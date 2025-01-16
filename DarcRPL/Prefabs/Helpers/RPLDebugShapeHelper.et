@@ -1,7 +1,7 @@
 RplExampleDebugShape {
  ID "645CDD8731A17852"
  components {
-  RplExample2ComponentColorAnim "{645F1C727E937B11}" {
+  RplExample3ComponentColorAnim "{646111D5EED40A0F}" {
   }
   SCR_DebugShapeHelperComponent "{645CDD8731A17868}" {
   }
