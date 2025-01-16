@@ -1,3 +1,5 @@
+//NOTE: To use this, edit the prefab object properties to use this one
+
 class RplExample1ComponentColorAnimClass : ScriptComponentClass { }
 RplExample1ComponentColorAnimClass g_RplExample1ComponentColorAnimClass;
  
