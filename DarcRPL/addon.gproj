@@ -1,0 +1,22 @@
+GameProject {
+ ID "DarcRPL"
+ GUID "62488C0C59B62612"
+ TITLE "DarcRPL"
+ Dependencies {
+  "58D0FB3206B6F859" "622CD3A9533E4430"
+ }
+ Configurations {
+  GameProjectConfig PC {
+  }
+  GameProjectConfig XBOX_ONE {
+  }
+  GameProjectConfig XBOX_SERIES {
+  }
+  GameProjectConfig PS4 {
+  }
+  GameProjectConfig PS5 {
+  }
+  GameProjectConfig HEADLESS {
+  }
+ }
+}
