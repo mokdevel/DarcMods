@@ -10,6 +10,7 @@ class SCR_DC_Frame : Managed
 {
 	//Mission specific
 	DC_LogLevel logLevel;	
+	[Attribute(defvalue: "1", UIWidgets.Slider, "Search radius in meters", "0 10")]	
 	int missionCount;			//Maximum amount of missions to be active at the same time
 	int missionLifeCycleTime;	//The cycle time to manage mission spawning, deletion etc...
 	ref array<DC_EMissionType> missionTypeArray = {};	//Active missions list

@@ -26,8 +26,8 @@ class SCR_DC_RplMapMarkerEntity : ScriptComponent
             Print("This example requires that the entity is of type `RplExampleDebugShape`.", LogLevel.WARNING);
             return;
         }
-/* 
-        shapeEnt.SetColorByIdx(m_ColorIdx);
+ 
+//        shapeEnt.SetColorByIdx(m_ColorIdx);
  
         // We must belong to some RplComponent in order for replication to work.
         // We search for it and warn user when we can't find it.
@@ -45,11 +45,13 @@ class SCR_DC_RplMapMarkerEntity : ScriptComponent
         if (rplComponent.Role() == RplRole.Authority)
         {
             SetEventMask(owner, EntityEvent.FRAME);
-        }*/
+        }
     }
  
     override void EOnFrame(IEntity owner, float timeSlice)
     {
+//		m_MarkerEntity.  . m_markers.
+		
         int colorIdxDelta = CalculateColorIdxDelta(timeSlice);
         ApplyColorIdxDelta(owner, colorIdxDelta);
     }

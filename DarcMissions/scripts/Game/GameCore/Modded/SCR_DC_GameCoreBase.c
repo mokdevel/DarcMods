@@ -21,7 +21,7 @@ modded class SCR_BaseGameMode
 				
 		//Initialize the SCR_DC_MapMarkerEntity
 		SCR_DC_Log.Add("[SCR_DC_GameCoreBase:OnGameStart] Creating SCR_DC_MapMarkerEntity", LogLevel.NORMAL);        
-		string m_PrefabToSpawn = "{923122A12D5F2CF9}Prefabs/SCR_DC_MapMarker.et";
+		string m_PrefabToSpawn = "{53500C990CE05DAC}Prefabs/Helpers/SCR_DC_MapMarker.et";
 		Resource m_Resource = Resource.Load(m_PrefabToSpawn);
 		m_MarkerEntity = GetGame().SpawnEntityPrefab(m_Resource, GetGame().GetWorld());		
 		
