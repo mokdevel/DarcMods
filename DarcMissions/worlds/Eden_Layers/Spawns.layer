@@ -1,0 +1,6 @@
+SCR_SpawnPoint SpawnPointPLR_US : "{CEA2B24051A44525}PrefabsEditable/SpawnPoints/E_SpawnPoint_US.et" {
+ coords 7463.763 137.861 4725.052
+ m_Info SCR_UIInfo "{56B4CC4ECACA2C37}" {
+  Name "US Industrial Spawn point"
+ }
+}

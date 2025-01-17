@@ -1,0 +1,10 @@
+SCR_BaseGameMode GameMode_Plain1 : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
+ components {
+  SCR_HintManagerComponent "{5702B54C6CBC9D7F}" {
+   m_bIgnoreHintSettings 1
+  }
+  SlotManagerComponent "{623B17309985ABB5}" {
+  }
+ }
+ coords 6449.517 162.002 6441.515
+}

@@ -1,0 +1,318 @@
+//Mission SCR_DC_Mission_Hunter.c
+
+//------------------------------------------------------------------------------------------------
+/*!
+This mission spawns one (or more) hunter groups that search players. Original idea and parts of the 
+code are from HunterKiller mod by Rabid Squirrel. This mod worked as a great example when taking the 
+first steps in AR modding.
+
+See: https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller 
+Note: The original mod is discontinued.
+*/
+
+//------------------------------------------------------------------------------------------------
+class SCR_DC_Mission_Hunter : SCR_DC_Mission
+{
+	private ref SCR_DC_MissionConfigHunter m_Config = new SCR_DC_MissionConfigHunter();				
+	private const int DC_LOCATION_SEACRH_ITERATIONS = 30;	//How many different spots to try for a mission before giving up	
+	
+	private ref array<IEntity> m_Locations = {};
+	private ref array<SCR_AIGroup> m_Groups = {};
+	int m_GroupsSpawned = 0;	//The amount of groups spawned. Between spawns, a group may be killed so the total of m_Groups is not reliable to know the count.
+	
+	//------------------------------------------------------------------------------------------------
+	//Constructor
+	void SCR_DC_Mission_Hunter()
+	{
+		SCR_DC_Log.Add("[SCR_DC_Mission_Hunter] Constructor", LogLevel.DEBUG);
+
+		//Set some defaults				
+		SCR_DC_Mission();
+
+		//Load config	
+		m_Config.Load();
+		
+		//Find position
+		bool positionFound = false;
+		vector pos;
+
+		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
+		{
+			pos = SCR_DC_Misc.GetRandomWorldPos();
+			
+			//Find a position close to any player
+			if (SCR_DC_PlayerHelper.IsAnyPlayerCloseToPos(pos, m_Config.hunter.maxDistanceToPlayer, m_Config.hunter.minDistanceToPlayer))
+			{
+				positionFound = true;
+			
+				SCR_DC_Log.Add("[SCR_DC_Mission_Hunter] Location for spawn " + pos, LogLevel.DEBUG);
+				break;
+			}
+			else
+			{						
+				SCR_DC_Log.Add("[SCR_DC_Mission_Hunter] Invalid mission position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
+			}
+		}
+		
+		if (positionFound)
+		{	
+			SetTitle("Hunters");
+			SetInfo("They are coming for you...");
+			SetPos(pos);
+			SetPosName("");
+			SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(DC_ID_PREFIX, GetPos(), GetTitle()));
+	
+			SetState(DC_MissionState.INIT);
+		}
+		else
+		{				
+			//No suitable location found.
+			SCR_DC_Log.Add("[SCR_DC_Mission_Hunter] Could not find suitable location.", LogLevel.ERROR);
+			SetState(DC_MissionState.EXIT);
+			return;
+		}	
+	}
+
+	//------------------------------------------------------------------------------------------------
+	override void MissionRun()
+	{
+		if (GetState() == DC_MissionState.INIT)
+		{
+			MissionSpawn();
+		}
+		
+		if (GetState() == DC_MissionState.END)
+		{
+			MissionEnd();
+			SetState(DC_MissionState.EXIT);
+		}
+		
+		if (GetState() == DC_MissionState.ACTIVE)
+		{
+			if (m_GroupsSpawned < m_Config.hunter.groupsToSpawn)
+			{
+				SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionRun] Waiting for all groups to spawn. " + m_GroupsSpawned + "/" + m_Config.hunter.groupsToSpawn + " ready.", LogLevel.DEBUG);
+			}
+			else
+			{
+				if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
+				{
+					SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
+					SetState(DC_MissionState.END);
+				}
+			}
+		}
+		
+		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionLifeCycleTime);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	override void MissionEnd()
+	{
+		//Remove marker from map
+		SCR_DC_MapMarkersUI.DeleteMarker(GetMarkerId());
+		//TBD: Delete all AI groups. This case is needed in case the mission is stopped by an external force (e.g., admin).
+		SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);
+	}	
+			
+	//------------------------------------------------------------------------------------------------
+	private void MissionSpawn()
+	{					
+		SCR_DC_Log.Add(("[SCR_DC_Mission_Hunter:MissionSpawn] Spawning " + m_Config.hunter.groupsToSpawn + " groups"), LogLevel.NORMAL);
+		
+		for (int i = 1; i <= m_Config.hunter.groupsToSpawn; i++)
+		{
+			SCR_DC_Log.Add(("[SCR_DC_Mission_Hunter:MissionSpawn] Initiating spawn for group " + i + " of " + m_Config.hunter.groupsToSpawn), LogLevel.NORMAL);
+			
+			GetGame().GetCallqueue().CallLater(SpawnGroup, (m_Config.hunter.groupSpawnDelay + i*1000), false);
+		}
+		
+		SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionSpawn] INIT ready. Changing to ACTIVE state", LogLevel.NORMAL);
+		
+		SetState(DC_MissionState.ACTIVE);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void GroupLifeCycle(SCR_AIGroup group)
+	{
+		if (group)
+		{
+			//Check if there are any nearby AI
+			IEntity closestPlayer = SCR_DC_PlayerHelper.PlayerGetClosestToPos(group.GetLeaderEntity().GetOrigin(), 0, m_Config.hunter.maxDistanceToPlayer);
+		
+			if (closestPlayer != null)
+			{
+				if (group.GetAgentsCount() > 0)
+				{
+					SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:GroupLifeCycle] Creating waypoint for group: " + group.GetID(), LogLevel.SPAM);
+					
+					SCR_DC_AIHelper.RemoveWaypoints(group);
+					AIWaypoint wp = GetWaypoint(group);
+					group.AddWaypoint(wp);
+					GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.hunter.lifeCycleTime, false, group);
+					return;
+				}
+			}
+			else
+			{
+				// If there aren't any players close end the group
+				SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:GroupLifeCycle] No players nearby, deleting group group: " + group.GetID(), LogLevel.NORMAL);
+				SCR_DC_AIHelper.GroupDelete(group);
+			}
+		}
+	}	
+		
+	//------------------------------------------------------------------------------------------------	
+	protected void SpawnGroup()
+	{
+//		IEntity spawnLocation = GetSpawnPointForAI();
+		vector spawnLocation = GetSpawnPointForAI();
+		
+		if (spawnLocation)
+		{
+			string groupToSpawn = m_Config.hunter.groupTypes.GetRandomElement();
+			SCR_AIGroup group = SCR_DC_AIHelper.SpawnGroup(groupToSpawn, spawnLocation);
+			
+			if (group)
+			{
+				m_Groups.Insert(group);
+				m_GroupsSpawned++;
+				SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:SpawnHunterGroup] Group spawned to " + spawnLocation, LogLevel.NORMAL);				
+			}
+			else
+			{
+				SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:SpawnHunterGroup] Unable to spawn group!", LogLevel.ERROR);
+				return;
+			}
+			
+			// Manage the life cycle for the spawned group
+			GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.hunter.lifeCycleTime, false, group);
+		}
+		else
+		{
+			SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:SpawnHunterGroup] Unable to find spawn point for group! Retrying...", LogLevel.WARNING);
+			
+			// Try again later
+			GetGame().GetCallqueue().CallLater(SpawnGroup, (m_Config.hunter.lifeCycleTime*2), false);
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------	
+	/*!
+	Find a spawn position for hunters that is close to mission position.
+	*/
+	protected vector GetSpawnPointForAI()
+	{
+		vector pos = GetPos();
+		vector posFixed = SCR_DC_SpawnHelper.FindEmptyPos(pos, 100, 8);
+		
+		if (pos != posFixed)
+		{						
+			SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:GetSpawnPointForAI] Pos: " + pos, LogLevel.SPAM);
+		}
+		else
+			SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:GetSpawnPointForAI] Could not find an empty pos.", LogLevel.ERROR);
+		
+		return pos;
+	}
+		
+	//------------------------------------------------------------------------------------------------
+	protected AIWaypoint GetWaypoint(SCR_AIGroup group)
+	{
+		IEntity closestPlayer = SCR_DC_PlayerHelper.PlayerGetClosestToPos(group.GetLeaderEntity().GetOrigin());
+		
+		if (closestPlayer != null)
+		{
+			AIWaypoint waypoint = SCR_DC_AIHelper.CreateWaypointEntity(DC_EWaypointMoveType.MOVE);
+//			waypoint.SetOrigin(closestPlayer.GetOrigin());
+			waypoint.SetOrigin(SCR_DC_Misc.RandomizePos(closestPlayer.GetOrigin(), m_Config.hunter.rndDistanceToPlayer));
+			return waypoint;
+		}
+		else
+		{
+			SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:GetWaypoint] Unable to find player for waypoint creation!", LogLevel.ERROR);
+			SCR_DC_AIHelper.GroupDelete(group);
+		}
+		
+		return null;
+	}	
+}
+
+//------------------------------------------------------------------------------------------------
+class SCR_DC_Hunter : Managed
+{
+	//Mission specific
+	int groupsToSpawn;					//Number of groups to spawn
+	int groupSpawnDelay;				//Delay between group spawns 
+	int lifeCycleTime;					//Loop time for giving hunters a new player location
+	int minDistanceToPlayer;			//Hunter group minimum distance to player for spawn
+	int maxDistanceToPlayer;			//...max distance
+	int rndDistanceToPlayer;			//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
+	
+	ref array<string> groupTypes = {}; 				//Types of AI groups
+}
+
+//------------------------------------------------------------------------------------------------
+class SCR_DC_MissionConfigHunter : SCR_DC_JsonConfig
+{
+	//Information stored in .json
+	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Hunter.json";
+	int missionLifeCycleTime;			//How often the mission is run	
+	ref SCR_DC_Hunter hunter = new SCR_DC_Hunter;
+	//----
+	
+	//------------------------------------------------------------------------------------------------
+	void SCR_DC_MissionConfigHunter()
+	{
+		version = 1;
+		author = "darc";
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void Load()
+	{	
+		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		
+		if(!loadContext)
+		{
+			SetDefaults();
+			Save("");
+			return;
+		}
+		
+		loadContext.ReadValue("missionLifeCycleTime", missionLifeCycleTime);
+		loadContext.ReadValue("hunter", hunter);
+	}	
+
+	//------------------------------------------------------------------------------------------------
+	void Save(string data)
+	{
+		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		saveContext.WriteValue("missionLifeCycleTime", missionLifeCycleTime);		
+		saveContext.WriteValue("hunter", hunter);
+		SaveConfigClose(saveContext);
+	}	
+		
+	//------------------------------------------------------------------------------------------------
+	void SetDefaults()
+	{
+		//Mission specific
+		missionLifeCycleTime = MISSION_LIFECYCLE_TIME_LIMIT;
+		hunter.groupsToSpawn = 2;
+		hunter.groupSpawnDelay = 5000;
+		hunter.lifeCycleTime = 5000;
+		hunter.minDistanceToPlayer = 250;
+		hunter.maxDistanceToPlayer = 1000;
+		hunter.rndDistanceToPlayer = 60;
+		hunter.groupTypes = 
+		{
+			"{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
+			"{976AC400219898FA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Sharpshooter.et",
+			"{30ED11AA4F0D41E5}Prefabs/Groups/OPFOR/Group_USSR_FireGroup.et",
+/*			"{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et",
+			"{96BAB56E6558788E}Prefabs/Groups/OPFOR/Group_USSR_Team_AT.et",
+			"{43C7A28EEB660FF8}Prefabs/Groups/OPFOR/Group_USSR_Team_GL.et",
+			"{1C0502B5729E7231}Prefabs/Groups/OPFOR/Group_USSR_Team_Suppress.et"*/
+		};
+	}	
+}

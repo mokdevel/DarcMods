@@ -1,0 +1,32 @@
+GameProject {
+ ID "DarcMissions"
+ GUID "5ED0FAC84A48D018"
+ TITLE "DarcMissions"
+ Dependencies {
+  "58D0FB3206B6F859" "631EE12D448D7FCC"
+ }
+ Configurations {
+  GameProjectConfig PC {
+  }
+  GameProjectConfig XBOX_ONE {
+  }
+  GameProjectConfig XBOX_SERIES {
+  }
+  GameProjectConfig PS4 {
+  }
+  GameProjectConfig PS5 : PC {
+   PlatformHardware PS5
+   DefaultSettings EngineUserSettings "{5702F087A781A9FC}" {
+    VideoUserSettings VideoUserSettings "{B272A67DB18E04F9}" {
+     FsrEnabled 1
+    }
+   }
+   ChimeraGlobalConfig ChimeraGlobalConfig "{6F12664687156A7B}" {
+    "Maximum View Distance" 2000
+    "Minimum View Distance" 2000
+   }
+  }
+  GameProjectConfig HEADLESS {
+  }
+ }
+}
