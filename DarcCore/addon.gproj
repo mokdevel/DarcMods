@@ -1,0 +1,8 @@
+GameProject {
+ ID "DarcCore"
+ GUID "631EE12D448D7FCC"
+ TITLE "DarcCore"
+ Dependencies {
+  "58D0FB3206B6F859"
+ }
+}

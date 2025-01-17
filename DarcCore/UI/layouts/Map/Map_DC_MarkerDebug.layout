@@ -1,0 +1,30 @@
+FrameWidgetClass {
+ Name "rootFrame"
+ Slot FrameWidgetSlot "{6138796D59F405E8}" {
+  OffsetLeft 0
+  OffsetTop 0
+  SizeX 16
+  OffsetRight -16
+  SizeY 16
+  OffsetBottom -16
+ }
+ {
+  ImageWidgetClass "{6232DDCBD6000C05}" {
+   Name "Image"
+   Slot FrameWidgetSlot "{6137458171DE5CCC}" {
+    Anchor 0.5 0.5 0.5 0.5
+    PositionX -8
+    OffsetLeft -8
+    PositionY -8
+    OffsetTop -8
+    SizeX 16
+    OffsetRight -8
+    SizeY 16
+    OffsetBottom -8
+   }
+   Opacity 0.8
+   Texture "{40C90A13FA693EA0}UI/Textures/Icons/iconmission_ca.edds"
+   Size 32 32
+  }
+ }
+}

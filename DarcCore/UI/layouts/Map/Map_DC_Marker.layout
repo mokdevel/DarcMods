@@ -1,0 +1,53 @@
+FrameWidgetClass {
+ Name "rootFrame"
+ Slot FrameWidgetSlot "{6138796D59F405E8}" {
+  OffsetLeft 0
+  OffsetTop 0
+  SizeX 512
+  OffsetRight -512
+  SizeY 34
+  OffsetBottom -34
+ }
+ {
+  ImageWidgetClass "{6137458171DE5D31}" {
+   Name "Image"
+   Slot FrameWidgetSlot "{6137458171DE5CCC}" {
+    Anchor 0.5 0.5 0.5 0.5
+    PositionX -256
+    OffsetLeft -256
+    PositionY -16
+    OffsetTop -16
+    SizeX 32
+    OffsetRight 224
+    SizeY 32
+    OffsetBottom -16
+   }
+   Texture "{40C90A13FA693EA0}UI/Textures/Icons/iconmission_ca.edds"
+   Size 64 64
+  }
+  TextWidgetClass "{61374581754D62C4}" {
+   Name "Text"
+   Slot FrameWidgetSlot "{61374581754D62E1}" {
+    Anchor 1 0.5 1 0.5
+    PositionX -470
+    OffsetLeft -470
+    PositionY -32
+    OffsetTop -32
+    SizeX 192
+    OffsetRight 278
+    SizeY 64
+    OffsetBottom -32
+   }
+   "Z Order" 1
+   Color 0 0 0 1
+   "Font Size" 16
+   "Min Font Size" 16
+   "Vertical Alignment" Center
+   Wrap 1
+   FontProperties FontProperties "{61387969EB3E6386}" {
+    Bold 1
+    ShadowOffset 0 0
+   }
+  }
+ }
+}
