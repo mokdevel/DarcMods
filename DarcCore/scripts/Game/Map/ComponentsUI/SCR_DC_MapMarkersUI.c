@@ -118,10 +118,16 @@ class SCR_DC_MapMarkersUI : SCR_MapUIBaseComponent
 		marker.widget = null;
 		
 		m_markers.Insert(marker);
-		
+
 		return marker.id;
 	}
-	
+
+	static void AddMarkerX(string idPrefix)	
+	{	
+		SCR_DC_MapMarkerEntity dummy = SCR_DC_MapMarkerEntity.Cast(m_MarkerEntity);		
+		dummy.AddMarker(idPrefix);
+	}			
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Delete marker with certain id

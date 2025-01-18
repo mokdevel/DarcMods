@@ -10,24 +10,24 @@ class SCR_DC_RplMapMarkerEntity : ScriptComponent
     // We mark color index as replicated property using RplProp attribute, making
     // it part of replicated state. We also say we want OnColorIdxChanged function
     // to be invoked whenever replication updates value of color index.
-    [RplProp(onRplName: "OnColorIdxChanged")]
+    [RplProp(onRplName: "OnShowHint")]
     private int m_ColorIdx;
  
-    [RplProp(onRplName: "OnColorIdxChanged")]
+    [RplProp(onRplName: "OnShowHint")]
 	string m_SomeString;
 
 	private ref array<string> m_SomeArray = {"one", "two", "three", "four"};
 	
     override void OnPostInit(IEntity owner)
     {
+		Print("[SCR_DC_RplMapMarkerEntity] Here we are!", LogLevel.WARNING);
+		
         auto shapeEnt = SCR_DC_MapMarkerEntity.Cast(owner);
         if (!shapeEnt)
         {
             Print("This example requires that the entity is of type `RplExampleDebugShape`.", LogLevel.WARNING);
             return;
         }
- 
-//        shapeEnt.SetColorByIdx(m_ColorIdx);
  
         // We must belong to some RplComponent in order for replication to work.
         // We search for it and warn user when we can't find it.
@@ -50,52 +50,32 @@ class SCR_DC_RplMapMarkerEntity : ScriptComponent
  
     override void EOnFrame(IEntity owner, float timeSlice)
     {
-//		m_MarkerEntity.  . m_markers.
-		
-        int colorIdxDelta = CalculateColorIdxDelta(timeSlice);
-        ApplyColorIdxDelta(owner, colorIdxDelta);
+        HintTime(owner);
     }
  
-    private int CalculateColorIdxDelta(float timeSlice)
-    {
-        m_TimeAccumulator_s += timeSlice;
-        int colorIdxDelta = m_TimeAccumulator_s / COLOR_CHANGE_PERIOD_S;
-        m_TimeAccumulator_s -= colorIdxDelta * COLOR_CHANGE_PERIOD_S;
-        return colorIdxDelta;
-    }
- 
-    private void ApplyColorIdxDelta(IEntity owner, int colorIdxDelta)
-    {
-        if (colorIdxDelta == 0)
-            return;
- 
-//        int newColorIdx = (m_ColorIdx + colorIdxDelta) % RplExampleDebugShape.COLOR_COUNT;
-//        if (newColorIdx == m_ColorIdx)
-//            return;
- 
-        // Update replicated state with results from the simulation.
-//        m_ColorIdx = newColorIdx;
- 
-		m_SomeString = m_SomeArray.GetRandomElement();
+	private void HintTime(IEntity owner)	
+	{
+		string hint = SCR_DC_MapMarkerEntity.Cast(owner).GetMarkerTxt();
 		
-        // After we have written new value of color index, we let replication know
-        // that there are changes in our state that need to be replicated to proxies.
-        // Without this call, even if we change our color index, new value would not
-        // be replicated to proxies.
-//        Replication.BumpMe();
- 
+		if (hint == "")
+			return;
+		
+		m_SomeString = "Title is: " + hint;
+		Replication.BumpMe();
+		
         // Presentation of replicated state on authority.
-//        RplExampleDebugShape.Cast(owner).SetColorByIdx(m_ColorIdx);
-//		ShowHint();
-    }
- 
-    // Presentation of replicated state on proxy.
-    private void OnColorIdxChanged()
-    {
-//        RplExampleDebugShape.Cast(GetOwner()).SetColorByIdx(m_ColorIdx);
-		ShowHint();
-    }
-	
+		ShowHint();		
+		SCR_DC_MapMarkerEntity.Cast(owner).ClearMarkerTxt();
+	}
+
+	// Presentation of replicated state on proxy.
+	private void OnShowHint()
+	{
+		SCR_DC_Log.Add("[SCR_DC_RplMapMarkerEntity] CLIENT SIDE!", LogLevel.NORMAL);        
+		ShowHint();		
+		SCR_DC_MapMarkerEntity.Cast(GetOwner()).ClearMarkerTxt();		
+	}	
+		
 	private void ShowHint()
 	{
 		SCR_HintManagerComponent hintComponent = SCR_HintManagerComponent.GetInstance();

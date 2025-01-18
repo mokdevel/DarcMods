@@ -97,6 +97,8 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 			SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(DC_ID_PREFIX, GetPos(), GetTitle()));
 	
 			SetState(DC_MissionState.INIT);
+			
+			SCR_DC_MapMarkersUI.AddMarkerX(GetTitle());
 		}
 		else
 		{				
@@ -323,7 +325,7 @@ class SCR_DC_MissionConfigOccupation : SCR_DC_JsonConfig
 			"Bandit camp at ",
 			"Bandits are protecting their valuable loot.",
 			{
-				EMapDescriptorType.MDT_NAME_VILLAGE, 
+				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_SETTLEMENT,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_BASE,
@@ -353,6 +355,7 @@ class SCR_DC_MissionConfigOccupation : SCR_DC_JsonConfig
 			"Occupation at ",
 			"City is being occupied.",
 			{
+				EMapDescriptorType.MDT_NAME_RIDGE,
 				EMapDescriptorType.MDT_NAME_TOWN, 
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_AIRPORT,

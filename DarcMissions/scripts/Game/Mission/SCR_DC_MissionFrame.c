@@ -129,8 +129,8 @@ class SCR_DC_MissionFrame
 				{			
 					SCR_DC_Log.Add(string.Format("[SCR_DC_MissionFrame:MissionLifeCycleManager] Spawning mission %1 (%2) %3", tmpDC_Mission.GetTitle(), tmpDC_Mission.GetPos(), tmpDC_Mission.GetPosName()), LogLevel.NORMAL);
 					
-					SCR_HintManagerComponent hintComponent = SCR_HintManagerComponent.GetInstance();
-					hintComponent.ShowCustomHint(tmpDC_Mission.GetInfo(), "Mission: " + tmpDC_Mission.GetTitle(), 10);
+					//SCR_HintManagerComponent hintComponent = SCR_HintManagerComponent.GetInstance();
+					//hintComponent.ShowCustomHint(tmpDC_Mission.GetInfo(), "Mission: " + tmpDC_Mission.GetTitle(), 10);
 					
 					SCR_DC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), Color.YELLOW, 10)
 				}

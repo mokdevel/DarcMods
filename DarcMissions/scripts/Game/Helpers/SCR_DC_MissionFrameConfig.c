@@ -82,10 +82,11 @@ class SCR_DC_MissionFrameConfig : SCR_DC_JsonConfig
 		frame.missionCount = 4;
 		frame.missionLifeCycleTime = MISSION_LIFECYCLE_TIME_LIMIT;			
 //		frame.missionTypeArray = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-		frame.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION};		
-//		frame.missionTypeArray = {DC_EMissionType.HUNTER};		
-		frame.minDistanceToMission = 2000;
-		frame.minDistanceToPlayer = 1000;
+//		frame.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION};		
+		frame.missionTypeArray = {DC_EMissionType.OCCUPATION};		
+//		frame.missionTypeArray = {DC_EMissionType.HUNTER};
+		frame.minDistanceToMission = 500;
+		frame.minDistanceToPlayer = 100;
 		SCR_DC_NonValidArea area1 = new SCR_DC_NonValidArea;
 		area1.Set("4780 0 11450", 1000, "Airport - for testing");
 		nonValidAreas.Insert(area1);
