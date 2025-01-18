@@ -96,9 +96,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 			SetPosName(posName);
 			SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(DC_ID_PREFIX, GetPos(), GetTitle()));
 	
-			SetState(DC_MissionState.INIT);
-			
-			SCR_DC_MapMarkersUI.AddMarkerX(GetTitle());
+			SetState(DC_MissionState.INIT);			
 		}
 		else
 		{				

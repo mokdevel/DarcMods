@@ -122,10 +122,10 @@ class SCR_DC_MapMarkersUI : SCR_MapUIBaseComponent
 		return marker.id;
 	}
 
-	static void AddMarkerX(string idPrefix)	
+	static void AddMarkerHint(string title, string description, string id)	
 	{	
 		SCR_DC_MapMarkerEntity dummy = SCR_DC_MapMarkerEntity.Cast(m_MarkerEntity);		
-		dummy.AddMarker(idPrefix);
+		dummy.AddMarkerHint(title, description, id);
 	}			
 		
 	//------------------------------------------------------------------------------------------------
@@ -183,7 +183,7 @@ class SCR_DC_MapMarkersUI : SCR_MapUIBaseComponent
 	protected void UpdateMarkers()
 	{
 		float screenPosX, screenPosY;
-		float posW, posH;		
+		//float posW, posH;
  		WorkspaceWidget workspace = GetGame().GetWorkspace();
 
 		for (int i = 0; i < m_markers.Count(); i++)

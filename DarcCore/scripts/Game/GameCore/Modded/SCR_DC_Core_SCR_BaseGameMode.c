@@ -22,7 +22,7 @@ modded class SCR_BaseGameMode
 		}
 		else 
 		{
-			SCR_DC_Log.Add("[SCR_DC_Core_BaseGameMode:NonMaster] Core not needed for client.", LogLevel.NORMAL);        
+			SCR_DC_Log.Add("[SCR_DC_Core_BaseGameMode:NonMaster] Core not needed for client.", LogLevel.DEBUG);        
 		}
     }
 };

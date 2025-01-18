@@ -3,6 +3,7 @@ class SCR_DC_MapMarkerEntityClass : GenericEntityClass {}
 class SCR_DC_MapMarkerEntity : GenericEntity
 {
 	private string m_MarkerTxt = "";	
+	private string m_Hint;				//TBD: Maybe this should be a FIFO array
 	
     void SCR_DC_MapMarkerEntity(IEntitySource src, IEntity parent)
     {
@@ -15,30 +16,22 @@ class SCR_DC_MapMarkerEntity : GenericEntity
 //        this.GetWorldTransform(worldTransform);
 //        Shape.CreateSphere(m_Color, ShapeFlags.ONCE, worldTransform[3], 0.5);
     }
- 
-	void AddMarker(string idPrefix)	
+	
+	void AddMarkerHint(string title, string description, string id)	
 	{
-		m_MarkerTxt = idPrefix;
-		SCR_DC_Log.Add("[SCR_DC_MapMarkerEntity] Added marker.");
+		m_Hint = title + "|" + description + "|" + id;
+		
+		//SCR_DC_Log.Add("[SCR_DC_MapMarkerEntity] Added marker.");
 	}
 
-	string GetMarkerTxt()
+	string GetMarkerHint()
 	{
-		return m_MarkerTxt;
+		return m_Hint;
 	}
 		
-	void ClearMarkerTxt()
+	void ClearMarkerHint()
 	{
-		m_MarkerTxt = "";
-	}
-	
-/*    bool SetColorByIdx(int colorIdx)
-    {
-        if (colorIdx < 0 || colorIdx >= COLOR_COUNT)
-            return false;
- 
-        m_Color = COLORS[colorIdx];
-        return true;
-    }*/
+		m_Hint = "";
+	}	
 }
 

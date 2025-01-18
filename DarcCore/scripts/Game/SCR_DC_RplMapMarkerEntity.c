@@ -1,31 +1,27 @@
 class SCR_DC_RplMapMarkerEntityClass : ScriptComponentClass { }
 SCR_DC_RplMapMarkerEntityClass g_SCR_DC_RplMapMarkerEntityClassInst;
- 
+
+//------------------------------------------------------------------------------------------------
 class SCR_DC_RplMapMarkerEntity : ScriptComponent
 {
     private static const float COLOR_CHANGE_PERIOD_S = 5.0;
  
     private float m_TimeAccumulator_s;
  
-    // We mark color index as replicated property using RplProp attribute, making
-    // it part of replicated state. We also say we want OnColorIdxChanged function
-    // to be invoked whenever replication updates value of color index.
+    // We mark hint as replicated property using RplProp attribute, making
+    // it part of replicated state. We also say we want OnShowHint function
+    // to be invoked whenever replication updates value of m_Hint.
     [RplProp(onRplName: "OnShowHint")]
-    private int m_ColorIdx;
- 
-    [RplProp(onRplName: "OnShowHint")]
-	string m_SomeString;
-
-	private ref array<string> m_SomeArray = {"one", "two", "three", "four"};
+	string m_Hint;
+	
+	string m_HintOld = "";
 	
     override void OnPostInit(IEntity owner)
     {
-		Print("[SCR_DC_RplMapMarkerEntity] Here we are!", LogLevel.WARNING);
-		
         auto shapeEnt = SCR_DC_MapMarkerEntity.Cast(owner);
         if (!shapeEnt)
         {
-            Print("This example requires that the entity is of type `RplExampleDebugShape`.", LogLevel.WARNING);
+            SCR_DC_Log.Add("[SCR_DC_RplMapMarkerEntity] SCR_DC_MapMarkerEntity not found", LogLevel.ERROR);
             return;
         }
  
@@ -34,7 +30,7 @@ class SCR_DC_RplMapMarkerEntity : ScriptComponent
         auto rplComponent = BaseRplComponent.Cast(shapeEnt.FindComponent(BaseRplComponent));
         if (!rplComponent)
         {
-            Print("This example requires that the entity has an RplComponent.", LogLevel.WARNING);
+            SCR_DC_Log.Add("[SCR_DC_RplMapMarkerEntity] RplComponent not found.", LogLevel.ERROR);
             return;
         }
  
@@ -55,17 +51,18 @@ class SCR_DC_RplMapMarkerEntity : ScriptComponent
  
 	private void HintTime(IEntity owner)	
 	{
-		string hint = SCR_DC_MapMarkerEntity.Cast(owner).GetMarkerTxt();
+		m_Hint = SCR_DC_MapMarkerEntity.Cast(owner).GetMarkerHint();
 		
-		if (hint == "")
+		if (m_Hint == m_HintOld)
 			return;
 		
-		m_SomeString = "Title is: " + hint;
+		m_HintOld = m_Hint;
+		
 		Replication.BumpMe();
 		
         // Presentation of replicated state on authority.
 		ShowHint();		
-		SCR_DC_MapMarkerEntity.Cast(owner).ClearMarkerTxt();
+		//SCR_DC_MapMarkerEntity.Cast(owner).ClearMarkerHint();
 	}
 
 	// Presentation of replicated state on proxy.
@@ -73,12 +70,15 @@ class SCR_DC_RplMapMarkerEntity : ScriptComponent
 	{
 		SCR_DC_Log.Add("[SCR_DC_RplMapMarkerEntity] CLIENT SIDE!", LogLevel.NORMAL);        
 		ShowHint();		
-		SCR_DC_MapMarkerEntity.Cast(GetOwner()).ClearMarkerTxt();		
+		//SCR_DC_MapMarkerEntity.Cast(GetOwner()).ClearMarkerHint();
 	}	
 		
 	private void ShowHint()
 	{
+		array<string> hint = {"", "", ""};
+		m_Hint.Split("|", hint, false);		
 		SCR_HintManagerComponent hintComponent = SCR_HintManagerComponent.GetInstance();
-		hintComponent.ShowCustomHint("Hello", m_SomeString, 2);
+		hintComponent.ShowCustomHint(hint[1], hint[0], 2);		
+		//SCR_DC_MapMarkerEntity.Cast(GetOwner()).ClearMarkerHint();
 	}	
 }

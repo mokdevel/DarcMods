@@ -27,13 +27,15 @@ modded class SCR_BaseGameMode
 			SCR_DC_Log.Add("[SCR_DC_GameCoreBase:OnGameStart] Creating SCR_DC_MapMarkerEntity", LogLevel.NORMAL);        
 			string m_PrefabToSpawn = "{F158EB543483DC6A}Prefabs/Markers/SCR_DC_MapMarker.et";
 			Resource m_Resource = Resource.Load(m_PrefabToSpawn);
+			//m_MarkerEntity = GetGame().SpawnEntityPrefab(m_Resource, GetGame().GetWorld());
 			
-			vector pos = "913 39 2624";
+//			vector pos = "913 39 2624";
+			vector pos = "0 0 0";
 			vector transform[4];
 			EntitySpawnParams params = EntitySpawnParams();
 			SCR_DC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0);
 			params.Transform = transform;
-			
+		
 			m_MarkerEntity = GetGame().SpawnEntityPrefab(m_Resource, GetGame().GetWorld(), params);		
 				
 			missionFrame = new SCR_DC_MissionFrame();
@@ -41,7 +43,7 @@ modded class SCR_BaseGameMode
 		}
 		else 
 		{
-			SCR_DC_Log.Add("[SCR_DC_GameCoreBase:NonMaster] Mission frame not needed for client.", LogLevel.NORMAL);        
+			SCR_DC_Log.Add("[SCR_DC_GameCoreBase:NonMaster] Mission frame not needed for client.", LogLevel.DEBUG);        
 		}
     }
 };

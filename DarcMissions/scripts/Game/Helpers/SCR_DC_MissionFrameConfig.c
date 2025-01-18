@@ -3,7 +3,7 @@
 // For readable jsons, use https://jsonformatter.org
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J
 
-const int MISSION_LIFECYCLE_TIME_LIMIT = 6000;
+const int MISSION_LIFECYCLE_TIME_LIMIT = 10000;
 
 //------------------------------------------------------------------------------------------------
 class SCR_DC_Frame : Managed

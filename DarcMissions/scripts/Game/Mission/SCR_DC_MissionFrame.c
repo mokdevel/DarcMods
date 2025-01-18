@@ -62,7 +62,7 @@ class SCR_DC_MissionFrame
 	*/	
 	void MissionFrameStart()
 	{
-		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_DC_MissionFrameConfig.frame.missionLifeCycleTime, false);
+		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_DC_MissionFrameConfig.frame.missionLifeCycleTime * 2, false);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -128,6 +128,10 @@ class SCR_DC_MissionFrame
 				if (tmpDC_Mission.GetState() != DC_MissionState.EXIT)
 				{			
 					SCR_DC_Log.Add(string.Format("[SCR_DC_MissionFrame:MissionLifeCycleManager] Spawning mission %1 (%2) %3", tmpDC_Mission.GetTitle(), tmpDC_Mission.GetPos(), tmpDC_Mission.GetPosName()), LogLevel.NORMAL);
+					
+//					SCR_DC_MapMarkersUI.AddMarkerHint("Mission: " + GetTitle(), GetInfo());
+					SCR_DC_MapMarkersUI.AddMarkerHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), tmpDC_Mission.GetId());
+					
 					
 					//SCR_HintManagerComponent hintComponent = SCR_HintManagerComponent.GetInstance();
 					//hintComponent.ShowCustomHint(tmpDC_Mission.GetInfo(), "Mission: " + tmpDC_Mission.GetTitle(), 10);
