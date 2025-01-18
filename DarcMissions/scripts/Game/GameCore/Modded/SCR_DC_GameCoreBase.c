@@ -29,8 +29,13 @@ modded class SCR_BaseGameMode
 			Resource m_Resource = Resource.Load(m_PrefabToSpawn);
 			//m_MarkerEntity = GetGame().SpawnEntityPrefab(m_Resource, GetGame().GetWorld());
 			
-//			vector pos = "913 39 2624";
-			vector pos = "0 0 0";
+			vector pos;
+//			pos = "0 0 0";
+			pos = "913 39 2624";
+//			int mid = SCR_DC_Misc.GetWorldSize();
+//			pos[0] = mid;
+//			pos[2] = mid;
+			
 			vector transform[4];
 			EntitySpawnParams params = EntitySpawnParams();
 			SCR_DC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0);
