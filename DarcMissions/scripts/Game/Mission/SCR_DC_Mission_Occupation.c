@@ -66,11 +66,11 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 						pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, 200, 10);
 						if (posName == "any")
 						{
-							posName = location.GetName();
+							posName = SCR_StringHelper.Translate(location.GetName());
 						}
 						positionFound = true;
 					
-						SCR_DC_Log.Add("[SCR_DC_Mission_Occupation] Location for spawn " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);
+						SCR_DC_Log.Add("[SCR_DC_Mission_Occupation] Location for spawn " + SCR_StringHelper.Translate(location.GetName()) + " " + location.GetOrigin(), LogLevel.DEBUG);
 						break;
 					}
 					else
@@ -127,7 +127,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 			{
 				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
 				SetState(DC_MissionState.END);
-			}			
+			}
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionLifeCycleTime);

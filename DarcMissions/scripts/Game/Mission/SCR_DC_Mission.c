@@ -15,11 +15,15 @@ class SCR_DC_Mission
 	//Common for all missions
 	private DC_MissionState m_State;
     private string m_Id;
-    private vector m_POS;
+    private vector m_Pos;
     private string m_PosName;
     private string m_Title;
     private string m_Info;
 	private string m_MarkerId;
+	//Internal without getters
+	private int m_StartTime;	//Minutes when mission started
+	private int m_EndTime;		//Minutes when mission shall end.
+	private int m_ActiveTime;	//Minutes of how long the mission should be active 
 //	MapDescriptorComponent m_MapDescriptorComponent = new MapDescriptorComponent;
 				
 	//------------------------------------------------------------------------------------------------
@@ -27,12 +31,14 @@ class SCR_DC_Mission
 	{
 		m_State = DC_MissionState.INIT;
 		m_Id = DC_ID_PREFIX + string.ToString(System.GetTickCount());
-		m_POS = "0 0 0";
+		m_Pos = "0 0 0";
 		m_PosName = "";
 		m_Title = "";
 		m_Info = "";
 		m_MarkerId = "";
-//		m_MapDescriptorComponent.IsActive();		
+		m_StartTime = (System.GetTickCount() / (60*1000)); 	//Ticktime is the ms when the game was started. We use only minutes.
+		SetActiveTime(DC_MISSION_ACTIVE_TIME);				//Sets m_EndTick
+//		m_MapDescriptorComponent.IsActive();
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -84,12 +90,12 @@ class SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	vector GetPos()
 	{
-		return m_POS;
+		return m_Pos;
 	}
 
 	void SetPos(vector pos)
 	{
-		m_POS = pos;
+		m_Pos = pos;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -135,4 +141,40 @@ class SCR_DC_Mission
 	{
 		m_MarkerId = markerId;
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	bool IsActive()
+	{
+		//Are there players still nearby
+		if (SCR_DC_PlayerHelper.PlayerGetClosestToPos(m_Pos, 0, DC_MISSION_ACTIVE_DISTANCE))
+		{
+			ResetActiveTime();
+			return true;
+		}
+		
+		//Has the active time passed
+		int currentTime = (System.GetTickCount() / (60*1000));		
+		if (currentTime < m_EndTime)
+		{
+			return true;
+		}
+		
+		//Well, we should not be active anymore
+		return false;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	void SetActiveTime(int minutes)	
+	{
+		m_ActiveTime = minutes;
+		m_EndTime = m_StartTime + m_ActiveTime;
+	}		
+	
+	//------------------------------------------------------------------------------------------------
+	void ResetActiveTime()	
+	{
+		int currentTime = (System.GetTickCount() / (60*1000));		
+		m_EndTime = currentTime + m_ActiveTime;
+	}		
+	
 }

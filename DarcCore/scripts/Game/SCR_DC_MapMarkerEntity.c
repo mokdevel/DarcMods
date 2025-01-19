@@ -1,5 +1,7 @@
 class SCR_DC_MapMarkerEntityClass : GenericEntityClass {}
 
+//TBD: I should investigate SCR_MapMarkerManagerComponent
+
 class SCR_DC_MapMarkerEntity : GenericEntity
 {
 	private string m_MarkerTxt = "";	

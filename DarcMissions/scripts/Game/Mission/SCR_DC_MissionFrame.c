@@ -29,7 +29,9 @@ enum DC_EMissionType
 	BANDITCAMP		//TBD
 };
 
-const string DC_ID_PREFIX = "DCM_";	//The prefix used for marker and missions Id's.
+const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
+const int DC_MISSION_ACTIVE_DISTANCE = 300;		//The distance to a player to keep the mission active 
+const int DC_MISSION_ACTIVE_TIME = 3;			//Minutes to keep the mission active
 
 //------------------------------------------------------------------------------------------------
 class SCR_DC_MissionFrame
@@ -145,7 +147,10 @@ class SCR_DC_MissionFrame
 			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Maximum amount of missions spawned: " + m_DC_MissionFrameConfig.frame.missionCount, LogLevel.SPAM);
 		}
 
-		//Check if missions are to be despawned
+		//Check if missions are 
+		//- to be despawned
+		//- active
+		//- not-active and to be ended
 				
 		int i = 0;				
 		SCR_DC_Mission mission;	
@@ -153,6 +158,7 @@ class SCR_DC_MissionFrame
 		while (i < m_MissionList.Count())
 		{
 			mission = m_MissionList[i];
+						
 			if (mission.GetState() == DC_MissionState.EXIT)
 			{
 				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Deleting mission: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
@@ -161,8 +167,14 @@ class SCR_DC_MissionFrame
 			}
 			else
 			{
-				i++;
-			}
+				if (!mission.IsActive())
+				{
+					SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Mission not active anymore: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
+					mission.SetState(DC_MissionState.END);
+				}			
+				
+				i++;	//Next mission to check
+			}			
 		}		
 		
 		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_DC_MissionFrameConfig.frame.missionLifeCycleTime, false);
