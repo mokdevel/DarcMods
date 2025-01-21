@@ -24,7 +24,9 @@ Add this to your StartGameTrigger or use SCR_DC_GameCoreBase.c
 //------------------------------------------------------------------------------------------------
 class SCR_DC_Spawner
 {
-	ref SCR_DC_SpawnerConfig m_DC_SpawnerConfig;
+	ref SCR_DC_SpawnerJsonApi m_DC_SpawnerConfig;
+	ref SCR_DC_SpawnerConfig m_Config;
+//	ref SCR_DC_Config m_DC_Config;
 	private ref array<MapItem> m_Locations = {};	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
 	private int m_spawnSetID;
@@ -35,29 +37,37 @@ class SCR_DC_Spawner
 	{
 		SCR_DC_Log.Add("[SCR_DC_Spawner] Starting SCR_DC_Spawner", LogLevel.NORMAL);
 		
-		//Load configuration from file		
-		m_DC_SpawnerConfig = new SCR_DC_SpawnerConfig();
+		//Load configuration from file
+		m_DC_SpawnerConfig = new SCR_DC_SpawnerJsonApi();
 		m_DC_SpawnerConfig.Load();
-		
-		SCR_DC_Log.SetLogLevel(m_DC_SpawnerConfig.frame.logLevel);
+		m_Config = m_DC_SpawnerConfig.conf;
+
+//		//Load configuration from file		
+//		m_DC_Config = new SCR_DC_Config();
+//		m_DC_Config.Load();
+				
+//		SCR_DC_Log.SetLogLevel(m_DC_SpawnerConfig.conf.logLevel);
+		SCR_DC_Log.SetLogLevel(m_Config.logLevel);
 		if (!SCR_DC_Core.RELEASE)
 		{
 			SCR_DC_Log.SetLogLevel(DC_LogLevel.DEBUG);						//Remove in production
 		}
 
-		SCR_DC_Log.Add("SCR_DC: Chance: " + m_DC_SpawnerConfig.spawnSets[m_spawnSetID].itemChance);
-		
+		SCR_DC_Log.Add("SCR_DC: Chance: " + m_DC_SpawnerConfig.conf.spawnSets[m_spawnSetID].itemChance);
 				
 		//Select which spawnSet to use. -1 for a random one.
-		m_spawnSetID = m_DC_SpawnerConfig.frame.spawnSetID;
+		//m_spawnSetID = m_DC_SpawnerConfig.conf.spawnSetID;
+		m_spawnSetID = m_Config.spawnSetID;
+		
 		if (m_spawnSetID == -1)
 		{
-			m_spawnSetID = Math.RandomInt(0,  m_DC_SpawnerConfig.spawnSets.Count() - 1);
+			m_spawnSetID = Math.RandomInt(0,  m_DC_SpawnerConfig.conf.spawnSets.Count() - 1);
 		}		
 		SCR_DC_Log.Add("[SCR_DC_Spawner] Using spawnSet: " + m_spawnSetID, LogLevel.DEBUG);
 				
 		//Find a locations
-		SCR_DC_Locations.GetLocations(m_Locations, m_DC_SpawnerConfig.spawnSets[m_spawnSetID].locationTypes);
+//		SCR_DC_Locations.GetLocations(m_Locations, m_DC_SpawnerConfig.conf.spawnSets[m_spawnSetID].locationTypes);
+		SCR_DC_Locations.GetLocations(m_Locations, m_Config.spawnSets[m_spawnSetID].locationTypes);
 		
 		foreach(MapItem loc : m_Locations)
 		{
@@ -81,15 +91,15 @@ class SCR_DC_Spawner
 	{
 		SCR_DC_Log.Add("[SCR_DC_Spawner:Run] Running", LogLevel.DEBUG);
 		
-		if (m_spawnIdx < m_DC_SpawnerConfig.spawnSets[m_spawnSetID].spawnNames.Count())
+		if (m_spawnIdx < m_DC_SpawnerConfig.conf.spawnSets[m_spawnSetID].spawnNames.Count())
 		{
-			if (Math.RandomFloat(0, 1) < m_DC_SpawnerConfig.spawnSets[m_spawnSetID].spawnChance)
+			if (Math.RandomFloat(0, 1) < m_DC_SpawnerConfig.conf.spawnSets[m_spawnSetID].spawnChance)
 			{
 				Spawn();
 			}
 			else
 			{
-				SCR_DC_Log.Add("[SCR_DC_Spawner:Run] Skipped " + m_DC_SpawnerConfig.spawnSets[m_spawnSetID].spawnNames[m_spawnIdx] + " due to spawnChance", LogLevel.NORMAL);
+				SCR_DC_Log.Add("[SCR_DC_Spawner:Run] Skipped " + m_DC_SpawnerConfig.conf.spawnSets[m_spawnSetID].spawnNames[m_spawnIdx] + " due to spawnChance", LogLevel.NORMAL);
 			}
 			m_spawnIdx++;
 			
@@ -97,7 +107,7 @@ class SCR_DC_Spawner
 		}				
 		else
 		{
-			SCR_DC_Log.Add("[SCR_DC_Spawner:Run] Spawned " + m_EntityList.Count() + "/" + m_DC_SpawnerConfig.spawnSets[m_spawnSetID].spawnNames.Count() + ". All done, stopping.", LogLevel.NORMAL);
+			SCR_DC_Log.Add("[SCR_DC_Spawner:Run] Spawned " + m_EntityList.Count() + "/" + m_DC_SpawnerConfig.conf.spawnSets[m_spawnSetID].spawnNames.Count() + ". All done, stopping.", LogLevel.NORMAL);
 		}
 	}
 	
@@ -111,22 +121,22 @@ class SCR_DC_Spawner
 
 		//Spawn entities one by one. Sets missions active once ready.		
 		MapItem location = m_Locations.GetRandomElement();		
-		string entityToSpawn = m_DC_SpawnerConfig.spawnSets[m_spawnSetID].spawnNames[m_spawnIdx];
+		string entityToSpawn = m_DC_SpawnerConfig.conf.spawnSets[m_spawnSetID].spawnNames[m_spawnIdx];
 		
 		SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Spawning " + entityToSpawn + " to " + SCR_StringHelper.Translate(location.Entity().GetName()), LogLevel.NORMAL);				
 		
 		float rotation = Math.RandomFloat(0, 360);
 				
-		entity = SCR_DC_SpawnHelper.SpawnItem(SCR_DC_Misc.RandomizePos(location.Entity().GetOrigin(), m_DC_SpawnerConfig.frame.spawnRndRadius), entityToSpawn, rotation);
+		entity = SCR_DC_SpawnHelper.SpawnItem(SCR_DC_Misc.RandomizePos(location.Entity().GetOrigin(), m_DC_SpawnerConfig.conf.spawnRndRadius), entityToSpawn, rotation);
 			
 		if (entity != NULL)
 		{ 
 			m_EntityList.Insert(entity);
 			SCR_DC_DebugHelper.AddDebugPos(entity, Color.VIOLET);
 			
-			foreach(string itemName: m_DC_SpawnerConfig.spawnSets[m_spawnSetID].itemNames)
+			foreach(string itemName: m_DC_SpawnerConfig.conf.spawnSets[m_spawnSetID].itemNames)
 			{
-				if (Math.RandomFloat(0, 1) < m_DC_SpawnerConfig.spawnSets[m_spawnSetID].itemChance)
+				if (Math.RandomFloat(0, 1) < m_DC_SpawnerConfig.conf.spawnSets[m_spawnSetID].itemChance)
 				{
 					ResourceName resource = itemName;
 					bool result = SCR_DC_SpawnHelper.AddToStorage(entity, resource);			

@@ -59,7 +59,7 @@ class SCR_DC_MapMarkersUI : SCR_MapUIBaseComponent
 
 		if (!SCR_DC_Core.RELEASE)
 		{
-			SCR_DC_MissionHelper.DebugTestMissionPos();
+//			SCR_DC_MissionHelper.DebugTestMissionPos();
 		}
 		
 		m_isMapOpen = true;			
