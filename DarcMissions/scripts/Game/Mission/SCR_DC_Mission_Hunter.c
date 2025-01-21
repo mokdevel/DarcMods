@@ -13,7 +13,8 @@ Note: The original mod is discontinued.
 //------------------------------------------------------------------------------------------------
 class SCR_DC_Mission_Hunter : SCR_DC_Mission
 {
-	private ref SCR_DC_MissionConfigHunter m_Config = new SCR_DC_MissionConfigHunter();				
+	private ref SCR_DC_HunterJsonApi m_HunterJsonApi = new SCR_DC_HunterJsonApi();				
+	ref SCR_DC_HunterConfig m_Config;
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 30;	//How many different spots to try for a mission before giving up	
 	
 	private ref array<IEntity> m_Locations = {};
@@ -30,7 +31,8 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 		SCR_DC_Mission();
 
 		//Load config	
-		m_Config.Load();
+		m_HunterJsonApi.Load();
+		m_Config = m_HunterJsonApi.conf;
 		
 		//Find position
 		bool positionFound = false;
@@ -41,7 +43,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 			pos = SCR_DC_Misc.GetRandomWorldPos();
 			
 			//Find a position close to any player
-			if (SCR_DC_PlayerHelper.IsAnyPlayerCloseToPos(pos, m_Config.hunter.maxDistanceToPlayer, m_Config.hunter.minDistanceToPlayer))
+			if (SCR_DC_PlayerHelper.IsAnyPlayerCloseToPos(pos, m_Config.maxDistanceToPlayer, m_Config.minDistanceToPlayer))
 			{
 				positionFound = true;
 			
@@ -89,9 +91,9 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 		
 		if (GetState() == DC_MissionState.ACTIVE)
 		{
-			if (m_GroupsSpawned < m_Config.hunter.groupsToSpawn)
+			if (m_GroupsSpawned < m_Config.groupsToSpawn)
 			{
-				SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionRun] Waiting for all groups to spawn. " + m_GroupsSpawned + "/" + m_Config.hunter.groupsToSpawn + " ready.", LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionRun] Waiting for all groups to spawn. " + m_GroupsSpawned + "/" + m_Config.groupsToSpawn + " ready.", LogLevel.DEBUG);
 			}
 			else
 			{
@@ -118,13 +120,13 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
 	{					
-		SCR_DC_Log.Add(("[SCR_DC_Mission_Hunter:MissionSpawn] Spawning " + m_Config.hunter.groupsToSpawn + " groups"), LogLevel.NORMAL);
+		SCR_DC_Log.Add(("[SCR_DC_Mission_Hunter:MissionSpawn] Spawning " + m_Config.groupsToSpawn + " groups"), LogLevel.NORMAL);
 		
-		for (int i = 1; i <= m_Config.hunter.groupsToSpawn; i++)
+		for (int i = 1; i <= m_Config.groupsToSpawn; i++)
 		{
-			SCR_DC_Log.Add(("[SCR_DC_Mission_Hunter:MissionSpawn] Initiating spawn for group " + i + " of " + m_Config.hunter.groupsToSpawn), LogLevel.NORMAL);
+			SCR_DC_Log.Add(("[SCR_DC_Mission_Hunter:MissionSpawn] Initiating spawn for group " + i + " of " + m_Config.groupsToSpawn), LogLevel.NORMAL);
 			
-			GetGame().GetCallqueue().CallLater(SpawnGroup, (m_Config.hunter.groupSpawnDelay + i*1000), false);
+			GetGame().GetCallqueue().CallLater(SpawnGroup, (m_Config.groupSpawnDelay + i*1000), false);
 		}
 		
 		SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionSpawn] INIT ready. Changing to ACTIVE state", LogLevel.NORMAL);
@@ -138,7 +140,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 		if (group)
 		{
 			//Check if there are any nearby AI
-			IEntity closestPlayer = SCR_DC_PlayerHelper.PlayerGetClosestToPos(group.GetLeaderEntity().GetOrigin(), 0, m_Config.hunter.maxDistanceToPlayer);
+			IEntity closestPlayer = SCR_DC_PlayerHelper.PlayerGetClosestToPos(group.GetLeaderEntity().GetOrigin(), 0, m_Config.maxDistanceToPlayer);
 		
 			if (closestPlayer != null)
 			{
@@ -149,7 +151,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 					SCR_DC_AIHelper.RemoveWaypoints(group);
 					AIWaypoint wp = GetWaypoint(group);
 					group.AddWaypoint(wp);
-					GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.hunter.lifeCycleTime, false, group);
+					GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.lifeCycleTime, false, group);
 					return;
 				}
 			}
@@ -170,7 +172,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 		
 		if (spawnLocation)
 		{
-			string groupToSpawn = m_Config.hunter.groupTypes.GetRandomElement();
+			string groupToSpawn = m_Config.groupTypes.GetRandomElement();
 			SCR_AIGroup group = SCR_DC_AIHelper.SpawnGroup(groupToSpawn, spawnLocation);
 			
 			if (group)
@@ -186,14 +188,14 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 			}
 			
 			// Manage the life cycle for the spawned group
-			GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.hunter.lifeCycleTime, false, group);
+			GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.lifeCycleTime, false, group);
 		}
 		else
 		{
 			SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:SpawnHunterGroup] Unable to find spawn point for group! Retrying...", LogLevel.WARNING);
 			
 			// Try again later
-			GetGame().GetCallqueue().CallLater(SpawnGroup, (m_Config.hunter.lifeCycleTime*2), false);
+			GetGame().GetCallqueue().CallLater(SpawnGroup, (m_Config.lifeCycleTime*2), false);
 		}
 	}
 
@@ -225,7 +227,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 		{
 			AIWaypoint waypoint = SCR_DC_AIHelper.CreateWaypointEntity(DC_EWaypointMoveType.MOVE);
 //			waypoint.SetOrigin(closestPlayer.GetOrigin());
-			waypoint.SetOrigin(SCR_DC_Misc.RandomizePos(closestPlayer.GetOrigin(), m_Config.hunter.rndDistanceToPlayer));
+			waypoint.SetOrigin(SCR_DC_Misc.RandomizePos(closestPlayer.GetOrigin(), m_Config.rndDistanceToPlayer));
 			return waypoint;
 		}
 		else
@@ -239,8 +241,13 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 }
 
 //------------------------------------------------------------------------------------------------
-class SCR_DC_Hunter : Managed
+class SCR_DC_HunterConfig : Managed
 {
+	//Default information
+	int version = 1;
+	string author = "darc";
+	int missionLifeCycleTime = MISSION_LIFECYCLE_TIME_LIMIT;
+	
 	//Mission specific
 	int groupsToSpawn;					//Number of groups to spawn
 	int groupSpawnDelay;				//Delay between group spawns 
@@ -253,19 +260,17 @@ class SCR_DC_Hunter : Managed
 }
 
 //------------------------------------------------------------------------------------------------
-class SCR_DC_MissionConfigHunter : SCR_DC_JsonConfig
+class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 {
 	//Information stored in .json
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Hunter.json";
 	int missionLifeCycleTime;			//How often the mission is run	
-	ref SCR_DC_Hunter hunter = new SCR_DC_Hunter;
+	ref SCR_DC_HunterConfig conf = new SCR_DC_HunterConfig;
 	//----
 	
 	//------------------------------------------------------------------------------------------------
-	void SCR_DC_MissionConfigHunter()
+	void SCR_DC_HunterJsonApi()
 	{
-		version = 1;
-		author = "darc";
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -280,16 +285,14 @@ class SCR_DC_MissionConfigHunter : SCR_DC_JsonConfig
 			return;
 		}
 		
-		loadContext.ReadValue("missionLifeCycleTime", missionLifeCycleTime);
-		loadContext.ReadValue("hunter", hunter);
+		loadContext.ReadValue("", conf);
 	}	
 
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
 		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
-		saveContext.WriteValue("missionLifeCycleTime", missionLifeCycleTime);		
-		saveContext.WriteValue("hunter", hunter);
+		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	
 		
@@ -297,14 +300,13 @@ class SCR_DC_MissionConfigHunter : SCR_DC_JsonConfig
 	void SetDefaults()
 	{
 		//Mission specific
-		missionLifeCycleTime = MISSION_LIFECYCLE_TIME_LIMIT;
-		hunter.groupsToSpawn = 2;
-		hunter.groupSpawnDelay = 5000;
-		hunter.lifeCycleTime = 5000;
-		hunter.minDistanceToPlayer = 250;
-		hunter.maxDistanceToPlayer = 1000;
-		hunter.rndDistanceToPlayer = 60;
-		hunter.groupTypes = 
+		conf.groupsToSpawn = 2;
+		conf.groupSpawnDelay = 5000;
+		conf.lifeCycleTime = 5000;
+		conf.minDistanceToPlayer = 250;
+		conf.maxDistanceToPlayer = 1000;
+		conf.rndDistanceToPlayer = 60;
+		conf.groupTypes = 
 		{
 			"{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
 			"{976AC400219898FA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Sharpshooter.et",

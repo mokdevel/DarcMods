@@ -37,7 +37,8 @@ const int DC_MISSION_ACTIVE_TIME = 3;			//Minutes to keep the mission active
 class SCR_DC_MissionFrame
 {
 	ref array<ref SCR_DC_Mission> m_MissionList = new array<ref SCR_DC_Mission>();
-	ref SCR_DC_MissionFrameConfig m_DC_MissionFrameConfig;
+	ref SCR_DC_MissionFrameJsonApi m_DC_MissionFrameJsonApi = new SCR_DC_MissionFrameJsonApi();
+	ref SCR_DC_MissionFrameConfig m_Config;
 	
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_MissionFrame()
@@ -48,10 +49,9 @@ class SCR_DC_MissionFrame
 		//TBD: For some reason the SCR_DC_Core.RELEASE seems not to be defined when we come here. It is safer to delete the conf files manually to create them.
 		
 		//Load configuration from file		
-		m_DC_MissionFrameConfig = new SCR_DC_MissionFrameConfig();
-		m_DC_MissionFrameConfig.Load();
+		m_DC_MissionFrameJsonApi.Load();
 		
-		SCR_DC_Log.SetLogLevel(m_DC_MissionFrameConfig.frame.logLevel);
+		SCR_DC_Log.SetLogLevel(m_Config.logLevel);
 		if (!SCR_DC_Core.RELEASE)
 		{
 			SCR_DC_Log.SetLogLevel(DC_LogLevel.DEBUG);						//Remove in production
@@ -64,7 +64,7 @@ class SCR_DC_MissionFrame
 	*/	
 	void MissionFrameStart()
 	{
-		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_DC_MissionFrameConfig.frame.missionLifeCycleTime * 2, false);
+		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_Config.missionLifeCycleTime * 2, false);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -82,16 +82,16 @@ class SCR_DC_MissionFrame
 	*/	
 	protected void MissionLifeCycleManager()
 	{			
-		SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Number of active missions: " + m_MissionList.Count() + "/" + m_DC_MissionFrameConfig.frame.missionCount, LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Number of active missions: " + m_MissionList.Count() + "/" + m_Config.missionCount, LogLevel.NORMAL);
 				
 		//Check if more missions are to be spawned
-		if (m_MissionList.Count() < m_DC_MissionFrameConfig.frame.missionCount)
+		if (m_MissionList.Count() < m_Config.missionCount)
 		{
 			private ref SCR_DC_Mission tmpDC_Mission = null;
 
 			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Starting new missions", LogLevel.DEBUG);
 			
-			DC_EMissionType missionType = m_DC_MissionFrameConfig.frame.missionTypeArray.GetRandomElement();
+			DC_EMissionType missionType = m_Config.missionTypeArray.GetRandomElement();
 			
 			switch (missionType)
 			{
@@ -107,7 +107,7 @@ class SCR_DC_MissionFrame
 				}
 				case DC_EMissionType.OCCUPATION:
 				{
-					tmpDC_Mission = new SCR_DC_Mission_Occupation();
+//					tmpDC_Mission = new SCR_DC_Mission_Occupation();
 					break;
 				}
 				case DC_EMissionType.BANDITCAMP:	//TBD
@@ -144,7 +144,7 @@ class SCR_DC_MissionFrame
 		}
 		else
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Maximum amount of missions spawned: " + m_DC_MissionFrameConfig.frame.missionCount, LogLevel.SPAM);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Maximum amount of missions spawned: " + m_Config.missionCount, LogLevel.SPAM);
 		}
 
 		//Check if missions are 
@@ -177,6 +177,6 @@ class SCR_DC_MissionFrame
 			}			
 		}		
 		
-		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_DC_MissionFrameConfig.frame.missionLifeCycleTime, false);
+		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_Config.missionLifeCycleTime, false);
 	}	
 }

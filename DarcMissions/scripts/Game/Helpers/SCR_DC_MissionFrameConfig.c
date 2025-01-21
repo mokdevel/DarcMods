@@ -6,16 +6,20 @@
 const int MISSION_LIFECYCLE_TIME_LIMIT = 10000;
 
 //------------------------------------------------------------------------------------------------
-class SCR_DC_Frame : Managed
+class SCR_DC_MissionFrameConfig : Managed
 {
+	//Default information
+	int version = 1;
+	string author = "darc";
 	//Mission specific
 	DC_LogLevel logLevel;	
-	[Attribute(defvalue: "1", UIWidgets.Slider, "Search radius in meters", "0 10")]	
 	int missionCount;			//Maximum amount of missions to be active at the same time
 	int missionLifeCycleTime;	//The cycle time to manage mission spawning, deletion etc...
 	ref array<DC_EMissionType> missionTypeArray = {};	//Active missions list
 	int minDistanceToMission;	//Distance to another mission. Two missions shall not be too close to each other.
 	int minDistanceToPlayer;	//Mission shall not spawn too close a player.
+	
+	ref array<ref SCR_DC_NonValidArea> nonValidAreas = {};	
 }
 
 class SCR_DC_NonValidArea : Managed
@@ -33,17 +37,14 @@ class SCR_DC_NonValidArea : Managed
 }
 
 //------------------------------------------------------------------------------------------------
-class SCR_DC_MissionFrameConfig : SCR_DC_JsonConfig
+class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 {
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig.json";
-	ref SCR_DC_Frame frame = new SCR_DC_Frame;
-	ref array<ref SCR_DC_NonValidArea> nonValidAreas = {};
+	ref SCR_DC_MissionFrameConfig conf = new SCR_DC_MissionFrameConfig;
 
 	//------------------------------------------------------------------------------------------------
-	void SCR_DC_MissionFrameConfig()
+	void SCR_DC_MissionFrameJsonApi()
 	{
-		version = 1;
-		author = "darc";
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -57,10 +58,9 @@ class SCR_DC_MissionFrameConfig : SCR_DC_JsonConfig
 			return;
 		}
 		
-		loadContext.ReadValue("frame", frame);
-		loadContext.ReadValue("nonValidAreas", nonValidAreas);
+		loadContext.ReadValue("", conf);
 
-		if (frame.missionLifeCycleTime < MISSION_LIFECYCLE_TIME_LIMIT)
+		if (conf.missionLifeCycleTime < MISSION_LIFECYCLE_TIME_LIMIT)
 		{
 			SCR_DC_Log.Add("[SCR_DC_MissionConfig] missionLifeCycleTime is less than " + MISSION_LIFECYCLE_TIME_LIMIT + ". This could lead to performance issues.", LogLevel.WARNING);
 		}
@@ -70,28 +70,27 @@ class SCR_DC_MissionFrameConfig : SCR_DC_JsonConfig
 	void Save(string data)
 	{
 		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
-		saveContext.WriteValue("frame", frame);
-		saveContext.WriteValue("nonValidAreas", nonValidAreas);
+		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		frame.logLevel = DC_LogLevel.NORMAL;
-		frame.missionCount = 4;
-		frame.missionLifeCycleTime = MISSION_LIFECYCLE_TIME_LIMIT;			
-//		frame.missionTypeArray = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-//		frame.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION};		
-		frame.missionTypeArray = {DC_EMissionType.OCCUPATION};		
-//		frame.missionTypeArray = {DC_EMissionType.HUNTER};
-		frame.minDistanceToMission = 500;
-		frame.minDistanceToPlayer = 100;
+		conf.logLevel = DC_LogLevel.NORMAL;
+		conf.missionCount = 4;
+		conf.missionLifeCycleTime = MISSION_LIFECYCLE_TIME_LIMIT;			
+//		conf.missionTypeArray = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
+//		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION};		
+		conf.missionTypeArray = {DC_EMissionType.OCCUPATION};		
+//		conf.missionTypeArray = {DC_EMissionType.HUNTER};
+		conf.minDistanceToMission = 500;
+		conf.minDistanceToPlayer = 100;
 		SCR_DC_NonValidArea area1 = new SCR_DC_NonValidArea;
 		area1.Set("4780 0 11450", 1000, "Airport - for testing");
-		nonValidAreas.Insert(area1);
+		conf.nonValidAreas.Insert(area1);
 		SCR_DC_NonValidArea area2 = new SCR_DC_NonValidArea;
 		area2.Set("9680 0 1560", 1000, "St. Pierre - for testing");
-		nonValidAreas.Insert(area2);
+		conf.nonValidAreas.Insert(area2);
 	}
 }

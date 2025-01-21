@@ -33,10 +33,10 @@ sealed class SCR_DC_MissionHelper
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		
 		if (distanceToMission == -1)
-			distanceToMission = baseGameMode.missionFrame.m_DC_MissionFrameConfig.frame.minDistanceToMission;
+			distanceToMission = baseGameMode.missionFrame.m_Config.minDistanceToMission;
 
 		if (distanceToPlayer == -1)
-			distanceToPlayer = baseGameMode.missionFrame.m_DC_MissionFrameConfig.frame.minDistanceToPlayer;
+			distanceToPlayer = baseGameMode.missionFrame.m_Config.minDistanceToPlayer;
 				
 		if (waterHeight != 0)
 		{			
@@ -96,7 +96,7 @@ sealed class SCR_DC_MissionHelper
 	{
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 	
-		foreach (SCR_DC_NonValidArea nonValidArea : baseGameMode.missionFrame.m_DC_MissionFrameConfig.nonValidAreas)
+		foreach (SCR_DC_NonValidArea nonValidArea : baseGameMode.missionFrame.m_Config.nonValidAreas)
 		{
 			float distance = vector.Distance(pos, nonValidArea.pos);
 		
