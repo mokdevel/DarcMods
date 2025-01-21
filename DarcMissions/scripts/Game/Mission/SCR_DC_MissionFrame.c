@@ -50,6 +50,7 @@ class SCR_DC_MissionFrame
 		
 		//Load configuration from file		
 		m_DC_MissionFrameJsonApi.Load();
+		m_Config = m_DC_MissionFrameJsonApi.conf;
 		
 		SCR_DC_Log.SetLogLevel(m_Config.logLevel);
 		if (!SCR_DC_Core.RELEASE)
