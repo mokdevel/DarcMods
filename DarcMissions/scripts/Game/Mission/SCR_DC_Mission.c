@@ -36,8 +36,8 @@ class SCR_DC_Mission
 		m_Title = "";
 		m_Info = "";
 		m_MarkerId = "";
-		m_StartTime = (System.GetTickCount() / (60*1000)); 	//Ticktime is the ms when the game was started. We use only minutes.
-		SetActiveTime(DC_MISSION_ACTIVE_TIME);				//Sets m_EndTick
+		m_StartTime = (System.GetTickCount() / 1000); 	//Ticktime is the ms when the game was started. We use only minutes.
+		SetActiveTime(DC_MISSION_ACTIVE_TIME);				//Sets m_EndTick	//TBD: This value should be coming from the MissionFrame
 //		m_MapDescriptorComponent.IsActive();
 	}
 
@@ -153,7 +153,7 @@ class SCR_DC_Mission
 		}
 		
 		//Has the active time passed
-		int currentTime = (System.GetTickCount() / (60*1000));		
+		int currentTime = (System.GetTickCount() / 1000);		
 		if (currentTime < m_EndTime)
 		{
 			return true;
@@ -164,16 +164,16 @@ class SCR_DC_Mission
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void SetActiveTime(int minutes)	
+	void SetActiveTime(int seconds)	
 	{
-		m_ActiveTime = minutes;
+		m_ActiveTime = seconds;
 		m_EndTime = m_StartTime + m_ActiveTime;
 	}		
 	
 	//------------------------------------------------------------------------------------------------
 	void ResetActiveTime()	
 	{
-		int currentTime = (System.GetTickCount() / (60*1000));		
+		int currentTime = (System.GetTickCount() / 1000);		
 		m_EndTime = currentTime + m_ActiveTime;
 	}		
 	

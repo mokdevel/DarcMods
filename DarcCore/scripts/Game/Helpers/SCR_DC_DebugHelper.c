@@ -237,8 +237,7 @@ sealed class SCR_DC_DebugHelper
 		dpos.color = color - SEETHROUGH;
 		dpos.radius = radius;
 		m_Pos.Insert(dpos);	
-	}
-				
+	}				
 	//------------------------------------------------------------------------------------------------
 	static void DrawSlots()
 	{

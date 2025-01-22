@@ -65,15 +65,17 @@ sealed class SCR_DC_Misc
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Returns the world name of the current mod.
-	NOTE: Unsure how this works on 
+	Returns the world name being played.
+	Example: "path/to/worldfile/Arland.ent" will return "Arland"
 	*/	
 	static string GetWorldName()
 	{
 		string worldName = "Unknown";
-		
-//		WorldEditorAPI worldEditorAPI = ((WorldEditor)Workbench.GetModule(WorldEditor)).GetApi();
-//		worldEditorAPI.GetWorldPath(worldName);
+
+		worldName = GetGame().GetWorldFile();
+		//The name is "path/to/worldfile/Arland.ent". Find the last slash, add one to it and cut the ".ent" from the end.
+		int lastslash = worldName.LastIndexOf("/") + 1;
+		worldName = worldName.Substring(lastslash, worldName.Length() - lastslash - 4);
 		
 		return worldName;
 	}

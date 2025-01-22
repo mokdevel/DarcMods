@@ -30,8 +30,6 @@ enum DC_EMissionType
 };
 
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
-const int DC_MISSION_ACTIVE_DISTANCE = 300;		//The distance to a player to keep the mission active 
-const int DC_MISSION_ACTIVE_TIME = 3;			//Minutes to keep the mission active
 
 //------------------------------------------------------------------------------------------------
 class SCR_DC_MissionFrame
@@ -39,23 +37,36 @@ class SCR_DC_MissionFrame
 	ref array<ref SCR_DC_Mission> m_MissionList = new array<ref SCR_DC_Mission>();
 	ref SCR_DC_MissionFrameJsonApi m_DC_MissionFrameJsonApi = new SCR_DC_MissionFrameJsonApi();
 	ref SCR_DC_MissionFrameConfig m_Config;
+	ref array<ref SCR_DC_NonValidArea> m_NonValidAreas = {};
+	string m_WorldName
 	
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_MissionFrame()
 	{
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Starting SCR_DC_MissionFrame", LogLevel.NORMAL);
-//		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldname" + worldName, LogLevel.NORMAL);
+		m_WorldName = SCR_DC_Misc.GetWorldName();
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldname: " + m_WorldName, LogLevel.NORMAL);
 
-		//TBD: For some reason the SCR_DC_Core.RELEASE seems not to be defined when we come here. It is safer to delete the conf files manually to create them.
-		
 		//Load configuration from file		
 		m_DC_MissionFrameJsonApi.Load();
 		m_Config = m_DC_MissionFrameJsonApi.conf;
 		
+		//Fix seconds to ms
+		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;
+		
+		foreach(SCR_DC_NonValidArea nonValidArea : m_Config.nonValidAreas)
+		{
+			if(nonValidArea.worldName == m_WorldName)
+			{
+				m_NonValidAreas.Insert(nonValidArea);
+				SCR_DC_DebugHelper.AddDebugPos(nonValidArea.pos, Color.GRAY, nonValidArea.radius);
+			}
+		}
+		
 		SCR_DC_Log.SetLogLevel(m_Config.logLevel);
 		if (!SCR_DC_Core.RELEASE)
 		{
-			SCR_DC_Log.SetLogLevel(DC_LogLevel.DEBUG);						//Remove in production
+			SCR_DC_Log.SetLogLevel(DC_LogLevel.DEBUG);	//Debug enabled when not release
 		}
 	}
 
@@ -65,7 +76,7 @@ class SCR_DC_MissionFrame
 	*/	
 	void MissionFrameStart()
 	{
-		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_Config.missionLifeCycleTime * 2, false);
+		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_Config.missionStartDelay, false);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -108,7 +119,7 @@ class SCR_DC_MissionFrame
 				}
 				case DC_EMissionType.OCCUPATION:
 				{
-//					tmpDC_Mission = new SCR_DC_Mission_Occupation();
+					tmpDC_Mission = new SCR_DC_Mission_Occupation();
 					break;
 				}
 				case DC_EMissionType.BANDITCAMP:	//TBD
@@ -133,13 +144,9 @@ class SCR_DC_MissionFrame
 					SCR_DC_Log.Add(string.Format("[SCR_DC_MissionFrame:MissionLifeCycleManager] Spawning mission %1 (%2) %3", tmpDC_Mission.GetTitle(), tmpDC_Mission.GetPos(), tmpDC_Mission.GetPosName()), LogLevel.NORMAL);
 					
 //					SCR_DC_MapMarkersUI.AddMarkerHint("Mission: " + GetTitle(), GetInfo());
-					SCR_DC_MapMarkersUI.AddMarkerHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), tmpDC_Mission.GetId());
+					SCR_DC_MapMarkersUI.AddMarkerHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), tmpDC_Mission.GetId());		
 					
-					
-					//SCR_HintManagerComponent hintComponent = SCR_HintManagerComponent.GetInstance();
-					//hintComponent.ShowCustomHint(tmpDC_Mission.GetInfo(), "Mission: " + tmpDC_Mission.GetTitle(), 10);
-					
-					SCR_DC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), Color.YELLOW, 10)
+					SCR_DC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), Color.YELLOW, 10);
 				}
 			}
 		}

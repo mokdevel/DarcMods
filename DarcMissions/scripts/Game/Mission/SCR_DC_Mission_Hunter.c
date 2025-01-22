@@ -14,7 +14,7 @@ Note: The original mod is discontinued.
 class SCR_DC_Mission_Hunter : SCR_DC_Mission
 {
 	private ref SCR_DC_HunterJsonApi m_HunterJsonApi = new SCR_DC_HunterJsonApi();				
-	ref SCR_DC_HunterConfig m_Config;
+	private ref SCR_DC_HunterConfig m_Config;
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 30;	//How many different spots to try for a mission before giving up	
 	
 	private ref array<IEntity> m_Locations = {};
@@ -246,7 +246,7 @@ class SCR_DC_HunterConfig : Managed
 	//Default information
 	int version = 1;
 	string author = "darc";
-	int missionLifeCycleTime = MISSION_LIFECYCLE_TIME_LIMIT;
+	int missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_LIMIT;
 	
 	//Mission specific
 	int groupsToSpawn;					//Number of groups to spawn
