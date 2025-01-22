@@ -50,24 +50,27 @@ class SCR_DC_MissionFrame
 		//Load configuration from file		
 		m_DC_MissionFrameJsonApi.Load();
 		m_Config = m_DC_MissionFrameJsonApi.conf;
-		
-		//Fix seconds to ms
-		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;
-		
-		foreach(SCR_DC_NonValidArea nonValidArea : m_Config.nonValidAreas)
-		{
-			if(nonValidArea.worldName == m_WorldName)
-			{
-				m_NonValidAreas.Insert(nonValidArea);
-				SCR_DC_DebugHelper.AddDebugPos(nonValidArea.pos, Color.GRAY, nonValidArea.radius);
-			}
-		}
-		
+
+		//Set loglevel
 		SCR_DC_Log.SetLogLevel(m_Config.logLevel);
 		if (!SCR_DC_Core.RELEASE)
 		{
 			SCR_DC_Log.SetLogLevel(DC_LogLevel.DEBUG);	//Debug enabled when not release
 		}
+		
+		//Fix seconds to ms
+		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;
+		
+		//Pick nonValidAreas for the current world
+		foreach(SCR_DC_NonValidArea nonValidArea : m_Config.nonValidAreas)
+		{
+			if(nonValidArea.worldName == m_WorldName)
+			{
+				m_NonValidAreas.Insert(nonValidArea);
+				SCR_DC_DebugHelper.AddDebugPos(nonValidArea.pos, Color.BLACK, nonValidArea.radius);
+			}
+		}
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas: " + m_NonValidAreas.Count(), LogLevel.DEBUG);		
 	}
 
 	//------------------------------------------------------------------------------------------------

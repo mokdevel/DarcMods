@@ -35,7 +35,7 @@ class SCR_DC_NonValidArea : Managed
 	float radius;
 	string name;
 
-	void SCR_DC_NonValidArea(string worldName_, vector pos_, float radius_, string name_ = "")	
+	void Set(string worldName_, vector pos_, float radius_, string name_ = "")	
 	{
 		worldName = worldName_;
 		pos = pos_;
@@ -101,15 +101,19 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		
 		//List of non valid areas where mission shall not spawn
 		//Eden
-		SCR_DC_NonValidArea areaE1 = new SCR_DC_NonValidArea("Eden", "4780 0 11450", 1000, "Airport - for testing");
+		SCR_DC_NonValidArea areaE1 = new SCR_DC_NonValidArea;
+		areaE1.Set("Eden", "4780 0 11450", 1000, "Airport - for testing");
 		conf.nonValidAreas.Insert(areaE1);
-		SCR_DC_NonValidArea areaE2 = new SCR_DC_NonValidArea("Eden", "9680 0 1560", 1000, "St. Pierre - for testing");
+		SCR_DC_NonValidArea areaE2 = new SCR_DC_NonValidArea;
+		areaE2.Set("Eden", "9680 0 1560", 1000, "St. Pierre - for testing");
 		conf.nonValidAreas.Insert(areaE2);
 		
 		//Arland
-		SCR_DC_NonValidArea areaA1 = new SCR_DC_NonValidArea("Arland", "1340 0 2320", 200, "Airport - for testing");
+		SCR_DC_NonValidArea areaA1 = new SCR_DC_NonValidArea;
+		areaA1.Set("Arland", "1340 0 2320", 200, "Airport - for testing");
 		conf.nonValidAreas.Insert(areaA1);
-		SCR_DC_NonValidArea areaA2 = new SCR_DC_NonValidArea("Arland", "1080 0 3300", 100, "Harbour - for testing");
+		SCR_DC_NonValidArea areaA2 = new SCR_DC_NonValidArea;
+		areaA2.Set("Arland", "1080 0 3300", 100, "Harbour - for testing");
 		conf.nonValidAreas.Insert(areaA2);
 	}
 }

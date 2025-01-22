@@ -185,10 +185,7 @@ sealed class SCR_DC_DebugHelper
 	//------------------------------------------------------------------------------------------------
 	static void DrawMarks()
 	{
-		int shapeFlags = ShapeFlags.ONCE;
-
-//		if (m_Locations.Count() == 0)
-//			return;
+		int shapeFlags = ShapeFlags.TRANSP|ShapeFlags.ONCE|ShapeFlags.ADDITIVE;
 
 		if (m_Pos.Count() == 0)
 			return;
@@ -210,13 +207,11 @@ sealed class SCR_DC_DebugHelper
 	\param color Color of the marker
 	*/	
 	
-	static const int SEETHROUGH = 0xF0000000;	//How much the marker can be seen through
-	
 	static void AddDebugPos(MapItem mapItem, int color = Color.RED, float radius = 1.0)
 	{
 		SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
 		dpos.pos = mapItem.GetPos();
-		dpos.color = color - SEETHROUGH;
+		dpos.color = color;
 		dpos.radius = radius;
 		m_Pos.Insert(dpos);	
 	}
@@ -225,7 +220,7 @@ sealed class SCR_DC_DebugHelper
 	{
 		SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
 		dpos.pos = entity.GetOrigin();
-		dpos.color = color - SEETHROUGH;
+		dpos.color = color;
 		dpos.radius = radius;
 		m_Pos.Insert(dpos);	
 	}
@@ -234,7 +229,7 @@ sealed class SCR_DC_DebugHelper
 	{
 		SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
 		dpos.pos = pos;
-		dpos.color = color - SEETHROUGH;
+		dpos.color = color;
 		dpos.radius = radius;
 		m_Pos.Insert(dpos);	
 	}				

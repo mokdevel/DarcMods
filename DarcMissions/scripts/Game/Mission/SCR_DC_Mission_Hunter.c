@@ -262,11 +262,9 @@ class SCR_DC_HunterConfig : Managed
 //------------------------------------------------------------------------------------------------
 class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 {
-	//Information stored in .json
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Hunter.json";
 	int missionLifeCycleTime;			//How often the mission is run	
 	ref SCR_DC_HunterConfig conf = new SCR_DC_HunterConfig;
-	//----
 	
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_HunterJsonApi()

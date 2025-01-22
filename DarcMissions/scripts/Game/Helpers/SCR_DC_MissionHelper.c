@@ -96,7 +96,8 @@ sealed class SCR_DC_MissionHelper
 	{
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 	
-		foreach (SCR_DC_NonValidArea nonValidArea : baseGameMode.missionFrame.m_Config.nonValidAreas)
+//		foreach (SCR_DC_NonValidArea nonValidArea : baseGameMode.missionFrame.m_Config.nonValidAreas)
+		foreach (SCR_DC_NonValidArea nonValidArea : baseGameMode.missionFrame.m_NonValidAreas)
 		{
 			float distance = vector.Distance(pos, nonValidArea.pos);
 		
