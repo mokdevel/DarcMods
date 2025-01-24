@@ -15,6 +15,13 @@ class SCR_DC_JsonApi : JsonApiStruct
 		SetFileName(fileName);		
 		
 		SCR_JsonLoadContext loadContext = new SCR_JsonLoadContext();
+		
+		if (SCR_DC_Core.OVERWRITE_JSON)
+		{
+			SCR_DC_Log.Add("[SCR_DC_JsonConfig] Not release build - overwriting json config on disk.", LogLevel.WARNING);
+			return null;
+		}
+		
 		bool success = loadContext.LoadFromFile(m_fileName);
 		
 		if(!success)
@@ -23,13 +30,7 @@ class SCR_DC_JsonApi : JsonApiStruct
 			return null;
 		}
 
-		SCR_DC_Log.Add("[SCR_DC_JsonConfig] Loading configuration from file: " + m_fileName, LogLevel.NORMAL);        							
-				
-		if (SCR_DC_Core.OVERWRITE_JSON)
-		{
-			SCR_DC_Log.Add("[SCR_DC_JsonConfig] Not release build - overwriting json config on disk.", LogLevel.WARNING);
-			return null;
-		}
+		SCR_DC_Log.Add("[SCR_DC_JsonConfig] Loading configuration from file: " + m_fileName, LogLevel.NORMAL);
 		
 		return loadContext;
 	}	
@@ -49,8 +50,10 @@ class SCR_DC_JsonApi : JsonApiStruct
 	void SaveConfigClose(SCR_JsonSaveContext saveContext)
 	{
 		string dataString = saveContext.ExportToString();
-		
 		ExpandFromRAW(dataString);
+		
+		SCR_DC_Log.Add("[SCR_DC_JsonConfig] This gives some warnings on 'JsonApi Array name='something' found in JSON ... ' . Please ignore.", LogLevel.DEBUG);			
+		
 		if(!saveContext.SaveToFile(m_fileName))
 		{
 			SCR_DC_Log.Add("[SCR_DC_JsonConfig] Config save failed to: " + m_fileName, LogLevel.ERROR);

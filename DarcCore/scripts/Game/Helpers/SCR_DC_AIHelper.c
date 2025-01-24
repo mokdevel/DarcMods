@@ -359,9 +359,11 @@ sealed class SCR_DC_AIHelper
 		//Circular
 		if (rndtype == DC_EWaypointRndType.RADIUS)
 		{		
+			float startAngle = Math.RandomFloat(0, 360);
+			
 			for (int i = 0; i < count; i++)
 			{				
-				vector vec = SCR_DC_Misc.GetCoordinatesOnCircle(position, range, i*(360/count));
+				vector vec = SCR_DC_Misc.GetCoordinatesOnCircle(position, range, i*(360/count), startAngle);
 				
 				AIWaypoint waypoint = GetWaypoint(vec, wptype, (range/4), emptyspot);
 				if (waypoint != null)

@@ -3,7 +3,7 @@
 // For readable jsons, use https://jsonformatter.org
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J
 
-const int DC_MISSION_START_DELAY = 30;			//Time to wait before spawning the first mission (seconds)
+const int DC_MISSION_START_DELAY = 10;			//Time to wait before spawning the first mission (seconds)
 const int DC_MISSION_ACTIVE_TIME = 180;			//Time to keep the mission active (seconds)
 const int DC_MISSION_ACTIVE_DISTANCE = 300;		
 const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 10000;
@@ -15,7 +15,9 @@ class SCR_DC_MissionFrameConfig : Managed
 	int version = 1;
 	string author = "darc";
 	//Mission specific
-	DC_LogLevel logLevel;	
+	DC_LogLevel logLevel;
+	//bool debugShowWaypoints = false;
+	//bool debugShowMarks = false;
 	int missionStartDelay;		//Time to wait before spawning the first mission (seconds)
 	int missionCount;			//Maximum amount of missions to be active at the same time
 	int missionLifeCycleTime;	//The cycle time to manage mission spawning, deletion etc...

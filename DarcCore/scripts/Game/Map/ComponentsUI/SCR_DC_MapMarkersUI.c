@@ -122,6 +122,11 @@ class SCR_DC_MapMarkersUI : SCR_MapUIBaseComponent
 		return marker.id;
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Shows a hint
+	TBD: Not sure how to properly show hint for all players. Trying various things...
+	*/
 	static void AddMarkerHint(string title, string description, string id)	
 	{	
 		SCR_DC_MapMarkerEntity dummy = SCR_DC_MapMarkerEntity.Cast(m_MarkerEntity);		

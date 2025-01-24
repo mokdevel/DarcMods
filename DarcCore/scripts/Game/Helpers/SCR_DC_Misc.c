@@ -33,10 +33,10 @@ sealed class SCR_DC_Misc
 	/*!
 	Find a point on circle with given radius and angle in degrees (0-360)
 	*/
-    static vector GetCoordinatesOnCircle(vector vec, float radius, float angleInDegrees)
+    static vector GetCoordinatesOnCircle(vector vec, float radius, float angleInDegrees, float startAngle = 0)
     {
         // Convert the angle to radians
-        float angleInRadians = angleInDegrees * (Math.PI / 180.0);
+        float angleInRadians = (startAngle + angleInDegrees) * (Math.PI / 180.0);
 
         // Calculate the coordinates using trigonometric functions
         vec[0] = vec[0] + radius * Math.Cos(angleInRadians);

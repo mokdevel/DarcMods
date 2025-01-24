@@ -169,7 +169,14 @@ class SCR_DC_Mission
 		m_ActiveTime = seconds;
 		m_EndTime = m_StartTime + m_ActiveTime;
 	}		
-	
+
+	//------------------------------------------------------------------------------------------------
+	int GetActiveTime()
+	{
+		int currentTime = (System.GetTickCount() / 1000);
+		return m_EndTime - currentTime;
+	}		
+		
 	//------------------------------------------------------------------------------------------------
 	void ResetActiveTime()	
 	{

@@ -38,7 +38,9 @@ class SCR_DC_MissionFrame
 	ref SCR_DC_MissionFrameJsonApi m_DC_MissionFrameJsonApi = new SCR_DC_MissionFrameJsonApi();
 	ref SCR_DC_MissionFrameConfig m_Config;
 	ref array<ref SCR_DC_NonValidArea> m_NonValidAreas = {};
-	string m_WorldName
+	string m_WorldName;
+	
+	protected SCR_MapMarkerManagerComponent m_mapMarkerManager;
 	
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_MissionFrame()
@@ -71,8 +73,34 @@ class SCR_DC_MissionFrame
 			}
 		}
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas: " + m_NonValidAreas.Count(), LogLevel.DEBUG);		
+		
+		m_mapMarkerManager = SCR_MapMarkerManagerComponent.GetInstance();
+		
+		CreateMapMarker("1000 0 1000");
+		
 	}
 
+	void CreateMapMarker(vector pos, int color = Color.RED)
+	{
+		SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
+		markerst.SetType(SCR_EMapMarkerType.PLACED_MILITARY);
+		markerst.SetCustomText("Marker");
+		markerst.SetWorldPos(pos[0], pos[2]);
+		markerst.SetColorEntry(color);
+		
+		m_mapMarkerManager.InsertStaticMarker(markerst, false, true);
+		
+//		SCR_MapMarkerEntity markeren = new SCR_MapMarkerEntity();
+//		m_mapMarkerManager.SetMarkerStreamRules(markeren);
+		
+	}	
+
+//    [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)] // For showing hints, again not relevant
+//    void broadcastHint(string msg = "hello", string hl = "oopas", int dur = 10, bool b = true)
+//    {
+//        SCR_HintManagerComponent.ShowCustomHint(msg, hl, dur, b);
+//    }	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Start the mission framework.
@@ -148,7 +176,8 @@ class SCR_DC_MissionFrame
 					
 //					SCR_DC_MapMarkersUI.AddMarkerHint("Mission: " + GetTitle(), GetInfo());
 					SCR_DC_MapMarkersUI.AddMarkerHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), tmpDC_Mission.GetId());		
-					
+	
+//					broadcastHint();				
 					SCR_DC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), Color.YELLOW, 10);
 				}
 			}
@@ -188,6 +217,24 @@ class SCR_DC_MissionFrame
 			}			
 		}		
 		
+		if (m_Config.logLevel < LogLevel.NORMAL)
+		{
+			MissionStatusDump();
+		}
+		
 		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_Config.missionLifeCycleTime, false);
-	}	
+	}
+	
+	protected void MissionStatusDump()
+	{
+		int i = 0;
+		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.DEBUG);
+		foreach(SCR_DC_Mission mission : m_MissionList)
+		{
+			SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] Mission: " + i + ": " + mission.GetId() + " - " + mission.GetTitle() + " - " + "Time left: " + mission.GetActiveTime() + " ", LogLevel.DEBUG);
+			i++;
+		}		
+		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.DEBUG);
+	}
+
 }
