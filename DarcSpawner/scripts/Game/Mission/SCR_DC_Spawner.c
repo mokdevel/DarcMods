@@ -30,6 +30,7 @@ class SCR_DC_Spawner
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g. cars, tents, ..) spawned
 	private int m_spawnSetID;
 	private int m_spawnIdx = 0;
+	private int m_spawnCount;
 	
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Spawner()
@@ -56,7 +57,17 @@ class SCR_DC_Spawner
 			m_spawnSetID = Math.RandomInt(0, m_Config.spawnSets.Count() - 1);
 		}		
 		SCR_DC_Log.Add("[SCR_DC_Spawner] Using spawnSet: " + m_spawnSetID, LogLevel.DEBUG);
-				
+
+		//Max amount to items to spawn
+		m_spawnCount = m_Config.spawnSets[m_spawnSetID].spawnCount;
+		
+		if (m_spawnCount == 0)
+		{			
+//			int ws = SCR_DC_Misc.GetWorldSize();
+			m_spawnCount = (SCR_DC_Misc.GetWorldSize() * m_Config.spawnWorldSizeMultiplier) / 1000;
+		}		
+		SCR_DC_Log.Add("[SCR_DC_Spawner] Maximum spawnCount: " + m_spawnCount, LogLevel.DEBUG);
+						
 		//Find a locations
 		SCR_DC_Locations.GetLocations(m_Locations, m_Config.spawnSets[m_spawnSetID].locationTypes);
 		
@@ -81,16 +92,12 @@ class SCR_DC_Spawner
 	void Run()
 	{
 		SCR_DC_Log.Add("[SCR_DC_Spawner:Run] Running", LogLevel.DEBUG);
-		
-		if (m_spawnIdx <  m_Config.spawnSets[m_spawnSetID].spawnNames.Count())
-		{
+
+		if (m_spawnIdx < m_spawnCount)		
+		{		
 			if (Math.RandomFloat(0, 1) < m_Config.spawnSets[m_spawnSetID].spawnChance)
 			{
 				Spawn();
-			}
-			else
-			{
-				SCR_DC_Log.Add("[SCR_DC_Spawner:Run] Skipped " + m_Config.spawnSets[m_spawnSetID].spawnNames[m_spawnIdx] + " due to spawnChance", LogLevel.NORMAL);
 			}
 			m_spawnIdx++;
 			
@@ -98,7 +105,7 @@ class SCR_DC_Spawner
 		}				
 		else
 		{
-			SCR_DC_Log.Add("[SCR_DC_Spawner:Run] Spawned " + m_EntityList.Count() + "/" + m_Config.spawnSets[m_spawnSetID].spawnNames.Count() + ". All done, stopping.", LogLevel.NORMAL);
+			SCR_DC_Log.Add("[SCR_DC_Spawner:Run] Spawned " + m_EntityList.Count() + "/" + m_spawnCount + ". All done, stopping.", LogLevel.NORMAL);
 		}
 	}
 	
@@ -112,7 +119,8 @@ class SCR_DC_Spawner
 
 		//Spawn entities one by one. Sets missions active once ready.		
 		MapItem location = m_Locations.GetRandomElement();		
-		string entityToSpawn = m_Config.spawnSets[m_spawnSetID].spawnNames[m_spawnIdx];
+//		string entityToSpawn = m_Config.spawnSets[m_spawnSetID].spawnNames[m_spawnIdx];
+		string entityToSpawn = m_Config.spawnSets[m_spawnSetID].spawnNames.GetRandomElement();
 		
 		SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Spawning " + entityToSpawn + " to " + SCR_StringHelper.Translate(location.Entity().GetName()), LogLevel.NORMAL);				
 		
