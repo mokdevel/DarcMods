@@ -3,10 +3,23 @@
 // For readable jsons, use https://jsonformatter.org
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J
 
-const int DC_MISSION_START_DELAY = 10;			//Time to wait before spawning the first mission (seconds)
-const int DC_MISSION_ACTIVE_TIME = 180;			//Time to keep the mission active (seconds)
-const int DC_MISSION_ACTIVE_DISTANCE = 300;		
-const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 10000;
+#ifdef SCR_DC_RELEASE
+	const int DC_MISSION_START_DELAY = 120;			//Time to wait before spawning the first mission (seconds)
+	const int DC_MISSION_ACTIVE_TIME = 600;			//Time to keep the mission active (seconds)
+	const int DC_MISSION_ACTIVE_DISTANCE = 300;		
+	const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 30;
+	const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 30;
+	const int DC_MISSIONFRAME_LIFECYCLE_TIME = 120;
+#endif
+
+#ifndef SCR_DC_RELEASE
+	const int DC_MISSION_START_DELAY = 10;			//Time to wait before spawning the first mission (seconds)
+	const int DC_MISSION_ACTIVE_TIME = 180;			//Time to keep the mission active (seconds)
+	const int DC_MISSION_ACTIVE_DISTANCE = 300;		
+	const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 10;
+	const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 30;
+	const int DC_MISSIONFRAME_LIFECYCLE_TIME = 120;
+#endif
 
 //------------------------------------------------------------------------------------------------
 class SCR_DC_MissionFrameConfig : Managed
@@ -18,14 +31,14 @@ class SCR_DC_MissionFrameConfig : Managed
 	DC_LogLevel logLevel;
 	//bool debugShowWaypoints = false;
 	//bool debugShowMarks = false;
-	int missionStartDelay;		//Time to wait before spawning the first mission (seconds)
-	int missionCount;			//Maximum amount of missions to be active at the same time
-	int missionLifeCycleTime;	//The cycle time to manage mission spawning, deletion etc...
-	int missionActiveTime;		//Time to keep the mission active (seconds)
-	int missionActiveDistance;	//The distance to a player to keep the mission active 
+	int missionStartDelay;			//Time to wait before spawning the first mission (seconds)
+	int missionCount;				//Maximum amount of missions to be active at the same time
+	int missionFrameLifeCycleTime;	//The cycle time to manage mission spawning, deletion etc...
+	int missionActiveTime;			//Time to keep the mission active (seconds)
+	int missionActiveDistance;		//The distance to a player to keep the mission active 
 	ref array<DC_EMissionType> missionTypeArray = {};	//Active missions list
-	int minDistanceToMission;	//Distance to another mission. Two missions shall not be too close to each other.
-	int minDistanceToPlayer;	//Mission shall not spawn too close a player.
+	int minDistanceToMission;		//Distance to another mission. Two missions shall not be too close to each other.
+	int minDistanceToPlayer;		//Mission shall not spawn too close a player.
 	
 	ref array<ref SCR_DC_NonValidArea> nonValidAreas = {};	
 }
@@ -70,9 +83,9 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		
 		loadContext.ReadValue("", conf);
 
-		if (conf.missionLifeCycleTime < DC_MISSION_LIFECYCLE_TIME_LIMIT)
+		if (conf.missionFrameLifeCycleTime < DC_MISSION_LIFECYCLE_TIME_LIMIT)
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionConfig] missionLifeCycleTime is less than " + DC_MISSION_LIFECYCLE_TIME_LIMIT + ". This could lead to performance issues.", LogLevel.WARNING);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrameConfig] missionLifeCycleTime is less than " + DC_MISSION_LIFECYCLE_TIME_DEFAULT + ". This could lead to performance issues.", LogLevel.WARNING);
 		}
 	}	
 
@@ -87,16 +100,17 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		conf.logLevel = DC_LogLevel.NORMAL;
+		conf.logLevel = DC_LogLevel.DEBUG;
 		conf.missionStartDelay = DC_MISSION_START_DELAY;
 		conf.missionCount = 4;
-		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_LIMIT;
+		conf.missionFrameLifeCycleTime = DC_MISSIONFRAME_LIFECYCLE_TIME;
 		conf.missionActiveTime = DC_MISSION_ACTIVE_TIME;
 		conf.missionActiveDistance = DC_MISSION_ACTIVE_DISTANCE;
 		
 //		conf.missionTypeArray = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
 //		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION};		
-		conf.missionTypeArray = {DC_EMissionType.OCCUPATION};		
+		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};		
+//		conf.missionTypeArray = {DC_EMissionType.OCCUPATION};		
 //		conf.missionTypeArray = {DC_EMissionType.HUNTER};
 		conf.minDistanceToMission = 500;
 		conf.minDistanceToPlayer = 100;

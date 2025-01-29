@@ -105,7 +105,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 			}
 		}
 		
-		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionLifeCycleTime);
+		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionLifeCycleTime*1000);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -246,7 +246,7 @@ class SCR_DC_HunterConfig : Managed
 	//Default information
 	int version = 1;
 	string author = "darc";
-	int missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_LIMIT;
+	int missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;		//How often the mission is run	
 	
 	//Mission specific
 	int groupsToSpawn;					//Number of groups to spawn
@@ -263,7 +263,6 @@ class SCR_DC_HunterConfig : Managed
 class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 {
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Hunter.json";
-	int missionLifeCycleTime;			//How often the mission is run	
 	ref SCR_DC_HunterConfig conf = new SCR_DC_HunterConfig;
 	
 	//------------------------------------------------------------------------------------------------
@@ -298,6 +297,7 @@ class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 	void SetDefaults()
 	{
 		//Mission specific
+		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;		
 		conf.groupsToSpawn = 2;
 		conf.groupSpawnDelay = 5000;
 		conf.lifeCycleTime = 5000;

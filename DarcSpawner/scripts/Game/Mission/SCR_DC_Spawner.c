@@ -37,8 +37,8 @@ class SCR_DC_Spawner
 		SCR_DC_Log.Add("[SCR_DC_Spawner] Starting SCR_DC_Spawner", LogLevel.NORMAL);
 		
 		//Load configuration from file
-		m_DC_SpawnerJsonApi.Load();
-		m_Config = m_DC_SpawnerJsonApi.conf;
+		m_DC_SpawnerConfig.Load();
+		m_Config = m_DC_SpawnerConfig.conf;
 
 		SCR_DC_Log.SetLogLevel(m_Config.logLevel);
 		if (!SCR_DC_Core.RELEASE)

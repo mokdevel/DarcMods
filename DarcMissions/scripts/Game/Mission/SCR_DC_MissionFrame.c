@@ -222,7 +222,7 @@ class SCR_DC_MissionFrame
 			MissionStatusDump();
 		}
 		
-		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_Config.missionLifeCycleTime, false);
+		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_Config.missionFrameLifeCycleTime*1000, false);
 	}
 	
 	protected void MissionStatusDump()

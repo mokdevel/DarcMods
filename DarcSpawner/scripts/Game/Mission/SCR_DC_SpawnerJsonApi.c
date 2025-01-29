@@ -24,15 +24,17 @@ class SCR_DC_SpawnSet : Managed
 	ref array<EMapDescriptorType> locationTypes;
 	ref array<string> spawnNames;					//What resource to spawn; cars, box, .. All of these will be spawned with spawnChance chance
 	float spawnChance;								//The change to spawn an item from spawnNames. 0.5 = 50% chance
+	int spawnCount;									//The maximum amount of spawnNames to spawn. For example: 10 with 0.5 chance would spawn 5 items on average. 0 = count a value depending on mapsize.
 	ref array<string> itemNames;					//Items to add to each spawnNames
 	float itemChance;								//The chance to spawn and item from itemNames. 0.5 = 50% chance
 	
-	void Set(string comment_, array<EMapDescriptorType> locationTypes_, array<string> spawnNames_, float spawnChance_, array<string> itemNames_, float itemChance_)
+	void Set(string comment_, array<EMapDescriptorType> locationTypes_, array<string> spawnNames_, float spawnChance_, int spawnCount_, array<string> itemNames_, float itemChance_)
 	{
 		comment = comment_;
 		locationTypes = locationTypes_;
 		spawnNames = spawnNames_;
 		spawnChance = spawnChance_;
+		spawnCount = spawnCount_;
 		itemNames = itemNames_;
 		itemChance = itemChance_;
 	}
@@ -99,11 +101,9 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 				"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
 				"{3B1EB924602C7A07}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance_MERDC.et",
 				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
-				"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
-				"{3B1EB924602C7A07}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance_MERDC.et",
-				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et"
 			},
 			1.0,
+			0,
 			{
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
@@ -132,16 +132,11 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 			},
 			{
 				"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
-				"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
-				"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
 				"{3B1EB924602C7A07}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance_MERDC.et",
-				"{3B1EB924602C7A07}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance_MERDC.et",
-				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
-				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
-				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
 				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et"
 			},
 			0.6,
+			0,
 			{
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
