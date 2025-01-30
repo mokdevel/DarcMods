@@ -1,0 +1,10 @@
+GenericEntity : "{0511E95F422061BB}Prefabs/Props/Recreation/Camp/TentSmall_02/TentSmall_02_blue.et" {
+ coords 1029.974 39 2487.454
+}
+StaticModelEntity : "{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et" {
+ coords 1028.55 39 2485.5
+ angleY 119.334
+}
+GameEntity : "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et" {
+ coords 1029.9 39 2484.78
+}
