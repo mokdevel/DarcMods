@@ -26,7 +26,7 @@ enum DC_EMissionType
 	NONE,
 	HUNTER,
 	OCCUPATION,
-	BANDITCAMP		//TBD
+	CAMP
 };
 
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
@@ -153,9 +153,9 @@ class SCR_DC_MissionFrame
 					tmpDC_Mission = new SCR_DC_Mission_Occupation();
 					break;
 				}
-				case DC_EMissionType.BANDITCAMP:	//TBD
+				case DC_EMissionType.CAMP:
 				{
-//					tmpDC_Mission = new SCR_DC_Mission_xxxx();
+					tmpDC_Mission = new SCR_DC_Mission_Camp();
 					break;
 				}
 				default:

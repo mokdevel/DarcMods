@@ -1,27 +1,14 @@
 GenericEntity : "{0511E95F422061BB}Prefabs/Props/Recreation/Camp/TentSmall_02/TentSmall_02_blue.et" {
- coords 4765.175 25.858 11921.723
- angleX 0.395
- angleY -116.209
- angleZ 0.803
+ coords 4763.218 25.846 11922.541
+ angleX 0.801
+ angleY -153.51
+ angleZ 0.399
 }
 StaticModelEntity : "{1A34A7A8677C3EC1}Prefabs/Compositions/Misc/SubCompositions/Furniture/Chair_NightStand_US_02.et" {
- coords 4760.451 25.886 11919.927
- angleX 0.242
- angleY 105.691
- angleZ -0.862
- {
-  GenericEntity {
-   ID "5CB0F58AFEACBA93"
-   coords -0.029 0.493 0.017
-   angleY -27.651
-  }
- }
-}
-GenericEntity : "{2D793363CD1D4D7A}Prefabs/Structures/Military/CamoNets/FIA/CamoNet_Bunker_FIA_01_V1.et" {
- coords 1275.013 37.389 5946.376
- angleX -1.789
- angleY 0.028
- angleZ -0.896
+ coords 4761.885 25.91 11918.375
+ angleX -0.891
+ angleY 5.38
+ angleZ -0.084
 }
 StaticModelEntity : "{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et" {
  coords 4763.568 25.902 11918.884
@@ -30,11 +17,24 @@ StaticModelEntity : "{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMil
  angleZ 0.887
 }
 StaticModelEntity : "{D96D0298723202BC}Prefabs/Compositions/Misc/SubCompositions/ChairMilitary_Cluttered_US_01.et" {
- coords 4762.823 25.912 11918.276
- angleX -0.895
- angleY 0
+ coords 4763.457 25.911 11918.295
+ angleX -0.89
+ angleY 6.195
+ angleZ -0.097
+ {
+  GameEntity {
+   ID "59D87A7B48AC79B6"
+   coords -0.022 0.501 -0.044
+   angleY -28.191
+  }
+ }
 }
 GameEntity : "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et" {
+ components {
+  SCR_FireplaceComponent "{5876E7F288BF5C8E}" {
+   m_eInitialLightState LIT
+  }
+ }
  coords 4762.13 25.887 11919.887
  angleX -0.895
 }

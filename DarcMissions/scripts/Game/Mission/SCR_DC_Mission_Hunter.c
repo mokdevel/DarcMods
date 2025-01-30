@@ -266,11 +266,6 @@ class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 	ref SCR_DC_HunterConfig conf = new SCR_DC_HunterConfig;
 	
 	//------------------------------------------------------------------------------------------------
-	void SCR_DC_HunterJsonApi()
-	{
-	}
-	
-	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
