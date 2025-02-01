@@ -81,6 +81,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 		if (GetState() == DC_MissionState.INIT)
 		{
 			MissionSpawn();
+			SetState(DC_MissionState.ACTIVE);
 		}
 		
 		if (GetState() == DC_MissionState.END)
@@ -129,9 +130,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 			GetGame().GetCallqueue().CallLater(SpawnGroup, (m_Config.groupSpawnDelay + i*1000), false);
 		}
 		
-		SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionSpawn] INIT ready. Changing to ACTIVE state", LogLevel.NORMAL);
-		
-		SetState(DC_MissionState.ACTIVE);
+		SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionSpawn] INIT ready. Changing to ACTIVE state", LogLevel.NORMAL);		
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -167,7 +166,6 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------	
 	protected void SpawnGroup()
 	{
-//		IEntity spawnLocation = GetSpawnPointForAI();
 		vector spawnLocation = GetSpawnPointForAI();
 		
 		if (spawnLocation)

@@ -9,9 +9,9 @@ class SCR_DC_Structure
 {
 	string m_Resource;
 	vector m_Position;
-	vector m_Rotation;
+	vector m_Rotation;	//"Xrot YRot ZRot"
 
-	void SCR_DC_Structure(string resource, vector position, vector rotation)
+	void Set(string resource, vector position, vector rotation)
 	{
 		m_Resource = resource;
 		m_Position = position;
@@ -32,6 +32,11 @@ class SCR_DC_Structure
     vector GetRotation()
     {
         return m_Rotation;
+    }
+
+	float GetRotationY()
+    {
+        return m_Rotation[1];
     }
 
     // Setter functions

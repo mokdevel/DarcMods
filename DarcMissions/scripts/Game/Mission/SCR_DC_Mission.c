@@ -47,19 +47,23 @@ class SCR_DC_Mission
 		if (m_State == DC_MissionState.INIT)
 		{
 			//Add init code
-			m_State = DC_MissionState.ACTIVE;	
+			SetState(DC_MissionState.ACTIVE);
+			//m_State = DC_MissionState.ACTIVE;	
 		}
 		
 		if (m_State == DC_MissionState.END)
 		{
 			//Add code clean up code
 			MissionEnd();
-			m_State = DC_MissionState.EXIT;	
+			SetState(DC_MissionState.EXIT);
 		}
 		
 		if (m_State == DC_MissionState.ACTIVE)
 		{
-			//Add code
+			//Add code for runtime
+			
+			//Eventually when mission is to ended do this:
+			//SetState(DC_MissionState.END);
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, 3000);		

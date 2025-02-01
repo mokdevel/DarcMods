@@ -38,7 +38,7 @@ class SCR_DC_Mission_Camp : SCR_DC_Mission
 		{
 			m_DC_Camp = m_Config.camps[m_Config.campIdx];
 		}
-
+		
 		string posName = "Unknown";
 		vector pos = m_DC_Camp.pos;
 		
@@ -57,6 +57,7 @@ class SCR_DC_Mission_Camp : SCR_DC_Mission
 		if (GetState() == DC_MissionState.INIT)
 		{
 			MissionSpawn();
+			SetState(DC_MissionState.ACTIVE);
 		}
 
 		if (GetState() == DC_MissionState.END)
@@ -70,7 +71,7 @@ class SCR_DC_Mission_Camp : SCR_DC_Mission
 			if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
 			{
 				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
-				SetState(DC_MissionState.END);
+				//SetState(DC_MissionState.END);
 			}
 		}
 		
@@ -82,12 +83,21 @@ class SCR_DC_Mission_Camp : SCR_DC_Mission
 	{			
 
 	}
-			
+	
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
 	{					
-		SetState(DC_MissionState.ACTIVE);
+		SpawnCamp();
 	}	
+
+	//------------------------------------------------------------------------------------------------
+	private void SpawnCamp()
+	{
+		SCR_DC_SpawnHelper.SetStructuresToOrigo(m_DC_Camp.campItems);
+		SCR_DC_SpawnHelper.SpawnStructures(m_DC_Camp.campItems, m_DC_Camp.pos, -1, -1);
+		SCR_DC_SpawnHelper.SpawnStructures(m_DC_Camp.campItems, m_DC_Camp.pos + "10 0 10", -1, -1);
+		SCR_DC_SpawnHelper.SpawnStructures(m_DC_Camp.campItems, m_DC_Camp.pos + "-10 0 -10", -1, -1);
+	}			
 }
 	
 //------------------------------------------------------------------------------------------------
@@ -112,7 +122,7 @@ class SCR_DC_Camp : Managed
 	string title;
 	string info;
 
-	ref array<ref SCR_DC_CampItem> campItems = {};
+	ref array<ref SCR_DC_Structure> campItems = {};
 			
 	void Set(string comment_, vector pos_, vector rot_, string title_, string info_,)
 	{
@@ -125,7 +135,7 @@ class SCR_DC_Camp : Managed
 }		
 
 //------------------------------------------------------------------------------------------------
-class SCR_DC_CampItem : Managed
+/*class SCR_DC_CampItem : Managed
 {		
 	string item;
 	vector pos;
@@ -137,7 +147,7 @@ class SCR_DC_CampItem : Managed
 		pos = pos_;
 		rot = rot_;
 	}
-}		
+}		*/
 
 //------------------------------------------------------------------------------------------------
 class SCR_DC_CampJsonApi : SCR_DC_JsonApi
@@ -179,14 +189,14 @@ class SCR_DC_CampJsonApi : SCR_DC_JsonApi
 		camp0.Set
 		(
 			"Comment",
-			"0 0 0",
+			"1000 0 2480",
 			"0 0 0",
 			"Banditcamp at ",
 			"Loot is for grabs."		
 		);
 		conf.camps.Insert(camp0);
 		
-		SCR_DC_CampItem camp0item0 = new SCR_DC_CampItem;
+		SCR_DC_Structure camp0item0 = new SCR_DC_Structure;
 		camp0item0.Set
 		(
 			"{0511E95F422061BB}Prefabs/Props/Recreation/Camp/TentSmall_02/TentSmall_02_blue.et",
@@ -194,15 +204,15 @@ class SCR_DC_CampJsonApi : SCR_DC_JsonApi
 			"0 0 0"
 		);
 		camp0.campItems.Insert(camp0item0);
-		SCR_DC_CampItem camp0item1 = new SCR_DC_CampItem;
+		SCR_DC_Structure camp0item1 = new SCR_DC_Structure;
 		camp0item1.Set
 		(
 			"{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et",
 			"1028.55 39 2485.5",
-			"0 0 0"
+			"0 119.334 0"
 		);
 		camp0.campItems.Insert(camp0item1);
-		SCR_DC_CampItem camp0item2 = new SCR_DC_CampItem;
+		SCR_DC_Structure camp0item2 = new SCR_DC_Structure;
 		camp0item2.Set
 		(
 			"{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et",

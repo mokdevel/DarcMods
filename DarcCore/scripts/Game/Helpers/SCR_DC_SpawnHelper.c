@@ -50,17 +50,12 @@ sealed class SCR_DC_SpawnHelper
 			posFixed = FindEmptyPos(pos, EMPTY_POS_RADIUS, (SCR_DC_Misc.FindMaxValue(sums)/SIZEDIV));
 			if(posFixed != "0 0 0")
 			{
-				//New code
 				vector transform[4];
 				GetTransformFromPosAndRot(transform, posFixed, rotation);
 				params.Transform = transform;
-				//New end
-
-				//Old code				
-//		        params.TransformMode = ETransformMode.WORLD;			
-//		        params.Transform[3] = posFixed;
-				//Old end
+				
 				entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
+				RebuildNavmesh(entity);
 				
 				SCR_DC_Log.Add("[SCR_DC_MissionHelper:SpawnItem] Entity spawned to: " + posFixed, LogLevel.DEBUG);
 			}
@@ -77,7 +72,7 @@ sealed class SCR_DC_SpawnHelper
 	        params.TransformMode = ETransformMode.WORLD;			
 	        params.Transform = transform;
 			entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
-			RebuildNavmesh(entity);	
+			RebuildNavmesh(entity);
 			
 			SCR_DC_Log.Add("[SCR_DC_MissionHelper:SpawnItem] Entity spawned to exact position: " + pos, LogLevel.DEBUG);
 		}
@@ -96,26 +91,58 @@ sealed class SCR_DC_SpawnHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Spawns a structure, for example a building 
+	Spawns a structure or structures, for example a building on the map.
+	\param pos Location on map. 
+	\param structures Array of structures to spawn
+	\param index Index for the individual item to spawn. -1 will spawn all.
+	\param emptyPosRadius How far from the center the spawned position can be. If set to -1, spawns to exact position. 
 	*/
-	static IEntity SpawnStructure(vector pos, array<ref SCR_DC_Structure> structures, int index)
+	static IEntity SpawnStructures(array<ref SCR_DC_Structure> structures, vector pos = "0 0 0", int index = -1, float emptyPosRadius = -1)
 	{
 		if (index == -1)
 		{
 			foreach(SCR_DC_Structure structure : structures)
 			{
-				SpawnItem(structure.GetPosition(), structure.GetResource(), 0, true);
+				SpawnItem(structure.GetPosition() + pos, structure.GetResource(), structure.GetRotationY(), emptyPosRadius);
 			}
 			return null;
 		}
 		else
 		{
 			IEntity entity;
-			entity = SpawnItem(structures[index].GetPosition(), structures[index].GetResource(), 0, true);		
+			entity = SpawnItem(structures[index].GetPosition() + pos, structures[index].GetResource(), 0, emptyPosRadius);		
 			return entity;
 		}
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Resets coordinaters of structures around "0 0 0" (or around given pos)
+	\param structures Array of structures to spawn
+	\param pos The location to move to.
+	*/
+	static void SetStructuresToOrigo(array<ref SCR_DC_Structure> structures, vector pos = "0 0 0")
+	{
+		vector avgPos = "0 0 0";
+		int i = 0;
+		
+		foreach(SCR_DC_Structure structure : structures)		
+		{
+			avgPos = avgPos + structure.GetPosition();
+			i++;
+		}
+		avgPos[0] = avgPos[0]/i;
+		avgPos[1] = avgPos[1]/i;
+		avgPos[2] = avgPos[2]/i;
+		SCR_DC_Log.Add("[SCR_DC_MissionHelper:SetStructuresToOrigo] avgPos = " + avgPos, LogLevel.DEBUG);		
+		
+		foreach(SCR_DC_Structure structure : structures)		
+		{
+			structure.SetPosition(structure.GetPosition() - avgPos + pos);
+			SCR_DC_Log.Add("[SCR_DC_MissionHelper:SetStructuresToOrigo] pos = " + structure.GetPosition(), LogLevel.DEBUG);		
+		}		
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	/*! 
 	Try to add an item to a storage of an entity
