@@ -103,26 +103,17 @@ sealed class SCR_DC_SpawnHelper
 		{
 			foreach(SCR_DC_Structure structure : structures)
 			{
-				vector transform[4];
-				vector newtransform[4];
-
-				Math3D.MatrixIdentity3(transform);
-				transform[3] = structure.GetPosition();
-								
-				SCR_Math3D.RotateAround(transform, "0 0 0", "0 1 0", SCR_DC_Misc.AngleToRadians(rotation), newtransform);			
+				vector newPos = RotatePosAroundPivot(structure.GetPosition(), "0 0 0", rotation);
 				
-				vector newPos = newtransform[3];
-			
 				SpawnItem(newPos + pos, structure.GetResource(), structure.GetRotationY() + rotation, emptyPosRadius);
-				//SpawnItem(structure.GetPosition() + pos, structure.GetResource(), structure.GetRotationY(), emptyPosRadius);
 			}
-			return null;
+			return null;	//Return null as we spawned multiple structures
 		}
 		else
 		{
 			IEntity entity;
 			entity = SpawnItem(structures[index].GetPosition() + pos, structures[index].GetResource(), 0, emptyPosRadius);		
-			return entity;
+			return entity;	//Return entity of spawned individual structure
 		}
 	}
 
@@ -201,6 +192,23 @@ sealed class SCR_DC_SpawnHelper
 		SCR_TerrainHelper.SnapAndOrientToTerrain(transform);
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Rotate a position around a pivot point
+	*/
+	static vector RotatePosAroundPivot(vector pos, vector pivot, float rotation)
+	{
+		vector transform[4];
+		vector newtransform[4];
+
+		Math3D.MatrixIdentity3(transform);
+		transform[3] = pos;
+						
+		SCR_Math3D.RotateAround(transform, pivot, "0 1 0", SCR_DC_Misc.AngleToRadians(rotation), newtransform);			
+		
+		return newtransform[3];		
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find an empty spot within areaRadius to fit emptySize

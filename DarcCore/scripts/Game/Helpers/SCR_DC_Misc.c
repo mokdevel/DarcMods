@@ -54,7 +54,7 @@ sealed class SCR_DC_Misc
 	{
 		return (angleInRadians) * (Math.PI / 180.0);
 	}
-	
+
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Returns the (max) size of the world
