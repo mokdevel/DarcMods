@@ -22,12 +22,12 @@ class SCR_DC_Mission_Camp : SCR_DC_Mission
 		m_CampJsonApi.Load();
 		m_Config = m_CampJsonApi.conf;
 		
-/*		if (m_Config.occupations.Count() == 0)
+		if (m_Config.camps.Count() == 0)
 		{
-			SCR_DC_Log.Add("[SCR_DC_Mission_Camp] No occupations defined.", LogLevel.ERROR);
+			SCR_DC_Log.Add("[SCR_DC_Mission_Camp] No camps defined.", LogLevel.ERROR);
 			SetState(DC_MissionState.EXIT);
 			return;
-		}*/
+		}
 		
 		//Pick a configuration for mission
 		if(m_Config.campIdx == -1)
@@ -178,7 +178,7 @@ class SCR_DC_CampJsonApi : SCR_DC_JsonApi
 			"1000 0 2480",
 			"0 0 0",
 			"Banditcamp at ",
-			"Loot is for grabs."		
+			"Loot is for grabs."
 		);
 		conf.camps.Insert(camp0);
 		

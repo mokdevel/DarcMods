@@ -2,6 +2,8 @@
 
 sealed class SCR_DC_MissionHelper
 {
+	private const int DC_LOCATION_SEACRH_ITERATIONS = 5;	//How many different spots to try for a mission before giving up
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find an empty spot where to spawn a mission. 
@@ -17,6 +19,50 @@ sealed class SCR_DC_MissionHelper
 		return pos;
 	}
 	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find a location where to spawn a mission. 
+	*/	
+	static IEntity FindMissionLocation(array<EMapDescriptorType> locationTypes)
+	{	
+		//Find a random location
+		vector pos = "0 0 0";
+		bool positionFound = false;
+		
+		IEntity location = null;
+		array<IEntity> locations = {};
+		SCR_DC_Locations.GetLocations(locations, locationTypes);		
+		
+		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
+		{
+			location = locations.GetRandomElement();
+			pos = location.GetOrigin();
+			
+			if (SCR_DC_MissionHelper.IsValidMissionPos(pos))
+			{				
+				//Find an empty position at mission pos
+				pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, 200, 10);
+				positionFound = true;
+			
+				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation] Location for spawn " + SCR_StringHelper.Translate(location.GetName()) + " " + location.GetOrigin(), LogLevel.DEBUG);
+				break;
+			}
+			else
+			{						
+				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation] Invalid mission position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
+			}
+		}
+
+		if (!positionFound)
+		{
+			return null;
+		}
+
+		location.SetOrigin(pos);
+						
+		return location;
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if given pos is a valid position for mission. 
