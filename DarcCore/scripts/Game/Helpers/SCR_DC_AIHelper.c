@@ -25,7 +25,6 @@ sealed class SCR_DC_AIHelper
 	*/
 	static SCR_AIGroup SpawnGroup(string groupToSpawn, IEntity spawnLocation)
 	{
-//		SCR_AIGroup group = SpawnGroup(groupToSpawn, IEntity.Cast(spawnLocation).GetOrigin());
 		SCR_AIGroup group = SpawnGroup(groupToSpawn, spawnLocation.GetOrigin());
 		return group;
 	}	
@@ -251,7 +250,7 @@ sealed class SCR_DC_AIHelper
 	\param range Range (radius) for randomization from given position.
 	\param emptyspot True if found position needs to be on clear area.	
 	*/
-	static bool CreateWaypoints(SCR_AIGroup group, int count, DC_EWaypointMoveType wptype = DC_EWaypointMoveType.MOVECYCLE, DC_EWaypointRndType rndtype = DC_EWaypointRndType.SCATTERED, float range = 100, bool emptyspot = false)
+	static bool CreateWaypoints(SCR_AIGroup group, int count = 7, DC_EWaypointMoveType wptype = DC_EWaypointMoveType.MOVECYCLE, DC_EWaypointRndType rndtype = DC_EWaypointRndType.SCATTERED, float range = 100, bool emptyspot = false)
 	{
 		array<AIWaypoint> waypoints = {};
 		AIWaypointCycle wpcycle = null;

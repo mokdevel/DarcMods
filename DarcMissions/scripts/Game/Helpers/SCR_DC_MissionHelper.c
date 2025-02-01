@@ -125,43 +125,46 @@ sealed class SCR_DC_MissionHelper
 		}		
 	}
 				
-/*
-	https://github.com/Kexanone/KexScenarioCore_AR/blob/32c0f538d8d00a6583a51e35efed66302700adb9/scripts/Game/KSC/Global/KSC_GameTools.c#L26
+	//------------------------------------------------------------------------------------------------
+	static SCR_AIGroup SpawnMissionAIGroup(string groupToSpawn, vector pos)
+	{
+		vector posFixed = SCR_DC_SpawnHelper.FindEmptyPos(pos, 100, 8);
+		
+		SCR_AIGroup group = SCR_DC_AIHelper.SpawnGroup(groupToSpawn, posFixed);
+		
+		return group;
+	}	
 
 	//------------------------------------------------------------------------------------------------
-	//! Get transform from the given position and rotation in XZ plane
-	protected static void GetTransformFromPosAndRot(out vector transform[4], vector pos, float rotation)
-	{
-		Math3D.MatrixIdentity3(transform);
-		Math3D.AnglesToMatrix(Vector(rotation, 0, 0), transform);
-		transform[3] = pos;
-	}
+	//Create waypoint for AI m_Groups
+	//This will randomize the type, speed and count of waypoints to create.
 	
-	//------------------------------------------------------------------------------------------------
-	//! Spawn prefab at the given position and with the given rotation in XZ plane
-	static IEntity SpawnPrefab(ResourceName name, vector pos, float rotation = 0)
-	{
-		vector transform[4];
-		GetTransformFromPosAndRot(transform, pos, rotation);
-		return SpawnPrefab(name, transform);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	//! Spawn a structure, align it to the terrain surface and rebuild navmesh
-	static IEntity SpawnStructurePrefab(ResourceName name, vector pos,  float rotation = 0)
-	{
-		vector transform[4];
-		GetTransformFromPosAndRot(transform, pos, rotation);
-		SCR_TerrainHelper.SnapAndOrientToTerrain(transform);
-		IEntity entity = SpawnPrefab(name, transform);
-		
-		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
-		if (aiWorld)
-			aiWorld.RequestNavmeshRebuildEntity(entity);
-		
-		return entity;
-	}
-*/	
-
+	static void CreateMissionAIWaypoints(SCR_AIGroup group, int wpRangeLow, int wpRangeHigh, DC_EWaypointMoveType wpMoveType = DC_EWaypointMoveType.MOVECYCLE, DC_EWaypointRndType wpType = DC_EWaypointRndType.SCATTERED)
+	{		
+		if (group)
+		{
+			int rndCount = Math.RandomInt(4, 11);
+			int rndRange = Math.RandomInt(wpRangeLow, wpRangeHigh);
 			
+			//Select the waypoint formation
+			DC_EWaypointRndType waypointRndType = wpType;
+			if (waypointRndType == DC_EWaypointRndType.RANDOM)
+			{
+				array<DC_EWaypointRndType> waypointRndTypeArray = {DC_EWaypointRndType.SCATTERED, DC_EWaypointRndType.RADIUS, DC_EWaypointRndType.RADIUS}; //DC_EWaypointRndType.SLOTS
+				waypointRndType = waypointRndTypeArray.GetRandomElement();
+			}
+
+			//Select the waypoint movement type
+			DC_EWaypointMoveType waypointMoveType = wpMoveType;
+			if (waypointMoveType == DC_EWaypointMoveType.RANDOM)
+			{
+				array<DC_EWaypointMoveType> waypointMoveTypeArray = {DC_EWaypointMoveType.MOVECYCLE, DC_EWaypointMoveType.PATROLCYCLE, DC_EWaypointMoveType.PATROLCYCLE, DC_EWaypointMoveType.PATROLCYCLE};
+				waypointMoveType = waypointMoveTypeArray.GetRandomElement();
+			}
+			
+			SCR_DC_Log.Add("[SCR_DC_MissionHelper:CreateMissionAIWaypoints] Adding " + rndCount + " waypoints (" + SCR_Enum.GetEnumName(DC_EWaypointRndType, waypointRndType) + ", " + SCR_Enum.GetEnumName(DC_EWaypointMoveType, waypointMoveType) + ")", LogLevel.DEBUG);
+
+			SCR_DC_AIHelper.CreateWaypoints(group, rndCount, waypointMoveType, waypointRndType, rndRange, true);
+		}
+	}			
 }

@@ -136,21 +136,6 @@ class SCR_DC_Camp : Managed
 }		
 
 //------------------------------------------------------------------------------------------------
-/*class SCR_DC_CampItem : Managed
-{		
-	string item;
-	vector pos;
-	vector rot;
-	
-	void Set(string item_, vector pos_, vector rot_)
-	{
-		item = item_;
-		pos = pos_;
-		rot = rot_;
-	}
-}		*/
-
-//------------------------------------------------------------------------------------------------
 class SCR_DC_CampJsonApi : SCR_DC_JsonApi
 {
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Camp.json";
@@ -200,7 +185,6 @@ class SCR_DC_CampJsonApi : SCR_DC_JsonApi
 		SCR_DC_Structure camp0item0 = new SCR_DC_Structure;
 		camp0item0.Set
 		(
-//			"{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et",
 			"{0511E95F422061BB}Prefabs/Props/Recreation/Camp/TentSmall_02/TentSmall_02_blue.et",
 			"1029.974 39 2487.454",
 			"0 0 0"
