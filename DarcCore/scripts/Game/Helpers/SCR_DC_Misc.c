@@ -36,7 +36,8 @@ sealed class SCR_DC_Misc
     static vector GetCoordinatesOnCircle(vector vec, float radius, float angleInDegrees, float startAngle = 0)
     {
         // Convert the angle to radians
-        float angleInRadians = (startAngle + angleInDegrees) * (Math.PI / 180.0);
+//        float angleInRadians = (startAngle + angleInDegrees) * (Math.PI / 180.0);
+        float angleInRadians = AngleToRadians(startAngle + angleInDegrees);
 
         // Calculate the coordinates using trigonometric functions
         vec[0] = vec[0] + radius * Math.Cos(angleInRadians);
@@ -44,6 +45,15 @@ sealed class SCR_DC_Misc
 
 		return vec;
     }	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Convert angle in degrees (0-360) to radians 
+	*/
+	static float AngleToRadians(float angleInRadians)
+	{
+		return (angleInRadians) * (Math.PI / 180.0);
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	/*!

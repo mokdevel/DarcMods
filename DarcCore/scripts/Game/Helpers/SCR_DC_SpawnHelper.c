@@ -101,9 +101,6 @@ sealed class SCR_DC_SpawnHelper
 	{
 		if (index == -1)
 		{
-			float rot;
-			rot = Math.RandomFloat(0, 360);
-			
 			foreach(SCR_DC_Structure structure : structures)
 			{
 				vector transform[4];
@@ -111,13 +108,12 @@ sealed class SCR_DC_SpawnHelper
 
 				Math3D.MatrixIdentity3(transform);
 				transform[3] = structure.GetPosition();
-				Math3D.AnglesToMatrix(Vector(rot, 0, 0), transform);				
 								
-				SCR_Math3D.RotateAround(transform, "0 0 0", "0 1 0", rot, newtransform);			
+				SCR_Math3D.RotateAround(transform, "0 0 0", "0 1 0", SCR_DC_Misc.AngleToRadians(rotation), newtransform);			
 				
 				vector newPos = newtransform[3];
 			
-				SpawnItem(newPos + pos, structure.GetResource(), structure.GetRotationY() + rot, emptyPosRadius);
+				SpawnItem(newPos + pos, structure.GetResource(), structure.GetRotationY() + rotation, emptyPosRadius);
 				//SpawnItem(structure.GetPosition() + pos, structure.GetResource(), structure.GetRotationY(), emptyPosRadius);
 			}
 			return null;

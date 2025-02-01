@@ -94,9 +94,10 @@ class SCR_DC_Mission_Camp : SCR_DC_Mission
 	private void SpawnCamp()
 	{
 		SCR_DC_SpawnHelper.SetStructuresToOrigo(m_DC_Camp.campItems);
-		SCR_DC_SpawnHelper.SpawnStructures(m_DC_Camp.campItems, m_DC_Camp.pos, -1, -1);
-		SCR_DC_SpawnHelper.SpawnStructures(m_DC_Camp.campItems, m_DC_Camp.pos + "10 0 10", -1, -1);
-		SCR_DC_SpawnHelper.SpawnStructures(m_DC_Camp.campItems, m_DC_Camp.pos + "-10 0 -10", -1, -1);
+		SCR_DC_SpawnHelper.SpawnStructures(m_DC_Camp.campItems, m_DC_Camp.pos + "00 0 00", 0, -1);
+		SCR_DC_SpawnHelper.SpawnStructures(m_DC_Camp.campItems, m_DC_Camp.pos + "05 0 05", 45, -1);
+		SCR_DC_SpawnHelper.SpawnStructures(m_DC_Camp.campItems, m_DC_Camp.pos + "10 0 10", 90, -1);
+		SCR_DC_SpawnHelper.SpawnStructures(m_DC_Camp.campItems, m_DC_Camp.pos + "15 0 15", 135, -1);
 	}			
 }
 	
