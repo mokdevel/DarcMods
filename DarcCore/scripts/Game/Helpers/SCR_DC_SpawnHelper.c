@@ -97,13 +97,28 @@ sealed class SCR_DC_SpawnHelper
 	\param index Index for the individual item to spawn. -1 will spawn all.
 	\param emptyPosRadius How far from the center the spawned position can be. If set to -1, spawns to exact position. 
 	*/
-	static IEntity SpawnStructures(array<ref SCR_DC_Structure> structures, vector pos = "0 0 0", int index = -1, float emptyPosRadius = -1)
+	static IEntity SpawnStructures(array<ref SCR_DC_Structure> structures, vector pos = "0 0 0", float rotation = 0, int index = -1, float emptyPosRadius = -1)
 	{
 		if (index == -1)
 		{
+			float rot;
+			rot = Math.RandomFloat(0, 360);
+			
 			foreach(SCR_DC_Structure structure : structures)
 			{
-				SpawnItem(structure.GetPosition() + pos, structure.GetResource(), structure.GetRotationY(), emptyPosRadius);
+				vector transform[4];
+				vector newtransform[4];
+
+				Math3D.MatrixIdentity3(transform);
+				transform[3] = structure.GetPosition();
+				Math3D.AnglesToMatrix(Vector(rot, 0, 0), transform);				
+								
+				SCR_Math3D.RotateAround(transform, "0 0 0", "0 1 0", rot, newtransform);			
+				
+				vector newPos = newtransform[3];
+			
+				SpawnItem(newPos + pos, structure.GetResource(), structure.GetRotationY() + rot, emptyPosRadius);
+				//SpawnItem(structure.GetPosition() + pos, structure.GetResource(), structure.GetRotationY(), emptyPosRadius);
 			}
 			return null;
 		}
