@@ -22,8 +22,10 @@ sealed class SCR_DC_MissionHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find a location where to spawn a mission. 
+	\param locationTypes Array of EMapDescriptorType to look for a place
+	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
 	*/	
-	static IEntity FindMissionLocation(array<EMapDescriptorType> locationTypes)
+	static IEntity FindMissionLocation(array<EMapDescriptorType> locationTypes, float size = 10)
 	{	
 		//Find a random location
 		vector pos = "0 0 0";
@@ -33,6 +35,12 @@ sealed class SCR_DC_MissionHelper
 		array<IEntity> locations = {};
 		SCR_DC_Locations.GetLocations(locations, locationTypes);		
 		
+		if(locations.Count() == 0)
+		{
+			SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] No locations found. Check the list of locationTypes in your mission." , LogLevel.ERROR);
+			return null;
+		}
+		
 		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 		{
 			location = locations.GetRandomElement();
@@ -41,15 +49,15 @@ sealed class SCR_DC_MissionHelper
 			if (SCR_DC_MissionHelper.IsValidMissionPos(pos))
 			{				
 				//Find an empty position at mission pos
-				pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, 200, 10);
+				pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, 200, size);
 				positionFound = true;
 			
-				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation] Location for spawn " + SCR_StringHelper.Translate(location.GetName()) + " " + location.GetOrigin(), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] Location for spawn " + SCR_StringHelper.Translate(location.GetName()) + " " + location.GetOrigin(), LogLevel.DEBUG);
 				break;
 			}
 			else
 			{						
-				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation] Invalid mission position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
+				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] Invalid mission position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
 			}
 		}
 

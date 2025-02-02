@@ -92,27 +92,32 @@ sealed class SCR_DC_SpawnHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Spawns a structure or structures, for example a building on the map.
-	\param pos Location on map. 
 	\param structures Array of structures to spawn
+	\param pos Location on map. 
+	\param rotation Rotation of the object around origo
 	\param index Index for the individual item to spawn. -1 will spawn all.
 	\param emptyPosRadius How far from the center the spawned position can be. If set to -1, spawns to exact position. 
 	*/
 	static IEntity SpawnStructures(array<ref SCR_DC_Structure> structures, vector pos = "0 0 0", float rotation = 0, int index = -1, float emptyPosRadius = -1)
 	{
+		IEntity entity;
+		
 		if (index == -1)
 		{
 			foreach(SCR_DC_Structure structure : structures)
 			{
 				vector newPos = RotatePosAroundPivot(structure.GetPosition(), "0 0 0", rotation);
 				
-				SpawnItem(newPos + pos, structure.GetResource(), structure.GetRotationY() + rotation, emptyPosRadius);
+				entity = SpawnItem(newPos + pos, structure.GetResource(), structure.GetRotationY() + rotation, emptyPosRadius);
 			}
 			return null;	//Return null as we spawned multiple structures
 		}
 		else
 		{
-			IEntity entity;
-			entity = SpawnItem(structures[index].GetPosition() + pos, structures[index].GetResource(), 0, emptyPosRadius);		
+			vector newPos = RotatePosAroundPivot(structures[index].GetPosition(), "0 0 0", rotation);
+		
+			entity = SpawnItem(newPos + pos, structures[index].GetResource(), structures[index].GetRotationY() + rotation, emptyPosRadius);
+//			entity = SpawnItem(structures[index].GetPosition() + pos, structures[index].GetResource(), 0, emptyPosRadius);
 			return entity;	//Return entity of spawned individual structure
 		}
 	}
