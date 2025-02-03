@@ -58,7 +58,7 @@ class SCR_DC_Spawner
 		}		
 		SCR_DC_Log.Add("[SCR_DC_Spawner] Using spawnSet: " + m_spawnSetID, LogLevel.DEBUG);
 
-		//Max amount to items to spawn
+		//Max amount of spawnNames to spawn
 		m_spawnCount = m_Config.spawnSets[m_spawnSetID].spawnCount;
 		
 		if (m_spawnCount == 0)
@@ -133,19 +133,13 @@ class SCR_DC_Spawner
 			m_EntityList.Insert(entity);
 			SCR_DC_DebugHelper.AddDebugPos(entity, Color.VIOLET);
 			
-			foreach(string itemName: m_Config.spawnSets[m_spawnSetID].itemNames)
-			{
-				if (Math.RandomFloat(0, 1) < m_Config.spawnSets[m_spawnSetID].itemChance)
-				{
-					ResourceName resource = itemName;
-					bool result = SCR_DC_SpawnHelper.AddToStorage(entity, resource);			
-					SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Adding item " + resource + ". Success: " + result, LogLevel.DEBUG);
-				}
-			}
+			SCR_DC_SpawnHelper.SpawnItemsToStorage(entity, m_Config.spawnSets[m_spawnSetID].itemNames, m_Config.spawnSets[m_spawnSetID].itemChance);			
 		}
 		else
 		{
 			SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Could not spawn: " + entityToSpawn, LogLevel.ERROR);	
 		}
 	}
+	
+
 }
