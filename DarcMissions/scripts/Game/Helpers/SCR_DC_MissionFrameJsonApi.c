@@ -17,8 +17,8 @@
 	const int DC_MISSION_ACTIVE_TIME = 180;			//Time to keep the mission active (seconds)
 	const int DC_MISSION_ACTIVE_DISTANCE = 300;		
 	const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 10;
-	const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 30;
-	const int DC_MISSIONFRAME_LIFECYCLE_TIME = 120;
+	const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 10;
+	const int DC_MISSIONFRAME_LIFECYCLE_TIME = 20;
 #endif
 
 //------------------------------------------------------------------------------------------------

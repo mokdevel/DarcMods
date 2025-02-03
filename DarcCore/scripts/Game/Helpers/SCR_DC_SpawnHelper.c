@@ -45,7 +45,7 @@ sealed class SCR_DC_SpawnHelper
 		if (emptyPosRadius > -1)
 		{
 			//Spawn the resource to a free spot close to pos
-			SCR_DC_Log.Add(string.Format("[SCR_DC_MissionHelper:SpawnItem] Itemsize: %1, X: %2, Y: %3, Z: %4, S: %5", SCR_DC_Misc.FindMaxValue(sums), maxs[0]-mins[0], maxs[1]-mins[1], maxs[2]-mins[2], sums), LogLevel.DEBUG);							
+			SCR_DC_Log.Add(string.Format("[SCR_DC_SpawnHelper:SpawnItem] Itemsize: %1, X: %2, Y: %3, Z: %4, S: %5", SCR_DC_Misc.FindMaxValue(sums), maxs[0]-mins[0], maxs[1]-mins[1], maxs[2]-mins[2], sums), LogLevel.DEBUG);							
 			
 			posFixed = FindEmptyPos(pos, EMPTY_POS_RADIUS, (SCR_DC_Misc.FindMaxValue(sums)/SIZEDIV));
 			if(posFixed != "0 0 0")
@@ -57,11 +57,11 @@ sealed class SCR_DC_SpawnHelper
 				entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
 				RebuildNavmesh(entity);
 				
-				SCR_DC_Log.Add("[SCR_DC_MissionHelper:SpawnItem] Entity spawned to: " + posFixed, LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_SpawnHelper:SpawnItem] Entity spawned to: " + posFixed, LogLevel.DEBUG);
 			}
 			else
 			{
-				SCR_DC_Log.Add("[SCR_DC_MissionHelper:SpawnItem] Could not find an empty spot for " + resourceName, LogLevel.ERROR);			
+				SCR_DC_Log.Add("[SCR_DC_SpawnHelper:SpawnItem] Could not find an empty spot for " + resourceName, LogLevel.ERROR);			
 			}
 		}
 		else
@@ -74,7 +74,7 @@ sealed class SCR_DC_SpawnHelper
 			entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
 			RebuildNavmesh(entity);
 			
-			SCR_DC_Log.Add("[SCR_DC_MissionHelper:SpawnItem] Entity spawned to exact position: " + pos, LogLevel.DEBUG);
+			SCR_DC_Log.Add("[SCR_DC_SpawnHelper:SpawnItem] Entity spawned to exact position: " + pos, LogLevel.DEBUG);
 		}
 		return entity;
 	}	
@@ -141,12 +141,12 @@ sealed class SCR_DC_SpawnHelper
 		avgPos[0] = avgPos[0]/i;
 		avgPos[1] = avgPos[1]/i;
 		avgPos[2] = avgPos[2]/i;
-		SCR_DC_Log.Add("[SCR_DC_MissionHelper:SetStructuresToOrigo] avgPos = " + avgPos, LogLevel.DEBUG);		
+		SCR_DC_Log.Add("[SCR_DC_SpawnHelper:SetStructuresToOrigo] avgPos = " + avgPos, LogLevel.SPAM);		
 		
 		foreach(SCR_DC_Structure structure : structures)		
 		{
 			structure.SetPosition(structure.GetPosition() - avgPos + pos);
-			SCR_DC_Log.Add("[SCR_DC_MissionHelper:SetStructuresToOrigo] pos = " + structure.GetPosition(), LogLevel.DEBUG);		
+			SCR_DC_Log.Add("[SCR_DC_SpawnHelper:SetStructuresToOrigo] pos = " + structure.GetPosition(), LogLevel.SPAM);		
 		}		
 	}
 		
@@ -164,8 +164,16 @@ sealed class SCR_DC_SpawnHelper
 			return null;		
 		
 		ScriptedInventoryStorageManagerComponent storageManager = ScriptedInventoryStorageManagerComponent.Cast(entity.FindComponent(ScriptedInventoryStorageManagerComponent));			
-					
-		return storageManager.TrySpawnPrefabToStorage(item);
+		if(storageManager)
+		{				
+			SCR_DC_Log.Add("[SCR_DC_SpawnHelper:AddToStorage] Adding loot", LogLevel.DEBUG);
+			return storageManager.TrySpawnPrefabToStorage(item);
+		}
+		else
+		{
+			SCR_DC_Log.Add("[SCR_DC_SpawnHelper:AddToStorage] storageManager not found", LogLevel.ERROR);
+			return false;
+		}
 	}
 			
 	//------------------------------------------------------------------------------------------------
@@ -181,7 +189,7 @@ sealed class SCR_DC_SpawnHelper
 		}
 		else
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionHelper:RebuildNavmesh] Could not create navmesh.", LogLevel.DEBUG);
+			SCR_DC_Log.Add("[SCR_DC_SpawnHelper:RebuildNavmesh] Could not create navmesh.", LogLevel.DEBUG);
 		}
 	}	
 
@@ -224,11 +232,11 @@ sealed class SCR_DC_SpawnHelper
 		
 		if(SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize))
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindEmptyPos] Found.", LogLevel.SPAM);			
+			SCR_DC_Log.Add("[SCR_DC_SpawnHelper:FindEmptyPos] Found.", LogLevel.SPAM);			
 			return posFixed;
 		}
 		
-		SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.DEBUG);			
+		SCR_DC_Log.Add("[SCR_DC_SpawnHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.DEBUG);			
 		return pos;
 	}
 }

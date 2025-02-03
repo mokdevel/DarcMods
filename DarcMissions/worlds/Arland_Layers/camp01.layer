@@ -1,12 +1,12 @@
 GenericEntity : "{0511E95F422061BB}Prefabs/Props/Recreation/Camp/TentSmall_02/TentSmall_02_blue.et" {
  coords 1029.974 39 2480.114
 }
-GenericEntity : "{2E93D634BF435971}Prefabs/Props/Military/SupplyBox/SupplyCrate/SupplyCrate_01/SupplyCrate_01_item.et" {
- coords 1031.648 39 2479.261
-}
 StaticModelEntity : "{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et" {
  coords 1028.55 39 2478.16
  angleY 119.334
+}
+GenericEntity : "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01_blue.et" {
+ coords 1032.136 39 2478.538
 }
 GameEntity : "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et" {
  coords 1029.9 39 2477.44
