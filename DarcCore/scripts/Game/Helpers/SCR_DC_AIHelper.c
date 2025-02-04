@@ -129,11 +129,15 @@ sealed class SCR_DC_AIHelper
 	static void GroupDelete(AIGroup group)
 	{
 		array<AIAgent> groupMembers  = new array<AIAgent>;
-		group.GetAgents(groupMembers);
 		
-		foreach(AIAgent groupMember : groupMembers)
+		if(group)
 		{
-			RemoveAIAgent(groupMember);
+			group.GetAgents(groupMembers);
+			
+			foreach(AIAgent groupMember : groupMembers)
+			{
+				RemoveAIAgent(groupMember);
+			}
 		}
 	}
 
@@ -200,6 +204,8 @@ sealed class SCR_DC_AIHelper
 				
 		if (damageManager)
 			damageManager.SetHealthScaled(0);
+		
+		SCR_DC_SpawnHelper.DespawnItem(aiEntity);
 	}		
 
 	//------------------------------------------------------------------------------------------------

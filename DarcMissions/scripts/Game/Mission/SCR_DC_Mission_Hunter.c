@@ -114,7 +114,14 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 	{
 		//Remove marker from map
 		SCR_DC_MapMarkersUI.DeleteMarker(GetMarkerId());
-		//TBD: Delete all AI groups. This case is needed in case the mission is stopped by an external force (e.g., admin).
+		
+		//Remove AI
+		SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionEnd] Deleting AI groups", LogLevel.DEBUG);
+		foreach(SCR_AIGroup group : m_Groups)
+		{
+			SCR_DC_AIHelper.GroupDelete(group);			
+		}
+		
 		SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);
 	}	
 			
@@ -295,7 +302,7 @@ class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 		conf.groupSpawnDelay = 5000;
 		conf.lifeCycleTime = 5000;
 		conf.minDistanceToPlayer = 250;
-		conf.maxDistanceToPlayer = 1000;
+		conf.maxDistanceToPlayer = 600;
 		conf.rndDistanceToPlayer = 60;
 		conf.groupTypes = 
 		{

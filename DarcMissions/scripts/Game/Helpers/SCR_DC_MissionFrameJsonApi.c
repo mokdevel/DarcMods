@@ -4,8 +4,8 @@
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J
 
 #ifdef SCR_DC_RELEASE
-	const int DC_MISSION_START_DELAY = 120;			//Time to wait before spawning the first mission (seconds)
-	const int DC_MISSION_ACTIVE_TIME = 600;			//Time to keep the mission active (seconds)
+	const int DC_MISSION_START_DELAY = 120;				//Time to wait before spawning the first mission (seconds)
+	const int DC_MISSION_ACTIVE_TIME = 600;				//Time to keep the mission active (seconds)
 	const int DC_MISSION_ACTIVE_DISTANCE = 300;		
 	const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 30;
 	const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 30;
@@ -13,8 +13,8 @@
 #endif
 
 #ifndef SCR_DC_RELEASE
-	const int DC_MISSION_START_DELAY = 1;			//Time to wait before spawning the first mission (seconds)
-	const int DC_MISSION_ACTIVE_TIME = 180;			//Time to keep the mission active (seconds)
+	const int DC_MISSION_START_DELAY = 1;				//Time to wait before spawning the first mission (seconds)
+	const int DC_MISSION_ACTIVE_TIME = 180;				//Time to keep the mission active (seconds)
 	const int DC_MISSION_ACTIVE_DISTANCE = 300;		
 	const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 10;
 	const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 10;
@@ -109,8 +109,8 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		
 //		conf.missionTypeArray = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
 //		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION};
-//		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};		
-		conf.missionTypeArray = {DC_EMissionType.OCCUPATION};		
+		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};		
+//		conf.missionTypeArray = {DC_EMissionType.OCCUPATION};		
 //		conf.missionTypeArray = {DC_EMissionType.HUNTER};
 //		conf.missionTypeArray = {DC_EMissionType.CAMP};		
 		conf.minDistanceToMission = 500;
