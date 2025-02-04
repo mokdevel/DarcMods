@@ -38,7 +38,19 @@ sealed class SCR_DC_DebugHelper
 		    DiagMenu.RegisterBool(MyModDebugMenu_Enum.ModMenu_MARKS, "", "Show markers", categoryName);
 		}
 	}		
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Configure SCR_DC_DebugHelper.
+	*/
+	static void Configure(bool waypoint, bool marks)
+	{
+		DiagMenu.SetValue(MyModDebugMenu_Enum.ModMenu_WAYPOINTS, waypoint);
+		DiagMenu.SetValue(MyModDebugMenu_Enum.ModMenu_MARKS, marks);
+		
+		SCR_DC_MapMarkerEntity dummy = SCR_DC_MapMarkerEntity.Cast(m_MarkerEntity);		
+	}		
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Call this on EOnFrame
@@ -233,6 +245,24 @@ sealed class SCR_DC_DebugHelper
 		dpos.radius = radius;
 		m_Pos.Insert(dpos);	
 	}				
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Deletes a debug cylinder from a certain position
+	NOTE: Ugly code. Positions could have a fraction of difference in theory -> the cylinder is not removed. Only for debugging so should not be an issue.
+	*/
+	static void DeleteDebugPos(vector pos)
+	{
+		for (int i = 0; i < m_Pos.Count(); i++)		
+		{
+			if(m_Pos[i].pos == pos)
+			{
+				m_Pos.Remove(i);
+				i--;
+			}			
+		}		
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	static void DrawSlots()
 	{

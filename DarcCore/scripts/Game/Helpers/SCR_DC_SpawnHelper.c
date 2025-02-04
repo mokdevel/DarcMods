@@ -133,23 +133,25 @@ sealed class SCR_DC_SpawnHelper
 		vector avgPos = "0 0 0";
 		int i = 0;
 		
-		if(structures.Count() > 0)
+		if(structures.Count() == 0)
 		{
-			foreach(SCR_DC_Structure structure : structures)		
-			{
-				avgPos = avgPos + structure.GetPosition();
-				i++;
-			}
-			avgPos[0] = avgPos[0]/i;
-			avgPos[1] = avgPos[1]/i;
-			avgPos[2] = avgPos[2]/i;
-			SCR_DC_Log.Add("[SCR_DC_SpawnHelper:SetStructuresToOrigo] avgPos = " + avgPos, LogLevel.SPAM);		
-			
-			foreach(SCR_DC_Structure structure : structures)		
-			{
-				structure.SetPosition(structure.GetPosition() - avgPos + pos);
-				SCR_DC_Log.Add("[SCR_DC_SpawnHelper:SetStructuresToOrigo] pos = " + structure.GetPosition(), LogLevel.SPAM);		
-			}
+			return;
+		}	
+		
+		foreach(SCR_DC_Structure structure : structures)		
+		{
+			avgPos = avgPos + structure.GetPosition();
+			i++;
+		}
+		avgPos[0] = avgPos[0]/i;
+		avgPos[1] = avgPos[1]/i;
+		avgPos[2] = avgPos[2]/i;
+		SCR_DC_Log.Add("[SCR_DC_SpawnHelper:SetStructuresToOrigo] avgPos = " + avgPos, LogLevel.SPAM);		
+		
+		foreach(SCR_DC_Structure structure : structures)		
+		{
+			structure.SetPosition(structure.GetPosition() - avgPos + pos);
+			SCR_DC_Log.Add("[SCR_DC_SpawnHelper:SetStructuresToOrigo] pos = " + structure.GetPosition(), LogLevel.SPAM);		
 		}
 	}
 

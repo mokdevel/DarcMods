@@ -35,9 +35,7 @@ class SCR_DC_MapMarkersUI : SCR_MapUIBaseComponent
 	override void Init()
 	{
 		SCR_DC_Log.Add("[SCR_DC_MapMarkersUI:Init]", LogLevel.NORMAL);
-
-//		TurnOnX();
-		
+	
 		m_bHookToRoot = true;
 	}
 		
@@ -260,47 +258,4 @@ class SCR_DC_MapMarkersUI : SCR_MapUIBaseComponent
 
 		return widget;
 	}
-
-	//------------------------------------------------------------------------------------------------
-	//TBD: Does not work
-	
-/*	void TurnOnX()
-	{
-		SCR_DC_Log.Add("[SCR_DC_MapMarkersUI:TurnOnX] OnGameStart", LogLevel.NORMAL);        
-		SCR_DC_MapMarkerEntity dummy = SCR_DC_MapMarkerEntity.Cast(m_MarkerEntity);
-		dummy.TurnOn();
-	}	
-	
-	static void MarkerRPL()
-	{
-		
-	}
-*/	
 }
-
-
-/*	Example code to draw lines behind map and add some text
-
-		static ref array<ref CanvasWidgetCommand> mapDrawCommands = {};
-
-		CanvasWidget mapWidget = m_MapUnitEntity.GetMapWidget();
-		if (mapWidget)
-		{
-			LineDrawCommand drawLine = new LineDrawCommand();
-			drawLine.m_Vertices = {0, 0, 12800, 12800};
-			drawLine.m_fWidth = 10.0;
-			drawLine.m_fOutlineWidth = 10;
-			drawLine.m_iOutlineColor = 0x12345678;
-			
-			mapDrawCommands.Insert(drawLine);
-			
-			TextDrawCommand textLine = new TextDrawCommand();
-			textLine.m_sText = "This is just text";
-			textLine.m_Position = "10 110 10";
-			mapDrawCommands.Insert(textLine);
-			
-			mapWidget.SetDrawCommands(mapDrawCommands);
-			mapWidget.SetZOrder(100);
-			mapWidget.Update();
-		}
-*/

@@ -12,18 +12,16 @@ class SCR_DC_MapMarkerEntity : GenericEntity
         this.SetEventMask(EntityEvent.FRAME);
     }
  
-    override void EOnFrame(IEntity owner, float timeSlice)
-    {
+//    override void EOnFrame(IEntity owner, float timeSlice)
+//    {
 //        vector worldTransform[4];
 //        this.GetWorldTransform(worldTransform);
 //        Shape.CreateSphere(m_Color, ShapeFlags.ONCE, worldTransform[3], 0.5);
-    }
+//    }
 	
 	void AddMarkerHint(string title, string description, string id)	
 	{
 		m_Hint = title + "|" + description + "|" + id;
-		
-		//SCR_DC_Log.Add("[SCR_DC_MapMarkerEntity] Added marker.");
 	}
 
 	string GetMarkerHint()

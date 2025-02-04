@@ -25,8 +25,7 @@ enum DC_EMissionType
 {
 	NONE,
 	HUNTER,
-	OCCUPATION,
-	CAMP
+	OCCUPATION
 };
 
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
@@ -60,6 +59,9 @@ class SCR_DC_MissionFrame
 			SCR_DC_Log.SetLogLevel(DC_LogLevel.DEBUG);	//Debug enabled when not release
 		}
 		
+		//Set debug visibility
+		SCR_DC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks);
+		
 		//Fix seconds to ms
 		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;
 		
@@ -72,14 +74,18 @@ class SCR_DC_MissionFrame
 				SCR_DC_DebugHelper.AddDebugPos(nonValidArea.pos, Color.BLACK, nonValidArea.radius);
 			}
 		}
-		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas: " + m_NonValidAreas.Count(), LogLevel.DEBUG);		
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas defined: " + m_NonValidAreas.Count(), LogLevel.DEBUG);		
 		
 		m_mapMarkerManager = SCR_MapMarkerManagerComponent.GetInstance();
 		
-		CreateMapMarker("1000 0 1000");
-		
+		CreateMapMarker("1000 0 1000");		
 	}
 
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	DEBUGging things with CreateMapMarker
+	*/	
 	void CreateMapMarker(vector pos, int color = Color.RED)
 	{
 		SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
@@ -89,18 +95,8 @@ class SCR_DC_MissionFrame
 		markerst.SetColorEntry(color);
 		
 		m_mapMarkerManager.InsertStaticMarker(markerst, false, true);
-		
-//		SCR_MapMarkerEntity markeren = new SCR_MapMarkerEntity();
-//		m_mapMarkerManager.SetMarkerStreamRules(markeren);
-		
 	}	
 
-//    [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)] // For showing hints, again not relevant
-//    void broadcastHint(string msg = "hello", string hl = "oopas", int dur = 10, bool b = true)
-//    {
-//        SCR_HintManagerComponent.ShowCustomHint(msg, hl, dur, b);
-//    }	
-		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Start the mission framework.
@@ -153,11 +149,11 @@ class SCR_DC_MissionFrame
 					tmpDC_Mission = new SCR_DC_Mission_Occupation();
 					break;
 				}
-				case DC_EMissionType.CAMP:
-				{
-					tmpDC_Mission = new SCR_DC_Mission_Camp();
-					break;
-				}
+//				case DC_EMissionType.CAMP:
+//				{
+//					tmpDC_Mission = new SCR_DC_Mission_Camp();
+//					break;
+//				}
 				default:
 					SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Incorrect mission type.", LogLevel.DEBUG);
 			}
@@ -174,10 +170,8 @@ class SCR_DC_MissionFrame
 				{			
 					SCR_DC_Log.Add(string.Format("[SCR_DC_MissionFrame:MissionLifeCycleManager] Spawning mission %1 (%2) %3", tmpDC_Mission.GetTitle(), tmpDC_Mission.GetPos(), tmpDC_Mission.GetPosName()), LogLevel.NORMAL);
 					
-//					SCR_DC_MapMarkersUI.AddMarkerHint("Mission: " + GetTitle(), GetInfo());
 					SCR_DC_MapMarkersUI.AddMarkerHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), tmpDC_Mission.GetId());		
 	
-//					broadcastHint();				
 					SCR_DC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), Color.YELLOW, 10);
 				}
 			}
@@ -202,7 +196,7 @@ class SCR_DC_MissionFrame
 			if (mission.GetState() == DC_MissionState.EXIT)
 			{
 				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Deleting mission: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
-				//TBD: SCR_DC_DebugHelper.DeleteDebugPos(tmpDC_Mission.GetPos(), Color.YELLOW, 10);				
+				SCR_DC_DebugHelper.DeleteDebugPos(mission.GetPos());				
 				m_MissionList.Remove(i);
 				delete mission;
 			}
@@ -226,6 +220,10 @@ class SCR_DC_MissionFrame
 		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_Config.missionFrameLifeCycleTime*1000, false);
 	}
 	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Dumps the current mission details to log.
+	*/	
 	protected void MissionStatusDump()
 	{
 		int i = 0;

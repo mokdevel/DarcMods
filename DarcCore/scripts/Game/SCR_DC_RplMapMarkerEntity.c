@@ -68,7 +68,7 @@ class SCR_DC_RplMapMarkerEntity : ScriptComponent
 	// Presentation of replicated state on proxy.
 	private void OnShowHint()
 	{
-		SCR_DC_Log.Add("[SCR_DC_RplMapMarkerEntity] CLIENT SIDE!", LogLevel.NORMAL);        
+		SCR_DC_Log.Add("[SCR_DC_RplMapMarkerEntity] CLIENT SIDE!", LogLevel.DEBUG);        
 		ShowHint();		
 		//SCR_DC_MapMarkerEntity.Cast(GetOwner()).ClearMarkerHint();
 	}	
@@ -78,7 +78,7 @@ class SCR_DC_RplMapMarkerEntity : ScriptComponent
 		array<string> hint = {"", "", ""};
 		m_Hint.Split("|", hint, false);		
 		SCR_HintManagerComponent hintComponent = SCR_HintManagerComponent.GetInstance();
-		hintComponent.ShowCustomHint(hint[1], hint[0], 2);		
+		hintComponent.ShowCustomHint(hint[1], hint[0], 10);		
 		//SCR_DC_MapMarkerEntity.Cast(GetOwner()).ClearMarkerHint();
 	}	
 }
