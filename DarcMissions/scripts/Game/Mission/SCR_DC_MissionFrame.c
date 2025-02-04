@@ -33,8 +33,8 @@ const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions
 //------------------------------------------------------------------------------------------------
 class SCR_DC_MissionFrame
 {
-	ref array<ref SCR_DC_Mission> m_MissionList = new array<ref SCR_DC_Mission>();
-	ref SCR_DC_MissionFrameJsonApi m_DC_MissionFrameJsonApi = new SCR_DC_MissionFrameJsonApi();
+	ref array<ref SCR_DC_Mission> m_MissionList = new array<ref SCR_DC_Mission>;
+	ref SCR_DC_MissionFrameJsonApi m_DC_MissionFrameJsonApi = new SCR_DC_MissionFrameJsonApi;
 	ref SCR_DC_MissionFrameConfig m_Config;
 	ref array<ref SCR_DC_NonValidArea> m_NonValidAreas = {};
 	string m_WorldName;
