@@ -271,7 +271,7 @@ sealed class SCR_DC_AIHelper
 				default:
 					SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Incorrect wptype", LogLevel.ERROR);
 			}
-			SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Creating cycle", LogLevel.DEBUG);
+			SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Creating cycle", LogLevel.SPAM);
 		}
 		
 		RemoveWaypoints(group);		
@@ -291,7 +291,7 @@ sealed class SCR_DC_AIHelper
 				wpcycle.SetWaypoints(waypoints);
 				group.AddWaypoint(wpcycle);
 				
-				SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Adding waypoints: " + waypoints.Count(), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Adding " + waypoints.Count() + " waypoints", LogLevel.SPAM);
 				return true;
 			}
 			else

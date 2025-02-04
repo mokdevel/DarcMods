@@ -261,7 +261,7 @@ class SCR_DC_HunterConfig : Managed
 class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 {
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Hunter.json";
-	ref SCR_DC_HunterConfig conf = new SCR_DC_HunterConfig;
+	ref SCR_DC_HunterConfig conf = new SCR_DC_HunterConfig();
 	
 	//------------------------------------------------------------------------------------------------
 	void Load()
@@ -301,11 +301,7 @@ class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 		{
 			"{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
 			"{976AC400219898FA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Sharpshooter.et",
-			"{30ED11AA4F0D41E5}Prefabs/Groups/OPFOR/Group_USSR_FireGroup.et",
-/*			"{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et",
-			"{96BAB56E6558788E}Prefabs/Groups/OPFOR/Group_USSR_Team_AT.et",
-			"{43C7A28EEB660FF8}Prefabs/Groups/OPFOR/Group_USSR_Team_GL.et",
-			"{1C0502B5729E7231}Prefabs/Groups/OPFOR/Group_USSR_Team_Suppress.et"*/
+			"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et",
 		};
 	}	
 }

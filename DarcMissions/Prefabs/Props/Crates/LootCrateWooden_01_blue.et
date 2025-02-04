@@ -1,41 +1,53 @@
 GenericEntity : "{7030822F7A54F479}Prefabs/Props/Crates/CrateWooden_01_base.et" {
  ID "51E0C144AB96DABD"
  components {
+  MeshObject "{5872F0EB7FA40561}" {
+   Materials {
+    MaterialAssignClass "{64889D448C8AD2A9}" {
+     SourceMaterial "CrateWooden_01"
+     AssignedMaterial "{24AD2F3D4740C89E}Assets/Props/Crates/CrateWooden_01/Data/CrateWooden_01_blue.emat"
+    }
+    MaterialAssignClass "{64889D448C8AD2BE}" {
+     SourceMaterial "Palette"
+     AssignedMaterial "{E453DBB191DE9A51}Assets/Props/Crates/CrateWooden_01/Data/CrateWooden_Blue_MLOD.emat"
+    }
+   }
+  }
   RigidBody "{5872F0EB7DFB5A9D}" {
    Static 1
   }
-  UniversalInventoryStorageComponent "{648701879D1D2E68}" {
-   Attributes SCR_ItemAttributeCollection "{648701847D60E0AC}" {
-    ItemDisplayName SCR_InventoryUIInfo "{648701847A20DAFE}" {
+  UniversalInventoryStorageComponent "{64889D44AC8CB26F}" {
+   Attributes SCR_ItemAttributeCollection "{64889D4540446FE0}" {
+    ItemDisplayName SCR_InventoryUIInfo "{64889D454C22A460}" {
     }
    }
   }
-  ScriptedInventoryStorageManagerComponent "{6487018B8D7DC150}" {
+  ScriptedInventoryStorageManagerComponent "{64889D455A02339A}" {
   }
-  ActionsManagerComponent "{648553C12639279E}" {
+  ActionsManagerComponent "{64889D4553C7C06C}" {
    ActionContexts {
-    UserActionContext "{6486B52AC2EA3298}" {
+    UserActionContext "{64889D4579AD9561}" {
      ContextName "default"
-     Position PointInfo "{6486B52ACC14DBC7}" {
+     Position PointInfo "{64889D45606BC3D2}" {
      }
-     Radius 1.57
+     Radius 1.53
     }
    }
    additionalActions {
-    SCR_OpenStorageAction "{64868661F52B1D2E}" {
+    SCR_OpenStorageAction "{64889D4516FD109F}" {
      ParentContextList {
       "default"
      }
-     UIInfo UIInfo "{6486B52FDCD12282}" {
+     UIInfo UIInfo "{64889D451C99294D}" {
       Name "Open Loot"
      }
      "Sort Priority" 1000
     }
    }
   }
-  RplComponent "{648553C1FAD03377}" {
+  RplComponent "{64889D44A830C307}" {
   }
-  Hierarchy "{648553C1FEEEB131}" {
+  Hierarchy "{64889D45567CFED6}" {
   }
  }
  coords 1.956 3.131 -1.565

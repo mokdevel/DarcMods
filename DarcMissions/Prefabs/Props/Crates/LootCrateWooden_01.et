@@ -1,0 +1,42 @@
+GenericEntity : "{7030822F7A54F479}Prefabs/Props/Crates/CrateWooden_01_base.et" {
+ ID "51E0C144AB96DABD"
+ components {
+  RigidBody "{5872F0EB7DFB5A9D}" {
+   Static 1
+  }
+  UniversalInventoryStorageComponent "{648701879D1D2E68}" {
+   Attributes SCR_ItemAttributeCollection "{648701847D60E0AC}" {
+    ItemDisplayName SCR_InventoryUIInfo "{648701847A20DAFE}" {
+    }
+   }
+  }
+  ScriptedInventoryStorageManagerComponent "{6487018B8D7DC150}" {
+  }
+  ActionsManagerComponent "{648553C12639279E}" {
+   ActionContexts {
+    UserActionContext "{6486B52AC2EA3298}" {
+     ContextName "default"
+     Position PointInfo "{6486B52ACC14DBC7}" {
+     }
+     Radius 1.57
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{64868661F52B1D2E}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{6486B52FDCD12282}" {
+      Name "Open Loot"
+     }
+     "Sort Priority" 1000
+    }
+   }
+  }
+  RplComponent "{648553C1FAD03377}" {
+  }
+  Hierarchy "{648553C1FEEEB131}" {
+  }
+ }
+ coords 1.956 3.131 -1.565
+}

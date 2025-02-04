@@ -1,0 +1,40 @@
+GenericEntity : "{A5AC0827E24C1929}Prefabs/Props/Core/SupplyBox_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  MeshObject "{5872F0EB7FA40561}" {
+   Object "{E535C6A8397ACFE0}Assets/Props/Military/SupplyBox/SupplyCrate/SupplyCrate_01_item.xob"
+  }
+  SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+   m_eMaterialSoundType BREAK_WOOD_SOLID
+  }
+  SCR_ResourceComponent "{5D247A59598D71AE}" {
+   Enabled 0
+  }
+  UniversalInventoryStorageComponent "{64889D464A1C1DFE}" {
+   Attributes SCR_ItemAttributeCollection "{64889D46761572CB}" {
+    ItemDisplayName SCR_InventoryUIInfo "{64889D4671635226}" {
+    }
+   }
+  }
+  ActionsManagerComponent "{64889D4667F7E0EB}" {
+   ActionContexts {
+    UserActionContext "{64889D4661F9FE74}" {
+     ContextName "default"
+     Position PointInfo "{64889D466B6A1208}" {
+     }
+     Radius 1.51
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{64889D461BC655B8}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{64889D460D87E70B}" {
+      Name "Open Loot"
+     }
+    }
+   }
+  }
+ }
+}

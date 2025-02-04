@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
+ Name "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
  Configurations {
   EntityTemplateResourceClass PC {
   }

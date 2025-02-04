@@ -231,7 +231,7 @@ class SCR_DC_MissionFrame
 		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.DEBUG);
 		foreach(SCR_DC_Mission mission : m_MissionList)
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] Mission: " + i + ": " + mission.GetId() + " - " + mission.GetTitle() + " - " + "Time left: " + mission.GetActiveTime() + " ", LogLevel.DEBUG);
+			SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] Mission: " + i + ": " + mission.GetId() + " - " + mission.GetTitle() + " - " + "Time left: " + mission.GetActiveTime() + " (" + SCR_Enum.GetEnumName(DC_MissionState,  mission.GetState()) + ")", LogLevel.DEBUG);
 			i++;
 		}		
 		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.DEBUG);

@@ -108,8 +108,8 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		conf.missionActiveDistance = DC_MISSION_ACTIVE_DISTANCE;
 		
 //		conf.missionTypeArray = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-//		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION};		
-//		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};		
+//		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION};
+//		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};		
 		conf.missionTypeArray = {DC_EMissionType.OCCUPATION};		
 //		conf.missionTypeArray = {DC_EMissionType.HUNTER};
 //		conf.missionTypeArray = {DC_EMissionType.CAMP};		
