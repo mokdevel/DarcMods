@@ -16,6 +16,8 @@ GenericEntity : "{A5AC0827E24C1929}Prefabs/Props/Core/SupplyBox_Base.et" {
     }
    }
   }
+  ScriptedInventoryStorageManagerComponent "{6488DB069B96FABC}" {
+  }
   ActionsManagerComponent "{64889D4667F7E0EB}" {
    ActionContexts {
     UserActionContext "{64889D4661F9FE74}" {
