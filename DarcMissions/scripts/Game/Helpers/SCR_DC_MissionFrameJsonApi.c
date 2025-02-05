@@ -13,7 +13,7 @@
 #endif
 
 #ifndef SCR_DC_RELEASE
-	const int DC_MISSION_START_DELAY = 5;				//Time to wait before spawning the first mission (seconds)
+	const int DC_MISSION_START_DELAY = 1;				//Time to wait before spawning the first mission (seconds)
 	const int DC_MISSION_ACTIVE_TIME = 120;				//Time to keep the mission active (seconds)
 	const int DC_MISSION_ACTIVE_DISTANCE = 300;		
 	const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 10;

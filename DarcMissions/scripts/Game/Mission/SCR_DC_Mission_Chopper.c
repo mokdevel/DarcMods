@@ -1,11 +1,15 @@
 //Mission SCR_DC_Mission_Chopper.c
 //
-//An example of a mission file with simple set. No real functionality.
+//This is a concept of a mission. Some chopper to fly from A to B and do something. 
+//This is completely unfinished. More like a PoC to show that a chopper can fly.
 
 class SCR_DC_Mission_Chopper : SCR_DC_Mission
 {
 	private ref SCR_DC_ChopperJsonApi m_ChopperJsonApi = new SCR_DC_ChopperJsonApi();	
 	private ref SCR_DC_ChopperConfig m_Config;
+	private VehicleHelicopterSimulation m_Vehicle_s;
+	private IEntity m_Vehicle;
+	private int idx = 0;	
 	
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Chopper()
@@ -68,11 +72,10 @@ class SCR_DC_Mission_Chopper : SCR_DC_Mission
 	private void MissionSpawn()
 	{					
 		//Code for whatever you need for spawning things.
-		IEntity entity = NULL;
 		EntitySpawnParams params = EntitySpawnParams();
 //		string resourceName	= "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et";
 		string resourceName	= "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et";
-		vector pos = "1053 69 2470";
+		vector pos = "1053 49 2470";
 //		vector pos = "1053 39 2470";
 	
 		//Spawn the resource exactly to pos
@@ -81,23 +84,58 @@ class SCR_DC_Mission_Chopper : SCR_DC_Mission
 		SCR_DC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0);
         params.TransformMode = ETransformMode.WORLD;			
         params.Transform = transform;
-		entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);		
-	
+		m_Vehicle = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);		
 		
-		
-		VehicleHelicopterSimulation m_Vehicle_s = VehicleHelicopterSimulation.Cast(entity.FindComponent(VehicleHelicopterSimulation));
+		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
         m_Vehicle_s.EngineStart();
         m_Vehicle_s.SetThrottle(1);
-        m_Vehicle_s.RotorSetForceScaleState(0, 1);
-        m_Vehicle_s.RotorSetForceScaleState(1, 1);
+        m_Vehicle_s.RotorSetForceScaleState(0, 1.1);	//Hovering 1.2
+        m_Vehicle_s.RotorSetForceScaleState(1, 2);
 		
-		vector velOrig = entity.GetPhysics().GetVelocity();
-        vector rotVector = entity.GetAngles();
-        vector vel = {velOrig[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * 50, velOrig[1], velOrig[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * 50 };
-        entity.GetPhysics().SetVelocity(vel);
+		vector velOrig = m_Vehicle.GetPhysics().GetVelocity();
+        vector rotVector = m_Vehicle.GetAngles();
+		
+        vector vel = {velOrig[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * 10, velOrig[1], velOrig[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * 10 };
+        vector rot = {rotVector[0] + Math.Sin(rotVector[0] * Math.DEG2RAD) * 0, rotVector[1], rotVector[2] + Math.Cos(rotVector[2] * Math.DEG2RAD) * 0 };
+		
+        m_Vehicle.SetAngles(rot);				
+		m_Vehicle.GetPhysics().SetVelocity(vel);
+		
+		GetGame().GetCallqueue().CallLater(Path1, 5000);		
+	}
+	
+	private void Path1()
+	{		
+		array<float> rotor = {1.8, 2.5, 2.2, 1.3, 1.2, -1};
+		array<float> vel0 =  {20,  30,  30,  25,  20};
+		array<float> rot0 =  {10,  20,  20,  -20, -10};
+		
+        m_Vehicle_s.RotorSetForceScaleState(0, rotor[idx]);	//Hovering 1.2
+        m_Vehicle_s.RotorSetForceScaleState(1, 2);
+		
+		vector velOrig = m_Vehicle.GetPhysics().GetVelocity();
+//        vector rotVector = m_Vehicle.GetAngles();
+        vector rotVector = m_Vehicle.GetYawPitchRoll();
+		
+        vector vel = {	velOrig[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * vel0[idx], 
+						velOrig[1] + 0.5, 
+						velOrig[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * vel0[idx] };		
+        vector rot = {	rotVector[0] + Math.Sin(rotVector[0] * Math.DEG2RAD) * rot0[idx], 
+						rotVector[1] + 0.5,
+						rotVector[2] + Math.Cos(rotVector[2] * Math.DEG2RAD) * rot0[idx]};
+		
+//        m_Vehicle.SetAngles(rot);		
+        m_Vehicle.SetYawPitchRoll(rot);		
+        m_Vehicle.GetPhysics().SetVelocity(vel);		
+		
+		idx++;
+		if(rotor[idx] != -1)
+		{
+			GetGame().GetCallqueue().CallLater(Path1, 8000);
+		}
 	}
 }
-	
+		
 //------------------------------------------------------------------------------------------------
 class SCR_DC_ChopperConfig : Managed
 {
