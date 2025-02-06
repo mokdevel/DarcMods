@@ -154,7 +154,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 				{
 					SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:GroupLifeCycle] Creating waypoint for group: " + group.GetID(), LogLevel.SPAM);
 					
-					SCR_DC_AIHelper.RemoveWaypoints(group);
+					SCR_DC_WPHelper.RemoveWaypoints(group);
 					AIWaypoint wp = GetWaypoint(group);
 					group.AddWaypoint(wp);
 					GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.lifeCycleTime, false, group);
@@ -230,7 +230,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 		
 		if (closestPlayer != null)
 		{
-			AIWaypoint waypoint = SCR_DC_AIHelper.CreateWaypointEntity(DC_EWaypointMoveType.MOVE);
+			AIWaypoint waypoint = SCR_DC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.MOVE);
 //			waypoint.SetOrigin(closestPlayer.GetOrigin());
 			waypoint.SetOrigin(SCR_DC_Misc.RandomizePos(closestPlayer.GetOrigin(), m_Config.rndDistanceToPlayer));
 			return waypoint;

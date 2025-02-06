@@ -1,0 +1,10 @@
+SCR_DC_MapMarkerEntity {
+ ID "64647B3ADE27C753"
+ components {
+  SCR_DC_RplMapMarkerEntity "{64647B3ACD693CC0}" {
+  }
+  RplComponent "{64647B3ADE27C75A}" {
+  }
+ }
+ Flags 0
+}

@@ -1,6 +1,12 @@
 GenericEntity : "{2CB4BFA62C2D9C12}Prefabs/Structures/Military/CamoNets/CamoNet_Small_Top_01_base.et" {
  coords 1017.857 39 2501.721
 }
+SCR_ChimeraCharacter : "{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et" {
+ coords 1042.314 39 2489.828
+}
+SCR_ChimeraCharacter : "{6F5A71376479B353}Prefabs/Characters/Factions/CIV/ConstructionWorker/Character_CIV_ConstructionWorker_1.et" {
+ coords 1050.861 39 2474.127
+}
 GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et" {
  coords 1018.164 39 2501.937
 }
@@ -12,4 +18,7 @@ $grp GenericEntity : "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_
   coords 1020.456 39 2500.896
   angleY 114.569
  }
+}
+Vehicle M151A1 : "{F649585ABB3706C4}Prefabs/Vehicles/Wheeled/M151A2/M151A2.et" {
+ coords 1048.417 39 2460.345
 }

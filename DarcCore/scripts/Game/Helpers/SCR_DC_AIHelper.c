@@ -1,27 +1,54 @@
 //Helpers SCR_DC_AIHelper.c
 
-enum DC_EWaypointRndType
-{
-	RANDOM,			//Use one from the list below randomly
-	SCATTERED,		//Completely random waypoints without any logic
-	RADIUS,			//AI follow a path that is close to a circle with a radius. There is some additional randomization to avoid a perfect circle.
-	SLOTS 			//AI goes from a slot to slot. NOTE: This will not work unless the map has slots (the S/M/L letters on map) defined.
-};
-
-enum DC_EWaypointMoveType
-{
-	RANDOM,			//Pick a random one. Mission should define how to handle randomness. Often a reasonable RANDOM is a selection between MOVECYCLE and PATROLCYCLE.
-	MOVE,			//Creates move waypoints. AI will stop once waypoints are visited.
-	PATROL,			//Same as MOVE but with patrol speed.
-	MOVECYCLE,		//Creates move waypoints in cycke. AI will restart the cycle once all waypoints are visited.
-	PATROLCYCLE		//Same as MOVECYCLE but with patrol speed.
-};
+//------------------------------------------------------------------------------------------------
+/*!
+Functions for various AI actions
+*/
 
 sealed class SCR_DC_AIHelper
 {
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Spawn a group
+	Spawn an AIagent 
+	This is used for spawning an individual character rather than a group.
+	
+		AIAgent aiAgent = SCR_DC_AIHelper.SpawnAIAgent("{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et", position);
+		SCR_DC_AIHelper.GroupAddAI(aiAgent);
+	
+	*/
+	static AIAgent SpawnAIAgent(string aiAgentPrefab, vector pos)
+	{
+		Resource resource = null;
+		AIAgent aiAgent = null;
+		
+		resource = Resource.Load(aiAgentPrefab);
+		
+		EntitySpawnParams params = EntitySpawnParams();
+		
+		//Spawn the resource exactly to pos
+		vector transform[4];
+		SCR_DC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0);
+        params.TransformMode = ETransformMode.WORLD;			
+        params.Transform = transform;
+		IEntity entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);		
+		
+		SCR_ChimeraCharacter characterEnt = SCR_ChimeraCharacter.Cast(entity);
+				
+		CharacterControllerComponent characterController = characterEnt.GetCharacterController();			
+		AIControlComponent aiControlComponent = characterController.GetAIControlComponent();
+		aiControlComponent.ActivateAI();
+			
+		aiAgent = aiControlComponent.GetControlAIAgent();			
+		
+		return aiAgent;
+	}			
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Spawn a group of AIs from a prefab. 
+	This also supports character spawning.
+	
+		AIGroup group = SCR_DC_AIHelper.SpawnGroup("{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et", position);
 	*/
 	static SCR_AIGroup SpawnGroup(string groupToSpawn, IEntity spawnLocation)
 	{
@@ -38,11 +65,25 @@ sealed class SCR_DC_AIHelper
 		{
 			//Spawn an individual character
 			AIAgent aiAgent = SpawnAIAgent(groupToSpawn, spawnPosition);
-				
+
 			//Add to proper group
 			if (aiAgent)
 			{
-				string faction = GetAIAgentFactionKey(aiAgent);			
+				string faction = GetAIAgentFactionKey(aiAgent);
+				group = GroupCreate(faction, aiAgent.GetOrigin());
+				if(group)
+				{
+					group.SetNewLeader(aiAgent);
+					group.AddAgent(aiAgent);
+				}
+					
+				SCR_DC_Log.Add("[SCR_DC_AIHelper:SpawnGroup] Spawned single unit (" + groupToSpawn + ") to " + faction + " faction.", LogLevel.DEBUG);				
+			}				
+							
+/*			//Add to proper group
+			if (aiAgent)
+			{
+				string faction = GetAIAgentFactionKey(aiAgent);
 				string aiBaseGroup = "{9E45E4F7AE1CB45A}Prefabs/Groups/Campaign/Group_USSR.et";
 				
 				switch (faction)
@@ -70,7 +111,7 @@ sealed class SCR_DC_AIHelper
 					
 					SCR_DC_Log.Add("[SCR_DC_AIHelper:SpawnGroup] Spawned single unit (" + groupToSpawn + ") to " + faction + " faction.", LogLevel.DEBUG);				
 				}			
-			}				
+			}		*/		
 		}
 		else
 		{
@@ -83,13 +124,7 @@ sealed class SCR_DC_AIHelper
 				
 				group = SCR_AIGroup.Cast(GetGame().SpawnEntityPrefab(resource, null, params));
 			}
-		}
-		
-		if (!resource.IsValid())
-		{
-			SCR_DC_Log.Add(("[SCR_DC_AIHelper:SpawnGroup] Unable to load resource for group to spawn: " + groupToSpawn), LogLevel.ERROR);
-			return null;
-		}
+		}	
 		
 		return group;		
 	}
@@ -124,6 +159,50 @@ sealed class SCR_DC_AIHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Create a group
+	*/
+	static SCR_AIGroup GroupCreate(string faction, vector pos = "0 0 0")
+	{
+		string aiBaseGroup = "{F22EDFBEFC193357}Prefabs/Groups/Campaign/Group_FIA_Remnants.et";
+		Resource resource = null;
+		SCR_AIGroup group = null;
+		
+		switch (faction)
+		{
+			case "USSR":
+				aiBaseGroup = "{9E45E4F7AE1CB45A}Prefabs/Groups/Campaign/Group_USSR.et";
+				break;
+			case "US":
+				aiBaseGroup = "{412A7767B11310C5}Prefabs/Groups/Campaign/Group_US.et";
+				break;
+			case "CIV":
+				aiBaseGroup = "{F22EDFBEFC193357}Prefabs/Groups/Campaign/Group_FIA_Remnants.et";
+				break;
+			default:
+				//FIA
+		}
+	
+		resource = Resource.Load(aiBaseGroup);
+		if (resource.IsValid())
+		{
+			EntitySpawnParams params = EntitySpawnParams();
+			params.TransformMode = ETransformMode.WORLD;
+			params.Transform[3] = pos;
+				
+			group = SCR_AIGroup.Cast(GetGame().SpawnEntityPrefab(resource, null, params));		
+		}	
+		else
+		{
+			SCR_DC_Log.Add("[SCR_DC_AIHelper:GroupCreate] Unable to load group resource.", LogLevel.ERROR);
+			return null;
+		}
+		
+		
+		return group;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Delete a group
 	*/
 	static void GroupDelete(AIGroup group)
@@ -143,36 +222,19 @@ sealed class SCR_DC_AIHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Spawn an AIagent 
-	This is used for spawning an individual character rather than a group.
+	Add an AI to a group. If the group does not exist, create a new one.
 	*/
-	static AIAgent SpawnAIAgent(string aiAgentPrefab, vector pos)
+	static void GroupAddAI(AIAgent aiAgent, AIGroup group = null)
 	{
-		Resource resource = null;
-		AIAgent aiAgent = null;
+		if(!group)
+		{
+			string faction = GetAIAgentFactionKey(aiAgent);
+			group = GroupCreate(faction, aiAgent.GetOrigin());
+		}
 		
-		resource = Resource.Load(aiAgentPrefab);
-		
-		EntitySpawnParams params = EntitySpawnParams();
-		
-		//Spawn the resource exactly to pos
-		vector transform[4];
-		SCR_DC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0);
-        params.TransformMode = ETransformMode.WORLD;			
-        params.Transform = transform;
-		IEntity entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);		
-		
-		SCR_ChimeraCharacter characterEnt = SCR_ChimeraCharacter.Cast(entity);
-				
-		CharacterControllerComponent characterController = characterEnt.GetCharacterController();			
-		AIControlComponent aiControlComponent = characterController.GetAIControlComponent();
-		aiControlComponent.ActivateAI();
-			
-		aiAgent = aiControlComponent.GetControlAIAgent();			
-		
-		return aiAgent;
-	}			
-
+		group.AddAgent(aiAgent);		
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find AIagent faction
@@ -182,6 +244,11 @@ sealed class SCR_DC_AIHelper
 	{
 		string faction = "";
 		
+		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(aiAgent.GetControlledEntity());
+		faction = character.GetFaction().GetFactionKey();
+
+		/* 
+		//Code that also works. Not sure what is the difference but leaving here for future				
 		SCR_CallsignCharacterComponent callsignComp = SCR_CallsignCharacterComponent.Cast(aiAgent.GetControlledEntity().FindComponent(SCR_CallsignCharacterComponent));
 		FactionAffiliationComponent factionComp = FactionAffiliationComponent.Cast(aiAgent.GetControlledEntity().FindComponent(FactionAffiliationComponent));
 		
@@ -189,6 +256,7 @@ sealed class SCR_DC_AIHelper
 		{
 			faction = factionComp.GetAffiliatedFaction().GetFactionKey();
 		}
+		*/
 		
 		return faction;
 	}		
@@ -206,7 +274,7 @@ sealed class SCR_DC_AIHelper
 			damageManager.SetHealthScaled(0);
 		
 		SCR_DC_SpawnHelper.DespawnItem(aiEntity);
-	}		
+	}
 
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -243,226 +311,5 @@ sealed class SCR_DC_AIHelper
 		}
 		
 		return false;				
-	}		
-		
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Creates a list of waypoints for a group
-	NOTE: Currently only supports creation of cycle waypoints. 
-	TBD: Non-cycle waypoint list creation for a group
-	\param group
-	\param count Amount of waypoints to create
-	\param rndtype Type of waypoint creation
-	\param range Range (radius) for randomization from given position.
-	\param emptyspot True if found position needs to be on clear area.	
-	*/
-	static bool CreateWaypoints(SCR_AIGroup group, int count = 7, DC_EWaypointMoveType wptype = DC_EWaypointMoveType.MOVECYCLE, DC_EWaypointRndType rndtype = DC_EWaypointRndType.SCATTERED, float range = 100, bool emptyspot = false)
-	{
-		array<AIWaypoint> waypoints = {};
-		AIWaypointCycle wpcycle = null;
-		
-		if (wptype == DC_EWaypointMoveType.MOVECYCLE || wptype == DC_EWaypointMoveType.PATROLCYCLE)
-		{
-			wpcycle = AIWaypointCycle.Cast(CreateWaypointEntity(wptype));
-			
-			//Cycle created, change type to something normal
-			switch (wptype)
-			{
-				case DC_EWaypointMoveType.MOVECYCLE:
-					wptype = DC_EWaypointMoveType.MOVE;
-					break;
-				case DC_EWaypointMoveType.PATROLCYCLE:
-					wptype = DC_EWaypointMoveType.PATROL;
-					break;
-				default:
-					SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Incorrect wptype", LogLevel.ERROR);
-			}
-			SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Creating cycle", LogLevel.SPAM);
-		}
-		
-		RemoveWaypoints(group);		
-		waypoints = GetPatrolWaypoints(group.GetOrigin(), count, wptype, rndtype, range, emptyspot);
-		
-		if (waypoints.Count() == 0)
-		{
-			SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Could not create waypoint to group: " + group, LogLevel.WARNING);
-			return false;
-		}
-		
-		//Create cycle waypoints
-		if (wpcycle != null)
-		{				
-			if (waypoints.Count() > 0)
-			{
-				wpcycle.SetWaypoints(waypoints);
-				group.AddWaypoint(wpcycle);
-				
-				SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Adding " + waypoints.Count() + " waypoints", LogLevel.SPAM);
-				return true;
-			}
-			else
-			{
-				SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] No waypoints added to group: " + group, LogLevel.WARNING);
-				return false;
-			}		
-		}
-		//Create normal waypoints
-		else
-		{
-			foreach (AIWaypoint wpc : waypoints)
-			{
-				group.AddWaypoint(wpc);
-			}
-			
-			SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Adding waypoints: " + waypoints.Count(), LogLevel.DEBUG);
-			return true;			
-		}
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	static void RemoveWaypoints(AIGroup group)
-	{
-		array<AIWaypoint> waypoints = {};
-		group.GetWaypoints(waypoints);
-		
-		foreach(AIWaypoint waypoint : waypoints)
-		{
-			group.RemoveWaypoint(waypoint);
-		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Creates an array waypoints in a given pattern
-	\param position
-	\param count How many waypoints to create
-	\param wptype See DC_EWaypointMoveType definition for more information
-	\param rndtype See DC_EWaypointRndType definition for more information
-	\param range Range (radius) for randomization from given position.
-	\param emptyspot True if found position needs to be on clear area.
-	*/
-	static array<AIWaypoint> GetPatrolWaypoints(vector position, int count, DC_EWaypointMoveType wptype = DC_EWaypointMoveType.PATROL, DC_EWaypointRndType rndtype = DC_EWaypointRndType.SCATTERED, float range = 100, bool emptyspot = false )
-	{
-		array<AIWaypoint> waypoints = {};
-		
-		//Random 
-		if (rndtype == DC_EWaypointRndType.SCATTERED)
-		{		
-			for (int i = 0; i < count; i++)
-			{
-				//Add some additional randomization
-				float rndRange = Math.RandomInt(0, rndRange/3); 
-				
-				AIWaypoint waypoint = GetWaypoint(position, wptype, (range + rndRange), emptyspot);
-				if (waypoint != null)
-				{
-					waypoints.Insert(waypoint);
-				}
-			}		
-		}
-
-		//Circular
-		if (rndtype == DC_EWaypointRndType.RADIUS)
-		{		
-			float startAngle = Math.RandomFloat(0, 360);
-			
-			for (int i = 0; i < count; i++)
-			{				
-				vector vec = SCR_DC_Misc.GetCoordinatesOnCircle(position, range, i*(360/count), startAngle);
-				
-				AIWaypoint waypoint = GetWaypoint(vec, wptype, (range/4), emptyspot);
-				if (waypoint != null)
-				{
-					waypoints.Insert(waypoint);
-				}
-			}		
-		}
-
-		//Slots
-		if (rndtype == DC_EWaypointRndType.SLOTS)
-		{		
-			array<IEntity> slots = {};
-			SCR_DC_Locations.GetLocationSlots(slots, position, range);
-			
-			for (int i = 0; i < count; i++)
-			{
-				IEntity slot = slots.GetRandomElement();				
-
-				AIWaypoint waypoint = GetWaypoint(slot.GetOrigin(), wptype, 3, emptyspot);
-				if (waypoint != null)
-				{
-					waypoints.Insert(waypoint);
-				}
-			}		
-		}
-						
-		return waypoints;
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Creates a waypoint
-	\param position
-	\param wptype
-	\param range Range (radius) for randomization from given position.
-	\param emptyspot True if found position needs to be on clear area.
-	*/
-	static AIWaypoint GetWaypoint(vector position, DC_EWaypointMoveType wptype, float range = 100, bool emptyspot = false )
-	{	
-		vector wpPos;
-		float emptyRange = 30;
-		
-		wpPos = SCR_DC_Misc.RandomizePos(position, range);
-		
-		vector wpPosFixed;
-
-		if (emptyspot)
-		{
-			SCR_WorldTools().FindEmptyTerrainPosition(wpPosFixed, wpPos, emptyRange, 1);
-			wpPos = wpPosFixed;
-		}
-		
-		AIWaypoint waypoint = CreateWaypointEntity(wptype);
-		waypoint.SetOrigin(wpPos);
-		return waypoint;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Creates a waypoint entity
-	\param wptype
-	*/
-	
-	static AIWaypoint CreateWaypointEntity(DC_EWaypointMoveType wptype)
-	{
-		private string wpPrefab = "";
-		
-		switch (wptype)
-		{
-			case DC_EWaypointMoveType.MOVE:
-				wpPrefab = "{750A8D1695BD6998}Prefabs/AI/Waypoints/AIWaypoint_Move.et";
-				break;
-			case DC_EWaypointMoveType.PATROL:
-				wpPrefab = "{22A875E30470BD4F}Prefabs/AI/Waypoints/AIWaypoint_Patrol.et";
-				break;
-			case DC_EWaypointMoveType.MOVECYCLE:
-			case DC_EWaypointMoveType.PATROLCYCLE:
-				wpPrefab = "{35BD6541CBB8AC08}Prefabs/AI/Waypoints/AIWaypoint_Cycle.et";
-				break;
-			default: 
-				wpPrefab = "";
-				break;		
-		}
-		
-		Resource resource = Resource.Load(wpPrefab);
-		if (!resource)
-			return null;
-		
-		AIWaypoint wp = AIWaypoint.Cast(GetGame().SpawnEntityPrefab(resource));
-		if (!wp)
-			return null;
-		
-		return wp;
-	}	
-	
+	}			
 }

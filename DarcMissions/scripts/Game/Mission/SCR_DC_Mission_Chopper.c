@@ -81,7 +81,7 @@ class SCR_DC_Mission_Chopper : SCR_DC_Mission
 		//Spawn the resource exactly to pos
 		Resource resource = Resource.Load(resourceName);
 		vector transform[4];
-		SCR_DC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0);
+		SCR_DC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0);	//NOTE: This will snap to ground! 
         params.TransformMode = ETransformMode.WORLD;			
         params.Transform = transform;
 		m_Vehicle = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);		
@@ -131,7 +131,7 @@ class SCR_DC_Mission_Chopper : SCR_DC_Mission
 		idx++;
 		if(rotor[idx] != -1)
 		{
-			GetGame().GetCallqueue().CallLater(Path1, 8000);
+			GetGame().GetCallqueue().CallLater(Path1, 8000, false);
 		}
 	}
 }

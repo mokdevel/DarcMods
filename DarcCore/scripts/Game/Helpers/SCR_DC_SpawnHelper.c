@@ -227,7 +227,7 @@ sealed class SCR_DC_SpawnHelper
 		Math3D.MatrixIdentity3(transform);
 		Math3D.AnglesToMatrix(Vector(rotation, 0, 0), transform);
 		transform[3] = pos;
-		//SCR_TerrainHelper.SnapAndOrientToTerrain(transform);
+		SCR_TerrainHelper.SnapAndOrientToTerrain(transform);
 	}
 
 	//------------------------------------------------------------------------------------------------

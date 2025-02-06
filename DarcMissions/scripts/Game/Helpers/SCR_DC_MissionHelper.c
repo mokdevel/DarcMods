@@ -218,7 +218,7 @@ sealed class SCR_DC_MissionHelper
 			
 			SCR_DC_Log.Add("[SCR_DC_MissionHelper:CreateMissionAIWaypoints] Adding " + rndCount + " waypoints (" + SCR_Enum.GetEnumName(DC_EWaypointRndType, waypointRndType) + ", " + SCR_Enum.GetEnumName(DC_EWaypointMoveType, waypointMoveType) + ")", LogLevel.DEBUG);
 
-			SCR_DC_AIHelper.CreateWaypoints(group, rndCount, waypointMoveType, waypointRndType, rndRange, true);
+			SCR_DC_WPHelper.CreateWaypoints(group, rndCount, waypointMoveType, waypointRndType, rndRange, true);
 		}
 	}			
 }
