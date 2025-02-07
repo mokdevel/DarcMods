@@ -14,6 +14,7 @@ class SCR_DC_DebugHelperPos : Managed
 	vector pos;
 	int color;
 	float radius;
+	string id;
 }
 
 //------------------------------------------------------------------------------------------------
@@ -219,50 +220,68 @@ sealed class SCR_DC_DebugHelper
 	\param color Color of the marker
 	*/	
 	
-	static void AddDebugPos(MapItem mapItem, int color = Color.RED, float radius = 1.0)
+	static void AddDebugPos(MapItem mapItem, int color = Color.RED, float radius = 1.0, string id = "NONE")
 	{
 		SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
 		dpos.pos = mapItem.GetPos();
 		dpos.color = color;
 		dpos.radius = radius;
+		dpos.id = id;
 		m_Pos.Insert(dpos);	
 	}
 
-	static void AddDebugPos(IEntity entity, int color = Color.RED, float radius = 1.0)
+	static void AddDebugPos(IEntity entity, int color = Color.RED, float radius = 1.0, string id = "NONE")
 	{
 		SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
 		dpos.pos = entity.GetOrigin();
 		dpos.color = color;
 		dpos.radius = radius;
+		dpos.id = id;
 		m_Pos.Insert(dpos);	
 	}
 	
-	static void AddDebugPos(vector pos, int color = Color.RED, float radius = 1.0)
+	static void AddDebugPos(vector pos, int color = Color.RED, float radius = 1.0, string id = "NONE")
 	{
 		SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
 		dpos.pos = pos;
 		dpos.color = color;
 		dpos.radius = radius;
+		dpos.id = id;
 		m_Pos.Insert(dpos);	
 	}				
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Deletes a debug cylinder from a certain position
-	NOTE: Ugly code. Positions could have a fraction of difference in theory -> the cylinder is not removed. Only for debugging so should not be an issue.
+	Deletes a debug cylinder with a certain id
 	*/
-	static void DeleteDebugPos(vector pos)
+	static void DeleteDebugPos(string id)
 	{
 		for (int i = 0; i < m_Pos.Count(); i++)		
 		{
-			if(m_Pos[i].pos == pos)
+			if(m_Pos[i].id == id)
 			{
 				m_Pos.Remove(i);
 				i--;
 			}			
 		}		
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Move a debug cylinder with a certain id to a new position
+	*/
+	static void MoveDebugPos(string id, vector pos)
+	{
+		for (int i = 0; i < m_Pos.Count(); i++)		
+		{
+			if(m_Pos[i].id == id)
+			{
+				m_Pos[i].pos = pos;
+				break;
+			}			
+		}		
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	static void DrawSlots()
 	{

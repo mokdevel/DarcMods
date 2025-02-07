@@ -21,15 +21,6 @@ Add this to your StartGameTrigger or use SCR_DC_GameCoreBase.c
 	//------------------------------------------------------------------------------------------------
 */
 
-enum DC_EMissionType
-{
-	NONE,
-	HUNTER,
-	OCCUPATION,
-	CHOPPER,
-	CONVOY
-};
-
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
 
 //------------------------------------------------------------------------------------------------
@@ -155,12 +146,18 @@ class SCR_DC_MissionFrame
 				{
 					tmpDC_Mission = new SCR_DC_Mission_Chopper();
 					break;
-				}		
+				}
 				case DC_EMissionType.CONVOY:
 				{
 					tmpDC_Mission = new SCR_DC_Mission_Convoy();
 					break;
-				}		
+				}
+				case DC_EMissionType.CRASHSITE:
+				{
+					tmpDC_Mission = new SCR_DC_Mission_Crashsite();
+					break;
+				}
+				
 //				case DC_EMissionType.CAMP:
 //				{
 //					tmpDC_Mission = new SCR_DC_Mission_Camp();
@@ -184,7 +181,7 @@ class SCR_DC_MissionFrame
 					
 					SCR_DC_MapMarkersUI.AddMarkerHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), tmpDC_Mission.GetId());		
 	
-					SCR_DC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), Color.YELLOW, 10);
+					SCR_DC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), Color.YELLOW, 10, tmpDC_Mission.GetId());
 				}
 			}
 		}
@@ -208,7 +205,8 @@ class SCR_DC_MissionFrame
 			if (mission.GetState() == DC_MissionState.EXIT)
 			{
 				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Deleting mission: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
-				SCR_DC_DebugHelper.DeleteDebugPos(mission.GetPos());				
+//				SCR_DC_DebugHelper.DeleteDebugPos(mission.GetPos());				
+				SCR_DC_DebugHelper.DeleteDebugPos(mission.GetId());
 				m_MissionList.Remove(i);
 				delete mission;
 			}

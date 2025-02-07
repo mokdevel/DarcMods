@@ -1,5 +1,15 @@
 
 //------------------------------------------------------------------------------------------------
+enum DC_EMissionType
+{
+	NONE,
+	HUNTER,
+	OCCUPATION,
+	CHOPPER,
+	CONVOY,
+	CRASHSITE
+};
+
 enum DC_MissionState
 {
 	NONE,		//Unknown state. Nothing should be run at this state.
@@ -36,7 +46,7 @@ class SCR_DC_Mission
 		m_Title = "";
 		m_Info = "";
 		m_MarkerId = "";
-		m_StartTime = (System.GetTickCount() / 1000); 	//Ticktime is the ms when the game was started. We use only minutes.
+		m_StartTime = (System.GetTickCount() / 1000); 		//The time in seconds when the game was started.
 		SetActiveTime(DC_MISSION_ACTIVE_TIME);				//Sets m_EndTick	//TBD: This value should be coming from the MissionFrame
 //		m_MapDescriptorComponent.IsActive();
 	}

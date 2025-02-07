@@ -20,7 +20,7 @@ sealed class SCR_DC_SpawnHelper
 	//pos
 	*/
 //	static IEntity SpawnItem(vector pos, string resourceName, float rotation, float emptyPosRadius)
-	static IEntity SpawnItem(vector pos, string resourceName, float rotation = 0, float emptyPosRadius = EMPTY_POS_RADIUS)
+	static IEntity SpawnItem(vector pos, string resourceName, float rotation = 0, float emptyPosRadius = EMPTY_POS_RADIUS, bool snap = true)
 	{
 		IEntity entity = NULL;
 		vector posFixed;
@@ -47,11 +47,11 @@ sealed class SCR_DC_SpawnHelper
 			//Spawn the resource to a free spot close to pos
 			SCR_DC_Log.Add(string.Format("[SCR_DC_SpawnHelper:SpawnItem] Itemsize: %1, X: %2, Y: %3, Z: %4, S: %5", SCR_DC_Misc.FindMaxValue(sums), maxs[0]-mins[0], maxs[1]-mins[1], maxs[2]-mins[2], sums), LogLevel.DEBUG);							
 			
-			posFixed = FindEmptyPos(pos, EMPTY_POS_RADIUS, (SCR_DC_Misc.FindMaxValue(sums)/SIZEDIV));
+			posFixed = FindEmptyPos(pos, emptyPosRadius, (SCR_DC_Misc.FindMaxValue(sums)/SIZEDIV));
 			if(posFixed != "0 0 0")
 			{
 				vector transform[4];
-				GetTransformFromPosAndRot(transform, posFixed, rotation);
+				GetTransformFromPosAndRot(transform, posFixed, rotation, snap);
 				params.Transform = transform;
 				
 				entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
@@ -68,7 +68,7 @@ sealed class SCR_DC_SpawnHelper
 		{
 			//Spawn the resource exactly to pos
 			vector transform[4];
-			GetTransformFromPosAndRot(transform, pos, rotation);
+			GetTransformFromPosAndRot(transform, pos, rotation, snap);
 	        params.TransformMode = ETransformMode.WORLD;			
 	        params.Transform = transform;
 			entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
@@ -222,12 +222,15 @@ sealed class SCR_DC_SpawnHelper
 	/*!
 	Get transform from the given position and rotation in XZ plane
 	*/
-	static void GetTransformFromPosAndRot(out vector transform[4], vector pos, float rotation)
+	static void GetTransformFromPosAndRot(out vector transform[4], vector pos, float rotation, bool snap = true)
 	{
 		Math3D.MatrixIdentity3(transform);
 		Math3D.AnglesToMatrix(Vector(rotation, 0, 0), transform);
 		transform[3] = pos;
-		SCR_TerrainHelper.SnapAndOrientToTerrain(transform);
+		if (snap)
+		{
+			SCR_TerrainHelper.SnapAndOrientToTerrain(transform);
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------
