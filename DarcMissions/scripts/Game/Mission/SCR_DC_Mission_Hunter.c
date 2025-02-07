@@ -18,7 +18,6 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 30;	//How many different spots to try for a mission before giving up	
 	
 	private ref array<IEntity> m_Locations = {};
-	private ref array<SCR_AIGroup> m_Groups = {};
 	int m_GroupsSpawned = 0;	//The amount of groups spawned. Between spawns, a group may be killed so the total of m_Groups is not reliable to know the count.
 	
 	//------------------------------------------------------------------------------------------------

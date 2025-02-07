@@ -102,18 +102,18 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 	{
 		conf.logLevel = DC_LogLevel.DEBUG;
 		conf.missionStartDelay = DC_MISSION_START_DELAY;
-		conf.missionCount = 1;
+		conf.missionCount = 4;
 		conf.missionFrameLifeCycleTime = DC_MISSIONFRAME_LIFECYCLE_TIME;
 		conf.missionActiveTime = DC_MISSION_ACTIVE_TIME;
 		conf.missionActiveDistance = DC_MISSION_ACTIVE_DISTANCE;
 		
 //		conf.missionTypeArray = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
 //		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION};
-//		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};		
+		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};		
 //		conf.missionTypeArray = {DC_EMissionType.OCCUPATION};		
 //		conf.missionTypeArray = {DC_EMissionType.HUNTER};
 //		conf.missionTypeArray = {DC_EMissionType.CONVOY};		
-		conf.missionTypeArray = {DC_EMissionType.CRASHSITE};
+//		conf.missionTypeArray = {DC_EMissionType.CRASHSITE};
 //		conf.missionTypeArray = {DC_EMissionType.CHOPPER};
 		conf.minDistanceToMission = 500;
 		conf.minDistanceToPlayer = 100;

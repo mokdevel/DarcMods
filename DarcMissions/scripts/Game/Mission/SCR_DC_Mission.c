@@ -35,7 +35,10 @@ class SCR_DC_Mission
 	private int m_EndTime;		//Minutes when mission shall end.
 	private int m_ActiveTime;	//Minutes of how long the mission should be active 
 //	MapDescriptorComponent m_MapDescriptorComponent = new MapDescriptorComponent;
-				
+	
+	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
+	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
+	
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission()
 	{

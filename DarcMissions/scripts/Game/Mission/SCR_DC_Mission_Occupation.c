@@ -13,8 +13,6 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 	private ref SCR_DC_OccupationConfig m_Config;
 	
 	protected ref SCR_DC_Occupation m_DC_Occupation;	//Occupation configuration in use
-	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
-	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
 	
 	private int m_SpawnIndex = 0;						//Counter for the item to spawn
 	private float m_SpawnRotation = 0;					//Rotation of the camp for random locations.

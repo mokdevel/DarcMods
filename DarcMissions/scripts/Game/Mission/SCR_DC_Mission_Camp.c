@@ -5,8 +5,6 @@ class SCR_DC_Mission_Camp : SCR_DC_Mission
 	private ref SCR_DC_CampConfig m_Config;
 	
 	protected ref SCR_DC_Camp m_DC_Camp;				//Camp configuration in use	
-	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
-	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
 
 	private int m_SpawnIndex = 0;
 
