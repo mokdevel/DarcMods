@@ -111,15 +111,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	override void MissionEnd()
 	{
-		//Remove marker from map
-		SCR_DC_MapMarkersUI.DeleteMarker(GetMarkerId());
-		
-		//Remove AI
-		SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionEnd] Deleting AI groups", LogLevel.DEBUG);
-		foreach(SCR_AIGroup group : m_Groups)
-		{
-			SCR_DC_AIHelper.GroupDelete(group);			
-		}
+		super.MissionEnd();
 		
 		SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);
 	}	

@@ -4,8 +4,9 @@
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J , convert to readable format - press Ctrl+Alt+Shift+M
 
 #ifdef SCR_DC_RELEASE
-	const int DC_MISSION_START_DELAY = 120;				//Time to wait before spawning the first mission (seconds)
-	const int DC_MISSION_ACTIVE_TIME = 600;				//Time to keep the mission active (seconds)
+	const int DC_MISSION_START_DELAY = 2*60;				//Time to wait before spawning the first mission (seconds)
+	const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 5*60;
+	const int DC_MISSION_ACTIVE_TIME = 10*60;				//Time to keep the mission active (seconds)
 	const int DC_MISSION_ACTIVE_DISTANCE = 300;		
 	const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 30;
 	const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 30;
@@ -14,6 +15,7 @@
 
 #ifndef SCR_DC_RELEASE
 	const int DC_MISSION_START_DELAY = 1;				//Time to wait before spawning the first mission (seconds)
+	const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 2*60;
 	const int DC_MISSION_ACTIVE_TIME = 120;				//Time to keep the mission active (seconds)
 	const int DC_MISSION_ACTIVE_DISTANCE = 300;		
 	const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 10;
@@ -102,6 +104,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 	{
 		conf.logLevel = DC_LogLevel.DEBUG;
 		conf.missionStartDelay = DC_MISSION_START_DELAY;
+		//TBD: conf.missionnDelayBetweeen = DC_MISSION_DELAY_BETWEEN_MISSIONS
 		conf.missionCount = 4;
 		conf.missionFrameLifeCycleTime = DC_MISSIONFRAME_LIFECYCLE_TIME;
 		conf.missionActiveTime = DC_MISSION_ACTIVE_TIME;

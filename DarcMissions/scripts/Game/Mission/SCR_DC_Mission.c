@@ -83,8 +83,34 @@ class SCR_DC_Mission
 	}
 
 	//------------------------------------------------------------------------------------------------
-	void MissionEnd()	//You should override this in your mission
+	/*!
+		override void MissionEnd()
+		{			
+			super.MissionEnd();	
+		}
+	*/
+	void MissionEnd()	//You should calls this at the end of your mission
 	{
+		//Remove spawned items
+		SCR_DC_Log.Add("[SCR_DC_Mission:MissionEnd] Deleting entities", LogLevel.DEBUG);
+		foreach(IEntity entity : m_EntityList)
+		{
+			if (entity)
+			{
+				SCR_DC_Log.Add("[SCR_DC_Mission:MissionEnd] Despawning: " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
+				SCR_DC_SpawnHelper.DespawnItem(entity);
+			}
+		}		
+		
+		//Remove AI
+		SCR_DC_Log.Add("[SCR_DC_Mission:MissionEnd] Deleting AI groups", LogLevel.DEBUG);
+		foreach(SCR_AIGroup group : m_Groups)
+		{
+			SCR_DC_AIHelper.GroupDelete(group);			
+		}		
+
+		//Remove marker from map
+		SCR_DC_MapMarkersUI.DeleteMarker(GetMarkerId());				
 	}
 
 	//------------------------------------------------------------------------------------------------

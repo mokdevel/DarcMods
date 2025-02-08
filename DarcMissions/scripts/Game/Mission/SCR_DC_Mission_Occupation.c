@@ -133,25 +133,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	override void MissionEnd()
 	{			
-		//Remove spawned items
-		foreach(IEntity entity : m_EntityList)
-		{
-			if (entity)
-			{
-				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionEnd] Despawning: " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
-				SCR_DC_SpawnHelper.DespawnItem(entity);
-			}
-		}
-		
-		//Remove marker from map
-		SCR_DC_MapMarkersUI.DeleteMarker(GetMarkerId());
-		
-		//Remove AI
-		SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionEnd] Deleting AI groups", LogLevel.DEBUG);
-		foreach(SCR_AIGroup group : m_Groups)
-		{
-			SCR_DC_AIHelper.GroupDelete(group);			
-		}
+		super.MissionEnd();
 		
 		SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);		
 	}

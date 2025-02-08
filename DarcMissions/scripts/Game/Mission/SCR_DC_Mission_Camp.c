@@ -79,7 +79,9 @@ class SCR_DC_Mission_Camp : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	override void MissionEnd()
 	{			
-
+		super.MissionEnd();
+		
+		SCR_DC_Log.Add("[SCR_DC_Mission_Camp:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);
 	}
 	
 	//------------------------------------------------------------------------------------------------

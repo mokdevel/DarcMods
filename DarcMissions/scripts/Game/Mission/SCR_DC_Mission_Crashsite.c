@@ -65,8 +65,9 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	override void MissionEnd()
 	{			
-		
-		
+		super.MissionEnd();	
+			
+		SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);
 	}
 	
 	//------------------------------------------------------------------------------------------------

@@ -50,8 +50,14 @@ class SCR_DC_Mission_Template : SCR_DC_Mission
 		{			
 			//Add code for runtime
 			
-			//Eventually when mission is to ended do this:
+/*			//Eventually when mission is to ended do this:
 			//SetState(DC_MissionState.END);
+			
+			if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
+			{
+				SCR_DC_Log.Add("[SCR_DC_Mission_Template:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
+				//SetState(DC_MissionState.END);
+			}*/			
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionLifeCycleTime*1000);
@@ -60,7 +66,11 @@ class SCR_DC_Mission_Template : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	override void MissionEnd()
 	{			
-
+		super.MissionEnd();	
+		
+		//The rest of your clean up code.
+		
+		SCR_DC_Log.Add("[SCR_DC_Mission_Template:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);
 	}
 	
 	//------------------------------------------------------------------------------------------------

@@ -64,8 +64,9 @@ class SCR_DC_Mission_Chopper : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	override void MissionEnd()
 	{			
+		super.MissionEnd();
 		
-		
+		SCR_DC_Log.Add("[SCR_DC_Mission_Chopper:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);
 	}
 	
 	//------------------------------------------------------------------------------------------------
