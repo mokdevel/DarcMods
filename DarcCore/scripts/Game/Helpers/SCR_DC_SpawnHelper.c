@@ -260,7 +260,7 @@ sealed class SCR_DC_SpawnHelper
 		
 		if(SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize))
 		{
-			SCR_DC_Log.Add("[SCR_DC_SpawnHelper:FindEmptyPos] Found.", LogLevel.SPAM);			
+			SCR_DC_Log.Add("[SCR_DC_SpawnHelper:FindEmptyPos] Found: " + posFixed, LogLevel.SPAM);			
 			return posFixed;
 		}
 		

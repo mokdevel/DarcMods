@@ -89,6 +89,8 @@ sealed class SCR_DC_Misc
 		
 		return worldName;
 	}
+	
+
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find a random spot on the map.
@@ -151,4 +153,38 @@ sealed class SCR_DC_Misc
 		
 		return newPos;
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Check if two positions are within limit distance
+	\param pos0,pos1 Positions to check if they're within limit
+	\param limit How close the positions needs to be to return trua
+	*/	
+	static bool IsPosNearPos(vector pos0, vector pos1, float limit = 10)
+	{
+		float distance = vector.Distance(pos0, pos1);
+		
+		if (distance < limit)
+		{			
+			return true;
+		}
+		return false;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Check if a class is available. This can be used to check if a mod has been loaded by checking a class
+	\param classToTest The class to search
+	TBD: For some reason uncommenting the code below results in WB crash and weird compilation errors
+	*/	
+/*	static bool IsClassAvailable(string classToTest)
+	{
+		string s = String(classToTest);
+		typename var = s.ToType();
+		if(var)
+		{
+			return true;
+		}
+		return false;
+	}*/
 }

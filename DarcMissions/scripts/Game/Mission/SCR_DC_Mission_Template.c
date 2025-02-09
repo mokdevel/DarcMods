@@ -50,13 +50,14 @@ class SCR_DC_Mission_Template : SCR_DC_Mission
 		{			
 			//Add code for runtime
 			
-/*			//Eventually when mission is to ended do this:
+/*			//Eventually when mission is to be ended do this:
 			//SetState(DC_MissionState.END);
-			
+
+			//For example:			
 			if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
 			{
 				SCR_DC_Log.Add("[SCR_DC_Mission_Template:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
-				//SetState(DC_MissionState.END);
+				SetState(DC_MissionState.END);
 			}*/			
 		}
 		

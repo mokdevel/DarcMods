@@ -78,40 +78,7 @@ sealed class SCR_DC_AIHelper
 				}
 					
 				SCR_DC_Log.Add("[SCR_DC_AIHelper:SpawnGroup] Spawned single unit (" + groupToSpawn + ") to " + faction + " faction.", LogLevel.DEBUG);				
-			}				
-							
-/*			//Add to proper group
-			if (aiAgent)
-			{
-				string faction = GetAIAgentFactionKey(aiAgent);
-				string aiBaseGroup = "{9E45E4F7AE1CB45A}Prefabs/Groups/Campaign/Group_USSR.et";
-				
-				switch (faction)
-				{
-					case "USSR":
-						aiBaseGroup = "{9E45E4F7AE1CB45A}Prefabs/Groups/Campaign/Group_USSR.et";
-						break;
-					case "US":
-						aiBaseGroup = "{412A7767B11310C5}Prefabs/Groups/Campaign/Group_US.et";
-					default:
-						//USSR
-				}
-			
-				resource = Resource.Load(aiBaseGroup);
-				if (resource.IsValid())
-				{
-					EntitySpawnParams params = EntitySpawnParams();
-					params.TransformMode = ETransformMode.WORLD;
-					params.Transform[3] = spawnPosition;
-						
-					group = SCR_AIGroup.Cast(GetGame().SpawnEntityPrefab(resource, null, params));
-					
-					group.SetNewLeader(aiAgent);
-					group.AddAgent(aiAgent);
-					
-					SCR_DC_Log.Add("[SCR_DC_AIHelper:SpawnGroup] Spawned single unit (" + groupToSpawn + ") to " + faction + " faction.", LogLevel.DEBUG);				
-				}			
-			}		*/		
+			}
 		}
 		else
 		{

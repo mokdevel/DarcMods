@@ -6,7 +6,9 @@ sealed class SCR_DC_MissionHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Find an empty spot where to spawn a mission. 
+	Find a random position for a mission. "0 0 0" returned if nothing found.
+	\param distanceToMission Distance to another mission. Two missions shall not be too close to each other. -1 will use the default from MissionFrame.
+	\param distanceToPlayer Mission shall not spawn too close to a player. -1 will use the default from MissionFrame.
 	*/	
 	static vector FindMissionPos(float distanceToMission = -1, float distanceToPlayer = -1)
 	{	
@@ -74,6 +76,9 @@ sealed class SCR_DC_MissionHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if given pos is a valid position for mission. 
+
+	\param distanceToMission Distance to another mission. Two missions shall not be too close to each other. -1 will use the default from MissionFrame.
+	\param distanceToPlayer Mission shall not spawn too close to a player. -1 will use the default from MissionFrame.
 	
 	The position shall have ... 
 	- no players nearby
@@ -150,7 +155,6 @@ sealed class SCR_DC_MissionHelper
 	{
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 	
-//		foreach (SCR_DC_NonValidArea nonValidArea : baseGameMode.missionFrame.m_Config.nonValidAreas)
 		foreach (SCR_DC_NonValidArea nonValidArea : baseGameMode.missionFrame.m_NonValidAreas)
 		{
 			float distance = vector.Distance(pos, nonValidArea.pos);
@@ -167,7 +171,7 @@ sealed class SCR_DC_MissionHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Test mission positions on map. Only for debugging.
+	DEBUG: Test mission positions on map. Only for debugging.
 	*/	
 	static void DebugTestMissionPos(float distanceToMission = -1, float distanceToPlayer = -1)
 	{	
@@ -220,5 +224,5 @@ sealed class SCR_DC_MissionHelper
 
 			SCR_DC_WPHelper.CreateWaypoints(group, rndCount, waypointMoveType, waypointRndType, rndRange, true);
 		}
-	}			
+	}	
 }

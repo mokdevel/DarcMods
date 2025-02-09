@@ -40,7 +40,7 @@ class SCR_DC_MissionFrameConfig : Managed
 	int missionActiveDistance;		//The distance to a player to keep the mission active 
 	ref array<DC_EMissionType> missionTypeArray = {};	//Active missions list
 	int minDistanceToMission;		//Distance to another mission. Two missions shall not be too close to each other.
-	int minDistanceToPlayer;		//Mission shall not spawn too close a player.
+	int minDistanceToPlayer;		//Mission shall not spawn too close to a player.
 	
 	ref array<ref SCR_DC_NonValidArea> nonValidAreas = {};	
 }
@@ -105,18 +105,18 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		conf.logLevel = DC_LogLevel.DEBUG;
 		conf.missionStartDelay = DC_MISSION_START_DELAY;
 		//TBD: conf.missionnDelayBetweeen = DC_MISSION_DELAY_BETWEEN_MISSIONS
-		conf.missionCount = 4;
+		conf.missionCount = 1;
 		conf.missionFrameLifeCycleTime = DC_MISSIONFRAME_LIFECYCLE_TIME;
 		conf.missionActiveTime = DC_MISSION_ACTIVE_TIME;
 		conf.missionActiveDistance = DC_MISSION_ACTIVE_DISTANCE;
 		
 //		conf.missionTypeArray = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
 //		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION};
-		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};		
+//		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};		
 //		conf.missionTypeArray = {DC_EMissionType.OCCUPATION};		
 //		conf.missionTypeArray = {DC_EMissionType.HUNTER};
 //		conf.missionTypeArray = {DC_EMissionType.CONVOY};		
-//		conf.missionTypeArray = {DC_EMissionType.CRASHSITE};
+		conf.missionTypeArray = {DC_EMissionType.CRASHSITE};
 //		conf.missionTypeArray = {DC_EMissionType.CHOPPER};
 		conf.minDistanceToMission = 500;
 		conf.minDistanceToPlayer = 100;

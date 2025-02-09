@@ -205,7 +205,6 @@ class SCR_DC_MissionFrame
 			if (mission.GetState() == DC_MissionState.EXIT)
 			{
 				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Deleting mission: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
-//				SCR_DC_DebugHelper.DeleteDebugPos(mission.GetPos());				
 				SCR_DC_DebugHelper.DeleteDebugPos(mission.GetId());
 				m_MissionList.Remove(i);
 				delete mission;

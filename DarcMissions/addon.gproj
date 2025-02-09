@@ -14,7 +14,7 @@ GameProject {
   }
   GameProjectConfig PS4 {
   }
-  GameProjectConfig PS5 : PC {
+  GameProjectConfig PS5 {
    PlatformHardware PS5
    DefaultSettings EngineUserSettings "{5702F087A781A9FC}" {
     VideoUserSettings VideoUserSettings "{B272A67DB18E04F9}" {

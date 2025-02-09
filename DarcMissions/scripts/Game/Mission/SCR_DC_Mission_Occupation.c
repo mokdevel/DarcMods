@@ -204,7 +204,7 @@ class SCR_DC_OccupationConfig : Managed
 //------------------------------------------------------------------------------------------------
 class SCR_DC_Occupation : Managed
 {
-	//Mission specific
+	//Occupation specific
 	string comment;							//Generic comment to describe the mission. Not used in game.
 	vector locationPos;						//Position for mission. "0 0 0" used for random location chosen from locationTypes.
 	string locationName;					//Name for the mission location (like "bandit camp"). "any" uses location name found from locationTypes 
