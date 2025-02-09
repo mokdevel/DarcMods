@@ -234,7 +234,7 @@ sealed class SCR_DC_AIHelper
 	*/
 	static void RemoveAIAgent(AIAgent ai)
 	{
-		IEntity aiEntity = ai.GetControlledEntity();		
+		IEntity aiEntity = ai.GetControlledEntity();
 		DamageManagerComponent damageManager = DamageManagerComponent.Cast(aiEntity.FindComponent(DamageManagerComponent));
 				
 		if (damageManager)

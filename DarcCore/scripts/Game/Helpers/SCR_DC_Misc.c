@@ -57,6 +57,17 @@ sealed class SCR_DC_Misc
 
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Convert a vector to angle in degrees (0-360) to radians 
+	*/
+	static float VectorToAngle(vector direction)
+	{
+    	float angle = Math.Atan2(direction[0], direction[2]);
+    	float degrees = (180 * angle / Math.PI);
+    	return degrees;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Returns the (max) size of the world
 	*/	
 	static int GetWorldSize()
@@ -127,7 +138,9 @@ sealed class SCR_DC_Misc
 
 		if (positionFound)
 		{
-			pos = posTmp;
+			pos = posTmp;			
+			//Find height of ground
+			pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
 /*			#ifndef RELEASE
 				SCR_DC_MapMarkersUI.AddMarker("DUMMY_", pos, "", DC_EMarkerType.DEBUG);
 			#endif*/

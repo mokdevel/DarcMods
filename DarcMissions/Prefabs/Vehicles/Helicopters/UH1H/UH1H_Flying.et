@@ -37,7 +37,7 @@ Vehicle : "{D03C0F6044DB5208}Prefabs/Vehicles/Helicopters/UH1H/UH1H_base.et" {
    }
   }
   SCR_FireplaceComponent "{6490B6C15194670B}" {
-   m_sParticle "{3FEEFBF34A5A515C}Particles/Vehicle/Vehicle_fire_engine_BTR70_01.ptc"
+   m_sParticle "{79DD3A5F1F3069CD}Particles/Vehicle/Vehicle_fire_engine_small.ptc"
   }
   SCR_ResourceComponent "{64894791717784F3}" {
    m_aContainers {

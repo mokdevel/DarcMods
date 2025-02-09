@@ -19,8 +19,11 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 {
 	private ref SCR_DC_CrashsiteJsonApi m_CrashsiteJsonApi = new SCR_DC_CrashsiteJsonApi();	
 	private ref SCR_DC_CrashsiteConfig m_Config;
+	private const int DC_LOCATION_SEACRH_ITERATIONS = 30;	//How many different spots to try for a mission before giving up	
 		
 	private DC_EMissionCrashSiteState missionCrashSiteState = DC_EMissionCrashSiteState.INIT;
+	private vector m_PosDestination = "0 0 0";	//The destination where the chopper is flying from mission position
+	private float m_Angle = 0;
 	private IEntity m_Vehicle;
 	private vector vehiclePosOld;
 	private int idx = 0;	
@@ -29,7 +32,6 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 	void SCR_DC_Mission_Crashsite()
 	{
 		SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] Constructor", LogLevel.DEBUG);
-
 		
 //		SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] Class test: " + SCR_DC_Misc.IsClassAvailable("SCR_DC_Mission_Crashsite"), LogLevel.DEBUG);
 						
@@ -40,17 +42,58 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 		m_CrashsiteJsonApi.Load();
 		m_Config = m_CrashsiteJsonApi.conf;
 		
-		string posName = m_Config.posName;
-		vector pos = m_Config.pos;		
-//		vector pos = FindMissionPos(
-		
-		SetTitle(m_Config.title + "" + posName);
-		SetInfo(m_Config.info);
-		SetPos(pos);
-		SetPosName(posName);
-		SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(DC_ID_PREFIX, GetPos(), GetTitle()));
+		//Find position
+		bool positionFound = false;
+		vector pos;
 
-		SetState(DC_MissionState.INIT);			
+		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
+		{
+			pos = SCR_DC_MissionHelper.FindMissionPos(300, 500);
+			if (pos != "0 0 0")
+			{
+				positionFound = true;
+				pos[1] = pos[1] + Math.RandomInt(80, 120);
+				int rnd = SCR_DC_Misc.GetWorldSize()/8;
+				m_PosDestination[0] = SCR_DC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
+				m_PosDestination[2] = SCR_DC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
+				
+				//pos[0] = SCR_DC_Misc.GetWorldSize() - SCR_DC_Misc.GetWorldSize()/4;
+				//pos[2] = SCR_DC_Misc.GetWorldSize() - SCR_DC_Misc.GetWorldSize()/4;
+				
+				vector direction = vector.Direction(pos, m_PosDestination);
+				m_Angle = SCR_DC_Misc.VectorToAngle(direction);
+//				directon.VectorToAngles();
+				
+				SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] Helicopter flying from " + pos + " to " + m_PosDestination + ". Angle: " + m_Angle, LogLevel.DEBUG);
+				break;
+			}
+			else
+			{						
+				SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] Invalid mission position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
+			}
+		}
+		
+		if (positionFound)
+		{	
+			SetTitle(m_Config.title);
+			SetInfo(m_Config.info);
+			SetPos(pos);
+			SetPosName("");
+			SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(DC_ID_PREFIX, GetPos(), GetTitle()));
+	
+			SetState(DC_MissionState.INIT);			
+
+			//Set a marker for destination
+			SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(DC_ID_PREFIX, m_PosDestination, "Destination"));
+			SCR_DC_DebugHelper.AddDebugPos(m_PosDestination, Color.RED, 10, GetId() + "_1");
+		}
+		else
+		{				
+			//No suitable location found.
+			SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] Could not find suitable location.", LogLevel.ERROR);
+			SetState(DC_MissionState.EXIT);
+			return;
+		}	
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -81,6 +124,12 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 					if (!IsStillFlying(m_Vehicle))
 					{
 						SetPos(m_Vehicle.GetOrigin());
+
+						//Make sure the chopper is destroyed
+						DamageManagerComponent damageManager = DamageManagerComponent.Cast(m_Vehicle.FindComponent(DamageManagerComponent));
+						if (damageManager)
+							damageManager.SetHealthScaled(0);
+					
 						//TBD: Simulation should be set off to stop rolling etc.
 						//VehicleHelicopterSimulation vehicle_s;
 						//vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
@@ -136,12 +185,12 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 	{					
 		//Code for whatever you need for spawning things.
 		EntitySpawnParams params = EntitySpawnParams();
-//		string resourceName	= "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et";
-		string resourceName	= "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et";
-		vector pos = GetPos() + "0 40 0";
-	
+		string resourceName	= "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et";
+//		string resourceName	= "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et";
+		vector pos = GetPos();
+
 		//Spawn the resource exactly to pos		
-		m_Vehicle = SCR_DC_SpawnHelper.SpawnItem(pos, resourceName, 40, -1, false);
+		m_Vehicle = SCR_DC_SpawnHelper.SpawnItem(pos, resourceName, m_Angle, -1, false);
 		m_EntityList.Insert(m_Vehicle);
 		
 /*		Resource resource = Resource.Load(resourceName);
@@ -156,13 +205,15 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
         m_Vehicle_s.EngineStart();
         m_Vehicle_s.SetThrottle(0.7);
-        m_Vehicle_s.RotorSetForceScaleState(0, 0.8);	//Hovering 1.2
+        m_Vehicle_s.RotorSetForceScaleState(0, 0.9);	//Hovering 1.2	.. was 0.8 for the other one
+//        m_Vehicle_s.RotorSetForceScaleState(0, 1.2);	//Hovering 1.2
         m_Vehicle_s.RotorSetForceScaleState(1, 2);
 
 		vector velOrig = m_Vehicle.GetPhysics().GetVelocity();
         vector rotVector = m_Vehicle.GetAngles();
+		int speed = 40;
 		
-        vector vel = {velOrig[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * 50, velOrig[1], velOrig[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * 50 };
+        vector vel = {velOrig[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * speed, velOrig[1], velOrig[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * speed };
 		m_Vehicle.GetPhysics().SetVelocity(vel);
 	}
 	
@@ -173,12 +224,12 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 	private bool IsStillFlying(IEntity vehicle)
 	{
 		vector pos = vehicle.GetOrigin();
-		if(SCR_DC_Misc.IsPosNearPos(pos, vehiclePosOld, 3))
+		if(!SCR_DC_Misc.IsPosNearPos(pos, vehiclePosOld, 10))
 		{
+			vehiclePosOld = pos;
 			return true;
 		}
 		
-		vehiclePosOld = pos;
 		return false;
 	}	
 }
@@ -192,8 +243,6 @@ class SCR_DC_CrashsiteConfig : Managed
 	int missionLifeCycleTime = 1000;//DC_MISSION_LIFECYCLE_TIME_DEFAULT;	//How often the mission is run
 	
 	//Mission specific
-	vector pos;
-	string posName;
 	string title;
 	string info;
 	ref array<int> waypointRange = {};		//min, max
@@ -236,10 +285,8 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 	{
 		//Mission specific
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
-		conf.pos = "1053 39 2470";
-		conf.posName = "airport";
-		conf.title = "Crashsite mission at ";
-		conf.info = "Some additional information for players";
+		conf.title = "Helicopter in distress ";
+		conf.info = "A valuable cargo has crashed";
 		conf.waypointRange = {10,50};
 		conf.groupTypes = 
 		{
