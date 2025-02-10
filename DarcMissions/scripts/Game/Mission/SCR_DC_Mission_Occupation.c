@@ -176,10 +176,11 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 			}
 			
 			//Put loot
-			if (m_EntityList.Count() > 0)
+//			if (m_EntityList.Count() > 0)
+			if (m_DC_Occupation.loot)			
 			{
-				IEntity entityLoot = m_EntityList[0];
-				SCR_DC_SpawnHelper.SpawnItemsToStorage(entityLoot, m_DC_Occupation.itemNames, m_DC_Occupation.itemChance);			
+				m_DC_Occupation.loot.box = m_EntityList[0];
+				SCR_DC_LootHelper.SpawnItemsToStorage(m_DC_Occupation.loot.box, m_DC_Occupation.loot.items, m_DC_Occupation.loot.itemChance);
 				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionSpawn] Loot added.", LogLevel.DEBUG);								
 			}
 			
@@ -216,12 +217,11 @@ class SCR_DC_Occupation : Managed
 	DC_EWaypointRndType waypointType;
 	DC_EWaypointMoveType waypointMoveType;
 	ref array<string> groupTypes = {};
-	ref array<string> itemNames = {};		//Items to add to each spawnNames
-	float itemChance;						//The chance to spawn and item from itemNames. 0.5 = 50% chance
+	ref SCR_DC_Loot loot = null;
 	
 	ref array<ref SCR_DC_Structure> campItems = {};
 	
-	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointRndType waypointType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_,  array<string> itemNames_, float itemChance_)
+	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointRndType waypointType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_)
 	{
 		comment = comment_;
 		locationPos = locationPos_;
@@ -234,8 +234,6 @@ class SCR_DC_Occupation : Managed
 		waypointType = waypointType_;
 		waypointMoveType = _waypointMoveType;
 		groupTypes = groupTypes_;
-		itemNames = itemNames_;
-		itemChance = itemChance_;
 	}
 }		
 
@@ -271,9 +269,11 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
+		array<string> lootItems = {};
+		
 		//Mission specific
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
-		conf.occupationList = {0,0,0,1,1,1,2};		//Set -1 in the first entry to get a random occupation. Single number will be used as index.
+		conf.occupationList = {1};//}{0,0,0,1,1,1,2};		//Set -1 in the first entry to get a random occupation. Single number will be used as index.
 
 		//----------------------------------------------------
 		SCR_DC_Occupation occupation0 = new SCR_DC_Occupation;
@@ -296,9 +296,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
 				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
-			},
-			{},
-			1.0		
+			}
 		);
 		conf.occupations.Insert(occupation0);
 		
@@ -329,8 +327,12 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 				"{4D3BBEC1A955626A}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_Squad.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
 				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"				
-			},
-			{
+			}
+		);
+		conf.occupations.Insert(occupation1);
+		
+		SCR_DC_Loot occupation1loot = new SCR_DC_Loot;
+		lootItems = {
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
@@ -339,10 +341,9 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
-			},
-			0.9		
-		);
-		conf.occupations.Insert(occupation1);
+			};
+		occupation1loot.Set(0.9, lootItems);
+		occupation1.loot = occupation1loot;
 		
 		SCR_DC_Structure ocu1item0 = new SCR_DC_Structure;
 		ocu1item0.Set
@@ -403,8 +404,12 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 				"{96BAB56E6558788E}Prefabs/Groups/OPFOR/Group_USSR_Team_AT.et",
 				"{43C7A28EEB660FF8}Prefabs/Groups/OPFOR/Group_USSR_Team_GL.et",
 				"{1C0502B5729E7231}Prefabs/Groups/OPFOR/Group_USSR_Team_Suppress.et"
-			},
-			{
+			}
+		);
+		conf.occupations.Insert(occupation2);
+
+		SCR_DC_Loot occupation2loot = new SCR_DC_Loot;
+		lootItems = {
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
@@ -413,11 +418,10 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
-			},
-			0.9		
-		);
-		conf.occupations.Insert(occupation2);
-
+			};
+		occupation2loot.Set(0.9, lootItems);
+		occupation2.loot = occupation1loot;
+		
 		SCR_DC_Structure ocu2item0 = new SCR_DC_Structure;
 		ocu2item0.Set
 		(

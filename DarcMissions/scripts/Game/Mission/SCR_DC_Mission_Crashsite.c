@@ -185,12 +185,14 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 	{					
 		//Code for whatever you need for spawning things.
 		EntitySpawnParams params = EntitySpawnParams();
-		string resourceName	= "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et";
+		SCR_DC_HelicopterInfo helicopterInfo = m_Config.helicopterInfo.GetRandomElement();
+//		string resourceName	= helicopterInfo.resource;
+//		string resourceName	= "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et";
 //		string resourceName	= "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et";
 		vector pos = GetPos();
 
 		//Spawn the resource exactly to pos		
-		m_Vehicle = SCR_DC_SpawnHelper.SpawnItem(pos, resourceName, m_Angle, -1, false);
+		m_Vehicle = SCR_DC_SpawnHelper.SpawnItem(pos, helicopterInfo.resource, m_Angle, -1, false);
 		m_EntityList.Insert(m_Vehicle);
 		
 /*		Resource resource = Resource.Load(resourceName);
@@ -204,8 +206,8 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 		VehicleHelicopterSimulation m_Vehicle_s;
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
         m_Vehicle_s.EngineStart();
-        m_Vehicle_s.SetThrottle(0.7);
-        m_Vehicle_s.RotorSetForceScaleState(0, 0.9);	//Hovering 1.2	.. was 0.8 for the other one
+        m_Vehicle_s.SetThrottle(helicopterInfo.throttle);
+        m_Vehicle_s.RotorSetForceScaleState(0, helicopterInfo.rotorForce);	//Hovering 1.2	.. was 0.8 for the other one
 //        m_Vehicle_s.RotorSetForceScaleState(0, 1.2);	//Hovering 1.2
         m_Vehicle_s.RotorSetForceScaleState(1, 2);
 
@@ -235,6 +237,22 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 }
 		
 //------------------------------------------------------------------------------------------------
+class SCR_DC_HelicopterInfo : Managed
+{
+	string resource;
+	float throttle;
+	float rotorForce;
+
+	void Set(string resource_, float throttle_, float rotorForce_)
+	{
+		resource = resource_;
+		throttle = throttle_;
+		rotorForce = rotorForce_;
+	};
+}
+
+//------------------------------------------------------------------------------------------------
+
 class SCR_DC_CrashsiteConfig : Managed
 {
 	//Default information
@@ -245,8 +263,9 @@ class SCR_DC_CrashsiteConfig : Managed
 	//Mission specific
 	string title;
 	string info;
-	ref array<int> waypointRange = {};		//min, max
+	ref array<ref SCR_DC_HelicopterInfo> helicopterInfo = {};
 	ref array<string> groupTypes = {};
+	ref array<int> waypointRange = {};		//min, max
 	
 	//Variables here
 }
@@ -291,7 +310,24 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 		conf.groupTypes = 
 		{
 			"{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et"
-		}
+		};
+		
+		SCR_DC_HelicopterInfo heli0 = new SCR_DC_HelicopterInfo;
+		heli0.Set
+		(
+			"{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+			0.8,
+			1.3
+		);
+		conf.helicopterInfo.Insert(heli0);
+		SCR_DC_HelicopterInfo heli1 = new SCR_DC_HelicopterInfo;
+		heli1.Set
+		(
+			"{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
+			0.7,
+			0.9
+		);
+		conf.helicopterInfo.Insert(heli1);
 		
 	}	
 }

@@ -18,6 +18,8 @@ class SCR_DC_Structure
 		m_Rotation = rotation;
 	};
 
+	//TBD: As the things are not private, setters/getters are unnecessary
+	
     // Getter functions
     string GetResource()
     {
