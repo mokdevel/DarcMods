@@ -43,7 +43,7 @@ sealed class SCR_DC_LootHelper
 			{
 				ResourceName resource = itemName;
 				bool result = AddToStorage(storage, resource);			
-				SCR_DC_Log.Add("[SCR_DC_SpawnHelper:SpawnItemsToStorage] Adding item " + resource + ". Success: " + result, LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_LootHelper:SpawnItemsToStorage] Adding item " + resource + ". Success: " + result, LogLevel.DEBUG);
 			}
 		}
 	}		
@@ -68,7 +68,7 @@ sealed class SCR_DC_LootHelper
 		}
 		else
 		{
-			SCR_DC_Log.Add("[SCR_DC_SpawnHelper:AddToStorage] storageManager not found", LogLevel.ERROR);
+			SCR_DC_Log.Add("[SCR_DC_LootHelper:AddToStorage] storageManager not found", LogLevel.ERROR);
 			return false;
 		}
 	}	

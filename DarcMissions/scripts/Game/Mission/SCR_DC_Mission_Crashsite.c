@@ -11,7 +11,8 @@ enum DC_EMissionCrashSiteState
 {
 	INIT,
 	FLYING,
-	SPAWN,
+	SPAWN_SITE,
+	SPAWN_AI,
 	RUN
 };
 
@@ -134,14 +135,47 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 						//VehicleHelicopterSimulation vehicle_s;
 						//vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
 						SCR_DC_DebugHelper.MoveDebugPos(GetId(), GetPos());
-						missionCrashSiteState = DC_EMissionCrashSiteState.SPAWN;
+						missionCrashSiteState = DC_EMissionCrashSiteState.SPAWN_SITE;
 					}
 					break;
-				case DC_EMissionCrashSiteState.SPAWN:
+				case DC_EMissionCrashSiteState.SPAWN_SITE:
+					IEntity entity;
+				
+					SCR_DC_SpawnHelper.SetStructuresToOrigo(m_Config.siteItems);
+				
+					float rotation = Math.RandomFloat(0, 360);			
+					int i = 0;
+				
+					foreach(SCR_DC_Structure item : m_Config.siteItems)
+					{
+						entity = SCR_DC_SpawnHelper.SpawnStructures(m_Config.siteItems, GetPos(), rotation, i);
+						
+						if (entity != NULL)
+						{ 
+							m_EntityList.Insert(entity);
+						}
+						else
+						{
+							SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite:MissionSpawn] Could not load: " + item.m_Resource, LogLevel.ERROR);				
+						}
+						
+						i++;			
+					}
+				
+					//Put loot
+					if (m_Config.loot)			
+					{
+						m_Config.loot.box = m_EntityList[0];
+						SCR_DC_LootHelper.SpawnItemsToStorage(m_Config.loot.box, m_Config.loot.items, m_Config.loot.itemChance);
+						SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite:MissionSpawn] Loot added.", LogLevel.DEBUG);								
+					}
+				
+					missionCrashSiteState = DC_EMissionCrashSiteState.SPAWN_AI;
+					break;								
+				case DC_EMissionCrashSiteState.SPAWN_AI:
 				
 					SCR_AIGroup group = SCR_DC_MissionHelper.SpawnMissionAIGroup(m_Config.groupTypes.GetRandomElement(), GetPos());				
 //					SCR_AIGroup group = SCR_DC_MissionHelper.SpawnMissionAIGroup("{58251EDC277CE499}622120A5448725E3/Prefabs/Groups/Group_Zombies_USSR.et", GetPos());
-//					SCR_AIGroup group = SCR_DC_MissionHelper.SpawnMissionAIGroup("{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et", GetPos());
 					if (group)
 					{
 						m_Groups.Insert(group);
@@ -186,29 +220,17 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 		//Code for whatever you need for spawning things.
 		EntitySpawnParams params = EntitySpawnParams();
 		SCR_DC_HelicopterInfo helicopterInfo = m_Config.helicopterInfo.GetRandomElement();
-//		string resourceName	= helicopterInfo.resource;
-//		string resourceName	= "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et";
-//		string resourceName	= "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et";
 		vector pos = GetPos();
 
 		//Spawn the resource exactly to pos		
 		m_Vehicle = SCR_DC_SpawnHelper.SpawnItem(pos, helicopterInfo.resource, m_Angle, -1, false);
 		m_EntityList.Insert(m_Vehicle);
 		
-/*		Resource resource = Resource.Load(resourceName);
-		vector transform[4];
-		SCR_DC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0, false);
-        params.TransformMode = ETransformMode.WORLD;			
-        params.Transform = transform;
-		m_Vehicle = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);		
-		m_EntityList.Insert(m_Vehicle);*/
-		
 		VehicleHelicopterSimulation m_Vehicle_s;
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
         m_Vehicle_s.EngineStart();
         m_Vehicle_s.SetThrottle(helicopterInfo.throttle);
         m_Vehicle_s.RotorSetForceScaleState(0, helicopterInfo.rotorForce);	//Hovering 1.2	.. was 0.8 for the other one
-//        m_Vehicle_s.RotorSetForceScaleState(0, 1.2);	//Hovering 1.2
         m_Vehicle_s.RotorSetForceScaleState(1, 2);
 
 		vector velOrig = m_Vehicle.GetPhysics().GetVelocity();
@@ -264,6 +286,8 @@ class SCR_DC_CrashsiteConfig : Managed
 	string title;
 	string info;
 	ref array<ref SCR_DC_HelicopterInfo> helicopterInfo = {};
+	ref array<ref SCR_DC_Structure> siteItems = {};
+	ref SCR_DC_Loot loot = null;
 	ref array<string> groupTypes = {};
 	ref array<int> waypointRange = {};		//min, max
 	
@@ -313,21 +337,80 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 		};
 		
 		SCR_DC_HelicopterInfo heli0 = new SCR_DC_HelicopterInfo;
-		heli0.Set
-		(
+		heli0.Set(
 			"{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
 			0.8,
 			1.3
 		);
 		conf.helicopterInfo.Insert(heli0);
 		SCR_DC_HelicopterInfo heli1 = new SCR_DC_HelicopterInfo;
-		heli1.Set
-		(
+		heli1.Set(
 			"{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
 			0.7,
 			0.9
 		);
 		conf.helicopterInfo.Insert(heli1);
 		
+		SCR_DC_Structure crashitem0 = new SCR_DC_Structure;
+		crashitem0.Set(
+			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+	        //"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+	        "921.983 39 2629.78"
+	    );
+		conf.siteItems.Insert(crashitem0);
+		SCR_DC_Structure crashitem1 = new SCR_DC_Structure;
+		crashitem1.Set(
+	        "{33E84AF90E5FE1E5}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_03.et",
+	        "924.145 39 2635.076",
+	        "0 29.077 0"
+	    );
+		conf.siteItems.Insert(crashitem1);
+		SCR_DC_Structure crashitem2 = new SCR_DC_Structure;
+		crashitem2.Set(
+	        "{342E852E9A1847EA}Prefabs/Props/Industrial/Repair/VehicleGarbage_01_pile_medium.et",
+	        "928.642 39 2628.902",
+	        "0 37.793 0"
+	    );
+		conf.siteItems.Insert(crashitem2);
+		SCR_DC_Structure crashitem3 = new SCR_DC_Structure;
+		crashitem3.Set(
+	        "{D674060002BA768E}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_02.et",
+	        "928.925 39 2633.846"
+	    );
+		conf.siteItems.Insert(crashitem3);		
+		SCR_DC_Structure crashitem4 = new SCR_DC_Structure;
+		crashitem4.Set(
+			"{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
+			"925.622 39.009 2628.648"
+		);
+		conf.siteItems.Insert(crashitem4);		
+		SCR_DC_Structure crashitem5 = new SCR_DC_Structure;
+		crashitem5.Set(
+			"{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
+			"931.951 39 2631.805",
+			"0 68.972 0"
+		);
+		conf.siteItems.Insert(crashitem5);		
+		SCR_DC_Structure crashitem6 = new SCR_DC_Structure;
+		crashitem6.Set(
+			"{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
+			"922.173 39 2632.577",
+			"0 68.972 0"
+		);
+		conf.siteItems.Insert(crashitem6);
+		
+		SCR_DC_Loot crashloot = new SCR_DC_Loot;
+		array<string> lootItems = {
+				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
+				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
+				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
+				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
+				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
+			};
+		crashloot.Set(0.9, lootItems);
+		conf.loot = crashloot;		
 	}	
 }

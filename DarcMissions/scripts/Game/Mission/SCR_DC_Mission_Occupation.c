@@ -176,7 +176,6 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 			}
 			
 			//Put loot
-//			if (m_EntityList.Count() > 0)
 			if (m_DC_Occupation.loot)			
 			{
 				m_DC_Occupation.loot.box = m_EntityList[0];
@@ -273,7 +272,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		
 		//Mission specific
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
-		conf.occupationList = {1};//}{0,0,0,1,1,1,2};		//Set -1 in the first entry to get a random occupation. Single number will be used as index.
+		conf.occupationList = {0,0,0,1,1,1,2};		//Set -1 in the first entry to get a random occupation. Single number will be used as index.
 
 		//----------------------------------------------------
 		SCR_DC_Occupation occupation0 = new SCR_DC_Occupation;
@@ -302,8 +301,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		
 		//----------------------------------------------------
 		SCR_DC_Occupation occupation1 = new SCR_DC_Occupation;
-		occupation1.Set
-		(
+		occupation1.Set(
 			"Bandit camp spawning to non city areas",
 			"0 0 0",
 			"any",
@@ -346,42 +344,34 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		occupation1.loot = occupation1loot;
 		
 		SCR_DC_Structure ocu1item0 = new SCR_DC_Structure;
-		ocu1item0.Set
-		(
+		ocu1item0.Set(
 			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
-			"1032.038 39 2478.923",
-			"0 0 0"
+			"1032.038 39 2478.923"
 		);
 		occupation1.campItems.Insert(ocu1item0);
 		SCR_DC_Structure ocu1item1 = new SCR_DC_Structure;
-		ocu1item1.Set
-		(
+		ocu1item1.Set(
 			"{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et",
 			"1028.55 39 2478.16",
 			"0 119.334 0"
 		);
 		occupation1.campItems.Insert(ocu1item1);
 		SCR_DC_Structure ocu1item2 = new SCR_DC_Structure;
-		ocu1item2.Set
-		(
+		ocu1item2.Set(
 			"{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et",
-			"1029.9 39 2477.44",
-			"0 0 0"
+			"1029.9 39 2477.44"
 		);
 		occupation1.campItems.Insert(ocu1item2);					
 		SCR_DC_Structure ocu1item3 = new SCR_DC_Structure;
-		ocu1item3.Set
-		(
+		ocu1item3.Set(
 			"{0511E95F422061BB}Prefabs/Props/Recreation/Camp/TentSmall_02/TentSmall_02_blue.et",
-			"1029.974 39 2480.114",
-			"0 0 0"
+			"1029.974 39 2480.114"
 		);
 		occupation1.campItems.Insert(ocu1item3);
 		
 		//----------------------------------------------------
 		SCR_DC_Occupation occupation2 = new SCR_DC_Occupation;
-		occupation2.Set
-		(
+		occupation2.Set(
 			"Occupation that will spawn mainly to cities and towns with USSR forces.",
 			"0 0 0",
 			"any",
@@ -423,36 +413,29 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		occupation2.loot = occupation1loot;
 		
 		SCR_DC_Structure ocu2item0 = new SCR_DC_Structure;
-		ocu2item0.Set
-		(
+		ocu2item0.Set(
 			//"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
 	        "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
-        	"1018.164 39 2501.937",
-			"0 0 0"
+        	"1018.164 39 2501.937"
 		);
 		occupation2.campItems.Insert(ocu2item0);
 		
 		SCR_DC_Structure ocu2item1 = new SCR_DC_Structure;
-		ocu2item1.Set
-		(
+		ocu2item1.Set(
 	        "{2CB4BFA62C2D9C12}Prefabs/Structures/Military/CamoNets/CamoNet_Small_Top_01_base.et",
-	        "1017.857 39 2501.721",
-			"0 0 0"
+	        "1017.857 39 2501.721"
 		);
 		occupation2.campItems.Insert(ocu2item1);
 
 		SCR_DC_Structure ocu2item2 = new SCR_DC_Structure;
-		ocu2item2.Set
-		(
+		ocu2item2.Set(
 	        "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
-			"1018.146 39 2504.881",
-			"0 0 0"
+			"1018.146 39 2504.881"
 		);
 		occupation2.campItems.Insert(ocu2item2);
 	
 		SCR_DC_Structure ocu2item3 = new SCR_DC_Structure;
-		ocu2item3.Set
-		(
+		ocu2item3.Set(
 	        "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
 			"1020.456 39 2500.896",
 			"0 114.569 0"

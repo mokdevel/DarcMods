@@ -11,7 +11,7 @@ class SCR_DC_Structure
 	vector m_Position;
 	vector m_Rotation;	//"Xrot YRot ZRot"
 
-	void Set(string resource, vector position, vector rotation)
+	void Set(string resource, vector position, vector rotation = "0 0 0")
 	{
 		m_Resource = resource;
 		m_Position = position;
