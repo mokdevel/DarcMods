@@ -10,12 +10,12 @@
 	const int DC_MISSION_ACTIVE_DISTANCE = 300;		
 	const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 30;
 	const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 30;
-	const int DC_MISSIONFRAME_LIFECYCLE_TIME = 120;
+	const int DC_MISSIONFRAME_LIFECYCLE_TIME = 60;
 #endif
 
 #ifndef SCR_DC_RELEASE
 	const int DC_MISSION_START_DELAY = 5;				//Time to wait before spawning the first mission (seconds)
-	const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 2*60;
+	const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*60;
 	const int DC_MISSION_ACTIVE_TIME = 120;				//Time to keep the mission active (seconds)
 	const int DC_MISSION_ACTIVE_DISTANCE = 300;		
 	const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 10;
@@ -34,6 +34,7 @@ class SCR_DC_MissionFrameConfig : Managed
 	bool debugShowWaypoints = true;
 	bool debugShowMarks = true;
 	int missionStartDelay;			//Time to wait before spawning the first mission (seconds)
+	int missionDelayBetweeen;		//Time between missions
 	int missionCount;				//Maximum amount of missions to be active at the same time
 	int missionFrameLifeCycleTime;	//The cycle time to manage mission spawning, deletion etc...
 	int missionActiveTime;			//Time to keep the mission active (seconds)
@@ -104,15 +105,15 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 	{
 		conf.logLevel = DC_LogLevel.DEBUG;
 		conf.missionStartDelay = DC_MISSION_START_DELAY;
-		//TBD: conf.missionnDelayBetweeen = DC_MISSION_DELAY_BETWEEN_MISSIONS
-		conf.missionCount = 1;
+		conf.missionDelayBetweeen = DC_MISSION_DELAY_BETWEEN_MISSIONS;
+		conf.missionCount = 4;
 		conf.missionFrameLifeCycleTime = DC_MISSIONFRAME_LIFECYCLE_TIME;
 		conf.missionActiveTime = DC_MISSION_ACTIVE_TIME;
 		conf.missionActiveDistance = DC_MISSION_ACTIVE_DISTANCE;
 		
 //		conf.missionTypeArray = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
 //		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION};
-//		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};		
+//		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
 //		conf.missionTypeArray = {DC_EMissionType.OCCUPATION};		
 //		conf.missionTypeArray = {DC_EMissionType.HUNTER};
 //		conf.missionTypeArray = {DC_EMissionType.CONVOY};		

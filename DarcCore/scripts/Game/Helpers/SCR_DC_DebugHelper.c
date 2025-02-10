@@ -252,13 +252,14 @@ sealed class SCR_DC_DebugHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Deletes a debug cylinder with a certain id
+	Deletes a debug cylinder with a certain id. The id works as a wild card.
 	*/
 	static void DeleteDebugPos(string id)
 	{
 		for (int i = 0; i < m_Pos.Count(); i++)		
 		{
-			if(m_Pos[i].id == id)
+//			if(m_Pos[i].id == id)
+			if(m_Pos[i].id.Contains(id))
 			{
 				m_Pos.Remove(i);
 				i--;

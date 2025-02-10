@@ -30,7 +30,8 @@ class SCR_DC_MissionFrame
 	ref SCR_DC_MissionFrameJsonApi m_DC_MissionFrameJsonApi = new SCR_DC_MissionFrameJsonApi;
 	ref SCR_DC_MissionFrameConfig m_Config;
 	ref array<ref SCR_DC_NonValidArea> m_NonValidAreas = {};
-	string m_WorldName;
+	private string m_WorldName;
+	private int m_LastMissionSpawnTime = 0;
 	
 	protected SCR_MapMarkerManagerComponent m_mapMarkerManager;
 	
@@ -116,8 +117,8 @@ class SCR_DC_MissionFrame
 	{			
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Number of active missions: " + m_MissionList.Count() + "/" + m_Config.missionCount, LogLevel.NORMAL);
 				
-		//Check if more missions are to be spawned
-		if (m_MissionList.Count() < m_Config.missionCount)
+		//Check if more missions are to be spawned		
+		if ( (m_MissionList.Count() < m_Config.missionCount) && (isMissionDelayPassed()) )
 		{
 			private ref SCR_DC_Mission tmpDC_Mission = null;
 
@@ -182,6 +183,9 @@ class SCR_DC_MissionFrame
 					SCR_DC_MapMarkersUI.AddMarkerHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), tmpDC_Mission.GetId());		
 	
 					SCR_DC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), Color.YELLOW, 10, tmpDC_Mission.GetId());
+					
+					//Set the time when the mission has started. Activates the delay.
+					m_LastMissionSpawnTime = (System.GetTickCount() / 1000);
 				}
 			}
 		}
@@ -245,4 +249,21 @@ class SCR_DC_MissionFrame
 		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.DEBUG);
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Checks if the delay between missions has passed.
+	*/	
+	protected bool isMissionDelayPassed()
+	{
+		int delayTime = m_LastMissionSpawnTime + m_Config.missionDelayBetweeen;
+		int systemTime = (System.GetTickCount() / 1000);
+		
+		if ( delayTime > systemTime )
+		{
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame:isMissionDelayPassed] Waiting for delay: " + delayTime + ">" + systemTime, LogLevel.DEBUG);
+			return false;
+		}
+		return true;
+	}
+	
 }

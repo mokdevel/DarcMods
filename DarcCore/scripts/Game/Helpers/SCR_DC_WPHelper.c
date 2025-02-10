@@ -152,7 +152,7 @@ sealed class SCR_DC_WPHelper
 	{
 		array<AIWaypoint> waypoints = {};
 		
-		//Random 
+		//Scattered as in completely random positions
 		if (rndtype == DC_EWaypointRndType.SCATTERED)
 		{		
 			for (int i = 0; i < count; i++)
@@ -217,7 +217,7 @@ sealed class SCR_DC_WPHelper
 	static AIWaypoint GetWaypoint(vector position, DC_EWaypointMoveType wptype, float range = 0, bool emptyspot = false )
 	{	
 		vector wpPos;
-		float emptyRange = 30;
+		float emptyRange = 30;	//Radius of queried area
 		
 		wpPos = SCR_DC_Misc.RandomizePos(position, range);
 		

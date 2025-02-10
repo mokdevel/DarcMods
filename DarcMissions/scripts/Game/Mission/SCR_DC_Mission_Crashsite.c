@@ -26,7 +26,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 	private vector m_PosDestination = "0 0 0";	//The destination where the chopper is flying from mission position
 	private float m_Angle = 0;
 	private IEntity m_Vehicle;
-	private vector vehiclePosOld;
+	private vector m_VehiclePosOld;
 	private int idx = 0;	
 	
 	//------------------------------------------------------------------------------------------------
@@ -52,18 +52,15 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 			pos = SCR_DC_MissionHelper.FindMissionPos(300, 500);
 			if (pos != "0 0 0")
 			{
+				//Find flight positions from pos to m_PosDestination.
 				positionFound = true;
 				pos[1] = pos[1] + Math.RandomInt(80, 120);
 				int rnd = SCR_DC_Misc.GetWorldSize()/8;
 				m_PosDestination[0] = SCR_DC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
 				m_PosDestination[2] = SCR_DC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
 				
-				//pos[0] = SCR_DC_Misc.GetWorldSize() - SCR_DC_Misc.GetWorldSize()/4;
-				//pos[2] = SCR_DC_Misc.GetWorldSize() - SCR_DC_Misc.GetWorldSize()/4;
-				
 				vector direction = vector.Direction(pos, m_PosDestination);
 				m_Angle = SCR_DC_Misc.VectorToAngle(direction);
-//				directon.VectorToAngles();
 				
 				SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] Helicopter flying from " + pos + " to " + m_PosDestination + ". Angle: " + m_Angle, LogLevel.DEBUG);
 				break;
@@ -80,12 +77,12 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 			SetInfo(m_Config.info);
 			SetPos(pos);
 			SetPosName("");
-			SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(DC_ID_PREFIX, GetPos(), GetTitle()));
+			SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(GetId(), GetPos(), GetTitle()));
 	
 			SetState(DC_MissionState.INIT);			
 
 			//Set a marker for destination
-			SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(DC_ID_PREFIX, m_PosDestination, "Destination"));
+			SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(GetId() + "_1", m_PosDestination, "Destination"));
 			SCR_DC_DebugHelper.AddDebugPos(m_PosDestination, Color.RED, 10, GetId() + "_1");
 		}
 		else
@@ -126,6 +123,8 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 					{
 						SetPos(m_Vehicle.GetOrigin());
 
+						SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(GetId(), GetPos(), "Crashsite"));
+					
 						//Make sure the chopper is destroyed
 						DamageManagerComponent damageManager = DamageManagerComponent.Cast(m_Vehicle.FindComponent(DamageManagerComponent));
 						if (damageManager)
@@ -165,17 +164,16 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 					//Put loot
 					if (m_Config.loot)			
 					{
-						m_Config.loot.box = m_EntityList[0];
+						m_Config.loot.box = m_EntityList[1];	//Normally it's the first one, but we have added the chopper in the list as the first one.
 						SCR_DC_LootHelper.SpawnItemsToStorage(m_Config.loot.box, m_Config.loot.items, m_Config.loot.itemChance);
 						SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite:MissionSpawn] Loot added.", LogLevel.DEBUG);								
 					}
-				
+								
 					missionCrashSiteState = DC_EMissionCrashSiteState.SPAWN_AI;
 					break;								
 				case DC_EMissionCrashSiteState.SPAWN_AI:
-				
+
 					SCR_AIGroup group = SCR_DC_MissionHelper.SpawnMissionAIGroup(m_Config.groupTypes.GetRandomElement(), GetPos());				
-//					SCR_AIGroup group = SCR_DC_MissionHelper.SpawnMissionAIGroup("{58251EDC277CE499}622120A5448725E3/Prefabs/Groups/Group_Zombies_USSR.et", GetPos());
 					if (group)
 					{
 						m_Groups.Insert(group);
@@ -197,10 +195,6 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 				default:
 					//Nothing
 			}
-			
-			//Add code for runtime
-			//Eventually when mission is to ended do this:
-			//SetState(DC_MissionState.END);
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionLifeCycleTime*1000);
@@ -248,9 +242,9 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 	private bool IsStillFlying(IEntity vehicle)
 	{
 		vector pos = vehicle.GetOrigin();
-		if(!SCR_DC_Misc.IsPosNearPos(pos, vehiclePosOld, 10))
+		if(!SCR_DC_Misc.IsPosNearPos(pos, m_VehiclePosOld, 10))
 		{
-			vehiclePosOld = pos;
+			m_VehiclePosOld = pos;
 			return true;
 		}
 		
@@ -333,7 +327,8 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 		conf.waypointRange = {10,50};
 		conf.groupTypes = 
 		{
-			"{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et"
+			"{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et",
+			//"{58251EDC277CE499}622120A5448725E3/Prefabs/Groups/Group_Zombies_USSR.et"
 		};
 		
 		SCR_DC_HelicopterInfo heli0 = new SCR_DC_HelicopterInfo;
@@ -353,8 +348,8 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 		
 		SCR_DC_Structure crashitem0 = new SCR_DC_Structure;
 		crashitem0.Set(
-			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
-	        //"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+			//"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+	        "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 	        "921.983 39 2629.78"
 	    );
 		conf.siteItems.Insert(crashitem0);

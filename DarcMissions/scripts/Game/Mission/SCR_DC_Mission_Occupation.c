@@ -272,7 +272,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		
 		//Mission specific
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
-		conf.occupationList = {0,0,0,1,1,1,2};		//Set -1 in the first entry to get a random occupation. Single number will be used as index.
+		conf.occupationList = {1};// {0,0,0,1,1,1,2};		//Set -1 in the first entry to get a random occupation. Single number will be used as index.
 
 		//----------------------------------------------------
 		SCR_DC_Occupation occupation0 = new SCR_DC_Occupation;
