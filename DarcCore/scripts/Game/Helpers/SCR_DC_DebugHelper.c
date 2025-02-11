@@ -1,12 +1,18 @@
 //Helpers SCR_DC_DebugHelper.c
 
+modded enum SCR_DebugMenuID {
+    MODMENU = 236,		//TBD: This should work without the need to have a value here. 
+    MODMENU_WAYPOINTS,
+    MODMENU_MARKS
+}
+
 //------------------------------------------------------------------------------------------------
-enum MyModDebugMenu_Enum
+/*enum MyModDebugMenu_Enum
 {
-    ModMenu = SCR_DebugMenuID.DEBUGUI_NEWTUTORIAL_COURSE_MOVE_TO_WP,
-    ModMenu_WAYPOINTS,
-    ModMenu_MARKS
-};
+    MODMENU = SCR_DebugMenuID.DEBUGUI_NEWTUTORIAL_COURSE_MOVE_TO_WP,
+    MODMENU_WAYPOINTS,
+    MODMENU_MARKS
+};*/
 
 //------------------------------------------------------------------------------------------------
 class SCR_DC_DebugHelperPos : Managed
@@ -32,11 +38,11 @@ sealed class SCR_DC_DebugHelper
 	static void Setup()
 	{
 		// Some init script		
-		const string categoryName = "DarcDebug";		
-		DiagMenu.RegisterMenu(MyModDebugMenu_Enum.ModMenu , categoryName, categoryName);
+		const string categoryName = "DarcDebug";
+		DiagMenu.RegisterMenu(SCR_DebugMenuID.MODMENU , categoryName, categoryName);
 		{
-		    DiagMenu.RegisterBool(MyModDebugMenu_Enum.ModMenu_WAYPOINTS, "", "Show waypoints", categoryName);
-		    DiagMenu.RegisterBool(MyModDebugMenu_Enum.ModMenu_MARKS, "", "Show markers", categoryName);
+		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_WAYPOINTS, "", "Show waypoints", categoryName);
+		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_MARKS, "", "Show markers", categoryName);
 		}
 	}		
 
@@ -46,8 +52,8 @@ sealed class SCR_DC_DebugHelper
 	*/
 	static void Configure(bool waypoint, bool marks)
 	{
-		DiagMenu.SetValue(MyModDebugMenu_Enum.ModMenu_WAYPOINTS, waypoint);
-		DiagMenu.SetValue(MyModDebugMenu_Enum.ModMenu_MARKS, marks);
+		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_WAYPOINTS, waypoint);
+		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_MARKS, marks);
 		
 		SCR_DC_MapMarkerEntity dummy = SCR_DC_MapMarkerEntity.Cast(m_MarkerEntity);		
 	}		
@@ -58,13 +64,13 @@ sealed class SCR_DC_DebugHelper
 	*/
 	static void OnFrame(IEntity owner)
 	{	
-		if (DiagMenu.GetBool(MyModDebugMenu_Enum.ModMenu_WAYPOINTS))
+		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_WAYPOINTS))
 		{
 			SCR_DC_DebugHelper.DrawWaypointShapes();
 			SCR_DC_DebugHelper.DrawWaypointLines();
 		}
 		
-		if (DiagMenu.GetBool(MyModDebugMenu_Enum.ModMenu_MARKS))
+		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
 		{		
 			SCR_DC_DebugHelper.DrawMarks();
 		}
@@ -133,7 +139,6 @@ sealed class SCR_DC_DebugHelper
 					
 				foreach(AIWaypoint wp : waypoints)
 				{				
-//					if (AIWaypointCycle.Cast(wp) == null && wpType == DC_WaypointLineType.NORMAL)	//Filter cycle waypoints away
 					if (AIWaypointCycle.Cast(wp) == null && !isCycle)	//Filter cycle waypoints away
 					{
 						vector pos = RaiseWaypointPos(wp);
@@ -141,7 +146,6 @@ sealed class SCR_DC_DebugHelper
 						index++;
 					}
 					
-//					if (AIWaypointCycle.Cast(wp) != null && wpType == DC_WaypointLineType.CYCLE)
 					if (AIWaypointCycle.Cast(wp) != null && isCycle)
 					{
 						AIWaypointCycle.Cast(wp).GetWaypoints(waypointsCycle);
@@ -321,24 +325,5 @@ sealed class SCR_DC_DebugHelper
 		
 		return pos;
 	}
-	
-/*	
-ComponentType type = CompnentType.Cast(object.FindCoponent(ComponentType))	
-array<AIAgent> agents = new array<AIAgent>;
-            group.GetAgents(agents);
-	
-GetGame().GetWorld().QueryEntitiesBySphere(w.FindEntityByName("Trigger_" + loc).GetOrigin(), 170, processAI, filterAI);
-        }
-    }
-    
-    bool filterAI(IEntity ent)
-    {
-        SCR_AIGroup aig = SCR_AIGroup.Cast(ent);
-        // Runs 13000 times, so it does find entities
-        if (!aig) return false;
-        // Runs 0 times, despite there being AI groups present that FindEntityByName() can manually find and successfully cast to SCR_AIGroup
-        return true;	
-	
-*/	
 	
 }

@@ -83,12 +83,21 @@ class SCR_DC_MissionFrame
 	void CreateMapMarker(vector pos, int color = Color.RED)
 	{
 		SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
-		markerst.SetType(SCR_EMapMarkerType.PLACED_MILITARY);
+		markerst.SetType(SCR_EMapMarkerType.PLACED_CUSTOM);
 		markerst.SetCustomText("Marker");
 		markerst.SetWorldPos(pos[0], pos[2]);
 		markerst.SetColorEntry(color);
+		markerst.SetIconEntry(1);
 		
 		m_mapMarkerManager.InsertStaticMarker(markerst, false, true);
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] CreateMapMarker " + markerst.GetMarkerConfigID(), LogLevel.DEBUG);		
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] CreateMapMarker " + markerst.GetMarkerComponent(), LogLevel.DEBUG);		
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] CreateMapMarker " + markerst.GetType(), LogLevel.DEBUG);		
+		
+//		SCR_DC_Log.Add("[SCR_DC_DebugHelper] ENUM " + SCR_DebugMenuID.ModMenu, LogLevel.DEBUG);		
+//		SCR_DC_Log.Add("[SCR_DC_DebugHelper] ENUM " + SCR_DebugMenuID.DEBUGUI_NEWTUTORIAL_COURSE_MOVE_TO_WP, LogLevel.DEBUG);
+
+		
 	}	
 
 	//------------------------------------------------------------------------------------------------
