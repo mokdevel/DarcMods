@@ -34,7 +34,11 @@ class SCR_DC_MissionFrame
 	private int m_LastMissionSpawnTime = 0;
 	
 	protected SCR_MapMarkerManagerComponent m_mapMarkerManager;
+
+	protected ref SCR_MapMarkerBase m_MapMarker;
+	protected ref SCR_ScenarioFrameworkMarkerType m_MapMarkerType = new SCR_ScenarioFrameworkMarkerCustom;
 	
+		
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_MissionFrame()
 	{
@@ -72,7 +76,8 @@ class SCR_DC_MissionFrame
 		
 		m_mapMarkerManager = SCR_MapMarkerManagerComponent.GetInstance();
 		
-		CreateMapMarker("1000 0 1000");		
+		CreateMapMarker("1000 0 1000");
+		CreateMapMarker2("1500 0 1000");
 	}
 
 	
@@ -82,6 +87,8 @@ class SCR_DC_MissionFrame
 	*/	
 	void CreateMapMarker(vector pos, int color = Color.RED)
 	{
+		SCR_MapMarkerEntryConfig conf = new SCR_MapMarkerEntryConfig();
+		
 		SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
 		markerst.SetType(SCR_EMapMarkerType.PLACED_CUSTOM);
 		markerst.SetCustomText("Marker");
@@ -93,13 +100,34 @@ class SCR_DC_MissionFrame
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] CreateMapMarker " + markerst.GetMarkerConfigID(), LogLevel.DEBUG);		
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] CreateMapMarker " + markerst.GetMarkerComponent(), LogLevel.DEBUG);		
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] CreateMapMarker " + markerst.GetType(), LogLevel.DEBUG);		
-		
-//		SCR_DC_Log.Add("[SCR_DC_DebugHelper] ENUM " + SCR_DebugMenuID.ModMenu, LogLevel.DEBUG);		
-//		SCR_DC_Log.Add("[SCR_DC_DebugHelper] ENUM " + SCR_DebugMenuID.DEBUGUI_NEWTUTORIAL_COURSE_MOVE_TO_WP, LogLevel.DEBUG);
-
-		
 	}	
 
+	protected void CreateMapMarker2(vector pos)
+	{
+		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
+		if (!mapMarkerMgr)
+			return;
+		m_MapMarker = new SCR_MapMarkerBase();
+		
+		SCR_ScenarioFrameworkMarkerCustom mapMarkerCustom = SCR_ScenarioFrameworkMarkerCustom.Cast(m_MapMarkerType);
+		if (mapMarkerCustom)
+		{
+			m_MapMarker.SetType(SCR_EMapMarkerType.PLACED_CUSTOM);
+//			m_MapMarker.SetType(SCR_EMapMarkerType.DARC_MISSION);
+			m_MapMarker.SetIconEntry(SCR_EScenarioFrameworkMarkerCustom.FORTIFICATION);
+			m_MapMarker.SetColorEntry(SCR_EScenarioFrameworkMarkerCustomColor.RED);
+			m_MapMarker.SetCustomText("My marker");
+//			m_MapMarker.SetIconEntry(mapMarkerCustom.m_eMapMarkerIcon);
+//			m_MapMarker.SetRotation(mapMarkerCustom.m_iMapMarkerRotation);
+//			m_MapMarker.SetColorEntry(mapMarkerCustom.m_eMapMarkerColor);
+		}
+		
+		m_MapMarker.SetWorldPos(pos[0], pos[2]);
+		m_MapMarker.SetCustomText(m_MapMarkerType.m_sMapMarkerText);
+		
+		mapMarkerMgr.InsertStaticMarker(m_MapMarker, false, true);
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Start the mission framework.
