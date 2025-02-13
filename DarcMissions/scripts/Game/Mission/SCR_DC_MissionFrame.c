@@ -76,7 +76,7 @@ class SCR_DC_MissionFrame
 		
 		m_mapMarkerManager = SCR_MapMarkerManagerComponent.GetInstance();
 		
-		CreateMapMarker("1000 0 1000");
+//		CreateMapMarker("1000 0 1000");
 		CreateMapMarker2("1500 0 1000");
 	}
 
@@ -87,10 +87,10 @@ class SCR_DC_MissionFrame
 	*/	
 	void CreateMapMarker(vector pos, int color = Color.RED)
 	{
-		SCR_MapMarkerEntryConfig conf = new SCR_MapMarkerEntryConfig();
+//		SCR_MapMarkerEntryConfig conf = new SCR_MapMarkerEntryConfig();
 		
 		SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
-		markerst.SetType(SCR_EMapMarkerType.PLACED_CUSTOM);
+		markerst.SetType(SCR_EMapMarkerType.DARC_MISSION);
 		markerst.SetCustomText("Marker");
 		markerst.SetWorldPos(pos[0], pos[2]);
 		markerst.SetColorEntry(color);
@@ -112,7 +112,7 @@ class SCR_DC_MissionFrame
 		SCR_ScenarioFrameworkMarkerCustom mapMarkerCustom = SCR_ScenarioFrameworkMarkerCustom.Cast(m_MapMarkerType);
 		if (mapMarkerCustom)
 		{
-			m_MapMarker.SetType(SCR_EMapMarkerType.PLACED_CUSTOM);
+			m_MapMarker.SetType(SCR_EMapMarkerType.DARC_MISSION);
 //			m_MapMarker.SetType(SCR_EMapMarkerType.DARC_MISSION);
 			m_MapMarker.SetIconEntry(SCR_EScenarioFrameworkMarkerCustom.FORTIFICATION);
 			m_MapMarker.SetColorEntry(SCR_EScenarioFrameworkMarkerCustomColor.RED);
