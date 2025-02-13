@@ -76,7 +76,7 @@ class SCR_DC_MapMarkersUI : SCR_MapUIBaseComponent
 		
 		if (!SCR_DC_Core.RELEASE)
 		{
-			DeleteMarker("DUMMY_");
+			SCR_DC_MapMarkerHelper.DeleteMarker("DUMMY_");
 		}
 		
 		super.OnMapClose(config);
@@ -130,35 +130,6 @@ class SCR_DC_MapMarkersUI : SCR_MapUIBaseComponent
 		SCR_DC_MapMarkerEntity dummy = SCR_DC_MapMarkerEntity.Cast(m_MarkerEntity);		
 		dummy.AddMarkerHint(title, description, id);
 	}			
-		
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Delete marker with certain id
-	\param id Id of the marker to delete. This works as a wildcard so "A_" will delete all markers starting with A_
-	*/
-	
-	static void DeleteMarker(string id)
-	{
-		m_isMapOpen = false;
-		
-		int startCount = m_markers.Count();
-		
-		//Clean up marker widgets
-		for (int i = 0; i < m_markers.Count(); i++)		
-		{
-			if (m_markers[i].id.Contains(id))
-			{
-				if (m_markers[i].widget)
-				{
-					delete m_markers[i].widget;
-				}
-				m_markers.Remove(i);
-				i--;
-			}	
-		}
-		
-		SCR_DC_Log.Add("[SCR_DC_MapMarkersUI:DeleteMarker] " + m_markers.Count() + " markers. Deleted " + (startCount - m_markers.Count()) + " markers", LogLevel.NORMAL);        		
-	}	
 	
 	//------------------------------------------------------------------------------------------------
 	/*!

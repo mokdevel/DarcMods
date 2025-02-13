@@ -37,7 +37,6 @@ class SCR_DC_MissionFrame
 
 	protected ref SCR_MapMarkerBase m_MapMarker;
 	protected ref SCR_ScenarioFrameworkMarkerType m_MapMarkerType = new SCR_ScenarioFrameworkMarkerCustom;
-	
 		
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_MissionFrame()
@@ -74,54 +73,10 @@ class SCR_DC_MissionFrame
 		}
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas defined: " + m_NonValidAreas.Count(), LogLevel.DEBUG);		
 		
-		m_mapMarkerManager = SCR_MapMarkerManagerComponent.GetInstance();
-		
-		CreateMapMarker("900 0 1000", DC_EMissionIcon.MISSION);
-		CreateMapMarker("1000 0 1000", DC_EMissionIcon.CRASHSITE);
-		CreateMapMarker("1200 0 1000", DC_EMissionIcon.TARGETO);
+		SCR_DC_MapMarkerHelper.CreateMapMarker("900 0 1000", DC_EMissionIcon.MISSION);
+		SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 1000", DC_EMissionIcon.CRASHSITE);
+		SCR_DC_MapMarkerHelper.CreateMapMarker("1200 0 1000", DC_EMissionIcon.TARGETO);
 	}
-
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	DEBUGging things with CreateMapMarker
-	*/	
-
-	void CreateMapMarker(vector pos, int icon)
-	{
-		SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
-		markerst.SetType(SCR_EMapMarkerType.DARC_MISSION);
-		markerst.SetCustomText("Marker Mission");
-		markerst.SetWorldPos(pos[0], pos[2]);
-		markerst.SetIconEntry(icon);
-		
-		m_mapMarkerManager.InsertStaticMarker(markerst, false, true);
-	}	
-
-/*	protected void CreateMapMarker2(vector pos)
-	{
-		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
-		if (!mapMarkerMgr)
-			return;
-		m_MapMarker = new SCR_MapMarkerBase();
-		
-		SCR_ScenarioFrameworkMarkerCustom mapMarkerCustom = SCR_ScenarioFrameworkMarkerCustom.Cast(m_MapMarkerType);
-		if (mapMarkerCustom)
-		{
-			m_MapMarker.SetType(SCR_EMapMarkerType.DARC_MISSION);
-			m_MapMarker.SetIconEntry(SCR_EScenarioFrameworkMarkerCustom.FORTIFICATION);
-			m_MapMarker.SetColorEntry(SCR_EScenarioFrameworkMarkerCustomColor.RED);
-			m_MapMarker.SetCustomText("My marker");
-//			m_MapMarker.SetIconEntry(mapMarkerCustom.m_eMapMarkerIcon);
-//			m_MapMarker.SetRotation(mapMarkerCustom.m_iMapMarkerRotation);
-//			m_MapMarker.SetColorEntry(mapMarkerCustom.m_eMapMarkerColor);
-		}
-		
-		m_MapMarker.SetWorldPos(pos[0], pos[2]);
-		m_MapMarker.SetCustomText(m_MapMarkerType.m_sMapMarkerText);
-		
-		mapMarkerMgr.InsertStaticMarker(m_MapMarker, false, true);
-	}*/
 	
 	//------------------------------------------------------------------------------------------------
 	/*!

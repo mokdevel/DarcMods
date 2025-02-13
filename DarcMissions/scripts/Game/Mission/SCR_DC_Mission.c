@@ -110,7 +110,7 @@ class SCR_DC_Mission
 		}		
 
 		//Remove marker from map
-		SCR_DC_MapMarkersUI.DeleteMarker(GetMarkerId());				
+		SCR_DC_MapMarkerHelper.DeleteMarker(GetMarkerId());				
 	}
 
 	//------------------------------------------------------------------------------------------------

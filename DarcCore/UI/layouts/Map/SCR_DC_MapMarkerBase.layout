@@ -118,7 +118,6 @@ FrameWidgetClass {
      FontProperties FontProperties "{5D2693726AAD1299}" {
       Font "{3E7733BAC8C831F6}UI/Fonts/RobotoCondensed/RobotoCondensed_Regular.fnt"
       Bold 1
-      OutlineSize 2
       ShadowSize 1
      }
     }
