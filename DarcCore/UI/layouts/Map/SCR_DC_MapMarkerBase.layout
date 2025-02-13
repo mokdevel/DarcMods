@@ -66,9 +66,9 @@ FrameWidgetClass {
         SizeToContent 1
        }
        Clipping False
-       Texture "{E23427CAC80DA8B7}UI/Textures/Icons/icons_mapMarkersUI.imageset"
-       Image "point-of-interest"
-       Size 56 56
+       Texture "{0C86564F20AD42F2}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI.imageset"
+       Image "mission"
+       Size 64 64
       }
      }
     }

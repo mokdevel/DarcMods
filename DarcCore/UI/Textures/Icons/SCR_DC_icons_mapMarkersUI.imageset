@@ -1,0 +1,30 @@
+ImageSetClass {
+ RefSize 324 324
+ Textures {
+  ImageSetTextureClass {
+   screenSize FHD
+   size 324 324
+   path "{5DDBEDB7027F9F3F}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI-450_atlas.edds"
+  }
+ }
+ Images {
+  ImageSetDefClass circle {
+   Name "circle"
+   Pos 8 8
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass mission {
+   Name "mission"
+   Pos 72 8
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass debug {
+   Name "debug"
+   Pos 8 72
+   Size 64 64
+   Flags 0
+  }
+ }
+}
