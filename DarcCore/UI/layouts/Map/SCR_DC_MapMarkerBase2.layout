@@ -1,4 +1,4 @@
-FrameWidgetClass {
+FrameWidgetClass "{649AABADD944AA3E}" {
  Name "rootFrame"
  Slot FrameWidgetSlot "{5D2691F3AE61A7FC}" {
   OffsetLeft 0
@@ -19,7 +19,7 @@ FrameWidgetClass {
   }
  }
  {
-  VerticalLayoutWidgetClass "{649AABAD8DD1DCB4}" {
+  VerticalLayoutWidgetClass "{649AABADD944AA39}" {
    Name "VerticalLayout0"
    Slot FrameWidgetSlot "{5D56BA46E7717D6A}" {
     Anchor 0.5 0 0.5 0
@@ -34,7 +34,7 @@ FrameWidgetClass {
     SizeToContent 1
    }
    {
-    FrameWidgetClass "{649AABAD8DD1DC89}" {
+    FrameWidgetClass "{649AABADD944AA3A}" {
      Name "Frame0"
      Slot LayoutSlot "{5E3E82F0B6DE3AE5}" {
       HorizontalAlign 1
@@ -42,7 +42,7 @@ FrameWidgetClass {
       SizeMode Fill
      }
      {
-      ImageWidgetClass "{649AABAD8DD1DC83}" {
+      ImageWidgetClass "{649AABADD944AA05}" {
        Name "MarkerIconGlow"
        Slot FrameWidgetSlot "{5E3E82F0B6D23F67}" {
         SizeToContent 1
@@ -54,15 +54,9 @@ FrameWidgetClass {
        Image "point-of-interest"
        Size 56 56
       }
-      ImageWidgetClass "{649AABAD8DD1DC80}" {
+      ImageWidgetClass "{649AABADD944AA06}" {
        Name "MarkerIcon"
        Slot FrameWidgetSlot "{5E3E82F0B6D23F67}" {
-        OffsetLeft 0
-        OffsetTop 0
-        SizeX 64
-        OffsetRight -64
-        SizeY 64
-        OffsetBottom -64
         SizeToContent 1
        }
        Clipping False
@@ -72,7 +66,7 @@ FrameWidgetClass {
       }
      }
     }
-    SizeLayoutWidgetClass "{649AABAD8DD1DC87}" {
+    SizeLayoutWidgetClass "{649AABADD944AA00}" {
      Name "SymbolWidget"
      Slot LayoutSlot "{5DB880D509DB9B90}" {
       HorizontalAlign 1
@@ -85,7 +79,7 @@ FrameWidgetClass {
      AllowHeightOverride 1
      HeightOverride 56
      {
-      OverlayWidgetClass "{649AABAD8DD1DC85}" {
+      OverlayWidgetClass "{649AABADD944AA01}" {
        Name "SymbolOverlay"
        Slot AlignableSlot "{5DB880D509AA11C2}" {
         HorizontalAlign 3
@@ -103,26 +97,23 @@ FrameWidgetClass {
       }
      }
     }
-    TextWidgetClass "{649AABAD8DD1DC9A}" {
+    TextWidgetClass "{649AABADD944AA02}" {
      Name "MarkerText"
      Slot LayoutSlot "{5D8AED759625D73D}" {
-      Padding 0 16 0 0
-      SizeMode Fill
      }
      Clipping False
-     Text "sadad as das  oijh oij iojoi joij ioj ioj ioj oijoi joi jioj io "
+     Color 0 0.001 0 1
+     Text "sadad as das "
      "Font Size" 18
      "Min Font Size" 18
      "Horizontal Alignment" Center
-     Wrap 1
      FontProperties FontProperties "{5D2693726AAD1299}" {
       Font "{3E7733BAC8C831F6}UI/Fonts/RobotoCondensed/RobotoCondensed_Regular.fnt"
       Bold 1
-      OutlineSize 2
-      ShadowSize 1
+      ShadowSize 3
      }
     }
-    HorizontalLayoutWidgetClass "{649AABAD8DD1DC99}" {
+    HorizontalLayoutWidgetClass "{649AABADD944AA03}" {
      Name "HorizontalLayout0"
      Slot LayoutSlot "{627C693E4DB0469B}" {
       HorizontalAlign 1
@@ -131,7 +122,7 @@ FrameWidgetClass {
      }
      "Is Visible" 0
      {
-      ImageWidgetClass "{649AABAD8DD1DC9E}" {
+      ImageWidgetClass "{649AABADD944AA0C}" {
        Name "PlatformIcon"
        Slot LayoutSlot "{627C69318E3FFA61}" {
         HorizontalAlign 2
@@ -143,7 +134,7 @@ FrameWidgetClass {
        Image "public"
        Size 16 16
       }
-      TextWidgetClass "{649AABAD8DD1DC9D}" {
+      TextWidgetClass "{649AABADD944AA0D}" {
        Name "MarkerAuthor"
        Slot LayoutSlot "{5D56BA46CC7AE802}" {
         HorizontalAlign 0
@@ -162,7 +153,7 @@ FrameWidgetClass {
         ShadowSize 3
        }
       }
-      ImageWidgetClass "{649AABAD8DD1DC92}" {
+      ImageWidgetClass "{649AABADD944AA0E}" {
        Name "MarkerModeIcon"
        Slot LayoutSlot "{627C69318E3FFA61}" {
         HorizontalAlign 2
@@ -177,7 +168,7 @@ FrameWidgetClass {
       }
      }
     }
-    HorizontalLayoutWidgetClass "{649AABAD8DD1DC93}" {
+    HorizontalLayoutWidgetClass "{649AABADD945466F}" {
      Name "TypeIconHLayout"
      Slot LayoutSlot "{5EF69515ACDA89C9}" {
       HorizontalAlign 1
@@ -186,7 +177,7 @@ FrameWidgetClass {
      }
      "Is Visible" 0
      {
-      OverlayWidgetClass "{649AABAD8DD1DC90}" {
+      OverlayWidgetClass "{649AABADD9454668}" {
        Name "TypeOverlay1"
        Slot LayoutSlot "{599ACE656D6CB8D7}" {
         HorizontalAlign 1
@@ -196,7 +187,7 @@ FrameWidgetClass {
        "Is Visible" 0
        "Inherit Color" 1
        {
-        ImageWidgetClass "{649AABAD8DD1E6CF}" {
+        ImageWidgetClass "{649AABADD945466B}" {
          Name "TypeBackground"
          Slot OverlayWidgetSlot "{599ACE6775AB1524}" {
           HorizontalAlign 3
@@ -205,14 +196,14 @@ FrameWidgetClass {
          Opacity 0.3
          Size 0 0
         }
-        FrameWidgetClass "{649AABAD8DD1E6B4}" {
+        FrameWidgetClass "{649AABADD9451602}" {
          Name "TypeFrame"
          Slot OverlayWidgetSlot "{599ACE65B54D9742}" {
           Padding 4 2 4 2
          }
          Clipping True
          {
-          RichTextWidgetClass "{649AABAD8DD1E6B7}" {
+          RichTextWidgetClass "{649AABADD945161C}" {
            Name "TypeText1"
            Slot FrameWidgetSlot "{599ACE65B57F9E0C}" {
             SizeToContent 1
@@ -229,7 +220,7 @@ FrameWidgetClass {
         }
        }
       }
-      OverlayWidgetClass "{649AABAD8DD1E6B6}" {
+      OverlayWidgetClass "{649AABADD945161D}" {
        Name "TypeOverlay2"
        Slot LayoutSlot "{599ACE656D6CB8D7}" {
         HorizontalAlign 1
@@ -239,7 +230,7 @@ FrameWidgetClass {
        "Is Visible" 0
        "Inherit Color" 1
        {
-        ImageWidgetClass "{649AABAD8DD1E6B1}" {
+        ImageWidgetClass "{649AABADD945161E}" {
          Name "TypeBackground"
          Slot OverlayWidgetSlot "{599ACE6775AB1524}" {
           HorizontalAlign 3
@@ -248,14 +239,14 @@ FrameWidgetClass {
          Opacity 0.3
          Size 0 0
         }
-        FrameWidgetClass "{649AABAD8DD1E6B0}" {
+        FrameWidgetClass "{649AABADD945161F}" {
          Name "TypeFrame"
          Slot OverlayWidgetSlot "{599ACE65B54D9742}" {
           Padding 4 2 4 2
          }
          Clipping True
          {
-          RichTextWidgetClass "{649AABAD8DD1E6B3}" {
+          RichTextWidgetClass "{649AABADD9451618}" {
            Name "TypeText2"
            Slot FrameWidgetSlot "{599ACE65B57F9E0C}" {
             SizeToContent 1
@@ -272,7 +263,7 @@ FrameWidgetClass {
         }
        }
       }
-      OverlayWidgetClass "{649AABAD8DD1E6B2}" {
+      OverlayWidgetClass "{649AABADD9451619}" {
        Name "TypeOverlay3"
        Slot LayoutSlot "{599ACE656D6CB8D7}" {
         HorizontalAlign 1
@@ -283,7 +274,7 @@ FrameWidgetClass {
        "Is Visible" 0
        "Inherit Color" 1
        {
-        ImageWidgetClass "{649AABAD8DD1E6BE}" {
+        ImageWidgetClass "{649AABADD9450A1F}" {
          Name "TypeBackground"
          Slot OverlayWidgetSlot "{599ACE6775AB1524}" {
           HorizontalAlign 3
@@ -292,14 +283,14 @@ FrameWidgetClass {
          Opacity 0.3
          Size 0 0
         }
-        FrameWidgetClass "{649AABAD8DD1401B}" {
+        FrameWidgetClass "{649AABADD9450A1C}" {
          Name "TypeFrame"
          Slot OverlayWidgetSlot "{599ACE65B54D9742}" {
           Padding 4 2 4 2
          }
          Clipping True
          {
-          RichTextWidgetClass "{649AABAD8DD1401E}" {
+          RichTextWidgetClass "{649AABADD9450A12}" {
            Name "TypeText3"
            Slot FrameWidgetSlot "{599ACE65B57F9E0C}" {
             OffsetLeft 0

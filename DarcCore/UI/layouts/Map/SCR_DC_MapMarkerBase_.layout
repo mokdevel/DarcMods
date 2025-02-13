@@ -1,12 +1,15 @@
 FrameWidgetClass {
  Name "rootFrame"
  Slot FrameWidgetSlot "{5D2691F3AE61A7FC}" {
-  OffsetLeft 0
+  Anchor 0.5 0 0.5 0
+  PositionX -128
+  OffsetLeft -128
+  PositionY 0
   OffsetTop 0
   SizeX 256
-  OffsetRight -256
-  SizeY 90
-  OffsetBottom -90
+  OffsetRight -128
+  SizeY 64
+  OffsetBottom -64
   Alignment 0.5 0.5
  }
  "Z Order" 60
@@ -19,30 +22,39 @@ FrameWidgetClass {
   }
  }
  {
-  VerticalLayoutWidgetClass "{649AABAD8DD1DCB4}" {
+  VerticalLayoutWidgetClass "{649AAB8D9F9B3827}" {
    Name "VerticalLayout0"
    Slot FrameWidgetSlot "{5D56BA46E7717D6A}" {
-    Anchor 0.5 0 0.5 0
-    PositionX 0
-    OffsetLeft 0
-    OffsetTop 0
-    SizeX 100
-    OffsetRight -100
-    SizeY 30
-    OffsetBottom -30
-    Alignment 0.5 0
-    SizeToContent 1
+    Anchor 0.959 0.508 0.959 0.508
+    PositionX -245.591
+    OffsetLeft -245.591
+    PositionY -32.482
+    OffsetTop -32.482
+    SizeX 256
+    OffsetRight -10.409
+    SizeY 64
+    OffsetBottom -31.517
+    Alignment 0 0
    }
    {
-    FrameWidgetClass "{649AABAD8DD1DC89}" {
+    ImageWidgetClass "{649AAB8D9F9B382B}" {
+     Name "MarkerIcon"
+     Slot LayoutSlot {
+     }
+     Clipping False
+     Texture "{E23427CAC80DA8B7}UI/Textures/Icons/icons_mapMarkersUI.imageset"
+     Image "point-of-interest"
+     Size 56 56
+    }
+    FrameWidgetClass "{649AAB8D9F9B3825}" {
      Name "Frame0"
      Slot LayoutSlot "{5E3E82F0B6DE3AE5}" {
-      HorizontalAlign 1
-      VerticalAlign 1
+      HorizontalAlign 0
+      VerticalAlign 0
       SizeMode Fill
      }
      {
-      ImageWidgetClass "{649AABAD8DD1DC83}" {
+      ImageWidgetClass "{649AAB8D9F9B3824}" {
        Name "MarkerIconGlow"
        Slot FrameWidgetSlot "{5E3E82F0B6D23F67}" {
         SizeToContent 1
@@ -54,25 +66,9 @@ FrameWidgetClass {
        Image "point-of-interest"
        Size 56 56
       }
-      ImageWidgetClass "{649AABAD8DD1DC80}" {
-       Name "MarkerIcon"
-       Slot FrameWidgetSlot "{5E3E82F0B6D23F67}" {
-        OffsetLeft 0
-        OffsetTop 0
-        SizeX 64
-        OffsetRight -64
-        SizeY 64
-        OffsetBottom -64
-        SizeToContent 1
-       }
-       Clipping False
-       Texture "{E23427CAC80DA8B7}UI/Textures/Icons/icons_mapMarkersUI.imageset"
-       Image "point-of-interest"
-       Size 56 56
-      }
      }
     }
-    SizeLayoutWidgetClass "{649AABAD8DD1DC87}" {
+    SizeLayoutWidgetClass "{649AAB8D9F9B3829}" {
      Name "SymbolWidget"
      Slot LayoutSlot "{5DB880D509DB9B90}" {
       HorizontalAlign 1
@@ -80,18 +76,15 @@ FrameWidgetClass {
      }
      "Is Enabled" 0
      "Is Visible" 0
-     AllowWidthOverride 1
      WidthOverride 56
-     AllowHeightOverride 1
      HeightOverride 56
      {
-      OverlayWidgetClass "{649AABAD8DD1DC85}" {
+      OverlayWidgetClass "{649AAB8D9F9B3828}" {
        Name "SymbolOverlay"
        Slot AlignableSlot "{5DB880D509AA11C2}" {
         HorizontalAlign 3
         VerticalAlign 3
        }
-       "Is Visible" 0
        components {
         SCR_MilitarySymbolUIComponent "{5DB880D56B45FA22}" {
          m_MilitarySymbol SCR_MilitarySymbol "{5DB880D56FF1176A}" {
@@ -103,26 +96,29 @@ FrameWidgetClass {
       }
      }
     }
-    TextWidgetClass "{649AABAD8DD1DC9A}" {
+    TextWidgetClass "{649AAB8D9F9B382F}" {
      Name "MarkerText"
      Slot LayoutSlot "{5D8AED759625D73D}" {
-      Padding 0 16 0 0
+      VerticalAlign 1
+      Padding 60 0 0 25
       SizeMode Fill
+      FillWeight 3
      }
      Clipping False
-     Text "sadad as das  oijh oij iojoi joij ioj ioj ioj oijoi joi jioj io "
+     Rotation 0
+     Pivot 0.5 0.5
+     Text "Test text"
      "Font Size" 18
      "Min Font Size" 18
-     "Horizontal Alignment" Center
+     "Vertical Alignment" Center
      Wrap 1
      FontProperties FontProperties "{5D2693726AAD1299}" {
       Font "{3E7733BAC8C831F6}UI/Fonts/RobotoCondensed/RobotoCondensed_Regular.fnt"
       Bold 1
-      OutlineSize 2
-      ShadowSize 1
+      OutlineSize 5
      }
     }
-    HorizontalLayoutWidgetClass "{649AABAD8DD1DC99}" {
+    HorizontalLayoutWidgetClass "{649AAB8D9F9B382E}" {
      Name "HorizontalLayout0"
      Slot LayoutSlot "{627C693E4DB0469B}" {
       HorizontalAlign 1
@@ -131,7 +127,7 @@ FrameWidgetClass {
      }
      "Is Visible" 0
      {
-      ImageWidgetClass "{649AABAD8DD1DC9E}" {
+      ImageWidgetClass "{649AAB8D9F9B382D}" {
        Name "PlatformIcon"
        Slot LayoutSlot "{627C69318E3FFA61}" {
         HorizontalAlign 2
@@ -143,7 +139,7 @@ FrameWidgetClass {
        Image "public"
        Size 16 16
       }
-      TextWidgetClass "{649AABAD8DD1DC9D}" {
+      TextWidgetClass "{649AAB8D9F9B382C}" {
        Name "MarkerAuthor"
        Slot LayoutSlot "{5D56BA46CC7AE802}" {
         HorizontalAlign 0
@@ -152,8 +148,8 @@ FrameWidgetClass {
        }
        "Is Visible" 0
        Clipping False
-       Color 0.074 0.074 0.074 1
-       Text ""
+       Color 0 0 0 1
+       Text "asdasdasd"
        "Font Size" 12
        "Min Font Size" 12
        "Horizontal Alignment" Center
@@ -162,7 +158,7 @@ FrameWidgetClass {
         ShadowSize 3
        }
       }
-      ImageWidgetClass "{649AABAD8DD1DC92}" {
+      ImageWidgetClass "{649AAB8D9F9B56E2}" {
        Name "MarkerModeIcon"
        Slot LayoutSlot "{627C69318E3FFA61}" {
         HorizontalAlign 2
@@ -177,7 +173,7 @@ FrameWidgetClass {
       }
      }
     }
-    HorizontalLayoutWidgetClass "{649AABAD8DD1DC93}" {
+    HorizontalLayoutWidgetClass "{649AAB8D9F9B56FC}" {
      Name "TypeIconHLayout"
      Slot LayoutSlot "{5EF69515ACDA89C9}" {
       HorizontalAlign 1
@@ -186,7 +182,7 @@ FrameWidgetClass {
      }
      "Is Visible" 0
      {
-      OverlayWidgetClass "{649AABAD8DD1DC90}" {
+      OverlayWidgetClass "{649AAB8D9F9B56FE}" {
        Name "TypeOverlay1"
        Slot LayoutSlot "{599ACE656D6CB8D7}" {
         HorizontalAlign 1
@@ -196,7 +192,7 @@ FrameWidgetClass {
        "Is Visible" 0
        "Inherit Color" 1
        {
-        ImageWidgetClass "{649AABAD8DD1E6CF}" {
+        ImageWidgetClass "{649AAB8D9F98C013}" {
          Name "TypeBackground"
          Slot OverlayWidgetSlot "{599ACE6775AB1524}" {
           HorizontalAlign 3
@@ -205,14 +201,14 @@ FrameWidgetClass {
          Opacity 0.3
          Size 0 0
         }
-        FrameWidgetClass "{649AABAD8DD1E6B4}" {
+        FrameWidgetClass "{649AAB8D9F98C014}" {
          Name "TypeFrame"
          Slot OverlayWidgetSlot "{599ACE65B54D9742}" {
           Padding 4 2 4 2
          }
          Clipping True
          {
-          RichTextWidgetClass "{649AABAD8DD1E6B7}" {
+          RichTextWidgetClass "{649AAB8D9F98C015}" {
            Name "TypeText1"
            Slot FrameWidgetSlot "{599ACE65B57F9E0C}" {
             SizeToContent 1
@@ -229,7 +225,7 @@ FrameWidgetClass {
         }
        }
       }
-      OverlayWidgetClass "{649AABAD8DD1E6B6}" {
+      OverlayWidgetClass "{649AAB8D9F98C016}" {
        Name "TypeOverlay2"
        Slot LayoutSlot "{599ACE656D6CB8D7}" {
         HorizontalAlign 1
@@ -239,7 +235,7 @@ FrameWidgetClass {
        "Is Visible" 0
        "Inherit Color" 1
        {
-        ImageWidgetClass "{649AABAD8DD1E6B1}" {
+        ImageWidgetClass "{649AAB8D9F98C017}" {
          Name "TypeBackground"
          Slot OverlayWidgetSlot "{599ACE6775AB1524}" {
           HorizontalAlign 3
@@ -248,14 +244,14 @@ FrameWidgetClass {
          Opacity 0.3
          Size 0 0
         }
-        FrameWidgetClass "{649AABAD8DD1E6B0}" {
+        FrameWidgetClass "{649AAB8D9F98C018}" {
          Name "TypeFrame"
          Slot OverlayWidgetSlot "{599ACE65B54D9742}" {
           Padding 4 2 4 2
          }
          Clipping True
          {
-          RichTextWidgetClass "{649AABAD8DD1E6B3}" {
+          RichTextWidgetClass "{649AAB8D9F98C019}" {
            Name "TypeText2"
            Slot FrameWidgetSlot "{599ACE65B57F9E0C}" {
             SizeToContent 1
@@ -272,7 +268,7 @@ FrameWidgetClass {
         }
        }
       }
-      OverlayWidgetClass "{649AABAD8DD1E6B2}" {
+      OverlayWidgetClass "{649AAB8D9F98DC12}" {
        Name "TypeOverlay3"
        Slot LayoutSlot "{599ACE656D6CB8D7}" {
         HorizontalAlign 1
@@ -283,7 +279,7 @@ FrameWidgetClass {
        "Is Visible" 0
        "Inherit Color" 1
        {
-        ImageWidgetClass "{649AABAD8DD1E6BE}" {
+        ImageWidgetClass "{649AAB8D9F98DC11}" {
          Name "TypeBackground"
          Slot OverlayWidgetSlot "{599ACE6775AB1524}" {
           HorizontalAlign 3
@@ -292,14 +288,14 @@ FrameWidgetClass {
          Opacity 0.3
          Size 0 0
         }
-        FrameWidgetClass "{649AABAD8DD1401B}" {
+        FrameWidgetClass "{649AAB8D9F98DC10}" {
          Name "TypeFrame"
          Slot OverlayWidgetSlot "{599ACE65B54D9742}" {
           Padding 4 2 4 2
          }
          Clipping True
          {
-          RichTextWidgetClass "{649AABAD8DD1401E}" {
+          RichTextWidgetClass "{649AAB8D9F980538}" {
            Name "TypeText3"
            Slot FrameWidgetSlot "{599ACE65B57F9E0C}" {
             OffsetLeft 0

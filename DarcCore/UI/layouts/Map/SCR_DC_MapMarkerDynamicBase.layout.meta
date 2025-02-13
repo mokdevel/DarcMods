@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{18F9BF945D877690}UI/layouts/Map/SCR_DC_MapMarkerBase.layout"
+ Name "{C89FA85A3C77BEA8}UI/layouts/Map/SCR_DC_MapMarkerDynamicBase.layout"
  Configurations {
   LayoutResourceClass PC {
   }
