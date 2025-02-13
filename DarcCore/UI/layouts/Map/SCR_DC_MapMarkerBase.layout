@@ -110,7 +110,7 @@ FrameWidgetClass {
       SizeMode Fill
      }
      Clipping False
-     Text "sadad as das  oijh oij iojoi joij ioj ioj ioj oijoi joi jioj io "
+     Text ""
      "Font Size" 18
      "Min Font Size" 18
      "Horizontal Alignment" Center

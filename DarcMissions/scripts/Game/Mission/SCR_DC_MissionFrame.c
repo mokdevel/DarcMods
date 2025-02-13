@@ -76,6 +76,7 @@ class SCR_DC_MissionFrame
 		
 		m_mapMarkerManager = SCR_MapMarkerManagerComponent.GetInstance();
 		
+		CreateMapMarker("900 0 1000", SCR_EMapMarkerType.SIMPLE);
 		CreateMapMarker("1000 0 1000", SCR_EMapMarkerType.PLACED_CUSTOM);
 		CreateMapMarker("1200 0 1000", SCR_EMapMarkerType.DARC_MISSION);
 		CreateMapMarker2("1500 0 1000");
@@ -86,6 +87,7 @@ class SCR_DC_MissionFrame
 	/*!
 	DEBUGging things with CreateMapMarker
 	*/	
+
 	void CreateMapMarker(vector pos, SCR_EMapMarkerType mtype)
 	{
 		SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
@@ -94,7 +96,7 @@ class SCR_DC_MissionFrame
 		markerst.SetCustomText("Marker Mission");
 		markerst.SetWorldPos(pos[0], pos[2]);
 		markerst.SetColorEntry(Color.RED);
-		markerst.SetIconEntry(1);
+		markerst.SetIconEntry(0);
 		
 		m_mapMarkerManager.InsertStaticMarker(markerst, false, true);
 	}	
