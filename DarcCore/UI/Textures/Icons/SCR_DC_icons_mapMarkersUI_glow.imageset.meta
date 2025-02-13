@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{9BE5CC69285A77F5}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI_glow.imageset"
+ Configurations {
+  ImageSetResourceClass PC {
+  }
+  ImageSetResourceClass XBOX_ONE : PC {
+  }
+  ImageSetResourceClass XBOX_SERIES : PC {
+  }
+  ImageSetResourceClass PS4 : PC {
+  }
+  ImageSetResourceClass PS5 : PC {
+  }
+  ImageSetResourceClass HEADLESS : PC {
+  }
+ }
+}
