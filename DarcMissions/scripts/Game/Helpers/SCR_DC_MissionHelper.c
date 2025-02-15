@@ -69,7 +69,7 @@ sealed class SCR_DC_MissionHelper
 		}
 
 		location.SetOrigin(pos);
-						
+
 		return location;
 	}
 		
@@ -117,11 +117,6 @@ sealed class SCR_DC_MissionHelper
 			return false;
 		}
 										
-		if (!SCR_DC_Core.RELEASE)
-		{
-			SCR_DC_MapMarkersUI.AddMarker("DUMMY_", pos, "", DC_EMarkerType.DEBUG);
-		}
-		
 		return true;
 	}
 
@@ -173,16 +168,31 @@ sealed class SCR_DC_MissionHelper
 	/*!
 	DEBUG: Test mission positions on map. Only for debugging.
 	*/	
-	static void DebugTestMissionPos(float distanceToMission = -1, float distanceToPlayer = -1)
+	static void DebugTestMissionPos()
 	{	
-		vector pos;
-
-		for (int i = 0; i < 500; i++)
-		{		
-			SCR_DC_MissionHelper.FindMissionPos();
-		}		
+		if (!SCR_DC_Core.RELEASE)
+		{
+			vector pos;
+	
+			for (int i = 0; i < 400; i++)
+			{		
+				pos = SCR_DC_MissionHelper.FindMissionPos();
+				if (pos != "0 0 0")
+				{
+					SCR_DC_MapMarkerHelper.CreateMapMarker(pos, DC_EMissionIcon.DEBUG_SMALL, "DUMMY_");
+				}
+			}		
+		}
 	}
-				
+
+	static void DeleteDebugTestMissionPos()
+	{	
+		if (!SCR_DC_Core.RELEASE)
+		{
+			SCR_DC_MapMarkerHelper.DeleteMarker("DUMMY_");
+		}
+	}
+					
 	//------------------------------------------------------------------------------------------------
 	static SCR_AIGroup SpawnMissionAIGroup(string groupToSpawn, vector pos)
 	{

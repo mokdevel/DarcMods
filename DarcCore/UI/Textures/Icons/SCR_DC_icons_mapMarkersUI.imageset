@@ -4,7 +4,7 @@ ImageSetClass {
   ImageSetTextureClass {
    screenSize FHD
    size 324 324
-   path "{5DDBEDB7027F9F40}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI-450_atlas.edds"
+   path "{5DDBEDB7027F9F3F}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI-450_atlas.edds"
   }
  }
  Images {
@@ -41,6 +41,12 @@ ImageSetClass {
   ImageSetDefClass "target-o" {
    Name "target-o"
    Pos 137 73
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass debug_small {
+   Name "debug_small"
+   Pos 9 137
    Size 64 64
    Flags 0
   }

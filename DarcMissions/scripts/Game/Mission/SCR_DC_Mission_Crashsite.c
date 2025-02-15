@@ -77,12 +77,12 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 			SetInfo(m_Config.info);
 			SetPos(pos);
 			SetPosName("");
-			SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(GetId(), GetPos(), GetTitle()));
+			SCR_DC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.MISSION, GetId(), GetTitle());
 	
 			SetState(DC_MissionState.INIT);			
 
 			//Set a marker for destination
-			SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(GetId() + "_1", m_PosDestination, "Destination"));
+			SCR_DC_MapMarkerHelper.CreateMapMarker(m_PosDestination, DC_EMissionIcon.MISSION, GetId() + "_1", "Destination");
 			SCR_DC_DebugHelper.AddDebugPos(m_PosDestination, Color.RED, 10, GetId() + "_1");
 		}
 		else
@@ -123,7 +123,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 					{
 						SetPos(m_Vehicle.GetOrigin());
 
-						SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(GetId(), GetPos(), "Crashsite"));
+						//Markerfix: SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(GetId(), GetPos(), "Crashsite"));
 					
 						//Make sure the chopper is destroyed
 						DamageManagerComponent damageManager = DamageManagerComponent.Cast(m_Vehicle.FindComponent(DamageManagerComponent));

@@ -86,7 +86,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 			SetInfo(m_DC_Occupation.info);			
 			SetPos(location.GetOrigin());
 			SetPosName(posName);
-			SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(DC_ID_PREFIX, GetPos(), GetTitle()));
+			SCR_DC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.MISSION, GetId(), GetTitle());
 
 			SCR_DC_SpawnHelper.SetStructuresToOrigo(m_DC_Occupation.campItems);
 				

@@ -44,5 +44,11 @@ ImageSetClass {
    Size 64 64
    Flags 0
   }
+  ImageSetDefClass debug_small {
+   Name "debug_small"
+   Pos 9 137
+   Size 64 64
+   Flags 0
+  }
  }
 }

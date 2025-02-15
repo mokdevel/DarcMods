@@ -29,7 +29,7 @@ class SCR_DC_Mission
     private string m_PosName;
     private string m_Title;
     private string m_Info;
-	private string m_MarkerId;
+//	private string m_MarkerId;
 	//Internal without getters
 	private int m_StartTime;	//Minutes when mission started
 	private int m_EndTime;		//Minutes when mission shall end.
@@ -48,7 +48,7 @@ class SCR_DC_Mission
 		m_PosName = "";
 		m_Title = "";
 		m_Info = "";
-		m_MarkerId = "";
+//		m_MarkerId = "";
 		m_StartTime = (System.GetTickCount() / 1000); 		//The time in seconds when the game was started.
 		SetActiveTime(DC_MISSION_ACTIVE_TIME);				//Sets m_EndTick	//TBD: This value should be coming from the MissionFrame
 //		m_MapDescriptorComponent.IsActive();
@@ -110,7 +110,8 @@ class SCR_DC_Mission
 		}		
 
 		//Remove marker from map
-		SCR_DC_MapMarkerHelper.DeleteMarker(GetMarkerId());				
+//		SCR_DC_MapMarkerHelper.DeleteMarker(GetMarkerId());				
+		SCR_DC_MapMarkerHelper.DeleteMarker(GetId());				
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -175,7 +176,7 @@ class SCR_DC_Mission
 	}
 
 	//------------------------------------------------------------------------------------------------
-	string GetMarkerId()
+/*	string GetMarkerId()
 	{
 		return m_MarkerId;
 	}
@@ -183,7 +184,7 @@ class SCR_DC_Mission
 	void SetMarkerId(string markerId)
 	{
 		m_MarkerId = markerId;
-	}	
+	}	*/
 	
 	//------------------------------------------------------------------------------------------------
 	bool IsActive()

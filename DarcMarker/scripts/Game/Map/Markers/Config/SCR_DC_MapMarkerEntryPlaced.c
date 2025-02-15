@@ -7,9 +7,8 @@ enum DC_EMissionIcon
 	MISSION,
 	DEBUG,
 	CRASHSITE,
-	TARGET_X,
-	TARGET_O,
-	DEBUG_SMALL
+	TARGETX,
+	TARGETO
 };
 
 [BaseContainerProps(), SCR_MapMarkerTitle()]

@@ -32,11 +32,6 @@ class SCR_DC_MissionFrame
 	ref array<ref SCR_DC_NonValidArea> m_NonValidAreas = {};
 	private string m_WorldName;
 	private int m_LastMissionSpawnTime = 0;
-	
-	protected SCR_MapMarkerManagerComponent m_mapMarkerManager;
-
-	protected ref SCR_MapMarkerBase m_MapMarker;
-	protected ref SCR_ScenarioFrameworkMarkerType m_MapMarkerType = new SCR_ScenarioFrameworkMarkerCustom;
 		
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_MissionFrame()
@@ -73,9 +68,13 @@ class SCR_DC_MissionFrame
 		}
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas defined: " + m_NonValidAreas.Count(), LogLevel.DEBUG);		
 		
-		SCR_DC_MapMarkerHelper.CreateMapMarker("900 0 1000", DC_EMissionIcon.MISSION);
-		SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 1000", DC_EMissionIcon.CRASHSITE);
-		SCR_DC_MapMarkerHelper.CreateMapMarker("1200 0 1000", DC_EMissionIcon.TARGETO);
+		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
+		if (!mapMarkerMgr)
+			return;
+		
+		SCR_DC_MapMarkerHelper.CreateMapMarker("900 0 1000", DC_EMissionIcon.MISSION, "DMC_A", "miss a");
+		SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 1000", DC_EMissionIcon.CRASHSITE, "DMC_B", "miss b");
+		SCR_DC_MapMarkerHelper.CreateMapMarker("1200 0 1000", DC_EMissionIcon.TARGET_O, "DMC_C", "miss c");
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -103,7 +102,7 @@ class SCR_DC_MissionFrame
 	protected void MissionLifeCycleManager()
 	{			
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Number of active missions: " + m_MissionList.Count() + "/" + m_Config.missionCount, LogLevel.NORMAL);
-				
+
 		//Check if more missions are to be spawned		
 		if ( (m_MissionList.Count() < m_Config.missionCount) && (isMissionDelayPassed()) )
 		{
@@ -166,8 +165,8 @@ class SCR_DC_MissionFrame
 				if (tmpDC_Mission.GetState() != DC_MissionState.EXIT)
 				{			
 					SCR_DC_Log.Add(string.Format("[SCR_DC_MissionFrame:MissionLifeCycleManager] Spawning mission %1 (%2) %3", tmpDC_Mission.GetTitle(), tmpDC_Mission.GetPos(), tmpDC_Mission.GetPosName()), LogLevel.NORMAL);
-					
-					SCR_DC_MapMarkersUI.AddMarkerHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), tmpDC_Mission.GetId());		
+
+					//Markerfix: SCR_DC_MapMarkersUI.AddMarkerHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), tmpDC_Mission.GetId());		
 	
 					SCR_DC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), Color.YELLOW, 10, tmpDC_Mission.GetId());
 					
@@ -216,7 +215,13 @@ class SCR_DC_MissionFrame
 		{
 			MissionStatusDump();
 		}
-		
+
+		if (!SCR_DC_Core.RELEASE)
+		{
+			SCR_DC_MissionHelper.DeleteDebugTestMissionPos();
+			SCR_DC_MissionHelper.DebugTestMissionPos();
+		}
+				
 		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_Config.missionFrameLifeCycleTime*1000, false);
 	}
 	

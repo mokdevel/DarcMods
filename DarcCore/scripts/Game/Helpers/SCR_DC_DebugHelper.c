@@ -54,8 +54,6 @@ sealed class SCR_DC_DebugHelper
 	{
 		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_WAYPOINTS, waypoint);
 		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_MARKS, marks);
-		
-		SCR_DC_MapMarkerEntity dummy = SCR_DC_MapMarkerEntity.Cast(m_MarkerEntity);		
 	}		
 		
 	//------------------------------------------------------------------------------------------------

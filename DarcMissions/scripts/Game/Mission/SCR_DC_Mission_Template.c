@@ -26,7 +26,7 @@ class SCR_DC_Mission_Template : SCR_DC_Mission
 		SetInfo(m_Config.info);
 		SetPos(pos);
 		SetPosName(posName);
-		SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(DC_ID_PREFIX, GetPos(), GetTitle()));
+		//Markerfix: SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(DC_ID_PREFIX, GetPos(), GetTitle()));
 
 		SetState(DC_MissionState.INIT);			
 	}	

@@ -61,7 +61,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 			SetInfo("They are coming for you...");
 			SetPos(pos);
 			SetPosName("");
-			SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(DC_ID_PREFIX, GetPos(), GetTitle()));
+			SCR_DC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.MISSION, GetId(), GetTitle());
 	
 			SetState(DC_MissionState.INIT);
 		}
