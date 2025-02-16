@@ -77,13 +77,16 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 			SetInfo(m_Config.info);
 			SetPos(pos);
 			SetPosName("");
-			SCR_DC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.MISSION, GetId(), GetTitle());
+			SCR_DC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.TARGET_X, GetId(), GetTitle());
 	
 			SetState(DC_MissionState.INIT);			
 
 			//Set a marker for destination
-			SCR_DC_MapMarkerHelper.CreateMapMarker(m_PosDestination, DC_EMissionIcon.MISSION, GetId() + "_1", "Destination");
-			SCR_DC_DebugHelper.AddDebugPos(m_PosDestination, Color.RED, 10, GetId() + "_1");
+			if (!SCR_DC_Core.RELEASE)
+			{			
+				SCR_DC_MapMarkerHelper.CreateMapMarker(m_PosDestination, DC_EMissionIcon.TARGET_O, GetId() + "_1", "Destination");
+				SCR_DC_DebugHelper.AddDebugPos(m_PosDestination, Color.RED, 10, GetId() + "_1");
+			}
 		}
 		else
 		{				
@@ -134,6 +137,8 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 						//VehicleHelicopterSimulation vehicle_s;
 						//vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
 						SCR_DC_DebugHelper.MoveDebugPos(GetId(), GetPos());
+						SCR_DC_MapMarkerHelper.DeleteMarker(GetId());
+						SCR_DC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.CRASHSITE, GetId(), "Crash site");
 						missionCrashSiteState = DC_EMissionCrashSiteState.SPAWN_SITE;
 					}
 					break;
@@ -177,7 +182,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 					if (group)
 					{
 						m_Groups.Insert(group);
-						SCR_DC_MissionHelper.CreateMissionAIWaypoints(group, m_Config.waypointRange[0], m_Config.waypointRange[1], DC_EWaypointMoveType.PATROLCYCLE , DC_EWaypointRndType.SCATTERED);
+						SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_Config.waypointRange[0], m_Config.waypointRange[1], DC_EWaypointMoveType.PATROLCYCLE , DC_EWaypointRndType.SCATTERED);
 					}
 					SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite:MissionSpawn] AI groups spawned ", LogLevel.DEBUG);								
 					missionCrashSiteState = DC_EMissionCrashSiteState.RUN;

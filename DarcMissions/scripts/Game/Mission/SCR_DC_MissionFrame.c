@@ -72,9 +72,9 @@ class SCR_DC_MissionFrame
 		if (!mapMarkerMgr)
 			return;
 		
-		SCR_DC_MapMarkerHelper.CreateMapMarker("900 0 1000", DC_EMissionIcon.MISSION, "DMC_A", "miss a");
-		SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 1000", DC_EMissionIcon.CRASHSITE, "DMC_B", "miss b");
-		SCR_DC_MapMarkerHelper.CreateMapMarker("1200 0 1000", DC_EMissionIcon.TARGET_O, "DMC_C", "miss c");
+//		SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.CRASHSITE, "DMC_B", "");
+//		SCR_DC_MapMarkerHelper.CreateMapMarker("800 0 3500", DC_EMissionIcon.TARGET_O, "DMC_B", "");
+//		SCR_DC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "");
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -166,7 +166,12 @@ class SCR_DC_MissionFrame
 				{			
 					SCR_DC_Log.Add(string.Format("[SCR_DC_MissionFrame:MissionLifeCycleManager] Spawning mission %1 (%2) %3", tmpDC_Mission.GetTitle(), tmpDC_Mission.GetPos(), tmpDC_Mission.GetPosName()), LogLevel.NORMAL);
 
-					//Markerfix: SCR_DC_MapMarkersUI.AddMarkerHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), tmpDC_Mission.GetId());		
+					if (m_Config.missionHintTime > 0)
+					{
+						SCR_DC_HintHelper.ShowHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), m_Config.missionHintTime);					
+					}
+					
+					//Markerfix: SCR_DC_MapMarkersUI.AddMarkerHint(tmpDC_Mission.GetId());		
 	
 					SCR_DC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), Color.YELLOW, 10, tmpDC_Mission.GetId());
 					
@@ -216,7 +221,7 @@ class SCR_DC_MissionFrame
 			MissionStatusDump();
 		}
 
-		if (!SCR_DC_Core.RELEASE)
+		if (SCR_DC_Core.SHOW_VALID_MISSION_AREAS)
 		{
 			SCR_DC_MissionHelper.DeleteDebugTestMissionPos();
 			SCR_DC_MissionHelper.DebugTestMissionPos();

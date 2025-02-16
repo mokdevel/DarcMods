@@ -25,6 +25,39 @@ enum DC_EWaypointMoveType
 sealed class SCR_DC_WPHelper
 {
 	//------------------------------------------------------------------------------------------------
+	//Create waypoints for an AI groups
+	//This will randomize the type, speed and count of waypoints to create.
+	
+	static void CreateMissionAIWaypoints(SCR_AIGroup group, int wpRangeLow, int wpRangeHigh, DC_EWaypointMoveType wpMoveType = DC_EWaypointMoveType.MOVECYCLE, DC_EWaypointRndType wpType = DC_EWaypointRndType.SCATTERED)
+	{		
+		if (group)
+		{
+			int rndCount = Math.RandomInt(4, 11);
+			int rndRange = Math.RandomInt(wpRangeLow, wpRangeHigh);
+			
+			//Select the waypoint formation
+			DC_EWaypointRndType waypointRndType = wpType;
+			if (waypointRndType == DC_EWaypointRndType.RANDOM)
+			{
+				array<DC_EWaypointRndType> waypointRndTypeArray = {DC_EWaypointRndType.SCATTERED, DC_EWaypointRndType.RADIUS, DC_EWaypointRndType.RADIUS}; //DC_EWaypointRndType.SLOTS
+				waypointRndType = waypointRndTypeArray.GetRandomElement();
+			}
+
+			//Select the waypoint movement type
+			DC_EWaypointMoveType waypointMoveType = wpMoveType;
+			if (waypointMoveType == DC_EWaypointMoveType.RANDOM)
+			{
+				array<DC_EWaypointMoveType> waypointMoveTypeArray = {DC_EWaypointMoveType.MOVECYCLE, DC_EWaypointMoveType.PATROLCYCLE, DC_EWaypointMoveType.PATROLCYCLE, DC_EWaypointMoveType.PATROLCYCLE};
+				waypointMoveType = waypointMoveTypeArray.GetRandomElement();
+			}
+			
+			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Adding " + rndCount + " waypoints (" + SCR_Enum.GetEnumName(DC_EWaypointRndType, waypointRndType) + ", " + SCR_Enum.GetEnumName(DC_EWaypointMoveType, waypointMoveType) + ")", LogLevel.DEBUG);
+
+			CreateWaypoints(group, rndCount, waypointMoveType, waypointRndType, rndRange, true);
+		}
+	}	
+	
+	//------------------------------------------------------------------------------------------------
 	/*!
 	Creates a single waypoint for a group
 	NOTE: Currently only supports creation of cycle waypoints. 

@@ -151,7 +151,6 @@ FrameWidgetClass {
        }
        "Is Visible" 0
        Clipping False
-       Color 0.074 0.074 0.074 1
        Text ""
        "Font Size" 12
        "Min Font Size" 12
@@ -169,7 +168,6 @@ FrameWidgetClass {
        }
        "Is Visible" 0
        Clipping False
-       Color 0.074 0.074 0.074 1
        Texture "{3262679C50EF4F01}UI/Textures/Icons/icons_wrapperUI.imageset"
        Image "public"
        Size 16 16
@@ -216,7 +214,6 @@ FrameWidgetClass {
            Slot FrameWidgetSlot "{599ACE65B57F9E0C}" {
             SizeToContent 1
            }
-           Color 0 0 0 1
            Text "Land"
            "Font Size" 16
            "Min Font Size" 12
@@ -259,7 +256,6 @@ FrameWidgetClass {
            Slot FrameWidgetSlot "{599ACE65B57F9E0C}" {
             SizeToContent 1
            }
-           Color 0 0 0 1
            Text "Infantry"
            "Font Size" 16
            "Min Font Size" 12
@@ -309,7 +305,6 @@ FrameWidgetClass {
             OffsetBottom 0
             SizeToContent 1
            }
-           Color 0 0 0 1
            Text ""
            "Font Size" 16
            "Min Font Size" 12

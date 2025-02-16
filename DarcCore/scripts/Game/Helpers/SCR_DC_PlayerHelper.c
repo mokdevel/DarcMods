@@ -11,7 +11,7 @@ sealed class SCR_DC_PlayerHelper
 	/*!
 	Find the count of players in game
 	*/
-	static int PlayerGetNumberOf()
+	static int PlayerCount()
 	{
 		array<int> players = {};
 		GetGame().GetPlayerManager().GetPlayers(players);

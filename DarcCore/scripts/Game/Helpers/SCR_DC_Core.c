@@ -10,13 +10,15 @@ Stupid file to handle a few common variables accross multiple mods
 sealed class SCR_DC_Core
 {
 #ifdef SCR_DC_RELEASE
-	const bool RELEASE = true;			//Define for release compilation to workshop
-	const bool OVERWRITE_JSON = false;	//Writes a new conf even if it exists
+	const bool RELEASE = true;						//Define for release compilation to workshop
+	const bool OVERWRITE_JSON = false;				//Writes a new conf even if it exists
+	const bool SHOW_VALID_MISSION_AREAS = false;
 #endif
 		
-#ifndef SCR_DC_RELEASE
-	const bool RELEASE = false;			//Define for release compilation to workshop
-	const bool OVERWRITE_JSON = true;	//Writes a new conf even if it exists
-//	const bool OVERWRITE_JSON = false;	//Writes a new conf even if it exists
+#ifndef SCR_DC_RELEASE	//Development time options
+	const bool RELEASE = false;						//Define for release compilation to workshop
+	const bool OVERWRITE_JSON = true;				//Writes a new conf even if it exists
+//	const bool OVERWRITE_JSON = false;				//Writes a new conf even if it exists
+	const bool SHOW_VALID_MISSION_AREAS = true;
 #endif
 }

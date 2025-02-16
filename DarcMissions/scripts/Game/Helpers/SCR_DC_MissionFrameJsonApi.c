@@ -13,10 +13,10 @@
 	const int DC_MISSIONFRAME_LIFECYCLE_TIME = 60;
 #endif
 
-#ifndef SCR_DC_RELEASE
-	const int DC_MISSION_START_DELAY = 5;				//Time to wait before spawning the first mission (seconds)
+#ifndef SCR_DC_RELEASE	//Development time options
+	const int DC_MISSION_START_DELAY = 30;				//Time to wait before spawning the first mission (seconds)
 	const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*60;
-	const int DC_MISSION_ACTIVE_TIME = 120;				//Time to keep the mission active (seconds)
+	const int DC_MISSION_ACTIVE_TIME = 200;				//Time to keep the mission active (seconds)
 	const int DC_MISSION_ACTIVE_DISTANCE = 300;		
 	const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 10;
 	const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 10;
@@ -39,6 +39,7 @@ class SCR_DC_MissionFrameConfig : Managed
 	int missionFrameLifeCycleTime;	//The cycle time to manage mission spawning, deletion etc...
 	int missionActiveTime;			//Time to keep the mission active (seconds)
 	int missionActiveDistance;		//The distance to a player to keep the mission active 
+	int missionHintTime;			//Seconds to show mission hints to players. 0 disables hints.
 	ref array<DC_EMissionType> missionTypeArray = {};	//Active missions list
 	int minDistanceToMission;		//Distance to another mission. Two missions shall not be too close to each other.
 	int minDistanceToPlayer;		//Mission shall not spawn too close to a player.
@@ -110,14 +111,15 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		conf.missionFrameLifeCycleTime = DC_MISSIONFRAME_LIFECYCLE_TIME;
 		conf.missionActiveTime = DC_MISSION_ACTIVE_TIME;
 		conf.missionActiveDistance = DC_MISSION_ACTIVE_DISTANCE;
+		conf.missionHintTime = 10;
 		
 //		conf.missionTypeArray = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
 //		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION};
-//		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
+		conf.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
 //		conf.missionTypeArray = {DC_EMissionType.OCCUPATION};		
 //		conf.missionTypeArray = {DC_EMissionType.HUNTER};
 //		conf.missionTypeArray = {DC_EMissionType.CONVOY};		
-		conf.missionTypeArray = {DC_EMissionType.CRASHSITE};
+//		conf.missionTypeArray = {DC_EMissionType.CRASHSITE};
 //		conf.missionTypeArray = {DC_EMissionType.CHOPPER};
 		conf.minDistanceToMission = 500;
 		conf.minDistanceToPlayer = 100;
