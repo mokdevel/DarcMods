@@ -30,6 +30,7 @@ class SCR_DC_MissionFrameConfig : Managed
 	int version = 1;
 	string author = "darc";
 	//Mission specific
+	bool recreateConfigs;			//If set to true, all configs are to be written to disk. Should be run only first time.
 	DC_LogLevel logLevel;
 	bool debugShowWaypoints = true;
 	bool debugShowMarks = true;
@@ -104,6 +105,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
+		conf.recreateConfigs = true;
 		conf.logLevel = DC_LogLevel.DEBUG;
 		conf.missionStartDelay = DC_MISSION_START_DELAY;
 		conf.missionDelayBetweeen = DC_MISSION_DELAY_BETWEEN_MISSIONS;

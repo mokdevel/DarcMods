@@ -2,7 +2,6 @@
 
 modded class SCR_BaseGameMode 
 {
-	//private 
 	ref SCR_DC_MissionFrame missionFrame;
 
     override void OnGameStart()
@@ -10,7 +9,6 @@ modded class SCR_BaseGameMode
         super.OnGameStart();
 		
 		SCR_DC_Log.Add("[SCR_DC_GameCoreBase:OnGameStart]", LogLevel.NORMAL);
-//		SCR_DC_Log.Add("[SCR_DC_GameCoreBase:OnGameStart] Worldname :" + SCR_DC_Misc.GetWorldName(), LogLevel.DEBUG);
 
 		if (!SCR_DC_Core.RELEASE)
 		{
@@ -20,10 +18,9 @@ modded class SCR_BaseGameMode
 		if(IsMaster())
 		{
 			SCR_DC_Log.Add("[SCR_DC_GameCoreBase:IsMaster] OnGameStart", LogLevel.NORMAL);        
-
 				
 			missionFrame = new SCR_DC_MissionFrame();
-			missionFrame.MissionFrameStart();
+//			missionFrame.MissionFrameStart();
 		}
 		else 
 		{

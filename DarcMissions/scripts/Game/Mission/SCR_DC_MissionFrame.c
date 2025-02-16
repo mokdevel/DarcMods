@@ -38,7 +38,6 @@ class SCR_DC_MissionFrame
 	{
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Starting SCR_DC_MissionFrame", LogLevel.NORMAL);
 		m_WorldName = SCR_DC_Misc.GetWorldName();
-		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldname: " + m_WorldName, LogLevel.NORMAL);
 
 		//Load configuration from file		
 		m_DC_MissionFrameJsonApi.Load();
@@ -50,6 +49,23 @@ class SCR_DC_MissionFrame
 		{
 			SCR_DC_Log.SetLogLevel(DC_LogLevel.DEBUG);	//Debug enabled when not release
 		}
+
+		//Check if a request to create new logs has been made		
+		if (m_Config.recreateConfigs)
+		{
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame] !!!!!!!!!!!!!!!!!!!!!.....Creating default configs.....!!!!!!!!!!!!!!!!!!!!!!", LogLevel.NORMAL);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame] Existing ones will not be over written.", LogLevel.NORMAL);
+			CreateAllConfigs();
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame] Changing recreateConfigs to false and saving the config.", LogLevel.NORMAL);
+			m_Config.recreateConfigs = false;
+			m_DC_MissionFrameJsonApi.Save("");
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame] !!!!!!!!!!!!!!!!!!!!! Configs created. Please restart. !!!!!!!!!!!!!!!!!!!!!!", LogLevel.NORMAL);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame] DarcMissions not running. Please restart.", LogLevel.ERROR);
+			
+			return;
+		}
+		
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldname: " + m_WorldName, LogLevel.DEBUG);
 		
 		//Set debug visibility
 		SCR_DC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks);
@@ -68,13 +84,11 @@ class SCR_DC_MissionFrame
 		}
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas defined: " + m_NonValidAreas.Count(), LogLevel.DEBUG);		
 		
-		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
-		if (!mapMarkerMgr)
-			return;
-		
 //		SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.CRASHSITE, "DMC_B", "");
 //		SCR_DC_MapMarkerHelper.CreateMapMarker("800 0 3500", DC_EMissionIcon.TARGET_O, "DMC_B", "");
 //		SCR_DC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "");
+		
+		MissionFrameStart();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -263,4 +277,25 @@ class SCR_DC_MissionFrame
 		return true;
 	}
 	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Creates config files. To be run at first run of the mod. Will not over write existing confs.
+	*/	
+	void CreateAllConfigs()
+	{		
+		SCR_DC_CampJsonApi m_CampJsonApi = new SCR_DC_CampJsonApi();	
+		m_CampJsonApi.Load();
+
+		SCR_DC_ConvoyJsonApi m_ConvoyJsonApi = new SCR_DC_ConvoyJsonApi();	
+		m_ConvoyJsonApi.Load();
+
+		SCR_DC_CrashsiteJsonApi m_CrashsiteJsonApi = new SCR_DC_CrashsiteJsonApi();	
+		m_CrashsiteJsonApi.Load();		
+
+		SCR_DC_HunterJsonApi m_HunterJsonApi = new SCR_DC_HunterJsonApi();				
+		m_HunterJsonApi.Load();								
+		
+		SCR_DC_OccupationJsonApi m_OccupationJsonApi = new SCR_DC_OccupationJsonApi;	
+		m_OccupationJsonApi.Load();		
+	}	
 }

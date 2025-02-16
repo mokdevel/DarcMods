@@ -26,7 +26,7 @@ class SCR_DC_JsonApi : JsonApiStruct
 		
 		if(!success)
 		{
-			SCR_DC_Log.Add("[SCR_DC_JsonConfig] Config file load failed or not found (" + m_fileName + "). Using and saving a default config.", LogLevel.ERROR);
+			SCR_DC_Log.Add("[SCR_DC_JsonConfig] Config file load failed or not found (" + m_fileName + "). Creating a default config.", LogLevel.ERROR);
 			return null;
 		}
 
@@ -52,7 +52,7 @@ class SCR_DC_JsonApi : JsonApiStruct
 		string dataString = saveContext.ExportToString();
 		ExpandFromRAW(dataString);
 		
-		SCR_DC_Log.Add("[SCR_DC_JsonConfig] This gives some warnings on 'JsonApi Array name='something' found in JSON ... ' . Please ignore.", LogLevel.DEBUG);			
+		SCR_DC_Log.Add("[SCR_DC_JsonConfig] This gives some warnings on 'JsonApi Array name='something' found in JSON ... ' . Please ignore.", LogLevel.WARNING);			
 		
 		if(!saveContext.SaveToFile(m_fileName))
 		{

@@ -1,4 +1,8 @@
 //------------------------------------------------------------------------------------------------
+
+//TBD: Unsure why this file even exists here.
+
+/*
 modded class SCR_GroupsManagerComponent : SCR_BaseGameModeComponent
 {
 	//------------------------------------------------------------------------------------------------
@@ -38,3 +42,4 @@ modded class SCR_GroupsManagerComponent : SCR_BaseGameModeComponent
 		}
 	}
 }
+*/
