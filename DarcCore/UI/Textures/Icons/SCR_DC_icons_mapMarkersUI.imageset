@@ -50,5 +50,17 @@ ImageSetClass {
    Size 64 64
    Flags 0
   }
+  ImageSetDefClass redcross {
+   Name "redcross"
+   Pos 9 201
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass redcross_small {
+   Name "redcross_small"
+   Pos 73 201
+   Size 64 64
+   Flags 0
+  }
  }
 }

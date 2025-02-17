@@ -9,7 +9,9 @@ enum DC_EMissionIcon
 	CRASHSITE,
 	TARGET_X,
 	TARGET_O,
-	DEBUG_SMALL
+	DEBUG_SMALL,
+	REDCROSS,
+	REDCROSS_SMALL,
 };
 
 [BaseContainerProps(), SCR_MapMarkerTitle()]

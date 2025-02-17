@@ -11,6 +11,7 @@
 	const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 30;
 	const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 30;
 	const int DC_MISSIONFRAME_LIFECYCLE_TIME = 60;
+	const bool DC_MISSION_RECREATE_CONFIGS = true;
 #endif
 
 #ifndef SCR_DC_RELEASE	//Development time options
@@ -21,6 +22,7 @@
 	const int DC_MISSION_LIFECYCLE_TIME_LIMIT = 10;
 	const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 10;
 	const int DC_MISSIONFRAME_LIFECYCLE_TIME = 20;
+	const bool DC_MISSION_RECREATE_CONFIGS = false;
 #endif
 
 //------------------------------------------------------------------------------------------------
@@ -105,7 +107,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		conf.recreateConfigs = true;
+		conf.recreateConfigs = DC_MISSION_RECREATE_CONFIGS;
 		conf.logLevel = DC_LogLevel.DEBUG;
 		conf.missionStartDelay = DC_MISSION_START_DELAY;
 		conf.missionDelayBetweeen = DC_MISSION_DELAY_BETWEEN_MISSIONS;

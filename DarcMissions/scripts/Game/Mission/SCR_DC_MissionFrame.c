@@ -84,8 +84,8 @@ class SCR_DC_MissionFrame
 		}
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas defined: " + m_NonValidAreas.Count(), LogLevel.DEBUG);		
 		
-//		SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.CRASHSITE, "DMC_B", "");
-//		SCR_DC_MapMarkerHelper.CreateMapMarker("800 0 3500", DC_EMissionIcon.TARGET_O, "DMC_B", "");
+		SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.REDCROSS_SMALL, "DMC_B", "");
+		SCR_DC_MapMarkerHelper.CreateMapMarker("800 0 3500", DC_EMissionIcon.REDCROSS, "DMC_B", "");
 //		SCR_DC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "");
 		
 		MissionFrameStart();

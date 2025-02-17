@@ -28,4 +28,15 @@ modded class SCR_BaseGameMode
 			SCR_DC_Log.Add("[SCR_DC_Spawner_BaseGameMode:NonMaster] Spawner not needed for client.", LogLevel.NORMAL);        
 		}
     }
+	
+	override void OnPlayerSpawned(int playerId, IEntity controlledEntity)	
+	{
+		super.OnPlayerSpawned(playerId, controlledEntity);
+		
+		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
+		if (mapMarkerMgr)
+			mapMarkerMgr.SetStreamRulesForPlayer(playerId);
+		
+		SCR_DC_Log.Add("[SCR_DC_Spawner_BaseGameMode] Player spawned", LogLevel.DEBUG);
+	}	
 };
