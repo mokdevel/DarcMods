@@ -1,4 +1,4 @@
-//SCR_DC_GameCoreBase.c
+//SCR_DC_Missions_GameCoreBase.c
 
 modded class SCR_BaseGameMode 
 {

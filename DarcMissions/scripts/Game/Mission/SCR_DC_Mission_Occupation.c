@@ -207,17 +207,17 @@ class SCR_DC_Occupation : Managed
 	//Occupation specific
 	string comment;							//Generic comment to describe the mission. Not used in game.
 	vector locationPos;						//Position for mission. "0 0 0" used for random location chosen from locationTypes.
-	string locationName;					//Name for the mission location (like "bandit camp"). "any" uses location name found from locationTypes 
-	string title;
-	string info;
+	string locationName;					//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
+	string title;							//Title for the hint shown for players
+	string info;							//Details for the hint shown for players
 	ref array<EMapDescriptorType> locationTypes = {};
 	ref array<int> groupCount = {};			//min, max
 	ref array<int> waypointRange = {};		//min, max
 	DC_EWaypointRndType waypointType;
 	DC_EWaypointMoveType waypointMoveType;
 	ref array<string> groupTypes = {};
-	ref SCR_DC_Loot loot = null;
-	
+	//Optional settings
+	ref SCR_DC_Loot loot = null;	
 	ref array<ref SCR_DC_Structure> campItems = {};
 	
 	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointRndType waypointType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_)

@@ -17,7 +17,7 @@ sealed class SCR_DC_SpawnHelper
 	\param resourceName Name of the resource to spawn
 	\param rotation The angle (0-360) to rotate the item
 	\param emptyPosRadius How far from the center the spawned position can be. If set to -1, spawns to exact position
-	//pos
+	\param snap Snap the object to ground when spawning
 	*/
 //	static IEntity SpawnItem(vector pos, string resourceName, float rotation, float emptyPosRadius)
 	static IEntity SpawnItem(vector pos, string resourceName, float rotation = 0, float emptyPosRadius = EMPTY_POS_RADIUS, bool snap = true)

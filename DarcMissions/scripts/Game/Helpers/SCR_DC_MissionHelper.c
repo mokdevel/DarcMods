@@ -194,6 +194,10 @@ sealed class SCR_DC_MissionHelper
 	}
 					
 	//------------------------------------------------------------------------------------------------
+	/*!
+	Spawn a mission AI group to given position making sure it's empty. 
+	NOTE: Position is not exact
+	*/
 	static SCR_AIGroup SpawnMissionAIGroup(string groupToSpawn, vector pos)
 	{
 		vector posFixed = SCR_DC_SpawnHelper.FindEmptyPos(pos, 100, 8);

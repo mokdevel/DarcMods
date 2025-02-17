@@ -2,14 +2,12 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
-Functions for various AI actions
+Functions for various loot related things
 */
 
 //------------------------------------------------------------------------------------------------
-
 class SCR_DC_Loot : Managed
 {
-	//SCR_DC_Structure lootBox;
 	IEntity box;
 	float itemChance = 1.0;
 	ref array<string> items = {};	
@@ -18,13 +16,10 @@ class SCR_DC_Loot : Managed
 	{
 		itemChance = itemChance_;
 		items = items_;
-/*		foreach(string item : items_)
-		{
-			items.Insert(item);
-		}		*/
 	}
 }
 
+//------------------------------------------------------------------------------------------------
 sealed class SCR_DC_LootHelper
 {
 	//------------------------------------------------------------------------------------------------
