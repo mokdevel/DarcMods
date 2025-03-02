@@ -87,7 +87,6 @@ sealed class SCR_DC_MissionHelper
 	*/	
 	static bool IsValidMissionPos(vector pos, float distanceToMission = -1, float distanceToPlayer = -1)
 	{
-		float waterHeight = GetGame().GetWorld().GetOceanHeight(pos[0], pos[2]);
 	
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		
@@ -97,11 +96,17 @@ sealed class SCR_DC_MissionHelper
 		if (distanceToPlayer == -1)
 			distanceToPlayer = baseGameMode.missionFrame.m_Config.minDistanceToPlayer;
 				
+/*		float waterHeight = GetGame().GetWorld().GetOceanHeight(pos[0], pos[2]);
 		if (waterHeight != 0)
 		{			
 			return false;
+		}*/
+
+		if (IsPosInWater(pos))
+		{
+			return false;
 		}
-		
+				
 		if (SCR_DC_PlayerHelper.IsAnyPlayerCloseToPos(pos, distanceToPlayer))
 		{
 			return false;
@@ -120,6 +125,22 @@ sealed class SCR_DC_MissionHelper
 		return true;
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Check if position is in water.
+	*/	
+	static bool IsPosInWater(vector pos)
+	{
+		float waterHeight = GetGame().GetWorld().GetOceanHeight(pos[0], pos[2]);
+		
+		if (waterHeight == 0)
+		{			
+			return false;
+		}
+		
+		return true;
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if any mission is close to given position. Returns true if another mission is within radius

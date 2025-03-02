@@ -58,7 +58,7 @@ sealed class SCR_DC_MapMarkerHelper
 			{
 				int iID = m_markers[i].iID;
 				SCR_MapMarkerBase marker;
-				marker = GetStaticMarkerByID(m_markers[i].iID);
+				marker = GetMarkerByID(m_markers[i].iID);
 				if (marker)
 				{
 					mapMarkerMgr.RemoveStaticMarker(marker);
@@ -67,7 +67,7 @@ sealed class SCR_DC_MapMarkerHelper
 				}
 				else
 				{
-					SCR_DC_Log.Add("[SCR_DC_MapMarkerHelper:DeleteMarker] SCR_MapMarkerBase NULL!", LogLevel.ERROR);        							
+					SCR_DC_Log.Add("[SCR_DC_MapMarkerHelper:DeleteMarker] SCR_MapMarkerBase NULL!", LogLevel.SPAM);        							
 				}					
 			}	
 		}
@@ -81,7 +81,7 @@ sealed class SCR_DC_MapMarkerHelper
 	\param id Id of the marker to find.
 	See: https://feedback.bistudio.com/T182932
 	*/
-	static SCR_MapMarkerBase GetStaticMarkerByID(int markerID)
+	static SCR_MapMarkerBase GetMarkerByID(int markerID)
 	{
 		SCR_MapMarkerBase marker;
 

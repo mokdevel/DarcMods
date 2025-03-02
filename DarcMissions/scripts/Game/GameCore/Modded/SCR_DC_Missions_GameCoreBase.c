@@ -38,20 +38,20 @@ modded class SCR_BaseGameMode
 			mapMarkerMgr.SetStreamRulesForPlayer(playerId);
 		
 		#ifndef SCR_DC_RELEASE
-		//Testing to see if a player can be made to run faster
-		IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
-		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(player);
-		if (character)
-		{
-			CharacterControllerComponent controller = CharacterControllerComponent.Cast(character.GetCharacterController());
-			if (controller)
+			//Testing to see if a player can be made to run faster
+			IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
+			SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(player);
+			if (character)
 			{
-				//controller.SetDynamicStance(0);
-				controller.SetInThirdPersonView(true);
-				controller.SetDynamicSpeed(10.0);
-				Print("SCR_DC speed:" + controller.GetMovementSpeed());
+				CharacterControllerComponent controller = CharacterControllerComponent.Cast(character.GetCharacterController());
+				if (controller)
+				{
+					//controller.SetDynamicStance(0);
+					controller.SetInThirdPersonView(true);
+					controller.SetDynamicSpeed(10.0);
+					SCR_DC_Log.Add("SCR_DC speed:" + controller.GetMovementSpeed(), LogLevel.DEBUG);
+				}
 			}
-		}
 		#endif
 				
 		SCR_DC_Log.Add("[SCR_DC_GameCoreBase: OnPlayerSpawned] Player spawned - id: " + playerId, LogLevel.DEBUG);

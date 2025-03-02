@@ -134,7 +134,10 @@ class SCR_DC_MissionFrame
 			{
 				missionType = m_Config.missionTypeArrayStatic.GetRandomElement();
 				tmpDC_Mission = MissionCreate(missionType);
-				tmpDC_Mission.SetStatic(true);
+				if (tmpDC_Mission)
+				{
+					tmpDC_Mission.SetStatic(true);
+				}
 			}
 			else	//Select a dynamic mission to spawn
 			{
@@ -259,8 +262,13 @@ class SCR_DC_MissionFrame
 				tmpDC_Mission = new SCR_DC_Mission_Crashsite();
 				break;
 			}
+			case DC_EMissionType.PATROL:
+			{
+				tmpDC_Mission = new SCR_DC_Mission_Patrol();
+				break;
+			}
 			default:
-				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Incorrect mission type.", LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Incorrect mission type: " + missionType, LogLevel.ERROR);
 		}	
 		
 		return tmpDC_Mission;

@@ -74,7 +74,7 @@ sealed class SCR_DC_WPHelper
 		RemoveWaypoints(group);		
 		
 		AIWaypoint aiWayPoint;
-		aiWayPoint = GetWaypoint(pos, wptype);
+		aiWayPoint = FindAndCreateWaypoint(pos, wptype);
 		if(aiWayPoint)
 		{
 			group.AddWaypoint(aiWayPoint);
@@ -193,7 +193,7 @@ sealed class SCR_DC_WPHelper
 				//Add some additional randomization
 				float rndRange = Math.RandomInt(0, rndRange/3); 
 				
-				AIWaypoint waypoint = GetWaypoint(position, wptype, (range + rndRange), emptyspot);
+				AIWaypoint waypoint = FindAndCreateWaypoint(position, wptype, (range + rndRange), emptyspot);
 				if (waypoint != null)
 				{
 					waypoints.Insert(waypoint);
@@ -210,7 +210,7 @@ sealed class SCR_DC_WPHelper
 			{				
 				vector vec = SCR_DC_Misc.GetCoordinatesOnCircle(position, range, i*(360/count), startAngle);
 				
-				AIWaypoint waypoint = GetWaypoint(vec, wptype, (range/4), emptyspot);
+				AIWaypoint waypoint = FindAndCreateWaypoint(vec, wptype, (range/4), emptyspot);
 				if (waypoint != null)
 				{
 					waypoints.Insert(waypoint);
@@ -228,7 +228,7 @@ sealed class SCR_DC_WPHelper
 			{
 				IEntity slot = slots.GetRandomElement();				
 
-				AIWaypoint waypoint = GetWaypoint(slot.GetOrigin(), wptype, 3, emptyspot);
+				AIWaypoint waypoint = FindAndCreateWaypoint(slot.GetOrigin(), wptype, 3, emptyspot);
 				if (waypoint != null)
 				{
 					waypoints.Insert(waypoint);
@@ -247,7 +247,7 @@ sealed class SCR_DC_WPHelper
 	\param range Range (radius) for randomization from given position.
 	\param emptyspot True if found position needs to be on clear area.
 	*/
-	static AIWaypoint GetWaypoint(vector position, DC_EWaypointMoveType wptype, float range = 0, bool emptyspot = false )
+	static AIWaypoint FindAndCreateWaypoint(vector position, DC_EWaypointMoveType wptype, float range = 0, bool emptyspot = false )
 	{	
 		vector wpPos;
 		float emptyRange = 30;	//Radius of queried area
@@ -258,8 +258,13 @@ sealed class SCR_DC_WPHelper
 
 		if (emptyspot)
 		{
-			SCR_WorldTools().FindEmptyTerrainPosition(wpPosFixed, wpPos, emptyRange, 1);
+			SCR_WorldTools().FindEmptyTerrainPosition(wpPosFixed, wpPos, emptyRange, 1, 1, TraceFlags.ENTS|TraceFlags.WORLD|TraceFlags.OCEAN);
 			wpPos = wpPosFixed;
+		}
+		
+		if (SCR_DC_MissionHelper.IsPosInWater(wpPos))
+		{
+			return null;
 		}
 		
 		AIWaypoint waypoint = CreateWaypointEntity(wptype);
