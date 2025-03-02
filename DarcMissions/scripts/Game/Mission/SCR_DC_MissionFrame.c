@@ -320,6 +320,7 @@ class SCR_DC_MissionFrame
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Creates config files. To be run at first run of the mod. Will not over write existing confs.
+	//TBD: Remove the m_ from variable names. 
 	*/	
 	void CreateAllConfigs()
 	{		
@@ -337,5 +338,8 @@ class SCR_DC_MissionFrame
 		
 		SCR_DC_OccupationJsonApi m_OccupationJsonApi = new SCR_DC_OccupationJsonApi;	
 		m_OccupationJsonApi.Load();		
+
+		SCR_DC_PatrolJsonApi m_PatrolJsonApi = new SCR_DC_PatrolJsonApi;	
+		m_PatrolJsonApi.Load();						
 	}	
 }

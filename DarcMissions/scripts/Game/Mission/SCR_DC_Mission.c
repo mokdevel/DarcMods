@@ -7,7 +7,8 @@ enum DC_EMissionType
 	OCCUPATION,
 	CHOPPER,
 	CONVOY,
-	CRASHSITE
+	CRASHSITE,
+	PATROL
 };
 
 enum DC_MissionState

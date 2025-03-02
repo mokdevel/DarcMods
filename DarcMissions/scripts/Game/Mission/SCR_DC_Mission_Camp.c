@@ -1,3 +1,4 @@
+//NOTE: Not a mission. This is just for testing the camp functionality. Could become a mission....
 
 class SCR_DC_Mission_Camp : SCR_DC_Mission
 {
