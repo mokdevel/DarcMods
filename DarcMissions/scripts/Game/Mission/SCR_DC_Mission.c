@@ -24,17 +24,17 @@ class SCR_DC_Mission
 {
 	//Common for all missions
 	private DC_MissionState m_State;
+	private DC_EMissionType m_Type;
+	private bool m_Static;		//Defines if the mission is dynamic or static. Dynamic is default. 
     private string m_Id;
     private vector m_Pos;
     private string m_PosName;
     private string m_Title;
     private string m_Info;
-//	private string m_MarkerId;
 	//Internal without getters
 	private int m_StartTime;	//Minutes when mission started
 	private int m_EndTime;		//Minutes when mission shall end.
 	private int m_ActiveTime;	//Minutes of how long the mission should be active 
-//	MapDescriptorComponent m_MapDescriptorComponent = new MapDescriptorComponent;
 	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
@@ -43,6 +43,8 @@ class SCR_DC_Mission
 	void SCR_DC_Mission()
 	{
 		m_State = DC_MissionState.INIT;
+		m_Type = DC_EMissionType.NONE;
+		m_Static = false;
 		m_Id = DC_ID_PREFIX + string.ToString(System.GetTickCount());
 		m_Pos = "0 0 0";
 		m_PosName = "";
@@ -110,7 +112,6 @@ class SCR_DC_Mission
 		}		
 
 		//Remove marker from map
-//		SCR_DC_MapMarkerHelper.DeleteMarker(GetMarkerId());				
 		SCR_DC_MapMarkerHelper.DeleteMarker(GetId());				
 	}
 
@@ -124,7 +125,29 @@ class SCR_DC_Mission
 	{
 		m_State = state;
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	DC_MissionState GetType()
+	{
+		return m_Type;
+	}
+
+	void SetType(DC_EMissionType type)
+	{
+		m_Type = type;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	DC_MissionState IsStatic()
+	{
+		return m_Static;
+	}
+
+	void SetStatic(bool static_)
+	{
+		m_Static = static_;
+	}		
+				
 	//------------------------------------------------------------------------------------------------
 	string GetId()
 	{

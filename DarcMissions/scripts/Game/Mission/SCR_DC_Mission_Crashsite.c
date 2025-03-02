@@ -38,6 +38,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 						
 		//Set some defaults
 		SCR_DC_Mission();
+		SetType(DC_EMissionType.CRASHSITE);
 
 		//Load config
 		m_CrashsiteJsonApi.Load();

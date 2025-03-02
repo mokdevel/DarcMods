@@ -14,6 +14,7 @@ class SCR_DC_Mission_Template : SCR_DC_Mission
 				
 		//Set some defaults
 		SCR_DC_Mission();
+		SetType(DC_EMissionType.NONE);	//NOTE: Define your own ENUM and change here
 
 		//Load config
 		m_TemplateJsonApi.Load();
@@ -26,7 +27,6 @@ class SCR_DC_Mission_Template : SCR_DC_Mission
 		SetInfo(m_Config.info);
 		SetPos(pos);
 		SetPosName(posName);
-		//Markerfix: SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(DC_ID_PREFIX, GetPos(), GetTitle()));
 
 		SetState(DC_MissionState.INIT);			
 	}	

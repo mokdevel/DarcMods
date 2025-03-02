@@ -28,7 +28,8 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 
 		//Set some defaults				
 		SCR_DC_Mission();
-
+		SetType(DC_EMissionType.HUNTER);
+		
 		//Load config	
 		m_HunterJsonApi.Load();
 		m_Config = m_HunterJsonApi.conf;

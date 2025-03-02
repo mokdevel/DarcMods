@@ -24,6 +24,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 				
 		//Set some defaults
 		SCR_DC_Mission();
+		SetType(DC_EMissionType.OCCUPATION);
 
 		//Load config
 		m_OccupationJsonApi.Load();

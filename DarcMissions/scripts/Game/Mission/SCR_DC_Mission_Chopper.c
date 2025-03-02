@@ -18,6 +18,7 @@ class SCR_DC_Mission_Chopper : SCR_DC_Mission
 				
 		//Set some defaults
 		SCR_DC_Mission();
+		SetType(DC_EMissionType.CHOPPER);
 
 		//Load config
 		m_ChopperJsonApi.Load();

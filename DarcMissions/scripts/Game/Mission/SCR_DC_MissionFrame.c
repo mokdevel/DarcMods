@@ -84,9 +84,11 @@ class SCR_DC_MissionFrame
 		}
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas defined: " + m_NonValidAreas.Count(), LogLevel.DEBUG);		
 		
-		SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.REDCROSS_SMALL, "DMC_B", "");
-		SCR_DC_MapMarkerHelper.CreateMapMarker("800 0 3500", DC_EMissionIcon.REDCROSS, "DMC_B", "");
-//		SCR_DC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "");
+		#ifndef SCR_DC_RELEASE
+			SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.REDCROSS_SMALL, "DMC_B", "");
+			SCR_DC_MapMarkerHelper.CreateMapMarker("800 0 3500", DC_EMissionIcon.REDCROSS, "DMC_B", "");
+//			SCR_DC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "");
+		#endif
 		
 		MissionFrameStart();
 	}
@@ -124,49 +126,22 @@ class SCR_DC_MissionFrame
 
 			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Starting new missions", LogLevel.DEBUG);
 			
-			DC_EMissionType missionType = m_Config.missionTypeArray.GetRandomElement();
+			DC_EMissionType missionType = null;
 			
-			switch (missionType)
+			//Select a new mission to spawn. 
+			//Static missions are prioritized so check that the list spawned.
+			if (CountStaticMissions() < m_Config.missionTypeArrayStatic.Count())
 			{
-				case DC_EMissionType.NONE:
-				{
-					SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Mission of type NONE ignored.", LogLevel.DEBUG);
-					break;
-				}
-				case DC_EMissionType.HUNTER:
-				{
-					tmpDC_Mission = new SCR_DC_Mission_Hunter();
-					break;
-				}
-				case DC_EMissionType.OCCUPATION:
-				{
-					tmpDC_Mission = new SCR_DC_Mission_Occupation();
-					break;
-				}
-				case DC_EMissionType.CHOPPER:
-				{
-					tmpDC_Mission = new SCR_DC_Mission_Chopper();
-					break;
-				}
-				case DC_EMissionType.CONVOY:
-				{
-					tmpDC_Mission = new SCR_DC_Mission_Convoy();
-					break;
-				}
-				case DC_EMissionType.CRASHSITE:
-				{
-					tmpDC_Mission = new SCR_DC_Mission_Crashsite();
-					break;
-				}
-				
-//				case DC_EMissionType.CAMP:
-//				{
-//					tmpDC_Mission = new SCR_DC_Mission_Camp();
-//					break;
-//				}
-				default:
-					SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Incorrect mission type.", LogLevel.DEBUG);
+				missionType = m_Config.missionTypeArrayStatic.GetRandomElement();
+				tmpDC_Mission = MissionCreate(missionType);
+				tmpDC_Mission.SetStatic(true);
 			}
+			else	//Select a dynamic mission to spawn
+			{
+				missionType = m_Config.missionTypeArrayDynamic.GetRandomElement();				
+				tmpDC_Mission = MissionCreate(missionType);
+			}
+			
 			
 			if (tmpDC_Mission)
 			{
@@ -246,6 +221,53 @@ class SCR_DC_MissionFrame
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Creates the mission object
+	*/		
+	protected SCR_DC_Mission MissionCreate(DC_EMissionType missionType)
+	{
+		SCR_DC_Mission tmpDC_Mission = null;
+		
+		switch (missionType)
+		{
+			case DC_EMissionType.NONE:
+			{
+				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Mission of type NONE ignored.", LogLevel.DEBUG);
+				break;
+			}
+			case DC_EMissionType.HUNTER:
+			{
+				tmpDC_Mission = new SCR_DC_Mission_Hunter();
+				break;
+			}
+			case DC_EMissionType.OCCUPATION:
+			{
+				tmpDC_Mission = new SCR_DC_Mission_Occupation();
+				break;
+			}
+			case DC_EMissionType.CHOPPER:
+			{
+				tmpDC_Mission = new SCR_DC_Mission_Chopper();
+				break;
+			}
+			case DC_EMissionType.CONVOY:
+			{
+				tmpDC_Mission = new SCR_DC_Mission_Convoy();
+				break;
+			}
+			case DC_EMissionType.CRASHSITE:
+			{
+				tmpDC_Mission = new SCR_DC_Mission_Crashsite();
+				break;
+			}
+			default:
+				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Incorrect mission type.", LogLevel.DEBUG);
+		}	
+		
+		return tmpDC_Mission;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Dumps the current mission details to log.
 	*/	
 	protected void MissionStatusDump()
@@ -254,12 +276,30 @@ class SCR_DC_MissionFrame
 		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.DEBUG);
 		foreach(SCR_DC_Mission mission : m_MissionList)
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] Mission: " + i + ": " + mission.GetId() + " - " + mission.GetTitle() + " - " + "Time left: " + mission.GetActiveTime() + " (" + SCR_Enum.GetEnumName(DC_MissionState,  mission.GetState()) + ")", LogLevel.DEBUG);
+			SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] Mission: " + i + ": " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + ", static: " + mission.IsStatic() + ") - " + mission.GetTitle() + " - " + "Time left: " + mission.GetActiveTime() + " (" + SCR_Enum.GetEnumName(DC_MissionState,  mission.GetState()) + ")", LogLevel.DEBUG);
 			i++;
 		}		
 		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.DEBUG);
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Dumps the current mission details to log.
+	*/	
+	protected int CountStaticMissions()	
+	{
+		int i = 0;
+		foreach(SCR_DC_Mission mission : m_MissionList)
+		{
+			if (mission.IsStatic())
+			{
+				i++;
+			}
+		}
+		
+		return i;
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Checks if the delay between missions has passed.

@@ -14,6 +14,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 				
 		//Set some defaults
 		SCR_DC_Mission();
+		SetType(DC_EMissionType.CONVOY);
 
 		//Load config
 		m_ConvoyJsonApi.Load();

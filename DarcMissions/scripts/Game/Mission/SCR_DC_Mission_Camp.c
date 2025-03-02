@@ -15,6 +15,8 @@ class SCR_DC_Mission_Camp : SCR_DC_Mission
 				
 		//Set some defaults
 		SCR_DC_Mission();
+		SetType(DC_EMissionType.NONE);
+
 
 		//Load config
 		m_CampJsonApi.Load();
