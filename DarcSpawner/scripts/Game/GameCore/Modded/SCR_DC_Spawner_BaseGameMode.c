@@ -19,9 +19,7 @@ modded class SCR_BaseGameMode
 		if(IsMaster())
 		{
 			SCR_DC_Log.Add("[SCR_DC_Spawner_BaseGameMode:IsMaster] OnGameStart", LogLevel.NORMAL);        
-	
-			dcSpawner = new SCR_DC_Spawner();
-			dcSpawner.Run();
+			GetGame().GetCallqueue().CallLater(StartSpawner, 10000, false);	
 		}
 		else 
 		{
@@ -38,5 +36,11 @@ modded class SCR_BaseGameMode
 			mapMarkerMgr.SetStreamRulesForPlayer(playerId);
 		
 		SCR_DC_Log.Add("[SCR_DC_Spawner_BaseGameMode] Player spawned", LogLevel.DEBUG);
-	}	
+	}
+	
+	private void StartSpawner()
+	{
+		dcSpawner = new SCR_DC_Spawner();
+		dcSpawner.Run();
+	}
 };

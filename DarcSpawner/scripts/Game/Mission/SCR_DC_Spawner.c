@@ -47,8 +47,6 @@ class SCR_DC_Spawner
 			SCR_DC_Log.SetLogLevel(DC_LogLevel.DEBUG);						//Remove in production
 		}
 
-		SCR_DC_Log.Add("SCR_DC: Chance: " + m_Config.spawnSets[m_spawnSetID].itemChance);
-				
 		//Select which spawnSet to use. -1 for a random one.
 		m_spawnSetID = m_Config.spawnSetID;
 		
@@ -63,8 +61,8 @@ class SCR_DC_Spawner
 		
 		if (m_spawnCount == 0)
 		{			
-//			int ws = SCR_DC_Misc.GetWorldSize();
 			m_spawnCount = (SCR_DC_Misc.GetWorldSize() * m_Config.spawnWorldSizeMultiplier) / 1000;
+			SCR_DC_Log.Add("[SCR_DC_Spawner] m_spawnCount = Worldsize: " + SCR_DC_Misc.GetWorldSize() + " * " + m_Config.spawnWorldSizeMultiplier, LogLevel.DEBUG);			
 		}		
 		SCR_DC_Log.Add("[SCR_DC_Spawner] Maximum spawnCount: " + m_spawnCount, LogLevel.DEBUG);
 						

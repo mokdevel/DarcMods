@@ -137,17 +137,25 @@ class SCR_DC_MissionFrame
 				if (tmpDC_Mission)
 				{
 					tmpDC_Mission.SetStatic(true);
+					//Set the defaul active time. NOTE: Static missions are kept alive 
+					tmpDC_Mission.SetActiveTime(m_Config.missionActiveTimeStatic);
 				}
 			}
 			else	//Select a dynamic mission to spawn
 			{
 				missionType = m_Config.missionTypeArrayDynamic.GetRandomElement();				
 				tmpDC_Mission = MissionCreate(missionType);
+				if (tmpDC_Mission)
+				{
+					tmpDC_Mission.SetActiveTime(m_Config.missionActiveTime);
+				}				
 			}
 			
-			
+			//Mission is ready to be run. Finalize the last details
 			if (tmpDC_Mission)
 			{
+				//Set the defaul active distance
+				tmpDC_Mission.SetActiveDistance(m_Config.missionActiveDistance);
 				//Add to list
 				m_MissionList.Insert(tmpDC_Mission);
 				//Set mission to start to run
@@ -163,8 +171,6 @@ class SCR_DC_MissionFrame
 						SCR_DC_HintHelper.ShowHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), m_Config.missionHintTime);					
 					}
 					
-					//Markerfix: SCR_DC_MapMarkersUI.AddMarkerHint(tmpDC_Mission.GetId());		
-	
 					SCR_DC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), Color.YELLOW, 10, tmpDC_Mission.GetId());
 					
 					//Set the time when the mission has started. Activates the delay.
@@ -292,7 +298,7 @@ class SCR_DC_MissionFrame
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Dumps the current mission details to log.
+	Counts the amount of active static missions
 	*/	
 	protected int CountStaticMissions()	
 	{

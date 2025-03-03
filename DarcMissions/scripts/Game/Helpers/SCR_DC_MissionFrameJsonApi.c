@@ -3,27 +3,13 @@
 // For readable jsons, use https://jsonformatter.org
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J , convert to readable format - press Ctrl+Alt+Shift+M
 
-#ifdef SCR_DC_RELEASE
-	const int DC_MISSION_START_DELAY = 2*60;				//Time to wait before spawning the first mission (seconds)
-	const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 5*60;
-	const int DC_MISSION_ACTIVE_TIME = 10*60;				//Time to keep the mission active (seconds)
-	const int DC_MISSION_ACTIVE_DISTANCE = 300;		
-	const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 30;
-	const int DC_MISSIONFRAME_LIFECYCLE_TIME = 60;
-	const int DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT = 20;
-	const bool DC_MISSION_RECREATE_CONFIGS = true;
-#endif
-
-#ifndef SCR_DC_RELEASE	//Development time options
-	const int DC_MISSION_START_DELAY = 5;					//Time to wait before spawning the first mission (seconds)
-	const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*10;
-	const int DC_MISSION_ACTIVE_TIME = 200;					//Time to keep the mission active (seconds)
-	const int DC_MISSION_ACTIVE_DISTANCE = 300;		
-	const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 10;
-	const int DC_MISSIONFRAME_LIFECYCLE_TIME = 20;
-	const int DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT = 10;	//You should not be running the frame too often as it's unncecessary
-	const bool DC_MISSION_RECREATE_CONFIGS = false;
-#endif
+	#ifdef SCR_DC_RELEASE
+		const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 30;
+	#endif
+	
+	#ifndef SCR_DC_RELEASE	//Development time options
+		const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 10;
+	#endif
 
 //------------------------------------------------------------------------------------------------
 class SCR_DC_MissionFrameConfig : Managed
@@ -41,6 +27,7 @@ class SCR_DC_MissionFrameConfig : Managed
 	int missionCount;				//Maximum amount of missions to be active at the same time
 	int missionFrameLifeCycleTime;	//The cycle time to manage mission spawning, deletion etc...
 	int missionActiveTime;			//Time to keep the mission active (seconds)
+	int missionActiveTimeStatic;	//Time to keep the static mission active (seconds). This typically is much longer than for dynamic.
 	int missionActiveDistance;		//The distance to a player to keep the mission active 
 	int missionHintTime;			//Seconds to show mission hints to players. 0 disables hints.
 	ref array<DC_EMissionType> missionTypeArrayDynamic = {};		//List mission types that spawn randomly
@@ -70,6 +57,32 @@ class SCR_DC_NonValidArea : Managed
 //------------------------------------------------------------------------------------------------
 class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 {
+	#ifdef SCR_DC_RELEASE
+		private const int DC_MISSION_COUNT = 4;											//Default amount of missions to run
+		private const int DC_MISSION_START_DELAY = 2*60;								//Time to wait before spawning the first mission (seconds)
+		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 5*60;						//Minimum delay between missions.
+		private const int DC_MISSION_ACTIVE_TIME = 10*60;								//Time to keep the mission active (seconds)
+		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 5;	//Static missions are to be kept alive much longer
+		private const int DC_MISSION_ACTIVE_DISTANCE = 300;								//Mission is to be removed if no players close to the position after the mission active time has passed.
+		private const int DC_MISSIONFRAME_LIFECYCLE_TIME = 60;							//The cycle to run the mission frame. 
+		private const int DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT = 20;					//You should not be running the frame too often as it's unncecessary
+		private const bool DC_MISSION_RECREATE_CONFIGS = true;							//Force recreaction of config files. 
+		private const int DC_MISSION_HINT_TIME = 10;									//Seconds to show the mission hint to players
+	#endif
+	
+	#ifndef SCR_DC_RELEASE	//Development time options
+		private const int DC_MISSION_COUNT = 4;
+		private const int DC_MISSION_START_DELAY = 5;					
+		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*10;
+		private const int DC_MISSION_ACTIVE_TIME = 2*60;				
+		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 5;	
+		private const int DC_MISSION_ACTIVE_DISTANCE = 200;		
+		private const int DC_MISSIONFRAME_LIFECYCLE_TIME = 20;
+		private const int DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT = 10;
+		private const bool DC_MISSION_RECREATE_CONFIGS = false;
+		private const int DC_MISSION_HINT_TIME = 10;									//Seconds to show the mission hint to players
+	#endif
+		
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig.json";
 	ref SCR_DC_MissionFrameConfig conf = new SCR_DC_MissionFrameConfig;
 
@@ -112,11 +125,12 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		conf.logLevel = DC_LogLevel.DEBUG;
 		conf.missionStartDelay = DC_MISSION_START_DELAY;
 		conf.missionDelayBetweeen = DC_MISSION_DELAY_BETWEEN_MISSIONS;
-		conf.missionCount = 6;
+		conf.missionCount = DC_MISSION_COUNT;
 		conf.missionFrameLifeCycleTime = DC_MISSIONFRAME_LIFECYCLE_TIME;
 		conf.missionActiveTime = DC_MISSION_ACTIVE_TIME;
+		conf.missionActiveTimeStatic = DC_MISSION_ACTIVE_TIME_STATIC;
 		conf.missionActiveDistance = DC_MISSION_ACTIVE_DISTANCE;
-		conf.missionHintTime = 10;
+		conf.missionHintTime = DC_MISSION_HINT_TIME;
 		
 //		conf.missionTypeArrayDynamic = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
 //		conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION};
@@ -141,10 +155,10 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		
 		//Arland
 		SCR_DC_NonValidArea areaA1 = new SCR_DC_NonValidArea;
-		areaA1.Set("Arland", "1340 0 2320", 200, "Airport - for testing");
+		areaA1.Set("Arland", "1340 0 2320", 300, "Airport - for testing");
 		conf.nonValidAreas.Insert(areaA1);
 		SCR_DC_NonValidArea areaA2 = new SCR_DC_NonValidArea;
-		areaA2.Set("Arland", "1080 0 3300", 100, "Harbour - for testing");
+		areaA2.Set("Arland", "1080 0 3300", 200, "Harbour - for testing");
 		conf.nonValidAreas.Insert(areaA2);
 	}
 }

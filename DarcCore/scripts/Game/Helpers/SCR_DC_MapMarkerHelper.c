@@ -72,7 +72,7 @@ sealed class SCR_DC_MapMarkerHelper
 			}	
 		}
 		
-		SCR_DC_Log.Add("[SCR_DC_MapMarkerHelper:DeleteMarker] " + m_markers.Count() + " markers. Deleted " + (startCount - m_markers.Count()) + " markers", LogLevel.NORMAL);        		
+		SCR_DC_Log.Add("[SCR_DC_MapMarkerHelper:DeleteMarker] " + m_markers.Count() + " markers. Deleted " + (startCount - m_markers.Count()) + " markers", LogLevel.DEBUG);        		
 	}
 
 	//------------------------------------------------------------------------------------------------

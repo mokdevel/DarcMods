@@ -186,6 +186,22 @@ sealed class SCR_DC_Misc
 
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Check if position is in water.
+	*/	
+	static bool IsPosInWater(vector pos)
+	{
+		float waterHeight = GetGame().GetWorld().GetOceanHeight(pos[0], pos[2]);
+		
+		if (waterHeight == 0)
+		{			
+			return false;
+		}
+		
+		return true;
+	}	
+		
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Check if a class is available. This can be used to check if a mod has been loaded by checking a class
 	\param classToTest The class to search
 	TBD: For some reason uncommenting the code below results in WB crash and weird compilation errors

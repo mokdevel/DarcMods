@@ -65,7 +65,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
-			location = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Occupation.locationTypes);
+			location = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Occupation.locationTypes, m_Config.emptySize);
 			//Camps in random places are randomly rotated
 			m_SpawnRotation = Math.RandomFloat(0, 360);
 		}
@@ -87,7 +87,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 			SetInfo(m_DC_Occupation.info);			
 			SetPos(location.GetOrigin());
 			SetPosName(posName);
-			SCR_DC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.MISSION, GetId(), GetTitle());
+			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 
 			SCR_DC_SpawnHelper.SetStructuresToOrigo(m_DC_Occupation.campItems);
 				
@@ -108,6 +108,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 		if (GetState() == DC_MissionState.INIT)
 		{
 			MissionSpawn();
+			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds
 		}
 
 		if (GetState() == DC_MissionState.END)
@@ -126,9 +127,8 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 					SetState(DC_MissionState.END);
 				}
 			}
-		}
-		
-		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionLifeCycleTime*1000);
+			GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionLifeCycleTime*1000);
+		}		
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -195,11 +195,13 @@ class SCR_DC_OccupationConfig : Managed
 	//Default information
 	int version = 1;
 	string author = "darc";
-	int missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;	//How often the mission is run
+	int missionLifeCycleTime;								//How often the mission is run
+	bool showMarker;
 	
 	//Mission specific	
-	ref array<ref int> occupationList = {};							//Which occupations to use. If first one is -1, any random one will be chosen from occupations. A single value will work as index.
-	ref array<ref SCR_DC_Occupation> occupations = {};				//List of occupations
+	int emptySize = 20;										//The size of the empty space to found to decide on a mission position.
+	ref array<ref int> occupationList = {};					//Which occupations to use. If first one is -1, any random one will be chosen from occupations. A single value will work as index.
+	ref array<ref SCR_DC_Occupation> occupations = {};		//List of occupations
 }
 
 //------------------------------------------------------------------------------------------------
@@ -271,9 +273,11 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 	{
 		array<string> lootItems = {};
 		
-		//Mission specific
+		//Default		
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
-		conf.occupationList = {0,0,0,1,1,1,2};		//Set -1 in the first entry to get a random occupation. Single number will be used as index.
+		conf.showMarker = true;
+		//Mission specific		
+		conf.occupationList = {1};//{0,0,0,1,1,1,2};		//Set -1 in the first entry to get a random occupation. Single number will be used as index.
 
 		//----------------------------------------------------
 		SCR_DC_Occupation occupation0 = new SCR_DC_Occupation;
@@ -318,7 +322,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 				EMapDescriptorType.MDT_FORTRESS
 			},
 			{1, 2},
-			{10, 100},
+			{25, 100},
 			DC_EWaypointRndType.RANDOM,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
@@ -386,7 +390,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT,
 			},
 			{2, 4},
-			{50, 300},
+			{50, 250},
 			DC_EWaypointRndType.RADIUS,
 			DC_EWaypointMoveType.RANDOM,		
 			{

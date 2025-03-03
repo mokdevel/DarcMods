@@ -91,7 +91,8 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 		(			
 			"Used for Escapists in Gogland. Spawns random ambulances with some gear",
 			{
-				EMapDescriptorType.MDT_NAME_CITY, 
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_VILLAGE, 
 				EMapDescriptorType.MDT_NAME_SETTLEMENT,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,

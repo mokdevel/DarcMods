@@ -78,7 +78,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 			SetInfo(m_Config.info);
 			SetPos(pos);
 			SetPosName("");
-			SCR_DC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.TARGET_X, GetId(), GetTitle());
+			SetMarker(m_Config.showMarker, DC_EMissionIcon.TARGET_X);
 	
 			SetState(DC_MissionState.INIT);			
 
@@ -114,8 +114,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 		}	
 				
 		if (GetState() == DC_MissionState.ACTIVE)
-		{
-			
+		{			
 			switch (missionCrashSiteState)
 			{
 				case DC_EMissionCrashSiteState.INIT:
@@ -217,7 +216,6 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
 	{					
-		//Code for whatever you need for spawning things.
 		EntitySpawnParams params = EntitySpawnParams();
 		SCR_DC_HelicopterInfo helicopterInfo = m_Config.helicopterInfo.GetRandomElement();
 		vector pos = GetPos();
@@ -280,7 +278,8 @@ class SCR_DC_CrashsiteConfig : Managed
 	//Default information
 	int version = 1;
 	string author = "darc";
-	int missionLifeCycleTime = 1000;//DC_MISSION_LIFECYCLE_TIME_DEFAULT;	//How often the mission is run
+	int missionLifeCycleTime;				//How often the mission is run
+	bool showMarker;
 	
 	//Mission specific
 	string title;
@@ -326,8 +325,10 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		//Mission specific
+		//Default		
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
+		conf.showMarker = true;
+		//Mission specific
 		conf.title = "Helicopter in distress ";
 		conf.info = "A valuable cargo has crashed";
 		conf.waypointRange = {10,50};

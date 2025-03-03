@@ -306,20 +306,20 @@ sealed class SCR_DC_DebugHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Takes the waypoint/position and raises it with 2 meters.
+	Takes the waypoint/position and raises it with 12 meters.
 	\param waypoint Waypoint or position to raise
 	*/
 	static vector RaiseWaypointPos(AIWaypoint waypoint)
 	{
 		vector pos = waypoint.GetOrigin();
-		pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + 2;
+		pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + 12;
 		
 		return pos;
 	}	
 
 	static vector RaiseWaypointPos(vector pos)
 	{
-		pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + 2;
+		pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + 12;
 		
 		return pos;
 	}

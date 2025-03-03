@@ -47,7 +47,7 @@ class SCR_DC_Mission_Camp : SCR_DC_Mission
 		SetInfo(m_DC_Camp.info);
 		SetPos(pos);
 		SetPosName(posName);
-		SCR_DC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.MISSION, GetId(), GetTitle());
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 
 		SetState(DC_MissionState.INIT);			
 	}	
@@ -110,11 +110,12 @@ class SCR_DC_CampConfig : Managed
 	//Default information
 	int version = 1;
 	string author = "darc";
-	int missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;	//How often the mission is run
+	int missionLifeCycleTime;					//How often the mission is run
+	bool showMarker;
 	
 	//Mission specific	
 	ref array<ref SCR_DC_Camp> camps = {};
-	int campIdx;													//Which camp to use. -1 for random	
+	int campIdx;								//Which camp to use. -1 for random	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -170,8 +171,10 @@ class SCR_DC_CampJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		//Mission specific
+		//Default
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
+		conf.showMarker = true;
+		//Mission specific
 		conf.campIdx = 0;
 
 		SCR_DC_Camp camp0 = new SCR_DC_Camp;

@@ -1,4 +1,3 @@
-
 //------------------------------------------------------------------------------------------------
 enum DC_EMissionType
 {
@@ -32,10 +31,12 @@ class SCR_DC_Mission
     private string m_PosName;
     private string m_Title;
     private string m_Info;
-	//Internal without getters
-	private int m_StartTime;	//Minutes when mission started
-	private int m_EndTime;		//Minutes when mission shall end.
-	private int m_ActiveTime;	//Minutes of how long the mission should be active 
+	//Internals
+	private int m_StartTime;		//Seconds when mission started
+	private int m_EndTime;			//Seconds when mission shall end.
+	private int m_ActiveTime;		//Seconds of how long the mission should be active 
+	//Internals without getters
+	private int m_ActiveDistance;	//The distance to a player to keep the mission active 
 	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
@@ -51,10 +52,8 @@ class SCR_DC_Mission
 		m_PosName = "";
 		m_Title = "";
 		m_Info = "";
-//		m_MarkerId = "";
-		m_StartTime = (System.GetTickCount() / 1000); 		//The time in seconds when the game was started.
-		SetActiveTime(DC_MISSION_ACTIVE_TIME);				//Sets m_EndTick	//TBD: This value should be coming from the MissionFrame
-//		m_MapDescriptorComponent.IsActive();
+		m_StartTime = (System.GetTickCount() / 1000); 			//The time in seconds when the game was started.
+		SetActiveTime(DC_MISSION_LIFECYCLE_TIME_DEFAULT*20);	//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -64,7 +63,6 @@ class SCR_DC_Mission
 		{
 			//Add init code
 			SetState(DC_MissionState.ACTIVE);
-			//m_State = DC_MissionState.ACTIVE;	
 		}
 		
 		if (m_State == DC_MissionState.END)
@@ -198,30 +196,19 @@ class SCR_DC_Mission
 	{		
 		m_Info = info;
 	}
-
-	//------------------------------------------------------------------------------------------------
-/*	string GetMarkerId()
-	{
-		return m_MarkerId;
-	}
-
-	void SetMarkerId(string markerId)
-	{
-		m_MarkerId = markerId;
-	}	*/
 	
 	//------------------------------------------------------------------------------------------------
 	bool IsActive()
 	{
 		//Are there players still nearby
-		if (SCR_DC_PlayerHelper.PlayerGetClosestToPos(m_Pos, 0, DC_MISSION_ACTIVE_DISTANCE))
+		if (SCR_DC_PlayerHelper.PlayerGetClosestToPos(m_Pos, 0, m_ActiveDistance))
 		{
 			ResetActiveTime();
 			return true;
 		}
 		
 		//Has the active time passed
-		int currentTime = (System.GetTickCount() / 1000);		
+		int currentTime = (System.GetTickCount() / 1000);
 		if (currentTime < m_EndTime)
 		{
 			return true;
@@ -232,10 +219,17 @@ class SCR_DC_Mission
 	}	
 	
 	//------------------------------------------------------------------------------------------------
+	void SetActiveDistance(int distance)	
+	{
+		m_ActiveDistance = distance;
+	}		
+	
+	//------------------------------------------------------------------------------------------------
 	void SetActiveTime(int seconds)	
 	{
 		m_ActiveTime = seconds;
-		m_EndTime = m_StartTime + m_ActiveTime;
+		//m_EndTime = m_StartTime + m_ActiveTime;
+		ResetActiveTime();
 	}		
 
 	//------------------------------------------------------------------------------------------------
@@ -251,5 +245,13 @@ class SCR_DC_Mission
 		int currentTime = (System.GetTickCount() / 1000);		
 		m_EndTime = currentTime + m_ActiveTime;
 	}		
-	
+
+	//------------------------------------------------------------------------------------------------
+	void SetMarker(bool setMarker, DC_EMissionIcon icon)
+	{
+		if(setMarker)
+		{
+			SCR_DC_MapMarkerHelper.CreateMapMarker(GetPos(), icon, GetId(), GetTitle());
+		}
+	}		
 }

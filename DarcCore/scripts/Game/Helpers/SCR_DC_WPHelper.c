@@ -50,10 +50,10 @@ sealed class SCR_DC_WPHelper
 				array<DC_EWaypointMoveType> waypointMoveTypeArray = {DC_EWaypointMoveType.MOVECYCLE, DC_EWaypointMoveType.PATROLCYCLE, DC_EWaypointMoveType.PATROLCYCLE, DC_EWaypointMoveType.PATROLCYCLE};
 				waypointMoveType = waypointMoveTypeArray.GetRandomElement();
 			}
-			
-			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Adding " + rndCount + " waypoints (" + SCR_Enum.GetEnumName(DC_EWaypointRndType, waypointRndType) + ", " + SCR_Enum.GetEnumName(DC_EWaypointMoveType, waypointMoveType) + ")", LogLevel.DEBUG);
 
-			CreateWaypoints(group, rndCount, waypointMoveType, waypointRndType, rndRange, true);
+			int realCount = CreateWaypoints(group, rndCount, waypointMoveType, waypointRndType, rndRange, true);
+						
+			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Added " + realCount + "/" + rndCount + " waypoints (" + SCR_Enum.GetEnumName(DC_EWaypointRndType, waypointRndType) + ", " + SCR_Enum.GetEnumName(DC_EWaypointMoveType, waypointMoveType) + ")", LogLevel.DEBUG);
 		}
 	}	
 	
@@ -96,7 +96,7 @@ sealed class SCR_DC_WPHelper
 	\param range Range (radius) for randomization from given position.
 	\param emptyspot True if found position needs to be on clear area.	
 	*/
-	static bool CreateWaypoints(SCR_AIGroup group, int count = 7, DC_EWaypointMoveType wptype = DC_EWaypointMoveType.MOVECYCLE, DC_EWaypointRndType rndtype = DC_EWaypointRndType.SCATTERED, float range = 100, bool emptyspot = false)
+	static int CreateWaypoints(SCR_AIGroup group, int count = 7, DC_EWaypointMoveType wptype = DC_EWaypointMoveType.MOVECYCLE, DC_EWaypointRndType rndtype = DC_EWaypointRndType.SCATTERED, float range = 100, bool emptyspot = false)
 	{
 		array<AIWaypoint> waypoints = {};
 		AIWaypointCycle wpcycle = null;
@@ -115,9 +115,9 @@ sealed class SCR_DC_WPHelper
 					wptype = DC_EWaypointMoveType.PATROL;
 					break;
 				default:
-					SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Incorrect wptype", LogLevel.ERROR);
+					SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateWaypoints] Incorrect wptype", LogLevel.ERROR);
 			}
-			SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Creating cycle", LogLevel.SPAM);
+			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateWaypoints] Creating cycle", LogLevel.SPAM);
 		}
 		
 		RemoveWaypoints(group);		
@@ -125,8 +125,8 @@ sealed class SCR_DC_WPHelper
 		
 		if (waypoints.Count() == 0)
 		{
-			SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Could not create waypoint to group: " + group, LogLevel.WARNING);
-			return false;
+			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateWaypoints] Could not create waypoint to group: " + group, LogLevel.WARNING);
+			return waypoints.Count();
 		}
 		
 		//Create cycle waypoints
@@ -137,13 +137,13 @@ sealed class SCR_DC_WPHelper
 				wpcycle.SetWaypoints(waypoints);
 				group.AddWaypoint(wpcycle);
 				
-				SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Adding " + waypoints.Count() + " waypoints", LogLevel.SPAM);
-				return true;
+				SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateWaypoints] Adding " + waypoints.Count() + " waypoints as a cycle", LogLevel.SPAM);
+				return waypoints.Count();
 			}
 			else
 			{
-				SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] No waypoints added to group: " + group, LogLevel.WARNING);
-				return false;
+				SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateWaypoints] No waypoints added to group: " + group, LogLevel.WARNING);
+				return waypoints.Count();
 			}		
 		}
 		//Create normal waypoints
@@ -154,8 +154,8 @@ sealed class SCR_DC_WPHelper
 				group.AddWaypoint(wpc);
 			}
 			
-			SCR_DC_Log.Add("[SCR_DC_AIHelper:CreateWaypoints] Adding waypoints: " + waypoints.Count(), LogLevel.DEBUG);
-			return true;			
+			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateWaypoints] Adding non-cycle waypoints: " + waypoints.Count(), LogLevel.DEBUG);
+			return waypoints.Count();			
 		}
 	}	
 	
@@ -169,6 +169,20 @@ sealed class SCR_DC_WPHelper
 		{
 			group.RemoveWaypoint(waypoint);
 		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get count of waypoints for a group
+	TBD: If the group has cycle waypoint, it will return 1. Should return the count of waypoints in the cycle.
+	\param group
+	*/
+	static int GetWaypointCount(AIGroup group)
+	{
+		array<AIWaypoint> waypoints = {};
+		group.GetWaypoints(waypoints);
+		
+		return waypoints.Count();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -262,8 +276,9 @@ sealed class SCR_DC_WPHelper
 			wpPos = wpPosFixed;
 		}
 		
-		if (SCR_DC_MissionHelper.IsPosInWater(wpPos))
+		if (SCR_DC_Misc.IsPosInWater(wpPos))
 		{
+			SCR_DC_Log.Add("[SCR_DC_WPHelper:FindAndCreateWaypoint] Waypoint in water. Skipping.", LogLevel.DEBUG);			
 			return null;
 		}
 		
@@ -277,7 +292,6 @@ sealed class SCR_DC_WPHelper
 	Creates a waypoint entity
 	\param wptype
 	*/
-	
 	static AIWaypoint CreateWaypointEntity(DC_EWaypointMoveType wptype)
 	{
 		private string wpPrefab = "";
@@ -308,5 +322,5 @@ sealed class SCR_DC_WPHelper
 			return null;
 		
 		return wp;
-	}	
+	}		
 }

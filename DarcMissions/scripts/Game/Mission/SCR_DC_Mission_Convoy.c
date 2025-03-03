@@ -27,7 +27,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		SetInfo(m_Config.info);
 		SetPos(pos);
 		SetPosName(posName);
-		SCR_DC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.MISSION, GetId(), GetTitle());
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 
 		SetState(DC_MissionState.INIT);			
 	}	
@@ -210,6 +210,7 @@ class SCR_DC_ConvoyConfig : Managed
 	int version = 1;
 	string author = "darc";
 	int missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;	//How often the mission is run
+	bool showMarker;
 	
 	//Mission specific
 	vector pos;
@@ -252,8 +253,10 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		//Mission specific
+		//Default
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
+		conf.showMarker = true;
+		//Mission specific
 		conf.pos = "0 0 0";
 		conf.posName = "A location name";
 		conf.title = "Convoy mission";

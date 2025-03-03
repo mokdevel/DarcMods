@@ -47,13 +47,16 @@ sealed class SCR_DC_MissionHelper
 		{
 			location = locations.GetRandomElement();
 			pos = location.GetOrigin();
+			pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, 200, size);
 			
 			if (SCR_DC_MissionHelper.IsValidMissionPos(pos))
 			{				
 				//Find an empty position at mission pos
-				pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, 200, size);
+//				pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, 200, size);
+//				if(!SCR_DC_Misc.IsPosInWater(pos))
+//				{
 				positionFound = true;
-			
+		
 				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] Location for spawn " + SCR_StringHelper.Translate(location.GetName()) + " " + location.GetOrigin(), LogLevel.DEBUG);
 				break;
 			}
@@ -95,14 +98,8 @@ sealed class SCR_DC_MissionHelper
 
 		if (distanceToPlayer == -1)
 			distanceToPlayer = baseGameMode.missionFrame.m_Config.minDistanceToPlayer;
-				
-/*		float waterHeight = GetGame().GetWorld().GetOceanHeight(pos[0], pos[2]);
-		if (waterHeight != 0)
-		{			
-			return false;
-		}*/
 
-		if (IsPosInWater(pos))
+		if (SCR_DC_Misc.IsPosInWater(pos))
 		{
 			return false;
 		}
@@ -125,22 +122,6 @@ sealed class SCR_DC_MissionHelper
 		return true;
 	}
 
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Check if position is in water.
-	*/	
-	static bool IsPosInWater(vector pos)
-	{
-		float waterHeight = GetGame().GetWorld().GetOceanHeight(pos[0], pos[2]);
-		
-		if (waterHeight == 0)
-		{			
-			return false;
-		}
-		
-		return true;
-	}	
-	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if any mission is close to given position. Returns true if another mission is within radius

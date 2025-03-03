@@ -62,7 +62,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 			SetInfo("They are coming for you...");
 			SetPos(pos);
 			SetPosName("");
-			SCR_DC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.MISSION, GetId(), GetTitle());
+			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 	
 			SetState(DC_MissionState.INIT);
 		}
@@ -223,7 +223,6 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 		if (closestPlayer != null)
 		{
 			AIWaypoint waypoint = SCR_DC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.MOVE);
-//			waypoint.SetOrigin(closestPlayer.GetOrigin());
 			waypoint.SetOrigin(SCR_DC_Misc.RandomizePos(closestPlayer.GetOrigin(), m_Config.rndDistanceToPlayer));
 			return waypoint;
 		}
@@ -243,7 +242,8 @@ class SCR_DC_HunterConfig : Managed
 	//Default information
 	int version = 1;
 	string author = "darc";
-	int missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;		//How often the mission is run	
+	int missionLifeCycleTime;
+	bool showMarker;
 	
 	//Mission specific
 	int groupsToSpawn;					//Number of groups to spawn
@@ -288,8 +288,10 @@ class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
+		//Default
+		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
+		conf.showMarker = true;
 		//Mission specific
-		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;		
 		conf.groupsToSpawn = 2;
 		conf.groupSpawnDelay = 5000;
 		conf.lifeCycleTime = 5000;

@@ -1,6 +1,7 @@
 //Mission SCR_DC_Mission_Template.c
 //
 //An example of a mission file with simple set. No real functionality.
+//Do a "replace all" for the word "Template" with your mission name.
 
 class SCR_DC_Mission_Template : SCR_DC_Mission
 {
@@ -14,19 +15,17 @@ class SCR_DC_Mission_Template : SCR_DC_Mission
 				
 		//Set some defaults
 		SCR_DC_Mission();
-		SetType(DC_EMissionType.NONE);	//NOTE: Define your own ENUM and change here
+		SetType(DC_EMissionType.NONE);	//REMEMBER: Define your own ENUM in SCR_DC_Mission.c and change here. Don't use modded enum.
 
 		//Load config
 		m_TemplateJsonApi.Load();
 		m_Config = m_TemplateJsonApi.conf;
 		
-		string posName = m_Config.posName;
-		vector pos = m_Config.pos;
-		
-		SetTitle(m_Config.title + "" + posName);
+		SetTitle(m_Config.title);
 		SetInfo(m_Config.info);
-		SetPos(pos);
-		SetPosName(posName);
+		SetPos(m_Config.pos);
+		SetPosName(m_Config.posName);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 
 		SetState(DC_MissionState.INIT);			
 	}	
@@ -88,6 +87,7 @@ class SCR_DC_TemplateConfig : Managed
 	int version = 1;
 	string author = "darc";
 	int missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;	//How often the mission is run
+	bool showMarker;
 	
 	//Mission specific
 	vector pos;
@@ -130,8 +130,10 @@ class SCR_DC_TemplateJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		//Mission specific
+		//Default
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
+		conf.showMarker = true;		
+		//Mission specific		
 		conf.pos = "0 0 0";
 		conf.posName = "A location name";
 		conf.title = "Template mission";
