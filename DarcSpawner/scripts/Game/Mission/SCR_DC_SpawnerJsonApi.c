@@ -81,8 +81,8 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 	{
 		conf.logLevel = DC_LogLevel.NORMAL;
 		conf.spawnSetID = 0;
-		conf.spawnRndRadius = 100;
-		conf.spawnWorldSizeMultiplier = 1.5;
+		conf.spawnRndRadius = 200;
+		conf.spawnWorldSizeMultiplier = 2;
 		
 		//Different spawner confs
 		//---
@@ -91,6 +91,7 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 		(			
 			"Used for Escapists in Gogland. Spawns random ambulances with some gear",
 			{
+				EMapDescriptorType.MDT_NAME_GENERIC,	
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_VILLAGE, 

@@ -72,13 +72,19 @@ sealed class SCR_DC_Misc
 	*/	
 	static int GetWorldSize()
 	{
+		int worldSize;
+		//TBD: This should work, but returns incorrect size on dedicated server. Check with 1.3 if fixed.
+		/*
 		SCR_MapEntity m_MapEntity = SCR_MapEntity.GetMapInstance();
-		int worldSize = m_MapEntity.GetMapSizeX();
+		worldSize = m_MapEntity.GetMapSizeX();		
 		if (m_MapEntity.GetMapSizeY() > worldSize)
 		{
 			worldSize = m_MapEntity.GetMapSizeY();
-		}
+		}*/
 
+		vector mins, maxs;
+		GetGame().GetWorld().GetBoundBox(mins, maxs);		
+		worldSize = FindMaxValue(maxs);
 		SCR_DC_Log.Add("[SCR_DC_Misc:GetWorldSize] Worldsize:" + worldSize, LogLevel.SPAM);
 						
 		return worldSize;

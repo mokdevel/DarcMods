@@ -45,7 +45,7 @@ sealed class SCR_DC_SpawnHelper
 		if (emptyPosRadius > -1)
 		{
 			//Spawn the resource to a free spot close to pos
-			SCR_DC_Log.Add(string.Format("[SCR_DC_SpawnHelper:SpawnItem] Itemsize: %1, X: %2, Y: %3, Z: %4, S: %5", SCR_DC_Misc.FindMaxValue(sums), maxs[0]-mins[0], maxs[1]-mins[1], maxs[2]-mins[2], sums), LogLevel.DEBUG);							
+			SCR_DC_Log.Add(string.Format("[SCR_DC_SpawnHelper:SpawnItem] Itemsize: %1, X: %2, Y: %3, Z: %4, S: %5", SCR_DC_Misc.FindMaxValue(sums), maxs[0]-mins[0], maxs[1]-mins[1], maxs[2]-mins[2], sums), LogLevel.SPAM);							
 			
 			posFixed = FindEmptyPos(pos, emptyPosRadius, (SCR_DC_Misc.FindMaxValue(sums)/SIZEDIV));
 			if(posFixed != "0 0 0")

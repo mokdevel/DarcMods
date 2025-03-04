@@ -58,16 +58,16 @@ class SCR_DC_NonValidArea : Managed
 class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 {
 	#ifdef SCR_DC_RELEASE
-		private const int DC_MISSION_COUNT = 4;											//Default amount of missions to run
+		private const int DC_MISSION_COUNT = 6;											//Default amount of missions to run
 		private const int DC_MISSION_START_DELAY = 2*60;								//Time to wait before spawning the first mission (seconds)
 		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 5*60;						//Minimum delay between missions.
 		private const int DC_MISSION_ACTIVE_TIME = 10*60;								//Time to keep the mission active (seconds)
-		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 5;	//Static missions are to be kept alive much longer
+		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 3;	//Static missions are to be kept alive much longer
 		private const int DC_MISSION_ACTIVE_DISTANCE = 300;								//Mission is to be removed if no players close to the position after the mission active time has passed.
 		private const int DC_MISSIONFRAME_LIFECYCLE_TIME = 60;							//The cycle to run the mission frame. 
 		private const int DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT = 20;					//You should not be running the frame too often as it's unncecessary
 		private const bool DC_MISSION_RECREATE_CONFIGS = true;							//Force recreaction of config files. 
-		private const int DC_MISSION_HINT_TIME = 10;									//Seconds to show the mission hint to players
+		private const int DC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
 	#endif
 	
 	#ifndef SCR_DC_RELEASE	//Development time options
@@ -75,12 +75,12 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		private const int DC_MISSION_START_DELAY = 5;					
 		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*10;
 		private const int DC_MISSION_ACTIVE_TIME = 2*60;				
-		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 5;	
+		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 3;	
 		private const int DC_MISSION_ACTIVE_DISTANCE = 200;		
 		private const int DC_MISSIONFRAME_LIFECYCLE_TIME = 20;
 		private const int DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT = 10;
 		private const bool DC_MISSION_RECREATE_CONFIGS = false;
-		private const int DC_MISSION_HINT_TIME = 10;									//Seconds to show the mission hint to players
+		private const int DC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
 	#endif
 		
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig.json";
