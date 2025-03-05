@@ -50,9 +50,9 @@ sealed class SCR_DC_Misc
 	/*!
 	Convert angle in degrees (0-360) to radians 
 	*/
-	static float AngleToRadians(float angleInRadians)
+	static float AngleToRadians(float angle)
 	{
-		return (angleInRadians) * (Math.PI / 180.0);
+		return (angle) * (Math.PI / 180.0);
 	}
 
 	//------------------------------------------------------------------------------------------------

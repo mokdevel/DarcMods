@@ -108,7 +108,14 @@ class SCR_DC_MissionFrame
 	*/	
 	void MissionFrameEnd()
 	{
-		//TBD: Clean and delete missions
+		//Clean and delete missions
+		foreach(SCR_DC_Mission mission: m_MissionList)
+		{
+			mission.MissionEnd();
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Deleting mission: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
+			SCR_DC_DebugHelper.DeleteDebugPos(mission.GetId());
+			delete mission;		
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -333,27 +340,26 @@ class SCR_DC_MissionFrame
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Creates config files. To be run at first run of the mod. Will not over write existing confs.
-	//TBD: Remove the m_ from variable names. 
+	Creates config files. To be run at first run of the mod. Will not overwrite existing confs.
 	*/	
 	void CreateAllConfigs()
 	{		
-		SCR_DC_CampJsonApi m_CampJsonApi = new SCR_DC_CampJsonApi();	
-		m_CampJsonApi.Load();
+		SCR_DC_CampJsonApi campJsonApi = new SCR_DC_CampJsonApi();	
+		campJsonApi.Load();
 
-		SCR_DC_ConvoyJsonApi m_ConvoyJsonApi = new SCR_DC_ConvoyJsonApi();	
-		m_ConvoyJsonApi.Load();
+		SCR_DC_ConvoyJsonApi convoyJsonApi = new SCR_DC_ConvoyJsonApi();	
+		convoyJsonApi.Load();
 
-		SCR_DC_CrashsiteJsonApi m_CrashsiteJsonApi = new SCR_DC_CrashsiteJsonApi();	
-		m_CrashsiteJsonApi.Load();		
+		SCR_DC_CrashsiteJsonApi crashsiteJsonApi = new SCR_DC_CrashsiteJsonApi();	
+		crashsiteJsonApi.Load();		
 
-		SCR_DC_HunterJsonApi m_HunterJsonApi = new SCR_DC_HunterJsonApi();				
-		m_HunterJsonApi.Load();								
+		SCR_DC_HunterJsonApi hunterJsonApi = new SCR_DC_HunterJsonApi();				
+		hunterJsonApi.Load();								
 		
-		SCR_DC_OccupationJsonApi m_OccupationJsonApi = new SCR_DC_OccupationJsonApi;	
-		m_OccupationJsonApi.Load();		
+		SCR_DC_OccupationJsonApi occupationJsonApi = new SCR_DC_OccupationJsonApi;	
+		occupationJsonApi.Load();		
 
-		SCR_DC_PatrolJsonApi m_PatrolJsonApi = new SCR_DC_PatrolJsonApi;	
-		m_PatrolJsonApi.Load();						
+		SCR_DC_PatrolJsonApi patrolJsonApi = new SCR_DC_PatrolJsonApi;	
+		patrolJsonApi.Load();						
 	}	
 }

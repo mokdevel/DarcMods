@@ -75,7 +75,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		private const int DC_MISSION_START_DELAY = 5;					
 		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*10;
 		private const int DC_MISSION_ACTIVE_TIME = 2*60;				
-		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 3;	
+		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 2;	
 		private const int DC_MISSION_ACTIVE_DISTANCE = 200;		
 		private const int DC_MISSIONFRAME_LIFECYCLE_TIME = 20;
 		private const int DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT = 10;

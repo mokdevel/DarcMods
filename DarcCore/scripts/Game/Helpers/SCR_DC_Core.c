@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-#define SCR_DC_RELEASE
+//#define SCR_DC_RELEASE
 
 sealed class SCR_DC_Core
 {
