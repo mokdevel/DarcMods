@@ -20,6 +20,7 @@ class SCR_DC_DebugHelperPos : Managed
 	vector pos;
 	int color;
 	float radius;
+	float height;
 	string id;
 }
 
@@ -209,8 +210,7 @@ sealed class SCR_DC_DebugHelper
 		{
 			if (dpos != null)
 			{
-				vector pos = RaiseWaypointPos(dpos.pos);
-				Shape.CreateCylinder(dpos.color, shapeFlags, pos, dpos.radius, 300);
+				Shape.CreateCylinder(dpos.color, shapeFlags, dpos.pos, dpos.radius, dpos.height);
 			}
 		}			
 	}	
@@ -222,33 +222,39 @@ sealed class SCR_DC_DebugHelper
 	\param color Color of the marker
 	*/	
 	
-	static void AddDebugPos(MapItem mapItem, int color = Color.RED, float radius = 1.0, string id = "NONE")
+	static void AddDebugPos(MapItem mapItem, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300)
 	{
-		SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
+		AddDebugPos(mapItem.GetPos(), color, radius, id, height);
+/*		SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
 		dpos.pos = mapItem.GetPos();
 		dpos.color = color;
 		dpos.radius = radius;
 		dpos.id = id;
-		m_Pos.Insert(dpos);	
+		dpos.height = height;
+		m_Pos.Insert(dpos);	*/
 	}
 
-	static void AddDebugPos(IEntity entity, int color = Color.RED, float radius = 1.0, string id = "NONE")
+	static void AddDebugPos(IEntity entity, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300)
 	{
-		SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
+		AddDebugPos(entity.GetOrigin(), color, radius, id, height);
+/*		SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
 		dpos.pos = entity.GetOrigin();
 		dpos.color = color;
 		dpos.radius = radius;
 		dpos.id = id;
-		m_Pos.Insert(dpos);	
+		dpos.height = height;
+		m_Pos.Insert(dpos);	*/
 	}
 	
-	static void AddDebugPos(vector pos, int color = Color.RED, float radius = 1.0, string id = "NONE")
+	static void AddDebugPos(vector pos, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300)
 	{
 		SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
+		pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + (height/2);
 		dpos.pos = pos;
 		dpos.color = color;
 		dpos.radius = radius;
 		dpos.id = id;
+		dpos.height = height;
 		m_Pos.Insert(dpos);	
 	}				
 	
@@ -260,7 +266,6 @@ sealed class SCR_DC_DebugHelper
 	{
 		for (int i = 0; i < m_Pos.Count(); i++)		
 		{
-//			if(m_Pos[i].id == id)
 			if(m_Pos[i].id.Contains(id))
 			{
 				m_Pos.Remove(i);
