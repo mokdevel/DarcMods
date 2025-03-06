@@ -36,7 +36,6 @@ sealed class SCR_DC_Misc
     static vector GetCoordinatesOnCircle(vector vec, float radius, float angleInDegrees, float startAngle = 0)
     {
         // Convert the angle to radians
-//        float angleInRadians = (startAngle + angleInDegrees) * (Math.PI / 180.0);
         float angleInRadians = AngleToRadians(startAngle + angleInDegrees);
 
         // Calculate the coordinates using trigonometric functions
@@ -69,11 +68,11 @@ sealed class SCR_DC_Misc
 	//------------------------------------------------------------------------------------------------
 	static vector MovePosToAngle(vector pos, float distance, float angle)
 	{
-	    float radians = SCR_DC_Misc.AngleToRadians(angle);
+	    float angleInRadians = SCR_DC_Misc.AngleToRadians(angle);
 	
 	    // Calculate the new x and y coordinates
-	    pos[0] = pos[0] + distance * Math.Cos(radians);
-	    pos[2] = pos[2] + distance * Math.Sin(radians);
+	    pos[0] = pos[0] + distance * Math.Cos(angleInRadians);
+	    pos[2] = pos[2] + distance * Math.Sin(angleInRadians);
 		
 		return pos;
 	}

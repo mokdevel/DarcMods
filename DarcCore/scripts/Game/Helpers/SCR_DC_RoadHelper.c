@@ -18,17 +18,33 @@ sealed class SCR_DC_RoadHelper
 		SCR_DC_DebugHelper.AddDebugPos(pos, Color.PINK, 2, "ROADTEST", 5);				
 		
 		array<vector> roadPts = {};
+		array<vector> roadPts1 = {};
+		array<vector> roadPts2 = {};
 		BaseRoad road = null;
 		
 		road = FindClosestRoad(pos, 200);
-		FindRoadPts(roadPts, road);
-		road = FindNextRoad(roadPts);
+		FindRoadPts(roadPts1, road);
+		road = FindNextRoad(roadPts1[roadPts1.Count() - 2], roadPts1[roadPts1.Count() - 1]);		
+		FindRoadPts(roadPts2, road);
+		CombineRoadPts(roadPts, roadPts1, roadPts2);
 		
-		FindRoadPts(roadPts, road);
-		road = FindNextRoad(roadPts);
+//		road = FindNextRoad(roadPts);
 				
-		FindRoadPts(roadPts, road);
+//		FindRoadPts(roadPts, road);
 //		FindNextRoad(roadPts);
+		
+		DebugDrawRoad(roadPts);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	static void DebugDrawRoad(array<vector> roadPts)
+	{
+		float i = 0;
+		foreach(vector roadPt: roadPts)
+		{
+			SCR_DC_DebugHelper.AddDebugPos(roadPt, Color.PINK, 2, "ROADTEST", 5 + i);
+			i = i + 0.2;
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -39,16 +55,39 @@ sealed class SCR_DC_RoadHelper
 		if(road)
 		{
 			road.GetPoints(roadPts);
-			
-			float i = 0;
-			foreach(vector roadPt: roadPts)
-			{
-				SCR_DC_DebugHelper.AddDebugPos(roadPt, Color.PINK, 2, "ROADTEST", 5 + i);
-				i = i + 0.2;
-			}
 		}
 	}
 
+	//------------------------------------------------------------------------------------------------
+	static void CombineRoadPts(out array<vector> roadPts, array<vector> roadPts1, array<vector> roadPts2)
+	{
+		//Find out the first point of the road to continue. 
+		//We want to combine the points to a single road going A-B-B-C. In optimal situation the roads go [A--road--B][B--road--C].
+		//If case the road goes [A--road--B][C--road--B], the ends of the roads are in the same place. We need to mirror the second road.
+
+		roadPts.Copy(roadPts1);
+				
+		//Check if road1 end is closer to road2 start
+		float d1 = vector.Distance(roadPts1[roadPts1.Count() - 1], roadPts2[0]);						//B-C
+		float d2 = vector.Distance(roadPts1[roadPts1.Count() - 1], roadPts2[roadPts2.Count() - 1]);		//B-D
+		if( d1 > d2 )
+		{	
+			SCR_DC_Log.Add("[SCR_DC_RoadHelper] Road to be mirrored.", LogLevel.DEBUG);			
+			int j = roadPts2.Count() - 1;
+			foreach(vector pt: roadPts2)
+			{
+				roadPts.Insert(roadPts2[j]);
+				j--;
+			}
+			SCR_DC_Log.Add("[SCR_DC_RoadHelper] Road to be mirrored: " + j, LogLevel.DEBUG);			
+		}
+		else
+		{
+			roadPts.InsertAll(roadPts2);
+		}
+		
+	}
+	
 /*	//------------------------------------------------------------------------------------------------
 	vector FindClosestRoadToPos(vector pos, float maxDistanceToRoad)
 	{
@@ -100,9 +139,11 @@ sealed class SCR_DC_RoadHelper
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	static BaseRoad FindNextRoad(array<vector> roadPts)
-	{		
-		vector direction = vector.Direction(roadPts[roadPts.Count() - 2], roadPts[roadPts.Count() - 1]);
+//	static BaseRoad FindNextRoad(array<vector> roadPts)
+	static BaseRoad FindNextRoad(vector roadPosPrev, vector roadPosLast)
+	{	
+		//Find the direction the road was heading. We look at the two last points of road and create a direction vector from them.
+		vector direction = vector.Direction(roadPosPrev, roadPosLast);
 		float angle = SCR_DC_Misc.VectorToAngle(direction);		
 		
 		float distanceToCheck = 50;
@@ -111,7 +152,7 @@ sealed class SCR_DC_RoadHelper
 		
 		foreach(float angleToTest: anglesToTest)
 		{		
-			pos = SCR_DC_Misc.MovePosToAngle(roadPts[roadPts.Count() - 1], distanceToCheck, angle + angleToTest);
+			pos = SCR_DC_Misc.MovePosToAngle(roadPosLast, distanceToCheck, angle + angleToTest);
 			SCR_DC_DebugHelper.AddDebugPos(pos, Color.GREEN, 2, "ROADTEST", 5);
 			BaseRoad road = FindClosestRoad(pos, distanceToCheck);
 			if(road)
