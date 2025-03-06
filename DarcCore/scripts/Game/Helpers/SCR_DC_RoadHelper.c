@@ -23,15 +23,19 @@ sealed class SCR_DC_RoadHelper
 		BaseRoad road = null;
 		
 		road = FindClosestRoad(pos, 200);
-		FindRoadPts(roadPts1, road);
-		road = FindNextRoad(roadPts1[roadPts1.Count() - 2], roadPts1[roadPts1.Count() - 1]);		
-		FindRoadPts(roadPts2, road);
-		CombineRoadPts(roadPts, roadPts1, roadPts2);
+		FindRoadPts(roadPts, road);
 		
-//		road = FindNextRoad(roadPts);
+		road = FindNextRoad(roadPts[roadPts.Count() - 2], roadPts[roadPts.Count() - 1]);		
+		FindRoadPts(roadPts1, road);
+		CombineRoadPts(roadPts, roadPts1);
+		
+		road = FindNextRoad(roadPts[roadPts.Count() - 2], roadPts[roadPts.Count() - 1]);
+		FindRoadPts(roadPts1, road);
+		CombineRoadPts(roadPts, roadPts1);
 				
-//		FindRoadPts(roadPts, road);
-//		FindNextRoad(roadPts);
+		road = FindNextRoad(roadPts[roadPts.Count() - 2], roadPts[roadPts.Count() - 1]);
+		FindRoadPts(roadPts1, road);
+		CombineRoadPts(roadPts, roadPts1);
 		
 		DebugDrawRoad(roadPts);
 	}
@@ -59,14 +63,17 @@ sealed class SCR_DC_RoadHelper
 	}
 
 	//------------------------------------------------------------------------------------------------
-	static void CombineRoadPts(out array<vector> roadPts, array<vector> roadPts1, array<vector> roadPts2)
+	/*!
+	Combine road segments.
+	In order to combine them in right order, we find out the first point of the road to continue. 
+	We want to combine the points to a single road going A-B-B-C. In optimal situation the roads go [A--road--B][B--road--C].
+	If case the road goes [A--road--B][C--road--B], the ends of the roads are in the same place. We need to mirror the second road.
+	\param roadPts1 The road segment where to append the second road.
+	\param roadPts2 The second road segment.
+	*/	
+	static void CombineRoadPts(out array<vector> roadPts1, array<vector> roadPts2)
 	{
-		//Find out the first point of the road to continue. 
-		//We want to combine the points to a single road going A-B-B-C. In optimal situation the roads go [A--road--B][B--road--C].
-		//If case the road goes [A--road--B][C--road--B], the ends of the roads are in the same place. We need to mirror the second road.
 
-		roadPts.Copy(roadPts1);
-				
 		//Check if road1 end is closer to road2 start
 		float d1 = vector.Distance(roadPts1[roadPts1.Count() - 1], roadPts2[0]);						//B-C
 		float d2 = vector.Distance(roadPts1[roadPts1.Count() - 1], roadPts2[roadPts2.Count() - 1]);		//B-D
@@ -76,17 +83,17 @@ sealed class SCR_DC_RoadHelper
 			int j = roadPts2.Count() - 1;
 			foreach(vector pt: roadPts2)
 			{
-				roadPts.Insert(roadPts2[j]);
+				roadPts1.Insert(roadPts2[j]);
 				j--;
 			}
 			SCR_DC_Log.Add("[SCR_DC_RoadHelper] Road to be mirrored: " + j, LogLevel.DEBUG);			
 		}
 		else
 		{
-			roadPts.InsertAll(roadPts2);
+			roadPts1.InsertAll(roadPts2);
 		}
 		
-	}
+	}	
 	
 /*	//------------------------------------------------------------------------------------------------
 	vector FindClosestRoadToPos(vector pos, float maxDistanceToRoad)
@@ -114,7 +121,12 @@ sealed class SCR_DC_RoadHelper
 	}*/
 		
 	//------------------------------------------------------------------------------------------------
-	static BaseRoad FindClosestRoad(vector pos, float maxDistanceToRoad)
+	/*!
+	Find the closest road to a position. 
+	\param pos Position from where to check
+	\param maxDistanceToRoad Limit on how far the road may be from pos. 
+	*/
+	static BaseRoad FindClosestRoad(vector pos, float maxDistanceToRoad = 10000)
 	{
 		BaseRoad road = null;
 	
@@ -139,20 +151,33 @@ sealed class SCR_DC_RoadHelper
 	}
 	
 	//------------------------------------------------------------------------------------------------
-//	static BaseRoad FindNextRoad(array<vector> roadPts)
-	static BaseRoad FindNextRoad(vector roadPosPrev, vector roadPosLast)
+	/*!
+	Find the closest road to position.
+	The road to be searched should not be the same one so we need two points to define the current road direction. We look at the two last points of road and create a direction vector from them.
+	\param roadPosPrev, roadPosLast Last points of the road
+	\param distanceToCheck How far the road may be.
+	*/
+	static BaseRoad FindNextRoad(vector roadPosPrev, vector roadPosLast, float distanceToCheck = 50)
 	{	
 		//Find the direction the road was heading. We look at the two last points of road and create a direction vector from them.
 		vector direction = vector.Direction(roadPosPrev, roadPosLast);
 		float angle = SCR_DC_Misc.VectorToAngle(direction);		
 		
-		float distanceToCheck = 50;
 		vector pos = "0 0 0";
-		array<float> anglesToTest = {0, 180, 270};		
-		
-		foreach(float angleToTest: anglesToTest)
-		{		
-			pos = SCR_DC_Misc.MovePosToAngle(roadPosLast, distanceToCheck, angle + angleToTest);
+		//Use random angle to search from the 
+		array<float> anglesToTest = {0, 180, 270, 0, 180, 270};
+		int idx = Math.RandomInt(0, 2);
+
+		idx = 2;
+		for(int i = 0; i < 3; i++)
+		{				
+			pos = SCR_DC_Misc.MovePosToAngle(roadPosLast, distanceToCheck, (angle + anglesToTest[idx+i]));
+			SCR_DC_DebugHelper.AddDebugPos(pos, Color.GREEN, 2, "ROADTEST", 5);
+		}		
+				
+		for(int i = 0; i < 2; i++)
+		{				
+			pos = SCR_DC_Misc.MovePosToAngle(roadPosLast, distanceToCheck, (angle + anglesToTest[idx+i]));
 			SCR_DC_DebugHelper.AddDebugPos(pos, Color.GREEN, 2, "ROADTEST", 5);
 			BaseRoad road = FindClosestRoad(pos, distanceToCheck);
 			if(road)
