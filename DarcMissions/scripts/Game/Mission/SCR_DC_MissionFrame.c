@@ -52,7 +52,7 @@ class SCR_DC_MissionFrame
 
 		if (!SCR_DC_Core.RELEASE)
 		{
-			TestRoad();
+			SCR_DC_RoadHelper.TestRoad();
 		}
 		
 		//Check if a request to create new logs has been made		
@@ -368,51 +368,6 @@ class SCR_DC_MissionFrame
 		patrolJsonApi.Load();						
 	}	
 	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Road segment testing
-	*/
-	void TestRoad()
-	{
-		vector pos = "2650 0 1830";
-		
-		SCR_DC_DebugHelper.AddDebugPos(pos, Color.PINK, 2, "ROADTEST", 5);				
-		
-		array<vector> roadPts = {};
-		FindRoadPts(roadPts, pos);
-		
-		FindRoadPts(roadPts, roadPts[roadPts.Count() - 1]);
-		
-		FindRoadPts(roadPts, roadPts[roadPts.Count() - 1]);
-	}
+
 	
-	//------------------------------------------------------------------------------------------------
-	void FindRoadPts(out array<vector> roadPts, vector pos)
-	{
-		roadPts = {};
-		
-		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
-		RoadNetworkManager rnManager = null;
-		if (aiWorld)
-		{
-			rnManager = aiWorld.GetRoadNetworkManager();
-		}
-		
-		if (rnManager)
-		{
-			BaseRoad road;
-			float dist;
-			
-			rnManager.GetClosestRoad(pos, road, dist);
-			//array<vector> roadPts = {};
-			road.GetPoints(roadPts);
-			
-			float i = 0;
-			foreach(vector roadPt: roadPts)
-			{
-				SCR_DC_DebugHelper.AddDebugPos(roadPt, Color.PINK, 2, "ROADTEST", 5 + i);
-				i = i + 0.2;
-			}			
-		}			
-	}
 }

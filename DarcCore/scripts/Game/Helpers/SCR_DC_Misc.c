@@ -65,7 +65,19 @@ sealed class SCR_DC_Misc
     	float degrees = (180 * angle / Math.PI);
     	return degrees;
 	}
+
+	//------------------------------------------------------------------------------------------------
+	static vector MovePosToAngle(vector pos, float distance, float angle)
+	{
+	    float radians = SCR_DC_Misc.AngleToRadians(angle);
 	
+	    // Calculate the new x and y coordinates
+	    pos[0] = pos[0] + distance * Math.Cos(radians);
+	    pos[2] = pos[2] + distance * Math.Sin(radians);
+		
+		return pos;
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Returns the (max) size of the world
@@ -105,8 +117,7 @@ sealed class SCR_DC_Misc
 		worldName = worldName.Substring(lastslash, worldName.Length() - lastslash - 4);
 		
 		return worldName;
-	}
-	
+	}	
 
 	//------------------------------------------------------------------------------------------------
 	/*!
