@@ -182,7 +182,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 					if (group)
 					{
 						m_Groups.Insert(group);
-						SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_Config.waypointRange[0], m_Config.waypointRange[1], DC_EWaypointMoveType.PATROLCYCLE , DC_EWaypointRndType.SCATTERED);
+						SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.SCATTERED, group.GetOrigin(), "0 0 0", DC_EWaypointMoveType.PATROLCYCLE, m_Config.waypointRange[0], m_Config.waypointRange[1]);
 					}
 					SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite:MissionSpawn] AI groups spawned ", LogLevel.DEBUG);								
 					missionCrashSiteState = DC_EMissionCrashSiteState.RUN;

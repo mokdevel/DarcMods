@@ -171,7 +171,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 				if (group)
 				{
 					m_Groups.Insert(group);
-					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1], m_DC_Occupation.waypointMoveType, m_DC_Occupation.waypointType);
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointMoveType, group.GetOrigin(), "0 0 0", m_DC_Occupation.waypointType, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
 				}
 				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
 			}
@@ -216,14 +216,14 @@ class SCR_DC_Occupation : Managed
 	ref array<EMapDescriptorType> locationTypes = {};
 	ref array<int> groupCount = {};			//min, max
 	ref array<int> waypointRange = {};		//min, max
-	DC_EWaypointRndType waypointType;
+	DC_EWaypointGenerationType waypointType;
 	DC_EWaypointMoveType waypointMoveType;
 	ref array<string> groupTypes = {};
 	//Optional settings
 	ref SCR_DC_Loot loot = null;	
 	ref array<ref SCR_DC_Structure> campItems = {};
 	
-	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointRndType waypointType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_)
+	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_)
 	{
 		comment = comment_;
 		locationPos = locationPos_;
@@ -294,7 +294,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			},
 			{1, 2},
 			{50, 300},
-			DC_EWaypointRndType.RANDOM,
+			DC_EWaypointGenerationType.RANDOM,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
 				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
@@ -323,7 +323,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			},
 			{1, 2},
 			{25, 100},
-			DC_EWaypointRndType.RANDOM,
+			DC_EWaypointGenerationType.RANDOM,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
 				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
@@ -391,7 +391,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			},
 			{2, 4},
 			{50, 250},
-			DC_EWaypointRndType.RADIUS,
+			DC_EWaypointGenerationType.RADIUS,
 			DC_EWaypointMoveType.RANDOM,		
 			{
 				"{30ED11AA4F0D41E5}Prefabs/Groups/OPFOR/Group_USSR_FireGroup.et",

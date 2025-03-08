@@ -148,7 +148,11 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 			if (group)
 			{
 				m_Groups.Insert(group);
-				SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointRange[0], m_DC_Patrol.waypointRange[1], m_DC_Patrol.waypointMoveType, m_DC_Patrol.waypointType);
+				vector posFrom = "2776 0 1623";
+				vector posTo = "3165 0 2800";
+				SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.ROUTE, posFrom, posTo);
+//				SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointMoveType, posFrom, posTo);
+//				SCR_DC_WPHelper.CreateMissionAIWaypoints(group, "0 0 0", "0 0 0", m_DC_Patrol.waypointRange[0], m_DC_Patrol.waypointRange[1], m_DC_Patrol.waypointMoveType, m_DC_Patrol.waypointType);
 			}
 			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
 		}
@@ -185,11 +189,11 @@ class SCR_DC_Patrol : Managed
 	ref array<EMapDescriptorType> locationTypes = {};
 	ref array<int> groupCount = {};			//min, max	
 	ref array<int> waypointRange = {};		//min, max
-	DC_EWaypointRndType waypointType;
+	DC_EWaypointGenerationType waypointType;
 	DC_EWaypointMoveType waypointMoveType;
 	ref array<string> groupTypes = {};	
 	
-	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointRndType waypointType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_)
+	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_)
 	{
 		comment = comment_;
 		locationPos = locationPos_;
@@ -261,7 +265,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 			},
 			{1, 1},
 			{300, 700},
-			DC_EWaypointRndType.RADIUS,//.RANDOM,
+			DC_EWaypointGenerationType.RADIUS,//.RANDOM,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
 				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
@@ -290,7 +294,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 			},
 			{1, 1},
 			{300, 1000},
-			DC_EWaypointRndType.RANDOM,
+			DC_EWaypointGenerationType.RANDOM,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
 				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",

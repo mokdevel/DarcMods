@@ -15,7 +15,29 @@ class SCR_DC_RoadPos : Managed
 
 //------------------------------------------------------------------------------------------------
 sealed class SCR_DC_RoadHelper
-{
+{	
+	static void CreateRoute(out array<vector> routePts, vector posFrom, vector posTo, int stepDistance = 60)
+	{
+		float distance = vector.Distance(posFrom, posTo);
+		int ptCount = distance/stepDistance;
+			
+		vector posStart = posFrom;
+		SCR_DC_RoadPos roadPos;
+		
+		for (int i = 0; i < ptCount; i++)
+		{
+			vector ptPos = vector.Lerp(posStart, posTo, i*(1/ptCount));
+			SCR_DC_DebugHelper.AddDebugPos(ptPos, Color.YELLOW, 3, "ROADTEST", 2);				
+			
+			roadPos = FindClosestRoadposToPos(ptPos, stepDistance*2);
+			if(roadPos)
+			{				
+				routePts.Insert(roadPos.posOnRoad);
+				//posStart = roadPos.posOnRoad;
+			}			
+		}
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find the closest position on a road close to given position. 
@@ -47,6 +69,7 @@ sealed class SCR_DC_RoadHelper
 					pt[1] = 0;				
 					if(SCR_DC_Misc.IsPosNearPos(pos, pt, (roadPos.distanceToRoad + 2)))
 					{
+						pt[1] = GetGame().GetWorld().GetSurfaceY(pt[0], pt[2]);
 						roadPos.posOnRoad = pt;
 						SCR_DC_Log.Add("[SCR_DC_RoadHelper:FindClosestRoadposToPos] Road point found. Iterations: " + i, LogLevel.SPAM);			
 						return roadPos;
@@ -175,13 +198,19 @@ sealed class SCR_DC_RoadHelper
 	*/
 	static void TestRoad()
 	{
+		
+/*		array<vector> routePts = {};
+		CreateRoute(routePts, "2776 0 1623", "3165 0 2800");
+		DebugDrawRoad(routePts);*/
+		
+		/*
 		vector pos = "2650 0 1830";
 		
 		SCR_DC_DebugHelper.AddDebugPos(pos, Color.PINK, 2, "ROADTEST", 5);				
 		
 		SCR_DC_RoadPos roadPos;
 		roadPos = FindClosestRoadposToPos(pos);
-		SCR_DC_DebugHelper.AddDebugPos(roadPos.posOnRoad, Color.YELLOW, 3, "ROADTEST", 5);				
+		SCR_DC_DebugHelper.AddDebugPos(roadPos.posOnRoad, Color.YELLOW, 3, "ROADTEST", 5);
 		
 		array<vector> roadPts = {};
 		array<vector> roadPts1 = {};
@@ -203,7 +232,7 @@ sealed class SCR_DC_RoadHelper
 		FindRoadPts(roadPts1, road);
 		CombineRoadPts(roadPts, roadPts1);
 		
-		DebugDrawRoad(roadPts);
+		DebugDrawRoad(roadPts);*/
 	}
 	
 	//------------------------------------------------------------------------------------------------
