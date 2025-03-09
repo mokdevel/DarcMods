@@ -12,7 +12,7 @@ enum DC_EWaypointGenerationType
 	SCATTERED,		//Completely random waypoints without any logic
 	RADIUS,			//AI follow a path that is close to a circle with a radius. There is some additional randomization to avoid a perfect circle.
 	ROUTE,			//
-	LOITER,
+	LOITER,			//TBD: Currently does nothing even if WP is assigned to AI
 	SLOTS 			//AI goes from a slot to slot. NOTE: This will not work unless the map has slots (the S/M/L letters on map) defined.
 };
 
@@ -24,7 +24,7 @@ enum DC_EWaypointMoveType
 	PATROL,			//Same as MOVE but with patrol speed.
 	MOVECYCLE,		//Creates move waypoints in cycke. AI will restart the cycle once all waypoints are visited.
 	PATROLCYCLE,	//Same as MOVECYCLE but with patrol speed.
-	LOITER
+	LOITER			//TBD: Currently does nothing even if WP is assigned to AI
 };
 
 sealed class SCR_DC_WPHelper
@@ -300,7 +300,11 @@ sealed class SCR_DC_WPHelper
 		}
 		
 		AIWaypoint waypoint = CreateWaypointEntity(wptype);
-		waypoint.SetOrigin(wpPos);
+		if(waypoint)
+		{
+			waypoint.SetOrigin(wpPos);
+		}
+		
 		return waypoint;
 	}
 			

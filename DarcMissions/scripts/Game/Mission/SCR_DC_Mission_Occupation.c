@@ -172,6 +172,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 				{
 					m_Groups.Insert(group);
 					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointGenType, GetPos(), "0 0 0", m_DC_Occupation.waypointMoveType, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
+//					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
 				}
 				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
 			}
