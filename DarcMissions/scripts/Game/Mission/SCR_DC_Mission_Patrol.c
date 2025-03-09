@@ -150,7 +150,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 				m_Groups.Insert(group);
 				vector posFrom = "2776 0 1623";
 				vector posTo = "3165 0 2800";
-				SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.ROUTE, posFrom, posTo);
+				SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.ROUTE, posFrom, posTo, m_DC_Patrol.waypointMoveType);
 //				SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointMoveType, posFrom, posTo);
 //				SCR_DC_WPHelper.CreateMissionAIWaypoints(group, "0 0 0", "0 0 0", m_DC_Patrol.waypointRange[0], m_DC_Patrol.waypointRange[1], m_DC_Patrol.waypointMoveType, m_DC_Patrol.waypointType);
 			}
@@ -189,11 +189,11 @@ class SCR_DC_Patrol : Managed
 	ref array<EMapDescriptorType> locationTypes = {};
 	ref array<int> groupCount = {};			//min, max	
 	ref array<int> waypointRange = {};		//min, max
-	DC_EWaypointGenerationType waypointType;
+	DC_EWaypointGenerationType waypointGenType;
 	DC_EWaypointMoveType waypointMoveType;
 	ref array<string> groupTypes = {};	
 	
-	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_)
+	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_)
 	{
 		comment = comment_;
 		locationPos = locationPos_;
@@ -203,7 +203,7 @@ class SCR_DC_Patrol : Managed
 		locationTypes = locationTypes_;
 		groupCount = groupCount_;
 		waypointRange = waypointRange_;
-		waypointType = waypointType_;
+		waypointGenType = waypointGenType_;
 		waypointMoveType = _waypointMoveType;
 		groupTypes = groupTypes_;
 	}

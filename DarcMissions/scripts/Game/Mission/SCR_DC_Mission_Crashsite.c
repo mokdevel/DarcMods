@@ -126,8 +126,6 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 					{
 						SetPos(m_Vehicle.GetOrigin());
 
-						//Markerfix: SetMarkerId(SCR_DC_MapMarkersUI.AddMarker(GetId(), GetPos(), "Crashsite"));
-					
 						//Make sure the chopper is destroyed
 						DamageManagerComponent damageManager = DamageManagerComponent.Cast(m_Vehicle.FindComponent(DamageManagerComponent));
 						if (damageManager)

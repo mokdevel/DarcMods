@@ -171,7 +171,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 				if (group)
 				{
 					m_Groups.Insert(group);
-					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointMoveType, group.GetOrigin(), "0 0 0", m_DC_Occupation.waypointType, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointGenType, group.GetOrigin(), "0 0 0", m_DC_Occupation.waypointMoveType, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
 				}
 				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
 			}
@@ -216,14 +216,14 @@ class SCR_DC_Occupation : Managed
 	ref array<EMapDescriptorType> locationTypes = {};
 	ref array<int> groupCount = {};			//min, max
 	ref array<int> waypointRange = {};		//min, max
-	DC_EWaypointGenerationType waypointType;
+	DC_EWaypointGenerationType waypointGenType;
 	DC_EWaypointMoveType waypointMoveType;
 	ref array<string> groupTypes = {};
 	//Optional settings
 	ref SCR_DC_Loot loot = null;	
 	ref array<ref SCR_DC_Structure> campItems = {};
 	
-	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_)
+	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_)
 	{
 		comment = comment_;
 		locationPos = locationPos_;
@@ -233,7 +233,7 @@ class SCR_DC_Occupation : Managed
 		locationTypes = locationTypes_;
 		groupCount = groupCount_;
 		waypointRange = waypointRange_;
-		waypointType = waypointType_;
+		waypointGenType = waypointGenType_;
 		waypointMoveType = _waypointMoveType;
 		groupTypes = groupTypes_;
 	}

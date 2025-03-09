@@ -12,6 +12,7 @@ enum DC_EWaypointGenerationType
 	SCATTERED,		//Completely random waypoints without any logic
 	RADIUS,			//AI follow a path that is close to a circle with a radius. There is some additional randomization to avoid a perfect circle.
 	ROUTE,			//
+	LOITER,
 	SLOTS 			//AI goes from a slot to slot. NOTE: This will not work unless the map has slots (the S/M/L letters on map) defined.
 };
 
@@ -22,7 +23,8 @@ enum DC_EWaypointMoveType
 	MOVE,			//Creates move waypoints. AI will stop once waypoints are visited.
 	PATROL,			//Same as MOVE but with patrol speed.
 	MOVECYCLE,		//Creates move waypoints in cycke. AI will restart the cycle once all waypoints are visited.
-	PATROLCYCLE		//Same as MOVECYCLE but with patrol speed.
+	PATROLCYCLE,	//Same as MOVECYCLE but with patrol speed.
+	LOITER
 };
 
 sealed class SCR_DC_WPHelper
@@ -53,8 +55,8 @@ sealed class SCR_DC_WPHelper
 			//Select the waypoint generation type. Randomize if requested.
 			if (wpGenType == DC_EWaypointGenerationType.RANDOM)
 			{
-				array<DC_EWaypointGenerationType> waypointRndTypeArray = {DC_EWaypointGenerationType.SCATTERED, DC_EWaypointGenerationType.RADIUS, DC_EWaypointGenerationType.RADIUS}; //DC_EWaypointGenerationType.SLOTS
-				wpGenType = waypointRndTypeArray.GetRandomElement();
+				array<DC_EWaypointGenerationType> waypointGenTypeArray = {DC_EWaypointGenerationType.SCATTERED, DC_EWaypointGenerationType.RADIUS, DC_EWaypointGenerationType.RADIUS}; //DC_EWaypointGenerationType.SLOTS
+				wpGenType = waypointGenTypeArray.GetRandomElement();
 			}
 
 			//Select the waypoint movement type. Randomize if requested.
@@ -181,22 +183,22 @@ sealed class SCR_DC_WPHelper
 	\param posFrom Starting point for waypoint. Note that AI may be spawned to another spot and will move first here.
 	\param posTo End point for waypoint. This is only used for ROUTE
 	\param count How many waypoints to create
-	\param wptype See DC_EWaypointMoveType definition for more information
-	\param rndtype See DC_EWaypointGenerationType definition for more information
+	\param moveType See DC_EWaypointMoveType definition for more information
+	\param genType See DC_EWaypointGenerationType definition for more information
 	\param range Range (radius) for randomization from given position.
 	\param emptyspot True if found position needs to be on clear area.
 	*/
-	static void GenerateWaypoints(out array<AIWaypoint> waypoints, vector posFrom, vector posTo, int count, DC_EWaypointMoveType wptype = DC_EWaypointMoveType.PATROL, DC_EWaypointGenerationType rndtype = DC_EWaypointGenerationType.SCATTERED, float range = 0, bool emptyspot = false )
+	static void GenerateWaypoints(out array<AIWaypoint> waypoints, vector posFrom, vector posTo, int count, DC_EWaypointMoveType moveType = DC_EWaypointMoveType.PATROL, DC_EWaypointGenerationType genType = DC_EWaypointGenerationType.SCATTERED, float range = 0, bool emptyspot = false )
 	{
 		//Scattered as in completely random positions
-		if (rndtype == DC_EWaypointGenerationType.SCATTERED)
+		if (genType == DC_EWaypointGenerationType.SCATTERED)
 		{		
 			for (int i = 0; i < count; i++)
 			{
 				//Add some additional randomization
-				float rndRange = Math.RandomInt(0, rndRange/3); 
+				float rndRange = Math.RandomInt(0, range/3); 
 				
-				AIWaypoint waypoint = FindAndCreateWaypoint(posFrom, wptype, (range + rndRange), emptyspot);
+				AIWaypoint waypoint = FindAndCreateWaypoint(posFrom, moveType, (range + rndRange), emptyspot);
 				if (waypoint != null)
 				{
 					waypoints.Insert(waypoint);
@@ -205,7 +207,7 @@ sealed class SCR_DC_WPHelper
 		}
 
 		//Circular
-		if (rndtype == DC_EWaypointGenerationType.RADIUS)
+		if (genType == DC_EWaypointGenerationType.RADIUS)
 		{		
 			float startAngle = Math.RandomFloat(0, 360);
 			
@@ -213,7 +215,7 @@ sealed class SCR_DC_WPHelper
 			{				
 				vector vec = SCR_DC_Misc.GetCoordinatesOnCircle(posFrom, range, i*(360/count), startAngle);
 				
-				AIWaypoint waypoint = FindAndCreateWaypoint(vec, wptype, (range/4), emptyspot);
+				AIWaypoint waypoint = FindAndCreateWaypoint(vec, moveType, (range/4), emptyspot);
 				if (waypoint != null)
 				{
 					waypoints.Insert(waypoint);
@@ -222,7 +224,7 @@ sealed class SCR_DC_WPHelper
 		}
 
 		//Route
-		if (rndtype == DC_EWaypointGenerationType.ROUTE)
+		if (genType == DC_EWaypointGenerationType.ROUTE)
 		{			
 			array<vector> routePts = {};
 			SCR_DC_RoadHelper.CreateRoute(routePts, posFrom, posTo);
@@ -231,16 +233,22 @@ sealed class SCR_DC_WPHelper
 			
 			foreach(vector pt: routePts)
 			{
-				AIWaypoint waypoint = FindAndCreateWaypoint(pt, wptype, 3, emptyspot);
+				AIWaypoint waypoint = FindAndCreateWaypoint(pt, moveType, 0, emptyspot);
 				if (waypoint != null)
 				{
 					waypoints.Insert(waypoint);
 				}
 			}		
 		}
-		
+
+		//Loiter
+		if (genType == DC_EWaypointGenerationType.LOITER)
+		{			
+			//TBD: Currently not supported
+		}
+				
 		//Slots
-		if (rndtype == DC_EWaypointGenerationType.SLOTS)
+		if (genType == DC_EWaypointGenerationType.SLOTS)
 		{		
 			array<IEntity> slots = {};
 			SCR_DC_Locations.GetLocationSlots(slots, posFrom, range);
@@ -249,7 +257,7 @@ sealed class SCR_DC_WPHelper
 			{
 				IEntity slot = slots.GetRandomElement();				
 
-				AIWaypoint waypoint = FindAndCreateWaypoint(slot.GetOrigin(), wptype, 3, emptyspot);
+				AIWaypoint waypoint = FindAndCreateWaypoint(slot.GetOrigin(), moveType, 3, emptyspot);
 				if (waypoint != null)
 				{
 					waypoints.Insert(waypoint);
@@ -318,6 +326,8 @@ sealed class SCR_DC_WPHelper
 			case DC_EWaypointMoveType.PATROLCYCLE:
 				wpPrefab = "{35BD6541CBB8AC08}Prefabs/AI/Waypoints/AIWaypoint_Cycle.et";
 				break;
+			case DC_EWaypointMoveType.LOITER:
+				wpPrefab = "{4ECD14650D82F5CA}Prefabs/AI/Waypoints/AIWaypoint_Loiter_CO.et";
 			default: 
 				wpPrefab = "";
 				break;		
