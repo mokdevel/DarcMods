@@ -90,10 +90,14 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 				
 		if (allGood)
 		{	
-			if (posName == "any")
+			if (posName == "any" && pos == "0 0 0")
 			{
 				posName = SCR_StringHelper.Translate(location.GetName());
 			}			
+			else
+			{
+				posName = "";
+			}
 			SetTitle(m_DC_Patrol.title + "" + posName);
 			SetInfo(m_DC_Patrol.info);			
 			SetPos(pos);
@@ -277,8 +281,8 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 		patrol0.Set
 		(
 			"USSR patrols going between two points hopefully following roads",
-			"0 0 0",
-			"0 0 0",
+			"2776 0 1623",//"0 0 0",
+			"3165 0 2800",//"0 0 0",
 			"any",
 			"Patrol in ",
 			"Beware",
