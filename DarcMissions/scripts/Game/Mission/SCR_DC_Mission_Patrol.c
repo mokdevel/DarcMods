@@ -166,9 +166,6 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 			if (group)
 			{
 				m_Groups.Insert(group);
-				//vector posFrom = "2776 0 1623";
-				//vector posTo = "3165 0 2800";
-				
 				if (m_DC_Patrol.waypointGenType == DC_EWaypointGenerationType.ROUTE)
 				{
 					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointGenType, GetPos(), m_PatrolDestination, m_DC_Patrol.waypointMoveType);
@@ -281,8 +278,8 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 		patrol0.Set
 		(
 			"USSR patrols going between two points hopefully following roads",
-			"2776 0 1623",//"0 0 0",
-			"3165 0 2800",//"0 0 0",
+			"0 0 0",
+			"0 0 0",
 			"any",
 			"Patrol in ",
 			"Beware",

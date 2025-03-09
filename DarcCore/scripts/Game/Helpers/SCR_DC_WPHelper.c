@@ -83,18 +83,12 @@ sealed class SCR_DC_WPHelper
 					default:
 						SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Incorrect wpMoveType", LogLevel.ERROR);
 				}
+				wpcycle.SetOrigin(group.GetOrigin());
 				SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Created cycle", LogLevel.SPAM);
 			}			
 								
 			//Generate waypoints
-			if (wpGenType == DC_EWaypointGenerationType.ROUTE)
-			{
-				GenerateWaypoints(waypoints, posFrom, posTo, rndCount, wpMoveType, wpGenType, rndRange, true);				
-			}			
-			else
-			{
-				GenerateWaypoints(waypoints, posFrom, "0 0 0", rndCount, wpMoveType, wpGenType, rndRange, true);
-			}
+			GenerateWaypoints(waypoints, posFrom, posTo, rndCount, wpMoveType, wpGenType, rndRange, true);
 
 			//Add waypoints as a cycle
 			if (wpcycle)
@@ -196,7 +190,7 @@ sealed class SCR_DC_WPHelper
 			for (int i = 0; i < count; i++)
 			{
 				//Add some additional randomization
-				float rndRange = Math.RandomInt(0, range/3); 
+				float rndRange = 0;//Math.RandomInt(0, range/3); 
 				
 				AIWaypoint waypoint = FindAndCreateWaypoint(posFrom, moveType, (range + rndRange), emptyspot);
 				if (waypoint != null)
@@ -244,7 +238,12 @@ sealed class SCR_DC_WPHelper
 		//Loiter
 		if (genType == DC_EWaypointGenerationType.LOITER)
 		{			
-			//TBD: Currently not supported
+			//TBD: Does not currently work one would expect
+			AIWaypoint waypoint = FindAndCreateWaypoint(posFrom, moveType, 0, emptyspot);
+			if (waypoint != null)
+			{
+				waypoints.Insert(waypoint);
+			}
 		}
 				
 		//Slots

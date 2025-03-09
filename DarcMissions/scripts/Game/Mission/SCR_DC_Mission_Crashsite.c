@@ -180,7 +180,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 					if (group)
 					{
 						m_Groups.Insert(group);
-						SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.SCATTERED, group.GetOrigin(), "0 0 0", DC_EWaypointMoveType.PATROLCYCLE, m_Config.waypointRange[0], m_Config.waypointRange[1]);
+						SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.SCATTERED, GetPos(), "0 0 0", DC_EWaypointMoveType.PATROLCYCLE, m_Config.waypointRange[0], m_Config.waypointRange[1]);
 					}
 					SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite:MissionSpawn] AI groups spawned ", LogLevel.DEBUG);								
 					missionCrashSiteState = DC_EMissionCrashSiteState.RUN;
@@ -329,7 +329,7 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 		//Mission specific
 		conf.title = "Helicopter in distress ";
 		conf.info = "A valuable cargo has crashed";
-		conf.waypointRange = {10,50};
+		conf.waypointRange = {20,70};
 		conf.groupTypes = 
 		{
 			"{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et",

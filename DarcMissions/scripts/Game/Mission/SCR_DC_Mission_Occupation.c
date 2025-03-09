@@ -171,7 +171,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 				if (group)
 				{
 					m_Groups.Insert(group);
-					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointGenType, group.GetOrigin(), "0 0 0", m_DC_Occupation.waypointMoveType, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointGenType, GetPos(), "0 0 0", m_DC_Occupation.waypointMoveType, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
 				}
 				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
 			}
@@ -323,7 +323,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			},
 			{1, 2},
 			{25, 100},
-			DC_EWaypointGenerationType.RANDOM,
+			DC_EWaypointGenerationType.SCATTERED,//RANDOM,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
 				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
