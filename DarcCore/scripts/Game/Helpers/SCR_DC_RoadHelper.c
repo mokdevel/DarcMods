@@ -16,25 +16,56 @@ class SCR_DC_RoadPos : Managed
 //------------------------------------------------------------------------------------------------
 sealed class SCR_DC_RoadHelper
 {	
-	static void CreateRoute(out array<vector> routePts, vector posFrom, vector posTo, int stepDistance = 60)
+	static void CreateRoute(out array<vector> routePts, vector posFrom, vector posTo, int stepDistance = 600)
 	{
 		float distance = vector.Distance(posFrom, posTo);
-		int ptCount = distance/stepDistance;
+		int ptCount = (distance/stepDistance) + 1;
 			
 		vector posStart = posFrom;
 		SCR_DC_RoadPos roadPos;
-		
+		//array<vector>
+		routePts = {posFrom, posTo};
+
 		for (int i = 0; i < ptCount; i++)
+		{				
+			SplitRoute(routePts);
+		}
+		
+		#ifndef SCR_DC_RELEASE
+			//Draw debug markers for a straight line from start to end
+			for (int i = 0; i < 20; i++)
+			{
+				vector ptPos = vector.Lerp(posStart, posTo, i*(1/ptCount));
+				SCR_DC_DebugHelper.AddDebugPos(ptPos, Color.YELLOW, 3, "ROADTEST", 2);
+			}
+		#endif		
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Splits the points and adds point on the road to the route
+	Example: 
+		Road from vector points A to B. Table starts as {A,B} and after split has an mid point a {A, a, B}. For readability, let's have it as {A, B, C}.
+		Next split call will split it on AB and BC -> {A, a, B, b, C}. The positions will be on road if they are close to roads.	
+	\param route Route to split
+	*/	
+	
+	static void SplitRoute(out array<vector>route)
+	{
+		array<vector> tmpPos = {};
+		tmpPos.InsertAll(route);
+		
+		for (int i = 0; i < tmpPos.Count() - 1; i++)		
 		{
-			vector ptPos = vector.Lerp(posStart, posTo, i*(1/ptCount));
-			SCR_DC_DebugHelper.AddDebugPos(ptPos, Color.YELLOW, 3, "ROADTEST", 2);				
-			
-			roadPos = FindClosestRoadposToPos(ptPos, stepDistance*2);
-			if(roadPos)
-			{				
-				routePts.Insert(roadPos.posOnRoad);
-				//posStart = roadPos.posOnRoad;
-			}			
+			vector splitPos = vector.Lerp(tmpPos[i], tmpPos[i + 1], 0.5);
+			SCR_DC_RoadPos roadPos = FindClosestRoadposToPos(splitPos, 150);			
+			if (roadPos)
+			{
+				route.InsertAt(roadPos.posOnRoad, (i*2 + 1));
+				#ifndef SCR_DC_RELEASE
+					SCR_DC_DebugHelper.AddDebugPos(roadPos.posOnRoad, Color.RED, 5, "ROADTEST", 1.5);
+				#endif
+			}
 		}
 	}
 	
@@ -49,7 +80,7 @@ sealed class SCR_DC_RoadHelper
 		BaseRoad road = null;
 		SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
 		array<vector> roadPts = {};
-				
+			
 		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
 		RoadNetworkManager rnManager = null;
 		if (aiWorld)
@@ -64,9 +95,11 @@ sealed class SCR_DC_RoadHelper
 			{
 				FindRoadPts(roadPts, roadPos.road);
 				int i = 0;
+				
+				pos[1] = 0;		//Distance calculation done on plane at 0 height
 				foreach(vector pt: roadPts)
 				{	
-					pt[1] = 0;				
+					pt[1] = 0;	//Distance calculation done on plane at 0 height
 					if(SCR_DC_Misc.IsPosNearPos(pos, pt, (roadPos.distanceToRoad + 2)))
 					{
 						pt[1] = GetGame().GetWorld().GetSurfaceY(pt[0], pt[2]);
@@ -201,8 +234,8 @@ sealed class SCR_DC_RoadHelper
 		
 /*		array<vector> routePts = {};
 		CreateRoute(routePts, "2776 0 1623", "3165 0 2800");
-		DebugDrawRoad(routePts);*/
-		
+		DebugDrawRoad(routePts);
+*/		
 		/*
 		vector pos = "2650 0 1830";
 		

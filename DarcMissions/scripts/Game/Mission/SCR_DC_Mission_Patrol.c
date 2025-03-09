@@ -15,6 +15,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 	protected ref SCR_DC_Patrol m_DC_Patrol;	//Patrol configuration in use
 	
 	private int m_SpawnIndex = 0;						//Counter for the item to spawn
+	private vector m_PatrolDestination = "0 0 0";
 
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Patrol()
@@ -60,21 +61,34 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		vector pos = m_DC_Patrol.locationPos;
 		string posName = m_DC_Patrol.locationName;
 		IEntity location = null;
+		IEntity locationDestination = null;
+		bool allGood = true;
 		
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
 			location = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Patrol.locationTypes);
+			pos = location.GetOrigin();
 		}
-		else
+
+		//Find a location for the destination
+		m_PatrolDestination = m_DC_Patrol.posDestination;
+		if (m_PatrolDestination == "0 0 0")
 		{
-			//Use a predefined location
-			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Predefined locations are not supported. Yet.", LogLevel.ERROR);
-			SetState(DC_MissionState.EXIT);
-			return;			
+			locationDestination = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Patrol.locationTypes);
+			if(location)
+			{
+				m_PatrolDestination = locationDestination.GetOrigin();
+				SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Patrol destination: " + SCR_StringHelper.Translate(locationDestination.GetName()), LogLevel.DEBUG);
+			}
+			else
+			{
+				SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Could not find destination location for ROUTE.", LogLevel.WARNING);
+				allGood = false; 	//This will make the mission exit.
+			}
 		}
-		
-		if (location)
+				
+		if (allGood)
 		{	
 			if (posName == "any")
 			{
@@ -82,7 +96,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 			}			
 			SetTitle(m_DC_Patrol.title + "" + posName);
 			SetInfo(m_DC_Patrol.info);			
-			SetPos(location.GetOrigin());
+			SetPos(pos);
 			SetPosName(posName);
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 
@@ -148,11 +162,17 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 			if (group)
 			{
 				m_Groups.Insert(group);
-				vector posFrom = "2776 0 1623";
-				vector posTo = "3165 0 2800";
-				SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.ROUTE, posFrom, posTo, m_DC_Patrol.waypointMoveType);
-//				SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointMoveType, posFrom, posTo);
-//				SCR_DC_WPHelper.CreateMissionAIWaypoints(group, "0 0 0", "0 0 0", m_DC_Patrol.waypointRange[0], m_DC_Patrol.waypointRange[1], m_DC_Patrol.waypointMoveType, m_DC_Patrol.waypointType);
+				//vector posFrom = "2776 0 1623";
+				//vector posTo = "3165 0 2800";
+				
+				if (m_DC_Patrol.waypointGenType == DC_EWaypointGenerationType.ROUTE)
+				{
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointGenType, GetPos(), m_PatrolDestination, m_DC_Patrol.waypointMoveType);
+				}
+				else
+				{
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointGenType, "0 0 0", "0 0 0", m_DC_Patrol.waypointMoveType, m_DC_Patrol.waypointRange[0], m_DC_Patrol.waypointRange[1]);
+				}
 			}
 			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
 		}
@@ -183,6 +203,7 @@ class SCR_DC_Patrol : Managed
 	//Patrol specific
 	string comment;							//Generic comment to describe the mission. Not used in game.
 	vector locationPos;						//Position for mission. "0 0 0" used for random location chosen from locationTypes.
+	vector posDestination;					//Destination for the patrol to go to
 	string locationName;					//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
@@ -193,10 +214,11 @@ class SCR_DC_Patrol : Managed
 	DC_EWaypointMoveType waypointMoveType;
 	ref array<string> groupTypes = {};	
 	
-	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_)
+	void Set(string comment_, vector locationPos_, vector posDestination_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_)
 	{
 		comment = comment_;
 		locationPos = locationPos_;
+		posDestination = posDestination_;
 		locationName = locationName_;
 		title = title_;
 		info = info_;
@@ -254,18 +276,22 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 		SCR_DC_Patrol patrol0 = new SCR_DC_Patrol;
 		patrol0.Set
 		(
-			"USSR patrols",
+			"USSR patrols going between two points hopefully following roads",
+			"0 0 0",
 			"0 0 0",
 			"any",
 			"Patrol in ",
 			"Beware",
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_LOCAL
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_RIDGE
 			},
 			{1, 1},
-			{300, 700},
-			DC_EWaypointGenerationType.RADIUS,//.RANDOM,
+			{0, 0},
+			DC_EWaypointGenerationType.ROUTE,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
 				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
@@ -279,6 +305,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 		SCR_DC_Patrol patrol1 = new SCR_DC_Patrol;
 		patrol1.Set(
 			"US patrols",
+			"0 0 0",
 			"0 0 0",
 			"any",
 			"Patrol in ",
@@ -304,5 +331,31 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 			}
 		);
 		conf.patrols.Insert(patrol1);
+
+		//----------------------------------------------------
+		SCR_DC_Patrol patrol2 = new SCR_DC_Patrol;
+		patrol2.Set
+		(
+			"USSR patrols",
+			"0 0 0",
+			"0 0 0",
+			"any",
+			"Patrol in ",
+			"Beware",
+			{
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_LOCAL
+			},
+			{1, 1},
+			{300, 700},
+			DC_EWaypointGenerationType.RANDOM,
+			DC_EWaypointMoveType.PATROLCYCLE,
+			{
+				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
+				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
+				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+			}
+		);
+		conf.patrols.Insert(patrol2);				
 	}
 }

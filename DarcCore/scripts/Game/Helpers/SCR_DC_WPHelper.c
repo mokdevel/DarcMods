@@ -229,7 +229,7 @@ sealed class SCR_DC_WPHelper
 			array<vector> routePts = {};
 			SCR_DC_RoadHelper.CreateRoute(routePts, posFrom, posTo);
 			
-			SCR_DC_RoadHelper.DebugDrawRoad(routePts);
+			//SCR_DC_RoadHelper.DebugDrawRoad(routePts);
 			
 			foreach(vector pt: routePts)
 			{
