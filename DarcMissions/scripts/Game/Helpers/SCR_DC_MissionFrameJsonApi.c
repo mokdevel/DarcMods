@@ -133,14 +133,15 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		conf.missionHintTime = DC_MISSION_HINT_TIME;
 		
 //		conf.missionTypeArrayDynamic = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-//		conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION};
-		conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-		conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
+		conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION};
+//		conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
+//		conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
 //		conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER};
 //		conf.missionTypeArrayDynamic = {DC_EMissionType.CONVOY};		
 //		conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
 //		conf.missionTypeArrayDynamic = {DC_EMissionType.CHOPPER};
-		conf.missionTypeArrayStatic = {};//}{DC_EMissionType.PATROL, DC_EMissionType.PATROL};
+		conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
+//		conf.missionTypeArrayStatic = {};
 		conf.minDistanceToMission = 500;
 		conf.minDistanceToPlayer = 100;
 		

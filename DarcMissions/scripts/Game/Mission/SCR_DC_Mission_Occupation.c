@@ -171,8 +171,8 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 				if (group)
 				{
 					m_Groups.Insert(group);
-					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointGenType, GetPos(), "0 0 0", m_DC_Occupation.waypointMoveType, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
-//					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
+//					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointGenType, GetPos(), "0 0 0", m_DC_Occupation.waypointMoveType, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
 				}
 				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
 			}
@@ -278,7 +278,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {1};//{0,0,0,1,1,1,2};		//Set -1 in the first entry to get a random occupation. Single number will be used as index.
+		conf.occupationList = {2};//{0,0,0,1,1,1,2};		//Set -1 in the first entry to get a random occupation. Single number will be used as index.
 
 		//----------------------------------------------------
 		SCR_DC_Occupation occupation0 = new SCR_DC_Occupation;
@@ -384,10 +384,14 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			"Occupation at ",
 			"City is being occupied.",
 			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_RIDGE,
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_TOWN, 
-				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_AIRPORT,
 			},
 			{2, 4},

@@ -12,7 +12,7 @@ enum DC_EWaypointGenerationType
 	SCATTERED,		//Completely random waypoints without any logic
 	RADIUS,			//AI follow a path that is close to a circle with a radius. There is some additional randomization to avoid a perfect circle.
 	ROUTE,			//
-	LOITER,			//TBD: Currently does nothing even if WP is assigned to AI
+	LOITER,			//Currently makes a DEFEND waypoint for the location
 	SLOTS 			//AI goes from a slot to slot. NOTE: This will not work unless the map has slots (the S/M/L letters on map) defined.
 };
 
@@ -24,7 +24,7 @@ enum DC_EWaypointMoveType
 	PATROL,			//Same as MOVE but with patrol speed.
 	MOVECYCLE,		//Creates move waypoints in cycke. AI will restart the cycle once all waypoints are visited.
 	PATROLCYCLE,	//Same as MOVECYCLE but with patrol speed.
-	LOITER			//TBD: Currently does nothing even if WP is assigned to AI
+	LOITER			//If LOITER is chosen for generation, this needs to be in movetype. This is enforced in CreateMissionAIWaypoints
 };
 
 sealed class SCR_DC_WPHelper
@@ -55,7 +55,7 @@ sealed class SCR_DC_WPHelper
 			//Select the waypoint generation type. Randomize if requested.
 			if (wpGenType == DC_EWaypointGenerationType.RANDOM)
 			{
-				array<DC_EWaypointGenerationType> waypointGenTypeArray = {DC_EWaypointGenerationType.SCATTERED, DC_EWaypointGenerationType.RADIUS, DC_EWaypointGenerationType.RADIUS}; //DC_EWaypointGenerationType.SLOTS
+				array<DC_EWaypointGenerationType> waypointGenTypeArray = {DC_EWaypointGenerationType.SCATTERED, DC_EWaypointGenerationType.RADIUS, DC_EWaypointGenerationType.RADIUS, DC_EWaypointGenerationType.RADIUS, DC_EWaypointGenerationType.LOITER};
 				wpGenType = waypointGenTypeArray.GetRandomElement();
 			}
 
@@ -66,6 +66,12 @@ sealed class SCR_DC_WPHelper
 				wpMoveType = waypointMoveTypeArray.GetRandomElement();
 			}
 
+			//If the generation type is LOITER, movement needs to be LOITER too.
+			if (wpGenType == DC_EWaypointGenerationType.LOITER)
+			{
+				wpMoveType = DC_EWaypointMoveType.LOITER;
+			}
+			
 			//Create a cycle wp if needed
 			if (wpMoveType == DC_EWaypointMoveType.MOVECYCLE || wpMoveType == DC_EWaypointMoveType.PATROLCYCLE)
 			{
@@ -111,6 +117,14 @@ sealed class SCR_DC_WPHelper
 				foreach (AIWaypoint wpc : waypoints)
 				{
 					group.AddWaypoint(wpc);
+				}
+				
+				//Create a LOITER waypoint as the last one so that AIs don't just stand there.
+				AIWaypoint wploiter = FindAndCreateWaypoint(waypoints[waypoints.Count() - 1].GetOrigin(), DC_EWaypointMoveType.LOITER);
+				if(wploiter)
+				{
+					wploiter.SetOrigin(waypoints[waypoints.Count() - 1].GetOrigin());
+					group.AddWaypoint(wploiter);
 				}
 				
 				SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateWaypoints] Adding non-cycle waypoints: " + waypoints.Count(), LogLevel.DEBUG);
@@ -330,7 +344,9 @@ sealed class SCR_DC_WPHelper
 				wpPrefab = "{35BD6541CBB8AC08}Prefabs/AI/Waypoints/AIWaypoint_Cycle.et";
 				break;
 			case DC_EWaypointMoveType.LOITER:
-				wpPrefab = "{4ECD14650D82F5CA}Prefabs/AI/Waypoints/AIWaypoint_Loiter_CO.et";
+				wpPrefab = "{FAD1D789EE291964}Prefabs/AI/Waypoints/AIWaypoint_Defend_Large.et";
+//				wpPrefab = "{4ECD14650D82F5CA}Prefabs/AI/Waypoints/AIWaypoint_Loiter_CO.et";
+				break;
 			default: 
 				wpPrefab = "";
 				break;		

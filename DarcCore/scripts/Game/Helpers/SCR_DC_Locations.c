@@ -47,7 +47,7 @@ sealed class SCR_DC_Locations
 			ShowDebugInfo(m_tmpLocationArray, locationType);			
 		}
 		
-		SCR_DC_Log.Add("[SCR_DC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.SPAM);
+		SCR_DC_Log.Add("[SCR_DC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ sealed class SCR_DC_Locations
 			ShowDebugInfo(m_tmpLocationArray, locationType);
 		}
 		
-		SCR_DC_Log.Add("[SCR_DC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.SPAM);
+		SCR_DC_Log.Add("[SCR_DC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ sealed class SCR_DC_Locations
 
 		if (SCR_DC_Log.GetLogLevel() != DC_LogLevel.NONE)
 		{		
-			SCR_DC_Log.Add( string.Format("[SCR_DC_Locations:GetLocations] Found %1 locations of type (%2) %3", 
+			SCR_DC_Log.Add( string.Format("[SCR_DC_Locations:ShowDebugInfo] Found %1 locations of type (%2) %3", 
 				m_tmpLocationArray.Count(),
 				locationType,
 			 	SCR_Enum.GetEnumName(EMapDescriptorType, locationType),
@@ -91,7 +91,7 @@ sealed class SCR_DC_Locations
 	
 			foreach (MapItem location: m_tmpLocationArray)
 			{	
-				SCR_DC_Log.Add( string.Format("[SCR_DC_Locations:GetLocations] Name: %1 , Entity: %2 , Type: %3 , GetDisplayName: %4 , Pos: %5", 
+				SCR_DC_Log.Add( string.Format("[SCR_DC_Locations:ShowDebugInfo] Name: %1 , Entity: %2 , Type: %3 , GetDisplayName: %4 , Pos: %5", 
 					location.Entity().GetName(),
 					location.Entity(),
 					location.Type(),
@@ -102,7 +102,7 @@ sealed class SCR_DC_Locations
 				slots.Clear();
 				int slotcount = GetLocationSlots(slots, location.GetPos(), 200);
 				
-				SCR_DC_Log.Add( string.Format("[SCR_DC_Locations:GetLocationsShowDebug] Found %1 slots.", 
+				SCR_DC_Log.Add( string.Format("[SCR_DC_Locations:ShowDebugInfo] Found %1 slots.", 
 					slotcount,
 					), LogLevel.SPAM);
 			}

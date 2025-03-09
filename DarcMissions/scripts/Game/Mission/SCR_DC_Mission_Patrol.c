@@ -90,13 +90,13 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 				
 		if (allGood)
 		{	
-			if (posName == "any" && pos == "0 0 0")
+			if (posName == "any" && (location))
 			{
 				posName = SCR_StringHelper.Translate(location.GetName());
 			}			
 			else
 			{
-				posName = "";
+				posName = m_DC_Patrol.locationName;
 			}
 			SetTitle(m_DC_Patrol.title + "" + posName);
 			SetInfo(m_DC_Patrol.info);			
@@ -131,6 +131,16 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 				
 		if (GetState() == DC_MissionState.ACTIVE)
 		{	
+			//Are there players still nearby
+			foreach(AIGroup group: m_Groups)
+			{
+				if (SCR_DC_PlayerHelper.PlayerGetClosestToPos(group.GetOrigin(), 0, m_Config.distanceToPlayer))
+				{
+					ResetActiveTime();
+					break;
+				}
+			}
+			
 			if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
 			{
 				if (!IsActive())
@@ -281,11 +291,14 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 			"0 0 0",
 			"0 0 0",
 			"any",
-			"Patrol in ",
+			"Patrol seen close to ",
 			"Beware",
 			{
-				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_VALLEY,
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_NAME_RIDGE
@@ -293,7 +306,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 			{1, 1},
 			{0, 0},
 			DC_EWaypointGenerationType.ROUTE,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			DC_EWaypointMoveType.MOVE,
 			{
 				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
