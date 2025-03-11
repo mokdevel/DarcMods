@@ -107,7 +107,10 @@ class SCR_DC_Mission
 		SCR_DC_Log.Add("[SCR_DC_Mission:MissionEnd] Deleting AI groups", LogLevel.DEBUG);
 		foreach(SCR_AIGroup group : m_Groups)
 		{
-			SCR_DC_AIHelper.GroupDelete(group);			
+			if (group)
+			{
+				SCR_DC_AIHelper.GroupDelete(group);
+			}
 		}		
 
 		//Remove marker from map

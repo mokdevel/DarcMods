@@ -2,10 +2,21 @@
 //
 //A convoy traveling from A to B
 
+enum DC_EMissionConvoyState
+{
+	INIT,
+	MOVE_AI,
+	RUN
+};
+
 class SCR_DC_Mission_Convoy : SCR_DC_Mission
 {
 	private ref SCR_DC_ConvoyJsonApi m_ConvoyJsonApi = new SCR_DC_ConvoyJsonApi();	
 	private ref SCR_DC_ConvoyConfig m_Config;
+	private DC_EMissionConvoyState missionConvoyState = DC_EMissionConvoyState.INIT;	
+
+	private IEntity m_Vehicle = null;
+	private SCR_AIGroup m_Group = null;
 	
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Convoy()
@@ -22,6 +33,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		
 		string posName = m_Config.posName;
 		vector pos = m_Config.pos;
+		pos = "1053 49 2470";					//!!!!!!!!!!!!!!!!!!!!
 		
 		SetTitle(m_Config.title + "" + posName);
 		SetInfo(m_Config.info);
@@ -49,10 +61,28 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 				
 		if (GetState() == DC_MissionState.ACTIVE)
 		{			
-			//Add code for runtime
-			
-			//Eventually when mission is to ended do this:
-			//SetState(DC_MissionState.END);
+			switch (missionConvoyState)
+			{
+				case DC_EMissionConvoyState.INIT:
+					//This state is mainly for delay to give vehicle and AI to finalize spawn. If removed, AI will not enter the vehicle.
+					missionConvoyState = DC_EMissionConvoyState.MOVE_AI;
+					break;
+				case DC_EMissionConvoyState.MOVE_AI:
+					MoveGroupInVehicle(m_Group, m_Vehicle);
+//					SCR_DC_WPHelper.CreateWaypoint(m_Group, "1674 0 3009");
+					missionConvoyState = DC_EMissionConvoyState.RUN;
+					break;
+				case DC_EMissionConvoyState.RUN:
+					if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
+					{
+						if (!IsActive())
+						{
+							SCR_DC_Log.Add("[SCR_DC_Mission_Convoy:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
+							SetState(DC_MissionState.END);
+						}
+					}
+					break;
+			}			
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionLifeCycleTime*1000);
@@ -61,52 +91,34 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	override void MissionEnd()
 	{			
-
+		super.MissionEnd();	
+		
+		SCR_DC_Log.Add("[SCR_DC_Mission_Convoy:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);				
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
 	{					
-//		string resourceName	= "{F649585ABB3706C4}Prefabs/Vehicles/Wheeled/M151A2/M151A2.et";
+		//Spawn vehicle					
 		string resourceName	= "{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et";		
-		vector pos = "1053 49 2470";		
-		IEntity vehicle = SCR_DC_SpawnHelper.SpawnItem(pos, resourceName);
-		
-		AICarMovementComponent vehicle_c = AICarMovementComponent.Cast(vehicle.FindComponent(AICarMovementComponent));
-        vehicle_c.SetCruiseSpeed(30);
-		
-//		AIAgent aiAgent;
-//		aiAgent = SCR_DC_AIHelper.SpawnAIAgent("{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et", pos);
-//		SCR_DC_AIHelper.GroupAddAI(aiAgent);
-//		AIGroup group = aiAgent.GetParentGroup();
-		
-		
-		vector posg = pos + "3 0 3";
-//		AIGroup group = SCR_DC_AIHelper.SpawnGroup("{6F5A71376479B353}Prefabs/Characters/Factions/CIV/ConstructionWorker/Character_CIV_ConstructionWorker_1.et", posg);
-//		AIGroup group = SCR_DC_AIHelper.SpawnGroup("{3BF36BDEEB33AEC9}Prefabs/Groups/BLUFOR/Group_US_SentryTeam.et", posg);
-		AIGroup group = SCR_DC_AIHelper.SpawnGroup("{84E5BBAB25EA23E5}Prefabs/Groups/BLUFOR/Group_US_FireTeam.et", posg);		
-//		AIGroup group = SCR_DC_AIHelper.SpawnGroup("{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et", posg);
-		
-		GetGame().GetCallqueue().CallLater(MoveAI, 5000, false, group, vehicle);
-	}
-		
-	private void MoveAI(AIGroup group, IEntity vehicle)
-	{
-//		MoveInPlayerVehicle(aiAgent, entity);
-		
-/*		array<AIAgent> groupMembers  = new array<AIAgent>;		
-		if(group)
+		m_Vehicle = SCR_DC_SpawnHelper.SpawnItem(GetPos(), resourceName);
+		if(m_Vehicle)
 		{
-			group.GetAgents(groupMembers);
-		}		
-		AIAgent aiAgent = groupMembers[0];
-		MoveEntityInVehicle(aiAgent, vehicle); */
+			m_EntityList.Insert(m_Vehicle);
+		}
+		
+		AICarMovementComponent vehicle_c = AICarMovementComponent.Cast(m_Vehicle.FindComponent(AICarMovementComponent));
+        vehicle_c.SetCruiseSpeed(30);
 
-//		AIGroup group = aiAgent.GetParentGroup();
-		MoveGroupInVehicle(group, vehicle);
-		SCR_DC_WPHelper.CreateWaypoint(group, "1674 0 3009");
+		//Spawn AI
+		vector posg = GetPos() + "3 0 3";
+		m_Group = SCR_DC_AIHelper.SpawnGroup("{84E5BBAB25EA23E5}Prefabs/Groups/BLUFOR/Group_US_FireTeam.et", posg);
+		if (m_Group)
+		{
+			m_Groups.Insert(m_Group);					
+		}
 	}
-
+		
     private void MoveGroupInVehicle(AIGroup group, IEntity vehicle)
     {
 		
@@ -124,7 +136,6 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 			}
 		}
 	}
-		
 	
     bool MoveEntityInVehicle(AIAgent aiAgent, IEntity vehicle, int slotIdx = -1)
     {

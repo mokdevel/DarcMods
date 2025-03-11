@@ -221,7 +221,10 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 
 		//Spawn the resource exactly to pos		
 		m_Vehicle = SCR_DC_SpawnHelper.SpawnItem(pos, helicopterInfo.resource, m_Angle, -1, false);
-		m_EntityList.Insert(m_Vehicle);
+		if(m_Vehicle)
+		{
+			m_EntityList.Insert(m_Vehicle);
+		}
 		
 		VehicleHelicopterSimulation m_Vehicle_s;
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));

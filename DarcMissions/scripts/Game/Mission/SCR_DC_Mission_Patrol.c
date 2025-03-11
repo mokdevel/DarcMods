@@ -12,9 +12,8 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 	private ref SCR_DC_PatrolJsonApi m_PatrolJsonApi = new SCR_DC_PatrolJsonApi;	
 	private ref SCR_DC_PatrolConfig m_Config;
 	
-	protected ref SCR_DC_Patrol m_DC_Patrol;	//Patrol configuration in use
+	protected ref SCR_DC_Patrol m_DC_Patrol;		//Patrol configuration in use
 	
-	private int m_SpawnIndex = 0;						//Counter for the item to spawn
 	private vector m_PatrolDestination = "0 0 0";
 
 	//------------------------------------------------------------------------------------------------
@@ -87,7 +86,8 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 				allGood = false; 	//This will make the mission exit.
 			}
 		}
-				
+
+		//If all is ok, let's finalize the mission creation				
 		if (allGood)
 		{	
 			if (posName == "any" && (location))
@@ -202,9 +202,9 @@ class SCR_DC_PatrolConfig : Managed
 	bool showMarker;
 	
 	//Mission specific	
-	ref array<ref int> patrolList = {};				//Which patrols to use. If first one is -1, any random one will be chosen from occupations. A single value will work as index.
+	ref array<ref int> patrolList = {};				//Which patrols to use. If first one is -1, any random one will be chosen from the list. A single value will work as index.
 	ref array<ref SCR_DC_Patrol> patrols = {};		//List of patrols
-	int patrolingTime;								//Time to patrol, is seconds
+	int patrolingTime;								//Time to patrol, in seconds
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
 }
 
@@ -280,7 +280,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT * 3;
 		conf.showMarker = true;
 		//Mission specific
-		conf.patrolList = {0};//}{0,0,0,1,1,1,2};		//Set -1 in the first entry to get a random occupation. Single number will be used as index.
+		conf.patrolList = {0,1,2};
 		conf.distanceToPlayer = 500;
 
 		//----------------------------------------------------
@@ -304,7 +304,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 				EMapDescriptorType.MDT_NAME_RIDGE
 			},
 			{1, 1},
-			{0, 0},
+			{0, 0},	//Not used with ROUTE
 			DC_EWaypointGenerationType.ROUTE,
 			DC_EWaypointMoveType.MOVE,
 			{
@@ -318,7 +318,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 		//----------------------------------------------------
 		SCR_DC_Patrol patrol1 = new SCR_DC_Patrol;
 		patrol1.Set(
-			"US patrols",
+			"USSR patrols",
 			"0 0 0",
 			"0 0 0",
 			"any",
@@ -335,7 +335,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 			},
 			{1, 1},
 			{300, 1000},
-			DC_EWaypointGenerationType.RANDOM,
+			DC_EWaypointGenerationType.RADIUS,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
 				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
