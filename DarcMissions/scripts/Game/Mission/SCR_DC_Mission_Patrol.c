@@ -57,7 +57,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		}
 
 		//Set defaults
-		vector pos = m_DC_Patrol.locationPos;
+		vector pos = m_DC_Patrol.posStart;
 		string posName = m_DC_Patrol.locationName;
 		IEntity location = null;
 		IEntity locationDestination = null;
@@ -202,10 +202,10 @@ class SCR_DC_PatrolConfig : Managed
 	bool showMarker;
 	
 	//Mission specific	
-	ref array<ref int> patrolList = {};				//Which patrols to use. If first one is -1, any random one will be chosen from the list. A single value will work as index.
-	ref array<ref SCR_DC_Patrol> patrols = {};		//List of patrols
 	int patrolingTime;								//Time to patrol, in seconds
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
+	ref array<ref int> patrolList = {};				//Which patrols to use. If first one is -1, any random one will be chosen from the list. A single value will work as index.
+	ref array<ref SCR_DC_Patrol> patrols = {};		//List of patrols
 }
 
 //------------------------------------------------------------------------------------------------
@@ -213,7 +213,7 @@ class SCR_DC_Patrol : Managed
 {
 	//Patrol specific
 	string comment;							//Generic comment to describe the mission. Not used in game.
-	vector locationPos;						//Position for mission. "0 0 0" used for random location chosen from locationTypes.
+	vector posStart;						//Position for mission. "0 0 0" used for random location chosen from locationTypes.
 	vector posDestination;					//Destination for the patrol to go to
 	string locationName;					//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
@@ -225,10 +225,10 @@ class SCR_DC_Patrol : Managed
 	DC_EWaypointMoveType waypointMoveType;
 	ref array<string> groupTypes = {};	
 	
-	void Set(string comment_, vector locationPos_, vector posDestination_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_)
+	void Set(string comment_, vector posStart_, vector posDestination_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_)
 	{
 		comment = comment_;
-		locationPos = locationPos_;
+		posStart = posStart_;
 		posDestination = posDestination_;
 		locationName = locationName_;
 		title = title_;
@@ -237,7 +237,7 @@ class SCR_DC_Patrol : Managed
 		groupCount = groupCount_;
 		waypointRange = waypointRange_;
 		waypointGenType = waypointGenType_;
-		waypointMoveType = _waypointMoveType;
+		waypointMoveType = waypointMoveType_;
 		groupTypes = groupTypes_;
 	}
 }		

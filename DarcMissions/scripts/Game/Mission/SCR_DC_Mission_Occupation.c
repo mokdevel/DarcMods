@@ -278,7 +278,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {2};//{0,0,0,1,1,1,2};		//Set -1 in the first entry to get a random occupation. Single number will be used as index.
+		conf.occupationList = {0};//{0,0,0,1,1,1,2};		//Set -1 in the first entry to get a random occupation. Single number will be used as index.
 
 		//----------------------------------------------------
 		SCR_DC_Occupation occupation0 = new SCR_DC_Occupation;
@@ -287,7 +287,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			"Gogland: Mission to be used with Escapists",
 			"0 0 0",
 			"any",
-			"Patrol in ",
+			"Camp in ",
 			"Avoid the location",
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,

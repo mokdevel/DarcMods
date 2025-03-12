@@ -30,10 +30,10 @@ class SCR_DC_MissionFrameConfig : Managed
 	int missionActiveTimeStatic;	//Time to keep the static mission active (seconds). This typically is much longer than for dynamic.
 	int missionActiveDistance;		//The distance to a player to keep the mission active 
 	int missionHintTime;			//Seconds to show mission hints to players. 0 disables hints.
-	ref array<DC_EMissionType> missionTypeArrayDynamic = {};		//List mission types that spawn randomly
-	ref array<DC_EMissionType> missionTypeArrayStatic = {};		//List mission types that are always active
 	int minDistanceToMission;		//Distance to another mission. Two missions shall not be too close to each other.
 	int minDistanceToPlayer;		//Mission shall not spawn too close to a player.
+	ref array<DC_EMissionType> missionTypeArrayDynamic = {};		//List mission types that spawn randomly
+	ref array<DC_EMissionType> missionTypeArrayStatic = {};		//List mission types that are always active
 	
 	ref array<ref SCR_DC_NonValidArea> nonValidAreas = {};	
 }
@@ -131,20 +131,27 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		conf.missionActiveTimeStatic = DC_MISSION_ACTIVE_TIME_STATIC;
 		conf.missionActiveDistance = DC_MISSION_ACTIVE_DISTANCE;
 		conf.missionHintTime = DC_MISSION_HINT_TIME;
-		
-//		conf.missionTypeArrayDynamic = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-		conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION};
-//		conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-//		conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
-//		conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER};
-//		conf.missionTypeArrayDynamic = {DC_EMissionType.CONVOY};		
-//		conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
-//		conf.missionTypeArrayDynamic = {DC_EMissionType.CHOPPER};
-//		conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
-		conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
-//		conf.missionTypeArrayStatic = {};
 		conf.minDistanceToMission = 500;
 		conf.minDistanceToPlayer = 100;
+		
+		#ifdef SCR_DC_RELEASE
+			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
+			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
+		#endif	
+
+		#ifndef SCR_DC_RELEASE				
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
+			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION};
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER};
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.CONVOY};		
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.CHOPPER};
+//			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
+			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
+//			conf.missionTypeArrayStatic = {};
+		#endif
 		
 		//List of non valid areas where mission shall not spawn
 		//Eden

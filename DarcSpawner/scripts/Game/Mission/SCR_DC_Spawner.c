@@ -115,7 +115,7 @@ class SCR_DC_Spawner
 	{					
 		IEntity entity;
 
-		//Spawn entities one by one. Sets missions active once ready.		
+		//Spawn entities one by one.
 		MapItem location = m_Locations.GetRandomElement();		
 //		string entityToSpawn = m_Config.spawnSets[m_spawnSetID].spawnNames[m_spawnIdx];
 		string entityToSpawn = m_Config.spawnSets[m_spawnSetID].spawnNames.GetRandomElement();
@@ -139,6 +139,4 @@ class SCR_DC_Spawner
 			SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Could not spawn: " + entityToSpawn, LogLevel.ERROR);	
 		}
 	}
-	
-
 }

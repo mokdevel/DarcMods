@@ -15,6 +15,9 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 	private ref SCR_DC_ConvoyConfig m_Config;
 	private DC_EMissionConvoyState missionConvoyState = DC_EMissionConvoyState.INIT;	
 
+	protected ref SCR_DC_Convoy m_DC_Convoy;		//Convoy configuration in use
+	
+	private vector m_ConvoyDestination = "0 0 0";
 	private IEntity m_Vehicle = null;
 	private SCR_AIGroup m_Group = null;
 	
@@ -30,18 +33,103 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		//Load config
 		m_ConvoyJsonApi.Load();
 		m_Config = m_ConvoyJsonApi.conf;
-		
-		string posName = m_Config.posName;
-		vector pos = m_Config.pos;
-		pos = "1053 49 2470";					//!!!!!!!!!!!!!!!!!!!!
-		
-		SetTitle(m_Config.title + "" + posName);
-		SetInfo(m_Config.info);
-		SetPos(pos);
-		SetPosName(posName);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 
-		SetState(DC_MissionState.INIT);			
+		if (m_Config.convoys.Count() == 0)
+		{
+			SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No convoys defined.", LogLevel.ERROR);
+			SetState(DC_MissionState.EXIT);
+			return;
+		}
+
+		//Pick a configuration for mission
+		if(m_Config.convoyList.Count() == 1)
+		{
+			//-1 = Pick any random value
+			if(m_Config.convoyList[0] == -1)
+			{
+				m_DC_Convoy = m_Config.convoys.GetRandomElement();
+			}
+			else
+			{
+				//Single number = Use it as a index
+				m_DC_Convoy = m_Config.convoys[m_Config.convoyList[0]];
+			}
+		}
+		else
+		{
+			int convoyIdx = m_Config.convoyList.GetRandomElement();
+			m_DC_Convoy = m_Config.convoys[convoyIdx];
+		}		
+
+		//Set defaults
+		vector pos = m_DC_Convoy.posStart;
+		string posName = m_DC_Convoy.locationName;
+		IEntity location = null;
+		IEntity locationDestination = null;
+		bool allGood = true;
+		
+		//Find a location for the mission
+		if (pos == "0 0 0")
+		{
+			location = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Convoy.locationTypes);
+			pos = location.GetOrigin();
+		}
+
+		//Find a location for the destination
+		m_ConvoyDestination = m_DC_Convoy.posDestination;
+		if (m_ConvoyDestination == "0 0 0")
+		{
+			locationDestination = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Convoy.locationTypes);
+			if(location)
+			{
+				m_ConvoyDestination = locationDestination.GetOrigin();
+				SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Patrol destination: " + SCR_StringHelper.Translate(locationDestination.GetName()), LogLevel.DEBUG);
+			}
+			else
+			{
+				SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Could not find destination location for ROUTE.", LogLevel.WARNING);
+				allGood = false; 	//This will make the mission exit.
+			}
+		}		
+
+		//If all is ok, let's finalize the mission creation				
+		if (allGood)
+		{	
+			if (posName == "any" && (location))
+			{
+				posName = SCR_StringHelper.Translate(location.GetName());
+			}			
+			else
+			{
+				posName = m_DC_Convoy.locationName;
+			}
+			SetTitle(m_DC_Convoy.title + "" + posName);
+			SetInfo(m_DC_Convoy.info);			
+			SetPos(pos);
+			SetPosName(posName);
+			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+
+			SetState(DC_MissionState.INIT);
+		}
+		else
+		{				
+			//No suitable location found.
+			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Could not find suitable location.", LogLevel.ERROR);
+			SetState(DC_MissionState.EXIT);
+			return;
+		}		
+										
+//		string posName = m_Config.posName;
+//		vector pos = m_Config.pos;
+//		pos = "1053 49 2470";					//!!!!!!!!!!!!!!!!!!!!
+		
+//		SetTitle(m_Config.title + "" + posName);
+//		SetInfo(m_Config.info);
+//		SetPos(pos);
+//		SetPosName(posName);
+//		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+
+//		SetState(DC_MissionState.INIT);			
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -70,9 +158,20 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 				case DC_EMissionConvoyState.MOVE_AI:
 					MoveGroupInVehicle(m_Group, m_Vehicle);
 //					SCR_DC_WPHelper.CreateWaypoint(m_Group, "1674 0 3009");
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(m_Group, m_DC_Convoy.waypointGenType, GetPos(), m_ConvoyDestination, DC_EWaypointMoveType.MOVE);
 					missionConvoyState = DC_EMissionConvoyState.RUN;
 					break;
 				case DC_EMissionConvoyState.RUN:
+					//Are there players still nearby
+					foreach(AIGroup group: m_Groups)
+					{
+						if (SCR_DC_PlayerHelper.PlayerGetClosestToPos(group.GetOrigin(), 0, m_Config.distanceToPlayer))
+						{
+							ResetActiveTime();
+							break;
+						}
+					}
+				
 					if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
 					{
 						if (!IsActive())
@@ -224,12 +323,40 @@ class SCR_DC_ConvoyConfig : Managed
 	bool showMarker;
 	
 	//Mission specific
-	vector pos;
-	string posName;
-	string title;
-	string info;
+	int convoyTime;									//Time to patrol, in seconds
+	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
+	ref array<ref int> convoyList = {};				//Which patrols to use. If first one is -1, any random one will be chosen from the list. A single value will work as index.
+	ref array<ref SCR_DC_Convoy> convoys = {};		//List of patrols
+}
+
+//------------------------------------------------------------------------------------------------
+class SCR_DC_Convoy : Managed
+{
+	//Patrol specific
+	string comment;							//Generic comment to describe the mission. Not used in game.
+	vector posStart;						//Start position for the patrol. "0 0 0" used for random location chosen from locationTypes.
+	vector posDestination;					//Destination for the patrol to go to
+	string locationName;					//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
+	string title;							//Title for the hint shown for players
+	string info;							//Details for the hint shown for players
+	ref array<EMapDescriptorType> locationTypes = {};
+	DC_EWaypointGenerationType waypointGenType;
+	string vehicleType;
+	string groupType;
 	
-	//Variables here
+	void Set(string comment_, vector posStart_, vector posDestination_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, DC_EWaypointGenerationType waypointGenType_, string vehicleType_, string groupType_)
+	{
+		comment = comment_;
+		posStart = posStart_;
+		posDestination = posDestination_;
+		locationName = locationName_;
+		title = title_;
+		info = info_;
+		locationTypes = locationTypes_;
+		waypointGenType = waypointGenType_;
+		vehicleType = vehicleType_;
+		groupType = groupType_;
+	}
 }
 
 //------------------------------------------------------------------------------------------------
@@ -268,9 +395,34 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific
-		conf.pos = "0 0 0";
-		conf.posName = "A location name";
-		conf.title = "Convoy mission";
-		conf.info = "Some additional information for players";
+		conf.convoyList = {0};
+		conf.distanceToPlayer = 500;
+		
+		//----------------------------------------------------
+		SCR_DC_Convoy convoy0 = new SCR_DC_Convoy;
+		convoy0.Set
+		(
+			"Convoy driving from .. to ..",
+			"1053 49 2470",
+			"2232 0 2880",
+			"any",
+			"Convoy on the run",
+			"Beware",
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_RIDGE
+			},
+			DC_EWaypointGenerationType.ROUTE,
+			"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
+			"{84E5BBAB25EA23E5}Prefabs/Groups/BLUFOR/Group_US_FireTeam.et"
+		);
+		conf.convoys.Insert(convoy0);		
+		
 	}	
 }

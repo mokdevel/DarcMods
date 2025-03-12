@@ -208,7 +208,7 @@ sealed class SCR_DC_RoadHelper
 		float angle = SCR_DC_Misc.VectorToAngle(direction);		
 		
 		vector pos = "0 0 0";
-		//Use random angle to search from the 
+		//Use random angle to search from the position
 		array<float> anglesToTest = {0, 180, 270, 0, 180, 270};
 		int idx = Math.RandomInt(0, 2);
 
