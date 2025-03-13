@@ -55,7 +55,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 			{
 				//Find flight positions from pos to m_PosDestination.
 				positionFound = true;
-				pos[1] = pos[1] + Math.RandomInt(80, 120);
+				pos[1] = pos[1] + Math.RandomInt(80, 120);	//Adjust flight height
 				int rnd = SCR_DC_Misc.GetWorldSize()/8;
 				m_PosDestination[0] = SCR_DC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
 				m_PosDestination[2] = SCR_DC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
@@ -340,6 +340,7 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 			//"{58251EDC277CE499}622120A5448725E3/Prefabs/Groups/Group_Zombies_USSR.et"
 		};
 		
+		//----------------------------------------------------
 		SCR_DC_HelicopterInfo heli0 = new SCR_DC_HelicopterInfo;
 		heli0.Set(
 			"{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
@@ -355,6 +356,7 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 		);
 		conf.helicopterInfo.Insert(heli1);
 		
+		//----------------------------------------------------
 		SCR_DC_Structure crashitem0 = new SCR_DC_Structure;
 		crashitem0.Set(
 			//"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
@@ -403,6 +405,7 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 		);
 		conf.siteItems.Insert(crashitem6);
 		
+		//----------------------------------------------------
 		SCR_DC_Loot crashloot = new SCR_DC_Loot;
 		array<string> lootItems = {
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",

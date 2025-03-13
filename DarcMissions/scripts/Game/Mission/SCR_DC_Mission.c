@@ -36,7 +36,7 @@ class SCR_DC_Mission
 	private int m_EndTime;			//Seconds when mission shall end.
 	private int m_ActiveTime;		//Seconds of how long the mission should be active 
 	//Internals without getters
-	private int m_ActiveDistance;	//The distance to a player to keep the mission active 
+	private int m_ActiveDistance;	//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
 	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
@@ -54,6 +54,7 @@ class SCR_DC_Mission
 		m_Info = "";
 		m_StartTime = (System.GetTickCount() / 1000); 			//The time in seconds when the game was started.
 		SetActiveTime(DC_MISSION_LIFECYCLE_TIME_DEFAULT*20);	//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
+		m_ActiveDistance = 0;									//Set a default zero
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -224,7 +225,15 @@ class SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SetActiveDistance(int distance)	
 	{
-		m_ActiveDistance = distance;
+		if(m_ActiveDistance > 0)
+		{
+			//It has been set by the mission already
+		}
+		else		
+		{
+			//Use provided distance
+			m_ActiveDistance = distance;
+		}
 	}		
 	
 	//------------------------------------------------------------------------------------------------

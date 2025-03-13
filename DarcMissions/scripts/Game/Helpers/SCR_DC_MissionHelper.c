@@ -208,4 +208,27 @@ sealed class SCR_DC_MissionHelper
 		
 		return group;
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Select mission index 
+	- An empty list is an error -> return -1;
+	*/
+	static int SelectMissionIndex(array<ref int>confList)	
+	{
+		int idx = -1;
+
+		if(confList.Count() == 0)
+		{
+			return null;
+		}
+				
+		//Pick a configuration for mission
+		idx = confList.GetRandomElement();
+
+		SCR_DC_Log.Add("[SCR_DC_MissionHelper:SelectMissionIndex] Mission index: " + idx, LogLevel.DEBUG);
+				
+		return idx;
+	}
+	
 }

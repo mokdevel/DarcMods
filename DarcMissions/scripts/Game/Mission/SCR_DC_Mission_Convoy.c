@@ -34,32 +34,15 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		m_ConvoyJsonApi.Load();
 		m_Config = m_ConvoyJsonApi.conf;
 
-		if (m_Config.convoys.Count() == 0)
+		//Pick a configuration for mission
+		int idx = SCR_DC_MissionHelper.SelectMissionIndex(m_Config.convoyList);
+		if(idx == -1)
 		{
-			SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No convoys defined.", LogLevel.ERROR);
+			SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No occupations defined.", LogLevel.ERROR);
 			SetState(DC_MissionState.EXIT);
 			return;
 		}
-
-		//Pick a configuration for mission
-		if(m_Config.convoyList.Count() == 1)
-		{
-			//-1 = Pick any random value
-			if(m_Config.convoyList[0] == -1)
-			{
-				m_DC_Convoy = m_Config.convoys.GetRandomElement();
-			}
-			else
-			{
-				//Single number = Use it as a index
-				m_DC_Convoy = m_Config.convoys[m_Config.convoyList[0]];
-			}
-		}
-		else
-		{
-			int convoyIdx = m_Config.convoyList.GetRandomElement();
-			m_DC_Convoy = m_Config.convoys[convoyIdx];
-		}		
+		m_DC_Convoy = m_Config.convoys[idx];
 
 		//Set defaults
 		vector pos = m_DC_Convoy.posStart;
@@ -108,7 +91,8 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 			SetPos(pos);
 			SetPosName(posName);
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
-
+			SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
+			
 			SetState(DC_MissionState.INIT);
 		}
 		else
@@ -117,19 +101,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Could not find suitable location.", LogLevel.ERROR);
 			SetState(DC_MissionState.EXIT);
 			return;
-		}		
-										
-//		string posName = m_Config.posName;
-//		vector pos = m_Config.pos;
-//		pos = "1053 49 2470";					//!!!!!!!!!!!!!!!!!!!!
-		
-//		SetTitle(m_Config.title + "" + posName);
-//		SetInfo(m_Config.info);
-//		SetPos(pos);
-//		SetPosName(posName);
-//		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
-
-//		SetState(DC_MissionState.INIT);			
+		}										
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -162,7 +134,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 					missionConvoyState = DC_EMissionConvoyState.RUN;
 					break;
 				case DC_EMissionConvoyState.RUN:
-					//Are there players still nearby
+/*					//Are there players still nearby
 					foreach(AIGroup group: m_Groups)
 					{
 						if (SCR_DC_PlayerHelper.PlayerGetClosestToPos(group.GetOrigin(), 0, m_Config.distanceToPlayer))
@@ -170,8 +142,15 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 							ResetActiveTime();
 							break;
 						}
+					}*/
+
+					//Move the position as the convoy is moving. This way check for player distance works properly.
+					if(m_Vehicle)
+					{
+						SetPos(m_Vehicle.GetOrigin());
+						SCR_DC_DebugHelper.MoveDebugPos(GetId(), GetPos());
 					}
-				
+								
 					if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
 					{
 						if (!IsActive())
@@ -325,8 +304,8 @@ class SCR_DC_ConvoyConfig : Managed
 	//Mission specific
 	int convoyTime;									//Time to patrol, in seconds
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
-	ref array<ref int> convoyList = {};				//Which patrols to use. If first one is -1, any random one will be chosen from the list. A single value will work as index.
-	ref array<ref SCR_DC_Convoy> convoys = {};		//List of patrols
+	ref array<ref int> convoyList = {};				//The indexes of convoys.
+	ref array<ref SCR_DC_Convoy> convoys = {};		//List of convoys
 }
 
 //------------------------------------------------------------------------------------------------
@@ -423,6 +402,5 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 			"{84E5BBAB25EA23E5}Prefabs/Groups/BLUFOR/Group_US_FireTeam.et"
 		);
 		conf.convoys.Insert(convoy0);		
-		
 	}	
 }

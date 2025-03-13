@@ -30,33 +30,16 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 		m_OccupationJsonApi.Load();
 		m_Config = m_OccupationJsonApi.conf;
 		
-		if (m_Config.occupations.Count() == 0)
+		//Pick a configuration for mission
+		int idx = SCR_DC_MissionHelper.SelectMissionIndex(m_Config.occupationList);
+		if(idx == -1)
 		{
 			SCR_DC_Log.Add("[SCR_DC_Mission_Occupation] No occupations defined.", LogLevel.ERROR);
 			SetState(DC_MissionState.EXIT);
 			return;
 		}
-		
-		//Pick a configuration for mission
-		if(m_Config.occupationList.Count() == 1)
-		{
-			//-1 = Pick any random value
-			if(m_Config.occupationList[0] == -1)
-			{
-				m_DC_Occupation = m_Config.occupations.GetRandomElement();
-			}
-			else
-			{
-				//Single number = Use it as a index
-				m_DC_Occupation = m_Config.occupations[m_Config.occupationList[0]];
-			}
-		}
-		else
-		{
-			int occupationIdx = m_Config.occupationList.GetRandomElement();
-			m_DC_Occupation = m_Config.occupations[occupationIdx];
-		}
-
+		m_DC_Occupation = m_Config.occupations[idx];
+				
 		//Set defaults
 		vector pos = m_DC_Occupation.locationPos;
 		string posName = m_DC_Occupation.locationName;
@@ -201,7 +184,7 @@ class SCR_DC_OccupationConfig : Managed
 	
 	//Mission specific	
 	int emptySize = 20;										//The size of the empty space to found to decide on a mission position.
-	ref array<ref int> occupationList = {};					//Which occupations to use. If first one is -1, any random one will be chosen from occupations. A single value will work as index.
+	ref array<ref int> occupationList = {};					//The indexes of occupations.
 	ref array<ref SCR_DC_Occupation> occupations = {};		//List of occupations
 }
 
@@ -278,7 +261,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {0};//{0,0,0,1,1,1,2};		//Set -1 in the first entry to get a random occupation. Single number will be used as index.
+		conf.occupationList = {0};//{0,0,0,1,1,1,2};
 
 		//----------------------------------------------------
 		SCR_DC_Occupation occupation0 = new SCR_DC_Occupation;

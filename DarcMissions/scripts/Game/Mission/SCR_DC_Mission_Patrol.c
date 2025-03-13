@@ -29,32 +29,15 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		m_PatrolJsonApi.Load();
 		m_Config = m_PatrolJsonApi.conf;
 		
-		if (m_Config.patrols.Count() == 0)
+		//Pick a configuration for mission
+		int idx = SCR_DC_MissionHelper.SelectMissionIndex(m_Config.patrolList);
+		if(idx == -1)
 		{
-			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] No patrols defined.", LogLevel.ERROR);
+			SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No occupations defined.", LogLevel.ERROR);
 			SetState(DC_MissionState.EXIT);
 			return;
 		}
-		
-		//Pick a configuration for mission
-		if(m_Config.patrolList.Count() == 1)
-		{
-			//-1 = Pick any random value
-			if(m_Config.patrolList[0] == -1)
-			{
-				m_DC_Patrol = m_Config.patrols.GetRandomElement();
-			}
-			else
-			{
-				//Single number = Use it as a index
-				m_DC_Patrol = m_Config.patrols[m_Config.patrolList[0]];
-			}
-		}
-		else
-		{
-			int patrolIdx = m_Config.patrolList.GetRandomElement();
-			m_DC_Patrol = m_Config.patrols[patrolIdx];
-		}
+		m_DC_Patrol = m_Config.patrols[idx];
 
 		//Set defaults
 		vector pos = m_DC_Patrol.posStart;
@@ -103,6 +86,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 			SetPos(pos);
 			SetPosName(posName);
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+			SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 
 			SetState(DC_MissionState.INIT);
 		}
@@ -131,14 +115,11 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 				
 		if (GetState() == DC_MissionState.ACTIVE)
 		{	
-			//Are there players still nearby
-			foreach(AIGroup group: m_Groups)
+			//Move the position as the first patrol is moving. This way check for player distance works properly.
+			if(m_Groups[0])
 			{
-				if (SCR_DC_PlayerHelper.PlayerGetClosestToPos(group.GetOrigin(), 0, m_Config.distanceToPlayer))
-				{
-					ResetActiveTime();
-					break;
-				}
+				SetPos(m_Groups[0].GetOrigin());
+				SCR_DC_DebugHelper.MoveDebugPos(GetId(), GetPos());
 			}
 			
 			if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
@@ -204,7 +185,7 @@ class SCR_DC_PatrolConfig : Managed
 	//Mission specific	
 	int patrolingTime;								//Time to patrol, in seconds
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
-	ref array<ref int> patrolList = {};				//Which patrols to use. If first one is -1, any random one will be chosen from the list. A single value will work as index.
+	ref array<ref int> patrolList = {};				//The indexes of patrols.
 	ref array<ref SCR_DC_Patrol> patrols = {};		//List of patrols
 }
 
