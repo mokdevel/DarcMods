@@ -47,17 +47,12 @@ sealed class SCR_DC_MissionHelper
 		{
 			location = locations.GetRandomElement();
 			pos = location.GetOrigin();
-			pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, 200, size);
+			pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, 100, size);	//Find the position within 100m from pos
 			
 			if (SCR_DC_MissionHelper.IsValidMissionPos(pos))
 			{				
-				//Find an empty position at mission pos
-//				pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, 200, size);
-//				if(!SCR_DC_Misc.IsPosInWater(pos))
-//				{
 				positionFound = true;
-		
-				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] Location for spawn " + SCR_StringHelper.Translate(location.GetName()) + " " + location.GetOrigin(), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] Location found: " + SCR_StringHelper.Translate(location.GetName()) + " " + location.GetOrigin(), LogLevel.DEBUG);
 				break;
 			}
 			else
@@ -75,7 +70,56 @@ sealed class SCR_DC_MissionHelper
 
 		return location;
 	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find destination location where the mission ends.
+	This is usable for missions where something is traveling to a destination.
+	\param locationTypes Array of EMapDescriptorType to look for a place
+	\param missionPos The mission position aka the starting point for mission
+	\param distance Minimum distance for missionPos and destination
+	*/		
+	static IEntity FindMissionDestination(array<EMapDescriptorType> locationTypes, vector missionPos, int distance)
+	{
+		IEntity location = null;
+		array<IEntity> locations = {};
+
+		bool positionFound = false;
 		
+		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
+		{					
+			location = SCR_DC_MissionHelper.FindMissionLocation(locationTypes);
+			if(!SCR_DC_Misc.IsPosNearPos(location.GetOrigin(), missionPos, distance))	//Shall be 300m from actual missionPos
+			{
+				positionFound = true;
+				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] Location found: " + SCR_StringHelper.Translate(location.GetName()) + " " + location.GetOrigin(), LogLevel.DEBUG);
+				break;
+			}
+			else
+			{						
+				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionDestination] Invalid mission position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
+			}
+		}			
+		
+		if (!positionFound)
+		{
+			return null;
+		}
+
+		return location;
+	}		
+		
+/*		if(location)
+		{
+			m_ConvoyDestination = locationDestination.GetOrigin();
+			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Patrol destination: " + SCR_StringHelper.Translate(locationDestination.GetName()), LogLevel.DEBUG);
+		}
+		else
+		{
+			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Could not find destination location for ROUTE.", LogLevel.WARNING);
+			allGood = false; 	//This will make the mission exit.
+		}*/
+			
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if given pos is a valid position for mission. 
@@ -230,5 +274,4 @@ sealed class SCR_DC_MissionHelper
 				
 		return idx;
 	}
-	
 }

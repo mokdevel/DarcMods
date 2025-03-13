@@ -56,22 +56,33 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		{
 			location = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Convoy.locationTypes);
 			pos = location.GetOrigin();
+			SCR_DC_RoadPos roadPos = SCR_DC_RoadHelper.FindClosestRoadposToPos(pos);
+			if(roadPos)
+			{
+				pos = roadPos.posOnRoad;
+			}
+			else
+			{
+				SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No road found.", LogLevel.ERROR);
+				allGood = false;
+			}
 		}
 
 		//Find a location for the destination
 		m_ConvoyDestination = m_DC_Convoy.posDestination;
-		if (m_ConvoyDestination == "0 0 0")
+		if (m_ConvoyDestination == "0 0 0" && allGood)
 		{
-			locationDestination = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Convoy.locationTypes);
-			if(location)
+			locationDestination = SCR_DC_MissionHelper.FindMissionDestination(m_DC_Convoy.locationTypes, pos, 500);
+			
+			if(locationDestination)
 			{
 				m_ConvoyDestination = locationDestination.GetOrigin();
-				SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Patrol destination: " + SCR_StringHelper.Translate(locationDestination.GetName()), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] Convoy destination: " + SCR_StringHelper.Translate(locationDestination.GetName()), LogLevel.DEBUG);
 			}
 			else
 			{
-				SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Could not find destination location for ROUTE.", LogLevel.WARNING);
-				allGood = false; 	//This will make the mission exit.
+				SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] Could not find destination location for ROUTE.", LogLevel.WARNING);
+				allGood = false;
 			}
 		}		
 
@@ -382,8 +393,10 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 		convoy0.Set
 		(
 			"Convoy driving from .. to ..",
-			"1053 49 2470",
-			"2232 0 2880",
+			"0 0 0",
+			"0 0 0",
+//			"1053 49 2470",
+//			"2232 0 2880",
 			"any",
 			"Convoy on the run",
 			"Beware",

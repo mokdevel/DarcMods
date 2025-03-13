@@ -187,7 +187,7 @@ sealed class SCR_DC_Misc
 	/*!
 	Check if two positions are within limit distance
 	\param pos0,pos1 Positions to check if they're within limit
-	\param limit How close the positions needs to be to return trua
+	\param limit How close the positions needs to be to return true
 	*/	
 	static bool IsPosNearPos(vector pos0, vector pos1, float limit = 10)
 	{
