@@ -52,7 +52,7 @@ sealed class SCR_DC_MissionHelper
 			if (SCR_DC_MissionHelper.IsValidMissionPos(pos))
 			{				
 				positionFound = true;
-				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] Location found: " + SCR_StringHelper.Translate(location.GetName()) + " " + location.GetOrigin(), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] Location found: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);
 				break;
 			}
 			else
@@ -92,7 +92,7 @@ sealed class SCR_DC_MissionHelper
 			if(!SCR_DC_Misc.IsPosNearPos(location.GetOrigin(), missionPos, distance))	//Shall be 300m from actual missionPos
 			{
 				positionFound = true;
-				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] Location found: " + SCR_StringHelper.Translate(location.GetName()) + " " + location.GetOrigin(), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] Location found: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);
 				break;
 			}
 			else
@@ -108,17 +108,6 @@ sealed class SCR_DC_MissionHelper
 
 		return location;
 	}		
-		
-/*		if(location)
-		{
-			m_ConvoyDestination = locationDestination.GetOrigin();
-			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Patrol destination: " + SCR_StringHelper.Translate(locationDestination.GetName()), LogLevel.DEBUG);
-		}
-		else
-		{
-			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Could not find destination location for ROUTE.", LogLevel.WARNING);
-			allGood = false; 	//This will make the mission exit.
-		}*/
 			
 	//------------------------------------------------------------------------------------------------
 	/*!

@@ -64,12 +64,12 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 		{	
 			if (posName == "any")
 			{
-				posName = SCR_StringHelper.Translate(location.GetName());
+				posName = location.GetName();
 			}			
-			SetTitle(m_DC_Occupation.title + "" + posName);
-			SetInfo(m_DC_Occupation.info);			
 			SetPos(location.GetOrigin());
 			SetPosName(posName);
+			SetTitle(m_DC_Occupation.title + "" + GetPosName());
+			SetInfo(m_DC_Occupation.info);			
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 
 			SCR_DC_SpawnHelper.SetStructuresToOrigo(m_DC_Occupation.campItems);

@@ -58,10 +58,10 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 		
 		if (positionFound)
 		{	
-			SetTitle("Hunters");
-			SetInfo("They are coming for you...");
 			SetPos(pos);
 			SetPosName("");
+			SetTitle("Hunters");
+			SetInfo("They are coming for you...");
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 	
 			SetState(DC_MissionState.INIT);

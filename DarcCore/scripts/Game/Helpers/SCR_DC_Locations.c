@@ -40,6 +40,7 @@ sealed class SCR_DC_Locations
 			
 			foreach (MapItem tmpMapItem: m_tmpLocationArray)
 			{
+				tmpMapItem.SetDisplayName(SCR_StringHelper.Translate(tmpMapItem.GetDisplayName()));
 				tmpMapItem.Entity().SetName(tmpMapItem.GetDisplayName());
 				locationArray.Insert(tmpMapItem.Entity());
 			}			
@@ -64,6 +65,7 @@ sealed class SCR_DC_Locations
 			
 			foreach (MapItem tmpMapItem: m_tmpLocationArray)
 			{
+				tmpMapItem.SetDisplayName(SCR_StringHelper.Translate(tmpMapItem.GetDisplayName()));
 				locationArray.Insert(tmpMapItem);
 			}			
 
@@ -108,7 +110,29 @@ sealed class SCR_DC_Locations
 			}
 		}
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	static string GetNameCloseToPos(vector pos, int distance = 300)
+	{
+		array<MapItem> mapItems = {};
+		string name = "";
+		
+		SCR_MapEntity.GetMapInstance().GetInsideCircle(mapItems, pos, distance);
+		
+		foreach (MapItem mapItem: mapItems)
+		{
+			string tmpName = SCR_StringHelper.Translate(mapItem.GetDisplayName());
+			if (tmpName != "")
+			{
+				name = tmpName;
+				SCR_DC_Log.Add("[SCR_DC_Locations:GetNameCloseToPos] Found name:" + tmpName + SCR_Enum.GetEnumName(EMapDescriptorType, mapItem.GetBaseType()), LogLevel.DEBUG);
+				break;
+			}				
+		}			
+
+		return name;	
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find slots around position. Slots are the ones where you can put depots and similar.

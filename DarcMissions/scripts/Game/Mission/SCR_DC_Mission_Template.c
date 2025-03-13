@@ -21,10 +21,10 @@ class SCR_DC_Mission_Template : SCR_DC_Mission
 		m_TemplateJsonApi.Load();
 		m_Config = m_TemplateJsonApi.conf;
 		
-		SetTitle(m_Config.title);
-		SetInfo(m_Config.info);
 		SetPos(m_Config.pos);
 		SetPosName(m_Config.posName);
+		SetTitle(m_Config.title);
+		SetInfo(m_Config.info);
 		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 
 		SetState(DC_MissionState.INIT);			

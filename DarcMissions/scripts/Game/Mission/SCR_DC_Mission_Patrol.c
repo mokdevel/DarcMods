@@ -61,7 +61,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 			if(location)
 			{
 				m_PatrolDestination = locationDestination.GetOrigin();
-				SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Patrol destination: " + SCR_StringHelper.Translate(locationDestination.GetName()), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Patrol destination: " + locationDestination.GetName(), LogLevel.DEBUG);
 			}
 			else
 			{
@@ -75,16 +75,16 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		{	
 			if (posName == "any" && (location))
 			{
-				posName = SCR_StringHelper.Translate(location.GetName());
+				posName = location.GetName();
 			}			
 			else
 			{
 				posName = m_DC_Patrol.locationName;
 			}
-			SetTitle(m_DC_Patrol.title + "" + posName);
-			SetInfo(m_DC_Patrol.info);			
 			SetPos(pos);
 			SetPosName(posName);
+			SetTitle(m_DC_Patrol.title + "" + GetPosName());
+			SetInfo(m_DC_Patrol.info);			
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 			SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 

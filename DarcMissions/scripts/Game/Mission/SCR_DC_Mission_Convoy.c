@@ -51,6 +51,8 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		IEntity locationDestination = null;
 		bool allGood = true;
 		
+		SCR_DC_Locations.GetNameCloseToPos("1220 0 3400");
+		
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
@@ -77,7 +79,13 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 			if(locationDestination)
 			{
 				m_ConvoyDestination = locationDestination.GetOrigin();
-				SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] Convoy destination: " + SCR_StringHelper.Translate(locationDestination.GetName()), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] Convoy destination: " + locationDestination.GetName(), LogLevel.DEBUG);
+				locationDestination.SetName(SCR_DC_Locations.GetNameCloseToPos(m_ConvoyDestination));
+				if(locationDestination.GetName() == "")
+				{
+					locationDestination.SetName("[REDACTED]");
+				}
+				SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] Convoy destination: " + locationDestination.GetName(), LogLevel.DEBUG);
 			}
 			else
 			{
@@ -91,16 +99,16 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		{	
 			if (posName == "any" && (location))
 			{
-				posName = SCR_StringHelper.Translate(location.GetName());
+				posName = location.GetName();
 			}			
 			else
 			{
 				posName = m_DC_Convoy.locationName;
 			}
-			SetTitle(m_DC_Convoy.title + "" + posName);
-			SetInfo(m_DC_Convoy.info);			
 			SetPos(pos);
 			SetPosName(posName);
+			SetTitle(m_DC_Convoy.title);
+			SetInfo(m_DC_Convoy.info + "" + GetPosName() + " to " + locationDestination.GetName());			
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 			SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 			
@@ -395,11 +403,9 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 			"Convoy driving from .. to ..",
 			"0 0 0",
 			"0 0 0",
-//			"1053 49 2470",
-//			"2232 0 2880",
 			"any",
-			"Convoy on the run",
-			"Beware",
+			"Convoy is on the move.",
+			"Leaked travel plans show a route from ",
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,

@@ -74,10 +74,10 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 		
 		if (positionFound)
 		{	
-			SetTitle(m_Config.title);
-			SetInfo(m_Config.info);
 			SetPos(pos);
 			SetPosName("");
+			SetTitle(m_Config.title);
+			SetInfo(m_Config.info);
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.TARGET_X);
 	
 			SetState(DC_MissionState.INIT);			
