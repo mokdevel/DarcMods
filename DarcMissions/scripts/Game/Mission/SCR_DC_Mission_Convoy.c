@@ -57,15 +57,18 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		if (pos == "0 0 0")
 		{
 			location = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Convoy.locationTypes);
-			pos = location.GetOrigin();
-			SCR_DC_RoadPos roadPos = SCR_DC_RoadHelper.FindClosestRoadposToPos(pos);
-			if(roadPos)
+			if(location)
 			{
-				pos = roadPos.posOnRoad;
+				SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
+				pos = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, location.GetOrigin());
+				if(pos == "0 0 0")
+				{
+					SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No start road found.", LogLevel.ERROR);
+					allGood = false;
+				}
 			}
 			else
 			{
-				SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No road found.", LogLevel.ERROR);
 				allGood = false;
 			}
 		}
@@ -75,18 +78,16 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		if (m_ConvoyDestination == "0 0 0" && allGood)
 		{
 			locationDestination = SCR_DC_MissionHelper.FindMissionDestination(m_DC_Convoy.locationTypes, pos, 500);
-			
 			if(locationDestination)
 			{
-				m_ConvoyDestination = locationDestination.GetOrigin();
-				SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] Convoy destination: " + locationDestination.GetName(), LogLevel.DEBUG);
-				locationDestination.SetName(SCR_DC_Locations.GetNameCloseToPos(m_ConvoyDestination));
-				if(locationDestination.GetName() == "")
+				SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
+				m_ConvoyDestination = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, locationDestination.GetOrigin());
+				if(pos == "0 0 0")
 				{
-					locationDestination.SetName("[REDACTED]");
+					SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No destination road found.", LogLevel.ERROR);
+					allGood = false;
 				}
-				SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] Convoy destination: " + locationDestination.GetName(), LogLevel.DEBUG);
-			}
+			}			
 			else
 			{
 				SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] Could not find destination location for ROUTE.", LogLevel.WARNING);
@@ -97,18 +98,10 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		//If all is ok, let's finalize the mission creation				
 		if (allGood)
 		{	
-			if (posName == "any" && (location))
-			{
-				posName = location.GetName();
-			}			
-			else
-			{
-				posName = m_DC_Convoy.locationName;
-			}
 			SetPos(pos);
-			SetPosName(posName);
+			SetPosName(SCR_DC_Locations.CreateName(location, posName));
 			SetTitle(m_DC_Convoy.title);
-			SetInfo(m_DC_Convoy.info + "" + GetPosName() + " to " + locationDestination.GetName());			
+			SetInfo(m_DC_Convoy.info + "" + GetPosName() + " to " + SCR_DC_Locations.CreateName(locationDestination, posName));			
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 			SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 			
@@ -117,7 +110,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		else
 		{				
 			//No suitable location found.
-			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Could not find suitable location.", LogLevel.ERROR);
+			SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] Could not find suitable location.", LogLevel.ERROR);
 			SetState(DC_MissionState.EXIT);
 			return;
 		}										

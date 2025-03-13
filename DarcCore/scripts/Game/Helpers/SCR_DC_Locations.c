@@ -132,7 +132,34 @@ sealed class SCR_DC_Locations
 
 		return name;	
 	}
+
+	//------------------------------------------------------------------------------------------------
+	static string CreateName(IEntity location, string nameDefault)
+	{
+		string name;
+		
+		if (nameDefault == "any")
+		{					
+			name = location.GetName();
+			if(name == "")
+			{
+				name = SCR_DC_Locations.GetNameCloseToPos(location.GetOrigin());
+			}
 			
+			if(name == "")
+			{
+				name = "[REDACTED]";
+			}		
+		}
+		else
+		{
+			name = nameDefault;
+		}
+		
+		return name;		
+	}
+		
+						
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find slots around position. Slots are the ones where you can put depots and similar.

@@ -55,10 +55,11 @@ sealed class SCR_DC_RoadHelper
 		array<vector> tmpPos = {};
 		tmpPos.InsertAll(route);
 		
+		SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
 		for (int i = 0; i < tmpPos.Count() - 1; i++)		
 		{
 			vector splitPos = vector.Lerp(tmpPos[i], tmpPos[i + 1], 0.5);
-			SCR_DC_RoadPos roadPos = FindClosestRoadposToPos(splitPos, 150);			
+			vector pos = FindClosestRoadposToPos(roadPos, splitPos, 150);			
 			if (roadPos)
 			{
 				route.InsertAt(roadPos.posOnRoad, (i*2 + 1));
@@ -72,13 +73,13 @@ sealed class SCR_DC_RoadHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find the closest position on a road close to given position. 
-	\param pos Position from where to check
+	\param pos Position from where to check. If a better pos is found, this will be overwritten with it
 	\param maxDistanceToRoad Limit on how far the road may be from pos. 
 	*/	
-	static SCR_DC_RoadPos FindClosestRoadposToPos(vector pos, float maxDistanceToRoad = 10000)
+	static vector FindClosestRoadposToPos(out SCR_DC_RoadPos roadPos, vector pos, float maxDistanceToRoad = 10000)
 	{
 		BaseRoad road = null;
-		SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
+//		SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
 		array<vector> roadPts = {};
 			
 		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
@@ -105,16 +106,16 @@ sealed class SCR_DC_RoadHelper
 						pt[1] = GetGame().GetWorld().GetSurfaceY(pt[0], pt[2]);
 						roadPos.posOnRoad = pt;
 						SCR_DC_Log.Add("[SCR_DC_RoadHelper:FindClosestRoadposToPos] Road point found. Iterations: " + i, LogLevel.SPAM);			
-						return roadPos;
+						return pt;
 					}
 					i++;
 				}
 				
-				return null;
+				return "0 0 0";
 			}
 		}
 		
-		return null;
+		return "0 0 0";
 	}
 		
 	//------------------------------------------------------------------------------------------------
