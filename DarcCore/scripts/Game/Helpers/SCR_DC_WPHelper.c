@@ -49,7 +49,7 @@ sealed class SCR_DC_WPHelper
 			
 			RemoveWaypoints(group);
 		
-			int rndCount = Math.RandomInt(6, 14);
+			int rndCount = 2;// Math.RandomInt(6, 14);
 			int rndRange = Math.RandomInt(wpRangeLow, wpRangeHigh);
 			
 			//Select the waypoint generation type. Randomize if requested.

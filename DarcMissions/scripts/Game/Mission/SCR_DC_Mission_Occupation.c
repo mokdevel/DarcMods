@@ -269,7 +269,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		occupation0.Set
 		(
 			"Gogland: Mission to be used with Escapists",
-			"1846 0 3350",//,"0 0 0",//
+			"0 0 0",
 			"any",
 			"Camp in ",
 			"Avoid the location",
@@ -279,10 +279,8 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			},
 			{1, 2},
 			{50, 300},
-			DC_EWaypointGenerationType.RADIUS,
-			DC_EWaypointMoveType.MOVE,
-//			DC_EWaypointGenerationType.RANDOM,
-//			DC_EWaypointMoveType.PATROLCYCLE,
+			DC_EWaypointGenerationType.RANDOM,
+			DC_EWaypointMoveType.PATROLCYCLE,
 			{
 				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",

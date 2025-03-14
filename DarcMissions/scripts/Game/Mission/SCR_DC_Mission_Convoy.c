@@ -50,7 +50,6 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		string posName = m_DC_Convoy.locationName;
 		IEntity location = null;
 		IEntity locationDestination = null;
-//		bool allGood = true;
 		
 		//Find a location for the mission
 		if (pos == "0 0 0")
@@ -193,6 +192,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		}
 	}
 		
+	//------------------------------------------------------------------------------------------------
     private void MoveGroupInVehicle(AIGroup group, IEntity vehicle)
     {
 		
@@ -211,6 +211,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		}
 	}
 	
+	//------------------------------------------------------------------------------------------------
     bool MoveEntityInVehicle(AIAgent aiAgent, IEntity vehicle, int slotIdx = -1)
     {
 		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(aiAgent.GetControlledEntity());		
@@ -226,67 +227,13 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 			BaseCompartmentSlot slot = compartments[i];
             if (!slot.IsOccupied() && (!slot.IsReserved()))// || slot.IsReservedBy(aiAgent))
 			{
-				bool success = accessComponent.GetInVehicle(vehicle, slot, false, -1, ECloseDoorAfterActions.CLOSE_DOOR,false);
+				bool success = accessComponent.GetInVehicle(vehicle, slot, true, -1, ECloseDoorAfterActions.CLOSE_DOOR, false);
 				return success;
-			}			
+			}
 //		}
 		return false;
     }		
 }
-
-/*
-//copy of the code from SCR_PlayerSpawnPoint
-protected bool PrepareSpawnedEntityForVehicle_S(SCR_SpawnRequestComponent requestComponent, SCR_SpawnData data, IEntity entity, Vehicle vehicle)
-    {
-        #ifdef _ENABLE_RESPAWN_LOGS
-        Print(string.Format("%1::PrepareSpawnedEntityForVehicle_S(playerId: %2, data: %3, entity: %4, vehicle: %5)", Type().ToString(),
-                    requestComponent.GetPlayerId(),    data, entity, vehicle), LogLevel.NORMAL);
-        #endif
-        
-        SCR_CompartmentAccessComponent accessComponent = SCR_CompartmentAccessComponent.Cast(entity.FindComponent(SCR_CompartmentAccessComponent));
-        BaseCompartmentManagerComponent compartmentManager = BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(BaseCompartmentManagerComponent));
-        
-        array<BaseCompartmentSlot> compartments = {};
-        int count = compartmentManager.GetCompartments(compartments);
-        for (int i = 0; i < count; i++)
-        {
-            BaseCompartmentSlot slot = compartments[i];
-            if (!slot.IsOccupied() && (!slot.IsReserved() || slot.IsReservedBy(entity)))
-            {
-                ChimeraWorld world = GetGame().GetWorld();
-                return accessComponent.GetInVehicle(vehicle, slot, true, -1, ECloseDoorAfterActions.INVALID, world.IsGameTimePaused());
-            }
-        }
-        
-        return false;
-    }
-*/
-
-/*
-BaseCompartmentManagerComponent slotCompMan = BaseCompartmentManagerComponent.Cast(spawnedVehicle.FindComponent(BaseCompartmentManagerComponent));
-                        array<BaseCompartmentSlot> vehicleCompartments = new array<BaseCompartmentSlot>;
-                        slotCompMan.GetCompartments(vehicleCompartments);
-                        for(int j = 0; j < agents.Count(); j++)
-                        {
-                            AIAgent member = agents[j];
-                            if(member)
-                            {
-                                SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(member.GetControlledEntity());
-                                CompartmentAccessComponent CAComp = CompartmentAccessComponent.Cast(character.FindComponent(CompartmentAccessComponent));
-                                if(CAComp && character && !character.IsInVehicle() && j < vehicleCompartments.Count())
-                                {
-                                    BaseCompartmentSlot slot = vehicleCompartments[j];
-                                    if(slot)
-                                        CAComp.GetInVehicle(spawnedVehicle, slot, true, -1, ECloseDoorAfterActions.INVALID, false);
-                                }
-                                else
-                                {
-                                    group.RemoveAgent(member);
-                                    RplComponent.DeleteRplEntity(member.GetControlledEntity().GetRootParent(), false);
-                                }
-                            }
-                        }
-*/
 	
 //------------------------------------------------------------------------------------------------
 class SCR_DC_ConvoyConfig : Managed
@@ -395,7 +342,8 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 			},
 			DC_EWaypointGenerationType.ROUTE,
 			"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
-			"{84E5BBAB25EA23E5}Prefabs/Groups/BLUFOR/Group_US_FireTeam.et"
+			"{5B08C42EA0661A20}Prefabs/Groups/OPFOR/KLMK/Group_USSR_LightFireTeam_KLMK.et"
+//			"{84E5BBAB25EA23E5}Prefabs/Groups/BLUFOR/Group_US_FireTeam.et"
 		);
 		conf.convoys.Insert(convoy0);		
 	}	
