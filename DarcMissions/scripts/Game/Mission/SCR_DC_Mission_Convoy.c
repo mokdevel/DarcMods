@@ -173,7 +173,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 	private void MissionSpawn()
 	{					
 		//Spawn vehicle					
-		string resourceName	= "{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et";		
+		string resourceName	= m_DC_Convoy.vehicleTypes.GetRandomElement();
 		m_Vehicle = SCR_DC_SpawnHelper.SpawnItem(GetPos(), resourceName);
 		if(m_Vehicle)
 		{
@@ -185,11 +185,20 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 
 		//Spawn AI
 		vector posg = GetPos() + "3 0 3";
-		m_Group = SCR_DC_AIHelper.SpawnGroup("{84E5BBAB25EA23E5}Prefabs/Groups/BLUFOR/Group_US_FireTeam.et", posg);
+		m_Group = SCR_DC_AIHelper.SpawnGroup(m_DC_Convoy.groupTypes.GetRandomElement(), posg);
 		if (m_Group)
 		{
 			m_Groups.Insert(m_Group);					
 		}
+		
+		//Put loot
+		if (m_DC_Convoy.loot)			
+		{
+			m_DC_Convoy.loot.box = m_Vehicle;
+			SCR_DC_LootHelper.SpawnItemsToStorage(m_DC_Convoy.loot.box, m_DC_Convoy.loot.items, m_DC_Convoy.loot.itemChance);
+			SCR_DC_Log.Add("[SCR_DC_Mission_Convoy:MissionSpawn] Loot added.", LogLevel.DEBUG);								
+		}		
+		
 	}
 		
 	//------------------------------------------------------------------------------------------------
@@ -263,10 +272,12 @@ class SCR_DC_Convoy : Managed
 	string info;							//Details for the hint shown for players
 	ref array<EMapDescriptorType> locationTypes = {};
 	DC_EWaypointGenerationType waypointGenType;
-	string vehicleType;
-	string groupType;
+	ref array<string> vehicleTypes = {};
+	ref array<string> groupTypes = {};
+	//Optional settings
+	ref SCR_DC_Loot loot = null;	
 	
-	void Set(string comment_, vector posStart_, vector posDestination_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, DC_EWaypointGenerationType waypointGenType_, string vehicleType_, string groupType_)
+	void Set(string comment_, vector posStart_, vector posDestination_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, DC_EWaypointGenerationType waypointGenType_, array<string> vehicleTypes_, array<string> groupTypes_)
 	{
 		comment = comment_;
 		posStart = posStart_;
@@ -276,8 +287,8 @@ class SCR_DC_Convoy : Managed
 		info = info_;
 		locationTypes = locationTypes_;
 		waypointGenType = waypointGenType_;
-		vehicleType = vehicleType_;
-		groupType = groupType_;
+		vehicleTypes = vehicleTypes_;
+		groupTypes = groupTypes_;
 	}
 }
 
@@ -313,6 +324,8 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
+		array<string> lootItems = {};
+		
 		//Default
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
@@ -341,10 +354,31 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 				EMapDescriptorType.MDT_NAME_RIDGE
 			},
 			DC_EWaypointGenerationType.ROUTE,
-			"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
-			"{5B08C42EA0661A20}Prefabs/Groups/OPFOR/KLMK/Group_USSR_LightFireTeam_KLMK.et"
-//			"{84E5BBAB25EA23E5}Prefabs/Groups/BLUFOR/Group_US_FireTeam.et"
+			{
+				"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
+				"{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et",
+				"{D4855501D5B12AF2}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_teal.et"
+			},
+			{
+				"{5B08C42EA0661A20}Prefabs/Groups/OPFOR/KLMK/Group_USSR_LightFireTeam_KLMK.et",
+				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
+				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+			}
 		);
-		conf.convoys.Insert(convoy0);		
+		conf.convoys.Insert(convoy0);	
+		
+		SCR_DC_Loot convoy0loot = new SCR_DC_Loot;
+		lootItems = {
+				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
+				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
+				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
+				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
+				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
+			};
+		convoy0loot.Set(0.9, lootItems);
+		convoy0.loot = convoy0loot;			
 	}	
 }
