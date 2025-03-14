@@ -253,7 +253,7 @@ sealed class SCR_DC_MissionHelper
 
 		if(confList.Count() == 0)
 		{
-			return null;
+			return -1;
 		}
 				
 		//Pick a configuration for mission

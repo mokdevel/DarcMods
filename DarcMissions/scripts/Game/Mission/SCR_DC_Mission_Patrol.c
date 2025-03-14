@@ -258,7 +258,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT * 3;
 		conf.showMarker = true;
 		//Mission specific
-		conf.patrolList = {0,1,2};
+		conf.patrolList = {0};//,1,2};
 		conf.distanceToPlayer = 500;
 
 		//----------------------------------------------------

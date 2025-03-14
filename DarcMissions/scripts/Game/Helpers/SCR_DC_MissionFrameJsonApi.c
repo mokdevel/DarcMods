@@ -74,7 +74,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		private const int DC_MISSION_COUNT = 4;
 		private const int DC_MISSION_START_DELAY = 5;					
 		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*10;
-		private const int DC_MISSION_ACTIVE_TIME = 2*600;				
+		private const int DC_MISSION_ACTIVE_TIME = 2*60;				
 		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 2;	
 		private const int DC_MISSION_ACTIVE_DISTANCE = 200;		
 		private const int DC_MISSIONFRAME_LIFECYCLE_TIME = 20;
@@ -143,13 +143,13 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
 			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-			conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CONVOY};		
-//			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
+			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CHOPPER};
-//			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
-			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
+			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
+//			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
 //			conf.missionTypeArrayStatic = {};
 		#endif
 		
