@@ -134,6 +134,9 @@ sealed class SCR_DC_Locations
 	}
 
 	//------------------------------------------------------------------------------------------------
+	/*!
+	Creates a name for a location or a position
+	*/	
 	static string CreateName(IEntity location, string nameDefault)
 	{
 		string name;
@@ -158,7 +161,29 @@ sealed class SCR_DC_Locations
 		
 		return name;		
 	}
+
+	//----------------------------------------------------------
+	static string CreateName(vector pos, string nameDefault)
+	{
+		string name;
 		
+		if (nameDefault == "any")
+		{					
+			name = SCR_DC_Locations.GetNameCloseToPos(pos);
+			
+			if(name == "")
+			{
+				name = "[REDACTED]";
+			}		
+		}
+		else
+		{
+			name = nameDefault;
+		}
+		
+		return name;		
+	}
+			
 						
 	//------------------------------------------------------------------------------------------------
 	/*!

@@ -14,7 +14,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 	
 	protected ref SCR_DC_Patrol m_DC_Patrol;		//Patrol configuration in use
 	
-	private vector m_PatrolDestination = "0 0 0";
+	private vector m_PosDestination = "0 0 0";
 
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Patrol()
@@ -41,48 +41,45 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 
 		//Set defaults
 		vector pos = m_DC_Patrol.posStart;
+		m_PosDestination = m_DC_Patrol.posDestination;
 		string posName = m_DC_Patrol.locationName;
 		IEntity location = null;
 		IEntity locationDestination = null;
-		bool allGood = true;
 		
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
 			location = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Patrol.locationTypes);
-			pos = location.GetOrigin();
+			if(location)
+			{			
+				pos = location.GetOrigin();
+			}
+			else
+			{
+				pos = "0 0 0";				
+			}
 		}
 
 		//Find a location for the destination
-		m_PatrolDestination = m_DC_Patrol.posDestination;
-		if (m_PatrolDestination == "0 0 0")
+		if (m_PosDestination == "0 0 0" && pos != "0 0 0")
 		{
 			locationDestination = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Patrol.locationTypes);
 			if(location)
 			{
-				m_PatrolDestination = locationDestination.GetOrigin();
+				m_PosDestination = locationDestination.GetOrigin();
 				SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Patrol destination: " + locationDestination.GetName(), LogLevel.DEBUG);
 			}
 			else
 			{
 				SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Could not find destination location for ROUTE.", LogLevel.WARNING);
-				allGood = false; 	//This will make the mission exit.
 			}
 		}
 
 		//If all is ok, let's finalize the mission creation				
-		if (allGood)
+		if (pos != "0 0 0" && m_PosDestination != "0 0 0")
 		{	
-			if (posName == "any" && (location))
-			{
-				posName = location.GetName();
-			}			
-			else
-			{
-				posName = m_DC_Patrol.locationName;
-			}
 			SetPos(pos);
-			SetPosName(posName);
+			SetPosName(SCR_DC_Locations.CreateName(location, posName));
 			SetTitle(m_DC_Patrol.title + "" + GetPosName());
 			SetInfo(m_DC_Patrol.info);			
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
@@ -159,7 +156,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 				m_Groups.Insert(group);
 				if (m_DC_Patrol.waypointGenType == DC_EWaypointGenerationType.ROUTE)
 				{
-					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointGenType, GetPos(), m_PatrolDestination, m_DC_Patrol.waypointMoveType);
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointGenType, GetPos(), m_PosDestination, m_DC_Patrol.waypointMoveType);
 				}
 				else
 				{

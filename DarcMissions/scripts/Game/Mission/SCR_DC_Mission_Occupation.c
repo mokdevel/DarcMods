@@ -49,25 +49,26 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 		if (pos == "0 0 0")
 		{
 			location = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Occupation.locationTypes, m_Config.emptySize);
+			if(location)
+			{
+				pos = location.GetOrigin();
+				posName = location.GetName();
+			}
 			//Camps in random places are randomly rotated
 			m_SpawnRotation = Math.RandomFloat(0, 360);
 		}
 		else
 		{
-			//Use a predefined location
-			SCR_DC_Log.Add("[SCR_DC_Mission_Occupation] Predefined locations are not supported. Yet.", LogLevel.ERROR);
-			SetState(DC_MissionState.EXIT);
-			return;			
+			if (!SCR_DC_MissionHelper.IsValidMissionPos(pos))
+			{
+				pos = "0 0 0";	//Mission position is not valid
+			}
 		}
 		
-		if (location)
+		if (pos != "0 0 0")
 		{	
-			if (posName == "any")
-			{
-				posName = location.GetName();
-			}			
-			SetPos(location.GetOrigin());
-			SetPosName(posName);
+			SetPos(pos);
+			SetPosName(SCR_DC_Locations.CreateName(pos, posName));
 			SetTitle(m_DC_Occupation.title + "" + GetPosName());
 			SetInfo(m_DC_Occupation.info);			
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
@@ -154,8 +155,8 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 				if (group)
 				{
 					m_Groups.Insert(group);
-//					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointGenType, GetPos(), "0 0 0", m_DC_Occupation.waypointMoveType, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
-					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointGenType, GetPos(), "0 0 0", m_DC_Occupation.waypointMoveType, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
+//					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
 				}
 				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
 			}
@@ -268,7 +269,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		occupation0.Set
 		(
 			"Gogland: Mission to be used with Escapists",
-			"0 0 0",
+			"1846 0 3350",//,"0 0 0",//
 			"any",
 			"Camp in ",
 			"Avoid the location",
@@ -278,8 +279,10 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			},
 			{1, 2},
 			{50, 300},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			DC_EWaypointGenerationType.RADIUS,
+			DC_EWaypointMoveType.MOVE,
+//			DC_EWaypointGenerationType.RANDOM,
+//			DC_EWaypointMoveType.PATROLCYCLE,
 			{
 				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",

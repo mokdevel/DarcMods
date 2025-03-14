@@ -16,14 +16,13 @@ class SCR_DC_RoadPos : Managed
 //------------------------------------------------------------------------------------------------
 sealed class SCR_DC_RoadHelper
 {	
-	static void CreateRoute(out array<vector> routePts, vector posFrom, vector posTo, int stepDistance = 600)
+	static void CreateRoute(out array<vector> routePts, vector posFrom, vector posTo, int stepDistance = 700)
 	{
 		float distance = vector.Distance(posFrom, posTo);
 		int ptCount = (distance/stepDistance) + 1;
 			
 		vector posStart = posFrom;
 		SCR_DC_RoadPos roadPos;
-		//array<vector>
 		routePts = {posFrom, posTo};
 
 		for (int i = 0; i < ptCount; i++)
@@ -36,7 +35,7 @@ sealed class SCR_DC_RoadHelper
 			for (int i = 0; i < 20; i++)
 			{
 				vector ptPos = vector.Lerp(posStart, posTo, i*(1/ptCount));
-				SCR_DC_DebugHelper.AddDebugPos(ptPos, Color.YELLOW, 3, "ROADTEST", 2);
+				SCR_DC_DebugHelper.AddDebugPos(ptPos, Color.CYAN, 3, "ROADTEST", 2);
 			}
 		#endif		
 	}

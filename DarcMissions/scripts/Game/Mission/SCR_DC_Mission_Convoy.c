@@ -17,7 +17,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 
 	protected ref SCR_DC_Convoy m_DC_Convoy;		//Convoy configuration in use
 	
-	private vector m_ConvoyDestination = "0 0 0";
+	private vector m_PosDestination = "1 1 1";
 	private IEntity m_Vehicle = null;
 	private SCR_AIGroup m_Group = null;
 	
@@ -46,12 +46,11 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 
 		//Set defaults
 		vector pos = m_DC_Convoy.posStart;
+		m_PosDestination = m_DC_Convoy.posDestination;
 		string posName = m_DC_Convoy.locationName;
 		IEntity location = null;
 		IEntity locationDestination = null;
-		bool allGood = true;
-		
-		SCR_DC_Locations.GetNameCloseToPos("1220 0 3400");
+//		bool allGood = true;
 		
 		//Find a location for the mission
 		if (pos == "0 0 0")
@@ -64,39 +63,35 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 				if(pos == "0 0 0")
 				{
 					SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No start road found.", LogLevel.ERROR);
-					allGood = false;
 				}
 			}
 			else
 			{
-				allGood = false;
+				pos = "0 0 0";
 			}
 		}
 
 		//Find a location for the destination
-		m_ConvoyDestination = m_DC_Convoy.posDestination;
-		if (m_ConvoyDestination == "0 0 0" && allGood)
+		if (m_PosDestination == "0 0 0" && pos != "0 0 0")
 		{
 			locationDestination = SCR_DC_MissionHelper.FindMissionDestination(m_DC_Convoy.locationTypes, pos, 500);
 			if(locationDestination)
 			{
 				SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
-				m_ConvoyDestination = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, locationDestination.GetOrigin());
-				if(pos == "0 0 0")
+				m_PosDestination = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, locationDestination.GetOrigin());
+				if(m_PosDestination == "0 0 0")
 				{
 					SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No destination road found.", LogLevel.ERROR);
-					allGood = false;
 				}
 			}			
 			else
 			{
 				SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] Could not find destination location for ROUTE.", LogLevel.WARNING);
-				allGood = false;
 			}
 		}		
 
 		//If all is ok, let's finalize the mission creation				
-		if (allGood)
+		if (pos != "0 0 0" && m_PosDestination != "0 0 0")
 		{	
 			SetPos(pos);
 			SetPosName(SCR_DC_Locations.CreateName(location, posName));
@@ -141,21 +136,10 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 					break;
 				case DC_EMissionConvoyState.MOVE_AI:
 					MoveGroupInVehicle(m_Group, m_Vehicle);
-//					SCR_DC_WPHelper.CreateWaypoint(m_Group, "1674 0 3009");
-					SCR_DC_WPHelper.CreateMissionAIWaypoints(m_Group, m_DC_Convoy.waypointGenType, GetPos(), m_ConvoyDestination, DC_EWaypointMoveType.MOVE);
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(m_Group, m_DC_Convoy.waypointGenType, GetPos(), m_PosDestination, DC_EWaypointMoveType.MOVE);
 					missionConvoyState = DC_EMissionConvoyState.RUN;
 					break;
 				case DC_EMissionConvoyState.RUN:
-/*					//Are there players still nearby
-					foreach(AIGroup group: m_Groups)
-					{
-						if (SCR_DC_PlayerHelper.PlayerGetClosestToPos(group.GetOrigin(), 0, m_Config.distanceToPlayer))
-						{
-							ResetActiveTime();
-							break;
-						}
-					}*/
-
 					//Move the position as the convoy is moving. This way check for player distance works properly.
 					if(m_Vehicle)
 					{

@@ -92,9 +92,17 @@ sealed class SCR_DC_WPHelper
 				wpcycle.SetOrigin(group.GetOrigin());
 				SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Created cycle", LogLevel.SPAM);
 			}			
-								
+
 			//Generate waypoints
-			GenerateWaypoints(waypoints, posFrom, posTo, rndCount, wpMoveType, wpGenType, rndRange, true);
+			if (wpGenType == DC_EWaypointGenerationType.ROUTE)
+			{
+				GenerateWaypoints(waypoints, posFrom, posTo, 0, wpMoveType, wpGenType, 0, false);	//ROUTE does not use the rndCount and rndRange and spot is to be exact
+			}
+			else
+			{
+				GenerateWaypoints(waypoints, posFrom, posTo, rndCount, wpMoveType, wpGenType, rndRange, true);
+			}
+											
 
 			//Add waypoints as a cycle
 			if (wpcycle)
