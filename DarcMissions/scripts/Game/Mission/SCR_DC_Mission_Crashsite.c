@@ -230,8 +230,8 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
         m_Vehicle_s.EngineStart();
         m_Vehicle_s.SetThrottle(helicopterInfo.throttle);
-        m_Vehicle_s.RotorSetForceScaleState(0, helicopterInfo.rotorForce);	//Hovering 1.2	.. was 0.8 for the other one
-        m_Vehicle_s.RotorSetForceScaleState(1, 2);
+        m_Vehicle_s.RotorSetForceScaleState(0, helicopterInfo.rotorForce);
+        m_Vehicle_s.RotorSetForceScaleState(1, helicopterInfo.rotor2Force);
 
 		vector velOrig = m_Vehicle.GetPhysics().GetVelocity();
         vector rotVector = m_Vehicle.GetAngles();
@@ -264,12 +264,14 @@ class SCR_DC_HelicopterInfo : Managed
 	string resource;
 	float throttle;
 	float rotorForce;
+	float rotor2Force;
 
-	void Set(string resource_, float throttle_, float rotorForce_)
+	void Set(string resource_, float throttle_, float rotorForce_, float rotor2Force_)
 	{
 		resource = resource_;
 		throttle = throttle_;
 		rotorForce = rotorForce_;
+		rotor2Force = rotor2Force_;
 	};
 }
 
@@ -345,16 +347,26 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 		heli0.Set(
 			"{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
 			0.8,
-			1.3
+			0.8,
+			1.0
 		);
 		conf.helicopterInfo.Insert(heli0);
 		SCR_DC_HelicopterInfo heli1 = new SCR_DC_HelicopterInfo;
 		heli1.Set(
 			"{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
 			0.7,
-			0.9
+			0.9,
+			1.0
 		);
 		conf.helicopterInfo.Insert(heli1);
+		SCR_DC_HelicopterInfo heli2 = new SCR_DC_HelicopterInfo;
+		heli2.Set(
+			"{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+			0.8,
+			0.8,
+			-1.0
+		);
+		conf.helicopterInfo.Insert(heli2);		
 		
 		//----------------------------------------------------
 		SCR_DC_Structure crashitem0 = new SCR_DC_Structure;
