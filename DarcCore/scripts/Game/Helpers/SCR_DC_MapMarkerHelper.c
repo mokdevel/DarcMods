@@ -6,13 +6,7 @@ class DC_Mmarker : Managed
 	int iID;		//Internal ID in SCR_MapMarkerManagerComponent
 }
 
-/*enum DC_EMmarkerType
-{
-	NONE,
-	DEBUG,
-	MISSION
-};*/
-
+//------------------------------------------------------------------------------------------------
 sealed class SCR_DC_MapMarkerHelper
 {
 	static ref array<ref DC_Mmarker> m_markers = {};
@@ -34,7 +28,6 @@ sealed class SCR_DC_MapMarkerHelper
 		dcmarker.id = id;
 		dcmarker.iID = markerst.GetMarkerID();
 		m_markers.Insert(dcmarker);
-		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -42,7 +35,6 @@ sealed class SCR_DC_MapMarkerHelper
 	Delete marker with certain id
 	\param id Id of the marker to delete. This works as a wildcard so "A_" will delete all markers starting with A_
 	*/
-	
 	static void DeleteMarker(string id)
 	{
 		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
@@ -99,18 +91,6 @@ sealed class SCR_DC_MapMarkerHelper
 		
 		return null;
 	}
-	
-/*	void OnRemoveSynchedMarker(int markerID)
-	{
-	    SCR_MapMarkerBase marker = GetStaticMarkerByID(markerID);
-	
-	    if (marker)
-	        marker.OnDelete();
-	        
-	    m_aStaticMarkers.RemoveItem(marker);
-	    m_aDisabledMarkers.RemoveItem(marker);
-	}		*/
-	
 }
 
 /*	protected void CreateMapMarker2(vector pos)

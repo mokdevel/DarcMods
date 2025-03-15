@@ -5,6 +5,7 @@
 Includes various functions for spawning entities (items) on map. 
 */
 
+//------------------------------------------------------------------------------------------------
 sealed class SCR_DC_SpawnHelper
 {
 	const float SIZEDIV = 1.8;

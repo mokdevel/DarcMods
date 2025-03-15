@@ -202,6 +202,7 @@ sealed class SCR_DC_MissionHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	DEBUG: Test mission positions on map. Only for debugging.
+	This will create a map marker for each position tested.
 	*/	
 	static void DebugTestMissionPos()
 	{	
@@ -220,6 +221,10 @@ sealed class SCR_DC_MissionHelper
 		}
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	DEBUG: Delete the test mission positions on map. Only for debugging.
+	*/	
 	static void DeleteDebugTestMissionPos()
 	{	
 		if (!SCR_DC_Conf.RELEASE)
@@ -244,8 +249,8 @@ sealed class SCR_DC_MissionHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Select mission index 
-	- An empty list is an error -> return -1;
+	Select mission index randomly from given list.
+	Returns -1 in case of an error - for example empty list.
 	*/
 	static int SelectMissionIndex(array<ref int>confList)	
 	{

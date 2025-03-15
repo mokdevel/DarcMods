@@ -64,18 +64,6 @@ sealed class SCR_DC_Misc
     	float degrees = (180 * angle / Math.PI);
     	return degrees;
 	}
-
-	//------------------------------------------------------------------------------------------------
-	static vector MovePosToAngle(vector pos, float distance, float angle)
-	{
-	    float angleInRadians = SCR_DC_Misc.AngleToRadians(angle);
-	
-	    // Calculate the new x and y coordinates
-	    pos[0] = pos[0] + distance * Math.Cos(angleInRadians);
-	    pos[2] = pos[2] + distance * Math.Sin(angleInRadians);
-		
-		return pos;
-	}
 		
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -169,13 +157,20 @@ sealed class SCR_DC_Misc
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Returns the name of the mod you're running
-	*/	
-	static string GetModName()
+	Returns a position that has moved given distance along an angle from given position.
+	\param pos Original position
+	\param distance Distance to move
+	\param angle Move towards this angle (degrees, 0-360).
+	*/
+	static vector MovePosToAngle(vector pos, float distance, float angle)
 	{
-		array<string> addonGUIDs = {};
-		GameProject.GetAvailableAddons(addonGUIDs);
-		return GameProject.GetAddonTitle(addonGUIDs[0]);
+	    float angleInRadians = SCR_DC_Misc.AngleToRadians(angle);
+	
+	    // Calculate the new x and y coordinates
+	    pos[0] = pos[0] + distance * Math.Cos(angleInRadians);
+	    pos[2] = pos[2] + distance * Math.Sin(angleInRadians);
+		
+		return pos;
 	}
 	
 	//------------------------------------------------------------------------------------------------

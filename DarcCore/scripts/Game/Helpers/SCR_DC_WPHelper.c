@@ -27,6 +27,7 @@ enum DC_EWaypointMoveType
 	LOITER			//If LOITER is chosen for generation, this needs to be in movetype. This is enforced in CreateMissionAIWaypoints
 };
 
+//------------------------------------------------------------------------------------------------
 sealed class SCR_DC_WPHelper
 {
 	//------------------------------------------------------------------------------------------------

@@ -16,6 +16,13 @@ class SCR_DC_RoadPos : Managed
 //------------------------------------------------------------------------------------------------
 sealed class SCR_DC_RoadHelper
 {	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Creates vector points from given two positions. 
+	\param routePts Array to have the given points
+	\param posFrom, posTo Positions for the route start and end
+	\param stepDistance The distance between points to split the route
+	*/
 	static void CreateRoute(out array<vector> routePts, vector posFrom, vector posTo, int stepDistance = 700)
 	{
 		float distance = vector.Distance(posFrom, posTo);
@@ -72,13 +79,14 @@ sealed class SCR_DC_RoadHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find the closest position on a road close to given position. 
+	\param roadPos The structure to have move details of returned position
 	\param pos Position from where to check. If a better pos is found, this will be overwritten with it
 	\param maxDistanceToRoad Limit on how far the road may be from pos. 
+	\return Position on a road close the given position
 	*/	
 	static vector FindClosestRoadposToPos(out SCR_DC_RoadPos roadPos, vector pos, float maxDistanceToRoad = 10000)
 	{
 		BaseRoad road = null;
-//		SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
 		array<vector> roadPts = {};
 			
 		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
@@ -227,7 +235,7 @@ sealed class SCR_DC_RoadHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Road segment testing
+	DEBUG: Road segment testing
 	*/
 	static void TestRoad()
 	{
@@ -269,6 +277,9 @@ sealed class SCR_DC_RoadHelper
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	/*!
+	DEBUG: Create visible markers for road points.
+	*/
 	static void DebugDrawRoad(array<vector> roadPts)
 	{
 		float i = 0;

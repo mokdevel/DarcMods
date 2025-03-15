@@ -1,5 +1,6 @@
 //Helpers SCR_DC_HintHelper.c
 
+//------------------------------------------------------------------------------------------------
 class SCR_DC_HintHelper
 {	
 	static void ShowHint(string title, string details, int timeOut)

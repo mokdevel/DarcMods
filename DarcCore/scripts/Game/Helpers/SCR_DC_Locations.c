@@ -7,7 +7,7 @@ Functions to find locations (for example cities) from map.
 
 sealed class SCR_DC_Locations
 {
-	static ref array<IEntity> m_TmpSlots = {};
+	private static ref array<IEntity> m_TmpSlots = {};
 	
 	//-----------------------------------------------------------------------------------------------
 	/*!

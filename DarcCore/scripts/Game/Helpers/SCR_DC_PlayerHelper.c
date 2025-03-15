@@ -87,19 +87,6 @@ sealed class SCR_DC_PlayerHelper
 		}
 		
 		return false;
-	}	
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	TBD: Find current player
-	*/
-/*			PlayerManager playerManager = GetGame().GetPlayerManager();
-			array<int> allplayers = {};
-			playerManager.GetPlayers(allplayers);		
-			IEntity player = playerManager.GetPlayerControlledEntity(allplayers[0]);
-			
-			vector playerPos = player.GetOrigin();		
-			vector playerAngles = "0 0 0";//player.GetAngles();		
-*/					
+	}					
 }
 
