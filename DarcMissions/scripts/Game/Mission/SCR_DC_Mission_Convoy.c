@@ -351,7 +351,10 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_VALLEY,
 				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_NAME_RIDGE
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_AIRPORT
 			},
 			DC_EWaypointGenerationType.ROUTE,
 			{

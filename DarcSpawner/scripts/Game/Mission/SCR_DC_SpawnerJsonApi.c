@@ -9,7 +9,6 @@ class SCR_DC_SpawnerConfig : Managed
 	//Default information
 	int version = 1;
 	string author = "darc";
-	DC_LogLevel logLevel;
 	//Spawner specific
 	int spawnSetID;						//-1 = random, other numbers are the index of spawnSet
 	int spawnRndRadius;					//Random radius where the spawnName spawns. 
@@ -79,7 +78,6 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		conf.logLevel = DC_LogLevel.NORMAL;
 		conf.spawnSetID = 0;
 		conf.spawnRndRadius = 200;
 		conf.spawnWorldSizeMultiplier = 2;

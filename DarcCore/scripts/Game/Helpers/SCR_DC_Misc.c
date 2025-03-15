@@ -166,7 +166,18 @@ sealed class SCR_DC_Misc
 								
 		return pos;		
 	}		
-			
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Returns the name of the mod you're running
+	*/	
+	static string GetModName()
+	{
+		array<string> addonGUIDs = {};
+		GameProject.GetAvailableAddons(addonGUIDs);
+		return GameProject.GetAddonTitle(addonGUIDs[0]);
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Move given position range meters away from the given position in X/Y.	

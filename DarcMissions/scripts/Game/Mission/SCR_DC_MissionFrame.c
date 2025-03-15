@@ -44,13 +44,7 @@ class SCR_DC_MissionFrame
 		m_Config = m_DC_MissionFrameJsonApi.conf;
 
 		//Set loglevel
-		SCR_DC_Log.SetLogLevel(m_Config.logLevel);
-		if (!SCR_DC_Core.RELEASE)
-		{
-			SCR_DC_Log.SetLogLevel(DC_LogLevel.DEBUG);	//Debug enabled when not release
-		}
-
-		if (!SCR_DC_Core.RELEASE)
+		if (!SCR_DC_Conf.RELEASE)
 		{
 			SCR_DC_RoadHelper.TestRoad();
 		}
@@ -71,9 +65,6 @@ class SCR_DC_MissionFrame
 		}
 		
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldname: " + m_WorldName, LogLevel.DEBUG);
-		
-		//Set debug visibility
-		SCR_DC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks);
 		
 		//Fix seconds to ms
 		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;
@@ -226,12 +217,12 @@ class SCR_DC_MissionFrame
 			}			
 		}		
 		
-		if (m_Config.logLevel < LogLevel.NORMAL)
+		if (SCR_DC_Log.GetLogLevel() < LogLevel.NORMAL)
 		{
 			MissionStatusDump();
 		}
 
-		if (SCR_DC_Core.SHOW_VALID_MISSION_AREAS)
+		if (SCR_DC_Conf.SHOW_VALID_MISSION_AREAS)
 		{
 			SCR_DC_MissionHelper.DeleteDebugTestMissionPos();
 			SCR_DC_MissionHelper.DebugTestMissionPos();
@@ -367,7 +358,4 @@ class SCR_DC_MissionFrame
 		SCR_DC_PatrolJsonApi patrolJsonApi = new SCR_DC_PatrolJsonApi;	
 		patrolJsonApi.Load();						
 	}	
-	
-
-	
 }

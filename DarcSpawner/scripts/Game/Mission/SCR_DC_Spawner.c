@@ -21,6 +21,8 @@ Add this to your StartGameTrigger or use SCR_DC_GameCoreBase.c
 	//------------------------------------------------------------------------------------------------
 */
 
+const string SCR_DC_MODNAME = "DarcSpawner";
+
 //------------------------------------------------------------------------------------------------
 class SCR_DC_Spawner
 {
@@ -40,12 +42,6 @@ class SCR_DC_Spawner
 		//Load configuration from file
 		m_DC_SpawnerConfig.Load();
 		m_Config = m_DC_SpawnerConfig.conf;
-
-		SCR_DC_Log.SetLogLevel(m_Config.logLevel);
-		if (!SCR_DC_Core.RELEASE)
-		{
-			SCR_DC_Log.SetLogLevel(DC_LogLevel.DEBUG);						//Remove in production
-		}
 
 		//Select which spawnSet to use. -1 for a random one.
 		m_spawnSetID = m_Config.spawnSetID;

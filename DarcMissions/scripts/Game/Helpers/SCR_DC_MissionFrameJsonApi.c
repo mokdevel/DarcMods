@@ -19,9 +19,6 @@ class SCR_DC_MissionFrameConfig : Managed
 	string author = "darc";
 	//Mission specific
 	bool recreateConfigs;			//If set to true, all configs are to be written to disk. Should be run only first time.
-	DC_LogLevel logLevel;
-	bool debugShowWaypoints = true;
-	bool debugShowMarks = true;
 	int missionStartDelay;			//Time to wait before spawning the first mission (seconds)
 	int missionDelayBetweeen;		//Time between missions
 	int missionCount;				//Maximum amount of missions to be active at the same time
@@ -57,6 +54,8 @@ class SCR_DC_NonValidArea : Managed
 //------------------------------------------------------------------------------------------------
 class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 {
+	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig.json";
+	
 	#ifdef SCR_DC_RELEASE
 		private const int DC_MISSION_COUNT = 6;											//Default amount of missions to run
 		private const int DC_MISSION_START_DELAY = 2*60;								//Time to wait before spawning the first mission (seconds)
@@ -83,7 +82,6 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		private const int DC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
 	#endif
 		
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig.json";
 	ref SCR_DC_MissionFrameConfig conf = new SCR_DC_MissionFrameConfig;
 
 	//------------------------------------------------------------------------------------------------
@@ -122,7 +120,6 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 	void SetDefaults()
 	{
 		conf.recreateConfigs = DC_MISSION_RECREATE_CONFIGS;
-		conf.logLevel = DC_LogLevel.DEBUG;
 		conf.missionStartDelay = DC_MISSION_START_DELAY;
 		conf.missionDelayBetweeen = DC_MISSION_DELAY_BETWEEN_MISSIONS;
 		conf.missionCount = DC_MISSION_COUNT;
@@ -143,14 +140,14 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.NONE, DC_EMissionType.HUNTER, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
 			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-//			conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
+			conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CONVOY};		
-			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CHOPPER};
-			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
-//			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
-			conf.missionTypeArrayStatic = {DC_EMissionType.CRASHSITE};
+//			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
+			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
+//			conf.missionTypeArrayStatic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayStatic = {};
 		#endif
 		

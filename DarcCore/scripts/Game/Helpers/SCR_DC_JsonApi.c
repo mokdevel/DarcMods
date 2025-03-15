@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------------------------
 class SCR_DC_JsonApi : JsonApiStruct
 {
-	private string m_fileName = "";
+	private string m_FileName = "";
 	
 	//------------------------------------------------------------------------------------------------
 	SCR_JsonLoadContext LoadConfig(string fileName)
@@ -16,21 +16,21 @@ class SCR_DC_JsonApi : JsonApiStruct
 		
 		SCR_JsonLoadContext loadContext = new SCR_JsonLoadContext();
 		
-		if (SCR_DC_Core.OVERWRITE_JSON)
+		if (SCR_DC_Conf.OVERWRITE_JSON)
 		{
-			SCR_DC_Log.Add("[SCR_DC_JsonConfig] Not release build - overwriting json config on disk.", LogLevel.WARNING);
+			SCR_DC_Log.Add("[SCR_DC_JsonApi] Not release build - overwriting json config on disk.", LogLevel.WARNING);
 			return null;
 		}
 		
-		bool success = loadContext.LoadFromFile(m_fileName);
+		bool success = loadContext.LoadFromFile(m_FileName);
 		
 		if(!success)
 		{
-			SCR_DC_Log.Add("[SCR_DC_JsonConfig] Config file load failed or not found (" + m_fileName + "). Creating a default config.", LogLevel.ERROR);
+			SCR_DC_Log.Add("[SCR_DC_JsonApi] Config file load failed or not found (" + m_FileName + "). Creating a default config.", LogLevel.ERROR);
 			return null;
 		}
 
-		SCR_DC_Log.Add("[SCR_DC_JsonConfig] Loading configuration from file: " + m_fileName, LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_JsonApi] Loading configuration from file: " + m_FileName, LogLevel.NORMAL);
 		
 		return loadContext;
 	}	
@@ -39,7 +39,6 @@ class SCR_DC_JsonApi : JsonApiStruct
 	SCR_JsonSaveContext SaveConfigOpen(string fileName)
 	{
 		SetFileName(fileName);
-		//m_fileName = "$profile:/" + fileName;
 		
 		SCR_JsonSaveContext saveContext = new SCR_JsonSaveContext();
 		
@@ -52,15 +51,15 @@ class SCR_DC_JsonApi : JsonApiStruct
 		string dataString = saveContext.ExportToString();
 		ExpandFromRAW(dataString);
 		
-		SCR_DC_Log.Add("[SCR_DC_JsonConfig] This gives some warnings on 'JsonApi Array name='something' found in JSON ... ' . Please ignore.", LogLevel.WARNING);			
+		SCR_DC_Log.Add("[SCR_DC_JsonApi] This gives some warnings on 'JsonApi Array name='something' found in JSON ... ' . Please ignore.", LogLevel.WARNING);			
 		
-		if(!saveContext.SaveToFile(m_fileName))
+		if(!saveContext.SaveToFile(m_FileName))
 		{
-			SCR_DC_Log.Add("[SCR_DC_JsonConfig] Config save failed to: " + m_fileName, LogLevel.ERROR);
+			SCR_DC_Log.Add("[SCR_DC_JsonApi] Config save failed to: " + m_FileName, LogLevel.ERROR);
 		}
 		else
 		{
-			SCR_DC_Log.Add("[SCR_DC_JsonConfig] Config saved to: " + m_fileName, LogLevel.DEBUG);			
+			SCR_DC_Log.Add("[SCR_DC_JsonApi] Config saved to: " + m_FileName, LogLevel.DEBUG);			
 		}
 	}
 	
@@ -69,20 +68,23 @@ class SCR_DC_JsonApi : JsonApiStruct
 	{
 		// errorCode is EJsonApiError
 		// Event called when pending store operation is finished - callback when error happened
-		SCR_DC_Log.Add("[SCR_DC_JsonConfig] Error loading config. " + SCR_Enum.GetEnumName(EJsonApiError, errorCode), LogLevel.ERROR);
+		SCR_DC_Log.Add("[SCR_DC_JsonApi] Error loading config. " + SCR_Enum.GetEnumName(EJsonApiError, errorCode), LogLevel.ERROR);
 	}		
-	
+
 	//------------------------------------------------------------------------------------------------
 	void SetFileName(string fileName)
 	{			
-		if (SCR_DC_Core.RELEASE)
+		string path = "";
+		string directory = SCR_DC_Conf.CONF_DIRECTORY;
+		
+		path = "$profile:/" + directory + "/";
+
+		if (!FileIO.MakeDirectory(path))
 		{
-			m_fileName = "$profile:/" + fileName;
+			SCR_DC_Log.Add("[SCR_DC_JsonApi] Could not create path: " + path, LogLevel.ERROR);
 		}
-		else
-		{
-			m_fileName = fileName;
-		}
+				
+		m_FileName = path + fileName;
 	}
 	
 }	

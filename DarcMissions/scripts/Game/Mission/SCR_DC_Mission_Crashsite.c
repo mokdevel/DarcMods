@@ -83,7 +83,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 			SetState(DC_MissionState.INIT);			
 
 			//Set a marker for destination
-			if (!SCR_DC_Core.RELEASE)
+			if (!SCR_DC_Conf.RELEASE)
 			{			
 				SCR_DC_MapMarkerHelper.CreateMapMarker(m_PosDestination, DC_EMissionIcon.TARGET_O, GetId() + "_1", "Destination");
 				SCR_DC_DebugHelper.AddDebugPos(m_PosDestination, Color.RED, 10, GetId() + "_1");

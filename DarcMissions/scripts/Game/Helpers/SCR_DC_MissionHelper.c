@@ -27,7 +27,7 @@ sealed class SCR_DC_MissionHelper
 	\param locationTypes Array of EMapDescriptorType to look for a place
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
 	*/	
-	static IEntity FindMissionLocation(array<EMapDescriptorType> locationTypes, float size = 10)
+	static IEntity FindMissionLocation(array<EMapDescriptorType> locationTypes, float size = 5)
 	{	
 		//Find a random location
 		vector pos = "0 0 0";
@@ -205,7 +205,7 @@ sealed class SCR_DC_MissionHelper
 	*/	
 	static void DebugTestMissionPos()
 	{	
-		if (!SCR_DC_Core.RELEASE)
+		if (!SCR_DC_Conf.RELEASE)
 		{
 			vector pos;
 	
@@ -222,7 +222,7 @@ sealed class SCR_DC_MissionHelper
 
 	static void DeleteDebugTestMissionPos()
 	{	
-		if (!SCR_DC_Core.RELEASE)
+		if (!SCR_DC_Conf.RELEASE)
 		{
 			SCR_DC_MapMarkerHelper.DeleteMarker("DUMMY_");
 		}

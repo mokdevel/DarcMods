@@ -11,7 +11,7 @@ modded class SCR_BaseGameMode
 		
 		SCR_DC_Log.Add("[SCR_DC_Spawner_BaseGameMode:OnGameStart]", LogLevel.NORMAL);
 		
-		if (!SCR_DC_Core.RELEASE)
+		if (!SCR_DC_Conf.RELEASE)
 		{
 			SCR_DC_Log.Add("[SCR_DC_Spawner_BaseGameMode] SCR_DC_Core.RELEASE not true. This is a DEVELOPMENT build.", LogLevel.WARNING);
 		}

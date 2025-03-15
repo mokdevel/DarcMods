@@ -225,25 +225,11 @@ sealed class SCR_DC_DebugHelper
 	static void AddDebugPos(MapItem mapItem, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300)
 	{
 		AddDebugPos(mapItem.GetPos(), color, radius, id, height);
-/*		SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
-		dpos.pos = mapItem.GetPos();
-		dpos.color = color;
-		dpos.radius = radius;
-		dpos.id = id;
-		dpos.height = height;
-		m_Pos.Insert(dpos);	*/
 	}
 
 	static void AddDebugPos(IEntity entity, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300)
 	{
 		AddDebugPos(entity.GetOrigin(), color, radius, id, height);
-/*		SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
-		dpos.pos = entity.GetOrigin();
-		dpos.color = color;
-		dpos.radius = radius;
-		dpos.id = id;
-		dpos.height = height;
-		m_Pos.Insert(dpos);	*/
 	}
 	
 	static void AddDebugPos(vector pos, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300)

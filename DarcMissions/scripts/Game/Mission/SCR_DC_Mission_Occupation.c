@@ -184,7 +184,7 @@ class SCR_DC_OccupationConfig : Managed
 	bool showMarker;
 	
 	//Mission specific	
-	int emptySize = 20;										//The size of the empty space to found to decide on a mission position.
+	int emptySize = 7;										//The size (radius) of the empty space to found to decide on a mission position.
 	ref array<ref int> occupationList = {};					//The indexes of occupations.
 	ref array<ref SCR_DC_Occupation> occupations = {};		//List of occupations
 }
@@ -262,7 +262,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {0};//{0,0,0,1,1,1,2};
+		conf.occupationList = {0,0,0,1,1,1,2};
 
 		//----------------------------------------------------
 		SCR_DC_Occupation occupation0 = new SCR_DC_Occupation;
