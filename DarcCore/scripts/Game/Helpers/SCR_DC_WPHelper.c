@@ -52,7 +52,9 @@ sealed class SCR_DC_WPHelper
 		
 			int rndCount = Math.RandomInt(6, 14);
 			int rndRange = Math.RandomInt(wpRangeLow, wpRangeHigh);
-			
+
+			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Random count: " + rndCount + " , Random range: " + rndRange, LogLevel.SPAM);
+						
 			//Select the waypoint generation type. Randomize if requested.
 			if (wpGenType == DC_EWaypointGenerationType.RANDOM)
 			{
@@ -104,7 +106,6 @@ sealed class SCR_DC_WPHelper
 				GenerateWaypoints(waypoints, posFrom, posTo, rndCount, wpMoveType, wpGenType, rndRange, true);
 			}
 											
-
 			//Add waypoints as a cycle
 			if (wpcycle)
 			{				
@@ -128,20 +129,23 @@ sealed class SCR_DC_WPHelper
 					group.AddWaypoint(wpc);
 				}
 				
-				//Create a LOITER waypoint as the last one so that AIs don't just stand there.
-				AIWaypoint wploiter = FindAndCreateWaypoint(waypoints[waypoints.Count() - 1].GetOrigin(), DC_EWaypointMoveType.LOITER);
-				if(wploiter)
+				if (waypoints.Count() > 0)
 				{
-					wploiter.SetOrigin(waypoints[waypoints.Count() - 1].GetOrigin());
-					group.AddWaypoint(wploiter);
+					//Create a LOITER waypoint as the last one so that AIs don't just stand there.
+					AIWaypoint wploiter = FindAndCreateWaypoint(waypoints[waypoints.Count() - 1].GetOrigin(), DC_EWaypointMoveType.LOITER);
+					if(wploiter)
+					{
+						wploiter.SetOrigin(waypoints[waypoints.Count() - 1].GetOrigin());
+						group.AddWaypoint(wploiter);
+					}
 				}
-				
+								
 				SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateWaypoints] Adding non-cycle waypoints: " + waypoints.Count(), LogLevel.DEBUG);
 			}						
 			
 			int realCount = waypoints.Count();
 			
-			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Added " + realCount + "/" + rndCount + " waypoints (" + SCR_Enum.GetEnumName(DC_EWaypointGenerationType, wpGenType) + ", " + SCR_Enum.GetEnumName(DC_EWaypointMoveType, wpMoveType) + ")", LogLevel.DEBUG);
+			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Added " + realCount + " waypoints (" + SCR_Enum.GetEnumName(DC_EWaypointGenerationType, wpGenType) + ", " + SCR_Enum.GetEnumName(DC_EWaypointMoveType, wpMoveType) + ")", LogLevel.DEBUG);
 		}
 	}	
 
@@ -245,8 +249,6 @@ sealed class SCR_DC_WPHelper
 		{			
 			array<vector> routePts = {};
 			SCR_DC_RoadHelper.CreateRoute(routePts, posFrom, posTo);
-			
-			//SCR_DC_RoadHelper.DebugDrawRoad(routePts);
 			
 			foreach(vector pt: routePts)
 			{

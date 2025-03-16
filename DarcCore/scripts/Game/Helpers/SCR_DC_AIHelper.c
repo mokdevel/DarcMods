@@ -96,6 +96,52 @@ sealed class SCR_DC_AIHelper
 		return group;		
 	}
 
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Set skill and perception for an AI
+	
+	See SCR_AICombatComponent for details
+	*/
+	static void SetAISkill(AIAgent aiAgent, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
+	{
+	    IEntity agentEntity = aiAgent.GetControlledEntity();
+	
+	    if (!agentEntity)
+	        return;
+	
+	    SCR_AICombatComponent combatComponent = SCR_AICombatComponent.Cast(agentEntity.FindComponent(SCR_AICombatComponent));
+	    if (combatComponent)
+	    {
+	        combatComponent.SetAISkill(skill);
+	        combatComponent.SetPerceptionFactor(perceptionFactor);
+//	        combatComponent.SetCombatType(combatType);
+//	        combatComponent.SetHoldFire(holdFire);
+	    }	
+	
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Set skill and perception for all AIs in the group
+	
+	See SCR_AICombatComponent for details
+	*/
+	static void SetAIGroupSkill(SCR_AIGroup group, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
+	{
+		array<AIAgent> groupMembers  = new array<AIAgent>;
+		
+		if(group)
+		{
+			group.GetAgents(groupMembers);
+			
+			foreach(AIAgent groupMember : groupMembers)
+			{
+				SetAISkill(groupMember, skill, perceptionFactor);
+			}
+		}
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find all groups

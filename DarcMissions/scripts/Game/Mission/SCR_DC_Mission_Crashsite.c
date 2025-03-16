@@ -175,10 +175,10 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 					missionCrashSiteState = DC_EMissionCrashSiteState.SPAWN_AI;
 					break;								
 				case DC_EMissionCrashSiteState.SPAWN_AI:
-
 					SCR_AIGroup group = SCR_DC_MissionHelper.SpawnMissionAIGroup(m_Config.groupTypes.GetRandomElement(), GetPos());				
 					if (group)
 					{
+						SCR_DC_AIHelper.SetAIGroupSkill(group, m_Config.AISkill, m_Config.AIperception);					
 						m_Groups.Insert(group);
 //						SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.SCATTERED, GetPos(), "0 0 0", DC_EWaypointMoveType.PATROLCYCLE, m_Config.waypointRange[0], m_Config.waypointRange[1]);
 						SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, m_Config.waypointRange[0], m_Config.waypointRange[1]);
@@ -293,8 +293,8 @@ class SCR_DC_CrashsiteConfig : Managed
 	ref SCR_DC_Loot loot = null;
 	ref array<string> groupTypes = {};
 	ref array<int> waypointRange = {};		//min, max
-	
-	//Variables here
+	int AISkill;
+	float AIperception
 }
 
 //------------------------------------------------------------------------------------------------
@@ -341,6 +341,8 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 			"{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et",
 			//"{58251EDC277CE499}622120A5448725E3/Prefabs/Groups/Group_Zombies_USSR.et"
 		};
+		conf.AISkill = 50;
+		conf.AIperception = 1.0;
 		
 		//----------------------------------------------------
 		SCR_DC_HelicopterInfo heli0 = new SCR_DC_HelicopterInfo;

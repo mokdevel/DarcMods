@@ -143,11 +143,7 @@ sealed class SCR_DC_Misc
 		if (positionFound)
 		{
 			pos = posTmp;			
-			//Find height of ground
 			pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
-/*			#ifndef RELEASE
-				SCR_DC_MapMarkersUI.AddMarker("DUMMY_", pos, "", DC_EMarkerType.DEBUG);
-			#endif*/
 		}		
 		
 //		SCR_DC_Log.Add("[SCR_DC_MissionHelper:GetRandomWorldPos] Iterations: " + i, LogLevel.SPAM);			

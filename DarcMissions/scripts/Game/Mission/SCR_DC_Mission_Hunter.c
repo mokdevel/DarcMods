@@ -174,6 +174,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 			
 			if (group)
 			{
+				SCR_DC_AIHelper.SetAIGroupSkill(group, m_Config.AISkill, m_Config.AIperception);					
 				m_Groups.Insert(group);
 				m_GroupsSpawned++;
 				SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:SpawnHunterGroup] Group spawned to " + spawnLocation, LogLevel.NORMAL);				
@@ -254,6 +255,8 @@ class SCR_DC_HunterConfig : Managed
 	int rndDistanceToPlayer;			//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
 	
 	ref array<string> groupTypes = {}; 				//Types of AI groups
+	int AISkill;
+	float AIperception	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -304,5 +307,7 @@ class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 			"{976AC400219898FA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Sharpshooter.et",
 			"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et",
 		};
+		conf.AISkill = 50;
+		conf.AIperception = 1.0;		
 	}	
 }

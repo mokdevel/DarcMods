@@ -154,6 +154,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 				SCR_AIGroup group = SCR_DC_MissionHelper.SpawnMissionAIGroup(m_DC_Occupation.groupTypes.GetRandomElement(), GetPos());
 				if (group)
 				{
+					SCR_DC_AIHelper.SetAIGroupSkill(group, m_DC_Occupation.AISkill, m_DC_Occupation.AIperception);					
 					m_Groups.Insert(group);
 					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointGenType, GetPos(), "0 0 0", m_DC_Occupation.waypointMoveType, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
 //					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
@@ -204,11 +205,13 @@ class SCR_DC_Occupation : Managed
 	DC_EWaypointGenerationType waypointGenType;
 	DC_EWaypointMoveType waypointMoveType;
 	ref array<string> groupTypes = {};
+	int AISkill;
+	float AIperception	
 	//Optional settings
 	ref SCR_DC_Loot loot = null;	
 	ref array<ref SCR_DC_Structure> campItems = {};
 	
-	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_)
+	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_, int AISkill_, float AIperception_)
 	{
 		comment = comment_;
 		locationPos = locationPos_;
@@ -221,6 +224,8 @@ class SCR_DC_Occupation : Managed
 		waypointGenType = waypointGenType_;
 		waypointMoveType = _waypointMoveType;
 		groupTypes = groupTypes_;
+		AISkill = AISkill_;
+		AIperception = AIperception_;		
 	}
 }		
 
@@ -268,7 +273,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		SCR_DC_Occupation occupation0 = new SCR_DC_Occupation;
 		occupation0.Set
 		(
-			"Gogland: Mission to be used with Escapists",
+			"Gogland: Mission to be used with Escapists.",
 			"0 0 0",
 			"any",
 			"Camp in ",
@@ -285,7 +290,8 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
 				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
-			}
+			},
+			50, 1.0		
 		);
 		conf.occupations.Insert(occupation0);
 		
@@ -315,7 +321,8 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 				"{4D3BBEC1A955626A}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_Squad.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
 				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"				
-			}
+			},
+			50, 1.0		
 		);
 		conf.occupations.Insert(occupation1);
 		
@@ -388,7 +395,8 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 				"{96BAB56E6558788E}Prefabs/Groups/OPFOR/Group_USSR_Team_AT.et",
 				"{43C7A28EEB660FF8}Prefabs/Groups/OPFOR/Group_USSR_Team_GL.et",
 				"{1C0502B5729E7231}Prefabs/Groups/OPFOR/Group_USSR_Team_Suppress.et"
-			}
+			},
+			50, 1.0		
 		);
 		conf.occupations.Insert(occupation2);
 

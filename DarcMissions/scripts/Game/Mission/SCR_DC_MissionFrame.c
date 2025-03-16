@@ -120,8 +120,6 @@ class SCR_DC_MissionFrame
 	*/	
 	protected void MissionLifeCycleManager()
 	{			
-		SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Number of active missions: " + m_MissionList.Count() + "/" + m_Config.missionCount, LogLevel.NORMAL);
-
 		//Check if more missions are to be spawned		
 		if ( (m_MissionList.Count() < m_Config.missionCount) && (isMissionDelayPassed()) )
 		{
@@ -222,6 +220,8 @@ class SCR_DC_MissionFrame
 			MissionStatusDump();
 		}
 
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Number of active missions: " + m_MissionList.Count() + "/" + m_Config.missionCount, LogLevel.NORMAL);
+		
 		if (SCR_DC_Conf.SHOW_VALID_MISSION_AREAS)
 		{
 			SCR_DC_MissionHelper.DeleteDebugTestMissionPos();
@@ -256,11 +256,6 @@ class SCR_DC_MissionFrame
 				tmpDC_Mission = new SCR_DC_Mission_Occupation();
 				break;
 			}
-			case DC_EMissionType.CHOPPER:
-			{
-				tmpDC_Mission = new SCR_DC_Mission_Chopper();
-				break;
-			}
 			case DC_EMissionType.CONVOY:
 			{
 				tmpDC_Mission = new SCR_DC_Mission_Convoy();
@@ -274,6 +269,11 @@ class SCR_DC_MissionFrame
 			case DC_EMissionType.PATROL:
 			{
 				tmpDC_Mission = new SCR_DC_Mission_Patrol();
+				break;
+			}
+			case DC_EMissionType.CHOPPER:
+			{
+				tmpDC_Mission = new SCR_DC_Mission_Chopper();
 				break;
 			}
 			default:

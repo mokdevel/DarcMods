@@ -4,10 +4,10 @@ enum DC_EMissionType
 	NONE,
 	HUNTER,
 	OCCUPATION,
-	CHOPPER,
 	CONVOY,
 	CRASHSITE,
-	PATROL
+	PATROL,
+	CHOPPER		//Mission not ready or working
 };
 
 enum DC_MissionState

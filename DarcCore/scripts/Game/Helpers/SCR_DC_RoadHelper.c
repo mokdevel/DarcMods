@@ -25,8 +25,14 @@ sealed class SCR_DC_RoadHelper
 	*/
 	static void CreateRoute(out array<vector> routePts, vector posFrom, vector posTo, int stepDistance = 700)
 	{
-		float distance = vector.Distance(posFrom, posTo);
+		float distance = vector.DistanceXZ(posFrom, posTo);
 		int ptCount = (distance/stepDistance) + 1;
+		
+		//Limit the ptCount
+		if(ptCount > 4)
+		{
+			ptCount = 4;	//4 will limit the WPs to 16, 3 would limit to 9
+		}
 			
 		vector posStart = posFrom;
 		SCR_DC_RoadPos roadPos;
@@ -36,6 +42,8 @@ sealed class SCR_DC_RoadHelper
 		{				
 			SplitRoute(routePts);
 		}
+		
+//		SCR_DC_Log.Add("[SCR_DC_RoadHelper:CreateRoute] Route pts created: " + routePts.Count(), LogLevel.SPAM);
 		
 		#ifndef SCR_DC_RELEASE
 			//Draw debug markers for a straight line from start to end
@@ -61,11 +69,14 @@ sealed class SCR_DC_RoadHelper
 		array<vector> tmpPos = {};
 		tmpPos.InsertAll(route);
 		
+		//The distance tried for a road depends on the map size. For a 1024 size map ~150 is a good value -> 7 as divider
+		float distanceToRoad = SCR_DC_Misc.GetWorldSize() / 27;
+		
 		SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
 		for (int i = 0; i < tmpPos.Count() - 1; i++)		
 		{
 			vector splitPos = vector.Lerp(tmpPos[i], tmpPos[i + 1], 0.5);
-			vector pos = FindClosestRoadposToPos(roadPos, splitPos, 150);			
+			vector pos = FindClosestRoadposToPos(roadPos, splitPos, distanceToRoad);			
 			if (roadPos)
 			{
 				route.InsertAt(roadPos.posOnRoad, (i*2 + 1));
@@ -108,11 +119,11 @@ sealed class SCR_DC_RoadHelper
 				foreach(vector pt: roadPts)
 				{	
 					pt[1] = 0;	//Distance calculation done on plane at 0 height
-					if(SCR_DC_Misc.IsPosNearPos(pos, pt, (roadPos.distanceToRoad + 2)))
+					if(SCR_DC_Misc.IsPosNearPos(pos, pt, (roadPos.distanceToRoad + 10)))
 					{
 						pt[1] = GetGame().GetWorld().GetSurfaceY(pt[0], pt[2]);
 						roadPos.posOnRoad = pt;
-						SCR_DC_Log.Add("[SCR_DC_RoadHelper:FindClosestRoadposToPos] Road point found. Iterations: " + i, LogLevel.SPAM);			
+						SCR_DC_Log.Add("[SCR_DC_RoadHelper:FindClosestRoadposToPos] Road point found. Iterations: " + i, LogLevel.SPAM);
 						return pt;
 					}
 					i++;
@@ -120,6 +131,10 @@ sealed class SCR_DC_RoadHelper
 				
 				return "0 0 0";
 			}
+		}
+		else
+		{
+			int x = 0;
 		}
 		
 		return "0 0 0";

@@ -153,6 +153,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 			SCR_AIGroup group = SCR_DC_MissionHelper.SpawnMissionAIGroup(m_DC_Patrol.groupTypes.GetRandomElement(), GetPos());
 			if (group)
 			{
+				SCR_DC_AIHelper.SetAIGroupSkill(group, m_DC_Patrol.AISkill, m_DC_Patrol.AIperception);					
 				m_Groups.Insert(group);
 				if (m_DC_Patrol.waypointGenType == DC_EWaypointGenerationType.ROUTE)
 				{
@@ -202,8 +203,10 @@ class SCR_DC_Patrol : Managed
 	DC_EWaypointGenerationType waypointGenType;
 	DC_EWaypointMoveType waypointMoveType;
 	ref array<string> groupTypes = {};	
+	int AISkill;
+	float AIperception	
 	
-	void Set(string comment_, vector posStart_, vector posDestination_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_)
+	void Set(string comment_, vector posStart_, vector posDestination_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_, int AISkill_, float AIperception_)
 	{
 		comment = comment_;
 		posStart = posStart_;
@@ -217,6 +220,8 @@ class SCR_DC_Patrol : Managed
 		waypointGenType = waypointGenType_;
 		waypointMoveType = waypointMoveType_;
 		groupTypes = groupTypes_;
+		AISkill = AISkill_;
+		AIperception = AIperception_;				
 	}
 }		
 
@@ -289,7 +294,8 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
 				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
-			}
+			},
+			50, 1.0
 		);
 		conf.patrols.Insert(patrol0);
 		
@@ -320,7 +326,8 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 				"{4D3BBEC1A955626A}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_Squad.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
 				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"				
-			}
+			},
+			50, 1.0
 		);
 		conf.patrols.Insert(patrol1);
 
@@ -346,7 +353,8 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
 				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
-			}
+			},
+			50, 1.0
 		);
 		conf.patrols.Insert(patrol2);				
 	}

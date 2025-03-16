@@ -19,7 +19,6 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 	
 	private vector m_PosDestination = "1 1 1";
 	private IEntity m_Vehicle = null;
-	private SCR_AIGroup m_Group = null;
 	
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Convoy()
@@ -134,8 +133,8 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 					missionConvoyState = DC_EMissionConvoyState.MOVE_AI;
 					break;
 				case DC_EMissionConvoyState.MOVE_AI:
-					MoveGroupInVehicle(m_Group, m_Vehicle);
-					SCR_DC_WPHelper.CreateMissionAIWaypoints(m_Group, m_DC_Convoy.waypointGenType, GetPos(), m_PosDestination, DC_EWaypointMoveType.MOVE);
+					MoveGroupInVehicle(m_Groups[0], m_Vehicle);
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(m_Groups[0], m_DC_Convoy.waypointGenType, GetPos(), m_PosDestination, DC_EWaypointMoveType.MOVE);
 					missionConvoyState = DC_EMissionConvoyState.RUN;
 					break;
 				case DC_EMissionConvoyState.RUN:
@@ -185,10 +184,11 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 
 		//Spawn AI
 		vector posg = GetPos() + "3 0 3";
-		m_Group = SCR_DC_AIHelper.SpawnGroup(m_DC_Convoy.groupTypes.GetRandomElement(), posg);
-		if (m_Group)
-		{
-			m_Groups.Insert(m_Group);					
+		SCR_AIGroup group = SCR_DC_AIHelper.SpawnGroup(m_DC_Convoy.groupTypes.GetRandomElement(), posg);
+		if (group)
+		{			
+			SCR_DC_AIHelper.SetAIGroupSkill(group, m_DC_Convoy.AISkill, m_DC_Convoy.AIperception);
+			m_Groups.Insert(group);					
 		}
 		
 		//Put loot
@@ -204,7 +204,6 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
     private void MoveGroupInVehicle(AIGroup group, IEntity vehicle)
     {
-		
 		array<AIAgent> groupMembers  = new array<AIAgent>;
 		
 		if(group)
@@ -274,10 +273,12 @@ class SCR_DC_Convoy : Managed
 	DC_EWaypointGenerationType waypointGenType;
 	ref array<string> vehicleTypes = {};
 	ref array<string> groupTypes = {};
+	int AISkill;
+	float AIperception
 	//Optional settings
 	ref SCR_DC_Loot loot = null;	
 	
-	void Set(string comment_, vector posStart_, vector posDestination_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, DC_EWaypointGenerationType waypointGenType_, array<string> vehicleTypes_, array<string> groupTypes_)
+	void Set(string comment_, vector posStart_, vector posDestination_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, DC_EWaypointGenerationType waypointGenType_, array<string> vehicleTypes_, array<string> groupTypes_, int AISkill_, float AIperception_)
 	{
 		comment = comment_;
 		posStart = posStart_;
@@ -289,6 +290,8 @@ class SCR_DC_Convoy : Managed
 		waypointGenType = waypointGenType_;
 		vehicleTypes = vehicleTypes_;
 		groupTypes = groupTypes_;
+		AISkill = AISkill_;
+		AIperception = AIperception_;
 	}
 }
 
@@ -366,7 +369,8 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 				"{5B08C42EA0661A20}Prefabs/Groups/OPFOR/KLMK/Group_USSR_LightFireTeam_KLMK.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
 				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
-			}
+			},
+			50, 1.0
 		);
 		conf.convoys.Insert(convoy0);	
 		
