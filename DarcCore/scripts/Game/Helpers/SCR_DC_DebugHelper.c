@@ -63,21 +63,23 @@ sealed class SCR_DC_DebugHelper
 	*/
 	static void OnFrame(IEntity owner)
 	{	
-		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_WAYPOINTS))
-		{
-			SCR_DC_DebugHelper.DrawWaypointShapes();
-			SCR_DC_DebugHelper.DrawWaypointLines();
-		}
-		
-		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
-		{		
-			SCR_DC_DebugHelper.DrawMarks();
-		}
-		
-		if (m_DebugSlots)
-		{			
-			SCR_DC_DebugHelper.DrawSlots();	
-		}
+		#ifndef SCR_DC_RELEASE
+			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_WAYPOINTS))
+			{
+				SCR_DC_DebugHelper.DrawWaypointShapes();
+				SCR_DC_DebugHelper.DrawWaypointLines();
+			}
+			
+			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
+			{		
+				SCR_DC_DebugHelper.DrawMarks();
+			}
+			
+			if (m_DebugSlots)
+			{			
+				SCR_DC_DebugHelper.DrawSlots();	
+			}
+		#endif
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -87,6 +89,7 @@ sealed class SCR_DC_DebugHelper
 	*/
 	static void DrawWaypointLines()
 	{
+		const int pLimit = 50;
 		array<AIGroup> groups = {};
 		array<AIWaypoint> waypoints = {};
 		array<AIWaypoint> waypointsCycle = {};	
@@ -94,7 +97,7 @@ sealed class SCR_DC_DebugHelper
 		int color = Color.RED;
 		bool isCycle = false;
 		
-		vector p[50];
+		vector p[pLimit];
 
 		SCR_DC_AIHelper.GroupFindAll(groups);
 		
@@ -154,6 +157,12 @@ sealed class SCR_DC_DebugHelper
 							p[index] = pos;
 							index++;
 						}						
+					}
+					
+					if (index >= (pLimit - 1))	//-1 to have a slot for cycle wp
+					{
+						SCR_DC_Log.Add("[SCR_DC_DebugHelper:DrawWaypointLines] There are more than " + pLimit + " waypoints. Ignoring the rest.", LogLevel.WARNING);						
+						break;
 					}
 				}
 				
@@ -234,14 +243,16 @@ sealed class SCR_DC_DebugHelper
 	
 	static void AddDebugPos(vector pos, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300)
 	{
-		SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
-		pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + (height/2);
-		dpos.pos = pos;
-		dpos.color = color;
-		dpos.radius = radius;
-		dpos.id = id;
-		dpos.height = height;
-		m_Pos.Insert(dpos);	
+		#ifndef SCR_DC_RELEASE
+			SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
+			pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + (height/2);
+			dpos.pos = pos;
+			dpos.color = color;
+			dpos.radius = radius;
+			dpos.id = id;
+			dpos.height = height;
+			m_Pos.Insert(dpos);
+		#endif
 	}				
 	
 	//------------------------------------------------------------------------------------------------
