@@ -19,20 +19,19 @@ class SCR_DC_MissionFrameConfig : Managed
 	string author = "darc";
 	//Mission specific
 	bool recreateConfigs;			//If set to true, all configs are to be written to disk. Should be run only first time.
-	int missionStartDelay;			//Time to wait before spawning the first mission (seconds)
-	int missionDelayBetweeen;		//Time between missions
-	int missionCount;				//Maximum amount of missions to be active at the same time
-	int missionFrameLifeCycleTime;	//The cycle time to manage mission spawning, deletion etc...
+	int missionStartDelay;			//Time to wait before spawning the first mission (seconds).
+	int missionDelayBetweeen;		//Time delay between mission spawns (seconds)
+	int missionCount;				//Maximum amount of missions (both static and dynamic) to be active at the same time. 
+	int missionFrameCycleTime;		//The cycle time to manage mission spawning, deletion etc... (seconds)
 	int missionActiveTime;			//Time to keep the mission active (seconds)
 	int missionActiveTimeStatic;	//Time to keep the static mission active (seconds). This typically is much longer than for dynamic.
-	int missionActiveDistance;		//The distance to a player to keep the mission active 
+	int missionActiveDistance;		//The distance to a player to keep the mission active.
 	int missionHintTime;			//Seconds to show mission hints to players. 0 disables hints.
 	int minDistanceToMission;		//Distance to another mission. Two missions shall not be too close to each other.
 	int minDistanceToPlayer;		//Mission shall not spawn too close to a player.
-	ref array<DC_EMissionType> missionTypeArrayDynamic = {};		//List mission types that spawn randomly
-	ref array<DC_EMissionType> missionTypeArrayStatic = {};		//List mission types that are always active
-	
-	ref array<ref SCR_DC_NonValidArea> nonValidAreas = {};	
+	ref array<DC_EMissionType> missionTypeArrayDynamic = {};	//List mission types that spawn randomly
+	ref array<DC_EMissionType> missionTypeArrayStatic = {};		//List mission types that are always active	
+	ref array<ref SCR_DC_NonValidArea> nonValidAreas = {};		//List of areas where missions shall not spawn.
 }
 
 class SCR_DC_NonValidArea : Managed
@@ -102,9 +101,9 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		
 		loadContext.ReadValue("", conf);
 
-		if (conf.missionFrameLifeCycleTime < DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT)
+		if (conf.missionFrameCycleTime < DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT)
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionFrameConfig] missionFrameLifeCycleTime is less than " + DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT + ". This could lead to performance issues.", LogLevel.WARNING);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrameConfig] missionFrameCycleTime is less than " + DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT + ". This could lead to performance issues.", LogLevel.WARNING);
 		}
 	}	
 
@@ -123,7 +122,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		conf.missionStartDelay = DC_MISSION_START_DELAY;
 		conf.missionDelayBetweeen = DC_MISSION_DELAY_BETWEEN_MISSIONS;
 		conf.missionCount = DC_MISSION_COUNT;
-		conf.missionFrameLifeCycleTime = DC_MISSIONFRAME_LIFECYCLE_TIME;
+		conf.missionFrameCycleTime = DC_MISSIONFRAME_LIFECYCLE_TIME;
 		conf.missionActiveTime = DC_MISSION_ACTIVE_TIME;
 		conf.missionActiveTimeStatic = DC_MISSION_ACTIVE_TIME_STATIC;
 		conf.missionActiveDistance = DC_MISSION_ACTIVE_DISTANCE;

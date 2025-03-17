@@ -129,7 +129,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 			}
 		}
 		
-		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionLifeCycleTime*1000);
+		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -254,7 +254,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 		array<string> lootItems = {};
 		
 		//Default
-		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT * 3;
+		conf.missionCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT * 3;
 		conf.showMarker = true;
 		//Mission specific
 		conf.patrolList = {0};//,1,2};

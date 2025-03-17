@@ -112,7 +112,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 			}
 		}
 		
-		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionLifeCycleTime*1000);
+		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -155,7 +155,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 					SCR_DC_WPHelper.RemoveWaypoints(group);
 					AIWaypoint wp = GetWaypoint(group);
 					group.AddWaypoint(wp);
-					GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.missionLifeCycleTime*1000, false, group);
+					GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.missionCycleTime*1000, false, group);
 					return;
 				}
 			}
@@ -192,7 +192,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 			}
 			
 			// Manage the life cycle for the spawned group
-			GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.missionLifeCycleTime*1000, false, group);
+			GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.missionCycleTime*1000, false, group);
 		}
 		else
 		{
@@ -290,7 +290,7 @@ class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 	void SetDefaults()
 	{
 		//Default
-		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
+		conf.missionCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
 		conf.showMarker = true;
 		//Mission specific
 		conf.groupCount = {1, 2};			//min, max		

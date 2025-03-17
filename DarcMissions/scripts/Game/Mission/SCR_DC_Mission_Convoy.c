@@ -157,7 +157,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 			}			
 		}
 		
-		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionLifeCycleTime*1000);
+		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -324,7 +324,7 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 		array<string> lootItems = {};
 		
 		//Default
-		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
+		conf.missionCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific
 		conf.convoyList = {0};

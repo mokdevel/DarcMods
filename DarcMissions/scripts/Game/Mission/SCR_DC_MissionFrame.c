@@ -228,7 +228,7 @@ class SCR_DC_MissionFrame
 			SCR_DC_MissionHelper.DebugTestMissionPos();
 		}
 				
-		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_Config.missionFrameLifeCycleTime*1000, false);
+		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_Config.missionFrameCycleTime*1000, false);
 	}
 	
 	//------------------------------------------------------------------------------------------------

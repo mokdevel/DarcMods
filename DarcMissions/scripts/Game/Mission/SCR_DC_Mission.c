@@ -25,7 +25,7 @@ class SCR_DC_MissionConfig : Managed
 	//Default information
 	int version = 1;
 	string author = "darc";
-	int missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;	//How often the mission is run
+	int missionCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;	//How often the mission is run
 	bool showMarker = true;
 }
 

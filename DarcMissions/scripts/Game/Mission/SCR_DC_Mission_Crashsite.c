@@ -212,7 +212,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 			}
 		}
 		
-		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionLifeCycleTime*1000);
+		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -356,7 +356,7 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 		conf.version = 2;
 		conf.author = "lkasdi";
 		//Default		
-		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
+		conf.missionCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
 		conf.crashsiteList = {0};

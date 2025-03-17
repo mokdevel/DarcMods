@@ -111,7 +111,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 					SetState(DC_MissionState.END);
 				}
 			}
-			GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionLifeCycleTime*1000);
+			GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);
 		}		
 	}
 
@@ -258,7 +258,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		array<string> lootItems = {};
 		
 		//Default		
-		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
+		conf.missionCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
 		conf.occupationList = {0,0,0,1,1,1,2};
