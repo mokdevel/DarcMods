@@ -144,21 +144,22 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CONVOY};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.PATROL};		
-//			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
+			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CHOPPER};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
 			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
-//			conf.missionTypeArrayStatic = {DC_EMissionType.CRASHSITE};
+			conf.missionTypeArrayStatic = {DC_EMissionType.HUNTER};
+			conf.missionTypeArrayStatic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayStatic = {};
 		#endif
 		
 		//List of non valid areas where mission shall not spawn
 		//Eden
 		SCR_DC_NonValidArea areaE1 = new SCR_DC_NonValidArea;
-		areaE1.Set("Eden", "4780 0 11450", 1000, "Airport - for testing");
+		areaE1.Set("Eden", "4780 0 11450", 500, "Airport - for testing");
 		conf.nonValidAreas.Insert(areaE1);
 		SCR_DC_NonValidArea areaE2 = new SCR_DC_NonValidArea;
-		areaE2.Set("Eden", "9680 0 1560", 1000, "St. Pierre - for testing");
+		areaE2.Set("Eden", "9680 0 1560", 400, "St. Pierre - for testing");
 		conf.nonValidAreas.Insert(areaE2);
 		
 		//Arland

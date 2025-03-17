@@ -20,6 +20,16 @@ enum DC_MissionState
 };
 
 //------------------------------------------------------------------------------------------------
+class SCR_DC_MissionConfig : Managed
+{
+	//Default information
+	int version = 1;
+	string author = "darc";
+	int missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;	//How often the mission is run
+	bool showMarker = true;
+}
+
+//------------------------------------------------------------------------------------------------
 class SCR_DC_Mission
 {
 	//Common for all missions
@@ -265,5 +275,21 @@ class SCR_DC_Mission
 		{
 			SCR_DC_MapMarkerHelper.CreateMapMarker(GetPos(), icon, GetId(), GetTitle());
 		}
-	}		
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	int GetAICount()
+	{
+		int count = 0;
+		
+		foreach(SCR_AIGroup group: m_Groups)
+		{		
+			if(group)
+			{
+				count = count + group.GetAgentsCount();
+			}
+		}
+		
+		return count;
+	}
 }

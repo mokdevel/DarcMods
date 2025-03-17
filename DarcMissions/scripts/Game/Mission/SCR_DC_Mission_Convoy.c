@@ -244,14 +244,8 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 }
 	
 //------------------------------------------------------------------------------------------------
-class SCR_DC_ConvoyConfig : Managed
+class SCR_DC_ConvoyConfig : SCR_DC_MissionConfig
 {
-	//Default information
-	int version = 1;
-	string author = "darc";
-	int missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;	//How often the mission is run
-	bool showMarker;
-	
 	//Mission specific
 	int convoyTime;									//Time to patrol, in seconds
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.

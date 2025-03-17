@@ -105,14 +105,8 @@ class SCR_DC_Mission_Camp : SCR_DC_Mission
 }
 	
 //------------------------------------------------------------------------------------------------
-class SCR_DC_CampConfig : Managed
+class SCR_DC_CampConfig : SCR_DC_MissionConfig
 {
-	//Default information
-	int version = 1;
-	string author = "darc";
-	int missionLifeCycleTime;					//How often the mission is run
-	bool showMarker;
-	
 	//Mission specific	
 	ref array<ref SCR_DC_Camp> camps = {};
 	int campIdx;								//Which camp to use. -1 for random	

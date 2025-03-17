@@ -142,14 +142,8 @@ class SCR_DC_Mission_Chopper : SCR_DC_Mission
 }
 		
 //------------------------------------------------------------------------------------------------
-class SCR_DC_ChopperConfig : Managed
+class SCR_DC_ChopperConfig : SCR_DC_MissionConfig
 {
-	//Default information
-	int version = 1;
-	string author = "darc";
-	int missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;	//How often the mission is run
-	bool showMarker;
-	
 	//Mission specific
 	vector pos;
 	string posName;

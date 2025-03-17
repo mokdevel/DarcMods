@@ -50,7 +50,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 		int idx = SCR_DC_MissionHelper.SelectMissionIndex(m_Config.crashsiteList);
 		if(idx == -1)
 		{
-			SCR_DC_Log.Add("[SCR_DC_Mission_Occupation] No occupations defined.", LogLevel.ERROR);
+			SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] No crashsites defined.", LogLevel.ERROR);
 			SetState(DC_MissionState.EXIT);
 			return;
 		}
@@ -192,7 +192,6 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 					{
 						SCR_DC_AIHelper.SetAIGroupSkill(group, m_DC_Crashsite.AISkill, m_DC_Crashsite.AIperception);					
 						m_Groups.Insert(group);
-//						SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.SCATTERED, GetPos(), "0 0 0", DC_EWaypointMoveType.PATROLCYCLE, m_DC_Crashsite.waypointRange[0], m_DC_Crashsite.waypointRange[1]);
 						SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER);
 					}
 					SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite:MissionSpawn] AI groups spawned ", LogLevel.DEBUG);								
@@ -289,14 +288,8 @@ class SCR_DC_HelicopterInfo : Managed
 
 //------------------------------------------------------------------------------------------------
 
-class SCR_DC_CrashsiteConfig : Managed
+class SCR_DC_CrashsiteConfig : SCR_DC_MissionConfig
 {
-	//Default information
-	int version = 1;
-	string author = "darc";
-	int missionLifeCycleTime;				//How often the mission is run
-	bool showMarker;
-	
 	//Mission specific	
 	ref array<ref int> crashsiteList = {};				//The indexes of crashsites.
 	ref array<ref SCR_DC_Crashsite> crashsites = {};		//List of crashsites
@@ -305,14 +298,14 @@ class SCR_DC_CrashsiteConfig : Managed
 //------------------------------------------------------------------------------------------------
 class SCR_DC_Crashsite : Managed
 {
-	//Occupation specific
+	//Mission specific
 	string comment;							//Generic comment to describe the mission. Not used in game.
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
 	ref array<string> groupTypes = {};
 	int AISkill;
 	float AIperception
-	ref array<SCR_DC_HelicopterInfo> helicopterInfo = {};
+	ref array<ref SCR_DC_HelicopterInfo> helicopterInfo = {};
 	//Optional settings
 	ref array<ref SCR_DC_Structure> siteItems = {};
 	ref SCR_DC_Loot loot = null;	
@@ -360,9 +353,13 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
+		conf.version = 2;
+		conf.author = "lkasdi";
 		//Default		
 		conf.missionLifeCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
+		//Mission specific		
+		conf.crashsiteList = {0};
 		
 		//----------------------------------------------------
 		SCR_DC_Crashsite crashsite0 = new SCR_DC_Crashsite;
@@ -377,31 +374,17 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 			},
 			50, 1.0
 		);
+		conf.crashsites.Insert(crashsite0);
 		
 		//----------------------------------------------------
 		SCR_DC_HelicopterInfo heli0 = new SCR_DC_HelicopterInfo;
-		heli0.Set(
-			"{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
-			0.8,
-			0.8,
-			1.0
-		);
+		heli0.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et", 0.8, 0.8, 1.0);
 		crashsite0.helicopterInfo.Insert(heli0);
 		SCR_DC_HelicopterInfo heli1 = new SCR_DC_HelicopterInfo;
-		heli1.Set(
-			"{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
-			0.7,
-			0.9,
-			1.0
-		);
+		heli1.Set("{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",	0.7, 0.9, 1.0);
 		crashsite0.helicopterInfo.Insert(heli1);
 		SCR_DC_HelicopterInfo heli2 = new SCR_DC_HelicopterInfo;
-		heli2.Set(
-			"{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
-			0.8,
-			0.8,
-			-1.0
-		);
+		heli2.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.8, 0.8, -1.0);
 		crashsite0.helicopterInfo.Insert(heli2);		
 		
 		//----------------------------------------------------

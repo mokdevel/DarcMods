@@ -176,14 +176,8 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 }
 
 //------------------------------------------------------------------------------------------------
-class SCR_DC_OccupationConfig : Managed
+class SCR_DC_OccupationConfig : SCR_DC_MissionConfig
 {
-	//Default information
-	int version = 1;
-	string author = "darc";
-	int missionLifeCycleTime;								//How often the mission is run
-	bool showMarker;
-	
 	//Mission specific	
 	int emptySize = 7;										//The size (radius) of the empty space to found to decide on a mission position.
 	ref array<ref int> occupationList = {};					//The indexes of occupations.

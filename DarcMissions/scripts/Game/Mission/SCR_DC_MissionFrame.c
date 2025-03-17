@@ -290,12 +290,15 @@ class SCR_DC_MissionFrame
 	protected void MissionStatusDump()
 	{
 		int i = 0;
+		int aiCount = 0;
 		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.DEBUG);
 		foreach(SCR_DC_Mission mission : m_MissionList)
 		{
 			SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] Mission: " + i + ": " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + ", static: " + mission.IsStatic() + ") - " + mission.GetTitle() + " - " + "Time left: " + mission.GetActiveTime() + " (" + SCR_Enum.GetEnumName(DC_MissionState,  mission.GetState()) + ")", LogLevel.DEBUG);
+			aiCount = aiCount + mission.GetAICount();
 			i++;
 		}		
+		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] AI count: " + aiCount, LogLevel.DEBUG);
 		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.DEBUG);
 	}
 

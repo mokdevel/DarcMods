@@ -172,14 +172,8 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 }
 
 //------------------------------------------------------------------------------------------------
-class SCR_DC_PatrolConfig : Managed
+class SCR_DC_PatrolConfig : SCR_DC_MissionConfig
 {
-	//Default information
-	int version = 1;
-	string author = "darc";
-	int missionLifeCycleTime;						//How often the mission is run
-	bool showMarker;
-	
 	//Mission specific	
 	int patrolingTime;								//Time to patrol, in seconds
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
