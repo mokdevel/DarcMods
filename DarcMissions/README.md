@@ -10,19 +10,20 @@ A mission frame work for Arma Reforger. There are various missions premade and t
 
 # MissionFrame cycle
 ```
-----|
-    |--------------------------|--------------------------|------------------...
-    |O----o----o----o----|O------o------o-----|O---o---o---o---o---|O----o---...
+----|------------|------------|------------|------------|------------|------------|----...
+    |-------------------------|-------------------------|-------------------------|----...
+    |------------------------------|------------------------------|--------------------...
+    |O----o----o----o----o----|O------o------o-----o----|O---o---o---o---o---|O----o---...
      ^                    ^
      mission is spawned   mission is spawned
-
-    |--------------------| missionDelayBetweeen : Time between mission spawns 
-|---| missionStartDelay : Time waited before first mission is spawned
      |----| missionCycleTime : Each mission has a cycle time it's running. It may differ between mission types
-     |-------------------------| missionActiveTime : Mission is kept alive this amount of time.
-                                 Note that if a player is within missionActiveDistance, the time will reset.      
+    |------------| missionFrameCycleTime : The cycle time to manage mission spawning, deletion etc...
+    |-------------------------| missionDelayBetweeen : Time between mission spawns 
+|---| missionStartDelay : Time waited before first mission is spawned
+    |------------------------------| missionActiveTime : Mission is kept alive this amount of time.
+                                     Note that if a player is within missionActiveDistance, the time will reset.      
 ```
 
 # Thanks
-- The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3
-- [HunterKiller mod by Rabid Squirrel](https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller)
+- The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
+- [HunterKiller mod by Rabid Squirrel](https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller) for the initial kick to get into coding.
