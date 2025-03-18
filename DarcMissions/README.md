@@ -16,8 +16,8 @@ A mission frame work for Arma Reforger. There are various missions premade and t
                               |------------------------------| missionActiveTime
                                                         |------------------------------...
     |O----o----o----o----o----|O------o------o-----o----|O---o---o---o---o---|O----o---...
-     ^                    ^
-     mission is spawned   mission is spawned
+     ^                         ^                         ^
+     mission is spawned        mission is spawned        mission is spawned 
      |----| missionCycleTime : Each mission has a cycle time it's running. It may differ between mission types
     |------------| missionFrameCycleTime : The cycle time to manage mission spawning, deletion etc...
     |-------------------------| missionDelayBetweeen : Time between mission spawns 
