@@ -37,8 +37,10 @@ Just active the mod (and dependencies) and you're good to go.
 - [HunterKiller mod by Rabid Squirrel](https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller) for the initial kick to get into coding.
 
 # Configuration parameters
-For examples of configuration files see [ExampleConfigs](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions/ExampleConfigs)
-The configuration files will be under your profile\DarcMods_conf\*.
+For examples of configuration files see [ExampleConfigs](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions/ExampleConfigs).
+
+The configuration files will be under your ```profile\DarcMods_conf\*```.
+
 ## MissionFrame 	
 ```
 int version : Version number of the file.
