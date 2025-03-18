@@ -117,7 +117,9 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
+				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
+				"{3805C0B87B9D2AB0}prefabs/weapons/Melee/Knife.et",							//From Functional Knives
+				"{CB716A41903571AD}prefabs/weapons/Melee/Knife_US.et"						//From Functional Knives
 			},
 			0.9
 		);
@@ -153,7 +155,9 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
+				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
+				"{3805C0B87B9D2AB0}prefabs/weapons/Melee/Knife.et",							//From Functional Knives
+				"{CB716A41903571AD}prefabs/weapons/Melee/Knife_US.et"						//From Functional Knives
 			},
 			0.9
 		);
@@ -186,7 +190,9 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
+				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
+				"{3805C0B87B9D2AB0}prefabs/weapons/Melee/Knife.et",							//From Functional Knives
+				"{CB716A41903571AD}prefabs/weapons/Melee/Knife_US.et"						//From Functional Knives
 			},
 			0.7
 		);

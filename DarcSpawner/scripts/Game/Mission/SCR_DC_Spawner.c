@@ -64,16 +64,13 @@ class SCR_DC_Spawner
 						
 		//Find a locations
 		SCR_DC_Locations.GetLocations(m_Locations, m_Config.spawnSets[m_spawnSetID].locationTypes);
-		
-		#ifndef SCR_DC_RELEASE		
-			foreach(MapItem loc : m_Locations)
-			{
-				if (loc) 
-				{
-					SCR_DC_DebugHelper.AddDebugPos(loc);
-				}
-			}
-		#endif
+
+		//Check if RoadNetworkManager is available. 		
+		if (!SCR_DC_RoadHelper.GetRoadNetworkManager())
+		{
+			m_Config.spawnOnRoad = false;
+			SCR_DC_Log.Add("[SCR_DC_Spawner] RoadNetworkManager not defined. Vehicles will not be spawned on roads.", LogLevel.ERROR);
+		}
 	}
 
 	void ~SCR_DC_Spawner()
@@ -114,14 +111,13 @@ class SCR_DC_Spawner
 		IEntity entity;
 
 		//Spawn entities one by one.
-		MapItem location = m_Locations.GetRandomElement();		
-		
-		vector pos = "0 0 0";
+		MapItem location = m_Locations.GetRandomElement();
+		vector pos = location.GetPos();
 		
 		if(m_Config.spawnOnRoad)
 		{
 			SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
-			pos = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, location.GetPos());
+			pos = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
 		}
 		else
 		{
@@ -156,5 +152,10 @@ class SCR_DC_Spawner
 				SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Could not spawn: " + entityToSpawn, LogLevel.ERROR);	
 			}
 		}
+		/*
+		else
+		{
+			SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Position in water.", LogLevel.ERROR);	
+		}*/
 	}
 }

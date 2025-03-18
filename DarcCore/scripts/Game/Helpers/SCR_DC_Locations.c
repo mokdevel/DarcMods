@@ -107,6 +107,14 @@ sealed class SCR_DC_Locations
 				SCR_DC_Log.Add( string.Format("[SCR_DC_Locations:ShowDebugInfo] Found %1 slots.", 
 					slotcount,
 					), LogLevel.SPAM);
+				
+				if(SCR_DC_Conf.SHOW_MARKER_FOR_LOCATION)
+				{
+					if (location) 
+					{
+						SCR_DC_DebugHelper.AddDebugPos(location);
+					}
+				}
 			}
 		}
 	}

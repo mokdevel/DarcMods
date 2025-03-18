@@ -100,12 +100,14 @@ sealed class SCR_DC_RoadHelper
 		BaseRoad road = null;
 		array<vector> roadPts = {};
 			
-		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
+		RoadNetworkManager rnManager = GetRoadNetworkManager();
+		
+/*		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
 		RoadNetworkManager rnManager = null;
 		if (aiWorld)
 		{
 			rnManager = aiWorld.GetRoadNetworkManager();
-		}
+		}*/
 		
 		if (rnManager)
 		{
@@ -145,13 +147,14 @@ sealed class SCR_DC_RoadHelper
 	static BaseRoad FindClosestRoad(vector pos, float maxDistanceToRoad = 10000)
 	{
 		BaseRoad road = null;
+		RoadNetworkManager rnManager = GetRoadNetworkManager();
 	
-		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
+/*		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
 		RoadNetworkManager rnManager = null;
 		if (aiWorld)
 		{
 			rnManager = aiWorld.GetRoadNetworkManager();
-		}
+		}*/
 		
 		if (rnManager)
 		{
@@ -243,7 +246,29 @@ sealed class SCR_DC_RoadHelper
 
 		return null;
 	}	
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find RoadNetworkManager from world
+	*/	
+	static RoadNetworkManager GetRoadNetworkManager()
+	{
+		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
+		RoadNetworkManager rnManager = null;
+		if (!aiWorld)
+		{
+			return null;
+		}	
+		
+		rnManager = aiWorld.GetRoadNetworkManager();
+		if(!rnManager)
+		{
+			return null;
+		}
+		
+		return rnManager;
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	/*!
 	DEBUG: Road segment testing

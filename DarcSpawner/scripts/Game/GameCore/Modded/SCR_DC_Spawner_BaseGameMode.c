@@ -19,7 +19,7 @@ modded class SCR_BaseGameMode
 		if(IsMaster())
 		{
 			SCR_DC_Log.Add("[SCR_DC_Spawner_BaseGameMode:IsMaster] OnGameStart", LogLevel.NORMAL);        
-			GetGame().GetCallqueue().CallLater(StartSpawner, 10000, false);	
+			GetGame().GetCallqueue().CallLater(StartSpawner, 15000, false);	
 		}
 		else 
 		{
