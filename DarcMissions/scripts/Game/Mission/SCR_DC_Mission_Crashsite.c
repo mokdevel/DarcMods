@@ -373,20 +373,20 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 				"{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et",
 				//"{58251EDC277CE499}622120A5448725E3/Prefabs/Groups/Group_Zombies_USSR.et"
 			},
-			50, 1.0
+			20, 0.8
 		);
 		conf.crashsites.Insert(crashsite0);
 		
 		//----------------------------------------------------
 		SCR_DC_HelicopterInfo heli0 = new SCR_DC_HelicopterInfo;
-		heli0.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et", 0.8, 0.8, 1.0);
-		crashsite0.helicopterInfo.Insert(heli0);
+			heli0.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et", 0.8, 0.8, 1.0);
+			crashsite0.helicopterInfo.Insert(heli0);
 		SCR_DC_HelicopterInfo heli1 = new SCR_DC_HelicopterInfo;
-		heli1.Set("{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",	0.7, 0.9, 1.0);
-		crashsite0.helicopterInfo.Insert(heli1);
+			heli1.Set("{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",	0.7, 0.9, 1.0);
+			crashsite0.helicopterInfo.Insert(heli1);
 		SCR_DC_HelicopterInfo heli2 = new SCR_DC_HelicopterInfo;
-		heli2.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.8, 0.8, -1.0);
-		crashsite0.helicopterInfo.Insert(heli2);		
+			heli2.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.8, 0.8, -1.0);
+			crashsite0.helicopterInfo.Insert(heli2);		
 		
 		//----------------------------------------------------
 		SCR_DC_Structure crashitem0 = new SCR_DC_Structure;

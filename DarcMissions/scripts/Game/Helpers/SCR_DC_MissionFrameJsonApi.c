@@ -4,12 +4,33 @@
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J , convert to readable format - press Ctrl+Alt+Shift+M
 
 	#ifdef SCR_DC_RELEASE
-		const int DC_MISSION_CYCLE_TIME_DEFAULT = 30;
+		private const int DC_MISSION_COUNT = 8;											//Default amount of missions to run
+		private const int DC_MISSION_CYCLE_TIME_DEFAULT = 30;
+		private const int DC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
+		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 2*60;						//Minimum delay between missions.
+		private const int DC_MISSION_ACTIVE_TIME = 15*60;								//Time to keep the mission active (seconds)
+		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 3;	//Static missions are to be kept alive much longer
+		private const int DC_MISSION_ACTIVE_DISTANCE = 300;								//Mission is to be removed if no players close to the position after the mission active time has passed.
+		private const int DC_MISSIONFRAME_CYCLE_TIME = 60;								//The cycle to run the mission frame. 
+		private const int DC_MISSIONFRAME_CYCLE_TIME_LIMIT = 20;						//You should not be running the frame too often as it's unncecessary
+		private const bool DC_MISSION_RECREATE_CONFIGS = true;							//Force recreaction of config files. 
+		private const int DC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
 	#endif
 	
 	#ifndef SCR_DC_RELEASE	//Development time options
-		const int DC_MISSION_CYCLE_TIME_DEFAULT = 10;
+		private const int DC_MISSION_COUNT = 8;
+		private const int DC_MISSION_CYCLE_TIME_DEFAULT = 10;
+		private const int DC_MISSION_START_DELAY = 5;					
+		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*10;
+		private const int DC_MISSION_ACTIVE_TIME = 2*60;				
+		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 2;	
+		private const int DC_MISSION_ACTIVE_DISTANCE = 200;		
+		private const int DC_MISSIONFRAME_CYCLE_TIME = 20;
+		private const int DC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
+		private const bool DC_MISSION_RECREATE_CONFIGS = false;
+		private const int DC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
 	#endif
+
 
 //------------------------------------------------------------------------------------------------
 class SCR_DC_MissionFrameConfig : Managed
@@ -54,32 +75,6 @@ class SCR_DC_NonValidArea : Managed
 class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 {
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig.json";
-	
-	#ifdef SCR_DC_RELEASE
-		private const int DC_MISSION_COUNT = 6;											//Default amount of missions to run
-		private const int DC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
-		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*60;						//Minimum delay between missions.
-		private const int DC_MISSION_ACTIVE_TIME = 10*60;								//Time to keep the mission active (seconds)
-		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 3;	//Static missions are to be kept alive much longer
-		private const int DC_MISSION_ACTIVE_DISTANCE = 300;								//Mission is to be removed if no players close to the position after the mission active time has passed.
-		private const int DC_MISSIONFRAME_CYCLE_TIME = 60;								//The cycle to run the mission frame. 
-		private const int DC_MISSIONFRAME_CYCLE_TIME_LIMIT = 20;						//You should not be running the frame too often as it's unncecessary
-		private const bool DC_MISSION_RECREATE_CONFIGS = true;							//Force recreaction of config files. 
-		private const int DC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
-	#endif
-	
-	#ifndef SCR_DC_RELEASE	//Development time options
-		private const int DC_MISSION_COUNT = 8;
-		private const int DC_MISSION_START_DELAY = 5;					
-		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*10;
-		private const int DC_MISSION_ACTIVE_TIME = 2*60;				
-		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 2;	
-		private const int DC_MISSION_ACTIVE_DISTANCE = 200;		
-		private const int DC_MISSIONFRAME_CYCLE_TIME = 20;
-		private const int DC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
-		private const bool DC_MISSION_RECREATE_CONFIGS = true;
-		private const int DC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
-	#endif
 		
 	ref SCR_DC_MissionFrameConfig conf = new SCR_DC_MissionFrameConfig;
 
@@ -132,7 +127,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		
 		#ifdef SCR_DC_RELEASE
 			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.CONVOY, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
+			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL};
 		#endif	
 
 		#ifndef SCR_DC_RELEASE				

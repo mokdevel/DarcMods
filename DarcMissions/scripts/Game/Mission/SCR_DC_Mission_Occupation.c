@@ -262,7 +262,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {0,0,0,1,1,1,2};
+		conf.occupationList = {0,0,1,1,2};
 
 		//----------------------------------------------------
 		SCR_DC_Occupation occupation0 = new SCR_DC_Occupation;

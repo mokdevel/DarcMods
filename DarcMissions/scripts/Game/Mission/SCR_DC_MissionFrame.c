@@ -286,15 +286,15 @@ class SCR_DC_MissionFrame
 	{
 		int i = 0;
 		int aiCount = 0;
-		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.DEBUG);
+		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.NORMAL);
 		foreach(SCR_DC_Mission mission : m_MissionList)
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] Mission: " + i + ": " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + ", static: " + mission.IsStatic() + ") - " + mission.GetTitle() + " - " + "Time left: " + mission.GetActiveTime() + " (" + SCR_Enum.GetEnumName(DC_MissionState,  mission.GetState()) + ")", LogLevel.DEBUG);
+			SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] Mission: " + i + ": " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + ", static: " + mission.IsStatic() + ") - " + mission.GetTitle() + " - " + "Time left: " + mission.GetActiveTime() + " (" + SCR_Enum.GetEnumName(DC_MissionState,  mission.GetState()) + ")", LogLevel.NORMAL);
 			aiCount = aiCount + mission.GetAICount();
 			i++;
 		}		
-		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] AI count: " + aiCount, LogLevel.DEBUG);
-		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.DEBUG);
+		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] AI count: " + aiCount, LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.NORMAL);
 	}
 
 	//------------------------------------------------------------------------------------------------
