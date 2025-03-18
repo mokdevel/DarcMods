@@ -50,7 +50,7 @@ class SCR_DC_Spawner
 		{
 			m_spawnSetID = Math.RandomInt(0, m_Config.spawnSets.Count() - 1);
 		}		
-		SCR_DC_Log.Add("[SCR_DC_Spawner] Using spawnSet: " + m_spawnSetID, LogLevel.DEBUG);
+		SCR_DC_Log.Add("[SCR_DC_Spawner] Using spawnSet: " + m_spawnSetID, LogLevel.NORMAL);
 
 		//Max amount of spawnNames to spawn
 		m_spawnCount = m_Config.spawnSets[m_spawnSetID].spawnCount;

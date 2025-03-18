@@ -52,16 +52,14 @@ class SCR_DC_MissionFrame
 		//Check if a request to create new logs has been made		
 		if (m_Config.recreateConfigs)
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame] !!!!!!!!!!!!!!!!!!!!!.....Creating default configs.....!!!!!!!!!!!!!!!!!!!!!!", LogLevel.NORMAL);
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame] Existing ones will not be over written.", LogLevel.NORMAL);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame] !!!!!!!!!!!!!!.....Creating default configs.....!!!!!!!!!!!!!", LogLevel.WARNING);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame] Existing ones will not be over written.", LogLevel.WARNING);
 			CreateAllConfigs();
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame] Changing recreateConfigs to false and saving the config.", LogLevel.NORMAL);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame] Changing recreateConfigs to false and saving the config.", LogLevel.WARNING);
 			m_Config.recreateConfigs = false;
 			m_DC_MissionFrameJsonApi.Save("");
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame] !!!!!!!!!!!!!!!!!!!!! Configs created. Please restart. !!!!!!!!!!!!!!!!!!!!!!", LogLevel.NORMAL);
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame] DarcMissions not running. Please restart.", LogLevel.ERROR);
-			
-			return;
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame] !!!!!!!!!!!!!!!!!!!!! Configs created. !!!!!!!!!!!!!!!!!!!!!!", LogLevel.WARNING
+			);
 		}
 		
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldname: " + m_WorldName, LogLevel.NORMAL);
@@ -216,11 +214,7 @@ class SCR_DC_MissionFrame
 			}			
 		}		
 		
-		if (SCR_DC_Log.GetLogLevel() < LogLevel.NORMAL)
-		{
-			MissionStatusDump();
-		}
-
+		MissionStatusDump();
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Active missions: " + m_MissionList.Count() + "/" + m_Config.missionCount + ". Delay for next mission: " + getMissionDelayWait() + " seconds.", LogLevel.NORMAL);
 		
 		if (SCR_DC_Conf.SHOW_VALID_MISSION_AREAS)
@@ -359,20 +353,26 @@ class SCR_DC_MissionFrame
 	{		
 		SCR_DC_CampJsonApi campJsonApi = new SCR_DC_CampJsonApi();	
 		campJsonApi.Load();
-
+		delete campJsonApi;
+		
 		SCR_DC_ConvoyJsonApi convoyJsonApi = new SCR_DC_ConvoyJsonApi();	
 		convoyJsonApi.Load();
-
+		delete convoyJsonApi;
+		
 		SCR_DC_CrashsiteJsonApi crashsiteJsonApi = new SCR_DC_CrashsiteJsonApi();	
 		crashsiteJsonApi.Load();		
-
+		delete crashsiteJsonApi;
+		
 		SCR_DC_HunterJsonApi hunterJsonApi = new SCR_DC_HunterJsonApi();				
 		hunterJsonApi.Load();								
+		delete hunterJsonApi;
 		
 		SCR_DC_OccupationJsonApi occupationJsonApi = new SCR_DC_OccupationJsonApi;	
 		occupationJsonApi.Load();		
-
+		delete occupationJsonApi;
+		
 		SCR_DC_PatrolJsonApi patrolJsonApi = new SCR_DC_PatrolJsonApi;	
-		patrolJsonApi.Load();						
+		patrolJsonApi.Load();
+		delete patrolJsonApi;
 	}	
 }

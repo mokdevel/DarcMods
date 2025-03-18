@@ -77,7 +77,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		private const int DC_MISSION_ACTIVE_DISTANCE = 200;		
 		private const int DC_MISSIONFRAME_CYCLE_TIME = 20;
 		private const int DC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
-		private const bool DC_MISSION_RECREATE_CONFIGS = false;
+		private const bool DC_MISSION_RECREATE_CONFIGS = true;
 		private const int DC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
 	#endif
 		
@@ -143,7 +143,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CONVOY};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.PATROL};		
-			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CHOPPER};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
 			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};

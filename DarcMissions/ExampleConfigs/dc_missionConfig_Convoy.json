@@ -1,0 +1,70 @@
+{
+	"version": 1,
+	"author": "darc",
+	"missionCycleTime": 30,
+	"showMarker": true,
+	"showHint": true,
+	"convoyTime": 0,
+	"distanceToPlayer": 500,
+	"convoyList": [
+		0
+	],
+	"convoys": [
+		{
+			"comment": "Convoy driving from .. to ..",
+			"posStart": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posDestination": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"locationName": "any",
+			"title": "Convoy is on the move.",
+			"info": "Leaked travel plans show a route from ",
+			"locationTypes": [
+				59,
+				59,
+				59,
+				59,
+				60,
+				71,
+				64,
+				70,
+				26,
+				75,
+				81
+			],
+			"waypointGenType": 4,
+			"vehicleTypes": [
+				"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
+				"{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et",
+				"{D4855501D5B12AF2}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_teal.et"
+			],
+			"groupTypes": [
+				"{5B08C42EA0661A20}Prefabs/Groups/OPFOR/KLMK/Group_USSR_LightFireTeam_KLMK.et",
+				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
+				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+			],
+			"AISkill": 50,
+			"AIperception": 1.0,
+			"loot": {
+				"box": null,
+				"itemChance": 0.8999999761581421,
+				"items": [
+					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+					"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
+					"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
+					"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
+					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
+					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
+				]
+			}
+		}
+	]
+}

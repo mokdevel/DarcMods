@@ -20,7 +20,6 @@ sealed class SCR_DC_SpawnHelper
 	\param emptyPosRadius How far from the center the spawned position can be. If set to -1, spawns to exact position
 	\param snap Snap the object to ground when spawning
 	*/
-//	static IEntity SpawnItem(vector pos, string resourceName, float rotation, float emptyPosRadius)
 	static IEntity SpawnItem(vector pos, string resourceName, float rotation = 0, float emptyPosRadius = EMPTY_POS_RADIUS, bool snap = true)
 	{
 		IEntity entity = NULL;
