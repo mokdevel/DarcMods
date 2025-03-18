@@ -65,13 +65,15 @@ class SCR_DC_Spawner
 		//Find a locations
 		SCR_DC_Locations.GetLocations(m_Locations, m_Config.spawnSets[m_spawnSetID].locationTypes);
 		
-		foreach(MapItem loc : m_Locations)
-		{
-			if (loc) 
+		#ifndef SCR_DC_RELEASE		
+			foreach(MapItem loc : m_Locations)
 			{
-				SCR_DC_DebugHelper.AddDebugPos(loc);
+				if (loc) 
+				{
+					SCR_DC_DebugHelper.AddDebugPos(loc);
+				}
 			}
-		}		
+		#endif
 	}
 
 	void ~SCR_DC_Spawner()
@@ -113,26 +115,46 @@ class SCR_DC_Spawner
 
 		//Spawn entities one by one.
 		MapItem location = m_Locations.GetRandomElement();		
-//		string entityToSpawn = m_Config.spawnSets[m_spawnSetID].spawnNames[m_spawnIdx];
-		string entityToSpawn = m_Config.spawnSets[m_spawnSetID].spawnNames.GetRandomElement();
 		
-		SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Spawning " + entityToSpawn + " to " + SCR_StringHelper.Translate(location.Entity().GetName()), LogLevel.NORMAL);				
+		vector pos = "0 0 0";
 		
-		float rotation = Math.RandomFloat(0, 360);
-				
-		entity = SCR_DC_SpawnHelper.SpawnItem(SCR_DC_Misc.RandomizePos(location.Entity().GetOrigin(), m_Config.spawnRndRadius), entityToSpawn, rotation);
-			
-		if (entity != NULL)
-		{ 
-			m_EntityList.Insert(entity);
-			SCR_DC_DebugHelper.AddDebugPos(entity, Color.VIOLET);
-			
-			SCR_DC_LootHelper.SpawnItemsToStorage(entity, m_Config.spawnSets[m_spawnSetID].itemNames, m_Config.spawnSets[m_spawnSetID].itemChance);			
-			SCR_DC_MapMarkerHelper.CreateMapMarker(entity.GetOrigin(), DC_EMissionIcon.REDCROSS_SMALL, "", "");
+		if(m_Config.spawnOnRoad)
+		{
+			SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
+			pos = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, location.GetPos());
 		}
 		else
 		{
-			SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Could not spawn: " + entityToSpawn, LogLevel.ERROR);	
+			pos = SCR_DC_Misc.RandomizePos(pos, m_Config.spawnRndRadius);
+		}
+		
+		if(!SCR_DC_Misc.IsPosInWater(pos))
+		{		
+			string entityToSpawn = m_Config.spawnSets[m_spawnSetID].spawnNames.GetRandomElement();		
+			SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Spawning " + entityToSpawn + " to " + SCR_StringHelper.Translate(location.Entity().GetName()), LogLevel.NORMAL);				
+			
+			float rotation = Math.RandomFloat(0, 360);
+			if (m_Config.spawnOnRoad)
+			{
+				entity = SCR_DC_SpawnHelper.SpawnItem(pos, entityToSpawn, rotation, -1);
+			}
+			else
+			{
+				entity = SCR_DC_SpawnHelper.SpawnItem(pos, entityToSpawn, rotation);
+			}
+			
+			if (entity != NULL)
+			{ 
+				m_EntityList.Insert(entity);
+				SCR_DC_DebugHelper.AddDebugPos(entity, Color.VIOLET);
+				
+				SCR_DC_LootHelper.SpawnItemsToStorage(entity, m_Config.spawnSets[m_spawnSetID].itemNames, m_Config.spawnSets[m_spawnSetID].itemChance);			
+				SCR_DC_MapMarkerHelper.CreateMapMarker(entity.GetOrigin(), DC_EMissionIcon.REDCROSS_SMALL, "", "");
+			}
+			else
+			{
+				SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Could not spawn: " + entityToSpawn, LogLevel.ERROR);	
+			}
 		}
 	}
 }

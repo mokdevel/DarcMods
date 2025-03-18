@@ -92,9 +92,10 @@ sealed class SCR_DC_Misc
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Returns the world name being played.
+	\param filterGM Shall we remove GM_ from the worldname (GM_Arland -> Arland)
 	Example: "path/to/worldfile/Arland.ent" will return "Arland"
 	*/	
-	static string GetWorldName()
+	static string GetWorldName(bool filterGM = false)
 	{
 		string worldName = "Unknown";
 
@@ -102,6 +103,11 @@ sealed class SCR_DC_Misc
 		//The name is "path/to/worldfile/Arland.ent". Find the last slash, add one to it and cut the ".ent" from the end.
 		int lastslash = worldName.LastIndexOf("/") + 1;
 		worldName = worldName.Substring(lastslash, worldName.Length() - lastslash - 4);
+		
+		if(worldName.StartsWith("GM_"))
+		{
+			worldName.Replace("GM_", "");
+		}
 		
 		return worldName;
 	}	

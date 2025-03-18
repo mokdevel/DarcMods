@@ -132,10 +132,6 @@ sealed class SCR_DC_RoadHelper
 				return "0 0 0";
 			}
 		}
-		else
-		{
-			int x = 0;
-		}
 		
 		return "0 0 0";
 	}

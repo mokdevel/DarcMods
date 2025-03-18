@@ -17,11 +17,11 @@ class SCR_DC_DebugEntity: GenericEntity
 
 	override void EOnActivate(IEntity owner)
 	{
-		SCR_DC_Log.Add("[SCR_DC_DebugEntity] Starting..", LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_DebugEntity] Starting SCR_DC_DebugEntity", LogLevel.NORMAL);
 		SCR_DC_DebugHelper.Setup();
 		SetEventMask(EntityEvent.FRAME | EntityEvent.POSTFRAME);
         SetFlags(EntityFlags.ACTIVE, true);
-		SCR_DC_Log.Add("[SCR_DC_DebugEntity] Running", LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_DebugEntity] Running", LogLevel.DEBUG);
 	}
 
 	//------------------------------------------------------------------------------------------------

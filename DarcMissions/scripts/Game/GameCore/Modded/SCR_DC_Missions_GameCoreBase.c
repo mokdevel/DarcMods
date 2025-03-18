@@ -34,6 +34,7 @@ modded class SCR_BaseGameMode
 	}
 			
 	//------------------------------------------------------------------------------------------------
+	//TBD: Should use OnPlayerSpawnFinalize_S
 	override void OnPlayerSpawned(int playerId, IEntity controlledEntity)	
 	{
 		super.OnPlayerSpawned(playerId, controlledEntity);

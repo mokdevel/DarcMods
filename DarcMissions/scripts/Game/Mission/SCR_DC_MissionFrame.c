@@ -37,7 +37,7 @@ class SCR_DC_MissionFrame
 	void SCR_DC_MissionFrame()
 	{
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Starting SCR_DC_MissionFrame", LogLevel.NORMAL);
-		m_WorldName = SCR_DC_Misc.GetWorldName();
+		m_WorldName = SCR_DC_Misc.GetWorldName(true);
 
 		//Load configuration from file		
 		m_DC_MissionFrameJsonApi.Load();
@@ -64,7 +64,7 @@ class SCR_DC_MissionFrame
 			return;
 		}
 		
-		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldname: " + m_WorldName, LogLevel.DEBUG);
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldname: " + m_WorldName, LogLevel.NORMAL);
 		
 		//Pick nonValidAreas for the current world
 		foreach(SCR_DC_NonValidArea nonValidArea : m_Config.nonValidAreas)

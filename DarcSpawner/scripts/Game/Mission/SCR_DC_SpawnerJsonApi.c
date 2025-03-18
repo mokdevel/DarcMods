@@ -11,6 +11,7 @@ class SCR_DC_SpawnerConfig : Managed
 	string author = "darc";
 	//Spawner specific
 	int spawnSetID;						//-1 = random, other numbers are the index of spawnSet
+	bool spawnOnRoad;					//Spawn the cars on road
 	int spawnRndRadius;					//Random radius where the spawnName spawns. 
 	float spawnWorldSizeMultiplier;		//If spawnCount = 0, we search for the world size and multiple with this. 
 										//For example: 4km wide map with spawnWorldSizeMultiplier = 2 results in spawnCount = 8 (4*2)
@@ -79,7 +80,8 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 	void SetDefaults()
 	{
 		conf.spawnSetID = 0;
-		conf.spawnRndRadius = 200;
+		conf.spawnOnRoad = true;
+		conf.spawnRndRadius = 100;
 		conf.spawnWorldSizeMultiplier = 2;
 		
 		//Different spawner confs
