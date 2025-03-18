@@ -11,6 +11,9 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - Crashsite : A helicopter carrying loot is damaged and is going to crash. Survivors will be protecting the wreck while waiting to be rescued.
 - Occupation : A location is guarded by AIs with loot available. 
 
+## Installation
+Just active the mod (and dependencies) and you're good to go.
+
 # MissionFrame cycle
 ```
 ----|------------|------------|------------|------------|------------|------------|----...
@@ -35,6 +38,7 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 
 # Configuration parameters
 For examples of configuration files see [ExampleConfigs](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions/ExampleConfigs)
+The configuration files will be under your profile\DarcMods_conf\*.
 ## MissionFrame 	
 ```
 int version : Version number of the file.
