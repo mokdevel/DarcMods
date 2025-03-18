@@ -96,6 +96,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 			SetTitle(m_DC_Convoy.title);
 			SetInfo(m_DC_Convoy.info + "" + GetPosName() + " to " + SCR_DC_Locations.CreateName(locationDestination, posName));			
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+			SetShowHint(m_Config.showHint);			
 			SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 			
 			SetState(DC_MissionState.INIT);
@@ -324,7 +325,7 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 		array<string> lootItems = {};
 		
 		//Default
-		conf.missionCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
+		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific
 		conf.convoyList = {0};

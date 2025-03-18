@@ -69,7 +69,8 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 			SetTitle("Hunters");
 			SetInfo("They are coming for you...");
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
-	
+			SetShowHint(m_Config.showHint);
+
 			SetState(DC_MissionState.INIT);
 		}
 		else
@@ -290,7 +291,7 @@ class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 	void SetDefaults()
 	{
 		//Default
-		conf.missionCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
+		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
 		conf.showMarker = true;
 		//Mission specific
 		conf.groupCount = {1, 2};			//min, max		

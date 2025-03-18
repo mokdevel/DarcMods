@@ -26,6 +26,7 @@ class SCR_DC_Mission_Template : SCR_DC_Mission
 		SetTitle(m_Config.title);
 		SetInfo(m_Config.info);
 		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+		SetShowHint(m_Config.showHint);
 
 		SetState(DC_MissionState.INIT);			
 	}	
@@ -125,7 +126,7 @@ class SCR_DC_TemplateJsonApi : SCR_DC_JsonApi
 	void SetDefaults()
 	{
 		//Default
-		conf.missionCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
+		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;		
 		//Mission specific		
 		conf.pos = "0 0 0";

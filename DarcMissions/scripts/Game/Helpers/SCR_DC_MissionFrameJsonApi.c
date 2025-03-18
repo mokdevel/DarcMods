@@ -4,11 +4,11 @@
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J , convert to readable format - press Ctrl+Alt+Shift+M
 
 	#ifdef SCR_DC_RELEASE
-		const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 30;
+		const int DC_MISSION_CYCLE_TIME_DEFAULT = 30;
 	#endif
 	
 	#ifndef SCR_DC_RELEASE	//Development time options
-		const int DC_MISSION_LIFECYCLE_TIME_DEFAULT = 10;
+		const int DC_MISSION_CYCLE_TIME_DEFAULT = 10;
 	#endif
 
 //------------------------------------------------------------------------------------------------
@@ -57,13 +57,13 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 	
 	#ifdef SCR_DC_RELEASE
 		private const int DC_MISSION_COUNT = 6;											//Default amount of missions to run
-		private const int DC_MISSION_START_DELAY = 2*60;								//Time to wait before spawning the first mission (seconds)
-		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 5*60;						//Minimum delay between missions.
+		private const int DC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
+		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*60;						//Minimum delay between missions.
 		private const int DC_MISSION_ACTIVE_TIME = 10*60;								//Time to keep the mission active (seconds)
 		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 3;	//Static missions are to be kept alive much longer
 		private const int DC_MISSION_ACTIVE_DISTANCE = 300;								//Mission is to be removed if no players close to the position after the mission active time has passed.
-		private const int DC_MISSIONFRAME_LIFECYCLE_TIME = 60;							//The cycle to run the mission frame. 
-		private const int DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT = 20;					//You should not be running the frame too often as it's unncecessary
+		private const int DC_MISSIONFRAME_CYCLE_TIME = 60;								//The cycle to run the mission frame. 
+		private const int DC_MISSIONFRAME_CYCLE_TIME_LIMIT = 20;						//You should not be running the frame too often as it's unncecessary
 		private const bool DC_MISSION_RECREATE_CONFIGS = true;							//Force recreaction of config files. 
 		private const int DC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
 	#endif
@@ -75,8 +75,8 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		private const int DC_MISSION_ACTIVE_TIME = 2*60;				
 		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 2;	
 		private const int DC_MISSION_ACTIVE_DISTANCE = 200;		
-		private const int DC_MISSIONFRAME_LIFECYCLE_TIME = 20;
-		private const int DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT = 10;
+		private const int DC_MISSIONFRAME_CYCLE_TIME = 20;
+		private const int DC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
 		private const bool DC_MISSION_RECREATE_CONFIGS = false;
 		private const int DC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
 	#endif
@@ -101,9 +101,9 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		
 		loadContext.ReadValue("", conf);
 
-		if (conf.missionFrameCycleTime < DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT)
+		if (conf.missionFrameCycleTime < DC_MISSIONFRAME_CYCLE_TIME_LIMIT)
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionFrameConfig] missionFrameCycleTime is less than " + DC_MISSIONFRAME_LIFECYCLE_TIME_LIMIT + ". This could lead to performance issues.", LogLevel.WARNING);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrameConfig] missionFrameCycleTime is less than " + DC_MISSIONFRAME_CYCLE_TIME_LIMIT + ". This could lead to performance issues.", LogLevel.WARNING);
 		}
 	}	
 
@@ -122,7 +122,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		conf.missionStartDelay = DC_MISSION_START_DELAY;
 		conf.missionDelayBetweeen = DC_MISSION_DELAY_BETWEEN_MISSIONS;
 		conf.missionCount = DC_MISSION_COUNT;
-		conf.missionFrameCycleTime = DC_MISSIONFRAME_LIFECYCLE_TIME;
+		conf.missionFrameCycleTime = DC_MISSIONFRAME_CYCLE_TIME;
 		conf.missionActiveTime = DC_MISSION_ACTIVE_TIME;
 		conf.missionActiveTimeStatic = DC_MISSION_ACTIVE_TIME_STATIC;
 		conf.missionActiveDistance = DC_MISSION_ACTIVE_DISTANCE;
@@ -131,7 +131,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		conf.minDistanceToPlayer = 100;
 		
 		#ifdef SCR_DC_RELEASE
-			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
+			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.CONVOY, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
 			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
 		#endif	
 

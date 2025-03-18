@@ -63,23 +63,21 @@ sealed class SCR_DC_DebugHelper
 	*/
 	static void OnFrame(IEntity owner)
 	{	
-		#ifndef SCR_DC_RELEASE
-			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_WAYPOINTS))
-			{
-				SCR_DC_DebugHelper.DrawWaypointShapes();
-				SCR_DC_DebugHelper.DrawWaypointLines();
-			}
-			
-			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
-			{		
-				SCR_DC_DebugHelper.DrawMarks();
-			}
-			
-			if (m_DebugSlots)
-			{			
-				SCR_DC_DebugHelper.DrawSlots();	
-			}
-		#endif
+		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_WAYPOINTS))
+		{
+			SCR_DC_DebugHelper.DrawWaypointShapes();
+			SCR_DC_DebugHelper.DrawWaypointLines();
+		}
+		
+		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
+		{		
+			SCR_DC_DebugHelper.DrawMarks();
+		}
+		
+		if (m_DebugSlots)
+		{			
+			SCR_DC_DebugHelper.DrawSlots();	
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -243,7 +241,8 @@ sealed class SCR_DC_DebugHelper
 	
 	static void AddDebugPos(vector pos, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300)
 	{
-		#ifndef SCR_DC_RELEASE
+		if(DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
+		{
 			SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
 			pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + (height/2);
 			dpos.pos = pos;
@@ -252,7 +251,7 @@ sealed class SCR_DC_DebugHelper
 			dpos.id = id;
 			dpos.height = height;
 			m_Pos.Insert(dpos);
-		#endif
+		}
 	}				
 	
 	//------------------------------------------------------------------------------------------------

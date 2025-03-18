@@ -91,6 +91,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 			SetTitle(m_DC_Crashsite.title);
 			SetInfo(m_DC_Crashsite.info);
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.TARGET_X);
+			SetShowHint(m_Config.showHint);
 	
 			SetState(DC_MissionState.INIT);			
 
@@ -356,7 +357,7 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 		conf.version = 2;
 		conf.author = "lkasdi";
 		//Default		
-		conf.missionCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
+		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
 		conf.crashsiteList = {0};

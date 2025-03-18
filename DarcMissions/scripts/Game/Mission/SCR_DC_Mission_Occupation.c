@@ -72,6 +72,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 			SetTitle(m_DC_Occupation.title + "" + GetPosName());
 			SetInfo(m_DC_Occupation.info);			
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+			SetShowHint(m_Config.showHint);
 
 			SCR_DC_SpawnHelper.SetStructuresToOrigo(m_DC_Occupation.campItems);
 				
@@ -258,7 +259,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		array<string> lootItems = {};
 		
 		//Default		
-		conf.missionCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
+		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
 		conf.occupationList = {0,0,0,1,1,1,2};

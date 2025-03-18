@@ -66,9 +66,6 @@ class SCR_DC_MissionFrame
 		
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldname: " + m_WorldName, LogLevel.DEBUG);
 		
-		//Fix seconds to ms
-		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;
-		
 		//Pick nonValidAreas for the current world
 		foreach(SCR_DC_NonValidArea nonValidArea : m_Config.nonValidAreas)
 		{
@@ -78,7 +75,11 @@ class SCR_DC_MissionFrame
 				SCR_DC_DebugHelper.AddDebugPos(nonValidArea.pos, Color.BLACK, nonValidArea.radius);
 			}
 		}
-		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas defined: " + m_NonValidAreas.Count(), LogLevel.DEBUG);		
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas defined: " + m_NonValidAreas.Count(), LogLevel.NORMAL);		
+		
+		//Fix seconds to ms
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Mission start delay: " + m_Config.missionStartDelay + " seconds.", LogLevel.NORMAL);
+		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;
 		
 		#ifndef SCR_DC_RELEASE
 			SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.REDCROSS_SMALL, "DMC_B", "");
@@ -95,7 +96,7 @@ class SCR_DC_MissionFrame
 	*/	
 	void MissionFrameStart()
 	{
-		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_Config.missionStartDelay, false);
+		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStartDelay, false);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -108,7 +109,7 @@ class SCR_DC_MissionFrame
 		foreach(SCR_DC_Mission mission: m_MissionList)
 		{
 			mission.MissionEnd();
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Deleting mission: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Deleting mission: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
 			SCR_DC_DebugHelper.DeleteDebugPos(mission.GetId());
 			delete mission;		
 		}
@@ -118,14 +119,14 @@ class SCR_DC_MissionFrame
 	/*!
 	Mission life cycle manager.
 	*/	
-	protected void MissionLifeCycleManager()
+	protected void MissionCycleManager()
 	{			
 		//Check if more missions are to be spawned		
 		if ( (m_MissionList.Count() < m_Config.missionCount) && (isMissionDelayPassed()) )
 		{
 			private ref SCR_DC_Mission tmpDC_Mission = null;
 
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Starting new missions", LogLevel.DEBUG);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Starting new missions", LogLevel.DEBUG);
 			
 			DC_EMissionType missionType = null;
 			
@@ -165,9 +166,9 @@ class SCR_DC_MissionFrame
 				//If there was an error starting the mission, it has been prepared for deletion (state = EXIT).
 				if (tmpDC_Mission.GetState() != DC_MissionState.EXIT)
 				{			
-					SCR_DC_Log.Add(string.Format("[SCR_DC_MissionFrame:MissionLifeCycleManager] Spawning mission %1 (%2) %3", tmpDC_Mission.GetTitle(), tmpDC_Mission.GetPos(), tmpDC_Mission.GetPosName()), LogLevel.NORMAL);
+					SCR_DC_Log.Add(string.Format("[SCR_DC_MissionFrame:MissionCycleManager] Spawning mission %1 (%2) %3", tmpDC_Mission.GetTitle(), tmpDC_Mission.GetPos(), tmpDC_Mission.GetPosName()), LogLevel.NORMAL);
 
-					if (m_Config.missionHintTime > 0)
+					if (m_Config.missionHintTime > 0 && tmpDC_Mission.IsShowHint())
 					{
 						SCR_DC_HintHelper.ShowHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), m_Config.missionHintTime);					
 					}
@@ -181,7 +182,7 @@ class SCR_DC_MissionFrame
 		}
 		else
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Maximum amount of missions spawned: " + m_Config.missionCount, LogLevel.SPAM);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Maximum amount of missions spawned: " + m_Config.missionCount, LogLevel.SPAM);
 		}
 
 		//Check if missions are 
@@ -198,7 +199,7 @@ class SCR_DC_MissionFrame
 						
 			if (mission.GetState() == DC_MissionState.EXIT)
 			{
-				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Deleting mission: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Deleting mission: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
 				SCR_DC_DebugHelper.DeleteDebugPos(mission.GetId());
 				m_MissionList.Remove(i);
 				delete mission;
@@ -207,7 +208,7 @@ class SCR_DC_MissionFrame
 			{
 				if (!mission.IsActive())
 				{
-					SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Mission not active anymore: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
+					SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Mission not active anymore: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
 					mission.SetState(DC_MissionState.END);
 				}			
 				
@@ -220,7 +221,7 @@ class SCR_DC_MissionFrame
 			MissionStatusDump();
 		}
 
-		SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Number of active missions: " + m_MissionList.Count() + "/" + m_Config.missionCount, LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Active missions: " + m_MissionList.Count() + "/" + m_Config.missionCount + ". Delay for next mission: " + getMissionDelayWait() + " seconds.", LogLevel.NORMAL);
 		
 		if (SCR_DC_Conf.SHOW_VALID_MISSION_AREAS)
 		{
@@ -228,7 +229,7 @@ class SCR_DC_MissionFrame
 			SCR_DC_MissionHelper.DebugTestMissionPos();
 		}
 				
-		GetGame().GetCallqueue().CallLater(MissionLifeCycleManager, m_Config.missionFrameCycleTime*1000, false);
+		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionFrameCycleTime*1000, false);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -243,7 +244,7 @@ class SCR_DC_MissionFrame
 		{
 			case DC_EMissionType.NONE:
 			{
-				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Mission of type NONE ignored.", LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Mission of type NONE ignored.", LogLevel.DEBUG);
 				break;
 			}
 			case DC_EMissionType.HUNTER:
@@ -277,7 +278,7 @@ class SCR_DC_MissionFrame
 				break;
 			}
 			default:
-				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionLifeCycleManager] Incorrect mission type: " + missionType, LogLevel.ERROR);
+				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Incorrect mission type: " + missionType, LogLevel.ERROR);
 		}	
 		
 		return tmpDC_Mission;
@@ -326,17 +327,30 @@ class SCR_DC_MissionFrame
 	*/	
 	protected bool isMissionDelayPassed()
 	{
-		int delayTime = m_LastMissionSpawnTime + m_Config.missionDelayBetweeen;
-		int systemTime = (System.GetTickCount() / 1000);
+//		int delayTime = m_LastMissionSpawnTime + m_Config.missionDelayBetweeen;
+//		int systemTime = (System.GetTickCount() / 1000);
 		
-		if ( delayTime > systemTime )
+		if ( getMissionDelayWait() > 0)
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame:isMissionDelayPassed] Waiting for delay: " + delayTime + ">" + systemTime, LogLevel.DEBUG);
+//			SCR_DC_Log.Add("[SCR_DC_MissionFrame:isMissionDelayPassed] Waiting for delay: " + delayTime + ">" + systemTime, LogLevel.DEBUG);
 			return false;
 		}
 		return true;
 	}
+
 	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Checks if the delay between missions has passed.
+	*/	
+	protected int getMissionDelayWait()
+	{
+		int delayTime = m_LastMissionSpawnTime + m_Config.missionDelayBetweeen;
+		int systemTime = (System.GetTickCount() / 1000);
+		
+		return delayTime - systemTime;
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Creates config files. To be run at first run of the mod. Will not overwrite existing confs.

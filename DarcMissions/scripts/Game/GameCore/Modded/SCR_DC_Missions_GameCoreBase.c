@@ -9,7 +9,7 @@ modded class SCR_BaseGameMode
     {
         super.OnGameStart();
 		
-		SCR_DC_Log.Add("[SCR_DC_GameCoreBase:OnGameStart]", LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_GameCoreBase:OnGameStart]", LogLevel.DEBUG);
 
 		if (!SCR_DC_Conf.RELEASE)
 		{
@@ -18,7 +18,7 @@ modded class SCR_BaseGameMode
 				
 		if(IsMaster())
 		{
-			SCR_DC_Log.Add("[SCR_DC_GameCoreBase:IsMaster] OnGameStart", LogLevel.NORMAL);        
+			SCR_DC_Log.Add("[SCR_DC_GameCoreBase:IsMaster] OnGameStart", LogLevel.DEBUG);        
 			GetGame().GetCallqueue().CallLater(StartMissionFrame, 5000, false);	
 		}
 		else 

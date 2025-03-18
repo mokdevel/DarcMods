@@ -32,6 +32,7 @@ class SCR_DC_Mission_Chopper : SCR_DC_Mission
 		SetPos(pos);
 		SetPosName(posName);
 		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+		SetShowHint(m_Config.showHint);
 
 		SetState(DC_MissionState.INIT);			
 	}	
@@ -186,7 +187,7 @@ class SCR_DC_ChopperJsonApi : SCR_DC_JsonApi
 	void SetDefaults()
 	{
 		//Default
-		conf.missionCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;
+		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;		
 		//Mission specific
 		conf.pos = "0 0 0";

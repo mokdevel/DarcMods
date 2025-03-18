@@ -83,6 +83,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 			SetTitle(m_DC_Patrol.title + "" + GetPosName());
 			SetInfo(m_DC_Patrol.info);			
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+			SetShowHint(m_Config.showHint);			
 			SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 
 			SetState(DC_MissionState.INIT);
@@ -254,7 +255,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 		array<string> lootItems = {};
 		
 		//Default
-		conf.missionCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT * 3;
+		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT * 3;
 		conf.showMarker = true;
 		//Mission specific
 		conf.patrolList = {0};//,1,2};

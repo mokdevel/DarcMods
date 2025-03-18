@@ -25,8 +25,9 @@ class SCR_DC_MissionConfig : Managed
 	//Default information
 	int version = 1;
 	string author = "darc";
-	int missionCycleTime = DC_MISSION_LIFECYCLE_TIME_DEFAULT;	//How often the mission is run
+	int missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;	//How often the mission is run
 	bool showMarker = true;
+	bool showHint = true;
 }
 
 //------------------------------------------------------------------------------------------------
@@ -41,6 +42,7 @@ class SCR_DC_Mission
     private string m_PosName;
     private string m_Title;
     private string m_Info;
+    private bool m_ShowHint;
 	//Internals
 	private int m_StartTime;		//Seconds when mission started
 	private int m_EndTime;			//Seconds when mission shall end.
@@ -63,7 +65,7 @@ class SCR_DC_Mission
 		m_Title = "";
 		m_Info = "";
 		m_StartTime = (System.GetTickCount() / 1000); 			//The time in seconds when the game was started.
-		SetActiveTime(DC_MISSION_LIFECYCLE_TIME_DEFAULT*20);	//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
+		SetActiveTime(DC_MISSION_CYCLE_TIME_DEFAULT*20);		//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
 		m_ActiveDistance = 0;									//Set a default zero
 	}
 
@@ -268,6 +270,17 @@ class SCR_DC_Mission
 		m_EndTime = currentTime + m_ActiveTime;
 	}		
 
+	//------------------------------------------------------------------------------------------------
+	void SetShowHint(bool showHint)
+	{
+		m_ShowHint = showHint;
+	}
+	
+	bool IsShowHint()
+	{
+		return m_ShowHint;
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	void SetMarker(bool setMarker, DC_EMissionIcon icon)
 	{
