@@ -1,6 +1,9 @@
 # DarcMissions
 A mission frame work for Arma Reforger. There are various missions premade and their behaviour can be modified by editing the configuration jsons.
 
+## Vision
+I wanted to create a simple drop-in mission package where there is minimal configuration needed to get it running. You can take the mod, play it in SP, MP or let it run on a dedicated server. Everything should be randomized so you should never know what is happening in the world. The behaviour of the mod should be close to vanilla and by doing that, you could be running this on top of your other game modes. I've been using this with [Escapists](https://reforger.armaplatform.com/workshop/5F16D7E4A1CBE075-Escapists) just to get a few additional surprises.
+
 ## Missions
 - Hunter : AIs are hunting you and following you. They have some knowledge of where you are. You can outrun them or take them down. 
 - Convoy : AIs are driving from a location A to B carrying valuable loot with them.
