@@ -31,6 +31,7 @@ A mission frame work for Arma Reforger. There are various missions premade and t
 - [HunterKiller mod by Rabid Squirrel](https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller) for the initial kick to get into coding.
 
 # Configuration parameters
+For examples of configuration files see [ExampleConfigs](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions/ExampleConfigs)
 ## MissionFrame 	
 ```
 int version : Version number of the file.
