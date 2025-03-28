@@ -1,18 +1,10 @@
 //Helpers SCR_DC_DebugHelper.c
 
 modded enum SCR_DebugMenuID {
-    MODMENU = 236,		//TBD: This should work without the need to have a value here. 
+    MODMENU,
     MODMENU_WAYPOINTS,
     MODMENU_MARKS
 }
-
-//------------------------------------------------------------------------------------------------
-/*enum MyModDebugMenu_Enum
-{
-    MODMENU = SCR_DebugMenuID.DEBUGUI_NEWTUTORIAL_COURSE_MOVE_TO_WP,
-    MODMENU_WAYPOINTS,
-    MODMENU_MARKS
-};*/
 
 //------------------------------------------------------------------------------------------------
 class SCR_DC_DebugHelperPos : Managed

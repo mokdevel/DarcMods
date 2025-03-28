@@ -4,6 +4,7 @@
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J , convert to readable format - press Ctrl+Alt+Shift+M
 
 	#ifdef SCR_DC_RELEASE
+		private const string DC_MISSION_PROFILE_DIR = "default";
 		private const int DC_MISSION_COUNT = 8;											//Default amount of missions to run
 		private const int DC_MISSION_CYCLE_TIME_DEFAULT = 30;
 		private const int DC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
@@ -18,6 +19,7 @@
 	#endif
 	
 	#ifndef SCR_DC_RELEASE	//Development time options
+		private const string DC_MISSION_PROFILE_DIR = "dummy";
 		private const int DC_MISSION_COUNT = 8;
 		private const int DC_MISSION_CYCLE_TIME_DEFAULT = 10;
 		private const int DC_MISSION_START_DELAY = 5;					
@@ -40,6 +42,7 @@ class SCR_DC_MissionFrameConfig : Managed
 	string author = "darc";
 	//Mission specific
 	bool recreateConfigs;			//If set to true, all configs are to be written to disk. Should be run only first time.
+	string missionProfile;			//Directory specifying a certain conf for play. For example "Escapists"
 	int missionStartDelay;			//Time to wait before spawning the first mission (seconds).
 	int missionDelayBetweeen;		//Time delay between mission spawns (seconds)
 	int missionCount;				//Maximum amount of missions (both static and dynamic) to be active at the same time. 
@@ -52,23 +55,6 @@ class SCR_DC_MissionFrameConfig : Managed
 	int minDistanceToPlayer;		//Mission shall not spawn too close to a player.
 	ref array<DC_EMissionType> missionTypeArrayDynamic = {};	//List mission types that spawn randomly
 	ref array<DC_EMissionType> missionTypeArrayStatic = {};		//List mission types that are always active	
-	ref array<ref SCR_DC_NonValidArea> nonValidAreas = {};		//List of areas where missions shall not spawn.
-}
-
-class SCR_DC_NonValidArea : Managed
-{
-	string worldName;
-	vector pos;
-	float radius;
-	string name;
-
-	void Set(string worldName_, vector pos_, float radius_, string name_ = "")	
-	{
-		worldName = worldName_;
-		pos = pos_;
-		radius = radius_;
-		name = name_;
-	}		
 }
 
 //------------------------------------------------------------------------------------------------
@@ -114,6 +100,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 	void SetDefaults()
 	{
 		conf.recreateConfigs = DC_MISSION_RECREATE_CONFIGS;
+		conf.missionProfile = DC_MISSION_PROFILE_DIR;
 		conf.missionStartDelay = DC_MISSION_START_DELAY;
 		conf.missionDelayBetweeen = DC_MISSION_DELAY_BETWEEN_MISSIONS;
 		conf.missionCount = DC_MISSION_COUNT;
@@ -141,27 +128,10 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CHOPPER};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
-			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
-			conf.missionTypeArrayStatic = {DC_EMissionType.HUNTER};
+//			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
+//			conf.missionTypeArrayStatic = {DC_EMissionType.HUNTER};
 			conf.missionTypeArrayStatic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayStatic = {};
 		#endif
-		
-		//List of non valid areas where mission shall not spawn
-		//Eden
-		SCR_DC_NonValidArea areaE1 = new SCR_DC_NonValidArea;
-		areaE1.Set("Eden", "4780 0 11450", 500, "Airport - for testing");
-		conf.nonValidAreas.Insert(areaE1);
-		SCR_DC_NonValidArea areaE2 = new SCR_DC_NonValidArea;
-		areaE2.Set("Eden", "9680 0 1560", 400, "St. Pierre - for testing");
-		conf.nonValidAreas.Insert(areaE2);
-		
-		//Arland
-		SCR_DC_NonValidArea areaA1 = new SCR_DC_NonValidArea;
-		areaA1.Set("Arland", "1340 0 2320", 300, "Airport - for testing");
-		conf.nonValidAreas.Insert(areaA1);
-		SCR_DC_NonValidArea areaA2 = new SCR_DC_NonValidArea;
-		areaA2.Set("Arland", "1080 0 3300", 200, "Harbour - for testing");
-		conf.nonValidAreas.Insert(areaA2);
 	}
 }

@@ -10,6 +10,7 @@ Stupid file to handle a few common variables accross multiple mods
 sealed class SCR_DC_Conf
 {
 const string CONF_DIRECTORY = "DarcMods_conf";
+	static string missionProfile = "";
 	
 #ifdef SCR_DC_RELEASE
 	const bool RELEASE = true;						//Define for release compilation to workshop

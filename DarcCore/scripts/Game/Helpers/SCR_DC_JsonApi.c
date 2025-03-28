@@ -76,6 +76,10 @@ class SCR_DC_JsonApi : JsonApiStruct
 	{			
 		string path = "";
 		string directory = SCR_DC_Conf.CONF_DIRECTORY;
+		if (SCR_DC_Conf.missionProfile != "")
+		{
+			directory = directory + "/" + SCR_DC_Conf.missionProfile
+		}
 		
 		path = "$profile:/" + directory + "/";
 

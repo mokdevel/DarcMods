@@ -29,7 +29,11 @@ class SCR_DC_MissionFrame
 	ref array<ref SCR_DC_Mission> m_MissionList = new array<ref SCR_DC_Mission>;
 	ref SCR_DC_MissionFrameJsonApi m_DC_MissionFrameJsonApi = new SCR_DC_MissionFrameJsonApi;
 	ref SCR_DC_MissionFrameConfig m_Config;
+	
+	ref SCR_DC_NonValidAreaJsonApi m_DC_NonValidAreaJsonApi = new SCR_DC_NonValidAreaJsonApi;
+	ref SCR_DC_NonValidAreaConfig m_NonValidAreaConfig;
 	ref array<ref SCR_DC_NonValidArea> m_NonValidAreas = {};
+	
 	private string m_WorldName;
 	private int m_LastMissionSpawnTime = 0;
 		
@@ -42,13 +46,10 @@ class SCR_DC_MissionFrame
 		//Load configuration from file		
 		m_DC_MissionFrameJsonApi.Load();
 		m_Config = m_DC_MissionFrameJsonApi.conf;
-
-		//Set loglevel
-		if (!SCR_DC_Conf.RELEASE)
-		{
-			SCR_DC_RoadHelper.TestRoad();
-		}
+		SCR_DC_Conf.missionProfile = m_Config.missionProfile;
 		
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Conf destination: /profile/" + SCR_DC_Conf.CONF_DIRECTORY + "/" + SCR_DC_Conf.missionProfile, LogLevel.NORMAL);
+
 		//Check if a request to create new logs has been made		
 		if (m_Config.recreateConfigs)
 		{
@@ -63,9 +64,13 @@ class SCR_DC_MissionFrame
 		}
 		
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldname: " + m_WorldName, LogLevel.NORMAL);
-		
+
+		//Load non valid area configuration from file		
+		m_DC_NonValidAreaJsonApi.Load();
+		m_NonValidAreaConfig = m_DC_NonValidAreaJsonApi.conf;
+				
 		//Pick nonValidAreas for the current world
-		foreach(SCR_DC_NonValidArea nonValidArea : m_Config.nonValidAreas)
+		foreach(SCR_DC_NonValidArea nonValidArea : m_NonValidAreaConfig.nonValidAreas)
 		{
 			if(nonValidArea.worldName == m_WorldName)
 			{
