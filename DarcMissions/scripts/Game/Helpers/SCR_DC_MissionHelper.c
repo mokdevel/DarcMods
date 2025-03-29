@@ -89,7 +89,12 @@ sealed class SCR_DC_MissionHelper
 		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 		{					
 			location = SCR_DC_MissionHelper.FindMissionLocation(locationTypes);
-			if(!SCR_DC_Misc.IsPosNearPos(location.GetOrigin(), missionPos, distance))	//Shall be 300m from actual missionPos
+			if(!location)
+			{
+				return null;
+			}
+			
+			if(!SCR_DC_Misc.IsPosNearPos(location.GetOrigin(), missionPos, distance))	//Shall be distance meters from actual missionPos
 			{
 				positionFound = true;
 				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] Location found: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);

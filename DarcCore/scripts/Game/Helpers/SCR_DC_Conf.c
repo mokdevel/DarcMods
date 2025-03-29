@@ -9,7 +9,7 @@ Stupid file to handle a few common variables accross multiple mods
 
 sealed class SCR_DC_Conf
 {
-const string CONF_DIRECTORY = "DarcMods_conf";
+const string CONF_DIRECTORY = "DarcMods";
 	static string missionProfile = "";
 	
 #ifdef SCR_DC_RELEASE

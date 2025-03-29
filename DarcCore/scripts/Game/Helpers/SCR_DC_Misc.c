@@ -199,7 +199,7 @@ sealed class SCR_DC_Misc
 	*/	
 	static bool IsPosNearPos(vector pos0, vector pos1, float limit = 10)
 	{
-		float distance = vector.Distance(pos0, pos1);
+		float distance = vector.DistanceXZ(pos0, pos1);
 		
 		if (distance < limit)
 		{			

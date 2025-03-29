@@ -219,8 +219,8 @@ class SCR_DC_MissionFrame
 			}			
 		}		
 		
-		MissionStatusDump();
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Active missions: " + m_MissionList.Count() + "/" + m_Config.missionCount + ". Delay for next mission: " + getMissionDelayWait() + " seconds.", LogLevel.NORMAL);
+		MissionDump();
 		
 		if (SCR_DC_Conf.SHOW_VALID_MISSION_AREAS)
 		{
@@ -285,43 +285,6 @@ class SCR_DC_MissionFrame
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Dumps the current mission details to log.
-	*/	
-	protected void MissionStatusDump()
-	{
-		int i = 0;
-		int aiCount = 0;
-		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.NORMAL);
-		foreach(SCR_DC_Mission mission : m_MissionList)
-		{
-			SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] Mission: " + i + ": " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + ", static: " + mission.IsStatic() + ") - " + mission.GetTitle() + " - " + "Time left: " + mission.GetActiveTime() + " (" + SCR_Enum.GetEnumName(DC_MissionState,  mission.GetState()) + ")", LogLevel.NORMAL);
-			aiCount = aiCount + mission.GetAICount();
-			i++;
-		}		
-		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] AI count: " + aiCount, LogLevel.NORMAL);
-		SCR_DC_Log.Add("[SCR_DC_MissionStatusDump] -------------------------------------------------------------------------", LogLevel.NORMAL);
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Counts the amount of active static missions
-	*/	
-	protected int CountStaticMissions()	
-	{
-		int i = 0;
-		foreach(SCR_DC_Mission mission : m_MissionList)
-		{
-			if (mission.IsStatic())
-			{
-				i++;
-			}
-		}
-		
-		return i;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
 	Checks if the delay between missions has passed.
 	*/	
 	protected bool isMissionDelayPassed()
@@ -380,4 +343,61 @@ class SCR_DC_MissionFrame
 		patrolJsonApi.Load();
 		delete patrolJsonApi;
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Dumps the current mission details to log.
+	*/	
+	protected void MissionDump()
+	{
+		int i = 0;
+		int aiCount = 0;
+		int cutLen = 18;
+		
+		if (m_MissionList.Count() == 0)
+		{
+			return;
+		}
+
+		SCR_DC_Log.Add("[SCR_DC_MissionDump] --Missions---------------------------------------------------------------", LogLevel.NORMAL);
+		foreach(SCR_DC_Mission mission : m_MissionList)
+		{
+			string staticString = "dynamic";
+			if (mission.IsStatic())
+			{
+				staticString = "static";
+			}
+			string missionType = SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType());
+			string missionTitle = mission.GetTitle();
+			if (missionTitle.Length() > cutLen)
+			{
+				missionTitle = mission.GetTitle().Substring(0, cutLen) + "..";
+			}
+			string missionState = SCR_Enum.GetEnumName(DC_MissionState,  mission.GetState());
+			
+			SCR_DC_Log.Add("[SCR_DC_MissionDump] " + i + ": " + mission.GetId() + " (" + missionType + ", " + staticString + ", " + missionState + ") - " + missionTitle + " - " + "Time left: " + mission.GetActiveTime(), LogLevel.NORMAL);
+			aiCount = aiCount + mission.GetAICount();
+			i++;
+		}		
+		SCR_DC_Log.Add("[SCR_DC_MissionDump] AI count: " + aiCount, LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_MissionDump] -------------------------------------------------------------------------", LogLevel.NORMAL);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Counts the amount of active static missions
+	*/	
+	protected int CountStaticMissions()	
+	{
+		int i = 0;
+		foreach(SCR_DC_Mission mission : m_MissionList)
+		{
+			if (mission.IsStatic())
+			{
+				i++;
+			}
+		}
+		
+		return i;
+	}
 }
