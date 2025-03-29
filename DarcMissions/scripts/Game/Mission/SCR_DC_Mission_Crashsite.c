@@ -67,7 +67,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 			{
 				//Find flight positions from pos to m_PosDestination.
 				positionFound = true;
-				pos[1] = pos[1] + Math.RandomInt(80, 120);	//Adjust flight height
+				pos[1] = pos[1] + Math.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[0]);	//Adjust flight height
 				int rnd = SCR_DC_Misc.GetWorldSize()/8;
 				m_PosDestination[0] = SCR_DC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
 				m_PosDestination[2] = SCR_DC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
@@ -292,8 +292,9 @@ class SCR_DC_HelicopterInfo : Managed
 class SCR_DC_CrashsiteConfig : SCR_DC_MissionConfig
 {
 	//Mission specific	
+	ref array<int> flyHeight = {};						//min, max - Spawn helicopter between these values.
 	ref array<ref int> crashsiteList = {};				//The indexes of crashsites.
-	ref array<ref SCR_DC_Crashsite> crashsites = {};		//List of crashsites
+	ref array<ref SCR_DC_Crashsite> crashsites = {};	//List of crashsites
 }
 
 //------------------------------------------------------------------------------------------------
@@ -356,10 +357,11 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 	{
 		conf.version = 2;
 		conf.author = "lkasdi";
-		//Default		
+		//Default
 		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
-		//Mission specific		
+		//Mission specific
+		conf.flyHeight = {80, 120};
 		conf.crashsiteList = {0};
 		
 		//----------------------------------------------------

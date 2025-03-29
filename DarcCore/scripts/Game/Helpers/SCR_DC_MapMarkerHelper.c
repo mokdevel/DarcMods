@@ -27,8 +27,6 @@ sealed class SCR_DC_MapMarkerHelper
 		markerst.SetIconEntry(icon);
 		markerst.SetMarkerFactionFlags(fIndex);
 		mapMarkerMgr.InsertStaticMarker(markerst, false, true);		
-
-		
 		
 		DC_Mmarker dcmarker = new DC_Mmarker;
 		dcmarker.id = id;

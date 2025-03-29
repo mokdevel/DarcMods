@@ -88,6 +88,7 @@ class SCR_DC_MissionFrame
 			SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.REDCROSS_SMALL, "DMC_B", "");
 			SCR_DC_MapMarkerHelper.CreateMapMarker("800 0 3500", DC_EMissionIcon.REDCROSS, "DMC_B", "");
 //			SCR_DC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "");
+			SCR_DC_Misc.CreateMapMarker("1100 0 3300", 1, "DD", "blargh");
 		#endif
 		
 		MissionFrameStart();
