@@ -47,28 +47,25 @@ FrameWidgetClass {
        Slot FrameWidgetSlot "{5E3E82F0B6D23F67}" {
         SizeToContent 1
        }
-       "Is Visible" 0
        Clipping False
        Color 0.007 0.012 0.014 0.6
        Texture "{9BE5CC69285A77F5}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI_glow.imageset"
        Image "mission"
-       Size 64 64
+       Size 42 42
       }
       ImageWidgetClass "{649AABAD8DD1DC80}" {
        Name "MarkerIcon"
        Slot FrameWidgetSlot "{5E3E82F0B6D23F67}" {
         OffsetLeft 0
         OffsetTop 0
-        SizeX 64
-        OffsetRight -64
-        SizeY 64
-        OffsetBottom -64
+        OffsetRight -100
+        OffsetBottom -30
         SizeToContent 1
        }
        Clipping False
        Texture "{0C86564F20AD42F2}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI.imageset"
        Image "mission"
-       Size 64 64
+       Size 36 36
       }
      }
     }
@@ -106,13 +103,13 @@ FrameWidgetClass {
     TextWidgetClass "{649AABAD8DD1DC9A}" {
      Name "MarkerText"
      Slot LayoutSlot "{5D8AED759625D73D}" {
-      Padding 0 22 0 0
+      Padding 0 12 0 0
       SizeMode Fill
      }
      Clipping False
      Text "testing test"
-     "Font Size" 18
-     "Min Font Size" 18
+     "Font Size" 16
+     "Min Font Size" 16
      "Horizontal Alignment" Center
      Wrap 1
      FontProperties FontProperties "{5D2693726AAD1299}" {

@@ -72,7 +72,7 @@ class SCR_DC_MissionFrame
 		//Pick nonValidAreas for the current world
 		foreach(SCR_DC_NonValidArea nonValidArea : m_NonValidAreaConfig.nonValidAreas)
 		{
-			if(nonValidArea.worldName == m_WorldName)
+			if(nonValidArea.worldName == m_WorldName || nonValidArea.worldName == "")
 			{
 				m_NonValidAreas.Insert(nonValidArea);
 				SCR_DC_DebugHelper.AddDebugPos(nonValidArea.pos, Color.BLACK, nonValidArea.radius);
@@ -88,7 +88,7 @@ class SCR_DC_MissionFrame
 			SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.REDCROSS_SMALL, "DMC_B", "");
 			SCR_DC_MapMarkerHelper.CreateMapMarker("800 0 3500", DC_EMissionIcon.REDCROSS, "DMC_B", "");
 //			SCR_DC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "");
-			SCR_DC_Misc.CreateMapMarker("1100 0 3300", 1, "DD", "blargh");
+			SCR_DC_Misc.CreateMapMarkerTest("1100 0 3300", 1, "DD", "blargh");
 		#endif
 		
 		MissionFrameStart();
@@ -124,9 +124,9 @@ class SCR_DC_MissionFrame
 	Mission life cycle manager.
 	*/	
 	protected void MissionCycleManager()
-	{			
+	{	
 		//Check if more missions are to be spawned		
-		if ( (m_MissionList.Count() < m_Config.missionCount) && (isMissionDelayPassed()) )
+		if ( (m_MissionList.Count() < m_Config.missionCount) && (isMissionDelayPassed()) && SCR_DC_PlayerHelper.PlayerCount() > 0)
 		{
 			private ref SCR_DC_Mission tmpDC_Mission = null;
 
@@ -186,7 +186,7 @@ class SCR_DC_MissionFrame
 		}
 		else
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Maximum amount of missions spawned: " + m_Config.missionCount, LogLevel.SPAM);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] " + m_MissionList.Count() + " active missions. Waiting for mission delay and/or players to join.", LogLevel.DEBUG);
 		}
 
 		//Check if missions are 
@@ -360,7 +360,7 @@ class SCR_DC_MissionFrame
 			return;
 		}
 
-		SCR_DC_Log.Add("[SCR_DC_MissionDump] --Missions---------------------------------------------------------------", LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_MissionDump] -- Missions -------------------------------------------------------------------", LogLevel.NORMAL);
 		foreach(SCR_DC_Mission mission : m_MissionList)
 		{
 			string staticString = "dynamic";
@@ -380,8 +380,9 @@ class SCR_DC_MissionFrame
 			aiCount = aiCount + mission.GetAICount();
 			i++;
 		}		
-		SCR_DC_Log.Add("[SCR_DC_MissionDump] AI count: " + aiCount, LogLevel.NORMAL);
-		SCR_DC_Log.Add("[SCR_DC_MissionDump] -------------------------------------------------------------------------", LogLevel.NORMAL);
+		string lastLine = "[SCR_DC_MissionDump] -- AI count: " + aiCount + " -------------------------------------------------------------------------";
+		lastLine = lastLine.Substring(0, 100);
+		SCR_DC_Log.Add(lastLine, LogLevel.NORMAL);
 	}
 
 	//------------------------------------------------------------------------------------------------
