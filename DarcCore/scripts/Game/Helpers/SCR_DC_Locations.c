@@ -30,6 +30,7 @@ sealed class SCR_DC_Locations
 	static void GetLocations(out array<IEntity> locationArray, array<EMapDescriptorType> locationTypeArray)
 	{
 		private array<MapItem> m_tmpLocationArray = new array<MapItem>;
+		private array<MapItem> m_debugLocationArray = new array<MapItem>;
 
 		foreach (EMapDescriptorType locationType: locationTypeArray)
 		{
@@ -45,12 +46,12 @@ sealed class SCR_DC_Locations
 				vector origin = tmpMapItem.Entity().GetOrigin();			//TBD: MapItem position on DS is "0 0 0". This is a bug in 1.3.0
 				tmpMapItem.SetPos(origin[0], origin[2]);
 				locationArray.Insert(tmpMapItem.Entity());
+				m_debugLocationArray.Insert(tmpMapItem);
 			}			
 		}
-
-		ShowDebugInfo(locationArray, EMapDescriptorType.MDT_NAME_GENERIC);
 				
 		SCR_DC_Log.Add("[SCR_DC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
+		ShowDebugInfo(m_debugLocationArray);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -74,8 +75,8 @@ sealed class SCR_DC_Locations
 			}			
 		}
 		
-		
 		SCR_DC_Log.Add("[SCR_DC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
+		ShowDebugInfo(locationArray);
 	}
 
 	//------------------------------------------------------------------------------------------------
