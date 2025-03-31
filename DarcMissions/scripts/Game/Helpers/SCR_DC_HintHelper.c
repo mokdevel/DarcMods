@@ -5,6 +5,18 @@ class SCR_DC_HintHelper
 {	
 	static void ShowHint(string title, string details, int timeOut)
 	{	
+/*
+		SCR_HintUIInfo info = SCR_HintUIInfo();
+        info.CreateInfo("HintUIInfo Description", "HintUIInfo name", 10.0, EHint.CONFLICT_OVERVIEW, EFieldManualEntryId.CONFLICT_OVERVIEW, false);
+        
+        SCR_HintManagerComponent hintManagerComponent = SCR_HintManagerComponent.GetInstance();
+		if (hintManagerComponent)
+		{
+			hintManagerComponent.ShowCustomHint(title, details, 10, false, EFieldManualEntryId.CONFLICT_OVERVIEW);
+		}
+        //SCR_HintManagerComponent.GetInstance().ShowHint(info);
+		return;
+*/		
 		array<int> players = {};
 		GetGame().GetPlayerManager().GetPlayers(players);
 		
@@ -21,12 +33,37 @@ class SCR_DC_HintHelper
 			//The hint needs to be sent to each player
 			foreach(int player : players)
 			{
-				m_HintHelper.ShowHint(details, title, timeOut, "", player);
+				FactionKey factionKey = SCR_DC_PlayerHelper.GetPlayerFactionKey(player);
+				
+				SCR_DC_Log.Add("[SCR_DC_HintHelper:ShowHint] Player FactionKey: " + factionKey, LogLevel.DEBUG);
+				factionKey = "";	//TBD: Leaving this like this as it seems to work for now. 
+				m_HintHelper.ShowHint(details, title, timeOut, factionKey, player);
 			}
 		}
 		else
 		{
 			SCR_DC_Log.Add("[SCR_DC_HintHelper:ShowHint] Could not send hints.", LogLevel.ERROR);
 		}
-	}	
+	}
+	
+	/*
+ 	static void ShowGlobalPopup(string hl, string msg, int dur, array<string> fkeys)
+    {
+        Rpc(RpcDo_ShowPopup, hl, msg, dur, fkeys); // broadcast to clients
+        RpcDo_ShowPopup(hl, msg, dur, fkeys); // try to show on authority
+    }
+    
+    [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
+    protected void RpcDo_ShowPopup(string hl, string msg, int dur, array<string> fkeys)
+    {
+        if (fkeys && !fkeys.IsEmpty()) {
+            SCR_FactionManager fm = SCR_FactionManager.Cast(GetGame().GetFactionManager());
+            if (!fm) return;
+            Faction f = fm.GetLocalPlayerFaction();
+            if (!f) return;
+            if (fkeys.Contains(f.GetFactionKey())) return;
+        }
+        SCR_PopUpNotification.GetInstance().PopupMsg(hl, dur, msg);
+    }
+	*/	
 }

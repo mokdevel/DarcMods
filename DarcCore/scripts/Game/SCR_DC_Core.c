@@ -19,12 +19,9 @@ class SCR_DC_Core
 		m_Config = m_DC_CoreConfig.conf;
 
 		SCR_DC_Log.SetLogLevel(m_Config.logLevel);
-		#ifndef SCR_DC_RELEASE
-//		if (!SCR_DC_Conf.RELEASE)
-//		{
+/*		#ifndef SCR_DC_RELEASE
 			SCR_DC_Log.SetLogLevel(DC_LogLevel.DEBUG);
-//		}			
-		#endif
+		#endif*/
 
 		//Set debug visibility
 		SCR_DC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks);							

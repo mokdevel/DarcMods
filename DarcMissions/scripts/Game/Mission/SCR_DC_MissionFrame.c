@@ -89,7 +89,7 @@ class SCR_DC_MissionFrame
 			SCR_DC_MapMarkerHelper.CreateMapMarker("800 0 3500", DC_EMissionIcon.REDCROSS, "DMC_B", "");
 //			SCR_DC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "");
 			SCR_DC_Misc.CreateMapMarkerTest("1100 0 3300", 1, "DD", "blargh");
-		#endif
+		#endif	
 		
 		MissionFrameStart();
 	}
@@ -124,7 +124,7 @@ class SCR_DC_MissionFrame
 	Mission life cycle manager.
 	*/	
 	protected void MissionCycleManager()
-	{	
+	{			
 		//Check if more missions are to be spawned		
 		if ( (m_MissionList.Count() < m_Config.missionCount) && (isMissionDelayPassed()) && SCR_DC_PlayerHelper.PlayerCount() > 0)
 		{

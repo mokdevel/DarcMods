@@ -78,6 +78,7 @@ class SCR_DC_CoreJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		conf.logLevel = DC_LogLevel.NORMAL;	
+//		conf.logLevel = DC_LogLevel.DEBUG;	
+		conf.logLevel = SCR_DC_Conf.DEFAULT_LOGLEVEL;	
 	}
 };

@@ -114,13 +114,21 @@ class SCR_DC_Spawner
 		MapItem location = m_Locations.GetRandomElement();
 		vector pos = location.GetPos();
 		
+		SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Chosen location: " + SCR_StringHelper.Translate(location.Entity().GetName()) + " (" + pos + ")", LogLevel.DEBUG);
+		
 		if(m_Config.spawnOnRoad)
 		{
 			SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
-			pos = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
+			vector tmpPos = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
+			SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] tmpPos: " + tmpPos, LogLevel.DEBUG);			
+			if (tmpPos != "0 0 0")
+			{
+				pos = tmpPos;
+			}
 		}
 		else
 		{
+			SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Randomizing position", LogLevel.DEBUG);			
 			pos = SCR_DC_Misc.RandomizePos(pos, m_Config.spawnRndRadius);
 		}
 		
@@ -152,10 +160,9 @@ class SCR_DC_Spawner
 				SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Could not spawn: " + entityToSpawn, LogLevel.ERROR);	
 			}
 		}
-		/*
 		else
 		{
-			SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Position in water.", LogLevel.ERROR);	
-		}*/
+			SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Position in water: " + pos, LogLevel.ERROR);	
+		}
 	}
 }

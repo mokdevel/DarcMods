@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{95C1023081045BA6}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI_glow-450_atlas.edds"
+ Name "{95C1023081045BA5}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI_glow-450_atlas.edds"
  Configurations {
   TGAResourceClass PC : "{1D692833852EC72A}Configs/System/ResourceTypes/PC/TextureUIAtlas.conf" {
   }

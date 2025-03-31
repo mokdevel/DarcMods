@@ -48,6 +48,7 @@ modded class SCR_BaseGameMode
 			//Testing to see if a player can be made to run faster
 			IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
 			SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(player);
+		
 			if (character)
 			{
 				CharacterControllerComponent controller = CharacterControllerComponent.Cast(character.GetCharacterController());
@@ -59,6 +60,11 @@ modded class SCR_BaseGameMode
 					SCR_DC_Log.Add("SCR_DC speed:" + controller.GetMovementSpeed(), LogLevel.DEBUG);
 				}
 			}
+		
+			//Set faction
+//			SCR_FactionManager fm = SCR_FactionManager.Cast(GetGame().GetFactionManager());
+//	        if (!fm) return;
+//	        Faction f = fm.SetPlayerFaction(player);		
 		#endif
 				
 		SCR_DC_Log.Add("[SCR_DC_GameCoreBase: OnPlayerSpawned] Player spawned - id: " + playerId, LogLevel.DEBUG);

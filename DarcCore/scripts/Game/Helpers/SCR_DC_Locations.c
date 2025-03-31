@@ -42,12 +42,14 @@ sealed class SCR_DC_Locations
 			{
 				tmpMapItem.SetDisplayName(SCR_StringHelper.Translate(tmpMapItem.GetDisplayName()));
 				tmpMapItem.Entity().SetName(tmpMapItem.GetDisplayName());
+				vector origin = tmpMapItem.Entity().GetOrigin();			//TBD: MapItem position on DS is "0 0 0". This is a bug in 1.3.0
+				tmpMapItem.SetPos(origin[0], origin[2]);
 				locationArray.Insert(tmpMapItem.Entity());
 			}			
-			
-			ShowDebugInfo(m_tmpLocationArray, locationType);			
 		}
-		
+
+		ShowDebugInfo(locationArray, EMapDescriptorType.MDT_NAME_GENERIC);
+				
 		SCR_DC_Log.Add("[SCR_DC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
 	}
 	
@@ -66,11 +68,12 @@ sealed class SCR_DC_Locations
 			foreach (MapItem tmpMapItem: m_tmpLocationArray)
 			{
 				tmpMapItem.SetDisplayName(SCR_StringHelper.Translate(tmpMapItem.GetDisplayName()));
+				vector origin = tmpMapItem.Entity().GetOrigin();			//TBD: MapItem position on DS is "0 0 0". This is a bug in 1.3.0
+				tmpMapItem.SetPos(origin[0], origin[2]);
 				locationArray.Insert(tmpMapItem);
 			}			
-
-			ShowDebugInfo(m_tmpLocationArray, locationType);
 		}
+		
 		
 		SCR_DC_Log.Add("[SCR_DC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
 	}
@@ -79,27 +82,27 @@ sealed class SCR_DC_Locations
 	/*!
 	Helper function that just prints the information for debugging purposes.
 	*/	
-	static private void ShowDebugInfo(array<MapItem> m_tmpLocationArray, EMapDescriptorType locationType)
+	static private void ShowDebugInfo(array<MapItem> m_tmpLocationArray)
 	{
 		array<IEntity> slots = {};
 
 		if (SCR_DC_Log.GetLogLevel() != DC_LogLevel.NONE)
 		{		
-			SCR_DC_Log.Add( string.Format("[SCR_DC_Locations:ShowDebugInfo] Found %1 locations of type (%2) %3", 
+/*			SCR_DC_Log.Add( string.Format("[SCR_DC_Locations:ShowDebugInfo] Found %1 locations of type (%2) %3", 
 				m_tmpLocationArray.Count(),
 				locationType,
 			 	SCR_Enum.GetEnumName(EMapDescriptorType, locationType),
-				), LogLevel.DEBUG);
+				), LogLevel.DEBUG);*/
 	
 			foreach (MapItem location: m_tmpLocationArray)
 			{	
-				SCR_DC_Log.Add( string.Format("[SCR_DC_Locations:ShowDebugInfo] Name: %1 , Entity: %2 , Type: %3 , GetDisplayName: %4 , Pos: %5", 
+				SCR_DC_Log.Add( string.Format("[SCR_DC_Locations:ShowDebugInfo] Name: %1 , DisplayName: %2 , Type: %3 , Pos: %4 , Entity: %5", 
 					location.Entity().GetName(),
-					location.Entity(),
-					location.Type(),
 					location.GetDisplayName(),
-					location.GetPos()
-					), LogLevel.SPAM);
+					location.GetBaseType(),
+					location.GetPos(),
+					location.Entity()
+					), LogLevel.DEBUG);
 
 				slots.Clear();
 				int slotcount = GetLocationSlots(slots, location.GetPos(), 200);

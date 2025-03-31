@@ -117,10 +117,10 @@ sealed class SCR_DC_RoadHelper
 				FindRoadPts(roadPts, roadPos.road);
 				int i = 0;
 				
-				pos[1] = 0;		//Distance calculation done on plane at 0 height
+//				pos[1] = 0;		//Distance calculation done on plane at 0 height
 				foreach(vector pt: roadPts)
 				{	
-					pt[1] = 0;	//Distance calculation done on plane at 0 height
+///					pt[1] = 0;	//Distance calculation done on plane at 0 height
 					if(SCR_DC_Misc.IsPosNearPos(pos, pt, (roadPos.distanceToRoad + 10)))
 					{
 						pt[1] = GetGame().GetWorld().GetSurfaceY(pt[0], pt[2]);
@@ -133,6 +133,10 @@ sealed class SCR_DC_RoadHelper
 				
 				return "0 0 0";
 			}
+		}
+		else
+		{
+			SCR_DC_Log.Add("[SCR_DC_RoadHelper:FindClosestRoadposToPos] RoadNetworkManager not found.", LogLevel.WARNING);
 		}
 		
 		return "0 0 0";

@@ -87,6 +87,39 @@ sealed class SCR_DC_PlayerHelper
 		}
 		
 		return false;
-	}					
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get player faction
+	*/	
+	static Faction GetPlayerFaction(int player)
+	{
+ 		SCR_FactionManager factionManager = SCR_FactionManager.Cast(GetGame().GetFactionManager());
+		if (!factionManager)
+		{
+			return null;
+		}
+		Faction faction = factionManager.GetPlayerFaction(player);
+		
+		return faction;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get player factionKey
+	*/	
+	static FactionKey GetPlayerFactionKey(int player)
+	{
+		Faction faction = GetPlayerFaction(player);
+		FactionKey factionKey = "";
+		
+		if (faction)
+		{
+			factionKey = faction.GetFactionKey();
+		}
+		
+		return factionKey;
+	}		
 }
 

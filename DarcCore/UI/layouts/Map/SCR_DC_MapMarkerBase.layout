@@ -1,13 +1,15 @@
 FrameWidgetClass {
  Name "rootFrame"
  Slot FrameWidgetSlot "{5D2691F3AE61A7FC}" {
+  PositionX 0
   OffsetLeft 0
+  PositionY 0
   OffsetTop 0
   SizeX 256
   OffsetRight -256
   SizeY 90
   OffsetBottom -90
-  Alignment 0.5 0.5
+  Alignment 0.5 0.25
  }
  "Z Order" 60
  Clipping False
@@ -22,14 +24,15 @@ FrameWidgetClass {
   VerticalLayoutWidgetClass "{649AABAD8DD1DCB4}" {
    Name "VerticalLayout0"
    Slot FrameWidgetSlot "{5D56BA46E7717D6A}" {
-    Anchor 0.5 0 0.5 0
+    Anchor 0.5 0.25 0.5 0.25
     PositionX 0
     OffsetLeft 0
-    OffsetTop 0
+    PositionY -22.5
+    OffsetTop -22.5
     SizeX 100
     OffsetRight -100
     SizeY 30
-    OffsetBottom -30
+    OffsetBottom -7.5
     Alignment 0.5 0
     SizeToContent 1
    }

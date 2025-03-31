@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-//#define SCR_DC_RELEASE
+#define SCR_DC_RELEASE
 
 sealed class SCR_DC_Conf
 {
@@ -17,6 +17,8 @@ const string CONF_DIRECTORY = "DarcMods";
 	const bool OVERWRITE_JSON = false;				//Writes a new conf even if it exists
 	const bool SHOW_VALID_MISSION_AREAS = false;	//Debug markers for mission position testing drawn on the map
 	const bool SHOW_MARKER_FOR_LOCATION = false;	//Show a debug marker for locations
+//	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.NORMAL
+	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG
 #endif
 		
 #ifndef SCR_DC_RELEASE	//Development time options
@@ -25,5 +27,6 @@ const string CONF_DIRECTORY = "DarcMods";
 //	const bool OVERWRITE_JSON = false;				//Writes a new conf even if it exists
 	const bool SHOW_VALID_MISSION_AREAS = false;	//Debug markers for mission position testing drawn on the map
 	const bool SHOW_MARKER_FOR_LOCATION = false;	//Show a debug marker for locations
+	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG
 #endif
 }

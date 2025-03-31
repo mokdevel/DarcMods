@@ -80,7 +80,7 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 	void SetDefaults()
 	{
 		conf.spawnSetID = 0;
-		conf.spawnOnRoad = true;
+		conf.spawnOnRoad = false;
 		conf.spawnRndRadius = 100;
 		conf.spawnWorldSizeMultiplier = 2;
 		

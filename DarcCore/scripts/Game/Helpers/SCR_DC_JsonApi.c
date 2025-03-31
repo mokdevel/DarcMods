@@ -51,7 +51,7 @@ class SCR_DC_JsonApi : JsonApiStruct
 		string dataString = saveContext.ExportToString();
 		ExpandFromRAW(dataString);
 		
-		SCR_DC_Log.Add("[SCR_DC_JsonApi] This gives some warnings on 'JsonApi Array name='something' found in JSON ... ' . Please ignore.", LogLevel.WARNING);			
+		SCR_DC_Log.Add("[SCR_DC_JsonApi] This may give some warnings on 'JsonApi Array name='something' found in JSON ... ' . Please ignore.", LogLevel.WARNING);
 		
 		if(!saveContext.SaveToFile(m_FileName))
 		{
