@@ -48,7 +48,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 		
 		//Pick a configuration for mission
 		int idx = SCR_DC_MissionHelper.SelectMissionIndex(m_Config.crashsiteList);
-		if(idx == -1)
+		if (idx == -1)
 		{
 			SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] No crashsites defined.", LogLevel.ERROR);
 			SetState(DC_MissionState.EXIT);

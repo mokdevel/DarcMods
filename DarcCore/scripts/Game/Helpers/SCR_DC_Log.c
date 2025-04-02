@@ -37,7 +37,6 @@ sealed class SCR_DC_Log
 	{
 		m_LogLevel = DC_LogLevel.NORMAL;
 		Print("[SCR_DC_Log] Started. (LogLevel = " + SCR_Enum.GetEnumName(DC_LogLevel, m_LogLevel), LogLevel.NORMAL);
-//		m_LogLevel = DC_LogLevel.NONE;
 	}
 	
 	//------------------------------------------------------------------------------------------------

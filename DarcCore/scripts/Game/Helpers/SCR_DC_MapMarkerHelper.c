@@ -17,15 +17,15 @@ sealed class SCR_DC_MapMarkerHelper
 		if (!mapMarkerMgr)
 			return;
 
-		Faction faction = GetGame().GetFactionManager().GetFactionByKey("US");
-        int fIndex = GetGame().GetFactionManager().GetFactionIndex(faction);		
+//		Faction faction = GetGame().GetFactionManager().GetFactionByKey("US");
+//        int fIndex = GetGame().GetFactionManager().GetFactionIndex(faction);		
 				
 		SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
 		markerst.SetType(SCR_EMapMarkerType.DARC_MISSION);
 		markerst.SetCustomText(title);
 		markerst.SetWorldPos(pos[0], pos[2]);
 		markerst.SetIconEntry(icon);
-		markerst.SetMarkerFactionFlags(fIndex);
+		markerst.SetMarkerFactionFlags(0);	//Everyone can see the markers
 		mapMarkerMgr.InsertStaticMarker(markerst, false, true);		
 		
 		DC_Mmarker dcmarker = new DC_Mmarker;

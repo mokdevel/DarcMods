@@ -12,11 +12,11 @@ SCR_SpawnPoint : "{4FEA25583D0975F7}Prefabs/MP/Spawning/SpawnPoint_USSR.et" {
  }
  coords 6043.308 10 6045.557
 }
-RplExampleDebugShape : "{73F3B373976B3B1A}Prefabs/Helpers/RPLDebugShapeHelper.et" {
- coords 6004.375 10.853 5999.849
+SCR_SpawnPoint : "{5A2220DD0C16958B}Prefabs/MP/Spawning/SpawnPoint_US.et" {
+ coords 6050.559 10 6045.855
 }
 SCR_LoadoutManager : "{97EF4C1A41F63DDB}Prefabs/MP/Managers/Loadouts/LoadoutManager_USxUSSR.et" {
- coords 6033.133 10 6024.802
+ coords 6065.651 10 6026.918
 }
 SCR_SpawnPoint : "{B1248BD4035260A0}Prefabs/MP/Spawning/SpawnPoint_US_CP.et" {
  components {

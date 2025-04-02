@@ -5,19 +5,19 @@ class SCR_DC_HintHelper
 {	
 	static void ShowHint(string title, string details, int timeOut)
 	{	
-/*
+
 		SCR_HintUIInfo info = SCR_HintUIInfo();
         info.CreateInfo("HintUIInfo Description", "HintUIInfo name", 10.0, EHint.CONFLICT_OVERVIEW, EFieldManualEntryId.CONFLICT_OVERVIEW, false);
         
         SCR_HintManagerComponent hintManagerComponent = SCR_HintManagerComponent.GetInstance();
 		if (hintManagerComponent)
 		{
-			hintManagerComponent.ShowCustomHint(title, details, 10, false, EFieldManualEntryId.CONFLICT_OVERVIEW);
+			hintManagerComponent.ShowCustomHint(details, title, 10, false, EFieldManualEntryId.NONE, true);
 		}
         //SCR_HintManagerComponent.GetInstance().ShowHint(info);
 		return;
-*/		
-		array<int> players = {};
+		
+/*		array<int> players = {};
 		GetGame().GetPlayerManager().GetPlayers(players);
 		
 		World world = GetGame().GetWorld();
@@ -43,7 +43,7 @@ class SCR_DC_HintHelper
 		else
 		{
 			SCR_DC_Log.Add("[SCR_DC_HintHelper:ShowHint] Could not send hints.", LogLevel.ERROR);
-		}
+		}*/
 	}
 	
 	/*

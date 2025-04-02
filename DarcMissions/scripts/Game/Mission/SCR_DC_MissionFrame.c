@@ -46,23 +46,25 @@ class SCR_DC_MissionFrame
 		//Load configuration from file		
 		m_DC_MissionFrameJsonApi.Load();
 		m_Config = m_DC_MissionFrameJsonApi.conf;
-		SCR_DC_Conf.missionProfile = m_Config.missionProfile;
 		
-		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Conf destination: /profile/" + SCR_DC_Conf.CONF_DIRECTORY + "/" + SCR_DC_Conf.missionProfile, LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Conf destination: /profile/" + SCR_DC_Conf.CONF_DIRECTORY + "/" + m_Config.missionProfile, LogLevel.NORMAL);
 
 		//Check if a request to create new logs has been made		
 		if (m_Config.recreateConfigs)
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame] !!!!!!!!!!!!!!.....Creating default configs.....!!!!!!!!!!!!!", LogLevel.WARNING);
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame] Existing ones will not be over written.", LogLevel.WARNING);
-			CreateAllConfigs();
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame] Changing recreateConfigs to false and saving the config.", LogLevel.WARNING);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame] ---------------- Creating default configs -------------------", LogLevel.WARNING);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame] - Changing recreateConfigs to false and saving the config.  -", LogLevel.WARNING);
 			m_Config.recreateConfigs = false;
 			m_DC_MissionFrameJsonApi.Save("");
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame] !!!!!!!!!!!!!!!!!!!!! Configs created. !!!!!!!!!!!!!!!!!!!!!!", LogLevel.WARNING
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame] - Creating configs. Existing ones will not be over written. -", LogLevel.WARNING);
+			SCR_DC_Conf.missionProfile = m_Config.missionProfile;
+			CreateAllConfigs();
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame] --------------------- Configs created. ----------------------", LogLevel.WARNING
 			);
 		}
 		
+		//Set mission profile directory. This needs to be after a possible MissionFrame config save.
+		SCR_DC_Conf.missionProfile = m_Config.missionProfile;		
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldname: " + m_WorldName, LogLevel.NORMAL);
 
 		//Load non valid area configuration from file		
@@ -320,6 +322,12 @@ class SCR_DC_MissionFrame
 	*/	
 	void CreateAllConfigs()
 	{		
+		//Create a default nonValidArea config
+		SCR_DC_NonValidAreaJsonApi nonValidAreaJsonApi = new SCR_DC_NonValidAreaJsonApi;
+		nonValidAreaJsonApi.Load();
+		delete nonValidAreaJsonApi;		
+		
+		//Create a default mission configs
 		SCR_DC_CampJsonApi campJsonApi = new SCR_DC_CampJsonApi();	
 		campJsonApi.Load();
 		delete campJsonApi;
@@ -342,7 +350,7 @@ class SCR_DC_MissionFrame
 		
 		SCR_DC_PatrolJsonApi patrolJsonApi = new SCR_DC_PatrolJsonApi;	
 		patrolJsonApi.Load();
-		delete patrolJsonApi;
+		delete patrolJsonApi;		
 	}	
 	
 	//------------------------------------------------------------------------------------------------

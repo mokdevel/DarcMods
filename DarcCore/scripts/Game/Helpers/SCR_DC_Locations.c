@@ -46,6 +46,7 @@ sealed class SCR_DC_Locations
 				vector origin = tmpMapItem.Entity().GetOrigin();			//TBD: MapItem position on DS is "0 0 0". This is a bug in 1.3.0
 				tmpMapItem.SetPos(origin[0], origin[2]);
 				locationArray.Insert(tmpMapItem.Entity());
+				
 				m_debugLocationArray.Insert(tmpMapItem);
 			}			
 		}
@@ -87,7 +88,7 @@ sealed class SCR_DC_Locations
 	{
 		array<IEntity> slots = {};
 
-		if (SCR_DC_Log.GetLogLevel() != DC_LogLevel.NONE)
+		if (SCR_DC_Log.GetLogLevel() > DC_LogLevel.NORMAL)
 		{		
 /*			SCR_DC_Log.Add( string.Format("[SCR_DC_Locations:ShowDebugInfo] Found %1 locations of type (%2) %3", 
 				m_tmpLocationArray.Count(),
@@ -103,7 +104,7 @@ sealed class SCR_DC_Locations
 					location.GetBaseType(),
 					location.GetPos(),
 					location.Entity()
-					), LogLevel.DEBUG);
+					), LogLevel.SPAM);
 
 				slots.Clear();
 				int slotcount = GetLocationSlots(slots, location.GetPos(), 200);

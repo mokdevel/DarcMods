@@ -16,7 +16,7 @@ class RplExample3ComponentColorAnim : ScriptComponent
     [RplProp(onRplName: "OnColorIdxChanged")]
 	string m_SomeString;
 
-	private ref array<string> m_SomeArray = {"one", "two", "three", "four"};
+//	private ref array<string> m_SomeArray = {"one", "two", "three", "four"};
 	
     override void OnPostInit(IEntity owner)
     {
@@ -74,7 +74,7 @@ class RplExample3ComponentColorAnim : ScriptComponent
         // Update replicated state with results from the simulation.
         m_ColorIdx = newColorIdx;
  
-		m_SomeString = m_SomeArray.GetRandomElement();
+//		m_SomeString = m_SomeArray.GetRandomElement();
 		
         // After we have written new value of color index, we let replication know
         // that there are changes in our state that need to be replicated to proxies.
@@ -84,19 +84,19 @@ class RplExample3ComponentColorAnim : ScriptComponent
  
         // Presentation of replicated state on authority.
         RplExampleDebugShape.Cast(owner).SetColorByIdx(m_ColorIdx);
-		ShowHint();
+//		ShowHint();
     }
  
     // Presentation of replicated state on proxy.
     private void OnColorIdxChanged()
     {
         RplExampleDebugShape.Cast(GetOwner()).SetColorByIdx(m_ColorIdx);
-		ShowHint();
+//		ShowHint();
     }
 	
-	private void ShowHint()
+/*	private void ShowHint()
 	{
 		SCR_HintManagerComponent hintComponent = SCR_HintManagerComponent.GetInstance();
 		hintComponent.ShowCustomHint("Hello", m_SomeString, 2);
-	}	
+	}*/
 }
