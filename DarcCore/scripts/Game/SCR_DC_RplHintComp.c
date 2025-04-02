@@ -1,7 +1,7 @@
-class RplHintCompClass : ScriptComponentClass { }
-RplHintCompClass g_RplHintCompClass;
+class SCR_DC_RplHintCompClass : ScriptComponentClass { }
+SCR_DC_RplHintCompClass g_RplHintCompClass;
  
-class RplHintComp : ScriptComponent
+class SCR_DC_RplHintComp : ScriptComponent
 {
 //	private IEntity m_HintEntity;	
 	 
@@ -17,7 +17,7 @@ class RplHintComp : ScriptComponent
 
 		BaseRplComponent m_rplComponent = null;
 				
-        auto hintEnt = SCR_DC_RplHint.Cast(owner);
+        auto hintEnt = SCR_DC_RplHintEntity.Cast(owner);
         if (!hintEnt)
         {
             Print("SCR_DC This example requires that the entity is of type `SCR_DC_RplHint`.", LogLevel.WARNING);
