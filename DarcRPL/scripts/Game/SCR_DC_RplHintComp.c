@@ -21,7 +21,7 @@ class RplHintComp : ScriptComponent
         auto hintEnt = RplDCHint.Cast(owner);
         if (!hintEnt)
         {
-            Print("This example requires that the entity is of type `RplDCHint`.", LogLevel.WARNING);
+            Print("SCR_DC This example requires that the entity is of type `RplDCHint`.", LogLevel.WARNING);
             return;
         }
 				
