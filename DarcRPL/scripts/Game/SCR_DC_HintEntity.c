@@ -1,9 +1,9 @@
-class RplDCHintClass: GenericEntityClass {}
-RplDCHintClass g_RplDCHintClassInst;
+class SCR_DC_RplHintClass: GenericEntityClass {}
+SCR_DC_RplHintClass g_SCR_DC_RplHintClassInst;
  
-class RplDCHint : GenericEntity
+class SCR_DC_RplHint : GenericEntity
 {
-	protected static RplDCHint s_Instance;	
+	protected static SCR_DC_RplHint s_Instance;	
 
     void RplDCHint(IEntitySource src, IEntity parent)
     {
@@ -32,7 +32,7 @@ class RplDCHint : GenericEntity
 		SCR_DC_DebugEntity debug = SCR_DC_DebugEntity.GetInstance();
 	\endcode
 	*/
-	static RplDCHint GetInstance()
+	static SCR_DC_RplHint GetInstance()
 	{
 		return s_Instance;		
 	}

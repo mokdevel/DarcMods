@@ -7,7 +7,6 @@ class RplHintComp : ScriptComponent
 	 
     [RplProp(onRplName: "OnShowHint")]
 	string m_SomeString;
-	BaseRplComponent m_rplComponent = null;
 	
 	private ref array<string> m_SomeArray = {"one", "two", "three", "four"};
 	
@@ -15,13 +14,13 @@ class RplHintComp : ScriptComponent
     {
         // We must belong to some RplComponent in order for replication to work.
         // We search for it and warn user when we can't find it.
-		
-//		m_HintEntity = IEntity.Cast(GetGame().SpawnEntity(SCR_DC_HintEntity, GetGame().GetWorld(), null));		
 
-        auto hintEnt = RplDCHint.Cast(owner);
+		BaseRplComponent m_rplComponent = null;
+				
+        auto hintEnt = SCR_DC_RplHint.Cast(owner);
         if (!hintEnt)
         {
-            Print("SCR_DC This example requires that the entity is of type `RplDCHint`.", LogLevel.WARNING);
+            Print("SCR_DC This example requires that the entity is of type `SCR_DC_RplHint`.", LogLevel.WARNING);
             return;
         }
 				
@@ -40,9 +39,10 @@ class RplHintComp : ScriptComponent
         if (m_rplComponent.Role() == RplRole.Authority)
         {
             SetEventMask(owner, EntityEvent.FRAME);
+			GetGame().GetCallqueue().CallLater(HintTime, 3000, false);
         }
 
-		GetGame().GetCallqueue().CallLater(HintTime, 3000, false);				
+//		GetGame().GetCallqueue().CallLater(HintTime, 3000, false);
     }
  
     override void EOnFrame(IEntity owner, float timeSlice)
@@ -52,8 +52,8 @@ class RplHintComp : ScriptComponent
 	
     private void HintTime()
     {
-		if (m_rplComponent.Role() == RplRole.Authority)
-//		if (true)
+//		if (m_rplComponent.Role() == RplRole.Authority)
+		if (true)
 		{
 			Print("SCR_DC Hinttime.", LogLevel.NORMAL);
 			
