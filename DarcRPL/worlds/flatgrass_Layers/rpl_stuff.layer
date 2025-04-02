@@ -1,0 +1,6 @@
+RplExampleDebugShape : "{73F3B373976B3B1A}Prefabs/Helpers/RPLDebugShapeHelper.et" {
+ coords 6004.375 10.853 5999.849
+}
+RplDCHint : "{924FD1167E7B26EA}Prefabs/Helpers/RPLHintHelper.et" {
+ coords 6083.371 10 6032.557
+}
