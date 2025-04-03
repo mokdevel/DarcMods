@@ -5,7 +5,7 @@ class SCR_DC_RplHintEntity : GenericEntity
 {
 	protected static SCR_DC_RplHintEntity s_Instance;	
 
-    void RplDCHint(IEntitySource src, IEntity parent)
+/*    void RplDCHint(IEntitySource src, IEntity parent)
     {
         this.SetEventMask(EntityEvent.FRAME);
     }
@@ -13,12 +13,13 @@ class SCR_DC_RplHintEntity : GenericEntity
 	override void EOnFrame(IEntity owner, float timeSlice)
 	{
 //		SCR_DC_DebugHelper.OnFrame(owner);
-	}
+	}*/
 
 	override void EOnActivate(IEntity owner)
 	{
 		SetEventMask(EntityEvent.FRAME | EntityEvent.POSTFRAME);
         SetFlags(EntityFlags.ACTIVE, true);
+		s_Instance = this;
 		Print("[SCR_DC_HintEntity] Running", LogLevel.NORMAL);
 	}
 

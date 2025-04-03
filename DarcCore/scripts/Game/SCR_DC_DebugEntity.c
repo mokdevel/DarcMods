@@ -21,6 +21,7 @@ class SCR_DC_DebugEntity: GenericEntity
 		SCR_DC_DebugHelper.Setup();
 		SetEventMask(EntityEvent.FRAME | EntityEvent.POSTFRAME);
         SetFlags(EntityFlags.ACTIVE, true);
+		s_Instance = this;
 		SCR_DC_Log.Add("[SCR_DC_DebugEntity] Running", LogLevel.DEBUG);
 	}
 

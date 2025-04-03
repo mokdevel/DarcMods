@@ -8,6 +8,7 @@ class RplHintComp : ScriptComponent
     [RplProp(onRplName: "OnShowHint")]
 	string m_SomeString;
 	
+	string m_SomeString2;
 	private ref array<string> m_SomeArray = {"one", "two", "three", "four"};
 	
     override void OnPostInit(IEntity owner)
@@ -38,18 +39,10 @@ class RplHintComp : ScriptComponent
         // passive components that do something only when necessary.
         if (m_rplComponent.Role() == RplRole.Authority)
         {
-//            SetEventMask(owner, EntityEvent.FRAME);
 			GetGame().GetCallqueue().CallLater(HintTime, 3000, false);
         }
-
-//		GetGame().GetCallqueue().CallLater(HintTime, 3000, false);
     }
  
-    override void EOnFrame(IEntity owner, float timeSlice)
-    {
-//		GetGame().GetCallqueue().CallLater(HintTime, 3000, true);
-    }	
-	
     private void HintTime()
     {
 //		if (m_rplComponent.Role() == RplRole.Authority)
@@ -57,12 +50,15 @@ class RplHintComp : ScriptComponent
 		{
 			Print("SCR_DC Hinttime.", LogLevel.NORMAL);
 			
-			m_SomeString = m_SomeArray.GetRandomElement() + " - " + System.GetTickCount();		
+			//This is for the RplProp
+//			m_SomeString = m_SomeArray.GetRandomElement() + " - " + System.GetTickCount();	
+//	        Replication.BumpMe();
 			
-	        Replication.BumpMe();
+			m_SomeString2 = m_SomeArray.GetRandomElement() + " - 2 - " + System.GetTickCount();
+			
 			ShowHint();
 			
-			GetGame().GetCallqueue().CallLater(HintTime, 5000, false);						
+			GetGame().GetCallqueue().CallLater(HintTime, 10000, false);						
 		}
 		else
 		{
@@ -70,15 +66,56 @@ class RplHintComp : ScriptComponent
 		}
     }
  
-    // Presentation of replicated state on proxy.
+    // Presentation of replicated state on proxy. This is used for the RplProp.
     private void OnShowHint()
     {
 		ShowHint();
     }
 	
+	// Show the hint
 	private void ShowHint()
 	{
+		//RplProp section
+	//	SCR_HintManagerComponent hintComponent = SCR_HintManagerComponent.GetInstance();
+	//	hintComponent.ShowCustomHint("Hello", m_SomeString, 2);
+		
+		//Rpc section
+		ShowGlobalPopup("Oh dear", m_SomeString2, 6);
+	}
+	
+ 	void ShowGlobalPopup(string hl, string msg, int dur)
+    {
+        Rpc(RpcDo_ShowPopup, hl, msg, dur); // broadcast to clients
+        RpcDo_ShowPopup(hl, msg, dur); // try to show on authority
+    }
+    
+    [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
+    protected void RpcDo_ShowPopup(string hl, string msg, int dur)
+    {
+		Print("SCR_DC RpcDo_ShowPopup:" + msg, LogLevel.NORMAL);
+		
+        SCR_PopUpNotification.GetInstance().PopupMsg(hl, dur, msg);
+		
+		string hintTitle = "Victory!";
+		string hintDescription = msg;
+		float duration = dur;
+		EHint type = EHint.UNDEFINED;
+		bool isTimerVisible = true;
+		EFieldManualEntryId fieldManualEntry = EFieldManualEntryId.NONE;
+		
+		// Create the hint info
+		SCR_HintUIInfo hintInfo = SCR_HintUIInfo.CreateInfo(hintDescription, hintTitle, duration, type, fieldManualEntry, isTimerVisible);		
+		
 		SCR_HintManagerComponent hintComponent = SCR_HintManagerComponent.GetInstance();
-		hintComponent.ShowCustomHint("Hello", m_SomeString, 2);
-	}	
+		if(hintComponent)
+		{
+//			hintComponent.ShowCustomHint("Hello", msg, dur);
+			hintComponent.ShowHint(hintInfo);
+		}
+		else
+		{
+			Print("SCR_DC hintComponent not found", LogLevel.NORMAL);
+		}
+		
+    }	
 }

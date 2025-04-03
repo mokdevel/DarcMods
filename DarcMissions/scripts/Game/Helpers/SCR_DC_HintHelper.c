@@ -5,7 +5,15 @@ class SCR_DC_HintHelper
 {	
 	static void ShowHint(string title, string details, int timeOut)
 	{	
+		
+		SCR_DC_RplHintEntity rplHintEntity = SCR_DC_RplHintEntity.GetInstance();
+		
+		SCR_DC_RplHintComp hintManagerComponent = SCR_DC_RplHintComp.GetInstance();
+		hintManagerComponent.ShowGlobalHint(details, title, timeOut);
+		//(details, title, 10, false, EFieldManualEntryId.NONE, true);
 
+/*		
+		
 		SCR_HintUIInfo info = SCR_HintUIInfo();
         info.CreateInfo("HintUIInfo Description", "HintUIInfo name", 10.0, EHint.CONFLICT_OVERVIEW, EFieldManualEntryId.CONFLICT_OVERVIEW, false);
         
@@ -16,7 +24,7 @@ class SCR_DC_HintHelper
 		}
         //SCR_HintManagerComponent.GetInstance().ShowHint(info);
 		return;
-		
+*/		
 /*		array<int> players = {};
 		GetGame().GetPlayerManager().GetPlayers(players);
 		

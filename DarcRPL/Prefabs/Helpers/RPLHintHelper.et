@@ -4,6 +4,7 @@ SCR_DC_RplHint {
   RplHintComp "{6504E489D0DF11D2}" {
   }
   RplComponent "{6504E489D0DF11E7}" {
+   Streamable Disabled
   }
   Hierarchy "{6504E489D0DF11E4}" {
   }

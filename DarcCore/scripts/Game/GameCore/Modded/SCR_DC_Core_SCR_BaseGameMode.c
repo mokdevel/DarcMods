@@ -26,7 +26,8 @@ modded class SCR_BaseGameMode
 			
 	        EntitySpawnParams params = EntitySpawnParams();
 	        params.TransformMode = ETransformMode.WORLD;			
-	        params.Transform[3] = "900 0 2600";			
+//	        params.Transform[3] = "900 0 2600";
+	        params.Transform[3] = "0 0 0";	
 			
 			Resource resource = Resource.Load("{CF2D9888CE3C5AD7}Prefabs/Helpers/RPLHintHelper.et");
 			if (!resource.IsValid())
