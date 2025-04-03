@@ -24,14 +24,8 @@ class SCR_DC_RplHintEntity : GenericEntity
 	}
 
 	//------------------------------------------------------------------------------------------------
-	/*!
-	Get instance of the SCR_DC_DebugEntity.
-	\return SCR_DC_DebugEntity
-
-	Example:
-	\code
-		SCR_DC_DebugEntity debug = SCR_DC_DebugEntity.GetInstance();
-	\endcode
+	/*!	
+	Return instance to class
 	*/
 	static SCR_DC_RplHintEntity GetInstance()
 	{

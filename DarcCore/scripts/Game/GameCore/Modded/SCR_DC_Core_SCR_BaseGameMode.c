@@ -24,19 +24,19 @@ modded class SCR_BaseGameMode
 			//Initialize the SCR_DC_HintEntity
 			SCR_DC_Log.Add("[SCR_DC_Hint_BaseGameMode] Creating SCR_DC_HintEntity", LogLevel.NORMAL);
 			
-	        EntitySpawnParams params = EntitySpawnParams();
+/*	        EntitySpawnParams params = EntitySpawnParams();
 	        params.TransformMode = ETransformMode.WORLD;			
 //	        params.Transform[3] = "900 0 2600";
-	        params.Transform[3] = "0 0 0";	
+	        params.Transform[3] = "0 0 0";	*/
 			
 			Resource resource = Resource.Load("{CF2D9888CE3C5AD7}Prefabs/Helpers/RPLHintHelper.et");
 			if (!resource.IsValid())
 			{
-				SCR_DC_Log.Add("[SCR_DC_Hint_BaseGameMode] Failed to create SCR_DC_HintEntity", LogLevel.NORMAL);
+				SCR_DC_Log.Add("[SCR_DC_Hint_BaseGameMode] Failed to create SCR_DC_RplHintEntity", LogLevel.NORMAL);
 				return;
 			}
 	
-			m_SCR_DC_RplHintEntity = SCR_DC_RplHintEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params));
+			m_SCR_DC_RplHintEntity = SCR_DC_RplHintEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));
 						
 			//Initialize core
 			m_SCR_DC_Core = new SCR_DC_Core();
