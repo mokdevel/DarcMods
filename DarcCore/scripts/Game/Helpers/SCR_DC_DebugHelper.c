@@ -1,5 +1,11 @@
 //Helpers SCR_DC_DebugHelper.c
 
+//------------------------------------------------------------------------------------------------
+/*!
+The entity that takes care of showing debug markers and other things. Currently works only in WB.
+*/
+
+//------------------------------------------------------------------------------------------------
 modded enum SCR_DebugMenuID {
     MODMENU,
     MODMENU_WAYPOINTS,

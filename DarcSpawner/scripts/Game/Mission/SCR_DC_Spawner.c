@@ -71,6 +71,8 @@ class SCR_DC_Spawner
 			m_Config.spawnOnRoad = false;
 			SCR_DC_Log.Add("[SCR_DC_Spawner] RoadNetworkManager not defined. Vehicles will not be spawned on roads.", LogLevel.ERROR);
 		}
+		
+		SCR_DC_Resources.GetResources();
 	}
 
 	void ~SCR_DC_Spawner()

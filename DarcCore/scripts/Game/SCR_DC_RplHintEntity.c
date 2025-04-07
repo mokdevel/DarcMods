@@ -1,5 +1,14 @@
+//------------------------------------------------------------------------------------------------
+/*!
+This is the hint entity class.
+
+This is the entity with the RPL component attached and uses SCR_DC_RplHintComp for the communication.
+The entity is not streamed so everyone gets the hint regardless on where they are on the map.
+*/
+
+//------------------------------------------------------------------------------------------------
 class SCR_DC_RplHintEntityClass: GenericEntityClass {}
-SCR_DC_RplHintEntityClass g_SCR_DC_RplHintEntityClassInst;
+//SCR_DC_RplHintEntityClass g_SCR_DC_RplHintEntityClassInst;
  
 class SCR_DC_RplHintEntity : GenericEntity
 {
