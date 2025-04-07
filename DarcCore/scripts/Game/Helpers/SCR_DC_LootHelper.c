@@ -22,6 +22,17 @@ class SCR_DC_Loot : Managed
 //------------------------------------------------------------------------------------------------
 sealed class SCR_DC_LootHelper
 {
+	private static ref SCR_DC_LootListJsonApi m_LootListJsonApi = new SCR_DC_LootListJsonApi();	
+	private static ref SCR_DC_LootListConfig m_Config;
+	
+	static void Setup()
+	{
+		//Load loot config
+		m_LootListJsonApi.Load();
+		m_Config = m_LootListJsonApi.conf;
+		m_Config.Populate();
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Spawn a list of items to an entity storage. 
@@ -36,13 +47,49 @@ sealed class SCR_DC_LootHelper
 		{
 			if (Math.RandomFloat(0, 1) < itemChance)
 			{
-				ResourceName resource = itemName;
+				ResourceName resource = "";
+				
+				if (itemName[0] == "{")
+				{
+					resource = itemName;
+				}
+				else
+				{
+					SCR_DC_Log.Add("[SCR_DC_LootHelper:SpawnItemsToStorage] Using lootlist: " + itemName, LogLevel.DEBUG);
+					resource = FindLootItem(itemName);
+				}
+				
 				bool result = AddToStorage(storage, resource);			
 				SCR_DC_Log.Add("[SCR_DC_LootHelper:SpawnItemsToStorage] Adding item " + resource + ". Success: " + result, LogLevel.DEBUG);
 			}
 		}
 	}		
-			
+
+	//------------------------------------------------------------------------------------------------
+	/*! 
+	Find the loot item
+	*/	
+	static ResourceName FindLootItem(string lootListName)
+	{
+		int lootIndex = -1;
+		for (int i = 0; i < m_Config.lootLists.Count(); i++)		
+		{
+			if (m_Config.lootLists[i].lootListName == lootListName)
+			{
+				lootIndex = i;
+				break;
+			}
+		}
+		
+		if (lootIndex == -1)
+		{
+			return "";				
+		}
+		
+		ResourceName resourceName = m_Config.lootLists[lootIndex].itemList.GetRandomElement();
+		return resourceName;
+	}
+				
 	//------------------------------------------------------------------------------------------------
 	/*! 
 	Try to add an item to a storage of an entity

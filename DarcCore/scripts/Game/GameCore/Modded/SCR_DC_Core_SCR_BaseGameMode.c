@@ -6,9 +6,6 @@ modded class SCR_BaseGameMode
 	private ref SCR_DC_Core m_SCR_DC_Core;
 	private SCR_DC_DebugEntity m_SCR_DC_DebugEntity;
 	private SCR_DC_RplHintEntity m_SCR_DC_RplHintEntity;
-
-	private ref SCR_DC_LootListJsonApi m_LootListJsonApi = new SCR_DC_LootListJsonApi();	
-	private ref SCR_DC_LootListConfig m_Config;
 	
     override void OnGameStart()
     {
@@ -49,10 +46,7 @@ modded class SCR_BaseGameMode
 			SCR_DC_Log.Add("[SCR_DC_Core_BaseGameMode:NonMaster] Core not needed for client.", LogLevel.DEBUG);        
 		}
 		
-		//Load loot config
-		m_LootListJsonApi.Load();
-		m_Config = m_LootListJsonApi.conf;
-		m_Config.Populate();
+		SCR_DC_LootHelper.Setup();
     }	
 }
 	

@@ -262,7 +262,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {0,0,1,1,2};
+		conf.occupationList = {1};//{0,0,1,1,2};
 
 		//----------------------------------------------------
 		SCR_DC_Occupation occupation0 = new SCR_DC_Occupation;
@@ -323,6 +323,9 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		
 		SCR_DC_Loot occupation1loot = new SCR_DC_Loot;
 		lootItems = {
+				"WEAPON_RIFLE",
+				"WEAPON_HANDGUN",
+				"ITEM_MEDICAL",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
@@ -332,7 +335,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
 			};
-		occupation1loot.Set(0.9, lootItems);
+		occupation1loot.Set(1.0, lootItems);
 		occupation1.loot = occupation1loot;
 		
 		SCR_DC_Structure ocu1item0 = new SCR_DC_Structure;

@@ -11,13 +11,11 @@ sealed class SCR_DC_Resources
 						
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Find slots around position. Slots are the ones where you can put depots and similar.
-	\param slots Array where to store the slots entities
-	\param position Middle position
-	\param distance Radius to seach
+	Get items for the lootlist
+	\param itemList The itemList to fill with loot items
+	\param mod From which mod to search for items. Example: "$ArmaReforger:Prefabs/Weapons"
+	\param lootList 
 	*/	
-//	static int GetResources(out array<IEntity> slots, vector position, float distance = 200)
-	
 	static void GetItemList(out array<ResourceName> itemList, string mod, SCR_DC_LootList lootList)
 	{
 		SearchResourcesFilter filter = new SearchResourcesFilter;
@@ -30,35 +28,17 @@ sealed class SCR_DC_Resources
 		ResourceDatabase.SearchResources(filter, GetResourcesFilter);		
 		itemList.InsertAll(m_resourceNames);
 		
-		LeaveFilter(itemList, lootList.include);
-		RemoveFilter(itemList, lootList.exclude);
+		IncludeFilter(itemList, lootList.include);
+		ExcludeFilter(itemList, lootList.exclude);
 //		itemList.Debug();
 	}
-		
-/*	static int GetResources()
-	{
-		SCR_DC_Log.Add("[SCR_DC_Resources:GetResources] Searching...", LogLevel.DEBUG);
-		
-		SearchResourcesFilter filter = new SearchResourcesFilter;
-		filter.rootPath = "$ArmaReforger:Prefabs/Weapons";
-//		filter.rootPath = "$WCS_Armaments:Prefabs/Weapons";
-		filter.fileExtensions = {"et"};
-		filter.searchStr = {""};
-		filter.recursive = true;
-
-		ResourceDatabase.SearchResources(filter, GetResourcesFilter);		
-		
-		m_resourceNames.Debug();
-		LeaveFilter(m_resourceNames, {"Rifles", "Handguns"});
-		RemoveFilter(m_resourceNames, {"Ammo", "_Base", "Magazines", "Tripods", "Explosives", "Attachments", "Warheads", "Grenades", "Mortars", "Aircraftweapons", "Cannons", "Core"});
-		m_resourceNames.Debug();
-		
-		return 1;
-	}	*/
 	
-	static void RemoveFilter(out array<ResourceName> m_resourceNames, array<string> filters)
-	{
-	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Remove the items from array that match the filters
+	*/	
+	static void ExcludeFilter(out array<ResourceName> m_resourceNames, array<string> filters)
+	{	
 		foreach(string filter: filters)
 		{
 			filter.ToLower();
@@ -76,7 +56,11 @@ sealed class SCR_DC_Resources
 		}
 	}
 
-	static void LeaveFilter(out array<ResourceName> m_resourceNames, array<string> filters)
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Include only the items in the array that match the filters. Remove others.
+	*/	
+	static void IncludeFilter(out array<ResourceName> m_resourceNames, array<string> filters)
 	{
 		for (int i = 0; i < m_resourceNames.Count(); i++)		
 		{
@@ -104,9 +88,8 @@ sealed class SCR_DC_Resources
 		
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Call back filter for GetLocationsSlots
-	*/	
-	
+	Call back filter for ResourceDatabase.SearchResources
+	*/		
 	static private bool GetResourcesFilter(ResourceName resourceName, string exactPath = "")
 	{
 //		SCR_DC_Log.Add("[SCR_DC_Resources:GetResourcesFilter] Found: " + resourceName + " at " + exactPath, LogLevel.DEBUG);

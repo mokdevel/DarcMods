@@ -321,6 +321,5 @@ sealed class SCR_DC_DebugHelper
 		pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + 12;
 		
 		return pos;
-	}
-	
+	}	
 }

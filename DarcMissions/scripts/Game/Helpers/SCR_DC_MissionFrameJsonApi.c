@@ -121,7 +121,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
 			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL};
-//			conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
+			conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CONVOY};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.PATROL};		
@@ -131,7 +131,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 //			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.HUNTER};
 			conf.missionTypeArrayStatic = {DC_EMissionType.CRASHSITE};
-//			conf.missionTypeArrayStatic = {};
+			conf.missionTypeArrayStatic = {};
 		#endif
 	}
 }
