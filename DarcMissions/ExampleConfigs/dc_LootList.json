@@ -1,0 +1,71 @@
+{
+	"version": 1,
+	"author": "darc",
+	"modList": [
+		"$ArmaReforger:Prefabs",
+		"$WCS_Armaments:Prefabs",
+		"$M110MarksmanRifle:Prefabs"
+	],
+	"lootLists": [
+		{
+			"lootListName": "WEAPON_RIFLE",
+			"lootListType": 0,
+			"modDir": "/Weapons/Rifles",
+			"include": [
+				"Rifle"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"itemList": []
+		},
+		{
+			"lootListName": "WEAPON_LAUNCHER",
+			"lootListType": 2,
+			"modDir": "/Weapons/Launchers",
+			"include": [
+				"Launcher"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"itemList": []
+		},
+		{
+			"lootListName": "WEAPON_HANDGUN",
+			"lootListType": 1,
+			"modDir": "/Weapons/Handguns",
+			"include": [
+				"Handgun"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"itemList": []
+		},
+		{
+			"lootListName": "WEAPON_GRENADE",
+			"lootListType": 3,
+			"modDir": "/Weapons/Grenades",
+			"include": [
+				""
+			],
+			"exclude": [
+				"_Base"
+			],
+			"itemList": []
+		},
+		{
+			"lootListName": "ITEM_MEDICAL",
+			"lootListType": 4,
+			"modDir": "/Items/Medicine",
+			"include": [
+				""
+			],
+			"exclude": [
+				"_Base"
+			],
+			"itemList": []
+		}
+	]
+}

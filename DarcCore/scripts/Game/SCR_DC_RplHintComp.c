@@ -60,15 +60,15 @@ class SCR_DC_RplHintComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------
  	void ShowGlobalHint(string hl, string msg, int dur)
     {
-        Rpc(RpcDo_ShowPopup, hl, msg, dur); // broadcast to clients
-        RpcDo_ShowPopup(hl, msg, dur); // try to show on authority
+        Rpc(RpcDo_ShowHint, hl, msg, dur); // broadcast to clients
+        RpcDo_ShowHint(hl, msg, dur); // try to show on authority
     }
     
 	//------------------------------------------------------------------------------------------------
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-    protected void RpcDo_ShowPopup(string title, string msg, int dur)
+    protected void RpcDo_ShowHint(string title, string msg, int dur)
     {
-		SCR_DC_Log.Add("[SCR_DC_RplHintComp] RpcDo_ShowHint:" + msg, LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_RplHintComp:RpcDo_ShowHint] Hint: " + msg, LogLevel.DEBUG);
 		
 		string hintTitle = title;
 		string hintDescription = msg;
@@ -87,7 +87,7 @@ class SCR_DC_RplHintComp : ScriptComponent
 		}
 		else
 		{
-			SCR_DC_Log.Add("[SCR_DC_RplHintComp] SCR_HintManagerComponent not found", LogLevel.ERROR);
+			SCR_DC_Log.Add("[SCR_DC_RplHintComp:RpcDo_ShowHint] SCR_HintManagerComponent not found", LogLevel.ERROR);
 		}		
     }	
 }

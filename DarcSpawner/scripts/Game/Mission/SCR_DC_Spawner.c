@@ -71,8 +71,6 @@ class SCR_DC_Spawner
 			m_Config.spawnOnRoad = false;
 			SCR_DC_Log.Add("[SCR_DC_Spawner] RoadNetworkManager not defined. Vehicles will not be spawned on roads.", LogLevel.ERROR);
 		}
-		
-		SCR_DC_Resources.GetResources();
 	}
 
 	void ~SCR_DC_Spawner()
@@ -155,7 +153,10 @@ class SCR_DC_Spawner
 				SCR_DC_DebugHelper.AddDebugPos(entity, Color.VIOLET);
 				
 				SCR_DC_LootHelper.SpawnItemsToStorage(entity, m_Config.spawnSets[m_spawnSetID].itemNames, m_Config.spawnSets[m_spawnSetID].itemChance);			
-				SCR_DC_MapMarkerHelper.CreateMapMarker(entity.GetOrigin(), DC_EMissionIcon.REDCROSS_SMALL, "", "");
+				if(m_Config.showMarker)
+				{
+					SCR_DC_MapMarkerHelper.CreateMapMarker(entity.GetOrigin(), DC_EMissionIcon.REDCROSS_SMALL, "", "");
+				}
 			}
 			else
 			{

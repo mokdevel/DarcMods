@@ -82,10 +82,13 @@ class SCR_DC_NonValidAreaJsonApi : SCR_DC_JsonApi
 		SCR_DC_NonValidArea areaA2 = new SCR_DC_NonValidArea;
 		areaA2.Set("Arland", "1080 0 3300", 200, "Arland - Harbour - for testing");
 		conf.nonValidAreas.Insert(areaA2);
-
-		//Dummy for Arland
 		SCR_DC_NonValidArea areaA3 = new SCR_DC_NonValidArea;
-		areaA3.Set("", "900 0 1450", 300, "Arland - Gull Island - for testing");
-		conf.nonValidAreas.Insert(areaA3);		
+		areaA3.Set("Arland", "4500 0 10700", 200, "Arland - St. Philippe");
+		conf.nonValidAreas.Insert(areaA3);
+
+		//Dummy for Arland, but as worldname is not defined, this will be valid for all worlds.
+		SCR_DC_NonValidArea areaA10 = new SCR_DC_NonValidArea;
+		areaA10.Set("", "900 0 1450", 300, "Arland - Gull Island - for testing");
+		conf.nonValidAreas.Insert(areaA10);		
 	}
 }

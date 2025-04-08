@@ -49,13 +49,12 @@ sealed class SCR_DC_LootHelper
 			{
 				ResourceName resource = "";
 				
-				if (itemName[0] == "{")
+				if (itemName[0] == "{")			//Manually defined prefabs are added
 				{
 					resource = itemName;
 				}
 				else
 				{
-					SCR_DC_Log.Add("[SCR_DC_LootHelper:SpawnItemsToStorage] Using lootlist: " + itemName, LogLevel.DEBUG);
 					resource = FindLootItem(itemName);
 				}
 				
@@ -83,9 +82,11 @@ sealed class SCR_DC_LootHelper
 		
 		if (lootIndex == -1)
 		{
+			SCR_DC_Log.Add("[SCR_DC_LootHelper:FindLootItem] No lootList with name: " + lootListName + ". Typo?", LogLevel.WARNING);
 			return "";				
 		}
-		
+
+		SCR_DC_Log.Add("[SCR_DC_LootHelper:SpawnItemsToStorage] Using lootlist: " + lootListName, LogLevel.DEBUG);
 		ResourceName resourceName = m_Config.lootLists[lootIndex].itemList.GetRandomElement();
 		return resourceName;
 	}

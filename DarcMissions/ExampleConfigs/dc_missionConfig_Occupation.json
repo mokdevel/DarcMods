@@ -1,1 +1,270 @@
-{"version":1,"author":"darc","missionCycleTime":30,"showMarker":true,"showHint":true,"emptySize":7,"occupationList":[0,0,1,1,2],"occupations":[{"comment":"Gogland: Mission to be used with Escapists.","locationPos":[0.0,0.0,0.0],"locationName":"any","title":"Camp in ","info":"Avoid the location","locationTypes":[60,64],"groupCount":[1,2],"waypointRange":[50,300],"waypointGenType":1,"waypointMoveType":5,"groupTypes":["{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et","{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et","{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"],"AISkill":50,"AIperception":1.0,"loot":null,"campItems":[]},{"comment":"Bandit camp spawning to non city areas","locationPos":[0.0,0.0,0.0],"locationName":"any","title":"Bandit camp at ","info":"Bandits are protecting their valuable loot.","locationTypes":[64,62,75,79,80,81,15],"groupCount":[1,2],"waypointRange":[25,100],"waypointGenType":2,"waypointMoveType":5,"groupTypes":["{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et","{4D3BBEC1A955626A}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_Squad.et","{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et","{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"],"AISkill":50,"AIperception":1.0,"loot":{"box":null,"itemChance":0.8999999761581421,"items":["{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et","{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et","{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et","{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et","{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et","{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et","{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et","{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"]},"campItems":[{"m_Resource":"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et","m_Position":[1032.0379638671876,39.0,2478.923095703125],"m_Rotation":[0.0,0.0,0.0]},{"m_Resource":"{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et","m_Position":[1028.550048828125,39.0,2478.159912109375],"m_Rotation":[0.0,119.33399963378906,0.0]},{"m_Resource":"{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et","m_Position":[1029.9000244140626,39.0,2477.43994140625],"m_Rotation":[0.0,0.0,0.0]},{"m_Resource":"{0511E95F422061BB}Prefabs/Props/Recreation/Camp/TentSmall_02/TentSmall_02_blue.et","m_Position":[1029.9739990234376,39.0,2480.114013671875],"m_Rotation":[0.0,0.0,0.0]}]},{"comment":"Occupation that will spawn mainly to cities and towns with USSR forces.","locationPos":[0.0,0.0,0.0],"locationName":"any","title":"Occupation at ","info":"City is being occupied.","locationTypes":[59,59,59,59,59,70,60,61,81],"groupCount":[2,4],"waypointRange":[50,250],"waypointGenType":3,"waypointMoveType":1,"groupTypes":["{30ED11AA4F0D41E5}Prefabs/Groups/OPFOR/Group_USSR_FireGroup.et","{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et","{96BAB56E6558788E}Prefabs/Groups/OPFOR/Group_USSR_Team_AT.et","{43C7A28EEB660FF8}Prefabs/Groups/OPFOR/Group_USSR_Team_GL.et","{1C0502B5729E7231}Prefabs/Groups/OPFOR/Group_USSR_Team_Suppress.et"],"AISkill":50,"AIperception":1.0,"loot":{"box":null,"itemChance":0.8999999761581421,"items":["{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et","{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et","{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et","{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et","{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et","{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et","{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et","{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"]},"campItems":[{"m_Resource":"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et","m_Position":[1018.1640014648438,39.0,2501.93701171875],"m_Rotation":[0.0,0.0,0.0]},{"m_Resource":"{2CB4BFA62C2D9C12}Prefabs/Structures/Military/CamoNets/CamoNet_Small_Top_01_base.et","m_Position":[1017.8569946289063,39.0,2501.720947265625],"m_Rotation":[0.0,0.0,0.0]},{"m_Resource":"{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et","m_Position":[1018.14599609375,39.0,2504.881103515625],"m_Rotation":[0.0,0.0,0.0]},{"m_Resource":"{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et","m_Position":[1020.4559936523438,39.0,2500.89599609375],"m_Rotation":[0.0,114.56900024414063,0.0]}]}]}
+{
+	"version": 1,
+	"author": "darc",
+	"missionCycleTime": 30,
+	"showMarker": true,
+	"showHint": true,
+	"emptySize": 7,
+	"occupationList": [
+		0,
+		0,
+		1,
+		1,
+		2
+	],
+	"occupations": [
+		{
+			"comment": "Gogland: Mission to be used with Escapists.",
+			"locationPos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"locationName": "any",
+			"title": "Camp in ",
+			"info": "Avoid the location",
+			"locationTypes": [
+				60,
+				64
+			],
+			"groupCount": [
+				1,
+				2
+			],
+			"waypointRange": [
+				50,
+				300
+			],
+			"waypointGenType": 1,
+			"waypointMoveType": 5,
+			"groupTypes": [
+				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
+				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
+				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+			],
+			"AISkill": 50,
+			"AIperception": 1.0,
+			"loot": null,
+			"campItems": []
+		},
+		{
+			"comment": "Bandit camp spawning to non city areas",
+			"locationPos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"locationName": "any",
+			"title": "Bandit camp at ",
+			"info": "Bandits are protecting their valuable loot.",
+			"locationTypes": [
+				64,
+				62,
+				75,
+				79,
+				80,
+				81,
+				15
+			],
+			"groupCount": [
+				1,
+				2
+			],
+			"waypointRange": [
+				25,
+				100
+			],
+			"waypointGenType": 2,
+			"waypointMoveType": 5,
+			"groupTypes": [
+				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
+				"{4D3BBEC1A955626A}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_Squad.et",
+				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
+				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+			],
+			"AISkill": 50,
+			"AIperception": 1.0,
+			"loot": {
+				"box": null,
+				"itemChance": 1.0,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"ITEM_MEDICAL",
+					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+					"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
+					"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
+					"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
+				]
+			},
+			"campItems": [
+				{
+					"m_Resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+					"m_Position": [
+						1032.0379638671876,
+						39.0,
+						2478.923095703125
+					],
+					"m_Rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et",
+					"m_Position": [
+						1028.550048828125,
+						39.0,
+						2478.159912109375
+					],
+					"m_Rotation": [
+						0.0,
+						119.33399963378906,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et",
+					"m_Position": [
+						1029.9000244140626,
+						39.0,
+						2477.43994140625
+					],
+					"m_Rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{0511E95F422061BB}Prefabs/Props/Recreation/Camp/TentSmall_02/TentSmall_02_blue.et",
+					"m_Position": [
+						1029.9739990234376,
+						39.0,
+						2480.114013671875
+					],
+					"m_Rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"comment": "Occupation that will spawn mainly to cities and towns with USSR forces.",
+			"locationPos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"locationName": "any",
+			"title": "Occupation at ",
+			"info": "City is being occupied.",
+			"locationTypes": [
+				59,
+				59,
+				59,
+				59,
+				59,
+				70,
+				60,
+				61,
+				81
+			],
+			"groupCount": [
+				2,
+				4
+			],
+			"waypointRange": [
+				50,
+				250
+			],
+			"waypointGenType": 3,
+			"waypointMoveType": 1,
+			"groupTypes": [
+				"{30ED11AA4F0D41E5}Prefabs/Groups/OPFOR/Group_USSR_FireGroup.et",
+				"{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et",
+				"{96BAB56E6558788E}Prefabs/Groups/OPFOR/Group_USSR_Team_AT.et",
+				"{43C7A28EEB660FF8}Prefabs/Groups/OPFOR/Group_USSR_Team_GL.et",
+				"{1C0502B5729E7231}Prefabs/Groups/OPFOR/Group_USSR_Team_Suppress.et"
+			],
+			"AISkill": 50,
+			"AIperception": 1.0,
+			"loot": {
+				"box": null,
+				"itemChance": 1.0,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"ITEM_MEDICAL",
+					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+					"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
+					"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
+					"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
+				]
+			},
+			"campItems": [
+				{
+					"m_Resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+					"m_Position": [
+						1018.1640014648438,
+						39.0,
+						2501.93701171875
+					],
+					"m_Rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{2CB4BFA62C2D9C12}Prefabs/Structures/Military/CamoNets/CamoNet_Small_Top_01_base.et",
+					"m_Position": [
+						1017.8569946289063,
+						39.0,
+						2501.720947265625
+					],
+					"m_Rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+					"m_Position": [
+						1018.14599609375,
+						39.0,
+						2504.881103515625
+					],
+					"m_Rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+					"m_Position": [
+						1020.4559936523438,
+						39.0,
+						2500.89599609375
+					],
+					"m_Rotation": [
+						0.0,
+						114.56900024414063,
+						0.0
+					]
+				}
+			]
+		}
+	]
+}

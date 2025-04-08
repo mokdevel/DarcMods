@@ -10,6 +10,7 @@ class SCR_DC_SpawnerConfig : Managed
 	int version = 1;
 	string author = "darc";
 	//Spawner specific
+	bool showMarker;
 	int spawnSetID;						//-1 = random, other numbers are the index of spawnSet
 	bool spawnOnRoad;					//Spawn the cars on road
 	int spawnRndRadius;					//Random radius where the spawnName spawns. 
@@ -79,7 +80,9 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		conf.spawnSetID = 0;
+		conf.showMarker = false;
+//		conf.showMarker = true;
+		conf.spawnSetID = -1;
 		conf.spawnOnRoad = false;
 		conf.spawnRndRadius = 100;
 		conf.spawnWorldSizeMultiplier = 2;
@@ -110,12 +113,12 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 			1.0,
 			0,
 			{
-				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+				"WEAPON_GRENADE",
+				"ITEM_MEDICAL",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
 				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
 				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{3805C0B87B9D2AB0}prefabs/weapons/Melee/Knife.et",							//From Functional Knives
@@ -148,12 +151,13 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 			1.0,
 			0,
 			{
-				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+				"WEAPON_RIFLE",
+				"WEAPON_GRENADE", "WEAPON_GRENADE",
+				"ITEM_MEDICAL",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
 				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
 				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{3805C0B87B9D2AB0}prefabs/weapons/Melee/Knife.et",							//From Functional Knives
@@ -183,12 +187,11 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 			0.6,
 			0,
 			{
-				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+				"WEAPON_HANDGUN", "WEAPON_HANDGUN", 
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
 				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
 				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{3805C0B87B9D2AB0}prefabs/weapons/Melee/Knife.et",							//From Functional Knives

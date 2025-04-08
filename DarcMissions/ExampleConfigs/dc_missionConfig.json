@@ -1,1 +1,29 @@
-{"version":1,"author":"darc","recreateConfigs":false,"missionProfile":"default","missionStartDelay":60,"missionDelayBetweeen":120,"missionCount":8,"missionFrameCycleTime":60,"missionActiveTime":900,"missionActiveTimeStatic":2700,"missionActiveDistance":300,"missionHintTime":30,"minDistanceToMission":500,"minDistanceToPlayer":100,"missionTypeArrayDynamic":[1,4,3,2,2,2,2,2],"missionTypeArrayStatic":[5]}
+{
+	"version": 1,
+	"author": "darc",
+	"recreateConfigs": false,
+	"missionProfile": "default",
+	"missionStartDelay": 60,
+	"missionDelayBetweeen": 120,
+	"missionCount": 8,
+	"missionFrameCycleTime": 60,
+	"missionActiveTime": 900,
+	"missionActiveTimeStatic": 2700,
+	"missionActiveDistance": 300,
+	"missionHintTime": 30,
+	"minDistanceToMission": 500,
+	"minDistanceToPlayer": 100,
+	"missionTypeArrayDynamic": [
+		1,
+		4,
+		3,
+		2,
+		2,
+		2,
+		2,
+		2
+	],
+	"missionTypeArrayStatic": [
+		5
+	]
+}
