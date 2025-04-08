@@ -271,7 +271,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			"Gogland: Mission to be used with Escapists.",
 			"0 0 0",
 			"any",
-			"Camp in ",
+			"Patrol seen in ",
 			"Avoid the location",
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
@@ -325,14 +325,12 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		lootItems = {
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
+				"WEAPON_ATTACHMENT",
 				"ITEM_MEDICAL",
-				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
-				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
-				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
 			};
-		occupation1loot.Set(1.0, lootItems);
+		occupation1loot.Set(0.7, lootItems);
 		occupation1.loot = occupation1loot;
 		
 		SCR_DC_Structure ocu1item0 = new SCR_DC_Structure;
@@ -399,11 +397,11 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		lootItems = {
 				"WEAPON_RIFLE",	"WEAPON_RIFLE",
 				"WEAPON_HANDGUN",
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
+				"WEAPON_ATTACHMENT",
+				"WEAPON_OPTICS",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
-				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
-				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
-				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
 			};

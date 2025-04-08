@@ -26,10 +26,17 @@ sealed class SCR_DC_Resources
 
 		m_resourceNames = {};
 		ResourceDatabase.SearchResources(filter, GetResourcesFilter);		
+		
+		//TBD: Remove the old way
+//		itemList.InsertAll(m_resourceNames);
+//		IncludeFilter(itemList, lootList.include);
+//		ExcludeFilter(itemList, lootList.exclude);
+		
+		IncludeFilter(m_resourceNames, lootList.include);
+		ExcludeFilter(m_resourceNames, lootList.exclude);
+		
 		itemList.InsertAll(m_resourceNames);
 		
-		IncludeFilter(itemList, lootList.include);
-		ExcludeFilter(itemList, lootList.exclude);
 //		itemList.Debug();
 	}
 	

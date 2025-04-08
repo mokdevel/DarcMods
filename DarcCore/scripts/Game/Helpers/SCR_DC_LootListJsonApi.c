@@ -4,14 +4,17 @@
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J , convert to readable format - press Ctrl+Alt+Shift+M
 
 //------------------------------------------------------------------------------------------------
-enum DC_ELootListType
-{
+// Types defined by default
+/*
 	WEAPON_RIFLE,
 	WEAPON_HANDGUN,
 	WEAPON_LAUNCHER,
 	WEAPON_GRENADE,
-	ITEM_MEDICAL
-};
+	WEAPON_ATTACHMENT,
+	WEAPON_OPTICS,
+	ITEM_MEDICAL,
+	ITEM_GENERAL
+*/
 
 class SCR_DC_LootListConfig : Managed
 {
@@ -38,16 +41,14 @@ class SCR_DC_LootListConfig : Managed
 class SCR_DC_LootList : Managed
 {
 	string lootListName;
-	DC_ELootListType lootListType;
 	string modDir;
 	ref array<string> include = {};
 	ref array<string> exclude = {};
 	ref array<ResourceName> itemList = {};
 
-	void Set(string lootListName_, DC_ELootListType lootListType_, string modDir_, array<string> include_, array<string> exclude_)	
+	void Set(string lootListName_, string modDir_, array<string> include_, array<string> exclude_)	
 	{
 		lootListName = lootListName_;
-		lootListType = lootListType_;
 		modDir = modDir_;
 		include = include_;
 		exclude = exclude_;
@@ -95,14 +96,14 @@ class SCR_DC_LootListJsonApi : SCR_DC_JsonApi
 		
 		conf.modList = {"$ArmaReforger:Prefabs",
 						"$WCS_Armaments:Prefabs",
-						"$M110MarksmanRifle:Prefabs"
+						"$M110MarksmanRifle:Prefabs",
+						"$RISLaserAttachments:Prefabs"
 		};
 		
 		//Lootlist: Rifles
 		SCR_DC_LootList lootlist01 = new SCR_DC_LootList;
 		lootlist01.Set(
 			"WEAPON_RIFLE",
-			DC_ELootListType.WEAPON_RIFLE,
 			"/Weapons/Rifles",
 			{"Rifle"},
 			{"_Base"}
@@ -113,7 +114,6 @@ class SCR_DC_LootListJsonApi : SCR_DC_JsonApi
 		SCR_DC_LootList lootlist02 = new SCR_DC_LootList;
 		lootlist02.Set(
 			"WEAPON_LAUNCHER",
-			DC_ELootListType.WEAPON_LAUNCHER,
 			"/Weapons/Launchers",
 			{"Launcher"},
 			{"_Base"}
@@ -124,7 +124,6 @@ class SCR_DC_LootListJsonApi : SCR_DC_JsonApi
 		SCR_DC_LootList lootlist03 = new SCR_DC_LootList;
 		lootlist03.Set(
 			"WEAPON_HANDGUN",
-			DC_ELootListType.WEAPON_HANDGUN,
 			"/Weapons/Handguns",
 			{"Handgun"},
 			{"_Base"}
@@ -135,7 +134,6 @@ class SCR_DC_LootListJsonApi : SCR_DC_JsonApi
 		SCR_DC_LootList lootlist04 = new SCR_DC_LootList;
 		lootlist04.Set(
 			"WEAPON_GRENADE",
-			DC_ELootListType.WEAPON_GRENADE,
 			"/Weapons/Grenades",
 			{""},
 			{"_Base"}
@@ -146,11 +144,41 @@ class SCR_DC_LootListJsonApi : SCR_DC_JsonApi
 		SCR_DC_LootList lootlist05 = new SCR_DC_LootList;
 		lootlist05.Set(
 			"ITEM_MEDICAL",
-			DC_ELootListType.ITEM_MEDICAL,
 			"/Items/Medicine",
 			{""},
 			{"_Base"}
 		);
 		conf.lootLists.Insert(lootlist05);			
+		
+		//Lootlist: Weapon attachments
+		SCR_DC_LootList lootlist06 = new SCR_DC_LootList;
+		lootlist06.Set(
+			"WEAPON_ATTACHMENT",
+			"/Weapons/Attachments",
+			{""},
+			{"_Base", "Optic"}
+		);
+		conf.lootLists.Insert(lootlist06);			
+
+		//Lootlist: Weapon attachments
+		SCR_DC_LootList lootlist07 = new SCR_DC_LootList;
+		lootlist07.Set(
+			"WEAPON_OPTICS",
+			"/Weapons/Attachments",
+			{"Optic", "Scope"},
+			{"_Base"}
+		);
+		conf.lootLists.Insert(lootlist07);			
+		
+		//Lootlist: General items
+		SCR_DC_LootList lootlist08 = new SCR_DC_LootList;
+		lootlist08.Set(
+			"ITEM_GENERAL",
+			"/Items",
+			{"Binocular", "Compass", "Flashlight", "PaperMap_01_folded", "Watch_"},
+			{"_Base"}
+		);
+		conf.lootLists.Insert(lootlist08);			
+		
 	}
 }

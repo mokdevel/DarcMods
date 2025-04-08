@@ -8,7 +8,7 @@
 		private const int DC_MISSION_COUNT = 8;											//Default amount of missions to run
 		private const int DC_MISSION_CYCLE_TIME_DEFAULT = 30;
 		private const int DC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
-		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 2*60;						//Minimum delay between missions.
+		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 10*60;					//Minimum delay between missions.
 		private const int DC_MISSION_ACTIVE_TIME = 15*60;								//Time to keep the mission active (seconds)
 		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 3;	//Static missions are to be kept alive much longer
 		private const int DC_MISSION_ACTIVE_DISTANCE = 300;								//Mission is to be removed if no players close to the position after the mission active time has passed.
@@ -114,7 +114,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		
 		#ifdef SCR_DC_RELEASE
 			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.CONVOY, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL};
+			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.CONVOY,  DC_EMissionType.CONVOY};
 		#endif	
 
 		#ifndef SCR_DC_RELEASE				
