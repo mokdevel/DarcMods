@@ -173,7 +173,7 @@ The below example with the name WEAPON_RIFLE will search three mods for items ma
   ]
 }
 ```
-# Mission configuration parameters
+# Mission specific configuration parameters
 ## Common for all
 ```
 int version : See General parameters
@@ -227,7 +227,7 @@ array string groupTypes : See General parameters
 int AISkill : See General parameters
 float AIperception : See General parameters
 ```
-
+# Common mission parameters
 ## General parameters
 ```
 int version : Version number of the file.
