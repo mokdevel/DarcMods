@@ -344,9 +344,26 @@ DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
 
 ## SCR_DC_Loot
 ```
-IEntity box : The container where the items are put;
+IEntity box : (null) The container where the items are put. This can be a box, vehicle or similar. Do not specify anything here as this will be autofilled. For concoy mission this will be the vehicle, for occupation this will be the first item listed in the structure. NOTE: The entity needs to have <***COMPONENT***> available.
 float itemChance : (0-1, equals to percentage) The chance of each item appearing in the box. 
-ref array<string> items : List of items;	
+ref array<string> items : List of items. This can be prefabs or an lootList.
+```
+### Example
+The below example shows the different ways you can define the loot. 
+- "box": null : For convoys this will be automatically assigned to the vehicle
+- There is a 75% chance for each of the items to appear in the box
+- Items will include a saline bag and a map. In addition a random rifle and a random general item is added. See [lootList](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#loot-lists---dc_lootlistjson)
+```
+"loot": {
+  "box": null,
+  "itemChance": 0.75,
+  "items": [
+    "{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+    "{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
+    "WEAPON_RIFLE",
+    "ITEM_GENERAL"
+  ]
+}
 ```
 
 # TBD
