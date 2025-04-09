@@ -53,7 +53,7 @@ Mission specific files
 * dc_missionConfig_Convoy.json
 * dc_missionConfig_Crashsite.json
 
-## dc_missionConfig.json - Mission frame
+## Mission frame - dc_missionConfig.json
 The main configuration file for mission frame.
 
 Example: [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig.json)
@@ -81,7 +81,7 @@ array missionTypeArrayDynamic : List mission types that spawn randomly. (DC_EMis
   5 = PATROL
 array missionTypeArrayStatic : (DC_EMissionType) List mission types that are always active. See missionTypeArrayDynamic for values
 ```
-## dc_nonValidArea.json - Non valid areas
+## Non valid areas - dc_nonValidArea.json
 This a list of areas where missions shall not spawn. For example a safe zone would be listed here. 
 
 Example: [dc_nonValidArea.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_nonValidArea.json)
@@ -100,7 +100,7 @@ int missionCycleTime : (seconds) The cycle time the mission states are run
 bool showMarker : Show marker on map
 bool showHint : Show players a hint with details about the missions
 ```
-## dc_missionConfig_Hunter.json - Hunter
+## Hunter - dc_missionConfig_Hunter.json
 AIs are hunting you and following you. They will receive regularly information about where the closest player. The location is known to them with an error of rndDistanceToPlayer. You can outrun them by going further than maxDistanceToPlayer.
 
 Example: [dc_missionConfig_Hunter.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Hunter.json)
