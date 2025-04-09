@@ -11,6 +11,9 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - Crashsite : A helicopter carrying loot is damaged and is going to crash. Survivors will be protecting the wreck while waiting to be rescued.
 - Occupation : A location is guarded by AIs with loot available. 
 
+### Dynamic vs Static
+Static missions ...
+
 ## Installation
 Just active the mod (and dependencies) and you're good to go.
 
