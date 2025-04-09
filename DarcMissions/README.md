@@ -63,8 +63,8 @@ The main configuration file for mission frame.
 
 Example: [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig.json)
 ```
-int version : Version number of the file.
-string author : Author of the missions.
+int version : See General parameters
+string author : See General parameters
 bool recreateConfigs : If set to true, all configs are written to disk. Should be run only first time.
 string missionProfile : Directory specifying a certain conf for play. For example "Escapists" will result in configs under ```profile\DarcMods_conf\Escapists\*```
 int missionStartDelay : (seconds) Time to wait before spawning the first mission.
