@@ -41,6 +41,18 @@ For examples of configuration files see [ExampleConfigs](https://github.com/mokd
 
 The configuration files will be under your ```profile\DarcMods_conf\*```.
 
+dc_coreConfig.json
+dc_lootList.json
+dc_missionConfig.json
+
+dc_missionConfig_Convoy.json
+dc_missionConfig_Crashsite.json
+dc_missionConfig_Hunter.json
+dc_missionConfig_Occupation.json
+dc_missionConfig_Patrol.json
+
+dc_nonValidArea
+
 ## MissionFrame 	
 ```
 int version : Version number of the file.
