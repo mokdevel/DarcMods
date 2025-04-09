@@ -198,7 +198,6 @@ array string groupTypes : See General parameters
 int AISkill : See General parameters
 float AIperception : See General parameters
 ```
-
 ## Patrol - dc_missionConfig_Patrol.json
 AI patrol is spawned to move around the map. The may have a destination where they're moving to or just randomly roam the map.
 
@@ -227,6 +226,35 @@ DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
 array string groupTypes : See General parameters
 int AISkill : See General parameters
 float AIperception : See General parameters
+```
+## Convoy - dc_missionConfig_Convoy.json
+AI patrol is spawned in a vehicle to move around the map. 
+
+Example: [dc_missionConfig_Convoy.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Convoy.json)
+```
+int convoyTime : (seconds) Time to drive around. Once this time has passed and not players nearby, despawn mission.
+int distanceToPlayer : If no players this close to the convoy and convoyTime has passed, despawn mission.
+array<int> convoyList : The indexes of convoys.
+array<SCR_DC_Convoy> convoys : List of convoys
+```
+### SCR_DC_Patrol
+```
+string comment : See General parameters
+vector posStart : See General parameters - pos. 
+vector posDestination : Destination for the patrol to go to. See also General parameters - pos.
+string locationName : See General parameters - posName
+string title : See General parameters
+string info : See General parameters
+array<EMapDescriptorType> locationTypes : See Location parameters
+DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
+  ROUTE : The convoy will go from posStart to posDestination. When destination has been reached, the patrol will LOITER.
+  RADIUS, SCATTERED : The concoy will follow a path created with waypointRange starting from posStart. posDestination is ignored.
+array<string> vehicleTypes : The prefab names of vehicles. The vehicle is randomly picked from this list.
+float cruiseSpeed : Speed to drive in km/h. 30 is a good value so that the convoy is not driving too fast.
+array string groupTypes : See General parameters
+int AISkill : See General parameters
+float AIperception : See General parameters
+SCR_DC_Loot loot : (optional) Loot found in the vehicle. 
 ```
 # Common mission parameters
 ## General parameters
