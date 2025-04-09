@@ -21,6 +21,10 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - Crashsite : A helicopter carrying loot is damaged and is going to crash. Survivors will be protecting the wreck while waiting to be rescued.
 - Occupation : A location is guarded by AIs with loot available. 
 
+## Thanks
+- The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
+- [HunterKiller mod by Rabid Squirrel](https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller) for the initial kick to get into coding.
+
 # MissionFrame cycle
 ```
 ----|------------|------------|------------|------------|------------|------------|----...
@@ -38,10 +42,6 @@ I wanted to create a simple drop-in mission package where there is minimal confi
     |------------------------------| missionActiveTime : Mission is kept alive this amount of time.
                                      Note that if a player is within missionActiveDistance, the time will reset.      
 ```
-
-# Thanks
-- The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
-- [HunterKiller mod by Rabid Squirrel](https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller) for the initial kick to get into coding.
 
 # Configuration parameters
 For examples of configuration files see [ExampleConfigs](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions/ExampleConfigs).
