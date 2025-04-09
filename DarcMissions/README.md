@@ -148,8 +148,8 @@ array<SCR_DC_Patrol> patrols : List of patrols
 ### SCR_DC_Patrol
 ```
 string comment : See General parameters
-vector posStart : See General parameters - pos
-vector posDestination : Destination for the patrol to go to
+vector posStart : See General parameters - pos. 
+vector posDestination : Destination for the patrol to go to. See also General parameters - pos.
 string locationName : See General parameters - posName
 string title : See General parameters
 string info : See General parameters
@@ -157,6 +157,8 @@ array<EMapDescriptorType> locationTypes : See Location parameters
 array<int> groupCount : See General parameters
 array<int> waypointRange : See Waypoint parameters
 DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
+  ROUTE : The patrol will go from posStart to posDestination. When destination has been reached, the patrol will LOITER.
+  RADIUS, SCATTERED : The patrol will follow a path created with waypointRange starting from posStart. posDestination is ignored.
 DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
 array string groupTypes : See General parameters
 int AISkill : See General parameters
