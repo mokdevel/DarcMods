@@ -181,26 +181,26 @@ float AIperception : How quickly AI reacts to danger. See SCR_AICombatComponent 
 ```
 
 ## Location parametes
-A mission location can be defined manually at certain coordinates or as "0 0 0". In the latter case, the mission position is chosen from the map from locations defined in locationTypes. The different types are defined as [EMapDescriptorType](https://community.bistudio.com/wikidata/external-data/arma-reforger/ArmaReforgerScriptAPIPublic/group__Map.html#ga18c4f596069370b50b7f842cf36d5686) 
+A mission location can be defined manually at certain coordinates or as "0 0 0". In the latter case, the mission position is chosen from the map from locations defined in locationTypes. The different types are defined as [EMapDescriptorType](https://community.bistudio.com/wikidata/external-data/arma-reforger/ArmaReforgerScriptAPIPublic/group__Map.html#ga18c4f596069370b50b7f842cf36d5686). 
 ```
 array<int> locationTypes : Location types as defined by EMapDescriptorType.
 ```
+### EMapDescriptorType
+Below are the typical values used from [EMapDescriptorType](https://community.bistudio.com/wikidata/external-data/arma-reforger/ArmaReforgerScriptAPIPublic/group__Map.html#ga18c4f596069370b50b7f842cf36d5686) .
 ```
-MDT_NAME_GENERIC 	
-MDT_NAME_CITY 	
-MDT_NAME_VILLAGE 	
-MDT_NAME_TOWN 	
-MDT_NAME_SETTLEMENT 	
-MDT_NAME_HILL 	
-MDT_NAME_LOCAL 	
-MDT_NAME_ISLAND 	
-MDT_NAME_WATER_MINOR 	
-MDT_NAME_WATER_MAJOR 	
-MDT_NAME_SEA_MINOR 	
-MDT_NAME_SEA_MAJOR 	
-MDT_NAME_RIDGE 	
-MDT_NAME_VALLEY
+58 = MDT_NAME_GENERIC 
+59 = MDT_NAME_CITY 
+60 = MDT_NAME_VILLAGE 
+61 = MDT_NAME_TOWN 
+62 = MDT_NAME_SETTLEMENT 
+63 = MDT_NAME_HILL 
+64 = MDT_NAME_LOCAL 
+65 = MDT_NAME_ISLAND 
+..
+70 = MDT_NAME_RIDGE 
+71 = MDT_NAME_VALLEY 
 ```
+My humble wish for map makers is that please use the full range of EMapDescriptorTypes. 
 
 ## Waypoint parameters
 ```
