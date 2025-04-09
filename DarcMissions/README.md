@@ -114,3 +114,10 @@ array string groupTypes : The prefab names of AI groups or characters. The AI is
 int AISkill : Skill for AI (0-100). See SCR_AICombatComponent and EAISkill.
 float AIperception : How quickly AI reacts to danger. See SCR_AICombatComponent for details on perception factors.
 ```
+
+## General parameters
+```
+array string groupTypes : The prefab names of AI groups or characters. The AI is randomly picked from this list.
+int AISkill : Skill for AI (0-100). See SCR_AICombatComponent and EAISkill.
+float AIperception : How quickly AI reacts to danger. See SCR_AICombatComponent for details on perception factors.
+```
