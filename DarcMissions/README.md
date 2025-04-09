@@ -44,21 +44,23 @@ The configuration files will be under your ```profile\DarcMods_conf\*```.
 * dc_missionConfig.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#dc_missionconfigjson---missionframe)) :  The main mission frame configuration. 
 * dc_nonValidArea.json : 
 * dc_lootList.json : Definitions of loot for missions. 
-* dc_coreConfig.json : See [dc_coreConfig](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md#dc_coreconfigjson)
-
+* dc_coreConfig.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md#dc_coreconfigjson)) : Configuration file for core.
+  
+Mission specific files
 * dc_missionConfig_Convoy.json
 * dc_missionConfig_Crashsite.json
 * dc_missionConfig_Hunter.json
 * dc_missionConfig_Occupation.json
 * dc_missionConfig_Patrol.json
 
-
-## dc_missionConfig.json - MissionFrame
+## dc_missionConfig.json - Mission frame
+The main configuration file for mission frame.
 Example: [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig.json)
 ```
 int version : Version number of the file.
 string author : Author of the missions.
 bool recreateConfigs : If set to true, all configs are written to disk. Should be run only first time.
+string missionProfile : Directory specifying a certain conf for play. For example "Escapists" will result in configs under ```profile\DarcMods_conf\Escapists\*```
 int missionStartDelay : (seconds) Time to wait before spawning the first mission.
 int missionDelayBetweeen : (seconds) Time delay between mission spawns.
 int missionCount : Maximum amount of missions (both static and dynamic) to be active at the same time. 
@@ -74,9 +76,10 @@ array missionTypeArrayStatic : (DC_EMissionType) List mission types that are alw
 array nonValidAreas : (SCR_DC_NonValidArea) List of areas where missions shall not spawn. 
 ```
 ## dc_nonValidArea.json - Non valid areas
-This a list of areas where missions shall not spawn. For example a safe zone would be listed here.
+This a list of areas where missions shall not spawn. For example a safe zone would be listed here. 
+Example: [dc_nonValidArea.json](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#dc_nonvalidareajson---non-valid-areas)
 ```
-string worldName : The world name this should be affecting. For example Arland or Eden.
+string worldName : The world name this should be affecting. For example Arland or Eden. If left empty, area will be valid for all maps. Note that Arland and GM_Arland are considered different maps.
 vector pos : Center position of area
 float radius : Radius 
 string name : Your own name for the area. Not used by the mod.
