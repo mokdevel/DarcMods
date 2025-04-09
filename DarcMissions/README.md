@@ -175,6 +175,7 @@ The below example with the name WEAPON_RIFLE will search three mods for items ma
 ```
 # Mission specific configuration parameters
 ## Common for all
+These parameters are in every mission.
 ```
 int version : See General parameters
 string author : See General parameters
