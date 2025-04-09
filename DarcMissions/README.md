@@ -177,5 +177,19 @@ array<EMapDescriptorType> locationTypes = {};
 ```
 array<int> waypointRange : See Waypoint parameters
 DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
+  NONE        : Not used anywhere. The rest are names of the mission types.
+  RANDOM      : Use one of these randomly: SCATTERED (1), RADIUS (3), LOITER (1)
+  SCATTERED   : Completely random waypoints without any logic
+  RADIUS      : AI follow a path that is close to a circle with a radius. There is some additional randomization to avoid a perfect circle.
+  ROUTE       : AI follow a route from A to B. The route is created with waypoints along the road.
+  LOITER      : Currently makes a DEFEND waypoint for the location
+  SLOTS       : AI goes from a slot to slot. NOTE: This will not work unless the map has slots (the S/M/L letters on map) defined.
 DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
+  NONE        : Not used anywhere. The rest are names of the mission types.
+  RANDOM      : Pick a random one from MOVECYCLE (1) and PATROLCYCLE (3).
+  MOVE        : Creates move waypoints. AI will stop once waypoints are visited.
+  PATROL      : Same as MOVE but with patrol speed.
+  MOVECYCLE   : Creates move waypoints in cycke. AI will restart the cycle once all waypoints are visited.
+  PATROLCYCLE : Same as MOVECYCLE but with patrol speed.
+  LOITER      : If LOITER is chosen for generation, LOITER will be anforced for the movetype too.
 ```
