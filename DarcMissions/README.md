@@ -139,9 +139,9 @@ array<SCR_DC_Patrol> patrols : List of patrols
 ### SCR_DC_Patrol
 ```
 string comment : See General parameters
-vector posStart : Position for mission. "0 0 0" used for random location chosen from locationTypes.
+vector posStart : See General parameters - pos
 vector posDestination : Destination for the patrol to go to
-string locationName : Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
+string locationName : See General parameters - posName
 string title : See General parameters
 string info : See General parameters
 array<EMapDescriptorType> locationTypes : See Location parameters
@@ -159,6 +159,8 @@ float AIperception : See General parameters
 int version : Version number of the file.
 string author : Author of the missions.
 string comment : Generic comment to describe the mission. Not used in game.
+vector pos : Position for mission. "0 0 0" used for random location chosen from locationTypes.
+string posName : Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes. "" will leave the information empty.
 string title : Title for the hint shown for players
 string info : Details for the hint shown for players
 array<int> groupCount : Amount of AI groups of characters to spawn. (min, max) 
@@ -179,6 +181,7 @@ float AIperception : How quickly AI reacts to danger. See SCR_AICombatComponent 
 ```
 
 ## Location parametes
+Unless defined as a specific position 
 ```
 array<EMapDescriptorType> locationTypes = {};
 ```
