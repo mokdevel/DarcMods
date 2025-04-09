@@ -72,7 +72,7 @@ int missionActiveDistance : The distance to a player to keep the mission active.
 int missionHintTime : (seconds) Time to show mission hints to players. 0 disables ALL hints.
 int minDistanceToMission : Distance to another mission. Two missions shall not be too close to each other.
 int minDistanceToPlayer : Mission shall not spawn too close to a player.
-array missionTypeArrayDynamic : List mission types that spawn randomly. (DC_EMissionType)
+array<int> missionTypeArrayDynamic : List mission types that spawn randomly. (DC_EMissionType)
   0 = NONE       : Not used anywhere. The rest are names of the mission types.
   1 = HUNTER
   2 = OCCUPATION
@@ -105,7 +105,7 @@ AIs are hunting you and following you. They will receive regularly information a
 
 Example: [dc_missionConfig_Hunter.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Hunter.json)
 ```
-array int groupCount : Amount of AI groups of characters to spawn. (min, max) 
+array<int> groupCount : Amount of AI groups of characters to spawn. (min, max) 
 int minDistanceToPlayer : Hunter group minimum distance to player for spawn
 int maxDistanceToPlayer : ..max distance
 int rndDistanceToPlayer : The error on the location where AI thinks you are. (0..rndDistanceToPlayer). 
@@ -115,8 +115,37 @@ int AISkill : See [General parameters](https://github.com/mokdevel/DarcMods/blob
 float AIperception : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
 ```
 
+## Patrol - dc_missionConfig_Patrol.json
+
+Example:
+```
+int patrolingTime : (seconds) Time to patrol. Once this time has passed and not players nearby, despawn mission.
+int distanceToPlayer : If no players this close to any players and patrolingTime has passed, despawn mission.
+array<int> patrolList : The indexes of patrols.
+array<SCR_DC_Patrol> patrols : List of patrols
+```
+```
+SCR_DC_Patrol
+string comment : Generic comment to describe the mission. Not used in game.
+vector posStart : Position for mission. "0 0 0" used for random location chosen from locationTypes.
+vector posDestination : Destination for the patrol to go to
+string locationName : Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
+string title : Title for the hint shown for players
+string info : Details for the hint shown for players
+array<EMapDescriptorType> locationTypes = {};
+array<int> groupCount : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
+array<int> waypointRange : See
+DC_EWaypointGenerationType waypointGenType : See
+DC_EWaypointMoveType waypointMoveType : See
+
+array string groupTypes : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
+int AISkill : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
+float AIperception : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
+```
+
 ## General parameters
 ```
+array<int> groupCount : Amount of AI groups of characters to spawn. (min, max) 
 array string groupTypes : The prefab names of AI groups or characters. The AI is randomly picked from this list.
   Example : {
             "{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
