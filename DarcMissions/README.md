@@ -119,7 +119,17 @@ float radius : Radius from the center where the missions shall not spawn.
 string name : Your own name for the area. Not used by the mod.
 ```
 ## Loot lists - dc_lootList.json
-The mod is capable of creating automatic loot lists to be used with missions.
+The mod is capable of creating automatic loot lists to be used with missions. You can also define your own sets by following the rules. 
+
+Currently available lists are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
+  WEAPON_RIFLE : Rifles
+	WEAPON_HANDGUN : Handguns
+	WEAPON_LAUNCHER : Launchers
+	WEAPON_GRENADE : Grenades
+	WEAPON_ATTACHMENT : Various attachments excluding optics
+	WEAPON_OPTICS : Optic attachments
+	ITEM_MEDICAL : Medical items
+	ITEM_GENERAL : General items
 
 Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json)
 ```
@@ -130,13 +140,13 @@ array<SCR_DC_LootList> lootLists : The defined lootlists
 ```
 ### SCR_DC_LootList
 ```
-string lootListName;
-string modDir;
-array<string> include = {};
-array<string> exclude = {};
-array<ResourceName> itemList = {};
+string lootListName : The name given for the lootList. This is the name you use for adding loot. 
+string modDir : Prefab directory inside mod
+array<string> include : Items having these words are included in the lootList.
+array<string> exclude : Items with these words will be removed from the lootList.
+array<ResourceName> itemList : The list of items. This is autofilled, but you can pre-define items if needed.
 ```
-
+### Example
 
 
 # Mission configuration parameters
