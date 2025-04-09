@@ -137,6 +137,7 @@ float AIperception : See General parameters
 ```
 
 ## Patrol - dc_missionConfig_Patrol.json
+AI patrol is spawned to move around the map. The may have a destination where they're moving to or just randomly roam the map.
 
 Example: [dc_missionConfig_Patrol.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Patrol.json)
 ```
@@ -155,7 +156,7 @@ string title : See General parameters
 string info : See General parameters
 array<EMapDescriptorType> locationTypes : See Location parameters
 array<int> groupCount : See General parameters
-array<int> waypointRange : See Waypoint parameters
+array<int> waypointRange : See Waypoint parameters. For patrols, the values should be quite big to have them move around the map.
 DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
   ROUTE : The patrol will go from posStart to posDestination. When destination has been reached, the patrol will LOITER.
   RADIUS, SCATTERED : The patrol will follow a path created with waypointRange starting from posStart. posDestination is ignored.
