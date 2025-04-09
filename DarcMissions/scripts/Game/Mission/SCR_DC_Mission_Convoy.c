@@ -181,7 +181,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		}
 		
 		AICarMovementComponent vehicle_c = AICarMovementComponent.Cast(m_Vehicle.FindComponent(AICarMovementComponent));
-        vehicle_c.SetCruiseSpeed(30);
+        vehicle_c.SetCruiseSpeed(m_DC_Convoy.cruiseSpeed);
 
 		//Spawn AI
 		vector posg = GetPos() + "3 0 3";
@@ -267,6 +267,7 @@ class SCR_DC_Convoy : Managed
 	ref array<EMapDescriptorType> locationTypes = {};
 	DC_EWaypointGenerationType waypointGenType;
 	ref array<string> vehicleTypes = {};
+	float cruiseSpeed;						//Speed to drive in km/h.
 	ref array<string> groupTypes = {};
 	int AISkill;
 	float AIperception

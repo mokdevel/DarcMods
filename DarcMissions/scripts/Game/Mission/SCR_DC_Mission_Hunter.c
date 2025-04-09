@@ -66,8 +66,8 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 		{	
 			SetPos(pos);
 			SetPosName("");
-			SetTitle("Hunters");
-			SetInfo("They are coming for you...");
+			SetTitle(m_Config.title);
+			SetInfo(m_Config.info);						
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 			SetShowHint(m_Config.showHint);
 
@@ -248,14 +248,15 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 class SCR_DC_HunterConfig : SCR_DC_MissionConfig
 {
 	//Mission specific
+	string title;							//Title for the hint shown for players
+	string info;							//Details for the hint shown for players
+	int minDistanceToPlayer;				//Hunter group minimum distance to player for spawn
+	int maxDistanceToPlayer;				//...max distance
+	int rndDistanceToPlayer;				//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
 	ref array<int> groupCount = {1, 2};
-	int minDistanceToPlayer;			//Hunter group minimum distance to player for spawn
-	int maxDistanceToPlayer;			//...max distance
-	int rndDistanceToPlayer;			//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
-	
-	ref array<string> groupTypes = {}; 				//Types of AI groups
-	int AISkill;
-	float AIperception	
+	ref array<string> groupTypes = {}; 		//The prefab names of AI groups or characters. The AI is randomly picked from this list.
+	int AISkill;							//Skill for AI (0-100). See SCR_AICombatComponent and EAISkill
+	float AIperception;					
 }
 
 //------------------------------------------------------------------------------------------------
@@ -294,6 +295,8 @@ class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
 		conf.showMarker = true;
 		//Mission specific
+		conf.title = "Hunters";
+		conf.info = "They are coming for you...";		
 		conf.groupCount = {1, 2};			//min, max		
 //		conf.groupsToSpawn = 2;
 		conf.minDistanceToPlayer = 250;

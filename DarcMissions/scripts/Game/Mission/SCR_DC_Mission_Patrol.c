@@ -176,7 +176,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 class SCR_DC_PatrolConfig : SCR_DC_MissionConfig
 {
 	//Mission specific	
-	int patrolingTime;								//Time to patrol, in seconds
+	int patrolingTime;								//(seconds) Time to patrol. Once this time has passed and not players nearby, despawn mission.
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
 	ref array<ref int> patrolList = {};				//The indexes of patrols.
 	ref array<ref SCR_DC_Patrol> patrols = {};		//List of patrols

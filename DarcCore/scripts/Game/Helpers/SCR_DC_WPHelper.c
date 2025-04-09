@@ -8,10 +8,10 @@ Functions for waypoint related things
 enum DC_EWaypointGenerationType
 {
 	NONE,
-	RANDOM,			//Use one from the list below randomly
+	RANDOM,			//Use one of these randomly: SCATTERED (1), RADIUS (3), LOITER (1)
 	SCATTERED,		//Completely random waypoints without any logic
 	RADIUS,			//AI follow a path that is close to a circle with a radius. There is some additional randomization to avoid a perfect circle.
-	ROUTE,			//
+	ROUTE,			//AI follow a route from A to B. The route is created with waypoints along the road.
 	LOITER,			//Currently makes a DEFEND waypoint for the location
 	SLOTS 			//AI goes from a slot to slot. NOTE: This will not work unless the map has slots (the S/M/L letters on map) defined.
 };
@@ -19,7 +19,7 @@ enum DC_EWaypointGenerationType
 enum DC_EWaypointMoveType
 {
 	NONE,
-	RANDOM,			//Pick a random one. Mission should define how to handle randomness. Often a reasonable RANDOM is a selection between MOVECYCLE and PATROLCYCLE.
+	RANDOM,			//Pick a random one from MOVECYCLE (1) and PATROLCYCLE (3).
 	MOVE,			//Creates move waypoints. AI will stop once waypoints are visited.
 	PATROL,			//Same as MOVE but with patrol speed.
 	MOVECYCLE,		//Creates move waypoints in cycke. AI will restart the cycle once all waypoints are visited.
