@@ -91,6 +91,12 @@ This a list of areas where missions shall not spawn. For example a safe zone wou
 
 Example: [dc_nonValidArea.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_nonValidArea.json)
 ```
+int version : See General parameters
+string author : See General parameters
+array<SCR_DC_NonValidArea> nonValidAreas : List of areas where missions shall not spawn.
+```
+### SCR_DC_NonValidArea
+```
 string worldName : The world name this should be affecting. For example Arland or Eden. If left empty, area will be valid for all maps. Note that Arland and GM_Arland are considered different maps.
 vector pos : Center position of area
 float radius : Radius from the center where the missions shall not spawn.
@@ -99,8 +105,8 @@ string name : Your own name for the area. Not used by the mod.
 # Mission configuration parameters
 ## Common for all
 ```
-int version : Version number of the file.
-string author : Author of the missions.
+int version : See General parameters
+string author : See General parameters
 int missionCycleTime : (seconds) The cycle time the mission states are run
 bool showMarker : Show mission marker on map
 bool showHint : Show players a hint with details about the missions
@@ -130,8 +136,8 @@ int distanceToPlayer : If no players this close to any players and patrolingTime
 array<int> patrolList : The indexes of patrols.
 array<SCR_DC_Patrol> patrols : List of patrols
 ```
+### SCR_DC_Patrol
 ```
-SCR_DC_Patrol
 string comment : See General parameters
 vector posStart : Position for mission. "0 0 0" used for random location chosen from locationTypes.
 vector posDestination : Destination for the patrol to go to
@@ -150,6 +156,8 @@ float AIperception : See General parameters
 
 ## General parameters
 ```
+int version : Version number of the file.
+string author : Author of the missions.
 string comment : Generic comment to describe the mission. Not used in game.
 string title : Title for the hint shown for players
 string info : Details for the hint shown for players
