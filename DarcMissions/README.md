@@ -105,11 +105,12 @@ AIs are hunting you and following you. They will receive regularly information a
 
 Example: [dc_missionConfig_Hunter.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Hunter.json)
 ```
-array<int> groupCount : Amount of AI groups of characters to spawn. (min, max) 
+string title : See General parameters
+string info : See General parameters
 int minDistanceToPlayer : Hunter group minimum distance to player for spawn
 int maxDistanceToPlayer : ..max distance
 int rndDistanceToPlayer : The error on the location where AI thinks you are. (0..rndDistanceToPlayer). 
-	
+array<int> groupCount : See General parameters
 array string groupTypes : See General parameters
 int AISkill : See General parameters
 float AIperception : See General parameters
@@ -126,18 +127,17 @@ array<SCR_DC_Patrol> patrols : List of patrols
 ```
 ```
 SCR_DC_Patrol
-string comment : Generic comment to describe the mission. Not used in game.
+string comment : See General parameters
 vector posStart : Position for mission. "0 0 0" used for random location chosen from locationTypes.
 vector posDestination : Destination for the patrol to go to
 string locationName : Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
-string title : Title for the hint shown for players
-string info : Details for the hint shown for players
+string title : See General parameters
+string info : See General parameters
 array<EMapDescriptorType> locationTypes : See Location parameters
 array<int> groupCount : See General parameters
 array<int> waypointRange : See Waypoint parameters
 DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
 DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
-
 array string groupTypes : See General parameters
 int AISkill : See General parameters
 float AIperception : See General parameters
@@ -145,6 +145,9 @@ float AIperception : See General parameters
 
 ## General parameters
 ```
+string comment : Generic comment to describe the mission. Not used in game.
+string title : Title for the hint shown for players
+string info : Details for the hint shown for players
 array<int> groupCount : Amount of AI groups of characters to spawn. (min, max) 
 array string groupTypes : The prefab names of AI groups or characters. The AI is randomly picked from this list.
   Example : {
