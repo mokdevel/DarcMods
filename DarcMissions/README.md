@@ -118,6 +118,27 @@ vector pos : Center position of area
 float radius : Radius from the center where the missions shall not spawn.
 string name : Your own name for the area. Not used by the mod.
 ```
+## Loot lists - dc_lootList.json
+The mod is capable of creating automatic loot lists to be used with missions.
+
+Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json)
+```
+int version : See General parameters
+string author : See General parameters
+array<string> modList : The mods to search for loot
+array<SCR_DC_LootList> lootLists : The defined lootlists
+```
+### SCR_DC_LootList
+```
+string lootListName;
+string modDir;
+array<string> include = {};
+array<string> exclude = {};
+array<ResourceName> itemList = {};
+```
+
+
+
 # Mission configuration parameters
 ## Common for all
 ```
