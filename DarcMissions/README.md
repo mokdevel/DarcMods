@@ -53,6 +53,15 @@ Mission specific files
 * dc_missionConfig_Convoy.json
 * dc_missionConfig_Crashsite.json
 
+## Mission position
+Mission position is either defined or randomized. See [General parameters - pos](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#general-parameters) and [Location parameters](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#location-parametes). 
+
+Once a location is chosen, it's checked for validity. The position shall not be .. 
+- .. too close to another mission
+- .. too close to any player
+- .. in water
+- .. in [non valid area](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#non-valid-areas---dc_nonvalidareajson)
+
 ## Dynamic vs Static mission
 In the configuration you can define missions either as a dynamic mission (missionTypeArrayDynamic) or static mission (missionTypeArrayStatic). The missions are the same but static missions have priority in being spawned. Static missions are such that there should always be the given count of static missions running and if there are mission slots still available, these will be populated with dynamic missions. Note that both static and dynamic missions are counted towards the total count.
 
@@ -180,7 +189,7 @@ int AISkill : Skill for AI (0-100). See SCR_AICombatComponent and EAISkill.
 float AIperception : How quickly AI reacts to danger. See SCR_AICombatComponent for details on perception factors.
 ```
 
-## Location parametes
+## Location parameters
 A mission location position (see: General parameters - pos) can be defined manually at certain coordinates or as "0 0 0". In the latter case, the mission position is chosen randomly from the map from locations defined in locationTypes. The different types are defined as [EMapDescriptorType](https://community.bistudio.com/wikidata/external-data/arma-reforger/ArmaReforgerScriptAPIPublic/group__Map.html#ga18c4f596069370b50b7f842cf36d5686). 
 
 Note that you 'overload' certain value by defining it multiple times. For example ```locationTypes = {59, 59, 59, 59, 60};``` will choose a CITY 80% of the time and only 20% time a village.
