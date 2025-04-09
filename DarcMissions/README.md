@@ -110,14 +110,25 @@ int minDistanceToPlayer : Hunter group minimum distance to player for spawn
 int maxDistanceToPlayer : ..max distance
 int rndDistanceToPlayer : The error on the location where AI thinks you are. (0..rndDistanceToPlayer). 
 	
-array string groupTypes : The prefab names of AI groups or characters. The AI is randomly picked from this list.
-int AISkill : Skill for AI (0-100). See SCR_AICombatComponent and EAISkill.
-float AIperception : How quickly AI reacts to danger. See SCR_AICombatComponent for details on perception factors.
+array string groupTypes : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
+int AISkill : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
+float AIperception : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
 ```
 
 ## General parameters
 ```
 array string groupTypes : The prefab names of AI groups or characters. The AI is randomly picked from this list.
+  Example : {
+            "{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
+            "{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+            }
 int AISkill : Skill for AI (0-100). See SCR_AICombatComponent and EAISkill.
+  0 = NONE
+  10 = NOOB
+  20 = ROOKIE
+  50 = REGULAR
+  70 = VETERAN
+  80 = EXPERT
+  100 = CYLON
 float AIperception : How quickly AI reacts to danger. See SCR_AICombatComponent for details on perception factors.
 ```
