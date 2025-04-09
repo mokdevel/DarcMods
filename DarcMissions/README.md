@@ -93,7 +93,7 @@ Example: [dc_nonValidArea.json](https://github.com/mokdevel/DarcMods/blob/main/D
 ```
 string worldName : The world name this should be affecting. For example Arland or Eden. If left empty, area will be valid for all maps. Note that Arland and GM_Arland are considered different maps.
 vector pos : Center position of area
-float radius : Radius 
+float radius : Radius from the center where the missions shall not spawn.
 string name : Your own name for the area. Not used by the mod.
 ```
 # Mission configuration parameters
@@ -102,7 +102,7 @@ string name : Your own name for the area. Not used by the mod.
 int version : Version number of the file.
 string author : Author of the missions.
 int missionCycleTime : (seconds) The cycle time the mission states are run
-bool showMarker : Show marker on map
+bool showMarker : Show mission marker on map
 bool showHint : Show players a hint with details about the missions
 ```
 ## Hunter - dc_missionConfig_Hunter.json
@@ -123,7 +123,7 @@ float AIperception : See General parameters
 
 ## Patrol - dc_missionConfig_Patrol.json
 
-Example:
+Example: [dc_missionConfig_Patrol.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Patrol.json)
 ```
 int patrolingTime : (seconds) Time to patrol. Once this time has passed and not players nearby, despawn mission.
 int distanceToPlayer : If no players this close to any players and patrolingTime has passed, despawn mission.
