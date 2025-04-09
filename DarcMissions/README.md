@@ -306,7 +306,6 @@ Below are the typical values selected from [EMapDescriptorType](https://communit
 71 = MDT_NAME_VALLEY 
 ```
 My humble wish for map makers is that please use the full range of EMapDescriptorTypes. 
-
 ## Waypoint parameters
 The mission AI can be given general rules on how to create waypoints for their movement. You need to define the waypoint generation rule and the movement rule and the rest is created automatically.
 ```
@@ -327,6 +326,12 @@ DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
   MOVECYCLE   : Creates move waypoints in cycke. AI will restart the cycle once all waypoints are visited.
   PATROLCYCLE : Same as MOVECYCLE but with patrol speed.
   LOITER      : If LOITER is chosen for generation, LOITER will be enforced for the movetype too.
+```
+## SCR_DC_Loot
+```
+IEntity box : The container where the items are put;
+float itemChance : (0-1, equals to percentage) The chance of each item appearing in the box. 
+ref array<string> items : List of items;	
 ```
 # TBD
 - Waypoint functionality to roam buildings in a city
