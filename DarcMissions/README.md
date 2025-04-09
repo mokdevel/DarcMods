@@ -41,19 +41,19 @@ For examples of configuration files see [ExampleConfigs](https://github.com/mokd
 
 The configuration files will be under your ```profile\DarcMods_conf\*```.
 
-dc_coreConfig.json
-dc_lootList.json
-dc_missionConfig.json
+* dc_missionConfig.json : [link]()The main mission frame configuration. 
+* dc_nonValidArea.json : 
+* dc_lootList.json : Definitions of loot for missions. 
+* dc_coreConfig.json : See [dc_coreConfig](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md#dc_coreconfigjson)
 
-dc_missionConfig_Convoy.json
-dc_missionConfig_Crashsite.json
-dc_missionConfig_Hunter.json
-dc_missionConfig_Occupation.json
-dc_missionConfig_Patrol.json
+* dc_missionConfig_Convoy.json
+* dc_missionConfig_Crashsite.json
+* dc_missionConfig_Hunter.json
+* dc_missionConfig_Occupation.json
+* dc_missionConfig_Patrol.json
 
-dc_nonValidArea
 
-## MissionFrame 	
+## dc_missionConfig.json - MissionFrame
 ```
 int version : Version number of the file.
 string author : Author of the missions.
@@ -72,7 +72,7 @@ array missionTypeArrayDynamic : (DC_EMissionType) List mission types that spawn 
 array missionTypeArrayStatic : (DC_EMissionType) List mission types that are always active	
 array nonValidAreas : (SCR_DC_NonValidArea) List of areas where missions shall not spawn. 
 ```
-### nonValidAreas - SCR_DC_NonValidArea
+### dc_nonValidArea - Non valid areas
 This a list of areas where missions shall not spawn. For example a safe zone would be listed here.
 ```
 string worldName : The world name this should be affecting. For example Arland or Eden.
