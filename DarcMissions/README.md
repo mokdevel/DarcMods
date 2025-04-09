@@ -147,8 +147,30 @@ array<string> exclude : Items with these words will be removed from the lootList
 array<ResourceName> itemList : The list of items. This is autofilled, but you can pre-define items if needed.
 ```
 ### Example
-
-
+```
+"version": 1,
+"author": "darc",
+"modList": [
+  "$ArmaReforger:Prefabs",
+  "$WCS_Armaments:Prefabs",
+  "$M110MarksmanRifle:Prefabs"
+  ],
+"lootLists": [
+  {
+    "lootListName": "WEAPON_RIFLE",
+    "lootListType": 0,
+    "modDir": "/Weapons/Rifles",
+    "include": [
+      "Rifle"
+    ],
+    "exclude": [
+      "_Base"
+    ],
+    "itemList": []
+  }
+  ]
+}
+```
 # Mission configuration parameters
 ## Common for all
 ```
