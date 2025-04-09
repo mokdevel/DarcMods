@@ -154,6 +154,9 @@ array<ResourceName> itemList : The list of items. This is autofilled, but you ca
 
 ### Example
 The below example with the name WEAPON_RIFLE will search three mods for items matching the include and exclude filters. The intial search path is ```$Modname:Prefabs```. Under the Prefabs dir we use the dir ```/Weapons/Rifles``` for the more detailed search. The full path for the search is ```$Modname:Prefabs/Weapons/Rifles``` and internally we're searching for all files ending in ```et```. Initally all items will be listed. 
+
+TBD: Explanation on how the filtering works.
+
 ```
 "version": 1,
 "author": "darc",
@@ -171,9 +174,12 @@ The below example with the name WEAPON_RIFLE will search three mods for items ma
       "Rifle"
     ],
     "exclude": [
-      "_Base"
+      "_Base",
+      "***TBD: ADD SOME PREFAB***"
     ],
-    "itemList": []
+    "itemList": [
+      "***TBD: ADD SOME PREFAB***"
+    ]
   }
   ]
 }
@@ -347,7 +353,7 @@ Loot is the reward of a mission. It is usually in a container (vehicle, box, ..)
 ```
 IEntity box : (null) The container where the items are put. This can be a box, vehicle or similar. Do not specify anything here as this will be autofilled. For concoy mission this will be the vehicle, for occupation this will be the first item listed in the structure. NOTE: The entity needs to have <***COMPONENT***> available.
 float itemChance : (0-1, equals to percentage) The chance of each item appearing in the box. 
-ref array<string> items : List of items. This can be prefabs or an lootList.
+array<string> items : List of items. This can be prefabs or an lootList.
 ```
 ### Example
 The below example shows the different ways you can define the loot. 
