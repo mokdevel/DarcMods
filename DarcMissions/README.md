@@ -350,7 +350,7 @@ ref array<string> items : List of items. This can be prefabs or an lootList.
 ```
 ### Example
 The below example shows the different ways you can define the loot. 
-- "box": null : For convoys this will be automatically assigned to the vehicle
+- "box": null : For convoys this will be automatically assigned to the vehicle. For missions with structures, the first structue is considered as the loot target.
 - There is a 75% chance for each of the items to appear in the box
 - Items will include a saline bag and a map. In addition a random rifle and a random general item is added. See [lootList](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#loot-lists---dc_lootlistjson)
 ```
