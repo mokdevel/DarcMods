@@ -47,11 +47,11 @@ The configuration files will be under your ```profile\DarcMods_conf\*```.
 * dc_coreConfig.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md#dc_coreconfigjson)) : Configuration file for core.
   
 Mission specific files
+* dc_missionConfig_Hunter.json
+* dc_missionConfig_Patrol.json
+* dc_missionConfig_Occupation.json
 * dc_missionConfig_Convoy.json
 * dc_missionConfig_Crashsite.json
-* dc_missionConfig_Hunter.json
-* dc_missionConfig_Occupation.json
-* dc_missionConfig_Patrol.json
 
 ## dc_missionConfig.json - Mission frame
 The main configuration file for mission frame.
@@ -94,4 +94,16 @@ string author : Author of the missions.
 int missionCycleTime : (seconds) The cycle time the mission states are run
 bool showMarker : Show marker on map
 bool showHint : Show players a hint with details about the missions
+```
+## dc_missionConfig_Hunter.json - Hunter
+Example: [dc_missionConfig_Hunter.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Hunter.json)
+```
+array<int> groupCount = {1, 2};
+int minDistanceToPlayer;			//Hunter group minimum distance to player for spawn
+int maxDistanceToPlayer;			//...max distance
+int rndDistanceToPlayer;			//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
+	
+ref array<string> groupTypes = {}; 				//Types of AI groups
+int AISkill;
+float AIperception
 ```
