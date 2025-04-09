@@ -343,6 +343,7 @@ DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
 ```
 
 ## SCR_DC_Loot
+Loot is the reward of a mission. It is usually in a container (vehicle, box, ..) that is spawned in the mission.
 ```
 IEntity box : (null) The container where the items are put. This can be a box, vehicle or similar. Do not specify anything here as this will be autofilled. For concoy mission this will be the vehicle, for occupation this will be the first item listed in the structure. NOTE: The entity needs to have <***COMPONENT***> available.
 float itemChance : (0-1, equals to percentage) The chance of each item appearing in the box. 
