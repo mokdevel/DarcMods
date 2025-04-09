@@ -195,8 +195,8 @@ These parameters are in every mission.
 int version : See General parameters
 string author : See General parameters
 int missionCycleTime : (seconds) The cycle time the mission states are run
-bool showMarker : Show mission marker on map
-bool showHint : Show players a hint with details about the missions
+bool showMarker : Show mission marker on map. False will disable markers.
+bool showHint : Show players a hint with details about the missions. False will disable hints.
 ```
 
 ## Hunter - dc_missionConfig_Hunter.json
