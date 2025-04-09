@@ -135,10 +135,10 @@ array<SCR_DC_LootList> lootLists : The defined lootlists
 ```
 Currently available lootListNames are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
 ```
-WEAPON_RIFLE : Rifles
-WEAPON_HANDGUN : Handguns
-WEAPON_LAUNCHER : Launchers
-WEAPON_GRENADE : Grenades
+WEAPON_RIFLE : A random rifle from any faction.
+WEAPON_HANDGUN : A random handgun from any faction.
+WEAPON_LAUNCHER : A random launcher from any faction.
+WEAPON_GRENADE : Grenades available
 WEAPON_ATTACHMENT : Various attachments excluding optics
 WEAPON_OPTICS : Optic attachments
 ITEM_MEDICAL : Medical items
@@ -146,6 +146,7 @@ ITEM_GENERAL : General items
 ```
 
 ### SCR_DC_LootList
+The functionality goes through the modDir and gets every file with the ending of ```.et```. The list is first filtered with ```include``` words and then filtered with ```exclude```words. Note that any item you may have defined manually goes through the same filtering and may be removed if the ```exclude``` word matches.
 ```
 string lootListName : The name given for the lootList. This is the name you use for adding loot. 
 string modDir : Prefab directory inside mod.
