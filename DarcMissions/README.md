@@ -102,6 +102,7 @@ array<int> missionTypeArrayDynamic : List mission types that spawn randomly. (DC
   5 = PATROL
 array<int> missionTypeArrayStatic : List mission types that are always active. See missionTypeArrayDynamic for values.
 ```
+
 ## Non valid areas - dc_nonValidArea.json
 This a list of areas where missions shall not spawn. For example a safe zone would be listed here. 
 
@@ -111,6 +112,7 @@ int version : See General parameters
 string author : See General parameters
 array<SCR_DC_NonValidArea> nonValidAreas : List of areas where missions shall not spawn.
 ```
+
 ### SCR_DC_NonValidArea
 ```
 string worldName : The world name this should be affecting. For example Arland or Eden. If left empty, area will be valid for all maps. Note that Arland and GM_Arland are considered different maps.
@@ -118,6 +120,7 @@ vector pos : Center position of area
 float radius : Radius from the center where the missions shall not spawn.
 string name : Your own name for the area. Not used by the mod.
 ```
+
 ## Loot lists - dc_lootList.json
 The mod is capable of creating automatic loot lists to be used with missions. You can also define your own sets by following the rules. 
 
@@ -139,6 +142,7 @@ WEAPON_OPTICS : Optic attachments
 ITEM_MEDICAL : Medical items
 ITEM_GENERAL : General items
 ```
+
 ### SCR_DC_LootList
 ```
 string lootListName : The name given for the lootList. This is the name you use for adding loot. 
@@ -147,6 +151,7 @@ array<string> include : Items having these words are included in the lootList.
 array<string> exclude : Items with these words will be removed from the lootList.
 array<ResourceName> itemList : The list of items. This is autofilled, but you can pre-define items if needed.
 ```
+
 ### Example
 The below example with the name WEAPON_RIFLE will search three mods for items matching the include and exclude filters. The intial search path is ```$Modname:Prefabs```. Under the Prefabs dir we use the dir ```/Weapons/Rifles``` for the more detailed search. The full path for the search is ```$Modname:Prefabs/Weapons/Rifles``` and internally we're searching for all files ending in ```et```. Initally all items will be listed. 
 ```
@@ -173,6 +178,7 @@ The below example with the name WEAPON_RIFLE will search three mods for items ma
   ]
 }
 ```
+
 # Mission specific configuration parameters
 ## Common for all
 These parameters are in every mission.
@@ -183,6 +189,7 @@ int missionCycleTime : (seconds) The cycle time the mission states are run
 bool showMarker : Show mission marker on map
 bool showHint : Show players a hint with details about the missions
 ```
+
 ## Hunter - dc_missionConfig_Hunter.json
 AIs are hunting you and following you. They will receive regularly information about where the closest player. The location is known to them with an error of rndDistanceToPlayer. You can outrun them by going further than maxDistanceToPlayer.
 
@@ -198,6 +205,7 @@ array string groupTypes : See General parameters
 int AISkill : See General parameters
 float AIperception : See General parameters
 ```
+
 ## Patrol - dc_missionConfig_Patrol.json
 AI patrol is spawned to move around the map. The may have a destination where they're moving to or just randomly roam the map.
 
@@ -208,6 +216,7 @@ int distanceToPlayer : If no players this close to any players and patrolingTime
 array<int> patrolList : The indexes of patrols.
 array<SCR_DC_Patrol> patrols : List of patrols
 ```
+
 ### SCR_DC_Patrol
 ```
 string comment : See General parameters
@@ -227,6 +236,7 @@ array string groupTypes : See General parameters
 int AISkill : See General parameters
 float AIperception : See General parameters
 ```
+
 ## Convoy - dc_missionConfig_Convoy.json
 AI patrol is spawned in a vehicle to move around the map. 
 
@@ -237,6 +247,7 @@ int distanceToPlayer : If no players this close to the convoy and convoyTime has
 array<int> convoyList : The indexes of convoys.
 array<SCR_DC_Convoy> convoys : List of convoys
 ```
+
 ### SCR_DC_Patrol
 ```
 string comment : See General parameters
@@ -256,6 +267,7 @@ int AISkill : See General parameters
 float AIperception : See General parameters
 SCR_DC_Loot loot : (optional) Loot found in the vehicle. 
 ```
+
 # Common mission parameters
 ## General parameters
 ```
@@ -290,6 +302,7 @@ Note that you 'overload' certain value by defining it multiple times. For exampl
 ```
 array<int> locationTypes : Location types as defined by EMapDescriptorType.
 ```
+
 ### EMapDescriptorType
 Below are the typical values selected from [EMapDescriptorType](https://community.bistudio.com/wikidata/external-data/arma-reforger/ArmaReforgerScriptAPIPublic/group__Map.html#ga18c4f596069370b50b7f842cf36d5686) .
 ```
@@ -306,6 +319,7 @@ Below are the typical values selected from [EMapDescriptorType](https://communit
 71 = MDT_NAME_VALLEY 
 ```
 My humble wish for map makers is that please use the full range of EMapDescriptorTypes. 
+
 ## Waypoint parameters
 The mission AI can be given general rules on how to create waypoints for their movement. You need to define the waypoint generation rule and the movement rule and the rest is created automatically.
 ```
@@ -327,12 +341,14 @@ DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
   PATROLCYCLE : Same as MOVECYCLE but with patrol speed.
   LOITER      : If LOITER is chosen for generation, LOITER will be enforced for the movetype too.
 ```
+
 ## SCR_DC_Loot
 ```
 IEntity box : The container where the items are put;
 float itemChance : (0-1, equals to percentage) The chance of each item appearing in the box. 
 ref array<string> items : List of items;	
 ```
+
 # TBD
 - Waypoint functionality to roam buildings in a city
 - Give AIs the capability to guard buildings (for example in occupation missions)
