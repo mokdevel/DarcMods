@@ -148,7 +148,7 @@ array<string> exclude : Items with these words will be removed from the lootList
 array<ResourceName> itemList : The list of items. This is autofilled, but you can pre-define items if needed.
 ```
 ### Example
-The below example with the name WEAPON_RIFLE will search three mods for items matching the include and exclude filters. The intial search path is ```$Modname:Prefabs```. Under the Prefabs dir we use the dir ```/Weapons/Rifles``` for the more detailed search. Initally all items will be listed. 
+The below example with the name WEAPON_RIFLE will search three mods for items matching the include and exclude filters. The intial search path is ```$Modname:Prefabs```. Under the Prefabs dir we use the dir ```/Weapons/Rifles``` for the more detailed search. The full path for the search is ```$Modname:Prefabs/Weapons/Rifles``` and internally we're searching for all files ending in ```et```. Initally all items will be listed. 
 ```
 "version": 1,
 "author": "darc",
