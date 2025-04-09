@@ -55,6 +55,7 @@ Mission specific files
 
 ## dc_missionConfig.json - Mission frame
 The main configuration file for mission frame.
+
 Example: [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig.json)
 ```
 int version : Version number of the file.
@@ -77,7 +78,8 @@ array nonValidAreas : (SCR_DC_NonValidArea) List of areas where missions shall n
 ```
 ## dc_nonValidArea.json - Non valid areas
 This a list of areas where missions shall not spawn. For example a safe zone would be listed here. 
-Example: [dc_nonValidArea.json](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#dc_nonvalidareajson---non-valid-areas)
+
+Example: [dc_nonValidArea.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_nonValidArea.json)
 ```
 string worldName : The world name this should be affecting. For example Arland or Eden. If left empty, area will be valid for all maps. Note that Arland and GM_Arland are considered different maps.
 vector pos : Center position of area
