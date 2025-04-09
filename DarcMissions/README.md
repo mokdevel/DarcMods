@@ -110,9 +110,9 @@ int minDistanceToPlayer : Hunter group minimum distance to player for spawn
 int maxDistanceToPlayer : ..max distance
 int rndDistanceToPlayer : The error on the location where AI thinks you are. (0..rndDistanceToPlayer). 
 	
-array string groupTypes : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
-int AISkill : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
-float AIperception : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
+array string groupTypes : See General parameters
+int AISkill : See General parameters
+float AIperception : See General parameters
 ```
 
 ## Patrol - dc_missionConfig_Patrol.json
@@ -132,15 +132,15 @@ vector posDestination : Destination for the patrol to go to
 string locationName : Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 string title : Title for the hint shown for players
 string info : Details for the hint shown for players
-array<EMapDescriptorType> locationTypes = {};
-array<int> groupCount : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
-array<int> waypointRange : See
-DC_EWaypointGenerationType waypointGenType : See
-DC_EWaypointMoveType waypointMoveType : See
+array<EMapDescriptorType> locationTypes : See Location parameters
+array<int> groupCount : See General parameters
+array<int> waypointRange : See Waypoint parameters
+DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
+DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
 
-array string groupTypes : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
-int AISkill : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
-float AIperception : See [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
+array string groupTypes : See General parameters
+int AISkill : See General parameters
+float AIperception : See General parameters
 ```
 
 ## General parameters
@@ -160,4 +160,16 @@ int AISkill : Skill for AI (0-100). See SCR_AICombatComponent and EAISkill.
   80 = EXPERT
   100 = CYLON
 float AIperception : How quickly AI reacts to danger. See SCR_AICombatComponent for details on perception factors.
+```
+
+## Location parametes
+```
+array<EMapDescriptorType> locationTypes = {};
+```
+
+## Waypoint parameters
+```
+array<int> waypointRange : See Waypoint parameters
+DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
+DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
 ```
