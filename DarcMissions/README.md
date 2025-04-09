@@ -181,9 +181,25 @@ float AIperception : How quickly AI reacts to danger. See SCR_AICombatComponent 
 ```
 
 ## Location parametes
-Unless defined as a specific position 
+A mission location can be defined manually at certain coordinates or as "0 0 0". In the latter case, the mission position is chosen from the map from locations defined in locationTypes. The different types are defined as [EMapDescriptorType](https://community.bistudio.com/wikidata/external-data/arma-reforger/ArmaReforgerScriptAPIPublic/group__Map.html#ga18c4f596069370b50b7f842cf36d5686) 
 ```
-array<EMapDescriptorType> locationTypes = {};
+array<int> locationTypes : Location types as defined by EMapDescriptorType.
+```
+```
+MDT_NAME_GENERIC 	
+MDT_NAME_CITY 	
+MDT_NAME_VILLAGE 	
+MDT_NAME_TOWN 	
+MDT_NAME_SETTLEMENT 	
+MDT_NAME_HILL 	
+MDT_NAME_LOCAL 	
+MDT_NAME_ISLAND 	
+MDT_NAME_WATER_MINOR 	
+MDT_NAME_WATER_MAJOR 	
+MDT_NAME_SEA_MINOR 	
+MDT_NAME_SEA_MAJOR 	
+MDT_NAME_RIDGE 	
+MDT_NAME_VALLEY
 ```
 
 ## Waypoint parameters
