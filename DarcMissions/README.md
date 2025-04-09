@@ -84,7 +84,7 @@ array<int> missionTypeArrayDynamic : List mission types that spawn randomly. (DC
   3 = CONVOY
   4 = CRASHSITE
   5 = PATROL
-array missionTypeArrayStatic : (DC_EMissionType) List mission types that are always active. See missionTypeArrayDynamic for values
+array<int> missionTypeArrayStatic : List mission types that are always active. See missionTypeArrayDynamic for values.
 ```
 ## Non valid areas - dc_nonValidArea.json
 This a list of areas where missions shall not spawn. For example a safe zone would be listed here. 
