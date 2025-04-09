@@ -86,6 +86,7 @@ vector pos : Center position of area
 float radius : Radius 
 string name : Your own name for the area. Not used by the mod.
 ```
+# Mission configuration parameters
 ## Common for all
 ```
 int version : Version number of the file.
