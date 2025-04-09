@@ -59,7 +59,7 @@ class SCR_DC_LootList : Managed
 //------------------------------------------------------------------------------------------------
 class SCR_DC_LootListJsonApi : SCR_DC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_LootList.json";
+	const string DC_MISSIONCONFIG_FILE = "dc_lootList.json";
 		
 	ref SCR_DC_LootListConfig conf = new SCR_DC_LootListConfig;
 

@@ -11,7 +11,7 @@ enum DC_LogLevel
 	ERROR,	//Prints FATAL, ERROR, WARNING
 	NORMAL,	//Prints NORMAL + all above
 	DEBUG,	//Prints DEBUG + all above
-	ALL		//Prints everything
+	ALL		//Prints everything including VERBOSE and SPAM. It's a lot.
 };
 
 //Print method has these levels
