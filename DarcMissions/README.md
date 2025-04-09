@@ -72,9 +72,14 @@ int missionActiveDistance : The distance to a player to keep the mission active.
 int missionHintTime : (seconds) Time to show mission hints to players. 0 disables ALL hints.
 int minDistanceToMission : Distance to another mission. Two missions shall not be too close to each other.
 int minDistanceToPlayer : Mission shall not spawn too close to a player.
-array missionTypeArrayDynamic : (DC_EMissionType) List mission types that spawn randomly
-array missionTypeArrayStatic : (DC_EMissionType) List mission types that are always active	
-array nonValidAreas : (SCR_DC_NonValidArea) List of areas where missions shall not spawn. 
+array missionTypeArrayDynamic : List mission types that spawn randomly. (DC_EMissionType)
+  0 = NONE       : Not used anywhere. The rest are names of the mission types.
+  1 = HUNTER
+  2 = OCCUPATION
+  3 = CONVOY
+  4 = CRASHSITE
+  5 = PATROL
+array missionTypeArrayStatic : (DC_EMissionType) List mission types that are always active. See missionTypeArrayDynamic for values
 ```
 ## dc_nonValidArea.json - Non valid areas
 This a list of areas where missions shall not spawn. For example a safe zone would be listed here. 
@@ -96,14 +101,16 @@ bool showMarker : Show marker on map
 bool showHint : Show players a hint with details about the missions
 ```
 ## dc_missionConfig_Hunter.json - Hunter
+AIs are hunting you and following you. They will receive regularly information about where the closest player. The location is known to them with an error of rndDistanceToPlayer. You can outrun them by going further than maxDistanceToPlayer.
+
 Example: [dc_missionConfig_Hunter.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Hunter.json)
 ```
-array<int> groupCount = {1, 2};
-int minDistanceToPlayer;			//Hunter group minimum distance to player for spawn
-int maxDistanceToPlayer;			//...max distance
-int rndDistanceToPlayer;			//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
+array int groupCount : Amount of AI groups of characters to spawn. (min, max) 
+int minDistanceToPlayer : Hunter group minimum distance to player for spawn
+int maxDistanceToPlayer : ..max distance
+int rndDistanceToPlayer : The error on the location where AI thinks you are. (0..rndDistanceToPlayer). 
 	
-ref array<string> groupTypes = {}; 				//Types of AI groups
-int AISkill;
-float AIperception
+array string groupTypes : The prefab names of AI groups or characters. The AI is randomly picked from this list.
+int AISkill : Skill for AI (0-100). See SCR_AICombatComponent and EAISkill.
+float AIperception : How quickly AI reacts to danger. See SCR_AICombatComponent for details on perception factors.
 ```
