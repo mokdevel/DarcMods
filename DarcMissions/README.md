@@ -121,22 +121,23 @@ string name : Your own name for the area. Not used by the mod.
 ## Loot lists - dc_lootList.json
 The mod is capable of creating automatic loot lists to be used with missions. You can also define your own sets by following the rules. 
 
-Currently available lists are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
-  WEAPON_RIFLE : Rifles
-	WEAPON_HANDGUN : Handguns
-	WEAPON_LAUNCHER : Launchers
-	WEAPON_GRENADE : Grenades
-	WEAPON_ATTACHMENT : Various attachments excluding optics
-	WEAPON_OPTICS : Optic attachments
-	ITEM_MEDICAL : Medical items
-	ITEM_GENERAL : General items
-
 Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json)
 ```
 int version : See General parameters
 string author : See General parameters
 array<string> modList : The mods to search for loot
 array<SCR_DC_LootList> lootLists : The defined lootlists
+```
+Currently available lootListNames are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
+```
+WEAPON_RIFLE : Rifles
+WEAPON_HANDGUN : Handguns
+WEAPON_LAUNCHER : Launchers
+WEAPON_GRENADE : Grenades
+WEAPON_ATTACHMENT : Various attachments excluding optics
+WEAPON_OPTICS : Optic attachments
+ITEM_MEDICAL : Medical items
+ITEM_GENERAL : General items
 ```
 ### SCR_DC_LootList
 ```
