@@ -122,13 +122,15 @@ string name : Your own name for the area. Not used by the mod.
 ```
 
 ## Loot lists - dc_lootList.json
-The mod is capable of creating automatic loot lists to be used with missions. You can also define your own sets by following the rules. 
+The mod is capable of creating automatic loot lists to be used with missions. You can also define your own sets by following the same notation as in the example. Do not reuse the same names as is already available as a lootListName.
+
+This supports additional mods that you can define in the modList parameter. The typical notation is ```"$ModName:PreFabs"```. A properly created mod follows the same structure and keeps prefabs in the right places. 
 
 Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json)
 ```
 int version : See General parameters
 string author : See General parameters
-array<string> modList : The mods to search for loot
+array<string> modList : The mods to search for loot.
 array<SCR_DC_LootList> lootLists : The defined lootlists
 ```
 Currently available lootListNames are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
@@ -146,7 +148,7 @@ ITEM_GENERAL : General items
 ### SCR_DC_LootList
 ```
 string lootListName : The name given for the lootList. This is the name you use for adding loot. 
-string modDir : Prefab directory inside mod
+string modDir : Prefab directory inside mod.
 array<string> include : Items having these words are included in the lootList.
 array<string> exclude : Items with these words will be removed from the lootList.
 array<ResourceName> itemList : The list of items. This is autofilled, but you can pre-define items if needed.
