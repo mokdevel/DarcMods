@@ -41,8 +41,8 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 		m_DC_Occupation = m_Config.occupations[idx];
 				
 		//Set defaults
-		vector pos = m_DC_Occupation.locationPos;
-		string posName = m_DC_Occupation.locationName;
+		vector pos = m_DC_Occupation.pos;
+		string posName = m_DC_Occupation.posName;
 		IEntity location = null;
 		
 		//Find a location for the mission
@@ -190,11 +190,11 @@ class SCR_DC_Occupation : Managed
 {
 	//Occupation specific
 	string comment;							//Generic comment to describe the mission. Not used in game.
-	vector locationPos;						//Position for mission. "0 0 0" used for random location chosen from locationTypes.
-	string locationName;					//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
+	vector pos;								//Position for mission. "0 0 0" used for random location chosen from locationTypes.
+	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
-	ref array<EMapDescriptorType> locationTypes = {};
+	ref array<EMapDescriptorType> locationTypes = {};	
 	ref array<int> groupCount = {};			//min, max
 	ref array<int> waypointRange = {};		//min, max
 	DC_EWaypointGenerationType waypointGenType;
@@ -202,15 +202,16 @@ class SCR_DC_Occupation : Managed
 	ref array<string> groupTypes = {};
 	int AISkill;
 	float AIperception	
+	
 	//Optional settings
 	ref SCR_DC_Loot loot = null;	
 	ref array<ref SCR_DC_Structure> campItems = {};
 	
-	void Set(string comment_, vector locationPos_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_, int AISkill_, float AIperception_)
+	void Set(string comment_, vector pos_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_, int AISkill_, float AIperception_)
 	{
 		comment = comment_;
-		locationPos = locationPos_;
-		locationName = locationName_;
+		pos = pos_;
+		posName = posName_;
 		title = title_;
 		info = info_;
 		locationTypes = locationTypes_;

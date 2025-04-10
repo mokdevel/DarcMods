@@ -40,9 +40,9 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		m_DC_Patrol = m_Config.patrols[idx];
 
 		//Set defaults
-		vector pos = m_DC_Patrol.posStart;
+		vector pos = m_DC_Patrol.pos;
 		m_PosDestination = m_DC_Patrol.posDestination;
-		string posName = m_DC_Patrol.locationName;
+		string posName = m_DC_Patrol.posName;
 		IEntity location = null;
 		IEntity locationDestination = null;
 		
@@ -187,12 +187,12 @@ class SCR_DC_Patrol : Managed
 {
 	//Patrol specific
 	string comment;							//Generic comment to describe the mission. Not used in game.
-	vector posStart;						//Position for mission. "0 0 0" used for random location chosen from locationTypes.
+	vector pos;								//Position for mission. "0 0 0" used for random location chosen from locationTypes.
 	vector posDestination;					//Destination for the patrol to go to
-	string locationName;					//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
+	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
-	ref array<EMapDescriptorType> locationTypes = {};
+	ref array<EMapDescriptorType> locationTypes = {};	
 	ref array<int> groupCount = {};			//min, max	
 	ref array<int> waypointRange = {};		//min, max
 	DC_EWaypointGenerationType waypointGenType;
@@ -201,12 +201,12 @@ class SCR_DC_Patrol : Managed
 	int AISkill;
 	float AIperception	
 	
-	void Set(string comment_, vector posStart_, vector posDestination_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_, int AISkill_, float AIperception_)
+	void Set(string comment_, vector pos_, vector posDestination_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_, int AISkill_, float AIperception_)
 	{
 		comment = comment_;
-		posStart = posStart_;
+		pos = pos_;
 		posDestination = posDestination_;
-		locationName = locationName_;
+		posName = posName_;
 		title = title_;
 		info = info_;
 		locationTypes = locationTypes_;

@@ -62,7 +62,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 
 		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 		{
-			pos = SCR_DC_MissionHelper.FindMissionPos(300, 500);
+			pos = SCR_DC_MissionHelper.FindMissionPos(m_Config.distanceToMission, m_Config.distanceToPlayer);
 			if (pos != "0 0 0")
 			{
 				//Find flight positions from pos to m_PosDestination.
@@ -292,6 +292,8 @@ class SCR_DC_HelicopterInfo : Managed
 class SCR_DC_CrashsiteConfig : SCR_DC_MissionConfig
 {
 	//Mission specific	
+	int distanceToMission;								//Distance to mission when searching for a mission pos. Overrides missionFrame settings.
+	int distanceToPlayer;								//Distance to player when searching for a mission pos. Overrides missionFrame settings.
 	ref array<int> flyHeight = {};						//min, max - Spawn helicopter between these values.
 	ref array<ref int> crashsiteList = {};				//The indexes of crashsites.
 	ref array<ref SCR_DC_Crashsite> crashsites = {};	//List of crashsites
@@ -306,11 +308,11 @@ class SCR_DC_Crashsite : Managed
 	string info;							//Details for the hint shown for players
 	ref array<string> groupTypes = {};
 	int AISkill;
-	float AIperception
+	float AIperception;
 	ref array<ref SCR_DC_HelicopterInfo> helicopterInfo = {};
 	//Optional settings
+	ref SCR_DC_Loot loot = null;
 	ref array<ref SCR_DC_Structure> siteItems = {};
-	ref SCR_DC_Loot loot = null;	
 	
 	void Set(string comment_, string title_, string info_, array<string> groupTypes_, int AISkill_, float AIperception_)
 	{
@@ -355,12 +357,14 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		conf.version = 2;
-		conf.author = "lkasdi";
+		conf.version = 1;
+		conf.author = "darc";
 		//Default
 		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific
+		conf.distanceToMission = 100;
+		conf.distanceToPlayer = 500;
 		conf.flyHeight = {80, 120};
 		conf.crashsiteList = {0};
 		
@@ -390,6 +394,21 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 			heli2.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.8, 0.8, -1.0);
 			crashsite0.helicopterInfo.Insert(heli2);		
 		
+		//----------------------------------------------------
+		SCR_DC_Loot crashloot = new SCR_DC_Loot;
+		array<string> lootItems = {
+				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
+				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
+				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
+				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
+				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
+			};
+		crashloot.Set(0.9, lootItems);
+		crashsite0.loot = crashloot;
+				
 		//----------------------------------------------------
 		SCR_DC_Structure crashitem0 = new SCR_DC_Structure;
 		crashitem0.Set(
@@ -437,21 +456,6 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 			"922.173 39 2632.577",
 			"0 68.972 0"
 		);
-		crashsite0.siteItems.Insert(crashitem6);
-		
-		//----------------------------------------------------
-		SCR_DC_Loot crashloot = new SCR_DC_Loot;
-		array<string> lootItems = {
-				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
-				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
-				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
-			};
-		crashloot.Set(0.9, lootItems);
-		crashsite0.loot = crashloot;		
+		crashsite0.siteItems.Insert(crashitem6);	
 	}	
 }

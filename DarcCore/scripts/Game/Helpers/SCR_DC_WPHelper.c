@@ -58,14 +58,18 @@ sealed class SCR_DC_WPHelper
 			//Select the waypoint generation type. Randomize if requested.
 			if (wpGenType == DC_EWaypointGenerationType.RANDOM)
 			{
-				array<DC_EWaypointGenerationType> waypointGenTypeArray = {DC_EWaypointGenerationType.SCATTERED, DC_EWaypointGenerationType.RADIUS, DC_EWaypointGenerationType.RADIUS, DC_EWaypointGenerationType.RADIUS, DC_EWaypointGenerationType.LOITER};
+				array<DC_EWaypointGenerationType> waypointGenTypeArray = {DC_EWaypointGenerationType.LOITER, 
+																		  DC_EWaypointGenerationType.SCATTERED, DC_EWaypointGenerationType.SCATTERED, 
+					                                                      DC_EWaypointGenerationType.RADIUS, DC_EWaypointGenerationType.RADIUS, DC_EWaypointGenerationType.RADIUS, DC_EWaypointGenerationType.RADIUS};
 				wpGenType = waypointGenTypeArray.GetRandomElement();
 			}
 
 			//Select the waypoint movement type. Randomize if requested.
 			if (wpMoveType == DC_EWaypointMoveType.RANDOM)
 			{
-				array<DC_EWaypointMoveType> waypointMoveTypeArray = {DC_EWaypointMoveType.MOVECYCLE, DC_EWaypointMoveType.PATROLCYCLE, DC_EWaypointMoveType.PATROLCYCLE, DC_EWaypointMoveType.PATROLCYCLE};
+				array<DC_EWaypointMoveType> waypointMoveTypeArray = {DC_EWaypointMoveType.MOVECYCLE, 
+																	 DC_EWaypointMoveType.PATROLCYCLE, DC_EWaypointMoveType.PATROLCYCLE, DC_EWaypointMoveType.PATROLCYCLE, DC_EWaypointMoveType.PATROLCYCLE,
+																	 DC_EWaypointMoveType.MOVE, DC_EWaypointMoveType.PATROL};
 				wpMoveType = waypointMoveTypeArray.GetRandomElement();
 			}
 

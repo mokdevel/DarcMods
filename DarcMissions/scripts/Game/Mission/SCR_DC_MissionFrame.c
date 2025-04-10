@@ -328,10 +328,6 @@ class SCR_DC_MissionFrame
 		delete nonValidAreaJsonApi;		
 		
 		//Create a default mission configs
-		SCR_DC_CampJsonApi campJsonApi = new SCR_DC_CampJsonApi();	
-		campJsonApi.Load();
-		delete campJsonApi;
-		
 		SCR_DC_ConvoyJsonApi convoyJsonApi = new SCR_DC_ConvoyJsonApi();	
 		convoyJsonApi.Load();
 		delete convoyJsonApi;
@@ -351,6 +347,10 @@ class SCR_DC_MissionFrame
 		SCR_DC_PatrolJsonApi patrolJsonApi = new SCR_DC_PatrolJsonApi;	
 		patrolJsonApi.Load();
 		delete patrolJsonApi;		
+
+/*		SCR_DC_CampJsonApi campJsonApi = new SCR_DC_CampJsonApi();	
+		campJsonApi.Load();
+		delete campJsonApi;*/
 	}	
 	
 	//------------------------------------------------------------------------------------------------

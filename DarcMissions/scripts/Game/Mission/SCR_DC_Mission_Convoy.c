@@ -44,9 +44,9 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		m_DC_Convoy = m_Config.convoys[idx];
 
 		//Set defaults
-		vector pos = m_DC_Convoy.posStart;
+		vector pos = m_DC_Convoy.pos;
 		m_PosDestination = m_DC_Convoy.posDestination;
-		string posName = m_DC_Convoy.locationName;
+		string posName = m_DC_Convoy.posName;
 		IEntity location = null;
 		IEntity locationDestination = null;
 		
@@ -259,35 +259,35 @@ class SCR_DC_Convoy : Managed
 {
 	//Patrol specific
 	string comment;							//Generic comment to describe the mission. Not used in game.
-	vector posStart;						//Start position for the patrol. "0 0 0" used for random location chosen from locationTypes.
+	vector pos;								//Start position for the patrol. "0 0 0" used for random location chosen from locationTypes.
 	vector posDestination;					//Destination for the patrol to go to
-	string locationName;					//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
+	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
-	ref array<EMapDescriptorType> locationTypes = {};
+	ref array<EMapDescriptorType> locationTypes = {};	
 	DC_EWaypointGenerationType waypointGenType;
-	ref array<string> vehicleTypes = {};
-	float cruiseSpeed;						//Speed to drive in km/h.
 	ref array<string> groupTypes = {};
 	int AISkill;
-	float AIperception
+	float AIperception	
+	ref array<string> vehicleTypes = {};
+	float cruiseSpeed;						//Speed to drive in km/h.
 	//Optional settings
 	ref SCR_DC_Loot loot = null;	
 	
-	void Set(string comment_, vector posStart_, vector posDestination_, string locationName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, DC_EWaypointGenerationType waypointGenType_, array<string> vehicleTypes_, array<string> groupTypes_, int AISkill_, float AIperception_)
+	void Set(string comment_, vector pos_, vector posDestination_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, DC_EWaypointGenerationType waypointGenType_, array<string> groupTypes_, int AISkill_, float AIperception_, array<string> vehicleTypes_, )
 	{
 		comment = comment_;
-		posStart = posStart_;
+		pos = pos_;
 		posDestination = posDestination_;
-		locationName = locationName_;
+		posName = posName_;
 		title = title_;
 		info = info_;
 		locationTypes = locationTypes_;
 		waypointGenType = waypointGenType_;
-		vehicleTypes = vehicleTypes_;
 		groupTypes = groupTypes_;
 		AISkill = AISkill_;
 		AIperception = AIperception_;
+		vehicleTypes = vehicleTypes_;
 	}
 }
 
@@ -357,16 +357,16 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 			},
 			DC_EWaypointGenerationType.ROUTE,
 			{
-				"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
-				"{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et",
-				"{D4855501D5B12AF2}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_teal.et"
-			},
-			{
 				"{5B08C42EA0661A20}Prefabs/Groups/OPFOR/KLMK/Group_USSR_LightFireTeam_KLMK.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
 				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
 			},
-			50, 1.0
+			50, 1.0,
+			{
+				"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
+				"{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et",
+				"{D4855501D5B12AF2}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_teal.et"
+			}		
 		);
 		conf.convoys.Insert(convoy0);	
 		

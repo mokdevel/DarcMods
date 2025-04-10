@@ -250,13 +250,13 @@ class SCR_DC_HunterConfig : SCR_DC_MissionConfig
 	//Mission specific
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
-	int minDistanceToPlayer;				//Hunter group minimum distance to player for spawn
-	int maxDistanceToPlayer;				//...max distance
-	int rndDistanceToPlayer;				//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
 	ref array<int> groupCount = {1, 2};
 	ref array<string> groupTypes = {}; 		//The prefab names of AI groups or characters. The AI is randomly picked from this list.
 	int AISkill;							//Skill for AI (0-100). See SCR_AICombatComponent and EAISkill
 	float AIperception;					
+	int minDistanceToPlayer;				//Hunter group minimum distance to player for spawn
+	int maxDistanceToPlayer;				//...max distance
+	int rndDistanceToPlayer;				//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
 }
 
 //------------------------------------------------------------------------------------------------
@@ -299,9 +299,6 @@ class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 		conf.info = "They are coming for you...";		
 		conf.groupCount = {1, 2};			//min, max		
 //		conf.groupsToSpawn = 2;
-		conf.minDistanceToPlayer = 250;
-		conf.maxDistanceToPlayer = 600;
-		conf.rndDistanceToPlayer = 60;
 		conf.groupTypes = 
 		{
 			"{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
@@ -310,5 +307,8 @@ class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 		};
 		conf.AISkill = 30;
 		conf.AIperception = 0.7;		
+		conf.minDistanceToPlayer = 250;
+		conf.maxDistanceToPlayer = 600;
+		conf.rndDistanceToPlayer = 60;
 	}	
 }
