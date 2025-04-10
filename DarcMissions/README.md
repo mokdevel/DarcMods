@@ -302,8 +302,12 @@ SCR_DC_Loot loot : (optional) Loot found in the vehicle.
 ```
 
 ### SCR_DC_HelicopterInfo
+
 ```
 string resource : The prefab for the helicopter.
+  Currently supported values:
+    "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et"
+    "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et"
 float throttle : The 'speed' the helicopter is flying.
 float rotorForce : Force of the main rotor.
 float rotor2Force : Force of the second rotor.
