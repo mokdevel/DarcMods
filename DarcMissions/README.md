@@ -8,7 +8,6 @@ TBD:
 - Uncomment: float rndRange = 0;//Math.RandomInt(0, range/3); in WPHelper
 - waypointGenType RANDOM to have MOVE and PATROL also.
 - crashsite : The mission pos search 300, 500 to be set as json parameters
-- Fix links to different chapters
 
 ## Installation
 Just active the mod (and dependencies) and you're good to go.
@@ -58,9 +57,9 @@ Mission position is either defined or randomized. See [General parameters - pos]
 In the case position is not usable, another try is made. Currently searching is limited to five tries before deciding that no position has been found. In this case, mission will not spawn.
 
 ## Dynamic vs Static mission
-In the configuration you can define missions either as a dynamic mission (missionTypeArrayDynamic) or static mission (missionTypeArrayStatic). The missions are the same but static missions have priority in being spawned. Static missions are such that there should always be the given count of static missions running and if there are mission slots still available, these will be populated with dynamic missions. Note that both static and dynamic missions are counted towards the total count.
+In the configuration you can define missions either as a dynamic mission (```missionTypeArrayDynamic```) or static mission (```missionTypeArrayStatic```). The missions are the same but static missions have priority in being spawned. Static missions are such that there should always be the given count of static missions running and if there are mission slots still available, these will be populated with dynamic missions. Note that both static and dynamic missions are counted towards the total count.
 
-This enables you to have a count of certain types of missions always running. For example, you may want to have three patrols always roaming the map. To achieve this, you define the patrol mission three times in the missionTypeArrayStatic array. If you define multiple types of missions in the static list, the missions are picked at random. Having for example three patrol missions and one convoy mission in the list, makes sure that four static missions are running, but this may be any combination due to random picking. The patrol mission has a higher chance to be chosen.
+This enables you to have a count of certain types of missions always running. For example, you may want to have three patrols always roaming the map. To achieve this, you define the patrol mission three times in the ```missionTypeArrayStatic``` array. If you define multiple types of missions in the static list, the missions are picked at random. Having for example three patrol missions and one convoy mission in the list, makes sure that four static missions are running, but this may be any combination due to random picking. The patrol mission has a higher chance to be chosen.
 
 ## Configuration parameters
 Configuration is done in .json files.
@@ -135,7 +134,7 @@ string name : Your own name for the area. Not used by the mod.
 ## Loot lists
 Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json)
 
-The mod is capable of creating automatic loot lists to be used with missions. You can also define your own sets by following the same notation as in the example. Do not reuse the same names as is already available as a lootListName.
+The mod is capable of creating automatic loot lists to be used with missions. You can also define your own sets by following the same notation as in the example. Do not reuse the same names as is already available as a ```lootListName```.
 
 This supports additional mods that you can define in the modList parameter. The typical notation is ```"$ModName:PreFabs"```. A properly created mod follows the same structure and keeps prefabs in the right places. 
 ```
@@ -167,7 +166,7 @@ array<ResourceName> itemList : The list of items. This is autofilled, but you ca
 ```
 
 ### Example
-The below example with the name WEAPON_RIFLE will search three mods for items matching the include and exclude filters. The intial search path is ```$Modname:Prefabs```. Under the Prefabs dir we use the dir ```/Weapons/Rifles``` for the more detailed search. The full path for the search is ```$Modname:Prefabs/Weapons/Rifles``` and internally we're searching for all files ending in ```et```. Initally all items will be listed. 
+The below example with the name ```WEAPON_RIFLE``` will search three mods for items matching the include and exclude filters. The intial search path is ```$Modname:Prefabs```. Under the Prefabs dir we use the dir ```/Weapons/Rifles``` for the more detailed search. The full path for the search is ```$Modname:Prefabs/Weapons/Rifles``` and internally we're searching for all files ending in ```et```. Initally all items will be listed. 
 
 TBD: Explanation on how the filtering works.
 
@@ -441,7 +440,7 @@ Below are the typical values selected from [EMapDescriptorType](https://communit
 70 = MDT_NAME_RIDGE 
 71 = MDT_NAME_VALLEY 
 ```
-My humble wish for map makers is that please use the full range of EMapDescriptorTypes. 
+My humble wish for map makers is that please use the full range of ```EMapDescriptorTypes```. 
 
 ## Waypoint parameters
 The mission AI can be given general rules on how to create waypoints for their movement. You need to define the waypoint generation rule and the movement rule and the rest is created automatically.
