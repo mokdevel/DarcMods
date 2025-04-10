@@ -77,11 +77,11 @@ Mission frame specific files
 * dc_coreConfig.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md#dc_coreconfigjson)) : Configuration file for core.
   
 Mission specific files
-* dc_missionConfig_Hunter.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#hunter---dc_missionconfig_hunterjson))
-* dc_missionConfig_Patrol.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#patrol---dc_missionconfig_patroljson))
-* dc_missionConfig_Occupation.json
-* dc_missionConfig_Convoy.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#convoy---dc_missionconfig_convoyjson))
-* dc_missionConfig_Crashsite.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#mission--crashsite)
+* dc_missionConfig_Hunter.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--hunter))
+* dc_missionConfig_Patrol.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--patrol))
+* dc_missionConfig_Occupation.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--occupation))
+* dc_missionConfig_Convoy.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--convoy))
+* dc_missionConfig_Crashsite.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--crashsite)
 
 ## Mission frame
 Example: [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig.json)
