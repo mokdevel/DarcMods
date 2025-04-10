@@ -302,7 +302,7 @@ SCR_DC_Loot loot : (optional) Loot found in the vehicle.
 ```
 
 ### SCR_DC_HelicopterInfo
-
+This defines the helicopter parameters. The default prefabs in Arma Reforger are without their engines running and will simply crash before the flight is possible. For the flying helicopters the prefabs needs to be modified and currently only a couple of options are available.
 ```
 string resource : The prefab for the helicopter.
   Currently supported values:
@@ -312,6 +312,11 @@ float throttle : The 'speed' the helicopter is flying.
 float rotorForce : Force of the main rotor.
 float rotor2Force : Force of the second rotor.
 ```
+
+### Define flying helicopter prefab
+- Duplicate the helicopter prefab
+- Set <TBD: motor running>
+- ...etc
 
 # Common mission parameters
 ## General parameters
