@@ -215,13 +215,13 @@ bool showMarker : See Common parameters
 bool showHint : See Common parameters
 string title : See General parameters
 string info : See General parameters
-int minDistanceToPlayer : Hunter group minimum distance to player for spawn
-int maxDistanceToPlayer : ..max distance
-int rndDistanceToPlayer : The error on the location where AI thinks you are. (0..rndDistanceToPlayer). 
 array<int> groupCount : See General parameters
 array<string> groupTypes : See General parameters
 int AISkill : See General parameters
 float AIperception : See General parameters
+int minDistanceToPlayer : Hunter group minimum distance to player for spawn
+int maxDistanceToPlayer : ..max distance
+int rndDistanceToPlayer : The error on the location where AI thinks you are. (0..rndDistanceToPlayer). 
 ```
 
 ## Mission : Patrol
@@ -244,9 +244,9 @@ array<SCR_DC_Patrol> patrols : List of patrols
 ### SCR_DC_Patrol
 ```
 string comment : See General parameters
-vector posStart : See General parameters - pos. 
+vector pos : See General parameters
 vector posDestination : Destination for the patrol to go to. See also General parameters - pos.
-string locationName : See General parameters - posName
+string posName : See General parameters
 string title : See General parameters
 string info : See General parameters
 array<EMapDescriptorType> locationTypes : See Location parameters
@@ -280,27 +280,27 @@ array<SCR_DC_Convoy> convoys : List of convoys
 ### SCR_DC_Convoy
 ```
 string comment : See General parameters
-vector posStart : See General parameters - pos. 
-vector posDestination : Destination for the patrol to go to. See also General parameters - pos.
-string locationName : See General parameters - posName
+vector pos : See General parameters. This is the starting point for the convoy 
+vector posDestination : Destination for the convoy to go to. See also General parameters - pos.
+string posName : See General parameters
 string title : See General parameters
 string info : See General parameters
 array<EMapDescriptorType> locationTypes : See Location parameters
 DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
   ROUTE : The convoy will go from posStart to posDestination. When destination has been reached, the patrol will LOITER.
   RADIUS, SCATTERED : The concoy will follow a path created with waypointRange starting from posStart. posDestination is ignored.
-array<string> vehicleTypes : The prefab names of vehicles. The vehicle is randomly picked from this list.
-float cruiseSpeed : Speed to drive in km/h. 30 is a good value so that the convoy is not driving too fast.
 array<string> groupTypes : See General parameters
 int AISkill : See General parameters
 float AIperception : See General parameters
+array<string> vehicleTypes : The prefab names of vehicles. The vehicle is randomly picked from this list.
+float cruiseSpeed : Speed to drive in km/h. 30 is a good value so that the convoy is not driving too fast.
 SCR_DC_Loot loot : (optional) Loot found in the vehicle. 
 ```
 
 ## Mission : Crashsite
 Example: [dc_missionConfig_Crashsite.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Crashsite.json)
 
-A flying helicopter is spawned in a random location flying towards a random location. The helicopter either crashes or if the speed is reduced enough, it will be destroyed via script. Once the helicopter has crashed, AI will be spawned to protect the crashsite. Loot can be added in to the loot box carried. Additional structures can be spawned around the crashed helicopter. 
+A flying helicopter is spawned in a random location flying towards a random location. The helicopter either crashes or if the speed is reduced enough, it will be destroyed via script. Once the helicopter has crashed, AI will be spawned to protect the crashsite. NOTE: There is no parameter for waypoints and AIs will ```LOITER```. Loot can be added in to the loot box carried. Additional structures can be spawned around the crashed helicopter. 
 
 The location for the initial chopper spawn is random and only checks for mission distance and player distance. The destination is toward map center with randomization. This is to avoid the direction to be towards the map edges. There will be cases where the helicopter flies towards the sea and this is just unfortunate randomization (read: this is by design).
 ```
@@ -324,8 +324,8 @@ int AISkill : See General parameters
 float AIperception : See General parameters
 array<SCR_DC_HelicopterInfo> helicopterInfo : The helicopter is selected randomly.
 //Optional settings
-array<SCR_DC_Structure> siteItems : Prefabs to spawn at the crashsite. Note that first item shall be the loot box.
-SCR_DC_Loot loot : (optional) Loot found in the vehicle. 
+SCR_DC_Loot loot : (optional) Loot found in the box. 
+array<SCR_DC_Structure> siteItems : (optional) Prefabs to spawn at the crashsite. Note that first item shall be the loot box.
 ```
 
 ### SCR_DC_HelicopterInfo
@@ -366,8 +366,8 @@ array<SCR_DC_Occupation> occupations : List of oocupations.
 ### SCR_DC_Occupation
 ```
 string comment : See General parameters
-vector locationPos : See General parameters - pos. 
-string locationName : See General parameters - posName
+vector pos : See General parameters
+string posName : See General parameters
 string title : See General parameters
 string info : See General parameters
 array<EMapDescriptorType> locationTypes : See Location parameters
