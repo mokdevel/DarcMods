@@ -227,6 +227,11 @@ Example: [dc_missionConfig_Patrol.json](https://github.com/mokdevel/DarcMods/blo
 AI patrol is spawned to move around the map. The may have a destination where they're moving to or just randomly roam the map.
 
 ```
+int version : See Common parameters
+string author : See Common parameters
+int missionCycleTime : See Common parameters
+bool showMarker : See Common parameters
+bool showHint : See Common parameters
 int patrolingTime : (seconds) Time to patrol. Once this time has passed and not players nearby, despawn mission.
 int distanceToPlayer : If no players this close to any players and patrolingTime has passed, despawn mission.
 array<int> patrolList : The indexes of patrols.
@@ -235,11 +240,6 @@ array<SCR_DC_Patrol> patrols : List of patrols
 
 ### SCR_DC_Patrol
 ```
-int version : See Common parameters
-string author : See Common parameters
-int missionCycleTime : See Common parameters
-bool showMarker : See Common parameters
-bool showHint : See Common parameters
 string comment : See General parameters
 vector posStart : See General parameters - pos. 
 vector posDestination : Destination for the patrol to go to. See also General parameters - pos.
@@ -343,6 +343,41 @@ float rotor2Force : Force of the second rotor.
 - Duplicate the helicopter prefab
 - Set <TBD: motor running>
 - ...etc
+
+## Mission : Occupation
+Example: [dc_missionConfig_Occupation.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Patrol.json)
+
+AI patrol is spawned to a location like city. They will patrol the location and may have loot with them.
+
+```
+int version : See Common parameters
+string author : See Common parameters
+int missionCycleTime : See Common parameters
+bool showMarker : See Common parameters
+bool showHint : See Common parameters
+int emptySize : The size (radius) of the empty space needed to decide on a mission position.
+array<int> occupationList : The indexes of occupations.
+array<SCR_DC_Occupation> occupations : List of oocupations.
+```
+
+### SCR_DC_Occupation
+```
+string comment : See General parameters
+vector locationPos : See General parameters - pos. 
+string locationName : See General parameters - posName
+string title : See General parameters
+string info : See General parameters
+array<EMapDescriptorType> locationTypes : See Location parameters
+array<int> groupCount : See General parameters
+array<int> waypointRange : See Waypoint parameters. For patrols, the values should be quite big to have them move around the map.
+DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
+DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
+array<string> groupTypes : See General parameters
+int AISkill : See General parameters
+float AIperception : See General parameters
+SCR_DC_Loot loot : (optional) Loot found in the mission. 
+array<ref SCR_DC_Structure> campItems  : (optional) The structure list for the camp.
+```
 
 # Common mission parameters
 ## Common parameters
