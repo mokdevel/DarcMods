@@ -45,10 +45,14 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 ```
 
 # Configuration parameters
+Configuration is done in .json files.
+
+## Configuration files
 For examples of configuration files see [ExampleConfigs](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions/ExampleConfigs).
 
-The configuration files will be under your ```profile\DarcMods_conf\*```.
+The configuration files will be under your ```profile\DarcMods_conf\*```. Depending on the usage the profile is in your ArmaReforger, ArmaReforgerWorkbench or in your server profile directory. For example ```TBD: Fix the names above and add link to find these in your users dir```.
 
+Mission frame specific files
 * dc_missionConfig.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#dc_missionconfigjson---missionframe)) :  The main mission frame configuration. 
 * dc_nonValidArea.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#non-valid-areas---dc_nonvalidareajson)) : Definition of areas where a mission can not spawn.
 * dc_lootList.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#loot-lists---dc_lootlistjson)) : Definitions of loot for missions. 
