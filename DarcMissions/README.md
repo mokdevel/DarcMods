@@ -2,10 +2,8 @@
 A mission frame work for Arma Reforger. There are various missions premade and their behaviour can be modified by editing the configuration jsons.
 
 TBD: 
-- Change all missions to use pos and posName instead of posStart and locationName.
 - Add rndCount for waypoints as a min,max parameter in core 
 - Uncomment: float rndRange = 0;//Math.RandomInt(0, range/3); in WPHelper
-- crashsite : The mission pos search 300, 500 to be set as json parameters
 
 ## Installation
 Just active the mod (and dependencies) and you're good to go.
