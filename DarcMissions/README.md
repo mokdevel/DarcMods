@@ -71,9 +71,9 @@ For examples of configuration files see [ExampleConfigs](https://github.com/mokd
 The configuration files will be under your ```profile\DarcMods_conf\*```. Depending on the usage the profile is in your ArmaReforger, ArmaReforgerWorkbench or in your server profile directory. For example ```TBD: Fix the names above and add link to find these in your users dir```.
 
 Mission frame specific files
-* dc_missionConfig.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#dc_missionconfigjson---missionframe)) :  The main mission frame configuration. 
-* dc_nonValidArea.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#non-valid-areas---dc_nonvalidareajson)) : Definition of areas where a mission can not spawn.
-* dc_lootList.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#loot-lists---dc_lootlistjson)) : Definitions of loot for missions. 
+* dc_missionConfig.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission-frame)) :  The main mission frame configuration. 
+* dc_nonValidArea.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#non-valid-areas)) : Definition of areas where a mission can not spawn.
+* dc_lootList.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#loot-lists)) : Definitions of loot for missions. 
 * dc_coreConfig.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md#dc_coreconfigjson)) : Configuration file for core.
   
 Mission specific files
@@ -81,7 +81,7 @@ Mission specific files
 * dc_missionConfig_Patrol.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--patrol))
 * dc_missionConfig_Occupation.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--occupation))
 * dc_missionConfig_Convoy.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--convoy))
-* dc_missionConfig_Crashsite.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--crashsite)
+* dc_missionConfig_Crashsite.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--crashsite))
 
 ## Mission frame
 Example: [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig.json)
