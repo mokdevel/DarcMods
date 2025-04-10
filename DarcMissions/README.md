@@ -48,9 +48,6 @@ Once the mod starts to run it will wait for ```missionStartDelay``` before the m
                                      Note that if a player is within missionActiveDistance, the time will reset.      
 ```
 
-## Configuration parameters
-Configuration is done in .json files.
-
 ## Mission position
 Mission position is either defined or randomized. See [General parameters - pos](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#general-parameters) and [Location parameters](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#location-parametes). Once a position is chosen, it's checked for validity. The position shall not be .. 
 - .. too close to another mission
@@ -64,6 +61,9 @@ In the case position is not usable, another try is made. Currently searching is 
 In the configuration you can define missions either as a dynamic mission (missionTypeArrayDynamic) or static mission (missionTypeArrayStatic). The missions are the same but static missions have priority in being spawned. Static missions are such that there should always be the given count of static missions running and if there are mission slots still available, these will be populated with dynamic missions. Note that both static and dynamic missions are counted towards the total count.
 
 This enables you to have a count of certain types of missions always running. For example, you may want to have three patrols always roaming the map. To achieve this, you define the patrol mission three times in the missionTypeArrayStatic array. If you define multiple types of missions in the static list, the missions are picked at random. Having for example three patrol missions and one convoy mission in the list, makes sure that four static missions are running, but this may be any combination due to random picking. The patrol mission has a higher chance to be chosen.
+
+## Configuration parameters
+Configuration is done in .json files.
 
 # Configuration files
 For examples of configuration files see [ExampleConfigs](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions/ExampleConfigs).
