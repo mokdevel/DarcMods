@@ -28,6 +28,8 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - [HunterKiller mod by Rabid Squirrel](https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller) for the initial kick to get into coding.
 
 # Basics
+Once the mod starts to run it will wait for ```missionStartDelay``` before the missions start to spawn. The missions have their own life cycle with a defined cycle time. Once a mission is completed and no players are near by, the missions will despawn.
+
 ## MissionFrame cycle
 ```
 ----|------------|------------|------------|------------|------------|------------|----...
