@@ -199,6 +199,8 @@ TBD: Explanation on how the filtering works.
 ```
 
 # Mission parameters
+Each mission have their own configuration file. Note that there are [Common parameters](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#common-parameters) that are valid for all missions. [General parameters](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#general-parameters) are such that same term is used in multiple mods. 
+
 ## Mission : Hunter
 Example: [dc_missionConfig_Hunter.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Hunter.json)
 
