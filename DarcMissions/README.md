@@ -200,10 +200,12 @@ bool showMarker : Show mission marker on map. False will disable markers.
 bool showHint : Show players a hint with details about the missions. False will disable hints.
 ```
 
-## Hunter - dc_missionConfig_Hunter.json
+## Mission : Hunter
+Example: [dc_missionConfig_Hunter.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Hunter.json)
+
 AIs are hunting you and following you. They will receive regularly information about where the closest player. The location is known to them with an error of rndDistanceToPlayer. You can outrun them by going further than maxDistanceToPlayer.
 
-Example: [dc_missionConfig_Hunter.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Hunter.json)
+
 ```
 string title : See General parameters
 string info : See General parameters
@@ -216,10 +218,11 @@ int AISkill : See General parameters
 float AIperception : See General parameters
 ```
 
-## Patrol - dc_missionConfig_Patrol.json
+## Mission : Patrol
+Example: [dc_missionConfig_Patrol.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Patrol.json)
+
 AI patrol is spawned to move around the map. The may have a destination where they're moving to or just randomly roam the map.
 
-Example: [dc_missionConfig_Patrol.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Patrol.json)
 ```
 int patrolingTime : (seconds) Time to patrol. Once this time has passed and not players nearby, despawn mission.
 int distanceToPlayer : If no players this close to any players and patrolingTime has passed, despawn mission.
@@ -247,10 +250,10 @@ int AISkill : See General parameters
 float AIperception : See General parameters
 ```
 
-## Convoy - dc_missionConfig_Convoy.json
-AI patrol is spawned in a vehicle to move around the map. 
-
+## Mission : Convoy
 Example: [dc_missionConfig_Convoy.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Convoy.json)
+
+AI patrol is spawned in a vehicle to move around the map. 
 ```
 int convoyTime : (seconds) Time to drive around. Once this time has passed and not players nearby, despawn mission.
 int distanceToPlayer : If no players this close to the convoy and convoyTime has passed, despawn mission.
@@ -278,12 +281,12 @@ float AIperception : See General parameters
 SCR_DC_Loot loot : (optional) Loot found in the vehicle. 
 ```
 
-## Crashsite - dc_missionConfig_Crashsite.json
+## Mission : Crashsite
+Example: [dc_missionConfig_Crashsite.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Crashsite.json)
+
 A flying helicopter is spawned in a random location flying towards a random location. The helicopter either crashes or if the speed is reduced enough, it will be destroyed via script. Once the helicopter has crashed, AI will be spawned to protect the crashsite. Loot can be added in to the loot box carried. Additional structures can be spawned around the crashed helicopter. 
 
 The location for the initial chopper spawn is random and only checks for mission distance and player distance. The destination is toward map center with randomization. This is to avoid the direction to be towards the map edges. There will be cases where the helicopter flies towards the sea and this is just unfortunate randomization (read: this is by design).
-
-Example: [dc_missionConfig_Crashsite.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Crashsite.json)
 ```
 array<int> flyHeight : (min, max) The helicopter is spawned between these height values. The higher the values, the longer flight. Setting to zero will create the crashsite immediately.
 array<int> crashsiteList : The indexes of crashsites.
