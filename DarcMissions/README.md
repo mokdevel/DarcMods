@@ -210,7 +210,7 @@ int minDistanceToPlayer : Hunter group minimum distance to player for spawn
 int maxDistanceToPlayer : ..max distance
 int rndDistanceToPlayer : The error on the location where AI thinks you are. (0..rndDistanceToPlayer). 
 array<int> groupCount : See General parameters
-array string groupTypes : See General parameters
+array<string> groupTypes : See General parameters
 int AISkill : See General parameters
 float AIperception : See General parameters
 ```
@@ -241,7 +241,7 @@ DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
   ROUTE : The patrol will go from posStart to posDestination. When destination has been reached, the patrol will LOITER.
   RADIUS, SCATTERED : The patrol will follow a path created with waypointRange starting from posStart. posDestination is ignored.
 DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
-array string groupTypes : See General parameters
+array<string> groupTypes : See General parameters
 int AISkill : See General parameters
 float AIperception : See General parameters
 ```
@@ -257,7 +257,7 @@ array<int> convoyList : The indexes of convoys.
 array<SCR_DC_Convoy> convoys : List of convoys
 ```
 
-### SCR_DC_Patrol
+### SCR_DC_Convoy
 ```
 string comment : See General parameters
 vector posStart : See General parameters - pos. 
@@ -271,10 +271,42 @@ DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
   RADIUS, SCATTERED : The concoy will follow a path created with waypointRange starting from posStart. posDestination is ignored.
 array<string> vehicleTypes : The prefab names of vehicles. The vehicle is randomly picked from this list.
 float cruiseSpeed : Speed to drive in km/h. 30 is a good value so that the convoy is not driving too fast.
-array string groupTypes : See General parameters
+array<string> groupTypes : See General parameters
 int AISkill : See General parameters
 float AIperception : See General parameters
 SCR_DC_Loot loot : (optional) Loot found in the vehicle. 
+```
+
+## Crashsite - dc_missionConfig_Crashsite.json
+AI patrol is spawned in a vehicle to move around the map. 
+
+Example: [dc_missionConfig_Crashsite.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Crashsite.json)
+```
+array<int> flyHeight = {};						//min, max - Spawn helicopter between these values.
+array<int> crashsiteList = {};				//The indexes of crashsites.
+array<SCR_DC_Crashsite> crashsites = {};	//List of crashsites
+```
+
+### SCR_DC_Crashsite
+```
+string comment : See General parameters
+string title : See General parameters
+string info : See General parameters
+array<string> groupTypes : See General parameters
+int AISkill : See General parameters
+float AIperception : See General parameters
+array<SCR_DC_HelicopterInfo> helicopterInfo = {};
+//Optional settings
+array<SCR_DC_Structure> siteItems = {};
+SCR_DC_Loot loot : (optional) Loot found in the vehicle. 
+```
+
+### SCR_DC_HelicopterInfo
+```
+string resource;
+float throttle;
+float rotorForce;
+float rotor2Force;
 ```
 
 # Common mission parameters
