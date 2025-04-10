@@ -6,7 +6,8 @@ For examples of configuration files see [ExampleConfigs](https://github.com/mokd
 
 The configuration files will be under your ```profile\DarcMods_conf\*```.
 
-## dc_coreConfig.json
+## Core config
+Example: [dc_coreConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_coreConfig.json)
 ```
 int version : Version number of the file.
 string author : Author of the missions.
