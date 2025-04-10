@@ -80,10 +80,10 @@ Mission specific files
 * dc_missionConfig_Convoy.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#convoy---dc_missionconfig_convoyjson))
 * dc_missionConfig_Crashsite.json
 
-## Mission frame - dc_missionConfig.json
-The main configuration file for mission frame.
-
+## Mission frame
 Example: [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig.json)
+
+The main configuration file for mission frame.
 ```
 int version : See General parameters
 string author : See General parameters
@@ -109,10 +109,10 @@ array<int> missionTypeArrayDynamic : List mission types that spawn randomly. (DC
 array<int> missionTypeArrayStatic : List mission types that are always active. See missionTypeArrayDynamic for values.
 ```
 
-## Non valid areas - dc_nonValidArea.json
-This a list of areas where missions shall not spawn. For example a safe zone would be listed here. 
-
+## Non valid areas
 Example: [dc_nonValidArea.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_nonValidArea.json)
+
+This a list of areas where missions shall not spawn. For example a safe zone would be listed here. 
 ```
 int version : See General parameters
 string author : See General parameters
@@ -127,12 +127,12 @@ float radius : Radius from the center where the missions shall not spawn.
 string name : Your own name for the area. Not used by the mod.
 ```
 
-## Loot lists - dc_lootList.json
+## Loot lists
+Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json)
+
 The mod is capable of creating automatic loot lists to be used with missions. You can also define your own sets by following the same notation as in the example. Do not reuse the same names as is already available as a lootListName.
 
 This supports additional mods that you can define in the modList parameter. The typical notation is ```"$ModName:PreFabs"```. A properly created mod follows the same structure and keeps prefabs in the right places. 
-
-Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json)
 ```
 int version : See General parameters
 string author : See General parameters
