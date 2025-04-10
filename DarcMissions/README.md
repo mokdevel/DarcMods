@@ -7,6 +7,7 @@ TBD:
 - Add rndCount for waypoints as a min,max parameter in core 
 - Uncomment: float rndRange = 0;//Math.RandomInt(0, range/3); in WPHelper
 - waypointGenType RANDOM to have MOVE and PATROL also.
+- crashsite : The mission pos search 300, 500 to be set as json parameters
   
 ## Installation
 Just active the mod (and dependencies) and you're good to go.
@@ -279,6 +280,8 @@ SCR_DC_Loot loot : (optional) Loot found in the vehicle.
 
 ## Crashsite - dc_missionConfig_Crashsite.json
 A flying helicopter is spawned in a random location flying towards a random location. The helicopter either crashes or if the speed is reduced enough, it will be destroyed via script. Once the helicopter has crashed, AI will be spawned to protect the crashsite. Loot can be added in to the loot box carried. Additional structures can be spawned around the crashed helicopter. 
+
+The location for the initial chopper spawn is random and only checks for mission distance and player distance. The destination is toward map center with randomization. This is to avoid the direction to be towards the map edges. There will be cases where the helicopter flies towards the sea and this is just unfortunate randomization (read: this is by design).
 
 Example: [dc_missionConfig_Crashsite.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Crashsite.json)
 ```
