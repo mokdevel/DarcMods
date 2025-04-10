@@ -190,16 +190,6 @@ TBD: Explanation on how the filtering works.
 ```
 
 # Mission specific configuration parameters
-## Common for all
-These parameters are in every mission.
-```
-int version : See General parameters
-string author : See General parameters
-int missionCycleTime : (seconds) The cycle time the mission states are run
-bool showMarker : Show mission marker on map. False will disable markers.
-bool showHint : Show players a hint with details about the missions. False will disable hints.
-```
-
 ## Mission : Hunter
 Example: [dc_missionConfig_Hunter.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Hunter.json)
 
@@ -207,6 +197,11 @@ AIs are hunting you and following you. They will receive regularly information a
 
 
 ```
+int version : See Common parameters
+string author : See Common parameters
+int missionCycleTime : See Common parameters
+bool showMarker : See Common parameters
+bool showHint : See Common parameters
 string title : See General parameters
 string info : See General parameters
 int minDistanceToPlayer : Hunter group minimum distance to player for spawn
@@ -232,6 +227,11 @@ array<SCR_DC_Patrol> patrols : List of patrols
 
 ### SCR_DC_Patrol
 ```
+int version : See Common parameters
+string author : See Common parameters
+int missionCycleTime : See Common parameters
+bool showMarker : See Common parameters
+bool showHint : See Common parameters
 string comment : See General parameters
 vector posStart : See General parameters - pos. 
 vector posDestination : Destination for the patrol to go to. See also General parameters - pos.
@@ -255,6 +255,11 @@ Example: [dc_missionConfig_Convoy.json](https://github.com/mokdevel/DarcMods/blo
 
 AI patrol is spawned in a vehicle to move around the map. 
 ```
+int version : See Common parameters
+string author : See Common parameters
+int missionCycleTime : See Common parameters
+bool showMarker : See Common parameters
+bool showHint : See Common parameters
 int convoyTime : (seconds) Time to drive around. Once this time has passed and not players nearby, despawn mission.
 int distanceToPlayer : If no players this close to the convoy and convoyTime has passed, despawn mission.
 array<int> convoyList : The indexes of convoys.
@@ -288,6 +293,11 @@ A flying helicopter is spawned in a random location flying towards a random loca
 
 The location for the initial chopper spawn is random and only checks for mission distance and player distance. The destination is toward map center with randomization. This is to avoid the direction to be towards the map edges. There will be cases where the helicopter flies towards the sea and this is just unfortunate randomization (read: this is by design).
 ```
+int version : See Common parameters
+string author : See Common parameters
+int missionCycleTime : See Common parameters
+bool showMarker : See Common parameters
+bool showHint : See Common parameters
 array<int> flyHeight : (min, max) The helicopter is spawned between these height values. The higher the values, the longer flight. Setting to zero will create the crashsite immediately.
 array<int> crashsiteList : The indexes of crashsites.
 array<SCR_DC_Crashsite> crashsites : List of crashsites
@@ -325,6 +335,16 @@ float rotor2Force : Force of the second rotor.
 - ...etc
 
 # Common mission parameters
+## Common parameters
+These parameters are in every mission.
+```
+int version : See General parameters
+string author : See General parameters
+int missionCycleTime : (seconds) The cycle time the mission states are run
+bool showMarker : Show mission marker on map. False will disable markers.
+bool showHint : Show players a hint with details about the missions. False will disable hints.
+```
+
 ## General parameters
 ```
 int version : Version number of the file.
