@@ -313,7 +313,7 @@ float rotorForce : Force of the main rotor.
 float rotor2Force : Force of the second rotor.
 ```
 
-### Define flying helicopter prefab
+### Define a new flying helicopter prefab
 - Duplicate the helicopter prefab
 - Set <TBD: motor running>
 - ...etc
@@ -399,6 +399,7 @@ IEntity box : (null) The container where the items are put. This can be a box, v
 float itemChance : (0-1, equals to percentage) The chance of each item appearing in the box. 
 array<string> items : List of items. This can be prefabs or an lootList.
 ```
+
 ### Example
 The below example shows the different ways you can define the loot. 
 - "box": null : For convoys this will be automatically assigned to the vehicle. For missions with structures, the first structue is considered as the loot target.
@@ -416,6 +417,21 @@ The below example shows the different ways you can define the loot.
   ]
 }
 ```
+
+### Loot box 
+The loot box (vehicle, box, ..) needs to have <TBD: component> available. If it's not available, no loot can be added. 
+- Vehicles : Typically works.
+- Box : The default arsenal boxes are not supported and you will need to use special ones. Currently supported values: 
+```
+"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
+"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
+```
+
+### Define a new loot box
+- Duplicate the box prefab
+- Set <TBD: component>
+- Remove <TBD: component>
+- ...etc
 
 # TBD
 - Waypoint functionality to roam buildings in a city
