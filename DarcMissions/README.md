@@ -143,7 +143,7 @@ string author : See General parameters
 array<string> modList : The mods to search for loot.
 array<SCR_DC_LootList> lootLists : The defined lootlists
 ```
-Currently available lootListNames are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
+Currently available ```lootListNames``` are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
 ```
 WEAPON_RIFLE : A random rifle from any faction.
 WEAPON_HANDGUN : A random handgun from any faction.
