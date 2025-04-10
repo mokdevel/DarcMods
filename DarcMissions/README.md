@@ -16,10 +16,10 @@ Just active the mod (and dependencies) and you're good to go.
 I wanted to create a simple drop-in mission package where there is minimal configuration needed to get it running. You can take the mod, play it in SP, MP or let it run on a dedicated server. Everything should be randomized so you should never know what is happening in the world. The behaviour of the mod should be close to vanilla and by doing that, you could be running this on top of your other game modes. I've been using this with [Escapists](https://reforger.armaplatform.com/workshop/5F16D7E4A1CBE075-Escapists) just to get a few additional surprises.
 
 ## Missions
-- Hunter : AIs are hunting you and following you. They have some knowledge of where you are. You can outrun them or take them down. 
+- Hunter : AIs are hunting you. They have some knowledge of where you are. You can outrun them or take them down. 
 - Convoy : AIs are driving from a location A to B carrying valuable loot with them.
-- Patrol : AIs are traveling either with a purpose to reach a location or to patrol areas.
-- Crashsite : A helicopter carrying loot is damaged and is going to crash. Survivors will be protecting the wreck while waiting to be rescued.
+- Patrol : AIs are patroling an area or traveling with a purpose to reach a location.
+- Crashsite : A helicopter carrying loot is damaged and is crashing. Survivors will be protecting the wreck while waiting to be rescued.
 - Occupation : A location is guarded by AIs with loot available. 
 
 ## Thanks
