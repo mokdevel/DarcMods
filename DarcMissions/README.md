@@ -278,13 +278,13 @@ SCR_DC_Loot loot : (optional) Loot found in the vehicle.
 ```
 
 ## Crashsite - dc_missionConfig_Crashsite.json
-AI patrol is spawned in a vehicle to move around the map. 
+A flying helicopter is spawned in a random location flying towards a random location. The helicopter either crashes or if the speed is reduced enough, it will be destroyed via script. Once the helicopter has crashed, AI will be spawned to protect the crashsite. Loot can be added in to the loot box carried. Additional structures can be spawned around the crashed helicopter. 
 
 Example: [dc_missionConfig_Crashsite.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Crashsite.json)
 ```
-array<int> flyHeight = {};						//min, max - Spawn helicopter between these values.
-array<int> crashsiteList = {};				//The indexes of crashsites.
-array<SCR_DC_Crashsite> crashsites = {};	//List of crashsites
+array<int> flyHeight : (min, max) The helicopter is spawned between these height values. The higher the values, the longer flight. Setting to zero will create the crashsite immediately.
+array<int> crashsiteList : The indexes of crashsites.
+array<SCR_DC_Crashsite> crashsites : List of crashsites
 ```
 
 ### SCR_DC_Crashsite
@@ -295,18 +295,18 @@ string info : See General parameters
 array<string> groupTypes : See General parameters
 int AISkill : See General parameters
 float AIperception : See General parameters
-array<SCR_DC_HelicopterInfo> helicopterInfo = {};
+array<SCR_DC_HelicopterInfo> helicopterInfo : The helicopter is selected randomly.
 //Optional settings
-array<SCR_DC_Structure> siteItems = {};
+array<SCR_DC_Structure> siteItems : Prefabs to spawn at the crashsite. Note that first item shall be the loot box.
 SCR_DC_Loot loot : (optional) Loot found in the vehicle. 
 ```
 
 ### SCR_DC_HelicopterInfo
 ```
-string resource;
-float throttle;
-float rotorForce;
-float rotor2Force;
+string resource : The prefab for the helicopter.
+float throttle : The 'speed' the helicopter is flying.
+float rotorForce : Force of the main rotor.
+float rotor2Force : Force of the second rotor.
 ```
 
 # Common mission parameters
