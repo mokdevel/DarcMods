@@ -3,10 +3,8 @@ A mission frame work for Arma Reforger. There are various missions premade and t
 
 TBD: 
 - Change all missions to use pos and posName instead of posStart and locationName.
-- MOVE ends up in LOITER
 - Add rndCount for waypoints as a min,max parameter in core 
 - Uncomment: float rndRange = 0;//Math.RandomInt(0, range/3); in WPHelper
-- waypointGenType RANDOM to have MOVE and PATROL also.
 - crashsite : The mission pos search 300, 500 to be set as json parameters
 
 ## Installation
@@ -303,12 +301,16 @@ Example: [dc_missionConfig_Crashsite.json](https://github.com/mokdevel/DarcMods/
 A flying helicopter is spawned in a random location flying towards a random location. The helicopter either crashes or if the speed is reduced enough, it will be destroyed via script. Once the helicopter has crashed, AI will be spawned to protect the crashsite. NOTE: There is no parameter for waypoints and AIs will ```LOITER```. Loot can be added in to the loot box carried. Additional structures can be spawned around the crashed helicopter. 
 
 The location for the initial chopper spawn is random and only checks for mission distance and player distance. The destination is toward map center with randomization. This is to avoid the direction to be towards the map edges. There will be cases where the helicopter flies towards the sea and this is just unfortunate randomization (read: this is by design).
+
+Note: ```distanceToMission``` and ```distanceToPlayer``` overrides missionFrame settings. The initial helicopter position could start on top of a mission and it does not matter.
 ```
 int version : See Common parameters
 string author : See Common parameters
 int missionCycleTime : See Common parameters
 bool showMarker : See Common parameters
 bool showHint : See Common parameters
+int distanceToMission : Distance to mission when searching for a mission pos. Overrides missionFrame settings.
+int distanceToPlayer : Distance to player when searching for a mission pos. Overrides missionFrame settings.
 array<int> flyHeight : (min, max) The helicopter is spawned between these height values. The higher the values, the longer flight. Setting to zero will create the crashsite immediately.
 array<int> crashsiteList : The indexes of crashsites.
 array<SCR_DC_Crashsite> crashsites : List of crashsites
@@ -452,7 +454,7 @@ The mission AI can be given general rules on how to create waypoints for their m
 array<int> waypointRange : (min, max) The random radius for waypoint creation.
 DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
   NONE        : Not used anywhere. The rest are names of the mission types.
-  RANDOM      : Use one of these randomly: SCATTERED (1), RADIUS (3), LOITER (1)
+  RANDOM      : Use one of these randomly: LOITER (1), SCATTERED (2), RADIUS (4), 
   SCATTERED   : Completely random waypoints without any logic. 
   RADIUS      : AI follow a path that is close to a circle with a radius. There is some additional randomization to avoid a perfect circle.
   ROUTE       : AI follow a route from A to B. The route is created with waypoints along the road. Once the destination is reached, the AI will LOITER
@@ -460,7 +462,7 @@ DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
   SLOTS       : AI goes from a slot to slot. NOTE: This will not work unless the map has slots (the S/M/L letters on map) defined.
 DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
   NONE        : Not used anywhere. The rest are names of the mission types.
-  RANDOM      : Pick a random one from MOVECYCLE (1) and PATROLCYCLE (3).
+  RANDOM      : Pick a random one from MOVECYCLE (1), PATROLCYCLE (4), MOVE (1), PATROL (1).
   MOVE        : Creates move waypoints. AI will LOITER once reaching the last waypoint.
   PATROL      : Same as MOVE but with patrol speed.
   MOVECYCLE   : Creates move waypoints in cycke. AI will restart the cycle once all waypoints are visited.
