@@ -8,7 +8,8 @@ TBD:
 - Uncomment: float rndRange = 0;//Math.RandomInt(0, range/3); in WPHelper
 - waypointGenType RANDOM to have MOVE and PATROL also.
 - crashsite : The mission pos search 300, 500 to be set as json parameters
-  
+- Fix links to different chapters
+
 ## Installation
 Just active the mod (and dependencies) and you're good to go.
 
@@ -78,7 +79,7 @@ Mission specific files
 * dc_missionConfig_Patrol.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#patrol---dc_missionconfig_patroljson))
 * dc_missionConfig_Occupation.json
 * dc_missionConfig_Convoy.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#convoy---dc_missionconfig_convoyjson))
-* dc_missionConfig_Crashsite.json ([link]()
+* dc_missionConfig_Crashsite.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#mission--crashsite)
 
 ## Mission frame
 Example: [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig.json)
