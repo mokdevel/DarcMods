@@ -74,7 +74,6 @@ Mission frame specific files
 * dc_missionConfig.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission-frame)) :  The main mission frame configuration. 
 * dc_nonValidArea.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#non-valid-areas)) : Definition of areas where a mission can not spawn.
 * dc_lootList.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#loot-lists)) : Definitions of loot for missions. 
-* dc_coreConfig.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md#dc_coreconfigjson)) : Configuration file for core.
   
 Mission specific files
 * dc_missionConfig_Hunter.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--hunter))
@@ -82,6 +81,9 @@ Mission specific files
 * dc_missionConfig_Occupation.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--occupation))
 * dc_missionConfig_Convoy.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--convoy))
 * dc_missionConfig_Crashsite.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--crashsite))
+
+Dependency specific files
+* dc_coreConfig.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md#core-config)) : Configuration file for core.
 
 ## Mission frame
 Example: [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig.json)
