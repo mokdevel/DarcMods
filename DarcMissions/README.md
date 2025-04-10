@@ -325,11 +325,13 @@ SCR_DC_Loot loot : (optional) Loot found in the vehicle.
 
 ### SCR_DC_HelicopterInfo
 This defines the helicopter parameters. The default prefabs in Arma Reforger are without their engines running and will simply crash before the flight is possible. For the flying helicopters the prefabs needs to be modified and currently only a couple of options are available.
+
+Currently supported prefabs:
+- ```"{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et"```
+- ```"{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et"```
+
 ```
-string resource : The prefab for the helicopter.
-  Currently supported values:
-    "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et"
-    "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et"
+string resource : The prefab for the helicopter. See supported values above.
 float throttle : The 'speed' the helicopter is flying.
 float rotorForce : Force of the main rotor.
 float rotor2Force : Force of the second rotor.
@@ -361,7 +363,7 @@ string posName : Your name for the mission location (like "Harbor near city"). "
 string title : Title for the hint shown for players
 string info : Details for the hint shown for players
 array<int> groupCount : Amount of AI groups of characters to spawn. (min, max) 
-array string groupTypes : The prefab names of AI groups or characters. The AI is randomly picked from this list.
+array<string> groupTypes : The prefab names of AI groups or characters. The AI is randomly picked from this list.
   Example : {
             "{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
             "{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
@@ -431,14 +433,14 @@ NOTE: The box entity needs to have <***COMPONENT***> available. See [loot box](h
 
 ### SCR_DC_Loot
 ```
-IEntity box : (null) The container where the items are put. This can be a box, vehicle or similar. Do not specify anything here as this will be autofilled. For concoy mission this will be the vehicle, for occupation this will be the first item listed in the structure. 
+IEntity box : (set as null) The container where the items are put. This can be a box, vehicle or similar. Do not specify anything here as this will be autofilled. For concoy mission this will be the vehicle, for occupation this will be the first item listed in the structure. 
 float itemChance : (0-1, equals to percentage) The chance of each item appearing in the box. 
 array<string> items : List of items. This can be prefabs or an lootList.
 ```
 
 ### Example
 The below example shows the different ways you can define the loot. 
-- "box": null : For convoys this will be automatically assigned to the vehicle. For missions with structures, the first structue is considered as the loot target.
+- "box": null : Leave as null. For convoys this will be automatically assigned to the vehicle. For missions with structures, the first structue is considered as the loot target.
 - There is a 75% chance for each of the items to appear in the box
 - Items will include a saline bag and a map. In addition a random rifle and a random general item is added. See [lootList](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#loot-lists---dc_lootlistjson)
 ```
