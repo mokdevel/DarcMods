@@ -402,7 +402,7 @@ vector pos : Position for mission. "0 0 0" used for random location chosen from 
 string posName : Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes. "" will leave the information empty.
 string title : Title for the hint shown for players
 string info : Details for the hint shown for players
-array<int> groupCount : Amount of AI groups of characters to spawn. (min, max) 
+array<int> groupCount : (min, max) Amount of AI groups of characters to spawn.
 array<string> groupTypes : The prefab names of AI groups or characters. The AI is randomly picked from this list.
   Example : {
             "{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
@@ -446,8 +446,10 @@ My humble wish for map makers is that please use the full range of ```EMapDescri
 
 ## Waypoint parameters
 The mission AI can be given general rules on how to create waypoints for their movement. You need to define the waypoint generation rule and the movement rule and the rest is created automatically.
+
+```waypointRange``` is used as the range for example for RADIUS. The area with waypoints will be a value between min and max. If you have multiple groups, they most likely will have different values and different areas to roam.
 ```
-array<int> waypointRange : (min, max) 
+array<int> waypointRange : (min, max) The random radius for waypoint creation.
 DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
   NONE        : Not used anywhere. The rest are names of the mission types.
   RANDOM      : Use one of these randomly: SCATTERED (1), RADIUS (3), LOITER (1)
