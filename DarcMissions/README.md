@@ -486,10 +486,13 @@ vector m_Rotation : Rotation vector. Currently only Yrot is supported ["Xrot YRo
 ### Creating a camp
 You can use WB to set the wanted objects. You can turn them to make the camp to look better. I suggest you to create an own layer which you can then view as a file and convert to properly looking json file. Locate the camp on flat surface for example on an airfield if using a world like Arland (or use some simple flat world). When the camp is spawned, the items will be set around a center location (origo) in the spawner script. The origo will be the position on the map and items will spawn around it.
 
+If you have a loot defined and it needs to appear in a container like a box, ALWAYS define it as the first structure.
+
 TBD: Image of a camp
 TBD: Image of camp from the above with origo marked.
 
 ### Example
+Below is a an example camp with a box for loot, tent, fireplace and chair. The chair is rotated. The first item ```LootCrateWooden_01_blue``` is the container for loot. 
 ```
 "campItems": [
   {
