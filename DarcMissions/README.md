@@ -83,6 +83,7 @@ The main configuration file for mission frame.
 ```
 int version : See General parameters
 string author : See General parameters
+string comment : See General parameters
 bool recreateConfigs : If set to true, all configs are written to disk. Should be run only first time.
 string missionProfile : Directory specifying a certain conf for play. For example "Escapists" will result in configs under "profile\DarcMods_conf\Escapists\*"
 int missionStartDelay : (seconds) Time to wait before spawning the first mission.
