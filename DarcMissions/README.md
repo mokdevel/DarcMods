@@ -1,10 +1,6 @@
 # DarcMissions
 A mission frame work for Arma Reforger. There are various missions premade and their behaviour can be modified by editing the configuration jsons.
 
-TBD: 
-- Add rndCount for waypoints as a min,max parameter in core 
-- Uncomment: float rndRange = 0;//Math.RandomInt(0, range/3); in WPHelper
-
 ## Installation
 Just active the mod (and dependencies) and you're good to go.
 
