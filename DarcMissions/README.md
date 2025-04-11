@@ -215,7 +215,6 @@ Example: [dc_missionConfig_Hunter.json](https://github.com/mokdevel/DarcMods/blo
 
 AIs are hunting you and following you. They will receive regularly information about where the closest player. The location is known to them with an error of ```rndDistanceToPlayer```. You can outrun them by going further than ```maxDistanceToPlayer```.
 
-
 ```
 int version : See Common parameters
 string author : See Common parameters
@@ -536,12 +535,13 @@ vector m_Rotation : Rotation vector. Currently only Yrot is supported ["Xrot YRo
 ```
 
 ### Creating a camp
-You can use WB to set the wanted objects. You can turn them to make the camp to look better. I suggest you to create an own layer which you can then view as a file and convert to properly looking json file. Locate the camp on flat surface for example on an airfield if using a world like Arland (or use some simple flat world). When the camp is spawned, the items will be set around a center location (origo) in the spawner script. The origo will be the position on the map and items will spawn around it.
+You can use WB to set the wanted objects. You can turn them to make the camp to look better. I suggest you to create an own layer which you can then view as a file and convert to properly looking json file. Locate the camp on flat surface for example on an airfield if using a world like Arland (or use some simple flat world). If you have a loot defined and it needs to appear in a container like a box, ALWAYS define it as the first structure.
 
-If you have a loot defined and it needs to appear in a container like a box, ALWAYS define it as the first structure.
+![Camp](https://github.com/mokdevel/DarcMods/blob/main/pics/camp01.png "Camp")
 
-TBD: Image of a camp
-TBD: Image of camp from the above with origo marked.
+When the camp is spawned, the items will be set around a center location (origo) in the spawner script. The origo will be the position on the map and items will spawn around it.
+
+![Camp](https://github.com/mokdevel/DarcMods/blob/main/pics/camp02.png "Camp center")
 
 ### Example
 Below is a an example camp with a box for loot, tent, fireplace and chair. The chair is rotated. The first item ```LootCrateWooden_01_blue``` is the container for loot. 
