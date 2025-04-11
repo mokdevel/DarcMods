@@ -50,7 +50,7 @@ sealed class SCR_DC_WPHelper
 			
 			RemoveWaypoints(group);
 		
-			int rndCount = Math.RandomInt(6, 14);
+			int rndCount = Math.RandomInt(6, 14);	//TBD: This could be a parameter in .json
 			int rndRange = Math.RandomInt(wpRangeLow, wpRangeHigh);
 
 			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Random count: " + rndCount + " , Random range: " + rndRange, LogLevel.SPAM);
@@ -221,7 +221,7 @@ sealed class SCR_DC_WPHelper
 			for (int i = 0; i < count; i++)
 			{
 				//Add some additional randomization
-				float rndRange = 0;//Math.RandomInt(0, range/3); 
+				float rndRange = Math.RandomInt(0, range/21); 
 				
 				AIWaypoint waypoint = FindAndCreateWaypoint(posFrom, moveType, (range + rndRange), emptyspot);
 				if (waypoint != null)
@@ -240,7 +240,7 @@ sealed class SCR_DC_WPHelper
 			{				
 				vector vec = SCR_DC_Misc.GetCoordinatesOnCircle(posFrom, range, i*(360/count), startAngle);
 				
-				AIWaypoint waypoint = FindAndCreateWaypoint(vec, moveType, (range/4), emptyspot);
+				AIWaypoint waypoint = FindAndCreateWaypoint(vec, moveType, (range/8), emptyspot);
 				if (waypoint != null)
 				{
 					waypoints.Insert(waypoint);
