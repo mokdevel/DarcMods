@@ -1,0 +1,50 @@
+GenericEntity : "{7E2EC66747A3FBA3}Prefabs/Props/Crates/CrateWooden_02/CrateWooden_02_base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  MeshObject "{5872F0EB7FA40561}" {
+   Object "{569C9B8C543D3020}Assets/Props/Crates/CrateWooden_02/CrateWooden_02_1x1x1.xob"
+  }
+  SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+   m_aDamagePhases {
+    SCR_DamagePhaseData "{5C54D7C1B2724555}" {
+     m_PhaseDestroySpawnObjects {
+      SCR_DebrisSpawnable "{5C568A6D3E1FAFAB}" {
+       m_ModelPrefabs {
+        "{F891C149A6A54263}Assets/Props/Crates/CrateWooden_02/dst/CrateWooden_02_1x1x1_dst_03.xob" "{FF563B18C023F8A0}Assets/Props/Crates/CrateWooden_02/dst/CrateWooden_02_1x1x1_dst_04.xob"
+       }
+      }
+     }
+    }
+   }
+  }
+  UniversalInventoryStorageComponent "{65171C0CB0F935A5}" {
+   Attributes SCR_ItemAttributeCollection "{65171C0D50109096}" {
+    ItemDisplayName SCR_InventoryUIInfo "{65171C0D72E91A5C}" {
+    }
+   }
+  }
+  ScriptedInventoryStorageManagerComponent "{65171C0CB94FFBFD}" {
+  }
+  ActionsManagerComponent "{65171C0EDC9CDA97}" {
+   ActionContexts {
+    UserActionContext "{65171C0EBB3CED1A}" {
+     ContextName "default"
+     Position PointInfo "{65171C0F5452B716}" {
+     }
+     Radius 1.5
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{65171C0F445E2090}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{65171C0F6934A73E}" {
+      Name "Open Loot"
+     }
+     ActionTitle "Open Loot"
+    }
+   }
+  }
+ }
+}
