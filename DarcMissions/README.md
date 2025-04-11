@@ -339,7 +339,6 @@ array<string> groupTypes : See General parameters
 int AISkill : See General parameters
 float AIperception : See General parameters
 array<SCR_DC_HelicopterInfo> helicopterInfo : The helicopter is selected randomly.
-//Optional settings
 SCR_DC_Loot loot : (optional) Loot found in the box. 
 array<SCR_DC_Structure> siteItems : (optional) Prefabs to spawn at the crashsite. Note that first item shall be the loot box.
 ```
