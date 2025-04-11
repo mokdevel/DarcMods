@@ -106,7 +106,7 @@ class SCR_DC_LootListJsonApi : SCR_DC_JsonApi
 			"WEAPON_RIFLE",
 			"/Weapons/Rifles",
 			{"Rifle"},
-			{"_Base"}
+			{"_Base", "Tutorial"}
 		);
 		conf.lootLists.Insert(lootlist01);
 		

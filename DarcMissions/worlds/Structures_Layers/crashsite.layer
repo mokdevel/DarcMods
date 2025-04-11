@@ -1,0 +1,35 @@
+GenericEntity {
+ components {
+  MeshObject "{64950D4A2966B27D}" {
+   Object "{97B6EE1A45A88A89}Assets/Vehicles/Helicopters/UH1H/UH1H_Wreck.xob"
+  }
+ }
+ coords 103.251 1 124.179
+}
+GenericEntity : "{33E84AF90E5FE1E5}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_03.et" {
+ coords 100.073 1 126.823
+ angleY 29.077
+}
+GenericEntity : "{342E852E9A1847EA}Prefabs/Props/Industrial/Repair/VehicleGarbage_01_pile_medium.et" {
+ coords 104.57 1 120.649
+ angleY 37.793
+}
+GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et" {
+ coords 97.911 1 121.527
+}
+GenericEntity : "{D674060002BA768E}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_02.et" {
+ coords 104.853 1 125.593
+}
+$grp GenericEntity : "{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et" {
+ {
+  coords 98.101 1 124.324
+  angleY 68.972
+ }
+ {
+  coords 101.55 1.009 120.395
+ }
+ {
+  coords 107.879 1 123.552
+  angleY 68.972
+ }
+}

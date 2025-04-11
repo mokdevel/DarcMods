@@ -1,0 +1,15 @@
+GenericEntity : "{2CB4BFA62C2D9C12}Prefabs/Structures/Military/CamoNets/CamoNet_Small_Top_01_base.et" {
+ coords 82.503 1 134.466
+}
+GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et" {
+ coords 82.81 1 134.682
+}
+$grp GenericEntity : "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et" {
+ {
+  coords 82.792 1 137.626
+ }
+ {
+  coords 85.102 1 133.641
+  angleY 114.569
+ }
+}

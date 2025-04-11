@@ -99,7 +99,7 @@ sealed class SCR_DC_Resources
 	*/		
 	static private bool GetResourcesFilter(ResourceName resourceName, string exactPath = "")
 	{
-//		SCR_DC_Log.Add("[SCR_DC_Resources:GetResourcesFilter] Found: " + resourceName + " at " + exactPath, LogLevel.DEBUG);
+		SCR_DC_Log.Add("[SCR_DC_Resources:GetResourcesFilter] Found: " + resourceName + " at " + exactPath, LogLevel.SPAM);
 		m_resourceNames.Insert(resourceName);
 		return true;
 	}
