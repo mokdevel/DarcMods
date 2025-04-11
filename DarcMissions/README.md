@@ -523,7 +523,7 @@ The loot box (vehicle, box, ..) needs to have certain components available for t
 - Duplicate the container prefab to DarcMissions. In theory you could use anything.
 - Edit prefab and add components ```UniversalInventoryStorageComponent```, ```ScriptedInventoryStorageManagerComponent``` and ```ActionsManagerComponent```.
 - Configure as in the image
-<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/lootboxsettings.png" width=40% height=40%>
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/lootboxsettings.png" width=30% height=30%>
 
 ## Structure parameters
 Structures are entities (prefabs) of e.g., furniture. Typically you would spawn multiple structures to create for example a camp with chairs, a tent, fireplace etc. 
@@ -538,11 +538,11 @@ vector m_Rotation : Rotation vector. Currently only Yrot is supported ["Xrot YRo
 ### Creating a camp
 You can use WB to set the wanted objects. You can turn them to make the camp to look better. I suggest you to create an own layer which you can then view as a file and convert to properly looking json file. Locate the camp on flat surface for example on an airfield if using a world like Arland (or use some simple flat world). If you have a loot defined and it needs to appear in a container like a box, ALWAYS define it as the first structure.
 
-<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/camp01.png" width=40% height=40%>
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/camp01.png" width=30% height=30%>
 
 When the camp is spawned, the items will be set around a center location (origo) in the spawner script. The origo will be the position on the map and items will spawn around it.
 
-<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/camp02.png" width=40% height=40%>
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/camp02.png" width=30% height=30%>
 
 ### Example
 Below is a an example camp with a box for loot, tent, fireplace and chair. The chair is rotated. The first item ```LootCrateWooden_01_blue``` is the container for loot. 
