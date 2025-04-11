@@ -215,7 +215,6 @@ Example: [dc_missionConfig_Hunter.json](https://github.com/mokdevel/DarcMods/blo
 
 AIs are hunting you and following you. They will receive regularly information about where the closest player. The location is known to them with an error of ```rndDistanceToPlayer```. You can outrun them by going further than ```maxDistanceToPlayer```.
 
-
 ```
 int version : See Common parameters
 string author : See Common parameters
@@ -481,9 +480,9 @@ DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
 ```
 
 ## Loot parameters
-Loot is the reward of a mission. It is usually in a container (vehicle, box, ..) that is spawned in the mission. 
+Loot is the reward of a mission. It is usually in a container (vehicle, box, ..) that is spawned in the mission. The boxes and crates are special for the mod. 
 
-NOTE: The box entity needs to have <***COMPONENT***> available. See [loot box](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#loot-box). 
+See [loot box](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#loot-box). 
 
 ### SCR_DC_Loot
 ```
@@ -511,19 +510,20 @@ The below example shows the different ways you can define the loot.
 ```
 
 ### Loot box 
-The loot box (vehicle, box, ..) needs to have <TBD: component> available. If it's not available, no loot can be added. 
+The loot box (vehicle, box, ..) needs to have certain components available for them to work.
 - Vehicles : Typically works.
 - Box : The default arsenal boxes are not supported and you will need to use special ones. Currently supported values: 
 ```
 "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
 "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
+"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
 ```
 
 ### Define a new loot box
-- Duplicate the box prefab
-- Set <TBD: component>
-- Remove <TBD: component>
-- ...etc
+- Duplicate the container prefab to DarcMissions. In theory you could use anything.
+- Edit prefab and add components ```UniversalInventoryStorageComponent```, ```ScriptedInventoryStorageManagerComponent``` and ```ActionsManagerComponent```.
+- Configure as in the image
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/lootboxsettings.png" width=40% height=40%>
 
 ## Structure parameters
 Structures are entities (prefabs) of e.g., furniture. Typically you would spawn multiple structures to create for example a camp with chairs, a tent, fireplace etc. 
@@ -536,12 +536,13 @@ vector m_Rotation : Rotation vector. Currently only Yrot is supported ["Xrot YRo
 ```
 
 ### Creating a camp
-You can use WB to set the wanted objects. You can turn them to make the camp to look better. I suggest you to create an own layer which you can then view as a file and convert to properly looking json file. Locate the camp on flat surface for example on an airfield if using a world like Arland (or use some simple flat world). When the camp is spawned, the items will be set around a center location (origo) in the spawner script. The origo will be the position on the map and items will spawn around it.
+You can use WB to set the wanted objects. You can turn them to make the camp to look better. I suggest you to create an own layer which you can then view as a file and convert to properly looking json file. Locate the camp on flat surface for example on an airfield if using a world like Arland (or use some simple flat world). If you have a loot defined and it needs to appear in a container like a box, ALWAYS define it as the first structure.
 
-If you have a loot defined and it needs to appear in a container like a box, ALWAYS define it as the first structure.
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/camp01.png" width=40% height=40%>
 
-TBD: Image of a camp
-TBD: Image of camp from the above with origo marked.
+When the camp is spawned, the items will be set around a center location (origo) in the spawner script. The origo will be the position on the map and items will spawn around it.
+
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/camp02.png" width=40% height=40%>
 
 ### Example
 Below is a an example camp with a box for loot, tent, fireplace and chair. The chair is rotated. The first item ```LootCrateWooden_01_blue``` is the container for loot. 
