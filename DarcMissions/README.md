@@ -354,9 +354,11 @@ float rotor2Force : Force of the second rotor.
 ```
 
 ### Define a new flying helicopter prefab
-- Duplicate the helicopter prefab
-- Set <TBD: motor running>
-- ...etc
+- Duplicate the helicopter prefab to DarcMissions. In to the name, add "_flying" at the end.
+- Edit prefab and add components ```SCR_FireplaceComponent```. This is only for the smoke.
+- Modify the engine to be running immediately.
+- Configure as in the image
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/helicoptersettings.png" width=30% height=30%>
 
 ## Mission : Occupation
 Example: [dc_missionConfig_Occupation.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Patrol.json)
@@ -520,7 +522,7 @@ The loot box (vehicle, box, ..) needs to have certain components available for t
 ```
 
 ### Define a new loot box
-- Duplicate the container prefab to DarcMissions. In theory you could use anything.
+- Duplicate the container prefab to DarcMissions. In theory you could use anything. In to the name, add "Loot" in the beginning.
 - Edit prefab and add components ```UniversalInventoryStorageComponent```, ```ScriptedInventoryStorageManagerComponent``` and ```ActionsManagerComponent```.
 - Configure as in the image
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/lootboxsettings.png" width=30% height=30%>
