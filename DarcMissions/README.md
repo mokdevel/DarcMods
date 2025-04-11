@@ -187,7 +187,7 @@ The .json configuration as an example:
       "{29DD901C0664FC61}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_suppressor_4x20_OliveGreen_Sand_Stripes.et"
     ],
     "itemList": [
-      "{E8F00BF730225B00}Prefabs/Weapons/Grenades/Grenade_M67.et}"
+      "{E8F00BF730225B00}Prefabs/Weapons/Grenades/Grenade_M67.et"
     ]
   }
   ]
@@ -205,7 +205,7 @@ All items under each mods ```/Weapons/Rifles``` will be collected initially. The
 ```
 The ```include``` filter ("Rifle") matches the list so everything is included. The ```exclude``` filter picks out anything with "_Base", the SVD's and the specific M16A2 with suppressor. A grenade was specified in the itemList so it is included. The resulting list will be: 
 ```
-"{E8F00BF730225B00}Prefabs/Weapons/Grenades/Grenade_M67.et}"
+"{E8F00BF730225B00}Prefabs/Weapons/Grenades/Grenade_M67.et"
 "{B036BA26CCFE9E5D}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_OliveGreen_Sand_Stripes.et"
 "{FA0E25CE35EE945F}Prefabs/Weapons/Rifles/AKS74U/Rifle_AKS74UN.et"
 ```
