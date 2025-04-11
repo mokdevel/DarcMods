@@ -41,6 +41,7 @@ class SCR_DC_MissionFrameConfig : Managed
 	int version = 1;
 	string author = "darc";
 	//Mission specific
+	string comment;
 	bool recreateConfigs;			//If set to true, all configs are to be written to disk. Should be run only first time.
 	string missionProfile;			//Directory specifying a certain conf for play. For example "Escapists"
 	int missionStartDelay;			//Time to wait before spawning the first mission (seconds).
@@ -99,6 +100,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
+		conf.comment = "Simple comment, not used in game";
 		conf.recreateConfigs = DC_MISSION_RECREATE_CONFIGS;
 		conf.missionProfile = DC_MISSION_PROFILE_DIR;
 		conf.missionStartDelay = DC_MISSION_START_DELAY;
@@ -113,8 +115,9 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		conf.minDistanceToPlayer = 100;
 		
 		#ifdef SCR_DC_RELEASE
-			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.CONVOY, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.CONVOY,  DC_EMissionType.CONVOY};
+			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.CONVOY, 
+											DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
+			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
 		#endif	
 
 		#ifndef SCR_DC_RELEASE				
