@@ -53,7 +53,7 @@ In the configuration you can define missions either as a dynamic mission (```mis
 
 This enables you to have a count of certain types of missions always running. For example, you may want to have three patrols always roaming the map. To achieve this, you define the patrol mission three times in the ```missionTypeArrayStatic``` array. If you define multiple types of missions in the static list, the missions are picked at random. Having for example three patrol missions and one convoy mission in the list, makes sure that four static missions are running, but this may be any combination due to random picking. The patrol mission has a higher chance to be chosen.
 
-## Configuration parameters
+## Configuration
 Configuration is done in .json files.
 
 # Configuration files
