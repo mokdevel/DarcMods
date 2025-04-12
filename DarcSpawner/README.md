@@ -4,7 +4,7 @@ Spawns vehicles (could work with containers too) randomly on map with some loot.
 ## Installation
 Just active the mod (and dependencies) and you're good to go.
 
-## Configuration parameters
+## Configuration
 Configuration is done in .json files.
 
 # Configuration files
