@@ -1,5 +1,5 @@
 # DarcSpawner
-Spawns vehicles (could work with containers too) randomly on map with some loot.
+Spawns vehicles (could work with containers too) randomly on map with some loot. Once everything is spawned, the mod will stop running.
 
 ## Installation
 Just active the mod (and dependencies) and you're good to go.
