@@ -115,4 +115,41 @@ sealed class SCR_DC_LootHelper
 			return false;
 		}
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*! 
+	Disable arsenal
+	*/	
+	static void DisableArsenal(IEntity entity)
+	{	
+		
+		SlotManagerComponent slotManager = SlotManagerComponent.Cast(entity.FindComponent(SlotManagerComponent));		
+		if (slotManager)
+		{
+			array<EntitySlotInfo> slots = {};
+			slotManager.GetSlotInfos(slots);			
+			
+			IEntity arsenal;
+			SCR_ArsenalComponent arsenalComponent;
+			
+			// Handle Conflict-specific vehicles
+			foreach (EntitySlotInfo slot : slots)
+			{
+				if (!slot)
+					continue;
+				
+				arsenal = slot.GetAttachedEntity();
+
+				if (!arsenal)
+					continue;
+
+				arsenalComponent = SCR_ArsenalComponent.Cast(arsenal.FindComponent(SCR_ArsenalComponent));
+				if (arsenalComponent)
+				{
+					arsenalComponent.SetArsenalEnabled(false, false);
+					SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Disabling arsenal.", LogLevel.SPAM);
+				}
+			}
+		}		
+	}
 }

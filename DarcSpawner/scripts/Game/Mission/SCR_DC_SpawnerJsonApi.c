@@ -80,8 +80,8 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		conf.showMarker = false;
-//		conf.showMarker = true;
+//		conf.showMarker = false;
+		conf.showMarker = true;
 		conf.spawnSetID = -1;
 		conf.spawnOnRoad = false;
 		conf.spawnRndRadius = 100;

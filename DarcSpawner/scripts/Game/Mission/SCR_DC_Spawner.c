@@ -152,7 +152,8 @@ class SCR_DC_Spawner
 				m_EntityList.Insert(entity);
 				SCR_DC_DebugHelper.AddDebugPos(entity, Color.VIOLET);
 				
-				SCR_DC_LootHelper.SpawnItemsToStorage(entity, m_Config.spawnSets[m_spawnSetID].itemNames, m_Config.spawnSets[m_spawnSetID].itemChance);			
+				SCR_DC_LootHelper.SpawnItemsToStorage(entity, m_Config.spawnSets[m_spawnSetID].itemNames, m_Config.spawnSets[m_spawnSetID].itemChance);
+				SCR_DC_LootHelper.DisableArsenal(entity);
 				if(m_Config.showMarker)
 				{
 					SCR_DC_MapMarkerHelper.CreateMapMarker(entity.GetOrigin(), DC_EMissionIcon.REDCROSS_SMALL, "", "");
