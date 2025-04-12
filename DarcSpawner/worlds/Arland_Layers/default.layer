@@ -9,21 +9,6 @@ SCR_FactionManager FactionManager_USxUSSR1 : "{589540B35EBA8CDC}Prefabs/MP/Manag
 }
 Vehicle UAZ452_ambulance1 : "{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et" {
  components {
-  SCR_ResourceComponent "{5D83561B5E01449A}" {
-   m_aEncapsulators {
-    SCR_ResourceEncapsulator "{5DAD42B3CC9612DF}" {
-     m_eResourceRights NONE
-     m_aActions {
-      SCR_ResourceEncapsulatorActionChangeOnEmptyBehavior "{5DDCCC77D897CBB1}" {
-       m_eOnEmptyBehavior DELETE
-      }
-      SCR_ResourceEncapsulatorActionChangeResourceValue "{5DDCCC77DBBCDA33}" {
-       m_fResourceValueCurrent 0
-      }
-     }
-    }
-   }
-  }
   SlotManagerComponent "{55BCE45E438E4CFF}" {
    Slots {
     RegisteringComponentSlotInfo Arsenal {

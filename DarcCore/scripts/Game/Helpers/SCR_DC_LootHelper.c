@@ -123,21 +123,48 @@ sealed class SCR_DC_LootHelper
 	static void DisableArsenal(IEntity entity)
 	{	
 		
-		SlotManagerComponent slotManager = SlotManagerComponent.Cast(entity.FindComponent(SlotManagerComponent));		
+		SlotManagerComponent slotManager = SlotManagerComponent.Cast(entity.FindComponent(SlotManagerComponent));
 		if (slotManager)
 		{
 			array<EntitySlotInfo> slots = {};
 			slotManager.GetSlotInfos(slots);			
-			
+
+			// TBD: Did not work
+			/*
+			SCR_ResourceContainer resourceContainer;			
+			resourceContainer = SCR_ResourceContainer.Cast(entity.FindComponent(SCR_ResourceContainer));
+			if (resourceContainer)
+			{
+				resourceContainer.SetResourceValue(0, true);
+				resourceContainer.SetMaxResourceValue(0, true);
+				resourceContainer.SetOnEmptyBehavior(EResourceContainerOnEmptyBehavior.HIDE);
+			}
+			*/
+					
 			IEntity arsenal;
 			SCR_ArsenalComponent arsenalComponent;
 			
-			// Handle Conflict-specific vehicles
+			// Disable arsenal
+			arsenalComponent = SCR_ArsenalComponent.FindArsenalComponent(entity);
+			if (arsenalComponent)
+			{
+				arsenalComponent.SetArsenalEnabled(false, true);
+//				arsenalComponent.SetSupportedArsenalItemModes(0);
+//				arsenalComponent.ClearArsenal();
+				
+				SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Disabling arsenal.", LogLevel.SPAM);
+				return;				
+			}			
+			
+			// Disable virtual arsenals 
 			foreach (EntitySlotInfo slot : slots)
 			{
 				if (!slot)
 					continue;
-				
+
+				//Print out the slot names
+//				string str = slot.GetSourceName();
+//				SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Slot name: " + str, LogLevel.DEBUG);
 				arsenal = slot.GetAttachedEntity();
 
 				if (!arsenal)
@@ -146,8 +173,10 @@ sealed class SCR_DC_LootHelper
 				arsenalComponent = SCR_ArsenalComponent.Cast(arsenal.FindComponent(SCR_ArsenalComponent));
 				if (arsenalComponent)
 				{
-					arsenalComponent.SetArsenalEnabled(false, false);
-					SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Disabling arsenal.", LogLevel.SPAM);
+					arsenalComponent.SetArsenalEnabled(false, true);
+//					arsenalComponent.SetSupportedArsenalItemModes(0);
+//					arsenalComponent.ClearArsenal();
+					SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Disabling virtual arsenal.", LogLevel.SPAM);
 				}
 			}
 		}		
