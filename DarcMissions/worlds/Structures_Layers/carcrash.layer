@@ -1,0 +1,24 @@
+GenericEntity : "{2424EBB806A690D4}Prefabs/Props/Garbage/Medical/GarbageMedicalUS_02.et" {
+ coords 80.1 1 113.321
+}
+GenericEntity : "{530705FBB61026D2}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_03.et" {
+ coords 76.743 1 111.704
+}
+GenericEntity : "{56FFF0C990358ED2}Prefabs/Props/Wrecks/UAZ452_wreck_static.et" {
+ coords 78.8 1 113.211
+}
+$grp GenericEntity : "{6095B175AA9804DC}Prefabs/Props/VehicleParts/Tires/Tire_UAZ469.et" {
+ {
+  coords 77.252 1 114.03
+ }
+ {
+  coords 80.555 1 110.34
+ }
+}
+GenericEntity : "{8BAF6C3ACF99388E}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_05.et" {
+ coords 79.362 1 108.878
+}
+GenericEntity : "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et" {
+ coords 78.569 1 110.113
+ angleY -34.136
+}
