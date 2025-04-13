@@ -133,7 +133,8 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 //			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.HUNTER};
-			conf.missionTypeArrayStatic = {DC_EMissionType.CRASHSITE};
+//			conf.missionTypeArrayStatic = {DC_EMissionType.CRASHSITE};
+			conf.missionTypeArrayStatic = {DC_EMissionType.OCCUPATION};
 			conf.missionTypeArrayStatic = {};
 		#endif
 	}

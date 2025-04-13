@@ -43,17 +43,12 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 		//Set defaults
 		vector pos = m_DC_Occupation.pos;
 		string posName = m_DC_Occupation.posName;
-		IEntity location = null;
+//		IEntity location = null;
 		
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
-			location = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Occupation.locationTypes, m_Config.emptySize);
-			if(location)
-			{
-				pos = location.GetOrigin();
-				posName = location.GetName();
-			}
+			pos = SCR_DC_MissionHelper.FindMissionPos(m_DC_Occupation.locationTypes, m_Config.emptySize);
 			//Camps in random places are randomly rotated
 			m_SpawnRotation = Math.RandomFloat(0, 360);
 		}
@@ -267,7 +262,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {0,0,1,1,2};
+		conf.occupationList = {0,0,0,1,1,2,2,2,3};
 
 		//----------------------------------------------------
 		SCR_DC_Occupation occupation0 = new SCR_DC_Occupation;
@@ -276,7 +271,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			"Gogland: Mission to be used with Escapists.",
 			"0 0 0",
 			"any",
-			"Patrol seen in ",
+			"Gaurding patrol seen near ",
 			"Avoid the location",
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
@@ -301,7 +296,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			"Bandit camp spawning to non city areas",
 			"0 0 0",
 			"any",
-			"Bandit camp at ",
+			"Bandit camp near ",
 			"Bandits are protecting their valuable loot.",
 			{
 				EMapDescriptorType.MDT_NAME_LOCAL,
@@ -370,7 +365,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			"Occupation that will spawn mainly to cities and towns with USSR forces.",
 			"0 0 0",
 			"any",
-			"Occupation at ",
+			"Occupation in ",
 			"City is being occupied.",
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -411,7 +406,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
 			};
 		occupation2loot.Set(0.9, lootItems);
-		occupation2.loot = occupation1loot;
+		occupation2.loot = occupation2loot;
 		
 		SCR_DC_Structure ocu2item0 = new SCR_DC_Structure;
 		ocu2item0.Set(
@@ -442,5 +437,103 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			"0 114.569 0"
 		);
 		occupation2.campItems.Insert(ocu2item3);
-	}
+		
+		//----------------------------------------------------
+		SCR_DC_Occupation occupation3 = new SCR_DC_Occupation;
+		occupation3.Set(
+			"Car crash in an unusual place",
+			"0 0 0",
+			"any",
+			"Car crash near ",
+			"Loot is up for grabs.",
+			{
+//				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_NAME_SETTLEMENT,
+				EMapDescriptorType.MDT_PARKING,
+				EMapDescriptorType.MDT_BASE,
+				EMapDescriptorType.MDT_RADIO,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+//				EMapDescriptorType.MDT_NAME_VILLAGE,
+//				EMapDescriptorType.MDT_NAME_TOWN, 
+//				EMapDescriptorType.MDT_AIRPORT,
+			},
+			{1, 3},
+			{10, 60},
+			DC_EWaypointGenerationType.RANDOM,
+			DC_EWaypointMoveType.RANDOM,		
+			{
+				"{666A2B0A6B1967AE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconSquad.et",
+				"{B721D5A8C1B556CE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconTeam.et",
+				"{06F0C9675883F18A}Prefabs/Groups/OPFOR/KLMK/Group_USSR_ReconTeam.et"
+			},
+			50, 1.0		
+		);
+		conf.occupations.Insert(occupation3);
+
+		SCR_DC_Loot occupation3loot = new SCR_DC_Loot;
+		lootItems = {
+				"WEAPON_RIFLE",	"WEAPON_RIFLE",
+				"WEAPON_HANDGUN",
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
+				"WEAPON_ATTACHMENT",
+				"WEAPON_OPTICS",
+				"WEAPON_LAUNCHER",
+				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
+			};
+		occupation3loot.Set(0.7, lootItems);
+		occupation3.loot = occupation3loot;
+		
+		SCR_DC_Structure ocu3item0 = new SCR_DC_Structure;
+		ocu3item0.Set(
+	       "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+        	"78.569 1 110.113",
+	        "0 -34.136 0"
+ 		);
+		occupation3.campItems.Insert(ocu3item0);
+		
+		SCR_DC_Structure ocu3item1 = new SCR_DC_Structure;
+		ocu3item1.Set(
+	        "{56FFF0C990358ED2}Prefabs/Props/Wrecks/UAZ452_wreck_static.et",
+        	"78.8 1 113.211"
+		);
+		occupation3.campItems.Insert(ocu3item1);
+
+		SCR_DC_Structure ocu3item2 = new SCR_DC_Structure;
+		ocu3item2.Set(
+	        "{6095B175AA9804DC}Prefabs/Props/VehicleParts/Tires/Tire_UAZ469.et",
+    	    "77.252 1 114.03"
+		);
+		occupation3.campItems.Insert(ocu3item2);
+	
+		SCR_DC_Structure ocu3item3 = new SCR_DC_Structure;
+		ocu3item3.Set(
+	        "{6095B175AA9804DC}Prefabs/Props/VehicleParts/Tires/Tire_UAZ469.et",
+        	"80.555 1 110.34"
+		);
+		occupation3.campItems.Insert(ocu3item3);
+		
+		SCR_DC_Structure ocu3item4 = new SCR_DC_Structure;
+		ocu3item4.Set(
+	        "{8BAF6C3ACF99388E}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_05.et",
+	        "79.362 1 108.878"
+		);
+		occupation3.campItems.Insert(ocu3item4);		
+		
+		SCR_DC_Structure ocu3item5 = new SCR_DC_Structure;
+		ocu3item5.Set(
+	        "{530705FBB61026D2}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_03.et",
+    	    "76.743 1 111.704"
+		);
+		occupation3.campItems.Insert(ocu3item5);		
+
+		SCR_DC_Structure ocu3item6 = new SCR_DC_Structure;
+		ocu3item6.Set(
+	        "{2424EBB806A690D4}Prefabs/Props/Garbage/Medical/GarbageMedicalUS_02.et",
+    	    "80.1 1 113.321"
+		);
+		occupation3.campItems.Insert(ocu3item6);				
+	}	
 }

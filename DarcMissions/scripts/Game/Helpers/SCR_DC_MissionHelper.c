@@ -27,7 +27,8 @@ sealed class SCR_DC_MissionHelper
 	\param locationTypes Array of EMapDescriptorType to look for a place
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
 	*/	
-	static IEntity FindMissionLocation(array<EMapDescriptorType> locationTypes, float size = 5)
+//	static IEntity FindMissionLocation(array<EMapDescriptorType> locationTypes, float size = 5)
+	static vector FindMissionPos(array<EMapDescriptorType> locationTypes, float size = 5)
 	{	
 		//Find a random location
 		vector pos = "0 0 0";
@@ -40,7 +41,7 @@ sealed class SCR_DC_MissionHelper
 		if(locations.Count() == 0)
 		{
 			SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] No locations found. Check the list of locationTypes in your mission." , LogLevel.ERROR);
-			return null;
+			return "0 0 0";
 		}
 		
 		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
@@ -63,12 +64,13 @@ sealed class SCR_DC_MissionHelper
 
 		if (!positionFound)
 		{
-			return null;
+			return "0 0 0";
 		}
 
-		location.SetOrigin(pos);
-
-		return location;
+//		location.SetOrigin(pos);
+//		return location;
+		
+		return pos;
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -79,25 +81,27 @@ sealed class SCR_DC_MissionHelper
 	\param missionPos The mission position aka the starting point for mission
 	\param distance Minimum distance for missionPos and destination
 	*/		
-	static IEntity FindMissionDestination(array<EMapDescriptorType> locationTypes, vector missionPos, int distance)
+//	static IEntity FindMissionDestination(array<EMapDescriptorType> locationTypes, vector missionPos, int distance)
+	static vector FindMissionDestination(array<EMapDescriptorType> locationTypes, vector missionPos, int distance)
 	{
-		IEntity location = null;
-		array<IEntity> locations = {};
+		//IEntity location = null;
+		vector pos = "0 0 0";
+//		array<IEntity> locations = {};
 
 		bool positionFound = false;
 		
 		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 		{					
-			location = SCR_DC_MissionHelper.FindMissionLocation(locationTypes);
-			if(!location)
+			pos = SCR_DC_MissionHelper.FindMissionPos(locationTypes);
+			if(pos == "0 0 0")
 			{
-				return null;
+				return "0 0 0";
 			}
 			
-			if(!SCR_DC_Misc.IsPosNearPos(location.GetOrigin(), missionPos, distance))	//Shall be distance meters from actual missionPos
+			if(!SCR_DC_Misc.IsPosNearPos(pos, missionPos, distance))	//Shall be distance meters from actual missionPos
 			{
 				positionFound = true;
-				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] Location found: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionDestination] Location found: " + pos, LogLevel.DEBUG);
 				break;
 			}
 			else
@@ -108,10 +112,10 @@ sealed class SCR_DC_MissionHelper
 		
 		if (!positionFound)
 		{
-			return null;
+			return "0 0 0";
 		}
 
-		return location;
+		return pos;
 	}		
 			
 	//------------------------------------------------------------------------------------------------

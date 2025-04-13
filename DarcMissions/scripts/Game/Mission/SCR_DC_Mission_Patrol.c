@@ -43,31 +43,22 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		vector pos = m_DC_Patrol.pos;
 		m_PosDestination = m_DC_Patrol.posDestination;
 		string posName = m_DC_Patrol.posName;
-		IEntity location = null;
-		IEntity locationDestination = null;
+//		IEntity location = null;
+//		IEntity locationDestination = null;
 		
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
-			location = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Patrol.locationTypes);
-			if(location)
-			{			
-				pos = location.GetOrigin();
-			}
-			else
-			{
-				pos = "0 0 0";				
-			}
+			pos = SCR_DC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes);
 		}
 
 		//Find a location for the destination
 		if (m_PosDestination == "0 0 0" && pos != "0 0 0")
 		{
-			locationDestination = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Patrol.locationTypes);
-			if(location)
+			m_PosDestination = SCR_DC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes);
+			if (m_PosDestination != "0 0 0")
 			{
-				m_PosDestination = locationDestination.GetOrigin();
-				SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Patrol destination: " + locationDestination.GetName(), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Patrol destination: " + m_PosDestination, LogLevel.DEBUG);
 			}
 			else
 			{
@@ -79,7 +70,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		if (pos != "0 0 0" && m_PosDestination != "0 0 0")
 		{	
 			SetPos(pos);
-			SetPosName(SCR_DC_Locations.CreateName(location, posName));
+			SetPosName(SCR_DC_Locations.CreateName(pos, posName));
 			SetTitle(m_DC_Patrol.title + "" + GetPosName());
 			SetInfo(m_DC_Patrol.info);			
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);

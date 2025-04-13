@@ -138,7 +138,7 @@ sealed class SCR_DC_Locations
 			if (tmpName != "")
 			{
 				name = tmpName;
-				SCR_DC_Log.Add("[SCR_DC_Locations:GetNameCloseToPos] Found name:" + tmpName + SCR_Enum.GetEnumName(EMapDescriptorType, mapItem.GetBaseType()), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_Locations:GetNameCloseToPos] Found name: " + tmpName + " " + SCR_Enum.GetEnumName(EMapDescriptorType, mapItem.GetBaseType()), LogLevel.DEBUG);
 				break;
 			}				
 		}			

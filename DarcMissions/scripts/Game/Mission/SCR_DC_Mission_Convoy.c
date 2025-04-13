@@ -47,17 +47,17 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		vector pos = m_DC_Convoy.pos;
 		m_PosDestination = m_DC_Convoy.posDestination;
 		string posName = m_DC_Convoy.posName;
-		IEntity location = null;
-		IEntity locationDestination = null;
+//		IEntity location = null;
+//		IEntity locationDestination = null;
 		
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
-			location = SCR_DC_MissionHelper.FindMissionLocation(m_DC_Convoy.locationTypes);
-			if(location)
+			pos = SCR_DC_MissionHelper.FindMissionPos(m_DC_Convoy.locationTypes);
+			if(pos != "0 0 0")
 			{
 				SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
-				pos = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, location.GetOrigin());
+				pos = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
 				if(pos == "0 0 0")
 				{
 					SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No start road found.", LogLevel.ERROR);
@@ -72,11 +72,11 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		//Find a location for the destination
 		if (m_PosDestination == "0 0 0" && pos != "0 0 0")
 		{
-			locationDestination = SCR_DC_MissionHelper.FindMissionDestination(m_DC_Convoy.locationTypes, pos, 500);
-			if(locationDestination)
+			m_PosDestination = SCR_DC_MissionHelper.FindMissionDestination(m_DC_Convoy.locationTypes, pos, 500);
+			if(m_PosDestination != "0 0 0")
 			{
 				SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
-				m_PosDestination = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, locationDestination.GetOrigin());
+				m_PosDestination = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, m_PosDestination);
 				if(m_PosDestination == "0 0 0")
 				{
 					SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No destination road found.", LogLevel.ERROR);
@@ -92,9 +92,9 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		if (pos != "0 0 0" && m_PosDestination != "0 0 0")
 		{	
 			SetPos(pos);
-			SetPosName(SCR_DC_Locations.CreateName(location, posName));
+			SetPosName(SCR_DC_Locations.CreateName(pos, posName));
 			SetTitle(m_DC_Convoy.title);
-			SetInfo(m_DC_Convoy.info + "" + GetPosName() + " to " + SCR_DC_Locations.CreateName(locationDestination, posName));			
+			SetInfo(m_DC_Convoy.info + "" + GetPosName() + " to " + SCR_DC_Locations.CreateName(pos, posName));			
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 			SetShowHint(m_Config.showHint);			
 			SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
