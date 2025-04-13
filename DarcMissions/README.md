@@ -281,6 +281,7 @@ bool showMarker : See Common parameters
 bool showHint : See Common parameters
 int convoyTime : (seconds) Time to drive around. Once this time has passed and not players nearby, despawn mission.
 int distanceToPlayer : If no players this close to the convoy and convoyTime has passed, despawn mission.
+bool disableArsenal : See General parameters
 array<int> convoyList : The indexes of convoys.
 array<SCR_DC_Convoy> convoys : List of convoys
 ```
@@ -430,6 +431,7 @@ int AISkill : Skill for AI (0-100). See SCR_AICombatComponent and EAISkill.
   80 = EXPERT
   100 = CYLON
 float AIperception : How quickly AI reacts to danger. See SCR_AICombatComponent for details on perception factors.
+bool disableArsenal : Disable arsenal so that no other items are found.
 ```
 
 ## Location parameters
