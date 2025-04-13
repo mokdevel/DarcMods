@@ -373,6 +373,7 @@ int missionCycleTime : See Common parameters
 bool showMarker : See Common parameters
 bool showHint : See Common parameters
 int emptySize : The size (radius) of the empty space needed to decide on a mission position.
+bool disableArsenal : See General parameters
 array<int> occupationList : The indexes of occupations.
 array<SCR_DC_Occupation> occupations : List of oocupations.
 ```
@@ -431,7 +432,7 @@ int AISkill : Skill for AI (0-100). See SCR_AICombatComponent and EAISkill.
   80 = EXPERT
   100 = CYLON
 float AIperception : How quickly AI reacts to danger. See SCR_AICombatComponent for details on perception factors.
-bool disableArsenal : Disable arsenal so that no other items are found.
+bool disableArsenal : Disable arsenal for vehicles so that only defined loot items are found.
 ```
 
 ## Location parameters
