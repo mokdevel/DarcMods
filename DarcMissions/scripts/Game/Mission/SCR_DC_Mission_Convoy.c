@@ -180,6 +180,9 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 			m_EntityList.Insert(m_Vehicle);
 		}
 		
+		//Disable arsenal
+		SCR_DC_SpawnHelper.DisableVehicleArsenal(m_Vehicle, resourceName, m_Config.disableArsenal);
+		
 		AICarMovementComponent vehicle_c = AICarMovementComponent.Cast(m_Vehicle.FindComponent(AICarMovementComponent));
         vehicle_c.SetCruiseSpeed(m_DC_Convoy.cruiseSpeed);
 
@@ -250,6 +253,7 @@ class SCR_DC_ConvoyConfig : SCR_DC_MissionConfig
 	//Mission specific
 	int convoyTime;									//Time to patrol, in seconds
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
+	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found
 	ref array<ref int> convoyList = {};				//The indexes of convoys.
 	ref array<ref SCR_DC_Convoy> convoys = {};		//List of convoys
 }
@@ -331,6 +335,7 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 		//Mission specific
 		conf.convoyList = {0};
 		conf.distanceToPlayer = 500;
+		conf.disableArsenal = true;
 		
 		//----------------------------------------------------
 		SCR_DC_Convoy convoy0 = new SCR_DC_Convoy;

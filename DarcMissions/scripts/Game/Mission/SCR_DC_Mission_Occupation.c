@@ -137,6 +137,9 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 			if (entity != NULL)
 			{ 
 				m_EntityList.Insert(entity);
+				//Disable arsenal
+				string resourceName = m_DC_Occupation.campItems[m_SpawnIndex].GetResource();
+				SCR_DC_SpawnHelper.DisableVehicleArsenal(entity, resourceName, m_Config.disableArsenal);				
 			}
 			else
 			{
@@ -181,6 +184,7 @@ class SCR_DC_OccupationConfig : SCR_DC_MissionConfig
 {
 	//Mission specific	
 	int emptySize = 7;										//The size (radius) of the empty space to found to decide on a mission position.
+	bool disableArsenal;									//Disable arsenal for vehicles so that no other items are found
 	ref array<ref int> occupationList = {};					//The indexes of occupations.
 	ref array<ref SCR_DC_Occupation> occupations = {};		//List of occupations
 }

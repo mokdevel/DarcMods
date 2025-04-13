@@ -222,6 +222,21 @@ sealed class SCR_DC_SpawnHelper
 		return pos;
 	}
 	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	*/
+	static void DisableVehicleArsenal(IEntity entity, ResourceName resourceName, bool disable)
+	{	
+		//Disable arsenal
+		string tempEntity = resourceName;
+		tempEntity.ToLower();
+		if (disable && (tempEntity.Contains("vehicle")) )
+		{
+			SCR_DC_SpawnHelper.DisableArsenal(entity);
+		}		
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	/*! 
 	Disable arsenal on an entity
@@ -242,22 +257,22 @@ sealed class SCR_DC_SpawnHelper
 				
 			SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Disabling arsenal. Type: " + arsenalComponent.GetArsenalType(), LogLevel.DEBUG);
 		}			
-					
+
+		// Disable virtual arsenals					
 		SlotManagerComponent slotManager = SlotManagerComponent.Cast(entity.FindComponent(SlotManagerComponent));
 		if (slotManager)
 		{
 			array<EntitySlotInfo> slots = {};
 			slotManager.GetSlotInfos(slots);			
 
-			// Disable virtual arsenals 
 			foreach (EntitySlotInfo slot : slots)
 			{
 				if (!slot)
 					continue;
 
 				//Print out the slot names
-				string str = slot.GetSourceName();
-				SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Slot name: " + str, LogLevel.DEBUG);
+				//string str = slot.GetSourceName();
+				//SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Slot name: " + str, LogLevel.DEBUG);
 				IEntity arsenal;
 				arsenal = slot.GetAttachedEntity();
 

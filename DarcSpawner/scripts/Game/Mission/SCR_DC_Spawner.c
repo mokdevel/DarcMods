@@ -153,10 +153,8 @@ class SCR_DC_Spawner
 				SCR_DC_DebugHelper.AddDebugPos(entity, Color.VIOLET);
 				
 				SCR_DC_LootHelper.SpawnItemsToStorage(entity, m_Config.spawnSets[m_spawnSetID].itemNames, m_Config.spawnSets[m_spawnSetID].itemChance);
-				if (m_Config.disableArsenal)
-				{
-					SCR_DC_SpawnHelper.DisableArsenal(entity);
-				}
+				//Disable arsenal
+				SCR_DC_SpawnHelper.DisableVehicleArsenal(entity, entityToSpawn, m_Config.disableArsenal);
 					
 				if(m_Config.showMarker)
 				{
