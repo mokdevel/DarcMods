@@ -221,4 +221,83 @@ sealed class SCR_DC_SpawnHelper
 		SCR_DC_Log.Add("[SCR_DC_SpawnHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.DEBUG);			
 		return pos;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*! 
+	Disable arsenal on an entity
+	
+	TBD: This works in mysterious ways. If you disable the Arsenal in SlotManagerComponent of the prefan, it is not visible in the game. 
+	I have not found a way to do the same via script. So, we disable the arsenal. The content are cleared, but you can still see the empty arsenal.
+	*/	
+	static void DisableArsenal(IEntity entity)
+	{	
+		SCR_ArsenalComponent arsenalComponent;
+			
+		// Disable arsenal
+		arsenalComponent = SCR_ArsenalComponent.FindArsenalComponent(entity);
+		if (arsenalComponent)
+		{				
+			arsenalComponent.SetArsenalEnabled(false, false);
+//			arsenalComponent.SetSupportedArsenalItemModes(0);
+				
+			SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Disabling arsenal. Type: " + arsenalComponent.GetArsenalType(), LogLevel.DEBUG);
+		}			
+					
+		SlotManagerComponent slotManager = SlotManagerComponent.Cast(entity.FindComponent(SlotManagerComponent));
+		if (slotManager)
+		{
+			array<EntitySlotInfo> slots = {};
+			slotManager.GetSlotInfos(slots);			
+
+			// Disable virtual arsenals 
+			foreach (EntitySlotInfo slot : slots)
+			{
+				if (!slot)
+					continue;
+
+				//Print out the slot names
+				string str = slot.GetSourceName();
+				SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Slot name: " + str, LogLevel.DEBUG);
+				IEntity arsenal;
+				arsenal = slot.GetAttachedEntity();
+
+				if (!arsenal)
+					continue;
+
+//				arsenalComponent = SCR_ArsenalComponent.Cast(arsenal.FindComponent(SCR_ArsenalComponent));
+				arsenalComponent = SCR_ArsenalComponent.FindArsenalComponent(arsenal);
+				if (arsenalComponent)
+				{
+					arsenalComponent.SetArsenalEnabled(false, false);
+//					arsenalComponent.SetSupportedArsenalItemModes(0);
+					SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Disabling virtual arsenal. Type: " + arsenalComponent.GetArsenalType(), LogLevel.DEBUG);
+				}
+			}
+		}		
+/*		
+		// TBD: Did not change the behaviour
+		SCR_ResourceComponent resourceComponent;
+		
+		resourceComponent = SCR_ResourceComponent.FindResourceComponent(entity);
+		if (resourceComponent)
+		{
+			resourceComponent.SetResourceTypeEnabled(false);
+			resourceComponent.SetIsVisible(false);
+			SCR_ResourceEncapsulator enc = resourceComponent.GetEncapsulator(EResourceType.SUPPLIES);
+			if (enc)
+			{
+				enc.SetResourceRights(EResourceRights.NONE);
+			}
+		}
+		
+		SCR_ResourceContainer resourceContainer;			
+		resourceContainer = SCR_ResourceContainer.Cast(entity.FindComponent(SCR_ResourceContainer));
+		if (resourceContainer)
+		{
+			resourceContainer.SetResourceValue(0, true);
+			resourceContainer.SetResourceValueUnsafe(0, true);
+			resourceContainer.SetMaxResourceValue(0, true);
+			resourceContainer.SetOnEmptyBehavior(EResourceContainerOnEmptyBehavior.DELETE);
+		}*/
+	}
 }
