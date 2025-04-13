@@ -25,7 +25,7 @@ int spawnSetID : The spawner to use. -1 = random pick of spawner from spawnSets
 bool spawnOnRoad : Spawn the cars on road. If no road network manager found, cars spawned around the map.
 int spawnRndRadius : Random radius where the spawnName spawns. Once a location is found, additional randomization is done to avoid vehicles to be always in the same spot.
 float spawnWorldSizeMultiplier : If spawnCount = 0, we search for the world size in km and multiple with this. For example: 4km wide map with spawnWorldSizeMultiplier = 2 results in spawnCount = 8 (4*2)
-bool disableArsenal : Disable arsenal so that no other items are found.
+bool disableArsenal : See General parameters
 array<SCR_DC_SpawnSet> spawnSets : List of possible spawners
 ```
 
