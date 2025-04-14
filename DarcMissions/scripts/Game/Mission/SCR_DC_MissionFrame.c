@@ -66,6 +66,7 @@ class SCR_DC_MissionFrame
 		//Set mission profile directory. This needs to be after a possible MissionFrame config save.
 		SCR_DC_Conf.missionProfile = m_Config.missionProfile;		
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldname: " + m_WorldName, LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldsize: " + SCR_DC_Misc.GetWorldSize(), LogLevel.DEBUG);
 
 		//Load non valid area configuration from file		
 		m_DC_NonValidAreaJsonApi.Load();

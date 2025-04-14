@@ -33,12 +33,16 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		int idx = SCR_DC_MissionHelper.SelectMissionIndex(m_Config.patrolList);
 		if(idx == -1)
 		{
-			SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No occupations defined.", LogLevel.ERROR);
+			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] No patrols defined.", LogLevel.ERROR);
 			SetState(DC_MissionState.EXIT);
 			return;
 		}
 		m_DC_Patrol = m_Config.patrols[idx];
 
+		//Check that ranges are not too big
+		int worldSize = SCR_DC_Misc.GetWorldSize();
+		SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Worldsize vs maxRange : " + worldSize + " vs " + m_DC_Patrol.waypointRange[1], LogLevel.DEBUG);
+		
 		//Set defaults
 		vector pos = m_DC_Patrol.pos;
 		m_PosDestination = m_DC_Patrol.posDestination;
@@ -53,7 +57,8 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		}
 
 		//Find a location for the destination
-		if (m_PosDestination == "0 0 0" && pos != "0 0 0")
+		//Only needed for route
+		if (m_PosDestination == "0 0 0")// && pos != "0 0 0")
 		{
 			m_PosDestination = SCR_DC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes);
 			if (m_PosDestination != "0 0 0")
@@ -153,7 +158,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 				}
 				else
 				{
-					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointGenType, "0 0 0", "0 0 0", m_DC_Patrol.waypointMoveType, m_DC_Patrol.waypointRange[0], m_DC_Patrol.waypointRange[1]);
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointGenType, GetPos(), "0 0 0", m_DC_Patrol.waypointMoveType, m_DC_Patrol.waypointRange[0], m_DC_Patrol.waypointRange[1]);
 				}
 			}
 			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
@@ -249,7 +254,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT * 3;
 		conf.showMarker = true;
 		//Mission specific
-		conf.patrolList = {0,1,2};
+		conf.patrolList = {0,0,0,1,2,3};
 		conf.distanceToPlayer = 500;
 
 		//----------------------------------------------------
@@ -260,8 +265,8 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 			"0 0 0",
 			"0 0 0",
 			"any",
-			"Patrol seen close to ",
-			"Beware",
+			"Patrol spotted near ",
+			"Be careful while traveling on roads.",
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -293,7 +298,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 			"0 0 0",
 			"any",
 			"Patrol in ",
-			"Beware",
+			"Beware!",
 			{
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_NAME_SETTLEMENT,
@@ -304,7 +309,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 				EMapDescriptorType.MDT_FORTRESS
 			},
 			{1, 1},
-			{300, 1000},
+			{200, 800},
 			DC_EWaypointGenerationType.RADIUS,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
@@ -325,8 +330,35 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 			"0 0 0",
 			"0 0 0",
 			"any",
-			"Patrol in ",
-			"Beware",
+			"Patrol seen in ",
+			"Be alert",
+			{
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_LOCAL
+			},
+			{1, 1},
+			{300, 700},
+			DC_EWaypointGenerationType.SCATTERED,
+			DC_EWaypointMoveType.PATROLCYCLE,
+			{
+				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
+				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
+				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+			},
+			50, 1.0
+		);
+		conf.patrols.Insert(patrol2);
+		
+		//----------------------------------------------------
+		SCR_DC_Patrol patrol3 = new SCR_DC_Patrol;
+		patrol3.Set
+		(
+			"FIA patrols",
+			"0 0 0",
+			"0 0 0",
+			"any",
+			"FIA has been seen near ",
+			"Caution is adviced.",
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_LOCAL
@@ -336,12 +368,12 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 			DC_EWaypointGenerationType.RANDOM,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
-				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
-				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
-				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+				"{5BEA04939D148B1D}Prefabs/Groups/INDFOR/Group_FIA_FireTeam.et",
+				"{2E9C920C3ACA2C6F}Prefabs/Groups/INDFOR/Group_FIA_ReconTeam.et",
+				"{C1E39427E43B1E79}Prefabs/Groups/INDFOR/Group_FIA_AmmoTeam.et"
 			},
 			50, 1.0
 		);
-		conf.patrols.Insert(patrol2);				
+		conf.patrols.Insert(patrol3);			
 	}
 }

@@ -50,10 +50,10 @@ sealed class SCR_DC_WPHelper
 			
 			RemoveWaypoints(group);
 		
-			int rndCount = Math.RandomInt(6, 14);	//TBD: This could be a parameter in .json
+			int rndCount = Math.RandomInt(6, 20);	//TBD: This could be a parameter in .json
 			int rndRange = Math.RandomInt(wpRangeLow, wpRangeHigh);
 
-			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Random count: " + rndCount + " , Random range: " + rndRange, LogLevel.SPAM);
+			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Random waypoint count: " + rndCount + " , Random range: " + rndRange, LogLevel.DEBUG);
 						
 			//Select the waypoint generation type. Randomize if requested.
 			if (wpGenType == DC_EWaypointGenerationType.RANDOM)
@@ -295,7 +295,7 @@ sealed class SCR_DC_WPHelper
 
 		if (waypoints.Count() == 0)
 		{
-			SCR_DC_Log.Add("[SCR_DC_WPHelper:GetWaypoints] Could not create waypoints.", LogLevel.WARNING);
+			SCR_DC_Log.Add("[SCR_DC_WPHelper:GenerateWaypoints] Could not create waypoints.", LogLevel.WARNING);
 		}		
 	}
 

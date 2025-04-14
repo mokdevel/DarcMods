@@ -377,6 +377,8 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 			"A valuable cargo has crashed",	
 			{
 				"{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et",
+				"{B721D5A8C1B556CE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconTeam.et",
+				"{E552DABF3636C2AD}Prefabs/Groups/OPFOR/Group_USSR_RifleSquad.et",
 				//"{58251EDC277CE499}622120A5448725E3/Prefabs/Groups/Group_Zombies_USSR.et"
 			},
 			20, 0.8

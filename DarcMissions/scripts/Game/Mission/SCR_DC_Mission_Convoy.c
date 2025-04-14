@@ -94,7 +94,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 			SetPos(pos);
 			SetPosName(SCR_DC_Locations.CreateName(pos, posName));
 			SetTitle(m_DC_Convoy.title);
-			SetInfo(m_DC_Convoy.info + "" + GetPosName() + " to " + SCR_DC_Locations.CreateName(pos, posName));			
+			SetInfo(m_DC_Convoy.info + "" + GetPosName() + " to " + SCR_DC_Locations.CreateName(m_PosDestination, "any"));			
 			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 			SetShowHint(m_Config.showHint);			
 			SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.

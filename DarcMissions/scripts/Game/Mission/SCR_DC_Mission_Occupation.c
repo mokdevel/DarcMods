@@ -271,7 +271,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			"Gogland: Mission to be used with Escapists.",
 			"0 0 0",
 			"any",
-			"Gaurding patrol seen near ",
+			"Guard patrol seen near ",
 			"Avoid the location",
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
