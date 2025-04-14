@@ -347,11 +347,7 @@ class SCR_DC_MissionFrame
 		
 		SCR_DC_PatrolJsonApi patrolJsonApi = new SCR_DC_PatrolJsonApi;	
 		patrolJsonApi.Load();
-		delete patrolJsonApi;		
-
-/*		SCR_DC_CampJsonApi campJsonApi = new SCR_DC_CampJsonApi();	
-		campJsonApi.Load();
-		delete campJsonApi;*/
+		delete patrolJsonApi;
 	}	
 	
 	//------------------------------------------------------------------------------------------------

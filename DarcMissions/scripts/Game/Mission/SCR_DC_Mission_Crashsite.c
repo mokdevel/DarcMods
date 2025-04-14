@@ -36,8 +36,6 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 	{
 		SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] Constructor", LogLevel.DEBUG);
 		
-//		SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] Class test: " + SCR_DC_Misc.IsClassAvailable("SCR_DC_Mission_Crashsite"), LogLevel.DEBUG);
-						
 		//Set some defaults
 		SCR_DC_Mission();
 		SetType(DC_EMissionType.CRASHSITE);

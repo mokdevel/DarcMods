@@ -47,8 +47,6 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		vector pos = m_DC_Patrol.pos;
 		m_PosDestination = m_DC_Patrol.posDestination;
 		string posName = m_DC_Patrol.posName;
-//		IEntity location = null;
-//		IEntity locationDestination = null;
 		
 		//Find a location for the mission
 		if (pos == "0 0 0")
@@ -56,9 +54,8 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 			pos = SCR_DC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes);
 		}
 
-		//Find a location for the destination
-		//Only needed for route
-		if (m_PosDestination == "0 0 0")// && pos != "0 0 0")
+		//Find a location for the destination. Only used for route
+		if (m_PosDestination == "0 0 0")
 		{
 			m_PosDestination = SCR_DC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes);
 			if (m_PosDestination != "0 0 0")
@@ -184,7 +181,7 @@ class SCR_DC_Patrol : Managed
 	//Patrol specific
 	string comment;							//Generic comment to describe the mission. Not used in game.
 	vector pos;								//Position for mission. "0 0 0" used for random location chosen from locationTypes.
-	vector posDestination;					//Destination for the patrol to go to
+	vector posDestination;					//Destination for the patrol to go to. Only used when waypointMoveType = ROUTE
 	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players

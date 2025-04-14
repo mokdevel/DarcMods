@@ -1,0 +1,18 @@
+GenericEntity : "{06FE4FE70907D486}Prefabs/Props/Military/Compositions/Dst/PersonnelService_Table_01/PersonnelService_Table_01_dst_01.et" {
+ coords 80.32 1.092 90.817
+ angleY -40.157
+}
+StaticModelEntity : "{172DD50ACF177B9E}Prefabs/Props/Military/Furniture/ChairMilitary_USSR_01.et" {
+ coords 79.558 1.075 91.27
+ angleY -38.585
+}
+GenericEntity : "{9CBBE8B23794214D}Prefabs/Props/Commercial/CabinetCardFile_01/Dst/CabinetCardFile_01_dst_green.et" {
+ coords 76.37 1.078 91.049
+}
+SCR_DestructibleBuildingEntity : "{C768E842A6F11CEE}Prefabs/Structures/Military/Camps/TentUSSR_01/TentUSSR_01_camonet.et" {
+ coords 78.758 0 92.718
+}
+Vehicle UAZ469_FIA_uncovered1 : "{E28501E93F8EFDC0}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_FIA_uncovered.et" {
+ coords 84.933 1 97.416
+ angleY -43.327
+}

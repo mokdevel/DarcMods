@@ -43,7 +43,6 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 		//Set defaults
 		vector pos = m_DC_Occupation.pos;
 		string posName = m_DC_Occupation.posName;
-//		IEntity location = null;
 		
 		//Find a location for the mission
 		if (pos == "0 0 0")
@@ -262,7 +261,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {0,0,0,1,1,2,2,2,3};
+		conf.occupationList = {0,0,0,1,1,2,2,2,3,4};
 
 		//----------------------------------------------------
 		SCR_DC_Occupation occupation0 = new SCR_DC_Occupation;
@@ -272,7 +271,7 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			"0 0 0",
 			"any",
 			"Guard patrol seen near ",
-			"Avoid the location",
+			"Avoid the location. Loot has already been lost.",
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_LOCAL
@@ -447,7 +446,6 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 			"Car crash near ",
 			"Loot is up for grabs.",
 			{
-//				EMapDescriptorType.MDT_NAME_RIDGE,
 				EMapDescriptorType.MDT_FORESTSQUARE,
 				EMapDescriptorType.MDT_FUELSTATION,
 				EMapDescriptorType.MDT_NAME_SETTLEMENT,
@@ -455,9 +453,6 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 				EMapDescriptorType.MDT_BASE,
 				EMapDescriptorType.MDT_RADIO,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
-//				EMapDescriptorType.MDT_NAME_VILLAGE,
-//				EMapDescriptorType.MDT_NAME_TOWN, 
-//				EMapDescriptorType.MDT_AIRPORT,
 			},
 			{1, 3},
 			{10, 60},
@@ -534,6 +529,85 @@ class SCR_DC_OccupationJsonApi : SCR_DC_JsonApi
 	        "{2424EBB806A690D4}Prefabs/Props/Garbage/Medical/GarbageMedicalUS_02.et",
     	    "80.1 1 113.321"
 		);
-		occupation3.campItems.Insert(ocu3item6);				
+		occupation3.campItems.Insert(ocu3item6);
+		
+		//----------------------------------------------------
+		SCR_DC_Occupation occupation4 = new SCR_DC_Occupation;
+		occupation4.Set(
+			"FIA camp with a car",
+			"0 0 0",
+			"any",
+			"Campers near ",
+			"Rob them before they leave.",
+			{
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_HILL,
+				EMapDescriptorType.MDT_NAME_VALLEY			
+			},
+			{1, 3},
+			{10, 90},
+			DC_EWaypointGenerationType.RANDOM,
+			DC_EWaypointMoveType.RANDOM,		
+			{
+				"{35681BE27C302FF5}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_SentryTeam.et",
+				"{D0886786634E55AE}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_Squad.et",
+				"{B7AB5D3F8A7ADAE4}Prefabs/Groups/BLUFOR/Group_US_PlatoonHQ.et",
+				"{9624D2B39397E148}Prefabs/Groups/BLUFOR/Group_US_SapperTeam.et"
+			},
+			50, 1.0		
+		);
+		conf.occupations.Insert(occupation4);
+
+		SCR_DC_Loot occupation4loot = new SCR_DC_Loot;
+		lootItems = {
+				"WEAPON_RIFLE",
+				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
+				"WEAPON_ATTACHMENT", "WEAPON_ATTACHMENT",
+				"WEAPON_OPTICS",
+				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
+			};
+		occupation4loot.Set(0.4, lootItems);
+		occupation4.loot = occupation4loot;		
+		
+ 		SCR_DC_Structure ocu4item0 = new SCR_DC_Structure;
+		ocu4item0.Set(
+			"{E28501E93F8EFDC0}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_FIA_uncovered.et",
+			"84.933 1 97.416",
+			"0 -43.327 0"
+		);
+		occupation4.campItems.Insert(ocu4item0);
+		
+ 		SCR_DC_Structure ocu4item1 = new SCR_DC_Structure;
+		ocu4item1.Set(
+			"{06FE4FE70907D486}Prefabs/Props/Military/Compositions/Dst/PersonnelService_Table_01/PersonnelService_Table_01_dst_01.et",
+			"80.32 1.092 90.817",
+			"0 -40.157 0"
+		);
+		occupation4.campItems.Insert(ocu4item1);
+		
+ 		SCR_DC_Structure ocu4item2 = new SCR_DC_Structure;
+		ocu4item2.Set(
+			"{172DD50ACF177B9E}Prefabs/Props/Military/Furniture/ChairMilitary_USSR_01.et",
+			"79.558 1.075 91.27",
+			"0 -38.585 0"
+		);
+		occupation4.campItems.Insert(ocu4item2);
+		
+ 		SCR_DC_Structure ocu4item3 = new SCR_DC_Structure;
+		ocu4item3.Set(
+			"{9CBBE8B23794214D}Prefabs/Props/Commercial/CabinetCardFile_01/Dst/CabinetCardFile_01_dst_green.et",
+			"76.37 1.078 91.049"
+		);
+		occupation4.campItems.Insert(ocu4item3);
+		
+ 		SCR_DC_Structure ocu4item4 = new SCR_DC_Structure;
+		ocu4item4.Set(
+			"{C768E842A6F11CEE}Prefabs/Structures/Military/Camps/TentUSSR_01/TentUSSR_01_camonet.et",
+			"78.758 0 92.718"
+		);
+		occupation4.campItems.Insert(ocu4item4);
 	}	
 }

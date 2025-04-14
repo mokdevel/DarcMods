@@ -47,8 +47,6 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		vector pos = m_DC_Convoy.pos;
 		m_PosDestination = m_DC_Convoy.posDestination;
 		string posName = m_DC_Convoy.posName;
-//		IEntity location = null;
-//		IEntity locationDestination = null;
 		
 		//Find a location for the mission
 		if (pos == "0 0 0")

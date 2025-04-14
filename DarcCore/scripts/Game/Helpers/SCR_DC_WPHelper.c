@@ -118,11 +118,11 @@ sealed class SCR_DC_WPHelper
 					wpcycle.SetWaypoints(waypoints);
 					group.AddWaypoint(wpcycle);
 					
-					SCR_DC_Log.Add("[SCR_DC_WPHelper:AddToCycleWP] Adding " + waypoints.Count() + " waypoints as a cycle", LogLevel.SPAM);
+					SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Adding " + waypoints.Count() + " waypoints as a cycle", LogLevel.SPAM);
 				}
 				else
 				{
-					SCR_DC_Log.Add("[SCR_DC_WPHelper:AddToCycleWP] No waypoints added to group: " + group, LogLevel.WARNING);
+					SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] No waypoints added to group: " + group, LogLevel.WARNING);
 				}		
 			}
 			//Create normal waypoints
@@ -144,9 +144,23 @@ sealed class SCR_DC_WPHelper
 					}
 				}
 								
-				SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateWaypoints] Adding non-cycle waypoints: " + waypoints.Count(), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Adding non-cycle waypoints: " + waypoints.Count(), LogLevel.DEBUG);
 			}						
-			
+
+			//If now waypoints defined, add a LOITER waypoint as a minimum.
+			if (waypoints.Count() == 0)
+			{
+				SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] No waypoints added to group. Create a LOITER waypoint.", LogLevel.DEBUG);
+				
+				//Create a LOITER waypoint so that AIs don't just stand there.
+				AIWaypoint wploiter = FindAndCreateWaypoint(posFrom, DC_EWaypointMoveType.LOITER);
+				if(wploiter)
+				{
+					wploiter.SetOrigin(posFrom);
+					group.AddWaypoint(wploiter);
+				}
+			}
+									
 			int realCount = waypoints.Count();
 			
 			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Added " + realCount + " waypoints (" + SCR_Enum.GetEnumName(DC_EWaypointGenerationType, wpGenType) + ", " + SCR_Enum.GetEnumName(DC_EWaypointMoveType, wpMoveType) + ")", LogLevel.DEBUG);
