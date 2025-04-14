@@ -281,7 +281,6 @@ sealed class SCR_DC_WPHelper
 		//Loiter
 		if (genType == DC_EWaypointGenerationType.LOITER)
 		{			
-			//TBD: Does not currently work one would expect
 			AIWaypoint waypoint = FindAndCreateWaypoint(posFrom, moveType, 0, emptyspot);
 			if (waypoint != null)
 			{

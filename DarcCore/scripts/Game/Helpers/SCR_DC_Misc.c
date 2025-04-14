@@ -225,32 +225,6 @@ sealed class SCR_DC_Misc
 	}	
 		
 	//------------------------------------------------------------------------------------------------
-	//TBD: This is here just for testing. To be removed.
-	static void CreateMapMarkerTest(vector pos, int icon, string id, string title = "")
-	{		
-		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
-		if (!mapMarkerMgr)
-			return;
-
-		Faction faction = GetGame().GetFactionManager().GetFactionByKey("US");
-        int fIndex = GetGame().GetFactionManager().GetFactionIndex(faction);		
-				
-/*		SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
-		markerst.SetType(SCR_EMapMarkerType.PLACED_MILITARY);
-		markerst.SetCustomText(title);
-		markerst.SetWorldPos(pos[0], pos[2]);
-//		markerst.SetIconEntry(icon);
-		markerst.SetIconEntry(1);
-		markerst.SetMarkerFactionFlags(fIndex);
-		mapMarkerMgr.InsertStaticMarker(markerst, false, true);*/
-		mapMarkerMgr.InsertStaticMarkerByType(SCR_EMapMarkerType.DARC_MISSION, pos[0], pos[2], false);
-//		markerst.SetWorldPos(pos[0] + 100, pos[2]);
-		
-//		SCR_MapMarkerEntity markerEnt = m_MarkerMgr.InsertDynamicMarker(SCR_EMapMarkerType.DYNAMIC_EXAMPLE, player, 1);
-//		markerEnt.SetGlobalVisible(true);
-	}	
-		
-	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if a class is available. This can be used to check if a mod has been loaded by checking a class
 	\param classToTest The class to search

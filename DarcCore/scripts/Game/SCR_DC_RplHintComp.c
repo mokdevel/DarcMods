@@ -22,12 +22,7 @@ class SCR_DC_RplHintComp : ScriptComponent
             return;
         }
  
-		s_Instance = this;
-				
-/*        if (m_rplComponent.Role() == RplRole.Authority)
-        {
-			GetGame().GetCallqueue().CallLater(HintTime, 3000, false);
-        }*/
+		s_Instance = this;				
     }
  
 	//------------------------------------------------------------------------------------------------
@@ -38,24 +33,6 @@ class SCR_DC_RplHintComp : ScriptComponent
 	{
 		return s_Instance;
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	//TBD: Remove
-/*	private void HintTime()
-    {
-		SCR_DC_Log.Add("[SCR_DC_RplHintComp] Hinttime.", LogLevel.SPAM);
-			
-		ShowHint();			
-		GetGame().GetCallqueue().CallLater(HintTime, 5000, false);						
-	}*/
- 
-	//------------------------------------------------------------------------------------------------
-	//TBD: Remove
-/*	private void ShowHint()
-	{
-		string dummyString = "Dummy: " + System.GetTickCount();		
-		ShowGlobalHint("Testing", dummyString, 6);
-	}*/
 	
 	//------------------------------------------------------------------------------------------------
  	void ShowGlobalHint(string hl, string msg, int dur)
