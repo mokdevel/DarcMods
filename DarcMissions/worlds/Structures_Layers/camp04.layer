@@ -6,6 +6,9 @@ StaticModelEntity : "{172DD50ACF177B9E}Prefabs/Props/Military/Furniture/ChairMil
  coords 79.558 1.075 91.27
  angleY -38.585
 }
+GenericEntity : "{48720FC416263FC1}Prefabs/Weapons/Magazines/Vz58/Magazine_762x39_Vz58_30rnd_Ball.et" {
+ coords 70.103 1 101.018
+}
 GenericEntity : "{9CBBE8B23794214D}Prefabs/Props/Commercial/CabinetCardFile_01/Dst/CabinetCardFile_01_dst_green.et" {
  coords 76.37 1.078 91.049
 }

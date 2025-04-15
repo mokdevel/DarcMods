@@ -84,15 +84,19 @@ class SCR_DC_MissionFrame
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas defined: " + m_NonValidAreas.Count(), LogLevel.NORMAL);		
 		
 		//Fix seconds to ms
-		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Mission start delay: " + m_Config.missionStartDelay + " seconds.", LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Waiting for " + m_Config.missionStartDelay + " seconds before spawning missions.", LogLevel.NORMAL);
 		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;
 		
 		#ifndef SCR_DC_RELEASE
 			SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.REDCROSS_SMALL, "DMC_B", "");
 			SCR_DC_MapMarkerHelper.CreateMapMarker("800 0 3500", DC_EMissionIcon.REDCROSS, "DMC_B", "");
 //			SCR_DC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "");
-			SCR_DC_Misc.CreateMapMarkerTest("1100 0 3300", 1, "DD", "blargh");
 		#endif	
+		
+		array<string>buildingsToFind = {"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_"};
+		array<IEntity>buildings = {};
+		
+		SCR_DC_Misc.FindBuildings(buildings, buildingsToFind);
 		
 		MissionFrameStart();
 	}
@@ -222,7 +226,7 @@ class SCR_DC_MissionFrame
 				i++;	//Next mission to check
 			}			
 		}		
-		
+			
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Active missions: " + m_MissionList.Count() + "/" + m_Config.missionCount + ". Delay for next mission: " + getMissionDelayWait() + " seconds.", LogLevel.NORMAL);
 		MissionDump();
 		

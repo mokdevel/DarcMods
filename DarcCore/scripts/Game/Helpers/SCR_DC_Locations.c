@@ -227,7 +227,9 @@ sealed class SCR_DC_Locations
 		if (ent.Type() == SCR_SiteSlotEntity)
 		{
 			m_TmpSlots.Insert(ent);
+//			return true;
 		}
+//		return false;
 		return true;
 	}
 }

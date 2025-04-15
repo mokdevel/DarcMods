@@ -7,6 +7,8 @@ Includes various small functions.
 
 sealed class SCR_DC_Misc
 {
+	private static ref array<IEntity> m_TmpBuildings = {};
+
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Return the biggest value in a vector. 
@@ -223,7 +225,97 @@ sealed class SCR_DC_Misc
 		
 		return true;
 	}	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find types of buildings
+	*/	
+	static void FindBuildings(out array<IEntity>buildings, array<string>filter)
+	{
+		m_TmpBuildings.Clear();
+//		GetGame().GetWorld().QueryEntitiesBySphere("0 0 0", 99999999, null, FindBuildingCallback);//, EQueryEntitiesFlags.STATIC);		
 		
+		GetGame().GetWorld().QueryEntitiesBySphere("0 0 0", 99999999, FindBuildingCallback, null, EQueryEntitiesFlags.STATIC);		
+		
+		foreach(IEntity building: m_TmpBuildings)
+		{
+			ResourceName buildingName = building.GetPrefabData().GetPrefabName();
+			
+			if (SCR_StringHelper.ContainsAny(buildingName, filter))
+			{
+				SCR_DC_Log.Add("[SCR_DC_Misc:FindBuildings] Added: " + buildingName, LogLevel.DEBUG);
+				buildings.Insert(building);
+			}
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Call back filter for FindBuilding
+	*/		
+	static bool FindBuildingCallback(IEntity entity)
+	{
+		if (entity.ClassName() == "SCR_DestructibleBuildingEntity")
+		{
+			ResourceName res = entity.GetPrefabData().GetPrefabName();
+		  	if (res.IndexOf("_furniture") > -1 || res == "")
+			{
+				return true;
+			}
+			
+			SCR_DC_Log.Add("[SCR_DC_Misc:FindBuildingCallback] Found: " + res, LogLevel.DEBUG);
+			//EntityID id = entity.GetID();
+			m_TmpBuildings.Insert(entity);
+			return true;
+		}
+		
+		return true;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	//TBD: Does not work
+	static void FindCompatibleMagazine()
+	{
+		BaseMagazineComponent magazine;
+		BaseWeaponComponent weapon;
+		BaseMuzzleComponent muzzle;
+		
+		SCR_MagazinePredicate m_pMagazineSearchPredicate = new SCR_MagazinePredicate();		
+//		InventoryStorageManagerComponent invManager = SCR_WeaponInfo.GetInventoryManager();
+		
+		if (weapon)
+			muzzle = weapon.GetCurrentMuzzle();
+		
+		if (muzzle)
+		{
+			// WEAPON WITH MUZZLE -> NON-GRENADE
+			
+			// Find compatible magazines for this magazine well
+			BaseMagazineWell magWell = muzzle.GetMagazineWell();
+			
+			if (magWell)
+			{
+				m_pMagazineSearchPredicate.magWellType = magWell.Type();
+				array<IEntity> magEntities = new array<IEntity>;
+//				invManager.FindItems(magEntities, m_pMagazineSearchPredicate);
+//				magazineCount = magEntities.Count();
+			}
+			else
+			{
+				// No magazine well, weapon is probably not reloadable
+//				magazineCount = 0;
+			}
+		}
+		
+/*
+		SCR_PrefabNamePredicate myPredicate = new SCR_PrefabNamePredicate();
+		myPredicate.prefabName = "YourMagPrefabToFind";
+		array<IEntity> sameMagazines = new array<IEntity>;
+		invManager.FindItems(sameMagazines, myPredicate);		
+		*/
+		
+	}	
+			
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if a class is available. This can be used to check if a mod has been loaded by checking a class

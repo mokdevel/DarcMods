@@ -25,7 +25,7 @@ sealed class SCR_DC_Resources
 		filter.recursive = true;
 
 		m_resourceNames = {};
-		ResourceDatabase.SearchResources(filter, GetResourcesFilter);		
+		ResourceDatabase.SearchResources(filter, GetResourcesCallback);		
 		
 		IncludeFilter(m_resourceNames, lootList.include);
 		ExcludeFilter(m_resourceNames, lootList.exclude);
@@ -92,7 +92,7 @@ sealed class SCR_DC_Resources
 	/*!
 	Call back filter for ResourceDatabase.SearchResources
 	*/		
-	static private bool GetResourcesFilter(ResourceName resourceName, string exactPath = "")
+	static private bool GetResourcesCallback(ResourceName resourceName, string exactPath = "")
 	{
 		SCR_DC_Log.Add("[SCR_DC_Resources:GetResourcesFilter] Found: " + resourceName + " at " + exactPath, LogLevel.SPAM);
 		m_resourceNames.Insert(resourceName);
