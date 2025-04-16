@@ -24,29 +24,19 @@ sealed class SCR_DC_SpawnHelper
 	{
 		IEntity entity = NULL;
 		vector posFixed;
-		vector posNone = {0,1000,0};
-		vector mins, maxs, sums;
         EntitySpawnParams params = EntitySpawnParams();
+		
+		vector sums = FindPrefabSize(resourceName);
+		if (sums == "0 0 0")
+			return null;
 		
 		Resource resource = Resource.Load(resourceName);
 		if (!resource.IsValid())
 			return null;
-
-		//Find the proper size of the resource to spawn. 
-        params.TransformMode = ETransformMode.WORLD;			
-        params.Transform[3] = posNone;
-		entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
-		entity.GetWorldBounds(mins, maxs);
-		sums = maxs - mins;
-		
-		//Delete the unnecessary resource that we used for getting the bounding box. Wait for it to initialize properly.
-		GetGame().GetCallqueue().CallLater(DespawnItem, 10000, false, entity);
-		
+			
 		if (emptyPosRadius > -1)
 		{
 			//Spawn the resource to a free spot close to pos
-			SCR_DC_Log.Add(string.Format("[SCR_DC_SpawnHelper:SpawnItem] Itemsize: %1, X: %2, Y: %3, Z: %4, S: %5", SCR_DC_Misc.FindMaxValue(sums), maxs[0]-mins[0], maxs[1]-mins[1], maxs[2]-mins[2], sums), LogLevel.SPAM);							
-			
 			posFixed = FindEmptyPos(pos, emptyPosRadius, (SCR_DC_Misc.FindMaxValue(sums)/SIZEDIV));
 			if(posFixed != "0 0 0")
 			{
@@ -89,6 +79,50 @@ sealed class SCR_DC_SpawnHelper
 		//RebuildNavmesh(entity);	//TBD: Not sure if this is needed
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find size of a prefab
+	*/
+	static vector FindPrefabSize(ResourceName resourceName)
+	{
+		IEntity entity = NULL;
+//		vector posFixed;
+		vector posNone = {0,1000,0};
+		vector mins, maxs, sums;
+        EntitySpawnParams params = EntitySpawnParams();
+		
+		Resource resource = Resource.Load(resourceName);
+		if (!resource.IsValid())
+			return "0 0 0";
+
+		//Find the proper size of the resource to spawn. 
+        params.TransformMode = ETransformMode.WORLD;			
+        params.Transform[3] = posNone;
+		entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
+		entity.GetWorldBounds(mins, maxs);
+		sums = maxs - mins;		
+
+		SCR_DC_Log.Add(string.Format("[SCR_DC_SpawnHelper:FindPrefabSize] Itemsize: %1, X: %2, Y: %3, Z: %4, S: %5", SCR_DC_Misc.FindMaxValue(sums), maxs[0]-mins[0], maxs[1]-mins[1], maxs[2]-mins[2], sums), LogLevel.SPAM);							
+				
+		//Delete the unnecessary resource that we used for getting the bounding box. Wait for it to initialize properly.
+		GetGame().GetCallqueue().CallLater(DespawnItem, 10000, false, entity);
+		
+		return sums;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find size of an entity
+	*/
+	static vector FindEntitySize(IEntity entity)
+	{
+		vector mins, maxs, sums;
+		entity.GetWorldBounds(mins, maxs);
+		sums = maxs - mins;
+		
+		return sums;
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Spawns a structure or structures, for example a building on the map.

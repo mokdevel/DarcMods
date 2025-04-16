@@ -16,7 +16,7 @@ sealed class SCR_DC_AIHelper
 		SCR_DC_AIHelper.GroupAddAI(aiAgent);
 	
 	*/
-	static AIAgent SpawnAIAgent(string aiAgentPrefab, vector pos)
+	static AIAgent SpawnAIAgent(string aiAgentPrefab, vector pos, bool snap = true)
 	{
 		Resource resource = null;
 		AIAgent aiAgent = null;
@@ -27,7 +27,7 @@ sealed class SCR_DC_AIHelper
 		
 		//Spawn the resource exactly to pos
 		vector transform[4];
-		SCR_DC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0);
+		SCR_DC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0, snap);
         params.TransformMode = ETransformMode.WORLD;			
         params.Transform = transform;
 		IEntity entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);		

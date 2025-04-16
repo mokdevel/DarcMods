@@ -92,11 +92,32 @@ class SCR_DC_MissionFrame
 			SCR_DC_MapMarkerHelper.CreateMapMarker("800 0 3500", DC_EMissionIcon.REDCROSS, "DMC_B", "");
 //			SCR_DC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "");
 		#endif	
+
+		#ifndef SCR_DC_RELEASE				
+			array<string>buildingsToFind = {"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_"};
+			array<IEntity>buildings = {};
 		
-		array<string>buildingsToFind = {"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_"};
-		array<IEntity>buildings = {};
+			SCR_DC_Misc.FindBuildings(buildings, buildingsToFind);
 		
-		SCR_DC_Misc.FindBuildings(buildings, buildingsToFind);
+			IEntity entity = buildings[0];
+			vector sums = SCR_DC_SpawnHelper.FindEntitySize(entity);
+		
+			sums[0] = 0;
+//			sums[1] = sums[1] / 2;
+			sums[1] = 0;//sums[1];//5;
+			sums[2] = 0;
+		
+			vector pos;
+			pos = entity.GetOrigin() + sums;
+		
+			SCR_TerrainHelper.SnapToGeometry(pos, (entity.GetOrigin() + sums), {}, entity.GetWorld());
+//			SCR_TerrainHelper.SnapToGeometry(pos, (entity.GetOrigin() + sums), {}, GetGame().GetWorld());
+			pos = pos + "0 2 0";
+		
+			AIAgent aiAgent = SCR_DC_AIHelper.SpawnAIAgent("{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et", pos, false);
+			SCR_DC_AIHelper.GroupAddAI(aiAgent);			
+		
+		#endif		
 		
 		MissionFrameStart();
 	}

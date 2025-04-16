@@ -230,12 +230,12 @@ sealed class SCR_DC_Misc
 	/*!
 	Find types of buildings
 	*/	
-	static void FindBuildings(out array<IEntity>buildings, array<string>filter)
+	static void FindBuildings(out array<IEntity>buildings, array<string>filter, vector pos = "0 0 0", float radius = 999999)
 	{
 		m_TmpBuildings.Clear();
 //		GetGame().GetWorld().QueryEntitiesBySphere("0 0 0", 99999999, null, FindBuildingCallback);//, EQueryEntitiesFlags.STATIC);		
 		
-		GetGame().GetWorld().QueryEntitiesBySphere("0 0 0", 99999999, FindBuildingCallback, null, EQueryEntitiesFlags.STATIC);		
+		GetGame().GetWorld().QueryEntitiesBySphere(pos, radius, FindBuildingCallback, null, EQueryEntitiesFlags.STATIC);		
 		
 		foreach(IEntity building: m_TmpBuildings)
 		{
@@ -247,6 +247,13 @@ sealed class SCR_DC_Misc
 				buildings.Insert(building);
 			}
 		}
+		
+		//Print debug information
+		foreach(IEntity building: buildings)
+		{
+			ResourceName res = building.GetPrefabData().GetPrefabName();
+			SCR_DC_Log.Add("[SCR_DC_Misc:FindBuildings] Found: " + res + " at " + building.GetOrigin(), LogLevel.DEBUG);			
+		}		
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -263,7 +270,7 @@ sealed class SCR_DC_Misc
 				return true;
 			}
 			
-			SCR_DC_Log.Add("[SCR_DC_Misc:FindBuildingCallback] Found: " + res, LogLevel.DEBUG);
+			SCR_DC_Log.Add("[SCR_DC_Misc:FindBuildingCallback] Found: " + res + " at " + entity.GetOrigin(), LogLevel.SPAM);
 			//EntityID id = entity.GetID();
 			m_TmpBuildings.Insert(entity);
 			return true;
