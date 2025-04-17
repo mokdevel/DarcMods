@@ -59,6 +59,7 @@ class SCR_DC_CoreConfig : Managed
 	DC_LogLevel logLevel;
 	bool debugShowWaypoints = true;
 	bool debugShowMarks = true;	
+	bool debugShowSpheres = true;	
 }
 
 //------------------------------------------------------------------------------------------------

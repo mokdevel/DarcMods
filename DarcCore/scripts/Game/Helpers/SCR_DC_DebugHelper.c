@@ -9,7 +9,8 @@ The entity that takes care of showing debug markers and other things. Currently 
 modded enum SCR_DebugMenuID {
     MODMENU,
     MODMENU_WAYPOINTS,
-    MODMENU_MARKS
+    MODMENU_MARKS,
+	MODMENU_SPHERES
 }
 
 //------------------------------------------------------------------------------------------------
@@ -28,6 +29,7 @@ sealed class SCR_DC_DebugHelper
 	static bool m_DebugSlots = true;
 	
 	static ref array<ref SCR_DC_DebugHelperPos> m_Pos = {};
+	static ref array<ref SCR_DC_DebugHelperPos> m_Sphere = {};
 	static ref array<IEntity> m_Slots = {};
 			
 	//------------------------------------------------------------------------------------------------
@@ -42,6 +44,7 @@ sealed class SCR_DC_DebugHelper
 		{
 		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_WAYPOINTS, "", "Show waypoints", categoryName);
 		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_MARKS, "", "Show markers", categoryName);
+		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_SPHERES, "", "Show spheres", categoryName);
 		}
 	}		
 
@@ -49,10 +52,11 @@ sealed class SCR_DC_DebugHelper
 	/*!
 	Configure SCR_DC_DebugHelper.
 	*/
-	static void Configure(bool waypoint, bool marks)
+	static void Configure(bool waypoint, bool marks, bool spheres)
 	{
 		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_WAYPOINTS, waypoint);
 		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_MARKS, marks);
+		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_SPHERES, marks);
 	}		
 		
 	//------------------------------------------------------------------------------------------------
@@ -70,6 +74,11 @@ sealed class SCR_DC_DebugHelper
 		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
 		{		
 			SCR_DC_DebugHelper.DrawMarks();
+		}
+		
+		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
+		{		
+			SCR_DC_DebugHelper.DrawSpheres();
 		}
 		
 		if (m_DebugSlots)
@@ -204,6 +213,21 @@ sealed class SCR_DC_DebugHelper
 	}
 
 	//------------------------------------------------------------------------------------------------
+	static void DrawSpheres()
+	{
+		array<vector> sphere = {};
+		int shapeFlags = ShapeFlags.ONCE;
+
+		foreach(SCR_DC_DebugHelperPos dpos: m_Sphere)
+		{
+			if (dpos != null)
+			{
+				Shape.CreateSphere(dpos.color, shapeFlags, dpos.pos, dpos.radius);
+			}
+		}		
+	}	
+	
+	//------------------------------------------------------------------------------------------------
 	static void DrawMarks()
 	{
 		int shapeFlags = ShapeFlags.TRANSP|ShapeFlags.ONCE|ShapeFlags.ADDITIVE;
@@ -251,6 +275,37 @@ sealed class SCR_DC_DebugHelper
 			m_Pos.Insert(dpos);
 		}
 	}				
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Adds sphere on the map for debugging. Can be either MapItem, IEntity or direct position.
+	\param MapItem, IEntity, pos Location of the marker
+	\param color Color of the marker
+	*/	
+	
+	static void AddDebugSphere(MapItem mapItem, int color = Color.BLUE, float radius = 1.0, string id = "NONE")
+	{
+		AddDebugSphere(mapItem.GetPos(), color, radius, id);
+	}
+
+	static void AddDebugSphere(IEntity entity, int color = Color.BLUE, float radius = 1.0, string id = "NONE")
+	{
+		AddDebugSphere(entity.GetOrigin(), color, radius, id);
+	}
+	
+	static void AddDebugSphere(vector pos, int color = Color.BLUE, float radius = 1.0, string id = "NONE")
+	{
+		if(DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
+		{
+			SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
+			dpos.pos = pos;
+			dpos.color = color;
+			dpos.radius = radius;
+			dpos.id = id;
+			dpos.height = 0;
+			m_Sphere.Insert(dpos);
+		}
+	}					
 	
 	//------------------------------------------------------------------------------------------------
 	/*!

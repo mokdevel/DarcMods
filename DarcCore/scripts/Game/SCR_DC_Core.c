@@ -24,7 +24,7 @@ class SCR_DC_Core
 		#endif*/
 
 		//Set debug visibility
-		SCR_DC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks);							
+		SCR_DC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres);							
 	}
 
 	void ~SCR_DC_Core()
