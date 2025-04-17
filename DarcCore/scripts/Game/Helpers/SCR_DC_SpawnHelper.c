@@ -255,8 +255,22 @@ sealed class SCR_DC_SpawnHelper
 		SCR_DC_Log.Add("[SCR_DC_SpawnHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.DEBUG);			
 		return pos;
 	}
-	
-	
+
+	//TBD: Remove
+	static vector FindEmptyPosEx(vector pos, float areaRadius, float emptySize)
+	{		
+		vector posFixed;
+		
+		if(SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize, 2, TraceFlags.ENTS|TraceFlags.WORLD|TraceFlags.OCEAN|TraceFlags.VISIBILITY))
+		{
+			SCR_DC_Log.Add("[SCR_DC_SpawnHelper:FindEmptyPos] Found: " + posFixed, LogLevel.SPAM);			
+			return posFixed;
+		}
+		
+		SCR_DC_Log.Add("[SCR_DC_SpawnHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.DEBUG);			
+		return pos;
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	*/

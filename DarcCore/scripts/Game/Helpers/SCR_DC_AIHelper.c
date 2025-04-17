@@ -237,7 +237,7 @@ sealed class SCR_DC_AIHelper
 	/*!
 	Add an AI to a group. If the group does not exist, create a new one.
 	*/
-	static void GroupAddAI(AIAgent aiAgent, AIGroup group = null)
+	static AIGroup GroupAddAI(AIAgent aiAgent, AIGroup group = null)
 	{
 		if(!group)
 		{
@@ -245,7 +245,9 @@ sealed class SCR_DC_AIHelper
 			group = GroupCreate(faction, aiAgent.GetOrigin());
 		}
 		
-		group.AddAgent(aiAgent);		
+		group.AddAgent(aiAgent);
+		
+		return group;
 	}	
 	
 	//------------------------------------------------------------------------------------------------

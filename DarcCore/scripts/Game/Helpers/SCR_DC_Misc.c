@@ -280,6 +280,66 @@ sealed class SCR_DC_Misc
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	/*!
+	Find floors from a building entity.
+	From the returned vector position, the [1] item is the floor height
+	*/		
+	static void FindBuildingFloors(out array<vector>floors, IEntity entity)
+	{
+		vector sums = SCR_DC_SpawnHelper.FindEntitySize(entity);
+	
+		vector pos;
+		pos = entity.GetOrigin();
+	
+		float terrainY = SCR_TerrainHelper.GetTerrainY(entity.GetOrigin());
+	
+		//Trace from the ceiling down to terrain height
+		vector posStart = entity.GetOrigin();
+		posStart[1] = posStart[1] + sums[1];
+		vector posEnd;
+	
+		TraceParam trace = new TraceParam();
+		{
+			trace.Start = posStart;
+		
+			posEnd = posStart;
+			posEnd[1] = terrainY;
+			trace.End = posEnd;
+
+			SCR_DC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 2);
+				
+			//trace.Exclude = child;
+			trace.TargetLayers = EPhysicsLayerDefs.Navmesh;
+			trace.Flags = TraceFlags.ENTS | TraceFlags.WORLD;
+		}		
+
+		vector posCheck = posStart;
+		int i = 0;
+		while (posCheck[1] > terrainY && i < 10)	//Try a maximun of ten times. Just to avoid forever loop
+		{
+			vector floorpos;
+			SCR_TerrainHelper.SnapToGeometry(floorpos, posCheck, {}, entity.GetWorld(), traceParam: trace);
+			floors.Insert(floorpos);
+			posCheck[1] = floorpos[1] - 1;
+			trace.Start = posCheck;
+			i++;
+		}
+		
+		if (floors.Count() > 0)
+		{
+			floors.RemoveOrdered(0);					//Remove roof height
+			SCR_ArrayHelperT<vector>.Reverse(floors);	//Change order to that [0] is the bottom floor
+		}
+		
+		foreach (vector fpos: floors)
+		{
+			SCR_DC_DebugHelper.AddDebugSphere(fpos, Color.BLUE, 0.3);
+		}
+		
+		SCR_DC_Log.Add("[SCR_DC_Misc:FindBuildingFloors] Found: " + floors.Count() + " floors from " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	//TBD: Does not work
 	static void FindCompatibleMagazine()
 	{

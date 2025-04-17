@@ -100,57 +100,29 @@ class SCR_DC_MissionFrame
 		
 			SCR_DC_Misc.FindBuildings(buildings, buildingsToFind);
 		
-			IEntity entity = buildings[3];
-			vector sums = SCR_DC_SpawnHelper.FindEntitySize(entity);
-		
-			vector pos;
-			pos = entity.GetOrigin();
-		
-			float terrainY = SCR_TerrainHelper.GetTerrainY(entity.GetOrigin());
-		
-			vector posStart = entity.GetOrigin();
-			posStart[1] = posStart[1] + sums[1];
-			vector posEnd;
-		
-			TraceParam trace = new TraceParam();
-			{
-				trace.Start = posStart;
-			
-				posEnd = posStart;
-				posEnd[1] = terrainY;
-				trace.End = posEnd;
+			IEntity entity = buildings[0];
 
-				SCR_DC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 2);
-//				SCR_DC_DebugHelper.AddDebugSphere(posEnd);
-					
-				//trace.Exclude = child;
-				trace.TargetLayers = EPhysicsLayerDefs.Navmesh;
-				trace.Flags = TraceFlags.ENTS | TraceFlags.WORLD;
-			}		
-
-			vector posCheck = posStart;
-			int i = 0;
-			while (posCheck[1] > terrainY || i < 4)
-			{
-				vector floorpos;
-				SCR_TerrainHelper.SnapToGeometry(floorpos, posCheck, {}, entity.GetWorld(), traceParam: trace);
-				floors.Insert(floorpos);
-				posCheck[1] = floorpos[1] - 1;
-				trace.Start = posCheck;
-				i++;
-			}
-			floors.RemoveOrdered(0);					//Remove roof
-			SCR_ArrayHelperT<vector>.Reverse(floors);	//Change order to that [0] is the bottom floor
+			SCR_DC_Misc.FindBuildingFloors(floors, entity);
 		
-			foreach (vector fpos: floors)
-			{
-				SCR_DC_DebugHelper.AddDebugSphere(fpos);
-			}
-		
-			pos = floors[0] + "0 0.2 0";		
+			vector pos, floorpos;
+//			floorpos = floors.GetRandomElement() + "0 0.2 0";
+			floorpos = floors[0];
+			//pos = floorpos;// + "0 0.5 0";
+			pos = SCR_DC_SpawnHelper.FindEmptyPos(floorpos, 10, 0.6);
+			pos[1] = floorpos[1] + 0.2;
+			SCR_DC_DebugHelper.AddDebugSphere(pos, Color.YELLOW);
 			AIAgent aiAgent = SCR_DC_AIHelper.SpawnAIAgent("{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et", pos, false);
-			SCR_DC_AIHelper.GroupAddAI(aiAgent);			
-		
+			AIGroup group = SCR_DC_AIHelper.GroupAddAI(aiAgent);
+
+//			floorpos = floors.GetRandomElement() + "0 0.2 0";
+			floorpos = floors[1];
+			//pos = floorpos;// + "0 0.5 0";
+			pos = SCR_DC_SpawnHelper.FindEmptyPos(floorpos, 10, 0.6);
+			pos[1] = floorpos[1] + 0.2;
+			SCR_DC_DebugHelper.AddDebugSphere(pos, Color.YELLOW);
+			aiAgent = SCR_DC_AIHelper.SpawnAIAgent("{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et", pos, false);
+			SCR_DC_AIHelper.GroupAddAI(aiAgent, group);
+				
 		#endif		
 		
 		MissionFrameStart();
