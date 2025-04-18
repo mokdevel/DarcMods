@@ -103,25 +103,52 @@ class SCR_DC_MissionFrame
 			IEntity entity = buildings[0];
 
 			SCR_DC_Misc.FindBuildingFloors(floors, entity);
+
+			/*
+		
+			|------------------------------------------| House size
+		               |---------||---------|            Random spot is 1/6 of house size from the center
+		          |----*----|                            Radius to search for a spot is 1/4 of house size
+		
+			*/
+			//Find the building size. The bigger X or Y value will be used as the radius
+			vector sums = SCR_DC_SpawnHelper.FindEntitySize(entity);
+			//Pick the radius to be the bigger one from X/Y
+			float radius = sums[0];
+			if (sums[0] < sums[2])
+			{
+				radius = sums[2];
+			}
 		
 			vector pos, floorpos;
-//			floorpos = floors.GetRandomElement() + "0 0.2 0";
-			floorpos = floors[0];
-			//pos = floorpos;// + "0 0.5 0";
-			pos = SCR_DC_SpawnHelper.FindEmptyPos(floorpos, 10, 0.6);
-			pos[1] = floorpos[1] + 0.2;
-			SCR_DC_DebugHelper.AddDebugSphere(pos, Color.YELLOW);
-			AIAgent aiAgent = SCR_DC_AIHelper.SpawnAIAgent("{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et", pos, false);
-			AIGroup group = SCR_DC_AIHelper.GroupAddAI(aiAgent);
-
-//			floorpos = floors.GetRandomElement() + "0 0.2 0";
-			floorpos = floors[1];
-			//pos = floorpos;// + "0 0.5 0";
-			pos = SCR_DC_SpawnHelper.FindEmptyPos(floorpos, 10, 0.6);
-			pos[1] = floorpos[1] + 0.2;
-			SCR_DC_DebugHelper.AddDebugSphere(pos, Color.YELLOW);
-			aiAgent = SCR_DC_AIHelper.SpawnAIAgent("{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et", pos, false);
-			SCR_DC_AIHelper.GroupAddAI(aiAgent, group);
+		
+			for (int i = 0; i < 10; i++)
+			{
+				float empty_radius = 0.5;
+			
+				floorpos = floors.GetRandomElement();
+				pos = SCR_DC_Misc.RandomizePos(floorpos, radius/6);
+				pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, radius/5, empty_radius);
+				pos[1] = pos[1] + 0.2;
+				SCR_DC_DebugHelper.AddDebugSphere(pos, Color.YELLOW, empty_radius);
+				AIAgent aiAgent = SCR_DC_AIHelper.SpawnAIAgent("{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et", pos, false);
+				AIGroup group = SCR_DC_AIHelper.GroupAddAI(aiAgent);
+			
+				array<AIWaypoint> waypoints = {};
+				AIWaypointCycle wpcycle = null;
+				wpcycle = AIWaypointCycle.Cast(SCR_DC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.PATROLCYCLE));
+				wpcycle.SetOrigin(pos);
+			
+				AIWaypoint waypoint = SCR_DC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.PATROL);
+				if(waypoint)
+				{
+					waypoint.SetOrigin(pos);
+					waypoints.Insert(waypoint);
+				}
+				
+				wpcycle.SetWaypoints(waypoints);
+				group.AddWaypoint(wpcycle);			
+			}
 				
 		#endif		
 		
