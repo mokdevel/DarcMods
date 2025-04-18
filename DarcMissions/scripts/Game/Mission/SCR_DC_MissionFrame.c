@@ -96,21 +96,22 @@ class SCR_DC_MissionFrame
 		#ifndef SCR_DC_RELEASE				
 			array<string>buildingsToFind = {"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_"};
 			array<IEntity>buildings = {};
-			array<vector> floors = {};
 		
 			SCR_DC_Misc.FindBuildings(buildings, buildingsToFind);
 		
 			IEntity entity = buildings[0];
-
-			SCR_DC_Misc.FindBuildingFloors(floors, entity);
-
-			/*
+			array<ResourceName> aiChars = {
+				"{5117311FB822FD1F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Officer.et",
+				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
+				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
+				"{96C784C502AC37DA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_MG.et",
+				"{7DE1CBA32A0225EB}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Randomized.et"
+			};
 		
-			|------------------------------------------| House size
-		               |---------||---------|            Random spot is 1/6 of house size from the center
-		          |----*----|                            Radius to search for a spot is 1/4 of house size
+			SCR_DC_AIHelper.SpawnAIInBuilding(entity, aiChars);
+
+/*			SCR_DC_Misc.FindBuildingFloors(floors, entity);
 		
-			*/
 			//Find the building size. The bigger X or Y value will be used as the radius
 			vector sums = SCR_DC_SpawnHelper.FindEntitySize(entity);
 			//Pick the radius to be the bigger one from X/Y
@@ -122,7 +123,7 @@ class SCR_DC_MissionFrame
 		
 			vector pos, floorpos;
 		
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				float empty_radius = 0.5;
 			
@@ -149,7 +150,7 @@ class SCR_DC_MissionFrame
 				wpcycle.SetWaypoints(waypoints);
 				group.AddWaypoint(wpcycle);			
 			}
-				
+*/				
 		#endif		
 		
 		MissionFrameStart();

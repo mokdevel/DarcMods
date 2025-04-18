@@ -233,8 +233,6 @@ sealed class SCR_DC_Misc
 	static void FindBuildings(out array<IEntity>buildings, array<string>filter, vector pos = "0 0 0", float radius = 999999)
 	{
 		m_TmpBuildings.Clear();
-//		GetGame().GetWorld().QueryEntitiesBySphere("0 0 0", 99999999, null, FindBuildingCallback);//, EQueryEntitiesFlags.STATIC);		
-		
 		GetGame().GetWorld().QueryEntitiesBySphere(pos, radius, FindBuildingCallback, null, EQueryEntitiesFlags.STATIC);		
 		
 		foreach(IEntity building: m_TmpBuildings)
@@ -243,7 +241,7 @@ sealed class SCR_DC_Misc
 			
 			if (SCR_StringHelper.ContainsAny(buildingName, filter))
 			{
-				SCR_DC_Log.Add("[SCR_DC_Misc:FindBuildings] Added: " + buildingName, LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_Misc:FindBuildings] Added: " + buildingName, LogLevel.SPAM);
 				buildings.Insert(building);
 			}
 		}

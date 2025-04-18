@@ -96,6 +96,69 @@ sealed class SCR_DC_AIHelper
 		return group;		
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Spawn AI characters inside a building.
+	
+	We try to keep the AI inside the building by setting a cycle waypoint to spawn point. They will go out and fight,
+	but go back inside (or close to that).
+	
+	The spawn point is chosen randomly on the floors. Sometimes the randomess sets them outside.
+	
+			|------------------------------------------| House size
+		               |---------||---------|            Random spot is 1/6 of house size from the center
+		          |----*----|                            Radius to search for a spot is 1/5 of house size
+	
+	*/
+	static void SpawnAIInBuilding(IEntity entity, array<ResourceName> resourceNames, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
+	{
+		array<vector> floors = {};
+		
+		SCR_DC_Misc.FindBuildingFloors(floors, entity);
+
+		//Find the building size. The bigger X or Y value will be used as the radius
+		vector sums = SCR_DC_SpawnHelper.FindEntitySize(entity);
+		//Pick the radius to be the bigger one from X/Y
+		float radius = sums[0];
+		if (sums[0] < sums[2])
+		{
+			radius = sums[2];
+		}
+	
+		vector pos, floorpos;
+	
+//		for (int i = 0; i < 4; i++)
+		foreach(ResourceName resourceName : resourceNames)
+		{
+			float empty_radius = 0.5;
+		
+			floorpos = floors.GetRandomElement();
+			pos = SCR_DC_Misc.RandomizePos(floorpos, radius/6);
+			pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, radius/5, empty_radius);
+			pos[1] = pos[1] + 0.2;			
+//			SCR_DC_DebugHelper.AddDebugSphere(pos, Color.YELLOW, empty_radius);
+			AIAgent aiAgent = SCR_DC_AIHelper.SpawnAIAgent(resourceName, pos, false);
+			
+			SetAISkill(aiAgent, skill, perceptionFactor);
+			
+			AIGroup group = SCR_DC_AIHelper.GroupAddAI(aiAgent);
+		
+			array<AIWaypoint> waypoints = {};
+			AIWaypointCycle wpcycle = null;
+			wpcycle = AIWaypointCycle.Cast(SCR_DC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.PATROLCYCLE));
+			wpcycle.SetOrigin(pos);
+		
+			AIWaypoint waypoint = SCR_DC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.PATROL);
+			if(waypoint)
+			{
+				waypoint.SetOrigin(pos);
+				waypoints.Insert(waypoint);
+			}
+			
+			wpcycle.SetWaypoints(waypoints);
+			group.AddWaypoint(wpcycle);			
+		}
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
