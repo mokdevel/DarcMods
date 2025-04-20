@@ -225,8 +225,8 @@ string title : See General parameters
 string info : See General parameters
 array<int> groupCount : See General parameters
 array<string> groupTypes : See General parameters
-int AISkill : See General parameters
-float AIperception : See General parameters
+int aiSkill : See General parameters
+float aiPerception : See General parameters
 int minDistanceToPlayer : Hunter group minimum distance to player for spawn
 int maxDistanceToPlayer : ..max distance
 int rndDistanceToPlayer : The error on the location where AI thinks you are. (0..rndDistanceToPlayer). 
@@ -265,8 +265,8 @@ DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
   RADIUS, SCATTERED : The patrol will follow a path created with waypointRange starting from posStart. posDestination is ignored.
 DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
 array<string> groupTypes : See General parameters
-int AISkill : See General parameters
-float AIperception : See General parameters
+int aiSkill : See General parameters
+float aiPerception : See General parameters
 ```
 
 ## Mission : Convoy
@@ -299,8 +299,8 @@ DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
   ROUTE : The convoy will go from posStart to posDestination. When destination has been reached, the patrol will LOITER.
   RADIUS, SCATTERED : The concoy will follow a path created with waypointRange starting from posStart. posDestination is ignored.
 array<string> groupTypes : See General parameters
-int AISkill : See General parameters
-float AIperception : See General parameters
+int aiSkill : See General parameters
+float aiPerception : See General parameters
 array<string> vehicleTypes : The prefab names of vehicles. The vehicle is randomly picked from this list.
 float cruiseSpeed : Speed to drive in km/h. 30 is a good value so that the convoy is not driving too fast.
 SCR_DC_Loot loot : (optional) Loot found in the vehicle. 
@@ -333,8 +333,8 @@ string comment : See General parameters
 string title : See General parameters
 string info : See General parameters
 array<string> groupTypes : See General parameters
-int AISkill : See General parameters
-float AIperception : See General parameters
+int aiSkill : See General parameters
+float aiPerception : See General parameters
 array<SCR_DC_HelicopterInfo> helicopterInfo : The helicopter is selected randomly.
 SCR_DC_Loot loot : (optional) Loot found in the box. 
 array<SCR_DC_Structure> siteItems : (optional) Prefabs to spawn at the crashsite. Note that first item shall be the loot box.
@@ -391,8 +391,8 @@ array<int> waypointRange : See Waypoint parameters. NOTE: If loot is defined, th
 DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
 DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
 array<string> groupTypes : See General parameters
-int AISkill : See General parameters
-float AIperception : See General parameters
+int aiSkill : See General parameters
+float aiPerception : See General parameters
 SCR_DC_Loot loot : (optional) Loot found in the mission. 
 array<ref SCR_DC_Structure> campItems  : (optional) The structure list for the camp.
 ```
@@ -423,7 +423,7 @@ array<string> groupTypes : The prefab names of AI groups or characters. The AI i
             "{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
             "{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
             }
-int AISkill : Skill for AI (0-100). See SCR_AICombatComponent and EAISkill.
+int aiSkill : Skill for AI (0-100). See SCR_AICombatComponent and EaiSkill.
   0 = NONE
   10 = NOOB
   20 = ROOKIE
@@ -431,7 +431,7 @@ int AISkill : Skill for AI (0-100). See SCR_AICombatComponent and EAISkill.
   70 = VETERAN
   80 = EXPERT
   100 = CYLON
-float AIperception : How quickly AI reacts to danger. See SCR_AICombatComponent for details on perception factors.
+float aiPerception : How quickly AI reacts to danger. See SCR_AICombatComponent for details on perception factors.
 bool disableArsenal : Disable arsenal for vehicles so that only defined loot items are found.
 ```
 
