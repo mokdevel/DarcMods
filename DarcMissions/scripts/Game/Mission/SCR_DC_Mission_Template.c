@@ -22,8 +22,8 @@ class SCR_DC_Mission_Template : SCR_DC_Mission
 		m_Config = m_TemplateJsonApi.conf;
 		
 		SetPos(m_Config.pos);
-		SetPosName(m_Config.posName);
-		SetTitle(m_Config.title);
+		SetPosName(SCR_DC_Locations.CreateName(GetPos(), m_Config.posName));
+		SetTitle(m_Config.title + "" + GetPosName());
 		SetInfo(m_Config.info);
 		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 		SetShowHint(m_Config.showHint);

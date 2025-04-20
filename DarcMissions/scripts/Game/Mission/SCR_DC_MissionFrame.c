@@ -334,11 +334,16 @@ class SCR_DC_MissionFrame
 				tmpDC_Mission = new SCR_DC_Mission_Patrol();
 				break;
 			}
-			case DC_EMissionType.CHOPPER:
+			case DC_EMissionType.SQUATTER:
+			{
+				tmpDC_Mission = new SCR_DC_Mission_Squatter();
+				break;
+			}			
+/*			case DC_EMissionType.CHOPPER:
 			{
 				tmpDC_Mission = new SCR_DC_Mission_Chopper();
 				break;
-			}
+			}*/
 			default:
 				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Incorrect mission type: " + missionType, LogLevel.ERROR);
 		}	
@@ -407,6 +412,10 @@ class SCR_DC_MissionFrame
 		SCR_DC_PatrolJsonApi patrolJsonApi = new SCR_DC_PatrolJsonApi;	
 		patrolJsonApi.Load();
 		delete patrolJsonApi;
+		
+		SCR_DC_SquatterJsonApi squatterJsonApi = new SCR_DC_SquatterJsonApi;	
+		squatterJsonApi.Load();
+		delete squatterJsonApi;		
 	}	
 	
 	//------------------------------------------------------------------------------------------------

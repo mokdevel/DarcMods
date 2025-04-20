@@ -217,7 +217,7 @@ class SCR_DC_Occupation : Managed
 	ref SCR_DC_Loot loot = null;	
 	ref array<ref SCR_DC_Structure> campItems = {};
 	
-	void Set(string comment_, vector pos_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType _waypointMoveType, array<string> groupTypes_, int AISkill_, float AIperception_)
+	void Set(string comment_, vector pos_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_, int AISkill_, float AIperception_)
 	{
 		comment = comment_;
 		pos = pos_;
@@ -228,7 +228,7 @@ class SCR_DC_Occupation : Managed
 		groupCount = groupCount_;
 		waypointRange = waypointRange_;
 		waypointGenType = waypointGenType_;
-		waypointMoveType = _waypointMoveType;
+		waypointMoveType = waypointMoveType_;
 		groupTypes = groupTypes_;
 		AISkill = AISkill_;
 		AIperception = AIperception_;		

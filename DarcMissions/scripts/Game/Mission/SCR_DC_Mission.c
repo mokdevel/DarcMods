@@ -7,6 +7,7 @@ enum DC_EMissionType
 	CONVOY,
 	CRASHSITE,
 	PATROL,
+	SQUATTER,
 	CHOPPER		//Mission not ready or working
 };
 
