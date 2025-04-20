@@ -154,7 +154,19 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 				{
 					SCR_DC_AIHelper.SetAIGroupSkill(group, m_DC_Occupation.AISkill, m_DC_Occupation.AIperception);					
 					m_Groups.Insert(group);
-					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointGenType, GetPos(), "0 0 0", m_DC_Occupation.waypointMoveType, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
+					
+					int minRange = m_DC_Occupation.waypointRange[0];
+					int maxRange = m_DC_Occupation.waypointRange[1];
+					
+					//If there are more than one group and loot, spawn one to protect the loot. 
+					//For the first group, waypointRange is ignored.
+					if ((m_DC_Occupation.loot) && i == 0)
+					{
+						minRange = 5;
+						maxRange = 30;					
+					}
+					
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointGenType, GetPos(), "0 0 0", m_DC_Occupation.waypointMoveType, minRange, maxRange);
 //					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
 				}
 				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
