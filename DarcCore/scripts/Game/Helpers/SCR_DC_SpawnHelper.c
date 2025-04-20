@@ -71,6 +71,47 @@ sealed class SCR_DC_SpawnHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Spawn an item inside a building.
+	
+	The spawn point is chosen randomly on the floors. Sometimes the randomess sets them outside.
+	
+			|------------------------------------------| House size
+		               |---------||---------|            Random spot is 1/6 of house size from the center
+		          |----*----|                            Radius to search for a spot is 1/5 of house size
+	
+	*/
+	static IEntity SpawnItemInBuilding(IEntity building, string item, float rotation = 0, float emptyPosRadius = EMPTY_POS_RADIUS, bool snap = true)
+	{
+		IEntity entity = NULL;
+		array<vector> floors = {};
+		
+		SCR_DC_Misc.FindBuildingFloors(floors, building);
+
+		//Find the building size. The bigger X or Y value will be used as the radius
+		vector sums = SCR_DC_SpawnHelper.FindEntitySize(building);
+		//Pick the radius to be the bigger one from X/Y
+		float radius = sums[0];
+		if (sums[0] < sums[2])
+		{
+			radius = sums[2];
+		}
+	
+		vector pos, floorpos;
+	
+		float empty_radius = 1.2;
+	
+		floorpos = floors.GetRandomElement();
+		pos = SCR_DC_Misc.RandomizePos(floorpos, radius/6);
+		pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, radius/5, emptyPosRadius);
+		pos[1] = pos[1] + 0.1;			
+		SCR_DC_DebugHelper.AddDebugSphere(pos, Color.PINK, empty_radius);
+		entity = SpawnItem(pos, item, rotation, emptyPosRadius, snap);
+		
+		return entity;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Despawn an entity
 	*/
 	static void DespawnItem(IEntity entity)

@@ -189,7 +189,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		SCR_AIGroup group = SCR_DC_AIHelper.SpawnGroup(m_DC_Convoy.groupTypes.GetRandomElement(), posg);
 		if (group)
 		{			
-			SCR_DC_AIHelper.SetAIGroupSkill(group, m_DC_Convoy.AISkill, m_DC_Convoy.AIperception);
+			SCR_DC_AIHelper.SetAIGroupSkill(group, m_DC_Convoy.aiSkill, m_DC_Convoy.aiPerception);
 			m_Groups.Insert(group);					
 		}
 		
@@ -269,14 +269,14 @@ class SCR_DC_Convoy : Managed
 	ref array<EMapDescriptorType> locationTypes = {};	
 	DC_EWaypointGenerationType waypointGenType;
 	ref array<string> groupTypes = {};
-	int AISkill;
-	float AIperception	
+	int aiSkill;
+	float aiPerception	
 	ref array<string> vehicleTypes = {};
 	float cruiseSpeed;						//Speed to drive in km/h.
 	//Optional settings
 	ref SCR_DC_Loot loot = null;	
 	
-	void Set(string comment_, vector pos_, vector posDestination_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, DC_EWaypointGenerationType waypointGenType_, array<string> groupTypes_, int AISkill_, float AIperception_, array<string> vehicleTypes_, )
+	void Set(string comment_, vector pos_, vector posDestination_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, DC_EWaypointGenerationType waypointGenType_, array<string> groupTypes_, int aiSkill_, float aiPerception_, array<string> vehicleTypes_, )
 	{
 		comment = comment_;
 		pos = pos_;
@@ -287,8 +287,8 @@ class SCR_DC_Convoy : Managed
 		locationTypes = locationTypes_;
 		waypointGenType = waypointGenType_;
 		groupTypes = groupTypes_;
-		AISkill = AISkill_;
-		AIperception = AIperception_;
+		aiSkill = aiSkill_;
+		aiPerception = aiPerception_;
 		vehicleTypes = vehicleTypes_;
 	}
 }

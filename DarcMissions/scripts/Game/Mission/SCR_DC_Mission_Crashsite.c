@@ -189,7 +189,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 					SCR_AIGroup group = SCR_DC_MissionHelper.SpawnMissionAIGroup(m_DC_Crashsite.groupTypes.GetRandomElement(), GetPos());				
 					if (group)
 					{
-						SCR_DC_AIHelper.SetAIGroupSkill(group, m_DC_Crashsite.AISkill, m_DC_Crashsite.AIperception);					
+						SCR_DC_AIHelper.SetAIGroupSkill(group, m_DC_Crashsite.aiSkill, m_DC_Crashsite.aiPerception);					
 						m_Groups.Insert(group);
 						SCR_DC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER);
 					}
@@ -305,21 +305,21 @@ class SCR_DC_Crashsite : Managed
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
 	ref array<string> groupTypes = {};
-	int AISkill;
-	float AIperception;
+	int aiSkill;
+	float aiPerception;
 	ref array<ref SCR_DC_HelicopterInfo> helicopterInfo = {};
 	//Optional settings
 	ref SCR_DC_Loot loot = null;
 	ref array<ref SCR_DC_Structure> siteItems = {};
 	
-	void Set(string comment_, string title_, string info_, array<string> groupTypes_, int AISkill_, float AIperception_)
+	void Set(string comment_, string title_, string info_, array<string> groupTypes_, int aiSkill_, float aiPerception_)
 	{
 		comment = comment_;
 		title = title_;
 		info = info_;
 		groupTypes = groupTypes_;
-		AISkill = AISkill_;
-		AIperception = AIperception_;				
+		aiSkill = aiSkill_;
+		aiPerception = aiPerception_;
 	}	
 }
 

@@ -110,7 +110,7 @@ sealed class SCR_DC_AIHelper
 		          |----*----|                            Radius to search for a spot is 1/5 of house size
 	
 	*/
-	static void SpawnAIInBuilding(IEntity entity, array<ResourceName> resourceNames, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
+	static void SpawnAIInBuilding(IEntity entity, array<string> resourceNames, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
 		array<vector> floors = {};
 		
@@ -127,7 +127,6 @@ sealed class SCR_DC_AIHelper
 	
 		vector pos, floorpos;
 	
-//		for (int i = 0; i < 4; i++)
 		foreach(ResourceName resourceName : resourceNames)
 		{
 			float empty_radius = 0.5;

@@ -181,7 +181,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 			
 			if (group)
 			{
-				SCR_DC_AIHelper.SetAIGroupSkill(group, m_Config.AISkill, m_Config.AIperception);					
+				SCR_DC_AIHelper.SetAIGroupSkill(group, m_Config.aiSkill, m_Config.aiPerception);					
 				m_Groups.Insert(group);
 				m_GroupsSpawned++;
 				SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:SpawnHunterGroup] Group spawned to " + spawnLocation, LogLevel.NORMAL);				
@@ -252,8 +252,8 @@ class SCR_DC_HunterConfig : SCR_DC_MissionConfig
 	string info;							//Details for the hint shown for players
 	ref array<int> groupCount = {1, 2};
 	ref array<string> groupTypes = {}; 		//The prefab names of AI groups or characters. The AI is randomly picked from this list.
-	int AISkill;							//Skill for AI (0-100). See SCR_AICombatComponent and EAISkill
-	float AIperception;					
+	int aiSkill;							//Skill for AI (0-100). See SCR_AICombatComponent and EAISkill
+	float aiPerception;					
 	int minDistanceToPlayer;				//Hunter group minimum distance to player for spawn
 	int maxDistanceToPlayer;				//...max distance
 	int rndDistanceToPlayer;				//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
@@ -305,8 +305,8 @@ class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 			"{976AC400219898FA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Sharpshooter.et",
 			"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et",
 		};
-		conf.AISkill = 30;
-		conf.AIperception = 0.7;		
+		conf.aiSkill = 30;
+		conf.aiPerception = 0.7;		
 		conf.minDistanceToPlayer = 250;
 		conf.maxDistanceToPlayer = 600;
 		conf.rndDistanceToPlayer = 60;

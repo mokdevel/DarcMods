@@ -10,7 +10,7 @@ class SCR_DC_Loot : Managed
 {
 	IEntity box;
 	float itemChance = 1.0;
-	ref array<string> items = {};	
+	ref array<string> items = {};
 	
 	void Set(float itemChance_, array<string> items_)
 	{

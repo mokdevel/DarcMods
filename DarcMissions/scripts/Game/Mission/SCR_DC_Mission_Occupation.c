@@ -152,7 +152,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 				SCR_AIGroup group = SCR_DC_MissionHelper.SpawnMissionAIGroup(m_DC_Occupation.groupTypes.GetRandomElement(), GetPos());
 				if (group)
 				{
-					SCR_DC_AIHelper.SetAIGroupSkill(group, m_DC_Occupation.AISkill, m_DC_Occupation.AIperception);					
+					SCR_DC_AIHelper.SetAIGroupSkill(group, m_DC_Occupation.aiSkill, m_DC_Occupation.aiPerception);					
 					m_Groups.Insert(group);
 					
 					int minRange = m_DC_Occupation.waypointRange[0];
@@ -210,14 +210,14 @@ class SCR_DC_Occupation : Managed
 	DC_EWaypointGenerationType waypointGenType;
 	DC_EWaypointMoveType waypointMoveType;
 	ref array<string> groupTypes = {};
-	int AISkill;
-	float AIperception	
+	int aiSkill;
+	float aiPerception	
 	
 	//Optional settings
-	ref SCR_DC_Loot loot = null;	
+	ref SCR_DC_Loot loot = null;
 	ref array<ref SCR_DC_Structure> campItems = {};
 	
-	void Set(string comment_, vector pos_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_, int AISkill_, float AIperception_)
+	void Set(string comment_, vector pos_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_, int aiSkill_, float aiPerception_)
 	{
 		comment = comment_;
 		pos = pos_;
@@ -230,8 +230,8 @@ class SCR_DC_Occupation : Managed
 		waypointGenType = waypointGenType_;
 		waypointMoveType = waypointMoveType_;
 		groupTypes = groupTypes_;
-		AISkill = AISkill_;
-		AIperception = AIperception_;		
+		aiSkill = aiSkill_;
+		aiPerception = aiPerception_;		
 	}
 }		
 
