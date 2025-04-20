@@ -387,7 +387,7 @@ string title : See General parameters
 string info : See General parameters
 array<EMapDescriptorType> locationTypes : See Location parameters
 array<int> groupCount : See General parameters
-array<int> waypointRange : See Waypoint parameters. For patrols, the values should be quite big to have them move around the map.
+array<int> waypointRange : See Waypoint parameters. NOTE: If loot is defined, the first group is spawned near the loot regardless of waypointRange values.
 DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
 DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
 array<string> groupTypes : See General parameters
