@@ -295,16 +295,18 @@ sealed class SCR_DC_DebugHelper
 	
 	static void AddDebugSphere(vector pos, int color = Color.BLUE, float radius = 1.0, string id = "NONE")
 	{
-		if(DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
-		{
-			SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
-			dpos.pos = pos;
-			dpos.color = color;
-			dpos.radius = radius;
-			dpos.id = id;
-			dpos.height = 0;
-			m_Sphere.Insert(dpos);
-		}
+		#ifndef SCR_DC_RELEASE
+			if(DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
+			{
+				SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
+				dpos.pos = pos;
+				dpos.color = color;
+				dpos.radius = radius;
+				dpos.id = id;
+				dpos.height = 0;
+				m_Sphere.Insert(dpos);
+			}
+		#endif
 	}					
 	
 	//------------------------------------------------------------------------------------------------

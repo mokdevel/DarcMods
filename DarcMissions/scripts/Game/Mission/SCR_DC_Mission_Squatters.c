@@ -8,7 +8,8 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 	private ref SCR_DC_SquatterJsonApi m_SquatterJsonApi = new SCR_DC_SquatterJsonApi();	
 	private ref SCR_DC_SquatterConfig m_Config;
 
-	protected ref SCR_DC_Squatter m_DC_Squatter;	//Squatter configuration in use
+	private ref SCR_DC_Squatter m_DC_Squatter;	//Squatter configuration in use
+	private IEntity m_Building;					//The building for the mission
 		
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Squatter()
@@ -40,13 +41,25 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
-			//TBD: Find location and building.
-			//pos = SCR_DC_MissionHelper.FindMissionPos(m_DC_Squatter.locationTypes, m_Config.emptySize);
+			pos = SCR_DC_MissionHelper.FindMissionPos(m_DC_Squatter.locationTypes, 2);
+			//Find the houses 
+			array<IEntity>buildings = {};
+		
+			SCR_DC_Misc.FindBuildings(buildings, m_DC_Squatter.buildingNames, pos, m_Config.buildingRadius);
+			if (buildings.Count() > 0)
+			{
+				m_Building = buildings.GetRandomElement();
+			}
+			else
+			{
+				SCR_DC_Log.Add("[SCR_DC_Mission_Squatter] Could not find suitable building near " + SCR_DC_Locations.CreateName(pos, "any") + " " + pos, LogLevel.ERROR);
+				pos = "0 0 0";				
+			}
 		}
 		
 		if (pos != "0 0 0")
 		{					
-			SetPos(pos);
+			SetPos(m_Building.GetOrigin());
 			SetPosName(SCR_DC_Locations.CreateName(pos, posName));
 			SetTitle(m_DC_Squatter.title + "" + GetPosName());
 			SetInfo(m_DC_Squatter.info);			
@@ -81,17 +94,15 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 				
 		if (GetState() == DC_MissionState.ACTIVE)
 		{			
-			//Add code for runtime
-			
-/*			//Eventually when mission is to be ended do this:
-			//SetState(DC_MissionState.END);
-
-			//For example:			
-			if (SCR_DC_aiHelper.AreAllGroupsDead(m_Groups))
+			if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
 			{
-				SCR_DC_Log.Add("[SCR_DC_Mission_Squatter:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
-				SetState(DC_MissionState.END);
-			}*/			
+				if (!IsActive())
+				{
+					SCR_DC_Log.Add("[SCR_DC_Mission_Squatter:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
+					SetState(DC_MissionState.END);
+				}
+			}
+			GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);		
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);
@@ -151,6 +162,7 @@ class SCR_DC_SquatterConfig : SCR_DC_MissionConfig
 	//Mission specific
 	
 	//Variables here
+	int buildingRadius;									//The radius to search for suitable buildings.
 	ref array<ref int> squatterList = {};				//The indexes of squatters.
 	ref array<ref SCR_DC_Squatter> squatters = {};		//List of squatters
 }
@@ -230,6 +242,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;		
 		//Mission specific
+		conf.buildingRadius = 200;
 		conf.squatterList = {0};
 		
 		//----------------------------------------------------
