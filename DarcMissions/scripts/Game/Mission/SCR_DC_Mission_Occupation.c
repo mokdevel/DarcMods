@@ -20,7 +20,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Occupation()
 	{
-		SCR_DC_Log.Add("[SCR_DC_Mission_Occupation] Constructor", LogLevel.DEBUG);
+		SCR_DC_Log.Add("[SCR_DC_Mission_Occupation] Constructor", LogLevel.SPAM);
 				
 		//Set some defaults
 		SCR_DC_Mission();
@@ -35,7 +35,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 		if(idx == -1)
 		{
 			SCR_DC_Log.Add("[SCR_DC_Mission_Occupation] No occupations defined.", LogLevel.ERROR);
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.FAILED);
 			return;
 		}
 		m_DC_Occupation = m_Config.occupations[idx];
@@ -59,55 +59,53 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 			}
 		}
 		
-		if (pos != "0 0 0")
-		{	
-			SetPos(pos);
-			SetPosName(SCR_DC_Locations.CreateName(pos, posName));
-			SetTitle(m_DC_Occupation.title + "" + GetPosName());
-			SetInfo(m_DC_Occupation.info);			
-			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
-			SetShowHint(m_Config.showHint);
-
-			SCR_DC_SpawnHelper.SetStructuresToOrigo(m_DC_Occupation.campItems);
-				
-			SetState(DC_MissionState.INIT);
-		}
-		else
+		if (pos == "0 0 0")	//No suitable location found.
 		{				
-			//No suitable location found.
 			SCR_DC_Log.Add("[SCR_DC_Mission_Occupation] Could not find suitable location.", LogLevel.ERROR);
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.FAILED);
 			return;
 		}	
+		
+		SetPos(pos);
+		SetPosName(SCR_DC_Locations.CreateName(pos, posName));
+		SetTitle(m_DC_Occupation.title + "" + GetPosName());
+		SetInfo(m_DC_Occupation.info);			
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+		SetShowHint(m_Config.showHint);
+
+		SCR_DC_SpawnHelper.SetStructuresToOrigo(m_DC_Occupation.campItems);
+			
+		SetState(DC_EMissionState.INIT);
 	}
 
 	//------------------------------------------------------------------------------------------------
 	override void MissionRun()
 	{
-		if (GetState() == DC_MissionState.INIT)
+		if (GetState() == DC_EMissionState.INIT)
 		{
 			MissionSpawn();
 			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds
 		}
 
-		if (GetState() == DC_MissionState.END)
+		if (GetState() == DC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_MissionState.ACTIVE)
+		if (GetState() == DC_EMissionState.ACTIVE)
 		{	
 			if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
 			{
 				if (!IsActive())
 				{
 					SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
-					SetState(DC_MissionState.END);
+					SetState(DC_EMissionState.END);
 				}
 			}
-			GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);
-		}		
+		}
+		
+		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -180,7 +178,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 				SCR_DC_Log.Add("[SCR_DC_Mission_Occupation:MissionSpawn] Loot added.", LogLevel.DEBUG);								
 			}
 			
-			SetState(DC_MissionState.ACTIVE);
+			SetState(DC_EMissionState.ACTIVE);
 		}		
 	}
 }

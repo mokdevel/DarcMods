@@ -36,6 +36,7 @@ class SCR_DC_MissionFrame
 	
 	private string m_WorldName;
 	private int m_LastMissionSpawnTime = 0;
+	private int m_StaticFailCount = 0;
 		
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_MissionFrame()
@@ -157,7 +158,7 @@ class SCR_DC_MissionFrame
 			
 			//Select a new mission to spawn. 
 			//Static missions are prioritized so check that the list spawned.
-			if (CountStaticMissions() < m_Config.missionTypeArrayStatic.Count())
+			if (CountStaticMissions() < m_Config.missionTypeArrayStatic.Count() && m_StaticFailCount < m_Config.staticFailLimit)
 			{
 				missionType = m_Config.missionTypeArrayStatic.GetRandomElement();
 				tmpDC_Mission = MissionCreate(missionType);
@@ -181,16 +182,19 @@ class SCR_DC_MissionFrame
 			//Mission is ready to be run. Finalize the last details
 			if (tmpDC_Mission)
 			{
-				//Set the defaul active distance
-				tmpDC_Mission.SetActiveDistance(m_Config.missionActiveDistance);
 				//Add to list
 				m_MissionList.Insert(tmpDC_Mission);
-				//Set mission to start to run
-				m_MissionList[m_MissionList.Count() - 1].MissionRun();
 				
-				//If there was an error starting the mission, it has been prepared for deletion (state = EXIT).
-				if (tmpDC_Mission.GetState() != DC_MissionState.EXIT)
-				{			
+				//If there was an error starting the mission, it has been prepared for deletion.
+				if (tmpDC_Mission.GetState() != DC_EMissionState.FAILED)
+				{		
+					//Mission startup was success. Reset fail counter for static missions.	
+					m_StaticFailCount = 0;
+					//Set the defaul active distance
+					tmpDC_Mission.SetActiveDistance(m_Config.missionActiveDistance);
+					//Set mission to start to run
+					m_MissionList[m_MissionList.Count() - 1].MissionRun();
+				
 					SCR_DC_Log.Add(string.Format("[SCR_DC_MissionFrame:MissionCycleManager] Spawning mission %1 (%2) %3", tmpDC_Mission.GetTitle(), tmpDC_Mission.GetPos(), tmpDC_Mission.GetPosName()), LogLevel.NORMAL);
 
 					if (m_Config.missionHintTime > 0 && tmpDC_Mission.IsShowHint())
@@ -216,15 +220,24 @@ class SCR_DC_MissionFrame
 		//- not-active and to be ended
 				
 		int i = 0;				
-		SCR_DC_Mission mission;	
+		SCR_DC_Mission mission;
 		
 		while (i < m_MissionList.Count())
 		{
 			mission = m_MissionList[i];
 						
-			if (mission.GetState() == DC_MissionState.EXIT)
+			if (mission.GetState() == DC_EMissionState.FAILED)
 			{
-				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Deleting mission: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
+				if (mission.IsStatic())
+				{
+					m_StaticFailCount++;
+				}
+				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Mission start failed: " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + "). Static fail count: " + m_StaticFailCount, LogLevel.DEBUG);
+			}
+			
+			if (mission.GetState() == DC_EMissionState.EXIT || mission.GetState() == DC_EMissionState.FAILED)
+			{
+				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Deleting mission: " + mission.GetId(), LogLevel.DEBUG);
 				SCR_DC_DebugHelper.DeleteDebugPos(mission.GetId());
 				m_MissionList.Remove(i);
 				delete mission;
@@ -234,7 +247,7 @@ class SCR_DC_MissionFrame
 				if (!mission.IsActive())
 				{
 					SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Mission not active anymore: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
-					mission.SetState(DC_MissionState.END);
+					mission.SetState(DC_EMissionState.END);
 				}			
 				
 				i++;	//Next mission to check
@@ -406,7 +419,7 @@ class SCR_DC_MissionFrame
 			{
 				missionTitle = mission.GetTitle().Substring(0, cutLen) + "..";
 			}
-			string missionState = SCR_Enum.GetEnumName(DC_MissionState,  mission.GetState());
+			string missionState = SCR_Enum.GetEnumName(DC_EMissionState,  mission.GetState());
 			
 			SCR_DC_Log.Add("[SCR_DC_MissionDump] " + i + ": " + mission.GetId() + " (" + missionType + ", " + staticString + ", " + missionState + ") - " + missionTitle + " - " + "Time left: " + mission.GetActiveTime(), LogLevel.NORMAL);
 			aiCount = aiCount + mission.GetAICount();

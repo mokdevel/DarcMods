@@ -1,5 +1,15 @@
 //Helpers SCR_DC_MissionHelper.c
 
+enum DC_EMissionPosFailReason
+{
+	NONE,
+	POS_IN_WATER,
+	PLAYER_TOO_CLOSE,
+	MISSION_TOO_CLOSE,
+	IN_NON_VALID_AREA
+};
+
+
 sealed class SCR_DC_MissionHelper
 {
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 5;	//How many different spots to try for a mission before giving up
@@ -131,8 +141,7 @@ sealed class SCR_DC_MissionHelper
 	- not in water	
 	*/	
 	static bool IsValidMissionPos(vector pos, float distanceToMission = -1, float distanceToPlayer = -1)
-	{
-	
+	{	
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		
 		if (distanceToMission == -1)
@@ -143,21 +152,25 @@ sealed class SCR_DC_MissionHelper
 
 		if (SCR_DC_Misc.IsPosInWater(pos))
 		{
+			SCR_DC_Log.Add("[SCR_DC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionPosFailReason, DC_EMissionPosFailReason.POS_IN_WATER), LogLevel.WARNING);
 			return false;
 		}
 				
 		if (SCR_DC_PlayerHelper.IsAnyPlayerCloseToPos(pos, distanceToPlayer))
 		{
+			SCR_DC_Log.Add("[SCR_DC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionPosFailReason, DC_EMissionPosFailReason.PLAYER_TOO_CLOSE), LogLevel.WARNING);
 			return false;
 		}
 
 		if (IsAnyMissionCloseToPos(pos, distanceToMission))
 		{
+			SCR_DC_Log.Add("[SCR_DC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionPosFailReason, DC_EMissionPosFailReason.MISSION_TOO_CLOSE), LogLevel.WARNING);
 			return false;
 		}
 
 		if (IsPosInNonValidArea(pos))
 		{
+			SCR_DC_Log.Add("[SCR_DC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionPosFailReason, DC_EMissionPosFailReason.IN_NON_VALID_AREA), LogLevel.WARNING);
 			return false;
 		}
 										

@@ -34,30 +34,30 @@ class SCR_DC_Mission_Chopper : SCR_DC_Mission
 		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 		SetShowHint(m_Config.showHint);
 
-		SetState(DC_MissionState.INIT);			
+		SetState(DC_EMissionState.INIT);			
 	}	
 	
 	//------------------------------------------------------------------------------------------------
 	override void MissionRun()
 	{
-		if (GetState() == DC_MissionState.INIT)
+		if (GetState() == DC_EMissionState.INIT)
 		{
 			MissionSpawn();
-			SetState(DC_MissionState.ACTIVE);
+			SetState(DC_EMissionState.ACTIVE);
 		}
 
-		if (GetState() == DC_MissionState.END)
+		if (GetState() == DC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_MissionState.ACTIVE)
+		if (GetState() == DC_EMissionState.ACTIVE)
 		{			
 			//Add code for runtime
 			
 			//Eventually when mission is to ended do this:
-			//SetState(DC_MissionState.END);
+			//SetState(DC_EMissionState.END);
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);

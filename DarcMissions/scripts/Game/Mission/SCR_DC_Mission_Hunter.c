@@ -25,7 +25,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 	//Constructor
 	void SCR_DC_Mission_Hunter(bool createConf = false)
 	{
-		SCR_DC_Log.Add("[SCR_DC_Mission_Hunter] Constructor", LogLevel.DEBUG);
+		SCR_DC_Log.Add("[SCR_DC_Mission_Hunter] Constructor", LogLevel.SPAM);
 
 		//Set some defaults				
 		SCR_DC_Mission();
@@ -62,42 +62,39 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 			}
 		}
 		
-		if (positionFound)
-		{	
-			SetPos(pos);
-			SetPosName("");
-			SetTitle(m_Config.title);
-			SetInfo(m_Config.info);						
-			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
-			SetShowHint(m_Config.showHint);
-
-			SetState(DC_MissionState.INIT);
-		}
-		else
+		if (!positionFound)	//No suitable location found.
 		{				
-			//No suitable location found.
 			SCR_DC_Log.Add("[SCR_DC_Mission_Hunter] Could not find suitable location.", LogLevel.ERROR);
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.FAILED);
 			return;
 		}	
+				
+		SetPos(pos);
+		SetPosName("");
+		SetTitle(m_Config.title);
+		SetInfo(m_Config.info);						
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+		SetShowHint(m_Config.showHint);
+
+		SetState(DC_EMissionState.INIT);
 	}
 
 	//------------------------------------------------------------------------------------------------
 	override void MissionRun()
 	{
-		if (GetState() == DC_MissionState.INIT)
+		if (GetState() == DC_EMissionState.INIT)
 		{
 			MissionSpawn();
-			SetState(DC_MissionState.ACTIVE);
+			SetState(DC_EMissionState.ACTIVE);
 		}
 		
-		if (GetState() == DC_MissionState.END)
+		if (GetState() == DC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.EXIT);
 		}
 		
-		if (GetState() == DC_MissionState.ACTIVE)
+		if (GetState() == DC_EMissionState.ACTIVE)
 		{
 			if (m_GroupsSpawned < m_GroupsToSpawn)
 			{
@@ -108,7 +105,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 				if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
 				{
 					SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
-					SetState(DC_MissionState.END);
+					SetState(DC_EMissionState.END);
 				}
 			}
 		}

@@ -138,7 +138,7 @@ sealed class SCR_DC_Locations
 			if (tmpName != "")
 			{
 				name = tmpName;
-				SCR_DC_Log.Add("[SCR_DC_Locations:GetNameCloseToPos] Found name: " + tmpName + " " + SCR_Enum.GetEnumName(EMapDescriptorType, mapItem.GetBaseType()), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_Locations:GetNameCloseToPos] Found name: " + tmpName + " " + SCR_Enum.GetEnumName(EMapDescriptorType, mapItem.GetBaseType()), LogLevel.SPAM);
 				break;
 			}				
 		}			
@@ -154,12 +154,18 @@ sealed class SCR_DC_Locations
 	{
 		string name;
 		
-		if (nameDefault == "any")
+		name = CreateName(location.GetOrigin(), location.GetName());
+		
+/*		if (nameDefault == "any")
 		{					
 			name = location.GetName();
 			if(name == "")
 			{
 				name = SCR_DC_Locations.GetNameCloseToPos(location.GetOrigin());
+				if (name == "")	//Try a second time with a bigger circle
+				{
+					name = SCR_DC_Locations.GetNameCloseToPos(location.GetOrigin(), 400);
+				}				
 			}
 			
 			if(name == "")
@@ -170,7 +176,7 @@ sealed class SCR_DC_Locations
 		else
 		{
 			name = nameDefault;
-		}
+		}*/
 		
 		return name;		
 	}
@@ -183,6 +189,10 @@ sealed class SCR_DC_Locations
 		if (nameDefault == "any")
 		{					
 			name = SCR_DC_Locations.GetNameCloseToPos(pos);
+			if (name == "")	//Try a second time with a bigger circle
+			{
+				name = SCR_DC_Locations.GetNameCloseToPos(pos, 400);
+			}				
 			
 			if(name == "")
 			{

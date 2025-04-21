@@ -53,7 +53,7 @@ sealed class SCR_DC_WPHelper
 			int rndCount = Math.RandomInt(6, 20);	//TBD: This could be a parameter in .json
 			int rndRange = Math.RandomInt(wpRangeLow, wpRangeHigh);
 
-			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Random waypoint count: " + rndCount + " , Random range: " + rndRange, LogLevel.DEBUG);
+			SCR_DC_Log.Add("[SCR_DC_WPHelper:CreateMissionAIWaypoints] Random waypoint count: " + rndCount + " , Random range: " + rndRange, LogLevel.SPAM);
 						
 			//Select the waypoint generation type. Randomize if requested.
 			if (wpGenType == DC_EWaypointGenerationType.RANDOM)

@@ -208,7 +208,7 @@ sealed class SCR_DC_SpawnHelper
 		vector avgPos = "0 0 0";
 		int i = 0;
 		
-		if(structures.Count() == 0)
+		if(structures.IsEmpty())
 		{
 			return;
 		}	

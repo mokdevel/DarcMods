@@ -11,13 +11,14 @@ enum DC_EMissionType
 	CHOPPER		//Mission not ready or working
 };
 
-enum DC_MissionState
+enum DC_EMissionState
 {
 	NONE,		//Unknown state. Nothing should be run at this state.
 	INIT,		//The mission is being init. Things are spawned etc.
 	ACTIVE,		//Normal state when mission is running.	
 	END,		//Mission is ending. Things are cleaned, despawned etc.
-	EXIT		//State to inform the MissionFrame that the mission should be destroyed.
+	EXIT,		//State to inform the MissionFrame that the mission should be destroyed.
+	FAILED		//Mission startup has failed, delete mission
 };
 
 //------------------------------------------------------------------------------------------------
@@ -35,7 +36,7 @@ class SCR_DC_MissionConfig : Managed
 class SCR_DC_Mission
 {
 	//Common for all missions
-	private DC_MissionState m_State;
+	private DC_EMissionState m_State;
 	private DC_EMissionType m_Type;
 	private bool m_Static;		//Defines if the mission is dynamic or static. Dynamic is default. 
     private string m_Id;
@@ -57,7 +58,7 @@ class SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission()
 	{
-		m_State = DC_MissionState.INIT;
+		m_State = DC_EMissionState.INIT;
 		m_Type = DC_EMissionType.NONE;
 		m_Static = false;
 		m_Id = DC_ID_PREFIX + string.ToString(System.GetTickCount());
@@ -73,25 +74,25 @@ class SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	void MissionRun()	//You should override this in your mission
 	{
-		if (m_State == DC_MissionState.INIT)
+		if (m_State == DC_EMissionState.INIT)
 		{
 			//Add init code
-			SetState(DC_MissionState.ACTIVE);
+			SetState(DC_EMissionState.ACTIVE);
 		}
 		
-		if (m_State == DC_MissionState.END)
+		if (m_State == DC_EMissionState.END)
 		{
 			//Add code clean up code
 			MissionEnd();
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.EXIT);
 		}
 		
-		if (m_State == DC_MissionState.ACTIVE)
+		if (m_State == DC_EMissionState.ACTIVE)
 		{
 			//Add code for runtime
 			
 			//Eventually when mission is to ended do this:
-			//SetState(DC_MissionState.END);
+			//SetState(DC_EMissionState.END);
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, 3000);		
@@ -132,18 +133,18 @@ class SCR_DC_Mission
 	}
 
 	//------------------------------------------------------------------------------------------------
-	DC_MissionState GetState()
+	DC_EMissionState GetState()
 	{
 		return m_State;
 	}
 
-	void SetState(DC_MissionState state)
+	void SetState(DC_EMissionState state)
 	{
 		m_State = state;
 	}
 
 	//------------------------------------------------------------------------------------------------
-	DC_MissionState GetType()
+	DC_EMissionState GetType()
 	{
 		return m_Type;
 	}
@@ -154,7 +155,7 @@ class SCR_DC_Mission
 	}
 
 	//------------------------------------------------------------------------------------------------
-	DC_MissionState IsStatic()
+	DC_EMissionState IsStatic()
 	{
 		return m_Static;
 	}

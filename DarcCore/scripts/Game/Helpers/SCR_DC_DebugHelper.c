@@ -263,17 +263,19 @@ sealed class SCR_DC_DebugHelper
 	
 	static void AddDebugPos(vector pos, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300)
 	{
-		if(DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
-		{
-			SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
-			pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + (height/2);
-			dpos.pos = pos;
-			dpos.color = color;
-			dpos.radius = radius;
-			dpos.id = id;
-			dpos.height = height;
-			m_Pos.Insert(dpos);
-		}
+		#ifndef SCR_DC_RELEASE		
+			if(DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
+			{
+				SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
+				pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + (height/2);
+				dpos.pos = pos;
+				dpos.color = color;
+				dpos.radius = radius;
+				dpos.id = id;
+				dpos.height = height;
+				m_Pos.Insert(dpos);
+			}
+		#endif
 	}				
 	
 	//------------------------------------------------------------------------------------------------

@@ -6,6 +6,7 @@
 	#ifdef SCR_DC_RELEASE
 		private const string DC_MISSION_PROFILE_DIR = "default";
 		private const int DC_MISSION_COUNT = 8;											//Default amount of missions to run
+		private const int DC_MISSION_STATIC_FAIL_LIMIT = 3;
 		private const int DC_MISSION_CYCLE_TIME_DEFAULT = 30;
 		private const int DC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
 		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 10*60;					//Minimum delay between missions.
@@ -21,6 +22,7 @@
 	#ifndef SCR_DC_RELEASE	//Development time options
 		private const string DC_MISSION_PROFILE_DIR = "dummy";
 		private const int DC_MISSION_COUNT = 8;
+		private const int DC_MISSION_STATIC_FAIL_LIMIT = 2;
 		private const int DC_MISSION_CYCLE_TIME_DEFAULT = 10;
 		private const int DC_MISSION_START_DELAY = 5;					
 		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*10;
@@ -47,6 +49,7 @@ class SCR_DC_MissionFrameConfig : Managed
 	int missionStartDelay;			//Time to wait before spawning the first mission (seconds).
 	int missionDelayBetweeen;		//Time delay between mission spawns (seconds)
 	int missionCount;				//Maximum amount of missions (both static and dynamic) to be active at the same time. 
+	int staticFailLimit;			//How many static missions may fail, before trying a dynamic one
 	int missionFrameCycleTime;		//The cycle time to manage mission spawning, deletion etc... (seconds)
 	int missionActiveTime;			//Time to keep the mission active (seconds)
 	int missionActiveTimeStatic;	//Time to keep the static mission active (seconds). This typically is much longer than for dynamic.
@@ -106,6 +109,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		conf.missionStartDelay = DC_MISSION_START_DELAY;
 		conf.missionDelayBetweeen = DC_MISSION_DELAY_BETWEEN_MISSIONS;
 		conf.missionCount = DC_MISSION_COUNT;
+		conf.staticFailLimit = DC_MISSION_STATIC_FAIL_LIMIT;
 		conf.missionFrameCycleTime = DC_MISSIONFRAME_CYCLE_TIME;
 		conf.missionActiveTime = DC_MISSION_ACTIVE_TIME;
 		conf.missionActiveTimeStatic = DC_MISSION_ACTIVE_TIME_STATIC;

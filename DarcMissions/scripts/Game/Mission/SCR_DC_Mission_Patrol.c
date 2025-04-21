@@ -19,7 +19,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Patrol()
 	{
-		SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Constructor", LogLevel.DEBUG);
+		SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Constructor", LogLevel.SPAM);
 				
 		//Set some defaults
 		SCR_DC_Mission();
@@ -34,7 +34,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		if(idx == -1)
 		{
 			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] No patrols defined.", LogLevel.ERROR);
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.FAILED);
 			return;
 		}
 		m_DC_Patrol = m_Config.patrols[idx];
@@ -68,43 +68,39 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 			}
 		}
 
-		//If all is ok, let's finalize the mission creation				
-		if (pos != "0 0 0" && m_PosDestination != "0 0 0")
-		{	
-			SetPos(pos);
-			SetPosName(SCR_DC_Locations.CreateName(pos, posName));
-			SetTitle(m_DC_Patrol.title + "" + GetPosName());
-			SetInfo(m_DC_Patrol.info);			
-			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
-			SetShowHint(m_Config.showHint);			
-			SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
-
-			SetState(DC_MissionState.INIT);
-		}
-		else
+		if (pos == "0 0 0" || m_PosDestination == "0 0 0")	//No suitable location found.
 		{				
-			//No suitable location found.
 			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Could not find suitable location.", LogLevel.ERROR);
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.FAILED);
 			return;
 		}	
+		
+		SetPos(pos);
+		SetPosName(SCR_DC_Locations.CreateName(pos, posName));
+		SetTitle(m_DC_Patrol.title + "" + GetPosName());
+		SetInfo(m_DC_Patrol.info);			
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+		SetShowHint(m_Config.showHint);			
+		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
+
+		SetState(DC_EMissionState.INIT);
 	}
 
 	//------------------------------------------------------------------------------------------------
 	override void MissionRun()
 	{
-		if (GetState() == DC_MissionState.INIT)
+		if (GetState() == DC_EMissionState.INIT)
 		{
 			MissionSpawn();
 		}
 
-		if (GetState() == DC_MissionState.END)
+		if (GetState() == DC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_MissionState.ACTIVE)
+		if (GetState() == DC_EMissionState.ACTIVE)
 		{	
 			//Move the position as the first patrol is moving. This way check for player distance works properly.
 			if(m_Groups[0])
@@ -118,7 +114,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 				if (!IsActive())
 				{
 					SCR_DC_Log.Add("[SCR_DC_Mission_Patrol:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
-					SetState(DC_MissionState.END);
+					SetState(DC_EMissionState.END);
 				}
 			}
 		}
@@ -161,7 +157,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
 		}
 			
-		SetState(DC_MissionState.ACTIVE);
+		SetState(DC_EMissionState.ACTIVE);
 	}
 }
 

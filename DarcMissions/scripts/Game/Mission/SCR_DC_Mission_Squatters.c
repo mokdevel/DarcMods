@@ -14,7 +14,7 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Squatter()
 	{
-		SCR_DC_Log.Add("[SCR_DC_Mission_Squatter] Constructor", LogLevel.DEBUG);
+		SCR_DC_Log.Add("[SCR_DC_Mission_Squatter] Constructor", LogLevel.SPAM);
 				
 		//Set some defaults
 		SCR_DC_Mission();
@@ -29,7 +29,7 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 		if(idx == -1)
 		{
 			SCR_DC_Log.Add("[SCR_DC_Mission_Squatter] No squatters defined.", LogLevel.ERROR);
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.FAILED);
 			return;
 		}
 		m_DC_Squatter = m_Config.squatters[idx];
@@ -41,71 +41,86 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
-			pos = SCR_DC_MissionHelper.FindMissionPos(m_DC_Squatter.locationTypes, 2);
-			//Find the houses 
+			float radius = m_Config.buildingRadius;
+			
+			//If no locationTypes defined, we search for any building matching on the map
+			if (m_DC_Squatter.locationTypes.IsEmpty())
+			{
+				radius = 9999;
+			}
+			else
+			{
+				pos = SCR_DC_MissionHelper.FindMissionPos(m_DC_Squatter.locationTypes, 2);
+			}
+			
+			//Find the houses
 			array<IEntity>buildings = {};
 		
-			SCR_DC_Misc.FindBuildings(buildings, m_DC_Squatter.buildingNames, pos, m_Config.buildingRadius);
-			if (buildings.Count() > 0)
+			SCR_DC_Misc.FindBuildings(buildings, m_DC_Squatter.buildingNames, pos, radius);
+			if (!buildings.IsEmpty())
 			{
 				m_Building = buildings.GetRandomElement();
+				pos = m_Building.GetOrigin();
+				
+				SCR_DC_Log.Add("[SCR_DC_Mission_Squatter] Building selectd: " + m_Building.GetPrefabData().GetPrefabName() + " " + pos, LogLevel.DEBUG);
 			}
 			else
 			{
 				SCR_DC_Log.Add("[SCR_DC_Mission_Squatter] Could not find suitable building near " + SCR_DC_Locations.CreateName(pos, "any") + " " + pos, LogLevel.ERROR);
 				pos = "0 0 0";				
 			}
+			
+			if (!SCR_DC_MissionHelper.IsValidMissionPos(pos))
+			{
+				pos = "0 0 0";	//Mission position is not valid
+			}
 		}
 		
-		if (pos != "0 0 0")
-		{					
-			SetPos(m_Building.GetOrigin());
-			SetPosName(SCR_DC_Locations.CreateName(pos, posName));
-			SetTitle(m_DC_Squatter.title + "" + GetPosName());
-			SetInfo(m_DC_Squatter.info);			
-			SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
-			SetShowHint(m_Config.showHint);
-				
-			SetState(DC_MissionState.INIT);			
-		}
-		else
+		if (pos == "0 0 0")	//No suitable location found.
 		{				
-			//No suitable location found.
 			SCR_DC_Log.Add("[SCR_DC_Mission_Squatter] Could not find suitable location.", LogLevel.ERROR);
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.FAILED);
 			return;
-		}	
+		}			
+		
+		SetPos(pos);
+		SetPosName(SCR_DC_Locations.CreateName(pos, posName));
+		SetTitle(m_DC_Squatter.title + "" + GetPosName());
+		SetInfo(m_DC_Squatter.info);			
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+		SetShowHint(m_Config.showHint);
+			
+		SetState(DC_EMissionState.INIT);			
 	}	
 	
 	//------------------------------------------------------------------------------------------------
 	override void MissionRun()
 	{
-		if (GetState() == DC_MissionState.INIT)
+		if (GetState() == DC_EMissionState.INIT)
 		{
 			MissionSpawn();
-			SetState(DC_MissionState.ACTIVE);
+			SetState(DC_EMissionState.ACTIVE);
 		}
 
-		if (GetState() == DC_MissionState.END)
+		if (GetState() == DC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_MissionState.ACTIVE)
+		if (GetState() == DC_EMissionState.ACTIVE)
 		{			
 			if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
 			{
 				if (!IsActive())
 				{
 					SCR_DC_Log.Add("[SCR_DC_Mission_Squatter:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
-					SetState(DC_MissionState.END);
+					SetState(DC_EMissionState.END);
 				}
 			}
-			GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);		
 		}
 		
-		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);
+		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -137,10 +152,11 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 		SCR_DC_AIHelper.SpawnAIInBuilding(building, m_DC_Squatter.aiTypes, m_DC_Squatter.aiSkill, m_DC_Squatter.aiPerception);
 	
 		float rotation = Math.RandomFloat(0, 360);
-		IEntity entity = SCR_DC_SpawnHelper.SpawnItemInBuilding(building, m_DC_Squatter.lootBox, rotation, 1.2, false);
+		IEntity entity = SCR_DC_SpawnHelper.SpawnItemInBuilding(building, m_DC_Squatter.lootBox, rotation, 1.5, false);
 		if (entity)
 		{
 			m_EntityList.Insert(entity);
+			
 			//Put loot
 			if (m_DC_Squatter.loot)			
 			{
@@ -243,15 +259,15 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		conf.showMarker = true;		
 		//Mission specific
 		conf.buildingRadius = 200;
-		conf.squatterList = {0};
+		conf.squatterList = {2};
 		
 		//----------------------------------------------------
 		SCR_DC_Squatter squatter0 = new SCR_DC_Squatter;
 		squatter0.Set(
-			"Bandit camp spawning to non city areas",
+			"Squatters in cities",
 			"0 0 0",
 			"any",
-			"Bandit camp near ",
+			"Squatters near ",
 			"Building has squatters with loot",		
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -259,20 +275,18 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_RIDGE,
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_TOWN, 
 				EMapDescriptorType.MDT_AIRPORT,
 			},
-			{4,8},
+			{3,6},
 			{
 				"{5117311FB822FD1F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Officer.et",
 				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
 				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
-				"{96C784C502AC37DA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_MG.et",
-				"{7DE1CBA32A0225EB}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Randomized.et"						
+				"{96C784C502AC37DA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_MG.et",								
 			},
-			50, 1.0,
+			50, 0.6,
 			{"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_"},
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
 		);
@@ -280,15 +294,89 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		
 		SCR_DC_Loot squatter0loot = new SCR_DC_Loot;
 		lootItems = {
-				"WEAPON_RIFLE",	"WEAPON_RIFLE",
+				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"WEAPON_ATTACHMENT",
-				"WEAPON_OPTICS",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
 			};
-		squatter0loot.Set(0.9, lootItems);
+		squatter0loot.Set(0.7, lootItems);
 		squatter0.loot = squatter0loot;
+		
+		//----------------------------------------------------
+		SCR_DC_Squatter squatter1 = new SCR_DC_Squatter;
+		squatter1.Set(
+			"Squatters in control towers",
+			"0 0 0",
+			"any",
+			"Enemy in ",
+			"Control tower is being guarded.",		
+			{
+				//We pick any building that matches and ignore location
+			},
+			{6,10},
+			{
+				"{5117311FB822FD1F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Officer.et",
+				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
+				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
+				"{96C784C502AC37DA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_MG.et",								
+			},
+			50, 0.8,
+			{"ControlTowerMilitary_"},
+			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
+		);
+		conf.squatters.Insert(squatter1);	
+		
+		SCR_DC_Loot squatter1loot = new SCR_DC_Loot;
+		lootItems = {
+				"WEAPON_RIFLE",	"WEAPON_RIFLE", "WEAPON_RIFLE",
+				"WEAPON_HANDGUN",
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
+				"WEAPON_ATTACHMENT",
+				"WEAPON_OPTICS", "WEAPON_OPTICS",
+				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL"
+			};
+		squatter1loot.Set(0.8, lootItems);
+		squatter1.loot = squatter1loot;		
+	
+		//----------------------------------------------------
+		SCR_DC_Squatter squatter2 = new SCR_DC_Squatter;
+		squatter2.Set(
+			"Squatters in militart locations towers",
+			"0 0 0",
+			"any",
+			"Guards around ",
+			"Military location has loot to steal.",		
+			{
+				//We pick any building that matches and ignore location
+			},
+			{4,10},
+			{
+				"{77D7BFD355620806}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Ammo_KLMK.et",
+				"{9A12B3F6ABDF70BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_AT_KLMK.et",
+				"{8A60AEBD529FEB8B}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_MG_KLMK.et",
+				"{D66C215D6F03EFFD}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Medic_KLMK.et"
+			},
+			50, 0.8,
+//			{"Barracks_01_military_camo_v1"},
+			{"Office_E_", "Barracks_01_", "Barracks_E_02_"},
+			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
+		);
+		conf.squatters.Insert(squatter2);	
+		
+		SCR_DC_Loot squatter2loot = new SCR_DC_Loot;
+		lootItems = {
+				"WEAPON_RIFLE",	"WEAPON_RIFLE", "WEAPON_RIFLE",
+				"WEAPON_HANDGUN",
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
+				"WEAPON_ATTACHMENT",
+				"WEAPON_OPTICS", "WEAPON_OPTICS",
+				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL"
+			};
+		squatter2loot.Set(0.8, lootItems);
+		squatter2.loot = squatter1loot;		
 	}	
 }

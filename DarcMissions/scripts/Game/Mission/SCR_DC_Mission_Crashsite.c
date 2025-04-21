@@ -34,7 +34,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Crashsite()
 	{
-		SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] Constructor", LogLevel.DEBUG);
+		SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] Constructor", LogLevel.SPAM);
 		
 		//Set some defaults
 		SCR_DC_Mission();
@@ -49,7 +49,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 		if (idx == -1)
 		{
 			SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] No crashsites defined.", LogLevel.ERROR);
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.FAILED);
 			return;
 		}
 		m_DC_Crashsite = m_Config.crashsites[idx];
@@ -82,49 +82,46 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 			}
 		}
 		
-		if (positionFound)
-		{	
-			SetPos(pos);
-			SetPosName("");
-			SetTitle(m_DC_Crashsite.title);
-			SetInfo(m_DC_Crashsite.info);
-			SetMarker(m_Config.showMarker, DC_EMissionIcon.TARGET_X);
-			SetShowHint(m_Config.showHint);
-	
-			SetState(DC_MissionState.INIT);			
-
-			//Set a marker for destination
-			if (!SCR_DC_Conf.RELEASE)
-			{			
-				SCR_DC_MapMarkerHelper.CreateMapMarker(m_PosDestination, DC_EMissionIcon.TARGET_O, GetId() + "_1", "Destination");
-				SCR_DC_DebugHelper.AddDebugPos(m_PosDestination, Color.RED, 10, GetId() + "_1");
-			}
-		}
-		else
+		if (!positionFound)	//No suitable location found.
 		{				
-			//No suitable location found.
 			SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] Could not find suitable location.", LogLevel.ERROR);
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.FAILED);
 			return;
 		}	
+		
+		SetPos(pos);
+		SetPosName("");
+		SetTitle(m_DC_Crashsite.title);
+		SetInfo(m_DC_Crashsite.info);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.TARGET_X);
+		SetShowHint(m_Config.showHint);
+
+		SetState(DC_EMissionState.INIT);			
+
+		//Set a marker for destination
+		if (!SCR_DC_Conf.RELEASE)
+		{			
+			SCR_DC_MapMarkerHelper.CreateMapMarker(m_PosDestination, DC_EMissionIcon.TARGET_O, GetId() + "_1", "Destination");
+			SCR_DC_DebugHelper.AddDebugPos(m_PosDestination, Color.RED, 10, GetId() + "_1");
+		}
 	}	
 	
 	//------------------------------------------------------------------------------------------------
 	override void MissionRun()
 	{
-		if (GetState() == DC_MissionState.INIT)
+		if (GetState() == DC_EMissionState.INIT)
 		{
 			MissionSpawn();
-			SetState(DC_MissionState.ACTIVE);
+			SetState(DC_EMissionState.ACTIVE);
 		}
 
-		if (GetState() == DC_MissionState.END)
+		if (GetState() == DC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_MissionState.EXIT);
+			SetState(DC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_MissionState.ACTIVE)
+		if (GetState() == DC_EMissionState.ACTIVE)
 		{			
 			switch (missionCrashSiteState)
 			{
@@ -202,7 +199,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 						if (!IsActive())
 						{
 							SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
-							SetState(DC_MissionState.END);
+							SetState(DC_EMissionState.END);
 						}
 					}
 					break;

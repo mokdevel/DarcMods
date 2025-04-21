@@ -381,7 +381,7 @@ sealed class SCR_DC_AIHelper
 			}
 		}	
 
-		if (groups.Count() == 0)
+		if (groups.IsEmpty())
 		{
 			SCR_DC_Log.Add("[SCR_DC_AIHelper:AreAllGroupsDead] All groups killed. Mission has ended.", LogLevel.SPAM);
 			return true;
