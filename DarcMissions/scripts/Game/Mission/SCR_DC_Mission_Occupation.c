@@ -121,7 +121,7 @@ class SCR_DC_Mission_Occupation : SCR_DC_Mission
 	{					
 		IEntity entity;
 
-		//Spawn entities one by one. Sets missions active once ready.		
+		//Spawn entities one by one. Sets missions active once ready.
 		if ( (m_SpawnIndex < m_DC_Occupation.campItems.Count()) && (m_DC_Occupation.campItems.Count() > 0) )
 		{			
 			entity = SCR_DC_SpawnHelper.SpawnStructures(m_DC_Occupation.campItems, GetPos(), m_SpawnRotation, m_SpawnIndex);

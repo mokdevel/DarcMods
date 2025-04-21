@@ -10,6 +10,8 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 
 	private ref SCR_DC_Squatter m_DC_Squatter;	//Squatter configuration in use
 	private IEntity m_Building;					//The building for the mission
+	private int m_AiCount;
+	private int m_SpawnIndex = 0;				//Counter for the AI to spawn
 		
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Squatter()
@@ -37,6 +39,7 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 		//Set defaults
 		vector pos = m_DC_Squatter.pos;
 		string posName = m_DC_Squatter.posName;
+		m_AiCount = Math.RandomInt(m_DC_Squatter.aiCount[0], m_DC_Squatter.aiCount[1]);
 		
 		//Find a location for the mission
 		if (pos == "0 0 0")
@@ -99,7 +102,8 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 		if (GetState() == DC_EMissionState.INIT)
 		{
 			MissionSpawn();
-			SetState(DC_EMissionState.ACTIVE);
+			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds
+//			SetState(DC_EMissionState.ACTIVE);
 		}
 
 		if (GetState() == DC_EMissionState.END)
@@ -135,39 +139,37 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 	
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
-	{					
-		//Code for whatever you need for spawning things.
-		array<IEntity>buildings = {};
-		
-		SCR_DC_Misc.FindBuildings(buildings, m_DC_Squatter.buildingNames);
-	
-		IEntity building = buildings[0];
-		array<string> aiCharacters = {};
-		int aiCount = Math.RandomInt(m_DC_Squatter.aiCount[0], m_DC_Squatter.aiCount[1]);
-		for (int i = 0; i < aiCount; i++)
+	{	
+		//Spawn AI one by one. Sets missions active once ready.
+		if (m_SpawnIndex < m_AiCount)
 		{
-			aiCharacters.Insert(m_DC_Squatter.aiTypes.GetRandomElement());
-		}		
-	
-		SCR_DC_AIHelper.SpawnAIInBuilding(building, m_DC_Squatter.aiTypes, m_DC_Squatter.aiSkill, m_DC_Squatter.aiPerception);
-	
-		float rotation = Math.RandomFloat(0, 360);
-		IEntity entity = SCR_DC_SpawnHelper.SpawnItemInBuilding(building, m_DC_Squatter.lootBox, rotation, 1.5, false);
-		if (entity)
-		{
-			m_EntityList.Insert(entity);
-			
-			//Put loot
-			if (m_DC_Squatter.loot)			
-			{
-				m_DC_Squatter.loot.box = entity;
-				SCR_DC_LootHelper.SpawnItemsToStorage(m_DC_Squatter.loot.box, m_DC_Squatter.loot.items, m_DC_Squatter.loot.itemChance);
-				SCR_DC_Log.Add("[SCR_DC_Mission_Squatter:MissionSpawn] Loot added.", LogLevel.DEBUG);								
-			}
+			//Each AI is spawned in to its own group to be able to give individual waypoints to a character
+			SCR_AIGroup group = SCR_DC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.aiTypes.GetRandomElement(), m_DC_Squatter.aiSkill, m_DC_Squatter.aiPerception);
+			m_Groups.Insert(group);
+			m_SpawnIndex++;
 		}
 		else
 		{
-			SCR_DC_Log.Add("[SCR_DC_Mission_Squatter:MissionSpawn] Could not spawn loot box: " + m_DC_Squatter.lootBox, LogLevel.ERROR);								
+			float rotation = Math.RandomFloat(0, 360);
+			IEntity entity = SCR_DC_SpawnHelper.SpawnItemInBuilding(m_Building, m_DC_Squatter.lootBox, rotation, 1.5, false);
+			if (entity)
+			{
+				m_EntityList.Insert(entity);
+				
+				//Put loot
+				if (m_DC_Squatter.loot)			
+				{
+					m_DC_Squatter.loot.box = entity;
+					SCR_DC_LootHelper.SpawnItemsToStorage(m_DC_Squatter.loot.box, m_DC_Squatter.loot.items, m_DC_Squatter.loot.itemChance);
+					SCR_DC_Log.Add("[SCR_DC_Mission_Squatter:MissionSpawn] Loot added.", LogLevel.DEBUG);								
+				}
+			}
+			else
+			{
+				SCR_DC_Log.Add("[SCR_DC_Mission_Squatter:MissionSpawn] Could not spawn loot box: " + m_DC_Squatter.lootBox, LogLevel.ERROR);								
+			}
+			
+			SetState(DC_EMissionState.ACTIVE);
 		}
 	}
 }
@@ -259,7 +261,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		conf.showMarker = true;		
 		//Mission specific
 		conf.buildingRadius = 200;
-		conf.squatterList = {2};
+		conf.squatterList = {3};
 		
 		//----------------------------------------------------
 		SCR_DC_Squatter squatter0 = new SCR_DC_Squatter;
@@ -287,7 +289,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 				"{96C784C502AC37DA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_MG.et",								
 			},
 			50, 0.6,
-			{"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_"},
+			{"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_", "Office_E_"},
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
 		);
 		conf.squatters.Insert(squatter0);	
@@ -344,7 +346,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		//----------------------------------------------------
 		SCR_DC_Squatter squatter2 = new SCR_DC_Squatter;
 		squatter2.Set(
-			"Squatters in militart locations towers",
+			"Squatters in military locations",
 			"0 0 0",
 			"any",
 			"Guards around ",
@@ -360,7 +362,6 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 				"{D66C215D6F03EFFD}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Medic_KLMK.et"
 			},
 			50, 0.8,
-//			{"Barracks_01_military_camo_v1"},
 			{"Office_E_", "Barracks_01_", "Barracks_E_02_"},
 			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
 		);
@@ -376,7 +377,116 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL"
 			};
-		squatter2loot.Set(0.8, lootItems);
-		squatter2.loot = squatter1loot;		
-	}	
+		squatter2loot.Set(0.6, lootItems);
+		squatter2.loot = squatter2loot;
+		
+		//----------------------------------------------------
+		SCR_DC_Squatter squatter3 = new SCR_DC_Squatter;
+		squatter3.Set(
+			"Military in industrial areas",
+			"0 0 0",
+			"any",
+			"Industrial area near ",
+			"Military has seized control of an industrial area. Don't shoot the civilians.",
+			{
+				//We pick any building that matches and ignore location
+			},
+			{2,6},
+			{
+				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
+				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
+				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
+				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
+				"{730CDEC4168637B6}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sapper.et",
+				"{8CA70597606992EC}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Medic.et",
+//				"{6F5A71376479B353}Prefabs/Characters/Factions/CIV/ConstructionWorker/Character_CIV_ConstructionWorker_1.et",
+//				"{472F2B06FF9BF37D}Prefabs/Characters/Factions/CIV/Dockworker/Character_CIV_Dockworker_4.et"
+			},
+			50, 0.8,
+			{"DieselPowerPlant_", "CowShed_", "FireStation_", "Warehouse_", "TransformerStation_", "FactoryHall_"},
+			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
+		);
+		conf.squatters.Insert(squatter3);	
+		
+		SCR_DC_Loot squatter3loot = new SCR_DC_Loot;
+		lootItems = {
+				"WEAPON_HANDGUN",
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
+				"WEAPON_ATTACHMENT",
+				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL"
+			};
+		squatter3loot.Set(0.6, lootItems);
+		squatter3.loot = squatter3loot;
+		
+		//----------------------------------------------------
+		SCR_DC_Squatter squatter4 = new SCR_DC_Squatter;
+		squatter4.Set(
+			"FIA in churches",
+			"0 0 0",
+			"any",
+			"Church visitors near ",
+			"Holy night, holy loot.",		
+			{
+				//We pick any building that matches and ignore location
+			},
+			{3,7},
+			{
+				"{9503CB9B3463BA1E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC.et",
+				"{9503CB9B3463BA1E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC.et",
+				"{9503CB9B3463BA1E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC.et",
+				"{9503CB9B3463BA1E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC.et",
+				"{5C0DC0BE7F1A7346}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Grenadier.et",
+				"{4E29194BA809DF32}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Medic.et",
+				"{B4977616CD19191A}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Scout.et"
+			},
+			50, 0.8,
+			{"Church_", "ChurchSmall_"},
+			"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et"
+		);
+		conf.squatters.Insert(squatter4);	
+		
+		SCR_DC_Loot squatter4loot = new SCR_DC_Loot;
+		lootItems = {
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
+				"WEAPON_OPTICS",
+				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL"
+			};
+		squatter4loot.Set(0.6, lootItems);
+		squatter4.loot = squatter4loot;
+		
+		//----------------------------------------------------
+		SCR_DC_Squatter squatter5 = new SCR_DC_Squatter;
+		squatter5.Set(
+			"Shops and houses",
+			"0 0 0",
+			"any",
+			"Burglars seen near ",
+			"Go rob the robbers.",		
+			{
+				//We pick any building that matches and ignore location
+			},
+			{2,6},
+			{
+				"{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
+				"{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
+				"{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
+				"{0B8AC0C3C447F90E}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_LMG.et"
+			},
+			30, 0.3,
+			{"ShopModern_", "House_Town_", "House_Village_"},
+			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
+		);
+		conf.squatters.Insert(squatter5);	
+		
+		SCR_DC_Loot squatter5loot = new SCR_DC_Loot;
+		lootItems = {
+				"WEAPON_ATTACHMENT",
+				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
+			};
+		squatter5loot.Set(0.6, lootItems);
+		squatter5.loot = squatter5loot;		
+	}
 }

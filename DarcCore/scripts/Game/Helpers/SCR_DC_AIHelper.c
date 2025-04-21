@@ -110,14 +110,14 @@ sealed class SCR_DC_AIHelper
 		          |----*----|                            Radius to search for a spot is 1/5 of house size
 	
 	*/
-	static void SpawnAIInBuilding(IEntity entity, array<string> resourceNames, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
+	static SCR_AIGroup SpawnAIInBuilding(IEntity building, string resourceName, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
 		array<vector> floors = {};
 		
-		SCR_DC_Misc.FindBuildingFloors(floors, entity);
+		SCR_DC_Misc.FindBuildingFloors(floors, building);
 
 		//Find the building size. The bigger X or Y value will be used as the radius
-		vector sums = SCR_DC_SpawnHelper.FindEntitySize(entity);
+		vector sums = SCR_DC_SpawnHelper.FindEntitySize(building);
 		//Pick the radius to be the bigger one from X/Y
 		float radius = sums[0];
 		if (sums[0] < sums[2])
@@ -127,36 +127,35 @@ sealed class SCR_DC_AIHelper
 	
 		vector pos, floorpos;
 	
-		foreach(ResourceName resourceName : resourceNames)
+		float empty_radius = 0.5;
+	
+		floorpos = floors.GetRandomElement();
+		pos = SCR_DC_Misc.RandomizePos(floorpos, radius/6);
+		pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, radius/5, empty_radius);
+		pos[1] = pos[1] + 0.2;			
+//		SCR_DC_DebugHelper.AddDebugSphere(pos, Color.YELLOW, empty_radius);
+		AIAgent aiAgent = SCR_DC_AIHelper.SpawnAIAgent(resourceName, pos, false);
+		
+		SetAISkill(aiAgent, skill, perceptionFactor);
+		
+		SCR_AIGroup group = SCR_DC_AIHelper.GroupAddAI(aiAgent);
+	
+		array<AIWaypoint> waypoints = {};
+		AIWaypointCycle wpcycle = null;
+		wpcycle = AIWaypointCycle.Cast(SCR_DC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.PATROLCYCLE));
+		wpcycle.SetOrigin(pos);
+	
+		AIWaypoint waypoint = SCR_DC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.PATROL);
+		if(waypoint)
 		{
-			float empty_radius = 0.5;
-		
-			floorpos = floors.GetRandomElement();
-			pos = SCR_DC_Misc.RandomizePos(floorpos, radius/6);
-			pos = SCR_DC_SpawnHelper.FindEmptyPos(pos, radius/5, empty_radius);
-			pos[1] = pos[1] + 0.2;			
-//			SCR_DC_DebugHelper.AddDebugSphere(pos, Color.YELLOW, empty_radius);
-			AIAgent aiAgent = SCR_DC_AIHelper.SpawnAIAgent(resourceName, pos, false);
-			
-			SetAISkill(aiAgent, skill, perceptionFactor);
-			
-			AIGroup group = SCR_DC_AIHelper.GroupAddAI(aiAgent);
-		
-			array<AIWaypoint> waypoints = {};
-			AIWaypointCycle wpcycle = null;
-			wpcycle = AIWaypointCycle.Cast(SCR_DC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.PATROLCYCLE));
-			wpcycle.SetOrigin(pos);
-		
-			AIWaypoint waypoint = SCR_DC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.PATROL);
-			if(waypoint)
-			{
-				waypoint.SetOrigin(pos);
-				waypoints.Insert(waypoint);
-			}
-			
-			wpcycle.SetWaypoints(waypoints);
-			group.AddWaypoint(wpcycle);			
+			waypoint.SetOrigin(pos);
+			waypoints.Insert(waypoint);
 		}
+		
+		wpcycle.SetWaypoints(waypoints);
+		group.AddWaypoint(wpcycle);
+		
+		return group;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -299,7 +298,7 @@ sealed class SCR_DC_AIHelper
 	/*!
 	Add an AI to a group. If the group does not exist, create a new one.
 	*/
-	static AIGroup GroupAddAI(AIAgent aiAgent, AIGroup group = null)
+	static SCR_AIGroup GroupAddAI(AIAgent aiAgent, SCR_AIGroup group = null)
 	{
 		if(!group)
 		{
@@ -322,7 +321,10 @@ sealed class SCR_DC_AIHelper
 		string faction = "";
 		
 		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(aiAgent.GetControlledEntity());
-		faction = character.GetFaction().GetFactionKey();
+		if (character)
+		{
+			faction = character.GetFaction().GetFactionKey();
+		}
 
 		/* 
 		//Code that also works. Not sure what is the difference but leaving here for future				

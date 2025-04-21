@@ -29,7 +29,6 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 	private float m_Angle = 0;
 	private IEntity m_Vehicle;
 	private vector m_VehiclePosOld;
-	private int idx = 0;	
 	
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Crashsite()

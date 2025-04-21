@@ -39,19 +39,19 @@ sealed class SCR_DC_Resources
 	/*!
 	Remove the items from array that match the filters
 	*/	
-	static void ExcludeFilter(out array<ResourceName> m_resourceNames, array<string> filters)
+	static void ExcludeFilter(out array<ResourceName> resourceNames, array<string> filters)
 	{	
 		foreach(string filter: filters)
 		{
 			filter.ToLower();
-			for (int i = 0; i < m_resourceNames.Count(); i++)		
+			for (int i = 0; i < resourceNames.Count(); i++)		
 			{
-				string resourceName = m_resourceNames[i];
+				string resourceName = resourceNames[i];
 				resourceName.ToLower();
 				
 				if (resourceName.Contains(filter))
 				{
-					m_resourceNames.Remove(i);
+					resourceNames.Remove(i);
 					i--;
 				}
 			}
@@ -62,15 +62,15 @@ sealed class SCR_DC_Resources
 	/*!
 	Include only the items in the array that match the filters. Remove others.
 	*/	
-	static void IncludeFilter(out array<ResourceName> m_resourceNames, array<string> filters)
+	static void IncludeFilter(out array<ResourceName> resourceNames, array<string> filters)
 	{
-		for (int i = 0; i < m_resourceNames.Count(); i++)		
+		for (int i = 0; i < resourceNames.Count(); i++)		
 		{
 			bool ToBeRemoved = true;
 			foreach(string filter: filters)
 			{
 				filter.ToLower();
-				string resourceName = m_resourceNames[i];
+				string resourceName = resourceNames[i];
 				resourceName.ToLower();
 				
 				if (resourceName.Contains(filter))
@@ -82,7 +82,7 @@ sealed class SCR_DC_Resources
 		
 			if (ToBeRemoved)
 			{
-				m_resourceNames.Remove(i);
+				resourceNames.Remove(i);
 				i--;
 			}
 		}
