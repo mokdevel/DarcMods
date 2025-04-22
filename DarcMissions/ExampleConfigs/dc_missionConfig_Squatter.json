@@ -1,0 +1,339 @@
+{
+	"version": 1,
+	"author": "darc",
+	"missionCycleTime": 30,
+	"showMarker": true,
+	"showHint": true,
+	"buildingRadius": 400,
+	"squatterList": [
+		0,
+		1,
+		2,
+		2,
+		3,
+		3,
+		3,
+		4,
+		5,
+		5,
+		5
+	],
+	"squatters": [
+		{
+			"comment": "Squatters in cities",
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posName": "any",
+			"title": "Squatters near ",
+			"info": "Building has squatters with loot",
+			"locationTypes": [
+				59,
+				59,
+				59,
+				59,
+				59,
+				60,
+				61,
+				81
+			],
+			"aiCount": [
+				3,
+				6
+			],
+			"aiTypes": [
+				"{5117311FB822FD1F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Officer.et",
+				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
+				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
+				"{96C784C502AC37DA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_MG.et"
+			],
+			"aiSkill": 50,
+			"aiPerception": 0.6000000238418579,
+			"buildingNames": [
+				"ShopModern_",
+				"Villa_",
+				"MunicipalOffice_",
+				"PubVillage_",
+				"Office_E_"
+			],
+			"lootBox": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+			"loot": {
+				"box": null,
+				"itemChance": 0.699999988079071,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_ATTACHMENT",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			}
+		},
+		{
+			"comment": "Squatters in control towers",
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posName": "any",
+			"title": "Enemy in ",
+			"info": "Control tower is being guarded.",
+			"locationTypes": [],
+			"aiCount": [
+				6,
+				10
+			],
+			"aiTypes": [
+				"{5117311FB822FD1F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Officer.et",
+				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
+				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
+				"{96C784C502AC37DA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_MG.et"
+			],
+			"aiSkill": 50,
+			"aiPerception": 0.800000011920929,
+			"buildingNames": [
+				"ControlTowerMilitary_"
+			],
+			"lootBox": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+			"loot": {
+				"box": null,
+				"itemChance": 0.800000011920929,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_RIFLE",
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_ATTACHMENT",
+					"WEAPON_OPTICS",
+					"WEAPON_OPTICS",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			}
+		},
+		{
+			"comment": "Squatters in military locations",
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posName": "any",
+			"title": "Guards around ",
+			"info": "Military location has loot to steal.",
+			"locationTypes": [],
+			"aiCount": [
+				4,
+				10
+			],
+			"aiTypes": [
+				"{77D7BFD355620806}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Ammo_KLMK.et",
+				"{9A12B3F6ABDF70BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_AT_KLMK.et",
+				"{8A60AEBD529FEB8B}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_MG_KLMK.et",
+				"{D66C215D6F03EFFD}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Medic_KLMK.et"
+			],
+			"aiSkill": 50,
+			"aiPerception": 0.800000011920929,
+			"buildingNames": [
+				"Office_E_",
+				"Barracks_01_",
+				"Barracks_E_02_"
+			],
+			"lootBox": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+			"loot": {
+				"box": null,
+				"itemChance": 0.6000000238418579,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_RIFLE",
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_ATTACHMENT",
+					"WEAPON_OPTICS",
+					"WEAPON_OPTICS",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			}
+		},
+		{
+			"comment": "Military in industrial areas",
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posName": "any",
+			"title": "Industrial area near ",
+			"info": "Military has seized control of an industrial area. Don't shoot the civilians.",
+			"locationTypes": [],
+			"aiCount": [
+				2,
+				6
+			],
+			"aiTypes": [
+				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
+				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
+				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
+				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
+				"{730CDEC4168637B6}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sapper.et",
+				"{8CA70597606992EC}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Medic.et"
+			],
+			"aiSkill": 50,
+			"aiPerception": 0.800000011920929,
+			"buildingNames": [
+				"DieselPowerPlant_",
+				"CowShed_",
+				"FireStation_",
+				"Warehouse_",
+				"TransformerStation_",
+				"FactoryHall_"
+			],
+			"lootBox": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+			"loot": {
+				"box": null,
+				"itemChance": 0.6000000238418579,
+				"items": [
+					"WEAPON_HANDGUN",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_ATTACHMENT",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			}
+		},
+		{
+			"comment": "FIA in churches",
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posName": "any",
+			"title": "Church visitors near ",
+			"info": "Holy night, holy loot.",
+			"locationTypes": [],
+			"aiCount": [
+				3,
+				7
+			],
+			"aiTypes": [
+				"{9503CB9B3463BA1E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC.et",
+				"{9503CB9B3463BA1E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC.et",
+				"{9503CB9B3463BA1E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC.et",
+				"{9503CB9B3463BA1E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC.et",
+				"{5C0DC0BE7F1A7346}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Grenadier.et",
+				"{4E29194BA809DF32}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Medic.et",
+				"{B4977616CD19191A}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Scout.et"
+			],
+			"aiSkill": 50,
+			"aiPerception": 0.800000011920929,
+			"buildingNames": [
+				"Church_",
+				"ChurchSmall_"
+			],
+			"lootBox": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+			"loot": {
+				"box": null,
+				"itemChance": 0.6000000238418579,
+				"items": [
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_OPTICS",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			}
+		},
+		{
+			"comment": "Shops and houses",
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posName": "any",
+			"title": "Burglars seen near ",
+			"info": "Go rob the robbers.",
+			"locationTypes": [],
+			"aiCount": [
+				2,
+				6
+			],
+			"aiTypes": [
+				"{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
+				"{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
+				"{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
+				"{0B8AC0C3C447F90E}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_LMG.et"
+			],
+			"aiSkill": 30,
+			"aiPerception": 0.30000001192092898,
+			"buildingNames": [
+				"ShopModern_",
+				"House_Town_",
+				"House_Village_"
+			],
+			"lootBox": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+			"loot": {
+				"box": null,
+				"itemChance": 0.6000000238418579,
+				"items": [
+					"WEAPON_ATTACHMENT",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			}
+		}
+	]
+}
