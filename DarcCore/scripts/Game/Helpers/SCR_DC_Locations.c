@@ -155,7 +155,8 @@ sealed class SCR_DC_Locations
 		string name;
 		
 		name = CreateName(location.GetOrigin(), location.GetName());
-		
+
+//TBD: Remove the commented code				
 /*		if (nameDefault == "any")
 		{					
 			name = location.GetName();

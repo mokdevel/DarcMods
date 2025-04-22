@@ -24,7 +24,7 @@
 		private const int DC_MISSION_COUNT = 8;
 		private const int DC_MISSION_STATIC_FAIL_LIMIT = 2;
 		private const int DC_MISSION_CYCLE_TIME_DEFAULT = 10;
-		private const int DC_MISSION_START_DELAY = 5;					
+		private const int DC_MISSION_START_DELAY = 10;					
 		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*10;
 		private const int DC_MISSION_ACTIVE_TIME = 2*60;				
 		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 2;	
@@ -120,8 +120,9 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		
 		#ifdef SCR_DC_RELEASE
 			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.CONVOY, 
+											DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, 
 											DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
+			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
 		#endif	
 
 		#ifndef SCR_DC_RELEASE				

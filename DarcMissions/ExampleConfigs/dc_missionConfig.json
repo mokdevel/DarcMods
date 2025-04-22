@@ -1,11 +1,13 @@
 {
 	"version": 1,
 	"author": "darc",
+	"comment": "Simple comment, not used in game",
 	"recreateConfigs": false,
 	"missionProfile": "default",
 	"missionStartDelay": 60,
-	"missionDelayBetweeen": 120,
+	"missionDelayBetweeen": 600,
 	"missionCount": 8,
+	"staticFailLimit": 3,
 	"missionFrameCycleTime": 60,
 	"missionActiveTime": 900,
 	"missionActiveTimeStatic": 2700,
@@ -17,6 +19,15 @@
 		1,
 		4,
 		3,
+		6,
+		6,
+		6,
+		6,
+		6,
+		2,
+		2,
+		2,
+		2,
 		2,
 		2,
 		2,
@@ -24,6 +35,10 @@
 		2
 	],
 	"missionTypeArrayStatic": [
-		5
+		5,
+		5,
+		3,
+		3,
+		3
 	]
 }

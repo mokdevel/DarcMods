@@ -4,18 +4,20 @@
 	"missionCycleTime": 90,
 	"showMarker": true,
 	"showHint": true,
+	"title": "Hunters",
+	"info": "They are coming for you...",
 	"groupCount": [
 		1,
 		2
 	],
-	"minDistanceToPlayer": 250,
-	"maxDistanceToPlayer": 600,
-	"rndDistanceToPlayer": 60,
 	"groupTypes": [
 		"{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
 		"{976AC400219898FA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Sharpshooter.et",
 		"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
 	],
-	"AISkill": 30,
-	"AIperception": 0.699999988079071
+	"aiSkill": 30,
+	"aiPerception": 0.699999988079071,
+	"minDistanceToPlayer": 250,
+	"maxDistanceToPlayer": 600,
+	"rndDistanceToPlayer": 60
 }

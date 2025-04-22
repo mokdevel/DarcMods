@@ -1,9 +1,11 @@
 {
-	"version": 2,
-	"author": "lkasdi",
+	"version": 1,
+	"author": "darc",
 	"missionCycleTime": 30,
 	"showMarker": true,
 	"showHint": true,
+	"distanceToMission": 100,
+	"distanceToPlayer": 500,
 	"flyHeight": [
 		80,
 		120
@@ -17,10 +19,12 @@
 			"title": "Helicopter in distress ",
 			"info": "A valuable cargo has crashed",
 			"groupTypes": [
-				"{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et"
+				"{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et",
+				"{B721D5A8C1B556CE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconTeam.et",
+				"{E552DABF3636C2AD}Prefabs/Groups/OPFOR/Group_USSR_RifleSquad.et"
 			],
-			"AISkill": 20,
-			"AIperception": 0.800000011920929,
+			"aiSkill": 20,
+			"aiPerception": 0.800000011920929,
 			"helicopterInfo": [
 				{
 					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
@@ -41,6 +45,20 @@
 					"rotor2Force": -1.0
 				}
 			],
+			"loot": {
+				"box": null,
+				"itemChance": 0.8999999761581421,
+				"items": [
+					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+					"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
+					"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
+					"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
+					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
+					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
+				]
+			},
 			"siteItems": [
 				{
 					"m_Resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
@@ -133,21 +151,7 @@
 						0.0
 					]
 				}
-			],
-			"loot": {
-				"box": null,
-				"itemChance": 0.8999999761581421,
-				"items": [
-					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-					"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
-					"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
-					"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
-					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
-					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
-					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
-				]
-			}
+			]
 		}
 	]
 }

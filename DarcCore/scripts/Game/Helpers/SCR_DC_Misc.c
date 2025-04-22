@@ -8,6 +8,7 @@ Includes various small functions.
 sealed class SCR_DC_Misc
 {
 	private static ref array<IEntity> m_TmpBuildings = {};
+	static int m_Ctr = 0;
 
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -225,117 +226,6 @@ sealed class SCR_DC_Misc
 		
 		return true;
 	}	
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Find types of buildings
-	*/	
-	static void FindBuildings(out array<IEntity>buildings, array<string>filter, vector pos = "0 0 0", float radius = 999999)
-	{
-		m_TmpBuildings.Clear();
-		GetGame().GetWorld().QueryEntitiesBySphere(pos, radius, FindBuildingCallback, null, EQueryEntitiesFlags.STATIC);		
-		
-		foreach(IEntity building: m_TmpBuildings)
-		{
-			ResourceName buildingName = building.GetPrefabData().GetPrefabName();
-			
-			if (SCR_StringHelper.ContainsAny(buildingName, filter))
-			{
-				SCR_DC_Log.Add("[SCR_DC_Misc:FindBuildings] Added: " + buildingName, LogLevel.SPAM);
-				buildings.Insert(building);
-			}
-		}
-		
-		//Print debug information
-		foreach(IEntity building: buildings)
-		{
-			ResourceName res = building.GetPrefabData().GetPrefabName();
-			SCR_DC_Log.Add("[SCR_DC_Misc:FindBuildings] Found: " + res + " at " + building.GetOrigin(), LogLevel.DEBUG);			
-		}		
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Call back filter for FindBuilding
-	*/		
-	static bool FindBuildingCallback(IEntity entity)
-	{
-		if (entity.ClassName() == "SCR_DestructibleBuildingEntity")
-		{
-			ResourceName res = entity.GetPrefabData().GetPrefabName();
-		  	if (res.IndexOf("_furniture") > -1 || res == "")
-			{
-				return true;
-			}
-			
-			SCR_DC_Log.Add("[SCR_DC_Misc:FindBuildingCallback] Found: " + res + " at " + entity.GetOrigin(), LogLevel.SPAM);
-			//EntityID id = entity.GetID();
-			m_TmpBuildings.Insert(entity);
-			return true;
-		}
-		
-		return true;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Find floors from a building entity.
-	From the returned vector position, the [1] item is the floor height
-	*/		
-	static void FindBuildingFloors(out array<vector>floors, IEntity entity)
-	{
-		vector sums = SCR_DC_SpawnHelper.FindEntitySize(entity);
-	
-		vector pos;
-		pos = entity.GetOrigin();
-	
-		float terrainY = SCR_TerrainHelper.GetTerrainY(entity.GetOrigin());
-	
-		//Trace from the ceiling down to terrain height
-		vector posStart = entity.GetOrigin();
-		posStart[1] = posStart[1] + sums[1];
-		vector posEnd;
-	
-		TraceParam trace = new TraceParam();
-		{
-			trace.Start = posStart;
-		
-			posEnd = posStart;
-			posEnd[1] = terrainY;
-			trace.End = posEnd;
-
-			SCR_DC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 2);
-				
-			//trace.Exclude = child;
-			trace.TargetLayers = EPhysicsLayerDefs.Navmesh;
-			trace.Flags = TraceFlags.ENTS | TraceFlags.WORLD;
-		}		
-
-		vector posCheck = posStart;
-		int i = 0;
-		while (posCheck[1] > terrainY && i < 10)	//Try a maximun of ten times. Just to avoid forever loop
-		{
-			vector floorpos;
-			SCR_TerrainHelper.SnapToGeometry(floorpos, posCheck, {}, entity.GetWorld(), traceParam: trace);
-			floors.Insert(floorpos);
-			posCheck[1] = floorpos[1] - 1;
-			trace.Start = posCheck;
-			i++;
-		}
-		
-		if (floors.Count() > 0)
-		{
-			floors.RemoveOrdered(0);					//Remove roof height
-			SCR_ArrayHelperT<vector>.Reverse(floors);	//Change order to that [0] is the bottom floor
-		}
-		
-		foreach (vector fpos: floors)
-		{
-			SCR_DC_DebugHelper.AddDebugSphere(fpos, Color.BLUE, 0.3);
-		}
-		
-		SCR_DC_Log.Add("[SCR_DC_Misc:FindBuildingFloors] Found: " + floors.Count() + " floors from " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
-	}
 	
 	//------------------------------------------------------------------------------------------------
 	//TBD: Does not work

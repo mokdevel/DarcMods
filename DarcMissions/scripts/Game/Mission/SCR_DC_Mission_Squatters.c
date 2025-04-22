@@ -49,7 +49,7 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 			//If no locationTypes defined, we search for any building matching on the map
 			if (m_DC_Squatter.locationTypes.IsEmpty())
 			{
-				radius = 9999;
+				radius = -1;
 			}
 			else
 			{
@@ -59,13 +59,13 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 			//Find the houses
 			array<IEntity>buildings = {};
 		
-			SCR_DC_Misc.FindBuildings(buildings, m_DC_Squatter.buildingNames, pos, radius);
+			SCR_DC_BuildingHelper.FindBuildings(buildings, m_DC_Squatter.buildingNames, pos, radius);
 			if (!buildings.IsEmpty())
 			{
 				m_Building = buildings.GetRandomElement();
 				pos = m_Building.GetOrigin();
 				
-				SCR_DC_Log.Add("[SCR_DC_Mission_Squatter] Building selectd: " + m_Building.GetPrefabData().GetPrefabName() + " " + pos, LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_Mission_Squatter] Building selected: " + m_Building.GetPrefabData().GetPrefabName() + " " + pos, LogLevel.DEBUG);
 			}
 			else
 			{
@@ -260,8 +260,8 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;		
 		//Mission specific
-		conf.buildingRadius = 200;
-		conf.squatterList = {3};
+		conf.buildingRadius = 400;
+		conf.squatterList = {0,1,2,2,3,3,3,4,5,5,5};
 		
 		//----------------------------------------------------
 		SCR_DC_Squatter squatter0 = new SCR_DC_Squatter;

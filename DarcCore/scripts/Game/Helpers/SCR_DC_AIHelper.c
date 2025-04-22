@@ -114,7 +114,7 @@ sealed class SCR_DC_AIHelper
 	{
 		array<vector> floors = {};
 		
-		SCR_DC_Misc.FindBuildingFloors(floors, building);
+		SCR_DC_BuildingHelper.FindBuildingFloors(floors, building);
 
 		//Find the building size. The bigger X or Y value will be used as the radius
 		vector sums = SCR_DC_SpawnHelper.FindEntitySize(building);

@@ -1,11 +1,12 @@
 {
 	"version": 1,
 	"author": "darc",
-	"showMarker": false,
+	"showMarker": true,
 	"spawnSetID": -1,
 	"spawnOnRoad": false,
 	"spawnRndRadius": 100,
 	"spawnWorldSizeMultiplier": 2.0,
+	"disableArsenal": true,
 	"spawnSets": [
 		{
 			"comment": "Used for Escapists in Gogland. Spawns random ambulances with some gear",

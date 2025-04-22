@@ -2,19 +2,22 @@
 	"version": 1,
 	"author": "darc",
 	"missionCycleTime": 90,
-	"showMarker": true,
+	"showMarker": false,
 	"showHint": true,
 	"patrolingTime": 0,
 	"distanceToPlayer": 500,
 	"patrolList": [
 		0,
+		0,
+		0,
 		1,
-		2
+		2,
+		3
 	],
 	"patrols": [
 		{
 			"comment": "USSR patrols going between two points hopefully following roads",
-			"posStart": [
+			"pos": [
 				0.0,
 				0.0,
 				0.0
@@ -24,9 +27,9 @@
 				0.0,
 				0.0
 			],
-			"locationName": "any",
-			"title": "Patrol seen close to ",
-			"info": "Beware",
+			"posName": "any",
+			"title": "Patrol spotted near ",
+			"info": "Be careful while traveling on roads.",
 			"locationTypes": [
 				59,
 				59,
@@ -52,12 +55,12 @@
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
 				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
 			],
-			"AISkill": 50,
-			"AIperception": 1.0
+			"aiSkill": 50,
+			"aiPerception": 1.0
 		},
 		{
 			"comment": "USSR patrols",
-			"posStart": [
+			"pos": [
 				0.0,
 				0.0,
 				0.0
@@ -67,9 +70,9 @@
 				0.0,
 				0.0
 			],
-			"locationName": "any",
+			"posName": "any",
 			"title": "Patrol in ",
-			"info": "Beware",
+			"info": "Beware!",
 			"locationTypes": [
 				64,
 				62,
@@ -84,8 +87,8 @@
 				1
 			],
 			"waypointRange": [
-				300,
-				1000
+				200,
+				800
 			],
 			"waypointGenType": 3,
 			"waypointMoveType": 5,
@@ -95,12 +98,12 @@
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
 				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
 			],
-			"AISkill": 50,
-			"AIperception": 1.0
+			"aiSkill": 50,
+			"aiPerception": 1.0
 		},
 		{
 			"comment": "USSR patrols",
-			"posStart": [
+			"pos": [
 				0.0,
 				0.0,
 				0.0
@@ -110,9 +113,46 @@
 				0.0,
 				0.0
 			],
-			"locationName": "any",
-			"title": "Patrol in ",
-			"info": "Beware",
+			"posName": "any",
+			"title": "Patrol seen in ",
+			"info": "Be alert",
+			"locationTypes": [
+				60,
+				64
+			],
+			"groupCount": [
+				1,
+				1
+			],
+			"waypointRange": [
+				300,
+				700
+			],
+			"waypointGenType": 2,
+			"waypointMoveType": 5,
+			"groupTypes": [
+				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
+				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
+				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+			],
+			"aiSkill": 50,
+			"aiPerception": 1.0
+		},
+		{
+			"comment": "FIA patrols",
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posDestination": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posName": "any",
+			"title": "FIA has been seen near ",
+			"info": "Caution is adviced.",
 			"locationTypes": [
 				60,
 				64
@@ -128,12 +168,12 @@
 			"waypointGenType": 1,
 			"waypointMoveType": 5,
 			"groupTypes": [
-				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
-				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
-				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+				"{5BEA04939D148B1D}Prefabs/Groups/INDFOR/Group_FIA_FireTeam.et",
+				"{2E9C920C3ACA2C6F}Prefabs/Groups/INDFOR/Group_FIA_ReconTeam.et",
+				"{C1E39427E43B1E79}Prefabs/Groups/INDFOR/Group_FIA_AmmoTeam.et"
 			],
-			"AISkill": 50,
-			"AIperception": 1.0
+			"aiSkill": 50,
+			"aiPerception": 1.0
 		}
 	]
 }

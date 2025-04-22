@@ -4,24 +4,24 @@
 	"modList": [
 		"$ArmaReforger:Prefabs",
 		"$WCS_Armaments:Prefabs",
-		"$M110MarksmanRifle:Prefabs"
+		"$M110MarksmanRifle:Prefabs",
+		"$RISLaserAttachments:Prefabs"
 	],
 	"lootLists": [
 		{
 			"lootListName": "WEAPON_RIFLE",
-			"lootListType": 0,
 			"modDir": "/Weapons/Rifles",
 			"include": [
 				"Rifle"
 			],
 			"exclude": [
-				"_Base"
+				"_Base",
+				"Tutorial"
 			],
 			"itemList": []
 		},
 		{
 			"lootListName": "WEAPON_LAUNCHER",
-			"lootListType": 2,
 			"modDir": "/Weapons/Launchers",
 			"include": [
 				"Launcher"
@@ -33,7 +33,6 @@
 		},
 		{
 			"lootListName": "WEAPON_HANDGUN",
-			"lootListType": 1,
 			"modDir": "/Weapons/Handguns",
 			"include": [
 				"Handgun"
@@ -45,7 +44,6 @@
 		},
 		{
 			"lootListName": "WEAPON_GRENADE",
-			"lootListType": 3,
 			"modDir": "/Weapons/Grenades",
 			"include": [
 				""
@@ -57,10 +55,48 @@
 		},
 		{
 			"lootListName": "ITEM_MEDICAL",
-			"lootListType": 4,
 			"modDir": "/Items/Medicine",
 			"include": [
 				""
+			],
+			"exclude": [
+				"_Base"
+			],
+			"itemList": []
+		},
+		{
+			"lootListName": "WEAPON_ATTACHMENT",
+			"modDir": "/Weapons/Attachments",
+			"include": [
+				""
+			],
+			"exclude": [
+				"_Base",
+				"Optic"
+			],
+			"itemList": []
+		},
+		{
+			"lootListName": "WEAPON_OPTICS",
+			"modDir": "/Weapons/Attachments",
+			"include": [
+				"Optic",
+				"Scope"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"itemList": []
+		},
+		{
+			"lootListName": "ITEM_GENERAL",
+			"modDir": "/Items",
+			"include": [
+				"Binocular",
+				"Compass",
+				"Flashlight",
+				"PaperMap_01_folded",
+				"Watch_"
 			],
 			"exclude": [
 				"_Base"

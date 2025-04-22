@@ -5,24 +5,30 @@
 	"showMarker": true,
 	"showHint": true,
 	"emptySize": 7,
+	"disableArsenal": false,
 	"occupationList": [
 		0,
 		0,
+		0,
 		1,
 		1,
-		2
+		2,
+		2,
+		2,
+		3,
+		4
 	],
 	"occupations": [
 		{
 			"comment": "Gogland: Mission to be used with Escapists.",
-			"locationPos": [
+			"pos": [
 				0.0,
 				0.0,
 				0.0
 			],
-			"locationName": "any",
-			"title": "Camp in ",
-			"info": "Avoid the location",
+			"posName": "any",
+			"title": "Guard patrol seen near ",
+			"info": "Avoid the location. Loot has already been lost.",
 			"locationTypes": [
 				60,
 				64
@@ -42,20 +48,20 @@
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
 				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
 			],
-			"AISkill": 50,
-			"AIperception": 1.0,
+			"aiSkill": 50,
+			"aiPerception": 1.0,
 			"loot": null,
 			"campItems": []
 		},
 		{
 			"comment": "Bandit camp spawning to non city areas",
-			"locationPos": [
+			"pos": [
 				0.0,
 				0.0,
 				0.0
 			],
-			"locationName": "any",
-			"title": "Bandit camp at ",
+			"posName": "any",
+			"title": "Bandit camp near ",
 			"info": "Bandits are protecting their valuable loot.",
 			"locationTypes": [
 				64,
@@ -82,21 +88,24 @@
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
 				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
 			],
-			"AISkill": 50,
-			"AIperception": 1.0,
+			"aiSkill": 50,
+			"aiPerception": 1.0,
 			"loot": {
 				"box": null,
-				"itemChance": 1.0,
+				"itemChance": 0.699999988079071,
 				"items": [
 					"WEAPON_RIFLE",
 					"WEAPON_HANDGUN",
 					"WEAPON_HANDGUN",
 					"WEAPON_HANDGUN",
+					"WEAPON_ATTACHMENT",
 					"ITEM_MEDICAL",
-					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-					"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
-					"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
-					"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
 					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
 				]
 			},
@@ -157,13 +166,13 @@
 		},
 		{
 			"comment": "Occupation that will spawn mainly to cities and towns with USSR forces.",
-			"locationPos": [
+			"pos": [
 				0.0,
 				0.0,
 				0.0
 			],
-			"locationName": "any",
-			"title": "Occupation at ",
+			"posName": "any",
+			"title": "Occupation in ",
 			"info": "City is being occupied.",
 			"locationTypes": [
 				59,
@@ -193,21 +202,31 @@
 				"{43C7A28EEB660FF8}Prefabs/Groups/OPFOR/Group_USSR_Team_GL.et",
 				"{1C0502B5729E7231}Prefabs/Groups/OPFOR/Group_USSR_Team_Suppress.et"
 			],
-			"AISkill": 50,
-			"AIperception": 1.0,
+			"aiSkill": 50,
+			"aiPerception": 1.0,
 			"loot": {
 				"box": null,
-				"itemChance": 1.0,
+				"itemChance": 0.8999999761581421,
 				"items": [
 					"WEAPON_RIFLE",
+					"WEAPON_RIFLE",
 					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_ATTACHMENT",
+					"WEAPON_OPTICS",
 					"ITEM_MEDICAL",
-					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-					"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
-					"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
-					"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
 					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
 				]
 			},
@@ -261,6 +280,289 @@
 					"m_Rotation": [
 						0.0,
 						114.56900024414063,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"comment": "Car crash in an unusual place",
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posName": "any",
+			"title": "Car crash near ",
+			"info": "Loot is up for grabs.",
+			"locationTypes": [
+				8,
+				25,
+				62,
+				72,
+				79,
+				84,
+				75
+			],
+			"groupCount": [
+				1,
+				3
+			],
+			"waypointRange": [
+				10,
+				60
+			],
+			"waypointGenType": 1,
+			"waypointMoveType": 1,
+			"groupTypes": [
+				"{666A2B0A6B1967AE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconSquad.et",
+				"{B721D5A8C1B556CE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconTeam.et",
+				"{06F0C9675883F18A}Prefabs/Groups/OPFOR/KLMK/Group_USSR_ReconTeam.et"
+			],
+			"aiSkill": 50,
+			"aiPerception": 1.0,
+			"loot": {
+				"box": null,
+				"itemChance": 0.699999988079071,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_ATTACHMENT",
+					"WEAPON_OPTICS",
+					"WEAPON_LAUNCHER",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			},
+			"campItems": [
+				{
+					"m_Resource": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+					"m_Position": [
+						78.56900024414063,
+						1.0,
+						110.11299896240235
+					],
+					"m_Rotation": [
+						0.0,
+						-34.13600158691406,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{56FFF0C990358ED2}Prefabs/Props/Wrecks/UAZ452_wreck_static.et",
+					"m_Position": [
+						78.80000305175781,
+						1.0,
+						113.21099853515625
+					],
+					"m_Rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{6095B175AA9804DC}Prefabs/Props/VehicleParts/Tires/Tire_UAZ469.et",
+					"m_Position": [
+						77.25199890136719,
+						1.0,
+						114.02999877929688
+					],
+					"m_Rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{6095B175AA9804DC}Prefabs/Props/VehicleParts/Tires/Tire_UAZ469.et",
+					"m_Position": [
+						80.55500030517578,
+						1.0,
+						110.33999633789063
+					],
+					"m_Rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{8BAF6C3ACF99388E}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_05.et",
+					"m_Position": [
+						79.36199951171875,
+						1.0,
+						108.87799835205078
+					],
+					"m_Rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{530705FBB61026D2}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_03.et",
+					"m_Position": [
+						76.74299621582031,
+						1.0,
+						111.7040023803711
+					],
+					"m_Rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{2424EBB806A690D4}Prefabs/Props/Garbage/Medical/GarbageMedicalUS_02.et",
+					"m_Position": [
+						80.0999984741211,
+						1.0,
+						113.32099914550781
+					],
+					"m_Rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"comment": "FIA camp with a car",
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posName": "any",
+			"title": "Campers near ",
+			"info": "Rob them before they leave.",
+			"locationTypes": [
+				70,
+				8,
+				63,
+				71
+			],
+			"groupCount": [
+				1,
+				3
+			],
+			"waypointRange": [
+				10,
+				90
+			],
+			"waypointGenType": 1,
+			"waypointMoveType": 1,
+			"groupTypes": [
+				"{35681BE27C302FF5}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_SentryTeam.et",
+				"{D0886786634E55AE}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_Squad.et",
+				"{B7AB5D3F8A7ADAE4}Prefabs/Groups/BLUFOR/Group_US_PlatoonHQ.et",
+				"{9624D2B39397E148}Prefabs/Groups/BLUFOR/Group_US_SapperTeam.et"
+			],
+			"aiSkill": 50,
+			"aiPerception": 1.0,
+			"loot": {
+				"box": null,
+				"itemChance": 0.4000000059604645,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_ATTACHMENT",
+					"WEAPON_ATTACHMENT",
+					"WEAPON_OPTICS",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			},
+			"campItems": [
+				{
+					"m_Resource": "{E28501E93F8EFDC0}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_FIA_uncovered.et",
+					"m_Position": [
+						84.93299865722656,
+						1.0,
+						97.41600036621094
+					],
+					"m_Rotation": [
+						0.0,
+						-43.32699966430664,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{06FE4FE70907D486}Prefabs/Props/Military/Compositions/Dst/PersonnelService_Table_01/PersonnelService_Table_01_dst_01.et",
+					"m_Position": [
+						80.31999969482422,
+						1.0920000076293946,
+						90.81700134277344
+					],
+					"m_Rotation": [
+						0.0,
+						-40.15700149536133,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{172DD50ACF177B9E}Prefabs/Props/Military/Furniture/ChairMilitary_USSR_01.et",
+					"m_Position": [
+						79.55799865722656,
+						1.0750000476837159,
+						91.2699966430664
+					],
+					"m_Rotation": [
+						0.0,
+						-38.584999084472659,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{9CBBE8B23794214D}Prefabs/Props/Commercial/CabinetCardFile_01/Dst/CabinetCardFile_01_dst_green.et",
+					"m_Position": [
+						76.37000274658203,
+						1.0779999494552613,
+						91.04900360107422
+					],
+					"m_Rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"m_Resource": "{C768E842A6F11CEE}Prefabs/Structures/Military/Camps/TentUSSR_01/TentUSSR_01_camonet.et",
+					"m_Position": [
+						78.75800323486328,
+						0.0,
+						92.71800231933594
+					],
+					"m_Rotation": [
+						0.0,
+						0.0,
 						0.0
 					]
 				}

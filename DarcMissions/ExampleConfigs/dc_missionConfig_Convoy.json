@@ -2,17 +2,18 @@
 	"version": 1,
 	"author": "darc",
 	"missionCycleTime": 30,
-	"showMarker": true,
+	"showMarker": false,
 	"showHint": true,
 	"convoyTime": 0,
 	"distanceToPlayer": 500,
+	"disableArsenal": true,
 	"convoyList": [
 		0
 	],
 	"convoys": [
 		{
 			"comment": "Convoy driving from .. to ..",
-			"posStart": [
+			"pos": [
 				0.0,
 				0.0,
 				0.0
@@ -22,7 +23,7 @@
 				0.0,
 				0.0
 			],
-			"locationName": "any",
+			"posName": "any",
 			"title": "Convoy is on the move.",
 			"info": "Leaked travel plans show a route from ",
 			"locationTypes": [
@@ -39,18 +40,19 @@
 				81
 			],
 			"waypointGenType": 4,
-			"vehicleTypes": [
-				"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
-				"{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et",
-				"{D4855501D5B12AF2}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_teal.et"
-			],
 			"groupTypes": [
 				"{5B08C42EA0661A20}Prefabs/Groups/OPFOR/KLMK/Group_USSR_LightFireTeam_KLMK.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
 				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
 			],
-			"AISkill": 50,
-			"AIperception": 1.0,
+			"aiSkill": 50,
+			"aiPerception": 1.0,
+			"vehicleTypes": [
+				"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
+				"{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et",
+				"{D4855501D5B12AF2}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_teal.et"
+			],
+			"cruiseSpeed": 0.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.8999999761581421,

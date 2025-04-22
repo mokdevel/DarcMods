@@ -3,5 +3,21 @@
 	"author": "darc",
 	"logLevel": 3,
 	"debugShowWaypoints": true,
-	"debugShowMarks": true
+	"debugShowMarks": true,
+	"debugShowSpheres": true,
+	"buildingExcludeFilter": [
+		"BrickPile",
+		"WoodPile",
+		"AmmoDump",
+		"PierConcrete",
+		"PierWooden",
+		"Pier_",
+		"ConcreteRetainingWall",
+		"Calvary",
+		"Castle_",
+		"GraveStone",
+		"Grave_",
+		"MooringDolphin",
+		"HouseRuin"
+	]
 }

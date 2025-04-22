@@ -325,7 +325,7 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 		
 		//Default
 		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.showMarker = true;
+		conf.showMarker = false;
 		//Mission specific
 		conf.convoyList = {0};
 		conf.distanceToPlayer = 500;
