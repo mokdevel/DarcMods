@@ -18,5 +18,6 @@ DC_LogLevel logLevel : Loglevel of debugging information created in to logs.
   3 = DEBUG  : Debug details + all above
   4 = ALL    : Prints everything including VERBOSE and SPAM. It's a lot.
 bool debugShowWaypoints : Only in WB. Show waypoints for AI.
-bool debugShowMarks : Only in WB. Show various markers in the world like mission location and non Valid Areas. 
+bool debugShowMarks : Only in WB. Show various markers in the world like mission location and non Valid Areas.
+array<string>buildingExcludeFilter : Excelude these prefab names from the cached building list. The list of buildings are cached to avoid a rescan on the map.
 ```
