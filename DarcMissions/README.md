@@ -12,7 +12,8 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - Convoy : AIs are driving from a location A to B carrying valuable loot with them.
 - Patrol : AIs are patroling an area or traveling with a purpose to reach a location.
 - Crashsite : A helicopter carrying loot is damaged and is crashing. Survivors will be protecting the wreck while waiting to be rescued.
-- Occupation : A location is guarded by AIs with loot available. 
+- Occupation : A location is guarded by AIs with loot available.
+- Squatters : A building is guarded by AIs with loot available.
 
 ## Thanks
 - The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
@@ -396,6 +397,39 @@ int aiSkill : See General parameters
 float aiPerception : See General parameters
 SCR_DC_Loot loot : (optional) Loot found in the mission. 
 array<ref SCR_DC_Structure> campItems  : (optional) The structure list for the camp.
+```
+
+## Mission : Squatters
+Example: [dc_missionConfig_Squatters.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Squatter.json)
+
+A building is guarded by AIs with loot available.
+
+```
+int version : See Common parameters
+string author : See Common parameters
+int missionCycleTime : See Common parameters
+bool showMarker : See Common parameters
+bool showHint : See Common parameters
+int buildingRadius : The radius to search for suitable buildings.
+array<int> squatterList : The indexes of squatters.
+array<SCR_DC_Squatter> squatters : List of squatters
+```
+
+### SCR_DC_Squatter
+```
+string comment : See General parameters
+vector pos : See General parameters
+string posName : See General parameters
+string title : See General parameters
+string info : See General parameters
+array<EMapDescriptorType> locationTypes : See Location parameters
+	ref array<int> aiCount = {};			//min, max
+	ref array<string> aiTypes = {};
+int aiSkill : See General parameters
+float aiPerception : See General parameters
+	ref array<string> buildingNames = {};
+	string lootBox = "";					//The loot box
+SCR_DC_Loot loot : (optional) Loot found in the mission. 
 ```
 
 # Common mission parameters
