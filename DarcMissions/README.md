@@ -409,7 +409,7 @@ The missions tries to find floors in the building and spawn AI and the loot box 
 
 The mission can be configured in two different ways:
 1) Find a building in a location by defining both ```locationTypes``` and ```buildingNames```. First the location is chosen and then the building is searched in it within ```buildingRadius```.
-2) Find a certain building type from the map by defining only ```buildingNames```. Leave ```locationTypes``` empty. ```buildingRadius``` is ignored.
+2) Find a certain building type from the map by defining only ```buildingNames```. Leave ```locationTypes``` empty. ```buildingRadius``` is ignored. NOTE: The mod DarcCore will cache the buildings found from the map for faster searching. The list ```buildingNames``` is used as an additional filter on the cached results.
 
 ```
 int version : See Common parameters
@@ -435,8 +435,8 @@ array<string> aiTypes : The prefab names of AI _characters_. The AI is randomly 
 int aiSkill : See General parameters
 float aiPerception : See General parameters
 array<string> buildingNames : Names of the buildings. This works as a wildcard. For example:
-	"Barracks_" will include all barrack types on the map.
-	"PubVillage_E_1L01" will include this type of pub and will ignore the others.
+  "Barracks_" will include all barrack types on the map.
+  "PubVillage_E_1L01" will include this type of pub and will ignore the others.
 string lootBox : The box for loot. See Loot box for compatible values.
 SCR_DC_Loot loot : (optional) Loot found in the mission. 
 ```
