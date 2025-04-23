@@ -25,7 +25,7 @@
 		private const int DC_MISSION_STATIC_FAIL_LIMIT = 2;
 		private const int DC_MISSION_CYCLE_TIME_DEFAULT = 10;
 		private const int DC_MISSION_START_DELAY = 10;					
-		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*10;
+		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 1*20;
 		private const int DC_MISSION_ACTIVE_TIME = 2*60;				
 		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 2;	
 		private const int DC_MISSION_ACTIVE_DISTANCE = 200;		

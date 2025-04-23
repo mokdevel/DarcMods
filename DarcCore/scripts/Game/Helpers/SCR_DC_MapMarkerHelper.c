@@ -41,34 +41,37 @@ sealed class SCR_DC_MapMarkerHelper
 	*/
 	static void DeleteMarker(string id)
 	{
-		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
-		if (!mapMarkerMgr)
-			return;
-		
-		int startCount = m_markers.Count();
-		
-		//Clean up marker widgets
-		for (int i = 0; i < m_markers.Count(); i++)		
+		if (GetGame().GetGameMode())
 		{
-			if (m_markers[i].id.Contains(id))
+			SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
+			if (!mapMarkerMgr)
+				return;
+			
+			int startCount = m_markers.Count();
+			
+			//Clean up marker widgets
+			for (int i = 0; i < m_markers.Count(); i++)		
 			{
-				int iID = m_markers[i].iID;
-				SCR_MapMarkerBase marker;
-				marker = GetMarkerByID(m_markers[i].iID);
-				if (marker)
+				if (m_markers[i].id.Contains(id))
 				{
-					mapMarkerMgr.RemoveStaticMarker(marker);
-					m_markers.Remove(i);
-					i--;
-				}
-				else
-				{
-					SCR_DC_Log.Add("[SCR_DC_MapMarkerHelper:DeleteMarker] SCR_MapMarkerBase NULL!", LogLevel.SPAM);        							
-				}					
-			}	
+					int iID = m_markers[i].iID;
+					SCR_MapMarkerBase marker;
+					marker = GetMarkerByID(m_markers[i].iID);
+					if (marker)
+					{
+						mapMarkerMgr.RemoveStaticMarker(marker);
+						m_markers.Remove(i);
+						i--;
+					}
+					else
+					{
+						SCR_DC_Log.Add("[SCR_DC_MapMarkerHelper:DeleteMarker] SCR_MapMarkerBase NULL!", LogLevel.SPAM);        							
+					}					
+				}	
+			}
+			
+			SCR_DC_Log.Add("[SCR_DC_MapMarkerHelper:DeleteMarker] " + m_markers.Count() + " markers. Deleted " + (startCount - m_markers.Count()) + " markers", LogLevel.DEBUG);        		
 		}
-		
-		SCR_DC_Log.Add("[SCR_DC_MapMarkerHelper:DeleteMarker] " + m_markers.Count() + " markers. Deleted " + (startCount - m_markers.Count()) + " markers", LogLevel.DEBUG);        		
 	}
 
 	//------------------------------------------------------------------------------------------------

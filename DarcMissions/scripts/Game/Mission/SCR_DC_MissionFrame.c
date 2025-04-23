@@ -86,36 +86,36 @@ class SCR_DC_MissionFrame
 		
 		//Fix seconds to ms
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Waiting for " + m_Config.missionStartDelay + " seconds before spawning missions.", LogLevel.NORMAL);
-		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;
+		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;		//sec to ms
+		m_LastMissionSpawnTime = (System.GetTickCount() / 1000) - m_Config.missionDelayBetweeen;	//Fix the timer so that first mission immediately spawns
 		
 		#ifndef SCR_DC_RELEASE
-			SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.REDCROSS_SMALL, "DMC_B", "");
-			SCR_DC_MapMarkerHelper.CreateMapMarker("800 0 3500", DC_EMissionIcon.REDCROSS, "DMC_B", "");
+//			SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.REDCROSS_SMALL, "DMC_B", "");
+//			SCR_DC_MapMarkerHelper.CreateMapMarker("800 0 3500", DC_EMissionIcon.REDCROSS, "DMC_B", "");
 //			SCR_DC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "");
 		#endif	
-
-		#ifndef SCR_DC_RELEASE				
-/*			array<string>buildingsToFind = {"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_"};
-			array<IEntity>buildings = {};
-		
-			SCR_DC_Misc.FindBuildings(buildings, buildingsToFind);
-		
-			IEntity entity = buildings[0];
-			array<string> aiChars = {
-				"{5117311FB822FD1F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Officer.et",
-				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
-				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
-				"{96C784C502AC37DA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_MG.et",
-				"{7DE1CBA32A0225EB}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Randomized.et"
-			};
-		
-			SCR_DC_AIHelper.SpawnAIInBuilding(entity, aiChars);
-*/			
-		#endif		
 		
 		MissionFrameStart();
 	}
 	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	End the mission framework. Clean up the running missions.
+	*/	
+	void ~SCR_DC_MissionFrame()
+	{
+		//Clean and delete missions
+		while(m_MissionList.Count() > 0)
+		{
+			SCR_DC_Mission mission = m_MissionList[0];
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Deleting mission: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
+			SCR_DC_DebugHelper.DeleteDebugPos(mission.GetId());
+			//delete mission;	//This gives an error...
+			m_MissionList.RemoveOrdered(0);			
+		}
+		SCR_DC_Log.Add("[~SCR_DC_MissionFrame] Stopping SCR_DC_MissionFrame", LogLevel.NORMAL);
+	}
+
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Start the mission framework.
@@ -123,22 +123,6 @@ class SCR_DC_MissionFrame
 	void MissionFrameStart()
 	{
 		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStartDelay, false);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	End the mission framework. Clean up the running missions.
-	*/	
-	void MissionFrameEnd()
-	{
-		//Clean and delete missions
-		foreach(SCR_DC_Mission mission: m_MissionList)
-		{
-			mission.MissionEnd();
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Deleting mission: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
-			SCR_DC_DebugHelper.DeleteDebugPos(mission.GetId());
-			delete mission;		
-		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -211,7 +195,7 @@ class SCR_DC_MissionFrame
 		}
 		else
 		{
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] " + m_MissionList.Count() + " active missions. Waiting for mission delay and/or players to join.", LogLevel.DEBUG);
+			//SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] " + m_MissionList.Count() + " active missions. Waiting for mission delay and/or players to join.", LogLevel.DEBUG);
 		}
 
 		//Check if missions are 
@@ -329,9 +313,6 @@ class SCR_DC_MissionFrame
 	*/	
 	protected bool isMissionDelayPassed()
 	{
-//		int delayTime = m_LastMissionSpawnTime + m_Config.missionDelayBetweeen;
-//		int systemTime = (System.GetTickCount() / 1000);
-		
 		if ( getMissionDelayWait() > 0)
 		{
 //			SCR_DC_Log.Add("[SCR_DC_MissionFrame:isMissionDelayPassed] Waiting for delay: " + delayTime + ">" + systemTime, LogLevel.DEBUG);

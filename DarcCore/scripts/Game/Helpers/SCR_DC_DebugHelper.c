@@ -26,12 +26,20 @@ class SCR_DC_DebugHelperPos : Managed
 //------------------------------------------------------------------------------------------------
 sealed class SCR_DC_DebugHelper
 {
-	static bool m_DebugSlots = true;
+	static bool m_DebugSlots = true;	//TBD: Slots functionality is very untested. Should be under MODMENU
 	
 	static ref array<ref SCR_DC_DebugHelperPos> m_Pos = {};
 	static ref array<ref SCR_DC_DebugHelperPos> m_Sphere = {};
 	static ref array<IEntity> m_Slots = {};
-			
+
+	//------------------------------------------------------------------------------------------------
+	static void ~SCR_DC_DebugHelper()
+	{
+		m_Pos.Clear();
+		m_Sphere.Clear();
+		m_Slots.Clear();
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Setup the SCR_DC_DebugHelper. Can be used to run some default code in start.

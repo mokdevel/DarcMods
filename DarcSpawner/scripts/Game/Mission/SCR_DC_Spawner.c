@@ -75,7 +75,7 @@ class SCR_DC_Spawner
 
 	void ~SCR_DC_Spawner()
 	{
-		SCR_DC_Log.Add("[SCR_DC_Spawner] Stopping SCR_DC_Spawner", LogLevel.NORMAL);
+		SCR_DC_Log.Add("[~SCR_DC_Spawner] Stopping SCR_DC_Spawner", LogLevel.NORMAL);
 	}
 	
 	//------------------------------------------------------------------------------------------------

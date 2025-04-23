@@ -31,7 +31,7 @@ class SCR_DC_Core
 
 	void ~SCR_DC_Core()
 	{
-		SCR_DC_Log.Add("[SCR_DC_Core] Stopping SCR_DC_Core", LogLevel.NORMAL);
+		SCR_DC_Log.Add("[~SCR_DC_Core] Stopping SCR_DC_Core", LogLevel.NORMAL);
 	}
 
 	//------------------------------------------------------------------------------------------------		

@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-#define SCR_DC_RELEASE
+//#define SCR_DC_RELEASE
 
 sealed class SCR_DC_Conf
 {
@@ -22,7 +22,7 @@ const string CONF_DIRECTORY = "DarcMods";
 #endif
 		
 #ifndef SCR_DC_RELEASE	//Development time options
-	#define SCR_DC_DISABLE_DARCSPAWNER				//Disable the spawner mod during development
+//	#define SCR_DC_DISABLE_DARCSPAWNER				//Disable the spawner mod during development
 //	#define SCR_DC_DISABLE_DARCMISSIONS				//Disable the missions mod during development
 	const bool RELEASE = false;						//Define for release compilation to workshop
 	const bool OVERWRITE_JSON = true;				//Writes a new conf even if it exists
