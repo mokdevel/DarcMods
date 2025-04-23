@@ -73,6 +73,7 @@ Mission specific files
 * dc_missionConfig_Occupation.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--occupation))
 * dc_missionConfig_Convoy.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--convoy))
 * dc_missionConfig_Crashsite.json ([link](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#mission--crashsite))
+* dc_missionConfig_Squatters.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#mission--squatters)) 
 
 Dependency specific files
 * dc_coreConfig.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md#core-config)) : Configuration file for core.
