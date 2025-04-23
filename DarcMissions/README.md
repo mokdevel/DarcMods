@@ -106,6 +106,7 @@ array<int> missionTypeArrayDynamic : List mission types that spawn randomly. (DC
   3 = CONVOY
   4 = CRASHSITE
   5 = PATROL
+  6 = SQUATTER
 array<int> missionTypeArrayStatic : List mission types that are always active. See missionTypeArrayDynamic for values.
 ```
 
