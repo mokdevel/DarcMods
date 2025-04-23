@@ -83,7 +83,7 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 	{
 //		conf.showMarker = false;
 		conf.showMarker = true;
-		conf.spawnSetID = -1;
+		conf.spawnSetID = 0;//-1;
 		conf.spawnOnRoad = false;
 		conf.spawnRndRadius = 100;
 		conf.spawnWorldSizeMultiplier = 2;

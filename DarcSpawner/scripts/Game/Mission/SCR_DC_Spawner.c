@@ -64,7 +64,7 @@ class SCR_DC_Spawner
 						
 		//Find a locations
 		SCR_DC_Locations.GetLocations(m_Locations, m_Config.spawnSets[m_spawnSetID].locationTypes);
-
+		
 		//Check if RoadNetworkManager is available. 		
 		if (!SCR_DC_RoadHelper.GetRoadNetworkManager())
 		{

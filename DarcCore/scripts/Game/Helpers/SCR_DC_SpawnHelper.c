@@ -329,7 +329,7 @@ sealed class SCR_DC_SpawnHelper
 			arsenalComponent.SetArsenalEnabled(false, false);
 //			arsenalComponent.SetSupportedArsenalItemModes(0);
 				
-			SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Disabling arsenal. Type: " + arsenalComponent.GetArsenalType(), LogLevel.DEBUG);
+			SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Disabling arsenal. Type: " + arsenalComponent.GetArsenalType(), LogLevel.SPAM);
 		}			
 
 		// Disable virtual arsenals					
@@ -359,7 +359,7 @@ sealed class SCR_DC_SpawnHelper
 				{
 					arsenalComponent.SetArsenalEnabled(false, false);
 //					arsenalComponent.SetSupportedArsenalItemModes(0);
-					SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Disabling virtual arsenal. Type: " + arsenalComponent.GetArsenalType(), LogLevel.DEBUG);
+					SCR_DC_Log.Add("[SCR_DC_LootHelper:DisableArsenal] Disabling virtual arsenal. Type: " + arsenalComponent.GetArsenalType(), LogLevel.SPAM);
 				}
 			}
 		}		

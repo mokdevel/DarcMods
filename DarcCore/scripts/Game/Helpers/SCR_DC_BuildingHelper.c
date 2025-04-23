@@ -99,14 +99,13 @@ sealed class SCR_DC_BuildingHelper
 		}		
 				
 		//Print debug information
-		if (SCR_DC_Log.GetLogLevel() == DC_LogLevel.ALL)
-		{
+		#ifndef SCR_DC_RELEASE
 			foreach(IEntity building: m_BuildingsCache)
 			{
 				ResourceName res = building.GetPrefabData().GetPrefabName();
 				SCR_DC_Log.Add("[SCR_DC_BuildingHelper:FillBuildingsCache] Found: " + res + " at " + building.GetOrigin(), LogLevel.SPAM);			
 			}		
-		}
+		#endif
 		
 		SCR_DC_Log.Add("[SCR_DC_BuildingHelper:FillBuildingsCache] Found " + m_BuildingsCache.Count() + " items to building cache.", LogLevel.NORMAL);					
 	}

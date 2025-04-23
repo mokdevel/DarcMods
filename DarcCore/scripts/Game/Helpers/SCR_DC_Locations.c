@@ -8,6 +8,7 @@ Functions to find locations (for example cities) from map.
 sealed class SCR_DC_Locations
 {
 	private static ref array<IEntity> m_TmpSlots = {};
+	private static ref array<MapItem> m_TmpMapItems = {};
 	
 	//-----------------------------------------------------------------------------------------------
 	/*!
@@ -43,8 +44,9 @@ sealed class SCR_DC_Locations
 			{
 				tmpMapItem.SetDisplayName(SCR_StringHelper.Translate(tmpMapItem.GetDisplayName()));
 				tmpMapItem.Entity().SetName(tmpMapItem.GetDisplayName());
-				vector origin = tmpMapItem.Entity().GetOrigin();			//TBD: MapItem position on DS is "0 0 0". This is a bug in 1.3.0
+				vector origin = tmpMapItem.Entity().GetOrigin();			//TBD: MapItem position on DS is "0 0 0". This is a bug in 1.3.0?
 				tmpMapItem.SetPos(origin[0], origin[2]);
+				tmpMapItem.Entity().SetOrigin(origin);						//Need to put the entity pos ot the mapItem pos
 				locationArray.Insert(tmpMapItem.Entity());
 				
 				m_debugLocationArray.Insert(tmpMapItem);
@@ -52,7 +54,9 @@ sealed class SCR_DC_Locations
 		}
 				
 		SCR_DC_Log.Add("[SCR_DC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
-		ShowDebugInfo(m_debugLocationArray);
+//		#ifndef SCR_DC_RELEASE
+			ShowDebugInfo(m_debugLocationArray);
+//		#endif
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -70,14 +74,17 @@ sealed class SCR_DC_Locations
 			foreach (MapItem tmpMapItem: m_tmpLocationArray)
 			{
 				tmpMapItem.SetDisplayName(SCR_StringHelper.Translate(tmpMapItem.GetDisplayName()));
-				vector origin = tmpMapItem.Entity().GetOrigin();			//TBD: MapItem position on DS is "0 0 0". This is a bug in 1.3.0
+				vector origin = tmpMapItem.Entity().GetOrigin();			//TBD: MapItem position on DS is "0 0 0". This is a bug in 1.3.0?
 				tmpMapItem.SetPos(origin[0], origin[2]);
+				//tmpMapItem.Entity().SetOrigin(origin);						//Need to put the entity pos ot the mapItem pos
 				locationArray.Insert(tmpMapItem);
 			}			
 		}
 		
 		SCR_DC_Log.Add("[SCR_DC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
-		ShowDebugInfo(locationArray);
+//		#ifndef SCR_DC_RELEASE
+			ShowDebugInfo(locationArray);
+//		#endif
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -98,13 +105,16 @@ sealed class SCR_DC_Locations
 	
 			foreach (MapItem location: m_tmpLocationArray)
 			{	
-				SCR_DC_Log.Add( string.Format("[SCR_DC_Locations:ShowDebugInfo] Name: %1 , DisplayName: %2 , Type: %3 , Pos: %4 , Entity: %5", 
+				IEntity entity = location.Entity();
+				SCR_DC_Log.Add( string.Format("[SCR_DC_Locations:ShowDebugInfo] Name: %1 , DisplayName: %2 , CreatedName: %3, Type: %4 , Pos: %5 , Entity: %6", 
 					location.Entity().GetName(),
 					location.GetDisplayName(),
+//					CreateName(entity),
+					CreateName(location.GetPos()),
 					location.GetBaseType(),
 					location.GetPos(),
-					location.Entity()
-					), LogLevel.SPAM);
+					entity
+					), LogLevel.DEBUG);
 
 				slots.Clear();
 				int slotcount = GetLocationSlots(slots, location.GetPos(), 200);
@@ -127,75 +137,96 @@ sealed class SCR_DC_Locations
 	//------------------------------------------------------------------------------------------------
 	static string GetNameCloseToPos(vector pos, int distance = 300)
 	{
-		array<MapItem> mapItems = {};
+//		array<MapItem> mapItems = {};
+//		array<IEntity> mapEntities = {};
 		string name = "";
 		
-		SCR_MapEntity.GetMapInstance().GetInsideCircle(mapItems, pos, distance);
+		pos[1] = SCR_TerrainHelper.GetTerrainY(pos);
+		m_TmpMapItems.Clear();
 		
-		foreach (MapItem mapItem: mapItems)
+//		SCR_MapEntity.GetMapInstance().GetInsideCircle(mapItems, pos, distance);
+		GetGame().GetWorld().QueryEntitiesBySphere(pos, distance, GetMapItemsCallBack);
+		
+		SCR_DC_Log.Add("[SCR_DC_Locations:GetNameCloseToPos] Start.. " + pos + " mapitems: " + m_TmpMapItems.Count(), LogLevel.SPAM);		
+		foreach (MapItem mapItem: m_TmpMapItems)
 		{
 			string tmpName = SCR_StringHelper.Translate(mapItem.GetDisplayName());
 			if (tmpName != "")
 			{
 				name = tmpName;
-				SCR_DC_Log.Add("[SCR_DC_Locations:GetNameCloseToPos] Found name: " + tmpName + " " + SCR_Enum.GetEnumName(EMapDescriptorType, mapItem.GetBaseType()), LogLevel.SPAM);
+				SCR_DC_Log.Add("[SCR_DC_Locations:GetNameCloseToPos] Found name: " + tmpName + " " + SCR_Enum.GetEnumName(EMapDescriptorType, mapItem.GetBaseType()) + " at " + pos, LogLevel.DEBUG);
 				break;
-			}				
+			}
+			else
+			{
+				SCR_DC_Log.Add("[SCR_DC_Locations:GetNameCloseToPos] Found name: EMPTY", LogLevel.SPAM);
+			}
 		}			
-
+		
+/*		foreach (MapItem mapItem: mapItems)
+		{
+			string tmpName = SCR_StringHelper.Translate(mapItem.GetDisplayName());
+			if (tmpName != "")
+			{
+				name = tmpName;
+				SCR_DC_Log.Add("[SCR_DC_Locations:GetNameCloseToPos] Found name: " + tmpName + " " + SCR_Enum.GetEnumName(EMapDescriptorType, mapItem.GetBaseType()) + " at " + pos, LogLevel.DEBUG);
+				break;
+			}
+			else
+			{
+				SCR_DC_Log.Add("[SCR_DC_Locations:GetNameCloseToPos] Found name: EMPTY", LogLevel.SPAM);
+			}
+		}			*/
+		
 		return name;	
 	}
 
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Call back filter for GetMapItems
+	*/	
+	static private bool GetMapItemsCallBack(IEntity entity)
+	{
+	    SCR_MapDescriptorComponent mapDescr = SCR_MapDescriptorComponent.Cast(entity.FindComponent(SCR_MapDescriptorComponent));
+		
+		if (mapDescr)
+		{
+			MapItem mapItem = mapDescr.Item();
+			m_TmpMapItems.Insert(mapItem);
+		}
+		return true;
+	}
+	
+		
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Creates a name for a location or a position
 	*/	
-	static string CreateName(IEntity location, string nameDefault)
+	static string CreateName(IEntity location, string nameDefault = "any")
 	{
-		string name;
-		
-		name = CreateName(location.GetOrigin(), location.GetName());
-
-//TBD: Remove the commented code				
-/*		if (nameDefault == "any")
-		{					
-			name = location.GetName();
-			if(name == "")
-			{
-				name = SCR_DC_Locations.GetNameCloseToPos(location.GetOrigin());
-				if (name == "")	//Try a second time with a bigger circle
-				{
-					name = SCR_DC_Locations.GetNameCloseToPos(location.GetOrigin(), 400);
-				}				
-			}
-			
-			if(name == "")
-			{
-				name = "[REDACTED]";
-			}		
-		}
-		else
-		{
-			name = nameDefault;
-		}*/
+		string name = CreateName(location.GetOrigin(), nameDefault);
 		
 		return name;		
 	}
 
 	//----------------------------------------------------------
-	static string CreateName(vector pos, string nameDefault)
+	static string CreateName(vector pos, string nameDefault = "any")
 	{
 		string name;
 		
 		if (nameDefault == "any")
-		{					
-			name = SCR_DC_Locations.GetNameCloseToPos(pos);
-			if (name == "")	//Try a second time with a bigger circle
+		{	
+			array<int>distancesToTry = {50, 150, 300, 400};
+			foreach(int distance : distancesToTry)
 			{
-				name = SCR_DC_Locations.GetNameCloseToPos(pos, 400);
-			}				
+				name = SCR_DC_Locations.GetNameCloseToPos(pos, distance);
+				if (name != "")
+				{
+					break;
+				}				
+			}
 			
-			if(name == "")
+			if (name == "")
 			{
 				name = "[REDACTED]";
 			}		
@@ -206,8 +237,7 @@ sealed class SCR_DC_Locations
 		}
 		
 		return name;		
-	}
-			
+	}	
 						
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -238,9 +268,7 @@ sealed class SCR_DC_Locations
 		if (ent.Type() == SCR_SiteSlotEntity)
 		{
 			m_TmpSlots.Insert(ent);
-//			return true;
 		}
-//		return false;
 		return true;
 	}
 }

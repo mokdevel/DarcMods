@@ -18,10 +18,12 @@ const string CONF_DIRECTORY = "DarcMods";
 	const bool SHOW_VALID_MISSION_AREAS = false;	//Debug markers for mission position testing drawn on the map
 	const bool SHOW_MARKER_FOR_LOCATION = false;	//Show a debug marker for locations
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.NORMAL
-	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG
+	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL
 #endif
 		
 #ifndef SCR_DC_RELEASE	//Development time options
+	#define SCR_DC_DISABLE_DARCSPAWNER				//Disable the spawner mod during development
+//	#define SCR_DC_DISABLE_DARCMISSIONS				//Disable the missions mod during development
 	const bool RELEASE = false;						//Define for release compilation to workshop
 	const bool OVERWRITE_JSON = true;				//Writes a new conf even if it exists
 //	const bool OVERWRITE_JSON = false;				//Writes a new conf even if it exists

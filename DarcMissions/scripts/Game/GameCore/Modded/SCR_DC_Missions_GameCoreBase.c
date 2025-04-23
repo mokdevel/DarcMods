@@ -3,7 +3,8 @@
 modded class SCR_BaseGameMode 
 {
 	ref SCR_DC_MissionFrame missionFrame;
-
+	
+	#ifndef SCR_DC_DISABLE_DARCMISSIONS
 	//------------------------------------------------------------------------------------------------
     override void OnGameStart()
     {
@@ -45,5 +46,6 @@ modded class SCR_BaseGameMode
 			mapMarkerMgr.SetStreamRulesForPlayer(playerId);
 				
 		SCR_DC_Log.Add("[SCR_DC_GameCoreBase: OnPlayerSpawned] Player spawned - id: " + playerId, LogLevel.DEBUG);
-	}		
+	}
+	#endif
 };

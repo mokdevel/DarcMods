@@ -2,6 +2,7 @@
 
 modded class SCR_BaseGameMode 
 {
+	#ifndef SCR_DC_DISABLE_DARCSPAWNER
 	//private 
 	ref SCR_DC_Spawner dcSpawner;
 
@@ -43,4 +44,5 @@ modded class SCR_BaseGameMode
 		dcSpawner = new SCR_DC_Spawner();
 		dcSpawner.Run();
 	}
+	#endif
 };

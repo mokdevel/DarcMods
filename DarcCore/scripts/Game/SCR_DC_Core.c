@@ -97,13 +97,14 @@ class SCR_DC_CoreJsonApi : SCR_DC_JsonApi
 //		conf.logLevel = DC_LogLevel.DEBUG;	
 		conf.logLevel = SCR_DC_Conf.DEFAULT_LOGLEVEL;
 		conf.buildingExcludeFilter = {
-			"BrickPile", "WoodPile",
-			"AmmoDump",
-			"PierConcrete", "PierWooden", "Pier_",
-			"ConcreteRetainingWall", "Calvary", "Castle_", 
-			"GraveStone", "Grave_",
+			"BrickPile", "WoodPile", "Hotbed", "Henhouse", "PhoneBooth",
+			"AmmoDump", "ElectricCabinet", "ControlBox110kV", "LightBeacon",
+			"PierConcrete", "PierWooden", "Pier_", "SeaBollard", 
+			"ConcreteRetainingWall", "StoneRetainingWall", "ConcreteBridge",
+			"Calvary", "Castle_", "Davit_",
+			"GraveStone", "Grave_", "GraveFence",
 			"MooringDolphin",
-			"HouseRuin",		
+			"HouseRuin",
 		}
 	}
 };
