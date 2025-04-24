@@ -17,7 +17,7 @@ class SCR_DC_Mission_Template : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Template()
 	{
-		SCR_DC_Log.Add("[SCR_DC_Mission_Template] Constructor", LogLevel.DEBUG);
+		SCR_DC_Log.Add("[SCR_DC_Mission_Template] Constructor", LogLevel.SPAM);
 				
 		//Set some defaults
 		SCR_DC_Mission();

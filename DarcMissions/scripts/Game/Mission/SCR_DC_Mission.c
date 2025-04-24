@@ -38,7 +38,7 @@ class SCR_DC_Mission
 	//Common for all missions
 	private DC_EMissionState m_State;
 	private DC_EMissionType m_Type;
-	private bool m_Static;		//Defines if the mission is dynamic or static. Dynamic is default. 
+	private bool m_Static;					//Defines if the mission is dynamic or static. Dynamic is default. 
     private string m_Id;
     private vector m_Pos;
     private string m_PosName;
@@ -46,11 +46,12 @@ class SCR_DC_Mission
     private string m_Info;
     private bool m_ShowHint;
 	//Internals
-	private int m_StartTime;		//Seconds when mission started
-	private int m_EndTime;			//Seconds when mission shall end.
-	private int m_ActiveTime;		//Seconds of how long the mission should be active
+	private int m_StartTime;				//Seconds when mission started
+	private int m_EndTime;					//Seconds when mission shall end.
+	private int m_ActiveTime;				//Seconds of how long the mission should be active
 	//Internals without getters
-	private int m_ActiveDistance;	//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
+	private int m_ActiveDistance;			//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
+	private int m_ActiveTimeToEnd;			//The time to keep mission active once all AIs are dead.
 	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
@@ -66,7 +67,7 @@ class SCR_DC_Mission
 		m_PosName = "";
 		m_Title = "";
 		m_Info = "";
-		m_StartTime = (System.GetTickCount() / 1000); 			//The time in seconds when the game was started.
+		m_StartTime = (System.GetTickCount() / 1000); 			//The time in seconds when the mission was started.
 		SetActiveTime(DC_MISSION_CYCLE_TIME_DEFAULT*20);		//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
 		m_ActiveDistance = 0;									//Set a default zero
 	}
@@ -251,6 +252,12 @@ class SCR_DC_Mission
 	}		
 	
 	//------------------------------------------------------------------------------------------------
+	void SetActiveTimeToEnd(int seconds)	
+	{
+		m_ActiveTimeToEnd = seconds;
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	void SetActiveTime(int seconds)	
 	{
 		m_ActiveTime = seconds;
@@ -267,15 +274,15 @@ class SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	void ResetActiveTime()	
 	{
-		float mult = 1.0;	//In normal cases the active time is kept as default. When AIs are dead, shorten it to some %
+		int currentTime = (System.GetTickCount() / 1000);		
 		
-		if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
+		if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups) && m_State == DC_EMissionState.ACTIVE)
 		{
-			mult = 0.3;		//If all AIs dead, keep mission active only 30% of the time. Players close by will reset the time
+			m_EndTime = currentTime + m_ActiveTimeToEnd;
+			return;
 		}
 
-		int currentTime = (System.GetTickCount() / 1000);		
-		m_EndTime = currentTime + (m_ActiveTime * mult);
+		m_EndTime = currentTime + m_ActiveTime;
 	}		
 
 	//------------------------------------------------------------------------------------------------

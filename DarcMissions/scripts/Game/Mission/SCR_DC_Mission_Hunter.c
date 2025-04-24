@@ -22,7 +22,6 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 	int m_GroupsToSpawn	= 0;	//Amount of groups to spawn
 	int m_GroupsSpawned = 0;	//The amount of groups spawned. Between spawns, a group may be killed so the total of m_Groups is not reliable to know the count.
 	//------------------------------------------------------------------------------------------------
-	//Constructor
 	void SCR_DC_Mission_Hunter(bool createConf = false)
 	{
 		SCR_DC_Log.Add("[SCR_DC_Mission_Hunter] Constructor", LogLevel.SPAM);

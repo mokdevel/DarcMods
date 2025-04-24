@@ -12,7 +12,8 @@
 		private const int DC_MISSION_DELAY_BETWEEN_MISSIONS = 4*60;						//Minimum delay between missions.
 		private const int DC_MISSION_ACTIVE_TIME = 15*60;								//Time to keep the mission active (seconds)
 		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 2;	//Static missions are to be kept alive longer
-		private const int DC_MISSION_ACTIVE_DISTANCE = 300;								//Mission is to be removed if no players close to the position after the mission active time has passed.
+		private const int DC_MISSION_ACTIVE_DISTANCE = 200;								//Mission is to be removed if no players close to the position after the mission active time has passed.
+		private const int DC_MISSION_ACTIVE_TIME_TO_END = 180;							//Mission is kept active this time once all AIs are dead.
 		private const int DC_MISSIONFRAME_CYCLE_TIME = 60;								//The cycle to run the mission frame. 
 		private const int DC_MISSIONFRAME_CYCLE_TIME_LIMIT = 20;						//You should not be running the frame too often as it's unncecessary
 		private const bool DC_MISSION_RECREATE_CONFIGS = true;							//Force recreaction of config files. 
@@ -29,6 +30,7 @@
 		private const int DC_MISSION_ACTIVE_TIME = 2*60;				
 		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 2;	
 		private const int DC_MISSION_ACTIVE_DISTANCE = 200;		
+		private const int DC_MISSION_ACTIVE_TIME_TO_END = 60;		
 		private const int DC_MISSIONFRAME_CYCLE_TIME = 20;
 		private const int DC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
 		private const bool DC_MISSION_RECREATE_CONFIGS = false;
@@ -54,6 +56,7 @@ class SCR_DC_MissionFrameConfig : Managed
 	int missionActiveTime;			//Time to keep the mission active (seconds)
 	int missionActiveTimeStatic;	//Time to keep the static mission active (seconds). This typically is much longer than for dynamic.
 	int missionActiveDistance;		//The distance to a player to keep the mission active.
+	int missionActiveTimeToEnd;		//Time to keep the mission active once all AI is dead. Used for both dynamic and static missions.
 	int missionHintTime;			//Seconds to show mission hints to players. 0 disables hints.
 	int minDistanceToMission;		//Distance to another mission. Two missions shall not be too close to each other.
 	int minDistanceToPlayer;		//Mission shall not spawn too close to a player.
@@ -114,6 +117,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 		conf.missionActiveTime = DC_MISSION_ACTIVE_TIME;
 		conf.missionActiveTimeStatic = DC_MISSION_ACTIVE_TIME_STATIC;
 		conf.missionActiveDistance = DC_MISSION_ACTIVE_DISTANCE;
+		conf.missionActiveTimeToEnd = DC_MISSION_ACTIVE_TIME_TO_END;
 		conf.missionHintTime = DC_MISSION_HINT_TIME;
 		conf.minDistanceToMission = 500;
 		conf.minDistanceToPlayer = 100;

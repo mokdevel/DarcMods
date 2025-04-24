@@ -181,6 +181,7 @@ class SCR_DC_MissionFrame
 					m_StaticFailCount = 0;
 					//Set the defaul active distance
 					tmpDC_Mission.SetActiveDistance(m_Config.missionActiveDistance);
+					tmpDC_Mission.SetActiveTimeToEnd(m_Config.missionActiveTimeToEnd);
 					//Set mission to start to run
 					m_MissionList[m_MissionList.Count() - 1].MissionRun();
 				
