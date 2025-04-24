@@ -99,6 +99,7 @@ int missionFrameCycleTime : (seconds) The cycle time to manage mission spawning,
 int missionActiveTime : (seconds) Time to keep the mission active.
 int missionActiveTimeStatic : (seconds) Time to keep the static mission active (seconds). This typically is much longer than for dynamic.
 int missionActiveDistance : The distance to a player to keep the mission active.
+int missionActiveTimeToEnd : (seconds) Time to keep the mission active once all AI is dead. Used for both dynamic and static missions.
 int missionHintTime : (seconds) Time to show mission hints to players. 0 disables ALL hints.
 int minDistanceToMission : Distance to another mission. Two missions shall not be too close to each other.
 int minDistanceToPlayer : Mission shall not spawn too close to a player.
