@@ -276,7 +276,8 @@ float aiPerception : See General parameters
 ## Mission : Convoy
 Example: [dc_missionConfig_Convoy.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Convoy.json)
 
-AI patrol is spawned in a vehicle to move around the map. 
+AI patrol is spawned in a vehicle to move around the map. The convoy will go from ```posStart``` to ```posDestination```. When destination has been reached, the patrol will LOITER.
+
 ```
 int version : See Common parameters
 string author : See Common parameters
@@ -299,9 +300,6 @@ string posName : See General parameters
 string title : See General parameters
 string info : See General parameters
 array<EMapDescriptorType> locationTypes : See Location parameters
-DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
-  ROUTE : The convoy will go from posStart to posDestination. When destination has been reached, the patrol will LOITER.
-  RADIUS, SCATTERED : The concoy will follow a path created with waypointRange starting from posStart. posDestination is ignored.
 array<string> groupTypes : See General parameters
 int aiSkill : See General parameters
 float aiPerception : See General parameters
