@@ -3,6 +3,12 @@
 //An example of a mission file with simple set. No real functionality.
 //Do a "replace all" for the word "Template" with your mission name.
 
+//------------------------------------------------------------------------------------------------
+/*!
+
+*/
+
+//------------------------------------------------------------------------------------------------
 class SCR_DC_Mission_Template : SCR_DC_Mission
 {
 	private ref SCR_DC_TemplateJsonApi m_TemplateJsonApi = new SCR_DC_TemplateJsonApi();	

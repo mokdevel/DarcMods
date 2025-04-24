@@ -8,21 +8,10 @@ The entity is not streamed so everyone gets the hint regardless on where they ar
 
 //------------------------------------------------------------------------------------------------
 class SCR_DC_RplHintEntityClass: GenericEntityClass {}
-//SCR_DC_RplHintEntityClass g_SCR_DC_RplHintEntityClassInst;
  
 class SCR_DC_RplHintEntity : GenericEntity
 {
 	protected static SCR_DC_RplHintEntity s_Instance;	
-
-/*    void RplDCHint(IEntitySource src, IEntity parent)
-    {
-        this.SetEventMask(EntityEvent.FRAME);
-    }
-	
-	override void EOnFrame(IEntity owner, float timeSlice)
-	{
-//		SCR_DC_DebugHelper.OnFrame(owner);
-	}*/
 
 	override void EOnActivate(IEntity owner)
 	{

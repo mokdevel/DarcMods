@@ -6,7 +6,6 @@ A chopper flys and crashes. Loot and defending AI is spawned.
 */
 
 //------------------------------------------------------------------------------------------------
-
 enum DC_EMissionCrashSiteState
 {
 	INIT,
@@ -16,6 +15,7 @@ enum DC_EMissionCrashSiteState
 	RUN
 };
 
+//------------------------------------------------------------------------------------------------
 class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 {
 	private ref SCR_DC_CrashsiteJsonApi m_CrashsiteJsonApi = new SCR_DC_CrashsiteJsonApi();	

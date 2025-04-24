@@ -7,11 +7,11 @@ Logging functionality that fits my needs
 
 enum DC_LogLevel
 {
-	NONE,
-	ERROR,	//Prints FATAL, ERROR, WARNING
-	NORMAL,	//Prints NORMAL + all above
-	DEBUG,	//Prints DEBUG + all above
-	ALL		//Prints everything including VERBOSE and SPAM. It's a lot.
+	NONE,	//0
+	ERROR,	//1 - Prints FATAL, ERROR, WARNING
+	NORMAL,	//2 - Prints NORMAL + all above
+	DEBUG,	//3 - Prints DEBUG + all above
+	ALL		//4 - Prints everything including VERBOSE and SPAM. It's a lot.
 };
 
 //Print method has these levels
@@ -33,11 +33,11 @@ sealed class SCR_DC_Log
 {
 	static private DC_LogLevel m_LogLevel = DC_LogLevel.NORMAL;
 	
-	static void SCR_DC_Log()
+/*	static void SCR_DC_Log()
 	{
 		m_LogLevel = DC_LogLevel.NORMAL;
 		Print("[SCR_DC_Log] Started. (LogLevel = " + SCR_Enum.GetEnumName(DC_LogLevel, m_LogLevel), LogLevel.NORMAL);
-	}
+	}*/
 	
 	//------------------------------------------------------------------------------------------------
 	static void SetLogLevel(DC_LogLevel logLevel)
@@ -45,6 +45,10 @@ sealed class SCR_DC_Log
 		if (m_LogLevel != logLevel)
 		{
 			Print("[SCR_DC_Log] LogLevel changed to " + SCR_Enum.GetEnumName(DC_LogLevel, logLevel) + " (was: " + SCR_Enum.GetEnumName(DC_LogLevel, m_LogLevel) + ")", LogLevel.NORMAL);
+		}
+		else
+		{
+			Print("[SCR_DC_Log] LogLevel: " + SCR_Enum.GetEnumName(DC_LogLevel, m_LogLevel), LogLevel.NORMAL);
 		}
 		m_LogLevel = logLevel;
 	}

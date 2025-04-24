@@ -6,7 +6,6 @@ This mission spawns groups to defend a location
 */
 
 //------------------------------------------------------------------------------------------------
-
 class SCR_DC_Mission_Patrol : SCR_DC_Mission
 {
 	private ref SCR_DC_PatrolJsonApi m_PatrolJsonApi = new SCR_DC_PatrolJsonApi;	

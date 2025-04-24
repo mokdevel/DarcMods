@@ -6,7 +6,6 @@ This mission spawns groups to defend a location
 */
 
 //------------------------------------------------------------------------------------------------
-
 class SCR_DC_Mission_Occupation : SCR_DC_Mission
 {
 	private ref SCR_DC_OccupationJsonApi m_OccupationJsonApi = new SCR_DC_OccupationJsonApi;	

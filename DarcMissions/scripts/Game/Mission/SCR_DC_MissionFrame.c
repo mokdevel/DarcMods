@@ -35,8 +35,9 @@ class SCR_DC_MissionFrame
 	ref array<ref SCR_DC_NonValidArea> m_NonValidAreas = {};
 	
 	private string m_WorldName;
-	private int m_LastMissionSpawnTime = 0;
-	private int m_StaticFailCount = 0;
+	private int m_LastMissionSpawnTime;
+	private int m_StaticFailCount = 0;				//Counter for failed static missions. If staticFailLimit is reached, we'll spawn a dynamic one.
+	private bool m_FirstMissionSpawned = false;		//The first mission is to be dynamic
 		
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_MissionFrame()
@@ -83,11 +84,15 @@ class SCR_DC_MissionFrame
 			}
 		}
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas defined: " + m_NonValidAreas.Count(), LogLevel.NORMAL);		
-		
+
+		//Set some defaults
+		m_StaticFailCount = 0;
+		m_LastMissionSpawnTime = (System.GetTickCount() / 1000) - m_Config.missionDelayBetweeen;	//Fix the timer so that first mission immediately spawns
+		m_FirstMissionSpawned = false;
+				
 		//Fix seconds to ms
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Waiting for " + m_Config.missionStartDelay + " seconds before spawning missions.", LogLevel.NORMAL);
 		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;		//sec to ms
-		m_LastMissionSpawnTime = (System.GetTickCount() / 1000) - m_Config.missionDelayBetweeen;	//Fix the timer so that first mission immediately spawns
 		
 		#ifndef SCR_DC_RELEASE
 //			SCR_DC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.REDCROSS_SMALL, "DMC_B", "");
@@ -136,20 +141,19 @@ class SCR_DC_MissionFrame
 		{
 			private ref SCR_DC_Mission tmpDC_Mission = null;
 
-			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Starting new missions", LogLevel.DEBUG);
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Spawning new mission", LogLevel.NORMAL);
 			
 			DC_EMissionType missionType = null;
 			
 			//Select a new mission to spawn. 
-			//Static missions are prioritized so check that the list spawned.
-			if (CountStaticMissions() < m_Config.missionTypeArrayStatic.Count() && m_StaticFailCount < m_Config.staticFailLimit)
+			//Static missions are prioritized so check that the list spawned. 
+			if (CountStaticMissions() < m_Config.missionTypeArrayStatic.Count() && m_StaticFailCount < m_Config.staticFailLimit && m_FirstMissionSpawned)
 			{
 				missionType = m_Config.missionTypeArrayStatic.GetRandomElement();
 				tmpDC_Mission = MissionCreate(missionType);
 				if (tmpDC_Mission)
 				{
 					tmpDC_Mission.SetStatic(true);
-					//Set the defaul active time. NOTE: Static missions are kept alive 
 					tmpDC_Mission.SetActiveTime(m_Config.missionActiveTimeStatic);
 				}
 			}
@@ -160,6 +164,7 @@ class SCR_DC_MissionFrame
 				if (tmpDC_Mission)
 				{
 					tmpDC_Mission.SetActiveTime(m_Config.missionActiveTime);
+					m_FirstMissionSpawned = true;
 				}				
 			}
 			
@@ -221,7 +226,7 @@ class SCR_DC_MissionFrame
 			
 			if (mission.GetState() == DC_EMissionState.EXIT || mission.GetState() == DC_EMissionState.FAILED)
 			{
-				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Deleting mission: " + mission.GetId(), LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Deleting mission: " + mission.GetId(), LogLevel.NORMAL);
 				SCR_DC_DebugHelper.DeleteDebugPos(mission.GetId());
 				m_MissionList.Remove(i);
 				delete mission;
@@ -240,12 +245,25 @@ class SCR_DC_MissionFrame
 			
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Active missions: " + m_MissionList.Count() + "/" + m_Config.missionCount + ". Delay for next mission: " + getMissionDelayWait() + " seconds.", LogLevel.NORMAL);
 		MissionDump();
-		
-		if (SCR_DC_Conf.SHOW_VALID_MISSION_AREAS)
+
+		//Check if no players available
+		if (SCR_DC_PlayerHelper.PlayerCount() == 0)
 		{
-			SCR_DC_MissionHelper.DeleteDebugTestMissionPos();
-			SCR_DC_MissionHelper.DebugTestMissionPos();
+			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Waiting for players..", LogLevel.NORMAL);
+			if (m_MissionList.Count() == 0 && m_FirstMissionSpawned)
+			{
+				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Resetting m_FirstMissionSpawned", LogLevel.DEBUG);
+				m_FirstMissionSpawned = false;
+			}
 		}
+
+		#ifndef SCR_DC_RELEASE				
+			if (SCR_DC_Conf.SHOW_VALID_MISSION_AREAS)
+			{
+				SCR_DC_MissionHelper.DeleteDebugTestMissionPos();
+				SCR_DC_MissionHelper.DebugTestMissionPos();
+			}
+		#endif
 				
 		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionFrameCycleTime*1000, false);
 	}
@@ -379,7 +397,7 @@ class SCR_DC_MissionFrame
 	{
 		int i = 0;
 		int aiCount = 0;
-		int cutLen = 18;
+		int cutLen = 25;
 		
 		if (m_MissionList.Count() == 0)
 		{

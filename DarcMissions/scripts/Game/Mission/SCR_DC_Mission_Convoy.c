@@ -1,7 +1,13 @@
 //Mission SCR_DC_Mission_Convoy.c
-//
-//A convoy traveling from A to B
 
+//------------------------------------------------------------------------------------------------
+/*!
+A convoy traveling from A to B.
+
+Note to self: RADIUS, SCATTERED : This could also work, but support was removed as unnecessary. The concoy would follow a path created with waypointRange starting from posStart. posDestination is ignored.
+*/
+
+//------------------------------------------------------------------------------------------------
 enum DC_EMissionConvoyState
 {
 	INIT,
@@ -9,6 +15,7 @@ enum DC_EMissionConvoyState
 	RUN
 };
 
+//------------------------------------------------------------------------------------------------
 class SCR_DC_Mission_Convoy : SCR_DC_Mission
 {
 	private ref SCR_DC_ConvoyJsonApi m_ConvoyJsonApi = new SCR_DC_ConvoyJsonApi();	
@@ -129,7 +136,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 					break;
 				case DC_EMissionConvoyState.MOVE_AI:
 					MoveGroupInVehicle(m_Groups[0], m_Vehicle);
-					SCR_DC_WPHelper.CreateMissionAIWaypoints(m_Groups[0], m_DC_Convoy.waypointGenType, GetPos(), m_PosDestination, DC_EWaypointMoveType.MOVE);
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(m_Groups[0], DC_EWaypointGenerationType.ROUTE, GetPos(), m_PosDestination, DC_EWaypointMoveType.MOVE);
 					missionConvoyState = DC_EMissionConvoyState.RUN;
 					break;
 				case DC_EMissionConvoyState.RUN:
@@ -263,7 +270,6 @@ class SCR_DC_Convoy : Managed
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
 	ref array<EMapDescriptorType> locationTypes = {};	
-	DC_EWaypointGenerationType waypointGenType;
 	ref array<string> groupTypes = {};
 	int aiSkill;
 	float aiPerception	
@@ -272,7 +278,7 @@ class SCR_DC_Convoy : Managed
 	//Optional settings
 	ref SCR_DC_Loot loot = null;	
 	
-	void Set(string comment_, vector pos_, vector posDestination_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, DC_EWaypointGenerationType waypointGenType_, array<string> groupTypes_, int aiSkill_, float aiPerception_, array<string> vehicleTypes_, )
+	void Set(string comment_, vector pos_, vector posDestination_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<string> groupTypes_, int aiSkill_, float aiPerception_, array<string> vehicleTypes_, float cruiseSpeed_)
 	{
 		comment = comment_;
 		pos = pos_;
@@ -281,11 +287,11 @@ class SCR_DC_Convoy : Managed
 		title = title_;
 		info = info_;
 		locationTypes = locationTypes_;
-		waypointGenType = waypointGenType_;
 		groupTypes = groupTypes_;
 		aiSkill = aiSkill_;
 		aiPerception = aiPerception_;
 		vehicleTypes = vehicleTypes_;
+		cruiseSpeed = cruiseSpeed_;
 	}
 }
 
@@ -354,7 +360,6 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_AIRPORT
 			},
-			DC_EWaypointGenerationType.ROUTE,
 			{
 				"{5B08C42EA0661A20}Prefabs/Groups/OPFOR/KLMK/Group_USSR_LightFireTeam_KLMK.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
@@ -365,7 +370,8 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 				"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
 				"{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et",
 				"{D4855501D5B12AF2}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_teal.et"
-			}		
+			},
+			30
 		);
 		conf.convoys.Insert(convoy0);	
 		

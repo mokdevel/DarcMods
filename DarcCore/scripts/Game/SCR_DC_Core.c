@@ -19,11 +19,11 @@ class SCR_DC_Core
 		m_Config = m_DC_CoreConfig.conf;
 
 		SCR_DC_Log.SetLogLevel(m_Config.logLevel);
-/*		#ifndef SCR_DC_RELEASE
-			SCR_DC_Log.SetLogLevel(DC_LogLevel.DEBUG);
-		#endif*/
 
 		GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);			
+		
+		//Initialize LootHelper
+		SCR_DC_LootHelper.Setup();
 		
 		//Set debug visibility
 		SCR_DC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres);							
@@ -41,8 +41,6 @@ class SCR_DC_Core
 		SCR_DC_BuildingHelper.FillBuildingsCache(m_Config.buildingExcludeFilter);
 	}
 }
-
-
 	
 //------------------------------------------------------------------------------------------------
 class SCR_DC_CoreConfig : Managed

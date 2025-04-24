@@ -27,13 +27,30 @@ class SCR_DC_LootListConfig : Managed
 	
 	void Populate()
 	{
+		SCR_DC_Log.Add("[SCR_DC_LootListConfig:Populate] Creating loot lists..", LogLevel.NORMAL);
+		
+		if (modList.IsEmpty())
+		{
+			array<string> addonList = SCR_AddonTool.GetAllAddonFileSystems();
+			foreach (string addon : addonList)
+			{
+				string name = addon + "Prefabs";
+				modList.Insert(name);
+				SCR_DC_Log.Add("[SCR_DC_LootListConfig:Populate] Mod found: " + name, LogLevel.DEBUG);				
+			}
+		}
+		
 		foreach(SCR_DC_LootList lootList : lootLists)
 		{
 			foreach(string mod : modList)
 			{
 				SCR_DC_Resources.GetItemList(lootList.itemList, mod, lootList);
 			}
-			lootList.itemList.Debug();
+			
+			if (SCR_DC_Log.GetLogLevel() > DC_LogLevel.NORMAL)
+			{
+				lootList.itemList.Debug();
+			}
 		}
 	}	
 }
@@ -94,11 +111,12 @@ class SCR_DC_LootListJsonApi : SCR_DC_JsonApi
 	void SetDefaults()
 	{
 		
-		conf.modList = {"$ArmaReforger:Prefabs",
+		conf.modList = {};
+		/*conf.modList = {"$ArmaReforger:Prefabs",
 						"$WCS_Armaments:Prefabs",
 						"$M110MarksmanRifle:Prefabs",
 						"$RISLaserAttachments:Prefabs"
-		};
+		};*/
 		
 		//Lootlist: Rifles
 		SCR_DC_LootList lootlist01 = new SCR_DC_LootList;

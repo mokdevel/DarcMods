@@ -45,7 +45,7 @@ class SCR_DC_RplHintComp : ScriptComponent
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
     protected void RpcDo_ShowHint(string title, string msg, int dur)
     {
-		SCR_DC_Log.Add("[SCR_DC_RplHintComp:RpcDo_ShowHint] Hint: " + msg, LogLevel.SPAM);
+		SCR_DC_Log.Add("[SCR_DC_RplHintComp:RpcDo_ShowHint] Hint: " + msg, LogLevel.NORMAL);
 		
 		string hintTitle = title;
 		string hintDescription = msg;

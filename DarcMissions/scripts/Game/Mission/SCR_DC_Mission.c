@@ -48,7 +48,7 @@ class SCR_DC_Mission
 	//Internals
 	private int m_StartTime;		//Seconds when mission started
 	private int m_EndTime;			//Seconds when mission shall end.
-	private int m_ActiveTime;		//Seconds of how long the mission should be active 
+	private int m_ActiveTime;		//Seconds of how long the mission should be active
 	//Internals without getters
 	private int m_ActiveDistance;	//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
 	
@@ -254,7 +254,6 @@ class SCR_DC_Mission
 	void SetActiveTime(int seconds)	
 	{
 		m_ActiveTime = seconds;
-		//m_EndTime = m_StartTime + m_ActiveTime;
 		ResetActiveTime();
 	}		
 
@@ -268,8 +267,15 @@ class SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	void ResetActiveTime()	
 	{
+		float mult = 1.0;	//In normal cases the active time is kept as default. When AIs are dead, shorten it to some %
+		
+		if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
+		{
+			mult = 0.3;		//If all AIs dead, keep mission active only 30% of the time. Players close by will reset the time
+		}
+
 		int currentTime = (System.GetTickCount() / 1000);		
-		m_EndTime = currentTime + m_ActiveTime;
+		m_EndTime = currentTime + (m_ActiveTime * mult);
 	}		
 
 	//------------------------------------------------------------------------------------------------

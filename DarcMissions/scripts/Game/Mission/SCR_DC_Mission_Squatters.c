@@ -1,8 +1,11 @@
 //Mission SCR_DC_Mission_Squatter.c
-//
-//An example of a mission file with simple set. No real functionality.
-//Do a "replace all" for the word "Squatter" with your mission name.
 
+//------------------------------------------------------------------------------------------------
+/*!
+A building is guarded by AIs with loot available.
+*/
+
+//------------------------------------------------------------------------------------------------
 class SCR_DC_Mission_Squatter : SCR_DC_Mission
 {
 	private ref SCR_DC_SquatterJsonApi m_SquatterJsonApi = new SCR_DC_SquatterJsonApi();	
