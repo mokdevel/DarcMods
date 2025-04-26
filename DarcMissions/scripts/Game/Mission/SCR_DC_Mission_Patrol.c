@@ -8,12 +8,12 @@ This mission spawns groups to defend a location
 //------------------------------------------------------------------------------------------------
 class SCR_DC_Mission_Patrol : SCR_DC_Mission
 {
-	private ref SCR_DC_PatrolJsonApi m_PatrolJsonApi = new SCR_DC_PatrolJsonApi;	
+	private ref SCR_DC_PatrolJsonApi m_PatrolJsonApi = new SCR_DC_PatrolJsonApi();	
 	private ref SCR_DC_PatrolConfig m_Config;
 	
 	protected ref SCR_DC_Patrol m_DC_Patrol;		//Patrol configuration in use
 	
-	private vector m_PosDestination = "0 0 0";
+	private vector m_vPosDestination = "0 0 0";
 
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Patrol()
@@ -30,7 +30,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		
 		//Pick a configuration for mission
 		int idx = SCR_DC_MissionHelper.SelectMissionIndex(m_Config.patrolList);
-		if(idx == -1)
+		if (idx == -1)
 		{
 			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] No patrols defined.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
@@ -44,7 +44,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		
 		//Set defaults
 		vector pos = m_DC_Patrol.pos;
-		m_PosDestination = m_DC_Patrol.posDestination;
+		m_vPosDestination = m_DC_Patrol.posDestination;
 		string posName = m_DC_Patrol.posName;
 		
 		//Find a location for the mission
@@ -54,12 +54,12 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		}
 
 		//Find a location for the destination. Only used for route
-		if (m_PosDestination == "0 0 0")
+		if (m_vPosDestination == "0 0 0")
 		{
-			m_PosDestination = SCR_DC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes);
-			if (m_PosDestination != "0 0 0")
+			m_vPosDestination = SCR_DC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes);
+			if (m_vPosDestination != "0 0 0")
 			{
-				SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Patrol destination: " + m_PosDestination, LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Patrol destination: " + m_vPosDestination, LogLevel.DEBUG);
 			}
 			else
 			{
@@ -67,7 +67,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 			}
 		}
 
-		if (pos == "0 0 0" || m_PosDestination == "0 0 0")	//No suitable location found.
+		if (pos == "0 0 0" || m_vPosDestination == "0 0 0")	//No suitable location found.
 		{				
 			SCR_DC_Log.Add("[SCR_DC_Mission_Patrol] Could not find suitable location.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
@@ -102,7 +102,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 		if (GetState() == DC_EMissionState.ACTIVE)
 		{	
 			//Move the position as the first patrol is moving. This way check for player distance works properly.
-			if(m_Groups[0])
+			if (m_Groups[0])
 			{
 				SetPos(m_Groups[0].GetOrigin());
 				SCR_DC_DebugHelper.MoveDebugPos(GetId(), GetPos());
@@ -146,7 +146,7 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 				m_Groups.Insert(group);
 				if (m_DC_Patrol.waypointGenType == DC_EWaypointGenerationType.ROUTE)
 				{
-					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointGenType, GetPos(), m_PosDestination, m_DC_Patrol.waypointMoveType);
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointGenType, GetPos(), m_vPosDestination, m_DC_Patrol.waypointMoveType);
 				}
 				else
 				{
@@ -212,14 +212,14 @@ class SCR_DC_Patrol : Managed
 class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 {
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Patrol.json";
-	ref SCR_DC_PatrolConfig conf = new SCR_DC_PatrolConfig;
+	ref SCR_DC_PatrolConfig conf = new SCR_DC_PatrolConfig();
 	
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
 		
-		if(!loadContext)
+		if (!loadContext)
 		{
 			SetDefaults();
 			Save("");
@@ -250,7 +250,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 		conf.distanceToPlayer = 500;
 
 		//----------------------------------------------------
-		SCR_DC_Patrol patrol0 = new SCR_DC_Patrol;
+		SCR_DC_Patrol patrol0 = new SCR_DC_Patrol();
 		patrol0.Set
 		(
 			"USSR patrols going between two points hopefully following roads",
@@ -283,7 +283,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 		conf.patrols.Insert(patrol0);
 		
 		//----------------------------------------------------
-		SCR_DC_Patrol patrol1 = new SCR_DC_Patrol;
+		SCR_DC_Patrol patrol1 = new SCR_DC_Patrol();
 		patrol1.Set(
 			"USSR patrols",
 			"0 0 0",
@@ -315,7 +315,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 		conf.patrols.Insert(patrol1);
 
 		//----------------------------------------------------
-		SCR_DC_Patrol patrol2 = new SCR_DC_Patrol;
+		SCR_DC_Patrol patrol2 = new SCR_DC_Patrol();
 		patrol2.Set
 		(
 			"USSR patrols",
@@ -342,7 +342,7 @@ class SCR_DC_PatrolJsonApi : SCR_DC_JsonApi
 		conf.patrols.Insert(patrol2);
 		
 		//----------------------------------------------------
-		SCR_DC_Patrol patrol3 = new SCR_DC_Patrol;
+		SCR_DC_Patrol patrol3 = new SCR_DC_Patrol();
 		patrol3.Set
 		(
 			"FIA patrols",

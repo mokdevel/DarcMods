@@ -10,21 +10,21 @@ modded class SCR_BaseGameMode
     {
         super.OnGameStart();
 		
-		SCR_DC_Log.Add("[SCR_DC_Spawner_BaseGameMode:OnGameStart]", LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_Spawner_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
 		
 		if (!SCR_DC_Conf.RELEASE)
 		{
 			SCR_DC_Log.Add("[SCR_DC_Spawner_BaseGameMode] SCR_DC_Core.RELEASE not true. This is a DEVELOPMENT build.", LogLevel.WARNING);
 		}
 		
-		if(IsMaster())
+		if (IsMaster())
 		{
-			SCR_DC_Log.Add("[SCR_DC_Spawner_BaseGameMode:IsMaster] OnGameStart", LogLevel.NORMAL);        
+			SCR_DC_Log.Add("[SCR_DC_Spawner_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
 			GetGame().GetCallqueue().CallLater(StartSpawner, 15000, false);	
 		}
 		else 
 		{
-			SCR_DC_Log.Add("[SCR_DC_Spawner_BaseGameMode:NonMaster] Spawner not needed for client.", LogLevel.NORMAL);        
+			SCR_DC_Log.Add("[SCR_DC_Spawner_BaseGameMode:NonMaster] Spawner not needed for client.", LogLevel.DEBUG);        
 		}
     }
 	

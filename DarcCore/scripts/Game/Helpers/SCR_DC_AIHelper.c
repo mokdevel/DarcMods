@@ -71,7 +71,7 @@ sealed class SCR_DC_AIHelper
 			{
 				string faction = GetAIAgentFactionKey(aiAgent);
 				group = GroupCreate(faction, aiAgent.GetOrigin());
-				if(group)
+				if (group)
 				{
 					group.SetNewLeader(aiAgent);
 					group.AddAgent(aiAgent);
@@ -146,7 +146,7 @@ sealed class SCR_DC_AIHelper
 		wpcycle.SetOrigin(pos);
 	
 		AIWaypoint waypoint = SCR_DC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.PATROL);
-		if(waypoint)
+		if (waypoint)
 		{
 			waypoint.SetOrigin(pos);
 			waypoints.Insert(waypoint);
@@ -192,11 +192,11 @@ sealed class SCR_DC_AIHelper
 	{
 		array<AIAgent> groupMembers  = new array<AIAgent>;
 		
-		if(group)
+		if (group)
 		{
 			group.GetAgents(groupMembers);
 			
-			foreach(AIAgent groupMember : groupMembers)
+			foreach (AIAgent groupMember : groupMembers)
 			{
 				SetAISkill(groupMember, skill, perceptionFactor);
 			}
@@ -218,7 +218,7 @@ sealed class SCR_DC_AIHelper
 			
 			groups.Clear();
 			
-			foreach(AIAgent agent : agents)
+			foreach (AIAgent agent : agents)
 			{
 				AIGroup group;
 				group = agent.GetParentGroup();
@@ -283,11 +283,11 @@ sealed class SCR_DC_AIHelper
 	{
 		array<AIAgent> groupMembers  = new array<AIAgent>;
 		
-		if(group)
+		if (group)
 		{
 			group.GetAgents(groupMembers);
 			
-			foreach(AIAgent groupMember : groupMembers)
+			foreach (AIAgent groupMember : groupMembers)
 			{
 				RemoveAIAgent(groupMember);
 			}
@@ -300,7 +300,7 @@ sealed class SCR_DC_AIHelper
 	*/
 	static SCR_AIGroup GroupAddAI(AIAgent aiAgent, SCR_AIGroup group = null)
 	{
-		if(!group)
+		if (!group)
 		{
 			string faction = GetAIAgentFactionKey(aiAgent);
 			group = GroupCreate(faction, aiAgent.GetOrigin());

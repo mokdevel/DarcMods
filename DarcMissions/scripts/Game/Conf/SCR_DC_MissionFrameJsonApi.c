@@ -30,7 +30,7 @@
 		private const int DC_MISSION_ACTIVE_TIME = 2*60;				
 		private const int DC_MISSION_ACTIVE_TIME_STATIC = DC_MISSION_ACTIVE_TIME * 2;	
 		private const int DC_MISSION_ACTIVE_DISTANCE = 200;		
-		private const int DC_MISSION_ACTIVE_TIME_TO_END = 60;		
+		private const int DC_MISSION_ACTIVE_TIME_TO_END = 45;		
 		private const int DC_MISSIONFRAME_CYCLE_TIME = 20;
 		private const int DC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
 		private const bool DC_MISSION_RECREATE_CONFIGS = false;
@@ -69,7 +69,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 {
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig.json";
 		
-	ref SCR_DC_MissionFrameConfig conf = new SCR_DC_MissionFrameConfig;
+	ref SCR_DC_MissionFrameConfig conf = new SCR_DC_MissionFrameConfig();
 
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_MissionFrameJsonApi()
@@ -80,7 +80,7 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 	void Load()
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
-		if(!loadContext)
+		if (!loadContext)
 		{
 			SetDefaults();
 			Save("");
@@ -141,11 +141,11 @@ class SCR_DC_MissionFrameJsonApi : SCR_DC_JsonApi
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CHOPPER};
 		
 //			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
-//			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
+			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.OCCUPATION};
-			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER};
+//			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER};
 //			conf.missionTypeArrayStatic = {};
 		#endif
 	}

@@ -48,7 +48,7 @@ class SCR_DC_SpawnSet : Managed
 class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 {
 	const string DC_CONFIG_FILE = "dc_spawnerConfig.json";
-	ref SCR_DC_SpawnerConfig conf = new SCR_DC_SpawnerConfig;
+	ref SCR_DC_SpawnerConfig conf = new SCR_DC_SpawnerConfig();
 
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_SpawnerJsonConfig()
@@ -60,7 +60,7 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(DC_CONFIG_FILE);
 		
-		if(!loadContext)
+		if (!loadContext)
 		{
 			SetDefaults();
 			Save();
@@ -91,7 +91,7 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 		
 		//Different spawner confs
 		//---
-		SCR_DC_SpawnSet spawnSet0 = new SCR_DC_SpawnSet;
+		SCR_DC_SpawnSet spawnSet0 = new SCR_DC_SpawnSet();
 		spawnSet0.Set
 		(			
 			"Used for Escapists in Gogland. Spawns random ambulances with some gear",
@@ -131,7 +131,7 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 		conf.spawnSets.Insert(spawnSet0);
 				
 		//---
-		SCR_DC_SpawnSet spawnSet1 = new SCR_DC_SpawnSet;
+		SCR_DC_SpawnSet spawnSet1 = new SCR_DC_SpawnSet();
 		spawnSet1.Set
 		(			
 			"Used for Escapists. Spawns random ambulances with some gear",
@@ -170,7 +170,7 @@ class SCR_DC_SpawnerJsonApi : SCR_DC_JsonApi
 		conf.spawnSets.Insert(spawnSet1);
 		
 		//---
-		SCR_DC_SpawnSet spawnSet2 = new SCR_DC_SpawnSet;
+		SCR_DC_SpawnSet spawnSet2 = new SCR_DC_SpawnSet();
 		spawnSet2.Set
 		(			
 			"Used for Escapists in Arland. Spawns random ambulances with some gear.",

@@ -27,23 +27,23 @@ const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions
 class SCR_DC_MissionFrame
 {
 	ref array<ref SCR_DC_Mission> m_MissionList = new array<ref SCR_DC_Mission>;
-	ref SCR_DC_MissionFrameJsonApi m_DC_MissionFrameJsonApi = new SCR_DC_MissionFrameJsonApi;
+	ref SCR_DC_MissionFrameJsonApi m_DC_MissionFrameJsonApi = new SCR_DC_MissionFrameJsonApi();
 	ref SCR_DC_MissionFrameConfig m_Config;
 	
-	ref SCR_DC_NonValidAreaJsonApi m_DC_NonValidAreaJsonApi = new SCR_DC_NonValidAreaJsonApi;
+	ref SCR_DC_NonValidAreaJsonApi m_DC_NonValidAreaJsonApi = new SCR_DC_NonValidAreaJsonApi();
 	ref SCR_DC_NonValidAreaConfig m_NonValidAreaConfig;
-	ref array<ref SCR_DC_NonValidArea> m_NonValidAreas = {};
+	ref array<ref SCR_DC_NonValidArea> m_aNonValidAreas = {};
 	
-	private string m_WorldName;
-	private int m_LastMissionSpawnTime;
-	private int m_StaticFailCount = 0;				//Counter for failed static missions. If staticFailLimit is reached, we'll spawn a dynamic one.
-	private bool m_FirstMissionSpawned = false;		//The first mission is to be dynamic
+	private string m_sWorldName;
+	private int m_iLastMissionSpawnTime;
+	private int m_iStaticFailCount = 0;				//Counter for failed static missions. If staticFailLimit is reached, we'll spawn a dynamic one.
+	private bool m_bFirstMissionSpawned = false;		//The first mission is to be dynamic
 		
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_MissionFrame()
 	{
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Starting SCR_DC_MissionFrame", LogLevel.NORMAL);
-		m_WorldName = SCR_DC_Misc.GetWorldName(true);
+		m_sWorldName = SCR_DC_Misc.GetWorldName(true);
 
 		//Load configuration from file		
 		m_DC_MissionFrameJsonApi.Load();
@@ -67,7 +67,7 @@ class SCR_DC_MissionFrame
 		
 		//Set mission profile directory. This needs to be after a possible MissionFrame config save.
 		SCR_DC_Conf.missionProfile = m_Config.missionProfile;		
-		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldname: " + m_WorldName, LogLevel.NORMAL);
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldname: " + m_sWorldName, LogLevel.NORMAL);
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Worldsize: " + SCR_DC_Misc.GetWorldSize(), LogLevel.DEBUG);
 
 		//Load non valid area configuration from file		
@@ -75,20 +75,20 @@ class SCR_DC_MissionFrame
 		m_NonValidAreaConfig = m_DC_NonValidAreaJsonApi.conf;
 				
 		//Pick nonValidAreas for the current world
-		foreach(SCR_DC_NonValidArea nonValidArea : m_NonValidAreaConfig.nonValidAreas)
+		foreach (SCR_DC_NonValidArea nonValidArea : m_NonValidAreaConfig.nonValidAreas)
 		{
-			if(nonValidArea.worldName == m_WorldName || nonValidArea.worldName == "")
+			if (nonValidArea.worldName == m_sWorldName || nonValidArea.worldName == "")
 			{
-				m_NonValidAreas.Insert(nonValidArea);
+				m_aNonValidAreas.Insert(nonValidArea);
 				SCR_DC_DebugHelper.AddDebugPos(nonValidArea.pos, Color.BLACK, nonValidArea.radius);
 			}
 		}
-		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas defined: " + m_NonValidAreas.Count(), LogLevel.NORMAL);		
+		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Number of nonValidAreas defined: " + m_aNonValidAreas.Count(), LogLevel.NORMAL);		
 
 		//Set some defaults
-		m_StaticFailCount = 0;
-		m_LastMissionSpawnTime = (System.GetTickCount() / 1000) - m_Config.missionDelayBetweeen;	//Fix the timer so that first mission immediately spawns
-		m_FirstMissionSpawned = false;
+		m_iStaticFailCount = 0;
+		m_iLastMissionSpawnTime = (System.GetTickCount() / 1000) - m_Config.missionDelayBetweeen;	//Fix the timer so that first mission immediately spawns
+		m_bFirstMissionSpawned = SCR_DC_Conf.FIRST_MISSION_HAS_SPAWNED;
 				
 		//Fix seconds to ms
 		SCR_DC_Log.Add("[SCR_DC_MissionFrame] Waiting for " + m_Config.missionStartDelay + " seconds before spawning missions.", LogLevel.NORMAL);
@@ -100,7 +100,14 @@ class SCR_DC_MissionFrame
 //			SCR_DC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "");
 		#endif	
 		
+		GetGame().GetCallqueue().CallLater(SendHint, 6000, true);
+		
 		MissionFrameStart();
+	}
+	
+	void SendHint()
+	{
+		SCR_DC_HintHelper.ShowHint("Testing", "Yeah", 2);					
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -110,7 +117,7 @@ class SCR_DC_MissionFrame
 	void ~SCR_DC_MissionFrame()
 	{
 		//Clean and delete missions
-		while(m_MissionList.Count() > 0)
+		while (m_MissionList.Count() > 0)
 		{
 			SCR_DC_Mission mission = m_MissionList[0];
 			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Deleting mission: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
@@ -147,7 +154,7 @@ class SCR_DC_MissionFrame
 			
 			//Select a new mission to spawn. 
 			//Static missions are prioritized so check that the list spawned. 
-			if (CountStaticMissions() < m_Config.missionTypeArrayStatic.Count() && m_StaticFailCount < m_Config.staticFailLimit && m_FirstMissionSpawned)
+			if (CountStaticMissions() < m_Config.missionTypeArrayStatic.Count() && m_iStaticFailCount < m_Config.staticFailLimit && m_bFirstMissionSpawned)
 			{
 				missionType = m_Config.missionTypeArrayStatic.GetRandomElement();
 				tmpDC_Mission = MissionCreate(missionType);
@@ -155,6 +162,7 @@ class SCR_DC_MissionFrame
 				{
 					tmpDC_Mission.SetStatic(true);
 					tmpDC_Mission.SetActiveTime(m_Config.missionActiveTimeStatic);
+					tmpDC_Mission.ResetActiveTime();
 				}
 			}
 			else	//Select a dynamic mission to spawn
@@ -164,7 +172,8 @@ class SCR_DC_MissionFrame
 				if (tmpDC_Mission)
 				{
 					tmpDC_Mission.SetActiveTime(m_Config.missionActiveTime);
-					m_FirstMissionSpawned = true;
+					tmpDC_Mission.ResetActiveTime();
+					m_bFirstMissionSpawned = true;
 				}				
 			}
 			
@@ -178,7 +187,7 @@ class SCR_DC_MissionFrame
 				if (tmpDC_Mission.GetState() != DC_EMissionState.FAILED)
 				{		
 					//Mission startup was success. Reset fail counter for static missions.	
-					m_StaticFailCount = 0;
+					m_iStaticFailCount = 0;
 					//Set the defaul active distance
 					tmpDC_Mission.SetActiveDistance(m_Config.missionActiveDistance);
 					tmpDC_Mission.SetActiveTimeToEnd(m_Config.missionActiveTimeToEnd);
@@ -195,7 +204,7 @@ class SCR_DC_MissionFrame
 					SCR_DC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), Color.YELLOW, 10, tmpDC_Mission.GetId());
 					
 					//Set the time when the mission has started. Activates the delay.
-					m_LastMissionSpawnTime = (System.GetTickCount() / 1000);
+					m_iLastMissionSpawnTime = (System.GetTickCount() / 1000);
 				}
 			}
 		}
@@ -220,9 +229,9 @@ class SCR_DC_MissionFrame
 			{
 				if (mission.IsStatic())
 				{
-					m_StaticFailCount++;
+					m_iStaticFailCount++;
 				}
-				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Mission start failed: " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + "). Static fail count: " + m_StaticFailCount, LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Mission start failed: " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + "). Static fail count: " + m_iStaticFailCount, LogLevel.DEBUG);
 			}
 			
 			if (mission.GetState() == DC_EMissionState.EXIT || mission.GetState() == DC_EMissionState.FAILED)
@@ -251,10 +260,10 @@ class SCR_DC_MissionFrame
 		if (SCR_DC_PlayerHelper.PlayerCount() == 0)
 		{
 			SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Waiting for players..", LogLevel.NORMAL);
-			if (m_MissionList.Count() == 0 && m_FirstMissionSpawned)
+			if (m_MissionList.Count() == 0 && m_bFirstMissionSpawned)
 			{
-				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Resetting m_FirstMissionSpawned", LogLevel.DEBUG);
-				m_FirstMissionSpawned = false;
+				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Resetting m_bFirstMissionSpawned", LogLevel.DEBUG);
+				m_bFirstMissionSpawned = false;
 			}
 		}
 
@@ -347,7 +356,7 @@ class SCR_DC_MissionFrame
 	*/	
 	protected int getMissionDelayWait()
 	{
-		int delayTime = m_LastMissionSpawnTime + m_Config.missionDelayBetweeen;
+		int delayTime = m_iLastMissionSpawnTime + m_Config.missionDelayBetweeen;
 		int systemTime = (System.GetTickCount() / 1000);
 		
 		return delayTime - systemTime;
@@ -360,7 +369,7 @@ class SCR_DC_MissionFrame
 	void CreateAllConfigs()
 	{		
 		//Create a default nonValidArea config
-		SCR_DC_NonValidAreaJsonApi nonValidAreaJsonApi = new SCR_DC_NonValidAreaJsonApi;
+		SCR_DC_NonValidAreaJsonApi nonValidAreaJsonApi = new SCR_DC_NonValidAreaJsonApi();
 		nonValidAreaJsonApi.Load();
 		delete nonValidAreaJsonApi;		
 		
@@ -377,15 +386,15 @@ class SCR_DC_MissionFrame
 		hunterJsonApi.Load();								
 		delete hunterJsonApi;
 		
-		SCR_DC_OccupationJsonApi occupationJsonApi = new SCR_DC_OccupationJsonApi;	
+		SCR_DC_OccupationJsonApi occupationJsonApi = new SCR_DC_OccupationJsonApi();	
 		occupationJsonApi.Load();		
 		delete occupationJsonApi;
 		
-		SCR_DC_PatrolJsonApi patrolJsonApi = new SCR_DC_PatrolJsonApi;	
+		SCR_DC_PatrolJsonApi patrolJsonApi = new SCR_DC_PatrolJsonApi();	
 		patrolJsonApi.Load();
 		delete patrolJsonApi;
 		
-		SCR_DC_SquatterJsonApi squatterJsonApi = new SCR_DC_SquatterJsonApi;	
+		SCR_DC_SquatterJsonApi squatterJsonApi = new SCR_DC_SquatterJsonApi();	
 		squatterJsonApi.Load();
 		delete squatterJsonApi;		
 	}	
@@ -406,7 +415,7 @@ class SCR_DC_MissionFrame
 		}
 
 		SCR_DC_Log.Add("[SCR_DC_MissionDump] -- Missions -------------------------------------------------------------------", LogLevel.NORMAL);
-		foreach(SCR_DC_Mission mission : m_MissionList)
+		foreach (SCR_DC_Mission mission : m_MissionList)
 		{
 			string staticString = "dynamic";
 			if (mission.IsStatic())
@@ -437,7 +446,7 @@ class SCR_DC_MissionFrame
 	protected int CountStaticMissions()	
 	{
 		int i = 0;
-		foreach(SCR_DC_Mission mission : m_MissionList)
+		foreach (SCR_DC_Mission mission : m_MissionList)
 		{
 			if (mission.IsStatic())
 			{

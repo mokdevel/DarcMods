@@ -13,8 +13,8 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 
 	private ref SCR_DC_Squatter m_DC_Squatter;	//Squatter configuration in use
 	private IEntity m_Building;					//The building for the mission
-	private int m_AiCount;
-	private int m_SpawnIndex = 0;				//Counter for the AI to spawn
+	private int m_iAiCount;
+	private int m_iSpawnIndex = 0;				//Counter for the AI to spawn
 		
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Squatter()
@@ -31,7 +31,7 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 		
 		//Pick a configuration for mission
 		int idx = SCR_DC_MissionHelper.SelectMissionIndex(m_Config.squatterList);
-		if(idx == -1)
+		if (idx == -1)
 		{
 			SCR_DC_Log.Add("[SCR_DC_Mission_Squatter] No squatters defined.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
@@ -42,7 +42,7 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 		//Set defaults
 		vector pos = m_DC_Squatter.pos;
 		string posName = m_DC_Squatter.posName;
-		m_AiCount = Math.RandomInt(m_DC_Squatter.aiCount[0], m_DC_Squatter.aiCount[1]);
+		m_iAiCount = Math.RandomInt(m_DC_Squatter.aiCount[0], m_DC_Squatter.aiCount[1]);
 		
 		//Find a location for the mission
 		if (pos == "0 0 0")
@@ -144,12 +144,12 @@ class SCR_DC_Mission_Squatter : SCR_DC_Mission
 	private void MissionSpawn()
 	{	
 		//Spawn AI one by one. Sets missions active once ready.
-		if (m_SpawnIndex < m_AiCount)
+		if (m_iSpawnIndex < m_iAiCount)
 		{
 			//Each AI is spawned in to its own group to be able to give individual waypoints to a character
 			SCR_AIGroup group = SCR_DC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.aiTypes.GetRandomElement(), m_DC_Squatter.aiSkill, m_DC_Squatter.aiPerception);
 			m_Groups.Insert(group);
-			m_SpawnIndex++;
+			m_iSpawnIndex++;
 		}
 		else
 		{
@@ -229,14 +229,14 @@ class SCR_DC_Squatter : Managed
 class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 {
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Squatter.json";
-	ref SCR_DC_SquatterConfig conf = new SCR_DC_SquatterConfig;
+	ref SCR_DC_SquatterConfig conf = new SCR_DC_SquatterConfig();
 		
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
 		
-		if(!loadContext)
+		if (!loadContext)
 		{
 			SetDefaults();
 			Save("");
@@ -267,7 +267,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		conf.squatterList = {0,1,2,2,3,3,3,4,5,5,5};
 		
 		//----------------------------------------------------
-		SCR_DC_Squatter squatter0 = new SCR_DC_Squatter;
+		SCR_DC_Squatter squatter0 = new SCR_DC_Squatter();
 		squatter0.Set(
 			"Squatters in cities",
 			"0 0 0",
@@ -297,7 +297,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		);
 		conf.squatters.Insert(squatter0);	
 		
-		SCR_DC_Loot squatter0loot = new SCR_DC_Loot;
+		SCR_DC_Loot squatter0loot = new SCR_DC_Loot();
 		lootItems = {
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN",
@@ -310,7 +310,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		squatter0.loot = squatter0loot;
 		
 		//----------------------------------------------------
-		SCR_DC_Squatter squatter1 = new SCR_DC_Squatter;
+		SCR_DC_Squatter squatter1 = new SCR_DC_Squatter();
 		squatter1.Set(
 			"Squatters in control towers",
 			"0 0 0",
@@ -333,7 +333,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		);
 		conf.squatters.Insert(squatter1);	
 		
-		SCR_DC_Loot squatter1loot = new SCR_DC_Loot;
+		SCR_DC_Loot squatter1loot = new SCR_DC_Loot();
 		lootItems = {
 				"WEAPON_RIFLE",	"WEAPON_RIFLE", "WEAPON_RIFLE",
 				"WEAPON_HANDGUN",
@@ -347,7 +347,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		squatter1.loot = squatter1loot;		
 	
 		//----------------------------------------------------
-		SCR_DC_Squatter squatter2 = new SCR_DC_Squatter;
+		SCR_DC_Squatter squatter2 = new SCR_DC_Squatter();
 		squatter2.Set(
 			"Squatters in military locations",
 			"0 0 0",
@@ -370,7 +370,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		);
 		conf.squatters.Insert(squatter2);	
 		
-		SCR_DC_Loot squatter2loot = new SCR_DC_Loot;
+		SCR_DC_Loot squatter2loot = new SCR_DC_Loot();
 		lootItems = {
 				"WEAPON_RIFLE",	"WEAPON_RIFLE", "WEAPON_RIFLE",
 				"WEAPON_HANDGUN",
@@ -384,7 +384,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		squatter2.loot = squatter2loot;
 		
 		//----------------------------------------------------
-		SCR_DC_Squatter squatter3 = new SCR_DC_Squatter;
+		SCR_DC_Squatter squatter3 = new SCR_DC_Squatter();
 		squatter3.Set(
 			"Military in industrial areas",
 			"0 0 0",
@@ -411,7 +411,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		);
 		conf.squatters.Insert(squatter3);	
 		
-		SCR_DC_Loot squatter3loot = new SCR_DC_Loot;
+		SCR_DC_Loot squatter3loot = new SCR_DC_Loot();
 		lootItems = {
 				"WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
@@ -423,7 +423,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		squatter3.loot = squatter3loot;
 		
 		//----------------------------------------------------
-		SCR_DC_Squatter squatter4 = new SCR_DC_Squatter;
+		SCR_DC_Squatter squatter4 = new SCR_DC_Squatter();
 		squatter4.Set(
 			"FIA in churches",
 			"0 0 0",
@@ -449,7 +449,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		);
 		conf.squatters.Insert(squatter4);	
 		
-		SCR_DC_Loot squatter4loot = new SCR_DC_Loot;
+		SCR_DC_Loot squatter4loot = new SCR_DC_Loot();
 		lootItems = {
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"WEAPON_OPTICS",
@@ -460,7 +460,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		squatter4.loot = squatter4loot;
 		
 		//----------------------------------------------------
-		SCR_DC_Squatter squatter5 = new SCR_DC_Squatter;
+		SCR_DC_Squatter squatter5 = new SCR_DC_Squatter();
 		squatter5.Set(
 			"Shops and houses",
 			"0 0 0",
@@ -483,7 +483,7 @@ class SCR_DC_SquatterJsonApi : SCR_DC_JsonApi
 		);
 		conf.squatters.Insert(squatter5);	
 		
-		SCR_DC_Loot squatter5loot = new SCR_DC_Loot;
+		SCR_DC_Loot squatter5loot = new SCR_DC_Loot();
 		lootItems = {
 				"WEAPON_ATTACHMENT",
 				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",

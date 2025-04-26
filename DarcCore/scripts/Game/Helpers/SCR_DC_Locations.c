@@ -7,9 +7,8 @@ Functions to find locations (for example cities) from map.
 
 sealed class SCR_DC_Locations
 {
-	private static ref array<IEntity> m_TmpSlots = {};
-	private static ref array<MapItem> m_TmpMapItems = {};
-	private static string m_Name;
+	private static ref array<IEntity> m_aTmpSlots = {};
+	private static string m_sName;
 	
 	//-----------------------------------------------------------------------------------------------
 	/*!
@@ -120,7 +119,7 @@ sealed class SCR_DC_Locations
 					slotcount,
 					), LogLevel.SPAM);
 				
-				if(SCR_DC_Conf.SHOW_MARKER_FOR_LOCATION)
+				if (SCR_DC_Conf.SHOW_MARKER_FOR_LOCATION)
 				{
 					if (location) 
 					{
@@ -153,7 +152,7 @@ sealed class SCR_DC_Locations
 		if (nameDefault == "any")
 		{	
 			array<int>distancesToTry = {10, 20, 30, 50, 100, 150, 300, 400};
-			foreach(int distance : distancesToTry)
+			foreach (int distance : distancesToTry)
 			{
 				name = SCR_DC_Locations.GetNameCloseToPos(pos, distance);
 				if (name != "")
@@ -182,11 +181,11 @@ sealed class SCR_DC_Locations
 	*/	
 	static string GetNameCloseToPos(vector pos, int distance = 300)
 	{
-		m_Name = "";
+		m_sName = "";
 		
 		GetGame().GetWorld().QueryEntitiesBySphere(pos, distance, GetNameCloseToPosCallBack);
 		
-		return m_Name;
+		return m_sName;
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -202,7 +201,7 @@ sealed class SCR_DC_Locations
 			MapItem mapItem = mapDescr.Item();
 			if ( (mapItem.GetDisplayName() != "") && (SCR_StringHelper.Translate(mapItem.GetDisplayName()) != "") )
 			{
-				m_Name = SCR_StringHelper.Translate(mapItem.GetDisplayName());
+				m_sName = SCR_StringHelper.Translate(mapItem.GetDisplayName());
 				return false;			
 			}
 		}
@@ -218,10 +217,10 @@ sealed class SCR_DC_Locations
 	*/	
 	static int GetLocationSlots(out array<IEntity> slots, vector position, float distance = 200)
 	{
-		m_TmpSlots.Clear();
+		m_aTmpSlots.Clear();
 		GetGame().GetWorld().QueryEntitiesBySphere(position, 200, SCR_DC_Locations.GetLocationSlotsCallBack);
 		
-		foreach(IEntity slot: m_TmpSlots)
+		foreach (IEntity slot: m_aTmpSlots)
 		{
 			slots.Insert(slot);
 		}
@@ -237,7 +236,7 @@ sealed class SCR_DC_Locations
 	{
 		if (entity.Type() == SCR_SiteSlotEntity)
 		{
-			m_TmpSlots.Insert(entity);
+			m_aTmpSlots.Insert(entity);
 		}
 		return true;
 	}

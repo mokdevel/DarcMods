@@ -34,7 +34,7 @@ class SCR_DC_NonValidAreaJsonApi : SCR_DC_JsonApi
 {
 	const string DC_MISSIONCONFIG_FILE = "dc_nonValidArea.json";
 		
-	ref SCR_DC_NonValidAreaConfig conf = new SCR_DC_NonValidAreaConfig;
+	ref SCR_DC_NonValidAreaConfig conf = new SCR_DC_NonValidAreaConfig();
 
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_NonValidAreaJsonApi()
@@ -45,7 +45,7 @@ class SCR_DC_NonValidAreaJsonApi : SCR_DC_JsonApi
 	void Load()
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
-		if(!loadContext)
+		if (!loadContext)
 		{
 			SetDefaults();
 			Save("");
@@ -68,26 +68,26 @@ class SCR_DC_NonValidAreaJsonApi : SCR_DC_JsonApi
 	{
 		//List of non valid areas where missions shall not spawn
 		//Eden
-		SCR_DC_NonValidArea areaE1 = new SCR_DC_NonValidArea;
+		SCR_DC_NonValidArea areaE1 = new SCR_DC_NonValidArea();
 		areaE1.Set("Eden", "4780 0 11450", 500, "Eden - Airport - for testing");
 		conf.nonValidAreas.Insert(areaE1);
-		SCR_DC_NonValidArea areaE2 = new SCR_DC_NonValidArea;
+		SCR_DC_NonValidArea areaE2 = new SCR_DC_NonValidArea();
 		areaE2.Set("Eden", "9680 0 1560", 400, "Eden - St. Pierre - for testing");
 		conf.nonValidAreas.Insert(areaE2);
 		
 		//Arland
-		SCR_DC_NonValidArea areaA1 = new SCR_DC_NonValidArea;
+		SCR_DC_NonValidArea areaA1 = new SCR_DC_NonValidArea();
 		areaA1.Set("Arland", "1340 0 2320", 300, "Arland - Airport - for testing");
 		conf.nonValidAreas.Insert(areaA1);
-		SCR_DC_NonValidArea areaA2 = new SCR_DC_NonValidArea;
+		SCR_DC_NonValidArea areaA2 = new SCR_DC_NonValidArea();
 		areaA2.Set("Arland", "1080 0 3300", 200, "Arland - Harbour - for testing");
 		conf.nonValidAreas.Insert(areaA2);
-		SCR_DC_NonValidArea areaA3 = new SCR_DC_NonValidArea;
+		SCR_DC_NonValidArea areaA3 = new SCR_DC_NonValidArea();
 		areaA3.Set("Arland", "4500 0 10700", 200, "Arland - St. Philippe");
 		conf.nonValidAreas.Insert(areaA3);
 
 		//Dummy for Arland, but as worldname is not defined, this will be valid for all worlds.
-		SCR_DC_NonValidArea areaA10 = new SCR_DC_NonValidArea;
+		SCR_DC_NonValidArea areaA10 = new SCR_DC_NonValidArea();
 		areaA10.Set("", "900 0 1450", 300, "Arland - Gull Island - for testing");
 		conf.nonValidAreas.Insert(areaA10);		
 	}

@@ -114,7 +114,7 @@ sealed class SCR_DC_DebugHelper
 
 		SCR_DC_AIHelper.GroupFindAll(groups);
 		
-		foreach(AIGroup group: groups)
+		foreach (AIGroup group: groups)
 		{
 			if (group != null)
 			{
@@ -129,7 +129,7 @@ sealed class SCR_DC_DebugHelper
 				}
 
 				//Find if it is a cycle				
-				foreach(AIWaypoint wp : waypoints)
+				foreach (AIWaypoint wp : waypoints)
 				{
 					if (AIWaypointCycle.Cast(wp) != null)
 					{
@@ -152,7 +152,7 @@ sealed class SCR_DC_DebugHelper
 					index = 0;										
 				}
 					
-				foreach(AIWaypoint wp : waypoints)
+				foreach (AIWaypoint wp : waypoints)
 				{				
 					if (AIWaypointCycle.Cast(wp) == null && !isCycle)	//Filter cycle waypoints away
 					{
@@ -164,7 +164,7 @@ sealed class SCR_DC_DebugHelper
 					if (AIWaypointCycle.Cast(wp) != null && isCycle)
 					{
 						AIWaypointCycle.Cast(wp).GetWaypoints(waypointsCycle);
-						foreach(AIWaypoint wpc : waypointsCycle)
+						foreach (AIWaypoint wpc : waypointsCycle)
 						{											
 							vector pos = RaiseWaypointPos(wpc);
 							p[index] = pos;
@@ -206,12 +206,12 @@ sealed class SCR_DC_DebugHelper
 		if (groups.Count() == 0)
 			return;
 
-		foreach(AIGroup group : groups)
+		foreach (AIGroup group : groups)
 		{
 			if (group != null)
 			{
 				group.GetWaypoints(waypoints);
-				foreach(AIWaypoint wp : waypoints)
+				foreach (AIWaypoint wp : waypoints)
 				{
 					vector pos = RaiseWaypointPos(wp);
 					Shape.CreateSphere(Color.DARK_RED, shapeFlags, pos, 0.3);
@@ -226,7 +226,7 @@ sealed class SCR_DC_DebugHelper
 		array<vector> sphere = {};
 		int shapeFlags = ShapeFlags.ONCE;
 
-		foreach(SCR_DC_DebugHelperPos dpos: m_Sphere)
+		foreach (SCR_DC_DebugHelperPos dpos: m_Sphere)
 		{
 			if (dpos != null)
 			{
@@ -243,7 +243,7 @@ sealed class SCR_DC_DebugHelper
 		if (m_Pos.Count() == 0)
 			return;
 		
-		foreach(SCR_DC_DebugHelperPos dpos: m_Pos)
+		foreach (SCR_DC_DebugHelperPos dpos: m_Pos)
 		{
 			if (dpos != null)
 			{
@@ -272,7 +272,7 @@ sealed class SCR_DC_DebugHelper
 	static void AddDebugPos(vector pos, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300)
 	{
 		#ifndef SCR_DC_RELEASE		
-			if(DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
+			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
 			{
 				SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
 				pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + (height/2);
@@ -306,7 +306,7 @@ sealed class SCR_DC_DebugHelper
 	static void AddDebugSphere(vector pos, int color = Color.BLUE, float radius = 1.0, string id = "NONE")
 	{
 		#ifndef SCR_DC_RELEASE
-			if(DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
+			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
 			{
 				SCR_DC_DebugHelperPos dpos = new SCR_DC_DebugHelperPos;
 				dpos.pos = pos;
@@ -327,7 +327,7 @@ sealed class SCR_DC_DebugHelper
 	{
 		for (int i = 0; i < m_Pos.Count(); i++)		
 		{
-			if(m_Pos[i].id.Contains(id))
+			if (m_Pos[i].id.Contains(id))
 			{
 				m_Pos.Remove(i);
 				i--;
@@ -343,7 +343,7 @@ sealed class SCR_DC_DebugHelper
 	{
 		for (int i = 0; i < m_Pos.Count(); i++)		
 		{
-			if(m_Pos[i].id == id)
+			if (m_Pos[i].id == id)
 			{
 				m_Pos[i].pos = pos;
 				break;
@@ -359,7 +359,7 @@ sealed class SCR_DC_DebugHelper
 		if (m_Slots.Count() == 0)
 			return;
 
-		foreach(IEntity loc: m_Slots)
+		foreach (IEntity loc: m_Slots)
 		{
 			if (loc != null)
 			{

@@ -25,10 +25,10 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 	protected ref SCR_DC_Crashsite m_DC_Crashsite;	//Occupation configuration in use
 			
 	private DC_EMissionCrashSiteState missionCrashSiteState = DC_EMissionCrashSiteState.INIT;
-	private vector m_PosDestination = "0 0 0";	//The destination where the chopper is flying from mission position
-	private float m_Angle = 0;
+	private vector m_vPosDestination = "0 0 0";	//The destination where the chopper is flying from mission position
+	private float m_fAngle = 0;
 	private IEntity m_Vehicle;
-	private vector m_VehiclePosOld;
+	private vector m_vVehiclePosOld;
 	
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Crashsite()
@@ -66,13 +66,13 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 				positionFound = true;
 				pos[1] = pos[1] + Math.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[0]);	//Adjust flight height
 				int rnd = SCR_DC_Misc.GetWorldSize()/8;
-				m_PosDestination[0] = SCR_DC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
-				m_PosDestination[2] = SCR_DC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
+				m_vPosDestination[0] = SCR_DC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
+				m_vPosDestination[2] = SCR_DC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
 				
-				vector direction = vector.Direction(pos, m_PosDestination);
-				m_Angle = SCR_DC_Misc.VectorToAngle(direction);
+				vector direction = vector.Direction(pos, m_vPosDestination);
+				m_fAngle = SCR_DC_Misc.VectorToAngle(direction);
 				
-				SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] Helicopter flying from " + pos + " to " + m_PosDestination + ". Angle: " + m_Angle, LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite] Helicopter flying from " + pos + " to " + m_vPosDestination + ". Angle: " + m_fAngle, LogLevel.DEBUG);
 				break;
 			}
 			else
@@ -100,8 +100,8 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 		//Set a marker for destination
 		if (!SCR_DC_Conf.RELEASE)
 		{			
-			SCR_DC_MapMarkerHelper.CreateMapMarker(m_PosDestination, DC_EMissionIcon.TARGET_O, GetId() + "_1", "Destination");
-			SCR_DC_DebugHelper.AddDebugPos(m_PosDestination, Color.RED, 10, GetId() + "_1");
+			SCR_DC_MapMarkerHelper.CreateMapMarker(m_vPosDestination, DC_EMissionIcon.TARGET_O, GetId() + "_1", "Destination");
+			SCR_DC_DebugHelper.AddDebugPos(m_vPosDestination, Color.RED, 10, GetId() + "_1");
 		}
 	}	
 	
@@ -155,7 +155,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 					float rotation = Math.RandomFloat(0, 360);			
 					int i = 0;
 				
-					foreach(SCR_DC_Structure item : m_DC_Crashsite.siteItems)
+					foreach (SCR_DC_Structure item : m_DC_Crashsite.siteItems)
 					{
 						entity = SCR_DC_SpawnHelper.SpawnStructures(m_DC_Crashsite.siteItems, GetPos(), rotation, i);
 						
@@ -165,7 +165,7 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 						}
 						else
 						{
-							SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite:MissionSpawn] Could not load: " + item.m_Resource, LogLevel.ERROR);				
+							SCR_DC_Log.Add("[SCR_DC_Mission_Crashsite:MissionSpawn] Could not load: " + item.GetResource(), LogLevel.ERROR);				
 						}
 						
 						i++;			
@@ -226,8 +226,8 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 		vector pos = GetPos();
 
 		//Spawn the resource exactly to pos		
-		m_Vehicle = SCR_DC_SpawnHelper.SpawnItem(pos, helicopterInfo.resource, m_Angle, -1, false);
-		if(m_Vehicle)
+		m_Vehicle = SCR_DC_SpawnHelper.SpawnItem(pos, helicopterInfo.resource, m_fAngle, -1, false);
+		if (m_Vehicle)
 		{
 			m_EntityList.Insert(m_Vehicle);
 		}
@@ -254,9 +254,9 @@ class SCR_DC_Mission_Crashsite : SCR_DC_Mission
 	private bool IsStillFlying(IEntity vehicle)
 	{
 		vector pos = vehicle.GetOrigin();
-		if(!SCR_DC_Misc.IsPosNearPos(pos, m_VehiclePosOld, 10))
+		if (!SCR_DC_Misc.IsPosNearPos(pos, m_vVehiclePosOld, 10))
 		{
-			m_VehiclePosOld = pos;
+			m_vVehiclePosOld = pos;
 			return true;
 		}
 		
@@ -323,14 +323,14 @@ class SCR_DC_Crashsite : Managed
 class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 {
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Crashsite.json";
-	ref SCR_DC_CrashsiteConfig conf = new SCR_DC_CrashsiteConfig;
+	ref SCR_DC_CrashsiteConfig conf = new SCR_DC_CrashsiteConfig();
 		
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
 		
-		if(!loadContext)
+		if (!loadContext)
 		{
 			SetDefaults();
 			Save("");
@@ -363,7 +363,7 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 		conf.crashsiteList = {0};
 		
 		//----------------------------------------------------
-		SCR_DC_Crashsite crashsite0 = new SCR_DC_Crashsite;
+		SCR_DC_Crashsite crashsite0 = new SCR_DC_Crashsite();
 		crashsite0.Set
 		(
 			"Gogland: Mission to be used with Escapists.",
@@ -380,13 +380,13 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 		conf.crashsites.Insert(crashsite0);
 		
 		//----------------------------------------------------
-		SCR_DC_HelicopterInfo heli0 = new SCR_DC_HelicopterInfo;
+		SCR_DC_HelicopterInfo heli0 = new SCR_DC_HelicopterInfo();
 			heli0.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et", 0.8, 0.8, 1.0);
 			crashsite0.helicopterInfo.Insert(heli0);
-		SCR_DC_HelicopterInfo heli1 = new SCR_DC_HelicopterInfo;
+		SCR_DC_HelicopterInfo heli1 = new SCR_DC_HelicopterInfo();
 			heli1.Set("{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",	0.7, 0.9, 1.0);
 			crashsite0.helicopterInfo.Insert(heli1);
-		SCR_DC_HelicopterInfo heli2 = new SCR_DC_HelicopterInfo;
+		SCR_DC_HelicopterInfo heli2 = new SCR_DC_HelicopterInfo();
 			heli2.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.8, 0.8, -1.0);
 			crashsite0.helicopterInfo.Insert(heli2);		
 		
@@ -406,47 +406,47 @@ class SCR_DC_CrashsiteJsonApi : SCR_DC_JsonApi
 		crashsite0.loot = crashloot;
 				
 		//----------------------------------------------------
-		SCR_DC_Structure crashitem0 = new SCR_DC_Structure;
+		SCR_DC_Structure crashitem0 = new SCR_DC_Structure();
 		crashitem0.Set(
 			//"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
 	        "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 	        "921.983 39 2629.78"
 	    );
 		crashsite0.siteItems.Insert(crashitem0);
-		SCR_DC_Structure crashitem1 = new SCR_DC_Structure;
+		SCR_DC_Structure crashitem1 = new SCR_DC_Structure();
 		crashitem1.Set(
 	        "{33E84AF90E5FE1E5}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_03.et",
 	        "924.145 39 2635.076",
 	        "0 29.077 0"
 	    );
 		crashsite0.siteItems.Insert(crashitem1);
-		SCR_DC_Structure crashitem2 = new SCR_DC_Structure;
+		SCR_DC_Structure crashitem2 = new SCR_DC_Structure();
 		crashitem2.Set(
 	        "{342E852E9A1847EA}Prefabs/Props/Industrial/Repair/VehicleGarbage_01_pile_medium.et",
 	        "928.642 39 2628.902",
 	        "0 37.793 0"
 	    );
 		crashsite0.siteItems.Insert(crashitem2);
-		SCR_DC_Structure crashitem3 = new SCR_DC_Structure;
+		SCR_DC_Structure crashitem3 = new SCR_DC_Structure();
 		crashitem3.Set(
 	        "{D674060002BA768E}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_02.et",
 	        "928.925 39 2633.846"
 	    );
 		crashsite0.siteItems.Insert(crashitem3);		
-		SCR_DC_Structure crashitem4 = new SCR_DC_Structure;
+		SCR_DC_Structure crashitem4 = new SCR_DC_Structure();
 		crashitem4.Set(
 			"{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
 			"925.622 39.009 2628.648"
 		);
 		crashsite0.siteItems.Insert(crashitem4);		
-		SCR_DC_Structure crashitem5 = new SCR_DC_Structure;
+		SCR_DC_Structure crashitem5 = new SCR_DC_Structure();
 		crashitem5.Set(
 			"{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
 			"931.951 39 2631.805",
 			"0 68.972 0"
 		);
 		crashsite0.siteItems.Insert(crashitem5);		
-		SCR_DC_Structure crashitem6 = new SCR_DC_Structure;
+		SCR_DC_Structure crashitem6 = new SCR_DC_Structure();
 		crashitem6.Set(
 			"{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
 			"922.173 39 2632.577",

@@ -103,14 +103,14 @@ class SCR_DC_TemplateConfig : SCR_DC_MissionConfig
 class SCR_DC_TemplateJsonApi : SCR_DC_JsonApi
 {
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Template.json";
-	ref SCR_DC_TemplateConfig conf = new SCR_DC_TemplateConfig;
+	ref SCR_DC_TemplateConfig conf = new SCR_DC_TemplateConfig();
 		
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
 		
-		if(!loadContext)
+		if (!loadContext)
 		{
 			SetDefaults();
 			Save("");

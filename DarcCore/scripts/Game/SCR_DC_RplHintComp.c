@@ -58,9 +58,9 @@ class SCR_DC_RplHintComp : ScriptComponent
 		SCR_HintUIInfo hintInfo = SCR_HintUIInfo.CreateInfo(hintDescription, hintTitle, duration, type, fieldManualEntry, isTimerVisible);		
 		
 		SCR_HintManagerComponent hintComponent = SCR_HintManagerComponent.GetInstance();
-		if(hintComponent)
+		if (hintComponent)
 		{
-			hintComponent.ShowHint(hintInfo);
+			hintComponent.ShowHint(hintInfo, ignoreShown: true);
 		}
 		else
 		{

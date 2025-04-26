@@ -18,7 +18,7 @@ sealed class SCR_DC_Resources
 	*/	
 	static void GetItemList(out array<ResourceName> itemList, string mod, SCR_DC_LootList lootList)
 	{
-		SearchResourcesFilter filter = new SearchResourcesFilter;
+		SearchResourcesFilter filter = new SearchResourcesFilter();
 		filter.rootPath = mod + lootList.modDir;
 		filter.fileExtensions = {"et"};
 		filter.searchStr = {""};
@@ -41,7 +41,7 @@ sealed class SCR_DC_Resources
 	*/	
 	static void ExcludeFilter(out array<ResourceName> resourceNames, array<string> filters)
 	{	
-		foreach(string filter: filters)
+		foreach (string filter: filters)
 		{
 			filter.ToLower();
 			for (int i = 0; i < resourceNames.Count(); i++)		
@@ -67,7 +67,7 @@ sealed class SCR_DC_Resources
 		for (int i = 0; i < resourceNames.Count(); i++)		
 		{
 			bool ToBeRemoved = true;
-			foreach(string filter: filters)
+			foreach (string filter: filters)
 			{
 				filter.ToLower();
 				string resourceName = resourceNames[i];

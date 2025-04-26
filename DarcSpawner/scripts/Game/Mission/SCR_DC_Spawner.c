@@ -116,9 +116,9 @@ class SCR_DC_Spawner
 		
 		SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Chosen location: " + SCR_StringHelper.Translate(location.Entity().GetName()) + " (" + pos + ")", LogLevel.DEBUG);
 		
-		if(m_Config.spawnOnRoad)
+		if (m_Config.spawnOnRoad)
 		{
-			SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
+			SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos();
 			vector tmpPos = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
 			SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] tmpPos: " + tmpPos, LogLevel.DEBUG);			
 			if (tmpPos != "0 0 0")
@@ -132,7 +132,7 @@ class SCR_DC_Spawner
 			pos = SCR_DC_Misc.RandomizePos(pos, m_Config.spawnRndRadius);
 		}
 		
-		if(!SCR_DC_Misc.IsPosInWater(pos))
+		if (!SCR_DC_Misc.IsPosInWater(pos))
 		{		
 			string entityToSpawn = m_Config.spawnSets[m_spawnSetID].spawnNames.GetRandomElement();		
 			SCR_DC_Log.Add("[SCR_DC_Spawner:Spawn] Spawning " + entityToSpawn + " to " + SCR_StringHelper.Translate(location.Entity().GetName()), LogLevel.NORMAL);				
@@ -156,7 +156,7 @@ class SCR_DC_Spawner
 				//Disable arsenal
 				SCR_DC_SpawnHelper.DisableVehicleArsenal(entity, entityToSpawn, m_Config.disableArsenal);
 					
-				if(m_Config.showMarker)
+				if (m_Config.showMarker)
 				{
 					SCR_DC_MapMarkerHelper.CreateMapMarker(entity.GetOrigin(), DC_EMissionIcon.REDCROSS_SMALL, "", "");
 				}

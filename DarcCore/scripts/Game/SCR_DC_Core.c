@@ -59,7 +59,7 @@ class SCR_DC_CoreConfig : Managed
 class SCR_DC_CoreJsonApi : SCR_DC_JsonApi
 {
 	const string DC_CONFIG_FILE = "dc_coreConfig.json";
-	ref SCR_DC_CoreConfig conf = new SCR_DC_CoreConfig;
+	ref SCR_DC_CoreConfig conf = new SCR_DC_CoreConfig();
 
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_SpawnerJsonConfig()
@@ -71,7 +71,7 @@ class SCR_DC_CoreJsonApi : SCR_DC_JsonApi
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(DC_CONFIG_FILE);
 		
-		if(!loadContext)
+		if (!loadContext)
 		{
 			SetDefaults();
 			Save();

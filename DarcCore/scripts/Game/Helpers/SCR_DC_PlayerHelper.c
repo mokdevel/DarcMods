@@ -31,7 +31,7 @@ sealed class SCR_DC_PlayerHelper
 		
 		float closestDistance = maxDistance;
 		IEntity closestPlayer = null;
-		foreach(int i, int playerId: players)
+		foreach (int i, int playerId: players)
 		{
 			IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
 			if (player)
@@ -67,7 +67,7 @@ sealed class SCR_DC_PlayerHelper
 		array<int> players = {};
 		GetGame().GetPlayerManager().GetPlayers(players);
 		
-		foreach(int i, int playerId: players)
+		foreach (int i, int playerId: players)
 		{
 			IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
 			if (player)

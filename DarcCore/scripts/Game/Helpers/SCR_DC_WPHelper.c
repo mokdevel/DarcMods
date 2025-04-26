@@ -137,7 +137,7 @@ sealed class SCR_DC_WPHelper
 				{
 					//Create a LOITER waypoint as the last one so that AIs don't just stand there.
 					AIWaypoint wploiter = FindAndCreateWaypoint(waypoints[waypoints.Count() - 1].GetOrigin(), DC_EWaypointMoveType.LOITER);
-					if(wploiter)
+					if (wploiter)
 					{
 						wploiter.SetOrigin(waypoints[waypoints.Count() - 1].GetOrigin());
 						group.AddWaypoint(wploiter);
@@ -154,7 +154,7 @@ sealed class SCR_DC_WPHelper
 				
 				//Create a LOITER waypoint so that AIs don't just stand there.
 				AIWaypoint wploiter = FindAndCreateWaypoint(posFrom, DC_EWaypointMoveType.LOITER);
-				if(wploiter)
+				if (wploiter)
 				{
 					wploiter.SetOrigin(posFrom);
 					group.AddWaypoint(wploiter);
@@ -178,7 +178,7 @@ sealed class SCR_DC_WPHelper
 	{
 		AIWaypoint aiWayPoint;
 		aiWayPoint = FindAndCreateWaypoint(pos, wptype);
-		if(aiWayPoint)
+		if (aiWayPoint)
 		{
 			group.AddWaypoint(aiWayPoint);
 			return true;
@@ -196,7 +196,7 @@ sealed class SCR_DC_WPHelper
 		array<AIWaypoint> waypoints = {};
 		group.GetWaypoints(waypoints);
 		
-		foreach(AIWaypoint waypoint : waypoints)
+		foreach (AIWaypoint waypoint : waypoints)
 		{
 			group.RemoveWaypoint(waypoint);
 		}
@@ -268,7 +268,7 @@ sealed class SCR_DC_WPHelper
 			array<vector> routePts = {};
 			SCR_DC_RoadHelper.CreateRoute(routePts, posFrom, posTo);
 			
-			foreach(vector pt: routePts)
+			foreach (vector pt: routePts)
 			{
 				AIWaypoint waypoint = FindAndCreateWaypoint(pt, moveType, 0, emptyspot);
 				if (waypoint != null)
@@ -342,7 +342,7 @@ sealed class SCR_DC_WPHelper
 		}
 		
 		AIWaypoint waypoint = CreateWaypointEntity(wptype);
-		if(waypoint)
+		if (waypoint)
 		{
 			waypoint.SetOrigin(wpPos);
 		}

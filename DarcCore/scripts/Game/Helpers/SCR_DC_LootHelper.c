@@ -43,7 +43,7 @@ sealed class SCR_DC_LootHelper
 	*/
 	static void SpawnItemsToStorage(IEntity storage, array<string> itemNames, float itemChance = 1.0)
 	{
-		foreach(string itemName: itemNames)
+		foreach (string itemName: itemNames)
 		{
 			if (Math.RandomFloat(0, 1) < itemChance)
 			{
@@ -105,7 +105,7 @@ sealed class SCR_DC_LootHelper
 			return null;		
 		
 		ScriptedInventoryStorageManagerComponent storageManager = ScriptedInventoryStorageManagerComponent.Cast(entity.FindComponent(ScriptedInventoryStorageManagerComponent));			
-		if(storageManager)
+		if (storageManager)
 		{				
 			return storageManager.TrySpawnPrefabToStorage(item);
 		}

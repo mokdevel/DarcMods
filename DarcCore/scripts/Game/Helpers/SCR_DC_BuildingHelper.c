@@ -34,7 +34,7 @@ sealed class SCR_DC_BuildingHelper
 		}
 				
 		//Print debug information
-		foreach(IEntity building: buildings)
+		foreach (IEntity building: buildings)
 		{
 			ResourceName res = building.GetPrefabData().GetPrefabName();
 			SCR_DC_Log.Add("[SCR_DC_BuildingHelper:FindBuildings] Found: " + res + " at " + building.GetOrigin(), LogLevel.DEBUG);			
@@ -50,9 +50,9 @@ sealed class SCR_DC_BuildingHelper
 	*/	
 	static void FilterBuildingList(out array<IEntity>buildings, array<IEntity>buildingListSource, array<string>filter)
 	{
-		foreach(IEntity building: buildingListSource)
+		foreach (IEntity building: buildingListSource)
 		{
-			if(!building)
+			if (!building)
 			{
 				SCR_DC_Log.Add("[SCR_DC_BuildingHelper:FilterBuildingList] NULL - should never happen", LogLevel.WARNING);
 				continue;
@@ -87,7 +87,7 @@ sealed class SCR_DC_BuildingHelper
 		m_TmpBuildings.Clear();
 		GetGame().GetWorld().QueryEntitiesBySphere(pos, radius, FindBuildingCallback, null, EQueryEntitiesFlags.STATIC);		
 
-		foreach(IEntity building: m_TmpBuildings)
+		foreach (IEntity building: m_TmpBuildings)
 		{
 			ResourceName buildingName = building.GetPrefabData().GetPrefabName();
 			
@@ -100,7 +100,7 @@ sealed class SCR_DC_BuildingHelper
 				
 		//Print debug information
 		#ifndef SCR_DC_RELEASE
-			foreach(IEntity building: m_BuildingsCache)
+			foreach (IEntity building: m_BuildingsCache)
 			{
 				ResourceName res = building.GetPrefabData().GetPrefabName();
 				SCR_DC_Log.Add("[SCR_DC_BuildingHelper:FillBuildingsCache] Found: " + res + " at " + building.GetOrigin(), LogLevel.SPAM);			

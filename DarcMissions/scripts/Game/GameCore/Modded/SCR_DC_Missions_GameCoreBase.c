@@ -17,7 +17,7 @@ modded class SCR_BaseGameMode
 			SCR_DC_Log.Add("[SCR_DC_GameCoreBase] SCR_DC_RELEASE not defined. This is a DEVELOPMENT build.", LogLevel.WARNING);
 		}
 				
-		if(IsMaster())
+		if (IsMaster())
 		{
 			SCR_DC_Log.Add("[SCR_DC_GameCoreBase:IsMaster] OnGameStart", LogLevel.DEBUG);        
 			GetGame().GetCallqueue().CallLater(StartMissionFrame, 5000, false);	

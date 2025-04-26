@@ -40,9 +40,9 @@ class SCR_DC_LootListConfig : Managed
 			}
 		}
 		
-		foreach(SCR_DC_LootList lootList : lootLists)
+		foreach (SCR_DC_LootList lootList : lootLists)
 		{
-			foreach(string mod : modList)
+			foreach (string mod : modList)
 			{
 				SCR_DC_Resources.GetItemList(lootList.itemList, mod, lootList);
 			}
@@ -89,7 +89,7 @@ class SCR_DC_LootListJsonApi : SCR_DC_JsonApi
 	void Load()
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
-		if(!loadContext)
+		if (!loadContext)
 		{
 			SetDefaults();
 			Save("");

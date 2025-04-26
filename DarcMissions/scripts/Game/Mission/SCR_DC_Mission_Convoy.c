@@ -24,7 +24,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 
 	protected ref SCR_DC_Convoy m_DC_Convoy;		//Convoy configuration in use
 	
-	private vector m_PosDestination = "1 1 1";
+	private vector m_vPosDestination = "1 1 1";
 	private IEntity m_Vehicle = null;
 	
 	//------------------------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 
 		//Pick a configuration for mission
 		int idx = SCR_DC_MissionHelper.SelectMissionIndex(m_Config.convoyList);
-		if(idx == -1)
+		if (idx == -1)
 		{
 			SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No occupations defined.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
@@ -52,18 +52,18 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 
 		//Set defaults
 		vector pos = m_DC_Convoy.pos;
-		m_PosDestination = m_DC_Convoy.posDestination;
+		m_vPosDestination = m_DC_Convoy.posDestination;
 		string posName = m_DC_Convoy.posName;
 		
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
 			pos = SCR_DC_MissionHelper.FindMissionPos(m_DC_Convoy.locationTypes);
-			if(pos != "0 0 0")
+			if (pos != "0 0 0")
 			{
-				SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
+				SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos();
 				pos = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
-				if(pos == "0 0 0")
+				if (pos == "0 0 0")
 				{
 					SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No start road found.", LogLevel.ERROR);
 				}
@@ -75,14 +75,14 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		}
 
 		//Find a location for the destination
-		if (m_PosDestination == "0 0 0" && pos != "0 0 0")
+		if (m_vPosDestination == "0 0 0" && pos != "0 0 0")
 		{
-			m_PosDestination = SCR_DC_MissionHelper.FindMissionDestination(m_DC_Convoy.locationTypes, pos, 500);
-			if(m_PosDestination != "0 0 0")
+			m_vPosDestination = SCR_DC_MissionHelper.FindMissionDestination(m_DC_Convoy.locationTypes, pos, 500);
+			if (m_vPosDestination != "0 0 0")
 			{
-				SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
-				m_PosDestination = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, m_PosDestination);
-				if(m_PosDestination == "0 0 0")
+				SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos();
+				m_vPosDestination = SCR_DC_RoadHelper.FindClosestRoadposToPos(roadPos, m_vPosDestination);
+				if (m_vPosDestination == "0 0 0")
 				{
 					SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] No destination road found.", LogLevel.ERROR);
 				}
@@ -93,7 +93,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 			}
 		}		
 
-		if (pos == "0 0 0" || m_PosDestination == "0 0 0")	//No suitable location found.
+		if (pos == "0 0 0" || m_vPosDestination == "0 0 0")	//No suitable location found.
 		{				
 			SCR_DC_Log.Add("[SCR_DC_Mission_Convoy] Could not find suitable location.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
@@ -103,7 +103,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		SetPos(pos);
 		SetPosName(SCR_DC_Locations.CreateName(pos, posName));
 		SetTitle(m_DC_Convoy.title);
-		SetInfo(m_DC_Convoy.info + "" + GetPosName() + " to " + SCR_DC_Locations.CreateName(m_PosDestination, "any"));			
+		SetInfo(m_DC_Convoy.info + "" + GetPosName() + " to " + SCR_DC_Locations.CreateName(m_vPosDestination, "any"));			
 		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
 		SetShowHint(m_Config.showHint);			
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
@@ -136,12 +136,12 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 					break;
 				case DC_EMissionConvoyState.MOVE_AI:
 					MoveGroupInVehicle(m_Groups[0], m_Vehicle);
-					SCR_DC_WPHelper.CreateMissionAIWaypoints(m_Groups[0], DC_EWaypointGenerationType.ROUTE, GetPos(), m_PosDestination, DC_EWaypointMoveType.MOVE);
+					SCR_DC_WPHelper.CreateMissionAIWaypoints(m_Groups[0], DC_EWaypointGenerationType.ROUTE, GetPos(), m_vPosDestination, DC_EWaypointMoveType.MOVE);
 					missionConvoyState = DC_EMissionConvoyState.RUN;
 					break;
 				case DC_EMissionConvoyState.RUN:
 					//Move the position as the convoy is moving. This way check for player distance works properly.
-					if(m_Vehicle)
+					if (m_Vehicle)
 					{
 						SetPos(m_Vehicle.GetOrigin());
 						SCR_DC_DebugHelper.MoveDebugPos(GetId(), GetPos());
@@ -176,7 +176,7 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
 		//Spawn vehicle					
 		string resourceName	= m_DC_Convoy.vehicleTypes.GetRandomElement();
 		m_Vehicle = SCR_DC_SpawnHelper.SpawnItem(GetPos(), resourceName);
-		if(m_Vehicle)
+		if (m_Vehicle)
 		{
 			m_EntityList.Insert(m_Vehicle);
 		}
@@ -211,12 +211,12 @@ class SCR_DC_Mission_Convoy : SCR_DC_Mission
     {
 		array<AIAgent> groupMembers  = new array<AIAgent>;
 		
-		if(group)
+		if (group)
 		{
 			group.GetAgents(groupMembers);
 			
 			int i = 0;
-			foreach(AIAgent aiAgent: groupMembers)
+			foreach (AIAgent aiAgent: groupMembers)
 			{
 				MoveEntityInVehicle(aiAgent, vehicle, i);				
 				i++;
@@ -299,14 +299,14 @@ class SCR_DC_Convoy : Managed
 class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 {
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Convoy.json";
-	ref SCR_DC_ConvoyConfig conf = new SCR_DC_ConvoyConfig;
+	ref SCR_DC_ConvoyConfig conf = new SCR_DC_ConvoyConfig();
 		
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
 		
-		if(!loadContext)
+		if (!loadContext)
 		{
 			SetDefaults();
 			Save("");
@@ -333,12 +333,12 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = false;
 		//Mission specific
-		conf.convoyList = {0};
+		conf.convoyList = {0,0,0,1};
 		conf.distanceToPlayer = 500;
 		conf.disableArsenal = true;
 		
 		//----------------------------------------------------
-		SCR_DC_Convoy convoy0 = new SCR_DC_Convoy;
+		SCR_DC_Convoy convoy0 = new SCR_DC_Convoy();
 		convoy0.Set
 		(
 			"Convoy driving from .. to ..",
@@ -375,7 +375,7 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 		);
 		conf.convoys.Insert(convoy0);	
 		
-		SCR_DC_Loot convoy0loot = new SCR_DC_Loot;
+		SCR_DC_Loot convoy0loot = new SCR_DC_Loot();
 		lootItems = {
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
@@ -388,5 +388,57 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 			};
 		convoy0loot.Set(0.9, lootItems);
 		convoy0.loot = convoy0loot;			
+	
+		//----------------------------------------------------
+		SCR_DC_Convoy convoy1 = new SCR_DC_Convoy();
+		convoy1.Set
+		(
+			"Truck driving from .. to ..",
+			"0 0 0",
+			"0 0 0",
+			"any",
+			"Cargo truck is on the move.",
+			"Follow the route from ",
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_PARKING,
+				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_AIRPORT
+			},
+			{
+				"{2E9C920C3ACA2C6F}Prefabs/Groups/INDFOR/Group_FIA_ReconTeam.et",
+				"{581106FA58919E89}Prefabs/Groups/INDFOR/Group_FIA_MedicalSection.et",
+				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
+				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+			},
+			40, 1.0,
+			{
+				"{92264FF932676C13}Prefabs/Vehicles/Wheeled/M923A1/M923A1_ammo.et",
+				"{1449105FD658EDFB}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_CIV_forest.et",
+				"{FB219B49A448A8EA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_JZD.et",
+				"{F1FBD0972FA5FE09}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport.et"
+			},
+			20
+		);
+		conf.convoys.Insert(convoy1);	
+		
+		SCR_DC_Loot convoy1loot = new SCR_DC_Loot();
+		lootItems = {
+				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
+				"WEAPON_HANDGUN", "WEAPON_HANDGUN", 
+				"WEAPON_LAUNCHER",
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"			
+			};
+		convoy1loot.Set(0.9, lootItems);
+		convoy1.loot = convoy1loot;			
 	}	
 }

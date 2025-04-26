@@ -38,7 +38,7 @@ sealed class SCR_DC_SpawnHelper
 		{
 			//Spawn the resource to a free spot close to pos
 			posFixed = FindEmptyPos(pos, emptyPosRadius, (SCR_DC_Misc.FindMaxValue(sums)/SIZEDIV));
-			if(posFixed != "0 0 0")
+			if (posFixed != "0 0 0")
 			{
 				vector transform[4];
 				GetTransformFromPosAndRot(transform, posFixed, rotation, snap);
@@ -179,7 +179,7 @@ sealed class SCR_DC_SpawnHelper
 		
 		if (index == -1)
 		{
-			foreach(SCR_DC_Structure structure : structures)
+			foreach (SCR_DC_Structure structure : structures)
 			{
 				vector newPos = RotatePosAroundPivot(structure.GetPosition(), "0 0 0", rotation);
 				
@@ -208,12 +208,12 @@ sealed class SCR_DC_SpawnHelper
 		vector avgPos = "0 0 0";
 		int i = 0;
 		
-		if(structures.IsEmpty())
+		if (structures.IsEmpty())
 		{
 			return;
 		}	
 		
-		foreach(SCR_DC_Structure structure : structures)		
+		foreach (SCR_DC_Structure structure : structures)		
 		{
 			avgPos = avgPos + structure.GetPosition();
 			i++;
@@ -223,7 +223,7 @@ sealed class SCR_DC_SpawnHelper
 		avgPos[2] = avgPos[2]/i;
 		SCR_DC_Log.Add("[SCR_DC_SpawnHelper:SetStructuresToOrigo] avgPos = " + avgPos, LogLevel.SPAM);		
 		
-		foreach(SCR_DC_Structure structure : structures)		
+		foreach (SCR_DC_Structure structure : structures)		
 		{
 			structure.SetPosition(structure.GetPosition() - avgPos + pos);
 			SCR_DC_Log.Add("[SCR_DC_SpawnHelper:SetStructuresToOrigo] pos = " + structure.GetPosition(), LogLevel.SPAM);		
@@ -287,7 +287,7 @@ sealed class SCR_DC_SpawnHelper
 	{		
 		vector posFixed;
 		
-		if(SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize, 2, TraceFlags.ENTS|TraceFlags.WORLD|TraceFlags.OCEAN))
+		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize, 2, TraceFlags.ENTS|TraceFlags.WORLD|TraceFlags.OCEAN))
 		{
 			SCR_DC_Log.Add("[SCR_DC_SpawnHelper:FindEmptyPos] Found: " + posFixed, LogLevel.SPAM);			
 			return posFixed;

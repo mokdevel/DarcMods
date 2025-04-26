@@ -48,7 +48,7 @@ sealed class SCR_DC_MissionHelper
 		array<IEntity> locations = {};
 		SCR_DC_Locations.GetLocations(locations, locationTypes);		
 		
-		if(locations.Count() == 0)
+		if (locations.Count() == 0)
 		{
 			SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionLocation] No locations found. Check the list of locationTypes in your mission." , LogLevel.ERROR);
 			return "0 0 0";
@@ -103,12 +103,12 @@ sealed class SCR_DC_MissionHelper
 		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 		{					
 			pos = SCR_DC_MissionHelper.FindMissionPos(locationTypes);
-			if(pos == "0 0 0")
+			if (pos == "0 0 0")
 			{
 				return "0 0 0";
 			}
 			
-			if(!SCR_DC_Misc.IsPosNearPos(pos, missionPos, distance))	//Shall be distance meters from actual missionPos
+			if (!SCR_DC_Misc.IsPosNearPos(pos, missionPos, distance))	//Shall be distance meters from actual missionPos
 			{
 				positionFound = true;
 				SCR_DC_Log.Add("[SCR_DC_MissionHelper:FindMissionDestination] Location found: " + pos, LogLevel.DEBUG);
@@ -185,7 +185,7 @@ sealed class SCR_DC_MissionHelper
 	{
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		
-		foreach(int i, SCR_DC_Mission mission: baseGameMode.missionFrame.m_MissionList)
+		foreach (int i, SCR_DC_Mission mission: baseGameMode.missionFrame.m_MissionList)
 		{
 			float distance = vector.Distance(mission.GetPos(), positionToCheck);
 		
@@ -207,7 +207,7 @@ sealed class SCR_DC_MissionHelper
 	{
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 	
-		foreach (SCR_DC_NonValidArea nonValidArea : baseGameMode.missionFrame.m_NonValidAreas)
+		foreach (SCR_DC_NonValidArea nonValidArea : baseGameMode.missionFrame.m_aNonValidAreas)
 		{
 			float distance = vector.Distance(pos, nonValidArea.pos);
 		
@@ -278,7 +278,7 @@ sealed class SCR_DC_MissionHelper
 	{
 		int idx = -1;
 
-		if(confList.Count() == 0)
+		if (confList.Count() == 0)
 		{
 			return -1;
 		}

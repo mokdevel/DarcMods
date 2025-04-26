@@ -29,7 +29,7 @@ sealed class SCR_DC_RoadHelper
 		int ptCount = (distance/stepDistance) + 1;
 		
 		//Limit the ptCount
-		if(ptCount > 4)
+		if (ptCount > 4)
 		{
 			ptCount = 4;	//4 will limit the WPs to 16, 3 would limit to 9
 		}
@@ -72,7 +72,7 @@ sealed class SCR_DC_RoadHelper
 		//The distance tried for a road depends on the map size. For a 1024 size map ~150 is a good value -> 7 as divider
 		float distanceToRoad = SCR_DC_Misc.GetWorldSize() / 27;
 		
-		SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos;
+		SCR_DC_RoadPos roadPos = new SCR_DC_RoadPos();
 		for (int i = 0; i < tmpPos.Count() - 1; i++)		
 		{
 			vector splitPos = vector.Lerp(tmpPos[i], tmpPos[i + 1], 0.5);
@@ -112,16 +112,16 @@ sealed class SCR_DC_RoadHelper
 		if (rnManager)
 		{
 			rnManager.GetClosestRoad(pos, roadPos.road, roadPos.distanceToRoad);			
-			if(roadPos.distanceToRoad < maxDistanceToRoad)
+			if (roadPos.distanceToRoad < maxDistanceToRoad)
 			{
 				FindRoadPts(roadPts, roadPos.road);
 				int i = 0;
 				
 //				pos[1] = 0;		//Distance calculation done on plane at 0 height
-				foreach(vector pt: roadPts)
+				foreach (vector pt: roadPts)
 				{	
 ///					pt[1] = 0;	//Distance calculation done on plane at 0 height
-					if(SCR_DC_Misc.IsPosNearPos(pos, pt, (roadPos.distanceToRoad + 10)))
+					if (SCR_DC_Misc.IsPosNearPos(pos, pt, (roadPos.distanceToRoad + 10)))
 					{
 						pt[1] = GetGame().GetWorld().GetSurfaceY(pt[0], pt[2]);
 						roadPos.posOnRoad = pt;
@@ -164,7 +164,7 @@ sealed class SCR_DC_RoadHelper
 		{
 			float distanceToRoad;
 			rnManager.GetClosestRoad(pos, road, distanceToRoad);
-			if(distanceToRoad > maxDistanceToRoad)
+			if (distanceToRoad > maxDistanceToRoad)
 			{
 				return null;
 			}
@@ -183,7 +183,7 @@ sealed class SCR_DC_RoadHelper
 	{
 		roadPts = {};
 		
-		if(road)
+		if (road)
 		{
 			road.GetPoints(roadPts);
 		}
@@ -203,11 +203,11 @@ sealed class SCR_DC_RoadHelper
 		//Check if road1 end is closer to road2 start
 		float d1 = vector.Distance(roadPts1[roadPts1.Count() - 1], roadPts2[0]);						//B-C
 		float d2 = vector.Distance(roadPts1[roadPts1.Count() - 1], roadPts2[roadPts2.Count() - 1]);		//B-D
-		if( d1 > d2 )
+		if ( d1 > d2 )
 		{	
 			SCR_DC_Log.Add("[SCR_DC_RoadHelper] Road to be mirrored.", LogLevel.DEBUG);			
 			int j = roadPts2.Count() - 1;
-			foreach(vector pt: roadPts2)
+			foreach (vector pt: roadPts2)
 			{
 				roadPts1.Insert(roadPts2[j]);
 				j--;
@@ -239,12 +239,12 @@ sealed class SCR_DC_RoadHelper
 		int idx = Math.RandomInt(0, 2);
 
 //		idx = 2;
-		for(int i = 0; i < 2; i++)
+		for (int i = 0; i < 2; i++)
 		{				
 			pos = SCR_DC_Misc.MovePosToAngle(roadPosLast, distanceToCheck, (angle + anglesToTest[idx+i]));
 			SCR_DC_DebugHelper.AddDebugPos(pos, Color.GREEN, 2, "ROADTEST", 5);
 			BaseRoad road = FindClosestRoad(pos, distanceToCheck);
-			if(road)
+			if (road)
 				return road;
 		}
 
@@ -265,7 +265,7 @@ sealed class SCR_DC_RoadHelper
 		}	
 		
 		rnManager = aiWorld.GetRoadNetworkManager();
-		if(!rnManager)
+		if (!rnManager)
 		{
 			return null;
 		}
@@ -323,7 +323,7 @@ sealed class SCR_DC_RoadHelper
 	static void DebugDrawRoad(array<vector> roadPts)
 	{
 		float i = 0;
-		foreach(vector roadPt: roadPts)
+		foreach (vector roadPt: roadPts)
 		{
 			SCR_DC_DebugHelper.AddDebugPos(roadPt, Color.PINK, 2, "ROADTEST", 5 + i);
 			i = i + 0.2;

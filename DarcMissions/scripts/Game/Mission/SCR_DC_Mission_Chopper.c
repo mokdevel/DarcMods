@@ -135,7 +135,7 @@ class SCR_DC_Mission_Chopper : SCR_DC_Mission
         m_Vehicle.GetPhysics().SetVelocity(vel);		
 		
 		idx++;
-		if(rotor[idx] != -1)
+		if (rotor[idx] != -1)
 		{
 			GetGame().GetCallqueue().CallLater(Path1, 8000, false);
 		}
@@ -158,14 +158,14 @@ class SCR_DC_ChopperConfig : SCR_DC_MissionConfig
 class SCR_DC_ChopperJsonApi : SCR_DC_JsonApi
 {
 	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Chopper.json";
-	ref SCR_DC_ChopperConfig conf = new SCR_DC_ChopperConfig;
+	ref SCR_DC_ChopperConfig conf = new SCR_DC_ChopperConfig();
 		
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
 		
-		if(!loadContext)
+		if (!loadContext)
 		{
 			SetDefaults();
 			Save("");

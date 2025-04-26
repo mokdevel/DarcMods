@@ -7,51 +7,51 @@ Structure class
 
 class SCR_DC_Structure
 {
-	string m_Resource;
-	vector m_Position;
-	vector m_Rotation;	//"Xrot YRot ZRot"
+	private string resource;
+	private vector position;
+	private vector rotation;	//"Xrot YRot ZRot"
 
-	void Set(string resource, vector position, vector rotation = "0 0 0")
+	void Set(string resource_, vector position_, vector rotation_ = "0 0 0")
 	{
-		m_Resource = resource;
-		m_Position = position;
-		m_Rotation = rotation;
+		resource = resource_;
+		position = position_;
+		rotation = rotation_;
 	};
 
     // Getter functions
     string GetResource()
     {
-        return m_Resource;
+        return resource;
     }
 
     vector GetPosition()
     {
-        return m_Position;
+        return position;
     }
 
     vector GetRotation()
     {
-        return m_Rotation;
+        return rotation;
     }
 
 	float GetRotationY()
     {
-        return m_Rotation[1];
+        return rotation[1];
     }
 
     // Setter functions
-    void SetResource(string resource)
+    void SetResource(string resource_)
     {
-        m_Resource = resource;
+        resource = resource_;
     }
 
-    void SetPosition(vector position)
+    void SetPosition(vector position_)
     {
-        m_Position = position;
+        position = position_;
     }
 
-    void SetRotation(vector rotation)
+    void SetRotation(vector rotation_)
     {
-        m_Rotation = rotation;
+        rotation = rotation_;
     }
 }

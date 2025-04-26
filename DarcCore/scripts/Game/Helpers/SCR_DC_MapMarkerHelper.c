@@ -28,7 +28,7 @@ sealed class SCR_DC_MapMarkerHelper
 		markerst.SetMarkerFactionFlags(0);	//Everyone can see the markers
 		mapMarkerMgr.InsertStaticMarker(markerst, false, true);		
 		
-		DC_Mmarker dcmarker = new DC_Mmarker;
+		DC_Mmarker dcmarker = new DC_Mmarker();
 		dcmarker.id = id;
 		dcmarker.iID = markerst.GetMarkerID();
 		m_markers.Insert(dcmarker);

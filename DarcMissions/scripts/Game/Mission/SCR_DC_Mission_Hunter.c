@@ -19,8 +19,8 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 	private const int DC_GROUP_SPAWN_DELAY = 2000;			//Delay between AI group spawns
 	
 	private ref array<IEntity> m_Locations = {};
-	int m_GroupsToSpawn	= 0;	//Amount of groups to spawn
-	int m_GroupsSpawned = 0;	//The amount of groups spawned. Between spawns, a group may be killed so the total of m_Groups is not reliable to know the count.
+	private int m_iGroupsToSpawn	= 0;	//Amount of groups to spawn
+	private int m_iGroupsSpawned = 0;	//The amount of groups spawned. Between spawns, a group may be killed so the total of m_Groups is not reliable to know the count.
 	//------------------------------------------------------------------------------------------------
 	void SCR_DC_Mission_Hunter(bool createConf = false)
 	{
@@ -34,7 +34,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 		m_HunterJsonApi.Load();
 		m_Config = m_HunterJsonApi.conf;
 		
-		m_GroupsToSpawn = Math.RandomInt(m_Config.groupCount[0], m_Config.groupCount[1]);
+		m_iGroupsToSpawn = Math.RandomInt(m_Config.groupCount[0], m_Config.groupCount[1]);
 		
 		//Find position
 		bool positionFound = false;
@@ -44,7 +44,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 		{
 			pos = SCR_DC_Misc.GetRandomWorldPos();
 						
-			if(SCR_DC_MissionHelper.IsValidMissionPos(pos))
+			if (SCR_DC_MissionHelper.IsValidMissionPos(pos))
 			{			
 				//Find a position close to any player
 				if (SCR_DC_PlayerHelper.IsAnyPlayerCloseToPos(pos, m_Config.maxDistanceToPlayer, m_Config.minDistanceToPlayer))
@@ -95,9 +95,9 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 		
 		if (GetState() == DC_EMissionState.ACTIVE)
 		{
-			if (m_GroupsSpawned < m_GroupsToSpawn)
+			if (m_iGroupsSpawned < m_iGroupsToSpawn)
 			{
-				SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionRun] Waiting for all groups to spawn. " + m_GroupsSpawned + "/" + m_GroupsToSpawn + " ready.", LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionRun] Waiting for all groups to spawn. " + m_iGroupsSpawned + "/" + m_iGroupsToSpawn + " ready.", LogLevel.DEBUG);
 			}
 			else
 			{
@@ -123,11 +123,11 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
 	{					
-		SCR_DC_Log.Add(("[SCR_DC_Mission_Hunter:MissionSpawn] Spawning " + m_GroupsToSpawn + " groups"), LogLevel.NORMAL);
+		SCR_DC_Log.Add(("[SCR_DC_Mission_Hunter:MissionSpawn] Spawning " + m_iGroupsToSpawn + " groups"), LogLevel.NORMAL);
 		
-		for (int i = 1; i <= m_GroupsToSpawn; i++)
+		for (int i = 1; i <= m_iGroupsToSpawn; i++)
 		{
-			SCR_DC_Log.Add(("[SCR_DC_Mission_Hunter:MissionSpawn] Initiating spawn for group " + i + " of " + m_GroupsToSpawn), LogLevel.NORMAL);
+			SCR_DC_Log.Add(("[SCR_DC_Mission_Hunter:MissionSpawn] Initiating spawn for group " + i + " of " + m_iGroupsToSpawn), LogLevel.NORMAL);
 			
 			GetGame().GetCallqueue().CallLater(SpawnGroup, (DC_GROUP_SPAWN_DELAY + i*1000), false);
 		}
@@ -179,7 +179,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 			{
 				SCR_DC_AIHelper.SetAIGroupSkill(group, m_Config.aiSkill, m_Config.aiPerception);					
 				m_Groups.Insert(group);
-				m_GroupsSpawned++;
+				m_iGroupsSpawned++;
 				SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:SpawnHunterGroup] Group spawned to " + spawnLocation, LogLevel.NORMAL);				
 			}
 			else
@@ -266,7 +266,7 @@ class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
 		
-		if(!loadContext)
+		if (!loadContext)
 		{
 			SetDefaults();
 			Save("");

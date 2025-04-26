@@ -13,7 +13,7 @@ modded class SCR_BaseGameMode
 		
 		SCR_DC_Log.Add("[SCR_DC_Core_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
 		
-		if(IsMaster())
+		if (IsMaster())
 		{
 			SCR_DC_Log.Add("[SCR_DC_Core_BaseGameMode:IsMaster] OnGameStart", LogLevel.SPAM);        
 

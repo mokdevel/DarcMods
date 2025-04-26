@@ -38,7 +38,7 @@ class SCR_DC_Mission
 	//Common for all missions
 	private DC_EMissionState m_State;
 	private DC_EMissionType m_Type;
-	private bool m_Static;					//Defines if the mission is dynamic or static. Dynamic is default. 
+	private bool m_Static;						//Defines if the mission is dynamic or static. Dynamic is default. 
     private string m_Id;
     private vector m_Pos;
     private string m_PosName;
@@ -46,12 +46,13 @@ class SCR_DC_Mission
     private string m_Info;
     private bool m_ShowHint;
 	//Internals
-	private int m_StartTime;				//Seconds when mission started
-	private int m_EndTime;					//Seconds when mission shall end.
-	private int m_ActiveTime;				//Seconds of how long the mission should be active
+	private int m_StartTime;					//Seconds when mission started
+	private int m_EndTime;						//Seconds when mission shall end.
+	private int m_ActiveTime;					//Seconds of how long the mission should be active
 	//Internals without getters
-	private int m_ActiveDistance;			//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
-	private int m_ActiveTimeToEnd;			//The time to keep mission active once all AIs are dead.
+	private int m_ActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
+	private int m_ActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
+	private bool m_bMissionIsEnding;			//Once all AIs are dead, we're getting close to end the mission.
 	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
@@ -70,6 +71,7 @@ class SCR_DC_Mission
 		m_StartTime = (System.GetTickCount() / 1000); 			//The time in seconds when the mission was started.
 		SetActiveTime(DC_MISSION_CYCLE_TIME_DEFAULT*20);		//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
 		m_ActiveDistance = 0;									//Set a default zero
+		m_bMissionIsEnding = false;
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -110,7 +112,7 @@ class SCR_DC_Mission
 	{
 		//Remove spawned items
 		SCR_DC_Log.Add("[SCR_DC_Mission:MissionEnd] Deleting entities", LogLevel.DEBUG);
-		foreach(IEntity entity : m_EntityList)
+		foreach (IEntity entity : m_EntityList)
 		{
 			if (entity)
 			{
@@ -121,7 +123,7 @@ class SCR_DC_Mission
 		
 		//Remove AI
 		SCR_DC_Log.Add("[SCR_DC_Mission:MissionEnd] Deleting AI groups", LogLevel.DEBUG);
-		foreach(SCR_AIGroup group : m_Groups)
+		foreach (SCR_AIGroup group : m_Groups)
 		{
 			if (group)
 			{
@@ -215,10 +217,54 @@ class SCR_DC_Mission
 	{		
 		m_Info = info;
 	}
+
+	//------------------------------------------------------------------------------------------------
+	void SetActiveDistance(int distance)	
+	{
+		if (m_ActiveDistance > 0)
+		{
+			//It has been set by the mission already
+		}
+		else		
+		{
+			//Use provided distance
+			m_ActiveDistance = distance;
+		}
+	}		
 	
+	//------------------------------------------------------------------------------------------------
+	void SetActiveTimeToEnd(int seconds)	
+	{
+		m_ActiveTimeToEnd = seconds;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	//NOTE: Call ResetActiveTime(); after you've set this
+	void SetActiveTime(int seconds)	
+	{
+		m_ActiveTime = seconds;
+	}		
+
+	//------------------------------------------------------------------------------------------------
+	int GetActiveTime()
+	{
+		int currentTime = (System.GetTickCount() / 1000);
+		return m_EndTime - currentTime;
+	}		
+		
 	//------------------------------------------------------------------------------------------------
 	bool IsActive()
 	{
+		//Are all AIs dead
+		if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups) && m_State == DC_EMissionState.ACTIVE && !m_bMissionIsEnding)
+		{
+			//Mission is soon to be ending
+			m_bMissionIsEnding = true;
+			//Set ActiveTimeToEnd to be the final active time
+			SetActiveTime(m_ActiveTimeToEnd);
+			ResetActiveTime();
+		}
+		
 		//Are there players still nearby
 		if (SCR_DC_PlayerHelper.PlayerGetClosestToPos(m_Pos, 0, m_ActiveDistance))
 		{
@@ -238,50 +284,9 @@ class SCR_DC_Mission
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void SetActiveDistance(int distance)	
-	{
-		if(m_ActiveDistance > 0)
-		{
-			//It has been set by the mission already
-		}
-		else		
-		{
-			//Use provided distance
-			m_ActiveDistance = distance;
-		}
-	}		
-	
-	//------------------------------------------------------------------------------------------------
-	void SetActiveTimeToEnd(int seconds)	
-	{
-		m_ActiveTimeToEnd = seconds;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void SetActiveTime(int seconds)	
-	{
-		m_ActiveTime = seconds;
-		ResetActiveTime();
-	}		
-
-	//------------------------------------------------------------------------------------------------
-	int GetActiveTime()
-	{
-		int currentTime = (System.GetTickCount() / 1000);
-		return m_EndTime - currentTime;
-	}		
-		
-	//------------------------------------------------------------------------------------------------
 	void ResetActiveTime()	
 	{
 		int currentTime = (System.GetTickCount() / 1000);		
-		
-		if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups) && m_State == DC_EMissionState.ACTIVE)
-		{
-			m_EndTime = currentTime + m_ActiveTimeToEnd;
-			return;
-		}
-
 		m_EndTime = currentTime + m_ActiveTime;
 	}		
 
@@ -299,7 +304,7 @@ class SCR_DC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SetMarker(bool setMarker, DC_EMissionIcon icon)
 	{
-		if(setMarker)
+		if (setMarker)
 		{
 			SCR_DC_MapMarkerHelper.CreateMapMarker(GetPos(), icon, GetId(), GetTitle());
 		}
@@ -310,9 +315,9 @@ class SCR_DC_Mission
 	{
 		int count = 0;
 		
-		foreach(SCR_AIGroup group: m_Groups)
+		foreach (SCR_AIGroup group: m_Groups)
 		{		
-			if(group)
+			if (group)
 			{
 				count = count + group.GetAgentsCount();
 			}

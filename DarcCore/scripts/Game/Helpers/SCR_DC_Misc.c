@@ -7,9 +7,6 @@ Includes various small functions.
 
 sealed class SCR_DC_Misc
 {
-	private static ref array<IEntity> m_TmpBuildings = {};
-	static int m_Ctr = 0;
-
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Return the biggest value in a vector. 
@@ -107,7 +104,7 @@ sealed class SCR_DC_Misc
 		int lastslash = worldName.LastIndexOf("/") + 1;
 		worldName = worldName.Substring(lastslash, worldName.Length() - lastslash - 4);
 		
-		if(worldName.StartsWith("GM_"))
+		if (worldName.StartsWith("GM_"))
 		{
 			worldName.Replace("GM_", "");
 		}
@@ -281,7 +278,7 @@ sealed class SCR_DC_Misc
 	{
 		string s = String(classToTest);
 		typename var = s.ToType();
-		if(var)
+		if (var)
 		{
 			return true;
 		}
