@@ -4,7 +4,12 @@ ImageSetClass {
   ImageSetTextureClass {
    screenSize FHD
    size 324 324
-   path "{5DDBEDB7027F9F40}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI-450_atlas.edds"
+   path "{5DDBEDB7027F9F3F}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI-450_atlas.edds"
+  }
+  ImageSetTextureClass {
+   screenSize FHD
+   size 324 324
+   path "{5DDBEDB7027F9F3F}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI-450_atlas.edds"
   }
  }
  Images {
@@ -59,6 +64,12 @@ ImageSetClass {
   ImageSetDefClass redcross_small {
    Name "redcross_small"
    Pos 73 201
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass black_x_small {
+   Name "black_x_small"
+   Pos 137 201
    Size 64 64
    Flags 0
   }

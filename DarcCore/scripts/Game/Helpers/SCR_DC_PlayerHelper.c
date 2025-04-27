@@ -120,6 +120,21 @@ sealed class SCR_DC_PlayerHelper
 		}
 		
 		return factionKey;
-	}		
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get player name
+	*/	
+	static string GetPlayerName(int playerId)
+	{
+		string playerName = "";
+		PlayerManager playerManager = GetGame().GetPlayerManager();
+		if (playerManager)
+		{
+			playerName = playerManager.GetPlayerName(playerId);		
+		}		
+		return playerName;
+	}	
 }
 

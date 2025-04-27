@@ -2,7 +2,7 @@
 
 modded class SCR_BaseGameMode 
 {
-	#ifndef SCR_DC_DISABLE_DARCSPAWNER
+	#ifdef SCR_DC_ENABLE_DARCSPAWNER
 	//private 
 	ref SCR_DC_Spawner dcSpawner;
 

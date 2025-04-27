@@ -12,6 +12,7 @@ enum DC_EMissionIcon
 	DEBUG_SMALL,
 	REDCROSS,
 	REDCROSS_SMALL,
+	BLACK_X_SMALL,
 };
 
 [BaseContainerProps(), SCR_MapMarkerTitle()]

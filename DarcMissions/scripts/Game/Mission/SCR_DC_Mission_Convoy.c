@@ -440,5 +440,53 @@ class SCR_DC_ConvoyJsonApi : SCR_DC_JsonApi
 			};
 		convoy1loot.Set(0.9, lootItems);
 		convoy1.loot = convoy1loot;			
+	
+		//----------------------------------------------------
+		//TBD: Needs fixing. The AI will jump out immediately when seeing a player. The driver stays inside, but gunner not. Probably need to assign a gunner...
+		SCR_DC_Convoy convoy2 = new SCR_DC_Convoy();
+		convoy2.Set
+		(
+			"Armor driving from .. to ..",
+			"0 0 0",
+			"0 0 0",
+			"any",
+			"Armor spotted",
+			"Likely to patrol from ",
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_PARKING,
+				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_AIRPORT
+			},
+			{
+				"{E552DABF3636C2AD}Prefabs/Groups/OPFOR/Group_USSR_RifleSquad.et",
+				"{97D45056CFC22FF2}Prefabs/Groups/OPFOR/KLMK/Group_USSR_RifleSquad_KLMK.et"			},
+			50, 1.0,
+			{
+				"{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et",
+				"{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et",
+			},
+			50
+		);
+		conf.convoys.Insert(convoy2);	
+		
+		SCR_DC_Loot convoy2loot = new SCR_DC_Loot();
+		lootItems = {
+				"WEAPON_RIFLE", 
+				"WEAPON_HANDGUN", 
+				"WEAPON_LAUNCHER", "WEAPON_LAUNCHER",
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"			
+			};
+		convoy2loot.Set(0.9, lootItems);
+		convoy2.loot = convoy2loot;			
 	}	
 }

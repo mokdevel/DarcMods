@@ -3,6 +3,20 @@ GameProject {
  GUID "652EACEC4A8BDBC3"
  TITLE "DarcDev"
  Dependencies {
-  "5ED0FAC84A48D018" "631C9C204D8FAF47" "631EE12D448D7FCC" "58D0FB3206B6F859"
+  "5ED0FAC84A48D018" "631C9C204D8FAF47" "631EE12D448D7FCC" "58D0FB3206B6F859" "653719CD7463A93B"
+ }
+ Configurations {
+  GameProjectConfig PC {
+  }
+  GameProjectConfig XBOX_ONE {
+  }
+  GameProjectConfig XBOX_SERIES {
+  }
+  GameProjectConfig PS4 {
+  }
+  GameProjectConfig PS5 {
+  }
+  GameProjectConfig HEADLESS {
+  }
  }
 }
