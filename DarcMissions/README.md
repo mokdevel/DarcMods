@@ -19,6 +19,15 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
 - [HunterKiller mod by Rabid Squirrel](https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller) for the initial kick to get into coding.
 
+## Future plans
+- Waypoint functionality for AI to roam buildings in a city
+- New missions: Kill a target, steal smth and bring the loot somewhere, choppers hunting you
+
+## Known issues
+- Vehicles spawned for missions (convoy, ...) will despawn once mission is cleared. (TBD: Plans to change this behavior).
+- No ammo spawns in loot. (TBD: weapon compatible ammo functionality)
+- Hints about mission sometimes simply stop showing. Especially if you do a logout/login loop. (TBD: Find a cure).
+
 # Basics
 Once the mod starts to run it will wait for ```missionStartDelay``` before the missions start to spawn. The missions have their own life cycle with a defined cycle time. Once a mission is completed and no players are near by, the missions will despawn. The missions are active a minimum of ```missionActiveTime```. The time is reset if there is a player within ```missionActiveDistance```.
 
@@ -654,8 +663,3 @@ Below is a an example camp with a box for loot, tent, fireplace and chair. The c
   }
 ]
 ```
-
-# TBD
-- Waypoint functionality to roam buildings in a city
-- Give AIs the capability to guard buildings (for example in occupation missions)
-- New missions: Kill a target, steal smth and bring the loot somewhere, choppers hunting you
