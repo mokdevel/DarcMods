@@ -1,0 +1,8 @@
+GameProject {
+ ID "DarcDeathMarker"
+ GUID "653719CD7463A93B"
+ TITLE "DarcDeathMarker"
+ Dependencies {
+  "631EE12D448D7FCC" "58D0FB3206B6F859"
+ }
+}
