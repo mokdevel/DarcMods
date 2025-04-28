@@ -101,6 +101,7 @@ class SCR_DC_Mission_Hunter : SCR_DC_Mission
 			}
 			else
 			{
+				//NOTE: This one does not use IsActive(). Will run forever until no players are near players.
 				if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
 				{
 					SCR_DC_Log.Add("[SCR_DC_Mission_Hunter:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
@@ -289,22 +290,24 @@ class SCR_DC_HunterJsonApi : SCR_DC_JsonApi
 	{
 		//Default
 		conf.missionCycleTime = DC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
-		conf.showMarker = true;
+		conf.showMarker = false;
 		//Mission specific
 		conf.title = "Hunters";
 		conf.info = "They are coming for you...";		
-		conf.groupCount = {1, 2};			//min, max		
+		conf.groupCount = {1, 4};			//min, max		
 //		conf.groupsToSpawn = 2;
 		conf.groupTypes = 
 		{
-			"{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
 			"{976AC400219898FA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Sharpshooter.et",
-			"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et",
+			"{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
+			"{730CDEC4168637B6}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sapper.et",
+			"{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
+			"{5811F02495F6810E}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_SL.et"
 		};
 		conf.aiSkill = 30;
 		conf.aiPerception = 0.7;		
 		conf.minDistanceToPlayer = 250;
-		conf.maxDistanceToPlayer = 600;
+		conf.maxDistanceToPlayer = 800;
 		conf.rndDistanceToPlayer = 60;
 	}	
 }

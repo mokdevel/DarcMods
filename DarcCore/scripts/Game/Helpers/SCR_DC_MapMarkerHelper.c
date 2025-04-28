@@ -4,6 +4,25 @@ class DC_Mmarker : Managed
 {
 	string id;		//Mission related ID
 	int iID;		//Internal ID in SCR_MapMarkerManagerComponent
+	
+	void DC_Mmarker(int lifetime = 0)
+	{
+		if (lifetime != 0)
+		{
+			GetGame().GetCallqueue().CallLater(LifecycleEnd, lifetime * 1000, false);
+		}
+	}
+
+	void ~DC_Mmarker()
+	{
+		SCR_DC_Log.Add("[SCR_DC:DC_Mmarker] Destroyer: " + id, LogLevel.SPAM);        							
+	}
+		
+	void LifecycleEnd()
+	{
+		SCR_DC_Log.Add("[SCR_DC:DC_Mmarker:LifecycleEnd] Deleting marker: " + id, LogLevel.DEBUG);        							
+		SCR_DC_MapMarkerHelper.DeleteMarker(id, true);
+	}
 }
 
 //------------------------------------------------------------------------------------------------
@@ -11,7 +30,7 @@ sealed class SCR_DC_MapMarkerHelper
 {
 	static ref array<ref DC_Mmarker> m_markers = {};
 	
-	static void CreateMapMarker(vector pos, int icon, string id, string title = "")
+	static void CreateMapMarker(vector pos, int icon, string id, string title = "", int lifetime = 0)
 	{		
 		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
 		if (!mapMarkerMgr)
@@ -28,7 +47,7 @@ sealed class SCR_DC_MapMarkerHelper
 		markerst.SetMarkerFactionFlags(0);	//Everyone can see the markers
 		mapMarkerMgr.InsertStaticMarker(markerst, false, true);		
 		
-		DC_Mmarker dcmarker = new DC_Mmarker();
+		DC_Mmarker dcmarker = new DC_Mmarker(lifetime);
 		dcmarker.id = id;
 		dcmarker.iID = markerst.GetMarkerID();
 		m_markers.Insert(dcmarker);
@@ -38,8 +57,9 @@ sealed class SCR_DC_MapMarkerHelper
 	/*!
 	Delete marker with certain id
 	\param id Id of the marker to delete. This works as a wildcard so "A_" will delete all markers starting with A_
+	\param exact The id must be exactly the same. Essentially disables the wildcard functionality.
 	*/
-	static void DeleteMarker(string id)
+	static void DeleteMarker(string id, bool exact = false)
 	{
 		if (GetGame().GetGameMode())
 		{
@@ -52,7 +72,7 @@ sealed class SCR_DC_MapMarkerHelper
 			//Clean up marker widgets
 			for (int i = 0; i < m_markers.Count(); i++)		
 			{
-				if (m_markers[i].id.Contains(id))
+				if ( (m_markers[i].id.Contains(id) && exact == false) || (m_markers[i].id == id && exact) )
 				{
 					int iID = m_markers[i].iID;
 					SCR_MapMarkerBase marker;

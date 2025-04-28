@@ -48,13 +48,14 @@ modded class SCR_BaseGameMode
 		
 		if (playername != "")
 		{
-			SCR_DC_MapMarkerHelper.DeleteMarker(playername);
-			SCR_DC_MapMarkerHelper.CreateMapMarker(playerEntity.GetOrigin(), DC_EMissionIcon.BLACK_X_SMALL, playername, playername);
+			SCR_DC_MapMarkerHelper.DeleteMarker(playername, true);
+			SCR_DC_MapMarkerHelper.CreateMapMarker(playerEntity.GetOrigin(), DC_EMissionIcon.BLACK_X_SMALL, playername, playername, 5*60);
 		}
 		
 		SCR_DC_Log.Add("[SCR_DC_DeathMarker_BaseGameMode:OnPlayerKilled] Player died: " + playername, LogLevel.DEBUG);        
 	}
 	
+	/* This is actually not needed because the marker has a lifetime and eventually is deleted.
 	override void OnPlayerDisconnected(int playerId, KickCauseCode cause, int timeout)
 	{
 		super.OnPlayerDisconnected(playerId, cause, timeout);
@@ -63,11 +64,11 @@ modded class SCR_BaseGameMode
 		
 		if (playername != "")
 		{
-			SCR_DC_MapMarkerHelper.DeleteMarker(playername);
+			SCR_DC_MapMarkerHelper.DeleteMarker(playername, true);
 		}
 			
 		SCR_DC_Log.Add("[SCR_DC_DeathMarker_BaseGameMode:OnPlayerDisconnected] Player disconnected: " + playername, LogLevel.DEBUG);        
 	}
-			
+	*/
 	#endif
 };

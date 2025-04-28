@@ -100,7 +100,7 @@ class SCR_DC_MissionFrame
 //			SCR_DC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "");
 		#endif	
 		
-		GetGame().GetCallqueue().CallLater(SendHint, 6000, true);
+//		GetGame().GetCallqueue().CallLater(SendHint, 6000, true);
 		
 		MissionFrameStart();
 	}
@@ -176,7 +176,12 @@ class SCR_DC_MissionFrame
 					m_bFirstMissionSpawned = true;
 				}				
 			}
-			
+
+			if (!tmpDC_Mission)
+			{
+				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] MissionCreate failed.", LogLevel.WARNING);
+			}
+						
 			//Mission is ready to be run. Finalize the last details
 			if (tmpDC_Mission)
 			{
@@ -231,7 +236,7 @@ class SCR_DC_MissionFrame
 				{
 					m_iStaticFailCount++;
 				}
-				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Mission start failed: " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + "). Static fail count: " + m_iStaticFailCount, LogLevel.DEBUG);
+				SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Mission start failed: " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + "). Static fail count: " + m_iStaticFailCount, LogLevel.WARNING);
 			}
 			
 			if (mission.GetState() == DC_EMissionState.EXIT || mission.GetState() == DC_EMissionState.FAILED)
@@ -243,11 +248,12 @@ class SCR_DC_MissionFrame
 			}
 			else
 			{
-				if (!mission.IsActive())
+				//This check is to be done in the missions and not by MissionFrame
+/*				if (!mission.IsActive())
 				{
 					SCR_DC_Log.Add("[SCR_DC_MissionFrame:MissionCycleManager] Mission not active anymore: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
 					mission.SetState(DC_EMissionState.END);
-				}			
+				}*/
 				
 				i++;	//Next mission to check
 			}			

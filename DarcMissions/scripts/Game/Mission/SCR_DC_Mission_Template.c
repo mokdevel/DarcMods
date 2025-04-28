@@ -59,12 +59,18 @@ class SCR_DC_Mission_Template : SCR_DC_Mission
 /*			//Eventually when mission is to be ended do this:
 			//SetState(DC_EMissionState.END);
 
-			//For example:			
-			if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
+			//For example:
+			if (!IsActive())
 			{
 				SCR_DC_Log.Add("[SCR_DC_Mission_Template:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
 				SetState(DC_EMissionState.END);
-			}*/			
+			}
+			
+//			if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
+//			{
+//				SCR_DC_Log.Add("[SCR_DC_Mission_Template:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
+//				SetState(DC_EMissionState.END);
+//			}*/			
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);

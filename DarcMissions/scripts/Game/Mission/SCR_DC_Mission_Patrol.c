@@ -108,14 +108,14 @@ class SCR_DC_Mission_Patrol : SCR_DC_Mission
 				SCR_DC_DebugHelper.MoveDebugPos(GetId(), GetPos());
 			}
 			
-			if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
-			{
+//			if (SCR_DC_AIHelper.AreAllGroupsDead(m_Groups))
+//			{
 				if (!IsActive())
 				{
 					SCR_DC_Log.Add("[SCR_DC_Mission_Patrol:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
 					SetState(DC_EMissionState.END);
 				}
-			}
+//			}
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);

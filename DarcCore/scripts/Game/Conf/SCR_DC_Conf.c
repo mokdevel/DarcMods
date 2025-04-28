@@ -27,8 +27,8 @@ const string CONF_DIRECTORY = "DarcMods";
 		
 #ifndef SCR_DC_RELEASE	//Development time options
 //	#define SCR_DC_ENABLE_DARCSPAWNER				//Enable the spawner mod during development
-//	#define SCR_DC_ENABLE_DARCMISSIONS				//Enable the missions mod during development
-	#define SCR_DC_ENABLE_DARCDEATHMARKER			//Enable death marker mod during development
+	#define SCR_DC_ENABLE_DARCMISSIONS				//Enable the missions mod during development
+//	#define SCR_DC_ENABLE_DARCDEATHMARKER			//Enable death marker mod during development
 	const bool RELEASE = false;						//Define for release compilation to workshop
 	const bool OVERWRITE_JSON = true;				//Writes a new conf even if it exists
 //	const bool OVERWRITE_JSON = false;				//Writes a new conf even if it exists
