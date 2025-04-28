@@ -1,7 +1,7 @@
-SCR_DC_RplHintEntity {
+SDRC_RplHintEntity {
  ID "6505170C020BAB54"
  components {
-  SCR_DC_RplHintComp "{6505170CE97A90C6}" {
+  SDRC_RplHintComp "{6505170CE97A90C6}" {
   }
   RplComponent "{6505170CDDE08E99}" {
    Streamable Disabled

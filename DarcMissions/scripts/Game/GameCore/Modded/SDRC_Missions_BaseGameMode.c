@@ -1,0 +1,51 @@
+//SDRC_Missions_BaseGameMode.c
+
+modded class SCR_BaseGameMode 
+{
+	ref SDRC_MissionFrame missionFrame;
+	
+	#ifdef SDRC_ENABLE_DARCMISSIONS
+	//------------------------------------------------------------------------------------------------
+    override void OnGameStart()
+    {
+        super.OnGameStart();
+		
+		SDRC_Log.Add("[SDRC_Missions_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
+
+		if (!SDRC_Conf.RELEASE)
+		{
+			SDRC_Log.Add("[SDRC_Missions_BaseGameMode] SDRC_RELEASE not defined. This is a DEVELOPMENT build.", LogLevel.WARNING);
+		}
+				
+		if (IsMaster())
+		{
+			SDRC_Log.Add("[SDRC_Missions_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
+			GetGame().GetCallqueue().CallLater(StartMissionFrame, 5000, false);	
+		}
+		else 
+		{
+			SDRC_Log.Add("[SDRC_Missions_BaseGameMode:NonMaster] Mission frame not needed for client.", LogLevel.DEBUG);        
+		}
+    }
+
+	//------------------------------------------------------------------------------------------------
+	private void StartMissionFrame()
+	{
+		missionFrame = new SDRC_MissionFrame();
+	}
+			
+	//------------------------------------------------------------------------------------------------
+	//TBD: Should use OnPlayerSpawnFinalize_S
+	override void OnPlayerSpawned(int playerId, IEntity controlledEntity)	
+	{
+		super.OnPlayerSpawned(playerId, controlledEntity);
+		
+		//Set markers to stream to joining players
+		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
+		if (mapMarkerMgr)
+			mapMarkerMgr.SetStreamRulesForPlayer(playerId);
+				
+		SDRC_Log.Add("[SDRC_Missions_BaseGameMode: OnPlayerSpawned] Player spawned - id: " + playerId, LogLevel.DEBUG);
+	}
+	#endif
+};
