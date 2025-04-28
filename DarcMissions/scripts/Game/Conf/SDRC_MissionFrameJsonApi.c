@@ -3,6 +3,7 @@
 // For readable jsons, use https://jsonformatter.org
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J , convert to readable format - press Ctrl+Alt+Shift+M
 
+	//Release options
 	#ifdef SDRC_RELEASE
 		private const string SDRC_MISSION_PROFILE_DIR = "default";
 		private const int SDRC_MISSION_COUNT = 10;										//Default amount of missions to run
@@ -20,17 +21,18 @@
 		private const int SDRC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
 	#endif
 	
-	#ifndef SDRC_RELEASE	//Development time options
+	//Development time options
+	#ifndef SDRC_RELEASE	
 		private const string SDRC_MISSION_PROFILE_DIR = "dummy";
 		private const int SDRC_MISSION_COUNT = 8;
 		private const int SDRC_MISSION_STATIC_FAIL_LIMIT = 2;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 10;
 		private const int SDRC_MISSION_START_DELAY = 10;					
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS = 1*20;
-		private const int SDRC_MISSION_ACTIVE_TIME = 2*60;				
+		private const int SDRC_MISSION_ACTIVE_TIME = 3*60;				
 		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = SDRC_MISSION_ACTIVE_TIME * 2;	
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 200;		
-		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 45;		
+		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 45;
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME = 20;
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = false;
@@ -130,10 +132,10 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION};
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL};
-			conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
+			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTER};
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CONVOY};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.PATROL};		
@@ -141,11 +143,12 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CHOPPER};
 		
 //			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
-			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
+//			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.OCCUPATION};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER};
+			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER};
 //			conf.missionTypeArrayStatic = {};
 		#endif
 	}

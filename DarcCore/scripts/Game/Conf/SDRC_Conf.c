@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-//#define SDRC_RELEASE
+#define SDRC_RELEASE
 
 sealed class SDRC_Conf
 {
