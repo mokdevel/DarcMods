@@ -140,27 +140,97 @@ sealed class SDRC_BuildingHelper
 	*/		
 	static void FindBuildingFloors(out array<vector>floors, IEntity entity)
 	{
+		array<vector>floorsTmp = {};
 		vector sums = SDRC_SpawnHelper.FindEntitySize(entity);
 	
 		vector pos;
 		pos = entity.GetOrigin();
 	
-		float terrainY = SCR_TerrainHelper.GetTerrainY(entity.GetOrigin());
+		//Trace from the ceiling down to terrain height.
+		//We do three traces in slightly different positions. This way we can find traces that hit for example furniture.
+		//All trace values are collected to floorsTmp
+		vector posStartOrig = entity.GetOrigin();		
+		vector posStart = posStartOrig;
+				
+		posStart[1] = posStartOrig[1] + sums[1];
+		floors = {};
+		DoFloorTrace(floorsTmp, entity, posStart);
+		
+//		float mulVal = 0.07;
+		float mulVal = Math.RandomFloat(0.05, 0.12);		
+		posStart[0] = posStartOrig[0] + (sums[0] * mulVal);
+		posStart[2] = posStartOrig[2] + (sums[2] * mulVal);
+		floors = {};
+		DoFloorTrace(floorsTmp, entity, posStart);
+		
+		posStart[0] = posStartOrig[0] + (sums[0] * mulVal);
+		posStart[2] = posStartOrig[2] - (sums[2] * mulVal);
+		floors = {};
+		DoFloorTrace(floorsTmp, entity, posStart);
+
+		//Get heights of all scans and sort from lowest to highest.
+		//These are potential floor heights.
+		array<float> floorHeight = {};		
+		foreach (vector posTmp : floorsTmp)
+		{
+			int ival = posTmp[1] * 100;		//Round to two decimals
+			float fval = ival / 100;		
+			floorHeight.Insert(fval);		
+		}
+		floorHeight.Sort();
+		
+		//Those that are single values, are most likely not proper floor heights. We hit a furniture or some other part of the building.
+		//Clean the list and leave only those with multiples.
+		//For example: {11,15,15,15,19,19,19,22,22} -> {15, 19, 22}
+		
+		float checkValue = floorHeight[0];
+		float addedValue = 0;
+		for (int i = 1; i < floorHeight.Count(); i++)
+		{			
+			if ( (checkValue == floorHeight[i]) && (checkValue != addedValue) )
+			{
+				vector newPos = posStartOrig;
+				newPos[1] = floorHeight[i];
+				addedValue = floorHeight[i];
+				floors.Insert(newPos);
+			}
+			else
+			{
+				checkValue = floorHeight[i];
+			}		
+		}
+
+		//If we found multiple floors, the highest one is with high probability the roof. Remove it.
+		if (floors.Count() > 1)
+		{
+			floors.RemoveOrdered(floors.Count() - 1);					//Remove roof as a floor
+		}
+		
+		//Print(floorHeight);
+		//Print(floors);
+
+		foreach (vector fpos: floors)
+		{
+			SDRC_DebugHelper.AddDebugSphere(fpos, Color.ORANGE, 0.3);
+		}				
+				
+		SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Found: " + floors.Count() + " floors from " + entity.GetPrefabData().GetPrefabName(), LogLevel.SPAM);
+	}
 	
-		//Trace from the ceiling down to terrain height
-		vector posStart = entity.GetOrigin();
-		posStart[1] = posStart[1] + sums[1];
+	static void DoFloorTrace(out array<vector>floors, IEntity entity, vector posStart)
+	{
+		float terrainY = SCR_TerrainHelper.GetTerrainY(posStart);
+		
 		vector posEnd;
+		posEnd = posStart;
+		posEnd[1] = terrainY + 0.2;					//Stop 20cm above ground
 	
 		TraceParam trace = new TraceParam();
 		{
 			trace.Start = posStart;
-		
-			posEnd = posStart;
-			posEnd[1] = terrainY;
 			trace.End = posEnd;
 
-			SDRC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 2);
+			SDRC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 1);
 				
 			//trace.Exclude = child;
 			trace.TargetLayers = EPhysicsLayerDefs.Navmesh;
@@ -173,23 +243,18 @@ sealed class SDRC_BuildingHelper
 		{
 			vector floorpos;
 			SCR_TerrainHelper.SnapToGeometry(floorpos, posCheck, {}, entity.GetWorld(), traceParam: trace);
-			floors.Insert(floorpos);
-			posCheck[1] = floorpos[1] - 1;
-			trace.Start = posCheck;
+			if (floorpos[1] != terrainY)			//Try to evoid ground level
+			{
+				floors.Insert(floorpos);
+				posCheck[1] = floorpos[1] - 1;		//Move 1m down from found floor
+				trace.Start = posCheck;
+			}
 			i++;
-		}
-		
-		if (floors.Count() > 0)
-		{
-			floors.RemoveOrdered(0);					//Remove roof height
-			SCR_ArrayHelperT<vector>.Reverse(floors);	//Change order to that [0] is the bottom floor
 		}
 		
 		foreach (vector fpos: floors)
 		{
-			SDRC_DebugHelper.AddDebugSphere(fpos, Color.BLUE, 0.3);
-		}
-		
-		SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Found: " + floors.Count() + " floors from " + entity.GetPrefabData().GetPrefabName(), LogLevel.SPAM);
+			SDRC_DebugHelper.AddDebugSphere(fpos, Color.BLUE, 0.2);
+		}				
 	}	
 }
