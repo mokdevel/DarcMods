@@ -46,7 +46,10 @@ class SDRC_RplHintComp : ScriptComponent
     protected void RpcDo_ShowHint(string title, string msg, int dur)
     {
 		SDRC_Log.Add("[SDRC_RplHintComp:RpcDo_ShowHint] Hint: " + msg, LogLevel.NORMAL);
-		
+	
+		SCR_PopUpNotification.GetInstance().PopupMsg(title, 20, text2: msg);		
+		return;
+			
 		string hintTitle = title;
 		string hintDescription = msg;
 		float duration = dur;

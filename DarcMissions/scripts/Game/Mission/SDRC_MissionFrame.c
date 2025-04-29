@@ -36,8 +36,8 @@ class SDRC_MissionFrame
 	
 	private string m_sWorldName;
 	private int m_iLastMissionSpawnTime;
-	private int m_iStaticFailCount = 0;				//Counter for failed static missions. If staticFailLimit is reached, we'll spawn a dynamic one.
-	private bool m_bFirstMissionSpawned = false;		//The first mission is to be dynamic
+	private int m_iStaticFailCount = 0;				//Counter for failed static missions. If staticFailLimit is reached, we'll try a dynamic one.
+	private bool m_bFirstMissionSpawned = false;	//The first mission is to be dynamic
 		
 	//------------------------------------------------------------------------------------------------
 	void SDRC_MissionFrame()
@@ -102,9 +102,11 @@ class SDRC_MissionFrame
 		
 //		GetGame().GetCallqueue().CallLater(SendHint, 6000, true);
 		
-		MissionFrameStart();
+		//Start the mission framework.
+		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStartDelay, false);
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void SendHint()
 	{
 		SDRC_HintHelper.ShowHint("Testing", "Yeah", 2);					
@@ -126,15 +128,6 @@ class SDRC_MissionFrame
 			m_MissionList.RemoveOrdered(0);			
 		}
 		SDRC_Log.Add("[~SDRC_MissionFrame] Stopping SDRC_MissionFrame", LogLevel.NORMAL);
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Start the mission framework.
-	*/	
-	void MissionFrameStart()
-	{
-		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStartDelay, false);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -248,13 +241,6 @@ class SDRC_MissionFrame
 			}
 			else
 			{
-				//This check is to be done in the missions and not by MissionFrame
-/*				if (!mission.IsActive())
-				{
-					SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Mission not active anymore: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
-					mission.SetState(DC_EMissionState.END);
-				}*/
-				
 				i++;	//Next mission to check
 			}			
 		}		

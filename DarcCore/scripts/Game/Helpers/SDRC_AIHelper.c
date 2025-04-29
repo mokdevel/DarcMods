@@ -77,7 +77,7 @@ sealed class SDRC_AIHelper
 					group.AddAgent(aiAgent);
 				}
 					
-				SDRC_Log.Add("[SDRC_AIHelper:SpawnGroup] Spawned single unit (" + groupToSpawn + ") to " + faction + " faction.", LogLevel.DEBUG);				
+				SDRC_Log.Add("[SDRC_AIHelper:SpawnGroup] Spawned single unit (" + groupToSpawn + ") to " + faction + " faction.", LogLevel.DEBUG);
 			}
 		}
 		else
@@ -129,7 +129,16 @@ sealed class SDRC_AIHelper
 	
 		float empty_radius = 0.5;
 	
-		floorpos = floors.GetRandomElement();
+		if (!floors.IsEmpty())
+		{
+			floorpos = floors.GetRandomElement();
+		}
+		else
+		{
+			floorpos = building.GetOrigin();
+			ResourceName res = building.GetPrefabData().GetPrefabName();
+			SDRC_Log.Add("[SDRC_AIHelper:SpawnAIInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.ERROR);
+		}
 		pos = SDRC_Misc.RandomizePos(floorpos, radius/6);
 		pos = SDRC_SpawnHelper.FindEmptyPos(pos, radius/5, empty_radius);
 		pos[1] = pos[1] + 0.2;			

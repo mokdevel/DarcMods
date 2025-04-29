@@ -94,14 +94,11 @@ class SDRC_Mission_Occupation : SDRC_Mission
 				
 		if (GetState() == DC_EMissionState.ACTIVE)
 		{	
-//			if (SDRC_AIHelper.AreAllGroupsDead(m_Groups))
-//			{
-				if (!IsActive())
-				{
-					SDRC_Log.Add("[SDRC_Mission_Occupation:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
-					SetState(DC_EMissionState.END);
-				}
-//			}
+			if (!IsActive())
+			{
+				SDRC_Log.Add("[SDRC_Mission_Occupation:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
+				SetState(DC_EMissionState.END);
+			}
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);
@@ -387,7 +384,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT,
 			},
 			{2, 4},
-			{50, 250},
+			{30, 200},
 			DC_EWaypointGenerationType.RADIUS,
 			DC_EWaypointMoveType.RANDOM,		
 			{

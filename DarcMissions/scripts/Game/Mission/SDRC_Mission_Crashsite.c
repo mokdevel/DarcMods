@@ -193,14 +193,11 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 					missionCrashSiteState = DC_EMissionCrashSiteState.RUN;
 					break;
 				case DC_EMissionCrashSiteState.RUN:		
-//					if (SDRC_AIHelper.AreAllGroupsDead(m_Groups))
-//					{
-						if (!IsActive())
-						{
-							SDRC_Log.Add("[SDRC_Mission_Crashsite:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
-							SetState(DC_EMissionState.END);
-						}
-//					}
+					if (!IsActive())
+					{
+						SDRC_Log.Add("[SDRC_Mission_Crashsite:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
+						SetState(DC_EMissionState.END);
+					}
 					break;
 				default:
 					//Nothing

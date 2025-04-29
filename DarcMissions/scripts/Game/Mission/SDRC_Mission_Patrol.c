@@ -108,14 +108,11 @@ class SDRC_Mission_Patrol : SDRC_Mission
 				SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
 			}
 			
-//			if (SDRC_AIHelper.AreAllGroupsDead(m_Groups))
-//			{
-				if (!IsActive())
-				{
-					SDRC_Log.Add("[SDRC_Mission_Patrol:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
-					SetState(DC_EMissionState.END);
-				}
-//			}
+			if (!IsActive())
+			{
+				SDRC_Log.Add("[SDRC_Mission_Patrol:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
+				SetState(DC_EMissionState.END);
+			}
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);

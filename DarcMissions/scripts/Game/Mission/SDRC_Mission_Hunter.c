@@ -7,7 +7,7 @@ code are from HunterKiller mod by Rabid Squirrel. This mod worked as a great exa
 first steps in AR modding.
 
 See: https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller 
-Note: The original mod is discontinued.
+Note: The original HunterKiller mod is discontinued.
 */
 
 //------------------------------------------------------------------------------------------------
@@ -252,7 +252,7 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 	int aiSkill;							//Skill for AI (0-100). See SCR_AICombatComponent and EAISkill
 	float aiPerception;					
 	int minDistanceToPlayer;				//Hunter group minimum distance to player for spawn
-	int maxDistanceToPlayer;				//...max distance
+	int maxDistanceToPlayer;				//...max distance to despawn
 	int rndDistanceToPlayer;				//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
 }
 
@@ -306,7 +306,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 		};
 		conf.aiSkill = 30;
 		conf.aiPerception = 0.7;		
-		conf.minDistanceToPlayer = 250;
+		conf.minDistanceToPlayer = 200;
 		conf.maxDistanceToPlayer = 800;
 		conf.rndDistanceToPlayer = 60;
 	}	

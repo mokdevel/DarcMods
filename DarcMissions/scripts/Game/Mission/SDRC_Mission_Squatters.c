@@ -117,14 +117,11 @@ class SDRC_Mission_Squatter : SDRC_Mission
 				
 		if (GetState() == DC_EMissionState.ACTIVE)
 		{			
-//			if (SDRC_AIHelper.AreAllGroupsDead(m_Groups))
-//			{
-				if (!IsActive())
-				{
-					SDRC_Log.Add("[SDRC_Mission_Squatter:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
-					SetState(DC_EMissionState.END);
-				}
-//			}
+			if (!IsActive())
+			{
+				SDRC_Log.Add("[SDRC_Mission_Squatter:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
+				SetState(DC_EMissionState.END);
+			}
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);		

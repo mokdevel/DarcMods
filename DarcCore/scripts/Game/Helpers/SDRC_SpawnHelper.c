@@ -99,8 +99,17 @@ sealed class SDRC_SpawnHelper
 		vector pos, floorpos;
 	
 		float empty_radius = 1.2;
-	
-		floorpos = floors.GetRandomElement();
+
+		if (!floors.IsEmpty())
+		{
+			floorpos = floors.GetRandomElement();
+		}
+		else
+		{
+			floorpos = building.GetOrigin();
+			ResourceName res = building.GetPrefabData().GetPrefabName();
+			SDRC_Log.Add("[SDRC_AIHelper:SpawnItemInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.ERROR);
+		}
 		pos = SDRC_Misc.RandomizePos(floorpos, radius/6);
 		pos = SDRC_SpawnHelper.FindEmptyPos(pos, radius/5, emptyPosRadius);
 		pos[1] = pos[1] + 0.1;			
@@ -184,6 +193,10 @@ sealed class SDRC_SpawnHelper
 				vector newPos = RotatePosAroundPivot(structure.GetPosition(), "0 0 0", rotation);
 				
 				entity = SpawnItem(newPos + pos, structure.GetResource(), structure.GetRotationY() + rotation, emptyPosRadius);
+				if (!entity)
+				{
+					SDRC_Log.Add("[SDRC_SpawnHelper:SpawnStructures] Could not spawn: " + structure.GetResource(), LogLevel.ERROR);			
+				}
 			}
 			return null;	//Return null as we spawned multiple structures
 		}
@@ -193,6 +206,10 @@ sealed class SDRC_SpawnHelper
 		
 			entity = SpawnItem(newPos + pos, structures[index].GetResource(), structures[index].GetRotationY() + rotation, emptyPosRadius);
 //			entity = SpawnItem(structures[index].GetPosition() + pos, structures[index].GetResource(), 0, emptyPosRadius);
+			if (!entity)
+			{
+				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnStructures] Could not spawn: " + structures[index].GetResource(), LogLevel.ERROR);			
+			}
 			return entity;	//Return entity of spawned individual structure
 		}
 	}
