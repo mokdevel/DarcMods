@@ -5,13 +5,12 @@ FrameWidgetClass {
   OffsetLeft 0
   PositionY 0
   OffsetTop 0
-  SizeX 256
-  OffsetRight -256
-  SizeY 90
-  OffsetBottom -90
+  SizeX 128
+  OffsetRight -128
+  SizeY 56
+  OffsetBottom -56
   Alignment 0.5 0.25
  }
- "Z Order" 60
  Clipping False
  "Ignore Cursor" 0
  components {
@@ -42,31 +41,41 @@ FrameWidgetClass {
      Slot LayoutSlot "{5E3E82F0B6DE3AE5}" {
       HorizontalAlign 1
       VerticalAlign 1
-      SizeMode Fill
      }
      {
       ImageWidgetClass "{649AABAD8DD1DC83}" {
        Name "MarkerIconGlow"
        Slot FrameWidgetSlot "{5E3E82F0B6D23F67}" {
-        SizeToContent 1
+        PositionX 4
+        OffsetLeft 4
+        PositionY 4
+        OffsetTop 4
+        SizeX 36
+        OffsetRight -40
+        SizeY 36
+        OffsetBottom -40
        }
        Clipping False
        Color 0.007 0.012 0.014 0.6
-       Texture "{9BE5CC69285A77F5}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI_glow.imageset"
+       Texture "{9BE5CC69285A77F5}UI/Textures/Icons/SDRC_icons_mapMarkersUI_glow.imageset"
        Image "mission"
        Size 42 42
       }
       ImageWidgetClass "{649AABAD8DD1DC80}" {
        Name "MarkerIcon"
        Slot FrameWidgetSlot "{5E3E82F0B6D23F67}" {
+        Anchor 0 0 0 0
+        PositionX 0
         OffsetLeft 0
-        OffsetTop 0
-        OffsetRight -100
-        OffsetBottom -30
-        SizeToContent 1
+        PositionY 2
+        OffsetTop 2
+        SizeX 36
+        OffsetRight -36
+        SizeY 36
+        OffsetBottom -38
        }
        Clipping False
-       Texture "{0C86564F20AD42F2}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI.imageset"
+       Texture "{0C86564F20AD42F2}UI/Textures/Icons/SDRC_icons_mapMarkersUI.imageset"
        Image "mission"
        Size 36 36
       }
@@ -106,11 +115,10 @@ FrameWidgetClass {
     TextWidgetClass "{649AABAD8DD1DC9A}" {
      Name "MarkerText"
      Slot LayoutSlot "{5D8AED759625D73D}" {
-      Padding 0 12 0 0
-      SizeMode Fill
+      Padding 0 -10 0 0
      }
      Clipping False
-     Text "testing test"
+     Text "Testing a quite long description"
      "Font Size" 16
      "Min Font Size" 16
      "Horizontal Alignment" Center

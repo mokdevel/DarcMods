@@ -128,12 +128,12 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		
 		for (int i = 1; i <= m_iGroupsToSpawn; i++)
 		{
-			SDRC_Log.Add(("[SDRC_Mission_Hunter:MissionSpawn] Initiating spawn for group " + i + " of " + m_iGroupsToSpawn), LogLevel.NORMAL);
+			SDRC_Log.Add(("[SDRC_Mission_Hunter:MissionSpawn] Initiating spawn for group " + i + " of " + m_iGroupsToSpawn), LogLevel.DEBUG);
 			
 			GetGame().GetCallqueue().CallLater(SpawnGroup, (DC_GROUP_SPAWN_DELAY + i*1000), false);
 		}
 		
-		SDRC_Log.Add("[SDRC_Mission_Hunter:MissionSpawn] INIT ready. Changing to ACTIVE state", LogLevel.NORMAL);		
+		SDRC_Log.Add("[SDRC_Mission_Hunter:MissionSpawn] INIT ready. Changing to ACTIVE state", LogLevel.DEBUG);		
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -160,7 +160,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 			else
 			{
 				// If there aren't any players close, delete the group
-				SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] No players nearby, deleting group group: " + group.GetID(), LogLevel.NORMAL);
+				SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] No players nearby, deleting group: " + group.GetID(), LogLevel.NORMAL);
 				SDRC_AIHelper.GroupDelete(group);
 			}
 		}
