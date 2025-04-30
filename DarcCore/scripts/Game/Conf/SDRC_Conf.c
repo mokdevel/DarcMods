@@ -5,13 +5,14 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-#define SDRC_RELEASE
+//#define SDRC_RELEASE
 
 sealed class SDRC_Conf
 {
 const string CONF_DIRECTORY = "DarcMods";
 	static string missionProfile = "";
 	
+//Release options	
 #ifdef SDRC_RELEASE
 	#define SDRC_ENABLE_DARCSPAWNER				//Enable the spawner mod during development
 	#define SDRC_ENABLE_DARCMISSIONS				//Enable the missions mod during development
@@ -25,8 +26,9 @@ const string CONF_DIRECTORY = "DarcMods";
 	#define USE_POPUP_NOTIFICATION
 #endif
 		
-#ifndef SDRC_RELEASE	//Development time options
-	#define SDRC_ENABLE_DARCSPAWNER				//Enable the spawner mod during development
+//Development time options	
+#ifndef SDRC_RELEASE	
+//	#define SDRC_ENABLE_DARCSPAWNER				//Enable the spawner mod during development
 	#define SDRC_ENABLE_DARCMISSIONS				//Enable the missions mod during development
 	#define SDRC_ENABLE_DARCDEATHMARKER			//Enable death marker mod during development
 	const bool RELEASE = false;						//Define for release compilation to workshop

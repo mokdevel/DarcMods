@@ -1,26 +1,59 @@
 FrameWidgetClass {
  Name "rootFrame"
  {
+  ImageWidgetClass "{653CAEA9CCE5D535}" {
+   Name "ShadowM"
+   Slot FrameWidgetSlot "{653CAEA26D22B8EA}" {
+    Anchor 0.01 0 0.01 0
+    PositionX -6
+    OffsetLeft -6
+    PositionY 67
+    OffsetTop 67
+    SizeX 56
+    OffsetRight -50
+    SizeY 56
+    OffsetBottom -123
+   }
+   Color 0.0467 0.0467 0.0467 1
+   Texture "{232D9BDABB08F52F}UI/Textures/Icons/SDRC_icon_M.edds"
+   Size 64 64
+  }
+  ImageWidgetClass "{653CAEA26D22B8C4}" {
+   Name "WhiteM"
+   Slot FrameWidgetSlot "{653CAEA26D22B8EA}" {
+    Anchor 0.01 0 0.01 0
+    PositionX -8
+    OffsetLeft -8
+    PositionY 65
+    OffsetTop 65
+    SizeX 56
+    OffsetRight -48
+    SizeY 56
+    OffsetBottom -121
+   }
+   Color 0.5841 0.5841 0.5841 1
+   Texture "{232D9BDABB08F52F}UI/Textures/Icons/SDRC_icon_M.edds"
+   Size 64 64
+  }
   RichTextWidgetClass "{653CAEA75E278849}" {
    Name "Popup"
    Slot FrameWidgetSlot "{50F4C51DF92631E2}" {
-    Anchor 0.5 0 0.5 0
-    PositionX -960
-    OffsetLeft -960
+    Anchor 0.01 0 0.01 0
+    PositionX 56
+    OffsetLeft 56
     PositionY 70
     OffsetTop 70
-    SizeX 384.549
-    OffsetRight 575.451
+    SizeX 500
+    OffsetRight -556
     SizeY 40
     OffsetBottom -110
    }
    Opacity 0
    Clipping Ancestor
-   Color 0.761 0.392 0.078 0.824
+   Color 0.8211 0.8193 1 1
    Text "TEXT WIDGET"
    "Font Size" 25
    "Min Font Size" 25
-   "Horizontal Alignment" Center
    "Vertical Alignment" Center
    FontProperties FontProperties "{50F46E94D3213183}" {
     Font "{EABA4FE9D014CCEF}UI/Fonts/RobotoCondensed/RobotoCondensed_Bold.fnt"
@@ -31,22 +64,21 @@ FrameWidgetClass {
   RichTextWidgetClass "{653CAEA75E27884F}" {
    Name "PopupSmall"
    Slot FrameWidgetSlot "{50F4C51DF92631E2}" {
-    Anchor 0.5 0 0.5 0
-    PositionX -960
-    OffsetLeft -960
+    Anchor 0.01 0 0.01 0
+    PositionX 56
+    OffsetLeft 56
     PositionY 116
     OffsetTop 116
-    SizeX 285.765
-    OffsetRight 674.235
-    SizeY 73.318
-    OffsetBottom -189.318
+    SizeX 500
+    OffsetRight -556
+    SizeY 73.3
+    OffsetBottom -189.3
    }
    Opacity 0
    Clipping Ancestor
    Color 0.791 0.791 0.791 0.824
    "Font Size" 20
    "Min Font Size" 20
-   "Horizontal Alignment" Center
    FontProperties FontProperties "{50F46E94D3213183}" {
     Font "{3E7733BAC8C831F6}UI/Fonts/RobotoCondensed/RobotoCondensed_Regular.fnt"
     ShadowSize 5
@@ -56,13 +88,12 @@ FrameWidgetClass {
   ProgressBarWidgetClass "{653CAEA75E27884E}" {
    Name "Progress"
    Slot FrameWidgetSlot "{51CEB4305A3864FB}" {
-    Anchor 0.5 0 0.5 0
-    PositionX -250
-    OffsetLeft -250
+    Anchor 0.02 0 0.02 0
+    OffsetLeft 0
     PositionY 106
     OffsetTop 106
     SizeX 500
-    OffsetRight -250
+    OffsetRight -500
     SizeY 4
     OffsetBottom -110
    }

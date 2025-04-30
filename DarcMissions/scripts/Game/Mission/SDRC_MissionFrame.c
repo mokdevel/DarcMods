@@ -100,7 +100,7 @@ class SDRC_MissionFrame
 			SDRC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "This is a description for a mission");
 		#endif	
 		
-		GetGame().GetCallqueue().CallLater(SendHint, 15000, true);
+		//GetGame().GetCallqueue().CallLater(SendHint, 15000, true);
 		
 		//Start the mission framework.
 		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStartDelay, false);
