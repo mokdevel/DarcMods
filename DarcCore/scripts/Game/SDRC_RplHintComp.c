@@ -47,9 +47,15 @@ class SDRC_RplHintComp : ScriptComponent
     {
 		SDRC_Log.Add("[SDRC_RplHintComp:RpcDo_ShowHint] Hint: " + msg, LogLevel.NORMAL);
 	
-		SCR_PopUpNotification.GetInstance().PopupMsg(title, 20, text2: msg);		
-		return;
+		#ifdef USE_POPUP_NOTIFICATION
+			//TBD: Using PopUps is a temporary solution.
+//			SCR_PopUpNotification.GetInstance().PopupMsg(title, 20, text2: msg);		
+			SDRC_SCR_PopUpNotification.GetInstance().PopupMsg(title, 20, text2: msg);		
+			return;
+		#endif
 			
+		//TBD: Currently the solution below stops showing hints to users after a few logout/login.
+		
 		string hintTitle = title;
 		string hintDescription = msg;
 		float duration = dur;

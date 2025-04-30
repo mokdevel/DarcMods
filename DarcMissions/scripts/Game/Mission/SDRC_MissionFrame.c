@@ -88,7 +88,7 @@ class SDRC_MissionFrame
 		//Set some defaults
 		m_iStaticFailCount = 0;
 		m_iLastMissionSpawnTime = (System.GetTickCount() / 1000) - m_Config.missionDelayBetweeen;	//Fix the timer so that first mission immediately spawns
-		m_bFirstMissionSpawned = SDRC_Conf.FIRST_MISSION_HAS_SPAWNED;
+		m_bFirstMissionSpawned = SDRC_MISSION_FIRST_MISSION_HAS_SPAWNED;
 				
 		//Fix seconds to ms
 		SDRC_Log.Add("[SDRC_MissionFrame] Waiting for " + m_Config.missionStartDelay + " seconds before spawning missions.", LogLevel.NORMAL);
@@ -100,7 +100,7 @@ class SDRC_MissionFrame
 			SDRC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "This is a description for a mission");
 		#endif	
 		
-//		GetGame().GetCallqueue().CallLater(SendHint, 6000, true);
+		GetGame().GetCallqueue().CallLater(SendHint, 15000, true);
 		
 		//Start the mission framework.
 		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStartDelay, false);

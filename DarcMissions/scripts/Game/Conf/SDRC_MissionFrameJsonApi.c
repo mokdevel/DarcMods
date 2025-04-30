@@ -19,6 +19,7 @@
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 20;						//You should not be running the frame too often as it's unncecessary
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = true;						//Force recreaction of config files. 
 		private const int SDRC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
+		const bool SDRC_MISSION_FIRST_MISSION_HAS_SPAWNED = false;									//Has the first mission (=dynamic) spawned. Setting to true will spawn a static mission first
 	#endif
 	
 	//Development time options
@@ -37,6 +38,7 @@
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = false;
 		private const int SDRC_MISSION_HINT_TIME = 30;
+		const bool SDRC_MISSION_FIRST_MISSION_HAS_SPAWNED = true;	//Has the first mission (=dynamic) spawned. 
 	#endif
 
 

@@ -1,0 +1,77 @@
+FrameWidgetClass {
+ Name "rootFrame"
+ {
+  RichTextWidgetClass "{653CAEA75E278849}" {
+   Name "Popup"
+   Slot FrameWidgetSlot "{50F4C51DF92631E2}" {
+    Anchor 0.5 0 0.5 0
+    PositionX -960
+    OffsetLeft -960
+    PositionY 70
+    OffsetTop 70
+    SizeX 384.549
+    OffsetRight 575.451
+    SizeY 40
+    OffsetBottom -110
+   }
+   Opacity 0
+   Clipping Ancestor
+   Color 0.761 0.392 0.078 0.824
+   Text "TEXT WIDGET"
+   "Font Size" 25
+   "Min Font Size" 25
+   "Horizontal Alignment" Center
+   "Vertical Alignment" Center
+   FontProperties FontProperties "{50F46E94D3213183}" {
+    Font "{EABA4FE9D014CCEF}UI/Fonts/RobotoCondensed/RobotoCondensed_Bold.fnt"
+    ShadowSize 5
+    ShadowOffset 4 4
+   }
+  }
+  RichTextWidgetClass "{653CAEA75E27884F}" {
+   Name "PopupSmall"
+   Slot FrameWidgetSlot "{50F4C51DF92631E2}" {
+    Anchor 0.5 0 0.5 0
+    PositionX -960
+    OffsetLeft -960
+    PositionY 116
+    OffsetTop 116
+    SizeX 285.765
+    OffsetRight 674.235
+    SizeY 73.318
+    OffsetBottom -189.318
+   }
+   Opacity 0
+   Clipping Ancestor
+   Color 0.791 0.791 0.791 0.824
+   "Font Size" 20
+   "Min Font Size" 20
+   "Horizontal Alignment" Center
+   FontProperties FontProperties "{50F46E94D3213183}" {
+    Font "{3E7733BAC8C831F6}UI/Fonts/RobotoCondensed/RobotoCondensed_Regular.fnt"
+    ShadowSize 5
+    ShadowOffset 4 4
+   }
+  }
+  ProgressBarWidgetClass "{653CAEA75E27884E}" {
+   Name "Progress"
+   Slot FrameWidgetSlot "{51CEB4305A3864FB}" {
+    Anchor 0.5 0 0.5 0
+    PositionX -250
+    OffsetLeft -250
+    PositionY 106
+    OffsetTop 106
+    SizeX 500
+    OffsetRight -250
+    SizeY 4
+    OffsetBottom -110
+   }
+   "Z Order" 10
+   Opacity 0
+   Color 0.761 0.392 0.078 0.824
+   style SimpleWithBackground
+   Maximum 1
+   Current 0.5
+  }
+ }
+}
