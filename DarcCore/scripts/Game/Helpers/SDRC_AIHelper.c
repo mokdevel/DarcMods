@@ -123,9 +123,22 @@ sealed class SDRC_AIHelper
 		          |----*----|                            Radius to search for a spot is 1/5 of house size
 	
 	*/
+	
+	static EntityID buildingID = null;	
+	
 	static SCR_AIGroup SpawnAIInBuilding(IEntity building, string resourceName, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
 		array<vector> floors = {};
+		
+		if (buildingID == building.GetID())
+		{
+			SDRC_Log.Add("[SDRC_AIHelper:SpawnAIInBuilding] Same building - using cached floor values.", LogLevel.DEBUG);
+			//TBD: Do the cache functionality
+		}
+		else
+		{
+			buildingID = building.GetID();
+		}
 		
 		SDRC_BuildingHelper.FindBuildingFloors(floors, building);
 
@@ -150,8 +163,9 @@ sealed class SDRC_AIHelper
 		{
 			floorpos = building.GetOrigin();
 			ResourceName res = building.GetPrefabData().GetPrefabName();
-			SDRC_Log.Add("[SDRC_AIHelper:SpawnAIInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_AIHelper:SpawnAIInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.DEBUG);
 		}
+		
 		pos = SDRC_Misc.RandomizePos(floorpos, radius/6);
 		pos = SDRC_SpawnHelper.FindEmptyPos(pos, radius/5, empty_radius);
 		pos[1] = pos[1] + 0.2;			

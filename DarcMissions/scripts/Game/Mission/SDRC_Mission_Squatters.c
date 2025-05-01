@@ -218,8 +218,7 @@ class SDRC_Squatter : Managed
 		aiPerception = aiPerception_;	
 		buildingNames = buildingNames_;	
 		lootBox = lootBox_;
-	}
-	
+	}	
 }
 
 //------------------------------------------------------------------------------------------------
