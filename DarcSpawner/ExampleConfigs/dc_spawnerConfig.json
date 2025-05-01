@@ -9,7 +9,7 @@
 	"disableArsenal": true,
 	"spawnSets": [
 		{
-			"comment": "Used for Escapists in Gogland. Spawns random ambulances with some gear",
+			"comment": "Spawn two cars",
 			"locationTypes": [
 				58,
 				64,
@@ -24,11 +24,14 @@
 			],
 			"spawnNames": [
 				"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
-				"{3B1EB924602C7A07}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance_MERDC.et",
+				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
+				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
+				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
+				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
 				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et"
 			],
-			"spawnChance": 1.0,
-			"spawnCount": 0,
+			"spawnChance": 0.800000011920929,
+			"spawnCount": 2,
 			"itemNames": [
 				"WEAPON_GRENADE",
 				"ITEM_MEDICAL",
@@ -44,7 +47,7 @@
 			"itemChance": 0.8999999761581421
 		},
 		{
-			"comment": "Used for Escapists. Spawns random ambulances with some gear",
+			"comment": "Spawn two cars.",
 			"locationTypes": [
 				59,
 				60,
@@ -58,10 +61,12 @@
 			"spawnNames": [
 				"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
 				"{3B1EB924602C7A07}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance_MERDC.et",
+				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
+				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
 				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et"
 			],
-			"spawnChance": 1.0,
-			"spawnCount": 0,
+			"spawnChance": 0.5,
+			"spawnCount": 3,
 			"itemNames": [
 				"WEAPON_RIFLE",
 				"WEAPON_GRENADE",
@@ -70,16 +75,12 @@
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
 				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
-				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
-				"{3805C0B87B9D2AB0}prefabs/weapons/Melee/Knife.et",
-				"{CB716A41903571AD}prefabs/weapons/Melee/Knife_US.et"
+				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et"
 			],
 			"itemChance": 0.8999999761581421
 		},
 		{
-			"comment": "Used for Escapists in Arland. Spawns random ambulances with some gear.",
+			"comment": "Spawn two civilian cars",
 			"locationTypes": [
 				59,
 				60,
@@ -87,23 +88,21 @@
 				70
 			],
 			"spawnNames": [
-				"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
-				"{3B1EB924602C7A07}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance_MERDC.et",
-				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et"
+				"{54C3CC22DEBD57BE}Prefabs/Vehicles/Wheeled/S105/S105_beige.et",
+				"{321016E0F9361A22}Prefabs/Vehicles/Wheeled/S105/S105_lightgreen.et",
+				"{6E485048122CEEEE}Prefabs/Vehicles/Wheeled/S1203/S1203_cargo_red.et",
+				"{F77C41245A580FD1}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_blue.et"
 			],
 			"spawnChance": 0.6000000238418579,
-			"spawnCount": 0,
+			"spawnCount": 2,
 			"itemNames": [
+				"WEAPON_HANDGUN",
 				"WEAPON_HANDGUN",
 				"WEAPON_HANDGUN",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
 				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
-				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
-				"{3805C0B87B9D2AB0}prefabs/weapons/Melee/Knife.et",
-				"{CB716A41903571AD}prefabs/weapons/Melee/Knife_US.et"
+				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et"
 			],
 			"itemChance": 0.699999988079071
 		}

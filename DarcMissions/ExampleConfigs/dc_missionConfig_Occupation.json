@@ -27,7 +27,7 @@
 				0.0
 			],
 			"posName": "any",
-			"title": "Guard patrol seen near ",
+			"title": "Guards patroling near ",
 			"info": "Avoid the location. Loot has already been lost.",
 			"locationTypes": [
 				60,
@@ -111,52 +111,52 @@
 			},
 			"campItems": [
 				{
-					"m_Resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
-					"m_Position": [
+					"resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+					"position": [
 						1032.0379638671876,
 						39.0,
 						2478.923095703125
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et",
-					"m_Position": [
+					"resource": "{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et",
+					"position": [
 						1028.550048828125,
 						39.0,
 						2478.159912109375
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						119.33399963378906,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et",
-					"m_Position": [
+					"resource": "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et",
+					"position": [
 						1029.9000244140626,
 						39.0,
 						2477.43994140625
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{0511E95F422061BB}Prefabs/Props/Recreation/Camp/TentSmall_02/TentSmall_02_blue.et",
-					"m_Position": [
+					"resource": "{0511E95F422061BB}Prefabs/Props/Recreation/Camp/TentSmall_02/TentSmall_02_blue.et",
+					"position": [
 						1029.9739990234376,
 						39.0,
 						2480.114013671875
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
@@ -190,8 +190,8 @@
 				4
 			],
 			"waypointRange": [
-				50,
-				250
+				30,
+				200
 			],
 			"waypointGenType": 3,
 			"waypointMoveType": 1,
@@ -232,52 +232,52 @@
 			},
 			"campItems": [
 				{
-					"m_Resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
-					"m_Position": [
+					"resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+					"position": [
 						1018.1640014648438,
 						39.0,
 						2501.93701171875
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{2CB4BFA62C2D9C12}Prefabs/Structures/Military/CamoNets/CamoNet_Small_Top_01_base.et",
-					"m_Position": [
+					"resource": "{2CB4BFA62C2D9C12}Prefabs/Structures/Military/CamoNets/CamoNet_Small_Top_01_base.et",
+					"position": [
 						1017.8569946289063,
 						39.0,
 						2501.720947265625
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
-					"m_Position": [
+					"resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+					"position": [
 						1018.14599609375,
 						39.0,
 						2504.881103515625
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
-					"m_Position": [
+					"resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+					"position": [
 						1020.4559936523438,
 						39.0,
 						2500.89599609375
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						114.56900024414063,
 						0.0
@@ -348,91 +348,91 @@
 			},
 			"campItems": [
 				{
-					"m_Resource": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
-					"m_Position": [
+					"resource": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+					"position": [
 						78.56900024414063,
 						1.0,
 						110.11299896240235
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						-34.13600158691406,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{56FFF0C990358ED2}Prefabs/Props/Wrecks/UAZ452_wreck_static.et",
-					"m_Position": [
+					"resource": "{56FFF0C990358ED2}Prefabs/Props/Wrecks/UAZ452_wreck_static.et",
+					"position": [
 						78.80000305175781,
 						1.0,
 						113.21099853515625
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{6095B175AA9804DC}Prefabs/Props/VehicleParts/Tires/Tire_UAZ469.et",
-					"m_Position": [
+					"resource": "{6095B175AA9804DC}Prefabs/Props/VehicleParts/Tires/Tire_UAZ469.et",
+					"position": [
 						77.25199890136719,
 						1.0,
 						114.02999877929688
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{6095B175AA9804DC}Prefabs/Props/VehicleParts/Tires/Tire_UAZ469.et",
-					"m_Position": [
+					"resource": "{6095B175AA9804DC}Prefabs/Props/VehicleParts/Tires/Tire_UAZ469.et",
+					"position": [
 						80.55500030517578,
 						1.0,
 						110.33999633789063
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{8BAF6C3ACF99388E}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_05.et",
-					"m_Position": [
+					"resource": "{8BAF6C3ACF99388E}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_05.et",
+					"position": [
 						79.36199951171875,
 						1.0,
 						108.87799835205078
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{530705FBB61026D2}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_03.et",
-					"m_Position": [
+					"resource": "{530705FBB61026D2}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_03.et",
+					"position": [
 						76.74299621582031,
 						1.0,
 						111.7040023803711
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{2424EBB806A690D4}Prefabs/Props/Garbage/Medical/GarbageMedicalUS_02.et",
-					"m_Position": [
+					"resource": "{2424EBB806A690D4}Prefabs/Props/Garbage/Medical/GarbageMedicalUS_02.et",
+					"position": [
 						80.0999984741211,
 						1.0,
 						113.32099914550781
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
@@ -502,65 +502,65 @@
 			},
 			"campItems": [
 				{
-					"m_Resource": "{E28501E93F8EFDC0}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_FIA_uncovered.et",
-					"m_Position": [
+					"resource": "{E28501E93F8EFDC0}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_FIA_uncovered.et",
+					"position": [
 						84.93299865722656,
 						1.0,
 						97.41600036621094
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						-43.32699966430664,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{06FE4FE70907D486}Prefabs/Props/Military/Compositions/Dst/PersonnelService_Table_01/PersonnelService_Table_01_dst_01.et",
-					"m_Position": [
+					"resource": "{06FE4FE70907D486}Prefabs/Props/Military/Compositions/Dst/PersonnelService_Table_01/PersonnelService_Table_01_dst_01.et",
+					"position": [
 						80.31999969482422,
 						1.0920000076293946,
 						90.81700134277344
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						-40.15700149536133,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{172DD50ACF177B9E}Prefabs/Props/Military/Furniture/ChairMilitary_USSR_01.et",
-					"m_Position": [
+					"resource": "{172DD50ACF177B9E}Prefabs/Props/Military/Furniture/ChairMilitary_USSR_01.et",
+					"position": [
 						79.55799865722656,
 						1.0750000476837159,
 						91.2699966430664
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						-38.584999084472659,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{9CBBE8B23794214D}Prefabs/Props/Commercial/CabinetCardFile_01/Dst/CabinetCardFile_01_dst_green.et",
-					"m_Position": [
+					"resource": "{9CBBE8B23794214D}Prefabs/Props/Commercial/CabinetCardFile_01/Dst/CabinetCardFile_01_dst_green.et",
+					"position": [
 						76.37000274658203,
 						1.0779999494552613,
 						91.04900360107422
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{C768E842A6F11CEE}Prefabs/Structures/Military/Camps/TentUSSR_01/TentUSSR_01_camonet.et",
-					"m_Position": [
+					"resource": "{C768E842A6F11CEE}Prefabs/Structures/Military/Camps/TentUSSR_01/TentUSSR_01_camonet.et",
+					"position": [
 						78.75800323486328,
 						0.0,
 						92.71800231933594
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0

@@ -7,7 +7,7 @@
 	#ifdef SDRC_RELEASE
 		private const string SDRC_MISSION_PROFILE_DIR = "default";
 		private const int SDRC_MISSION_COUNT = 10;										//Default amount of missions to run
-		private const int SDRC_MISSION_STATIC_FAIL_LIMIT = 2;
+		private const int SDRC_MISSION_STATIC_TRY_LIMIT = 2;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 30;
 		private const int SDRC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS = 2*60;					//Minimum delay between missions. 
@@ -26,7 +26,7 @@
 	#ifndef SDRC_RELEASE	
 		private const string SDRC_MISSION_PROFILE_DIR = "dummy";
 		private const int SDRC_MISSION_COUNT = 8;
-		private const int SDRC_MISSION_STATIC_FAIL_LIMIT = 2;
+		private const int SDRC_MISSION_STATIC_TRY_LIMIT = 2;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 10;
 		private const int SDRC_MISSION_START_DELAY = 10;					
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS = 1*20;
@@ -54,7 +54,7 @@ class SDRC_MissionFrameConfig : Managed
 	int missionStartDelay;			//Time to wait before spawning the first mission (seconds).
 	int missionDelayBetweeen;		//Time delay between mission spawns (seconds)
 	int missionCount;				//Maximum amount of missions (both static and dynamic) to be active at the same time. 
-	int staticFailLimit;			//How many static missions may fail, before trying a dynamic one
+	int staticTryLimit;				//How many static missions may fail or succeed, before trying a dynamic one
 	int missionFrameCycleTime;		//The cycle time to manage mission spawning, deletion etc... (seconds)
 	int missionActiveTime;			//Time to keep the mission active (seconds)
 	int missionActiveTimeStatic;	//Time to keep the static mission active (seconds). This typically is much longer than for dynamic.
@@ -115,7 +115,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.missionStartDelay = SDRC_MISSION_START_DELAY;
 		conf.missionDelayBetweeen = SDRC_MISSION_DELAY_BETWEEN_MISSIONS;
 		conf.missionCount = SDRC_MISSION_COUNT;
-		conf.staticFailLimit = SDRC_MISSION_STATIC_FAIL_LIMIT;
+		conf.staticTryLimit = SDRC_MISSION_STATIC_TRY_LIMIT;
 		conf.missionFrameCycleTime = SDRC_MISSIONFRAME_CYCLE_TIME;
 		conf.missionActiveTime = SDRC_MISSION_ACTIVE_TIME;
 		conf.missionActiveTimeStatic = SDRC_MISSION_ACTIVE_TIME_STATIC;
@@ -140,7 +140,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.PATROL};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CHOPPER};
-//			conf.missionTypeArrayDynamic = {DC_EMissionType.SQUATTER};
+			conf.missionTypeArrayDynamic = {DC_EMissionType.SQUATTER};
 		
 //			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};

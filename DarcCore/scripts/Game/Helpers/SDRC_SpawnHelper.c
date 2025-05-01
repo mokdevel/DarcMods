@@ -84,6 +84,7 @@ sealed class SDRC_SpawnHelper
 	{
 		IEntity entity = NULL;
 		array<vector> floors = {};
+		vector pos, floorpos;
 		
 		SDRC_BuildingHelper.FindBuildingFloors(floors, building);
 
@@ -96,8 +97,6 @@ sealed class SDRC_SpawnHelper
 			radius = sums[2];
 		}
 	
-		vector pos, floorpos;
-	
 		float empty_radius = 1.2;
 
 		if (!floors.IsEmpty())
@@ -108,7 +107,7 @@ sealed class SDRC_SpawnHelper
 		{
 			floorpos = building.GetOrigin();
 			ResourceName res = building.GetPrefabData().GetPrefabName();
-			SDRC_Log.Add("[SDRC_AIHelper:SpawnItemInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItemInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.SPAM);
 		}
 		pos = SDRC_Misc.RandomizePos(floorpos, radius/6);
 		pos = SDRC_SpawnHelper.FindEmptyPos(pos, radius/5, emptyPosRadius);

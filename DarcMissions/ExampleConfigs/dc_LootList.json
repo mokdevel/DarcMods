@@ -1,13 +1,239 @@
 {
 	"version": 1,
 	"author": "darc",
-	"modList": [
-		"$ArmaReforger:Prefabs",
-		"$WCS_Armaments:Prefabs",
-		"$M110MarksmanRifle:Prefabs",
-		"$RISLaserAttachments:Prefabs"
-	],
+	"modList": [],
 	"lootLists": [
+		{
+			"lootListName": "WEAPON_RIFLE",
+			"modDir": "/Weapons/Rifles",
+			"include": [
+				"Rifle"
+			],
+			"exclude": [
+				"_Base",
+				"Tutorial"
+			],
+			"itemList": [
+				"BFF3186D2A9CEFB7",
+				"83CE659F2C763F28",
+				"135044000CA7BF85",
+				"F7571A26F55AD8EF",
+				"3E413771E1834D2F",
+				"92A0764C4EDF7C14",
+				"877128FBE22FF2C9",
+				"C29B073E2E583220",
+				"29DD901C0664FC61",
+				"ED492F11FCFAE30A",
+				"B036BA26CCFE9E5D",
+				"F97A4AC994231900",
+				"EB404DC9E1BCB750",
+				"1B332B99C72DAF8B",
+				"443CEFF17E040B11",
+				"EF73725A81669E2C",
+				"5F3661399CE6BEE6",
+				"A016D4D3B9D40A58",
+				"5A987A8A13763769",
+				"AE81219082244685",
+				"BC6C9476FB3219A7",
+				"B31929F65F0D0279",
+				"4C1FF226DDA3017C",
+				"22529BCDC9439FCD",
+				"5D29FA916AB8E593",
+				"43D001A8797EA5C9",
+				"FA5C25BF66A53DCF",
+				"96DFD2E7E63B3386",
+				"FA0E25CE35EE945F",
+				"EDE7F2CE157306AD",
+				"6415B7923DE28C1B",
+				"E57DBDA5C50F07FF",
+				"0B0C4F7940C1CE26",
+				"B1482FB64E3D2D45",
+				"9C948630078D154D",
+				"81EB948E6414BD6F",
+				"D3F274F6E2A5A924",
+				"C417FBA57578B2E1",
+				"63E8322E2ADD4AA7",
+				"D7690D6BB82B50D7",
+				"60B4E42557D61CF9",
+				"3EB02CDAD5F23C82",
+				"BFEA719491610A45",
+				"9B4DF9A9F1BD2A1C"
+			]
+		},
+		{
+			"lootListName": "WEAPON_LAUNCHER",
+			"modDir": "/Weapons/Launchers",
+			"include": [
+				"Launcher"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"itemList": [
+				"9C5C20FB0E01E64F",
+				"7A82FE978603F137",
+				"E8A55396050E1762"
+			]
+		},
+		{
+			"lootListName": "WEAPON_HANDGUN",
+			"modDir": "/Weapons/Handguns",
+			"include": [
+				"Handgun"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"itemList": [
+				"1353C6EAD1DCFE43",
+				"C0F7DD85A86B2900"
+			]
+		},
+		{
+			"lootListName": "WEAPON_GRENADE",
+			"modDir": "/Weapons/Grenades",
+			"include": [
+				""
+			],
+			"exclude": [
+				"_Base"
+			],
+			"itemList": [
+				"3343A055A83CB30D",
+				"14C1A0F061D9DDEE",
+				"9DB69176CEF0EE97",
+				"77EAE5E07DC4678A",
+				"E8F00BF730225B00",
+				"645C73791ECA1698",
+				"9BBDEE253A16CC66",
+				"D41D22DD1B8E921E"
+			]
+		},
+		{
+			"lootListName": "ITEM_MEDICAL",
+			"modDir": "/Items/Medicine",
+			"include": [
+				""
+			],
+			"exclude": [
+				"_Base"
+			],
+			"itemList": [
+				"A81F501D3EF6F38E",
+				"CDCC313B2FB76FE7",
+				"C98FCC6CA6C56069",
+				"C3F1FA1E2EC2B345",
+				"D70216B1B2889129",
+				"80E75A71C29190DB",
+				"AF3411AAF94D18C2",
+				"0D9A5DCF89AE7AA9",
+				"00E36F41CA310E2A",
+				"527D7C5D2E476BDC"
+			]
+		},
+		{
+			"lootListName": "WEAPON_ATTACHMENT",
+			"modDir": "/Weapons/Attachments",
+			"include": [
+				""
+			],
+			"exclude": [
+				"_Base",
+				"Optic"
+			],
+			"itemList": [
+				"AD045AFAFFC1AB6E",
+				"1A2C3098A3F88658",
+				"98C79F5FAE12F9B6",
+				"C374AF8B50B0C6EF",
+				"1125E1072C3541D3",
+				"F4B9ADFE20D0D6B8",
+				"3F1B1BAD1F6DDC28",
+				"AA44A3B17DFE5ACE",
+				"1ABABE3551512B0A",
+				"20BCF441EAD9F593",
+				"D711F819F3271AC6",
+				"084D8EDB23D39D93",
+				"3B96FAC169E27037",
+				"775E9992AF575338",
+				"FB1A7F5BC7D935E2",
+				"43FDAF3FA0FF2299",
+				"6288A1F1A5E3AC37",
+				"85C85EFC8E49B312",
+				"E52C9791E1554A5F",
+				"6DE8BD5167F90D6D",
+				"ADDF08D09F1877A4",
+				"2D26D2AE25429499",
+				"49CC4426C8671477",
+				"4A815EB8B824974A",
+				"AB268D088F2D6291",
+				"2F4BBE174AFAF5E0",
+				"06D4C36A6D585275",
+				"D92368B78263A9E0",
+				"558117556F3880A8",
+				"51C19F66AAC90A29",
+				"A97F179B2DA6DE33"
+			]
+		},
+		{
+			"lootListName": "WEAPON_OPTICS",
+			"modDir": "/Weapons/Attachments",
+			"include": [
+				"Optic",
+				"Scope"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"itemList": [
+				"C850A33226B8F9C1",
+				"E5E9DBBF3BFB88C6",
+				"B9773AC7CCDAD633",
+				"886A96EF3F14BCD2",
+				"B8764E1CDC4F4F22",
+				"08286DDBB1F33FF1",
+				"B623482E2704B69A",
+				"D2018EDB1BBF4C88",
+				"ACDF49FACD0701A8",
+				"44AAA61117B6CA8E",
+				"519E60CCCDCA456A",
+				"BD496EE1B40DC510"
+			]
+		},
+		{
+			"lootListName": "ITEM_GENERAL",
+			"modDir": "/Items",
+			"include": [
+				"Binocular",
+				"Compass",
+				"Flashlight",
+				"PaperMap_01_folded",
+				"Watch_"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"itemList": [
+				"78ED4FEF62BBA728",
+				"243948B23D90BECB",
+				"61A705D76908160C",
+				"922F95F91943F69A",
+				"C819E0B7454461F2",
+				"13772C903CB5E4F7",
+				"7CEF68E2BC68CE71",
+				"72691366C26BD901",
+				"3A421547BC29F679",
+				"DCB293AEF79CCD7D",
+				"575EA58E67448C2A",
+				"6FD6C96121905202",
+				"F849217AB3BA88BE",
+				"4FAD128BE9F66C6F",
+				"F2539FA5706E51E4",
+				"0CF54B9A85D8E0D4",
+				"61D4F80E49BF9B12",
+				"6ECDF523E1035A0F"
+			]
+		},
 		{
 			"lootListName": "WEAPON_RIFLE",
 			"modDir": "/Weapons/Rifles",

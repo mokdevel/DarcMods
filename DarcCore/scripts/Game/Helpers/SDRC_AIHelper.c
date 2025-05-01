@@ -124,24 +124,14 @@ sealed class SDRC_AIHelper
 	
 	*/
 	
-	static EntityID buildingID = null;	
-	
 	static SCR_AIGroup SpawnAIInBuilding(IEntity building, string resourceName, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
 		array<vector> floors = {};
-		
-		if (buildingID == building.GetID())
-		{
-			SDRC_Log.Add("[SDRC_AIHelper:SpawnAIInBuilding] Same building - using cached floor values.", LogLevel.DEBUG);
-			//TBD: Do the cache functionality
-		}
-		else
-		{
-			buildingID = building.GetID();
-		}
-		
-		SDRC_BuildingHelper.FindBuildingFloors(floors, building);
+		vector pos, floorpos;
+		float empty_radius = 0.5;
 
+		SDRC_BuildingHelper.FindBuildingFloors(floors, building);
+				
 		//Find the building size. The bigger X or Y value will be used as the radius
 		vector sums = SDRC_SpawnHelper.FindEntitySize(building);
 		//Pick the radius to be the bigger one from X/Y
@@ -151,10 +141,6 @@ sealed class SDRC_AIHelper
 			radius = sums[2];
 		}
 	
-		vector pos, floorpos;
-	
-		float empty_radius = 0.5;
-	
 		if (!floors.IsEmpty())
 		{
 			floorpos = floors.GetRandomElement();
@@ -163,7 +149,7 @@ sealed class SDRC_AIHelper
 		{
 			floorpos = building.GetOrigin();
 			ResourceName res = building.GetPrefabData().GetPrefabName();
-			SDRC_Log.Add("[SDRC_AIHelper:SpawnAIInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_AIHelper:SpawnAIInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.SPAM);
 		}
 		
 		pos = SDRC_Misc.RandomizePos(floorpos, radius/6);

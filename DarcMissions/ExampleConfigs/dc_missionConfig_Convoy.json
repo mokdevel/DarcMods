@@ -8,7 +8,10 @@
 	"distanceToPlayer": 500,
 	"disableArsenal": true,
 	"convoyList": [
-		0
+		0,
+		0,
+		0,
+		1
 	],
 	"convoys": [
 		{
@@ -39,7 +42,6 @@
 				75,
 				81
 			],
-			"waypointGenType": 4,
 			"groupTypes": [
 				"{5B08C42EA0661A20}Prefabs/Groups/OPFOR/KLMK/Group_USSR_LightFireTeam_KLMK.et",
 				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
@@ -52,7 +54,7 @@
 				"{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et",
 				"{D4855501D5B12AF2}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_teal.et"
 			],
-			"cruiseSpeed": 0.0,
+			"cruiseSpeed": 30.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.8999999761581421,
@@ -65,6 +67,134 @@
 					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
 					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
 					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
+				]
+			}
+		},
+		{
+			"comment": "Truck driving from .. to ..",
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posDestination": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posName": "any",
+			"title": "Cargo truck is on the move.",
+			"info": "Follow the route from ",
+			"locationTypes": [
+				59,
+				59,
+				59,
+				8,
+				60,
+				71,
+				64,
+				25,
+				72,
+				26,
+				75,
+				81
+			],
+			"groupTypes": [
+				"{2E9C920C3ACA2C6F}Prefabs/Groups/INDFOR/Group_FIA_ReconTeam.et",
+				"{581106FA58919E89}Prefabs/Groups/INDFOR/Group_FIA_MedicalSection.et",
+				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
+				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+			],
+			"aiSkill": 40,
+			"aiPerception": 1.0,
+			"vehicleTypes": [
+				"{92264FF932676C13}Prefabs/Vehicles/Wheeled/M923A1/M923A1_ammo.et",
+				"{1449105FD658EDFB}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_CIV_forest.et",
+				"{FB219B49A448A8EA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_JZD.et",
+				"{F1FBD0972FA5FE09}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport.et"
+			],
+			"cruiseSpeed": 20.0,
+			"loot": {
+				"box": null,
+				"itemChance": 0.8999999761581421,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_RIFLE",
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"WEAPON_LAUNCHER",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			}
+		},
+		{
+			"comment": "Armor driving from .. to ..",
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posDestination": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posName": "any",
+			"title": "Armor spotted",
+			"info": "Likely to patrol from ",
+			"locationTypes": [
+				59,
+				59,
+				59,
+				8,
+				60,
+				71,
+				64,
+				25,
+				72,
+				26,
+				75,
+				81
+			],
+			"groupTypes": [
+				"{E552DABF3636C2AD}Prefabs/Groups/OPFOR/Group_USSR_RifleSquad.et",
+				"{97D45056CFC22FF2}Prefabs/Groups/OPFOR/KLMK/Group_USSR_RifleSquad_KLMK.et"
+			],
+			"aiSkill": 50,
+			"aiPerception": 1.0,
+			"vehicleTypes": [
+				"{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et",
+				"{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et"
+			],
+			"cruiseSpeed": 50.0,
+			"loot": {
+				"box": null,
+				"itemChance": 0.8999999761581421,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_LAUNCHER",
+					"WEAPON_LAUNCHER",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
 				]
 			}
 		}

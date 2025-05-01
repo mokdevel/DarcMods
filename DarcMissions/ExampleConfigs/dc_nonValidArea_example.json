@@ -1,0 +1,66 @@
+{
+	"version": 1,
+	"author": "darc",
+	"nonValidAreas": [
+		{
+			"worldName": "Eden",
+			"pos": [
+				4780.0,
+				0.0,
+				11450.0
+			],
+			"radius": 500.0,
+			"name": "Eden - Airport - for testing"
+		},
+		{
+			"worldName": "Eden",
+			"pos": [
+				9680.0,
+				0.0,
+				1560.0
+			],
+			"radius": 400.0,
+			"name": "Eden - St. Pierre - for testing"
+		},
+		{
+			"worldName": "Arland",
+			"pos": [
+				1340.0,
+				0.0,
+				2320.0
+			],
+			"radius": 300.0,
+			"name": "Arland - Airport - for testing"
+		},
+		{
+			"worldName": "Arland",
+			"pos": [
+				1080.0,
+				0.0,
+				3300.0
+			],
+			"radius": 200.0,
+			"name": "Arland - Harbour - for testing"
+		},
+		{
+			"worldName": "Arland",
+			"pos": [
+				4500.0,
+				0.0,
+				10700.0
+			],
+			"radius": 200.0,
+			"name": "Arland - St. Philippe"
+		},
+		{
+			"worldName": "",
+			"pos": [
+				900.0,
+				0.0,
+				1450.0
+			],
+			"radius": 300.0,
+			"name": "Dummy for Arland, but as worldname is not defined, this will be valid for all worlds."
+		}
+	]
+}

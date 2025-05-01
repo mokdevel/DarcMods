@@ -5,13 +5,14 @@
 	"recreateConfigs": false,
 	"missionProfile": "default",
 	"missionStartDelay": 60,
-	"missionDelayBetweeen": 600,
-	"missionCount": 8,
-	"staticFailLimit": 3,
-	"missionFrameCycleTime": 60,
+	"missionDelayBetweeen": 120,
+	"missionCount": 10,
+	"staticTryLimit": 2,
+	"missionFrameCycleTime": 30,
 	"missionActiveTime": 900,
-	"missionActiveTimeStatic": 2700,
-	"missionActiveDistance": 300,
+	"missionActiveTimeStatic": 1200,
+	"missionActiveDistance": 200,
+	"missionActiveTimeToEnd": 180,
 	"missionHintTime": 30,
 	"minDistanceToMission": 500,
 	"minDistanceToPlayer": 100,
@@ -37,7 +38,6 @@
 	"missionTypeArrayStatic": [
 		5,
 		5,
-		3,
 		3,
 		3
 	]

@@ -138,41 +138,64 @@ sealed class SDRC_BuildingHelper
 	Find floors from a building entity.
 	From the returned vector positions, the [0] item is the floor height. Roof has been removed.
 	*/		
-	static void FindBuildingFloors(out array<vector>floors, IEntity entity)
+	static EntityID buildingID = null;	
+	static ref array<vector> buildingIDfloorCache = {};	
+	
+	static void FindBuildingFloors(out array<vector>floors, IEntity building)
 	{
 		array<vector>floorsTmp = {};
-		floors = {};		
-		vector sums = SDRC_SpawnHelper.FindEntitySize(entity);
+		floors = {};
+		
+		if (buildingID == building.GetID())
+		{
+			SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Same building - using cached floor values.", LogLevel.DEBUG);
+			floors.Copy(buildingIDfloorCache);
+			return;
+		}
+		else
+		{
+			//Cache values if needed again
+			buildingID = building.GetID();
+			buildingIDfloorCache.Copy(floors);
+		}
+		
+		vector sums = SDRC_SpawnHelper.FindEntitySize(building);
 	
 		vector pos;
-		pos = entity.GetOrigin();
+		pos = building.GetOrigin();
 	
 		//Trace from the ceiling down to terrain height.
-		//We do three traces in slightly different positions. This way we can find traces that hit for example furniture.
+		//We do multiple traces in slightly different positions. This way we can find traces that hit for example furniture.
 		//All trace values are collected to floorsTmp
-		vector posStartOrig = entity.GetOrigin();		
+		vector posStartOrig = building.GetOrigin();		
 		vector posStart = posStartOrig;
 				
 		posStart[1] = posStartOrig[1] + sums[1];
-		DoFloorTrace(floorsTmp, entity, posStart);
+		DoFloorTrace(floorsTmp, building, posStart);
 		
 //		float mulVal = 0.07;
-		float mulVal = Math.RandomFloat(0.05, 0.20);			//Was 0.15
+		float mulVal = Math.RandomFloat(0.05, 0.10);			//Was 0.15
 		posStart[0] = posStartOrig[0] + (sums[0] * mulVal);
 		posStart[2] = posStartOrig[2] + (sums[2] * mulVal);
-		DoFloorTrace(floorsTmp, entity, posStart);
+		DoFloorTrace(floorsTmp, building, posStart);
 		
+		mulVal = Math.RandomFloat(0.05, 0.20);
 		posStart[0] = posStartOrig[0] + (sums[0] * mulVal);
 		posStart[2] = posStartOrig[2] - (sums[2] * mulVal);
-		DoFloorTrace(floorsTmp, entity, posStart);
+		DoFloorTrace(floorsTmp, building, posStart);
 
+		mulVal = Math.RandomFloat(0.05, 0.30);
+		posStart[0] = posStartOrig[0] - (sums[0] * mulVal);
+		posStart[2] = posStartOrig[2] + (sums[2] * mulVal);
+		DoFloorTrace(floorsTmp, building, posStart);
+		
 		//Get heights of all scans and sort from lowest to highest.
 		//These are potential floor heights.
 		array<float> floorHeight = {};		
 		foreach (vector posTmp : floorsTmp)
 		{
-			int ival = posTmp[1] * 50;		//Round to two decimals
-			float fval = ival / 50;		
+			int ival = posTmp[1] * 10;		//Round value
+			float fval = ival / 10;		
 			floorHeight.Insert(fval);		
 		}
 		floorHeight.Sort();
@@ -212,7 +235,7 @@ sealed class SDRC_BuildingHelper
 			SDRC_DebugHelper.AddDebugSphere(fpos, Color.ORANGE, 0.3);
 		}				
 				
-		SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Found: " + floors.Count() + " floors from " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);		//REMOVE
+		SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Found: " + floors.Count() + " floors from " + building.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);		//REMOVE
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -229,7 +252,7 @@ sealed class SDRC_BuildingHelper
 			trace.Start = posStart;
 			trace.End = posEnd;
 
-			SDRC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 1);
+			SDRC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 0.6);
 				
 			//trace.Exclude = child;
 			trace.TargetLayers = EPhysicsLayerDefs.Navmesh;

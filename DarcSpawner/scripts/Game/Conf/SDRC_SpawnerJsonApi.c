@@ -81,9 +81,9 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-//		conf.showMarker = false;
 		conf.showMarker = true;
-		conf.spawnSetID = 0;//-1;
+//		conf.showMarker = false;
+		conf.spawnSetID = -1;
 		conf.spawnOnRoad = false;
 		conf.spawnRndRadius = 100;
 		conf.spawnWorldSizeMultiplier = 2;
@@ -94,9 +94,9 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 		SDRC_SpawnSet spawnSet0 = new SDRC_SpawnSet();
 		spawnSet0.Set
 		(			
-			"Used for Escapists in Gogland. Spawns random ambulances with some gear",
+			"Spawn two cars",
 			{
-				EMapDescriptorType.MDT_NAME_GENERIC,	
+				EMapDescriptorType.MDT_NAME_GENERIC,
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_VILLAGE, 
@@ -109,11 +109,14 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 			},
 			{
 				"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
-				"{3B1EB924602C7A07}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance_MERDC.et",
+				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
+				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
+				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
+				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
 				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
 			},
-			1.0,
-			0,
+			0.8,	//spawnChance
+			2,		//spawnCount, max
 			{
 				"WEAPON_GRENADE",
 				"ITEM_MEDICAL",
@@ -134,7 +137,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 		SDRC_SpawnSet spawnSet1 = new SDRC_SpawnSet();
 		spawnSet1.Set
 		(			
-			"Used for Escapists. Spawns random ambulances with some gear",
+			"Spawn two cars.",
 			{
 				EMapDescriptorType.MDT_NAME_CITY, 
 				EMapDescriptorType.MDT_NAME_VILLAGE, 
@@ -147,11 +150,13 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 			},
 			{
 				"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
-				"{3B1EB924602C7A07}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance_MERDC.et",
+				"{3B1EB924602C7A07}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance_MERDC.et",			
+				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
+				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
 				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
 			},
-			1.0,
-			0,
+			0.5,
+			3,
 			{
 				"WEAPON_RIFLE",
 				"WEAPON_GRENADE", "WEAPON_GRENADE",
@@ -159,11 +164,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
 				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
-				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
-				"{3805C0B87B9D2AB0}prefabs/weapons/Melee/Knife.et",							//From Functional Knives
-				"{CB716A41903571AD}prefabs/weapons/Melee/Knife_US.et"						//From Functional Knives
+				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et"
 			},
 			0.9
 		);
@@ -173,7 +174,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 		SDRC_SpawnSet spawnSet2 = new SDRC_SpawnSet();
 		spawnSet2.Set
 		(			
-			"Used for Escapists in Arland. Spawns random ambulances with some gear.",
+			"Spawn two civilian cars",
 			{
 				EMapDescriptorType.MDT_NAME_CITY, 
 				EMapDescriptorType.MDT_NAME_VILLAGE, 
@@ -182,22 +183,19 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 			
 			},
 			{
-				"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
-				"{3B1EB924602C7A07}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance_MERDC.et",
-				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et"
+				"{54C3CC22DEBD57BE}Prefabs/Vehicles/Wheeled/S105/S105_beige.et",
+				"{321016E0F9361A22}Prefabs/Vehicles/Wheeled/S105/S105_lightgreen.et",
+				"{6E485048122CEEEE}Prefabs/Vehicles/Wheeled/S1203/S1203_cargo_red.et",
+				"{F77C41245A580FD1}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_blue.et"
 			},
 			0.6,
-			0,
+			2,
 			{
-				"WEAPON_HANDGUN", "WEAPON_HANDGUN", 
+				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN", 
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
 				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
 				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
-				"{3805C0B87B9D2AB0}prefabs/weapons/Melee/Knife.et",							//From Functional Knives
-				"{CB716A41903571AD}prefabs/weapons/Melee/Knife_US.et"						//From Functional Knives
 			},
 			0.7
 		);

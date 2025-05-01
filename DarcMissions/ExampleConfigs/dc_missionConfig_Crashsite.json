@@ -61,91 +61,91 @@
 			},
 			"siteItems": [
 				{
-					"m_Resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
-					"m_Position": [
+					"resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+					"position": [
 						921.9829711914063,
 						39.0,
 						2629.780029296875
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{33E84AF90E5FE1E5}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_03.et",
-					"m_Position": [
+					"resource": "{33E84AF90E5FE1E5}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_03.et",
+					"position": [
 						924.14501953125,
 						39.0,
 						2635.075927734375
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						29.07699966430664,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{342E852E9A1847EA}Prefabs/Props/Industrial/Repair/VehicleGarbage_01_pile_medium.et",
-					"m_Position": [
+					"resource": "{342E852E9A1847EA}Prefabs/Props/Industrial/Repair/VehicleGarbage_01_pile_medium.et",
+					"position": [
 						928.6420288085938,
 						39.0,
 						2628.902099609375
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						37.792999267578128,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{D674060002BA768E}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_02.et",
-					"m_Position": [
+					"resource": "{D674060002BA768E}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_02.et",
+					"position": [
 						928.9249877929688,
 						39.0,
 						2633.845947265625
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
-					"m_Position": [
+					"resource": "{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
+					"position": [
 						925.6220092773438,
 						39.00899887084961,
 						2628.64794921875
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						0.0,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
-					"m_Position": [
+					"resource": "{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
+					"position": [
 						931.9509887695313,
 						39.0,
 						2631.804931640625
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						68.97200012207031,
 						0.0
 					]
 				},
 				{
-					"m_Resource": "{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
-					"m_Position": [
+					"resource": "{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
+					"position": [
 						922.1729736328125,
 						39.0,
 						2632.576904296875
 					],
-					"m_Rotation": [
+					"rotation": [
 						0.0,
 						68.97200012207031,
 						0.0

@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-//#define SDRC_RELEASE
+#define SDRC_RELEASE
 
 sealed class SDRC_Conf
 {
@@ -14,9 +14,10 @@ const string CONF_DIRECTORY = "DarcMods";
 	
 //Release options	
 #ifdef SDRC_RELEASE
-	#define SDRC_ENABLE_DARCSPAWNER				//Enable the spawner mod during development
+	#define SDRC_ENABLE_DARCSPAWNER					//Enable the spawner mod during development
 	#define SDRC_ENABLE_DARCMISSIONS				//Enable the missions mod during development
-	#define SDRC_ENABLE_DARCDEATHMARKER			//Enable death marker mod during development
+	#define SDRC_ENABLE_DARCDEATHMARKER				//Enable death marker mod during development
+//	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA		//If enabled, creates a default configuration
 	const bool RELEASE = true;						//Define for release compilation to workshop
 	const bool OVERWRITE_JSON = false;				//Writes a new conf even if it exists
 	const bool SHOW_VALID_MISSION_AREAS = false;	//Debug markers for mission position testing drawn on the map
@@ -28,14 +29,15 @@ const string CONF_DIRECTORY = "DarcMods";
 		
 //Development time options	
 #ifndef SDRC_RELEASE
-//	#define SDRC_ENABLE_DARCSPAWNER				//Enable the spawner mod during development
-	#define SDRC_ENABLE_DARCMISSIONS				//Enable the missions mod during development
-	#define SDRC_ENABLE_DARCDEATHMARKER			//Enable death marker mod during development
-	const bool RELEASE = false;						//Define for release compilation to workshop
-	const bool OVERWRITE_JSON = true;				//Writes a new conf even if it exists
-//	const bool OVERWRITE_JSON = false;				//Writes a new conf even if it exists
-	const bool SHOW_VALID_MISSION_AREAS = false;	//Debug markers for mission position testing drawn on the map
-	const bool SHOW_MARKER_FOR_LOCATION = false;	//Show a debug marker for locations
+//	#define SDRC_ENABLE_DARCSPAWNER				
+	#define SDRC_ENABLE_DARCMISSIONS			
+	#define SDRC_ENABLE_DARCDEATHMARKER			
+	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
+	const bool RELEASE = false;					
+	const bool OVERWRITE_JSON = true;				
+//	const bool OVERWRITE_JSON = false;				
+	const bool SHOW_VALID_MISSION_AREAS = false;	
+	const bool SHOW_MARKER_FOR_LOCATION = false;	
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
 	#define USE_POPUP_NOTIFICATION
 #endif

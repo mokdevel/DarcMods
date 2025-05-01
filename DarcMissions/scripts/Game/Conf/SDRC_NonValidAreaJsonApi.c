@@ -66,29 +66,31 @@ class SDRC_NonValidAreaJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		//List of non valid areas where missions shall not spawn
-		//Eden
-		SDRC_NonValidArea areaE1 = new SDRC_NonValidArea();
-		areaE1.Set("Eden", "4780 0 11450", 500, "Eden - Airport - for testing");
-		conf.nonValidAreas.Insert(areaE1);
-		SDRC_NonValidArea areaE2 = new SDRC_NonValidArea();
-		areaE2.Set("Eden", "9680 0 1560", 400, "Eden - St. Pierre - for testing");
-		conf.nonValidAreas.Insert(areaE2);
-		
-		//Arland
-		SDRC_NonValidArea areaA1 = new SDRC_NonValidArea();
-		areaA1.Set("Arland", "1340 0 2320", 300, "Arland - Airport - for testing");
-		conf.nonValidAreas.Insert(areaA1);
-		SDRC_NonValidArea areaA2 = new SDRC_NonValidArea();
-		areaA2.Set("Arland", "1080 0 3300", 200, "Arland - Harbour - for testing");
-		conf.nonValidAreas.Insert(areaA2);
-		SDRC_NonValidArea areaA3 = new SDRC_NonValidArea();
-		areaA3.Set("Arland", "4500 0 10700", 200, "Arland - St. Philippe");
-		conf.nonValidAreas.Insert(areaA3);
-
-		//Dummy for Arland, but as worldname is not defined, this will be valid for all worlds.
-		SDRC_NonValidArea areaA10 = new SDRC_NonValidArea();
-		areaA10.Set("", "900 0 1450", 300, "Arland - Gull Island - for testing");
-		conf.nonValidAreas.Insert(areaA10);		
+		#ifdef SDRC_CREATE_EXAMPLE_NONVALIDAREA
+			//List of non valid areas where missions shall not spawn
+			//Eden
+			SDRC_NonValidArea areaE1 = new SDRC_NonValidArea();
+			areaE1.Set("Eden", "4780 0 11450", 500, "Eden - Airport - for testing");
+			conf.nonValidAreas.Insert(areaE1);
+			SDRC_NonValidArea areaE2 = new SDRC_NonValidArea();
+			areaE2.Set("Eden", "9680 0 1560", 400, "Eden - St. Pierre - for testing");
+			conf.nonValidAreas.Insert(areaE2);
+			
+			//Arland
+			SDRC_NonValidArea areaA1 = new SDRC_NonValidArea();
+			areaA1.Set("Arland", "1340 0 2320", 300, "Arland - Airport - for testing");
+			conf.nonValidAreas.Insert(areaA1);
+			SDRC_NonValidArea areaA2 = new SDRC_NonValidArea();
+			areaA2.Set("Arland", "1080 0 3300", 200, "Arland - Harbour - for testing");
+			conf.nonValidAreas.Insert(areaA2);
+			SDRC_NonValidArea areaA3 = new SDRC_NonValidArea();
+			areaA3.Set("Arland", "4500 0 10700", 200, "Arland - St. Philippe");
+			conf.nonValidAreas.Insert(areaA3);
+	
+			//Dummy for Arland, but as worldname is not defined, this will be valid for all worlds.
+			SDRC_NonValidArea areaA10 = new SDRC_NonValidArea();
+			areaA10.Set("", "900 0 1450", 300, "Dummy for Arland, but as worldname is not defined, this will be valid for all worlds.");
+			conf.nonValidAreas.Insert(areaA10);		
+		#endif
 	}
 }
