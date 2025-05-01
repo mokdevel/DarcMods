@@ -124,11 +124,9 @@ array<int> missionTypeArrayStatic : List mission types that are always active. S
 ```
 
 ## Non valid areas
-Example: [dc_nonValidArea.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_nonValidArea_example.json)
+Example: [dc_nonValidArea_example.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_nonValidArea_example.json)
 
-Default one is empty: [dc_nonValidArea.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_nonValidArea.json)
-
-This a list of areas where missions shall not spawn. For example a safe zone would be listed here. 
+This a list of areas where missions shall not spawn. For example a safe zone would be listed here. Note that the default one is empty: [dc_nonValidArea.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_nonValidArea.json)
 ```
 int version : See General parameters
 string author : See General parameters
