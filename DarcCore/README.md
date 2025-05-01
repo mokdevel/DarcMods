@@ -19,5 +19,6 @@ DC_LogLevel logLevel : Loglevel of debugging information created in to logs.
   4 = ALL    : Prints everything including VERBOSE and SPAM. It's a lot.
 bool debugShowWaypoints : Only in WB. Show waypoints for AI.
 bool debugShowMarks : Only in WB. Show various markers in the world like mission location and non Valid Areas.
+string defaultEnemyFaction : (USSR) The default faction to assign to AI in case the proper faction is not available. For example: If FIA is not assigned but a FIA AI is spawned, it's set as USSR
 array<string>buildingExcludeFilter : Exclude these prefab names from the cached building list. The list of buildings are cached to avoid a rescan on the map.
 ```

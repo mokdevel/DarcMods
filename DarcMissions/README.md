@@ -54,7 +54,7 @@ Mission position is either defined or randomized. See [General parameters - pos]
 - .. too close to another mission
 - .. too close to any player
 - .. in water
-- .. in [non valid area](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#non-valid-areas---dc_nonvalidareajson)
+- .. in [non valid area](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#non-valid-areas)
 
 In the case position is not usable, another try is made. Currently searching is limited to five tries before deciding that no position has been found. In this case, mission will not spawn.
 
@@ -103,7 +103,7 @@ string missionProfile : Directory specifying a certain conf for play. For exampl
 int missionStartDelay : (seconds) Time to wait before spawning the first mission.
 int missionDelayBetweeen : (seconds) Time delay between mission spawns.
 int missionCount : Maximum amount of missions (both static and dynamic) to be active at the same time.
-int staticFailLimit : How many static missions may fail, before trying a dynamic one.
+int staticTryLimit : How many static missions are tried (fail or success) before trying a dynamic one. To avoid constant static spawns especially if failed.
 int missionFrameCycleTime : (seconds) The cycle time to manage mission spawning, deletion etc...
 int missionActiveTime : (seconds) Time to keep the mission active.
 int missionActiveTimeStatic : (seconds) Time to keep the static mission active (seconds). This typically is much longer than for dynamic.
