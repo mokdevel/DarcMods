@@ -103,7 +103,7 @@ string missionProfile : Directory specifying a certain conf for play. For exampl
 int missionStartDelay : (seconds) Time to wait before spawning the first mission.
 int missionDelayBetweeen : (seconds) Time delay between mission spawns.
 int missionCount : Maximum amount of missions (both static and dynamic) to be active at the same time.
-int staticFailLimit : How many static missions may fail, before trying a dynamic one.
+int staticTryLimit : How many static missions are tried (fail or success) before trying a dynamic one. To avoid constant static spawns especially if failed.
 int missionFrameCycleTime : (seconds) The cycle time to manage mission spawning, deletion etc...
 int missionActiveTime : (seconds) Time to keep the mission active.
 int missionActiveTimeStatic : (seconds) Time to keep the static mission active (seconds). This typically is much longer than for dynamic.
