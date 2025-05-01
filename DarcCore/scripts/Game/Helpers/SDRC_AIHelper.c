@@ -343,7 +343,7 @@ sealed class SDRC_AIHelper
 		Faction faction = null;
 		FactionKey factionKey = "";
 
-		SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] Checking: " + aiAgent, LogLevel.DEBUG);
+		//SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] Checking: " + aiAgent, LogLevel.DEBUG);
 
 		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(aiAgent.GetControlledEntity());
 		if (character)
@@ -356,8 +356,9 @@ sealed class SDRC_AIHelper
 			else
 			{
 				factionKey = m_sDefaultEnemyFactionKey;
-				ResourceName res = aiAgent.GetPrefabData().GetPrefabName();
-				SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] Using default enemy faction " + factionKey + " for " + aiAgent, LogLevel.WARNING);
+				IEntity ent = aiAgent.GetControlledEntity();
+				ResourceName res = ent.GetPrefabData().GetPrefabName();
+				SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] Using default enemy faction " + factionKey + " for " + res, LogLevel.WARNING);
 			}
 		}
 

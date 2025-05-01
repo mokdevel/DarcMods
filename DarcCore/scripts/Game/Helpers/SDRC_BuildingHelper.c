@@ -141,6 +141,7 @@ sealed class SDRC_BuildingHelper
 	static void FindBuildingFloors(out array<vector>floors, IEntity entity)
 	{
 		array<vector>floorsTmp = {};
+		floors = {};		
 		vector sums = SDRC_SpawnHelper.FindEntitySize(entity);
 	
 		vector pos;
@@ -153,19 +154,16 @@ sealed class SDRC_BuildingHelper
 		vector posStart = posStartOrig;
 				
 		posStart[1] = posStartOrig[1] + sums[1];
-		floors = {};
 		DoFloorTrace(floorsTmp, entity, posStart);
 		
 //		float mulVal = 0.07;
 		float mulVal = Math.RandomFloat(0.05, 0.20);			//Was 0.15
 		posStart[0] = posStartOrig[0] + (sums[0] * mulVal);
 		posStart[2] = posStartOrig[2] + (sums[2] * mulVal);
-		floors = {};
 		DoFloorTrace(floorsTmp, entity, posStart);
 		
 		posStart[0] = posStartOrig[0] + (sums[0] * mulVal);
 		posStart[2] = posStartOrig[2] - (sums[2] * mulVal);
-		floors = {};
 		DoFloorTrace(floorsTmp, entity, posStart);
 
 		//Get heights of all scans and sort from lowest to highest.
@@ -173,8 +171,8 @@ sealed class SDRC_BuildingHelper
 		array<float> floorHeight = {};		
 		foreach (vector posTmp : floorsTmp)
 		{
-			int ival = posTmp[1] * 100;		//Round to two decimals
-			float fval = ival / 100;		
+			int ival = posTmp[1] * 50;		//Round to two decimals
+			float fval = ival / 50;		
 			floorHeight.Insert(fval);		
 		}
 		floorHeight.Sort();
@@ -217,6 +215,7 @@ sealed class SDRC_BuildingHelper
 		SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Found: " + floors.Count() + " floors from " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);		//REMOVE
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	static void DoFloorTrace(out array<vector>floors, IEntity entity, vector posStart)
 	{
 		float terrainY = SCR_TerrainHelper.GetTerrainY(posStart);

@@ -100,10 +100,6 @@ class SDRC_MissionFrame
 			SDRC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "This is a description for a mission");
 		#endif	
 		
-		//TBD: Spawn AI (CIV). Try to GetAIAgentFactionKey - will it crash?
-//		SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.aiTypes.GetRandomElement(), m_DC_Squatter.aiSkill, m_DC_Squatter.aiPerception);
-//		m_Groups.Insert(group);
-		
 		//GetGame().GetCallqueue().CallLater(SendHint, 15000, true);
 		
 		//Start the mission framework.
