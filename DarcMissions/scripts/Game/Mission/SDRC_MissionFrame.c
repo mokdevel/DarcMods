@@ -100,6 +100,10 @@ class SDRC_MissionFrame
 			SDRC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "This is a description for a mission");
 		#endif	
 		
+		//TBD: Spawn AI (CIV). Try to GetAIAgentFactionKey - will it crash?
+//		SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.aiTypes.GetRandomElement(), m_DC_Squatter.aiSkill, m_DC_Squatter.aiPerception);
+//		m_Groups.Insert(group);
+		
 		//GetGame().GetCallqueue().CallLater(SendHint, 15000, true);
 		
 		//Start the mission framework.
@@ -147,6 +151,7 @@ class SDRC_MissionFrame
 			
 			//Select a new mission to spawn. 
 			//Static missions are prioritized so check that the list spawned. 
+			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Static active: " + CountStaticMissions() + " < static count: " + m_Config.missionTypeArrayStatic.Count() + " && FailCount: " + m_iStaticFailCount + " < FailLimit: " + m_Config.staticFailLimit + " && FirstMissionSpawned: " + m_bFirstMissionSpawned, LogLevel.DEBUG);
 			if (CountStaticMissions() < m_Config.missionTypeArrayStatic.Count() && m_iStaticFailCount < m_Config.staticFailLimit && m_bFirstMissionSpawned)
 			{
 				missionType = m_Config.missionTypeArrayStatic.GetRandomElement();
@@ -157,6 +162,7 @@ class SDRC_MissionFrame
 					tmpDC_Mission.SetActiveTime(m_Config.missionActiveTimeStatic);
 					tmpDC_Mission.ResetActiveTime();
 				}
+				m_iStaticFailCount++;	//We increase this even if the mission start failed for static
 			}
 			else	//Select a dynamic mission to spawn
 			{
@@ -167,6 +173,8 @@ class SDRC_MissionFrame
 					tmpDC_Mission.SetActiveTime(m_Config.missionActiveTime);
 					tmpDC_Mission.ResetActiveTime();
 					m_bFirstMissionSpawned = true;
+					//Mission startup was success. Reset fail counter for static missions.	
+					m_iStaticFailCount = 0;
 				}				
 			}
 
@@ -184,8 +192,6 @@ class SDRC_MissionFrame
 				//If there was an error starting the mission, it has been prepared for deletion.
 				if (tmpDC_Mission.GetState() != DC_EMissionState.FAILED)
 				{		
-					//Mission startup was success. Reset fail counter for static missions.	
-					m_iStaticFailCount = 0;
 					//Set the defaul active distance
 					tmpDC_Mission.SetActiveDistance(m_Config.missionActiveDistance);
 					tmpDC_Mission.SetActiveTimeToEnd(m_Config.missionActiveTimeToEnd);
@@ -225,10 +231,10 @@ class SDRC_MissionFrame
 						
 			if (mission.GetState() == DC_EMissionState.FAILED)
 			{
-				if (mission.IsStatic())
+/*				if (mission.IsStatic())
 				{
 					m_iStaticFailCount++;
-				}
+				}*/
 				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Mission start failed: " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + "). Static fail count: " + m_iStaticFailCount, LogLevel.WARNING);
 			}
 			

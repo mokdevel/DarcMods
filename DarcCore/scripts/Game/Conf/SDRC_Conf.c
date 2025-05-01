@@ -27,7 +27,7 @@ const string CONF_DIRECTORY = "DarcMods";
 #endif
 		
 //Development time options	
-#ifndef SDRC_RELEASE	
+#ifndef SDRC_RELEASE
 //	#define SDRC_ENABLE_DARCSPAWNER				//Enable the spawner mod during development
 	#define SDRC_ENABLE_DARCMISSIONS				//Enable the missions mod during development
 	#define SDRC_ENABLE_DARCDEATHMARKER			//Enable death marker mod during development

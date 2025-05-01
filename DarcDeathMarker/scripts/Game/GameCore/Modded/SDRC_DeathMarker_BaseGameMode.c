@@ -8,6 +8,7 @@ modded class SCR_BaseGameMode
     {
         super.OnGameStart();
 		
+		SDRC_Log.Add("[SDRC_MissionFrame] Starting SDRC_DeathMarker", LogLevel.NORMAL);		
 		SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
 
 		if (!SDRC_Conf.RELEASE)
@@ -18,7 +19,6 @@ modded class SCR_BaseGameMode
 		if (IsMaster())
 		{
 			SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
-//			GetGame().GetCallqueue().CallLater(StartMissionFrame, 5000, false);	
 		}
 		else 
 		{
@@ -27,19 +27,6 @@ modded class SCR_BaseGameMode
     }
 			
 	//------------------------------------------------------------------------------------------------
-	//TBD: Should use OnPlayerSpawnFinalize_S
-/*	override void OnPlayerSpawned(int playerId, IEntity controlledEntity)	
-	{
-		super.OnPlayerSpawned(playerId, controlledEntity);
-		
-		//Set markers to stream to joining players
-		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
-		if (mapMarkerMgr)
-			mapMarkerMgr.SetStreamRulesForPlayer(playerId);
-				
-		SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode: OnPlayerSpawned] Player spawned - id: " + playerId, LogLevel.DEBUG);
-	}
-*/	
 	override void OnPlayerKilled(int playerId, IEntity playerEntity, IEntity killerEntity, notnull Instigator killer)
 	{
 		string playername = SDRC_PlayerHelper.GetPlayerName(playerId);

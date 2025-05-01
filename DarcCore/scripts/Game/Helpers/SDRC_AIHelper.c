@@ -6,7 +6,20 @@ Functions for various AI actions
 */
 
 sealed class SDRC_AIHelper
-{
+{	
+	static private string m_sDefaultEnemyFactionKey = "USSR";	
+	
+	//------------------------------------------------------------------------------------------------
+	static void SetDefaultEnemyFaction(string faction)
+	{
+		if (faction != "")
+		{
+			m_sDefaultEnemyFactionKey = faction;
+		}
+		
+		SDRC_Log.Add("[SDRC_AIHelper:SetDefaultEnemyFaction] Default enemy faction: " + faction, LogLevel.NORMAL);
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Spawn an AIagent 
@@ -323,16 +336,29 @@ sealed class SDRC_AIHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find AIagent faction
-	Returns the faction ID for an AIAgent. Return empty in case it's not found.
+	Returns the faction ID for an AIAgent. Returns the default enemy faction in case it's not found.
 	*/
-	static string GetAIAgentFactionKey(AIAgent aiAgent)
+	static FactionKey GetAIAgentFactionKey(AIAgent aiAgent)
 	{
-		string faction = "";
-		
+		Faction faction = null;
+		FactionKey factionKey = "";
+
+		SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] Checking: " + aiAgent, LogLevel.DEBUG);
+
 		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(aiAgent.GetControlledEntity());
 		if (character)
 		{
-			faction = character.GetFaction().GetFactionKey();
+			faction = character.GetFaction();
+			if(faction)
+			{
+				factionKey = character.GetFaction().GetFactionKey();
+			}
+			else
+			{
+				factionKey = m_sDefaultEnemyFactionKey;
+				ResourceName res = aiAgent.GetPrefabData().GetPrefabName();
+				SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] Using default enemy faction " + factionKey + " for " + aiAgent, LogLevel.WARNING);
+			}
 		}
 
 		/* 
@@ -346,7 +372,7 @@ sealed class SDRC_AIHelper
 		}
 		*/
 		
-		return faction;
+		return factionKey;
 	}		
 			
 	//------------------------------------------------------------------------------------------------

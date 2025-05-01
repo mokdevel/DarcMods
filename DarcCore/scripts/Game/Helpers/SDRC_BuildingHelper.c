@@ -157,7 +157,7 @@ sealed class SDRC_BuildingHelper
 		DoFloorTrace(floorsTmp, entity, posStart);
 		
 //		float mulVal = 0.07;
-		float mulVal = Math.RandomFloat(0.05, 0.12);		
+		float mulVal = Math.RandomFloat(0.05, 0.20);			//Was 0.15
 		posStart[0] = posStartOrig[0] + (sums[0] * mulVal);
 		posStart[2] = posStartOrig[2] + (sums[2] * mulVal);
 		floors = {};
@@ -214,7 +214,7 @@ sealed class SDRC_BuildingHelper
 			SDRC_DebugHelper.AddDebugSphere(fpos, Color.ORANGE, 0.3);
 		}				
 				
-		SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Found: " + floors.Count() + " floors from " + entity.GetPrefabData().GetPrefabName(), LogLevel.SPAM);
+		SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Found: " + floors.Count() + " floors from " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);		//REMOVE
 	}
 	
 	static void DoFloorTrace(out array<vector>floors, IEntity entity, vector posStart)

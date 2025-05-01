@@ -10,7 +10,7 @@
 		private const int SDRC_MISSION_STATIC_FAIL_LIMIT = 2;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 30;
 		private const int SDRC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
-		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS = 3*60;					//Minimum delay between missions. 
+		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS = 2*60;					//Minimum delay between missions. 
 		private const int SDRC_MISSION_ACTIVE_TIME = 15*60;								//Time to keep the mission active (seconds)
 		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 20*60;						//Static missions are to be kept alive longer
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 200;							//Mission is to be removed if no players close to the position after the mission active time has passed.
@@ -19,7 +19,7 @@
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 20;						//You should not be running the frame too often as it's unncecessary
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = true;						//Force recreaction of config files. 
 		private const int SDRC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
-		const bool SDRC_MISSION_FIRST_MISSION_HAS_SPAWNED = false;									//Has the first mission (=dynamic) spawned. Setting to true will spawn a static mission first
+		const bool SDRC_MISSION_FIRST_MISSION_HAS_SPAWNED = false;						//Has the first mission (=dynamic) spawned. Setting to true will spawn a static mission first
 	#endif
 	
 	//Development time options
@@ -38,9 +38,8 @@
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = false;
 		private const int SDRC_MISSION_HINT_TIME = 30;
-		const bool SDRC_MISSION_FIRST_MISSION_HAS_SPAWNED = true;	//Has the first mission (=dynamic) spawned. 
+		const bool SDRC_MISSION_FIRST_MISSION_HAS_SPAWNED = true;
 	#endif
-
 
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionFrameConfig : Managed
@@ -134,14 +133,14 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-//			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTER};
+			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTER};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CONVOY};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.PATROL};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CHOPPER};
-			conf.missionTypeArrayDynamic = {DC_EMissionType.SQUATTER};
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.SQUATTER};
 		
 //			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};

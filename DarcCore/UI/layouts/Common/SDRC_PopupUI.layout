@@ -7,13 +7,14 @@ FrameWidgetClass {
     Anchor 0.01 0 0.01 0
     PositionX -6
     OffsetLeft -6
-    PositionY 67
-    OffsetTop 67
+    PositionY 66
+    OffsetTop 66
     SizeX 56
     OffsetRight -50
     SizeY 56
-    OffsetBottom -123
+    OffsetBottom -122
    }
+   "Is Visible" 0
    Color 0.0467 0.0467 0.0467 1
    Texture "{232D9BDABB08F52F}UI/Textures/Icons/SDRC_icon_M.edds"
    Size 64 64
@@ -24,13 +25,14 @@ FrameWidgetClass {
     Anchor 0.01 0 0.01 0
     PositionX -8
     OffsetLeft -8
-    PositionY 65
-    OffsetTop 65
+    PositionY 64
+    OffsetTop 64
     SizeX 56
     OffsetRight -48
     SizeY 56
-    OffsetBottom -121
+    OffsetBottom -120
    }
+   "Is Visible" 0
    Color 0.5841 0.5841 0.5841 1
    Texture "{232D9BDABB08F52F}UI/Textures/Icons/SDRC_icon_M.edds"
    Size 64 64

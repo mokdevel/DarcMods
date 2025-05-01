@@ -276,7 +276,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"Gogland: Mission to be used with Escapists.",
 			"0 0 0",
 			"any",
-			"Guard patrol seen near ",
+			"Guards patroling near ",
 			"Avoid the location. Loot has already been lost.",
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
