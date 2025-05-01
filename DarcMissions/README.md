@@ -54,7 +54,7 @@ Mission position is either defined or randomized. See [General parameters - pos]
 - .. too close to another mission
 - .. too close to any player
 - .. in water
-- .. in [non valid area](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#non-valid-areas---dc_nonvalidareajson)
+- .. in [non valid area](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions#non-valid-areas)
 
 In the case position is not usable, another try is made. Currently searching is limited to five tries before deciding that no position has been found. In this case, mission will not spawn.
 
