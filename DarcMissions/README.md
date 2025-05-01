@@ -124,9 +124,9 @@ array<int> missionTypeArrayStatic : List mission types that are always active. S
 ```
 
 ## Non valid areas
-Example: [dc_nonValidArea.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_nonValidArea.json)
+Example: [dc_nonValidArea_example.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_nonValidArea_example.json)
 
-This a list of areas where missions shall not spawn. For example a safe zone would be listed here. 
+This a list of areas where missions shall not spawn. For example a safe zone would be listed here. Note that the default one is empty: [dc_nonValidArea.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_nonValidArea.json)
 ```
 int version : See General parameters
 string author : See General parameters
@@ -150,7 +150,7 @@ This supports additional mods that you can define in the modList parameter. The 
 ```
 int version : See General parameters
 string author : See General parameters
-array<string> modList : The mods to search for loot.
+array<string> modList : The mods to search for loot. If left empty, all mods enabled will be searched.
 array<SCR_DC_LootList> lootLists : The defined lootlists
 ```
 Currently available ```lootListNames``` are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
