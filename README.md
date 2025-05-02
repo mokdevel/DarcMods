@@ -5,13 +5,13 @@ A bunch Arma Reforger mods.
 The core functions collected under one mod.
 
 ## DarcDeathMarker
-The mod creates a map marker on the position where you died. The marker is active 5 minutes (for now) and disappears after that. If you die again, another marker replaces the previous one.
+The mod creates a map marker on the position where you died. The marker is active 10 minutes and disappears after that. If you die again, another marker replaces the previous one. Documentation inside mod folder.
 
 ## DarcMissions
-A mod that spawns various types of PVE missions. 
+A mod that spawns various types of PVE missions. Documentation inside mod folder.
 
 ## DarcSpawner
-Spawns vehicles (could work with containers too) randomly on map with some loot.
+Spawns vehicles (could work with containers too) randomly on map with some loot. Documentation inside mod folder.
 
 # Not mods
 ## DarcDev
