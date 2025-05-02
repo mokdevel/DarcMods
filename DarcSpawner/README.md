@@ -4,7 +4,7 @@ Spawns vehicles (could work with containers too) randomly on map with some loot.
 The position for a spawn is searched from locations listed. If the location is in water, the spawn is interrupted and the vehicle is skipped. This is by design.
 
 ## Installation
-Just active the mod (and dependencies) and you're good to go.
+Just activate the mod (and dependencies) and you're good to go.
 
 ## Configuration
 Configuration is done in .json files.
