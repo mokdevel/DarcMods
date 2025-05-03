@@ -83,7 +83,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 	{
 		conf.showMarker = true;
 //		conf.showMarker = false;
-		conf.spawnSetID = -1;
+		conf.spawnSetID = 3;//-1;
 		conf.spawnOnRoad = false;
 		conf.spawnRndRadius = 100;
 		conf.spawnWorldSizeMultiplier = 2;
@@ -200,5 +200,38 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 			0.7
 		);
 		conf.spawnSets.Insert(spawnSet2);		
+		
+		//---
+		SDRC_SpawnSet spawnSet3 = new SDRC_SpawnSet();
+		spawnSet3.Set
+		(			
+			"Spawn loot crates",
+			{
+				EMapDescriptorType.MDT_NAME_HILL,
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_FORESTERLODGE,
+				EMapDescriptorType.MDT_FORESTTRIANGLE,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_VALLEY,		
+			},
+			{
+				"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+				"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+				"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+				"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
+			},
+			0.6,
+			0,
+			{
+				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN", 
+				"WEAPON_RIFLE",
+				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
+				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
+				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+			},
+			0.7
+		);
+		conf.spawnSets.Insert(spawnSet3);				
 	}
 }
