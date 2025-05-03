@@ -21,6 +21,8 @@ Example: [dc_spawnerConfig_Convoy.json](https://github.com/mokdevel/DarcMods/blo
 int version : See Common parameters
 string author : See Common parameters
 bool showMarker : See Common parameters
+string markerType : Marker type of SCR_EMapMarkerType. DARC_MISSION by default. You could use for example PLACED_MILITARY or any of the other defined ones.
+int markerIdx : The index of the icon in the map marker configuration (check in workbench). 
 int spawnSetID : The spawner to use. -1 = random pick of spawner from spawnSets
 bool spawnOnRoad : Spawn the cars on road. If no road network manager found, cars spawned around the map.
 int spawnRndRadius : Random radius where the spawnName spawns. Once a location is found, additional randomization is done to avoid vehicles to be always in the same spot.
