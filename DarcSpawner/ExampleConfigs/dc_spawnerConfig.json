@@ -2,6 +2,9 @@
 	"version": 1,
 	"author": "darc",
 	"showMarker": true,
+	"markerType": "DARC_MISSION",
+	"markerIdx": 8,
+	"iconID": 0,
 	"spawnSetID": -1,
 	"spawnOnRoad": false,
 	"spawnRndRadius": 100,
@@ -99,6 +102,36 @@
 				"WEAPON_HANDGUN",
 				"WEAPON_HANDGUN",
 				"WEAPON_HANDGUN",
+				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
+				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
+				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et"
+			],
+			"itemChance": 0.699999988079071
+		},
+		{
+			"comment": "Spawn loot crates",
+			"locationTypes": [
+				63,
+				70,
+				5,
+				7,
+				8,
+				71
+			],
+			"spawnNames": [
+				"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+				"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+				"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+				"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
+			],
+			"spawnChance": 0.6000000238418579,
+			"spawnCount": 0,
+			"itemNames": [
+				"WEAPON_HANDGUN",
+				"WEAPON_HANDGUN",
+				"WEAPON_HANDGUN",
+				"WEAPON_RIFLE",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
 				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
