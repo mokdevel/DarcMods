@@ -30,7 +30,7 @@ sealed class SDRC_MapMarkerHelper
 {
 	static ref array<ref DC_Mmarker> m_markers = {};
 	
-	static void CreateMapMarker(vector pos, int icon, string id, string title = "", int lifetime = 0, string markerTypeString = "SCR_EMapMarkerType.DARC_MISSION")
+	static void CreateMapMarker(vector pos, int icon, string id, string title = "", int lifetime = 0, string markerTypeString = "DARC_MISSION")
 	{		
 		
 		SCR_EMapMarkerType markerType = typename.StringToEnum(SCR_EMapMarkerType, markerTypeString);
