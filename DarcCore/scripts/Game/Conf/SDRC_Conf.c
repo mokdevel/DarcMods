@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-#define SDRC_RELEASE
+//#define SDRC_RELEASE
 
 sealed class SDRC_Conf
 {
@@ -29,9 +29,9 @@ const string CONF_DIRECTORY = "DarcMods";
 		
 //Development time options	
 #ifndef SDRC_RELEASE
-//	#define SDRC_ENABLE_DARCSPAWNER				
-	#define SDRC_ENABLE_DARCMISSIONS			
-	#define SDRC_ENABLE_DARCDEATHMARKER			
+	#define SDRC_ENABLE_DARCSPAWNER				
+//	#define SDRC_ENABLE_DARCMISSIONS			
+//	#define SDRC_ENABLE_DARCDEATHMARKER			
 	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
 	const bool RELEASE = false;					
 	const bool OVERWRITE_JSON = true;				
