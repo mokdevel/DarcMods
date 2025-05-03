@@ -11,6 +11,7 @@ modded class SCR_BaseGameMode
     {
         super.OnGameStart();
 		
+		SDRC_Log.Add("[SDRC_Core] Starting..", LogLevel.NORMAL);					
 		SDRC_Log.Add("[SDRC_Core_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
 		
 		if (IsMaster())

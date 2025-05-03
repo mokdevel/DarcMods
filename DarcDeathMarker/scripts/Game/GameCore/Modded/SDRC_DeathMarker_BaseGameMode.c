@@ -2,27 +2,33 @@
 
 modded class SCR_BaseGameMode 
 {
-	#ifdef SDRC_ENABLE_DARCDEATHMARKER
 	//------------------------------------------------------------------------------------------------
     override void OnGameStart()
     {
         super.OnGameStart();
 		
-		SDRC_Log.Add("[SDRC_MissionFrame] Starting SDRC_DeathMarker", LogLevel.NORMAL);		
-		SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
-
-		if (!SDRC_Conf.RELEASE)
+		if (SDRC_Conf.SDRC_ENABLE_DARCDEATHMARKER)
 		{
-			SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode] SDRC_RELEASE not defined. This is a DEVELOPMENT build.", LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_DeathMarker] Starting..", LogLevel.NORMAL);		
+			SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
+	
+			if (!SDRC_Conf.RELEASE)
+			{
+				SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode] SDRC_RELEASE not defined. This is a DEVELOPMENT build.", LogLevel.WARNING);
+			}
+					
+			if (IsMaster())
+			{
+				SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
+			}
+			else 
+			{
+				SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:NonMaster] Mission frame not needed for client.", LogLevel.DEBUG);        
+			}
 		}
-				
-		if (IsMaster())
+		else
 		{
-			SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
-		}
-		else 
-		{
-			SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:NonMaster] Mission frame not needed for client.", LogLevel.DEBUG);        
+			SDRC_Log.Add("[SDRC_DeathMarker] Not started. Development build?", LogLevel.ERROR);
 		}
     }
 			
@@ -41,5 +47,4 @@ modded class SCR_BaseGameMode
 		
 		super.OnPlayerKilled(playerId, playerEntity, killerEntity, killer);		
 	}
-	#endif
 };

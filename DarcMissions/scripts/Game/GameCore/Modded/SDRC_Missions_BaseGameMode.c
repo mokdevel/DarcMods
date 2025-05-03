@@ -4,28 +4,35 @@ modded class SCR_BaseGameMode
 {
 	ref SDRC_MissionFrame missionFrame;
 	
-	#ifdef SDRC_ENABLE_DARCMISSIONS
 	//------------------------------------------------------------------------------------------------
     override void OnGameStart()
     {
         super.OnGameStart();
 		
-		SDRC_Log.Add("[SDRC_Missions_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
-
-		if (!SDRC_Conf.RELEASE)
-		{
-			SDRC_Log.Add("[SDRC_Missions_BaseGameMode] SDRC_RELEASE not defined. This is a DEVELOPMENT build.", LogLevel.WARNING);
+		if (SDRC_Conf.SDRC_ENABLE_DARCMISSIONS)
+		{	
+			SDRC_Log.Add("[SDRC_Missions] Starting..", LogLevel.NORMAL);					
+			SDRC_Log.Add("[SDRC_Missions_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
+	
+			if (!SDRC_Conf.RELEASE)
+			{
+				SDRC_Log.Add("[SDRC_Missions_BaseGameMode] SDRC_RELEASE not defined. This is a DEVELOPMENT build.", LogLevel.WARNING);
+			}
+					
+			if (IsMaster())
+			{
+				SDRC_Log.Add("[SDRC_Missions_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
+				GetGame().GetCallqueue().CallLater(StartMissionFrame, 5000, false);	
+			}
+			else 
+			{
+				SDRC_Log.Add("[SDRC_Missions_BaseGameMode:NonMaster] Mission frame not needed for client.", LogLevel.DEBUG);        
+			}
 		}
-				
-		if (IsMaster())
+		else
 		{
-			SDRC_Log.Add("[SDRC_Missions_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
-			GetGame().GetCallqueue().CallLater(StartMissionFrame, 5000, false);	
-		}
-		else 
-		{
-			SDRC_Log.Add("[SDRC_Missions_BaseGameMode:NonMaster] Mission frame not needed for client.", LogLevel.DEBUG);        
-		}
+			SDRC_Log.Add("[SDRC_Missions] Not started. Development build?", LogLevel.ERROR);
+		}		
     }
 
 	//------------------------------------------------------------------------------------------------
@@ -47,5 +54,4 @@ modded class SCR_BaseGameMode
 				
 		SDRC_Log.Add("[SDRC_Missions_BaseGameMode: OnPlayerSpawned] Player spawned - id: " + playerId, LogLevel.DEBUG);
 	}
-	#endif
 };

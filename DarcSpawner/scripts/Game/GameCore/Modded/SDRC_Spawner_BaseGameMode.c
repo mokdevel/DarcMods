@@ -2,29 +2,37 @@
 
 modded class SCR_BaseGameMode 
 {
-	#ifdef SDRC_ENABLE_DARCSPAWNER
 	//private 
 	ref SDRC_Spawner dcSpawner;
 
     override void OnGameStart()
     {
-        super.OnGameStart();
+	    super.OnGameStart();
 		
-		SDRC_Log.Add("[SDRC_Spawner_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
-		
-		if (!SDRC_Conf.RELEASE)
+		if (SDRC_Conf.SDRC_ENABLE_DARCSPAWNER)
 		{
-			SDRC_Log.Add("[SDRC_Spawner_BaseGameMode] SDRC_Core.RELEASE not true. This is a DEVELOPMENT build.", LogLevel.WARNING);
+			
+			SDRC_Log.Add("[SDRC_Spawner] Starting..", LogLevel.NORMAL);		
+			SDRC_Log.Add("[SDRC_Spawner_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
+			
+			if (!SDRC_Conf.RELEASE)
+			{
+				SDRC_Log.Add("[SDRC_Spawner_BaseGameMode] SDRC_Core.RELEASE not true. This is a DEVELOPMENT build.", LogLevel.WARNING);
+			}
+			
+			if (IsMaster())
+			{
+				SDRC_Log.Add("[SDRC_Spawner_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
+				GetGame().GetCallqueue().CallLater(StartSpawner, 15000, false);	
+			}
+			else 
+			{
+				SDRC_Log.Add("[SDRC_Spawner_BaseGameMode:NonMaster] Spawner not needed for client.", LogLevel.DEBUG);        
+			}
 		}
-		
-		if (IsMaster())
+		else
 		{
-			SDRC_Log.Add("[SDRC_Spawner_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
-			GetGame().GetCallqueue().CallLater(StartSpawner, 15000, false);	
-		}
-		else 
-		{
-			SDRC_Log.Add("[SDRC_Spawner_BaseGameMode:NonMaster] Spawner not needed for client.", LogLevel.DEBUG);        
+			SDRC_Log.Add("[SDRC_Spawner] Not started. Development build?", LogLevel.ERROR);
 		}
     }
 	
@@ -44,5 +52,4 @@ modded class SCR_BaseGameMode
 		dcSpawner = new SDRC_Spawner();
 		dcSpawner.Run();
 	}
-	#endif
 };
