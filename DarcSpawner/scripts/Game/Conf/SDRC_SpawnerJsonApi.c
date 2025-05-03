@@ -11,6 +11,9 @@ class SDRC_SpawnerConfig : Managed
 	string author = "darc";
 	//Spawner specific
 	bool showMarker;
+	string markerType;					//marker type
+	int markerIdx;						//marker ID
+	int iconID;							//The ID of the icon
 	int spawnSetID;						//-1 = random, other numbers are the index of spawnSet
 	bool spawnOnRoad;					//Spawn the cars on road
 	int spawnRndRadius;					//Random radius where the spawnName spawns. 
@@ -83,7 +86,9 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 	{
 		conf.showMarker = true;
 //		conf.showMarker = false;
-		conf.spawnSetID = 3;//-1;
+		conf.markerType = "DARC_MISSION";
+		conf.markerIdx = 8;
+		conf.spawnSetID = -1;
 		conf.spawnOnRoad = false;
 		conf.spawnRndRadius = 100;
 		conf.spawnWorldSizeMultiplier = 2;

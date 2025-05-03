@@ -158,7 +158,7 @@ class SDRC_Spawner
 					
 				if (m_Config.showMarker)
 				{
-					SDRC_MapMarkerHelper.CreateMapMarker(entity.GetOrigin(), DC_EMissionIcon.REDCROSS_SMALL, "", "");
+					SDRC_MapMarkerHelper.CreateMapMarker(entity.GetOrigin(), m_Config.markerIdx, "", "", markerTypeString: m_Config.markerType);
 				}
 			}
 			else
