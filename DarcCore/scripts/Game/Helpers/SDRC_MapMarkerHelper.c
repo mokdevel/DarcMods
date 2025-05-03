@@ -30,8 +30,11 @@ sealed class SDRC_MapMarkerHelper
 {
 	static ref array<ref DC_Mmarker> m_markers = {};
 	
-	static void CreateMapMarker(vector pos, int icon, string id, string title = "", int lifetime = 0)
+	static void CreateMapMarker(vector pos, int icon, string id, string title = "", int lifetime = 0, string markerTypeString = "SCR_EMapMarkerType.DARC_MISSION")
 	{		
+		
+		SCR_EMapMarkerType markerType = typename.StringToEnum(SCR_EMapMarkerType, markerTypeString);
+
 		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
 		if (!mapMarkerMgr)
 			return;
@@ -40,7 +43,7 @@ sealed class SDRC_MapMarkerHelper
 //        int fIndex = GetGame().GetFactionManager().GetFactionIndex(faction);		
 				
 		SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
-		markerst.SetType(SCR_EMapMarkerType.DARC_MISSION);
+		markerst.SetType(markerType);
 		markerst.SetCustomText(title);
 		markerst.SetWorldPos(pos[0], pos[2]);
 		markerst.SetIconEntry(icon);
