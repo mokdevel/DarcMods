@@ -1,7 +1,8 @@
 {
 	"version": 1,
 	"author": "darc",
-	"nonValidAreas": [
+	"showOnMap": true,
+	"m_NonValidAreas": [
 		{
 			"worldName": "Eden",
 			"pos": [
