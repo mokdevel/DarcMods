@@ -81,7 +81,7 @@ sealed class SDRC_RoadHelper
 			{
 				route.InsertAt(roadPos.posOnRoad, (i*2 + 1));
 				#ifndef SDRC_RELEASE
-					SDRC_DebugHelper.AddDebugPos(roadPos.posOnRoad, Color.RED, 5, "ROADTEST", 1.5);
+					SDRC_DebugHelper.AddDebugPos(roadPos.posOnRoad, ARGB(75, 255, 0, 0), 5, "ROADTEST", 1.5);
 				#endif
 			}
 		}
@@ -242,7 +242,7 @@ sealed class SDRC_RoadHelper
 		for (int i = 0; i < 2; i++)
 		{				
 			pos = SDRC_Misc.MovePosToAngle(roadPosLast, distanceToCheck, (angle + anglesToTest[idx+i]));
-			SDRC_DebugHelper.AddDebugPos(pos, Color.GREEN, 2, "ROADTEST", 5);
+			SDRC_DebugHelper.AddDebugPos(pos, ARGB(50, 0, 255, 0), 2, "ROADTEST", 5);
 			BaseRoad road = FindClosestRoad(pos, distanceToCheck);
 			if (road)
 				return road;
@@ -325,7 +325,7 @@ sealed class SDRC_RoadHelper
 		float i = 0;
 		foreach (vector roadPt: roadPts)
 		{
-			SDRC_DebugHelper.AddDebugPos(roadPt, Color.PINK, 2, "ROADTEST", 5 + i);
+			SDRC_DebugHelper.AddDebugPos(roadPt, ARGB(50, 255,192,203), 2, "ROADTEST", 5 + i);
 			i = i + 0.2;
 		}
 	}	

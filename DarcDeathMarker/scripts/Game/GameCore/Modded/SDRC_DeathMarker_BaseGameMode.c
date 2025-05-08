@@ -19,7 +19,7 @@ modded class SCR_BaseGameMode
 					
 			if (IsMaster())
 			{
-				SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
+				SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);
 			}
 			else 
 			{

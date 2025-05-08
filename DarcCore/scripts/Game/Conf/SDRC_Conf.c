@@ -31,7 +31,7 @@ const string CONF_DIRECTORY = "DarcMods";
 #ifndef SDRC_RELEASE
 	const bool SDRC_ENABLE_DARCSPAWNER = false;
 	const bool SDRC_ENABLE_DARCMISSIONS	= true;
-	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
+	const bool SDRC_ENABLE_DARCDEATHMARKER = true;
 	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
 	const bool RELEASE = false;					
 	const bool OVERWRITE_JSON = true;				

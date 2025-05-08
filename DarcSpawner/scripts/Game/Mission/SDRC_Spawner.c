@@ -150,7 +150,7 @@ class SDRC_Spawner
 			if (entity != NULL)
 			{ 
 				m_EntityList.Insert(entity);
-				SDRC_DebugHelper.AddDebugPos(entity, Color.VIOLET);
+				SDRC_DebugHelper.AddDebugPos(entity, ARGB(50, 255, 0, 255));
 				
 				SDRC_LootHelper.SpawnItemsToStorage(entity, m_Config.spawnSets[m_spawnSetID].itemNames, m_Config.spawnSets[m_spawnSetID].itemChance);
 				//Disable arsenal
