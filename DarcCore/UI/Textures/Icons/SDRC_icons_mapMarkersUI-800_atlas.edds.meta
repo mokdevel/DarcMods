@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{420BD0A6DFCB191F}UI/Textures/Icons/SDRC_icons_mapMarkersUI-800_atlas.edds"
+ Configurations {
+  TGAResourceClass PC : "{1D692833852EC72A}Configs/System/ResourceTypes/PC/TextureUIAtlas.conf" {
+  }
+  TGAResourceClass XBOX_ONE : "{96767353535A4256}Configs/System/ResourceTypes/XBOX_ONE/TextureUIAtlas.conf" {
+  }
+  TGAResourceClass XBOX_SERIES : "{8A3A5BA26FD3DE70}Configs/System/ResourceTypes/XBOX_SERIES/TextureUIAtlas.conf" {
+  }
+  TGAResourceClass PS4 : "{962DE8F3FC2848A3}Configs/System/ResourceTypes/PS4/TextureUIAtlas.conf" {
+  }
+  TGAResourceClass PS5 : "{BED5DFAD2A554849}configs/ResourceTypes/PS5/TextureUIAtlas.conf" {
+  }
+  TGAResourceClass HEADLESS : "{15892FB1C3E30D2C}Configs/System/ResourceTypes/HEADLESS/TextureUIAtlas.conf" {
+  }
+ }
+}
