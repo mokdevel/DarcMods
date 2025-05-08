@@ -30,6 +30,7 @@ sealed class SDRC_DebugHelper
 	
 	static ref array<ref SDRC_DebugHelperPos> m_Pos = {};
 	static ref array<ref SDRC_DebugHelperPos> m_Sphere = {};
+	static ref array<ref SDRC_DebugHelperPos> m_MapCircle = {};
 	static ref array<IEntity> m_Slots = {};
 
 	//------------------------------------------------------------------------------------------------
@@ -38,6 +39,7 @@ sealed class SDRC_DebugHelper
 		m_Pos.Clear();
 		m_Sphere.Clear();
 		m_Slots.Clear();
+		m_MapCircle.Clear();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -319,6 +321,21 @@ sealed class SDRC_DebugHelper
 		#endif
 	}					
 	
+	//------------------------------------------------------------------------------------------------
+	static void AddMapCircle(vector pos, float radius = 100, int color = Color.BLUE, string id = "NONE")
+	{
+//		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
+		{
+			SDRC_DebugHelperPos dpos = new SDRC_DebugHelperPos;
+			dpos.pos = pos;
+			dpos.color = color;
+			dpos.radius = radius;
+			dpos.id = id;
+			dpos.height = 0;
+			m_MapCircle.Insert(dpos);
+		}
+	}					
+
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Deletes a debug cylinder with a certain id. The id works as a wild card.

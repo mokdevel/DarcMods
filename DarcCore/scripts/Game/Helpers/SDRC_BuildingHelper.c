@@ -232,7 +232,7 @@ sealed class SDRC_BuildingHelper
 
 		foreach (vector fpos: floors)
 		{
-			SDRC_DebugHelper.AddDebugSphere(fpos, Color.ORANGE, 0.3);
+			SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 255, 255, 0), 0.3);
 		}				
 				
 		SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Found: " + floors.Count() + " floors from " + building.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);		//REMOVE
@@ -276,7 +276,7 @@ sealed class SDRC_BuildingHelper
 		
 		foreach (vector fpos: floors)
 		{
-			SDRC_DebugHelper.AddDebugSphere(fpos, Color.BLUE, 0.2);
+			SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 0, 0, 255), 0.2);
 		}				
 	}	
 }

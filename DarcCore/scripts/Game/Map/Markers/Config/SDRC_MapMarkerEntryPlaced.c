@@ -3,16 +3,23 @@
 
 enum DC_EMissionIcon
 {
-	CIRCLE,
 	MISSION,
-	DEBUG,
 	CRASHSITE,
 	TARGET_X,
 	TARGET_O,
-	DEBUG_SMALL,
 	REDCROSS,
 	REDCROSS_SMALL,
 	BLACK_X_SMALL,
+	N_MISSION,
+	N_X,
+	N_HOUSE,
+	N_FIRE,
+	N_FENCE,
+	N_CAR,
+	N_HELI,
+	N_HUNTER,
+	N_PATROL,
+	N_RADIOACTIVE
 };
 
 [BaseContainerProps(), SCR_MapMarkerTitle()]
