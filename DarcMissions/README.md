@@ -131,7 +131,7 @@ This a list of areas where missions shall not spawn. For example a safe zone wou
 ```
 int version : See General parameters
 string author : See General parameters
-bool showOnMap : Show a red area where non valid area is. Helps to properly define the areas.
+bool showOnMap : Show a red area where non valid area is. Helps to properly define the areas. (Currently works only in WB)
 array<SCR_DC_NonValidArea> nonValidAreas : List of areas where missions shall not spawn.
 ```
 
