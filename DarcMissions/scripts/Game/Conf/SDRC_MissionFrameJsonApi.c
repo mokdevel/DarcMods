@@ -10,7 +10,7 @@
 		private const int SDRC_MISSION_STATIC_TRY_LIMIT = 2;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 30;
 		private const int SDRC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
-		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS = 2*60;					//Minimum delay between missions. 
+		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS = 4*60;					//Minimum delay between missions. 
 		private const int SDRC_MISSION_ACTIVE_TIME = 15*60;								//Time to keep the mission active (seconds)
 		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 20*60;						//Static missions are to be kept alive longer
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 200;							//Mission is to be removed if no players close to the position after the mission active time has passed.
@@ -138,16 +138,17 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CONVOY};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.PATROL};		
-//			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
+			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CHOPPER};
-			conf.missionTypeArrayDynamic = {DC_EMissionType.SQUATTER};
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.SQUATTER};
 		
 //			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
+			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.OCCUPATION};
-			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER};
+//			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER};
 //			conf.missionTypeArrayStatic = {};
 		#endif

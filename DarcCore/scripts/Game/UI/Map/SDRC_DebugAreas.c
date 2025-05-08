@@ -11,10 +11,11 @@ class SDRC_DebugAreas : SDRC_MapCanvasLayer
 			DrawCircle(mapCircle.pos, mapCircle.radius, mapCircle.color);
 		}		
 	}
-/*	
-	override void OnMapOpen(MapConfiguration config)
+	
+/*	override void OnMapOpen(MapConfiguration config)
 	{
 		super.OnMapOpen(config);
+		SDRC_Log.Add("[SDRC_DebugAreas] Map opened", LogLevel.NORMAL);
 	}
 	
 	override void OnMapClose(MapConfiguration config)

@@ -87,7 +87,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 		conf.showMarker = true;
 //		conf.showMarker = false;
 		conf.markerType = "DARC_MISSION";
-		conf.markerIdx = 8;
+		conf.markerIdx = DC_EMissionIcon.REDCROSS_SMALL;
 		conf.spawnSetID = -1;
 		conf.spawnOnRoad = false;
 		conf.spawnRndRadius = 100;
