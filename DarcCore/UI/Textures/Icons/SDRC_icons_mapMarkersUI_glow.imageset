@@ -1,76 +1,119 @@
 ImageSetClass {
- RefSize 324 324
+ RefSize 520 520
  Textures {
   ImageSetTextureClass {
    screenSize FHD
-   size 324 324
-   path "{95C1023081045BA6}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI_glow-450_atlas.edds"
-  }
-  ImageSetTextureClass {
-   screenSize FHD
-   size 324 324
-   path "{95C1023081045BA6}UI/Textures/Icons/SCR_DC_icons_mapMarkersUI_glow-450_atlas.edds"
+   size 520 520
+   path "{52896F1BEA566E83}UI/Textures/Icons/SDRC_icons_mapMarkersUI_glow-100_atlas.edds"
   }
  }
  Images {
-  ImageSetDefClass circle {
-   Name "circle"
-   Pos 9 9
-   Size 64 64
+  ImageSetDefClass iconmission_ca_icons {
+   Name "iconmission_ca_icons"
+   Pos 0 0
+   Size 512 512
    Flags 0
   }
   ImageSetDefClass mission {
    Name "mission"
-   Pos 73 9
-   Size 64 64
-   Flags 0
-  }
-  ImageSetDefClass debug {
-   Name "debug"
-   Pos 9 73
-   Size 64 64
+   Pos 1 2
+   Size 64 128
    Flags 0
   }
   ImageSetDefClass crashsite {
    Name "crashsite"
-   Pos 137 9
-   Size 64 64
+   Pos 65 2
+   Size 64 128
    Flags 0
   }
   ImageSetDefClass "target-x" {
    Name "target-x"
-   Pos 201 9
-   Size 64 64
+   Pos 193 2
+   Size 64 128
    Flags 0
   }
   ImageSetDefClass "target-o" {
    Name "target-o"
-   Pos 137 73
-   Size 64 64
-   Flags 0
-  }
-  ImageSetDefClass debug_small {
-   Name "debug_small"
-   Pos 9 137
-   Size 64 64
+   Pos 129 2
+   Size 64 128
    Flags 0
   }
   ImageSetDefClass redcross {
    Name "redcross"
-   Pos 9 201
-   Size 64 64
+   Pos 1 130
+   Size 64 128
    Flags 0
   }
   ImageSetDefClass redcross_small {
    Name "redcross_small"
-   Pos 73 201
-   Size 64 64
+   Pos 65 130
+   Size 64 128
    Flags 0
   }
   ImageSetDefClass black_x_small {
    Name "black_x_small"
-   Pos 137 201
-   Size 64 64
+   Pos 129 130
+   Size 64 128
+   Flags 0
+  }
+  ImageSetDefClass n_mission {
+   Name "n_mission"
+   Pos 258 2
+   Size 64 128
+   Flags 0
+  }
+  ImageSetDefClass n_x {
+   Name "n_x"
+   Pos 322 2
+   Size 64 128
+   Flags 0
+  }
+  ImageSetDefClass n_house {
+   Name "n_house"
+   Pos 386 2
+   Size 64 128
+   Flags 0
+  }
+  ImageSetDefClass n_fire {
+   Name "n_fire"
+   Pos 450 2
+   Size 64 128
+   Flags 0
+  }
+  ImageSetDefClass n_fence {
+   Name "n_fence"
+   Pos 258 130
+   Size 64 128
+   Flags 0
+  }
+  ImageSetDefClass n_car {
+   Name "n_car"
+   Pos 322 130
+   Size 64 128
+   Flags 0
+  }
+  ImageSetDefClass n_heli {
+   Name "n_heli"
+   Pos 386 130
+   Size 64 128
+   Flags 0
+  }
+  ImageSetDefClass n_radioactive {
+   Name "n_radioactive"
+   Pos 450 130
+   Size 64 128
+   Flags 0
+  }
+  ImageSetDefClass n_hunter {
+   Name "n_hunter"
+   Pos 258 258
+   Size 64 128
+   Flags 0
+  }
+  ImageSetDefClass n_patrol {
+   Name "n_patrol"
+   Pos 322 258
+   Size 64 128
    Flags 0
   }
  }
