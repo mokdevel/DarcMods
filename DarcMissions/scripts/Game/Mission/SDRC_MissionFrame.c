@@ -26,6 +26,7 @@ const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionFrame
 {
+	protected static SDRC_MissionFrame s_Instance;		
 	ref array<ref SDRC_Mission> m_MissionList = new array<ref SDRC_Mission>;
 	ref SDRC_MissionFrameJsonApi m_DC_MissionFrameJsonApi = new SDRC_MissionFrameJsonApi();
 	ref SDRC_MissionFrameConfig m_Config;
@@ -43,6 +44,8 @@ class SDRC_MissionFrame
 	void SDRC_MissionFrame()
 	{
 		SDRC_Log.Add("[SDRC_MissionFrame] Starting SDRC_MissionFrame", LogLevel.NORMAL);
+		s_Instance = this;
+		
 		m_sWorldName = SDRC_Misc.GetWorldName(true);
 
 		//Load configuration from file		
@@ -67,23 +70,12 @@ class SDRC_MissionFrame
 		
 		//Set mission profile directory. This needs to be after a possible MissionFrame config save.
 		SDRC_Conf.missionProfile = m_Config.missionProfile;		
-		SDRC_Log.Add("[SDRC_MissionFrame] Worldname: " + m_sWorldName, LogLevel.NORMAL);
-		SDRC_Log.Add("[SDRC_MissionFrame] Worldsize: " + SDRC_Misc.GetWorldSize(), LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_MissionFrame] WorldName: " + m_sWorldName, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_MissionFrame] WorldSize: " + SDRC_Misc.GetWorldSize(), LogLevel.DEBUG);
 
 		//Load non valid area configuration from file		
 		m_DC_NonValidAreaJsonApi.Load();
-		m_NonValidAreaConfig = m_DC_NonValidAreaJsonApi.conf;
-				
-		//Pick nonValidAreas for the current world
-		foreach (SDRC_NonValidArea nonValidArea : m_NonValidAreaConfig.nonValidAreas)
-		{
-			if (nonValidArea.worldName == m_sWorldName || nonValidArea.worldName == "")
-			{
-				m_aNonValidAreas.Insert(nonValidArea);
-				SDRC_DebugHelper.AddDebugPos(nonValidArea.pos, Color.BLACK, nonValidArea.radius);
-			}
-		}
-		SDRC_Log.Add("[SDRC_MissionFrame] Number of nonValidAreas defined: " + m_aNonValidAreas.Count(), LogLevel.NORMAL);		
+		m_DC_NonValidAreaJsonApi.Populate(m_aNonValidAreas);
 
 		//Set some defaults
 		m_iStaticTryCount = 0;
@@ -95,9 +87,9 @@ class SDRC_MissionFrame
 		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;		//sec to ms
 		
 		#ifndef SDRC_RELEASE
-			SDRC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.REDCROSS_SMALL, "DMC_B", "Here is a text");
-			SDRC_MapMarkerHelper.CreateMapMarker("800 0 3500", DC_EMissionIcon.REDCROSS, "DMC_B", "Darc_SK");
-			SDRC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.MISSION, "DMC_B", "This is a description for a mission");
+			SDRC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.N_FENCE, "DMC_B", "Here is a text");
+			SDRC_MapMarkerHelper.CreateMapMarker("1200 0 3500", DC_EMissionIcon.N_HOUSE, "DMC_B", "Darc_SK");
+			SDRC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.N_HELI, "DMC_B", "This is a description for a mission");
 		#endif	
 		
 		//GetGame().GetCallqueue().CallLater(SendHint, 15000, true);
@@ -105,6 +97,12 @@ class SDRC_MissionFrame
 		//Start the mission framework.
 		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStartDelay, false);
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	static SDRC_MissionFrame GetInstance()
+	{
+		return s_Instance;		
+	}	
 	
 	//------------------------------------------------------------------------------------------------
 	void SendHint()
@@ -201,7 +199,7 @@ class SDRC_MissionFrame
 						SDRC_HintHelper.ShowHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), m_Config.missionHintTime);					
 					}
 					
-					SDRC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), Color.YELLOW, 10, tmpDC_Mission.GetId());
+					SDRC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), ARGB(70, 255, 255, 0), 10, tmpDC_Mission.GetId());
 					
 					//Set the time when the mission has started. Activates the delay.
 					m_iLastMissionSpawnTime = (System.GetTickCount() / 1000);

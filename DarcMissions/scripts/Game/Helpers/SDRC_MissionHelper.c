@@ -237,7 +237,7 @@ sealed class SDRC_MissionHelper
 				pos = SDRC_MissionHelper.FindMissionPos();
 				if (pos != "0 0 0")
 				{
-					SDRC_MapMarkerHelper.CreateMapMarker(pos, DC_EMissionIcon.DEBUG_SMALL, "DUMMY_");
+					SDRC_MapMarkerHelper.CreateMapMarker(pos, DC_EMissionIcon.REDCROSS, "DUMMY_");	//TBD: Create some other debug marker
 				}
 			}		
 		}

@@ -78,7 +78,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, posName));
 		SetTitle(m_DC_Patrol.title + "" + GetPosName());
 		SetInfo(m_DC_Patrol.info);			
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.N_PATROL);
 		SetShowHint(m_Config.showHint);			
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 

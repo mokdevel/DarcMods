@@ -72,7 +72,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		SetPosName("");
 		SetTitle(m_Config.title);
 		SetInfo(m_Config.info);						
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.N_X);
 		SetShowHint(m_Config.showHint);
 
 		SetState(DC_EMissionState.INIT);

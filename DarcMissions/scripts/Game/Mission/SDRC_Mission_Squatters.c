@@ -93,7 +93,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, posName));
 		SetTitle(m_DC_Squatter.title + "" + GetPosName());
 		SetInfo(m_DC_Squatter.info);			
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.N_HOUSE);
 		SetShowHint(m_Config.showHint);
 			
 		SetState(DC_EMissionState.INIT);			

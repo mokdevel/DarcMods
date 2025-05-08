@@ -92,7 +92,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		SetPosName("");
 		SetTitle(m_DC_Crashsite.title);
 		SetInfo(m_DC_Crashsite.info);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.TARGET_X);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.N_HELI);
 		SetShowHint(m_Config.showHint);
 
 		SetState(DC_EMissionState.INIT);			
@@ -101,7 +101,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		if (!SDRC_Conf.RELEASE)
 		{			
 			SDRC_MapMarkerHelper.CreateMapMarker(m_vPosDestination, DC_EMissionIcon.TARGET_O, GetId() + "_1", "Destination");
-			SDRC_DebugHelper.AddDebugPos(m_vPosDestination, Color.RED, 10, GetId() + "_1");
+			SDRC_DebugHelper.AddDebugPos(m_vPosDestination, ARGB(50, 255, 0, 0), 10, GetId() + "_1");
 		}
 	}	
 	
@@ -143,7 +143,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 						//vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
 						SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
 						SDRC_MapMarkerHelper.DeleteMarker(GetId());
-						SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.CRASHSITE, GetId(), "Crash site");
+						SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.N_HELI, GetId(), "Crash site");
 						missionCrashSiteState = DC_EMissionCrashSiteState.SPAWN_SITE;
 					}
 					break;

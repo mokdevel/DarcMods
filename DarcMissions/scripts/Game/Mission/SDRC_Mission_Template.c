@@ -31,7 +31,7 @@ class SDRC_Mission_Template : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(GetPos(), m_Config.posName));
 		SetTitle(m_Config.title + "" + GetPosName());
 		SetInfo(m_Config.info);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.MISSION);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.N_MISSION);
 		SetShowHint(m_Config.showHint);
 
 		SetState(DC_EMissionState.INIT);			
