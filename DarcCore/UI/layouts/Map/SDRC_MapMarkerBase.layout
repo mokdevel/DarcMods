@@ -5,12 +5,13 @@ FrameWidgetClass {
   OffsetLeft 0
   PositionY 0
   OffsetTop 0
-  SizeX 128
-  OffsetRight -128
+  SizeX 88
+  OffsetRight -88
   SizeY 88
   OffsetBottom -88
-  Alignment 0.5 0.25
+  Alignment 0.5 0.5
  }
+ IsPixelPerfect 0
  Clipping False
  "Ignore Cursor" 0
  components {
@@ -23,17 +24,14 @@ FrameWidgetClass {
   VerticalLayoutWidgetClass "{649AABAD8DD1DCB4}" {
    Name "VerticalLayout0"
    Slot FrameWidgetSlot "{5D56BA46E7717D6A}" {
-    Anchor 0.49 0.57 0.49 0.57
-    PositionX 0
+    Anchor 0.5 0.5 0.5 0.5
     OffsetLeft 0
-    PositionY -50
-    OffsetTop -50
-    SizeX 100
-    OffsetRight -100
-    SizeY 30
-    OffsetBottom 20
-    Alignment 0.5 0
-    SizeToContent 1
+    OffsetTop 0
+    SizeX 88
+    OffsetRight -88
+    SizeY 88
+    OffsetBottom -88
+    Alignment 0.5 0.5
    }
    {
     FrameWidgetClass "{649AABAD8DD1DC89}" {
@@ -51,10 +49,10 @@ FrameWidgetClass {
         OffsetLeft 2
         PositionY 4
         OffsetTop 4
-        SizeX 38
-        OffsetRight -40
-        SizeY 76
-        OffsetBottom -80
+        SizeX 32
+        OffsetRight -34
+        SizeY 64
+        OffsetBottom -68
        }
        Clipping False
        Color 0.007 0.012 0.014 0.6
@@ -68,10 +66,10 @@ FrameWidgetClass {
         Anchor 0 0 0 0
         OffsetLeft 0
         OffsetTop 0
-        SizeX 38
-        OffsetRight -38
-        SizeY 76
-        OffsetBottom -76
+        SizeX 32
+        OffsetRight -32
+        SizeY 64
+        OffsetBottom -64
        }
        Clipping False
        Texture "{0C86564F20AD42F2}UI/Textures/Icons/SDRC_icons_mapMarkersUI.imageset"
@@ -117,6 +115,7 @@ FrameWidgetClass {
       Padding 0 -24 0 0
      }
      Clipping False
+     "Ignore Cursor" 0
      Text "Testing a quite long description"
      "Font Size" 16
      "Min Font Size" 16
