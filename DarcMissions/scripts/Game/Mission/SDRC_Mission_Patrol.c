@@ -347,7 +347,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"0 0 0",
 			"any",
 			"FIA has been seen near ",
-			"Caution is adviced.",
+			"Caution is advised.",
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_LOCAL
