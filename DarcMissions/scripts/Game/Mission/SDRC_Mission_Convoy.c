@@ -145,6 +145,11 @@ class SDRC_Mission_Convoy : SDRC_Mission
 					{
 						SetPos(m_Vehicle.GetOrigin());
 						SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
+						if (m_Config.showMarker)
+						{
+							SDRC_MapMarkerHelper.DeleteMarker(GetId());
+							SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.N_CAR, GetId(), "");
+						}
 					}
 								
 					if (!IsActive())
@@ -328,7 +333,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.showMarker = false;
+		conf.showMarker = true;
 		//Mission specific
 		conf.convoyList = {0,0,0,1};
 		conf.distanceToPlayer = 500;

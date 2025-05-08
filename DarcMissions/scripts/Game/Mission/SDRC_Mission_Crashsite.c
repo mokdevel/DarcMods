@@ -129,10 +129,10 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 					missionCrashSiteState = DC_EMissionCrashSiteState.FLYING;
 					break;
 				case DC_EMissionCrashSiteState.FLYING:
+					SetPos(m_Vehicle.GetOrigin());
+				
 					if (!IsStillFlying(m_Vehicle))
 					{
-						SetPos(m_Vehicle.GetOrigin());
-
 						//Make sure the chopper is destroyed
 						DamageManagerComponent damageManager = DamageManagerComponent.Cast(m_Vehicle.FindComponent(DamageManagerComponent));
 						if (damageManager)
@@ -142,9 +142,20 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 						//VehicleHelicopterSimulation vehicle_s;
 						//vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
 						SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
-						SDRC_MapMarkerHelper.DeleteMarker(GetId());
-						SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.N_HELI, GetId(), "Crash site");
+						if (m_Config.showMarker)
+						{
+							SDRC_MapMarkerHelper.DeleteMarker(GetId());
+							SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.N_FIRE, GetId(), "Crash site");
+						}
 						missionCrashSiteState = DC_EMissionCrashSiteState.SPAWN_SITE;
+					}
+					else
+					{
+						if (m_Config.showMarker)
+						{
+							SDRC_MapMarkerHelper.DeleteMarker(GetId());
+							SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.N_HELI, GetId(), "");
+						}
 					}
 					break;
 				case DC_EMissionCrashSiteState.SPAWN_SITE:
