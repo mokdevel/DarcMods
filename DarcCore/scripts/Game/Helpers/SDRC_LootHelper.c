@@ -23,7 +23,7 @@ class SDRC_Loot : Managed
 sealed class SDRC_LootHelper
 {
 	private static ref SDRC_LootListJsonApi m_LootListJsonApi = new SDRC_LootListJsonApi();	
-	private static ref SDRC_LootListConfig m_Config;
+	private static ref SDRC_ListConfig m_Config;
 	
 	static void Setup()
 	{
@@ -68,12 +68,12 @@ sealed class SDRC_LootHelper
 	/*! 
 	Find the loot item
 	*/	
-	static ResourceName FindLootItem(string lootListName)
+	static ResourceName FindLootItem(string listName)
 	{
 		int lootIndex = -1;
-		for (int i = 0; i < m_Config.lootLists.Count(); i++)		
+		for (int i = 0; i < m_Config.lists.Count(); i++)		
 		{
-			if (m_Config.lootLists[i].lootListName == lootListName)
+			if (m_Config.lists[i].id == listName)
 			{
 				lootIndex = i;
 				break;
@@ -82,12 +82,13 @@ sealed class SDRC_LootHelper
 		
 		if (lootIndex == -1)
 		{
-			SDRC_Log.Add("[SDRC_LootHelper:FindLootItem] No lootList with name: " + lootListName + ". Typo?", LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_LootHelper:FindLootItem] No lootList with name: " + listName + ". Typo?", LogLevel.WARNING);
 			return "";				
 		}
 
-		SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Using lootlist: " + lootListName, LogLevel.DEBUG);
-		ResourceName resourceName = m_Config.lootLists[lootIndex].itemList.GetRandomElement();
+		ResourceName resourceName = m_Config.lists[lootIndex].items.GetRandomElement();
+		SDRC_Log.Add("[SDRC_LootHelper:FindLootItem] Selected: (" + listName + ") " + resourceName, LogLevel.DEBUG);
+		
 		return resourceName;
 	}
 				

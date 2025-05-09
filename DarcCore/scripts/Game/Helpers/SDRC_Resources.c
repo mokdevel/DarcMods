@@ -11,12 +11,12 @@ sealed class SDRC_Resources
 						
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Get items for the lootlist
+	Get items for the various lists like lootlist. The items are the resource name of a prefab
 	\param itemList The itemList to fill with loot items
 	\param mod From which mod to search for items. Example: "$ArmaReforger:Prefabs/Weapons"
 	\param lootList 
 	*/	
-	static void GetItemList(out array<ResourceName> itemList, string mod, SDRC_LootList lootList)
+	static void GetList(out array<ResourceName> list, string mod, SDRC_List lootList)
 	{
 		SearchResourcesFilter filter = new SearchResourcesFilter();
 		filter.rootPath = mod + lootList.modDir;
@@ -30,9 +30,9 @@ sealed class SDRC_Resources
 		IncludeFilter(m_resourceNames, lootList.include);
 		ExcludeFilter(m_resourceNames, lootList.exclude);
 		
-		itemList.InsertAll(m_resourceNames);
+		list.InsertAll(m_resourceNames);
 		
-//		itemList.Debug();
+//		list.Debug();
 	}
 	
 	//------------------------------------------------------------------------------------------------
