@@ -91,6 +91,9 @@ Mission specific files
 Dependency specific files
 * dc_coreConfig.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md#core-config)) : Configuration file for core.
 
+Special functionality
+* Automatic loot and enemy lists. See [Lists](LISTS.md)
+
 ## Mission frame
 Example: [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig.json)
 
