@@ -4,7 +4,7 @@ ImageSetClass {
   ImageSetTextureClass {
    screenSize FHD
    size 520 520
-   path "{52896F1BEA566E83}UI/Textures/Icons/SDRC_icons_mapMarkersUI_glow-100_atlas.edds"
+   path "{52896F1BEA566E84}UI/Textures/Icons/SDRC_icons_mapMarkersUI_glow-100_atlas.edds"
   }
  }
  Images {
@@ -46,7 +46,7 @@ ImageSetClass {
   }
   ImageSetDefClass redcross_small {
    Name "redcross_small"
-   Pos 65 130
+   Pos 66 130
    Size 64 128
    Flags 0
   }

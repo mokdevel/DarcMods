@@ -73,7 +73,7 @@ FrameWidgetClass {
        }
        Clipping False
        Texture "{0C86564F20AD42F2}UI/Textures/Icons/SDRC_icons_mapMarkersUI.imageset"
-       Image "n_x"
+       Image "black_x_small"
        Size 64 128
       }
      }
