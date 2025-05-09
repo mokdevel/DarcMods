@@ -298,11 +298,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 //		conf.groupsToSpawn = 2;
 		conf.groupTypes = 
 		{
-			"{976AC400219898FA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Sharpshooter.et",
-			"{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
-			"{730CDEC4168637B6}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sapper.et",
-			"{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
-			"{5811F02495F6810E}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_SL.et"
+			"G_SMALL"
 		};
 		conf.aiSkill = 30;
 		conf.aiPerception = 0.7;		

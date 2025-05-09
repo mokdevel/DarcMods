@@ -63,6 +63,7 @@ class SDRC_MissionFrameConfig : Managed
 	int missionHintTime;			//Seconds to show mission hints to players. 0 disables hints.
 	int minDistanceToMission;		//Distance to another mission. Two missions shall not be too close to each other.
 	int minDistanceToPlayer;		//Mission shall not spawn too close to a player.
+	ref array<string>enemyFactions;	//Factions to use for enemy selection
 	ref array<DC_EMissionType> missionTypeArrayDynamic = {};	//List mission types that spawn randomly
 	ref array<DC_EMissionType> missionTypeArrayStatic = {};		//List mission types that are always active	
 }
@@ -124,6 +125,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.missionHintTime = SDRC_MISSION_HINT_TIME;
 		conf.minDistanceToMission = 500;
 		conf.minDistanceToPlayer = 100;
+		conf.enemyFactions = {"FIA", "USSR"};
 		
 		#ifdef SDRC_RELEASE
 			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.CONVOY, 
@@ -134,20 +136,20 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 
 		#ifndef SDRC_RELEASE				
 			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTER};
-//			conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
+			conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CONVOY};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.PATROL};		
-			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CHOPPER};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.SQUATTER};
 		
 //			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
-			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
+//			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.CRASHSITE};
-//			conf.missionTypeArrayStatic = {DC_EMissionType.OCCUPATION};
+			conf.missionTypeArrayStatic = {DC_EMissionType.OCCUPATION};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER};
 //			conf.missionTypeArrayStatic = {};

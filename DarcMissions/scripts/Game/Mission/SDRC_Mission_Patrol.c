@@ -250,7 +250,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		SDRC_Patrol patrol0 = new SDRC_Patrol();
 		patrol0.Set
 		(
-			"USSR patrols going between two points hopefully following roads",
+			"Enemy patrols going between two points hopefully following roads",
 			"0 0 0",
 			"0 0 0",
 			"any",
@@ -271,9 +271,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			DC_EWaypointGenerationType.ROUTE,
 			DC_EWaypointMoveType.MOVE,
 			{
-				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
-				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
-				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+				"G_SPECIAL"
 			},
 			50, 1.0
 		);
@@ -302,10 +300,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			DC_EWaypointGenerationType.RADIUS,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
-				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
-				"{4D3BBEC1A955626A}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_Squad.et",
-				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
-				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"				
+				"G_HEAVY", "G_LAUNCHER"
 			},
 			50, 1.0
 		);
@@ -315,7 +310,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		SDRC_Patrol patrol2 = new SDRC_Patrol();
 		patrol2.Set
 		(
-			"USSR patrols",
+			"Enemy patrols between villages",
 			"0 0 0",
 			"0 0 0",
 			"any",
@@ -330,9 +325,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			DC_EWaypointGenerationType.SCATTERED,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
-				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
-				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
-				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+				"G_RECON", "G_LIGHT", "G_SMALL"
 			},
 			50, 1.0
 		);
@@ -342,11 +335,11 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		SDRC_Patrol patrol3 = new SDRC_Patrol();
 		patrol3.Set
 		(
-			"FIA patrols",
+			"Small patrols",
 			"0 0 0",
 			"0 0 0",
 			"any",
-			"FIA has been seen near ",
+			"Enemy has been seen near ",
 			"Caution is advised.",
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
@@ -357,9 +350,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			DC_EWaypointGenerationType.RANDOM,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
-				"{5BEA04939D148B1D}Prefabs/Groups/INDFOR/Group_FIA_FireTeam.et",
-				"{2E9C920C3ACA2C6F}Prefabs/Groups/INDFOR/Group_FIA_ReconTeam.et",
-				"{C1E39427E43B1E79}Prefabs/Groups/INDFOR/Group_FIA_AmmoTeam.et"
+				"G_SMALL", "G_MEDICAL", "G_RECON"
 			},
 			50, 1.0
 		);

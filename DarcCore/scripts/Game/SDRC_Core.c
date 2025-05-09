@@ -26,6 +26,12 @@ class SDRC_Core
 		//Initialize LootHelper
 		SDRC_LootHelper.Setup();
 		
+		//Initialize EnemyHelper
+		SDRC_EnemyHelper.Setup();
+//		SDRC_EnemyHelper.SelectEnemy("G_REMNANTS", {"FIA"});
+//		SDRC_EnemyHelper.SelectEnemy("G_REMNANTS", {"USSR"});
+//		SDRC_EnemyHelper.SelectEnemy("G_REMNANTS", {"US"});
+		
 		//Set debug visibility
 		SDRC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres);							
 	}

@@ -267,7 +267,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {0,0,0,1,1,2,2,2,3,4};
+		conf.occupationList = {0};//{0,0,0,1,1,2,2,2,3,4};
 
 		//----------------------------------------------------
 		SDRC_Occupation occupation0 = new SDRC_Occupation();
@@ -287,9 +287,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			DC_EWaypointGenerationType.RANDOM,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
-				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
-				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
-				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+				"G_RECON", "G_LIGHT"
 			},
 			50, 1.0		
 		);
@@ -317,10 +315,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			DC_EWaypointGenerationType.SCATTERED,//RANDOM,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
-				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
-				"{4D3BBEC1A955626A}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_Squad.et",
-				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
-				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"				
+				"G_ADMIN", "G_LIGHT", "G_LIGHT"
 			},
 			50, 1.0		
 		);
@@ -388,11 +383,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			DC_EWaypointGenerationType.RADIUS,
 			DC_EWaypointMoveType.RANDOM,		
 			{
-				"{30ED11AA4F0D41E5}Prefabs/Groups/OPFOR/Group_USSR_FireGroup.et",
-				"{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et",
-				"{96BAB56E6558788E}Prefabs/Groups/OPFOR/Group_USSR_Team_AT.et",
-				"{43C7A28EEB660FF8}Prefabs/Groups/OPFOR/Group_USSR_Team_GL.et",
-				"{1C0502B5729E7231}Prefabs/Groups/OPFOR/Group_USSR_Team_Suppress.et"
+				"G_LIGHT", "G_LIGHT", "G_LIGHT", 
+				"G_ADMIN", "G_HEAVY", "G_LAUNCHER", "G_MEDICAL"
 			},
 			50, 1.0		
 		);
@@ -465,9 +457,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			DC_EWaypointGenerationType.RANDOM,
 			DC_EWaypointMoveType.RANDOM,		
 			{
-				"{666A2B0A6B1967AE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconSquad.et",
-				"{B721D5A8C1B556CE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconTeam.et",
-				"{06F0C9675883F18A}Prefabs/Groups/OPFOR/KLMK/Group_USSR_ReconTeam.et"
+				"G_RECON"
 			},
 			50, 1.0		
 		);
@@ -540,7 +530,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Occupation occupation4 = new SDRC_Occupation();
 		occupation4.Set(
-			"FIA camp with a car",
+			"Campers with a car",
 			"0 0 0",
 			"any",
 			"Campers near ",
@@ -556,10 +546,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			DC_EWaypointGenerationType.RANDOM,
 			DC_EWaypointMoveType.RANDOM,		
 			{
-				"{35681BE27C302FF5}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_SentryTeam.et",
-				"{D0886786634E55AE}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_Squad.et",
-				"{B7AB5D3F8A7ADAE4}Prefabs/Groups/BLUFOR/Group_US_PlatoonHQ.et",
-				"{9624D2B39397E148}Prefabs/Groups/BLUFOR/Group_US_SapperTeam.et"
+				"G_SPECIAL", "G_HEAVY"
 			},
 			50, 1.0		
 		);

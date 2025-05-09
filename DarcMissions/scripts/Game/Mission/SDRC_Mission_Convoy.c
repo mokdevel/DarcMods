@@ -363,9 +363,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT
 			},
 			{
-				"{5B08C42EA0661A20}Prefabs/Groups/OPFOR/KLMK/Group_USSR_LightFireTeam_KLMK.et",
-				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
-				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+				"G_LIGHT", "G_MEDICAL"
 			},
 			50, 1.0,
 			{
@@ -416,10 +414,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT
 			},
 			{
-				"{2E9C920C3ACA2C6F}Prefabs/Groups/INDFOR/Group_FIA_ReconTeam.et",
-				"{581106FA58919E89}Prefabs/Groups/INDFOR/Group_FIA_MedicalSection.et",
-				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
-				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+				"G_RECON"
 			},
 			40, 1.0,
 			{
@@ -469,8 +464,8 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT
 			},
 			{
-				"{E552DABF3636C2AD}Prefabs/Groups/OPFOR/Group_USSR_RifleSquad.et",
-				"{97D45056CFC22FF2}Prefabs/Groups/OPFOR/KLMK/Group_USSR_RifleSquad_KLMK.et"			},
+				"G_HEAVY"
+			},
 			50, 1.0,
 			{
 				"{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et",

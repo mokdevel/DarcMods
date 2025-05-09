@@ -264,7 +264,9 @@ sealed class SDRC_MissionHelper
 	{
 		vector posFixed = SDRC_SpawnHelper.FindEmptyPos(pos, 100, 8);
 		
-		SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(groupToSpawn, posFixed);
+		string groupName = SDRC_EnemyHelper.SelectEnemy(groupToSpawn);
+		
+		SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(groupName, posFixed);
 		
 		return group;
 	}	
