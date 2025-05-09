@@ -93,6 +93,7 @@ Dependency specific files
 
 ## Special functionality
 * Automatic loot and enemy lists. See [Lists](LISTS.md)
+* Non Valid Areas (aka safe zones). See [Non Valid Areas](NONVALIDAREAS.md)
 
 ## Mission frame
 Example: [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig.json)
