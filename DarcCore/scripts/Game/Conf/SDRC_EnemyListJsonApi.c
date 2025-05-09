@@ -6,6 +6,7 @@
 //------------------------------------------------------------------------------------------------
 // Types defined by default
 /*
+	//Groups
 	G_LIGHT
 	G_HEAVY
 	G_SNIPER
@@ -15,11 +16,17 @@
 	G_RECON
 	G_SPECIAL
 	G_SMALL		//A small group of 2 
-*/
 
-/*class SDRC_EnemyListConfig : SDRC_ListConfig
-{
-}*/
+	//Characters
+	C_RIFLEMAN
+	C_HEAVY
+	C_RECON
+	C_OFFICER
+	C_CREW
+	C_SNIPER
+	C_LAUNCHER
+	C_MEDIC
+*/
 
 //------------------------------------------------------------------------------------------------
 class SDRC_EnemyListJsonApi : SDRC_JsonApi
@@ -151,12 +158,74 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		//Character lists		
 		SDRC_List enemyList20 = new SDRC_List();
 		enemyList20.Set(
-			"G_SMALL",
-			"/Characters",			
-			{""},
-			{"_Base", "_NotSpawned", "_Remnants"}
+			"C_RIFLEMAN",
+			"/Characters/Factions",			
+			{"Rifleman", "Sapper", "_PL", "_SL"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed"}
 		);
-		conf.lists.Insert(enemyList20);		
+		conf.lists.Insert(enemyList20);
 		
+		SDRC_List enemyList21 = new SDRC_List();
+		enemyList21.Set(
+			"C_HEAVY",
+			"/Characters/Factions",			
+			{"_GL", "_MG", "Grenadier", "_Ammo"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed"}
+		);
+		conf.lists.Insert(enemyList21);
+				
+		SDRC_List enemyList22 = new SDRC_List();
+		enemyList22.Set(
+			"C_RECON",
+			"/Characters/Factions",			
+			{"Scout", "Spotter", "_RTO", "_SL", "_GL"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed"}
+		);
+		conf.lists.Insert(enemyList22);
+				
+		SDRC_List enemyList23 = new SDRC_List();
+		enemyList23.Set(
+			"C_OFFICER",
+			"/Characters/Factions",			
+			{"_Officer", "Sergeant", "_AC"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed"}
+		);
+		conf.lists.Insert(enemyList23);
+		
+		SDRC_List enemyList24 = new SDRC_List();
+		enemyList24.Set(
+			"C_CREW",
+			"/Characters/Factions",			
+			{"Crew", "Pilot", "_CC"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed"}
+		);
+		conf.lists.Insert(enemyList24);
+		
+		SDRC_List enemyList25 = new SDRC_List();
+		enemyList25.Set(
+			"C_SNIPER",
+			"/Characters/Factions",			
+			{"Sniper", "Sharpshooter"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed"}
+		);
+		conf.lists.Insert(enemyList25);	
+		
+		SDRC_List enemyList26 = new SDRC_List();
+		enemyList26.Set(
+			"C_LAUNCHER",
+			"/Characters/Factions",			
+			{"_AAT", "_AT", "_AT", "_LAT"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed"}
+		);
+		conf.lists.Insert(enemyList26);
+		
+		SDRC_List enemyList27 = new SDRC_List();
+		enemyList27.Set(
+			"C_MEDIC",
+			"/Characters/Factions",			
+			{"Medic"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed"}
+		);
+		conf.lists.Insert(enemyList27);
 	}
 }
