@@ -33,7 +33,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Convoy] Constructor", LogLevel.SPAM);
 				
 		//Set some defaults
-		SDRC_Mission();
 		SetType(DC_EMissionType.CONVOY);
 
 		//Load config
@@ -191,7 +190,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 
 		//Spawn AI
 		vector posg = GetPos() + "3 0 3";
-		SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(m_DC_Convoy.groupTypes.GetRandomElement(), posg);
+		SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(m_DC_Convoy.groupTypes.GetRandomElement(), posg, GetFaction());
 		if (group)
 		{			
 			SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Convoy.aiSkill, m_DC_Convoy.aiPerception);
@@ -205,7 +204,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			SDRC_LootHelper.SpawnItemsToStorage(m_DC_Convoy.loot.box, m_DC_Convoy.loot.items, m_DC_Convoy.loot.itemChance);
 			SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] Loot added.", LogLevel.DEBUG);								
 		}		
-		
 	}
 		
 	//------------------------------------------------------------------------------------------------

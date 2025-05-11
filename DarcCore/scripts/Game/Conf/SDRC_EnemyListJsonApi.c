@@ -26,6 +26,7 @@
 	C_SNIPER
 	C_LAUNCHER
 	C_MEDIC
+	C_SPECIAL
 */
 
 //------------------------------------------------------------------------------------------------
@@ -227,5 +228,14 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed"}
 		);
 		conf.lists.Insert(enemyList27);
+		
+		SDRC_List enemyList28 = new SDRC_List();
+		enemyList28.Set(
+			"C_SPECIAL",
+			"/Characters/Factions",			
+			{"_SF", "FIA_AC"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed"}
+		);
+		conf.lists.Insert(enemyList28);
 	}
 }

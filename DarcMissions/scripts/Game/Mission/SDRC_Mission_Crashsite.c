@@ -36,7 +36,6 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Crashsite] Constructor", LogLevel.SPAM);
 		
 		//Set some defaults
-		SDRC_Mission();
 		SetType(DC_EMissionType.CRASHSITE);
 
 		//Load config
@@ -193,7 +192,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 					missionCrashSiteState = DC_EMissionCrashSiteState.SPAWN_AI;
 					break;								
 				case DC_EMissionCrashSiteState.SPAWN_AI:
-					SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_Crashsite.groupTypes.GetRandomElement(), GetPos());				
+					SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_Crashsite.groupTypes.GetRandomElement(), GetPos(), GetFaction());				
 					if (group)
 					{
 						SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Crashsite.aiSkill, m_DC_Crashsite.aiPerception);					

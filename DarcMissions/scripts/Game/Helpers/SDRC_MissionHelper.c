@@ -260,13 +260,13 @@ sealed class SDRC_MissionHelper
 	Spawn a mission AI group to given position making sure it's empty. 
 	NOTE: Position is not exact
 	*/
-	static SCR_AIGroup SpawnMissionAIGroup(string groupToSpawn, vector pos)
+	static SCR_AIGroup SpawnMissionAIGroup(string groupToSpawn, vector pos, string faction)
 	{
 		vector posFixed = SDRC_SpawnHelper.FindEmptyPos(pos, 100, 8);
 		
-		string groupName = SDRC_EnemyHelper.SelectEnemy(groupToSpawn);
+		string groupName = SDRC_EnemyHelper.SelectEnemy(groupToSpawn, faction);
 		
-		SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(groupName, posFixed);
+		SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(groupName, posFixed, faction);
 		
 		return group;
 	}	

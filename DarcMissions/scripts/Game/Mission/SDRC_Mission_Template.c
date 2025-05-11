@@ -20,7 +20,6 @@ class SDRC_Mission_Template : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Template] Constructor", LogLevel.SPAM);
 				
 		//Set some defaults
-		SDRC_Mission();
 		SetType(DC_EMissionType.NONE);	//REMEMBER: Define your own ENUM in SDRC_Mission.c and change here. Don't use modded enum.
 
 		//Load config

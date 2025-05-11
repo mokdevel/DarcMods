@@ -11,7 +11,7 @@ sealed class SDRC_Resources
 						
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Get items for the various lists like lootlist. The items are the resource name of a prefab
+	Get items for the various lists like lootList. The items are the resource name of a prefab
 	\param itemList The itemList to fill with loot items
 	\param mod From which mod to search for items. Example: "$ArmaReforger:Prefabs/Weapons"
 	\param lootList 

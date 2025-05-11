@@ -22,7 +22,6 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Squatter] Constructor", LogLevel.SPAM);
 				
 		//Set some defaults
-		SDRC_Mission();
 		SetType(DC_EMissionType.SQUATTER);
 
 		//Load config
@@ -144,7 +143,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		if (m_iSpawnIndex < m_iAiCount)
 		{
 			//Each AI is spawned in to its own group to be able to give individual waypoints to a character
-			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.aiTypes.GetRandomElement(), m_DC_Squatter.aiSkill, m_DC_Squatter.aiPerception);
+			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.aiTypes.GetRandomElement(), m_DC_Squatter.aiSkill, m_DC_Squatter.aiPerception, GetFaction());
 			m_Groups.Insert(group);
 			m_iSpawnIndex++;
 		}
@@ -282,10 +281,8 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			},
 			{3,6},
 			{
-				"{5117311FB822FD1F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Officer.et",
-				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
-				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
-				"{96C784C502AC37DA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_MG.et",								
+				"C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", 
+				"C_OFFICER"
 			},
 			50, 0.6,
 			{"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_", "Office_E_", "MountainHotel_"},
@@ -318,10 +315,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			},
 			{6,10},
 			{
-				"{5117311FB822FD1F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Officer.et",
-				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
-				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
-				"{96C784C502AC37DA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_MG.et",								
+				"C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", 
+				"C_HEAVY", "C_HEAVY", 
+				"C_LAUNCHER", "C_MEDIC", "C_OFFICER"
 			},
 			50, 0.8,
 			{"ControlTowerMilitary_"},
@@ -355,10 +351,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			},
 			{4,10},
 			{
-				"{77D7BFD355620806}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Ammo_KLMK.et",
-				"{9A12B3F6ABDF70BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_AT_KLMK.et",
-				"{8A60AEBD529FEB8B}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_MG_KLMK.et",
-				"{D66C215D6F03EFFD}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Medic_KLMK.et"
+				"C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", 
+				"C_HEAVY", "C_HEAVY", "C_HEAVY", 
+				"C_LAUNCHER", "C_MEDIC", "C_OFFICER"
 			},
 			50, 0.8,
 			{"Office_E_", "Barracks_01_", "Barracks_E_02_"},
@@ -392,14 +387,10 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			},
 			{2,6},
 			{
-				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
-				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
-				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
-				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
-				"{730CDEC4168637B6}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sapper.et",
-				"{8CA70597606992EC}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Medic.et",
-				"{6F5A71376479B353}Prefabs/Characters/Factions/CIV/ConstructionWorker/Character_CIV_ConstructionWorker_1.et",
-				"{472F2B06FF9BF37D}Prefabs/Characters/Factions/CIV/Dockworker/Character_CIV_Dockworker_4.et"
+				"C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", 
+				"C_HEAVY", "C_HEAVY", "C_HEAVY", 
+				"C_RECON", "C_RECON", "C_RECON", 
+				"C_OFFICER"
 			},
 			50, 0.8,
 			{"DieselPowerPlant_", "CowShed_", "FireStation_", "Warehouse_", "TransformerStation_", "FactoryHall_"},
@@ -421,7 +412,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Squatter squatter4 = new SDRC_Squatter();
 		squatter4.Set(
-			"FIA in churches",
+			"Enemy in churches",
 			"0 0 0",
 			"any",
 			"Church visitors near ",
@@ -431,17 +422,10 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			},
 			{3,7},
 			{
-//				"{9503CB9B3463BA1E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC.et",
-//				"{9503CB9B3463BA1E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC.et",
-//				"{9503CB9B3463BA1E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC.et",
-//				"{9503CB9B3463BA1E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC.et",
-//				"{5C0DC0BE7F1A7346}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Grenadier.et",
-//				"{4E29194BA809DF32}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Medic.et",
-				"{B4977616CD19191A}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Scout.et"
+				"C_RIFLEMAN"
 			},
 			50, 0.8,		
-			{"ChurchSmall_"},
-//			{"Church_", "ChurchSmall_"},
+			{"Church_", "ChurchSmall_"},
 			"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et"
 		);
 		conf.squatters.Insert(squatter4);	
@@ -469,10 +453,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			},
 			{2,6},
 			{
-				"{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
-				"{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
-				"{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
-				"{0B8AC0C3C447F90E}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_LMG.et"
+				"C_SPECIAL"
 			},
 			30, 0.3,
 			{"ShopModern_", "House_Town_", "House_Village_", "FarmHouse_", "House_Wooden_"},

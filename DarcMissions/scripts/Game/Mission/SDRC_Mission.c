@@ -49,6 +49,7 @@ class SDRC_Mission
 	private int m_StartTime;					//Seconds when mission started
 	private int m_EndTime;						//Seconds when mission shall end.
 	private int m_ActiveTime;					//Seconds of how long the mission should be active
+	private string m_sFaction;					//Faction for the mission		
 	//Internals without getters
 	private int m_ActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
 	private int m_ActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
@@ -68,6 +69,9 @@ class SDRC_Mission
 		m_PosName = "";
 		m_Title = "";
 		m_Info = "";
+		m_ShowHint = true;
+		SetFaction(SDRC_EnemyHelper.SelectEnemyFaction()); 		//m_sFaction 
+		//Internals
 		m_StartTime = (System.GetTickCount() / 1000); 			//The time in seconds when the mission was started.
 		SetActiveTime(SDRC_MISSION_CYCLE_TIME_DEFAULT*20);		//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
 		m_ActiveDistance = 0;									//Set a default zero
@@ -300,7 +304,20 @@ class SDRC_Mission
 	{
 		return m_ShowHint;
 	}
-		
+
+	//------------------------------------------------------------------------------------------------
+	void SetFaction(string faction)
+	{
+		m_sFaction = faction;
+		SDRC_Log.Add("[SDRC_Mission:SetFaction] " + faction, LogLevel.DEBUG);		
+	}
+			
+	//------------------------------------------------------------------------------------------------
+	string GetFaction()
+	{
+		return m_sFaction;
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	void SetMarker(bool setMarker, DC_EMissionIcon icon)
 	{

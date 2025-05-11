@@ -17,7 +17,6 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Chopper] Constructor", LogLevel.DEBUG);
 				
 		//Set some defaults
-		SDRC_Mission();
 		SetType(DC_EMissionType.CHOPPER);
 
 		//Load config

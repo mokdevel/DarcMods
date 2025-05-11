@@ -66,83 +66,83 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		};*/
 		
 		//Lootlist: Rifles
-		SDRC_List lootlist01 = new SDRC_List;
-		lootlist01.Set(
+		SDRC_List lootList01 = new SDRC_List;
+		lootList01.Set(
 			"WEAPON_RIFLE",
 			"/Weapons/Rifles",
 			{"Rifle"},
 			{"_Base", "Tutorial"}
 		);
-		conf.lists.Insert(lootlist01);
+		conf.lists.Insert(lootList01);
 		
 		//Lootlist: Launchers
-		SDRC_List lootlist02 = new SDRC_List;
-		lootlist02.Set(
+		SDRC_List lootList02 = new SDRC_List;
+		lootList02.Set(
 			"WEAPON_LAUNCHER",
 			"/Weapons/Launchers",
 			{"Launcher"},
 			{"_Base"}
 		);
-		conf.lists.Insert(lootlist02);		
+		conf.lists.Insert(lootList02);		
 		
 		//Lootlist: Handguns
-		SDRC_List lootlist03 = new SDRC_List;
-		lootlist03.Set(
+		SDRC_List lootList03 = new SDRC_List;
+		lootList03.Set(
 			"WEAPON_HANDGUN",
 			"/Weapons/Handguns",
 			{"Handgun"},
 			{"_Base"}
 		);
-		conf.lists.Insert(lootlist03);		
+		conf.lists.Insert(lootList03);		
 
 		//Lootlist: Grenades
-		SDRC_List lootlist04 = new SDRC_List;
-		lootlist04.Set(
+		SDRC_List lootList04 = new SDRC_List;
+		lootList04.Set(
 			"WEAPON_GRENADE",
 			"/Weapons/Grenades",
 			{""},
 			{"_Base"}
 		);
-		conf.lists.Insert(lootlist04);			
+		conf.lists.Insert(lootList04);			
 				
 		//Lootlist: Medical items
-		SDRC_List lootlist05 = new SDRC_List;
-		lootlist05.Set(
+		SDRC_List lootList05 = new SDRC_List;
+		lootList05.Set(
 			"ITEM_MEDICAL",
 			"/Items/Medicine",
 			{""},
 			{"_Base"}
 		);
-		conf.lists.Insert(lootlist05);			
+		conf.lists.Insert(lootList05);			
 		
 		//Lootlist: Weapon attachments
-		SDRC_List lootlist06 = new SDRC_List;
-		lootlist06.Set(
+		SDRC_List lootList06 = new SDRC_List;
+		lootList06.Set(
 			"WEAPON_ATTACHMENT",
 			"/Weapons/Attachments",
 			{""},
 			{"_Base", "Optic"}
 		);
-		conf.lists.Insert(lootlist06);			
+		conf.lists.Insert(lootList06);			
 
 		//Lootlist: Weapon attachments
-		SDRC_List lootlist07 = new SDRC_List;
-		lootlist07.Set(
+		SDRC_List lootList07 = new SDRC_List;
+		lootList07.Set(
 			"WEAPON_OPTICS",
 			"/Weapons/Attachments",
 			{"Optic", "Scope"},
 			{"_Base"}
 		);
-		conf.lists.Insert(lootlist07);			
+		conf.lists.Insert(lootList07);			
 		
 		//Lootlist: General items
-		SDRC_List lootlist08 = new SDRC_List;
-		lootlist08.Set(
+		SDRC_List lootList08 = new SDRC_List;
+		lootList08.Set(
 			"ITEM_GENERAL",
 			"/Items",
 			{"Binocular", "Compass", "Flashlight", "PaperMap_01_folded", "Watch_"},
 			{"_Base"}
 		);
-		conf.lists.Insert(lootlist08);		
+		conf.lists.Insert(lootList08);		
 	}
 }

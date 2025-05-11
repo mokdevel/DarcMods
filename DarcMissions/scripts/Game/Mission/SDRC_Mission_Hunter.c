@@ -27,7 +27,6 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Hunter] Constructor", LogLevel.SPAM);
 
 		//Set some defaults				
-		SDRC_Mission();
 		SetType(DC_EMissionType.HUNTER);
 		
 		//Load config	
@@ -174,7 +173,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		if (spawnLocation)
 		{
 			string groupToSpawn = m_Config.groupTypes.GetRandomElement();
-			SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(groupToSpawn, spawnLocation);
+			SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(groupToSpawn, spawnLocation, GetFaction());
 			
 			if (group)
 			{

@@ -6,20 +6,7 @@ Functions for various AI actions
 */
 
 sealed class SDRC_AIHelper
-{	
-	static private string m_sDefaultEnemyFactionKey = "USSR";	
-	
-	//------------------------------------------------------------------------------------------------
-	static void SetDefaultEnemyFaction(string faction)
-	{
-		if (faction != "")
-		{
-			m_sDefaultEnemyFactionKey = faction;
-		}
-		
-		SDRC_Log.Add("[SDRC_AIHelper:SetDefaultEnemyFaction] Default enemy faction: " + faction, LogLevel.NORMAL);
-	}
-	
+{		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Spawn an AIagent 
@@ -29,12 +16,18 @@ sealed class SDRC_AIHelper
 		SDRC_AIHelper.GroupAddAI(aiAgent);
 	
 	*/
-	static AIAgent SpawnAIAgent(string aiAgentPrefab, vector pos, bool snap = true)
+	static AIAgent SpawnAIAgent(ResourceName resourceName, vector pos, bool snap = true, string faction = "DEFAULT")
 	{
 		Resource resource = null;
 		AIAgent aiAgent = null;
 		
-		resource = Resource.Load(aiAgentPrefab);
+		ResourceName name = SDRC_EnemyHelper.SelectEnemy(resourceName, faction);
+		resource = Resource.Load(name);
+		
+		if (!resource)
+		{
+			return null;
+		}
 		
 		EntitySpawnParams params = EntitySpawnParams();
 		
@@ -63,26 +56,28 @@ sealed class SDRC_AIHelper
 	
 		AIGroup group = SDRC_AIHelper.SpawnGroup("{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et", position);
 	*/
-	static SCR_AIGroup SpawnGroup(string groupToSpawn, IEntity spawnLocation)
+	static SCR_AIGroup SpawnGroup(string groupToSpawn, IEntity spawnLocation, string faction)
 	{
-		SCR_AIGroup group = SpawnGroup(groupToSpawn, spawnLocation.GetOrigin());
+		SCR_AIGroup group = SpawnGroup(groupToSpawn, spawnLocation.GetOrigin(), faction);
 		return group;
 	}	
 	
-	static SCR_AIGroup SpawnGroup(string groupToSpawn, vector spawnPosition)	
+	static SCR_AIGroup SpawnGroup(string groupToSpawn, vector spawnPosition, string faction)	
 	{
 		Resource resource = null;
 		SCR_AIGroup group = null;
 		
-		if (groupToSpawn.Contains("Prefabs/Characters/"))
+		ResourceName name = SDRC_EnemyHelper.SelectEnemy(groupToSpawn, faction);
+		
+		if (name.Contains("Prefabs/Characters/"))
 		{
 			//Spawn an individual character
-			AIAgent aiAgent = SpawnAIAgent(groupToSpawn, spawnPosition);
+			AIAgent aiAgent = SpawnAIAgent(name, spawnPosition, true, faction);
 
 			//Add to proper group
 			if (aiAgent)
 			{
-				string faction = GetAIAgentFactionKey(aiAgent);
+				faction = GetAIAgentFactionKey(aiAgent);
 				group = GroupCreate(faction, aiAgent.GetOrigin());
 				if (group)
 				{
@@ -90,12 +85,12 @@ sealed class SDRC_AIHelper
 					group.AddAgent(aiAgent);
 				}
 					
-				SDRC_Log.Add("[SDRC_AIHelper:SpawnGroup] Spawned single unit (" + groupToSpawn + ") to " + faction + " faction.", LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_AIHelper:SpawnGroup] Spawned single unit (" + name + ") to " + faction + " faction.", LogLevel.DEBUG);
 			}
 		}
 		else
 		{
-			resource = Resource.Load(groupToSpawn);
+			resource = Resource.Load(name);
 			if (resource.IsValid())
 			{
 				EntitySpawnParams params = EntitySpawnParams();
@@ -124,7 +119,7 @@ sealed class SDRC_AIHelper
 	
 	*/
 	
-	static SCR_AIGroup SpawnAIInBuilding(IEntity building, string resourceName, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
+	static SCR_AIGroup SpawnAIInBuilding(IEntity building, string resourceName, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0, string faction = "DEFAULT")
 	{
 		array<vector> floors = {};
 		vector pos, floorpos;
@@ -156,7 +151,7 @@ sealed class SDRC_AIHelper
 		pos = SDRC_SpawnHelper.FindEmptyPos(pos, radius/5, empty_radius);
 		pos[1] = pos[1] + 0.2;			
 //		SDRC_DebugHelper.AddDebugSphere(pos, Color.YELLOW, empty_radius);
-		AIAgent aiAgent = SDRC_AIHelper.SpawnAIAgent(resourceName, pos, false);
+		AIAgent aiAgent = SDRC_AIHelper.SpawnAIAgent(resourceName, pos, false, faction);
 		
 		SetAISkill(aiAgent, skill, perceptionFactor);
 		
@@ -200,8 +195,7 @@ sealed class SDRC_AIHelper
 	        combatComponent.SetPerceptionFactor(perceptionFactor);
 //	        combatComponent.SetCombatType(combatType);
 //	        combatComponent.SetHoldFire(holdFire);
-	    }	
-	
+	    }		
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -340,7 +334,6 @@ sealed class SDRC_AIHelper
 	*/
 	static FactionKey GetAIAgentFactionKey(AIAgent aiAgent)
 	{
-		Faction faction = null;
 		FactionKey factionKey = "";
 
 		//SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] Checking: " + aiAgent, LogLevel.DEBUG);
@@ -348,17 +341,20 @@ sealed class SDRC_AIHelper
 		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(aiAgent.GetControlledEntity());
 		if (character)
 		{
-			faction = character.GetFaction();
-			if(faction)
+			Faction faction = character.GetFaction();
+			if (faction)
 			{
 				factionKey = character.GetFaction().GetFactionKey();
 			}
 			else
 			{
-				factionKey = m_sDefaultEnemyFactionKey;
+				//Select the enemy faction from a list
+				factionKey = SDRC_EnemyHelper.SelectEnemyFaction("DEFAULT");
+				
 				IEntity ent = aiAgent.GetControlledEntity();
 				ResourceName res = ent.GetPrefabData().GetPrefabName();
-				SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] Using default enemy faction " + factionKey + " for " + res, LogLevel.WARNING);
+				SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] Faction missin from game? FactionKey not found for : " + res, LogLevel.ERROR);
+				SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] Using default enemy faction " + factionKey + ".", LogLevel.WARNING);
 			}
 		}
 

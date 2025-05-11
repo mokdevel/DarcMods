@@ -125,7 +125,9 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.missionHintTime = SDRC_MISSION_HINT_TIME;
 		conf.minDistanceToMission = 500;
 		conf.minDistanceToPlayer = 100;
-		conf.enemyFactions = {"FIA", "USSR"};
+//		conf.enemyFactions = {"FIA", "USSR"};
+//		conf.enemyFactions = {"FIA", "US"};
+		conf.enemyFactions = {"USSR"};
 		
 		#ifdef SDRC_RELEASE
 			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.CONVOY, 
@@ -136,7 +138,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 
 		#ifndef SDRC_RELEASE				
 			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTER};
-			conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
+//			conf.missionTypeArrayDynamic = {DC_EMissionType.OCCUPATION};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.CONVOY};		
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.PATROL};		
@@ -149,9 +151,9 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.CRASHSITE};
-			conf.missionTypeArrayStatic = {DC_EMissionType.OCCUPATION};
+//			conf.missionTypeArrayStatic = {DC_EMissionType.OCCUPATION};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER};
-//			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER};
+			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER};
 //			conf.missionTypeArrayStatic = {};
 		#endif
 	}

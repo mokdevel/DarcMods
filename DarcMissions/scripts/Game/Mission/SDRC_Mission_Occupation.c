@@ -22,7 +22,6 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Occupation] Constructor", LogLevel.SPAM);
 				
 		//Set some defaults
-		SDRC_Mission();
 		SetType(DC_EMissionType.OCCUPATION);
 
 		//Load config
@@ -143,7 +142,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 			
 			for (int i = 0; i < groupCount; i++)
 			{
-				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_Occupation.groupTypes.GetRandomElement(), GetPos());
+				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_Occupation.groupTypes.GetRandomElement(), GetPos(), GetFaction());
 				if (group)
 				{
 					SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Occupation.aiSkill, m_DC_Occupation.aiPerception);					
@@ -267,7 +266,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {0};//{0,0,0,1,1,2,2,2,3,4};
+		conf.occupationList = {0,0,0,1,1,2,2,2,3,4};
 
 		//----------------------------------------------------
 		SDRC_Occupation occupation0 = new SDRC_Occupation();

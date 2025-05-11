@@ -19,7 +19,7 @@ class SDRC_Core
 		m_Config = m_DC_CoreConfig.conf;
 
 		SDRC_Log.SetLogLevel(m_Config.logLevel);
-		SDRC_AIHelper.SetDefaultEnemyFaction(m_Config.defaultEnemyFaction);
+		SDRC_EnemyHelper.SetDefaultEnemyFaction(m_Config.fallbackEnemyFaction);
 
 		GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);			
 		
@@ -59,7 +59,7 @@ class SDRC_CoreConfig : Managed
 	bool debugShowWaypoints = true;
 	bool debugShowMarks = true;	
 	bool debugShowSpheres = true;
-	string defaultEnemyFaction = "USSR";
+	string fallbackEnemyFaction = "USSR";
 	ref array<string> buildingExcludeFilter = {};
 }
 

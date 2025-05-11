@@ -278,6 +278,8 @@ class SDRC_MissionFrame
 	{
 		SDRC_Mission tmpDC_Mission = null;
 		
+		SDRC_Log.Add("[SDRC_MissionFrame:MissionCreate] Starting mission of type: " + SCR_Enum.GetEnumName(DC_EMissionType, missionType), LogLevel.DEBUG);
+		
 		switch (missionType)
 		{
 			case DC_EMissionType.NONE:

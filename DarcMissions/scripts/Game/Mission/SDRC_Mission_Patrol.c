@@ -21,7 +21,6 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Patrol] Constructor", LogLevel.SPAM);
 				
 		//Set some defaults
-		SDRC_Mission();
 		SetType(DC_EMissionType.PATROL);
 
 		//Load config
@@ -136,7 +135,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		
 		for (int i = 0; i < groupCount; i++)
 		{
-			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_Patrol.groupTypes.GetRandomElement(), GetPos());
+			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_Patrol.groupTypes.GetRandomElement(), GetPos(), GetFaction());
 			if (group)
 			{
 				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Patrol.aiSkill, m_DC_Patrol.aiPerception);					
