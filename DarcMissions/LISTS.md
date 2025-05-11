@@ -22,7 +22,7 @@ array<string> modList : The mods to search for loot. If left empty, all mods ena
 array<SCR_DC_List> lootLists : The defined lootlists
 ```
 ## Loot list names (id)
-Currently available loot names are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
+Currently available names are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
 ```
 WEAPON_RIFLE : A random rifle from any faction.
 WEAPON_HANDGUN : A random handgun from any faction.
@@ -84,4 +84,29 @@ The ```include``` filter ("Rifle") matches the list so everything is included. T
 ```
 
 # Enemy lists
+## Enemy list names (id)
+Currently available names are below. For a complete list, please check [SCR_DC_EnemyListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Conf/SDRC_EnemyListJsonApi.c)
+```
+//Groups
+G_LIGHT : Small arms units like rifle men.
+G_HEAVY : Bigger guns for example machine guns
+G_SNIPER : Units with rifles and typically with scopes
+G_LAUNCHER : Units with launchers
+G_ADMIN : Officers and similar higher ranking units
+G_MEDICAL : Medical units
+G_RECON : Units defined as recon units
+G_SPECIAL : Special Forces units.
+G_SMALL	: Small groups with two units. Mixed arms.
+
+//Characters
+C_RIFLEMAN
+C_HEAVY
+C_RECON
+C_OFFICER
+C_CREW
+C_SNIPER
+C_LAUNCHER
+C_MEDIC
+C_SPECIAL
+```
 ## Example for enemyList
