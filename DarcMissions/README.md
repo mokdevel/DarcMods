@@ -64,7 +64,7 @@ In the configuration you can define missions either as a dynamic mission (```mis
 This enables you to have a count of certain types of missions always running. For example, you may want to have three patrols always roaming the map. To achieve this, you define the patrol mission three times in the ```missionTypeArrayStatic``` array. If you define multiple types of missions in the static list, the missions are picked at random. Having for example three patrol missions and one convoy mission in the list, makes sure that four static missions are running, but this may be any combination due to random picking. The patrol mission has a higher chance to be chosen.
 
 ## Mission end
-Once all AIs have been eliminated, the mission is kept alive for ```missionActiveTimeToEnd``` seconds. The time is reset if there is a player within ```missionActiveDistance```.
+Once all AIs have been eliminated, the mission is kept alive for ```missionActiveTimeToEnd``` seconds. The time is reset if there is a player within ```missionActiveDistance```. At the end of a mission, all spawned items will despawn (for example camps) but also vehicles. 
 
 ## Configuration
 Configuration is done in .json files.
@@ -116,6 +116,7 @@ int missionActiveTimeToEnd : (seconds) Time to keep the mission active once all 
 int missionHintTime : (seconds) Time to show mission hints to players. 0 disables ALL hints.
 int minDistanceToMission : Distance to another mission. Two missions shall not be too close to each other.
 int minDistanceToPlayer : Mission shall not spawn too close to a player.
+array<string> enemyFactions : The array of factions to consider as enemies. "USSR" by default. You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission.
 array<int> missionTypeArrayDynamic : List mission types that spawn randomly. (DC_EMissionType)
   0 = NONE       : Not used anywhere. The rest are names of the mission types.
   1 = HUNTER
