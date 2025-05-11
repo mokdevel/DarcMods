@@ -1,9 +1,18 @@
 # Lists
+The mod is capable of creating automatic lists to be used with missions. You can also define your own sets by following the same notation as in the example. Do not reuse the same ids as is already available as a ```lootListName```.
 
-## Loot lists
+## SCR_DC_List
+The functionality goes through the modDir and gets every file with the ending of ```.et```. The list is first filtered with ```include``` words and then filtered with ```exclude```words. Note that any item you may have defined manually goes through the same filtering and may be removed if the ```exclude``` word matches.
+```
+string id : The name given for the listist. This is the name you use for adding loot or selecting enemies. 
+string modDir : Prefab directory inside mod.
+array<string> include : Items having these words are included in the lootList.
+array<string> exclude : Items with these words will be removed from the lootList.
+array<ResourceName> items : The list of items. This is autofilled, but you can pre-define items if needed.
+```
+
+# Loot lists
 Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json)
-
-The mod is capable of creating automatic loot lists to be used with missions. You can also define your own sets by following the same notation as in the example. Do not reuse the same names as is already available as a ```lootListName```.
 
 This supports additional mods that you can define in the modList parameter. The typical notation is ```"$ModName:PreFabs"```. A properly created mod follows the same structure and keeps prefabs in the right places. 
 ```
@@ -12,7 +21,8 @@ string author : See General parameters
 array<string> modList : The mods to search for loot. If left empty, all mods enabled will be searched.
 array<SCR_DC_LootList> lootLists : The defined lootlists
 ```
-Currently available ```lootListNames``` are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
+## Loot list names (id)
+Currently available loot names are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
 ```
 WEAPON_RIFLE : A random rifle from any faction.
 WEAPON_HANDGUN : A random handgun from any faction.
@@ -24,17 +34,7 @@ ITEM_MEDICAL : Medical items
 ITEM_GENERAL : General items
 ```
 
-### SCR_DC_LootList
-The functionality goes through the modDir and gets every file with the ending of ```.et```. The list is first filtered with ```include``` words and then filtered with ```exclude```words. Note that any item you may have defined manually goes through the same filtering and may be removed if the ```exclude``` word matches.
-```
-string lootListName : The name given for the lootList. This is the name you use for adding loot. 
-string modDir : Prefab directory inside mod.
-array<string> include : Items having these words are included in the lootList.
-array<string> exclude : Items with these words will be removed from the lootList.
-array<ResourceName> itemList : The list of items. This is autofilled, but you can pre-define items if needed.
-```
-
-### Example
+## Example for lootList
 The below example with the name ```WEAPON_RIFLE``` will search three mods for items matching the include and exclude filters. The intial search path is ```$Modname:Prefabs```. Under the Prefabs dir we use the dir ```/Weapons/Rifles``` for the more detailed search. The full path for the search is ```$Modname:Prefabs/Weapons/Rifles``` and internally we're searching for all files ending in ```.et```. Initally all items will be listed. 
 
 The .json configuration as an example:
@@ -82,3 +82,6 @@ The ```include``` filter ("Rifle") matches the list so everything is included. T
 "{B036BA26CCFE9E5D}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_OliveGreen_Sand_Stripes.et"
 "{FA0E25CE35EE945F}Prefabs/Weapons/Rifles/AKS74U/Rifle_AKS74UN.et"
 ```
+
+# Enemy lists
+## Example for enemyList
