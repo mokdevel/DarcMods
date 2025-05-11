@@ -69,6 +69,12 @@ Once all AIs have been eliminated, the mission is kept alive for ```missionActiv
 ## Configuration
 Configuration is done in .json files.
 
+# Special functionality
+The mod uses functionality provided by DarcCore that help in mission configurations.
+* Automatic loot lists. See [Lists](LISTS.md)
+* Automatic enemy lists. See [Lists](LISTS.md)
+* Non Valid Areas (aka safe zones). See [Non Valid Areas](NONVALIDAREAS.md)
+
 # Configuration files
 The configuration files will be under your ```profile\DarcMods_conf\*```. Depending on the usage the profile is in your ArmaReforger, ArmaReforgerWorkbench or in your server profile directory. For example ```C:\Users\username\Documents\My Games\ArmaReforger\profile\DarcMods_conf```.
 
@@ -89,10 +95,6 @@ Mission specific files
 
 Dependency specific files
 * dc_coreConfig.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md#core-config)) : Configuration file for core.
-
-## Special functionality
-* Automatic loot and enemy lists. See [Lists](LISTS.md)
-* Non Valid Areas (aka safe zones). See [Non Valid Areas](NONVALIDAREAS.md)
 
 ## Mission frame
 Example: [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig.json)
