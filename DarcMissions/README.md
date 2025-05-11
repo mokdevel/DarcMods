@@ -27,7 +27,6 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 ## Known issues
 - Vehicles spawned for missions (convoy, ...) will despawn once mission is cleared. (TBD: Plans to change this behavior).
 - No ammo spawns in loot. (TBD: weapon compatible ammo functionality)
-- Map icon being white is hard to see on a light map (for example Chernarus)
 
 # Basics
 Once the mod starts to run it will wait for ```missionStartDelay``` before the missions start to spawn. The missions have their own life cycle with a defined cycle time. Once a mission is completed and no players are near by, the missions will despawn. The missions are active a minimum of ```missionActiveTime```. The time is reset if there is a player within ```missionActiveDistance```.
