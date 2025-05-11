@@ -34,6 +34,35 @@ ITEM_MEDICAL : Medical items
 ITEM_GENERAL : General items
 ```
 
+# Enemy lists
+## Enemy list names (id)
+Currently available names are below. For a complete list, please check [SCR_DC_EnemyListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Conf/SDRC_EnemyListJsonApi.c)
+```
+//Groups
+G_LIGHT : Small arms units like rifle men.
+G_HEAVY : Bigger guns for example machine guns
+G_SNIPER : Units with rifles and typically with scopes
+G_LAUNCHER : Units with launchers
+G_ADMIN : Officers and similar higher ranking units
+G_MEDICAL : Medical units
+G_RECON : Units defined as recon units
+G_SPECIAL : Special Forces units.
+G_SMALL	: Small groups with two units. Mixed arms.
+
+//Characters
+C_RIFLEMAN
+C_HEAVY
+C_RECON
+C_OFFICER
+C_CREW
+C_SNIPER
+C_LAUNCHER
+C_MEDIC
+C_SPECIAL
+```
+
+# Examples
+
 ## Example for lootList
 The below example with the name ```WEAPON_RIFLE``` will search three mods for items matching the include and exclude filters. The intial search path is ```$Modname:Prefabs```. Under the Prefabs dir we use the dir ```/Weapons/Rifles``` for the more detailed search. The full path for the search is ```$Modname:Prefabs/Weapons/Rifles``` and internally we're searching for all files ending in ```.et```. Initally all items will be listed. 
 
@@ -83,30 +112,4 @@ The ```include``` filter ("Rifle") matches the list so everything is included. T
 "{FA0E25CE35EE945F}Prefabs/Weapons/Rifles/AKS74U/Rifle_AKS74UN.et"
 ```
 
-# Enemy lists
-## Enemy list names (id)
-Currently available names are below. For a complete list, please check [SCR_DC_EnemyListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Conf/SDRC_EnemyListJsonApi.c)
-```
-//Groups
-G_LIGHT : Small arms units like rifle men.
-G_HEAVY : Bigger guns for example machine guns
-G_SNIPER : Units with rifles and typically with scopes
-G_LAUNCHER : Units with launchers
-G_ADMIN : Officers and similar higher ranking units
-G_MEDICAL : Medical units
-G_RECON : Units defined as recon units
-G_SPECIAL : Special Forces units.
-G_SMALL	: Small groups with two units. Mixed arms.
-
-//Characters
-C_RIFLEMAN
-C_HEAVY
-C_RECON
-C_OFFICER
-C_CREW
-C_SNIPER
-C_LAUNCHER
-C_MEDIC
-C_SPECIAL
-```
 ## Example for enemyList
