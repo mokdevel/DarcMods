@@ -5,7 +5,7 @@
 	"recreateConfigs": false,
 	"missionProfile": "default",
 	"missionStartDelay": 60,
-	"missionDelayBetweeen": 120,
+	"missionDelayBetweeen": 240,
 	"missionCount": 10,
 	"staticTryLimit": 2,
 	"missionFrameCycleTime": 30,
@@ -16,6 +16,9 @@
 	"missionHintTime": 30,
 	"minDistanceToMission": 500,
 	"minDistanceToPlayer": 100,
+	"enemyFactions": [
+		"USSR"
+	],
 	"missionTypeArrayDynamic": [
 		1,
 		4,

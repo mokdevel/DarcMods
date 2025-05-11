@@ -5,7 +5,7 @@
 	"debugShowWaypoints": true,
 	"debugShowMarks": true,
 	"debugShowSpheres": true,
-	"defaultEnemyFaction": "USSR",
+	"fallbackEnemyFaction": "USSR",
 	"buildingExcludeFilter": [
 		"BrickPile",
 		"WoodPile",

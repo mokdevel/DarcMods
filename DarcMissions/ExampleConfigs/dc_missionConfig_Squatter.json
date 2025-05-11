@@ -44,10 +44,12 @@
 				6
 			],
 			"aiTypes": [
-				"{5117311FB822FD1F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Officer.et",
-				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
-				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
-				"{96C784C502AC37DA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_MG.et"
+				"C_RIFLEMAN",
+				"C_RIFLEMAN",
+				"C_RIFLEMAN",
+				"C_RIFLEMAN",
+				"C_RIFLEMAN",
+				"C_OFFICER"
 			],
 			"aiSkill": 50,
 			"aiPerception": 0.6000000238418579,
@@ -99,10 +101,16 @@
 				10
 			],
 			"aiTypes": [
-				"{5117311FB822FD1F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Officer.et",
-				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
-				"{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
-				"{96C784C502AC37DA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_MG.et"
+				"C_RIFLEMAN",
+				"C_RIFLEMAN",
+				"C_RIFLEMAN",
+				"C_RIFLEMAN",
+				"C_RIFLEMAN",
+				"C_HEAVY",
+				"C_HEAVY",
+				"C_LAUNCHER",
+				"C_MEDIC",
+				"C_OFFICER"
 			],
 			"aiSkill": 50,
 			"aiPerception": 0.800000011920929,
@@ -149,10 +157,15 @@
 				10
 			],
 			"aiTypes": [
-				"{77D7BFD355620806}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Ammo_KLMK.et",
-				"{9A12B3F6ABDF70BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_AT_KLMK.et",
-				"{8A60AEBD529FEB8B}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_MG_KLMK.et",
-				"{D66C215D6F03EFFD}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Medic_KLMK.et"
+				"C_RIFLEMAN",
+				"C_RIFLEMAN",
+				"C_RIFLEMAN",
+				"C_HEAVY",
+				"C_HEAVY",
+				"C_HEAVY",
+				"C_LAUNCHER",
+				"C_MEDIC",
+				"C_OFFICER"
 			],
 			"aiSkill": 50,
 			"aiPerception": 0.800000011920929,
@@ -201,14 +214,16 @@
 				6
 			],
 			"aiTypes": [
-				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
-				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
-				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
-				"{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
-				"{730CDEC4168637B6}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sapper.et",
-				"{8CA70597606992EC}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Medic.et",
-				"{6F5A71376479B353}Prefabs/Characters/Factions/CIV/ConstructionWorker/Character_CIV_ConstructionWorker_1.et",
-				"{472F2B06FF9BF37D}Prefabs/Characters/Factions/CIV/Dockworker/Character_CIV_Dockworker_4.et"
+				"C_RIFLEMAN",
+				"C_RIFLEMAN",
+				"C_RIFLEMAN",
+				"C_HEAVY",
+				"C_HEAVY",
+				"C_HEAVY",
+				"C_RECON",
+				"C_RECON",
+				"C_RECON",
+				"C_OFFICER"
 			],
 			"aiSkill": 50,
 			"aiPerception": 0.800000011920929,
@@ -240,7 +255,7 @@
 			}
 		},
 		{
-			"comment": "FIA in churches",
+			"comment": "Enemy in churches",
 			"pos": [
 				0.0,
 				0.0,
@@ -255,11 +270,12 @@
 				7
 			],
 			"aiTypes": [
-				"{B4977616CD19191A}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Scout.et"
+				"C_RIFLEMAN"
 			],
 			"aiSkill": 50,
 			"aiPerception": 0.800000011920929,
 			"buildingNames": [
+				"Church_",
 				"ChurchSmall_"
 			],
 			"lootBox": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
@@ -299,10 +315,7 @@
 				6
 			],
 			"aiTypes": [
-				"{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
-				"{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
-				"{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
-				"{0B8AC0C3C447F90E}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_LMG.et"
+				"C_SPECIAL"
 			],
 			"aiSkill": 30,
 			"aiPerception": 0.30000001192092898,

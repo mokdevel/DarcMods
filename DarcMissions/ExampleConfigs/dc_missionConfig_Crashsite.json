@@ -19,9 +19,8 @@
 			"title": "Helicopter in distress ",
 			"info": "A valuable cargo has crashed",
 			"groupTypes": [
-				"{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et",
-				"{B721D5A8C1B556CE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconTeam.et",
-				"{E552DABF3636C2AD}Prefabs/Groups/OPFOR/Group_USSR_RifleSquad.et"
+				"G_LIGHT",
+				"G_ADMIN"
 			],
 			"aiSkill": 20,
 			"aiPerception": 0.800000011920929,

@@ -16,7 +16,7 @@
 	],
 	"patrols": [
 		{
-			"comment": "USSR patrols going between two points hopefully following roads",
+			"comment": "Enemy patrols going between two points hopefully following roads",
 			"pos": [
 				0.0,
 				0.0,
@@ -51,9 +51,7 @@
 			"waypointGenType": 4,
 			"waypointMoveType": 2,
 			"groupTypes": [
-				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
-				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
-				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+				"G_SPECIAL"
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0
@@ -93,16 +91,14 @@
 			"waypointGenType": 3,
 			"waypointMoveType": 5,
 			"groupTypes": [
-				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
-				"{4D3BBEC1A955626A}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_Squad.et",
-				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
-				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+				"G_HEAVY",
+				"G_LAUNCHER"
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0
 		},
 		{
-			"comment": "USSR patrols",
+			"comment": "Enemy patrols between villages",
 			"pos": [
 				0.0,
 				0.0,
@@ -131,15 +127,15 @@
 			"waypointGenType": 2,
 			"waypointMoveType": 5,
 			"groupTypes": [
-				"{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
-				"{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
-				"{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et"
+				"G_RECON",
+				"G_LIGHT",
+				"G_SMALL"
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0
 		},
 		{
-			"comment": "FIA patrols",
+			"comment": "Small patrols",
 			"pos": [
 				0.0,
 				0.0,
@@ -151,8 +147,8 @@
 				0.0
 			],
 			"posName": "any",
-			"title": "FIA has been seen near ",
-			"info": "Caution is adviced.",
+			"title": "Enemy has been seen near ",
+			"info": "Caution is advised.",
 			"locationTypes": [
 				60,
 				64
@@ -168,9 +164,9 @@
 			"waypointGenType": 1,
 			"waypointMoveType": 5,
 			"groupTypes": [
-				"{5BEA04939D148B1D}Prefabs/Groups/INDFOR/Group_FIA_FireTeam.et",
-				"{2E9C920C3ACA2C6F}Prefabs/Groups/INDFOR/Group_FIA_ReconTeam.et",
-				"{C1E39427E43B1E79}Prefabs/Groups/INDFOR/Group_FIA_AmmoTeam.et"
+				"G_SMALL",
+				"G_MEDICAL",
+				"G_RECON"
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0

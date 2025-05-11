@@ -2,5 +2,5 @@
 	"version": 1,
 	"author": "darc",
 	"showOnMap": false,
-	"nonValidAreas": []
+	"m_NonValidAreas": []
 }

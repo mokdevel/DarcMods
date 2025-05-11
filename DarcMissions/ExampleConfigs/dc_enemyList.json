@@ -1,0 +1,325 @@
+{
+	"version": 1,
+	"author": "darc",
+	"modList": [],
+	"lists": [
+		{
+			"id": "G_LIGHT",
+			"modDir": "/Groups",
+			"include": [
+				"LightFire",
+				"FireTeam",
+				"FireGroup",
+				"RifleSquad",
+				"SentryTeam"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants"
+			],
+			"items": []
+		},
+		{
+			"id": "G_SNIPER",
+			"modDir": "/Groups",
+			"include": [
+				"Sniper",
+				"SharpShooter"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants"
+			],
+			"items": []
+		},
+		{
+			"id": "G_LAUNCHER",
+			"modDir": "/Groups",
+			"include": [
+				"Team_AT",
+				"Team_GL",
+				"Team_LAT"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants"
+			],
+			"items": []
+		},
+		{
+			"id": "G_ADMIN",
+			"modDir": "/Groups",
+			"include": [
+				"_Platoon"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants"
+			],
+			"items": []
+		},
+		{
+			"id": "G_MEDICAL",
+			"modDir": "/Groups",
+			"include": [
+				"_Medical"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants"
+			],
+			"items": []
+		},
+		{
+			"id": "G_RECON",
+			"modDir": "/Groups",
+			"include": [
+				"_Recon",
+				"_Maneuver"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants"
+			],
+			"items": []
+		},
+		{
+			"id": "G_HEAVY",
+			"modDir": "/Groups",
+			"include": [
+				"MachineGunTeam",
+				"FireTeam",
+				"FireGroup",
+				"Suppress",
+				"Spetsnaz_Squad"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants"
+			],
+			"items": []
+		},
+		{
+			"id": "G_SPECIAL",
+			"modDir": "/Groups",
+			"include": [
+				"GreenBeret",
+				"Sapper",
+				"Sentry",
+				"Spetsnaz"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants"
+			],
+			"items": []
+		},
+		{
+			"id": "G_SMALL",
+			"modDir": "/Groups",
+			"include": [
+				"Spetsnaz_SentryTeam",
+				"GreenBeret_SentryTeam",
+				"SharpshooterTeam",
+				"MedicalSection",
+				"SapperTeam",
+				"SentryTeam"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants"
+			],
+			"items": []
+		},
+		{
+			"id": "C_RIFLEMAN",
+			"modDir": "/Characters/Factions",
+			"include": [
+				"Rifleman",
+				"Sapper",
+				"_PL",
+				"_SL"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed"
+			],
+			"items": []
+		},
+		{
+			"id": "C_HEAVY",
+			"modDir": "/Characters/Factions",
+			"include": [
+				"_GL",
+				"_MG",
+				"Grenadier",
+				"_Ammo"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed"
+			],
+			"items": []
+		},
+		{
+			"id": "C_RECON",
+			"modDir": "/Characters/Factions",
+			"include": [
+				"Scout",
+				"Spotter",
+				"_RTO",
+				"_SL",
+				"_GL"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed"
+			],
+			"items": []
+		},
+		{
+			"id": "C_OFFICER",
+			"modDir": "/Characters/Factions",
+			"include": [
+				"_Officer",
+				"Sergeant",
+				"_AC"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed"
+			],
+			"items": []
+		},
+		{
+			"id": "C_CREW",
+			"modDir": "/Characters/Factions",
+			"include": [
+				"Crew",
+				"Pilot",
+				"_CC"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed"
+			],
+			"items": []
+		},
+		{
+			"id": "C_SNIPER",
+			"modDir": "/Characters/Factions",
+			"include": [
+				"Sniper",
+				"Sharpshooter"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed"
+			],
+			"items": []
+		},
+		{
+			"id": "C_LAUNCHER",
+			"modDir": "/Characters/Factions",
+			"include": [
+				"_AAT",
+				"_AT",
+				"_AT",
+				"_LAT"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed"
+			],
+			"items": []
+		},
+		{
+			"id": "C_MEDIC",
+			"modDir": "/Characters/Factions",
+			"include": [
+				"Medic"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed"
+			],
+			"items": []
+		},
+		{
+			"id": "C_SPECIAL",
+			"modDir": "/Characters/Factions",
+			"include": [
+				"_SF",
+				"FIA_AC"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed"
+			],
+			"items": []
+		}
+	]
+}
