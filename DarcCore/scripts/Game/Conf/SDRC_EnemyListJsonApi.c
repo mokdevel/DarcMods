@@ -7,15 +7,15 @@
 // Types defined by default
 /*
 	//Groups
-	G_LIGHT
-	G_HEAVY
-	G_SNIPER
-	G_LAUNCHER
-	G_ADMIN
-	G_MEDICAL
-	G_RECON
-	G_SPECIAL
-	G_SMALL		//A small group of 2 
+	G_LIGHT : Small arms units like rifle men.
+	G_HEAVY : Bigger guns for example machine guns
+	G_SNIPER : Units with rifles and typically with scopes
+	G_LAUNCHER : Units with launchers
+	G_ADMIN : Officers and similar higher ranking units
+	G_MEDICAL : Medical units
+	G_RECON : Units defined as recon units
+	G_SPECIAL : Special Forces units.
+	G_SMALL	: Small groups with two units. Mixed arms.
 
 	//Characters
 	C_RIFLEMAN
