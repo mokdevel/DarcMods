@@ -48,8 +48,16 @@ modded class SCR_BaseGameMode
 	}
 	
 	private void StartSpawner()
-	{
-		dcSpawner = new SDRC_Spawner();
-		dcSpawner.Run();
+	{		
+		if (SDRC_Conf.coreHasStarted)
+		{		
+			dcSpawner = new SDRC_Spawner();
+			dcSpawner.Run();
+		}
+		else
+		{
+			GetGame().GetCallqueue().CallLater(StartSpawner, 2000, false);	
+			SDRC_Log.Add("[SDRC_Spawner_BaseGameMode:StartSpawner] Core not running. Waiting...", LogLevel.DEBUG);
+		}
 	}
 };

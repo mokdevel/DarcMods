@@ -38,7 +38,15 @@ modded class SCR_BaseGameMode
 	//------------------------------------------------------------------------------------------------
 	private void StartMissionFrame()
 	{
-		missionFrame = new SDRC_MissionFrame();
+		if (SDRC_Conf.coreHasStarted)	//Wait for core to be available
+		{		
+			missionFrame = new SDRC_MissionFrame();
+		}
+		else
+		{
+			GetGame().GetCallqueue().CallLater(StartMissionFrame, 2000, false);	
+			SDRC_Log.Add("[SDRC_MissionFrame_BaseGameMode:StartMissionFrame] Core not running. Waiting...", LogLevel.DEBUG);
+		}
 	}
 			
 	//------------------------------------------------------------------------------------------------
