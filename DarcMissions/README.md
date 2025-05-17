@@ -27,7 +27,6 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 ## Known issues
 - Vehicles spawned for missions (convoy, ...) will despawn once mission is cleared. (TBD: Plans to change this behavior).
 - No ammo spawns in loot. (TBD: weapon compatible ammo functionality)
-- Map icon being white is hard to see on a light map (for example Chernarus)
 
 # Basics
 Once the mod starts to run it will wait for ```missionStartDelay``` before the missions start to spawn. The missions have their own life cycle with a defined cycle time. Once a mission is completed and no players are near by, the missions will despawn. The missions are active a minimum of ```missionActiveTime```. The time is reset if there is a player within ```missionActiveDistance```.
@@ -65,10 +64,16 @@ In the configuration you can define missions either as a dynamic mission (```mis
 This enables you to have a count of certain types of missions always running. For example, you may want to have three patrols always roaming the map. To achieve this, you define the patrol mission three times in the ```missionTypeArrayStatic``` array. If you define multiple types of missions in the static list, the missions are picked at random. Having for example three patrol missions and one convoy mission in the list, makes sure that four static missions are running, but this may be any combination due to random picking. The patrol mission has a higher chance to be chosen.
 
 ## Mission end
-Once all AIs have been eliminated, the mission is kept alive for ```missionActiveTimeToEnd``` seconds. The time is reset if there is a player within ```missionActiveDistance```.
+Once all AIs have been eliminated, the mission is kept alive for ```missionActiveTimeToEnd``` seconds. The time is reset if there is a player within ```missionActiveDistance```. At the end of a mission, all spawned items will despawn (for example camps) but also vehicles. 
 
 ## Configuration
 Configuration is done in .json files.
+
+# Special functionality
+The mod uses functionality provided by DarcCore that help in mission configurations.
+* Automatic loot lists. See [Lists](LISTS.md)
+* Automatic enemy lists. See [Lists](LISTS.md)
+* Non Valid Areas (aka safe zones). See [Non Valid Areas](NONVALIDAREAS.md)
 
 # Configuration files
 The configuration files will be under your ```profile\DarcMods_conf\*```. Depending on the usage the profile is in your ArmaReforger, ArmaReforgerWorkbench or in your server profile directory. For example ```C:\Users\username\Documents\My Games\ArmaReforger\profile\DarcMods_conf```.
@@ -90,10 +95,6 @@ Mission specific files
 
 Dependency specific files
 * dc_coreConfig.json ([link](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md#core-config)) : Configuration file for core.
-
-## Special functionality
-* Automatic loot and enemy lists. See [Lists](LISTS.md)
-* Non Valid Areas (aka safe zones). See [Non Valid Areas](NONVALIDAREAS.md)
 
 ## Mission frame
 Example: [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig.json)
@@ -117,6 +118,7 @@ int missionActiveTimeToEnd : (seconds) Time to keep the mission active once all 
 int missionHintTime : (seconds) Time to show mission hints to players. 0 disables ALL hints.
 int minDistanceToMission : Distance to another mission. Two missions shall not be too close to each other.
 int minDistanceToPlayer : Mission shall not spawn too close to a player.
+array<string> enemyFactions : The array of factions to consider as enemies. "USSR" by default. You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission.
 array<int> missionTypeArrayDynamic : List mission types that spawn randomly. (DC_EMissionType)
   0 = NONE       : Not used anywhere. The rest are names of the mission types.
   1 = HUNTER
