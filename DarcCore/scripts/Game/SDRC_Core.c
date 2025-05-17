@@ -20,6 +20,8 @@ class SDRC_Core
 
 		SDRC_Log.SetLogLevel(m_Config.logLevel);
 		SDRC_EnemyHelper.SetDefaultEnemyFaction(m_Config.fallbackEnemyFaction);
+		SDRC_Conf.subConfDir = m_Config.subConfDir;
+		SDRC_Log.Add("[SDRC_Core] Conf destination: $profile:/" + SDRC_Conf.CONF_DIRECTORY + "/" + SDRC_Conf.subConfDir, LogLevel.NORMAL);
 
 		GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);			
 		
@@ -56,6 +58,7 @@ class SDRC_CoreConfig : Managed
 	int version = 1;
 	string author = "darc";
 	DC_LogLevel logLevel;
+	string subConfDir;						//Directory specifying a certain conf for play. For example "Escapists"	
 	bool debugShowWaypoints = true;
 	bool debugShowMarks = true;	
 	bool debugShowSpheres = true;
@@ -102,6 +105,7 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 	{
 //		conf.logLevel = DC_LogLevel.DEBUG;	
 		conf.logLevel = SDRC_Conf.DEFAULT_LOGLEVEL;
+		conf.subConfDir = SDRC_Conf.DEFAULT_DIR;		
 		conf.buildingExcludeFilter = {
 			"BrickPile", "WoodPile", "Hotbed", "Henhouse", "PhoneBooth",
 			"AmmoDump", "ElectricCabinet", "ControlBox110kV", "LightBeacon",

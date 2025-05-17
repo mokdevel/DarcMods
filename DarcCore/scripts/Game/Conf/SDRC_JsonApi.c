@@ -8,12 +8,11 @@
 class SDRC_JsonApi : JsonApiStruct
 {
 	private string m_FileName = "";
-	
+			
 	//------------------------------------------------------------------------------------------------
 	SCR_JsonLoadContext LoadConfig(string fileName)
 	{	
-		SetFileName(fileName);		
-		
+		SetFileName(fileName);
 		SCR_JsonLoadContext loadContext = new SCR_JsonLoadContext();
 		
 		if (SDRC_Conf.OVERWRITE_JSON)
@@ -76,9 +75,9 @@ class SDRC_JsonApi : JsonApiStruct
 	{			
 		string path = "";
 		string directory = SDRC_Conf.CONF_DIRECTORY;
-		if (SDRC_Conf.missionProfile != "")
+		if (SDRC_Conf.subConfDir != "")	//TBD: This should never be empty
 		{
-			directory = directory + "/" + SDRC_Conf.missionProfile
+			directory = directory + "/" + SDRC_Conf.subConfDir
 		}
 		
 		path = "$profile:/" + directory + "/";
@@ -89,6 +88,5 @@ class SDRC_JsonApi : JsonApiStruct
 		}
 				
 		m_FileName = path + fileName;
-	}
-	
+	}	
 }	

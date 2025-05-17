@@ -52,8 +52,6 @@ class SDRC_MissionFrame
 		m_DC_MissionFrameJsonApi.Load();
 		m_Config = m_DC_MissionFrameJsonApi.conf;
 		
-		SDRC_Log.Add("[SDRC_MissionFrame] Conf destination: /profile/" + SDRC_Conf.CONF_DIRECTORY + "/" + m_Config.missionProfile, LogLevel.NORMAL);
-
 		//Check if a request to create new logs has been made		
 		if (m_Config.recreateConfigs)
 		{
@@ -62,14 +60,11 @@ class SDRC_MissionFrame
 			m_Config.recreateConfigs = false;
 			m_DC_MissionFrameJsonApi.Save("");
 			SDRC_Log.Add("[SDRC_MissionFrame] - Creating configs. Existing ones will not be over written. -", LogLevel.WARNING);
-			SDRC_Conf.missionProfile = m_Config.missionProfile;
 			CreateAllConfigs();
 			SDRC_Log.Add("[SDRC_MissionFrame] --------------------- Configs created. ----------------------", LogLevel.WARNING
 			);
 		}
 		
-		//Set mission profile directory. This needs to be after a possible MissionFrame config save.
-		SDRC_Conf.missionProfile = m_Config.missionProfile;		
 		SDRC_Log.Add("[SDRC_MissionFrame] WorldName: " + m_sWorldName, LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_MissionFrame] WorldSize: " + SDRC_Misc.GetWorldSize(), LogLevel.DEBUG);
 
