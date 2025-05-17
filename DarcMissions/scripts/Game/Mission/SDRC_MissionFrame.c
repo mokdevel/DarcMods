@@ -72,6 +72,10 @@ class SDRC_MissionFrame
 		m_DC_NonValidAreaJsonApi.Load();
 		m_DC_NonValidAreaJsonApi.Populate(m_aNonValidAreas);
 
+		//Checking the enemies found
+		SDRC_Log.Add("[SDRC_MissionFrame] Enemy factions: " + m_Config.enemyFactions, LogLevel.NORMAL);
+		SDRC_EnemyHelper.SetEnemyFactions(m_Config.enemyFactions);
+		
 		//Set some defaults
 		m_iStaticTryCount = 0;
 		m_iLastMissionSpawnTime = (System.GetTickCount() / 1000) - m_Config.missionDelayBetweeen;	//Fix the timer so that first mission immediately spawns
