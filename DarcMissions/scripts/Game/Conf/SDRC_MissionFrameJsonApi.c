@@ -50,7 +50,6 @@ class SDRC_MissionFrameConfig : Managed
 	//Mission specific
 	string comment;
 	bool recreateConfigs;			//If set to true, all configs are to be written to disk. Should be run only first time.
-	string missionProfile;			//Directory specifying a certain conf for play. For example "Escapists"
 	int missionStartDelay;			//Time to wait before spawning the first mission (seconds).
 	int missionDelayBetweeen;		//Time delay between mission spawns (seconds)
 	int missionCount;				//Maximum amount of missions (both static and dynamic) to be active at the same time. 
@@ -112,7 +111,6 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 	{
 		conf.comment = "Simple comment, not used in game";
 		conf.recreateConfigs = SDRC_MISSION_RECREATE_CONFIGS;
-		conf.missionProfile = SDRC_MISSION_PROFILE_DIR;
 		conf.missionStartDelay = SDRC_MISSION_START_DELAY;
 		conf.missionDelayBetweeen = SDRC_MISSION_DELAY_BETWEEN_MISSIONS;
 		conf.missionCount = SDRC_MISSION_COUNT;
