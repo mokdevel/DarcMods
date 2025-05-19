@@ -14,7 +14,11 @@ class SDRC_ListConfig : Managed
 		
 		if (modList.IsEmpty())
 		{
-			array<string> addonList = SCR_AddonTool.GetAllAddonFileSystems();
+			array<string> addonList = {};
+			
+			SDRC_Misc.GetAddonList(addonList);			
+//			array<string> addonList = SCR_AddonTool.GetAllAddonFileSystems();
+			
 			foreach (string addon : addonList)
 			{
 				string name = addon + "Prefabs";

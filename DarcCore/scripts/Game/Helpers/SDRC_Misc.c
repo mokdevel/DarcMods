@@ -64,7 +64,23 @@ sealed class SDRC_Misc
     	float degrees = (180 * angle / Math.PI);
     	return degrees;
 	}
-		
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Returns the available mods
+	*/	
+	static void GetAddonList(out array<string> addonList, bool printList = false)
+	{
+		addonList = SCR_AddonTool.GetAllAddonFileSystems();
+		if (printList)
+		{
+			foreach (string addon : addonList)
+			{
+				SDRC_Log.Add("[SDRC_Misc:GetAddonList] Mod found: " + addon, LogLevel.NORMAL);				
+			}
+		}
+	}	
+			
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Returns the (max) size of the world
@@ -214,6 +230,11 @@ sealed class SDRC_Misc
 	*/	
 	static bool IsPosInWater(vector pos)
 	{
+		if (!GetGame().GetWorld().IsOcean())
+		{
+			return false;
+		}
+		
 		float waterHeight = GetGame().GetWorld().GetOceanHeight(pos[0], pos[2]);
 		
 		if (waterHeight == 0)
