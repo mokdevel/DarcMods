@@ -80,7 +80,38 @@ sealed class SDRC_Misc
 			}
 		}
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get factionlist
+	*/	
+	static int GetFactionList(out array<string> factionList, bool printList = false)
+	{
+		array<Faction> factions = {};
+		SCR_FactionManager factionManager = SCR_FactionManager.Cast(GetGame().GetFactionManager());
+		
+		if (!factionManager)
+		{			
+			return 0;
+		}
+		
+		factionManager.GetFactionsList(factions);
+
+		foreach (Faction faction : factions)
+		{
+//			string factionName = SCR_StringHelper.Translate(faction.GetFactionName());
+			string factionName = faction.GetFactionKey();
+			factionList.Insert(factionName);
 			
+			if (printList)
+			{
+				SDRC_Log.Add("[SDRC_Misc:GetFactionList] Faction found: " + factionName, LogLevel.NORMAL);				
+			}
+		}
+				
+		return factionList.Count();
+	}
+				
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Returns the (max) size of the world

@@ -9,6 +9,7 @@ class SDRC_Core
 	private ref SDRC_CoreJsonApi m_DC_CoreConfig = new SDRC_CoreJsonApi();	
 	private ref SDRC_CoreConfig m_Config;	
 	private ref array<string> m_sAddonList = {};
+	private ref array<string> m_sFactionList = {};
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Core()
 	{
@@ -27,7 +28,8 @@ class SDRC_Core
 		SDRC_Log.Add("[SDRC_Core] World name: " + SDRC_Misc.GetWorldName(true), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World size: " + SDRC_Misc.GetWorldSize(), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World has ocean: " + GetGame().GetWorld().IsOcean(), LogLevel.NORMAL);
-		SDRC_Log.Add("[SDRC_Core] Factions available: <TBD>", LogLevel.NORMAL);
+		int factionCount = SDRC_Misc.GetFactionList(m_sFactionList);
+		SDRC_Log.Add("[SDRC_Core] Factions available: " + factionCount + " - " + m_sFactionList, LogLevel.NORMAL);
 		SDRC_Misc.GetAddonList(m_sAddonList, true);
 		SDRC_Log.Add("[SDRC_Core] -------------------------------------", LogLevel.NORMAL);
 
