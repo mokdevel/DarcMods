@@ -8,7 +8,7 @@ class SDRC_Core
 {
 	private ref SDRC_CoreJsonApi m_DC_CoreConfig = new SDRC_CoreJsonApi();	
 	private ref SDRC_CoreConfig m_Config;	
-	
+	private ref array<string> m_sAddonList = {};
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Core()
 	{
@@ -19,10 +19,20 @@ class SDRC_Core
 		m_Config = m_DC_CoreConfig.conf;
 
 		SDRC_Log.SetLogLevel(m_Config.logLevel);
-		SDRC_EnemyHelper.SetDefaultEnemyFaction(m_Config.fallbackEnemyFaction);
-		SDRC_Conf.subConfDir = m_Config.subConfDir;
-		SDRC_Log.Add("[SDRC_Core] Conf destination: $profile:/" + SDRC_Conf.CONF_DIRECTORY + "/" + SDRC_Conf.subConfDir, LogLevel.NORMAL);
 
+		//Print general information
+		SDRC_Conf.subConfDir = m_Config.subConfDir;
+		SDRC_Log.Add("[SDRC_Core] -------- General information --------", LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_Core] Conf destination: $profile:/" + SDRC_Conf.CONF_DIRECTORY + "/" + SDRC_Conf.subConfDir, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_Core] World name: " + SDRC_Misc.GetWorldName(true), LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_Core] World size: " + SDRC_Misc.GetWorldSize(), LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_Core] World has ocean: " + GetGame().GetWorld().IsOcean(), LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_Core] Factions available: <TBD>", LogLevel.NORMAL);
+		SDRC_Misc.GetAddonList(m_sAddonList, true);
+		SDRC_Log.Add("[SDRC_Core] -------------------------------------", LogLevel.NORMAL);
+
+		SDRC_EnemyHelper.SetDefaultEnemyFaction(m_Config.fallbackEnemyFaction);
+		
 		GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);			
 		
 		//Initialize LootHelper
