@@ -31,9 +31,9 @@ sealed class SDRC_Conf
 		
 //Development time options	
 #ifndef SDRC_RELEASE
-	const bool SDRC_ENABLE_DARCSPAWNER = true;
+	const bool SDRC_ENABLE_DARCSPAWNER = false;
 	const bool SDRC_ENABLE_DARCMISSIONS	= true;
-	const bool SDRC_ENABLE_DARCDEATHMARKER = true;
+	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
 	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
 	const bool RELEASE = false;					
 	const bool OVERWRITE_JSON = true;				
@@ -41,6 +41,7 @@ sealed class SDRC_Conf
 	const bool SHOW_VALID_MISSION_AREAS = false;	
 	const bool SHOW_MARKER_FOR_LOCATION = false;	
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
+//	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
 	#define USE_POPUP_NOTIFICATION
 #endif
 }

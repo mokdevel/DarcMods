@@ -3,7 +3,6 @@
 	"author": "darc",
 	"comment": "Simple comment, not used in game",
 	"recreateConfigs": false,
-	"missionProfile": "default",
 	"missionStartDelay": 60,
 	"missionDelayBetweeen": 240,
 	"missionCount": 10,

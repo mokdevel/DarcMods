@@ -65,9 +65,6 @@ class SDRC_MissionFrame
 			);
 		}
 		
-		SDRC_Log.Add("[SDRC_MissionFrame] WorldName: " + m_sWorldName, LogLevel.NORMAL);
-		SDRC_Log.Add("[SDRC_MissionFrame] WorldSize: " + SDRC_Misc.GetWorldSize(), LogLevel.DEBUG);
-
 		//Load non valid area configuration from file		
 		m_DC_NonValidAreaJsonApi.Load();
 		m_DC_NonValidAreaJsonApi.Populate(m_aNonValidAreas);

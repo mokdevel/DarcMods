@@ -2,6 +2,7 @@
 	"version": 1,
 	"author": "darc",
 	"logLevel": 3,
+	"subConfDir": "default",
 	"debugShowWaypoints": true,
 	"debugShowMarks": true,
 	"debugShowSpheres": true,
