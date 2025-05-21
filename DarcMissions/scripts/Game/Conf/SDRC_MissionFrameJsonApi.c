@@ -27,7 +27,7 @@
 		private const string SDRC_MISSION_PROFILE_DIR = "dummy";
 		private const int SDRC_MISSION_COUNT = 8;
 		private const int SDRC_MISSION_STATIC_TRY_LIMIT = 2;
-		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 10;
+		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSION_START_DELAY = 10;					
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS = 1*20;
 		private const int SDRC_MISSION_ACTIVE_TIME = 3*60;				
@@ -145,13 +145,13 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionTypeArrayDynamic = {DC_EMissionType.SQUATTER};
 		
 //			conf.missionTypeArrayStatic = {DC_EMissionType.PATROL, DC_EMissionType.PATROL};
-//			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
+			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.CONVOY};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.HUNTER};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.CRASHSITE};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.OCCUPATION};
 //			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER};
-			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER};
+//			conf.missionTypeArrayStatic = {DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER};
 //			conf.missionTypeArrayStatic = {};
 		#endif
 	}

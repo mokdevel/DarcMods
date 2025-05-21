@@ -47,7 +47,7 @@ sealed class SDRC_MapMarkerHelper
 		markerst.SetCustomText(title);
 		markerst.SetWorldPos(pos[0], pos[2]);
 		markerst.SetIconEntry(icon);
-		markerst.SetMarkerFactionFlags(0);	//Everyone can see the markers
+//		markerst.SetMarkerFactionFlags(0);	//Everyone can see the markers		//TBD: Is this needed ?
 		mapMarkerMgr.InsertStaticMarker(markerst, false, true);		
 		
 		DC_Mmarker dcmarker = new DC_Mmarker(lifetime);
