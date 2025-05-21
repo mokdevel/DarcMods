@@ -79,30 +79,48 @@ class SDRC_Mission
 	}
 
 	//------------------------------------------------------------------------------------------------
-	void MissionRun()	//You should override this in your mission
+	/*! You should override this in your mission but remember to super.MissionRun()
+		override void MissionRun()
+		{			
+			super.MissionEnd();	
+			
+			.. and add the functionality for the states. See SDRC_Mission_Template
+		}
+	*/
+	void MissionRun()	
 	{
 		if (m_State == DC_EMissionState.INIT)
 		{
-			//Add init code
-			SetState(DC_EMissionState.ACTIVE);
 		}
 		
 		if (m_State == DC_EMissionState.END)
 		{
-			//Add code clean up code
-			MissionEnd();
-			SetState(DC_EMissionState.EXIT);
 		}
 		
 		if (m_State == DC_EMissionState.ACTIVE)
 		{
-			//Add code for runtime
+			int i = 0;
 			
-			//Eventually when mission is to ended do this:
-			//SetState(DC_EMissionState.END);
+			while (i < m_EntityList.Count())
+			{
+				IEntity entity = m_EntityList[i];
+				Vehicle vehicle = Vehicle.Cast(entity);
+				
+				if (vehicle)
+				{
+					SDRC_Log.Add("[SDRC_Mission:MissionRun] Vehicle: " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
+					
+					if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(entity.GetOrigin(), 5))
+					{
+						SDRC_Log.Add("[SDRC_Mission:MissionRun] Vehicle not to be deleted: " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
+						m_EntityList.Remove(i);
+						i--;
+					}
+				}
+				
+				i++;
+			}			
 		}
-		
-		GetGame().GetCallqueue().CallLater(MissionRun, 3000);		
 	}
 
 	//------------------------------------------------------------------------------------------------
