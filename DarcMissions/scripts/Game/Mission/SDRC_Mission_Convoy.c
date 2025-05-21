@@ -113,6 +113,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	override void MissionRun()
 	{
+		super.MissionRun();
+		
 		if (GetState() == DC_EMissionState.INIT)
 		{
 			MissionSpawn();

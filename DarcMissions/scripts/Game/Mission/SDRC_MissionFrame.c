@@ -207,6 +207,7 @@ class SDRC_MissionFrame
 			//SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] " + m_MissionList.Count() + " active missions. Waiting for mission delay and/or players to join.", LogLevel.DEBUG);
 		}
 
+		//------------------------------------------------------------------------------------------------
 		//Check if missions are 
 		//- to be despawned
 		//- active
@@ -221,13 +222,9 @@ class SDRC_MissionFrame
 						
 			if (mission.GetState() == DC_EMissionState.FAILED)
 			{
-/*				if (mission.IsStatic())
-				{
-					m_iStaticFailCount++;
-				}*/
 				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Mission start failed: " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + "). Static fail count: " + m_iStaticTryCount, LogLevel.WARNING);
 			}
-			
+
 			if (mission.GetState() == DC_EMissionState.EXIT || mission.GetState() == DC_EMissionState.FAILED)
 			{
 				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Deleting mission: " + mission.GetId(), LogLevel.NORMAL);
