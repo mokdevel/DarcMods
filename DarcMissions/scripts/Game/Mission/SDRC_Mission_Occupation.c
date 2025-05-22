@@ -97,7 +97,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		{	
 			if (!IsActive())
 			{
-				SDRC_Log.Add("[SDRC_Mission_Occupation:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
+				SDRC_Log.Add("[SDRC_Mission_Occupation:MissionRun] Mission over.", LogLevel.NORMAL);
 				SetState(DC_EMissionState.END);
 			}
 		}
@@ -268,13 +268,13 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {0,0,0,1,1,2,2,2,3,4};
+		conf.occupationList = {4};//{0,0,0,1,1,2,2,2,3,4};
 
 		//----------------------------------------------------
 		SDRC_Occupation occupation0 = new SDRC_Occupation();
 		occupation0.Set
 		(
-			"Gogland: Mission to be used with Escapists.",
+			"index 0: Mission in villages and local areas.",
 			"0 0 0",
 			"any",
 			"Guards patroling near ",
@@ -297,7 +297,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Occupation occupation1 = new SDRC_Occupation();
 		occupation1.Set(
-			"Bandit camp spawning to non city areas",
+			"index 1: Bandit camp spawning to non city areas",
 			"0 0 0",
 			"any",
 			"Bandit camp near ",
@@ -363,7 +363,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Occupation occupation2 = new SDRC_Occupation();
 		occupation2.Set(
-			"Occupation that will spawn mainly to cities and towns with USSR forces.",
+			"index 2: Occupation that will spawn mainly to cities and towns.",
 			"0 0 0",
 			"any",
 			"Occupation in ",
@@ -439,7 +439,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Occupation occupation3 = new SDRC_Occupation();
 		occupation3.Set(
-			"Car crash in an unusual place",
+			"index 3: Car crash in an unusual place",
 			"0 0 0",
 			"any",
 			"Car crash near ",
@@ -531,7 +531,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Occupation occupation4 = new SDRC_Occupation();
 		occupation4.Set(
-			"Campers with a car",
+			"index 4: Campers with a car and a tent",
 			"0 0 0",
 			"any",
 			"Campers near ",

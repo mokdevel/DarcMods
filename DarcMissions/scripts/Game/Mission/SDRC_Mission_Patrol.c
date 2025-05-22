@@ -111,7 +111,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			
 			if (!IsActive())
 			{
-				SDRC_Log.Add("[SDRC_Mission_Patrol:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
+				SDRC_Log.Add("[SDRC_Mission_Patrol:MissionRun] Mission over.", LogLevel.NORMAL);
 				SetState(DC_EMissionState.END);
 			}
 		}
@@ -251,7 +251,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		SDRC_Patrol patrol0 = new SDRC_Patrol();
 		patrol0.Set
 		(
-			"Enemy patrols going between two points hopefully following roads",
+			"index 0: Enemy patrols going between two points hopefully following roads",
 			"0 0 0",
 			"0 0 0",
 			"any",
@@ -281,7 +281,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Patrol patrol1 = new SDRC_Patrol();
 		patrol1.Set(
-			"USSR patrols",
+			"index 1: Heavy patrol",
 			"0 0 0",
 			"0 0 0",
 			"any",
@@ -311,7 +311,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		SDRC_Patrol patrol2 = new SDRC_Patrol();
 		patrol2.Set
 		(
-			"Enemy patrols between villages",
+			"index 2: Enemy patrols between villages",
 			"0 0 0",
 			"0 0 0",
 			"any",
@@ -336,7 +336,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		SDRC_Patrol patrol3 = new SDRC_Patrol();
 		patrol3.Set
 		(
-			"Small patrols",
+			"index 3: Small patrols with a few AIs",
 			"0 0 0",
 			"0 0 0",
 			"any",

@@ -207,7 +207,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 				case DC_EMissionCrashSiteState.RUN:		
 					if (!IsActive())
 					{
-						SDRC_Log.Add("[SDRC_Mission_Crashsite:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
+						SDRC_Log.Add("[SDRC_Mission_Crashsite:MissionRun] Mission over.", LogLevel.NORMAL);
 						SetState(DC_EMissionState.END);
 					}
 					break;
@@ -375,7 +375,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		SDRC_Crashsite crashsite0 = new SDRC_Crashsite();
 		crashsite0.Set
 		(
-			"Gogland: Mission to be used with Escapists.",
+			"index 0: general mission",
 			"Helicopter in distress ",
 			"A valuable cargo has crashed",	
 			{

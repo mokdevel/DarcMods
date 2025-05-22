@@ -142,7 +142,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 					break;
 				case DC_EMissionConvoyState.RUN:
 					//Move the position as the convoy is moving. This way check for player distance works properly.
-					if (m_Vehicle)
+					//If players have already stolen the vehicle, the map marker will stop moving.
+					if ( (m_Vehicle) && (m_EntityList.Count() > 0) )
 					{
 						SetPos(m_Vehicle.GetOrigin());
 						SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
@@ -155,7 +156,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 								
 					if (!IsActive())
 					{
-						SDRC_Log.Add("[SDRC_Mission_Convoy:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
+						SDRC_Log.Add("[SDRC_Mission_Convoy:MissionRun] Mission over.", LogLevel.NORMAL);
 						SetState(DC_EMissionState.END);
 					}
 					break;
@@ -343,7 +344,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		SDRC_Convoy convoy0 = new SDRC_Convoy();
 		convoy0.Set
 		(
-			"Convoy driving from .. to ..",
+			"index 0: Convoy driving from .. to ..",
 			"0 0 0",
 			"0 0 0",
 			"any",
@@ -393,7 +394,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		SDRC_Convoy convoy1 = new SDRC_Convoy();
 		convoy1.Set
 		(
-			"Truck driving from .. to ..",
+			"index 1: Truck driving from .. to ..",
 			"0 0 0",
 			"0 0 0",
 			"any",
@@ -443,7 +444,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		SDRC_Convoy convoy2 = new SDRC_Convoy();
 		convoy2.Set
 		(
-			"Armor driving from .. to ..",
+			"index 2: Armor driving from .. to ..",
 			"0 0 0",
 			"0 0 0",
 			"any",
