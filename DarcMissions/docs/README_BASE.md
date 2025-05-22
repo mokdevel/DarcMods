@@ -25,8 +25,8 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - New missions: Kill a target, steal smth and bring the loot somewhere, choppers hunting you
 
 ## Known issues
-- Vehicles spawned for missions (convoy, ...) will despawn once mission is cleared. (TBD: Plans to change this behavior).
 - No ammo spawns in loot. (TBD: weapon compatible ammo functionality)
+- AI spawns inside rocks sometimes. Might affect just certain types of rocks. 
 
 # Parameters
 All configurations are done via .json files. 
