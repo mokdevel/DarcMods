@@ -28,7 +28,7 @@
 	G_MEDICAL : Medical units
 	G_RECON : Units defined as recon units
 	G_SPECIAL : Special Forces units.
-	G_SMALL	: Small groups with two units. Mixed arms.
+	G_SMALL : Small groups with two units. Mixed arms.
 
 	//Characters
 	C_RIFLEMAN
