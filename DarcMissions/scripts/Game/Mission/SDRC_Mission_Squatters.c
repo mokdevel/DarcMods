@@ -120,7 +120,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		{			
 			if (!IsActive())
 			{
-				SDRC_Log.Add("[SDRC_Mission_Squatter:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
+				SDRC_Log.Add("[SDRC_Mission_Squatter:MissionRun] Mission over.", LogLevel.NORMAL);
 				SetState(DC_EMissionState.END);
 			}
 		}
@@ -414,7 +414,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Squatter squatter4 = new SDRC_Squatter();
 		squatter4.Set(
-			"Enemy in churches",
+			"Enemy in churches and similar",
 			"0 0 0",
 			"any",
 			"Church visitors near ",
@@ -427,7 +427,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 				"C_RIFLEMAN"
 			},
 			50, 0.8,		
-			{"Church_", "ChurchSmall_"},
+			{"Church_", "ChurchSmall_", "Mosque_", "Minaret"},
 			"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et"
 		);
 		conf.squatters.Insert(squatter4);	
