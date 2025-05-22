@@ -12,6 +12,7 @@
 	WEAPON_GRENADE,
 	WEAPON_ATTACHMENT,
 	WEAPON_OPTICS,
+	WEAPON_SHOTGUN,
 	ITEM_MEDICAL,
 	ITEM_GENERAL
 */
@@ -80,7 +81,9 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		lootList02.Set(
 			"WEAPON_LAUNCHER",
 			"/Weapons/Launchers",
-			{"Launcher"},
+			{"Launcher", 
+			"BC_M79"		//From BigChungusLaunchers
+			},
 			{"_Base"}
 		);
 		conf.lists.Insert(lootList02);		
@@ -144,5 +147,25 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			{"_Base"}
 		);
 		conf.lists.Insert(lootList08);		
+		
+		//Lootlist: Shotguns
+		SDRC_List lootList09 = new SDRC_List;
+		lootList09.Set(
+			"WEAPON_SHOTGUN",
+			"/Weapons/Shotguns",
+			{"Shotgun"},
+			{"_Base"}
+		);
+		conf.lists.Insert(lootList09);
+		
+		//Lootlist: Machineguns
+		SDRC_List lootList10 = new SDRC_List;
+		lootList10.Set(
+			"WEAPON_MG",
+			"/Weapons/MachineGuns",
+			{"MG_", "RPD", "RPK"},
+			{"_Base"}
+		);
+		conf.lists.Insert(lootList10);		
 	}
 }
