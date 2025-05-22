@@ -7,12 +7,16 @@
 * Cars become persistent once you are close to them for a moment.
 * No more duplicate conf files. Dir defined in core with ```subDir``` parameter.
 * Mods wait for core to start first.
-* Kunar map issue fixed (POS_IN_WATER).
+* Kunar map
+  * POS_IN_WATER issue fixed
+  * Added mosques and minarets as squatter spawns
 * Core provides some additional game information.
-* dc_coreConfig.json: Added ```subDir``` parameter
-* dc_coreConfig.json: Added ```fallbackEnemyFaction``` . In case a faction is not available, set AI to this one.
-* dc_coreConfig.json: Added ```enemyFactions``` . You can define the factions considered as enemies. Enemy AI will spawn from these factions unless a mission has defined a specific factions. The default missions use the new enemy list functionality
-* dc_missionConfig.json : ```missionProfile``` removed
+* dc_coreConfig.json parameter changes
+  * Added ```subDir```. This defines the subdir under profile\DarcMods where the confs go.
+  * Added ```fallbackEnemyFaction``` . In case a faction is not available, set AI to this one.
+  * Added ```enemyFactions``` . You can define the factions considered as enemies. Enemy AI will spawn from these factions unless a mission has defined a specific factions. The default missions use the new enemy list functionality
+* dc_missionConfig.json parameter changes
+  * ```missionProfile``` removed
 * Enemylist functionality : Instead of defining specific enemy prefab, you can use the available keywords to define the type of AI to spawn. The enemy is selected to represent the faction found in ```enemyFactions```. Available keywords:
   ```
 	//Groups
