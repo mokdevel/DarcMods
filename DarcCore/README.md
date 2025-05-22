@@ -17,6 +17,7 @@ DC_LogLevel logLevel : Loglevel of debugging information created in to logs.
   2 = NORMAL : Normal information in to log + all above
   3 = DEBUG  : Debug details + all above
   4 = ALL    : Prints everything including VERBOSE and SPAM. It's a lot.
+string subDir : The sub directory where to store configs (subDir=myconf -> $profile:/DarcMods/myconf/ )
 bool debugShowWaypoints : Only in WB. Show waypoints for AI.
 bool debugShowMarks : Only in WB. Show various markers in the world like mission location and non Valid Areas.
 string defaultEnemyFaction : (USSR) The default faction to assign to AI in case the proper faction is not available. For example: If FIA is not assigned but a FIA AI is spawned, it's set as USSR
