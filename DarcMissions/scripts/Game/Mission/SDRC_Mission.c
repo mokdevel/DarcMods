@@ -29,7 +29,7 @@ class SDRC_MissionConfig : Managed
 	string author = "darc";
 	int missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;	//How often the mission is run
 	bool showMarker = true;
-	bool showHint = true;
+	bool showHint = true;	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -89,6 +89,8 @@ class SDRC_Mission
 	*/
 	void MissionRun()	
 	{
+		//SDRC_Log.Add("[SDRC_Mission:MissionRun] Super on: " + GetId(), LogLevel.DEBUG);
+		
 		if (m_State == DC_EMissionState.INIT)
 		{
 		}
@@ -108,11 +110,11 @@ class SDRC_Mission
 				
 				if (vehicle)
 				{
-					SDRC_Log.Add("[SDRC_Mission:MissionRun] Vehicle: " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
+					SDRC_Log.Add("[SDRC_Mission:MissionRun] Vehicle: " + entity.GetPrefabData().GetPrefabName(), LogLevel.SPAM);
 					
 					if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(entity.GetOrigin(), 5))
 					{
-						SDRC_Log.Add("[SDRC_Mission:MissionRun] Vehicle not to be deleted: " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
+						SDRC_Log.Add("[SDRC_Mission:MissionRun] Vehicle set as persistent: " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
 						m_EntityList.Remove(i);
 						i--;
 					}
