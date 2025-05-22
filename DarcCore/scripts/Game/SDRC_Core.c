@@ -22,9 +22,9 @@ class SDRC_Core
 		SDRC_Log.SetLogLevel(m_Config.logLevel);
 
 		//Print general information
-		SDRC_Conf.subConfDir = m_Config.subConfDir;
+		SDRC_Conf.subDir = m_Config.subDir;
 		SDRC_Log.Add("[SDRC_Core] -------- General information --------", LogLevel.NORMAL);
-		SDRC_Log.Add("[SDRC_Core] Conf destination: $profile:/" + SDRC_Conf.CONF_DIRECTORY + "/" + SDRC_Conf.subConfDir, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_Core] Conf destination: $profile:/" + SDRC_Conf.CONF_DIRECTORY + "/" + SDRC_Conf.subDir, LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World name: " + SDRC_Misc.GetWorldName(true), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World size: " + SDRC_Misc.GetWorldSize(), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World has ocean: " + GetGame().GetWorld().IsOcean(), LogLevel.NORMAL);
@@ -70,7 +70,7 @@ class SDRC_CoreConfig : Managed
 	int version = 1;
 	string author = "darc";
 	DC_LogLevel logLevel;
-	string subConfDir;						//Directory specifying a certain conf for play. For example "Escapists"	
+	string subDir;						//Directory specifying a certain conf for play. For example "Escapists"	
 	bool debugShowWaypoints = true;
 	bool debugShowMarks = true;	
 	bool debugShowSpheres = true;
@@ -117,7 +117,7 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 	{
 //		conf.logLevel = DC_LogLevel.DEBUG;	
 		conf.logLevel = SDRC_Conf.DEFAULT_LOGLEVEL;
-		conf.subConfDir = SDRC_Conf.DEFAULT_DIR;		
+		conf.subDir = SDRC_Conf.DEFAULT_DIR;		
 		conf.buildingExcludeFilter = {
 			"BrickPile", "WoodPile", "Hotbed", "Henhouse", "PhoneBooth",
 			"AmmoDump", "ElectricCabinet", "ControlBox110kV", "LightBeacon",
@@ -127,6 +127,8 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 			"GraveStone", "Grave_", "GraveFence",
 			"MooringDolphin",
 			"HouseRuin",
+			//These from Kunar map
+			"Wall_2", "Wall_5", "militarywall", "fort_rampart_", "CNCBlock", "MEStairs"
 		}
 	}
 };
