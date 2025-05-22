@@ -8,7 +8,7 @@
 /*
 	//Groups
 	G_LIGHT : Small arms units like rifle men.
-	G_HEAVY : Bigger guns for example machine guns
+	G_HEAVY : Units with bigger guns for example machine guns
 	G_SNIPER : Units with rifles and typically with scopes
 	G_LAUNCHER : Units with launchers
 	G_ADMIN : Officers and similar higher ranking units

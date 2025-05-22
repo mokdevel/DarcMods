@@ -85,6 +85,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		{
 			MissionSpawn();
 			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds
+			return;
 		}
 
 		if (GetState() == DC_EMissionState.END)
@@ -268,7 +269,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {4};//{0,0,0,1,1,2,2,2,3,4};
+		conf.occupationList = {0,0,0,1,1,2,2,2,3,4};
 
 		//----------------------------------------------------
 		SDRC_Occupation occupation0 = new SDRC_Occupation();

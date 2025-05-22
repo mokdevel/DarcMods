@@ -108,6 +108,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 			MissionSpawn();
 			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds
 //			SetState(DC_EMissionState.ACTIVE);
+			return;
 		}
 
 		if (GetState() == DC_EMissionState.END)
@@ -266,7 +267,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Squatter squatter0 = new SDRC_Squatter();
 		squatter0.Set(
-			"Squatters in cities",
+			"index 0: Squatters in cities",
 			"0 0 0",
 			"any",
 			"Squatters near ",
@@ -307,7 +308,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Squatter squatter1 = new SDRC_Squatter();
 		squatter1.Set(
-			"Squatters in control towers",
+			"index 1: Squatters in control towers",
 			"0 0 0",
 			"any",
 			"Enemy in ",
@@ -343,7 +344,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Squatter squatter2 = new SDRC_Squatter();
 		squatter2.Set(
-			"Squatters in military locations",
+			"index 2: Squatters in military locations",
 			"0 0 0",
 			"any",
 			"Guards around ",
@@ -379,7 +380,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Squatter squatter3 = new SDRC_Squatter();
 		squatter3.Set(
-			"Military in industrial areas",
+			"index 3: Military in industrial areas",
 			"0 0 0",
 			"any",
 			"Industrial area near ",
@@ -414,10 +415,10 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Squatter squatter4 = new SDRC_Squatter();
 		squatter4.Set(
-			"Enemy in churches and similar",
+			"index 4: Enemy in churches and similar",
 			"0 0 0",
 			"any",
-			"Church visitors near ",
+			"Sanctuary visitors near ",
 			"Holy night, holy loot.",		
 			{
 				//We pick any building that matches and ignore location
@@ -445,7 +446,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Squatter squatter5 = new SDRC_Squatter();
 		squatter5.Set(
-			"Shops and houses",
+			"index 5: Shops and houses",
 			"0 0 0",
 			"any",
 			"Burglars seen near ",

@@ -5,13 +5,13 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-//#define SDRC_RELEASE
+#define SDRC_RELEASE
 
 sealed class SDRC_Conf
 {
 	const string CONF_DIRECTORY = "DarcMods";
 	const string DEFAULT_DIR = "default";
-	static string subConfDir = "";
+	static string subDir = "";
 	static bool coreHasStarted = false;
 	
 //Release options	
@@ -40,8 +40,8 @@ sealed class SDRC_Conf
 //	const bool OVERWRITE_JSON = false;				
 	const bool SHOW_VALID_MISSION_AREAS = false;	
 	const bool SHOW_MARKER_FOR_LOCATION = false;	
-	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
-//	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
+//	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
+	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
 	#define USE_POPUP_NOTIFICATION
 #endif
 }
