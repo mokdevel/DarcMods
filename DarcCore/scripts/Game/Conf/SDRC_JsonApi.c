@@ -75,9 +75,9 @@ class SDRC_JsonApi : JsonApiStruct
 	{			
 		string path = "";
 		string directory = SDRC_Conf.CONF_DIRECTORY;
-		if (SDRC_Conf.subConfDir != "")	//TBD: This should never be empty
+		if (SDRC_Conf.subDir != "")	//TBD: This should never be empty
 		{
-			directory = directory + "/" + SDRC_Conf.subConfDir
+			directory = directory + "/" + SDRC_Conf.subDir
 		}
 		
 		path = "$profile:/" + directory + "/";
