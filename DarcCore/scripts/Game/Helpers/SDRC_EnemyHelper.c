@@ -29,32 +29,45 @@ sealed class SDRC_EnemyHelper
 		SDRC_Log.Add("[SDRC_EnemyHelper:SanityCheck] Checking that all factions (" + enemyFactions + ") have enemies.", LogLevel.NORMAL);
 		
 		array<string>factionsFound = {};		
+		array<string>factionsMissing = {};
 		
 		foreach (SDRC_List list : m_Config.lists)
 		{
-			int count = 0;
+//			int count = 0;
 			factionsFound.Clear();
+			factionsMissing.Clear();
 			
 			foreach(string faction : enemyFactions)
 			{
+				//Collect factions found
 				foreach(ResourceName enemy : list.items)
 				{
 					if (enemy.Contains("_" + faction + "_"))
 					{
-						count++;
+//						count++;
 						factionsFound.Insert(faction);
+						break;
+					}
+				}
+
+				//Collect factions missing
+				foreach(ResourceName enemy : list.items)
+				{
+					if (!enemy.Contains("_" + faction + "_"))
+					{
+						factionsMissing.Insert(faction);
 						break;
 					}
 				}
 			}
 			
-			if (count == enemyFactions.Count())
+			if (factionsFound.Count() == enemyFactions.Count())
 			{
-				SDRC_Log.Add("[SDRC_EnemyHelper:SanityCheck] " + list.id + " has " + count + " enemy factions", LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_EnemyHelper:SanityCheck] " + list.id + " OK. Has " + factionsFound.Count() + " enemy factions", LogLevel.DEBUG);
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_EnemyHelper:SanityCheck] " + list.id + " is missing enemies. " + count + "/" + enemyFactions.Count() + " factions found: " + factionsFound , LogLevel.WARNING);
+				SDRC_Log.Add("[SDRC_EnemyHelper:SanityCheck] " + list.id + " is missing enemies in faction: " + factionsMissing, LogLevel.WARNING);
 			}
 		}		
 	}

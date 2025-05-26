@@ -88,7 +88,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList02.Set(
 			"G_SNIPER",
 			"/Groups",
-			{"Sniper", "SharpShooter"},
+			{"Sniper", "SharpShooter", "USSR_Spetsnaz_SentryTeam"},
 			{"_Base", "_NotSpawned", "_Remnants"}
 		);
 		conf.lists.Insert(enemyList02);

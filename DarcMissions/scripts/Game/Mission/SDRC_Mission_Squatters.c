@@ -134,8 +134,6 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	{			
 		super.MissionEnd();	
 		
-		//The rest of your clean up code.
-		
 		SDRC_Log.Add("[SDRC_Mission_Squatter:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);
 	}
 	

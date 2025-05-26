@@ -36,7 +36,7 @@ class SDRC_ListConfig : Managed
 			
 			if (SDRC_Log.GetLogLevel() > DC_LogLevel.NORMAL)
 			{
-				SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id, LogLevel.DEBUG);				
+				SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);				
 				list.items.Debug();
 			}
 		}

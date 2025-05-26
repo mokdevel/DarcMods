@@ -40,8 +40,8 @@ sealed class SDRC_Conf
 //	const bool OVERWRITE_JSON = false;				
 	const bool SHOW_VALID_MISSION_AREAS = false;	
 	const bool SHOW_MARKER_FOR_LOCATION = false;	
-//	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
-	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
+	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
+//	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
 	#define USE_POPUP_NOTIFICATION
 #endif
 }

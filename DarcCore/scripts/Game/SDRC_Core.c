@@ -128,7 +128,9 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 			"MooringDolphin",
 			"HouseRuin",
 			//These from Kunar map
-			"Wall_2", "Wall_5", "militarywall", "fort_rampart_", "CNCBlock", "MEStairs"
+			"Wall_2", "Wall_5", "militarywall", "fort_rampart_", "CNCBlock", "MEStairs",
+			//Gogland
+			"Gogland_trench", "Gogland_short_wall"
 		}
 	}
 };
