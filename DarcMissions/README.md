@@ -25,8 +25,8 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - New missions: Kill a target, steal smth and bring the loot somewhere, choppers hunting you
 
 ## Known issues
-- Vehicles spawned for missions (convoy, ...) will despawn once mission is cleared. (TBD: Plans to change this behavior).
 - No ammo spawns in loot. (TBD: weapon compatible ammo functionality)
+- AI spawns inside rocks sometimes. Might affect just certain types of rocks. 
 
 # Parameters
 All configurations are done via .json files. 
@@ -77,20 +77,34 @@ Mission specific files
 Dependency specific files
 * [dc_coreConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_coreConfig.json) : Configuration file for core.
 
+
 # Version history
 
 ## Next release (unreleased)
+Still empty.
+
+## 20250526
+Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
+
+Main feature: You can define the enemies via ```enemyFactions```. Just configure a faction, and that faction is used for enemies. USSR as default.
+
 * Two new loot lists ```WEAPON_SHOTGUN``` , ```WEAPON_MG```. Supports BigChungus guns.
 * Cars become persistent once you are close to them for a moment.
 * No more duplicate conf files. Dir defined in core with ```subDir``` parameter.
 * Mods wait for core to start first.
-* Kunar map issue fixed (POS_IN_WATER).
+* Kunar map
+  * POS_IN_WATER issue fixed
+  * Added mosques and minarets as squatter spawns
 * Core provides some additional game information.
-* dc_coreConfig.json: Added ```subDir``` parameter
-* dc_coreConfig.json: Added ```fallbackEnemyFaction``` . In case a faction is not available, set AI to this one.
-* dc_coreConfig.json: Added ```enemyFactions``` . You can define the factions considered as enemies. Enemy AI will spawn from these factions unless a mission has defined a specific factions. The default missions use the new enemy list functionality
-* dc_missionConfig.json : ```missionProfile``` removed
-* Enemylist functionality : Instead of defining specific enemy prefab, you can use the available keywords to define the type of AI to spawn. The enemy is selected to represent the faction found in ```enemyFactions```. Available keywords:
+* dc_coreConfig.json parameter changes
+  * Added ```subDir```. This defines the subdir under profile\DarcMods where the confs go.
+  * Added ```fallbackEnemyFaction``` . In case a faction is not available, set AI to this one.
+  * Added ```enemyFactions``` . You can define the factions considered as enemies. Enemy AI will spawn from these factions unless a mission has defined a specific factions. The default missions use the new enemy list functionality
+* dc_missionConfig.json parameter changes
+  * ```missionProfile``` removed
+* Enemylist functionality : Instead of defining specific enemy prefab, you can use the available keywords to define the type of AI to spawn. The enemy is selected to represent the faction found in ```enemyFactions```.
+* All missions use enemylists. You should delete your existing jsons.
+* Available keywords:
   ```
 	//Groups
 	G_LIGHT : Small arms units like rifle men.
@@ -101,7 +115,7 @@ Dependency specific files
 	G_MEDICAL : Medical units
 	G_RECON : Units defined as recon units
 	G_SPECIAL : Special Forces units.
-	G_SMALL	: Small groups with two units. Mixed arms.
+	G_SMALL : Small groups with two units. Mixed arms.
 
 	//Characters
 	C_RIFLEMAN
