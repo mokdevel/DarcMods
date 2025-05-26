@@ -3,6 +3,11 @@
 # Version history
 
 ## Next release (unreleased)
+
+Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
+
+Main feature: You can define the enemies via ```enemyFactions```. Just configure a faction, and that faction is used for enemies. USSR as default.
+
 * Two new loot lists ```WEAPON_SHOTGUN``` , ```WEAPON_MG```. Supports BigChungus guns.
 * Cars become persistent once you are close to them for a moment.
 * No more duplicate conf files. Dir defined in core with ```subDir``` parameter.
