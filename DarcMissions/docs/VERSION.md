@@ -17,7 +17,9 @@
   * Added ```enemyFactions``` . You can define the factions considered as enemies. Enemy AI will spawn from these factions unless a mission has defined a specific factions. The default missions use the new enemy list functionality
 * dc_missionConfig.json parameter changes
   * ```missionProfile``` removed
-* Enemylist functionality : Instead of defining specific enemy prefab, you can use the available keywords to define the type of AI to spawn. The enemy is selected to represent the faction found in ```enemyFactions```. Available keywords:
+* Enemylist functionality : Instead of defining specific enemy prefab, you can use the available keywords to define the type of AI to spawn. The enemy is selected to represent the faction found in ```enemyFactions```.
+* All missions use enemylists. You should delete your existing jsons.
+* Available keywords:
   ```
 	//Groups
 	G_LIGHT : Small arms units like rifle men.
