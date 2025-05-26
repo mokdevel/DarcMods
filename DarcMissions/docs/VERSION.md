@@ -3,7 +3,9 @@
 # Version history
 
 ## Next release (unreleased)
+Still empty.
 
+## 20250526
 Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
 
 Main feature: You can define the enemies via ```enemyFactions```. Just configure a faction, and that faction is used for enemies. USSR as default.
