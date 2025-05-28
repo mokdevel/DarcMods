@@ -116,5 +116,11 @@ ImageSetClass {
    Size 64 128
    Flags 0
   }
+  ImageSetDefClass n_fence_round {
+   Name "n_fence_round"
+   Pos 258 130
+   Size 64 64
+   Flags 0
+  }
  }
 }
