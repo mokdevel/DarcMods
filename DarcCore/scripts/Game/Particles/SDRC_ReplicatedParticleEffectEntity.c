@@ -10,5 +10,8 @@ class SDCR_ReplicatedParticleEffectEntity : SCR_ReplicatedParticleEffectEntity
 		super.EOnActivate(owner);
 		
 		Print("WHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOA!");
+		
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+		baseGameMode.missionFrame.SendHint();
 	}
 }

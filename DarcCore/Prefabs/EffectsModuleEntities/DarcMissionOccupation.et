@@ -22,7 +22,11 @@ SDCR_ReplicatedParticleEffectEntity : "{5C61F07CE0B1DBB2}Prefabs/EffectsModuleEn
     }
    }
    m_bAutoRegister ALWAYS
-   m_Flags HORIZONTAL
+   m_bStatic 1
+   m_Flags 67
+  }
+  RplComponent "{616C912BED359789}" {
+   Streamable Disabled
   }
  }
  scale 13.3
