@@ -1,0 +1,30 @@
+SDCR_ReplicatedParticleEffectEntity : "{5C61F07CE0B1DBB2}Prefabs/EffectsModuleEntities/BaseEffectModule_Particle_Smoke.et" {
+ ID "5CAAA309C760D959"
+ components {
+  SoundComponent "{622CB2564278E7B9}" {
+   Enabled 0
+  }
+  SCR_EditableEffectsModuleComponent "{6578C40A42FBF47D}" {
+   m_EntityType SYSTEM
+   m_UIInfo SCR_EditableEntityUIInfoColored "{6578C40A7E70DBF0}" {
+    Name "DarcMissions Occupation"
+    Description "Spawns a random Occupation mission"
+    Icon "{0C86564F20AD42F2}UI/Textures/Icons/SDRC_icons_mapMarkersUI.imageset"
+    IconSetName "n_fence_round"
+    m_Image "{232D9BDABB08F52F}UI/Textures/Icons/SDRC_icon_M.edds"
+    m_aAuthoredLabels {
+     7
+    }
+    m_EntityBudgetCost {
+     SCR_EntityBudgetValue "{6578C40A070C0E1B}" {
+      m_BudgetType SYSTEMS
+     }
+    }
+   }
+   m_bAutoRegister ALWAYS
+   m_Flags HORIZONTAL
+  }
+ }
+ scale 13.3
+ EffectPath "{94CAB105E065775C}Particles/Weapon/Smoke_grenade_M18_Red.ptc"
+}
