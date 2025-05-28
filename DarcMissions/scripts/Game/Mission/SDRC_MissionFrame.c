@@ -23,6 +23,13 @@ Add this to your StartGameTrigger or use SDRC_GameCoreBase.c
 
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
 
+class SDRC_MissionGMSpawned : Managed
+{
+	EntityID entityID;
+	DC_EMissionType type;
+	vector pos;
+}
+
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionFrame
 {
@@ -42,6 +49,8 @@ class SDRC_MissionFrame
 	private int m_iStaticTryCount = 0;					//Counter for tries on static missions - both failed and succesful. If m_iStaticTryLimit is reached, we stop trying to spawn static missions
 	private int m_iStaticTryLimit = 0;					
 		
+	ref array<ref SDRC_MissionGMSpawned> m_missionGMSpawned = {};
+	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_MissionFrame()
 	{
@@ -98,6 +107,7 @@ class SDRC_MissionFrame
 		#endif	
 		
 		//GetGame().GetCallqueue().CallLater(SendHint, 15000, true);
+		GetGame().GetCallqueue().CallLater(FindGMSpawnedMissions, 5000, true);
 		
 		//Start the mission framework.
 		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStartDelay, false);
@@ -156,6 +166,11 @@ class SDRC_MissionFrame
 				tmpDC_Mission.SetActiveTime(m_Config.missionStatic.activeTime);
 				tmpDC_Mission.ResetActiveTime();
 			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] MissionCreate failed (static): " + tmpDC_Mission.GetId(), LogLevel.WARNING);
+			}
+			
 			staticMissionSpawned = true;	//Static missions to be spawned faster at startup
 			m_iStaticTryCount++;			//We increase this even if the mission start failed for static
 		}
@@ -166,22 +181,34 @@ class SDRC_MissionFrame
 			{
 				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Spawning new dynamic mission", LogLevel.NORMAL);
 				
-				//Select a new mission to spawn. 
-				missionType = m_Config.missionDynamic.missionTypeArray.GetRandomElement();				
+				//Select a new mission to spawn.
+				if (m_missionGMSpawned.IsEmpty())
+				{
+					missionType = m_Config.missionDynamic.missionTypeArray.GetRandomElement();
+				}
+				else	//Spawn a GM requested mission
+				{
+					CleanMissionGMSpawnedArray();
+					missionType = m_Config.missionDynamic.missionTypeArray.GetRandomElement();
+					
+//					SDRC_MissionGMSpawned mission
+					
+				}
+				
+				//Do the spawning
 				tmpDC_Mission = MissionCreate(missionType);
 				if (tmpDC_Mission)
 				{
 					tmpDC_Mission.SetActiveTime(m_Config.missionDynamic.activeTime);
 					tmpDC_Mission.ResetActiveTime();
 				}
+				else
+				{
+					SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] MissionCreate failed (dynamic): " + tmpDC_Mission.GetId(), LogLevel.WARNING);
+				}
 			}
 		}
 
-		if (!tmpDC_Mission)
-		{
-			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] MissionCreate failed: " + tmpDC_Mission.GetId(), LogLevel.WARNING);
-		}
-					
 		//Mission is ready to be run. Finalize the last details
 		if (tmpDC_Mission)
 		{
@@ -473,5 +500,96 @@ class SDRC_MissionFrame
 		}
 		
 		return count;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Search the map for GM spawned missions
+	*/	
+	void FindGMSpawnedMissions()
+	{
+		int size = SDRC_Misc.GetWorldSize();
+		vector pos = "0 0 0";
+		pos[0] = size / 2;
+		pos[2] = size / 2;
+		GetGame().GetWorld().QueryEntitiesBySphere(pos, size / 2, FindGMSpawnedMissionsCallback, null, EQueryEntitiesFlags.STATIC);
+		
+		dumpGMSpawnedMissions();
+		CleanMissionGMSpawnedArray();
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Callback for the search of GM spawned missions
+	*/		
+	bool FindGMSpawnedMissionsCallback(IEntity entity)
+	{
+		if (entity.ClassName() == "SDCR_ReplicatedParticleEffectEntity")
+		{
+			SDCR_ReplicatedParticleEffectEntity ent = SDCR_ReplicatedParticleEffectEntity.Cast(entity);
+			if (!ent.IsAdded())
+			{
+				ent.AddedToList();
+				
+				ref SDRC_MissionGMSpawned mission = new SDRC_MissionGMSpawned();
+				
+				mission.entityID = entity.GetID();
+				mission.pos = entity.GetOrigin();
+				mission.type = DC_EMissionType.OCCUPATION;
+				m_missionGMSpawned.Insert(mission);
+				
+				ResourceName res = entity.GetPrefabData().GetPrefabName();
+				SDRC_Log.Add("[SDRC_MissionFrame:FindGMSpawnedMissions] Found: " + res + " at " + entity.GetOrigin(), LogLevel.DEBUG);
+			}			
+			
+			//SDRC_SpawnHelper.DespawnItem(entity);
+		}
+		
+		return true;
+	}
+
+	//------------------------------------------------------------------------------------------------	
+	/*!
+	Remove deleted missions from the list
+	*/		
+	void CleanMissionGMSpawnedArray()
+	{
+		int i = 0;
+		
+		while (i < m_missionGMSpawned.Count())
+		{
+			IEntity entity = GetGame().GetWorld().FindEntityByID(m_missionGMSpawned[i].entityID);
+			if (!entity)
+			{
+				m_missionGMSpawned.Remove(i);
+			}
+			else
+			{
+				i++;
+			}
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Dump information of GM spawned missions
+	*/			
+	void dumpGMSpawnedMissions()
+	{
+		foreach (SDRC_MissionGMSpawned mission : m_missionGMSpawned)
+		{
+			IEntity entity = GetGame().GetWorld().FindEntityByID(mission.entityID);
+			//SDCR_ReplicatedParticleEffectEntity ent
+			
+			if (entity)
+			{
+				SDRC_Log.Add("[SDRC_MissionFrame:dumpGMSpawnedMissions] " + entity + " at " + mission.pos, LogLevel.DEBUG);
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_MissionFrame:dumpGMSpawnedMissions] Deleted at: " + mission.pos, LogLevel.DEBUG);
+			}
+			
+		}		
 	}	
 }

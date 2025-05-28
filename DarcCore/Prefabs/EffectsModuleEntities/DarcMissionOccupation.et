@@ -29,6 +29,7 @@ SDCR_ReplicatedParticleEffectEntity : "{5C61F07CE0B1DBB2}Prefabs/EffectsModuleEn
    Streamable Disabled
   }
  }
+ Flags 1027
  scale 13.3
  EffectPath "{94CAB105E065775C}Particles/Weapon/Smoke_grenade_M18_Red.ptc"
 }

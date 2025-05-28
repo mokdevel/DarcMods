@@ -7,9 +7,9 @@
 	#ifdef SDRC_RELEASE
 		private const string SDRC_MISSION_PROFILE_DIR = "default";
 		private const int SDRC_MISSION_COUNT = 10;										//Default amount of dynamic missions to run
-		private const int SDRC_MISSION_COUNT_STATIC = 10;								//Default amount of static missions to run
-		private const float SDRC_MISSION_COUNT_MUL = 0.2;
-		private const float SDRC_MISSION_COUNT_STATIC_MUL = 0.1;
+		private const float SDRC_MISSION_COUNT_MUL = 1.5;
+		private const int SDRC_MISSION_COUNT_STATIC = 8;								//Default amount of static missions to run
+		private const float SDRC_MISSION_COUNT_STATIC_MUL = 1;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 30;
 		private const int SDRC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS = 4*60;					//Minimum delay between missions. 
@@ -27,9 +27,9 @@
 	#ifndef SDRC_RELEASE	
 		private const string SDRC_MISSION_PROFILE_DIR = "dummy";
 		private const int SDRC_MISSION_COUNT = 0;//8;
-		private const int SDRC_MISSION_COUNT_STATIC = 0;//10;
 		private const float SDRC_MISSION_COUNT_MUL = 2.0;
-		private const float SDRC_MISSION_COUNT_STATIC_MUL = 1.2;
+		private const int SDRC_MISSION_COUNT_STATIC = 1;//10;
+		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSION_START_DELAY = 10;					
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS = 1*20;
