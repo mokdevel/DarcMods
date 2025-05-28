@@ -36,9 +36,11 @@ class SDRC_MissionFrame
 	ref array<ref SDRC_NonValidArea> m_aNonValidAreas = {};
 	
 	private string m_sWorldName;
+	private int m_iMissionCount;
+	private int m_iMissionCountStatic;					//Amount of static missions
 	private int m_iLastMissionSpawnTime;
-	private int m_iStaticTryCount = 0;					//Counter for tries on static missions - both failed and succesful. If staticLimit is reached, we'll try a dynamic one.
-	private bool m_bFirstMissionSpawned = false;	//The first mission is to be dynamic
+	private int m_iStaticTryCount = 0;					//Counter for tries on static missions - both failed and succesful. If m_iStaticTryLimit is reached, we stop trying to spawn static missions
+	private int m_iStaticTryLimit = 0;					
 		
 	//------------------------------------------------------------------------------------------------
 	void SDRC_MissionFrame()
@@ -72,11 +74,18 @@ class SDRC_MissionFrame
 		//Checking the enemies found
 		SDRC_Log.Add("[SDRC_MissionFrame] Enemy factions: " + m_Config.enemyFactions, LogLevel.NORMAL);
 		SDRC_EnemyHelper.SetEnemyFactions(m_Config.enemyFactions);
-		
+
+		//Count amount of dynamic and static missions
+		m_iMissionCount = GetMissionCount(m_Config.missionDynamic.count, m_Config.missionDynamic.countMul);
+		SDRC_Log.Add("[SDRC_MissionFrame] Max dynamic mission count: " + m_iMissionCount, LogLevel.NORMAL);		
+
+		m_iMissionCountStatic = GetMissionCount(m_Config.missionStatic.count, m_Config.missionStatic.countMul);
+		SDRC_Log.Add("[SDRC_MissionFrame] Max static mission count: " + m_iMissionCountStatic, LogLevel.NORMAL);		
+				
 		//Set some defaults
 		m_iStaticTryCount = 0;
+		m_iStaticTryLimit = m_iMissionCountStatic + 5;	//We may fail 5 times
 		m_iLastMissionSpawnTime = (System.GetTickCount() / 1000) - m_Config.missionDelayBetweeen;	//Fix the timer so that first mission immediately spawns
-		m_bFirstMissionSpawned = SDRC_MISSION_FIRST_MISSION_HAS_SPAWNED;
 				
 		//Fix seconds to ms
 		SDRC_Log.Add("[SDRC_MissionFrame] Waiting for " + m_Config.missionStartDelay + " seconds before spawning missions.", LogLevel.NORMAL);
@@ -130,76 +139,78 @@ class SDRC_MissionFrame
 	*/	
 	protected void MissionCycleManager()
 	{			
-		//Check if more missions are to be spawned		
-		if ( (m_MissionList.Count() < m_Config.missionCount) && (isMissionDelayPassed()) && SDRC_PlayerHelper.PlayerCount() > 0)
+		ref SDRC_Mission tmpDC_Mission = null;
+		DC_EMissionType missionType = null;
+		bool staticMissionSpawned = false;
+		
+		//Check if static missions have been spawned
+		if (CountStaticMissions() < m_iMissionCountStatic && m_iStaticTryCount < m_iStaticTryLimit)
 		{
-			private ref SDRC_Mission tmpDC_Mission = null;
-
-			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Spawning new mission", LogLevel.NORMAL);
+			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Spawning new static mission", LogLevel.NORMAL);
 			
-			DC_EMissionType missionType = null;
-			
-			//Select a new mission to spawn. 
-			//Static missions are prioritized so check that the list spawned. 
-			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Static active: " + CountStaticMissions() + " < static count: " + m_Config.missionTypeArrayStatic.Count() + " && StaticCount: " + m_iStaticTryCount + " < StaticLimit: " + m_Config.staticTryLimit + " && FirstMissionSpawned: " + m_bFirstMissionSpawned, LogLevel.DEBUG);
-			if (CountStaticMissions() < m_Config.missionTypeArrayStatic.Count() && m_iStaticTryCount < m_Config.staticTryLimit && m_bFirstMissionSpawned)
-			{
-				missionType = m_Config.missionTypeArrayStatic.GetRandomElement();
-				tmpDC_Mission = MissionCreate(missionType);
-				if (tmpDC_Mission)
-				{
-					tmpDC_Mission.SetStatic(true);
-					tmpDC_Mission.SetActiveTime(m_Config.missionActiveTimeStatic);
-					tmpDC_Mission.ResetActiveTime();
-				}
-				m_iStaticTryCount++;	//We increase this even if the mission start failed for static
-			}
-			else	//Select a dynamic mission to spawn
-			{
-				missionType = m_Config.missionTypeArrayDynamic.GetRandomElement();				
-				tmpDC_Mission = MissionCreate(missionType);
-				if (tmpDC_Mission)
-				{
-					tmpDC_Mission.SetActiveTime(m_Config.missionActiveTime);
-					tmpDC_Mission.ResetActiveTime();
-					m_bFirstMissionSpawned = true;
-					//Mission startup was success. Reset fail counter for static missions.	
-					m_iStaticTryCount = 0;
-				}				
-			}
-
-			if (!tmpDC_Mission)
-			{
-				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] MissionCreate failed.", LogLevel.WARNING);
-			}
-						
-			//Mission is ready to be run. Finalize the last details
+			missionType = m_Config.missionStatic.missionTypeArray.GetRandomElement();
+			tmpDC_Mission = MissionCreate(missionType);
 			if (tmpDC_Mission)
 			{
-				//Add to list
-				m_MissionList.Insert(tmpDC_Mission);
+				tmpDC_Mission.SetStatic(true);
+				tmpDC_Mission.SetActiveTime(m_Config.missionStatic.activeTime);
+				tmpDC_Mission.ResetActiveTime();
+			}
+			staticMissionSpawned = true;	//Static missions to be spawned faster at startup
+			m_iStaticTryCount++;			//We increase this even if the mission start failed for static
+		}
+		else
+		{
+			//Check if more dynamic missions are to be spawned
+			if ( (m_MissionList.Count() < m_iMissionCount) && (isMissionDelayPassed()) && SDRC_PlayerHelper.PlayerCount() > 0)
+			{
+				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Spawning new dynamic mission", LogLevel.NORMAL);
 				
-				//If there was an error starting the mission, it has been prepared for deletion.
-				if (tmpDC_Mission.GetState() != DC_EMissionState.FAILED)
-				{		
-					//Set the defaul active distance
-					tmpDC_Mission.SetActiveDistance(m_Config.missionActiveDistance);
-					tmpDC_Mission.SetActiveTimeToEnd(m_Config.missionActiveTimeToEnd);
-					//Set mission to start to run
-					m_MissionList[m_MissionList.Count() - 1].MissionRun();
-				
-					SDRC_Log.Add(string.Format("[SDRC_MissionFrame:MissionCycleManager] Spawning mission %1 (%2) %3", tmpDC_Mission.GetTitle(), tmpDC_Mission.GetPos(), tmpDC_Mission.GetPosName()), LogLevel.NORMAL);
+				//Select a new mission to spawn. 
+				missionType = m_Config.missionDynamic.missionTypeArray.GetRandomElement();				
+				tmpDC_Mission = MissionCreate(missionType);
+				if (tmpDC_Mission)
+				{
+					tmpDC_Mission.SetActiveTime(m_Config.missionDynamic.activeTime);
+					tmpDC_Mission.ResetActiveTime();
+				}
+			}
+		}
 
+		if (!tmpDC_Mission)
+		{
+			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] MissionCreate failed: " + tmpDC_Mission.GetId(), LogLevel.WARNING);
+		}
+					
+		//Mission is ready to be run. Finalize the last details
+		if (tmpDC_Mission)
+		{
+			//Add to list
+			m_MissionList.Insert(tmpDC_Mission);
+			
+			//If there was an error starting the mission, it has been prepared for deletion.
+			if (tmpDC_Mission.GetState() != DC_EMissionState.FAILED)
+			{		
+				//Set the defaul active distance
+				tmpDC_Mission.SetActiveDistance(m_Config.missionActiveDistance);
+				tmpDC_Mission.SetActiveTimeToEnd(m_Config.missionActiveTimeToEnd);
+				//Set mission to start to run
+				m_MissionList[m_MissionList.Count() - 1].MissionRun();
+			
+				SDRC_Log.Add(string.Format("[SDRC_MissionFrame:MissionCycleManager] Spawning mission %1 (%2) %3", tmpDC_Mission.GetTitle(), tmpDC_Mission.GetPos(), tmpDC_Mission.GetPosName()), LogLevel.NORMAL);
+
+				if (!staticMissionSpawned)
+				{
 					if (m_Config.missionHintTime > 0 && tmpDC_Mission.IsShowHint())
 					{
 						SDRC_HintHelper.ShowHint("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), m_Config.missionHintTime);					
 					}
-					
-					SDRC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), ARGB(70, 255, 255, 0), 10, tmpDC_Mission.GetId());
-					
-					//Set the time when the mission has started. Activates the delay.
-					m_iLastMissionSpawnTime = (System.GetTickCount() / 1000);
 				}
+								
+				SDRC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), ARGB(70, 255, 255, 0), 10, tmpDC_Mission.GetId());
+				
+				//Set the time when the mission has started. Activates the delay.
+				m_iLastMissionSpawnTime = (System.GetTickCount() / 1000);
 			}
 		}
 		else
@@ -222,7 +233,7 @@ class SDRC_MissionFrame
 						
 			if (mission.GetState() == DC_EMissionState.FAILED)
 			{
-				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Mission start failed: " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + "). Static fail count: " + m_iStaticTryCount, LogLevel.WARNING);
+				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Mission start failed: " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + ")", LogLevel.WARNING);
 			}
 
 			if (mission.GetState() == DC_EMissionState.EXIT || mission.GetState() == DC_EMissionState.FAILED)
@@ -230,7 +241,6 @@ class SDRC_MissionFrame
 				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Deleting mission: " + mission.GetId(), LogLevel.NORMAL);
 				SDRC_DebugHelper.DeleteDebugPos(mission.GetId());
 				m_MissionList.Remove(i);
-				delete mission;
 			}
 			else
 			{
@@ -238,18 +248,10 @@ class SDRC_MissionFrame
 			}			
 		}		
 			
-		SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Active missions: " + m_MissionList.Count() + "/" + m_Config.missionCount + ". Delay for next mission: " + getMissionDelayWait() + " seconds.", LogLevel.NORMAL);
-		MissionDump();
-
 		//Check if no players available
 		if (SDRC_PlayerHelper.PlayerCount() == 0)
 		{
 			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Waiting for players..", LogLevel.NORMAL);
-			if (m_MissionList.Count() == 0 && m_bFirstMissionSpawned)
-			{
-				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Resetting m_bFirstMissionSpawned", LogLevel.DEBUG);
-				m_bFirstMissionSpawned = false;
-			}
 		}
 
 		#ifndef SDRC_RELEASE				
@@ -259,8 +261,22 @@ class SDRC_MissionFrame
 				SDRC_MissionHelper.DebugTestMissionPos();
 			}
 		#endif
-				
-		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionFrameCycleTime*1000, false);
+
+		int staticCount = CountStaticMissions();
+		
+		//If static mission spawned, we set a shorter time to spawn them quickly at startup
+		if (!staticMissionSpawned)
+		{
+			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Dynamic missions: " + (m_MissionList.Count() - staticCount) + "/" + m_iMissionCount + " - Static missions: " + staticCount + "/" + m_iMissionCountStatic + ". Next mission in " + getMissionDelayWait() + " seconds.", LogLevel.NORMAL);
+			MissionDump();
+			GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionFrameCycleTime*1000, false);
+		}				
+		else
+		{
+			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Static missions: " + staticCount + "/" + m_iMissionCountStatic + " - try/limit: " + m_iStaticTryCount + "/" + m_iStaticTryLimit, LogLevel.NORMAL);
+			MissionDump();
+			GetGame().GetCallqueue().CallLater(MissionCycleManager, 5000, false);
+		}		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -443,4 +459,19 @@ class SDRC_MissionFrame
 		
 		return i;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Counts the amount of active static missions
+	*/	
+	protected int GetMissionCount(int count, float mul)	
+	{
+		if (count == 0)
+		{			
+			count = (SDRC_Misc.GetWorldSize() * mul) / 1000;
+			SDRC_Log.Add("[SDRC_MissionFrame:GetMissionCount] Count = (Worldsize) " + SDRC_Misc.GetWorldSize() + " * " + mul + " / 1000 = " + count, LogLevel.DEBUG);			
+		}
+		
+		return count;
+	}	
 }
