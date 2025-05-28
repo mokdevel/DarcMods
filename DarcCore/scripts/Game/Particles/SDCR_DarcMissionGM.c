@@ -1,9 +1,9 @@
 [EntityEditorProps(category: "GameScripted/Particles", description: "")]
-class SDCR_ReplicatedParticleEffectEntityClass : SCR_ReplicatedParticleEffectEntityClass
+class SDCR_DarcMissionGMClass : SCR_ReplicatedParticleEffectEntityClass
 {
 }
 
-class SDCR_ReplicatedParticleEffectEntity : SCR_ReplicatedParticleEffectEntity
+class SDCR_DarcMissionGM : SCR_ReplicatedParticleEffectEntity
 {	
 	private bool m_bAdded = false;
 	

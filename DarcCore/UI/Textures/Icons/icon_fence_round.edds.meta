@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{232D9BDABB08F52F}UI/Textures/Icons/SDRC_icon_M.edds"
+ Name "{8C29004A86E4EE20}UI/Textures/Icons/icon_fence_round.edds"
  Configurations {
   PNGResourceClass PC : "{DC555BD399D92412}Configs/System/ResourceTypes/PC/TextureUnspecified.conf" {
   }

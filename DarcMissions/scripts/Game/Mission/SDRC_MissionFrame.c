@@ -489,7 +489,9 @@ class SDRC_MissionFrame
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Counts the amount of active static missions
+	Counts the amount of missions for the map
+	\param count
+	\param mul
 	*/	
 	protected int GetMissionCount(int count, float mul)	
 	{
@@ -524,9 +526,9 @@ class SDRC_MissionFrame
 	*/		
 	bool FindGMSpawnedMissionsCallback(IEntity entity)
 	{
-		if (entity.ClassName() == "SDCR_ReplicatedParticleEffectEntity")
+		if (entity.ClassName() == "SDCR_DarcMissionGM")
 		{
-			SDCR_ReplicatedParticleEffectEntity ent = SDCR_ReplicatedParticleEffectEntity.Cast(entity);
+			SDCR_DarcMissionGM ent = SDCR_DarcMissionGM.Cast(entity);
 			if (!ent.IsAdded())
 			{
 				ent.AddedToList();
