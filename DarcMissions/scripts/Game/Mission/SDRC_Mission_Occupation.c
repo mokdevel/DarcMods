@@ -75,7 +75,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 			
 		SetState(DC_EMissionState.INIT);
 	}
-
+	
 	//------------------------------------------------------------------------------------------------
 	override void MissionRun()
 	{
@@ -185,7 +185,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 class SDRC_OccupationConfig : SDRC_MissionConfig
 {
 	//Mission specific	
-	int emptySize = 7;										//The size (radius) of the empty space to found to decide on a mission position.
+	int emptySize = 30;//TBD: 7;										//The size (radius) of the empty space to found to decide on a mission position.
 	bool disableArsenal;									//Disable arsenal for vehicles so that no other items are found
 	ref array<ref int> occupationList = {};					//The indexes of occupations.
 	ref array<ref SDRC_Occupation> occupations = {};		//List of occupations
@@ -269,7 +269,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {0,0,0,1,1,2,2,2,3,4};
+		conf.occupationList = {5};//{0,0,0,1,1,2,2,2,3,4};
 
 		//----------------------------------------------------
 		SDRC_Occupation occupation0 = new SDRC_Occupation();
@@ -604,5 +604,138 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"78.758 0 92.718"
 		);
 		occupation4.campItems.Insert(ocu4item4);
+		
+		//----------------------------------------------------
+		SDRC_Occupation occupation5 = new SDRC_Occupation();
+		occupation5.Set(
+			"index 5: A small town",
+			"0 0 0",
+			"any",
+			"Town near ",
+			"The enemies are hiding in a ghost town.",
+			{
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_VALLEY			
+			},
+			{1, 3},
+			{10, 90},
+			DC_EWaypointGenerationType.RANDOM,
+			DC_EWaypointMoveType.RANDOM,		
+			{
+				"G_SPECIAL", "G_HEAVY"
+			},
+			50, 1.0		
+		);
+		conf.occupations.Insert(occupation5);
+
+		SDRC_Loot occupation5loot = new SDRC_Loot();
+		lootItems = {
+				"WEAPON_RIFLE",
+				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
+				"WEAPON_ATTACHMENT", "WEAPON_ATTACHMENT",
+				"WEAPON_OPTICS",
+				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
+			};
+		occupation5loot.Set(0.4, lootItems);
+		occupation5.loot = occupation4loot;				
+		
+		SDRC_Structure ocu5item0 = new SDRC_Structure;
+		ocu5item0.Set(
+		    "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+		    "130.023 1 81.107"
+		);
+		occupation5.campItems.Insert(ocu5item0);
+		
+		SDRC_Structure ocu5item1 = new SDRC_Structure;
+		ocu5item1.Set(
+		    "{325991D9993FA95B}Prefabs/Structures/Houses/Village/HouseAddon_Shed_E_01/HouseAddon_Shed_E_01.et",
+		    "136.378 0 91.665",
+		    "0 -106.094 0"
+		);
+		occupation5.campItems.Insert(ocu5item1);
+		
+		SDRC_Structure ocu5item2 = new SDRC_Structure;
+		ocu5item2.Set(
+		    "{39AF1EE567E58C60}Prefabs/Structures/Houses/Village/HouseAddon_Shed_E_01/Dst/HouseAddon_Shed_E_01_Ruin_base.et",
+		    "135.091 1 95.696",
+		    "0 75.947 0"
+		);
+		occupation5.campItems.Insert(ocu5item2);
+		
+		SDRC_Structure ocu5item3 = new SDRC_Structure;
+		ocu5item3.Set(
+		    "{4472D9B48597C94D}Prefabs/Structures/Houses/Village/HouseAddon_Workshop_E_01/HouseAddon_Workshop_E_01_base.et",
+		    "124.517 0 82.525"
+		);
+		occupation5.campItems.Insert(ocu5item3);
+		
+		SDRC_Structure ocu5item4 = new SDRC_Structure;
+		ocu5item4.Set(
+		    "{4A34979DC19CA9ED}Prefabs/Props/Construction/ConcreteMixer_01.et",
+		    "129.237 1 79.088"
+		);
+		occupation5.campItems.Insert(ocu5item4);
+		
+		SDRC_Structure ocu5item5 = new SDRC_Structure;
+		ocu5item5.Set(
+		    "{654B33C808C4D93E}Prefabs/Props/Wrecks/M151A2_wreck_static.et",
+		    "135.54 1 78.048",
+		    "0 43.167 0"
+		);
+		occupation5.campItems.Insert(ocu5item5);
+		
+		SDRC_Structure ocu5item6 = new SDRC_Structure;
+		ocu5item6.Set(
+		    "{A240B5FCD17D5686}Prefabs/Props/Construction/GarbageStack_01/GarbageStack_01_Medium.et",
+		    "126.997 1 70.125"
+		);
+		occupation5.campItems.Insert(ocu5item6);
+		
+		SDRC_Structure ocu5item7 = new SDRC_Structure;
+		ocu5item7.Set(
+		    "{BE34698CFA200F28}Prefabs/Structures/Houses/Shed/Shed_01/Dst/Shed_01_Ruin.et",
+		    "134.193 1 94.635"
+		);
+		occupation5.campItems.Insert(ocu5item7);
+		
+		SDRC_Structure ocu5item8 = new SDRC_Structure;
+		ocu5item8.Set(
+		    "{CD66BE4E1368B398}Prefabs/Props/Construction/ContainerMetal_01/ContainerMetal_01_low_blue.et",
+		    "129.587 1 94.315"
+		);
+		occupation5.campItems.Insert(ocu5item8);
+		
+		SDRC_Structure ocu5item9 = new SDRC_Structure;
+		ocu5item9.Set(
+		    "{DE59CB05202006E8}Prefabs/Props/Agriculture/CultivatorWreck_01.et",
+		    "144.429 1 90.912",
+		    "0 0 0"
+		);
+		occupation5.campItems.Insert(ocu5item9);
+		
+		SDRC_Structure ocu5item10 = new SDRC_Structure;
+		ocu5item10.Set(
+		    "{DEB57429CD49782D}Prefabs/Props/Construction/GravelPile_01/SandPile_01.et",
+		    "141.012 1 73.982"
+		);
+		occupation5.campItems.Insert(ocu5item10);
+		
+		SDRC_Structure ocu5item11 = new SDRC_Structure;
+		ocu5item11.Set(
+		    "{ED100C4FA5097FC5}Prefabs/Structures/Houses/Village/HouseAddon_Garage_E_01/HouseAddon_Garage_E_01_base.et",
+		    "125.158 0 75.105",
+		    "0 90 0"
+		);
+		occupation5.campItems.Insert(ocu5item11);
+		
+		SDRC_Structure ocu5item12 = new SDRC_Structure;
+		ocu5item12.Set(
+		    "{116C488674B5A4A6}Prefabs/Structures/Commercial/FuelStations/FuelStation_E_01/Dst/FuelStation_E_01_roof_Ruin_base.et",
+		    "143.453 1 79.224"
+		);
+		occupation5.campItems.Insert(ocu5item12);
 	}	
 }
