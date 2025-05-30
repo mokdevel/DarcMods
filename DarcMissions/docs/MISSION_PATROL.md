@@ -12,10 +12,10 @@ bool showHint : See Common parameters
 int patrolingTime : (seconds) Time to patrol. Once this time has passed and not players nearby, despawn mission.
 int distanceToPlayer : If no players this close to any players and patrolingTime has passed, despawn mission.
 array<int> patrolList : The indexes of patrols.
-array<SCR_DC_Patrol> patrols : List of patrols
+array<SDRC_Patrol> patrols : List of patrols
 ```
 
-### SCR_DC_Patrol
+### SDRC_Patrol
 ```
 string comment : See General parameters
 vector pos : See General parameters
