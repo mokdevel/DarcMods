@@ -9,9 +9,8 @@ SDCR_DarcMissionGM : "{5C61F07CE0B1DBB2}Prefabs/EffectsModuleEntities/BaseEffect
    m_UIInfo SCR_EditableEntityUIInfoColored "{6578C40A7E70DBF0}" {
     Name "DarcMissions Occupation"
     Description "Spawns a random Occupation mission"
-    Icon "{0C86564F20AD42F2}UI/Textures/Icons/SDRC_icons_mapMarkersUI.imageset"
-    IconSetName "n_fence_round"
-    m_Image "{8C29004A86E4EE20}UI/Textures/Icons/icon_fence_round.edds"
+    Icon "{83FBFA44C296A183}UI/Textures/Icons/gm_mission_Occupation.edds"
+    m_Image "{83FBFA44C296A183}UI/Textures/Icons/gm_mission_Occupation.edds"
     m_aAuthoredLabels {
      7
     }
@@ -25,11 +24,12 @@ SDCR_DarcMissionGM : "{5C61F07CE0B1DBB2}Prefabs/EffectsModuleEntities/BaseEffect
    m_bStatic 1
    m_Flags 67
   }
+  SDRC_DarcMissionRequestComp "{657C7DE71886F8E5}" {
+  }
   RplComponent "{616C912BED359789}" {
    Streamable Disabled
   }
  }
  Flags 1027
- scale 13.3
  EffectPath "{94CAB105E065775C}Particles/Weapon/Smoke_grenade_M18_Red.ptc"
 }
