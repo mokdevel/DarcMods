@@ -50,9 +50,9 @@ int count : Count of missions.
   0 = No missions will spawn
   1-n = Max amount of missions. 
   -1 = Missions amount depends on the size of the map and countMul. The
-  Mission count = (mapsize in meters / 1000) * countMul.
-  Example: 12km x 12km map with countMul 0.5 -> 12*0.5 = 6 missions
-float countMul : Multiplier for mission count. Only used is count = -1
+    Mission count = (mapsize in meters / 1000) * countMul.
+    Example: 12km x 12km map with countMul 0.5 -> 12*0.5 = 6 missions
+float countMul : Multiplier for mission count. Only used if count = -1
 int activeTime : (seconds) Time to keep the mission active. For static this should be high.
 array<int> missionTypeArray : List mission types that spawn randomly. (DC_EMissionType)
   0 = NONE       : Not used anywhere. The rest are names of the mission types.
