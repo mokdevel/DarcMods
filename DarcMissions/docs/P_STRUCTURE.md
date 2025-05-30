@@ -1,7 +1,7 @@
 ## Structure parameters
 Structures are entities (prefabs) of e.g., furniture. Typically you would spawn multiple structures to create for example a camp with chairs, a tent, fireplace etc. 
 
-### SCR_DC_Structure
+### SDRC_Structure
 ```
 string m_Resource : Prefab name
 vector m_Position : Position in the world.
