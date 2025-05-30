@@ -66,6 +66,15 @@ sealed class SDRC_SpawnHelper
 			
 			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] Entity spawned to exact position: " + pos, LogLevel.DEBUG);
 		}
+		
+		RplComponent rplComp = RplComponent.Cast(entity.FindComponent(RplComponent));
+		if (!rplComp)
+		{
+			ResourceName res = entity.GetPrefabData().GetPrefabName();
+			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] The object " + res + " has no RplComponent. This will not be seen by players.", LogLevel.WARNING);		
+		}
+		
+		
 		return entity;
 	}	
 
