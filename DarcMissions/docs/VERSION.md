@@ -4,6 +4,7 @@
 Static mission behaviour changed; these spawn immediately when server starts.
 * dc_coreConfig.json parameter changes
 * dc_missionConfig_Occupation.json
+  * ``emptySize`` moved inside SDRC_Occupation
 * dc_missionConfig.json parameter changes
   * Introduced ``missionDynamic`` and ``missionStatic`` structures
   * Moved ``missionCount``, ``missionActiveTime`` and ``missionTypeArray`` in to the mission specific structures
