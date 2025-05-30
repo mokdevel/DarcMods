@@ -19,7 +19,8 @@
 			"id": "WEAPON_LAUNCHER",
 			"modDir": "/Weapons/Launchers",
 			"include": [
-				"Launcher"
+				"Launcher",
+				"BC_M79"
 			],
 			"exclude": [
 				"_Base"
@@ -92,6 +93,30 @@
 				"Flashlight",
 				"PaperMap_01_folded",
 				"Watch_"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"items": []
+		},
+		{
+			"id": "WEAPON_SHOTGUN",
+			"modDir": "/Weapons/Shotguns",
+			"include": [
+				"Shotgun"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"items": []
+		},
+		{
+			"id": "WEAPON_MG",
+			"modDir": "/Weapons/MachineGuns",
+			"include": [
+				"MG_",
+				"RPD",
+				"RPK"
 			],
 			"exclude": [
 				"_Base"

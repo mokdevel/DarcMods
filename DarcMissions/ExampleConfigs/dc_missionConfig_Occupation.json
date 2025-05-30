@@ -4,23 +4,13 @@
 	"missionCycleTime": 30,
 	"showMarker": true,
 	"showHint": true,
-	"emptySize": 7,
 	"disableArsenal": false,
 	"occupationList": [
-		0,
-		0,
-		0,
-		1,
-		1,
-		2,
-		2,
-		2,
-		3,
-		4
+		2
 	],
 	"occupations": [
 		{
-			"comment": "Gogland: Mission to be used with Escapists.",
+			"comment": "index 0: Mission in villages and local areas.",
 			"pos": [
 				0.0,
 				0.0,
@@ -49,11 +39,12 @@
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0,
+			"emptySize": 5.0,
 			"loot": null,
 			"campItems": []
 		},
 		{
-			"comment": "Bandit camp spawning to non city areas",
+			"comment": "index 1: Bandit camp spawning to non city areas",
 			"pos": [
 				0.0,
 				0.0,
@@ -88,6 +79,7 @@
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0,
+			"emptySize": 10.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -163,7 +155,7 @@
 			]
 		},
 		{
-			"comment": "Occupation that will spawn mainly to cities and towns with USSR forces.",
+			"comment": "index 2: Occupation that will spawn mainly to cities and towns.",
 			"pos": [
 				0.0,
 				0.0,
@@ -204,6 +196,7 @@
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0,
+			"emptySize": 20.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.8999999761581421,
@@ -245,7 +238,7 @@
 					]
 				},
 				{
-					"resource": "{2CB4BFA62C2D9C12}Prefabs/Structures/Military/CamoNets/CamoNet_Small_Top_01_base.et",
+					"resource": "{E1343D495AB1956E}PrefabsEditable/Auto/Structures/Military/CamoNets/Soviet/E_CamoNet_Small_Top_Soviet.et",
 					"position": [
 						1017.8569946289063,
 						39.0,
@@ -286,7 +279,7 @@
 			]
 		},
 		{
-			"comment": "Car crash in an unusual place",
+			"comment": "index 3: Car crash in an unusual place",
 			"pos": [
 				0.0,
 				0.0,
@@ -319,6 +312,7 @@
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0,
+			"emptySize": 15.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -439,7 +433,7 @@
 			]
 		},
 		{
-			"comment": "Campers with a car",
+			"comment": "index 4: Campers with a car and a tent",
 			"pos": [
 				0.0,
 				0.0,
@@ -470,6 +464,7 @@
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0,
+			"emptySize": 20.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.4000000059604645,
@@ -555,6 +550,236 @@
 						78.75800323486328,
 						0.0,
 						92.71800231933594
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"comment": "index 5: A small town",
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"posName": "any",
+			"title": "Town near ",
+			"info": "The enemies are hiding in a ghost town.",
+			"locationTypes": [
+				70,
+				8,
+				71
+			],
+			"groupCount": [
+				1,
+				3
+			],
+			"waypointRange": [
+				10,
+				90
+			],
+			"waypointGenType": 1,
+			"waypointMoveType": 1,
+			"groupTypes": [
+				"G_SPECIAL",
+				"G_HEAVY"
+			],
+			"aiSkill": 50,
+			"aiPerception": 1.0,
+			"emptySize": 50.0,
+			"loot": {
+				"box": null,
+				"itemChance": 0.4000000059604645,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_ATTACHMENT",
+					"WEAPON_ATTACHMENT",
+					"WEAPON_OPTICS",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			},
+			"campItems": [
+				{
+					"resource": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+					"position": [
+						130.0229949951172,
+						1.0,
+						81.10700225830078
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{325991D9993FA95B}Prefabs/Structures/Houses/Village/HouseAddon_Shed_E_01/HouseAddon_Shed_E_01.et",
+					"position": [
+						136.3780059814453,
+						0.0,
+						91.66500091552735
+					],
+					"rotation": [
+						0.0,
+						-106.09400177001953,
+						0.0
+					]
+				},
+				{
+					"resource": "{39AF1EE567E58C60}Prefabs/Structures/Houses/Village/HouseAddon_Shed_E_01/Dst/HouseAddon_Shed_E_01_Ruin_base.et",
+					"position": [
+						135.09100341796876,
+						1.0,
+						95.69599914550781
+					],
+					"rotation": [
+						0.0,
+						75.9469985961914,
+						0.0
+					]
+				},
+				{
+					"resource": "{4472D9B48597C94D}Prefabs/Structures/Houses/Village/HouseAddon_Workshop_E_01/HouseAddon_Workshop_E_01_base.et",
+					"position": [
+						124.51699829101563,
+						0.0,
+						82.5250015258789
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{4A34979DC19CA9ED}Prefabs/Props/Construction/ConcreteMixer_01.et",
+					"position": [
+						129.23699951171876,
+						1.0,
+						79.08799743652344
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{654B33C808C4D93E}Prefabs/Props/Wrecks/M151A2_wreck_static.et",
+					"position": [
+						135.5399932861328,
+						1.0,
+						78.0479965209961
+					],
+					"rotation": [
+						0.0,
+						43.16699981689453,
+						0.0
+					]
+				},
+				{
+					"resource": "{A240B5FCD17D5686}Prefabs/Props/Construction/GarbageStack_01/GarbageStack_01_Medium.et",
+					"position": [
+						126.99700164794922,
+						1.0,
+						70.125
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{BE34698CFA200F28}Prefabs/Structures/Houses/Shed/Shed_01/Dst/Shed_01_Ruin.et",
+					"position": [
+						134.1929931640625,
+						1.0,
+						94.63500213623047
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{CD66BE4E1368B398}Prefabs/Props/Construction/ContainerMetal_01/ContainerMetal_01_low_blue.et",
+					"position": [
+						129.58700561523438,
+						1.0,
+						94.31500244140625
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{DE59CB05202006E8}Prefabs/Props/Agriculture/CultivatorWreck_01.et",
+					"position": [
+						144.4290008544922,
+						1.0,
+						90.91200256347656
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{DEB57429CD49782D}Prefabs/Props/Construction/GravelPile_01/SandPile_01.et",
+					"position": [
+						141.01199340820313,
+						1.0,
+						73.98200225830078
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{ED100C4FA5097FC5}Prefabs/Structures/Houses/Village/HouseAddon_Garage_E_01/HouseAddon_Garage_E_01_base.et",
+					"position": [
+						125.15799713134766,
+						0.0,
+						75.1050033569336
+					],
+					"rotation": [
+						0.0,
+						90.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{116C488674B5A4A6}Prefabs/Structures/Commercial/FuelStations/FuelStation_E_01/Dst/FuelStation_E_01_roof_Ruin_base.et",
+					"position": [
+						143.4530029296875,
+						1.0,
+						79.2239990234375
 					],
 					"rotation": [
 						0.0,

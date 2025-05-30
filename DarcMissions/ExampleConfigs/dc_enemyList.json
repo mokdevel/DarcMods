@@ -25,7 +25,8 @@
 			"modDir": "/Groups",
 			"include": [
 				"Sniper",
-				"SharpShooter"
+				"SharpShooter",
+				"USSR_Spetsnaz_SentryTeam"
 			],
 			"exclude": [
 				"_Base",

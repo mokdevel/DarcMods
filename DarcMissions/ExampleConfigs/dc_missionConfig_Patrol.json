@@ -16,7 +16,7 @@
 	],
 	"patrols": [
 		{
-			"comment": "Enemy patrols going between two points hopefully following roads",
+			"comment": "index 0: Enemy patrols going between two points hopefully following roads",
 			"pos": [
 				0.0,
 				0.0,
@@ -57,7 +57,7 @@
 			"aiPerception": 1.0
 		},
 		{
-			"comment": "USSR patrols",
+			"comment": "index 1: Heavy patrol",
 			"pos": [
 				0.0,
 				0.0,
@@ -98,7 +98,7 @@
 			"aiPerception": 1.0
 		},
 		{
-			"comment": "Enemy patrols between villages",
+			"comment": "index 2: Enemy patrols between villages",
 			"pos": [
 				0.0,
 				0.0,
@@ -135,7 +135,7 @@
 			"aiPerception": 1.0
 		},
 		{
-			"comment": "Small patrols",
+			"comment": "index 3: Small patrols with a few AIs",
 			"pos": [
 				0.0,
 				0.0,

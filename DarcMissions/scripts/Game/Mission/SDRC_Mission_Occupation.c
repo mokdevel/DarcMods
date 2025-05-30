@@ -275,7 +275,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {2};//{0,0,0,1,1,2,2,2,3,4};		
+		conf.occupationList = {0,0,0,1,1,2,2,2,3,4};		
 
 		//----------------------------------------------------
 		SDRC_Occupation occupation0 = new SDRC_Occupation();

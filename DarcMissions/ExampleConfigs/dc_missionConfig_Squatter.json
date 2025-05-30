@@ -20,7 +20,7 @@
 	],
 	"squatters": [
 		{
-			"comment": "Squatters in cities",
+			"comment": "index 0: Squatters in cities",
 			"pos": [
 				0.0,
 				0.0,
@@ -86,7 +86,7 @@
 			}
 		},
 		{
-			"comment": "Squatters in control towers",
+			"comment": "index 1: Squatters in control towers",
 			"pos": [
 				0.0,
 				0.0,
@@ -142,7 +142,7 @@
 			}
 		},
 		{
-			"comment": "Squatters in military locations",
+			"comment": "index 2: Squatters in military locations",
 			"pos": [
 				0.0,
 				0.0,
@@ -199,7 +199,7 @@
 			}
 		},
 		{
-			"comment": "Military in industrial areas",
+			"comment": "index 3: Military in industrial areas",
 			"pos": [
 				0.0,
 				0.0,
@@ -255,14 +255,14 @@
 			}
 		},
 		{
-			"comment": "Enemy in churches",
+			"comment": "index 4: Enemy in churches and similar",
 			"pos": [
 				0.0,
 				0.0,
 				0.0
 			],
 			"posName": "any",
-			"title": "Church visitors near ",
+			"title": "Sanctuary visitors near ",
 			"info": "Holy night, holy loot.",
 			"locationTypes": [],
 			"aiCount": [
@@ -276,7 +276,9 @@
 			"aiPerception": 0.800000011920929,
 			"buildingNames": [
 				"Church_",
-				"ChurchSmall_"
+				"ChurchSmall_",
+				"Mosque_",
+				"Minaret"
 			],
 			"lootBox": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
 			"loot": {
@@ -300,7 +302,7 @@
 			}
 		},
 		{
-			"comment": "Shops and houses",
+			"comment": "index 5: Shops and houses",
 			"pos": [
 				0.0,
 				0.0,

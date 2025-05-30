@@ -15,7 +15,7 @@
 	],
 	"crashsites": [
 		{
-			"comment": "Gogland: Mission to be used with Escapists.",
+			"comment": "index 0: general mission",
 			"title": "Helicopter in distress ",
 			"info": "A valuable cargo has crashed",
 			"groupTypes": [

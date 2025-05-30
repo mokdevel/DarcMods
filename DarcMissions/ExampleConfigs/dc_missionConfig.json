@@ -5,11 +5,7 @@
 	"recreateConfigs": false,
 	"missionStartDelay": 60,
 	"missionDelayBetweeen": 240,
-	"missionCount": 10,
-	"staticTryLimit": 2,
 	"missionFrameCycleTime": 30,
-	"missionActiveTime": 900,
-	"missionActiveTimeStatic": 1200,
 	"missionActiveDistance": 200,
 	"missionActiveTimeToEnd": 180,
 	"missionHintTime": 30,
@@ -18,29 +14,39 @@
 	"enemyFactions": [
 		"USSR"
 	],
-	"missionTypeArrayDynamic": [
-		1,
-		4,
-		3,
-		6,
-		6,
-		6,
-		6,
-		6,
-		2,
-		2,
-		2,
-		2,
-		2,
-		2,
-		2,
-		2,
-		2
-	],
-	"missionTypeArrayStatic": [
-		5,
-		5,
-		3,
-		3
-	]
+	"missionDynamic": {
+		"count": 10,
+		"countMul": 1.5,
+		"activeTime": 900,
+		"missionTypeArray": [
+			1,
+			4,
+			3,
+			6,
+			6,
+			6,
+			6,
+			6,
+			2,
+			2,
+			2,
+			2,
+			2,
+			2,
+			2,
+			2,
+			2
+		]
+	},
+	"missionStatic": {
+		"count": 8,
+		"countMul": 1.0,
+		"activeTime": 1200,
+		"missionTypeArray": [
+			5,
+			5,
+			3,
+			3
+		]
+	}
 }
