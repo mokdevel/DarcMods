@@ -37,7 +37,6 @@ sealed class SDRC_MissionHelper
 	\param locationTypes Array of EMapDescriptorType to look for a place
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
 	*/	
-//	static IEntity FindMissionLocation(array<EMapDescriptorType> locationTypes, float size = 5)
 	static vector FindMissionPos(array<EMapDescriptorType> locationTypes, float size = 5)
 	{	
 		//Find a random location
@@ -76,9 +75,6 @@ sealed class SDRC_MissionHelper
 		{
 			return "0 0 0";
 		}
-
-//		location.SetOrigin(pos);
-//		return location;
 		
 		return pos;
 	}
@@ -91,12 +87,10 @@ sealed class SDRC_MissionHelper
 	\param missionPos The mission position aka the starting point for mission
 	\param distance Minimum distance for missionPos and destination
 	*/		
-//	static IEntity FindMissionDestination(array<EMapDescriptorType> locationTypes, vector missionPos, int distance)
 	static vector FindMissionDestination(array<EMapDescriptorType> locationTypes, vector missionPos, int distance)
 	{
 		//IEntity location = null;
 		vector pos = "0 0 0";
-//		array<IEntity> locations = {};
 
 		bool positionFound = false;
 		

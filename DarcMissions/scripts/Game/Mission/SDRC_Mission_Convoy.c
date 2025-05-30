@@ -48,31 +48,34 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			return;
 		}
 		m_DC_Convoy = m_Config.convoys[idx];
-
-		//Set defaults
-		pos = m_DC_Convoy.pos;
-		m_vPosDestination = m_DC_Convoy.posDestination;
-		string posName = m_DC_Convoy.posName;
 		
-		//Find a location for the mission
-		if (pos == "0 0 0")
+		//Set defaults		
+		m_vPosDestination = m_DC_Convoy.posDestination;		//Destination from the defined SDRC_Convoy 
+
+		if (!IsRequested())
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.locationTypes);
-			if (pos != "0 0 0")
+			pos = m_DC_Convoy.pos;
+			
+			//Find a location for the mission
+			if (pos == "0 0 0")
 			{
-				SDRC_RoadPos roadPos = new SDRC_RoadPos();
-				pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
-				if (pos == "0 0 0")
+				pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.locationTypes);
+				if (pos != "0 0 0")
 				{
-					SDRC_Log.Add("[SDRC_Mission_Convoy] No start road found.", LogLevel.ERROR);
+					SDRC_RoadPos roadPos = new SDRC_RoadPos();
+					pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
+					if (pos == "0 0 0")
+					{
+						SDRC_Log.Add("[SDRC_Mission_Convoy] No start road found.", LogLevel.ERROR);
+					}
+				}
+				else
+				{
+					pos = "0 0 0";
 				}
 			}
-			else
-			{
-				pos = "0 0 0";
-			}
 		}
-
+		
 		//Find a location for the destination
 		if (m_vPosDestination == "0 0 0" && pos != "0 0 0")
 		{
@@ -98,6 +101,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}	
+		
+		string posName = m_DC_Convoy.posName;
 		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, posName));

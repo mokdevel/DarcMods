@@ -42,16 +42,19 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Patrol] Worldsize vs maxRange : " + worldSize + " vs " + m_DC_Patrol.waypointRange[1], LogLevel.DEBUG);
 		
 		//Set defaults
-		pos = m_DC_Patrol.pos;
 		m_vPosDestination = m_DC_Patrol.posDestination;
-		string posName = m_DC_Patrol.posName;
 		
-		//Find a location for the mission
-		if (pos == "0 0 0")
+		if (!IsRequested())
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes);
+			pos = m_DC_Patrol.pos;
+			
+			//Find a location for the mission
+			if (pos == "0 0 0")
+			{
+				pos = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes);
+			}
 		}
-
+	
 		//Find a location for the destination. Only used for route
 		if (m_vPosDestination == "0 0 0")
 		{
@@ -73,6 +76,8 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			return;
 		}	
 		
+		string posName = m_DC_Patrol.posName;
+			
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, posName));
 		SetTitle(m_DC_Patrol.title + "" + GetPosName());

@@ -38,25 +38,33 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		//Find position
 		bool positionFound = false;
 
-		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
+		if (!IsRequested())
 		{
-			pos = SDRC_Misc.GetRandomWorldPos();
-						
-			if (SDRC_MissionHelper.IsValidMissionPos(pos))
-			{			
-				//Find a position close to any player
-				if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, m_Config.maxDistanceToPlayer, m_Config.minDistanceToPlayer))
-				{
-					positionFound = true;
-				
-					SDRC_Log.Add("[SDRC_Mission_Hunter] Location for spawn " + pos, LogLevel.DEBUG);
-					break;
-				}
-				else
-				{						
-					SDRC_Log.Add("[SDRC_Mission_Hunter] Invalid mission position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
+			for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
+			{
+				pos = SDRC_Misc.GetRandomWorldPos();
+							
+				if (SDRC_MissionHelper.IsValidMissionPos(pos))
+				{			
+					//Find a position close to any player
+					if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, m_Config.maxDistanceToPlayer, m_Config.minDistanceToPlayer))
+					{
+						positionFound = true;
+					
+						SDRC_Log.Add("[SDRC_Mission_Hunter] Location for spawn " + pos, LogLevel.DEBUG);
+						break;
+					}
+					else
+					{						
+						SDRC_Log.Add("[SDRC_Mission_Hunter] Invalid mission position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
+					}
 				}
 			}
+		}
+		else
+		{
+			//Requested positions are blindly accepted
+			positionFound = true;
 		}
 		
 		if (!positionFound)	//No suitable location found.
