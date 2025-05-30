@@ -16,10 +16,10 @@ int distanceToMission : Distance to mission when searching for a mission pos. Ov
 int distanceToPlayer : Distance to player when searching for a mission pos. Overrides missionFrame settings.
 array<int> flyHeight : (min, max) The helicopter is spawned between these height values. The higher the values, the longer flight. Setting to zero will create the crashsite immediately.
 array<int> crashsiteList : The indexes of crashsites.
-array<SCR_DC_Crashsite> crashsites : List of crashsites
+array<SDRC_Crashsite> crashsites : List of crashsites
 ```
 
-### SCR_DC_Crashsite
+### SDRC_Crashsite
 ```
 string comment : See General parameters
 string title : See General parameters
@@ -27,12 +27,12 @@ string info : See General parameters
 array<string> groupTypes : See General parameters
 int aiSkill : See General parameters
 float aiPerception : See General parameters
-array<SCR_DC_HelicopterInfo> helicopterInfo : The helicopter is selected randomly.
+array<SDRC_HelicopterInfo> helicopterInfo : The helicopter is selected randomly.
 SCR_DC_Loot loot : (optional) Loot found in the box. 
-array<SCR_DC_Structure> siteItems : (optional) Prefabs to spawn at the crashsite. Note that first item shall be the loot box.
+array<SDRC_Structure> siteItems : (optional) Prefabs to spawn at the crashsite. Note that first item shall be the loot box.
 ```
 
-### SCR_DC_HelicopterInfo
+### SDRC_HelicopterInfo
 This defines the helicopter parameters. The default prefabs in Arma Reforger are without their engines running and will simply crash before the flight is possible. For the flying helicopters the prefabs needs to be modified and currently only a couple of options are available.
 
 Currently supported prefabs:
