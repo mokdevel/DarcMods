@@ -3,9 +3,9 @@ Structures are entities (prefabs) of e.g., furniture. Typically you would spawn 
 
 ### SCR_DC_Structure
 ```
-string m_Resource : Prefab name
-vector m_Position : Position in the world.
-vector m_Rotation : Rotation vector. Currently only Yrot is supported ["Xrot YRot ZRot"].
+string resource : Prefab name
+vector position : Position in the world.
+vector rotation : Rotation vector. Currently only Yrot is supported ["Xrot YRot ZRot"].
 ```
 
 ### Creating a camp
