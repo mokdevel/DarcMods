@@ -1,0 +1,8 @@
+In InkScape:
+- Batch Export
+- DPI 30
+
+In Gimp
+- Canvas Size 128x100
+- Center
+- Invert colors

@@ -116,9 +116,63 @@ ImageSetClass {
    Size 64 128
    Flags 0
   }
+  ImageSetDefClass n_mission_round {
+   Name "n_mission_round"
+   Pos 258 2
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass n_x_round {
+   Name "n_x_round"
+   Pos 322 2
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass n_house_round {
+   Name "n_house_round"
+   Pos 386 2
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass n_fire_round {
+   Name "n_fire_round"
+   Pos 450 2
+   Size 64 64
+   Flags 0
+  }
   ImageSetDefClass n_fence_round {
    Name "n_fence_round"
    Pos 258 130
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass n_car_round {
+   Name "n_car_round"
+   Pos 322 130
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass n_heli_round {
+   Name "n_heli_round"
+   Pos 386 130
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass n_radioactive_round {
+   Name "n_radioactive_round"
+   Pos 450 130
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass n_hunter_round {
+   Name "n_hunter_round"
+   Pos 258 258
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass n_patrol_round {
+   Name "n_patrol_round"
+   Pos 322 258
    Size 64 64
    Flags 0
   }
