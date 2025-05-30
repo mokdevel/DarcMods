@@ -79,7 +79,14 @@ Dependency specific files
 
 
 # Version history
-Static mission behaviour changed; these spawn immediately when server starts.
+
+## Next release (unreleased)
+Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
+
+Main features: 
+* You can spawn missions as a GM. You can find the mission under Systems. 
+* Static mission behaviour changed; these spawn immediately when server starts.
+
 * dc_coreConfig.json parameter changes
 * dc_missionConfig_Occupation.json
   * ``emptySize`` moved inside SDRC_Occupation
@@ -87,10 +94,6 @@ Static mission behaviour changed; these spawn immediately when server starts.
   * Introduced ``missionDynamic`` and ``missionStatic`` structures
   * Moved ``missionCount``, ``missionActiveTime`` and ``missionTypeArray`` in to the mission specific structures
   * Removed ``staticTryLimit``
-
-
-## Next release (unreleased)
-Still empty.
 
 ## 20250526
 Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
