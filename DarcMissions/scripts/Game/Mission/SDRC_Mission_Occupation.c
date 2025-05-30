@@ -426,8 +426,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		
 		SDRC_Structure ocu2item1 = new SDRC_Structure();
 		ocu2item1.Set(
-	        //"{2CB4BFA62C2D9C12}Prefabs/Structures/Military/CamoNets/CamoNet_Small_Top_01_base.et",
-	        "{8088790C2D455045}Prefabs/Structures/Military/CamoNets/Soviet/CamoNet_Small_Top_Soviet.et",
+	        "{E1343D495AB1956E}PrefabsEditable/Auto/Structures/Military/CamoNets/Soviet/E_CamoNet_Small_Top_Soviet.et",
 	        "1017.857 39 2501.721"
 		);
 		occupation2.campItems.Insert(ocu2item1);
