@@ -13,10 +13,10 @@ int convoyTime : (seconds) Time to drive around. Once this time has passed and n
 int distanceToPlayer : If no players this close to the convoy and convoyTime has passed, despawn mission.
 bool disableArsenal : See General parameters
 array<int> convoyList : The indexes of convoys.
-array<SCR_DC_Convoy> convoys : List of convoys
+array<SDRC_Convoy> convoys : List of convoys
 ```
 
-### SCR_DC_Convoy
+### SDRC_Convoy
 ```
 string comment : See General parameters
 vector pos : See General parameters. This is the starting point for the convoy 

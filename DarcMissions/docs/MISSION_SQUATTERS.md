@@ -17,10 +17,10 @@ bool showMarker : See Common parameters
 bool showHint : See Common parameters
 int buildingRadius : The radius to search for suitable buildings.
 array<int> squatterList : The indexes of squatters.
-array<SCR_DC_Squatter> squatters : List of squatters
+array<SDRC_Squatter> squatters : List of squatters
 ```
 
-### SCR_DC_Squatter
+### SDRC_Squatter
 ```
 string comment : See General parameters
 vector pos : See General parameters

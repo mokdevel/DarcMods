@@ -1,7 +1,7 @@
 # Lists
 The mod is capable of creating automatic lists to be used with missions. You can also define your own sets by following the same notation as in the example. Do not reuse the same ids as is already available as a ```lootListName```.
 
-## SCR_DC_List
+## SDCR_List
 The functionality goes through the modDir and gets every file with the ending of ```.et```. The list is first filtered with ```include``` words and then filtered with ```exclude```words. Note that any item you may have defined manually goes through the same filtering and may be removed if the ```exclude``` word matches.
 ```
 string id : The name given for the listist. This is the name you use for adding loot or selecting enemies. 
@@ -19,7 +19,7 @@ This supports additional mods that you can define in the modList parameter. The 
 int version : See General parameters
 string author : See General parameters
 array<string> modList : The mods to search for loot. If left empty, all mods enabled will be searched.
-array<SCR_DC_List> lootLists : The defined lootlists
+array<SDCR_List> lootLists : The defined lootlists
 ```
 ## Loot list names (id)
 Currently available names are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
