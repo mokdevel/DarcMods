@@ -30,21 +30,31 @@ int version : See General parameters
 string author : See General parameters
 string comment : See General parameters
 bool recreateConfigs : If set to true, all configs are written to disk. Should be run only first time.
-string missionProfile : Directory specifying a certain conf for play. For example "Escapists" will result in configs under "profile\DarcMods_conf\Escapists\*"
 int missionStartDelay : (seconds) Time to wait before spawning the first mission.
 int missionDelayBetweeen : (seconds) Time delay between mission spawns.
-int missionCount : Maximum amount of missions (both static and dynamic) to be active at the same time.
-int staticTryLimit : How many static missions are tried (fail or success) before trying a dynamic one. To avoid constant static spawns especially if failed.
 int missionFrameCycleTime : (seconds) The cycle time to manage mission spawning, deletion etc...
-int missionActiveTime : (seconds) Time to keep the mission active.
-int missionActiveTimeStatic : (seconds) Time to keep the static mission active (seconds). This typically is much longer than for dynamic.
 int missionActiveDistance : The distance to a player to keep the mission active.
 int missionActiveTimeToEnd : (seconds) Time to keep the mission active once all AI is dead. Used for both dynamic and static missions.
 int missionHintTime : (seconds) Time to show mission hints to players. 0 disables ALL hints.
 int minDistanceToMission : Distance to another mission. Two missions shall not be too close to each other.
 int minDistanceToPlayer : Mission shall not spawn too close to a player.
 array<string> enemyFactions : The array of factions to consider as enemies. "USSR" by default. You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission.
-array<int> missionTypeArrayDynamic : List mission types that spawn randomly. (DC_EMissionType)
+SDRC_MissionTypeConfig missionDynamic : Dynamic missions configurations.
+SDRC_MissionTypeConfig missionStatic : Static missions configurations.
+```
+
+### SDRC_MissionTypeConfig
+The below is valid for both static and dynamic missions
+```
+int count : Count of missions.
+  0 = No missions will spawn
+  1-n = Max amount of missions. 
+  -1 = Missions amount depends on the size of the map and countMul. The
+  Mission count = (mapsize in meters / 1000) * countMul.
+  Example: 12km x 12km map with countMul 0.5 -> 12*0.5 = 6 missions
+float countMul : Multiplier for mission count. Only used is count = -1
+int activeTime : (seconds) Time to keep the mission active. For static this should be high.
+array<int> missionTypeArray : List mission types that spawn randomly. (DC_EMissionType)
   0 = NONE       : Not used anywhere. The rest are names of the mission types.
   1 = HUNTER
   2 = OCCUPATION
@@ -52,7 +62,6 @@ array<int> missionTypeArrayDynamic : List mission types that spawn randomly. (DC
   4 = CRASHSITE
   5 = PATROL
   6 = SQUATTER
-array<int> missionTypeArrayStatic : List mission types that are always active. See missionTypeArrayDynamic for values.
 ```
 
 ## MissionFrame cycle
