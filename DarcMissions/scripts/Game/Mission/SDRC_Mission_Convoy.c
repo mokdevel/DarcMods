@@ -28,7 +28,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	private IEntity m_Vehicle = null;
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Convoy()
+	void SDRC_Mission_Convoy(vector pos = "0 0 0")
 	{
 		SDRC_Log.Add("[SDRC_Mission_Convoy] Constructor", LogLevel.SPAM);
 				
@@ -50,7 +50,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		m_DC_Convoy = m_Config.convoys[idx];
 
 		//Set defaults
-		vector pos = m_DC_Convoy.pos;
+		pos = m_DC_Convoy.pos;
 		m_vPosDestination = m_DC_Convoy.posDestination;
 		string posName = m_DC_Convoy.posName;
 		

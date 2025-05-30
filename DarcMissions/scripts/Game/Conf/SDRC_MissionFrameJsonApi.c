@@ -28,7 +28,7 @@
 		private const string SDRC_MISSION_PROFILE_DIR = "dummy";
 		private const int SDRC_MISSION_COUNT = 0;//8;
 		private const float SDRC_MISSION_COUNT_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 1;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSION_START_DELAY = 10;					
@@ -135,9 +135,9 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.missionHintTime = SDRC_MISSION_HINT_TIME;
 		conf.minDistanceToMission = 500;
 		conf.minDistanceToPlayer = 100;
-		conf.enemyFactions = {"FIA", "USSR"};
+//		conf.enemyFactions = {"FIA", "USSR"};
 //		conf.enemyFactions = {"FIA", "US"};
-//		conf.enemyFactions = {"USSR"};
+		conf.enemyFactions = {"USSR"};
 		
 		#ifdef SDRC_RELEASE
 			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.CONVOY, 

@@ -16,7 +16,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	private vector m_vPosDestination = "0 0 0";
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Patrol()
+	void SDRC_Mission_Patrol(vector pos = "0 0 0")
 	{
 		SDRC_Log.Add("[SDRC_Mission_Patrol] Constructor", LogLevel.SPAM);
 				
@@ -42,7 +42,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Patrol] Worldsize vs maxRange : " + worldSize + " vs " + m_DC_Patrol.waypointRange[1], LogLevel.DEBUG);
 		
 		//Set defaults
-		vector pos = m_DC_Patrol.pos;
+		pos = m_DC_Patrol.pos;
 		m_vPosDestination = m_DC_Patrol.posDestination;
 		string posName = m_DC_Patrol.posName;
 		

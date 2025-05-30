@@ -31,7 +31,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	private vector m_vVehiclePosOld;
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Crashsite()
+	void SDRC_Mission_Crashsite(vector pos = "0 0 0")
 	{
 		SDRC_Log.Add("[SDRC_Mission_Crashsite] Constructor", LogLevel.SPAM);
 		
@@ -54,11 +54,14 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		
 		//Find position
 		bool positionFound = false;
-		vector pos;
 
 		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_Config.distanceToMission, m_Config.distanceToPlayer);
+			if (pos == "0 0 0")
+			{
+				pos = SDRC_MissionHelper.FindMissionPos(m_Config.distanceToMission, m_Config.distanceToPlayer);
+			}
+			
 			if (pos != "0 0 0")
 			{
 				//Find flight positions from pos to m_PosDestination.

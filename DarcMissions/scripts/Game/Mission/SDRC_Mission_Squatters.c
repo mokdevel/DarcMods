@@ -17,7 +17,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	private int m_iSpawnIndex = 0;				//Counter for the AI to spawn
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Squatter()
+	void SDRC_Mission_Squatter(vector pos = "0 0 0")
 	{
 		SDRC_Log.Add("[SDRC_Mission_Squatter] Constructor", LogLevel.SPAM);
 				
@@ -39,7 +39,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		m_DC_Squatter = m_Config.squatters[idx];
 		
 		//Set defaults
-		vector pos = m_DC_Squatter.pos;
+		pos = m_DC_Squatter.pos;
 		string posName = m_DC_Squatter.posName;
 		m_iAiCount = Math.RandomInt(m_DC_Squatter.aiCount[0], m_DC_Squatter.aiCount[1]);
 		

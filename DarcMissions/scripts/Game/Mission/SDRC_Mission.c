@@ -1,14 +1,16 @@
 //------------------------------------------------------------------------------------------------
 enum DC_EMissionType
 {
-	NONE,
+	NONE = 0,
 	HUNTER,
 	OCCUPATION,
 	CONVOY,
 	CRASHSITE,
 	PATROL,
 	SQUATTER,
-	CHOPPER		//Mission not ready or working
+	CHOPPER,	//Mission not ready or working
+	
+	REQUESTED = 100
 };
 
 enum DC_EMissionState
@@ -54,18 +56,19 @@ class SDRC_Mission
 	private int m_ActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
 	private int m_ActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
 	private bool m_bMissionIsEnding;			//Once all AIs are dead, we're getting close to end the mission.
+	private bool m_bRequested;					//The missions spawn was requested by a an external party (like GM)
 	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission()
+	void SDRC_Mission(vector pos = "0 0 0")
 	{
 		m_State = DC_EMissionState.INIT;
 		m_Type = DC_EMissionType.NONE;
 		m_Static = false;
 		m_Id = DC_ID_PREFIX + string.ToString(System.GetTickCount());
-		m_Pos = "0 0 0";
+		m_Pos = pos;
 		m_PosName = "";
 		m_Title = "";
 		m_Info = "";
@@ -76,6 +79,10 @@ class SDRC_Mission
 		SetActiveTime(SDRC_MISSION_CYCLE_TIME_DEFAULT*20);		//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
 		m_ActiveDistance = 0;									//Set a default zero
 		m_bMissionIsEnding = false;
+		if (pos != "0 0 0")
+		{
+			m_bRequested = true;
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -362,4 +369,10 @@ class SDRC_Mission
 		
 		return count;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	bool IsRequested()
+	{
+		return m_bRequested;
+	}	
 }

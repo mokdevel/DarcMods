@@ -17,7 +17,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Occupation()
+	void SDRC_Mission_Occupation(vector pos = "0 0 0")
 	{
 		SDRC_Log.Add("[SDRC_Mission_Occupation] Constructor", LogLevel.SPAM);
 				
@@ -39,30 +39,34 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		m_DC_Occupation = m_Config.occupations[idx];
 				
 		//Set defaults
-		vector pos = m_DC_Occupation.pos;
-		string posName = m_DC_Occupation.posName;
-		
-		//Find a location for the mission
-		if (pos == "0 0 0")
+		if (!IsRequested())
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Occupation.locationTypes, m_Config.emptySize);
-			//Camps in random places are randomly rotated
-			m_fSpawnRotation = Math.RandomFloat(0, 360);
-		}
-		else
-		{
-			if (!SDRC_MissionHelper.IsValidMissionPos(pos))
+			pos = m_DC_Occupation.pos;
+			
+			//Find a location for the mission
+			if (pos == "0 0 0")
 			{
-				pos = "0 0 0";	//Mission position is not valid
+				pos = SDRC_MissionHelper.FindMissionPos(m_DC_Occupation.locationTypes, m_DC_Occupation.emptySize);
+				//Camps in random places are randomly rotated
+				m_fSpawnRotation = Math.RandomFloat(0, 360);
 			}
+			else
+			{
+				if (!SDRC_MissionHelper.IsValidMissionPos(pos))
+				{
+					pos = "0 0 0";	//Mission position is not valid
+				}
+			}
+			
+			if (pos == "0 0 0")	//No suitable location found.
+			{				
+				SDRC_Log.Add("[SDRC_Mission_Occupation] Could not find suitable location.", LogLevel.ERROR);
+				SetState(DC_EMissionState.FAILED);
+				return;
+			}	
 		}
 		
-		if (pos == "0 0 0")	//No suitable location found.
-		{				
-			SDRC_Log.Add("[SDRC_Mission_Occupation] Could not find suitable location.", LogLevel.ERROR);
-			SetState(DC_EMissionState.FAILED);
-			return;
-		}	
+		string posName = m_DC_Occupation.posName;
 		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, posName));
@@ -185,7 +189,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 class SDRC_OccupationConfig : SDRC_MissionConfig
 {
 	//Mission specific	
-	int emptySize = 30;//TBD: 7;										//The size (radius) of the empty space to found to decide on a mission position.
+	//int emptySize = 30;//TBD: 7;										//The size (radius) of the empty space to found to decide on a mission position.	//TBD: Removed
 	bool disableArsenal;									//Disable arsenal for vehicles so that no other items are found
 	ref array<ref int> occupationList = {};					//The indexes of occupations.
 	ref array<ref SDRC_Occupation> occupations = {};		//List of occupations
@@ -207,13 +211,14 @@ class SDRC_Occupation : Managed
 	DC_EWaypointMoveType waypointMoveType;
 	ref array<string> groupTypes = {};
 	int aiSkill;
-	float aiPerception	
+	float aiPerception;
+	float emptySize = 7;					//The size (radius) of the empty space to found to decide on a mission position.
 	
 	//Optional settings
 	ref SDRC_Loot loot = null;
 	ref array<ref SDRC_Structure> campItems = {};
 	
-	void Set(string comment_, vector pos_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_, int aiSkill_, float aiPerception_)
+	void Set(string comment_, vector pos_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_, int aiSkill_, float aiPerception_, float emptySize_)
 	{
 		comment = comment_;
 		pos = pos_;
@@ -228,6 +233,7 @@ class SDRC_Occupation : Managed
 		groupTypes = groupTypes_;
 		aiSkill = aiSkill_;
 		aiPerception = aiPerception_;		
+		emptySize = emptySize_;
 	}
 }		
 
@@ -269,7 +275,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {2};//{0,0,0,1,1,2,2,2,3,4};
+		conf.occupationList = {2};//{0,0,0,1,1,2,2,2,3,4};		
 
 		//----------------------------------------------------
 		SDRC_Occupation occupation0 = new SDRC_Occupation();
@@ -291,7 +297,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{
 				"G_RECON", "G_LIGHT"
 			},
-			50, 1.0		
+			50, 1.0,
+			5
 		);
 		conf.occupations.Insert(occupation0);
 		
@@ -319,7 +326,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{
 				"G_ADMIN", "G_LIGHT", "G_LIGHT"
 			},
-			50, 1.0		
+			50, 1.0,
+			10
 		);
 		conf.occupations.Insert(occupation1);
 		
@@ -388,7 +396,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"G_LIGHT", "G_LIGHT", "G_LIGHT", 
 				"G_ADMIN", "G_HEAVY", "G_LAUNCHER", "G_MEDICAL"
 			},
-			50, 1.0		
+			50, 1.0,
+			20		
 		);
 		conf.occupations.Insert(occupation2);
 
@@ -417,7 +426,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		
 		SDRC_Structure ocu2item1 = new SDRC_Structure();
 		ocu2item1.Set(
-	        "{2CB4BFA62C2D9C12}Prefabs/Structures/Military/CamoNets/CamoNet_Small_Top_01_base.et",
+	        //"{2CB4BFA62C2D9C12}Prefabs/Structures/Military/CamoNets/CamoNet_Small_Top_01_base.et",
+	        "{8088790C2D455045}Prefabs/Structures/Military/CamoNets/Soviet/CamoNet_Small_Top_Soviet.et",
 	        "1017.857 39 2501.721"
 		);
 		occupation2.campItems.Insert(ocu2item1);
@@ -461,7 +471,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{
 				"G_RECON"
 			},
-			50, 1.0		
+			50, 1.0,
+			15
 		);
 		conf.occupations.Insert(occupation3);
 
@@ -550,7 +561,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{
 				"G_SPECIAL", "G_HEAVY"
 			},
-			50, 1.0		
+			50, 1.0,
+			20		
 		);
 		conf.occupations.Insert(occupation4);
 
@@ -625,7 +637,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{
 				"G_SPECIAL", "G_HEAVY"
 			},
-			50, 1.0		
+			50, 1.0,
+			50
 		);
 		conf.occupations.Insert(occupation5);
 

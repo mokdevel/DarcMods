@@ -12,7 +12,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private int idx = 0;	
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Chopper()
+	void SDRC_Mission_Chopper(vector pos = "0 0 0")
 	{
 		SDRC_Log.Add("[SDRC_Mission_Chopper] Constructor", LogLevel.DEBUG);
 				
@@ -24,7 +24,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		m_Config = m_ChopperJsonApi.conf;
 		
 		string posName = m_Config.posName;
-		vector pos = m_Config.pos;
+		pos = m_Config.pos;
 		
 		SetTitle(m_Config.title + "" + posName);
 		SetInfo(m_Config.info);

@@ -15,7 +15,7 @@ class SDRC_Mission_Template : SDRC_Mission
 	private ref SDRC_TemplateConfig m_Config;
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Template()
+	void SDRC_Mission_Template(vector pos = "0 0 0")
 	{
 		SDRC_Log.Add("[SDRC_Mission_Template] Constructor", LogLevel.SPAM);
 				
@@ -25,8 +25,9 @@ class SDRC_Mission_Template : SDRC_Mission
 		//Load config
 		m_TemplateJsonApi.Load();
 		m_Config = m_TemplateJsonApi.conf;
+		pos = m_Config.pos;
 		
-		SetPos(m_Config.pos);
+		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(GetPos(), m_Config.posName));
 		SetTitle(m_Config.title + "" + GetPosName());
 		SetInfo(m_Config.info);

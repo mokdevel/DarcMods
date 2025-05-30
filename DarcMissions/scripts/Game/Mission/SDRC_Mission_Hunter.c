@@ -22,7 +22,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	private int m_iGroupsToSpawn	= 0;	//Amount of groups to spawn
 	private int m_iGroupsSpawned = 0;	//The amount of groups spawned. Between spawns, a group may be killed so the total of m_Groups is not reliable to know the count.
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Hunter(bool createConf = false)
+	void SDRC_Mission_Hunter(vector pos = "0 0 0")
 	{
 		SDRC_Log.Add("[SDRC_Mission_Hunter] Constructor", LogLevel.SPAM);
 
@@ -37,7 +37,6 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		
 		//Find position
 		bool positionFound = false;
-		vector pos;
 
 		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 		{
