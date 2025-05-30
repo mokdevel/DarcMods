@@ -9,13 +9,12 @@ string author : See Common parameters
 int missionCycleTime : See Common parameters
 bool showMarker : See Common parameters
 bool showHint : See Common parameters
-int emptySize : The size (radius) of the empty space needed to decide on a mission position.
 bool disableArsenal : See General parameters
 array<int> occupationList : The indexes of occupations.
-array<SCR_DC_Occupation> occupations : List of oocupations.
+array<SDRC_Occupation> occupations : List of oocupations.
 ```
 
-### SCR_DC_Occupation
+### SDRC_Occupation
 ```
 string comment : See General parameters
 vector pos : See General parameters
@@ -30,6 +29,6 @@ DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
 array<string> groupTypes : See General parameters
 int aiSkill : See General parameters
 float aiPerception : See General parameters
-SCR_DC_Loot loot : (optional) Loot found in the mission. 
-array<ref SCR_DC_Structure> campItems  : (optional) The structure list for the camp.
+int emptySize : The size (radius) of the empty space needed to decide on a mission position.SCR_DC_Loot loot : (optional) Loot found in the mission. 
+array<SDRC_Structure> campItems  : (optional) The structure list for the camp.
 ```
