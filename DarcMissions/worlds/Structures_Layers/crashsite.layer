@@ -1,3 +1,6 @@
+GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et" {
+ coords 97.911 1 121.527
+}
 GenericEntity {
  components {
   MeshObject "{64950D4A2966B27D}" {
@@ -6,30 +9,20 @@ GenericEntity {
  }
  coords 103.251 1 124.179
 }
-GenericEntity : "{33E84AF90E5FE1E5}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_03.et" {
- coords 100.073 1 126.823
- angleY 29.077
+GenericEntity : "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et" {
+ coords 106.274 1 121.108
 }
-GenericEntity : "{342E852E9A1847EA}Prefabs/Props/Industrial/Repair/VehicleGarbage_01_pile_medium.et" {
- coords 104.57 1 120.649
- angleY 37.793
+GenericEntity : "{310E849A808F9F5F}PrefabsEditable/Auto/Structures/Military/Camps/Canvas_Covers/US/E_CanvasCover_Folded_US.et" {
+ coords 104.552 1 126.903
 }
-GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et" {
- coords 97.911 1 121.527
+StaticModelEntity : "{532795AD51CFBEDF}PrefabsEditable/Auto/Structures/Infrastructure/Piping/E_DieselPipe_01_hose_V2.et" {
+ coords 104.745 1 123.685
 }
-GenericEntity : "{D674060002BA768E}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_02.et" {
- coords 104.853 1 125.593
+GenericEntity : "{7576CB87CAFAE6E8}PrefabsEditable/Auto/Structures/Military/CamoNets/US/E_CamoNet_AssemblyKit_US.et" {
+ coords 103.559 1 119.949
+ angleY -45.003
 }
-$grp GenericEntity : "{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et" {
- {
-  coords 98.101 1 124.324
-  angleY 68.972
- }
- {
-  coords 101.55 1.009 120.395
- }
- {
-  coords 107.879 1 123.552
-  angleY 68.972
- }
+GenericEntity : "{7AB486CD1FBB0B0A}PrefabLibrary/Props/Garbage/Junk_01_pile_small.et" {
+ coords 100.944 1 123.924
+ angleY -111.273
 }
