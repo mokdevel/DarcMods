@@ -8,7 +8,9 @@ Some changes in the jsons. The safest way is to backup your current ones if you 
 Main features: 
 * You can spawn missions as a GM. You can find the mission under Systems. 
 * Static mission behaviour changed; these spawn immediately when server starts.
+* AI will start from their first assigned waypoint.
 
+### Conf changes
 * dc_coreConfig.json parameter changes
 * dc_missionConfig_Occupation.json
   * ``emptySize`` moved inside SDRC_Occupation
