@@ -156,9 +156,18 @@ sealed class SDRC_WPHelper
 				AIWaypoint wploiter = FindAndCreateWaypoint(posFrom, DC_EWaypointMoveType.LOITER);
 				if (wploiter)
 				{
+					waypoints.Insert(wploiter);
 					wploiter.SetOrigin(posFrom);
 					group.AddWaypoint(wploiter);
 				}
+			}
+			
+			//Move the group to the first waypoint
+			if (waypoints.Count() > 0)	//This check should be unnecessary as there should always be atleast one WP.
+			{
+				AIWaypoint wp = waypoints[0];
+				
+				group.SetOrigin(wp.GetOrigin());
 			}
 									
 			int realCount = waypoints.Count();
