@@ -178,19 +178,27 @@ sealed class SDRC_Misc
 			posTmp[0] = Math.RandomInt(0, worldSize);
 			posTmp[2] = Math.RandomInt(0, worldSize);
 			
-			if (mustBeOnLand)
+			if (GetGame().GetWorld().IsOcean())
 			{
-				if (GetGame().GetWorld().GetOceanHeight(posTmp[0], posTmp[2]) == 0)
+				if (mustBeOnLand)
+				{
+					if (GetGame().GetWorld().GetOceanHeight(posTmp[0], posTmp[2]) == 0)
+					{
+						positionFound = true;
+						break;
+					}
+				}
+				else
 				{
 					positionFound = true;
 					break;
 				}
 			}
-			else
+			else	//If there is no ocean, we are happy with what we found
 			{
 				positionFound = true;
 				break;
-			}			
+			}
 		}
 
 		if (positionFound)
