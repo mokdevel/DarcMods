@@ -46,6 +46,7 @@ sealed class SDRC_MissionHelper
 		IEntity location = null;
 		array<IEntity> locations = {};
 		SDRC_Locations.GetLocations(locations, locationTypes);		
+		int searchRadius = 100;			//Find the position within 100m from pos. In case of fail, we increase the area.
 		
 		if (locations.Count() == 0)
 		{
@@ -57,7 +58,7 @@ sealed class SDRC_MissionHelper
 		{
 			location = locations.GetRandomElement();
 			pos = location.GetOrigin();
-			pos = SDRC_SpawnHelper.FindEmptyPos(pos, 100, size);	//Find the position within 100m from pos
+			pos = SDRC_SpawnHelper.FindEmptyPos(pos, searchRadius, size);	//Find the position within 100m from pos
 			
 			if (SDRC_MissionHelper.IsValidMissionPos(pos))
 			{				
@@ -67,6 +68,7 @@ sealed class SDRC_MissionHelper
 			}
 			else
 			{						
+				searchRadius = searchRadius + 20;	//Increase the are with 20m
 				SDRC_Log.Add("[SDRC_MissionHelper:FindMissionLocation] Invalid mission position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
 			}
 		}

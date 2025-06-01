@@ -104,6 +104,22 @@ class SDRC_MissionFrame
 			SDRC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.N_FENCE, "DMC_B", "Here is a text");
 			SDRC_MapMarkerHelper.CreateMapMarker("1200 0 3500", DC_EMissionIcon.N_HOUSE, "DMC_B", "Darc_SK");
 			SDRC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.N_HELI, "DMC_B", "This is a description for a mission");
+		
+			for (int i = 0;i < 150; i++)
+			{
+				vector pos = SDRC_Misc.GetRandomWorldPos();
+				pos = SDRC_SpawnHelper.FindEmptyPos(pos, 300, 30);			
+			}
+		
+			//vector pos = SDRC_SpawnHelper.FindEmptyPos("1990 0 2330", 300, 60);			
+		
+		/*
+			vector pos;
+			pos[0] = SDRC_Misc.GetWorldSize() / 2;
+			pos[1] = 0;
+			pos[2] = pos[0];
+			pos = SDRC_SpawnHelper.FindEmptyPos(pos, 300, 5000);			*/
+				
 		#endif	
 		
 		//GetGame().GetCallqueue().CallLater(SendHint, 15000, true);
@@ -232,7 +248,7 @@ class SDRC_MissionFrame
 					}
 				}
 								
-				SDRC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), ARGB(70, 255, 255, 0), 10, tmpDC_Mission.GetId());
+				SDRC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), ARGB(40, 255, 255, 0), 10, tmpDC_Mission.GetId());
 				
 				//Set the time when the mission has started. Activates the delay.
 				m_iLastMissionSpawnTime = (System.GetTickCount() / 1000);

@@ -3,7 +3,7 @@
 modded class SCR_BaseGameMode 
 {
 	//private 
-	private ref SDRC_Core m_SDRC_Core;
+	ref SDRC_Core m_SDRC_Core;
 	private SDRC_DebugEntity m_SDRC_DebugEntity;
 	private SDRC_RplHintEntity m_SDRC_RplHintEntity;
 	

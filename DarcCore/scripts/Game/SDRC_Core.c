@@ -6,8 +6,8 @@ This is the main Core file.
 //------------------------------------------------------------------------------------------------
 class SDRC_Core
 {
-	private ref SDRC_CoreJsonApi m_DC_CoreConfig = new SDRC_CoreJsonApi();	
-	private ref SDRC_CoreConfig m_Config;	
+	ref SDRC_CoreJsonApi m_DC_CoreConfig = new SDRC_CoreJsonApi();	
+	ref SDRC_CoreConfig m_Config;	
 	private ref array<string> m_sAddonList = {};
 	private ref array<string> m_sFactionList = {};
 	//------------------------------------------------------------------------------------------------
@@ -76,6 +76,9 @@ class SDRC_CoreConfig : Managed
 	bool debugShowSpheres = true;
 	string fallbackEnemyFaction = "USSR";
 	ref array<string> buildingExcludeFilter = {};
+	ref array<string> emptyPosStopFilter = {};
+	ref array<string> emptyPosExcludeFilter = {};
+	ref array<string> emptyPosClassFilter = {};
 }
 
 //------------------------------------------------------------------------------------------------
@@ -131,6 +134,30 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 			"Wall_2", "Wall_5", "militarywall", "fort_rampart_", "CNCBlock", "MEStairs",
 			//Gogland
 			"Gogland_trench", "Gogland_short_wall"
-		}
+		};
+		conf.emptyPosStopFilter = {			
+			"RiverPartEntity",
+			"SCR_DestructibleBuildingEntity", 			//Class: Building
+			"GraniteCliff_", "GraniteRock_", 			//Large rocks
+		};		
+		conf.emptyPosClassFilter = {			
+			"SCR_DestructibleEntity",					//Fences etc
+			"SCR_IndestructibleEnvironmentalEntity",	//Rocks
+			"StaticModelEntity",						
+		 	"Tree",
+		};
+		conf.emptyPosExcludeFilter = {
+			//Rocks etc
+			"Boulder_", "BeachStone_", 
+			//Misc
+			"BlastCover_",
+			//Building parts
+			"BrickWall",			
+			//Trees
+			"t_pinus_sylvestris_3",
+			"t_picea_abies_3",
+			"t_carpinus_betulus_3",
+			"t_betula_pendula_3",
+		};
 	}
 };

@@ -10,6 +10,14 @@ sealed class SDRC_SpawnHelper
 {
 	const float SIZEDIV = 1.8;
 	const float EMPTY_POS_RADIUS = 50;	//How far from the center the spawned position can be.
+//	private static ref array<string>m_sEmptyPosExcludeFilter = {};
+	
+/*	//------------------------------------------------------------------------------------------------
+	static void Setup()
+	{
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+		baseGameMode.m_SDRC_Core.m_Config.emptyPosExcludeFilter
+	}	*/
 	
 	//------------------------------------------------------------------------------------------------
 	/*! 
@@ -308,20 +316,98 @@ sealed class SDRC_SpawnHelper
 	/*!
 	Find an empty spot within areaRadius to fit emptySize
 	*/
+	
+	static private int m_obstructCount;
+	static const int SDRC_OBSTRUCT_LIMIT = 5;
+	
 	static vector FindEmptyPos(vector pos, float areaRadius, float emptySize)
 	{		
 		vector posFixed;
+		m_obstructCount = 0;
+		posFixed = pos;
 		
-		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize, 2, TraceFlags.ENTS|TraceFlags.WORLD|TraceFlags.OCEAN))
-		{
+//		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize, 20, TraceFlags.ENTS|TraceFlags.WORLD|TraceFlags.OCEAN|TraceFlags.ANY_CONTACT))
+//		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize, 20, TraceFlags.ENTS|TraceFlags.OCEAN|TraceFlags.WORLD))
+		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize, 20, TraceFlags.ENTS|TraceFlags.OCEAN) && m_obstructCount == 0)
+		{			
 			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Found: " + posFixed, LogLevel.SPAM);			
-			return posFixed;
+			
+			//TBD: For some reason the emptySize when doing a query is wider than the actual area.
+			GetGame().GetWorld().QueryEntitiesBySphere(posFixed, emptySize * 0.8, FindEntitiesCallback, null, EQueryEntitiesFlags.ALL);
+		}
+		else	//FindEmptyTerrainPosition did not find a spot
+		{
+			m_obstructCount = SDRC_OBSTRUCT_LIMIT;
 		}
 		
-		SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.DEBUG);			
-		return pos;
+		if (SDRC_Misc.IsPosInWater(posFixed))
+		{
+			m_obstructCount = SDRC_OBSTRUCT_LIMIT;
+		}
+		
+		if (m_obstructCount < SDRC_OBSTRUCT_LIMIT)
+		{
+			SDRC_DebugHelper.AddDebugPos(posFixed, ARGB(40, 0, 255, 0), emptySize, "NONE", 20);			
+		}
+		else
+		{
+			SDRC_DebugHelper.AddDebugPos(posFixed, ARGB(40, 255, 0, 0), emptySize, "NONE", 20);			
+			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.DEBUG);			
+		}
+		return posFixed;
 	}
 		
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Call back filter for FindBuilding
+	*/		
+	static bool FindEntitiesCallback(IEntity entity)
+	{
+		bool obstruct = false;
+		bool returnval = true;
+		
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+		if (entity)
+		{									
+			if (SCR_StringHelper.ContainsAny(entity.ClassName(), baseGameMode.m_SDRC_Core.m_Config.emptyPosStopFilter) )
+			{
+				obstruct = true;
+				m_obstructCount = SDRC_OBSTRUCT_LIMIT;
+				returnval = false;	//Stop searching. This is a bad spot
+			}
+			else
+			{
+				ResourceName resName = entity.GetPrefabData().GetPrefabName();
+				
+				if (SCR_StringHelper.ContainsAny(resName, baseGameMode.m_SDRC_Core.m_Config.emptyPosStopFilter) && !obstruct)
+				{
+					obstruct = true;
+				}
+							
+				if (SCR_StringHelper.ContainsAny(entity.ClassName(), baseGameMode.m_SDRC_Core.m_Config.emptyPosClassFilter) && !obstruct)
+				{
+					if (SCR_StringHelper.ContainsAny(resName, baseGameMode.m_SDRC_Core.m_Config.emptyPosExcludeFilter))
+					{
+						obstruct = true;
+					}
+				}
+			}
+			
+			if (obstruct)
+			{
+				m_obstructCount++;
+				if (m_obstructCount >= SDRC_OBSTRUCT_LIMIT)	//TBD: Enable once everything is fine.
+				{
+					returnval = false;	//Stop searching
+				}
+				
+				SDRC_DebugHelper.AddDebugPos(entity.GetOrigin(), ARGB(40, 0, 0, 255), 1, "NONE", 30);			
+			}
+		}
+		
+		return returnval;
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	*/
