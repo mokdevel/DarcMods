@@ -76,6 +76,7 @@ class SDRC_CoreConfig : Managed
 	bool debugShowSpheres = true;
 	string fallbackEnemyFaction = "USSR";
 	ref array<string> buildingExcludeFilter = {};
+	ref array<string> emptyPosIgnoreFilter = {};
 	ref array<string> emptyPosStopFilter = {};
 	ref array<string> emptyPosExcludeFilter = {};
 	ref array<string> emptyPosClassFilter = {};
@@ -135,8 +136,12 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 			//Gogland
 			"Gogland_trench", "Gogland_short_wall"
 		};
-		conf.emptyPosStopFilter = {			
-			"RiverPartEntity",
+		conf.emptyPosIgnoreFilter = {
+			"ParticleEffectEntity",
+		};
+		conf.emptyPosStopFilter = {
+			"RiverPartEntity", "LakeGeneratorEntity", 
+			//"ParticleEffectEntity",
 			"SCR_DestructibleBuildingEntity", 			//Class: Building
 			"GraniteCliff_", "GraniteRock_", 			//Large rocks
 		};		
