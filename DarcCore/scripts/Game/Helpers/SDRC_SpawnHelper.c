@@ -332,7 +332,7 @@ sealed class SDRC_SpawnHelper
 			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Found: " + pos, LogLevel.SPAM);			
 			
 			//TBD: For some reason the emptySize when doing a query is wider than the actual area.
-			GetGame().GetWorld().QueryEntitiesBySphere(pos, emptySize * 0.8, FindEntitiesCallback, null, EQueryEntitiesFlags.ALL);
+			GetGame().GetWorld().QueryEntitiesBySphere(pos, emptySize * 0.7, FindEntitiesCallback, null, EQueryEntitiesFlags.ALL);
 		}
 		else	//FindEmptyTerrainPosition did not find a spot
 		{
@@ -368,15 +368,23 @@ sealed class SDRC_SpawnHelper
 		bool returnval = true;
 		
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+		
 		if (entity)
-		{									
+		{				
+			//Completely ignore these. There is no PrefabName for these and will crash if asked.								
+			if (SCR_StringHelper.ContainsAny(entity.ClassName(), baseGameMode.m_SDRC_Core.m_Config.emptyPosIgnoreFilter) )
+			{
+				return true;	//Just continue...
+			}
+			
+			//Stop immediately when these are found
 			if (SCR_StringHelper.ContainsAny(entity.ClassName(), baseGameMode.m_SDRC_Core.m_Config.emptyPosStopFilter) )
 			{
 				obstruct = true;
 				m_obstructCount = SDRC_OBSTRUCT_LIMIT;
 				returnval = false;	//Stop searching. This is a bad spot
 			}
-			else
+			else //Then do normal checking
 			{
 				ResourceName resName = entity.GetPrefabData().GetPrefabName();
 				
@@ -397,10 +405,12 @@ sealed class SDRC_SpawnHelper
 			if (obstruct)
 			{
 				m_obstructCount++;
-/*				if (m_obstructCount >= SDRC_OBSTRUCT_LIMIT)	//TBD: Enable once everything is fine.
-				{
-					returnval = false;	//Stop searching
-				}*/
+				#ifdef SDRC_RELEASE	// While developing, we want to show all obstructing objects
+					if (m_obstructCount >= SDRC_OBSTRUCT_LIMIT)
+					{
+						returnval = false;	//Stop searching
+					}
+				#endif
 				
 				SDRC_DebugHelper.AddDebugPos(entity.GetOrigin(), ARGB(40, 0, 0, 255), 1, "NONE", 30);			
 			}
