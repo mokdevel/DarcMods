@@ -397,10 +397,10 @@ sealed class SDRC_SpawnHelper
 			if (obstruct)
 			{
 				m_obstructCount++;
-				if (m_obstructCount >= SDRC_OBSTRUCT_LIMIT)	//TBD: Enable once everything is fine.
+/*				if (m_obstructCount >= SDRC_OBSTRUCT_LIMIT)	//TBD: Enable once everything is fine.
 				{
 					returnval = false;	//Stop searching
-				}
+				}*/
 				
 				SDRC_DebugHelper.AddDebugPos(entity.GetOrigin(), ARGB(40, 0, 0, 255), 1, "NONE", 30);			
 			}

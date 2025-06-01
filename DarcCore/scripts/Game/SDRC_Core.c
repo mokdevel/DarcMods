@@ -152,12 +152,13 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 			//Misc
 			"BlastCover_",
 			//Building parts
-			"BrickWall",			
+			"BrickWall", 
 			//Trees
 			"t_pinus_sylvestris_3",
 			"t_picea_abies_3",
 			"t_carpinus_betulus_3",
 			"t_betula_pendula_3",
+			"t_piceaabies_2", "t_piceaabies_3",
 		};
 	}
 };
