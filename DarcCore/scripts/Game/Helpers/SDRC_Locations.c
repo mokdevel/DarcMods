@@ -44,7 +44,7 @@ sealed class SDRC_Locations
 			{
 				tmpMapItem.SetDisplayName(SCR_StringHelper.Translate(tmpMapItem.GetDisplayName()));
 				tmpMapItem.Entity().SetName(tmpMapItem.GetDisplayName());
-				vector origin = tmpMapItem.Entity().GetOrigin();			//TBD: MapItem position on DS is "0 0 0". This is a bug in 1.3.0?
+				vector origin = tmpMapItem.Entity().GetOrigin();			
 				tmpMapItem.SetPos(origin[0], origin[2]);
 				//tmpMapItem.Entity().SetOrigin(origin);						//Need to put the entity pos ot the mapItem pos
 				locationArray.Insert(tmpMapItem.Entity());
@@ -72,7 +72,7 @@ sealed class SDRC_Locations
 			foreach (MapItem tmpMapItem: m_tmpLocationArray)
 			{
 				tmpMapItem.SetDisplayName(SCR_StringHelper.Translate(tmpMapItem.GetDisplayName()));
-				vector origin = tmpMapItem.Entity().GetOrigin();			//TBD: MapItem position on DS is "0 0 0". This is a bug in 1.3.0?
+				vector origin = tmpMapItem.Entity().GetOrigin();			
 				tmpMapItem.SetPos(origin[0], origin[2]);
 				//tmpMapItem.Entity().SetOrigin(origin);						//Need to put the entity pos ot the mapItem pos
 				locationArray.Insert(tmpMapItem);
