@@ -22,52 +22,52 @@ Below is a an example camp with a box for loot, tent, fireplace and chair. The c
 ```
 "campItems": [
   {
-    "m_Resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
-    "m_Position": [
+    "resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+    "position": [
       1032.0379638671876,
       39.0,
       2478.923095703125
     ],
-    "m_Rotation": [
+    "rotation": [
       0.0,
       0.0,
       0.0
     ]
   },
   {
-    "m_Resource": "{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et",
-    "m_Position": [
+    "resource": "{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et",
+    "position": [
       1028.550048828125,
       39.0,
       2478.159912109375
     ],
-    "m_Rotation": [
+    "rotation": [
       0.0,
       119.33399963378906,
       0.0
     ]
   },
   {
-    "m_Resource": "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et",
-    "m_Position": [
+    "resource": "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et",
+    "position": [
       1029.9000244140626,
       39.0,
       2477.43994140625
     ],
-    "m_Rotation": [
+    "rotation": [
       0.0,
       0.0,
       0.0
     ]
   },
   {
-    "m_Resource": "{0511E95F422061BB}Prefabs/Props/Recreation/Camp/TentSmall_02/TentSmall_02_blue.et",
-    "m_Position": [
+    "resource": "{0511E95F422061BB}Prefabs/Props/Recreation/Camp/TentSmall_02/TentSmall_02_blue.et",
+    "position": [
       1029.9739990234376,
       39.0,
       2480.114013671875
     ],
-    "m_Rotation": [
+    "rotation": [
       0.0,
       0.0,
       0.0
