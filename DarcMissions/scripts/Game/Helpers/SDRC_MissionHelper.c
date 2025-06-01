@@ -12,9 +12,9 @@ enum DC_EMissionPosFailReason
 
 sealed class SDRC_MissionHelper
 {
-	private const int DC_LOCATION_SEACRH_ITERATIONS = 5;		//How many different spots to try for a mission before giving up
+	private const int DC_LOCATION_SEACRH_ITERATIONS = 8;		//How many different spots to try for a mission before giving up
 	private const int DC_LOCATION_SEACRH_RADIUS = 50;			//The start search radius for mission position 
-	private const int DC_LOCATION_SEACRH_RADIUS_INC = 30;		//The increase of search radius for each failed iteration
+	private const int DC_LOCATION_SEACRH_RADIUS_INC = 15;		//The increase of search radius for each failed iteration
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -104,8 +104,8 @@ sealed class SDRC_MissionHelper
 			}
 			else
 			{	
-				pos = SDRC_Misc.RandomizePos(pos, searchRadius);
-				searchRadius = searchRadius + DC_LOCATION_SEACRH_RADIUS_INC;	//Increase the are with 20m
+				pos = SDRC_Misc.RandomizePos(pos, searchRadius/2);
+				searchRadius = searchRadius + DC_LOCATION_SEACRH_RADIUS_INC;	//Increase the are with DC_LOCATION_SEACRH_RADIUS_INC
 				SDRC_Log.Add("[SDRC_MissionHelper:FindWithIterate] Invalid position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
 			}
 		}
@@ -295,7 +295,7 @@ sealed class SDRC_MissionHelper
 	*/
 	static SCR_AIGroup SpawnMissionAIGroup(string groupToSpawn, vector pos, string faction)
 	{
-		SDRC_SpawnHelper.FindEmptyPos(pos, 100, 8);
+		SDRC_SpawnHelper.FindEmptyPos(pos, 100, 4);
 		
 		string groupName = SDRC_EnemyHelper.SelectEnemy(groupToSpawn, faction);
 		

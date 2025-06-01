@@ -105,13 +105,14 @@ class SDRC_MissionFrame
 			SDRC_MapMarkerHelper.CreateMapMarker("1200 0 3500", DC_EMissionIcon.N_HOUSE, "DMC_B", "Darc_SK");
 			SDRC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.N_HELI, "DMC_B", "This is a description for a mission");
 		
-			for (int i = 0;i < 150; i++)
+/*			for (int i = 0;i < 250; i++)
 			{
 				vector pos = SDRC_Misc.GetRandomWorldPos();
-				SDRC_SpawnHelper.FindEmptyPos(pos, 300, 30);			
-			}
+				SDRC_SpawnHelper.FindEmptyPos(pos, 300, 50);			
+			}*/
 		
-			//vector pos = SDRC_SpawnHelper.FindEmptyPos("1990 0 2330", 300, 60);			
+//			vector pos = "4600 0 6100";
+//			SDRC_SpawnHelper.FindEmptyPos(pos, 300, 60);			
 		
 		/*
 			vector pos;
@@ -541,6 +542,7 @@ class SDRC_MissionFrame
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Search the map for GM spawned missions
+	TBD: This is really bad way of doing this
 	*/	
 	void FindGMSpawnedMissions()
 	{

@@ -276,7 +276,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {4};//{0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
+		conf.occupationList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
 
 		//----------------------------------------------------
 		SDRC_Occupation occupation0 = new SDRC_Occupation();
@@ -559,7 +559,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"G_SPECIAL", "G_HEAVY"
 			},
 			50, 1.0,
-			10		
+			12
 		);
 		conf.occupations.Insert(occupation4);
 
