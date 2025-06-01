@@ -31,7 +31,7 @@ sealed class SDRC_SpawnHelper
 	static IEntity SpawnItem(vector pos, string resourceName, float rotation = 0, float emptyPosRadius = EMPTY_POS_RADIUS, bool snap = true)
 	{
 		IEntity entity = NULL;
-		vector posFixed;
+		//vector posFixed;
         EntitySpawnParams params = EntitySpawnParams();
 		
 		vector sums = FindPrefabSize(resourceName);
@@ -45,17 +45,16 @@ sealed class SDRC_SpawnHelper
 		if (emptyPosRadius > -1)
 		{
 			//Spawn the resource to a free spot close to pos
-			posFixed = FindEmptyPos(pos, emptyPosRadius, (SDRC_Misc.FindMaxValue(sums)/SIZEDIV));
-			if (posFixed != "0 0 0")
+			if (FindEmptyPos(pos, emptyPosRadius, (SDRC_Misc.FindMaxValue(sums)/SIZEDIV) ) )
 			{
 				vector transform[4];
-				GetTransformFromPosAndRot(transform, posFixed, rotation, snap);
+				GetTransformFromPosAndRot(transform, pos, rotation, snap);
 				params.Transform = transform;
 				
 				entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
 				RebuildNavmesh(entity);
 				
-				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] Entity spawned to: " + posFixed, LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] Entity spawned to: " + pos, LogLevel.DEBUG);
 			}
 			else
 			{
@@ -127,7 +126,7 @@ sealed class SDRC_SpawnHelper
 			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItemInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.SPAM);
 		}
 		pos = SDRC_Misc.RandomizePos(floorpos, radius/6);
-		pos = SDRC_SpawnHelper.FindEmptyPos(pos, radius/5, emptyPosRadius);
+		SDRC_SpawnHelper.FindEmptyPos(pos, radius/5, emptyPosRadius);	//We use the original pos if we don't find a better spot.
 		pos[1] = pos[1] + 0.1;			
 		SDRC_DebugHelper.AddDebugSphere(pos, Color.PINK, empty_radius);
 		entity = SpawnItem(pos, item, rotation, emptyPosRadius, snap);
@@ -320,41 +319,43 @@ sealed class SDRC_SpawnHelper
 	static private int m_obstructCount;
 	static const int SDRC_OBSTRUCT_LIMIT = 5;
 	
-	static vector FindEmptyPos(vector pos, float areaRadius, float emptySize)
+	static bool FindEmptyPos(out vector pos, float areaRadius, float emptySize)
 	{		
 		vector posFixed;
 		m_obstructCount = 0;
-		posFixed = pos;
-		
+				
 //		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize, 20, TraceFlags.ENTS|TraceFlags.WORLD|TraceFlags.OCEAN|TraceFlags.ANY_CONTACT))
 //		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize, 20, TraceFlags.ENTS|TraceFlags.OCEAN|TraceFlags.WORLD))
 		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize, 20, TraceFlags.ENTS|TraceFlags.OCEAN) && m_obstructCount == 0)
-		{			
-			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Found: " + posFixed, LogLevel.SPAM);			
+		{	
+			pos = posFixed;
+			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Found: " + pos, LogLevel.SPAM);			
 			
 			//TBD: For some reason the emptySize when doing a query is wider than the actual area.
-			GetGame().GetWorld().QueryEntitiesBySphere(posFixed, emptySize * 0.8, FindEntitiesCallback, null, EQueryEntitiesFlags.ALL);
+			GetGame().GetWorld().QueryEntitiesBySphere(pos, emptySize * 0.8, FindEntitiesCallback, null, EQueryEntitiesFlags.ALL);
 		}
 		else	//FindEmptyTerrainPosition did not find a spot
 		{
 			m_obstructCount = SDRC_OBSTRUCT_LIMIT;
 		}
 		
-		if (SDRC_Misc.IsPosInWater(posFixed))
+		if (SDRC_Misc.IsPosInWater(pos))
 		{
 			m_obstructCount = SDRC_OBSTRUCT_LIMIT;
 		}
 		
 		if (m_obstructCount < SDRC_OBSTRUCT_LIMIT)
 		{
-			SDRC_DebugHelper.AddDebugPos(posFixed, ARGB(40, 0, 255, 0), emptySize, "NONE", 20);			
+			SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 0, 255, 0), emptySize, "NONE", 20);			
+			return true;
 		}
 		else
 		{
-			SDRC_DebugHelper.AddDebugPos(posFixed, ARGB(40, 255, 0, 0), emptySize, "NONE", 20);			
+			SDRC_DebugHelper.AddDebugPos(pos, ARGB(20, 255, 0, 0), emptySize, "NONE", 15);			
 			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.DEBUG);			
+			return false;
 		}
-		return posFixed;
+		return false;
 	}
 		
 	//------------------------------------------------------------------------------------------------

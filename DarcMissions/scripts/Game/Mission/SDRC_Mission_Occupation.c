@@ -52,19 +52,20 @@ class SDRC_Mission_Occupation : SDRC_Mission
 			}
 			else
 			{
-				if (!SDRC_MissionHelper.IsValidMissionPos(pos))
-				{
-					pos = "0 0 0";	//Mission position is not valid
-				}
+				pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_Occupation.emptySize);
 			}
-			
-			if (pos == "0 0 0")	//No suitable location found.
-			{				
-				SDRC_Log.Add("[SDRC_Mission_Occupation] Could not find suitable location.", LogLevel.ERROR);
-				SetState(DC_EMissionState.FAILED);
-				return;
-			}	
 		}
+		else
+		{
+			pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_Occupation.emptySize);
+		}
+		
+		if (pos == "0 0 0")	//No suitable location found.
+		{				
+			SDRC_Log.Add("[SDRC_Mission_Occupation] Could not find suitable location.", LogLevel.ERROR);
+			SetState(DC_EMissionState.FAILED);
+			return;
+		}	
 		
 		string posName = m_DC_Occupation.posName;
 		
@@ -275,7 +276,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.occupationList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
+		conf.occupationList = {4};//{0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
 
 		//----------------------------------------------------
 		SDRC_Occupation occupation0 = new SDRC_Occupation();
@@ -298,7 +299,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"G_RECON", "G_LIGHT"
 			},
 			50, 1.0,
-			5
+			3
 		);
 		conf.occupations.Insert(occupation0);
 		
@@ -327,7 +328,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"G_ADMIN", "G_LIGHT", "G_LIGHT"
 			},
 			50, 1.0,
-			10
+			6
 		);
 		conf.occupations.Insert(occupation1);
 		
@@ -401,7 +402,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"G_ADMIN", "G_HEAVY", "G_LAUNCHER", "G_MEDICAL"
 			},
 			50, 1.0,
-			20		
+			10		
 		);
 		conf.occupations.Insert(occupation2);
 
@@ -474,7 +475,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"G_RECON"
 			},
 			50, 1.0,
-			15
+			7
 		);
 		conf.occupations.Insert(occupation3);
 
@@ -558,7 +559,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"G_SPECIAL", "G_HEAVY"
 			},
 			50, 1.0,
-			20		
+			10		
 		);
 		conf.occupations.Insert(occupation4);
 
@@ -657,7 +658,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"G_SPECIAL", "G_HEAVY"
 			},
 			50, 1.0,
-			50
+			30
 		);
 		conf.occupations.Insert(occupation5);
 

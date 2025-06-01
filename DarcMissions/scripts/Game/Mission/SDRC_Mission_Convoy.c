@@ -245,12 +245,19 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		int i = slotIdx;
 //        for (int i = 0; i < slots; i++)
 //        {
+		if (i < slots)
+		{
 			BaseCompartmentSlot slot = compartments[i];
             if (!slot.IsOccupied() && (!slot.IsReserved()))// || slot.IsReservedBy(aiAgent))
 			{
 				bool success = accessComponent.GetInVehicle(vehicle, slot, true, -1, ECloseDoorAfterActions.CLOSE_DOOR, false);
 				return success;
 			}
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] slotIdx incorrect: " + i + "/" + slots, LogLevel.DEBUG);											
+		}
 //		}
 		return false;
     }		

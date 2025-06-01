@@ -148,7 +148,7 @@ sealed class SDRC_AIHelper
 		}
 		
 		pos = SDRC_Misc.RandomizePos(floorpos, radius/6);
-		pos = SDRC_SpawnHelper.FindEmptyPos(pos, radius/5, empty_radius);
+		SDRC_SpawnHelper.FindEmptyPos(pos, radius/5, empty_radius);		//If we did not find an empty pos, we use the original pos
 		pos[1] = pos[1] + 0.2;			
 //		SDRC_DebugHelper.AddDebugSphere(pos, Color.YELLOW, empty_radius);
 		AIAgent aiAgent = SDRC_AIHelper.SpawnAIAgent(resourceName, pos, false, faction);

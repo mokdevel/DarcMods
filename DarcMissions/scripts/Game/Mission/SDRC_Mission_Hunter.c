@@ -216,9 +216,8 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	protected vector GetSpawnPointForAI()
 	{
 		vector pos = GetPos();
-		vector posFixed = SDRC_SpawnHelper.FindEmptyPos(pos, 100, 8);
 		
-		if (pos != posFixed)
+		if (SDRC_SpawnHelper.FindEmptyPos(pos, 100, 8))
 		{						
 			SDRC_Log.Add("[SDRC_Mission_Hunter:GetSpawnPointForAI] Pos: " + pos, LogLevel.SPAM);
 		}

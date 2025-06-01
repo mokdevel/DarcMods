@@ -12,17 +12,20 @@ enum DC_EMissionPosFailReason
 
 sealed class SDRC_MissionHelper
 {
-	private const int DC_LOCATION_SEACRH_ITERATIONS = 5;	//How many different spots to try for a mission before giving up
+	private const int DC_LOCATION_SEACRH_ITERATIONS = 5;		//How many different spots to try for a mission before giving up
+	private const int DC_LOCATION_SEACRH_RADIUS = 50;			//The start search radius for mission position 
+	private const int DC_LOCATION_SEACRH_RADIUS_INC = 30;		//The increase of search radius for each failed iteration
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Find a random position for a mission. "0 0 0" returned if nothing found.
+	Find a completely random position for a mission. "0 0 0" returned if nothing found.
 	\param distanceToMission Distance to another mission. Two missions shall not be too close to each other. -1 will use the default from MissionFrame.
 	\param distanceToPlayer Mission shall not spawn too close to a player. -1 will use the default from MissionFrame.
 	*/	
 	static vector FindMissionPos(float distanceToMission = -1, float distanceToPlayer = -1)
 	{	
 		vector pos = SDRC_Misc.GetRandomWorldPos();
+		
 		if (!IsValidMissionPos(pos, distanceToMission, distanceToPlayer))
 		{
 			return "0 0 0";
@@ -30,7 +33,21 @@ sealed class SDRC_MissionHelper
 		
 		return pos;
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find a position near pos for a mission. "0 0 0" returned if nothing found.
+	\param pos Position to start to search for mission position
+	\param distanceToMission Distance to another mission. Two missions shall not be too close to each other. -1 will use the default from MissionFrame.
+	\param distanceToPlayer Mission shall not spawn too close to a player. -1 will use the default from MissionFrame.
+	*/	
+	static vector FindMissionPos(vector pos, float distanceToMission = -1, float distanceToPlayer = -1, float size = 5)
+	{	
+		pos = FindWithIterate(pos, DC_LOCATION_SEACRH_RADIUS, size);
+		
+		return pos;
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find a location where to spawn a mission. 
@@ -41,35 +58,55 @@ sealed class SDRC_MissionHelper
 	{	
 		//Find a random location
 		vector pos = "0 0 0";
-		bool positionFound = false;
 		
 		IEntity location = null;
 		array<IEntity> locations = {};
 		SDRC_Locations.GetLocations(locations, locationTypes);		
-		int searchRadius = 100;			//Find the position within 100m from pos. In case of fail, we increase the area.
+		int searchRadius = DC_LOCATION_SEACRH_RADIUS;			//Find the position within DC_LOCATION_SEACRH_RADIUS from pos. In case of fail, we increase the area.
 		
-		if (locations.Count() == 0)
+		if (locations.IsEmpty())
 		{
 			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionLocation] No locations found. Check the list of locationTypes in your mission." , LogLevel.ERROR);
 			return "0 0 0";
 		}
+
+		location = locations.GetRandomElement();
+
+		SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);
+		
+		pos = FindWithIterate(location.GetOrigin(), searchRadius, size);
+		
+		return pos;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find the location close to the position 
+	\param pos Position to start to search for mission position
+	\param searchRadius The radius to search for the proper position.
+	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
+	*/	
+	static vector FindWithIterate(vector pos, float searchRadius, float size = 5)
+	{
+		bool positionFound = false;
 		
 		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 		{
-			location = locations.GetRandomElement();
-			pos = location.GetOrigin();
-			pos = SDRC_SpawnHelper.FindEmptyPos(pos, searchRadius, size);	//Find the position within 100m from pos
-			
-			if (SDRC_MissionHelper.IsValidMissionPos(pos))
-			{				
-				positionFound = true;
-				SDRC_Log.Add("[SDRC_MissionHelper:FindMissionLocation] Location found: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);
-				break;
+			//Find the position within searchRadius from pos.			
+			if (SDRC_SpawnHelper.FindEmptyPos(pos, searchRadius, size))
+			{			
+				if (SDRC_MissionHelper.IsValidMissionPos(pos))
+				{				
+					positionFound = true;
+					SDRC_Log.Add("[SDRC_MissionHelper:FindWithIterate] Position found: " + pos, LogLevel.DEBUG);
+					break;
+				}
 			}
 			else
-			{						
-				searchRadius = searchRadius + 20;	//Increase the are with 20m
-				SDRC_Log.Add("[SDRC_MissionHelper:FindMissionLocation] Invalid mission position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
+			{	
+				pos = SDRC_Misc.RandomizePos(pos, searchRadius);
+				searchRadius = searchRadius + DC_LOCATION_SEACRH_RADIUS_INC;	//Increase the are with 20m
+				SDRC_Log.Add("[SDRC_MissionHelper:FindWithIterate] Invalid position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
 			}
 		}
 
@@ -77,10 +114,10 @@ sealed class SDRC_MissionHelper
 		{
 			return "0 0 0";
 		}
-		
+			
 		return pos;
-	}
-
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find destination location where the mission ends.
@@ -258,11 +295,11 @@ sealed class SDRC_MissionHelper
 	*/
 	static SCR_AIGroup SpawnMissionAIGroup(string groupToSpawn, vector pos, string faction)
 	{
-		vector posFixed = SDRC_SpawnHelper.FindEmptyPos(pos, 100, 8);
+		SDRC_SpawnHelper.FindEmptyPos(pos, 100, 8);
 		
 		string groupName = SDRC_EnemyHelper.SelectEnemy(groupToSpawn, faction);
 		
-		SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(groupName, posFixed, faction);
+		SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(groupName, pos, faction);
 		
 		return group;
 	}	
