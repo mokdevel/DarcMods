@@ -18,7 +18,7 @@ class SDRC_DarcMissionGM : SCR_ReplicatedParticleEffectEntity
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());	
 		if (baseGameMode.IsMaster())
 		{
-			SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInit] Server call!", LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInit] Server call!", LogLevel.SPAM);
 			
 			SDRC_DarcMissionGM ent = SDRC_DarcMissionGM.Cast(owner);
 			if (!ent.IsAdded())

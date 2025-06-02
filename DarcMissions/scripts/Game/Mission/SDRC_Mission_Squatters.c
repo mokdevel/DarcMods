@@ -40,7 +40,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		
 		//Set defaults
 		m_iAiCount = Math.RandomInt(m_DC_Squatter.aiCount[0], m_DC_Squatter.aiCount[1]);
-		float radius = 20;	//Default size for the radius
+		float radius = 10;	//Default size for the radius
 		array<IEntity>buildings = {};
 		array<string>buildingFilter = {};
 		

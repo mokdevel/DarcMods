@@ -87,9 +87,12 @@ Main features:
 * You can spawn missions as a GM. You can find the mission under Systems. 
 * Static mission behaviour changed; these spawn immediately when server starts.
 * AI will start from their first assigned waypoint.
+* Improved floor finding for buildings
+* Filtering rules for maps: Kunar, Anizay
 
 ### Conf changes
 * dc_coreConfig.json parameter changes
+  * Added ``emptyPosIgnoreFilter``, ``emptyPosStopFilter``, ``emptyPosClassFilter``, ``emptyPosExcludeFilter``
 * dc_missionConfig_Occupation.json
   * ``emptySize`` moved inside SDRC_Occupation
 * dc_missionConfig.json parameter changes
