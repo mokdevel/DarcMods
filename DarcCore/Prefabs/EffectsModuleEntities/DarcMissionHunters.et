@@ -9,10 +9,13 @@ SDRC_DarcMissionGM : "{5C61F07CE0B1DBB2}Prefabs/EffectsModuleEntities/BaseEffect
    m_UIInfo SCR_EditableEntityUIInfoColored "{657D04B5FA60578F}" {
     Name "DarcMissions Hunters"
     Description "Spawns a random Convoy mission"
-    Icon "{D989027F5BD87A63}UI/Textures/Icons/gm_mission_Hunter.edds"
+    Icon "{3926E3E61DDC2FAB}UI/Textures/Icons/gm_mission_Hunter_round.edds"
     m_Image "{D989027F5BD87A63}UI/Textures/Icons/gm_mission_Hunter.edds"
     m_aAuthoredLabels {
      7
+    }
+    m_aAutoLabels {
+     45001
     }
     m_EntityBudgetCost {
      SCR_EntityBudgetValue "{657D04B5FA605792}" {
