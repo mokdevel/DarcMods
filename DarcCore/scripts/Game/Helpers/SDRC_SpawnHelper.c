@@ -74,13 +74,15 @@ sealed class SDRC_SpawnHelper
 			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] Entity spawned to exact position: " + pos, LogLevel.DEBUG);
 		}
 		
-		RplComponent rplComp = RplComponent.Cast(entity.FindComponent(RplComponent));
-		if (!rplComp)
+		if (entity)
 		{
-			ResourceName res = entity.GetPrefabData().GetPrefabName();
-			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] The object " + res + " has no RplComponent. This will not be seen by players.", LogLevel.WARNING);		
+			RplComponent rplComp = RplComponent.Cast(entity.FindComponent(RplComponent));
+			if (!rplComp)
+			{
+				ResourceName res = entity.GetPrefabData().GetPrefabName();
+				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] The object " + res + " has no RplComponent. This will not be seen by players.", LogLevel.WARNING);		
+			}
 		}
-		
 		
 		return entity;
 	}	
@@ -128,8 +130,9 @@ sealed class SDRC_SpawnHelper
 		pos = SDRC_Misc.RandomizePos(floorpos, radius/6);
 		SDRC_SpawnHelper.FindEmptyPos(pos, radius/5, emptyPosRadius);	//We use the original pos if we don't find a better spot.
 		pos[1] = pos[1] + 0.1;			
-		SDRC_DebugHelper.AddDebugSphere(pos, Color.PINK, empty_radius);
-		entity = SpawnItem(pos, item, rotation, emptyPosRadius, snap);
+		SDRC_DebugHelper.AddDebugSphere(pos, ARGB(20, 128, 0, 128), empty_radius);
+//		entity = SpawnItem(pos, item, rotation, emptyPosRadius, snap);
+		entity = SpawnItem(pos, item, rotation, -1, snap);
 		
 		return entity;
 	}	
