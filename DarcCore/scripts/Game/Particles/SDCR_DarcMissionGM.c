@@ -16,30 +16,34 @@ class SDRC_DarcMissionGM : SCR_ReplicatedParticleEffectEntity
 	override event protected void EOnInit(IEntity owner)	
 	{
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());	
-		if (baseGameMode.IsMaster())
+		
+		if (baseGameMode)
 		{
-			SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInit] Server call!", LogLevel.SPAM);
-			
-			SDRC_DarcMissionGM ent = SDRC_DarcMissionGM.Cast(owner);
-			if (!ent.IsAdded())
+			if (baseGameMode.IsMaster())
 			{
-				ent.AddedToList();
+				SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInit] Server call!", LogLevel.SPAM);
 				
-				ref SDRC_MissionRequested mission = new SDRC_MissionRequested();
-				
-				mission.entityID = owner.GetID();
-				mission.pos = owner.GetOrigin();
-				baseGameMode.missionFrame.m_missionsRequested.Insert(mission);
-				
-				ResourceName res = owner.GetPrefabData().GetPrefabName();
-				SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInit] Found: " + res + " at " + owner.GetOrigin(), LogLevel.DEBUG);				
+				SDRC_DarcMissionGM ent = SDRC_DarcMissionGM.Cast(owner);
+				if (!ent.IsAdded())
+				{
+					ent.AddedToList();
+					
+					ref SDRC_MissionRequested mission = new SDRC_MissionRequested();
+					
+					mission.entityID = owner.GetID();
+					mission.pos = owner.GetOrigin();
+					baseGameMode.missionFrame.m_missionsRequested.Insert(mission);
+					
+					ResourceName res = owner.GetPrefabData().GetPrefabName();
+					SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInit] Found: " + res + " at " + owner.GetOrigin(), LogLevel.DEBUG);				
+				}
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInit] Client call!", LogLevel.DEBUG);
 			}
 		}
-		else
-		{
-			SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInit] Client call!", LogLevel.DEBUG);
-		}
-		
+				
 		super.EOnInit(owner);		
 	}
 	
