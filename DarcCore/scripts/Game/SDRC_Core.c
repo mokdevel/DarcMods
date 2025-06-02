@@ -134,14 +134,19 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 			//These from Kunar map
 			"Wall_2", "Wall_5", "militarywall", "fort_rampart_", "CNCBlock", "MEStairs",
 			//Gogland
-			"Gogland_trench", "Gogland_short_wall"
+			"Gogland_trench", "Gogland_short_wall",
+			//Anizay
+			"tem_toilet", "tem_buildingwall", "TEM_bigwall", "tem_wall", 
+			"tem_buildingtower", "tem_column", "tem_arab", "tem_cover", 
+			"tem_buildingbridge", "tem_arch", "tem_potmarket", "tem_oil_pump", 
+			"tem_brokengate", 
+			"FuelTank_"
 		};
 		conf.emptyPosIgnoreFilter = {
 			"ParticleEffectEntity",
 		};
 		conf.emptyPosStopFilter = {
 			"RiverPartEntity", "LakeGeneratorEntity", 
-			//"ParticleEffectEntity",
 			"SCR_DestructibleBuildingEntity", 			//Class: Building
 			"GraniteCliff_", "GraniteRock_", 			//Large rocks
 		};		
@@ -164,6 +169,13 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 			"t_carpinus_betulus_3",
 			"t_betula_pendula_3",
 			"t_piceaabies_2", "t_piceaabies_3",
+			//Anizay
+			"tem_wall", 
+			"tem_cave", 
+			"tem_big", "rocktower", "rockwall",
+			"tem_r_tk_rock", "tem_rock",
+			//Trees
+			"tem_palm2",
 		};
 	}
 };
