@@ -146,19 +146,19 @@ sealed class SDRC_BuildingHelper
 		array<vector>floorsTmp = {};
 		floors = {};
 		
+		//Is this the same building as used before?
 		if (buildingID == building.GetID())
 		{
 			SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Same building - using cached floor values.", LogLevel.DEBUG);
 			floors.Copy(buildingIDfloorCache);
 			return;
 		}
-		else
-		{
-			//Cache values if needed again
-			buildingID = building.GetID();
-			buildingIDfloorCache.Copy(floors);
-		}
+
+		//Clear cache		
+		buildingID = building.GetID();
+		buildingIDfloorCache.Clear();
 		
+		//Finding the building size
 		vector sums = SDRC_SpawnHelper.FindEntitySize(building);
 	
 		vector pos;
@@ -221,19 +221,35 @@ sealed class SDRC_BuildingHelper
 			}		
 		}
 
-		//If we found multiple floors, the highest one is with high probability the roof. Remove it.
+		//NOTE: The floors order is from lowest to highest		
+		
+		//Roof check : If we found multiple floors, the highest one is with high probability the roof. Remove it.
 		if (floors.Count() > 1)
 		{
-			floors.RemoveOrdered(floors.Count() - 1);					//Remove roof as a floor
+			floors.RemoveOrdered(floors.Count() - 1);	//Remove roof as a floor
 		}
 		
-		//Print(floorHeight);
-		//Print(floors);
-
-		foreach (vector fpos: floors)
+		//Ground check : If the two last floors are too close to each other, the lowest floor is considered ground
+		if (floors.Count() > 1)
 		{
-			SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 255, 255, 0), 0.3);
-		}				
+			float diff = floors[1][1] - floors[0][1];
+			if ( diff < 1.7 )
+			{
+				floors.RemoveOrdered(0);				//Remove ground as a floor
+			}
+		}
+		
+		//Cache values if needed again
+		buildingIDfloorCache.Copy(floors);
+		
+		#ifndef SDRC_RELEASE
+			//Print(floorHeight);
+			//Print(floors);
+			foreach (vector fpos: floors)
+			{
+				SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 255, 255, 0), 0.3);
+			}				
+		#endif 
 				
 		SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Found: " + floors.Count() + " floors from " + building.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);		//REMOVE
 	}
@@ -245,14 +261,16 @@ sealed class SDRC_BuildingHelper
 		
 		vector posEnd;
 		posEnd = posStart;
-		posEnd[1] = terrainY + 0.2;					//Stop 20cm above ground
+		posEnd[1] = terrainY + 0.1;					//Stop 10cm above ground
 	
 		TraceParam trace = new TraceParam();
 		{
 			trace.Start = posStart;
 			trace.End = posEnd;
 
-			SDRC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 0.6);
+			#ifndef SDRC_RELEASE
+				SDRC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 0.6);
+			#endif
 				
 			//trace.Exclude = child;
 			trace.TargetLayers = EPhysicsLayerDefs.Navmesh;
@@ -260,23 +278,30 @@ sealed class SDRC_BuildingHelper
 		}		
 
 		vector posCheck = posStart;
-		int i = 0;
-		while (posCheck[1] > terrainY && i < 10)	//Try a maximun of ten times. Just to avoid forever loop
+		int i = 0;		
+		while ( (posCheck[1] > terrainY) && (i < 10) )	//Try a maximun of ten times. Just to avoid forever loop
 		{
 			vector floorpos;
 			SCR_TerrainHelper.SnapToGeometry(floorpos, posCheck, {}, entity.GetWorld(), traceParam: trace);
-			if (floorpos[1] != terrainY)			//Try to evoid ground level
-			{
-				floors.Insert(floorpos);
-				posCheck[1] = floorpos[1] - 1;		//Move 1m down from found floor
-				trace.Start = posCheck;
-			}
+			
+			#ifndef SDRC_RELEASE
+				vector move = "0.15 0 0.0";
+				SDRC_DebugHelper.AddDebugSphere(posCheck, ARGB(50, 255, 0, 255), 0.05);				
+				SDRC_DebugHelper.AddDebugSphere(floorpos + move, ARGB(50, 255, 255, 255), 0.05);				
+			#endif 
+			
+			floors.Insert(floorpos);
+			posCheck[1] = floorpos[1] - 1;		//Move 1m down from found floor
+			trace.Start = posCheck;
+			
 			i++;
 		}
 		
-		foreach (vector fpos: floors)
-		{
-			SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 0, 0, 255), 0.2);
-		}				
+		#ifndef SDRC_RELEASE
+			foreach (vector fpos: floors)
+			{
+				SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 0, 0, 255), 0.15);
+			}				
+		#endif 
 	}	
 }
