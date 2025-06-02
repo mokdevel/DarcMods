@@ -19,7 +19,7 @@ class SDRC_DarcMissionGM : SCR_ReplicatedParticleEffectEntity
 		
 		if (baseGameMode)
 		{
-			if (baseGameMode.IsMaster())
+			if (baseGameMode.IsMaster() && baseGameMode.missionFrame)
 			{
 				SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInit] Server call!", LogLevel.SPAM);
 				
