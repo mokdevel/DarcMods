@@ -22,10 +22,10 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	private ref SDRC_CrashsiteConfig m_Config;
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 30;	//How many different spots to try for a mission before giving up	
 
-	protected ref SDRC_Crashsite m_DC_Crashsite;	//Occupation configuration in use
+	protected ref SDRC_Crashsite m_DC_Crashsite;			//Occupation configuration in use
 			
 	private DC_EMissionCrashSiteState missionCrashSiteState = DC_EMissionCrashSiteState.INIT;
-	private vector m_vPosDestination = "0 0 0";	//The destination where the chopper is flying from mission position
+	private vector m_vPosDestination = "0 0 0";				//The destination where the chopper is flying from mission position
 	private float m_fAngle = 0;
 	private IEntity m_Vehicle;
 	private vector m_vVehiclePosOld;
@@ -68,7 +68,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 				{
 					//Find flight positions from pos to m_PosDestination.
 					positionFound = true;
-					pos[1] = pos[1] + Math.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[0]);	//Adjust flight height
+/*					pos[1] = pos[1] + Math.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[0]);	//Adjust flight height
 					int rnd = SDRC_Misc.GetWorldSize()/8;
 					m_vPosDestination[0] = SDRC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
 					m_vPosDestination[2] = SDRC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
@@ -76,7 +76,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 					vector direction = vector.Direction(pos, m_vPosDestination);
 					m_fAngle = SDRC_Misc.VectorToAngle(direction);
 					
-					SDRC_Log.Add("[SDRC_Mission_Crashsite] Helicopter flying from " + pos + " to " + m_vPosDestination + ". Angle: " + m_fAngle, LogLevel.DEBUG);
+					SDRC_Log.Add("[SDRC_Mission_Crashsite] Helicopter flying from " + pos + " to " + m_vPosDestination + ". Angle: " + m_fAngle, LogLevel.DEBUG);*/
 					break;
 				}
 				else
@@ -90,13 +90,28 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 			//Requested positions are blindly accepted
 			positionFound = true;
 		}			
-		
-		if (!positionFound)	//No suitable location found.
+
+		//No suitable location found.
+		if (!positionFound)	
 		{				
 			SDRC_Log.Add("[SDRC_Mission_Crashsite] Could not find suitable location.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}	
+		
+		//Set common parameters
+		if (positionFound)	
+		{		
+			pos[1] = pos[1] + Math.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[0]);	//Adjust flight height
+			int rnd = SDRC_Misc.GetWorldSize()/8;
+			m_vPosDestination[0] = SDRC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
+			m_vPosDestination[2] = SDRC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
+			
+			vector direction = vector.Direction(pos, m_vPosDestination);
+			m_fAngle = SDRC_Misc.VectorToAngle(direction);
+			
+			SDRC_Log.Add("[SDRC_Mission_Crashsite] Helicopter flying from " + pos + " to " + m_vPosDestination + ". Angle: " + m_fAngle, LogLevel.DEBUG);
+		}			
 		
 		SetPos(pos);
 		SetPosName("");
@@ -423,52 +438,55 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		crashsite0.loot = crashloot;
 				
 		//----------------------------------------------------
-		SDRC_Structure crashitem0 = new SDRC_Structure();
+		SDRC_Structure crashitem0 = new SDRC_Structure;
 		crashitem0.Set(
-			//"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
-	        "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
-	        "921.983 39 2629.78"
-	    );
+			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+			"97.911 1 121.527"
+		);
 		crashsite0.siteItems.Insert(crashitem0);
-		SDRC_Structure crashitem1 = new SDRC_Structure();
+
+		SDRC_Structure crashitem1 = new SDRC_Structure;
 		crashitem1.Set(
-	        "{33E84AF90E5FE1E5}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_03.et",
-	        "924.145 39 2635.076",
-	        "0 29.077 0"
-	    );
+			"{97B6EE1A45A88A89}Assets/Vehicles/Helicopters/UH1H/UH1H_Wreck.xob",
+			"103.251 1 124.179"
+		);
 		crashsite0.siteItems.Insert(crashitem1);
-		SDRC_Structure crashitem2 = new SDRC_Structure();
+
+		SDRC_Structure crashitem2 = new SDRC_Structure;
 		crashitem2.Set(
-	        "{342E852E9A1847EA}Prefabs/Props/Industrial/Repair/VehicleGarbage_01_pile_medium.et",
-	        "928.642 39 2628.902",
-	        "0 37.793 0"
-	    );
+			"{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
+			"106.274 1 121.108"
+		);
 		crashsite0.siteItems.Insert(crashitem2);
-		SDRC_Structure crashitem3 = new SDRC_Structure();
+
+		SDRC_Structure crashitem3 = new SDRC_Structure;
 		crashitem3.Set(
-	        "{D674060002BA768E}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_02.et",
-	        "928.925 39 2633.846"
-	    );
-		crashsite0.siteItems.Insert(crashitem3);		
-		SDRC_Structure crashitem4 = new SDRC_Structure();
+			"{310E849A808F9F5F}PrefabsEditable/Auto/Structures/Military/Camps/Canvas_Covers/US/E_CanvasCover_Folded_US.et",
+			"104.552 1 126.903"
+		);
+		crashsite0.siteItems.Insert(crashitem3);
+
+		SDRC_Structure crashitem4 = new SDRC_Structure;
 		crashitem4.Set(
-			"{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
-			"925.622 39.009 2628.648"
+			"{532795AD51CFBEDF}PrefabsEditable/Auto/Structures/Infrastructure/Piping/E_DieselPipe_01_hose_V2.et",
+			"104.745 1 123.685"
 		);
-		crashsite0.siteItems.Insert(crashitem4);		
-		SDRC_Structure crashitem5 = new SDRC_Structure();
+		crashsite0.siteItems.Insert(crashitem4);
+
+		SDRC_Structure crashitem5 = new SDRC_Structure;
 		crashitem5.Set(
-			"{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
-			"931.951 39 2631.805",
-			"0 68.972 0"
+			"{7576CB87CAFAE6E8}PrefabsEditable/Auto/Structures/Military/CamoNets/US/E_CamoNet_AssemblyKit_US.et",
+			"103.559 1 119.949",
+			"0 -45.003 0"
 		);
-		crashsite0.siteItems.Insert(crashitem5);		
-		SDRC_Structure crashitem6 = new SDRC_Structure();
+		crashsite0.siteItems.Insert(crashitem5);
+
+		SDRC_Structure crashitem6 = new SDRC_Structure;
 		crashitem6.Set(
-			"{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
-			"922.173 39 2632.577",
-			"0 68.972 0"
+			"{7AB486CD1FBB0B0A}PrefabLibrary/Props/Garbage/Junk_01_pile_small.et",
+			"100.944 1 123.924",
+			"0 -111.273 0"
 		);
-		crashsite0.siteItems.Insert(crashitem6);	
+		crashsite0.siteItems.Insert(crashitem6);
 	}	
 }
