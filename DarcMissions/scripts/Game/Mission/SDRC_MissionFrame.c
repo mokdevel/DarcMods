@@ -124,7 +124,6 @@ class SDRC_MissionFrame
 		#endif	
 		
 		//GetGame().GetCallqueue().CallLater(SendHint, 15000, true);
-		GetGame().GetCallqueue().CallLater(FindGMSpawnedMissions, 5000, true);
 		
 		//Start the mission framework.
 		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStartDelay, false);
@@ -538,50 +537,6 @@ class SDRC_MissionFrame
 		
 		return count;
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Search the map for GM spawned missions
-	TBD: This is really bad way of doing this
-	*/	
-	void FindGMSpawnedMissions()
-	{
-		int size = SDRC_Misc.GetWorldSize();
-		vector pos = "0 0 0";
-		pos[0] = size / 2;
-		pos[2] = size / 2;
-		GetGame().GetWorld().QueryEntitiesBySphere(pos, size / 2, FindGMSpawnedMissionsCallback, null, EQueryEntitiesFlags.STATIC);
-		
-		//dumpMissionRequested();
-		CleanMissionsRequestedArray();
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Callback for the search of GM spawned missions
-	*/		
-	bool FindGMSpawnedMissionsCallback(IEntity entity)
-	{
-		if (entity.ClassName() == "SDCR_DarcMissionGM")
-		{
-			SDCR_DarcMissionGM ent = SDCR_DarcMissionGM.Cast(entity);
-			if (!ent.IsAdded())
-			{
-				ent.AddedToList();
-				
-				ref SDRC_MissionRequested mission = new SDRC_MissionRequested();
-				
-				mission.entityID = entity.GetID();
-				mission.pos = entity.GetOrigin();
-				m_missionsRequested.Insert(mission);
-				
-				ResourceName res = entity.GetPrefabData().GetPrefabName();
-				SDRC_Log.Add("[SDRC_MissionFrame:FindGMSpawnedMissions] Found: " + res + " at " + entity.GetOrigin(), LogLevel.DEBUG);
-			}
-		}
-		
-		return true;
-	}
 
 	//------------------------------------------------------------------------------------------------	
 	/*!
@@ -614,7 +569,7 @@ class SDRC_MissionFrame
 		foreach (SDRC_MissionRequested mission : m_missionsRequested)
 		{
 			IEntity entity = GetGame().GetWorld().FindEntityByID(mission.entityID);
-			//SDCR_ReplicatedParticleEffectEntity ent
+			//SDRC_ReplicatedParticleEffectEntity ent
 			
 			if (entity)
 			{
