@@ -39,54 +39,68 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		m_DC_Squatter = m_Config.squatters[idx];
 		
 		//Set defaults
-		pos = m_DC_Squatter.pos;
-		string posName = m_DC_Squatter.posName;
 		m_iAiCount = Math.RandomInt(m_DC_Squatter.aiCount[0], m_DC_Squatter.aiCount[1]);
+		float radius = 20;	//Default size for the radius
+		array<IEntity>buildings = {};
+		array<string>buildingFilter = {};
 		
 		//Find a location for the mission
-		if (pos == "0 0 0")
+		if (!IsRequested())
+		{		
+			pos = m_DC_Squatter.pos;
+			radius = m_Config.buildingRadius;
+			
+			if (pos == "0 0 0")
+			{
+				//If no locationTypes defined, we search for any building matching on the map
+				if (m_DC_Squatter.locationTypes.IsEmpty())
+				{
+					radius = -1;
+				}
+				else
+				{
+					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Squatter.locationTypes, 2);
+					buildingFilter = m_DC_Squatter.buildingNames;
+				}
+			}
+		}
+		else
 		{
-			float radius = m_Config.buildingRadius;
-			
-			//If no locationTypes defined, we search for any building matching on the map
-			if (m_DC_Squatter.locationTypes.IsEmpty())
-			{
-				radius = -1;
-			}
-			else
-			{
-				pos = SDRC_MissionHelper.FindMissionPos(m_DC_Squatter.locationTypes, 2);
-			}
-			
-			//Find the houses
-			array<IEntity>buildings = {};
+			//If the missions is requested, any building near the location will be accepted.
+			buildingFilter.Insert("");
+		}
+
+		//Find the houses	
+		SDRC_BuildingHelper.FindBuildings(buildings, buildingFilter, pos, radius);
 		
-			SDRC_BuildingHelper.FindBuildings(buildings, m_DC_Squatter.buildingNames, pos, radius);
-			if (!buildings.IsEmpty())
-			{
-				m_Building = buildings.GetRandomElement();
-				pos = m_Building.GetOrigin();
-				
-				SDRC_Log.Add("[SDRC_Mission_Squatter] Building selected: " + m_Building.GetPrefabData().GetPrefabName() + " " + pos, LogLevel.DEBUG);
-			}
-			else
-			{
-				SDRC_Log.Add("[SDRC_Mission_Squatter] Could not find suitable building near " + SDRC_Locations.CreateName(pos, "any") + " " + pos, LogLevel.ERROR);
-				pos = "0 0 0";				
-			}
+		if (!buildings.IsEmpty())
+		{
+			m_Building = buildings.GetRandomElement();
+			pos = m_Building.GetOrigin();
 			
 			if (!SDRC_MissionHelper.IsValidMissionPos(pos))
 			{
 				pos = "0 0 0";	//Mission position is not valid
 			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_Mission_Squatter] Building selected: " + m_Building.GetPrefabData().GetPrefabName() + " " + pos, LogLevel.DEBUG);
+			}
 		}
-		
+		else
+		{
+			SDRC_Log.Add("[SDRC_Mission_Squatter] Could not find suitable building near " + SDRC_Locations.CreateName(pos, "any") + " " + pos, LogLevel.ERROR);
+			pos = "0 0 0";				
+		}
+			
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
 			SDRC_Log.Add("[SDRC_Mission_Squatter] Could not find suitable location.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}			
+		
+		string posName = m_DC_Squatter.posName;
 		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, posName));
@@ -260,7 +274,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		conf.showMarker = true;		
 		//Mission specific
 		conf.buildingRadius = 400;
-		conf.squatterList = {0,1,2,2,3,3,3,4,5,5,5};
+		conf.squatterList = {0};//{0,1,2,2,3,3,3,4,5,5,5};
 		
 		//----------------------------------------------------
 		SDRC_Squatter squatter0 = new SDRC_Squatter();
