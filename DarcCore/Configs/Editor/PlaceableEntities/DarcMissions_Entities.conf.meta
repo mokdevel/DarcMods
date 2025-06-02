@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{E7A3FBD353A0F532}Configs/Editor/PlaceableEntities/DarcMissions_Entities.conf"
+ Configurations {
+  CONFResourceClass PC {
+  }
+  CONFResourceClass XBOX_ONE : PC {
+  }
+  CONFResourceClass XBOX_SERIES : PC {
+  }
+  CONFResourceClass PS4 : PC {
+  }
+  CONFResourceClass PS5 : PC {
+  }
+  CONFResourceClass HEADLESS : PC {
+  }
+ }
+}
