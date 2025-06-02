@@ -274,7 +274,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		conf.showMarker = true;		
 		//Mission specific
 		conf.buildingRadius = 400;
-		conf.squatterList = {0};//{0,1,2,2,3,3,3,4,5,5,5};
+		conf.squatterList = {0,1,2,2,3,3,3,4,5,5,5};
 		
 		//----------------------------------------------------
 		SDRC_Squatter squatter0 = new SDRC_Squatter();
