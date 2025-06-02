@@ -12,7 +12,7 @@ SDRC_DarcMissionGM : "{5C61F07CE0B1DBB2}Prefabs/EffectsModuleEntities/BaseEffect
     Icon "{AD5B6FECDE9A1E1E}UI/Textures/Icons/gm_mission_Occupation_round.edds"
     m_Image "{83FBFA44C296A183}UI/Textures/Icons/gm_mission_Occupation.edds"
     m_aAuthoredLabels {
-     7
+     1001
     }
     m_aAutoLabels {
      45001
