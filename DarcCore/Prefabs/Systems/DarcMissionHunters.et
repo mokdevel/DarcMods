@@ -4,31 +4,30 @@ SDRC_DarcMissionGM : "{5C61F07CE0B1DBB2}Prefabs/EffectsModuleEntities/BaseEffect
   SoundComponent "{622CB2564278E7B9}" {
    Enabled 0
   }
-  SCR_EditableEffectsModuleComponent "{65846EB47D87064A}" {
+  SCR_EditableEffectsModuleComponent "{657D04B5FA6057FA}" {
    m_EntityType SYSTEM
-   m_UIInfo SCR_EditableEntityUIInfoColored "{65846EB47D870666}" {
-    Name "DarcMissions Squatters"
+   m_UIInfo SCR_EditableEntityUIInfoColored "{657D04B5FA60578F}" {
+    Name "DarcMissions Hunters"
     Description "Spawns a random Convoy mission"
-    Icon "{E5DAD5DC5B093F46}UI/Textures/Icons/gm_mission_Squatters_round.edds"
-    m_Image "{4112879DE0872949}UI/Textures/Icons/gm_mission_Squatters.edds"
+    Icon "{3926E3E61DDC2FAB}UI/Textures/Icons/gm_mission_Hunter_round.edds"
+    m_Image "{D989027F5BD87A63}UI/Textures/Icons/gm_mission_Hunter.edds"
     m_aAuthoredLabels {
      1001
     }
     m_aAutoLabels {
-     45001
+     44001
     }
     m_EntityBudgetCost {
-     SCR_EntityBudgetValue "{65846EB47D87066D}" {
+     SCR_EntityBudgetValue "{657D04B5FA605792}" {
       m_BudgetType SYSTEMS
      }
     }
    }
-   m_bAutoRegister ALWAYS
    m_bStatic 1
-   m_Flags 67
+   m_Flags 65
   }
-  SDRC_DarcMissionRequestComp "{65846EB47D870679}" {
-   missionType SQUATTER
+  SDRC_DarcMissionRequestComp "{657D04B5FA60579B}" {
+   missionType HUNTER
   }
   RplComponent "{616C912BED359789}" {
    Streamable Disabled

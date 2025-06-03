@@ -15,7 +15,7 @@ SDRC_DarcMissionGM : "{5C61F07CE0B1DBB2}Prefabs/EffectsModuleEntities/BaseEffect
      1001
     }
     m_aAutoLabels {
-     45001
+     44001
     }
     m_EntityBudgetCost {
      SCR_EntityBudgetValue "{657D04B53A611628}" {
@@ -23,9 +23,8 @@ SDRC_DarcMissionGM : "{5C61F07CE0B1DBB2}Prefabs/EffectsModuleEntities/BaseEffect
      }
     }
    }
-   m_bAutoRegister ALWAYS
    m_bStatic 1
-   m_Flags 67
+   m_Flags 65
   }
   SDRC_DarcMissionRequestComp "{657D04B53A611636}" {
    missionType CRASHSITE
