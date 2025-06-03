@@ -6,31 +6,35 @@ EffectDef {
    ShapeSize 0.05 0.4 1
    ConeAngle 360 0 45
    ConeAngleMinDist 80
-   MaxNum 50
-   BirthRate 1.6
+   MaxNum 61
+   BirthRate 2.2
+   BirthRateRND 0.1
    BirthRateVel 0.7
    Offset 0 0 0
    Angles 0 0 90
-   Material "{896ED2720AFADD2C}Particles/_Materials/Gas/Smoke_Cloud_Dark_02.emat"
-   SizeMultiplier 9.7
-   SizeRND 1.5
-   RotMultiplier 40.7
+   Material "{03CA8CFC9A160CDC}system/wbdata/ParticleEditor/SDRC_defaultMaterial.emat"
+   SizeMultiplier 4.3
+   SizeRND 2.9
+   RotMultiplier 67.7
+   RotRND 5.8
    RandomRotDir 1
    RandomAngle 1
    FlipU Random
-   Velocity 0.1
+   FlipV Random
+   Velocity 0.08
    VelocityRND 0.02
    VelAffect 0.59
    AirResistance 0.3
    AirResistanceRND 0
-   WindInfluence 0.44
-   GravityMultiply -0.2
+   WindInfluence 0.72
+   GravityMultiply -0.1
    GravityMultiplyRND 0.03
-   AnimFPS 4.2
-   RandomFrame 0
+   AnimFPS 9.2
+   RandomFrame 1
    Lifetime 18.7
-   LifetimeRND 1
-   LifetimeVelFactor 0.529
+   LifetimeRND 2.5
+   LifetimeVelFactor 0.359
+   LifetimeVelSmoothing 4.39
    Color {
     0 0.287 0.287 0.287 1 0.181 0.181 0.181
    }

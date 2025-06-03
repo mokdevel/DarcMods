@@ -1,14 +1,6 @@
 Vehicle : "{D03C0F6044DB5208}Prefabs/Vehicles/Helicopters/UH1H/UH1H_base.et" {
  ID "57DA6675519A417B"
  components {
-  BaseVehicleNodeComponent "{57DA667544C3090A}" {
-   components {
-    SCR_HelicopterControllerComponent "{5CB0B40B1BD943AB}" {
-     DrawDebugInfo 1
-     MaxStartupTime 0
-    }
-   }
-  }
   RigidBody "{51DAA09FECF52BBF}" {
    Active Active
   }
@@ -38,6 +30,9 @@ Vehicle : "{D03C0F6044DB5208}Prefabs/Vehicles/Helicopters/UH1H/UH1H_base.et" {
   }
   SCR_FireplaceComponent "{6490B6C15194670B}" {
    m_sParticle "{79DD3A5F1F3069CD}Particles/Vehicle/Vehicle_fire_engine_small.ptc"
+  }
+  SCR_FireplaceComponent "{658678C408EF1510}" {
+   m_sParticle "{B9A7A1ABD97AAFDE}Particles/Vehicle/Helicopter/SDRC_BlackSmoke.ptc"
   }
   SCR_ResourceComponent "{64894791717784F3}" {
    m_aContainers {
@@ -95,6 +90,14 @@ Vehicle : "{D03C0F6044DB5208}Prefabs/Vehicles/Helicopters/UH1H/UH1H_base.et" {
      StartUpTime 0
     }
     Hull HelicopterHull "{51FAED9EF37A2D2D}" {
+    }
+   }
+  }
+  BaseVehicleNodeComponent "{57DA667544C3090A}" {
+   components {
+    SCR_HelicopterControllerComponent "{5CB0B40B1BD943AB}" {
+     DrawDebugInfo 1
+     MaxStartupTime 0
     }
    }
   }
