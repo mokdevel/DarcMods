@@ -1,0 +1,10 @@
+Particle {
+ Color 1 1 1 1
+ AlbedoMap "{0C179D58272B95FE}system/wbdata/ParticleEditor/defaultTexture_CA.edds"
+ Diffuse 0.305 0.305 0.305 1
+ Ambient 0.047 0.047 0.047 1
+ VertexNormalPower 0.74
+ NormalStretching 0.22
+ Softness 0.628
+ DepthScale 1.148
+}

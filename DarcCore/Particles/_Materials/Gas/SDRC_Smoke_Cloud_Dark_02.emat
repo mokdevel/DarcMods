@@ -1,0 +1,20 @@
+Particle {
+ AlbedoMap "{20D894737B37A0E6}Particles/_Textures/smoke_ball_1_BCA.edds"
+ NormalMap "{805B86E1CDF46E78}Particles/_Textures/smoke_ball_1_N.edds"
+ Diffuse 0.038 0.038 0.038 1
+ Ambient 0.216 0.216 0.216 1
+ EmissiveAbsoluteLV 0
+ ApplyAlbedoToEmissive 0
+ ReceiveShadow 1
+ ReceiveProbesLighting 1
+ AlphaMul 1.372
+ TileU 8
+ TileV 8
+ SphereSizeMultiplier 0.3
+ VertexNormalPower 1
+ NormalMapPower 1
+ NormalStretching 0
+ Backlight 1
+ BacklightStretching 0.5
+ Softness 0.5
+}

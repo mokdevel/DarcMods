@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{B1F1FF053AFF476C}Particles/_Materials/Gas/SDRC_Smoke_Cloud_Dark_02.emat"
+ Configurations {
+  EMATResourceClass PC {
+  }
+  EMATResourceClass XBOX_ONE : PC {
+  }
+  EMATResourceClass XBOX_SERIES : PC {
+  }
+  EMATResourceClass PS4 : PC {
+  }
+  EMATResourceClass PS5 : PC {
+  }
+  EMATResourceClass HEADLESS : PC {
+  }
+ }
+}
