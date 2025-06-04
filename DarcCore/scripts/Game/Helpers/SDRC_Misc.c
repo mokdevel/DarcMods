@@ -286,11 +286,13 @@ sealed class SDRC_Misc
 	
 	//------------------------------------------------------------------------------------------------
 	//TBD: Does not work
-	static void FindCompatibleMagazine()
+	static void FindCompatibleMagazine(IEntity wpn)
 	{
 		BaseMagazineComponent magazine;
 		BaseWeaponComponent weapon;
 		BaseMuzzleComponent muzzle;
+		
+		weapon = BaseWeaponComponent.Cast(wpn.FindComponent(BaseWeaponComponent));
 		
 		SCR_MagazinePredicate m_pMagazineSearchPredicate = new SCR_MagazinePredicate();		
 //		InventoryStorageManagerComponent invManager = SCR_WeaponInfo.GetInventoryManager();
@@ -304,6 +306,7 @@ sealed class SDRC_Misc
 			
 			// Find compatible magazines for this magazine well
 			BaseMagazineWell magWell = muzzle.GetMagazineWell();
+			ResourceName res = muzzle.GetDefaultMagazineOrProjectileName();
 			
 			if (magWell)
 			{

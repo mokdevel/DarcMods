@@ -190,7 +190,6 @@ class SDRC_Mission_Occupation : SDRC_Mission
 class SDRC_OccupationConfig : SDRC_MissionConfig
 {
 	//Mission specific	
-	//int emptySize = 30;//TBD: 7;										//The size (radius) of the empty space to found to decide on a mission position.	//TBD: Removed
 	bool disableArsenal;									//Disable arsenal for vehicles so that no other items are found
 	ref array<ref int> occupationList = {};					//The indexes of occupations.
 	ref array<ref SDRC_Occupation> occupations = {};		//List of occupations

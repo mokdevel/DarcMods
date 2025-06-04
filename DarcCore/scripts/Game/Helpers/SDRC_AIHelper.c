@@ -157,8 +157,6 @@ sealed class SDRC_AIHelper
 		
 		SCR_AIGroup group = SDRC_AIHelper.GroupAddAI(aiAgent);
 	
-		return group; //TBD: REMOVE
-		
 		array<AIWaypoint> waypoints = {};
 		AIWaypointCycle wpcycle = null;
 		wpcycle = AIWaypointCycle.Cast(SDRC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.PATROLCYCLE));

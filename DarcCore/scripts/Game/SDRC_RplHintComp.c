@@ -52,28 +52,5 @@ class SDRC_RplHintComp : ScriptComponent
 			SDRC_SCR_PopUpNotification.GetInstance().PopupMsg(title, 20, text2: msg);		
 			return;
 		#endif
-			
-		/*		
-		//TBD: Currently the solution below stops showing hints to users after a few logout/login.
-		string hintTitle = title;
-		string hintDescription = msg;
-		float duration = dur;
-		EHint type = EHint.UNDEFINED;
-		bool isTimerVisible = true;
-		EFieldManualEntryId fieldManualEntry = EFieldManualEntryId.NONE;
-		
-		// Create the hint info
-		SCR_HintUIInfo hintInfo = SCR_HintUIInfo.CreateInfo(hintDescription, hintTitle, duration, type, fieldManualEntry, isTimerVisible);		
-		
-		SCR_HintManagerComponent hintComponent = SCR_HintManagerComponent.GetInstance();
-		if (hintComponent)
-		{
-			hintComponent.ShowHint(hintInfo, ignoreShown: true);
-		}
-		else
-		{
-			SDRC_Log.Add("[SDRC_RplHintComp:RpcDo_ShowHint] SCR_HintManagerComponent not found", LogLevel.ERROR);
-		}
-		*/
     }	
 }
