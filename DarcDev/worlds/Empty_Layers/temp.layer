@@ -1,6 +1,18 @@
-SCR_AIWorld : "{E0A05C76552E7F58}Prefabs/AI/SCR_AIWorld.et" {
- coords 120.565 1 135.968
+GenericEntity : "{3D3758C525994D3A}Prefabs/Weapons/Shotguns/Double Barrel/BC_Shotgun_Double_Barrel_610mm.et" {
+ coords 121.046 1 139.178
 }
-PerceptionManager PerceptionManager1 : "{028DAEAD63E056BE}Prefabs/World/Game/PerceptionManager.et" {
- coords 121.466 1 135.952
+GenericEntity : "{3E413771E1834D2F}Prefabs/Weapons/Rifles/M16/Rifle_M16A2.et" {
+ coords 121.128 1 143.806
+}
+GenericEntity : "{5897D01F41DB5D2D}Prefabs/Weapons/Magazines/Magazine_545x39_RPK_45rnd_Tracer.et" {
+ coords 120.845 1 144.437
+}
+GenericEntity : "{9207B5D36C3C8C94}Prefabs/Weapons/Rifles/M16/Rifle_M16A2_carbine_base.et" {
+ coords 120.654 1 142.925
+}
+GenericEntity : "{9569026177545A20}Prefabs/Weapons/Magazines/Magazine_545x39_RPK_45rnd_Base.et" {
+ coords 120.941 1 144.848
+}
+GenericEntity : "{FA5C25BF66A53DCF}Prefabs/Weapons/Rifles/AK74/Rifle_AK74.et" {
+ coords 122.162 1 144.901
 }
