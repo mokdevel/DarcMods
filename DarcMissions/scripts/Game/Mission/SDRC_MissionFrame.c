@@ -105,6 +105,12 @@ class SDRC_MissionFrame
 			SDRC_MapMarkerHelper.CreateMapMarker("1200 0 3500", DC_EMissionIcon.N_HOUSE, "DMC_B", "Darc_SK");
 			SDRC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.N_HELI, "DMC_B", "This is a description for a mission");
 		
+/*			IEntity wpn = SDRC_SpawnHelper.SpawnItem("0 0 0", "{3D3758C525994D3A}Prefabs/Weapons/Shotguns/Double Barrel/BC_Shotgun_Double_Barrel_610mm.et");
+			if (wpn)
+			{
+				SDRC_Misc.FindCompatibleMagazine(wpn);
+			}	*/
+		
 /*			for (int i = 0;i < 250; i++)
 			{
 				vector pos = SDRC_Misc.GetRandomWorldPos();
@@ -120,6 +126,8 @@ class SDRC_MissionFrame
 			pos[1] = 0;
 			pos[2] = pos[0];
 			pos = SDRC_SpawnHelper.FindEmptyPos(pos, 300, 5000);			*/
+		
+			
 				
 		#endif	
 		

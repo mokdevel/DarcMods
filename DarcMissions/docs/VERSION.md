@@ -11,6 +11,7 @@ Main features:
 * AI will start from their first assigned waypoint.
 * Improved floor finding for buildings
 * Filtering rules for maps: Kunar, Anizay
+* More smoke for Crashsites
 
 ### Conf changes
 * dc_coreConfig.json parameter changes
