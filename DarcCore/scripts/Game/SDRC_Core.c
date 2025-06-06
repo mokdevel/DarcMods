@@ -40,6 +40,9 @@ class SDRC_Core
 		//Initialize LootHelper
 		SDRC_LootHelper.Setup();
 		
+		//Initialize AmmoHelper
+		SDRC_AmmoHelper.Setup();
+		
 		//Initialize EnemyHelper
 		SDRC_EnemyHelper.Setup();
 //		SDRC_EnemyHelper.SelectEnemy("G_REMNANTS", {"FIA"});

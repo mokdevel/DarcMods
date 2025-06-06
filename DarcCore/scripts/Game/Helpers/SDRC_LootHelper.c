@@ -91,7 +91,35 @@ sealed class SDRC_LootHelper
 		
 		return resourceName;
 	}
+
+	//------------------------------------------------------------------------------------------------
+	/*! 
+	Give full loot list
+	*/	
+	static bool GetLootListItems(out array<string>items, string listName)
+	{
+		int lootIndex = -1;
+		for (int i = 0; i < m_Config.lists.Count(); i++)		
+		{
+			if (m_Config.lists[i].id == listName)
+			{
+				lootIndex = i;
+				break;
+			}
+		}
+		
+		if (lootIndex == -1)
+		{
+			SDRC_Log.Add("[SDRC_LootHelper:FindLootItem] No lootList with name: " + listName + ". Typo?", LogLevel.WARNING);
+			return false;				
+		}
+
+		SDRC_Log.Add("[SDRC_LootHelper:GetLootListItems] Found: " + listName, LogLevel.DEBUG);
 				
+		items.Copy(m_Config.lists[lootIndex].items);
+		return true;
+	}	
+					
 	//------------------------------------------------------------------------------------------------
 	/*! 
 	Try to add an item to a storage of an entity

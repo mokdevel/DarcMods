@@ -1,4 +1,23 @@
+//------------------------------------------------------------------------------------------------
+class SDRC_List : Managed
+{
+	string id;
+	string modDir;
+	ref array<string> include = {};
+	ref array<string> exclude = {};
+	ref array<string> items = {};
 
+	void Set(string id_, string modDir_, array<string> include_, array<string> exclude_)	
+	{
+		id = id_;
+		modDir = modDir_;
+		include = include_;
+		exclude = exclude_;
+		items = {};
+	}
+}
+
+//------------------------------------------------------------------------------------------------
 class SDRC_ListConfig : Managed
 {
 	//Default information
@@ -41,22 +60,4 @@ class SDRC_ListConfig : Managed
 			}
 		}
 	}	
-}
-
-class SDRC_List : Managed
-{
-	string id;
-	string modDir;
-	ref array<string> include = {};
-	ref array<string> exclude = {};
-	ref array<ResourceName> items = {};
-
-	void Set(string id_, string modDir_, array<string> include_, array<string> exclude_)	
-	{
-		id = id_;
-		modDir = modDir_;
-		include = include_;
-		exclude = exclude_;
-		items = {};
-	}
 }

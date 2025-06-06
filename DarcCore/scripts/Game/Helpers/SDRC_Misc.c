@@ -283,54 +283,7 @@ sealed class SDRC_Misc
 		
 		return true;
 	}	
-	
-	//------------------------------------------------------------------------------------------------
-	//TBD: Does not work
-	static void FindCompatibleMagazine(IEntity wpn)
-	{
-		BaseMagazineComponent magazine;
-		BaseWeaponComponent weapon;
-		BaseMuzzleComponent muzzle;
-		
-		weapon = BaseWeaponComponent.Cast(wpn.FindComponent(BaseWeaponComponent));
-		
-		SCR_MagazinePredicate m_pMagazineSearchPredicate = new SCR_MagazinePredicate();		
-//		InventoryStorageManagerComponent invManager = SCR_WeaponInfo.GetInventoryManager();
-		
-		if (weapon)
-			muzzle = weapon.GetCurrentMuzzle();
-		
-		if (muzzle)
-		{
-			// WEAPON WITH MUZZLE -> NON-GRENADE
-			
-			// Find compatible magazines for this magazine well
-			BaseMagazineWell magWell = muzzle.GetMagazineWell();
-			ResourceName res = muzzle.GetDefaultMagazineOrProjectileName();
-			
-			if (magWell)
-			{
-				m_pMagazineSearchPredicate.magWellType = magWell.Type();
-				array<IEntity> magEntities = new array<IEntity>;
-//				invManager.FindItems(magEntities, m_pMagazineSearchPredicate);
-//				magazineCount = magEntities.Count();
-			}
-			else
-			{
-				// No magazine well, weapon is probably not reloadable
-//				magazineCount = 0;
-			}
-		}
-		
-/*
-		SCR_PrefabNamePredicate myPredicate = new SCR_PrefabNamePredicate();
-		myPredicate.prefabName = "YourMagPrefabToFind";
-		array<IEntity> sameMagazines = new array<IEntity>;
-		invManager.FindItems(sameMagazines, myPredicate);		
-		*/
-		
-	}	
-			
+				
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if a class is available. This can be used to check if a mod has been loaded by checking a class

@@ -166,6 +166,17 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			{"MG_", "RPD", "RPK"},
 			{"_Base"}
 		);
-		conf.lists.Insert(lootList10);		
+		conf.lists.Insert(lootList10);
+		
+		//Utility list: Magazine
+		SDRC_List lootList30 = new SDRC_List;
+		lootList30.Set(
+			"UTIL_MAGAZINES",
+			"/Weapons/Magazines",
+			{""},
+			{"_Base", "Internal_"}
+		);
+		conf.lists.Insert(lootList30);		
+		
 	}
 }
