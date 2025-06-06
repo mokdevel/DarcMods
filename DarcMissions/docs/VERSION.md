@@ -26,7 +26,7 @@ Main features:
 * dc_lootList.json
   * WEAPON_ATTACHMENT renamed to UTIL_ATTACHMENT
   * WEAPON_OPTICS renamed to UTIL_OPTICS
-  * UTIL_MAGAZINES : NEW - Adds a random magazine  
+  * UTIL_MAGAZINES : NEW - Adds a random magazine
 
 ## 20250526
 Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
