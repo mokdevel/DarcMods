@@ -89,6 +89,8 @@ Main features:
 * AI will start from their first assigned waypoint.
 * Improved floor finding for buildings
 * Filtering rules for maps: Kunar, Anizay
+* More smoke for Crashsites
+* Magazines spawned in loot (0-4 with itemChance%)
 
 ### Conf changes
 * dc_coreConfig.json parameter changes
@@ -99,6 +101,10 @@ Main features:
   * Introduced ``missionDynamic`` and ``missionStatic`` structures
   * Moved ``missionCount``, ``missionActiveTime`` and ``missionTypeArray`` in to the mission specific structures
   * Removed ``staticTryLimit``
+* dc_lootList.json
+  * WEAPON_ATTACHMENT renamed to UTIL_ATTACHMENT
+  * WEAPON_OPTICS renamed to UTIL_OPTICS
+  * UTIL_MAGAZINES : NEW - Adds a random magazine  
 
 ## 20250526
 Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.

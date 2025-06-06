@@ -28,12 +28,13 @@ WEAPON_RIFLE : A random rifle from any faction.
 WEAPON_HANDGUN : A random handgun from any faction.
 WEAPON_LAUNCHER : A random launcher from any faction.
 WEAPON_GRENADE : Grenades available
-WEAPON_ATTACHMENT : Various attachments excluding optics
-WEAPON_OPTICS : Optic attachments
 WEAPON_SHOTGUN : Shotguns (use e.g. Big Chungus mods)
 WEAPON_MG : Machine guns (use e.g. Big Chungus mods)
 ITEM_MEDICAL : Medical items
 ITEM_GENERAL : General items
+UTIL_ATTACHMENT : Various attachments excluding optics
+UTIL_OPTICS : Optic attachments
+UTIL_MAGAZINES : Adds a random magazine
 ```
 
 # Enemy lists
