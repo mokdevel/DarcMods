@@ -10,11 +10,12 @@
 	WEAPON_HANDGUN,
 	WEAPON_LAUNCHER,
 	WEAPON_GRENADE,
-	WEAPON_ATTACHMENT,
-	WEAPON_OPTICS,
+	UTIL_ATTACHMENT,
+	UTIL_OPTICS,
 	WEAPON_SHOTGUN,
 	ITEM_MEDICAL,
-	ITEM_GENERAL
+	ITEM_GENERAL,
+	UTIL_MAGAZINES	//Adds a random magazine
 */
 
 /*class SDRC_LootListConfig : SDRC_ListConfig
@@ -121,7 +122,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		//Lootlist: Weapon attachments
 		SDRC_List lootList06 = new SDRC_List;
 		lootList06.Set(
-			"WEAPON_ATTACHMENT",
+			"UTIL_ATTACHMENT",
 			"/Weapons/Attachments",
 			{""},
 			{"_Base", "Optic"}
@@ -131,7 +132,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		//Lootlist: Weapon attachments
 		SDRC_List lootList07 = new SDRC_List;
 		lootList07.Set(
-			"WEAPON_OPTICS",
+			"UTIL_OPTICS",
 			"/Weapons/Attachments",
 			{"Optic", "Scope"},
 			{"_Base"}
