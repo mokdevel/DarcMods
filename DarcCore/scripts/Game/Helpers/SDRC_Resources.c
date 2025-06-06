@@ -7,7 +7,7 @@ Functions to find resources (for example cities) from game.
 
 sealed class SDRC_Resources
 {
-	private static ref array<ResourceName> m_resourceNames = {};
+	private static ref array<string> m_resourceNames = {};
 						
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -16,7 +16,7 @@ sealed class SDRC_Resources
 	\param mod From which mod to search for items. Example: "$ArmaReforger:Prefabs/Weapons"
 	\param lootList 
 	*/	
-	static void GetList(out array<ResourceName> list, string mod, SDRC_List lootList)
+	static void GetList(out array<string> list, string mod, SDRC_List lootList)
 	{
 		SearchResourcesFilter filter = new SearchResourcesFilter();
 		filter.rootPath = mod + lootList.modDir;
@@ -39,7 +39,7 @@ sealed class SDRC_Resources
 	/*!
 	Remove the items from array that match the filters
 	*/	
-	static void ExcludeFilter(out array<ResourceName> resourceNames, array<string> filters)
+	static void ExcludeFilter(out array<string> resourceNames, array<string> filters)
 	{	
 		foreach (string filter: filters)
 		{
@@ -62,7 +62,7 @@ sealed class SDRC_Resources
 	/*!
 	Include only the items in the array that match the filters. Remove others.
 	*/	
-	static void IncludeFilter(out array<ResourceName> resourceNames, array<string> filters)
+	static void IncludeFilter(out array<string> resourceNames, array<string> filters)
 	{
 		for (int i = 0; i < resourceNames.Count(); i++)		
 		{
