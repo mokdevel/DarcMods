@@ -49,7 +49,10 @@ sealed class SDRC_AmmoHelper
 			//Delete the unnecessary weapon that we used for finding the magazine
 			GetGame().GetCallqueue().CallLater(SDRC_SpawnHelper.DespawnItem, 10000, false, wpn);
 			
-			return magazineList.GetRandomElement();
+			if (!magazineList.IsEmpty())
+			{
+				return magazineList.GetRandomElement();
+			}
 		}
 		
 		return "";
@@ -105,15 +108,15 @@ sealed class SDRC_AmmoHelper
 				m_pMagazineSearchPredicate.magWellType = magWell.Type();
 				array<IEntity> magEntities = new array<IEntity>;
 				m_invManager.FindItems(magEntities, m_pMagazineSearchPredicate);
-				magazineCount = magazineList.Count();
 				
 				foreach (IEntity mag : magEntities)				
 				{
 					ResourceName magRes = mag.GetPrefabData().GetPrefabName();
 					magazineList.Insert(magRes);
 				}
+				magazineCount = magazineList.Count();
 				
-				SDRC_Log.Add("[SDRC_AmmoHelper:FindCompatibleMagazineList] Found " + magazineCount + " compatible magazines for: " + res, LogLevel.WARNING);				
+				SDRC_Log.Add("[SDRC_AmmoHelper:FindCompatibleMagazineList] Found " + magazineCount + " compatible magazines for: " + res, LogLevel.DEBUG);				
 			}
 			else
 			{
