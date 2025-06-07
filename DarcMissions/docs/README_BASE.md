@@ -33,6 +33,7 @@ All configurations are done via .json files.
 
 The mission frame has the main definitions on mission spawn times, counts, etc. See:
 * [Mission Frame](./docs/MISSIONFRAME.md)
+* See also [Core](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md)
 
 Missions are configurable via .json files. Each mission have their own configuration file, but some information is shared. There are:
 * [Common parameters](./docs/P_COMMON.md) that are valid for all missions. 
