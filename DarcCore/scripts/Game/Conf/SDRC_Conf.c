@@ -10,10 +10,10 @@ Stupid file to handle a few common variables accross multiple mods
 sealed class SDRC_Conf
 {
 	const string CONF_DIRECTORY = "DarcMods";
+	const string CORE_CONFIG_FILE = "dc_coreConfig.json";
 	const string DEFAULT_DIR = "default";
 	static string subDir = "";
 	static bool coreHasStarted = false;
-	const string DC_CORE_CONFIG_FILE = "dc_coreConfig.json";
 	
 //Release options	
 #ifdef SDRC_RELEASE

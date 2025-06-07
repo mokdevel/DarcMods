@@ -15,6 +15,8 @@ sealed class SDRC_AmmoHelper
 	//------------------------------------------------------------------------------------------------
 	static void Setup()
 	{
+		SDRC_Log.Add("[SDRC_AmmoHelper:Setup] Preparing..", LogLevel.NORMAL);
+
 		//Put a random box to put all our magazines available.
 		//This is needed for the predicates to work.
 		IEntity m_ammoHelperBox = SDRC_SpawnHelper.SpawnItem("122 1 144", "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et", emptyPosRadius: -1);		
@@ -89,6 +91,7 @@ sealed class SDRC_AmmoHelper
 		if (!weaponComp)
 			return;
 		
+		//TBD: Could there be multiple muzzles? One for regular ammo, one for grenade launchers?
 		muzzle = weaponComp.GetCurrentMuzzle();
 		ResourceName res = weapon.GetPrefabData().GetPrefabName();
 		
@@ -102,8 +105,7 @@ sealed class SDRC_AmmoHelper
 		
 		if (muzzle)
 		{
-			// WEAPON WITH MUZZLE -> NON-GRENADE
-			
+			// WEAPON WITH MUZZLE -> NON-GRENADE			
 			// Find compatible magazines for this magazine well
 			BaseMagazineWell magWell = muzzle.GetMagazineWell();
 			

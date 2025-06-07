@@ -16,7 +16,9 @@ sealed class SDRC_EnemyHelper
 	//------------------------------------------------------------------------------------------------
 	static void Setup()
 	{
-		//Load loot config
+		SDRC_Log.Add("[SDRC_EnemyHelper:Setup] Preparing..", LogLevel.NORMAL);
+		
+		//Load enemy config
 		m_EnemyListJsonApi.Load();
 		m_Config = m_EnemyListJsonApi.conf;
 		m_Config.Populate();		
