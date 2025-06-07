@@ -8,7 +8,7 @@
 		private const string SDRC_MISSION_PROFILE_DIR = "default";
 		private const int SDRC_MISSION_COUNT = 10;										//Default amount of dynamic missions to run
 		private const float SDRC_MISSION_COUNT_MUL = 1.5;
-		private const int SDRC_MISSION_COUNT_STATIC = 8;								//Default amount of static missions to run
+		private const int SDRC_MISSION_COUNT_STATIC = 6;								//Default amount of static missions to run
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 1;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 30;
 		private const int SDRC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
@@ -143,7 +143,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.CONVOY, 
 											DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, 
 											DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION};
-			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
+			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
 		#endif	
 
 		#ifndef SDRC_RELEASE				
