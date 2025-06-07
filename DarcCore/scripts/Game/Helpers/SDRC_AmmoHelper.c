@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------------------------
 /*!
 Functions for various ammo/magazine related things
-NOTE: SDRC_LootHelper needs to initialized before using this. UTIL_MAGAZINES list has to be available. 
+NOTE: SDRC_LootHelper needs to initialized before using this. UTIL_MAGAZINES and UTIL_AMMO lists has to be available. 
 */
 
 //------------------------------------------------------------------------------------------------
@@ -24,6 +24,9 @@ sealed class SDRC_AmmoHelper
 			m_invManager = InventoryStorageManagerComponent.Cast(m_ammoHelperBox.FindComponent(InventoryStorageManagerComponent));		
 			array<string> itemNames = {};
 			SDRC_LootHelper.GetLootListItems(itemNames, "UTIL_MAGAZINES");
+			SDRC_LootHelper.SpawnItemsToStorage(m_ammoHelperBox, itemNames);
+			itemNames = {};
+			SDRC_LootHelper.GetLootListItems(itemNames, "UTIL_AMMO");
 			SDRC_LootHelper.SpawnItemsToStorage(m_ammoHelperBox, itemNames);
 		}
 		else
@@ -80,7 +83,8 @@ sealed class SDRC_AmmoHelper
 		BaseWeaponComponent weaponComp;
 		array<BaseMuzzleComponent> muzzles;	
 		weaponComp = BaseWeaponComponent.Cast(weapon.FindComponent(BaseWeaponComponent));
-		SCR_MagazinePredicate m_pMagazineSearchPredicate = new SCR_MagazinePredicate(); // Predicate for searching for magazines
+		SCR_MagazinePredicate magazineSearchPredicate = new SCR_MagazinePredicate(); // Predicate for searching for magazines
+		SCR_PrefabDataPredicate prefabDataPredicate = new SCR_PrefabDataPredicate();
 		
 		if (!weaponComp)
 			return;
@@ -105,9 +109,9 @@ sealed class SDRC_AmmoHelper
 			
 			if (magWell)
 			{
-				m_pMagazineSearchPredicate.magWellType = magWell.Type();
+				magazineSearchPredicate.magWellType = magWell.Type();
 				array<IEntity> magEntities = new array<IEntity>;
-				m_invManager.FindItems(magEntities, m_pMagazineSearchPredicate);
+				m_invManager.FindItems(magEntities, magazineSearchPredicate);
 				
 				foreach (IEntity mag : magEntities)				
 				{
@@ -130,9 +134,9 @@ sealed class SDRC_AmmoHelper
 			// WEAPON WITHOUT MUZZLE -> GRENADE
 /*			
 			// Find compatible weapons (same grenades for instance)
-			m_pPrefabDataPredicate.prefabData = weapon.GetOwner().GetPrefabData();
+			prefabDataPredicate.prefabData = weapon.GetPrefabData();
 			array<IEntity> sameWeapons = new array<IEntity>;
-			m_invManager.FindItems(sameWeapons, m_pPrefabDataPredicate);
+			m_invManager.FindItems(sameWeapons, prefabDataPredicate);
 			
 			// Remaining 'mags' count text
 			magazineCount = sameWeapons.Count();*/

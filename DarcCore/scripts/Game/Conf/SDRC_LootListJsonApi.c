@@ -15,7 +15,8 @@
 	WEAPON_SHOTGUN,
 	ITEM_MEDICAL,
 	ITEM_GENERAL,
-	UTIL_MAGAZINES	//Adds a random magazine
+	UTIL_MAGAZINES,	//Adds a random magazine
+	UTIL_AMMO		//Adds a random rocket, shell, flare, ..
 */
 
 /*class SDRC_LootListConfig : SDRC_ListConfig
@@ -179,5 +180,14 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		);
 		conf.lists.Insert(lootList30);		
 		
+		//Utility list: Ammo
+		SDRC_List lootList31 = new SDRC_List;
+		lootList31.Set(
+			"UTIL_AMMO",
+			"/Weapons/Ammo",
+			{"Shell", "Rocket", "Grenade", "Flare"},
+			{"_Base", "Internal_", "_Effect", "FlareEffect"}
+		);
+		conf.lists.Insert(lootList31);		
 	}
 }
