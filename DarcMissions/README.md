@@ -33,7 +33,6 @@ All configurations are done via .json files.
 
 The mission frame has the main definitions on mission spawn times, counts, etc. See:
 * [Mission Frame](./docs/MISSIONFRAME.md)
-* See also [Core](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md)
 
 Missions are configurable via .json files. Each mission have their own configuration file, but some information is shared. There are:
 * [Common parameters](./docs/P_COMMON.md) that are valid for all missions. 
@@ -106,6 +105,7 @@ Main features:
   * ``WEAPON_ATTACHMENT`` renamed to ``UTIL_ATTACHMENT``
   * ``WEAPON_OPTICS`` renamed to ``UTIL_OPTICS``
   * ``UTIL_MAGAZINES`` : NEW - Adds a random magazine
+  * ``UTIL_AMMO`` : NEW - Adds a random rocket, shell, flare, ..
 
 ## 20250526
 Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.

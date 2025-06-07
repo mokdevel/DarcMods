@@ -123,7 +123,8 @@ class SDRC_MissionFrame
 			pos[2] = pos[0];
 			pos = SDRC_SpawnHelper.FindEmptyPos(pos, 300, 5000);			*/
 		
-			string wpnPrefab = "{FA5C25BF66A53DCF}Prefabs/Weapons/Rifles/AK74/Rifle_AK74.et";
+//			string wpnPrefab = "{FA5C25BF66A53DCF}Prefabs/Weapons/Rifles/AK74/Rifle_AK74.et";
+			string wpnPrefab = "{7A82FE978603F137}Prefabs/Weapons/Launchers/RPG7/Launcher_RPG7.et";
 			string mag = SDRC_AmmoHelper.GetCompatibleMagazineForPrefab(wpnPrefab);
 
 			IEntity wpn = SDRC_SpawnHelper.SpawnItem("0 0 0", "{FA5C25BF66A53DCF}Prefabs/Weapons/Rifles/AK74/Rifle_AK74.et", emptyPosRadius: -1);		
