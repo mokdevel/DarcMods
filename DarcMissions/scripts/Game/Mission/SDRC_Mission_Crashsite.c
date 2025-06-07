@@ -445,13 +445,6 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		);
 		crashsite0.siteItems.Insert(crashitem0);
 
-		SDRC_Structure crashitem1 = new SDRC_Structure;
-		crashitem1.Set(
-			"{97B6EE1A45A88A89}Assets/Vehicles/Helicopters/UH1H/UH1H_Wreck.xob",
-			"103.251 1 124.179"
-		);
-		crashsite0.siteItems.Insert(crashitem1);
-
 		SDRC_Structure crashitem2 = new SDRC_Structure;
 		crashitem2.Set(
 			"{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",

@@ -14,7 +14,7 @@
 		private const int SDRC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS = 4*60;					//Minimum delay between missions. 
 		private const int SDRC_MISSION_ACTIVE_TIME = 15*60;								//Time to keep the mission active (seconds)
-		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 20*60;						//Static missions are to be kept alive longer
+		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 60*60;						//Static missions are to be kept alive longer
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 200;							//Mission is to be removed if no players close to the position after the mission active time has passed.
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 180;						//Mission is kept active this time once all AIs are dead.
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME = 30;							//The cycle to run the mission frame. 
@@ -125,6 +125,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.missionDynamic.count = SDRC_MISSION_COUNT;
 		conf.missionDynamic.countMul = SDRC_MISSION_COUNT_MUL;
 		conf.missionDynamic.activeTime = SDRC_MISSION_ACTIVE_TIME;
+		
 		conf.missionStatic.count = SDRC_MISSION_COUNT_STATIC;
 		conf.missionStatic.countMul = SDRC_MISSION_COUNT_STATIC_MUL;
 		conf.missionStatic.activeTime = SDRC_MISSION_ACTIVE_TIME_STATIC;
