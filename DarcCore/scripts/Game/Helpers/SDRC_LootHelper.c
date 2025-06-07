@@ -27,6 +27,8 @@ sealed class SDRC_LootHelper
 	
 	static void Setup()
 	{
+		SDRC_Log.Add("[SDRC_LootHelper:Setup] Preparing..", LogLevel.NORMAL);
+		
 		//Load loot config
 		m_LootListJsonApi.Load();
 		m_Config = m_LootListJsonApi.conf;
@@ -43,8 +45,6 @@ sealed class SDRC_LootHelper
 	*/
 	static void SpawnItemsToStorage(IEntity storage, array<string> itemNames, float itemChance = 1.0)
 	{
-		bool originalPrefabName = false;
-		
 		foreach (string itemName: itemNames)
 		{
 			if (Math.RandomFloat(0, 1) < itemChance)
@@ -54,7 +54,6 @@ sealed class SDRC_LootHelper
 				if (itemName[0] == "{")			//Manually defined prefabs are added
 				{
 					resource = itemName;
-					originalPrefabName = true;
 				}
 				else
 				{
@@ -64,23 +63,46 @@ sealed class SDRC_LootHelper
 				bool result = AddToStorage(storage, resource);
 				SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Adding item " + resource + ". Success: " + result, LogLevel.DEBUG);
 				
-				if ( ( (itemName.Contains("WEAPON_")) ||
-					   (resource.Contains("/Weapons/") && !resource.Contains("/Magazines/") && originalPrefabName) )
-					&& (Math.RandomFloat(0, 1) < itemChance) )
+				//Shall we add ammo? Ammo is to be added with itemChance%
+				if ((Math.RandomFloat(0, 1) < itemChance))
 				{
-					int magCount = Math.RandomFloat(0, 4);
-					if (magCount > 0)
-					{
-						string magazine = SDRC_AmmoHelper.GetCompatibleMagazineForPrefab(resource);
+					bool addToBox = false;
 					
-						for (int i = 0; i < magCount; i++)
+					//If it's defined as a list item, add to box
+					if (itemName.Contains("WEAPON_"))
+					{
+						addToBox = true;
+					}
+					else 
+					{ //If using original prefab name and it's not magazine nor ammo, add to box
+						if ( !addToBox &&
+						     (!resource.Contains("/Weapons/Magazines/")) && 
+						     (!resource.Contains("/Weapons/Ammo/")) &&
+						     (!resource.Contains("/Weapons/Attachments/")) &&
+						     (!resource.Contains("/Weapons/Grenades/")) &&
+						     (!resource.Contains("Prefabs/Items/"))
+						   )
 						{
-							result = AddToStorage(storage, magazine);
-							SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Adding magazine " + magazine + ". Success: " + result, LogLevel.DEBUG);				
+							addToBox = true;
+						}
+					}
+					
+					//Add ammo to box 
+					if (addToBox)
+					{
+						int magCount = Math.RandomFloat(0, 4);
+						if (magCount > 0)
+						{
+							string magazine = SDRC_AmmoHelper.GetCompatibleMagazineForPrefab(resource);
+						
+							for (int i = 0; i < magCount; i++)
+							{
+								result = AddToStorage(storage, magazine);
+								SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Adding magazine " + magazine + ". Success: " + result, LogLevel.DEBUG);				
+							}
 						}
 					}
 				}
-				
 			}
 		}
 	}		
