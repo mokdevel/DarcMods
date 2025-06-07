@@ -3,11 +3,11 @@
 	"author": "darc",
 	"comment": "Simple comment, not used in game",
 	"recreateConfigs": false,
-	"missionStartDelay": 60,
-	"missionDelayBetweeen": 240,
-	"missionFrameCycleTime": 30,
+	"missionStartDelay": 10,
+	"missionDelayBetweeen": 20,
+	"missionFrameCycleTime": 20,
 	"missionActiveDistance": 200,
-	"missionActiveTimeToEnd": 180,
+	"missionActiveTimeToEnd": 45,
 	"missionHintTime": 30,
 	"minDistanceToMission": 500,
 	"minDistanceToPlayer": 100,
@@ -15,38 +15,19 @@
 		"USSR"
 	],
 	"missionDynamic": {
-		"count": 10,
-		"countMul": 1.5,
-		"activeTime": 900,
+		"count": 0,
+		"countMul": 2.0,
+		"activeTime": 180,
 		"missionTypeArray": [
-			1,
-			4,
-			3,
-			6,
-			6,
-			6,
-			6,
-			6,
-			2,
-			2,
-			2,
-			2,
-			2,
-			2,
-			2,
-			2,
 			2
 		]
 	},
 	"missionStatic": {
-		"count": 8,
-		"countMul": 1.0,
-		"activeTime": 1200,
+		"count": 0,
+		"countMul": 3.0,
+		"activeTime": 1800,
 		"missionTypeArray": [
-			5,
-			5,
-			3,
-			3
+			4
 		]
 	}
 }

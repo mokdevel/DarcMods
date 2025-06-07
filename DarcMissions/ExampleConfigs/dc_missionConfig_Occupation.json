@@ -1,12 +1,28 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 30,
+	"missionCycleTime": 20,
 	"showMarker": true,
 	"showHint": true,
 	"disableArsenal": false,
 	"occupationList": [
-		2
+		0,
+		0,
+		0,
+		1,
+		1,
+		1,
+		1,
+		2,
+		2,
+		2,
+		2,
+		2,
+		3,
+		3,
+		3,
+		4,
+		5
 	],
 	"occupations": [
 		{
@@ -39,7 +55,7 @@
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0,
-			"emptySize": 5.0,
+			"emptySize": 3.0,
 			"loot": null,
 			"campItems": []
 		},
@@ -79,7 +95,7 @@
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0,
-			"emptySize": 10.0,
+			"emptySize": 6.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -88,7 +104,7 @@
 					"WEAPON_HANDGUN",
 					"WEAPON_HANDGUN",
 					"WEAPON_HANDGUN",
-					"WEAPON_ATTACHMENT",
+					"UTIL_ATTACHMENT",
 					"ITEM_MEDICAL",
 					"ITEM_GENERAL",
 					"ITEM_GENERAL",
@@ -101,11 +117,11 @@
 			},
 			"campItems": [
 				{
-					"resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+					"resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
 					"position": [
-						1032.0379638671876,
-						39.0,
-						2478.923095703125
+						100.47000122070313,
+						1.0,
+						144.56199645996095
 					],
 					"rotation": [
 						0.0,
@@ -116,9 +132,9 @@
 				{
 					"resource": "{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et",
 					"position": [
-						1028.550048828125,
-						39.0,
-						2478.159912109375
+						96.88500213623047,
+						1.0,
+						144.1840057373047
 					],
 					"rotation": [
 						0.0,
@@ -129,9 +145,9 @@
 				{
 					"resource": "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et",
 					"position": [
-						1029.9000244140626,
-						39.0,
-						2477.43994140625
+						98.23500061035156,
+						1.0,
+						143.46400451660157
 					],
 					"rotation": [
 						0.0,
@@ -140,15 +156,15 @@
 					]
 				},
 				{
-					"resource": "{0511E95F422061BB}Prefabs/Props/Recreation/Camp/TentSmall_02/TentSmall_02_blue.et",
+					"resource": "{EBC3D311A1B64FE6}PrefabsEditable/Auto/Structures/Military/Camps/TentSmallUS_01/E_TentSmallUS_01.et",
 					"position": [
-						1029.9739990234376,
-						39.0,
-						2480.114013671875
+						96.65299987792969,
+						1.0,
+						146.6009979248047
 					],
 					"rotation": [
 						0.0,
-						0.0,
+						-39.20800018310547,
 						0.0
 					]
 				}
@@ -196,7 +212,7 @@
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0,
-			"emptySize": 20.0,
+			"emptySize": 10.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.8999999761581421,
@@ -207,8 +223,8 @@
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
-					"WEAPON_ATTACHMENT",
-					"WEAPON_OPTICS",
+					"UTIL_ATTACHMENT",
+					"UTIL_OPTICS",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
@@ -227,52 +243,52 @@
 				{
 					"resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 					"position": [
-						1018.1640014648438,
-						39.0,
-						2501.93701171875
+						82.80999755859375,
+						1.0,
+						134.6820068359375
 					],
 					"rotation": [
 						0.0,
 						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+					"position": [
+						82.79199981689453,
+						1.0,
+						137.62600708007813
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+					"position": [
+						85.10199737548828,
+						1.0,
+						133.64100646972657
+					],
+					"rotation": [
+						0.0,
+						114.56900024414063,
 						0.0
 					]
 				},
 				{
 					"resource": "{E1343D495AB1956E}PrefabsEditable/Auto/Structures/Military/CamoNets/Soviet/E_CamoNet_Small_Top_Soviet.et",
 					"position": [
-						1017.8569946289063,
-						39.0,
-						2501.720947265625
+						82.3030014038086,
+						1.0,
+						134.70399475097657
 					],
 					"rotation": [
 						0.0,
 						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
-					"position": [
-						1018.14599609375,
-						39.0,
-						2504.881103515625
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
-					"position": [
-						1020.4559936523438,
-						39.0,
-						2500.89599609375
-					],
-					"rotation": [
-						0.0,
-						114.56900024414063,
 						0.0
 					]
 				}
@@ -312,7 +328,7 @@
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0,
-			"emptySize": 15.0,
+			"emptySize": 7.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -323,8 +339,8 @@
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
-					"WEAPON_ATTACHMENT",
-					"WEAPON_OPTICS",
+					"UTIL_ATTACHMENT",
+					"UTIL_OPTICS",
 					"WEAPON_LAUNCHER",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
@@ -353,50 +369,11 @@
 					]
 				},
 				{
-					"resource": "{56FFF0C990358ED2}Prefabs/Props/Wrecks/UAZ452_wreck_static.et",
+					"resource": "{3A9EC9CE2B10F863}PrefabsEditable/Auto/Props/VehicleParts/Tires/E_Tire_M151A2.et",
 					"position": [
-						78.80000305175781,
+						77.6709976196289,
 						1.0,
-						113.21099853515625
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{6095B175AA9804DC}Prefabs/Props/VehicleParts/Tires/Tire_UAZ469.et",
-					"position": [
-						77.25199890136719,
-						1.0,
-						114.02999877929688
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{6095B175AA9804DC}Prefabs/Props/VehicleParts/Tires/Tire_UAZ469.et",
-					"position": [
-						80.55500030517578,
-						1.0,
-						110.33999633789063
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{8BAF6C3ACF99388E}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_05.et",
-					"position": [
-						79.36199951171875,
-						1.0,
-						108.87799835205078
+						117.21199798583985
 					],
 					"rotation": [
 						0.0,
@@ -418,11 +395,37 @@
 					]
 				},
 				{
-					"resource": "{2424EBB806A690D4}Prefabs/Props/Garbage/Medical/GarbageMedicalUS_02.et",
+					"resource": "{8BAF6C3ACF99388E}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_05.et",
 					"position": [
-						80.0999984741211,
+						79.36199951171875,
 						1.0,
-						113.32099914550781
+						108.87799835205078
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{F8CFFBA89541B0E9}PrefabsEditable/Auto/Props/Crates/E_Crate_01_ivory.et",
+					"position": [
+						80.81900024414063,
+						1.0,
+						113.16600036621094
+					],
+					"rotation": [
+						0.0,
+						28.260000228881837,
+						0.0
+					]
+				},
+				{
+					"resource": "{FA34D99C60B233F0}PrefabsEditable/Auto/Props/Wrecks/E_S105_wreck.et",
+					"position": [
+						79.03600311279297,
+						1.0,
+						113.87899780273438
 					],
 					"rotation": [
 						0.0,
@@ -464,7 +467,7 @@
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0,
-			"emptySize": 20.0,
+			"emptySize": 12.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.4000000059604645,
@@ -476,9 +479,9 @@
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
-					"WEAPON_ATTACHMENT",
-					"WEAPON_ATTACHMENT",
-					"WEAPON_OPTICS",
+					"UTIL_ATTACHMENT",
+					"UTIL_ATTACHMENT",
+					"UTIL_OPTICS",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
@@ -506,24 +509,24 @@
 					]
 				},
 				{
-					"resource": "{06FE4FE70907D486}Prefabs/Props/Military/Compositions/Dst/PersonnelService_Table_01/PersonnelService_Table_01_dst_01.et",
+					"resource": "{0B24DD72DAF499F4}PrefabsEditable/Auto/Props/Military/AmmoBoxes/EquipmentBoxStack/E_EquipmentBoxStack_US_01_V6_covered.et",
 					"position": [
-						80.31999969482422,
-						1.0920000076293946,
-						90.81700134277344
+						80.77999877929688,
+						1.0,
+						94.66500091552735
 					],
 					"rotation": [
 						0.0,
-						-40.15700149536133,
+						89.87100219726563,
 						0.0
 					]
 				},
 				{
 					"resource": "{172DD50ACF177B9E}Prefabs/Props/Military/Furniture/ChairMilitary_USSR_01.et",
 					"position": [
-						79.55799865722656,
-						1.0750000476837159,
-						91.2699966430664
+						79.39700317382813,
+						1.0,
+						92.375
 					],
 					"rotation": [
 						0.0,
@@ -532,15 +535,41 @@
 					]
 				},
 				{
-					"resource": "{9CBBE8B23794214D}Prefabs/Props/Commercial/CabinetCardFile_01/Dst/CabinetCardFile_01_dst_green.et",
+					"resource": "{172DD50ACF177B9E}Prefabs/Props/Military/Furniture/ChairMilitary_USSR_01.et",
 					"position": [
-						76.37000274658203,
-						1.0779999494552613,
-						91.04900360107422
+						79.58100128173828,
+						1.0,
+						90.91600036621094
+					],
+					"rotation": [
+						0.0,
+						-152.0070037841797,
+						0.0
+					]
+				},
+				{
+					"resource": "{3EC72887AEC40F22}PrefabsEditable/Auto/Props/Furniture/TableOld_01/E_TableOld_01_white.et",
+					"position": [
+						79.55000305175781,
+						1.0,
+						91.49400329589844
 					],
 					"rotation": [
 						0.0,
 						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{BEC236C8D6F6E783}PrefabsEditable/Auto/Props/Furniture/ChairRecreation_01/E_ChairRecreation_01_red.et",
+					"position": [
+						76.98600006103516,
+						1.0,
+						91.97799682617188
+					],
+					"rotation": [
+						0.0,
+						60.599998474121097,
 						0.0
 					]
 				},
@@ -550,6 +579,19 @@
 						78.75800323486328,
 						0.0,
 						92.71800231933594
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{FF3ED8B26C05A940}PrefabsEditable/Auto/Props/Military/Camps/E_LanternMilitary_US_01.et",
+					"position": [
+						76.75800323486328,
+						1.0,
+						92.85600280761719
 					],
 					"rotation": [
 						0.0,
@@ -590,7 +632,7 @@
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0,
-			"emptySize": 50.0,
+			"emptySize": 30.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.4000000059604645,
@@ -602,9 +644,9 @@
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
-					"WEAPON_ATTACHMENT",
-					"WEAPON_ATTACHMENT",
-					"WEAPON_OPTICS",
+					"UTIL_ATTACHMENT",
+					"UTIL_ATTACHMENT",
+					"UTIL_OPTICS",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
@@ -628,6 +670,32 @@
 					"rotation": [
 						0.0,
 						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{116C488674B5A4A6}Prefabs/Structures/Commercial/FuelStations/FuelStation_E_01/Dst/FuelStation_E_01_roof_Ruin_base.et",
+					"position": [
+						143.4530029296875,
+						1.0,
+						79.2239990234375
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{215C30FCB7EF7E90}PrefabsEditable/Auto/Props/Military/WaterTanks/E_MobileWaterTank_USSR_01.et",
+					"position": [
+						143.2100067138672,
+						1.0,
+						73.0469970703125
+					],
+					"rotation": [
+						0.0,
+						-104.53299713134766,
 						0.0
 					]
 				},
@@ -671,11 +739,11 @@
 					]
 				},
 				{
-					"resource": "{4A34979DC19CA9ED}Prefabs/Props/Construction/ConcreteMixer_01.et",
+					"resource": "{46F077BDA1AF95B2}PrefabsEditable/Auto/Props/Industrial/E_BarrelFuel_01_closed.et",
 					"position": [
-						129.23699951171876,
+						128.00799560546876,
 						1.0,
-						79.08799743652344
+						71.13099670410156
 					],
 					"rotation": [
 						0.0,
@@ -684,28 +752,67 @@
 					]
 				},
 				{
-					"resource": "{654B33C808C4D93E}Prefabs/Props/Wrecks/M151A2_wreck_static.et",
+					"resource": "{71165C5EA36C797C}PrefabsEditable/Auto/Props/Infrastructure/SnowBreakers/E_SnowBreaker_E_01_C.et",
 					"position": [
-						135.5399932861328,
+						137.61500549316407,
 						1.0,
-						78.0479965209961
+						73.96099853515625
 					],
 					"rotation": [
 						0.0,
-						43.16699981689453,
+						-41.53200149536133,
 						0.0
 					]
 				},
 				{
-					"resource": "{A240B5FCD17D5686}Prefabs/Props/Construction/GarbageStack_01/GarbageStack_01_Medium.et",
+					"resource": "{74BA7E97319D69C3}PrefabsEditable/Auto/Props/VehicleParts/Tires/E_Tire_Ural4320_pile.et",
 					"position": [
-						126.99700164794922,
+						140.8699951171875,
 						1.0,
-						70.125
+						93.76000213623047
 					],
 					"rotation": [
 						0.0,
 						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{82008EE10AB80D6E}PrefabsEditable/Auto/Props/Wrecks/E_UAZ469_wreck.et",
+					"position": [
+						139.98399353027345,
+						1.0,
+						71.41400146484375
+					],
+					"rotation": [
+						0.0,
+						-135.75599670410157,
+						0.0
+					]
+				},
+				{
+					"resource": "{A3EF3195AD211CDB}PrefabsEditable/Auto/Props/Industrial/Pallets/E_Pallet_01.et",
+					"position": [
+						130.22999572753907,
+						1.0,
+						76.85099792480469
+					],
+					"rotation": [
+						0.0,
+						31.798999786376954,
+						0.0
+					]
+				},
+				{
+					"resource": "{B724CDD1316A90B1}PrefabsEditable/Auto/Props/Industrial/Pallets/E_MarsBoxContainer_01_Wood.et",
+					"position": [
+						143.39700317382813,
+						1.0,
+						90.51799774169922
+					],
+					"rotation": [
+						0.0,
+						20.222999572753908,
 						0.0
 					]
 				},
@@ -715,45 +822,6 @@
 						134.1929931640625,
 						1.0,
 						94.63500213623047
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{CD66BE4E1368B398}Prefabs/Props/Construction/ContainerMetal_01/ContainerMetal_01_low_blue.et",
-					"position": [
-						129.58700561523438,
-						1.0,
-						94.31500244140625
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{DE59CB05202006E8}Prefabs/Props/Agriculture/CultivatorWreck_01.et",
-					"position": [
-						144.4290008544922,
-						1.0,
-						90.91200256347656
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{DEB57429CD49782D}Prefabs/Props/Construction/GravelPile_01/SandPile_01.et",
-					"position": [
-						141.01199340820313,
-						1.0,
-						73.98200225830078
 					],
 					"rotation": [
 						0.0,
@@ -775,11 +843,11 @@
 					]
 				},
 				{
-					"resource": "{116C488674B5A4A6}Prefabs/Structures/Commercial/FuelStations/FuelStation_E_01/Dst/FuelStation_E_01_roof_Ruin_base.et",
+					"resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
 					"position": [
-						143.4530029296875,
+						132.4409942626953,
 						1.0,
-						79.2239990234375
+						85.12699890136719
 					],
 					"rotation": [
 						0.0,

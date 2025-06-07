@@ -39,6 +39,59 @@
 		"CNCBlock",
 		"MEStairs",
 		"Gogland_trench",
-		"Gogland_short_wall"
-	]
+		"Gogland_short_wall",
+		"tem_toilet",
+		"tem_buildingwall",
+		"TEM_bigwall",
+		"tem_wall",
+		"tem_buildingtower",
+		"tem_column",
+		"tem_arab",
+		"tem_cover",
+		"tem_buildingbridge",
+		"tem_arch",
+		"tem_potmarket",
+		"tem_oil_pump",
+		"tem_brokengate",
+		"FuelTank_"
+	],
+	"emptyPos": {
+		"limit": 5,
+		"ignoreFilter": [
+			"ParticleEffectEntity"
+		],
+		"stopFilter": [
+			"RiverPartEntity",
+			"LakeGeneratorEntity",
+			"SCR_DestructibleBuildingEntity",
+			"GraniteCliff_",
+			"GraniteRock_"
+		],
+		"classFilter": [
+			"SCR_DestructibleEntity",
+			"SCR_IndestructibleEnvironmentalEntity",
+			"StaticModelEntity",
+			"Tree"
+		],
+		"objectFilter": [
+			"Boulder_",
+			"BeachStone_",
+			"BlastCover_",
+			"BrickWall",
+			"t_pinus_sylvestris_3",
+			"t_picea_abies_3",
+			"t_carpinus_betulus_3",
+			"t_betula_pendula_3",
+			"t_piceaabies_2",
+			"t_piceaabies_3",
+			"tem_wall",
+			"tem_cave",
+			"tem_big",
+			"rocktower",
+			"rockwall",
+			"tem_r_tk_rock",
+			"tem_rock",
+			"tem_palm2"
+		]
+	}
 }

@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 30,
+	"missionCycleTime": 20,
 	"showMarker": true,
 	"showHint": true,
 	"distanceToMission": 100,
@@ -62,9 +62,9 @@
 				{
 					"resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 					"position": [
-						921.9829711914063,
-						39.0,
-						2629.780029296875
+						97.91100311279297,
+						1.0,
+						121.5270004272461
 					],
 					"rotation": [
 						0.0,
@@ -73,37 +73,11 @@
 					]
 				},
 				{
-					"resource": "{33E84AF90E5FE1E5}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_03.et",
+					"resource": "{97B6EE1A45A88A89}Assets/Vehicles/Helicopters/UH1H/UH1H_Wreck.xob",
 					"position": [
-						924.14501953125,
-						39.0,
-						2635.075927734375
-					],
-					"rotation": [
-						0.0,
-						29.07699966430664,
-						0.0
-					]
-				},
-				{
-					"resource": "{342E852E9A1847EA}Prefabs/Props/Industrial/Repair/VehicleGarbage_01_pile_medium.et",
-					"position": [
-						928.6420288085938,
-						39.0,
-						2628.902099609375
-					],
-					"rotation": [
-						0.0,
-						37.792999267578128,
-						0.0
-					]
-				},
-				{
-					"resource": "{D674060002BA768E}Prefabs/Vehicles/Helicopters/UH1H/Dst/Dbr/Dbr_UH1H_Blade_02.et",
-					"position": [
-						928.9249877929688,
-						39.0,
-						2633.845947265625
+						103.2509994506836,
+						1.0,
+						124.17900085449219
 					],
 					"rotation": [
 						0.0,
@@ -112,11 +86,11 @@
 					]
 				},
 				{
-					"resource": "{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
+					"resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
 					"position": [
-						925.6220092773438,
-						39.00899887084961,
-						2628.64794921875
+						106.27400207519531,
+						1.0,
+						121.10800170898438
 					],
 					"rotation": [
 						0.0,
@@ -125,28 +99,54 @@
 					]
 				},
 				{
-					"resource": "{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
+					"resource": "{310E849A808F9F5F}PrefabsEditable/Auto/Structures/Military/Camps/Canvas_Covers/US/E_CanvasCover_Folded_US.et",
 					"position": [
-						931.9509887695313,
-						39.0,
-						2631.804931640625
+						104.552001953125,
+						1.0,
+						126.90299987792969
 					],
 					"rotation": [
 						0.0,
-						68.97200012207031,
+						0.0,
 						0.0
 					]
 				},
 				{
-					"resource": "{F4561FBC26102515}Prefabs/Particles/Metal/Vehicle/Dbr_Helicopter_Rotor.et",
+					"resource": "{532795AD51CFBEDF}PrefabsEditable/Auto/Structures/Infrastructure/Piping/E_DieselPipe_01_hose_V2.et",
 					"position": [
-						922.1729736328125,
-						39.0,
-						2632.576904296875
+						104.74500274658203,
+						1.0,
+						123.68499755859375
 					],
 					"rotation": [
 						0.0,
-						68.97200012207031,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{7576CB87CAFAE6E8}PrefabsEditable/Auto/Structures/Military/CamoNets/US/E_CamoNet_AssemblyKit_US.et",
+					"position": [
+						103.55899810791016,
+						1.0,
+						119.9489974975586
+					],
+					"rotation": [
+						0.0,
+						-45.00299835205078,
+						0.0
+					]
+				},
+				{
+					"resource": "{7AB486CD1FBB0B0A}PrefabLibrary/Props/Garbage/Junk_01_pile_small.et",
+					"position": [
+						100.94400024414063,
+						1.0,
+						123.92400360107422
+					],
+					"rotation": [
+						0.0,
+						-111.27300262451172,
 						0.0
 					]
 				}

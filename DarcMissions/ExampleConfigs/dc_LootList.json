@@ -61,7 +61,7 @@
 			"items": []
 		},
 		{
-			"id": "WEAPON_ATTACHMENT",
+			"id": "UTIL_ATTACHMENT",
 			"modDir": "/Weapons/Attachments",
 			"include": [
 				""
@@ -73,7 +73,7 @@
 			"items": []
 		},
 		{
-			"id": "WEAPON_OPTICS",
+			"id": "UTIL_OPTICS",
 			"modDir": "/Weapons/Attachments",
 			"include": [
 				"Optic",
@@ -120,6 +120,18 @@
 			],
 			"exclude": [
 				"_Base"
+			],
+			"items": []
+		},
+		{
+			"id": "UTIL_MAGAZINES",
+			"modDir": "/Weapons/Magazines",
+			"include": [
+				""
+			],
+			"exclude": [
+				"_Base",
+				"Internal_"
 			],
 			"items": []
 		}
