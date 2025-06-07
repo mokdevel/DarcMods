@@ -320,11 +320,12 @@ sealed class SDRC_SpawnHelper
 	*/
 	
 	static private int m_obstructCount;
-	static const int SDRC_OBSTRUCT_LIMIT = 5;
 	
 	static bool FindEmptyPos(out vector pos, float areaRadius, float emptySize)
 	{		
 		vector posFixed;
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+		
 		m_obstructCount = 0;
 				
 //		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize, 20, TraceFlags.ENTS|TraceFlags.WORLD|TraceFlags.OCEAN|TraceFlags.ANY_CONTACT))
@@ -339,15 +340,15 @@ sealed class SDRC_SpawnHelper
 		}
 		else	//FindEmptyTerrainPosition did not find a spot
 		{
-			m_obstructCount = SDRC_OBSTRUCT_LIMIT;
+			m_obstructCount = baseGameMode.m_SDRC_Core.m_Config.emptyPos.limit;
 		}
 		
 		if (SDRC_Misc.IsPosInWater(pos))
 		{
-			m_obstructCount = SDRC_OBSTRUCT_LIMIT;
+			m_obstructCount = baseGameMode.m_SDRC_Core.m_Config.emptyPos.limit;
 		}
 		
-		if (m_obstructCount < SDRC_OBSTRUCT_LIMIT)
+		if (m_obstructCount < baseGameMode.m_SDRC_Core.m_Config.emptyPos.limit)
 		{
 			SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 0, 255, 0), emptySize, "NONE", 20);			
 			return true;
@@ -375,30 +376,30 @@ sealed class SDRC_SpawnHelper
 		if (entity)
 		{				
 			//Completely ignore these. There is no PrefabName for these and will crash if asked.								
-			if (SCR_StringHelper.ContainsAny(entity.ClassName(), baseGameMode.m_SDRC_Core.m_Config.emptyPosIgnoreFilter) )
+			if (SCR_StringHelper.ContainsAny(entity.ClassName(), baseGameMode.m_SDRC_Core.m_Config.emptyPos.ignoreFilter) )
 			{
 				return true;	//Just continue...
 			}
 			
 			//Stop immediately when these are found
-			if (SCR_StringHelper.ContainsAny(entity.ClassName(), baseGameMode.m_SDRC_Core.m_Config.emptyPosStopFilter) )
+			if (SCR_StringHelper.ContainsAny(entity.ClassName(), baseGameMode.m_SDRC_Core.m_Config.emptyPos.stopFilter) )
 			{
 				obstruct = true;
-				m_obstructCount = SDRC_OBSTRUCT_LIMIT;
+				m_obstructCount = baseGameMode.m_SDRC_Core.m_Config.emptyPos.limit;
 				returnval = false;	//Stop searching. This is a bad spot
 			}
 			else //Then do normal checking
 			{
 				ResourceName resName = entity.GetPrefabData().GetPrefabName();
 				
-				if (SCR_StringHelper.ContainsAny(resName, baseGameMode.m_SDRC_Core.m_Config.emptyPosStopFilter) && !obstruct)
+				if (SCR_StringHelper.ContainsAny(resName, baseGameMode.m_SDRC_Core.m_Config.emptyPos.stopFilter) && !obstruct)
 				{
 					obstruct = true;
 				}
 							
-				if (SCR_StringHelper.ContainsAny(entity.ClassName(), baseGameMode.m_SDRC_Core.m_Config.emptyPosClassFilter) && !obstruct)
+				if (SCR_StringHelper.ContainsAny(entity.ClassName(), baseGameMode.m_SDRC_Core.m_Config.emptyPos.classFilter) && !obstruct)
 				{
-					if (SCR_StringHelper.ContainsAny(resName, baseGameMode.m_SDRC_Core.m_Config.emptyPosExcludeFilter))
+					if (SCR_StringHelper.ContainsAny(resName, baseGameMode.m_SDRC_Core.m_Config.emptyPos.objectFilter))
 					{
 						obstruct = true;
 					}
@@ -409,7 +410,7 @@ sealed class SDRC_SpawnHelper
 			{
 				m_obstructCount++;
 				#ifdef SDRC_RELEASE	// While developing, we want to show all obstructing objects
-					if (m_obstructCount >= SDRC_OBSTRUCT_LIMIT)
+					if (m_obstructCount >= baseGameMode.m_SDRC_Core.m_Config.emptyPos.limit;)
 					{
 						returnval = false;	//Stop searching
 					}

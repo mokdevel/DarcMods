@@ -3,6 +3,15 @@
 This is the main Core file. 
 */
 
+class SDRC_EmptyPos : Managed
+{
+	int limit;
+	ref array<string> ignoreFilter = {};
+	ref array<string> stopFilter = {};
+	ref array<string> classFilter = {};
+	ref array<string> objectFilter = {};
+}
+
 //------------------------------------------------------------------------------------------------
 class SDRC_Core
 {
@@ -79,10 +88,7 @@ class SDRC_CoreConfig : Managed
 	bool debugShowSpheres = true;
 	string fallbackEnemyFaction = "USSR";
 	ref array<string> buildingExcludeFilter = {};
-	ref array<string> emptyPosIgnoreFilter = {};
-	ref array<string> emptyPosStopFilter = {};
-	ref array<string> emptyPosExcludeFilter = {};
-	ref array<string> emptyPosClassFilter = {};
+	ref SDRC_EmptyPos emptyPos = new SDRC_EmptyPos();
 }
 
 //------------------------------------------------------------------------------------------------
@@ -145,21 +151,22 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 			"tem_brokengate", 
 			"FuelTank_"
 		};
-		conf.emptyPosIgnoreFilter = {
+		conf.emptyPos.limit = 5;
+		conf.emptyPos.ignoreFilter = {
 			"ParticleEffectEntity",
 		};
-		conf.emptyPosStopFilter = {
+		conf.emptyPos.stopFilter = {
 			"RiverPartEntity", "LakeGeneratorEntity", 
 			"SCR_DestructibleBuildingEntity", 			//Class: Building
 			"GraniteCliff_", "GraniteRock_", 			//Large rocks
 		};		
-		conf.emptyPosClassFilter = {			
+		conf.emptyPos.classFilter = {			
 			"SCR_DestructibleEntity",					//Fences etc
 			"SCR_IndestructibleEnvironmentalEntity",	//Rocks
 			"StaticModelEntity",						
 		 	"Tree",
 		};
-		conf.emptyPosExcludeFilter = {
+		conf.emptyPos.objectFilter = {
 			//Rocks etc
 			"Boulder_", "BeachStone_", 
 			//Misc
