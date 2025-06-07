@@ -16,7 +16,7 @@ Main features:
 
 ### Conf changes
 * dc_coreConfig.json parameter changes
-  * Added ``emptyPosIgnoreFilter``, ``emptyPosStopFilter``, ``emptyPosClassFilter``, ``emptyPosExcludeFilter``
+  * Added ``emptyPos.limit``, ``emptyPos.ignoreFilter``, ``emptyPos.stopFilter``, ``emptyPos.classFilter``, ``emptyPos.objectFilter``
 * dc_missionConfig_Occupation.json
   * ``emptySize`` moved inside SDRC_Occupation
 * dc_missionConfig.json parameter changes
