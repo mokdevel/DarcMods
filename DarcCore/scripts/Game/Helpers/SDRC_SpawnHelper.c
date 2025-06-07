@@ -410,7 +410,7 @@ sealed class SDRC_SpawnHelper
 			{
 				m_obstructCount++;
 				#ifdef SDRC_RELEASE	// While developing, we want to show all obstructing objects
-					if (m_obstructCount >= baseGameMode.m_SDRC_Core.m_Config.emptyPos.limit;)
+					if (m_obstructCount >= baseGameMode.m_SDRC_Core.m_Config.emptyPos.limit)
 					{
 						returnval = false;	//Stop searching
 					}
