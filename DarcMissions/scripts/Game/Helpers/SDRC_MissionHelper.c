@@ -1,5 +1,10 @@
 //Helpers SDRC_MissionHelper.c
 
+//------------------------------------------------------------------------------------------------
+/*!
+Includes various functions for missions. 
+*/
+
 enum DC_EMissionPosFailReason
 {
 	NONE,
@@ -9,7 +14,7 @@ enum DC_EMissionPosFailReason
 	IN_NON_VALID_AREA
 };
 
-
+//------------------------------------------------------------------------------------------------
 sealed class SDRC_MissionHelper
 {
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 8;		//How many different spots to try for a mission before giving up
