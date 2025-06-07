@@ -7,14 +7,14 @@ For examples of configuration files see [ExampleConfigs](https://github.com/mokd
 The configuration files will be under your ```profile\DarcMods_conf\*```.
 
 ## Empty position finding
-When searching for an empty position for an spawnable item (mission camp, building, vehicle, ..), we need to do some extra checks in addition to the BI provided functionality. The ``FindEmptyTerrainPosition`` returns areas that are e.g. in the woods or has big objects on it (buildings, rocks, ..). The mod does additional filtering. Once a possible position is found, the mod queries for items within the range. If there are more then ``limit`` items that are considered blockers, the area is not empty and this not suitable for spawning. 
+When searching for an empty position for an spawnable item (mission camp, building, vehicle, ..), we need to do some extra checks in addition to the BI provided functionality. The ``FindEmptyTerrainPosition`` returns areas that are e.g. in the woods or has big objects on it (buildings, rocks, ..). The mod does additional filtering. Once a possible position is found, the mod queries for items within the range. If there are more than ``limit`` items that are considered blockers, the area is not empty and this not suitable for spawning. 
 
 Under ``emptyPos`` you will find these parameters:
-  ``limit`` : The amount of blocking objects that define the area not to be empty.
-  ``ignoreFilter`` : Objects that are not considered as blockers. For example particles.
-  ``stopFilter`` : Objects that immediately will define that the position is not good. For example buildings or large rocks.
-  ``classFilter`` : The classes of objects that might be considered as blockers. More filtering done in the next step.
-  ``objectFilter`` : If an object matching the listed classes is found, we check that the object to match this list. If ``limit`` or more is found within the area, the area is not suitable for spawning.
+* ``limit`` : The amount of blocking objects that define the area not to be empty.
+* ``ignoreFilter`` : Objects that are not considered as blockers. For example particles.
+* ``stopFilter`` : Objects that immediately will define that the position is not good. For example buildings or large rocks.
+* ``classFilter`` : The classes of objects that might be considered as blockers. More filtering done in the next step.
+* ``objectFilter`` : If an object matching the listed classes is found, we check that the object to match this list. If ``limit`` or more is found within the area, the area is not suitable for spawning.
 
 ## Core config
 Example: [dc_coreConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_coreConfig.json)
