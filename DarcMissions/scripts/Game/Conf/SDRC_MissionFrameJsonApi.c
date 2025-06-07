@@ -39,7 +39,7 @@
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 45;
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME = 20;
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
-		private const bool SDRC_MISSION_RECREATE_CONFIGS = false;
+		private const bool SDRC_MISSION_RECREATE_CONFIGS = true;
 		private const int SDRC_MISSION_HINT_TIME = 30;
 	#endif
 
