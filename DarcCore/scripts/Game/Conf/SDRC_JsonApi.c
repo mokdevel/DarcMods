@@ -75,7 +75,7 @@ class SDRC_JsonApi : JsonApiStruct
 	{			
 		string path = "";
 		string directory = SDRC_Conf.CONF_DIRECTORY;
-		if (SDRC_Conf.subDir != "")		//This should never be empty
+		if ( (SDRC_Conf.subDir != "") && (fileName != SDRC_Conf.DC_CORE_CONFIG_FILE) )	//This should never be empty
 		{
 			directory = directory + "/" + SDRC_Conf.subDir
 		}

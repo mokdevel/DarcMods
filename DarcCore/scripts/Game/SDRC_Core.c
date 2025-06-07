@@ -94,7 +94,7 @@ class SDRC_CoreConfig : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_CoreJsonApi : SDRC_JsonApi
 {
-	const string DC_CONFIG_FILE = "dc_coreConfig.json";
+	const string DC_CONFIG_FILE = SDRC_Conf.DC_CORE_CONFIG_FILE;//"dc_coreConfig.json";
 	ref SDRC_CoreConfig conf = new SDRC_CoreConfig();
 
 	//------------------------------------------------------------------------------------------------
