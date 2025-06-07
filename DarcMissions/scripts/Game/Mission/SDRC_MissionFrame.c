@@ -104,8 +104,6 @@ class SDRC_MissionFrame
 			SDRC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.N_FENCE, "DMC_B", "Here is a text");
 			SDRC_MapMarkerHelper.CreateMapMarker("1200 0 3500", DC_EMissionIcon.N_HOUSE, "DMC_B", "Darc_SK");
 			SDRC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.N_HELI, "DMC_B", "This is a description for a mission");
-		
-
 				
 /*			for (int i = 0;i < 250; i++)
 			{
@@ -124,7 +122,8 @@ class SDRC_MissionFrame
 			pos = SDRC_SpawnHelper.FindEmptyPos(pos, 300, 5000);			*/
 		
 //			string wpnPrefab = "{FA5C25BF66A53DCF}Prefabs/Weapons/Rifles/AK74/Rifle_AK74.et";
-			string wpnPrefab = "{7A82FE978603F137}Prefabs/Weapons/Launchers/RPG7/Launcher_RPG7.et";
+//			string wpnPrefab = "{7A82FE978603F137}Prefabs/Weapons/Launchers/RPG7/Launcher_RPG7.et";
+			string wpnPrefab = "{63E8322E2ADD4AA7}Prefabs/Weapons/Rifles/AK74/Rifle_AK74_GP25.et";
 			string mag = SDRC_AmmoHelper.GetCompatibleMagazineForPrefab(wpnPrefab);
 
 			IEntity wpn = SDRC_SpawnHelper.SpawnItem("0 0 0", "{FA5C25BF66A53DCF}Prefabs/Weapons/Rifles/AK74/Rifle_AK74.et", emptyPosRadius: -1);		
