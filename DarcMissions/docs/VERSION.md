@@ -22,7 +22,8 @@ Main features:
   * ``emptySize`` moved inside SDRC_Occupation
 * dc_missionConfig.json parameter changes
   * NEW: Introduced ``missionDynamic`` and ``missionStatic`` structures
-  * Moved ``missionCount``, ``missionActiveTime`` and ``missionTypeArray`` in to the mission specific structures
+  * Moved ``missionCount``, ``missionActiveTime`` and ``missionTypeArray`` in to the mission specific structures  
+  * Mission count can be defined as a value or dependent on the map size. See ``count``
   * Removed ``staticTryLimit``
 * dc_lootList.json
   * ``WEAPON_ATTACHMENT`` renamed to ``UTIL_ATTACHMENT``
