@@ -35,6 +35,7 @@ ITEM_GENERAL : General items
 UTIL_ATTACHMENT : Various attachments excluding optics
 UTIL_OPTICS : Optic attachments
 UTIL_MAGAZINES : Adds a random magazine
+UTIL_AMMO : Adds a random rocket, shell, flare, ..
 ```
 
 # Enemy lists
