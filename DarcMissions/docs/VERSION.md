@@ -6,7 +6,7 @@
 Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
 
 Main features: 
-* You can spawn missions as a GM. You can find the mission under Systems. 
+* You can spawn missions as a GM. You can find the mission under DarcMissions. 
 * Static mission behaviour changed; these spawn immediately when server starts.
 * AI will start from their first assigned waypoint.
 * Improved floor finding for buildings
@@ -21,7 +21,7 @@ Main features:
 * dc_missionConfig_Occupation.json
   * ``emptySize`` moved inside SDRC_Occupation
 * dc_missionConfig.json parameter changes
-  * Introduced ``missionDynamic`` and ``missionStatic`` structures
+  * NEW: Introduced ``missionDynamic`` and ``missionStatic`` structures
   * Moved ``missionCount``, ``missionActiveTime`` and ``missionTypeArray`` in to the mission specific structures
   * Removed ``staticTryLimit``
 * dc_lootList.json

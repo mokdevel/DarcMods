@@ -25,8 +25,8 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - New missions: Kill a target, steal smth and bring the loot somewhere, choppers hunting you
 
 ## Known issues
-- No ammo spawns in loot. (TBD: weapon compatible ammo functionality)
-- AI spawns inside rocks sometimes. Might affect just certain types of rocks. 
+- Moving map markers lose the text under them. 
+- This should be an issues fixed: AI spawns inside rocks sometimes. Might affect just certain types of rocks. 
 
 # Parameters
 All configurations are done via .json files. 
@@ -85,7 +85,7 @@ Dependency specific files
 Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
 
 Main features: 
-* You can spawn missions as a GM. You can find the mission under Systems. 
+* You can spawn missions as a GM. You can find the mission under DarcMissions. 
 * Static mission behaviour changed; these spawn immediately when server starts.
 * AI will start from their first assigned waypoint.
 * Improved floor finding for buildings
@@ -100,7 +100,7 @@ Main features:
 * dc_missionConfig_Occupation.json
   * ``emptySize`` moved inside SDRC_Occupation
 * dc_missionConfig.json parameter changes
-  * Introduced ``missionDynamic`` and ``missionStatic`` structures
+  * NEW: Introduced ``missionDynamic`` and ``missionStatic`` structures
   * Moved ``missionCount``, ``missionActiveTime`` and ``missionTypeArray`` in to the mission specific structures
   * Removed ``staticTryLimit``
 * dc_lootList.json
