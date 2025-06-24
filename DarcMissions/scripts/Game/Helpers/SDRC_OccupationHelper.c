@@ -52,12 +52,18 @@ sealed class SDRC_OccupationHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Spawn camp items, AI and loot defined in a SDRC_Occupation structure
+	\param mission Mission that is calling this
+	\param idx Index of the item to spawn. This needs to be increased each run.
+	\param occupation The SDRC_Occupation structure to use
+	\param rotation The rotation of the items around Y axis
+	\param disableArsenal Defines if vehicle arsenals are to be disabled
+	\return true/false if the mission spawning is ready and mission can continue to next stage 
 	*/
-	static bool SpawnOccupationEntitiesX(SDRC_Mission mission, int idx, SDRC_Occupation occupation, float rotation = 0, bool disableArsenal = true)
+	static bool Spawn(SDRC_Mission mission, int idx, SDRC_Occupation occupation, float rotation = 0, bool disableArsenal = true)
 	{
 		IEntity entity;
 		
-		//Spawn entities one by one. Sets missions active once ready.
+		//Spawn entities one by one
 		if ( (idx < occupation.campItems.Count()) && (occupation.campItems.Count() > 0) )
 		{			
 			entity = SDRC_SpawnHelper.SpawnStructures(occupation.campItems, mission.GetPos(), rotation, idx);
@@ -71,7 +77,7 @@ sealed class SDRC_OccupationHelper
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_Mission_Occupation:MissionSpawn] Could not load: " + occupation.campItems[idx], LogLevel.ERROR);				
+				SDRC_Log.Add("[SDRC_OccupationHelper:Spawn] Could not load: " + occupation.campItems[idx], LogLevel.ERROR);				
 			}
 			
 			return false;
@@ -103,7 +109,7 @@ sealed class SDRC_OccupationHelper
 					SDRC_WPHelper.CreateMissionAIWaypoints(group, occupation.waypointGenType, mission.GetPos(), "0 0 0", occupation.waypointMoveType, minRange, maxRange);
 //					SDRC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, occupation.waypointRange[0], occupation.waypointRange[1]);
 				}
-				SDRC_Log.Add("[SDRC_Mission_Occupation:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
+				SDRC_Log.Add("[SDRC_OccupationHelper:Spawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
 			}
 			
 			//Put loot
@@ -111,7 +117,7 @@ sealed class SDRC_OccupationHelper
 			{
 				occupation.loot.box = mission.GetFromEntityList(0);
 				SDRC_LootHelper.SpawnItemsToStorage(occupation.loot.box, occupation.loot.items, occupation.loot.itemChance);
-				SDRC_Log.Add("[SDRC_Mission_Occupation:MissionSpawn] Loot added.", LogLevel.DEBUG);								
+				SDRC_Log.Add("[SDRC_OccupationHelper:Spawn] Loot added.", LogLevel.DEBUG);								
 			}
 
 			return true;			
