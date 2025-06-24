@@ -37,6 +37,15 @@ class SDRC_Core
 		SDRC_Log.Add("[SDRC_Core] World name: " + SDRC_Misc.GetWorldName(true), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World size: " + SDRC_Misc.GetWorldSize(), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World has ocean: " + GetGame().GetWorld().IsOcean(), LogLevel.NORMAL);
+		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
+		if (aiWorld)
+		{
+			SDRC_Log.Add("[SDRC_Core] World has AIWorld: true", LogLevel.NORMAL);
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_Core] World has AIWorld: false", LogLevel.ERROR);
+		}
 		int factionCount = SDRC_Misc.GetFactionList(m_sFactionList);
 		SDRC_Log.Add("[SDRC_Core] Factions available: " + factionCount + " - " + m_sFactionList, LogLevel.NORMAL);
 		SDRC_Misc.GetAddonList(m_sAddonList, true);
@@ -180,7 +189,9 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 			"t_betula_pendula_3",
 			"t_piceaabies_2", "t_piceaabies_3",
 			//Anizay
-			"tem_wall", 
+			//"tem_wall",
+			"tem_wall_L_",
+			"tem_concrete_wall",
 			"tem_cave", 
 			"tem_big", "rocktower", "rockwall",
 			"tem_r_tk_rock", "tem_rock",

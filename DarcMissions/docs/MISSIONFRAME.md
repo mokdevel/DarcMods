@@ -17,6 +17,8 @@ In the configuration you can define missions either as a dynamic mission (```mis
 
 * Dynamic missions will spawn on steady pace. The ``activeTime`` should be relatively short so that the missions despawn and new ones are brought to players. Note that no dynamic missions, including GM requested ones, will spawn if static missions are still spawning.
 
+* GM spawned missions are dynamic missions. You can spawn missions as a GM even if you have reached the maximum count of dynamic missions. GM requested missions are spawned with a higher priority compared to normal dynamic missions.
+
 ## Mission end
 Once all AIs have been eliminated, the mission is kept alive for ```missionActiveTimeToEnd``` seconds. The time is reset if there is a player within ```missionActiveDistance```. At the end of a mission, all spawned items will despawn (for example camps) but also vehicles. 
 
@@ -33,7 +35,6 @@ string author : See General parameters
 string comment : See General parameters
 bool recreateConfigs : If set to true, all configs are written to disk. Should be run only first time.
 int missionStartDelay : (seconds) Time to wait before spawning the first mission.
-int missionDelayBetweeen : (seconds) Time delay between mission spawns.
 int missionFrameCycleTime : (seconds) The cycle time to manage mission spawning, deletion etc...
 int missionActiveDistance : The distance to a player to keep the mission active.
 int missionActiveTimeToEnd : (seconds) Time to keep the mission active once all AI is dead. Used for both dynamic and static missions.
@@ -56,6 +57,7 @@ int count : Count of missions.
     Example: 12km x 12km map with countMul 0.5 -> 12*0.5 = 6 missions
 float countMul : Multiplier for mission count. Only used if count = -1
 int activeTime : (seconds) Time to keep the mission active. For static this should be high.
+int delayBetween : (seconds) Time delay between mission spawns.
 array<int> missionTypeArray : List mission types that spawn randomly. (DC_EMissionType)
   0 = NONE       : Not used anywhere. The rest are names of the mission types.
   1 = HUNTER

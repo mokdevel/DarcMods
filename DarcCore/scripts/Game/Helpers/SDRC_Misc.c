@@ -177,6 +177,10 @@ sealed class SDRC_Misc
 		{
 			posTmp[0] = Math.RandomInt(0, worldSize);
 			posTmp[2] = Math.RandomInt(0, worldSize);
+
+			//SDRC_Log.Add("[SDRC_MissionHelper:GetRandomWorldPos] pos: " + posTmp, LogLevel.DEBUG);			
+			
+			posTmp[1] = GetGame().GetWorld().GetSurfaceY(posTmp[0], posTmp[2]);
 			
 			if (GetGame().GetWorld().IsOcean())
 			{
@@ -185,18 +189,16 @@ sealed class SDRC_Misc
 					if (GetGame().GetWorld().GetOceanHeight(posTmp[0], posTmp[2]) == 0)
 					{
 						positionFound = true;
-						break;
 					}
 				}
 				else
 				{
 					positionFound = true;
-					break;
 				}
 			}
-			else	//If there is no ocean, we are happy with what we found
+			
+			if ( (posTmp[1] >= 0) && positionFound )
 			{
-				positionFound = true;
 				break;
 			}
 		}
@@ -204,7 +206,6 @@ sealed class SDRC_Misc
 		if (positionFound)
 		{
 			pos = posTmp;			
-			pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
 		}		
 		
 //		SDRC_Log.Add("[SDRC_MissionHelper:GetRandomWorldPos] Iterations: " + i, LogLevel.SPAM);			

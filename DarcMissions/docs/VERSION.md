@@ -6,6 +6,21 @@
 Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
 
 Main features: 
+* ..empty..
+
+Fixes:
+
+
+### Conf changes
+* dc_missionConfig.json parameter changes
+  * Moved ``missionDelayBetween`` in to the mission specific structures and renamed to ``delayBetween``. You can define the delay separately for dynamic and static.
+* dc_coreConfig.json parameter changes
+  * emptyPos.objectFilter : Less strict filtering for Anizay map
+
+## 20250607
+Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
+
+Main features: 
 * You can spawn missions as a GM. You can find the mission under DarcMissions. 
 * Static mission behaviour changed; these spawn immediately when server starts.
 * AI will start from their first assigned waypoint.
