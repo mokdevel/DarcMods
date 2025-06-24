@@ -284,7 +284,19 @@ sealed class SDRC_Misc
 		
 		return true;
 	}	
-				
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Returns the resourceName in human readable format
+	*/	
+	static string GetEntityName(ResourceName resourceName)
+	{
+		string name = SCR_StringHelper.FormatResourceNameToUserFriendly(resourceName);
+		name = SCR_StringHelper.ReplaceRecursive(name, " ", "_");
+		
+		return name;
+	}	
+						
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if a class is available. This can be used to check if a mod has been loaded by checking a class
