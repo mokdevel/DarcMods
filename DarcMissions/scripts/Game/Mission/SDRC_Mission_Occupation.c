@@ -122,68 +122,86 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
 	{					
+		bool ready = false;
+		
+//		ready = SpawnOccupationEntities(m_iSpawnIndex, m_DC_Occupation);
+		ready = SDRC_OccupationHelper.SpawnOccupationEntitiesX(this, m_iSpawnIndex, m_DC_Occupation, m_fSpawnRotation, m_Config.disableArsenal);
+		m_iSpawnIndex++;			
+		
+		if (ready)
+		{
+			SetState(DC_EMissionState.ACTIVE);
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Spawn camp items, AI and loot defined in a SDRC_Occupation structure
+	*/
+/*	private bool SpawnOccupationEntities(int idx, SDRC_Occupation occupation)
+	{
 		IEntity entity;
-
+		
 		//Spawn entities one by one. Sets missions active once ready.
-		if ( (m_iSpawnIndex < m_DC_Occupation.campItems.Count()) && (m_DC_Occupation.campItems.Count() > 0) )
+		if ( (idx < occupation.campItems.Count()) && (occupation.campItems.Count() > 0) )
 		{			
-			entity = SDRC_SpawnHelper.SpawnStructures(m_DC_Occupation.campItems, GetPos(), m_fSpawnRotation, m_iSpawnIndex);
+			entity = SDRC_SpawnHelper.SpawnStructures(occupation.campItems, GetPos(), m_fSpawnRotation, idx);
 			
 			if (entity != NULL)
 			{ 
 				m_EntityList.Insert(entity);
 				//Disable arsenal
-				string resourceName = m_DC_Occupation.campItems[m_iSpawnIndex].GetResource();
+				string resourceName = occupation.campItems[idx].GetResource();
 				SDRC_SpawnHelper.DisableVehicleArsenal(entity, resourceName, m_Config.disableArsenal);				
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_Mission_Occupation:MissionSpawn] Could not load: " + m_DC_Occupation.campItems[m_iSpawnIndex], LogLevel.ERROR);				
+				SDRC_Log.Add("[SDRC_Mission_Occupation:MissionSpawn] Could not load: " + occupation.campItems[idx], LogLevel.ERROR);				
 			}
 			
-			m_iSpawnIndex++;			
+			return false;
 		}
 		else
 		{
 			//Spawn mission AI 
-			int groupCount = Math.RandomInt(m_DC_Occupation.groupCount[0], m_DC_Occupation.groupCount[1]);
+			int groupCount = Math.RandomInt(occupation.groupCount[0], occupation.groupCount[1]);
 			
 			for (int i = 0; i < groupCount; i++)
 			{
-				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_Occupation.groupTypes.GetRandomElement(), GetPos(), GetFaction());
+				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(occupation.groupTypes.GetRandomElement(), GetPos(), GetFaction());
 				if (group)
 				{
-					SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Occupation.aiSkill, m_DC_Occupation.aiPerception);					
+					SDRC_AIHelper.SetAIGroupSkill(group, occupation.aiSkill, occupation.aiPerception);					
 					m_Groups.Insert(group);
 					
-					int minRange = m_DC_Occupation.waypointRange[0];
-					int maxRange = m_DC_Occupation.waypointRange[1];
+					int minRange = occupation.waypointRange[0];
+					int maxRange = occupation.waypointRange[1];
 					
 					//If there are more than one group and loot, spawn one to protect the loot. 
 					//For the first group, waypointRange is ignored.
-					if ((m_DC_Occupation.loot) && i == 0)
+					if ((occupation.loot) && i == 0)
 					{
 						minRange = 5;
 						maxRange = 30;					
 					}
 					
-					SDRC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Occupation.waypointGenType, GetPos(), "0 0 0", m_DC_Occupation.waypointMoveType, minRange, maxRange);
-//					SDRC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, m_DC_Occupation.waypointRange[0], m_DC_Occupation.waypointRange[1]);
+					SDRC_WPHelper.CreateMissionAIWaypoints(group, occupation.waypointGenType, GetPos(), "0 0 0", occupation.waypointMoveType, minRange, maxRange);
+//					SDRC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, occupation.waypointRange[0], occupation.waypointRange[1]);
 				}
 				SDRC_Log.Add("[SDRC_Mission_Occupation:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
 			}
 			
 			//Put loot
-			if (m_DC_Occupation.loot)			
+			if (occupation.loot)			
 			{
-				m_DC_Occupation.loot.box = m_EntityList[0];
-				SDRC_LootHelper.SpawnItemsToStorage(m_DC_Occupation.loot.box, m_DC_Occupation.loot.items, m_DC_Occupation.loot.itemChance);
+				occupation.loot.box = m_EntityList[0];
+				SDRC_LootHelper.SpawnItemsToStorage(m_DC_Occupation.loot.box, occupation.loot.items, occupation.loot.itemChance);
 				SDRC_Log.Add("[SDRC_Mission_Occupation:MissionSpawn] Loot added.", LogLevel.DEBUG);								
 			}
-			
-			SetState(DC_EMissionState.ACTIVE);
+
+			return true;			
 		}		
-	}
+	}	*/
 }
 
 //------------------------------------------------------------------------------------------------
@@ -196,7 +214,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 }
 
 //------------------------------------------------------------------------------------------------
-class SDRC_Occupation : Managed
+/*class SDRC_Occupation : Managed
 {
 	//Occupation specific
 	string comment;							//Generic comment to describe the mission. Not used in game.
@@ -235,7 +253,7 @@ class SDRC_Occupation : Managed
 		aiPerception = aiPerception_;		
 		emptySize = emptySize_;
 	}
-}		
+}		*/
 
 //------------------------------------------------------------------------------------------------
 class SDRC_OccupationJsonApi : SDRC_JsonApi
