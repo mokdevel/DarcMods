@@ -93,8 +93,8 @@ class SDRC_MissionFrame
 				
 		//Set some defaults
 		m_iStaticTryCount = 0;
-		m_iStaticTryLimit = m_iMissionCountStatic + 5;	//We may fail 5 times
-		m_iLastMissionSpawnTime = (System.GetTickCount() / 1000) - m_Config.missionDelayBetweeen;	//Fix the timer so that first mission immediately spawns
+		m_iStaticTryLimit = m_iMissionCountStatic * 2;
+		m_iLastMissionSpawnTime = (System.GetTickCount() / 1000) - m_Config.missionStatic.delayBetween;		//Fix the timer so that first mission immediately spawns
 				
 		//Fix seconds to ms
 		SDRC_Log.Add("[SDRC_MissionFrame] Waiting for " + m_Config.missionStartDelay + " seconds before spawning missions.", LogLevel.NORMAL);
@@ -326,7 +326,7 @@ class SDRC_MissionFrame
 		{
 			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Static missions: " + staticCount + "/" + m_iMissionCountStatic + " - try/limit: " + m_iStaticTryCount + "/" + m_iStaticTryLimit, LogLevel.NORMAL);
 			MissionDump();
-			GetGame().GetCallqueue().CallLater(MissionCycleManager, 5000, false);
+			GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStatic.delayBetween*1000, false);
 		}		
 	}
 	
@@ -430,7 +430,7 @@ class SDRC_MissionFrame
 	*/	
 	protected int getMissionDelayWait()
 	{
-		int delayTime = m_iLastMissionSpawnTime + m_Config.missionDelayBetweeen;
+		int delayTime = m_iLastMissionSpawnTime + m_Config.missionDynamic.delayBetween;
 		int systemTime = (System.GetTickCount() / 1000);
 		
 		return delayTime - systemTime;

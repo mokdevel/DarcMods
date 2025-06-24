@@ -8,6 +8,7 @@ enum DC_EMissionType
 	CRASHSITE,
 	PATROL,
 	SQUATTER,
+	ROADBLOCK,
 	CHOPPER,	//Mission not ready or working
 	
 	REQUESTED = 100
@@ -276,13 +277,19 @@ class SDRC_Mission
 		m_ActiveTime = seconds;
 	}		
 
-	//------------------------------------------------------------------------------------------------
 	int GetActiveTime()
 	{
 		int currentTime = (System.GetTickCount() / 1000);
 		return m_EndTime - currentTime;
 	}		
 		
+	//------------------------------------------------------------------------------------------------
+	void ResetActiveTime()	
+	{
+		int currentTime = (System.GetTickCount() / 1000);		
+		m_EndTime = currentTime + m_ActiveTime;
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	bool IsActive()
 	{
@@ -314,13 +321,6 @@ class SDRC_Mission
 		return false;
 	}	
 	
-	//------------------------------------------------------------------------------------------------
-	void ResetActiveTime()	
-	{
-		int currentTime = (System.GetTickCount() / 1000);		
-		m_EndTime = currentTime + m_ActiveTime;
-	}		
-
 	//------------------------------------------------------------------------------------------------
 	void SetShowHint(bool showHint)
 	{
@@ -371,8 +371,26 @@ class SDRC_Mission
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	//\return bool status it the mission spawn was requested by a an external party (like GM)	
 	bool IsRequested()
 	{
 		return m_bRequested;
 	}	
+
+	//------------------------------------------------------------------------------------------------
+	void AddToEntityList(IEntity entity)
+	{
+		m_EntityList.Insert(entity);
+	}
+	
+	IEntity GetFromEntityList(int index)
+	{
+		return m_EntityList[index];	
+	}		
+
+	//------------------------------------------------------------------------------------------------
+	void AddToGroupsList(SCR_AIGroup group)
+	{
+		m_Groups.Insert(group);
+	}		
 }

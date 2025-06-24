@@ -12,7 +12,8 @@
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 1;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 30;
 		private const int SDRC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
-		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS = 4*60;					//Minimum delay between missions. 
+		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 4*60;			//Minimum delay between dynamic missions. 
+		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 5;				//Minimum delay between static missions. 
 		private const int SDRC_MISSION_ACTIVE_TIME = 15*60;								//Time to keep the mission active (seconds)
 		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 60*60;						//Static missions are to be kept alive longer
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 200;							//Mission is to be removed if no players close to the position after the mission active time has passed.
@@ -28,11 +29,12 @@
 		private const string SDRC_MISSION_PROFILE_DIR = "dummy";
 		private const int SDRC_MISSION_COUNT = 0;//8;
 		private const float SDRC_MISSION_COUNT_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 5;//30;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSION_START_DELAY = 10;					
-		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS = 1*20;
+		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 1*20;
+		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 1;
 		private const int SDRC_MISSION_ACTIVE_TIME = 3*60;				
 		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = SDRC_MISSION_ACTIVE_TIME * 10;	
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 200;		
@@ -48,6 +50,7 @@ class SDRC_MissionTypeConfig : Managed
 	int count;
 	float countMul;
 	int activeTime;
+	int delayBetween;
 	ref array<DC_EMissionType> missionTypeArray = {};	//List mission types that spawn randomly
 }
 
@@ -61,7 +64,6 @@ class SDRC_MissionFrameConfig : Managed
 	string comment;
 	bool recreateConfigs;			//If set to true, all configs are to be written to disk. Should be run only first time.
 	int missionStartDelay;			//Time to wait before spawning the first mission (seconds).
-	int missionDelayBetweeen;		//Time delay between mission spawns (seconds)
 	//Timing specific
 	int missionFrameCycleTime;		//The cycle time to manage mission spawning, deletion etc... (seconds)
 	int missionActiveDistance;		//The distance to a player to keep the mission active.
@@ -120,15 +122,16 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.comment = "Simple comment, not used in game";
 		conf.recreateConfigs = SDRC_MISSION_RECREATE_CONFIGS;
 		conf.missionStartDelay = SDRC_MISSION_START_DELAY;
-		conf.missionDelayBetweeen = SDRC_MISSION_DELAY_BETWEEN_MISSIONS;
 		
 		conf.missionDynamic.count = SDRC_MISSION_COUNT;
 		conf.missionDynamic.countMul = SDRC_MISSION_COUNT_MUL;
 		conf.missionDynamic.activeTime = SDRC_MISSION_ACTIVE_TIME;
+		conf.missionDynamic.delayBetween = SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC;
 		
 		conf.missionStatic.count = SDRC_MISSION_COUNT_STATIC;
 		conf.missionStatic.countMul = SDRC_MISSION_COUNT_STATIC_MUL;
 		conf.missionStatic.activeTime = SDRC_MISSION_ACTIVE_TIME_STATIC;
+		conf.missionStatic.delayBetween = SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC;
 		
 		conf.missionFrameCycleTime = SDRC_MISSIONFRAME_CYCLE_TIME;
 		conf.missionActiveDistance = SDRC_MISSION_ACTIVE_DISTANCE;
@@ -161,10 +164,11 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.CONVOY, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HUNTER};
-			conf.missionStatic.missionTypeArray = {DC_EMissionType.CRASHSITE};
-//			conf.missionStatic.missionTypeArray = {DC_EMissionType.OCCUPATION};
+//			conf.missionStatic.missionTypeArray = {DC_EMissionType.CRASHSITE};
+			conf.missionStatic.missionTypeArray = {DC_EMissionType.OCCUPATION};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER};
+//			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {};
 		#endif
 	}
