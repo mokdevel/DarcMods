@@ -51,15 +51,20 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 			{
 				pos = SDRC_MissionHelper.FindMissionPos(m_DC_Roadblock.locationTypes, m_DC_Roadblock.emptySize);
 				
+				//Add randomization so that it's not always in the same place
+				pos = SDRC_Misc.RandomizePos(pos, 150);
+				
 				//Find nearest road
 				SDRC_RoadPos roadPos = new SDRC_RoadPos();				
 				vector posOnRoad = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
 				pos = posOnRoad;
-				
+
+//				SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 128, 128, 128), m_DC_Roadblock.emptySize, "NONE", 20);	//Gray
+								
 				//TBD: Find the road direction.
 				
 				//Camps in random places are randomly rotated
-				m_fSpawnRotation = Math.RandomFloat(0, 360);
+				m_fSpawnRotation = 0;//Math.RandomFloat(0, 360);
 			}
 			else
 			{
@@ -85,6 +90,8 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		SetMarker(m_Config.showMarker, DC_EMissionIcon.N_MISSION);
 		SetShowHint(m_Config.showHint);
 
+		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Roadblock.campItems);
+		
 		SetState(DC_EMissionState.INIT);			
 	}	
 	
@@ -195,6 +202,74 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		conf.showMarker = true;
 		//Mission specific		
 		conf.roadblockList = {0};		
+		
+		//----------------------------------------------------
+		SDRC_Occupation roadblock0 = new SDRC_Occupation();
+		roadblock0.Set(
+			"index 0: Roadblock",
+			"0 0 0",
+			"any",
+			"Roadblock near ",
+			"Bandits are protecting their valuable loot.",
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_BASE,
+				EMapDescriptorType.MDT_PORT,
+				EMapDescriptorType.MDT_AIRPORT,
+				EMapDescriptorType.MDT_FORTRESS
+			},
+			{1, 2},
+			{0, 20},
+			DC_EWaypointGenerationType.LOITER,//RANDOM,
+			DC_EWaypointMoveType.PATROLCYCLE,
+			{
+				"G_LAUNCHER", "G_LIGHT", "G_LIGHT"
+			},
+			50, 1.0,
+			6
+		);
+		conf.roadblocks.Insert(roadblock0);
+		
+		SDRC_Loot roadblock0loot = new SDRC_Loot();
+		lootItems = {
+				"WEAPON_RIFLE",
+				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
+				"UTIL_ATTACHMENT",
+				"ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+			};
+		roadblock0loot.Set(0.7, lootItems);
+		roadblock0.loot = roadblock0loot;
+				
+		SDRC_Structure rb0item0 = new SDRC_Structure;
+		rb0item0.Set(
+		    "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+		    "10.387 1 94.908"
+		);
+		roadblock0.campItems.Insert(rb0item0);
+		
+		SDRC_Structure rb0item1 = new SDRC_Structure;
+		rb0item1.Set(
+		    "{3F5EE4D69DBC478C}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_short_plastic.et",
+		    "7.037 1 95.973"
+		);
+		roadblock0.campItems.Insert(rb0item1);
+		
+		SDRC_Structure rb0item2 = new SDRC_Structure;
+		rb0item2.Set(
+		    "{3F5EE4D69DBC478C}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_short_plastic.et",
+		    "10.177 1 96.021"
+		);
+		roadblock0.campItems.Insert(rb0item2);
+		
+		SDRC_Structure rb0item3 = new SDRC_Structure;
+		rb0item3.Set(
+		    "{723870DBB19D30B0}Prefabs/Weapons/Tripods/Tripod_6T5_PKM.et",
+		    "8.656 1 95.797"
+		);
+		roadblock0.campItems.Insert(rb0item3);		
 		
 		//----------------------------------------------------
 		SDRC_Occupation roadblock1 = new SDRC_Occupation();
