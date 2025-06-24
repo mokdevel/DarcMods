@@ -34,6 +34,8 @@ sealed class SDRC_SpawnHelper
 		//vector posFixed;
         EntitySpawnParams params = EntitySpawnParams();
 		
+		string entityName = SDRC_Misc.GetEntityName(resourceName);		
+		
 		vector sums = FindPrefabSize(resourceName);
 		if (sums == "0 0 0")
 			return null;
@@ -54,11 +56,11 @@ sealed class SDRC_SpawnHelper
 				entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
 				RebuildNavmesh(entity);
 				
-				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] Entity spawned to: " + pos, LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] " + entityName + " spawned to: " + pos, LogLevel.DEBUG);
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] Could not find an empty spot for " + resourceName, LogLevel.ERROR);			
+				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] Could not find an empty spot for " + entityName, LogLevel.ERROR);			
 			}
 		}
 		else
@@ -71,7 +73,7 @@ sealed class SDRC_SpawnHelper
 			entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
 			RebuildNavmesh(entity);
 			
-			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] Entity spawned to exact position: " + pos, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] " + entityName + " spawned to exact position: " + pos, LogLevel.DEBUG);
 		}
 		
 		if (entity)
