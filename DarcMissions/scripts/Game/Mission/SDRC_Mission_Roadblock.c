@@ -14,6 +14,11 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	private ref SDRC_RoadblockJsonApi m_RoadblockJsonApi = new SDRC_RoadblockJsonApi();	
 	private ref SDRC_RoadblockConfig m_Config;
 	
+	protected ref SDRC_Occupation m_DC_Roadblock;		//Roadblock configuration in use
+	
+	private int m_iSpawnIndex = 0;						//Counter for the item to spawn
+	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
+	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_Roadblock(vector pos = "0 0 0")
 	{
@@ -25,7 +30,53 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		//Load config
 		m_RoadblockJsonApi.Load();
 		m_Config = m_RoadblockJsonApi.conf;
-		pos = m_Config.pos;
+		
+		//Pick a configuration for mission
+		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.roadblockList);
+		if (idx == -1)
+		{
+			SDRC_Log.Add("[SDRC_Mission_Roadblock] No roadblocks defined.", LogLevel.ERROR);
+			SetState(DC_EMissionState.FAILED);
+			return;
+		}
+		m_DC_Roadblock = m_Config.roadblocks[idx];
+		
+		//Set defaults
+		if (!IsRequested())
+		{
+			pos = m_DC_Roadblock.pos;
+			
+			//Find a location for the mission
+			if (pos == "0 0 0")
+			{
+				pos = SDRC_MissionHelper.FindMissionPos(m_DC_Roadblock.locationTypes, m_DC_Roadblock.emptySize);
+				
+				//Find nearest road
+				SDRC_RoadPos roadPos = new SDRC_RoadPos();				
+				vector posOnRoad = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
+				pos = posOnRoad;
+				
+				//TBD: Find the road direction.
+				
+				//Camps in random places are randomly rotated
+				m_fSpawnRotation = Math.RandomFloat(0, 360);
+			}
+			else
+			{
+				pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_Roadblock.emptySize);
+			}
+		}
+		else
+		{
+			pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_Roadblock.emptySize);
+		}
+		
+		if (pos == "0 0 0")	//No suitable location found.
+		{				
+			SDRC_Log.Add("[SDRC_Mission_Roadblock] Could not find suitable location.", LogLevel.ERROR);
+			SetState(DC_EMissionState.FAILED);
+			return;
+		}	
 		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(GetPos(), m_Config.posName));
@@ -45,7 +96,8 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		if (GetState() == DC_EMissionState.INIT)
 		{
 			MissionSpawn();
-			SetState(DC_EMissionState.ACTIVE);
+			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds
+			return;
 		}
 
 		if (GetState() == DC_EMissionState.END)
@@ -71,15 +123,21 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	{			
 		super.MissionEnd();	
 		
-		//The rest of your clean up code.
-		
 		SDRC_Log.Add("[SDRC_Mission_Roadblock:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
 	{					
-		//Code for whatever you need for spawning things.
+		bool ready = false;
+		
+		ready = SDRC_OccupationHelper.Spawn(this, m_iSpawnIndex, m_DC_Roadblock, m_fSpawnRotation, m_Config.disableArsenal);
+		m_iSpawnIndex++;			
+		
+		if (ready)
+		{
+			SetState(DC_EMissionState.ACTIVE);
+		}
 	}
 }
 	
@@ -93,6 +151,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 	string info;
 	
 	//Variables here
+	bool disableArsenal;									//Disable arsenal for vehicles so that no other items are found	
 	ref array<ref int> roadblockList = {};				//The indexes of roadblocks.
 	ref array<ref SDRC_Occupation> roadblocks = {};		//List of roadblocks - uses the same structure as for occupations	
 }
@@ -140,14 +199,14 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		SDRC_Occupation roadblock1 = new SDRC_Occupation();
 		roadblock1.Set(
-			"index 0: Roadblock",
+			"index 1: Roadblock",
 			"0 0 0",
 			"any",
 			"Roadblock near ",
 			"Bandits are protecting their valuable loot.",
 			{
-				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_NAME_SETTLEMENT,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_TOWN,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_BASE,
 				EMapDescriptorType.MDT_PORT,
@@ -155,11 +214,11 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_FORTRESS
 			},
 			{1, 2},
-			{25, 100},
+			{0, 20},
 			DC_EWaypointGenerationType.SCATTERED,//RANDOM,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
-				"G_ADMIN", "G_LIGHT", "G_LIGHT"
+				"G_LAUNCHER", "G_LIGHT", "G_LIGHT"
 			},
 			50, 1.0,
 			6
@@ -172,8 +231,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL",
-				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 			};
 		roadblock1loot.Set(0.7, lootItems);
 		roadblock1.loot = roadblock1loot;

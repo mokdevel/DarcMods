@@ -396,6 +396,11 @@ class SDRC_MissionFrame
 			{
 				tmpDC_Mission = new SDRC_Mission_Squatter(pos);
 				break;
+			}
+			case DC_EMissionType.ROADBLOCK:
+			{
+				tmpDC_Mission = new SDRC_Mission_Roadblock(pos);
+				break;
 			}			
 /*			case DC_EMissionType.CHOPPER:
 			{

@@ -11,7 +11,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	private ref SDRC_OccupationJsonApi m_OccupationJsonApi = new SDRC_OccupationJsonApi();	
 	private ref SDRC_OccupationConfig m_Config;
 	
-	protected ref SDRC_Occupation m_DC_Occupation;	//Occupation configuration in use
+	protected ref SDRC_Occupation m_DC_Occupation;		//Occupation configuration in use
 	
 	private int m_iSpawnIndex = 0;						//Counter for the item to spawn
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
@@ -67,10 +67,8 @@ class SDRC_Mission_Occupation : SDRC_Mission
 			return;
 		}	
 		
-		string posName = m_DC_Occupation.posName;
-		
 		SetPos(pos);
-		SetPosName(SDRC_Locations.CreateName(pos, posName));
+		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Occupation.posName));
 		SetTitle(m_DC_Occupation.title + "" + GetPosName());
 		SetInfo(m_DC_Occupation.info);			
 		SetMarker(m_Config.showMarker, DC_EMissionIcon.N_FENCE);
@@ -124,8 +122,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	{					
 		bool ready = false;
 		
-//		ready = SpawnOccupationEntities(m_iSpawnIndex, m_DC_Occupation);
-		ready = SDRC_OccupationHelper.SpawnOccupationEntitiesX(this, m_iSpawnIndex, m_DC_Occupation, m_fSpawnRotation, m_Config.disableArsenal);
+		ready = SDRC_OccupationHelper.Spawn(this, m_iSpawnIndex, m_DC_Occupation, m_fSpawnRotation, m_Config.disableArsenal);
 		m_iSpawnIndex++;			
 		
 		if (ready)
@@ -133,75 +130,6 @@ class SDRC_Mission_Occupation : SDRC_Mission
 			SetState(DC_EMissionState.ACTIVE);
 		}
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Spawn camp items, AI and loot defined in a SDRC_Occupation structure
-	*/
-/*	private bool SpawnOccupationEntities(int idx, SDRC_Occupation occupation)
-	{
-		IEntity entity;
-		
-		//Spawn entities one by one. Sets missions active once ready.
-		if ( (idx < occupation.campItems.Count()) && (occupation.campItems.Count() > 0) )
-		{			
-			entity = SDRC_SpawnHelper.SpawnStructures(occupation.campItems, GetPos(), m_fSpawnRotation, idx);
-			
-			if (entity != NULL)
-			{ 
-				m_EntityList.Insert(entity);
-				//Disable arsenal
-				string resourceName = occupation.campItems[idx].GetResource();
-				SDRC_SpawnHelper.DisableVehicleArsenal(entity, resourceName, m_Config.disableArsenal);				
-			}
-			else
-			{
-				SDRC_Log.Add("[SDRC_Mission_Occupation:MissionSpawn] Could not load: " + occupation.campItems[idx], LogLevel.ERROR);				
-			}
-			
-			return false;
-		}
-		else
-		{
-			//Spawn mission AI 
-			int groupCount = Math.RandomInt(occupation.groupCount[0], occupation.groupCount[1]);
-			
-			for (int i = 0; i < groupCount; i++)
-			{
-				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(occupation.groupTypes.GetRandomElement(), GetPos(), GetFaction());
-				if (group)
-				{
-					SDRC_AIHelper.SetAIGroupSkill(group, occupation.aiSkill, occupation.aiPerception);					
-					m_Groups.Insert(group);
-					
-					int minRange = occupation.waypointRange[0];
-					int maxRange = occupation.waypointRange[1];
-					
-					//If there are more than one group and loot, spawn one to protect the loot. 
-					//For the first group, waypointRange is ignored.
-					if ((occupation.loot) && i == 0)
-					{
-						minRange = 5;
-						maxRange = 30;					
-					}
-					
-					SDRC_WPHelper.CreateMissionAIWaypoints(group, occupation.waypointGenType, GetPos(), "0 0 0", occupation.waypointMoveType, minRange, maxRange);
-//					SDRC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, occupation.waypointRange[0], occupation.waypointRange[1]);
-				}
-				SDRC_Log.Add("[SDRC_Mission_Occupation:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
-			}
-			
-			//Put loot
-			if (occupation.loot)			
-			{
-				occupation.loot.box = m_EntityList[0];
-				SDRC_LootHelper.SpawnItemsToStorage(m_DC_Occupation.loot.box, occupation.loot.items, occupation.loot.itemChance);
-				SDRC_Log.Add("[SDRC_Mission_Occupation:MissionSpawn] Loot added.", LogLevel.DEBUG);								
-			}
-
-			return true;			
-		}		
-	}	*/
 }
 
 //------------------------------------------------------------------------------------------------
@@ -212,48 +140,6 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 	ref array<ref int> occupationList = {};					//The indexes of occupations.
 	ref array<ref SDRC_Occupation> occupations = {};		//List of occupations
 }
-
-//------------------------------------------------------------------------------------------------
-/*class SDRC_Occupation : Managed
-{
-	//Occupation specific
-	string comment;							//Generic comment to describe the mission. Not used in game.
-	vector pos;								//Position for mission. "0 0 0" used for random location chosen from locationTypes.
-	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
-	string title;							//Title for the hint shown for players
-	string info;							//Details for the hint shown for players
-	ref array<EMapDescriptorType> locationTypes = {};	
-	ref array<int> groupCount = {};			//min, max
-	ref array<int> waypointRange = {};		//min, max
-	DC_EWaypointGenerationType waypointGenType;
-	DC_EWaypointMoveType waypointMoveType;
-	ref array<string> groupTypes = {};
-	int aiSkill;
-	float aiPerception;
-	float emptySize = 7;					//The size (radius) of the empty space to found to decide on a mission position.
-	
-	//Optional settings
-	ref SDRC_Loot loot = null;
-	ref array<ref SDRC_Structure> campItems = {};
-	
-	void Set(string comment_, vector pos_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_, int aiSkill_, float aiPerception_, float emptySize_)
-	{
-		comment = comment_;
-		pos = pos_;
-		posName = posName_;
-		title = title_;
-		info = info_;
-		locationTypes = locationTypes_;
-		groupCount = groupCount_;
-		waypointRange = waypointRange_;
-		waypointGenType = waypointGenType_;
-		waypointMoveType = waypointMoveType_;
-		groupTypes = groupTypes_;
-		aiSkill = aiSkill_;
-		aiPerception = aiPerception_;		
-		emptySize = emptySize_;
-	}
-}		*/
 
 //------------------------------------------------------------------------------------------------
 class SDRC_OccupationJsonApi : SDRC_JsonApi
