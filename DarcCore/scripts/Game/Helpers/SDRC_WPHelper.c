@@ -382,8 +382,9 @@ sealed class SDRC_WPHelper
 				wpPrefab = "{35BD6541CBB8AC08}Prefabs/AI/Waypoints/AIWaypoint_Cycle.et";
 				break;
 			case DC_EWaypointMoveType.LOITER:
-				wpPrefab = "{FAD1D789EE291964}Prefabs/AI/Waypoints/AIWaypoint_Defend_Large.et";
-//				wpPrefab = "{4ECD14650D82F5CA}Prefabs/AI/Waypoints/AIWaypoint_Loiter_CO.et";
+				array<string> wpDefendList = {"{2FCBE5C76E285A7B}Prefabs/AI/Waypoints/AIWaypoint_DefendSmall.et", "{FAD1D789EE291964}Prefabs/AI/Waypoints/AIWaypoint_Defend_Large.et"};
+				wpPrefab = wpDefendList.GetRandomElement();
+//				wpPrefab = "{FAD1D789EE291964}Prefabs/AI/Waypoints/AIWaypoint_Defend_Large.et";
 				break;
 			default: 
 				wpPrefab = "";

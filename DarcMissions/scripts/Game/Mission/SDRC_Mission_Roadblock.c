@@ -57,14 +57,29 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 				//Find nearest road
 				SDRC_RoadPos roadPos = new SDRC_RoadPos();				
 				vector posOnRoad = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
-				pos = posOnRoad;
-
-//				SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 128, 128, 128), m_DC_Roadblock.emptySize, "NONE", 20);	//Gray
-								
-				//TBD: Find the road direction.
+				array<vector> roadPts;
+				SDRC_RoadHelper.FindRoadPts(roadPts, roadPos.road);
 				
-				//Camps in random places are randomly rotated
-				m_fSpawnRotation = 0;//Math.RandomFloat(0, 360);
+				if (roadPts.IsEmpty())
+				{
+					pos = "0 0 0";
+					SDRC_Log.Add("[SDRC_Mission_Roadblock] No roadpoints found.", LogLevel.ERROR);
+				}
+				else
+				{
+					SDRC_Log.Add("[SDRC_Mission_Roadblock] Roadpoints found: " + roadPts.Count(), LogLevel.DEBUG);
+					
+					int roadPointIndex = Math.RandomInt(0, roadPts.Count() - 1);
+					pos = roadPts[roadPointIndex];
+					posOnRoad = roadPts[roadPointIndex + 1];
+	
+					SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 192, 192, 192), 2, "NONE", 20);			//Gray
+					SDRC_DebugHelper.AddDebugPos(posOnRoad, ARGB(40, 128, 128, 128), 2, "NONE", 20);	//Gray
+									
+					//Find the road direction. Roadblocks shall be aligned to road. 
+					vector direction = vector.Direction(pos, posOnRoad);
+					m_fSpawnRotation = SDRC_Misc.VectorToAngle(direction);
+				}
 			}
 			else
 			{
@@ -214,6 +229,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_BASE,
 				EMapDescriptorType.MDT_PORT,
