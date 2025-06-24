@@ -132,7 +132,7 @@ sealed class SDRC_SpawnHelper
 		pos = SDRC_Misc.RandomizePos(floorpos, radius/6);
 		SDRC_SpawnHelper.FindEmptyPos(pos, radius/5, emptyPosRadius);	//We use the original pos if we don't find a better spot.
 		pos[1] = pos[1] + 0.1;			
-		SDRC_DebugHelper.AddDebugSphere(pos, ARGB(20, 128, 0, 128), empty_radius);
+		SDRC_DebugHelper.AddDebugSphere(pos, ARGB(20, 128, 0, 128), empty_radius);	//Purple
 //		entity = SpawnItem(pos, item, rotation, emptyPosRadius, snap);
 		entity = SpawnItem(pos, item, rotation, -1, snap);
 		
@@ -352,12 +352,12 @@ sealed class SDRC_SpawnHelper
 		
 		if (m_obstructCount < baseGameMode.m_SDRC_Core.m_Config.emptyPos.limit)
 		{
-			SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 0, 255, 0), emptySize, "NONE", 20);			
+			SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 0, 255, 0), emptySize, "NONE", 20);	//GREEN
 			return true;
 		}
 		else
 		{
-			SDRC_DebugHelper.AddDebugPos(pos, ARGB(20, 255, 0, 0), emptySize, "NONE", 15);			
+			SDRC_DebugHelper.AddDebugPos(pos, ARGB(20, 255, 0, 0), emptySize, "NONE", 15);	//RED
 			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.DEBUG);			
 			return false;
 		}
