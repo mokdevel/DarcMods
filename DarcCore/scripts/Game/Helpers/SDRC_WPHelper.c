@@ -49,9 +49,10 @@ sealed class SDRC_WPHelper
 			AIWaypointCycle wpcycle = null;
 			
 			RemoveWaypoints(group);
-		
-			int rndCount = Math.RandomInt(6, 20);	//TBD: This could be a parameter in .json
+			
 			int rndRange = Math.RandomInt(wpRangeLow, wpRangeHigh);
+			int max = rndRange / 30;
+			int rndCount = Math.RandomInt(3, 3 + max);
 
 			SDRC_Log.Add("[SDRC_WPHelper:CreateMissionAIWaypoints] Random waypoint count: " + rndCount + " , Random range: " + rndRange, LogLevel.SPAM);
 						
