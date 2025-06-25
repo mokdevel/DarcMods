@@ -1,8 +1,21 @@
-In InkScape:
-- Batch Export
-- DPI 30
+Three icons are needed:
 
-In Gimp
-- Canvas Size 128x100
-- Center
-- Invert colors
+# Map icon:
+- Name: gm_mission_MissionName_map
+- Size: 54x110 with DPI 30
+- Color: Black
+- In Gimp
+-- Canvas Size 54x110
+
+# Round image for GM drop:
+- Name: gm_mission_MissionName
+- Size: 71x69 with DPI 30
+- Color: White -> invert color
+
+# UI image for GM view:
+- Name: gm_mission_MissionName_round
+- Size: 128x100 with DPI 30
+- Color: White -> invert color
+- In Gimp
+-- Canvas Size 128x100
+-- Center

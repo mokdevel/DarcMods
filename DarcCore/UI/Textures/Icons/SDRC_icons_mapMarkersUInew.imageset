@@ -1,0 +1,78 @@
+ImageSetClass {
+ RefSize 172 452
+ Textures {
+  ImageSetTextureClass {
+   screenSize FHD
+   size 172 452
+   path "{84F3106DED438339}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-100_atlas.edds"
+  }
+ }
+ Images {
+  ImageSetDefClass gm_mission_Car_side_map {
+   Name "gm_mission_Car_side_map"
+   Pos 2 2
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass gm_mission_Convoy_map {
+   Name "gm_mission_Convoy_map"
+   Pos 58 2
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass gm_mission_Crashsite_map {
+   Name "gm_mission_Crashsite_map"
+   Pos 114 2
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass gm_mission_Helicopter_map {
+   Name "gm_mission_Helicopter_map"
+   Pos 2 114
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass gm_mission_Hunter_map {
+   Name "gm_mission_Hunter_map"
+   Pos 58 114
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass gm_mission_Occupation_map {
+   Name "gm_mission_Occupation_map"
+   Pos 114 114
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass gm_mission_Patrol_map {
+   Name "gm_mission_Patrol_map"
+   Pos 2 226
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass gm_mission_RadioActive_map {
+   Name "gm_mission_RadioActive_map"
+   Pos 58 226
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass gm_mission_Roadblock_map {
+   Name "gm_mission_Roadblock_map"
+   Pos 114 226
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass gm_mission_Squatters_map {
+   Name "gm_mission_Squatters_map"
+   Pos 2 338
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass gm_mission_X_map {
+   Name "gm_mission_X_map"
+   Pos 58 338
+   Size 54 110
+   Flags 0
+  }
+ }
+}
