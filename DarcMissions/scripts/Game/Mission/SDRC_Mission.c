@@ -82,7 +82,7 @@ class SDRC_Mission
 		SetActiveTime(SDRC_MISSION_CYCLE_TIME_DEFAULT*20);		//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
 		m_ActiveDistance = 0;									//Set a default zero
 		m_bMissionIsEnding = false;
-		if (pos != "0 0 0")
+		if (pos != "0 0 0")										//Requested is set here
 		{
 			m_bRequested = true;
 		}
@@ -387,6 +387,7 @@ class SDRC_Mission
 	
 	//------------------------------------------------------------------------------------------------
 	//\return bool status it the mission spawn was requested by a an external party (like GM)	
+	//NOTE: m_bRequested is set in SDRC_Mission constructor
 	bool IsRequested()
 	{
 		return m_bRequested;

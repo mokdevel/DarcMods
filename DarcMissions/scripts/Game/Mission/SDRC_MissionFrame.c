@@ -506,6 +506,10 @@ class SDRC_MissionFrame
 			{
 				staticString = "static";
 			}
+			if (mission.IsRequested())
+			{
+				staticString = staticString + "(req)";
+			}
 			string missionType = SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType());
 			string missionTitle = mission.GetTitle();
 			if (missionTitle.Length() > cutLen)
