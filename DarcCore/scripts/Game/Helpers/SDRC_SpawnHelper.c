@@ -10,7 +10,6 @@ sealed class SDRC_SpawnHelper
 {
 	const float SIZEDIV = 1.8;
 	const float EMPTY_POS_RADIUS = 50;	//How far from the center the spawned position can be.
-//	private static ref array<string>m_sEmptyPosExcludeFilter = {};
 	
 /*	//------------------------------------------------------------------------------------------------
 	static void Setup()
@@ -56,7 +55,7 @@ sealed class SDRC_SpawnHelper
 				entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
 				RebuildNavmesh(entity);
 				
-				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] " + entityName + " spawned to: " + pos, LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] " + entityName + " spawned to: " + pos, LogLevel.SPAM);
 			}
 			else
 			{
@@ -73,7 +72,7 @@ sealed class SDRC_SpawnHelper
 			entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
 			RebuildNavmesh(entity);
 			
-			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] " + entityName + " spawned to exact position: " + pos, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] " + entityName + " spawned to exact position: " + pos, LogLevel.SPAM);
 		}
 		
 		if (entity)
@@ -127,7 +126,7 @@ sealed class SDRC_SpawnHelper
 		{
 			floorpos = building.GetOrigin();
 			ResourceName res = building.GetPrefabData().GetPrefabName();
-			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItemInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.SPAM);
+			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItemInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.WARNING);
 		}
 		pos = SDRC_Misc.RandomizePos(floorpos, radius/6);
 		SDRC_SpawnHelper.FindEmptyPos(pos, radius/5, emptyPosRadius);	//We use the original pos if we don't find a better spot.
