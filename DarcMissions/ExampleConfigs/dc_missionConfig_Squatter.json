@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 20,
+	"missionCycleTime": 30,
 	"showMarker": true,
 	"showHint": true,
 	"buildingRadius": 400,

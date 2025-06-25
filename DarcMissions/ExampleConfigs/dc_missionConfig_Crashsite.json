@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 20,
+	"missionCycleTime": 30,
 	"showMarker": true,
 	"showHint": true,
 	"distanceToMission": 100,
@@ -65,19 +65,6 @@
 						97.91100311279297,
 						1.0,
 						121.5270004272461
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{97B6EE1A45A88A89}Assets/Vehicles/Helicopters/UH1H/UH1H_Wreck.xob",
-					"position": [
-						103.2509994506836,
-						1.0,
-						124.17900085449219
 					],
 					"rotation": [
 						0.0,

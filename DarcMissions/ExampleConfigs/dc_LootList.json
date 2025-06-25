@@ -134,6 +134,23 @@
 				"Internal_"
 			],
 			"items": []
+		},
+		{
+			"id": "UTIL_AMMO",
+			"modDir": "/Weapons/Ammo",
+			"include": [
+				"Shell",
+				"Rocket",
+				"Grenade",
+				"Flare"
+			],
+			"exclude": [
+				"_Base",
+				"Internal_",
+				"_Effect",
+				"FlareEffect"
+			],
+			"items": []
 		}
 	]
 }
