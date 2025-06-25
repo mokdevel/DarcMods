@@ -14,6 +14,7 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - Crashsite : A helicopter carrying loot is damaged and is crashing. Survivors will be protecting the wreck while waiting to be rescued.
 - Occupation : A location is guarded by AIs with loot available.
 - Squatters : A building is guarded by AIs with loot available.
+- Roadblocks : AIs have set random roadblocks on roads with loot available.
 
 ## Thanks
 - The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
@@ -46,6 +47,7 @@ Mission specific parameters for each mission type:
 * [Crashsite](./docs/MISSION_CRASHSITE.md)
 * [Occupation](./docs/MISSION_OCCUPATION.md)
 * [Squatters](./docs/MISSION_SQUATTERS.md)
+* Roadblock -TBD-
 
 Other parameter details available:
 * [Lists](./docs/P_LISTS.md) for automatic loot and enemy lists
@@ -73,7 +75,8 @@ Mission specific files
 * [dc_missionConfig_Occupation.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Patrol.json)
 * [dc_missionConfig_Convoy.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Convoy.json)
 * [dc_missionConfig_Crashsite.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Crashsite.json)
-* [dc_missionConfig_Squatters.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Squatter.json)
+* [dc_missionConfig_Squatter.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Squatter.json)
+* [dc_missionConfig_Roadblock.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Roadblock.json)
 
 Dependency specific files
 * [dc_coreConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_coreConfig.json) : Configuration file for core.
