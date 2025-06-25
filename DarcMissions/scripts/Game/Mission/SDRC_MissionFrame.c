@@ -101,9 +101,11 @@ class SDRC_MissionFrame
 		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;		//sec to ms
 		
 		#ifndef SDRC_RELEASE
-			SDRC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.N_FENCE, "DMC_B", "Here is a text");
-			SDRC_MapMarkerHelper.CreateMapMarker("1200 0 3500", DC_EMissionIcon.N_HOUSE, "DMC_B", "Darc_SK");
-			SDRC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.N_HELI, "DMC_B", "This is a description for a mission");
+			SDRC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP, "DMC_B", "Here is a text");
+			SDRC_MapMarkerHelper.CreateMapMarker("1200 0 3500", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP, "DMC_B", "Darc_SK");
+			SDRC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, "DMC_B", "This is a description for a mission");
+			SDRC_MapMarkerHelper.CreateMapMarker("1600 0 3200", DC_EMissionIcon.GM_MISSION_RADIOACTIVE_MAP, "DMC_B", "This is a description for a mission");
+			SDRC_MapMarkerHelper.CreateMapMarker("1700 0 3200", DC_EMissionIcon.GM_MISSION_X_MAP, "DMC_B", "This is a description for a mission");
 				
 /*			for (int i = 0;i < 250; i++)
 			{

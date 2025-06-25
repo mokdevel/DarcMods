@@ -31,7 +31,7 @@ class SDRC_Mission_Template : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(GetPos(), m_Config.posName));
 		SetTitle(m_Config.title + "" + GetPosName());
 		SetInfo(m_Config.info);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.N_MISSION);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_X_MAP);
 		SetShowHint(m_Config.showHint);
 
 		SetState(DC_EMissionState.INIT);			
@@ -139,7 +139,7 @@ class SDRC_TemplateJsonApi : SDRC_JsonApi
 		conf.showMarker = true;		
 		//Mission specific		
 		conf.pos = "0 0 0";
-		conf.posName = "A location name";
+		conf.posName = "any";
 		conf.title = "Template mission";
 		conf.info = "Some additional information for players";
 	}	

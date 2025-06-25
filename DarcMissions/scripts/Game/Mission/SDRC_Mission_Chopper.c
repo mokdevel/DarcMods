@@ -30,7 +30,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		SetInfo(m_Config.info);
 		SetPos(pos);
 		SetPosName(posName);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.N_HELI);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP);
 		SetShowHint(m_Config.showHint);
 
 		SetState(DC_EMissionState.INIT);			

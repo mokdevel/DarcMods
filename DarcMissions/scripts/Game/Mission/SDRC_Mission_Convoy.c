@@ -108,7 +108,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, posName));
 		SetTitle(m_DC_Convoy.title);
 		SetInfo(m_DC_Convoy.info + "" + GetPosName() + " to " + SDRC_Locations.CreateName(m_vPosDestination, "any"));			
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.N_CAR);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_CONVOY_MAP);
 		SetShowHint(m_Config.showHint);			
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 		
@@ -155,7 +155,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 						if (m_Config.showMarker)
 						{
 							SDRC_MapMarkerHelper.DeleteMarker(GetId());
-							SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.N_CAR, GetId(), "");
+							SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.GM_MISSION_CONVOY_MAP, GetId(), "");
 						}
 					}
 								

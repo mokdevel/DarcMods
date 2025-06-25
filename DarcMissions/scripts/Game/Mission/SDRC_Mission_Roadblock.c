@@ -102,7 +102,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(GetPos(), m_Config.posName));
 		SetTitle(m_Config.title + "" + GetPosName());
 		SetInfo(m_Config.info);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.N_MISSION);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP);
 		SetShowHint(m_Config.showHint);
 
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Roadblock.campItems);
@@ -216,7 +216,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.roadblockList = {0};		
+		conf.roadblockList = {2};		
 		
 		//----------------------------------------------------
 		SDRC_Occupation roadblock0 = new SDRC_Occupation();
@@ -225,7 +225,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"0 0 0",
 			"any",
 			"Roadblock near ",
-			"Bandits are protecting their valuable loot.",
+			"Look out for trouble.",
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_TOWN,
@@ -293,11 +293,11 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"index 1: Roadblock",
 			"0 0 0",
 			"any",
-			"Roadblock near ",
-			"Bandits are protecting their valuable loot.",
+			"Roadblock seen close to ",
+			"Be careful.",
 			{
-				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_BASE,
 				EMapDescriptorType.MDT_PORT,
@@ -305,11 +305,11 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_FORTRESS
 			},
 			{1, 2},
-			{0, 20},
-			DC_EWaypointGenerationType.SCATTERED,//RANDOM,
+			{0, 10},
+			DC_EWaypointGenerationType.SCATTERED,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
-				"G_LAUNCHER", "G_LIGHT", "G_LIGHT"
+				"G_LAUNCHER", "G_HEAVY", "G_LIGHT"
 			},
 			50, 1.0,
 			6
@@ -318,43 +318,226 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		
 		SDRC_Loot roadblock1loot = new SDRC_Loot();
 		lootItems = {
-				"WEAPON_RIFLE",
-				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
-				"UTIL_ATTACHMENT",
+				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"UTIL_MAGAZINES", "UTIL_MAGAZINES"
 			};
-		roadblock1loot.Set(0.7, lootItems);
+		roadblock1loot.Set(0.9, lootItems);
 		roadblock1.loot = roadblock1loot;
 		
 		SDRC_Structure rb1item0 = new SDRC_Structure;
 		rb1item0.Set(
-			"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
-			"100.47 1 144.562"
+		    "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+		    "6.814 1 115.156",
+		    "0 32.729 0"
 		);
 		roadblock1.campItems.Insert(rb1item0);
-
+		
 		SDRC_Structure rb1item1 = new SDRC_Structure;
 		rb1item1.Set(
-			"{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et",
-			"96.885 1 144.184",
-			"0 119.334 0"
+		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+		    "12.579 0 120.902",
+		    "0 28.496 0"
 		);
 		roadblock1.campItems.Insert(rb1item1);
-
+		
 		SDRC_Structure rb1item2 = new SDRC_Structure;
 		rb1item2.Set(
-			"{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et",
-			"98.235 1 143.464"
+		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+		    "8.218 0 123.028",
+		    "0 -31.966 0"
 		);
 		roadblock1.campItems.Insert(rb1item2);
-
+		
 		SDRC_Structure rb1item3 = new SDRC_Structure;
 		rb1item3.Set(
-			"{EBC3D311A1B64FE6}PrefabsEditable/Auto/Structures/Military/Camps/TentSmallUS_01/E_TentSmallUS_01.et",
-			"96.653 1 146.601",
-			"0 -39.208 0"
+		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+		    "11.18 0 107.827",
+		    "0 9.997 0"
 		);
-		roadblock1.campItems.Insert(rb1item3);	
+		roadblock1.campItems.Insert(rb1item3);
+		
+		SDRC_Structure rb1item4 = new SDRC_Structure;
+		rb1item4.Set(
+		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+		    "5.713 0.227 120.863",
+		    "0 14.494 0"
+		);
+		roadblock1.campItems.Insert(rb1item4);
+		
+		SDRC_Structure rb1item5 = new SDRC_Structure;
+		rb1item5.Set(
+		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+		    "14.977 -0.169 120.709",
+		    "0 -16.455 0"
+		);
+		roadblock1.campItems.Insert(rb1item5);
+		
+		SDRC_Structure rb1item6 = new SDRC_Structure;
+		rb1item6.Set(
+		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+		    "7.873 0 108.275",
+		    "0 -48.948 0"
+		);
+		roadblock1.campItems.Insert(rb1item6);
+		
+		SDRC_Structure rb1item7 = new SDRC_Structure;
+		rb1item7.Set(
+		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+		    "4.596 0 108.679",
+		    "0 54.582 0"
+		);
+		roadblock1.campItems.Insert(rb1item7);
+		
+		SDRC_Structure rb1item8 = new SDRC_Structure;
+		rb1item8.Set(
+		    "{93E06E731212BD96}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Triple.et",
+		    "14.151 0 114.891",
+		    "0 -32.743 0"
+		);
+		roadblock1.campItems.Insert(rb1item8);
+		
+		SDRC_Structure rb1item9 = new SDRC_Structure;
+		rb1item9.Set(
+		    "{93E06E731212BD96}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Triple.et",
+		    "5.131 0 116.374",
+		    "0 26.719 0"
+		);
+		roadblock1.campItems.Insert(rb1item9);
+		
+		SDRC_Structure rb1item10 = new SDRC_Structure;
+		rb1item10.Set(
+		    "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
+		    "9.49 1 117.729",
+		    "0 86.019 0"
+		);
+		roadblock1.campItems.Insert(rb1item10);
+		
+		SDRC_Structure rb1item11 = new SDRC_Structure;
+		rb1item11.Set(
+		    "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
+		    "8.268 1 110.003",
+		    "0 93.268 0"
+		);
+		roadblock1.campItems.Insert(rb1item11);
+		
+		//----------------------------------------------------
+		SDRC_Occupation roadblock2 = new SDRC_Occupation();
+		roadblock2.Set(
+			"index 2: Roadblock",
+			"0 0 0",
+			"any",
+			"Road is closed near ",
+			"Are your ready to pay the toll?",
+			{
+				EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_BASE,
+				EMapDescriptorType.MDT_PORT,
+				EMapDescriptorType.MDT_AIRPORT,
+				EMapDescriptorType.MDT_FORTRESS
+			},
+			{2, 4},
+			{0, 10},
+			DC_EWaypointGenerationType.LOITER,
+			DC_EWaypointMoveType.PATROLCYCLE,
+			{
+				"G_LIGHT", "G_LIGHT", "G_LIGHT", "C_SNIPER", 
+			},
+			50, 1.0,
+			6
+		);
+		conf.roadblocks.Insert(roadblock2);
+		
+		SDRC_Loot roadblock2loot = new SDRC_Loot();
+		lootItems = {
+				"WEAPON_LAUNCHER", "WEAPON_RIFLE", "WEAPON_RIFLE",
+				"UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES",
+				"ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO"
+			};
+		roadblock2loot.Set(0.6, lootItems);
+		roadblock2.loot = roadblock2loot;
+		
+		SDRC_Structure rb2item0 = new SDRC_Structure;
+		rb2item0.Set(
+		    "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+		    "10.866 1 140.452",
+		    "0 2.385 0"
+		);
+		roadblock2.campItems.Insert(rb2item0);
+		
+		SDRC_Structure rb2item1 = new SDRC_Structure;
+		rb2item1.Set(
+		    "{365E4BF1FFFD8B30}PrefabsEditable/Auto/Structures/Walls/BarbedWire/E_BarbedTape_Long.et",
+		    "6.01 0 148.186",
+		    "0 -106.133 0"
+		);
+		roadblock2.campItems.Insert(rb2item1);
+		
+		SDRC_Structure rb2item2 = new SDRC_Structure;
+		rb2item2.Set(
+		    "{365E4BF1FFFD8B30}PrefabsEditable/Auto/Structures/Walls/BarbedWire/E_BarbedTape_Long.et",
+		    "14.12 0 145.299",
+		    "0 -45.299 0"
+		);
+		roadblock2.campItems.Insert(rb2item2);
+		
+		SDRC_Structure rb2item3 = new SDRC_Structure;
+		rb2item3.Set(
+		    "{365E4BF1FFFD8B30}PrefabsEditable/Auto/Structures/Walls/BarbedWire/E_BarbedTape_Long.et",
+		    "13.278 0.732 134.665",
+		    "0 -106.133 0"
+		);
+		roadblock2.campItems.Insert(rb2item3);
+		
+		SDRC_Structure rb2item4 = new SDRC_Structure;
+		rb2item4.Set(
+		    "{365E4BF1FFFD8B30}PrefabsEditable/Auto/Structures/Walls/BarbedWire/E_BarbedTape_Long.et",
+		    "9.088 0 134.691",
+		    "0 -76.67 0"
+		);
+		roadblock2.campItems.Insert(rb2item4);
+		
+		SDRC_Structure rb2item5 = new SDRC_Structure;
+		rb2item5.Set(
+		    "{365E4BF1FFFD8B30}PrefabsEditable/Auto/Structures/Walls/BarbedWire/E_BarbedTape_Long.et",
+		    "5.972 0 137.246",
+		    "0 -18.935 0"
+		);
+		roadblock2.campItems.Insert(rb2item5);
+		
+		SDRC_Structure rb2item6 = new SDRC_Structure;
+		rb2item6.Set(
+		    "{365E4BF1FFFD8B30}PrefabsEditable/Auto/Structures/Walls/BarbedWire/E_BarbedTape_Long.et",
+		    "9.607 0 148.603",
+		    "0 -90 0"
+		);
+		roadblock2.campItems.Insert(rb2item6);
+		
+		SDRC_Structure rb2item7 = new SDRC_Structure;
+		rb2item7.Set(
+		    "{6A735BB1318B2E76}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_bunker_plastic_camonet.et",
+		    "10.187 1 140.88"
+		);
+		roadblock2.campItems.Insert(rb2item7);
+		
+		SDRC_Structure rb2item8 = new SDRC_Structure;
+		rb2item8.Set(
+		    "{A76FBE3B139F227A}PrefabsEditable/Auto/Structures/Signs/Military/E_SignCheckpoint_01_stop.et",
+		    "6.063 1 143.004"
+		);
+		roadblock2.campItems.Insert(rb2item8);
+		
+		SDRC_Structure rb2item9 = new SDRC_Structure;
+		rb2item9.Set(
+		    "{A76FBE3B139F227A}PrefabsEditable/Auto/Structures/Signs/Military/E_SignCheckpoint_01_stop.et",
+		    "12.532 1 148.443",
+		    "0 -9.375 0"
+		);
+		roadblock2.campItems.Insert(rb2item9);		
 	}	
 }

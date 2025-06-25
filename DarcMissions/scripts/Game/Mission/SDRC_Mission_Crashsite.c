@@ -117,7 +117,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		SetPosName("");
 		SetTitle(m_DC_Crashsite.title);
 		SetInfo(m_DC_Crashsite.info);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.N_HELI);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP);
 		SetShowHint(m_Config.showHint);
 
 		SetState(DC_EMissionState.INIT);			
@@ -172,7 +172,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 						if (m_Config.showMarker)
 						{
 							SDRC_MapMarkerHelper.DeleteMarker(GetId());
-							SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.N_FIRE, GetId(), "Crash site");
+							SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, GetId(), "Crash site");
 						}
 						missionCrashSiteState = DC_EMissionCrashSiteState.SPAWN_SITE;
 					}
@@ -181,7 +181,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 						if (m_Config.showMarker)
 						{
 							SDRC_MapMarkerHelper.DeleteMarker(GetId());
-							SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.N_HELI, GetId(), "");
+							SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, GetId(), "");
 						}
 					}
 					break;
