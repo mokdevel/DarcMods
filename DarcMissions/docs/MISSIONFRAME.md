@@ -13,7 +13,7 @@ In the case position is not usable, another try is made. Currently searching is 
 ## Dynamic vs Static mission
 In the configuration you can define missions either as a dynamic mission (```missionDynamic```) or static mission (```missionStatic```). The missions are the same but spawning is different. 
 
-* Static missions will spawn immediately when the server starts. Once all static missions are spawned, no new ones will be spawned during the session. If a static mission fails to start, it will not be tried again. For example, if you define 30 missions as static, on a small map there may not be locations that fit the missions criteria. You may end up with 20 missions running. For static missions ``activeTime`` should be long. NOTE: No popup will be provided to players for static mission spawns.
+* Static missions will spawn immediately when the server starts. Once all static missions are spawned, no new ones will be spawned during the session. If a static mission fails to start, it will not be tried again. For example, if you define 30 missions as static, on a small map there may not be locations that fit the missions criteria. You may end up with 20 missions running. For static missions ``activeTime`` should be long. NOTE: No popup will be provided to players for static mission spawns. Marker visibility can be defined with ``showStaticMissionMarker``;
 
 * Dynamic missions will spawn on steady pace. The ``activeTime`` should be relatively short so that the missions despawn and new ones are brought to players. Note that no dynamic missions, including GM requested ones, will spawn if static missions are still spawning.
 
@@ -41,6 +41,7 @@ int missionActiveTimeToEnd : (seconds) Time to keep the mission active once all 
 int missionHintTime : (seconds) Time to show mission hints to players. 0 disables ALL hints.
 int minDistanceToMission : Distance to another mission. Two missions shall not be too close to each other.
 int minDistanceToPlayer : Mission shall not spawn too close to a player.
+bool showStaticMissionMarker : Show/hide static mission markers. 
 array<string> enemyFactions : The array of factions to consider as enemies. "USSR" by default. You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission.
 SDRC_MissionTypeConfig missionDynamic : Dynamic missions configurations.
 SDRC_MissionTypeConfig missionStatic : Static missions configurations.

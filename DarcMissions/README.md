@@ -85,14 +85,18 @@ Dependency specific files
 Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
 
 Main features: 
-* ..empty..
+* New mission: Roadblock
 
 Fixes:
+* ..empty..
 
+Internal things:
+* New icons with easier icon creation.
 
 ### Conf changes
 * dc_missionConfig.json parameter changes
   * Moved ``missionDelayBetween`` in to the mission specific structures and renamed to ``delayBetween``. You can define the delay separately for dynamic and static.
+  * Added ``showStaticMissionMarker`` that shows/hides static mission markers. 
 * dc_coreConfig.json parameter changes
   * emptyPos.objectFilter : Less strict filtering for Anizay map
 
