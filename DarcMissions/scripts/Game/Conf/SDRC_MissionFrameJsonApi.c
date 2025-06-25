@@ -22,14 +22,15 @@
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 20;						//You should not be running the frame too often as it's unncecessary
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = true;						//Force recreaction of config files. 
 		private const int SDRC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
+		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;						//Show/hide static mission markers
 	#endif
 	
 	//Development time options
 	#ifndef SDRC_RELEASE	
 		private const string SDRC_MISSION_PROFILE_DIR = "dummy";
-		private const int SDRC_MISSION_COUNT = 0;//8;
+		private const int SDRC_MISSION_COUNT = 2;//8;
 		private const float SDRC_MISSION_COUNT_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 5;//30;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 2;//30;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSION_START_DELAY = 10;					
@@ -43,6 +44,7 @@
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = true;
 		private const int SDRC_MISSION_HINT_TIME = 30;
+		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;
 	#endif
 
 class SDRC_MissionTypeConfig : Managed
@@ -72,6 +74,7 @@ class SDRC_MissionFrameConfig : Managed
 	//Misc
 	int minDistanceToMission;		//Distance to another mission. Two missions shall not be too close to each other.
 	int minDistanceToPlayer;		//Mission shall not spawn too close to a player.
+	bool showStaticMissionMarker;	//Show static mission marker
 	ref array<string>enemyFactions;	//Factions to use for enemy selection
 	ref SDRC_MissionTypeConfig missionDynamic = new SDRC_MissionTypeConfig();
 	ref SDRC_MissionTypeConfig missionStatic = new SDRC_MissionTypeConfig();
@@ -139,6 +142,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.missionHintTime = SDRC_MISSION_HINT_TIME;
 		conf.minDistanceToMission = 500;
 		conf.minDistanceToPlayer = 100;
+		conf.showStaticMissionMarker = SDRC_MISSION_SHOW_STATIC_MARKER;
 //		conf.enemyFactions = {"FIA", "USSR"};
 //		conf.enemyFactions = {"FIA", "US"};
 		conf.enemyFactions = {"USSR"};

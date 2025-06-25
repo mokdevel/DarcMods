@@ -155,7 +155,9 @@ class SDRC_Mission_Convoy : SDRC_Mission
 						if (m_Config.showMarker)
 						{
 							SDRC_MapMarkerHelper.DeleteMarker(GetId());
-							SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.GM_MISSION_CONVOY_MAP, GetId(), "");
+							//SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.GM_MISSION_CONVOY_MAP, GetId(), "");
+							SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_CONVOY_MAP);
+							ShowMarker();
 						}
 					}
 								

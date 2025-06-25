@@ -53,6 +53,8 @@ class SDRC_Mission
 	private int m_EndTime;						//Seconds when mission shall end.
 	private int m_ActiveTime;					//Seconds of how long the mission should be active
 	private string m_sFaction;					//Faction for the mission		
+	private bool m_bShowMarker;					//If the icon is to be shown
+	private DC_EMissionIcon m_sIcon;			//The icon to show
 	//Internals without getters
 	private int m_ActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
 	private int m_ActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
@@ -346,11 +348,24 @@ class SDRC_Mission
 	}
 			
 	//------------------------------------------------------------------------------------------------
-	void SetMarker(bool setMarker, DC_EMissionIcon icon)
+	void SetMarker(bool showMarker, DC_EMissionIcon icon)
 	{
-		if (setMarker)
+		m_sIcon = icon;
+		m_bShowMarker = showMarker;
+	}
+	
+	void ShowMarker()
+	{
+		//If static mission, check if we are to show a marker
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (IsStatic() && !baseGameMode.missionFrame.m_Config.showStaticMissionMarker)
 		{
-			SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), icon, GetId(), GetTitle());
+			return;
+		}
+		
+		if (m_bShowMarker)
+		{
+			SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), m_sIcon, GetId(), GetTitle());
 		}
 	}
 	

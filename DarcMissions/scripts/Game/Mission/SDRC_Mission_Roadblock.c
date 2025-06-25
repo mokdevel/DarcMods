@@ -25,7 +25,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Roadblock] Constructor", LogLevel.SPAM);
 				
 		//Set some defaults
-		SetType(DC_EMissionType.ROADBLOCK);	//REMEMBER: Define your own ENUM in SDRC_Mission.c and change here. Don't use modded enum.
+		SetType(DC_EMissionType.ROADBLOCK);
 
 		//Load config
 		m_RoadblockJsonApi.Load();
@@ -73,8 +73,8 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 					pos = roadPts[roadPointIndex];
 					posOnRoad = roadPts[roadPointIndex + 1];
 	
-					SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 192, 192, 192), 2, "NONE", 20);			//Gray
-					SDRC_DebugHelper.AddDebugPos(posOnRoad, ARGB(40, 128, 128, 128), 2, "NONE", 20);	//Gray
+					//SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 192, 192, 192), 2, "NONE", 20);			//Gray
+					//SDRC_DebugHelper.AddDebugPos(posOnRoad, ARGB(40, 128, 128, 128), 2, "NONE", 20);	//Gray
 									
 					//Find the road direction. Roadblocks shall be aligned to road. 
 					vector direction = vector.Direction(pos, posOnRoad);
@@ -99,9 +99,9 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		}	
 		
 		SetPos(pos);
-		SetPosName(SDRC_Locations.CreateName(GetPos(), m_Config.posName));
-		SetTitle(m_Config.title + "" + GetPosName());
-		SetInfo(m_Config.info);
+		SetPosName(SDRC_Locations.CreateName(GetPos(), m_DC_Roadblock.posName));
+		SetTitle(m_DC_Roadblock.title + "" + GetPosName());
+		SetInfo(m_DC_Roadblock.info);
 		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP);
 		SetShowHint(m_Config.showHint);
 
@@ -216,7 +216,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.showMarker = true;
 		//Mission specific		
-		conf.roadblockList = {2};		
+		conf.roadblockList = {0,1,2};		
 		
 		//----------------------------------------------------
 		SDRC_Occupation roadblock0 = new SDRC_Occupation();
@@ -227,9 +227,10 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"Roadblock near ",
 			"Look out for trouble.",
 			{
-				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_TOWN,
 				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_NAME_VALLEY,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_BASE,
 				EMapDescriptorType.MDT_PORT,
@@ -296,6 +297,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"Roadblock seen close to ",
 			"Be careful.",
 			{
+				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_TOWN,
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
@@ -431,7 +433,8 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"Road is closed near ",
 			"Are your ready to pay the toll?",
 			{
-				EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN,
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_BASE,
@@ -439,7 +442,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT,
 				EMapDescriptorType.MDT_FORTRESS
 			},
-			{2, 4},
+			{2, 3},
 			{0, 10},
 			DC_EWaypointGenerationType.LOITER,
 			DC_EWaypointMoveType.PATROLCYCLE,
