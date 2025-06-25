@@ -1,0 +1,42 @@
+$grp StaticModelEntity : "{365E4BF1FFFD8B30}PrefabsEditable/Auto/Structures/Walls/BarbedWire/E_BarbedTape_Long.et" {
+ {
+  coords 9.607 0 148.603
+  angleY -90
+ }
+ {
+  coords 6.01 0 148.186
+  angleY -106.133
+ }
+ {
+  coords 14.12 0 145.299
+  angleY -45.299
+ }
+ {
+  coords 13.278 0.732 134.665
+  angleY -106.133
+ }
+ {
+  coords 9.088 0 134.691
+  angleY -76.67
+ }
+ {
+  coords 5.972 0 137.246
+  angleY -18.935
+ }
+}
+GenericEntity : "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et" {
+ coords 10.866 1 140.452
+ angleY 2.385
+}
+GenericEntity : "{6A735BB1318B2E76}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_bunker_plastic_camonet.et" {
+ coords 10.187 1 140.88
+}
+$grp GenericEntity : "{A76FBE3B139F227A}PrefabsEditable/Auto/Structures/Signs/Military/E_SignCheckpoint_01_stop.et" {
+ {
+  coords 6.063 1 143.004
+ }
+ {
+  coords 12.532 1 148.443
+  angleY -9.375
+ }
+}

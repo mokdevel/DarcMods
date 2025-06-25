@@ -1,14 +1,54 @@
-GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et" {
- coords 10.387 1 94.908
+GenericEntity : "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et" {
+ coords 6.814 1 115.156
+ angleY 32.729
 }
-$grp GenericEntity : "{3F5EE4D69DBC478C}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_short_plastic.et" {
+$grp StaticModelEntity : "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et" {
  {
-  coords 7.037 1 95.973
+  coords 12.579 0 120.902
+  angleY 28.496
  }
  {
-  coords 10.177 1 96.021
+  coords 8.218 0 123.028
+  angleY -31.966
+ }
+ {
+  coords 11.18 0 107.827
+  angleY 9.997
+ }
+ {
+  coords 5.713 0.227 120.863
+  angleY 14.494
+ }
+ {
+  coords 14.977 -0.169 120.709
+  angleY -16.455
+ }
+ {
+  coords 7.873 0 108.275
+  angleY -48.948
+ }
+ {
+  coords 4.596 0 108.679
+  angleY 54.582
  }
 }
-Turret : "{723870DBB19D30B0}Prefabs/Weapons/Tripods/Tripod_6T5_PKM.et" {
- coords 8.656 1 95.797
+$grp StaticModelEntity : "{93E06E731212BD96}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Triple.et" {
+ {
+  coords 14.151 0 114.891
+  angleY -32.743
+ }
+ {
+  coords 5.131 0 116.374
+  angleY 26.719
+ }
+}
+$grp GenericEntity : "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et" {
+ {
+  coords 9.49 1 117.729
+  angleY 86.019
+ }
+ {
+  coords 8.268 1 110.003
+  angleY 93.268
+ }
 }
