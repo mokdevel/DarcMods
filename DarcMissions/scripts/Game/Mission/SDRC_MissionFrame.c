@@ -101,11 +101,17 @@ class SDRC_MissionFrame
 		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;		//sec to ms
 		
 		#ifndef SDRC_RELEASE
-/*			SDRC_MapMarkerHelper.CreateMapMarker("1000 0 3000", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP, "DMC_B", "Here is a text");
-			SDRC_MapMarkerHelper.CreateMapMarker("1200 0 3500", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP, "DMC_B", "Darc_SK");
-			SDRC_MapMarkerHelper.CreateMapMarker("1500 0 3200", DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, "DMC_B", "This is a description for a mission");
-			SDRC_MapMarkerHelper.CreateMapMarker("1600 0 3200", DC_EMissionIcon.GM_MISSION_RADIOACTIVE_MAP, "DMC_B", "This is a description for a mission");
-			SDRC_MapMarkerHelper.CreateMapMarker("1700 0 3200", DC_EMissionIcon.GM_MISSION_X_MAP, "DMC_B", "This is a description for a mission");
+/*		
+			SDRC_MapMarkerHelper.CreateMapMarker("1000 0 1000", DC_EMissionIcon.GM_MISSION_X_MAP, "DMC_B", "Here is a text");
+			SDRC_MapMarkerHelper.CreateMapMarker("1100 0 1000", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP, "DMC_B", "Darc_SK");
+			SDRC_MapMarkerHelper.CreateMapMarker("1200 0 1000", DC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, "DMC_B", "Darc_SK");
+			SDRC_MapMarkerHelper.CreateMapMarker("1300 0 1000", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP, "DMC_B", "Darc_SK");
+			SDRC_MapMarkerHelper.CreateMapMarker("1400 0 1000", DC_EMissionIcon.GM_MISSION_CONVOY_MAP, "DMC_B", "This is a description for a mission");
+			SDRC_MapMarkerHelper.CreateMapMarker("1500 0 1000", DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, "DMC_B", "This is a description for a mission");
+			SDRC_MapMarkerHelper.CreateMapMarker("1600 0 1000", DC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "This is a description for a mission");
+			SDRC_MapMarkerHelper.CreateMapMarker("1700 0 1000", DC_EMissionIcon.GM_MISSION_PATROL_MAP, "DMC_B", "This is a description for a mission");
+			SDRC_MapMarkerHelper.CreateMapMarker("1800 0 1000", DC_EMissionIcon.GM_MISSION_RADIOACTIVE_MAP, "DMC_B", "This is a description for a mission");
+			SDRC_MapMarkerHelper.CreateMapMarker("1900 0 1000", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP, "DMC_B", "This is a description for a mission");
 */				
 /*			for (int i = 0;i < 250; i++)
 			{
@@ -182,6 +188,12 @@ class SDRC_MissionFrame
 		bool staticMissionSpawned = false;
 		int staticMissionsCount = CountStaticMissions();
 		
+		//Check if maximum amount of static missions has been spawned, no more are to be spawned		
+		if (staticMissionsCount >= m_iMissionCountStaticMax)
+		{
+			m_iStaticTryCount = m_iStaticTryLimit;
+		}
+		
 		//Check if static missions have been spawned
 		if (staticMissionsCount < m_iMissionCountStaticMax && m_iStaticTryCount < m_iStaticTryLimit)
 		{
@@ -217,6 +229,8 @@ class SDRC_MissionFrame
 				if (m_missionsRequested.IsEmpty())
 				{
 					missionType = m_Config.missionDynamic.missionTypeArray.GetRandomElement();
+					//If regular mission is to be spawned, static missions have already been handled.
+					m_iStaticTryCount = m_iStaticTryLimit;
 				}
 				else	//Spawn a GM requested mission
 				{
@@ -224,7 +238,7 @@ class SDRC_MissionFrame
 				}
 				
 				//Do the spawning
-				tmpDC_Mission = MissionCreate(missionType);
+				tmpDC_Mission = MissionCreate(missionType);				
 				if (tmpDC_Mission)
 				{
 					tmpDC_Mission.SetActiveTime(m_Config.missionDynamic.activeTime);
@@ -237,7 +251,7 @@ class SDRC_MissionFrame
 				}
 			}
 		}
-
+		
 		//Mission is ready to be run. Finalize the last details
 		if (tmpDC_Mission)
 		{
@@ -361,6 +375,8 @@ class SDRC_MissionFrame
 			missionType = requestComp.GetMissionType();
 			pos = missionEntity.GetOrigin();
 			SDRC_SpawnHelper.DespawnItem(missionEntity);
+
+			CleanMissionsRequestedArray();						
 		}
 		
 		SDRC_Log.Add("[SDRC_MissionFrame:MissionCreate] Starting mission of type: " + SCR_Enum.GetEnumName(DC_EMissionType, missionType), LogLevel.DEBUG);
