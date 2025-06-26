@@ -19,7 +19,7 @@ Internal things:
   * Moved ``missionDelayBetween`` in to the mission specific structures and renamed to ``delayBetween``. You can define the delay separately for dynamic and static.
   * Added ``showStaticMissionMarker`` that shows/hides static mission markers. 
 * dc_coreConfig.json parameter changes
-  * emptyPos.objectFilter : Less strict filtering for Anizay map
+  * ``emptyPos.objectFilter`` : Less strict filtering for Anizay map
 * dc_missionConfig_*.json
   * Added ``winCondition``, ``winMessage``, ``loseMessage`` as placeholders. WIP.
 
