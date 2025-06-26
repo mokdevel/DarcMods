@@ -20,7 +20,7 @@ Internal things:
   * Added ``showStaticMissionMarker`` that shows/hides static mission markers. 
 * dc_coreConfig.json parameter changes
   * emptyPos.objectFilter : Less strict filtering for Anizay map
-* dc_missionConfig_******.json
+* dc_missionConfig_<mission>.json
   * Added ``winCondition``, ``winMessage``, ``loseMessage`` as placeholders. WIP.
 
 ## 20250607
