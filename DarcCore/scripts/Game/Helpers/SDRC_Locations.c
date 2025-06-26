@@ -151,7 +151,7 @@ sealed class SDRC_Locations
 		
 		if (nameDefault == "any")
 		{	
-			array<int>distancesToTry = {10, 20, 30, 50, 100, 150, 300, 400};
+			array<int>distancesToTry = {10, 20, 30, 50, 100, 150, 300, 400, 500, 600};
 			foreach (int distance : distancesToTry)
 			{
 				name = SDRC_Locations.GetNameCloseToPos(pos, distance);
