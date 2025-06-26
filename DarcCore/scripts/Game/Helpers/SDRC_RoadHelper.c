@@ -8,9 +8,11 @@ Includes various functions for road handling.
 //------------------------------------------------------------------------------------------------
 class SDRC_RoadPos : Managed
 {
-	vector posOnRoad;
-	float distanceToRoad;
+	vector posOnRoad = "0 0 0";		//The vector position on road
+	int posOnRoadIndex = -1;		//The index of found position on the list of points on the road.
+	float distanceToRoad = -1;
 	BaseRoad road;
+	ref array<vector> roadPts = {};
 }
 
 //------------------------------------------------------------------------------------------------
@@ -98,7 +100,7 @@ sealed class SDRC_RoadHelper
 	static vector FindClosestRoadposToPos(out SDRC_RoadPos roadPos, vector pos, float maxDistanceToRoad = 10000)
 	{
 		BaseRoad road = null;
-		array<vector> roadPts = {};
+//		array<vector> roadPts = {};
 			
 		RoadNetworkManager rnManager = GetRoadNetworkManager();
 		
@@ -114,17 +116,18 @@ sealed class SDRC_RoadHelper
 			rnManager.GetClosestRoad(pos, roadPos.road, roadPos.distanceToRoad);			
 			if (roadPos.distanceToRoad < maxDistanceToRoad)
 			{
-				FindRoadPts(roadPts, roadPos.road);
+				FindRoadPts(roadPos.roadPts, roadPos.road);
 				int i = 0;
 				
 //				pos[1] = 0;		//Distance calculation done on plane at 0 height
-				foreach (vector pt: roadPts)
+				foreach (vector pt: roadPos.roadPts)
 				{	
 ///					pt[1] = 0;	//Distance calculation done on plane at 0 height
 					if (SDRC_Misc.IsPosNearPos(pos, pt, (roadPos.distanceToRoad + 10)))
 					{
 						pt[1] = GetGame().GetWorld().GetSurfaceY(pt[0], pt[2]);
 						roadPos.posOnRoad = pt;
+						roadPos.posOnRoadIndex = i;
 						SDRC_Log.Add("[SDRC_RoadHelper:FindClosestRoadposToPos] Road point found. Iterations: " + i, LogLevel.SPAM);
 						return pt;
 					}
