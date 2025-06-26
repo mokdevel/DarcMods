@@ -10,8 +10,7 @@ modded class SCR_BaseGameMode
 	    super.OnGameStart();
 		
 		if (SDRC_Conf.SDRC_ENABLE_DARCSPAWNER)
-		{
-			
+		{			
 			SDRC_Log.Add("[SDRC_Spawner] Starting..", LogLevel.NORMAL);		
 			SDRC_Log.Add("[SDRC_Spawner_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
 			

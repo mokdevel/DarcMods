@@ -20,7 +20,7 @@ class DC_Mmarker : Managed
 		
 	void LifecycleEnd()
 	{
-		SDRC_Log.Add("[SCR_DC:DC_Mmarker:LifecycleEnd] Deleting marker: " + id, LogLevel.DEBUG);        							
+		SDRC_Log.Add("[SCR_DC:DC_Mmarker:LifecycleEnd] Deleting marker: " + id, LogLevel.SPAM);        							
 		SDRC_MapMarkerHelper.DeleteMarker(id, true);
 	}
 }
@@ -93,7 +93,7 @@ sealed class SDRC_MapMarkerHelper
 				}	
 			}
 			
-			SDRC_Log.Add("[SDRC_MapMarkerHelper:DeleteMarker] " + m_markers.Count() + " markers. Deleted " + (startCount - m_markers.Count()) + " markers", LogLevel.DEBUG);        		
+			SDRC_Log.Add("[SDRC_MapMarkerHelper:DeleteMarker] " + m_markers.Count() + " markers. Deleted " + (startCount - m_markers.Count()) + " markers", LogLevel.SPAM);        		
 		}
 	}
 

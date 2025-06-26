@@ -6,15 +6,15 @@
 	//Release options
 	#ifdef SDRC_RELEASE
 		private const string SDRC_MISSION_PROFILE_DIR = "default";
-		private const int SDRC_MISSION_COUNT = 10;										//Default amount of dynamic missions to run
-		private const float SDRC_MISSION_COUNT_MUL = 1.5;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 10;										//Default amount of dynamic missions to run
+		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 1.5;
 		private const int SDRC_MISSION_COUNT_STATIC = 6;								//Default amount of static missions to run
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 1;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 30;
 		private const int SDRC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 4*60;			//Minimum delay between dynamic missions. 
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 5;				//Minimum delay between static missions. 
-		private const int SDRC_MISSION_ACTIVE_TIME = 15*60;								//Time to keep the mission active (seconds)
+		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 15*60;						//Time to keep the mission active (seconds)
 		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 60*60;						//Static missions are to be kept alive longer
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 200;							//Mission is to be removed if no players close to the position after the mission active time has passed.
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 180;						//Mission is kept active this time once all AIs are dead.
@@ -28,16 +28,16 @@
 	//Development time options
 	#ifndef SDRC_RELEASE	
 		private const string SDRC_MISSION_PROFILE_DIR = "dummy";
-		private const int SDRC_MISSION_COUNT = 2;//8;
-		private const float SDRC_MISSION_COUNT_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 3;//30;//10;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//2;//8;
+		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
+		private const int SDRC_MISSION_COUNT_STATIC = 1;//3;//30;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSION_START_DELAY = 10;					
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 1*20;
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 1;
-		private const int SDRC_MISSION_ACTIVE_TIME = 3*60;				
-		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = SDRC_MISSION_ACTIVE_TIME * 10;	
+		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 3*60;				
+		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 30;//SDRC_MISSION_ACTIVE_TIME_DYNAMIC * 10;	
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 200;		
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 45;
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME = 20;
@@ -126,9 +126,9 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.recreateConfigs = SDRC_MISSION_RECREATE_CONFIGS;
 		conf.missionStartDelay = SDRC_MISSION_START_DELAY;
 		
-		conf.missionDynamic.count = SDRC_MISSION_COUNT;
-		conf.missionDynamic.countMul = SDRC_MISSION_COUNT_MUL;
-		conf.missionDynamic.activeTime = SDRC_MISSION_ACTIVE_TIME;
+		conf.missionDynamic.count = SDRC_MISSION_COUNT_DYNAMIC;
+		conf.missionDynamic.countMul = SDRC_MISSION_COUNT_DYNAMIC_MUL;
+		conf.missionDynamic.activeTime = SDRC_MISSION_ACTIVE_TIME_DYNAMIC;
 		conf.missionDynamic.delayBetween = SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC;
 		
 		conf.missionStatic.count = SDRC_MISSION_COUNT_STATIC;
