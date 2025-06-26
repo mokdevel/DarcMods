@@ -10,6 +10,8 @@ Mission position is either defined or randomized. See [General parameters - pos]
 
 In the case position is not usable, another try is made. Currently searching is limited to five tries before deciding that no position has been found. In this case, mission will not spawn.
 
+GM requested missions generally follow the same rule. Depends slightly on the mission requested.
+
 ## Dynamic vs Static mission
 In the configuration you can define missions either as a dynamic mission (```missionDynamic```) or static mission (```missionStatic```). The missions are the same but spawning is different. 
 
