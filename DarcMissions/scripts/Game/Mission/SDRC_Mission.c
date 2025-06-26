@@ -24,6 +24,12 @@ enum DC_EMissionState
 	FAILED		//Mission startup has failed, delete mission
 };
 
+enum DC_EMissionWinCondition
+{
+	NONE,
+	KILL_ALL_AI	
+};
+
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionConfig : Managed
 {
@@ -32,7 +38,10 @@ class SDRC_MissionConfig : Managed
 	string author = "darc";
 	int missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;	//How often the mission is run
 	bool showMarker = true;
-	bool showHint = true;	
+	bool showHint = true;
+	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.KILL_ALL_AI;
+	string winMessage = "";
+	string loseMessage = "";
 }
 
 //------------------------------------------------------------------------------------------------
