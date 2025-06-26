@@ -4,7 +4,7 @@ ImageSetClass {
   ImageSetTextureClass {
    screenSize FHD
    size 172 452
-   path "{84F3106DED438339}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-100_atlas.edds"
+   path "{84F3106DED43833A}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-100_atlas.edds"
   }
  }
  Images {
