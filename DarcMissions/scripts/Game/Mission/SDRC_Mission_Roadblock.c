@@ -51,27 +51,42 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 			pos = SDRC_Misc.RandomizePos(pos, 150);
 		}
 			
-		//Find nearest road
+		//Find nearest road		
 		SDRC_RoadPos roadPos = new SDRC_RoadPos();				
 		vector posOnRoad = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
-		array<vector> roadPts;
-		SDRC_RoadHelper.FindRoadPts(roadPts, roadPos.road);
+//		array<vector> roadPts;
+//		SDRC_RoadHelper.FindRoadPts(roadPts, roadPos.road);
 		
-		if (roadPts.IsEmpty())
+		if (roadPos.roadPts.Count() < 2)	//We need two points for a road. Having only one point would be a bug on the map.
 		{
 			pos = "0 0 0";
 			SDRC_Log.Add("[SDRC_Mission_Roadblock] No roadpoints found.", LogLevel.ERROR);
 		}
 		else
 		{
-			SDRC_Log.Add("[SDRC_Mission_Roadblock] Roadpoints found: " + roadPts.Count(), LogLevel.SPAM);
+			SDRC_Log.Add("[SDRC_Mission_Roadblock] Roadpoints found: " + roadPos.roadPts.Count(), LogLevel.DEBUG);
 			
-			int roadPointIndex = Math.RandomInt(0, roadPts.Count() - 1);
-			pos = roadPts[roadPointIndex];
-			posOnRoad = roadPts[roadPointIndex + 1];
+			int roadPointIndex = 0;
+			
+			if (!IsRequested())
+			{
+				roadPointIndex = Math.RandomInt(0, roadPos.roadPts.Count() - 1);
+			}
+			else			
+			{
+				roadPointIndex = roadPos.posOnRoadIndex;
+				//If the closest point is the last point, go one point backwards.
+				if (roadPointIndex == roadPos.roadPts.Count())
+				{
+					roadPointIndex--;
+				}
+			}
 
-			//SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 192, 192, 192), 2, "NONE", 20);			//Gray
-			//SDRC_DebugHelper.AddDebugPos(posOnRoad, ARGB(40, 128, 128, 128), 2, "NONE", 20);	//Gray
+			pos = roadPos.roadPts[roadPointIndex];
+			posOnRoad = roadPos.roadPts[roadPointIndex + 1];
+			
+			SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 192, 192, 192), 2, "NONE", 20);			//Gray
+			SDRC_DebugHelper.AddDebugPos(posOnRoad, ARGB(40, 128, 128, 128), 2, "NONE", 20);	//Gray
 							
 			//Find the road direction. Roadblocks shall be aligned to road. 
 			vector direction = vector.Direction(pos, posOnRoad);
