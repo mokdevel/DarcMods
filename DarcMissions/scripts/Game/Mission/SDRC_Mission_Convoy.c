@@ -52,6 +52,29 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		//Set defaults		
 		m_vPosDestination = m_DC_Convoy.posDestination;		//Destination from the defined SDRC_Convoy 
 
+		//If not a GM requested mission, use the default one.
+		if (!IsRequested())
+		{
+			pos = m_DC_Convoy.pos;
+		}
+
+		//Find a location for the mission
+		if (pos == "0 0 0")
+		{
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.locationTypes);
+		}
+
+		//Find nearest road
+		SDRC_RoadPos roadPosStart = new SDRC_RoadPos();				
+		pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPosStart, pos);
+		
+		//Find the road position for the mission
+		if (pos == "0 0 0")
+		{
+			SDRC_Log.Add("[SDRC_Mission_Convoy] No start road found.", LogLevel.ERROR);
+		}
+		
+/*				
 		if (!IsRequested())
 		{
 			pos = m_DC_Convoy.pos;
@@ -75,7 +98,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 				}
 			}
 		}
-		
+*/		
 		//Find a location for the destination
 		if (m_vPosDestination == "0 0 0" && pos != "0 0 0")
 		{
@@ -163,7 +186,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 								
 					if (!IsActive())
 					{
-						SDRC_Log.Add("[SDRC_Mission_Convoy:MissionRun] Mission over.", LogLevel.NORMAL);
 						SetState(DC_EMissionState.END);
 					}
 					break;
@@ -177,8 +199,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	override void MissionEnd()
 	{			
 		super.MissionEnd();	
-		
-		SDRC_Log.Add("[SDRC_Mission_Convoy:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);				
 	}
 	
 	//------------------------------------------------------------------------------------------------

@@ -39,6 +39,7 @@ class SDRC_MissionConfig : Managed
 	int missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;	//How often the mission is run
 	bool showMarker = true;
 	bool showHint = true;
+	int xp = 0;
 	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.KILL_ALL_AI;
 	string winMessage = "";
 	string loseMessage = "";
@@ -175,7 +176,9 @@ class SDRC_Mission
 		}		
 
 		//Remove marker from map
-		SDRC_MapMarkerHelper.DeleteMarker(GetId());				
+		SDRC_MapMarkerHelper.DeleteMarker(GetId());
+		
+		SDRC_Log.Add("[SDRC_Mission:MissionEnd] Mission " + GetId() + " : " + GetTitle() + " cleared for deletion.", LogLevel.NORMAL);		
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -329,6 +332,7 @@ class SDRC_Mission
 		}
 		
 		//Well, we should not be active anymore
+		SDRC_Log.Add("[SDRC_Mission:IsActive] Mission " + GetId() + " : " + GetTitle() + " has ended.", LogLevel.NORMAL);				
 		return false;
 	}	
 	
@@ -347,7 +351,7 @@ class SDRC_Mission
 	void SetFaction(string faction)
 	{
 		m_sFaction = faction;
-		SDRC_Log.Add("[SDRC_Mission:SetFaction] " + faction, LogLevel.DEBUG);		
+		SDRC_Log.Add("[SDRC_Mission:SetFaction] " + faction, LogLevel.SPAM);		
 	}
 			
 	//------------------------------------------------------------------------------------------------

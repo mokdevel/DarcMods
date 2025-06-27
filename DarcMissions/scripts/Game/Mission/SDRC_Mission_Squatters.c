@@ -135,7 +135,6 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		{			
 			if (!IsActive())
 			{
-				SDRC_Log.Add("[SDRC_Mission_Squatter:MissionRun] Mission over.", LogLevel.NORMAL);
 				SetState(DC_EMissionState.END);
 			}
 		}
@@ -147,8 +146,6 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	override void MissionEnd()
 	{			
 		super.MissionEnd();	
-		
-		SDRC_Log.Add("[SDRC_Mission_Squatter:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);
 	}
 	
 	//------------------------------------------------------------------------------------------------

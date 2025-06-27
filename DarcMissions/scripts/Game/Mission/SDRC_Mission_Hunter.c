@@ -125,8 +125,6 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	override void MissionEnd()
 	{
 		super.MissionEnd();
-		
-		SDRC_Log.Add("[SDRC_Mission_Hunter:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);
 	}	
 			
 	//------------------------------------------------------------------------------------------------

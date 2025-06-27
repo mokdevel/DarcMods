@@ -64,7 +64,6 @@ class SDRC_Mission_Template : SDRC_Mission
 			//For example:
 			if (!IsActive())
 			{
-				SDRC_Log.Add("[SDRC_Mission_Template:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
 				SetState(DC_EMissionState.END);
 			}
 */
@@ -79,8 +78,6 @@ class SDRC_Mission_Template : SDRC_Mission
 		super.MissionEnd();	
 		
 		//The rest of your clean up code.
-		
-		SDRC_Log.Add("[SDRC_Mission_Template:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);
 	}
 	
 	//------------------------------------------------------------------------------------------------

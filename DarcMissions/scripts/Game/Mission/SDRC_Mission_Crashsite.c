@@ -237,7 +237,6 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 				case DC_EMissionCrashSiteState.RUN:		
 					if (!IsActive())
 					{
-						SDRC_Log.Add("[SDRC_Mission_Crashsite:MissionRun] Mission over.", LogLevel.NORMAL);
 						SetState(DC_EMissionState.END);
 					}
 					break;
@@ -253,8 +252,6 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	override void MissionEnd()
 	{			
 		super.MissionEnd();	
-			
-		SDRC_Log.Add("[SDRC_Mission_Crashsite:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);
 	}
 	
 	//------------------------------------------------------------------------------------------------

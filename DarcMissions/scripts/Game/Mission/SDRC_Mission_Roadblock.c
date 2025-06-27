@@ -41,21 +41,24 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		}
 		m_DC_Roadblock = m_Config.roadblocks[idx];
 		
+		//If not a GM requested mission, use the default one.
+		if (!IsRequested())
+		{
+			pos = m_DC_Roadblock.pos;
+		}
+		
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
-			pos = m_DC_Roadblock.pos;			
 			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Roadblock.locationTypes, m_DC_Roadblock.emptySize);
 			
 			//Add randomization so that it's not always in the same place
 			pos = SDRC_Misc.RandomizePos(pos, 150);
 		}
 			
-		//Find nearest road		
+		//Find nearest road
 		SDRC_RoadPos roadPos = new SDRC_RoadPos();				
 		vector posOnRoad = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
-//		array<vector> roadPts;
-//		SDRC_RoadHelper.FindRoadPts(roadPts, roadPos.road);
 		
 		if (roadPos.roadPts.Count() < 2)	//We need two points for a road. Having only one point would be a bug on the map.
 		{
@@ -64,24 +67,26 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		}
 		else
 		{
-			SDRC_Log.Add("[SDRC_Mission_Roadblock] Roadpoints found: " + roadPos.roadPts.Count(), LogLevel.DEBUG);
-			
 			int roadPointIndex = 0;
 			
 			if (!IsRequested())
 			{
-				roadPointIndex = Math.RandomInt(0, roadPos.roadPts.Count() - 1);
+				roadPointIndex = Math.RandomInt(0, roadPos.roadPts.Count() - 2);
 			}
 			else			
 			{
 				roadPointIndex = roadPos.posOnRoadIndex;
-				//If the closest point is the last point, go one point backwards.
-				if (roadPointIndex == roadPos.roadPts.Count())
-				{
-					roadPointIndex--;
-				}
 			}
 
+			//If the closest point is the last point, go one point backwards.
+			if (roadPointIndex >= roadPos.roadPts.Count() - 1)
+			{
+				roadPointIndex--;
+				SDRC_Log.Add("[SDRC_Mission_Roadblock] Roadpoint index reduced", LogLevel.SPAM);
+			}
+			
+			//SDRC_Log.Add("[SDRC_Mission_Roadblock] Roadpoints found: " + roadPos.roadPts.Count() + " idx: " + roadPointIndex, LogLevel.SPAM);
+			
 			pos = roadPos.roadPts[roadPointIndex];
 			posOnRoad = roadPos.roadPts[roadPointIndex + 1];
 			
@@ -134,7 +139,6 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		{			
 			if (!IsActive())
 			{
-				SDRC_Log.Add("[SDRC_Mission_Roadblock:MissionRun] All groups killed. Mission has ended.", LogLevel.NORMAL);
 				SetState(DC_EMissionState.END);
 			}
 		}
@@ -146,8 +150,6 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	override void MissionEnd()
 	{			
 		super.MissionEnd();	
-		
-		SDRC_Log.Add("[SDRC_Mission_Roadblock:MissionEnd] Mission cleared for deletion.", LogLevel.NORMAL);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -175,7 +177,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 	string info;
 	
 	//Variables here
-	bool disableArsenal;									//Disable arsenal for vehicles so that no other items are found	
+	bool disableArsenal;								//Disable arsenal for vehicles so that no other items are found	
 	ref array<ref int> roadblockList = {};				//The indexes of roadblocks.
 	ref array<ref SDRC_Occupation> roadblocks = {};		//List of roadblocks - uses the same structure as for occupations	
 }
