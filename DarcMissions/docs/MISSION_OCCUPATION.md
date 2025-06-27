@@ -3,6 +3,8 @@ Example: [dc_missionConfig_Occupation.json](https://github.com/mokdevel/DarcMods
 
 AI patrol is spawned to a location like city. They will patrol the location and may have loot with them.
 
+Note on GM requested mission: The location is where the mission was dropped.
+
 ```
 int version : See Common parameters
 string author : See Common parameters

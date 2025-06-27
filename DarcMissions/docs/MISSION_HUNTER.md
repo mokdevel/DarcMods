@@ -3,6 +3,8 @@ Example: [dc_missionConfig_Hunter.json](https://github.com/mokdevel/DarcMods/blo
 
 AIs are hunting you and following you. They will receive regularly information about where the closest player. The location is known to them with an error of ```rndDistanceToPlayer```. You can outrun them by going further than ```maxDistanceToPlayer```.
 
+Note on GM requested mission: The location is where the mission was dropped.
+
 ```
 int version : See Common parameters
 string author : See Common parameters

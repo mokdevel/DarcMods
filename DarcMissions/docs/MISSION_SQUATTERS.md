@@ -9,6 +9,8 @@ The mission can be configured in two different ways:
 1) Find a building in a location by defining both ```locationTypes``` and ```buildingNames```. First the location is chosen and then the building is searched in it within ```buildingRadius```.
 2) Find a certain building type from the map by defining only ```buildingNames```. Leave ```locationTypes``` empty. ```buildingRadius``` is ignored. NOTE: The mod DarcCore will cache the buildings found from the map for faster searching. The list ```buildingNames``` is used as an additional filter on the cached results.
 
+Note on GM requested mission: The building chosen will as close as possible to the location where mission was dropped. In case there are multiple houses beside each other, the mission location might not be exactly what you wanted.
+
 ```
 int version : See Common parameters
 string author : See Common parameters

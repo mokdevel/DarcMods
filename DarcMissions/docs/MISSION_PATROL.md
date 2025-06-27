@@ -3,6 +3,8 @@ Example: [dc_missionConfig_Patrol.json](https://github.com/mokdevel/DarcMods/blo
 
 AI patrol is spawned to move around the map. The may have a destination where they're moving to or just randomly roam the map.
 
+Note on GM requested mission: The location is where the mission was dropped.
+
 ```
 int version : See Common parameters
 string author : See Common parameters
