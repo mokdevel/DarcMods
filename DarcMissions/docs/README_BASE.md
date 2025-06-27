@@ -35,7 +35,7 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - This should be an issues fixed: AI spawns inside rocks sometimes. Might affect just certain types of rocks. 
 
 # Parameters
-All configurations are done via .json files. 
+All configurations are done via .json files. The information is on one line due to the saving functionality in AR. See [FAQ](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/FAQ.md#q-the-oneline-jsons-are-hard-to-readedit) for more.
 
 The mission frame has the main definitions on mission spawn times, counts, etc. See:
 * [Mission Frame](./docs/MISSIONFRAME.md)
@@ -52,6 +52,7 @@ Mission specific parameters for each mission type:
 * [Crashsite](./docs/MISSION_CRASHSITE.md)
 * [Occupation](./docs/MISSION_OCCUPATION.md)
 * [Squatters](./docs/MISSION_SQUATTERS.md)
+* [Roadblock](./docs/MISSION_ROADBLOCK.md)
 
 Other parameter details available:
 * [Lists](./docs/P_LISTS.md) for automatic loot and enemy lists
