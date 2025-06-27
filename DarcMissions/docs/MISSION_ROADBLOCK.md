@@ -3,6 +3,8 @@ Example: [dc_missionConfig_Roadblock.json](https://github.com/mokdevel/DarcMods/
 
 AIs have setup roadblocks on roads. They will patrol the location and may have loot with them.
 
+Note on GM requested mission: The location for the mission will be searched from the closest road. It will not be exactly where you put the mission.
+
 ```
 int version : See Common parameters
 string author : See Common parameters
