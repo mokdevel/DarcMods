@@ -2,7 +2,10 @@
 A mission frame work for Arma Reforger. There are various missions premade and their behaviour can be modified by editing the configuration jsons.
 
 ## Installation
-Just activate the mod (and dependencies) and you're good to go. For support:
+Just activate the mod (and dependencies) and you're good to go.
+
+## Support
+Please check the FAQ and you can find me on Discord
 * [FAQ](docs/FAQ.md)
 * [Discord](https://discord.com/channels/105462288051380224/1367778477134057523)
 
@@ -16,6 +19,7 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - Crashsite : A helicopter carrying loot is damaged and is crashing. Survivors will be protecting the wreck while waiting to be rescued.
 - Occupation : A location is guarded by AIs with loot available.
 - Squatters : A building is guarded by AIs with loot available.
+- Roadblock : AI have setup a road block on the road.
 
 ## Thanks
 - The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.

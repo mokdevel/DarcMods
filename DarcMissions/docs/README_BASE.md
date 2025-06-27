@@ -4,6 +4,11 @@ A mission frame work for Arma Reforger. There are various missions premade and t
 ## Installation
 Just activate the mod (and dependencies) and you're good to go.
 
+## Support
+Please check the FAQ and you can find me on Discord
+* [FAQ](docs/FAQ.md)
+* [Discord](https://discord.com/channels/105462288051380224/1367778477134057523)
+
 ## Vision
 I wanted to create a simple drop-in mission package where there is minimal configuration needed to get it running. You can take the mod, play it in SP, MP or let it run on a dedicated server. Everything should be randomized so you should never know what is happening in the world. The behaviour of the mod should be close to vanilla and by doing that, you could be running this on top of your other game modes. I've been using this with [Escapists](https://reforger.armaplatform.com/workshop/5F16D7E4A1CBE075-Escapists) just to get a few additional surprises.
 
@@ -14,6 +19,7 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - Crashsite : A helicopter carrying loot is damaged and is crashing. Survivors will be protecting the wreck while waiting to be rescued.
 - Occupation : A location is guarded by AIs with loot available.
 - Squatters : A building is guarded by AIs with loot available.
+- Roadblock : AI have setup a road block on the road.
 
 ## Thanks
 - The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
