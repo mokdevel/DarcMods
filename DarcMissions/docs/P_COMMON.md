@@ -7,6 +7,7 @@ string author : See General parameters
 int missionCycleTime : (seconds) The cycle time the mission states are run
 bool showMarker : Show mission marker on map. False will disable markers.
 bool showHint : Show players a hint with details about the missions. False will disable hints.
+int xp : Experience given once mission has succeeded. (WIP)
 DC_EMissionWinCondition winCondition : The condition to reach for a win. (WIP)
 string winMessage : Message to show when winCondition has been reached. (WIP)
 string loseMessage : Message to show if mission failed (WIP)
