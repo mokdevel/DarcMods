@@ -7,9 +7,10 @@ Some changes in the jsons. The safest way is to backup your current ones if you 
 
 Main features: 
 * New mission: Roadblock
+* Added FAQ to documentation
 
 Fixes:
-* ..empty..
+* DarcDeathMarker was not possible to run without DarcMissions. 
 
 Internal things:
 * New icons with easier icon creation.
