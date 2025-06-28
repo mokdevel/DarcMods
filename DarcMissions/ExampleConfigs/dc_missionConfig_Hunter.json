@@ -4,6 +4,10 @@
 	"missionCycleTime": 90,
 	"showMarker": false,
 	"showHint": true,
+	"xp": 0,
+	"winCondition": 1,
+	"winMessage": "",
+	"loseMessage": "",
 	"title": "Hunters",
 	"info": "They are coming for you...",
 	"groupCount": [

@@ -4,6 +4,10 @@
 	"missionCycleTime": 30,
 	"showMarker": true,
 	"showHint": true,
+	"xp": 0,
+	"winCondition": 1,
+	"winMessage": "",
+	"loseMessage": "",
 	"distanceToMission": 100,
 	"distanceToPlayer": 500,
 	"flyHeight": [

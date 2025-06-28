@@ -4,6 +4,10 @@
 	"missionCycleTime": 90,
 	"showMarker": false,
 	"showHint": true,
+	"xp": 0,
+	"winCondition": 1,
+	"winMessage": "",
+	"loseMessage": "",
 	"patrolingTime": 0,
 	"distanceToPlayer": 500,
 	"patrolList": [
