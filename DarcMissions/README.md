@@ -89,6 +89,10 @@ Dependency specific files
 # Version history
 
 ## Next release (unreleased)
+
+..empty..
+
+## 20250627
 Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
 
 Main features: 
