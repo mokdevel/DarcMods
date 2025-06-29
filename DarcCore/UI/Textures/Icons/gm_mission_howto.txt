@@ -19,3 +19,11 @@ Three icons are needed:
 - In Gimp
 -- Canvas Size 128x100
 -- Center
+
+# Other icons
+- Name: icon_IconName
+- Size: 54x110 with DPI 30
+- Color: Black
+- In Gimp
+-- Canvas Size 54x150 - center
+-- Canvas Size 54x110

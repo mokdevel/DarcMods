@@ -1,9 +1,9 @@
 ImageSetClass {
- RefSize 172 452
+ RefSize 172 564
  Textures {
   ImageSetTextureClass {
    screenSize FHD
-   size 172 452
+   size 172 564
    path "{84F3106DED43833A}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-100_atlas.edds"
   }
  }
@@ -71,6 +71,30 @@ ImageSetClass {
   ImageSetDefClass gm_mission_X_map {
    Name "gm_mission_X_map"
    Pos 58 338
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass icon_DeathMarker_map {
+   Name "icon_DeathMarker_map"
+   Pos 114 338
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass icon_DeathMarker_small_map {
+   Name "icon_DeathMarker_small_map"
+   Pos 2 450
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass icon_DeathMarker_small_red_map {
+   Name "icon_DeathMarker_small_red_map"
+   Pos 58 450
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass icon_Plus_small_map {
+   Name "icon_Plus_small_map"
+   Pos 114 450
    Size 54 110
    Flags 0
   }
