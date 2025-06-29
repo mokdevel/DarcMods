@@ -1,5 +1,9 @@
 # FAQ
 
+## General
+### Suddenly the mod stopped working/generates errors/behaves oddly/..
+It's possible there was an update and the json files are not compatible with the new version. Backup your current ones and then delete the old confs. New ones will be created at startup. 
+
 ## Configuration related
 ### Q: The oneline jsons are hard to read/edit
 The one line format comes from AR. If you use Notepad++, install JSON tools plugin and then press Ctrl+Alt+Shift+M. The file will look like: https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig.json . AR will read the better looking format just fine.
