@@ -11,6 +11,23 @@ array<string> exclude : Items with these words will be removed from the lootList
 array<ResourceName> items : The list of items. This is autofilled, but you can pre-define items if needed.
 ```
 
+## SDCR_Aka
+Also known as - other names used for example for factions. In some cases/mods the prefab name don't have the faction name included. The first item in the array is the *faction* and the second name is the name used for filtering.
+```
+array<string> names : The faction name and the filtering name in this order.
+```
+
+This is the case for example with RHS. RHS uses the faction name ``RHS_USAF`` but the naming convention with AI prefabs uses ``USAF_USMC``. With the definition, the groups and characters are searched with the 'also known as' name.
+```
+"akas": [
+		{
+			"names": [
+				"RHS_USAF",
+				"USAF_USMC"
+			]
+		}
+```
+
 # Loot lists
 Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json)
 
@@ -20,6 +37,7 @@ int version : See General parameters
 string author : See General parameters
 array<string> modList : The mods to search for loot. If left empty, all mods enabled will be searched.
 array<SDCR_List> lootLists : The defined lootlists
+array<ref SDRC_Aka> akas : The defined 'akas'
 ```
 ## Loot list names (id)
 Currently available names are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)

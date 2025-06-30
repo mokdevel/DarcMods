@@ -92,6 +92,14 @@ Dependency specific files
 
 ..empty..
 
+## 20250630
+Minor update to properly find enemies when using RHS. Update *should not* affect existing installs. If you're using RHS, delete your dc_enemyList.json and a new one will be created.
+
+Main features:
+* Support for RHS enemies
+  * RHS_USAF and RHS_AFRF supported
+  * RHS_ION is not supported
+  
 ## 20250627
 Some changes in the jsons. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
 
