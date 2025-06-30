@@ -30,6 +30,15 @@ sealed class SDRC_Locations
 	*/	
 	static void GetLocations(out array<IEntity> locationArray, array<EMapDescriptorType> locationTypeArray)
 	{
+		#ifndef SDRC_RELEASE
+			//If SCR_MapEntity does not exist, we most likely are playing in some debug map
+			SCR_MapEntity mapEnt = SCR_MapEntity.GetMapInstance();
+			if (!mapEnt)
+			{
+				return;
+			}
+		#endif
+		
 		private array<MapItem> m_tmpLocationArray = new array<MapItem>;
 		private array<MapItem> m_debugLocationArray = new array<MapItem>;
 
@@ -60,6 +69,15 @@ sealed class SDRC_Locations
 	//------------------------------------------------------------------------------------------------
 	static void GetLocations(out array<MapItem> locationArray, array<EMapDescriptorType> locationTypeArray)
 	{
+		#ifndef SDRC_RELEASE
+			//If SCR_MapEntity does not exist, we most likely are playing in some debug map
+			SCR_MapEntity mapEnt = SCR_MapEntity.GetMapInstance();
+			if (!mapEnt)
+			{
+				return;
+			}
+		#endif
+		
 		private array<MapItem> m_tmpLocationArray = new array<MapItem>;
 
 		foreach (EMapDescriptorType locationType: locationTypeArray)

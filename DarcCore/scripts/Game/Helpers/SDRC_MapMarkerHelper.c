@@ -32,7 +32,15 @@ sealed class SDRC_MapMarkerHelper
 	
 	static void CreateMapMarker(vector pos, int icon, string id, string title = "", int lifetime = 0, string markerTypeString = "DARC_MISSION")
 	{		
-		
+		#ifndef SDRC_RELEASE
+			//If SCR_MapEntity does not exist, we most likely are playing in some debug map
+			SCR_MapEntity mapEnt = SCR_MapEntity.GetMapInstance();
+			if (!mapEnt)
+			{
+				return;
+			}
+		#endif
+				
 		SCR_EMapMarkerType markerType = typename.StringToEnum(SCR_EMapMarkerType, markerTypeString);
 
 		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
