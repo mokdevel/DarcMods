@@ -16,7 +16,8 @@
 			"exclude": [
 				"_Base",
 				"_NotSpawned",
-				"_Remnants"
+				"_Remnants",
+				"_Random"
 			],
 			"items": []
 		},
@@ -26,12 +27,14 @@
 			"include": [
 				"Sniper",
 				"SharpShooter",
-				"USSR_Spetsnaz_SentryTeam"
+				"USSR_Spetsnaz_SentryTeam",
+				"VKPO_S_SentryTeam.et"
 			],
 			"exclude": [
 				"_Base",
 				"_NotSpawned",
-				"_Remnants"
+				"_Remnants",
+				"_Random"
 			],
 			"items": []
 		},
@@ -46,7 +49,8 @@
 			"exclude": [
 				"_Base",
 				"_NotSpawned",
-				"_Remnants"
+				"_Remnants",
+				"_Random"
 			],
 			"items": []
 		},
@@ -59,7 +63,8 @@
 			"exclude": [
 				"_Base",
 				"_NotSpawned",
-				"_Remnants"
+				"_Remnants",
+				"_Random"
 			],
 			"items": []
 		},
@@ -72,7 +77,8 @@
 			"exclude": [
 				"_Base",
 				"_NotSpawned",
-				"_Remnants"
+				"_Remnants",
+				"_Random"
 			],
 			"items": []
 		},
@@ -86,7 +92,8 @@
 			"exclude": [
 				"_Base",
 				"_NotSpawned",
-				"_Remnants"
+				"_Remnants",
+				"_Random"
 			],
 			"items": []
 		},
@@ -103,7 +110,8 @@
 			"exclude": [
 				"_Base",
 				"_NotSpawned",
-				"_Remnants"
+				"_Remnants",
+				"_Random"
 			],
 			"items": []
 		},
@@ -119,7 +127,8 @@
 			"exclude": [
 				"_Base",
 				"_NotSpawned",
-				"_Remnants"
+				"_Remnants",
+				"_Random"
 			],
 			"items": []
 		},
@@ -137,7 +146,8 @@
 			"exclude": [
 				"_Base",
 				"_NotSpawned",
-				"_Remnants"
+				"_Remnants",
+				"_Random"
 			],
 			"items": []
 		},
@@ -158,7 +168,8 @@
 				"_Randomized",
 				"Variant",
 				"Suppressed",
-				"Unarmed"
+				"Unarmed",
+				"_Random"
 			],
 			"items": []
 		},
@@ -179,7 +190,8 @@
 				"_Randomized",
 				"Variant",
 				"Suppressed",
-				"Unarmed"
+				"Unarmed",
+				"_Random"
 			],
 			"items": []
 		},
@@ -201,7 +213,8 @@
 				"_Randomized",
 				"Variant",
 				"Suppressed",
-				"Unarmed"
+				"Unarmed",
+				"_Random"
 			],
 			"items": []
 		},
@@ -221,7 +234,8 @@
 				"_Randomized",
 				"Variant",
 				"Suppressed",
-				"Unarmed"
+				"Unarmed",
+				"_Random"
 			],
 			"items": []
 		},
@@ -241,7 +255,8 @@
 				"_Randomized",
 				"Variant",
 				"Suppressed",
-				"Unarmed"
+				"Unarmed",
+				"_Random"
 			],
 			"items": []
 		},
@@ -260,7 +275,8 @@
 				"_Randomized",
 				"Variant",
 				"Suppressed",
-				"Unarmed"
+				"Unarmed",
+				"_Random"
 			],
 			"items": []
 		},
@@ -281,7 +297,8 @@
 				"_Randomized",
 				"Variant",
 				"Suppressed",
-				"Unarmed"
+				"Unarmed",
+				"_Random"
 			],
 			"items": []
 		},
@@ -299,7 +316,8 @@
 				"_Randomized",
 				"Variant",
 				"Suppressed",
-				"Unarmed"
+				"Unarmed",
+				"_Random"
 			],
 			"items": []
 		},
@@ -308,6 +326,7 @@
 			"modDir": "/Characters/Factions",
 			"include": [
 				"_SF",
+				"_SR",
 				"FIA_AC"
 			],
 			"exclude": [
@@ -318,9 +337,24 @@
 				"_Randomized",
 				"Variant",
 				"Suppressed",
-				"Unarmed"
+				"Unarmed",
+				"_Random"
 			],
 			"items": []
+		}
+	],
+	"akas": [
+		{
+			"names": [
+				"RHS_USAF",
+				"USAF_USMC"
+			]
+		},
+		{
+			"names": [
+				"RHS_AFRF",
+				"RHS_RF"
+			]
 		}
 	]
 }
