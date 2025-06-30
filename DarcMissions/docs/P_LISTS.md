@@ -20,12 +20,12 @@ array<string> names : The faction name and the filtering name in this order.
 This is the case for example with RHS. RHS uses the faction name ``RHS_USAF`` but the naming convention with AI prefabs uses ``USAF_USMC``. With the definition, the groups and characters are searched with the 'also known as' name.
 ```
 "akas": [
-		{
-			"names": [
-				"RHS_USAF",
-				"USAF_USMC"
-			]
-		}
+  {
+    "names": [
+      "RHS_USAF",
+      "USAF_USMC"
+    ]
+  }
 ```
 
 # Loot lists
