@@ -18,6 +18,12 @@ class SDRC_List : Managed
 }
 
 //------------------------------------------------------------------------------------------------
+class SDRC_Aka : Managed
+{
+	ref array<string> names = {};
+}
+
+//------------------------------------------------------------------------------------------------
 class SDRC_ListConfig : Managed
 {
 	//Default information
@@ -26,6 +32,7 @@ class SDRC_ListConfig : Managed
 	//Config specific
 	ref array<string> modList = {};
 	ref array<ref SDRC_List> lists = {};
+	ref array<ref SDRC_Aka> akas = {};
 	
 	void Populate()
 	{

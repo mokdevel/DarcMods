@@ -41,10 +41,23 @@ sealed class SDRC_EnemyHelper
 			
 			foreach(string faction : enemyFactions)
 			{
+				string factionToTest = faction;
+				
+				//Check if the requested faction has an aka
+				foreach(SDRC_Aka aka : m_Config.akas)
+				{
+					if (aka.names[0] == faction)
+					{
+						factionToTest = aka.names[1];
+						SDRC_Log.Add("[SDRC_EnemyHelper:SanityCheck] Testing " + faction + " as " + factionToTest, LogLevel.DEBUG);
+						break;
+					}
+				}
+				
 				//Collect factions found
 				foreach(ResourceName enemy : list.items)
 				{
-					if (enemy.Contains("_" + faction + "_"))
+					if (enemy.Contains("_" + factionToTest + "_"))
 					{
 //						count++;
 						factionsFound.Insert(faction);
@@ -55,7 +68,7 @@ sealed class SDRC_EnemyHelper
 				//Collect factions missing
 				foreach(ResourceName enemy : list.items)
 				{
-					if (!enemy.Contains("_" + faction + "_"))
+					if (!enemy.Contains("_" + factionToTest + "_"))
 					{
 						factionsMissing.Insert(faction);
 						break;
@@ -133,7 +146,18 @@ sealed class SDRC_EnemyHelper
 		
 		//Select the enemy faction from a list
 		faction = SelectEnemyFaction(faction);
-		
+
+		//Check if the requested faction has an aka
+		foreach(SDRC_Aka aka : m_Config.akas)
+		{
+			if (aka.names[0] == faction)
+			{
+				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemy] Using " + aka.names[1] + " for " + faction, LogLevel.DEBUG);
+				faction = aka.names[1];
+				break;
+			}
+		}
+				
 		//Find the right list index		
 		for (int i = 0; i < m_Config.lists.Count(); i++)		
 		{
