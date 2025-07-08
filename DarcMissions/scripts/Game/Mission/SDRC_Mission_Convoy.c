@@ -146,7 +146,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		if (GetState() == DC_EMissionState.INIT)
 		{
 			MissionSpawn();
-			SetState(DC_EMissionState.ACTIVE);
 		}
 
 		if (GetState() == DC_EMissionState.END)
@@ -207,10 +206,16 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		//Spawn vehicle					
 		string resourceName	= m_DC_Convoy.vehicleTypes.GetRandomElement();
 		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName);
-		if (m_Vehicle)
+		
+		if (!m_Vehicle)
 		{
-			m_EntityList.Insert(m_Vehicle);
+			//Could not spawn vehicle
+			SDRC_Log.Add("[SDRC_Mission_Convoy] Could not spawn vehicle: " + resourceName, LogLevel.ERROR);
+			SetState(DC_EMissionState.FAILED);
+			return;			
 		}
+		
+		m_EntityList.Insert(m_Vehicle);
 		
 		//Disable arsenal
 		SDRC_SpawnHelper.DisableVehicleArsenal(m_Vehicle, resourceName, m_Config.disableArsenal);
@@ -234,6 +239,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			SDRC_LootHelper.SpawnItemsToStorage(m_DC_Convoy.loot.box, m_DC_Convoy.loot.items, m_DC_Convoy.loot.itemChance);
 			SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] Loot added.", LogLevel.DEBUG);								
 		}		
+		
+		SetState(DC_EMissionState.ACTIVE);		
 	}
 		
 	//------------------------------------------------------------------------------------------------
