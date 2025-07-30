@@ -20,7 +20,7 @@ class SDRC_List : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_Aka : Managed
 {
-	ref array<string> names = {};
+	ref array<string> names = {};	//Two entries: {"faction expected to use","actual faction name"}
 }
 
 //------------------------------------------------------------------------------------------------

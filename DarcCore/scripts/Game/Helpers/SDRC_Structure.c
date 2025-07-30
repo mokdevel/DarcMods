@@ -11,6 +11,10 @@ class SDRC_Structure
 	private vector position;
 	private vector rotation;	//"Xrot YRot ZRot"
 
+/*	void SDRC_Structure(string resource_ = "", vector position_ = "0 0 0", vector rotation_ = "0 0 0")	
+	{
+	}*/
+	
 	void Set(string resource_, vector position_, vector rotation_ = "0 0 0")
 	{
 		resource = resource_;

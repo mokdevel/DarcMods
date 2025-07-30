@@ -324,7 +324,7 @@ sealed class SDRC_DebugHelper
 	//------------------------------------------------------------------------------------------------
 	static void AddMapCircle(vector pos, float radius = 100, int color = Color.BLUE, string id = "NONE")
 	{
-//		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
+//		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))	//TBD: Need to add MODMENU_CIRCLE or similar
 		{
 			SDRC_DebugHelperPos dpos = new SDRC_DebugHelperPos;
 			dpos.pos = pos;

@@ -3,6 +3,8 @@
 //------------------------------------------------------------------------------------------------
 /*!
 Functions to find locations (for example cities) from map.
+
+NOTE: In order to use the caching, FillLocationsCache has to be run at startup.
 */
 
 sealed class SDRC_Locations
@@ -10,6 +12,8 @@ sealed class SDRC_Locations
 	private static ref array<IEntity> m_aTmpSlots = {};
 	private static string m_sName;
 	
+	private static ref array<MapItem> m_LocationsCache = {};
+		
 	//-----------------------------------------------------------------------------------------------
 	/*!
 	Search for locations from the world. The types to search are defined in locationTypeArray.
@@ -39,6 +43,8 @@ sealed class SDRC_Locations
 			}
 		#endif
 		
+		int stime = System.GetTickCount();
+		
 		private array<MapItem> m_tmpLocationArray = new array<MapItem>;
 		private array<MapItem> m_debugLocationArray = new array<MapItem>;
 
@@ -64,6 +70,9 @@ sealed class SDRC_Locations
 				
 		SDRC_Log.Add("[SDRC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
 		ShowDebugInfo(m_debugLocationArray);
+		
+		int etime = System.GetTickCount();
+		SDRC_Log.Add("[SDRC_Locations:GetLocations] Searching took: " + (etime-stime), LogLevel.DEBUG);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -77,7 +86,9 @@ sealed class SDRC_Locations
 				return;
 			}
 		#endif
-		
+
+		int stime = System.GetTickCount();
+				
 		private array<MapItem> m_tmpLocationArray = new array<MapItem>;
 
 		foreach (EMapDescriptorType locationType: locationTypeArray)
@@ -99,6 +110,9 @@ sealed class SDRC_Locations
 		
 		SDRC_Log.Add("[SDRC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
 		ShowDebugInfo(locationArray);
+		
+		int etime = System.GetTickCount();
+		SDRC_Log.Add("[SDRC_Locations:GetLocations] Searching took: " + (etime-stime), LogLevel.DEBUG);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -109,7 +123,7 @@ sealed class SDRC_Locations
 	{
 		array<IEntity> slots = {};
 
-		if (SDRC_Log.GetLogLevel() > DC_LogLevel.NORMAL)
+		if (SDRC_Log.GetLogLevel() == DC_LogLevel.ALL)
 		{		
 /*			SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Found %1 locations of type (%2) %3", 
 				m_tmpLocationArray.Count(),
@@ -148,6 +162,58 @@ sealed class SDRC_Locations
 		}
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Prepare an array with all locations on the map.
+	*/		
+	static void FillLocationsCache()
+	{
+		#ifndef SDRC_RELEASE
+			//If SCR_MapEntity does not exist, we most likely are playing in some debug map
+			SCR_MapEntity mapEnt = SCR_MapEntity.GetMapInstance();
+			if (!mapEnt)
+			{
+				return;
+			}
+		#endif		
+		
+		SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Searching..", LogLevel.NORMAL);			
+		
+		m_LocationsCache.Clear();
+		GetLocations(m_LocationsCache, m_LocationTypeArray);
+		
+		//Print debug information
+		#ifndef SDRC_RELEASE
+			foreach (MapItem location: m_LocationsCache)
+			{
+				SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Found: " + location.GetDisplayName() + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, location.GetBaseType()), LogLevel.DEBUG);
+			}		
+		#endif
+		
+		SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Found " + m_LocationsCache.Count() + " items to location cache.", LogLevel.NORMAL);					
+	}	
+
+	//-----------------------------------------------------------------------------------------------
+	/*!
+	Search for locations from the world using the cache. The types to search are defined in locationTypeArray.
+	*/		
+	static void GetLocationsCached(out array<IEntity> locationArray, array<EMapDescriptorType> locationTypeArray)
+	{
+		int stime = System.GetTickCount();
+		
+		foreach (MapItem location: m_LocationsCache)
+		{
+			if (locationTypeArray.Contains(location.GetBaseType()))
+			{
+				locationArray.Insert(location.Entity());
+				SDRC_Log.Add("[SDRC_Locations:GetLocationsCached] Found: " + location.GetDisplayName() + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, location.GetBaseType()), LogLevel.SPAM);
+			}
+		}		
+		
+		int etime = System.GetTickCount();
+		SDRC_Log.Add("[SDRC_Locations:GetLocationsCached] Searching took: " + (etime-stime), LogLevel.DEBUG);		
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Creates a name for a location or a position.
@@ -257,5 +323,107 @@ sealed class SDRC_Locations
 			m_aTmpSlots.Insert(entity);
 		}
 		return true;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	private static ref array<EMapDescriptorType>m_LocationTypeArray =
+	{
+		//EMapDescriptorType.MDT_TREE,
+		//EMapDescriptorType.MDT_SMALLTREE,
+		//EMapDescriptorType.MDT_BUSH,
+		EMapDescriptorType.MDT_BUILDING,
+		EMapDescriptorType.MDT_HOUSE,
+		EMapDescriptorType.MDT_FORESTERLODGE,
+		//EMapDescriptorType.MDT_FORESTBORDER,
+		EMapDescriptorType.MDT_FORESTTRIANGLE,
+		EMapDescriptorType.MDT_FORESTSQUARE,
+		EMapDescriptorType.MDT_CALVARY,
+		EMapDescriptorType.MDT_CHURCH,
+		EMapDescriptorType.MDT_CHAPEL,
+		//EMapDescriptorType.MDT_CROSS,
+		//EMapDescriptorType.MDT_ROCK,
+		EMapDescriptorType.MDT_BUNKER,
+		EMapDescriptorType.MDT_FORTRESS,
+		EMapDescriptorType.MDT_FOUNTAIN,
+		//EMapDescriptorType.MDT_SPRING,
+		EMapDescriptorType.MDT_VIEWPOINT,
+		EMapDescriptorType.MDT_TOWER,
+		EMapDescriptorType.MDT_VIEWTOWER,
+		EMapDescriptorType.MDT_WATERTOWER,
+		EMapDescriptorType.MDT_LIGHTHOUSE,
+		//EMapDescriptorType.MDT_QUAY,
+		//EMapDescriptorType.MDT_BUOY,
+		EMapDescriptorType.MDT_FUELSTATION,
+		EMapDescriptorType.MDT_HOSPITAL,
+		//EMapDescriptorType.MDT_LIGHT,
+		//EMapDescriptorType.MDT_FENCE,
+		//EMapDescriptorType.MDT_WALL,
+		EMapDescriptorType.MDT_HIDE,
+		EMapDescriptorType.MDT_BUSSTOP,
+		EMapDescriptorType.MDT_BUSSTATION,
+		EMapDescriptorType.MDT_ROAD,
+		//EMapDescriptorType.MDT_FOREST,
+		EMapDescriptorType.MDT_CRANE,
+		EMapDescriptorType.MDT_TRANSFORMER,
+		EMapDescriptorType.MDT_TRANSMITTER,
+		//EMapDescriptorType.MDT_STACK,
+		EMapDescriptorType.MDT_RUIN,
+		EMapDescriptorType.MDT_TOURISM,
+		EMapDescriptorType.MDT_HILL,
+		//EMapDescriptorType.MDT_TRACK,
+		//EMapDescriptorType.MDT_MAINROAD,
+		//EMapDescriptorType.MDT_ROCKS,
+		EMapDescriptorType.MDT_PLAYINGFIELD,
+		//EMapDescriptorType.MDT_POWERLINES,
+		EMapDescriptorType.MDT_RAILWAY,
+		EMapDescriptorType.MDT_SHIPWRECK,
+		EMapDescriptorType.MDT_TOURISTSHELTER,
+		//EMapDescriptorType.MDT_TOURISTSIGN,
+		EMapDescriptorType.MDT_MONUMENT,
+		//EMapDescriptorType.MDT_WATERPUMP,
+		EMapDescriptorType.MDT_POLICE,
+		EMapDescriptorType.MDT_STORE,
+		EMapDescriptorType.MDT_HOTEL,
+		EMapDescriptorType.MDT_PUB,
+		EMapDescriptorType.MDT_FIREDEP,
+		EMapDescriptorType.MDT_NAME_GENERIC,
+		EMapDescriptorType.MDT_NAME_CITY,
+		EMapDescriptorType.MDT_NAME_VILLAGE,
+		EMapDescriptorType.MDT_NAME_TOWN,
+		EMapDescriptorType.MDT_NAME_SETTLEMENT,
+		EMapDescriptorType.MDT_NAME_HILL,
+		EMapDescriptorType.MDT_NAME_LOCAL,
+		EMapDescriptorType.MDT_NAME_ISLAND,
+		//EMapDescriptorType.MDT_NAME_WATER_MINOR,
+		//EMapDescriptorType.MDT_NAME_WATER_MAJOR,
+		//EMapDescriptorType.MDT_NAME_SEA_MINOR,
+		//EMapDescriptorType.MDT_NAME_SEA_MAJOR,
+		EMapDescriptorType.MDT_NAME_RIDGE,
+		EMapDescriptorType.MDT_NAME_VALLEY,
+		EMapDescriptorType.MDT_PARKING,
+		//EMapDescriptorType.MDT_UNIT,
+		//EMapDescriptorType.MDT_WILDLIFE,
+		EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+		//EMapDescriptorType.MDT_CURPOS,
+		//EMapDescriptorType.MDT_WAYPOINT,
+		//EMapDescriptorType.MDT_TARGET,
+		EMapDescriptorType.MDT_BASE,
+		EMapDescriptorType.MDT_PORT,
+		EMapDescriptorType.MDT_AIRPORT,
+		EMapDescriptorType.MDT_LANDMARK,
+		EMapDescriptorType.MDT_CAVE,
+		//EMapDescriptorType.MDT_RADIO,
+		//EMapDescriptorType.MDT_SPAWNPOINT,
+		//EMapDescriptorType.MDT_TASK,
+		//EMapDescriptorType.MDT_ICON,
+		//! remaining types are debug/ functional
+		//EMapDescriptorType.MDT_IMAGE_COUNT,
+		//EMapDescriptorType.MDT_DEBUG_SELECTED,
+		//EMapDescriptorType.MDT_DEBUG_HOVER,
+		//EMapDescriptorType.MDT_DEBUG_HIGHLIGHT,
+		//! remaining types are not colorized by faction
+		//EMapDescriptorType.MDT_COLORIZE_COUNT,
+		//EMapDescriptorType.MDT_DEBUG_POINTS,
+		//EMapDescriptorType.MDT_COUNT,
 	}
 }

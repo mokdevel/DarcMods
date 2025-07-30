@@ -3,6 +3,8 @@
 //------------------------------------------------------------------------------------------------
 /*!
 Functions related to buildings on map
+
+NOTE: In order to use the caching, FillBuildingsCache has to be run at startup.
 */
 
 sealed class SDRC_BuildingHelper
@@ -103,7 +105,7 @@ sealed class SDRC_BuildingHelper
 			foreach (IEntity building: m_BuildingsCache)
 			{
 				ResourceName res = building.GetPrefabData().GetPrefabName();
-				SDRC_Log.Add("[SDRC_BuildingHelper:FillBuildingsCache] Found: " + res + " at " + building.GetOrigin(), LogLevel.SPAM);			
+				SDRC_Log.Add("[SDRC_BuildingHelper:FillBuildingsCache] Found: " + res + " at " + building.GetOrigin(), LogLevel.DEBUG);			
 			}		
 		#endif
 		
