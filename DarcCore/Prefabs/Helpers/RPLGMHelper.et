@@ -1,0 +1,13 @@
+SDRC_RplGMEntity {
+ ID "65D25C33CD4278FA"
+ components {
+  SDRC_RplGMComp "{65D25C321D9878B0}" {
+  }
+  RplComponent "{65D25C33CD427893}" {
+   Enabled 0
+   Streamable Disabled
+  }
+  Hierarchy "{65D25C33CD427896}" {
+  }
+ }
+}
