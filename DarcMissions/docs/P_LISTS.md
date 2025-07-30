@@ -1,7 +1,7 @@
 # Lists
 The mod is capable of creating automatic lists to be used with missions. You can also define your own sets by following the same notation as in the example. Do not reuse the same ids as is already available as a ```lootListName```.
 
-## SDCR_List
+## SDRC_List
 The functionality goes through the modDir and gets every file with the ending of ```.et```. The list is first filtered with ```include``` words and then filtered with ```exclude```words. Note that any item you may have defined manually goes through the same filtering and may be removed if the ```exclude``` word matches.
 ```
 string id : The name given for the listist. This is the name you use for adding loot or selecting enemies. 
@@ -11,7 +11,7 @@ array<string> exclude : Items with these words will be removed from the lootList
 array<ResourceName> items : The list of items. This is autofilled, but you can pre-define items if needed.
 ```
 
-## SDCR_Aka
+## SDRC_Aka
 Also known as - other names used for example for factions. In some cases/mods the prefab name don't have the faction name included. The first item in the array is the *faction* and the second name is the name used for filtering.
 ```
 array<string> names : The faction name and the filtering name in this order.
@@ -36,7 +36,7 @@ This supports additional mods that you can define in the modList parameter. The 
 int version : See General parameters
 string author : See General parameters
 array<string> modList : The mods to search for loot. If left empty, all mods enabled will be searched.
-array<SDCR_List> lootLists : The defined lootlists
+array<SDRC_List> lootLists : The defined lootlists
 array<ref SDRC_Aka> akas : The defined 'akas'
 ```
 ## Loot list names (id)

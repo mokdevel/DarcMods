@@ -6,10 +6,10 @@ This a list of areas where missions shall not spawn. For example a safe zone wou
 int version : See General parameters
 string author : See General parameters
 bool showOnMap : Show a red area where non valid area is. Helps to properly define the areas. (Currently works only in WB)
-array<SDCR_NonValidArea> nonValidAreas : List of areas where missions shall not spawn.
+array<SDRC_NonValidArea> nonValidAreas : List of areas where missions shall not spawn.
 ```
 
-## SDCR_NonValidArea
+## SDRC_NonValidArea
 ```
 string worldName : The world name this should be affecting. For example Arland or Eden. If left empty, area will be valid for all maps. Note that Arland and GM_Arland are considered different maps.
 vector pos : Center position of area
