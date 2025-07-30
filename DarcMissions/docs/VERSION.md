@@ -12,6 +12,7 @@ Main features:
 
 Fixes:
 * Convoy mission: When vehicle spawn fails, the mission fails .. instead of crashing.
+* Squatters mission: Building selection was not working properly.
 * Mission position searching much faster. When mission was starting, servers took quite some time to find a spot on large maps.
 
 ## 20250630

@@ -53,6 +53,8 @@ class SDRC_RplGMComp : ScriptComponent
     {
 		SDRC_Log.Add("[SDRC_RplGMComp] GM opened", LogLevel.DEBUG);
 		
+		
+		
         int PlayerID = m_PlayerManager.GetPlayerIdFromControlledEntity(GetOwner());
         Rpc(Ask_Authority_PrintStuff, PlayerID);
     }    

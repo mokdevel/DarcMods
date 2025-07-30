@@ -21,12 +21,12 @@ class SDRC_RplGMEntity : GenericEntity
 		s_Instance = this;
 		SDRC_Log.Add("[SDRC_RplGMEntity] Running", LogLevel.DEBUG);
 		
-/*        m_PlayerManager = GetGame().GetPlayerManager();
+        m_PlayerManager = GetGame().GetPlayerManager();
         if(SCR_PlayerController.GetLocalControlledEntity() != owner)
 		{
 			SDRC_Log.Add("[SDRC_RplGMEntity] GetPlayerManager failed", LogLevel.DEBUG);
             return;
-		}*/
+		}
         GetGame().GetCallqueue().CallLater(DelayedInit,1000,false,owner);
 	}
 
@@ -61,6 +61,14 @@ class SDRC_RplGMEntity : GenericEntity
 		SDRC_Log.Add("[SDRC_RplGMEntity] GM opened", LogLevel.DEBUG);
 		
 //        int PlayerID = m_PlayerManager.GetPlayerIdFromControlledEntity(GetOwner());
+//        int PlayerID = SCR_PossessingManagerComponent.GetPlayerIdFromControlledEntity(GetOwner());
 //        Rpc(Ask_Authority_PrintStuff, PlayerID);
-    }    
+    } 
+	
+    //------------------------------------------------------------------------------------------------
+    [RplRpc(RplChannel.Reliable, RplRcver.Server)]
+    void Ask_Authority_PrintStuff(int PlayerID)
+    {
+        SDRC_Log.Add("[SDRC_RplGMEntity] GM Mode by: " + m_PlayerManager.GetPlayerName(PlayerID), LogLevel.DEBUG);        
+    }	
 };

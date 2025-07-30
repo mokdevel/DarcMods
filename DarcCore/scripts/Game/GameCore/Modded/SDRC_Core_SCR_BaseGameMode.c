@@ -41,17 +41,9 @@ modded class SCR_BaseGameMode
 
 			//Core initialized properly
 			SDRC_Conf.coreHasStarted = true;
-			
-			//For testing
-			//GetGame().GetCallqueue().CallLater(DebugStart, 15000, false);	
-		}
-		else 
-		{
-			SDRC_Log.Add("[SDRC_Core_BaseGameMode:NonMaster] Core not needed for client.", LogLevel.DEBUG);        
-		}
-		
-/*			Resource resource;
-			//Initialize the SDRC_GMEntity
+
+#ifndef SDRC_RELEASE				
+/*			//Initialize the SDRC_GMEntity
 			SDRC_Log.Add("[SDRC_Core_BaseGameMode] Creating SDRC_GMEntity", LogLevel.NORMAL);
 			resource = Resource.Load("{034174406440412B}Prefabs/Helpers/RPLGMHelper.et");
 			if (!resource.IsValid())
@@ -60,6 +52,15 @@ modded class SCR_BaseGameMode
 				return;
 			}
 			m_SDRC_RplGMEntity = SDRC_RplGMEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));*/
+#endif
+									
+			//For testing
+			//GetGame().GetCallqueue().CallLater(DebugStart, 15000, false);	
+		}
+		else 
+		{
+			SDRC_Log.Add("[SDRC_Core_BaseGameMode:NonMaster] Core not needed for client.", LogLevel.DEBUG);        
+		}		
     }
 	
 	/*

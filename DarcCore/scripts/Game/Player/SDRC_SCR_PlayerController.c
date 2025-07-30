@@ -1,7 +1,9 @@
 modded class SCR_PlayerController : PlayerController
 {
 	
-#ifndef SDRC_RELEASE	
+#ifndef SDRC_RELEASE
+    PlayerManager m_PlayerManager;
+	
     override void OnInit(IEntity owner)
     {
 		super.OnInit(owner);
@@ -18,7 +20,7 @@ modded class SCR_PlayerController : PlayerController
         SetFlags(EntityFlags.ACTIVE, true);
 		SDRC_Log.Add("[SDRC_SCR_PlayerController] EOnActivate", LogLevel.DEBUG);
 		
-//        m_PlayerManager = GetGame().GetPlayerManager();
+        m_PlayerManager = GetGame().GetPlayerManager();
 /*        if(SCR_PlayerController.GetLocalControlledEntity() != owner)
 		{
 			SDRC_Log.Add("[SDRC_SCR_PlayerController] GetPlayerManager failed", LogLevel.DEBUG);
@@ -48,8 +50,16 @@ modded class SCR_PlayerController : PlayerController
     {
 		SDRC_Log.Add("[SDRC_SCR_PlayerController] GM opened", LogLevel.DEBUG);
 		
-//        int PlayerID = GetGame().GetPlayerManager().GetPlayerIdFromControlledEntity(GetOwner());
-//        Rpc(Ask_Authority_PrintStuff, PlayerID);
-    }    	
+        int PlayerID = GetGame().GetPlayerManager().GetPlayerIdFromControlledEntity(GetControlledEntity());
+        Rpc(Ask_Authority_PrintStuff, PlayerID);
+    } 
+
+    //------------------------------------------------------------------------------------------------
+    [RplRpc(RplChannel.Reliable, RplRcver.Server)]
+    void Ask_Authority_PrintStuff(int PlayerID)
+    {
+        SDRC_Log.Add("[SDRC_SCR_PlayerController] GM Mode by: " + m_PlayerManager.GetPlayerName(PlayerID), LogLevel.DEBUG);        
+    }
+		
 #endif	
 }

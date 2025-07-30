@@ -186,7 +186,7 @@ sealed class SDRC_Locations
 		#ifndef SDRC_RELEASE
 			foreach (MapItem location: m_LocationsCache)
 			{
-				SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Found: " + location.GetDisplayName() + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, location.GetBaseType()), LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Found: " + location.GetDisplayName() + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, location.GetBaseType()) + " at: " + location.Entity().GetOrigin(), LogLevel.DEBUG);
 			}		
 		#endif
 		
