@@ -178,7 +178,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList21.Set(
 			"C_HEAVY",
 			"/Characters/Factions",			
-			{"_GL", "_MG", "Grenadier", "_Ammo"},
+			{"_GL", "_MG", "Grenadier", "_Ammo", "_LMG"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
 		);
 		conf.lists.Insert(enemyList21);
@@ -187,7 +187,9 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList22.Set(
 			"C_RECON",
 			"/Characters/Factions",			
-			{"Scout", "Spotter", "_RTO", "_SL", "_GL"},
+			{"Scout", "Spotter", "_RTO", "_SL", "_GL",
+				"_AG1", //MEI		
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
 		);
 		conf.lists.Insert(enemyList22);
@@ -196,7 +198,9 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList23.Set(
 			"C_OFFICER",
 			"/Characters/Factions",			
-			{"_Officer", "Sergeant", "_AC"},
+			{"_Officer", "Sergeant", "_AC", 
+				"_Leader", //MEI
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
 		);
 		conf.lists.Insert(enemyList23);
@@ -205,7 +209,9 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList24.Set(
 			"C_CREW",
 			"/Characters/Factions",			
-			{"Crew", "Pilot", "_CC"},
+			{"Crew", "Pilot", "_CC",
+				"MEI_Leader", //MEI
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
 		);
 		conf.lists.Insert(enemyList24);
@@ -241,7 +247,10 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList28.Set(
 			"C_SPECIAL",
 			"/Characters/Factions",			
-			{"_SF", "_SR", "FIA_AC"},
+			{"_SF", "_SR", "FIA_AC", 
+				"_Bomb", //MEI
+				"MEI_Rifleman1", //MEI
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
 		);
 		conf.lists.Insert(enemyList28);
