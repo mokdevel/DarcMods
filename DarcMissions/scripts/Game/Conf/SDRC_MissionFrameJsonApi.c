@@ -28,23 +28,23 @@
 	//Development time options
 	#ifndef SDRC_RELEASE	
 		private const string SDRC_MISSION_PROFILE_DIR = "dummy";
-		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//2;//8;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 10;//2;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 6;//30;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 3;//30;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSION_START_DELAY = 10;					
-		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 1*20;
+		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 1;//1*20;
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 1;
-		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 3*60;				
-		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = SDRC_MISSION_ACTIVE_TIME_DYNAMIC * 10;	
+		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 20;//3*60;				
+		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 40;//SDRC_MISSION_ACTIVE_TIME_DYNAMIC * 10;	
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 200;		
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 45;
-		private const int SDRC_MISSIONFRAME_CYCLE_TIME = 20;
+		private const int SDRC_MISSIONFRAME_CYCLE_TIME = 10;//20;
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = true;
 		private const int SDRC_MISSION_HINT_TIME = 30;
-		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = false;
+		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;
 	#endif
 
 class SDRC_MissionTypeConfig : Managed
@@ -153,27 +153,29 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		#endif	
 
 		#ifndef SDRC_RELEASE				
+//			conf.enemyFactions = {"USSR"};
+			conf.enemyFactions = {"MEI"};
 //			conf.enemyFactions = {"FIA", "USSR"};
 //			conf.enemyFactions = {"FIA", "US"};
 //			conf.enemyFactions = {"USSR", "FIA", "FIA", "FIA"};
-			conf.enemyFactions = {"RHS_USAF", "RHS_AFRF"};
+//			conf.enemyFactions = {"RHS_USAF", "RHS_AFRF"};
 //			conf.enemyFactions = {"USAF_USMC", "RHS_RF"};
 		
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTER};
-			conf.missionDynamic.missionTypeArray = {DC_EMissionType.OCCUPATION};		
+//			conf.missionDynamic.missionTypeArray = {DC_EMissionType.OCCUPATION};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HUNTER};
-//			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CONVOY};		
+			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CONVOY};		
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.PATROL};		
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CRASHSITE};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CHOPPER};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.SQUATTER};
 		
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL};
-//			conf.missionStatic.missionTypeArray = {DC_EMissionType.CONVOY};
+			conf.missionStatic.missionTypeArray = {DC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HUNTER};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.CRASHSITE};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.OCCUPATION};
-			conf.missionStatic.missionTypeArray = {DC_EMissionType.ROADBLOCK};
+//			conf.missionStatic.missionTypeArray = {DC_EMissionType.CRASHSITE};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {};

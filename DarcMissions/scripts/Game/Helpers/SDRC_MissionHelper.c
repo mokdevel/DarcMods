@@ -66,7 +66,8 @@ sealed class SDRC_MissionHelper
 		
 		IEntity location = null;
 		array<IEntity> locations = {};
-		SDRC_Locations.GetLocations(locations, locationTypes);		
+//		SDRC_Locations.GetLocations(locations, locationTypes);		
+		SDRC_Locations.GetLocationsCached(locations, locationTypes);		
 		int searchRadius = DC_LOCATION_SEACRH_RADIUS;			//Find the position within DC_LOCATION_SEACRH_RADIUS from pos. In case of fail, we increase the area.
 		
 		if (locations.IsEmpty())

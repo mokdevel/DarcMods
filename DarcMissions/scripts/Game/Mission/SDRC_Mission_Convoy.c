@@ -64,14 +64,24 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.locationTypes);
 		}
 
+		//If failed, stop
+		if (pos == "0 0 0")	//No suitable location found.
+		{				
+			SDRC_Log.Add("[SDRC_Mission_Convoy] Could not find suitable location.", LogLevel.ERROR);
+			SetState(DC_EMissionState.FAILED);
+			return;
+		}	
+		
 		//Find nearest road
 		SDRC_RoadPos roadPosStart = new SDRC_RoadPos();				
-		pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPosStart, pos);
+		pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPosStart, pos, 1000);
 		
-		//Find the road position for the mission
+		//If failed, stop
 		if (pos == "0 0 0")
 		{
 			SDRC_Log.Add("[SDRC_Mission_Convoy] No start road found.", LogLevel.ERROR);
+			SetState(DC_EMissionState.FAILED);
+			return;
 		}
 		
 /*				
@@ -106,7 +116,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			if (m_vPosDestination != "0 0 0")
 			{
 				SDRC_RoadPos roadPos = new SDRC_RoadPos();
-				m_vPosDestination = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, m_vPosDestination);
+				m_vPosDestination = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, m_vPosDestination, 1000);
 				if (m_vPosDestination == "0 0 0")
 				{
 					SDRC_Log.Add("[SDRC_Mission_Convoy] No destination road found.", LogLevel.ERROR);

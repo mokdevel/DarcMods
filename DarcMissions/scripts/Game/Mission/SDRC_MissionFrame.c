@@ -366,6 +366,7 @@ class SDRC_MissionFrame
 		
 		if (missionType == DC_EMissionType.REQUESTED)
 		{					
+			//Clean the array before searching for a mission. It could be that user has deleted the mission in the array.
 			CleanMissionsRequestedArray();
 	
 			//Is the list empty?		
@@ -382,6 +383,7 @@ class SDRC_MissionFrame
 			pos = missionEntity.GetOrigin();
 			SDRC_SpawnHelper.DespawnItem(missionEntity);
 
+			//Clean the array as we removed an entry. Others could have been removed at the same time.
 			CleanMissionsRequestedArray();						
 		}
 		

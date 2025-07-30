@@ -424,7 +424,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			crashsite0.helicopterInfo.Insert(heli2);		
 		
 		//----------------------------------------------------
-		SDRC_Loot crashloot = new SDRC_Loot;
+		SDRC_Loot crashloot = new SDRC_Loot();
 		array<string> lootItems = {
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
@@ -439,35 +439,35 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		crashsite0.loot = crashloot;
 				
 		//----------------------------------------------------
-		SDRC_Structure crashitem0 = new SDRC_Structure;
+		SDRC_Structure crashitem0 = new SDRC_Structure();
 		crashitem0.Set(
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 			"97.911 1 121.527"
 		);
 		crashsite0.siteItems.Insert(crashitem0);
 
-		SDRC_Structure crashitem2 = new SDRC_Structure;
+		SDRC_Structure crashitem2 = new SDRC_Structure();
 		crashitem2.Set(
 			"{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
 			"106.274 1 121.108"
 		);
 		crashsite0.siteItems.Insert(crashitem2);
 
-		SDRC_Structure crashitem3 = new SDRC_Structure;
+		SDRC_Structure crashitem3 = new SDRC_Structure();
 		crashitem3.Set(
 			"{310E849A808F9F5F}PrefabsEditable/Auto/Structures/Military/Camps/Canvas_Covers/US/E_CanvasCover_Folded_US.et",
 			"104.552 1 126.903"
 		);
 		crashsite0.siteItems.Insert(crashitem3);
 
-		SDRC_Structure crashitem4 = new SDRC_Structure;
+		SDRC_Structure crashitem4 = new SDRC_Structure();
 		crashitem4.Set(
 			"{532795AD51CFBEDF}PrefabsEditable/Auto/Structures/Infrastructure/Piping/E_DieselPipe_01_hose_V2.et",
 			"104.745 1 123.685"
 		);
 		crashsite0.siteItems.Insert(crashitem4);
 
-		SDRC_Structure crashitem5 = new SDRC_Structure;
+		SDRC_Structure crashitem5 = new SDRC_Structure();
 		crashitem5.Set(
 			"{7576CB87CAFAE6E8}PrefabsEditable/Auto/Structures/Military/CamoNets/US/E_CamoNet_AssemblyKit_US.et",
 			"103.559 1 119.949",
@@ -475,7 +475,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		);
 		crashsite0.siteItems.Insert(crashitem5);
 
-		SDRC_Structure crashitem6 = new SDRC_Structure;
+		SDRC_Structure crashitem6 = new SDRC_Structure();
 		crashitem6.Set(
 			"{7AB486CD1FBB0B0A}PrefabLibrary/Props/Garbage/Junk_01_pile_small.et",
 			"100.944 1 123.924",

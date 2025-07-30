@@ -55,6 +55,14 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			}
 		}
 	
+		//If failed, stop
+		if (pos == "0 0 0")	//No suitable location found.
+		{				
+			SDRC_Log.Add("[SDRC_Mission_Patrol] Could not find suitable location.", LogLevel.ERROR);
+			SetState(DC_EMissionState.FAILED);
+			return;
+		}	
+		
 		//Find a location for the destination. Only used for route
 		if (m_vPosDestination == "0 0 0")
 		{

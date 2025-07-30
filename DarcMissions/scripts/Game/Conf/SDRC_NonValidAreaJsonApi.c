@@ -88,7 +88,7 @@ class SDRC_NonValidAreaJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		conf.showOnMap = false;
+		conf.showOnMap = SDRC_Conf.SHOW_MARKER_FOR_NONVALIDAREA;
 		#ifdef SDRC_CREATE_EXAMPLE_NONVALIDAREA
 			//List of non valid areas where missions shall not spawn
 			//Eden
@@ -114,6 +114,15 @@ class SDRC_NonValidAreaJsonApi : SDRC_JsonApi
 			SDRC_NonValidArea areaA10 = new SDRC_NonValidArea();
 			areaA10.Set("", "900 0 1450", 300, "Dummy for Arland, but as worldname is not defined, this will be valid for all worlds.");
 			conf.m_NonValidAreas.Insert(areaA10);		
+		
+			//Just for testing - a huge blocker area			
+/*			float worldSize = SDRC_Misc.GetWorldSize();
+			SDRC_NonValidArea areaA11 = new SDRC_NonValidArea();
+			vector pos = "0 0 0";
+			pos[0] = worldSize/2;
+			pos[2] = worldSize/2;
+			areaA11.Set("", pos, worldSize/2, "Just a huge NonValidArea");
+			conf.m_NonValidAreas.Insert(areaA11);*/
 		#endif
 	}
 }
