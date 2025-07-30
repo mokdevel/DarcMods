@@ -89,8 +89,16 @@ Dependency specific files
 # Version history
 
 ## Next release (unreleased)
+Minor update to properly find enemies when using TOH ReCharacters. Update *should not* affect existing installs. If you're using TOH ReCharacters, delete your dc_enemyList.json and a new one will be created.
 
-..empty..
+Main features:
+* Support for TOH ReCharacters
+  * MEI supported
+  * MEC is not supported
+
+Fixes:
+* Convoy mission: When vehicle spawn fails, the mission fails .. instead of crashing.
+* Mission position searching much faster. When mission was starting, servers took quite some time to find a spot on large maps.
 
 ## 20250630
 Minor update to properly find enemies when using RHS. Update *should not* affect existing installs. If you're using RHS, delete your dc_enemyList.json and a new one will be created.
