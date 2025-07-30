@@ -46,9 +46,10 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		
 		//Find a location for the mission
 		if (!IsRequested())
-		{		
+		{				
 			pos = m_DC_Squatter.pos;
 			radius = m_Config.buildingRadius;
+			buildingFilter = m_DC_Squatter.buildingNames;
 			
 			if (pos == "0 0 0")
 			{
@@ -60,7 +61,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 				else
 				{
 					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Squatter.locationTypes, 2);
-					buildingFilter = m_DC_Squatter.buildingNames;
+//					buildingFilter = m_DC_Squatter.buildingNames;
 				}
 			}
 		}
