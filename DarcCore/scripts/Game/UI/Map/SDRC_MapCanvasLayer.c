@@ -78,6 +78,10 @@ class SDRC_MapCanvasLayer : SCR_MapModuleBase
 	{
 		super.OnMapOpen(config);
 		
+		#ifndef SDRC_RELEASE
+			SDRC_Log.Add("[SDRC_MapCanvasLayer:OnMapOpen]", LogLevel.DEBUG);
+		#endif
+		
 		m_DrawCommands = new array<ref CanvasWidgetCommand>();		
 		m_Widget = GetGame().GetWorkspace().CreateWidgets(m_Layout);
 		m_Canvas = CanvasWidget.Cast(m_Widget.FindAnyWidget("Canvas"));

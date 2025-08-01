@@ -101,7 +101,25 @@ class SDRC_MissionFrame
 		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;		//sec to ms
 		
 		#ifndef SDRC_RELEASE
+
+			for (int i = 0; i < 7; i++)
+			{
+				SDRC_Log.Add("[SDRC_MissionFrame] Marker: " + SCR_Enum.GetEnumName(SCR_EMapMarkerType, i), LogLevel.NORMAL);			
+			}
 		
+			SCR_EMapMarkerType markerType = typename.StringToEnum(SCR_EMapMarkerType, "PLACED_MILITARY");
+	
+			SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
+			if (!mapMarkerMgr)
+				return;
+	
+			SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
+			markerst.SetType(markerType);
+			markerst.SetCustomText("dummy");
+			markerst.SetWorldPos(900, 1000);
+			markerst.SetIconEntry(10);
+			mapMarkerMgr.InsertStaticMarker(markerst, false, true);
+				
 			SDRC_MapMarkerHelper.CreateMapMarker("1000 0 1000", DC_EMissionIcon.GM_MISSION_X_MAP, "DMC_B", "Here is a text");
 			SDRC_MapMarkerHelper.CreateMapMarker("1100 0 1000", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP, "DMC_B", "Darc_SK");
 			SDRC_MapMarkerHelper.CreateMapMarker("1200 0 1000", DC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, "DMC_B", "Darc_SK");

@@ -59,7 +59,7 @@ modded class SCR_BaseGameMode
 		}
 		else 
 		{
-			SDRC_Log.Add("[SDRC_Core_BaseGameMode:NonMaster] Core not needed for client.", LogLevel.DEBUG);        
+			SDRC_Log.Add("[SDRC_Core_BaseGameMode:NonMaster] Core not needed for client.", LogLevel.DEBUG);
 		}		
     }
 	

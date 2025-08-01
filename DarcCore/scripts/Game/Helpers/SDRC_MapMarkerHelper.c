@@ -1,5 +1,11 @@
 //Helpers SDRC_MapMarkerHelper.c
 
+//------------------------------------------------------------------------------------------------
+/*!
+Functions for various map marker related things
+*/
+
+//------------------------------------------------------------------------------------------------
 class DC_Mmarker : Managed
 {
 	string id;		//Mission related ID
@@ -41,7 +47,10 @@ sealed class SDRC_MapMarkerHelper
 			}
 		#endif
 				
+//		SDRC_Log.Add("[SDRC_MapMarkerHelper:CreateMapMarker] Creating " + typename.StringToEnum(SCR_EMapMarkerType, markerTypeString) + " - " + icon, LogLevel.WARNING);		
+		
 		SCR_EMapMarkerType markerType = typename.StringToEnum(SCR_EMapMarkerType, markerTypeString);
+//		SCR_EMapMarkerType markerType = typename.StringToEnum(SCR_EMapMarkerType, "PLACED_MILITARY");
 
 		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
 		if (!mapMarkerMgr)
@@ -96,7 +105,7 @@ sealed class SDRC_MapMarkerHelper
 					}
 					else
 					{
-						SDRC_Log.Add("[SDRC_MapMarkerHelper:DeleteMarker] SCR_MapMarkerBase NULL!", LogLevel.SPAM);        							
+						SDRC_Log.Add("[SDRC_MapMarkerHelper:DeleteMarker] SCR_MapMarkerBase NULL!", LogLevel.SPAM);
 					}					
 				}	
 			}
