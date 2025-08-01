@@ -3,17 +3,22 @@
 # Version history
 
 ## Next release (unreleased)
+* Nothing yet
+
+## 20250801
 Minor update to properly find enemies when using TOH ReCharacters. Update *should not* affect existing installs. If you're using TOH ReCharacters, delete your dc_enemyList.json and a new one will be created.
 
 Main features:
 * Support for TOH ReCharacters
   * MEI supported
   * MEC is not supported
+* Checked compatibility with ArlandXEveron and Novka
 
 Fixes:
 * Convoy mission: When vehicle spawn fails, the mission fails .. instead of crashing.
 * Squatters mission: Building selection was not working properly.
 * Mission position searching much faster. When mission was starting, servers took quite some time to find a spot on large maps.
+* Crashes with EveronXArland when searching for mission position. 
 
 ## 20250630
 Minor update to properly find enemies when using RHS. Update *should not* affect existing installs. If you're using RHS, delete your dc_enemyList.json and a new one will be created.

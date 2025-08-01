@@ -32,7 +32,7 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 
 ## Known issues
 - Moving map markers lose the text under them. 
-- This should be an issues fixed: AI spawns inside rocks sometimes. Might affect just certain types of rocks. 
+- Incompatible with Freedom Fighters
 
 # Parameters
 All configurations are done via .json files. The information is on one line due to the saving functionality in AR. See [FAQ](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/FAQ.md#q-the-oneline-jsons-are-hard-to-readedit) for more.
@@ -89,16 +89,22 @@ Dependency specific files
 # Version history
 
 ## Next release (unreleased)
+* Nothing yet
+
+## 20250801
 Minor update to properly find enemies when using TOH ReCharacters. Update *should not* affect existing installs. If you're using TOH ReCharacters, delete your dc_enemyList.json and a new one will be created.
 
 Main features:
 * Support for TOH ReCharacters
   * MEI supported
   * MEC is not supported
+* Checked compatibility with ArlandXEveron and Novka
 
 Fixes:
 * Convoy mission: When vehicle spawn fails, the mission fails .. instead of crashing.
+* Squatters mission: Building selection was not working properly.
 * Mission position searching much faster. When mission was starting, servers took quite some time to find a spot on large maps.
+* Crashes with EveronXArland when searching for mission position. 
 
 ## 20250630
 Minor update to properly find enemies when using RHS. Update *should not* affect existing installs. If you're using RHS, delete your dc_enemyList.json and a new one will be created.
