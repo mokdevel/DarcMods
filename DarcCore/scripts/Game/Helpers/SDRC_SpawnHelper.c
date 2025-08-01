@@ -365,7 +365,7 @@ sealed class SDRC_SpawnHelper
 		
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Call back filter for FindBuilding
+	Call back filter for FindEmptyPos
 	*/		
 	static bool FindEntitiesCallback(IEntity entity)
 	{
@@ -391,7 +391,18 @@ sealed class SDRC_SpawnHelper
 			}
 			else //Then do normal checking
 			{
-				ResourceName resName = entity.GetPrefabData().GetPrefabName();
+				SDRC_Log.Add("[SDRC_SpawnHelper:FindEntitiesCallback] Entity: " + entity, LogLevel.DEBUG);
+				
+				ResourceName resName = "notaresourcename";
+				
+				if (entity.GetPrefabData())
+				{
+					resName = entity.GetPrefabData().GetPrefabName();
+				}
+				else
+				{
+					SDRC_Log.Add("[SDRC_SpawnHelper:FindEntitiesCallback] GetPrefabData fails for: " + entity, LogLevel.ERROR);
+				}
 				
 				if (SCR_StringHelper.ContainsAny(resName, baseGameMode.m_SDRC_Core.m_Config.emptyPos.stopFilter) && !obstruct)
 				{
