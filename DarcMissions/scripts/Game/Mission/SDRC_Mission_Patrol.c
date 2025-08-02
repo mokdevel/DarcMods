@@ -252,7 +252,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;
-		conf.showMarker = false;
+		conf.showMarker = true;//false;	//TBD!
 		//Mission specific
 		conf.patrolList = {0,0,0,1,2,3};
 		conf.distanceToPlayer = 500;
