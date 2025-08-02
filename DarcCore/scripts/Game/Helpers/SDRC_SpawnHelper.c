@@ -375,12 +375,26 @@ sealed class SDRC_SpawnHelper
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		
 		if (entity)
-		{				
+		{
 			//Completely ignore these. There is no PrefabName for these and will crash if asked.								
 			if (SCR_StringHelper.ContainsAny(entity.ClassName(), baseGameMode.m_SDRC_Core.m_Config.emptyPos.ignoreFilter) )
 			{
 				return true;	//Just continue...
 			}
+			
+			if (!entity.GetPrefabData())
+			{
+				SDRC_Log.Add("[SDRC_SpawnHelper:FindEntitiesCallback] GetPrefabData fails for: " + entity, LogLevel.SPAM);
+				return true;	//Just continue...
+			}
+			
+			#ifndef SDRC_RELEASE
+				vector pos = entity.GetOrigin();
+				if (pos[0] == 0)
+				{
+					SDRC_Log.Add("[SDRC_SpawnHelper:FindEntitiesCallback] Entity at zero: " + entity, LogLevel.SPAM);
+				}
+			#endif
 			
 			//Stop immediately when these are found
 			if (SCR_StringHelper.ContainsAny(entity.ClassName(), baseGameMode.m_SDRC_Core.m_Config.emptyPos.stopFilter) )
@@ -391,7 +405,11 @@ sealed class SDRC_SpawnHelper
 			}
 			else //Then do normal checking
 			{
-				SDRC_Log.Add("[SDRC_SpawnHelper:FindEntitiesCallback] Entity: " + entity, LogLevel.DEBUG);
+//				SDRC_Log.Add("[SDRC_SpawnHelper:FindEntitiesCallback] Entity: " + entity, LogLevel.DEBUG);
+				
+				ResourceName resName = entity.GetPrefabData().GetPrefabName();
+
+/*				//TBD: This code moved up. Remove if all is good.
 				
 				ResourceName resName = "notaresourcename";
 				
@@ -401,8 +419,8 @@ sealed class SDRC_SpawnHelper
 				}
 				else
 				{
-					SDRC_Log.Add("[SDRC_SpawnHelper:FindEntitiesCallback] GetPrefabData fails for: " + entity, LogLevel.ERROR);
-				}
+					SDRC_Log.Add("[SDRC_SpawnHelper:FindEntitiesCallback] GetPrefabData fails for: " + entity, LogLevel.SPAM);
+				}*/
 				
 				if (SCR_StringHelper.ContainsAny(resName, baseGameMode.m_SDRC_Core.m_Config.emptyPos.stopFilter) && !obstruct)
 				{
