@@ -43,7 +43,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.convoyList);
 		if (idx == -1)
 		{
-			SDRC_Log.Add("[SDRC_Mission_Convoy] No occupations defined.", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_Mission_Convoy] No convoys defined.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}
