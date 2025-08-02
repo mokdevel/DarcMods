@@ -12,7 +12,7 @@ Main features:
 * Support for TOH ReCharacters
   * MEI supported
   * MEC is not supported
-* Checked compatibility with ArlandXEveron and Novka
+* Checked compatibility with EveronXArland and Novka
 
 Fixes:
 * Convoy mission: When vehicle spawn fails, the mission fails .. instead of crashing.
