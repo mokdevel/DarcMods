@@ -62,17 +62,17 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 	{
 		
 		conf.modList = {};
-		/*conf.modList = {"$ArmaReforger:Prefabs",
-						"$WCS_Armaments:Prefabs",
-						"$M110MarksmanRifle:Prefabs",
-						"$RISLaserAttachments:Prefabs"
+		/*conf.modList = {"$ArmaReforger:",
+						"$WCS_Armaments:",
+						"$M110MarksmanRifle:",
+						"$RISLaserAttachments:"
 		};*/
 		
 		//Lootlist: Rifles
 		SDRC_List lootList01 = new SDRC_List;
 		lootList01.Set(
 			"WEAPON_RIFLE",
-			"/Weapons/Rifles",
+			"Prefabs/Weapons/Rifles",
 			{"Rifle"},
 			{"_Base", "Tutorial"}
 		);
@@ -82,7 +82,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		SDRC_List lootList02 = new SDRC_List;
 		lootList02.Set(
 			"WEAPON_LAUNCHER",
-			"/Weapons/Launchers",
+			"Prefabs/Weapons/Launchers",
 			{"Launcher", 
 			"BC_M79"		//From BigChungusLaunchers
 			},
@@ -94,7 +94,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		SDRC_List lootList03 = new SDRC_List;
 		lootList03.Set(
 			"WEAPON_HANDGUN",
-			"/Weapons/Handguns",
+			"Prefabs/Weapons/Handguns",
 			{"Handgun"},
 			{"_Base"}
 		);
@@ -104,7 +104,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		SDRC_List lootList04 = new SDRC_List;
 		lootList04.Set(
 			"WEAPON_GRENADE",
-			"/Weapons/Grenades",
+			"Prefabs/Weapons/Grenades",
 			{""},
 			{"_Base"}
 		);
@@ -114,7 +114,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		SDRC_List lootList05 = new SDRC_List;
 		lootList05.Set(
 			"ITEM_MEDICAL",
-			"/Items/Medicine",
+			"Prefabs/Items/Medicine",
 			{""},
 			{"_Base"}
 		);
@@ -124,7 +124,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		SDRC_List lootList06 = new SDRC_List;
 		lootList06.Set(
 			"UTIL_ATTACHMENT",
-			"/Weapons/Attachments",
+			"Prefabs/Weapons/Attachments",
 			{""},
 			{"_Base", "Optic"}
 		);
@@ -134,7 +134,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		SDRC_List lootList07 = new SDRC_List;
 		lootList07.Set(
 			"UTIL_OPTICS",
-			"/Weapons/Attachments",
+			"Prefabs/Weapons/Attachments",
 			{"Optic", "Scope"},
 			{"_Base"}
 		);
@@ -144,7 +144,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		SDRC_List lootList08 = new SDRC_List;
 		lootList08.Set(
 			"ITEM_GENERAL",
-			"/Items",
+			"Prefabs/Items",
 			{"Binocular", "Compass", "Flashlight", "PaperMap_01_folded", "Watch_"},
 			{"_Base"}
 		);
@@ -164,7 +164,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		SDRC_List lootList10 = new SDRC_List;
 		lootList10.Set(
 			"WEAPON_MG",
-			"/Weapons/MachineGuns",
+			"Prefabs/Weapons/MachineGuns",
 			{"MG_", "RPD", "RPK"},
 			{"_Base"}
 		);
@@ -174,7 +174,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		SDRC_List lootList30 = new SDRC_List;
 		lootList30.Set(
 			"UTIL_MAGAZINES",
-			"/Weapons/Magazines",
+			"Prefabs/Weapons/Magazines",
 			{""},
 			{"_Base", "Internal_"}
 		);
@@ -184,7 +184,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		SDRC_List lootList31 = new SDRC_List;
 		lootList31.Set(
 			"UTIL_AMMO",
-			"/Weapons/Ammo",
+			"Prefabs/Weapons/Ammo",
 			{"Shell", "Rocket", "Grenade", "Flare"},
 			{"_Base", "Internal_", "_Effect", "FlareEffect"}
 		);

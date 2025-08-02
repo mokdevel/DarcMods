@@ -27,6 +27,13 @@
 	C_LAUNCHER
 	C_MEDIC
 	C_SPECIAL
+
+	//Zombies and creatures
+	G_ZOMBIE_SMALL
+	G_ZOMBIE_MEDIUM
+	G_ZOMBIE_LARGE
+	C_DEMON
+	C_DEMON_BOSS
 */
 
 //------------------------------------------------------------------------------------------------
@@ -68,10 +75,10 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 	{
 		
 		conf.modList = {};
-		/*conf.modList = {"$ArmaReforger:Prefabs",
-						"$WCS_Armaments:Prefabs",
-						"$M110MarksmanRifle:Prefabs",
-						"$RISLaserAttachments:Prefabs"
+		/*conf.modList = {"$ArmaReforger:",
+						"$WCS_Armaments:",
+						"$M110MarksmanRifle:",
+						"$RISLaserAttachments:"
 		};*/
 		
 		SDRC_Aka aka00 = new SDRC_Aka();
@@ -86,7 +93,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList01 = new SDRC_List();
 		enemyList01.Set(
 			"G_LIGHT",
-			"/Groups",
+			"Prefabs/Groups",
 			{"LightFire", "FireTeam", "FireGroup", "RifleSquad", "SentryTeam"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
 		);
@@ -95,7 +102,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList02 = new SDRC_List();
 		enemyList02.Set(
 			"G_SNIPER",
-			"/Groups",
+			"Prefabs/Groups",
 			{"Sniper", "SharpShooter", "USSR_Spetsnaz_SentryTeam", "VKPO_S_SentryTeam.et"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
 		);
@@ -104,7 +111,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList03 = new SDRC_List();
 		enemyList03.Set(
 			"G_LAUNCHER",
-			"/Groups",
+			"Prefabs/Groups",
 			{"Team_AT", "Team_GL", "Team_LAT"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
 		);
@@ -113,7 +120,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList04 = new SDRC_List();
 		enemyList04.Set(
 			"G_ADMIN",
-			"/Groups",
+			"Prefabs/Groups",
 			{"_Platoon"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
 		);
@@ -122,7 +129,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList05 = new SDRC_List();
 		enemyList05.Set(
 			"G_MEDICAL",
-			"/Groups",
+			"Prefabs/Groups",
 			{"_Medical"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
 		);
@@ -131,7 +138,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList06 = new SDRC_List();
 		enemyList06.Set(
 			"G_RECON",
-			"/Groups",
+			"Prefabs/Groups",
 			{"_Recon", "_Maneuver"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
 		);
@@ -140,7 +147,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList07 = new SDRC_List();
 		enemyList07.Set(
 			"G_HEAVY",
-			"/Groups",
+			"Prefabs/Groups",
 			{"MachineGunTeam", "FireTeam", "FireGroup", "Suppress", "Spetsnaz_Squad"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
 		);
@@ -149,7 +156,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList08 = new SDRC_List();
 		enemyList08.Set(
 			"G_SPECIAL",
-			"/Groups",
+			"Prefabs/Groups",
 			{"GreenBeret", "Sapper", "Sentry", "Spetsnaz"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
 		);
@@ -158,7 +165,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList09 = new SDRC_List();
 		enemyList09.Set(
 			"G_SMALL",
-			"/Groups",			
+			"Prefabs/Groups",			
 			{"Spetsnaz_SentryTeam", "GreenBeret_SentryTeam", "SharpshooterTeam", "MedicalSection", "SapperTeam", "SentryTeam"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
 		);
@@ -168,7 +175,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList20 = new SDRC_List();
 		enemyList20.Set(
 			"C_RIFLEMAN",
-			"/Characters/Factions",			
+			"Prefabs/Characters/Factions",			
 			{"Rifleman", "Sapper", "_PL", "_SL"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
 		);
@@ -177,7 +184,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList21 = new SDRC_List();
 		enemyList21.Set(
 			"C_HEAVY",
-			"/Characters/Factions",			
+			"Prefabs/Characters/Factions",			
 			{"_GL", "_MG", "Grenadier", "_Ammo", "_LMG"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
 		);
@@ -186,7 +193,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList22 = new SDRC_List();
 		enemyList22.Set(
 			"C_RECON",
-			"/Characters/Factions",			
+			"Prefabs/Characters/Factions",			
 			{"Scout", "Spotter", "_RTO", "_SL", "_GL",
 				"_AG1", //MEI		
 			},
@@ -197,7 +204,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList23 = new SDRC_List();
 		enemyList23.Set(
 			"C_OFFICER",
-			"/Characters/Factions",			
+			"Prefabs/Characters/Factions",			
 			{"_Officer", "Sergeant", "_AC", 
 				"_Leader", //MEI
 			},
@@ -208,7 +215,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList24 = new SDRC_List();
 		enemyList24.Set(
 			"C_CREW",
-			"/Characters/Factions",			
+			"Prefabs/Characters/Factions",			
 			{"Crew", "Pilot", "_CC",
 				"MEI_Leader", //MEI
 			},
@@ -219,7 +226,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList25 = new SDRC_List();
 		enemyList25.Set(
 			"C_SNIPER",
-			"/Characters/Factions",			
+			"Prefabs/Characters/Factions",			
 			{"Sniper", "Sharpshooter"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
 		);
@@ -228,7 +235,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList26 = new SDRC_List();
 		enemyList26.Set(
 			"C_LAUNCHER",
-			"/Characters/Factions",			
+			"Prefabs/Characters/Factions",			
 			{"_AAT", "_AT", "_AT", "_LAT"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
 		);
@@ -237,7 +244,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList27 = new SDRC_List();
 		enemyList27.Set(
 			"C_MEDIC",
-			"/Characters/Factions",			
+			"Prefabs/Characters/Factions",			
 			{"Medic"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
 		);
@@ -246,7 +253,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_List enemyList28 = new SDRC_List();
 		enemyList28.Set(
 			"C_SPECIAL",
-			"/Characters/Factions",			
+			"Prefabs/Characters/Factions",			
 			{"_SF", "_SR", "FIA_AC", 
 				"_Bomb", //MEI
 				"MEI_Rifleman1", //MEI
@@ -254,5 +261,51 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
 		);
 		conf.lists.Insert(enemyList28);
+		
+		//Monster - zombies and creatures
+		SDRC_List enemyList50 = new SDRC_List();
+		enemyList50.Set(
+			"G_ZOMBIE_SMALL",
+			"622120A5448725E3/Prefabs/Characters/Factions",			
+			{"_Small"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+		);
+		conf.lists.Insert(enemyList50);
+
+		SDRC_List enemyList51 = new SDRC_List();
+		enemyList51.Set(
+			"G_ZOMBIE_MEDIUM",
+			"622120A5448725E3/Prefabs/Characters/Factions",			
+			{"_Medium"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+		);
+		conf.lists.Insert(enemyList51);
+
+		SDRC_List enemyList52 = new SDRC_List();
+		enemyList52.Set(
+			"G_ZOMBIE_LARGE",
+			"622120A5448725E3/Prefabs/Characters/Factions",			
+			{"_Huge", "_Large", "_Horde"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+		);
+		conf.lists.Insert(enemyList52);
+
+		SDRC_List enemyList60 = new SDRC_List();
+		enemyList60.Set(
+			"C_DEMON",
+			"Prefabs/Characters",			
+			{"Plague", "Slander", "Whisper", "Whisperer"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+		);
+		conf.lists.Insert(enemyList60);
+		
+		SDRC_List enemyList61 = new SDRC_List();
+		enemyList61.Set(
+			"C_DEMON_BOSS",
+			"Prefabs/Characters",			
+			{"Stalker Heavy"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+		);
+		conf.lists.Insert(enemyList61);								
 	}
 }
