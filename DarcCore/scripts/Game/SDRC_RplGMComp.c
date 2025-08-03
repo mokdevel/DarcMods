@@ -1,68 +1,85 @@
-//SDRC_RplGMComp.c
-
-//[ComponentEditorProps(category: "GameScripted/Misc", description: "")]
-class SDRC_RplGMCompClass : ScriptComponentClass{}
+class SDRC_RplGMCompClass : ScriptComponentClass { }
 SDRC_RplGMCompClass g_RplGMCompClass;
 
+//------------------------------------------------------------------------------------------------
+enum DC_EDrawSymbol
+{
+	NONE,
+	CIRCLE
+}
+ 
+//------------------------------------------------------------------------------------------------
+class SDRC_GMMapSymbol : Managed
+{
+	//Default information
+	DC_EDrawSymbol type;
+	vector pos;
+	int color;
+	float radius;
+}
+
+//------------------------------------------------------------------------------------------------
 class SDRC_RplGMComp : ScriptComponent
 {
 	private static SDRC_RplGMComp s_Instance;	
-	
-    PlayerManager m_PlayerManager;
-    //------------------------------------------------------------------------------------------------
+	/*private*/ ref array<ref SDRC_GMMapSymbol> m_Symbols = {};
+	 
     override void OnPostInit(IEntity owner)
     {
-		SDRC_Log.Add("[SDRC_RplGMComp] OnPostInit", LogLevel.DEBUG);
-        SetEventMask(owner, EntityEvent.INIT);
-
-		s_Instance = this;
+        auto hintEnt = SDRC_RplHintEntity.Cast(owner);
+        if (!hintEnt)
+        {
+            SDRC_Log.Add("[SDRC_RplGMComp] Entity not found.", LogLevel.ERROR);
+            return;
+        }
+				
+		BaseRplComponent rplComponent = BaseRplComponent.Cast(hintEnt.FindComponent(BaseRplComponent));
+        if (!rplComponent)
+        {
+            SDRC_Log.Add("[SDRC_RplGMComp] RplComponent not found.", LogLevel.ERROR);
+            return;
+        }
+ 
+		s_Instance = this;				
     }
+ 
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Return instance to component
+	*/
+	static SDRC_RplGMComp GetInstance()
+	{
+		return s_Instance;
+	}
 	
-    //------------------------------------------------------------------------------------------------
-    override void EOnInit(IEntity owner)
-    {
-        m_PlayerManager = GetGame().GetPlayerManager();
-		
-        if(SCR_PlayerController.GetLocalControlledEntity() != owner)
+	//------------------------------------------------------------------------------------------------
+ 	void SyncMapSymbols()
+	{
+		//TBD: We should sync the circles to newly joined players.
+		foreach(SDRC_GMMapSymbol symbol : m_Symbols)
 		{
-			SDRC_Log.Add("[SDRC_RplGMComp] GetPlayerManager failed", LogLevel.DEBUG);
-            return;
+			AddMapCicrle(symbol.pos, symbol.radius, symbol.color);
 		}		
-		
-        GetGame().GetCallqueue().CallLater(DelayedInit,1000,false,owner);
-    }
+	}
 	
-    //------------------------------------------------------------------------------------------------
-    void DelayedInit(IEntity owner)
+	//------------------------------------------------------------------------------------------------
+ 	void AddMapCicrle(vector pos, float radius, int color)
     {
-		SDRC_Log.Add("[SDRC_RplGMComp] DelayedInit", LogLevel.DEBUG);
-		
-        SCR_EditorManagerCore core = SCR_EditorManagerCore.Cast(SCR_EditorManagerCore.GetInstance(SCR_EditorManagerCore));
-        if (!core)
-            return;
-
-        SCR_EditorManagerEntity editorManager = core.GetEditorManager();
-        if (!editorManager)
-            return;        
-        
-        editorManager.GetOnOpened().Insert(FunctionToInvoke);    
+        Rpc(RpcDo_SyncMapCircle, DC_EDrawSymbol.CIRCLE, pos, radius, color); 	// broadcast to clients
+        RpcDo_SyncMapCircle(DC_EDrawSymbol.CIRCLE, pos, radius, color); 		// handle on authority
     }
-	
-    //------------------------------------------------------------------------------------------------
-    void FunctionToInvoke()
+    
+	//------------------------------------------------------------------------------------------------
+    [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
+    protected void RpcDo_SyncMapCircle(DC_EDrawSymbol symbolType, vector pos, float radius, int color)
     {
-		SDRC_Log.Add("[SDRC_RplGMComp] GM opened", LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapCircle] Pos: " + pos, LogLevel.NORMAL);	
 		
-		
-		
-        int PlayerID = m_PlayerManager.GetPlayerIdFromControlledEntity(GetOwner());
-        Rpc(Ask_Authority_PrintStuff, PlayerID);
-    }    
-	
-    //------------------------------------------------------------------------------------------------
-    [RplRpc(RplChannel.Reliable, RplRcver.Server)]
-    void Ask_Authority_PrintStuff(int PlayerID)
-    {
-        SDRC_Log.Add("[SDRC_RplGMComp] GM Mode by: " + m_PlayerManager.GetPlayerName(PlayerID), LogLevel.DEBUG);        
-    }
+		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
+		symbol.type = symbolType;
+		symbol.pos = pos;
+		symbol.radius = radius;
+		symbol.color = color;
+		m_Symbols.Insert(symbol);
+    }	
 }

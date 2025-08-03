@@ -14,6 +14,5 @@ class SDRC_HintHelper
 		{
 			SDRC_Log.Add("[SDRC_HintHelper:ShowHint] SDRC_RplHintComp not found", LogLevel.ERROR);
 		}		
-		
 	}
 }

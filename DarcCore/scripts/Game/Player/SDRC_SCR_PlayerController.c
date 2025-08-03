@@ -1,3 +1,5 @@
+/* TBD: Remove as this is unused
+
 modded class SCR_PlayerController : PlayerController
 {
 	
@@ -21,11 +23,11 @@ modded class SCR_PlayerController : PlayerController
 		SDRC_Log.Add("[SDRC_SCR_PlayerController] EOnActivate", LogLevel.DEBUG);
 		
         m_PlayerManager = GetGame().GetPlayerManager();
-/*        if(SCR_PlayerController.GetLocalControlledEntity() != owner)
-		{
-			SDRC_Log.Add("[SDRC_SCR_PlayerController] GetPlayerManager failed", LogLevel.DEBUG);
-            return;
-		}*/
+//        if(SCR_PlayerController.GetLocalControlledEntity() != owner)
+//		{
+//			SDRC_Log.Add("[SDRC_SCR_PlayerController] GetPlayerManager failed", LogLevel.DEBUG);
+//            return;
+//		}
         GetGame().GetCallqueue().CallLater(DelayedInit,1000,false,owner);
 	}
 	
@@ -63,3 +65,4 @@ modded class SCR_PlayerController : PlayerController
 		
 #endif	
 }
+*/

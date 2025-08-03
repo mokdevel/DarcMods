@@ -206,7 +206,10 @@ class SDRC_MissionFrame
 	Mission life cycle manager.
 	*/	
 	protected void MissionCycleManager()
-	{			
+	{		
+		vector testpos = SDRC_Misc.GetRandomWorldPos();				
+		SDRC_GMHelper.AddMapCicrle(testpos, 100, ARGB(75, 255, 0, 0));
+		
 		ref SDRC_Mission tmpDC_Mission = null;
 		DC_EMissionType missionType = null;
 		bool staticMissionSpawned = false;

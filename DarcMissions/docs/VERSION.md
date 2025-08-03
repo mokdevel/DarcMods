@@ -5,6 +5,10 @@
 ## Next release (unreleased)
 * Nothing yet
 
+Changes:
+* dc_enemyList.json and dc_lootList.json changes. 
+* dc_nonValidArea.json renamed showOnMap to showOnGMMap
+
 ## 20250801
 Minor update to properly find enemies when using TOH ReCharacters. Update *should not* affect existing installs. If you're using TOH ReCharacters, delete your dc_enemyList.json and a new one will be created.
 

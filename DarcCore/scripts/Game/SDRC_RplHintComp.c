@@ -47,10 +47,7 @@ class SDRC_RplHintComp : ScriptComponent
     {
 		SDRC_Log.Add("[SDRC_RplHintComp:RpcDo_ShowHint] Hint: " + msg, LogLevel.NORMAL);
 	
-		#ifdef USE_POPUP_NOTIFICATION
-//			SCR_PopUpNotification.GetInstance().PopupMsg(title, 20, text2: msg);		
-			SDRC_SCR_PopUpNotification.GetInstance().PopupMsg(title, 20, text2: msg);		
-			return;
-		#endif
+		SDRC_SCR_PopUpNotification.GetInstance().PopupMsg(title, 20, text2: msg);		
+		return;
     }	
 }

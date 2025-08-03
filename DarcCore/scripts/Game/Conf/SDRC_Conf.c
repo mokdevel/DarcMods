@@ -28,7 +28,6 @@ sealed class SDRC_Conf
 	const bool SHOW_MARKER_FOR_NONVALIDAREA = false;	//Show a debug marker for non valid area
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.NORMAL;
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
-	#define USE_POPUP_NOTIFICATION
 #endif
 		
 //Development time options	
@@ -45,6 +44,5 @@ sealed class SDRC_Conf
 	const bool SHOW_MARKER_FOR_NONVALIDAREA = true;
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
-	#define USE_POPUP_NOTIFICATION
 #endif
 }
