@@ -2,6 +2,13 @@
 class SDRC_MapSystem : GameSystem
 {
 #ifndef SDRC_RELEASE	
+	
+	protected Widget m_Widget;
+	protected CanvasWidget m_Canvas;
+	protected ref array<ref CanvasWidgetCommand> m_DrawCommands;
+	
+	protected ResourceName m_Layout = "{A6A79ABB08D490BF}UI/layouts/Map/SDRC_MapCanvasLayer.layout";
+		
 	//------------------------------------------------------------------------------------------------
 	// System initialization
 	//------------------------------------------------------------------------------------------------
@@ -50,62 +57,48 @@ class SDRC_MapSystem : GameSystem
 	
 	protected SCR_MapEntity m_mapEntity;
 	protected CanvasWidget m_wCanvasWidget;
-	
-/*	protected ref array<ref TILW_Drawing> m_drawings = {};
-	protected ref array<ref CanvasWidgetCommand> m_drawCommands = null;
-	protected ref TILW_Drawing m_previewDrawing = null;
-	protected ref array<int> m_drawPoints = null;*/
+	protected vector m_previousPan;
+	protected float m_previousZoom;
 	
 	//! Creates widget and assigns draw commands when the map is opened
 	protected void OnMapOpen(MapConfiguration mapConfig)
 	{	
 		SDRC_Log.Add("[SDRC_MapSystem:OnMapOpen]", LogLevel.DEBUG);		
 		
-/*		Widget mapFrame = m_mapEntity.GetMapMenuRoot().FindAnyWidget(SCR_MapConstants.MAP_FRAME_NAME);
+/*		SCR_EditorManagerEntity editorManager = SCR_EditorManagerEntity.GetInstance();
+		if !(editorManager && editorManager.IsOpened())		
+		{
+			return;
+		}*/
+		
+		Widget mapFrame = m_mapEntity.GetMapMenuRoot().FindAnyWidget(SCR_MapConstants.MAP_FRAME_NAME);
 		if (!mapFrame)
 			mapFrame = m_mapEntity.GetMapMenuRoot();
 		if (!mapFrame)
 			 return;
 		
-		Widget w = GetGame().GetWorkspace().CreateWidgets("{F928661E727CC638}UI/Map/TILW_DrawingCanvas.layout", mapFrame);
-		m_wCanvasWidget = CanvasWidget.Cast(w);
-		
-		int factionIndex = TILW_DrawingHelper.GetLocalFactionIndex();
-		
-		m_drawCommands = {};
-		foreach (TILW_Drawing drawing : m_drawings)
-		{
-			if (!TILW_DrawingHelper.IsVisibleFaction(drawing.m_factionIndex, factionIndex))
-				continue;
-			m_drawCommands.Insert(drawing.m_drawCommand);
-		}
-		m_wCanvasWidget.SetDrawCommands(m_drawCommands);
+		m_Widget = GetGame().GetWorkspace().CreateWidgets(m_Layout);
+		m_Canvas = CanvasWidget.Cast(m_Widget.FindAnyWidget("Canvas"));
+		m_DrawCommands = new array<ref CanvasWidgetCommand>();		
 		
 		Enable(true);
-		EnableDrawing();*/
 	}
-	
+		
 	//! Destroys widget and draw commands when the map is closed
 	protected void OnMapClose(MapConfiguration mapConfig)
 	{
 		SDRC_Log.Add("[SDRC_MapSystem:OnMapClose]", LogLevel.DEBUG);				
-/*		Enable(false);
-		m_wCanvasWidget = null;
-		m_drawCommands = null;
+		
+		m_Widget.RemoveFromHierarchy();
+		
+		Enable(false);
+		m_DrawCommands = null;
+		
+/*		m_wCanvasWidget = null;
 		m_previewDrawing = null;
 		m_drawPoints = null;
 		DisableDrawing();*/
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	// Drawing processing - updates vertices of existing drawings
-	//------------------------------------------------------------------------------------------------
-	
-/*	protected vector m_previousPan;
-	protected float m_previousZoom;
-	
-	protected float m_previousCursorX;
-	protected float m_previousCursorY;
 	
 	//! Updates existing drawings if the map has been transformed
 	override protected void OnUpdate(ESystemPoint point)
@@ -117,29 +110,53 @@ class SDRC_MapSystem : GameSystem
 		
 		vector currentPan = m_mapEntity.GetCurrentPan();
 		float currentZoom = m_mapEntity.GetCurrentZoom();
-		
+
 		bool mapChange = (m_previousPan != currentPan) || (m_previousZoom != currentZoom);
 		
-		if (m_previewDrawing)
+		if (!mapChange)
 		{
-			float cursorX, cursorY;
-			m_mapEntity.GetMapCursorWorldPosition(cursorX, cursorY);
-			if (mapChange || cursorX != m_previousCursorX || cursorY != m_previousCursorY)
-			{
-				UpdatePreviewCommand(currentZoom);
-				m_previousCursorX = cursorX;
-				m_previousCursorY = cursorX;
-			}
+			return;
 		}
 		
-		if (!mapChange)
-			return;
+		m_DrawCommands.Clear();
+		DrawCircle("2000 0 2000", 300, ARGB(75, 255, 75, 0));
 		
-		foreach (TILW_Drawing drawing : m_drawings)
-			drawing.UpdateCommand(currentZoom);
+		if(!m_DrawCommands.IsEmpty())
+		{						
+			m_Canvas.SetDrawCommands(m_DrawCommands);			
+		}
 		
 		m_previousPan = currentPan;
 		m_previousZoom = currentZoom;
-	}*/
+	}	
+
+	//------------------------------------------------------------------------------------------------
+	void DrawCircle(vector center, float range, int color, int n = 36)	
+	{
+		PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
+		
+		drawCommand.m_iColor = color;		
+		drawCommand.m_Vertices = new array<float>;
+		
+		float xpos, ypos;
+		
+		m_mapEntity.WorldToScreen(center[0], center[2], xpos, ypos, true);
+		float r = range * m_mapEntity.GetCurrentZoom();
+
+		vector pos_center = "0 0 0";
+		pos_center[0] = xpos;
+		pos_center[2] = ypos;
+		
+		for(int i = 0; i < n; i++)
+		{			
+			float angle = i * (350/n);
+			vector pos = SDRC_Misc.GetCoordinatesOnCircle(pos_center, r, angle);
+			drawCommand.m_Vertices.Insert(pos[0]);
+			drawCommand.m_Vertices.Insert(pos[2]);			
+		}
+		
+		m_DrawCommands.Insert(drawCommand);
+	}
+
 #endif
 }
