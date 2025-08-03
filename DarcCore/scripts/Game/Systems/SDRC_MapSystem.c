@@ -132,7 +132,10 @@ class SDRC_MapSystem : GameSystem
 			{			
 				PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
 				drawCommand = DrawCircle(symbol.pos, symbol.radius, symbol.color);
-				m_DrawCommands.Insert(drawCommand);
+				if (drawCommand)
+				{
+					m_DrawCommands.Insert(drawCommand);
+				}
 			}		
 			
 		}		
@@ -152,7 +155,7 @@ class SDRC_MapSystem : GameSystem
 			m_Canvas.SetDrawCommands(m_DrawCommands);			
 		}
 		
-		DrawImage("2000 0 2000", 54, 110);
+		DrawImage("2000 0 2000", 32, 64);
 		
 		m_previousPan = currentPan;
 		m_previousZoom = currentZoom;
@@ -188,19 +191,47 @@ class SDRC_MapSystem : GameSystem
 	}
 
 	//------------------------------------------------------------------------------------------------
-//	void DrawImage(vector center, int width, int height, SharedItemRef tex)
-	void DrawImage(vector center, int width, int height)
+	ImageDrawCommand DrawMarker(vector pos, DC_EMissionIcon icon)
+	{
+		string texture = SDRC_MapMarkerHelper.GetMarkerTexture(icon);
+		if (texture == "")
+		{
+			//TBD: Add errormessage
+			return null;
+		}
+		
+		int width = 32;
+		int height = 64;
+		
+		ImageDrawCommand drawCommand = new ImageDrawCommand();
+		SharedItemRef tex = m_Canvas.LoadTexture(texture);
+					
+		int xpos, ypos;		
+		m_MapEntity.WorldToScreen(pos[0], pos[2], xpos, ypos, true);
+		
+		drawCommand.m_Position = Vector(xpos - (width/2), ypos - (height/2), 0);
+		drawCommand.m_pTexture = tex;
+		drawCommand.m_Size = Vector(width, height, 0);
+		drawCommand.m_iFlags = WidgetFlags.BLEND | WidgetFlags.STRETCH;
+		
+		return drawCommand;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+//	void DrawImage(vector center, int width, int height, string texture)
+	void DrawImage(vector pos, int width, int height)
 	{
 		ImageDrawCommand drawCommand = new ImageDrawCommand();
 		
 		SharedItemRef tex = m_Canvas.LoadTexture("{8F0F7AD0EF00FCDB}UI/Textures/Icons/gm_mission_Convoy_map.edds");
 					
 		int xpos, ypos;		
-		m_MapEntity.WorldToScreen(center[0], center[2], xpos, ypos, true);
+		m_MapEntity.WorldToScreen(pos[0], pos[2], xpos, ypos, true);
 		
 		drawCommand.m_Position = Vector(xpos - (width/2), ypos - (height/2), 0);
 		drawCommand.m_pTexture = tex;
 		drawCommand.m_Size = Vector(width, height, 0);
+		drawCommand.m_iFlags = WidgetFlags.BLEND | WidgetFlags.STRETCH;
 		
 		m_DrawCommands.Insert(drawCommand);
 	}			

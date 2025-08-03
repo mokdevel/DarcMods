@@ -138,6 +138,71 @@ sealed class SDRC_MapMarkerHelper
 		
 		return null;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find marker texture file (*.edds)
+	\param icon Icon to find the texture 
+	*/
+	static string GetMarkerTexture(DC_EMissionIcon icon)
+	{
+		string texture = "";
+		
+		switch (icon)
+		{			
+			case DC_EMissionIcon.GM_MISSION_X_MAP:
+			{
+				texture = "{D2202D0BD28F1595}UI/Textures/Icons/gm_mission_X_map.edds";
+				break;
+			}
+			case DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP:
+			{
+				texture = "{80C94D83C82B22B0}UI/Textures/Icons/gm_mission_Squatters_map.edds";
+				break;
+			}
+			case DC_EMissionIcon.GM_MISSION_CRASHSITE_MAP:
+			{
+				texture = "{D717A926DD1BF821}UI/Textures/Icons/gm_mission_Crashsite_map.edds";
+				break;
+			}
+			case DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP:
+			{
+				texture = "{B039E934071DB071}UI/Textures/Icons/gm_mission_Occupation_map.edds";
+				break;
+			}
+			case DC_EMissionIcon.GM_MISSION_CONVOY_MAP:
+			{
+				texture = "{8F0F7AD0EF00FCDB}UI/Textures/Icons/gm_mission_Convoy_map.edds";
+				break;
+			}
+			case DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP:
+			{
+				texture = "{E9B24656D68043DB}UI/Textures/Icons/gm_mission_Helicopter_map.edds";
+				break;
+			}
+			case DC_EMissionIcon.GM_MISSION_HUNTER_MAP:
+			{
+				texture = "{B7B4981CD0DFF5BE}UI/Textures/Icons/gm_mission_Hunter_map.edds";
+				break;
+			}
+			case DC_EMissionIcon.GM_MISSION_PATROL_MAP:
+			{
+				texture = "{614156B627595CA2}UI/Textures/Icons/gm_mission_Patrol_map.edds";
+				break;
+			}
+			case DC_EMissionIcon.GM_MISSION_RADIOACTIVE_MAP:
+			{
+				texture = "{B9B3508F01BFEF7D}UI/Textures/Icons/gm_mission_RadioActive_map.edds";
+				break;
+			}
+			case DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP:		
+			{
+				texture = "{A72A9123C15DABDF}UI/Textures/Icons/gm_mission_Roadblock_map.edds";
+				break;
+			}
+		}		
+		return texture;
+	}		
 }
 
 /*	protected void CreateMapMarker2(vector pos)
