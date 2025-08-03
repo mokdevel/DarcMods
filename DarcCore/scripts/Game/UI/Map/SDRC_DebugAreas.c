@@ -1,4 +1,7 @@
 //------------------------------------------------------------------------------------------------
+/*
+TBD: Remove this. All map drawing stuff is in the SDRC_MapSystem
+
 [BaseContainerProps()]
 class SDRC_DebugAreas : SDRC_MapCanvasLayer
 {		
@@ -11,15 +14,5 @@ class SDRC_DebugAreas : SDRC_MapCanvasLayer
 			DrawCircle(mapCircle.pos, mapCircle.radius, mapCircle.color);
 		}		
 	}
-	
-/*	override void OnMapOpen(MapConfiguration config)
-	{
-		super.OnMapOpen(config);
-		SDRC_Log.Add("[SDRC_DebugAreas] Map opened", LogLevel.NORMAL);
-	}
-	
-	override void OnMapClose(MapConfiguration config)
-	{	
-		super.OnMapClose(config);
-	}*/
 }
+*/

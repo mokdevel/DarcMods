@@ -42,20 +42,20 @@ class SDRC_MapSystem : GameSystem
 	//! Inserts map listeners
 	protected void Init()
 	{
-		m_mapEntity = SCR_MapEntity.GetMapInstance();
+		m_MapEntity = SCR_MapEntity.GetMapInstance();
 		
-		if (!m_mapEntity)
+		if (!m_MapEntity)
 			return;
 		
-		m_mapEntity.GetOnMapOpen().Insert(OnMapOpen);
-		m_mapEntity.GetOnMapClose().Insert(OnMapClose);
+		m_MapEntity.GetOnMapOpen().Insert(OnMapOpen);
+		m_MapEntity.GetOnMapClose().Insert(OnMapClose);
 	}
 
 	//------------------------------------------------------------------------------------------------
 	// Map initialization
 	//------------------------------------------------------------------------------------------------
 	
-	protected SCR_MapEntity m_mapEntity;
+	protected SCR_MapEntity m_MapEntity;
 	protected CanvasWidget m_wCanvasWidget;
 	protected vector m_previousPan;
 	protected float m_previousZoom;
@@ -70,9 +70,9 @@ class SDRC_MapSystem : GameSystem
 			return;
 		}
 		
-		Widget mapFrame = m_mapEntity.GetMapMenuRoot().FindAnyWidget(SCR_MapConstants.MAP_FRAME_NAME);
+		Widget mapFrame = m_MapEntity.GetMapMenuRoot().FindAnyWidget(SCR_MapConstants.MAP_FRAME_NAME);
 		if (!mapFrame)
-			mapFrame = m_mapEntity.GetMapMenuRoot();
+			mapFrame = m_MapEntity.GetMapMenuRoot();
 		if (!mapFrame)
 			 return;
 		
@@ -110,11 +110,11 @@ class SDRC_MapSystem : GameSystem
 	{
 		super.OnUpdate(point);
 		
-		if (!m_mapEntity)
+		if (!m_MapEntity)
 			return;
 		
-		vector currentPan = m_mapEntity.GetCurrentPan();
-		float currentZoom = m_mapEntity.GetCurrentZoom();
+		vector currentPan = m_MapEntity.GetCurrentPan();
+		float currentZoom = m_MapEntity.GetCurrentZoom();
 
 		bool mapChange = (m_previousPan != currentPan) || (m_previousZoom != currentZoom);
 		
@@ -124,7 +124,16 @@ class SDRC_MapSystem : GameSystem
 		}
 		
 		m_DrawCommands.Clear();
-		DrawCircle("2000 0 2000", 300, ARGB(75, 255, 75, 0));
+		
+		PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
+		drawCommand = DrawCircle("2000 0 2000", 300, ARGB(75, 255, 75, 0));
+		m_DrawCommands.Insert(drawCommand);
+		
+		foreach(SDRC_DebugHelperPos mapCircle : SDRC_DebugHelper.m_MapCircle)
+		{			
+			drawCommand = DrawCircle(mapCircle.pos, mapCircle.radius, mapCircle.color);
+			m_DrawCommands.Insert(drawCommand);
+		}		
 		
 		if(!m_DrawCommands.IsEmpty())
 		{						
@@ -136,7 +145,7 @@ class SDRC_MapSystem : GameSystem
 	}	
 
 	//------------------------------------------------------------------------------------------------
-	void DrawCircle(vector center, float range, int color, int n = 36)	
+	PolygonDrawCommand DrawCircle(vector center, float range, int color, int n = 36)	
 	{
 		PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
 		
@@ -145,8 +154,8 @@ class SDRC_MapSystem : GameSystem
 		
 		float xpos, ypos;
 		
-		m_mapEntity.WorldToScreen(center[0], center[2], xpos, ypos, true);
-		float r = range * m_mapEntity.GetCurrentZoom();
+		m_MapEntity.WorldToScreen(center[0], center[2], xpos, ypos, true);
+		float r = range * m_MapEntity.GetCurrentZoom();
 
 		vector pos_center = "0 0 0";
 		pos_center[0] = xpos;
@@ -160,8 +169,23 @@ class SDRC_MapSystem : GameSystem
 			drawCommand.m_Vertices.Insert(pos[2]);			
 		}
 		
-		m_DrawCommands.Insert(drawCommand);
+		return drawCommand;
+		//m_DrawCommands.Insert(drawCommand);
 	}
 
+	//------------------------------------------------------------------------------------------------
+	void DrawImage(vector center, int width, int height, SharedItemRef tex)
+	{
+		ImageDrawCommand drawCommand = new ImageDrawCommand();
+		
+		int xpos, ypos;		
+		m_MapEntity.WorldToScreen(center[0], center[2], xpos, ypos, true);
+		
+		drawCommand.m_Position = Vector(xpos - (width/2), ypos - (height/2), 0);
+		drawCommand.m_pTexture = tex;
+		drawCommand.m_Size = Vector(width, height, 0);
+		
+		m_DrawCommands.Insert(drawCommand);
+	}			
 #endif
 }
