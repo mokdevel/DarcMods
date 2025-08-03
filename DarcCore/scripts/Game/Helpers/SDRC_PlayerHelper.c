@@ -140,6 +140,8 @@ sealed class SDRC_PlayerHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Get player name
+	
+	TBD: This returns true also for Armavision - should not.
 	*/	
 	static bool IsInGMmode()
 	{

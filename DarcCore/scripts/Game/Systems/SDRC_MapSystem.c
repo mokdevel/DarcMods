@@ -63,7 +63,7 @@ class SDRC_MapSystem : GameSystem
 	//! Creates widget and assigns draw commands when the map is opened
 	protected void OnMapOpen(MapConfiguration mapConfig)
 	{	
-		SDRC_Log.Add("[SDRC_MapSystem:OnMapOpen]", LogLevel.DEBUG);		
+		//SDRC_Log.Add("[SDRC_MapSystem:OnMapOpen]", LogLevel.DEBUG);
 		
 		if (!SDRC_PlayerHelper.IsInGMmode())
 		{
@@ -87,7 +87,7 @@ class SDRC_MapSystem : GameSystem
 	//! Destroys widget and draw commands when the map is closed
 	protected void OnMapClose(MapConfiguration mapConfig)
 	{
-		SDRC_Log.Add("[SDRC_MapSystem:OnMapClose]", LogLevel.DEBUG);				
+		//SDRC_Log.Add("[SDRC_MapSystem:OnMapClose]", LogLevel.DEBUG);				
 		
 		if (!SDRC_PlayerHelper.IsInGMmode())
 		{
@@ -125,7 +125,19 @@ class SDRC_MapSystem : GameSystem
 		
 		m_DrawCommands.Clear();
 		
-		PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
+		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
+		if (gmComponent)
+		{
+			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
+			{			
+				PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
+				drawCommand = DrawCircle(symbol.pos, symbol.radius, symbol.color);
+				m_DrawCommands.Insert(drawCommand);
+			}		
+			
+		}		
+		
+/*		PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
 		drawCommand = DrawCircle("2000 0 2000", 300, ARGB(75, 255, 75, 0));
 		m_DrawCommands.Insert(drawCommand);
 		
@@ -133,7 +145,7 @@ class SDRC_MapSystem : GameSystem
 		{			
 			drawCommand = DrawCircle(mapCircle.pos, mapCircle.radius, mapCircle.color);
 			m_DrawCommands.Insert(drawCommand);
-		}		
+		}		*/
 		
 		if(!m_DrawCommands.IsEmpty())
 		{						

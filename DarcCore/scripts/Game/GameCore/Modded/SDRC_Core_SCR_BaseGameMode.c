@@ -6,7 +6,6 @@ modded class SCR_BaseGameMode
 	ref SDRC_Core m_SDRC_Core;
 	private SDRC_DebugEntity m_SDRC_DebugEntity;
 	private SDRC_RplHintEntity m_SDRC_RplHintEntity;
-	private SDRC_RplGMEntity m_SDRC_RplGMEntity;
 	
     override void OnGameStart()
     {
@@ -38,21 +37,8 @@ modded class SCR_BaseGameMode
 			}
 			m_SDRC_RplHintEntity = SDRC_RplHintEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));
 
-
 			//Core initialized properly
 			SDRC_Conf.coreHasStarted = true;
-
-#ifndef SDRC_RELEASE				
-/*			//Initialize the SDRC_GMEntity
-			SDRC_Log.Add("[SDRC_Core_BaseGameMode] Creating SDRC_GMEntity", LogLevel.NORMAL);
-			resource = Resource.Load("{034174406440412B}Prefabs/Helpers/RPLGMHelper.et");
-			if (!resource.IsValid())
-			{
-				SDRC_Log.Add("[SDRC_Core_BaseGameMode] Failed to create RPLGMHelper.", LogLevel.ERROR);
-				return;
-			}
-			m_SDRC_RplGMEntity = SDRC_RplGMEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));*/
-#endif
 									
 			//For testing
 			//GetGame().GetCallqueue().CallLater(DebugStart, 15000, false);	
