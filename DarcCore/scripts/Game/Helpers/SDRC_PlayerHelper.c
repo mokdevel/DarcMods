@@ -136,5 +136,20 @@ sealed class SDRC_PlayerHelper
 		}		
 		return playerName;
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get player name
+	*/	
+	static bool IsInGMmode()
+	{
+		SCR_EditorManagerEntity editorManager = SCR_EditorManagerEntity.GetInstance();
+		if (editorManager && editorManager.IsOpened())		
+		{
+			return true;
+		}
+		
+		return false;
+	}	
 }
 

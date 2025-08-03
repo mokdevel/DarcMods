@@ -65,11 +65,10 @@ class SDRC_MapSystem : GameSystem
 	{	
 		SDRC_Log.Add("[SDRC_MapSystem:OnMapOpen]", LogLevel.DEBUG);		
 		
-/*		SCR_EditorManagerEntity editorManager = SCR_EditorManagerEntity.GetInstance();
-		if !(editorManager && editorManager.IsOpened())		
+		if (!SDRC_PlayerHelper.IsInGMmode())
 		{
 			return;
-		}*/
+		}
 		
 		Widget mapFrame = m_mapEntity.GetMapMenuRoot().FindAnyWidget(SCR_MapConstants.MAP_FRAME_NAME);
 		if (!mapFrame)
@@ -80,7 +79,8 @@ class SDRC_MapSystem : GameSystem
 		m_Widget = GetGame().GetWorkspace().CreateWidgets(m_Layout);
 		m_Canvas = CanvasWidget.Cast(m_Widget.FindAnyWidget("Canvas"));
 		m_DrawCommands = new array<ref CanvasWidgetCommand>();		
-		
+		m_previousPan = "-1000 0 -1000";
+		m_previousZoom = -1000;
 		Enable(true);
 	}
 		
@@ -88,6 +88,11 @@ class SDRC_MapSystem : GameSystem
 	protected void OnMapClose(MapConfiguration mapConfig)
 	{
 		SDRC_Log.Add("[SDRC_MapSystem:OnMapClose]", LogLevel.DEBUG);				
+		
+		if (!SDRC_PlayerHelper.IsInGMmode())
+		{
+			return;
+		}
 		
 		m_Widget.RemoveFromHierarchy();
 		
