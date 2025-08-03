@@ -33,7 +33,7 @@
 		private const int SDRC_MISSION_COUNT_STATIC = 5;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
-		private const int SDRC_MISSION_START_DELAY = 30;//10;					
+		private const int SDRC_MISSION_START_DELAY = 10;					
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 1;//1*20;
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 1;
 		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 20;//3*60;				
@@ -170,8 +170,8 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CHOPPER};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.SQUATTER};
 		
-			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL};
-//			conf.missionStatic.missionTypeArray = {DC_EMissionType.CONVOY};
+//			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL};
+			conf.missionStatic.missionTypeArray = {DC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HUNTER};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.CRASHSITE};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.OCCUPATION};
