@@ -152,6 +152,8 @@ class SDRC_MapSystem : GameSystem
 			m_Canvas.SetDrawCommands(m_DrawCommands);			
 		}
 		
+		DrawImage("2000 0 2000", 54, 110);
+		
 		m_previousPan = currentPan;
 		m_previousZoom = currentZoom;
 	}	
@@ -186,10 +188,13 @@ class SDRC_MapSystem : GameSystem
 	}
 
 	//------------------------------------------------------------------------------------------------
-	void DrawImage(vector center, int width, int height, SharedItemRef tex)
+//	void DrawImage(vector center, int width, int height, SharedItemRef tex)
+	void DrawImage(vector center, int width, int height)
 	{
 		ImageDrawCommand drawCommand = new ImageDrawCommand();
 		
+		SharedItemRef tex = m_Canvas.LoadTexture("{8F0F7AD0EF00FCDB}UI/Textures/Icons/gm_mission_Convoy_map.edds");
+					
 		int xpos, ypos;		
 		m_MapEntity.WorldToScreen(center[0], center[2], xpos, ypos, true);
 		
