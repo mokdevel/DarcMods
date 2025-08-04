@@ -51,8 +51,8 @@ class SDRC_RplPlayerComp : ScriptComponent
 	{
 		SDRC_Log.Add("[SDRC_RplPlayerComp:AskForInfo] Asking...", LogLevel.NORMAL);	
 		
-		Rpc(RpcAsk_GiveMeInfo, 0);
-//		RpcAsk_GiveMeInfo(0);
+		int playerId = GetGame().GetPlayerController().GetPlayerId();		
+		Rpc(RpcAsk_GiveMeInfo, playerId);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -65,8 +65,7 @@ class SDRC_RplPlayerComp : ScriptComponent
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
 		if (gmComp)
 		{
-			gmComp.SyncMapSymbols();
+			gmComp.SyncMapSymbols(playerID);
 		}
     }		
-		
 }

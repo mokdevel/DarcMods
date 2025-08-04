@@ -58,6 +58,7 @@ class SDRC_MapSystem : GameSystem
 	protected vector m_previousPan;
 	protected float m_previousZoom;
 	
+	//------------------------------------------------------------------------------------------------
 	//! Creates widget and assigns draw commands when the map is opened
 	protected void OnMapOpen(MapConfiguration mapConfig)
 	{	
@@ -104,6 +105,7 @@ class SDRC_MapSystem : GameSystem
 		Enable(true);
 	}
 		
+	//------------------------------------------------------------------------------------------------
 	//! Destroys widget and draw commands when the map is closed
 	protected void OnMapClose(MapConfiguration mapConfig)
 	{
@@ -117,7 +119,14 @@ class SDRC_MapSystem : GameSystem
 		m_Widget.RemoveFromHierarchy();
 		
 		Enable(false);
-		m_DrawCommands = null;
+		
+		//When map is closed, clear the information
+		m_DrawCommands = null;		
+		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
+		if (gmComponent)
+		{
+			gmComponent.m_Symbols.Clear();
+		}
 		
 /*		m_wCanvasWidget = null;
 		m_previewDrawing = null;
@@ -125,7 +134,8 @@ class SDRC_MapSystem : GameSystem
 		DisableDrawing();*/
 	}
 	
-	//! Updates existing drawings if the map has been transformed
+	//------------------------------------------------------------------------------------------------
+	//! Update known symbols on map
 	override protected void OnUpdate(ESystemPoint point)
 	{
 		super.OnUpdate(point);
@@ -151,24 +161,13 @@ class SDRC_MapSystem : GameSystem
 			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
 			{			
 				PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
-				drawCommand = DrawCircle(symbol.pos, symbol.radius, symbol.color);
+				drawCommand = DrawCircle(symbol.pos, symbol.radius, symbol.intval);
 				if (drawCommand)
 				{
 					m_DrawCommands.Insert(drawCommand);
 				}
-			}		
-			
+			}			
 		}		
-		
-/*		PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
-		drawCommand = DrawCircle("2000 0 2000", 300, ARGB(75, 255, 75, 0));
-		m_DrawCommands.Insert(drawCommand);
-		
-		foreach(SDRC_DebugHelperPos mapCircle : SDRC_DebugHelper.m_MapCircle)
-		{			
-			drawCommand = DrawCircle(mapCircle.pos, mapCircle.radius, mapCircle.color);
-			m_DrawCommands.Insert(drawCommand);
-		}		*/
 		
 		if(!m_DrawCommands.IsEmpty())
 		{						

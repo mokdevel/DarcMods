@@ -56,8 +56,7 @@ class SDRC_NonValidAreaJsonApi : SDRC_JsonApi
 				SDRC_DebugHelper.AddDebugPos(nonValidArea.pos, Color.BLACK, nonValidArea.radius);
 				if (conf.showOnGMMap)
 				{
-//					SDRC_DebugHelper.AddMapCircle(nonValidArea.pos, nonValidArea.radius, ARGB(75, 255, 0, 0));
-					SDRC_GMHelper.AddMapCicrle(nonValidArea.pos, nonValidArea.radius, ARGB(75, 255, 0, 0));
+					//SDRC_DebugHelper.AddMapCircle(nonValidArea.pos, nonValidArea.radius, ARGB(75, 255, 0, 0));		//TBD: Should we have this? 
 				}
 			}
 		}

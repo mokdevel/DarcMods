@@ -5,7 +5,8 @@ SDRC_RplGMCompClass g_RplGMCompClass;
 enum DC_EDrawSymbol
 {
 	NONE,
-	CIRCLE
+	CIRCLE,
+	MARKER
 }
  
 //------------------------------------------------------------------------------------------------
@@ -14,8 +15,8 @@ class SDRC_GMMapSymbol : Managed
 	//Default information
 	DC_EDrawSymbol type;
 	vector pos;
-	int color;
 	float radius;
+	int intval;			//Integer value for color or icon or ...	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -26,20 +27,6 @@ class SDRC_RplGMComp : ScriptComponent
 	 
     override void OnPostInit(IEntity owner)
     {
-        auto hintEnt = SDRC_RplHintEntity.Cast(owner);
-        if (!hintEnt)
-        {
-            SDRC_Log.Add("[SDRC_RplGMComp] Entity not found.", LogLevel.ERROR);
-            return;
-        }
-				
-		BaseRplComponent rplComponent = BaseRplComponent.Cast(hintEnt.FindComponent(BaseRplComponent));
-        if (!rplComponent)
-        {
-            SDRC_Log.Add("[SDRC_RplGMComp] RplComponent not found.", LogLevel.ERROR);
-            return;
-        }
- 
 		s_Instance = this;				
     }
  
@@ -53,38 +40,55 @@ class SDRC_RplGMComp : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
+ 	void AddSymbolCircle(vector pos, float radius, int color)
+    {
+		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
+		symbol.type = DC_EDrawSymbol.CIRCLE;
+		symbol.pos = pos;
+		symbol.radius = radius;
+		symbol.intval = color;
+		m_Symbols.Insert(symbol);
+    }
+	
+	//------------------------------------------------------------------------------------------------
+ 	void AddSymbolMarker(vector pos, float radius, DC_EMissionIcon icon)
+    {
+		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
+		symbol.type = DC_EDrawSymbol.MARKER;
+		symbol.pos = pos;
+		symbol.radius = 0;
+		symbol.intval = icon;
+		m_Symbols.Insert(symbol);
+    }
+	
+	//------------------------------------------------------------------------------------------------
 	//! Get instance
 	static SDRC_RplGMComp FindInstance()
 	{
-		BaseGameMode gameMode = GetGame().GetGameMode();
+		SDRC_RplHintEntity hintEnt = SDRC_RplHintEntity.GetInstance();
 		
-		if (!gameMode)
+		if (!hintEnt)
 		{
 			return null;
 		}
 		
-		return SDRC_RplGMComp.Cast(gameMode.FindComponent(SDRC_RplGMComp));
+		return SDRC_RplGMComp.Cast(hintEnt.FindComponent(SDRC_RplGMComp));
 	}	
 	
 	//------------------------------------------------------------------------------------------------
- 	void SyncMapSymbols()
+ 	void SyncMapSymbols(int playerID)
 	{
-		//TBD: We should sync the circles to newly joined players.
+		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.NORMAL);	
+		
 		foreach(SDRC_GMMapSymbol symbol : m_Symbols)
 		{
-//			AddMapCicrle(symbol.pos, symbol.radius, symbol.color);
-	        Rpc(RpcDo_SyncMapCircle, DC_EDrawSymbol.CIRCLE, symbol.pos, symbol.radius, symbol.color); 	// broadcast to clients			
+			//SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Syncing: " + symbol.pos, LogLevel.NORMAL);	
+	        Rpc(RpcDo_SyncMapCircle, DC_EDrawSymbol.CIRCLE, symbol.pos, symbol.radius, symbol.intval); 	// broadcast to clients			
 		}		
 	}
 
 	//------------------------------------------------------------------------------------------------
- 	void AddMapCicrle(vector pos, float radius, int color)
-    {
-        Rpc(RpcDo_SyncMapCircle, DC_EDrawSymbol.CIRCLE, pos, radius, color); 	// broadcast to clients
-//        RpcDo_SyncMapCircle(DC_EDrawSymbol.CIRCLE, pos, radius, color); 		// handle on authority
-    }
-	
-	//------------------------------------------------------------------------------------------------
+//    [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
     protected void RpcDo_SyncMapCircle(DC_EDrawSymbol symbolType, vector pos, float radius, int color)
     {
@@ -94,9 +98,7 @@ class SDRC_RplGMComp : ScriptComponent
 		symbol.type = symbolType;
 		symbol.pos = pos;
 		symbol.radius = radius;
-		symbol.color = color;
+		symbol.intval = color;
 		m_Symbols.Insert(symbol);
-    }	
-	
-
+    }
 }

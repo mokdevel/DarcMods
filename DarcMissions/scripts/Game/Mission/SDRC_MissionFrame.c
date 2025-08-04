@@ -207,8 +207,8 @@ class SDRC_MissionFrame
 	*/	
 	protected void MissionCycleManager()
 	{		
-		vector testpos = SDRC_Misc.GetRandomWorldPos();				
-		SDRC_GMHelper.AddMapCicrle(testpos, 100, ARGB(75, 255, 0, 0));
+//TBD:		vector testpos = SDRC_Misc.GetRandomWorldPos();				
+//TBD:		SDRC_GMHelper.AddMapCicrle(testpos, 100, ARGB(75, 255, 0, 0));
 		
 		ref SDRC_Mission tmpDC_Mission = null;
 		DC_EMissionType missionType = null;
