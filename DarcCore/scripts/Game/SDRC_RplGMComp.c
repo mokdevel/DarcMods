@@ -53,22 +53,37 @@ class SDRC_RplGMComp : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	//! Get instance
+	static SDRC_RplGMComp FindInstance()
+	{
+		BaseGameMode gameMode = GetGame().GetGameMode();
+		
+		if (!gameMode)
+		{
+			return null;
+		}
+		
+		return SDRC_RplGMComp.Cast(gameMode.FindComponent(SDRC_RplGMComp));
+	}	
+	
+	//------------------------------------------------------------------------------------------------
  	void SyncMapSymbols()
 	{
 		//TBD: We should sync the circles to newly joined players.
 		foreach(SDRC_GMMapSymbol symbol : m_Symbols)
 		{
-			AddMapCicrle(symbol.pos, symbol.radius, symbol.color);
+//			AddMapCicrle(symbol.pos, symbol.radius, symbol.color);
+	        Rpc(RpcDo_SyncMapCircle, DC_EDrawSymbol.CIRCLE, symbol.pos, symbol.radius, symbol.color); 	// broadcast to clients			
 		}		
 	}
-	
+
 	//------------------------------------------------------------------------------------------------
  	void AddMapCicrle(vector pos, float radius, int color)
     {
         Rpc(RpcDo_SyncMapCircle, DC_EDrawSymbol.CIRCLE, pos, radius, color); 	// broadcast to clients
-        RpcDo_SyncMapCircle(DC_EDrawSymbol.CIRCLE, pos, radius, color); 		// handle on authority
+//        RpcDo_SyncMapCircle(DC_EDrawSymbol.CIRCLE, pos, radius, color); 		// handle on authority
     }
-    
+	
 	//------------------------------------------------------------------------------------------------
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
     protected void RpcDo_SyncMapCircle(DC_EDrawSymbol symbolType, vector pos, float radius, int color)
@@ -82,4 +97,6 @@ class SDRC_RplGMComp : ScriptComponent
 		symbol.color = color;
 		m_Symbols.Insert(symbol);
     }	
+	
+
 }
