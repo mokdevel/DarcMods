@@ -180,7 +180,8 @@
 				"_GL",
 				"_MG",
 				"Grenadier",
-				"_Ammo"
+				"_Ammo",
+				"_LMG"
 			],
 			"exclude": [
 				"_Base",
@@ -203,7 +204,8 @@
 				"Spotter",
 				"_RTO",
 				"_SL",
-				"_GL"
+				"_GL",
+				"_AG1"
 			],
 			"exclude": [
 				"_Base",
@@ -224,7 +226,8 @@
 			"include": [
 				"_Officer",
 				"Sergeant",
-				"_AC"
+				"_AC",
+				"_Leader"
 			],
 			"exclude": [
 				"_Base",
@@ -245,7 +248,8 @@
 			"include": [
 				"Crew",
 				"Pilot",
-				"_CC"
+				"_CC",
+				"MEI_Leader"
 			],
 			"exclude": [
 				"_Base",
@@ -327,7 +331,9 @@
 			"include": [
 				"_SF",
 				"_SR",
-				"FIA_AC"
+				"FIA_AC",
+				"_Bomb",
+				"MEI_Rifleman1"
 			],
 			"exclude": [
 				"_Base",
