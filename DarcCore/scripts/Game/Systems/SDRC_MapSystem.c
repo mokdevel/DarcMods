@@ -3,12 +3,13 @@ class SDRC_MapSystem : GameSystem
 {
 	protected SCR_MapEntity m_MapEntity;
 	protected Widget m_Widget;
-	protected CanvasWidget m_Canvas;
+//	protected CanvasWidget m_Canvas;
+	protected CanvasWidget m_wCanvasWidget;
 	protected ref array<ref CanvasWidgetCommand> m_DrawCommands;
 	protected vector m_previousPan;
 	protected float m_previousZoom;
 	
-	protected ResourceName m_Layout = "{A6A79ABB08D490BF}UI/layouts/Map/SDRC_MapCanvasLayer.layout";
+	protected ResourceName m_Layout = "{F928661E727CC639}UI/layouts/Map/SDRC_MapCanvasLayer.layout";
 		
 	//------------------------------------------------------------------------------------------------
 	// System initialization
@@ -68,10 +69,10 @@ class SDRC_MapSystem : GameSystem
 		if (!mapFrame)
 			 return;
 		
-		m_Widget = GetGame().GetWorkspace().CreateWidgets(m_Layout);
-		//m_Widget.SetZOrder(1000);
-		m_Canvas = CanvasWidget.Cast(m_Widget.FindAnyWidget("Canvas"));
-		//m_Canvas.SetZOrder(1000);
+		m_Widget = GetGame().GetWorkspace().CreateWidgets(m_Layout, mapFrame);
+		m_wCanvasWidget = CanvasWidget.Cast(m_Widget);
+//		m_wCanvasWidget = CanvasWidget.Cast(m_Widget.FindAnyWidget("Canvas"));
+		
 		m_DrawCommands = new array<ref CanvasWidgetCommand>();		
 		m_previousPan = "-1000 0 -1000";
 		m_previousZoom = -1000;
@@ -101,11 +102,13 @@ class SDRC_MapSystem : GameSystem
 		
 		//When map is closed, clear the information
 		m_DrawCommands = null;		
+		m_wCanvasWidget = null;
+		
 		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
 		if (gmComponent)
 		{
 			gmComponent.ClearSymbols();
-		}		
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -191,7 +194,7 @@ class SDRC_MapSystem : GameSystem
 		
 		if(!m_DrawCommands.IsEmpty())
 		{						
-			m_Canvas.SetDrawCommands(m_DrawCommands);			
+			m_wCanvasWidget.SetDrawCommands(m_DrawCommands);			
 		}
 		
 		m_previousPan = currentPan;
@@ -240,7 +243,7 @@ class SDRC_MapSystem : GameSystem
 		int height = 64;
 		
 		ImageDrawCommand drawCommand = new ImageDrawCommand();
-		SharedItemRef tex = m_Canvas.LoadTexture(texture);
+		SharedItemRef tex = m_wCanvasWidget.LoadTexture(texture);
 					
 		int xpos, ypos;		
 		m_MapEntity.WorldToScreen(pos[0], pos[2], xpos, ypos, true);
@@ -259,7 +262,7 @@ class SDRC_MapSystem : GameSystem
 	{
 		ImageDrawCommand drawCommand = new ImageDrawCommand();
 		
-		SharedItemRef tex = m_Canvas.LoadTexture("{8F0F7AD0EF00FCDB}UI/Textures/Icons/gm_mission_Convoy_map.edds");
+		SharedItemRef tex = m_wCanvasWidget.LoadTexture("{8F0F7AD0EF00FCDB}UI/Textures/Icons/gm_mission_Convoy_map.edds");
 					
 		int xpos, ypos;		
 		m_MapEntity.WorldToScreen(pos[0], pos[2], xpos, ypos, true);
