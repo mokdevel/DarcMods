@@ -8,17 +8,28 @@ class SDRC_GMHelper
 	
 	//------------------------------------------------------------------------------------------------
 	static private void FindModeAndComponent()
-	{
+	{		
+		m_BaseGameMode = null;
+		m_GmComponent = null;
+		
 		m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (!m_BaseGameMode)
 		{
 			SDRC_Log.Add("[SDRC_GMHelper:FindModeAndComponent] SCR_BaseGameMode not found", LogLevel.ERROR);
-		}		
+			return;
+		}
+		
+		//If missionFrame is not available yet, stop
+ 		if (!m_BaseGameMode.missionFrame)
+		{
+			return;
+		}
 	
 		m_GmComponent = SDRC_RplGMComp.GetInstance();
 		if (!m_GmComponent)
 		{
 			SDRC_Log.Add("[SDRC_GMHelper:FindModeAndComponent] SDRC_RplGMComp not found", LogLevel.ERROR);
+			return;
 		}					
 	}
 	

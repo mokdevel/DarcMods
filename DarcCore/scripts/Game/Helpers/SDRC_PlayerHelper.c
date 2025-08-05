@@ -139,14 +139,16 @@ sealed class SDRC_PlayerHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Get player name
-	
-	TBD: This returns true also for Armavision - should not.
+	Check if player is in game master mode (not ArmaVision)
 	*/	
 	static bool IsInGMmode()
 	{
+		#ifndef SDRC_RELEASE		//TBD: Remove once things work
+			return true;
+		#endif
+		
 		SCR_EditorManagerEntity editorManager = SCR_EditorManagerEntity.GetInstance();
-		if (editorManager && editorManager.IsOpened())		
+		if (editorManager && editorManager.IsOpened() && !editorManager.IsLimited())
 		{
 			return true;
 		}

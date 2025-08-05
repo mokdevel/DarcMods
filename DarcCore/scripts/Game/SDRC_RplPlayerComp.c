@@ -49,7 +49,7 @@ class SDRC_RplPlayerComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------
  	void AskForInfo()
 	{
-		SDRC_Log.Add("[SDRC_RplPlayerComp:AskForInfo] Asking...", LogLevel.NORMAL);	
+		//SDRC_Log.Add("[SDRC_RplPlayerComp:AskForInfo] Asking...", LogLevel.NORMAL);			
 		
 		int playerId = GetGame().GetPlayerController().GetPlayerId();		
 		Rpc(RpcAsk_GiveMeInfo, playerId);
@@ -60,7 +60,7 @@ class SDRC_RplPlayerComp : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
     protected void RpcAsk_GiveMeInfo(int playerID)
     {
-		SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_GiveMeInfo] Asked for information by: " + playerID, LogLevel.NORMAL);	
+		//SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_GiveMeInfo] Asked for information by: " + playerID, LogLevel.NORMAL);	
 
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
 		if (gmComp)

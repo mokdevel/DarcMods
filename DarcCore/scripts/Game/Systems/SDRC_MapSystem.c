@@ -1,9 +1,12 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_MapSystem : GameSystem
 {
+	protected SCR_MapEntity m_MapEntity;
 	protected Widget m_Widget;
 	protected CanvasWidget m_Canvas;
 	protected ref array<ref CanvasWidgetCommand> m_DrawCommands;
+	protected vector m_previousPan;
+	protected float m_previousZoom;
 	
 	protected ResourceName m_Layout = "{A6A79ABB08D490BF}UI/layouts/Map/SDRC_MapCanvasLayer.layout";
 		
@@ -50,16 +53,6 @@ class SDRC_MapSystem : GameSystem
 	}
 
 	//------------------------------------------------------------------------------------------------
-	// Map initialization
-	//------------------------------------------------------------------------------------------------
-	
-	protected SCR_MapEntity m_MapEntity;
-	protected CanvasWidget m_wCanvasWidget;
-	protected vector m_previousPan;
-	protected float m_previousZoom;
-	
-	//------------------------------------------------------------------------------------------------
-	//! Creates widget and assigns draw commands when the map is opened
 	protected void OnMapOpen(MapConfiguration mapConfig)
 	{	
 		//SDRC_Log.Add("[SDRC_MapSystem:OnMapOpen]", LogLevel.DEBUG);
@@ -76,7 +69,9 @@ class SDRC_MapSystem : GameSystem
 			 return;
 		
 		m_Widget = GetGame().GetWorkspace().CreateWidgets(m_Layout);
+		//m_Widget.SetZOrder(1000);
 		m_Canvas = CanvasWidget.Cast(m_Widget.FindAnyWidget("Canvas"));
+		//m_Canvas.SetZOrder(1000);
 		m_DrawCommands = new array<ref CanvasWidgetCommand>();		
 		m_previousPan = "-1000 0 -1000";
 		m_previousZoom = -1000;
@@ -91,16 +86,15 @@ class SDRC_MapSystem : GameSystem
 	}
 		
 	//------------------------------------------------------------------------------------------------
-	//! Destroys widget and draw commands when the map is closed
 	protected void OnMapClose(MapConfiguration mapConfig)
-	{
-		//SDRC_Log.Add("[SDRC_MapSystem:OnMapClose]", LogLevel.DEBUG);				
-		
+	{		
 		if (!SDRC_PlayerHelper.IsInGMmode())
 		{
 			return;
 		}
-		
+
+		SDRC_Log.Add("[SDRC_MapSystem:OnMapClose]", LogLevel.NORMAL);
+				
 		m_Widget.RemoveFromHierarchy();
 		
 		Enable(false);
@@ -111,15 +105,7 @@ class SDRC_MapSystem : GameSystem
 		if (gmComponent)
 		{
 			gmComponent.ClearSymbols();
-		}
-		
-		m_previousPan = "-1000 0 -1000";
-		m_previousZoom = -1000;
-		
-/*		m_wCanvasWidget = null;
-		m_previewDrawing = null;
-		m_drawPoints = null;
-		DisableDrawing();*/
+		}		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -177,11 +163,6 @@ class SDRC_MapSystem : GameSystem
 			}			
 		}		
 		
-		if(!m_DrawCommands.IsEmpty())
-		{						
-			m_Canvas.SetDrawCommands(m_DrawCommands);			
-		}
-		
 		#ifndef SDRC_RELEASE
 			ImageDrawCommand drawCommand = new ImageDrawCommand();		
 			drawCommand = DrawMarker("1000 0 1500", DC_EMissionIcon.GM_MISSION_X_MAP);
@@ -207,6 +188,11 @@ class SDRC_MapSystem : GameSystem
 		
 //			DrawImage("2000 0 2000", 32, 64);
 		#endif
+		
+		if(!m_DrawCommands.IsEmpty())
+		{						
+			m_Canvas.SetDrawCommands(m_DrawCommands);			
+		}
 		
 		m_previousPan = currentPan;
 		m_previousZoom = currentZoom;

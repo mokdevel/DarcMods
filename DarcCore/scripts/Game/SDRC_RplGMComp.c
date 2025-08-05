@@ -103,7 +103,7 @@ class SDRC_RplGMComp : ScriptComponent
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
     protected void RpcDo_SyncMapSymbols(DC_EDrawSymbol symbolType, vector pos, float radius, int color)
     {
-		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(DC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.NORMAL);	//TBD: SPAM
+		//SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(DC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.NORMAL);	//TBD: SPAM
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
 		symbol.type = symbolType;

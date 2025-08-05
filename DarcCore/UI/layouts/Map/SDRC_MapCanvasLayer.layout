@@ -1,4 +1,4 @@
-FrameWidgetClass "{654F134477A16C78}" {
+FrameWidgetClass {
  Name "rootFrame"
  {
   CanvasWidgetClass "{654F134477A16C10}" {
@@ -15,7 +15,7 @@ FrameWidgetClass "{654F134477A16C78}" {
     OffsetBottom 0
     Alignment 0 0
    }
-   "Z Order" 9
+   "Z Order" 1000
    Color 1 1 1 1
    SizeInUnits 1024 1024
    Clear 1

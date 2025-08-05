@@ -2,7 +2,7 @@
 
 modded class SCR_BaseGameMode 
 {
-	ref SDRC_MissionFrame missionFrame;
+	ref SDRC_MissionFrame missionFrame = null;
 	
 	//------------------------------------------------------------------------------------------------
     override void OnGameStart()

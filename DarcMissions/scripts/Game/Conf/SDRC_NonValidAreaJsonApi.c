@@ -10,7 +10,6 @@ class SDRC_NonValidAreaConfig : Managed
 	int version = 1;
 	string author = "darc";
 	//Mission specific
-	bool showOnGMMap;
 	ref array<ref SDRC_NonValidArea> m_NonValidAreas = {};		//List of areas where missions shall not spawn.
 }
 
@@ -53,11 +52,6 @@ class SDRC_NonValidAreaJsonApi : SDRC_JsonApi
 			if (nonValidArea.worldName == worldName || nonValidArea.worldName == "")
 			{
 				nonValidAreaList.Insert(nonValidArea);
-				SDRC_DebugHelper.AddDebugPos(nonValidArea.pos, Color.BLACK, nonValidArea.radius);
-				if (conf.showOnGMMap)
-				{
-					//SDRC_DebugHelper.AddMapCircle(nonValidArea.pos, nonValidArea.radius, ARGB(75, 255, 0, 0));		//TBD: Should we have this? 
-				}
 			}
 		}
 		SDRC_Log.Add("[SDRC_NonValidAreaJsonApi:Populate] Number of nonValidAreas defined: " + nonValidAreaList.Count(), LogLevel.NORMAL);			
@@ -88,7 +82,6 @@ class SDRC_NonValidAreaJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		conf.showOnGMMap = SDRC_Conf.SHOW_MARKER_FOR_NONVALIDAREA;
 		#ifdef SDRC_CREATE_EXAMPLE_NONVALIDAREA
 			//List of non valid areas where missions shall not spawn
 			//Eden
