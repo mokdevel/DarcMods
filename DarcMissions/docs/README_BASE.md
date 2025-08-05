@@ -36,10 +36,12 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 
 # Parameters
 All configurations are done via .json files. The information is on one line due to the saving functionality in AR. See [FAQ](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/FAQ.md#q-the-oneline-jsons-are-hard-to-readedit) for more.
+The configuration files will be under your ```profile\DarcMods\<subDir>\*```, where the ``subDir`` is defined via ``dc_coreConfig.json``. 
 
+Core has common configurations for mods. See:
+* See also [Core](./docs/CORE.md)
 The mission frame has the main definitions on mission spawn times, counts, etc. See:
 * [Mission Frame](./docs/MISSIONFRAME.md)
-* See also [Core](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/README.md)
 
 Missions are configurable via .json files. Each mission have their own configuration file, but some information is shared. There are:
 * [Common parameters](./docs/P_COMMON.md) that are valid for all missions. 

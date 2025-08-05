@@ -197,7 +197,31 @@ class SDRC_MapSystem : GameSystem
 			m_Canvas.SetDrawCommands(m_DrawCommands);			
 		}
 		
-//		DrawImage("2000 0 2000", 32, 64);
+		#ifndef SDRC_RELEASE
+			ImageDrawCommand drawCommand = new ImageDrawCommand();		
+			drawCommand = DrawMarker("1000 0 1500", DC_EMissionIcon.GM_MISSION_X_MAP);
+			m_DrawCommands.Insert(drawCommand);
+			drawCommand = DrawMarker("1100 0 1500", DC_EMissionIcon.GM_MISSION_CONVOY_MAP);
+			m_DrawCommands.Insert(drawCommand);
+			drawCommand = DrawMarker("1200 0 1500", DC_EMissionIcon.GM_MISSION_HUNTER_MAP);
+			m_DrawCommands.Insert(drawCommand);
+			drawCommand = DrawMarker("1300 0 1500", DC_EMissionIcon.GM_MISSION_PATROL_MAP);
+			m_DrawCommands.Insert(drawCommand);
+			drawCommand = DrawMarker("1400 0 1500", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP);
+			m_DrawCommands.Insert(drawCommand);
+			drawCommand = DrawMarker("1500 0 1500", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP);
+			m_DrawCommands.Insert(drawCommand);
+			drawCommand = DrawMarker("1600 0 1500", DC_EMissionIcon.GM_MISSION_CRASHSITE_MAP);
+			m_DrawCommands.Insert(drawCommand);
+			drawCommand = DrawMarker("1700 0 1500", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP);
+			m_DrawCommands.Insert(drawCommand);
+			drawCommand = DrawMarker("1800 0 1500", DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP);
+			m_DrawCommands.Insert(drawCommand);
+			drawCommand = DrawMarker("1900 0 1500", DC_EMissionIcon.GM_MISSION_RADIOACTIVE_MAP);
+			m_DrawCommands.Insert(drawCommand);
+		
+//			DrawImage("2000 0 2000", 32, 64);
+		#endif
 		
 		m_previousPan = currentPan;
 		m_previousZoom = currentZoom;
