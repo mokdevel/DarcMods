@@ -20,6 +20,8 @@ bool debugShowWaypoints : Only in WB. Show waypoints for AI.
 bool debugShowMarks : Only in WB. Show various markers in the world like mission location and non Valid Areas.
 bool debugShowSpheres : Only in WB. !!! TBD !!!
 string fallbackEnemyFaction : (USSR) The default faction to assign to AI in case the proper faction is not available. For example: If FIA is not assigned but a FIA AI is spawned, it's set as USSR
+bool showOnGMMapNonValidArea : !!! TBD !!!
+bool showOnGMMapMissionMarker : !!! TBD !!!
 array<string>buildingExcludeFilter : Exclude these prefab names from the cached building list. The list of buildings are cached to avoid a rescan on the map.
 emptyPos\
   int limit : See section: Empty position finding

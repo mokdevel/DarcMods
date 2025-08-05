@@ -35,10 +35,12 @@ class SDRC_GMHelper
 	{
 		if ((m_BaseGameMode) && (m_GmComponent))
 		{
-			//TBD: if (m_BaseGameMode.missionFrame ... showOnGMMap)			
-			foreach (SDRC_NonValidArea nonValidArea : m_BaseGameMode.missionFrame.m_aNonValidAreas)
+			if (m_BaseGameMode.m_SDRC_Core.m_Config.showOnGMMapNonValidArea)
 			{
-				m_GmComponent.AddSymbolCircle(nonValidArea.pos, nonValidArea.radius, ARGB(75, 255, 0, 0));
+				foreach (SDRC_NonValidArea nonValidArea : m_BaseGameMode.missionFrame.m_aNonValidAreas)
+				{
+					m_GmComponent.AddSymbolCircle(nonValidArea.pos, nonValidArea.radius, ARGB(75, 255, 0, 0));
+				}
 			}
 		}
 	}
@@ -48,9 +50,12 @@ class SDRC_GMHelper
 	{
 		if ((m_BaseGameMode) && (m_GmComponent))
 		{
-			foreach (SDRC_Mission mission : m_BaseGameMode.missionFrame.m_MissionList)
+			if (m_BaseGameMode.m_SDRC_Core.m_Config.showOnGMMapMissionMarker)
 			{
-				m_GmComponent.AddSymbolMarker(mission.GetPos(), mission.GetType(), mission.GetMarker());
+				foreach (SDRC_Mission mission : m_BaseGameMode.missionFrame.m_MissionList)
+				{
+					m_GmComponent.AddSymbolMarker(mission.GetPos(), mission.GetType(), mission.GetMarker());
+				}
 			}
 		}	
 	}

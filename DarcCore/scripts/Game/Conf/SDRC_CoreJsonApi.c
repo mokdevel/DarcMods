@@ -15,6 +15,8 @@ class SDRC_CoreConfig : Managed
 	bool debugShowMarks = true;	
 	bool debugShowSpheres = true;
 	string fallbackEnemyFaction = "USSR";
+	bool showOnGMMapNonValidArea = true;	
+	bool showOnGMMapMissionMarker = true;	
 	ref array<string> buildingExcludeFilter = {};
 	ref SDRC_EmptyPos emptyPos = new SDRC_EmptyPos();
 }

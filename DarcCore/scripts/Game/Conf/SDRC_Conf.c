@@ -25,7 +25,6 @@ sealed class SDRC_Conf
 	const bool OVERWRITE_JSON = false;					//Writes a new conf even if it exists
 	const bool SHOW_VALID_MISSION_AREAS = false;		//Debug markers for mission position testing drawn on the map
 	const bool SHOW_MARKER_FOR_LOCATION = false;		//Show a debug marker for locations
-	const bool SHOW_MARKER_FOR_NONVALIDAREA = true;	//Show a debug marker for non valid area
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.NORMAL;
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
 #endif
@@ -41,7 +40,6 @@ sealed class SDRC_Conf
 //	const bool OVERWRITE_JSON = false;				
 	const bool SHOW_VALID_MISSION_AREAS = false;
 	const bool SHOW_MARKER_FOR_LOCATION = false;	
-	const bool SHOW_MARKER_FOR_NONVALIDAREA = true;
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
 #endif

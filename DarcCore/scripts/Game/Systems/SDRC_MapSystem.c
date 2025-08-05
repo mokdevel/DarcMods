@@ -81,26 +81,11 @@ class SDRC_MapSystem : GameSystem
 		m_previousPan = "-1000 0 -1000";
 		m_previousZoom = -1000;
 		
-		// Get the player controller which maintains authority
-/*		SCR_PlayerController playerController = SCR_PlayerController.Cast(GetGame().GetPlayerController());
-		if (playerController)
-		{
-			// Use the player controller's method which can send RPCs even when possessed
-			playerController.AskForInfo();
-		}*/
-		
 		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
 		if (playerComponent)
 		{
 			playerComponent.AskForInfo();
 		}
-		
-/*		
-		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
-		if (gmComponent)
-		{
-			gmComponent.AskForInfo();
-		}*/
 		
 		Enable(true);
 	}

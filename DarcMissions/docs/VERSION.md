@@ -5,9 +5,13 @@
 ## Next release (unreleased)
 * Nothing yet
 
+Main features:
+* Missions and NonValidAreas are shown on game master map view.
+
 Changes:
 * dc_enemyList.json and dc_lootList.json changes. 
-* dc_nonValidArea.json renamed showOnMap to showOnGMMap
+* dc_nonValidArea.json removed showOnMap
+* dc_coreConfig.json added showOnGMMapNonValidArea, showOnGMMapMissionMarker
 
 ## 20250801
 Minor update to properly find enemies when using TOH ReCharacters. Update *should not* affect existing installs. If you're using TOH ReCharacters, delete your dc_enemyList.json and a new one will be created.
