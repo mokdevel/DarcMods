@@ -125,8 +125,11 @@ class SDRC_MapSystem : GameSystem
 		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
 		if (gmComponent)
 		{
-			gmComponent.m_Symbols.Clear();
+			gmComponent.ClearSymbols();
 		}
+		
+		m_previousPan = "-1000 0 -1000";
+		m_previousZoom = -1000;
 		
 /*		m_wCanvasWidget = null;
 		m_previewDrawing = null;
@@ -160,11 +163,31 @@ class SDRC_MapSystem : GameSystem
 		{
 			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
 			{			
-				PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
-				drawCommand = DrawCircle(symbol.pos, symbol.radius, symbol.intval);
-				if (drawCommand)
+				switch (symbol.type)
 				{
-					m_DrawCommands.Insert(drawCommand);
+					case DC_EDrawSymbol.CIRCLE:
+					{
+						PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
+						drawCommand = DrawCircle(symbol.pos, symbol.radius, symbol.intval);
+						if (drawCommand)
+						{
+							m_DrawCommands.Insert(drawCommand);
+						}
+						break;
+					}
+					case DC_EDrawSymbol.MARKER:
+					{
+						ImageDrawCommand drawCommand = new ImageDrawCommand();		
+						drawCommand = DrawMarker(symbol.pos, symbol.intval);
+						if (drawCommand)
+						{
+							m_DrawCommands.Insert(drawCommand);
+						}
+						break;
+					}
+					default:
+					{
+					}
 				}
 			}			
 		}		
@@ -174,7 +197,7 @@ class SDRC_MapSystem : GameSystem
 			m_Canvas.SetDrawCommands(m_DrawCommands);			
 		}
 		
-		DrawImage("2000 0 2000", 32, 64);
+//		DrawImage("2000 0 2000", 32, 64);
 		
 		m_previousPan = currentPan;
 		m_previousZoom = currentZoom;
@@ -206,7 +229,6 @@ class SDRC_MapSystem : GameSystem
 		}
 		
 		return drawCommand;
-		//m_DrawCommands.Insert(drawCommand);
 	}
 
 	//------------------------------------------------------------------------------------------------

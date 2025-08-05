@@ -348,6 +348,11 @@ class SDRC_Mission
 	}
 
 	//------------------------------------------------------------------------------------------------
+	string GetFaction()
+	{
+		return m_sFaction;
+	}
+			
 	void SetFaction(string faction)
 	{
 		m_sFaction = faction;
@@ -355,12 +360,11 @@ class SDRC_Mission
 	}
 			
 	//------------------------------------------------------------------------------------------------
-	string GetFaction()
+	DC_EMissionIcon GetMarker()
 	{
-		return m_sFaction;
+		return m_sIcon;
 	}
-			
-	//------------------------------------------------------------------------------------------------
+
 	void SetMarker(bool showMarker, DC_EMissionIcon icon)
 	{
 		m_sIcon = icon;
@@ -380,6 +384,13 @@ class SDRC_Mission
 		{
 			SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), m_sIcon, GetId(), GetTitle());
 		}
+	}
+	
+	void MoveMarker()
+	{
+		SDRC_MapMarkerHelper.DeleteMarker(GetId());
+		SetMarker(m_bShowMarker, GetMarker());
+		ShowMarker();
 	}
 	
 	//------------------------------------------------------------------------------------------------

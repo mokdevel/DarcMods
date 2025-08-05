@@ -23,7 +23,7 @@ class SDRC_GMMapSymbol : Managed
 class SDRC_RplGMComp : ScriptComponent
 {
 	private static SDRC_RplGMComp s_Instance;	
-	/*private*/ ref array<ref SDRC_GMMapSymbol> m_Symbols = {};
+	static ref array<ref SDRC_GMMapSymbol> m_Symbols = {};
 	 
     override void OnPostInit(IEntity owner)
     {
@@ -37,6 +37,29 @@ class SDRC_RplGMComp : ScriptComponent
 	static SDRC_RplGMComp GetInstance()
 	{
 		return s_Instance;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	//! Get instance
+	static SDRC_RplGMComp FindInstance()
+	{
+		SDRC_RplHintEntity hintEnt = SDRC_RplHintEntity.GetInstance();
+		
+		if (!hintEnt)
+		{
+			return null;
+		}
+		
+		return SDRC_RplGMComp.Cast(hintEnt.FindComponent(SDRC_RplGMComp));
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Return instance to component
+	*/
+	static void ClearSymbols()
+	{
+		m_Symbols.Clear();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -62,37 +85,25 @@ class SDRC_RplGMComp : ScriptComponent
     }
 	
 	//------------------------------------------------------------------------------------------------
-	//! Get instance
-	static SDRC_RplGMComp FindInstance()
-	{
-		SDRC_RplHintEntity hintEnt = SDRC_RplHintEntity.GetInstance();
-		
-		if (!hintEnt)
-		{
-			return null;
-		}
-		
-		return SDRC_RplGMComp.Cast(hintEnt.FindComponent(SDRC_RplGMComp));
-	}	
-	
-	//------------------------------------------------------------------------------------------------
  	void SyncMapSymbols(int playerID)
 	{
-		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.NORMAL);	
+		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.DEBUG);	
+		ClearSymbols();
+		SDRC_GMHelper.AddSymbols();
 		
 		foreach(SDRC_GMMapSymbol symbol : m_Symbols)
 		{
-			//SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Syncing: " + symbol.pos, LogLevel.NORMAL);	
-	        Rpc(RpcDo_SyncMapCircle, DC_EDrawSymbol.CIRCLE, symbol.pos, symbol.radius, symbol.intval); 	// broadcast to clients			
+//			SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Syncing: " + symbol.pos, LogLevel.NORMAL);	
+	        Rpc(RpcDo_SyncMapSymbols, symbol.type, symbol.pos, symbol.radius, symbol.intval); 	// broadcast to clients			
 		}		
 	}
 
 	//------------------------------------------------------------------------------------------------
 //    [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-    protected void RpcDo_SyncMapCircle(DC_EDrawSymbol symbolType, vector pos, float radius, int color)
+    protected void RpcDo_SyncMapSymbols(DC_EDrawSymbol symbolType, vector pos, float radius, int color)
     {
-		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapCircle] Pos: " + pos, LogLevel.NORMAL);	
+		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(DC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.NORMAL);	//TBD: SPAM
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
 		symbol.type = symbolType;

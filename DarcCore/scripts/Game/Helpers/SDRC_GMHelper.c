@@ -7,26 +7,33 @@ class SDRC_GMHelper
 	static private SDRC_RplGMComp m_GmComponent;
 	
 	//------------------------------------------------------------------------------------------------
-	static void Init()
+	static private void FindModeAndComponent()
 	{
-		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (!m_BaseGameMode)
 		{
-			SDRC_Log.Add("[SDRC_GMHelper:Init] SCR_BaseGameMode not found", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_GMHelper:FindModeAndComponent] SCR_BaseGameMode not found", LogLevel.ERROR);
 		}		
 	
-		SDRC_RplGMComp m_GmComponent = SDRC_RplGMComp.GetInstance();
+		m_GmComponent = SDRC_RplGMComp.GetInstance();
 		if (!m_GmComponent)
 		{
-			SDRC_Log.Add("[SDRC_GMHelper:Init] SDRC_RplGMComp not found", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_GMHelper:FindModeAndComponent] SDRC_RplGMComp not found", LogLevel.ERROR);
 		}					
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	static void AddNonValidAreas()
+	static void AddSymbols()
 	{
-		Init();
-		if (m_BaseGameMode && m_GmComponent)
+		FindModeAndComponent();
+		AddNonValidAreas();
+		AddMarkers();
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	static private void AddNonValidAreas()
+	{
+		if ((m_BaseGameMode) && (m_GmComponent))
 		{
 			//TBD: if (m_BaseGameMode.missionFrame ... showOnGMMap)			
 			foreach (SDRC_NonValidArea nonValidArea : m_BaseGameMode.missionFrame.m_aNonValidAreas)
@@ -37,14 +44,13 @@ class SDRC_GMHelper
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	static void AddMarkers()
+	static private void AddMarkers()
 	{
-		Init();
-		if (m_BaseGameMode && m_GmComponent)
+		if ((m_BaseGameMode) && (m_GmComponent))
 		{
 			foreach (SDRC_Mission mission : m_BaseGameMode.missionFrame.m_MissionList)
 			{
-				m_GmComponent.AddSymbolMarker(mission.GetPos(), mission.GetType(), 0);
+				m_GmComponent.AddSymbolMarker(mission.GetPos(), mission.GetType(), mission.GetMarker());
 			}
 		}	
 	}

@@ -120,6 +120,13 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			{
 				SetPos(m_Groups[0].GetOrigin());
 				SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
+				MoveMarker();
+/*				if (m_Config.showMarker)
+				{
+					SDRC_MapMarkerHelper.DeleteMarker(GetId());
+					SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_PATROL_MAP);
+					ShowMarker();
+				}*/				
 			}
 			
 			if (!IsActive())

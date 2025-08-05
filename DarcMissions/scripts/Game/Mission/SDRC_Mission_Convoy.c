@@ -184,13 +184,13 @@ class SDRC_Mission_Convoy : SDRC_Mission
 					{
 						SetPos(m_Vehicle.GetOrigin());
 						SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
-						if (m_Config.showMarker)
+						MoveMarker();
+/*						if (m_Config.showMarker)
 						{
 							SDRC_MapMarkerHelper.DeleteMarker(GetId());
-							//SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.GM_MISSION_CONVOY_MAP, GetId(), "");
 							SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_CONVOY_MAP);
 							ShowMarker();
-						}
+						}*/
 					}
 								
 					if (!IsActive())
