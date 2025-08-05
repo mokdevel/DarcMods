@@ -39,7 +39,8 @@ All configurations are done via .json files. The information is on one line due 
 The configuration files will be under your ```profile\DarcMods\<subDir>\*```, where the ``subDir`` is defined via ``dc_coreConfig.json``. 
 
 Core has common configurations for mods. See:
-* See also [Core](./docs/CORE.md)
+* [Core](./docs/CORE.md)
+
 The mission frame has the main definitions on mission spawn times, counts, etc. See:
 * [Mission Frame](./docs/MISSIONFRAME.md)
 
