@@ -40,7 +40,7 @@ modded class SCR_BaseGameMode
 		if (playername != "")
 		{
 			SDRC_MapMarkerHelper.DeleteMarker(playername, true);
-			SDRC_MapMarkerHelper.CreateMapMarker(playerEntity.GetOrigin(), DC_EMissionIcon.BLACK_X_SMALL, playername, playername, 10*60);
+			SDRC_MapMarkerHelper.CreateMapMarker(playerEntity.GetOrigin(), DC_EMissionIcon.ICON_DEATHMARKER_SMALL_MAP, playername, playername, 10*60);
 		}
 		
 		SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:OnPlayerKilled] Player died: " + playername, LogLevel.DEBUG);        

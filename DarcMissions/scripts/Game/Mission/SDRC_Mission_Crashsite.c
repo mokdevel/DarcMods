@@ -125,7 +125,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		//Set a marker for destination
 		if (!SDRC_Conf.RELEASE)
 		{			
-			SDRC_MapMarkerHelper.CreateMapMarker(m_vPosDestination, DC_EMissionIcon.TARGET_O, GetId() + "_1", "Destination");
+			SDRC_MapMarkerHelper.CreateMapMarker(m_vPosDestination, DC_EMissionIcon.ICON_DEATHMARKER_SMALL_RED_MAP, GetId() + "_1", "Destination");
 			SDRC_DebugHelper.AddDebugPos(m_vPosDestination, ARGB(50, 255, 0, 0), 10, GetId() + "_1");
 		}
 	}	

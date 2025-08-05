@@ -5,17 +5,6 @@
 //NOTE: If you add a new icon, remember to add texture finding to SDRC_MapMarkerHelper.GetMarkerTexture
 enum DC_EMissionIcon
 {
-	MISSION,			//0
-	CRASHSITE,
-	TARGET_X,
-	TARGET_O,
-	UNUSED_1,
-	UNUSED_2,			//5
-	UNUSED_3,
-	REDCROSS,
-	REDCROSS_SMALL,		//8
-	BLACK_X_SMALL,
-	N_MISSION,
 	GM_MISSION_X_MAP,
 	GM_MISSION_SQUATTERS_MAP,
 	GM_MISSION_CRASHSITE_MAP,
