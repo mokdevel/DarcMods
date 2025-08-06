@@ -90,7 +90,13 @@ class SDRC_RplGMComp : ScriptComponent
 		symbol.id = id;
 		m_Symbols.Insert(symbol);
     }
-	
+
+	//------------------------------------------------------------------------------------------------
+ 	void DeleteMission(int playerID, string missionId)
+	{
+		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] DeleteMission " + missionId + " requested by " + playerID, LogLevel.DEBUG);	
+	}
+		
 	//------------------------------------------------------------------------------------------------
  	void SyncMapSymbols(int playerID)
 	{
@@ -106,7 +112,6 @@ class SDRC_RplGMComp : ScriptComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
-//    [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
     protected void RpcDo_SyncMapSymbol(DC_EDrawSymbol symbolType, vector pos, float radius, int color, string id)
     {

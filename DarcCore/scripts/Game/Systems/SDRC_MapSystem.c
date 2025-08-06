@@ -3,7 +3,6 @@ class SDRC_MapSystem : GameSystem
 {
 	protected SCR_MapEntity m_MapEntity;
 	protected Widget m_Widget;
-//	protected CanvasWidget m_Canvas;
 	protected CanvasWidget m_wCanvasWidget;
 	protected ref array<ref CanvasWidgetCommand> m_DrawCommands;
 	protected vector m_previousPan;
@@ -55,6 +54,11 @@ class SDRC_MapSystem : GameSystem
 	}
 
 	//------------------------------------------------------------------------------------------------
+	/*!
+	Input managers for
+	- Information
+	- Deletion
+	*/	
 	protected void EnableInput()
 	{
 		InputManager inputMgr = GetGame().GetInputManager();
@@ -77,18 +81,33 @@ class SDRC_MapSystem : GameSystem
 		}
 	}
 	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Show marker information
+	*/	
 	protected void OnShowMarkerInfo(float value, EActionTrigger reason)
 	{
 		int markerIdx = FindMarkerIndex();
 		//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Click.", LogLevel.NORMAL);
 	}	
 	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Request for a mission deletion
+	*/	
 	protected void OnMarkerDelete(float value, EActionTrigger reason)
 	{
 		int markerIdx = FindMarkerIndex();
 		SDRC_Log.Add("[SDRC_MapSystem:OnMarkerDelete] Deleting: " + markerIdx, LogLevel.NORMAL);
+		
+		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
+		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
+		
+		if ( (playerComponent) && (gmComponent) )
+		{
+			playerComponent.AskForMissionDeletion(gmComponent.m_Symbols[markerIdx].id);
+		}
 	}
-	
 	
 	//------------------------------------------------------------------------------------------------
 	protected void OnMapOpen(MapConfiguration mapConfig)

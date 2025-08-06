@@ -56,6 +56,15 @@ class SDRC_RplPlayerComp : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
+ 	void AskForMissionDeletion(string missionId)
+	{
+		//SDRC_Log.Add("[SDRC_RplPlayerComp:AskForInfo] Asking...", LogLevel.NORMAL);			
+		
+		int playerId = GetGame().GetPlayerController().GetPlayerId();		
+		Rpc(RpcAsk_DeleteMission, playerId, missionId);
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	//! Client requests for information
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
     protected void RpcAsk_GiveMeInfo(int playerID)
@@ -67,5 +76,19 @@ class SDRC_RplPlayerComp : ScriptComponent
 		{
 			gmComp.SyncMapSymbols(playerID);
 		}
-    }		
+    }
+	
+	//------------------------------------------------------------------------------------------------
+	//! Client requests for information
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+    protected void RpcAsk_DeleteMission(int playerID, string missionId)
+    {
+		//SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_GiveMeInfo] Asked for information by: " + playerID, LogLevel.NORMAL);	
+
+		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
+		if (gmComp)
+		{
+			gmComp.DeleteMission(playerID, missionId);
+		}
+    }	
 }

@@ -143,9 +143,9 @@ sealed class SDRC_PlayerHelper
 	*/	
 	static bool IsInGMmode()
 	{
-//		#ifndef SDRC_RELEASE		//TBD: Remove once things work
-//			return true;
-//		#endif
+		#ifndef SDRC_RELEASE		//TBD: Remove once things work
+			return true;
+		#endif
 		
 		SCR_EditorManagerEntity editorManager = SCR_EditorManagerEntity.GetInstance();
 		if (editorManager && editorManager.IsOpened() && !editorManager.IsLimited())
