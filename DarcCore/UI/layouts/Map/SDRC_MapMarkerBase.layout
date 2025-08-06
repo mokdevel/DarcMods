@@ -56,9 +56,9 @@ FrameWidgetClass {
        }
        Clipping False
        Color 0.007 0.012 0.014 0.6
-       Texture "{9BE5CC69285A77F5}UI/Textures/Icons/SDRC_icons_mapMarkersUI_glow.imageset"
-       Image "n_x"
-       Size 64 128
+       Texture "{A07F0C1D34FDFD4E}UI/Textures/Icons/SDRC_icons_mapMarkersUInew.imageset"
+       Image "gm_mission_X_map"
+       Size 54 110
       }
       ImageWidgetClass "{649AABAD8DD1DC80}" {
        Name "MarkerIcon"
@@ -72,9 +72,9 @@ FrameWidgetClass {
         OffsetBottom -64
        }
        Clipping False
-       Texture "{0C86564F20AD42F2}UI/Textures/Icons/SDRC_icons_mapMarkersUI.imageset"
-       Image "black_x_small"
-       Size 64 128
+       Texture "{A07F0C1D34FDFD4E}UI/Textures/Icons/SDRC_icons_mapMarkersUInew.imageset"
+       Image "gm_mission_X_map"
+       Size 54 110
       }
      }
     }

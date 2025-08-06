@@ -38,7 +38,8 @@ class SDRC_MapSystem : GameSystem
 	{
 		super.OnInit();
 		Enable(false);
-		GetGame().GetCallqueue().Call(Init);
+		Init();
+//		GetGame().GetCallqueue().Call(Init);
 	}
 	
 	//! Inserts map listeners
@@ -53,6 +54,32 @@ class SDRC_MapSystem : GameSystem
 		m_MapEntity.GetOnMapClose().Insert(OnMapClose);
 	}
 
+	//------------------------------------------------------------------------------------------------
+	protected void EnableInput()
+	{
+		InputManager inputMgr = GetGame().GetInputManager();
+		if (inputMgr)
+		{
+			SDRC_Log.Add("[SDRC_MapSystem:EnableInput]", LogLevel.NORMAL);		
+			inputMgr.AddActionListener("MapSelect", EActionTrigger.DOWN, ShowMarkerInfo);
+		}
+	}
+			
+	protected void DisableInput()
+	{
+		InputManager inputMgr = GetGame().GetInputManager();
+		if (inputMgr)
+		{
+			SDRC_Log.Add("[SDRC_MapSystem:DisableInput]", LogLevel.NORMAL);		
+			inputMgr.RemoveActionListener("MapSelect", EActionTrigger.DOWN, ShowMarkerInfo);
+		}
+	}
+	
+	protected void ShowMarkerInfo(float value, EActionTrigger reason)
+	{
+		SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Click.", LogLevel.NORMAL);		
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	protected void OnMapOpen(MapConfiguration mapConfig)
 	{	
@@ -84,8 +111,9 @@ class SDRC_MapSystem : GameSystem
 		}
 		
 		Enable(true);
+		EnableInput();
 	}
-		
+
 	//------------------------------------------------------------------------------------------------
 	protected void OnMapClose(MapConfiguration mapConfig)
 	{		
@@ -99,6 +127,7 @@ class SDRC_MapSystem : GameSystem
 		m_Widget.RemoveFromHierarchy();
 		
 		Enable(false);
+		DisableInput();
 		
 		//When map is closed, clear the information
 		m_DrawCommands = null;		
