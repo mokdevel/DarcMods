@@ -60,7 +60,7 @@ class SDRC_MapSystem : GameSystem
 		InputManager inputMgr = GetGame().GetInputManager();
 		if (inputMgr)
 		{
-			SDRC_Log.Add("[SDRC_MapSystem:EnableInput]", LogLevel.NORMAL);		
+			//SDRC_Log.Add("[SDRC_MapSystem:EnableInput]", LogLevel.NORMAL);		
 			inputMgr.AddActionListener("MapSelect", EActionTrigger.DOWN, ShowMarkerInfo);
 		}
 	}
@@ -70,14 +70,52 @@ class SDRC_MapSystem : GameSystem
 		InputManager inputMgr = GetGame().GetInputManager();
 		if (inputMgr)
 		{
-			SDRC_Log.Add("[SDRC_MapSystem:DisableInput]", LogLevel.NORMAL);		
+			//SDRC_Log.Add("[SDRC_MapSystem:DisableInput]", LogLevel.NORMAL);		
 			inputMgr.RemoveActionListener("MapSelect", EActionTrigger.DOWN, ShowMarkerInfo);
 		}
 	}
 	
 	protected void ShowMarkerInfo(float value, EActionTrigger reason)
 	{
-		SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Click.", LogLevel.NORMAL);		
+		const int markerSize = 24;
+		
+		//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Click.", LogLevel.NORMAL);
+		
+		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
+		if (gmComponent)
+		{
+			float worldX, worldY;
+			m_MapEntity.GetMapCursorWorldPosition(worldX, worldY);
+			vector cursorPos = "0 0 0";
+			cursorPos[0] = worldX;
+			cursorPos[2] = worldY - (markerSize/2)/m_previousZoom;	//Move the point to check up a little
+			
+			float distanceCheck = markerSize/m_previousZoom;
+			
+			int symbolIdx = -1;
+			int idx = 0;
+			
+			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
+			{
+				if (symbol.type == DC_EDrawSymbol.MARKER)
+				{
+					float distance = vector.DistanceXZ(cursorPos, symbol.pos);
+					//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Checking: " + cursorPos + " vs " + symbol.pos + " d=" + distance + " (" + distanceCheck + ")", LogLevel.NORMAL);
+					if (SDRC_Misc.IsPosNearPos(cursorPos, symbol.pos, distanceCheck))
+					{
+//						SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Found.", LogLevel.NORMAL);
+						symbolIdx = idx;
+						break;
+					}								
+				}
+				idx++;
+			}
+			
+			if (symbolIdx > -1)
+			{
+				SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Found marker - index: " + symbolIdx, LogLevel.NORMAL);
+			}
+		}		
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -98,7 +136,6 @@ class SDRC_MapSystem : GameSystem
 		
 		m_Widget = GetGame().GetWorkspace().CreateWidgets(m_Layout, mapFrame);
 		m_wCanvasWidget = CanvasWidget.Cast(m_Widget);
-//		m_wCanvasWidget = CanvasWidget.Cast(m_Widget.FindAnyWidget("Canvas"));
 		
 		m_DrawCommands = new array<ref CanvasWidgetCommand>();		
 		m_previousPan = "-1000 0 -1000";
@@ -122,7 +159,7 @@ class SDRC_MapSystem : GameSystem
 			return;
 		}
 
-		SDRC_Log.Add("[SDRC_MapSystem:OnMapClose]", LogLevel.NORMAL);
+		//SDRC_Log.Add("[SDRC_MapSystem:OnMapClose]", LogLevel.NORMAL);
 				
 		m_Widget.RemoveFromHierarchy();
 		
