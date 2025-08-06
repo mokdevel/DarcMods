@@ -61,7 +61,8 @@ class SDRC_MapSystem : GameSystem
 		if (inputMgr)
 		{
 			//SDRC_Log.Add("[SDRC_MapSystem:EnableInput]", LogLevel.NORMAL);		
-			inputMgr.AddActionListener("MapSelect", EActionTrigger.DOWN, ShowMarkerInfo);
+			inputMgr.AddActionListener("MapSelect", EActionTrigger.DOWN, OnShowMarkerInfo);
+			inputMgr.AddActionListener("MapMarkerDelete", EActionTrigger.DOWN, OnMarkerDelete);
 		}
 	}
 			
@@ -71,52 +72,23 @@ class SDRC_MapSystem : GameSystem
 		if (inputMgr)
 		{
 			//SDRC_Log.Add("[SDRC_MapSystem:DisableInput]", LogLevel.NORMAL);		
-			inputMgr.RemoveActionListener("MapSelect", EActionTrigger.DOWN, ShowMarkerInfo);
+			inputMgr.RemoveActionListener("MapSelect", EActionTrigger.DOWN, OnShowMarkerInfo);
+			inputMgr.RemoveActionListener("MapMarkerDelete", EActionTrigger.DOWN, OnMarkerDelete);
 		}
 	}
 	
-	protected void ShowMarkerInfo(float value, EActionTrigger reason)
+	protected void OnShowMarkerInfo(float value, EActionTrigger reason)
 	{
-		const int markerSize = 24;
-		
+		int markerIdx = FindMarkerIndex();
 		//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Click.", LogLevel.NORMAL);
-		
-		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
-		if (gmComponent)
-		{
-			float worldX, worldY;
-			m_MapEntity.GetMapCursorWorldPosition(worldX, worldY);
-			vector cursorPos = "0 0 0";
-			cursorPos[0] = worldX;
-			cursorPos[2] = worldY - (markerSize/2)/m_previousZoom;	//Move the point to check up a little
-			
-			float distanceCheck = markerSize/m_previousZoom;
-			
-			int symbolIdx = -1;
-			int idx = 0;
-			
-			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
-			{
-				if (symbol.type == DC_EDrawSymbol.MARKER)
-				{
-					float distance = vector.DistanceXZ(cursorPos, symbol.pos);
-					//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Checking: " + cursorPos + " vs " + symbol.pos + " d=" + distance + " (" + distanceCheck + ")", LogLevel.NORMAL);
-					if (SDRC_Misc.IsPosNearPos(cursorPos, symbol.pos, distanceCheck))
-					{
-//						SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Found.", LogLevel.NORMAL);
-						symbolIdx = idx;
-						break;
-					}								
-				}
-				idx++;
-			}
-			
-			if (symbolIdx > -1)
-			{
-				SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Found marker - index: " + symbolIdx, LogLevel.NORMAL);
-			}
-		}		
 	}	
+	
+	protected void OnMarkerDelete(float value, EActionTrigger reason)
+	{
+		int markerIdx = FindMarkerIndex();
+		SDRC_Log.Add("[SDRC_MapSystem:OnMarkerDelete] Deleting: " + markerIdx, LogLevel.NORMAL);
+	}
+	
 	
 	//------------------------------------------------------------------------------------------------
 	protected void OnMapOpen(MapConfiguration mapConfig)
@@ -339,5 +311,49 @@ class SDRC_MapSystem : GameSystem
 		drawCommand.m_iFlags = WidgetFlags.BLEND | WidgetFlags.STRETCH;
 		
 		m_DrawCommands.Insert(drawCommand);
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	protected int FindMarkerIndex()
+	{
+		const int markerSize = 24;
+		int symbolIdx = -1;
+		
+		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
+		if (gmComponent)
+		{
+			float worldX, worldY;
+			m_MapEntity.GetMapCursorWorldPosition(worldX, worldY);
+			vector cursorPos = "0 0 0";
+			cursorPos[0] = worldX;
+			cursorPos[2] = worldY - (markerSize/2)/m_previousZoom;	//Move the point to check up a little
+			
+			float distanceCheck = markerSize/m_previousZoom;
+			
+			int idx = 0;
+			
+			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
+			{
+				if (symbol.type == DC_EDrawSymbol.MARKER)
+				{
+					float distance = vector.DistanceXZ(cursorPos, symbol.pos);
+					//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Checking: " + cursorPos + " vs " + symbol.pos + " d=" + distance + " (" + distanceCheck + ")", LogLevel.NORMAL);
+					if (SDRC_Misc.IsPosNearPos(cursorPos, symbol.pos, distanceCheck))
+					{
+//						SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Found.", LogLevel.NORMAL);
+						symbolIdx = idx;
+						break;
+					}								
+				}
+				idx++;
+			}
+			
+			if (symbolIdx > -1)
+			{
+				SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Found marker - index: " + symbolIdx, LogLevel.NORMAL);
+			}
+		}		
+		
+		return symbolIdx;
 	}			
 }
