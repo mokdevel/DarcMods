@@ -107,12 +107,13 @@ class SDRC_MissionFrame
 				SDRC_Log.Add("[SDRC_MissionFrame] Marker: " + SCR_Enum.GetEnumName(SCR_EMapMarkerType, i), LogLevel.NORMAL);			
 			}
 		
-			SCR_EMapMarkerType markerType = typename.StringToEnum(SCR_EMapMarkerType, "PLACED_MILITARY");
-	
+			SDRC_MapMarkerHelper.CreateMapMarker("800 0 1000", 10, "DMC_B", "Here is a text", 0, "PLACED_MILITARY");
+		
+//			SCR_EMapMarkerType markerType = 7;//typename.StringToEnum(SCR_EMapMarkerType, "PLACED_MILITARY");	
+			SCR_EMapMarkerType markerType = typename.StringToEnum(SCR_EMapMarkerType, "PLACED_MILITARY");	
 			SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
 			if (!mapMarkerMgr)
-				return;
-	
+				return;	
 			SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
 			markerst.SetType(markerType);
 			markerst.SetCustomText("dummy");
