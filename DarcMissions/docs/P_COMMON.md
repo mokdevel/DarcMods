@@ -22,6 +22,13 @@ vector pos : Position for mission. "0 0 0" used for random location chosen from 
 string posName : Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes. "" will leave the information empty.
 string title : Title for the hint shown for players
 string info : Details for the hint shown for players
+DC_EMissionWinCondition winCondition =
+  0 = UNUSED  
+  1 = Kill all AI (100%)
+string winMessage : Message to show when mission is completed
+string loseMessage : Message to show when mission fails.
+int xp = 0 : Experience given - not supported currently
+
 array<int> groupCount : (min, max) Amount of AI groups of characters to spawn.
 array<string> groupTypes : The prefab names of AI groups or characters. The AI is randomly picked from this list.
   Example : {
