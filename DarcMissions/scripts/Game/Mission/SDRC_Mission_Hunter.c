@@ -80,6 +80,8 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		SetInfo(m_Config.info);						
 		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_X_MAP, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
+		SetMessages(m_Config.showMessage, m_Config.winMessage, m_Config.loseMessage);		
+		SetWinCondition(m_Config.winCondition);
 
 		SetState(DC_EMissionState.INIT);
 	}

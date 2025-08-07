@@ -61,8 +61,6 @@ class SDRC_Mission
     private string m_Info;
     private bool m_ShowHint;
     private bool m_ShowMessage;
-    private string m_WinMessage;
-    private string m_LoseMessage;
 	//Internals
 	private int m_StartTime;					//Seconds when mission started
 	private int m_EndTime;						//Seconds when mission shall end.
@@ -71,6 +69,9 @@ class SDRC_Mission
 	private bool m_bShowMarker;					//If the icon is to be shown
 	private DC_EMissionIcon m_sIcon;			//The icon to show
 	private string m_sMarkerType;				//Markertype defined by SCR_EMapMarkerType
+    private string m_WinMessage;
+    private string m_LoseMessage;
+	private DC_EMissionWinCondition m_WinCondition;
 	//Internals without getters
 	private int m_ActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
 	private int m_ActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
@@ -357,7 +358,25 @@ class SDRC_Mission
 		return m_ShowHint;
 	}
 
+	//------------------------------------------------------------------------------------------------	
+	void SetWinCondition(DC_EMissionWinCondition winCondition)
+	{
+		m_WinCondition = winCondition;
+	}
+	
+	DC_EMissionWinCondition GetWinCondition()
+	{
+		return m_WinCondition;
+	}
+	
 	//------------------------------------------------------------------------------------------------
+	void SetMessages(bool showMessage, string winMessage, string LoseMessage)
+	{
+		SetShowMessage(showMessage);
+		SetWinMessage(winMessage);
+		SetLoseMessage(LoseMessage);
+	}
+	
 	void SetShowMessage(bool showMessage)
 	{
 		m_ShowMessage = showMessage;
@@ -368,7 +387,6 @@ class SDRC_Mission
 		return m_ShowMessage;
 	}
 	
-	//------------------------------------------------------------------------------------------------
 	void SetWinMessage(string message)
 	{
 		m_WinMessage = message;
@@ -379,7 +397,6 @@ class SDRC_Mission
 		return m_WinMessage;
 	}
 	
-	//------------------------------------------------------------------------------------------------
 	void SetLoseMessage(string message)
 	{
 		m_LoseMessage = message;
