@@ -25,6 +25,10 @@ vector posDestination : Destination for the patrol to go to. See also General pa
 string posName : See General parameters
 string title : See General parameters
 string info : See General parameters
+DC_EMissionWinCondition winCondition : See General parameters
+string winMessage : See General parameters
+string loseMessage : See General parameters
+int xp = 0 : See General parameters
 array<EMapDescriptorType> locationTypes : See Location parameters
 array<int> groupCount : See General parameters
 array<int> waypointRange : See Waypoint parameters. For patrols, the values should be quite big to have them move around the map.
