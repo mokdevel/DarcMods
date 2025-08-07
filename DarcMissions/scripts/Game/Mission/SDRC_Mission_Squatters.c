@@ -107,7 +107,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, posName));
 		SetTitle(m_DC_Squatter.title + "" + GetPosName());
 		SetInfo(m_DC_Squatter.info);			
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP, m_Config.markerType);
+		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
 			
 		SetState(DC_EMissionState.INIT);			
@@ -220,13 +220,21 @@ class SDRC_Squatter : Managed
 	string lootBox = "";					//The loot box
 	ref SDRC_Loot loot = null;
 	
-	void Set(string comment_, vector pos_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> aiCount_, array<string> aiTypes_, int aiSkill_, float aiPerception_, array<string> buildingNames_, string lootBox_)
+	void SetCommon(string comment_, vector pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, int xp_)
 	{
 		comment = comment_;
 		pos = pos_;
 		posName = posName_;
 		title = title_;
 		info = info_;
+		winCondition = winCondition_;
+		winMessage = winMessage_;
+		loseMessage = loseMessage_;
+		xp = xp_;
+	}
+	
+	void Set(array<EMapDescriptorType> locationTypes_, array<int> aiCount_, array<string> aiTypes_, int aiSkill_, float aiPerception_, array<string> buildingNames_, string lootBox_)
+	{
 		locationTypes = locationTypes_;
 		aiCount = aiCount_;
 		aiTypes = aiTypes_;
@@ -273,19 +281,25 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.showMarker = true;		
+		conf.markerIdx = DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP;
 		//Mission specific
 		conf.buildingRadius = 400;
 		conf.squatterList = {0,1,2,2,3,3,3,4,5,5,5};
 		
 		//----------------------------------------------------
 		SDRC_Squatter squatter0 = new SDRC_Squatter();
-		squatter0.Set(
+		squatter0.SetCommon(
 			"index 0: Squatters in cities",
 			"0 0 0",
 			"any",
 			"Squatters near ",
 			"Building has squatters with loot",		
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0		
+		);
+		squatter0.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -321,12 +335,18 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Squatter squatter1 = new SDRC_Squatter();
-		squatter1.Set(
+		squatter1.SetCommon(
 			"index 1: Squatters in control towers",
 			"0 0 0",
 			"any",
 			"Enemy in ",
 			"Control tower is being guarded.",		
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0		
+		);
+		squatter1.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
@@ -357,12 +377,18 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	
 		//----------------------------------------------------
 		SDRC_Squatter squatter2 = new SDRC_Squatter();
-		squatter2.Set(
+		squatter2.SetCommon(
 			"index 2: Squatters in military locations",
 			"0 0 0",
 			"any",
 			"Guards around ",
 			"Military location has loot to steal.",		
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0		
+		);
+		squatter2.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
@@ -393,12 +419,18 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Squatter squatter3 = new SDRC_Squatter();
-		squatter3.Set(
+		squatter3.SetCommon(
 			"index 3: Military in industrial areas",
 			"0 0 0",
 			"any",
 			"Industrial area near ",
 			"Military has seized control of an industrial area. Don't shoot the civilians.",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0		
+		);
+		squatter3.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
@@ -428,12 +460,18 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Squatter squatter4 = new SDRC_Squatter();
-		squatter4.Set(
+		squatter4.SetCommon(
 			"index 4: Enemy in churches and similar",
 			"0 0 0",
 			"any",
 			"Sanctuary visitors near ",
 			"Holy night, holy loot.",		
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0		
+		);
+		squatter4.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
@@ -459,12 +497,18 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Squatter squatter5 = new SDRC_Squatter();
-		squatter5.Set(
+		squatter5.SetCommon(
 			"index 5: Shops and houses",
 			"0 0 0",
 			"any",
 			"Burglars seen near ",
 			"Go rob the robbers.",		
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0		
+		);
+		squatter5.Set(
 			{
 				//We pick any building that matches and ignore location
 			},

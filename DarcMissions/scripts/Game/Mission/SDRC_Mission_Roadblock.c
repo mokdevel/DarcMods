@@ -109,8 +109,10 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(GetPos(), m_DC_Roadblock.posName));
 		SetTitle(m_DC_Roadblock.title + "" + GetPosName());
 		SetInfo(m_DC_Roadblock.info);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP, m_Config.markerType);
+		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
+		SetMessages(m_Config.showMessage, m_DC_Roadblock.winMessage, m_DC_Roadblock.loseMessage);		
+		SetWinCondition(m_DC_Roadblock.winCondition);
 
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Roadblock.campItems);
 		
@@ -212,18 +214,24 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		
 		//Default		
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.showMarker = true;
+		conf.markerIdx = DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP;
 		//Mission specific		
 		conf.roadblockList = {0,1,2};		
 		
 		//----------------------------------------------------
 		SDRC_Occupation roadblock0 = new SDRC_Occupation();
-		roadblock0.Set(
+		roadblock0.SetCommon(
 			"index 0: Roadblock",
 			"0 0 0",
 			"any",
 			"Roadblock near ",
 			"Look out for trouble.",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0		
+		);
+		roadblock0.Set(
 			{
 				EMapDescriptorType.MDT_NAME_TOWN,
 				EMapDescriptorType.MDT_NAME_LOCAL,
@@ -288,12 +296,18 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Occupation roadblock1 = new SDRC_Occupation();
-		roadblock1.Set(
+		roadblock1.SetCommon(
 			"index 1: Roadblock",
 			"0 0 0",
 			"any",
 			"Roadblock seen close to ",
 			"Be careful.",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0		
+		);
+		roadblock1.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_TOWN,
@@ -424,12 +438,18 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Occupation roadblock2 = new SDRC_Occupation();
-		roadblock2.Set(
+		roadblock2.SetCommon(
 			"index 2: Roadblock",
 			"0 0 0",
 			"any",
 			"Road is closed near ",
 			"Are your ready to pay the toll?",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0		
+		);		
+		roadblock2.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN,

@@ -71,8 +71,10 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Occupation.posName));
 		SetTitle(m_DC_Occupation.title + "" + GetPosName());
 		SetInfo(m_DC_Occupation.info);			
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP, m_Config.markerType);
+		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
+		SetMessages(m_Config.showMessage, m_DC_Occupation.winMessage, m_DC_Occupation.loseMessage);		
+		SetWinCondition(m_DC_Occupation.winCondition);
 
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Occupation.campItems);
 			
@@ -174,19 +176,24 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		
 		//Default		
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.showMarker = true;
+		conf.markerIdx = DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP;
 		//Mission specific		
 		conf.occupationList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
 
 		//----------------------------------------------------
 		SDRC_Occupation occupation0 = new SDRC_Occupation();
-		occupation0.Set
-		(
+		occupation0.SetCommon(
 			"index 0: Mission in villages and local areas.",
 			"0 0 0",
 			"any",
 			"Guards patroling near ",
 			"Avoid the location. Loot has already been lost.",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0
+		);
+		occupation0.Set(
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_LOCAL
@@ -205,12 +212,18 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Occupation occupation1 = new SDRC_Occupation();
-		occupation1.Set(
+		occupation1.SetCommon(
 			"index 1: Bandit camp spawning to non city areas",
 			"0 0 0",
 			"any",
 			"Bandit camp near ",
 			"Bandits are protecting their valuable loot.",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0
+		);
+		occupation1.Set(
 			{
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_NAME_SETTLEMENT,
@@ -276,12 +289,18 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 
 		//----------------------------------------------------
 		SDRC_Occupation occupation2 = new SDRC_Occupation();
-		occupation2.Set(
+		occupation2.SetCommon(
 			"index 2: Occupation that will spawn mainly to cities and towns.",
 			"0 0 0",
 			"any",
 			"Occupation in ",
 			"City is being occupied.",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0
+		);
+		occupation2.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -352,12 +371,18 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Occupation occupation3 = new SDRC_Occupation();
-		occupation3.Set(
+		occupation3.SetCommon(
 			"index 3: Car crash in an unusual place",
 			"0 0 0",
 			"any",
 			"Car crash near ",
 			"Loot is up for grabs.",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0
+		);
+		occupation3.Set(
 			{
 				EMapDescriptorType.MDT_FORESTSQUARE,
 				EMapDescriptorType.MDT_FUELSTATION,
@@ -439,12 +464,18 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Occupation occupation4 = new SDRC_Occupation();
-		occupation4.Set(
+		occupation4.SetCommon(
 			"index 4: Campers with a car and a tent",
 			"0 0 0",
 			"any",
 			"Campers near ",
 			"Rob them before they leave.",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0
+		);
+		occupation4.Set(
 			{
 				EMapDescriptorType.MDT_NAME_RIDGE,
 				EMapDescriptorType.MDT_FORESTSQUARE,
@@ -539,12 +570,18 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				
 		//----------------------------------------------------
 		SDRC_Occupation occupation5 = new SDRC_Occupation();
-		occupation5.Set(
+		occupation5.SetCommon(
 			"index 5: A small town",
 			"0 0 0",
 			"any",
 			"Town near ",
 			"The enemies are hiding in a ghost town.",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0
+		);
+		occupation5.Set(
 			{
 				EMapDescriptorType.MDT_NAME_RIDGE,
 				EMapDescriptorType.MDT_FORESTSQUARE,

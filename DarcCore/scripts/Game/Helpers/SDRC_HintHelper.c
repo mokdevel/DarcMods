@@ -3,6 +3,28 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_HintHelper
 {	
+	//------------------------------------------------------------------------------------------------
+	static void ShowHintMission(string title, string details)
+	{	
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!m_BaseGameMode)
+		{
+			return;
+		}
+		
+ 		if (!m_BaseGameMode.missionFrame)
+		{
+			return;
+		}
+		
+		int timeout = m_BaseGameMode.missionFrame.m_Config.missionHintTime;
+		if (timeout > 0)
+		{
+			ShowHint(title, details, timeout);
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	static void ShowHint(string title, string details, int timeOut)
 	{	
 		SDRC_RplHintComp hintManagerComponent = SDRC_RplHintComp.GetInstance();

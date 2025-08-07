@@ -78,7 +78,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		SetPosName("");
 		SetTitle(m_Config.title);
 		SetInfo(m_Config.info);						
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_X_MAP, m_Config.markerType);
+		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
 		SetMessages(m_Config.showMessage, m_Config.winMessage, m_Config.loseMessage);		
 		SetWinCondition(m_Config.winCondition);
@@ -254,10 +254,10 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 	//Mission specific
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
-	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.KILL_AI_ALL;	//Mission win condidition
-	string winMessage = "";					//Message to show when mission is completed
-	string loseMessage = "";				//Message to show when mission fails
-	int xp = 0;								//Experience given
+	DC_EMissionWinCondition winCondition;	//Mission win condidition
+	string winMessage;						//Message to show when mission is completed
+	string loseMessage;						//Message to show when mission fails
+	int xp;									//Experience given	
 	ref array<int> groupCount = {1, 2};
 	ref array<string> groupTypes = {}; 		//The prefab names of AI groups or characters. The AI is randomly picked from this list.
 	int aiSkill;							//Skill for AI (0-100). See SCR_AICombatComponent and EAISkill
@@ -301,12 +301,16 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 	{
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
+		conf.markerIdx = DC_EMissionIcon.GM_MISSION_X_MAP;
 		conf.showMarker = false;
 		//Mission specific
 		conf.title = "Hunters";
 		conf.info = "They are coming for you...";		
+		conf.winCondition = DC_EMissionWinCondition.KILL_AI_ALL;
+		conf.winMessage = "Win message";
+		conf.loseMessage = "Lose message";
+		conf.xp = 0;		
 		conf.groupCount = {1, 4};			//min, max		
-//		conf.groupsToSpawn = 2;
 		conf.groupTypes = 
 		{
 			"G_SMALL"

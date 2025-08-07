@@ -31,7 +31,7 @@ class SDRC_Mission_Template : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(GetPos(), m_Config.posName));
 		SetTitle(m_Config.title + "" + GetPosName());
 		SetInfo(m_Config.info);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_X_MAP, m_Config.markerType);
+		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
 
 		SetState(DC_EMissionState.INIT);			
@@ -137,7 +137,7 @@ class SDRC_TemplateJsonApi : SDRC_JsonApi
 	{
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.showMarker = true;		
+		conf.markerIdx = DC_EMissionIcon.GM_MISSION_X_MAP;
 		//Mission specific		
 		conf.pos = "0 0 0";
 		conf.posName = "any";

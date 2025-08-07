@@ -14,6 +14,7 @@ enum DC_EMissionType
 	REQUESTED = 100
 };
 
+//Stages in the state machine
 enum DC_EMissionState
 {
 	NONE,		//Unknown state. Nothing should be run at this state.
@@ -33,6 +34,13 @@ enum DC_EMissionWinCondition
 	KILL_AI_RANDOM,
 };
 
+enum DC_EMissionSuccess
+{
+	UNKNOWN,
+	WIN,
+	LOSE
+}
+
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionConfig : Managed
 {
@@ -42,9 +50,9 @@ class SDRC_MissionConfig : Managed
 	int missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;	//How often the mission is run
 	string markerType = "DARC_MISSION";
 	int markerIdx;						//marker ID
-	bool showMarker;
-	bool showHint;
-	bool showMessage;
+	bool showMarker = true;
+	bool showHint = true;
+	bool showMessage = true;
 }
 
 //------------------------------------------------------------------------------------------------
@@ -72,6 +80,7 @@ class SDRC_Mission
     private string m_WinMessage;
     private string m_LoseMessage;
 	private DC_EMissionWinCondition m_WinCondition;
+	private DC_EMissionSuccess m_Success;
 	//Internals without getters
 	private int m_ActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
 	private int m_ActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
@@ -96,6 +105,8 @@ class SDRC_Mission
 		m_ShowMessage = true;
 		m_WinMessage = "";
 		m_LoseMessage = "";
+		m_WinCondition = DC_EMissionWinCondition.KILL_AI_ALL;
+		m_Success = DC_EMissionSuccess.UNKNOWN;
 		m_sMarkerType = "DARC_MISSION";
 		SetFaction(SDRC_EnemyHelper.SelectEnemyFaction()); 		//m_sFaction 
 		//Internals
@@ -322,6 +333,12 @@ class SDRC_Mission
 		if (SDRC_AIHelper.AreAllGroupsDead(m_Groups) && m_State == DC_EMissionState.ACTIVE && !m_bMissionIsEnding)
 		{
 			//Mission is soon to be ending
+			SetSuccess(DC_EMissionSuccess.WIN);
+			if (IsShowHint() && IsShowMessage())			
+			{
+				SDRC_HintHelper.ShowHintMission("Mission: " + GetTitle(), GetWinMessage());
+			}
+			
 			m_bMissionIsEnding = true;
 			//Set ActiveTimeToEnd to be the final active time
 			SetActiveTime(m_ActiveTimeToEnd);
@@ -343,6 +360,17 @@ class SDRC_Mission
 		}
 		
 		//Well, we should not be active anymore
+		
+		//If we won, don't show a lose message
+		if (GetSuccess() != DC_EMissionSuccess.WIN)
+		{
+			SetSuccess(DC_EMissionSuccess.LOSE);
+			if (IsShowHint() && IsShowMessage())			
+			{
+				SDRC_HintHelper.ShowHintMission("Mission: " + GetTitle(), GetLoseMessage());
+			}
+		}
+
 		SDRC_Log.Add("[SDRC_Mission:IsActive] Mission " + GetId() + " : " + GetTitle() + " has ended.", LogLevel.NORMAL);				
 		return false;
 	}	
@@ -405,6 +433,17 @@ class SDRC_Mission
 	string GetLoseMessage()
 	{
 		return m_LoseMessage;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void SetSuccess(DC_EMissionSuccess success)
+	{
+		m_Success = success;
+	}
+
+	DC_EMissionSuccess GetSuccess()
+	{
+		return m_Success;
 	}
 	
 	//------------------------------------------------------------------------------------------------

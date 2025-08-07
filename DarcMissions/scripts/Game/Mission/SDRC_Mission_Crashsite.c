@@ -117,8 +117,10 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		SetPosName("");
 		SetTitle(m_DC_Crashsite.title);
 		SetInfo(m_DC_Crashsite.info);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, m_Config.markerType);
+		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
+		SetMessages(m_Config.showMessage, m_DC_Crashsite.winMessage, m_DC_Crashsite.loseMessage);		
+		SetWinCondition(m_DC_Crashsite.winCondition);
 
 		SetState(DC_EMissionState.INIT);			
 
@@ -337,10 +339,10 @@ class SDRC_Crashsite : Managed
 	string comment;							//Generic comment to describe the mission. Not used in game.
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
-	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.KILL_AI_ALL;	//Mission win condidition
-	string winMessage = "";					//Message to show when mission is completed
-	string loseMessage = "";				//Message to show when mission fails
-	int xp = 0;								//Experience given
+	DC_EMissionWinCondition winCondition;	//Mission win condidition
+	string winMessage;						//Message to show when mission is completed
+	string loseMessage;						//Message to show when mission fails
+	int xp;									//Experience given	
 	ref array<string> groupTypes = {};
 	int aiSkill;
 	float aiPerception;
@@ -349,11 +351,15 @@ class SDRC_Crashsite : Managed
 	ref SDRC_Loot loot = null;
 	ref array<ref SDRC_Structure> siteItems = {};
 	
-	void Set(string comment_, string title_, string info_, array<string> groupTypes_, int aiSkill_, float aiPerception_)
+	void Set(string comment_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, int xp_, array<string> groupTypes_, int aiSkill_, float aiPerception_)
 	{
 		comment = comment_;
 		title = title_;
 		info = info_;
+		winCondition = winCondition_;
+		winMessage = winMessage_;
+		loseMessage = loseMessage_;
+		xp = xp_;
 		groupTypes = groupTypes_;
 		aiSkill = aiSkill_;
 		aiPerception = aiPerception_;
@@ -396,7 +402,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		conf.author = "darc";
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.showMarker = true;
+		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP;
 		//Mission specific
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;
@@ -409,7 +415,11 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		(
 			"index 0: general mission",
 			"Helicopter in distress ",
-			"A valuable cargo has crashed",	
+			"A valuable cargo has crashed",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0,
 			{
 				"G_LIGHT", "G_ADMIN"
 			},

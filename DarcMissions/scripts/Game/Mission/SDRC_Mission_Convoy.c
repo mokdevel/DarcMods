@@ -141,8 +141,10 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, posName));
 		SetTitle(m_DC_Convoy.title);
 		SetInfo(m_DC_Convoy.info + "" + GetPosName() + " to " + SDRC_Locations.CreateName(m_vPosDestination, "any"));			
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_CONVOY_MAP, m_Config.markerType);
-		SetShowHint(m_Config.showHint);			
+		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
+		SetShowHint(m_Config.showHint);
+		SetMessages(m_Config.showMessage, m_DC_Convoy.winMessage, m_DC_Convoy.loseMessage);		
+		SetWinCondition(m_DC_Convoy.winCondition);
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 		
 		SetState(DC_EMissionState.INIT);
@@ -317,10 +319,10 @@ class SDRC_Convoy : Managed
 	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
-	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.KILL_AI_ALL;	//Mission win condidition
-	string winMessage = "";					//Message to show when mission is completed
-	string loseMessage = "";				//Message to show when mission fails
-	int xp = 0;								//Experience given	
+	DC_EMissionWinCondition winCondition;	//Mission win condidition
+	string winMessage;						//Message to show when mission is completed
+	string loseMessage;						//Message to show when mission fails
+	int xp;									//Experience given	
 	ref array<EMapDescriptorType> locationTypes = {};	
 	ref array<string> groupTypes = {};
 	int aiSkill;
@@ -330,14 +332,22 @@ class SDRC_Convoy : Managed
 	//Optional settings
 	ref SDRC_Loot loot = null;	
 	
-	void Set(string comment_, vector pos_, vector posDestination_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<string> groupTypes_, int aiSkill_, float aiPerception_, array<string> vehicleTypes_, float cruiseSpeed_)
+	void SetCommon(string comment_, vector pos_, vector posDestination_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, int xp_)
 	{
 		comment = comment_;
 		pos = pos_;
-		posDestination = posDestination_;
+		posDestination = posDestination_;	//NOTE: This differs from other SetCommon() in other missions.
 		posName = posName_;
 		title = title_;
 		info = info_;
+		winCondition = winCondition_;
+		winMessage = winMessage_;
+		loseMessage = loseMessage_;
+		xp = xp_;
+	}
+	
+	void Set(array<EMapDescriptorType> locationTypes_, array<string> groupTypes_, int aiSkill_, float aiPerception_, array<string> vehicleTypes_, float cruiseSpeed_)
+	{
 		locationTypes = locationTypes_;
 		groupTypes = groupTypes_;
 		aiSkill = aiSkill_;
@@ -383,7 +393,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.showMarker = true;
+		conf.markerIdx = DC_EMissionIcon.GM_MISSION_CONVOY_MAP;
 		//Mission specific
 		conf.convoyList = {0,0,0,1};
 		conf.distanceToPlayer = 500;
@@ -391,14 +401,19 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Convoy convoy0 = new SDRC_Convoy();
-		convoy0.Set
-		(
+		convoy0.SetCommon(
 			"index 0: Convoy driving from .. to ..",
 			"0 0 0",
 			"0 0 0",
 			"any",
 			"Convoy is on the move.",
 			"Leaked travel plans show a route from ",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0
+		);
+		convoy0.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -441,14 +456,19 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	
 		//----------------------------------------------------
 		SDRC_Convoy convoy1 = new SDRC_Convoy();
-		convoy1.Set
-		(
+		convoy1.SetCommon(
 			"index 1: Truck driving from .. to ..",
 			"0 0 0",
 			"0 0 0",
 			"any",
 			"Cargo truck is on the move.",
 			"Follow the route from ",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0
+		);
+		convoy1.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -491,14 +511,19 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		//TBD: Needs fixing. The AI will jump out immediately when seeing a player. The driver stays inside, but gunner not. Probably need to assign a gunner...
 		SDRC_Convoy convoy2 = new SDRC_Convoy();
-		convoy2.Set
-		(
+		convoy2.SetCommon(
 			"index 2: Armor driving from .. to ..",
 			"0 0 0",
 			"0 0 0",
 			"any",
 			"Armor spotted",
 			"Likely to patrol from ",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0
+		);
+		convoy2.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,

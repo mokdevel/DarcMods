@@ -90,8 +90,10 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, posName));
 		SetTitle(m_DC_Patrol.title + "" + GetPosName());
 		SetInfo(m_DC_Patrol.info);			
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_PATROL_MAP, m_Config.markerType);
+		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);			
+		SetMessages(m_Config.showMessage, m_DC_Patrol.winMessage, m_DC_Patrol.loseMessage);		
+		SetWinCondition(m_DC_Patrol.winCondition);		
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 
 		SetState(DC_EMissionState.INIT);
@@ -263,6 +265,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;
+		conf.markerIdx = DC_EMissionIcon.GM_MISSION_PATROL_MAP;
 		conf.showMarker = false;
 		//Mission specific
 		conf.patrolList = {0,0,0,1,2,3};
