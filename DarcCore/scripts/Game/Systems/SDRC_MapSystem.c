@@ -151,8 +151,11 @@ class SDRC_MapSystem : GameSystem
 		}
 
 		//SDRC_Log.Add("[SDRC_MapSystem:OnMapClose]", LogLevel.NORMAL);
-				
-		m_Widget.RemoveFromHierarchy();
+
+		if (m_Widget)				
+		{
+			m_Widget.RemoveFromHierarchy();
+		}
 		
 		Enable(false);
 		DisableInput();

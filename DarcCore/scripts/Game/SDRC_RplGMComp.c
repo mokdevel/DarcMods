@@ -96,13 +96,18 @@ class SDRC_RplGMComp : ScriptComponent
 	{
 		SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Deletion of " + missionId + " requested by " + playerID, LogLevel.DEBUG);	
 		SDRC_GMHelper.DeleteMission(missionId);
+		SyncMapSymbols(playerID);
 	}
 		
 	//------------------------------------------------------------------------------------------------
  	void SyncMapSymbols(int playerID)
 	{
 		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.DEBUG);	
+		//Clear symbols on server
 		ClearSymbols();
+		//Clear symbols on client
+		Rpc(RpcDo_ClearSymbols);
+		
 		SDRC_GMHelper.AddSymbols();
 		
 		foreach(SDRC_GMMapSymbol symbol : m_Symbols)
@@ -113,6 +118,13 @@ class SDRC_RplGMComp : ScriptComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
+    [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
+    protected void RpcDo_ClearSymbols()
+    {
+		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_ClearSymbols] Clearing.. ", LogLevel.NORMAL);	//TBD: SPAM		
+		ClearSymbols();
+    }
+		
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
     protected void RpcDo_SyncMapSymbol(DC_EDrawSymbol symbolType, vector pos, float radius, int color, string id)
     {

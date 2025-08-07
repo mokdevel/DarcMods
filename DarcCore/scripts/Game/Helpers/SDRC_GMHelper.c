@@ -65,7 +65,10 @@ class SDRC_GMHelper
 			{
 				foreach (SDRC_Mission mission : m_BaseGameMode.missionFrame.m_MissionList)
 				{
-					m_GmComponent.AddSymbolMarker(mission.GetPos(), mission.GetType(), mission.GetMarker(), mission.GetId());
+					if (mission.GetState() == DC_EMissionState.ACTIVE)
+					{
+						m_GmComponent.AddSymbolMarker(mission.GetPos(), mission.GetType(), mission.GetMarker(), mission.GetId());
+					}
 				}
 			}
 		}	
