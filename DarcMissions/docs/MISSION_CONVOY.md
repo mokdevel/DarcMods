@@ -11,6 +11,7 @@ string author : See Common parameters
 int missionCycleTime : See Common parameters
 bool showMarker : See Common parameters
 bool showHint : See Common parameters
+bool showMessage : See Common parameters
 int convoyTime : (seconds) Time to drive around. Once this time has passed and not players nearby, despawn mission.
 int distanceToPlayer : If no players this close to the convoy and convoyTime has passed, despawn mission.
 bool disableArsenal : See General parameters
