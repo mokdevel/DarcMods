@@ -5,12 +5,11 @@ These parameters are in every mission.
 int version : See General parameters
 string author : See General parameters
 int missionCycleTime : (seconds) The cycle time the mission states are run
+string markerType : The marker type to use. Default is "DARC_MISSION".
+  For Arma Reforger default ones, you can use "PLACED_MILITARY". Other mods may extend this.
+int markerIdx : The index of the icon of defined markerType
 bool showMarker : Show mission marker on map. False will disable markers.
 bool showHint : Show players a hint with details about the missions. False will disable hints.
-int xp : Experience given once mission has succeeded. (WIP)
-DC_EMissionWinCondition winCondition : The condition to reach for a win. (WIP)
-string winMessage : Message to show when winCondition has been reached. (WIP)
-string loseMessage : Message to show if mission failed (WIP)
 ```
 
 ## General parameters
