@@ -5,6 +5,7 @@ AIs are hunting you and following you. They will receive regularly information a
 
 Note on GM requested mission: The location is where the mission was dropped.
 
+See [Common and General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_COMMON.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
