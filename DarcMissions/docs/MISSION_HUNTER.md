@@ -13,6 +13,10 @@ bool showMarker : See Common parameters
 bool showHint : See Common parameters
 string title : See General parameters
 string info : See General parameters
+DC_EMissionWinCondition winCondition : See General parameters
+string winMessage : See General parameters
+string loseMessage : See General parameters
+int xp = 0 : See General parameters
 array<int> groupCount : See General parameters
 array<string> groupTypes : See General parameters
 int aiSkill : See General parameters
