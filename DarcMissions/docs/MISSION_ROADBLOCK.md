@@ -5,6 +5,7 @@ AIs have setup roadblocks on roads. They will patrol the location and may have l
 
 Note on GM requested mission: The location for the mission will be searched from the closest road. It will not be exactly where you put the mission.
 
+See [Common and General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_COMMON.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
