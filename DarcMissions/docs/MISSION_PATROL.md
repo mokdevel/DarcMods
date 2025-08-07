@@ -11,6 +11,7 @@ string author : See Common parameters
 int missionCycleTime : See Common parameters
 bool showMarker : See Common parameters
 bool showHint : See Common parameters
+bool showMessage : See Common parameters
 int patrolingTime : (seconds) Time to patrol. Once this time has passed and not players nearby, despawn mission.
 int distanceToPlayer : If no players this close to any players and patrolingTime has passed, despawn mission.
 array<int> patrolList : The indexes of patrols.
