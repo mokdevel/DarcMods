@@ -32,7 +32,6 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 
 ## Known issues
 - Moving map markers lose the text under them. 
-- Incompatible with Freedom Fighters
 
 # Parameters
 All configurations are done via .json files. The information is on one line due to the saving functionality in AR. See [FAQ](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/FAQ.md#q-the-oneline-jsons-are-hard-to-readedit) for more.
