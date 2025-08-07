@@ -10,6 +10,7 @@ string markerType : The marker type to use. Default is "DARC_MISSION".
 int markerIdx : The index of the icon of defined markerType
 bool showMarker : Show mission marker on map. False will disable markers.
 bool showHint : Show players a hint with details about the missions. False will disable hints.
+bool showMessage : Show winmessage and losemessage to players. False will hide these.
 ```
 
 ## General parameters
