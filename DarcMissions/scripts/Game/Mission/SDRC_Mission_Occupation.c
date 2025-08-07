@@ -71,7 +71,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Occupation.posName));
 		SetTitle(m_DC_Occupation.title + "" + GetPosName());
 		SetInfo(m_DC_Occupation.info);			
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
 
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Occupation.campItems);

@@ -117,7 +117,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		SetPosName("");
 		SetTitle(m_DC_Crashsite.title);
 		SetInfo(m_DC_Crashsite.info);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
 
 		SetState(DC_EMissionState.INIT);			
@@ -173,20 +173,21 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 						{
 							SDRC_MapMarkerHelper.DeleteMarker(GetId());
 							//SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, GetId(), "Crash site");
-							SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_CRASHSITE_MAP);
+							SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, m_Config.markerType);
 							ShowMarker();
 						}
 						missionCrashSiteState = DC_EMissionCrashSiteState.SPAWN_SITE;
 					}
 					else
 					{
-						if (m_Config.showMarker)
-						{
+						MoveMarker();
+/*						if (m_Config.showMarker)
+						{						
 							SDRC_MapMarkerHelper.DeleteMarker(GetId());
 							//SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, GetId(), "");
-							SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP);
+							SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, m_Config.markerType);
 							ShowMarker();
-						}
+						}*/
 					}
 					break;
 				case DC_EMissionCrashSiteState.SPAWN_SITE:
@@ -336,6 +337,10 @@ class SDRC_Crashsite : Managed
 	string comment;							//Generic comment to describe the mission. Not used in game.
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
+	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.KILL_AI_ALL;	//Mission win condidition
+	string winMessage = "";					//Message to show when mission is completed
+	string loseMessage = "";				//Message to show when mission fails
+	int xp = 0;								//Experience given
 	ref array<string> groupTypes = {};
 	int aiSkill;
 	float aiPerception;

@@ -27,7 +27,10 @@ enum DC_EMissionState
 enum DC_EMissionWinCondition
 {
 	NONE,
-	KILL_ALL_AI	
+	KILL_AI_ALL,
+	KILL_AI_80,
+	KILL_AI_50,
+	KILL_AI_RANDOM,
 };
 
 //------------------------------------------------------------------------------------------------
@@ -37,12 +40,11 @@ class SDRC_MissionConfig : Managed
 	int version = 1;
 	string author = "darc";
 	int missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;	//How often the mission is run
-	bool showMarker = true;
-	bool showHint = true;
-	int xp = 0;
-	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.KILL_ALL_AI;
-	string winMessage = "";
-	string loseMessage = "";
+	string markerType = "DARC_MISSION";
+	int markerIdx;						//marker ID
+	bool showMarker;
+	bool showHint;
+	bool showMessage;
 }
 
 //------------------------------------------------------------------------------------------------
@@ -58,6 +60,9 @@ class SDRC_Mission
     private string m_Title;
     private string m_Info;
     private bool m_ShowHint;
+    private bool m_ShowMessage;
+    private string m_WinMessage;
+    private string m_LoseMessage;
 	//Internals
 	private int m_StartTime;					//Seconds when mission started
 	private int m_EndTime;						//Seconds when mission shall end.
@@ -65,6 +70,7 @@ class SDRC_Mission
 	private string m_sFaction;					//Faction for the mission		
 	private bool m_bShowMarker;					//If the icon is to be shown
 	private DC_EMissionIcon m_sIcon;			//The icon to show
+	private string m_sMarkerType;				//Markertype defined by SCR_EMapMarkerType
 	//Internals without getters
 	private int m_ActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
 	private int m_ActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
@@ -86,6 +92,10 @@ class SDRC_Mission
 		m_Title = "";
 		m_Info = "";
 		m_ShowHint = true;
+		m_ShowMessage = true;
+		m_WinMessage = "";
+		m_LoseMessage = "";
+		m_sMarkerType = "DARC_MISSION";
 		SetFaction(SDRC_EnemyHelper.SelectEnemyFaction()); 		//m_sFaction 
 		//Internals
 		m_StartTime = (System.GetTickCount() / 1000); 			//The time in seconds when the mission was started.
@@ -348,6 +358,39 @@ class SDRC_Mission
 	}
 
 	//------------------------------------------------------------------------------------------------
+	void SetShowMessage(bool showMessage)
+	{
+		m_ShowMessage = showMessage;
+	}
+	
+	bool IsShowMessage()
+	{
+		return m_ShowMessage;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void SetWinMessage(string message)
+	{
+		m_WinMessage = message;
+	}
+	
+	string GetWinMessage()
+	{
+		return m_WinMessage;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void SetLoseMessage(string message)
+	{
+		m_LoseMessage = message;
+	}
+	
+	string GetLoseMessage()
+	{
+		return m_LoseMessage;
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	string GetFaction()
 	{
 		return m_sFaction;
@@ -365,9 +408,10 @@ class SDRC_Mission
 		return m_sIcon;
 	}
 
-	void SetMarker(bool showMarker, DC_EMissionIcon icon)
+	void SetMarker(bool showMarker, DC_EMissionIcon icon, string markerType = "DARC_MISSION")
 	{
 		m_sIcon = icon;
+		m_sMarkerType = markerType;
 		m_bShowMarker = showMarker;
 	}
 	

@@ -31,7 +31,7 @@ class SDRC_Mission_Template : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(GetPos(), m_Config.posName));
 		SetTitle(m_Config.title + "" + GetPosName());
 		SetInfo(m_Config.info);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_X_MAP);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_X_MAP, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
 
 		SetState(DC_EMissionState.INIT);			
@@ -95,6 +95,10 @@ class SDRC_TemplateConfig : SDRC_MissionConfig
 	string posName;
 	string title;
 	string info;
+	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.KILL_AI_ALL;
+	string winMessage = "";
+	string loseMessage = "";
+	int xp = 0;
 	
 	//Variables here
 }

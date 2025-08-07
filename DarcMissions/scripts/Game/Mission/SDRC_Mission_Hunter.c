@@ -78,7 +78,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		SetPosName("");
 		SetTitle(m_Config.title);
 		SetInfo(m_Config.info);						
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_X_MAP);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_X_MAP, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
 
 		SetState(DC_EMissionState.INIT);
@@ -252,6 +252,10 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 	//Mission specific
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
+	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.KILL_AI_ALL;	//Mission win condidition
+	string winMessage = "";					//Message to show when mission is completed
+	string loseMessage = "";				//Message to show when mission fails
+	int xp = 0;								//Experience given
 	ref array<int> groupCount = {1, 2};
 	ref array<string> groupTypes = {}; 		//The prefab names of AI groups or characters. The AI is randomly picked from this list.
 	int aiSkill;							//Skill for AI (0-100). See SCR_AICombatComponent and EAISkill

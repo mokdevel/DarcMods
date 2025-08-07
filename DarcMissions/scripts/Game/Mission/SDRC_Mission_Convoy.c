@@ -141,7 +141,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, posName));
 		SetTitle(m_DC_Convoy.title);
 		SetInfo(m_DC_Convoy.info + "" + GetPosName() + " to " + SDRC_Locations.CreateName(m_vPosDestination, "any"));			
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_CONVOY_MAP);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_CONVOY_MAP, m_Config.markerType);
 		SetShowHint(m_Config.showHint);			
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 		
@@ -185,12 +185,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 						SetPos(m_Vehicle.GetOrigin());
 						SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
 						MoveMarker();
-/*						if (m_Config.showMarker)
-						{
-							SDRC_MapMarkerHelper.DeleteMarker(GetId());
-							SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_CONVOY_MAP);
-							ShowMarker();
-						}*/
 					}
 								
 					if (!IsActive())
@@ -323,6 +317,10 @@ class SDRC_Convoy : Managed
 	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
+	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.KILL_AI_ALL;	//Mission win condidition
+	string winMessage = "";					//Message to show when mission is completed
+	string loseMessage = "";				//Message to show when mission fails
+	int xp = 0;								//Experience given	
 	ref array<EMapDescriptorType> locationTypes = {};	
 	ref array<string> groupTypes = {};
 	int aiSkill;

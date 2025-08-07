@@ -166,8 +166,6 @@ class SDRC_MissionFrame
 			}*/
 		#endif	
 		
-		//GetGame().GetCallqueue().CallLater(SendHint, 15000, true);
-		
 		//Start the mission framework.
 		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStartDelay, false);
 	}
@@ -177,12 +175,6 @@ class SDRC_MissionFrame
 	{
 		return s_Instance;		
 	}	
-	
-	//------------------------------------------------------------------------------------------------
-	void SendHint()
-	{
-		SDRC_HintHelper.ShowHint("Testing", "Yeah", 2);					
-	}
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -208,9 +200,6 @@ class SDRC_MissionFrame
 	*/	
 	protected void MissionCycleManager()
 	{		
-//TBD:		vector testpos = SDRC_Misc.GetRandomWorldPos();				
-//TBD:		SDRC_GMHelper.AddMapCicrle(testpos, 100, ARGB(75, 255, 0, 0));
-		
 		ref SDRC_Mission tmpDC_Mission = null;
 		DC_EMissionType missionType = null;
 		bool staticMissionSpawned = false;
@@ -352,7 +341,7 @@ class SDRC_MissionFrame
 			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Waiting for players..", LogLevel.NORMAL);
 		}
 
-		#ifndef SDRC_RELEASE				
+		#ifndef SDRC_RELEASE
 			if (SDRC_Conf.SHOW_VALID_MISSION_AREAS)
 			{
 				SDRC_MissionHelper.DeleteDebugTestMissionPos();
@@ -478,7 +467,6 @@ class SDRC_MissionFrame
 		}
 		return true;
 	}
-
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -537,7 +525,7 @@ class SDRC_MissionFrame
 	{
 		int i = 0;
 		int aiCount = 0;
-		int cutLen = 25;
+		int cutLen = 32;
 		
 		if (m_MissionList.Count() == 0)
 		{
@@ -629,6 +617,26 @@ class SDRC_MissionFrame
 			}
 		}
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find mission index with mission id
+	*/		
+	int FindMissionWithId(string id)
+	{
+		int idx = -1;
+		foreach (SDRC_Mission mission : m_MissionList)
+		{
+			if (mission.GetId() == id)
+			{
+				idx++;
+				break;
+			}
+			idx++;
+		}
+		
+		return idx;
+	}		
 	
 	//------------------------------------------------------------------------------------------------
 	/*!

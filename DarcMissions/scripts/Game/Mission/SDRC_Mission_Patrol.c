@@ -90,7 +90,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, posName));
 		SetTitle(m_DC_Patrol.title + "" + GetPosName());
 		SetInfo(m_DC_Patrol.info);			
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_PATROL_MAP);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_PATROL_MAP, m_Config.markerType);
 		SetShowHint(m_Config.showHint);			
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 
@@ -124,7 +124,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 /*				if (m_Config.showMarker)
 				{
 					SDRC_MapMarkerHelper.DeleteMarker(GetId());
-					SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_PATROL_MAP);
+					SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_PATROL_MAP, m_Config.markerType);
 					ShowMarker();
 				}*/				
 			}
@@ -195,6 +195,10 @@ class SDRC_Patrol : Managed
 	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
+	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.KILL_AI_ALL;	//Mission win condidition
+	string winMessage = "";					//Message to show when mission is completed
+	string loseMessage = "";				//Message to show when mission fails
+	int xp = 0;								//Experience given
 	ref array<EMapDescriptorType> locationTypes = {};	
 	ref array<int> groupCount = {};			//min, max	
 	ref array<int> waypointRange = {};		//min, max

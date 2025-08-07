@@ -109,7 +109,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(GetPos(), m_DC_Roadblock.posName));
 		SetTitle(m_DC_Roadblock.title + "" + GetPosName());
 		SetInfo(m_DC_Roadblock.info);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
 
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Roadblock.campItems);
@@ -171,12 +171,6 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 class SDRC_RoadblockConfig : SDRC_MissionConfig
 {
 	//Mission specific
-	vector pos;
-	string posName;
-	string title;
-	string info;
-	
-	//Variables here
 	bool disableArsenal;								//Disable arsenal for vehicles so that no other items are found	
 	ref array<ref int> roadblockList = {};				//The indexes of roadblocks.
 	ref array<ref SDRC_Occupation> roadblocks = {};		//List of roadblocks - uses the same structure as for occupations	
