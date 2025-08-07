@@ -11,6 +11,7 @@ string author : See Common parameters
 int missionCycleTime : See Common parameters
 bool showMarker : See Common parameters
 bool showHint : See Common parameters
+bool showMessage : See Common parameters
 bool disableArsenal : See General parameters
 array<int> occupationList : The indexes of occupations.
 array<SDRC_Occupation> occupations : List of oocupations.
