@@ -24,6 +24,10 @@ array<SDRC_Crashsite> crashsites : List of crashsites
 string comment : See General parameters
 string title : See General parameters
 string info : See General parameters
+DC_EMissionWinCondition winCondition : See General parameters
+string winMessage : See General parameters
+string loseMessage : See General parameters
+int xp = 0 : See General parameters
 array<string> groupTypes : See General parameters
 int aiSkill : See General parameters
 float aiPerception : See General parameters
