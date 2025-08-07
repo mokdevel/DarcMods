@@ -23,6 +23,10 @@ vector pos : See General parameters
 string posName : See General parameters
 string title : See General parameters
 string info : See General parameters
+DC_EMissionWinCondition winCondition : See General parameters
+string winMessage : See General parameters
+string loseMessage : See General parameters
+int xp = 0 : See General parameters
 array<EMapDescriptorType> locationTypes : See Location parameters
 array<int> groupCount : See General parameters
 array<int> waypointRange : See Waypoint parameters. NOTE: If loot is defined, the first group is spawned near the loot regardless of waypointRange values.
