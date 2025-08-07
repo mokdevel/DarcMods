@@ -92,9 +92,10 @@ class SDRC_RplGMComp : ScriptComponent
     }
 
 	//------------------------------------------------------------------------------------------------
- 	void DeleteMission(int playerID, string missionId)
+ 	void DoDeleteMission(int playerID, string missionId)
 	{
-		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] DeleteMission " + missionId + " requested by " + playerID, LogLevel.DEBUG);	
+		SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Deletion of " + missionId + " requested by " + playerID, LogLevel.DEBUG);	
+		SDRC_GMHelper.DeleteMission(missionId);
 	}
 		
 	//------------------------------------------------------------------------------------------------

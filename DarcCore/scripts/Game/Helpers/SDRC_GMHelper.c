@@ -7,7 +7,7 @@ class SDRC_GMHelper
 	static private SDRC_RplGMComp m_GmComponent;
 	
 	//------------------------------------------------------------------------------------------------
-	static private void FindModeAndComponent()
+	static private void FindGameModeAndComponent()
 	{		
 		m_BaseGameMode = null;
 		m_GmComponent = null;
@@ -15,7 +15,7 @@ class SDRC_GMHelper
 		m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (!m_BaseGameMode)
 		{
-			SDRC_Log.Add("[SDRC_GMHelper:FindModeAndComponent] SCR_BaseGameMode not found", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_GMHelper:FindGameModeAndComponent] SCR_BaseGameMode not found", LogLevel.ERROR);
 			return;
 		}
 		
@@ -28,7 +28,7 @@ class SDRC_GMHelper
 		m_GmComponent = SDRC_RplGMComp.GetInstance();
 		if (!m_GmComponent)
 		{
-			SDRC_Log.Add("[SDRC_GMHelper:FindModeAndComponent] SDRC_RplGMComp not found", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_GMHelper:FindGameModeAndComponent] SDRC_RplGMComp not found", LogLevel.ERROR);
 			return;
 		}					
 	}
@@ -36,7 +36,7 @@ class SDRC_GMHelper
 	//------------------------------------------------------------------------------------------------
 	static void AddSymbols()
 	{
-		FindModeAndComponent();
+		FindGameModeAndComponent();
 		AddNonValidAreas();
 		AddMarkers();
 	}
@@ -70,4 +70,16 @@ class SDRC_GMHelper
 			}
 		}	
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	static void DeleteMission(string id)
+	{
+		FindGameModeAndComponent();
+		int idx = m_BaseGameMode.missionFrame.FindMissionWithId(id);
+		if (idx != -1)
+		{
+			m_BaseGameMode.missionFrame.m_MissionList[idx].SetState(DC_EMissionState.END);
+			SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Ending mission: " + id + " - " + m_BaseGameMode.missionFrame.m_MissionList[idx].GetTitle(), LogLevel.DEBUG);				
+		}
+	}	
 }
