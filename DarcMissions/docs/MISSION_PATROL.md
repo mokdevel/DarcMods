@@ -5,6 +5,7 @@ AI patrol is spawned to move around the map. The may have a destination where th
 
 Note on GM requested mission: The location is where the mission was dropped.
 
+See [Common and General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_COMMON.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
