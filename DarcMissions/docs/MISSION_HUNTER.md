@@ -11,6 +11,7 @@ string author : See Common parameters
 int missionCycleTime : See Common parameters
 bool showMarker : See Common parameters
 bool showHint : See Common parameters
+bool showMessage : See Common parameters
 string title : See General parameters
 string info : See General parameters
 DC_EMissionWinCondition winCondition : See General parameters
