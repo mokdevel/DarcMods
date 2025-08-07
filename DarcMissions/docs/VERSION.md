@@ -3,15 +3,22 @@
 # Version history
 
 ## Next release (unreleased)
-* Nothing yet
+Major changes in the json files. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
 
 Main features:
-* Missions and NonValidAreas are shown on game master map view.
+* Game master map view:
+  * Missions and NonValidAreas are shown on the map.
+  * Missions can be deleted by pressing 'delete'.
+* For all missions
+  * A message is shown when a mission succeeds (``winMessage``) or fails (``loseMessage``).
+  * First level of win conditions is introduced.
 
 Changes:
 * dc_enemyList.json and dc_lootList.json changes. 
 * dc_nonValidArea.json removed showOnMap
 * dc_coreConfig.json added showOnGMMapNonValidArea, showOnGMMapMissionMarker
+* dc_Mission*.json added markerType, markerIdx, showMessage
+* dc_Mission*.json moved winCondition, winMessage, loseMessage, xp under each individual mission item.
 
 ## 20250801
 Minor update to properly find enemies when using TOH ReCharacters. Update *should not* affect existing installs. If you're using TOH ReCharacters, delete your dc_enemyList.json and a new one will be created.
