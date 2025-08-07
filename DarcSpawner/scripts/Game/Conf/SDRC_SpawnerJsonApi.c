@@ -13,7 +13,6 @@ class SDRC_SpawnerConfig : Managed
 	bool showMarker;
 	string markerType;					//marker type
 	int markerIdx;						//marker ID
-	int iconID;							//The ID of the icon
 	int spawnSetID;						//-1 = random, other numbers are the index of spawnSet
 	bool spawnOnRoad;					//Spawn the cars on road
 	int spawnRndRadius;					//Random radius where the spawnName spawns. 
