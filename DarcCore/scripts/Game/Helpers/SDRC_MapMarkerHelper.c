@@ -200,6 +200,17 @@ sealed class SDRC_MapMarkerHelper
 				texture = "{A72A9123C15DABDF}UI/Textures/Icons/gm_mission_Roadblock_map.edds";
 				break;
 			}
+			//NOTE: The ones below are not usable as markers
+			case DC_EMissionIcon.ICON_WIN_ROUND:		
+			{
+				texture = "{E3E45CDDDBB68FD4}UI/Textures/Icons/gm_mission_Win_round.edds";
+				break;
+			}
+			case DC_EMissionIcon.ICON_LOSE_ROUND:		
+			{
+				texture = "{784AED49188FB189}UI/Textures/Icons/gm_mission_Lose_round.edds";
+				break;
+			}
 		}		
 		return texture;
 	}		
