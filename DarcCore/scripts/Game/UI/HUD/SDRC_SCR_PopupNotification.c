@@ -22,7 +22,29 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 
 		return s_Instance;
 	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Set the icon for a hint
+	*/
+	static void SetIcon(DC_EDrawSymbol icon)
+	{
+		if (icon == -1)
+		{
+			return;
+		}
 		
+		Widget root = GetGame().GetHUDManager().CreateLayout(SDRC_LAYOUT_NAME, EHudLayers.MEDIUM, 0);
+
+		if (!root)
+			return;
+		
+		ResourceName texture = SDRC_MapMarkerHelper.GetMarkerTexture(icon);		
+		ImageWidget iw1 = ImageWidget.Cast(root.FindAnyWidget("Icon"));
+		iw1.LoadImageTexture(0, texture.GetPath());
+		iw1.SetVisible(true);
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	override protected void ProcessInit()
 	{
@@ -50,7 +72,7 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 		m_wPopupMsg.SetVisible(false);
 		m_wPopupMsgSmall.SetVisible(false);
 		m_wStatusProgress.SetVisible(false);
-
+		
 		GetGame().GetCallqueue().CallLater(SetDefaultHorizontalPosition, 500);
 
 		SCR_PlayerController playerController = SCR_PlayerController.Cast(GetGame().GetPlayerController());

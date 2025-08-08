@@ -2,40 +2,40 @@ FrameWidgetClass {
  Name "rootFrame"
  {
   ImageWidgetClass "{653CAEA9CCE5D535}" {
-   Name "ShadowM"
+   Name "IconShadow"
    Slot FrameWidgetSlot "{653CAEA26D22B8EA}" {
     Anchor 0.01 0 0.01 0
-    PositionX -6
-    OffsetLeft -6
-    PositionY 66
-    OffsetTop 66
-    SizeX 56
-    OffsetRight -50
-    SizeY 56
-    OffsetBottom -122
+    PositionX 16
+    OffsetLeft 16
+    PositionY 76
+    OffsetTop 76
+    SizeX 32
+    OffsetRight -48
+    SizeY 32
+    OffsetBottom -108
    }
    "Is Visible" 0
    Color 0.0467 0.0467 0.0467 1
-   Texture "{232D9BDABB08F52F}UI/Textures/Icons/SDRC_icon_M.edds"
-   Size 64 64
+   Texture "{16296D7B325A094B}UI/Textures/Icons/gm_mission_X_round.edds"
+   Size 71 69
   }
   ImageWidgetClass "{653CAEA26D22B8C4}" {
-   Name "WhiteM"
+   Name "Icon"
    Slot FrameWidgetSlot "{653CAEA26D22B8EA}" {
     Anchor 0.01 0 0.01 0
-    PositionX -8
-    OffsetLeft -8
-    PositionY 64
-    OffsetTop 64
-    SizeX 56
-    OffsetRight -48
-    SizeY 56
-    OffsetBottom -120
+    PositionX 14
+    OffsetLeft 14
+    PositionY 74
+    OffsetTop 74
+    SizeX 32
+    OffsetRight -46
+    SizeY 32
+    OffsetBottom -106
    }
    "Is Visible" 0
    Color 0.5841 0.5841 0.5841 1
-   Texture "{232D9BDABB08F52F}UI/Textures/Icons/SDRC_icon_M.edds"
-   Size 64 64
+   Texture "{16296D7B325A094B}UI/Textures/Icons/gm_mission_X_round.edds"
+   Size 71 69
   }
   RichTextWidgetClass "{653CAEA75E278849}" {
    Name "Popup"

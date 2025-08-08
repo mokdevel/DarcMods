@@ -9,7 +9,11 @@ class SDRC_MapSystem : GameSystem
 	protected float m_previousZoom;
 	
 	protected ResourceName m_Layout = "{F928661E727CC639}UI/layouts/Map/SDRC_MapCanvasLayer.layout";
-		
+
+	int MARKER_WIDTH = (32 * 0.8);
+	int MARKER_HEIGHT = (64 * 0.8);
+	int MARKER_SIZE_BB = (24 * 0.8);		//Marker 'bounding box size' when searhing for mouse hit
+			
 	//------------------------------------------------------------------------------------------------
 	// System initialization
 	//------------------------------------------------------------------------------------------------
@@ -172,7 +176,9 @@ class SDRC_MapSystem : GameSystem
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	//! Update known symbols on map
+	/*!	
+	Update known symbols on map
+	*/
 	override protected void OnUpdate(ESystemPoint point)
 	{
 		super.OnUpdate(point);
@@ -262,6 +268,10 @@ class SDRC_MapSystem : GameSystem
 	}	
 
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	Create a drawCommand to draw a circle. 
+	This is actually a filled round polygon.
+	*/
 	PolygonDrawCommand DrawCircle(vector center, float range, int color, int n = 36)	
 	{
 		PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
@@ -290,7 +300,11 @@ class SDRC_MapSystem : GameSystem
 	}
 
 	//------------------------------------------------------------------------------------------------
-	ImageDrawCommand DrawMarker(vector pos, DC_EMissionIcon icon)
+	/*!	
+	Create a drawCommand to draw a marker. 
+	This is actually an image with marker texture.
+	*/
+	ImageDrawCommand DrawMarker(vector center, DC_EMissionIcon icon)
 	{
 		string texture = SDRC_MapMarkerHelper.GetMarkerTexture(icon);
 		if (texture == "")
@@ -299,33 +313,34 @@ class SDRC_MapSystem : GameSystem
 			return null;
 		}
 		
-		int width = 32;
-		int height = 64;
-		
 		ImageDrawCommand drawCommand = new ImageDrawCommand();
 		SharedItemRef tex = m_wCanvasWidget.LoadTexture(texture);
 					
 		int xpos, ypos;		
-		m_MapEntity.WorldToScreen(pos[0], pos[2], xpos, ypos, true);
+		m_MapEntity.WorldToScreen(center[0], center[2], xpos, ypos, true);
 		
-		drawCommand.m_Position = Vector(xpos - (width/2), ypos - (height/2), 0);
+		drawCommand.m_Position = Vector(xpos - (MARKER_WIDTH/2), ypos - (MARKER_HEIGHT/2), 0);
 		drawCommand.m_pTexture = tex;
-		drawCommand.m_Size = Vector(width, height, 0);
+		drawCommand.m_Size = Vector(MARKER_WIDTH, MARKER_HEIGHT, 0);
 		drawCommand.m_iFlags = WidgetFlags.BLEND | WidgetFlags.STRETCH;
 		
 		return drawCommand;
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-//	void DrawImage(vector center, int width, int height, string texture)
-	void DrawImage(vector pos, int width, int height)
+	/*!	
+	Create a drawCommand to draw an image.
+	TBD: This is currently not tested/working.
+	\param center The center of the image
+	*/	
+	void DrawImage(vector center, int width, int height, string texture)
 	{
 		ImageDrawCommand drawCommand = new ImageDrawCommand();
 		
-		SharedItemRef tex = m_wCanvasWidget.LoadTexture("{8F0F7AD0EF00FCDB}UI/Textures/Icons/gm_mission_Convoy_map.edds");
+		SharedItemRef tex = m_wCanvasWidget.LoadTexture(texture);
 					
 		int xpos, ypos;		
-		m_MapEntity.WorldToScreen(pos[0], pos[2], xpos, ypos, true);
+		m_MapEntity.WorldToScreen(center[0], center[2], xpos, ypos, true);
 		
 		drawCommand.m_Position = Vector(xpos - (width/2), ypos - (height/2), 0);
 		drawCommand.m_pTexture = tex;
@@ -336,9 +351,12 @@ class SDRC_MapSystem : GameSystem
 	}	
 	
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	Find the clicked marker on the map.
+	\return -1 if no marker found
+	*/
 	protected int FindMarkerIndex()
 	{
-		const int markerSize = 24;
 		int symbolIdx = -1;
 		
 		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
@@ -348,9 +366,9 @@ class SDRC_MapSystem : GameSystem
 			m_MapEntity.GetMapCursorWorldPosition(worldX, worldY);
 			vector cursorPos = "0 0 0";
 			cursorPos[0] = worldX;
-			cursorPos[2] = worldY - (markerSize/2)/m_previousZoom;	//Move the point to check up a little
+			cursorPos[2] = worldY - (MARKER_SIZE_BB/2)/m_previousZoom;	//Move the point to check up a little
 			
-			float distanceCheck = markerSize/m_previousZoom;
+			float distanceCheck = MARKER_SIZE_BB/m_previousZoom;
 			
 			int idx = 0;
 			
