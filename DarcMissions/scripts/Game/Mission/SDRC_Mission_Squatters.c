@@ -106,7 +106,8 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, posName));
 		SetTitle(m_DC_Squatter.title + "" + GetPosName());
-		SetInfo(m_DC_Squatter.info);			
+		SetInfo(m_DC_Squatter.info);
+		SetMessages(m_Config.showMessage, m_DC_Squatter.winMessage, m_DC_Squatter.loseMessage);				
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
 			
@@ -206,10 +207,10 @@ class SDRC_Squatter : Managed
 	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
-	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.KILL_AI_ALL;	//Mission win condidition
-	string winMessage = "";					//Message to show when mission is completed
-	string loseMessage = "";				//Message to show when mission fails
-	int xp = 0;								//Experience given
+	DC_EMissionWinCondition winCondition;	//Mission win condidition
+	string winMessage;						//Message to show when mission is completed
+	string loseMessage;						//Message to show when mission fails
+	int xp;									//Experience given	
 	ref array<EMapDescriptorType> locationTypes = {};
 	ref array<int> aiCount = {};			//min, max
 	ref array<string> aiTypes = {};
@@ -284,7 +285,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP;
 		//Mission specific
 		conf.buildingRadius = 400;
-		conf.squatterList = {0,1,2,2,3,3,3,4,5,5,5};
+		conf.squatterList = {4};//{0,1,2,2,3,3,3,4,5,5,5};
 		
 		//----------------------------------------------------
 		SDRC_Squatter squatter0 = new SDRC_Squatter();
