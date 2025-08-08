@@ -10,7 +10,7 @@ class SDRC_HintHelper
 	\param msg The message to show
 	\param icon Icon to show. By default, icon is not shown
 	*/
-	static void ShowHintMission(string title, string msg, DC_EMissionIcon icon)
+	static void ShowHintMission(string title, string msg, DC_EMissionIcon icon = DC_EMissionIcon.NONE)
 	{	
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (!m_BaseGameMode)

@@ -16,8 +16,8 @@ FrameWidgetClass {
    }
    "Is Visible" 0
    Color 0.0467 0.0467 0.0467 1
-   Texture "{16296D7B325A094B}UI/Textures/Icons/gm_mission_X_round.edds"
-   Size 71 69
+   Texture "{E3E45CDDDBB68FD4}UI/Textures/Icons/gm_mission_Win_round.edds"
+   Size 53 52
   }
   ImageWidgetClass "{653CAEA26D22B8C4}" {
    Name "Icon"
@@ -34,8 +34,8 @@ FrameWidgetClass {
    }
    "Is Visible" 0
    Color 0.5841 0.5841 0.5841 1
-   Texture "{16296D7B325A094B}UI/Textures/Icons/gm_mission_X_round.edds"
-   Size 71 69
+   Texture "{E3E45CDDDBB68FD4}UI/Textures/Icons/gm_mission_Win_round.edds"
+   Size 53 52
   }
   RichTextWidgetClass "{653CAEA75E278849}" {
    Name "Popup"

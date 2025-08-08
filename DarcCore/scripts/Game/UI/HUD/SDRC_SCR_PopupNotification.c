@@ -1,4 +1,21 @@
 //------------------------------------------------------------------------------------------------
+modded class SCR_PopUpNotification
+{
+	protected DC_EMissionIcon m_Icon;
+	protected ImageWidget m_wImageWidget;
+	protected ImageWidget m_wImageWidgetShadow;
+
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Set the icon for a hint
+	*/
+	void SetIcon(DC_EMissionIcon icon)
+	{
+		m_Icon = icon;
+	}				
+}
+
+//------------------------------------------------------------------------------------------------
 class SDRC_SCR_PopUpNotificationClass : SCR_PopUpNotificationClass
 {
 };
@@ -23,28 +40,6 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 		return s_Instance;
 	}
 
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Set the icon for a hint
-	*/
-	static void SetIcon(DC_EDrawSymbol icon)
-	{
-		if (icon == -1)
-		{
-			return;
-		}
-		
-		Widget root = GetGame().GetHUDManager().CreateLayout(SDRC_LAYOUT_NAME, EHudLayers.MEDIUM, 0);
-
-		if (!root)
-			return;
-		
-		ResourceName texture = SDRC_MapMarkerHelper.GetMarkerTexture(icon);		
-		ImageWidget iw1 = ImageWidget.Cast(root.FindAnyWidget("Icon"));
-		iw1.LoadImageTexture(0, texture.GetPath());
-		iw1.SetVisible(true);
-	}
-			
 	//------------------------------------------------------------------------------------------------
 	override protected void ProcessInit()
 	{
@@ -72,6 +67,7 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 		m_wPopupMsg.SetVisible(false);
 		m_wPopupMsgSmall.SetVisible(false);
 		m_wStatusProgress.SetVisible(false);
+		m_wImageWidget = ImageWidget.Cast(root.FindAnyWidget("Icon"));
 		
 		GetGame().GetCallqueue().CallLater(SetDefaultHorizontalPosition, 500);
 
@@ -94,5 +90,56 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 					root.SetZOrder(mapWidget.GetZOrder() - 1);
 			}
 		}
-	}		
+	}
+	//------------------------------------------------------------------------------------------------
+	override protected void ShowMsg(notnull SCR_PopupMessage msg)
+	{
+		if (!m_bIsEnabledInSettings)
+			return;
+		
+		if (msg == m_ShownMsg)
+			return;
+
+		ShowIcon();
+		
+		super.ShowMsg(msg);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	override protected void HideMsg(notnull SCR_PopupMessage msg)
+	{
+		if (msg == m_ShownMsg)
+		{
+			FadeWidget(m_wImageWidget, true);
+			FadeWidget(m_wImageWidgetShadow, true);
+		}
+
+		super.HideMsg(msg);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void ShowIcon()
+	{
+		Widget root = GetGame().GetHUDManager().CreateLayout(SDRC_LAYOUT_NAME, EHudLayers.MEDIUM, 0);
+
+		if (!root)		
+			return;
+		
+		m_wImageWidget = ImageWidget.Cast(root.FindAnyWidget("Icon"));
+		m_wImageWidgetShadow = ImageWidget.Cast(root.FindAnyWidget("IconShadow"));
+		
+		if (m_Icon == DC_EMissionIcon.NONE)
+		{
+			m_wImageWidget.SetVisible(false);
+			m_wImageWidgetShadow.SetVisible(false);
+			return;
+		}
+		
+		ResourceName texture = SDRC_MapMarkerHelper.GetMarkerTexture(m_Icon);		
+		
+		m_wImageWidget.LoadImageTexture(0, texture.GetPath());
+		m_wImageWidgetShadow.LoadImageTexture(0, texture.GetPath());
+		m_wImageWidget.SetVisible(true);
+		m_wImageWidgetShadow.SetVisible(true);
+	}	
 };
