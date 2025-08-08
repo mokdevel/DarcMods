@@ -64,6 +64,9 @@ class SDRC_RplGMComp : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	Add a circle on symbol list
+	*/
  	void AddSymbolCircle(vector pos, float radius, int color)
     {
 		pos[1] = 0;			//Set to zero plane
@@ -78,6 +81,9 @@ class SDRC_RplGMComp : ScriptComponent
     }
 	
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	Add a marker on symbol list
+	*/
  	void AddSymbolMarker(vector pos, float radius, DC_EMissionIcon icon, string id)
     {
 		pos[1] = 0;			//Set to zero plane
@@ -92,6 +98,9 @@ class SDRC_RplGMComp : ScriptComponent
     }
 
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	Request for a mission deletion
+	*/
  	void DoDeleteMission(int playerID, string missionId)
 	{
 		SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Deletion of " + missionId + " requested by " + playerID, LogLevel.DEBUG);	
@@ -100,9 +109,12 @@ class SDRC_RplGMComp : ScriptComponent
 	}
 		
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	Sync all map symbols to all players
+	*/
  	void SyncMapSymbols(int playerID)
 	{
-		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.DEBUG);	
+		//SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.DEBUG);	
 		//Clear symbols on server
 		ClearSymbols();
 		//Clear symbols on client
@@ -125,6 +137,7 @@ class SDRC_RplGMComp : ScriptComponent
 		ClearSymbols();
     }
 		
+	//------------------------------------------------------------------------------------------------
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
     protected void RpcDo_SyncMapSymbol(DC_EDrawSymbol symbolType, vector pos, float radius, int color, string id)
     {

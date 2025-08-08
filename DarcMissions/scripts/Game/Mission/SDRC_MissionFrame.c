@@ -269,7 +269,7 @@ class SDRC_MissionFrame
 				{
 					if (tmpDC_Mission.IsShowHint())
 					{
-						SDRC_HintHelper.ShowHintMission("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo());
+						SDRC_HintHelper.ShowHintMission("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo(), -1);
 					}
 				}
 								

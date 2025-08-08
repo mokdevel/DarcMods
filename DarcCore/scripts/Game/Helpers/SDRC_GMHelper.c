@@ -7,6 +7,9 @@ class SDRC_GMHelper
 	static private SDRC_RplGMComp m_GmComponent;
 	
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	A common function to find default information
+	*/	
 	static private void FindGameModeAndComponent()
 	{		
 		m_BaseGameMode = null;
@@ -34,6 +37,11 @@ class SDRC_GMHelper
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	Fill the symbol table with various information to sync to players
+	- NonValidAreas
+	- Markers
+	*/
 	static void AddSymbols()
 	{
 		FindGameModeAndComponent();
@@ -42,6 +50,9 @@ class SDRC_GMHelper
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	Fill the symbol table with NonValidAreas
+	*/
 	static private void AddNonValidAreas()
 	{
 		if ((m_BaseGameMode) && (m_GmComponent))
@@ -57,6 +68,9 @@ class SDRC_GMHelper
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	Fill the symbol table with ACTIVE markers
+	*/	
 	static private void AddMarkers()
 	{
 		if ((m_BaseGameMode) && (m_GmComponent))
@@ -75,6 +89,9 @@ class SDRC_GMHelper
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	Delete a mission with specific mission ID (DCMxxxx).
+	*/	
 	static void DeleteMission(string id)
 	{
 		FindGameModeAndComponent();

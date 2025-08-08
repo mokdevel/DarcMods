@@ -336,7 +336,7 @@ class SDRC_Mission
 			SetSuccess(DC_EMissionSuccess.WIN);
 			if (IsShowHint() && IsShowMessage())			
 			{
-				SDRC_HintHelper.ShowHintMission("Mission: " + GetTitle(), GetWinMessage());
+				SDRC_HintHelper.ShowHintMission("Mission: " + GetTitle(), GetWinMessage(), DC_EMissionIcon.ICON_WIN_ROUND);
 			}
 			
 			m_bMissionIsEnding = true;
@@ -367,7 +367,7 @@ class SDRC_Mission
 			SetSuccess(DC_EMissionSuccess.LOSE);
 			if (IsShowHint() && IsShowMessage())			
 			{
-				SDRC_HintHelper.ShowHintMission("Mission: " + GetTitle(), GetLoseMessage());
+				SDRC_HintHelper.ShowHintMission("Mission: " + GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);	//TBD: Fix to LOSE icon
 			}
 		}
 
