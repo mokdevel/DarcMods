@@ -64,9 +64,9 @@ class SDRC_Mission
 	private bool m_Static;						//Defines if the mission is dynamic or static. Dynamic is default. 
     private string m_Id;
     private vector m_Pos;
-    private string m_PosName;
-    private string m_Title;
-    private string m_Info;
+    private string m_sPosName;
+    private string m_sTitle;
+    private string m_sInfo;
     private bool m_ShowHint;
     private bool m_ShowMessage;
 	//Internals
@@ -77,13 +77,13 @@ class SDRC_Mission
 	private bool m_bShowMarker;					//If the icon is to be shown
 	private DC_EMissionIcon m_sIcon;			//The icon to show
 	private string m_sMarkerType;				//Markertype defined by SCR_EMapMarkerType
-    private string m_WinMessage;
-    private string m_LoseMessage;
+    private string m_sWinMessage;
+    private string m_sLoseMessage;
 	private DC_EMissionWinCondition m_WinCondition;
 	private DC_EMissionSuccess m_Success;
 	//Internals without getters
-	private int m_ActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
-	private int m_ActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
+	private int m_iActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
+	private int m_iActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
 	private bool m_bMissionIsEnding;			//Once all AIs are dead, we're getting close to end the mission.
 	private bool m_bRequested;					//The missions spawn was requested by a an external party (like GM)
 	
@@ -98,13 +98,13 @@ class SDRC_Mission
 		m_Static = false;
 		m_Id = DC_ID_PREFIX + string.ToString(System.GetTickCount());
 		m_Pos = pos;
-		m_PosName = "";
-		m_Title = "";
-		m_Info = "";
+		m_sPosName = "";
+		m_sTitle = "";
+		m_sInfo = "";
 		m_ShowHint = true;
 		m_ShowMessage = true;
-		m_WinMessage = "";
-		m_LoseMessage = "";
+		m_sWinMessage = "";
+		m_sLoseMessage = "";
 		m_WinCondition = DC_EMissionWinCondition.KILL_AI_ALL;
 		m_Success = DC_EMissionSuccess.UNKNOWN;
 		m_sMarkerType = "DARC_MISSION";
@@ -112,7 +112,7 @@ class SDRC_Mission
 		//Internals
 		m_StartTime = (System.GetTickCount() / 1000); 			//The time in seconds when the mission was started.
 		SetActiveTime(SDRC_MISSION_CYCLE_TIME_DEFAULT*20);		//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
-		m_ActiveDistance = 0;									//Set a default zero
+		m_iActiveDistance = 0;									//Set a default zero
 		m_bMissionIsEnding = false;
 		if (pos != "0 0 0")										//Requested is set here
 		{
@@ -256,54 +256,54 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	string GetPosName()
 	{
-		return m_PosName;
+		return m_sPosName;
 	}
 
 	void SetPosName(string posname)
 	{
-		m_PosName = posname;
+		m_sPosName = posname;
 	}
 
 	//------------------------------------------------------------------------------------------------
 	string GetTitle()
 	{
-		return m_Title;
+		return m_sTitle;
 	}
 	
 	void SetTitle(string title)
 	{
-		m_Title = title;
+		m_sTitle = title;
 	}
 
 	//------------------------------------------------------------------------------------------------
 	string GetInfo()
 	{		
-		return m_Info;	//GetPosName() + " at " + GetPos();
+		return m_sInfo;	//GetPosName() + " at " + GetPos();
 	}
 
 	void SetInfo(string info)
 	{		
-		m_Info = info;
+		m_sInfo = info;
 	}
 
 	//------------------------------------------------------------------------------------------------
 	void SetActiveDistance(int distance)	
 	{
-		if (m_ActiveDistance > 0)
+		if (m_iActiveDistance > 0)
 		{
 			//It has been set by the mission already
 		}
 		else		
 		{
 			//Use provided distance
-			m_ActiveDistance = distance;
+			m_iActiveDistance = distance;
 		}
 	}		
 	
 	//------------------------------------------------------------------------------------------------
 	void SetActiveTimeToEnd(int seconds)	
 	{
-		m_ActiveTimeToEnd = seconds;
+		m_iActiveTimeToEnd = seconds;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -341,12 +341,12 @@ class SDRC_Mission
 			
 			m_bMissionIsEnding = true;
 			//Set ActiveTimeToEnd to be the final active time
-			SetActiveTime(m_ActiveTimeToEnd);
+			SetActiveTime(m_iActiveTimeToEnd);
 			ResetActiveTime();
 		}
 		
 		//Are there players still nearby
-		if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_Pos, 0, m_ActiveDistance))
+		if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_Pos, 0, m_iActiveDistance))
 		{
 			ResetActiveTime();
 			return true;
@@ -417,22 +417,22 @@ class SDRC_Mission
 	
 	void SetWinMessage(string message)
 	{
-		m_WinMessage = message;
+		m_sWinMessage = message;
 	}
 	
 	string GetWinMessage()
 	{
-		return m_WinMessage;
+		return m_sWinMessage;
 	}
 	
 	void SetLoseMessage(string message)
 	{
-		m_LoseMessage = message;
+		m_sLoseMessage = message;
 	}
 	
 	string GetLoseMessage()
 	{
-		return m_LoseMessage;
+		return m_sLoseMessage;
 	}
 	
 	//------------------------------------------------------------------------------------------------
