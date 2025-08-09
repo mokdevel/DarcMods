@@ -107,10 +107,8 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(GetPos(), m_DC_Roadblock.general.posName));
-		SetTitle(m_DC_Roadblock.general.title + "" + GetPosName());
-		SetInfo(m_DC_Roadblock.general.info);			
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
-		SetShowHint(m_Config.showHint);
+		SetHint(m_Config.showHint, m_DC_Roadblock.general.title, m_DC_Roadblock.general.info);
 		SetMessages(m_Config.showMessage, m_DC_Roadblock.general.winMessage, m_DC_Roadblock.general.loseMessage);		
 		SetWinCondition(m_DC_Roadblock.general.winCondition);
 

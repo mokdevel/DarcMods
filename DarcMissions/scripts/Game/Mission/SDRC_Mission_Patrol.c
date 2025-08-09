@@ -86,10 +86,8 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		
 		SetPos(pos, m_vPosDestination);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Patrol.general.posName));
-		SetTitle(m_DC_Patrol.general.title + "" + GetPosName());
-		SetInfo(m_DC_Patrol.general.info);			
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
-		SetShowHint(m_Config.showHint);			
+		SetHint(m_Config.showHint, m_DC_Patrol.general.title, m_DC_Patrol.general.info);
 		SetMessages(m_Config.showMessage, m_DC_Patrol.general.winMessage, m_DC_Patrol.general.loseMessage);		
 		SetWinCondition(m_DC_Patrol.general.winCondition);		
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.

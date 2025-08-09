@@ -163,9 +163,9 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTER};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTER};
-//			conf.missionDynamic.missionTypeArray = {DC_EMissionType.OCCUPATION};
+			conf.missionDynamic.missionTypeArray = {DC_EMissionType.OCCUPATION};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HUNTER};
-			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CONVOY};		
+//			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CONVOY};		
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.PATROL};		
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CRASHSITE};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CHOPPER};

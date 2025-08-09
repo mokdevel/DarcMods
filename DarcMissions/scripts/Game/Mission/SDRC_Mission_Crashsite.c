@@ -114,11 +114,9 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		}			
 		
 		SetPos(pos, m_vPosDestination);
-		SetPosName("");
-		SetTitle(m_DC_Crashsite.general.title);
-		SetInfo(m_DC_Crashsite.general.info);			
+		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Crashsite.general.posName));
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
-		SetShowHint(m_Config.showHint);
+		SetHint(m_Config.showHint, m_DC_Crashsite.general.title, m_DC_Crashsite.general.info);		
 		SetMessages(m_Config.showMessage, m_DC_Crashsite.general.winMessage, m_DC_Crashsite.general.loseMessage);		
 		SetWinCondition(m_DC_Crashsite.general.winCondition);
 

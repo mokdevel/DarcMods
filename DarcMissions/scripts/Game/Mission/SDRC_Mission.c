@@ -299,6 +299,24 @@ class SDRC_Mission
 	}
 
 	//------------------------------------------------------------------------------------------------
+	void SetShowHint(bool showHint)
+	{
+		m_ShowHint = showHint;
+	}
+	
+	bool IsShowHint()
+	{
+		return m_ShowHint;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	void SetHint(bool show, string title, string info)
+	{
+		SetShowHint(show);
+		SetTitle(title);
+		SetInfo(info);
+	}
+	
 	string GetTitle()
 	{
 		return m_sTitle;
@@ -306,10 +324,9 @@ class SDRC_Mission
 	
 	void SetTitle(string title)
 	{
-		m_sTitle = title;
+		m_sTitle = FixString(title);
 	}
 
-	//------------------------------------------------------------------------------------------------
 	string GetInfo()
 	{		
 		return m_sInfo;	//GetPosName() + " at " + GetPos();
@@ -317,15 +334,7 @@ class SDRC_Mission
 
 	void SetInfo(string info)
 	{		
-		string destinatioName = "";
-		if (m_PosDestination != "0 0 0")
-		{
-			destinatioName = SDRC_Locations.CreateName(m_PosDestination, "any");			
-		}
-		
-		info = SDRC_MissionHelper.CreateInfo(info, GetPosName(), destinatioName);
-		
-		m_sInfo = info;
+		m_sInfo = FixString(info);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -378,7 +387,7 @@ class SDRC_Mission
 			SetSuccess(DC_EMissionSuccess.WIN);
 			if (IsShowHint() && IsShowMessage())			
 			{
-				SDRC_HintHelper.ShowHintMission("Mission: " + GetTitle(), GetWinMessage(), DC_EMissionIcon.ICON_WIN_ROUND);
+				SDRC_HintHelper.ShowHintMission(GetTitle(), GetWinMessage(), DC_EMissionIcon.ICON_WIN_ROUND);
 			}
 			
 			m_bMissionIsEnding = true;
@@ -409,25 +418,14 @@ class SDRC_Mission
 			SetSuccess(DC_EMissionSuccess.LOSE);
 			if (IsShowHint() && IsShowMessage())			
 			{
-				SDRC_HintHelper.ShowHintMission("Mission: " + GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);
+				SDRC_HintHelper.ShowHintMission(GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);
 			}
 		}
 
-		SDRC_Log.Add("[SDRC_Mission:IsActive] Mission " + GetId() + " : " + GetTitle() + " has ended.", LogLevel.NORMAL);				
+		SDRC_Log.Add("[SDRC_Mission:IsActive] END - Mission " + GetId() + " : " + GetTitle() + " has ended.", LogLevel.NORMAL);				
 		return false;
 	}	
 	
-	//------------------------------------------------------------------------------------------------
-	void SetShowHint(bool showHint)
-	{
-		m_ShowHint = showHint;
-	}
-	
-	bool IsShowHint()
-	{
-		return m_ShowHint;
-	}
-
 	//------------------------------------------------------------------------------------------------	
 	void SetWinCondition(DC_EMissionWinCondition winCondition)
 	{
@@ -440,13 +438,6 @@ class SDRC_Mission
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void SetMessages(bool showMessage, string winMessage, string LoseMessage)
-	{
-		SetShowMessage(showMessage);
-		SetWinMessage(winMessage);
-		SetLoseMessage(LoseMessage);
-	}
-	
 	void SetShowMessage(bool showMessage)
 	{
 		m_ShowMessage = showMessage;
@@ -457,9 +448,12 @@ class SDRC_Mission
 		return m_ShowMessage;
 	}
 	
-	void SetWinMessage(string message)
+	//------------------------------------------------------------------------------------------------
+	void SetMessages(bool show, string winMessage, string LoseMessage)
 	{
-		m_sWinMessage = message;
+		SetShowMessage(show);
+		SetWinMessage(winMessage);
+		SetLoseMessage(LoseMessage);
 	}
 	
 	string GetWinMessage()
@@ -467,9 +461,9 @@ class SDRC_Mission
 		return m_sWinMessage;
 	}
 	
-	void SetLoseMessage(string message)
+	void SetWinMessage(string message)
 	{
-		m_sLoseMessage = message;
+		m_sWinMessage = FixString(message);
 	}
 	
 	string GetLoseMessage()
@@ -477,17 +471,22 @@ class SDRC_Mission
 		return m_sLoseMessage;
 	}
 	
-	//------------------------------------------------------------------------------------------------
-	void SetSuccess(DC_EMissionSuccess success)
+	void SetLoseMessage(string message)
 	{
-		m_Success = success;
+		m_sLoseMessage = FixString(message);
 	}
-
+	
+	//------------------------------------------------------------------------------------------------
 	DC_EMissionSuccess GetSuccess()
 	{
 		return m_Success;
 	}
 	
+	void SetSuccess(DC_EMissionSuccess success)
+	{
+		m_Success = success;
+	}
+
 	//------------------------------------------------------------------------------------------------
 	string GetFaction()
 	{
@@ -560,19 +559,32 @@ class SDRC_Mission
 	}	
 
 	//------------------------------------------------------------------------------------------------
-	void AddToEntityList(IEntity entity)
-	{
-		m_EntityList.Insert(entity);
-	}
-	
 	IEntity GetFromEntityList(int index)
 	{
 		return m_EntityList[index];	
 	}		
 
+	void AddToEntityList(IEntity entity)
+	{
+		m_EntityList.Insert(entity);
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	void AddToGroupsList(SCR_AIGroup group)
 	{
 		m_Groups.Insert(group);
 	}		
+	
+	//------------------------------------------------------------------------------------------------
+	private string FixString(string info)
+	{
+		string destinatioName = "";
+		if (m_PosDestination != "0 0 0")
+		{
+			destinatioName = SDRC_Locations.CreateName(m_PosDestination, "any");			
+		}
+		
+		info = SDRC_MissionHelper.CreateInfo(info, GetPosName(), destinatioName);
+		return info;
+	}
 }

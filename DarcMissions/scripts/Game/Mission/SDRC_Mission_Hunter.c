@@ -75,11 +75,9 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		}	
 				
 		SetPos(pos);
-		SetPosName("");
-		SetTitle(m_Config.general.title);
-		SetInfo(m_Config.general.info);
+		SetPosName(SDRC_Locations.CreateName(pos, m_Config.general.posName));
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
-		SetShowHint(m_Config.showHint);
+		SetHint(m_Config.showHint, m_Config.general.title, m_Config.general.info);		
 		SetMessages(m_Config.showMessage, m_Config.general.winMessage, m_Config.general.loseMessage);		
 		SetWinCondition(m_Config.general.winCondition);
 
@@ -112,6 +110,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 			else
 			{
 				//NOTE: This one does not use IsActive(). Will run forever until no players are near players.
+				//TBD: This is not working properly
 				if (SDRC_AIHelper.AreAllGroupsDead(m_Groups))
 				{
 					SDRC_Log.Add("[SDRC_Mission_Hunter:MissionRun] All groups killed. Mission over.", LogLevel.NORMAL);

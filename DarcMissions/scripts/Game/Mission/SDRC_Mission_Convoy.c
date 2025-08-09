@@ -137,10 +137,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		
 		SetPos(pos, m_vPosDestination);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Convoy.general.posName));
-		SetTitle(m_DC_Convoy.general.title);
-		SetInfo(m_DC_Convoy.general.info);			
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
-		SetShowHint(m_Config.showHint);
+		SetHint(m_Config.showHint, m_DC_Convoy.general.title, m_DC_Convoy.general.info);		
 		SetMessages(m_Config.showMessage, m_DC_Convoy.general.winMessage, m_DC_Convoy.general.loseMessage);		
 		SetWinCondition(m_DC_Convoy.general.winCondition);
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
@@ -369,7 +367,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_CONVOY_MAP;
 		//Mission specific
-		conf.convoyList = {0};//{0,0,0,1};
+		conf.convoyList = {0,0,0,1};
 		conf.distanceToPlayer = 500;
 		conf.disableArsenal = true;
 		
