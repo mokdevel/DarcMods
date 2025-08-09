@@ -67,7 +67,8 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 		m_wPopupMsg.SetVisible(false);
 		m_wPopupMsgSmall.SetVisible(false);
 		m_wStatusProgress.SetVisible(false);
-		m_wImageWidget = ImageWidget.Cast(root.FindAnyWidget("Icon"));
+		//m_wImageWidget = ImageWidget.Cast(root.FindAnyWidget("Icon"));
+		LoadIcon();
 		
 		GetGame().GetCallqueue().CallLater(SetDefaultHorizontalPosition, 500);
 
@@ -97,9 +98,10 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 		if (!m_bIsEnabledInSettings)
 			return;
 		
-		if (msg == m_ShownMsg)
-			return;
+//		if (msg == m_ShownMsg)
+//			return;
 
+//		LoadIcon();
 		ShowIcon();
 		
 		super.ShowMsg(msg);
@@ -114,11 +116,31 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 			FadeWidget(m_wImageWidgetShadow, true);
 		}
 
+		ShowIcon();
+		
 		super.HideMsg(msg);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	void ShowIcon()
+	{
+		if (m_wImageWidget)
+		{
+			if (m_Icon == DC_EMissionIcon.NONE)
+			{
+				m_wImageWidget.SetVisible(false);
+				m_wImageWidgetShadow.SetVisible(false);
+			}
+			else
+			{
+				m_wImageWidget.SetVisible(true);
+				m_wImageWidgetShadow.SetVisible(true);
+			}
+		}		
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void LoadIcon()
 	{
 		Widget root = GetGame().GetHUDManager().CreateLayout(SDRC_LAYOUT_NAME, EHudLayers.MEDIUM, 0);
 
@@ -128,18 +150,15 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 		m_wImageWidget = ImageWidget.Cast(root.FindAnyWidget("Icon"));
 		m_wImageWidgetShadow = ImageWidget.Cast(root.FindAnyWidget("IconShadow"));
 		
-		if (m_Icon == DC_EMissionIcon.NONE)
-		{
-			m_wImageWidget.SetVisible(false);
-			m_wImageWidgetShadow.SetVisible(false);
-			return;
-		}
-		
 		ResourceName texture = SDRC_MapMarkerHelper.GetMarkerTexture(m_Icon);		
 		
-		m_wImageWidget.LoadImageTexture(0, texture.GetPath());
-		m_wImageWidgetShadow.LoadImageTexture(0, texture.GetPath());
-		m_wImageWidget.SetVisible(true);
-		m_wImageWidgetShadow.SetVisible(true);
+		m_wImageWidget.LoadImageTexture(0, texture);
+		m_wImageWidgetShadow.LoadImageTexture(0, texture);
+		ShowIcon();
+		
+		//By default we hide it.
+//		m_wImageWidget.SetVisible(false);
+//		m_wImageWidgetShadow.SetVisible(false);
+
 	}	
 };

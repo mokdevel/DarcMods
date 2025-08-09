@@ -149,7 +149,12 @@ sealed class SDRC_MapMarkerHelper
 		string texture = "";
 		
 		switch (icon)
-		{			
+		{						
+			case DC_EMissionIcon.NONE:
+			{
+				texture = "{885DA992DEA7C7BC}UI/Textures/Icons/icon_empty_round.edds";
+				break;
+			}
 			case DC_EMissionIcon.GM_MISSION_X_MAP:
 			{
 				texture = "{D2202D0BD28F1595}UI/Textures/Icons/gm_mission_X_map.edds";

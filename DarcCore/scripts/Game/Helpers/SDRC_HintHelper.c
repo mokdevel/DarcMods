@@ -12,6 +12,8 @@ class SDRC_HintHelper
 	*/
 	static void ShowHintMission(string title, string msg, DC_EMissionIcon icon = DC_EMissionIcon.NONE)
 	{	
+		title = "Mission: " + title;
+		
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (!m_BaseGameMode)
 		{
