@@ -15,8 +15,6 @@ bool showMessage : Show winmessage and losemessage to players. False will hide t
 
 ## General parameters
 ```
-int version : Version number of the file.
-string author : Author of the missions.
 string comment : Generic comment to describe the mission. Not used in game.
 array<vector> pos : Position(s) for mission. "0 0 0" used for random location chosen from locationTypes.
   [0] = The general position for a mission
