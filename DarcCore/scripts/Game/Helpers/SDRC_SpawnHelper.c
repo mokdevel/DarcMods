@@ -408,19 +408,6 @@ sealed class SDRC_SpawnHelper
 //				SDRC_Log.Add("[SDRC_SpawnHelper:FindEntitiesCallback] Entity: " + entity, LogLevel.DEBUG);
 				
 				ResourceName resName = entity.GetPrefabData().GetPrefabName();
-
-/*				//TBD: This code moved up. Remove if all is good.
-				
-				ResourceName resName = "notaresourcename";
-				
-				if (entity.GetPrefabData())
-				{
-					resName = entity.GetPrefabData().GetPrefabName();
-				}
-				else
-				{
-					SDRC_Log.Add("[SDRC_SpawnHelper:FindEntitiesCallback] GetPrefabData fails for: " + entity, LogLevel.SPAM);
-				}*/
 				
 				if (SCR_StringHelper.ContainsAny(resName, baseGameMode.m_SDRC_Core.m_Config.emptyPos.stopFilter) && !obstruct)
 				{
@@ -471,7 +458,7 @@ sealed class SDRC_SpawnHelper
 	/*! 
 	Disable arsenal on an entity
 	
-	TBD: This works in mysterious ways. If you disable the Arsenal in SlotManagerComponent of the prefan, it is not visible in the game. 
+	TBD: This works in mysterious ways. If you disable the Arsenal in SlotManagerComponent of the prefab, it is not visible in the game. 
 	I have not found a way to do the same via script. So, we disable the arsenal. The content are cleared, but you can still see the empty arsenal.
 	*/	
 	static void DisableArsenal(IEntity entity)
