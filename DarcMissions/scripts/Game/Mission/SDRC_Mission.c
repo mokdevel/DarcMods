@@ -49,16 +49,16 @@ class SDRC_MissionConfig : Managed
 	string author = "darc";
 	int missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;	//How often the mission is run
 	string markerType = "DARC_MISSION";
-	int markerIdx;						//marker ID
+	int markerIdx = -1;						//marker ID
 	bool showMarker = true;
 	bool showHint = true;
 	bool showMessage = true;
 }
 
-class SDRC_MissionConfigCommon : Managed
+class SDRC_MissionConfigGeneral : Managed
 {
 	string comment;							//Generic comment to describe the mission. Not used in game.
-	array<vector> pos;						//Positions for mission. "0 0 0" used for random location chosen from locationTypes. First is mission position, second is destination for missions that need it.
+	ref array<vector> pos = {};					//Positions for mission. "0 0 0" used for random location chosen from locationTypes. First is mission position, second is destination for missions that need it.
 	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
@@ -90,6 +90,7 @@ class SDRC_Mission
 	private bool m_Static;						//Defines if the mission is dynamic or static. Dynamic is default. 
     private string m_Id;
     private vector m_Pos;
+    private vector m_PosDestination;
     private string m_sPosName;
     private string m_sTitle;
     private string m_sInfo;
@@ -280,9 +281,10 @@ class SDRC_Mission
 		return m_Pos;
 	}
 
-	void SetPos(vector pos)
+	void SetPos(vector pos, vector destination = "0 0 0")
 	{
 		m_Pos = pos;
+		m_PosDestination = destination;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -315,6 +317,14 @@ class SDRC_Mission
 
 	void SetInfo(string info)
 	{		
+		string destinatioName = "";
+		if (m_PosDestination != "0 0 0")
+		{
+			destinatioName = SDRC_Locations.CreateName(m_PosDestination, "any");			
+		}
+		
+		info = SDRC_MissionHelper.CreateInfo(info, GetPosName(), destinatioName);
+		
 		m_sInfo = info;
 	}
 

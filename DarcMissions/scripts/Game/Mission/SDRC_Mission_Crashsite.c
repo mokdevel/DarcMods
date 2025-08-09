@@ -113,14 +113,14 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 			SDRC_Log.Add("[SDRC_Mission_Crashsite] Helicopter flying from " + pos + " to " + m_vPosDestination + ". Angle: " + m_fAngle, LogLevel.DEBUG);
 		}			
 		
-		SetPos(pos);
+		SetPos(pos, m_vPosDestination);
 		SetPosName("");
-		SetTitle(m_DC_Crashsite.common.title);
-		SetInfo(m_DC_Crashsite.common.info);
+		SetTitle(m_DC_Crashsite.general.title);
+		SetInfo(m_DC_Crashsite.general.info);			
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
-		SetMessages(m_Config.showMessage, m_DC_Crashsite.common.winMessage, m_DC_Crashsite.common.loseMessage);		
-		SetWinCondition(m_DC_Crashsite.common.winCondition);
+		SetMessages(m_Config.showMessage, m_DC_Crashsite.general.winMessage, m_DC_Crashsite.general.loseMessage);		
+		SetWinCondition(m_DC_Crashsite.general.winCondition);
 
 		SetState(DC_EMissionState.INIT);			
 
@@ -335,7 +335,7 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 //------------------------------------------------------------------------------------------------
 class SDRC_Crashsite : Managed
 {
-	ref SDRC_MissionConfigCommon common = new SDRC_MissionConfigCommon();
+	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref array<string> groupTypes = {};
 	int aiSkill;
 	float aiPerception;
@@ -397,12 +397,12 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Crashsite crashsite0 = new SDRC_Crashsite();
-		crashsite0.common.Set(
+		crashsite0.general.Set(
 			"index 0: general mission",
 			{"0 0 0"},
 			"any",
-			"Helicopter in distress ",
-			"A valuable cargo has crashed",
+			"Helicopter in distress",
+			"A valuable cargo has crashed.",
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",
 			"Lose message", 

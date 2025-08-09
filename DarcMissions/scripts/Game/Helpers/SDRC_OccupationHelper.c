@@ -8,8 +8,7 @@ Helper functions for spawning occupation class
 //------------------------------------------------------------------------------------------------
 class SDRC_Occupation : Managed
 {
-	//Occupation specific
-	ref SDRC_MissionConfigCommon common = new SDRC_MissionConfigCommon();
+	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref array<EMapDescriptorType> locationTypes = {};	
 	ref array<int> groupCount = {};			//min, max
 	ref array<int> waypointRange = {};		//min, max

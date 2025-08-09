@@ -41,7 +41,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		//Set defaults
 		if (!IsRequested())
 		{
-			pos = m_DC_Occupation.common.pos[0];
+			pos = m_DC_Occupation.general.pos[0];
 			
 			//Find a location for the mission
 			if (pos == "0 0 0")
@@ -68,13 +68,13 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		}	
 		
 		SetPos(pos);
-		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Occupation.common.posName));
-		SetTitle(m_DC_Occupation.common.title + "" + GetPosName());
-		SetInfo(m_DC_Occupation.common.info);			
+		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Occupation.general.posName));
+		SetTitle(m_DC_Occupation.general.title + "" + GetPosName());
+		SetInfo(m_DC_Occupation.general.info);			
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
-		SetMessages(m_Config.showMessage, m_DC_Occupation.common.winMessage, m_DC_Occupation.common.loseMessage);		
-		SetWinCondition(m_DC_Occupation.common.winCondition);
+		SetMessages(m_Config.showMessage, m_DC_Occupation.general.winMessage, m_DC_Occupation.general.loseMessage);		
+		SetWinCondition(m_DC_Occupation.general.winCondition);
 
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Occupation.campItems);
 			
@@ -182,11 +182,11 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 
 		//----------------------------------------------------
 		SDRC_Occupation occupation0 = new SDRC_Occupation();		
-		occupation0.common.Set(
+		occupation0.general.Set(
 			"index 0: Mission in villages and local areas.",
 			{"0 0 0"},
 			"any",
-			"Guards patroling near ",
+			"Guards patroling near %l",
 			"Avoid the location. Loot has already been lost.",
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",
@@ -213,11 +213,11 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Occupation occupation1 = new SDRC_Occupation();
-		occupation1.common.Set(
+		occupation1.general.Set(
 			"index 1: Bandit camp spawning to non city areas",
 			{"0 0 0"},
 			"any",
-			"Bandit camp near ",
+			"Bandit camp near %l",
 			"Bandits are protecting their valuable loot.",
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",
@@ -290,11 +290,11 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 
 		//----------------------------------------------------
 		SDRC_Occupation occupation2 = new SDRC_Occupation();
-		occupation2.common.Set(
+		occupation2.general.Set(
 			"index 2: Occupation that will spawn mainly to cities and towns.",
 			{"0 0 0"},
 			"any",
-			"Occupation in ",
+			"Occupation in %l",
 			"City is being occupied.",
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",
@@ -372,11 +372,11 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Occupation occupation3 = new SDRC_Occupation();
-		occupation3.common.Set(
+		occupation3.general.Set(
 			"index 3: Car crash in an unusual place",
 			{"0 0 0"},
 			"any",
-			"Car crash near ",
+			"Car crash near %l",
 			"Loot is up for grabs.",
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",
@@ -465,11 +465,11 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Occupation occupation4 = new SDRC_Occupation();
-		occupation4.common.Set(
+		occupation4.general.Set(
 			"index 4: Campers with a car and a tent",
 			{"0 0 0"},
 			"any",
-			"Campers near ",
+			"Campers near %l",
 			"Rob them before they leave.",
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",
@@ -571,11 +571,11 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				
 		//----------------------------------------------------
 		SDRC_Occupation occupation5 = new SDRC_Occupation();
-		occupation5.common.Set(
+		occupation5.general.Set(
 			"index 5: A small town",
 			{"0 0 0"},
 			"any",
-			"Town near ",
+			"Settlement near %l",
 			"The enemies are hiding in a ghost town.",
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",

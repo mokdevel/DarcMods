@@ -331,4 +331,17 @@ sealed class SDRC_MissionHelper
 				
 		return idx;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Create info to show to players.
+	*/	
+	static string CreateInfo(string msg, string location = "", string destination = "")
+	{
+		msg = SCR_StringHelper.ReplaceMultiple(msg, {"%l"}, location);
+		msg = SCR_StringHelper.ReplaceMultiple(msg, {"%d"}, destination);
+		
+		SDRC_Log.Add("[SDRC_MissionHelper:CreateInfo] Message created: " + msg, LogLevel.DEBUG);		//TBD: SPAM	
+		return msg;
+	}
 }

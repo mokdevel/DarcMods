@@ -44,7 +44,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		//If not a GM requested mission, use the default one.
 		if (!IsRequested())
 		{
-			pos = m_DC_Roadblock.common.pos[0];
+			pos = m_DC_Roadblock.general.pos[0];
 		}
 		
 		//Find a location for the mission
@@ -106,13 +106,13 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		}	
 		
 		SetPos(pos);
-		SetPosName(SDRC_Locations.CreateName(GetPos(), m_DC_Roadblock.common.posName));
-		SetTitle(m_DC_Roadblock.common.title + "" + GetPosName());
-		SetInfo(m_DC_Roadblock.common.info);
+		SetPosName(SDRC_Locations.CreateName(GetPos(), m_DC_Roadblock.general.posName));
+		SetTitle(m_DC_Roadblock.general.title + "" + GetPosName());
+		SetInfo(m_DC_Roadblock.general.info);			
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
-		SetMessages(m_Config.showMessage, m_DC_Roadblock.common.winMessage, m_DC_Roadblock.common.loseMessage);		
-		SetWinCondition(m_DC_Roadblock.common.winCondition);
+		SetMessages(m_Config.showMessage, m_DC_Roadblock.general.winMessage, m_DC_Roadblock.general.loseMessage);		
+		SetWinCondition(m_DC_Roadblock.general.winCondition);
 
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Roadblock.campItems);
 		
@@ -220,11 +220,11 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Occupation roadblock0 = new SDRC_Occupation();
-		roadblock0.common.Set(
+		roadblock0.general.Set(
 			"index 0: Roadblock",
 			{"0 0 0"},
 			"any",
-			"Roadblock near ",
+			"Roadblock near %l",
 			"Look out for trouble.",
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",
@@ -296,11 +296,11 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Occupation roadblock1 = new SDRC_Occupation();
-		roadblock1.common.Set(
+		roadblock1.general.Set(
 			"index 1: Roadblock",
 			{"0 0 0"},
 			"any",
-			"Roadblock seen close to ",
+			"Roadblock seen close to %l",
 			"Be careful.",
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",
@@ -438,11 +438,11 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Occupation roadblock2 = new SDRC_Occupation();
-		roadblock2.common.Set(
+		roadblock2.general.Set(
 			"index 2: Roadblock",
 			{"0 0 0"},
 			"any",
-			"Road is closed near ",
+			"Road is closed near %l",
 			"Are your ready to pay the toll?",
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",

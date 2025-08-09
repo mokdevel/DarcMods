@@ -106,7 +106,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, posName));
 		SetTitle(m_DC_Squatter.title + "" + GetPosName());
-		SetInfo(m_DC_Squatter.info);
+		SetInfo(m_DC_Squatter.info);			
 		SetMessages(m_Config.showMessage, m_DC_Squatter.winMessage, m_DC_Squatter.loseMessage);				
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
@@ -293,7 +293,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"index 0: Squatters in cities",
 			"0 0 0",
 			"any",
-			"Squatters near ",
+			"Squatters near %l.",
 			"Building has squatters with loot",		
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",
@@ -340,7 +340,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"index 1: Squatters in control towers",
 			"0 0 0",
 			"any",
-			"Enemy in ",
+			"Enemy in %l.",
 			"Control tower is being guarded.",		
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",
@@ -382,7 +382,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"index 2: Squatters in military locations",
 			"0 0 0",
 			"any",
-			"Guards around ",
+			"Guards around %l",
 			"Military location has loot to steal.",		
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",
@@ -424,7 +424,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"index 3: Military in industrial areas",
 			"0 0 0",
 			"any",
-			"Industrial area near ",
+			"Industrial area near %l",
 			"Military has seized control of an industrial area. Don't shoot the civilians.",
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",
@@ -502,7 +502,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"index 5: Shops and houses",
 			"0 0 0",
 			"any",
-			"Burglars seen near ",
+			"Burglars seen near %l",
 			"Go rob the robbers.",		
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",

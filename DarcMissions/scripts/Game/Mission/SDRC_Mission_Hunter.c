@@ -76,12 +76,12 @@ class SDRC_Mission_Hunter : SDRC_Mission
 				
 		SetPos(pos);
 		SetPosName("");
-		SetTitle(m_Config.common.title);
-		SetInfo(m_Config.common.info);						
+		SetTitle(m_Config.general.title);
+		SetInfo(m_Config.general.info);
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
-		SetMessages(m_Config.showMessage, m_Config.common.winMessage, m_Config.common.loseMessage);		
-		SetWinCondition(m_Config.common.winCondition);
+		SetMessages(m_Config.showMessage, m_Config.general.winMessage, m_Config.general.loseMessage);		
+		SetWinCondition(m_Config.general.winCondition);
 
 		SetState(DC_EMissionState.INIT);
 	}
@@ -251,7 +251,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 //------------------------------------------------------------------------------------------------
 class SDRC_HunterConfig : SDRC_MissionConfig
 {
-	ref SDRC_MissionConfigCommon common = new SDRC_MissionConfigCommon();
+	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref array<int> groupCount = {1, 2};
 	ref array<string> groupTypes = {}; 		//The prefab names of AI groups or characters. The AI is randomly picked from this list.
 	int aiSkill;							//Skill for AI (0-100). See SCR_AICombatComponent and EAISkill
@@ -298,7 +298,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_X_MAP;
 		conf.showMarker = false;
 		//Mission specific
-		conf.common.Set(
+		conf.general.Set(
 			"index 0: general mission",
 			{"0 0 0"},
 			"any",
