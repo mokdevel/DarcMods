@@ -18,7 +18,9 @@ bool showMessage : Show winmessage and losemessage to players. False will hide t
 int version : Version number of the file.
 string author : Author of the missions.
 string comment : Generic comment to describe the mission. Not used in game.
-vector pos : Position for mission. "0 0 0" used for random location chosen from locationTypes.
+array<vector> pos : Position(s) for mission. "0 0 0" used for random location chosen from locationTypes.
+  [0] = The general position for a mission
+  [1] = The destination position for missions that need it - convoy, patrol
 string posName : Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes. "" will leave the information empty.
 string title : Title for the hint shown for players
 string info : Details for the hint shown for players
