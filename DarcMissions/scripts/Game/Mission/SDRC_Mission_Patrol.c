@@ -42,11 +42,11 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Patrol] Worldsize vs maxRange : " + worldSize + " vs " + m_DC_Patrol.waypointRange[1], LogLevel.DEBUG);
 		
 		//Set defaults
-		m_vPosDestination = m_DC_Patrol.posDestination;
+		m_vPosDestination = m_DC_Patrol.common.pos[1];
 		
 		if (!IsRequested())
 		{
-			pos = m_DC_Patrol.pos;
+			pos = m_DC_Patrol.common.pos[0];
 			
 			//Find a location for the mission
 			if (pos == "0 0 0")
@@ -84,16 +84,14 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			return;
 		}	
 		
-		string posName = m_DC_Patrol.posName;
-			
 		SetPos(pos);
-		SetPosName(SDRC_Locations.CreateName(pos, posName));
-		SetTitle(m_DC_Patrol.title + "" + GetPosName());
-		SetInfo(m_DC_Patrol.info);			
+		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Patrol.common.posName));
+		SetTitle(m_DC_Patrol.common.title + "" + GetPosName());
+		SetInfo(m_DC_Patrol.common.info);			
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);			
-		SetMessages(m_Config.showMessage, m_DC_Patrol.winMessage, m_DC_Patrol.loseMessage);		
-		SetWinCondition(m_DC_Patrol.winCondition);		
+		SetMessages(m_Config.showMessage, m_DC_Patrol.common.winMessage, m_DC_Patrol.common.loseMessage);		
+		SetWinCondition(m_DC_Patrol.common.winCondition);		
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 
 		SetState(DC_EMissionState.INIT);
@@ -190,17 +188,7 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 //------------------------------------------------------------------------------------------------
 class SDRC_Patrol : Managed
 {
-	//Patrol specific
-	string comment;							//Generic comment to describe the mission. Not used in game.
-	vector pos;								//Position for mission. "0 0 0" used for random location chosen from locationTypes.
-	vector posDestination;					//Destination for the patrol to go to. Only used when waypointMoveType = ROUTE
-	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
-	string title;							//Title for the hint shown for players
-	string info;							//Details for the hint shown for players
-	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.KILL_AI_ALL;	//Mission win condidition
-	string winMessage = "";					//Message to show when mission is completed
-	string loseMessage = "";				//Message to show when mission fails
-	int xp = 0;								//Experience given
+	ref SDRC_MissionConfigCommon common = new SDRC_MissionConfigCommon();
 	ref array<EMapDescriptorType> locationTypes = {};	
 	ref array<int> groupCount = {};			//min, max	
 	ref array<int> waypointRange = {};		//min, max
@@ -210,14 +198,8 @@ class SDRC_Patrol : Managed
 	int aiSkill;
 	float aiPerception	
 	
-	void Set(string comment_, vector pos_, vector posDestination_, string posName_, string title_, string info_, array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_, int AISkill_, float aiPerception_)
+	void Set(array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_, int AISkill_, float aiPerception_)
 	{
-		comment = comment_;
-		pos = pos_;
-		posDestination = posDestination_;
-		posName = posName_;
-		title = title_;
-		info = info_;
 		locationTypes = locationTypes_;
 		groupCount = groupCount_;
 		waypointRange = waypointRange_;
@@ -273,14 +255,19 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 
 		//----------------------------------------------------
 		SDRC_Patrol patrol0 = new SDRC_Patrol();
-		patrol0.Set
-		(
+		patrol0.common.Set(
 			"index 0: Enemy patrols going between two points hopefully following roads",
-			"0 0 0",
-			"0 0 0",
+			{"0 0 0", "0 0 0"},
 			"any",
 			"Patrol spotted near ",
 			"Be careful while traveling on roads.",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0
+		);		
+		patrol0.Set
+		(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -304,13 +291,19 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Patrol patrol1 = new SDRC_Patrol();
-		patrol1.Set(
+		patrol1.common.Set(
 			"index 1: Heavy patrol",
-			"0 0 0",
-			"0 0 0",
+			{"0 0 0", "0 0 0"},
 			"any",
 			"Patrol in ",
 			"Beware!",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0
+		);				
+		patrol1.Set
+		(
 			{
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_NAME_SETTLEMENT,
@@ -333,14 +326,19 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 
 		//----------------------------------------------------
 		SDRC_Patrol patrol2 = new SDRC_Patrol();
-		patrol2.Set
-		(
+		patrol2.common.Set(
 			"index 2: Enemy patrols between villages",
-			"0 0 0",
-			"0 0 0",
+			{"0 0 0", "0 0 0"},
 			"any",
 			"Patrol seen in ",
 			"Be alert",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0
+		);		
+		patrol2.Set
+		(
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_LOCAL
@@ -358,14 +356,19 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Patrol patrol3 = new SDRC_Patrol();
-		patrol3.Set
-		(
+		patrol3.common.Set(
 			"index 3: Small patrols with a few AIs",
-			"0 0 0",
-			"0 0 0",
+			{"0 0 0", "0 0 0"},
 			"any",
 			"Enemy has been seen near ",
 			"Caution is advised.",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0
+		);				
+		patrol3.Set
+		(
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_LOCAL

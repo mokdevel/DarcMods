@@ -50,12 +50,12 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		m_DC_Convoy = m_Config.convoys[idx];
 		
 		//Set defaults		
-		m_vPosDestination = m_DC_Convoy.posDestination;		//Destination from the defined SDRC_Convoy 
+		m_vPosDestination = m_DC_Convoy.common.pos[1];		//Destination from the defined SDRC_Convoy 
 
 		//If not a GM requested mission, use the default one.
 		if (!IsRequested())
 		{
-			pos = m_DC_Convoy.pos;
+			pos = m_DC_Convoy.common.pos[0];
 		}
 
 		//Find a location for the mission
@@ -135,16 +135,16 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			return;
 		}	
 		
-		string posName = m_DC_Convoy.posName;
+		string posName = m_DC_Convoy.common.posName;
 		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, posName));
-		SetTitle(m_DC_Convoy.title);
-		SetInfo(m_DC_Convoy.info + "" + GetPosName() + " to " + SDRC_Locations.CreateName(m_vPosDestination, "any"));			
+		SetTitle(m_DC_Convoy.common.title);
+		SetInfo(m_DC_Convoy.common.info + "" + GetPosName() + " to " + SDRC_Locations.CreateName(m_vPosDestination, "any"));			
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
-		SetMessages(m_Config.showMessage, m_DC_Convoy.winMessage, m_DC_Convoy.loseMessage);		
-		SetWinCondition(m_DC_Convoy.winCondition);
+		SetMessages(m_Config.showMessage, m_DC_Convoy.common.winMessage, m_DC_Convoy.common.loseMessage);		
+		SetWinCondition(m_DC_Convoy.common.winCondition);
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 		
 		SetState(DC_EMissionState.INIT);
@@ -312,17 +312,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 //------------------------------------------------------------------------------------------------
 class SDRC_Convoy : Managed
 {
-	//Patrol specific
-	string comment;							//Generic comment to describe the mission. Not used in game.
-	vector pos;								//Start position for the patrol. "0 0 0" used for random location chosen from locationTypes.
-	vector posDestination;					//Destination for the patrol to go to
-	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
-	string title;							//Title for the hint shown for players
-	string info;							//Details for the hint shown for players
-	DC_EMissionWinCondition winCondition;	//Mission win condidition
-	string winMessage;						//Message to show when mission is completed
-	string loseMessage;						//Message to show when mission fails
-	int xp;									//Experience given	
+	ref SDRC_MissionConfigCommon common = new SDRC_MissionConfigCommon();
 	ref array<EMapDescriptorType> locationTypes = {};	
 	ref array<string> groupTypes = {};
 	int aiSkill;
@@ -331,20 +321,6 @@ class SDRC_Convoy : Managed
 	float cruiseSpeed;						//Speed to drive in km/h.
 	//Optional settings
 	ref SDRC_Loot loot = null;	
-	
-	void SetCommon(string comment_, vector pos_, vector posDestination_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, int xp_)
-	{
-		comment = comment_;
-		pos = pos_;
-		posDestination = posDestination_;	//NOTE: This differs from other SetCommon() in other missions.
-		posName = posName_;
-		title = title_;
-		info = info_;
-		winCondition = winCondition_;
-		winMessage = winMessage_;
-		loseMessage = loseMessage_;
-		xp = xp_;
-	}
 	
 	void Set(array<EMapDescriptorType> locationTypes_, array<string> groupTypes_, int aiSkill_, float aiPerception_, array<string> vehicleTypes_, float cruiseSpeed_)
 	{
@@ -401,10 +377,9 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Convoy convoy0 = new SDRC_Convoy();
-		convoy0.SetCommon(
+		convoy0.common.Set(
 			"index 0: Convoy driving from .. to ..",
-			"0 0 0",
-			"0 0 0",
+			{"0 0 0", "0 0 0"},
 			"any",
 			"Convoy is on the move.",
 			"Leaked travel plans show a route from ",
@@ -456,10 +431,9 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	
 		//----------------------------------------------------
 		SDRC_Convoy convoy1 = new SDRC_Convoy();
-		convoy1.SetCommon(
+		convoy1.common.Set(
 			"index 1: Truck driving from .. to ..",
-			"0 0 0",
-			"0 0 0",
+			{"0 0 0", "0 0 0"},
 			"any",
 			"Cargo truck is on the move.",
 			"Follow the route from ",
@@ -511,10 +485,9 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		//TBD: Needs fixing. The AI will jump out immediately when seeing a player. The driver stays inside, but gunner not. Probably need to assign a gunner...
 		SDRC_Convoy convoy2 = new SDRC_Convoy();
-		convoy2.SetCommon(
+		convoy2.common.Set(
 			"index 2: Armor driving from .. to ..",
-			"0 0 0",
-			"0 0 0",
+			{"0 0 0", "0 0 0"},
 			"any",
 			"Armor spotted",
 			"Likely to patrol from ",

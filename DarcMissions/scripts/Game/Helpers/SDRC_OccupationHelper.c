@@ -9,15 +9,7 @@ Helper functions for spawning occupation class
 class SDRC_Occupation : Managed
 {
 	//Occupation specific
-	string comment;							//Generic comment to describe the mission. Not used in game.
-	vector pos;								//Position for mission. "0 0 0" used for random location chosen from locationTypes.
-	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
-	string title;							//Title for the hint shown for players
-	string info;							//Details for the hint shown for players
-	DC_EMissionWinCondition winCondition;	//Mission win condidition
-	string winMessage;						//Message to show when mission is completed
-	string loseMessage;						//Message to show when mission fails
-	int xp;									//Experience given	
+	ref SDRC_MissionConfigCommon common = new SDRC_MissionConfigCommon();
 	ref array<EMapDescriptorType> locationTypes = {};	
 	ref array<int> groupCount = {};			//min, max
 	ref array<int> waypointRange = {};		//min, max
@@ -31,19 +23,6 @@ class SDRC_Occupation : Managed
 	//Optional settings
 	ref SDRC_Loot loot = null;
 	ref array<ref SDRC_Structure> campItems = {};
-	
-	void SetCommon(string comment_, vector pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, int xp_)
-	{
-		comment = comment_;
-		pos = pos_;
-		posName = posName_;
-		title = title_;
-		info = info_;
-		winCondition = winCondition_;
-		winMessage = winMessage_;
-		loseMessage = loseMessage_;
-		xp = xp_;
-	}
 	
 	void Set(array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_, int aiSkill_, float aiPerception_, float emptySize_)
 	{

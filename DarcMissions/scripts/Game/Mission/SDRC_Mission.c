@@ -55,6 +55,32 @@ class SDRC_MissionConfig : Managed
 	bool showMessage = true;
 }
 
+class SDRC_MissionConfigCommon : Managed
+{
+	string comment;							//Generic comment to describe the mission. Not used in game.
+	array<vector> pos;						//Positions for mission. "0 0 0" used for random location chosen from locationTypes. First is mission position, second is destination for missions that need it.
+	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
+	string title;							//Title for the hint shown for players
+	string info;							//Details for the hint shown for players
+	DC_EMissionWinCondition winCondition;	//Mission win condidition
+	string winMessage;						//Message to show when mission is completed
+	string loseMessage;						//Message to show when mission fails
+	int xp;									//Experience given	
+	
+	void Set(string comment_, array<vector> pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, int xp_)
+	{
+		comment = comment_;
+		pos = pos_;
+		posName = posName_;
+		title = title_;
+		info = info_;
+		winCondition = winCondition_;
+		winMessage = winMessage_;
+		loseMessage = loseMessage_;
+		xp = xp_;
+	}
+}
+
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission
 {
@@ -70,6 +96,7 @@ class SDRC_Mission
     private bool m_ShowHint;
     private bool m_ShowMessage;
 	//Internals
+	private bool m_bRequested;					//The missions spawn was requested by a an external party (like GM)
 	private int m_StartTime;					//Seconds when mission started
 	private int m_EndTime;						//Seconds when mission shall end.
 	private int m_ActiveTime;					//Seconds of how long the mission should be active
@@ -85,7 +112,8 @@ class SDRC_Mission
 	private int m_iActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
 	private int m_iActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
 	private bool m_bMissionIsEnding;			//Once all AIs are dead, we're getting close to end the mission.
-	private bool m_bRequested;					//The missions spawn was requested by a an external party (like GM)
+	//Win condition related
+//	private int m_iAiCountOriginal;				//The amount of AI at the beginning on the mission - at the time it was set active
 	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
@@ -212,6 +240,10 @@ class SDRC_Mission
 	void SetState(DC_EMissionState state)
 	{
 		m_State = state;
+		if (state == DC_EMissionState.ACTIVE)
+		{
+			//TBD: Things to set when mission goes to active state
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -367,7 +399,7 @@ class SDRC_Mission
 			SetSuccess(DC_EMissionSuccess.LOSE);
 			if (IsShowHint() && IsShowMessage())			
 			{
-				SDRC_HintHelper.ShowHintMission("Mission: " + GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);	//TBD: Fix to LOSE icon
+				SDRC_HintHelper.ShowHintMission("Mission: " + GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);
 			}
 		}
 

@@ -76,12 +76,12 @@ class SDRC_Mission_Hunter : SDRC_Mission
 				
 		SetPos(pos);
 		SetPosName("");
-		SetTitle(m_Config.title);
-		SetInfo(m_Config.info);						
+		SetTitle(m_Config.common.title);
+		SetInfo(m_Config.common.info);						
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
-		SetMessages(m_Config.showMessage, m_Config.winMessage, m_Config.loseMessage);		
-		SetWinCondition(m_Config.winCondition);
+		SetMessages(m_Config.showMessage, m_Config.common.winMessage, m_Config.common.loseMessage);		
+		SetWinCondition(m_Config.common.winCondition);
 
 		SetState(DC_EMissionState.INIT);
 	}
@@ -251,13 +251,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 //------------------------------------------------------------------------------------------------
 class SDRC_HunterConfig : SDRC_MissionConfig
 {
-	//Mission specific
-	string title;							//Title for the hint shown for players
-	string info;							//Details for the hint shown for players
-	DC_EMissionWinCondition winCondition;	//Mission win condidition
-	string winMessage;						//Message to show when mission is completed
-	string loseMessage;						//Message to show when mission fails
-	int xp;									//Experience given	
+	ref SDRC_MissionConfigCommon common = new SDRC_MissionConfigCommon();
 	ref array<int> groupCount = {1, 2};
 	ref array<string> groupTypes = {}; 		//The prefab names of AI groups or characters. The AI is randomly picked from this list.
 	int aiSkill;							//Skill for AI (0-100). See SCR_AICombatComponent and EAISkill
@@ -304,12 +298,17 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_X_MAP;
 		conf.showMarker = false;
 		//Mission specific
-		conf.title = "Hunters";
-		conf.info = "They are coming for you...";		
-		conf.winCondition = DC_EMissionWinCondition.KILL_AI_ALL;
-		conf.winMessage = "Win message";
-		conf.loseMessage = "Lose message";
-		conf.xp = 0;		
+		conf.common.Set(
+			"index 0: general mission",
+			{"0 0 0"},
+			"any",
+			"Hunters",
+			"They are coming for you...",
+			DC_EMissionWinCondition.KILL_AI_ALL,
+			"Win message",
+			"Lose message", 
+			0
+		);
 		conf.groupCount = {1, 4};			//min, max		
 		conf.groupTypes = 
 		{

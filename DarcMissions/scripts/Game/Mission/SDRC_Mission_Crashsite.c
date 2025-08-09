@@ -115,12 +115,12 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		
 		SetPos(pos);
 		SetPosName("");
-		SetTitle(m_DC_Crashsite.title);
-		SetInfo(m_DC_Crashsite.info);
+		SetTitle(m_DC_Crashsite.common.title);
+		SetInfo(m_DC_Crashsite.common.info);
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetShowHint(m_Config.showHint);
-		SetMessages(m_Config.showMessage, m_DC_Crashsite.winMessage, m_DC_Crashsite.loseMessage);		
-		SetWinCondition(m_DC_Crashsite.winCondition);
+		SetMessages(m_Config.showMessage, m_DC_Crashsite.common.winMessage, m_DC_Crashsite.common.loseMessage);		
+		SetWinCondition(m_DC_Crashsite.common.winCondition);
 
 		SetState(DC_EMissionState.INIT);			
 
@@ -335,14 +335,7 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 //------------------------------------------------------------------------------------------------
 class SDRC_Crashsite : Managed
 {
-	//Mission specific
-	string comment;							//Generic comment to describe the mission. Not used in game.
-	string title;							//Title for the hint shown for players
-	string info;							//Details for the hint shown for players
-	DC_EMissionWinCondition winCondition;	//Mission win condidition
-	string winMessage;						//Message to show when mission is completed
-	string loseMessage;						//Message to show when mission fails
-	int xp;									//Experience given	
+	ref SDRC_MissionConfigCommon common = new SDRC_MissionConfigCommon();
 	ref array<string> groupTypes = {};
 	int aiSkill;
 	float aiPerception;
@@ -351,15 +344,8 @@ class SDRC_Crashsite : Managed
 	ref SDRC_Loot loot = null;
 	ref array<ref SDRC_Structure> siteItems = {};
 	
-	void Set(string comment_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, int xp_, array<string> groupTypes_, int aiSkill_, float aiPerception_)
+	void Set(array<string> groupTypes_, int aiSkill_, float aiPerception_)
 	{
-		comment = comment_;
-		title = title_;
-		info = info_;
-		winCondition = winCondition_;
-		winMessage = winMessage_;
-		loseMessage = loseMessage_;
-		xp = xp_;
 		groupTypes = groupTypes_;
 		aiSkill = aiSkill_;
 		aiPerception = aiPerception_;
@@ -411,15 +397,19 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		SDRC_Crashsite crashsite0 = new SDRC_Crashsite();
-		crashsite0.Set
-		(
+		crashsite0.common.Set(
 			"index 0: general mission",
+			{"0 0 0"},
+			"any",
 			"Helicopter in distress ",
 			"A valuable cargo has crashed",
 			DC_EMissionWinCondition.KILL_AI_ALL,
 			"Win message",
 			"Lose message", 
-			0,
+			0
+		);
+		crashsite0.Set
+		(
 			{
 				"G_LIGHT", "G_ADMIN"
 			},
