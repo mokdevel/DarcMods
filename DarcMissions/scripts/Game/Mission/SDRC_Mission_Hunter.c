@@ -109,11 +109,8 @@ class SDRC_Mission_Hunter : SDRC_Mission
 			}
 			else
 			{
-				//NOTE: This one does not use IsActive(). Will run forever until no players are near players.
-				//TBD: This is not working properly
-				if (SDRC_AIHelper.AreAllGroupsDead(m_Groups))
+				if (!IsActive(true))
 				{
-					SDRC_Log.Add("[SDRC_Mission_Hunter:MissionRun] All groups killed. Mission over.", LogLevel.NORMAL);
 					SetState(DC_EMissionState.END);
 				}
 			}

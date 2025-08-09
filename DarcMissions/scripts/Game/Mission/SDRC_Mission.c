@@ -378,7 +378,11 @@ class SDRC_Mission
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	bool IsActive()
+	/*!
+	Check if mission is to be active.
+	\param checkOnlyWinCondition If set to true, ignore any timing related checks.
+	*/
+	bool IsActive(bool checkOnlyWinCondition = false)
 	{
 		//Are all AIs dead
 		if (SDRC_AIHelper.AreAllGroupsDead(m_Groups) && m_State == DC_EMissionState.ACTIVE && !m_bMissionIsEnding)
@@ -396,20 +400,23 @@ class SDRC_Mission
 			ResetActiveTime();
 		}
 		
-		//Are there players still nearby
-		if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_Pos, 0, m_iActiveDistance))
+		if (!checkOnlyWinCondition)
 		{
-			ResetActiveTime();
-			return true;
+			//Are there players still nearby
+			if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_Pos, 0, m_iActiveDistance))
+			{
+				ResetActiveTime();
+				return true;
+			}
+			
+			//Has the active time passed
+			int currentTime = (System.GetTickCount() / 1000);
+			if (currentTime < m_EndTime)
+			{
+				return true;
+			}
 		}
-		
-		//Has the active time passed
-		int currentTime = (System.GetTickCount() / 1000);
-		if (currentTime < m_EndTime)
-		{
-			return true;
-		}
-		
+				
 		//Well, we should not be active anymore
 		
 		//If we won, don't show a lose message
