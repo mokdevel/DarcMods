@@ -2,12 +2,11 @@
 	"version": 1,
 	"author": "darc",
 	"missionCycleTime": 30,
+	"markerType": "DARC_MISSION",
+	"markerIdx": 5,
 	"showMarker": true,
 	"showHint": true,
-	"xp": 0,
-	"winCondition": 1,
-	"winMessage": "",
-	"loseMessage": "",
+	"showMessage": true,
 	"distanceToMission": 100,
 	"distanceToPlayer": 500,
 	"flyHeight": [
@@ -15,13 +14,28 @@
 		120
 	],
 	"crashsiteList": [
-		0
+		0,
+		1
 	],
 	"crashsites": [
 		{
-			"comment": "index 0: general mission",
-			"title": "Helicopter in distress ",
-			"info": "A valuable cargo has crashed",
+			"general": {
+				"comment": "index 0: general mission",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Helicopter in distress",
+				"info": "A valuable cargo has crashed.",
+				"winCondition": 2,
+				"winMessage": "The loot was salvaged. Crash, burn, loot.",
+				"loseMessage": "No loot for you today.",
+				"xp": 0
+			},
 			"groupTypes": [
 				"G_LIGHT",
 				"G_ADMIN"
@@ -138,6 +152,95 @@
 					"rotation": [
 						0.0,
 						-111.27300262451172,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"general": {
+				"comment": "index 1: general mission",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Engine damage",
+				"info": "May day, may day! We're going down.",
+				"winCondition": 2,
+				"winMessage": "The loot box was secured.",
+				"loseMessage": "The cargo was lost.",
+				"xp": 0
+			},
+			"groupTypes": [
+				"G_HEAVY",
+				"G_ADMIN"
+			],
+			"aiSkill": 20,
+			"aiPerception": 0.800000011920929,
+			"helicopterInfo": [
+				{
+					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+					"throttle": 0.699999988079071,
+					"rotorForce": 0.800000011920929,
+					"rotor2Force": 1.0
+				},
+				{
+					"resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
+					"throttle": 0.6000000238418579,
+					"rotorForce": 0.8500000238418579,
+					"rotor2Force": 1.0
+				},
+				{
+					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+					"throttle": 0.75,
+					"rotorForce": 0.75,
+					"rotor2Force": -1.0
+				}
+			],
+			"loot": {
+				"box": null,
+				"itemChance": 0.699999988079071,
+				"items": [
+					"WEAPON_LAUNCHER",
+					"UTIL_OPTICS",
+					"WEAPON_RIFLE",
+					"WEAPON_RIFLE",
+					"WEAPON_RIFLE",
+					"UTIL_MAGAZINES",
+					"UTIL_MAGAZINES",
+					"UTIL_MAGAZINES",
+					"UTIL_MAGAZINES",
+					"UTIL_MAGAZINES"
+				]
+			},
+			"siteItems": [
+				{
+					"resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+					"position": [
+						97.91100311279297,
+						1.0,
+						121.5270004272461
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
+					"position": [
+						106.27400207519531,
+						1.0,
+						121.10800170898438
+					],
+					"rotation": [
+						0.0,
+						0.0,
 						0.0
 					]
 				}

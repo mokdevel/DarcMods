@@ -2,14 +2,28 @@
 	"version": 1,
 	"author": "darc",
 	"missionCycleTime": 90,
+	"markerType": "DARC_MISSION",
+	"markerIdx": 0,
 	"showMarker": false,
 	"showHint": true,
-	"xp": 0,
-	"winCondition": 1,
-	"winMessage": "",
-	"loseMessage": "",
-	"title": "Hunters",
-	"info": "They are coming for you...",
+	"showMessage": true,
+	"general": {
+		"comment": "index 0: general mission",
+		"pos": [
+			[
+				0.0,
+				0.0,
+				0.0
+			]
+		],
+		"posName": "any",
+		"title": "Hunters",
+		"info": "They are coming for you... Last time they were seen close to %l.",
+		"winCondition": 1,
+		"winMessage": "You outsmarted the hunters.",
+		"loseMessage": "Hunters lost track of you.",
+		"xp": 0
+	},
 	"groupCount": [
 		1,
 		4

@@ -5,7 +5,7 @@
 	"lists": [
 		{
 			"id": "G_LIGHT",
-			"modDir": "/Groups",
+			"modDir": "Prefabs/Groups",
 			"include": [
 				"LightFire",
 				"FireTeam",
@@ -23,7 +23,7 @@
 		},
 		{
 			"id": "G_SNIPER",
-			"modDir": "/Groups",
+			"modDir": "Prefabs/Groups",
 			"include": [
 				"Sniper",
 				"SharpShooter",
@@ -40,7 +40,7 @@
 		},
 		{
 			"id": "G_LAUNCHER",
-			"modDir": "/Groups",
+			"modDir": "Prefabs/Groups",
 			"include": [
 				"Team_AT",
 				"Team_GL",
@@ -56,7 +56,7 @@
 		},
 		{
 			"id": "G_ADMIN",
-			"modDir": "/Groups",
+			"modDir": "Prefabs/Groups",
 			"include": [
 				"_Platoon"
 			],
@@ -70,7 +70,7 @@
 		},
 		{
 			"id": "G_MEDICAL",
-			"modDir": "/Groups",
+			"modDir": "Prefabs/Groups",
 			"include": [
 				"_Medical"
 			],
@@ -84,7 +84,7 @@
 		},
 		{
 			"id": "G_RECON",
-			"modDir": "/Groups",
+			"modDir": "Prefabs/Groups",
 			"include": [
 				"_Recon",
 				"_Maneuver"
@@ -99,7 +99,7 @@
 		},
 		{
 			"id": "G_HEAVY",
-			"modDir": "/Groups",
+			"modDir": "Prefabs/Groups",
 			"include": [
 				"MachineGunTeam",
 				"FireTeam",
@@ -117,7 +117,7 @@
 		},
 		{
 			"id": "G_SPECIAL",
-			"modDir": "/Groups",
+			"modDir": "Prefabs/Groups",
 			"include": [
 				"GreenBeret",
 				"Sapper",
@@ -134,7 +134,7 @@
 		},
 		{
 			"id": "G_SMALL",
-			"modDir": "/Groups",
+			"modDir": "Prefabs/Groups",
 			"include": [
 				"Spetsnaz_SentryTeam",
 				"GreenBeret_SentryTeam",
@@ -153,7 +153,7 @@
 		},
 		{
 			"id": "C_RIFLEMAN",
-			"modDir": "/Characters/Factions",
+			"modDir": "Prefabs/Characters/Factions",
 			"include": [
 				"Rifleman",
 				"Sapper",
@@ -175,7 +175,7 @@
 		},
 		{
 			"id": "C_HEAVY",
-			"modDir": "/Characters/Factions",
+			"modDir": "Prefabs/Characters/Factions",
 			"include": [
 				"_GL",
 				"_MG",
@@ -198,7 +198,7 @@
 		},
 		{
 			"id": "C_RECON",
-			"modDir": "/Characters/Factions",
+			"modDir": "Prefabs/Characters/Factions",
 			"include": [
 				"Scout",
 				"Spotter",
@@ -222,7 +222,7 @@
 		},
 		{
 			"id": "C_OFFICER",
-			"modDir": "/Characters/Factions",
+			"modDir": "Prefabs/Characters/Factions",
 			"include": [
 				"_Officer",
 				"Sergeant",
@@ -244,7 +244,7 @@
 		},
 		{
 			"id": "C_CREW",
-			"modDir": "/Characters/Factions",
+			"modDir": "Prefabs/Characters/Factions",
 			"include": [
 				"Crew",
 				"Pilot",
@@ -266,7 +266,7 @@
 		},
 		{
 			"id": "C_SNIPER",
-			"modDir": "/Characters/Factions",
+			"modDir": "Prefabs/Characters/Factions",
 			"include": [
 				"Sniper",
 				"Sharpshooter"
@@ -286,7 +286,7 @@
 		},
 		{
 			"id": "C_LAUNCHER",
-			"modDir": "/Characters/Factions",
+			"modDir": "Prefabs/Characters/Factions",
 			"include": [
 				"_AAT",
 				"_AT",
@@ -308,7 +308,7 @@
 		},
 		{
 			"id": "C_MEDIC",
-			"modDir": "/Characters/Factions",
+			"modDir": "Prefabs/Characters/Factions",
 			"include": [
 				"Medic"
 			],
@@ -327,13 +327,113 @@
 		},
 		{
 			"id": "C_SPECIAL",
-			"modDir": "/Characters/Factions",
+			"modDir": "Prefabs/Characters/Factions",
 			"include": [
 				"_SF",
 				"_SR",
 				"FIA_AC",
 				"_Bomb",
 				"MEI_Rifleman1"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed",
+				"_Random"
+			],
+			"items": []
+		},
+		{
+			"id": "G_ZOMBIE_SMALL",
+			"modDir": "622120A5448725E3/Prefabs/Characters/Factions",
+			"include": [
+				"_Small"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed",
+				"_Random"
+			],
+			"items": []
+		},
+		{
+			"id": "G_ZOMBIE_MEDIUM",
+			"modDir": "622120A5448725E3/Prefabs/Characters/Factions",
+			"include": [
+				"_Medium"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed",
+				"_Random"
+			],
+			"items": []
+		},
+		{
+			"id": "G_ZOMBIE_LARGE",
+			"modDir": "622120A5448725E3/Prefabs/Characters/Factions",
+			"include": [
+				"_Huge",
+				"_Large",
+				"_Horde"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed",
+				"_Random"
+			],
+			"items": []
+		},
+		{
+			"id": "C_DEMON",
+			"modDir": "Prefabs/Characters",
+			"include": [
+				"Plague",
+				"Slander",
+				"Whisper",
+				"Whisperer"
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed",
+				"_Random"
+			],
+			"items": []
+		},
+		{
+			"id": "C_DEMON_BOSS",
+			"modDir": "Prefabs/Characters",
+			"include": [
+				"Stalker Heavy"
 			],
 			"exclude": [
 				"_Base",

@@ -7,6 +7,8 @@
 	"debugShowMarks": true,
 	"debugShowSpheres": true,
 	"fallbackEnemyFaction": "USSR",
+	"showOnGMMapNonValidArea": true,
+	"showOnGMMapMissionMarker": true,
 	"buildingExcludeFilter": [
 		"BrickPile",
 		"WoodPile",

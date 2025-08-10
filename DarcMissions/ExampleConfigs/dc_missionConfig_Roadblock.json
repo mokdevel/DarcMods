@@ -2,20 +2,11 @@
 	"version": 1,
 	"author": "darc",
 	"missionCycleTime": 30,
+	"markerType": "DARC_MISSION",
+	"markerIdx": 9,
 	"showMarker": true,
 	"showHint": true,
-	"xp": 0,
-	"winCondition": 1,
-	"winMessage": "",
-	"loseMessage": "",
-	"pos": [
-		0.0,
-		0.0,
-		0.0
-	],
-	"posName": "",
-	"title": "",
-	"info": "",
+	"showMessage": true,
 	"disableArsenal": false,
 	"roadblockList": [
 		0,
@@ -24,15 +15,23 @@
 	],
 	"roadblocks": [
 		{
-			"comment": "index 0: Roadblock",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Roadblock near ",
-			"info": "Look out for trouble.",
+			"general": {
+				"comment": "index 0: Roadblock",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Roadblock near %l",
+				"info": "Look out for trouble.",
+				"winCondition": 2,
+				"winMessage": "Roadblock cleared.",
+				"loseMessage": "Road was kept safe as planned.",
+				"xp": 0
+			},
 			"locationTypes": [
 				61,
 				64,
@@ -134,15 +133,23 @@
 			]
 		},
 		{
-			"comment": "index 1: Roadblock",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Roadblock seen close to ",
-			"info": "Be careful.",
+			"general": {
+				"comment": "index 1: Roadblock",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Roadblock seen close to %l",
+				"info": "Be careful.",
+				"winCondition": 1,
+				"winMessage": "These blocks can not stop you.",
+				"loseMessage": "Scared of the enemy? %l is not a place for you.",
+				"xp": 0
+			},
 			"locationTypes": [
 				59,
 				61,
@@ -347,15 +354,23 @@
 			]
 		},
 		{
-			"comment": "index 2: Roadblock",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Road is closed near ",
-			"info": "Are your ready to pay the toll?",
+			"general": {
+				"comment": "index 2: Roadblock",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Road is closed near %l",
+				"info": "Are your ready to pay the toll?",
+				"winCondition": 2,
+				"winMessage": "Road cleared.",
+				"loseMessage": "The road toll was too much for you.",
+				"xp": 0
+			},
 			"locationTypes": [
 				59,
 				59,

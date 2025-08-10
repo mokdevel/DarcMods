@@ -2,12 +2,11 @@
 	"version": 1,
 	"author": "darc",
 	"missionCycleTime": 30,
+	"markerType": "DARC_MISSION",
+	"markerIdx": 4,
 	"showMarker": true,
 	"showHint": true,
-	"xp": 0,
-	"winCondition": 1,
-	"winMessage": "",
-	"loseMessage": "",
+	"showMessage": true,
 	"convoyTime": 0,
 	"distanceToPlayer": 500,
 	"disableArsenal": true,
@@ -19,20 +18,28 @@
 	],
 	"convoys": [
 		{
-			"comment": "index 0: Convoy driving from .. to ..",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posDestination": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Convoy is on the move.",
-			"info": "Leaked travel plans show a route from ",
+			"general": {
+				"comment": "index 0: Convoy driving from .. to ..",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Convoy is on the move.",
+				"info": "Leaked travel plans show a route from %l to %d",
+				"winCondition": 1,
+				"winMessage": "The convoy was successfully intercepted.",
+				"loseMessage": "The convoy reached %d as planned.",
+				"xp": 0
+			},
 			"locationTypes": [
 				59,
 				59,
@@ -74,20 +81,28 @@
 			}
 		},
 		{
-			"comment": "index 1: Truck driving from .. to ..",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posDestination": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Cargo truck is on the move.",
-			"info": "Follow the route from ",
+			"general": {
+				"comment": "index 1: Truck driving from .. to ..",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Cargo truck is on the move.",
+				"info": "Follow the route from %l to %d",
+				"winCondition": 1,
+				"winMessage": "Truck stopped, loot grabbed.",
+				"loseMessage": "All the goodies in the truck was never for you.",
+				"xp": 0
+			},
 			"locationTypes": [
 				59,
 				59,
@@ -138,20 +153,28 @@
 			}
 		},
 		{
-			"comment": "index 2: Armor driving from .. to ..",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posDestination": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Armor spotted",
-			"info": "Likely to patrol from ",
+			"general": {
+				"comment": "index 2: Armor driving from .. to ..",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Armor spotted",
+				"info": "It's been seen in %l. It's to patrol to %d.",
+				"winCondition": 1,
+				"winMessage": "Armor destroyed. Well done!",
+				"loseMessage": "Were you scared of a piece metal? Cowards!",
+				"xp": 0
+			},
 			"locationTypes": [
 				59,
 				59,

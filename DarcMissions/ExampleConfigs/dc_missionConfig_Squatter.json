@@ -2,12 +2,11 @@
 	"version": 1,
 	"author": "darc",
 	"missionCycleTime": 30,
+	"markerType": "DARC_MISSION",
+	"markerIdx": 1,
 	"showMarker": true,
 	"showHint": true,
-	"xp": 0,
-	"winCondition": 1,
-	"winMessage": "",
-	"loseMessage": "",
+	"showMessage": true,
 	"buildingRadius": 400,
 	"squatterList": [
 		0,
@@ -24,15 +23,23 @@
 	],
 	"squatters": [
 		{
-			"comment": "index 0: Squatters in cities",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Squatters near ",
-			"info": "Building has squatters with loot",
+			"general": {
+				"comment": "index 0: Squatters in cities",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Squatters near %l.",
+				"info": "Building has squatters with loot",
+				"winCondition": 2,
+				"winMessage": "The loot has been secured.",
+				"loseMessage": "Squatters cleaned the house and left you nothing.",
+				"xp": 0
+			},
 			"locationTypes": [
 				59,
 				59,
@@ -90,15 +97,23 @@
 			}
 		},
 		{
-			"comment": "index 1: Squatters in control towers",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Enemy in ",
-			"info": "Control tower is being guarded.",
+			"general": {
+				"comment": "index 1: Squatters in control towers",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Enemy in %l",
+				"info": "Control tower is being guarded.",
+				"winCondition": 2,
+				"winMessage": "You did it! Control in %l has been restored.",
+				"loseMessage": "Control in %l has been lost.",
+				"xp": 0
+			},
 			"locationTypes": [],
 			"aiCount": [
 				6,
@@ -146,15 +161,23 @@
 			}
 		},
 		{
-			"comment": "index 2: Squatters in military locations",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Guards around ",
-			"info": "Military location has loot to steal.",
+			"general": {
+				"comment": "index 2: Squatters in military locations",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Guards around %l",
+				"info": "Military location has loot to steal.",
+				"winCondition": 1,
+				"winMessage": "Guards have been eliminated.",
+				"loseMessage": "Military has collected the loot and left.",
+				"xp": 0
+			},
 			"locationTypes": [],
 			"aiCount": [
 				4,
@@ -203,15 +226,23 @@
 			}
 		},
 		{
-			"comment": "index 3: Military in industrial areas",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Industrial area near ",
-			"info": "Military has seized control of an industrial area. Don't shoot the civilians.",
+			"general": {
+				"comment": "index 3: Military in industrial areas",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Industrial area near %l",
+				"info": "Military has seized control of an industrial area. Don't shoot the civilians.",
+				"winCondition": 3,
+				"winMessage": "Main enemy forces have been destroyed. Continue to keep an eye for rogues.",
+				"loseMessage": "%l is in the hands of the enemy.",
+				"xp": 0
+			},
 			"locationTypes": [],
 			"aiCount": [
 				2,
@@ -259,15 +290,23 @@
 			}
 		},
 		{
-			"comment": "index 4: Enemy in churches and similar",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Sanctuary visitors near ",
-			"info": "Holy night, holy loot.",
+			"general": {
+				"comment": "index 4: Enemy in churches and similar",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Sanctuary visitors near %l",
+				"info": "Holy night, holy loot.",
+				"winCondition": 4,
+				"winMessage": "Your success will be remembered.",
+				"loseMessage": "Your effort has been struck down.",
+				"xp": 0
+			},
 			"locationTypes": [],
 			"aiCount": [
 				3,
@@ -306,15 +345,23 @@
 			}
 		},
 		{
-			"comment": "index 5: Shops and houses",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Burglars seen near ",
-			"info": "Go rob the robbers.",
+			"general": {
+				"comment": "index 5: Shops and houses",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Burglars seen near %l",
+				"info": "Go rob the robbers.",
+				"winCondition": 3,
+				"winMessage": "%l is open for business once again.",
+				"loseMessage": "Everything has been stolen.",
+				"xp": 0
+			},
 			"locationTypes": [],
 			"aiCount": [
 				2,

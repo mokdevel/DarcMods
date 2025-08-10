@@ -5,7 +5,7 @@
 	"lists": [
 		{
 			"id": "WEAPON_RIFLE",
-			"modDir": "/Weapons/Rifles",
+			"modDir": "Prefabs/Weapons/Rifles",
 			"include": [
 				"Rifle"
 			],
@@ -17,7 +17,7 @@
 		},
 		{
 			"id": "WEAPON_LAUNCHER",
-			"modDir": "/Weapons/Launchers",
+			"modDir": "Prefabs/Weapons/Launchers",
 			"include": [
 				"Launcher",
 				"BC_M79"
@@ -29,7 +29,7 @@
 		},
 		{
 			"id": "WEAPON_HANDGUN",
-			"modDir": "/Weapons/Handguns",
+			"modDir": "Prefabs/Weapons/Handguns",
 			"include": [
 				"Handgun"
 			],
@@ -40,7 +40,7 @@
 		},
 		{
 			"id": "WEAPON_GRENADE",
-			"modDir": "/Weapons/Grenades",
+			"modDir": "Prefabs/Weapons/Grenades",
 			"include": [
 				""
 			],
@@ -51,7 +51,7 @@
 		},
 		{
 			"id": "ITEM_MEDICAL",
-			"modDir": "/Items/Medicine",
+			"modDir": "Prefabs/Items/Medicine",
 			"include": [
 				""
 			],
@@ -62,7 +62,7 @@
 		},
 		{
 			"id": "UTIL_ATTACHMENT",
-			"modDir": "/Weapons/Attachments",
+			"modDir": "Prefabs/Weapons/Attachments",
 			"include": [
 				""
 			],
@@ -74,7 +74,7 @@
 		},
 		{
 			"id": "UTIL_OPTICS",
-			"modDir": "/Weapons/Attachments",
+			"modDir": "Prefabs/Weapons/Attachments",
 			"include": [
 				"Optic",
 				"Scope"
@@ -86,7 +86,7 @@
 		},
 		{
 			"id": "ITEM_GENERAL",
-			"modDir": "/Items",
+			"modDir": "Prefabs/Items",
 			"include": [
 				"Binocular",
 				"Compass",
@@ -112,7 +112,7 @@
 		},
 		{
 			"id": "WEAPON_MG",
-			"modDir": "/Weapons/MachineGuns",
+			"modDir": "Prefabs/Weapons/MachineGuns",
 			"include": [
 				"MG_",
 				"RPD",
@@ -125,7 +125,7 @@
 		},
 		{
 			"id": "UTIL_MAGAZINES",
-			"modDir": "/Weapons/Magazines",
+			"modDir": "Prefabs/Weapons/Magazines",
 			"include": [
 				""
 			],
@@ -137,7 +137,7 @@
 		},
 		{
 			"id": "UTIL_AMMO",
-			"modDir": "/Weapons/Ammo",
+			"modDir": "Prefabs/Weapons/Ammo",
 			"include": [
 				"Shell",
 				"Rocket",

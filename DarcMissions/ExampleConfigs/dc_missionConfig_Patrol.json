@@ -2,12 +2,11 @@
 	"version": 1,
 	"author": "darc",
 	"missionCycleTime": 90,
+	"markerType": "DARC_MISSION",
+	"markerIdx": 7,
 	"showMarker": false,
 	"showHint": true,
-	"xp": 0,
-	"winCondition": 1,
-	"winMessage": "",
-	"loseMessage": "",
+	"showMessage": true,
 	"patrolingTime": 0,
 	"distanceToPlayer": 500,
 	"patrolList": [
@@ -20,20 +19,28 @@
 	],
 	"patrols": [
 		{
-			"comment": "index 0: Enemy patrols going between two points hopefully following roads",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posDestination": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Patrol spotted near ",
-			"info": "Be careful while traveling on roads.",
+			"general": {
+				"comment": "index 0: Enemy patrols going between two points hopefully following roads",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Patrol spotted near %l",
+				"info": "Intel tells them to travel to %d. Be careful while traveling on roads.",
+				"winCondition": 1,
+				"winMessage": "Patrol near %l is no more.",
+				"loseMessage": "Patroling completed, the world is saved.",
+				"xp": 0
+			},
 			"locationTypes": [
 				59,
 				59,
@@ -61,20 +68,28 @@
 			"aiPerception": 1.0
 		},
 		{
-			"comment": "index 1: Heavy patrol",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posDestination": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Patrol in ",
-			"info": "Beware!",
+			"general": {
+				"comment": "index 1: Heavy patrol",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Patrol in %l",
+				"info": "Beware!",
+				"winCondition": 2,
+				"winMessage": "Well done!",
+				"loseMessage": "You're not a worthy enemy for this patrol.",
+				"xp": 0
+			},
 			"locationTypes": [
 				64,
 				62,
@@ -102,20 +117,28 @@
 			"aiPerception": 1.0
 		},
 		{
-			"comment": "index 2: Enemy patrols between villages",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posDestination": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Patrol seen in ",
-			"info": "Be alert",
+			"general": {
+				"comment": "index 2: Enemy patrols between villages",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Patrol seen in %l",
+				"info": "Be alert!",
+				"winCondition": 2,
+				"winMessage": "The road from %l to %d is safe again.",
+				"loseMessage": "Patrol left the area.",
+				"xp": 0
+			},
 			"locationTypes": [
 				60,
 				64
@@ -139,20 +162,28 @@
 			"aiPerception": 1.0
 		},
 		{
-			"comment": "index 3: Small patrols with a few AIs",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posDestination": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Enemy has been seen near ",
-			"info": "Caution is advised.",
+			"general": {
+				"comment": "index 3: Small patrols with a few AIs",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Enemy has been seen near %l",
+				"info": "Caution is advised.",
+				"winCondition": 3,
+				"winMessage": "Patrol cleared!",
+				"loseMessage": "Such a small force was able to beat you.",
+				"xp": 0
+			},
 			"locationTypes": [
 				60,
 				64

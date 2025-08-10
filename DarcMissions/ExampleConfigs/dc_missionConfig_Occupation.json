@@ -2,12 +2,11 @@
 	"version": 1,
 	"author": "darc",
 	"missionCycleTime": 30,
+	"markerType": "DARC_MISSION",
+	"markerIdx": 3,
 	"showMarker": true,
 	"showHint": true,
-	"xp": 0,
-	"winCondition": 1,
-	"winMessage": "",
-	"loseMessage": "",
+	"showMessage": true,
 	"disableArsenal": false,
 	"occupationList": [
 		0,
@@ -30,15 +29,23 @@
 	],
 	"occupations": [
 		{
-			"comment": "index 0: Mission in villages and local areas.",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Guards patroling near ",
-			"info": "Avoid the location. Loot has already been lost.",
+			"general": {
+				"comment": "index 0: Mission in villages and local areas.",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Guards patroling near %l",
+				"info": "Avoid the location. Loot has already been lost.",
+				"winCondition": 1,
+				"winMessage": "Guard patrol eliminated.",
+				"loseMessage": "The patrol kept %l safe from you. Pathetic.",
+				"xp": 0
+			},
 			"locationTypes": [
 				60,
 				64
@@ -64,15 +71,23 @@
 			"campItems": []
 		},
 		{
-			"comment": "index 1: Bandit camp spawning to non city areas",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Bandit camp near ",
-			"info": "Bandits are protecting their valuable loot.",
+			"general": {
+				"comment": "index 1: Bandit camp spawning to non city areas",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Bandit camp near %l",
+				"info": "Bandits are protecting their valuable loot.",
+				"winCondition": 1,
+				"winMessage": "Camp cleared. Take the loot and leave.",
+				"loseMessage": "The camp near %l was never destroyed. Bandits rule!",
+				"xp": 0
+			},
 			"locationTypes": [
 				64,
 				62,
@@ -175,15 +190,23 @@
 			]
 		},
 		{
-			"comment": "index 2: Occupation that will spawn mainly to cities and towns.",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Occupation in ",
-			"info": "City is being occupied.",
+			"general": {
+				"comment": "index 2: Occupation that will spawn mainly to cities and towns.",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Occupation in %l",
+				"info": "City is being occupied.",
+				"winCondition": 2,
+				"winMessage": "%l is free again!",
+				"loseMessage": "The enemy was stronger this time.",
+				"xp": 0
+			},
 			"locationTypes": [
 				59,
 				59,
@@ -299,15 +322,23 @@
 			]
 		},
 		{
-			"comment": "index 3: Car crash in an unusual place",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Car crash near ",
-			"info": "Loot is up for grabs.",
+			"general": {
+				"comment": "index 3: Car crash in an unusual place",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Car crash near %l",
+				"info": "Loot is up for grabs.",
+				"winCondition": 2,
+				"winMessage": "You stopped the get away. Enjoy the spoils.",
+				"loseMessage": "Car was fixed and the loot was lost.",
+				"xp": 0
+			},
 			"locationTypes": [
 				8,
 				25,
@@ -440,15 +471,23 @@
 			]
 		},
 		{
-			"comment": "index 4: Campers with a car and a tent",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Campers near ",
-			"info": "Rob them before they leave.",
+			"general": {
+				"comment": "index 4: Campers with a car and a tent",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Campers near %l",
+				"info": "Rob them before they leave.",
+				"winCondition": 1,
+				"winMessage": "The camp is yours. Enjoy the loot and relax.",
+				"loseMessage": "The camp was packed and the campers left with their car.",
+				"xp": 0
+			},
 			"locationTypes": [
 				70,
 				8,
@@ -606,15 +645,23 @@
 			]
 		},
 		{
-			"comment": "index 5: A small town",
-			"pos": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"posName": "any",
-			"title": "Town near ",
-			"info": "The enemies are hiding in a ghost town.",
+			"general": {
+				"comment": "index 5: A small town",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Settlement near %l",
+				"info": "The enemies are hiding in a ghost town.",
+				"winCondition": 2,
+				"winMessage": "The ghost town neat %l has been cleared.",
+				"loseMessage": "Enemies have left with the loot. Shame on you.",
+				"xp": 0
+			},
 			"locationTypes": [
 				70,
 				8,
