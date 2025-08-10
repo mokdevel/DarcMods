@@ -24,7 +24,10 @@ string title : Title for the hint shown for players
 string info : Details for the hint shown for players
 DC_EMissionWinCondition winCondition =
   0 = UNUSED  
-  1 = Kill all AI (100%)
+	1 = AI_KILL_ALL - Mission succeeds when 100% of AI is killed.
+	2 = AI_KILL_75 - ..75%
+	3 = AI_KILL_50 - ..50%
+	4 = AI_KILL_RANDOM - ..a random % (30%-100%) of AI is killed
 string winMessage : Message to show when mission is completed
 string loseMessage : Message to show when mission fails.
 int xp = 0 : Experience given - not supported currently
