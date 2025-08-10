@@ -13,6 +13,7 @@ enum DC_EDrawSymbol
 class SDRC_GMMapSymbol : Managed
 {
 	//Default information
+	bool visible = true;
 	DC_EDrawSymbol type;
 	vector pos;
 	float radius;
@@ -105,7 +106,7 @@ class SDRC_RplGMComp : ScriptComponent
 	{
 		SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Deletion of " + missionId + " requested by " + playerID, LogLevel.DEBUG);	
 		SDRC_GMHelper.DeleteMission(missionId);
-		SyncMapSymbols(playerID);
+//		SyncMapSymbols(playerID);
 	}
 		
 	//------------------------------------------------------------------------------------------------
@@ -114,7 +115,7 @@ class SDRC_RplGMComp : ScriptComponent
 	*/
  	void SyncMapSymbols(int playerID)
 	{
-		//SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.DEBUG);	
+		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.SPAM);	
 		//Clear symbols on server
 		ClearSymbols();
 		//Clear symbols on client
@@ -133,7 +134,7 @@ class SDRC_RplGMComp : ScriptComponent
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
     protected void RpcDo_ClearSymbols()
     {
-		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_ClearSymbols] Clearing.. ", LogLevel.NORMAL);	//TBD: SPAM		
+		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_ClearSymbols] Clearing.. ", LogLevel.SPAM);
 		ClearSymbols();
     }
 		
@@ -141,7 +142,7 @@ class SDRC_RplGMComp : ScriptComponent
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
     protected void RpcDo_SyncMapSymbol(DC_EDrawSymbol symbolType, vector pos, float radius, int color, string id)
     {
-		//SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(DC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.NORMAL);	//TBD: SPAM
+		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(DC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.SPAM);
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
 		symbol.type = symbolType;

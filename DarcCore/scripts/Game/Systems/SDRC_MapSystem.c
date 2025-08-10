@@ -91,6 +91,33 @@ class SDRC_MapSystem : GameSystem
 	{
 		//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Click.", LogLevel.NORMAL);
 		int markerIdx = FindMarkerIndex();
+		
+		if (markerIdx > -1)
+		{		
+			SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
+			
+			if (gmComponent)
+			{
+				ShowChatMessage(WidgetManager.Translate("Mission ID: " + gmComponent.m_Symbols[markerIdx].id));
+			}
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Displays a message in chat
+	*/	
+	static void ShowChatMessage(string message)
+	{
+		PlayerController playerComponent = GetGame().GetPlayerController();
+		if (!playerComponent)
+			return;
+		
+		SCR_ChatComponent chatComponent = SCR_ChatComponent.Cast(playerComponent.FindComponent(SCR_ChatComponent));
+		if (!chatComponent)
+			return;
+		
+		chatComponent.ShowMessage(message);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -100,24 +127,28 @@ class SDRC_MapSystem : GameSystem
 	protected void OnMarkerDelete(float value, EActionTrigger reason)
 	{
 		int markerIdx = FindMarkerIndex();
-		SDRC_Log.Add("[SDRC_MapSystem:OnMarkerDelete] Deleting: " + markerIdx, LogLevel.NORMAL);
 		
-		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
-		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
-		
-		if ( (playerComponent) && (gmComponent) )
-		{
-			playerComponent.AskForMissionDeletion(gmComponent.m_Symbols[markerIdx].id);
+		if (markerIdx > -1)
+		{		
+			SDRC_Log.Add("[SDRC_MapSystem:OnMarkerDelete] Deleting: " + markerIdx, LogLevel.SPAM);
+			
+			SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
+			SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
+			
+			if ( (playerComponent) && (gmComponent) )
+			{
+				playerComponent.AskForMissionDeletion(gmComponent.m_Symbols[markerIdx].id);
+				ShowChatMessage(WidgetManager.Translate("Deletion requested for Mission ID: " + gmComponent.m_Symbols[markerIdx].id));
+				gmComponent.m_Symbols[markerIdx].visible = false;
+			}
+			
+			m_updateMap = true;
 		}
-		
-		m_updateMap = true;
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	protected void OnMapOpen(MapConfiguration mapConfig)
 	{	
-		//SDRC_Log.Add("[SDRC_MapSystem:OnMapOpen]", LogLevel.DEBUG);
-		
 		if (!SDRC_PlayerHelper.IsInGMmode())
 		{
 			return;
@@ -152,8 +183,6 @@ class SDRC_MapSystem : GameSystem
 		{
 			return;
 		}
-
-		//SDRC_Log.Add("[SDRC_MapSystem:OnMapClose]", LogLevel.NORMAL);
 
 		if (m_Widget)				
 		{
@@ -221,11 +250,14 @@ class SDRC_MapSystem : GameSystem
 					}
 					case DC_EDrawSymbol.MARKER:
 					{
-						ImageDrawCommand drawCommand = new ImageDrawCommand();		
-						drawCommand = DrawMarker(symbol.pos, symbol.intval);
-						if (drawCommand)
+						if (symbol.visible)
 						{
-							m_DrawCommands.Insert(drawCommand);
+							ImageDrawCommand drawCommand = new ImageDrawCommand();		
+							drawCommand = DrawMarker(symbol.pos, symbol.intval);
+							if (drawCommand)
+							{
+								m_DrawCommands.Insert(drawCommand);						
+							}
 						}
 						break;
 					}
@@ -375,7 +407,7 @@ class SDRC_MapSystem : GameSystem
 			
 			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
 			{
-				if (symbol.type == DC_EDrawSymbol.MARKER)
+				if (symbol.type == DC_EDrawSymbol.MARKER && symbol.visible)
 				{
 					float distance = vector.DistanceXZ(cursorPos, symbol.pos);
 					//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Checking: " + cursorPos + " vs " + symbol.pos + " d=" + distance + " (" + distanceCheck + ")", LogLevel.NORMAL);
