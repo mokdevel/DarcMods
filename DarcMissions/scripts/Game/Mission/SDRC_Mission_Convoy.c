@@ -361,8 +361,6 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		array<string> lootItems = {};
-		
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_CONVOY_MAP;
@@ -370,10 +368,17 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		conf.convoyList = {0,0,0,1};
 		conf.distanceToPlayer = 500;
 		conf.disableArsenal = true;
-		
 		//----------------------------------------------------
-		SDRC_Convoy convoy0 = new SDRC_Convoy();
-		convoy0.general.Set(
+		conf.convoys.Insert(Convoy0());				
+		conf.convoys.Insert(Convoy1());				
+		conf.convoys.Insert(Convoy2());
+	}
+		
+	//----------------------------------------------------
+	SDRC_Convoy Convoy0()
+	{
+		SDRC_Convoy convoy = new SDRC_Convoy();
+		convoy.general.Set(
 			"index 0: Convoy driving from .. to ..",
 			{"0 0 0", "0 0 0"},
 			"any",
@@ -384,7 +389,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"The convoy reached %d as planned.", 
 			0
 		);
-		convoy0.Set(
+		convoy.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -409,10 +414,9 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			},
 			30
 		);
-		conf.convoys.Insert(convoy0);	
 		
-		SDRC_Loot convoy0loot = new SDRC_Loot();
-		lootItems = {
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
@@ -422,12 +426,17 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
 			};
-		convoy0loot.Set(0.9, lootItems);
-		convoy0.loot = convoy0loot;			
+		loot.Set(0.9, lootItems);
+		convoy.loot = loot;			
 	
-		//----------------------------------------------------
-		SDRC_Convoy convoy1 = new SDRC_Convoy();
-		convoy1.general.Set(
+		return convoy;
+	}
+	
+	//----------------------------------------------------
+	SDRC_Convoy Convoy1()
+	{
+		SDRC_Convoy convoy = new SDRC_Convoy();
+		convoy.general.Set(
 			"index 1: Truck driving from .. to ..",
 			{"0 0 0", "0 0 0"},
 			"any",
@@ -438,7 +447,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"All the goodies in the truck was never for you.", 
 			0
 		);
-		convoy1.Set(
+		convoy.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -465,23 +474,27 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			},
 			20
 		);
-		conf.convoys.Insert(convoy1);	
 		
-		SDRC_Loot convoy1loot = new SDRC_Loot();
-		lootItems = {
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
 				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", 
 				"WEAPON_LAUNCHER",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"			
 			};
-		convoy1loot.Set(0.9, lootItems);
-		convoy1.loot = convoy1loot;			
+		loot.Set(0.9, lootItems);
+		convoy.loot = loot;			
+		
+		return convoy;
+	}
 	
-		//----------------------------------------------------
+	//----------------------------------------------------
+	SDRC_Convoy Convoy2()
+	{
 		//TBD: Needs fixing. The AI will jump out immediately when seeing a player. The driver stays inside, but gunner not. Probably need to assign a gunner...
-		SDRC_Convoy convoy2 = new SDRC_Convoy();
-		convoy2.general.Set(
+		SDRC_Convoy convoy = new SDRC_Convoy();
+		convoy.general.Set(
 			"index 2: Armor driving from .. to ..",
 			{"0 0 0", "0 0 0"},
 			"any",
@@ -492,7 +505,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"Were you scared of a piece metal? Cowards!", 
 			0
 		);
-		convoy2.Set(
+		convoy.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -517,17 +530,18 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			},
 			50
 		);
-		conf.convoys.Insert(convoy2);	
 		
-		SDRC_Loot convoy2loot = new SDRC_Loot();
-		lootItems = {
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
 				"WEAPON_RIFLE", 
 				"WEAPON_HANDGUN", 
 				"WEAPON_LAUNCHER", "WEAPON_LAUNCHER",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"			
 			};
-		convoy2loot.Set(0.9, lootItems);
-		convoy2.loot = convoy2loot;			
+		loot.Set(0.9, lootItems);
+		convoy.loot = loot;
+		
+		return convoy;	
 	}	
 }

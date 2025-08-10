@@ -395,8 +395,15 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		conf.crashsiteList = {0,1};
 		
 		//----------------------------------------------------
-		SDRC_Crashsite crashsite0 = new SDRC_Crashsite();
-		crashsite0.general.Set(
+		conf.crashsites.Insert(Crashsite0());
+		conf.crashsites.Insert(Crashsite1());
+	};
+			
+	//----------------------------------------------------
+	SDRC_Crashsite Crashsite0()
+	{
+		SDRC_Crashsite crashsite = new SDRC_Crashsite();
+		crashsite.general.Set(
 			"index 0: general mission",
 			{"0 0 0"},
 			"any",
@@ -407,25 +414,24 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"No loot for you today.", 
 			0
 		);
-		crashsite0.Set
+		crashsite.Set
 		(
 			{
 				"G_LIGHT", "G_ADMIN"
 			},
 			20, 0.8
 		);
-		conf.crashsites.Insert(crashsite0);
 		
 		//----------------------------------------------------
 		SDRC_HelicopterInfo heli00 = new SDRC_HelicopterInfo();
 			heli00.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et", 0.8, 0.8, 1.0);
-			crashsite0.helicopterInfo.Insert(heli00);
+			crashsite.helicopterInfo.Insert(heli00);
 		SDRC_HelicopterInfo heli01 = new SDRC_HelicopterInfo();
 			heli01.Set("{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",	0.7, 0.9, 1.0);
-			crashsite0.helicopterInfo.Insert(heli01);
+			crashsite.helicopterInfo.Insert(heli01);
 		SDRC_HelicopterInfo heli02 = new SDRC_HelicopterInfo();
 			heli02.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.8, 0.8, -1.0);
-			crashsite0.helicopterInfo.Insert(heli02);		
+			crashsite.helicopterInfo.Insert(heli02);		
 		
 		//----------------------------------------------------
 		SDRC_Loot crashloot0 = new SDRC_Loot();
@@ -440,7 +446,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
 			};
 		crashloot0.Set(0.9, lootItems0);
-		crashsite0.loot = crashloot0;
+		crashsite.loot = crashloot0;
 				
 		//----------------------------------------------------
 		SDRC_Structure crashitem0 = new SDRC_Structure();
@@ -448,28 +454,28 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 			"97.911 1 121.527"
 		);
-		crashsite0.siteItems.Insert(crashitem0);
+		crashsite.siteItems.Insert(crashitem0);
 
 		SDRC_Structure crashitem2 = new SDRC_Structure();
 		crashitem2.Set(
 			"{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
 			"106.274 1 121.108"
 		);
-		crashsite0.siteItems.Insert(crashitem2);
+		crashsite.siteItems.Insert(crashitem2);
 
 		SDRC_Structure crashitem3 = new SDRC_Structure();
 		crashitem3.Set(
 			"{310E849A808F9F5F}PrefabsEditable/Auto/Structures/Military/Camps/Canvas_Covers/US/E_CanvasCover_Folded_US.et",
 			"104.552 1 126.903"
 		);
-		crashsite0.siteItems.Insert(crashitem3);
+		crashsite.siteItems.Insert(crashitem3);
 
 		SDRC_Structure crashitem4 = new SDRC_Structure();
 		crashitem4.Set(
 			"{532795AD51CFBEDF}PrefabsEditable/Auto/Structures/Infrastructure/Piping/E_DieselPipe_01_hose_V2.et",
 			"104.745 1 123.685"
 		);
-		crashsite0.siteItems.Insert(crashitem4);
+		crashsite.siteItems.Insert(crashitem4);
 
 		SDRC_Structure crashitem5 = new SDRC_Structure();
 		crashitem5.Set(
@@ -477,7 +483,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"103.559 1 119.949",
 			"0 -45.003 0"
 		);
-		crashsite0.siteItems.Insert(crashitem5);
+		crashsite.siteItems.Insert(crashitem5);
 
 		SDRC_Structure crashitem6 = new SDRC_Structure();
 		crashitem6.Set(
@@ -485,11 +491,16 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"100.944 1 123.924",
 			"0 -111.273 0"
 		);
-		crashsite0.siteItems.Insert(crashitem6);
+		crashsite.siteItems.Insert(crashitem6);
 		
-		//----------------------------------------------------
-		SDRC_Crashsite crashsite1 = new SDRC_Crashsite();
-		crashsite1.general.Set(
+		return crashsite;
+	}
+			
+	//----------------------------------------------------
+	SDRC_Crashsite Crashsite1()
+	{
+		SDRC_Crashsite crashsite = new SDRC_Crashsite();
+		crashsite.general.Set(
 			"index 1: general mission",
 			{"0 0 0"},
 			"any",
@@ -500,50 +511,50 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"The cargo was lost.", 
 			0
 		);
-		crashsite1.Set
+		crashsite.Set
 		(
 			{
 				"G_HEAVY", "G_ADMIN"
 			},
 			20, 0.8
 		);
-		conf.crashsites.Insert(crashsite1);
 		
 		//----------------------------------------------------
 		SDRC_HelicopterInfo heli10 = new SDRC_HelicopterInfo();
 			heli10.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et", 0.7, 0.8, 1.0);
-			crashsite1.helicopterInfo.Insert(heli10);
+			crashsite.helicopterInfo.Insert(heli10);
 		SDRC_HelicopterInfo heli11 = new SDRC_HelicopterInfo();
 			heli11.Set("{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",	0.6, 0.85, 1.0);
-			crashsite1.helicopterInfo.Insert(heli11);
+			crashsite.helicopterInfo.Insert(heli11);
 		SDRC_HelicopterInfo heli12 = new SDRC_HelicopterInfo();
 			heli12.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.75, 0.75, -1.0);
-			crashsite1.helicopterInfo.Insert(heli12);		
+			crashsite.helicopterInfo.Insert(heli12);		
 		
 		//----------------------------------------------------
-		SDRC_Loot crashloot1 = new SDRC_Loot();
+		SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems1 = {
 				"WEAPON_LAUNCHER", 
 				"UTIL_OPTICS", 
 				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", 
 				"UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", 
 			};
-		crashloot1.Set(0.7, lootItems1);
-		crashsite1.loot = crashloot1;
+		loot.Set(0.7, lootItems1);
+		crashsite.loot = loot;
 				
 		//----------------------------------------------------
-		SDRC_Structure crashitem1_0 = new SDRC_Structure();
-		crashitem1_0.Set(
+		SDRC_Structure crashitem_0 = new SDRC_Structure();
+		crashitem_0.Set(
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 			"97.911 1 121.527"
 		);
-		crashsite1.siteItems.Insert(crashitem1_0);
+		crashsite.siteItems.Insert(crashitem_0);
 
-		SDRC_Structure crashitem1_1 = new SDRC_Structure();
-		crashitem1_1.Set(
+		SDRC_Structure crashitem_1 = new SDRC_Structure();
+		crashitem_1.Set(
 			"{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
 			"106.274 1 121.108"
 		);
-		crashsite1.siteItems.Insert(crashitem1_1);	
-	}	
+		crashsite.siteItems.Insert(crashitem_1);	
+		return crashsite;
+	}
 }

@@ -250,10 +250,18 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		//Mission specific
 		conf.patrolList = {0,0,0,1,2,3};
 		conf.distanceToPlayer = 500;
-
 		//----------------------------------------------------
-		SDRC_Patrol patrol0 = new SDRC_Patrol();
-		patrol0.general.Set(
+		conf.patrols.Insert(Patrol0());				
+		conf.patrols.Insert(Patrol1());				
+		conf.patrols.Insert(Patrol2());				
+		conf.patrols.Insert(Patrol3());				
+	};
+	
+	//----------------------------------------------------
+	SDRC_Patrol Patrol0()
+	{
+		SDRC_Patrol patrol = new SDRC_Patrol();
+		patrol.general.Set(
 			"index 0: Enemy patrols going between two points hopefully following roads",
 			{"0 0 0", "0 0 0"},
 			"any",
@@ -264,8 +272,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"Patroling completed, the world is saved.", 
 			0
 		);		
-		patrol0.Set
-		(
+		patrol.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -285,11 +292,15 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			},
 			50, 1.0
 		);
-		conf.patrols.Insert(patrol0);
+			
+		return patrol;
+	};
 		
-		//----------------------------------------------------
-		SDRC_Patrol patrol1 = new SDRC_Patrol();
-		patrol1.general.Set(
+	//----------------------------------------------------
+	SDRC_Patrol Patrol1()
+	{
+		SDRC_Patrol patrol = new SDRC_Patrol();
+		patrol.general.Set(
 			"index 1: Heavy patrol",
 			{"0 0 0", "0 0 0"},
 			"any",
@@ -300,7 +311,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"You're not a worthy enemy for this patrol.", 
 			0
 		);				
-		patrol1.Set
+		patrol.Set
 		(
 			{
 				EMapDescriptorType.MDT_NAME_LOCAL,
@@ -320,11 +331,15 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			},
 			50, 1.0
 		);
-		conf.patrols.Insert(patrol1);
+			
+		return patrol;
+	};
 
-		//----------------------------------------------------
-		SDRC_Patrol patrol2 = new SDRC_Patrol();
-		patrol2.general.Set(
+	//----------------------------------------------------
+	SDRC_Patrol Patrol2()
+	{
+		SDRC_Patrol patrol = new SDRC_Patrol();
+		patrol.general.Set(
 			"index 2: Enemy patrols between villages",
 			{"0 0 0", "0 0 0"},
 			"any",
@@ -335,7 +350,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"Patrol left the area.", 
 			0
 		);		
-		patrol2.Set
+		patrol.Set
 		(
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
@@ -350,11 +365,15 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			},
 			50, 1.0
 		);
-		conf.patrols.Insert(patrol2);
 		
-		//----------------------------------------------------
-		SDRC_Patrol patrol3 = new SDRC_Patrol();
-		patrol3.general.Set(
+		return patrol;
+	};
+		
+	//----------------------------------------------------
+	SDRC_Patrol Patrol3()
+	{
+		SDRC_Patrol patrol = new SDRC_Patrol();
+		patrol.general.Set(			
 			"index 3: Small patrols with a few AIs",
 			{"0 0 0", "0 0 0"},
 			"any",
@@ -365,8 +384,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"Such a small force was able to beat you.", 
 			0
 		);				
-		patrol3.Set
-		(
+		patrol.Set(
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_LOCAL
@@ -380,6 +398,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			},
 			50, 1.0
 		);
-		conf.patrols.Insert(patrol3);			
+		
+		return patrol;
 	}
 }

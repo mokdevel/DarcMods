@@ -208,17 +208,21 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		array<string> lootItems = {};
-		
 		//Default		
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP;
 		//Mission specific		
 		conf.roadblockList = {0,1,2};		
-		
+
 		//----------------------------------------------------
-		SDRC_Occupation roadblock0 = new SDRC_Occupation();
-		roadblock0.general.Set(
+		conf.roadblocks.Insert(Roadblock0());				
+	};
+	
+	//----------------------------------------------------
+	SDRC_Occupation Roadblock0()
+	{
+		SDRC_Occupation roadblock = new SDRC_Occupation();
+		roadblock.general.Set(
 			"index 0: Roadblock",
 			{"0 0 0"},
 			"any",
@@ -229,7 +233,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"Road was kept safe as planned.", 
 			0		
 		);
-		roadblock0.Set(
+		roadblock.Set(
 			{
 				EMapDescriptorType.MDT_NAME_TOWN,
 				EMapDescriptorType.MDT_NAME_LOCAL,
@@ -251,50 +255,54 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			50, 1.0,
 			6
 		);
-		conf.roadblocks.Insert(roadblock0);
 		
-		SDRC_Loot roadblock0loot = new SDRC_Loot();
-		lootItems = {
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 			};
-		roadblock0loot.Set(0.7, lootItems);
-		roadblock0.loot = roadblock0loot;
+		loot.Set(0.7, lootItems);
+		roadblock.loot = loot;
 				
 		SDRC_Structure rb0item0 = new SDRC_Structure;
 		rb0item0.Set(
 		    "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 		    "10.387 1 94.908"
 		);
-		roadblock0.campItems.Insert(rb0item0);
+		roadblock.campItems.Insert(rb0item0);
 		
 		SDRC_Structure rb0item1 = new SDRC_Structure;
 		rb0item1.Set(
 		    "{3F5EE4D69DBC478C}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_short_plastic.et",
 		    "7.037 1 95.973"
 		);
-		roadblock0.campItems.Insert(rb0item1);
+		roadblock.campItems.Insert(rb0item1);
 		
 		SDRC_Structure rb0item2 = new SDRC_Structure;
 		rb0item2.Set(
 		    "{3F5EE4D69DBC478C}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_short_plastic.et",
 		    "10.177 1 96.021"
 		);
-		roadblock0.campItems.Insert(rb0item2);
+		roadblock.campItems.Insert(rb0item2);
 		
 		SDRC_Structure rb0item3 = new SDRC_Structure;
 		rb0item3.Set(
 		    "{723870DBB19D30B0}Prefabs/Weapons/Tripods/Tripod_6T5_PKM.et",
 		    "8.656 1 95.797"
 		);
-		roadblock0.campItems.Insert(rb0item3);		
+		roadblock.campItems.Insert(rb0item3);		
 		
-		//----------------------------------------------------
-		SDRC_Occupation roadblock1 = new SDRC_Occupation();
-		roadblock1.general.Set(
+		return roadblock;
+	};
+	
+	//----------------------------------------------------
+	SDRC_Occupation Roadblock1()
+	{
+		SDRC_Occupation roadblock = new SDRC_Occupation();
+		roadblock.general.Set(
 			"index 1: Roadblock",
 			{"0 0 0"},
 			"any",
@@ -305,7 +313,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"Scared of the enemy? %l is not a place for you.", 
 			0		
 		);
-		roadblock1.Set(
+		roadblock.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_TOWN,
@@ -326,17 +334,16 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			50, 1.0,
 			6
 		);
-		conf.roadblocks.Insert(roadblock1);
 		
-		SDRC_Loot roadblock1loot = new SDRC_Loot();
-		lootItems = {
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
 				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"UTIL_MAGAZINES", "UTIL_MAGAZINES"
 			};
-		roadblock1loot.Set(0.9, lootItems);
-		roadblock1.loot = roadblock1loot;
+		loot.Set(0.9, lootItems);
+		roadblock.loot = loot;
 		
 		SDRC_Structure rb1item0 = new SDRC_Structure;
 		rb1item0.Set(
@@ -344,7 +351,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "6.814 1 115.156",
 		    "0 32.729 0"
 		);
-		roadblock1.campItems.Insert(rb1item0);
+		roadblock.campItems.Insert(rb1item0);
 		
 		SDRC_Structure rb1item1 = new SDRC_Structure;
 		rb1item1.Set(
@@ -352,7 +359,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "12.579 0 120.902",
 		    "0 28.496 0"
 		);
-		roadblock1.campItems.Insert(rb1item1);
+		roadblock.campItems.Insert(rb1item1);
 		
 		SDRC_Structure rb1item2 = new SDRC_Structure;
 		rb1item2.Set(
@@ -360,7 +367,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "8.218 0 123.028",
 		    "0 -31.966 0"
 		);
-		roadblock1.campItems.Insert(rb1item2);
+		roadblock.campItems.Insert(rb1item2);
 		
 		SDRC_Structure rb1item3 = new SDRC_Structure;
 		rb1item3.Set(
@@ -368,7 +375,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "11.18 0 107.827",
 		    "0 9.997 0"
 		);
-		roadblock1.campItems.Insert(rb1item3);
+		roadblock.campItems.Insert(rb1item3);
 		
 		SDRC_Structure rb1item4 = new SDRC_Structure;
 		rb1item4.Set(
@@ -376,7 +383,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "5.713 0.227 120.863",
 		    "0 14.494 0"
 		);
-		roadblock1.campItems.Insert(rb1item4);
+		roadblock.campItems.Insert(rb1item4);
 		
 		SDRC_Structure rb1item5 = new SDRC_Structure;
 		rb1item5.Set(
@@ -384,7 +391,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "14.977 -0.169 120.709",
 		    "0 -16.455 0"
 		);
-		roadblock1.campItems.Insert(rb1item5);
+		roadblock.campItems.Insert(rb1item5);
 		
 		SDRC_Structure rb1item6 = new SDRC_Structure;
 		rb1item6.Set(
@@ -392,7 +399,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "7.873 0 108.275",
 		    "0 -48.948 0"
 		);
-		roadblock1.campItems.Insert(rb1item6);
+		roadblock.campItems.Insert(rb1item6);
 		
 		SDRC_Structure rb1item7 = new SDRC_Structure;
 		rb1item7.Set(
@@ -400,7 +407,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "4.596 0 108.679",
 		    "0 54.582 0"
 		);
-		roadblock1.campItems.Insert(rb1item7);
+		roadblock.campItems.Insert(rb1item7);
 		
 		SDRC_Structure rb1item8 = new SDRC_Structure;
 		rb1item8.Set(
@@ -408,7 +415,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "14.151 0 114.891",
 		    "0 -32.743 0"
 		);
-		roadblock1.campItems.Insert(rb1item8);
+		roadblock.campItems.Insert(rb1item8);
 		
 		SDRC_Structure rb1item9 = new SDRC_Structure;
 		rb1item9.Set(
@@ -416,7 +423,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "5.131 0 116.374",
 		    "0 26.719 0"
 		);
-		roadblock1.campItems.Insert(rb1item9);
+		roadblock.campItems.Insert(rb1item9);
 		
 		SDRC_Structure rb1item10 = new SDRC_Structure;
 		rb1item10.Set(
@@ -424,7 +431,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "9.49 1 117.729",
 		    "0 86.019 0"
 		);
-		roadblock1.campItems.Insert(rb1item10);
+		roadblock.campItems.Insert(rb1item10);
 		
 		SDRC_Structure rb1item11 = new SDRC_Structure;
 		rb1item11.Set(
@@ -432,11 +439,16 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "8.268 1 110.003",
 		    "0 93.268 0"
 		);
-		roadblock1.campItems.Insert(rb1item11);
+		roadblock.campItems.Insert(rb1item11);
 		
-		//----------------------------------------------------
-		SDRC_Occupation roadblock2 = new SDRC_Occupation();
-		roadblock2.general.Set(
+		return roadblock;
+	};
+		
+	//----------------------------------------------------
+	SDRC_Occupation roadblock()
+	{
+		SDRC_Occupation roadblock = new SDRC_Occupation();
+		roadblock.general.Set(
 			"index 2: Roadblock",
 			{"0 0 0"},
 			"any",
@@ -447,7 +459,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"The road toll was too much for you.", 
 			0		
 		);		
-		roadblock2.Set(
+		roadblock.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN,
@@ -468,18 +480,17 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			50, 1.0,
 			6
 		);
-		conf.roadblocks.Insert(roadblock2);
 		
-		SDRC_Loot roadblock2loot = new SDRC_Loot();
-		lootItems = {
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
 				"WEAPON_LAUNCHER", "WEAPON_RIFLE", "WEAPON_RIFLE",
 				"UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO"
 			};
-		roadblock2loot.Set(0.6, lootItems);
-		roadblock2.loot = roadblock2loot;
+		loot.Set(0.6, lootItems);
+		roadblock.loot = loot;
 		
 		SDRC_Structure rb2item0 = new SDRC_Structure;
 		rb2item0.Set(
@@ -487,7 +498,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "10.866 1 140.452",
 		    "0 2.385 0"
 		);
-		roadblock2.campItems.Insert(rb2item0);
+		roadblock.campItems.Insert(rb2item0);
 		
 		SDRC_Structure rb2item1 = new SDRC_Structure;
 		rb2item1.Set(
@@ -495,7 +506,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "6.01 0 148.186",
 		    "0 -106.133 0"
 		);
-		roadblock2.campItems.Insert(rb2item1);
+		roadblock.campItems.Insert(rb2item1);
 		
 		SDRC_Structure rb2item2 = new SDRC_Structure;
 		rb2item2.Set(
@@ -503,7 +514,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "14.12 0 145.299",
 		    "0 -45.299 0"
 		);
-		roadblock2.campItems.Insert(rb2item2);
+		roadblock.campItems.Insert(rb2item2);
 		
 		SDRC_Structure rb2item3 = new SDRC_Structure;
 		rb2item3.Set(
@@ -511,7 +522,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "13.278 0.732 134.665",
 		    "0 -106.133 0"
 		);
-		roadblock2.campItems.Insert(rb2item3);
+		roadblock.campItems.Insert(rb2item3);
 		
 		SDRC_Structure rb2item4 = new SDRC_Structure;
 		rb2item4.Set(
@@ -519,7 +530,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "9.088 0 134.691",
 		    "0 -76.67 0"
 		);
-		roadblock2.campItems.Insert(rb2item4);
+		roadblock.campItems.Insert(rb2item4);
 		
 		SDRC_Structure rb2item5 = new SDRC_Structure;
 		rb2item5.Set(
@@ -527,7 +538,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "5.972 0 137.246",
 		    "0 -18.935 0"
 		);
-		roadblock2.campItems.Insert(rb2item5);
+		roadblock.campItems.Insert(rb2item5);
 		
 		SDRC_Structure rb2item6 = new SDRC_Structure;
 		rb2item6.Set(
@@ -535,21 +546,21 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "9.607 0 148.603",
 		    "0 -90 0"
 		);
-		roadblock2.campItems.Insert(rb2item6);
+		roadblock.campItems.Insert(rb2item6);
 		
 		SDRC_Structure rb2item7 = new SDRC_Structure;
 		rb2item7.Set(
 		    "{6A735BB1318B2E76}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_bunker_plastic_camonet.et",
 		    "10.187 1 140.88"
 		);
-		roadblock2.campItems.Insert(rb2item7);
+		roadblock.campItems.Insert(rb2item7);
 		
 		SDRC_Structure rb2item8 = new SDRC_Structure;
 		rb2item8.Set(
 		    "{A76FBE3B139F227A}PrefabsEditable/Auto/Structures/Signs/Military/E_SignCheckpoint_01_stop.et",
 		    "6.063 1 143.004"
 		);
-		roadblock2.campItems.Insert(rb2item8);
+		roadblock.campItems.Insert(rb2item8);
 		
 		SDRC_Structure rb2item9 = new SDRC_Structure;
 		rb2item9.Set(
@@ -557,6 +568,8 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		    "12.532 1 148.443",
 		    "0 -9.375 0"
 		);
-		roadblock2.campItems.Insert(rb2item9);		
+		roadblock.campItems.Insert(rb2item9);		
+
+		return roadblock;				
 	}	
 }
