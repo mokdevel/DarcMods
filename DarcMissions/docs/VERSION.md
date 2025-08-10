@@ -11,7 +11,14 @@ Main features:
   * Missions can be deleted by pressing 'delete'.
 * For all missions
   * A message is shown when a mission succeeds (``winMessage``) or fails (``loseMessage``).
-  * First level of win conditions is introduced.
+  * First phase of win conditions is introduced. Currently win conditions are related to AI killing (100%, 75%, 50% or random value 30%-100%)
+* Minor fixes in missions related to win condition. Notice that depending on the (sub-)mission, for a win you may not need to kill all AIs. So, be careful out there.
+* Enemy list have new entries to support Bacon Zombies and BallienCreatures. This is very untested so be careful. Entries:
+  * G_ZOMBIE_SMALL
+  * G_ZOMBIE_MEDIUM
+  * G_ZOMBIE_LARGE
+  * C_DEMON
+  * C_DEMON_BOSS
 
 Changes:
 * dc_enemyList.json and dc_lootList.json changes. 

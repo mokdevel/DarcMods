@@ -32,7 +32,6 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 
 ## Known issues
 - Moving map markers lose the text under them. 
-- Incompatible with Freedom Fighters
 
 # Parameters
 All configurations are done via .json files. The information is on one line due to the saving functionality in AR. See [FAQ](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/FAQ.md#q-the-oneline-jsons-are-hard-to-readedit) for more.
@@ -100,7 +99,14 @@ Main features:
   * Missions can be deleted by pressing 'delete'.
 * For all missions
   * A message is shown when a mission succeeds (``winMessage``) or fails (``loseMessage``).
-  * First level of win conditions is introduced.
+  * First phase of win conditions is introduced. Currently win conditions are related to AI killing (100%, 75%, 50% or random value 30%-100%)
+* Minor fixes in missions related to win condition. Notice that depending on the (sub-)mission, for a win you may not need to kill all AIs. So, be careful out there.
+* Enemy list have new entries to support Bacon Zombies and BallienCreatures. This is very untested so be careful. Entries:
+  * G_ZOMBIE_SMALL
+  * G_ZOMBIE_MEDIUM
+  * G_ZOMBIE_LARGE
+  * C_DEMON
+  * C_DEMON_BOSS
 
 Changes:
 * dc_enemyList.json and dc_lootList.json changes. 
