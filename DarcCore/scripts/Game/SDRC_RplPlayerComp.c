@@ -49,8 +49,6 @@ class SDRC_RplPlayerComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------
  	void AskForInfo()
 	{
-		//SDRC_Log.Add("[SDRC_RplPlayerComp:AskForInfo] Asking...", LogLevel.NORMAL);			
-		
 		int playerId = GetGame().GetPlayerController().GetPlayerId();		
 		Rpc(RpcAsk_GiveMeInfo, playerId);
 	}
@@ -58,8 +56,6 @@ class SDRC_RplPlayerComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------
  	void AskForMissionDeletion(string missionId)
 	{
-		//SDRC_Log.Add("[SDRC_RplPlayerComp:AskForInfo] Asking...", LogLevel.NORMAL);			
-		
 		int playerId = GetGame().GetPlayerController().GetPlayerId();		
 		Rpc(RpcAsk_DeleteMission, playerId, missionId);
 	}
@@ -69,7 +65,7 @@ class SDRC_RplPlayerComp : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
     protected void RpcAsk_GiveMeInfo(int playerID)
     {
-		//SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_GiveMeInfo] Asked by: " + playerID, LogLevel.NORMAL);	
+		SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_GiveMeInfo] Asked by: " + playerID, LogLevel.SPAM);	
 
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
 		if (gmComp)
@@ -83,7 +79,7 @@ class SDRC_RplPlayerComp : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
     protected void RpcAsk_DeleteMission(int playerID, string missionId)
     {
-		//SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_DeleteMission] Asked by: " + playerID, LogLevel.NORMAL);	
+		SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_DeleteMission] Asked by: " + playerID, LogLevel.SPAM);	
 
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
 		if (gmComp)
