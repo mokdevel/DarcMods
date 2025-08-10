@@ -10,6 +10,8 @@ See: https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller
 Note: The original HunterKiller mod is discontinued.
 */
 
+//TBD: It should be possible to define multiple different hunter types.
+
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Hunter : SDRC_Mission
 {
@@ -299,9 +301,9 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			{"0 0 0"},
 			"any",
 			"Hunters",
-			"They are coming for you...",
+			"They are coming for you... Last time they were seen close to %l.",
 			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Hunters taken care of.",
+			"You outsmarted the hunters.",
 			"Hunters lost track of you.", 
 			0
 		);

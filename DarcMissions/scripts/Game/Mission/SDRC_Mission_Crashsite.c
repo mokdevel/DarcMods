@@ -392,7 +392,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;
 		conf.flyHeight = {80, 120};
-		conf.crashsiteList = {1};//{0,1};
+		conf.crashsiteList = {0,1};
 		
 		//----------------------------------------------------
 		SDRC_Crashsite crashsite0 = new SDRC_Crashsite();

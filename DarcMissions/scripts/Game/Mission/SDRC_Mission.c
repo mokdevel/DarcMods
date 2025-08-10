@@ -484,11 +484,11 @@ class SDRC_Mission
 	*/
 	bool IsActive(bool checkOnlyWinCondition = false)
 	{
+		bool isWin = false;
+		
 		//Check the different winning conditions
 		if (m_State == DC_EMissionState.ACTIVE && !m_bMissionIsEnding && m_iAICountOriginal > 0)
-		{
-			bool isWin = false;
-			
+		{			
 			float aiKillPercentage = (1 - GetAICount()/m_iAICountOriginal);
 			
 			switch (m_WinCondition)
@@ -545,6 +545,13 @@ class SDRC_Mission
 				ResetActiveTime();
 			}
 		}
+
+		//If we did not win and only check for winCondition, we are still active. 
+		if (checkOnlyWinCondition && !isWin)		
+		{
+			ResetActiveTime();
+			return true;
+		}
 		
 		if (!checkOnlyWinCondition)
 		{
@@ -563,13 +570,13 @@ class SDRC_Mission
 			}
 		}
 				
-		//Well, we should not be active anymore
+		//Well, if get here, we should not be active anymore
 		
 		//If we won, don't show a lose message
 		if (GetSuccess() != DC_EMissionSuccess.WIN)
 		{
 			SetSuccess(DC_EMissionSuccess.LOSE);
-			if (IsShowHint() && IsShowMessage())			
+			if (IsShowHint() && IsShowMessage())
 			{
 				SDRC_HintHelper.ShowHintMission("Failure: " + GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);
 			}
@@ -659,6 +666,6 @@ class SDRC_Mission
 	private void GetAICountDelayed()
 	{
 		m_iAICountOriginal = GetAICount();
-		SDRC_Log.Add("[SDRC_Mission:GetAICountDelayed] Mission " + GetId() + " spawned " + m_iAICountOriginal + " AIs.", LogLevel.DEBUG);		//TBD: SPAM				
+		SDRC_Log.Add("[SDRC_Mission:GetAICountDelayed] Mission " + GetId() + " spawned " + m_iAICountOriginal + " AIs.", LogLevel.SPAM);
 	}
 }
