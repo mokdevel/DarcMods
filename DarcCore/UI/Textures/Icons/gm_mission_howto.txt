@@ -23,6 +23,14 @@ Three icons are needed:
 -- Canvas Size 128x100
 -- Center
 
+# Round image for win/lose
+- Name: gm_mission_XXX_round
+- Size: 53x52 with DPI 30
+- Color: White
+- In Gimp: 
+-- Invert color
+-- Set opacity to 60%
+
 # Other icons
 - Name: icon_IconName
 - Size: 54x110 with DPI 30
