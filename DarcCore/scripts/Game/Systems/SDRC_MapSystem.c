@@ -342,7 +342,7 @@ class SDRC_MapSystem : GameSystem
 		string texture = SDRC_MapMarkerHelper.GetMarkerTexture(icon);
 		if (texture == "")
 		{
-			//TBD: Add errormessage
+			SDRC_Log.Add("[SDRC_MapSystem:DrawMarker] Could not find texture for: (" + icon + ") " + SCR_Enum.GetEnumName(DC_EMissionIcon, icon), LogLevel.WARNING);
 			return null;
 		}
 		
