@@ -28,10 +28,10 @@ enum DC_EMissionState
 enum DC_EMissionWinCondition
 {
 	NONE,
-	KILL_AI_ALL,
-	KILL_AI_80,
-	KILL_AI_50,
-	KILL_AI_RANDOM,
+	AI_KILL_ALL,
+	AI_KILL_80,
+	AI_KILL_50,
+	AI_KILL_RANDOM,
 };
 
 enum DC_EMissionSuccess
@@ -114,7 +114,7 @@ class SDRC_Mission
 	private int m_iActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
 	private bool m_bMissionIsEnding;			//Once all AIs are dead, we're getting close to end the mission.
 	//Win condition related
-//	private int m_iAiCountOriginal;				//The amount of AI at the beginning on the mission - at the time it was set active
+	private int m_iAiCountOriginal;				//The amount of AI at the beginning on the mission - at the time it was set active
 	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
@@ -134,7 +134,7 @@ class SDRC_Mission
 		m_ShowMessage = true;
 		m_sWinMessage = "";
 		m_sLoseMessage = "";
-		m_WinCondition = DC_EMissionWinCondition.KILL_AI_ALL;
+		m_WinCondition = DC_EMissionWinCondition.AI_KILL_ALL;
 		m_Success = DC_EMissionSuccess.UNKNOWN;
 		m_sMarkerType = "DARC_MISSION";
 		SetFaction(SDRC_EnemyHelper.SelectEnemyFaction()); 		//m_sFaction 
@@ -242,8 +242,9 @@ class SDRC_Mission
 	{
 		m_State = state;
 		if (state == DC_EMissionState.ACTIVE)
-		{
-			//TBD: Things to set when mission goes to active state
+		{			
+			//Things to set when mission goes to active state
+			m_iAiCountOriginal = GetAICount();
 		}
 	}
 
@@ -336,102 +337,6 @@ class SDRC_Mission
 	{		
 		m_sInfo = FixString(info);
 	}
-
-	//------------------------------------------------------------------------------------------------
-	void SetActiveDistance(int distance)	
-	{
-		if (m_iActiveDistance > 0)
-		{
-			//It has been set by the mission already
-		}
-		else		
-		{
-			//Use provided distance
-			m_iActiveDistance = distance;
-		}
-	}		
-	
-	//------------------------------------------------------------------------------------------------
-	void SetActiveTimeToEnd(int seconds)	
-	{
-		m_iActiveTimeToEnd = seconds;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	//NOTE: Call ResetActiveTime(); after you've set this
-	void SetActiveTime(int seconds)	
-	{
-		m_ActiveTime = seconds;
-	}		
-
-	int GetActiveTime()
-	{
-		int currentTime = (System.GetTickCount() / 1000);
-		return m_EndTime - currentTime;
-	}		
-		
-	//------------------------------------------------------------------------------------------------
-	void ResetActiveTime()	
-	{
-		int currentTime = (System.GetTickCount() / 1000);		
-		m_EndTime = currentTime + m_ActiveTime;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Check if mission is to be active.
-	\param checkOnlyWinCondition If set to true, ignore any timing related checks.
-	*/
-	bool IsActive(bool checkOnlyWinCondition = false)
-	{
-		//Are all AIs dead
-		if (SDRC_AIHelper.AreAllGroupsDead(m_Groups) && m_State == DC_EMissionState.ACTIVE && !m_bMissionIsEnding)
-		{
-			//Mission is soon to be ending
-			SetSuccess(DC_EMissionSuccess.WIN);
-			if (IsShowHint() && IsShowMessage())			
-			{
-				SDRC_HintHelper.ShowHintMission(GetTitle(), GetWinMessage(), DC_EMissionIcon.ICON_WIN_ROUND);
-			}
-			
-			m_bMissionIsEnding = true;
-			//Set ActiveTimeToEnd to be the final active time
-			SetActiveTime(m_iActiveTimeToEnd);
-			ResetActiveTime();
-		}
-		
-		if (!checkOnlyWinCondition)
-		{
-			//Are there players still nearby
-			if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_Pos, 0, m_iActiveDistance))
-			{
-				ResetActiveTime();
-				return true;
-			}
-			
-			//Has the active time passed
-			int currentTime = (System.GetTickCount() / 1000);
-			if (currentTime < m_EndTime)
-			{
-				return true;
-			}
-		}
-				
-		//Well, we should not be active anymore
-		
-		//If we won, don't show a lose message
-		if (GetSuccess() != DC_EMissionSuccess.WIN)
-		{
-			SetSuccess(DC_EMissionSuccess.LOSE);
-			if (IsShowHint() && IsShowMessage())			
-			{
-				SDRC_HintHelper.ShowHintMission(GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);
-			}
-		}
-
-		SDRC_Log.Add("[SDRC_Mission:IsActive] END - Mission " + GetId() + " : " + GetTitle() + " has ended.", LogLevel.NORMAL);				
-		return false;
-	}	
 	
 	//------------------------------------------------------------------------------------------------	
 	void SetWinCondition(DC_EMissionWinCondition winCondition)
@@ -581,17 +486,133 @@ class SDRC_Mission
 	{
 		m_Groups.Insert(group);
 	}		
+
+	//------------------------------------------------------------------------------------------------
+	// ACTIVE state related things
+	//------------------------------------------------------------------------------------------------
 	
 	//------------------------------------------------------------------------------------------------
-	private string FixString(string info)
+	/*!
+	Check if mission is to be active.
+	\param checkOnlyWinCondition If set to true, ignore any timing related checks.
+	*/
+	bool IsActive(bool checkOnlyWinCondition = false)
 	{
-		string destinatioName = "";
-		if (m_PosDestination != "0 0 0")
+		//Are all AIs dead
+		if (m_State == DC_EMissionState.ACTIVE && !m_bMissionIsEnding)
 		{
-			destinatioName = SDRC_Locations.CreateName(m_PosDestination, "any");			
+			bool isWin = false;
+			
+			if (SDRC_AIHelper.AreAllGroupsDead(m_Groups))
+			{
+				isWin = true;
+			}
+				
+			//If we did win the mission, set the message and prepare for ending.
+			if (isWin)
+			{
+				//Mission is soon to be ending
+				SetSuccess(DC_EMissionSuccess.WIN);
+				if (IsShowHint() && IsShowMessage())			
+				{
+					SDRC_HintHelper.ShowHintMission(GetTitle(), GetWinMessage(), DC_EMissionIcon.ICON_WIN_ROUND);
+				}
+				
+				m_bMissionIsEnding = true;
+				//Set ActiveTimeToEnd to be the final active time
+				SetActiveTime(m_iActiveTimeToEnd);
+				ResetActiveTime();
+			}
 		}
 		
-		info = SDRC_MissionHelper.CreateInfo(info, GetPosName(), destinatioName);
+		if (!checkOnlyWinCondition)
+		{
+			//Are there players still nearby
+			if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_Pos, 0, m_iActiveDistance))
+			{
+				ResetActiveTime();
+				return true;
+			}
+			
+			//Has the active time passed
+			int currentTime = (System.GetTickCount() / 1000);
+			if (currentTime < m_EndTime)
+			{
+				return true;
+			}
+		}
+				
+		//Well, we should not be active anymore
+		
+		//If we won, don't show a lose message
+		if (GetSuccess() != DC_EMissionSuccess.WIN)
+		{
+			SetSuccess(DC_EMissionSuccess.LOSE);
+			if (IsShowHint() && IsShowMessage())			
+			{
+				SDRC_HintHelper.ShowHintMission(GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);
+			}
+		}
+
+		SDRC_Log.Add("[SDRC_Mission:IsActive] END - Mission " + GetId() + " : " + GetTitle() + " has ended.", LogLevel.NORMAL);				
+		return false;
+	}			
+	
+	//------------------------------------------------------------------------------------------------
+	void SetActiveDistance(int distance)	
+	{
+		if (m_iActiveDistance > 0)
+		{
+			//It has been set by the mission already
+		}
+		else		
+		{
+			//Use provided distance
+			m_iActiveDistance = distance;
+		}
+	}		
+	
+	//------------------------------------------------------------------------------------------------
+	void SetActiveTimeToEnd(int seconds)	
+	{
+		m_iActiveTimeToEnd = seconds;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	//NOTE: Call ResetActiveTime(); after you've set this
+	void SetActiveTime(int seconds)	
+	{
+		m_ActiveTime = seconds;
+	}		
+
+	int GetActiveTime()
+	{
+		int currentTime = (System.GetTickCount() / 1000);
+		return m_EndTime - currentTime;
+	}		
+		
+	//------------------------------------------------------------------------------------------------
+	void ResetActiveTime()	
+	{
+		int currentTime = (System.GetTickCount() / 1000);		
+		m_EndTime = currentTime + m_ActiveTime;
+	}
+		
+	//------------------------------------------------------------------------------------------------
+	// Misc functions
+	//------------------------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------------------------
+	//Fix the string with proper information - like location, destination, ..	
+	private string FixString(string info)
+	{
+		string destinationName = "";
+		if (m_PosDestination != "0 0 0")
+		{
+			destinationName = SDRC_Locations.CreateName(m_PosDestination, "any");			
+		}
+		
+		info = SDRC_MissionHelper.CreateInfo(info, GetPosName(), destinationName);
 		return info;
 	}
 }

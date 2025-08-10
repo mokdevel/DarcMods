@@ -300,7 +300,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			"any",
 			"Hunters",
 			"They are coming for you...",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0

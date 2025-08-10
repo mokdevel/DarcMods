@@ -379,7 +379,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"any",
 			"Convoy is on the move.",
 			"Leaked travel plans show a route from %l to %d",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0
@@ -433,7 +433,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"any",
 			"Cargo truck is on the move.",
 			"Follow the route from %l to %d",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0
@@ -487,7 +487,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"any",
 			"Armor spotted",
 			"It's been seen in %l. It's to patrol to %d.",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0

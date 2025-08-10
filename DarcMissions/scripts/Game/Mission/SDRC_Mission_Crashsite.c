@@ -401,7 +401,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"any",
 			"Helicopter in distress",
 			"A valuable cargo has crashed.",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0

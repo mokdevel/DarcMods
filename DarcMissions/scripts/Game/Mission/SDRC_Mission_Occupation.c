@@ -186,7 +186,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Guards patroling near %l",
 			"Avoid the location. Loot has already been lost.",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0
@@ -217,7 +217,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Bandit camp near %l",
 			"Bandits are protecting their valuable loot.",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0
@@ -294,7 +294,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Occupation in %l",
 			"City is being occupied.",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0
@@ -376,7 +376,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Car crash near %l",
 			"Loot is up for grabs.",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0
@@ -469,7 +469,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Campers near %l",
 			"Rob them before they leave.",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0
@@ -575,7 +575,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Settlement near %l",
 			"The enemies are hiding in a ghost town.",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0

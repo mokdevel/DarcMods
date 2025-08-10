@@ -259,7 +259,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"any",
 			"Patrol spotted near %l",
 			"Intel tells them to travel to %d. Be careful while traveling on roads.",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0
@@ -295,7 +295,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"any",
 			"Patrol in %l",
 			"Beware!",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0
@@ -330,7 +330,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"any",
 			"Patrol seen in ",
 			"Be alert",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0
@@ -360,7 +360,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"any",
 			"Enemy has been seen near %l",
 			"Caution is advised.",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0

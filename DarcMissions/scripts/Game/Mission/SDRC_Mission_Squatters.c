@@ -269,7 +269,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Squatters near %l.",
 			"Building has squatters with loot",		
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0		
@@ -314,9 +314,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"index 1: Squatters in control towers",
 			{"0 0 0"},
 			"any",
-			"Enemy in %l.",
+			"Enemy in %l",
 			"Control tower is being guarded.",		
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0		
@@ -358,7 +358,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Guards around %l",
 			"Military location has loot to steal.",		
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0		
@@ -400,7 +400,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Industrial area near %l",
 			"Military has seized control of an industrial area. Don't shoot the civilians.",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0		
@@ -439,9 +439,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"index 4: Enemy in churches and similar",
 			{"0 0 0"},
 			"any",
-			"Sanctuary visitors near ",
+			"Sanctuary visitors near %l",
 			"Holy night, holy loot.",		
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0		
@@ -478,7 +478,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Burglars seen near %l",
 			"Go rob the robbers.",		
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0		

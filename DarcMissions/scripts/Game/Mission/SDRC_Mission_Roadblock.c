@@ -224,7 +224,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"any",
 			"Roadblock near %l",
 			"Look out for trouble.",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0		
@@ -300,7 +300,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"any",
 			"Roadblock seen close to %l",
 			"Be careful.",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0		
@@ -442,7 +442,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"any",
 			"Road is closed near %l",
 			"Are your ready to pay the toll?",
-			DC_EMissionWinCondition.KILL_AI_ALL,
+			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Win message",
 			"Lose message", 
 			0		

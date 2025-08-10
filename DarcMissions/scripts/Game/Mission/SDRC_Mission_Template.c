@@ -94,7 +94,7 @@ class SDRC_TemplateConfig : SDRC_MissionConfig
 	string posName;
 	string title;
 	string info;
-	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.KILL_AI_ALL;
+	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.AI_KILL_ALL;
 	string winMessage = "";
 	string loseMessage = "";
 	int xp = 0;
