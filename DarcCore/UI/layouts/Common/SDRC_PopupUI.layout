@@ -5,18 +5,17 @@ FrameWidgetClass {
    Name "IconShadow"
    Slot FrameWidgetSlot "{653CAEA26D22B8EA}" {
     Anchor 0.01 0 0.01 0
-    PositionX 16
-    OffsetLeft 16
-    PositionY 76
-    OffsetTop 76
+    PositionX 15
+    OffsetLeft 15
+    PositionY 75
+    OffsetTop 75
     SizeX 32
-    OffsetRight -48
+    OffsetRight -47
     SizeY 32
-    OffsetBottom -108
+    OffsetBottom -107
    }
-   "Is Visible" 0
    Color 0.0467 0.0467 0.0467 1
-   Texture "{E3E45CDDDBB68FD4}UI/Textures/Icons/gm_mission_Win_round.edds"
+   Texture "{885DA992DEA7C7BC}UI/Textures/Icons/icon_empty_round.edds"
    Size 53 52
   }
   ImageWidgetClass "{653CAEA26D22B8C4}" {
@@ -32,9 +31,8 @@ FrameWidgetClass {
     SizeY 32
     OffsetBottom -106
    }
-   "Is Visible" 0
    Color 0.5841 0.5841 0.5841 1
-   Texture "{E3E45CDDDBB68FD4}UI/Textures/Icons/gm_mission_Win_round.edds"
+   Texture "{885DA992DEA7C7BC}UI/Textures/Icons/icon_empty_round.edds"
    Size 53 52
   }
   RichTextWidgetClass "{653CAEA75E278849}" {

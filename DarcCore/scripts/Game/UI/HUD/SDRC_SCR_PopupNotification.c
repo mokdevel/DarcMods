@@ -43,6 +43,8 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 	//------------------------------------------------------------------------------------------------
 	override protected void ProcessInit()
 	{
+//		super.ProcessInit();
+		
 		if (!GetGame().GetHUDManager())
 			return;
 
@@ -67,8 +69,12 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 		m_wPopupMsg.SetVisible(false);
 		m_wPopupMsgSmall.SetVisible(false);
 		m_wStatusProgress.SetVisible(false);
-		//m_wImageWidget = ImageWidget.Cast(root.FindAnyWidget("Icon"));
-		LoadIcon();
+
+		//Darc changes		
+		m_wImageWidget = ImageWidget.Cast(root.FindAnyWidget("Icon"));
+		m_wImageWidgetShadow = ImageWidget.Cast(root.FindAnyWidget("IconShadow"));
+//		LoadIcon();
+		//Darc changes - end
 		
 		GetGame().GetCallqueue().CallLater(SetDefaultHorizontalPosition, 500);
 
@@ -101,7 +107,7 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 //		if (msg == m_ShownMsg)
 //			return;
 
-//		LoadIcon();
+		LoadIcon();
 		ShowIcon();
 		
 		super.ShowMsg(msg);
@@ -126,7 +132,9 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 	{
 		if (m_wImageWidget)
 		{
-			if (m_Icon == DC_EMissionIcon.NONE)
+			m_wImageWidget.SetVisible(true);
+			m_wImageWidgetShadow.SetVisible(true);
+/*			if (m_Icon == DC_EMissionIcon.NONE)
 			{
 				m_wImageWidget.SetVisible(false);
 				m_wImageWidgetShadow.SetVisible(false);
@@ -135,7 +143,7 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 			{
 				m_wImageWidget.SetVisible(true);
 				m_wImageWidgetShadow.SetVisible(true);
-			}
+			}*/
 		}		
 	}
 	
@@ -154,7 +162,7 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 		
 		m_wImageWidget.LoadImageTexture(0, texture);
 		m_wImageWidgetShadow.LoadImageTexture(0, texture);
-		ShowIcon();
+//		ShowIcon();
 		
 		//By default we hide it.
 //		m_wImageWidget.SetVisible(false);
