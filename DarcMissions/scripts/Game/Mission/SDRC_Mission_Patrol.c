@@ -260,8 +260,8 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"Patrol spotted near %l",
 			"Intel tells them to travel to %d. Be careful while traveling on roads.",
 			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			"Patrol near %l is no more.",
+			"Patroling completed, the world is saved.", 
 			0
 		);		
 		patrol0.Set
@@ -295,9 +295,9 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"any",
 			"Patrol in %l",
 			"Beware!",
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			DC_EMissionWinCondition.AI_KILL_75,
+			"Well done!",
+			"You're not a worthy enemy for this patrol.", 
 			0
 		);				
 		patrol1.Set
@@ -328,11 +328,11 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"index 2: Enemy patrols between villages",
 			{"0 0 0", "0 0 0"},
 			"any",
-			"Patrol seen in ",
-			"Be alert",
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			"Patrol seen in %l",
+			"Be alert!",
+			DC_EMissionWinCondition.AI_KILL_75,
+			"The road from %l to %d is safe again.",
+			"Patrol left the area.", 
 			0
 		);		
 		patrol2.Set
@@ -360,9 +360,9 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"any",
 			"Enemy has been seen near %l",
 			"Caution is advised.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			DC_EMissionWinCondition.AI_KILL_50,
+			"Patrol cleared!",
+			"Such a small force was able to beat you.", 
 			0
 		);				
 		patrol3.Set

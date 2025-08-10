@@ -29,7 +29,7 @@ enum DC_EMissionWinCondition
 {
 	NONE,
 	AI_KILL_ALL,
-	AI_KILL_80,
+	AI_KILL_75,
 	AI_KILL_50,
 	AI_KILL_RANDOM,
 };
@@ -114,8 +114,8 @@ class SDRC_Mission
 	private int m_iActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
 	private bool m_bMissionIsEnding;			//Once all AIs are dead, we're getting close to end the mission.
 	//Win condition related
-	private int m_iAiCountOriginal;				//The amount of AI at the beginning on the mission - at the time it was set active
-	
+	private int m_iAICountOriginal;				//The amount of AI at the beginning on the mission - at the time it was set active
+	private int m_iAIKillPercentageRandom;		//The random amount of AIs to kill (30%-100%)	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
 	
@@ -244,7 +244,9 @@ class SDRC_Mission
 		if (state == DC_EMissionState.ACTIVE)
 		{			
 			//Things to set when mission goes to active state
-			m_iAiCountOriginal = GetAICount();
+			GetGame().GetCallqueue().CallLater(GetAICountDelayed, 10000);		//Do the counting after a while. AIs needs to be spawned.
+//			m_iAICountOriginal = GetAICount();
+			m_iAIKillPercentageRandom = Math.RandomInt(30, 99);
 		}
 	}
 
@@ -447,22 +449,6 @@ class SDRC_Mission
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	int GetAICount()
-	{
-		int count = 0;
-		
-		foreach (SCR_AIGroup group: m_Groups)
-		{		
-			if (group)
-			{
-				count = count + group.GetAgentsCount();
-			}
-		}
-		
-		return count;
-	}
-	
-	//------------------------------------------------------------------------------------------------
 	//\return bool status it the mission spawn was requested by a an external party (like GM)	
 	//NOTE: m_bRequested is set in SDRC_Mission constructor
 	bool IsRequested()
@@ -498,14 +484,49 @@ class SDRC_Mission
 	*/
 	bool IsActive(bool checkOnlyWinCondition = false)
 	{
-		//Are all AIs dead
-		if (m_State == DC_EMissionState.ACTIVE && !m_bMissionIsEnding)
+		//Check the different winning conditions
+		if (m_State == DC_EMissionState.ACTIVE && !m_bMissionIsEnding && m_iAICountOriginal > 0)
 		{
 			bool isWin = false;
 			
-			if (SDRC_AIHelper.AreAllGroupsDead(m_Groups))
+			float aiKillPercentage = (1 - GetAICount()/m_iAICountOriginal);
+			
+			switch (m_WinCondition)
+			{
+				case DC_EMissionWinCondition.AI_KILL_ALL:
+				{
+					if (aiKillPercentage > 0.95)
+						isWin = true;					
+					break;
+				}
+				case DC_EMissionWinCondition.AI_KILL_75:
+				{
+					if (aiKillPercentage > 0.74)
+						isWin = true;					
+					break;
+				}
+				case DC_EMissionWinCondition.AI_KILL_50:
+				{
+					if (aiKillPercentage > 0.49)
+						isWin = true;					
+					break;
+				}
+				case DC_EMissionWinCondition.AI_KILL_RANDOM:
+				{
+					if (aiKillPercentage > m_iAIKillPercentageRandom)
+						isWin = true;					
+					break;
+				}
+			}
+			
+/*			if (SDRC_AIHelper.AreAllGroupsDead(m_Groups))
 			{
 				isWin = true;
+			}*/
+			
+			if (isWin)
+			{
+				SDRC_Log.Add("[SDRC_Mission:IsActive] Mission WIN: " + GetId() + " : " + GetTitle(), LogLevel.DEBUG);
 			}
 				
 			//If we did win the mission, set the message and prepare for ending.
@@ -515,7 +536,7 @@ class SDRC_Mission
 				SetSuccess(DC_EMissionSuccess.WIN);
 				if (IsShowHint() && IsShowMessage())			
 				{
-					SDRC_HintHelper.ShowHintMission(GetTitle(), GetWinMessage(), DC_EMissionIcon.ICON_WIN_ROUND);
+					SDRC_HintHelper.ShowHintMission("Success: " + GetTitle(), GetWinMessage(), DC_EMissionIcon.ICON_WIN_ROUND);
 				}
 				
 				m_bMissionIsEnding = true;
@@ -550,11 +571,11 @@ class SDRC_Mission
 			SetSuccess(DC_EMissionSuccess.LOSE);
 			if (IsShowHint() && IsShowMessage())			
 			{
-				SDRC_HintHelper.ShowHintMission(GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);
+				SDRC_HintHelper.ShowHintMission("Failure: " + GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);
 			}
 		}
 
-		SDRC_Log.Add("[SDRC_Mission:IsActive] END - Mission " + GetId() + " : " + GetTitle() + " has ended.", LogLevel.NORMAL);				
+		SDRC_Log.Add("[SDRC_Mission:IsActive] END - Mission " + GetId() + " : " + GetTitle() + " has ended.", LogLevel.DEBUG);				
 		return false;
 	}			
 	
@@ -614,5 +635,30 @@ class SDRC_Mission
 		
 		info = SDRC_MissionHelper.CreateInfo(info, GetPosName(), destinationName);
 		return info;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	//Count total amount of AI from all groups
+	int GetAICount()
+	{
+		int count = 0;
+		
+		foreach (SCR_AIGroup group: m_Groups)
+		{		
+			if (group)
+			{
+				count = count + group.GetAgentsCount();
+			}
+		}
+		
+		return count;
+	}	
+	
+	//------------------------------------------------------------------------------------------------	
+	//Function called when setting state to ACTIVE. AIs needs to be spawned before the counting works properly.
+	private void GetAICountDelayed()
+	{
+		m_iAICountOriginal = GetAICount();
+		SDRC_Log.Add("[SDRC_Mission:GetAICountDelayed] Mission " + GetId() + " spawned " + m_iAICountOriginal + " AIs.", LogLevel.DEBUG);		//TBD: SPAM				
 	}
 }

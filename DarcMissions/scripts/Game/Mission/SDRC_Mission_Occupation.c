@@ -187,8 +187,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"Guards patroling near %l",
 			"Avoid the location. Loot has already been lost.",
 			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			"Guard patrol eliminated.",
+			"The patrol kept %l safe from you. Pathetic.",
 			0
 		);
 		
@@ -218,8 +218,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"Bandit camp near %l",
 			"Bandits are protecting their valuable loot.",
 			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			"Camp cleared. Take the loot and leave.",
+			"The camp near %l was never destroyed. Bandits rule!",
 			0
 		);
 		occupation1.Set(
@@ -294,9 +294,9 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Occupation in %l",
 			"City is being occupied.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			DC_EMissionWinCondition.AI_KILL_75,
+			"%l is free again!",
+			"The enemy was stronger this time.",
 			0
 		);
 		occupation2.Set(
@@ -376,9 +376,9 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Car crash near %l",
 			"Loot is up for grabs.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			DC_EMissionWinCondition.AI_KILL_75,
+			"You stopped the get away. Enjoy the spoils.",
+			"Car was fixed and the loot was lost.", 
 			0
 		);
 		occupation3.Set(
@@ -470,8 +470,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"Campers near %l",
 			"Rob them before they leave.",
 			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			"The camp is yours. Enjoy the loot and relax.",
+			"The camp was packed and the campers left with their car.", 
 			0
 		);
 		occupation4.Set(
@@ -575,9 +575,9 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Settlement near %l",
 			"The enemies are hiding in a ghost town.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			DC_EMissionWinCondition.AI_KILL_75,
+			"The ghost town neat %l has been cleared.",
+			"Enemies have left with the loot. Shame on you.", 
 			0
 		);
 		occupation5.Set(

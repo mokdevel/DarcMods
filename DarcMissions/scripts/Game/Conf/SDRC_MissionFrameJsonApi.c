@@ -34,9 +34,9 @@
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSION_START_DELAY = 10;					
-		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 45;//1*20;
+		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 30;//1*20;
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 1;
-		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 15;//3*60;				
+		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 3*60;				
 		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = SDRC_MISSION_ACTIVE_TIME_DYNAMIC * 10;	
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 200;		
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 45;
@@ -167,9 +167,9 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HUNTER};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CONVOY};		
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.PATROL};		
-//			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CRASHSITE};
+			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CRASHSITE};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CHOPPER};
-			conf.missionDynamic.missionTypeArray = {DC_EMissionType.SQUATTER};
+//			conf.missionDynamic.missionTypeArray = {DC_EMissionType.SQUATTER};
 		
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.CONVOY};

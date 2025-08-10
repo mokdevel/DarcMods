@@ -269,9 +269,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Squatters near %l.",
 			"Building has squatters with loot",		
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			DC_EMissionWinCondition.AI_KILL_75,
+			"The loot has been secured.",
+			"Squatters cleaned the house and left you nothing.", 
 			0		
 		);
 		squatter0.Set(
@@ -316,9 +316,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Enemy in %l",
 			"Control tower is being guarded.",		
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			DC_EMissionWinCondition.AI_KILL_75,
+			"You did it! Control in %l has been restored.",
+			"Control in %l has been lost.",
 			0		
 		);
 		squatter1.Set(
@@ -359,8 +359,8 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"Guards around %l",
 			"Military location has loot to steal.",		
 			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			"Guards have been eliminated.",
+			"Military has collected the loot and left.", 
 			0		
 		);
 		squatter2.Set(
@@ -400,9 +400,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Industrial area near %l",
 			"Military has seized control of an industrial area. Don't shoot the civilians.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			DC_EMissionWinCondition.AI_KILL_50,
+			"Main enemy forces have been destroyed. Continue to keep an eye for rogues.",
+			"%l is in the hands of the enemy.", 
 			0		
 		);
 		squatter3.Set(
@@ -441,9 +441,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Sanctuary visitors near %l",
 			"Holy night, holy loot.",		
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			DC_EMissionWinCondition.AI_KILL_RANDOM,
+			"Your success will be remembered.",
+			"Your effort has been struck down.", 
 			0		
 		);
 		squatter4.Set(
@@ -478,9 +478,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Burglars seen near %l",
 			"Go rob the robbers.",		
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			DC_EMissionWinCondition.AI_KILL_50,
+			"%l is open for business once again.",
+			"Everything has been stolen.", 
 			0		
 		);
 		squatter5.Set(

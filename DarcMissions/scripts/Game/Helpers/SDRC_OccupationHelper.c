@@ -112,5 +112,5 @@ sealed class SDRC_OccupationHelper
 
 			return true;			
 		}		
-	}*/
+	}
 }

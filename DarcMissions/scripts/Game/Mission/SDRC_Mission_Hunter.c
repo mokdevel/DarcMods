@@ -301,8 +301,8 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			"Hunters",
 			"They are coming for you...",
 			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			"Hunters taken care of.",
+			"Hunters lost track of you.", 
 			0
 		);
 		conf.groupCount = {1, 4};			//min, max		

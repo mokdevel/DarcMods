@@ -380,8 +380,8 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"Convoy is on the move.",
 			"Leaked travel plans show a route from %l to %d",
 			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			"The convoy was successfully intercepted.",
+			"The convoy reached %d as planned.", 
 			0
 		);
 		convoy0.Set(
@@ -434,8 +434,8 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"Cargo truck is on the move.",
 			"Follow the route from %l to %d",
 			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			"Truck stopped, loot grabbed.",
+			"All the goodies in the truck was never for you.", 
 			0
 		);
 		convoy1.Set(
@@ -488,8 +488,8 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"Armor spotted",
 			"It's been seen in %l. It's to patrol to %d.",
 			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			"Armor destroyed. Well done!",
+			"Were you scared of a piece metal? Cowards!", 
 			0
 		);
 		convoy2.Set(

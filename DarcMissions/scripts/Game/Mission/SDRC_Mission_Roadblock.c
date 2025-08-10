@@ -224,9 +224,9 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"any",
 			"Roadblock near %l",
 			"Look out for trouble.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			DC_EMissionWinCondition.AI_KILL_75,
+			"Roadblock cleared.",
+			"Road was kept safe as planned.", 
 			0		
 		);
 		roadblock0.Set(
@@ -301,8 +301,8 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"Roadblock seen close to %l",
 			"Be careful.",
 			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			"These blocks can not stop you.",
+			"Scared of the enemy? %l is not a place for you.", 
 			0		
 		);
 		roadblock1.Set(
@@ -442,9 +442,9 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"any",
 			"Road is closed near %l",
 			"Are your ready to pay the toll?",
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			DC_EMissionWinCondition.AI_KILL_75,
+			"Road cleared.",
+			"The road toll was too much for you.", 
 			0		
 		);		
 		roadblock2.Set(

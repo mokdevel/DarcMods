@@ -234,6 +234,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 					}
 					SDRC_Log.Add("[SDRC_Mission_Crashsite:MissionSpawn] AI groups spawned ", LogLevel.DEBUG);								
 					missionCrashSiteState = DC_EMissionCrashSiteState.RUN;
+					SetState(DC_EMissionState.ACTIVE);		//Set the ACTIVE state again to properly get correct AI count.
 					break;
 				case DC_EMissionCrashSiteState.RUN:		
 					if (!IsActive())
@@ -391,7 +392,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;
 		conf.flyHeight = {80, 120};
-		conf.crashsiteList = {0};
+		conf.crashsiteList = {1};//{0,1};
 		
 		//----------------------------------------------------
 		SDRC_Crashsite crashsite0 = new SDRC_Crashsite();
@@ -401,9 +402,9 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"any",
 			"Helicopter in distress",
 			"A valuable cargo has crashed.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Win message",
-			"Lose message", 
+			DC_EMissionWinCondition.AI_KILL_75,
+			"The loot was salvaged. Crash, burn, loot.",
+			"No loot for you today.", 
 			0
 		);
 		crashsite0.Set
@@ -416,19 +417,19 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		conf.crashsites.Insert(crashsite0);
 		
 		//----------------------------------------------------
-		SDRC_HelicopterInfo heli0 = new SDRC_HelicopterInfo();
-			heli0.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et", 0.8, 0.8, 1.0);
-			crashsite0.helicopterInfo.Insert(heli0);
-		SDRC_HelicopterInfo heli1 = new SDRC_HelicopterInfo();
-			heli1.Set("{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",	0.7, 0.9, 1.0);
-			crashsite0.helicopterInfo.Insert(heli1);
-		SDRC_HelicopterInfo heli2 = new SDRC_HelicopterInfo();
-			heli2.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.8, 0.8, -1.0);
-			crashsite0.helicopterInfo.Insert(heli2);		
+		SDRC_HelicopterInfo heli00 = new SDRC_HelicopterInfo();
+			heli00.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et", 0.8, 0.8, 1.0);
+			crashsite0.helicopterInfo.Insert(heli00);
+		SDRC_HelicopterInfo heli01 = new SDRC_HelicopterInfo();
+			heli01.Set("{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",	0.7, 0.9, 1.0);
+			crashsite0.helicopterInfo.Insert(heli01);
+		SDRC_HelicopterInfo heli02 = new SDRC_HelicopterInfo();
+			heli02.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.8, 0.8, -1.0);
+			crashsite0.helicopterInfo.Insert(heli02);		
 		
 		//----------------------------------------------------
-		SDRC_Loot crashloot = new SDRC_Loot();
-		array<string> lootItems = {
+		SDRC_Loot crashloot0 = new SDRC_Loot();
+		array<string> lootItems0 = {
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
@@ -438,8 +439,8 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
 			};
-		crashloot.Set(0.9, lootItems);
-		crashsite0.loot = crashloot;
+		crashloot0.Set(0.9, lootItems0);
+		crashsite0.loot = crashloot0;
 				
 		//----------------------------------------------------
 		SDRC_Structure crashitem0 = new SDRC_Structure();
@@ -485,5 +486,64 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"0 -111.273 0"
 		);
 		crashsite0.siteItems.Insert(crashitem6);
+		
+		//----------------------------------------------------
+		SDRC_Crashsite crashsite1 = new SDRC_Crashsite();
+		crashsite1.general.Set(
+			"index 1: general mission",
+			{"0 0 0"},
+			"any",
+			"Engine damage",
+			"May day, may day! We're going down.",
+			DC_EMissionWinCondition.AI_KILL_75,
+			"The loot box was secured.",
+			"The cargo was lost.", 
+			0
+		);
+		crashsite1.Set
+		(
+			{
+				"G_HEAVY", "G_ADMIN"
+			},
+			20, 0.8
+		);
+		conf.crashsites.Insert(crashsite1);
+		
+		//----------------------------------------------------
+		SDRC_HelicopterInfo heli10 = new SDRC_HelicopterInfo();
+			heli10.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et", 0.7, 0.8, 1.0);
+			crashsite1.helicopterInfo.Insert(heli10);
+		SDRC_HelicopterInfo heli11 = new SDRC_HelicopterInfo();
+			heli11.Set("{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",	0.6, 0.85, 1.0);
+			crashsite1.helicopterInfo.Insert(heli11);
+		SDRC_HelicopterInfo heli12 = new SDRC_HelicopterInfo();
+			heli12.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.75, 0.75, -1.0);
+			crashsite1.helicopterInfo.Insert(heli12);		
+		
+		//----------------------------------------------------
+		SDRC_Loot crashloot1 = new SDRC_Loot();
+		array<string> lootItems1 = {
+				"WEAPON_LAUNCHER", 
+				"UTIL_OPTICS", 
+				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", 
+				"UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", 
+			};
+		crashloot1.Set(0.7, lootItems1);
+		crashsite1.loot = crashloot1;
+				
+		//----------------------------------------------------
+		SDRC_Structure crashitem1_0 = new SDRC_Structure();
+		crashitem1_0.Set(
+			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+			"97.911 1 121.527"
+		);
+		crashsite1.siteItems.Insert(crashitem1_0);
+
+		SDRC_Structure crashitem1_1 = new SDRC_Structure();
+		crashitem1_1.Set(
+			"{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
+			"106.274 1 121.108"
+		);
+		crashsite1.siteItems.Insert(crashitem1_1);	
 	}	
 }
