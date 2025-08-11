@@ -40,8 +40,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		
 		//Set defaults
 		m_iAiCount = Math.RandomInt(m_DC_Squatter.aiCount[0], m_DC_Squatter.aiCount[1]);
-		float radius = 10;	//Default size for the radius
-		array<IEntity>buildings = {};
+		float radius = 10;	//Default size for the radius. Mainly for requested missions to find the nearest building.
 		array<string>buildingFilter = {};
 		
 		//Find a location for the mission
@@ -61,7 +60,6 @@ class SDRC_Mission_Squatter : SDRC_Mission
 				else
 				{
 					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Squatter.locationTypes, 2);
-//					buildingFilter = m_DC_Squatter.buildingNames;
 				}
 			}
 		}
@@ -71,27 +69,15 @@ class SDRC_Mission_Squatter : SDRC_Mission
 			buildingFilter.Insert("");
 		}
 
-		//Find the houses	
-		SDRC_BuildingHelper.FindBuildings(buildings, buildingFilter, pos, radius);
-		
-		if (!buildings.IsEmpty())
+		//Find the mission house
+		m_Building = SDRC_MissionHelper.FindMissionBuilding(pos, buildingFilter, radius);
+		if (m_Building)
 		{
-			m_Building = buildings.GetRandomElement();
 			pos = m_Building.GetOrigin();
-			
-			if (!SDRC_MissionHelper.IsValidMissionPos(pos))
-			{
-				pos = "0 0 0";	//Mission position is not valid
-			}
-			else
-			{
-				SDRC_Log.Add("[SDRC_Mission_Squatter] Building selected: " + m_Building.GetPrefabData().GetPrefabName() + " " + pos, LogLevel.DEBUG);
-			}
 		}
 		else
 		{
-			SDRC_Log.Add("[SDRC_Mission_Squatter] Could not find suitable building near " + SDRC_Locations.CreateName(pos, "any") + " " + pos, LogLevel.ERROR);
-			pos = "0 0 0";				
+			pos = "0 0 0";
 		}
 			
 		if (pos == "0 0 0")	//No suitable location found.
@@ -166,7 +152,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 				m_EntityList.Insert(entity);
 				
 				//Put loot
-				if (m_DC_Squatter.loot)			
+				if (m_DC_Squatter.loot)
 				{
 					m_DC_Squatter.loot.box = entity;
 					SDRC_LootHelper.SpawnItemsToStorage(m_DC_Squatter.loot.box, m_DC_Squatter.loot.items, m_DC_Squatter.loot.itemChance);
@@ -252,18 +238,26 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		array<string> lootItems = {};
-		
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP;
 		//Mission specific
 		conf.buildingRadius = 400;
 		conf.squatterList = {0,1,2,2,3,3,3,4,5,5,5};
-		
 		//----------------------------------------------------
-		SDRC_Squatter squatter0 = new SDRC_Squatter();
-		squatter0.general.Set(
+		conf.squatters.Insert(Squatter0());				
+		conf.squatters.Insert(Squatter1());				
+		conf.squatters.Insert(Squatter2());				
+		conf.squatters.Insert(Squatter3());				
+		conf.squatters.Insert(Squatter4());				
+		conf.squatters.Insert(Squatter5());				
+	};
+			
+	//----------------------------------------------------
+	SDRC_Squatter Squatter0()
+	{
+		SDRC_Squatter squatter = new SDRC_Squatter();
+		squatter.general.Set(
 			"index 0: Squatters in cities",
 			{"0 0 0"},
 			"any",
@@ -274,7 +268,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"Squatters cleaned the house and left you nothing.", 
 			0		
 		);
-		squatter0.Set(
+		squatter.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -294,10 +288,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			{"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_", "Office_E_", "MountainHotel_"},
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
 		);
-		conf.squatters.Insert(squatter0);	
 		
-		SDRC_Loot squatter0loot = new SDRC_Loot();
-		lootItems = {
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
@@ -305,12 +298,17 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
 			};
-		squatter0loot.Set(0.7, lootItems);
-		squatter0.loot = squatter0loot;
-		
-		//----------------------------------------------------
-		SDRC_Squatter squatter1 = new SDRC_Squatter();
-		squatter1.general.Set(
+		loot.Set(0.7, lootItems);
+		squatter.loot = loot;
+
+		return squatter;	
+	};
+					
+	//----------------------------------------------------
+	SDRC_Squatter Squatter1()
+	{
+		SDRC_Squatter squatter = new SDRC_Squatter();
+		squatter.general.Set(
 			"index 1: Squatters in control towers",
 			{"0 0 0"},
 			"any",
@@ -321,7 +319,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"Control in %l has been lost.",
 			0		
 		);
-		squatter1.Set(
+		squatter.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
@@ -335,10 +333,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			{"ControlTowerMilitary_"},
 			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
 		);
-		conf.squatters.Insert(squatter1);	
 		
-		SDRC_Loot squatter1loot = new SDRC_Loot();
-		lootItems = {
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
 				"WEAPON_RIFLE",	"WEAPON_RIFLE", "WEAPON_RIFLE",
 				"WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
@@ -347,12 +344,17 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL"
 			};
-		squatter1loot.Set(0.8, lootItems);
-		squatter1.loot = squatter1loot;		
+		loot.Set(0.8, lootItems);
+		squatter.loot = loot;		
 	
-		//----------------------------------------------------
-		SDRC_Squatter squatter2 = new SDRC_Squatter();
-		squatter2.general.Set(
+		return squatter;	
+	};
+					
+	//----------------------------------------------------
+	SDRC_Squatter Squatter2()
+	{
+		SDRC_Squatter squatter = new SDRC_Squatter();
+		squatter.general.Set(
 			"index 2: Squatters in military locations",
 			{"0 0 0"},
 			"any",
@@ -363,7 +365,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"Military has collected the loot and left.", 
 			0		
 		);
-		squatter2.Set(
+		squatter.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
@@ -377,10 +379,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			{"Office_E_", "Barracks_01_", "Barracks_E_02_"},
 			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
 		);
-		conf.squatters.Insert(squatter2);	
 		
-		SDRC_Loot squatter2loot = new SDRC_Loot();
-		lootItems = {
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
 				"WEAPON_RIFLE",	"WEAPON_RIFLE", "WEAPON_RIFLE",
 				"WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
@@ -389,12 +390,17 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL"
 			};
-		squatter2loot.Set(0.6, lootItems);
-		squatter2.loot = squatter2loot;
+		loot.Set(0.6, lootItems);
+		squatter.loot = loot;
 		
-		//----------------------------------------------------
-		SDRC_Squatter squatter3 = new SDRC_Squatter();
-		squatter3.general.Set(
+		return squatter;	
+	};
+					
+	//----------------------------------------------------
+	SDRC_Squatter Squatter3()
+	{
+		SDRC_Squatter squatter = new SDRC_Squatter();
+		squatter.general.Set(
 			"index 3: Military in industrial areas",
 			{"0 0 0"},
 			"any",
@@ -405,7 +411,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"%l is in the hands of the enemy.", 
 			0		
 		);
-		squatter3.Set(
+		squatter.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
@@ -420,22 +426,26 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			{"DieselPowerPlant_", "CowShed_", "FireStation_", "Warehouse_", "TransformerStation_", "FactoryHall_"},
 			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
 		);
-		conf.squatters.Insert(squatter3);	
 		
-		SDRC_Loot squatter3loot = new SDRC_Loot();
-		lootItems = {
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
 				"WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL"
 			};
-		squatter3loot.Set(0.6, lootItems);
-		squatter3.loot = squatter3loot;
+		loot.Set(0.6, lootItems);
+		squatter.loot = loot;
 		
-		//----------------------------------------------------
-		SDRC_Squatter squatter4 = new SDRC_Squatter();
-		squatter4.general.Set(
+		return squatter;	
+	};
+					
+	//----------------------------------------------------
+	SDRC_Squatter Squatter4()
+	{
+		SDRC_Squatter squatter = new SDRC_Squatter();
+		squatter.general.Set(
 			"index 4: Enemy in churches and similar",
 			{"0 0 0"},
 			"any",
@@ -446,7 +456,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"Your effort has been struck down.", 
 			0		
 		);
-		squatter4.Set(
+		squatter.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
@@ -458,21 +468,25 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			{"Church_", "ChurchSmall_", "Mosque_", "Minaret"},
 			"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et"
 		);
-		conf.squatters.Insert(squatter4);	
 		
-		SDRC_Loot squatter4loot = new SDRC_Loot();
-		lootItems = {
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_OPTICS",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL"
 			};
-		squatter4loot.Set(0.6, lootItems);
-		squatter4.loot = squatter4loot;
+		loot.Set(0.6, lootItems);
+		squatter.loot = loot;
 		
-		//----------------------------------------------------
-		SDRC_Squatter squatter5 = new SDRC_Squatter();
-		squatter5.general.Set(
+		return squatter;	
+	};
+					
+	//----------------------------------------------------
+	SDRC_Squatter Squatter5()
+	{
+		SDRC_Squatter squatter = new SDRC_Squatter();
+		squatter.general.Set(
 			"index 5: Shops and houses",
 			{"0 0 0"},
 			"any",
@@ -483,7 +497,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"Everything has been stolen.", 
 			0		
 		);
-		squatter5.Set(
+		squatter.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
@@ -495,15 +509,16 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			{"ShopModern_", "House_Town_", "House_Village_", "FarmHouse_", "House_Wooden_"},
 			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
 		);
-		conf.squatters.Insert(squatter5);	
 		
-		SDRC_Loot squatter5loot = new SDRC_Loot();
-		lootItems = {
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
 			};
-		squatter5loot.Set(0.6, lootItems);
-		squatter5.loot = squatter5loot;		
+		loot.Set(0.6, lootItems);
+		squatter.loot = loot;		
+
+		return squatter;						
 	}
 }
