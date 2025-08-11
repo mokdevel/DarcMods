@@ -19,6 +19,8 @@ Main features:
   * G_ZOMBIE_LARGE
   * C_DEMON
   * C_DEMON_BOSS
+* Added a new road block
+* Hunter mission follows the same structure as others. You can define multiple types of hunters.
 
 Changes:
 * dc_enemyList.json and dc_lootList.json changes. 
