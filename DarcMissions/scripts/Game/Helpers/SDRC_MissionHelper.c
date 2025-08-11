@@ -344,4 +344,36 @@ sealed class SDRC_MissionHelper
 		SDRC_Log.Add("[SDRC_MissionHelper:CreateInfo] Message created: " + msg, LogLevel.DEBUG);		//TBD: SPAM	
 		return msg;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Select a mission building
+	*/	
+	static IEntity FindMissionBuilding(vector pos, array<string>buildingFilter, float radius)
+	{
+		array<IEntity>buildings = {};
+		SDRC_BuildingHelper.FindBuildings(buildings, buildingFilter, pos, radius);
+
+		IEntity building = null;
+		
+		if (buildings.IsEmpty())
+		{
+			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionBuilding] Could not find suitable building near " + SDRC_Locations.CreateName(pos, "any") + " " + pos, LogLevel.ERROR);
+			return null;
+		}
+		
+		building = buildings.GetRandomElement();
+		vector bpos = building.GetOrigin();
+		
+		if (!SDRC_MissionHelper.IsValidMissionPos(bpos))
+		{
+			return null;
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionBuilding] Building selected: " + building.GetPrefabData().GetPrefabName() + " " + bpos, LogLevel.DEBUG);
+		}
+		
+		return building;
+	}	
 }
