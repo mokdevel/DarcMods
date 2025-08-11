@@ -14,6 +14,7 @@ sealed class SDRC_Conf
 	const string DEFAULT_DIR = "default";
 	static string subDir = "";
 	static bool coreHasStarted = false;
+	//TBD: const int MISSION_END_TIME = 5000;					//Time to set for mission cycle when mission is set to end.
 	
 //Release options	
 #ifdef SDRC_RELEASE

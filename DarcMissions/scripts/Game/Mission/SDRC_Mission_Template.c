@@ -20,12 +20,21 @@ class SDRC_Mission_Template : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Template] Constructor", LogLevel.SPAM);
 				
 		//Set some defaults
-		SetType(DC_EMissionType.NONE);	//REMEMBER: Define your own ENUM in SDRC_Mission.c and change here. Don't use modded enum.
+		SetType(DC_EMissionType.NONE);	//REMEMBER: Define your own ENUM in SDRC_Mission.c and change here. *DO NOT* use modded enum as the index numbers are to kept.
 
 		//Load config
 		m_TemplateJsonApi.Load();
 		m_Config = m_TemplateJsonApi.conf;
-		pos = m_Config.pos;
+		
+		//Check if GM requested mission
+		if (!IsRequested())
+		{		
+			pos = m_Config.pos;
+		}
+		else
+		{
+			//The provided pos is accepted
+		}
 		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(GetPos(), m_Config.posName));

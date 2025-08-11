@@ -18,7 +18,8 @@ class SDRC_GMMapSymbol : Managed
 	vector pos;
 	float radius;
 	int intval;			//Integer value for color or icon or ..
-	string id; 			
+	string id;
+	string strval;
 }
 
 //------------------------------------------------------------------------------------------------
@@ -68,7 +69,7 @@ class SDRC_RplGMComp : ScriptComponent
 	/*!	
 	Add a circle on symbol list
 	*/
- 	void AddSymbolCircle(vector pos, float radius, int color)
+ 	void AddSymbolCircle(vector pos, float radius, int color, string strval = "")
     {
 		pos[1] = 0;			//Set to zero plane
 		
@@ -78,6 +79,7 @@ class SDRC_RplGMComp : ScriptComponent
 		symbol.radius = radius;
 		symbol.intval = color;
 		symbol.id = "";
+		symbol.strval = "";
 		m_Symbols.Insert(symbol);
     }
 	
@@ -85,7 +87,7 @@ class SDRC_RplGMComp : ScriptComponent
 	/*!	
 	Add a marker on symbol list
 	*/
- 	void AddSymbolMarker(vector pos, float radius, DC_EMissionIcon icon, string id)
+ 	void AddSymbolMarker(vector pos, float radius, DC_EMissionIcon icon, string id, string strval)
     {
 		pos[1] = 0;			//Set to zero plane
 		
@@ -95,6 +97,7 @@ class SDRC_RplGMComp : ScriptComponent
 		symbol.radius = 0;
 		symbol.intval = icon;
 		symbol.id = id;
+		symbol.strval = strval;
 		m_Symbols.Insert(symbol);
     }
 
@@ -126,7 +129,7 @@ class SDRC_RplGMComp : ScriptComponent
 		foreach(SDRC_GMMapSymbol symbol : m_Symbols)
 		{
 //			SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Syncing: " + symbol.pos, LogLevel.NORMAL);	
-	        Rpc(RpcDo_SyncMapSymbol, symbol.type, symbol.pos, symbol.radius, symbol.intval, symbol.id); 	// broadcast to clients			
+	        Rpc(RpcDo_SyncMapSymbol, symbol.type, symbol.pos, symbol.radius, symbol.intval, symbol.id, symbol.strval); 	// broadcast to clients			
 		}		
 	}
 
@@ -140,7 +143,7 @@ class SDRC_RplGMComp : ScriptComponent
 		
 	//------------------------------------------------------------------------------------------------
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-    protected void RpcDo_SyncMapSymbol(DC_EDrawSymbol symbolType, vector pos, float radius, int color, string id)
+    protected void RpcDo_SyncMapSymbol(DC_EDrawSymbol symbolType, vector pos, float radius, int color, string id, string strval)
     {
 		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(DC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.SPAM);
 		
@@ -150,6 +153,7 @@ class SDRC_RplGMComp : ScriptComponent
 		symbol.radius = radius;
 		symbol.intval = color;
 		symbol.id = id;
+		symbol.strval = strval;
 		m_Symbols.Insert(symbol);
     }
 }

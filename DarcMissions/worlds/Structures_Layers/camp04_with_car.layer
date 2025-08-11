@@ -1,7 +1,3 @@
-Vehicle UAZ469_FIA_uncovered1 : "{E28501E93F8EFDC0}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_FIA_uncovered.et" {
- coords 84.933 1 97.416
- angleY -43.327
-}
 GenericEntity : "{0B24DD72DAF499F4}PrefabsEditable/Auto/Props/Military/AmmoBoxes/EquipmentBoxStack/E_EquipmentBoxStack_US_01_V6_covered.et" {
  coords 80.78 1 94.665
  angleY 89.871
@@ -31,6 +27,10 @@ SCR_DestructibleEntity : "{BEC236C8D6F6E783}PrefabsEditable/Auto/Props/Furniture
 }
 SCR_DestructibleBuildingEntity : "{C768E842A6F11CEE}Prefabs/Structures/Military/Camps/TentUSSR_01/TentUSSR_01_camonet.et" {
  coords 78.758 0 92.718
+}
+Vehicle UAZ469_FIA_uncovered1 : "{E28501E93F8EFDC0}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_FIA_uncovered.et" {
+ coords 84.933 1 97.416
+ angleY -43.327
 }
 GameEntity : "{FF3ED8B26C05A940}PrefabsEditable/Auto/Props/Military/Camps/E_LanternMilitary_US_01.et" {
  coords 76.758 1 92.856

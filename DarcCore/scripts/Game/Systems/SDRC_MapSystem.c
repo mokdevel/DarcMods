@@ -98,7 +98,7 @@ class SDRC_MapSystem : GameSystem
 			
 			if (gmComponent)
 			{
-				ShowChatMessage(WidgetManager.Translate("Mission ID: " + gmComponent.m_Symbols[markerIdx].id));
+				ShowChatMessage(WidgetManager.Translate("Mission ID: " + gmComponent.m_Symbols[markerIdx].id + " : " + gmComponent.m_Symbols[markerIdx].strval));
 			}
 		}
 	}

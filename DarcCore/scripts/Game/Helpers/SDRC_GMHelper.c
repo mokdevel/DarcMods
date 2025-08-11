@@ -81,7 +81,7 @@ class SDRC_GMHelper
 				{
 					if (mission.GetState() == DC_EMissionState.ACTIVE)
 					{
-						m_GmComponent.AddSymbolMarker(mission.GetPos(), mission.GetType(), mission.GetMarker(), mission.GetId());
+						m_GmComponent.AddSymbolMarker(mission.GetPos(), mission.GetType(), mission.GetMarker(), mission.GetId(), mission.GetTitle());
 					}
 				}
 			}

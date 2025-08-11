@@ -157,6 +157,7 @@ sealed class SDRC_AIHelper
 		
 		SCR_AIGroup group = SDRC_AIHelper.GroupAddAI(aiAgent);
 	
+		//Using a patrol cycle should make the AI return in to the building
 		array<AIWaypoint> waypoints = {};
 		AIWaypointCycle wpcycle = null;
 		wpcycle = AIWaypointCycle.Cast(SDRC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.PATROLCYCLE));
