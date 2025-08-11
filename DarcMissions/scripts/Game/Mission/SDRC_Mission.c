@@ -9,6 +9,7 @@ enum DC_EMissionType
 	PATROL,
 	SQUATTER,
 	ROADBLOCK,
+	HVTVIP,
 	CHOPPER,	//Mission not ready or working
 	
 	REQUESTED = 100
@@ -32,6 +33,8 @@ enum DC_EMissionWinCondition
 	AI_KILL_75,
 	AI_KILL_50,
 	AI_KILL_RANDOM,
+	
+	HVT_VIP,
 };
 
 enum DC_EMissionSuccess
@@ -241,11 +244,19 @@ class SDRC_Mission
 	void SetState(DC_EMissionState state)
 	{
 		m_State = state;
+		
+		if (state == DC_EMissionState.END)
+		{
+			//Things to set when mission is to end
+			
+			//TBD: The time should be set as a short one when mission ends.
+			//m_Config.missionCycleTime = SDRC_Conf.MISSION_END_TIME;
+		}		
+		
 		if (state == DC_EMissionState.ACTIVE)
 		{			
 			//Things to set when mission goes to active state
 			GetGame().GetCallqueue().CallLater(GetAICountDelayed, 10000);		//Do the counting after a while. AIs needs to be spawned.
-//			m_iAICountOriginal = GetAICount();
 			m_iAIKillPercentageRandom = Math.RandomInt(30, 99);
 		}
 	}

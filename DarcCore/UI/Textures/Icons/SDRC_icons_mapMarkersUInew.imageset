@@ -98,5 +98,11 @@ ImageSetClass {
    Size 54 110
    Flags 0
   }
+  ImageSetDefClass gm_mission_HvtVip_map {
+   Name "gm_mission_HvtVip_map"
+   Pos 58 338
+   Size 54 110
+   Flags 0
+  }
  }
 }

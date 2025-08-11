@@ -421,6 +421,11 @@ class SDRC_MissionFrame
 				tmpDC_Mission = new SDRC_Mission_Roadblock(pos);
 				break;
 			}			
+			case DC_EMissionType.HVTVIP:
+			{
+				tmpDC_Mission = new SDRC_Mission_HvtVip(pos);
+				break;
+			}			
 /*			case DC_EMissionType.CHOPPER:
 			{
 				tmpDC_Mission = new SDRC_Mission_Chopper(pos);
