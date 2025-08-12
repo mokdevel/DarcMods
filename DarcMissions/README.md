@@ -20,6 +20,8 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - Occupation : A location is guarded by AIs with loot available.
 - Squatters : A building is guarded by AIs with loot available.
 - Roadblock : AI have setup a road block on the road.
+- HvtVip : An AI is defined as a High Value Target VIP. Go take him down.
+- (HvtItem : A target needs to be destoyed. - MISSION NOT AVAILABLE YET)
 
 ## Thanks
 - The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
@@ -55,6 +57,8 @@ Mission specific parameters for each mission type:
 * [Occupation](./docs/MISSION_OCCUPATION.md)
 * [Squatters](./docs/MISSION_SQUATTERS.md)
 * [Roadblock](./docs/MISSION_ROADBLOCK.md)
+* [Roadblock](./docs/MISSION_HVTVIP.md) ** TBD : Documentation missing **
+* [Roadblock](./docs/MISSION_HVTITEM.md) ** TBD : Mission not available yet **
 
 Other parameter details available:
 * [Lists](./docs/P_LISTS.md) for automatic loot and enemy lists
@@ -236,3 +240,4 @@ Main feature: You can define the enemies via ```enemyFactions```. Just configure
   ```
   
 ## 20250522 - Nothing here
+
