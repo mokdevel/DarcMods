@@ -10,6 +10,7 @@ enum DC_EMissionType
 	SQUATTER,
 	ROADBLOCK,
 	HVTVIP,
+	HVTITEM,
 	CHOPPER,	//Mission not ready or working
 	
 	REQUESTED = 100
@@ -543,17 +544,7 @@ class SDRC_Mission
 			//If we did win the mission, set the message and prepare for ending.
 			if (isWin)
 			{
-				//Mission is soon to be ending
-				SetSuccess(DC_EMissionSuccess.WIN);
-				if (IsShowHint() && IsShowMessage())			
-				{
-					SDRC_HintHelper.ShowHintMission("Success: " + GetTitle(), GetWinMessage(), DC_EMissionIcon.ICON_WIN_ROUND);
-				}
-				
-				m_bMissionIsEnding = true;
-				//Set ActiveTimeToEnd to be the final active time
-				SetActiveTime(m_iActiveTimeToEnd);
-				ResetActiveTime();
+				DoWin();
 			}
 		}
 
@@ -586,16 +577,47 @@ class SDRC_Mission
 		//If we won, don't show a lose message
 		if (GetSuccess() != DC_EMissionSuccess.WIN)
 		{
-			SetSuccess(DC_EMissionSuccess.LOSE);
-			if (IsShowHint() && IsShowMessage())
-			{
-				SDRC_HintHelper.ShowHintMission("Failure: " + GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);
-			}
+			DoLose();
 		}
 
 		SDRC_Log.Add("[SDRC_Mission:IsActive] END - Mission " + GetId() + " : " + GetTitle() + " has ended.", LogLevel.DEBUG);				
 		return false;
 	}			
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Mission has been won. Do the final stuff.
+	*/
+	void DoWin()
+	{
+		//Mission is soon to be ending
+		SetSuccess(DC_EMissionSuccess.WIN);
+		m_bMissionIsEnding = true;
+		
+		if (IsShowHint() && IsShowMessage())			
+		{
+			SDRC_HintHelper.ShowHintMission("Success: " + GetTitle(), GetWinMessage(), DC_EMissionIcon.ICON_WIN_ROUND);
+		}
+		
+		//Set ActiveTimeToEnd to be the final active time
+		SetActiveTime(m_iActiveTimeToEnd);
+		ResetActiveTime();
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Mission was lost. Do the final stuff.
+	*/
+	void DoLose()
+	{
+		SetSuccess(DC_EMissionSuccess.LOSE);
+		m_bMissionIsEnding = true;
+		
+		if (IsShowHint() && IsShowMessage())
+		{
+			SDRC_HintHelper.ShowHintMission("Failure: " + GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);
+		}
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	void SetActiveDistance(int distance)	
