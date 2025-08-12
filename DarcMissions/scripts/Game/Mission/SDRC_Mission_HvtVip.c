@@ -13,8 +13,9 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 
 	private ref SDRC_HvtVip m_DC_HvtVip;	//HvtVip configuration in use
 	private IEntity m_Building;					//The building for the mission
-	private int m_iAiCount;
+	private int m_iGroupCount;
 	private int m_iSpawnIndex = 0;				//Counter for the AI to spawn
+	private SCR_AIGroup m_Target = null;
 		
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_HvtVip(vector pos = "0 0 0")
@@ -39,7 +40,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		m_DC_HvtVip = m_Config.HvtVips[idx];
 		
 		//Set defaults
-		m_iAiCount = Math.RandomInt(m_DC_HvtVip.aiCount[0], m_DC_HvtVip.aiCount[1]);
+		m_iGroupCount = Math.RandomInt(m_DC_HvtVip.groupCount[0], m_DC_HvtVip.groupCount[1]);
 		float radius = 10;	//Default size for the radius. Mainly for requested missions to find the nearest building.
 		array<string>buildingFilter = {};
 		
@@ -75,13 +76,8 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		{
 			pos = m_Building.GetOrigin();
 		}
-		else
+		else //No suitable location found.
 		{
-			pos = "0 0 0";
-		}
-			
-		if (pos == "0 0 0")	//No suitable location found.
-		{				
 			SDRC_Log.Add("[SDRC_Mission_HvtVip] Could not find suitable location.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
@@ -104,8 +100,8 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		if (GetState() == DC_EMissionState.INIT)
 		{
 			MissionSpawn();
-			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds
-//			SetState(DC_EMissionState.ACTIVE);
+			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds.
+			//NOTE: ACTIVE set inside MissionSpawn()
 			return;
 		}
 
@@ -136,36 +132,59 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	private void MissionSpawn()
 	{	
 		//Spawn AI one by one. Sets missions active once ready.
-		if (m_iSpawnIndex < m_iAiCount)
+		if (m_iSpawnIndex < m_iGroupCount)
 		{
-			//Each AI is spawned in to its own group to be able to give individual waypoints to a character
-			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_HvtVip.aiTypes.GetRandomElement(), m_DC_HvtVip.aiSkill, m_DC_HvtVip.aiPerception, GetFaction());
-			m_Groups.Insert(group);
+			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_HvtVip.groupTypes.GetRandomElement(), GetPos(), GetFaction());
+			if (group)
+			{
+				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_HvtVip.aiSkill, m_DC_HvtVip.aiPerception);					
+				SDRC_AIHelper.SetAIGroupMovementType(group, EMovementType.IDLE);
+				m_Groups.Insert(group);				
+				SDRC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, 10, 50);				
+			}
 			m_iSpawnIndex++;
 		}
 		else
 		{
-			float rotation = Math.RandomFloat(0, 360);
-			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(m_Building, m_DC_HvtVip.lootBox, rotation, 1.5, false);
+			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuildingWithLoot(m_Building, m_DC_HvtVip.lootBox, m_DC_HvtVip.loot.items, m_DC_HvtVip.loot.itemChance);			
 			if (entity)
 			{
 				m_EntityList.Insert(entity);
-				
-				//Put loot
-				if (m_DC_HvtVip.loot)			
-				{
-					m_DC_HvtVip.loot.box = entity;
-					SDRC_LootHelper.SpawnItemsToStorage(m_DC_HvtVip.loot.box, m_DC_HvtVip.loot.items, m_DC_HvtVip.loot.itemChance);
-					SDRC_Log.Add("[SDRC_Mission_HvtVip:MissionSpawn] Loot added.", LogLevel.DEBUG);								
-				}
+				m_DC_HvtVip.loot.box = entity;
 			}
 			else
 			{
 				SDRC_Log.Add("[SDRC_Mission_HvtVip:MissionSpawn] Could not spawn loot box: " + m_DC_HvtVip.lootBox, LogLevel.ERROR);								
 			}
-			
-			SetState(DC_EMissionState.ACTIVE);
+
+			//Spawn target enemy
+			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_HvtVip.target, m_DC_HvtVip.aiSkill, m_DC_HvtVip.aiPerception, GetFaction());
+			if (group)
+			{			
+				m_Groups.Insert(group);
+				m_Target = group;
+				SDRC_AIHelper.SetAIGroupMovementType(group, EMovementType.IDLE);
+			}
+
+			GetGame().GetCallqueue().CallLater(IsTargetDead, 5000, false);
+								
+			SetState(DC_EMissionState.ACTIVE);			
 		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	A loop that checks if the target has been eliminated.
+	*/
+	void IsTargetDead()
+	{
+		if (SDRC_AIHelper.IsGroupDead(m_Target))
+		{
+			SDRC_Log.Add("[SDRC_Mission_HvtVip:IsTargetDead] Target dead!", LogLevel.DEBUG);
+			DoWin();
+			return;
+		}
+		GetGame().GetCallqueue().CallLater(IsTargetDead, 5000, false);
 	}
 }
 	
@@ -185,8 +204,8 @@ class SDRC_HvtVip : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref array<EMapDescriptorType> locationTypes = {};
-	ref array<int> aiCount = {};			//min, max
-	ref array<string> aiTypes = {};
+	ref array<int> groupCount = {};			//min, max
+	ref array<string> groupTypes = {};
 	int aiSkill;
 	float aiPerception;
 	ref array<string> buildingNames = {};
@@ -195,11 +214,11 @@ class SDRC_HvtVip : Managed
 	ref SDRC_Loot loot = null;
 	string target;
 	
-	void Set(array<EMapDescriptorType> locationTypes_, array<int> aiCount_, array<string> aiTypes_, int aiSkill_, float aiPerception_, array<string> buildingNames_, string lootBox_, string target_)
+	void Set(array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<string> groupTypes_, int aiSkill_, float aiPerception_, array<string> buildingNames_, string lootBox_, string target_)
 	{
 		locationTypes = locationTypes_;
-		aiCount = aiCount_;
-		aiTypes = aiTypes_;
+		groupCount = groupCount_;
+		groupTypes = groupTypes_;
 		aiSkill = aiSkill_;
 		aiPerception = aiPerception_;	
 		buildingNames = buildingNames_;	
@@ -278,7 +297,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			},
 			{1,2},
 			{
-				"G_RIFLE", 
+				"G_LIGHT",
 			},
 			50, 0.6,
 			{"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_", "Office_E_", "MountainHotel_"},

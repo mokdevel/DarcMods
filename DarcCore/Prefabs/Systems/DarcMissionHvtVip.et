@@ -1,0 +1,38 @@
+SDRC_DarcMissionGM : "{5C61F07CE0B1DBB2}Prefabs/EffectsModuleEntities/BaseEffectModule_Particle_Smoke.et" {
+ ID "5CAAA309C760D959"
+ components {
+  SoundComponent "{622CB2564278E7B9}" {
+   Enabled 0
+  }
+  SCR_EditableEffectsModuleComponent "{66193E1E0E37A23B}" {
+   m_EntityType SYSTEM
+   m_UIInfo SCR_EditableEntityUIInfoColored "{66193E1E0E37ADD1}" {
+    Name "DarcMissions High Value Target VIP"
+    Description "A mission to take down a VIP"
+    Icon "{FA7D7C67D837958E}UI/Textures/Icons/gm_mission_HvtVip_round.edds"
+    m_Image "{BE8FD5CBD40986EF}UI/Textures/Icons/gm_mission_HvtVip.edds"
+    m_aAuthoredLabels {
+     1001
+    }
+    m_aAutoLabels {
+     44001
+    }
+    m_EntityBudgetCost {
+     SCR_EntityBudgetValue "{66193E1E0E37ADDA}" {
+      m_BudgetType SYSTEMS
+     }
+    }
+   }
+   m_bStatic 1
+   m_Flags 65
+  }
+  SDRC_DarcMissionRequestComp "{66193E1E0E37ADE0}" {
+   missionType HVTVIP
+  }
+  RplComponent "{616C912BED359789}" {
+   Streamable Disabled
+  }
+ }
+ Flags 1027
+ EffectPath "{E1E084593B8A05D2}Particles/Weapon/Smoke_grenade_M18_Yellow.ptc"
+}
