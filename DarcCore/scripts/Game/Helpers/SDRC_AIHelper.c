@@ -204,8 +204,14 @@ sealed class SDRC_AIHelper
 	Set skill and perception for all AIs in the group
 	
 	See SCR_AICombatComponent for details
+	NOTE: The setting will affect only if the AI has been spawned -> needs to be delayed.	
 	*/
 	static void SetAIGroupSkill(SCR_AIGroup group, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
+	{
+		GetGame().GetCallqueue().CallLater(SetAIGroupSkillDelayed, 5000, false, group, skill, perceptionFactor);
+	}
+		
+	static void SetAIGroupSkillDelayed(SCR_AIGroup group, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
 		array<AIAgent> groupMembers  = new array<AIAgent>;
 		
@@ -219,7 +225,42 @@ sealed class SDRC_AIHelper
 			}
 		}
 	}
+			
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Set movement speed for a group
 	
+	NOTE: The setting will affect only if the AI has been spawned -> needs to be delayed.
+	*/
+	static void SetAIGroupMovementType(SCR_AIGroup group, EMovementType movementType)
+	{
+		GetGame().GetCallqueue().CallLater(SetAIGroupMovementTypeDelayed, 5000, false, group, movementType);
+	}
+	
+	static void SetAIGroupMovementTypeDelayed(SCR_AIGroup group, EMovementType movementType)
+	{
+		array<AIAgent> groupMembers  = new array<AIAgent>;
+		
+		if (group)
+		{
+			group.GetAgents(groupMembers);
+			
+			foreach (AIAgent groupMember : groupMembers)
+			{
+				if (movementType == EMovementType.IDLE)
+				{
+					SDRC_WPHelper.RemoveWaypoints(group);
+				}
+					
+				AICharacterMovementComponent m_MovementComponent = AICharacterMovementComponent.Cast(groupMember.GetControlledEntity().FindComponent(AICharacterMovementComponent));
+				if (m_MovementComponent)
+				{
+					m_MovementComponent.SetMovementTypeWanted(movementType);
+				}
+			}
+		}
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find all groups
@@ -424,4 +465,18 @@ sealed class SDRC_AIHelper
 		
 		return false;				
 	}			
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Are all AIs in a group dead?
+	*/
+	static bool IsGroupDead(SCR_AIGroup group)
+	{
+		//Seems that if all members are dead, the group becomes null.
+		if (group)
+		{
+			return false;
+		}
+		return true;
+	}
 }

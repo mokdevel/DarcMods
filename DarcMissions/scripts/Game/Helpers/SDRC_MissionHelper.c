@@ -375,5 +375,5 @@ sealed class SDRC_MissionHelper
 		}
 		
 		return building;
-	}	
+	}		
 }

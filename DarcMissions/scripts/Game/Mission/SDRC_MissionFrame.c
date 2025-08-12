@@ -111,6 +111,8 @@ class SDRC_MissionFrame
 			SDRC_MapMarkerHelper.CreateMapMarker("1700 0 1000", DC_EMissionIcon.GM_MISSION_PATROL_MAP, "DMC_B", "This is a description for a mission");
 			SDRC_MapMarkerHelper.CreateMapMarker("1800 0 1000", DC_EMissionIcon.GM_MISSION_RADIOACTIVE_MAP, "DMC_B", "This is a description for a mission");
 			SDRC_MapMarkerHelper.CreateMapMarker("1900 0 1000", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP, "DMC_B", "This is a description for a mission");
+			SDRC_MapMarkerHelper.CreateMapMarker("2000 0 1000", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP, "DMC_B", "This is a description for a mission");
+			SDRC_MapMarkerHelper.CreateMapMarker("2100 0 1000", DC_EMissionIcon.GM_MISSION_HVTITEM_MAP, "DMC_B", "This is a description for a mission");
 
 			SDRC_MapMarkerHelper.CreateMapMarker("1000 0 1300", DC_EMissionIcon.ICON_DEATHMARKER_MAP, "DMC_B", "Here is a text");
 			SDRC_MapMarkerHelper.CreateMapMarker("1100 0 1300", DC_EMissionIcon.ICON_DEATHMARKER_SMALL_MAP, "DMC_B", "Here is a text");

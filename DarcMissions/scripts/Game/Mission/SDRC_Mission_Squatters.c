@@ -75,13 +75,8 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		{
 			pos = m_Building.GetOrigin();
 		}
-		else
+		else //No suitable location found.
 		{
-			pos = "0 0 0";
-		}
-			
-		if (pos == "0 0 0")	//No suitable location found.
-		{				
 			SDRC_Log.Add("[SDRC_Mission_Squatter] Could not find suitable location.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
@@ -104,8 +99,8 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		if (GetState() == DC_EMissionState.INIT)
 		{
 			MissionSpawn();
-			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds
-//			SetState(DC_EMissionState.ACTIVE);
+			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds. 
+			//NOTE: ACTIVE set inside MissionSpawn()
 			return;
 		}
 
@@ -140,31 +135,27 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		{
 			//Each AI is spawned in to its own group to be able to give individual waypoints to a character
 			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.aiTypes.GetRandomElement(), m_DC_Squatter.aiSkill, m_DC_Squatter.aiPerception, GetFaction());
-			m_Groups.Insert(group);
+			if (group)
+			{
+				m_Groups.Insert(group);
+			}
 			m_iSpawnIndex++;
 		}
 		else
 		{
-			float rotation = Math.RandomFloat(0, 360);
-			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(m_Building, m_DC_Squatter.lootBox, rotation, 1.5, false);
+			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuildingWithLoot(m_Building, m_DC_Squatter.lootBox, m_DC_Squatter.loot.items, m_DC_Squatter.loot.itemChance);			
 			if (entity)
 			{
 				m_EntityList.Insert(entity);
-				
-				//Put loot
-				if (m_DC_Squatter.loot)
-				{
-					m_DC_Squatter.loot.box = entity;
-					SDRC_LootHelper.SpawnItemsToStorage(m_DC_Squatter.loot.box, m_DC_Squatter.loot.items, m_DC_Squatter.loot.itemChance);
-					SDRC_Log.Add("[SDRC_Mission_Squatter:MissionSpawn] Loot added.", LogLevel.DEBUG);								
-				}
+				m_DC_Squatter.loot.box = entity;
 			}
 			else
 			{
 				SDRC_Log.Add("[SDRC_Mission_Squatter:MissionSpawn] Could not spawn loot box: " + m_DC_Squatter.lootBox, LogLevel.ERROR);								
 			}
-			
+		
 			SetState(DC_EMissionState.ACTIVE);
+			
 		}
 	}
 }

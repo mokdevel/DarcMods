@@ -137,7 +137,20 @@ sealed class SDRC_SpawnHelper
 		
 		return entity;
 	}	
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Spawn item in building (with loot)
+	*/	
+	static IEntity SpawnItemInBuildingWithLoot(IEntity building, string item, array<string> loot, float lootChance)
+	{
+		float rotation = Math.RandomFloat(0, 360);
+		IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(building, item, rotation, 1.5, false);
+		SDRC_LootHelper.SpawnItemsToStorage(entity, loot, lootChance);
+		
+		return entity;
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Despawn an entity
