@@ -6,6 +6,7 @@
 Major changes in the json files. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
 
 Main features:
+* New mission: High Value Target VIP - An AI is defined as a High Value Target VIP. Go take him down.
 * Game master map view:
   * Missions and NonValidAreas are shown on the map.
   * Missions can be deleted by pressing 'delete'.
