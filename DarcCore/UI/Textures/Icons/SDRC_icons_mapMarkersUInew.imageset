@@ -1,10 +1,10 @@
 ImageSetClass {
- RefSize 172 564
+ RefSize 228 564
  Textures {
   ImageSetTextureClass {
    screenSize FHD
-   size 172 564
-   path "{84F3106DED43833A}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-100_atlas.edds"
+   size 228 564
+   path "{84F3106DED438339}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-100_atlas.edds"
   }
  }
  Images {
@@ -28,19 +28,31 @@ ImageSetClass {
   }
   ImageSetDefClass gm_mission_Helicopter_map {
    Name "gm_mission_Helicopter_map"
-   Pos 2 114
+   Pos 170 2
    Size 54 110
    Flags 0
   }
   ImageSetDefClass gm_mission_Hunter_map {
    Name "gm_mission_Hunter_map"
+   Pos 2 114
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass gm_mission_HvtItem_map {
+   Name "gm_mission_HvtItem_map"
    Pos 58 114
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass gm_mission_HvtVip_map {
+   Name "gm_mission_HvtVip_map"
+   Pos 114 114
    Size 54 110
    Flags 0
   }
   ImageSetDefClass gm_mission_Occupation_map {
    Name "gm_mission_Occupation_map"
-   Pos 114 114
+   Pos 170 114
    Size 54 110
    Flags 0
   }
@@ -64,43 +76,37 @@ ImageSetClass {
   }
   ImageSetDefClass gm_mission_Squatters_map {
    Name "gm_mission_Squatters_map"
-   Pos 2 338
+   Pos 170 226
    Size 54 110
    Flags 0
   }
   ImageSetDefClass gm_mission_X_map {
    Name "gm_mission_X_map"
-   Pos 58 338
+   Pos 2 338
    Size 54 110
    Flags 0
   }
   ImageSetDefClass icon_DeathMarker_map {
    Name "icon_DeathMarker_map"
-   Pos 114 338
+   Pos 58 338
    Size 54 110
    Flags 0
   }
   ImageSetDefClass icon_DeathMarker_small_map {
    Name "icon_DeathMarker_small_map"
-   Pos 2 450
+   Pos 114 338
    Size 54 110
    Flags 0
   }
   ImageSetDefClass icon_DeathMarker_small_red_map {
    Name "icon_DeathMarker_small_red_map"
-   Pos 58 450
+   Pos 170 338
    Size 54 110
    Flags 0
   }
   ImageSetDefClass icon_Plus_small_map {
    Name "icon_Plus_small_map"
-   Pos 114 450
-   Size 54 110
-   Flags 0
-  }
-  ImageSetDefClass gm_mission_HvtVip_map {
-   Name "gm_mission_HvtVip_map"
-   Pos 58 338
+   Pos 2 450
    Size 54 110
    Flags 0
   }

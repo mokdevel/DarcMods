@@ -9,6 +9,7 @@ Three icons are needed:
 
 # Round image for GM drop: The icon shown on the game master entity browser 
 - Name: gm_mission_MissionName_round
+- Hide grayball and location
 - Size: 53x52 with DPI 30
 - Color: White 
 - In Gimp: 
@@ -16,6 +17,7 @@ Three icons are needed:
 
 # UI image for GM view: The icon shown on the prefab and seen when dropped on the map by GM
 - Name: gm_mission_MissionName
+- Hide grayball
 - Size: 128x100 with DPI 30
 - Color: White
 - In Gimp
