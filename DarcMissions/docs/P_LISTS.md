@@ -81,6 +81,13 @@ C_SNIPER
 C_LAUNCHER
 C_MEDIC
 C_SPECIAL
+
+//Zombies and creatures (untested!)
+G_ZOMBIE_SMALL
+G_ZOMBIE_MEDIUM
+G_ZOMBIE_LARGE
+C_DEMON
+C_DEMON_BOSS
 ```
 
 # Examples
