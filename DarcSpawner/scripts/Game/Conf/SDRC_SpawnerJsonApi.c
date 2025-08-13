@@ -10,39 +10,46 @@ class SDRC_SpawnerConfig : Managed
 	int version = 1;
 	string author = "darc";
 	//Spawner specific
-	bool showMarker;
-	string markerType;					//marker type
-	int markerIdx;						//marker ID
 	int spawnSetID;						//-1 = random, other numbers are the index of spawnSet
 	bool spawnOnRoad;					//Spawn the cars on road
 	int spawnRndRadius;					//Random radius where the spawnName spawns. 
-	float spawnWorldSizeMultiplier;		//If spawnCount = 0, we search for the world size and multiple with this. 
-										//For example: 4km wide map with spawnWorldSizeMultiplier = 2 results in spawnCount = 8 (4*2)
+	float spawnWorldSizeMultiplier;		//If spawnWorldSizeMultiplier > 0, we increase the maximum amount of containers to match the map size.
+										//For example: 4km wide map with spawnWorldSizeMultiplier = 0.5 results in maximum containerCount*2 (4*0.5)
 	bool disableArsenal;				//Disable arsenal so that no other items are found
-	ref array<ref SDRC_SpawnSet> spawnSets = {};	
+	ref array<ref SDRC_SpawnSet> spawnSetList = {};	
 }
 
 //------------------------------------------------------------------------------------------------
 class SDRC_SpawnSet : Managed
 {
-	//Mission specific
+	//Mission specific	
 	string comment;
+	bool showMarker;								//Show a marker 
+	string markerType;								//marker type
+	int markerIdx;									//marker ID
 	ref array<EMapDescriptorType> locationTypes;
-	ref array<string> spawnNames;					//What resource to spawn; cars, box, .. All of these will be spawned with spawnChance chance
-	float spawnChance;								//The change to spawn an item from spawnNames. 0.5 = 50% chance
-	int spawnCount;									//The maximum amount of spawnNames to spawn. For example: 10 with 0.5 chance would spawn 5 items on average. 0 = count a value depending on mapsize.
-	ref array<string> itemNames;					//Items to add to each spawnNames
-	float itemChance;								//The chance to spawn and item from itemNames. 0.5 = 50% chance
+	ref array<string> containers;					//What resource to spawn; cars, box, .. All of these will be spawned with spawnChance chance
+	array<int> containerCount = {};					//The min, max amount of spawnNames to spawn. For example: 10 with 0.5 chance would spawn 5 items on average. 0 = count a value depending on mapsize.
+//	string lootBox = "";							//The loot box
+	ref SDRC_Loot loot = null;
 	
-	void Set(string comment_, array<EMapDescriptorType> locationTypes_, array<string> spawnNames_, float spawnChance_, int spawnCount_, array<string> itemNames_, float itemChance_)
+//	ref array<string> itemNames;					//Items to add to each spawnNames
+//	float itemChance;								//The chance to spawn and item from itemNames. 0.5 = 50% chance
+	
+	//void Set(string comment_, bool showMarker_, string markerType_, int markerIdx_, array<EMapDescriptorType> locationTypes_, array<string> containers_, array<int> containerCount_, array<string> itemNames_, float itemChance_)
+	//void Set(string comment_, bool showMarker_, string markerType_, int markerIdx_, array<EMapDescriptorType> locationTypes_, array<string> containers_, array<int> containerCount_, string lootBox_)
+	void Set(string comment_, bool showMarker_, string markerType_, int markerIdx_, array<EMapDescriptorType> locationTypes_, array<string> containers_, array<int> containerCount_)
 	{
 		comment = comment_;
+		showMarker = showMarker_;
+		markerType = markerType_;
+		markerIdx = markerIdx;		
 		locationTypes = locationTypes_;
-		spawnNames = spawnNames_;
-		spawnChance = spawnChance_;
-		spawnCount = spawnCount_;
-		itemNames = itemNames_;
-		itemChance = itemChance_;
+		containers = containers_;
+		containerCount = containerCount_;
+//		lootBox = lootBox_;		
+//		itemNames = itemNames_;
+//		itemChance = itemChance_;
 	}
 }
 
@@ -92,51 +99,60 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 		conf.spawnRndRadius = 100;
 		conf.spawnWorldSizeMultiplier = 2;
 		conf.disableArsenal = true;
+		//----------------------------------------------------		
+		conf.spawnSetList.Insert(SpawnSet0);
 		
 		//Different spawner confs
 		//---
-		SDRC_SpawnSet spawnSet0 = new SDRC_SpawnSet();
-		spawnSet0.Set
-		(			
-			"Spawn two cars",
-			{
-				EMapDescriptorType.MDT_NAME_GENERIC,
-				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_VILLAGE, 
-				EMapDescriptorType.MDT_NAME_SETTLEMENT,
-				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
-				EMapDescriptorType.MDT_BASE,
-				EMapDescriptorType.MDT_PORT,
-				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_FORTRESS
-			},
-			{
-				"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
-				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
-				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
-				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
-				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
-				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
-			},
-			0.8,	//spawnChance
-			2,		//spawnCount, max
-			{
-				"WEAPON_GRENADE",
-				"ITEM_MEDICAL",
-				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
-				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
-				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
-				"{3805C0B87B9D2AB0}prefabs/weapons/Melee/Knife.et",							//From Functional Knives
-				"{CB716A41903571AD}prefabs/weapons/Melee/Knife_US.et"						//From Functional Knives
-			},
-			0.9
-		);
-		conf.spawnSets.Insert(spawnSet0);
-				
+		//----------------------------------------------------
+		SDRC_SpawnSet spawnSet0()
+		{
+			SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
+			spawnSet.Set
+			(		
+				"index 0 : Spawn two cars",
+				true, "DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP, 
+				{
+					EMapDescriptorType.MDT_NAME_GENERIC,
+					EMapDescriptorType.MDT_NAME_LOCAL,
+					EMapDescriptorType.MDT_NAME_CITY,
+					EMapDescriptorType.MDT_NAME_VILLAGE, 
+					EMapDescriptorType.MDT_NAME_SETTLEMENT,
+					EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+					EMapDescriptorType.MDT_BASE,
+					EMapDescriptorType.MDT_PORT,
+					EMapDescriptorType.MDT_AIRPORT,
+					EMapDescriptorType.MDT_FORTRESS
+				},
+				{
+					"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
+					"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
+					"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
+					"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
+					"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
+					"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
+				},
+				{1, 3},	//min, max
+			);
+			SDRC_Loot loot = new SDRC_Loot();
+			array<string> lootItems = {
+					"WEAPON_GRENADE",
+					"ITEM_MEDICAL",
+					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+					"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
+					"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
+					"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
+					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
+					"{3805C0B87B9D2AB0}prefabs/weapons/Melee/Knife.et",							//From Functional Knives
+					"{CB716A41903571AD}prefabs/weapons/Melee/Knife_US.et"						//From Functional Knives
+				};
+			loot.Set(0.9, lootItems);
+			spawnSet.loot = loot;
+			
+			return spawnSet;
+		}
+/*		
 		//---
 		SDRC_SpawnSet spawnSet1 = new SDRC_SpawnSet();
 		spawnSet1.Set
@@ -236,6 +252,6 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 			},
 			0.7
 		);
-		conf.spawnSets.Insert(spawnSet3);				
+		conf.spawnSets.Insert(spawnSet3);				*/
 	}
 }
