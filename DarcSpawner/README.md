@@ -36,11 +36,11 @@ array<SCR_DC_SpawnSet> spawnSets : List of spawners
 ```
 string comment : See General parameters
 bool showMarker : See Common parameters
-string markerType : Marker type of SCR_EMapMarkerType. DARC_MISSION by default. You could use for example PLACED_MILITARY or any of the other defined ones.
-int markerIdx : The index of the icon in the map marker configuration (check in workbench). 
+string markerType : See Common parameters
+int markerIdx : See Common parameters
 array<EMapDescriptorType> locationTypes : See Location parameters
 array<string> containers : What container to spawn; cars, box, .. All of these will be spawned with spawnChance chance
-SDRC_Loot loot : Loot found in the mission. 
+SDRC_Loot loot : Loot found in the mission. See Loot parameters
 ```
 
 ## Related documentation:
