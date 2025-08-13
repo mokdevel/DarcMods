@@ -13,7 +13,7 @@ The mission can be configured in two different ways:
 
 Note on GM requested mission: The building chosen will as close as possible to the location where mission was dropped. In case there are multiple houses beside each other, the mission location might not be exactly what you wanted.
 
-See [Common and General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_COMMON.md)
+See [Common and General parameters](./P_COMMON.md) , [Loot](./P_LOOT.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
