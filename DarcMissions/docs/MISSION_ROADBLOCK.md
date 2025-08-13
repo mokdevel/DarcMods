@@ -18,4 +18,4 @@ array<int> roadblockList : The indexes of roadblocks.
 array<SDRC_Occupation> roadblocks : List of roadblocks.
 ```
 
-NOTE: The roadblocks use the same ``SDRC_Occupation`` structure as occupations . See [SDRC_Occupation](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSION_OCCUPATION.md#sdrc_occupation)
+NOTE: The roadblocks use the same ``SDRC_Occupation`` structure as occupations . See [SDRC_Occupation](./MISSION_OCCUPATION.md#sdrc_occupation)
