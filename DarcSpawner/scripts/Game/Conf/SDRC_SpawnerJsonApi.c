@@ -84,7 +84,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 		conf.spawnOnRoad = false;
 		conf.spawnRndRadius = 100;
 		conf.spawnWorldSizeMultiplier = 0;
-		conf.containerCount = 6;
+		conf.containerCount = 20;
 		conf.disableArsenal = true;
 		conf.spawnSetList = {0,1,2,2,3,3};
 		//----------------------------------------------------		
@@ -101,7 +101,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(		
 			"index 0: Spawn ambulances",
-			true, "DARC_MISSION", DC_EMissionIcon.ICON_DEATHMARKER_SMALL_RED_MAP, 
+			true, "DARC_MISSION", DC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
 			{
 				EMapDescriptorType.MDT_NAME_GENERIC,
 				EMapDescriptorType.MDT_NAME_LOCAL,
@@ -147,7 +147,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(			
 			"index 1: Spawn ambulances",
-			true, "DARC_MISSION", DC_EMissionIcon.ICON_DEATHMARKER_SMALL_RED_MAP, 
+			true, "DARC_MISSION", DC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
 			{
 				EMapDescriptorType.MDT_NAME_CITY, 
 				EMapDescriptorType.MDT_NAME_VILLAGE, 
@@ -188,7 +188,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(		
 			"index 2: Spawn civilian cars",
-			true, "DARC_MISSION", DC_EMissionIcon.ICON_DEATHMARKER_SMALL_RED_MAP, 		
+			true, "DARC_MISSION", DC_EMissionIcon.ICON_EXCLAMATION_SMALL_MAP, 		
 			{
 				EMapDescriptorType.MDT_NAME_CITY, 
 				EMapDescriptorType.MDT_NAME_VILLAGE, 
@@ -226,7 +226,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(		
 			"index 3: Spawn loot crates",
-			true, "DARC_MISSION", DC_EMissionIcon.ICON_DEATHMARKER_SMALL_RED_MAP, 
+			true, "DARC_MISSION", DC_EMissionIcon.ICON_CRATE_SMALL_MAP, 
 			{
 				EMapDescriptorType.MDT_NAME_HILL,
 				EMapDescriptorType.MDT_NAME_LOCAL,
