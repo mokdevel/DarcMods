@@ -13,7 +13,7 @@ bool showHint : Show players a hint with details about the missions. False will 
 bool showMessage : Show winmessage and losemessage to players. False will hide these.
 ```
 
-## SDRC_MissionConfigGeneral - General parameters
+## SDRC_MissionConfigGeneral
 ```
 string comment : Generic comment to describe the mission. Not used in game.
 array<vector> pos : Position(s) for mission. "0 0 0" used for random location chosen from locationTypes.
@@ -31,7 +31,9 @@ DC_EMissionWinCondition winCondition =
 string winMessage : Message to show when mission is completed
 string loseMessage : Message to show when mission fails.
 int xp = 0 : Experience given - not supported currently
+```
 
+## General parameters
 array<int> groupCount : (min, max) Amount of AI groups of characters to spawn.
 array<string> groupTypes : The prefab names of AI groups or characters. The AI is randomly picked from this list.
   Example : {
