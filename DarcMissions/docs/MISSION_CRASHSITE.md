@@ -7,7 +7,7 @@ The location for the initial chopper spawn is random and only checks for mission
 
 Note: ```distanceToMission``` and ```distanceToPlayer``` overrides missionFrame settings. The initial helicopter position could start on top of a mission and it does not matter.
 
-See [Common and General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_COMMON.md)
+See [Common and General parameters](./P_COMMON.md) , [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
