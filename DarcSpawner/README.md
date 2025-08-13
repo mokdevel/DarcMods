@@ -1,7 +1,7 @@
 # DarcSpawner
-Spawns vehicles (could work with containers too) randomly on map with some loot. Once everything is spawned, the mod will stop running.
+Spawns vehicles or other containers randomly on map with some loot. Once everything is spawned, the mod will stop running.
 
-The position for a spawn is searched from locations listed. If the location is in water, the spawn is interrupted and the vehicle is skipped. This is by design.
+The position for a spawn is searched from locations listed.
 
 ## Installation
 Just activate the mod (and dependencies) and you're good to go.
@@ -15,7 +15,7 @@ The configuration files will be under your ```profile\DarcMods_conf\*```. Depend
 For examples of configuration files see [ExampleConfigs](https://github.com/mokdevel/DarcMods/tree/main/DarcSpawner/ExampleConfigs).
 
 ## How does the spawn happen?
-The defined ``spawnSetID`` is selected. Depending on the parameters, random spawning will happen. A location is chosen from the map of type ``locationTypes``. The exact position is A) randomized with ``spawnRndRadius`` or B) if ``spawnOnRoad`` is set, a position on a road is searched. Once the position is chosen, the list of ``spawnNames`` is gone through. With ``spawnChance``, the container will spawn. As this is random, you sometime may get 0 spawns. ``spawnCount`` is the maximum amount of containers to spawn. Loot items are then added to the container.
+A random index is chosen from ``spawnSetList`` and the indexed ``spawnSet`` is selected. Depending on the parameters, random spawning will happen. A random item from ``containers`` is selected. A location is chosen from the map of type ``locationTypes``. The exact position is A) randomized with ``spawnRndRadius`` or B) if ``spawnOnRoad`` is set, a position on a road is searched (only for vehicles). ``spawnCount`` is the maximum amount of containers to spawn. Loot items are then added to the container.
 
 ## Spawner config
 Example: [dc_spawnerConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner/ExampleConfigs/dc_spawnerConfig.json)
