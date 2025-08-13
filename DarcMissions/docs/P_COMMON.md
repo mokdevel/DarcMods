@@ -34,6 +34,7 @@ int xp = 0 : Experience given - not supported currently
 ```
 
 ## General parameters
+```
 array<int> groupCount : (min, max) Amount of AI groups of characters to spawn.
 array<string> groupTypes : The prefab names of AI groups or characters. The AI is randomly picked from this list.
   Example : {
