@@ -43,7 +43,7 @@ sealed class SDRC_Locations
 			}
 		#endif
 		
-		int stime = System.GetTickCount();
+		//int stime = System.GetTickCount();
 		
 		private array<MapItem> m_tmpLocationArray = new array<MapItem>;
 		private array<MapItem> m_debugLocationArray = new array<MapItem>;
@@ -71,8 +71,8 @@ sealed class SDRC_Locations
 		SDRC_Log.Add("[SDRC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
 		ShowDebugInfo(m_debugLocationArray);
 		
-		int etime = System.GetTickCount();
-		SDRC_Log.Add("[SDRC_Locations:GetLocations] Searching took: " + (etime-stime), LogLevel.DEBUG);
+		//int etime = System.GetTickCount();
+		//SDRC_Log.Add("[SDRC_Locations:GetLocations] Searching took: " + (etime-stime), LogLevel.DEBUG);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -87,7 +87,7 @@ sealed class SDRC_Locations
 			}
 		#endif
 
-		int stime = System.GetTickCount();
+		//int stime = System.GetTickCount();
 				
 		private array<MapItem> m_tmpLocationArray = new array<MapItem>;
 
@@ -111,8 +111,8 @@ sealed class SDRC_Locations
 		SDRC_Log.Add("[SDRC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
 		ShowDebugInfo(locationArray);
 		
-		int etime = System.GetTickCount();
-		SDRC_Log.Add("[SDRC_Locations:GetLocations] Searching took: " + (etime-stime), LogLevel.DEBUG);
+		//int etime = System.GetTickCount();
+		//SDRC_Log.Add("[SDRC_Locations:GetLocations] Searching took: " + (etime-stime), LogLevel.DEBUG);
 	}
 
 	//------------------------------------------------------------------------------------------------

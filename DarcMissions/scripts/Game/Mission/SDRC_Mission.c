@@ -596,7 +596,7 @@ class SDRC_Mission
 		
 		if (IsShowHint() && IsShowMessage())			
 		{
-			SDRC_HintHelper.ShowHintMission("Success: " + GetTitle(), GetWinMessage(), DC_EMissionIcon.ICON_WIN_ROUND);
+			SDRC_MissionHintHelper.Show("Success: " + GetTitle(), GetWinMessage(), DC_EMissionIcon.ICON_WIN_ROUND);
 		}
 		
 		//Set ActiveTimeToEnd to be the final active time
@@ -615,7 +615,7 @@ class SDRC_Mission
 		
 		if (IsShowHint() && IsShowMessage())
 		{
-			SDRC_HintHelper.ShowHintMission("Failure: " + GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);
+			SDRC_MissionHintHelper.Show("Failure: " + GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);
 		}
 	}
 	

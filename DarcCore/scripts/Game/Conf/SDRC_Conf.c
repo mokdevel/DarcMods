@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-#define SDRC_RELEASE
+//#define SDRC_RELEASE
 
 sealed class SDRC_Conf
 {
@@ -32,8 +32,8 @@ sealed class SDRC_Conf
 		
 //Development time options	
 #ifndef SDRC_RELEASE
-	const bool SDRC_ENABLE_DARCSPAWNER = false;
-	const bool SDRC_ENABLE_DARCMISSIONS	= true;
+	const bool SDRC_ENABLE_DARCSPAWNER = true;
+	const bool SDRC_ENABLE_DARCMISSIONS	= false;
 	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
 	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
 	const bool RELEASE = false;					
