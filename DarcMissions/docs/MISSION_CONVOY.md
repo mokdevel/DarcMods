@@ -22,16 +22,7 @@ array<SDRC_Convoy> convoys : List of convoys
 
 ### SDRC_Convoy
 ```
-string comment : See General parameters
-vector pos : See General parameters. This is the starting point for the convoy 
-vector posDestination : Destination for the convoy to go to. See also General parameters - pos.
-string posName : See General parameters
-string title : See General parameters
-string info : See General parameters
-DC_EMissionWinCondition winCondition : See General parameters
-string winMessage : See General parameters
-string loseMessage : See General parameters
-int xp = 0 : See General parameters
+SDRC_MissionConfigGeneral general : See General parameters
 array<EMapDescriptorType> locationTypes : See Location parameters
 array<string> groupTypes : See General parameters
 int aiSkill : See General parameters
