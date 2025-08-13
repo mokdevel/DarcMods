@@ -44,5 +44,5 @@ array<string> buildingNames : Names of the buildings. This works as a wildcard. 
   "Barracks_" will include all barrack types on the map.
   "PubVillage_E_1L01" will include this type of pub and will ignore the others.
 string lootBox : The box for loot. See Loot box for compatible values.
-SCR_DC_Loot loot : (optional) Loot found in the mission. 
+SCR_DC_Loot loot : (optional) Loot found in the mission.  See Loot parameters.
 ```
