@@ -1,7 +1,7 @@
 ## Loot parameters
 Loot is the reward of a mission. It is usually in a container (vehicle, box, ..) that is spawned in the mission. The boxes and crates are special for the mod. 
 
-See [loot box](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#loot-box). 
+See [loot box](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LOOT.md#loot-box). 
 
 ### SCR_DC_Loot
 ```
