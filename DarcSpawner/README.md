@@ -44,7 +44,8 @@ float itemChance : The chance to spawn and item from itemNames. 0.5 = 50% chance
 
 ## Related documentation:
 Some parameters are described in DarcMissions documentation
-- [Common parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#common-parameters)
-- [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#general-parameters)
-- [Location parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#location-parameters)
-- [LootLists](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/README.md#loot-lists)
+- [Common parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_COMMON.md#common-parameters)
+- [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_COMMON.md#general-parameters)
+- [Location parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LOCATIONS.md)
+- [Loot](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LOOT.md)
+- [LootLists](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LISTS.md#loot-lists)
