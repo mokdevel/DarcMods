@@ -84,9 +84,9 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 		conf.spawnOnRoad = false;
 		conf.spawnRndRadius = 100;
 		conf.spawnWorldSizeMultiplier = 0;
-		conf.containerCount = 4;
+		conf.containerCount = 6;
 		conf.disableArsenal = true;
-		conf.spawnSetList = {3};
+		conf.spawnSetList = {0,1,2,2,3,3};
 		//----------------------------------------------------		
 		conf.spawnSets.Insert(SpawnSet0());
 		conf.spawnSets.Insert(SpawnSet1());
@@ -193,14 +193,18 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_NAME_CITY, 
 				EMapDescriptorType.MDT_NAME_VILLAGE, 
 				EMapDescriptorType.MDT_NAME_HILL,
-				EMapDescriptorType.MDT_NAME_RIDGE
-			
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_NAME_LOCAL,
 			},
 			{
 				"{54C3CC22DEBD57BE}Prefabs/Vehicles/Wheeled/S105/S105_beige.et",
 				"{321016E0F9361A22}Prefabs/Vehicles/Wheeled/S105/S105_lightgreen.et",
 				"{6E485048122CEEEE}Prefabs/Vehicles/Wheeled/S1203/S1203_cargo_red.et",
-				"{F77C41245A580FD1}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_blue.et"
+				"{F77C41245A580FD1}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_blue.et",
+				"{C75DAB159B434B77}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_cargo_CIV_grey.et",
+				"{5F5AAFE8465D9D62}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_cargo_FIA.et",
+				"{BDE16A6AE9942D44}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_transport_FIA.et",
+				"{9B3A89DD33FF0483}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_blue.et",
 			}
 		);
 		SDRC_Loot loot = new SDRC_Loot();
@@ -225,6 +229,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 			true, "DARC_MISSION", DC_EMissionIcon.ICON_DEATHMARKER_SMALL_RED_MAP, 
 			{
 				EMapDescriptorType.MDT_NAME_HILL,
+				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_NAME_RIDGE,
 				EMapDescriptorType.MDT_FORESTERLODGE,
 				EMapDescriptorType.MDT_FORESTTRIANGLE,
