@@ -93,6 +93,7 @@ Dependency specific files
 ## Next release (unreleased)
 Major changes in the json files. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
 
+### DarcMissions
 Main features:
 * New mission: High Value Target VIP - An AI is defined as a High Value Target VIP. Go take him down.
 * Game master map view:
@@ -117,6 +118,11 @@ Changes:
 * dc_coreConfig.json added showOnGMMapNonValidArea, showOnGMMapMissionMarker
 * dc_Mission*.json added markerType, markerIdx, showMessage
 * dc_Mission*.json moved winCondition, winMessage, loseMessage, xp under each individual mission item.
+
+### DarcSpawner
+Main features:
+* You can have multiple spawnSets which are randomly chosen
+* Configuration structure follows the same way as missions. This means that a new json is to be used. Delete your old one.
 
 ## 20250801
 Minor update to properly find enemies when using TOH ReCharacters. Update *should not* affect existing installs. If you're using TOH ReCharacters, delete your dc_enemyList.json and a new one will be created.
