@@ -23,26 +23,24 @@ Example: [dc_spawnerConfig.json](https://github.com/mokdevel/DarcMods/blob/main/
 ```
 int version : See Common parameters
 string author : See Common parameters
-bool showMarker : See Common parameters
-string markerType : Marker type of SCR_EMapMarkerType. DARC_MISSION by default. You could use for example PLACED_MILITARY or any of the other defined ones.
-int markerIdx : The index of the icon in the map marker configuration (check in workbench). 
-int spawnSetID : The spawner to use. -1 = random pick of spawner from spawnSets
 bool spawnOnRoad : Spawn the cars on road. If no road network manager found, cars spawned around the map.
 int spawnRndRadius : Random radius where the spawnName spawns. Once a location is found, additional randomization is done to avoid vehicles to be always in the same spot.
+int containerCount : Amount of containers (cars, lootboxes, etc..) to spawn.
 float spawnWorldSizeMultiplier : If spawnCount = 0, we search for the world size in km and multiple with this. For example: 4km wide map with spawnWorldSizeMultiplier = 2 results in spawnCount = 8 (4*2)
 bool disableArsenal : See General parameters
-array<SCR_DC_SpawnSet> spawnSets : List of possible spawners
+array<int> spawnSetList : The indexes of squatters.
+array<SCR_DC_SpawnSet> spawnSets : List of spawners
 ```
 
 ### SCR_DC_SpawnSet
 ```
 string comment : See General parameters
+bool showMarker : See Common parameters
+string markerType : Marker type of SCR_EMapMarkerType. DARC_MISSION by default. You could use for example PLACED_MILITARY or any of the other defined ones.
+int markerIdx : The index of the icon in the map marker configuration (check in workbench). 
 array<EMapDescriptorType> locationTypes : See Location parameters
-array<string> spawnNames : What container to spawn; cars, box, .. All of these will be spawned with spawnChance chance
-float spawnChance : The change to spawn a container  from spawnNames. 0.5 = 50% chance
-int spawnCount : The maximum amount of spawnNames to spawn. For example: 10 with 0.5 chance would spawn 5 items on average. 0 = count a value depending on mapsize.
-array<string> itemNames : Items (prefabs or lootlists) to add to each spawnNames
-float itemChance : The chance to spawn and item from itemNames. 0.5 = 50% chance
+array<string> containers : What container to spawn; cars, box, .. All of these will be spawned with spawnChance chance
+SDRC_Loot loot : Loot found in the mission. 
 ```
 
 ## Related documentation:
