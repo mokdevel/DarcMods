@@ -13,7 +13,7 @@ bool showHint : Show players a hint with details about the missions. False will 
 bool showMessage : Show winmessage and losemessage to players. False will hide these.
 ```
 
-## General parameters
+## SDRC_MissionConfigGeneral - General parameters
 ```
 string comment : Generic comment to describe the mission. Not used in game.
 array<vector> pos : Position(s) for mission. "0 0 0" used for random location chosen from locationTypes.
