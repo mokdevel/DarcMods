@@ -13,17 +13,18 @@ int missionCycleTime : See Common parameters
 bool showMarker : See Common parameters
 bool showHint : See Common parameters
 bool showMessage : See Common parameters
-string title : See General parameters
-string info : See General parameters
-DC_EMissionWinCondition winCondition : See General parameters
-string winMessage : See General parameters
-string loseMessage : See General parameters
-int xp = 0 : See General parameters
+int minDistanceToPlayer : Hunter group minimum distance to player for spawn
+int maxDistanceToPlayer : ..max distance
+int rndDistanceToPlayer : The error on the location where AI thinks you are. (0..rndDistanceToPlayer).
+array<int> hunterList : The indexes of hunters.
+array<SDRC_Hunter> hunters : List of hunters
+```
+
+## SDRC_Hunter
+```
+SDRC_MissionConfigGeneral general
 array<int> groupCount : See General parameters
 array<string> groupTypes : See General parameters
 int aiSkill : See General parameters
 float aiPerception : See General parameters
-int minDistanceToPlayer : Hunter group minimum distance to player for spawn
-int maxDistanceToPlayer : ..max distance
-int rndDistanceToPlayer : The error on the location where AI thinks you are. (0..rndDistanceToPlayer). 
 ```
