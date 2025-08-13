@@ -38,7 +38,7 @@ array<EMapDescriptorType> locationTypes : See Location parameters
 array<string> spawnNames : What resource to spawn; cars, box, .. All of these will be spawned with spawnChance chance
 float spawnChance : The change to spawn an item from spawnNames. 0.5 = 50% chance
 int spawnCount : The maximum amount of spawnNames to spawn. For example: 10 with 0.5 chance would spawn 5 items on average. 0 = count a value depending on mapsize.
-array<string> itemNames : Items (prefabs) to add to each spawnNames
+array<string> itemNames : Items (prefabs or lootlists) to add to each spawnNames
 float itemChance : The chance to spawn and item from itemNames. 0.5 = 50% chance
 ```
 
