@@ -30,14 +30,14 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		m_Config = m_HvtVipJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.HvtVipList);
+		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.hvtVipList);
 		if (idx == -1)
 		{
 			SDRC_Log.Add("[SDRC_Mission_HvtVip] No HvtVips defined.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}
-		m_DC_HvtVip = m_Config.HvtVips[idx];
+		m_DC_HvtVip = m_Config.hvtVips[idx];
 		
 		//Set defaults
 		m_iGroupCount = Math.RandomInt(m_DC_HvtVip.groupCount[0], m_DC_HvtVip.groupCount[1]);
@@ -195,8 +195,8 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 	
 	//Variables here
 	int buildingRadius;									//The radius to search for suitable buildings.
-	ref array<ref int> HvtVipList = {};				//The indexes of HvtVips.
-	ref array<ref SDRC_HvtVip> HvtVips = {};		//List of HvtVips
+	ref array<ref int> hvtVipList = {};				//The indexes of HvtVips.
+	ref array<ref SDRC_HvtVip> hvtVips = {};		//List of HvtVips
 }
 
 //------------------------------------------------------------------------------------------------
@@ -264,9 +264,9 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HVTVIP_MAP;
 		//Mission specific
 		conf.buildingRadius = 400;
-		conf.HvtVipList = {0};
+		conf.hvtVipList = {0};
 		//----------------------------------------------------
-		conf.HvtVips.Insert(HvtVip0());				
+		conf.hvtVips.Insert(HvtVip0());				
 	};
 			
 	//----------------------------------------------------

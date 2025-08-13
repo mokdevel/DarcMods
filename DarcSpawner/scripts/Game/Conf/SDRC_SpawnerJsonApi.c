@@ -12,9 +12,8 @@ class SDRC_SpawnerConfig : Managed
 	//Spawner specific
 	bool spawnOnRoad;					//Spawn the cars on road
 	int spawnRndRadius;					//Random radius where the spawnName spawns. 
-	int containerCount;
-	float spawnWorldSizeMultiplier;		//If containerCount = 0, we use the map size and spawnWorldSizeMultiplier to create ... TBD
-										//For example: 4km wide map with spawnWorldSizeMultiplier = 0.5 results in maximum containerCount*2 (4*0.5)
+	int containerCount;					//Amount of containers (cars, lootboxes, etc..) to spawn
+	float spawnWorldSizeMultiplier;		//If containerCount = 0, we search for the world size in km and multiple with this. For example: 4km wide map with spawnWorldSizeMultiplier = 2 results in containerCount = 8 (4*2)
 	bool disableArsenal;				//Disable arsenal so that no other items are found	
 	ref array<ref int> spawnSetList = {};	
 	ref array<ref SDRC_SpawnSet> spawnSets = {};	
@@ -30,7 +29,6 @@ class SDRC_SpawnSet : Managed
 	int markerIdx;									//marker ID
 	ref array<EMapDescriptorType> locationTypes;
 	ref array<string> containers;					//What resource to spawn; cars, box, .. All of these will be spawned with spawnChance chance
-//	string lootBox = "";							//The loot box
 	ref SDRC_Loot loot = null;
 	
 	void Set(string comment_, bool showMarker_, string markerType_, int markerIdx_, array<EMapDescriptorType> locationTypes_, array<string> containers_)

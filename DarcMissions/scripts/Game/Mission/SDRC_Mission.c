@@ -62,7 +62,7 @@ class SDRC_MissionConfig : Managed
 class SDRC_MissionConfigGeneral : Managed
 {
 	string comment;							//Generic comment to describe the mission. Not used in game.
-	ref array<vector> pos = {};					//Positions for mission. "0 0 0" used for random location chosen from locationTypes. First is mission position, second is destination for missions that need it.
+	ref array<vector> pos = {};				//Positions for mission. "0 0 0" used for random location chosen from locationTypes. First is mission position, second is destination for missions that need it.
 	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
