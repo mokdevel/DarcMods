@@ -15,7 +15,7 @@ The configuration files will be under your ```profile\DarcMods_conf\*```. Depend
 For examples of configuration files see [ExampleConfigs](https://github.com/mokdevel/DarcMods/tree/main/DarcSpawner/ExampleConfigs).
 
 ## Spawner config
-Example: [dc_spawnerConfig_Convoy.json](https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner/ExampleConfigs/dc_spawnerConfig.json)
+Example: [dc_spawnerConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner/ExampleConfigs/dc_spawnerConfig.json)
 
 ```
 int version : See Common parameters
