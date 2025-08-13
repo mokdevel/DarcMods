@@ -14,6 +14,9 @@ The configuration files will be under your ```profile\DarcMods_conf\*```. Depend
 
 For examples of configuration files see [ExampleConfigs](https://github.com/mokdevel/DarcMods/tree/main/DarcSpawner/ExampleConfigs).
 
+## How does the spawn happen?
+The defined ``spawnSetID`` is selected. Depending on the parameters, random spawning will happen. A location is chosen from the map of type ``locationTypes``. The exact position is A) randomized with ``spawnRndRadius`` or B) if ``spawnOnRoad`` is set, a position on a road is searched. Once the position is chosen, the list of ``spawnNames`` is gone through. With ``spawnChance``, the container will spawn. As this is random, you sometime may get 0 spawns. ``spawnCount`` is the maximum amount of containers to spawn. Loot items are then added to the container.
+
 ## Spawner config
 Example: [dc_spawnerConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner/ExampleConfigs/dc_spawnerConfig.json)
 
@@ -35,8 +38,8 @@ array<SCR_DC_SpawnSet> spawnSets : List of possible spawners
 ```
 string comment : See General parameters
 array<EMapDescriptorType> locationTypes : See Location parameters
-array<string> spawnNames : What resource to spawn; cars, box, .. All of these will be spawned with spawnChance chance
-float spawnChance : The change to spawn an item from spawnNames. 0.5 = 50% chance
+array<string> spawnNames : What container to spawn; cars, box, .. All of these will be spawned with spawnChance chance
+float spawnChance : The change to spawn a container  from spawnNames. 0.5 = 50% chance
 int spawnCount : The maximum amount of spawnNames to spawn. For example: 10 with 0.5 chance would spawn 5 items on average. 0 = count a value depending on mapsize.
 array<string> itemNames : Items (prefabs or lootlists) to add to each spawnNames
 float itemChance : The chance to spawn and item from itemNames. 0.5 = 50% chance
