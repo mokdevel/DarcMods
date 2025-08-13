@@ -5,7 +5,7 @@ AI patrol is spawned in a vehicle to move around the map. The convoy will go fro
 
 Note on GM requested mission: The location for the mission will be searched from the closest road. If no road is found, the mission will not spawn. The start location is what you define, destination is random unless defined in ``posDestination``.
 
-See [Common and General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_COMMON.md)
+See [Common and General parameters](./docs/P_COMMON.md) , [Loot](./docs/P_LOOT.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
