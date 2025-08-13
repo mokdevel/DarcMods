@@ -1,3 +1,9 @@
+//SDRC_RPLPlayerComp.c
+
+//------------------------------------------------------------------------------------------------
+/*!
+RPL component to provide GM map information to clients.
+*/
 class SDRC_RplPlayerCompClass : ScriptComponentClass { }
 SDRC_RplPlayerCompClass g_RplPlayerCompClass;
 
