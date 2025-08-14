@@ -72,15 +72,22 @@ sealed class SDRC_MissionHelper
 		
 		if (locations.IsEmpty())
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionLocation] No locations found. Check the list of locationTypes in your mission." , LogLevel.ERROR);
-			return "0 0 0";
+			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionLocation] locationTypes is empty. Selecting a random location.", LogLevel.WARNING);
+			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+			if (baseGameMode)
+			{
+				pos = SDRC_MissionHelper.FindMissionPos(baseGameMode.missionFrame.m_Config.minDistanceToMission, baseGameMode.missionFrame.m_Config.minDistanceToPlayer);
+			}
+		}
+		else
+		{		
+			location = locations.GetRandomElement();
+			pos = location.GetOrigin();
+			
+			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);			
 		}
 
-		location = locations.GetRandomElement();
-
-		SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);
-		
-		pos = FindWithIterate(location.GetOrigin(), searchRadius, size);
+		pos = FindWithIterate(pos, searchRadius, size);
 		
 		return pos;
 	}

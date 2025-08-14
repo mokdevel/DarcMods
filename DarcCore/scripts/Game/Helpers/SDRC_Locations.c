@@ -199,7 +199,7 @@ sealed class SDRC_Locations
 	*/		
 	static void GetLocationsCached(out array<IEntity> locationArray, array<EMapDescriptorType> locationTypeArray)
 	{
-		int stime = System.GetTickCount();
+		//int stime = System.GetTickCount();
 		
 		foreach (MapItem location: m_LocationsCache)
 		{
@@ -210,8 +210,8 @@ sealed class SDRC_Locations
 			}
 		}		
 		
-		int etime = System.GetTickCount();
-		SDRC_Log.Add("[SDRC_Locations:GetLocationsCached] Searching took: " + (etime-stime), LogLevel.DEBUG);		
+		//int etime = System.GetTickCount();
+		//SDRC_Log.Add("[SDRC_Locations:GetLocationsCached] Searching took: " + (etime-stime), LogLevel.DEBUG);		
 	}	
 	
 	//------------------------------------------------------------------------------------------------
