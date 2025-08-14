@@ -503,6 +503,10 @@ class SDRC_MissionFrame
 		SDRC_SquatterJsonApi squatterJsonApi = new SDRC_SquatterJsonApi();	
 		squatterJsonApi.Load();
 		delete squatterJsonApi;		
+		
+		SDRC_HvtVipJsonApi hvtVipJsonApi = new SDRC_HvtVipJsonApi();	
+		hvtVipJsonApi.Load();
+		delete hvtVipJsonApi;				
 	}	
 	
 	//------------------------------------------------------------------------------------------------
