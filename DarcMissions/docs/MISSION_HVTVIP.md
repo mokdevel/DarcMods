@@ -3,15 +3,11 @@ Example: [dc_missionConfig_HvtVip.json](https://github.com/mokdevel/DarcMods/blo
 
 An AI is defined as a High Value Target VIP. Go take him down. The VIP 
 
-The missions tries to find floors in the building and spawn AI and the loot box on them. This is not perfect and sometimes you will find stuff under e.g. stairs or in the attic where there is no access. Different from other missions, you should *define individual characters as AI* (C_TYPE). See: [enemy lists](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LISTS.md#enemy-list-names-id). The reason is that the individual AI is spawned inside the building and the mod tries to find a free spot inside it. Behaviour set tries to keep the AI inside the building. They may come after you outside, but should be returning to the building in case they've not found the players.
-
-The mission can be configured in two different ways:
-1) Find a building in a location by defining both ```locationTypes``` and ```buildingNames```. First the location is chosen and then the building is searched in it within ```buildingRadius```.
-2) Find a certain building type from the map by defining only ```buildingNames```. Leave ```locationTypes``` empty. ```buildingRadius``` is ignored. NOTE: The mod DarcCore will cache the buildings found from the map for faster searching. The list ```buildingNames``` is used as an additional filter on the cached results.
+The missions tries to find floors in the building and spawn AI and the loot box on them. 
 
 Note on GM requested mission: The building chosen will as close as possible to the location where mission was dropped. In case there are multiple houses beside each other, the mission location might not be exactly what you wanted.
 
-See [Common and General parameters](./P_COMMON.md) , [Loot](./P_LOOT.md)
+See [Common and General parameters](./P_COMMON.md) , [Loot](./P_LOOT.md) , [Building](./P_BUILDING.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
