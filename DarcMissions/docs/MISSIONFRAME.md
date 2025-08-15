@@ -82,6 +82,8 @@ array<int> missionTypeArray : List mission types that spawn randomly. (DC_EMissi
   5 = PATROL
   6 = SQUATTER
   7 = ROADBLOCK
+  8 = HVTVIP
+  9 = HVTITEM (!!!MISSION NOT AVAILABLE YET!!!)
 ```
 
 ## MissionFrame cycle
