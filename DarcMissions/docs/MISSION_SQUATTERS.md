@@ -23,7 +23,8 @@ array<SDRC_Squatter> squatters : List of squatters
 SDRC_MissionConfigGeneral general : See General parameters
 array<EMapDescriptorType> locationTypes : See Location parameters
 array<int> aiCount : (min, max) Amount of AI _characters_ to spawn.
-array<string> aiTypes : The prefab names of AI _characters_. The AI is randomly picked from this list.
+array<string> aiTypes : The list of AI _characters_. The AI is randomly picked from this list. Here you can use:
+  C_TYPE of character defined in enemyLists or a resourceName for a character. 
 int aiSkill : See General parameters
 float aiPerception : See General parameters
 array<string> buildingNames : See Building parameters
