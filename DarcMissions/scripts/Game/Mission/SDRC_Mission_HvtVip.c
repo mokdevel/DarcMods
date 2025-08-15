@@ -8,6 +8,9 @@ High Value Target (HVT) - Very Important Person
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_HvtVip : SDRC_Mission
 {
+	const int AI_ACTIVATE_DISTANCE = 8;
+	const int AI_TARGET_DEAD_CYCLE_TIME = 5000;
+	
 	private ref SDRC_HvtVipJsonApi m_HvtVipJsonApi = new SDRC_HvtVipJsonApi();	
 	private ref SDRC_HvtVipConfig m_Config;
 
@@ -164,6 +167,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 				m_Groups.Insert(group);
 				m_Target = group;
 				SDRC_AIHelper.SetAIGroupMovementType(group, EMovementType.IDLE);
+				//SDRC_AIHelper.SetAIGroupEnable(group, false);
 			}
 
 			GetGame().GetCallqueue().CallLater(IsTargetDead, 5000, false);
@@ -175,6 +179,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	/*!
 	A loop that checks if the target has been eliminated.
+	It also keeps the target disabled until a player is near by.
 	*/
 	void IsTargetDead()
 	{
@@ -184,7 +189,17 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 			DoWin();
 			return;
 		}
-		GetGame().GetCallqueue().CallLater(IsTargetDead, 5000, false);
+		
+		//Check if any player is near by and activate AI
+		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(m_Target.GetLeaderEntity().GetOrigin(), AI_ACTIVATE_DISTANCE, 0))
+		{
+			SDRC_AIHelper.SetAIGroupEnableDelayed(m_Target, true);
+		}
+		else
+		{
+			SDRC_AIHelper.SetAIGroupEnableDelayed(m_Target, false);
+		}
+		GetGame().GetCallqueue().CallLater(IsTargetDead, AI_TARGET_DEAD_CYCLE_TIME, false);
 	}
 }
 	

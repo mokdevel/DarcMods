@@ -6,7 +6,9 @@ Functions for various AI actions
 */
 
 sealed class SDRC_AIHelper
-{		
+{			
+	const int AI_SETTING_DELAY = 10000;
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Spawn an AIagent 
@@ -184,6 +186,11 @@ sealed class SDRC_AIHelper
 	*/
 	static void SetAISkill(AIAgent aiAgent, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
+		GetGame().GetCallqueue().CallLater(SetAISkillDelayed, AI_SETTING_DELAY, false, aiAgent, skill, perceptionFactor);
+	}
+		
+	static void SetAISkillDelayed(AIAgent aiAgent, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
+	{
 	    IEntity agentEntity = aiAgent.GetControlledEntity();
 	
 	    if (!agentEntity)
@@ -208,7 +215,7 @@ sealed class SDRC_AIHelper
 	*/
 	static void SetAIGroupSkill(SCR_AIGroup group, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
-		GetGame().GetCallqueue().CallLater(SetAIGroupSkillDelayed, 5000, false, group, skill, perceptionFactor);
+		GetGame().GetCallqueue().CallLater(SetAIGroupSkillDelayed, AI_SETTING_DELAY, false, group, skill, perceptionFactor);
 	}
 		
 	static void SetAIGroupSkillDelayed(SCR_AIGroup group, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
@@ -221,7 +228,7 @@ sealed class SDRC_AIHelper
 			
 			foreach (AIAgent groupMember : groupMembers)
 			{
-				SetAISkill(groupMember, skill, perceptionFactor);
+				SetAISkillDelayed(groupMember, skill, perceptionFactor);
 			}
 		}
 	}
@@ -234,7 +241,7 @@ sealed class SDRC_AIHelper
 	*/
 	static void SetAIGroupMovementType(SCR_AIGroup group, EMovementType movementType)
 	{
-		GetGame().GetCallqueue().CallLater(SetAIGroupMovementTypeDelayed, 5000, false, group, movementType);
+		GetGame().GetCallqueue().CallLater(SetAIGroupMovementTypeDelayed, AI_SETTING_DELAY, false, group, movementType);
 	}
 	
 	static void SetAIGroupMovementTypeDelayed(SCR_AIGroup group, EMovementType movementType)
@@ -249,7 +256,7 @@ sealed class SDRC_AIHelper
 			{
 				if (movementType == EMovementType.IDLE)
 				{
-					SDRC_WPHelper.RemoveWaypoints(group);
+					SDRC_WPHelper.RemoveWaypoints(group);			
 				}
 					
 				AICharacterMovementComponent m_MovementComponent = AICharacterMovementComponent.Cast(groupMember.GetControlledEntity().FindComponent(AICharacterMovementComponent));
@@ -261,6 +268,39 @@ sealed class SDRC_AIHelper
 		}
 	}	
 		
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Enable/Disable AIs in the group
+	
+	NOTE: The setting will affect only if the AI has been spawned -> needs to be delayed.
+	*/
+	static void SetAIGroupEnable(SCR_AIGroup group, bool enable = true)
+	{
+		GetGame().GetCallqueue().CallLater(SetAIGroupEnableDelayed, AI_SETTING_DELAY, false, group, enable);
+	}
+	
+	static void SetAIGroupEnableDelayed(SCR_AIGroup group, bool enable)
+	{
+		array<AIAgent> groupMembers  = new array<AIAgent>;
+		
+		if (group)
+		{
+			group.GetAgents(groupMembers);
+			
+			foreach (AIAgent groupMember : groupMembers)
+			{
+				if (enable)
+				{
+					groupMember.ActivateAI();
+				}
+				else
+				{
+					groupMember.DeactivateAI();
+				}
+			}
+		}
+	}		
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find all groups
