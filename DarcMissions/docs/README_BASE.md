@@ -63,6 +63,7 @@ Other parameter details available:
 * [Non Valid Areas](./docs/NONVALIDAREAS.md) aka safe zones
 * [Structures](./docs/P_STRUCTURE.md)
 * [Waypoints](./docs/P_WAYPOINTS.md)
+* [Buildings](./docs/P_BUILDING.md)
 
 # Configuration files
 The configuration files will be under your ```profile\DarcMods\<subConfDir>```. The <subConfDir> is a name for the specific sub directory under DarcMods and can be changed in dc_coreConfig.json. The default directory will be called ```default```.

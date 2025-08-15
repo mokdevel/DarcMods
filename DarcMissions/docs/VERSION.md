@@ -23,6 +23,7 @@ Main features:
   * C_DEMON_BOSS
 * Added a new road block
 * Hunter mission follows the same structure as others. You can define multiple types of hunters.
+* Leaving ``locationTypes`` empty, will pick a completely random location from map. 
 
 Changes:
 * dc_enemyList.json and dc_lootList.json changes. 
