@@ -81,8 +81,7 @@ sealed class SDRC_PlayerHelper
 						return true;
 						break;
 					}
-				}
-				
+				}				
 			}
 		}
 		

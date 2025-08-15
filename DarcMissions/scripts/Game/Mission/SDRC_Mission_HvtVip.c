@@ -183,23 +183,28 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	*/
 	void IsTargetDead()
 	{
-		if (SDRC_AIHelper.IsGroupDead(m_Target))
+		if (GetWinCondition() == DC_EMissionWinCondition.HVT_KILL_VIP)
 		{
-			SDRC_Log.Add("[SDRC_Mission_HvtVip:IsTargetDead] Target dead!", LogLevel.DEBUG);
-			DoWin();
-			return;
+			if (SDRC_AIHelper.IsGroupDead(m_Target))
+			{
+				SDRC_Log.Add("[SDRC_Mission_HvtVip:IsTargetDead] Target dead!", LogLevel.DEBUG);
+				DoWin();
+				return;
+			}
+			
+			//TBD: This could also use "CharacterControllerComponent > SetDisableMovementControls" to disable movement. Something to investigate.
+			
+			//Check if any player is near by and activate AI
+			if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(m_Target.GetLeaderEntity().GetOrigin(), AI_ACTIVATE_DISTANCE, 0))
+			{
+				SDRC_AIHelper.SetAIGroupEnableDelayed(m_Target, true);
+			}
+			else
+			{
+				SDRC_AIHelper.SetAIGroupEnableDelayed(m_Target, false);
+			}
+			GetGame().GetCallqueue().CallLater(IsTargetDead, AI_TARGET_DEAD_CYCLE_TIME, false);
 		}
-		
-		//Check if any player is near by and activate AI
-		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(m_Target.GetLeaderEntity().GetOrigin(), AI_ACTIVATE_DISTANCE, 0))
-		{
-			SDRC_AIHelper.SetAIGroupEnableDelayed(m_Target, true);
-		}
-		else
-		{
-			SDRC_AIHelper.SetAIGroupEnableDelayed(m_Target, false);
-		}
-		GetGame().GetCallqueue().CallLater(IsTargetDead, AI_TARGET_DEAD_CYCLE_TIME, false);
 	}
 }
 	
@@ -209,7 +214,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 	//Mission specific
 	
 	//Variables here
-	int buildingRadius;									//The radius to search for suitable buildings.
+	int buildingRadius;								//The radius to search for suitable buildings.
 	ref array<ref int> hvtVipList = {};				//The indexes of HvtVips.
 	ref array<ref SDRC_HvtVip> hvtVips = {};		//List of HvtVips
 }
@@ -294,7 +299,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"any",
 			"Target near %l.",
 			"Assassinate the target",
-			DC_EMissionWinCondition.HVT_VIP,
+			DC_EMissionWinCondition.HVT_KILL_VIP,
 			"The target has been neutralized.",
 			"The target escaped.",
 			0		
