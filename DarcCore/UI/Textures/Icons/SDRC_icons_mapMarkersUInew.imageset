@@ -1,10 +1,10 @@
 ImageSetClass {
- RefSize 228 564
+ RefSize 228 676
  Textures {
   ImageSetTextureClass {
    screenSize FHD
-   size 228 564
-   path "{84F3106DED43833A}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-100_atlas.edds"
+   size 228 676
+   path "{84F3106DED438339}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-100_atlas.edds"
   }
  }
  Images {
@@ -50,75 +50,87 @@ ImageSetClass {
    Size 54 110
    Flags 0
   }
+  ImageSetDefClass gm_mission_Lose_map {
+   Name "gm_mission_Lose_map"
+   Pos 170 114
+   Size 54 110
+   Flags 0
+  }
   ImageSetDefClass gm_mission_Occupation_map {
    Name "gm_mission_Occupation_map"
-   Pos 170 114
+   Pos 2 226
    Size 54 110
    Flags 0
   }
   ImageSetDefClass gm_mission_Patrol_map {
    Name "gm_mission_Patrol_map"
-   Pos 2 226
+   Pos 58 226
    Size 54 110
    Flags 0
   }
   ImageSetDefClass gm_mission_RadioActive_map {
    Name "gm_mission_RadioActive_map"
-   Pos 58 226
+   Pos 114 226
    Size 54 110
    Flags 0
   }
   ImageSetDefClass gm_mission_Roadblock_map {
    Name "gm_mission_Roadblock_map"
-   Pos 114 226
+   Pos 170 226
    Size 54 110
    Flags 0
   }
   ImageSetDefClass gm_mission_Squatters_map {
    Name "gm_mission_Squatters_map"
-   Pos 170 226
+   Pos 2 338
+   Size 54 110
+   Flags 0
+  }
+  ImageSetDefClass gm_mission_Win_map {
+   Name "gm_mission_Win_map"
+   Pos 58 338
    Size 54 110
    Flags 0
   }
   ImageSetDefClass gm_mission_X_map {
    Name "gm_mission_X_map"
-   Pos 2 338
+   Pos 114 338
    Size 54 110
    Flags 0
   }
   ImageSetDefClass icon_Crate_small_map {
    Name "icon_Crate_small_map"
-   Pos 58 338
+   Pos 170 338
    Size 54 110
    Flags 0
   }
   ImageSetDefClass icon_DeathMarker_map {
    Name "icon_DeathMarker_map"
-   Pos 114 338
+   Pos 2 450
    Size 54 110
    Flags 0
   }
   ImageSetDefClass icon_DeathMarker_small_map {
    Name "icon_DeathMarker_small_map"
-   Pos 170 338
+   Pos 58 450
    Size 54 110
    Flags 0
   }
   ImageSetDefClass icon_DeathMarker_small_red_map {
    Name "icon_DeathMarker_small_red_map"
-   Pos 2 450
+   Pos 114 450
    Size 54 110
    Flags 0
   }
   ImageSetDefClass icon_Exclamation_small_map {
    Name "icon_Exclamation_small_map"
-   Pos 58 450
+   Pos 170 450
    Size 54 110
    Flags 0
   }
   ImageSetDefClass icon_Plus_small_map {
    Name "icon_Plus_small_map"
-   Pos 114 450
+   Pos 2 562
    Size 54 110
    Flags 0
   }

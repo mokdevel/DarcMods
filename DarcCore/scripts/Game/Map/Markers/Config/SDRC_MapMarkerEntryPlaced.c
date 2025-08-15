@@ -19,6 +19,10 @@ enum DC_EMissionIcon
 	GM_MISSION_HVTVIP_MAP,
 	GM_MISSION_HVTITEM_MAP,
 	
+	//Markers to show on top of win/lose mission
+	GM_MISSION_WIN_MAP,
+	GM_MISSION_LOSE_MAP,
+	
 	//Other markers
 	ICON_DEATHMARKER_MAP,
 	ICON_DEATHMARKER_SMALL_MAP,

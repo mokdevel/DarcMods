@@ -35,7 +35,7 @@ enum DC_EMissionWinCondition
 	AI_KILL_50,
 	AI_KILL_RANDOM,
 	
-	HVT_VIP,
+	HVT_KILL_VIP,
 };
 
 enum DC_EMissionSuccess
@@ -433,9 +433,9 @@ class SDRC_Mission
 
 	void SetMarker(bool showMarker, DC_EMissionIcon icon, string markerType = "DARC_MISSION")
 	{
+		m_bShowMarker = showMarker;
 		m_sIcon = icon;
 		m_sMarkerType = markerType;
-		m_bShowMarker = showMarker;
 	}
 	
 	void ShowMarker()
@@ -598,6 +598,13 @@ class SDRC_Mission
 		{
 			SDRC_MissionHintHelper.Show("Success: " + GetTitle(), GetWinMessage(), DC_EMissionIcon.ICON_WIN_ROUND);
 		}
+			
+		if (m_bShowMarker)
+		{
+			SDRC_MapMarkerHelper.DeleteMarker(GetId());
+			SetMarker(m_bShowMarker, DC_EMissionIcon.GM_MISSION_WIN_MAP, m_sMarkerType);
+			ShowMarker();
+		}
 		
 		//Set ActiveTimeToEnd to be the final active time
 		SetActiveTime(m_iActiveTimeToEnd);
@@ -617,6 +624,13 @@ class SDRC_Mission
 		{
 			SDRC_MissionHintHelper.Show("Failure: " + GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);
 		}
+		
+		if (m_bShowMarker)
+		{
+			SDRC_MapMarkerHelper.DeleteMarker(GetId());
+			SetMarker(m_bShowMarker, DC_EMissionIcon.GM_MISSION_LOSE_MAP, m_sMarkerType);
+			ShowMarker();
+		}		
 	}
 	
 	//------------------------------------------------------------------------------------------------
