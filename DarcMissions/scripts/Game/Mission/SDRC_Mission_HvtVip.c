@@ -413,7 +413,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			},
 			50, 0.6,
 			{"Office_E_", "Barracks_01_", "Barracks_E_02_", "MountainHotel_"},
-			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+			"{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
 			"{A517C72CEF150898}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_2.et"
 		);
 		

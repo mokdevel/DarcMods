@@ -1,17 +1,21 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 20,
+	"missionCycleTime": 30,
 	"markerType": "DARC_MISSION",
 	"markerIdx": 10,
 	"showMarker": true,
 	"showHint": true,
 	"showMessage": true,
 	"buildingRadius": 400,
-	"HvtVipList": [
-		0
+	"hvtVipList": [
+		0,
+		0,
+		0,
+		1,
+		2
 	],
-	"HvtVips": [
+	"hvtVips": [
 		{
 			"general": {
 				"comment": "index 0: HvtVips in cities",
@@ -25,7 +29,7 @@
 				"posName": "any",
 				"title": "Target near %l.",
 				"info": "Assassinate the target",
-				"winCondition": 5,
+				"winCondition": 10,
 				"winMessage": "The target has been neutralized.",
 				"loseMessage": "The target escaped.",
 				"xp": 0
@@ -45,7 +49,8 @@
 				2
 			],
 			"groupTypes": [
-				"G_LIGHT"
+				"G_LIGHT",
+				"G_RECON"
 			],
 			"aiSkill": 50,
 			"aiPerception": 0.6000000238418579,
@@ -57,7 +62,7 @@
 				"Office_E_",
 				"MountainHotel_"
 			],
-			"lootBox": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+			"lootBox": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -81,6 +86,123 @@
 				]
 			},
 			"target": "C_OFFICER"
+		},
+		{
+			"general": {
+				"comment": "index 1: HvtVips in control towers",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Flight controller near %l.",
+				"info": "Assassinate the target",
+				"winCondition": 10,
+				"winMessage": "The target has been neutralized.",
+				"loseMessage": "The target escaped.",
+				"xp": 0
+			},
+			"locationTypes": [],
+			"groupCount": [
+				1,
+				2
+			],
+			"groupTypes": [
+				"G_LIGHT"
+			],
+			"aiSkill": 50,
+			"aiPerception": 0.6000000238418579,
+			"buildingNames": [
+				"ControlTowerMilitary_"
+			],
+			"lootBox": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+			"loot": {
+				"box": null,
+				"itemChance": 0.699999988079071,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"UTIL_ATTACHMENT",
+					"UTIL_OPTICS",
+					"UTIL_MAGAZINES",
+					"UTIL_MAGAZINES",
+					"UTIL_MAGAZINES",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			},
+			"target": "C_OFFICER"
+		},
+		{
+			"general": {
+				"comment": "index 2: Businessman with bad business",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "%l is bad for business",
+				"info": "Assassinate the business man conducting bad business.",
+				"winCondition": 10,
+				"winMessage": "The target has been neutralized.",
+				"loseMessage": "The target escaped.",
+				"xp": 0
+			},
+			"locationTypes": [],
+			"groupCount": [
+				1,
+				1
+			],
+			"groupTypes": [
+				"G_HEAVY"
+			],
+			"aiSkill": 50,
+			"aiPerception": 0.6000000238418579,
+			"buildingNames": [
+				"Office_E_",
+				"Barracks_01_",
+				"Barracks_E_02_",
+				"MountainHotel_"
+			],
+			"lootBox": "{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
+			"loot": {
+				"box": null,
+				"itemChance": 0.699999988079071,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"UTIL_ATTACHMENT",
+					"UTIL_OPTICS",
+					"UTIL_MAGAZINES",
+					"UTIL_MAGAZINES",
+					"UTIL_MAGAZINES",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			},
+			"target": "{A517C72CEF150898}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_2.et"
 		}
 	]
 }

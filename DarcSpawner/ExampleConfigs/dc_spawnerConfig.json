@@ -3,7 +3,7 @@
 	"author": "darc",
 	"spawnOnRoad": false,
 	"spawnRndRadius": 100,
-	"containerCount": 6,
+	"containerCount": 20,
 	"spawnWorldSizeMultiplier": 0.0,
 	"disableArsenal": true,
 	"spawnSetList": [
@@ -19,7 +19,7 @@
 			"comment": "index 0: Spawn ambulances",
 			"showMarker": true,
 			"markerType": "DARC_MISSION",
-			"markerIdx": 14,
+			"markerIdx": 17,
 			"locationTypes": [
 				58,
 				64,
@@ -61,7 +61,7 @@
 			"comment": "index 1: Spawn ambulances",
 			"showMarker": true,
 			"markerType": "DARC_MISSION",
-			"markerIdx": 14,
+			"markerIdx": 17,
 			"locationTypes": [
 				59,
 				60,
@@ -98,7 +98,7 @@
 			"comment": "index 2: Spawn civilian cars",
 			"showMarker": true,
 			"markerType": "DARC_MISSION",
-			"markerIdx": 14,
+			"markerIdx": 18,
 			"locationTypes": [
 				59,
 				60,
@@ -134,7 +134,7 @@
 			"comment": "index 3: Spawn loot crates",
 			"showMarker": true,
 			"markerType": "DARC_MISSION",
-			"markerIdx": 14,
+			"markerIdx": 19,
 			"locationTypes": [
 				63,
 				64,
