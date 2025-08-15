@@ -92,11 +92,16 @@ Dependency specific files
 # Version history
 
 ## Next release (unreleased)
+
+.. nothing yet ..
+
+## 20250801
 Major changes in the json files. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
 
 ### DarcMissions
 Main features:
 * New mission: High Value Target VIP - An AI is defined as a High Value Target VIP. Go take him down.
+* Changes in missions related to win condition. Notice that depending on the (sub-)mission, for a win you may not need to kill all AIs. So, be careful out there.
 * Game master map view:
   * Missions and NonValidAreas are shown on the map.
   * Missions can be deleted by pressing 'delete'.
@@ -104,7 +109,6 @@ Main features:
   * A message is shown when a mission succeeds (``winMessage``) or fails (``loseMessage``).
   * First phase of win conditions is introduced. Currently win conditions are related to AI killing (100%, 75%, 50% or random value 30%-100%, High Value Target elimination)  
   * Mission icon will change to win or lose once finished.
-* Minor fixes in missions related to win condition. Notice that depending on the (sub-)mission, for a win you may not need to kill all AIs. So, be careful out there.
 * Enemy list have new entries to support Bacon Zombies and BallienCreatures. This is very untested so be careful. Entries:
   * G_ZOMBIE_SMALL
   * G_ZOMBIE_MEDIUM
@@ -114,6 +118,7 @@ Main features:
 * Added a new road block
 * Hunter mission follows the same structure as others. You can define multiple types of hunters.
 * Leaving ``locationTypes`` empty, will pick a completely random location from map. 
+* New loot box: Briefcase
 
 Changes:
 * dc_enemyList.json and dc_lootList.json changes. 
