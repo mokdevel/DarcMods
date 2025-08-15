@@ -46,7 +46,7 @@ class SDRC_Core
 		{
 			SDRC_Log.Add("[SDRC_Core] World has AIWorld: false", LogLevel.ERROR);
 		}
-		int factionCount = SDRC_Misc.GetFactionList(m_sFactionList);
+		int factionCount = SDRC_AIHelper.GetFactionList(m_sFactionList);
 		SDRC_Log.Add("[SDRC_Core] Factions available: " + factionCount + " - " + m_sFactionList, LogLevel.NORMAL);
 		SDRC_Misc.GetAddonList(m_sAddonList, true);
 		SDRC_Log.Add("[SDRC_Core] -------------------------------------", LogLevel.NORMAL);

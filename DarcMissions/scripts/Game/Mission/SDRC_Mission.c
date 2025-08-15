@@ -35,7 +35,7 @@ enum DC_EMissionWinCondition
 	AI_KILL_50,
 	AI_KILL_RANDOM,
 	
-	HVT_KILL_VIP,
+	HVT_KILL_VIP = 10,
 };
 
 enum DC_EMissionSuccess

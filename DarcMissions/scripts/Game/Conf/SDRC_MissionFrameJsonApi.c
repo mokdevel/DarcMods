@@ -28,7 +28,7 @@
 	//Development time options
 	#ifndef SDRC_RELEASE	
 		private const string SDRC_MISSION_PROFILE_DIR = "dummy";
-		private const int SDRC_MISSION_COUNT_DYNAMIC = 2;//5;//3;//8;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//5;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
 		private const int SDRC_MISSION_COUNT_STATIC = 5;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;

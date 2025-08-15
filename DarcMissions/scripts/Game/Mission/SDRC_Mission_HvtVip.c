@@ -160,14 +160,15 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 				SDRC_Log.Add("[SDRC_Mission_HvtVip:MissionSpawn] Could not spawn loot box: " + m_DC_HvtVip.lootBox, LogLevel.ERROR);								
 			}
 
-			//Spawn target enemy
+			//Spawn target enemy and it to mission faction
 			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_HvtVip.target, m_DC_HvtVip.aiSkill, m_DC_HvtVip.aiPerception, GetFaction());
 			if (group)
 			{			
 				m_Groups.Insert(group);
 				m_Target = group;
 				SDRC_AIHelper.SetAIGroupMovementType(group, EMovementType.IDLE);
-				//SDRC_AIHelper.SetAIGroupEnable(group, false);
+				Faction faction = SDRC_AIHelper.GetFactionWithName(GetFaction());
+				group.SetFaction(faction);
 			}
 
 			GetGame().GetCallqueue().CallLater(IsTargetDead, 5000, false);
@@ -284,9 +285,11 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HVTVIP_MAP;
 		//Mission specific
 		conf.buildingRadius = 400;
-		conf.hvtVipList = {0};
+		conf.hvtVipList = {0,0,0,1,2};
 		//----------------------------------------------------
 		conf.hvtVips.Insert(HvtVip0());				
+		conf.hvtVips.Insert(HvtVip1());				
+		conf.hvtVips.Insert(HvtVip2());				
 	};
 			
 	//----------------------------------------------------
@@ -317,11 +320,11 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			},
 			{1,2},
 			{
-				"G_LIGHT",
+				"G_LIGHT", "G_RECON",
 			},
 			50, 0.6,
 			{"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_", "Office_E_", "MountainHotel_"},
-			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
 			"C_OFFICER"
 		);
 		
@@ -339,4 +342,94 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 
 		return HvtVip;	
 	};
+	
+	//----------------------------------------------------
+	SDRC_HvtVip HvtVip1()
+	{
+		SDRC_HvtVip HvtVip = new SDRC_HvtVip();
+		HvtVip.general.Set(
+			"index 1: HvtVips in control towers",
+			{"0 0 0"},
+			"any",
+			"Flight controller near %l.",
+			"Assassinate the target",
+			DC_EMissionWinCondition.HVT_KILL_VIP,
+			"The target has been neutralized.",
+			"The target escaped.",
+			0		
+		);
+		HvtVip.Set(
+			{
+				//We pick any building that matches and ignore location
+			},
+			{1,2},
+			{
+				"G_LIGHT",
+			},
+			50, 0.6,
+			{"ControlTowerMilitary_"},
+			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+			"C_OFFICER"
+		);
+		
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"WEAPON_RIFLE",
+				"WEAPON_HANDGUN", "WEAPON_HANDGUN",
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
+				"UTIL_ATTACHMENT", "UTIL_OPTICS", 
+				"UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", 
+				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL",
+			};
+		loot.Set(0.7, lootItems);
+		HvtVip.loot = loot;
+
+		return HvtVip;	
+	};	
+	
+	//----------------------------------------------------
+	SDRC_HvtVip HvtVip2()
+	{
+		SDRC_HvtVip HvtVip = new SDRC_HvtVip();
+		HvtVip.general.Set(
+			"index 2: Businessman with bad business",
+			{"0 0 0"},
+			"any",
+			"%l is bad for business",
+			"Assassinate the business man conducting bad business.",
+			DC_EMissionWinCondition.HVT_KILL_VIP,
+			"The target has been neutralized.",
+			"The target escaped.",
+			0		
+		);
+		HvtVip.Set(
+			{
+				//We pick any building that matches and ignore location
+			},
+			{1,1},
+			{
+				"G_HEAVY",
+			},
+			50, 0.6,
+			{"Office_E_", "Barracks_01_", "Barracks_E_02_", "MountainHotel_"},
+			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+			"{A517C72CEF150898}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_2.et"
+		);
+		
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"WEAPON_RIFLE",
+				"WEAPON_HANDGUN", "WEAPON_HANDGUN",
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
+				"UTIL_ATTACHMENT", "UTIL_OPTICS", 
+				"UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", 
+				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL",
+			};
+		loot.Set(0.7, lootItems);
+		HvtVip.loot = loot;
+
+		return HvtVip;	
+	};		
 }
