@@ -13,7 +13,7 @@ int missionCycleTime : See Common parameters
 bool showMarker : See Common parameters
 bool showHint : See Common parameters
 bool showMessage : See Common parameters
-int buildingRadius : The radius to search for suitable buildings.
+int buildingRadius : See Building parameters
 array<int> hvtVipList : The indexes of HvtVips.
 array<SDRC_Squatter> hvtVips : List of HvtVips
 ```
@@ -26,9 +26,7 @@ array<int> groupCount : (min, max) Amount of AI groups to spawn.
 array<string> groupTypes : The resourceName names of AI groups. The AI is randomly picked from this list.
 int aiSkill : See General parameters
 float aiPerception : See General parameters
-array<string> buildingNames : Names of the buildings. This works as a wildcard. For example:
-  "Barracks_" will include all barrack types on the map.
-  "PubVillage_E_1L01" will include this type of pub and will ignore the others.
+array<string> buildingNames : See Building parameters
 string lootBox : The box for loot. See Loot box for compatible values.
 SCR_DC_Loot loot : (optional) Loot found in the mission.
 string target : The resourceName if the VIP to eliminate.
