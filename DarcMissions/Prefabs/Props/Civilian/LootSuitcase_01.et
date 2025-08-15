@@ -1,0 +1,65 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  MeshObject "{5872F0EB7FA40561}" {
+   Object "{8C8D2EF181A72B14}Assets/Props/Civilian/Suitcase_01/Suitcase_01.xob"
+  }
+  RigidBody "{5872F0EB7DFB5A9D}" {
+   Mass 10
+   ResponseIndex "SmallDestructible"
+   ModelGeometry 1
+   Static 1
+  }
+  SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" : "{76DA308CC9E2AB84}Prefabs/Props/Core/DestructionMultiPhase_Base.ct" {
+   Enabled 1
+   m_fBaseHealth 300
+   m_fDamageThresholdMaximum 10000
+   m_DestroySpawnObjects {
+    SCR_DebrisSpawnable "{661F07F0E42F23E0}" {
+     m_ModelPrefabs {
+      "{8C8D2EF181A72B14}Assets/Props/Civilian/Suitcase_01/Suitcase_01.xob"
+     }
+     m_fMass 5
+     m_eMaterialSoundType PLASTIC_SOLID
+    }
+    SCR_ParticleSpawnable "{661F07F0E42F23F9}" {
+     m_Particle "{63D673751320F318}Particles/Props/Dest_Prop_Wood_Medium.ptc"
+    }
+   }
+   m_eMaterialSoundType BREAK_PLASTIC
+  }
+  UniversalInventoryStorageComponent "{661F07F0EA7385C3}" {
+   Attributes SCR_ItemAttributeCollection "{661F07F35975C1B6}" {
+    ItemDisplayName SCR_InventoryUIInfo "{661F07F34467FAE4}" {
+    }
+   }
+  }
+  ScriptedInventoryStorageManagerComponent "{661F07F0972C6369}" {
+  }
+  ActionsManagerComponent "{661F07F0936E4812}" {
+   ActionContexts {
+    UserActionContext "{661F07F083828EE9}" {
+     ContextName "default"
+     Position PointInfo "{661F07F08B31B2F8}" {
+     }
+     Radius 1.53
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{661F07F0A5AE3D2A}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{661F07F0ADECD122}" {
+      Name "Open Loot"
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+ coords 1333.602 32.001 2181.522
+ angleY 68
+}
