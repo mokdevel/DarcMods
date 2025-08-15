@@ -21,8 +21,18 @@ In the configuration you can define missions either as a dynamic mission (```mis
 
 * GM spawned missions are dynamic missions. You can spawn missions as a GM even if you have reached the maximum count of dynamic missions. GM requested missions are spawned with a higher priority compared to normal dynamic missions. If you set both static and dynamic missions to zero, only GM spawned missions will spawn.
 
-## Mission end
-Once all AIs have been eliminated, the mission is kept alive for ```missionActiveTimeToEnd``` seconds. The time is reset if there is a player within ```missionActiveDistance```. At the end of a mission, all spawned items will despawn (for example camps) but also vehicles. 
+## Mission end (win or lose)
+Each mission has a win condition. The normal case is to eliminate a certain amount of AI to reach the goal. Once the win condition has been reached, the mission is kept alive for ```missionActiveTimeToEnd``` seconds. The time is reset if there is a player within ```missionActiveDistance```. At the end of a mission, all spawned items will despawn (for example camps) but also vehicles. 
+Available win conditions:
+```
+  0 = NONE 			  : Unused
+  1 = AI_KILL_ALL     : Kill all AIs to win
+  2 = AI_KILL_75      : 75%
+  3 = AI_KILL_50      : 50%
+  4 = AI_KILL_RANDOM  : 30%-100% of AIs to kill. This is set randomly when mission starts.
+  5-9: RESERVED       : Reserved for future use
+  10 = HVT_KILL_VIP   : Kill the target VIP - shall be used only with HVTVIP mission.
+```
 
 # Configuration
 Configuration is done in .json files.
