@@ -175,22 +175,30 @@ sealed class SDRC_BuildingHelper
 		posStart[1] = posStartOrig[1] + sums[1];
 		DoFloorTrace(floorsTmp, building, posStart);
 		
-//		float mulVal = 0.07;
-		float mulVal = Math.RandomFloat(0.05, 0.10);			//Was 0.15
-		posStart[0] = posStartOrig[0] + (sums[0] * mulVal);
-		posStart[2] = posStartOrig[2] + (sums[2] * mulVal);
+		float mulValX = Math.RandomFloat(0.05, 0.25);
+		float mulValY = Math.RandomFloat(0.05, 0.25);
+		posStart[0] = posStartOrig[0] + (sums[0] * mulValX);
+		posStart[2] = posStartOrig[2] + (sums[2] * mulValY);
 		DoFloorTrace(floorsTmp, building, posStart);
 		
-		mulVal = Math.RandomFloat(0.05, 0.20);
-		posStart[0] = posStartOrig[0] + (sums[0] * mulVal);
-		posStart[2] = posStartOrig[2] - (sums[2] * mulVal);
+		mulValX = Math.RandomFloat(0.05, 0.25);
+		mulValY = Math.RandomFloat(0.05, 0.25);
+		posStart[0] = posStartOrig[0] + (sums[0] * mulValX);
+		posStart[2] = posStartOrig[2] - (sums[2] * mulValY);
 		DoFloorTrace(floorsTmp, building, posStart);
 
-		mulVal = Math.RandomFloat(0.05, 0.30);
-		posStart[0] = posStartOrig[0] - (sums[0] * mulVal);
-		posStart[2] = posStartOrig[2] + (sums[2] * mulVal);
+		mulValX = Math.RandomFloat(0.05, 0.25);
+		mulValY = Math.RandomFloat(0.05, 0.25);
+		posStart[0] = posStartOrig[0] - (sums[0] * mulValX);
+		posStart[2] = posStartOrig[2] + (sums[2] * mulValY);
 		DoFloorTrace(floorsTmp, building, posStart);
-		
+
+		mulValX = Math.RandomFloat(0.05, 0.25);
+		mulValY = Math.RandomFloat(0.05, 0.25);
+		posStart[0] = posStartOrig[0] - (sums[0] * mulValX);
+		posStart[2] = posStartOrig[2] - (sums[2] * mulValY);
+		DoFloorTrace(floorsTmp, building, posStart);
+				
 		//Get heights of all scans and sort from lowest to highest.
 		//These are potential floor heights.
 		array<float> floorHeight = {};		
@@ -247,13 +255,15 @@ sealed class SDRC_BuildingHelper
 		#ifndef SDRC_RELEASE
 			//Print(floorHeight);
 			//Print(floors);
+			sums[1] = 0;
+		 	float bsize = SDRC_Misc.FindMaxValue(sums) / 2;
 			foreach (vector fpos: floors)
 			{
-				SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 255, 255, 0), 0.3);
+				SDRC_DebugHelper.AddDebugPos(fpos, ARGB(50, 255, 255, 0), bsize, "", 0.3, false);
 			}				
 		#endif 
 				
-		SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Found: " + floors.Count() + " floors from " + building.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);		//REMOVE
+		SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Found: " + floors.Count() + " floors from " + building.GetPrefabData().GetPrefabName(), LogLevel.SPAM);		//REMOVE
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -271,7 +281,7 @@ sealed class SDRC_BuildingHelper
 			trace.End = posEnd;
 
 			#ifndef SDRC_RELEASE
-				SDRC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 0.6);
+				SDRC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 0.3);
 			#endif
 				
 			//trace.Exclude = child;
@@ -287,9 +297,9 @@ sealed class SDRC_BuildingHelper
 			SCR_TerrainHelper.SnapToGeometry(floorpos, posCheck, {}, entity.GetWorld(), traceParam: trace);
 			
 			#ifndef SDRC_RELEASE
-				vector move = "0.15 0 0.0";
-				SDRC_DebugHelper.AddDebugSphere(posCheck, ARGB(50, 255, 0, 255), 0.05);				
-				SDRC_DebugHelper.AddDebugSphere(floorpos + move, ARGB(50, 255, 255, 255), 0.05);				
+//				vector move = "0.15 0 0.0";
+//				SDRC_DebugHelper.AddDebugSphere(posCheck, ARGB(50, 255, 0, 255), 0.05);				
+//				SDRC_DebugHelper.AddDebugSphere(floorpos + move, ARGB(50, 255, 255, 255), 0.05);				
 			#endif 
 			
 			floors.Insert(floorpos);
@@ -302,7 +312,7 @@ sealed class SDRC_BuildingHelper
 		#ifndef SDRC_RELEASE
 			foreach (vector fpos: floors)
 			{
-				SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 0, 0, 255), 0.15);
+				SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 0, 0, 255), 0.10);	//Blue ball for the found floor
 			}				
 		#endif 
 	}	

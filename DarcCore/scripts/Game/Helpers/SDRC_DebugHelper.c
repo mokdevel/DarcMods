@@ -259,25 +259,32 @@ sealed class SDRC_DebugHelper
 	Adds cylinder marker on the map for easier finding. Can be either MapItem, IEntity or direct position.
 	\param MapItem, IEntity, pos Location of the marker
 	\param color Color of the marker
+	\param radius
+	\param id
+	\param height 
+	\param snap If the cylinder it so snap to the ground
 	*/	
 	
-	static void AddDebugPos(MapItem mapItem, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300)
+	static void AddDebugPos(MapItem mapItem, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300, bool snap = true)
 	{
-		AddDebugPos(mapItem.GetPos(), color, radius, id, height);
+		AddDebugPos(mapItem.GetPos(), color, radius, id, height, snap);
 	}
 
-	static void AddDebugPos(IEntity entity, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300)
+	static void AddDebugPos(IEntity entity, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300, bool snap = true)
 	{
-		AddDebugPos(entity.GetOrigin(), color, radius, id, height);
+		AddDebugPos(entity.GetOrigin(), color, radius, id, height, snap);
 	}
 	
-	static void AddDebugPos(vector pos, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300)
+	static void AddDebugPos(vector pos, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300, bool snap = true)
 	{
 		#ifndef SDRC_RELEASE		
 			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
 			{
 				SDRC_DebugHelperPos dpos = new SDRC_DebugHelperPos;
-				pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + (height/2);
+				if (snap)
+				{
+					pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + (height/2);
+				}
 				dpos.pos = pos;
 				dpos.color = color;
 				dpos.radius = radius;
