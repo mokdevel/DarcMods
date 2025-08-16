@@ -1,12 +1,12 @@
-//Helpers SDRC_OccupationHelper
+//Helpers SDRC_CampHelper
 
 //------------------------------------------------------------------------------------------------
 /*!
-Helper functions for spawning occupation class 
+Helper functions for spawning camp class 
 */
 
 //------------------------------------------------------------------------------------------------
-class SDRC_Occupation : Managed
+class SDRC_Camp : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref array<EMapDescriptorType> locationTypes = {};	
@@ -37,7 +37,7 @@ class SDRC_Occupation : Managed
 	}
 }
 
-sealed class SDRC_OccupationHelper
+sealed class SDRC_CampHelper
 {
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -49,7 +49,7 @@ sealed class SDRC_OccupationHelper
 	\param disableArsenal Defines if vehicle arsenals are to be disabled
 	\return true/false if the mission spawning is ready and mission can continue to next stage 
 	*/
-	static bool Spawn(SDRC_Mission mission, int idx, SDRC_Occupation occupation, float rotation = 0, bool disableArsenal = true)
+	static bool Spawn(SDRC_Mission mission, int idx, SDRC_Camp occupation, float rotation = 0, bool disableArsenal = true)
 	{
 		IEntity entity;
 		
@@ -102,15 +102,39 @@ sealed class SDRC_OccupationHelper
 				SDRC_Log.Add("[SDRC_OccupationHelper:Spawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
 			}
 			
-			//Put loot
+/*			//Put loot
 			if (occupation.loot)			
 			{
 				occupation.loot.box = mission.GetFromEntityList(0);
 				SDRC_LootHelper.SpawnItemsToStorage(occupation.loot.box, occupation.loot.items, occupation.loot.itemChance);
 				SDRC_Log.Add("[SDRC_OccupationHelper:Spawn] Loot added.", LogLevel.DEBUG);								
-			}
+			}*/
 
 			return true;			
 		}		
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Spawn loot items. This is usually called at the end of the mission.
+	*/
+	static bool AddLoot(SDRC_Mission mission, SDRC_Camp occupation)
+	{
+		if (!occupation.loot)
+		{
+			return false;
+		}
+		
+		occupation.loot.box = mission.GetFromEntityList(0);
+		
+		if (!occupation.loot.box)
+		{
+			return false;
+		}
+		
+		SDRC_LootHelper.SpawnItemsToStorage(occupation.loot.box, occupation.loot.items, occupation.loot.itemChance);
+		SDRC_Log.Add("[SDRC_OccupationHelper:AddLoot] Loot added.", LogLevel.DEBUG);								
+		
+		return true;
 	}
 }
