@@ -28,16 +28,18 @@ class SDRC_SpawnSet : Managed
 	string markerType;								//marker type
 	int markerIdx;									//marker ID
 	ref array<EMapDescriptorType> locationTypes;
+	ref array<vector> positions;
 	ref array<string> containers;					//What resource to spawn; cars, box, .. All of these will be spawned with spawnChance chance
 	ref SDRC_Loot loot = null;
 	
-	void Set(string comment_, bool showMarker_, string markerType_, int markerIdx_, array<EMapDescriptorType> locationTypes_, array<string> containers_)
+	void Set(string comment_, bool showMarker_, string markerType_, int markerIdx_, array<EMapDescriptorType> locationTypes_, array<vector> positions_, array<string> containers_)
 	{
 		comment = comment_;
 		showMarker = showMarker_;
 		markerType = markerType_;
 		markerIdx = markerIdx_;		
 		locationTypes = locationTypes_;
+		positions = positions_;
 		containers = containers_;
 	}
 }
@@ -82,14 +84,15 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 		conf.spawnOnRoad = false;
 		conf.spawnRndRadius = 100;
 		conf.spawnWorldSizeMultiplier = 0;
-		conf.containerCount = 20;
+		conf.containerCount = 3;//20;
 		conf.disableArsenal = true;
-		conf.spawnSetList = {0,1,2,2,3,3};
+		conf.spawnSetList = {4};//{0,1,2,2,3,3};
 		//----------------------------------------------------		
 		conf.spawnSets.Insert(SpawnSet0());
 		conf.spawnSets.Insert(SpawnSet1());
 		conf.spawnSets.Insert(SpawnSet2());
 		conf.spawnSets.Insert(SpawnSet3());
+		conf.spawnSets.Insert(SpawnSet4());
 	}	
 	
 	//Different spawner confs
@@ -112,6 +115,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT,
 				EMapDescriptorType.MDT_FORTRESS
 			},
+			{},
 			{
 				"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
 				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
@@ -156,6 +160,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT,
 				EMapDescriptorType.MDT_FORTRESS
 			},
+			{},
 			{
 				"{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
 				"{3B1EB924602C7A07}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance_MERDC.et",			
@@ -194,6 +199,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_NAME_RIDGE,
 				EMapDescriptorType.MDT_NAME_LOCAL,
 			},
+			{},
 			{
 				"{54C3CC22DEBD57BE}Prefabs/Vehicles/Wheeled/S105/S105_beige.et",
 				"{321016E0F9361A22}Prefabs/Vehicles/Wheeled/S105/S105_lightgreen.et",
@@ -232,8 +238,9 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_FORESTERLODGE,
 				EMapDescriptorType.MDT_FORESTTRIANGLE,
 				EMapDescriptorType.MDT_FORESTSQUARE,
-				EMapDescriptorType.MDT_NAME_VALLEY,		
+				EMapDescriptorType.MDT_NAME_VALLEY,
 			},
+			{},
 			{
 				"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
 				"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
@@ -255,4 +262,37 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 		
 		return spawnSet;
 	}
+	
+	//----------------------------------------------------
+	SDRC_SpawnSet SpawnSet4()
+	{
+		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
+		spawnSet.Set(		
+			"index 4: Test to spawn crates to positions",
+			true, "DARC_MISSION", DC_EMissionIcon.ICON_CRATE_SMALL_MAP, 
+			{
+			},
+			{"1388.253 37.246 2350.735", "1392.363 0.0 2349.161"},
+			{
+				"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+				"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+				"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+				"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
+			}
+		);
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN", 
+				"WEAPON_RIFLE",
+				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
+				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
+				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+			};
+		loot.Set(0.7, lootItems);
+		spawnSet.loot = loot;
+		
+		return spawnSet;
+	}
+	
 }

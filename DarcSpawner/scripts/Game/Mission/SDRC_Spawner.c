@@ -34,7 +34,8 @@ class SDRC_Spawner
 	private int m_spawnCount;
 	private int m_failCount = 0;						//Counter for failed spawns
 	private int m_failLimit = 0;						//Limit for fails before stopping. This is 2* maximum amount.
-	
+	private ref array<vector> m_positionsUsed = {};			//When using position spawning, avoid spawning to same positions.
+		
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Spawner()
 	{
@@ -112,11 +113,15 @@ class SDRC_Spawner
 	Spawn an entity to random location. Adds items in to it.
 	*/	
 	private bool Spawn()
-	{					
+	{
 		IEntity entity;
 		bool isVehicle = false;
 		array<MapItem> locations = {};	
-
+		MapItem location = null;
+		vector pos;
+		bool snap = true;
+		float emptyPosRadius = 50;
+		
 		int idx = m_Config.spawnSetList.GetRandomElement();
 		SDRC_SpawnSet spawnSet = m_Config.spawnSets[idx];
 
@@ -130,41 +135,83 @@ class SDRC_Spawner
 		}
 		
 		//Spawn entities one by one.
-		SDRC_Locations.GetLocations(locations, spawnSet.locationTypes);
-		
-		MapItem location = locations.GetRandomElement();
-		vector pos = location.GetPos();
-		
-		SDRC_Log.Add("[SDRC_Spawner:Spawn] Chosen location: " + SCR_StringHelper.Translate(location.Entity().GetName()) + " (" + pos + ")", LogLevel.DEBUG);
-		
-		if (m_Config.spawnOnRoad && isVehicle)
+		//Find from location types
+		if (!spawnSet.locationTypes.IsEmpty())
 		{
-			SDRC_RoadPos roadPos = new SDRC_RoadPos();
-			vector tmpPos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
-			SDRC_Log.Add("[SDRC_Spawner:Spawn] tmpPos: " + tmpPos, LogLevel.SPAM);			
-			if (tmpPos != "0 0 0")
+			SDRC_Locations.GetLocations(locations, spawnSet.locationTypes);
+			location = locations.GetRandomElement();
+			pos = location.GetPos();
+			SDRC_Log.Add("[SDRC_Spawner:Spawn] Chosen location: " + SCR_StringHelper.Translate(location.Entity().GetName()) + " (" + pos + ")", LogLevel.DEBUG);
+		
+			if (m_Config.spawnOnRoad && isVehicle)
 			{
-				pos = tmpPos;
+				SDRC_RoadPos roadPos = new SDRC_RoadPos();
+				vector tmpPos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
+				SDRC_Log.Add("[SDRC_Spawner:Spawn] tmpPos: " + tmpPos, LogLevel.SPAM);			
+				if (tmpPos != "0 0 0")
+				{
+					pos = tmpPos;
+				}
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_Spawner:Spawn] Randomizing position", LogLevel.SPAM);			
+				pos = SDRC_Misc.RandomizePos(pos, m_Config.spawnRndRadius);
 			}
 		}
-		else
+		else //Use positions
 		{
-			SDRC_Log.Add("[SDRC_Spawner:Spawn] Randomizing position", LogLevel.SPAM);			
-			pos = SDRC_Misc.RandomizePos(pos, m_Config.spawnRndRadius);
+			if (!spawnSet.positions.IsEmpty())
+			{
+				pos = spawnSet.positions.GetRandomElement();
+				emptyPosRadius = -1;	//Spawn to exact position
+				
+				if (pos[1] != 0)	//If height is not 0, snap to exact pos
+				{
+					snap = false;
+				}
+				SDRC_Log.Add("[SDRC_Spawner:Spawn] Chosen position: " + " (" + pos + ")", LogLevel.DEBUG);
+				
+				
+				//Avoid spawning to same position.
+				//Check if we already spawned here?
+				vector rpos;	//Rounded value
+				rpos[0] = (int)pos[0];
+				rpos[1] = (int)pos[1];
+				rpos[2] = (int)pos[2];
+				if (m_positionsUsed.Contains(rpos))
+				{
+					return false;
+				}
+				
+				m_positionsUsed.Insert(rpos);
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_Spawner:Spawn] No positions, nor locations defined. Check you conf.", LogLevel.ERROR);
+				return false;				
+			}
 		}
 		
 		if (!SDRC_Misc.IsPosInWater(pos))
 		{		
-			SDRC_Log.Add("[SDRC_Spawner:Spawn] Spawning " + entityToSpawn + " to " + SCR_StringHelper.Translate(location.Entity().GetName()), LogLevel.NORMAL);				
+			if (location)
+			{
+				SDRC_Log.Add("[SDRC_Spawner:Spawn] Spawning " + entityToSpawn + " to " + SCR_StringHelper.Translate(location.Entity().GetName()), LogLevel.NORMAL);
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_Spawner:Spawn] Spawning " + entityToSpawn + " to (" + pos + ")", LogLevel.NORMAL);
+			}
 			
 			float rotation = Math.RandomFloat(0, 360);
 			if (m_Config.spawnOnRoad && isVehicle)
 			{
-				entity = SDRC_SpawnHelper.SpawnItem(pos, entityToSpawn, rotation, -1);
+				entity = SDRC_SpawnHelper.SpawnItem(pos, entityToSpawn, rotation, -1, snap);
 			}
 			else
 			{
-				entity = SDRC_SpawnHelper.SpawnItem(pos, entityToSpawn, rotation);
+				entity = SDRC_SpawnHelper.SpawnItem(pos, entityToSpawn, rotation, emptyPosRadius, snap);
 			}
 			
 			if (entity != NULL)
