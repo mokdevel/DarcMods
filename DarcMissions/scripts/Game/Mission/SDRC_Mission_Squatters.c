@@ -124,9 +124,9 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	override void MissionEnd()
 	{			
-		super.MissionEnd();	
+		super.MissionEnd();
 	}
-	
+			
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
 	{	
@@ -143,7 +143,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		}
 		else
 		{
-			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuildingWithLoot(m_Building, m_DC_Squatter.lootBox, m_DC_Squatter.loot.items, m_DC_Squatter.loot.itemChance);			
+			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuildingWithLoot(m_Building, m_DC_Squatter.lootBox);			
 			if (entity)
 			{
 				m_EntityList.Insert(entity);
@@ -154,9 +154,16 @@ class SDRC_Mission_Squatter : SDRC_Mission
 				SDRC_Log.Add("[SDRC_Mission_Squatter:MissionSpawn] Could not spawn loot box: " + m_DC_Squatter.lootBox, LogLevel.ERROR);								
 			}
 		
-			SetState(DC_EMissionState.ACTIVE);
-			
+			SetState(DC_EMissionState.ACTIVE);			
 		}
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	override void DoWin()
+	{	
+		SDRC_Loot loot = m_DC_Squatter.loot;
+		SDRC_LootHelper.SpawnItemsToStorage(loot.box, loot.items, loot.itemChance);
+		super.DoWin();
 	}
 }
 	

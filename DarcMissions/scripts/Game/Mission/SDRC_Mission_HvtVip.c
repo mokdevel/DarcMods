@@ -149,7 +149,8 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		}
 		else
 		{
-			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuildingWithLoot(m_Building, m_DC_HvtVip.lootBox, m_DC_HvtVip.loot.items, m_DC_HvtVip.loot.itemChance);			
+			//IEntity entity = SDRC_SpawnHelper.SpawnItemInBuildingWithLoot(m_Building, m_DC_HvtVip.lootBox, true, m_DC_HvtVip.loot.items, m_DC_HvtVip.loot.itemChance);			
+			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuildingWithLoot(m_Building, m_DC_HvtVip.lootBox);
 			if (entity)
 			{
 				m_EntityList.Insert(entity);
@@ -175,6 +176,14 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 								
 			SetState(DC_EMissionState.ACTIVE);			
 		}
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	override void DoWin()
+	{	
+		SDRC_Loot loot = m_DC_HvtVip.loot;
+		SDRC_LootHelper.SpawnItemsToStorage(loot.box, loot.items, loot.itemChance);
+		super.DoWin();
 	}
 	
 	//------------------------------------------------------------------------------------------------

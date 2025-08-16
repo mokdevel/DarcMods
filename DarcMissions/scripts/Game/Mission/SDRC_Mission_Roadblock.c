@@ -14,7 +14,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	private ref SDRC_RoadblockJsonApi m_RoadblockJsonApi = new SDRC_RoadblockJsonApi();	
 	private ref SDRC_RoadblockConfig m_Config;
 	
-	protected ref SDRC_Occupation m_DC_Roadblock;		//Roadblock configuration in use
+	protected ref SDRC_Camp m_DC_Roadblock;		//Roadblock configuration in use
 	
 	private int m_iSpawnIndex = 0;						//Counter for the item to spawn
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
@@ -161,7 +161,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	{					
 		bool ready = false;
 		
-		ready = SDRC_OccupationHelper.Spawn(this, m_iSpawnIndex, m_DC_Roadblock, m_fSpawnRotation, m_Config.disableArsenal);
+		ready = SDRC_CampHelper.Spawn(this, m_iSpawnIndex, m_DC_Roadblock, m_fSpawnRotation, m_Config.disableArsenal);
 		m_iSpawnIndex++;			
 		
 		if (ready)
@@ -169,6 +169,13 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 			SetState(DC_EMissionState.ACTIVE);
 		}
 	}
+	
+	//------------------------------------------------------------------------------------------------	
+	override void DoWin()
+	{	
+		SDRC_CampHelper.AddLoot(this, m_DC_Roadblock);
+		super.DoWin();
+	}	
 }
 	
 //------------------------------------------------------------------------------------------------
@@ -177,7 +184,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 	//Mission specific
 	bool disableArsenal;								//Disable arsenal for vehicles so that no other items are found	
 	ref array<ref int> roadblockList = {};				//The indexes of roadblocks.
-	ref array<ref SDRC_Occupation> roadblocks = {};		//List of roadblocks - uses the same structure as for occupations	
+	ref array<ref SDRC_Camp> roadblocks = {};		//List of roadblocks - uses the same structure as for occupations	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -225,9 +232,9 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	};
 	
 	//----------------------------------------------------
-	SDRC_Occupation Roadblock0()
+	SDRC_Camp Roadblock0()
 	{
-		SDRC_Occupation roadblock = new SDRC_Occupation();
+		SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
 			"index 0: Roadblock",
 			{"0 0 0"},
@@ -305,9 +312,9 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	};
 	
 	//----------------------------------------------------
-	SDRC_Occupation Roadblock1()
+	SDRC_Camp Roadblock1()
 	{
-		SDRC_Occupation roadblock = new SDRC_Occupation();
+		SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
 			"index 1: Roadblock",
 			{"0 0 0"},
@@ -451,9 +458,9 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	};
 		
 	//----------------------------------------------------
-	SDRC_Occupation Roadblock2()
+	SDRC_Camp Roadblock2()
 	{
-		SDRC_Occupation roadblock = new SDRC_Occupation();
+		SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
 			"index 2: Roadblock",
 			{"0 0 0"},
@@ -580,9 +587,9 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	}
 	
 	//----------------------------------------------------
-	SDRC_Occupation Roadblock3()
+	SDRC_Camp Roadblock3()
 	{
-		SDRC_Occupation roadblock = new SDRC_Occupation();
+		SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
 			"index 3: Roadblock with gates",
 			{"0 0 0"},

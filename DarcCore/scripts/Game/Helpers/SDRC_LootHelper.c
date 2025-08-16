@@ -45,6 +45,12 @@ sealed class SDRC_LootHelper
 	*/
 	static void SpawnItemsToStorage(IEntity storage, array<string> itemNames, float itemChance = 1.0)
 	{
+		if (!storage)
+		{
+			SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Storage not available.", LogLevel.ERROR);
+			return;
+		}
+		
 		foreach (string itemName: itemNames)
 		{
 			if (Math.RandomFloat(0, 1) < itemChance)

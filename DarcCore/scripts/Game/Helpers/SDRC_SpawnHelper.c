@@ -141,12 +141,20 @@ sealed class SDRC_SpawnHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Spawn item in building (with loot)
+	\param building Target building
+	\param lootBox Container for loot
+	\param addLoot If true, add loot
+	\param loot list of items to spawn
+	\param looChance chance for each item to appear in the lootBox
 	*/	
-	static IEntity SpawnItemInBuildingWithLoot(IEntity building, string item, array<string> loot, float lootChance)
+	static IEntity SpawnItemInBuildingWithLoot(IEntity building, string lootBox, bool addLoot = false, array<string> loot = null, float lootChance = 0)
 	{
 		float rotation = Math.RandomFloat(0, 360);
-		IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(building, item, rotation, 1.5, false);
-		SDRC_LootHelper.SpawnItemsToStorage(entity, loot, lootChance);
+		IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(building, lootBox, rotation, 1.5, false);
+		if (addLoot)
+		{
+			SDRC_LootHelper.SpawnItemsToStorage(entity, loot, lootChance);
+		}
 		
 		return entity;
 	}
