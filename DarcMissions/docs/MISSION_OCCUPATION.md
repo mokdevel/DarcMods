@@ -1,7 +1,7 @@
 ## Mission : Occupation
 Example: [dc_missionConfig_Occupation.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Occupation.json)
 
-AI patrol is spawned to a location like city. They will patrol the location and may have loot with them.
+AI patrol is spawned to a location like city. They will patrol the location and may have loot with them. Loot is spawned when a win condition is achieved.
 
 Note on GM requested mission: The location is where the mission was dropped.
 

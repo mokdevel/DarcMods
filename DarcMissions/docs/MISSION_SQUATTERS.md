@@ -1,7 +1,7 @@
 ## Mission : Squatters
 Example: [dc_missionConfig_Squatters.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Squatter.json)
 
-A building is guarded by AIs with loot available. The missions tries to find floors in the building and spawn AI and the loot box on them. 
+A building is guarded by AIs with loot available. The missions tries to find floors in the building and spawn AI and the loot box on them. Loot is spawned when a win condition is achieved.
 
 Note on GM requested mission: The building chosen will as close as possible to the location where mission was dropped. In case there are multiple houses beside each other, the mission location might not be exactly what you wanted.
 
