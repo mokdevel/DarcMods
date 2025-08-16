@@ -1,7 +1,6 @@
 {
 	"version": 1,
 	"author": "darc",
-	"showOnMap": true,
 	"m_NonValidAreas": [
 		{
 			"worldName": "Eden",
@@ -22,6 +21,16 @@
 			],
 			"radius": 400.0,
 			"name": "Eden - St. Pierre - for testing"
+		},
+		{
+			"worldName": "Eden",
+			"pos": [
+				8800.0,
+				0.0,
+				3950.0
+			],
+			"radius": 500.0,
+			"name": "Eden - Quarry - for testing"
 		},
 		{
 			"worldName": "Arland",
