@@ -294,7 +294,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HVTVIP_MAP;
 		//Mission specific
 		conf.buildingRadius = 400;
-		conf.hvtVipList = {0,0,0,1,2};
+		conf.hvtVipList = {0};//{0,0,0,1,2};
 		//----------------------------------------------------
 		conf.hvtVips.Insert(HvtVip0());				
 		conf.hvtVips.Insert(HvtVip1());				
