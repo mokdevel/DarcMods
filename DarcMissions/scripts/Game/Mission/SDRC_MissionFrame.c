@@ -279,7 +279,7 @@ class SDRC_MissionFrame
 					}
 				}
 								
-				SDRC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), ARGB(20, 255, 255, 0), 10, tmpDC_Mission.GetId());
+				SDRC_DebugHelper.AddDebugPos(tmpDC_Mission.GetPos(), ARGB(5, 128, 128, 0), 10, tmpDC_Mission.GetId());
 				
 				//Set the time when the mission has started. Activates the delay.
 				m_iLastMissionSpawnTime = (System.GetTickCount() / 1000);

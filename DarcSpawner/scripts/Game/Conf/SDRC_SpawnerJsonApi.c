@@ -86,7 +86,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 		conf.spawnWorldSizeMultiplier = 0;
 		conf.containerCount = 3;//20;
 		conf.disableArsenal = true;
-		conf.spawnSetList = {4};//{0,1,2,2,3,3};
+		conf.spawnSetList = {0,1,2,2,3,3};
 		//----------------------------------------------------		
 		conf.spawnSets.Insert(SpawnSet0());
 		conf.spawnSets.Insert(SpawnSet1());

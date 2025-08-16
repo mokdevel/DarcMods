@@ -45,7 +45,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		//Set defaults
 		m_iGroupCount = Math.RandomInt(m_DC_HvtVip.groupCount[0], m_DC_HvtVip.groupCount[1]);
 		float radius = 10;	//Default size for the radius. Mainly for requested missions to find the nearest building.
-		array<string>buildingFilter = {};
+		array<string> buildingFilter = {};
 		
 		//Find a location for the mission
 		if (!IsRequested())
@@ -294,11 +294,12 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HVTVIP_MAP;
 		//Mission specific
 		conf.buildingRadius = 400;
-		conf.hvtVipList = {0};//{0,0,0,1,2};
+		conf.hvtVipList = {3};//{0,0,1,2,3,3};
 		//----------------------------------------------------
 		conf.hvtVips.Insert(HvtVip0());				
 		conf.hvtVips.Insert(HvtVip1());				
 		conf.hvtVips.Insert(HvtVip2());				
+		conf.hvtVips.Insert(HvtVip3());				
 	};
 			
 	//----------------------------------------------------
@@ -441,4 +442,50 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 
 		return HvtVip;	
 	};		
+	
+	//----------------------------------------------------
+	SDRC_HvtVip HvtVip3()
+	{
+		SDRC_HvtVip HvtVip = new SDRC_HvtVip();
+		HvtVip.general.Set(
+			"index 3: Businessman in countryside",
+			{"0 0 0"},
+			"any",
+			"Criminal hiding in %l",
+			"Assassinate the criminal boss. He tries to keep low profile.",
+			DC_EMissionWinCondition.HVT_KILL_VIP,
+			"The criminal got what he deserved.",
+			"The judgement day is posponed.",
+			0		
+		);
+		HvtVip.Set(
+			{
+				//We pick any building that matches and ignore location
+			},
+			{1,1},
+			{
+				"G_LIGHT",
+			},
+			50, 0.6,
+			{"House_"},
+			"{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
+			"{E024A74F8A4BC644}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_1.et"
+		);
+		
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"WEAPON_RIFLE",
+				"WEAPON_HANDGUN", "WEAPON_HANDGUN",
+				"WEAPON_GRENADE", 
+				"UTIL_ATTACHMENT", 
+				"UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", 
+				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL",
+			};
+		loot.Set(0.7, lootItems);
+		HvtVip.loot = loot;
+
+		return HvtVip;	
+	};		
+	
 }
