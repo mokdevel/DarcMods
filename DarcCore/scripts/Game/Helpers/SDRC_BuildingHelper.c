@@ -235,7 +235,7 @@ sealed class SDRC_BuildingHelper
 		if (floors.Count() > 1)
 		{
 			float diff = floors[1][1] - floors[0][1];
-			if ( diff < 1.7 )
+			if ( diff < 1.8 )
 			{
 				floors.RemoveOrdered(0);				//Remove ground as a floor
 			}
