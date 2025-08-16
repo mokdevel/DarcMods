@@ -243,7 +243,7 @@ sealed class SDRC_BuildingHelper
 		if (floors.Count() > 1)
 		{
 			float diff = floors[1][1] - floors[0][1];
-			if ( diff < 1.8 )
+			if ( diff < 1.3 )	//Was 1.7
 			{
 				floors.RemoveOrdered(0);				//Remove ground as a floor
 			}
@@ -259,7 +259,7 @@ sealed class SDRC_BuildingHelper
 		 	float bsize = SDRC_Misc.FindMaxValue(sums) / 2;
 			foreach (vector fpos: floors)
 			{
-				SDRC_DebugHelper.AddDebugPos(fpos, ARGB(50, 255, 255, 0), bsize, "", 0.3, false);
+				SDRC_DebugHelper.AddDebugPos(fpos, ARGB(20, 255, 255, 0), bsize, "", 0.3, false);
 			}				
 		#endif 
 				
@@ -281,6 +281,7 @@ sealed class SDRC_BuildingHelper
 			trace.End = posEnd;
 
 			#ifndef SDRC_RELEASE
+				//Green debug sphere to show where trace starts
 				SDRC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 0.3);
 			#endif
 				
@@ -312,7 +313,7 @@ sealed class SDRC_BuildingHelper
 		#ifndef SDRC_RELEASE
 			foreach (vector fpos: floors)
 			{
-				SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 0, 0, 255), 0.10);	//Blue ball for the found floor
+				SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 0, 0, 255), 0.08);	//Blue ball for the found floor
 			}				
 		#endif 
 	}	

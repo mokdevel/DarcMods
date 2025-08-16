@@ -151,13 +151,15 @@ sealed class SDRC_Locations
 					slotcount,
 					), LogLevel.SPAM);
 				
-				if (SDRC_Conf.SHOW_MARKER_FOR_LOCATION)
-				{
-					if (location) 
+				#ifndef SDRC_RELEASE
+					if (SDRC_Conf.SHOW_MARKER_FOR_LOCATION)
 					{
-						SDRC_DebugHelper.AddDebugPos(location);
+						if (location) 
+						{
+							SDRC_DebugHelper.AddDebugPos(location);
+						}
 					}
-				}
+				#endif
 			}
 		}
 	}

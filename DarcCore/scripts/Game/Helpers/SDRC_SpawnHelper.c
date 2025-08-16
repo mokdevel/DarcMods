@@ -95,8 +95,7 @@ sealed class SDRC_SpawnHelper
 	The spawn point is chosen randomly on the floors. Sometimes the randomess sets them outside.
 	
 			|------------------------------------------| House size
-		               |---------||---------|            Random spot is 1/6 of house size from the center
-		          |----*----|                            Radius to search for a spot is 1/5 of house size
+		               |---------||---------|            Random spot is 1/8 of house size from the center
 	
 	*/
 	static IEntity SpawnItemInBuilding(IEntity building, string item, float rotation = 0, float emptyPosRadius = EMPTY_POS_RADIUS, bool snap = true)
@@ -128,15 +127,41 @@ sealed class SDRC_SpawnHelper
 			ResourceName res = building.GetPrefabData().GetPrefabName();
 			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItemInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.WARNING);
 		}
-		pos = SDRC_Misc.RandomizePos(floorpos, radius/6);
-		SDRC_SpawnHelper.FindEmptyPos(pos, radius/5, emptyPosRadius);	//We use the original pos if we don't find a better spot.
-		pos[1] = pos[1] + 0.1;			
-		SDRC_DebugHelper.AddDebugSphere(pos, ARGB(20, 128, 0, 128), empty_radius);	//Purple
-//		entity = SpawnItem(pos, item, rotation, emptyPosRadius, snap);
+		pos = SDRC_Misc.RandomizePos(floorpos, radius/8);
+		pos = FindPositinInsideBuilding(building, pos, empty_radius);
+
+		SDRC_DebugHelper.AddDebugPos(pos, ARGB(20, 128, 0, 128), empty_radius, "", 0.5, false);	//Purple for the item position
+		
 		entity = SpawnItem(pos, item, rotation, -1, snap);
 		
 		return entity;
 	}	
+
+	//------------------------------------------------------------------------------------------------
+	static vector FindPositinInsideBuilding(IEntity entity, vector posStart, float size)
+	{
+		vector outpos;
+		
+		TraceParam trace = new TraceParam();
+		{
+			trace.Start = posStart;
+//			trace.End = posEnd;		
+			trace.TargetLayers = EPhysicsLayerDefs.Projectile;
+			trace.LayerMask = EPhysicsLayerDefs.Projectile;
+			trace.Flags = TraceFlags.ENTS | TraceFlags.WORLD;
+		}		
+		
+		SCR_EmptyPositionHelper.TryFindNearbyFloorPosition(entity.GetWorld(), posStart, trace, 1, size/2, 10, false, 0, outpos);
+		
+		outpos[1] = posStart[1];
+		
+		#ifndef SDRC_RELEASE
+			SDRC_DebugHelper.AddDebugSphere(posStart, ARGB(50, 255, 0, 255), 0.05);				
+			SDRC_DebugHelper.AddDebugSphere(outpos, ARGB(50, 255, 255, 255), 0.2);
+		#endif 
+		
+		return outpos;
+	}
 
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -150,7 +175,7 @@ sealed class SDRC_SpawnHelper
 	static IEntity SpawnItemInBuildingWithLoot(IEntity building, string lootBox, bool addLoot = false, array<string> loot = null, float lootChance = 0)
 	{
 		float rotation = Math.RandomFloat(0, 360);
-		IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(building, lootBox, rotation, 1.5, false);
+		IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(building, lootBox, rotation, 2.0, false);
 		if (addLoot)
 		{
 			SDRC_LootHelper.SpawnItemsToStorage(entity, loot, lootChance);
@@ -372,12 +397,12 @@ sealed class SDRC_SpawnHelper
 		
 		if (m_obstructCount < baseGameMode.m_SDRC_Core.m_Config.emptyPos.limit)
 		{
-			SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 0, 255, 0), emptySize, "NONE", 20);	//GREEN
+			//SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 0, 255, 0), emptySize, "NONE", 20);	//GREEN
 			return true;
 		}
 		else
 		{
-			SDRC_DebugHelper.AddDebugPos(pos, ARGB(20, 255, 0, 0), emptySize, "NONE", 15);	//RED
+			//SDRC_DebugHelper.AddDebugPos(pos, ARGB(20, 255, 0, 0), emptySize, "NONE", 15);	//RED
 			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.DEBUG);			
 			return false;
 		}
@@ -454,7 +479,7 @@ sealed class SDRC_SpawnHelper
 					}
 				#endif
 				
-				SDRC_DebugHelper.AddDebugPos(entity.GetOrigin(), ARGB(40, 0, 0, 255), 1, "NONE", 30);			
+				//SDRC_DebugHelper.AddDebugPos(entity.GetOrigin(), ARGB(40, 0, 0, 255), 1, "NONE", 30);
 			}
 		}
 		
