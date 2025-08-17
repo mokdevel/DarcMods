@@ -14,7 +14,7 @@ class SDRC_RplPlayerComp : ScriptComponent
 	 
     override void OnPostInit(IEntity owner)
     {
-        auto hintEnt = SDRC_RplHintEntity.Cast(owner);
+/*        auto hintEnt = SDRC_RplHintEntity.Cast(owner);
         if (!hintEnt)
         {
             SDRC_Log.Add("[SDRC_RplPlayerComp] Entity not found.", LogLevel.ERROR);
@@ -26,7 +26,7 @@ class SDRC_RplPlayerComp : ScriptComponent
         {
             SDRC_Log.Add("[SDRC_RplPlayerComp] RplComponent not found.", LogLevel.ERROR);
             return;
-        }
+        }*/
  
 		s_Instance = this;				
     }
@@ -71,7 +71,7 @@ class SDRC_RplPlayerComp : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
     protected void RpcAsk_GiveMeInfo(int playerID)
     {
-		SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_GiveMeInfo] Asked by: " + playerID, LogLevel.SPAM);	
+		SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_GiveMeInfo] Asked by: " + playerID, LogLevel.DEBUG);	
 
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
 		if (gmComp)
@@ -85,7 +85,7 @@ class SDRC_RplPlayerComp : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
     protected void RpcAsk_DeleteMission(int playerID, string missionId)
     {
-		SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_DeleteMission] Asked by: " + playerID, LogLevel.SPAM);	
+		SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_DeleteMission] Asked by: " + playerID, LogLevel.DEBUG);	
 
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
 		if (gmComp)

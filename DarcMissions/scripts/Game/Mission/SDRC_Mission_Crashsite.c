@@ -483,14 +483,6 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"0 -45.003 0"
 		);
 		crashsite.siteItems.Insert(crashitem5);
-
-		SDRC_Structure crashitem6 = new SDRC_Structure();
-		crashitem6.Set(
-			"{7AB486CD1FBB0B0A}PrefabLibrary/Props/Garbage/Junk_01_pile_small.et",
-			"100.944 1 123.924",
-			"0 -111.273 0"
-		);
-		crashsite.siteItems.Insert(crashitem6);
 		
 		return crashsite;
 	}

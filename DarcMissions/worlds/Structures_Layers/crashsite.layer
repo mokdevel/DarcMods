@@ -1,6 +1,3 @@
-GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et" {
- coords 97.911 1 121.527
-}
 GenericEntity {
  components {
   MeshObject "{64950D4A2966B27D}" {
@@ -22,7 +19,6 @@ GenericEntity : "{7576CB87CAFAE6E8}PrefabsEditable/Auto/Structures/Military/Camo
  coords 103.559 1 119.949
  angleY -45.003
 }
-GenericEntity : "{7AB486CD1FBB0B0A}PrefabLibrary/Props/Garbage/Junk_01_pile_small.et" {
- coords 100.944 1 123.924
- angleY -111.273
+GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et" {
+ coords 97.911 1 121.527
 }

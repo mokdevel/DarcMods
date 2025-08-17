@@ -205,6 +205,26 @@ sealed class SDRC_MapMarkerHelper
 				texture = "{A72A9123C15DABDF}UI/Textures/Icons/gm_mission_Roadblock_map.edds";
 				break;
 			}
+			case DC_EMissionIcon.GM_MISSION_HVTVIP_MAP:		
+			{
+				texture = "{4E8D7F3F80D40037}UI/Textures/Icons/gm_mission_HvtVip_map.edds";
+				break;
+			}
+			case DC_EMissionIcon.GM_MISSION_HVTITEM_MAP:		
+			{
+				texture = "{14450944913A8F8D}UI/Textures/Icons/gm_mission_HvtItem_map.edds";
+				break;
+			}
+			case DC_EMissionIcon.GM_MISSION_WIN_MAP:		
+			{
+				texture = "{8C37D9AEF869E351}UI/Textures/Icons/gm_mission_Win_map.edds";
+				break;
+			}
+			case DC_EMissionIcon.GM_MISSION_LOSE_MAP:		
+			{
+				texture = "{063A043A682AE7F2}UI/Textures/Icons/gm_mission_Lose_map.edds";
+				break;
+			}
 			//NOTE: The ones below are not usable as markers
 			case DC_EMissionIcon.ICON_WIN_ROUND:		
 			{

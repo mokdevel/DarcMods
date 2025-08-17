@@ -290,6 +290,14 @@ class SDRC_MapSystem : GameSystem
 			m_DrawCommands.Insert(drawCommand);
 			drawCommand = DrawMarker("1900 0 1500", DC_EMissionIcon.GM_MISSION_RADIOACTIVE_MAP);
 			m_DrawCommands.Insert(drawCommand);
+			drawCommand = DrawMarker("2000 0 1500", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP);
+			m_DrawCommands.Insert(drawCommand);
+			drawCommand = DrawMarker("2100 0 1500", DC_EMissionIcon.GM_MISSION_HVTITEM_MAP);
+			m_DrawCommands.Insert(drawCommand);
+			drawCommand = DrawMarker("2200 0 1500", DC_EMissionIcon.GM_MISSION_WIN_MAP);
+			m_DrawCommands.Insert(drawCommand);
+			drawCommand = DrawMarker("2300 0 1500", DC_EMissionIcon.GM_MISSION_LOSE_MAP);
+			m_DrawCommands.Insert(drawCommand);
 		
 //			DrawImage("2000 0 2000", 32, 64);
 		#endif

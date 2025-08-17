@@ -2,7 +2,7 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
-High Value Target (HVT) - Very Important Person
+High Value Target (HVT) - Item target
 */
 
 //------------------------------------------------------------------------------------------------
@@ -41,11 +41,6 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 			return;
 		}
 		m_DC_HvtItem = m_Config.hvtItems[idx];
-		
-		//Set defaults
-//		m_iGroupCount = Math.RandomInt(m_DC_HvtItem.groupCount[0], m_DC_HvtItem.groupCount[1]);
-//		float radius = 10;	//Default size for the radius. Mainly for requested missions to find the nearest building.
-//		array<string> buildingFilter = {};
 		
 		//Set defaults
 		if (!IsRequested())
@@ -159,21 +154,32 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	{
 		if (GetWinCondition() == DC_EMissionWinCondition.HVT_DESTROY_ITEM)
 		{
+			bool isDestroyed = false;
 			if (m_Target)
 			{				
 				DamageManagerComponent damageManager = DamageManagerComponent.Cast(m_Target.FindComponent(DamageManagerComponent));
 				if (damageManager)
 				{
 					float health = damageManager.GetHealthScaled();
-					SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] Target health: " + health, LogLevel.DEBUG);
+					SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] Target health: " + health, LogLevel.SPAM);
 					if (health < 0.1)
 					{
-						SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] Target destroyed!", LogLevel.DEBUG);
-						DoWin();
-						return;
+						isDestroyed = true;
 					}
 				}
-			}			
+			}	
+			else
+			{
+				isDestroyed = true;
+			}
+			
+			if (isDestroyed)
+			{
+				SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] Target destroyed!", LogLevel.DEBUG);
+				DoWin();
+				return;
+			}
+		
 			GetGame().GetCallqueue().CallLater(IsTargetDestroyed, AI_TARGET_DESTROYED_CYCLE_TIME, false);
 		}
 	}
@@ -233,9 +239,10 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HVTITEM_MAP;
 		//Mission specific
-		conf.hvtItemList = {0};
+		conf.hvtItemList = {0,1};
 		//----------------------------------------------------
 		conf.hvtItems.Insert(HvtItem0());				
+		conf.hvtItems.Insert(HvtItem1());				
 	};
 	
 	//----------------------------------------------------
@@ -243,7 +250,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 	{
 		SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		hvtItem.general.Set(
-			"index 0: Destory generator",
+			"index 0: Destroy generator",
 			{"0 0 0"},
 			"any",
 			"Destroy generator near %l",
@@ -265,7 +272,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			},
 			{1, 2},
 			{25, 100},
-			DC_EWaypointGenerationType.SCATTERED,//RANDOM,
+			DC_EWaypointGenerationType.LOITER,
 			DC_EWaypointMoveType.PATROLCYCLE,
 			{
 				"G_ADMIN", "G_LIGHT", "G_LIGHT"
@@ -282,7 +289,6 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
 			};
 		loot.Set(0.7, lootItems);
 		hvtItem.loot = loot;
@@ -348,4 +354,102 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		
 		return hvtItem;
 	};		
+	
+	//----------------------------------------------------
+	SDRC_HvtItem HvtItem1()
+	{
+		SDRC_HvtItem hvtItem = new SDRC_HvtItem();
+		hvtItem.general.Set(
+			"index 1: Destroy supplies",
+			{"0 0 0"},
+			"any",
+			"A supply truck near %l",
+			"A truck has crashed and the supplies needs to be destroyed.",
+			DC_EMissionWinCondition.HVT_DESTROY_ITEM,
+			"Supplies never reached the enemy. Good work!",
+			"The enemy will fight with their bellies full.",
+			0
+		);
+		hvtItem.Set(
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_TOWN, 
+				EMapDescriptorType.MDT_AIRPORT,
+			},
+			{1, 2},
+			{25, 100},
+			DC_EWaypointGenerationType.LOITER,
+			DC_EWaypointMoveType.PATROLCYCLE,
+			{
+				"G_ADMIN", "G_LIGHT", "G_LIGHT", "G_HEAVY"
+			},
+			50, 1.0,
+			10
+		);
+		hvtItem.targetIdx = 1;
+		
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"UTIL_ATTACHMENT", "UTIL_OPTICAL",
+				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
+				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+			};
+		loot.Set(0.7, lootItems);
+		hvtItem.loot = loot;
+		
+		SDRC_Structure item_0 = new SDRC_Structure;
+		item_0.Set(
+		    "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+		    "250.977 1 204.513",
+		    "0 -92.923 0"
+		);
+		hvtItem.campItems.Insert(item_0);
+		
+		SDRC_Structure item_1 = new SDRC_Structure;
+		item_1.Set(
+		    "{47E0234DF4169EE5}Prefabs/Props/Military/CargoContainers/HvtCargoContainer_01_10ft_US_supplies.et",
+		    "249.9 1 196.961",
+		    "0 -18.644 0"
+		);
+		hvtItem.campItems.Insert(item_1);
+		
+		SDRC_Structure item_2 = new SDRC_Structure;
+		item_2.Set(
+		    "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
+		    "247.843 1 200.018"
+		);
+		hvtItem.campItems.Insert(item_2);
+		
+		SDRC_Structure item_3 = new SDRC_Structure;
+		item_3.Set(
+		    "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
+		    "249.795 1 196.908",
+		    "0 -24.662 0"
+		);
+		hvtItem.campItems.Insert(item_3);
+		
+		SDRC_Structure item_4 = new SDRC_Structure;
+		item_4.Set(
+		    "{563AD1F822D50049}Prefabs/EffectsModuleEntities/SDRC_BigSmoke.et",
+		    "249.128 1.952 202.453"
+		);
+		hvtItem.campItems.Insert(item_4);
+		
+		SDRC_Structure item_5 = new SDRC_Structure;
+		item_5.Set(
+		    "{9E5EDE35EFBF70B7}PrefabsEditable/Auto/Props/Wrecks/E_M923A1_wreck.et",
+		    "250.028 1 200.953",
+		    "0 -50.699 0"
+		);
+		hvtItem.campItems.Insert(item_5);
+		
+		return hvtItem;
+	};	
 }

@@ -3,6 +3,7 @@ GameEntity : "{103CBF9E0B0BC124}Prefabs/Props/Military/Generators/GeneratorMilit
  components {
   SCR_DestructionMultiPhaseComponent "{51E082CF9891AD6F}" {
    Enabled 1
+   m_fBaseHealth 10000
   }
  }
 }
