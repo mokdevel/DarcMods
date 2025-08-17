@@ -22,7 +22,9 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 6. [Squatters](./docs/MISSION_SQUATTERS.md) : A building is guarded by AIs with loot available.
 7. [Roadblock](./docs/MISSION_ROADBLOCK.md) : AI have setup a road block on the road.
 8. [HVT VIP](./docs/MISSION_HVTVIP.md) : High Value Target - VIP : An AI is defined as a High Value Target VIP. Go take him down.
-9. [HVT Item](./docs/MISSION_HVTITEM.md) : High Value Target - Item : A structure is to be destroyed. 
+9. [HVT Item](./docs/MISSION_HVTITEM.md) : High Value Target - Item : A structure is to be destroyed.
+
+The number in front of the mission name is the index used in the configuration.
 
 ## Thanks
 - The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
