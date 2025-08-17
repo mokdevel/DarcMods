@@ -432,6 +432,11 @@ class SDRC_MissionFrame
 				tmpDC_Mission = new SDRC_Mission_HvtVip(pos);
 				break;
 			}			
+			case DC_EMissionType.HVTITEM:
+			{
+				tmpDC_Mission = new SDRC_Mission_HvtItem(pos);
+				break;
+			}			
 /*			case DC_EMissionType.CHOPPER:
 			{
 				tmpDC_Mission = new SDRC_Mission_Chopper(pos);
@@ -509,6 +514,10 @@ class SDRC_MissionFrame
 		SDRC_HvtVipJsonApi hvtVipJsonApi = new SDRC_HvtVipJsonApi();	
 		hvtVipJsonApi.Load();
 		delete hvtVipJsonApi;				
+		
+		SDRC_HvtItemJsonApi hvtItemJsonApi = new SDRC_HvtItemJsonApi();	
+		hvtItemJsonApi.Load();
+		delete hvtItemJsonApi;				
 	}	
 	
 	//------------------------------------------------------------------------------------------------

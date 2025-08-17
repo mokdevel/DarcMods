@@ -1,0 +1,8 @@
+GameEntity : "{103CBF9E0B0BC124}Prefabs/Props/Military/Generators/GeneratorMilitary_USSR_01/GeneratorMilitary_USSR_01_base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_DestructionMultiPhaseComponent "{51E082CF9891AD6F}" {
+   Enabled 1
+  }
+ }
+}

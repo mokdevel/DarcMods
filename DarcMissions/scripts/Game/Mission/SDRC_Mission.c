@@ -36,6 +36,7 @@ enum DC_EMissionWinCondition
 	AI_KILL_RANDOM,
 	
 	HVT_KILL_VIP = 10,
+	HVT_DESTROY_ITEM = 20,
 };
 
 enum DC_EMissionSuccess
@@ -492,7 +493,7 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if mission is to be active.
-	\param checkOnlyWinCondition If set to true, ignore any timing related checks.
+	\param checkOnlyWinCondition If set to true, ignore any timing related checks. Currently only Hunter mission needs this.
 	*/
 	bool IsActive(bool checkOnlyWinCondition = false)
 	{
@@ -531,25 +532,16 @@ class SDRC_Mission
 				}
 			}
 			
-/*			if (SDRC_AIHelper.AreAllGroupsDead(m_Groups))
-			{
-				isWin = true;
-			}*/
-			
-			if (isWin)
-			{
-				SDRC_Log.Add("[SDRC_Mission:IsActive] Mission WIN: " + GetId() + " : " + GetTitle(), LogLevel.DEBUG);
-			}
-				
 			//If we did win the mission, set the message and prepare for ending.
 			if (isWin)
 			{
+				SDRC_Log.Add("[SDRC_Mission:IsActive] Mission WIN: " + GetId() + " : " + GetTitle(), LogLevel.DEBUG);
 				DoWin();
 			}
 		}
 
 		//If we did not win and only check for winCondition, we are still active. 
-		if (checkOnlyWinCondition && !isWin)		
+		if (checkOnlyWinCondition && !isWin)
 		{
 			ResetActiveTime();
 			return true;
