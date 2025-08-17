@@ -7,6 +7,7 @@
 ### DarcMissions
 Main features:
 * Change in behaviour: Loot is spawned only after win is reached. This is true for missions: Occupation, Squatters, HvtVip, HvtItem, Roadblock
+* Convoys with armored vehicles and cars with turrets.
 
 Fixes:
 * Win condition not set properly for some of the missions
