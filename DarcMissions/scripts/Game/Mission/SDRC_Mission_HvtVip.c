@@ -91,6 +91,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetHint(m_Config.showHint, m_DC_HvtVip.general.title, m_DC_HvtVip.general.info);
 		SetMessages(m_Config.showMessage, m_DC_HvtVip.general.winMessage, m_DC_HvtVip.general.loseMessage);				
+		SetWinCondition(m_DC_HvtVip.general.winCondition);
 			
 		SetState(DC_EMissionState.INIT);			
 	}	
@@ -172,7 +173,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 				group.SetFaction(faction);
 			}
 
-			GetGame().GetCallqueue().CallLater(IsTargetDead, 5000, false);
+			GetGame().GetCallqueue().CallLater(IsTargetDead, AI_TARGET_DEAD_CYCLE_TIME, false);
 								
 			SetState(DC_EMissionState.ACTIVE);			
 		}
@@ -294,7 +295,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HVTVIP_MAP;
 		//Mission specific
 		conf.buildingRadius = 400;
-		conf.hvtVipList = {3};//{0,0,1,2,3,3};
+		conf.hvtVipList = {0,0,1,2,3,3};
 		//----------------------------------------------------
 		conf.hvtVips.Insert(HvtVip0());				
 		conf.hvtVips.Insert(HvtVip1());				

@@ -87,6 +87,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetHint(m_Config.showHint, m_DC_Squatter.general.title, m_DC_Squatter.general.info);
 		SetMessages(m_Config.showMessage, m_DC_Squatter.general.winMessage, m_DC_Squatter.general.loseMessage);				
+		SetWinCondition(m_DC_Squatter.general.winCondition);
 			
 		SetState(DC_EMissionState.INIT);			
 	}	

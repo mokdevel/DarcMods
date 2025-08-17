@@ -91,6 +91,9 @@ class SDRC_NonValidAreaJsonApi : SDRC_JsonApi
 			SDRC_NonValidArea areaE2 = new SDRC_NonValidArea();
 			areaE2.Set("Eden", "9680 0 1560", 400, "Eden - St. Pierre - for testing");
 			conf.m_NonValidAreas.Insert(areaE2);
+			SDRC_NonValidArea areaE3 = new SDRC_NonValidArea();
+			areaE3.Set("Eden", "8800 0 3950", 500, "Eden - Quarry - for testing");
+			conf.m_NonValidAreas.Insert(areaE3);
 			
 			//Arland
 			SDRC_NonValidArea areaA1 = new SDRC_NonValidArea();

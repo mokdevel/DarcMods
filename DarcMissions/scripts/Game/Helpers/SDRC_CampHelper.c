@@ -41,33 +41,33 @@ sealed class SDRC_CampHelper
 {
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Spawn camp items, AI and loot defined in a SDRC_Occupation structure
+	Spawn camp items, AI and loot defined in a SDRC_camp structure
 	\param mission Mission that is calling this
 	\param idx Index of the item to spawn. This needs to be increased each run.
-	\param occupation The SDRC_Occupation structure to use
+	\param camp The SDRC_camp structure to use
 	\param rotation The rotation of the items around Y axis
 	\param disableArsenal Defines if vehicle arsenals are to be disabled
 	\return true/false if the mission spawning is ready and mission can continue to next stage 
 	*/
-	static bool Spawn(SDRC_Mission mission, int idx, SDRC_Camp occupation, float rotation = 0, bool disableArsenal = true)
+	static bool Spawn(SDRC_Mission mission, int idx, SDRC_Camp camp, float rotation = 0, bool disableArsenal = true)
 	{
 		IEntity entity;
 		
 		//Spawn entities one by one
-		if ( (idx < occupation.campItems.Count()) && (occupation.campItems.Count() > 0) )
+		if ( (idx < camp.campItems.Count()) && (camp.campItems.Count() > 0) )
 		{			
-			entity = SDRC_SpawnHelper.SpawnStructures(occupation.campItems, mission.GetPos(), rotation, idx);
+			entity = SDRC_SpawnHelper.SpawnStructures(camp.campItems, mission.GetPos(), rotation, idx);
 			
 			if (entity != NULL)
 			{ 
 				mission.AddToEntityList(entity);
 				//Disable arsenal
-				string resourceName = occupation.campItems[idx].GetResource();
+				string resourceName = camp.campItems[idx].GetResource();
 				SDRC_SpawnHelper.DisableVehicleArsenal(entity, resourceName, disableArsenal);				
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_OccupationHelper:Spawn] Could not load: " + occupation.campItems[idx], LogLevel.ERROR);				
+				SDRC_Log.Add("[SDRC_campHelper:Spawn] Could not load: " + camp.campItems[idx], LogLevel.ERROR);				
 			}
 			
 			return false;
@@ -75,39 +75,42 @@ sealed class SDRC_CampHelper
 		else
 		{
 			//Spawn mission AI 
-			int groupCount = Math.RandomInt(occupation.groupCount[0], occupation.groupCount[1]);
+			int groupCount = Math.RandomInt(camp.groupCount[0], camp.groupCount[1]);
 			
 			for (int i = 0; i < groupCount; i++)
 			{
-				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(occupation.groupTypes.GetRandomElement(), mission.GetPos(), mission.GetFaction());
+				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(camp.groupTypes.GetRandomElement(), mission.GetPos(), mission.GetFaction());
 				if (group)
 				{
-					SDRC_AIHelper.SetAIGroupSkill(group, occupation.aiSkill, occupation.aiPerception);					
+					SDRC_AIHelper.SetAIGroupSkill(group, camp.aiSkill, camp.aiPerception);					
 					mission.AddToGroupsList(group);
 					
-					int minRange = occupation.waypointRange[0];
-					int maxRange = occupation.waypointRange[1];
+					int minRange = camp.waypointRange[0];
+					int maxRange = camp.waypointRange[1];
 					
 					//If there are more than one group and loot, spawn one to protect the loot. 
 					//For the first group, waypointRange is ignored.
-					if ((occupation.loot) && i == 0)
+					if ((camp.loot) && i == 0)
 					{
 						minRange = 5;
 						maxRange = 30;					
 					}
 					
-					SDRC_WPHelper.CreateMissionAIWaypoints(group, occupation.waypointGenType, mission.GetPos(), "0 0 0", occupation.waypointMoveType, minRange, maxRange);
-//					SDRC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, occupation.waypointRange[0], occupation.waypointRange[1]);
+					SDRC_WPHelper.CreateMissionAIWaypoints(group, camp.waypointGenType, mission.GetPos(), "0 0 0", camp.waypointMoveType, minRange, maxRange);
+//					SDRC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, camp.waypointRange[0], camp.waypointRange[1]);
 				}
-				SDRC_Log.Add("[SDRC_OccupationHelper:Spawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
+				SDRC_Log.Add("[SDRC_campHelper:Spawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
 			}
 			
+			//Put the loot box in right place
+			camp.loot.box = mission.GetFromEntityList(0);
+			
 /*			//Put loot
-			if (occupation.loot)			
+			if (camp.loot)			
 			{
-				occupation.loot.box = mission.GetFromEntityList(0);
-				SDRC_LootHelper.SpawnItemsToStorage(occupation.loot.box, occupation.loot.items, occupation.loot.itemChance);
-				SDRC_Log.Add("[SDRC_OccupationHelper:Spawn] Loot added.", LogLevel.DEBUG);								
+				camp.loot.box = mission.GetFromEntityList(0);
+				SDRC_LootHelper.SpawnItemsToStorage(camp.loot.box, camp.loot.items, camp.loot.itemChance);
+				SDRC_Log.Add("[SDRC_campHelper:Spawn] Loot added.", LogLevel.DEBUG);								
 			}*/
 
 			return true;			
@@ -118,22 +121,11 @@ sealed class SDRC_CampHelper
 	/*!
 	Spawn loot items. This is usually called at the end of the mission.
 	*/
-	static bool AddLoot(SDRC_Mission mission, SDRC_Camp occupation)
+	static bool AddLoot(SDRC_Camp camp)
 	{
-		if (!occupation.loot)
-		{
-			return false;
-		}
-		
-		occupation.loot.box = mission.GetFromEntityList(0);
-		
-		if (!occupation.loot.box)
-		{
-			return false;
-		}
-		
-		SDRC_LootHelper.SpawnItemsToStorage(occupation.loot.box, occupation.loot.items, occupation.loot.itemChance);
-		SDRC_Log.Add("[SDRC_OccupationHelper:AddLoot] Loot added.", LogLevel.DEBUG);								
+		//NOTE: Error checking for missing loot or box is done in SpawnItemsToStorage()
+		SDRC_LootHelper.SpawnItemsToStorage(camp.loot.box, camp.loot.items, camp.loot.itemChance);
+		SDRC_Log.Add("[SDRC_campHelper:AddLoot] Loot added.", LogLevel.DEBUG);								
 		
 		return true;
 	}

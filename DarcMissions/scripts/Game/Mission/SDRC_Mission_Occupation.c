@@ -66,15 +66,15 @@ class SDRC_Mission_Occupation : SDRC_Mission
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}	
-		
+
+		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Occupation.campItems);
+				
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Occupation.general.posName));
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetHint(m_Config.showHint, m_DC_Occupation.general.title, m_DC_Occupation.general.info);
 		SetMessages(m_Config.showMessage, m_DC_Occupation.general.winMessage, m_DC_Occupation.general.loseMessage);		
 		SetWinCondition(m_DC_Occupation.general.winCondition);
-
-		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Occupation.campItems);
 			
 		SetState(DC_EMissionState.INIT);
 	}
@@ -131,7 +131,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	//------------------------------------------------------------------------------------------------	
 	override void DoWin()
 	{	
-		SDRC_CampHelper.AddLoot(this, m_DC_Occupation);
+		SDRC_CampHelper.AddLoot(m_DC_Occupation);
 		super.DoWin();
 	}
 }
@@ -140,8 +140,8 @@ class SDRC_Mission_Occupation : SDRC_Mission
 class SDRC_OccupationConfig : SDRC_MissionConfig
 {
 	//Mission specific	
-	bool disableArsenal;									//Disable arsenal for vehicles so that no other items are found
-	ref array<ref int> occupationList = {};					//The indexes of occupations.
+	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found
+	ref array<ref int> occupationList = {};			//The indexes of occupations.
 	ref array<ref SDRC_Camp> occupations = {};		//List of occupations
 }
 

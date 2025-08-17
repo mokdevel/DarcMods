@@ -51,6 +51,12 @@ sealed class SDRC_LootHelper
 			return;
 		}
 		
+		if (itemNames.IsEmpty())
+		{
+			SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] List of loot is empty.", LogLevel.ERROR);
+			return;
+		}
+		
 		foreach (string itemName: itemNames)
 		{
 			if (Math.RandomFloat(0, 1) < itemChance)

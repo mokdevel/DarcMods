@@ -41,7 +41,8 @@ class SDRC_Mission_Template : SDRC_Mission
 		SetHint(m_Config.showHint, m_Config.title, m_Config.info);		
 		SetMessages(m_Config.showMessage, m_Config.winMessage, m_Config.loseMessage);						
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
-
+		SetWinCondition(m_Config.winCondition);
+		
 		SetState(DC_EMissionState.INIT);			
 	}	
 	
