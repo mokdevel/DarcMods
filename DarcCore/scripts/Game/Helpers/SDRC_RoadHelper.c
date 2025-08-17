@@ -25,7 +25,7 @@ sealed class SDRC_RoadHelper
 	\param posFrom, posTo Positions for the route start and end
 	\param stepDistance The distance between points to split the route
 	*/
-	static void CreateRoute(out array<vector> routePts, vector posFrom, vector posTo, int stepDistance = 700)
+	static void CreateRoute(out array<vector> routePts, vector posFrom, vector posTo, int stepDistance = 1200)
 	{
 		float distance = vector.DistanceXZ(posFrom, posTo);
 		int ptCount = (distance/stepDistance) + 1;

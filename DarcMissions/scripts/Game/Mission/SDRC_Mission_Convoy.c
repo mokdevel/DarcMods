@@ -257,41 +257,85 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			int i = 0;
 			foreach (AIAgent aiAgent: groupMembers)
 			{
-				MoveEntityInVehicle(aiAgent, vehicle, i);				
+				MoveEntityInVehicle(aiAgent, vehicle, i);
 				i++;
 			}
 		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
-    bool MoveEntityInVehicle(AIAgent aiAgent, IEntity vehicle, int slotIdx = -1)
+    bool MoveEntityInVehicle(AIAgent aiAgent, IEntity vehicle, int slotIdx)
     {
-		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(aiAgent.GetControlledEntity());		
-        CompartmentAccessComponent accessComponent = CompartmentAccessComponent.Cast(character.FindComponent(CompartmentAccessComponent));
-
 		BaseCompartmentManagerComponent compartmentManager = BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(BaseCompartmentManagerComponent));
 		array<BaseCompartmentSlot> compartments = {};
 		int slots = compartmentManager.GetCompartments(compartments);		
 		
-		int i = slotIdx;
-//        for (int i = 0; i < slots; i++)
-//        {
-		if (i < slots)
+		if (slotIdx >= slots)
 		{
-			BaseCompartmentSlot slot = compartments[i];
-            if (!slot.IsOccupied() && (!slot.IsReserved()))// || slot.IsReservedBy(aiAgent))
+			SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] slotIdx incorrect: " + slotIdx + "/" + slots, LogLevel.DEBUG);
+			return false;			
+		}
+		
+		array<int> slotPrio = {};
+		slotPrio.Insert(-1);
+		slotPrio.Insert(-1);
+		
+		int i = 0;
+						
+		foreach (BaseCompartmentSlot slot : compartments)
+		{
+			bool found = false;
+			if (PilotCompartmentSlot.Cast(slot))
 			{
-				bool success = accessComponent.GetInVehicle(vehicle, slot, true, -1, ECloseDoorAfterActions.CLOSE_DOOR, false);
-				return success;
+				SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] Pilot slot: " + slot, LogLevel.DEBUG);
+				if (slotPrio[0] == -1)
+				{
+					slotPrio[0] = i;
+					found = true;
+				}
+			}			
+			else if (TurretCompartmentSlot.Cast(slot))
+			{
+				SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] Turret slot: " + slot, LogLevel.DEBUG);
+				if (slotPrio[1] == -1)
+				{
+					slotPrio[1] = i;
+					found = true;
+				}
 			}
+			
+			if (!found)
+			{
+				slotPrio.Insert(i);
+			}
+			
+			i++;
 		}
-		else
+			
+		int idx = slotPrio[slotIdx];
+		if (idx == -1)
 		{
-			SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] slotIdx incorrect: " + i + "/" + slots, LogLevel.DEBUG);											
+			idx = slotIdx;
 		}
-//		}
-		return false;
-    }		
+		bool success = SetEntityInSlot(aiAgent, vehicle, compartments[idx]);
+
+		return success;
+    }
+	
+	//------------------------------------------------------------------------------------------------
+	bool SetEntityInSlot(AIAgent aiAgent, IEntity vehicle, BaseCompartmentSlot slot)
+	{
+		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(aiAgent.GetControlledEntity());		
+        CompartmentAccessComponent accessComponent = CompartmentAccessComponent.Cast(character.FindComponent(CompartmentAccessComponent));
+		
+		if (slot.IsOccupied() || !slot.IsCompartmentAccessible() || slot.IsReserved())
+		{
+			return false;
+		}
+		bool success = accessComponent.GetInVehicle(vehicle, slot, true, -1, ECloseDoorAfterActions.CLOSE_DOOR, false);
+		
+		return success;
+	}
 }
 	
 //------------------------------------------------------------------------------------------------
@@ -365,13 +409,14 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_CONVOY_MAP;
 		//Mission specific
-		conf.convoyList = {0,0,0,1};
+		conf.convoyList = {0,0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
 		conf.distanceToPlayer = 500;
 		conf.disableArsenal = true;
 		//----------------------------------------------------
 		conf.convoys.Insert(Convoy0());				
 		conf.convoys.Insert(Convoy1());				
 		conf.convoys.Insert(Convoy2());
+		conf.convoys.Insert(Convoy3());
 	}
 		
 	//----------------------------------------------------
@@ -492,7 +537,6 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Convoy Convoy2()
 	{
-		//TBD: Needs fixing. The AI will jump out immediately when seeing a player. The driver stays inside, but gunner not. Probably need to assign a gunner...
 		SDRC_Convoy convoy = new SDRC_Convoy();
 		convoy.general.Set(
 			"index 2: Armor driving from .. to ..",
@@ -521,27 +565,84 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT
 			},
 			{
-				"G_HEAVY"
+				"G_HEAVY", "G_SPECIAL"
 			},
 			50, 1.0,
 			{
 				"{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et",
 				"{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et",
+				"{254289B9C09904AB}Prefabs/Vehicles/Wheeled/BRDM2/BRDM2.et",
 			},
-			50
+			20
 		);
 		
 		SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE", 
 				"WEAPON_HANDGUN", 
-				"WEAPON_LAUNCHER", "WEAPON_LAUNCHER",
+				"WEAPON_LAUNCHER", 
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"			
 			};
-		loot.Set(0.9, lootItems);
+		loot.Set(0.7, lootItems);
 		convoy.loot = loot;
+
+		return convoy;	
+	}
+			
+	//----------------------------------------------------
+	SDRC_Convoy Convoy3()
+	{
+		SDRC_Convoy convoy = new SDRC_Convoy();
+		convoy.general.Set(
+			"index 3: Vehicle with a gun driving from .. to ..",
+			{"0 0 0", "0 0 0"},
+			"any",
+			"Guns on the move",
+			"Look out for a patrol between %l and %d.",
+			DC_EMissionWinCondition.AI_KILL_ALL,
+			"Nice shooting!",
+			"Oh dear, your failure will be remembered.", 
+			0
+		);
+		convoy.Set(
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_PARKING,
+				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_AIRPORT
+			},
+			{
+				"G_RECON", "G_MEDICAL", "G_LIGHT"
+			},
+			50, 1.0,
+			{
+				"{F6B23D17D5067C11}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB.et",
+				"{5168FEA3054D6D15}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB_MERDC.et",
+				"{3EA6F47D95867114}Prefabs/Vehicles/Wheeled/M998/M1025_armed_M2HB.et",
+				"{DD774A8FD0989A78}Prefabs/Vehicles/Wheeled/M998/M1025_armed_M2HB_MERDC.et",
+			},
+			20
+		);
 		
+		SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"WEAPON_RIFLE", 
+				"WEAPON_HANDGUN", 
+				"WEAPON_GRENADE", "WEAPON_GRENADE", 
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"			
+			};
+		loot.Set(0.9, lootItems);
+		convoy.loot = loot;		
+				
 		return convoy;	
 	}	
 }
