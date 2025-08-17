@@ -8,6 +8,7 @@ Just activate the mod (and dependencies) and you're good to go.
 Please check the FAQ and you can find me on Discord
 * [FAQ](docs/FAQ.md)
 * [Discord](https://discord.com/channels/105462288051380224/1367778477134057523)
+* [GM functionality]/docs/GM.md)
 
 ## Vision
 I wanted to create a simple drop-in mission package where there is minimal configuration needed to get it running. You can take the mod, play it in SP, MP or let it run on a dedicated server. Everything should be randomized so you should never know what is happening in the world. The behaviour of the mod should be close to vanilla and by doing that, you could be running this on top of your other game modes. I've been using this with [Escapists](https://reforger.armaplatform.com/workshop/5F16D7E4A1CBE075-Escapists) just to get a few additional surprises.
@@ -20,6 +21,8 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - Occupation : A location is guarded by AIs with loot available.
 - Squatters : A building is guarded by AIs with loot available.
 - Roadblock : AI have setup a road block on the road.
+- High Value Target - VIP : An AI is defined as a High Value Target VIP. Go take him down.
+- High Value Target - Item : A structure is to be destroyed. 
 
 ## Thanks
 - The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
@@ -28,13 +31,13 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 
 ## Future plans
 - Waypoint functionality for AI to roam buildings in a city
-- New missions: Kill a target, steal smth and bring the loot somewhere, choppers hunting you
+- New missions: Steal smth and bring the loot somewhere, choppers hunting you
 
 ## Known issues
 - Moving map markers lose the text under them. 
 
 # Parameters
-All configurations are done via .json files. The information is on one line due to the saving functionality in AR. See [FAQ](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/FAQ.md#q-the-oneline-jsons-are-hard-to-readedit) for more.
+All configurations are done via .json files. The information is on one line due to the save functionality in AR. See [FAQ](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/FAQ.md#q-the-oneline-jsons-are-hard-to-readedit) for more.
 The configuration files will be under your ```profile\DarcMods\<subDir>\*```, where the ``subDir`` is defined via ``dc_coreConfig.json``. 
 
 Core has common configurations for mods. See:
@@ -55,6 +58,8 @@ Mission specific parameters for each mission type:
 * [Occupation](./docs/MISSION_OCCUPATION.md)
 * [Squatters](./docs/MISSION_SQUATTERS.md)
 * [Roadblock](./docs/MISSION_ROADBLOCK.md)
+* [HVT VIP](./docs/MISSION_HVTVIP.md)
+* [HVT Item](./docs/MISSION_HVTITEM.md)
 
 Other parameter details available:
 * [Lists](./docs/P_LISTS.md) for automatic loot and enemy lists
@@ -84,6 +89,8 @@ Mission specific files
 * [dc_missionConfig_Convoy.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Convoy.json)
 * [dc_missionConfig_Crashsite.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Crashsite.json)
 * [dc_missionConfig_Squatters.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Squatter.json)
+* [dc_missionConfig_HvtItem.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_HvtItem.json)
+* [dc_missionConfig_HvtVip.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_HvtVip.json)
 
 Dependency specific files
 * [dc_coreConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_coreConfig.json) : Configuration file for core.

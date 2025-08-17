@@ -1,0 +1,342 @@
+{
+	"version": 1,
+	"author": "darc",
+	"missionCycleTime": 30,
+	"markerType": "DARC_MISSION",
+	"markerIdx": 11,
+	"showMarker": true,
+	"showHint": true,
+	"showMessage": true,
+	"disableArsenal": false,
+	"hvtItemList": [
+		0,
+		1
+	],
+	"hvtItems": [
+		{
+			"general": {
+				"comment": "index 0: Destroy generator",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Destroy generator near %l",
+				"info": "The enemy is spreading propaganda.",
+				"winCondition": 20,
+				"winMessage": "Target destroyed.",
+				"loseMessage": "You failed in your mission!",
+				"xp": 0
+			},
+			"locationTypes": [
+				64,
+				62,
+				75,
+				79,
+				80,
+				81,
+				15
+			],
+			"groupCount": [
+				1,
+				2
+			],
+			"waypointRange": [
+				25,
+				100
+			],
+			"waypointGenType": 5,
+			"waypointMoveType": 5,
+			"groupTypes": [
+				"G_ADMIN",
+				"G_LIGHT",
+				"G_LIGHT"
+			],
+			"aiSkill": 50,
+			"aiPerception": 1.0,
+			"emptySize": 6.0,
+			"loot": {
+				"box": null,
+				"itemChance": 0.699999988079071,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"UTIL_ATTACHMENT",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			},
+			"campItems": [
+				{
+					"resource": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+					"position": [
+						243.29400634765626,
+						1.0,
+						174.7550048828125
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{4BEFC7FCCB2BA121}Prefabs/Props/Military/Generators/GeneratorMilitary_USSR_01/HvtGeneratorMilitary_USSR_01.et",
+					"position": [
+						249.6280059814453,
+						1.0,
+						176.9029998779297
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{B4F2701CBBE49C48}Prefabs/Props/Military/Antennas/Antenna_RC292_01.et",
+					"position": [
+						246.12100219726563,
+						1.0,
+						174.906005859375
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{C108EB96CCC73E94}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Table_Radio_US_01.et",
+					"position": [
+						243.3489990234375,
+						1.0,
+						176.16900634765626
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{D0974856AF6DAE81}PrefabsEditable/Auto/Props/Military/Furniture/E_ChairMilitary_US_01.et",
+					"position": [
+						243.37600708007813,
+						1.0,
+						176.95399475097657
+					],
+					"rotation": [
+						0.0,
+						-40.034000396728519,
+						0.0
+					]
+				},
+				{
+					"resource": "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
+					"position": [
+						252.32699584960938,
+						1.0,
+						177.1280059814453
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
+					"position": [
+						251.78700256347657,
+						1.0,
+						181.1179962158203
+					],
+					"rotation": [
+						0.0,
+						-27.458999633789064,
+						0.0
+					]
+				},
+				{
+					"resource": "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
+					"position": [
+						251.09100341796876,
+						1.0,
+						172.20899963378907
+					],
+					"rotation": [
+						0.0,
+						39.983001708984378,
+						0.0
+					]
+				}
+			],
+			"camp": null,
+			"targetIdx": 1
+		},
+		{
+			"general": {
+				"comment": "index 1: Destroy supplies",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "A supply truck near %l",
+				"info": "A truck has crashed and the supplies needs to be destroyed.",
+				"winCondition": 20,
+				"winMessage": "Supplies never reached the enemy. Good work!",
+				"loseMessage": "The enemy will fight with their bellies full.",
+				"xp": 0
+			},
+			"locationTypes": [
+				59,
+				59,
+				59,
+				59,
+				59,
+				70,
+				60,
+				61,
+				81
+			],
+			"groupCount": [
+				1,
+				2
+			],
+			"waypointRange": [
+				25,
+				100
+			],
+			"waypointGenType": 5,
+			"waypointMoveType": 5,
+			"groupTypes": [
+				"G_ADMIN",
+				"G_LIGHT",
+				"G_LIGHT",
+				"G_HEAVY"
+			],
+			"aiSkill": 50,
+			"aiPerception": 1.0,
+			"emptySize": 10.0,
+			"loot": {
+				"box": null,
+				"itemChance": 0.699999988079071,
+				"items": [
+					"UTIL_ATTACHMENT",
+					"UTIL_OPTICAL",
+					"UTIL_AMMO",
+					"UTIL_AMMO",
+					"UTIL_AMMO",
+					"UTIL_AMMO",
+					"UTIL_AMMO",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			},
+			"campItems": [
+				{
+					"resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+					"position": [
+						250.9770050048828,
+						1.0,
+						204.51300048828126
+					],
+					"rotation": [
+						0.0,
+						-92.9229965209961,
+						0.0
+					]
+				},
+				{
+					"resource": "{47E0234DF4169EE5}Prefabs/Props/Military/CargoContainers/HvtCargoContainer_01_10ft_US_supplies.et",
+					"position": [
+						249.89999389648438,
+						1.0,
+						196.96099853515626
+					],
+					"rotation": [
+						0.0,
+						-18.643999099731447,
+						0.0
+					]
+				},
+				{
+					"resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
+					"position": [
+						247.84300231933595,
+						1.0,
+						200.01800537109376
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
+					"position": [
+						249.7949981689453,
+						1.0,
+						196.9080047607422
+					],
+					"rotation": [
+						0.0,
+						-24.66200065612793,
+						0.0
+					]
+				},
+				{
+					"resource": "{563AD1F822D50049}Prefabs/EffectsModuleEntities/SDRC_BigSmoke.et",
+					"position": [
+						249.1280059814453,
+						1.9520000219345093,
+						202.4530029296875
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{9E5EDE35EFBF70B7}PrefabsEditable/Auto/Props/Wrecks/E_M923A1_wreck.et",
+					"position": [
+						250.0279998779297,
+						1.0,
+						200.9530029296875
+					],
+					"rotation": [
+						0.0,
+						-50.69900131225586,
+						0.0
+					]
+				}
+			],
+			"camp": null,
+			"targetIdx": 1
+		}
+	]
+}
