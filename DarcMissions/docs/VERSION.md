@@ -4,8 +4,18 @@
 
 ## Next release (unreleased)
 
+### DarcMissions
 Main features:
-* Loot is spawned only after win is reached. This is true for missions: Occupation, Squatters, HvtVip, Roadblock
+* Change in behaviour: Loot is spawned only after win is reached. This is true for missions: Occupation, Squatters, HvtVip, Roadblock
+
+Fixes:
+* Win condition not set properly for some of the missions
+
+### DarcSpawner
+Configuration json has changed. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
+
+Main features:
+* Supports spawning loot containers on designated spots. 
 
 ## 20250801
 Major changes in the json files. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
