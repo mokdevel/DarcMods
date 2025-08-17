@@ -13,8 +13,8 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	
 	private ref SDRC_HvtVipJsonApi m_HvtVipJsonApi = new SDRC_HvtVipJsonApi();	
 	private ref SDRC_HvtVipConfig m_Config;
-
 	private ref SDRC_HvtVip m_DC_HvtVip;	//HvtVip configuration in use
+	
 	private IEntity m_Building;					//The building for the mission
 	private int m_iGroupCount;
 	private int m_iSpawnIndex = 0;				//Counter for the AI to spawn

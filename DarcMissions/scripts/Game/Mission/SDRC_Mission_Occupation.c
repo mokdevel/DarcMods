@@ -9,9 +9,8 @@ This mission spawns groups to defend a location
 class SDRC_Mission_Occupation : SDRC_Mission
 {
 	private ref SDRC_OccupationJsonApi m_OccupationJsonApi = new SDRC_OccupationJsonApi();	
-	private ref SDRC_OccupationConfig m_Config;
-	
-	protected ref SDRC_Camp m_DC_Occupation;		//Occupation configuration in use
+	private ref SDRC_OccupationConfig m_Config;	
+	private ref SDRC_Camp m_DC_Occupation;		//Occupation configuration in use
 	
 	private int m_iSpawnIndex = 0;						//Counter for the item to spawn
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.

@@ -20,9 +20,9 @@ class SDRC_Mission_Convoy : SDRC_Mission
 {
 	private ref SDRC_ConvoyJsonApi m_ConvoyJsonApi = new SDRC_ConvoyJsonApi();	
 	private ref SDRC_ConvoyConfig m_Config;
+	private ref SDRC_Convoy m_DC_Convoy;		//Convoy configuration in use
+	
 	private DC_EMissionConvoyState missionConvoyState = DC_EMissionConvoyState.INIT;	
-
-	protected ref SDRC_Convoy m_DC_Convoy;		//Convoy configuration in use
 	
 	private vector m_vPosDestination = "1 1 1";
 	private IEntity m_Vehicle = null;

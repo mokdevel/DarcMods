@@ -12,8 +12,8 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	
 	private ref SDRC_HvtItemJsonApi m_HvtItemJsonApi = new SDRC_HvtItemJsonApi();	
 	private ref SDRC_HvtItemConfig m_Config;
-
 	private ref SDRC_HvtItem m_DC_HvtItem;			//HvtItem configuration in use
+	
 //	private int m_iGroupCount;
 	private int m_iSpawnIndex = 0;					//Counter for the item to spawn
 	private float m_fSpawnRotation = 0;				//Rotation of the camp for random locations.

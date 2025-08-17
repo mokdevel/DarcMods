@@ -11,13 +11,13 @@ sealed class SDRC_Conf
 {
 	const string CONF_DIRECTORY = "DarcMods";
 	const string CORE_CONFIG_FILE = "dc_coreConfig.json";
-	const string DEFAULT_DIR = "default";
 	static string subDir = "";
 	static bool coreHasStarted = false;
 	//TBD: const int MISSION_END_TIME = 5000;					//Time to set for mission cycle when mission is set to end.
 	
 //Release options	
 #ifdef SDRC_RELEASE
+	const string DEFAULT_DIR = "default";
 	const bool SDRC_ENABLE_DARCSPAWNER = true;			//Enable the spawner mod during development
 	const bool SDRC_ENABLE_DARCMISSIONS = true;			//Enable the missions mod during development
 	const bool SDRC_ENABLE_DARCDEATHMARKER = true;		//Enable death marker mod during development
@@ -32,6 +32,7 @@ sealed class SDRC_Conf
 		
 //Development time options	
 #ifndef SDRC_RELEASE
+	const string DEFAULT_DIR = "dummy";
 	const bool SDRC_ENABLE_DARCSPAWNER = false;
 	const bool SDRC_ENABLE_DARCMISSIONS	= true;
 	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
@@ -41,7 +42,7 @@ sealed class SDRC_Conf
 //	const bool OVERWRITE_JSON = false;				
 	const bool SHOW_VALID_MISSION_AREAS = false;
 	const bool SHOW_MARKER_FOR_LOCATION = false;	
-	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
-//	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
+//	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
+	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
 #endif
 }

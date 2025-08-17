@@ -10,8 +10,8 @@ class SDRC_Mission_Squatter : SDRC_Mission
 {
 	private ref SDRC_SquatterJsonApi m_SquatterJsonApi = new SDRC_SquatterJsonApi();	
 	private ref SDRC_SquatterConfig m_Config;
-
 	private ref SDRC_Squatter m_DC_Squatter;	//Squatter configuration in use
+	
 	private IEntity m_Building;					//The building for the mission
 	private int m_iAiCount;
 	private int m_iSpawnIndex = 0;				//Counter for the AI to spawn

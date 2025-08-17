@@ -20,9 +20,9 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 {
 	private ref SDRC_CrashsiteJsonApi m_CrashsiteJsonApi = new SDRC_CrashsiteJsonApi();	
 	private ref SDRC_CrashsiteConfig m_Config;
-	private const int DC_LOCATION_SEACRH_ITERATIONS = 30;	//How many different spots to try for a mission before giving up	
-
-	protected ref SDRC_Crashsite m_DC_Crashsite;			//Occupation configuration in use
+	private ref SDRC_Crashsite m_DC_Crashsite;			//Occupation configuration in use
+	
+	private const int DC_LOCATION_SEACRH_ITERATIONS = 10;	//How many different spots to try for a mission before giving up	
 			
 	private DC_EMissionCrashSiteState missionCrashSiteState = DC_EMissionCrashSiteState.INIT;
 	private vector m_vPosDestination = "0 0 0";				//The destination where the chopper is flying from mission position

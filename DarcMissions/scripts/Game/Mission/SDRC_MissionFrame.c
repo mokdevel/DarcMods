@@ -174,6 +174,7 @@ class SDRC_MissionFrame
 			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Deleting mission: " + mission.GetId() + " : " + mission.GetTitle(), LogLevel.DEBUG);
 			SDRC_DebugHelper.DeleteDebugPos(mission.GetId());
 			//delete mission;	//This gives an error...
+			mission.MissionEnd();
 			m_MissionList.RemoveOrdered(0);			
 		}
 		SDRC_Log.Add("[~SDRC_MissionFrame] Stopping SDRC_MissionFrame", LogLevel.NORMAL);

@@ -12,9 +12,8 @@
 class SDRC_Mission_Roadblock : SDRC_Mission
 {
 	private ref SDRC_RoadblockJsonApi m_RoadblockJsonApi = new SDRC_RoadblockJsonApi();	
-	private ref SDRC_RoadblockConfig m_Config;
-	
-	protected ref SDRC_Camp m_DC_Roadblock;		//Roadblock configuration in use
+	private ref SDRC_RoadblockConfig m_Config;	
+	private ref SDRC_Camp m_DC_Roadblock;		//Roadblock configuration in use
 	
 	private int m_iSpawnIndex = 0;						//Counter for the item to spawn
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.

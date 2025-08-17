@@ -16,9 +16,8 @@ Note: The original HunterKiller mod is discontinued.
 class SDRC_Mission_Hunter : SDRC_Mission
 {
 	private ref SDRC_HunterJsonApi m_HunterJsonApi = new SDRC_HunterJsonApi();				
-	private ref SDRC_HunterConfig m_Config;
-	
-	protected ref SDRC_Hunter m_DC_Hunter;		//Hunter configuration in use
+	private ref SDRC_HunterConfig m_Config;	
+	private ref SDRC_Hunter m_DC_Hunter;		//Hunter configuration in use
 	
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 10;	//How many different spots to try for a mission before giving up	
 	private const int DC_GROUP_SPAWN_DELAY = 2000;			//Delay between AI group spawns
