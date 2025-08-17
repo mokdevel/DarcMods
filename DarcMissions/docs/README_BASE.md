@@ -14,15 +14,15 @@ Please check the FAQ and you can find me on Discord
 I wanted to create a simple drop-in mission package where there is minimal configuration needed to get it running. You can take the mod, play it in SP, MP or let it run on a dedicated server. Everything should be randomized so you should never know what is happening in the world. The behaviour of the mod should be close to vanilla and by doing that, you could be running this on top of your other game modes. I've been using this with [Escapists](https://reforger.armaplatform.com/workshop/5F16D7E4A1CBE075-Escapists) just to get a few additional surprises.
 
 ## Missions
-- Hunter : AIs are hunting you. They have some knowledge of where you are. You can outrun them or take them down. 
-- Convoy : AIs are driving from a location A to B carrying valuable loot with them.
-- Patrol : AIs are patroling an area or traveling with a purpose to reach a location.
-- Crashsite : A helicopter carrying loot is damaged and is crashing. Survivors will be protecting the wreck while waiting to be rescued.
-- Occupation : A location is guarded by AIs with loot available.
-- Squatters : A building is guarded by AIs with loot available.
-- Roadblock : AI have setup a road block on the road.
-- High Value Target - VIP : An AI is defined as a High Value Target VIP. Go take him down.
-- High Value Target - Item : A structure is to be destroyed. 
+- (1) [Hunter](./docs/MISSION_HUNTER.md) : AIs are hunting you. They have some knowledge of where you are. You can outrun them or take them down. 
+- (2) [Occupation](./docs/MISSION_OCCUPATION.md) : AIs are driving from a location A to B carrying valuable loot with them.
+- (3) [Convoy](./docs/MISSION_CONVOY.md) : AIs are patroling an area or traveling with a purpose to reach a location.
+- (4) [Crashsite](./docs/MISSION_CRASHSITE.md) : A helicopter carrying loot is crashing. Survivors will be protecting the wreck while waiting to be rescued.
+- (5) [Patrol](./docs/MISSION_PATROL.md) : AIs are patroling an area or traveling with a purpose to reach a location.
+- (6) [Squatters](./docs/MISSION_SQUATTERS.md) : A building is guarded by AIs with loot available.
+- (7) [Roadblock](./docs/MISSION_ROADBLOCK.md) : AI have setup a road block on the road.
+- (8) [HVT VIP](./docs/MISSION_HVTVIP.md) : High Value Target - VIP : An AI is defined as a High Value Target VIP. Go take him down.
+- (9) [HVT Item](./docs/MISSION_HVTITEM.md) : High Value Target - Item : A structure is to be destroyed. 
 
 ## Thanks
 - The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
@@ -51,15 +51,15 @@ Missions are configurable via .json files. Each mission have their own configura
 * [General parameters](./docs/P_COMMON.md#general-parameters) that are used in multiple mods.
 
 Mission specific parameters for each mission type: 
-* [Hunter](./docs/MISSION_HUNTER.md)
-* [Convoy](./docs/MISSION_CONVOY.md)
-* [Patrol](./docs/MISSION_PATROL.md)
-* [Crashsite](./docs/MISSION_CRASHSITE.md)
-* [Occupation](./docs/MISSION_OCCUPATION.md)
-* [Squatters](./docs/MISSION_SQUATTERS.md)
-* [Roadblock](./docs/MISSION_ROADBLOCK.md)
-* [HVT VIP](./docs/MISSION_HVTVIP.md)
-* [HVT Item](./docs/MISSION_HVTITEM.md)
+* (1) [Hunter](./docs/MISSION_HUNTER.md)
+* (2) [Occupation](./docs/MISSION_OCCUPATION.md)
+* (3) [Convoy](./docs/MISSION_CONVOY.md)
+* (4) [Crashsite](./docs/MISSION_CRASHSITE.md)
+* (5) [Patrol](./docs/MISSION_PATROL.md)
+* (6) [Squatters](./docs/MISSION_SQUATTERS.md)
+* (7) [Roadblock](./docs/MISSION_ROADBLOCK.md)
+* (8) [HVT VIP](./docs/MISSION_HVTVIP.md)
+* (9) [HVT Item](./docs/MISSION_HVTITEM.md)
 
 Other parameter details available:
 * [Lists](./docs/P_LISTS.md) for automatic loot and enemy lists
