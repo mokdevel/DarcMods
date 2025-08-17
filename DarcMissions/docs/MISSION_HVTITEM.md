@@ -3,4 +3,4 @@ Example: [dc_missionConfig_HvtItem.json](https://github.com/mokdevel/DarcMods/bl
 
 A target needs to be destoyed.
 
-!!! Mission is not available yet !!!
+TBD: Documentation not available yet
