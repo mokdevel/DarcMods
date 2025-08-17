@@ -51,7 +51,7 @@ The mission frame has the main definitions on mission spawn times, counts, etc. 
 Missions are configurable via .json files. Each mission have their own configuration file, but some information is shared. There are:
 * [Common parameters](./docs/P_COMMON.md) that are valid for all missions. 
 * [General parameters](./docs/P_COMMON.md#general-parameters) that are used in multiple mods.
-* Mission specific parameters for each mission type are linked in the **Missions** chapter
+* Mission specific parameters for each mission type are linked in the [Missions](#missions) chapter.
 
 Other parameter details available:
 * [Lists](./docs/P_LISTS.md) for automatic loot and enemy lists
