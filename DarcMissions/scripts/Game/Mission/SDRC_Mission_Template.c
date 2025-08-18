@@ -42,8 +42,6 @@ class SDRC_Mission_Template : SDRC_Mission
 		SetMessages(m_Config.showMessage, m_Config.winMessage, m_Config.loseMessage);						
 		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
 		SetWinCondition(m_Config.winCondition);
-		
-		SetState(DC_EMissionState.INIT);			
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -51,7 +49,7 @@ class SDRC_Mission_Template : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.INIT)
+		if (GetState() == DC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 			SetState(DC_EMissionState.ACTIVE);

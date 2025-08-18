@@ -94,8 +94,6 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		SetHint(m_Config.showHint, m_DC_Hunter.general.title, m_DC_Hunter.general.info);		
 		SetMessages(m_Config.showMessage, m_DC_Hunter.general.winMessage, m_DC_Hunter.general.loseMessage);		
 		SetWinCondition(m_DC_Hunter.general.winCondition);
-
-		SetState(DC_EMissionState.INIT);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -103,7 +101,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.INIT)
+		if (GetState() == DC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 			SetState(DC_EMissionState.ACTIVE);

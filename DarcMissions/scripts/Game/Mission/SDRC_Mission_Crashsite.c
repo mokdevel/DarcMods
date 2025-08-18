@@ -120,8 +120,6 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		SetMessages(m_Config.showMessage, m_DC_Crashsite.general.winMessage, m_DC_Crashsite.general.loseMessage);		
 		SetWinCondition(m_DC_Crashsite.general.winCondition);
 
-		SetState(DC_EMissionState.INIT);			
-
 		//Set a marker for destination
 		if (!SDRC_Conf.RELEASE)
 		{			
@@ -135,7 +133,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.INIT)
+		if (GetState() == DC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 			SetState(DC_EMissionState.ACTIVE);

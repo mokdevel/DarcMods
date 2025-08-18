@@ -116,8 +116,6 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		SetWinCondition(m_DC_Roadblock.general.winCondition);
 
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Roadblock.campItems);
-		
-		SetState(DC_EMissionState.INIT);			
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -125,7 +123,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.INIT)
+		if (GetState() == DC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds

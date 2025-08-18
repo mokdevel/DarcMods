@@ -268,7 +268,7 @@ class SDRC_MissionFrame
 				tmpDC_Mission.SetActiveDistance(m_Config.missionActiveDistance);
 				tmpDC_Mission.SetActiveTimeToEnd(m_Config.missionActiveTimeToEnd);
 				//Set mission to start to run
-				m_MissionList[m_MissionList.Count() - 1].MissionRun();
+				m_MissionList[m_MissionList.Count() - 1].MissionStart();
 			
 				SDRC_Log.Add(string.Format("[SDRC_MissionFrame:MissionCycleManager] Spawning mission %1 (%2) %3", tmpDC_Mission.GetTitle(), tmpDC_Mission.GetPos(), tmpDC_Mission.GetPosName()), LogLevel.NORMAL);
 

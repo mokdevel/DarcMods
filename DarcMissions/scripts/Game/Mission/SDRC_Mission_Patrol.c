@@ -90,8 +90,6 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		SetMessages(m_Config.showMessage, m_DC_Patrol.general.winMessage, m_DC_Patrol.general.loseMessage);		
 		SetWinCondition(m_DC_Patrol.general.winCondition);		
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
-
-		SetState(DC_EMissionState.INIT);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -99,7 +97,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.INIT)
+		if (GetState() == DC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 		}

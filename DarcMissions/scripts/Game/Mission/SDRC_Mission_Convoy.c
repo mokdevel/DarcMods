@@ -142,8 +142,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		SetMessages(m_Config.showMessage, m_DC_Convoy.general.winMessage, m_DC_Convoy.general.loseMessage);		
 		SetWinCondition(m_DC_Convoy.general.winCondition);
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
-		
-		SetState(DC_EMissionState.INIT);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -151,7 +149,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.INIT)
+		if (GetState() == DC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 		}

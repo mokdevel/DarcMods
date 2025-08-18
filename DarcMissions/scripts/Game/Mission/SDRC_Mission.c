@@ -20,7 +20,8 @@ enum DC_EMissionType
 enum DC_EMissionState
 {
 	NONE,		//Unknown state. Nothing should be run at this state.
-	INIT,		//The mission is being init. Things are spawned etc.
+	INIT,		//The mission is being init. This automatically set when object is created.
+	SPAWN,		//Things are spawned etc. This automatically set when INIT is success.
 	ACTIVE,		//Normal state when mission is running.	
 	END,		//Mission is ending. Things are cleaned, despawned etc.
 	EXIT,		//State to inform the MissionFrame that the mission should be destroyed.
@@ -155,6 +156,17 @@ class SDRC_Mission
 	}
 
 	//------------------------------------------------------------------------------------------------
+	/*! This is called when INIT is successful and mission is ready to start. We delay the start a 
+		few seconds to make sure everything has settled properly.
+	*/
+	void MissionStart()	
+	{
+		m_State = DC_EMissionState.SPAWN;
+		SDRC_Log.Add("[SDRC_Mission:MissionStart] State changed to SPAWN: " + GetId(), LogLevel.DEBUG);
+		GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.MISSION_RUN_DELAY, false);	
+	}	
+	
+	//------------------------------------------------------------------------------------------------
 	/*! You should override this in your mission but remember to super.MissionRun()
 		override void MissionRun()
 		{			
@@ -167,7 +179,7 @@ class SDRC_Mission
 	{
 		//SDRC_Log.Add("[SDRC_Mission:MissionRun] Super on: " + GetId(), LogLevel.DEBUG);
 		
-		if (m_State == DC_EMissionState.INIT)
+		if (m_State == DC_EMissionState.SPAWN)
 		{
 		}
 		
@@ -176,7 +188,8 @@ class SDRC_Mission
 		}
 		
 		if (m_State == DC_EMissionState.ACTIVE)
-		{
+		{			
+			//Check if a player is close to a mission vehicle. If yes, remove it from entities list so that it's not deleted at the end of mission.
 			int i = 0;
 			
 			while (i < m_EntityList.Count())

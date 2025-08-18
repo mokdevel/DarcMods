@@ -74,8 +74,6 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		SetHint(m_Config.showHint, m_DC_Occupation.general.title, m_DC_Occupation.general.info);
 		SetMessages(m_Config.showMessage, m_DC_Occupation.general.winMessage, m_DC_Occupation.general.loseMessage);		
 		SetWinCondition(m_DC_Occupation.general.winCondition);
-			
-		SetState(DC_EMissionState.INIT);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -83,7 +81,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.INIT)
+		if (GetState() == DC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds
