@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-#define SDRC_RELEASE
+//#define SDRC_RELEASE
 
 sealed class SDRC_Conf
 {
@@ -13,6 +13,7 @@ sealed class SDRC_Conf
 	const string CORE_CONFIG_FILE = "dc_coreConfig.json";
 	static string subDir = "";
 	static bool coreHasStarted = false;
+	const int MISSION_RUN_DELAY = 5000;					//Time between INIT and SPAWN states.
 	//TBD: const int MISSION_END_TIME = 5000;					//Time to set for mission cycle when mission is set to end.
 	
 //Release options	

@@ -203,6 +203,11 @@ sealed class SDRC_Locations
 	{
 		//int stime = System.GetTickCount();
 		
+		if (m_LocationsCache.IsEmpty())
+		{
+			return;
+		}
+		
 		foreach (MapItem location: m_LocationsCache)
 		{
 			if (locationTypeArray.Contains(location.GetBaseType()))

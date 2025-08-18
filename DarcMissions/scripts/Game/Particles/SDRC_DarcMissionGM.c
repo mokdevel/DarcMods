@@ -7,12 +7,6 @@ class SDRC_DarcMissionGM : SCR_ReplicatedParticleEffectEntity
 {	
 	private bool m_bAdded = false;
 
-/*	override event protected bool RplLoad(ScriptBitReader reader)
-	{
-		SDRC_Log.Add("[SDRC_DarcMissionGM:RplLoad] Here we are!", LogLevel.DEBUG);		
-		return super.RplLoad(reader);
-	}	*/
-	
 	override event protected void EOnInit(IEntity owner)	
 	{
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());	
@@ -46,12 +40,6 @@ class SDRC_DarcMissionGM : SCR_ReplicatedParticleEffectEntity
 				
 		super.EOnInit(owner);		
 	}
-	
-/*	override event protected void EOnActivate(IEntity owner)
-	{
-		SDRC_Log.Add("[SDRC_DarcMissionGM:EOnActivate] Here we are!", LogLevel.DEBUG);
-		super.EOnActivate(owner);		
-	}*/
 	
 	void AddedToList()
 	{
