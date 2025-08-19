@@ -1,0 +1,24 @@
+SDRC_DarcMissionGM : "{C599195C442D7125}Prefabs/Compositions/Misc/CustomEntities/CompositionDecals/CompositionDecal_CigarButts_01.et" {
+ ID "56DEF7205C23FF67"
+ components {
+  SDRC_DarcMissionEditableRequestComp "{6626DE8C5A967E75}" {
+   m_EntityType SYSTEM
+   m_UIInfo SCR_EditableEntityUIInfoColored "{6626DE8C5A967E02}" {
+    Name "DarcMissions Crashsite"
+    Description "Spawns a random Crashsite mission"
+    Icon "{C2C967ED8D9A1A48}UI/Textures/Icons/gm_mission_Helicopter_round.edds"
+    m_Image "{497B0217CF61B4F0}UI/Textures/Icons/gm_mission_Helicopter.edds"
+    m_aAuthoredLabels {
+     7 44001
+    }
+   }
+   m_bAutoRegister ALWAYS
+   m_MissionType CRASHSITE
+  }
+  SDRC_DarcMissionRequestComp "{6626DE8C5A967E0D}" {
+  }
+  RplComponent "{6626DE8C5A967E13}" {
+   Streamable Disabled
+  }
+ }
+}
