@@ -9,8 +9,8 @@ This mission spawns groups to defend a location
 class SDRC_Mission_Patrol : SDRC_Mission
 {
 	private ref SDRC_PatrolJsonApi m_PatrolJsonApi = new SDRC_PatrolJsonApi();	
-	private ref SDRC_PatrolConfig m_Config;	
-	private ref SDRC_Patrol m_DC_Patrol;		//Patrol configuration in use
+	private ref SDRC_PatrolConfig m_Config = new SDRC_PatrolConfig();	
+	private ref SDRC_Patrol m_DC_Patrol = new SDRC_Patrol();			//Patrol configuration in use
 	
 	private vector m_vPosDestination = "0 0 0";
 
@@ -25,7 +25,9 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		//Load config
 		m_PatrolJsonApi.Load();
 		m_Config = m_PatrolJsonApi.conf;
-		
+
+		SDRC_Log.Add("[SDRC_Mission_Patrol:DEBUG] Patrols defined: " + m_Config.patrols.Count(), LogLevel.DEBUG);	
+				
 		//Pick a configuration for mission
 		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.patrolList);
 		if (idx == -1)
@@ -34,7 +36,17 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}
+		
+		SDRC_Log.Add("[SDRC_Mission_Patrol:DEBUG] Trying to read a variable from index: " + idx + " : " + m_Config.patrols[idx].aiSkill, LogLevel.DEBUG);
+		
 		m_DC_Patrol = m_Config.patrols[idx];
+		
+		if (!m_DC_Patrol)
+		{
+			SDRC_Log.Add("[SDRC_Mission_Patrol:DEBUG] m_DC_Patrol is NULL", LogLevel.ERROR);
+			SetState(DC_EMissionState.FAILED);
+			return;
+		}
 
 		//Check that ranges are not too big
 		int worldSize = SDRC_Misc.GetWorldSize();
@@ -144,6 +156,10 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	{					
 		IEntity entity;
 
+		SDRC_Log.Add("[SDRC_Mission_Patrol:DEBUG] Entering MissionSpawn", LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Mission_Patrol:DEBUG] Dump of m_DC_Patrol:" + m_DC_Patrol, LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Mission_Patrol:DEBUG] Length of groupCount: " + m_DC_Patrol.groupCount.Count(), LogLevel.DEBUG);								
+		
 		//Spawn mission AI 
 		int groupCount = Math.RandomInt(m_DC_Patrol.groupCount[0], m_DC_Patrol.groupCount[1]);
 		
@@ -166,6 +182,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			SDRC_Log.Add("[SDRC_Mission_Patrol:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
 		}
 			
+		SDRC_Log.Add("[SDRC_Mission_Patrol:DEBUG] Setting ACTIVE state", LogLevel.DEBUG);								
 		SetState(DC_EMissionState.ACTIVE);
 	}
 }
@@ -245,13 +262,13 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_PATROL_MAP;
 		conf.showMarker = false;
 		//Mission specific
-		conf.patrolList = {0};//{0,0,0,1,2,3};
+		conf.patrolList = {0,0,0,1,2,3};
 		conf.distanceToPlayer = 500;
 		//----------------------------------------------------
-		conf.patrols.Insert(Patrol0());				
-		conf.patrols.Insert(Patrol1());				
-		conf.patrols.Insert(Patrol2());				
-		conf.patrols.Insert(Patrol3());				
+		conf.patrols.Insert(Patrol0());
+		conf.patrols.Insert(Patrol1());
+		conf.patrols.Insert(Patrol2());
+		conf.patrols.Insert(Patrol3());
 	};
 	
 	//----------------------------------------------------

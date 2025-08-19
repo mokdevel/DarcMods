@@ -24,10 +24,9 @@ modded class SCR_BaseGameMode
 			//Initialize the SDRC_DebugEntity
 			SDRC_Log.Add("[SDRC_Core_BaseGameMode] Creating SDRC_DebugEntity", LogLevel.NORMAL);        
 			m_SDRC_DebugEntity = SDRC_DebugEntity.Cast(GetGame().SpawnEntity(SDRC_DebugEntity, GetGame().GetWorld(), null));
-
-			Resource resource;
 			
 			//Initialize the SDRC_HintEntity
+			Resource resource;
 			SDRC_Log.Add("[SDRC_Core_BaseGameMode] Creating SDRC_HintEntity", LogLevel.NORMAL);
 			resource = Resource.Load("{CF2D9888CE3C5AD7}Prefabs/Helpers/RPLHintHelper.et");
 			if (!resource.IsValid())

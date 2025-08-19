@@ -21,8 +21,10 @@ Add this to your StartGameTrigger or use SDRC_GameCoreBase.c
 	//------------------------------------------------------------------------------------------------
 */
 
+//------------------------------------------------------------------------------------------------
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
 
+//------------------------------------------------------------------------------------------------
 class SDRC_MissionRequested : Managed
 {
 	EntityID entityID;
@@ -56,7 +58,7 @@ class SDRC_MissionFrame
 	{
 		SDRC_Log.Add("[SDRC_MissionFrame] Starting SDRC_MissionFrame", LogLevel.NORMAL);
 		s_Instance = this;
-		
+				
 		m_sWorldName = SDRC_Misc.GetWorldName(true);
 
 		//Load configuration from file		
@@ -85,10 +87,10 @@ class SDRC_MissionFrame
 		SDRC_EnemyHelper.SetEnemyFactions(m_Config.enemyFactions);
 
 		//Count amount of dynamic and static missions
-		m_iMissionCountDynamicMax = GetMissionCount(m_Config.missionDynamic.count, m_Config.missionDynamic.countMul);
+		m_iMissionCountDynamicMax = SDRC_MissionHelper.GetMissionCountForWorld(m_Config.missionDynamic.count, m_Config.missionDynamic.countMul);
 		SDRC_Log.Add("[SDRC_MissionFrame] Max dynamic mission count: " + m_iMissionCountDynamicMax, LogLevel.NORMAL);		
 
-		m_iMissionCountStaticMax = GetMissionCount(m_Config.missionStatic.count, m_Config.missionStatic.countMul);
+		m_iMissionCountStaticMax = SDRC_MissionHelper.GetMissionCountForWorld(m_Config.missionStatic.count, m_Config.missionStatic.countMul);
 		SDRC_Log.Add("[SDRC_MissionFrame] Max static mission count: " + m_iMissionCountStaticMax, LogLevel.NORMAL);		
 				
 		//Set some defaults
@@ -375,7 +377,8 @@ class SDRC_MissionFrame
 			SDRC_MissionRequested missionRequest = m_missionsRequested[0];
 			
 			IEntity missionEntity = GetGame().GetWorld().FindEntityByID(missionRequest.entityID);
-			SDRC_DarcMissionRequestComp requestComp = SDRC_DarcMissionRequestComp.Cast(missionEntity.FindComponent(SDRC_DarcMissionRequestComp));
+//			SDRC_DarcMissionRequestComp requestComp = SDRC_DarcMissionRequestComp.Cast(missionEntity.FindComponent(SDRC_DarcMissionRequestComp));
+			SDRC_DarcMissionEditableRequestComp requestComp = SDRC_DarcMissionEditableRequestComp.Cast(missionEntity.FindComponent(SDRC_DarcMissionEditableRequestComp));
 			missionType = requestComp.GetMissionType();
 			pos = missionEntity.GetOrigin();
 			SDRC_SpawnHelper.DespawnItem(missionEntity);
@@ -583,23 +586,6 @@ class SDRC_MissionFrame
 		return i;
 	}
 	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Counts the amount of missions for the map
-	\param count
-	\param mul
-	*/	
-	protected int GetMissionCount(int count, float mul)	
-	{
-		if (count == -1)
-		{			
-			count = (SDRC_Misc.GetWorldSize() * mul) / 1000;
-			SDRC_Log.Add("[SDRC_MissionFrame:GetMissionCount] Count = (Worldsize) " + SDRC_Misc.GetWorldSize() + " * " + mul + " / 1000 = " + count, LogLevel.DEBUG);			
-		}
-		
-		return count;
-	}
-
 	//------------------------------------------------------------------------------------------------	
 	/*!
 	Remove deleted missions from the list

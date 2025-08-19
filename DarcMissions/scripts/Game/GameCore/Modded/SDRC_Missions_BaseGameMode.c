@@ -3,6 +3,7 @@
 modded class SCR_BaseGameMode 
 {
 	ref SDRC_MissionFrame missionFrame = null;
+	private SDRC_RplGMEntity m_SDRC_RplGMEntity;
 	
 	//------------------------------------------------------------------------------------------------
     override void OnGameStart()
@@ -21,6 +22,17 @@ modded class SCR_BaseGameMode
 					
 			if (IsMaster())
 			{
+				//Initialize the SDRC_RplGMEntity
+				Resource resource;				
+				SDRC_Log.Add("[SDRC_Core_BaseGameMode] Creating SDRC_RplGMEntity", LogLevel.NORMAL);
+				resource = Resource.Load("{034174406440412B}Prefabs/Helpers/RPLGMHelper.et");
+				if (!resource.IsValid())
+				{
+					SDRC_Log.Add("[SDRC_Core_BaseGameMode] Failed to create RPLHintHelper.", LogLevel.ERROR);
+					return;
+				}
+				m_SDRC_RplGMEntity = SDRC_RplGMEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));
+				
 				SDRC_Log.Add("[SDRC_Missions_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
 				GetGame().GetCallqueue().CallLater(StartMissionFrame, 5000, false);	
 			}

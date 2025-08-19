@@ -134,7 +134,39 @@ sealed class SDRC_BuildingHelper
 		
 		return true;
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Select a mission building
+	*/	
+	static IEntity FindMissionBuilding(vector pos, array<string>buildingFilter, float radius)
+	{
+		array<IEntity>buildings = {};
+		FindBuildings(buildings, buildingFilter, pos, radius);
+
+		IEntity building = null;
+		
+		if (buildings.IsEmpty())
+		{
+			SDRC_Log.Add("[SDRC_BuildingHelper:FindMissionBuilding] Could not find suitable building near " + SDRC_Locations.CreateName(pos, "any") + " " + pos, LogLevel.ERROR);
+			return null;
+		}
+		
+		building = buildings.GetRandomElement();
+		vector bpos = building.GetOrigin();
+		
+		if (!SDRC_MissionHelper.IsValidMissionPos(bpos))
+		{
+			return null;
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_BuildingHelper:FindMissionBuilding] Building selected: " + building.GetPrefabData().GetPrefabName() + " " + bpos, LogLevel.DEBUG);
+		}
+		
+		return building;
+	}		
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find floors from a building entity.

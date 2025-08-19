@@ -11,11 +11,14 @@ class SDRC_DarcMissionGM : GenericEntity
 	{
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());	
 		
-		if (baseGameMode)
+		if (baseGameMode)		
 		{
+			//When the entity is created, EOnInit happens both on server and client. 
+			//On server we store it in a list for spawning.
+			//On client, we do nothing.
 			if (baseGameMode.IsMaster() && baseGameMode.missionFrame)
 			{
-				SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInit] Server call!", LogLevel.SPAM);
+				SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInit] Server call!", LogLevel.DEBUG);
 				
 				SDRC_DarcMissionGM ent = SDRC_DarcMissionGM.Cast(owner);
 				if (!ent.IsAdded())

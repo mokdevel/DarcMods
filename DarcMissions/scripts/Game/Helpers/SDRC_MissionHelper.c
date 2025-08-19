@@ -66,7 +66,6 @@ sealed class SDRC_MissionHelper
 		
 		IEntity location = null;
 		array<IEntity> locations = {};
-//		SDRC_Locations.GetLocations(locations, locationTypes);		
 		SDRC_Locations.GetLocationsCached(locations, locationTypes);		
 		int searchRadius = DC_LOCATION_SEACRH_RADIUS;			//Find the position within DC_LOCATION_SEACRH_RADIUS from pos. In case of fail, we increase the area.
 		
@@ -319,6 +318,23 @@ sealed class SDRC_MissionHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Counts the amount of missions for the map
+	\param count
+	\param mul
+	*/	
+	static int GetMissionCountForWorld(int count, float mul)	
+	{
+		if (count == -1)
+		{			
+			count = (SDRC_Misc.GetWorldSize() * mul) / 1000;
+			SDRC_Log.Add("[SDRC_MissionHelper:GetMissionCountForWorld] Count = (Worldsize) " + SDRC_Misc.GetWorldSize() + " * " + mul + " / 1000 = " + count, LogLevel.DEBUG);			
+		}
+		
+		return count;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Select mission index randomly from given list.
 	Returns -1 in case of an error - for example empty list.
 	*/
@@ -326,7 +342,7 @@ sealed class SDRC_MissionHelper
 	{
 		int idx = -1;
 
-		if (confList.Count() == 0)
+		if (confList.IsEmpty())
 		{
 			return -1;
 		}
@@ -350,37 +366,5 @@ sealed class SDRC_MissionHelper
 		
 		SDRC_Log.Add("[SDRC_MissionHelper:CreateInfo] Message created: " + msg, LogLevel.DEBUG);		//TBD: SPAM	
 		return msg;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Select a mission building
-	*/	
-	static IEntity FindMissionBuilding(vector pos, array<string>buildingFilter, float radius)
-	{
-		array<IEntity>buildings = {};
-		SDRC_BuildingHelper.FindBuildings(buildings, buildingFilter, pos, radius);
-
-		IEntity building = null;
-		
-		if (buildings.IsEmpty())
-		{
-			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionBuilding] Could not find suitable building near " + SDRC_Locations.CreateName(pos, "any") + " " + pos, LogLevel.ERROR);
-			return null;
-		}
-		
-		building = buildings.GetRandomElement();
-		vector bpos = building.GetOrigin();
-		
-		if (!SDRC_MissionHelper.IsValidMissionPos(bpos))
-		{
-			return null;
-		}
-		else
-		{
-			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionBuilding] Building selected: " + building.GetPrefabData().GetPrefabName() + " " + bpos, LogLevel.DEBUG);
-		}
-		
-		return building;
-	}		
+	}	
 }
