@@ -17,11 +17,11 @@ class SDRC_DarcMissionEditableRequestComp : SCR_EditableSystemComponent
 
 #ifndef SDRC_RELEASE
 	static int max = 12;
-	static private string param = "1, " + max + ", 1";
-	[Attribute("3", UIWidgets.EditBox, "Test mission index variable", param)]	
+	static private string param = "-1, " + max + ", 1";
+	[Attribute("-1", UIWidgets.EditBox, "Test mission index variable", param)]	
 	protected int m_MissionIdx;
 #endif
-		
+			
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Return the mission type

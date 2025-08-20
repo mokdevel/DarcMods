@@ -1,6 +1,6 @@
 //! Explosive trigger attribute for manipulating the time that remains until the detonation
 [BaseContainerProps(), SCR_BaseEditorAttributeCustomTitle()]
-class SDRC_MissionTypeAttribute : SCR_BaseValueListEditorAttribute
+class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 {
 	//------------------------------------------------------------------------------------------------
 	override SCR_BaseEditorAttributeVar ReadVariable(Managed item, SCR_AttributesManagerEditorComponent manager)

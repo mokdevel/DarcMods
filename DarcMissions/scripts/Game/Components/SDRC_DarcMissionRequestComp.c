@@ -12,6 +12,7 @@ SDRC_DarcMissionRequestCompClass g_DarcMissionRequestClass;
 class SDRC_DarcMissionRequestComp : ScriptGameComponent
 {
 	protected DC_EMissionType m_MissionType;	//The type of mission
+	protected int m_MissionSubIdx;				//The sub type of mission
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
