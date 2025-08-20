@@ -4,10 +4,17 @@
 
 ## Next release (unreleased)
 
+Updated jsons: dc_enemyList.json, dc_lootList.json
+
 ### DarcMissions
 Main features:
 * Change in behaviour: Loot is spawned only after win is reached. This is true for missions: Occupation, Squatters, HvtVip, HvtItem, Roadblock
 * Convoys with armored vehicles and cars with turrets.
+* lootList support for mods: M4BlockII, RAYZIOPTICSPACK, RISLaserAttachments, BarrettM82, BaconDesertEagle
+* New lootList keyword: WEAPON_RIFLE_BIG
+
+Changes: 
+* LootList structure changed.
 
 Fixes:
 * Win condition not set properly for some of the missions
