@@ -27,6 +27,386 @@
 				"VZ",
 				"M16"
 			],
+			"items": [
+				"{B31929F65F0D0279}Prefabs/Weapons/Rifles/M14/Rifle_M21.et",
+				"{3EB02CDAD5F23C82}Prefabs/Weapons/Rifles/SVD/Rifle_SVD.et",
+				"{6415B7923DE28C1B}Prefabs/Weapons/Rifles/SVD/Rifle_SVD_PSO.et",
+				"{81EB948E6414BD6F}Prefabs/Weapons/Rifles/M14/Rifle_M21_ARTII.et"
+			]
+		},
+		{
+			"id": "WEAPON_HANDGUN",
+			"modDir": [
+				"Prefabs/Weapons/Handguns"
+			],
+			"include": [
+				"Handgun"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"items": [
+				"{1353C6EAD1DCFE43}Prefabs/Weapons/Handguns/M9/Handgun_M9.et",
+				"{C0F7DD85A86B2900}Prefabs/Weapons/Handguns/PM/Handgun_PM.et"
+			]
+		},
+		{
+			"id": "WEAPON_LAUNCHER",
+			"modDir": [
+				"Prefabs/Weapons/Launchers"
+			],
+			"include": [
+				"Launcher",
+				"BC_M79"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"items": [
+				"{9C5C20FB0E01E64F}Prefabs/Weapons/Launchers/M72/Launcher_M72A3.et",
+				"{7A82FE978603F137}Prefabs/Weapons/Launchers/RPG7/Launcher_RPG7.et",
+				"{E8A55396050E1762}Prefabs/Weapons/Launchers/RPG7/Launcher_RPG7_PGO7.et"
+			]
+		},
+		{
+			"id": "WEAPON_SHOTGUN",
+			"modDir": [
+				"Prefabs/Weapons/Shotguns"
+			],
+			"include": [
+				"Shotgun"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"items": []
+		},
+		{
+			"id": "WEAPON_GRENADE",
+			"modDir": [
+				"Prefabs/Weapons/Grenades"
+			],
+			"include": [
+				""
+			],
+			"exclude": [
+				"_Base"
+			],
+			"items": [
+				"{3343A055A83CB30D}Prefabs/Weapons/Grenades/M18/Smoke_M18_Red.et",
+				"{14C1A0F061D9DDEE}Prefabs/Weapons/Grenades/M18/Smoke_M18_Violet.et",
+				"{9DB69176CEF0EE97}Prefabs/Weapons/Grenades/Smoke_ANM8HC.et",
+				"{77EAE5E07DC4678A}Prefabs/Weapons/Grenades/Smoke_RDG2.et",
+				"{E8F00BF730225B00}Prefabs/Weapons/Grenades/Grenade_M67.et",
+				"{645C73791ECA1698}Prefabs/Weapons/Grenades/Grenade_RGD5.et",
+				"{9BBDEE253A16CC66}Prefabs/Weapons/Grenades/M18/Smoke_M18_Yellow.et",
+				"{D41D22DD1B8E921E}Prefabs/Weapons/Grenades/M18/Smoke_M18_Green.et"
+			]
+		},
+		{
+			"id": "UTIL_ATTACHMENT",
+			"modDir": [
+				"Prefabs/Weapons/Attachments",
+				"Prefabs/5AB890B71D748750/Grip",
+				"Prefabs/5AB890B71D748750/Handguard",
+				"Prefabs/5AB890B71D748750/Lower",
+				"Prefabs/5AB890B71D748750/Muzzle",
+				"Prefabs/5AB890B71D748750/Stock",
+				"Prefabs/5AB890B71D748750/UGL",
+				"Prefabs/5AB890B71D748750/Upper"
+			],
+			"include": [
+				""
+			],
+			"exclude": [
+				"_Base",
+				"Optic",
+				"Scope"
+			],
+			"items": [
+				"{AD045AFAFFC1AB6E}Prefabs/Weapons/Attachments/Stocks/Stock_VZ58/Stock_VZ58_folding.et",
+				"{1A2C3098A3F88658}Prefabs/Weapons/Attachments/Handguards/Handguard_M16A2/Handguard_M16_OliveGreen_Sand_Stripes.et",
+				"{98C79F5FAE12F9B6}Prefabs/Weapons/Attachments/Bayonets/Bayonet_6Kh4.et",
+				"{C374AF8B50B0C6EF}Prefabs/Weapons/Attachments/Muzzle/Suppressor_M16/Suppressor_M16_OliveGreen_Solid.et",
+				"{1125E1072C3541D3}Prefabs/Weapons/Attachments/Bayonets/Bayonet_VZ58/Bayonet_VZ58_v3.et",
+				"{F4B9ADFE20D0D6B8}Prefabs/Weapons/Attachments/Bayonets/Bayonet_VZ58/Bayonet_VZ58_v2.et",
+				"{3F1B1BAD1F6DDC28}Prefabs/Weapons/Attachments/Bayonets/Bayonet_VZ58/Bayonet_VZ58_v1.et",
+				"{AA44A3B17DFE5ACE}Prefabs/Weapons/Attachments/Underbarrel/UGL_M203_short_Tutorial.et",
+				"{1ABABE3551512B0A}Prefabs/Weapons/Attachments/Underbarrel/UGL_GP25.et",
+				"{20BCF441EAD9F593}Prefabs/Weapons/Attachments/Handguards/Handguard_M16_carbine/Handguard_M16_carbine.et",
+				"{D711F819F3271AC6}Prefabs/Weapons/Attachments/Underbarrel/UGL_M203_short_OliveGreen_Sand_Stripes.et",
+				"{084D8EDB23D39D93}Prefabs/Weapons/Attachments/Handguards/Handguard_M16_carbine/Handguard_M16_carbine_OliveGreen_Sand_Stripes.et",
+				"{3B96FAC169E27037}Prefabs/Weapons/Attachments/Muzzle/Suppressor_PBS4/Suppressor_PBS4.et",
+				"{775E9992AF575338}Prefabs/Weapons/Attachments/Underbarrel/UGL_M203_long_OliveGreen_Sand_Stripes.et",
+				"{FB1A7F5BC7D935E2}Prefabs/Weapons/Attachments/Handguards/Handguard_M16A2/Handguard_M16.et",
+				"{43FDAF3FA0FF2299}Prefabs/Weapons/Attachments/Underbarrel/UGL_M203_long.et",
+				"{6288A1F1A5E3AC37}Prefabs/Weapons/Attachments/Muzzle/FlashHider_M16A2/FlashHider_M16.et",
+				"{85C85EFC8E49B312}Prefabs/Weapons/Attachments/Handguards/Handguard_M16_carbine/Handguard_M16_carbine_OliveGreen_Solid.et",
+				"{E52C9791E1554A5F}Prefabs/Weapons/Attachments/Muzzle/Suppressor_M16/Suppressor_M16.et",
+				"{6DE8BD5167F90D6D}Prefabs/Weapons/Attachments/Underbarrel/UGL_M203_long_OliveGreen_Solid.et",
+				"{ADDF08D09F1877A4}Prefabs/Weapons/Attachments/Muzzle/Suppressor_M16/Suppressor_M16_OliveGreen_Sand_Stripes.et",
+				"{2D26D2AE25429499}Prefabs/Weapons/Attachments/Mounts/Dovetail_PKM/Dovetail_PKM.et",
+				"{49CC4426C8671477}Prefabs/Weapons/Attachments/Underbarrel/UGL_M203_short_OliveGreen_Solid.et",
+				"{4A815EB8B824974A}Prefabs/Weapons/Attachments/Muzzle/FlashHider_AK74/FlashHider_AK74.et",
+				"{AB268D088F2D6291}Prefabs/Weapons/Attachments/Underbarrel/UGL_M203_short.et",
+				"{2F4BBE174AFAF5E0}Prefabs/Weapons/Attachments/Stocks/Stock_VZ58/Stock_VZ58_fixed.et",
+				"{06D4C36A6D585275}Prefabs/Weapons/Attachments/Muzzle/FlashHider_AKS74u/FlashHider_AKS74u.et",
+				"{D92368B78263A9E0}Prefabs/Weapons/Attachments/Mounts/Dovetail_AK/Dovetail_AK.et",
+				"{558117556F3880A8}Prefabs/Weapons/Attachments/Bayonets/Bayonet_M9.et",
+				"{51C19F66AAC90A29}Prefabs/Weapons/Attachments/Handguards/Handguard_M16A2/Handguard_M16_OliveGreen_Solid.et",
+				"{A97F179B2DA6DE33}Prefabs/Weapons/Attachments/Mounts/Dovetail_NSV/Dovetail_NSV.et"
+			]
+		},
+		{
+			"id": "UTIL_OPTICS",
+			"modDir": [
+				"Prefabs/Weapons/Attachments",
+				"Scopes",
+				"Prefabs/Weapons/Attachments/BaconOptics/",
+				"Prefabs/5ABD0CB57F7E9EB1/Optics/"
+			],
+			"include": [
+				"Optic",
+				"Scope"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"items": [
+				"{C850A33226B8F9C1}Prefabs/Weapons/Attachments/Optics/Optic_PSO1/Optic_PSO1.et",
+				"{E5E9DBBF3BFB88C6}Prefabs/Weapons/Attachments/Optics/Optic_PGO7/Optic_PGO7V3.et",
+				"{B9773AC7CCDAD633}Prefabs/Weapons/Attachments/Optics/Optic_4x20/Optic_4x20_OliveGreen_Solid.et",
+				"{886A96EF3F14BCD2}Prefabs/Weapons/Attachments/Optics/UK59_4x8/Optic_UK59_4x8.et",
+				"{B8764E1CDC4F4F22}Prefabs/Weapons/Attachments/Optics/Optic_AP2k/Collim_AP2k_OliveGreen_Solid.et",
+				"{08286DDBB1F33FF1}Prefabs/Weapons/Attachments/Optics/Optic_AP2k/Collim_AP2k.et",
+				"{B623482E2704B69A}Prefabs/Weapons/Attachments/Optics/Optic_SPP/Optic_SPP.et",
+				"{D2018EDB1BBF4C88}Prefabs/Weapons/Attachments/Optics/Optic_ARTII/Optic_ARTII.et",
+				"{ACDF49FACD0701A8}Prefabs/Weapons/Attachments/Optics/Optic_1P29/Optic_1P29.et",
+				"{44AAA61117B6CA8E}Prefabs/Weapons/Attachments/Optics/Optic_4x20/Optic_4x20_OliveGreen_Sand_Stripes.et",
+				"{519E60CCCDCA456A}Prefabs/Weapons/Attachments/Optics/Optic_AP2k/Collim_AP2k_OliveGreen_Sand_Stripes.et",
+				"{BD496EE1B40DC510}Prefabs/Weapons/Attachments/Optics/Optic_4x20/Optic_4x20.et"
+			]
+		},
+		{
+			"id": "UTIL_MAGAZINES",
+			"modDir": [
+				"Prefabs/Weapons/Magazines"
+			],
+			"include": [
+				""
+			],
+			"exclude": [
+				"_Base",
+				"Internal_"
+			],
+			"items": [
+				"{AAF51CFA75A9CF8B}Prefabs/Weapons/Magazines/Box_762x51_M60_100rnd_4AP_1Tracer.et",
+				"{7DD9CA7DE97AB9C0}Prefabs/Weapons/Magazines/NSV/Box_127x108_NSV_50rnd_API.et",
+				"{B386EEE8AED8E386}Prefabs/Weapons/Magazines/Box_762x54_PK_250rnd_Tracer.et",
+				"{EA806763FE4EDDDF}Prefabs/Weapons/Magazines/Box_145x114_KPVT_50rnd_APIT.et",
+				"{B909BD4BF4048A2A}Prefabs/Weapons/Magazines/Box_145x114_KPVT_50rnd_IAI.et",
+				"{50A242E5D9742C62}Prefabs/Weapons/Magazines/Box_127x99_M2_100rnd_4AP_1Tracer.et",
+				"{E5E9C5897CF47F44}Prefabs/Weapons/Magazines/Box_762x54_PK_100rnd_4Ball_1Tracer.et",
+				"{9C05543A503DB80E}Prefabs/Weapons/Magazines/Magazine_9x19_M9_15rnd_Ball.et",
+				"{1C260E65B7F290BA}Prefabs/Weapons/Magazines/Box_762x54_PK_250rnd_Ball.et",
+				"{8E0429589CD8A49A}Prefabs/Weapons/Magazines/Magazine_M242/Box_25x137_M242_150rnd_HEIT.et",
+				"{4D2C1E8F3A81F894}Prefabs/Weapons/Magazines/Box_762x51_M60_100rnd_4Ball_1Tracer.et",
+				"{9CCB46C6EE632C1A}Prefabs/Weapons/Magazines/Magazine_762x54_SVD_10rnd_Sniper.et",
+				"{48720FC416263FC1}Prefabs/Weapons/Magazines/Vz58/Magazine_762x39_Vz58_30rnd_Ball.et",
+				"{25CE9A2A7EAD5B9D}Prefabs/Weapons/Magazines/Box_127x99_M2_100rnd_AP.et",
+				"{FAFA0D71E75CEBE2}Prefabs/Weapons/Magazines/Vz58/Magazine_762x39_Vz58_30rnd_Tracer.et",
+				"{2EBF60EF24B108FC}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M855_Ball.et",
+				"{423D78F865E8AF8A}Prefabs/Weapons/Magazines/Box_762x51_M60_500rnd_2Ball_1Tracer.et",
+				"{B8921B7BFE8CAEF0}Prefabs/Weapons/Magazines/Box_127x99_M2_100rnd_Ball.et",
+				"{4A3649DFF8A3F0E3}Prefabs/Weapons/Magazines/Magazine_762x54_SVD_10rnd_Tracer.et",
+				"{BC74DAC891D48540}Prefabs/Weapons/Magazines/Magazine_545x39_RPK_45rnd_Ball.et",
+				"{D8F2CA92583B23D3}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M855_M856_Last_5Tracer.et",
+				"{03094E059B554A9C}Prefabs/Weapons/Magazines/UK59/Box_762x54_UK59_50rnd_4Ball_1Tracer.et",
+				"{F7C9D35FB2AFADFF}Prefabs/Weapons/Magazines/Magazine_762x51_M14_20rnd_M62_Tracer.et",
+				"{8B853CDD11BA916E}Prefabs/Weapons/Magazines/Magazine_9x18_PM_8rnd_Ball.et",
+				"{A9A385FE1F7BF4BD}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M856_Tracer.et",
+				"{96DD0591AFDCC579}Prefabs/Weapons/Magazines/Magazine_M240_Coax/Box_762x51_M240_coax_200rnd_4Ball_1Tracer.et",
+				"{BB6613EBCE484822}Prefabs/Weapons/Magazines/UK59/Box_762x54_UK59_50rnd_Ball.et",
+				"{9458584521CCA4E2}Prefabs/Weapons/Magazines/Magazine_M240_Coax/Box_762x51_M240_coax_200rnd_4AP_1Tracer.et",
+				"{BFD6872B1C069136}Prefabs/Weapons/Magazines/Box_145x114_KPVT_50rnd_API.et",
+				"{4EEDDB27C023B8B9}Prefabs/Weapons/Magazines/Box_556x45_M249_200rnd_Tracer.et",
+				"{7ECA478D7C80ACC0}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M193_M196_Last_5Tracer.et",
+				"{E5912E45754CD421}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Tracer.et",
+				"{BEEA49E27174B224}Prefabs/Weapons/Magazines/Box_762x54_PK_100rnd_Tracer.et",
+				"{AD8AB93729348C3E}Prefabs/Weapons/Magazines/Box_762x51_M60_100rnd_Tracer.et",
+				"{5897D01F41DB5D2D}Prefabs/Weapons/Magazines/Magazine_545x39_RPK_45rnd_Tracer.et",
+				"{8257B5AFDE7AE5CB}Prefabs/Weapons/Magazines/Box_145x114_KPVT_50rnd_4API_1APIT.et",
+				"{D8421F6E70B2FB4F}Prefabs/Weapons/Magazines/Box_762x54_PK_250rnd_4Ball_1Tracer.et",
+				"{06809ADCCDBAB8FB}Prefabs/Weapons/Magazines/Magazine_M242/Box_25x137_M242_60rnd_APDST.et",
+				"{EF0B3DA0429425EC}Prefabs/Weapons/Magazines/Magazine_M240_Coax/Box_762x51_M240_coax_200rnd_Ball.et",
+				"{4CD3159446EC131B}Prefabs/Weapons/Magazines/NSV/Box_127x108_NSV_50rnd_APIT.et",
+				"{289E27BB8C346D82}Prefabs/Weapons/Magazines/Magazine_M240_Coax/Box_762x51_M240_coax_200rnd_AP.et",
+				"{CC7F787C3ECF678F}Prefabs/Weapons/Magazines/Box_127x99_M2_100rnd_4Ball_1Tracer.et",
+				"{06D722FC2666EB83}Prefabs/Weapons/Magazines/Box_556x45_M249_200rnd_4Ball_1Tracer.et",
+				"{BCB5E5C608ECFF50}Prefabs/Weapons/Magazines/Magazine_762x51_M14_20rnd_M80.et",
+				"{FB5EB0F6D447E858}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M193_Ball.et",
+				"{C319540BC96AE9BB}Prefabs/Weapons/Magazines/Magazine_762x51_M14_20rnd_M61_AP.et",
+				"{9B34796F40125F85}Prefabs/Weapons/Magazines/Magazine_M240_Coax/Box_762x51_M240_coax_200rnd_Tracer.et",
+				"{627255315038152A}Prefabs/Weapons/Magazines/Magazine_762x51_M14_20rnd_SpecialBall.et",
+				"{C820846B0521423B}Prefabs/Weapons/Magazines/Box_127x99_M2_100rnd_4AP_1APIT.et",
+				"{77595CB9F596E6AC}Prefabs/Weapons/Magazines/Magazine_762x54_SVD_10rnd_LPS.et",
+				"{843D9B182BCD2765}Prefabs/Weapons/Magazines/NSV/Box_127x108_NSV_50rnd_4AP_1APIT.et",
+				"{0A84AA5A3884176F}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Last_5Tracer.et",
+				"{D78C667F59829717}Prefabs/Weapons/Magazines/Magazine_545x39_RPK_45rnd_4Ball_1Tracer.et",
+				"{982F5BA41A3738CF}Prefabs/Weapons/Magazines/Box_762x51_M60_100rnd_Ball.et",
+				"{F7D5504B665E1375}Prefabs/Weapons/Magazines/Box_762x51_M60_500rnd_Tracer.et",
+				"{4068585808DF8DF2}Prefabs/Weapons/Magazines/Box_127x99_M2_100rnd_Tracer.et",
+				"{A827B610B7CD4158}Prefabs/Weapons/Magazines/Vz58/Magazine_762x39_Vz58_30rnd_Last_5Tracer.et",
+				"{75632A0CA07D3817}Prefabs/Weapons/Magazines/Box_762x51_M60_100rnd_AP.et",
+				"{19600CCA33279D20}Prefabs/Weapons/Magazines/Magazine_762x54_SVD_10rnd_7BZ3API.et",
+				"{0AFA7580D190A36A}Prefabs/Weapons/Magazines/UK59/Box_762x54_UK59_50rnd_Tracer.et",
+				"{4FCBBDF274FD2157}Prefabs/Weapons/Magazines/Box_556x45_M249_200rnd_Ball.et",
+				"{4575737B3D3A4505}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M196_Tracer.et",
+				"{A6737DA00653A39C}Prefabs/Weapons/Magazines/Box_762x54_PK_100rnd_Ball.et",
+				"{AFC7F529E6293E2A}Prefabs/Weapons/Magazines/Box_762x54_PK_250rnd_2Ball_1Tracer.et",
+				"{BBB50A815A2F916B}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Ball.et",
+				"{3D9AD4314FE34F5B}Prefabs/Weapons/Magazines/Box_762x51_M60_500rnd_Ball.et"
+			]
+		},
+		{
+			"id": "UTIL_AMMO",
+			"modDir": [
+				"Prefabs/Weapons/Ammo"
+			],
+			"include": [
+				"Shell",
+				"Rocket",
+				"Grenade",
+				"Flare"
+			],
+			"exclude": [
+				"_Base",
+				"Internal_",
+				"_Effect",
+				"FlareEffect",
+				"Particles"
+			],
+			"items": [
+				"{5375FA7CB1F68573}Prefabs/Weapons/Ammo/Ammo_Grenade_HE_M406.et",
+				"{C9A1612DC5340613}Prefabs/Weapons/Ammo/Ammo_Rocket_S5.et",
+				"{ECD8628EBF7E5F6B}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70.et",
+				"{2A63C909016C4C41}Prefabs/Weapons/Ammo/Ammo_Flare_40mm_M662_Red.et",
+				"{DD6844AB03FDA84F}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Practice_M879.et",
+				"{98DB57ECEDC81CC2}Prefabs/Weapons/Ammo/Ammo_Flare_40mm_M583A1_White.et",
+				"{675D3E87D5F45FFD}Prefabs/Weapons/Ammo/Ammo_Grenade_HEDP_M433_Penetrator.et",
+				"{61AF60E0235DC3B1}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HEDP_M247.et",
+				"{E6EC1F21E22709F0}Prefabs/Weapons/Ammo/Ammo_Rocket_PG7VM_Penetrator.et",
+				"{072A755D5CB85D47}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HE_M229.et",
+				"{DD2065AE34D8DFA9}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Illum_M853A1.et",
+				"{EF17BED6DCEE4DE4}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_FRAG_S5MO.et",
+				"{C8A906FB198D1A33}Prefabs/Weapons/Ammo/Ammo_Shell_82mm_Illum_S832S.et",
+				"{0D0EF81F5F5DCC67}Prefabs/Weapons/Ammo/Shell_82mm_Charge_Ring.et",
+				"{2D86FDF6894069B3}Prefabs/Weapons/Ammo/Ammo_Rocket_M72A3_Penetrator.et",
+				"{32E12D322E107F1C}Prefabs/Weapons/Ammo/Ammo_Rocket_PG7VM.et",
+				"{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et",
+				"{511ED66D8C3E1030}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HEDP_M247_Spall.et",
+				"{0AF10C206CF1A283}Prefabs/Weapons/Ammo/Ammo_Flare_40mm_M661_Green.et",
+				"{B40479180A86C261}Prefabs/Weapons/Ammo/Ammo_Rocket_M72A3_Spall.et",
+				"{E05D215E76BE8BE2}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO_Spall.et",
+				"{EDC9C1FB7F55A32D}Prefabs/Weapons/Ammo/Ammo_Grenade_HEDP_M433_Spall.et",
+				"{7CC1697D08638B5C}Prefabs/Weapons/Ammo/Ammo_Rocket_PG7VM_Spall.et",
+				"{262F0D09C4130826}Prefabs/Weapons/Ammo/Ammo_Grenade_HE_VOG25.et",
+				"{4B94AD7F5B4055DF}Prefabs/Weapons/Ammo/Shell_81mm_Charge_Ring.et",
+				"{7C8D575F843FDEB4}Prefabs/Weapons/Ammo/Ammo_Rocket_S5KO_Penetrator.et",
+				"{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et",
+				"{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et",
+				"{98EC9C526AFBA282}Prefabs/Weapons/Ammo/Ammo_Shell_82mm_HE_O832DU.et",
+				"{906F07BD0366E08F}Prefabs/Weapons/Ammo/Ammo_Flare_40mm_VG40OP_White.et",
+				"{79FA751EEBE25DDE}Prefabs/Weapons/Ammo/Ammo_Rocket_M72A3.et",
+				"{A544A2C131DE2C64}Prefabs/Weapons/Ammo/Ammo_Shell_82mm_Smoke_D832DU.et",
+				"{1663496AE5B9F10B}Prefabs/Weapons/Ammo/Ammo_Grenade_HEDP_M433.et",
+				"{F1540F188E872E03}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HEDP_M247_Penetrator.et"
+			]
+		},
+		{
+			"id": "ITEM_GENERAL",
+			"modDir": [
+				"Prefabs/Items"
+			],
+			"include": [
+				"Binocular",
+				"Compass",
+				"Flashlight",
+				"PaperMap_01_folded",
+				"Watch_"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"items": [
+				"{78ED4FEF62BBA728}Prefabs/Items/Equipment/Watches/Watch_SandY184A.et",
+				"{243948B23D90BECB}Prefabs/Items/Equipment/Binoculars/Binoculars_B8/Binoculars_B8.et",
+				"{61A705D76908160C}Prefabs/Items/Equipment/Watches/Watch_Orlik38/Watch_Orlik38.et",
+				"{922F95F91943F69A}Prefabs/Items/Equipment/Maps/PaperMap_01_folded_US.et",
+				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
+				"{7CEF68E2BC68CE71}Prefabs/Items/Equipment/Compass/Compass_Adrianov.et",
+				"{72691366C26BD901}Prefabs/Items/Equipment/Compass/Compass_SY183_Map.et",
+				"{3A421547BC29F679}Prefabs/Items/Equipment/Flashlights/Flashlight_MX991/Flashlight_MX991.et",
+				"{DCB293AEF79CCD7D}Prefabs/Items/Equipment/Watches/Watch_Orlik38/Watch_Orlik38_Map.et",
+				"{575EA58E67448C2A}Prefabs/Items/Equipment/Flashlights/Flashlight_Soviet_01/Flashlight_Soviet_01.et",
+				"{6FD6C96121905202}Prefabs/Items/Equipment/Watches/Watch_Vostok.et",
+				"{F849217AB3BA88BE}Prefabs/Items/Equipment/Maps/PaperMap_01_folded_USSR.et",
+				"{4FAD128BE9F66C6F}Prefabs/Items/Equipment/Watches/Watch_Vostok_Map.et",
+				"{F2539FA5706E51E4}Prefabs/Items/Equipment/Binoculars/Binoculars_B12/Binoculars_B12.et",
+				"{0CF54B9A85D8E0D4}Prefabs/Items/Equipment/Binoculars/Binoculars_M22/Binoculars_M22.et",
+				"{61D4F80E49BF9B12}Prefabs/Items/Equipment/Compass/Compass_SY183.et",
+				"{6ECDF523E1035A0F}Prefabs/Items/Equipment/Watches/Watch_SandY184A_Map.et"
+			]
+		},
+		{
+			"id": "ITEM_MEDICAL",
+			"modDir": [
+				"Prefabs/Items/Medicine"
+			],
+			"include": [
+				""
+			],
+			"exclude": [
+				"_Base"
+			],
+			"items": [
+				"{A81F501D3EF6F38E}Prefabs/Items/Medicine/FieldDressing_01/FieldDressing_US_01.et",
+				"{CDCC313B2FB76FE7}Prefabs/Items/Medicine/FieldDressing_01/Gauze_01.et",
+				"{C98FCC6CA6C56069}Prefabs/Items/Medicine/AspirinBottle.et",
+				"{C3F1FA1E2EC2B345}Prefabs/Items/Medicine/FieldDressing_01/FieldDressing_USSR_01.et",
+				"{D70216B1B2889129}Prefabs/Items/Medicine/Tourniquet_01/Tourniquet_US_01.et",
+				"{80E75A71C29190DB}Prefabs/Items/Medicine/Tourniquet_01/Tourniquet_USSR_01.et",
+				"{AF3411AAF94D18C2}Prefabs/Items/Medicine/Gauze_02/Gauze_02.et",
+				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
+				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
+				"{527D7C5D2E476BDC}Prefabs/Items/Medicine/SalineBag_01/SalineBag_USSR_01.et"
+			]
+		},
+		{
+			"id": "",
+			"modDir": [],
+			"include": [],
+			"exclude": [],
+			"items": []
+		},
+		{
+			"id": "WEAPON_RIFLE_BIG",
+			"modDir": [
+				"Prefabs/Weapons/Rifles"
+			],
+			"include": [
+				"Rifle"
+			],
+			"exclude": [
+				"_Base",
+				"_Sample",
+				"Tutorial",
+				"AK74",
+				"AKS74",
+				"VZ",
+				"M16"
+			],
 			"items": []
 		},
 		{

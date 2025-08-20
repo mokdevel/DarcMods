@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 20,
+	"missionCycleTime": 30,
 	"markerType": "DARC_MISSION",
 	"markerIdx": 3,
 	"showMarker": true,
@@ -9,23 +9,7 @@
 	"showMessage": true,
 	"disableArsenal": false,
 	"occupationList": [
-		0,
-		0,
-		0,
-		1,
-		1,
-		1,
-		1,
-		2,
-		2,
-		2,
-		2,
-		2,
-		3,
-		3,
-		3,
-		4,
-		5
+		0
 	],
 	"occupations": [
 		{

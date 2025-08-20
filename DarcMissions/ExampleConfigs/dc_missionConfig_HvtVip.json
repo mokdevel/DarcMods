@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 20,
+	"missionCycleTime": 30,
 	"markerType": "DARC_MISSION",
 	"markerIdx": 10,
 	"showMarker": true,
