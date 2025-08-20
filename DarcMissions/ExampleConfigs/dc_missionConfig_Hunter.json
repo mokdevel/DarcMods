@@ -1,39 +1,77 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 90,
+	"missionCycleTime": 60,
 	"markerType": "DARC_MISSION",
 	"markerIdx": 0,
 	"showMarker": false,
 	"showHint": true,
 	"showMessage": true,
-	"general": {
-		"comment": "index 0: general mission",
-		"pos": [
-			[
-				0.0,
-				0.0,
-				0.0
-			]
-		],
-		"posName": "any",
-		"title": "Hunters",
-		"info": "They are coming for you... Last time they were seen close to %l.",
-		"winCondition": 1,
-		"winMessage": "You outsmarted the hunters.",
-		"loseMessage": "Hunters lost track of you.",
-		"xp": 0
-	},
-	"groupCount": [
-		1,
-		4
-	],
-	"groupTypes": [
-		"G_SMALL"
-	],
-	"aiSkill": 30,
-	"aiPerception": 0.699999988079071,
 	"minDistanceToPlayer": 200,
 	"maxDistanceToPlayer": 800,
-	"rndDistanceToPlayer": 60
+	"rndDistanceToPlayer": 60,
+	"hunterList": [
+		0,
+		0,
+		0,
+		1
+	],
+	"hunters": [
+		{
+			"general": {
+				"comment": "index 0: general mission",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Hunters",
+				"info": "They are coming for you... Last time they were seen close to %l.",
+				"winCondition": 1,
+				"winMessage": "You outsmarted the hunters.",
+				"loseMessage": "Hunters lost track of you.",
+				"xp": 0
+			},
+			"groupCount": [
+				1,
+				4
+			],
+			"groupTypes": [
+				"G_SMALL"
+			],
+			"aiSkill": 30,
+			"aiPerception": 0.699999988079071
+		},
+		{
+			"general": {
+				"comment": "index 1: general mission",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Hunters",
+				"info": "Sharpshooters are hunting you. Last known location was near %l.",
+				"winCondition": 1,
+				"winMessage": "Sharpshooters were not that sharp.",
+				"loseMessage": "Sharpshooters lost track of you.",
+				"xp": 0
+			},
+			"groupCount": [
+				1,
+				1
+			],
+			"groupTypes": [
+				"G_SNIPER"
+			],
+			"aiSkill": 40,
+			"aiPerception": 0.800000011920929
+		}
+	]
 }

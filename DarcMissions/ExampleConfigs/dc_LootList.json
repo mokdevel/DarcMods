@@ -4,20 +4,49 @@
 	"modList": [],
 	"lists": [
 		{
-			"id": "WEAPON_RIFLE",
-			"modDir": "Prefabs/Weapons/Rifles",
+			"id": "",
+			"modDir": [],
+			"include": [],
+			"exclude": [],
+			"items": []
+		},
+		{
+			"id": "WEAPON_RIFLE_BIG",
+			"modDir": [
+				"Prefabs/Weapons/Rifles"
+			],
 			"include": [
 				"Rifle"
 			],
 			"exclude": [
 				"_Base",
-				"Tutorial"
+				"_Sample",
+				"Tutorial",
+				"AK74",
+				"AKS74",
+				"VZ",
+				"M16"
+			],
+			"items": []
+		},
+		{
+			"id": "WEAPON_HANDGUN",
+			"modDir": [
+				"Prefabs/Weapons/Handguns"
+			],
+			"include": [
+				"Handgun"
+			],
+			"exclude": [
+				"_Base"
 			],
 			"items": []
 		},
 		{
 			"id": "WEAPON_LAUNCHER",
-			"modDir": "Prefabs/Weapons/Launchers",
+			"modDir": [
+				"Prefabs/Weapons/Launchers"
+			],
 			"include": [
 				"Launcher",
 				"BC_M79"
@@ -28,10 +57,12 @@
 			"items": []
 		},
 		{
-			"id": "WEAPON_HANDGUN",
-			"modDir": "Prefabs/Weapons/Handguns",
+			"id": "WEAPON_SHOTGUN",
+			"modDir": [
+				"Prefabs/Weapons/Shotguns"
+			],
 			"include": [
-				"Handgun"
+				"Shotgun"
 			],
 			"exclude": [
 				"_Base"
@@ -40,18 +71,9 @@
 		},
 		{
 			"id": "WEAPON_GRENADE",
-			"modDir": "Prefabs/Weapons/Grenades",
-			"include": [
-				""
+			"modDir": [
+				"Prefabs/Weapons/Grenades"
 			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "ITEM_MEDICAL",
-			"modDir": "Prefabs/Items/Medicine",
 			"include": [
 				""
 			],
@@ -62,19 +84,34 @@
 		},
 		{
 			"id": "UTIL_ATTACHMENT",
-			"modDir": "Prefabs/Weapons/Attachments",
+			"modDir": [
+				"Prefabs/Weapons/Attachments",
+				"Prefabs/5AB890B71D748750/Grip",
+				"Prefabs/5AB890B71D748750/Handguard",
+				"Prefabs/5AB890B71D748750/Lower",
+				"Prefabs/5AB890B71D748750/Muzzle",
+				"Prefabs/5AB890B71D748750/Stock",
+				"Prefabs/5AB890B71D748750/UGL",
+				"Prefabs/5AB890B71D748750/Upper"
+			],
 			"include": [
 				""
 			],
 			"exclude": [
 				"_Base",
-				"Optic"
+				"Optic",
+				"Scope"
 			],
 			"items": []
 		},
 		{
 			"id": "UTIL_OPTICS",
-			"modDir": "Prefabs/Weapons/Attachments",
+			"modDir": [
+				"Prefabs/Weapons/Attachments",
+				"Scopes",
+				"Prefabs/Weapons/Attachments/BaconOptics/",
+				"Prefabs/5ABD0CB57F7E9EB1/Optics/"
+			],
 			"include": [
 				"Optic",
 				"Scope"
@@ -85,8 +122,44 @@
 			"items": []
 		},
 		{
+			"id": "UTIL_MAGAZINES",
+			"modDir": [
+				"Prefabs/Weapons/Magazines"
+			],
+			"include": [
+				""
+			],
+			"exclude": [
+				"_Base",
+				"Internal_"
+			],
+			"items": []
+		},
+		{
+			"id": "UTIL_AMMO",
+			"modDir": [
+				"Prefabs/Weapons/Ammo"
+			],
+			"include": [
+				"Shell",
+				"Rocket",
+				"Grenade",
+				"Flare"
+			],
+			"exclude": [
+				"_Base",
+				"Internal_",
+				"_Effect",
+				"FlareEffect",
+				"Particles"
+			],
+			"items": []
+		},
+		{
 			"id": "ITEM_GENERAL",
-			"modDir": "Prefabs/Items",
+			"modDir": [
+				"Prefabs/Items"
+			],
 			"include": [
 				"Binocular",
 				"Compass",
@@ -100,55 +173,15 @@
 			"items": []
 		},
 		{
-			"id": "WEAPON_SHOTGUN",
-			"modDir": "/Weapons/Shotguns",
-			"include": [
-				"Shotgun"
+			"id": "ITEM_MEDICAL",
+			"modDir": [
+				"Prefabs/Items/Medicine"
 			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "WEAPON_MG",
-			"modDir": "Prefabs/Weapons/MachineGuns",
-			"include": [
-				"MG_",
-				"RPD",
-				"RPK"
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "UTIL_MAGAZINES",
-			"modDir": "Prefabs/Weapons/Magazines",
 			"include": [
 				""
 			],
 			"exclude": [
-				"_Base",
-				"Internal_"
-			],
-			"items": []
-		},
-		{
-			"id": "UTIL_AMMO",
-			"modDir": "Prefabs/Weapons/Ammo",
-			"include": [
-				"Shell",
-				"Rocket",
-				"Grenade",
-				"Flare"
-			],
-			"exclude": [
-				"_Base",
-				"Internal_",
-				"_Effect",
-				"FlareEffect"
+				"_Base"
 			],
 			"items": []
 		}

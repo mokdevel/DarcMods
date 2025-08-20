@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 30,
+	"missionCycleTime": 20,
 	"markerType": "DARC_MISSION",
 	"markerIdx": 10,
 	"showMarker": true,
@@ -11,9 +11,10 @@
 	"hvtVipList": [
 		0,
 		0,
-		0,
 		1,
-		2
+		2,
+		3,
+		3
 	],
 	"hvtVips": [
 		{
@@ -203,6 +204,60 @@
 				]
 			},
 			"target": "{A517C72CEF150898}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_2.et"
+		},
+		{
+			"general": {
+				"comment": "index 3: Businessman in countryside",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Criminal hiding in %l",
+				"info": "Assassinate the criminal boss. He tries to keep low profile.",
+				"winCondition": 10,
+				"winMessage": "The criminal got what he deserved.",
+				"loseMessage": "The judgement day is posponed.",
+				"xp": 0
+			},
+			"locationTypes": [],
+			"groupCount": [
+				1,
+				1
+			],
+			"groupTypes": [
+				"G_LIGHT"
+			],
+			"aiSkill": 50,
+			"aiPerception": 0.6000000238418579,
+			"buildingNames": [
+				"House_"
+			],
+			"lootBox": "{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
+			"loot": {
+				"box": null,
+				"itemChance": 0.699999988079071,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"WEAPON_GRENADE",
+					"UTIL_ATTACHMENT",
+					"UTIL_MAGAZINES",
+					"UTIL_MAGAZINES",
+					"UTIL_MAGAZINES",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			},
+			"target": "{E024A74F8A4BC644}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_1.et"
 		}
 	]
 }

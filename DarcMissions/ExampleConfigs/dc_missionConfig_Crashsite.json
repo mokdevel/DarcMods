@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 30,
+	"missionCycleTime": 20,
 	"markerType": "DARC_MISSION",
 	"markerIdx": 5,
 	"showMarker": true,
@@ -139,19 +139,6 @@
 					"rotation": [
 						0.0,
 						-45.00299835205078,
-						0.0
-					]
-				},
-				{
-					"resource": "{7AB486CD1FBB0B0A}PrefabLibrary/Props/Garbage/Junk_01_pile_small.et",
-					"position": [
-						100.94400024414063,
-						1.0,
-						123.92400360107422
-					],
-					"rotation": [
-						0.0,
-						-111.27300262451172,
 						0.0
 					]
 				}

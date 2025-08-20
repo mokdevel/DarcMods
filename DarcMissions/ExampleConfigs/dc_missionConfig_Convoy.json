@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 30,
+	"missionCycleTime": 20,
 	"markerType": "DARC_MISSION",
 	"markerIdx": 4,
 	"showMarker": true,
@@ -14,7 +14,18 @@
 		0,
 		0,
 		0,
-		1
+		0,
+		0,
+		0,
+		0,
+		1,
+		1,
+		1,
+		1,
+		1,
+		2,
+		3,
+		3
 	],
 	"convoys": [
 		{
@@ -190,26 +201,94 @@
 				81
 			],
 			"groupTypes": [
-				"G_HEAVY"
+				"G_HEAVY",
+				"G_SPECIAL"
 			],
 			"aiSkill": 50,
 			"aiPerception": 1.0,
 			"vehicleTypes": [
 				"{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et",
-				"{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et"
+				"{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et",
+				"{254289B9C09904AB}Prefabs/Vehicles/Wheeled/BRDM2/BRDM2.et"
 			],
-			"cruiseSpeed": 50.0,
+			"cruiseSpeed": 20.0,
+			"loot": {
+				"box": null,
+				"itemChance": 0.699999988079071,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_LAUNCHER",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			}
+		},
+		{
+			"general": {
+				"comment": "index 3: Vehicle with a gun driving from .. to ..",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Guns on the move",
+				"info": "Look out for a patrol between %l and %d.",
+				"winCondition": 1,
+				"winMessage": "Nice shooting!",
+				"loseMessage": "Oh dear, your failure will be remembered.",
+				"xp": 0
+			},
+			"locationTypes": [
+				59,
+				59,
+				59,
+				8,
+				60,
+				71,
+				64,
+				25,
+				72,
+				26,
+				75,
+				81
+			],
+			"groupTypes": [
+				"G_RECON",
+				"G_MEDICAL",
+				"G_LIGHT"
+			],
+			"aiSkill": 50,
+			"aiPerception": 1.0,
+			"vehicleTypes": [
+				"{F6B23D17D5067C11}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB.et",
+				"{5168FEA3054D6D15}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB_MERDC.et",
+				"{3EA6F47D95867114}Prefabs/Vehicles/Wheeled/M998/M1025_armed_M2HB.et",
+				"{DD774A8FD0989A78}Prefabs/Vehicles/Wheeled/M998/M1025_armed_M2HB_MERDC.et"
+			],
+			"cruiseSpeed": 20.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.8999999761581421,
 				"items": [
 					"WEAPON_RIFLE",
 					"WEAPON_HANDGUN",
-					"WEAPON_LAUNCHER",
-					"WEAPON_LAUNCHER",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"ITEM_GENERAL",

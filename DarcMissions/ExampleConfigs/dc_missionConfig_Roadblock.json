@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 30,
+	"missionCycleTime": 20,
 	"markerType": "DARC_MISSION",
 	"markerIdx": 9,
 	"showMarker": true,
@@ -11,7 +11,8 @@
 	"roadblockList": [
 		0,
 		1,
-		2
+		2,
+		3
 	],
 	"roadblocks": [
 		{
@@ -553,6 +554,222 @@
 					"rotation": [
 						0.0,
 						-9.375,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"general": {
+				"comment": "index 3: Roadblock with gates",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"posName": "any",
+				"title": "Road near %l is guarded",
+				"info": "Prepare for a mandatory stop.",
+				"winCondition": 2,
+				"winMessage": "Gates do not stop you.",
+				"loseMessage": "Guards has left road near %l.",
+				"xp": 0
+			},
+			"locationTypes": [
+				59,
+				59,
+				61,
+				61,
+				61,
+				64,
+				75,
+				79,
+				80,
+				81,
+				15
+			],
+			"groupCount": [
+				2,
+				3
+			],
+			"waypointRange": [
+				0,
+				10
+			],
+			"waypointGenType": 5,
+			"waypointMoveType": 5,
+			"groupTypes": [
+				"G_LIGHT",
+				"G_LIGHT",
+				"G_HEAVY",
+				"G_ADMIN"
+			],
+			"aiSkill": 50,
+			"aiPerception": 1.0,
+			"emptySize": 10.0,
+			"loot": {
+				"box": null,
+				"itemChance": 0.6000000238418579,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_RIFLE",
+					"UTIL_MAGAZINES",
+					"UTIL_MAGAZINES",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"UTIL_AMMO",
+					"UTIL_AMMO",
+					"UTIL_AMMO",
+					"UTIL_AMMO",
+					"UTIL_AMMO"
+				]
+			},
+			"campItems": [
+				{
+					"resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+					"position": [
+						4.105999946594238,
+						1.0,
+						164.02999877929688
+					],
+					"rotation": [
+						0.0,
+						32.729000091552737,
+						0.0
+					]
+				},
+				{
+					"resource": "{07F043DD6AACCD0B}Prefabs/Structures/Infrastructure/Barriers/BarGate_01/BarGate_01.et",
+					"position": [
+						8.79699993133545,
+						0.0,
+						157.63600158691407
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{18822FB3F0D2ED00}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Long.et",
+					"position": [
+						14.847000122070313,
+						0.0,
+						160.26600646972657
+					],
+					"rotation": [
+						0.0,
+						30.736000061035158,
+						0.0
+					]
+				},
+				{
+					"resource": "{18822FB3F0D2ED00}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Long.et",
+					"position": [
+						14.935999870300293,
+						0.0,
+						173.24600219726563
+					],
+					"rotation": [
+						0.0,
+						160.06100463867188,
+						0.0
+					]
+				},
+				{
+					"resource": "{18822FB3F0D2ED00}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Long.et",
+					"position": [
+						15.390999794006348,
+						0.0,
+						166.74600219726563
+					],
+					"rotation": [
+						0.0,
+						-175.406005859375,
+						0.0
+					]
+				},
+				{
+					"resource": "{2FE7AA0EBA71CDFB}Prefabs/Structures/Signs/Large/SignLarge_01_MilitaryBase.et",
+					"position": [
+						13.017999649047852,
+						1.0,
+						180.40899658203126
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{2FE7AA0EBA71CDFB}Prefabs/Structures/Signs/Large/SignLarge_01_MilitaryBase.et",
+					"position": [
+						12.970000267028809,
+						1.0,
+						154.55499267578126
+					],
+					"rotation": [
+						0.0,
+						-180.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{07F043DD6AACCD0B}Prefabs/Structures/Infrastructure/Barriers/BarGate_01/BarGate_01.et",
+					"position": [
+						9.130000114440918,
+						0.0,
+						177.08599853515626
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{6A004A8F0571D456}Prefabs/Structures/Infrastructure/Towers/TransmitterTower_01/TransmitterTower_01_small.et",
+					"position": [
+						2.7109999656677248,
+						1.0,
+						174.3509979248047
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{9498ADA13BCDB218}Prefabs/Structures/Military/Houses/GuardBox_01/GuardBox_01_Base.et",
+					"position": [
+						3.928999900817871,
+						0.0,
+						166.7779998779297
+					],
+					"rotation": [
+						0.0,
+						-90.0,
+						0.0
+					]
+				},
+				{
+					"resource": "{E7117284012B39A4}Prefabs/Props/Garbage/Bins/TrashBin_02_patched.et",
+					"position": [
+						4.341000080108643,
+						1.0,
+						168.5489959716797
+					],
+					"rotation": [
+						0.0,
+						0.0,
 						0.0
 					]
 				}
