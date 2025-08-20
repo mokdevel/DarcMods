@@ -515,6 +515,10 @@ class SDRC_MissionFrame
 		squatterJsonApi.Load();
 		delete squatterJsonApi;		
 		
+		SDRC_RoadblockJsonApi roadblockJsonApi = new SDRC_RoadblockJsonApi();	
+		roadblockJsonApi.Load();
+		delete roadblockJsonApi;		
+		
 		SDRC_HvtVipJsonApi hvtVipJsonApi = new SDRC_HvtVipJsonApi();	
 		hvtVipJsonApi.Load();
 		delete hvtVipJsonApi;				
