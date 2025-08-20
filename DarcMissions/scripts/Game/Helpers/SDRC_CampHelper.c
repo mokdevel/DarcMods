@@ -103,7 +103,10 @@ sealed class SDRC_CampHelper
 			}
 			
 			//Put the loot box in right place
-			camp.loot.box = mission.GetFromEntityList(0);
+			if (camp.loot)
+			{
+				camp.loot.box = mission.GetFromEntityList(0);
+			}
 			
 /*			//Put loot
 			if (camp.loot)			
