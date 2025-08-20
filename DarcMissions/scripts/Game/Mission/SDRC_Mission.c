@@ -485,6 +485,15 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	IEntity GetFromEntityList(int index)
 	{
+		if (m_EntityList.IsEmpty())
+		{
+			return null;
+		}
+		if (index > m_EntityList.Count())
+		{
+			return null;
+		}
+		
 		return m_EntityList[index];	
 	}		
 

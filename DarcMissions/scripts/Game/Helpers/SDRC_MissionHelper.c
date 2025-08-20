@@ -268,40 +268,6 @@ sealed class SDRC_MissionHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	DEBUG: Test mission positions on map. Only for debugging.
-	This will create a map marker for each position tested.
-	*/	
-	static void DebugTestMissionPos()
-	{	
-		if (!SDRC_Conf.RELEASE)
-		{
-			vector pos;
-	
-			for (int i = 0; i < 400; i++)
-			{		
-				pos = SDRC_MissionHelper.FindMissionPos();
-				if (pos != "0 0 0")
-				{
-					SDRC_MapMarkerHelper.CreateMapMarker(pos, DC_EMissionIcon.ICON_PLUS_SMALL_MAP, "DUMMY_");	//TBD: Create some other debug marker
-				}
-			}		
-		}
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	DEBUG: Delete the test mission positions on map. Only for debugging.
-	*/	
-	static void DeleteDebugTestMissionPos()
-	{	
-		if (!SDRC_Conf.RELEASE)
-		{
-			SDRC_MapMarkerHelper.DeleteMarker("DUMMY_");
-		}
-	}
-					
-	//------------------------------------------------------------------------------------------------
-	/*!
 	Spawn a mission AI group to given position making sure it's empty. 
 	NOTE: Position is not exact
 	*/
@@ -367,4 +333,38 @@ sealed class SDRC_MissionHelper
 		SDRC_Log.Add("[SDRC_MissionHelper:CreateInfo] Message created: " + msg, LogLevel.DEBUG);		//TBD: SPAM	
 		return msg;
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	DEBUG: Test mission positions on map. Only for debugging.
+	This will create a map marker for each position tested.
+	*/	
+	static void DebugTestMissionPos()
+	{	
+		if (!SDRC_Conf.RELEASE)
+		{
+			vector pos;
+	
+			for (int i = 0; i < 400; i++)
+			{		
+				pos = SDRC_MissionHelper.FindMissionPos();
+				if (pos != "0 0 0")
+				{
+					SDRC_MapMarkerHelper.CreateMapMarker(pos, DC_EMissionIcon.ICON_PLUS_SMALL_MAP, "DUMMY_");	//TBD: Create some other debug marker
+				}
+			}		
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	DEBUG: Delete the test mission positions on map. Only for debugging.
+	*/	
+	static void DeleteDebugTestMissionPos()
+	{	
+		if (!SDRC_Conf.RELEASE)
+		{
+			SDRC_MapMarkerHelper.DeleteMarker("DUMMY_");
+		}
+	}
 }

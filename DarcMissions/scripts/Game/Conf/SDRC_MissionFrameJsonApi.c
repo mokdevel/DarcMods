@@ -26,9 +26,9 @@
 	
 	//Development time options
 	#ifndef SDRC_RELEASE	
-		private const int SDRC_MISSION_COUNT_DYNAMIC = 1;//5;//3;//8;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 2;//5;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 1;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 2;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSION_START_DELAY = 2;					
@@ -163,11 +163,11 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.enemyFactions = {"USAF_USMC", "RHS_RF"};
 //			conf.enemyFactions = {"MEI"};
 		
-//			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTER, DC_EMissionType.HVTVIP};
+			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTER, DC_EMissionType.HVTVIP, DC_EMissionType.HVTITEM};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTER};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.OCCUPATION};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HUNTER};
-			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CONVOY};		
+//			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CONVOY};		
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.PATROL};		
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CRASHSITE};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.SQUATTER};
