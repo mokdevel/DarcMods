@@ -304,7 +304,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_HvtVip HvtVip0()
 	{
-		SDRC_HvtVip HvtVip = new SDRC_HvtVip();
+		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
 		HvtVip.general.Set(
 			"index 0: HvtVips in cities",
 			{"0 0 0"},
@@ -337,7 +337,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"C_OFFICER"
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN",
@@ -355,7 +355,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_HvtVip HvtVip1()
 	{
-		SDRC_HvtVip HvtVip = new SDRC_HvtVip();
+		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
 		HvtVip.general.Set(
 			"index 1: HvtVips in control towers",
 			{"0 0 0"},
@@ -381,7 +381,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"C_OFFICER"
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN",
@@ -400,7 +400,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_HvtVip HvtVip2()
 	{
-		SDRC_HvtVip HvtVip = new SDRC_HvtVip();
+		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
 		HvtVip.general.Set(
 			"index 2: Businessman with bad business",
 			{"0 0 0"},
@@ -426,7 +426,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"{A517C72CEF150898}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_2.et"
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN",
@@ -445,7 +445,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_HvtVip HvtVip3()
 	{
-		SDRC_HvtVip HvtVip = new SDRC_HvtVip();
+		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
 		HvtVip.general.Set(
 			"index 3: Businessman in countryside",
 			{"0 0 0"},
@@ -471,7 +471,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"{E024A74F8A4BC644}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_1.et"
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN",

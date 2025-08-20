@@ -334,7 +334,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Hunter Hunter0()
 	{		
-		SDRC_Hunter hunter = new SDRC_Hunter();
+		ref SDRC_Hunter hunter = new SDRC_Hunter();
 		hunter.general.Set(
 			"index 0: general mission",
 			{"0 0 0"},
@@ -358,7 +358,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Hunter Hunter1()
 	{		
-		SDRC_Hunter hunter = new SDRC_Hunter();
+		ref SDRC_Hunter hunter = new SDRC_Hunter();
 		hunter.general.Set(
 			"index 1: general mission",
 			{"0 0 0"},

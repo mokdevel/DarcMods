@@ -420,7 +420,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Convoy Convoy0()
 	{
-		SDRC_Convoy convoy = new SDRC_Convoy();
+		ref SDRC_Convoy convoy = new SDRC_Convoy();
 		convoy.general.Set(
 			"index 0: Convoy driving from .. to ..",
 			{"0 0 0", "0 0 0"},
@@ -458,7 +458,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			30
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
 				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
@@ -478,7 +478,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Convoy Convoy1()
 	{
-		SDRC_Convoy convoy = new SDRC_Convoy();
+		ref SDRC_Convoy convoy = new SDRC_Convoy();
 		convoy.general.Set(
 			"index 1: Truck driving from .. to ..",
 			{"0 0 0", "0 0 0"},
@@ -518,7 +518,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			20
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", 
@@ -535,7 +535,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Convoy Convoy2()
 	{
-		SDRC_Convoy convoy = new SDRC_Convoy();
+		ref SDRC_Convoy convoy = new SDRC_Convoy();
 		convoy.general.Set(
 			"index 2: Armor driving from .. to ..",
 			{"0 0 0", "0 0 0"},
@@ -574,7 +574,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			20
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE", 
 				"WEAPON_HANDGUN", 
@@ -591,7 +591,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Convoy Convoy3()
 	{
-		SDRC_Convoy convoy = new SDRC_Convoy();
+		ref SDRC_Convoy convoy = new SDRC_Convoy();
 		convoy.general.Set(
 			"index 3: Vehicle with a gun driving from .. to ..",
 			{"0 0 0", "0 0 0"},
@@ -631,7 +631,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			20
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE", 
 				"WEAPON_HANDGUN", 

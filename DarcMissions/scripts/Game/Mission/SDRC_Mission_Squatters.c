@@ -160,7 +160,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	//------------------------------------------------------------------------------------------------	
 	override void DoWin()
 	{	
-		SDRC_Loot loot = m_DC_Squatter.loot;
+		ref SDRC_Loot loot = m_DC_Squatter.loot;
 		SDRC_LootHelper.SpawnItemsToStorage(loot.box, loot.items, loot.itemChance);
 		super.DoWin();
 	}
@@ -253,7 +253,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Squatter Squatter0()
 	{
-		SDRC_Squatter squatter = new SDRC_Squatter();
+		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
 			"index 0: Squatters in cities",
 			{"0 0 0"},
@@ -286,7 +286,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN",
@@ -304,7 +304,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Squatter Squatter1()
 	{
-		SDRC_Squatter squatter = new SDRC_Squatter();
+		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
 			"index 1: Squatters in control towers",
 			{"0 0 0"},
@@ -331,7 +331,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",	"WEAPON_RIFLE", "WEAPON_RIFLE",
 				"WEAPON_HANDGUN",
@@ -350,7 +350,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Squatter Squatter2()
 	{
-		SDRC_Squatter squatter = new SDRC_Squatter();
+		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
 			"index 2: Squatters in military locations",
 			{"0 0 0"},
@@ -377,7 +377,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",	"WEAPON_RIFLE", "WEAPON_RIFLE",
 				"WEAPON_HANDGUN",
@@ -396,7 +396,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Squatter Squatter3()
 	{
-		SDRC_Squatter squatter = new SDRC_Squatter();
+		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
 			"index 3: Military in industrial areas",
 			{"0 0 0"},
@@ -424,7 +424,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
@@ -441,7 +441,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Squatter Squatter4()
 	{
-		SDRC_Squatter squatter = new SDRC_Squatter();
+		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
 			"index 4: Enemy in churches and similar",
 			{"0 0 0"},
@@ -466,7 +466,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et"
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_OPTICS",
@@ -482,7 +482,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Squatter Squatter5()
 	{
-		SDRC_Squatter squatter = new SDRC_Squatter();
+		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
 			"index 5: Shops and houses",
 			{"0 0 0"},
@@ -507,7 +507,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",

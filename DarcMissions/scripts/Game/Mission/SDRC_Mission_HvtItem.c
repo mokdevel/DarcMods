@@ -246,7 +246,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_HvtItem HvtItem0()
 	{
-		SDRC_HvtItem hvtItem = new SDRC_HvtItem();
+		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		hvtItem.general.Set(
 			"index 0: Destroy generator",
 			{"0 0 0"},
@@ -280,7 +280,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		);
 		hvtItem.targetIdx = 1;
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
@@ -291,35 +291,35 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		loot.Set(0.7, lootItems);
 		hvtItem.loot = loot;
 		
-		SDRC_Structure item_0 = new SDRC_Structure;
+		ref SDRC_Structure item_0 = new SDRC_Structure();
 		item_0.Set(
 		    "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
 		    "243.294 1 174.755"
 		);
 		hvtItem.campItems.Insert(item_0);
 		
-		SDRC_Structure item_1 = new SDRC_Structure;
+		ref SDRC_Structure item_1 = new SDRC_Structure();
 		item_1.Set(
 		    "{4BEFC7FCCB2BA121}Prefabs/Props/Military/Generators/GeneratorMilitary_USSR_01/HvtGeneratorMilitary_USSR_01.et",
 		    "249.628 1 176.903"
 		);
 		hvtItem.campItems.Insert(item_1);
 		
-		SDRC_Structure item_2 = new SDRC_Structure;
+		ref SDRC_Structure item_2 = new SDRC_Structure();
 		item_2.Set(
 		    "{B4F2701CBBE49C48}Prefabs/Props/Military/Antennas/Antenna_RC292_01.et",
 		    "246.121 1 174.906"
 		);
 		hvtItem.campItems.Insert(item_2);
 		
-		SDRC_Structure item_3 = new SDRC_Structure;
+		ref SDRC_Structure item_3 = new SDRC_Structure();
 		item_3.Set(
 		    "{C108EB96CCC73E94}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Table_Radio_US_01.et",
 		    "243.349 1 176.169"
 		);
 		hvtItem.campItems.Insert(item_3);
 		
-		SDRC_Structure item_4 = new SDRC_Structure;
+		ref SDRC_Structure item_4 = new SDRC_Structure();
 		item_4.Set(
 		    "{D0974856AF6DAE81}PrefabsEditable/Auto/Props/Military/Furniture/E_ChairMilitary_US_01.et",
 		    "243.376 1 176.954",
@@ -327,14 +327,14 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		);
 		hvtItem.campItems.Insert(item_4);
 		
-		SDRC_Structure item_5 = new SDRC_Structure;
+		ref SDRC_Structure item_5 = new SDRC_Structure();
 		item_5.Set(
 		    "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
 		    "252.327 1 177.128"
 		);
 		hvtItem.campItems.Insert(item_5);
 		
-		SDRC_Structure item_6 = new SDRC_Structure;
+		ref SDRC_Structure item_6 = new SDRC_Structure();
 		item_6.Set(
 		    "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
 		    "251.787 1 181.118",
@@ -342,7 +342,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		);
 		hvtItem.campItems.Insert(item_6);
 		
-		SDRC_Structure item_7 = new SDRC_Structure;
+		ref SDRC_Structure item_7 = new SDRC_Structure();
 		item_7.Set(
 		    "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
 		    "251.091 1 172.209",
@@ -356,7 +356,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_HvtItem HvtItem1()
 	{
-		SDRC_HvtItem hvtItem = new SDRC_HvtItem();
+		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		hvtItem.general.Set(
 			"index 1: Destroy supplies",
 			{"0 0 0"},
@@ -392,7 +392,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		);
 		hvtItem.targetIdx = 1;
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"UTIL_ATTACHMENT", "UTIL_OPTICAL",
 				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
@@ -402,7 +402,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		loot.Set(0.7, lootItems);
 		hvtItem.loot = loot;
 		
-		SDRC_Structure item_0 = new SDRC_Structure;
+		ref SDRC_Structure item_0 = new SDRC_Structure();
 		item_0.Set(
 		    "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
 		    "250.977 1 204.513",
@@ -410,7 +410,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		);
 		hvtItem.campItems.Insert(item_0);
 		
-		SDRC_Structure item_1 = new SDRC_Structure;
+		ref SDRC_Structure item_1 = new SDRC_Structure();
 		item_1.Set(
 		    "{47E0234DF4169EE5}Prefabs/Props/Military/CargoContainers/HvtCargoContainer_01_10ft_US_supplies.et",
 		    "249.9 1 196.961",
@@ -418,14 +418,14 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		);
 		hvtItem.campItems.Insert(item_1);
 		
-		SDRC_Structure item_2 = new SDRC_Structure;
+		ref SDRC_Structure item_2 = new SDRC_Structure();
 		item_2.Set(
 		    "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
 		    "247.843 1 200.018"
 		);
 		hvtItem.campItems.Insert(item_2);
 		
-		SDRC_Structure item_3 = new SDRC_Structure;
+		ref SDRC_Structure item_3 = new SDRC_Structure();
 		item_3.Set(
 		    "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
 		    "249.795 1 196.908",
@@ -433,14 +433,14 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		);
 		hvtItem.campItems.Insert(item_3);
 		
-		SDRC_Structure item_4 = new SDRC_Structure;
+		ref SDRC_Structure item_4 = new SDRC_Structure();
 		item_4.Set(
 		    "{563AD1F822D50049}Prefabs/EffectsModuleEntities/SDRC_BigSmoke.et",
 		    "249.128 1.952 202.453"
 		);
 		hvtItem.campItems.Insert(item_4);
 		
-		SDRC_Structure item_5 = new SDRC_Structure;
+		ref SDRC_Structure item_5 = new SDRC_Structure();
 		item_5.Set(
 		    "{9E5EDE35EFBF70B7}PrefabsEditable/Auto/Props/Wrecks/E_M923A1_wreck.et",
 		    "250.028 1 200.953",

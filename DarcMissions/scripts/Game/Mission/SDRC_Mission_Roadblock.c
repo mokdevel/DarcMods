@@ -266,7 +266,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			6
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
@@ -277,28 +277,28 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		loot.Set(0.7, lootItems);
 		roadblock.loot = loot;
 				
-		SDRC_Structure item_0 = new SDRC_Structure;
+		ref SDRC_Structure item_0 = new SDRC_Structure();
 		item_0.Set(
 		    "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 		    "10.387 1 94.908"
 		);
 		roadblock.campItems.Insert(item_0);
 		
-		SDRC_Structure item_1 = new SDRC_Structure;
+		ref SDRC_Structure item_1 = new SDRC_Structure();
 		item_1.Set(
 		    "{3F5EE4D69DBC478C}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_short_plastic.et",
 		    "7.037 1 95.973"
 		);
 		roadblock.campItems.Insert(item_1);
 		
-		SDRC_Structure item_2 = new SDRC_Structure;
+		ref SDRC_Structure item_2 = new SDRC_Structure();
 		item_2.Set(
 		    "{3F5EE4D69DBC478C}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_short_plastic.et",
 		    "10.177 1 96.021"
 		);
 		roadblock.campItems.Insert(item_2);
 		
-		SDRC_Structure item_3 = new SDRC_Structure;
+		ref SDRC_Structure item_3 = new SDRC_Structure();
 		item_3.Set(
 		    "{723870DBB19D30B0}Prefabs/Weapons/Tripods/Tripod_6T5_PKM.et",
 		    "8.656 1 95.797"
@@ -311,7 +311,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Camp Roadblock1()
 	{
-		SDRC_Camp roadblock = new SDRC_Camp();
+		ref SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
 			"index 1: Roadblock",
 			{"0 0 0"},
@@ -345,7 +345,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			6
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
 				"ITEM_MEDICAL",
@@ -355,7 +355,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		loot.Set(0.9, lootItems);
 		roadblock.loot = loot;
 		
-		SDRC_Structure item_0 = new SDRC_Structure;
+		ref SDRC_Structure item_0 = new SDRC_Structure();
 		item_0.Set(
 		    "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
 		    "6.814 1 115.156",
@@ -363,7 +363,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_0);
 		
-		SDRC_Structure item_1 = new SDRC_Structure;
+		ref SDRC_Structure item_1 = new SDRC_Structure();
 		item_1.Set(
 		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
 		    "12.579 0 120.902",
@@ -371,7 +371,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_1);
 		
-		SDRC_Structure item_2 = new SDRC_Structure;
+		ref SDRC_Structure item_2 = new SDRC_Structure();
 		item_2.Set(
 		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
 		    "8.218 0 123.028",
@@ -379,7 +379,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_2);
 		
-		SDRC_Structure item_3 = new SDRC_Structure;
+		ref SDRC_Structure item_3 = new SDRC_Structure();
 		item_3.Set(
 		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
 		    "11.18 0 107.827",
@@ -387,7 +387,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_3);
 		
-		SDRC_Structure item_4 = new SDRC_Structure;
+		ref SDRC_Structure item_4 = new SDRC_Structure();
 		item_4.Set(
 		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
 		    "5.713 0.227 120.863",
@@ -395,7 +395,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_4);
 		
-		SDRC_Structure item_5 = new SDRC_Structure;
+		ref SDRC_Structure item_5 = new SDRC_Structure();
 		item_5.Set(
 		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
 		    "14.977 -0.169 120.709",
@@ -403,7 +403,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_5);
 		
-		SDRC_Structure item_6 = new SDRC_Structure;
+		ref SDRC_Structure item_6 = new SDRC_Structure();
 		item_6.Set(
 		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
 		    "7.873 0 108.275",
@@ -411,7 +411,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_6);
 		
-		SDRC_Structure item_7 = new SDRC_Structure;
+		ref SDRC_Structure item_7 = new SDRC_Structure();
 		item_7.Set(
 		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
 		    "4.596 0 108.679",
@@ -419,7 +419,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_7);
 		
-		SDRC_Structure item_8 = new SDRC_Structure;
+		ref SDRC_Structure item_8 = new SDRC_Structure();
 		item_8.Set(
 		    "{93E06E731212BD96}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Triple.et",
 		    "14.151 0 114.891",
@@ -427,7 +427,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_8);
 		
-		SDRC_Structure item_9 = new SDRC_Structure;
+		ref SDRC_Structure item_9 = new SDRC_Structure();
 		item_9.Set(
 		    "{93E06E731212BD96}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Triple.et",
 		    "5.131 0 116.374",
@@ -435,7 +435,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_9);
 		
-		SDRC_Structure item_10 = new SDRC_Structure;
+		ref SDRC_Structure item_10 = new SDRC_Structure();
 		item_10.Set(
 		    "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
 		    "9.49 1 117.729",
@@ -443,7 +443,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_10);
 		
-		SDRC_Structure item_11 = new SDRC_Structure;
+		ref SDRC_Structure item_11 = new SDRC_Structure();
 		item_11.Set(
 		    "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
 		    "8.268 1 110.003",
@@ -457,7 +457,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Camp Roadblock2()
 	{
-		SDRC_Camp roadblock = new SDRC_Camp();
+		ref SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
 			"index 2: Roadblock",
 			{"0 0 0"},
@@ -491,7 +491,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			6
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_LAUNCHER", "WEAPON_RIFLE", "WEAPON_RIFLE",
 				"UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES",
@@ -502,7 +502,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		loot.Set(0.6, lootItems);
 		roadblock.loot = loot;
 		
-		SDRC_Structure item_0 = new SDRC_Structure;
+		ref SDRC_Structure item_0 = new SDRC_Structure();
 		item_0.Set(
 		    "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
 		    "10.866 1 140.452",
@@ -510,7 +510,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_0);
 		
-		SDRC_Structure item_1 = new SDRC_Structure;
+		ref SDRC_Structure item_1 = new SDRC_Structure();
 		item_1.Set(
 		    "{365E4BF1FFFD8B30}PrefabsEditable/Auto/Structures/Walls/BarbedWire/E_BarbedTape_Long.et",
 		    "6.01 0 148.186",
@@ -518,7 +518,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_1);
 		
-		SDRC_Structure item_2 = new SDRC_Structure;
+		ref SDRC_Structure item_2 = new SDRC_Structure();
 		item_2.Set(
 		    "{365E4BF1FFFD8B30}PrefabsEditable/Auto/Structures/Walls/BarbedWire/E_BarbedTape_Long.et",
 		    "14.12 0 145.299",
@@ -526,7 +526,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_2);
 		
-		SDRC_Structure item_3 = new SDRC_Structure;
+		ref SDRC_Structure item_3 = new SDRC_Structure();
 		item_3.Set(
 		    "{365E4BF1FFFD8B30}PrefabsEditable/Auto/Structures/Walls/BarbedWire/E_BarbedTape_Long.et",
 		    "13.278 0.732 134.665",
@@ -534,7 +534,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_3);
 		
-		SDRC_Structure item_4 = new SDRC_Structure;
+		ref SDRC_Structure item_4 = new SDRC_Structure();
 		item_4.Set(
 		    "{365E4BF1FFFD8B30}PrefabsEditable/Auto/Structures/Walls/BarbedWire/E_BarbedTape_Long.et",
 		    "9.088 0 134.691",
@@ -542,7 +542,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_4);
 		
-		SDRC_Structure item_5 = new SDRC_Structure;
+		ref SDRC_Structure item_5 = new SDRC_Structure();
 		item_5.Set(
 		    "{365E4BF1FFFD8B30}PrefabsEditable/Auto/Structures/Walls/BarbedWire/E_BarbedTape_Long.et",
 		    "5.972 0 137.246",
@@ -550,7 +550,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_5);
 		
-		SDRC_Structure item_6 = new SDRC_Structure;
+		ref SDRC_Structure item_6 = new SDRC_Structure();
 		item_6.Set(
 		    "{365E4BF1FFFD8B30}PrefabsEditable/Auto/Structures/Walls/BarbedWire/E_BarbedTape_Long.et",
 		    "9.607 0 148.603",
@@ -558,21 +558,21 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_6);
 		
-		SDRC_Structure item_7 = new SDRC_Structure;
+		ref SDRC_Structure item_7 = new SDRC_Structure();
 		item_7.Set(
 		    "{6A735BB1318B2E76}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_bunker_plastic_camonet.et",
 		    "10.187 1 140.88"
 		);
 		roadblock.campItems.Insert(item_7);
 		
-		SDRC_Structure item_8 = new SDRC_Structure;
+		ref SDRC_Structure item_8 = new SDRC_Structure();
 		item_8.Set(
 		    "{A76FBE3B139F227A}PrefabsEditable/Auto/Structures/Signs/Military/E_SignCheckpoint_01_stop.et",
 		    "6.063 1 143.004"
 		);
 		roadblock.campItems.Insert(item_8);
 		
-		SDRC_Structure item_9 = new SDRC_Structure;
+		ref SDRC_Structure item_9 = new SDRC_Structure();
 		item_9.Set(
 		    "{A76FBE3B139F227A}PrefabsEditable/Auto/Structures/Signs/Military/E_SignCheckpoint_01_stop.et",
 		    "12.532 1 148.443",
@@ -586,7 +586,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	//----------------------------------------------------
 	SDRC_Camp Roadblock3()
 	{
-		SDRC_Camp roadblock = new SDRC_Camp();
+		ref SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
 			"index 3: Roadblock with gates",
 			{"0 0 0"},
@@ -620,7 +620,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			10
 		);
 		
-		SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE", "WEAPON_RIFLE",
 				"UTIL_MAGAZINES", "UTIL_MAGAZINES", 
@@ -631,7 +631,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		loot.Set(0.6, lootItems);
 		roadblock.loot = loot;
 		
-		SDRC_Structure item_0 = new SDRC_Structure;
+		ref SDRC_Structure item_0 = new SDRC_Structure();
 		item_0.Set(
 		    "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
 		    "4.106 1 164.03",
@@ -639,14 +639,14 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_0);
 		
-		SDRC_Structure item_1 = new SDRC_Structure;
+		ref SDRC_Structure item_1 = new SDRC_Structure();
 		item_1.Set(
 		    "{07F043DD6AACCD0B}Prefabs/Structures/Infrastructure/Barriers/BarGate_01/BarGate_01.et",
 		    "8.797 0 157.636"
 		);
 		roadblock.campItems.Insert(item_1);
 		
-		SDRC_Structure item_2 = new SDRC_Structure;
+		ref SDRC_Structure item_2 = new SDRC_Structure();
 		item_2.Set(
 		    "{18822FB3F0D2ED00}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Long.et",
 		    "14.847 0 160.266",
@@ -654,7 +654,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_2);
 		
-		SDRC_Structure item_3 = new SDRC_Structure;
+		ref SDRC_Structure item_3 = new SDRC_Structure();
 		item_3.Set(
 		    "{18822FB3F0D2ED00}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Long.et",
 		    "14.936 0 173.246",
@@ -662,7 +662,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_3);
 		
-		SDRC_Structure item_4 = new SDRC_Structure;
+		ref SDRC_Structure item_4 = new SDRC_Structure();
 		item_4.Set(
 		    "{18822FB3F0D2ED00}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Long.et",
 		    "15.391 0 166.746",
@@ -671,14 +671,14 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		roadblock.campItems.Insert(item_4);
 		
 		// SignLarge group
-		SDRC_Structure item_5 = new SDRC_Structure;
+		ref SDRC_Structure item_5 = new SDRC_Structure();
 		item_5.Set(
 		    "{2FE7AA0EBA71CDFB}Prefabs/Structures/Signs/Large/SignLarge_01_MilitaryBase.et",
 		    "13.018 1 180.409"
 		);
 		roadblock.campItems.Insert(item_5);
 		
-		SDRC_Structure item_6 = new SDRC_Structure;
+		ref SDRC_Structure item_6 = new SDRC_Structure();
 		item_6.Set(
 		    "{2FE7AA0EBA71CDFB}Prefabs/Structures/Signs/Large/SignLarge_01_MilitaryBase.et",
 		    "12.97 1 154.555",
@@ -686,7 +686,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_6);
 		
-		SDRC_Structure item_7 = new SDRC_Structure;
+		ref SDRC_Structure item_7 = new SDRC_Structure();
 		item_7.Set(
 		    "{07F043DD6AACCD0B}Prefabs/Structures/Infrastructure/Barriers/BarGate_01/BarGate_01.et",
 		    "9.13 0 177.086"
@@ -695,7 +695,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		
 		
 		// TransmitterTower
-		SDRC_Structure item_8 = new SDRC_Structure;
+		ref SDRC_Structure item_8 = new SDRC_Structure();
 		item_8.Set(
 		    "{6A004A8F0571D456}Prefabs/Structures/Infrastructure/Towers/TransmitterTower_01/TransmitterTower_01_small.et",
 		    "2.711 1 174.351"
@@ -703,7 +703,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		roadblock.campItems.Insert(item_8);
 		
 		// GuardBox
-		SDRC_Structure item_9 = new SDRC_Structure;
+		ref SDRC_Structure item_9 = new SDRC_Structure();
 		item_9.Set(
 		    "{9498ADA13BCDB218}Prefabs/Structures/Military/Houses/GuardBox_01/GuardBox_01_Base.et",
 		    "3.929 0 166.778",
@@ -712,7 +712,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		roadblock.campItems.Insert(item_9);
 		
 		// TrashBin
-		SDRC_Structure item_10 = new SDRC_Structure;
+		ref SDRC_Structure item_10 = new SDRC_Structure();
 		item_10.Set(
 		    "{E7117284012B39A4}Prefabs/Props/Garbage/Bins/TrashBin_02_patched.et",
 		    "4.341 1 168.549"
