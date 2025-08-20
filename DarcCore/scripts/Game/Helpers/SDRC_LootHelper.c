@@ -8,7 +8,7 @@ Functions for various loot related things
 //------------------------------------------------------------------------------------------------
 class SDRC_Loot : Managed
 {
-	IEntity box;
+	IEntity box = null;
 	float itemChance = 1.0;
 	ref array<string> items = {};
 	

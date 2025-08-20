@@ -18,19 +18,23 @@ sealed class SDRC_Resources
 	*/	
 	static void GetList(out array<string> list, string mod, SDRC_List lootList)
 	{
-		SearchResourcesFilter filter = new SearchResourcesFilter();
-		filter.rootPath = mod + lootList.modDir;
-		filter.fileExtensions = {"et"};
-		filter.searchStr = {""};
-		filter.recursive = true;
+		foreach (string modDir : lootList.modDir)
+		{
+			SearchResourcesFilter filter = new SearchResourcesFilter();
+//			filter.rootPath = mod + lootList.modDir;
+			filter.rootPath = mod + modDir;
+			filter.fileExtensions = {"et"};
+			filter.searchStr = {""};
+			filter.recursive = true;
 
-		m_resourceNames = {};
-		ResourceDatabase.SearchResources(filter, GetResourcesCallback);		
-		
-		IncludeFilter(m_resourceNames, lootList.include);
-		ExcludeFilter(m_resourceNames, lootList.exclude);
-		
-		list.InsertAll(m_resourceNames);
+			m_resourceNames = {};
+			ResourceDatabase.SearchResources(filter, GetResourcesCallback);		
+			
+			IncludeFilter(m_resourceNames, lootList.include);
+			ExcludeFilter(m_resourceNames, lootList.exclude);
+			
+			list.InsertAll(m_resourceNames);
+		}
 		
 //		list.Debug();
 	}

@@ -72,14 +72,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 	
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
-	{
-		
+	{		
 		conf.modList = {};
-		/*conf.modList = {"$ArmaReforger:",
-						"$WCS_Armaments:",
-						"$M110MarksmanRifle:",
-						"$RISLaserAttachments:"
-		};*/
 		
 		SDRC_Aka aka00 = new SDRC_Aka();
 		aka00.names = {"RHS_USAF", "USAF_USMC"};
@@ -88,224 +82,319 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_Aka aka01 = new SDRC_Aka();
 		aka01.names = {"RHS_AFRF", "RHS_RF"};
 		conf.akas.Insert(aka01);
+		
+		conf.lists.Insert(enemyList00());
+		conf.lists.Insert(enemyList01());
+		conf.lists.Insert(enemyList02());
+		conf.lists.Insert(enemyList03());
+		conf.lists.Insert(enemyList04());
+		conf.lists.Insert(enemyList05());
+		conf.lists.Insert(enemyList06());
+		conf.lists.Insert(enemyList07());
+		conf.lists.Insert(enemyList08());
+		conf.lists.Insert(enemyList09());
+		
+		conf.lists.Insert(enemyList20());
+		conf.lists.Insert(enemyList21());
+		conf.lists.Insert(enemyList22());
+		conf.lists.Insert(enemyList23());
+		conf.lists.Insert(enemyList24());
+		conf.lists.Insert(enemyList25());
+		conf.lists.Insert(enemyList26());
+		conf.lists.Insert(enemyList27());
+		
+		conf.lists.Insert(enemyList50());		
+		conf.lists.Insert(enemyList51());		
+		conf.lists.Insert(enemyList52());		
+		conf.lists.Insert(enemyList53());		
+		conf.lists.Insert(enemyList54());		
+	}
 				
-		//Group lists
-		SDRC_List enemyList01 = new SDRC_List();
-		enemyList01.Set(
+	//Group lists
+	SDRC_List enemyList00()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"G_LIGHT",
-			"Prefabs/Groups",
+			{"Prefabs/Groups"},
 			{"LightFire", "FireTeam", "FireGroup", "RifleSquad", "SentryTeam"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
-		);
-		conf.lists.Insert(enemyList01);
-		
-		SDRC_List enemyList02 = new SDRC_List();
-		enemyList02.Set(
+		);	
+		return enemyList;
+	}
+	
+	SDRC_List enemyList01()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"G_SNIPER",
-			"Prefabs/Groups",
+			{"Prefabs/Groups"},
 			{"Sniper", "SharpShooter", "USSR_Spetsnaz_SentryTeam", "VKPO_S_SentryTeam.et"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
-		);
-		conf.lists.Insert(enemyList02);
-		
-		SDRC_List enemyList03 = new SDRC_List();
-		enemyList03.Set(
+		);		
+		return enemyList;
+	}
+	
+	SDRC_List enemyList02()
+	{		
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"G_LAUNCHER",
-			"Prefabs/Groups",
+			{"Prefabs/Groups"},
 			{"Team_AT", "Team_GL", "Team_LAT"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
-		);
-		conf.lists.Insert(enemyList03);
-		
-		SDRC_List enemyList04 = new SDRC_List();
-		enemyList04.Set(
+		);		
+		return enemyList;
+	}
+	
+	SDRC_List enemyList03()
+	{			
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"G_ADMIN",
-			"Prefabs/Groups",
+			{"Prefabs/Groups"},
 			{"_Platoon"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
-		);
-		conf.lists.Insert(enemyList04);
-		
-		SDRC_List enemyList05 = new SDRC_List();
-		enemyList05.Set(
+		);		
+		return enemyList;
+	}
+	
+	SDRC_List enemyList04()
+	{			
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"G_MEDICAL",
-			"Prefabs/Groups",
+			{"Prefabs/Groups"},
 			{"_Medical"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
-		);
-		conf.lists.Insert(enemyList05);
-		
-		SDRC_List enemyList06 = new SDRC_List();
-		enemyList06.Set(
+		);				
+		return enemyList;
+	}
+	
+	SDRC_List enemyList05()
+	{	
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"G_RECON",
-			"Prefabs/Groups",
+			{"Prefabs/Groups"},
 			{"_Recon", "_Maneuver"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
-		);
-		conf.lists.Insert(enemyList06);
-		
-		SDRC_List enemyList07 = new SDRC_List();
-		enemyList07.Set(
+		);					
+		return enemyList;
+	}
+	
+	SDRC_List enemyList06()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"G_HEAVY",
-			"Prefabs/Groups",
+			{"Prefabs/Groups"},
 			{"MachineGunTeam", "FireTeam", "FireGroup", "Suppress", "Spetsnaz_Squad"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
-		);
-		conf.lists.Insert(enemyList07);
-		
-		SDRC_List enemyList08 = new SDRC_List();
-		enemyList08.Set(
+		);					
+		return enemyList;
+	}
+	
+	SDRC_List enemyList07()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"G_SPECIAL",
-			"Prefabs/Groups",
+			{"Prefabs/Groups"},
 			{"GreenBeret", "Sapper", "Sentry", "Spetsnaz"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
-		);
-		conf.lists.Insert(enemyList08);
-		
-		SDRC_List enemyList09 = new SDRC_List();
-		enemyList09.Set(
+		);					
+		return enemyList;
+	}
+	
+	SDRC_List enemyList08()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"G_SMALL",
-			"Prefabs/Groups",			
+			{"Prefabs/Groups"},			
 			{"Spetsnaz_SentryTeam", "GreenBeret_SentryTeam", "SharpshooterTeam", "MedicalSection", "SapperTeam", "SentryTeam"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
-		);
-		conf.lists.Insert(enemyList09);		
-
+		);			
+		return enemyList;
+	}
+	
+	SDRC_List enemyList09()
+	{
 		//Character lists		
-		SDRC_List enemyList20 = new SDRC_List();
-		enemyList20.Set(
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"C_RIFLEMAN",
-			"Prefabs/Characters/Factions",			
+			{"Prefabs/Characters/Factions"},
 			{"Rifleman", "Sapper", "_PL", "_SL"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
-		);
-		conf.lists.Insert(enemyList20);
-		
-		SDRC_List enemyList21 = new SDRC_List();
-		enemyList21.Set(
+		);					
+		return enemyList;
+	}
+	
+	SDRC_List enemyList20()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"C_HEAVY",
-			"Prefabs/Characters/Factions",			
+			{"Prefabs/Characters/Factions"},			
 			{"_GL", "_MG", "Grenadier", "_Ammo", "_LMG"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
-		);
-		conf.lists.Insert(enemyList21);
-				
-		SDRC_List enemyList22 = new SDRC_List();
-		enemyList22.Set(
+		);						
+		return enemyList;
+	}
+	
+	SDRC_List enemyList21()
+	{	
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"C_RECON",
-			"Prefabs/Characters/Factions",			
+			{"Prefabs/Characters/Factions"},
 			{"Scout", "Spotter", "_RTO", "_SL", "_GL",
 				"_AG1", //MEI		
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
-		);
-		conf.lists.Insert(enemyList22);
-				
-		SDRC_List enemyList23 = new SDRC_List();
-		enemyList23.Set(
+		);					
+		return enemyList;
+	}
+	
+	SDRC_List enemyList22()
+	{		
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"C_OFFICER",
-			"Prefabs/Characters/Factions",			
+			{"Prefabs/Characters/Factions"},
 			{"_Officer", "Sergeant", "_AC", 
 				"_Leader", //MEI
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
-		);
-		conf.lists.Insert(enemyList23);
-		
-		SDRC_List enemyList24 = new SDRC_List();
-		enemyList24.Set(
+		);					
+		return enemyList;
+	}
+	
+	SDRC_List enemyList23()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"C_CREW",
-			"Prefabs/Characters/Factions",			
+			{"Prefabs/Characters/Factions"},
 			{"Crew", "Pilot", "_CC",
 				"MEI_Leader", //MEI
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
-		);
-		conf.lists.Insert(enemyList24);
-		
-		SDRC_List enemyList25 = new SDRC_List();
-		enemyList25.Set(
+		);					
+		return enemyList;
+	}
+	
+	SDRC_List enemyList24()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"C_SNIPER",
-			"Prefabs/Characters/Factions",			
+			{"Prefabs/Characters/Factions"},
 			{"Sniper", "Sharpshooter"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
-		);
-		conf.lists.Insert(enemyList25);	
-		
-		SDRC_List enemyList26 = new SDRC_List();
-		enemyList26.Set(
+		);					
+		return enemyList;
+	}
+	
+	SDRC_List enemyList25()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"C_LAUNCHER",
-			"Prefabs/Characters/Factions",			
+			{"Prefabs/Characters/Factions"},
 			{"_AAT", "_AT", "_AT", "_LAT"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
-		);
-		conf.lists.Insert(enemyList26);
-		
-		SDRC_List enemyList27 = new SDRC_List();
-		enemyList27.Set(
+		);					
+		return enemyList;
+	}
+	
+	SDRC_List enemyList26()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"C_MEDIC",
-			"Prefabs/Characters/Factions",			
+			{"Prefabs/Characters/Factions"},
 			{"Medic"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
-		);
-		conf.lists.Insert(enemyList27);
-		
-		SDRC_List enemyList28 = new SDRC_List();
-		enemyList28.Set(
+		);					
+		return enemyList;
+	}
+	
+	SDRC_List enemyList27()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"C_SPECIAL",
-			"Prefabs/Characters/Factions",			
+			{"Prefabs/Characters/Factions"},
 			{"_SF", "_SR", "FIA_AC", 
 				"_Bomb", //MEI
 				"MEI_Rifleman1", //MEI
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
-		);
-		conf.lists.Insert(enemyList28);
-		
-		//Monster - zombies and creatures
-		SDRC_List enemyList50 = new SDRC_List();
-		enemyList50.Set(
+		);					
+		return enemyList;
+	}
+	
+	//Monster - zombies and creatures
+	SDRC_List enemyList50()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"G_ZOMBIE_SMALL",
-			"622120A5448725E3/Prefabs/Characters/Factions",			
+			{"622120A5448725E3/Prefabs/Characters/Factions"},
 			{"_Small"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
-		);
-		conf.lists.Insert(enemyList50);
-
-		SDRC_List enemyList51 = new SDRC_List();
-		enemyList51.Set(
+		);			
+		return enemyList;
+	}
+	
+	SDRC_List enemyList51()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"G_ZOMBIE_MEDIUM",
-			"622120A5448725E3/Prefabs/Characters/Factions",			
+			{"622120A5448725E3/Prefabs/Characters/Factions"},
 			{"_Medium"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
-		);
-		conf.lists.Insert(enemyList51);
-
-		SDRC_List enemyList52 = new SDRC_List();
-		enemyList52.Set(
+		);			
+		return enemyList;
+	}
+	
+	SDRC_List enemyList52()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"G_ZOMBIE_LARGE",
-			"622120A5448725E3/Prefabs/Characters/Factions",			
+			{"622120A5448725E3/Prefabs/Characters/Factions"},
 			{"_Huge", "_Large", "_Horde"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
-		);
-		conf.lists.Insert(enemyList52);
-
-		SDRC_List enemyList60 = new SDRC_List();
-		enemyList60.Set(
+		);			
+		return enemyList;
+	}
+	
+	SDRC_List enemyList53()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"C_DEMON",
-			"Prefabs/Characters",			
+			{"Prefabs/Characters"},
 			{"Plague", "Slander", "Whisper", "Whisperer"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
-		);
-		conf.lists.Insert(enemyList60);
-		
-		SDRC_List enemyList61 = new SDRC_List();
-		enemyList61.Set(
+		);					
+		return enemyList;
+	}
+	
+	SDRC_List enemyList54()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"C_DEMON_BOSS",
-			"Prefabs/Characters",			
+			{"Prefabs/Characters"},
 			{"Stalker Heavy"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
-		);
-		conf.lists.Insert(enemyList61);								
+		);					
+		return enemyList;
 	}
 }

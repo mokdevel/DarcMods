@@ -2,12 +2,12 @@
 class SDRC_List : Managed
 {
 	string id;
-	string modDir;
+	ref array<string> modDir = {};
 	ref array<string> include = {};
 	ref array<string> exclude = {};
 	ref array<string> items = {};
 
-	void Set(string id_, string modDir_, array<string> include_, array<string> exclude_)	
+	void Set(string id_, array<string> modDir_, array<string> include_, array<string> exclude_)	
 	{
 		id = id_;
 		modDir = modDir_;
@@ -42,14 +42,13 @@ class SDRC_ListConfig : Managed
 		{
 			array<string> addonList = {};
 			
-			SDRC_Misc.GetAddonList(addonList);			
-//			array<string> addonList = SCR_AddonTool.GetAllAddonFileSystems();
+			SDRC_Misc.GetAddonList(addonList, false);			
 			
 			foreach (string addon : addonList)
 			{
 				string name = addon;// + "Prefabs";
 				modList.Insert(name);
-				SDRC_Log.Add("[SDRC_ListConfig:Populate] Mod found: " + name, LogLevel.DEBUG);				
+				//SDRC_Log.Add("[SDRC_ListConfig:Populate] Mod found: " + name, LogLevel.DEBUG);				
 			}
 		}
 		

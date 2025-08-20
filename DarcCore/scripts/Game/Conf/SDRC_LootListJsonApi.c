@@ -7,12 +7,13 @@
 // Types defined by default
 /*
 	WEAPON_RIFLE,
+	WEAPON_RIFLE_BIG,
 	WEAPON_HANDGUN,
+	WEAPON_SHOTGUN,
 	WEAPON_LAUNCHER,
 	WEAPON_GRENADE,
 	UTIL_ATTACHMENT,
 	UTIL_OPTICS,
-	WEAPON_SHOTGUN,
 	ITEM_MEDICAL,
 	ITEM_GENERAL,
 	UTIL_MAGAZINES,	//Adds a random magazine
@@ -62,132 +63,207 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 	{
 		
 		conf.modList = {};
-		/*conf.modList = {"$ArmaReforger:",
-						"$WCS_Armaments:",
-						"$M110MarksmanRifle:",
-						"$RISLaserAttachments:"
-		};*/
-		
-		//Lootlist: Rifles
-		SDRC_List lootList01 = new SDRC_List;
-		lootList01.Set(
+		//Weapons
+		conf.lists.Insert(lootList00());		
+		conf.lists.Insert(lootList01());		
+		conf.lists.Insert(lootList02());		
+		conf.lists.Insert(lootList03());		
+		conf.lists.Insert(lootList04());		
+		conf.lists.Insert(lootList06());	
+		//Attachments
+		conf.lists.Insert(lootList20());	
+		conf.lists.Insert(lootList21());	
+		//Ammo, magazines
+		conf.lists.Insert(lootList40());	
+		conf.lists.Insert(lootList41());	
+		//Items
+		conf.lists.Insert(lootList50());	
+		conf.lists.Insert(lootList51());
+	}
+			
+	//Lootlist: Rifles
+	SDRC_List lootList00()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		SDRC_List lootList00 = new SDRC_List;
+		lootList00.Set(
 			"WEAPON_RIFLE",
-			"Prefabs/Weapons/Rifles",
+			{"Prefabs/Weapons/Rifles",
+				"Prefabs/5AB890B71D748750/Weapon_Variants_B",	//M4BlockII
+			},
 			{"Rifle"},
-			{"_Base", "Tutorial"}
+			{"_Base", "_Sample", "Tutorial", "Mosin", "SVD", "Barrett", "M110", "M21", "M40"}
 		);
-		conf.lists.Insert(lootList01);
+		return lootList;
+	}
 		
-		//Lootlist: Launchers
-		SDRC_List lootList02 = new SDRC_List;
-		lootList02.Set(
+	//Lootlist: Large rifles
+	SDRC_List lootList01()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"WEAPON_RIFLE_BIG",
+			{"Prefabs/Weapons/Rifles"},
+			{"Rifle"},
+			{"_Base", "_Sample", "Tutorial", "AK74", "AKS74", "VZ", "M16" }
+		);
+		return lootList;
+	}
+		
+	//Lootlist: Handguns
+	SDRC_List lootList02()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"WEAPON_HANDGUN",
+			{"Prefabs/Weapons/Handguns"},
+			{"Handgun"},
+			{"_Base"}
+		);
+		return lootList;
+	}
+
+	//Lootlist: Launchers
+	SDRC_List lootList03()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
 			"WEAPON_LAUNCHER",
-			"Prefabs/Weapons/Launchers",
+			{"Prefabs/Weapons/Launchers"},
 			{"Launcher", 
 			"BC_M79"		//From BigChungusLaunchers
 			},
 			{"_Base"}
 		);
-		conf.lists.Insert(lootList02);		
-		
-		//Lootlist: Handguns
-		SDRC_List lootList03 = new SDRC_List;
-		lootList03.Set(
-			"WEAPON_HANDGUN",
-			"Prefabs/Weapons/Handguns",
-			{"Handgun"},
-			{"_Base"}
-		);
-		conf.lists.Insert(lootList03);		
+		return lootList;
+	}
 
-		//Lootlist: Grenades
-		SDRC_List lootList04 = new SDRC_List;
-		lootList04.Set(
-			"WEAPON_GRENADE",
-			"Prefabs/Weapons/Grenades",
-			{""},
-			{"_Base"}
-		);
-		conf.lists.Insert(lootList04);			
-				
-		//Lootlist: Medical items
-		SDRC_List lootList05 = new SDRC_List;
-		lootList05.Set(
-			"ITEM_MEDICAL",
-			"Prefabs/Items/Medicine",
-			{""},
-			{"_Base"}
-		);
-		conf.lists.Insert(lootList05);			
-		
-		//Lootlist: Weapon attachments
-		SDRC_List lootList06 = new SDRC_List;
-		lootList06.Set(
-			"UTIL_ATTACHMENT",
-			"Prefabs/Weapons/Attachments",
-			{""},
-			{"_Base", "Optic"}
-		);
-		conf.lists.Insert(lootList06);			
-
-		//Lootlist: Weapon attachments
-		SDRC_List lootList07 = new SDRC_List;
-		lootList07.Set(
-			"UTIL_OPTICS",
-			"Prefabs/Weapons/Attachments",
-			{"Optic", "Scope"},
-			{"_Base"}
-		);
-		conf.lists.Insert(lootList07);			
-		
-		//Lootlist: General items
-		SDRC_List lootList08 = new SDRC_List;
-		lootList08.Set(
-			"ITEM_GENERAL",
-			"Prefabs/Items",
-			{"Binocular", "Compass", "Flashlight", "PaperMap_01_folded", "Watch_"},
-			{"_Base"}
-		);
-		conf.lists.Insert(lootList08);		
-		
-		//Lootlist: Shotguns
-		SDRC_List lootList09 = new SDRC_List;
-		lootList09.Set(
+	//Lootlist: Shotguns
+	SDRC_List lootList04()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
 			"WEAPON_SHOTGUN",
-			"/Weapons/Shotguns",
+			{"Prefabs/Weapons/Shotguns"},
 			{"Shotgun"},
 			{"_Base"}
 		);
-		conf.lists.Insert(lootList09);
+		return lootList;
+	}
 		
-		//Lootlist: Machineguns
-		SDRC_List lootList10 = new SDRC_List;
-		lootList10.Set(
+	//Lootlist: Machineguns
+	SDRC_List lootList05()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
 			"WEAPON_MG",
-			"Prefabs/Weapons/MachineGuns",
+			{"Prefabs/Weapons/MachineGuns"},
 			{"MG_", "RPD", "RPK"},
+			{"_Base", "_Mounted", "_rear", "_front", "PKMT"}
+		);
+		return lootList;
+	}	
+		
+	//Lootlist: Grenades
+	SDRC_List lootList06()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"WEAPON_GRENADE",
+			{"Prefabs/Weapons/Grenades"},
+			{""},
 			{"_Base"}
 		);
-		conf.lists.Insert(lootList10);
-		
-		//Utility list: Magazine
-		SDRC_List lootList30 = new SDRC_List;
-		lootList30.Set(
+		return lootList;
+	}
+				
+	//Lootlist: Weapon attachments
+	SDRC_List lootList20()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"UTIL_ATTACHMENT",
+			{"Prefabs/Weapons/Attachments",
+				"Prefabs/5AB890B71D748750/Grip",		//M4BlockII
+				"Prefabs/5AB890B71D748750/Handguard",
+				"Prefabs/5AB890B71D748750/Lower",
+				"Prefabs/5AB890B71D748750/Muzzle",
+				"Prefabs/5AB890B71D748750/Stock",
+				"Prefabs/5AB890B71D748750/UGL",
+				"Prefabs/5AB890B71D748750/Upper",			
+			},
+			{""},
+			{"_Base", "Optic", "Scope"}
+		);
+		return lootList;
+	}
+
+	//Lootlist: Weapon optics
+	SDRC_List lootList21()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"UTIL_OPTICS",
+			{"Prefabs/Weapons/Attachments", 
+				"Scopes",									//RAYZIOPTICSPACK
+				"Prefabs/Weapons/Attachments/BaconOptics/",	//RISLaserAttachments (BaconOptics)
+				"Prefabs/5ABD0CB57F7E9EB1/Optics/",			//RISLaserAttachments
+			},
+			{"Optic", "Scope"},
+			{"_Base"}
+		);
+		return lootList;
+	}
+
+	//Utility list: Magazine
+	SDRC_List lootList40()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
 			"UTIL_MAGAZINES",
-			"Prefabs/Weapons/Magazines",
+			{"Prefabs/Weapons/Magazines"},
 			{""},
 			{"_Base", "Internal_"}
 		);
-		conf.lists.Insert(lootList30);		
+		return lootList;
+	}
 		
-		//Utility list: Ammo
-		SDRC_List lootList31 = new SDRC_List;
-		lootList31.Set(
+	//Utility list: Ammo
+	SDRC_List lootList41()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
 			"UTIL_AMMO",
-			"Prefabs/Weapons/Ammo",
+			{"Prefabs/Weapons/Ammo"},
 			{"Shell", "Rocket", "Grenade", "Flare"},
-			{"_Base", "Internal_", "_Effect", "FlareEffect"}
+			{"_Base", "Internal_", "_Effect", "FlareEffect", "Particles"}
 		);
-		conf.lists.Insert(lootList31);		
+		return lootList;
+	}
+		
+	//Lootlist: General items
+	SDRC_List lootList50()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"ITEM_GENERAL",
+			{"Prefabs/Items"},
+			{"Binocular", "Compass", "Flashlight", "PaperMap_01_folded", "Watch_"},
+			{"_Base"}
+		);
+		return lootList;
+	}
+
+	//Lootlist: Medical items
+	SDRC_List lootList51()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"ITEM_MEDICAL",
+			{"Prefabs/Items/Medicine"},
+			{""},
+			{"_Base"}
+		);
+		return lootList;
 	}
 }
