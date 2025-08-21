@@ -3,8 +3,6 @@ The mod is capable of creating automatic lists to be used with missions. You can
 
 Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json) , [dc_enemyList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_enemyList.json)
 
-# Loot lists
-
 This supports additional mods that you can define in the modList parameter. The typical notation is ``"$ModName:"``. A properly created mod follows the same structure and keeps prefabs in the right places. 
 ```
 int version : See General parameters
