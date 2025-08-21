@@ -17,6 +17,36 @@ array<string> modList : The mods to search for loot. If left empty, all mods ena
 array<SDRC_List> lists : The defined lists. See details at he bottom of the page.
 array<ref SDRC_Aka> akas : The defined 'akas'. See details at he bottom of the page.
 ```
+
+## SDRC_List
+The functionality goes through the modDir and gets every file with the ending of ```.et```. The list is first filtered with ```include``` words and then filtered with ```exclude```words. Note that any item you may have defined manually goes through the same filtering and may be removed if the ```exclude``` word matches.
+```
+string id : The name given for the listist. This is the name you use for adding loot or selecting enemies. 
+array<string> modDir : Prefab directories inside mod. All mods will be searched for these directories.
+array<string> include : Items having these words are included in the lootList.
+array<string> exclude : Items with these words will be removed from the lootList.
+array<ResourceName> items : The list of items. This is autofilled, but you can pre-define items if needed.
+```
+
+## SDRC_Aka
+Also known as - other names used for example for factions. In some cases/mods the prefab name don't have the faction name included. The first item in the array is the *faction* and the second name is the name used for filtering.
+```
+array<string> names : The faction name and the filtering name in this order.
+```
+
+### Example
+This is the case for example with RHS. RHS uses the faction name ``RHS_USAF`` but the naming convention with AI prefabs uses ``USAF_USMC``. With the definition, the groups and characters are searched with the 'also known as' name.
+```
+"akas": [
+  {
+    "names": [
+      "RHS_USAF",
+      "USAF_USMC"
+    ]
+  }
+```
+
+# Loot lists
 ## Loot list names (id)
 Currently available names are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
 ```
@@ -67,34 +97,6 @@ G_ZOMBIE_MEDIUM
 G_ZOMBIE_LARGE
 C_DEMON
 C_DEMON_BOSS
-```
-
-## SDRC_List
-The functionality goes through the modDir and gets every file with the ending of ```.et```. The list is first filtered with ```include``` words and then filtered with ```exclude```words. Note that any item you may have defined manually goes through the same filtering and may be removed if the ```exclude``` word matches.
-```
-string id : The name given for the listist. This is the name you use for adding loot or selecting enemies. 
-array<string> modDir : Prefab directories inside mod. All mods will be searched for these directories.
-array<string> include : Items having these words are included in the lootList.
-array<string> exclude : Items with these words will be removed from the lootList.
-array<ResourceName> items : The list of items. This is autofilled, but you can pre-define items if needed.
-```
-
-## SDRC_Aka
-Also known as - other names used for example for factions. In some cases/mods the prefab name don't have the faction name included. The first item in the array is the *faction* and the second name is the name used for filtering.
-```
-array<string> names : The faction name and the filtering name in this order.
-```
-
-### Example
-This is the case for example with RHS. RHS uses the faction name ``RHS_USAF`` but the naming convention with AI prefabs uses ``USAF_USMC``. With the definition, the groups and characters are searched with the 'also known as' name.
-```
-"akas": [
-  {
-    "names": [
-      "RHS_USAF",
-      "USAF_USMC"
-    ]
-  }
 ```
 
 # Examples
