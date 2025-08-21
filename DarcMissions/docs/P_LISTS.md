@@ -3,17 +3,14 @@ The mod is capable of creating automatic lists to be used with missions. You can
 
 Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json) , [dc_enemyList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_enemyList.json)
 
-This supports additional mods that you can define in the modList parameter. The typical notation is ``"$ModName:"``. A properly created mod follows the same structure and keeps prefabs in the right places. 
+By default all mods are searched, but you can define a limited selection of mods to search in. The typical notation is ``"$ModName:"``. A properly created mod follows the same structure and keeps prefabs in the right places. 
 ```
 int version : See General parameters
 string author : See General parameters
 array<string> modList : The mods to search for loot. If left empty, all mods enabled will be searched.
-  Example: 
-  "modList": [
-    "$ArmaReforger:",
-    "$WCS_Armaments:",
-    "$M110MarksmanRifle:"
-    ],
+  Example:
+    "modList": [],
+    "modList": ["$ArmaReforger:", "$WCS_Armaments:", "$M110MarksmanRifle:"],
 array<SDRC_List> lists : The defined lists. See details at he bottom of the page.
 array<ref SDRC_Aka> akas : The defined 'akas'. See details at he bottom of the page.
 ```
