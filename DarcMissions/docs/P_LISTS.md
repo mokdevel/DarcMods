@@ -5,7 +5,7 @@ Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcM
 
 # Loot lists
 
-This supports additional mods that you can define in the modList parameter. The typical notation is ```"$ModName:PreFabs"```. A properly created mod follows the same structure and keeps prefabs in the right places. 
+This supports additional mods that you can define in the modList parameter. The typical notation is ``"$ModName:"``. A properly created mod follows the same structure and keeps prefabs in the right places. 
 ```
 int version : See General parameters
 string author : See General parameters
