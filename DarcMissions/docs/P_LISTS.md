@@ -87,6 +87,7 @@ Also known as - other names used for example for factions. In some cases/mods th
 array<string> names : The faction name and the filtering name in this order.
 ```
 
+### Example
 This is the case for example with RHS. RHS uses the faction name ``RHS_USAF`` but the naming convention with AI prefabs uses ``USAF_USMC``. With the definition, the groups and characters are searched with the 'also known as' name.
 ```
 "akas": [
@@ -100,7 +101,7 @@ This is the case for example with RHS. RHS uses the faction name ``RHS_USAF`` bu
 
 # Examples
 ## Example lootList
-The below example with the name ```WEAPON_RIFLE``` will search three mods for items matching the include and exclude filters. The intial search path is ```$Modname:Prefabs```. Under the Prefabs dir we use the dir ```/Weapons/Rifles``` for the more detailed search. The full path for the search is ```$Modname:Prefabs/Weapons/Rifles``` and internally we're searching for all files ending in ```.et```. Initally all items will be listed. 
+The below example with the name ```WEAPON_RIFLE``` will search three mods for items matching the include and exclude filters. The full path for the search is ```$Modname:Prefabs/Weapons/Rifles``` where the ``$Modname`` parameter is picked from the modList. Internally we're searching for all files ending in ```.et```. Initally all items will be listed. 
 
 The .json configuration as an example:
 ```
@@ -113,13 +114,13 @@ The .json configuration as an example:
   ],
 "lists": [
   {
-		"id": "WEAPON_RIFLE",
-		"modDir": [
-			"Prefabs/Weapons/Rifles",
-		],
-		"include": [
-			"Rifle"
-		],
+	"id": "WEAPON_RIFLE",
+	"modDir": [
+      "Prefabs/Weapons/Rifles"
+	],
+	"include": [
+      "Rifle"
+	],
     "exclude": [
       "_Base",
       "SVD",
@@ -150,5 +151,35 @@ The ```include``` filter ("Rifle") matches the list so everything is included. T
 ```
 
 ## Example enemyList
+The below example with the name ```G_LIGHT``` will search all available mods for items matching the include and exclude filters. The full path for the search is ```$Modname:Prefabs/Groups``` where the ``$Modname`` parameter is picked from the modList. internally we're searching for all files ending in ```.et```. Initally all items will be listed. All items matching the ```include``` filter will be included. The ```exclude``` filter picks out anything with "_Base", "_NotSpawned", .. from the list.
 
-<TBD>
+The .json configuration as an example:
+
+```
+{
+"version": 1,
+"author": "darc",
+"modList": [],
+"lists": [
+  {
+    "id": "G_LIGHT",
+    "modDir": [
+    "Prefabs/Groups"
+    ],
+    "include": [
+      "LightFire",
+      "FireTeam",
+      "FireGroup",
+      "RifleSquad",
+      "SentryTeam"
+    ],
+    "exclude": [
+      "_Base",
+      "_NotSpawned",
+      "_Remnants",
+      "_Random"
+    ],
+    "items": []
+  }
+  ]
+}
