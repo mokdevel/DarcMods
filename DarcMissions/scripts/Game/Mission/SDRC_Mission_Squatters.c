@@ -70,7 +70,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		}
 
 		//Find the mission house
-		m_Building = SDRC_BuildingHelper.FindMissionBuilding(pos, buildingFilter, radius);
+		m_Building = SDRC_MissionHelper.FindMissionBuilding(pos, buildingFilter, radius);
 		if (m_Building)
 		{
 			pos = m_Building.GetOrigin();
