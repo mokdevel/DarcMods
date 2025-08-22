@@ -13,10 +13,10 @@
 	WEAPON_LAUNCHER,
 	WEAPON_GRENADE,
 	UTIL_ATTACHMENT,
-	UTIL_OPTICS,
+	UTIL_OPTIC,
 	ITEM_MEDICAL,
 	ITEM_GENERAL,
-	UTIL_MAGAZINES,	//Adds a random magazine
+	UTIL_MAGAZINE,	//Adds a random magazine
 	UTIL_AMMO		//Adds a random rocket, shell, flare, ..
 */
 
@@ -85,8 +85,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 	SDRC_List lootList00()
 	{
 		ref SDRC_List lootList = new SDRC_List();
-		SDRC_List lootList00 = new SDRC_List;
-		lootList00.Set(
+		lootList.Set(
 			"WEAPON_RIFLE",
 			{"Prefabs/Weapons/Rifles",
 				"Prefabs/5AB890B71D748750/Weapon_Variants_B",	//M4BlockII
@@ -203,7 +202,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_List lootList = new SDRC_List();
 		lootList.Set(
-			"UTIL_OPTICS",
+			"UTIL_OPTIC",
 			{"Prefabs/Weapons/Attachments", 
 				"Scopes",									//RAYZIOPTICSPACK
 				"Prefabs/Weapons/Attachments/BaconOptics/",	//RISLaserAttachments (BaconOptics)
