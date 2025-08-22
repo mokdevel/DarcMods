@@ -52,14 +52,14 @@ class SDRC_RplGMComp : ScriptComponent
 	//! Get instance
 	static SDRC_RplGMComp FindInstance()
 	{
-		SDRC_RplHintEntity hintEnt = SDRC_RplHintEntity.GetInstance();
+		SDRC_RplGMEntity gmEnt = SDRC_RplGMEntity.GetInstance();
 		
-		if (!hintEnt)
+		if (!gmEnt)
 		{
 			return null;
 		}
 		
-		return SDRC_RplGMComp.Cast(hintEnt.FindComponent(SDRC_RplGMComp));
+		return SDRC_RplGMComp.Cast(gmEnt.FindComponent(SDRC_RplGMComp));
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -134,7 +134,7 @@ class SDRC_RplGMComp : ScriptComponent
 		
 		foreach(SDRC_GMMapSymbol symbol : m_Symbols)
 		{
-//			SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Syncing: " + symbol.pos, LogLevel.NORMAL);	
+			SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Syncing: " + symbol.pos, LogLevel.SPAM);	
 	        Rpc(RpcDo_SyncMapSymbol, symbol.type, symbol.pos, symbol.radius, symbol.intval, symbol.id, symbol.strval); 	// broadcast to clients			
 		}		
 	}

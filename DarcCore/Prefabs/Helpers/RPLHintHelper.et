@@ -1,8 +1,6 @@
 SDRC_RplHintEntity {
  ID "6505170C020BAB54"
  components {
-  SDRC_RplGMComp "{6606B4533C9E1A9C}" {
-  }
   SDRC_RplHintComp "{6505170CE97A90C6}" {
   }
   RplComponent "{6505170CDDE08E99}" {

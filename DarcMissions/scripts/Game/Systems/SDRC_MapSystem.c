@@ -7,7 +7,8 @@ class SDRC_MapSystem : GameSystem
 	protected ref array<ref CanvasWidgetCommand> m_DrawCommands;
 	protected vector m_previousPan;
 	protected float m_previousZoom;
-	protected bool m_updateMap;
+	protected int m_SymbolCount;
+
 	protected ResourceName m_Layout = "{F928661E727CC639}UI/layouts/Map/SDRC_MapCanvasLayer.layout";
 
 	int MARKER_WIDTH = (32 * 0.8);
@@ -48,6 +49,7 @@ class SDRC_MapSystem : GameSystem
 	//! Inserts map listeners
 	protected void Init()
 	{
+		SDRC_Log.Add("[SDRC_MapSystem:Init] Doing Init.", LogLevel.SPAM);
 		m_MapEntity = SCR_MapEntity.GetMapInstance();
 		
 		if (!m_MapEntity)
@@ -140,20 +142,21 @@ class SDRC_MapSystem : GameSystem
 				playerComponent.AskForMissionDeletion(gmComponent.m_Symbols[markerIdx].id);
 				ShowChatMessage(WidgetManager.Translate("Deletion requested for Mission ID: " + gmComponent.m_Symbols[markerIdx].id));
 				gmComponent.m_Symbols[markerIdx].visible = false;
+				m_SymbolCount = 0;	//Ask for map update
 			}
-			
-			m_updateMap = true;
 		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	protected void OnMapOpen(MapConfiguration mapConfig)
 	{	
+		//SDRC_Log.Add("[SDRC_MapSystem:OnMapOpen] Opened", LogLevel.DEBUG);
+				
 		if (!SDRC_PlayerHelper.IsInGMmode())
 		{
 			return;
 		}
-		
+
 		Widget mapFrame = m_MapEntity.GetMapMenuRoot().FindAnyWidget(SCR_MapConstants.MAP_FRAME_NAME);
 		if (!mapFrame)
 			mapFrame = m_MapEntity.GetMapMenuRoot();
@@ -164,12 +167,16 @@ class SDRC_MapSystem : GameSystem
 		m_wCanvasWidget = CanvasWidget.Cast(m_Widget);
 		
 		m_DrawCommands = new array<ref CanvasWidgetCommand>();		
-		m_updateMap = true;
-		
+		m_SymbolCount = 0;
+
 		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
 		if (playerComponent)
 		{
 			playerComponent.AskForInfo();
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_MapSystem:OnMapOpen] SDRC_RplPlayerComp not found", LogLevel.WARNING);		
 		}
 		
 		Enable(true);
@@ -195,7 +202,6 @@ class SDRC_MapSystem : GameSystem
 		//When map is closed, clear the information
 		m_DrawCommands = null;		
 		m_wCanvasWidget = null;
-		m_updateMap = false;
 
 		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
 		if (gmComponent)
@@ -209,17 +215,28 @@ class SDRC_MapSystem : GameSystem
 	Update known symbols on map
 	*/
 	override protected void OnUpdate(ESystemPoint point)
-	{
+	{		
 		super.OnUpdate(point);
-		
+	
 		if (!m_MapEntity)
 			return;
-		
+
+		bool updateMap = false;			
+		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
+		if (gmComponent)
+		{
+			if (m_SymbolCount != gmComponent.m_Symbols.Count())
+			{
+				m_SymbolCount = gmComponent.m_Symbols.Count();
+				updateMap = true;
+			}
+		}		
+				
 		vector currentPan = m_MapEntity.GetCurrentPan();
 		float currentZoom = m_MapEntity.GetCurrentZoom();
 
-		bool mapChange = (m_previousPan != currentPan) || (m_previousZoom != currentZoom) || m_updateMap;
-		
+		bool mapChange = ( (m_previousPan != currentPan) || (m_previousZoom != currentZoom) || updateMap );
+
 		if (!mapChange)
 		{
 			return;
@@ -227,11 +244,9 @@ class SDRC_MapSystem : GameSystem
 		
 		m_previousPan = currentPan;
 		m_previousZoom = currentZoom;
-		m_updateMap = false;
 		
 		m_DrawCommands.Clear();
 		
-		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
 		if (gmComponent)
 		{
 			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
@@ -431,7 +446,7 @@ class SDRC_MapSystem : GameSystem
 			
 			if (symbolIdx > -1)
 			{
-				SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Found marker - index: " + symbolIdx, LogLevel.NORMAL);
+				SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Found marker - index: " + symbolIdx, LogLevel.SPAM);
 			}
 		}		
 		
