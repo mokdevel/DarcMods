@@ -100,10 +100,14 @@ Dependency specific files
 
 ## Next release (unreleased)
 
+.. empty ..
+
+## 20250822
 Updated jsons: dc_enemyList.json, dc_lootList.json - remove your existing files.
 
 ### DarcMissions
 Main features:
+* New mission: High Value Target Item - A structure is to be destroyed.
 * Change in behaviour: Loot is spawned only after win is reached. This is true for missions: Occupation, Squatters, HvtVip, HvtItem, Roadblock
 * Added convoys with armored vehicles and cars with turrets.
 * lootList support for mods: M4BlockII, RAYZIOPTICSPACK, RISLaserAttachments, BarrettM82, BaconDesertEagle
@@ -112,6 +116,8 @@ Main features:
 Changes: 
 * LootList structure changed.
 * Renamed loot keys: UTIL_OPTICS to UTIL_OPTIC, UTIL_MAGAZINES to UTIL_MAGAZINE
+* More randomization for location position searching. Avoid having the mission always in same place.
+* Fixed the weird crash with Patrol mission
 
 Fixes:
 * Win condition not set properly for some of the missions
