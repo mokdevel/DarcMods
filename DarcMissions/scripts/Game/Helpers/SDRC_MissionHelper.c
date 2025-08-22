@@ -17,9 +17,9 @@ enum DC_EMissionPosFailReason
 //------------------------------------------------------------------------------------------------
 sealed class SDRC_MissionHelper
 {
-	private const int DC_LOCATION_SEACRH_ITERATIONS = 8;		//How many different spots to try for a mission before giving up
-	private const int DC_LOCATION_SEACRH_RADIUS = 50;			//The start search radius for mission position 
-	private const int DC_LOCATION_SEACRH_RADIUS_INC = 15;		//The increase of search radius for each failed iteration
+	private const int DC_LOCATION_SEACRH_ITERATIONS = 5;		//How many different spots to try for a mission before giving up
+	private const int DC_LOCATION_SEACRH_RADIUS = 100;			//The start search radius for mission position 
+	private const int DC_LOCATION_SEACRH_RADIUS_INC = 50;		//The increase of search radius for each failed iteration
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -104,6 +104,9 @@ sealed class SDRC_MissionHelper
 		
 		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 		{
+			//Give the position some randomization so it's not always in the same spot.			
+			pos = SDRC_Misc.RandomizePos(pos, searchRadius/2);
+			
 			//Find the position within searchRadius from pos.			
 			if (SDRC_SpawnHelper.FindEmptyPos(pos, searchRadius, size))
 			{			
@@ -116,7 +119,6 @@ sealed class SDRC_MissionHelper
 			}
 			else
 			{	
-				pos = SDRC_Misc.RandomizePos(pos, searchRadius/2);
 				searchRadius = searchRadius + DC_LOCATION_SEACRH_RADIUS_INC;	//Increase the are with DC_LOCATION_SEACRH_RADIUS_INC
 				SDRC_Log.Add("[SDRC_MissionHelper:FindWithIterate] Invalid position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
 			}
