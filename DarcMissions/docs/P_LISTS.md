@@ -57,8 +57,8 @@ WEAPON_MG : Machine guns (use e.g. Big Chungus mods)
 ITEM_MEDICAL : Medical items
 ITEM_GENERAL : General items
 UTIL_ATTACHMENT : Various attachments excluding optics
-UTIL_OPTICS : Optic attachments
-UTIL_MAGAZINES : Adds a random magazine
+UTIL_OPTIC : Optic attachments
+UTIL_MAGAZINE : Adds a random magazine
 UTIL_AMMO : Adds a random rocket, shell, flare, ..
 ```
 
