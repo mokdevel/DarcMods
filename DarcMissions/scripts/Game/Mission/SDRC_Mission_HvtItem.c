@@ -11,8 +11,8 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	const int AI_TARGET_DESTROYED_CYCLE_TIME = 5000;
 	
 	private ref SDRC_HvtItemJsonApi m_HvtItemJsonApi = new SDRC_HvtItemJsonApi();	
-	private ref SDRC_HvtItemConfig m_Config;
-	private ref SDRC_HvtItem m_DC_HvtItem;			//HvtItem configuration in use
+	private ref SDRC_HvtItemConfig m_Config = new SDRC_HvtItemConfig();
+	private ref SDRC_HvtItem m_DC_HvtItem = new SDRC_HvtItem();
 	
 //	private int m_iGroupCount;
 	private int m_iSpawnIndex = 0;					//Counter for the item to spawn
@@ -237,10 +237,11 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HVTITEM_MAP;
 		//Mission specific
-		conf.hvtItemList = {0,1};
+		conf.hvtItemList = {0,1,2};
 		//----------------------------------------------------
 		conf.hvtItems.Insert(HvtItem0());				
 		conf.hvtItems.Insert(HvtItem1());				
+		conf.hvtItems.Insert(HvtItem2());				
 	};
 	
 	//----------------------------------------------------
@@ -388,13 +389,13 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 				"G_ADMIN", "G_LIGHT", "G_LIGHT", "G_HEAVY"
 			},
 			50, 1.0,
-			10
+			20
 		);
 		hvtItem.targetIdx = 1;
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"UTIL_ATTACHMENT", "UTIL_OPTICAL",
+				"UTIL_ATTACHMENT", "UTIL_OPTIC",
 				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
 				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
@@ -450,4 +451,212 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		
 		return hvtItem;
 	};	
+	
+	//----------------------------------------------------
+	SDRC_HvtItem HvtItem2()
+	{
+		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
+		hvtItem.general.Set(
+			"index 2: Destroy antenna",
+			{"0 0 0"},
+			"any",
+			"Radio antenna close to %l",
+			"Disrupt the enemy communications. Destroy the antenna.",
+			DC_EMissionWinCondition.HVT_DESTROY_ITEM,
+			"The comms are dead.",
+			"Enemy communication is loud and clear.",
+			0
+		);
+		hvtItem.Set(
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_TOWN, 
+				EMapDescriptorType.MDT_NAME_HILL,
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_AIRPORT,
+			},
+			{2, 4},
+			{25, 100},
+			DC_EWaypointGenerationType.LOITER,
+			DC_EWaypointMoveType.PATROLCYCLE,
+			{
+				"G_ADMIN", "G_RECON", "G_SPECIAL", "G_LIGHT"
+			},
+			50, 1.0,
+			20
+		);
+		hvtItem.targetIdx = 9;
+		
+		ref SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE_BIG",
+				"UTIL_ATTACHMENT", "UTIL_OPTIC",
+				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
+				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+			};
+		loot.Set(0.7, lootItems);
+		hvtItem.loot = loot;
+		
+		// Loot Crate (first position)
+		SDRC_Structure item_0 = new SDRC_Structure();
+		item_0.Set(
+		    "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+		    "239.161 1 129.774"
+		);
+		hvtItem.campItems.Insert(item_0);
+		
+		// Generator Floodlight
+		SDRC_Structure item_1 = new SDRC_Structure();
+		item_1.Set(
+		    "{0E94F28FD722B1D8}Prefabs/Props/Military/Generators/GeneratorFloodlight_US_01.et",
+		    "241.481 1 131.634",
+		    "0 -23.351 0"
+		);
+		hvtItem.campItems.Insert(item_1);
+		
+		// Czech Hedgehog group
+		SDRC_Structure item_2 = new SDRC_Structure();
+		item_2.Set(
+		    "{7F8D6A0D827EA34B}Prefabs/Props/Military/Fortification/CzechHedgehog_01_base.et",
+		    "253.171 0 136.978"
+		);
+		hvtItem.campItems.Insert(item_2);
+		
+		SDRC_Structure item_3 = new SDRC_Structure();
+		item_3.Set(
+		    "{7F8D6A0D827EA34B}Prefabs/Props/Military/Fortification/CzechHedgehog_01_base.et",
+		    "251.835 0 139.877"
+		);
+		hvtItem.campItems.Insert(item_3);
+		
+		SDRC_Structure item_4 = new SDRC_Structure();
+		item_4.Set(
+		    "{7F8D6A0D827EA34B}Prefabs/Props/Military/Fortification/CzechHedgehog_01_base.et",
+		    "241.803 0 126.524"
+		);
+		hvtItem.campItems.Insert(item_4);
+		
+		// Sandbag Wall group
+		SDRC_Structure item_5 = new SDRC_Structure();
+		item_5.Set(
+		    "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
+		    "246.482 1 142.942"
+		);
+		hvtItem.campItems.Insert(item_5);
+		
+		SDRC_Structure item_6 = new SDRC_Structure();
+		item_6.Set(
+		    "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
+		    "239.978 1 141.694",
+		    "0 -20.77 0"
+		);
+		hvtItem.campItems.Insert(item_6);
+		
+		SDRC_Structure item_7 = new SDRC_Structure();
+		item_7.Set(
+		    "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
+		    "245.447 1 128.339",
+		    "0 154.533 0"
+		);
+		hvtItem.campItems.Insert(item_7);
+		
+		SDRC_Structure item_8 = new SDRC_Structure();
+		item_8.Set(
+		    "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
+		    "250.782 1 132.262",
+		    "0 133.763 0"
+		);
+		hvtItem.campItems.Insert(item_8);
+		
+		// Radar
+		SDRC_Structure item_9 = new SDRC_Structure();
+		item_9.Set(
+		    "{A528F04F41F2A2D0}Prefabs/Structures/Military/Radar/ApproachRadar_RPL5_01/ApproachRadar_RPL5_01_on.et",
+		    "244.809 1 137.097"
+		);
+		hvtItem.campItems.Insert(item_9);
+		
+		// Round Sandbag group
+		SDRC_Structure item_10 = new SDRC_Structure();
+		item_10.Set(
+		    "{B31A14BC1A0E7776}Prefabs/Props/Military/Sandbags/Sandbag_01_round_burlap.et",
+		    "243.004 1 143.131",
+		    "0 -6.802 0"
+		);
+		hvtItem.campItems.Insert(item_10);
+		
+		SDRC_Structure item_11 = new SDRC_Structure();
+		item_11.Set(
+		    "{B31A14BC1A0E7776}Prefabs/Props/Military/Sandbags/Sandbag_01_round_burlap.et",
+		    "248.668 1 129.663",
+		    "0 147.731 0"
+		);
+		hvtItem.campItems.Insert(item_11);
+		
+		// End High Sandbag group
+		SDRC_Structure item_12 = new SDRC_Structure();
+		item_12.Set(
+		    "{B547CF929FCC6BB7}Prefabs/Props/Military/Sandbags/Sandbag_01_end_high_burlap.et",
+		    "252.245 1 133.815",
+		    "0 -45.633 0"
+		);
+		hvtItem.campItems.Insert(item_12);
+		
+		SDRC_Structure item_13 = new SDRC_Structure();
+		item_13.Set(
+		    "{B547CF929FCC6BB7}Prefabs/Props/Military/Sandbags/Sandbag_01_end_high_burlap.et",
+		    "248.517 1 142.565",
+		    "0 28.291 0"
+		);
+		hvtItem.campItems.Insert(item_13);
+		
+		// Latrine
+		SDRC_Structure item_14 = new SDRC_Structure();
+		item_14.Set(
+		    "{C32544547260D3F1}PrefabsEditable/Auto/Structures/Civilian/E_Latrine_01.et",
+		    "235.318 1 130.793",
+		    "0 149.011 0"
+		);
+		hvtItem.campItems.Insert(item_14);
+		
+		// Dirt Pile
+		SDRC_Structure item_15 = new SDRC_Structure();
+		item_15.Set(
+		    "{C86856FFC84B573A}PrefabsEditable/Auto/Structures/Military/Fortifications/E_DirtPile_01_large.et",
+		    "241.817 0.827 136.378"
+		);
+		hvtItem.campItems.Insert(item_15);
+		
+		// Fuel Pallet
+		SDRC_Structure item_16 = new SDRC_Structure();
+		item_16.Set(
+		    "{DB4F61D5F37432F7}Prefabs/Props/Military/Camps/PalletFuel_01.et",
+		    "238.013 1 136.755",
+		    "0 -16.443 0"
+		);
+		hvtItem.campItems.Insert(item_16);
+		
+		// Portable Cabin
+		SDRC_Structure item_17 = new SDRC_Structure();
+		item_17.Set(
+		    "{E30E1250FD927736}Prefabs/Structures/Industrial/Houses/PortableCabin_E_01/PortableCabin_E_01_beige.et",
+		    "236.477 0 133.305",
+		    "0 -36.874 0"
+		);
+		hvtItem.campItems.Insert(item_17);
+		
+		// Camo Net Folded
+		SDRC_Structure item_18 = new SDRC_Structure();
+		item_18.Set(
+		    "{F922F6F1895F41E4}PrefabsEditable/Auto/Structures/Military/CamoNets/Soviet/E_CamoNet_Folded_Soviet.et",
+		    "237.727 1 129.295",
+		    "0 31.985 0"
+		);
+		hvtItem.campItems.Insert(item_18);
+		
+		return hvtItem;
+	};		
 }
