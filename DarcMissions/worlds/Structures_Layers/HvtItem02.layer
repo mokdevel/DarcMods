@@ -1,0 +1,77 @@
+GameEntity : "{0E94F28FD722B1D8}Prefabs/Props/Military/Generators/GeneratorFloodlight_US_01.et" {
+ coords 241.481 1 131.634
+ angleY -23.351
+}
+GenericEntity : "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et" {
+ coords 239.161 1 129.774
+}
+$grp StaticModelEntity : "{7F8D6A0D827EA34B}Prefabs/Props/Military/Fortification/CzechHedgehog_01_base.et" {
+ {
+  coords 253.171 -0 136.978
+ }
+ {
+  coords 251.835 -0 139.877
+ }
+ {
+  coords 241.803 0 126.524
+ }
+}
+$grp GenericEntity : "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et" {
+ {
+  coords 246.482 1 142.942
+ }
+ {
+  coords 239.978 1 141.694
+  angleY -20.77
+ }
+ {
+  coords 245.447 1 128.339
+  angleY 154.533
+ }
+ {
+  coords 250.782 1 132.262
+  angleY 133.763
+ }
+}
+GenericEntity : "{A528F04F41F2A2D0}Prefabs/Structures/Military/Radar/ApproachRadar_RPL5_01/ApproachRadar_RPL5_01_on.et" {
+ coords 244.809 1 137.097
+}
+$grp GenericEntity : "{B31A14BC1A0E7776}Prefabs/Props/Military/Sandbags/Sandbag_01_round_burlap.et" {
+ {
+  coords 243.004 1 143.131
+  angleY -6.802
+ }
+ {
+  coords 248.668 1 129.663
+  angleY 147.731
+ }
+}
+$grp GenericEntity : "{B547CF929FCC6BB7}Prefabs/Props/Military/Sandbags/Sandbag_01_end_high_burlap.et" {
+ {
+  coords 252.245 1 133.815
+  angleY -45.633
+ }
+ {
+  coords 248.517 1 142.565
+  angleY 28.291
+ }
+}
+GenericEntity : "{C32544547260D3F1}PrefabsEditable/Auto/Structures/Civilian/E_Latrine_01.et" {
+ coords 235.318 1 130.793
+ angleY 149.011
+}
+StaticModelEntity : "{C86856FFC84B573A}PrefabsEditable/Auto/Structures/Military/Fortifications/E_DirtPile_01_large.et" {
+ coords 241.817 0.827 136.378
+}
+GenericEntity : "{DB4F61D5F37432F7}Prefabs/Props/Military/Camps/PalletFuel_01.et" {
+ coords 238.013 1 136.755
+ angleY -16.443
+}
+SCR_DestructibleBuildingEntity : "{E30E1250FD927736}Prefabs/Structures/Industrial/Houses/PortableCabin_E_01/PortableCabin_E_01_beige.et" {
+ coords 236.477 0 133.305
+ angleY -36.874
+}
+GenericEntity : "{F922F6F1895F41E4}PrefabsEditable/Auto/Structures/Military/CamoNets/Soviet/E_CamoNet_Folded_Soviet.et" {
+ coords 237.727 1 129.295
+ angleY 31.985
+}
