@@ -9,8 +9,8 @@ A building is guarded by AIs with loot available.
 class SDRC_Mission_Squatter : SDRC_Mission
 {
 	private ref SDRC_SquatterJsonApi m_SquatterJsonApi = new SDRC_SquatterJsonApi();	
-	private ref SDRC_SquatterConfig m_Config;
-	private ref SDRC_Squatter m_DC_Squatter;	//Squatter configuration in use
+	private ref SDRC_SquatterConfig m_Config = new SDRC_SquatterConfig();
+	private ref SDRC_Squatter m_DC_Squatter = new SDRC_Squatter();
 	
 	private IEntity m_Building;					//The building for the mission
 	private int m_iAiCount;
@@ -334,10 +334,11 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",	"WEAPON_RIFLE", "WEAPON_RIFLE",
+				"WEAPON_RIFLE_BIG", "WEAPON_RIFLE_BIG", 
 				"WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_ATTACHMENT",
-				"UTIL_OPTICS", "UTIL_OPTICS",
+				"UTIL_OPTIC", "UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL"
 			};
@@ -383,7 +384,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 				"WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_ATTACHMENT",
-				"UTIL_OPTICS", "UTIL_OPTICS",
+				"UTIL_OPTIC", "UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL"
 			};
@@ -469,7 +470,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
-				"UTIL_OPTICS",
+				"UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL"
 			};

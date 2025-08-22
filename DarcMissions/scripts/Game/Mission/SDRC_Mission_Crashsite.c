@@ -19,8 +19,8 @@ enum DC_EMissionCrashSiteState
 class SDRC_Mission_Crashsite : SDRC_Mission
 {
 	private ref SDRC_CrashsiteJsonApi m_CrashsiteJsonApi = new SDRC_CrashsiteJsonApi();	
-	private ref SDRC_CrashsiteConfig m_Config;
-	private ref SDRC_Crashsite m_DC_Crashsite;			//Occupation configuration in use
+	private ref SDRC_CrashsiteConfig m_Config = new SDRC_CrashsiteConfig();
+	private ref SDRC_Crashsite m_DC_Crashsite = new SDRC_Crashsite();
 	
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 10;	//How many different spots to try for a mission before giving up	
 			
@@ -523,9 +523,9 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems1 = {
 				"WEAPON_LAUNCHER", 
-				"UTIL_OPTICS", 
+				"UTIL_OPTIC", 
 				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", 
-				"UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", 
+				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", 
 			};
 		loot.Set(0.7, lootItems1);
 		crashsite.loot = loot;

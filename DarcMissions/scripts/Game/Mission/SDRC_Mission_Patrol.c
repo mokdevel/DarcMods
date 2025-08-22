@@ -9,8 +9,8 @@ This mission spawns groups to defend a location
 class SDRC_Mission_Patrol : SDRC_Mission
 {
 	private ref SDRC_PatrolJsonApi m_PatrolJsonApi = new SDRC_PatrolJsonApi();	
-	private ref SDRC_PatrolConfig m_Config;	
-	private ref SDRC_Patrol m_DC_Patrol;				//Patrol configuration in use
+	private ref SDRC_PatrolConfig m_Config = new SDRC_PatrolConfig();	
+	private ref SDRC_Patrol m_DC_Patrol = new SDRC_Patrol();
 	
 	private vector m_vPosDestination = "0 0 0";
 
@@ -128,12 +128,6 @@ class SDRC_Mission_Patrol : SDRC_Mission
 				SetPos(m_Groups[0].GetOrigin());
 				SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
 				MoveMarker();
-/*				if (m_Config.showMarker)
-				{
-					SDRC_MapMarkerHelper.DeleteMarker(GetId());
-					SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_PATROL_MAP, m_Config.markerType);
-					ShowMarker();
-				}*/				
 			}
 			
 			if (!IsActive())

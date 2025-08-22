@@ -19,8 +19,8 @@ enum DC_EMissionConvoyState
 class SDRC_Mission_Convoy : SDRC_Mission
 {
 	private ref SDRC_ConvoyJsonApi m_ConvoyJsonApi = new SDRC_ConvoyJsonApi();	
-	private ref SDRC_ConvoyConfig m_Config;
-	private ref SDRC_Convoy m_DC_Convoy;		//Convoy configuration in use
+	private ref SDRC_ConvoyConfig m_Config = new SDRC_ConvoyConfig();
+	private ref SDRC_Convoy m_DC_Convoy = new SDRC_Convoy();
 	
 	private DC_EMissionConvoyState missionConvoyState = DC_EMissionConvoyState.INIT;	
 	
@@ -255,7 +255,14 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			int i = 0;
 			foreach (AIAgent aiAgent: groupMembers)
 			{
-				MoveEntityInVehicle(aiAgent, vehicle, i);
+				bool success = MoveEntityInVehicle(aiAgent, vehicle, i);
+				
+				//Remove those AI that did not fit in the vehicle.
+				if (!success)
+				{
+					SDRC_AIHelper.RemoveAIAgent(aiAgent);
+				}
+				
 				i++;
 			}
 		}
@@ -451,6 +458,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			},
 			50, 1.0,
 			{
+				"{01F65EFB8D767A91}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_cargo.et",
 				"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
 				"{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et",
 				"{D4855501D5B12AF2}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_teal.et"
@@ -576,7 +584,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"WEAPON_RIFLE", 
+				"WEAPON_RIFLE", "WEAPON_RIFLE_BIG", 
 				"WEAPON_HANDGUN", 
 				"WEAPON_LAUNCHER", 
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 

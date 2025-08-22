@@ -12,8 +12,8 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	const int AI_TARGET_DEAD_CYCLE_TIME = 5000;
 	
 	private ref SDRC_HvtVipJsonApi m_HvtVipJsonApi = new SDRC_HvtVipJsonApi();	
-	private ref SDRC_HvtVipConfig m_Config;
-	private ref SDRC_HvtVip m_DC_HvtVip;	//HvtVip configuration in use
+	private ref SDRC_HvtVipConfig m_Config = new SDRC_HvtVipConfig();
+	private ref SDRC_HvtVip m_DC_HvtVip = new SDRC_HvtVip();
 	
 	private IEntity m_Building;					//The building for the mission
 	private int m_iGroupCount;
@@ -386,8 +386,8 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
-				"UTIL_ATTACHMENT", "UTIL_OPTICS", 
-				"UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", 
+				"UTIL_ATTACHMENT", "UTIL_OPTIC", 
+				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", 
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL",
 			};
@@ -431,8 +431,8 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
-				"UTIL_ATTACHMENT", "UTIL_OPTICS", 
-				"UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", 
+				"UTIL_ATTACHMENT", "UTIL_OPTIC", 
+				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", 
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL",
 			};
@@ -477,7 +477,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"WEAPON_GRENADE", 
 				"UTIL_ATTACHMENT", 
-				"UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", 
+				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", 
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL",
 			};

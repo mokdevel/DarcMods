@@ -12,8 +12,8 @@
 class SDRC_Mission_Roadblock : SDRC_Mission
 {
 	private ref SDRC_RoadblockJsonApi m_RoadblockJsonApi = new SDRC_RoadblockJsonApi();	
-	private ref SDRC_RoadblockConfig m_Config;	
-	private ref SDRC_Camp m_DC_Roadblock;		//Roadblock configuration in use
+	private ref SDRC_RoadblockConfig m_Config = new SDRC_RoadblockConfig();	
+	private ref SDRC_Camp m_DC_Roadblock = new SDRC_Camp;
 	
 	private int m_iSpawnIndex = 0;						//Counter for the item to spawn
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
@@ -350,7 +350,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
-				"UTIL_MAGAZINES", "UTIL_MAGAZINES"
+				"UTIL_MAGAZINE", "UTIL_MAGAZINE"
 			};
 		loot.Set(0.9, lootItems);
 		roadblock.loot = loot;
@@ -494,7 +494,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_LAUNCHER", "WEAPON_RIFLE", "WEAPON_RIFLE",
-				"UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES", "UTIL_MAGAZINES",
+				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO"
@@ -623,7 +623,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE", "WEAPON_RIFLE",
-				"UTIL_MAGAZINES", "UTIL_MAGAZINES", 
+				"UTIL_MAGAZINE", "UTIL_MAGAZINE", 
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO",

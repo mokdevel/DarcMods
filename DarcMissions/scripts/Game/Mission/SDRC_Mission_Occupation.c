@@ -9,8 +9,8 @@ This mission spawns groups to defend a location
 class SDRC_Mission_Occupation : SDRC_Mission
 {
 	private ref SDRC_OccupationJsonApi m_OccupationJsonApi = new SDRC_OccupationJsonApi();	
-	private ref SDRC_OccupationConfig m_Config;	
-	private ref SDRC_Camp m_DC_Occupation;		//Occupation configuration in use
+	private ref SDRC_OccupationConfig m_Config = new SDRC_OccupationConfig();	
+	private ref SDRC_Camp m_DC_Occupation = new SDRC_Camp();
 	
 	private int m_iSpawnIndex = 0;						//Counter for the item to spawn
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
@@ -178,7 +178,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP;
 		//Mission specific		
-		conf.occupationList = {0};//{0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
+		conf.occupationList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
 		//----------------------------------------------------
 		conf.occupations.Insert(Occupation0());				
 		conf.occupations.Insert(Occupation1());				
@@ -346,10 +346,11 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",	"WEAPON_RIFLE",
+				"WEAPON_RIFLE_BIG", 
 				"WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_ATTACHMENT",
-				"UTIL_OPTICS",
+				"UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
@@ -432,7 +433,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_ATTACHMENT",
-				"UTIL_OPTICS",
+				"UTIL_OPTIC",
 				"WEAPON_LAUNCHER",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
@@ -526,7 +527,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_ATTACHMENT", "UTIL_ATTACHMENT",
-				"UTIL_OPTICS",
+				"UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
 			};
@@ -635,7 +636,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_ATTACHMENT", "UTIL_ATTACHMENT",
-				"UTIL_OPTICS",
+				"UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
 			};

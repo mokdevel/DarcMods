@@ -12,7 +12,7 @@
 class SDRC_Mission_Template : SDRC_Mission
 {
 	private ref SDRC_TemplateJsonApi m_TemplateJsonApi = new SDRC_TemplateJsonApi();	
-	private ref SDRC_TemplateConfig m_Config;
+	private ref SDRC_TemplateConfig m_Config = new SDRC_TemplateConfig();
 	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_Template(vector pos = "0 0 0")
