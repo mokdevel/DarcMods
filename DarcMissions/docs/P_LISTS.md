@@ -1,11 +1,25 @@
 # Lists
-The mod is capable of creating automatic lists to be used with missions. You can also define your own sets by following the same notation as in the example. Do not reuse the same ids as is already available as a ```lootListName```.
+The mod is capable of creating automatic lists to be used with missions. You can also define your own sets by following the same notation as in the example. Do not reuse the same ids as is already available as a ``lootListName`` or ``enemyListName``.
+
+Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json) , [dc_enemyList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_enemyList.json)
+
+By default all mods are searched, but you can define a limited selection of mods to search in. The typical notation is ``"$ModName:"``. A properly created mod follows the same structure and keeps prefabs in the right places. 
+```
+int version : See General parameters
+string author : See General parameters
+array<string> modList : The mods to search for loot. If left empty, all mods enabled will be searched.
+  Example:
+    "modList": [],
+    "modList": ["$ArmaReforger:", "$WCS_Armaments:", "$M110MarksmanRifle:"],
+array<SDRC_List> lists : The defined lists. See details at he bottom of the page.
+array<ref SDRC_Aka> akas : The defined 'akas'. See details at he bottom of the page.
+```
 
 ## SDRC_List
 The functionality goes through the modDir and gets every file with the ending of ```.et```. The list is first filtered with ```include``` words and then filtered with ```exclude```words. Note that any item you may have defined manually goes through the same filtering and may be removed if the ```exclude``` word matches.
 ```
 string id : The name given for the listist. This is the name you use for adding loot or selecting enemies. 
-string modDir : Prefab directory inside mod.
+array<string> modDir : Prefab directories inside mod. All mods will be searched for these directories.
 array<string> include : Items having these words are included in the lootList.
 array<string> exclude : Items with these words will be removed from the lootList.
 array<ResourceName> items : The list of items. This is autofilled, but you can pre-define items if needed.
@@ -17,6 +31,7 @@ Also known as - other names used for example for factions. In some cases/mods th
 array<string> names : The faction name and the filtering name in this order.
 ```
 
+### Example
 This is the case for example with RHS. RHS uses the faction name ``RHS_USAF`` but the naming convention with AI prefabs uses ``USAF_USMC``. With the definition, the groups and characters are searched with the 'also known as' name.
 ```
 "akas": [
@@ -29,20 +44,11 @@ This is the case for example with RHS. RHS uses the faction name ``RHS_USAF`` bu
 ```
 
 # Loot lists
-Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json)
-
-This supports additional mods that you can define in the modList parameter. The typical notation is ```"$ModName:PreFabs"```. A properly created mod follows the same structure and keeps prefabs in the right places. 
-```
-int version : See General parameters
-string author : See General parameters
-array<string> modList : The mods to search for loot. If left empty, all mods enabled will be searched.
-array<SDRC_List> lootLists : The defined lootlists
-array<ref SDRC_Aka> akas : The defined 'akas'
-```
 ## Loot list names (id)
 Currently available names are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
 ```
-WEAPON_RIFLE : A random rifle from any faction.
+WEAPON_RIFLE : A random (assault) rifle from any faction.
+WEAPON_RIFLE_BIG : A random "large rifle" from any faction. These for example SVDs and bolt action rifles
 WEAPON_HANDGUN : A random handgun from any faction.
 WEAPON_LAUNCHER : A random launcher from any faction.
 WEAPON_GRENADE : Grenades available
@@ -51,8 +57,8 @@ WEAPON_MG : Machine guns (use e.g. Big Chungus mods)
 ITEM_MEDICAL : Medical items
 ITEM_GENERAL : General items
 UTIL_ATTACHMENT : Various attachments excluding optics
-UTIL_OPTICS : Optic attachments
-UTIL_MAGAZINES : Adds a random magazine
+UTIL_OPTIC : Optic attachments
+UTIL_MAGAZINE : Adds a random magazine
 UTIL_AMMO : Adds a random rocket, shell, flare, ..
 ```
 
@@ -91,27 +97,27 @@ C_DEMON_BOSS
 ```
 
 # Examples
-
-## Example for lootList
-The below example with the name ```WEAPON_RIFLE``` will search three mods for items matching the include and exclude filters. The intial search path is ```$Modname:Prefabs```. Under the Prefabs dir we use the dir ```/Weapons/Rifles``` for the more detailed search. The full path for the search is ```$Modname:Prefabs/Weapons/Rifles``` and internally we're searching for all files ending in ```.et```. Initally all items will be listed. 
+## Example lootList
+The below example with the name ```WEAPON_RIFLE``` will search three mods for items matching the include and exclude filters. The full path for the search is ```$Modname:Prefabs/Weapons/Rifles``` where the ``$Modname`` parameter is picked from the modList. Internally we're searching for all files ending in ```.et```. Initally all items will be listed. 
 
 The .json configuration as an example:
 ```
 "version": 1,
 "author": "darc",
 "modList": [
-  "$ArmaReforger:Prefabs",
-  "$WCS_Armaments:Prefabs",
-  "$M110MarksmanRifle:Prefabs"
+  "$ArmaReforger:",
+  "$WCS_Armaments:",
+  "$M110MarksmanRifle:"
   ],
-"lootLists": [
+"lists": [
   {
-    "lootListName": "WEAPON_RIFLE",
-    "lootListType": 0,
-    "modDir": "/Weapons/Rifles",
-    "include": [
+	"id": "WEAPON_RIFLE",
+	"modDir": [
+      "Prefabs/Weapons/Rifles"
+	],
+	"include": [
       "Rifle"
-    ],
+	],
     "exclude": [
       "_Base",
       "SVD",
@@ -141,4 +147,36 @@ The ```include``` filter ("Rifle") matches the list so everything is included. T
 "{FA0E25CE35EE945F}Prefabs/Weapons/Rifles/AKS74U/Rifle_AKS74UN.et"
 ```
 
-## Example for enemyList
+## Example enemyList
+The below example with the name ```G_LIGHT``` will search all available mods for items matching the include and exclude filters. The full path for the search is ```$Modname:Prefabs/Groups``` where the ``$Modname`` parameter is picked from the modList. internally we're searching for all files ending in ```.et```. Initally all items will be listed. All items matching the ```include``` filter will be included. The ```exclude``` filter picks out anything with "_Base", "_NotSpawned", .. from the list.
+
+The .json configuration as an example:
+
+```
+{
+"version": 1,
+"author": "darc",
+"modList": [],
+"lists": [
+  {
+    "id": "G_LIGHT",
+    "modDir": [
+    "Prefabs/Groups"
+    ],
+    "include": [
+      "LightFire",
+      "FireTeam",
+      "FireGroup",
+      "RifleSquad",
+      "SentryTeam"
+    ],
+    "exclude": [
+      "_Base",
+      "_NotSpawned",
+      "_Remnants",
+      "_Random"
+    ],
+    "items": []
+  }
+  ]
+}
