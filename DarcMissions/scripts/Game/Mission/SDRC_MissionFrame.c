@@ -278,7 +278,7 @@ class SDRC_MissionFrame
 				{
 					if (tmpDC_Mission.IsShowHint())
 					{
-						SDRC_MissionHintHelper.Show("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo()); //, DC_EMissionIcon.GM_MISSION_X_MAP
+						SDRC_MissionHintHelper.Show("Mission: " + tmpDC_Mission.GetTitle(), tmpDC_Mission.GetInfo());
 					}
 				}
 								
