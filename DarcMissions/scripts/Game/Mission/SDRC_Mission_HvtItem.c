@@ -23,8 +23,6 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_HvtItem(vector pos = "0 0 0")
 	{
-		SDRC_Log.Add("[SDRC_Mission_HvtItem] Constructor", LogLevel.SPAM);
-				
 		//Set some defaults
 		SetType(DC_EMissionType.HVTITEM);
 
@@ -146,11 +144,11 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	/*!
 	A loop that checks if the target has been eliminated.
-	It also keeps the target disabled until a player is near by.
+	In order to win, the target has to be eliminated, state to ACTIVE and success to be UNKNOWN.
 	*/
 	void IsTargetDestroyed()
 	{
-		if (GetWinCondition() == DC_EMissionWinCondition.HVT_DESTROY_ITEM)
+		if (GetWinCondition() == DC_EMissionWinCondition.HVT_DESTROY_ITEM && GetState() == DC_EMissionState.ACTIVE && GetSuccess() == DC_EMissionSuccess.UNKNOWN)
 		{
 			bool isDestroyed = false;
 			if (m_Target)
@@ -173,7 +171,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 			
 			if (isDestroyed)
 			{
-				SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] Target destroyed!", LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] " +  GetId() + " : Target destroyed!", LogLevel.DEBUG);
 				DoWin();
 				return;
 			}

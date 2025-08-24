@@ -23,8 +23,6 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_HvtVip(vector pos = "0 0 0")
 	{
-		SDRC_Log.Add("[SDRC_Mission_HvtVip] Constructor", LogLevel.SPAM);
-				
 		//Set some defaults
 		SetType(DC_EMissionType.HVTVIP);
 
@@ -157,7 +155,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_Mission_HvtVip:MissionSpawn] Could not spawn loot box: " + m_DC_HvtVip.lootBox, LogLevel.ERROR);								
+				SDRC_Log.Add("[SDRC_Mission_HvtVip:MissionSpawn] " +  GetId() + " : Could not spawn loot box: " + m_DC_HvtVip.lootBox, LogLevel.ERROR);								
 			}
 
 			//Spawn target enemy and it to mission faction
@@ -189,14 +187,15 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	/*!
 	A loop that checks if the target has been eliminated.
 	It also keeps the target disabled until a player is near by.
+	In order to win, the target has to be eliminated, state to ACTIVE and success to be UNKNOWN.
 	*/
 	void IsTargetDead()
 	{
-		if (GetWinCondition() == DC_EMissionWinCondition.HVT_KILL_VIP)
+		if (GetWinCondition() == DC_EMissionWinCondition.HVT_KILL_VIP && GetState() == DC_EMissionState.ACTIVE && GetSuccess() == DC_EMissionSuccess.UNKNOWN)
 		{
 			if (SDRC_AIHelper.IsGroupDead(m_Target))
 			{
-				SDRC_Log.Add("[SDRC_Mission_HvtVip:IsTargetDead] Target dead!", LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_Mission_HvtVip:IsTargetDead] " +  GetId() + " : Target dead!", LogLevel.DEBUG);
 				DoWin();
 				return;
 			}
