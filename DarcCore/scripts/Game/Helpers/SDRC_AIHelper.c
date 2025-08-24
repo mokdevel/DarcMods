@@ -41,6 +41,11 @@ sealed class SDRC_AIHelper
 		IEntity entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);		
 		
 		SCR_ChimeraCharacter characterEnt = SCR_ChimeraCharacter.Cast(entity);
+		
+		if (!characterEnt)
+		{
+			return null;
+		}
 				
 		CharacterControllerComponent characterController = characterEnt.GetCharacterController();			
 		AIControlComponent aiControlComponent = characterController.GetAIControlComponent();
@@ -191,6 +196,9 @@ sealed class SDRC_AIHelper
 		
 	static void SetAISkillDelayed(AIAgent aiAgent, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
+		if (!aiAgent)
+			return;
+		
 	    IEntity agentEntity = aiAgent.GetControlledEntity();
 	
 	    if (!agentEntity)
