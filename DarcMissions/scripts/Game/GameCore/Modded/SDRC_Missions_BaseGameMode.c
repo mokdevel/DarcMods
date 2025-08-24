@@ -24,11 +24,11 @@ modded class SCR_BaseGameMode
 			{
 				//Initialize the SDRC_RplGMEntity
 				Resource resource;				
-				SDRC_Log.Add("[SDRC_Core_BaseGameMode] Creating SDRC_RplGMEntity", LogLevel.NORMAL);
+				SDRC_Log.Add("[SDRC_Missions_BaseGameMode] Creating SDRC_RplGMEntity", LogLevel.NORMAL);
 				resource = Resource.Load("{034174406440412B}Prefabs/Helpers/RPLGMHelper.et");
 				if (!resource.IsValid())
 				{
-					SDRC_Log.Add("[SDRC_Core_BaseGameMode] Failed to create RPLGMHelper.", LogLevel.ERROR);
+					SDRC_Log.Add("[SDRC_Missions_BaseGameMode] Failed to create RPLGMHelper.", LogLevel.ERROR);
 					return;
 				}
 				m_SDRC_RplGMEntity = SDRC_RplGMEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));
@@ -57,7 +57,7 @@ modded class SCR_BaseGameMode
 		else
 		{
 			GetGame().GetCallqueue().CallLater(StartMissionFrame, 2000, false);	
-			SDRC_Log.Add("[SDRC_MissionFrame_BaseGameMode:StartMissionFrame] Core not running. Waiting...", LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_Missions_BaseGameMode:StartMissionFrame] Core not running. Waiting...", LogLevel.DEBUG);
 		}
 	}
 			

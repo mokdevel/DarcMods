@@ -28,8 +28,6 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_Hunter(vector pos = "0 0 0")
 	{
-		SDRC_Log.Add("[SDRC_Mission_Hunter] Constructor", LogLevel.SPAM);
-
 		//Set some defaults				
 		SetType(DC_EMissionType.HUNTER);
 		

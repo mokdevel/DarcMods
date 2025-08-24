@@ -18,8 +18,6 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_Occupation(vector pos = "0 0 0")
 	{
-		SDRC_Log.Add("[SDRC_Mission_Occupation] Constructor", LogLevel.SPAM);
-				
 		//Set some defaults
 		SetType(DC_EMissionType.OCCUPATION);
 
@@ -178,7 +176,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP;
 		//Mission specific		
-		conf.occupationList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
+		conf.occupationList = {6};//{0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
 		//----------------------------------------------------
 		conf.occupations.Insert(Occupation0());				
 		conf.occupations.Insert(Occupation1());				
@@ -186,6 +184,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.occupations.Insert(Occupation3());				
 		conf.occupations.Insert(Occupation4());				
 		conf.occupations.Insert(Occupation5());				
+		conf.occupations.Insert(Occupation6());				
 	};
 	
 	//----------------------------------------------------
@@ -758,4 +757,39 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 
 		return occupation;
 	}	
+	
+	SDRC_Camp Occupation6()
+	{
+		ref SDRC_Camp occupation = new SDRC_Camp();
+		occupation.general.Set(
+			"index 6: Zombies and Demons.",
+			{"0 0 0"},
+			"any",
+			"Creatures near %l",
+			"Avoid the location. Loot has already been lost.",
+			DC_EMissionWinCondition.AI_KILL_ALL,
+			"Guard patrol eliminated.",
+			"The patrol kept %l safe from you. Pathetic.",
+			0
+		);
+		
+		occupation.Set(
+			{
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_LOCAL
+			},
+			{1, 8},
+			{50, 300},
+			DC_EWaypointGenerationType.RANDOM,
+			DC_EWaypointMoveType.PATROLCYCLE,
+			{
+//				"C_ZOMBIE", "G_ZOMBIE_SMALL", "G_ZOMBIE_MEDIUM", "G_ZOMBIE_LARGE"
+				"C_DEMON", "C_DEMON_BOSS"
+			},
+			50, 1.0,
+			3
+		);
+		
+		return occupation;
+	}		
 }

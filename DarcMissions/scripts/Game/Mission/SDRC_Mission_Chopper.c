@@ -14,8 +14,6 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_Chopper(vector pos = "0 0 0")
 	{
-		SDRC_Log.Add("[SDRC_Mission_Chopper] Constructor", LogLevel.DEBUG);
-				
 		//Set some defaults
 		SetType(DC_EMissionType.CHOPPER);
 

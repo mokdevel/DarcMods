@@ -162,7 +162,7 @@ class SDRC_Mission
 	void MissionStart()	
 	{
 		m_State = DC_EMissionState.SPAWN;
-		SDRC_Log.Add("[SDRC_Mission:MissionStart] State changed to SPAWN: " + GetId(), LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Mission:MissionStart] " +  GetId() + " : State changed to SPAWN", LogLevel.DEBUG);
 		GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.MISSION_RUN_DELAY, false);	
 	}	
 	
@@ -224,18 +224,18 @@ class SDRC_Mission
 	void MissionEnd()	//You should calls this at the end of your mission
 	{
 		//Remove spawned items
-		SDRC_Log.Add("[SDRC_Mission:MissionEnd] Deleting entities", LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Mission:MissionEnd] " +  GetId() + " : Deleting entities", LogLevel.DEBUG);
 		foreach (IEntity entity : m_EntityList)
 		{
 			if (entity)
 			{
-				SDRC_Log.Add("[SDRC_Mission:MissionEnd] Despawning: " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_Mission:MissionEnd] " +  GetId() + " : Despawning: " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
 				SDRC_SpawnHelper.DespawnItem(entity);
 			}
 		}		
 		
 		//Remove AI
-		SDRC_Log.Add("[SDRC_Mission:MissionEnd] Deleting AI groups", LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Mission:MissionEnd] " +  GetId() + " : Deleting AI groups", LogLevel.DEBUG);
 		foreach (SCR_AIGroup group : m_Groups)
 		{
 			if (group)
@@ -247,7 +247,7 @@ class SDRC_Mission
 		//Remove marker from map
 		SDRC_MapMarkerHelper.DeleteMarker(GetId());
 		
-		SDRC_Log.Add("[SDRC_Mission:MissionEnd] Mission " + GetId() + " : " + GetTitle() + " cleared for deletion.", LogLevel.NORMAL);		
+		SDRC_Log.Add("[SDRC_Mission:MissionEnd] " + GetId() + " : " + GetTitle() + " - Cleared for deletion.", LogLevel.NORMAL);		
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -436,7 +436,7 @@ class SDRC_Mission
 	void SetFaction(string faction)
 	{
 		m_sFaction = faction;
-		SDRC_Log.Add("[SDRC_Mission:SetFaction] " + faction, LogLevel.SPAM);		
+		SDRC_Log.Add("[SDRC_Mission:SetFaction] " +  GetId() + " : " + faction, LogLevel.SPAM);		
 	}
 			
 	//------------------------------------------------------------------------------------------------
@@ -557,7 +557,7 @@ class SDRC_Mission
 			//If we did win the mission, set the message and prepare for ending.
 			if (isWin)
 			{
-				SDRC_Log.Add("[SDRC_Mission:IsActive] Mission WIN: " + GetId() + " : " + GetTitle(), LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_Mission:IsActive] " + GetId() + " : Mission WIN: " + GetTitle(), LogLevel.DEBUG);
 				DoWin();
 			}
 		}
@@ -591,10 +591,11 @@ class SDRC_Mission
 		//If we won, don't show a lose message
 		if (GetSuccess() != DC_EMissionSuccess.WIN)
 		{
+			SDRC_Log.Add("[SDRC_Mission:IsActive] " + GetId() + " : Mission LOSE: " + GetTitle(), LogLevel.DEBUG);
 			DoLose();
 		}
 
-		SDRC_Log.Add("[SDRC_Mission:IsActive] END - Mission " + GetId() + " : " + GetTitle() + " has ended.", LogLevel.DEBUG);				
+		SDRC_Log.Add("[SDRC_Mission:IsActive] " +  GetId() + " : END - Mission : " + GetTitle() + " has ended.", LogLevel.DEBUG);				
 		return false;
 	}			
 	
@@ -727,6 +728,6 @@ class SDRC_Mission
 	private void GetAICountDelayed()
 	{
 		m_iAICountOriginal = GetAICount();
-		SDRC_Log.Add("[SDRC_Mission:GetAICountDelayed] Mission " + GetId() + " spawned " + m_iAICountOriginal + " AIs.", LogLevel.SPAM);
+		SDRC_Log.Add("[SDRC_Mission:GetAICountDelayed] " + GetId() + " : Spawned " + m_iAICountOriginal + " AIs.", LogLevel.SPAM);
 	}
 }

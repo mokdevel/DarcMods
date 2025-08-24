@@ -30,8 +30,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_Convoy(vector pos = "0 0 0")
 	{
-		SDRC_Log.Add("[SDRC_Mission_Convoy] Constructor", LogLevel.SPAM);
-				
 		//Set some defaults
 		SetType(DC_EMissionType.CONVOY);
 
@@ -277,7 +275,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		
 		if (slotIdx >= slots)
 		{
-			SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] slotIdx incorrect: " + slotIdx + "/" + slots, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] slotIdx incorrect: " + slotIdx + "/" + slots, LogLevel.SPAM);
 			return false;			
 		}
 		
@@ -292,7 +290,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			bool found = false;
 			if (PilotCompartmentSlot.Cast(slot))
 			{
-				SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] Pilot slot: " + slot, LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] Pilot slot: " + slot, LogLevel.SPAM);
 				if (slotPrio[0] == -1)
 				{
 					slotPrio[0] = i;
@@ -301,7 +299,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			}			
 			else if (TurretCompartmentSlot.Cast(slot))
 			{
-				SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] Turret slot: " + slot, LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] Turret slot: " + slot, LogLevel.SPAM);
 				if (slotPrio[1] == -1)
 				{
 					slotPrio[1] = i;

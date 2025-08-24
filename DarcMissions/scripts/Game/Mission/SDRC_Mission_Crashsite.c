@@ -33,8 +33,6 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_Crashsite(vector pos = "0 0 0")
 	{
-		SDRC_Log.Add("[SDRC_Mission_Crashsite] Constructor", LogLevel.SPAM);
-		
 		//Set some defaults
 		SetType(DC_EMissionType.CRASHSITE);
 

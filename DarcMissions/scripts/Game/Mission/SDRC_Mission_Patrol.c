@@ -26,8 +26,6 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		m_PatrolJsonApi.Load();
 		m_Config = m_PatrolJsonApi.conf;
 
-		//SDRC_Log.Add("[SDRC_Mission_Patrol:DEBUG] Patrols defined: " + m_Config.patrols.Count(), LogLevel.DEBUG);	
-				
 		//Pick a configuration for mission
 		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.patrolList);
 		if (idx == -1)
@@ -36,8 +34,6 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}
-		
-		//SDRC_Log.Add("[SDRC_Mission_Patrol:DEBUG] Trying to read a variable from index: " + idx + " : " + m_Config.patrols[idx].aiSkill, LogLevel.DEBUG);
 		
 		m_DC_Patrol = m_Config.patrols[idx];
 		
@@ -150,9 +146,6 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	{					
 		IEntity entity;
 
-//		SDRC_Log.Add("[SDRC_Mission_Patrol:DEBUG] Dump of m_DC_Patrol:" + m_DC_Patrol, LogLevel.DEBUG);
-//		SDRC_Log.Add("[SDRC_Mission_Patrol:DEBUG] Length of groupCount: " + m_DC_Patrol.groupCount.Count(), LogLevel.DEBUG);								
-		
 		//Spawn mission AI 
 		int groupCount = Math.RandomInt(m_DC_Patrol.groupCount[0], m_DC_Patrol.groupCount[1]);
 		

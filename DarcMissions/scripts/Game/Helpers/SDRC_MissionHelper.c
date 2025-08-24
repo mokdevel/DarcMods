@@ -364,7 +364,7 @@ sealed class SDRC_MissionHelper
 		msg = SCR_StringHelper.ReplaceMultiple(msg, {"%l"}, location);
 		msg = SCR_StringHelper.ReplaceMultiple(msg, {"%d"}, destination);
 		
-		SDRC_Log.Add("[SDRC_MissionHelper:CreateInfo] Message created: " + msg, LogLevel.DEBUG);		//TBD: SPAM	
+		SDRC_Log.Add("[SDRC_MissionHelper:CreateInfo] Message created: " + msg, LogLevel.SPAM);
 		return msg;
 	}	
 	

@@ -39,7 +39,7 @@ sealed class SDRC_BuildingHelper
 		foreach (IEntity building: buildings)
 		{
 			ResourceName res = building.GetPrefabData().GetPrefabName();
-			SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildings] Found: " + res + " at " + building.GetOrigin(), LogLevel.DEBUG);			
+			SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildings] Found: " + res + " at " + building.GetOrigin(), LogLevel.SPAM);			
 		}		
 	}
 
