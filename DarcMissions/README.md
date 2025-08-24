@@ -102,6 +102,13 @@ Dependency specific files
 
 .. empty ..
 
+## 20250824
+Updated json: dc_enemyList.json - remove your existing file.
+
+Fixes:
+* HvtItem and HvtVip missions occasionally created a static win marker on map.
+* Better support for factions: BALLIEN_BC_FACTION, BACON_622120A5448725E3_FACTION
+
 ## 20250822
 Updated jsons: dc_enemyList.json, dc_lootList.json - remove your existing files.
 

@@ -176,7 +176,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP;
 		//Mission specific		
-		conf.occupationList = {6};//{0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
+		conf.occupationList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
+//		conf.occupationList = {6};//{0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
 		//----------------------------------------------------
 		conf.occupations.Insert(Occupation0());				
 		conf.occupations.Insert(Occupation1());				
@@ -766,10 +767,10 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{"0 0 0"},
 			"any",
 			"Creatures near %l",
-			"Avoid the location. Loot has already been lost.",
+			"Avoid the location. No loot available.",
 			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Guard patrol eliminated.",
-			"The patrol kept %l safe from you. Pathetic.",
+			"Spawns from hell are dead!",
+			"Are you scared of a few ghosts..?",
 			0
 		);
 		
