@@ -1,0 +1,8 @@
+GameProject {
+ ID "DarcStories"
+ GUID "662E70994FA51409"
+ TITLE "DarcStories"
+ Dependencies {
+  "5ED0FAC84A48D018" "631EE12D448D7FCC" "58D0FB3206B6F859"
+ }
+}

@@ -10,7 +10,7 @@
 		private const int SDRC_MISSION_COUNT_STATIC = 6;								//Default amount of static missions to run
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 1;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 30;
-		private const int SDRC_MISSION_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
+		private const int SDRC_MISSIONFRAME_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 4*60;			//Minimum delay between dynamic missions. 
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 5;				//Minimum delay between static missions. 
 		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 15*60;						//Time to keep the mission active (seconds)
@@ -31,11 +31,11 @@
 		private const int SDRC_MISSION_COUNT_STATIC = 20;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
-		private const int SDRC_MISSION_START_DELAY = 2;					
+		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 10;//1*20;
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 1;
 		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 3*60;				
-		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = SDRC_MISSION_ACTIVE_TIME_DYNAMIC * 10;	
+		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 30;//SDRC_MISSION_ACTIVE_TIME_DYNAMIC * 10;	
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 200;		
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 45;
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME = 10;//20;
@@ -122,7 +122,8 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 	{
 		conf.comment = "Simple comment, not used in game";
 		conf.recreateConfigs = SDRC_MISSION_RECREATE_CONFIGS;
-		conf.missionStartDelay = SDRC_MISSION_START_DELAY;
+		conf.missionStartDelay = SDRC_MISSIONFRAME_START_DELAY;
+		conf.missionFrameCycleTime = SDRC_MISSIONFRAME_CYCLE_TIME;
 		
 		conf.missionDynamic.count = SDRC_MISSION_COUNT_DYNAMIC;
 		conf.missionDynamic.countMul = SDRC_MISSION_COUNT_DYNAMIC_MUL;
@@ -134,7 +135,6 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.missionStatic.activeTime = SDRC_MISSION_ACTIVE_TIME_STATIC;
 		conf.missionStatic.delayBetween = SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC;
 		
-		conf.missionFrameCycleTime = SDRC_MISSIONFRAME_CYCLE_TIME;
 		conf.missionActiveDistance = SDRC_MISSION_ACTIVE_DISTANCE;
 		conf.missionActiveTimeToEnd = SDRC_MISSION_ACTIVE_TIME_TO_END;
 		conf.missionHintTime = SDRC_MISSION_HINT_TIME;
@@ -155,7 +155,9 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-			conf.enemyFactions = {"USSR"};
+//			conf.enemyFactions = {"USSR"};
+//			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION"};
+			conf.enemyFactions = {"BALLIEN_BC_FACTION"};
 //			conf.enemyFactions = {"FIA", "USSR"};
 //			conf.enemyFactions = {"FIA", "US"};
 //			conf.enemyFactions = {"USSR", "FIA", "FIA", "FIA"};
@@ -172,17 +174,18 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CRASHSITE};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.SQUATTER};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.OCCUPATION};
+//			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTITEM};
 		
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HUNTER};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.CRASHSITE};
-//			conf.missionStatic.missionTypeArray = {DC_EMissionType.OCCUPATION};
+			conf.missionStatic.missionTypeArray = {DC_EMissionType.OCCUPATION};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.CRASHSITE};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.ROADBLOCK};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.SQUATTER};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTVIP};
-			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTITEM};
+//			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTITEM};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTVIP, DC_EMissionType.HVTITEM};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTITEM, DC_EMissionType.SQUATTER, DC_EMissionType.OCCUPATION, DC_EMissionType.ROADBLOCK, DC_EMissionType.PATROL, DC_EMissionType.HVTVIP};
