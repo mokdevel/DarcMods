@@ -107,7 +107,9 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		conf.lists.Insert(enemyList51());		
 		conf.lists.Insert(enemyList52());		
 		conf.lists.Insert(enemyList53());		
-		conf.lists.Insert(enemyList54());		
+		
+		conf.lists.Insert(enemyList60());		
+		conf.lists.Insert(enemyList61());				
 	}
 				
 	//Group lists
@@ -343,9 +345,9 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_ZOMBIE_SMALL",
-			{"622120A5448725E3/Prefabs/Characters/Factions"},
-			{"_Small"},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"622120A5448725E3/Prefabs/Groups"},
+			{"Group_Zombies"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random", "_Huge", "_Large", "_Medium"}
 		);			
 		return enemyList;
 	}
@@ -355,7 +357,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_ZOMBIE_MEDIUM",
-			{"622120A5448725E3/Prefabs/Characters/Factions"},
+			{"622120A5448725E3/Prefabs/Groups"},
 			{"_Medium"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
 		);			
@@ -367,7 +369,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_ZOMBIE_LARGE",
-			{"622120A5448725E3/Prefabs/Characters/Factions"},
+			{"622120A5448725E3/Prefabs/Groups"},
 			{"_Huge", "_Large", "_Horde"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
 		);			
@@ -378,15 +380,28 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
+			"C_ZOMBIE",
+			{"622120A5448725E3/Prefabs/Characters"},
+			{"Zombie_", "Character_", "Variant_"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+		);			
+		return enemyList;
+	}	
+	
+	SDRC_List enemyList60()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
 			"C_DEMON",
 			{"Prefabs/Characters"},
-			{"Plague", "Slander", "Whisper", "Whisperer"},
+			{"ShadowTwin", "Whisper",},
+//			{"Plague", "Slander", "Whisper", "Whisperer",  "Mazark"},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
 		);					
 		return enemyList;
 	}
 	
-	SDRC_List enemyList54()
+	SDRC_List enemyList61()
 	{
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
