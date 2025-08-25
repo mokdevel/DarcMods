@@ -23,12 +23,18 @@ enum DC_EStoryState
 	FAILED		//Mission startup has failed, delete mission
 };
 
+enum DC_ENextChapter
+{
+	WIN = -2,
+	LOSE = -1,
+}
+
 //------------------------------------------------------------------------------------------------
 class SDRC_Chapter : Managed
 {
 	int id;
 	DC_EMissionType missionType;		//Type of the mission
-	int index;							//Sub mission	
+	int subIdx;							//Sub mission index
 	string comment;
 	string title;
 	string intro;
@@ -38,10 +44,11 @@ class SDRC_Chapter : Managed
 	ref array<int> nextChapter = {};			//Where to go after a win, lose		
 	ref SDRC_MissionConfigGeneral missionConf = new SDRC_MissionConfigGeneral();		
 	
-	void Set(int id_, DC_EMissionType missionType_, string comment_, string title_, string intro_, string wintro_, string losetro_, int activeTime_, array<int> nextChapter_)
+	void Set(int id_, DC_EMissionType missionType_, int subIdx_, string comment_, string title_, string intro_, string wintro_, string losetro_, int activeTime_, array<int> nextChapter_)
 	{
 		id = id_;
 		missionType = missionType_;
+		subIdx = subIdx_;
 		comment = comment_;
 		title = title_;
 		intro = intro_;
@@ -61,12 +68,13 @@ class SDRC_Story : Managed
 	string intro;
 	string wintro;
 	string losetro;
+	ref array<string> dependencies = {};	//List of mods needed for the story
 	//Set outside of Set()
 	int index = 0;
 	DC_EStoryState state = DC_EStoryState.INIT;
 	ref array<SDRC_Chapter> chapters = {};
 	
-	void Set(int id_, string comment_, string title_, string intro_, string wintro_, string losetro_, )
+	void Set(int id_, string comment_, string title_, string intro_, string wintro_, string losetro_, array<string> dependencies_, )
 	{
 		id = id_;
 		comment = comment_;
@@ -74,6 +82,7 @@ class SDRC_Story : Managed
 		intro = intro_;
 		wintro = wintro_;
 		losetro = losetro_;
+		dependencies = dependencies_;
 		//NOTE: index handled outside
 		//NOTE: state handled outside
 		//NOTE: chapters are added separately
@@ -131,6 +140,7 @@ class SDRC_StoryJsonApi : SDRC_JsonApi
 			"Story intro",
 			"Story wintro",
 			"Story losetro",
+			{},
 		);
 		
 		conf.chapters.Insert(Chapter00());
@@ -141,14 +151,14 @@ class SDRC_StoryJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			0, DC_EMissionType.CRASHSITE,
+			0, DC_EMissionType.OCCUPATION, 3, 
 			"id 0:",
 			"Chapter Title",
 			"Chapter intro",
 			"Chapter wintro",
 			"Chapter losetro",
 			SDRC_STORIES_CHAPTER_TIME_DEFAULT,
-			{1,-1},
+			{1, DC_ENextChapter.LOSE},
 		);
 	
 		return chapter;
@@ -158,14 +168,14 @@ class SDRC_StoryJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			1, DC_EMissionType.CRASHSITE,
+			1, DC_EMissionType.ROADBLOCK, 1, 
 			"id 1:",
 			"Chapter Title",
 			"Chapter intro",
 			"Chapter wintro",
 			"Chapter losetro",
 			SDRC_STORIES_CHAPTER_TIME_DEFAULT,
-			{1,-1},
+			{DC_ENextChapter.WIN, DC_ENextChapter.LOSE},
 		);
 	
 		return chapter;

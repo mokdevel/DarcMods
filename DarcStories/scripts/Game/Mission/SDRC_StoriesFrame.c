@@ -83,11 +83,33 @@ class SDRC_StoriesFrame
 	{		
 		SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Spawning new story mission", LogLevel.NORMAL);
 		IEntity missionEntity;
-		vector pos = "2000 0 2000";
-		string resourceName = "{CE7D07A8484A1DE9}Prefabs/Systems/DarcMissionConvoy.et";
+		vector pos = "0 0 0";
+		string resourceName = SDRC_MissionHelper.GetMissionPrefab(DC_EMissionType.OCCUPATION);		
+		if (resourceName == "")
+		{
+			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Invalid resourcename.", LogLevel.ERROR);
+		}
 		missionEntity = SDRC_SpawnHelper.SpawnItem(pos, resourceName, 0, -1);
-		
-//		GetGame().GetCallqueue().CallLater(StoriesCycleManager, m_Config.storiesFrameCycleTime*1000, false);		
+		if (missionEntity)
+		{		
+			GetGame().GetCallqueue().CallLater(SetMissionParameters, 2000, false, missionEntity);			
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Could not spawn: " + resourceName, LogLevel.ERROR);
+		}
+
+//		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.storiesFrameCycleTime*1000, false);
+	}
+	
+	protected void SetMissionParameters(IEntity missionEntity)
+	{
+		SDRC_DarcMissionGM ent = SDRC_DarcMissionGM.Cast(missionEntity);
+		if (ent)
+		{
+			SDRC_DarcMissionRequestComp requestComp = SDRC_DarcMissionRequestComp.Cast(ent.FindComponent(SDRC_DarcMissionRequestComp));
+			requestComp.SetMissionSubIdx(3);
+		}		
 	}
 	
 	//------------------------------------------------------------------------------------------------
