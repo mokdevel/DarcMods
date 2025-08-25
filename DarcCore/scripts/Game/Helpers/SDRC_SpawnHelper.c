@@ -34,17 +34,18 @@ sealed class SDRC_SpawnHelper
         EntitySpawnParams params = EntitySpawnParams();
 		
 		string entityName = SDRC_Misc.GetEntityName(resourceName);		
-		
-		vector sums = FindPrefabSize(resourceName);
-		if (sums == "0 0 0")
-			return null;
-		
+
 		Resource resource = Resource.Load(resourceName);
 		if (!resource.IsValid())
 			return null;
-			
+		
 		if (emptyPosRadius > -1)
 		{
+			//Find the size
+			vector sums = FindPrefabSize(resourceName);
+			if (sums == "0 0 0")
+				return null;
+			
 			//Spawn the resource to a free spot close to pos
 			if (FindEmptyPos(pos, emptyPosRadius, (SDRC_Misc.FindMaxValue(sums)/SIZEDIV) ) )
 			{
