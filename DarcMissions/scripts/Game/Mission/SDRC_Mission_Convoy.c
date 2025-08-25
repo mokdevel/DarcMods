@@ -28,7 +28,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	private IEntity m_Vehicle = null;
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Convoy(vector pos = "0 0 0")
+	void SDRC_Mission_Convoy(vector pos = "0 0 0", int missionSubIdx = -1)
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.CONVOY);

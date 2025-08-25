@@ -15,12 +15,10 @@ class SDRC_DarcMissionEditableRequestComp : SCR_EditableSystemComponent
 	[Attribute(typename.EnumToString(DC_EMissionType, DC_EMissionType.OCCUPATION), UIWidgets.ComboBox, desc: "Mission type", enumType: DC_EMissionType)]	
 	protected DC_EMissionType m_MissionType;	//The type of mission
 
-#ifndef SDRC_RELEASE
-	static int max = 12;
+	static int max = Math.RandomInt(0,12);
 	static private string param = "-1, " + max + ", 1";
-	[Attribute("-1", UIWidgets.EditBox, "Test mission index variable", param)]	
-	protected int m_MissionIdx;
-#endif
+	[Attribute("-1", UIWidgets.EditBox, desc: "This should be editable", param)]	
+	protected int m_MissionSubIdx;
 			
 	//------------------------------------------------------------------------------------------------
 	/*!	

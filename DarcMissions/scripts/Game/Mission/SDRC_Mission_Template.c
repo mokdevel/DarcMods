@@ -15,7 +15,7 @@ class SDRC_Mission_Template : SDRC_Mission
 	private ref SDRC_TemplateConfig m_Config = new SDRC_TemplateConfig();
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Template(vector pos = "0 0 0")
+	void SDRC_Mission_Template(vector pos = "0 0 0", int missionSubIdx = -1)
 	{
 		SDRC_Log.Add("[SDRC_Mission_Template] Constructor", LogLevel.SPAM);
 				

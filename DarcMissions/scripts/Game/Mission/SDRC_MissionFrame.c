@@ -153,6 +153,20 @@ class SDRC_MissionFrame
 			}*/
 		#endif	
 		
+		
+		/*
+		//Freedom Fighters part
+		JWK_TerritoryControlManagerComponent territoryControlManagerComponent;		
+		territoryControlManagerComponent = JWK_CompT<JWK_TerritoryControlManagerComponent>.FindIn(GetGame().GetGameMode());
+		if (territoryControlManagerComponent)
+		{
+			if (territoryControlManagerComponent.IsInitialized()) 
+			{
+				JWK_EFactionRole role = territoryControlManagerComponent.GetControllingRoleAt("0 0 0");
+			}
+		}
+		*/
+		
 		//Start the mission framework.
 		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStartDelay, false);
 	}
@@ -362,6 +376,7 @@ class SDRC_MissionFrame
 	{
 		SDRC_Mission tmpDC_Mission = null;
 		vector pos = "0 0 0";
+		int missionSubIdx = -1;
 		
 		if (missionType == DC_EMissionType.REQUESTED)
 		{					
@@ -377,9 +392,9 @@ class SDRC_MissionFrame
 			SDRC_MissionRequested missionRequest = m_missionsRequested[0];
 			
 			IEntity missionEntity = GetGame().GetWorld().FindEntityByID(missionRequest.entityID);
-//			SDRC_DarcMissionRequestComp requestComp = SDRC_DarcMissionRequestComp.Cast(missionEntity.FindComponent(SDRC_DarcMissionRequestComp));
-			SDRC_DarcMissionEditableRequestComp requestComp = SDRC_DarcMissionEditableRequestComp.Cast(missionEntity.FindComponent(SDRC_DarcMissionEditableRequestComp));
+			SDRC_DarcMissionRequestComp requestComp = SDRC_DarcMissionRequestComp.Cast(missionEntity.FindComponent(SDRC_DarcMissionRequestComp));
 			missionType = requestComp.GetMissionType();
+			missionSubIdx = requestComp.GetMissionSubIdx();
 			pos = missionEntity.GetOrigin();
 			SDRC_SpawnHelper.DespawnItem(missionEntity);
 
@@ -398,52 +413,52 @@ class SDRC_MissionFrame
 			}
 			case DC_EMissionType.HUNTER:
 			{
-				tmpDC_Mission = new SDRC_Mission_Hunter(pos);
+				tmpDC_Mission = new SDRC_Mission_Hunter(pos, missionSubIdx);
 				break;
 			}
 			case DC_EMissionType.OCCUPATION:
 			{
-				tmpDC_Mission = new SDRC_Mission_Occupation(pos);
+				tmpDC_Mission = new SDRC_Mission_Occupation(pos, missionSubIdx);
 				break;
 			}
 			case DC_EMissionType.CONVOY:
 			{
-				tmpDC_Mission = new SDRC_Mission_Convoy(pos);
+				tmpDC_Mission = new SDRC_Mission_Convoy(pos, missionSubIdx);
 				break;
 			}
 			case DC_EMissionType.CRASHSITE:
 			{
-				tmpDC_Mission = new SDRC_Mission_Crashsite(pos);
+				tmpDC_Mission = new SDRC_Mission_Crashsite(pos, missionSubIdx);
 				break;
 			}
 			case DC_EMissionType.PATROL:
 			{
-				tmpDC_Mission = new SDRC_Mission_Patrol(pos);
+				tmpDC_Mission = new SDRC_Mission_Patrol(pos, missionSubIdx);
 				break;
 			}
 			case DC_EMissionType.SQUATTER:
 			{
-				tmpDC_Mission = new SDRC_Mission_Squatter(pos);
+				tmpDC_Mission = new SDRC_Mission_Squatter(pos, missionSubIdx);
 				break;
 			}
 			case DC_EMissionType.ROADBLOCK:
 			{
-				tmpDC_Mission = new SDRC_Mission_Roadblock(pos);
+				tmpDC_Mission = new SDRC_Mission_Roadblock(pos, missionSubIdx);
 				break;
 			}			
 			case DC_EMissionType.HVTVIP:
 			{
-				tmpDC_Mission = new SDRC_Mission_HvtVip(pos);
+				tmpDC_Mission = new SDRC_Mission_HvtVip(pos, missionSubIdx);
 				break;
 			}			
 			case DC_EMissionType.HVTITEM:
 			{
-				tmpDC_Mission = new SDRC_Mission_HvtItem(pos);
+				tmpDC_Mission = new SDRC_Mission_HvtItem(pos, missionSubIdx);
 				break;
 			}			
 /*			case DC_EMissionType.CHOPPER:
 			{
-				tmpDC_Mission = new SDRC_Mission_Chopper(pos);
+				tmpDC_Mission = new SDRC_Mission_Chopper(pos, missionSubIdx);
 				break;
 			}*/
 			default:

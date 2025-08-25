@@ -21,7 +21,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	private SCR_AIGroup m_Target = null;
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_HvtVip(vector pos = "0 0 0")
+	void SDRC_Mission_HvtVip(vector pos = "0 0 0", int missionSubIdx = -1)
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.HVTVIP);

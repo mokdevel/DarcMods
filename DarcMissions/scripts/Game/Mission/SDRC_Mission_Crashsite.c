@@ -31,7 +31,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	private vector m_vVehiclePosOld;
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Crashsite(vector pos = "0 0 0")
+	void SDRC_Mission_Crashsite(vector pos = "0 0 0", int missionSubIdx = -1)
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.CRASHSITE);

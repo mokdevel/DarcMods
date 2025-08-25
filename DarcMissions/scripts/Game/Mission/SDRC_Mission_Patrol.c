@@ -15,7 +15,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	private vector m_vPosDestination = "0 0 0";
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Patrol(vector pos = "0 0 0")
+	void SDRC_Mission_Patrol(vector pos = "0 0 0", int missionSubIdx = -1)
 	{
 		SDRC_Log.Add("[SDRC_Mission_Patrol] Constructor", LogLevel.SPAM);
 				

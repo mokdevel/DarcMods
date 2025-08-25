@@ -26,7 +26,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	private int m_iGroupsToSpawn	= 0;	//Amount of groups to spawn
 	private int m_iGroupsSpawned = 0;	//The amount of groups spawned. Between spawns, a group may be killed so the total of m_Groups is not reliable to know the count.
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Hunter(vector pos = "0 0 0")
+	void SDRC_Mission_Hunter(vector pos = "0 0 0", int missionSubIdx = -1)
 	{
 		//Set some defaults				
 		SetType(DC_EMissionType.HUNTER);

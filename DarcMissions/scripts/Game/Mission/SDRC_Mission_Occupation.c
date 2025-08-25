@@ -16,7 +16,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Occupation(vector pos = "0 0 0")
+	void SDRC_Mission_Occupation(vector pos = "0 0 0", int missionSubIdx = -1)
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.OCCUPATION);

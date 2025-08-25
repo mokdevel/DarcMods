@@ -19,7 +19,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Roadblock(vector pos = "0 0 0")
+	void SDRC_Mission_Roadblock(vector pos = "0 0 0", int missionSubIdx = -1)
 	{
 		SDRC_Log.Add("[SDRC_Mission_Roadblock] Constructor", LogLevel.SPAM);
 				
