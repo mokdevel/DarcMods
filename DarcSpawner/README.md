@@ -26,7 +26,7 @@ string author : See Common parameters
 bool spawnOnRoad : Spawn the cars on road. If no road network manager found, cars spawned around the map.
 int spawnRndRadius : Random radius where the spawnName spawns. Once a location is found, additional randomization is done to avoid vehicles to be always in the same spot.
 int containerCount : Amount of containers (cars, lootboxes, etc..) to spawn.
-float spawnWorldSizeMultiplier : If spawnCount = 0, we search for the world size in km and multiple with this. For example: 4km wide map with spawnWorldSizeMultiplier = 2 results in spawnCount = 8 (4*2)
+float spawnWorldSizeMultiplier : If containerCount = 0, we search for the world size in km and multiple with this. For example: 4km wide map with spawnWorldSizeMultiplier = 2 results in spawnCount = 8 (4*2)
 bool disableArsenal : See General parameters
 array<int> spawnSetList : The indexes of squatters.
 array<SCR_DC_SpawnSet> spawnSets : List of spawners
