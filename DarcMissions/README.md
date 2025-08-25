@@ -65,7 +65,7 @@ Other parameter details available:
 * [Lists](./docs/P_LISTS.md) for automatic loot and enemy lists
 * [Locations](./docs/P_LOCATIONS.md)
 * [Loot](./docs/P_LOOT.md)
-* [Non Valid Areas](./docs/NONVALIDAREAS.md) aka safe zones
+* [Non Valid Areas](./docs/P_NONVALIDAREAS.md) aka safe zones
 * [Structures](./docs/P_STRUCTURE.md)
 * [Waypoints](./docs/P_WAYPOINTS.md)
 * [Buildings](./docs/P_BUILDING.md)
