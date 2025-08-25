@@ -29,10 +29,9 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		m_Config = m_SquatterJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.squatterList);
+		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.squatterList, missionSubIdx);
 		if (idx == -1)
 		{
-			SDRC_Log.Add("[SDRC_Mission_Squatter] No squatters defined.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}

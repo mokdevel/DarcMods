@@ -338,18 +338,34 @@ sealed class SDRC_MissionHelper
 	Select mission index randomly from given list.
 	Returns -1 in case of an error - for example empty list.
 	*/
-	static int SelectMissionIndex(array<ref int>confList)	
+	static int SelectMissionIndex(array<ref int>confList, int missionSubIdx)	
 	{
 		int idx = -1;
 
 		if (confList.IsEmpty())
 		{
+			SDRC_Log.Add("[SDRC_MissionHelper:SelectMissionIndex] Mission list is empty.", LogLevel.ERROR);
 			return -1;
 		}
-				
-		//Pick a configuration for mission
-		idx = confList.GetRandomElement();
-
+		
+		if (missionSubIdx == -1)
+		{
+			//Pick a configuration for mission
+			idx = confList.GetRandomElement();
+		}
+		else
+		{
+			if (missionSubIdx > 0 && missionSubIdx < confList.Count())
+			{
+				idx = missionSubIdx;
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_MissionHelper:SelectMissionIndex] Incorrect mission index: " + missionSubIdx, LogLevel.ERROR);
+				return -1;
+			}			
+		}
+		
 		SDRC_Log.Add("[SDRC_MissionHelper:SelectMissionIndex] Mission index: " + idx, LogLevel.DEBUG);
 				
 		return idx;

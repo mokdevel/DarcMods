@@ -2,8 +2,14 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
-Component to modify mission related information in WB. Used with GM placable missions.
+Component to modify mission related information via GM. Used with GM placable missions.
+
+This is a component in SDRC_DarcMissionGM and should be the editable functionality. Parameters are then passed to SDRC_DarcMissionRequestComp.st
+
+TBD: The editing part if not working at the moment.
 */
+
+//------------------------------------------------------------------------------------------------
 [ComponentEditorProps(category: "GameScripted/Editor (Editables)", description: "", icon: "")]
 class SDRC_DarcMissionEditableRequestCompClass : SCR_EditableSystemComponentClass { }
 SDRC_DarcMissionEditableRequestCompClass g_DarcMissionEditableRequestClass;

@@ -26,10 +26,9 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		m_Config = m_OccupationJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.occupationList);
+		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.occupationList, missionSubIdx);
 		if (idx == -1)
 		{
-			SDRC_Log.Add("[SDRC_Mission_Occupation] No occupations defined.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}

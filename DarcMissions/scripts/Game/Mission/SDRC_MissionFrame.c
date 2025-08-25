@@ -28,7 +28,7 @@ const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions
 class SDRC_MissionRequested : Managed
 {
 	EntityID entityID;
-	vector pos;				//Just for debugging purposes. Entity may have been moved so we read the pos before spawning mission.
+	//vector pos;				//Just for debugging purposes. Entity may have been moved so we read the pos before spawning mission.
 	//DC_EMissionType type;
 }
 
@@ -73,7 +73,7 @@ class SDRC_MissionFrame
 			m_Config.recreateConfigs = false;
 			m_DC_MissionFrameJsonApi.Save("");
 			SDRC_Log.Add("[SDRC_MissionFrame] - Creating configs. Existing ones will not be over written. -", LogLevel.WARNING);
-			CreateAllConfigs();
+			SDRC_MissionEnumHelper.CreateAllConfigs();
 			SDRC_Log.Add("[SDRC_MissionFrame] --------------------- Configs created. ----------------------", LogLevel.WARNING
 			);
 		}
@@ -391,11 +391,18 @@ class SDRC_MissionFrame
 			
 			SDRC_MissionRequested missionRequest = m_missionsRequested[0];
 			
+			//Collect information from the mission entity
 			IEntity missionEntity = GetGame().GetWorld().FindEntityByID(missionRequest.entityID);
 			SDRC_DarcMissionRequestComp requestComp = SDRC_DarcMissionRequestComp.Cast(missionEntity.FindComponent(SDRC_DarcMissionRequestComp));
 			missionType = requestComp.GetMissionType();
 			missionSubIdx = requestComp.GetMissionSubIdx();
+			//If position was "0 0 0", it's possible it has moved due to gravity.
 			pos = missionEntity.GetOrigin();
+			if (pos[0] == 0 && pos[2] == 0)
+			{
+				pos[1] == 0;
+			}
+			
 			SDRC_SpawnHelper.DespawnItem(missionEntity);
 
 			//Clean the array as we removed an entry. Others could have been removed at the same time.
@@ -492,55 +499,6 @@ class SDRC_MissionFrame
 		int systemTime = (System.GetTickCount() / 1000);
 		
 		return delayTime - systemTime;
-	}	
-		
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Creates config files. To be run at first run of the mod. Will not overwrite existing confs.
-	*/	
-	void CreateAllConfigs()
-	{		
-		//Create a default nonValidArea config
-		SDRC_NonValidAreaJsonApi nonValidAreaJsonApi = new SDRC_NonValidAreaJsonApi();
-		nonValidAreaJsonApi.Load();
-		delete nonValidAreaJsonApi;		
-		
-		//Create a default mission configs
-		SDRC_ConvoyJsonApi convoyJsonApi = new SDRC_ConvoyJsonApi();	
-		convoyJsonApi.Load();
-		delete convoyJsonApi;
-		
-		SDRC_CrashsiteJsonApi crashsiteJsonApi = new SDRC_CrashsiteJsonApi();	
-		crashsiteJsonApi.Load();		
-		delete crashsiteJsonApi;
-		
-		SDRC_HunterJsonApi hunterJsonApi = new SDRC_HunterJsonApi();				
-		hunterJsonApi.Load();								
-		delete hunterJsonApi;
-		
-		SDRC_OccupationJsonApi occupationJsonApi = new SDRC_OccupationJsonApi();	
-		occupationJsonApi.Load();		
-		delete occupationJsonApi;
-		
-		SDRC_PatrolJsonApi patrolJsonApi = new SDRC_PatrolJsonApi();	
-		patrolJsonApi.Load();
-		delete patrolJsonApi;
-		
-		SDRC_SquatterJsonApi squatterJsonApi = new SDRC_SquatterJsonApi();	
-		squatterJsonApi.Load();
-		delete squatterJsonApi;		
-		
-		SDRC_RoadblockJsonApi roadblockJsonApi = new SDRC_RoadblockJsonApi();	
-		roadblockJsonApi.Load();
-		delete roadblockJsonApi;		
-		
-		SDRC_HvtVipJsonApi hvtVipJsonApi = new SDRC_HvtVipJsonApi();	
-		hvtVipJsonApi.Load();
-		delete hvtVipJsonApi;				
-		
-		SDRC_HvtItemJsonApi hvtItemJsonApi = new SDRC_HvtItemJsonApi();	
-		hvtItemJsonApi.Load();
-		delete hvtItemJsonApi;				
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -656,15 +614,14 @@ class SDRC_MissionFrame
 		foreach (SDRC_MissionRequested mission : m_missionsRequested)
 		{
 			IEntity entity = GetGame().GetWorld().FindEntityByID(mission.entityID);
-			//SDRC_ReplicatedParticleEffectEntity ent
 			
 			if (entity)
 			{
-				SDRC_Log.Add("[SDRC_MissionFrame:dumpGMSpawnedMissions] " + entity + " at " + mission.pos, LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_MissionFrame:dumpGMSpawnedMissions] " + entity + " at " + entity.GetOrigin(), LogLevel.DEBUG);
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_MissionFrame:dumpGMSpawnedMissions] Deleted at: " + mission.pos, LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_MissionFrame:dumpGMSpawnedMissions] Deleted at: " + entity.GetOrigin(), LogLevel.DEBUG);
 			}
 			
 		}		

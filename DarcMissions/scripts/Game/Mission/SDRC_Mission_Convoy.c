@@ -38,10 +38,9 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		m_Config = m_ConvoyJsonApi.conf;
 
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.convoyList);
+		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.convoyList, missionSubIdx);
 		if (idx == -1)
 		{
-			SDRC_Log.Add("[SDRC_Mission_Convoy] No convoys defined.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}

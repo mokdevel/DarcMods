@@ -41,10 +41,9 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		m_Config = m_CrashsiteJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.crashsiteList);
+		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.crashsiteList, missionSubIdx);
 		if (idx == -1)
 		{
-			SDRC_Log.Add("[SDRC_Mission_Crashsite] No crashsites defined.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}

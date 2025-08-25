@@ -3,7 +3,11 @@
 //------------------------------------------------------------------------------------------------
 /*!
 Component to set/get mission related information. Used with GM placable missions.
+
+This is a component in SDRC_DarcMissionGM. This component keeps all the information needed for the mission to spawn.
 */
+
+//------------------------------------------------------------------------------------------------
 [ComponentEditorProps(category: "GameScripted/Misc", description: "")]
 class SDRC_DarcMissionRequestCompClass : ScriptGameComponentClass { }
 SDRC_DarcMissionRequestCompClass g_DarcMissionRequestClass;

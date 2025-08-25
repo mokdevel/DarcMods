@@ -31,10 +31,9 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		m_Config = m_RoadblockJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.roadblockList);
+		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.roadblockList, missionSubIdx);
 		if (idx == -1)
 		{
-			SDRC_Log.Add("[SDRC_Mission_Roadblock] No roadblocks defined.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}

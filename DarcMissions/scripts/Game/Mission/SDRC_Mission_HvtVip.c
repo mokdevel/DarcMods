@@ -31,10 +31,9 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		m_Config = m_HvtVipJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.hvtVipList);
+		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.hvtVipList, missionSubIdx);
 		if (idx == -1)
 		{
-			SDRC_Log.Add("[SDRC_Mission_HvtVip] No HvtVips defined.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}

@@ -31,10 +31,9 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		m_Config = m_HvtItemJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.hvtItemList);
+		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.hvtItemList, missionSubIdx);
 		if (idx == -1)
 		{
-			SDRC_Log.Add("[SDRC_Mission_HvtItem] No HvtItems defined.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}

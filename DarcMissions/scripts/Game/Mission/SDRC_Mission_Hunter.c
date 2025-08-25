@@ -36,10 +36,9 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		m_Config = m_HunterJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.hunterList);
+		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.hunterList, missionSubIdx);
 		if (idx == -1)
 		{
-			SDRC_Log.Add("[SDRC_Mission_Hunter] No hunters defined.", LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}

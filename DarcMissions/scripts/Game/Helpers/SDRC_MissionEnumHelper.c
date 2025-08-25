@@ -28,6 +28,55 @@ sealed class SDRC_MissionEnumHelper
 {
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Creates config files. To be run at first run of the mod. Will not overwrite existing confs.
+	*/	
+	static void CreateAllConfigs()
+	{		
+		//Create a default nonValidArea config
+		SDRC_NonValidAreaJsonApi nonValidAreaJsonApi = new SDRC_NonValidAreaJsonApi();
+		nonValidAreaJsonApi.Load();
+		delete nonValidAreaJsonApi;		
+		
+		//Create a default mission configs
+		SDRC_ConvoyJsonApi convoyJsonApi = new SDRC_ConvoyJsonApi();	
+		convoyJsonApi.Load();
+		delete convoyJsonApi;
+		
+		SDRC_CrashsiteJsonApi crashsiteJsonApi = new SDRC_CrashsiteJsonApi();	
+		crashsiteJsonApi.Load();		
+		delete crashsiteJsonApi;
+		
+		SDRC_HunterJsonApi hunterJsonApi = new SDRC_HunterJsonApi();				
+		hunterJsonApi.Load();								
+		delete hunterJsonApi;
+		
+		SDRC_OccupationJsonApi occupationJsonApi = new SDRC_OccupationJsonApi();	
+		occupationJsonApi.Load();		
+		delete occupationJsonApi;
+		
+		SDRC_PatrolJsonApi patrolJsonApi = new SDRC_PatrolJsonApi();	
+		patrolJsonApi.Load();
+		delete patrolJsonApi;
+		
+		SDRC_SquatterJsonApi squatterJsonApi = new SDRC_SquatterJsonApi();	
+		squatterJsonApi.Load();
+		delete squatterJsonApi;		
+		
+		SDRC_RoadblockJsonApi roadblockJsonApi = new SDRC_RoadblockJsonApi();	
+		roadblockJsonApi.Load();
+		delete roadblockJsonApi;		
+		
+		SDRC_HvtVipJsonApi hvtVipJsonApi = new SDRC_HvtVipJsonApi();	
+		hvtVipJsonApi.Load();
+		delete hvtVipJsonApi;				
+		
+		SDRC_HvtItemJsonApi hvtItemJsonApi = new SDRC_HvtItemJsonApi();	
+		hvtItemJsonApi.Load();
+		delete hvtItemJsonApi;				
+	}		
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Return the prefab for mission requests
 	*/	
 	static string GetMissionPrefab(DC_EMissionType missionType)
