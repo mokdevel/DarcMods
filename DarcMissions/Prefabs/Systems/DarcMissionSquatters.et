@@ -1,38 +1,25 @@
-SDRC_DarcMissionGM : "{5C61F07CE0B1DBB2}Prefabs/EffectsModuleEntities/BaseEffectModule_Particle_Smoke.et" {
- ID "5CAAA309C760D959"
+SDRC_DarcMissionGM : "{C599195C442D7125}Prefabs/Compositions/Misc/CustomEntities/CompositionDecals/CompositionDecal_CigarButts_01.et" {
+ ID "56DEF7205C23FF67"
  components {
-  SoundComponent "{622CB2564278E7B9}" {
-   Enabled 0
-  }
-  SCR_EditableEffectsModuleComponent "{65846EB47D87064A}" {
+  SDRC_DarcMissionEditableRequestComp "{663310CB6DEEB16F}" {
    m_EntityType SYSTEM
-   m_UIInfo SCR_EditableEntityUIInfoColored "{65846EB47D870666}" {
+   m_UIInfo SCR_EditableEntityUIInfoColored "{663310CB6DEEB17A}" {
     Name "DarcMissions Squatters"
-    Description "Spawns a random Convoy mission"
+    Description "Spawns a random Squatters mission"
     Icon "{E5DAD5DC5B093F46}UI/Textures/Icons/gm_mission_Squatters_round.edds"
     m_Image "{4112879DE0872949}UI/Textures/Icons/gm_mission_Squatters.edds"
     m_aAuthoredLabels {
-     1001
-    }
-    m_aAutoLabels {
-     44001
-    }
-    m_EntityBudgetCost {
-     SCR_EntityBudgetValue "{65846EB47D87066D}" {
-      m_BudgetType SYSTEMS
-     }
+     7 44001
     }
    }
-   m_bStatic 1
-   m_Flags 65
+   m_bAutoRegister ALWAYS
+   m_MissionType NONE
   }
-  SDRC_DarcMissionRequestComp "{65846EB47D870679}" {
-   missionType SQUATTER
+  SDRC_DarcMissionRequestComp "{663310CB6DEEB104}" {
+   m_MissionType SQUATTER
   }
-  RplComponent "{616C912BED359789}" {
+  RplComponent "{663310CB6DEEB109}" {
    Streamable Disabled
   }
  }
- Flags 1027
- EffectPath "{E1E084593B8A05D2}Particles/Weapon/Smoke_grenade_M18_Yellow.ptc"
 }

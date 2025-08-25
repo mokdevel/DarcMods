@@ -11,6 +11,7 @@ SDRC_DarcMissionRequestCompClass g_DarcMissionRequestClass;
 //------------------------------------------------------------------------------------------------
 class SDRC_DarcMissionRequestComp : ScriptGameComponent
 {
+	[Attribute(typename.EnumToString(DC_EMissionType, DC_EMissionType.NONE), UIWidgets.ComboBox, desc: "Mission type", enumType: DC_EMissionType)]	
 	protected DC_EMissionType m_MissionType;	//The type of mission
 	
 	static int max = Math.RandomInt(0,12);

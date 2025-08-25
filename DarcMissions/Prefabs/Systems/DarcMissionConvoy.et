@@ -4,8 +4,8 @@ SDRC_DarcMissionGM : "{C599195C442D7125}Prefabs/Compositions/Misc/CustomEntities
   SDRC_DarcMissionEditableRequestComp "{6626D80169F80E0E}" {
    m_EntityType SYSTEM
    m_UIInfo SCR_EditableEntityUIInfoColored "{6626DE8D15FF383C}" {
-    Name "Convoy"
-    Description "asdasdad"
+    Name "DarcMissions Convoy"
+    Description "Spawns a random Convoy mission"
     Icon "{CB44916834E28FD3}UI/Textures/Icons/gm_mission_Convoy_round.edds"
     m_Image "{5240F6F0037BFEC7}UI/Textures/Icons/gm_mission_Convoy.edds"
     m_aAuthoredLabels {
@@ -13,9 +13,10 @@ SDRC_DarcMissionGM : "{C599195C442D7125}Prefabs/Compositions/Misc/CustomEntities
     }
    }
    m_bAutoRegister ALWAYS
-   m_MissionType CONVOY
+   m_MissionType NONE
   }
   SDRC_DarcMissionRequestComp "{662543CAEB079B26}" {
+   m_MissionType CONVOY
   }
   RplComponent "{5EF0C15DF9A24D2D}" {
    Streamable Disabled

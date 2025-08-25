@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{7E0E561D682C130F}Prefabs/EffectsModuleEntities/DarcMissionHunters.et"
+ Name "{907DCF8F8818652B}Prefabs/Systems/DarcMissionHunters.et"
  Configurations {
   EntityTemplateResourceClass PC {
   }
