@@ -45,17 +45,15 @@ class SDRC_StoriesFrame
 				
 		m_sWorldName = SDRC_Misc.GetWorldName(true);
 
-		//Load configuration from file		
+		//Load configuration from file
 		m_DC_StoriesFrameJsonApi.Load();
 		m_Config = m_DC_StoriesFrameJsonApi.conf;
+		
+		m_DC_StoriesFrameJsonApi.LoadStories();
 		
 		//Fix seconds to ms
 		SDRC_Log.Add("[SDRC_StoriesFrame] Waiting for " + m_Config.storiesStartDelay + " seconds before spawning stories.", LogLevel.NORMAL);
 		m_Config.storiesStartDelay = m_Config.storiesStartDelay * 1000;		//sec to ms
-		
-		#ifndef SDRC_RELEASE
-			SDRC_MapMarkerHelper.CreateMapMarker("1000 0 900", DC_EMissionIcon.GM_MISSION_X_MAP, "DMS_B", "This is a story");
-		#endif	
 		
 		//Start the mission framework.
 		GetGame().GetCallqueue().CallLater(StoriesCycleManager, m_Config.storiesStartDelay, false);
@@ -80,12 +78,16 @@ class SDRC_StoriesFrame
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Mission life cycle manager.
-	*/	
+	*/
 	protected void StoriesCycleManager()
 	{		
-		SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Spawning new static mission", LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Spawning new story mission", LogLevel.NORMAL);
+		IEntity missionEntity;
+		vector pos = "2000 0 2000";
+		string resourceName = "{CE7D07A8484A1DE9}Prefabs/Systems/DarcMissionConvoy.et";
+		missionEntity = SDRC_SpawnHelper.SpawnItem(pos, resourceName, 0, -1);
 		
-		GetGame().GetCallqueue().CallLater(StoriesCycleManager, m_Config.storiesFrameCycleTime*1000, false);		
+//		GetGame().GetCallqueue().CallLater(StoriesCycleManager, m_Config.storiesFrameCycleTime*1000, false);		
 	}
 	
 	//------------------------------------------------------------------------------------------------
