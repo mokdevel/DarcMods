@@ -3,11 +3,28 @@ class SDRC_DarcMissionGMClass : GenericEntityClass
 {
 }
 
+//------------------------------------------------------------------------------------------------
+/*!
+Includes various functions for missions. 
+*/
 class SDRC_DarcMissionGM : GenericEntity
 {	
 	private bool m_bAdded = false;
 
+	//------------------------------------------------------------------------------------------------
 	override event protected void EOnInit(IEntity owner)	
+	{
+
+		GetGame().GetCallqueue().CallLater(EOnInitDelayed, 5000, false, owner);
+				
+		super.EOnInit(owner);		
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Delayed 'EOnInit' to give some time before mission starts
+	*/
+	protected void EOnInitDelayed(IEntity owner)
 	{
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());	
 		
@@ -39,11 +56,10 @@ class SDRC_DarcMissionGM : GenericEntity
 			{
 				SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInit] Client call!", LogLevel.DEBUG);
 			}
-		}
-				
-		super.EOnInit(owner);		
+		}	
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void AddedToList()
 	{
 		m_bAdded = true;

@@ -22,7 +22,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Squatter] Constructor", LogLevel.SPAM);
 				
 		//Set some defaults
-		SetType(DC_EMissionType.SQUATTER);
+		SetType(DC_EMissionType.SQUATTERS);
 
 		//Load config
 		m_SquatterJsonApi.Load();
