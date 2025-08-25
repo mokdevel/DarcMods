@@ -72,6 +72,7 @@ class SDRC_MissionConfigGeneral : Managed
 	string winMessage;						//Message to show when mission is completed
 	string loseMessage;						//Message to show when mission fails
 	int xp;									//Experience given	
+	//TBD: string faction;
 	
 	void Set(string comment_, array<vector> pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, int xp_)
 	{

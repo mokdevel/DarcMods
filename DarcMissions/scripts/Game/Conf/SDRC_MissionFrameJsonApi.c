@@ -26,9 +26,9 @@
 	
 	//Development time options
 	#ifndef SDRC_RELEASE	
-		private const int SDRC_MISSION_COUNT_DYNAMIC = 5;//3;//8;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//5;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 0;//3;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
