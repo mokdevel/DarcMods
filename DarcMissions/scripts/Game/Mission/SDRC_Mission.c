@@ -1,21 +1,4 @@
 //------------------------------------------------------------------------------------------------
-enum DC_EMissionType
-{
-	NONE = 0,
-	HUNTER,
-	OCCUPATION,
-	CONVOY,
-	CRASHSITE,
-	PATROL,
-	SQUATTER,
-	ROADBLOCK,
-	HVTVIP,
-	HVTITEM,
-	CHOPPER,	//Mission not ready or working
-	
-	REQUESTED = 100
-};
-
 //Stages in the state machine
 enum DC_EMissionState
 {

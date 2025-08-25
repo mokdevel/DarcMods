@@ -367,7 +367,79 @@ sealed class SDRC_MissionHelper
 		SDRC_Log.Add("[SDRC_MissionHelper:CreateInfo] Message created: " + msg, LogLevel.SPAM);
 		return msg;
 	}	
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Return the prefab for mission requests
+	*/	
+	static string GetMissionPrefab(DC_EMissionType missionType)
+	{
+		string resourceName = "";
+		
+		switch (missionType)
+		{
+			case DC_EMissionType.NONE:
+			{
+				resourceName = "";
+				break;
+			}
+			case DC_EMissionType.HUNTER:
+			{
+				resourceName = "{907DCF8F8818652B}Prefabs/Systems/DarcMissionHunters.et";
+				break;
+			}
+			case DC_EMissionType.OCCUPATION:
+			{
+				resourceName = "{922D29EAFA4BB4F1}Prefabs/Systems/DarcMissionOccupation.et";
+				break;
+			}
+			case DC_EMissionType.CONVOY:
+			{
+				resourceName = "{CE7D07A8484A1DE9}Prefabs/Systems/DarcMissionConvoy.et";
+				break;
+			}
+			case DC_EMissionType.CRASHSITE:
+			{
+				resourceName = "{003521A6AD7BEB3C}Prefabs/Systems/DarcMissionCrashsite.et";
+				break;
+			}
+			case DC_EMissionType.PATROL:
+			{
+				resourceName = "{E8489D032B77CD71}Prefabs/Systems/DarcMissionPatrol.et";
+				break;
+			}
+			case DC_EMissionType.SQUATTERS:
+			{
+				resourceName = "{0178274B1C19A219}Prefabs/Systems/DarcMissionSquatters.et";
+				break;
+			}
+			case DC_EMissionType.ROADBLOCK:
+			{
+				resourceName = "{F1BE2D46F0949F6D}Prefabs/Systems/DarcMissionRoadblock.et";
+				break;
+			}			
+			case DC_EMissionType.HVTVIP:
+			{
+				resourceName = "{6A859F436655EEFA}Prefabs/Systems/DarcMissionHvtVip.et";
+				break;
+			}			
+			case DC_EMissionType.HVTITEM:
+			{
+				resourceName = "{B9D6798E6A963E0C}Prefabs/Systems/DarcMissionHvtItem.et";
+				break;
+			}			
+/*			case DC_EMissionType.CHOPPER:
+			{
+				resourceName = "";
+				break;
+			}*/
+			default:
+				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Incorrect mission type: " + missionType, LogLevel.ERROR);
+		}
+		
+		return resourceName;
+	}			
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	DEBUG: Test mission positions on map. Only for debugging.

@@ -436,7 +436,7 @@ class SDRC_MissionFrame
 				tmpDC_Mission = new SDRC_Mission_Patrol(pos, missionSubIdx);
 				break;
 			}
-			case DC_EMissionType.SQUATTER:
+			case DC_EMissionType.SQUATTERS:
 			{
 				tmpDC_Mission = new SDRC_Mission_Squatter(pos, missionSubIdx);
 				break;

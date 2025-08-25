@@ -158,7 +158,7 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 		m_wImageWidget = ImageWidget.Cast(root.FindAnyWidget("Icon"));
 		m_wImageWidgetShadow = ImageWidget.Cast(root.FindAnyWidget("IconShadow"));
 		
-		ResourceName texture = SDRC_MapMarkerHelper.GetMarkerTexture(m_Icon);		
+		ResourceName texture = SDRC_MissionEnumHelper.GetMarkerTexture(m_Icon);		
 		
 		m_wImageWidget.LoadImageTexture(0, texture);
 		m_wImageWidgetShadow.LoadImageTexture(0, texture);
