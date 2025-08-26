@@ -31,23 +31,24 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	private vector m_vVehiclePosOld;
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Crashsite(vector pos = "0 0 0", int missionSubIdx = -1)
+	void SDRC_Mission_Crashsite(SDRC_MissionRequested request)
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.CRASHSITE);
+		vector pos = GetPos();
 
 		//Load config
 		m_CrashsiteJsonApi.Load();
 		m_Config = m_CrashsiteJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.crashsiteList, missionSubIdx);
-		if (idx == -1)
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.crashsiteList, GetSubIdx()));
+		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}
-		m_DC_Crashsite = m_Config.crashsites[idx];
+		m_DC_Crashsite = m_Config.crashsites[GetSubIdx()];
 		
 		//Find position
 		bool positionFound = false;
@@ -406,6 +407,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_75,
 			"The loot was salvaged. Crash, burn, loot.",
 			"No loot for you today.", 
+			"",
 			0
 		);
 		crashsite.Set
@@ -495,6 +497,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_75,
 			"The loot box was secured.",
 			"The cargo was lost.", 
+			"",
 			0
 		);
 		crashsite.Set

@@ -46,18 +46,19 @@ class SDRC_MissionConfig : Managed
 
 class SDRC_MissionConfigGeneral : Managed
 {
-	string comment;							//Generic comment to describe the mission. Not used in game.
+	string comment = "";					//Generic comment to describe the mission. Not used in game.
 	ref array<vector> pos = {};				//Positions for mission. "0 0 0" used for random location chosen from locationTypes. First is mission position, second is destination for missions that need it.
-	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
-	string title;							//Title for the hint shown for players
-	string info;							//Details for the hint shown for players
+	string posName = "any";					//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
+	string title = "";						//Title for the hint shown for players
+	string info = "";						//Details for the hint shown for players
 	DC_EMissionWinCondition winCondition;	//Mission win condidition
-	string winMessage;						//Message to show when mission is completed
-	string loseMessage;						//Message to show when mission fails
-	int xp;									//Experience given	
+	string winMessage = "";					//Message to show when mission is completed
+	string loseMessage = "";				//Message to show when mission fails
+	string faction = "";
+	int xp = 0;								//Experience given	
 	//TBD: string faction;
 	
-	void Set(string comment_, array<vector> pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, int xp_)
+	void Set(string comment_, array<vector> pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, int xp_)
 	{
 		comment = comment_;
 		pos = pos_;
@@ -67,6 +68,7 @@ class SDRC_MissionConfigGeneral : Managed
 		winCondition = winCondition_;
 		winMessage = winMessage_;
 		loseMessage = loseMessage_;
+		string faction = faction_;
 		xp = xp_;
 	}
 }
@@ -79,26 +81,28 @@ class SDRC_Mission
 	private DC_EMissionType m_Type;
 	private bool m_Static;						//Defines if the mission is dynamic or static. Dynamic is default. 
     private string m_Id;
-    private vector m_Pos;
-    private vector m_PosDestination;
+    private bool m_ShowHint;
+    private bool m_ShowMessage;
+	private bool m_bShowMarker;					//If the icon is to be shown
+	private int m_iSubIdx;						//Sub mission index
+	
+	//Common for all sub missions
+	private ref array<vector> m_Pos = {};
     private string m_sPosName;
     private string m_sTitle;
     private string m_sInfo;
-    private bool m_ShowHint;
-    private bool m_ShowMessage;
-	//Internals
-	private bool m_bRequested;					//The missions spawn was requested by a an external party (like GM)
-	private int m_StartTime;					//Seconds when mission started
-	private int m_EndTime;						//Seconds when mission shall end.
-	private int m_ActiveTime;					//Seconds of how long the mission should be active
-	private string m_sFaction;					//Faction for the mission		
-	private bool m_bShowMarker;					//If the icon is to be shown
-	private DC_EMissionIcon m_sIcon;			//The icon to show
-	private string m_sMarkerType;				//Markertype defined by SCR_EMapMarkerType
     private string m_sWinMessage;
     private string m_sLoseMessage;
 	private DC_EMissionWinCondition m_WinCondition;
+	private string m_sMarkerType;				//Markertype defined by SCR_EMapMarkerType
+	private string m_sFaction;					//Faction for the mission		
+	//Internals
+	private bool m_bRequested;					//The missions spawn was requested by a an external party (like GM)
 	private DC_EMissionSuccess m_Success;
+	private int m_StartTime;					//Seconds when mission started
+	private int m_EndTime;						//Seconds when mission shall end.
+	private int m_ActiveTime;					//Seconds of how long the mission should be active
+	private DC_EMissionIcon m_sIcon;			//The icon to show
 	//Internals without getters
 	private int m_iActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
 	private int m_iActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
@@ -110,29 +114,54 @@ class SDRC_Mission
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission(vector pos = "0 0 0")
+	void SDRC_Mission(SDRC_MissionRequested request)
 	{
+		vector pos = "0 0 0";
+		
 		m_State = DC_EMissionState.INIT;
 		m_Type = DC_EMissionType.NONE;
 		m_Static = false;
 		m_Id = DC_ID_PREFIX + string.ToString(System.GetTickCount());
-		m_Pos = pos;
-		m_sPosName = "";
-		m_sTitle = "";
-		m_sInfo = "";
 		m_ShowHint = true;
 		m_ShowMessage = true;
-		m_sWinMessage = "";
-		m_sLoseMessage = "";
+		m_bShowMarker = true;
+		
 		m_WinCondition = DC_EMissionWinCondition.AI_KILL_ALL;
-		m_Success = DC_EMissionSuccess.UNKNOWN;
 		m_sMarkerType = "DARC_MISSION";
-		SetFaction(SDRC_EnemyHelper.SelectEnemyFaction()); 		//m_sFaction 
+		
+		m_Pos.Clear();
+		
+		if (!request)
+		{
+			m_iSubIdx = -1;
+			m_Pos.Insert(pos);
+			m_Pos.Insert("0 0 0");	//Destination
+			m_sPosName = "";
+			m_sTitle = "";
+			m_sInfo = "";
+			m_sWinMessage = "";
+			m_sLoseMessage = "";			
+			SetFaction(SDRC_EnemyHelper.SelectEnemyFaction()); 		//m_sFaction 
+		}
+		else
+		{
+			m_iSubIdx = request.subIdx;			
+			m_Pos.Insert(request.general.pos[0]);
+			m_Pos.Insert(request.general.pos[1]);
+			m_sPosName = request.general.posName;
+			m_sTitle = request.general.title;
+			m_sInfo = request.general.info;
+			m_sWinMessage = request.general.winMessage;
+			m_sLoseMessage = request.general.loseMessage;
+			SetFaction(SDRC_EnemyHelper.SelectEnemyFaction(request.general.faction)); 		//m_sFaction 
+		}
+		
 		//Internals
+		m_Success = DC_EMissionSuccess.UNKNOWN;
 		m_StartTime = (System.GetTickCount() / 1000); 			//The time in seconds when the mission was started.
 		SetActiveTime(SDRC_MISSION_CYCLE_TIME_DEFAULT*20);		//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
 		m_iActiveDistance = 0;									//Set a default zero
-		m_bMissionIsEnding = false;
+		m_bMissionIsEnding = false;		
 		if (pos != "0 0 0")										//Requested is set here
 		{
 			m_bRequested = true;
@@ -272,6 +301,17 @@ class SDRC_Mission
 	}
 
 	//------------------------------------------------------------------------------------------------
+	DC_EMissionState GetSubIdx()
+	{
+		return m_iSubIdx;
+	}
+
+	void SetSubIdx(int subIdx)
+	{
+		m_iSubIdx = subIdx;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
 	DC_EMissionState IsStatic()
 	{
 		return m_Static;
@@ -291,13 +331,13 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	vector GetPos()
 	{
-		return m_Pos;
+		return m_Pos[0];
 	}
 
 	void SetPos(vector pos, vector destination = "0 0 0")
 	{
-		m_Pos = pos;
-		m_PosDestination = destination;
+		m_Pos[0] = pos;
+		m_Pos[1] = destination;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -556,7 +596,7 @@ class SDRC_Mission
 		if (!checkOnlyWinCondition)
 		{
 			//Are there players still nearby
-			if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_Pos, 0, m_iActiveDistance))
+			if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_Pos[0], 0, m_iActiveDistance))
 			{
 				ResetActiveTime();
 				return true;
@@ -681,9 +721,9 @@ class SDRC_Mission
 	private string FixString(string info)
 	{
 		string destinationName = "";
-		if (m_PosDestination != "0 0 0")
+		if (m_Pos[1] != "0 0 0")
 		{
-			destinationName = SDRC_Locations.CreateName(m_PosDestination, "any");			
+			destinationName = SDRC_Locations.CreateName(m_Pos[1], "any");			
 		}
 		
 		info = SDRC_MissionHelper.CreateInfo(info, GetPosName(), destinationName);

@@ -25,14 +25,6 @@ Add this to your StartGameTrigger or use SDRC_GameCoreBase.c
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
 
 //------------------------------------------------------------------------------------------------
-class SDRC_MissionRequested : Managed
-{
-	EntityID entityID;
-	//vector pos;				//Just for debugging purposes. Entity may have been moved so we read the pos before spawning mission.
-	//DC_EMissionType type;
-}
-
-//------------------------------------------------------------------------------------------------
 class SDRC_MissionFrame
 {
 	protected static SDRC_MissionFrame s_Instance;		
@@ -375,38 +367,12 @@ class SDRC_MissionFrame
 	protected SDRC_Mission MissionCreate(DC_EMissionType missionType)
 	{
 		SDRC_Mission tmpDC_Mission = null;
-		vector pos = "0 0 0";
-		int missionSubIdx = -1;
+		SDRC_MissionRequested missionRequest = null;
 		
 		if (missionType == DC_EMissionType.REQUESTED)
 		{					
-			//Clean the array before searching for a mission. It could be that user has deleted the mission in the array.
-			CleanMissionsRequestedArray();
-	
-			//Is the list empty?		
-			if (m_missionsRequested.IsEmpty())
-			{
-				return null;
-			}
-			
-			SDRC_MissionRequested missionRequest = m_missionsRequested[0];
-			
-			//Collect information from the mission entity
-			IEntity missionEntity = GetGame().GetWorld().FindEntityByID(missionRequest.entityID);
-			SDRC_DarcMissionRequestComp requestComp = SDRC_DarcMissionRequestComp.Cast(missionEntity.FindComponent(SDRC_DarcMissionRequestComp));
-			missionType = requestComp.GetMissionType();
-			missionSubIdx = requestComp.GetMissionSubIdx();
-			//If position was "0 0 0", it's possible it has moved due to gravity.
-			pos = missionEntity.GetOrigin();
-			if (pos[0] == 0 && pos[2] == 0)
-			{
-				pos[1] == 0;
-			}
-			
-			SDRC_SpawnHelper.DespawnItem(missionEntity);
-
-			//Clean the array as we removed an entry. Others could have been removed at the same time.
-			CleanMissionsRequestedArray();						
+			missionRequest = SDRC_MissionRequestHelper.FillMissionRequest();
+			missionType = missionRequest.type;
 		}
 		
 		SDRC_Log.Add("[SDRC_MissionFrame:MissionCreate] Starting mission of type: " + SCR_Enum.GetEnumName(DC_EMissionType, missionType), LogLevel.DEBUG);
@@ -420,52 +386,52 @@ class SDRC_MissionFrame
 			}
 			case DC_EMissionType.HUNTER:
 			{
-				tmpDC_Mission = new SDRC_Mission_Hunter(pos, missionSubIdx);
+				tmpDC_Mission = new SDRC_Mission_Hunter(missionRequest);
 				break;
 			}
 			case DC_EMissionType.OCCUPATION:
 			{
-				tmpDC_Mission = new SDRC_Mission_Occupation(pos, missionSubIdx);
+				tmpDC_Mission = new SDRC_Mission_Occupation(missionRequest);
 				break;
 			}
 			case DC_EMissionType.CONVOY:
 			{
-				tmpDC_Mission = new SDRC_Mission_Convoy(pos, missionSubIdx);
+				tmpDC_Mission = new SDRC_Mission_Convoy(missionRequest);
 				break;
 			}
 			case DC_EMissionType.CRASHSITE:
 			{
-				tmpDC_Mission = new SDRC_Mission_Crashsite(pos, missionSubIdx);
+				tmpDC_Mission = new SDRC_Mission_Crashsite(missionRequest);
 				break;
 			}
 			case DC_EMissionType.PATROL:
 			{
-				tmpDC_Mission = new SDRC_Mission_Patrol(pos, missionSubIdx);
+				tmpDC_Mission = new SDRC_Mission_Patrol(missionRequest);
 				break;
 			}
 			case DC_EMissionType.SQUATTERS:
 			{
-				tmpDC_Mission = new SDRC_Mission_Squatter(pos, missionSubIdx);
+				tmpDC_Mission = new SDRC_Mission_Squatter(missionRequest);
 				break;
 			}
 			case DC_EMissionType.ROADBLOCK:
 			{
-				tmpDC_Mission = new SDRC_Mission_Roadblock(pos, missionSubIdx);
+				tmpDC_Mission = new SDRC_Mission_Roadblock(missionRequest);
 				break;
 			}			
 			case DC_EMissionType.HVTVIP:
 			{
-				tmpDC_Mission = new SDRC_Mission_HvtVip(pos, missionSubIdx);
+				tmpDC_Mission = new SDRC_Mission_HvtVip(missionRequest);
 				break;
 			}			
 			case DC_EMissionType.HVTITEM:
 			{
-				tmpDC_Mission = new SDRC_Mission_HvtItem(pos, missionSubIdx);
+				tmpDC_Mission = new SDRC_Mission_HvtItem(missionRequest);
 				break;
 			}			
 /*			case DC_EMissionType.CHOPPER:
 			{
-				tmpDC_Mission = new SDRC_Mission_Chopper(pos, missionSubIdx);
+				tmpDC_Mission = new SDRC_Mission_Chopper(missionRequest);
 				break;
 			}*/
 			default:
@@ -562,29 +528,7 @@ class SDRC_MissionFrame
 		
 		return i;
 	}
-	
-	//------------------------------------------------------------------------------------------------	
-	/*!
-	Remove deleted missions from the list
-	*/		
-	void CleanMissionsRequestedArray()
-	{
-		int i = 0;
-		
-		while (i < m_missionsRequested.Count())
-		{
-			IEntity entity = GetGame().GetWorld().FindEntityByID(m_missionsRequested[i].entityID);
-			if (!entity)
-			{
-				m_missionsRequested.Remove(i);
-			}
-			else
-			{
-				i++;
-			}
-		}
-	}
-	
+
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find mission index with mission id
@@ -603,27 +547,5 @@ class SDRC_MissionFrame
 		}
 		
 		return idx;
-	}		
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Dump information of GM spawned missions
-	*/			
-	void dumpMissionRequested()
-	{
-		foreach (SDRC_MissionRequested mission : m_missionsRequested)
-		{
-			IEntity entity = GetGame().GetWorld().FindEntityByID(mission.entityID);
-			
-			if (entity)
-			{
-				SDRC_Log.Add("[SDRC_MissionFrame:dumpGMSpawnedMissions] " + entity + " at " + entity.GetOrigin(), LogLevel.DEBUG);
-			}
-			else
-			{
-				SDRC_Log.Add("[SDRC_MissionFrame:dumpGMSpawnedMissions] Deleted at: " + entity.GetOrigin(), LogLevel.DEBUG);
-			}
-			
-		}		
-	}	
+	}			
 }

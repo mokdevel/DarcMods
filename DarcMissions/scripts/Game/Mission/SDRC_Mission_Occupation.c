@@ -16,11 +16,13 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Occupation(vector pos = "0 0 0", int missionSubIdx = -1)
+	void SDRC_Mission_Occupation(SDRC_MissionRequested request)
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.OCCUPATION);
-
+		vector pos = GetPos();
+		int missionSubIdx = GetSubIdx();
+		
 		//Load config
 		m_OccupationJsonApi.Load();
 		m_Config = m_OccupationJsonApi.conf;
@@ -200,6 +202,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Guard patrol eliminated.",
 			"The patrol kept %l safe from you. Pathetic.",
+			"",
 			0
 		);
 		
@@ -235,6 +238,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Camp cleared. Take the loot and leave.",
 			"The camp near %l was never destroyed. Bandits rule!",
+			"",
 			0
 		);
 		occupation.Set(
@@ -316,6 +320,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_75,
 			"%l is free again!",
 			"The enemy was stronger this time.",
+			"",
 			0
 		);
 		occupation.Set(
@@ -403,6 +408,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_75,
 			"You stopped the get away. Enjoy the spoils.",
 			"Car was fixed and the loot was lost.", 
+			"",
 			0
 		);
 		occupation.Set(
@@ -423,7 +429,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"G_RECON"
 			},
 			50, 1.0,
-			7
+			6
 		);
 
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -500,6 +506,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_ALL,
 			"The camp is yours. Enjoy the loot and relax.",
 			"The camp was packed and the campers left with their car.", 
+			"",
 			0
 		);
 		occupation.Set(
@@ -610,6 +617,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_75,
 			"The ghost town neat %l has been cleared.",
 			"Enemies have left with the loot. Shame on you.", 
+			"",
 			0
 		);
 		occupation.Set(
@@ -770,6 +778,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Spawns from hell are dead!",
 			"Are you scared of a few ghosts..?",
+			"",
 			0
 		);
 		

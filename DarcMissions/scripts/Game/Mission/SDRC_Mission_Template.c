@@ -15,13 +15,12 @@ class SDRC_Mission_Template : SDRC_Mission
 	private ref SDRC_TemplateConfig m_Config = new SDRC_TemplateConfig();
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Template(vector pos = "0 0 0", int missionSubIdx = -1)
+	void SDRC_Mission_Template(SDRC_MissionRequested request)
 	{
-		SDRC_Log.Add("[SDRC_Mission_Template] Constructor", LogLevel.SPAM);
-				
 		//Set some defaults
 		SetType(DC_EMissionType.NONE);	//REMEMBER: Define your own ENUM in SDRC_Mission.c and change here. *DO NOT* use modded enum as the index numbers are to kept.
-
+		vector pos = GetPos();
+				
 		//Load config
 		m_TemplateJsonApi.Load();
 		m_Config = m_TemplateJsonApi.conf;

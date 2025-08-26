@@ -15,37 +15,28 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	private vector m_vPosDestination = "0 0 0";
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Patrol(vector pos = "0 0 0", int missionSubIdx = -1)
+	void SDRC_Mission_Patrol(SDRC_MissionRequested request)
 	{
-		SDRC_Log.Add("[SDRC_Mission_Patrol] Constructor", LogLevel.SPAM);
-				
 		//Set some defaults
 		SetType(DC_EMissionType.PATROL);
-
+		vector pos = GetPos();
+		
 		//Load config
 		m_PatrolJsonApi.Load();
 		m_Config = m_PatrolJsonApi.conf;
 
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.patrolList, missionSubIdx);
-		if (idx == -1)
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.patrolList, GetSubIdx()));
+		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
-		}
-		
-		m_DC_Patrol = m_Config.patrols[idx];
-		
-/*		if (!m_DC_Patrol)
-		{
-			SDRC_Log.Add("[SDRC_Mission_Patrol:DEBUG] m_DC_Patrol is NULL", LogLevel.ERROR);
-			SetState(DC_EMissionState.FAILED);
-			return;
-		}*/
+		}	
+		m_DC_Patrol = m_Config.patrols[GetSubIdx()];
 
 		//Check that ranges are not too big
 		int worldSize = SDRC_Misc.GetWorldSize();
-		SDRC_Log.Add("[SDRC_Mission_Patrol] Worldsize vs maxRange : " + worldSize + " vs " + m_DC_Patrol.waypointRange[1], LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Mission_Patrol] Worldsize vs maxRange : " + worldSize + " vs " + m_DC_Patrol.waypointRange[1], LogLevel.SPAM);
 		
 		//Set defaults
 		m_vPosDestination = m_DC_Patrol.general.pos[1];
@@ -268,6 +259,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Patrol near %l is no more.",
 			"Patroling completed, the world is saved.", 
+			"",
 			0
 		);		
 		patrol.Set(
@@ -307,6 +299,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_75,
 			"Well done!",
 			"You're not a worthy enemy for this patrol.", 
+			"",
 			0
 		);				
 		patrol.Set
@@ -346,6 +339,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_75,
 			"The road from %l to %d is safe again.",
 			"Patrol left the area.", 
+			"",
 			0
 		);		
 		patrol.Set
@@ -380,6 +374,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_50,
 			"Patrol cleared!",
 			"Such a small force was able to beat you.", 
+			"",
 			0
 		);				
 		patrol.Set(

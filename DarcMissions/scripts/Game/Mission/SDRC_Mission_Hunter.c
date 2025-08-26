@@ -26,23 +26,24 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	private int m_iGroupsToSpawn	= 0;	//Amount of groups to spawn
 	private int m_iGroupsSpawned = 0;	//The amount of groups spawned. Between spawns, a group may be killed so the total of m_Groups is not reliable to know the count.
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Hunter(vector pos = "0 0 0", int missionSubIdx = -1)
+	void SDRC_Mission_Hunter(SDRC_MissionRequested request)
 	{
 		//Set some defaults				
 		SetType(DC_EMissionType.HUNTER);
-		
+		vector pos = GetPos();
+				
 		//Load config	
 		m_HunterJsonApi.Load();
 		m_Config = m_HunterJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.hunterList, missionSubIdx);
-		if (idx == -1)
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.hunterList, GetSubIdx()));
+		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
-		}
-		m_DC_Hunter = m_Config.hunters[idx];
+		}		
+		m_DC_Hunter = m_Config.hunters[GetSubIdx()];
 		
 		m_iGroupsToSpawn = Math.RandomInt(m_DC_Hunter.groupCount[0], m_DC_Hunter.groupCount[1]);
 		
@@ -341,6 +342,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_ALL,
 			"You outsmarted the hunters.",
 			"Hunters lost track of you.", 
+			"",
 			0
 		);
 		hunter.Set(
@@ -365,6 +367,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Sharpshooters were not that sharp.",
 			"Sharpshooters lost track of you.", 
+			"",
 			0
 		);
 		hunter.Set(

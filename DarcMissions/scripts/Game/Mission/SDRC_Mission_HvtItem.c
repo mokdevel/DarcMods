@@ -21,23 +21,24 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	private IEntity m_Target = null;
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_HvtItem(vector pos = "0 0 0", int missionSubIdx = -1)
+	void SDRC_Mission_HvtItem(SDRC_MissionRequested request)
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.HVTITEM);
-
+		vector pos = GetPos();
+		
 		//Load config
 		m_HvtItemJsonApi.Load();
 		m_Config = m_HvtItemJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.hvtItemList, missionSubIdx);
-		if (idx == -1)
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.hvtItemList, GetSubIdx()));
+		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
-		}
-		m_DC_HvtItem = m_Config.hvtItems[idx];
+		}		
+		m_DC_HvtItem = m_Config.hvtItems[GetSubIdx()];
 		
 		//Set defaults
 		if (!IsRequested())
@@ -254,6 +255,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.HVT_DESTROY_ITEM,
 			"Target destroyed.",
 			"You failed in your mission!",
+			"",
 			0
 		);
 		hvtItem.Set(
@@ -364,6 +366,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.HVT_DESTROY_ITEM,
 			"Supplies never reached the enemy. Good work!",
 			"The enemy will fight with their bellies full.",
+			"",
 			0
 		);
 		hvtItem.Set(
@@ -462,6 +465,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.HVT_DESTROY_ITEM,
 			"The comms are dead.",
 			"Enemy communication is loud and clear.",
+			"",
 			0
 		);
 		hvtItem.Set(

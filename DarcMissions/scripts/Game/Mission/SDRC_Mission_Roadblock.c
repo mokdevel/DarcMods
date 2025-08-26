@@ -19,25 +19,24 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Roadblock(vector pos = "0 0 0", int missionSubIdx = -1)
+	void SDRC_Mission_Roadblock(SDRC_MissionRequested request)
 	{
-		SDRC_Log.Add("[SDRC_Mission_Roadblock] Constructor", LogLevel.SPAM);
-				
 		//Set some defaults
 		SetType(DC_EMissionType.ROADBLOCK);
-
+		vector pos = GetPos();
+		
 		//Load config
 		m_RoadblockJsonApi.Load();
 		m_Config = m_RoadblockJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.roadblockList, missionSubIdx);
-		if (idx == -1)
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.roadblockList, GetSubIdx()));
+		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}
-		m_DC_Roadblock = m_Config.roadblocks[idx];
+		m_DC_Roadblock = m_Config.roadblocks[GetSubIdx()];
 		
 		//If not a GM requested mission, use the default one.
 		if (!IsRequested())
@@ -240,6 +239,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_75,
 			"Roadblock cleared.",
 			"Road was kept safe as planned.", 
+			"",
 			0		
 		);
 		roadblock.Set(
@@ -320,6 +320,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_ALL,
 			"These blocks can not stop you.",
 			"Scared of the enemy? %l is not a place for you.", 
+			"",
 			0		
 		);
 		roadblock.Set(
@@ -466,6 +467,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_75,
 			"Road cleared.",
 			"The road toll was too much for you.", 
+			"",
 			0		
 		);		
 		roadblock.Set(
@@ -595,6 +597,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_75,
 			"Gates do not stop you.",
 			"Guards has left road near %l.", 
+			"",
 			0		
 		);		
 		roadblock.Set(

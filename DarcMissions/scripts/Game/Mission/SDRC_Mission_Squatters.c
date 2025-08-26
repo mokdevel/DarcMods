@@ -17,25 +17,24 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	private int m_iSpawnIndex = 0;				//Counter for the AI to spawn
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Squatter(vector pos = "0 0 0", int missionSubIdx = -1)
+	void SDRC_Mission_Squatter(SDRC_MissionRequested request)
 	{
-		SDRC_Log.Add("[SDRC_Mission_Squatter] Constructor", LogLevel.SPAM);
-				
 		//Set some defaults
 		SetType(DC_EMissionType.SQUATTERS);
-
+		vector pos = GetPos();
+		
 		//Load config
 		m_SquatterJsonApi.Load();
 		m_Config = m_SquatterJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.squatterList, missionSubIdx);
-		if (idx == -1)
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.squatterList, GetSubIdx()));
+		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}
-		m_DC_Squatter = m_Config.squatters[idx];
+		m_DC_Squatter = m_Config.squatters[GetSubIdx()];
 		
 		//Set defaults
 		m_iAiCount = Math.RandomInt(m_DC_Squatter.aiCount[0], m_DC_Squatter.aiCount[1]);
@@ -262,6 +261,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_75,
 			"The loot has been secured.",
 			"Squatters cleaned the house and left you nothing.", 
+			"",
 			0		
 		);
 		squatter.Set(
@@ -313,6 +313,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_75,
 			"You did it! Control in %l has been restored.",
 			"Control in %l has been lost.",
+			"",
 			0		
 		);
 		squatter.Set(
@@ -360,6 +361,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Guards have been eliminated.",
 			"Military has collected the loot and left.", 
+			"",
 			0		
 		);
 		squatter.Set(
@@ -406,6 +408,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_50,
 			"Main enemy forces have been destroyed. Continue to keep an eye for rogues.",
 			"%l is in the hands of the enemy.", 
+			"",
 			0		
 		);
 		squatter.Set(
@@ -451,6 +454,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_RANDOM,
 			"Your success will be remembered.",
 			"Your effort has been struck down.", 
+			"",
 			0		
 		);
 		squatter.Set(
@@ -492,6 +496,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_50,
 			"%l is open for business once again.",
 			"Everything has been stolen.", 
+			"",
 			0		
 		);
 		squatter.Set(

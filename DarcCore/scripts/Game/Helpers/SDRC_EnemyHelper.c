@@ -11,13 +11,15 @@ sealed class SDRC_EnemyHelper
 	private static ref SDRC_EnemyListJsonApi m_EnemyListJsonApi = new SDRC_EnemyListJsonApi();	
 	private static ref SDRC_ListConfig m_Config;
 	private static string m_sDefaultEnemyFactionKey = "USSR";
-	private static ref array<string>m_sEnemyFactions = {};
+	private static ref array<string> m_sEnemyFactions = {};
+	private static ref array<string> m_sFactionList = {};
 	
 	//------------------------------------------------------------------------------------------------
 	static void Setup()
 	{
 		SDRC_Log.Add("[SDRC_EnemyHelper:Setup] Preparing..", LogLevel.NORMAL);
 		
+		SDRC_AIHelper.GetFactionList(m_sFactionList);
 		//Load enemy config
 		m_EnemyListJsonApi.Load();
 		m_Config = m_EnemyListJsonApi.conf;
@@ -107,12 +109,10 @@ sealed class SDRC_EnemyHelper
 	}
 
 	//------------------------------------------------------------------------------------------------
-	static ResourceName SelectEnemyFaction(string faction = "RANDOM")
+	static ResourceName SelectEnemyFaction(string faction = "")
 	{
-		if (faction == "RANDOM")
+		if (faction == "")	//RANDOM
 		{
-//			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());	
-//			faction = baseGameMode.missionFrame.m_Config.enemyFactions.GetRandomElement();				//TBD: This is pointing to missionFrame even if it's in core. Should move the enemyFactions as a parameter.
 			faction = m_sEnemyFactions.GetRandomElement();
 			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] RANDOM: " + faction, LogLevel.DEBUG);
 			return faction;
@@ -123,6 +123,22 @@ sealed class SDRC_EnemyHelper
 			faction = m_sDefaultEnemyFactionKey;
 			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] DEFAULT: " + faction, LogLevel.DEBUG);
 			return faction;
+		}
+		
+		if (faction != "")
+		{			
+			if (m_sFactionList.Contains(faction))
+			{
+				faction = m_sDefaultEnemyFactionKey;
+				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Set mission specific: " + faction, LogLevel.DEBUG);
+				return faction;
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Incorrect faction requested: " + faction + " . Using default: " + m_sDefaultEnemyFactionKey, LogLevel.WARNING);
+				faction = m_sDefaultEnemyFactionKey;
+				return faction;
+			}
 		}
 				
 		SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Selected: " + faction + " (no change)", LogLevel.DEBUG);
@@ -137,7 +153,7 @@ sealed class SDRC_EnemyHelper
 	static ResourceName SelectEnemy(string listName, string faction = "DEFAULT")
 	{
 		int index = -1;		
-		array<string>enemyList = {};
+		array<string> enemyList = {};
 		
 		if (listName[0] == "{")		//If it is already a resource name, return
 		{		

@@ -28,23 +28,24 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	private IEntity m_Vehicle = null;
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Convoy(vector pos = "0 0 0", int missionSubIdx = -1)
+	void SDRC_Mission_Convoy(SDRC_MissionRequested request)
 	{
 		//Set some defaults
-		SetType(DC_EMissionType.CONVOY);
-
+		SetType(DC_EMissionType.CONVOY);		
+		vector pos = GetPos();
+		
 		//Load config
 		m_ConvoyJsonApi.Load();
 		m_Config = m_ConvoyJsonApi.conf;
 
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.convoyList, missionSubIdx);
-		if (idx == -1)
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.convoyList, GetSubIdx()));
+		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}
-		m_DC_Convoy = m_Config.convoys[idx];
+		m_DC_Convoy = m_Config.convoys[GetSubIdx()];
 		
 		//Set defaults		
 		m_vPosDestination = m_DC_Convoy.general.pos[1];		//Destination from the defined SDRC_Convoy 
@@ -433,7 +434,8 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"Leaked travel plans show a route from %l to %d",
 			DC_EMissionWinCondition.AI_KILL_ALL,
 			"The convoy was successfully intercepted.",
-			"The convoy reached %d as planned.", 
+			"The convoy reached %d as planned.",
+			"",
 			0
 		);
 		convoy.Set(
@@ -493,6 +495,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Truck stopped, loot grabbed.",
 			"All the goodies in the truck was never for you.", 
+			"",
 			0
 		);
 		convoy.Set(
@@ -550,6 +553,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Armor destroyed. Well done!",
 			"Were you scared of a piece metal? Cowards!", 
+			"",
 			0
 		);
 		convoy.Set(
@@ -606,6 +610,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.AI_KILL_ALL,
 			"Nice shooting!",
 			"Oh dear, your failure will be remembered.", 
+			"",
 			0
 		);
 		convoy.Set(

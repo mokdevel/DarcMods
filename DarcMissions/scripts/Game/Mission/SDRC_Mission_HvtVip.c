@@ -21,23 +21,24 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	private SCR_AIGroup m_Target = null;
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_HvtVip(vector pos = "0 0 0", int missionSubIdx = -1)
+	void SDRC_Mission_HvtVip(SDRC_MissionRequested request)
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.HVTVIP);
-
+		vector pos = GetPos();
+		
 		//Load config
 		m_HvtVipJsonApi.Load();
 		m_Config = m_HvtVipJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.hvtVipList, missionSubIdx);
-		if (idx == -1)
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.hvtVipList, GetSubIdx()));
+		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
-		}
-		m_DC_HvtVip = m_Config.hvtVips[idx];
+		}	
+		m_DC_HvtVip = m_Config.hvtVips[GetSubIdx()];
 		
 		//Set defaults
 		m_iGroupCount = Math.RandomInt(m_DC_HvtVip.groupCount[0], m_DC_HvtVip.groupCount[1]);
@@ -312,6 +313,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.HVT_KILL_VIP,
 			"The target has been neutralized.",
 			"The target escaped.",
+			"",
 			0		
 		);
 		HvtVip.Set(
@@ -363,6 +365,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.HVT_KILL_VIP,
 			"The target has been neutralized.",
 			"The target escaped.",
+			"",
 			0		
 		);
 		HvtVip.Set(
@@ -408,6 +411,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.HVT_KILL_VIP,
 			"The target has been neutralized.",
 			"The target escaped.",
+			"",
 			0		
 		);
 		HvtVip.Set(
@@ -453,6 +457,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			DC_EMissionWinCondition.HVT_KILL_VIP,
 			"The criminal got what he deserved.",
 			"The judgement day is posponed.",
+			"",
 			0		
 		);
 		HvtVip.Set(
