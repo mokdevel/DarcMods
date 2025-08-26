@@ -81,32 +81,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}
-		
-/*				
-		if (!IsRequested())
-		{
-			pos = m_DC_Convoy.pos;
-			
-			//Find a location for the mission
-			if (pos == "0 0 0")
-			{
-				pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.locationTypes);
-				if (pos != "0 0 0")
-				{
-					SDRC_RoadPos roadPos = new SDRC_RoadPos();
-					pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
-					if (pos == "0 0 0")
-					{
-						SDRC_Log.Add("[SDRC_Mission_Convoy] No start road found.", LogLevel.ERROR);
-					}
-				}
-				else
-				{
-					pos = "0 0 0";
-				}
-			}
-		}
-*/		
+	
 		//Find a location for the destination
 		if (m_vPosDestination == "0 0 0" && pos != "0 0 0")
 		{

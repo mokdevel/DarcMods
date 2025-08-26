@@ -56,7 +56,6 @@ class SDRC_MissionConfigGeneral : Managed
 	string loseMessage = "";				//Message to show when mission fails
 	string faction = "";
 	int xp = 0;								//Experience given	
-	//TBD: string faction;
 	
 	void Set(string comment_, array<vector> pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, int xp_)
 	{
@@ -76,34 +75,30 @@ class SDRC_MissionConfigGeneral : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission
 {
+	static int m_MissionIDCounter = 1;			//Static counter for mission ID
+	
 	//Common for all missions
+    private string m_Id;
 	private DC_EMissionState m_State;
 	private DC_EMissionType m_Type;
 	private bool m_Static;						//Defines if the mission is dynamic or static. Dynamic is default. 
-    private string m_Id;
     private bool m_ShowHint;
     private bool m_ShowMessage;
 	private bool m_bShowMarker;					//If the icon is to be shown
-	private int m_iSubIdx;						//Sub mission index
+	private string m_sMarkerType;				//Markertype defined by SCR_EMapMarkerType
 	
 	//Common for all sub missions
-	private ref array<vector> m_Pos = {};
-    private string m_sPosName;
-    private string m_sTitle;
-    private string m_sInfo;
-    private string m_sWinMessage;
-    private string m_sLoseMessage;
-	private DC_EMissionWinCondition m_WinCondition;
-	private string m_sMarkerType;				//Markertype defined by SCR_EMapMarkerType
-	private string m_sFaction;					//Faction for the mission		
+	private int m_iSubIdx;						//Sub mission index
+	private ref SDRC_MissionConfigGeneral m_General = new SDRC_MissionConfigGeneral();
+
 	//Internals
 	private bool m_bRequested;					//The missions spawn was requested by a an external party (like GM)
 	private DC_EMissionSuccess m_Success;
+	//Internals without getters
 	private int m_StartTime;					//Seconds when mission started
 	private int m_EndTime;						//Seconds when mission shall end.
 	private int m_ActiveTime;					//Seconds of how long the mission should be active
 	private DC_EMissionIcon m_sIcon;			//The icon to show
-	//Internals without getters
 	private int m_iActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
 	private int m_iActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
 	private bool m_bMissionIsEnding;			//Once all AIs are dead, we're getting close to end the mission.
@@ -118,41 +113,42 @@ class SDRC_Mission
 	{
 		vector pos = "0 0 0";
 		
+		m_Id = DC_ID_PREFIX + SCR_StringHelper.PadLeft(string.ToString(m_MissionIDCounter), 4, "0");
+		m_MissionIDCounter++;
 		m_State = DC_EMissionState.INIT;
 		m_Type = DC_EMissionType.NONE;
 		m_Static = false;
-		m_Id = DC_ID_PREFIX + string.ToString(System.GetTickCount());
 		m_ShowHint = true;
 		m_ShowMessage = true;
 		m_bShowMarker = true;
 		
-		m_WinCondition = DC_EMissionWinCondition.AI_KILL_ALL;
+		m_General.winCondition = DC_EMissionWinCondition.AI_KILL_ALL;
 		m_sMarkerType = "DARC_MISSION";
-		
-		m_Pos.Clear();
+
+		m_General.pos.Clear();
 		
 		if (!request)
 		{
 			m_iSubIdx = -1;
-			m_Pos.Insert(pos);
-			m_Pos.Insert("0 0 0");	//Destination
-			m_sPosName = "";
-			m_sTitle = "";
-			m_sInfo = "";
-			m_sWinMessage = "";
-			m_sLoseMessage = "";			
+			m_General.pos.Insert(pos);
+			m_General.pos.Insert("0 0 0");	//Destination
+			m_General.posName = "";
+			m_General.title = "";
+			m_General.info = "";
+			m_General.winMessage = "";
+			m_General.loseMessage = "";			
 			SetFaction(SDRC_EnemyHelper.SelectEnemyFaction()); 		//m_sFaction 
 		}
 		else
 		{
 			m_iSubIdx = request.subIdx;			
-			m_Pos.Insert(request.general.pos[0]);
-			m_Pos.Insert(request.general.pos[1]);
-			m_sPosName = request.general.posName;
-			m_sTitle = request.general.title;
-			m_sInfo = request.general.info;
-			m_sWinMessage = request.general.winMessage;
-			m_sLoseMessage = request.general.loseMessage;
+			m_General.pos.Insert(request.general.pos[0]);
+			m_General.pos.Insert(request.general.pos[1]);
+			m_General.posName = request.general.posName;
+			m_General.title = request.general.title;
+			m_General.info = request.general.info;
+			m_General.winMessage = request.general.winMessage;
+			m_General.loseMessage = request.general.loseMessage;
 			SetFaction(SDRC_EnemyHelper.SelectEnemyFaction(request.general.faction)); 		//m_sFaction 
 		}
 		
@@ -331,24 +327,24 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	vector GetPos()
 	{
-		return m_Pos[0];
+		return m_General.pos[0];
 	}
 
 	void SetPos(vector pos, vector destination = "0 0 0")
 	{
-		m_Pos[0] = pos;
-		m_Pos[1] = destination;
+		m_General.pos[0] = pos;
+		m_General.pos[1] = destination;
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	string GetPosName()
 	{
-		return m_sPosName;
+		return m_General.posName;
 	}
 
 	void SetPosName(string posname)
 	{
-		m_sPosName = posname;
+		m_General.posName = posname;
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -372,33 +368,33 @@ class SDRC_Mission
 	
 	string GetTitle()
 	{
-		return m_sTitle;
+		return m_General.title;
 	}
 	
 	void SetTitle(string title)
 	{
-		m_sTitle = FixString(title);
+		m_General.title = FixString(title);
 	}
 
 	string GetInfo()
 	{		
-		return m_sInfo;	//GetPosName() + " at " + GetPos();
+		return m_General.info;	//GetPosName() + " at " + GetPos();
 	}
 
 	void SetInfo(string info)
 	{		
-		m_sInfo = FixString(info);
+		m_General.info = FixString(info);
 	}
 	
 	//------------------------------------------------------------------------------------------------	
 	void SetWinCondition(DC_EMissionWinCondition winCondition)
 	{
-		m_WinCondition = winCondition;
+		m_General.winCondition = winCondition;
 	}
 	
 	DC_EMissionWinCondition GetWinCondition()
 	{
-		return m_WinCondition;
+		return m_General.winCondition;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -422,22 +418,22 @@ class SDRC_Mission
 	
 	string GetWinMessage()
 	{
-		return m_sWinMessage;
+		return m_General.winMessage;
 	}
 	
 	void SetWinMessage(string message)
 	{
-		m_sWinMessage = FixString(message);
+		m_General.winMessage = FixString(message);
 	}
 	
 	string GetLoseMessage()
 	{
-		return m_sLoseMessage;
+		return m_General.loseMessage;
 	}
 	
 	void SetLoseMessage(string message)
 	{
-		m_sLoseMessage = FixString(message);
+		m_General.loseMessage = FixString(message);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -454,12 +450,12 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	string GetFaction()
 	{
-		return m_sFaction;
+		return m_General.faction;
 	}
 			
 	void SetFaction(string faction)
 	{
-		m_sFaction = faction;
+		m_General.faction = faction;
 		SDRC_Log.Add("[SDRC_Mission:SetFaction] " +  GetId() + " : " + faction, LogLevel.SPAM);		
 	}
 			
@@ -550,7 +546,7 @@ class SDRC_Mission
 		{			
 			float aiKillPercentage = (1 - GetAICount()/m_iAICountOriginal);
 			
-			switch (m_WinCondition)
+			switch (m_General.winCondition)
 			{
 				case DC_EMissionWinCondition.AI_KILL_ALL:
 				{
@@ -596,7 +592,7 @@ class SDRC_Mission
 		if (!checkOnlyWinCondition)
 		{
 			//Are there players still nearby
-			if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_Pos[0], 0, m_iActiveDistance))
+			if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_General.pos[0], 0, m_iActiveDistance))
 			{
 				ResetActiveTime();
 				return true;
@@ -721,9 +717,9 @@ class SDRC_Mission
 	private string FixString(string info)
 	{
 		string destinationName = "";
-		if (m_Pos[1] != "0 0 0")
+		if (m_General.pos[1] != "0 0 0")
 		{
-			destinationName = SDRC_Locations.CreateName(m_Pos[1], "any");			
+			destinationName = SDRC_Locations.CreateName(m_General.pos[1], "any");			
 		}
 		
 		info = SDRC_MissionHelper.CreateInfo(info, GetPosName(), destinationName);
