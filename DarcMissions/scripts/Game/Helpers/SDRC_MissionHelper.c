@@ -5,15 +5,6 @@
 Includes various functions for missions. 
 */
 
-enum DC_EMissionPosFailReason
-{
-	NONE,
-	POS_IN_WATER,
-	PLAYER_TOO_CLOSE,
-	MISSION_TOO_CLOSE,
-	IN_NON_VALID_AREA
-};
-
 //------------------------------------------------------------------------------------------------
 sealed class SDRC_MissionHelper
 {
@@ -231,25 +222,25 @@ sealed class SDRC_MissionHelper
 
 		if (SDRC_Misc.IsPosInWater(pos))
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionPosFailReason, DC_EMissionPosFailReason.POS_IN_WATER), LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionFailReason, DC_EMissionFailReason.POS_IN_WATER), LogLevel.WARNING);
 			return false;
 		}
 				
 		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, distanceToPlayer))
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionPosFailReason, DC_EMissionPosFailReason.PLAYER_TOO_CLOSE), LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionFailReason, DC_EMissionFailReason.PLAYER_TOO_CLOSE), LogLevel.WARNING);
 			return false;
 		}
 
 		if (IsAnyMissionCloseToPos(pos, distanceToMission))
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionPosFailReason, DC_EMissionPosFailReason.MISSION_TOO_CLOSE), LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionFailReason, DC_EMissionFailReason.MISSION_TOO_CLOSE), LogLevel.WARNING);
 			return false;
 		}
 
 		if (IsPosInNonValidArea(pos))
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionPosFailReason, DC_EMissionPosFailReason.IN_NON_VALID_AREA), LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionFailReason, DC_EMissionFailReason.IN_NON_VALID_AREA), LogLevel.WARNING);
 			return false;
 		}
 										
