@@ -1,0 +1,26 @@
+FrameWidgetClass {
+ {
+  FrameWidgetClass "{66353C835F215B02}" {
+   Name "StoryFrame"
+   Slot FrameWidgetSlot "{66353C835F215AC9}" {
+   }
+   "Z Order" 100
+   "Is Enabled" 0
+   "Is Visible" 0
+   components {
+    SCR_MapElementMoveComponent "{663544CDC4D69ECD}" {
+     m_bCanDragOffScreen 1
+    }
+   }
+   {
+    ImageWidgetClass "{66353C834E387694}" {
+     Name "StoryImage"
+     Slot FrameWidgetSlot "{66353C834E3876B2}" {
+     }
+     Texture "{FE1BB19B7DA76252}Assets/_SharedData/Glass/ST_Glass_Wired_01_A.edds"
+     Size 1024 1024
+    }
+   }
+  }
+ }
+}

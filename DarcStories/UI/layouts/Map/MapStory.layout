@@ -1,0 +1,38 @@
+FrameWidgetClass {
+ Name "StoryFrame"
+ Slot FrameWidgetSlot "{59387C05F9964BF9}" {
+  Anchor 0 0 0 0
+  OffsetLeft 0
+  OffsetTop 0
+  SizeX 100
+  OffsetRight -100
+  SizeY 30
+  OffsetBottom -30
+  Alignment 0.5 0.5
+  SizeToContent 1
+ }
+ Clipping False
+ "Ignore Cursor" 0
+ components {
+  SCR_MapElementMoveComponent "{59A08422C9F3821D}" {
+   m_bCanDragOffScreen 1
+   m_bCanRotate 1
+   m_bCanActivate 1
+   m_bCanResetRotation 1
+  }
+ }
+ {
+  ImageWidgetClass "{663518AA404FDE41}" {
+   Name "StoryImage"
+   Slot FrameWidgetSlot "{5986CBADA822726B}" {
+    OffsetLeft 0
+    OffsetTop 0
+    OffsetRight -100
+    OffsetBottom -30
+    SizeToContent 1
+   }
+   Texture "{FC855D20AA561819}UI/Textures/Map/ProtractorScale.edds"
+   Size 512 512
+  }
+ }
+}
