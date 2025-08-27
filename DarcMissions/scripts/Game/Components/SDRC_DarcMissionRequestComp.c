@@ -23,6 +23,8 @@ class SDRC_DarcMissionRequestComp : ScriptGameComponent
 	[Attribute("-1", UIWidgets.EditBox, desc: "Test mission index variable", param)]	
 	protected int m_MissionSubIdx;				//The sub type of mission	
 	
+	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
+	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Get/set mission type

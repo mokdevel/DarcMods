@@ -34,7 +34,7 @@ class SDRC_StoriesFrameConfig : Managed
 	int storiesFrameCycleTime;		//The cycle time to manage mission spawning, deletion etc... (seconds)	
 	
 	ref array<ref int> storiesList = {};	//The indexes of stories
-	ref array<SDRC_Story> stories = {};		//List stories	
+	ref array<ref SDRC_Story> stories = {};		//List stories	
 }
 
 //------------------------------------------------------------------------------------------------

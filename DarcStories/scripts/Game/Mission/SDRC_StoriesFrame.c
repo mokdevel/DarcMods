@@ -31,6 +31,7 @@ class SDRC_StoriesFrame
 //	ref array<ref SDRC_Mission> m_MissionList = new array<ref SDRC_Mission>;
 	ref SDRC_StoriesFrameJsonApi m_DC_StoriesFrameJsonApi = new SDRC_StoriesFrameJsonApi();
 	ref SDRC_StoriesFrameConfig m_Config;
+	ref SDRC_Story m_Story;
 	
 	private string m_sWorldName;
 	
@@ -50,6 +51,7 @@ class SDRC_StoriesFrame
 		m_Config = m_DC_StoriesFrameJsonApi.conf;
 		
 		m_DC_StoriesFrameJsonApi.LoadStories();
+		m_Story = m_Config.stories[0];
 		
 		//Fix seconds to ms
 		SDRC_Log.Add("[SDRC_StoriesFrame] Waiting for " + m_Config.storiesStartDelay + " seconds before spawning stories.", LogLevel.NORMAL);
@@ -92,7 +94,7 @@ class SDRC_StoriesFrame
 		missionEntity = SDRC_SpawnHelper.SpawnItem(pos, resourceName, 0, -1);
 		if (missionEntity)
 		{		
-			GetGame().GetCallqueue().CallLater(SetMissionParameters, 2000, false, missionEntity);			
+			GetGame().GetCallqueue().CallLater(SetMissionParameters_Delayed, 2000, false, missionEntity, 0);
 		}
 		else
 		{
@@ -102,13 +104,14 @@ class SDRC_StoriesFrame
 //		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.storiesFrameCycleTime*1000, false);
 	}
 	
-	protected void SetMissionParameters(IEntity missionEntity)
+	protected void SetMissionParameters_Delayed(IEntity missionEntity, int chapterIdx)
 	{
 		SDRC_DarcMissionGM ent = SDRC_DarcMissionGM.Cast(missionEntity);
 		if (ent)
 		{
 			SDRC_DarcMissionRequestComp requestComp = SDRC_DarcMissionRequestComp.Cast(ent.FindComponent(SDRC_DarcMissionRequestComp));
 			requestComp.SetMissionSubIdx(3);
+			requestComp.general = m_Story.chapters[chapterIdx].general;
 		}		
 	}
 	

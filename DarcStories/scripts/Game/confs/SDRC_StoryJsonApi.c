@@ -30,36 +30,6 @@ enum DC_ENextChapter
 }
 
 //------------------------------------------------------------------------------------------------
-class SDRC_Chapter : Managed
-{
-	int id;
-	DC_EMissionType missionType;		//Type of the mission
-	int subIdx;							//Sub mission index
-	string comment;
-	string title;
-	string intro;
-	string wintro;
-	string losetro;
-	int activeTime;
-	ref array<int> nextChapter = {};			//Where to go after a win, lose		
-	ref SDRC_MissionConfigGeneral missionConf = new SDRC_MissionConfigGeneral();		
-	
-	void Set(int id_, DC_EMissionType missionType_, int subIdx_, string comment_, string title_, string intro_, string wintro_, string losetro_, int activeTime_, array<int> nextChapter_)
-	{
-		id = id_;
-		missionType = missionType_;
-		subIdx = subIdx_;
-		comment = comment_;
-		title = title_;
-		intro = intro_;
-		wintro = wintro_;
-		losetro = losetro_;
-		activeTime = activeTime;
-		nextChapter = nextChapter_;
-	}		
-}
-
-//------------------------------------------------------------------------------------------------
 class SDRC_Story : Managed
 {
 	int id;
@@ -72,7 +42,7 @@ class SDRC_Story : Managed
 	//Set outside of Set()
 	int index = 0;
 	DC_EStoryState state = DC_EStoryState.INIT;
-	ref array<SDRC_Chapter> chapters = {};
+	ref array<ref SDRC_Chapter> chapters = {};
 	
 	void Set(int id_, string comment_, string title_, string intro_, string wintro_, string losetro_, array<string> dependencies_, )
 	{
@@ -87,6 +57,26 @@ class SDRC_Story : Managed
 		//NOTE: state handled outside
 		//NOTE: chapters are added separately
 	}	
+}
+
+//------------------------------------------------------------------------------------------------
+class SDRC_Chapter : Managed
+{
+	int id;
+	DC_EMissionType missionType;		//Type of the mission
+	int subIdx;							//Sub mission index
+	int activeTime;
+	ref array<int> nextChapter = {};			//Where to go after a win, lose		
+	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();		
+		
+	void Set(int id_, DC_EMissionType missionType_, int subIdx_, int activeTime_, array<int> nextChapter_)
+	{
+		id = id_;
+		missionType = missionType_;
+		subIdx = subIdx_;
+		activeTime = activeTime;
+		nextChapter = nextChapter_;
+	}		
 }
 
 //------------------------------------------------------------------------------------------------
@@ -152,14 +142,11 @@ class SDRC_StoryJsonApi : SDRC_JsonApi
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
 			0, DC_EMissionType.OCCUPATION, 3, 
-			"id 0:",
-			"Chapter Title",
-			"Chapter intro",
-			"Chapter wintro",
-			"Chapter losetro",
 			SDRC_STORIES_CHAPTER_TIME_DEFAULT,
 			{1, DC_ENextChapter.LOSE},
 		);
+		
+		chapter.general.SetDefaults("Chapter 0");
 	
 		return chapter;
 	};	
@@ -169,15 +156,12 @@ class SDRC_StoryJsonApi : SDRC_JsonApi
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
 			1, DC_EMissionType.ROADBLOCK, 1, 
-			"id 1:",
-			"Chapter Title",
-			"Chapter intro",
-			"Chapter wintro",
-			"Chapter losetro",
 			SDRC_STORIES_CHAPTER_TIME_DEFAULT,
 			{DC_ENextChapter.WIN, DC_ENextChapter.LOSE},
 		);
 	
+		chapter.general.SetDefaults("Chapter 1");
+		
 		return chapter;
 	};	
 }

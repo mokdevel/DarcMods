@@ -13,7 +13,8 @@ enum DC_EMissionState
 
 enum DC_EMissionWinCondition
 {
-	NONE,
+	DEFAULT = -1,
+	NONE = 0,
 	AI_KILL_ALL,
 	AI_KILL_75,
 	AI_KILL_50,
@@ -48,14 +49,22 @@ class SDRC_MissionConfigGeneral : Managed
 {
 	string comment = "";					//Generic comment to describe the mission. Not used in game.
 	ref array<vector> pos = {};				//Positions for mission. "0 0 0" used for random location chosen from locationTypes. First is mission position, second is destination for missions that need it.
-	string posName = "any";					//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
-	string title = "";						//Title for the hint shown for players
-	string info = "";						//Details for the hint shown for players
-	DC_EMissionWinCondition winCondition;	//Mission win condidition
-	string winMessage = "";					//Message to show when mission is completed
-	string loseMessage = "";				//Message to show when mission fails
-	string faction = "";
+	string posName = "default";				//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
+	string title = "default";				//Title for the hint shown for players
+	string info = "default";				//Details for the hint shown for players
+	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.DEFAULT;	//Mission win condidition
+	string winMessage = "default";			//Message to show when mission is completed
+	string loseMessage = "default";			//Message to show when mission fails
+	string faction = "default";
 	int xp = 0;								//Experience given	
+	
+	void SetDefaults(string comment_)
+	{
+		comment = comment_;
+		//Set defaults
+		pos.Insert("0 0 0");	//Set position
+		pos.Insert("0 0 0");	//Set destination
+	}
 	
 	void Set(string comment_, array<vector> pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, int xp_)
 	{
