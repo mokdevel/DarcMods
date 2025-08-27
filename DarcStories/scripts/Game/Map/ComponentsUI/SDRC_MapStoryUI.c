@@ -1,25 +1,17 @@
 class SDRC_MapStoryUI : SCR_MapRulerUI
 {
-/*	[Attribute(defvalue: "1994", uiwidget: UIWidgets.EditBox, desc: "pix, exact length of the ruler within the provided image, default base length being 1km in world space")]
-	float m_fRulerLength;
-
-//	[Attribute("StoryFrame", UIWidgets.EditBox, desc: "Root frame widget name")]
-	string m_sRootWidgetName;
-	
-//	[Attribute("StoryImage", UIWidgets.EditBox, desc: "Ruler image widget name")]
-	string m_sImageWidgetName; 
-	
-	//[Attribute("ruler", UIWidgets.EditBox, desc: "Toolmenu imageset quad name")]
-	string m_sToolMenuIconName;
-*/	
 	const string TOOL_MENU_ICONSET = "{A07F0C1D34FDFD4E}UI/Textures/Icons/SDRC_icons_mapMarkersUInew.imageset";
 	const string TOOL_MENU_ICON_NAME = "icon_DeathMarker_map";
+	
+	// Widgets
+	protected TextWidget m_wTitle;
+	protected TextWidget m_wText;
 	
 	//------------------------------------------------------------------------------------------------
 	override void Init()
 	{
-		m_sRootWidgetName = "StoryFrame";
-		m_sImageWidgetName = "StoryImage";
+//		m_sRootWidgetName = "StoryFrame";
+//		m_sImageWidgetName = "StoryImage";
 		
 		m_fPosX = 0;
 		m_fPosY = 0;
@@ -35,7 +27,20 @@ class SDRC_MapStoryUI : SCR_MapRulerUI
 			GetGame().GetInputManager().AddActionListener("MapToolProtractor", EActionTrigger.DOWN, OnInputQuickBind);
 		}
 	}
+
+	//------------------------------------------------------------------------------------------------
+	override void OnMapOpen(MapConfiguration config)
+	{
+		// refresh widgets
+		m_wTitle = TextWidget.Cast(m_RootWidget.FindAnyWidget("StoryTitle"));
+		m_wText = TextWidget.Cast(m_RootWidget.FindAnyWidget("StoryText"));
+		
+		m_wTitle.SetText("Yeah, new title");
+
+		super.OnMapOpen(config);
+	}
 	
+		
 	//------------------------------------------------------------------------------------------------
 	// constructor
 	void SCR_MapStoryUI()
