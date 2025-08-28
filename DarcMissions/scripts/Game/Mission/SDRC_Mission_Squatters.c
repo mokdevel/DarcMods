@@ -28,13 +28,14 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		m_Config = m_SquatterJsonApi.conf;
 		
 		//Pick a configuration for mission
-		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.squatterList, GetSubIdx()));
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
 		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}
 		m_DC_Squatter = m_Config.squatters[GetSubIdx()];
+		HandleRequestGeneralVariables(m_DC_Squatter.general, request);
 		
 		//Set defaults
 		m_iAiCount = Math.RandomInt(m_DC_Squatter.aiCount[0], m_DC_Squatter.aiCount[1]);
@@ -171,7 +172,6 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 	
 	//Variables here
 	int buildingRadius;									//The radius to search for suitable buildings.
-	ref array<ref int> squatterList = {};				//The indexes of squatters.
 	ref array<ref SDRC_Squatter> squatters = {};		//List of squatters
 }
 
@@ -236,9 +236,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP;
+		conf.missionList = {0,1,2,2,3,3,3,4,5,5,5};
 		//Mission specific
 		conf.buildingRadius = 400;
-		conf.squatterList = {0,1,2,2,3,3,3,4,5,5,5};
 		//----------------------------------------------------
 		conf.squatters.Insert(Squatter0());				
 		conf.squatters.Insert(Squatter1());				
@@ -253,7 +253,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
-			"index 0: Squatters in cities",
+			0, "index 0: Squatters in cities",
 			{"0 0 0"},
 			"any",
 			"Squatters near %l.",
@@ -305,7 +305,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
-			"index 1: Squatters in control towers",
+			1, "index 1: Squatters in control towers",
 			{"0 0 0"},
 			"any",
 			"Enemy in %l",
@@ -353,7 +353,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
-			"index 2: Squatters in military locations",
+			2, "index 2: Squatters in military locations",
 			{"0 0 0"},
 			"any",
 			"Guards around %l",
@@ -400,7 +400,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
-			"index 3: Military in industrial areas",
+			3, "index 3: Military in industrial areas",
 			{"0 0 0"},
 			"any",
 			"Industrial area near %l",
@@ -446,7 +446,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
-			"index 4: Enemy in churches and similar",
+			4, "index 4: Enemy in churches and similar",
 			{"0 0 0"},
 			"any",
 			"Sanctuary visitors near %l",
@@ -488,7 +488,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
-			"index 5: Shops and houses",
+			5, "index 5: Shops and houses",
 			{"0 0 0"},
 			"any",
 			"Burglars seen near %l",

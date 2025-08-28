@@ -21,20 +21,20 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		//Set some defaults
 		SetType(DC_EMissionType.OCCUPATION);
 		vector pos = GetPos();
-		int missionSubIdx = GetSubIdx();
 		
 		//Load config
 		m_OccupationJsonApi.Load();
 		m_Config = m_OccupationJsonApi.conf;
 		
 		//Pick a configuration for mission
-		int idx = SDRC_MissionHelper.SelectMissionIndex(m_Config.occupationList, missionSubIdx);
-		if (idx == -1)
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
+		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}
-		m_DC_Occupation = m_Config.occupations[idx];
+		m_DC_Occupation = m_Config.occupations[GetSubIdx()];
+		HandleRequestGeneralVariables(m_DC_Occupation.general, request);
 				
 		//Set defaults
 		if (!IsRequested())
@@ -137,7 +137,6 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 {
 	//Mission specific	
 	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found
-	ref array<ref int> occupationList = {};			//The indexes of occupations.
 	ref array<ref SDRC_Camp> occupations = {};		//List of occupations
 }
 
@@ -176,9 +175,9 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		//Default		
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP;
+		conf.missionList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
+//		conf.missionList = {6};//{0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
 		//Mission specific		
-		conf.occupationList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
-//		conf.occupationList = {6};//{0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
 		//----------------------------------------------------
 		conf.occupations.Insert(Occupation0());				
 		conf.occupations.Insert(Occupation1());				
@@ -194,7 +193,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
-			"index 0: Mission in villages and local areas.",
+			0, "index 0: Mission in villages and local areas.",
 			{"0 0 0"},
 			"any",
 			"Guards patroling near %l",
@@ -230,7 +229,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
-			"index 1: Bandit camp spawning to non city areas",
+			1, "index 1: Bandit camp spawning to non city areas",
 			{"0 0 0"},
 			"any",
 			"Bandit camp near %l",
@@ -312,7 +311,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
-			"index 2: Occupation that will spawn mainly to cities and towns.",
+			2, "index 2: Occupation that will spawn mainly to cities and towns.",
 			{"0 0 0"},
 			"any",
 			"Occupation in %l",
@@ -400,7 +399,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
-			"index 3: Car crash in an unusual place",
+			3, "index 3: Car crash in an unusual place",
 			{"0 0 0"},
 			"any",
 			"Car crash near %l",
@@ -498,7 +497,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
-			"index 4: Campers with a car and a tent",
+			4, "index 4: Campers with a car and a tent",
 			{"0 0 0"},
 			"any",
 			"Campers near %l",
@@ -609,7 +608,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
-			"index 5: A small town",
+			5, "index 5: A small town",
 			{"0 0 0"},
 			"any",
 			"Settlement near %l",
@@ -770,7 +769,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
-			"index 6: Zombies and Demons.",
+			6, "index 6: Zombies and Demons.",
 			{"0 0 0"},
 			"any",
 			"Creatures near %l",

@@ -13,6 +13,7 @@ FrameWidgetClass {
    }
    "Z Order" 100
    "Is Enabled" 0
+   "Is Visible" 0
    components {
     SCR_MapElementMoveComponent "{663544CDC4D69ECD}" {
      m_bCanDragOffScreen 1
@@ -29,6 +30,8 @@ FrameWidgetClass {
       SizeY 600
       OffsetBottom -600
      }
+     "Is Enabled" 0
+     "Is Visible" 0
      Opacity 0.65
      Texture "{8532574B81ED8703}UI/Textures/FieldManual/Common/Tiles/background_nU_ui.edds"
      Size 400 400
@@ -46,6 +49,8 @@ FrameWidgetClass {
       SizeY 64
       OffsetBottom -74
      }
+     "Is Enabled" 0
+     "Is Visible" 0
      Texture "{16296D7B325A094B}UI/Textures/Icons/gm_mission_X_round.edds"
      Size 71 69
     }
@@ -62,6 +67,8 @@ FrameWidgetClass {
       OffsetBottom -460
       SizeToContent 1
      }
+     "Is Enabled" 0
+     "Is Visible" 0
      Color 0 0 0 1
     }
     TextWidgetClass "{6636846C05A95D80}" {
@@ -76,6 +83,8 @@ FrameWidgetClass {
       SizeY 450
       OffsetBottom -490
      }
+     "Is Enabled" 0
+     "Is Visible" 0
      Color 0 0 0 1
      Text "Their mission, Operation Silent Watch, was simple in objective, complex in execution: confirm or deny the presence of a high-value target, codenamed \"Vulture,\" who was suspected of using the city as a staging ground for a weaponized drone program."\
      ""\

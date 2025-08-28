@@ -45,6 +45,7 @@
 		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;
 	#endif
 
+//------------------------------------------------------------------------------------------------
 class SDRC_MissionTypeConfig : Managed
 {
 	int count;
@@ -148,7 +149,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 											DC_EMissionType.ROADBLOCK, DC_EMissionType.ROADBLOCK, 
 											DC_EMissionType.HVTVIP, DC_EMissionType.HVTVIP,
 											DC_EMissionType.HVTITEM, DC_EMissionType.HVTITEM,
-											DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, DC_EMissionType.SQUATTER, 
+											DC_EMissionType.SQUATTERS, DC_EMissionType.SQUATTERS, DC_EMissionType.SQUATTERS, DC_EMissionType.SQUATTERS, 
 											DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION, DC_EMissionType.OCCUPATION,
 											};
 			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY, DC_EMissionType.ROADBLOCK};

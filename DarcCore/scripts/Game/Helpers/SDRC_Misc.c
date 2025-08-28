@@ -258,7 +258,7 @@ sealed class SDRC_Misc
 	/*!
 	Returns the resourceName in human readable format
 	*/	
-	static string GetEntityName(ResourceName resourceName)
+	static string GetSimpleEntityName(ResourceName resourceName)
 	{
 		string name = SCR_StringHelper.FormatResourceNameToUserFriendly(resourceName);
 		name = SCR_StringHelper.ReplaceRecursive(name, " ", "_");

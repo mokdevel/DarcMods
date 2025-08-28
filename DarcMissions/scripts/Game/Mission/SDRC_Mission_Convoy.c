@@ -39,13 +39,14 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		m_Config = m_ConvoyJsonApi.conf;
 
 		//Pick a configuration for mission
-		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.convoyList, GetSubIdx()));
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
 		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}
 		m_DC_Convoy = m_Config.convoys[GetSubIdx()];
+		HandleRequestGeneralVariables(m_DC_Convoy.general, request);
 		
 		//Set defaults		
 		m_vPosDestination = m_DC_Convoy.general.pos[1];		//Destination from the defined SDRC_Convoy 
@@ -323,7 +324,6 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 	int convoyTime;									//Time to patrol, in seconds
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
 	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found
-	ref array<ref int> convoyList = {};				//The indexes of convoys.
 	ref array<ref SDRC_Convoy> convoys = {};		//List of convoys
 }
 
@@ -386,8 +386,8 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_CONVOY_MAP;
+		conf.missionList = {0,0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
 		//Mission specific
-		conf.convoyList = {0,0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
 		conf.distanceToPlayer = 500;
 		conf.disableArsenal = true;
 		//----------------------------------------------------
@@ -402,7 +402,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Convoy convoy = new SDRC_Convoy();
 		convoy.general.Set(
-			"index 0: Convoy driving from .. to ..",
+			0, "index 0: Convoy driving from .. to ..",
 			{"0 0 0", "0 0 0"},
 			"any",
 			"Convoy is on the move.",
@@ -462,7 +462,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Convoy convoy = new SDRC_Convoy();
 		convoy.general.Set(
-			"index 1: Truck driving from .. to ..",
+			1, "index 1: Truck driving from .. to ..",
 			{"0 0 0", "0 0 0"},
 			"any",
 			"Cargo truck is on the move.",
@@ -520,7 +520,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Convoy convoy = new SDRC_Convoy();
 		convoy.general.Set(
-			"index 2: Armor driving from .. to ..",
+			2, "index 2: Armor driving from .. to ..",
 			{"0 0 0", "0 0 0"},
 			"any",
 			"Armor spotted",
@@ -577,7 +577,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Convoy convoy = new SDRC_Convoy();
 		convoy.general.Set(
-			"index 3: Vehicle with a gun driving from .. to ..",
+			3, "index 3: Vehicle with a gun driving from .. to ..",
 			{"0 0 0", "0 0 0"},
 			"any",
 			"Guns on the move",

@@ -37,13 +37,14 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		m_Config = m_HunterJsonApi.conf;
 		
 		//Pick a configuration for mission
-		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.hunterList, GetSubIdx()));
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
 		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}		
 		m_DC_Hunter = m_Config.hunters[GetSubIdx()];
+		HandleRequestGeneralVariables(m_DC_Hunter.general, request);
 		
 		m_iGroupsToSpawn = Math.RandomInt(m_DC_Hunter.groupCount[0], m_DC_Hunter.groupCount[1]);
 		
@@ -260,7 +261,6 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 	int minDistanceToPlayer;				//Hunter group minimum distance to player for spawn
 	int maxDistanceToPlayer;				//...max distance to despawn
 	int rndDistanceToPlayer;				//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
-	ref array<ref int> hunterList = {};				//The indexes of hunters.
 	ref array<ref SDRC_Hunter> hunters = {};		//List of hunters
 }
 
@@ -318,11 +318,11 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_X_MAP;
 		conf.showMarker = false;
+		conf.missionList = {0,0,0,1};
 		//Mission specific
 		conf.minDistanceToPlayer = 200;
 		conf.maxDistanceToPlayer = 800;
 		conf.rndDistanceToPlayer = 60;
-		conf.hunterList = {0,0,0,1};
 		
 		//----------------------------------------------------
 		conf.hunters.Insert(Hunter0());				
@@ -334,7 +334,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 	{		
 		ref SDRC_Hunter hunter = new SDRC_Hunter();
 		hunter.general.Set(
-			"index 0: general mission",
+			0, "index 0: general mission",
 			{"0 0 0"},
 			"any",
 			"Hunters",
@@ -359,7 +359,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 	{		
 		ref SDRC_Hunter hunter = new SDRC_Hunter();
 		hunter.general.Set(
-			"index 1: general mission",
+			1, "index 1: general mission",
 			{"0 0 0"},
 			"any",
 			"Hunters",

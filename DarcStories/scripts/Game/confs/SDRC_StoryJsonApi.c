@@ -34,26 +34,18 @@ class SDRC_Story : Managed
 {
 	int id;
 	string comment;
-	string title;
-	string intro;
-	string wintro;
-	string losetro;
 	ref array<string> dependencies = {};	//List of mods needed for the story
-	//Set outside of Set()
 	int index = 0;
+	//Set outside of Set()
 	DC_EStoryState state = DC_EStoryState.INIT;
 	ref array<ref SDRC_Chapter> chapters = {};
 	
-	void Set(int id_, string comment_, string title_, string intro_, string wintro_, string losetro_, array<string> dependencies_, )
+	void Set(int id_, string comment_, array<string> dependencies_, int index_)
 	{
 		id = id_;
 		comment = comment_;
-		title = title_;
-		intro = intro_;
-		wintro = wintro_;
-		losetro = losetro_;
 		dependencies = dependencies_;
-		//NOTE: index handled outside
+		index = index_;
 		//NOTE: state handled outside
 		//NOTE: chapters are added separately
 	}	
@@ -126,41 +118,53 @@ class SDRC_StoryJsonApi : SDRC_JsonApi
 		conf.Set(
 			0, 
 			"id 0:",
-			"Story Title",
-			"Story intro",
-			"Story wintro",
-			"Story losetro",
 			{},
+			0
 		);
 		
 		conf.chapters.Insert(Chapter00());
 		conf.chapters.Insert(Chapter01());
+		conf.chapters.Insert(Chapter02());
 	};
-	
+
 	SDRC_Chapter Chapter00()
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			0, DC_EMissionType.OCCUPATION, 3, 
+			1, DC_EMissionType.OCCUPATION, 3, 
 			SDRC_STORIES_CHAPTER_TIME_DEFAULT,
-			{1, DC_ENextChapter.LOSE},
+			{1, 1},
 		);
 		
-		chapter.general.SetDefaults("Chapter 0");
+		chapter.general.SetDefaults(comment: "Chapter 0", title: "Story begins");
 	
 		return chapter;
 	};	
-	
+		
 	SDRC_Chapter Chapter01()
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			1, DC_EMissionType.ROADBLOCK, 1, 
+			1, DC_EMissionType.OCCUPATION, 3, 
+			SDRC_STORIES_CHAPTER_TIME_DEFAULT,
+			{1, DC_ENextChapter.LOSE},
+		);
+		
+		chapter.general.SetDefaults(comment: "Chapter 1", title: "Chapter 1");
+	
+		return chapter;
+	};	
+	
+	SDRC_Chapter Chapter02()
+	{
+		ref SDRC_Chapter chapter = new SDRC_Chapter();
+		chapter.Set(
+			2, DC_EMissionType.ROADBLOCK, 1, 
 			SDRC_STORIES_CHAPTER_TIME_DEFAULT,
 			{DC_ENextChapter.WIN, DC_ENextChapter.LOSE},
 		);
 	
-		chapter.general.SetDefaults("Chapter 1");
+		chapter.general.SetDefaults(comment: "Chapter 1");
 		
 		return chapter;
 	};	

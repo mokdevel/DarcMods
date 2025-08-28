@@ -43,31 +43,47 @@ class SDRC_MissionConfig : Managed
 	bool showMarker = true;
 	bool showHint = true;
 	bool showMessage = true;
+	ref array<ref int> missionList = {};	//The list of mission suids.
 }
 
+//------------------------------------------------------------------------------------------------
 class SDRC_MissionConfigGeneral : Managed
 {
-	string comment = "";					//Generic comment to describe the mission. Not used in game.
+	const string SDRC_DEFAULT = "default";
+	int suid;								//Unique id for the sub mission
+	string comment;							//Generic comment to describe the mission. Not used in game.
 	ref array<vector> pos = {};				//Positions for mission. "0 0 0" used for random location chosen from locationTypes. First is mission position, second is destination for missions that need it.
-	string posName = "default";				//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
-	string title = "default";				//Title for the hint shown for players
-	string info = "default";				//Details for the hint shown for players
-	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.DEFAULT;	//Mission win condidition
-	string winMessage = "default";			//Message to show when mission is completed
-	string loseMessage = "default";			//Message to show when mission fails
-	string faction = "default";
-	int xp = 0;								//Experience given	
+	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
+	string title;							//Title for the hint shown for players
+	string info;							//Details for the hint shown for players
+	DC_EMissionWinCondition winCondition;	//Mission win condidition
+	string winMessage;						//Message to show when mission is completed
+	string loseMessage;						//Message to show when mission fails
+	string faction;							//Faction for the mission. Setting as empty, works as the default to select from the enemyFactions
+	int xp;									//Experience given	
 	
-	void SetDefaults(string comment_)
+	//------------------------------------------------------------------------------------------------
+	void SDRC_MissionConfigGeneral()
 	{
-		comment = comment_;
-		//Set defaults
-		pos.Insert("0 0 0");	//Set position
-		pos.Insert("0 0 0");	//Set destination
+		SetDefaults();
 	}
 	
-	void Set(string comment_, array<vector> pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, int xp_)
+	//------------------------------------------------------------------------------------------------
+	void SetDefaults(int suid = -1, string comment = SDRC_DEFAULT, 
+					 vector pos = "0 0 0", 
+					 string posName = SDRC_DEFAULT, string title = SDRC_DEFAULT, string info = SDRC_DEFAULT, 
+					 DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.DEFAULT, 
+					 string winMessage = SDRC_DEFAULT, string loseMessage = SDRC_DEFAULT, 
+					 string faction = "", int xp = 0)
 	{
+		array<vector> pos_array = {pos, "0 0 0"};
+		Set(suid, comment, pos_array, posName, title, info, winCondition, winMessage, loseMessage, faction, xp);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void Set(int suid_, string comment_, array<vector> pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, int xp_)
+	{
+		suid = suid_;
 		comment = comment_;
 		pos = pos_;
 		posName = posName_;
@@ -76,7 +92,7 @@ class SDRC_MissionConfigGeneral : Managed
 		winCondition = winCondition_;
 		winMessage = winMessage_;
 		loseMessage = loseMessage_;
-		string faction = faction_;
+		faction = faction_;
 		xp = xp_;
 	}
 }
@@ -120,7 +136,17 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission(SDRC_MissionRequested request)
 	{
-		vector pos = "0 0 0";
+//		vector pos = "0 0 0";
+		
+		if (request)
+		{
+			m_bRequested = true;
+		}
+		
+/*		if (pos != "0 0 0")										//Requested is set here
+		{
+			m_bRequested = true;
+		}*/
 		
 		m_Id = DC_ID_PREFIX + SCR_StringHelper.PadLeft(string.ToString(m_MissionIDCounter), 4, "0");
 		m_MissionIDCounter++;
@@ -131,34 +157,20 @@ class SDRC_Mission
 		m_ShowMessage = true;
 		m_bShowMarker = true;
 		
-		m_General.winCondition = DC_EMissionWinCondition.AI_KILL_ALL;
+		//NOTE: m_General default values have been set in the constructor
+//		m_General.winCondition = DC_EMissionWinCondition.AI_KILL_ALL;
 		m_sMarkerType = "DARC_MISSION";
 
-		m_General.pos.Clear();
-		
 		if (!request)
 		{
-			m_iSubIdx = -1;
-			m_General.pos.Insert(pos);
-			m_General.pos.Insert("0 0 0");	//Destination
-			m_General.posName = "";
-			m_General.title = "";
-			m_General.info = "";
-			m_General.winMessage = "";
-			m_General.loseMessage = "";			
-			SetFaction(SDRC_EnemyHelper.SelectEnemyFaction()); 		//m_sFaction 
+			//Will pick any mission from the list
+			m_iSubIdx = -1;		
 		}
 		else
 		{
-			m_iSubIdx = request.subIdx;			
-			m_General.pos.Insert(request.general.pos[0]);
-			m_General.pos.Insert(request.general.pos[1]);
-			m_General.posName = request.general.posName;
-			m_General.title = request.general.title;
-			m_General.info = request.general.info;
-			m_General.winMessage = request.general.winMessage;
-			m_General.loseMessage = request.general.loseMessage;
-			SetFaction(SDRC_EnemyHelper.SelectEnemyFaction(request.general.faction)); 		//m_sFaction 
+			//Set the requested values
+			m_iSubIdx = request.subIdx;
+			m_General = request.general;
 		}
 		
 		//Internals
@@ -167,10 +179,6 @@ class SDRC_Mission
 		SetActiveTime(SDRC_MISSION_CYCLE_TIME_DEFAULT*20);		//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
 		m_iActiveDistance = 0;									//Set a default zero
 		m_bMissionIsEnding = false;		
-		if (pos != "0 0 0")										//Requested is set here
-		{
-			m_bRequested = true;
-		}
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -268,6 +276,86 @@ class SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission:MissionEnd] " + GetId() + " : " + GetTitle() + " - Cleared for deletion.", LogLevel.NORMAL);		
 	}
 
+	
+	//------------------------------------------------------------------------------------------------	
+	/*!
+	Fill in information from general for sub mission to run. Only used for REQUESTED missions.
+	
+	In the case we have changed a value from default in the request, we use it for the mission.
+	See also constructor for additional variables set at creation.
+	*/		
+	void HandleRequestGeneralVariables(inout SDRC_MissionConfigGeneral general, SDRC_MissionRequested request)
+	{
+		if (IsRequested())
+		{
+			if (request.general.pos.IsEmpty())
+			{
+				SDRC_Log.Add("[SDRC_Mission:HandleRequestGeneralVariables] pos is empty. This should never happen.", LogLevel.ERROR);		
+				return;
+			}
+			
+			if (request.general.pos.Count() > 0 && general.pos.Count() > 0 )
+			{
+				if (request.general.pos[0] != "0 0 0")
+				{
+					general.pos[0] = request.general.pos[0];
+				}
+			}
+						
+			if (request.general.pos.Count() > 1 && general.pos.Count() > 1 )
+			{
+				if (request.general.pos[1] != "0 0 0")
+				{
+					general.pos[1] = request.general.pos[1];
+				}
+			}
+			
+			if (request.general.posName != "default")
+			{
+				general.posName = request.general.posName;
+			}
+			
+			if (request.general.title != "default")
+			{
+				general.title = request.general.title;
+			}
+
+			if (request.general.info != "default")
+			{
+				general.info = request.general.info;
+			}
+			
+			if (request.general.winCondition == DC_EMissionWinCondition.DEFAULT)
+			{
+				general.winCondition = request.general.winCondition;
+			}
+			
+			if (request.general.winMessage != "default")
+			{
+				general.winMessage = request.general.winMessage;
+			}
+			
+			if (request.general.loseMessage != "default")
+			{
+				general.loseMessage = request.general.loseMessage;
+			}
+			
+			if (request.general.faction != "default")
+			{
+				general.faction = request.general.faction;
+			}
+			
+			if (request.general.xp != 0)
+			{
+				general.xp = request.general.xp;
+			}
+		}
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	// Getters/Setters for members and other related functions 
+	//------------------------------------------------------------------------------------------------
+	
 	//------------------------------------------------------------------------------------------------
 	DC_EMissionState GetState()
 	{

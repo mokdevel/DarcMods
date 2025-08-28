@@ -42,13 +42,14 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		m_Config = m_CrashsiteJsonApi.conf;
 		
 		//Pick a configuration for mission
-		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.crashsiteList, GetSubIdx()));
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
 		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}
 		m_DC_Crashsite = m_Config.crashsites[GetSubIdx()];
+		HandleRequestGeneralVariables(m_DC_Crashsite.general, request);
 		
 		//Find position
 		bool positionFound = false;
@@ -323,8 +324,7 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 	int distanceToMission;								//Distance to mission when searching for a mission pos. Overrides missionFrame settings.
 	int distanceToPlayer;								//Distance to player when searching for a mission pos. Overrides missionFrame settings.
 	ref array<int> flyHeight = {};						//min, max - Spawn helicopter between these values.
-	ref array<ref int> crashsiteList = {};				//The indexes of crashsites.
-	ref array<ref SDRC_Crashsite> crashsites = {};	//List of crashsites
+	ref array<ref SDRC_Crashsite> crashsites = {};		//List of crashsites
 }
 
 //------------------------------------------------------------------------------------------------
@@ -384,11 +384,11 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP;
+		conf.missionList = {0,1};		
 		//Mission specific
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;
 		conf.flyHeight = {80, 120};
-		conf.crashsiteList = {0,1};		
 		//----------------------------------------------------
 		conf.crashsites.Insert(Crashsite0());
 		conf.crashsites.Insert(Crashsite1());
@@ -399,7 +399,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Crashsite crashsite = new SDRC_Crashsite();
 		crashsite.general.Set(
-			"index 0: general mission",
+			0, "index 0: general mission",
 			{"0 0 0"},
 			"any",
 			"Helicopter in distress",
@@ -489,7 +489,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Crashsite crashsite = new SDRC_Crashsite();
 		crashsite.general.Set(
-			"index 1: general mission",
+			1, "index 1: general mission",
 			{"0 0 0"},
 			"any",
 			"Engine damage",

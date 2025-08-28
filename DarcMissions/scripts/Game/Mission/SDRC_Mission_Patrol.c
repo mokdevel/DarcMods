@@ -26,13 +26,14 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		m_Config = m_PatrolJsonApi.conf;
 
 		//Pick a configuration for mission
-		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.patrolList, GetSubIdx()));
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
 		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}	
 		m_DC_Patrol = m_Config.patrols[GetSubIdx()];
+		HandleRequestGeneralVariables(m_DC_Patrol.general, request);
 
 		//Check that ranges are not too big
 		int worldSize = SDRC_Misc.GetWorldSize();
@@ -168,7 +169,6 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 	//Mission specific	
 	int patrolingTime;								//(seconds) Time to patrol. Once this time has passed and not players nearby, despawn mission.
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
-	ref array<ref int> patrolList = {};				//The indexes of patrols.
 	ref array<ref SDRC_Patrol> patrols = {};		//List of patrols
 }
 
@@ -236,8 +236,8 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_PATROL_MAP;
 		conf.showMarker = false;
+		conf.missionList = {0,0,0,1,2,3};
 		//Mission specific
-		conf.patrolList = {0,0,0,1,2,3};
 		conf.distanceToPlayer = 500;
 		//----------------------------------------------------
 		conf.patrols.Insert(Patrol0());
@@ -251,7 +251,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Patrol patrol = new SDRC_Patrol();
 		patrol.general.Set(
-			"index 0: Enemy patrols going between two points hopefully following roads",
+			0, "index 0: Enemy patrols going between two points hopefully following roads",
 			{"0 0 0", "0 0 0"},
 			"any",
 			"Patrol spotted near %l",
@@ -291,7 +291,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Patrol patrol = new SDRC_Patrol();
 		patrol.general.Set(
-			"index 1: Heavy patrol",
+			1, "index 1: Heavy patrol",
 			{"0 0 0", "0 0 0"},
 			"any",
 			"Patrol in %l",
@@ -331,7 +331,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Patrol patrol = new SDRC_Patrol();
 		patrol.general.Set(
-			"index 2: Enemy patrols between villages",
+			2, "index 2: Enemy patrols between villages",
 			{"0 0 0", "0 0 0"},
 			"any",
 			"Patrol seen in %l",
@@ -366,7 +366,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Patrol patrol = new SDRC_Patrol();
 		patrol.general.Set(			
-			"index 3: Small patrols with a few AIs",
+			3, "index 3: Small patrols with a few AIs",
 			{"0 0 0", "0 0 0"},
 			"any",
 			"Enemy has been seen near %l",

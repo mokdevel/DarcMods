@@ -30,13 +30,14 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		m_Config = m_RoadblockJsonApi.conf;
 		
 		//Pick a configuration for mission
-		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.roadblockList, GetSubIdx()));
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
 		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}
 		m_DC_Roadblock = m_Config.roadblocks[GetSubIdx()];
+		HandleRequestGeneralVariables(m_DC_Roadblock.general, request);
 		
 		//If not a GM requested mission, use the default one.
 		if (!IsRequested())
@@ -178,7 +179,6 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 {
 	//Mission specific
 	bool disableArsenal;								//Disable arsenal for vehicles so that no other items are found	
-	ref array<ref int> roadblockList = {};				//The indexes of roadblocks.
 	ref array<ref SDRC_Camp> roadblocks = {};		//List of roadblocks - uses the same structure as for occupations	
 }
 
@@ -217,8 +217,8 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		//Default		
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP;
+		conf.missionList = {0,1,2,3};
 		//Mission specific		
-		conf.roadblockList = {0,1,2,3};
 		//----------------------------------------------------
 		conf.roadblocks.Insert(Roadblock0());				
 		conf.roadblocks.Insert(Roadblock1());				
@@ -231,7 +231,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	{
 		SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
-			"index 0: Roadblock",
+			0, "index 0: Roadblock",
 			{"0 0 0"},
 			"any",
 			"Roadblock near %l",
@@ -312,7 +312,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
-			"index 1: Roadblock",
+			1, "index 1: Roadblock",
 			{"0 0 0"},
 			"any",
 			"Roadblock seen close to %l",
@@ -459,7 +459,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
-			"index 2: Roadblock",
+			2, "index 2: Roadblock",
 			{"0 0 0"},
 			"any",
 			"Road is closed near %l",
@@ -589,7 +589,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
-			"index 3: Roadblock with gates",
+			3, "index 3: Roadblock with gates",
 			{"0 0 0"},
 			"any",
 			"Road near %l is guarded",

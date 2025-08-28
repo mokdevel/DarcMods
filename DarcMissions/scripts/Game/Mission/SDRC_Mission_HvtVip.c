@@ -32,13 +32,14 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		m_Config = m_HvtVipJsonApi.conf;
 		
 		//Pick a configuration for mission
-		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.hvtVipList, GetSubIdx()));
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
 		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}	
 		m_DC_HvtVip = m_Config.hvtVips[GetSubIdx()];
+		HandleRequestGeneralVariables(m_DC_HvtVip.general, request);
 		
 		//Set defaults
 		m_iGroupCount = Math.RandomInt(m_DC_HvtVip.groupCount[0], m_DC_HvtVip.groupCount[1]);
@@ -223,7 +224,6 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 	
 	//Variables here
 	int buildingRadius;								//The radius to search for suitable buildings.
-	ref array<ref int> hvtVipList = {};				//The indexes of HvtVips.
 	ref array<ref SDRC_HvtVip> hvtVips = {};		//List of HvtVips
 }
 
@@ -290,9 +290,9 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HVTVIP_MAP;
+		conf.missionList = {0,0,1,2,3,3};
 		//Mission specific
 		conf.buildingRadius = 400;
-		conf.hvtVipList = {0,0,1,2,3,3};
 		//----------------------------------------------------
 		conf.hvtVips.Insert(HvtVip0());				
 		conf.hvtVips.Insert(HvtVip1());				
@@ -305,7 +305,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
 		HvtVip.general.Set(
-			"index 0: HvtVips in cities",
+			0, "index 0: HvtVips in cities",
 			{"0 0 0"},
 			"any",
 			"Target near %l.",
@@ -357,7 +357,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
 		HvtVip.general.Set(
-			"index 1: HvtVips in control towers",
+			1, "index 1: HvtVips in control towers",
 			{"0 0 0"},
 			"any",
 			"Flight controller near %l.",
@@ -403,7 +403,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
 		HvtVip.general.Set(
-			"index 2: Businessman with bad business",
+			2, "index 2: Businessman with bad business",
 			{"0 0 0"},
 			"any",
 			"%l is bad for business",
@@ -449,7 +449,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
 		HvtVip.general.Set(
-			"index 3: Businessman in countryside",
+			3, "index 3: Businessman in countryside",
 			{"0 0 0"},
 			"any",
 			"Criminal hiding in %l",

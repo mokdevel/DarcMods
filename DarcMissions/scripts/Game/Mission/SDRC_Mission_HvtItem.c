@@ -32,13 +32,14 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		m_Config = m_HvtItemJsonApi.conf;
 		
 		//Pick a configuration for mission
-		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.hvtItemList, GetSubIdx()));
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
 		if (GetSubIdx() == -1)
 		{
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}		
 		m_DC_HvtItem = m_Config.hvtItems[GetSubIdx()];
+		HandleRequestGeneralVariables(m_DC_HvtItem.general, request);
 		
 		//Set defaults
 		if (!IsRequested())
@@ -188,7 +189,6 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 	
 	//Variables here
 	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found
-	ref array<ref int> hvtItemList = {};			//The indexes of HvtItems.
 	ref array<ref SDRC_HvtItem> hvtItems = {};			//List of HvtItems
 }
 
@@ -234,8 +234,8 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HVTITEM_MAP;
+		conf.missionList = {0,1,2};
 		//Mission specific
-		conf.hvtItemList = {0,1,2};
 		//----------------------------------------------------
 		conf.hvtItems.Insert(HvtItem0());				
 		conf.hvtItems.Insert(HvtItem1());				
@@ -247,7 +247,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		hvtItem.general.Set(
-			"index 0: Destroy generator",
+			0, "index 0: Destroy generator",
 			{"0 0 0"},
 			"any",
 			"Destroy generator near %l",
@@ -358,7 +358,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		hvtItem.general.Set(
-			"index 1: Destroy supplies",
+			1, "index 1: Destroy supplies",
 			{"0 0 0"},
 			"any",
 			"A supply truck near %l",
@@ -457,7 +457,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		hvtItem.general.Set(
-			"index 2: Destroy antenna",
+			2, "index 2: Destroy antenna",
 			{"0 0 0"},
 			"any",
 			"Radio antenna close to %l",

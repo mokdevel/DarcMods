@@ -371,6 +371,7 @@ class SDRC_MissionFrame
 		
 		if (missionType == DC_EMissionType.REQUESTED)
 		{					
+			//If mission was requested, fill information from the request
 			missionRequest = SDRC_MissionRequestHelper.FillMissionRequest();
 			missionType = missionRequest.type;
 		}

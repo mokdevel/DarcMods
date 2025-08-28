@@ -59,7 +59,7 @@ class SDRC_DarcMissionGM : GenericEntity
 					ent.AddedToList();
 					
 					ResourceName res = owner.GetPrefabData().GetPrefabName();
-					SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInitDelayed] Found: " + res + " at " + owner.GetOrigin(), LogLevel.DEBUG);				
+					SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInitDelayed] Found: " + SDRC_Misc.GetSimpleEntityName(res) + " at " + owner.GetOrigin(), LogLevel.DEBUG);				
 				}
 			}
 			else

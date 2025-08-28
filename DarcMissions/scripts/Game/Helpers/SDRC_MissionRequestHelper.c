@@ -29,6 +29,7 @@ class SDRC_MissionRequestHelper
 			return null;
 		}
 		
+		//Take the first mission requested from the table (=[0]).
 		SDRC_MissionRequested missionRequest = baseGameMode.missionFrame.m_missionsRequested[0];
 		
 		//Collect information from the mission entity
@@ -36,15 +37,24 @@ class SDRC_MissionRequestHelper
 		SDRC_DarcMissionRequestComp requestComp = SDRC_DarcMissionRequestComp.Cast(missionEntity.FindComponent(SDRC_DarcMissionRequestComp));
 		missionRequest.type = requestComp.GetMissionType();
 		missionRequest.subIdx = requestComp.GetMissionSubIdx();
-		//Entity may have been moved so we read the pos before spawning mission.
-		missionRequest.general.pos.Insert(missionEntity.GetOrigin());	//Real position
-		missionRequest.general.pos.Insert("0 0 0");						//Destination dummy
-		//If position was "0 0 0", it's possible it has moved due to gravity.
-		if (missionRequest.general.pos[0][0] == 0 && missionRequest.general.pos[0][2] == 0)
-		{
-			missionRequest.general.pos[0][1] == 0;
-		}
+		missionRequest.general = requestComp.general;
 		
+		//Entity may have been moved so we read the pos before spawning mission.
+		vector pos = missionEntity.GetOrigin();
+		//If it is in the default "0 0 0", all is good. Otherwise, snap to ground
+		if (pos[0] != 0)
+		{
+			pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
+			missionRequest.general.pos[0] = pos;
+			
+/*			missionRequest.general.pos[0] = missionEntity.GetOrigin();		//Real position
+			//If position was "0 0 0", it's possible it has moved due to gravity.
+			if (missionRequest.general.pos[0][0] == 0 && missionRequest.general.pos[0][2] == 0)
+			{
+				missionRequest.general.pos[0][1] == 0;
+			}*/
+		}
+				
 		SDRC_SpawnHelper.DespawnItem(missionEntity);				
 
 		//Clean the array as we removed an entry. Others could have been removed at the same time.
