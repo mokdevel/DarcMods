@@ -33,7 +33,7 @@ sealed class SDRC_SpawnHelper
 		//vector posFixed;
         EntitySpawnParams params = EntitySpawnParams();
 		
-		string entityName = SDRC_Misc.GetEntityName(resourceName);		
+		string entityName = SDRC_Misc.GetSimpleEntityName(resourceName);		
 
 		Resource resource = Resource.Load(resourceName);
 		if (!resource.IsValid())
