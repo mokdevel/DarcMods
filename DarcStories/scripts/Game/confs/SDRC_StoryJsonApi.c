@@ -131,12 +131,13 @@ class SDRC_StoryJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			1, DC_EMissionType.OCCUPATION, 3, 
+			1, DC_EMissionType.SQUATTERS, 0, 
+//			1, DC_EMissionType.OCCUPATION, 3, 
 			SDRC_STORIES_CHAPTER_TIME_DEFAULT,
 			{1, 1},
 		);
 		
-		chapter.general.SetDefaults(comment: "Chapter 0", title: "Story begins");
+		chapter.general.SetDefaults(comment_: "Chapter 0", title_: "Story begins");
 	
 		return chapter;
 	};	
@@ -150,7 +151,7 @@ class SDRC_StoryJsonApi : SDRC_JsonApi
 			{1, DC_ENextChapter.LOSE},
 		);
 		
-		chapter.general.SetDefaults(comment: "Chapter 1", title: "Chapter 1");
+		chapter.general.SetDefaults(comment_: "Chapter 1", title_: "Chapter 1");
 	
 		return chapter;
 	};	
@@ -164,7 +165,7 @@ class SDRC_StoryJsonApi : SDRC_JsonApi
 			{DC_ENextChapter.WIN, DC_ENextChapter.LOSE},
 		);
 	
-		chapter.general.SetDefaults(comment: "Chapter 1");
+		chapter.general.SetDefaults(comment_: "Chapter 1");
 		
 		return chapter;
 	};	

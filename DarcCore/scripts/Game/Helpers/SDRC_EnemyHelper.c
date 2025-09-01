@@ -114,7 +114,7 @@ sealed class SDRC_EnemyHelper
 		if (faction == "")	//RANDOM
 		{
 			faction = m_sEnemyFactions.GetRandomElement();
-			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] RANDOM: " + faction, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Selected: " + faction, LogLevel.SPAM);
 			return faction;
 		}
 		
@@ -130,7 +130,7 @@ sealed class SDRC_EnemyHelper
 			if (m_sFactionList.Contains(faction))
 			{
 				faction = m_sDefaultEnemyFactionKey;
-				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Mission specific: " + faction, LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Mission specific: " + faction, LogLevel.SPAM);
 				return faction;
 			}
 			else
@@ -141,7 +141,7 @@ sealed class SDRC_EnemyHelper
 			}
 		}
 				
-		SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Selected: " + faction + " (no change)", LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Selected: " + faction + " (no change)", LogLevel.SPAM);
 		return faction;
 	}
 	
