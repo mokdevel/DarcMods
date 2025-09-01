@@ -18,11 +18,13 @@ class SDRC_DarcMissionRequestComp : ScriptGameComponent
 	[Attribute(typename.EnumToString(DC_EMissionType, DC_EMissionType.NONE), UIWidgets.ComboBox, desc: "Mission type", enumType: DC_EMissionType)]	
 	protected DC_EMissionType m_MissionType;	//The type of mission
 	
-	static int max = Math.RandomInt(0,12);
-	static private string param = "-1, " + max + ", 1";
-	[Attribute("-1", UIWidgets.EditBox, desc: "Test mission index variable", param)]	
-	protected int m_MissionSubIdx;				//The sub type of mission	
+//TBD: This may be needed if GM mission is editable. 	
+//	static int max = Math.RandomInt(0,12);
+//	static private string param = "-1, " + max + ", 1";
+//	[Attribute("-1", UIWidgets.EditBox, desc: "Test mission index variable", param)]	
+//	protected int m_MissionSubIdx;				//The sub type of mission	
 	
+	protected int m_RequestId;
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	
 	//------------------------------------------------------------------------------------------------
@@ -43,14 +45,27 @@ class SDRC_DarcMissionRequestComp : ScriptGameComponent
 	/*!	
 	Get/set mission subIdx
 	*/
-	DC_EMissionType GetMissionSubIdx()
+	DC_EMissionType GetRequestId()
 	{
-		return m_MissionSubIdx;
+		return m_RequestId;
+	}	
+	
+	void SetRequestId(int requestId)
+	{
+		m_RequestId = requestId;
+	}		
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Get/set mission subIdx
+	*/
+/*	DC_EMissionType GetMissionSubIdx()
+	{
+		return general.subIdx;
 	}	
 	
 	void SetMissionSubIdx(int missionSubIdx)
 	{
-		m_MissionSubIdx = missionSubIdx;
-	}		
-	
+		general.subIdx = missionSubIdx;
+	}*/
 }

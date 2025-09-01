@@ -35,6 +35,8 @@ class SDRC_StoriesFrame
 	ref SDRC_Chapter m_Chapter;
 	
 	int m_StoryIdx;
+	bool m_StoryActive;
+	int m_RequestId;
 	
 	private string m_sWorldName;
 	
@@ -56,6 +58,8 @@ class SDRC_StoriesFrame
 		m_DC_StoriesFrameJsonApi.LoadStories();
 		
 		m_StoryIdx = 0;
+		m_StoryActive = false;
+		m_RequestId = -1;
 		m_Story = m_Config.stories[m_StoryIdx];
 		m_Chapter = m_Story.chapters[m_Story.index];
 		SDRC_Log.Add("[SDRC_StoriesFrame] Starting story: " + m_StoryIdx + " , chapter: " + m_Chapter.general.title, LogLevel.NORMAL);
@@ -89,26 +93,36 @@ class SDRC_StoriesFrame
 	Mission life cycle manager.
 	*/
 	protected void StoriesCycleManager()
-	{		
-		SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Spawning new story mission", LogLevel.NORMAL);
-		IEntity missionEntity;
-		vector pos = "0 0 0";
-		string resourceName = SDRC_MissionEnumHelper.GetMissionPrefab(m_Chapter.missionType);
-		if (resourceName == "")
-		{
-			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Invalid resourcename.", LogLevel.ERROR);
+	{	
+		if (m_StoryActive)
+		{	
+			//Search if the mission is active
+			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] id: " + SDRC_MissionStats.GetId(m_RequestId));
 		}
-		missionEntity = SDRC_SpawnHelper.SpawnItem(pos, resourceName, 0, -1);
-		if (missionEntity)
+		
+		if (!m_StoryActive)
 		{		
-			GetGame().GetCallqueue().CallLater(SetMissionParameters_Delayed, 2000, false, missionEntity);
+			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Spawning new story mission", LogLevel.NORMAL);
+			IEntity missionEntity;
+			vector pos = "0 0 0";
+			string resourceName = SDRC_MissionEnumHelper.GetMissionPrefab(m_Chapter.missionType);
+			if (resourceName == "")
+			{
+				SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Invalid resourcename.", LogLevel.ERROR);
+			}
+			missionEntity = SDRC_SpawnHelper.SpawnItem(pos, resourceName, 0, -1);
+			if (missionEntity)
+			{		
+				GetGame().GetCallqueue().CallLater(SetMissionParameters_Delayed, 2000, false, missionEntity);
+				m_StoryActive = true;
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Could not spawn: " + resourceName, LogLevel.ERROR);
+			}
 		}
-		else
-		{
-			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Could not spawn: " + resourceName, LogLevel.ERROR);
-		}
-
-//		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.storiesFrameCycleTime*1000, false);
+		
+		GetGame().GetCallqueue().CallLater(StoriesCycleManager, m_Config.storiesFrameCycleTime*1000, false);
 	}
 	
 	protected void SetMissionParameters_Delayed(IEntity missionEntity)
@@ -117,9 +131,11 @@ class SDRC_StoriesFrame
 		if (ent)
 		{
 			SDRC_DarcMissionRequestComp requestComp = SDRC_DarcMissionRequestComp.Cast(ent.FindComponent(SDRC_DarcMissionRequestComp));
-			requestComp.SetMissionSubIdx(m_Chapter.subIdx);
+//			requestComp.SetMissionSubIdx(m_Chapter.subIdx);
 			requestComp.general = m_Chapter.general;
-			requestComp.general.suid = 1000 + m_StoryIdx * 100 + m_Story.index;
+			requestComp.general.subIdx = m_Chapter.subIdx;
+			m_RequestId = 1234 + m_StoryIdx * 100 + m_Story.index;
+			requestComp.SetRequestId(m_RequestId);
 		}		
 	}
 	

@@ -4,9 +4,9 @@
 class SDRC_MissionRequested : Managed
 {
 	EntityID entityID = null;
+	int requestId = -1;
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	DC_EMissionType type = DC_EMissionType.NONE;
-	int subIdx = -1;	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ class SDRC_MissionRequestHelper
 		IEntity missionEntity = GetGame().GetWorld().FindEntityByID(missionRequest.entityID);
 		SDRC_DarcMissionRequestComp requestComp = SDRC_DarcMissionRequestComp.Cast(missionEntity.FindComponent(SDRC_DarcMissionRequestComp));
 		missionRequest.type = requestComp.GetMissionType();
-		missionRequest.subIdx = requestComp.GetMissionSubIdx();
+		missionRequest.requestId = requestComp.GetRequestId();		
 		missionRequest.general = requestComp.general;
 		
 		//Entity may have been moved so we read the pos before spawning mission.
@@ -46,13 +46,6 @@ class SDRC_MissionRequestHelper
 		{
 			pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
 			missionRequest.general.pos[0] = pos;
-			
-/*			missionRequest.general.pos[0] = missionEntity.GetOrigin();		//Real position
-			//If position was "0 0 0", it's possible it has moved due to gravity.
-			if (missionRequest.general.pos[0][0] == 0 && missionRequest.general.pos[0][2] == 0)
-			{
-				missionRequest.general.pos[0][1] == 0;
-			}*/
 		}
 				
 		SDRC_SpawnHelper.DespawnItem(missionEntity);				
