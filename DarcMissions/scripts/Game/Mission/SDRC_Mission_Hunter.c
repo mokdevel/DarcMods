@@ -30,7 +30,6 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	{
 		//Set some defaults				
 		SetType(DC_EMissionType.HUNTER);
-		vector pos = GetPos();
 				
 		//Load config	
 		m_HunterJsonApi.Load();
@@ -46,12 +45,19 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		m_DC_Hunter = m_Config.hunters[GetSubIdx()];
 		HandleRequestGeneralVariables(m_DC_Hunter.general, request);
 		
+		//Set spawn count
 		m_iGroupsToSpawn = Math.RandomInt(m_DC_Hunter.groupCount[0], m_DC_Hunter.groupCount[1]);
 		
 		//Find position
+		vector pos = m_DC_Hunter.general.pos[0];
 		bool positionFound = false;
 
-		if (!IsRequested())
+		if (pos != "0 0 0")
+		{
+			//If pos has been set, we blindly accept it
+			positionFound = true;
+		}			
+		else
 		{
 			for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 			{
@@ -73,11 +79,6 @@ class SDRC_Mission_Hunter : SDRC_Mission
 					}
 				}
 			}
-		}
-		else
-		{
-			//Requested positions are blindly accepted
-			positionFound = true;
 		}
 		
 		if (!positionFound)	//No suitable location found.

@@ -19,7 +19,6 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.PATROL);
-		vector pos = GetPos();
 		
 		//Load config
 		m_PatrolJsonApi.Load();
@@ -40,17 +39,13 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Patrol] Worldsize vs maxRange : " + worldSize + " vs " + m_DC_Patrol.waypointRange[1], LogLevel.SPAM);
 		
 		//Set defaults
+		vector pos = m_DC_Patrol.general.pos[0];
 		m_vPosDestination = m_DC_Patrol.general.pos[1];
 		
-		if (!IsRequested())
+		//Find a location for the mission
+		if (pos == "0 0 0")
 		{
-			pos = m_DC_Patrol.general.pos[0];
-			
-			//Find a location for the mission
-			if (pos == "0 0 0")
-			{
-				pos = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes);
-			}
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes);
 		}
 	
 		//If failed, stop
@@ -65,19 +60,12 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		if (m_vPosDestination == "0 0 0")
 		{
 			m_vPosDestination = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes);
-			if (m_vPosDestination != "0 0 0")
-			{
-				SDRC_Log.Add("[SDRC_Mission_Patrol] Patrol destination: " + m_vPosDestination, LogLevel.DEBUG);
-			}
-			else
-			{
-				SDRC_Log.Add("[SDRC_Mission_Patrol] Could not find destination location for ROUTE.", LogLevel.WARNING);
-			}
+			SDRC_Log.Add("[SDRC_Mission_Patrol] Patrol destination: " + m_vPosDestination, LogLevel.SPAM);
 		}
 
 		if (pos == "0 0 0" || m_vPosDestination == "0 0 0")	//No suitable location found.
 		{				
-			SDRC_Log.Add("[SDRC_Mission_Patrol] Could not find suitable location.", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_Mission_Patrol] Could not find suitable route: " + pos + " to " + m_vPosDestination, LogLevel.ERROR);
 			SetState(DC_EMissionState.FAILED);
 			return;
 		}	

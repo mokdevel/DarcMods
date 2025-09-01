@@ -21,7 +21,6 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.SQUATTERS);
-		vector pos = GetPos();
 		
 		//Load config
 		m_SquatterJsonApi.Load();
@@ -39,13 +38,19 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		
 		//Set defaults
 		m_iAiCount = Math.RandomInt(m_DC_Squatter.aiCount[0], m_DC_Squatter.aiCount[1]);
-		float radius = 10;	//Default size for the radius. Mainly for requested missions to find the nearest building.
+		float radius = 10;					//Default size for the radius. Mainly for requested missions to find the nearest building.
 		array<string>buildingFilter = {};
 		
+		vector pos = m_DC_Squatter.general.pos[0];
+		
 		//Find a location for the mission
-		if (!IsRequested())
+		if (IsRequested() && pos != "0 0 0")
+		{
+			//If the missions is requested with a position, any building near the location will be accepted.
+			buildingFilter.Insert("");
+		}
+		else
 		{				
-			pos = m_DC_Squatter.general.pos[0];
 			radius = m_Config.buildingRadius;
 			buildingFilter = m_DC_Squatter.buildingNames;
 			
@@ -61,11 +66,6 @@ class SDRC_Mission_Squatter : SDRC_Mission
 					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Squatter.locationTypes, 2);
 				}
 			}
-		}
-		else
-		{
-			//If the missions is requested, any building near the location will be accepted.
-			buildingFilter.Insert("");
 		}
 
 		//Find the mission house

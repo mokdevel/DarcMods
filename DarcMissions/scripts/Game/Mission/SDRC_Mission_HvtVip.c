@@ -25,7 +25,6 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.HVTVIP);
-		vector pos = GetPos();
 		
 		//Load config
 		m_HvtVipJsonApi.Load();
@@ -43,13 +42,19 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		
 		//Set defaults
 		m_iGroupCount = Math.RandomInt(m_DC_HvtVip.groupCount[0], m_DC_HvtVip.groupCount[1]);
-		float radius = 10;	//Default size for the radius. Mainly for requested missions to find the nearest building.
+		float radius = 10;					//Default size for the radius. Mainly for requested missions to find the nearest building.
 		array<string> buildingFilter = {};
-		
+
+		vector pos = m_DC_HvtVip.general.pos[0];
+						
 		//Find a location for the mission
-		if (!IsRequested())
+		if (IsRequested() && pos != "0 0 0")
+		{
+			//If the missions is requested with a position, any building near the location will be accepted.
+			buildingFilter.Insert("");
+		}
+		else
 		{				
-			pos = m_DC_HvtVip.general.pos[0];
 			radius = m_Config.buildingRadius;
 			buildingFilter = m_DC_HvtVip.buildingNames;
 			
@@ -65,11 +70,6 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 					pos = SDRC_MissionHelper.FindMissionPos(m_DC_HvtVip.locationTypes, 2);
 				}
 			}
-		}
-		else
-		{
-			//If the missions is requested, any building near the location will be accepted.
-			buildingFilter.Insert("");
 		}
 
 		//Find the mission house
@@ -159,7 +159,8 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 				SDRC_Log.Add("[SDRC_Mission_HvtVip:MissionSpawn] " +  GetId() + " : Could not spawn loot box: " + m_DC_HvtVip.lootBox, LogLevel.ERROR);								
 			}
 
-			//Spawn target enemy and it to mission faction
+			//Spawn target enemy and add it to mission faction
+			//TBD: The CIV target faction is not set properly
 			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_HvtVip.target, m_DC_HvtVip.aiSkill, m_DC_HvtVip.aiPerception, GetFaction());
 			if (group)
 			{			
@@ -290,7 +291,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HVTVIP_MAP;
-		conf.missionList = {0,0,1,2,3,3};
+		conf.missionList = {2};//{0,0,1,2,3,3};
 		//Mission specific
 		conf.buildingRadius = 400;
 		//----------------------------------------------------

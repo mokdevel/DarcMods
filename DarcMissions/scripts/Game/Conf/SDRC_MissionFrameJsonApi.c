@@ -21,6 +21,7 @@
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 20;						//You should not be running the frame too often as it's unncecessary
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = true;						//Force recreaction of config files. 
 		private const int SDRC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
+		private const int SDRC_MISSION_RANDOM_POS = 30;									//The randomization for search radius for mission position 
 		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;						//Show/hide static mission markers
 	#endif
 	
@@ -28,7 +29,7 @@
 	#ifndef SDRC_RELEASE	
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 0;//5;//3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 1;//5;//3;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -42,6 +43,7 @@
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = true;
 		private const int SDRC_MISSION_HINT_TIME = 30;
+		private const int SDRC_MISSION_RANDOM_POS = 30;
 		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;
 	#endif
 
@@ -70,6 +72,8 @@ class SDRC_MissionFrameConfig : Managed
 	int missionActiveDistance;		//The distance to a player to keep the mission active.
 	int missionActiveTimeToEnd;		//Time to keep the mission active once all AI is dead. Used for both dynamic and static missions.
 	int missionHintTime;			//Seconds to show mission hints to players. 0 disables hints.
+	//Randomization
+	int missionRandomPos;			//The distance to randomize the missions position. This avoids mission appearing always in same place.
 	//Misc
 	int minDistanceToMission;		//Distance to another mission. Two missions shall not be too close to each other.
 	int minDistanceToPlayer;		//Mission shall not spawn too close to a player.
@@ -139,6 +143,8 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.missionActiveDistance = SDRC_MISSION_ACTIVE_DISTANCE;
 		conf.missionActiveTimeToEnd = SDRC_MISSION_ACTIVE_TIME_TO_END;
 		conf.missionHintTime = SDRC_MISSION_HINT_TIME;
+		conf.missionRandomPos = SDRC_MISSION_RANDOM_POS;
+		
 		conf.minDistanceToMission = 500;
 		conf.minDistanceToPlayer = 100;
 		conf.showStaticMissionMarker = SDRC_MISSION_SHOW_STATIC_MARKER;
@@ -177,21 +183,20 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.OCCUPATION};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTITEM};
 		
-//			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.CONVOY};
+//			conf.missionStatic.missionTypeArray = {DC_EMissionType.CRASHSITE};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HUNTER};
-//			conf.missionStatic.missionTypeArray = {DC_EMissionType.CRASHSITE};
-//			conf.missionStatic.missionTypeArray = {DC_EMissionType.OCCUPATION};
-//			conf.missionStatic.missionTypeArray = {DC_EMissionType.CRASHSITE};
-//			conf.missionStatic.missionTypeArray = {DC_EMissionType.ROADBLOCK};
-//			conf.missionStatic.missionTypeArray = {DC_EMissionType.SQUATTERS};
-//			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTVIP};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTITEM};
+//			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTVIP};
+//			conf.missionStatic.missionTypeArray = {DC_EMissionType.OCCUPATION};
+//			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL};
+//			conf.missionStatic.missionTypeArray = {DC_EMissionType.ROADBLOCK};
+			conf.missionStatic.missionTypeArray = {DC_EMissionType.SQUATTERS};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTVIP, DC_EMissionType.HVTITEM};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTITEM, DC_EMissionType.SQUATTERS, DC_EMissionType.OCCUPATION, DC_EMissionType.ROADBLOCK, DC_EMissionType.PATROL, DC_EMissionType.HVTVIP};
 //			conf.missionStatic.missionTypeArray = {};
-			conf.missionStatic.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTERS, DC_EMissionType.HVTVIP, DC_EMissionType.HVTITEM};		
+//			conf.missionStatic.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTERS, DC_EMissionType.HVTVIP, DC_EMissionType.HVTITEM};		
 		#endif
 	}
 }

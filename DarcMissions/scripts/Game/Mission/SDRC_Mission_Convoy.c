@@ -32,7 +32,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.CONVOY);		
-		vector pos = GetPos();
 		
 		//Load config
 		m_ConvoyJsonApi.Load();
@@ -48,19 +47,20 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		m_DC_Convoy = m_Config.convoys[GetSubIdx()];
 		HandleRequestGeneralVariables(m_DC_Convoy.general, request);
 		
-		//Set defaults		
-		m_vPosDestination = m_DC_Convoy.general.pos[1];		//Destination from the defined SDRC_Convoy 
-
-		//If not a GM requested mission, use the default one.
-		if (!IsRequested())
-		{
-			pos = m_DC_Convoy.general.pos[0];
-		}
-
 		//Find a location for the mission
+		vector pos = m_DC_Convoy.general.pos[0];
+		m_vPosDestination = m_DC_Convoy.general.pos[1];		//Destination from the defined SDRC_Convoy 
+		
+		//For requested missions we want have it as close as possible in the requested place.
+		int randomPos = -1;		
+		if (IsRequested())
+		{
+			randomPos = 0;
+		}
+		
 		if (pos == "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.locationTypes);
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.locationTypes, 5, randomPos);
 		}
 
 		//If failed, stop

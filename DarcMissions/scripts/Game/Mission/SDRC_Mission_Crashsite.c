@@ -35,7 +35,6 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.CRASHSITE);
-		vector pos = GetPos();
 
 		//Load config
 		m_CrashsiteJsonApi.Load();
@@ -52,9 +51,15 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Crashsite.general, request);
 		
 		//Find position
+		vector pos = m_DC_Crashsite.general.pos[0];
 		bool positionFound = false;
 
-		if (!IsRequested())
+		if (pos != "0 0 0")
+		{
+			//If pos has been set, we blindly accept it
+			positionFound = true;
+		}			
+		else
 		{
 			for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 			{
@@ -65,17 +70,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 				
 				if (pos != "0 0 0")
 				{
-					//Find flight positions from pos to m_PosDestination.
 					positionFound = true;
-/*					pos[1] = pos[1] + Math.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[0]);	//Adjust flight height
-					int rnd = SDRC_Misc.GetWorldSize()/8;
-					m_vPosDestination[0] = SDRC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
-					m_vPosDestination[2] = SDRC_Misc.GetWorldSize()/2 + Math.RandomFloat(-rnd, rnd);
-					
-					vector direction = vector.Direction(pos, m_vPosDestination);
-					m_fAngle = SDRC_Misc.VectorToAngle(direction);
-					
-					SDRC_Log.Add("[SDRC_Mission_Crashsite] Helicopter flying from " + pos + " to " + m_vPosDestination + ". Angle: " + m_fAngle, LogLevel.DEBUG);*/
 					break;
 				}
 				else
@@ -84,11 +79,6 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 				}
 			}
 		}
-		else
-		{
-			//Requested positions are blindly accepted
-			positionFound = true;
-		}			
 
 		//No suitable location found.
 		if (!positionFound)	

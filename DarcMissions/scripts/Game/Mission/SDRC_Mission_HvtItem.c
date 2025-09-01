@@ -25,7 +25,6 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.HVTITEM);
-		vector pos = GetPos();
 		
 		//Load config
 		m_HvtItemJsonApi.Load();
@@ -41,22 +40,16 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		m_DC_HvtItem = m_Config.hvtItems[GetSubIdx()];
 		HandleRequestGeneralVariables(m_DC_HvtItem.general, request);
 		
-		//Set defaults
-		if (!IsRequested())
+		//Camps are randomly rotated
+		m_fSpawnRotation = Math.RandomFloat(0, 360);
+		
+		//Find position
+		vector pos = m_DC_HvtItem.general.pos[0];
+		
+		//Find a location for the mission
+		if (pos == "0 0 0")
 		{
-			pos = m_DC_HvtItem.general.pos[0];
-			
-			//Find a location for the mission
-			if (pos == "0 0 0")
-			{
-				pos = SDRC_MissionHelper.FindMissionPos(m_DC_HvtItem.locationTypes, m_DC_HvtItem.emptySize);
-				//Camps in random places are randomly rotated
-				m_fSpawnRotation = Math.RandomFloat(0, 360);
-			}
-			else
-			{
-				pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_HvtItem.emptySize);
-			}
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_HvtItem.locationTypes, m_DC_HvtItem.emptySize);
 		}
 		else
 		{

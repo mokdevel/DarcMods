@@ -50,7 +50,7 @@ class SDRC_MissionConfig : Managed
 class SDRC_MissionConfigGeneral : Managed
 {
 	const string SDRC_DEFAULT = "default";
-	int suid;								//Unique id for the sub mission
+	int subIdx;								//Unique index for the sub mission. 
 	string comment;							//Generic comment to describe the mission. Not used in game.
 	ref array<vector> pos = {};				//Positions for mission. "0 0 0" used for random location chosen from locationTypes. First is mission position, second is destination for missions that need it.
 	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
@@ -69,21 +69,21 @@ class SDRC_MissionConfigGeneral : Managed
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void SetDefaults(int suid = -1, string comment = SDRC_DEFAULT, 
-					 vector pos = "0 0 0", 
-					 string posName = SDRC_DEFAULT, string title = SDRC_DEFAULT, string info = SDRC_DEFAULT, 
-					 DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.DEFAULT, 
-					 string winMessage = SDRC_DEFAULT, string loseMessage = SDRC_DEFAULT, 
-					 string faction = "", int xp = 0)
+	void SetDefaults(int subIdx_ = -1, string comment_ = SDRC_DEFAULT, 
+					 vector pos_ = "0 0 0", 
+					 string posName_ = SDRC_DEFAULT, string title_ = SDRC_DEFAULT, string info_ = SDRC_DEFAULT, 
+					 DC_EMissionWinCondition winCondition_ = DC_EMissionWinCondition.DEFAULT, 
+					 string winMessage_ = SDRC_DEFAULT, string loseMessage_ = SDRC_DEFAULT, 
+					 string faction_ = "", int xp_ = 0)
 	{
-		array<vector> pos_array = {pos, "0 0 0"};
-		Set(suid, comment, pos_array, posName, title, info, winCondition, winMessage, loseMessage, faction, xp);
+		array<vector> pos_array = {pos_, "0 0 0"};
+		Set(subIdx_, comment_, pos_array, posName_, title_, info_, winCondition_, winMessage_, loseMessage_, faction_, xp_);
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void Set(int suid_, string comment_, array<vector> pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, int xp_)
+	void Set(int subIdx_, string comment_, array<vector> pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, int xp_)
 	{
-		suid = suid_;
+		subIdx = subIdx_;
 		comment = comment_;
 		pos = pos_;
 		posName = posName_;
@@ -92,7 +92,9 @@ class SDRC_MissionConfigGeneral : Managed
 		winCondition = winCondition_;
 		winMessage = winMessage_;
 		loseMessage = loseMessage_;
-		faction = faction_;
+//		faction = faction_;
+		faction = SDRC_EnemyHelper.SelectEnemyFaction(faction_);
+		
 		xp = xp_;
 	}
 }
@@ -103,7 +105,7 @@ class SDRC_Mission
 	static int m_MissionIDCounter = 1;			//Static counter for mission ID
 	
 	//Common for all missions
-    private string m_Id;
+    private string m_sId;
 	private DC_EMissionState m_State;
 	private DC_EMissionType m_Type;
 	private bool m_Static;						//Defines if the mission is dynamic or static. Dynamic is default. 
@@ -113,11 +115,11 @@ class SDRC_Mission
 	private string m_sMarkerType;				//Markertype defined by SCR_EMapMarkerType
 	
 	//Common for all sub missions
-	private int m_iSubIdx;						//Sub mission index
 	private ref SDRC_MissionConfigGeneral m_General = new SDRC_MissionConfigGeneral();
 
 	//Internals
 	private bool m_bRequested;					//The missions spawn was requested by a an external party (like GM)
+	private int m_iRequestId;					//An ID set by the requestor. Default -1 which means no special ID set.
 	private DC_EMissionSuccess m_Success;
 	//Internals without getters
 	private int m_StartTime;					//Seconds when mission started
@@ -136,19 +138,7 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission(SDRC_MissionRequested request)
 	{
-//		vector pos = "0 0 0";
-		
-		if (request)
-		{
-			m_bRequested = true;
-		}
-		
-/*		if (pos != "0 0 0")										//Requested is set here
-		{
-			m_bRequested = true;
-		}*/
-		
-		m_Id = DC_ID_PREFIX + SCR_StringHelper.PadLeft(string.ToString(m_MissionIDCounter), 4, "0");
+		m_sId = DC_ID_PREFIX + SCR_StringHelper.PadLeft(string.ToString(m_MissionIDCounter), 4, "0");
 		m_MissionIDCounter++;
 		m_State = DC_EMissionState.INIT;
 		m_Type = DC_EMissionType.NONE;
@@ -156,6 +146,7 @@ class SDRC_Mission
 		m_ShowHint = true;
 		m_ShowMessage = true;
 		m_bShowMarker = true;
+		m_iRequestId = -1;
 		
 		//NOTE: m_General default values have been set in the constructor
 //		m_General.winCondition = DC_EMissionWinCondition.AI_KILL_ALL;
@@ -164,12 +155,13 @@ class SDRC_Mission
 		if (!request)
 		{
 			//Will pick any mission from the list
-			m_iSubIdx = -1;		
+			m_General.subIdx = -1;		
 		}
 		else
 		{
+			m_bRequested = true;
 			//Set the requested values
-			m_iSubIdx = request.subIdx;
+			m_iRequestId = request.requestId;
 			m_General = request.general;
 		}
 		
@@ -178,7 +170,9 @@ class SDRC_Mission
 		m_StartTime = (System.GetTickCount() / 1000); 			//The time in seconds when the mission was started.
 		SetActiveTime(SDRC_MISSION_CYCLE_TIME_DEFAULT*20);		//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
 		m_iActiveDistance = 0;									//Set a default zero
-		m_bMissionIsEnding = false;		
+		m_bMissionIsEnding = false;
+		
+		SDRC_MissionStats.Add(m_sId, m_iRequestId, m_State, m_Success);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -187,7 +181,7 @@ class SDRC_Mission
 	*/
 	void MissionStart()	
 	{
-		m_State = DC_EMissionState.SPAWN;
+		SetState(DC_EMissionState.SPAWN);
 		SDRC_Log.Add("[SDRC_Mission:MissionStart] " +  GetId() + " : State changed to SPAWN", LogLevel.DEBUG);
 		GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.MISSION_RUN_DELAY, false);	
 	}	
@@ -340,9 +334,9 @@ class SDRC_Mission
 				general.loseMessage = request.general.loseMessage;
 			}
 			
-			if (request.general.faction != "default")
+			if (request.general.faction != "")
 			{
-				general.faction = request.general.faction;
+				general.faction = SDRC_EnemyHelper.SelectEnemyFaction(request.general.faction);
 			}
 			
 			if (request.general.xp != 0)
@@ -350,6 +344,10 @@ class SDRC_Mission
 				general.xp = request.general.xp;
 			}
 		}
+		
+		//TBD: Should this do a dump of mission settings?
+		//Just to print out the faction for mission
+		SetFaction(general.faction);		
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -380,6 +378,8 @@ class SDRC_Mission
 			GetGame().GetCallqueue().CallLater(GetAICountDelayed, 10000);		//Do the counting after a while. AIs needs to be spawned.
 			m_iAIKillPercentageRandom = Math.RandomInt(30, 99);
 		}
+		
+		SDRC_MissionStats.UpdateState(GetId(), state);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -396,12 +396,12 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	DC_EMissionState GetSubIdx()
 	{
-		return m_iSubIdx;
+		return m_General.subIdx;
 	}
 
 	void SetSubIdx(int subIdx)
 	{
-		m_iSubIdx = subIdx;
+		m_General.subIdx = subIdx;
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -418,7 +418,7 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	string GetId()
 	{
-		return m_Id;
+		return m_sId;
 	}	
 			
 	//------------------------------------------------------------------------------------------------
@@ -542,6 +542,8 @@ class SDRC_Mission
 	void SetSuccess(DC_EMissionSuccess success)
 	{
 		m_Success = success;
+		
+		SDRC_MissionStats.UpdateState(GetId(), success);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -553,7 +555,7 @@ class SDRC_Mission
 	void SetFaction(string faction)
 	{
 		m_General.faction = faction;
-		SDRC_Log.Add("[SDRC_Mission:SetFaction] " +  GetId() + " : " + faction, LogLevel.SPAM);		
+		SDRC_Log.Add("[SDRC_Mission:SetFaction] " +  GetId() + " : " + faction, LogLevel.DEBUG);		
 	}
 			
 	//------------------------------------------------------------------------------------------------

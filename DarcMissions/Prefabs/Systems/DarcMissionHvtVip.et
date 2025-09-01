@@ -4,8 +4,8 @@ SDRC_DarcMissionGM : "{C599195C442D7125}Prefabs/Compositions/Misc/CustomEntities
   SDRC_DarcMissionEditableRequestComp "{663310CA3D4ECF81}" {
    m_EntityType SYSTEM
    m_UIInfo SCR_EditableEntityUIInfoColored "{663310CA3D4ECF90}" {
-    Name "DarcMissions HvtItem"
-    Description "Spawns a random HvtItem mission"
+    Name "DarcMissions HvtVip"
+    Description "Spawns a random HvtVip mission"
     Icon "{FA7D7C67D837958E}UI/Textures/Icons/gm_mission_HvtVip_round.edds"
     m_Image "{BE8FD5CBD40986EF}UI/Textures/Icons/gm_mission_HvtVip.edds"
     m_aAuthoredLabels {

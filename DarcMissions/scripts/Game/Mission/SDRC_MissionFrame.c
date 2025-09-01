@@ -57,19 +57,6 @@ class SDRC_MissionFrame
 		m_DC_MissionFrameJsonApi.Load();
 		m_Config = m_DC_MissionFrameJsonApi.conf;
 		
-		//Check if a request to create new logs has been made		
-		if (m_Config.recreateConfigs)
-		{
-			SDRC_Log.Add("[SDRC_MissionFrame] ---------------- Creating default configs -------------------", LogLevel.WARNING);
-			SDRC_Log.Add("[SDRC_MissionFrame] - Changing recreateConfigs to false and saving the config.  -", LogLevel.WARNING);
-			m_Config.recreateConfigs = false;
-			m_DC_MissionFrameJsonApi.Save("");
-			SDRC_Log.Add("[SDRC_MissionFrame] - Creating configs. Existing ones will not be over written. -", LogLevel.WARNING);
-			SDRC_MissionEnumHelper.CreateAllConfigs();
-			SDRC_Log.Add("[SDRC_MissionFrame] --------------------- Configs created. ----------------------", LogLevel.WARNING
-			);
-		}
-		
 		//Load non valid area configuration from file		
 		m_DC_NonValidAreaJsonApi.Load();
 		m_DC_NonValidAreaJsonApi.Populate(m_aNonValidAreas);
@@ -88,7 +75,20 @@ class SDRC_MissionFrame
 		//Set some defaults
 		m_iStaticTryCount = 0;
 		m_iStaticTryLimit = m_iMissionCountStaticMax * 2;
-		m_iLastMissionSpawnTime = (System.GetTickCount() / 1000) - m_Config.missionStatic.delayBetween;		//Fix the timer so that first mission immediately spawns
+		m_iLastMissionSpawnTime = (System.GetTickCount() / 1000) - m_Config.missionStatic.delayBetween;		//Fix the timer so that first mission immediately spawns		
+		
+		//Check if a request to create new configs has been made		
+		if (m_Config.recreateConfigs)
+		{
+			SDRC_Log.Add("[SDRC_MissionFrame] ---------------- Creating default configs -------------------", LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_MissionFrame] - Changing recreateConfigs to false and saving the config.  -", LogLevel.WARNING);
+			m_Config.recreateConfigs = false;
+			m_DC_MissionFrameJsonApi.Save("");
+			SDRC_Log.Add("[SDRC_MissionFrame] - Creating configs. Existing ones will not be over written. -", LogLevel.WARNING);
+			SDRC_MissionEnumHelper.CreateAllConfigs();
+			SDRC_Log.Add("[SDRC_MissionFrame] --------------------- Configs created. ----------------------", LogLevel.WARNING
+			);
+		}
 				
 		//Fix seconds to ms
 		SDRC_Log.Add("[SDRC_MissionFrame] Waiting for " + m_Config.missionStartDelay + " seconds before spawning missions.", LogLevel.NORMAL);

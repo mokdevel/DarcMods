@@ -8,9 +8,9 @@ Includes various functions for missions.
 //------------------------------------------------------------------------------------------------
 sealed class SDRC_MissionHelper
 {
+	private const float DC_DEFAULT_SIZE = 5;					//Default size for a mission position
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 5;		//How many different spots to try for a mission before giving up
-	private const int DC_LOCATION_SEACRH_RADIUS = 100;			//The start search radius for mission position 
-	private const int DC_LOCATION_SEACRH_RADIUS_INC = 50;		//The increase of search radius for each failed iteration
+	private const int DC_LOCATION_SEACRH_RADIUS_INC = 30;		//The increase of search radius for each failed iteration
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -34,12 +34,12 @@ sealed class SDRC_MissionHelper
 	/*!
 	Find a position near pos for a mission. "0 0 0" returned if nothing found.
 	\param pos Position to start to search for mission position
-	\param distanceToMission Distance to another mission. Two missions shall not be too close to each other. -1 will use the default from MissionFrame.
-	\param distanceToPlayer Mission shall not spawn too close to a player. -1 will use the default from MissionFrame.
+	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
+	\param randomPos Position randomization. -1 uses the value set in missionFrame settings 
 	*/	
-	static vector FindMissionPos(vector pos, float distanceToMission = -1, float distanceToPlayer = -1, float size = 5)
+	static vector FindMissionPos(vector pos, float size = DC_DEFAULT_SIZE, int randomPos = -1)
 	{	
-		pos = FindWithIterate(pos, DC_LOCATION_SEACRH_RADIUS, size);
+		pos = FindWithIterate(pos, size);
 		
 		return pos;
 	}
@@ -50,7 +50,7 @@ sealed class SDRC_MissionHelper
 	\param locationTypes Array of EMapDescriptorType to look for a place
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
 	*/	
-	static vector FindMissionPos(array<EMapDescriptorType> locationTypes, float size = 5)
+	static vector FindMissionPos(array<EMapDescriptorType> locationTypes, float size = DC_DEFAULT_SIZE, int randomPos = -1)
 	{	
 		//Find a random location
 		vector pos = "0 0 0";
@@ -58,7 +58,6 @@ sealed class SDRC_MissionHelper
 		IEntity location = null;
 		array<IEntity> locations = {};
 		SDRC_Locations.GetLocationsCached(locations, locationTypes);		
-		int searchRadius = DC_LOCATION_SEACRH_RADIUS;			//Find the position within DC_LOCATION_SEACRH_RADIUS from pos. In case of fail, we increase the area.
 		
 		if (locations.IsEmpty())
 		{
@@ -77,7 +76,7 @@ sealed class SDRC_MissionHelper
 			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);			
 		}
 
-		pos = FindWithIterate(pos, searchRadius, size);
+		pos = FindWithIterate(pos, size, randomPos);
 		
 		return pos;
 	}
@@ -86,17 +85,23 @@ sealed class SDRC_MissionHelper
 	/*!
 	Find the location close to the position 
 	\param pos Position to start to search for mission position
-	\param searchRadius The radius to search for the proper position.
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
 	*/	
-	static vector FindWithIterate(vector pos, float searchRadius, float size = 5)
+	static vector FindWithIterate(vector pos, float size = DC_DEFAULT_SIZE, int searchRadius = -1)
 	{
-		bool positionFound = false;
+		bool positionFound = false;		
+		vector posOrig = pos;
 		
+		if (searchRadius == -1)
+		{
+			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+			searchRadius = baseGameMode.missionFrame.m_Config.missionRandomPos;
+		}
+				
 		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 		{
 			//Give the position some randomization so it's not always in the same spot.			
-			pos = SDRC_Misc.RandomizePos(pos, searchRadius/2);
+			pos = SDRC_Misc.RandomizePos(posOrig, searchRadius);
 			
 			//Find the position within searchRadius from pos.			
 			if (SDRC_SpawnHelper.FindEmptyPos(pos, searchRadius, size))
@@ -347,7 +352,7 @@ sealed class SDRC_MissionHelper
 		else
 		{
 			//TBD: This needs to search through suid
-			if (missionSubIdx > 0 && missionSubIdx < confList.Count())
+			if (missionSubIdx > -1 && missionSubIdx < confList.Count())
 			{
 				idx = missionSubIdx;
 			}

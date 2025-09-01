@@ -23,7 +23,6 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	{
 		//Set some defaults
 		SetType(DC_EMissionType.ROADBLOCK);
-		vector pos = GetPos();
 		
 		//Load config
 		m_RoadblockJsonApi.Load();
@@ -39,16 +38,18 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		m_DC_Roadblock = m_Config.roadblocks[GetSubIdx()];
 		HandleRequestGeneralVariables(m_DC_Roadblock.general, request);
 		
-		//If not a GM requested mission, use the default one.
-		if (!IsRequested())
+		//For requested missions we want have it as close as possible in the requested place.
+		int randomPos = -1;		
+		if (IsRequested())
 		{
-			pos = m_DC_Roadblock.general.pos[0];
+			randomPos = 0;
 		}
 		
 		//Find a location for the mission
+		vector pos = m_DC_Roadblock.general.pos[0];
 		if (pos == "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Roadblock.locationTypes, m_DC_Roadblock.emptySize);
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Roadblock.locationTypes, m_DC_Roadblock.emptySize, randomPos);
 		}
 		
 		//If we found a position, let's search more closely
