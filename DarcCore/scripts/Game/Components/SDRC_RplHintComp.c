@@ -9,14 +9,14 @@ class SDRC_RplHintComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------
     override void OnPostInit(IEntity owner)
     {
-        auto hintEnt = SDRC_RplHintEntity.Cast(owner);
-        if (!hintEnt)
+        auto ent = SDRC_RplHintEntity.Cast(owner);
+        if (!ent)
         {
             SDRC_Log.Add("[SDRC_RplHintComp] Entity not found.", LogLevel.ERROR);
             return;
         }
 				
-		BaseRplComponent rplComponent = BaseRplComponent.Cast(hintEnt.FindComponent(BaseRplComponent));
+		BaseRplComponent rplComponent = BaseRplComponent.Cast(ent.FindComponent(BaseRplComponent));
         if (!rplComponent)
         {
             SDRC_Log.Add("[SDRC_RplHintComp] RplComponent not found.", LogLevel.ERROR);
