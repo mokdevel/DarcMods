@@ -111,6 +111,12 @@ sealed class SDRC_EnemyHelper
 	//------------------------------------------------------------------------------------------------
 	static ResourceName SelectEnemyFaction(string faction = "")
 	{
+		
+		if (m_sEnemyFactions.IsEmpty())
+		{
+			return "";
+		}
+		
 		if (faction == "")	//RANDOM
 		{
 			faction = m_sEnemyFactions.GetRandomElement();
