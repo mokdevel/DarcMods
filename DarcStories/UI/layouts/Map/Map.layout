@@ -3,12 +3,14 @@ FrameWidgetClass {
   FrameWidgetClass "{66353C835F215B02}" {
    Name "StoryFrame"
    Slot FrameWidgetSlot "{66353C835F215AC9}" {
-    OffsetLeft 0
-    OffsetTop 0
+    PositionX 400
+    OffsetLeft 400
+    PositionY 400
+    OffsetTop 400
     SizeX 600
-    OffsetRight -600
+    OffsetRight -1000
     SizeY 600
-    OffsetBottom -600
+    OffsetBottom -1000
     Alignment 0.5 0.5
    }
    "Z Order" 100
@@ -51,6 +53,7 @@ FrameWidgetClass {
      }
      "Is Enabled" 0
      "Is Visible" 0
+     Opacity 0.37
      Texture "{16296D7B325A094B}UI/Textures/Icons/gm_mission_X_round.edds"
      Size 71 69
     }
@@ -70,6 +73,9 @@ FrameWidgetClass {
      "Is Enabled" 0
      "Is Visible" 0
      Color 0 0 0 1
+     Text "Story Title"
+     "Font Size" 26
+     "Min Font Size" 26
     }
     TextWidgetClass "{6636846C05A95D80}" {
      Name "StoryText"
@@ -86,11 +92,9 @@ FrameWidgetClass {
      "Is Enabled" 0
      "Is Visible" 0
      Color 0 0 0 1
-     Text "Their mission, Operation Silent Watch, was simple in objective, complex in execution: confirm or deny the presence of a high-value target, codenamed \"Vulture,\" who was suspected of using the city as a staging ground for a weaponized drone program."\
-     ""\
-     "This was it. The first thread. The mission now pivoted from passive observation to active investigation. They had two choices: call it in and wait for a full assault team, or move in for a closer look to get definitive proof."
-     "Font Size" 16
-     "Min Font Size" 16
+     Text "Chapter Story"
+     "Font Size" 20
+     "Min Font Size" 20
      Wrap 1
     }
    }

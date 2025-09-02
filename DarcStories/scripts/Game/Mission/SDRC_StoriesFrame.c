@@ -34,16 +34,13 @@ class SDRC_StoriesFrame
 	private ref SDRC_StoriesFrameJsonApi m_DC_StoriesFrameJsonApi = new SDRC_StoriesFrameJsonApi();
 	private ref SDRC_StoriesFrameConfig m_Config;
 	private ref SDRC_Story m_Story;
-	private ref SDRC_Chapter m_Chapter;
+	ref SDRC_Chapter m_Chapter = new SDRC_Chapter();
 	
 	private int m_StoryIdx;
 	private bool m_StoryActive;
 	private int m_RequestId;
 	
-	private string m_sWorldName;
-	
-//	private int m_iMissionCountDynamicMax;				//Max amount of dynamic missions
-//	private int m_iMissionCountStaticMax;				//Max amount of static missions
+//	private string m_sWorldName;
 	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_StoriesFrame()
@@ -51,7 +48,7 @@ class SDRC_StoriesFrame
 		SDRC_Log.Add("[SDRC_StoriesFrame] Starting SDRC_StoriesFrame", LogLevel.NORMAL);
 		s_Instance = this;
 				
-		m_sWorldName = SDRC_Misc.GetWorldName(true);
+//		m_sWorldName = SDRC_Misc.GetWorldName(true);
 
 		//Load configuration from file
 		m_DC_StoriesFrameJsonApi.Load();
