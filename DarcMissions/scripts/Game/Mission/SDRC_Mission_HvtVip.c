@@ -87,10 +87,12 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_HvtVip.general.posName));
-		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
+		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
+		UpdateGeneral(m_DC_HvtVip.general);		
+/*		SetMarker(m_Config.showMarker, m_DC_HvtVip.general.markerIcon, m_DC_HvtVip.general.markerType);
 		SetHint(m_Config.showHint, m_DC_HvtVip.general.title, m_DC_HvtVip.general.info);
 		SetMessages(m_Config.showMessage, m_DC_HvtVip.general.winMessage, m_DC_HvtVip.general.loseMessage);				
-		SetWinCondition(m_DC_HvtVip.general.winCondition);
+		SetWinCondition(m_DC_HvtVip.general.winCondition);*/
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -290,8 +292,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	{
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HVTVIP_MAP;
-		conf.missionList = {2};//{0,0,1,2,3,3};
+		conf.missionList = {0,0,1,2,3,3};
 		//Mission specific
 		conf.buildingRadius = 400;
 		//----------------------------------------------------
@@ -315,6 +316,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"The target has been neutralized.",
 			"The target escaped.",
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
 			0		
 		);
 		HvtVip.Set(
@@ -367,6 +369,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"The target has been neutralized.",
 			"The target escaped.",
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
 			0		
 		);
 		HvtVip.Set(
@@ -413,6 +416,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"The target has been neutralized.",
 			"The target escaped.",
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
 			0		
 		);
 		HvtVip.Set(
@@ -459,6 +463,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"The criminal got what he deserved.",
 			"The judgement day is posponed.",
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
 			0		
 		);
 		HvtVip.Set(

@@ -104,10 +104,12 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		
 		SetPos(pos, m_vPosDestination);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Crashsite.general.posName));
-		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
+		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
+		UpdateGeneral(m_DC_Crashsite.general);		
+/*		SetMarker(m_Config.showMarker, m_DC_Crashsite.general.markerIcon, m_DC_Crashsite.general.markerType);
 		SetHint(m_Config.showHint, m_DC_Crashsite.general.title, m_DC_Crashsite.general.info);		
 		SetMessages(m_Config.showMessage, m_DC_Crashsite.general.winMessage, m_DC_Crashsite.general.loseMessage);		
-		SetWinCondition(m_DC_Crashsite.general.winCondition);
+		SetWinCondition(m_DC_Crashsite.general.winCondition);*/
 
 		//Set a marker for destination
 		if (!SDRC_Conf.RELEASE)
@@ -160,7 +162,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 						{
 							SDRC_MapMarkerHelper.DeleteMarker(GetId());
 							//SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, GetId(), "Crash site");
-							SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, m_Config.markerType);
+							SetMarker(DC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, m_DC_Crashsite.general.markerType);
 							ShowMarker();
 						}
 						missionCrashSiteState = DC_EMissionCrashSiteState.SPAWN_SITE;
@@ -373,7 +375,6 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		conf.author = "darc";
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP;
 		conf.missionList = {0,1};		
 		//Mission specific
 		conf.distanceToMission = 100;
@@ -398,6 +399,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"The loot was salvaged. Crash, burn, loot.",
 			"No loot for you today.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
 			0
 		);
 		crashsite.Set
@@ -488,6 +490,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"The loot box was secured.",
 			"The cargo was lost.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
 			0
 		);
 		crashsite.Set

@@ -31,6 +31,8 @@ enum DC_EMissionSuccess
 	LOSE
 }
 
+const string SDRC_DEFAULT = "default";
+
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionConfig : Managed
 {
@@ -38,8 +40,6 @@ class SDRC_MissionConfig : Managed
 	int version = 1;
 	string author = "darc";
 	int missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;	//How often the mission is run
-	string markerType = "DARC_MISSION";
-	int markerIdx = -1;						//marker ID
 	bool showMarker = true;
 	bool showHint = true;
 	bool showMessage = true;
@@ -49,7 +49,6 @@ class SDRC_MissionConfig : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionConfigGeneral : Managed
 {
-	const string SDRC_DEFAULT = "default";
 	int subIdx;								//Unique index for the sub mission. 
 	string comment;							//Generic comment to describe the mission. Not used in game.
 	ref array<vector> pos = {};				//Positions for mission. "0 0 0" used for random location chosen from locationTypes. First is mission position, second is destination for missions that need it.
@@ -60,6 +59,8 @@ class SDRC_MissionConfigGeneral : Managed
 	string winMessage;						//Message to show when mission is completed
 	string loseMessage;						//Message to show when mission fails
 	string faction;							//Faction for the mission. Setting as empty, works as the default to select from the enemyFactions
+	string markerType;						//Marker type for the mission
+	int markerIcon;							//Marker ID within markerType
 	int xp;									//Experience given	
 	
 	//------------------------------------------------------------------------------------------------
@@ -74,14 +75,16 @@ class SDRC_MissionConfigGeneral : Managed
 					 string posName_ = SDRC_DEFAULT, string title_ = SDRC_DEFAULT, string info_ = SDRC_DEFAULT, 
 					 DC_EMissionWinCondition winCondition_ = DC_EMissionWinCondition.DEFAULT, 
 					 string winMessage_ = SDRC_DEFAULT, string loseMessage_ = SDRC_DEFAULT, 
-					 string faction_ = "", int xp_ = 0)
+					 string faction_ = "", 
+					 string markerType_ = SDRC_DEFAULT, int markerIcon_ = -1, 
+					 int xp_ = 0)
 	{
 		array<vector> pos_array = {pos_, "0 0 0"};
-		Set(subIdx_, comment_, pos_array, posName_, title_, info_, winCondition_, winMessage_, loseMessage_, faction_, xp_);
+		Set(subIdx_, comment_, pos_array, posName_, title_, info_, winCondition_, winMessage_, loseMessage_, faction_, markerType_, markerIcon_, xp_);
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void Set(int subIdx_, string comment_, array<vector> pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, int xp_)
+	void Set(int subIdx_, string comment_, array<vector> pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, string markerType_, int markerIcon_, int xp_)
 	{
 		subIdx = subIdx_;
 		comment = comment_;
@@ -92,11 +95,11 @@ class SDRC_MissionConfigGeneral : Managed
 		winCondition = winCondition_;
 		winMessage = winMessage_;
 		loseMessage = loseMessage_;
-//		faction = faction_;
 		faction = SDRC_EnemyHelper.SelectEnemyFaction(faction_);
-		
+		markerType = markerType_;
+		markerIcon = markerIcon_;
 		xp = xp_;
-	}
+	}	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -108,11 +111,10 @@ class SDRC_Mission
     private string m_sId;
 	private DC_EMissionState m_State;
 	private DC_EMissionType m_Type;
-	private bool m_Static;						//Defines if the mission is dynamic or static. Dynamic is default. 
-    private bool m_ShowHint;
-    private bool m_ShowMessage;
+	private bool m_bStatic;						//Defines if the mission is dynamic or static. Dynamic is default. 
+    private bool m_bShowHint;
+    private bool m_bShowMessage;
 	private bool m_bShowMarker;					//If the icon is to be shown
-	private string m_sMarkerType;				//Markertype defined by SCR_EMapMarkerType
 	
 	//Common for all sub missions
 	private ref SDRC_MissionConfigGeneral m_General = new SDRC_MissionConfigGeneral();
@@ -125,7 +127,6 @@ class SDRC_Mission
 	private int m_StartTime;					//Seconds when mission started
 	private int m_EndTime;						//Seconds when mission shall end.
 	private int m_ActiveTime;					//Seconds of how long the mission should be active
-	private DC_EMissionIcon m_sIcon;			//The icon to show
 	private int m_iActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
 	private int m_iActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
 	private bool m_bMissionIsEnding;			//Once all AIs are dead, we're getting close to end the mission.
@@ -142,15 +143,15 @@ class SDRC_Mission
 		m_MissionIDCounter++;
 		m_State = DC_EMissionState.INIT;
 		m_Type = DC_EMissionType.NONE;
-		m_Static = false;
-		m_ShowHint = true;
-		m_ShowMessage = true;
+		m_bStatic = false;
+		m_bShowHint = true;
+		m_bShowMessage = true;
 		m_bShowMarker = true;
 		m_iRequestId = -1;
 		
 		//NOTE: m_General default values have been set in the constructor
 //		m_General.winCondition = DC_EMissionWinCondition.AI_KILL_ALL;
-		m_sMarkerType = "DARC_MISSION";
+//		m_sMarkerType = "DARC_MISSION";
 
 		if (!request)
 		{
@@ -304,32 +305,32 @@ class SDRC_Mission
 				}
 			}
 			
-			if (request.general.posName != "default")
+			if (request.general.posName != SDRC_DEFAULT)
 			{
 				general.posName = request.general.posName;
 			}
 			
-			if (request.general.title != "default")
+			if (request.general.title != SDRC_DEFAULT)
 			{
 				general.title = request.general.title;
 			}
 
-			if (request.general.info != "default")
+			if (request.general.info != SDRC_DEFAULT)
 			{
 				general.info = request.general.info;
 			}
 			
-			if (request.general.winCondition == DC_EMissionWinCondition.DEFAULT)
+			if (request.general.winCondition != DC_EMissionWinCondition.DEFAULT)
 			{
 				general.winCondition = request.general.winCondition;
 			}
 			
-			if (request.general.winMessage != "default")
+			if (request.general.winMessage != SDRC_DEFAULT)
 			{
 				general.winMessage = request.general.winMessage;
 			}
 			
-			if (request.general.loseMessage != "default")
+			if (request.general.loseMessage != SDRC_DEFAULT)
 			{
 				general.loseMessage = request.general.loseMessage;
 			}
@@ -337,6 +338,16 @@ class SDRC_Mission
 			if (request.general.faction != "")
 			{
 				general.faction = SDRC_EnemyHelper.SelectEnemyFaction(request.general.faction);
+			}
+			
+			if (request.general.markerType != SDRC_DEFAULT)
+			{
+				general.markerType = request.general.markerType;
+			}
+			
+			if (request.general.markerIcon != -1)
+			{
+				general.markerIcon = request.general.markerIcon;
 			}
 			
 			if (request.general.xp != 0)
@@ -349,6 +360,15 @@ class SDRC_Mission
 		//Just to print out the faction for mission
 		SetFaction(general.faction);		
 	}	
+
+	//------------------------------------------------------------------------------------------------
+	void UpdateGeneral(SDRC_MissionConfigGeneral general)
+	{
+		SetMarker(general.markerIcon, general.markerType);
+		SetHint(general.title, general.info);
+		SetMessages(general.winMessage, general.loseMessage);		
+		SetWinCondition(general.winCondition);
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	// Getters/Setters for members and other related functions 
@@ -407,12 +427,12 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	DC_EMissionState IsStatic()
 	{
-		return m_Static;
+		return m_bStatic;
 	}
 
 	void SetStatic(bool static_)
 	{
-		m_Static = static_;
+		m_bStatic = static_;
 	}		
 				
 	//------------------------------------------------------------------------------------------------
@@ -447,18 +467,17 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SetShowHint(bool showHint)
 	{
-		m_ShowHint = showHint;
+		m_bShowHint = showHint;
 	}
 	
 	bool IsShowHint()
 	{
-		return m_ShowHint;
+		return m_bShowHint;
 	}
 
 	//------------------------------------------------------------------------------------------------
-	void SetHint(bool show, string title, string info)
+	void SetHint(string title, string info)
 	{
-		SetShowHint(show);
 		SetTitle(title);
 		SetInfo(info);
 	}
@@ -497,20 +516,19 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SetShowMessage(bool showMessage)
 	{
-		m_ShowMessage = showMessage;
+		m_bShowMessage = showMessage;
 	}
 	
 	bool IsShowMessage()
 	{
-		return m_ShowMessage;
+		return m_bShowMessage;
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void SetMessages(bool show, string winMessage, string LoseMessage)
+	void SetMessages(string winMessage, string loseMessage)
 	{
-		SetShowMessage(show);
 		SetWinMessage(winMessage);
-		SetLoseMessage(LoseMessage);
+		SetLoseMessage(loseMessage);
 	}
 	
 	string GetWinMessage()
@@ -531,6 +549,14 @@ class SDRC_Mission
 	void SetLoseMessage(string message)
 	{
 		m_General.loseMessage = FixString(message);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void SetVisibility(bool showMarker, bool showHint, bool showMessage)
+	{
+		SetShowMarker(showMarker);
+		SetShowHint(showHint);
+		SetShowMessage(showMessage);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -561,15 +587,24 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	DC_EMissionIcon GetMarker()
 	{
-		return m_sIcon;
+		return m_General.markerIcon;
 	}
 
-	void SetMarker(bool showMarker, DC_EMissionIcon icon, string markerType = "DARC_MISSION")
+	void SetMarker(DC_EMissionIcon icon, string markerType = "DARC_MISSION")
+	{
+		m_General.markerIcon = icon;
+		m_General.markerType = markerType;
+	}
+
+	void SetShowMarker(bool showMarker)
 	{
 		m_bShowMarker = showMarker;
-		m_sIcon = icon;
-		m_sMarkerType = markerType;
-	}
+	}	
+		
+	bool IsShowMarker()
+	{
+		return m_bShowMarker;
+	}	
 	
 	void ShowMarker()
 	{
@@ -580,16 +615,16 @@ class SDRC_Mission
 			return;
 		}
 		
-		if (m_bShowMarker)
+		if (IsShowMarker())
 		{
-			SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), m_sIcon, GetId(), GetTitle());
+			SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), GetMarker(), GetId(), GetTitle());
 		}
 	}
 	
 	void MoveMarker()
 	{
 		SDRC_MapMarkerHelper.DeleteMarker(GetId());
-		SetMarker(m_bShowMarker, GetMarker());
+		SetMarker(GetMarker());
 		ShowMarker();
 	}
 	
@@ -736,7 +771,7 @@ class SDRC_Mission
 		if (m_bShowMarker)
 		{
 			SDRC_MapMarkerHelper.DeleteMarker(GetId());
-			SetMarker(m_bShowMarker, DC_EMissionIcon.GM_MISSION_WIN_MAP, m_sMarkerType);
+			SetMarker(DC_EMissionIcon.GM_MISSION_WIN_MAP, m_General.markerType);
 			ShowMarker();
 		}
 		
@@ -762,7 +797,7 @@ class SDRC_Mission
 		if (m_bShowMarker)
 		{
 			SDRC_MapMarkerHelper.DeleteMarker(GetId());
-			SetMarker(m_bShowMarker, DC_EMissionIcon.GM_MISSION_LOSE_MAP, m_sMarkerType);
+			SetMarker(DC_EMissionIcon.GM_MISSION_LOSE_MAP, m_General.markerType);
 			ShowMarker();
 		}		
 	}

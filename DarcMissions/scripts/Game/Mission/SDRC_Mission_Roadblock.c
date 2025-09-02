@@ -110,10 +110,12 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(GetPos(), m_DC_Roadblock.general.posName));
-		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
+		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
+		UpdateGeneral(m_DC_Roadblock.general);		
+/*		SetMarker(m_Config.showMarker, m_DC_Roadblock.general.markerIcon, m_DC_Roadblock.general.markerType);
 		SetHint(m_Config.showHint, m_DC_Roadblock.general.title, m_DC_Roadblock.general.info);
 		SetMessages(m_Config.showMessage, m_DC_Roadblock.general.winMessage, m_DC_Roadblock.general.loseMessage);		
-		SetWinCondition(m_DC_Roadblock.general.winCondition);
+		SetWinCondition(m_DC_Roadblock.general.winCondition);*/
 
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Roadblock.campItems);
 	}	
@@ -217,7 +219,6 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	{
 		//Default		
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.markerIdx = DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP;
 		conf.missionList = {0,1,2,3};
 		//Mission specific		
 		//----------------------------------------------------
@@ -241,6 +242,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"Roadblock cleared.",
 			"Road was kept safe as planned.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
 			0		
 		);
 		roadblock.Set(
@@ -322,6 +324,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"These blocks can not stop you.",
 			"Scared of the enemy? %l is not a place for you.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
 			0		
 		);
 		roadblock.Set(
@@ -469,6 +472,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"Road cleared.",
 			"The road toll was too much for you.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
 			0		
 		);		
 		roadblock.Set(
@@ -599,6 +603,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"Gates do not stop you.",
 			"Guards has left road near %l.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
 			0		
 		);		
 		roadblock.Set(

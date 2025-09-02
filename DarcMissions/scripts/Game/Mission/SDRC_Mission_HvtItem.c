@@ -67,10 +67,12 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_HvtItem.general.posName));
-		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
+		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
+		UpdateGeneral(m_DC_HvtItem.general);		
+/*		SetMarker(m_Config.showMarker, m_DC_HvtItem.general.markerIcon, m_DC_HvtItem.general.markerType);
 		SetHint(m_Config.showHint, m_DC_HvtItem.general.title, m_DC_HvtItem.general.info);
 		SetMessages(m_Config.showMessage, m_DC_HvtItem.general.winMessage, m_DC_HvtItem.general.loseMessage);				
-		SetWinCondition(m_DC_HvtItem.general.winCondition);
+		SetWinCondition(m_DC_HvtItem.general.winCondition);*/
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -226,7 +228,6 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 	{
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.markerIdx = DC_EMissionIcon.GM_MISSION_HVTITEM_MAP;
 		conf.missionList = {0,1,2};
 		//Mission specific
 		//----------------------------------------------------
@@ -249,6 +250,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			"Target destroyed.",
 			"You failed in your mission!",
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTITEM_MAP,
 			0
 		);
 		hvtItem.Set(
@@ -360,6 +362,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			"Supplies never reached the enemy. Good work!",
 			"The enemy will fight with their bellies full.",
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTITEM_MAP,
 			0
 		);
 		hvtItem.Set(
@@ -457,8 +460,9 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			"Disrupt the enemy communications. Destroy the antenna.",
 			DC_EMissionWinCondition.HVT_DESTROY_ITEM,
 			"The comms are dead.",
-			"Enemy communication is loud and clear.",
+			"Enemy communication is working loud and clear.",
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
 			0
 		);
 		hvtItem.Set(

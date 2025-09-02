@@ -83,10 +83,12 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Squatter.general.posName));
-		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
+		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
+		UpdateGeneral(m_DC_Squatter.general);		
+/*		SetMarker(m_Config.showMarker, m_DC_Squatter.general.markerIcon, m_DC_Squatter.general.markerType);
 		SetHint(m_Config.showHint, m_DC_Squatter.general.title, m_DC_Squatter.general.info);
 		SetMessages(m_Config.showMessage, m_DC_Squatter.general.winMessage, m_DC_Squatter.general.loseMessage);				
-		SetWinCondition(m_DC_Squatter.general.winCondition);
+		SetWinCondition(m_DC_Squatter.general.winCondition);*/
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -235,7 +237,6 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	{
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.markerIdx = DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP;
 		conf.missionList = {0,1,2,2,3,3,3,4,5,5,5};
 		//Mission specific
 		conf.buildingRadius = 400;
@@ -262,6 +263,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"The loot has been secured.",
 			"Squatters cleaned the house and left you nothing.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			0		
 		);
 		squatter.Set(
@@ -314,6 +316,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"You did it! Control in %l has been restored.",
 			"Control in %l has been lost.",
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			0		
 		);
 		squatter.Set(
@@ -362,6 +365,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"Guards have been eliminated.",
 			"Military has collected the loot and left.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			0		
 		);
 		squatter.Set(
@@ -409,6 +413,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"Main enemy forces have been destroyed. Continue to keep an eye for rogues.",
 			"%l is in the hands of the enemy.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			0		
 		);
 		squatter.Set(
@@ -455,6 +460,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"Your success will be remembered.",
 			"Your effort has been struck down.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			0		
 		);
 		squatter.Set(
@@ -497,6 +503,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"%l is open for business once again.",
 			"Everything has been stolen.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			0		
 		);
 		squatter.Set(

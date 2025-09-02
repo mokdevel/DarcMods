@@ -24,14 +24,14 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		string posName = m_Config.posName;
 		vector pos = m_Config.pos;
 		
-		SetTitle(m_Config.title + "" + posName);
+/*		SetTitle(m_Config.title + "" + posName);
 		SetInfo(m_Config.info);
 		SetPos(pos);
 		SetPosName(posName);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, m_Config.markerType);
+		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, "DARC_MISSION");
 		SetShowHint(m_Config.showHint);
 
-		SetState(DC_EMissionState.INIT);			
+		SetState(DC_EMissionState.INIT);			*/
 	}	
 	
 	//------------------------------------------------------------------------------------------------

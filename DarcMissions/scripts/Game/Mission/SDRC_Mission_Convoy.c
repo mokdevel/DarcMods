@@ -111,10 +111,12 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		
 		SetPos(pos, m_vPosDestination);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Convoy.general.posName));
-		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
+		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
+		UpdateGeneral(m_DC_Convoy.general);		
+/*		SetMarker(m_Config.showMarker, m_DC_Convoy.general.markerIcon, m_DC_Convoy.general.markerType);
 		SetHint(m_Config.showHint, m_DC_Convoy.general.title, m_DC_Convoy.general.info);		
 		SetMessages(m_Config.showMessage, m_DC_Convoy.general.winMessage, m_DC_Convoy.general.loseMessage);		
-		SetWinCondition(m_DC_Convoy.general.winCondition);
+		SetWinCondition(m_DC_Convoy.general.winCondition);*/
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 	}	
 	
@@ -385,7 +387,6 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	{
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.markerIdx = DC_EMissionIcon.GM_MISSION_CONVOY_MAP;
 		conf.missionList = {0,0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
 		//Mission specific
 		conf.distanceToPlayer = 500;
@@ -411,6 +412,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"The convoy was successfully intercepted.",
 			"The convoy reached %d as planned.",
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_CONVOY_MAP,
 			0
 		);
 		convoy.Set(
@@ -471,6 +473,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"Truck stopped, loot grabbed.",
 			"All the goodies in the truck was never for you.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
 			0
 		);
 		convoy.Set(
@@ -529,6 +532,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"Armor destroyed. Well done!",
 			"Were you scared of a piece metal? Cowards!", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
 			0
 		);
 		convoy.Set(
@@ -586,6 +590,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"Nice shooting!",
 			"Oh dear, your failure will be remembered.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_CONVOY_MAP,
 			0
 		);
 		convoy.Set(

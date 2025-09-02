@@ -217,7 +217,7 @@ class SDRC_MissionFrame
 				tmpDC_Mission.SetStatic(true);
 				tmpDC_Mission.SetActiveTime(m_Config.missionStatic.activeTime);
 				tmpDC_Mission.ResetActiveTime();
-				tmpDC_Mission.ShowMarker();
+//				tmpDC_Mission.ShowMarker();
 			}
 			else
 			{
@@ -252,9 +252,12 @@ class SDRC_MissionFrame
 				tmpDC_Mission = MissionCreate(missionType);				
 				if (tmpDC_Mission)
 				{
-					tmpDC_Mission.SetActiveTime(m_Config.missionDynamic.activeTime);
-					tmpDC_Mission.ResetActiveTime();
-					tmpDC_Mission.ShowMarker();
+					if (tmpDC_Mission.GetState() != DC_EMissionState.FAILED)
+					{
+						tmpDC_Mission.SetActiveTime(m_Config.missionDynamic.activeTime);
+						tmpDC_Mission.ResetActiveTime();
+//						tmpDC_Mission.ShowMarker();
+					}
 				}
 				else
 				{
@@ -272,6 +275,8 @@ class SDRC_MissionFrame
 			//If there was an error starting the mission, it has been prepared for deletion.
 			if (tmpDC_Mission.GetState() != DC_EMissionState.FAILED)
 			{		
+				//Show marker
+				tmpDC_Mission.ShowMarker();
 				//Set the defaul active distance
 				tmpDC_Mission.SetActiveDistance(m_Config.missionActiveDistance);
 				tmpDC_Mission.SetActiveTimeToEnd(m_Config.missionActiveTimeToEnd);

@@ -62,10 +62,12 @@ class SDRC_Mission_Occupation : SDRC_Mission
 				
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Occupation.general.posName));
-		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
+		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
+		UpdateGeneral(m_DC_Occupation.general);		
+/*		SetMarker(m_Config.showMarker, m_DC_Occupation.general.markerIcon, m_DC_Occupation.general.markerType);
 		SetHint(m_Config.showHint, m_DC_Occupation.general.title, m_DC_Occupation.general.info);
 		SetMessages(m_Config.showMessage, m_DC_Occupation.general.winMessage, m_DC_Occupation.general.loseMessage);		
-		SetWinCondition(m_DC_Occupation.general.winCondition);
+		SetWinCondition(m_DC_Occupation.general.winCondition);*/
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -167,9 +169,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 	{
 		//Default		
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.markerIdx = DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP;
 		conf.missionList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
-//		conf.missionList = {6};//{0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
 		//Mission specific		
 		//----------------------------------------------------
 		conf.occupations.Insert(Occupation0());				
@@ -195,6 +195,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"Guard patrol eliminated.",
 			"The patrol kept %l safe from you. Pathetic.",
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			0
 		);
 		
@@ -231,6 +232,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"Camp cleared. Take the loot and leave.",
 			"The camp near %l was never destroyed. Bandits rule!",
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			0
 		);
 		occupation.Set(
@@ -313,6 +315,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"%l is free again!",
 			"The enemy was stronger this time.",
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			0
 		);
 		occupation.Set(
@@ -401,6 +404,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"You stopped the get away. Enjoy the spoils.",
 			"Car was fixed and the loot was lost.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			0
 		);
 		occupation.Set(
@@ -499,6 +503,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"The camp is yours. Enjoy the loot and relax.",
 			"The camp was packed and the campers left with their car.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			0
 		);
 		occupation.Set(
@@ -610,6 +615,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"The ghost town neat %l has been cleared.",
 			"Enemies have left with the loot. Shame on you.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			0
 		);
 		occupation.Set(
@@ -771,6 +777,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"Spawns from hell are dead!",
 			"Are you scared of a few ghosts..?",
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			0
 		);
 		

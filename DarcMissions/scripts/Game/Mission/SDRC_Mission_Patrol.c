@@ -72,10 +72,12 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		
 		SetPos(pos, m_vPosDestination);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Patrol.general.posName));
-		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
+		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
+		UpdateGeneral(m_DC_Patrol.general);		
+/*		SetMarker(m_Config.showMarker, m_DC_Patrol.general.markerIcon, m_DC_Patrol.general.markerType);
 		SetHint(m_Config.showHint, m_DC_Patrol.general.title, m_DC_Patrol.general.info);
 		SetMessages(m_Config.showMessage, m_DC_Patrol.general.winMessage, m_DC_Patrol.general.loseMessage);		
-		SetWinCondition(m_DC_Patrol.general.winCondition);		
+		SetWinCondition(m_DC_Patrol.general.winCondition);		*/
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 	}
 
@@ -222,7 +224,6 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;
-		conf.markerIdx = DC_EMissionIcon.GM_MISSION_PATROL_MAP;
 		conf.showMarker = false;
 		conf.missionList = {0,0,0,1,2,3};
 		//Mission specific
@@ -248,6 +249,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"Patrol near %l is no more.",
 			"Patroling completed, the world is saved.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_PATROL_MAP,
 			0
 		);		
 		patrol.Set(
@@ -288,6 +290,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"Well done!",
 			"You're not a worthy enemy for this patrol.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_PATROL_MAP,
 			0
 		);				
 		patrol.Set
@@ -328,6 +331,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"The road from %l to %d is safe again.",
 			"Patrol left the area.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_PATROL_MAP,
 			0
 		);		
 		patrol.Set
@@ -363,6 +367,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"Patrol cleared!",
 			"Such a small force was able to beat you.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_PATROL_MAP,
 			0
 		);				
 		patrol.Set(

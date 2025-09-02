@@ -130,7 +130,6 @@ sealed class SDRC_AIHelper
 	{
 		array<vector> floors = {};
 		vector pos, floorpos;
-		float empty_radius = 0.4;
 
 		SDRC_BuildingHelper.FindBuildingFloors(floors, building);
 				
@@ -155,9 +154,8 @@ sealed class SDRC_AIHelper
 		}
 		
 		pos = SDRC_Misc.RandomizePos(floorpos, radius/6);
-		//SDRC_SpawnHelper.FindEmptyPos(pos, radius/5, empty_radius);		//If we did not find an empty pos, we use the original pos
 		pos[1] = pos[1] + 0.2;			
-//		SDRC_DebugHelper.AddDebugSphere(pos, Color.YELLOW, empty_radius);
+//		SDRC_DebugHelper.AddDebugSphere(pos, Color.YELLOW, 0.4);
 		AIAgent aiAgent = SDRC_AIHelper.SpawnAIAgent(resourceName, pos, false, faction);
 		
 		SetAISkill(aiAgent, skill, perceptionFactor);

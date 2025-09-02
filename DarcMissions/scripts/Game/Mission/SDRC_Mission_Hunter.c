@@ -90,10 +90,12 @@ class SDRC_Mission_Hunter : SDRC_Mission
 				
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Hunter.general.posName));
-		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
+		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
+		UpdateGeneral(m_DC_Hunter.general);		
+/*		SetMarker(m_Config.showMarker, m_DC_Hunter.general.markerIcon, m_DC_Hunter.general.markerType);
 		SetHint(m_Config.showHint, m_DC_Hunter.general.title, m_DC_Hunter.general.info);		
 		SetMessages(m_Config.showMessage, m_DC_Hunter.general.winMessage, m_DC_Hunter.general.loseMessage);		
-		SetWinCondition(m_DC_Hunter.general.winCondition);
+		SetWinCondition(m_DC_Hunter.general.winCondition);*/
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -317,7 +319,6 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 	{
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
-		conf.markerIdx = DC_EMissionIcon.GM_MISSION_X_MAP;
 		conf.showMarker = false;
 		conf.missionList = {0,0,0,1};
 		//Mission specific
@@ -344,6 +345,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			"You outsmarted the hunters.",
 			"Hunters lost track of you.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_X_MAP,
 			0
 		);
 		hunter.Set(
@@ -369,6 +371,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			"Sharpshooters were not that sharp.",
 			"Sharpshooters lost track of you.", 
 			"",
+			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_X_MAP,
 			0
 		);
 		hunter.Set(

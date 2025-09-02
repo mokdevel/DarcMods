@@ -28,7 +28,7 @@ class SDRC_Mission_Template : SDRC_Mission
 		//Check if GM requested mission
 		if (!IsRequested())
 		{		
-			pos = m_Config.pos;
+			pos = m_Config.general.pos[0];
 		}
 		else
 		{
@@ -36,11 +36,13 @@ class SDRC_Mission_Template : SDRC_Mission
 		}
 		
 		SetPos(pos);
-		SetPosName(SDRC_Locations.CreateName(GetPos(), m_Config.posName));
-		SetHint(m_Config.showHint, m_Config.title, m_Config.info);		
-		SetMessages(m_Config.showMessage, m_Config.winMessage, m_Config.loseMessage);						
-		SetMarker(m_Config.showMarker, m_Config.markerIdx, m_Config.markerType);
-		SetWinCondition(m_Config.winCondition);
+		SetPosName(SDRC_Locations.CreateName(GetPos(), m_Config.general.posName));
+		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
+		UpdateGeneral(m_Config.general);		
+/*		SetHint(m_Config.showHint, m_Config.general.title, m_Config.general.info);		
+		SetMessages(m_Config.showMessage, m_Config.general.winMessage, m_Config.general.loseMessage);						
+		SetMarker(m_Config.showMarker, m_Config.general.markerIcon, m_Config.general.markerType);
+		SetWinCondition(m_Config.general.winCondition);*/
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -96,17 +98,9 @@ class SDRC_Mission_Template : SDRC_Mission
 //------------------------------------------------------------------------------------------------
 class SDRC_TemplateConfig : SDRC_MissionConfig
 {
-	//Mission specific
-	vector pos;
-	string posName;
-	string title;
-	string info;
-	DC_EMissionWinCondition winCondition = DC_EMissionWinCondition.AI_KILL_ALL;
-	string winMessage = "";
-	string loseMessage = "";
-	int xp = 0;
-	
-	//Variables here
+	//Common for all
+	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
+	//Mission specific Variables here
 }
 
 //------------------------------------------------------------------------------------------------
@@ -143,11 +137,11 @@ class SDRC_TemplateJsonApi : SDRC_JsonApi
 	{
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.markerIdx = DC_EMissionIcon.GM_MISSION_X_MAP;
+		conf.general.markerIcon = DC_EMissionIcon.GM_MISSION_X_MAP;
 		//Mission specific		
-		conf.pos = "0 0 0";
-		conf.posName = "any";
-		conf.title = "Template mission";
-		conf.info = "Some additional information for players";
+		conf.general.pos[0] = "0 0 0";
+		conf.general.posName = "any";
+		conf.general.title = "Template mission";
+		conf.general.info = "Some additional information for players";
 	}	
 }
