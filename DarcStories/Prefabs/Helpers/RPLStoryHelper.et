@@ -1,0 +1,12 @@
+SDRC_RplStoryEntity {
+ ID "66453B18AB10C38C"
+ components {
+  SDRC_RplStoryComp "{66453B18AB10C394}" {
+  }
+  RplComponent "{66453B18AB10C3A6}" {
+   Streamable Disabled
+  }
+  Hierarchy "{66453B18AB10C3AA}" {
+  }
+ }
+}

@@ -97,9 +97,29 @@ class SDRC_StoriesFrame
 		{	
 			//Search if the mission is active
 			SDRC_MissionStat stat = SDRC_MissionStats.GetStat(m_RequestId);
+			
 			if (stat)
 			{
+				SDRC_RplStoryComp storyComp = SDRC_RplStoryComp.GetInstance();
+				if (storyComp)
+				{
+					storyComp.UpdateTime(100);
+				}
+				
 				SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] id: " + stat.id + " - " + SCR_Enum.GetEnumName(DC_EMissionState, stat.state) + " - " + SCR_Enum.GetEnumName(DC_EMissionSuccess, stat.success));
+				
+				if (stat.state == DC_EMissionState.ACTIVE || stat.state == DC_EMissionState.END || stat.state == DC_EMissionState.EXIT)
+				{
+					if (stat.success == DC_EMissionSuccess.WIN)
+					{
+						SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " : WIN");
+					}
+					
+					if (stat.success == DC_EMissionSuccess.LOSE)
+					{
+						SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " : FAILURE");
+					}
+				}
 				
 				if (stat.state == DC_EMissionState.FAILED)
 				{
