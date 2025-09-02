@@ -27,16 +27,18 @@ const string DCS_ID_PREFIX = "DCS_";				//The prefix used for stories marker and
 //------------------------------------------------------------------------------------------------
 class SDRC_StoriesFrame
 {
-	protected static SDRC_StoriesFrame s_Instance;		
-//	ref array<ref SDRC_Mission> m_MissionList = new array<ref SDRC_Mission>;
-	ref SDRC_StoriesFrameJsonApi m_DC_StoriesFrameJsonApi = new SDRC_StoriesFrameJsonApi();
-	ref SDRC_StoriesFrameConfig m_Config;
-	ref SDRC_Story m_Story;
-	ref SDRC_Chapter m_Chapter;
+	private static SDRC_StoriesFrame s_Instance;		
+	private static int m_RequestIdCounter = 1000;
 	
-	int m_StoryIdx;
-	bool m_StoryActive;
-	int m_RequestId;
+//	ref array<ref SDRC_Mission> m_MissionList = new array<ref SDRC_Mission>;
+	private ref SDRC_StoriesFrameJsonApi m_DC_StoriesFrameJsonApi = new SDRC_StoriesFrameJsonApi();
+	private ref SDRC_StoriesFrameConfig m_Config;
+	private ref SDRC_Story m_Story;
+	private ref SDRC_Chapter m_Chapter;
+	
+	private int m_StoryIdx;
+	private bool m_StoryActive;
+	private int m_RequestId;
 	
 	private string m_sWorldName;
 	
@@ -97,7 +99,18 @@ class SDRC_StoriesFrame
 		if (m_StoryActive)
 		{	
 			//Search if the mission is active
-			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] id: " + SDRC_MissionStats.GetId(m_RequestId));
+			SDRC_MissionStat stat = SDRC_MissionStats.GetStat(m_RequestId);
+			if (stat)
+			{
+				SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] id: " + stat.id + " - " + SCR_Enum.GetEnumName(DC_EMissionState, stat.state) + " - " + SCR_Enum.GetEnumName(DC_EMissionSuccess, stat.success));
+				
+				if (stat.state == DC_EMissionState.FAILED)
+				{
+					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " failed to start.");
+					//Let's try again
+					m_StoryActive = false;
+				}
+			}			
 		}
 		
 		if (!m_StoryActive)
@@ -134,9 +147,19 @@ class SDRC_StoriesFrame
 //			requestComp.SetMissionSubIdx(m_Chapter.subIdx);
 			requestComp.general = m_Chapter.general;
 			requestComp.general.subIdx = m_Chapter.subIdx;
-			m_RequestId = 1234 + m_StoryIdx * 100 + m_Story.index;
+			m_RequestId = GetRequestId();
 			requestComp.SetRequestId(m_RequestId);
 		}		
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Provides a request id keeping it unique for each chapter.
+	*/		
+	protected int GetRequestId()
+	{
+		m_RequestIdCounter++;
+		return m_RequestIdCounter;
 	}
 	
 	//------------------------------------------------------------------------------------------------
