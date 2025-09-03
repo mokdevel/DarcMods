@@ -13,14 +13,14 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 		if (!owner)
 			return null;
 
-		SDRC_DarcMissionRequestComp missionComp = SDRC_DarcMissionRequestComp.Cast(owner.FindComponent(SDRC_DarcMissionRequestComp));
+		SDRC_DarcMissionEditableRequestComp missionComp = SDRC_DarcMissionEditableRequestComp.Cast(owner.FindComponent(SDRC_DarcMissionEditableRequestComp));
 		if (!missionComp)
 			return null;
 
-		int missionType; 
-		missionType = missionComp.GetMissionType();
+		int subIdx; 
+		subIdx = missionComp.GetSubIdx();
 		
-		return SCR_BaseEditorAttributeVar.CreateFloat(missionType);
+		return SCR_BaseEditorAttributeVar.CreateInt(subIdx);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -37,10 +37,10 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 		if (!owner)
 			return;
 
-		SDRC_DarcMissionRequestComp missionComp = SDRC_DarcMissionRequestComp.Cast(owner.FindComponent(SDRC_DarcMissionRequestComp));
+		SDRC_DarcMissionEditableRequestComp missionComp = SDRC_DarcMissionEditableRequestComp.Cast(owner.FindComponent(SDRC_DarcMissionEditableRequestComp));
 		if (!missionComp)
 			return;
 
-		missionComp.SetMissionType(var.GetFloat());
+		missionComp.SetSubIdx(var.GetInt());
 	}
 }

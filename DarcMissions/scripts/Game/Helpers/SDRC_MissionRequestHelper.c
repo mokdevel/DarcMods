@@ -6,7 +6,7 @@ class SDRC_MissionRequested : Managed
 	EntityID entityID = null;
 	int requestId = -1;
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
-	DC_EMissionType type = DC_EMissionType.NONE;
+	DC_EMissionType missionType = DC_EMissionType.NONE;
 }
 
 //------------------------------------------------------------------------------------------------
@@ -34,10 +34,11 @@ class SDRC_MissionRequestHelper
 		
 		//Collect information from the mission entity
 		IEntity missionEntity = GetGame().GetWorld().FindEntityByID(missionRequest.entityID);
-		SDRC_DarcMissionRequestComp requestComp = SDRC_DarcMissionRequestComp.Cast(missionEntity.FindComponent(SDRC_DarcMissionRequestComp));
-		missionRequest.type = requestComp.GetMissionType();
+		SDRC_DarcMissionEditableRequestComp requestComp = SDRC_DarcMissionEditableRequestComp.Cast(missionEntity.FindComponent(SDRC_DarcMissionEditableRequestComp));
+		missionRequest.missionType = requestComp.GetMissionType();
 		missionRequest.requestId = requestComp.GetRequestId();		
 		missionRequest.general = requestComp.general;
+		missionRequest.general.subIdx = requestComp.GetSubIdx();
 		
 		//Entity may have been moved so we read the pos before spawning mission.
 		vector pos = missionEntity.GetOrigin();

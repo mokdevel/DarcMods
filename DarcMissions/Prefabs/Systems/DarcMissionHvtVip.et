@@ -13,9 +13,6 @@ SDRC_DarcMissionGM : "{C599195C442D7125}Prefabs/Compositions/Misc/CustomEntities
     }
    }
    m_bAutoRegister ALWAYS
-   m_MissionType NONE
-  }
-  SDRC_DarcMissionRequestComp "{663310CA3D4ECFA2}" {
    m_MissionType HVTVIP
   }
   RplComponent "{663310CA3D4ECFA6}" {
