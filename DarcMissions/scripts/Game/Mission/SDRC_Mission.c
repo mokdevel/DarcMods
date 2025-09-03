@@ -75,7 +75,7 @@ class SDRC_MissionConfigGeneral : Managed
 					 string posName_ = SDRC_DEFAULT, string title_ = SDRC_DEFAULT, string info_ = SDRC_DEFAULT, 
 					 DC_EMissionWinCondition winCondition_ = DC_EMissionWinCondition.DEFAULT, 
 					 string winMessage_ = SDRC_DEFAULT, string loseMessage_ = SDRC_DEFAULT, 
-					 string faction_ = "", 
+					 string faction_ = SDRC_DEFAULT, 
 					 string markerType_ = SDRC_DEFAULT, int markerIcon_ = -1, 
 					 int xp_ = 0)
 	{
@@ -95,7 +95,7 @@ class SDRC_MissionConfigGeneral : Managed
 		winCondition = winCondition_;
 		winMessage = winMessage_;
 		loseMessage = loseMessage_;
-		faction = SDRC_EnemyHelper.SelectEnemyFaction(faction_);
+		faction = faction_;		//SDRC_EnemyHelper.SelectEnemyFaction(faction_);
 		markerType = markerType_;
 		markerIcon = markerIcon_;
 		xp = xp_;
@@ -335,7 +335,11 @@ class SDRC_Mission
 				general.loseMessage = request.general.loseMessage;
 			}
 			
-			if (request.general.faction != "")
+			if (request.general.faction == SDRC_DEFAULT)
+			{
+				general.faction = SDRC_EnemyHelper.SelectEnemyFaction("");	//Pick a random 
+			}
+			else //Pick the requested one if defined or random if left empty
 			{
 				general.faction = SDRC_EnemyHelper.SelectEnemyFaction(request.general.faction);
 			}

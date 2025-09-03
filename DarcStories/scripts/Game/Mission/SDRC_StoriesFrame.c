@@ -19,7 +19,8 @@ class SDRC_StoriesFrame
 	ref SDRC_Chapter m_Chapter = new SDRC_Chapter();
 	
 	private int m_StoryIdx;
-	private bool m_StoryActive;
+	private bool m_StoryActive;			//true if a story has been started
+	private bool m_ChapterActive;		//true if a chapter inside a story has started
 	private int m_RequestId;
 	
 //	private string m_sWorldName;
@@ -37,16 +38,15 @@ class SDRC_StoriesFrame
 		m_Config = m_DC_StoriesFrameJsonApi.conf;
 		
 		m_DC_StoriesFrameJsonApi.LoadStories();
-		
+
+		//Reset
 		m_StoryIdx = 0;
 		m_StoryActive = false;
+		m_ChapterActive = false;
 		m_RequestId = -1;
-		m_Story = m_Config.stories[m_StoryIdx];
-		m_Chapter = m_Story.chapters[m_Story.index];
-		SDRC_Log.Add("[SDRC_StoriesFrame] Starting story: " + m_StoryIdx + " , chapter: " + m_Chapter.general.title, LogLevel.NORMAL);
-		
+				
 		//Fix seconds to ms
-		SDRC_Log.Add("[SDRC_StoriesFrame] Waiting for " + m_Config.storiesStartDelay + " seconds before spawning stories.", LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_StoriesFrame] Waiting for " + m_Config.storiesStartDelay + " seconds before starting stories.", LogLevel.NORMAL);
 		m_Config.storiesStartDelay = m_Config.storiesStartDelay * 1000;		//sec to ms
 		
 		//Start the mission framework.
@@ -75,7 +75,18 @@ class SDRC_StoriesFrame
 	*/
 	protected void StoriesCycleManager()
 	{	
-		if (m_StoryActive)
+		if (!m_StoryActive)
+		{	
+			m_ChapterActive = false;
+			m_RequestId = -1;
+			m_Story = m_Config.stories[m_StoryIdx];
+			m_Chapter = m_Story.chapters[m_Story.index];
+			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Starting story: " + m_StoryIdx + " , chapter: " + m_Chapter.general.title, LogLevel.NORMAL);
+			
+			m_StoryActive = true;
+		}		
+		
+		if (m_ChapterActive)
 		{	
 			//Search if the mission is active
 			SDRC_MissionStat stat = SDRC_MissionStats.GetStat(m_RequestId);
@@ -107,12 +118,12 @@ class SDRC_StoriesFrame
 				{
 					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " failed to start.");
 					//Let's try again
-					m_StoryActive = false;
+					m_ChapterActive = false;
 				}
 			}			
 		}
 		
-		if (!m_StoryActive)
+		if (!m_ChapterActive)
 		{		
 			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Spawning new story mission", LogLevel.NORMAL);
 			IEntity missionEntity;
@@ -126,7 +137,7 @@ class SDRC_StoriesFrame
 			if (missionEntity)
 			{		
 				GetGame().GetCallqueue().CallLater(SetMissionParameters_Delayed, 2000, false, missionEntity);
-				m_StoryActive = true;
+				m_ChapterActive = true;
 			}
 			else
 			{
@@ -137,17 +148,20 @@ class SDRC_StoriesFrame
 		GetGame().GetCallqueue().CallLater(StoriesCycleManager, m_Config.storiesFrameCycleTime*1000, false);
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	protected void SetMissionParameters_Delayed(IEntity missionEntity)
 	{
 		SDRC_DarcMissionGM ent = SDRC_DarcMissionGM.Cast(missionEntity);
 		if (ent)
 		{
-			SDRC_DarcMissionRequestComp requestComp = SDRC_DarcMissionRequestComp.Cast(ent.FindComponent(SDRC_DarcMissionRequestComp));
+			SDRC_DarcMissionEditableRequestComp requestComp = SDRC_DarcMissionEditableRequestComp.Cast(ent.FindComponent(SDRC_DarcMissionEditableRequestComp));
 //			requestComp.SetMissionSubIdx(m_Chapter.subIdx);
 			requestComp.general = m_Chapter.general;
-			requestComp.general.subIdx = m_Chapter.subIdx;
+//			requestComp.general.subIdx = m_Chapter.subIdx;
 			m_RequestId = GetRequestId();
 			requestComp.SetRequestId(m_RequestId);
+			requestComp.SetMissionType(m_Chapter.missionType);
+			requestComp.SetSubIdx(m_Chapter.subIdx);
 			
 			SDRC_RplStoryComp storyComp = SDRC_RplStoryComp.GetInstance();
 			if (storyComp)

@@ -380,7 +380,7 @@ class SDRC_MissionFrame
 		{					
 			//If mission was requested, fill information from the request
 			missionRequest = SDRC_MissionRequestHelper.FillMissionRequest();
-			missionType = missionRequest.type;
+			missionType = missionRequest.missionType;
 		}
 		
 		SDRC_Log.Add("[SDRC_MissionFrame:MissionCreate] Starting mission of type: " + SCR_Enum.GetEnumName(DC_EMissionType, missionType), LogLevel.DEBUG);
@@ -389,7 +389,7 @@ class SDRC_MissionFrame
 		{
 			case DC_EMissionType.NONE:
 			{
-				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Mission of type NONE ignored.", LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Mission of type NONE ignored.", LogLevel.ERROR);
 				break;
 			}
 			case DC_EMissionType.HUNTER:
