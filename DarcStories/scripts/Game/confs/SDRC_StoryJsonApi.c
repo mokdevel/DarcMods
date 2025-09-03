@@ -60,12 +60,12 @@ class SDRC_Chapter : Managed
 	int activeTime;
 	ref array<int> nextChapter = {};			//Where to go after a win, lose		
 	string title = "";
-	string story = "";
+	string text = "";
 	string success;
 	string failure;
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();		
 		
-	void Set(int id_, DC_EMissionType missionType_, int subIdx_, int activeTime_, array<int> nextChapter_, string title_, string story_, string success_, string failure_)
+	void Set(int id_, DC_EMissionType missionType_, int subIdx_, int activeTime_, array<int> nextChapter_, string title_, string text_, string success_, string failure_)
 	{
 		id = id_;
 		missionType = missionType_;
@@ -73,7 +73,7 @@ class SDRC_Chapter : Managed
 		activeTime = activeTime;
 		nextChapter = nextChapter_;
 		title = title_;
-		story = story_;
+		text = text_;
 		success = success_;
 		failure = failure_;
 	}		

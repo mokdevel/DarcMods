@@ -6,8 +6,14 @@ class SDRC_RplStoryComp : ScriptComponent
 {
 	private static SDRC_RplStoryComp s_Instance;
 
-	[RplProp(onRplName: "OnTimeUpdate")]
+	[RplProp(onRplName: "OnUpdateTime")]
 	protected int m_iTimeLeft = 1000;
+	
+	[RplProp(onRplName: "OnUpdateChapter")]
+	protected string m_sTitle = "";
+		
+	[RplProp(onRplName: "OnUpdateChapter")]
+	protected string m_sText = "";
 	
 	//------------------------------------------------------------------------------------------------
     override void OnPostInit(IEntity owner)
@@ -39,7 +45,11 @@ class SDRC_RplStoryComp : ScriptComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
-	protected void OnTimeUpdate()
+	// Time related RPL
+	//------------------------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------------------------
+	protected void OnUpdateTime()
 	{
 		SDRC_Log.Add("[SDRC_RplStoryComp:OnTimeUpdate] Time left: " + m_iTimeLeft, LogLevel.NORMAL);
 	}	
@@ -49,15 +59,52 @@ class SDRC_RplStoryComp : ScriptComponent
 	{
 		m_iTimeLeft--;
 		timeLeft = m_iTimeLeft;
-		Rpc(RpcAsk_Authority_Method, timeLeft);
+		Rpc(RpcDo_UpdateTime, timeLeft);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
-	protected void RpcAsk_Authority_Method(int timeLeft)
+	protected void RpcDo_UpdateTime(int timeLeft)
 	{
 		m_iTimeLeft = timeLeft;
 
 		Replication.BumpMe();
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	// Chapter related RPL
+	//------------------------------------------------------------------------------------------------
+	
+	string GetTitle()	
+	{
+		return m_sTitle;
+	}
+	
+	string GetText()	
+	{
+		return m_sText;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	protected void OnUpdateChapter()
+	{
+		SDRC_Log.Add("[SDRC_RplStoryComp:OnUpdateChapter] Chapter updated.", LogLevel.NORMAL);
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	void UpdateChapter(string title, string text)
+	{
+		RpcDo_UpdateChapter(title, text);
+		Rpc(RpcDo_UpdateChapter, title, text);
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	protected void RpcDo_UpdateChapter(string title, string text)
+	{
+		m_sTitle = title;
+		m_sText = text;
+
+		Replication.BumpMe();
+	}	
 }

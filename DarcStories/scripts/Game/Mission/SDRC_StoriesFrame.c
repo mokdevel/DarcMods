@@ -1,28 +1,10 @@
 //------------------------------------------------------------------------------------------------
 /*!
-This is the mission main framework file. 
-
-Add this to your StartGameTrigger or use SDRC_GameCoreBase.c
-
-	//------------------------------------------------------------------------------------------------
-	// user script
-	private bool m_GameHasStarted = false;
-	private ref SDRC_StoriesFrame MissionFrame;
-
-	override void EOnActivate(IEntity owner)
-	{
-		if (!m_GameHasStarted)
-		{
-			m_GameHasStarted = true;		
-			MissionFrame = new SDRC_StoriesFrame(true);
-			MissionFrame.MissionFrameStart();			
-		}
-	}
-	//------------------------------------------------------------------------------------------------
+This is the mission story framework file. 
 */
 
 //------------------------------------------------------------------------------------------------
-const string DCS_ID_PREFIX = "DCS_";				//The prefix used for stories marker and missions Id's.
+//const string DCS_ID_PREFIX = "DCS_";				//The prefix used for stories marker and missions Id's.
 
 //------------------------------------------------------------------------------------------------
 class SDRC_StoriesFrame
@@ -166,6 +148,12 @@ class SDRC_StoriesFrame
 			requestComp.general.subIdx = m_Chapter.subIdx;
 			m_RequestId = GetRequestId();
 			requestComp.SetRequestId(m_RequestId);
+			
+			SDRC_RplStoryComp storyComp = SDRC_RplStoryComp.GetInstance();
+			if (storyComp)
+			{
+				storyComp.UpdateChapter(m_Chapter.title, m_Chapter.text);
+			}						
 		}		
 	}
 	

@@ -35,16 +35,6 @@ class SDRC_MapStoryUI : SCR_MapRulerUI
 	//! \param[in] saveState determines whether this is visibility set during closing of the map, so the pos and rotation should be saved
 	override protected void SetVisible(bool visible, bool saveState = false)
 	{
-		//If story is not running yet, show nothing
-		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());	
-		if (baseGameMode)
-		{
-			if (!baseGameMode.storiesFrame)
-			{
-				return;
-			}
-		}
-		
 		m_bIsVisible = visible;
 		m_wFrame.SetEnabled(visible);
 		m_wFrame.SetVisible(visible);
@@ -136,15 +126,12 @@ class SDRC_MapStoryUI : SCR_MapRulerUI
 		m_wTitle = TextWidget.Cast(m_RootWidget.FindAnyWidget("StoryTitle"));
 		m_wText = TextWidget.Cast(m_RootWidget.FindAnyWidget("StoryText"));
 		
-		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());	
-		if (baseGameMode)
+		SDRC_RplStoryComp storyComp = SDRC_RplStoryComp.GetInstance();
+		if (storyComp)
 		{
-			if (baseGameMode.storiesFrame)
-			{
-				m_wTitle.SetText(baseGameMode.storiesFrame.m_Chapter.title);
-				m_wText.SetText(baseGameMode.storiesFrame.m_Chapter.story);
-			}
-		}
+			m_wTitle.SetText(storyComp.GetTitle());
+			m_wText.SetText(storyComp.GetText());
+		}						
 
 		super.OnMapOpen(config);
 	}

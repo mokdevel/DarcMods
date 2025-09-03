@@ -14,7 +14,7 @@
 	
 	//Development time options
 	#ifndef SDRC_RELEASE	
-		private const int SDRC_STORIESFRAME_START_DELAY = 5;						//Time to wait before spawning the first mission (seconds)
+		private const int SDRC_STORIESFRAME_START_DELAY = 15;						//Time to wait before spawning the first mission (seconds)
 		private const int SDRC_STORIESFRAME_CYCLE_TIME_DEFAULT = 10;
 		private const int SDRC_STORIESFRAME_CYCLE_TIME_LIMIT = 10;					//The cycle to run the mission frame. 
 
