@@ -25,7 +25,7 @@ class SDRC_DarcMissionGM : GenericEntity
 			{
 				SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInit] Entity created.", LogLevel.DEBUG);
 		
-				GetGame().GetCallqueue().CallLater(EOnInitDelayed, 5000, false, owner);
+				GetGame().GetCallqueue().CallLater(EOnInitDelayed, 15000, false, owner);
 			}
 		}
 			

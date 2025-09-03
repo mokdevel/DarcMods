@@ -1,4 +1,4 @@
-//! Explosive trigger attribute for manipulating the time that remains until the detonation
+//! Attribute for mission subIdx
 [BaseContainerProps(), SCR_BaseEditorAttributeCustomTitle()]
 class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 {

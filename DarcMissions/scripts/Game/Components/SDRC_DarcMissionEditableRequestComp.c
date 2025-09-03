@@ -10,7 +10,7 @@ TBD: The editing part if not working at the moment.
 */
 
 //------------------------------------------------------------------------------------------------
-[ComponentEditorProps(category: "GameScripted/Editor (Editables)", description: "", icon: "")]
+[ComponentEditorProps(category: "GameScripted/Editor (Editables)", description: "", icon: "WBData/ComponentEditorProps/componentEditor.png")]
 class SDRC_DarcMissionEditableRequestCompClass : SCR_EditableSystemComponentClass { }
 SDRC_DarcMissionEditableRequestCompClass g_DarcMissionEditableRequestClass;
  
@@ -21,9 +21,15 @@ class SDRC_DarcMissionEditableRequestComp : SCR_EditableSystemComponent
 	[Attribute(typename.EnumToString(DC_EMissionType, DC_EMissionType.OCCUPATION), UIWidgets.ComboBox, desc: "Mission type", enumType: DC_EMissionType)]	
 	protected DC_EMissionType m_MissionType;	//The type of mission
 
-	static int max = Math.RandomInt(0,12);
-	static private string param = "-1, " + max + ", 1";
-	[Attribute("-1", UIWidgets.EditBox, desc: "This should be editable", param)]	
+//	[Attribute("120", desc: "Default fuze time that will be used when object is spawned by GM.")]
+//	protected int m_MissionSubIdx;	
+	
+//	static int max = Math.RandomInt(0,12);
+//	static private string param = "-1, " + max + ", 1";
+//	[Attribute("-1", desc: "This should be editable", param)]
+	
+	//NOTE: Params are set in SDRC_EditorAttributeBaseValues in file SDRC_BaseValueListEditorAttribute.c
+	[Attribute("-1", desc: "This should be editable")]	
 	protected int m_MissionSubIdx;
 			
 	//------------------------------------------------------------------------------------------------

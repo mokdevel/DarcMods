@@ -45,6 +45,8 @@ class SDRC_MissionFrame
 		
 	ref array<ref SDRC_MissionRequested> m_missionsRequested = {};
 	
+	static int justAnumber = 15;	//TBD: Just for testing - remove
+	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_MissionFrame()
 	{

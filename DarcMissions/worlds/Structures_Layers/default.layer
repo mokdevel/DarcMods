@@ -4,6 +4,9 @@ GenericWorldLightEntity {
 GenericEntity : "{1BBEB0BB59A93FFE}PrefabsEditable/EffectsModules/Smoke/EffectModule_Smoke_Purple.et" {
  coords 214.344 1 214.425
 }
+SDRC_DarcMissionGM : "{CE7D07A8484A1DE9}Prefabs/Systems/DarcMissionConvoy.et" {
+ coords 188.853 1 203.486
+}
 GenericEntity : "{D9B1F65D20081DEF}PrefabsEditable/Explosives/E_DemoBlock_M112.et" {
  coords 220.149 1 231.336
 }
