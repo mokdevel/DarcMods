@@ -15,12 +15,17 @@
 //Stages in the state machine
 enum DC_EStoryState
 {
-	NONE,		//Unknown state. Nothing should be run at this state.
-	INIT,		//The mission is being init. This automatically set when object is created.
-	ACTIVE,		//Normal state when mission is running.	
-	END,		//Mission is ending. Things are cleaned, despawned etc.
-	EXIT,		//State to inform the MissionFrame that the mission should be destroyed.
-	FAILED		//Mission startup has failed, delete mission
+	ERROR = -1,
+	NONE = 0,			//Unknown state. Nothing should be run at this state.
+	INIT,				//Story frame is being init
+	STORY_WAITING,
+//	STORY_START,
+	CHAPTER_START,
+	CHAPTER_INIT,
+	CHAPTER_ACTIVE,
+	CHAPTER_DONE,
+	CHAPTER_OVER,
+	WAITING_FOR_NEXT,
 };
 
 enum DC_ENextChapter
@@ -37,7 +42,7 @@ class SDRC_Story : Managed
 	ref array<string> dependencies = {};	//List of mods needed for the story
 	int index = 0;							//The story index pointing to a chapter
 	//Set outside of Set()
-	DC_EStoryState state = DC_EStoryState.INIT;
+//	DC_EStoryState state = DC_EStoryState.NONE;
 	ref array<ref SDRC_Chapter> chapters = {};
 	
 	void Set(int id_, string comment_, array<string> dependencies_, int index_)
@@ -61,11 +66,11 @@ class SDRC_Chapter : Managed
 	ref array<int> nextChapter = {};			//Where to go after a win, lose		
 	string title = "";
 	string text = "";
-	string success;
-	string failure;
+	string textWin;
+	string textLose;
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();		
 		
-	void Set(int id_, DC_EMissionType missionType_, int subIdx_, int activeTime_, array<int> nextChapter_, string title_, string text_, string success_, string failure_)
+	void Set(int id_, DC_EMissionType missionType_, int subIdx_, int activeTime_, array<int> nextChapter_, string title_, string text_, string textWin_, string textLose_)
 	{
 		id = id_;
 		missionType = missionType_;
@@ -74,8 +79,8 @@ class SDRC_Chapter : Managed
 		nextChapter = nextChapter_;
 		title = title_;
 		text = text_;
-		success = success_;
-		failure = failure_;
+		textWin = textWin_;
+		textLose = textLose_;
 	}		
 }
 

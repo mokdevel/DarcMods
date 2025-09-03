@@ -19,9 +19,11 @@ class SDRC_StoriesFrame
 	ref SDRC_Chapter m_Chapter = new SDRC_Chapter();
 	
 	private int m_StoryIdx;
-	private bool m_StoryActive;			//true if a story has been started
-	private bool m_ChapterActive;		//true if a chapter inside a story has started
+	private DC_EStoryState m_State;
 	private int m_RequestId;
+	
+//	private bool m_StoryActive;			//true if a story has been started
+//	private bool m_ChapterActive;		//true if a chapter inside a story has started
 	
 //	private string m_sWorldName;
 	
@@ -30,6 +32,7 @@ class SDRC_StoriesFrame
 	{
 		SDRC_Log.Add("[SDRC_StoriesFrame] Starting SDRC_StoriesFrame", LogLevel.NORMAL);
 		s_Instance = this;
+		m_State = DC_EStoryState.INIT;
 				
 //		m_sWorldName = SDRC_Misc.GetWorldName(true);
 
@@ -41,8 +44,6 @@ class SDRC_StoriesFrame
 
 		//Reset
 		m_StoryIdx = 0;
-		m_StoryActive = false;
-		m_ChapterActive = false;
 		m_RequestId = -1;
 				
 		//Fix seconds to ms
@@ -50,6 +51,7 @@ class SDRC_StoriesFrame
 		m_Config.storiesStartDelay = m_Config.storiesStartDelay * 1000;		//sec to ms
 		
 		//Start the mission framework.
+		m_State = DC_EStoryState.STORY_WAITING;
 		GetGame().GetCallqueue().CallLater(StoriesCycleManager, m_Config.storiesStartDelay, false);
 	}
 	
@@ -75,55 +77,25 @@ class SDRC_StoriesFrame
 	*/
 	protected void StoriesCycleManager()
 	{	
-		if (!m_StoryActive)
+		//Search if the mission is active
+		SDRC_MissionStat stat = SDRC_MissionStats.GetStat(m_RequestId);
+		
+		if (m_State == DC_EStoryState.ERROR)
+		{
+			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] We're in an error state. To be fixed...", LogLevel.ERROR);
+		}
+		
+		if (m_State == DC_EStoryState.STORY_WAITING)
 		{	
-			m_ChapterActive = false;
 			m_RequestId = -1;
 			m_Story = m_Config.stories[m_StoryIdx];
 			m_Chapter = m_Story.chapters[m_Story.index];
 			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Starting story: " + m_StoryIdx + " , chapter: " + m_Chapter.general.title, LogLevel.NORMAL);
 			
-			m_StoryActive = true;
+			m_State = DC_EStoryState.CHAPTER_START;
 		}		
 		
-		if (m_ChapterActive)
-		{	
-			//Search if the mission is active
-			SDRC_MissionStat stat = SDRC_MissionStats.GetStat(m_RequestId);
-			
-			if (stat)
-			{
-				SDRC_RplStoryComp storyComp = SDRC_RplStoryComp.GetInstance();
-				if (storyComp)
-				{
-					storyComp.UpdateTime(100);
-				}
-				
-				SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] id: " + stat.id + " - " + SCR_Enum.GetEnumName(DC_EMissionState, stat.state) + " - " + SCR_Enum.GetEnumName(DC_EMissionSuccess, stat.success));
-				
-				if (stat.state == DC_EMissionState.ACTIVE || stat.state == DC_EMissionState.END || stat.state == DC_EMissionState.EXIT)
-				{
-					if (stat.success == DC_EMissionSuccess.WIN)
-					{
-						SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " : WIN");
-					}
-					
-					if (stat.success == DC_EMissionSuccess.LOSE)
-					{
-						SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " : FAILURE");
-					}
-				}
-				
-				if (stat.state == DC_EMissionState.FAILED)
-				{
-					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " failed to start.");
-					//Let's try again
-					m_ChapterActive = false;
-				}
-			}			
-		}
-		
-		if (!m_ChapterActive)
+		if (m_State == DC_EStoryState.CHAPTER_START)
 		{		
 			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Spawning new story mission", LogLevel.NORMAL);
 			IEntity missionEntity;
@@ -136,28 +108,93 @@ class SDRC_StoriesFrame
 			missionEntity = SDRC_SpawnHelper.SpawnItem(pos, resourceName, 0, -1);
 			if (missionEntity)
 			{		
-				GetGame().GetCallqueue().CallLater(SetMissionParameters_Delayed, 2000, false, missionEntity);
-				m_ChapterActive = true;
+				GetGame().GetCallqueue().CallLater(SetChapterParameters_Delayed, 2000, false, missionEntity);
+				m_State = DC_EStoryState.CHAPTER_INIT;
 			}
 			else
 			{
 				SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Could not spawn: " + resourceName, LogLevel.ERROR);
+				m_State = DC_EStoryState.ERROR;
 			}
+		}
+		
+		if (m_State == DC_EStoryState.CHAPTER_ACTIVE)
+		{	
+			if (stat)
+			{
+				SDRC_RplStoryComp storyComp = SDRC_RplStoryComp.GetInstance();
+				if (storyComp)
+				{
+					storyComp.UpdateTime(100);
+				}
+				
+				SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] id: " + stat.id + " - " + SCR_Enum.GetEnumName(DC_EMissionState, stat.state) + " - " + SCR_Enum.GetEnumName(DC_EMissionSuccess, stat.success));
+				
+				if (stat.state == DC_EMissionState.ACTIVE || stat.state == DC_EMissionState.END || stat.state == DC_EMissionState.EXIT)
+				{
+					m_State = DC_EStoryState.CHAPTER_DONE;
+				}
+				
+				if (stat.state == DC_EMissionState.FAILED)
+				{
+					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Chapter failed to start. Mission: " + stat.id + ". Retrying.", LogLevel.WARNING);
+					//Let's try again
+					m_State = DC_EStoryState.CHAPTER_START;
+				}
+			}			
+		}
+
+		if (m_State == DC_EStoryState.CHAPTER_DONE)
+		{
+			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Chapter done.", LogLevel.NORMAL);
+			
+			if (stat)
+			{	
+				SDRC_RplStoryComp storyComp = SDRC_RplStoryComp.GetInstance();
+				
+				if (stat.success == DC_EMissionSuccess.WIN)
+				{					
+					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " : WIN", LogLevel.NORMAL);
+					if (storyComp)
+					{
+						storyComp.UpdateChapter(m_Chapter.title, m_Chapter.textWin);
+					}
+					m_State = DC_EStoryState.CHAPTER_OVER;
+				}
+				
+				if (stat.success == DC_EMissionSuccess.LOSE)
+				{
+					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " : FAILURE", LogLevel.NORMAL);
+					if (storyComp)
+					{
+						storyComp.UpdateChapter(m_Chapter.title, m_Chapter.textLose);
+					}
+					m_State = DC_EStoryState.CHAPTER_OVER;
+				}
+			}
+		}
+				
+		if (m_State == DC_EStoryState.CHAPTER_OVER)
+		{
+			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Chapter over. Go to next chapter or an ending. To be fixed...", LogLevel.WARNING);				
 		}
 		
 		GetGame().GetCallqueue().CallLater(StoriesCycleManager, m_Config.storiesFrameCycleTime*1000, false);
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	protected void SetMissionParameters_Delayed(IEntity missionEntity)
+	/*!
+	Delayed parameter setting. This is to make sure the mission entity is properly initialized.
+	
+	This equals to CHAPTER_INIT state. Once all is fine, we go to CHAPTER_ACTIVE.
+	*/
+	protected void SetChapterParameters_Delayed(IEntity missionEntity)
 	{
 		SDRC_DarcMissionGM ent = SDRC_DarcMissionGM.Cast(missionEntity);
 		if (ent)
 		{
 			SDRC_DarcMissionEditableRequestComp requestComp = SDRC_DarcMissionEditableRequestComp.Cast(ent.FindComponent(SDRC_DarcMissionEditableRequestComp));
-//			requestComp.SetMissionSubIdx(m_Chapter.subIdx);
 			requestComp.general = m_Chapter.general;
-//			requestComp.general.subIdx = m_Chapter.subIdx;
 			m_RequestId = GetRequestId();
 			requestComp.SetRequestId(m_RequestId);
 			requestComp.SetMissionType(m_Chapter.missionType);
@@ -167,8 +204,15 @@ class SDRC_StoriesFrame
 			if (storyComp)
 			{
 				storyComp.UpdateChapter(m_Chapter.title, m_Chapter.text);
-			}						
-		}		
+			}
+			
+			SDRC_Log.Add("[SDRC_StoriesFrame:SetChapterParameters_Delayed] Chapter set ACTIVE.", LogLevel.DEBUG);			
+			m_State = DC_EStoryState.CHAPTER_ACTIVE;
+		}	
+		else
+		{
+			m_State = DC_EStoryState.ERROR;
+		}	
 	}
 	
 	//------------------------------------------------------------------------------------------------
