@@ -6,6 +6,11 @@ This is the mission story framework file.
 //------------------------------------------------------------------------------------------------
 //const string DCS_ID_PREFIX = "DCS_";				//The prefix used for stories marker and missions Id's.
 
+class storyMapLine : Managed
+{
+	ref array<int> line = {};
+}
+
 //------------------------------------------------------------------------------------------------
 class SDRC_StoriesFrame
 {
@@ -43,16 +48,123 @@ class SDRC_StoriesFrame
 		m_DC_StoriesFrameJsonApi.LoadStories();
 
 		//Reset
-		m_StoryIdx = 0;
+		m_StoryIdx = 1;
 		m_RequestId = -1;
-				
+
+		CheckStory();
+						
 		//Fix seconds to ms
 		SDRC_Log.Add("[SDRC_StoriesFrame] Waiting for " + m_Config.storiesStartDelay + " seconds before starting stories.", LogLevel.NORMAL);
 		m_Config.storiesStartDelay = m_Config.storiesStartDelay * 1000;		//sec to ms
 		
 		//Start the mission framework.
-		m_State = DC_EStoryState.STORY_WAITING;
+		m_State = DC_EStoryState.STORY_START;
 		GetGame().GetCallqueue().CallLater(StoriesCycleManager, m_Config.storiesStartDelay, false);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void CheckStory()
+	{
+		m_Story = m_Config.stories[m_StoryIdx];
+		foreach(SDRC_Chapter chapter : m_Story.chapters)
+		{
+			SDRC_Log.Add("[SDRC_StoriesFrame:CheckStory] [" + chapter.nextChapter[1] + "]-[" + chapter.id + "]-[" + chapter.nextChapter[0] + "]", LogLevel.NORMAL);
+		}
+
+		ref array<ref storyMapLine> storyMap = {};
+		
+		//Add the indexes
+		foreach(SDRC_Chapter chapter : m_Story.chapters)
+		{
+			while (storyMap.Count() < chapter.id + 1)
+			{
+				ref storyMapLine sml = new storyMapLine();
+				storyMap.Insert(sml);
+			}
+			
+			storyMap[chapter.id].line.Insert(chapter.id);
+			storyMap[chapter.id].line.InsertAt(0, 0);			
+		}
+
+		//Handle the lose spots
+		foreach(SDRC_Chapter chapter : m_Story.chapters)
+		{			
+			//Add the lose index on the right side
+			storyMap[chapter.id].line.Insert(chapter.nextChapter[1]);
+		}
+
+		int i = 0;
+		
+		//Start state is on the left
+		storyMap[1].line.RemoveOrdered(0);
+
+		dumpStoryMapLine(storyMap);
+				
+		i = 1;
+		
+		foreach(SDRC_Chapter chapter : m_Story.chapters)
+		{
+			int winIdx = chapter.nextChapter[0];
+			if (storyMap[winIdx].line[0] == 0)
+			{			
+				if (storyMap[i].line[1] != i)
+				{
+					storyMap[winIdx].line.RemoveOrdered(0);
+				}
+			}
+			i++;			
+			dumpStoryMapLine(storyMap);
+			
+			if (i >= m_Story.chapters.Count())
+			{
+				break;
+			}
+		}		
+
+		dumpStoryMapLine(storyMap);
+		
+		drawStoryMapLine(storyMap);
+	}
+	
+	void dumpStoryMapLine(array<ref storyMapLine> storyMap)
+	{
+		SDRC_Log.Add("[SDRC_StoriesFrame:CheckStory] ------------------------------------", LogLevel.NORMAL);
+		foreach(storyMapLine sml : storyMap)
+		{
+//			if (sml.line.Count() > 0)
+//			{
+				SDRC_Log.Add("[SDRC_StoriesFrame:CheckStory] " + sml.line, LogLevel.NORMAL);
+//			}
+		}		
+	}
+
+	void drawStoryMapLine(array<ref storyMapLine> storyMap)
+	{
+		foreach(storyMapLine sml : storyMap)
+		{
+			string line = "";
+			string line2 = "";
+			foreach (int char : sml.line)
+			{
+				if (char == -1)
+				{
+					line = line + "---[L]";					
+				}
+				else if (char == -2)
+				{
+					line = line + "---[W]";
+				}
+				else if (char != 0)
+				{
+					line = line + "[" + char.ToString(2) + "]";
+				}
+				if (char == 0)
+				{
+					line =   line + " |  ";
+				}
+			}
+			SDRC_Log.Add("[SDRC_StoriesFrame:CheckStory] " + line, LogLevel.NORMAL);
+		}		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -87,9 +199,15 @@ class SDRC_StoriesFrame
 		
 		if (m_State == DC_EStoryState.STORY_WAITING)
 		{	
+			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Waiting for next chapter.", LogLevel.DEBUG);							
+			//NOTE: CHAPTER_START is set in StartNewChapter()
+		}
+		
+		if (m_State == DC_EStoryState.STORY_START)
+		{	
 			m_RequestId = -1;
 			m_Story = m_Config.stories[m_StoryIdx];
-			m_Chapter = m_Story.chapters[m_Story.index];
+			//TBD: Error checking
 			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Starting story: " + m_StoryIdx + " , chapter: " + m_Chapter.general.title, LogLevel.NORMAL);
 			
 			m_State = DC_EStoryState.CHAPTER_START;
@@ -97,9 +215,13 @@ class SDRC_StoriesFrame
 		
 		if (m_State == DC_EStoryState.CHAPTER_START)
 		{		
-			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Spawning new story mission", LogLevel.NORMAL);
 			IEntity missionEntity;
 			vector pos = "0 0 0";
+			
+			m_Chapter = m_Story.chapters[m_Story.index];
+			//TBD: Error checking
+			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Spawning new story chapter: " + m_Story.index + " , chapter: " + m_Chapter.general.title, LogLevel.NORMAL);
+			
 			string resourceName = SDRC_MissionEnumHelper.GetMissionPrefab(m_Chapter.missionType);
 			if (resourceName == "")
 			{
@@ -151,8 +273,9 @@ class SDRC_StoriesFrame
 			if (stat)
 			{	
 				SDRC_RplStoryComp storyComp = SDRC_RplStoryComp.GetInstance();
+				m_Chapter.success = stat.success;
 				
-				if (stat.success == DC_EMissionSuccess.WIN)
+				if (m_Chapter.success == DC_EMissionSuccess.WIN)
 				{					
 					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " : WIN", LogLevel.NORMAL);
 					if (storyComp)
@@ -162,7 +285,7 @@ class SDRC_StoriesFrame
 					m_State = DC_EStoryState.CHAPTER_OVER;
 				}
 				
-				if (stat.success == DC_EMissionSuccess.LOSE)
+				if (m_Chapter.success == DC_EMissionSuccess.LOSE)
 				{
 					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " : FAILURE", LogLevel.NORMAL);
 					if (storyComp)
@@ -176,7 +299,8 @@ class SDRC_StoriesFrame
 				
 		if (m_State == DC_EStoryState.CHAPTER_OVER)
 		{
-			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Chapter over. Go to next chapter or an ending. To be fixed...", LogLevel.WARNING);				
+			SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Chapter over.", LogLevel.DEBUG);				
+			GetGame().GetCallqueue().CallLater(StartNewChapter, m_Config.chapterTimeBetween*1000, false);
 		}
 		
 		GetGame().GetCallqueue().CallLater(StoriesCycleManager, m_Config.storiesFrameCycleTime*1000, false);
@@ -213,6 +337,28 @@ class SDRC_StoriesFrame
 		{
 			m_State = DC_EStoryState.ERROR;
 		}	
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Starts a new chapter
+	*/		
+	protected void StartNewChapter()
+	{
+		//TBD: Select the proper chapter
+		int oldIndex = m_Story.index;
+		
+		if (m_Chapter.success == DC_EMissionSuccess.WIN)
+		{
+			m_Story.index = m_Chapter.nextChapter[0];
+		}
+		
+		if (m_Chapter.success == DC_EMissionSuccess.LOSE)
+		{
+			m_Story.index = m_Chapter.nextChapter[1];
+		}		
+		
+		m_State = DC_EStoryState.CHAPTER_START;
 	}
 	
 	//------------------------------------------------------------------------------------------------

@@ -573,7 +573,7 @@ class SDRC_Mission
 	{
 		m_Success = success;
 		
-		SDRC_MissionStats.UpdateState(GetId(), success);
+		SDRC_MissionStats.UpdateSuccess(GetId(), success);
 	}
 
 	//------------------------------------------------------------------------------------------------
