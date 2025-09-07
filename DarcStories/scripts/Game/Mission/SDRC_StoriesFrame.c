@@ -121,6 +121,10 @@ class SDRC_StoriesFrame
 			}
 		}		
 
+		dumpStoryMapLine(storyMap);
+		
+		//Check if there are double wins 
+		
 		//Handle the final win 
 		int lastIdx = m_Story.chapters.Count() - 1;
 		if (m_Story.chapters[lastIdx].nextChapter[0] == DC_ENextChapter.WIN)
@@ -140,14 +144,22 @@ class SDRC_StoriesFrame
 		i = 1;
 		foreach(SDRC_Chapter chapter : m_Story.chapters)
 		{
-			if (storyMap[i + 1].line[1] == DC_ENextChapter.LOSE)
+			if (storyMap[i].line[1] == DC_ENextChapter.LOSE)
 			{
-				storyMap[i + 1].line.InsertAt(DC_ENextChapter.NONE, 1);
+				if (storyMap[i + 1].line[0] == chapter.nextChapter[0])
+				{
+					storyMap[i].line.InsertAt(storyMap[i].line[0], 1);
+				}
+				else
+				{				
+					storyMap[i].line.InsertAt(DC_ENextChapter.NONE, 1);
+				}
 			}
+			
 			i++;
 
 			//Stop before the last one			
-			if (i >= m_Story.chapters.Count())
+			if (i > m_Story.chapters.Count())
 			{
 				break;
 			}
