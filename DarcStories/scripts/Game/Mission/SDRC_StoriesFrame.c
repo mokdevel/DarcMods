@@ -83,7 +83,7 @@ class SDRC_StoriesFrame
 			}
 			
 			storyMap[chapter.id].line.Insert(chapter.id);
-			storyMap[chapter.id].line.InsertAt(0, 0);			
+			storyMap[chapter.id].line.InsertAt(DC_ENextChapter.NONE, 0);			
 		}
 
 		//Handle the lose spots
@@ -98,14 +98,14 @@ class SDRC_StoriesFrame
 		//Start state is on the left
 		storyMap[1].line.RemoveOrdered(0);
 
-		dumpStoryMapLine(storyMap);
+		//dumpStoryMapLine(storyMap);
 				
-		i = 1;
-		
+		//Move the win states to left side
+		i = 1;		
 		foreach(SDRC_Chapter chapter : m_Story.chapters)
 		{
 			int winIdx = chapter.nextChapter[0];
-			if (storyMap[winIdx].line[0] == 0)
+			if (storyMap[winIdx].line[0] == DC_ENextChapter.NONE)
 			{			
 				if (storyMap[i].line[1] != i)
 				{
@@ -113,14 +113,47 @@ class SDRC_StoriesFrame
 				}
 			}
 			i++;			
-			dumpStoryMapLine(storyMap);
 			
+			//Stop before the last one			
 			if (i >= m_Story.chapters.Count())
 			{
 				break;
 			}
 		}		
 
+		//Handle the final win 
+		int lastIdx = m_Story.chapters.Count() - 1;
+		if (m_Story.chapters[lastIdx].nextChapter[0] == DC_ENextChapter.WIN)
+		{
+			ref storyMapLine sml = new storyMapLine();
+			sml.line.Insert(DC_ENextChapter.WIN);
+			storyMap.Insert(sml);			
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_StoriesFrame:CheckStory] Story has no WIN chapter!", LogLevel.ERROR);
+		}
+		
+		dumpStoryMapLine(storyMap);
+		
+		//Check the win connections
+		i = 1;
+		foreach(SDRC_Chapter chapter : m_Story.chapters)
+		{
+			if (storyMap[i + 1].line[1] == DC_ENextChapter.LOSE)
+			{
+				storyMap[i + 1].line.InsertAt(DC_ENextChapter.NONE, 1);
+			}
+			i++;
+
+			//Stop before the last one			
+			if (i >= m_Story.chapters.Count())
+			{
+				break;
+			}
+			dumpStoryMapLine(storyMap);
+		}		
+		
 		dumpStoryMapLine(storyMap);
 		
 		drawStoryMapLine(storyMap);
@@ -140,29 +173,43 @@ class SDRC_StoriesFrame
 
 	void drawStoryMapLine(array<ref storyMapLine> storyMap)
 	{
+		array<string>lines = {};
+		
 		foreach(storyMapLine sml : storyMap)
 		{
 			string line = "";
-			string line2 = "";
 			foreach (int char : sml.line)
 			{
-				if (char == -1)
+				if (char == DC_ENextChapter.LOSE)
 				{
-					line = line + "---[L]";					
+					line = line + "[L]";					
 				}
-				else if (char == -2)
+				else if (char == DC_ENextChapter.WIN)
 				{
-					line = line + "---[W]";
+					line = line + "[W]";
 				}
 				else if (char != 0)
 				{
 					line = line + "[" + char.ToString(2) + "]";
 				}
-				if (char == 0)
+				if (char == DC_ENextChapter.NONE)
 				{
-					line =   line + " |  ";
+					line = line + " |  ";
 				}
 			}
+			lines.Insert(line);
+		}		
+		
+		foreach(string line : lines)
+		{
+			if (line.Contains("[L]"))
+			{
+				line.Replace("[L]", "");				
+				line = line + "----------------------";
+				line = line.Substring(0,20);
+				line = line + "[L]";
+			}
+			
 			SDRC_Log.Add("[SDRC_StoriesFrame:CheckStory] " + line, LogLevel.NORMAL);
 		}		
 	}

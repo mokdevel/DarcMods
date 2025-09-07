@@ -30,6 +30,7 @@ enum DC_EStoryState
 
 enum DC_ENextChapter
 {
+	NONE = 0,
 	WIN = -2,
 	LOSE = -1,
 }

@@ -88,4 +88,5 @@ class SDRC_Story00_JsonApi : SDRC_StoryJsonApi
 		
 		return chapter;
 	};	
+	
 }
