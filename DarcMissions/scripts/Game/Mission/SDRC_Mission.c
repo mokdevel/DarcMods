@@ -26,9 +26,10 @@ enum DC_EMissionWinCondition
 
 enum DC_EMissionSuccess
 {
-	UNKNOWN,
-	WIN,
-	LOSE
+	UNKNOWN,	//Success is uncertain. Normal state while mission is running.
+	WIN,		//The mission was a success -> win
+	LOSE,		//The mission was a success -> lose
+	DELETED		//Mission was deleted prematurely. For example by GM.
 }
 
 const string SDRC_DEFAULT = "default";

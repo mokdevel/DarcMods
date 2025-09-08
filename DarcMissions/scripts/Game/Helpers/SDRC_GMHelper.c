@@ -99,6 +99,7 @@ class SDRC_GMHelper
 		if (idx != -1)
 		{
 			m_BaseGameMode.missionFrame.m_MissionList[idx].SetState(DC_EMissionState.END);
+			m_BaseGameMode.missionFrame.m_MissionList[idx].SetSuccess(DC_EMissionSuccess.DELETED);
 			SDRC_Log.Add("[SDRC_GMHelper:DeleteMission] Ending mission: " + id + " - " + m_BaseGameMode.missionFrame.m_MissionList[idx].GetTitle(), LogLevel.DEBUG);				
 		}
 	}	
