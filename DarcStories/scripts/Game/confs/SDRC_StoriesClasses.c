@@ -19,11 +19,12 @@ enum DC_EStoryState
 	NONE = 0,			//Unknown state. Nothing should be run at this state.
 	INIT,				//Story frame is being init
 	STORY_WAITING,		//Waiting before starting a mission
-	STORY_START,		//Start the mission
-	CHAPTER_START,
-	CHAPTER_INIT,
-	CHAPTER_ACTIVE,
-	CHAPTER_DONE,
+	STORY_START,		//Select and start the story. Check that story is usabled.
+	CHAPTER_START,		//Select chapter. Spawn the right mission entity.
+	CHAPTER_INIT,		//Initialize the chapter. This is done as a delayed action for the mission entity.
+	CHAPTER_PREACTIVE,	//Final check to see that mission started properly
+	CHAPTER_ACTIVE,		//Normal state running the chapter.
+	CHAPTER_DONE,		//Chapter is over. Either win or lose.
 	CHAPTER_OVER,
 	WAITING_FOR_NEXT,
 };
@@ -39,22 +40,48 @@ enum DC_ENextChapter
 class SDRC_Story : Managed
 {
 	int id;
+	int chapterId = 0;						//The id of the chapter
 	string comment;
+	string title = "";	
 	ref array<string> dependencies = {};	//List of mods needed for the story
-	int index = 0;							//The story index pointing to a chapter
 	//Set outside of Set()
 //	DC_EStoryState state = DC_EStoryState.NONE;
 	ref array<ref SDRC_Chapter> chapters = {};
 	
-	void Set(int id_, string comment_, array<string> dependencies_, int index_)
+	void Set(int id_, int chapterId_, string comment_, string title_, array<string> dependencies_)
 	{
 		id = id_;
+		chapterId = chapterId_;
 		comment = comment_;
+		title = title_;
 		dependencies = dependencies_;
-		index = index_;
 		//NOTE: state handled outside
 		//NOTE: chapters are added separately
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Returns the index of the chapters table where chapterId points
+	*/	
+	int GetIndex(int chapterId)
+	{
+		int idx = 0;
+		
+		foreach (SDRC_Chapter chapter : chapters)
+		{
+			if (chapter.id == chapterId)
+			{
+				return idx;
+			}
+			
+			idx++;
+		}
+		
+		//SDRC_Log.Add("[SDRC_Story:GetIndex] Wrong chapterId (" + chapterId + ") in story : " + id, LogLevel.ERROR);
+		return -1;		
 	}	
+	
+
 }
 
 //------------------------------------------------------------------------------------------------

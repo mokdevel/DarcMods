@@ -23,10 +23,10 @@ class SDRC_Story00_JsonApi : SDRC_StoryJsonApi
 		#endif
 		
 		conf.Set(
-			0, 
+			0, 1, 
 			"Story 00",
+			"The Hit",
 			{},
-			0
 		);
 		
 		conf.chapters.Insert(Chapter01());

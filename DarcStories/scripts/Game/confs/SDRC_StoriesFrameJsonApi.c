@@ -6,8 +6,8 @@
 	//Release options
 	#ifdef SDRC_RELEASE
 		private const int SDRC_STORIESFRAME_START_DELAY = 1*60;						//Time to wait before spawning the first mission (seconds)
-		private const int SDRC_STORIESFRAME_CYCLE_TIME_DEFAULT = 30;
-		private const int SDRC_STORIESFRAME_CYCLE_TIME_LIMIT = 20;					//The cycle to run the mission frame. 
+		private const int SDRC_STORIESFRAME_CYCLE_TIME_DEFAULT = 10;
+		private const int SDRC_STORIESFRAME_CYCLE_TIME_LIMIT = 5;					//The cycle to run the mission frame. 
 
 		private const int SDRC_CHAPTER_TIME_DEFAULT = 30*60;						//Time for the mission to be active
 		private const int SDRC_CHAPTER_TIME_BETWEEN = 10*60;						//Time between chapters
@@ -17,7 +17,7 @@
 	#ifndef SDRC_RELEASE	
 		private const int SDRC_STORIESFRAME_START_DELAY = 8;						//Time to wait before spawning the first mission (seconds)
 		private const int SDRC_STORIESFRAME_CYCLE_TIME_DEFAULT = 10;
-		private const int SDRC_STORIESFRAME_CYCLE_TIME_LIMIT = 10;					//The cycle to run the mission frame. 
+		private const int SDRC_STORIESFRAME_CYCLE_TIME_LIMIT = 5;					//The cycle to run the mission frame. 
 
 		private const int SDRC_CHAPTER_TIME_DEFAULT = 2*60;							//Time for the mission to be active
 		private const int SDRC_CHAPTER_TIME_BETWEEN = 1*60;							//Time between chapters
@@ -99,7 +99,7 @@ class SDRC_StoriesFrameJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void LoadStories()
 	{			
-		//Load configurations from file
+		//Load stories from file
 		SDRC_Story00_JsonApi story00_JsonApi = new SDRC_Story00_JsonApi();		
 		story00_JsonApi.Load();
 		conf.stories.Insert(story00_JsonApi.conf);		
