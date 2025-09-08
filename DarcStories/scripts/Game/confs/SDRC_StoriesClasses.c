@@ -22,7 +22,7 @@ enum DC_EStoryState
 	STORY_START,		//Select and start the story. Check that story is usabled.
 	CHAPTER_START,		//Select chapter. Spawn the right mission entity.
 	CHAPTER_INIT,		//Initialize the chapter. This is done as a delayed action for the mission entity.
-	CHAPTER_PREACTIVE,	//Final check to see that mission started properly
+	CHAPTER_READY,		//Final check to see that mission started properly
 	CHAPTER_ACTIVE,		//Normal state running the chapter.
 	CHAPTER_DONE,		//Chapter is over. Either win or lose.
 	CHAPTER_OVER,

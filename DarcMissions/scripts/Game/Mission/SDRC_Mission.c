@@ -173,6 +173,9 @@ class SDRC_Mission
 		SetActiveTime(SDRC_MISSION_CYCLE_TIME_DEFAULT*20);		//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
 		m_iActiveDistance = 0;									//Set a default zero
 		m_bMissionIsEnding = false;
+		//Win condition related	
+		m_iAICountOriginal = -1;								//Defaults set, updated once mission goes ACTIVE
+		m_iAIKillPercentageRandom = 99;
 		
 		SDRC_MissionStats.Add(m_sId, m_iRequestId, m_State, m_Success);
 	}
@@ -681,9 +684,18 @@ class SDRC_Mission
 		bool isWin = false;
 		
 		//Check the different winning conditions
-		if (m_State == DC_EMissionState.ACTIVE && !m_bMissionIsEnding && m_iAICountOriginal > 0)
+		if ( (m_State == DC_EMissionState.ACTIVE) && (!m_bMissionIsEnding) && (m_iAICountOriginal >= 0) )
 		{			
-			float aiKillPercentage = (1 - GetAICount()/m_iAICountOriginal);
+			float aiKillPercentage;
+			
+			if (m_iAICountOriginal == 0)	//This happens when AIs are killed before the delayed counting happens. For example, GM has killed the AIs 
+			{
+				aiKillPercentage = 1.0;
+			}
+			else
+			{
+				aiKillPercentage = (1 - GetAICount()/m_iAICountOriginal);
+			}
 			
 			switch (m_General.winCondition)
 			{
