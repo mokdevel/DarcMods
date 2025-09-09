@@ -27,6 +27,7 @@ enum DC_EStoryState
 	CHAPTER_DONE,		//Chapter is over. Either win or lose.
 	CHAPTER_OVER,
 	WAITING_FOR_NEXT,
+	STORY_END,
 };
 
 enum DC_ENextChapter

@@ -10,12 +10,17 @@ class SDRC_JsonApi : JsonApiStruct
 	private string m_FileName = "";
 			
 	//------------------------------------------------------------------------------------------------
-	SCR_JsonLoadContext LoadConfig(string fileName)
+	/*!
+	Load the json config	
+	\param fileName file name
+	\param respectOverWrite Defines if the SDRC_Conf.OVERWRITE_JSON setting is to be respected. If false, overwrite of files will not happen.
+	*/
+	SCR_JsonLoadContext LoadConfig(string fileName, bool respectOverWrite = true)
 	{	
 		SetFileName(fileName);
 		SCR_JsonLoadContext loadContext = new SCR_JsonLoadContext();
 		
-		if (SDRC_Conf.OVERWRITE_JSON)
+		if (SDRC_Conf.OVERWRITE_JSON && respectOverWrite)
 		{
 			SDRC_Log.Add("[SDRC_JsonApi] Not release build - overwriting json config on disk.", LogLevel.WARNING);
 			return null;

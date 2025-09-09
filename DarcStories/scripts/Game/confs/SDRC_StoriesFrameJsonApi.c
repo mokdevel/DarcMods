@@ -34,10 +34,12 @@ class SDRC_StoriesFrameConfig : Managed
 	int storiesStartDelay;			//Time to wait before spawning the first mission (seconds).
 	//Timing specific
 	int storiesFrameCycleTime;		//The cycle time to manage mission spawning, deletion etc... (seconds)	
+	int storyTimeBetween;			//The time between stories
 	int chapterTimeBetween;			//The time between chapters
 	
-	ref array<ref int> storiesList = {};	//The indexes of stories
-	ref array<ref SDRC_Story> stories = {};		//List stories	
+	ref array<ref string> storiesList = {};		//The indexes of stories
+//	ref array<ref SDRC_Story> stories = {};		//List stories	
+	ref SDRC_Story story;
 }
 
 //------------------------------------------------------------------------------------------------
@@ -87,7 +89,7 @@ class SDRC_StoriesFrameJsonApi : SDRC_JsonApi
 		conf.storiesStartDelay = SDRC_STORIESFRAME_START_DELAY;		
 		conf.storiesFrameCycleTime = SDRC_MISSIONFRAME_CYCLE_TIME;
 		conf.chapterTimeBetween = SDRC_CHAPTER_TIME_BETWEEN;
-		conf.storiesList = {0};
+		conf.storiesList = {"dc_storyConfig_00.json", "dc_storyConfig_01.json"};
 		
 		#ifdef SDRC_RELEASE
 		#endif	
@@ -97,15 +99,23 @@ class SDRC_StoriesFrameJsonApi : SDRC_JsonApi
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void LoadStories()
+	void LoadStory(string fileName)
+	{			
+		SDRC_StoryJsonApi story_JsonApi = new SDRC_StoryJsonApi(fileName);		
+		story_JsonApi.Load(false);
+		conf.story = story_JsonApi.conf;		
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	void CreateStories()
 	{			
 		//Load stories from file
 		SDRC_Story00_JsonApi story00_JsonApi = new SDRC_Story00_JsonApi();		
 		story00_JsonApi.Load();
-		conf.stories.Insert(story00_JsonApi.conf);		
+		//conf.stories.Insert(story00_JsonApi.conf);		
 		
 		SDRC_Story01_JsonApi story01_JsonApi = new SDRC_Story01_JsonApi();		
 		story01_JsonApi.Load();
-		conf.stories.Insert(story01_JsonApi.conf);		
+		//conf.stories.Insert(story01_JsonApi.conf);
 	}	
 }
