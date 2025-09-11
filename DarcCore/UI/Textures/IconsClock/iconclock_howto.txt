@@ -1,0 +1,6 @@
+One single icon is needed:
+
+# Clock icon: Shown in story map page
+- Name: clockXX
+- Size: 128x126 DPI 72,5	
+- Color: Black

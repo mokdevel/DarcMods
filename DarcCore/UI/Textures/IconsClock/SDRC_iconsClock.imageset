@@ -1,0 +1,72 @@
+ImageSetClass {
+ RefSize 396 516
+ Textures {
+  ImageSetTextureClass {
+   screenSize FHD
+   size 396 516
+   path "{1D8A1CFC69704606}UI/Textures/IconsClock/SDRC_iconsClock-100_atlas.edds"
+  }
+ }
+ Images {
+  ImageSetDefClass clock01 {
+   Name "clock01"
+   Pos 2 2
+   Size 128 126
+   Flags 0
+  }
+  ImageSetDefClass clock02 {
+   Name "clock02"
+   Pos 132 2
+   Size 128 126
+   Flags 0
+  }
+  ImageSetDefClass clock03 {
+   Name "clock03"
+   Pos 262 2
+   Size 128 126
+   Flags 0
+  }
+  ImageSetDefClass clock04 {
+   Name "clock04"
+   Pos 2 130
+   Size 128 126
+   Flags 0
+  }
+  ImageSetDefClass clock05 {
+   Name "clock05"
+   Pos 132 130
+   Size 128 126
+   Flags 0
+  }
+  ImageSetDefClass clock06 {
+   Name "clock06"
+   Pos 262 130
+   Size 128 126
+   Flags 0
+  }
+  ImageSetDefClass clock07 {
+   Name "clock07"
+   Pos 2 258
+   Size 128 126
+   Flags 0
+  }
+  ImageSetDefClass clock08 {
+   Name "clock08"
+   Pos 132 258
+   Size 128 126
+   Flags 0
+  }
+  ImageSetDefClass clock09 {
+   Name "clock09"
+   Pos 262 258
+   Size 128 126
+   Flags 0
+  }
+  ImageSetDefClass clock10 {
+   Name "clock10"
+   Pos 2 386
+   Size 128 126
+   Flags 0
+  }
+ }
+}
