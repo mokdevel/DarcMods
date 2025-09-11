@@ -19,7 +19,7 @@
 		private const int SDRC_STORIESFRAME_CYCLE_TIME_DEFAULT = 10;
 		private const int SDRC_STORIESFRAME_CYCLE_TIME_LIMIT = 5;					//The cycle to run the mission frame. 
 
-		private const int SDRC_CHAPTER_TIME_DEFAULT = 2*60;							//Time for the mission to be active
+		private const int SDRC_CHAPTER_TIME_DEFAULT = 1*60;							//Time for the mission to be active
 		private const int SDRC_CHAPTER_TIME_BETWEEN = 1*60;							//Time between chapters
 	#endif
 

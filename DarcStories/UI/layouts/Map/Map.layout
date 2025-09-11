@@ -53,7 +53,7 @@ FrameWidgetClass {
      }
      "Is Enabled" 0
      "Is Visible" 0
-     Opacity 0.37
+     Opacity 0.85
      Texture "{16296D7B325A094B}UI/Textures/Icons/gm_mission_X_round.edds"
      Size 71 69
     }
@@ -66,15 +66,14 @@ FrameWidgetClass {
       OffsetTop 10
       SizeX 500
       OffsetRight -580
-      SizeY 450
-      OffsetBottom -460
-      SizeToContent 1
+      SizeY 40
+      OffsetBottom -50
      }
      "Is Enabled" 0
      "Is Visible" 0
      Color 0 0 0 1
      Text "Story Title"
-     "Font Size" 26
+     "Font Size" 32
      "Min Font Size" 26
     }
     TextWidgetClass "{6636846C05A95D80}" {
@@ -82,18 +81,17 @@ FrameWidgetClass {
      Slot FrameWidgetSlot "{663673326C2548C0}" {
       PositionX 80
       OffsetLeft 80
-      PositionY 40
-      OffsetTop 40
+      PositionY 60
+      OffsetTop 60
       SizeX 500
       OffsetRight -580
-      SizeY 450
-      OffsetBottom -490
+      SizeY 520
+      OffsetBottom -580
      }
      "Is Enabled" 0
      "Is Visible" 0
      Color 0 0 0 1
      Text "Chapter Story"
-     "Font Size" 20
      "Min Font Size" 20
      Wrap 1
     }

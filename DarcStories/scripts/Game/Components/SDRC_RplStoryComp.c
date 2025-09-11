@@ -54,11 +54,15 @@ class SDRC_RplStoryComp : ScriptComponent
 		SDRC_Log.Add("[SDRC_RplStoryComp:OnTimeUpdate] Time left: " + m_iTimeLeft, LogLevel.NORMAL);
 	}	
 	
+	int GetTimeLeft()
+	{
+		return m_iTimeLeft;
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	void UpdateTime(int timeLeft)
 	{
-		m_iTimeLeft--;
-		timeLeft = m_iTimeLeft;
+		m_iTimeLeft = timeLeft;
 		Rpc(RpcDo_UpdateTime, timeLeft);
 	}	
 	

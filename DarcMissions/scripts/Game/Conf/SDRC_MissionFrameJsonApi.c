@@ -20,7 +20,7 @@
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME = 30;							//The cycle to run the mission frame. 
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 20;						//You should not be running the frame too often as it's unncecessary
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = true;						//Force recreaction of config files. 
-		private const int SDRC_MISSION_HINT_TIME = 30;									//Seconds to show the mission hint to players
+		private const int SDRC_MISSION_HINT_TIME = 45;									//Seconds to show the mission hint to players
 		private const int SDRC_MISSION_RANDOM_POS = 30;									//The randomization for search radius for mission position 
 		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;						//Show/hide static mission markers
 	#endif
@@ -42,7 +42,7 @@
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME = 10;//20;
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = true;
-		private const int SDRC_MISSION_HINT_TIME = 30;
+		private const int SDRC_MISSION_HINT_TIME = 45;
 		private const int SDRC_MISSION_RANDOM_POS = 30;
 		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;
 	#endif

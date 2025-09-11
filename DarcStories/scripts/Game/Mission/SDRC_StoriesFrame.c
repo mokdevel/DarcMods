@@ -76,6 +76,8 @@ class SDRC_StoriesFrame
 	{	
 		m_State = state;
 
+		SDRC_Log.Add("[SDRC_StoriesFrame:SetState] Chapter set to state: " + SCR_Enum.GetEnumName(DC_EStoryState, state), LogLevel.DEBUG);
+		
 		//If chapter is over, 		
 		if (m_State == DC_EStoryState.CHAPTER_OVER)
 		{
@@ -165,7 +167,7 @@ class SDRC_StoriesFrame
 			}
 		}
 		
-		if (m_State == DC_EStoryState.CHAPTER_READY)
+		if (m_State == DC_EStoryState.CHAPTER_WAITING)
 		{	
 			if (stat)
 			{
@@ -175,9 +177,17 @@ class SDRC_StoriesFrame
 					//Let's try again
 					SetState(DC_EStoryState.CHAPTER_START);
 				}
-				else
+				else	//All good, start the chapter
 				{
-					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Chapter set ACTIVE.", LogLevel.DEBUG);
+					int currentTime = (System.GetTickCount() / 1000);					
+					m_Chapter.chapterEndTime = m_Chapter.activeTime + currentTime;
+					
+					SDRC_RplStoryComp storyComp = SDRC_RplStoryComp.GetInstance();
+					if (storyComp)
+					{
+						storyComp.UpdateChapter(m_Chapter.title, m_Chapter.text);
+					}
+					
 					SetState(DC_EStoryState.CHAPTER_ACTIVE);
 				}				
 			}
@@ -192,7 +202,24 @@ class SDRC_StoriesFrame
 				SDRC_RplStoryComp storyComp = SDRC_RplStoryComp.GetInstance();
 				if (storyComp)
 				{
-					storyComp.UpdateTime(100);
+					int currentTime = (System.GetTickCount() / 1000);					
+					int timeLeft = m_Chapter.chapterEndTime - currentTime;
+					if (timeLeft < 0)
+					{
+						timeLeft = 0;
+					}
+					float timeLeftPercent = (timeLeft/m_Chapter.activeTime)*100;
+					storyComp.UpdateTime((int)timeLeftPercent);
+					
+					//End the missions					
+					if (timeLeft == 0)
+					{
+						SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
+						if (gmComp)
+						{
+							gmComp.DoEndMission(-1, stat.id);
+						}
+					}
 				}
 				
 				SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] id: " + stat.id + " - " + SCR_Enum.GetEnumName(DC_EMissionState, stat.state) + " - " + SCR_Enum.GetEnumName(DC_EMissionSuccess, stat.success), LogLevel.DEBUG);
@@ -213,7 +240,7 @@ class SDRC_StoriesFrame
 				if (stat.state == DC_EMissionState.END || stat.state == DC_EMissionState.EXIT)
 				{
 					SetState(DC_EStoryState.CHAPTER_DONE);
-				}				
+				}
 			}			
 		}
 
@@ -286,18 +313,11 @@ class SDRC_StoriesFrame
 			requestComp.SetMissionType(m_Chapter.missionType);
 			requestComp.SetSubIdx(m_Chapter.subIdx);
 			
-			SDRC_RplStoryComp storyComp = SDRC_RplStoryComp.GetInstance();
-			if (storyComp)
-			{
-				storyComp.UpdateChapter(m_Chapter.title, m_Chapter.text);
-			}
-			
-			SDRC_Log.Add("[SDRC_StoriesFrame:SetChapterParameters_Delayed] Chapter set CHAPTER_READY.", LogLevel.DEBUG);
-			SetState(DC_EStoryState.CHAPTER_READY);
+			SetState(DC_EStoryState.CHAPTER_WAITING);
 		}	
 		else
 		{
-			SDRC_Log.Add("[SDRC_StoriesFrame:SetChapterParameters_Delayed] Mission entity not found.", LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_StoriesFrame:SetChapterParameters_Delayed] Mission entity not found.", LogLevel.ERROR);
 			SetState(DC_EStoryState.ERROR);
 		}	
 	}

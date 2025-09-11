@@ -90,7 +90,8 @@ sealed class SDRC_StoriesHelper
 			SDRC_Log.Add("[SDRC_StoriesHelper:CheckStory] Story has no WIN chapter!", LogLevel.ERROR);
 		}
 		
-		//dumpStoryMapLine(storyMap);
+//		dumpStoryMapLine(storyMap);
+//		drawStoryMapLine(storyMap);
 		
 		//Check the win connections
 		i = 1;
@@ -99,7 +100,7 @@ sealed class SDRC_StoriesHelper
 			if (storyMap[i].line[1] == DC_ENextChapter.LOSE)
 			{
 				//Check if there are double wins 		
-				if (storyMap[i + 1].line[0] == chapter.nextChapter[0])
+				if ( (storyMap[i + 1].line[0] == chapter.nextChapter[0]) && (chapter.nextChapter[0] == DC_ENextChapter.WIN) )
 				{
 					storyMap[i].line.InsertAt(storyMap[i].line[0], 1);
 				}

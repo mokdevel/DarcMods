@@ -22,7 +22,7 @@ enum DC_EStoryState
 	STORY_START,		//Select and start the story. Check that story is usabled.
 	CHAPTER_START,		//Select chapter. Spawn the right mission entity.
 	CHAPTER_INIT,		//Initialize the chapter. This is done as a delayed action for the mission entity.
-	CHAPTER_READY,		//Final check to see that mission started properly
+	CHAPTER_WAITING,	//Final check to see that mission started properly
 	CHAPTER_ACTIVE,		//Normal state running the chapter.
 	CHAPTER_DONE,		//Chapter is over. Either win or lose.
 	CHAPTER_OVER,
@@ -46,7 +46,7 @@ class SDRC_Story : Managed
 	string title = "";	
 	ref array<string> dependencies = {};	//List of mods needed for the story
 	//Set outside of Set()
-//	DC_EStoryState state = DC_EStoryState.NONE;
+	//DC_EStoryState state = DC_EStoryState.NONE;
 	ref array<ref SDRC_Chapter> chapters = {};
 	
 	void Set(int id_, int chapterId_, string comment_, string title_, array<string> dependencies_)
@@ -82,7 +82,23 @@ class SDRC_Story : Managed
 		return -1;		
 	}	
 	
+	//------------------------------------------------------------------------------------------------
+/*	void GetState()
+	{	
+		return state;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void SetState(DC_EStoryState stateToSet)
+	{	
+		state = stateToSet;
 
+		//If chapter is over, 		
+		if (state == DC_EStoryState.CHAPTER_OVER)
+		{
+			GetGame().GetCallqueue().CallLater(StartNewChapter, m_Config.chapterTimeBetween*1000, false);
+		}
+	}*/
 }
 
 //------------------------------------------------------------------------------------------------
@@ -100,13 +116,14 @@ class SDRC_Chapter : Managed
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();		
 	//Default values not to be changed
 	DC_EMissionSuccess success = DC_EMissionSuccess.UNKNOWN;
+	int chapterEndTime = 0;
 		
 	void Set(int id_, array<int> nextChapter_, DC_EMissionType missionType_, int subIdx_, int activeTime_, string title_, string text_, string textWin_, string textLose_)
 	{
 		id = id_;
 		missionType = missionType_;
 		subIdx = subIdx_;
-		activeTime = activeTime;
+		activeTime = activeTime_;
 		nextChapter = nextChapter_;
 		title = title_;
 		text = text_;

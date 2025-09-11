@@ -2,11 +2,14 @@ class SDRC_MapStoryUI : SCR_MapRulerUI
 {
 	const string TOOL_MENU_ICONSET = "{A07F0C1D34FDFD4E}UI/Textures/Icons/SDRC_icons_mapMarkersUInew.imageset";
 	const string TOOL_MENU_ICON_NAME = "icon_DeathMarker_map";
+	const string CLOCK_ICONSET_NAME = "{3FF54281E7F02F92}UI/Textures/IconsClock/SDRC_iconsClock.imageset";
 	
 	// Widgets
 	protected TextWidget m_wTitle;
 	protected TextWidget m_wText;
+	protected ImageWidget m_wImageStory;
 	protected ImageWidget m_wImageBack;
+	protected string imageNameOld;
 	
 	//------------------------------------------------------------------------------------------------
 	override void Init()
@@ -35,14 +38,17 @@ class SDRC_MapStoryUI : SCR_MapRulerUI
 	//! \param[in] saveState determines whether this is visibility set during closing of the map, so the pos and rotation should be saved
 	override protected void SetVisible(bool visible, bool saveState = false)
 	{
+//		super.SetVisible(visible, saveState);
+		
+		saveState = true;
 		m_bIsVisible = visible;
 		m_wFrame.SetEnabled(visible);
 		m_wFrame.SetVisible(visible);
 		
 		if (visible)
 		{
-			m_wImage.SetEnabled(visible);
-			m_wImage.SetVisible(visible);
+			m_wImageStory.SetEnabled(visible);
+			m_wImageStory.SetVisible(visible);
 			m_wImageBack.SetEnabled(visible);
 			m_wImageBack.SetVisible(visible);
 			m_wTitle.SetEnabled(visible);
@@ -50,7 +56,7 @@ class SDRC_MapStoryUI : SCR_MapRulerUI
 			m_wText.SetEnabled(visible);
 			m_wText.SetVisible(visible);
 			
-			if (!m_wImage)
+			if (!m_wImageBack)
 				return;
 
 			ChimeraCharacter player = ChimeraCharacter.Cast(SCR_PlayerController.GetLocalControlledEntity());
@@ -69,12 +75,9 @@ class SDRC_MapStoryUI : SCR_MapRulerUI
 			if (!mapGadget)
 				return;
 
-/*			m_fRulerLength = mapGadget.GetRulerLength();
-			if (m_wImage.LoadImageTexture(0, mapGadget.GetProtractorTexture()))
-				m_wImage.SetImage(0);*/
-
 			float zoomVal = m_MapEntity.GetCurrentZoom();
-			m_fSizeCoef = 1000 / (m_fRulerLength / m_fBaseImageSize[0]); // (ruler real length%) / 1000 pix(meters)
+//			m_fSizeCoef = 1000 / (m_fRulerLength / m_fBaseImageSize[0]); // (ruler real length%) / 1000 pix(meters)
+			m_fSizeCoef = 1000 / (600 / m_fBaseImageSize[0]); // (image real length%) / 1000 pix(meters)
 			float sizeVal = m_wWorkspace.DPIUnscale(zoomVal * m_fSizeCoef);
 			SetSize(sizeVal, sizeVal);
 			
@@ -88,10 +91,6 @@ class SDRC_MapStoryUI : SCR_MapRulerUI
 				m_MapEntity.ScreenToWorld(m_fPosX, m_fPosY, m_fWorldX, m_fWorldY);
 			}
 			
-/*			FrameSlot.SetPos(m_wFrame, m_wWorkspace.DPIUnscale(m_fPosX), m_wWorkspace.DPIUnscale(m_fPosY));
-			m_wImage.SetRotation(m_fAngle);
-			m_vMapPan = m_MapEntity.GetCurrentPan();*/
-			
 			m_MapEntity.GetOnMapZoom().Insert(OnMapZoom);	// zoom for scaling
 			m_MapEntity.GetOnMapPan().Insert(OnMapPan);		// pan for scaling
 		}
@@ -99,7 +98,7 @@ class SDRC_MapStoryUI : SCR_MapRulerUI
 		{
 			if (saveState)	// save angle
 			{
-				m_fAngle = m_wImage.GetRotation();
+				m_fAngle = m_wImageStory.GetRotation();
 			}
 			else 
 			{
@@ -118,10 +117,12 @@ class SDRC_MapStoryUI : SCR_MapRulerUI
 
 	//------------------------------------------------------------------------------------------------
 	override void OnMapOpen(MapConfiguration config)
-	{
+	{		
+		imageNameOld = "";
+		
 		// refresh widgets
 		m_wFrame = m_RootWidget.FindAnyWidget("StoryFrame");
-		m_wImage = ImageWidget.Cast(m_RootWidget.FindAnyWidget("StoryImage"));		
+		m_wImageStory = ImageWidget.Cast(m_RootWidget.FindAnyWidget("StoryImage"));		
 		m_wImageBack = ImageWidget.Cast(m_RootWidget.FindAnyWidget("StoryBackground"));		
 		m_wTitle = TextWidget.Cast(m_RootWidget.FindAnyWidget("StoryTitle"));
 		m_wText = TextWidget.Cast(m_RootWidget.FindAnyWidget("StoryText"));
@@ -132,14 +133,59 @@ class SDRC_MapStoryUI : SCR_MapRulerUI
 			m_wTitle.SetText(storyComp.GetTitle());
 			m_wText.SetText(storyComp.GetText());
 		}						
-
-		super.OnMapOpen(config);
+		super.OnMapOpen(config);		
 	}
-		
+
+	//------------------------------------------------------------------------------------------------
+	override void Update(float timeSlice)
+	{
+		int timeLeft = 100;
+		SDRC_RplStoryComp storyComp = SDRC_RplStoryComp.GetInstance();
+		if (storyComp)
+		{
+			timeLeft = storyComp.GetTimeLeft();
+		}
+
+		string imageName = GetClockImageName(timeLeft);
+		//TBD: If it has not changed, do not reload		
+		if (imageName != imageNameOld)
+		{
+			bool imageLoaded = m_wImageStory.LoadImageFromSet(0, CLOCK_ICONSET_NAME, imageName);
+			if (imageLoaded)
+			{
+				imageNameOld = imageName;
+				m_wImageStory.SetImage(0);
+			}
+		}
+						
+		m_wTitle.SetText(storyComp.GetTitle() + " - " + timeLeft);
+		super.Update(timeSlice);
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	// constructor
 	void SCR_MapStoryUI()
 	{
 		m_bHookToRoot = true;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	// GetClockImageName
+	
+	string GetClockImageName(int percent)
+	{
+		array<string> names = {"clock01", "clock02", "clock03", "clock04", "clock05", "clock06", "clock07", "clock08", "clock09", "clock10"};
+		
+		int idx = percent/10;
+		if (idx < 0)
+		{
+			idx = 0;
+		}
+		if (idx > 9)
+		{
+			idx = 9;
+		}
+		
+		return names[idx];		
 	}
 }

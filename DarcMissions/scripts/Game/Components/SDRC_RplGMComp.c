@@ -120,6 +120,17 @@ class SDRC_RplGMComp : ScriptComponent
 		
 	//------------------------------------------------------------------------------------------------
 	/*!	
+	Request for a mission deletion
+	*/
+ 	void DoEndMission(int playerID, string missionId)
+	{
+		SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Ending of " + missionId + " requested by " + playerID, LogLevel.DEBUG);	
+		SDRC_GMHelper.EndMission(missionId);
+//		SyncMapSymbols(playerID);
+	}
+		
+	//------------------------------------------------------------------------------------------------
+	/*!	
 	Sync all map symbols to all players
 	*/
  	void SyncMapSymbols(int playerID)

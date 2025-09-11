@@ -80,8 +80,8 @@ class SDRC_Story00_JsonApi : SDRC_StoryJsonApi
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			"Chapter 3: The Hit"
 			,"With the salvaged documents secure, the squad moved inland. The coded coordinates pointed towards %l. Recon drones showed faint activity. It seemed to be a staging post, possibly linked to the target’s network. \n The squad prepared: setting observation posts, marking entry routes, and coordinating fire support. Every step forward brought them closer to the unseen figure that loomed over the mission."
-			,"The team infiltrated quietly, seizing encrypted files and maps before the enemy realized their presence. The evidence confirmed patterns of movement—the target’s trail was narrowing, close enough to prepare for elimination."
-			,"A misstep triggered alarms. Gunfire lit the station, forcing a hasty retreat. In the chaos, the enemy managed to destroy part of their own intel. The squad escaped, but with gaps in the puzzle—the path to the target now unclear."
+			,"The team infiltrated quietly, seizing encrypted files and maps before the enemy realized their presence. The evidence confirmed patterns of movement—the target’s trail was narrowing, close enough to prepare for elimination. \n <END>"
+			,"A misstep triggered alarms. Gunfire lit the station, forcing a hasty retreat. In the chaos, the enemy managed to destroy part of their own intel. The squad escaped, but with gaps in the puzzle—the path to the target now unclear. \n <END>"
 		);
 	
 		chapter.general.SetDefaults(comment_: "Chapter 3", title_: "Chapter 3: The Hit", info_: "See map for more information", winMessage_: "See map for more information", loseMessage_: "See map for more information");

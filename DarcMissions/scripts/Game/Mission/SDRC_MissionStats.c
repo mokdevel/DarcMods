@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionStat : Managed
 {
-	string id;
-	int requestId;
+	string id;						//The mission id assigned by DarcMissions
+	int requestId;					//The request id defined by an external requestor
 	DC_EMissionState state;
 	DC_EMissionSuccess success;
 		
