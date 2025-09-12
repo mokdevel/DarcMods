@@ -72,20 +72,6 @@ class SDRC_StoriesFrame
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	protected void SetState(DC_EStoryState state)
-	{	
-		m_State = state;
-
-		SDRC_Log.Add("[SDRC_StoriesFrame:SetState] Chapter set to state: " + SCR_Enum.GetEnumName(DC_EStoryState, state), LogLevel.DEBUG);
-		
-		//If chapter is over, 		
-		if (m_State == DC_EStoryState.CHAPTER_OVER)
-		{
-			GetGame().GetCallqueue().CallLater(StartNewChapter, m_Config.chapterTimeBetween*1000, false);
-		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
 	/*!
 	Mission life cycle manager.
 	*/
@@ -185,7 +171,7 @@ class SDRC_StoriesFrame
 					SDRC_RplStoryComp storyComp = SDRC_RplStoryComp.GetInstance();
 					if (storyComp)
 					{
-						storyComp.UpdateChapter(m_Chapter.title, m_Chapter.text);
+						storyComp.UpdateBrief(m_Story.title);
 					}
 					
 					SetState(DC_EStoryState.CHAPTER_ACTIVE);
@@ -210,6 +196,7 @@ class SDRC_StoriesFrame
 					}
 					float timeLeftPercent = (timeLeft/m_Chapter.activeTime)*100;
 					storyComp.UpdateTime((int)timeLeftPercent);
+					storyComp.UpdateChapter(m_Chapter.title, m_Chapter.text, SCR_Enum.GetEnumName(DC_EMissionSuccess, m_Chapter.success));
 					
 					//End the missions					
 					if (timeLeft == 0)
@@ -264,7 +251,7 @@ class SDRC_StoriesFrame
 					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " : WIN", LogLevel.NORMAL);
 					if (storyComp)
 					{
-						storyComp.UpdateChapter(m_Chapter.title, m_Chapter.textWin);
+						storyComp.UpdateChapter(m_Chapter.title, m_Chapter.textWin, SCR_Enum.GetEnumName(DC_EMissionSuccess, m_Chapter.success));
 					}
 					SetState(DC_EStoryState.CHAPTER_OVER);	//NOTE: SetState(CHAPTER_OVER) will do a delayed StartNewChapter()
 				}
@@ -274,7 +261,7 @@ class SDRC_StoriesFrame
 					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " : FAILURE", LogLevel.NORMAL);
 					if (storyComp)
 					{
-						storyComp.UpdateChapter(m_Chapter.title, m_Chapter.textLose);
+						storyComp.UpdateChapter(m_Chapter.title, m_Chapter.textLose, SCR_Enum.GetEnumName(DC_EMissionSuccess, m_Chapter.success));
 					}
 					SetState(DC_EStoryState.CHAPTER_OVER);	//NOTE: SetState(CHAPTER_OVER) will do a delayed StartNewChapter()
 				}
@@ -364,5 +351,18 @@ class SDRC_StoriesFrame
 		m_RequestIdCounter++;
 		return m_RequestIdCounter;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	protected void SetState(DC_EStoryState state)
+	{	
+		m_State = state;
 
+		SDRC_Log.Add("[SDRC_StoriesFrame:SetState] Chapter set to state: " + SCR_Enum.GetEnumName(DC_EStoryState, state), LogLevel.DEBUG);
+		
+		//If chapter is over, 		
+		if (m_State == DC_EStoryState.CHAPTER_OVER)
+		{
+			GetGame().GetCallqueue().CallLater(StartNewChapter, m_Config.chapterTimeBetween*1000, false);
+		}
+	}
 }

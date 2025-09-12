@@ -108,8 +108,21 @@ class SDRC_GMHelper
 	/*!	
 	Delete a mission with specific mission ID (DCMxxxx).
 	*/	
-	static void EndMission(string id)
+	static void EndMission(string id, DC_EMissionSuccess success)
 	{
-		DeleteMission(id, DC_EMissionSuccess.LOSE);
+		FindGameModeAndComponent();
+		int idx = m_BaseGameMode.missionFrame.FindMissionWithId(id);
+		if (idx != -1)
+		{
+			if (success == DC_EMissionSuccess.LOSE)
+			{
+				m_BaseGameMode.missionFrame.m_MissionList[idx].DoLose();
+			}
+			if (success == DC_EMissionSuccess.WIN)
+			{
+				m_BaseGameMode.missionFrame.m_MissionList[idx].DoWin();
+			}
+			SDRC_Log.Add("[SDRC_GMHelper:DeleteMission] Ending mission: " + id + " - (" + SCR_Enum.GetEnumName(DC_EMissionSuccess, success) + ")" + m_BaseGameMode.missionFrame.m_MissionList[idx].GetTitle(), LogLevel.DEBUG);				
+		}
 	}		
 }

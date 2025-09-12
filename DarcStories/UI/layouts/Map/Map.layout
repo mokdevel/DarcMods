@@ -9,13 +9,12 @@ FrameWidgetClass {
     OffsetTop 400
     SizeX 600
     OffsetRight -1000
-    SizeY 600
-    OffsetBottom -1000
+    SizeY 800
+    OffsetBottom -1200
     Alignment 0.5 0.5
    }
    "Z Order" 100
    "Is Enabled" 0
-   "Is Visible" 0
    components {
     SCR_MapElementMoveComponent "{663544CDC4D69ECD}" {
      m_bCanDragOffScreen 1
@@ -29,67 +28,172 @@ FrameWidgetClass {
       OffsetTop 0
       SizeX 600
       OffsetRight -600
-      SizeY 600
-      OffsetBottom -600
+      SizeY 800
+      OffsetBottom -800
      }
      "Is Enabled" 0
-     "Is Visible" 0
      Opacity 0.65
      Texture "{8532574B81ED8703}UI/Textures/FieldManual/Common/Tiles/background_nU_ui.edds"
      Size 400 400
+    }
+    ImageWidgetClass "{6658F68F3BC0CFE2}" {
+     Name "StoryLines"
+     Slot FrameWidgetSlot "{6658F68F3BC0CFFE}" {
+      OffsetLeft 0
+      OffsetTop 0
+      SizeX 600
+      OffsetRight -600
+      SizeY 800
+      OffsetBottom -800
+     }
+     "Is Enabled" 0
+     Opacity 0.58
+     Texture "{82CC77E027C8D0FB}UI/Textures/paper.edds"
+     Size 1024 1448
     }
     ImageWidgetClass "{66353C834E387694}" {
      Name "StoryImage"
      Slot FrameWidgetSlot "{66353C834E3876B2}" {
       Anchor 0 0 0 0
-      PositionX 10
-      OffsetLeft 10
-      PositionY 10
-      OffsetTop 10
+      PositionX 30
+      OffsetLeft 30
+      PositionY 30
+      OffsetTop 30
       SizeX 64
-      OffsetRight -74
+      OffsetRight -94
       SizeY 64
-      OffsetBottom -74
+      OffsetBottom -94
      }
      "Is Enabled" 0
-     "Is Visible" 0
      Opacity 0.85
      Texture "{16296D7B325A094B}UI/Textures/Icons/gm_mission_X_round.edds"
      Size 71 69
     }
+    TextWidgetClass "{6658F68FA7F679B4}" {
+     Name "StoryBrief"
+     Slot FrameWidgetSlot "{6658F68FA7F67950}" {
+      PositionX 100
+      OffsetLeft 100
+      PositionY 30
+      OffsetTop 30
+      SizeX 400
+      OffsetRight -500
+      SizeY 60
+      OffsetBottom -90
+     }
+     Color 0 0 0 1
+     Text "BRIEFING"
+     "Font Size" 54
+     "Horizontal Alignment" Center
+    }
     TextWidgetClass "{663673326C25497A}" {
      Name "StoryTitle"
      Slot FrameWidgetSlot "{663673326C2548C0}" {
-      PositionX 80
-      OffsetLeft 80
-      PositionY 10
-      OffsetTop 10
-      SizeX 500
-      OffsetRight -580
+      PositionX 90
+      OffsetLeft 90
+      PositionY 95
+      OffsetTop 95
+      SizeX 150
+      OffsetRight -240
       SizeY 40
-      OffsetBottom -50
+      OffsetBottom -135
      }
      "Is Enabled" 0
-     "Is Visible" 0
      Color 0 0 0 1
-     Text "Story Title"
-     "Font Size" 32
+     Text "Operation"
+     "Font Size" 22
+     "Min Font Size" 22
+     "Horizontal Alignment" Right
+     "Vertical Alignment" Center
+    }
+    TextWidgetClass "{6658F68EAF74334D}" {
+     Name "StoryTitleText"
+     Slot FrameWidgetSlot "{663673326C2548C0}" {
+      PositionX 255
+      OffsetLeft 255
+      PositionY 95
+      OffsetTop 95
+      SizeX 295
+      OffsetRight -550
+      SizeY 40
+      OffsetBottom -135
+     }
+     "Is Enabled" 0
+     Color 0 0 0 1
+     Text "Operation"
+     "Font Size" 26
      "Min Font Size" 26
+     "Vertical Alignment" Center
+    }
+    TextWidgetClass "{6658F68D03543B1D}" {
+     Name "StoryChapterTitle"
+     Slot FrameWidgetSlot "{663673326C2548C0}" {
+      PositionX 95
+      OffsetLeft 95
+      PositionY 160
+      OffsetTop 160
+      SizeX 450
+      OffsetRight -545
+      SizeY 50
+      OffsetBottom -210
+     }
+     "Is Enabled" 0
+     Color 0 0 0 1
+     Text "Chapter Title"
+     "Font Size" 26
+     "Min Font Size" 26
+     "Vertical Alignment" Center
+    }
+    TextWidgetClass "{6658F68DCF725C19}" {
+     Name "StoryStatus"
+     Slot FrameWidgetSlot "{663673326C2548C0}" {
+      PositionX 255
+      OffsetLeft 255
+      PositionY 232
+      OffsetTop 232
+      SizeX 295
+      OffsetRight -550
+      OffsetBottom -262
+     }
+     "Is Enabled" 0
+     Color 0 0 0 1
+     Text "Unknown"
+     "Font Size" 22
+     "Min Font Size" 22
+     "Vertical Alignment" Center
+    }
+    TextWidgetClass "{6658F68D946D95A4}" {
+     Name "StoryStatusTitle"
+     Slot FrameWidgetSlot "{663673326C2548C0}" {
+      PositionX 90
+      OffsetLeft 90
+      PositionY 232
+      OffsetTop 232
+      SizeX 150
+      OffsetRight -240
+      OffsetBottom -262
+     }
+     "Is Enabled" 0
+     Color 0 0 0 1
+     Text "Status"
+     "Font Size" 22
+     "Min Font Size" 22
+     "Horizontal Alignment" Right
+     "Vertical Alignment" Center
     }
     TextWidgetClass "{6636846C05A95D80}" {
      Name "StoryText"
      Slot FrameWidgetSlot "{663673326C2548C0}" {
-      PositionX 80
-      OffsetLeft 80
-      PositionY 60
-      OffsetTop 60
-      SizeX 500
-      OffsetRight -580
-      SizeY 520
-      OffsetBottom -580
+      PositionX 95
+      OffsetLeft 95
+      PositionY 285
+      OffsetTop 285
+      SizeX 450
+      OffsetRight -545
+      SizeY 460
+      OffsetBottom -745
      }
      "Is Enabled" 0
-     "Is Visible" 0
      Color 0 0 0 1
      Text "Chapter Story"
      "Min Font Size" 20

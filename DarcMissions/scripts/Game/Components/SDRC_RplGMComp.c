@@ -125,7 +125,7 @@ class SDRC_RplGMComp : ScriptComponent
  	void DoEndMission(int playerID, string missionId)
 	{
 		SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Ending of " + missionId + " requested by " + playerID, LogLevel.DEBUG);	
-		SDRC_GMHelper.EndMission(missionId);
+		SDRC_GMHelper.EndMission(missionId, DC_EMissionSuccess.LOSE);
 //		SyncMapSymbols(playerID);
 	}
 		
