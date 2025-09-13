@@ -15,9 +15,11 @@ FrameWidgetClass {
    }
    "Z Order" 100
    "Is Enabled" 0
+   "Is Visible" 0
    components {
     SCR_MapElementMoveComponent "{663544CDC4D69ECD}" {
      m_bCanDragOffScreen 1
+     m_bCanActivate 1
     }
    }
    {
@@ -32,6 +34,7 @@ FrameWidgetClass {
       OffsetBottom -800
      }
      "Is Enabled" 0
+     "Is Visible" 0
      Opacity 0.65
      Texture "{8532574B81ED8703}UI/Textures/FieldManual/Common/Tiles/background_nU_ui.edds"
      Size 400 400
@@ -47,7 +50,8 @@ FrameWidgetClass {
       OffsetBottom -800
      }
      "Is Enabled" 0
-     Opacity 0.58
+     "Is Visible" 0
+     Opacity 0.7
      Texture "{82CC77E027C8D0FB}UI/Textures/paper.edds"
      Size 1024 1448
     }
@@ -55,19 +59,20 @@ FrameWidgetClass {
      Name "StoryImage"
      Slot FrameWidgetSlot "{66353C834E3876B2}" {
       Anchor 0 0 0 0
-      PositionX 30
-      OffsetLeft 30
-      PositionY 30
-      OffsetTop 30
+      PositionX 50
+      OffsetLeft 50
+      PositionY 50
+      OffsetTop 50
       SizeX 64
-      OffsetRight -94
+      OffsetRight -114
       SizeY 64
-      OffsetBottom -94
+      OffsetBottom -114
      }
      "Is Enabled" 0
-     Opacity 0.85
-     Texture "{16296D7B325A094B}UI/Textures/Icons/gm_mission_X_round.edds"
-     Size 71 69
+     "Is Visible" 0
+     Opacity 0.7
+     Texture "{70859242BC81F727}UI/Textures/IconsClock/clock01.edds"
+     Size 128 126
     }
     TextWidgetClass "{6658F68FA7F679B4}" {
      Name "StoryBrief"
@@ -81,6 +86,8 @@ FrameWidgetClass {
       SizeY 60
       OffsetBottom -90
      }
+     "Is Enabled" 0
+     "Is Visible" 0
      Color 0 0 0 1
      Text "BRIEFING"
      "Font Size" 54
@@ -99,6 +106,7 @@ FrameWidgetClass {
       OffsetBottom -135
      }
      "Is Enabled" 0
+     "Is Visible" 0
      Color 0 0 0 1
      Text "Operation"
      "Font Size" 22
@@ -119,10 +127,12 @@ FrameWidgetClass {
       OffsetBottom -135
      }
      "Is Enabled" 0
+     "Is Visible" 0
      Color 0 0 0 1
      Text "Operation"
      "Font Size" 26
      "Min Font Size" 26
+     "Horizontal Alignment" Center
      "Vertical Alignment" Center
     }
     TextWidgetClass "{6658F68D03543B1D}" {
@@ -138,10 +148,12 @@ FrameWidgetClass {
       OffsetBottom -210
      }
      "Is Enabled" 0
+     "Is Visible" 0
      Color 0 0 0 1
      Text "Chapter Title"
      "Font Size" 26
      "Min Font Size" 26
+     "Horizontal Alignment" Center
      "Vertical Alignment" Center
     }
     TextWidgetClass "{6658F68DCF725C19}" {
@@ -156,6 +168,7 @@ FrameWidgetClass {
       OffsetBottom -262
      }
      "Is Enabled" 0
+     "Is Visible" 0
      Color 0 0 0 1
      Text "Unknown"
      "Font Size" 22
@@ -174,6 +187,7 @@ FrameWidgetClass {
       OffsetBottom -262
      }
      "Is Enabled" 0
+     "Is Visible" 0
      Color 0 0 0 1
      Text "Status"
      "Font Size" 22
@@ -194,6 +208,7 @@ FrameWidgetClass {
       OffsetBottom -745
      }
      "Is Enabled" 0
+     "Is Visible" 0
      Color 0 0 0 1
      Text "Chapter Story"
      "Min Font Size" 20

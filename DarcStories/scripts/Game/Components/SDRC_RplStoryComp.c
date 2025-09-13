@@ -7,7 +7,7 @@ class SDRC_RplStoryComp : ScriptComponent
 	private static SDRC_RplStoryComp s_Instance;
 
 	[RplProp(onRplName: "OnUpdateTime")]
-	protected int m_iTimeLeft = 1000;
+	protected int m_iTimeLeft = 0;
 
 	[RplProp(onRplName: "OnUpdateBrief")]
 	protected string m_sStoryTitle = "";
