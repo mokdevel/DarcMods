@@ -37,7 +37,7 @@ class SDRC_MapStoryUI : SCR_MapUIBaseComponent
 	// Widgets - story specific
 	protected ImageWidget m_wImageStoryBackground;
 	protected ImageWidget m_wImageStoryLines;
-	protected ImageWidget m_wImageStoryImage;
+	protected ImageWidget m_wImageStoryClock;
 	protected TextWidget m_wStoryBrief;
 	protected TextWidget m_wStoryTitle;
 	protected TextWidget m_wStoryTitleText;
@@ -78,28 +78,9 @@ class SDRC_MapStoryUI : SCR_MapUIBaseComponent
 	//! \param[in] saveState determines whether this is visibility set during closing of the map, so the pos and rotation should be saved
 	protected void SetVisible(bool visible, bool saveState = false)
 	{
-//		saveState = true;
 		m_bIsVisible = visible;
 		m_wFrame.SetEnabled(visible);
 		m_wFrame.SetVisible(visible);
-		m_wImageStoryBackground.SetVisible(visible);
-		m_wImageStoryLines.SetVisible(visible);
-//		m_wImageStoryImage.SetEnabled(visible);
-		m_wImageStoryImage.SetVisible(visible);
-//		m_wStoryBrief.SetEnabled(visible);
-		m_wStoryBrief.SetVisible(visible);
-//		m_wStoryTitle.SetEnabled(visible);
-		m_wStoryTitle.SetVisible(visible);
-//		m_wStoryTitleText.SetEnabled(visible);
-		m_wStoryTitleText.SetVisible(visible);
-//		m_wStoryChapterTitle.SetEnabled(visible);
-		m_wStoryChapterTitle.SetVisible(visible);
-//		m_wStoryStatus.SetEnabled(visible);
-		m_wStoryStatus.SetVisible(visible);
-//		m_wStoryStatusTitle.SetEnabled(visible);
-		m_wStoryStatusTitle.SetVisible(visible);
-//		m_wStoryText.SetEnabled(visible);
-		m_wStoryText.SetVisible(visible);
 		
 		if (visible)
 		{
@@ -123,7 +104,6 @@ class SDRC_MapStoryUI : SCR_MapUIBaseComponent
 				return;
 
 			float zoomVal = m_MapEntity.GetCurrentZoom();
-//			m_fSizeCoef = 1000 / (m_fRulerLength / m_fBaseImageSize[0]); // (ruler real length%) / 1000 pix(meters)
 			m_fSizeCoef = 1000 / (1024 / m_fBaseImageSize[0]); // (image real length%) / 1000 pix(meters)
 			
 			float sizeVal = m_wWorkspace.DPIUnscale(zoomVal * m_fSizeCoef);
@@ -171,7 +151,7 @@ class SDRC_MapStoryUI : SCR_MapUIBaseComponent
 		// refresh story widgets
 		m_wImageStoryBackground = ImageWidget.Cast(m_RootWidget.FindAnyWidget("StoryBackground"));		
 		m_wImageStoryLines = ImageWidget.Cast(m_RootWidget.FindAnyWidget("StoryLines"));		
-		m_wImageStoryImage = ImageWidget.Cast(m_RootWidget.FindAnyWidget("StoryImage"));		
+		m_wImageStoryClock = ImageWidget.Cast(m_RootWidget.FindAnyWidget("StoryClock"));		
 		m_wStoryBrief = TextWidget.Cast(m_RootWidget.FindAnyWidget("StoryBrief"));
 		m_wStoryTitle = TextWidget.Cast(m_RootWidget.FindAnyWidget("StoryTitle"));
 		m_wStoryTitleText = TextWidget.Cast(m_RootWidget.FindAnyWidget("StoryTitleText"));
@@ -227,11 +207,11 @@ class SDRC_MapStoryUI : SCR_MapUIBaseComponent
 			//If it has not changed, do not reload		
 			if (imageName != imageNameOld)
 			{
-				bool imageLoaded = m_wImageStoryImage.LoadImageFromSet(0, CLOCK_ICONSET_NAME, imageName);
+				bool imageLoaded = m_wImageStoryClock.LoadImageFromSet(0, CLOCK_ICONSET_NAME, imageName);
 				if (imageLoaded)
 				{
 					imageNameOld = imageName;
-					m_wImageStoryImage.SetImage(0);
+					m_wImageStoryClock.SetImage(0);
 				}
 				
 				m_wStoryTitleText.SetText(storyComp.GetStoryTitle());
@@ -243,7 +223,8 @@ class SDRC_MapStoryUI : SCR_MapUIBaseComponent
 							
 		}
 		
-		if ( (m_bIsVisible && m_bIsDragged) || (m_bForceUpdate) )
+//		if ( (m_bIsVisible && m_bIsDragged) || (m_bForceUpdate) )
+		if (m_bIsVisible && m_bIsDragged)
 		{
 			m_bForceUpdate = false;
 			// save position for map reopen

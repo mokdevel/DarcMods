@@ -34,7 +34,6 @@ FrameWidgetClass {
       OffsetBottom -800
      }
      "Is Enabled" 0
-     "Is Visible" 0
      Opacity 0.65
      Texture "{8532574B81ED8703}UI/Textures/FieldManual/Common/Tiles/background_nU_ui.edds"
      Size 400 400
@@ -50,26 +49,24 @@ FrameWidgetClass {
       OffsetBottom -800
      }
      "Is Enabled" 0
-     "Is Visible" 0
      Opacity 0.7
      Texture "{82CC77E027C8D0FB}UI/Textures/paper.edds"
      Size 1024 1448
     }
     ImageWidgetClass "{66353C834E387694}" {
-     Name "StoryImage"
+     Name "StoryClock"
      Slot FrameWidgetSlot "{66353C834E3876B2}" {
       Anchor 0 0 0 0
-      PositionX 50
-      OffsetLeft 50
-      PositionY 50
-      OffsetTop 50
-      SizeX 64
-      OffsetRight -114
-      SizeY 64
-      OffsetBottom -114
+      PositionX 40
+      OffsetLeft 40
+      PositionY 30
+      OffsetTop 30
+      SizeX 96
+      OffsetRight -136
+      SizeY 96
+      OffsetBottom -126
      }
      "Is Enabled" 0
-     "Is Visible" 0
      Opacity 0.7
      Texture "{70859242BC81F727}UI/Textures/IconsClock/clock01.edds"
      Size 128 126
@@ -87,7 +84,7 @@ FrameWidgetClass {
       OffsetBottom -90
      }
      "Is Enabled" 0
-     "Is Visible" 0
+     Opacity 0.7
      Color 0 0 0 1
      Text "BRIEFING"
      "Font Size" 54
@@ -106,7 +103,6 @@ FrameWidgetClass {
       OffsetBottom -135
      }
      "Is Enabled" 0
-     "Is Visible" 0
      Color 0 0 0 1
      Text "Operation"
      "Font Size" 22
@@ -127,7 +123,6 @@ FrameWidgetClass {
       OffsetBottom -135
      }
      "Is Enabled" 0
-     "Is Visible" 0
      Color 0 0 0 1
      Text "Operation"
      "Font Size" 26
@@ -148,7 +143,6 @@ FrameWidgetClass {
       OffsetBottom -210
      }
      "Is Enabled" 0
-     "Is Visible" 0
      Color 0 0 0 1
      Text "Chapter Title"
      "Font Size" 26
@@ -168,7 +162,6 @@ FrameWidgetClass {
       OffsetBottom -262
      }
      "Is Enabled" 0
-     "Is Visible" 0
      Color 0 0 0 1
      Text "Unknown"
      "Font Size" 22
@@ -187,7 +180,6 @@ FrameWidgetClass {
       OffsetBottom -262
      }
      "Is Enabled" 0
-     "Is Visible" 0
      Color 0 0 0 1
      Text "Status"
      "Font Size" 22
@@ -208,10 +200,10 @@ FrameWidgetClass {
       OffsetBottom -745
      }
      "Is Enabled" 0
-     "Is Visible" 0
      Color 0 0 0 1
      Text "Chapter Story"
      "Min Font Size" 20
+     "Vertical Alignment" Center
      Wrap 1
     }
    }
