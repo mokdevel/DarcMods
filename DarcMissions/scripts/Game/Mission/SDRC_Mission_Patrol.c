@@ -73,7 +73,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		SetHint(m_Config.showHint, m_DC_Patrol.general.title, m_DC_Patrol.general.info);
 		SetMessages(m_Config.showMessage, m_DC_Patrol.general.winMessage, m_DC_Patrol.general.loseMessage);		
 		SetWinCondition(m_DC_Patrol.general.winCondition);		*/
-		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
+		SetActiveDistance(m_Config.distanceToPlayer);		//Change the m_iActiveDistance to a mission specific one.
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -152,7 +152,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 class SDRC_PatrolConfig : SDRC_MissionConfig
 {
 	//Mission specific	
-	int patrolingTime;								//(seconds) Time to patrol. Once this time has passed and not players nearby, despawn mission.
+	int patrolingTime;								//(seconds) Time to patrol. Once this time has passed and no players nearby, despawn mission.
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
 	ref array<ref SDRC_Patrol> patrols = {};		//List of patrols
 }

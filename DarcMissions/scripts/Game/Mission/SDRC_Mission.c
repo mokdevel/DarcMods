@@ -143,7 +143,7 @@ class SDRC_Mission
 	//Internals without getters
 	private int m_StartTime;					//Seconds when mission started
 	private int m_EndTime;						//Seconds when mission shall end.
-	private int m_ActiveTime;					//Seconds of how long the mission should be active
+	private int m_iActiveTime;					//Seconds of how long the mission should be active
 	private int m_iActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
 	private int m_iActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
 	private bool m_bMissionIsEnding;			//Once all AIs are dead, we're getting close to end the mission.
@@ -543,22 +543,22 @@ class SDRC_Mission
 		{
 			case DC_EMissionWinCondition.FIND_IN_15:
 			{
-				SetActiveTime(15*60);
+				InitActiveTime(15*60);
 				break;
 			}
 			case DC_EMissionWinCondition.FIND_IN_30:
 			{
-				SetActiveTime(30*60);
+				InitActiveTime(30*60);
 				break;
 			}
 			case DC_EMissionWinCondition.FIND_IN_45:
 			{
-				SetActiveTime(45*60);
+				InitActiveTime(45*60);
 				break;
 			}
 			case DC_EMissionWinCondition.FIND_IN_60:
 			{
-				SetActiveTime(60*60);
+				InitActiveTime(60*60);
 				break;
 			}
 		}				
@@ -725,19 +725,16 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if mission is to be active.
-	\param checkOnlyWinCondition If set to true, ignore any timing related checks. Currently only Hunter mission needs this.
 	*/
-	bool IsActive(bool checkOnlyWinCondition = false)
+	bool IsActive()
 	{
 		bool isWin = false;
-		bool isLose = false;
 		int currentTime = (System.GetTickCount() / 1000);
 		
 		//Are there players still nearby, reset the timer
 		if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_General.pos[0], 0, m_iActiveDistance))
 		{
 			ResetActiveTime();
-//			return true;
 		}
 		
 		//Check the different winning conditions
@@ -802,43 +799,12 @@ class SDRC_Mission
 				DoWin();
 			}
 		}
-
-/*		//The mission was lost
-		if (isLose)
-		{
-			//Set ActiveTimeToEnd to be the final active time
-			SetActiveTime(m_iActiveTimeToEnd);
-			ResetActiveTime();
-		}*/
 		
 		if (currentTime < m_EndTime)
 		{
 			return true;
 		}
-/*		
-		//If we did not win and only check for winCondition, we are still active. 
-		if (checkOnlyWinCondition && !isWin)
-		{
-			ResetActiveTime();
-			return true;
-		}
-		
-		if (!checkOnlyWinCondition)
-		{
-			//Are there players still nearby
-			if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_General.pos[0], 0, m_iActiveDistance))
-			{
-				ResetActiveTime();
-				return true;
-			}
-			
-			//Has the active time passed
-			if (currentTime < m_EndTime)
-			{
-				return true;
-			}
-		}
-*/				
+
 		//Well, if got here, we should not be active anymore
 		
 		//If we won, don't show a lose message
@@ -922,20 +888,28 @@ class SDRC_Mission
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	// InitActiveTime set the initial time and should only be used at mission init
+	//
 	//NOTE: Call ResetActiveTime(); after you've set this
-	void SetActiveTime(int seconds)	
+	void InitActiveTime(int seconds)	
 	{
-		if (m_ActiveTime > 0)
+		if (m_iActiveTime > 0)
 		{
 			//It has been set by the mission already
 		}
 		else		
 		{
 			//Use provided distance
-			m_ActiveTime = seconds;
+			m_iActiveTime = seconds;
 		}
 	}		
 
+	//NOTE: Call ResetActiveTime(); after you've set this
+	void SetActiveTime(int seconds)	
+	{
+		m_iActiveTime = seconds;
+	}
+	
 	int GetActiveTime()
 	{
 		int currentTime = (System.GetTickCount() / 1000);
@@ -946,7 +920,7 @@ class SDRC_Mission
 	void ResetActiveTime()	
 	{
 		int currentTime = (System.GetTickCount() / 1000);		
-		m_EndTime = currentTime + m_ActiveTime;
+		m_EndTime = currentTime + m_iActiveTime;
 	}
 		
 	//------------------------------------------------------------------------------------------------

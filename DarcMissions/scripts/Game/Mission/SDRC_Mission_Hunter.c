@@ -92,6 +92,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		SetHint(m_Config.showHint, m_DC_Hunter.general.title, m_DC_Hunter.general.info);		
 		SetMessages(m_Config.showMessage, m_DC_Hunter.general.winMessage, m_DC_Hunter.general.loseMessage);		
 		SetWinCondition(m_DC_Hunter.general.winCondition);*/
+		SetActiveDistance(m_Config.maxDistanceToPlayer);		//Change the m_iActiveDistance to a mission specific one.		
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -119,7 +120,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 			}
 			else
 			{
-				if (!IsActive(true))
+				if (!IsActive())
 				{
 					SetState(DC_EMissionState.END);
 				}
@@ -257,10 +258,10 @@ class SDRC_Mission_Hunter : SDRC_Mission
 //------------------------------------------------------------------------------------------------
 class SDRC_HunterConfig : SDRC_MissionConfig
 {
-	int minDistanceToPlayer;				//Hunter group minimum distance to player for spawn
-	int maxDistanceToPlayer;				//...max distance to despawn
-	int rndDistanceToPlayer;				//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
-	ref array<ref SDRC_Hunter> hunters = {};		//List of hunters
+	int minDistanceToPlayer;					//Hunter group minimum distance to player for spawn
+	int maxDistanceToPlayer;					//...max distance to despawn
+	int rndDistanceToPlayer;					//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
+	ref array<ref SDRC_Hunter> hunters = {};	//List of hunters
 }
 
 class SDRC_Hunter : Managed
