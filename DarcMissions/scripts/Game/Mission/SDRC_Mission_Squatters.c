@@ -17,11 +17,8 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	private int m_iSpawnIndex = 0;				//Counter for the AI to spawn
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Squatter(SDRC_MissionRequested request)
+	void SDRC_Mission_Squatter(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
-		//Set some defaults
-		SetType(DC_EMissionType.SQUATTERS);
-		
 		//Load config
 		m_SquatterJsonApi.Load();
 		m_Config = m_SquatterJsonApi.conf;

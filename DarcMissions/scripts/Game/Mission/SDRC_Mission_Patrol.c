@@ -15,11 +15,8 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	private vector m_vPosDestination = "0 0 0";
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Patrol(SDRC_MissionRequested request)
+	void SDRC_Mission_Patrol(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
-		//Set some defaults
-		SetType(DC_EMissionType.PATROL);
-		
 		//Load config
 		m_PatrolJsonApi.Load();
 		m_Config = m_PatrolJsonApi.conf;

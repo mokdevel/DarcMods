@@ -16,11 +16,8 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Occupation(SDRC_MissionRequested request)
+	void SDRC_Mission_Occupation(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
-		//Set some defaults
-		SetType(DC_EMissionType.OCCUPATION);
-		
 		//Load config
 		m_OccupationJsonApi.Load();
 		m_Config = m_OccupationJsonApi.conf;

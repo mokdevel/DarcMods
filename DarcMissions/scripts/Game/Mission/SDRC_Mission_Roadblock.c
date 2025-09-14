@@ -19,11 +19,8 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Roadblock(SDRC_MissionRequested request)
+	void SDRC_Mission_Roadblock(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
-		//Set some defaults
-		SetType(DC_EMissionType.ROADBLOCK);
-		
 		//Load config
 		m_RoadblockJsonApi.Load();
 		m_Config = m_RoadblockJsonApi.conf;

@@ -12,11 +12,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private int idx = 0;	
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Chopper(SDRC_MissionRequested request)
+	void SDRC_Mission_Chopper(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
-		//Set some defaults
-		SetType(DC_EMissionType.CHOPPER);
-
 		//Load config
 		m_ChopperJsonApi.Load();
 		m_Config = m_ChopperJsonApi.conf;

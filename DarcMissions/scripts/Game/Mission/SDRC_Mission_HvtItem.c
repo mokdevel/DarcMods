@@ -21,11 +21,8 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	private IEntity m_Target = null;
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_HvtItem(SDRC_MissionRequested request)
+	void SDRC_Mission_HvtItem(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
-		//Set some defaults
-		SetType(DC_EMissionType.HVTITEM);
-		
 		//Load config
 		m_HvtItemJsonApi.Load();
 		m_Config = m_HvtItemJsonApi.conf;

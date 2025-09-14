@@ -31,11 +31,8 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	private vector m_vVehiclePosOld;
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Crashsite(SDRC_MissionRequested request)
+	void SDRC_Mission_Crashsite(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
-		//Set some defaults
-		SetType(DC_EMissionType.CRASHSITE);
-
 		//Load config
 		m_CrashsiteJsonApi.Load();
 		m_Config = m_CrashsiteJsonApi.conf;

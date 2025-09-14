@@ -15,10 +15,10 @@ class SDRC_Mission_Template : SDRC_Mission
 	private ref SDRC_TemplateConfig m_Config = new SDRC_TemplateConfig();
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Template(SDRC_MissionRequested request)
+	void SDRC_Mission_Template(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Set some defaults
-		SetType(DC_EMissionType.NONE);	//REMEMBER: Define your own ENUM in SDRC_Mission.c and change here. *DO NOT* use modded enum as the index numbers are to kept.
+		//For new mission rtpw, define your own ENUM in SDRC_Mission.c and change here. *DO NOT* use modded enum as the index numbers are to kept.
 		vector pos = GetPos();
 				
 		//Load config

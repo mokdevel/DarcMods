@@ -28,11 +28,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	private IEntity m_Vehicle = null;
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Convoy(SDRC_MissionRequested request)
+	void SDRC_Mission_Convoy(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
-		//Set some defaults
-		SetType(DC_EMissionType.CONVOY);		
-		
 		//Load config
 		m_ConvoyJsonApi.Load();
 		m_Config = m_ConvoyJsonApi.conf;

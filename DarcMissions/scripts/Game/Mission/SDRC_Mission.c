@@ -22,6 +22,11 @@ enum DC_EMissionWinCondition
 	
 	HVT_KILL_VIP = 10,
 	HVT_DESTROY_ITEM = 20,
+	
+	FIND_IN_15 = 30,
+	FIND_IN_30,
+	FIND_IN_45,
+	FIND_IN_60,
 };
 
 enum DC_EMissionSuccess
@@ -149,12 +154,12 @@ class SDRC_Mission
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission(SDRC_MissionRequested request)
+	void SDRC_Mission(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		m_sId = DC_ID_PREFIX + SCR_StringHelper.PadLeft(string.ToString(m_MissionIDCounter), 4, "0");
 		m_MissionIDCounter++;
 		m_State = DC_EMissionState.INIT;
-		m_Type = DC_EMissionType.NONE;
+		m_Type = missionType;	//DC_EMissionType.NONE;
 		m_bStatic = false;
 		m_bShowHint = true;
 		m_bShowMessage = true;
@@ -180,12 +185,12 @@ class SDRC_Mission
 		
 		//Internals
 		m_Success = DC_EMissionSuccess.UNKNOWN;
-		m_StartTime = (System.GetTickCount() / 1000); 			//The time in seconds when the mission was started.
-		SetActiveTime(SDRC_MISSION_CYCLE_TIME_DEFAULT*20);		//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
-		m_iActiveDistance = 0;									//Set a default zero
+		m_StartTime = (System.GetTickCount() / 1000); 	//The time in seconds when the mission was started.
+		SetActiveTime(0);								//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
+		m_iActiveDistance = 0;							//Set a default zero
 		m_bMissionIsEnding = false;
 		//Win condition related	
-		m_iAICountOriginal = -1;								//Defaults set, updated once mission goes ACTIVE
+		m_iAICountOriginal = -1;						//Defaults set, updated once mission goes ACTIVE
 		m_iAIKillPercentageRandom = 99;
 		
 		SDRC_MissionStats.Add(m_sId, m_iRequestId, m_State, m_Success);
@@ -435,10 +440,10 @@ class SDRC_Mission
 		return m_Type;
 	}
 
-	void SetType(DC_EMissionType type)
+/*	void SetType(DC_EMissionType type)	//TBD: This setter not needed in theory
 	{
 		m_Type = type;
-	}
+	}*/
 
 	//------------------------------------------------------------------------------------------------
 	DC_EMissionState GetSubIdx()
@@ -533,6 +538,30 @@ class SDRC_Mission
 	void SetWinCondition(DC_EMissionWinCondition winCondition)
 	{
 		m_General.winCondition = winCondition;
+
+		switch (m_General.winCondition)
+		{
+			case DC_EMissionWinCondition.FIND_IN_15:
+			{
+				SetActiveTime(15*60);
+				break;
+			}
+			case DC_EMissionWinCondition.FIND_IN_30:
+			{
+				SetActiveTime(30*60);
+				break;
+			}
+			case DC_EMissionWinCondition.FIND_IN_45:
+			{
+				SetActiveTime(45*60);
+				break;
+			}
+			case DC_EMissionWinCondition.FIND_IN_60:
+			{
+				SetActiveTime(60*60);
+				break;
+			}
+		}				
 	}
 	
 	DC_EMissionWinCondition GetWinCondition()
@@ -701,6 +730,15 @@ class SDRC_Mission
 	bool IsActive(bool checkOnlyWinCondition = false)
 	{
 		bool isWin = false;
+		bool isLose = false;
+		int currentTime = (System.GetTickCount() / 1000);
+		
+		//Are there players still nearby, reset the timer
+		if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_General.pos[0], 0, m_iActiveDistance))
+		{
+			ResetActiveTime();
+//			return true;
+		}
 		
 		//Check the different winning conditions
 		if ( (m_State == DC_EMissionState.ACTIVE) && (!m_bMissionIsEnding) && (m_iAICountOriginal >= 0) )
@@ -742,6 +780,19 @@ class SDRC_Mission
 						isWin = true;					
 					break;
 				}
+				//case DC_EMissionWinCondition.HVT_KILL_VIP:			NOTE: Handles internally in HvtVip mission
+				//case DC_EMissionWinCondition.HVT_DESTROY_ITEM:		NOTE: Handles internally in HvtItem mission
+				case DC_EMissionWinCondition.FIND_IN_15:
+				case DC_EMissionWinCondition.FIND_IN_30:
+				case DC_EMissionWinCondition.FIND_IN_45:
+				case DC_EMissionWinCondition.FIND_IN_60:
+				{
+					if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_General.pos[0], 0, m_iActiveDistance))
+					{
+						isWin = true;
+						break;
+					}					
+				}
 			}
 			
 			//If we did win the mission, set the message and prepare for ending.
@@ -752,6 +803,19 @@ class SDRC_Mission
 			}
 		}
 
+/*		//The mission was lost
+		if (isLose)
+		{
+			//Set ActiveTimeToEnd to be the final active time
+			SetActiveTime(m_iActiveTimeToEnd);
+			ResetActiveTime();
+		}*/
+		
+		if (currentTime < m_EndTime)
+		{
+			return true;
+		}
+/*		
 		//If we did not win and only check for winCondition, we are still active. 
 		if (checkOnlyWinCondition && !isWin)
 		{
@@ -769,14 +833,13 @@ class SDRC_Mission
 			}
 			
 			//Has the active time passed
-			int currentTime = (System.GetTickCount() / 1000);
 			if (currentTime < m_EndTime)
 			{
 				return true;
 			}
 		}
-				
-		//Well, if get here, we should not be active anymore
+*/				
+		//Well, if got here, we should not be active anymore
 		
 		//If we won, don't show a lose message
 		if (GetSuccess() != DC_EMissionSuccess.WIN)
@@ -862,7 +925,15 @@ class SDRC_Mission
 	//NOTE: Call ResetActiveTime(); after you've set this
 	void SetActiveTime(int seconds)	
 	{
-		m_ActiveTime = seconds;
+		if (m_ActiveTime > 0)
+		{
+			//It has been set by the mission already
+		}
+		else		
+		{
+			//Use provided distance
+			m_ActiveTime = seconds;
+		}
 	}		
 
 	int GetActiveTime()

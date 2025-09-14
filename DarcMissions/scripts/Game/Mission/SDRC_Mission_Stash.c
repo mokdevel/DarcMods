@@ -18,11 +18,8 @@ class SDRC_Mission_Stash : SDRC_Mission
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Stash(SDRC_MissionRequested request)
+	void SDRC_Mission_Stash(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
-		//Set some defaults
-		SetType(DC_EMissionType.STASH);
-		
 		//Load config
 		m_StashJsonApi.Load();
 		m_Config = m_StashJsonApi.conf;
@@ -182,9 +179,9 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 			"any",
 			"A stash near %l",
 			"Loot is yours to take",
-			DC_EMissionWinCondition.AI_KILL_ALL,
-			"Loot was collected.",
-			"Loot was lost.",
+			DC_EMissionWinCondition.FIND_IN_15,
+			"Loot found.",
+			"Loot lost.",
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_STASH_MAP,
 			0

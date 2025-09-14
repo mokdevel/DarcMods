@@ -21,11 +21,8 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	private SCR_AIGroup m_Target = null;
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_HvtVip(SDRC_MissionRequested request)
+	void SDRC_Mission_HvtVip(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
-		//Set some defaults
-		SetType(DC_EMissionType.HVTVIP);
-		
 		//Load config
 		m_HvtVipJsonApi.Load();
 		m_Config = m_HvtVipJsonApi.conf;

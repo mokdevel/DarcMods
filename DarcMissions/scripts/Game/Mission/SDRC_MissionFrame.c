@@ -394,52 +394,57 @@ class SDRC_MissionFrame
 			}
 			case DC_EMissionType.HUNTER:
 			{
-				tmpDC_Mission = new SDRC_Mission_Hunter(missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Hunter(missionType, missionRequest);
 				break;
 			}
 			case DC_EMissionType.OCCUPATION:
 			{
-				tmpDC_Mission = new SDRC_Mission_Occupation(missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Occupation(missionType, missionRequest);
 				break;
 			}
 			case DC_EMissionType.CONVOY:
 			{
-				tmpDC_Mission = new SDRC_Mission_Convoy(missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Convoy(missionType, missionRequest);
 				break;
 			}
 			case DC_EMissionType.CRASHSITE:
 			{
-				tmpDC_Mission = new SDRC_Mission_Crashsite(missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Crashsite(missionType, missionRequest);
 				break;
 			}
 			case DC_EMissionType.PATROL:
 			{
-				tmpDC_Mission = new SDRC_Mission_Patrol(missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Patrol(missionType, missionRequest);
 				break;
 			}
 			case DC_EMissionType.SQUATTERS:
 			{
-				tmpDC_Mission = new SDRC_Mission_Squatter(missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Squatter(missionType, missionRequest);
 				break;
 			}
 			case DC_EMissionType.ROADBLOCK:
 			{
-				tmpDC_Mission = new SDRC_Mission_Roadblock(missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Roadblock(missionType, missionRequest);
 				break;
 			}			
 			case DC_EMissionType.HVTVIP:
 			{
-				tmpDC_Mission = new SDRC_Mission_HvtVip(missionRequest);
+				tmpDC_Mission = new SDRC_Mission_HvtVip(missionType, missionRequest);
 				break;
 			}			
 			case DC_EMissionType.HVTITEM:
 			{
-				tmpDC_Mission = new SDRC_Mission_HvtItem(missionRequest);
+				tmpDC_Mission = new SDRC_Mission_HvtItem(missionType, missionRequest);
+				break;
+			}			
+			case DC_EMissionType.STASH:
+			{
+				tmpDC_Mission = new SDRC_Mission_Stash(missionType, missionRequest);
 				break;
 			}			
 /*			case DC_EMissionType.CHOPPER:
 			{
-				tmpDC_Mission = new SDRC_Mission_Chopper(missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Chopper(missionType, missionRequest);
 				break;
 			}*/
 			default:
