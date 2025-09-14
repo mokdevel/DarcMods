@@ -18,6 +18,7 @@ enum DC_EMissionIcon
 	GM_MISSION_ROADBLOCK_MAP,
 	GM_MISSION_HVTVIP_MAP,
 	GM_MISSION_HVTITEM_MAP,
+	GM_MISSION_STASH_MAP,
 	
 	//Markers to show on top of win/lose mission
 	GM_MISSION_WIN_MAP,
