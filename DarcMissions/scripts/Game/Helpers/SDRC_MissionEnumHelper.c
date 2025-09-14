@@ -18,6 +18,7 @@ enum DC_EMissionType
 	ROADBLOCK,
 	HVTVIP,
 	HVTITEM,
+	STASH,
 	CHOPPER,	//Mission not ready or working
 	
 	REQUESTED = 100
@@ -83,6 +84,10 @@ sealed class SDRC_MissionEnumHelper
 		SDRC_HvtItemJsonApi hvtItemJsonApi = new SDRC_HvtItemJsonApi();	
 		hvtItemJsonApi.Load();
 		delete hvtItemJsonApi;				
+		
+		SDRC_StashJsonApi stashJsonApi = new SDRC_StashJsonApi();	
+		stashJsonApi.Load();
+		delete stashJsonApi;						
 	}		
 	
 	//------------------------------------------------------------------------------------------------
@@ -145,7 +150,12 @@ sealed class SDRC_MissionEnumHelper
 				resourceName = "{B9D6798E6A963E0C}Prefabs/Systems/DarcMissionHvtItem.et"; 
 				break;
 			}			
-/*			case DC_EMissionType.CHOPPER:
+			case DC_EMissionType.STASH:
+			{
+				resourceName = "{631842AD30537026}Prefabs/Systems/DarcMissionStash.et"; 
+				break;
+			}	
+			/*			case DC_EMissionType.CHOPPER:
 			{
 				resourceName = "";
 				break;
@@ -233,6 +243,13 @@ sealed class SDRC_MissionEnumHelper
 				texture = "{14450944913A8F8D}UI/Textures/Icons/gm_mission_HvtItem_map.edds";
 				break;
 			}
+			case DC_EMissionIcon.GM_MISSION_STASH_MAP:		
+			{
+				texture = "{FD181DB538595893}UI/Textures/Icons/gm_mission_Stash_map.edds";
+				break;
+			}
+			
+			//Win / Lose markers
 			case DC_EMissionIcon.GM_MISSION_WIN_MAP:		
 			{
 				texture = "{8C37D9AEF869E351}UI/Textures/Icons/gm_mission_Win_map.edds";

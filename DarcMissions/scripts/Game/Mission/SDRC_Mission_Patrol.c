@@ -28,7 +28,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
 		if (GetSubIdx() == -1)
 		{
-			SetState(DC_EMissionState.FAILED);
+			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}	
 		m_DC_Patrol = m_Config.patrols[GetSubIdx()];
@@ -51,8 +51,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		//If failed, stop
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
-			SDRC_Log.Add("[SDRC_Mission_Patrol] Could not find suitable location.", LogLevel.ERROR);
-			SetState(DC_EMissionState.FAILED);
+			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
 		
@@ -65,8 +64,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 
 		if (pos == "0 0 0" || m_vPosDestination == "0 0 0")	//No suitable location found.
 		{				
-			SDRC_Log.Add("[SDRC_Mission_Patrol] Could not find suitable route: " + pos + " to " + m_vPosDestination, LogLevel.ERROR);
-			SetState(DC_EMissionState.FAILED);
+			SetState(DC_EMissionState.FAILED, DC_EMissionError.ROUTE_NOT_FOUND , "From " + pos + " to " + m_vPosDestination);
 			return;
 		}	
 		

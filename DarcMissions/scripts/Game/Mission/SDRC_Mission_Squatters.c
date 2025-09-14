@@ -30,7 +30,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
 		if (GetSubIdx() == -1)
 		{
-			SetState(DC_EMissionState.FAILED);
+			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
 		m_DC_Squatter = m_Config.squatters[GetSubIdx()];
@@ -76,8 +76,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		}
 		else //No suitable location found.
 		{
-			SDRC_Log.Add("[SDRC_Mission_Squatter] Could not find suitable location.", LogLevel.ERROR);
-			SetState(DC_EMissionState.FAILED);
+			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}			
 		

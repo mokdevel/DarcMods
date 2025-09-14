@@ -32,6 +32,17 @@ enum DC_EMissionSuccess
 	DELETED		//Mission was deleted prematurely. For example by GM.
 }
 
+enum DC_EMissionError
+{
+	NONE,
+	LOCATION_NOT_FOUND,
+	WRONG_SUBIDX,
+	ROAD_FOR_START_NOT_FOUND,
+	COULD_NOT_SPAWN_VEHICLE,
+	ROUTE_NOT_FOUND,
+}
+
+
 const string SDRC_DEFAULT = "default";
 
 //------------------------------------------------------------------------------------------------
@@ -388,7 +399,7 @@ class SDRC_Mission
 		return m_State;
 	}
 
-	void SetState(DC_EMissionState state)
+	void SetState(DC_EMissionState state, DC_EMissionError errorReason = DC_EMissionError.NONE, string errorInfo = "")
 	{
 		m_State = state;
 		
@@ -405,6 +416,14 @@ class SDRC_Mission
 			//Things to set when mission goes to active state
 			GetGame().GetCallqueue().CallLater(GetAICountDelayed, 10000);		//Do the counting after a while. AIs needs to be spawned.
 			m_iAIKillPercentageRandom = Math.RandomInt(30, 99);
+		}
+		
+		if (state == DC_EMissionState.FAILED)
+		{
+			if (errorReason != DC_EMissionError.NONE)
+			{
+				SDRC_Log.Add("[SDRC_Mission:SetState] ERROR: " + GetId() + " : " + SCR_Enum.GetEnumName(DC_EMissionError, errorReason) + " " + errorInfo, LogLevel.ERROR);						
+			}
 		}
 		
 		SDRC_MissionStats.UpdateState(GetId(), state);

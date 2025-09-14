@@ -44,7 +44,8 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
 		if (GetSubIdx() == -1)
 		{
-			SetState(DC_EMissionState.FAILED);
+			
+			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
 		m_DC_Crashsite = m_Config.crashsites[GetSubIdx()];
@@ -83,8 +84,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		//No suitable location found.
 		if (!positionFound)	
 		{				
-			SDRC_Log.Add("[SDRC_Mission_Crashsite] Could not find suitable location.", LogLevel.ERROR);
-			SetState(DC_EMissionState.FAILED);
+			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
 		

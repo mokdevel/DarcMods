@@ -41,7 +41,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
 		if (GetSubIdx() == -1)
 		{
-			SetState(DC_EMissionState.FAILED);
+			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
 		m_DC_Convoy = m_Config.convoys[GetSubIdx()];
@@ -66,8 +66,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		//If failed, stop
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
-			SDRC_Log.Add("[SDRC_Mission_Convoy] Could not find suitable location.", LogLevel.ERROR);
-			SetState(DC_EMissionState.FAILED);
+			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
 		
@@ -78,8 +77,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		//If failed, stop
 		if (pos == "0 0 0")
 		{
-			SDRC_Log.Add("[SDRC_Mission_Convoy] No start road found.", LogLevel.ERROR);
-			SetState(DC_EMissionState.FAILED);
+			SetState(DC_EMissionState.FAILED, DC_EMissionError.ROAD_FOR_START_NOT_FOUND);
 			return;
 		}
 	
@@ -104,8 +102,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 
 		if (pos == "0 0 0" || m_vPosDestination == "0 0 0")	//No suitable location found.
 		{				
-			SDRC_Log.Add("[SDRC_Mission_Convoy] Could not find suitable location.", LogLevel.ERROR);
-			SetState(DC_EMissionState.FAILED);
+			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
 		
@@ -186,8 +183,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		if (!m_Vehicle)
 		{
 			//Could not spawn vehicle
-			SDRC_Log.Add("[SDRC_Mission_Convoy] Could not spawn vehicle: " + resourceName, LogLevel.ERROR);
-			SetState(DC_EMissionState.FAILED);
+			SetState(DC_EMissionState.FAILED, DC_EMissionError.COULD_NOT_SPAWN_VEHICLE, resourceName);
 			return;			
 		}
 		
