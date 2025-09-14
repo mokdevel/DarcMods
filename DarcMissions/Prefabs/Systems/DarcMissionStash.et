@@ -4,8 +4,8 @@ SDRC_DarcMissionGM : "{C599195C442D7125}Prefabs/Compositions/Misc/CustomEntities
   SDRC_DarcMissionEditableRequestComp "{665C8448D8676BF1}" {
    m_EntityType SYSTEM
    m_UIInfo SCR_EditableEntityUIInfoColored "{665C8448D8676BA5}" {
-    Name "DarcMissions Patrol"
-    Description "Spawns a random Patrol mission"
+    Name "DarcMissions Stash"
+    Description "Spawns a random Stash mission"
     Icon "{6A0D51C4EF2184C9}UI/Textures/Icons/gm_mission_Stash_round.edds"
     m_Image "{9BA9327FDB1D9380}UI/Textures/Icons/gm_mission_Stash.edds"
     m_aAuthoredLabels {

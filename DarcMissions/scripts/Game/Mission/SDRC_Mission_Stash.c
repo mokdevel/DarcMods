@@ -61,7 +61,8 @@ class SDRC_Mission_Stash : SDRC_Mission
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Stash.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
-		UpdateGeneral(m_DC_Stash.general);		
+		UpdateGeneral(m_DC_Stash.general);
+		SetActiveDistance(m_Config.activeDistance);		//Change the m_iActiveDistance to a mission specific one.		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -126,6 +127,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 {
 	//Mission specific	
 	bool disableArsenal;						//Disable arsenal for vehicles so that no other items are found
+	int activeDistance;							//Distance of winning and keeping the mission active
 	ref array<ref SDRC_Camp> Stashs = {};		//List of Stashs
 }
 
@@ -163,6 +165,7 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 	{
 		//Default		
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
+		conf.activeDistance = 50;
 		conf.missionList = {0};
 		//Mission specific		
 		//----------------------------------------------------
