@@ -43,7 +43,7 @@ class SDRC_Story : Managed
 	int id;
 	int chapterId = 0;						//The id of the chapter
 	string comment;
-	string title = "";	
+	string title = "";
 	ref array<string> dependencies = {};	//List of mods needed for the story
 	//Set outside of Set()
 	//DC_EStoryState state = DC_EStoryState.NONE;

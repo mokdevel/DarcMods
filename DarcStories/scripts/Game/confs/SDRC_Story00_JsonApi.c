@@ -32,6 +32,7 @@ class SDRC_Story00_JsonApi : SDRC_StoryJsonApi
 		conf.chapters.Insert(Chapter01());
 		conf.chapters.Insert(Chapter02());
 		conf.chapters.Insert(Chapter03());
+		conf.chapters.Insert(ChapterWin());
 	};
 
 	SDRC_Chapter Chapter01()
@@ -75,7 +76,7 @@ class SDRC_Story00_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			3, {DC_ENextChapter.WIN, DC_ENextChapter.LOSE},
+			3, {4, DC_ENextChapter.LOSE},
 			DC_EMissionType.HVTVIP, 3, 
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			"Chapter 3: The Hit"
@@ -88,5 +89,22 @@ class SDRC_Story00_JsonApi : SDRC_StoryJsonApi
 		
 		return chapter;
 	};	
+
+	SDRC_Chapter ChapterWin()
+	{
+		ref SDRC_Chapter chapter = new SDRC_Chapter();
+		chapter.Set(
+			4, {DC_ENextChapter.WIN, DC_ENextChapter.WIN},
+			DC_EMissionType.STASH, 0, 
+			SDRC_CHAPTER_TIME_DEFAULT,			
+			"Epilogue: Loot"
+			,"Yeah, there is loot."
+			,"Loot was collected."
+			,"Loot was not collected"
+		);
 	
+		chapter.general.SetDefaults(comment_: "Epilogue", title_: "Epilogue: Loot", info_: "See map for more information", winMessage_: "See map for more information", loseMessage_: "See map for more information");
+		
+		return chapter;
+	};			
 }
