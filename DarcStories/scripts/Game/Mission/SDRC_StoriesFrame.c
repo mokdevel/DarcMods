@@ -43,7 +43,7 @@ class SDRC_StoriesFrame
 		m_DC_StoriesFrameJsonApi.CreateStories();
 
 		//Reset
-		m_StoryIdx = 0;
+		m_StoryIdx = 1;
 		m_RequestId = -1;
 
 		//Fix seconds to ms

@@ -94,7 +94,7 @@ class SDRC_Story00_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			4, {DC_ENextChapter.WIN, DC_ENextChapter.WIN},
+			4, {DC_ENextChapter.WIN, DC_ENextChapter.LOSE},
 			DC_EMissionType.STASH, 0, 
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			"Epilogue: Loot"

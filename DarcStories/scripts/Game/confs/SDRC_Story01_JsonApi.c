@@ -36,6 +36,7 @@ class SDRC_Story01_JsonApi : SDRC_StoryJsonApi
 		conf.chapters.Insert(Chapter05());
 		conf.chapters.Insert(Chapter06());
 		conf.chapters.Insert(Chapter07());
+		conf.chapters.Insert(ChapterWin());
 	};
 
 	SDRC_Chapter Chapter01()
@@ -151,7 +152,7 @@ class SDRC_Story01_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			7, {10, DC_ENextChapter.LOSE},
+			7, {8, DC_ENextChapter.LOSE},
 			DC_EMissionType.HVTVIP, 3, 
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			""
@@ -169,7 +170,7 @@ class SDRC_Story01_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			10, {DC_ENextChapter.WIN, DC_ENextChapter.WIN},
+			8, {DC_ENextChapter.WIN, DC_ENextChapter.LOSE},
 			DC_EMissionType.STASH, 3, 
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			"Epilogue: Loot"

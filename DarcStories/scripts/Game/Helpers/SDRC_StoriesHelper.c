@@ -25,8 +25,8 @@ sealed class SDRC_StoriesHelper
 			SDRC_Log.Add("[SDRC_StoriesHelper:CheckStory] [" + chapter.nextChapter[1] + "]-[" + chapter.id + "]-[" + chapter.nextChapter[0] + "]", LogLevel.NORMAL);
 		}*/
 
-		ref array<ref SDRC_StoryMapLine> storyMap = {};
-		
+		array<ref SDRC_StoryMapLine> storyMap = {};
+	
 		//Add the indexes
 		foreach(SDRC_Chapter chapter : story.chapters)
 		{
@@ -40,21 +40,21 @@ sealed class SDRC_StoriesHelper
 			storyMap[chapter.id].line.InsertAt(DC_ENextChapter.NONE, 0);			
 		}
 
-		//Handle the lose spots
+		//Handle the LOSE spots
 		foreach(SDRC_Chapter chapter : story.chapters)
 		{			
-			//Add the lose index on the right side
+			//Add the LOSE index on the right side. This could be -1 for final end, or a next chapter
 			storyMap[chapter.id].line.Insert(chapter.nextChapter[1]);
 		}
 
-		int i = 0;
-		
-		//Start state is on the left
+		//Start state is on the left. This is the beginning of the story
 		storyMap[1].line.RemoveOrdered(0);
 
-		//dumpStoryMapLine(storyMap);
+		dumpStoryMapLine(storyMap);
 				
-		//Move the win states to left side
+		int i = 0;
+		
+		//Move the WIN states to left side on the next line
 		i = 1;		
 		foreach(SDRC_Chapter chapter : story.chapters)
 		{
@@ -73,11 +73,11 @@ sealed class SDRC_StoriesHelper
 			{
 				break;
 			}
-		}		
+		}
 
-		//dumpStoryMapLine(storyMap);
-		
-		//Handle the final win 
+		dumpStoryMapLine(storyMap);
+				
+		//Check that the last chapter has a win condition.
 		int lastIdx = story.chapters.Count() - 1;
 		if (story.chapters[lastIdx].nextChapter[0] == DC_ENextChapter.WIN)
 		{
@@ -89,31 +89,90 @@ sealed class SDRC_StoriesHelper
 		{
 			SDRC_Log.Add("[SDRC_StoriesHelper:CheckStory] Story has no WIN chapter!", LogLevel.ERROR);
 		}
+
+		dumpStoryMapLine(storyMap);
 		
-//		dumpStoryMapLine(storyMap);
-//		drawStoryMapLine(storyMap);
+		//Check that second column has WIN condition below.
+		i = 0;		
+		while (i < story.chapters.Count() - 1)
+		{
+			int idx = storyMap[i + 1].line[1];
+			if (idx > 0)
+			{
+				if ( (storyMap[idx + 1].line[1] == DC_ENextChapter.LOSE)	//Position to be empty with a LOSE marker
+				  && (idx != storyMap[i + 2].line[0])						//WIN condition not needed if the LOSE condition is the same as next line
+				   )
+				{
+					//Put the win condition on the second column
+					int winToAdd = story.chapters[idx - 1].nextChapter[0];
+					bool isWinBelow = false;
+
+					//Check that the win condition is not already there					
+					int j = 0;
+					for (j = i + 1; j < story.chapters.Count(); j++)
+					{
+						if (storyMap[j].line[1] == winToAdd)
+						{
+							isWinBelow = true;
+							break;
+						}
+					}
+					
+					if (!isWinBelow)
+					{
+						storyMap[idx + 1].line.InsertAt(winToAdd, 1);
+					}
+					else
+					{
+						storyMap[idx + 1].line.InsertAt(DC_ENextChapter.NONE, 1);
+					}
+				}
+			}			
+			dumpStoryMapLine(storyMap);
+			i++;			
+		}
+
+		dumpStoryMapLine(storyMap);	
+		drawStoryMapLine(storyMap);
 		
 		//Check the win connections
-		i = 1;
+		i = 0;
 		foreach(SDRC_Chapter chapter : story.chapters)
-		{
-			if (storyMap[i].line[1] == DC_ENextChapter.LOSE)
-			{
-				//Check if there are double wins 		
-				if ( (storyMap[i + 1].line[0] == chapter.nextChapter[0]) && (chapter.nextChapter[0] == DC_ENextChapter.WIN) )
+		{		
+			if (storyMap[i + 1].line[1] == DC_ENextChapter.LOSE)
+			{								
+				//Check if there is a win condition below
+				bool isWinBelow = false;				
+				int j = 0;
+				for (j = i + 1; j < story.chapters.Count(); j++)
 				{
-					storyMap[i].line.InsertAt(storyMap[i].line[0], 1);
+					if ( (storyMap[j].line[1] != DC_ENextChapter.LOSE) && (storyMap[j].line[1] == chapter.nextChapter[0]) )
+					{
+						isWinBelow = true;
+						break;
+					}
 				}
-				else //Add a vertical connection
-				{				
-					storyMap[i].line.InsertAt(DC_ENextChapter.NONE, 1);
+				
+				//Check if there are double wins 		
+				if ( (storyMap[i + 2].line[0] == chapter.nextChapter[0]) && (chapter.nextChapter[0] == DC_ENextChapter.WIN) )
+				{
+					storyMap[i + 1].line.InsertAt(storyMap[i + 1].line[0], 1);
+				}
+				else //Add a vertical connection..
+				{	
+					if (isWinBelow) //..only if there is a WIN below
+					{
+						storyMap[i + 1].line.InsertAt(DC_ENextChapter.NONE, 1);
+					}
 				}
 			}
 			
 			i++;
 
-			//Stop before the last one			
-			if (i > story.chapters.Count())
+			dumpStoryMapLine(storyMap);
+			
+			//Stop before the last one
+			if (i >= story.chapters.Count())
 			{
 				break;
 			}
@@ -154,7 +213,7 @@ sealed class SDRC_StoriesHelper
 				}
 				else if (char == DC_ENextChapter.WIN)
 				{
-					line = line + "[W]";
+					line = line + "[WIN]";
 				}
 				else if (char != 0)
 				{
