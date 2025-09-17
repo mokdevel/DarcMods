@@ -10,7 +10,7 @@ class SDRC_EditorAttributeBaseValues:SCR_EditorAttributeBaseValues
 		
 		if (baseGameMode)		
 		{		
-			int num = baseGameMode.missionFrame.justAnumber;
+			int num = baseGameMode.missionFrame.justAnumber;	//TBD: Remove, just for testing
 		
 			m_fMin = -1;
 			m_fMax = num;//Math.RandomInt(0,12);
