@@ -6,7 +6,7 @@ Component to modify mission related information via GM. Used with GM placable mi
 
 This is a component in SDRC_DarcMissionGM and should be the editable functionality.
 
-TBD: The editing part if not working at the moment.
+TBD: The editing part is not working at the moment.
 */
 
 //------------------------------------------------------------------------------------------------
