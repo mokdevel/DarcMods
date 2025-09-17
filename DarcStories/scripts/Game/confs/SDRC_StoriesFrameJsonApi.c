@@ -9,6 +9,8 @@
 		private const int SDRC_STORIESFRAME_CYCLE_TIME_DEFAULT = 10;
 		private const int SDRC_STORIESFRAME_CYCLE_TIME_LIMIT = 5;					//The cycle to run the mission frame. 
 
+		private const int SDRC_STORY_TIME_BETWEEN = 20*60;							//Time between stories
+
 		private const int SDRC_CHAPTER_TIME_DEFAULT = 30*60;						//Time for the mission to be active
 		private const int SDRC_CHAPTER_TIME_BETWEEN = 10*60;						//Time between chapters
 	#endif
@@ -19,7 +21,9 @@
 		private const int SDRC_STORIESFRAME_CYCLE_TIME_DEFAULT = 10;
 		private const int SDRC_STORIESFRAME_CYCLE_TIME_LIMIT = 5;					//The cycle to run the mission frame. 
 
-		private const int SDRC_CHAPTER_TIME_DEFAULT = 2*60;							//Time for the mission to be active
+		private const int SDRC_STORY_TIME_BETWEEN = 3*60;							//Time between stories
+
+		private const int SDRC_CHAPTER_TIME_DEFAULT = 2*60;							//Time for the chapter to be active
 		private const int SDRC_CHAPTER_TIME_BETWEEN = 1*60;							//Time between chapters
 	#endif
 
@@ -38,7 +42,6 @@ class SDRC_StoriesFrameConfig : Managed
 	int chapterTimeBetween;			//The time between chapters
 	
 	ref array<ref string> storiesList = {};		//The indexes of stories
-//	ref array<ref SDRC_Story> stories = {};		//List stories	
 	ref SDRC_Story story;
 }
 
@@ -88,6 +91,7 @@ class SDRC_StoriesFrameJsonApi : SDRC_JsonApi
 		conf.comment = "Simple comment, not used in game";
 		conf.storiesStartDelay = SDRC_STORIESFRAME_START_DELAY;		
 		conf.storiesFrameCycleTime = SDRC_MISSIONFRAME_CYCLE_TIME;
+		conf.storyTimeBetween = SDRC_STORY_TIME_BETWEEN;
 		conf.chapterTimeBetween = SDRC_CHAPTER_TIME_BETWEEN;
 		conf.storiesList = {"dc_storyConfig_00.json", "dc_storyConfig_01.json"};
 		

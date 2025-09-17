@@ -37,6 +37,16 @@ enum DC_ENextChapter
 	LOSE = -1,
 }
 
+enum DC_EStoryError
+{
+	NONE,
+	STORY_LOAD_FAILED,
+	INVALID_RESOURCE_NAME,
+	SPAWN_FAILED,
+	CHAPTER_WRONG_ID,
+	//MISSION_DELETED,
+}
+
 //------------------------------------------------------------------------------------------------
 class SDRC_Story : Managed
 {

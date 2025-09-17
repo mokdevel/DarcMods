@@ -100,8 +100,7 @@ class SDRC_StoriesFrame
 			
 			if (!m_Config.story)
 			{
-				SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Load failed: " + fileName, LogLevel.ERROR);
-				SetState(DC_EStoryState.ERROR);
+				SetState(DC_EStoryState.ERROR, DC_EStoryError.STORY_LOAD_FAILED, "Load failed: " + fileName);
 			}
 			else
 			{
@@ -132,7 +131,7 @@ class SDRC_StoriesFrame
 				string resourceName = SDRC_MissionEnumHelper.GetMissionPrefab(m_Chapter.missionType);
 				if (resourceName == "")
 				{
-					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Invalid resourcename.", LogLevel.ERROR);
+					SetState(DC_EStoryState.ERROR, DC_EStoryError.INVALID_RESOURCE_NAME, "Incorrect chapter missiontype: " + m_Chapter.missionType);
 				}
 				missionEntity = SDRC_SpawnHelper.SpawnItem(pos, resourceName, 0, -1);
 				if (missionEntity)
@@ -142,14 +141,12 @@ class SDRC_StoriesFrame
 				}
 				else
 				{
-					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Could not spawn: " + resourceName, LogLevel.ERROR);
-					SetState(DC_EStoryState.ERROR);
+					SetState(DC_EStoryState.ERROR, DC_EStoryError.SPAWN_FAILED, "Could not spawn: " + resourceName);
 				}
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Wrong chapterId (" + cidx + ") in story : " + m_Story.id, LogLevel.ERROR);
-				SetState(DC_EStoryState.ERROR);
+				SetState(DC_EStoryState.ERROR, DC_EStoryError.CHAPTER_WRONG_ID, "Wrong chapterId (" + cidx + ") in story : " + m_Story.id);
 			}
 		}
 		
@@ -242,8 +239,10 @@ class SDRC_StoriesFrame
 				
 				if (m_Chapter.success == DC_EMissionSuccess.DELETED)
 				{					
-					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " : DELETED", LogLevel.WARNING);
-					SetState(DC_EStoryState.ERROR);		//TBD: For now we go to error state
+					//TBD: If mission was deleted, go the LOSE state. Not sure if this is the best way to handle this.
+					//SetState(DC_EStoryState.ERROR, DC_EStoryError.MISSION_DELETED, "Mission: " + stat.id + " : DELETED");
+					SDRC_Log.Add("[SDRC_StoriesFrame:StoriesCycleManager] Mission: " + stat.id + " : DELETED. Setting mission state to LOSE.", LogLevel.ERROR);
+					m_Chapter.success = DC_EMissionSuccess.LOSE;
 				}
 				
 				if (m_Chapter.success == DC_EMissionSuccess.WIN)
@@ -353,7 +352,7 @@ class SDRC_StoriesFrame
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	protected void SetState(DC_EStoryState state)
+	protected void SetState(DC_EStoryState state, DC_EStoryError errorReason = DC_EStoryError.NONE, string errorInfo = "")	
 	{	
 		m_State = state;
 
@@ -363,6 +362,14 @@ class SDRC_StoriesFrame
 		if (m_State == DC_EStoryState.CHAPTER_OVER)
 		{
 			GetGame().GetCallqueue().CallLater(StartNewChapter, m_Config.chapterTimeBetween*1000, false);
+		}
+		
+		if (m_State == DC_EStoryState.ERROR)
+		{
+			if (errorReason != DC_EStoryError.NONE)
+			{
+				SDRC_Log.Add("[SDRC_StoriesFrame:SetState] ERROR: " + SCR_Enum.GetEnumName(DC_EStoryError, errorReason) + " " + errorInfo, LogLevel.ERROR);						
+			}
 		}
 	}
 }
