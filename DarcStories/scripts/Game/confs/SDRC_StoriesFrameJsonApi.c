@@ -11,6 +11,7 @@
 
 		private const int SDRC_STORY_TIME_BETWEEN = 20*60;							//Time between stories
 
+		private const int SDRC_STORY_CYCLE_TIME = 10;								//Time for the chapter to be active
 		private const int SDRC_CHAPTER_TIME_DEFAULT = 30*60;						//Time for the mission to be active
 		private const int SDRC_CHAPTER_TIME_BETWEEN = 10*60;						//Time between chapters
 	#endif
@@ -23,6 +24,7 @@
 
 		private const int SDRC_STORY_TIME_BETWEEN = 3*60;							//Time between stories
 
+		private const int SDRC_STORY_CYCLE_TIME = 10;								//Time for the chapter to be active
 		private const int SDRC_CHAPTER_TIME_DEFAULT = 2*60;							//Time for the chapter to be active
 		private const int SDRC_CHAPTER_TIME_BETWEEN = 1*60;							//Time between chapters
 	#endif
@@ -36,13 +38,14 @@ class SDRC_StoriesFrameConfig : Managed
 	//Mission specific
 	string comment;
 	int storiesStartDelay;			//Time to wait before spawning the first mission (seconds).
-	//Timing specific
-	int storiesFrameCycleTime;		//The cycle time to manage mission spawning, deletion etc... (seconds)	
+	//StoriesFrame: Timing specific
+	int storiesFrameCycleTime;		//The cycle time to run the storiesFrame (seconds)	
 	int storyTimeBetween;			//The time between stories
+	//Story: Timing specific for all 
+	int storyCycleTime;				//The cycle time to run the story (seconds)
 	int chapterTimeBetween;			//The time between chapters
 	
 	ref array<ref string> storiesList = {};		//The indexes of stories
-	ref SDRC_Story story;
 }
 
 //------------------------------------------------------------------------------------------------
@@ -92,6 +95,7 @@ class SDRC_StoriesFrameJsonApi : SDRC_JsonApi
 		conf.storiesStartDelay = SDRC_STORIESFRAME_START_DELAY;		
 		conf.storiesFrameCycleTime = SDRC_MISSIONFRAME_CYCLE_TIME;
 		conf.storyTimeBetween = SDRC_STORY_TIME_BETWEEN;
+		conf.storyCycleTime = SDRC_STORY_CYCLE_TIME;
 		conf.chapterTimeBetween = SDRC_CHAPTER_TIME_BETWEEN;
 		conf.storiesList = {"dc_storyConfig_00.json", "dc_storyConfig_01.json"};
 		
@@ -101,14 +105,6 @@ class SDRC_StoriesFrameJsonApi : SDRC_JsonApi
 		#ifndef SDRC_RELEASE				
 		#endif		
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	void LoadStory(string fileName)
-	{			
-		SDRC_StoryJsonApi story_JsonApi = new SDRC_StoryJsonApi(fileName);		
-		story_JsonApi.Load(false);
-		conf.story = story_JsonApi.conf;		
-	}	
 	
 	//------------------------------------------------------------------------------------------------
 	void CreateStories()
