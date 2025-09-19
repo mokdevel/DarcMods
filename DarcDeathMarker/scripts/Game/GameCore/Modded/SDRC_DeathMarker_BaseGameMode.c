@@ -39,8 +39,26 @@ modded class SCR_BaseGameMode
 		
 		if (playername != "")
 		{
+			Faction faction = null;
+			
+/*			SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(playerEntity);
+			if (character)
+			{			
+		    	//get faction 
+		    	faction = character.GetFaction();
+			}
+*/			
+//			faction = SDRC_PlayerHelper.GetPlayerFaction(playerId);
+			faction = SDRC_PlayerHelper.GetPlayerFaction(playerEntity);
+			
+/*			SCR_FactionManager factionManager = SCR_FactionManager.Cast(GetGame().GetFactionManager());
+			if (factionManager)
+			{
+				faction = factionManager.GetLocalPlayerFaction();
+			}*/
+			
 			SDRC_MapMarkerHelper.DeleteMarker(playername, true);
-			SDRC_MapMarkerHelper.CreateMapMarker(playerEntity.GetOrigin(), DC_EMissionIcon.ICON_DEATHMARKER_SMALL_MAP, playername, playername, 10*60);
+			SDRC_MapMarkerHelper.CreateMapMarker(playerEntity.GetOrigin(), DC_EMissionIcon.ICON_DEATHMARKER_SMALL_MAP, playername, playername, 10*60, faction: faction);
 		}
 		
 		SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:OnPlayerKilled] Player died: " + playername, LogLevel.DEBUG);        

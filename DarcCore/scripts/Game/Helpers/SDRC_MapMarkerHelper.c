@@ -36,7 +36,7 @@ sealed class SDRC_MapMarkerHelper
 {
 	static ref array<ref DC_Mmarker> m_markers = {};
 	
-	static void CreateMapMarker(vector pos, int icon, string id, string title = "", int lifetime = 0, string markerTypeString = "DARC_MISSION")
+	static void CreateMapMarker(vector pos, int icon, string id, string title = "", int lifetime = 0, string markerTypeString = "DARC_MISSION", Faction faction = null)
 	{		
 		#ifndef SDRC_RELEASE
 			//If SCR_MapEntity does not exist, we most likely are playing in some debug map
@@ -50,21 +50,28 @@ sealed class SDRC_MapMarkerHelper
 //		SDRC_Log.Add("[SDRC_MapMarkerHelper:CreateMapMarker] Creating " + typename.StringToEnum(SCR_EMapMarkerType, markerTypeString) + " - " + icon, LogLevel.WARNING);		
 		
 		SCR_EMapMarkerType markerType = typename.StringToEnum(SCR_EMapMarkerType, markerTypeString);
-//		SCR_EMapMarkerType markerType = typename.StringToEnum(SCR_EMapMarkerType, "PLACED_MILITARY");
+//		SCR_EMapMarkerType markerType = typename.StringToEnum(SCR_EMapMarkerType, "PLACED_CUSTOM");
 
 		SCR_MapMarkerManagerComponent mapMarkerMgr = SCR_MapMarkerManagerComponent.Cast(GetGame().GetGameMode().FindComponent(SCR_MapMarkerManagerComponent));
 		if (!mapMarkerMgr)
 			return;
 
-//		Faction faction = GetGame().GetFactionManager().GetFactionByKey("US");
-//        int fIndex = GetGame().GetFactionManager().GetFactionIndex(faction);		
-				
+		int fIndex = 0;
+		if (faction)
+		{
+			fIndex = GetGame().GetFactionManager().GetFactionIndex(faction);		
+		}
+		
 		SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
 		markerst.SetType(markerType);
 		markerst.SetCustomText(title);
+		if (faction)
+		{
+			markerst.SetCustomText(faction.GetFactionName());
+		}
 		markerst.SetWorldPos(pos[0], pos[2]);
 		markerst.SetIconEntry(icon);
-//		markerst.SetMarkerFactionFlags(0);	//Everyone can see the markers		//TBD: Is this needed ?
+		markerst.AddMarkerFactionFlags(fIndex);	//Everyone can see the markers		//TBD: Is this needed ?		
 		mapMarkerMgr.InsertStaticMarker(markerst, false, true);		
 		
 		DC_Mmarker dcmarker = new DC_Mmarker(lifetime);
@@ -72,7 +79,7 @@ sealed class SDRC_MapMarkerHelper
 		dcmarker.iID = markerst.GetMarkerID();
 		m_markers.Insert(dcmarker);
 	}
-	
+								
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Delete marker with certain id

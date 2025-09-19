@@ -104,6 +104,19 @@ sealed class SDRC_PlayerHelper
 		return faction;
 	}
 
+	static Faction GetPlayerFaction(IEntity playerEntity)
+	{
+		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(playerEntity);
+		if (!character)
+		{	
+			return null;		
+		}
+		
+	    Faction faction = character.GetFaction();
+		
+		return faction;
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Get player factionKey
