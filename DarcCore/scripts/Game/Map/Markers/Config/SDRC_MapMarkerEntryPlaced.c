@@ -1,8 +1,7 @@
 //------------------------------------------------------------------------------------------------
 //! Marker entry which can be placed through map
 
-
-//NOTE: If you add a new icon, remember to add texture finding to SDRC_MapMarkerHelper.GetMarkerTexture
+//NOTE: If you add a new icon, remember to add texture finding to SDRC_IconHelper.GetMarkerTexture
 enum DC_EMissionIcon
 {
 	NONE = -1,
@@ -19,6 +18,41 @@ enum DC_EMissionIcon
 	GM_MISSION_HVTVIP_MAP,
 	GM_MISSION_HVTITEM_MAP,
 	GM_MISSION_STASH_MAP,
+	GM_MISSION_BIOHAZARD_MAP,
+	GM_MISSION_CRATE_MAP,
+	GM_MISSION_DEMON_MAP,
+	GM_MISSION_DIAMOND_MAP,
+	GM_MISSION_ZOMBIE_MAP,
+	RESERVED_18,
+	RESERVED_19,
+	RESERVED_20,
+	RESERVED_21,
+	RESERVED_22,
+	RESERVED_23,
+	RESERVED_24,
+	RESERVED_25,
+	RESERVED_26,
+	RESERVED_27,
+	RESERVED_28,
+	RESERVED_29,
+	RESERVED_30,
+	RESERVED_31,
+	RESERVED_32,
+	RESERVED_33,
+	RESERVED_34,
+	RESERVED_35,
+	RESERVED_36,
+	RESERVED_37,
+	RESERVED_38,
+	RESERVED_39,
+	RESERVED_40,
+	RESERVED_41,
+	RESERVED_42,
+	RESERVED_43,
+	RESERVED_44,
+	RESERVED_45,
+	RESERVED_46,
+	RESERVED_47,
 	
 	//Markers to show on top of win/lose mission
 	GM_MISSION_WIN_MAP,
