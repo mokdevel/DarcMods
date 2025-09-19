@@ -362,7 +362,7 @@ class SDRC_MapSystem : GameSystem
 	*/
 	ImageDrawCommand DrawMarker(vector center, DC_EMissionIcon icon)
 	{
-		string texture = SDRC_MissionEnumHelper.GetMarkerTexture(icon);
+		string texture = SDRC_IconHelper.GetMarkerTexture(icon);
 		if (texture == "")
 		{
 			SDRC_Log.Add("[SDRC_MapSystem:DrawMarker] Could not find texture for: (" + icon + ") " + SCR_Enum.GetEnumName(DC_EMissionIcon, icon), LogLevel.WARNING);

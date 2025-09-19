@@ -6,3 +6,4 @@ modded enum SCR_EMapMarkerType
 {
 	DARC_MISSION
 }
+
