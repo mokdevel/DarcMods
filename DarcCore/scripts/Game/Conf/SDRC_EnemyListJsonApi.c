@@ -39,19 +39,18 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_EnemyListJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_enemyList.json";
-		
 	ref SDRC_ListConfig conf = new SDRC_ListConfig();
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_EnemyListJsonApi()
+	void SDRC_EnemyListJsonApi(string fileName)
 	{
+		SetFileName(fileName);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		if (!loadContext)
 		{
 			SetDefaults();
@@ -65,7 +64,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	

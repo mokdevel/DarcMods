@@ -8,10 +8,12 @@
 
 */
 
+const string DC_MISSIONCONFIG_FILE_TEMPLATE = "dc_missionConfig_Template.json";
+
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Template : SDRC_Mission
 {
-	private ref SDRC_TemplateJsonApi m_TemplateJsonApi = new SDRC_TemplateJsonApi();	
+	private ref SDRC_TemplateJsonApi m_TemplateJsonApi = new SDRC_TemplateJsonApi(DC_MISSIONCONFIG_FILE_TEMPLATE);	
 	private ref SDRC_TemplateConfig m_Config = new SDRC_TemplateConfig();
 	
 	//------------------------------------------------------------------------------------------------
@@ -106,13 +108,18 @@ class SDRC_TemplateConfig : SDRC_MissionConfig
 //------------------------------------------------------------------------------------------------
 class SDRC_TemplateJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Template.json";
 	ref SDRC_TemplateConfig conf = new SDRC_TemplateConfig();
 		
 	//------------------------------------------------------------------------------------------------
+	void SDRC_TemplateJsonApi(string fileName)
+	{
+		SetFileName(fileName);
+	}
+			
+	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		
 		if (!loadContext)
 		{
@@ -127,7 +134,7 @@ class SDRC_TemplateJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	

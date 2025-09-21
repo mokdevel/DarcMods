@@ -5,6 +5,8 @@
 Functions for various loot related things
 */
 
+const string DC_MISSIONCONFIG_FILE_LOOTLIST = "dc_lootList.json";
+		
 //------------------------------------------------------------------------------------------------
 class SDRC_Loot : Managed
 {
@@ -22,7 +24,7 @@ class SDRC_Loot : Managed
 //------------------------------------------------------------------------------------------------
 sealed class SDRC_LootHelper
 {
-	private static ref SDRC_LootListJsonApi m_LootListJsonApi = new SDRC_LootListJsonApi();	
+	private static ref SDRC_LootListJsonApi m_LootListJsonApi;
 	private static ref SDRC_ListConfig m_Config;
 	
 	static void Setup()
@@ -30,6 +32,7 @@ sealed class SDRC_LootHelper
 		SDRC_Log.Add("[SDRC_LootHelper:Setup] Preparing..", LogLevel.NORMAL);
 		
 		//Load loot config
+		m_LootListJsonApi = new SDRC_LootListJsonApi(DC_MISSIONCONFIG_FILE_LOOTLIST);
 		m_LootListJsonApi.Load();
 		m_Config = m_LootListJsonApi.conf;
 		m_Config.Populate();

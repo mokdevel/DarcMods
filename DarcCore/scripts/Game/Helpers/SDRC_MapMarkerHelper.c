@@ -56,12 +56,6 @@ sealed class SDRC_MapMarkerHelper
 		if (!mapMarkerMgr)
 			return;
 
-		int fIndex = 0;
-		if (faction)
-		{
-			fIndex = GetGame().GetFactionManager().GetFactionIndex(faction);		
-		}
-		
 		SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
 		markerst.SetType(markerType);
 		markerst.SetCustomText(title);
@@ -71,9 +65,19 @@ sealed class SDRC_MapMarkerHelper
 		}
 		markerst.SetWorldPos(pos[0], pos[2]);
 		markerst.SetIconEntry(icon);
-		markerst.AddMarkerFactionFlags(fIndex);	//Everyone can see the markers		//TBD: Is this needed ?		
 		mapMarkerMgr.InsertStaticMarker(markerst, false, true);		
-		
+
+		//Handle visibility
+		if (faction)
+		{
+			int fIndex = GetGame().GetFactionManager().GetFactionIndex(faction);		
+			markerst.AddMarkerFactionFlags(fIndex);		//Limit visibility
+		}
+		else
+		{
+			markerst.SetMarkerFactionFlags(0);			//Everyone can see the markers
+		}
+				
 		DC_Mmarker dcmarker = new DC_Mmarker(lifetime);
 		dcmarker.id = id;
 		dcmarker.iID = markerst.GetMarkerID();

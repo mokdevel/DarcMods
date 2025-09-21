@@ -5,13 +5,15 @@
 High Value Target (HVT) - Very Important Person
 */
 
+const string DC_MISSIONCONFIG_FILE_HVTVIP = "dc_missionConfig_HvtVip.json";
+
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_HvtVip : SDRC_Mission
 {
 	const int AI_ACTIVATE_DISTANCE = 8;
 	const int AI_TARGET_DEAD_CYCLE_TIME = 5000;
 	
-	private ref SDRC_HvtVipJsonApi m_HvtVipJsonApi = new SDRC_HvtVipJsonApi();	
+	private ref SDRC_HvtVipJsonApi m_HvtVipJsonApi = new SDRC_HvtVipJsonApi(DC_MISSIONCONFIG_FILE_HVTVIP);	
 	private ref SDRC_HvtVipConfig m_Config = new SDRC_HvtVipConfig();
 	private ref SDRC_HvtVip m_DC_HvtVip = new SDRC_HvtVip();
 	
@@ -257,13 +259,18 @@ class SDRC_HvtVip : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_HvtVipJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_HvtVip.json";
 	ref SDRC_HvtVipConfig conf = new SDRC_HvtVipConfig();
 		
 	//------------------------------------------------------------------------------------------------
+	void SDRC_HvtVipJsonApi(string fileName)
+	{
+		SetFileName(fileName);
+	}
+			
+	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		
 		if (!loadContext)
 		{
@@ -278,7 +285,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	

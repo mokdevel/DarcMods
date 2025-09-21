@@ -21,12 +21,14 @@ Add this to your StartGameTrigger or use SDRC_GameCoreBase.c
 	//------------------------------------------------------------------------------------------------
 */
 
-const string SDRC_MODNAME = "DarcSpawner";
+const string DC_CONFIG_FILE_SPAWNER = "dc_spawnerConfig.json";
+
+//const string SDRC_MODNAME = "DarcSpawner";
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Spawner
 {
-	ref SDRC_SpawnerJsonApi m_DC_SpawnerConfig = new SDRC_SpawnerJsonApi();
+	ref SDRC_SpawnerJsonApi m_DC_SpawnerConfig = new SDRC_SpawnerJsonApi(DC_CONFIG_FILE_SPAWNER);
 	ref SDRC_SpawnerConfig m_Config;
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g. cars, tents, ..) spawned
 	private int m_spawnSetID;

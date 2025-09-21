@@ -7,6 +7,8 @@ A convoy traveling from A to B.
 Note to self: RADIUS, SCATTERED : This could also work, but support was removed as unnecessary. The concoy would follow a path created with waypointRange starting from posStart. posDestination is ignored.
 */
 
+const string DC_MISSIONCONFIG_FILE_CONVOY = "dc_missionConfig_Convoy.json";
+	
 //------------------------------------------------------------------------------------------------
 enum DC_EMissionConvoyState
 {
@@ -18,7 +20,7 @@ enum DC_EMissionConvoyState
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Convoy : SDRC_Mission
 {
-	private ref SDRC_ConvoyJsonApi m_ConvoyJsonApi = new SDRC_ConvoyJsonApi();	
+	private ref SDRC_ConvoyJsonApi m_ConvoyJsonApi = new SDRC_ConvoyJsonApi(DC_MISSIONCONFIG_FILE_CONVOY);	
 	private ref SDRC_ConvoyConfig m_Config = new SDRC_ConvoyConfig();
 	private ref SDRC_Convoy m_DC_Convoy = new SDRC_Convoy();
 	
@@ -349,13 +351,18 @@ class SDRC_Convoy : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_ConvoyJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Convoy.json";
 	ref SDRC_ConvoyConfig conf = new SDRC_ConvoyConfig();
-		
+
+	//------------------------------------------------------------------------------------------------
+	void SDRC_ConvoyJsonApi(string fileName)
+	{
+		SetFileName(fileName);
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		
 		if (!loadContext)
 		{
@@ -370,7 +377,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	

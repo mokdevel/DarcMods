@@ -24,18 +24,18 @@ class SDRC_CoreConfig : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_CoreJsonApi : SDRC_JsonApi
 {
-	const string DC_CONFIG_FILE = SDRC_Conf.CORE_CONFIG_FILE;
 	ref SDRC_CoreConfig conf = new SDRC_CoreConfig();
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_SpawnerJsonConfig()
+	void SDRC_CoreJsonApi(string fileName)
 	{
+		SetFileName(fileName);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_CONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		
 		if (!loadContext)
 		{
@@ -50,7 +50,7 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save()
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_CONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	

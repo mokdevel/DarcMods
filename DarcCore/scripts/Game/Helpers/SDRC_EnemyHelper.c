@@ -8,7 +8,9 @@ Functions for various enemy related things
 //------------------------------------------------------------------------------------------------
 sealed class SDRC_EnemyHelper
 {
-	private static ref SDRC_EnemyListJsonApi m_EnemyListJsonApi = new SDRC_EnemyListJsonApi();	
+	const string DC_MISSIONCONFIG_FILE = "dc_enemyList.json";
+		
+	private static ref SDRC_EnemyListJsonApi m_EnemyListJsonApi;
 	private static ref SDRC_ListConfig m_Config;
 	private static string m_sDefaultEnemyFactionKey = "USSR";
 	private static ref array<string> m_sEnemyFactions = {};
@@ -21,6 +23,7 @@ sealed class SDRC_EnemyHelper
 		
 		SDRC_AIHelper.GetFactionList(m_sFactionList);
 		//Load enemy config
+		m_EnemyListJsonApi = new SDRC_EnemyListJsonApi(DC_MISSIONCONFIG_FILE);
 		m_EnemyListJsonApi.Load();
 		m_Config = m_EnemyListJsonApi.conf;
 		m_Config.Populate();		

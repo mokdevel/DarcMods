@@ -15,9 +15,9 @@ class SDRC_JsonApi : JsonApiStruct
 	\param fileName file name
 	\param respectOverWrite Defines if the SDRC_Conf.OVERWRITE_JSON setting is to be respected. If false, overwrite of files will not happen.
 	*/
-	SCR_JsonLoadContext LoadConfig(string fileName, bool respectOverWrite = true)
+	SCR_JsonLoadContext LoadConfig(bool respectOverWrite = true)
 	{	
-		SetFileName(fileName);
+//		SetFileName(fileName);
 		SCR_JsonLoadContext loadContext = new SCR_JsonLoadContext();
 		
 		if (SDRC_Conf.OVERWRITE_JSON && respectOverWrite)
@@ -40,9 +40,9 @@ class SDRC_JsonApi : JsonApiStruct
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	SCR_JsonSaveContext SaveConfigOpen(string fileName)
+	SCR_JsonSaveContext SaveConfigOpen()
 	{
-		SetFileName(fileName);
+//		SetFileName(fileName);
 		
 		SCR_JsonSaveContext saveContext = new SCR_JsonSaveContext();
 		

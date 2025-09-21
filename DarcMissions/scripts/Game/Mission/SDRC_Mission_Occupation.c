@@ -5,10 +5,12 @@
 This mission spawns groups to defend a location
 */
 
+const string DC_MISSIONCONFIG_FILE_OCCUPATION = "dc_missionConfig_Occupation.json";
+
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Occupation : SDRC_Mission
 {
-	private ref SDRC_OccupationJsonApi m_OccupationJsonApi = new SDRC_OccupationJsonApi();	
+	private ref SDRC_OccupationJsonApi m_OccupationJsonApi = new SDRC_OccupationJsonApi(DC_MISSIONCONFIG_FILE_OCCUPATION);	
 	private ref SDRC_OccupationConfig m_Config = new SDRC_OccupationConfig();	
 	private ref SDRC_Camp m_DC_Occupation = new SDRC_Camp();
 	
@@ -134,13 +136,18 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 //------------------------------------------------------------------------------------------------
 class SDRC_OccupationJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Occupation.json";
 	ref SDRC_OccupationConfig conf = new SDRC_OccupationConfig();
 	
 	//------------------------------------------------------------------------------------------------
+	void SDRC_OccupationJsonApi(string fileName)
+	{
+		SetFileName(fileName);
+	}
+			
+	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		
 		if (!loadContext)
 		{
@@ -155,7 +162,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	

@@ -44,48 +44,48 @@ sealed class SDRC_MissionEnumHelper
 	static void CreateAllConfigs()
 	{		
 		//Create a default nonValidArea config
-		SDRC_NonValidAreaJsonApi nonValidAreaJsonApi = new SDRC_NonValidAreaJsonApi();
+		SDRC_NonValidAreaJsonApi nonValidAreaJsonApi = new SDRC_NonValidAreaJsonApi(DC_MISSIONCONFIG_FILE_NONVALIDAREA);
 		nonValidAreaJsonApi.Load();
 		delete nonValidAreaJsonApi;		
 		
 		//Create a default mission configs
-		SDRC_ConvoyJsonApi convoyJsonApi = new SDRC_ConvoyJsonApi();	
+		SDRC_ConvoyJsonApi convoyJsonApi = new SDRC_ConvoyJsonApi(DC_MISSIONCONFIG_FILE_CONVOY);	
 		convoyJsonApi.Load();
 		delete convoyJsonApi;
 		
-		SDRC_CrashsiteJsonApi crashsiteJsonApi = new SDRC_CrashsiteJsonApi();	
+		SDRC_CrashsiteJsonApi crashsiteJsonApi = new SDRC_CrashsiteJsonApi(DC_MISSIONCONFIG_FILE_CRASHSITE);	
 		crashsiteJsonApi.Load();		
 		delete crashsiteJsonApi;
 		
-		SDRC_HunterJsonApi hunterJsonApi = new SDRC_HunterJsonApi();				
+		SDRC_HunterJsonApi hunterJsonApi = new SDRC_HunterJsonApi(DC_MISSIONCONFIG_FILE_HUNTER);				
 		hunterJsonApi.Load();								
 		delete hunterJsonApi;
 		
-		SDRC_OccupationJsonApi occupationJsonApi = new SDRC_OccupationJsonApi();	
+		SDRC_OccupationJsonApi occupationJsonApi = new SDRC_OccupationJsonApi(DC_MISSIONCONFIG_FILE_OCCUPATION);	
 		occupationJsonApi.Load();		
 		delete occupationJsonApi;
 		
-		SDRC_PatrolJsonApi patrolJsonApi = new SDRC_PatrolJsonApi();	
+		SDRC_PatrolJsonApi patrolJsonApi = new SDRC_PatrolJsonApi(DC_MISSIONCONFIG_FILE_PATROL);	
 		patrolJsonApi.Load();
 		delete patrolJsonApi;
 		
-		SDRC_SquatterJsonApi squatterJsonApi = new SDRC_SquatterJsonApi();	
+		SDRC_SquatterJsonApi squatterJsonApi = new SDRC_SquatterJsonApi(DC_MISSIONCONFIG_FILE_SQUATTER);	
 		squatterJsonApi.Load();
 		delete squatterJsonApi;		
 		
-		SDRC_RoadblockJsonApi roadblockJsonApi = new SDRC_RoadblockJsonApi();	
+		SDRC_RoadblockJsonApi roadblockJsonApi = new SDRC_RoadblockJsonApi(DC_MISSIONCONFIG_FILE_ROADBLOCK);	
 		roadblockJsonApi.Load();
 		delete roadblockJsonApi;		
 		
-		SDRC_HvtVipJsonApi hvtVipJsonApi = new SDRC_HvtVipJsonApi();	
+		SDRC_HvtVipJsonApi hvtVipJsonApi = new SDRC_HvtVipJsonApi(DC_MISSIONCONFIG_FILE_HVTVIP);	
 		hvtVipJsonApi.Load();
 		delete hvtVipJsonApi;				
 		
-		SDRC_HvtItemJsonApi hvtItemJsonApi = new SDRC_HvtItemJsonApi();	
+		SDRC_HvtItemJsonApi hvtItemJsonApi = new SDRC_HvtItemJsonApi(DC_MISSIONCONFIG_FILE_HVTITEM);	
 		hvtItemJsonApi.Load();
 		delete hvtItemJsonApi;				
 		
-		SDRC_StashJsonApi stashJsonApi = new SDRC_StashJsonApi();	
+		SDRC_StashJsonApi stashJsonApi = new SDRC_StashJsonApi(DC_MISSIONCONFIG_FILE_STASH);	
 		stashJsonApi.Load();
 		delete stashJsonApi;						
 	}		

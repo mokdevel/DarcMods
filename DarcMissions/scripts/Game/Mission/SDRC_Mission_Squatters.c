@@ -5,10 +5,12 @@
 A building is guarded by AIs with loot available.
 */
 
+const string DC_MISSIONCONFIG_FILE_SQUATTER = "dc_missionConfig_Squatter.json";
+
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Squatter : SDRC_Mission
 {
-	private ref SDRC_SquatterJsonApi m_SquatterJsonApi = new SDRC_SquatterJsonApi();	
+	private ref SDRC_SquatterJsonApi m_SquatterJsonApi = new SDRC_SquatterJsonApi(DC_MISSIONCONFIG_FILE_SQUATTER);	
 	private ref SDRC_SquatterConfig m_Config = new SDRC_SquatterConfig();
 	private ref SDRC_Squatter m_DC_Squatter = new SDRC_Squatter();
 	
@@ -202,13 +204,18 @@ class SDRC_Squatter : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_SquatterJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Squatter.json";
 	ref SDRC_SquatterConfig conf = new SDRC_SquatterConfig();
 		
 	//------------------------------------------------------------------------------------------------
+	void SDRC_SquatterJsonApi(string fileName)
+	{
+		SetFileName(fileName);
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		
 		if (!loadContext)
 		{
@@ -223,7 +230,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	

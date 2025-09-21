@@ -7,10 +7,12 @@ This mission spawns a stash for loot. This essentially the same as Occupation mi
 The usage for Stash mission is mainly as a story ending when using DarcStories.
 */
 
+const string DC_MISSIONCONFIG_FILE_STASH = "dc_missionConfig_Stash.json";
+
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Stash : SDRC_Mission
 {
-	private ref SDRC_StashJsonApi m_StashJsonApi = new SDRC_StashJsonApi();	
+	private ref SDRC_StashJsonApi m_StashJsonApi = new SDRC_StashJsonApi(DC_MISSIONCONFIG_FILE_STASH);	
 	private ref SDRC_StashConfig m_Config = new SDRC_StashConfig();	
 	private ref SDRC_Camp m_DC_Stash = new SDRC_Camp();
 	
@@ -21,8 +23,10 @@ class SDRC_Mission_Stash : SDRC_Mission
 	void SDRC_Mission_Stash(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
+		m_StashJsonApi.CreateMissionFiles();
 		m_StashJsonApi.Load();
 		m_Config = m_StashJsonApi.conf;
+		m_StashJsonApi.LoadMissionFiles();
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -134,13 +138,18 @@ class SDRC_StashConfig : SDRC_MissionConfig
 //------------------------------------------------------------------------------------------------
 class SDRC_StashJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Stash.json";
 	ref SDRC_StashConfig conf = new SDRC_StashConfig();
 	
 	//------------------------------------------------------------------------------------------------
+	void SDRC_StashJsonApi(string fileName)
+	{
+		SetFileName(fileName);
+	}
+			
+	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		
 		if (!loadContext)
 		{
@@ -148,17 +157,40 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 			Save("");
 			return;
 		}
-
+		
 		loadContext.ReadValue("", conf);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
-	}	
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void CreateMissionFiles()
+	{
+		//Create mission files. TBD: Should not be done this way.
+		SDRC_Stash_010_JsonApi stash010_JsonApi = new SDRC_Stash_010_JsonApi();		
+		stash010_JsonApi.Load();
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void LoadMissionFiles()
+	{
+		//Load mission files
+		foreach (string missionFile : conf.missionFiles)
+		{
+			SDRC_StashJsonApi stash_JsonApi = new SDRC_StashJsonApi(missionFile);		
+			stash_JsonApi.Load();
+			foreach (SDRC_Camp stash : stash_JsonApi.conf.Stashs)
+			{
+				conf.Stashs.Insert(stash);
+			}
+		}
+	}
 		
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
@@ -167,6 +199,7 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.activeDistance = 50;
 		conf.missionList = {0};
+		conf.missionFiles.Insert("dc_missionConfig_Stash_010.json");
 		//Mission specific		
 		//----------------------------------------------------
 		conf.Stashs.Insert(Stash0());				

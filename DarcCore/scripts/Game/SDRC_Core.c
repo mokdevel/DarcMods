@@ -15,7 +15,9 @@ class SDRC_EmptyPos : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_Core
 {
-	ref SDRC_CoreJsonApi m_DC_CoreConfig = new SDRC_CoreJsonApi();	
+	const string DC_CONFIG_FILE = SDRC_Conf.CORE_CONFIG_FILE;
+	
+	ref SDRC_CoreJsonApi m_DC_CoreConfig = new SDRC_CoreJsonApi(DC_CONFIG_FILE);	
 	ref SDRC_CoreConfig m_Config;	
 	private ref array<string> m_sAddonList = {};
 	private ref array<string> m_sFactionList = {};

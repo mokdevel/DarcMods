@@ -2,13 +2,15 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
-This mission spawns groups to defend a location
+
 */
+
+const string DC_MISSIONCONFIG_FILE_PATROL = "dc_missionConfig_Patrol.json";
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Patrol : SDRC_Mission
 {
-	private ref SDRC_PatrolJsonApi m_PatrolJsonApi = new SDRC_PatrolJsonApi();	
+	private ref SDRC_PatrolJsonApi m_PatrolJsonApi = new SDRC_PatrolJsonApi(DC_MISSIONCONFIG_FILE_PATROL);	
 	private ref SDRC_PatrolConfig m_Config = new SDRC_PatrolConfig();	
 	private ref SDRC_Patrol m_DC_Patrol = new SDRC_Patrol();
 	
@@ -186,13 +188,18 @@ class SDRC_Patrol : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_PatrolJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Patrol.json";
 	ref SDRC_PatrolConfig conf = new SDRC_PatrolConfig();
-	
+
+	//------------------------------------------------------------------------------------------------
+	void SDRC_PatrolJsonApi(string fileName)
+	{
+		SetFileName(fileName);
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		
 		if (!loadContext)
 		{
@@ -207,7 +214,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	

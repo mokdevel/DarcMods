@@ -27,19 +27,18 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_LootListJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_lootList.json";
-		
 	ref SDRC_ListConfig conf = new SDRC_ListConfig();
-
+	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_LootListJsonApi()
+	void SDRC_LootListJsonApi(string fileName)
 	{
+		SetFileName(fileName);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		if (!loadContext)
 		{
 			SetDefaults();
@@ -53,15 +52,14 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
-	{
-		
+	{		
 		conf.modList = {};
 		//Weapons
 		conf.lists.Insert(lootList00());		

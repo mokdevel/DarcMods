@@ -32,15 +32,14 @@ class SDRC_NonValidArea : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_NonValidAreaJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_nonValidArea.json";
-		
 	ref SDRC_NonValidAreaConfig conf = new SDRC_NonValidAreaConfig();
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_NonValidAreaJsonApi()
+	void SDRC_NonValidAreaJsonApi(string fileName)
 	{
+		SetFileName(fileName);
 	}
-	
+			
 	//------------------------------------------------------------------------------------------------
 	void Populate(out array<ref SDRC_NonValidArea>nonValidAreaList)
 	{
@@ -60,7 +59,7 @@ class SDRC_NonValidAreaJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		if (!loadContext)
 		{
 			SetDefaults();
@@ -74,7 +73,7 @@ class SDRC_NonValidAreaJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	

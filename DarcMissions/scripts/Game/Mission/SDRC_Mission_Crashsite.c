@@ -5,6 +5,8 @@
 A chopper flys and crashes. Loot and defending AI is spawned.
 */
 
+const string DC_MISSIONCONFIG_FILE_CRASHSITE = "dc_missionConfig_Convoy.json";
+	
 //------------------------------------------------------------------------------------------------
 enum DC_EMissionCrashSiteState
 {
@@ -18,7 +20,7 @@ enum DC_EMissionCrashSiteState
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Crashsite : SDRC_Mission
 {
-	private ref SDRC_CrashsiteJsonApi m_CrashsiteJsonApi = new SDRC_CrashsiteJsonApi();	
+	private ref SDRC_CrashsiteJsonApi m_CrashsiteJsonApi = new SDRC_CrashsiteJsonApi(DC_MISSIONCONFIG_FILE_CRASHSITE);	
 	private ref SDRC_CrashsiteConfig m_Config = new SDRC_CrashsiteConfig();
 	private ref SDRC_Crashsite m_DC_Crashsite = new SDRC_Crashsite();
 	
@@ -338,13 +340,18 @@ class SDRC_Crashsite : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Crashsite.json";
 	ref SDRC_CrashsiteConfig conf = new SDRC_CrashsiteConfig();
 		
 	//------------------------------------------------------------------------------------------------
+	void SDRC_CrashsiteJsonApi(string fileName)
+	{
+		SetFileName(fileName);
+	}
+			
+	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		
 		if (!loadContext)
 		{
@@ -359,7 +366,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	

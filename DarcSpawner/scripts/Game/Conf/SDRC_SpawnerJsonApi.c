@@ -47,18 +47,18 @@ class SDRC_SpawnSet : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_SpawnerJsonApi : SDRC_JsonApi
 {
-	const string DC_CONFIG_FILE = "dc_spawnerConfig.json";
 	ref SDRC_SpawnerConfig conf = new SDRC_SpawnerConfig();
-
+	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_SpawnerJsonConfig()
+	void SDRC_SpawnerJsonApi(string fileName)
 	{
+		SetFileName(fileName);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_CONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		
 		if (!loadContext)
 		{
@@ -73,7 +73,7 @@ class SDRC_SpawnerJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save()
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_CONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	

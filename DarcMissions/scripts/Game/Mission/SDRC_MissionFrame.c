@@ -23,16 +23,18 @@ Add this to your StartGameTrigger or use SDRC_GameCoreBase.c
 
 //------------------------------------------------------------------------------------------------
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
+const string DC_MISSIONCONFIG_FILE = "dc_missionConfig.json";
+const string DC_MISSIONCONFIG_FILE_NONVALIDAREA = "dc_nonValidArea.json";
 
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionFrame
 {
 	protected static SDRC_MissionFrame s_Instance;		
 	ref array<ref SDRC_Mission> m_MissionList = new array<ref SDRC_Mission>;
-	ref SDRC_MissionFrameJsonApi m_DC_MissionFrameJsonApi = new SDRC_MissionFrameJsonApi();
+	ref SDRC_MissionFrameJsonApi m_DC_MissionFrameJsonApi = new SDRC_MissionFrameJsonApi(DC_MISSIONCONFIG_FILE);
 	ref SDRC_MissionFrameConfig m_Config;
 	
-	ref SDRC_NonValidAreaJsonApi m_DC_NonValidAreaJsonApi = new SDRC_NonValidAreaJsonApi();
+	ref SDRC_NonValidAreaJsonApi m_DC_NonValidAreaJsonApi = new SDRC_NonValidAreaJsonApi(DC_MISSIONCONFIG_FILE_NONVALIDAREA);
 	ref SDRC_NonValidAreaConfig m_NonValidAreaConfig;
 	ref array<ref SDRC_NonValidArea> m_aNonValidAreas = {};
 	

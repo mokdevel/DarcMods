@@ -60,7 +60,8 @@ class SDRC_MissionConfig : Managed
 	bool showMarker = true;
 	bool showHint = true;
 	bool showMessage = true;
-	ref array<ref int> missionList = {};	//The list of mission suids.
+	ref array<ref int> missionList = {};		//The list of mission suids.
+	ref array<ref string> missionFiles = {};	//The list of mission files to load.
 }
 
 //------------------------------------------------------------------------------------------------

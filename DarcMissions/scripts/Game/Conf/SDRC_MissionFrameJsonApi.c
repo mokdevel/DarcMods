@@ -5,15 +5,15 @@
 
 	//Release options
 	#ifdef SDRC_RELEASE
-		private const int SDRC_MISSION_COUNT_DYNAMIC = 10;										//Default amount of dynamic missions to run
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 10;								//Default amount of dynamic missions to run
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 1.5;
 		private const int SDRC_MISSION_COUNT_STATIC = 6;								//Default amount of static missions to run
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 1;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 30;
-		private const int SDRC_MISSIONFRAME_START_DELAY = 1*60;								//Time to wait before spawning the first mission (seconds)
-		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 4*60;			//Minimum delay between dynamic missions. 
+		private const int SDRC_MISSIONFRAME_START_DELAY = 1*60;							//Time to wait before spawning the first mission (seconds)
+		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 8*60;			//Minimum delay between dynamic missions. 
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 5;				//Minimum delay between static missions. 
-		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 15*60;						//Time to keep the mission active (seconds)
+		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 30*60;						//Time to keep the mission active (seconds)
 		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 60*60*10; //10hrs			//Static missions are to be kept alive longer
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 200;							//Mission is to be removed if no players close to the position after the mission active time has passed.
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 180;						//Mission is kept active this time once all AIs are dead.
@@ -27,9 +27,9 @@
 	
 	//Development time options
 	#ifndef SDRC_RELEASE	
-		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//3;//3;//8;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 0;//5;//3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 5;//5;//3;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -86,19 +86,18 @@ class SDRC_MissionFrameConfig : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig.json";
-		
 	ref SDRC_MissionFrameConfig conf = new SDRC_MissionFrameConfig();
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_MissionFrameJsonApi()
+	void SDRC_MissionFrameJsonApi(string fileName)
 	{
+		SetFileName(fileName);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		if (!loadContext)
 		{
 			SetDefaults();
@@ -117,10 +116,10 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
-	}	
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
@@ -172,27 +171,28 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.enemyFactions = {"USAF_USMC", "RHS_RF"};
 //			conf.enemyFactions = {"MEI"};
 		
-//			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTERS, DC_EMissionType.HVTVIP, DC_EMissionType.HVTITEM};
+			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTERS, DC_EMissionType.HVTVIP, DC_EMissionType.HVTITEM};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTERS};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.OCCUPATION};
-			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HUNTER};
+//			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HUNTER};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CONVOY};		
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.PATROL};		
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.CRASHSITE};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.SQUATTERS};
+//			conf.missionDynamic.missionTypeArray = {DC_EMissionType.STASH};
 //			conf.missionDynamic.missionTypeArray = {DC_EMissionType.OCCUPATION};
-//			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTITEM};
+//			conf.missionDynamic.missionTypeArray = {DC_EMissionType.HVTITEM};
 		
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.CRASHSITE};
-			conf.missionStatic.missionTypeArray = {DC_EMissionType.HUNTER};
+//			conf.missionStatic.missionTypeArray = {DC_EMissionType.HUNTER};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTITEM};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTVIP};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.OCCUPATION};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.ROADBLOCK};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.SQUATTERS};
-//			conf.missionStatic.missionTypeArray = {DC_EMissionType.STASH};
+			conf.missionStatic.missionTypeArray = {DC_EMissionType.STASH};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTVIP, DC_EMissionType.HVTITEM};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTITEM, DC_EMissionType.SQUATTERS, DC_EMissionType.OCCUPATION, DC_EMissionType.ROADBLOCK, DC_EMissionType.PATROL, DC_EMissionType.HVTVIP};

@@ -5,12 +5,14 @@
 High Value Target (HVT) - Item target
 */
 
+const string DC_MISSIONCONFIG_FILE_HVTITEM = "dc_missionConfig_HvtItem.json";
+
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_HvtItem : SDRC_Mission
 {
 	const int AI_TARGET_DESTROYED_CYCLE_TIME = 5000;
 	
-	private ref SDRC_HvtItemJsonApi m_HvtItemJsonApi = new SDRC_HvtItemJsonApi();	
+	private ref SDRC_HvtItemJsonApi m_HvtItemJsonApi = new SDRC_HvtItemJsonApi(DC_MISSIONCONFIG_FILE_HVTITEM);	
 	private ref SDRC_HvtItemConfig m_Config = new SDRC_HvtItemConfig();
 	private ref SDRC_HvtItem m_DC_HvtItem = new SDRC_HvtItem();
 	
@@ -193,13 +195,18 @@ class SDRC_HvtItem : SDRC_Camp
 //------------------------------------------------------------------------------------------------
 class SDRC_HvtItemJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_HvtItem.json";
 	ref SDRC_HvtItemConfig conf = new SDRC_HvtItemConfig();
 		
 	//------------------------------------------------------------------------------------------------
+	void SDRC_HvtItemJsonApi(string fileName)
+	{
+		SetFileName(fileName);
+	}
+			
+	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		
 		if (!loadContext)
 		{
@@ -214,7 +221,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	

@@ -1,17 +1,16 @@
 //Mission SDRC_Mission_Roadblock.c
-//
-//An example of a mission file with simple set. No real functionality.
-//Do a "replace all" for the word "Roadblock" with your mission name.
 
 //------------------------------------------------------------------------------------------------
 /*!
 
 */
 
+const string DC_MISSIONCONFIG_FILE_ROADBLOCK = "dc_missionConfig_Roadblock.json";
+
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Roadblock : SDRC_Mission
 {
-	private ref SDRC_RoadblockJsonApi m_RoadblockJsonApi = new SDRC_RoadblockJsonApi();	
+	private ref SDRC_RoadblockJsonApi m_RoadblockJsonApi = new SDRC_RoadblockJsonApi(DC_MISSIONCONFIG_FILE_ROADBLOCK);	
 	private ref SDRC_RoadblockConfig m_Config = new SDRC_RoadblockConfig();	
 	private ref SDRC_Camp m_DC_Roadblock = new SDRC_Camp;
 	
@@ -184,13 +183,18 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 //------------------------------------------------------------------------------------------------
 class SDRC_RoadblockJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Roadblock.json";
 	ref SDRC_RoadblockConfig conf = new SDRC_RoadblockConfig();
+		
+	//------------------------------------------------------------------------------------------------
+	void SDRC_RoadblockJsonApi(string fileName)
+	{
+		SetFileName(fileName);
+	}
 		
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		
 		if (!loadContext)
 		{
@@ -205,7 +209,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	

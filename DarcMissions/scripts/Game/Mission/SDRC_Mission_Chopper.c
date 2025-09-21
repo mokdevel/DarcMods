@@ -5,7 +5,9 @@
 
 class SDRC_Mission_Chopper : SDRC_Mission
 {
-	private ref SDRC_ChopperJsonApi m_ChopperJsonApi = new SDRC_ChopperJsonApi();	
+	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Chopper.json";
+	
+	private ref SDRC_ChopperJsonApi m_ChopperJsonApi = new SDRC_ChopperJsonApi(DC_MISSIONCONFIG_FILE);	
 	private ref SDRC_ChopperConfig m_Config;
 	private VehicleHelicopterSimulation m_Vehicle_s;
 	private IEntity m_Vehicle;
@@ -151,13 +153,18 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Chopper.json";
 	ref SDRC_ChopperConfig conf = new SDRC_ChopperConfig();
-		
+
+	//------------------------------------------------------------------------------------------------
+	void SDRC_ChopperJsonApi(string fileName)
+	{
+		SetFileName(fileName);
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		
 		if (!loadContext)
 		{
@@ -172,7 +179,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	
