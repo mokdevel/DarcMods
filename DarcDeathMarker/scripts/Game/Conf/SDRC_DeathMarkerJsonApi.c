@@ -17,13 +17,18 @@ class SDRC_DeathMarkerConfig : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_DeathMarkerJsonApi : SDRC_JsonApi
 {
-	const string DC_CONFIG_FILE = "dc_deathMarkerConfig.json";
 	ref SDRC_DeathMarkerConfig conf = new SDRC_DeathMarkerConfig();
 
 	//------------------------------------------------------------------------------------------------
+	void SDRC_DeathMarkerJsonApi(string fileName)
+	{
+		SetFileName(fileName);
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_CONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		
 		if (!loadContext)
 		{
@@ -38,7 +43,7 @@ class SDRC_DeathMarkerJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save()
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_CONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	

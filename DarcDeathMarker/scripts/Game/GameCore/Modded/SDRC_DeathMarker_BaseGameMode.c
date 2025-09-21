@@ -1,8 +1,10 @@
 //SDRC_DeathMarker_BaseGameMode.c
 
+const string DC_CONFIG_FILE_DEATHMARKER = "dc_deathMarkerConfig.json";
+
 modded class SCR_BaseGameMode 
 {
-	ref SDRC_DeathMarkerJsonApi m_DC_DeathMarkerConfig = new SDRC_DeathMarkerJsonApi();
+	ref SDRC_DeathMarkerJsonApi m_DC_DeathMarkerConfig;// = new SDRC_DeathMarkerJsonApi(DC_CONFIG_FILE_DEATHMARKER);
 	ref SDRC_DeathMarkerConfig m_Config;
 
 	//------------------------------------------------------------------------------------------------
@@ -20,17 +22,34 @@ modded class SCR_BaseGameMode
 				SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode] SDRC_RELEASE not defined. This is a DEVELOPMENT build.", LogLevel.WARNING);
 			}
 			
+			if (IsMaster())
+			{			
+				GetGame().GetCallqueue().CallLater(InitDeathMarker, 5000, false);
+			}
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_DeathMarker] Not started. Development build?", LogLevel.ERROR);
+		}		
+    }
+			
+	//------------------------------------------------------------------------------------------------
+	private void InitDeathMarker()
+	{
+		if (SDRC_Conf.coreHasStarted)	//Wait for core to be available
+		{		
+			m_DC_DeathMarkerConfig = new SDRC_DeathMarkerJsonApi(DC_CONFIG_FILE_DEATHMARKER);
 			//Load configuration from file
 			m_DC_DeathMarkerConfig.Load();
 			m_Config = m_DC_DeathMarkerConfig.conf;
 		}
 		else
 		{
-			SDRC_Log.Add("[SDRC_DeathMarker] Not started. Development build?", LogLevel.ERROR);
+			GetGame().GetCallqueue().CallLater(InitDeathMarker, 2000, false);	
+			SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:InitDeathMarker] Core not running. Waiting...", LogLevel.DEBUG);
 		}
-		
-    }
-			
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	override void OnPlayerKilled(int playerId, IEntity playerEntity, IEntity killerEntity, notnull Instigator killer)
 	{
