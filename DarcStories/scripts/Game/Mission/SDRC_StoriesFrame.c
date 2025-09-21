@@ -3,6 +3,8 @@
 This is the mission story framework file. 
 */
 
+const string DC_MISSIONCONFIG_FILE_STORIES = "dc_storiesConfig.json";
+
 //------------------------------------------------------------------------------------------------
 enum DC_EStoriesFrameState
 {
@@ -19,7 +21,7 @@ class SDRC_StoriesFrame
 	private static int m_RequestIdCounter = 1000;
 	
 	private DC_EStoriesFrameState m_State;
-	private ref SDRC_StoriesFrameJsonApi m_DC_StoriesFrameJsonApi = new SDRC_StoriesFrameJsonApi();
+	private ref SDRC_StoriesFrameJsonApi m_DC_StoriesFrameJsonApi = new SDRC_StoriesFrameJsonApi(DC_MISSIONCONFIG_FILE_STORIES);
 	ref SDRC_StoriesFrameConfig m_Config;
 	private int m_StoryIdx;
 	private ref array<ref SDRC_StoryFSM> m_StoriesRunning = {};

@@ -15,19 +15,18 @@
 class SDRC_StoryJsonApi : SDRC_JsonApi
 {
 	private string m_sStoryFileName;
-		
 	ref SDRC_Story conf = new SDRC_Story();
 
 	//------------------------------------------------------------------------------------------------
 	void SDRC_StoryJsonApi(string fileName = "")
 	{
-		m_sStoryFileName = fileName;
+		SetFileName(fileName);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	void Load(bool respectOverWrite = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(m_sStoryFileName, respectOverWrite);
+		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);
 		if (!loadContext)
 		{
 			SetDefaults();
@@ -41,7 +40,7 @@ class SDRC_StoryJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(m_sStoryFileName);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}
@@ -55,18 +54,15 @@ class SDRC_StoryJsonApi : SDRC_JsonApi
 		#ifndef SDRC_RELEASE				
 		#endif
 	};
+	
 	//------------------------------------------------------------------------------------------------
 	// New methods
 	//------------------------------------------------------------------------------------------------
-	void SetStoryFileName(string fileName)
-	{
-		m_sStoryFileName = fileName;
-	}
 	
 	//------------------------------------------------------------------------------------------------
 	void LoadStory()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(m_sStoryFileName);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		if (!loadContext)
 		{
 			return;

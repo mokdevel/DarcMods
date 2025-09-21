@@ -8,7 +8,7 @@ class SDRC_Story01_JsonApi : SDRC_StoryJsonApi
 {
 	void SDRC_Story01_JsonApi(string fileName = "")
 	{
-		SetStoryFileName("dc_storyConfig_01.json");
+		SetFileName("dc_storyConfig_01.json");
 	}
 	
 	//------------------------------------------------------------------------------------------------

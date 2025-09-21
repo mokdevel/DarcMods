@@ -51,20 +51,18 @@ class SDRC_StoriesFrameConfig : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_StoriesFrameJsonApi : SDRC_JsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_storiesConfig.json";
-		
 	ref SDRC_StoriesFrameConfig conf = new SDRC_StoriesFrameConfig();
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_StoriesFrameConfig()
+	void SDRC_StoriesFrameJsonApi(string fileName)
 	{
-		
+		SetFileName(fileName);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	void Load()
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(DC_MISSIONCONFIG_FILE);
+		SCR_JsonLoadContext loadContext = LoadConfig();
 		if (!loadContext)
 		{
 			SetDefaults();
@@ -83,7 +81,7 @@ class SDRC_StoriesFrameJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void Save(string data)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen(DC_MISSIONCONFIG_FILE);
+		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	
