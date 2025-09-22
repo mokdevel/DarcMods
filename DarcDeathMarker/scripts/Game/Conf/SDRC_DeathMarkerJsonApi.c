@@ -26,18 +26,22 @@ class SDRC_DeathMarkerJsonApi : SDRC_JsonApi
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void Load()
+	bool Load(bool createMissingFiles = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig();
-		
+		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
 		{
+			if (!createMissingFiles)
+			{
+				return false;
+			}
 			SetDefaults();
 			Save();
-			return;
+			return true;
 		}
 		
 		loadContext.ReadValue("", conf);
+		return true;
 	}	
 
 	//------------------------------------------------------------------------------------------------

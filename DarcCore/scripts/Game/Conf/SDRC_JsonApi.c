@@ -8,19 +8,17 @@
 class SDRC_JsonApi : JsonApiStruct
 {
 	private string m_FileName = "";
-			
+				
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Load the json config	
-	\param fileName file name
-	\param respectOverWrite Defines if the SDRC_Conf.OVERWRITE_JSON setting is to be respected. If false, overwrite of files will not happen.
+	\param createMissingFiles Defines if the SDRC_Conf.OVERWRITE_JSON setting is to be respected. If false, overwrite of files will not happen.
 	*/
-	SCR_JsonLoadContext LoadConfig(bool respectOverWrite = true)
+	SCR_JsonLoadContext LoadConfig(bool createMissingFiles = true)
 	{	
-//		SetFileName(fileName);
 		SCR_JsonLoadContext loadContext = new SCR_JsonLoadContext();
 		
-		if (SDRC_Conf.OVERWRITE_JSON && respectOverWrite)
+		if (SDRC_Conf.OVERWRITE_JSON && createMissingFiles)
 		{
 			SDRC_Log.Add("[SDRC_JsonApi] Not release build - overwriting json config on disk.", LogLevel.WARNING);
 			return null;
@@ -30,7 +28,14 @@ class SDRC_JsonApi : JsonApiStruct
 		
 		if (!success)
 		{
-			SDRC_Log.Add("[SDRC_JsonApi] Config file load failed or not found (" + m_FileName + "). Creating a default config.", LogLevel.ERROR);
+			if (createMissingFiles)
+			{
+				SDRC_Log.Add("[SDRC_JsonApi] Config file load failed or not found (" + m_FileName + "). Creating a default config.", LogLevel.ERROR);
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_JsonApi] Config file load failed or not found (" + m_FileName + ").", LogLevel.ERROR);
+			}
 			return null;
 		}
 
@@ -42,8 +47,6 @@ class SDRC_JsonApi : JsonApiStruct
 	//------------------------------------------------------------------------------------------------
 	SCR_JsonSaveContext SaveConfigOpen()
 	{
-//		SetFileName(fileName);
-		
 		SCR_JsonSaveContext saveContext = new SCR_JsonSaveContext();
 		
 		return saveContext;

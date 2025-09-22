@@ -58,24 +58,30 @@ class SDRC_StoriesFrameJsonApi : SDRC_JsonApi
 	{
 		SetFileName(fileName);
 	}
-	
+
 	//------------------------------------------------------------------------------------------------
-	void Load()
+	bool Load(bool createMissingFiles = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig();
+		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
 		{
+			if (!createMissingFiles)
+			{
+				return false;
+			}
 			SetDefaults();
 			Save();
-			return;
+			return true;
 		}
 		
 		loadContext.ReadValue("", conf);
-
+		
 		if (conf.storiesFrameCycleTime < SDRC_STORIESFRAME_CYCLE_TIME_LIMIT)
 		{
 			SDRC_Log.Add("[SDRC_StoriesFrameConfig] storiesFrameCycleTime is less than " + SDRC_STORIESFRAME_CYCLE_TIME_LIMIT + ". This could lead to performance issues.", LogLevel.WARNING);
 		}
+		
+		return true;
 	}	
 
 	//------------------------------------------------------------------------------------------------
@@ -110,10 +116,8 @@ class SDRC_StoriesFrameJsonApi : SDRC_JsonApi
 		//Load stories from file
 		SDRC_Story00_JsonApi story00_JsonApi = new SDRC_Story00_JsonApi();		
 		story00_JsonApi.Load();
-		//conf.stories.Insert(story00_JsonApi.conf);		
 		
 		SDRC_Story01_JsonApi story01_JsonApi = new SDRC_Story01_JsonApi();		
 		story01_JsonApi.Load();
-		//conf.stories.Insert(story01_JsonApi.conf);
 	}	
 }
