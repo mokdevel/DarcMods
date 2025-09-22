@@ -17,7 +17,7 @@ class SDRC_Camp : Managed
 	ref array<string> groupTypes = {};
 	int aiSkill;
 	float aiPerception;
-	float emptySize = 7;					//The size (radius) of the empty space to found to decide on a mission position.
+	float emptySize = 7;					//The size (radius) of the empty space needed to decide on a mission position.
 	
 	//Optional settings
 	ref SDRC_Loot loot = null;

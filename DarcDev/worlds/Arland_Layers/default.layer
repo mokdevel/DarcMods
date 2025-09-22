@@ -46,6 +46,11 @@ SCR_BaseGameMode GameMode_Deathmatch_Automatic1 : "{B00D51315A1C7150}Prefabs/MP/
 }
 SCR_CampaignFactionManager CampaignFactionManager1 : "{F1AC26310BAE3788}Prefabs/MP/Campaign/CampaignFactionManager.et" {
  coords 1003.632 39 2497.115
+ Factions {
+  SCR_CampaignFaction "{50B30C3AF4BFD934}" {
+   m_bIsPlayable 0
+  }
+ }
 }
 SCR_SpawnPoint : "{4FEA25583D0975F7}Prefabs/MP/Spawning/SpawnPoint_USSR.et" {
  coords 906.641 39.009 2620.362

@@ -1,5 +1,6 @@
 //Modded/SDRC_Spawner_BaseGameMode.c
 
+//------------------------------------------------------------------------------------------------
 modded class SCR_BaseGameMode 
 {
 	//private 
@@ -35,6 +36,7 @@ modded class SCR_BaseGameMode
 		}
     }
 	
+	//------------------------------------------------------------------------------------------------
 	override void OnPlayerSpawned(int playerId, IEntity controlledEntity)	
 	{
 		super.OnPlayerSpawned(playerId, controlledEntity);
@@ -46,6 +48,7 @@ modded class SCR_BaseGameMode
 		SDRC_Log.Add("[SDRC_Spawner_BaseGameMode] Player spawned", LogLevel.DEBUG);
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	private void StartSpawner()
 	{		
 		if (SDRC_Conf.coreHasStarted)
@@ -59,4 +62,4 @@ modded class SCR_BaseGameMode
 			SDRC_Log.Add("[SDRC_Spawner_BaseGameMode:StartSpawner] Core not running. Waiting...", LogLevel.DEBUG);
 		}
 	}
-};
+}
