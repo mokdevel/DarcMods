@@ -5,7 +5,7 @@ const string DC_CONFIG_FILE_DEATHMARKER = "dc_deathMarkerConfig.json";
 modded class SCR_BaseGameMode 
 {
 	ref SDRC_DeathMarkerJsonApi m_DC_DeathMarkerConfig;// = new SDRC_DeathMarkerJsonApi(DC_CONFIG_FILE_DEATHMARKER);
-	ref SDRC_DeathMarkerConfig m_Config;
+	ref SDRC_DeathMarkerConfig m_Config = null;
 
 	//------------------------------------------------------------------------------------------------
     override void OnGameStart()
@@ -40,7 +40,14 @@ modded class SCR_BaseGameMode
 		{		
 			m_DC_DeathMarkerConfig = new SDRC_DeathMarkerJsonApi(DC_CONFIG_FILE_DEATHMARKER);
 			//Load configuration from file
-			m_DC_DeathMarkerConfig.Load();
+			bool success = m_DC_DeathMarkerConfig.Load();
+			
+			if (!success)
+			{
+				SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:InitDeathMarker] Error loading " + DC_CONFIG_FILE_DEATHMARKER + ". SDRC_DeathMarker not started.", LogLevel.ERROR);
+				return;
+			}			
+			
 			m_Config = m_DC_DeathMarkerConfig.conf;
 		}
 		else
@@ -53,22 +60,25 @@ modded class SCR_BaseGameMode
 	//------------------------------------------------------------------------------------------------
 	override void OnPlayerKilled(int playerId, IEntity playerEntity, IEntity killerEntity, notnull Instigator killer)
 	{
-		string playername = SDRC_PlayerHelper.GetPlayerName(playerId);
-		
-		if (playername != "")
+		if (SDRC_Conf.SDRC_ENABLE_DARCDEATHMARKER && m_Config)
 		{
-			Faction faction = null;				//By default, marker is visible for everyone
-
-			if (m_Config.visibleOnlyToFaction)
+			string playername = SDRC_PlayerHelper.GetPlayerName(playerId);
+			
+			if (playername != "")
 			{
-				faction = SDRC_PlayerHelper.GetPlayerFaction(playerEntity);
+				Faction faction = null;				//By default, marker is visible for everyone
+	
+				if (m_Config.visibleOnlyToFaction)
+				{
+					faction = SDRC_PlayerHelper.GetPlayerFaction(playerEntity);
+				}
+				
+				SDRC_MapMarkerHelper.DeleteMarker(playername, true);
+				SDRC_MapMarkerHelper.CreateMapMarker(playerEntity.GetOrigin(), DC_EMissionIcon.ICON_DEATHMARKER_SMALL_MAP, playername, playername, m_Config.markerLifeTime, faction: faction);
 			}
 			
-			SDRC_MapMarkerHelper.DeleteMarker(playername, true);
-			SDRC_MapMarkerHelper.CreateMapMarker(playerEntity.GetOrigin(), DC_EMissionIcon.ICON_DEATHMARKER_SMALL_MAP, playername, playername, m_Config.markerLifeTime, faction: faction);
+			SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:OnPlayerKilled] Player died: " + playername, LogLevel.DEBUG);        
 		}
-		
-		SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:OnPlayerKilled] Player died: " + playername, LogLevel.DEBUG);        
 		
 		super.OnPlayerKilled(playerId, playerEntity, killerEntity, killer);		
 	}
