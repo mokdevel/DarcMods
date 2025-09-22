@@ -36,11 +36,17 @@ class SDRC_StoriesFrame
 //		m_sWorldName = SDRC_Misc.GetWorldName(true);
 
 		//Load configuration from file
-		m_DC_StoriesFrameJsonApi.Load();
-		m_Config = m_DC_StoriesFrameJsonApi.conf;
-		
 		m_DC_StoriesFrameJsonApi.CreateStories();
-
+		bool success = m_DC_StoriesFrameJsonApi.Load();
+		
+		if (!success)
+		{
+			SDRC_Log.Add("[SDRC_StoriesFrame] Error loading " + DC_MISSIONCONFIG_FILE_STORIES + ". SDRC_StoriesFrame not started.", LogLevel.ERROR);
+			m_State = DC_EStoriesFrameState.ERROR;
+			return;
+		}
+		
+		m_Config = m_DC_StoriesFrameJsonApi.conf;
 		m_StoryIdx = 0;
 		
 		//Fix seconds to ms
