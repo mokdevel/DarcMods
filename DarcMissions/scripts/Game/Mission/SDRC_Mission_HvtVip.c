@@ -26,17 +26,20 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	void SDRC_Mission_HvtVip(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
+		m_HvtVipJsonApi.CreateMissionFiles();
 		m_HvtVipJsonApi.Load();
+		m_HvtVipJsonApi.LoadMissionFiles();			
 		m_Config = m_HvtVipJsonApi.conf;
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
-		if (GetSubIdx() == -1)
+		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
+		if (idx == -1)
 		{
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
-		}	
-		m_DC_HvtVip = m_Config.subMissions[GetSubIdx()];
+		}
+		m_DC_HvtVip = m_Config.subMissions[idx];			
 		HandleRequestGeneralVariables(m_DC_HvtVip.general, request);
 		
 		//Set defaults
@@ -226,6 +229,20 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 	//Variables here
 	int buildingRadius;								//The radius to search for suitable buildings.
 	ref array<ref SDRC_HvtVip> subMissions = {};	//List of HvtVips
+	
+	int GetSubMissionIdx(int subIdx)
+	{
+		int idx = -1;
+		foreach (int i, SDRC_HvtVip subMission : subMissions)
+		{
+			if (subMission.general.subIdx == subIdx)
+			{
+				idx = i;
+				break;
+			}
+		}
+		return idx;
+	}	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -268,17 +285,23 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	}
 			
 	//------------------------------------------------------------------------------------------------
-	void Load(bool respectOverWrite = true)
+	bool Load(bool createMissingFiles = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);		
+		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
 		{
+			if (!createMissingFiles)
+			{
+				return false;
+			}
 			SetDefaults();
 			Save();
-			return;
+			return true;
 		}
+		
 		loadContext.ReadValue("", conf);
-	}	
+		return true;
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	void Save()
@@ -287,7 +310,33 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	
-		
+
+	//------------------------------------------------------------------------------------------------
+	void CreateMissionFiles()
+	{
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void LoadMissionFiles()
+	{
+		//Load mission files
+		foreach (string missionFile : conf.missionFiles)
+		{
+			SDRC_HvtVipJsonApi jsonApi = new SDRC_HvtVipJsonApi(missionFile);		
+			if (jsonApi.Load(false))
+			{
+				foreach (SDRC_HvtVip subMission : jsonApi.conf.subMissions)
+				{
+					conf.subMissions.Insert(subMission);
+				}
+				foreach (int idx : jsonApi.conf.missionList)
+				{
+					conf.missionList.Insert(idx);
+				}
+			}
+		}
+	}	
+				
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{

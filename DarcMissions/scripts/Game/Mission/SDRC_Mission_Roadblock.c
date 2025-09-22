@@ -21,17 +21,20 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	void SDRC_Mission_Roadblock(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
+		m_RoadblockJsonApi.CreateMissionFiles();
 		m_RoadblockJsonApi.Load();
+		m_RoadblockJsonApi.LoadMissionFiles();		
 		m_Config = m_RoadblockJsonApi.conf;
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
-		if (GetSubIdx() == -1)
+		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
+		if (idx == -1)
 		{
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
-		m_DC_Roadblock = m_Config.subMissions[GetSubIdx()];
+		m_DC_Roadblock = m_Config.subMissions[idx];
 		HandleRequestGeneralVariables(m_DC_Roadblock.general, request);
 		
 		//For requested missions we want have it as close as possible in the requested place.
@@ -178,6 +181,20 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 	//Mission specific
 	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found	
 	ref array<ref SDRC_Camp> subMissions = {};		//List of roadblocks - uses the same structure as for occupations	
+	
+	int GetSubMissionIdx(int subIdx)
+	{
+		int idx = -1;
+		foreach (int i, SDRC_Camp subMission : subMissions)
+		{
+			if (subMission.general.subIdx == subIdx)
+			{
+				idx = i;
+				break;
+			}
+		}
+		return idx;
+	}		
 }
 
 //------------------------------------------------------------------------------------------------
@@ -192,16 +209,23 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	}
 		
 	//------------------------------------------------------------------------------------------------
-	void Load(bool respectOverWrite = true)
+	//------------------------------------------------------------------------------------------------
+	bool Load(bool createMissingFiles = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);		
+		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
 		{
+			if (!createMissingFiles)
+			{
+				return false;
+			}
 			SetDefaults();
 			Save();
-			return;
+			return true;
 		}
+		
 		loadContext.ReadValue("", conf);
+		return true;
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -211,7 +235,33 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	
-		
+
+	//------------------------------------------------------------------------------------------------
+	void CreateMissionFiles()
+	{
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void LoadMissionFiles()
+	{
+		//Load mission files
+		foreach (string missionFile : conf.missionFiles)
+		{
+			SDRC_RoadblockJsonApi jsonApi = new SDRC_RoadblockJsonApi(missionFile);		
+			if (jsonApi.Load(false))
+			{
+				foreach (SDRC_Camp subMission : jsonApi.conf.subMissions)
+				{
+					conf.subMissions.Insert(subMission);
+				}
+				foreach (int idx : jsonApi.conf.missionList)
+				{
+					conf.missionList.Insert(idx);
+				}
+			}
+		}
+	}	
+			
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{

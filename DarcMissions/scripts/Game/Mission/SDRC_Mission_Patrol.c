@@ -20,17 +20,20 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	void SDRC_Mission_Patrol(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
+		m_PatrolJsonApi.CreateMissionFiles();
 		m_PatrolJsonApi.Load();
+		m_PatrolJsonApi.LoadMissionFiles();			
 		m_Config = m_PatrolJsonApi.conf;
 
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
-		if (GetSubIdx() == -1)
+		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
+		if (idx == -1)
 		{
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
-		}	
-		m_DC_Patrol = m_Config.subMissions[GetSubIdx()];
+		}
+		m_DC_Patrol = m_Config.subMissions[idx];		
 		HandleRequestGeneralVariables(m_DC_Patrol.general, request);
 
 		//Check that ranges are not too big
@@ -157,6 +160,20 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 	int patrolingTime;								//(seconds) Time to patrol. Once this time has passed and no players nearby, despawn mission.
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
 	ref array<ref SDRC_Patrol> subMissions = {};	//List of patrols
+	
+	int GetSubMissionIdx(int subIdx)
+	{
+		int idx = -1;
+		foreach (int i, SDRC_Patrol subMission : subMissions)
+		{
+			if (subMission.general.subIdx == subIdx)
+			{
+				idx = i;
+				break;
+			}
+		}
+		return idx;
+	}	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -197,16 +214,22 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 	}
 		
 	//------------------------------------------------------------------------------------------------
-	void Load(bool respectOverWrite = true)
+	bool Load(bool createMissingFiles = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);		
+		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
 		{
+			if (!createMissingFiles)
+			{
+				return false;
+			}
 			SetDefaults();
 			Save();
-			return;
+			return true;
 		}
+		
 		loadContext.ReadValue("", conf);
+		return true;
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -216,7 +239,33 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	
-		
+
+	//------------------------------------------------------------------------------------------------
+	void CreateMissionFiles()
+	{
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void LoadMissionFiles()
+	{
+		//Load mission files
+		foreach (string missionFile : conf.missionFiles)
+		{
+			SDRC_PatrolJsonApi jsonApi = new SDRC_PatrolJsonApi(missionFile);		
+			if (jsonApi.Load(false))
+			{
+				foreach (SDRC_Patrol subMission : jsonApi.conf.subMissions)
+				{
+					conf.subMissions.Insert(subMission);
+				}
+				foreach (int idx : jsonApi.conf.missionList)
+				{
+					conf.missionList.Insert(idx);
+				}
+			}
+		}
+	}		
+			
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{

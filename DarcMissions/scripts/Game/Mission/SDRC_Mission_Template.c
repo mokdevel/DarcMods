@@ -117,16 +117,22 @@ class SDRC_TemplateJsonApi : SDRC_JsonApi
 	}
 			
 	//------------------------------------------------------------------------------------------------
-	void Load(bool respectOverWrite = true)
+	bool Load(bool createMissingFiles = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);		
+		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
 		{
+			if (!createMissingFiles)
+			{
+				return false;
+			}
 			SetDefaults();
 			Save();
-			return;
+			return true;
 		}
+		
 		loadContext.ReadValue("", conf);
+		return true;
 	}	
 	
 	//------------------------------------------------------------------------------------------------

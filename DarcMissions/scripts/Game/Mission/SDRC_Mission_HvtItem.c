@@ -26,17 +26,20 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	void SDRC_Mission_HvtItem(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
+		m_HvtItemJsonApi.CreateMissionFiles();
 		m_HvtItemJsonApi.Load();
+		m_HvtItemJsonApi.LoadMissionFiles();			
 		m_Config = m_HvtItemJsonApi.conf;
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
-		if (GetSubIdx() == -1)
+		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
+		if (idx == -1)
 		{
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
-		}		
-		m_DC_HvtItem = m_Config.subMissions[GetSubIdx()];
+		}
+		m_DC_HvtItem = m_Config.subMissions[idx];			
 		HandleRequestGeneralVariables(m_DC_HvtItem.general, request);
 		
 		//Camps are randomly rotated
@@ -183,6 +186,20 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 	//Variables here
 	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found
 	ref array<ref SDRC_HvtItem> subMissions = {};	//List of HvtItems
+	
+	int GetSubMissionIdx(int subIdx)
+	{
+		int idx = -1;
+		foreach (int i, SDRC_HvtItem subMission : subMissions)
+		{
+			if (subMission.general.subIdx == subIdx)
+			{
+				idx = i;
+				break;
+			}
+		}
+		return idx;
+	}			
 }
 
 //------------------------------------------------------------------------------------------------
@@ -204,26 +221,58 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 	}
 			
 	//------------------------------------------------------------------------------------------------
-	void Load(bool respectOverWrite = true)
+	bool Load(bool createMissingFiles = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);		
+		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
 		{
+			if (!createMissingFiles)
+			{
+				return false;
+			}
 			SetDefaults();
-			Save("");
-			return;
+			Save();
+			return true;
 		}
+		
 		loadContext.ReadValue("", conf);
+		return true;
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save(string data)
+	void Save()
 	{
 		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	
-		
+
+	//------------------------------------------------------------------------------------------------
+	void CreateMissionFiles()
+	{
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void LoadMissionFiles()
+	{
+		//Load mission files
+		foreach (string missionFile : conf.missionFiles)
+		{
+			SDRC_HvtItemJsonApi jsonApi = new SDRC_HvtItemJsonApi(missionFile);		
+			if (jsonApi.Load(false))
+			{
+				foreach (SDRC_HvtItem subMission : jsonApi.conf.subMissions)
+				{
+					conf.subMissions.Insert(subMission);
+				}
+				foreach (int idx : jsonApi.conf.missionList)
+				{
+					conf.missionList.Insert(idx);
+				}
+			}
+		}
+	}	
+			
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{

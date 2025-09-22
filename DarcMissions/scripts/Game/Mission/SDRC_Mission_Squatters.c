@@ -22,17 +22,20 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	void SDRC_Mission_Squatter(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
+		m_SquatterJsonApi.CreateMissionFiles();
 		m_SquatterJsonApi.Load();
+		m_SquatterJsonApi.LoadMissionFiles();	
 		m_Config = m_SquatterJsonApi.conf;
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
-		if (GetSubIdx() == -1)
+		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
+		if (idx == -1)
 		{
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
-		m_DC_Squatter = m_Config.subMissions[GetSubIdx()];
+		m_DC_Squatter = m_Config.subMissions[idx];
 		HandleRequestGeneralVariables(m_DC_Squatter.general, request);
 		
 		//Set defaults
@@ -173,6 +176,20 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 	//Variables here
 	int buildingRadius;									//The radius to search for suitable buildings.
 	ref array<ref SDRC_Squatter> subMissions = {};		//List of squatters
+	
+	int GetSubMissionIdx(int subIdx)
+	{
+		int idx = -1;
+		foreach (int i, SDRC_Squatter subMission : subMissions)
+		{
+			if (subMission.general.subIdx == subIdx)
+			{
+				idx = i;
+				break;
+			}
+		}
+		return idx;
+	}		
 }
 
 //------------------------------------------------------------------------------------------------
@@ -213,16 +230,22 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void Load(bool respectOverWrite = true)
+	bool Load(bool createMissingFiles = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);		
+		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
 		{
+			if (!createMissingFiles)
+			{
+				return false;
+			}
 			SetDefaults();
 			Save();
-			return;
+			return true;
 		}
+		
 		loadContext.ReadValue("", conf);
+		return true;
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -232,7 +255,33 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	
-		
+
+	//------------------------------------------------------------------------------------------------
+	void CreateMissionFiles()
+	{
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void LoadMissionFiles()
+	{
+		//Load mission files
+		foreach (string missionFile : conf.missionFiles)
+		{
+			SDRC_SquatterJsonApi jsonApi = new SDRC_SquatterJsonApi(missionFile);		
+			if (jsonApi.Load(false))
+			{
+				foreach (SDRC_Squatter subMission : jsonApi.conf.subMissions)
+				{
+					conf.subMissions.Insert(subMission);
+				}
+				foreach (int idx : jsonApi.conf.missionList)
+				{
+					conf.missionList.Insert(idx);
+				}
+			}
+		}
+	}		
+			
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
