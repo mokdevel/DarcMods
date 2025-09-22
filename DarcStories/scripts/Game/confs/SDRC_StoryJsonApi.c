@@ -30,7 +30,7 @@ class SDRC_StoryJsonApi : SDRC_JsonApi
 		if (!loadContext)
 		{
 			SetDefaults();
-			Save("");
+			Save();
 			return;
 		}
 		
@@ -38,7 +38,7 @@ class SDRC_StoryJsonApi : SDRC_JsonApi
 	}	
 
 	//------------------------------------------------------------------------------------------------
-	void Save(string data)
+	void Save()
 	{
 		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);

@@ -30,7 +30,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}	
-		m_DC_Patrol = m_Config.patrols[GetSubIdx()];
+		m_DC_Patrol = m_Config.subMissions[GetSubIdx()];
 		HandleRequestGeneralVariables(m_DC_Patrol.general, request);
 
 		//Check that ranges are not too big
@@ -156,7 +156,7 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 	//Mission specific	
 	int patrolingTime;								//(seconds) Time to patrol. Once this time has passed and no players nearby, despawn mission.
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
-	ref array<ref SDRC_Patrol> patrols = {};		//List of patrols
+	ref array<ref SDRC_Patrol> subMissions = {};	//List of patrols
 }
 
 //------------------------------------------------------------------------------------------------
@@ -197,22 +197,20 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 	}
 		
 	//------------------------------------------------------------------------------------------------
-	void Load()
+	void Load(bool respectOverWrite = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig();
-		
+		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);		
 		if (!loadContext)
 		{
 			SetDefaults();
-			Save("");
+			Save();
 			return;
 		}
-
 		loadContext.ReadValue("", conf);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save(string data)
+	void Save()
 	{
 		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
@@ -231,10 +229,10 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		//Mission specific
 		conf.distanceToPlayer = 500;
 		//----------------------------------------------------
-		conf.patrols.Insert(Patrol0());
-		conf.patrols.Insert(Patrol1());
-		conf.patrols.Insert(Patrol2());
-		conf.patrols.Insert(Patrol3());
+		conf.subMissions.Insert(Patrol0());
+		conf.subMissions.Insert(Patrol1());
+		conf.subMissions.Insert(Patrol2());
+		conf.subMissions.Insert(Patrol3());
 	};
 	
 	//----------------------------------------------------

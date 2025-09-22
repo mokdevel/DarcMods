@@ -32,7 +32,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
-		m_DC_Squatter = m_Config.squatters[GetSubIdx()];
+		m_DC_Squatter = m_Config.subMissions[GetSubIdx()];
 		HandleRequestGeneralVariables(m_DC_Squatter.general, request);
 		
 		//Set defaults
@@ -172,7 +172,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 	
 	//Variables here
 	int buildingRadius;									//The radius to search for suitable buildings.
-	ref array<ref SDRC_Squatter> squatters = {};		//List of squatters
+	ref array<ref SDRC_Squatter> subMissions = {};		//List of squatters
 }
 
 //------------------------------------------------------------------------------------------------
@@ -213,22 +213,20 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void Load()
+	void Load(bool respectOverWrite = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig();
-		
+		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);		
 		if (!loadContext)
 		{
 			SetDefaults();
-			Save("");
+			Save();
 			return;
 		}
-
 		loadContext.ReadValue("", conf);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save(string data)
+	void Save()
 	{
 		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
@@ -244,12 +242,12 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		//Mission specific
 		conf.buildingRadius = 400;
 		//----------------------------------------------------
-		conf.squatters.Insert(Squatter0());				
-		conf.squatters.Insert(Squatter1());				
-		conf.squatters.Insert(Squatter2());				
-		conf.squatters.Insert(Squatter3());				
-		conf.squatters.Insert(Squatter4());				
-		conf.squatters.Insert(Squatter5());				
+		conf.subMissions.Insert(Squatter0());				
+		conf.subMissions.Insert(Squatter1());				
+		conf.subMissions.Insert(Squatter2());				
+		conf.subMissions.Insert(Squatter3());				
+		conf.subMissions.Insert(Squatter4());				
+		conf.subMissions.Insert(Squatter5());				
 	};
 			
 	//----------------------------------------------------

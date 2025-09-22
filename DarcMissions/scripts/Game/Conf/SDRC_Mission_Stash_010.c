@@ -15,6 +15,7 @@ class SDRC_Stash_010_JsonApi : SDRC_StashJsonApi
 	void SDRC_Stash_010_JsonApi(string fileName = "")
 	{		
 		SetFileName(DC_MISSIONCONFIG_FILE);
+		//SetDefaults();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -23,10 +24,10 @@ class SDRC_Stash_010_JsonApi : SDRC_StashJsonApi
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.activeDistance = 50;
-		conf.missionList = {0};
+		conf.missionList = {10};
 		//Mission specific		
 		//----------------------------------------------------
-		conf.Stashs.Insert(Stash10());				
+		conf.subMissions.Insert(Stash10());				
 	};
 	
 	//----------------------------------------------------
@@ -37,7 +38,7 @@ class SDRC_Stash_010_JsonApi : SDRC_StashJsonApi
 			10, "index 10: Random stash",
 			{"0 0 0"},
 			"any",
-			"A stash near %l",
+			"Hidden loot near %l",
 			"Loot is yours to take",
 			DC_EMissionWinCondition.FIND_IN_15,
 			"Loot found.",
@@ -50,7 +51,7 @@ class SDRC_Stash_010_JsonApi : SDRC_StashJsonApi
 		stash.Set(
 			{
 			},
-			{0, 0},
+			{0, 1},
 			{50, 300},
 			DC_EWaypointGenerationType.RANDOM,
 			DC_EWaypointMoveType.PATROLCYCLE,

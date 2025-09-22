@@ -367,7 +367,7 @@ sealed class SDRC_MissionHelper
 				
 		return idx;
 	}
-	
+
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Create info to show to players.

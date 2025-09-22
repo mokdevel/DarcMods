@@ -36,7 +36,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}	
-		m_DC_HvtVip = m_Config.hvtVips[GetSubIdx()];
+		m_DC_HvtVip = m_Config.subMissions[GetSubIdx()];
 		HandleRequestGeneralVariables(m_DC_HvtVip.general, request);
 		
 		//Set defaults
@@ -225,7 +225,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 	
 	//Variables here
 	int buildingRadius;								//The radius to search for suitable buildings.
-	ref array<ref SDRC_HvtVip> hvtVips = {};		//List of HvtVips
+	ref array<ref SDRC_HvtVip> subMissions = {};	//List of HvtVips
 }
 
 //------------------------------------------------------------------------------------------------
@@ -268,22 +268,20 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	}
 			
 	//------------------------------------------------------------------------------------------------
-	void Load()
+	void Load(bool respectOverWrite = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig();
-		
+		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);		
 		if (!loadContext)
 		{
 			SetDefaults();
-			Save("");
+			Save();
 			return;
 		}
-
 		loadContext.ReadValue("", conf);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save(string data)
+	void Save()
 	{
 		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
@@ -299,10 +297,10 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		//Mission specific
 		conf.buildingRadius = 400;
 		//----------------------------------------------------
-		conf.hvtVips.Insert(HvtVip0());				
-		conf.hvtVips.Insert(HvtVip1());				
-		conf.hvtVips.Insert(HvtVip2());				
-		conf.hvtVips.Insert(HvtVip3());				
+		conf.subMissions.Insert(HvtVip0());				
+		conf.subMissions.Insert(HvtVip1());				
+		conf.subMissions.Insert(HvtVip2());				
+		conf.subMissions.Insert(HvtVip3());				
 	};
 			
 	//----------------------------------------------------

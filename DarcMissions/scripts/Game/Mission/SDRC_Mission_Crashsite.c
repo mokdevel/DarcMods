@@ -46,7 +46,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
-		m_DC_Crashsite = m_Config.crashsites[GetSubIdx()];
+		m_DC_Crashsite = m_Config.subMissions[GetSubIdx()];
 		HandleRequestGeneralVariables(m_DC_Crashsite.general, request);
 		
 		//Find position
@@ -314,7 +314,7 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 	int distanceToMission;								//Distance to mission when searching for a mission pos. Overrides missionFrame settings.
 	int distanceToPlayer;								//Distance to player when searching for a mission pos. Overrides missionFrame settings.
 	ref array<int> flyHeight = {};						//min, max - Spawn helicopter between these values.
-	ref array<ref SDRC_Crashsite> crashsites = {};		//List of crashsites
+	ref array<ref SDRC_Crashsite> subMissions = {};		//List of crashsites
 }
 
 //------------------------------------------------------------------------------------------------
@@ -349,22 +349,20 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 	}
 			
 	//------------------------------------------------------------------------------------------------
-	void Load()
+	void Load(bool respectOverWrite = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig();
-		
+		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);		
 		if (!loadContext)
 		{
 			SetDefaults();
-			Save("");
+			Save();
 			return;
 		}
-
 		loadContext.ReadValue("", conf);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save(string data)
+	void Save()
 	{
 		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
@@ -384,8 +382,8 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		conf.distanceToPlayer = 500;
 		conf.flyHeight = {80, 120};
 		//----------------------------------------------------
-		conf.crashsites.Insert(Crashsite0());
-		conf.crashsites.Insert(Crashsite1());
+		conf.subMissions.Insert(Crashsite0());
+		conf.subMissions.Insert(Crashsite1());
 	};
 			
 	//----------------------------------------------------

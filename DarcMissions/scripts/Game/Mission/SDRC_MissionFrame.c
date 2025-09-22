@@ -87,7 +87,7 @@ class SDRC_MissionFrame
 			SDRC_Log.Add("[SDRC_MissionFrame] ---------------- Creating default configs -------------------", LogLevel.WARNING);
 			SDRC_Log.Add("[SDRC_MissionFrame] - Changing recreateConfigs to false and saving the config.  -", LogLevel.WARNING);
 			m_Config.recreateConfigs = false;
-			m_DC_MissionFrameJsonApi.Save("");
+			m_DC_MissionFrameJsonApi.Save();
 			SDRC_Log.Add("[SDRC_MissionFrame] - Creating configs. Existing ones will not be over written. -", LogLevel.WARNING);
 			SDRC_MissionEnumHelper.CreateAllConfigs();
 			SDRC_Log.Add("[SDRC_MissionFrame] --------------------- Configs created. ----------------------", LogLevel.WARNING

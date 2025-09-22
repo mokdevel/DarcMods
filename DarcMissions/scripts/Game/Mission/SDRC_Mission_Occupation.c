@@ -31,7 +31,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
-		m_DC_Occupation = m_Config.occupations[GetSubIdx()];
+		m_DC_Occupation = m_Config.subMissions[GetSubIdx()];
 		HandleRequestGeneralVariables(m_DC_Occupation.general, request);
 				
 		//Camps are randomly rotated
@@ -130,7 +130,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 {
 	//Mission specific	
 	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found
-	ref array<ref SDRC_Camp> occupations = {};		//List of occupations
+	ref array<ref SDRC_Camp> subMissions = {};		//List of occupations
 }
 
 //------------------------------------------------------------------------------------------------
@@ -145,22 +145,20 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 	}
 			
 	//------------------------------------------------------------------------------------------------
-	void Load()
+	void Load(bool respectOverWrite = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig();
-		
+		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);		
 		if (!loadContext)
 		{
 			SetDefaults();
-			Save("");
+			Save();
 			return;
 		}
-
 		loadContext.ReadValue("", conf);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save(string data)
+	void Save()
 	{
 		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
@@ -175,13 +173,13 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.missionList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
 		//Mission specific		
 		//----------------------------------------------------
-		conf.occupations.Insert(Occupation0());				
-		conf.occupations.Insert(Occupation1());				
-		conf.occupations.Insert(Occupation2());				
-		conf.occupations.Insert(Occupation3());				
-		conf.occupations.Insert(Occupation4());				
-		conf.occupations.Insert(Occupation5());				
-		conf.occupations.Insert(Occupation6());				
+		conf.subMissions.Insert(Occupation0());				
+		conf.subMissions.Insert(Occupation1());				
+		conf.subMissions.Insert(Occupation2());				
+		conf.subMissions.Insert(Occupation3());				
+		conf.subMissions.Insert(Occupation4());				
+		conf.subMissions.Insert(Occupation5());				
+		conf.subMissions.Insert(Occupation6());				
 	};
 	
 	//----------------------------------------------------

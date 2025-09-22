@@ -36,7 +36,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}		
-		m_DC_HvtItem = m_Config.hvtItems[GetSubIdx()];
+		m_DC_HvtItem = m_Config.subMissions[GetSubIdx()];
 		HandleRequestGeneralVariables(m_DC_HvtItem.general, request);
 		
 		//Camps are randomly rotated
@@ -182,7 +182,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 	
 	//Variables here
 	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found
-	ref array<ref SDRC_HvtItem> hvtItems = {};			//List of HvtItems
+	ref array<ref SDRC_HvtItem> subMissions = {};	//List of HvtItems
 }
 
 //------------------------------------------------------------------------------------------------
@@ -204,17 +204,15 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 	}
 			
 	//------------------------------------------------------------------------------------------------
-	void Load()
+	void Load(bool respectOverWrite = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig();
-		
+		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);		
 		if (!loadContext)
 		{
 			SetDefaults();
 			Save("");
 			return;
 		}
-
 		loadContext.ReadValue("", conf);
 	}	
 	
@@ -234,9 +232,9 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		conf.missionList = {0,1,2};
 		//Mission specific
 		//----------------------------------------------------
-		conf.hvtItems.Insert(HvtItem0());				
-		conf.hvtItems.Insert(HvtItem1());				
-		conf.hvtItems.Insert(HvtItem2());				
+		conf.subMissions.Insert(HvtItem0());				
+		conf.subMissions.Insert(HvtItem1());				
+		conf.subMissions.Insert(HvtItem2());				
 	};
 	
 	//----------------------------------------------------

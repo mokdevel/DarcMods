@@ -25,17 +25,19 @@ class SDRC_Mission_Stash : SDRC_Mission
 		//Load config
 		m_StashJsonApi.CreateMissionFiles();
 		m_StashJsonApi.Load();
-		m_Config = m_StashJsonApi.conf;
 		m_StashJsonApi.LoadMissionFiles();
+		m_Config = m_StashJsonApi.conf;
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
-		if (GetSubIdx() == -1)
+		int idx = m_Config.GetWithSubIdx(GetSubIdx());
+		if (idx == -1)
 		{
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
-		m_DC_Stash = m_Config.Stashs[GetSubIdx()];
+		
+		m_DC_Stash = m_Config.subMissions[idx];
 		HandleRequestGeneralVariables(m_DC_Stash.general, request);
 				
 		//Camps are randomly rotated
@@ -132,7 +134,21 @@ class SDRC_StashConfig : SDRC_MissionConfig
 	//Mission specific	
 	bool disableArsenal;						//Disable arsenal for vehicles so that no other items are found
 	int activeDistance;							//Distance of winning and keeping the mission active
-	ref array<ref SDRC_Camp> Stashs = {};		//List of Stashs
+	ref array<ref SDRC_Camp> subMissions = {};	//List of Stashs
+	
+	int GetWithSubIdx(int subIdx)
+	{
+		int idx = -1;
+		foreach (int i, SDRC_Camp subMission : subMissions)
+		{
+			if (subMission.general.subIdx == subIdx)
+			{
+				idx = i;
+				break;
+			}
+		}
+		return idx;
+	}
 }
 
 //------------------------------------------------------------------------------------------------
@@ -142,27 +158,25 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_StashJsonApi(string fileName)
-	{
+	{		
 		SetFileName(fileName);
 	}
 			
 	//------------------------------------------------------------------------------------------------
-	void Load()
+	void Load(bool respectOverWrite = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig();
-		
+		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);		
 		if (!loadContext)
 		{
 			SetDefaults();
-			Save("");
+			Save();
 			return;
-		}
-		
+		}		
 		loadContext.ReadValue("", conf);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save(string data)
+	void Save()
 	{
 		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
@@ -183,15 +197,51 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 		//Load mission files
 		foreach (string missionFile : conf.missionFiles)
 		{
-			SDRC_StashJsonApi stash_JsonApi = new SDRC_StashJsonApi(missionFile);		
-			stash_JsonApi.Load();
-			foreach (SDRC_Camp stash : stash_JsonApi.conf.Stashs)
+			SDRC_StashJsonApi jsonApi = new SDRC_StashJsonApi(missionFile);		
+			jsonApi.Load(false);
+			foreach (SDRC_Camp stash : jsonApi.conf.subMissions)
+			{
+				conf.subMissions.Insert(stash);
+			}
+			foreach (int idx : jsonApi.conf.missionList)
+			{
+				conf.missionList.Insert(idx);
+			}
+			//conf.missionList.InsertAll(jsonApi.conf.missionList);	//TBD: Not sure why this does not work
+		}
+	}
+	
+	/*	void LoadMissionFileClasses(Class cm)
+	{
+		//Load mission files
+		foreach (string missionFile : conf.missionFiles)
+		{
+			DC_EMissionType missionType = DC_EMissionType.STASH;
+			
+			SDRC_JsonApi cmm = new SDRC_JsonApi();
+			cmm = SDRC_StashJsonApi.Cast(cm);
+			cmm = new SDRC_StashJsonApi(missionFile);
+			
+			switch (missionType)
+			{
+				case DC_EMissionType.STASH:
+				{
+					cmm = SDRC_StashJsonApi.Cast(cm);
+					cmm = new SDRC_StashJsonApi(missionFile);
+//					cmm.Load();
+				}
+			}
+			
+			cmm.
+			
+			foreach (SDRC_Camp stash : cmm.conf.Stashs)
 			{
 				conf.Stashs.Insert(stash);
 			}
 		}
-	}
-		
+	}*/
+	
+			
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
@@ -200,9 +250,10 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 		conf.activeDistance = 50;
 		conf.missionList = {0};
 		conf.missionFiles.Insert("dc_missionConfig_Stash_010.json");
+		conf.missionFiles.Insert("dc_missionConfig_Stash_01x.json");
 		//Mission specific		
 		//----------------------------------------------------
-		conf.Stashs.Insert(Stash0());				
+		conf.subMissions.Insert(Stash0());				
 	};
 	
 	//----------------------------------------------------

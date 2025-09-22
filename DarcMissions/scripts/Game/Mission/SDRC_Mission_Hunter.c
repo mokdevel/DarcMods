@@ -41,7 +41,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}		
-		m_DC_Hunter = m_Config.hunters[GetSubIdx()];
+		m_DC_Hunter = m_Config.subMissions[GetSubIdx()];
 		HandleRequestGeneralVariables(m_DC_Hunter.general, request);
 		
 		//Set spawn count
@@ -260,10 +260,10 @@ class SDRC_Mission_Hunter : SDRC_Mission
 //------------------------------------------------------------------------------------------------
 class SDRC_HunterConfig : SDRC_MissionConfig
 {
-	int minDistanceToPlayer;					//Hunter group minimum distance to player for spawn
-	int maxDistanceToPlayer;					//...max distance to despawn
-	int rndDistanceToPlayer;					//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
-	ref array<ref SDRC_Hunter> hunters = {};	//List of hunters
+	int minDistanceToPlayer;						//Hunter group minimum distance to player for spawn
+	int maxDistanceToPlayer;						//...max distance to despawn
+	int rndDistanceToPlayer;						//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
+	ref array<ref SDRC_Hunter> subMissions = {};	//List of hunters
 }
 
 class SDRC_Hunter : Managed
@@ -296,14 +296,14 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 	}
 			
 	//------------------------------------------------------------------------------------------------
-	void Load()
+	void Load(bool respectOverWrite = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig();
+		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);
 		
 		if (!loadContext)
 		{
 			SetDefaults();
-			Save("");
+			Save();
 			return;
 		}
 		
@@ -311,7 +311,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 	}	
 
 	//------------------------------------------------------------------------------------------------
-	void Save(string data)
+	void Save()
 	{
 		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
@@ -331,8 +331,8 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 		conf.rndDistanceToPlayer = 60;
 		
 		//----------------------------------------------------
-		conf.hunters.Insert(Hunter0());				
-		conf.hunters.Insert(Hunter1());				
+		conf.subMissions.Insert(Hunter0());				
+		conf.subMissions.Insert(Hunter1());				
 	}
 	
 	//----------------------------------------------------

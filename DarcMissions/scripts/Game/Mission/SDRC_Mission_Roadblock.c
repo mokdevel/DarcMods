@@ -31,7 +31,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
-		m_DC_Roadblock = m_Config.roadblocks[GetSubIdx()];
+		m_DC_Roadblock = m_Config.subMissions[GetSubIdx()];
 		HandleRequestGeneralVariables(m_DC_Roadblock.general, request);
 		
 		//For requested missions we want have it as close as possible in the requested place.
@@ -176,8 +176,8 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 class SDRC_RoadblockConfig : SDRC_MissionConfig
 {
 	//Mission specific
-	bool disableArsenal;								//Disable arsenal for vehicles so that no other items are found	
-	ref array<ref SDRC_Camp> roadblocks = {};		//List of roadblocks - uses the same structure as for occupations	
+	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found	
+	ref array<ref SDRC_Camp> subMissions = {};		//List of roadblocks - uses the same structure as for occupations	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -192,22 +192,20 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	}
 		
 	//------------------------------------------------------------------------------------------------
-	void Load()
+	void Load(bool respectOverWrite = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig();
-		
+		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);		
 		if (!loadContext)
 		{
 			SetDefaults();
-			Save("");
+			Save();
 			return;
 		}
-
 		loadContext.ReadValue("", conf);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save(string data)
+	void Save()
 	{
 		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
@@ -222,10 +220,10 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		conf.missionList = {0,1,2,3};
 		//Mission specific		
 		//----------------------------------------------------
-		conf.roadblocks.Insert(Roadblock0());				
-		conf.roadblocks.Insert(Roadblock1());				
-		conf.roadblocks.Insert(Roadblock2());				
-		conf.roadblocks.Insert(Roadblock3());				
+		conf.subMissions.Insert(Roadblock0());				
+		conf.subMissions.Insert(Roadblock1());				
+		conf.subMissions.Insert(Roadblock2());				
+		conf.subMissions.Insert(Roadblock3());				
 	};
 	
 	//----------------------------------------------------

@@ -43,7 +43,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
-		m_DC_Convoy = m_Config.convoys[GetSubIdx()];
+		m_DC_Convoy = m_Config.subMissions[GetSubIdx()];
 		HandleRequestGeneralVariables(m_DC_Convoy.general, request);
 		
 		//Find a location for the mission
@@ -321,7 +321,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 	int convoyTime;									//Time to patrol, in seconds
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
 	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found
-	ref array<ref SDRC_Convoy> convoys = {};		//List of convoys
+	ref array<ref SDRC_Convoy> subMissions = {};	//List of convoys
 }
 
 //------------------------------------------------------------------------------------------------
@@ -360,14 +360,14 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	}
 			
 	//------------------------------------------------------------------------------------------------
-	void Load()
+	void Load(bool respectOverWrite = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig();
+		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);
 		
 		if (!loadContext)
 		{
 			SetDefaults();
-			Save("");
+			Save();
 			return;
 		}
 
@@ -375,7 +375,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save(string data)
+	void Save()
 	{
 		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
@@ -392,10 +392,10 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		conf.distanceToPlayer = 500;
 		conf.disableArsenal = true;
 		//----------------------------------------------------
-		conf.convoys.Insert(Convoy0());				
-		conf.convoys.Insert(Convoy1());				
-		conf.convoys.Insert(Convoy2());
-		conf.convoys.Insert(Convoy3());
+		conf.subMissions.Insert(Convoy0());				
+		conf.subMissions.Insert(Convoy1());				
+		conf.subMissions.Insert(Convoy2());
+		conf.subMissions.Insert(Convoy3());
 	}
 		
 	//----------------------------------------------------

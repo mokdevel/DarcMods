@@ -36,21 +36,20 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void Load()
+	void Load(bool respectOverWrite = true)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig();
+		SCR_JsonLoadContext loadContext = LoadConfig(respectOverWrite);
 		if (!loadContext)
 		{
 			SetDefaults();
-			Save("");
+			Save();
 			return;
-		}
-		
+		}		
 		loadContext.ReadValue("", conf);
 	}	
 
 	//------------------------------------------------------------------------------------------------
-	void Save(string data)
+	void Save()
 	{
 		SCR_JsonSaveContext saveContext = SaveConfigOpen();
 		saveContext.WriteValue("", conf);
