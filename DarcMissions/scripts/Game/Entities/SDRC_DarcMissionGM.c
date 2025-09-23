@@ -46,7 +46,7 @@ class SDRC_DarcMissionGM : GenericEntity
 			//Client should never run this.
 			if (baseGameMode.IsMaster() && baseGameMode.missionFrame)
 			{
-				SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInitDelayed] Server call!", LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInitDelayed] Server call!", LogLevel.SPAM);
 				
 				SDRC_DarcMissionGM ent = SDRC_DarcMissionGM.Cast(owner);
 				if (!ent.IsAdded())
