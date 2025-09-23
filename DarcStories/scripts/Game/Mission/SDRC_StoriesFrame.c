@@ -97,7 +97,7 @@ class SDRC_StoriesFrame
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_StoriesFrame] Error starting story: " + fileName, LogLevel.NORMAL);
+				SDRC_Log.Add("[SDRC_StoriesFrame] Error starting story: " + fileName, LogLevel.ERROR);
 				delete story;
 				m_State = DC_EStoriesFrameState.ERROR;
 			}
@@ -105,7 +105,7 @@ class SDRC_StoriesFrame
 		
 		if (m_State == DC_EStoriesFrameState.ACTIVE)
 		{
-			SDRC_Log.Add("[SDRC_StoriesFrame] Running StoriesCycleManager", LogLevel.NORMAL);
+			SDRC_Log.Add("[SDRC_StoriesFrame] Running StoriesCycleManager", LogLevel.SPAM);
 			StoriesDump();
 		}
 		

@@ -50,7 +50,7 @@ sealed class SDRC_StoriesHelper
 		//Start state is on the left. This is the beginning of the story
 		storyMap[1].line.RemoveOrdered(0);
 
-		dumpStoryMapLine(storyMap);
+//		dumpStoryMapLine(storyMap);
 				
 		int i = 0;
 		
@@ -75,7 +75,7 @@ sealed class SDRC_StoriesHelper
 			}
 		}
 
-		dumpStoryMapLine(storyMap);
+//		dumpStoryMapLine(storyMap);
 				
 		//Check that the last chapter has a win condition.
 		int lastIdx = story.chapters.Count() - 1;
@@ -90,7 +90,7 @@ sealed class SDRC_StoriesHelper
 			SDRC_Log.Add("[SDRC_StoriesHelper:CheckStory] Story has no WIN chapter!", LogLevel.ERROR);
 		}
 
-		dumpStoryMapLine(storyMap);
+//		dumpStoryMapLine(storyMap);
 		
 		//Check that second column has WIN condition below.
 		i = 0;		
@@ -128,12 +128,12 @@ sealed class SDRC_StoriesHelper
 					}
 				}
 			}			
-			dumpStoryMapLine(storyMap);
+//			dumpStoryMapLine(storyMap);
 			i++;			
 		}
 
-		dumpStoryMapLine(storyMap);	
-		drawStoryMapLine(storyMap);
+//		dumpStoryMapLine(storyMap);	
+//		drawStoryMapLine(storyMap);
 		
 		//Check the win connections
 		i = 0;
@@ -169,7 +169,7 @@ sealed class SDRC_StoriesHelper
 			
 			i++;
 
-			dumpStoryMapLine(storyMap);
+//			dumpStoryMapLine(storyMap);
 			
 			//Stop before the last one
 			if (i >= story.chapters.Count())

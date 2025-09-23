@@ -14,6 +14,7 @@ class SDRC_StoryFSM
 	private ref SDRC_Story m_Story;
 	private DC_EStoryState m_State;
 	private ref SDRC_Chapter m_Chapter = new SDRC_Chapter();
+	private int m_ChapterWaitStart = 0;
 	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_StoryFSM(string fileName)
@@ -31,7 +32,7 @@ class SDRC_StoryFSM
 			return;
 		}
 
-		m_RequestId = m_StoriesFrame.GetRequestId();
+		m_RequestId = -1;	//m_StoriesFrame.GetRequestId();
 				
 		//Start the mission framework.
 		SetState(DC_EStoryState.STORY_WAITING);
@@ -60,9 +61,6 @@ class SDRC_StoryFSM
 	*/
 	protected void StoryFSM()
 	{	
-		//Search if the mission is active
-		SDRC_MissionStat stat = SDRC_MissionStats.GetStat(m_RequestId);
-		
 		if (m_State == DC_EStoryState.ERROR)
 		{
 			SDRC_Log.Add("[SDRC_StoryFSM:StoryFSM] We're in an error state. To be fixed...", LogLevel.ERROR);
@@ -103,6 +101,9 @@ class SDRC_StoryFSM
 			if ( (cidx >= 0) && (m_Story.chapters.Count() > cidx) )
 			{
 				m_Chapter = m_Story.chapters[cidx];
+				m_Chapter.success == DC_EMissionSuccess.UNKNOWN;
+				m_RequestId = m_StoriesFrame.GetRequestId();
+				
 				//TBD: Error checking
 				SDRC_Log.Add("[SDRC_StoryFSM:StoryFSM] Spawning new story chapter: " + m_Story.chapterId + " , chapter: " + m_Chapter.general.title, LogLevel.NORMAL);
 				
@@ -127,6 +128,9 @@ class SDRC_StoryFSM
 				SetState(DC_EStoryState.ERROR, DC_EStoryError.CHAPTER_WRONG_ID, "Wrong chapterId (" + cidx + ") in story : " + m_Story.id);
 			}
 		}
+		
+		//Search if the mission is active
+		SDRC_MissionStat stat = SDRC_MissionStats.GetStat(m_RequestId);
 		
 		if (m_State == DC_EStoryState.CHAPTER_WAITING)
 		{	
@@ -184,7 +188,7 @@ class SDRC_StoryFSM
 					}
 				}
 				
-				SDRC_Log.Add("[SDRC_StoryFSM:StoryFSM] id: " + stat.id + " - " + SCR_Enum.GetEnumName(DC_EMissionState, stat.state) + " - " + SCR_Enum.GetEnumName(DC_EMissionSuccess, stat.success), LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_StoryFSM:StoryFSM] id: " + stat.id + " - " + SCR_Enum.GetEnumName(DC_EMissionState, stat.state) + " - " + SCR_Enum.GetEnumName(DC_EMissionSuccess, stat.success), LogLevel.SPAM);
 				
 				//While mission is ACTIVE, check if SUCCESS has changed. If yes, the chapter is done.
 				if (stat.state == DC_EMissionState.ACTIVE)
@@ -208,7 +212,7 @@ class SDRC_StoryFSM
 
 		if (m_State == DC_EStoryState.CHAPTER_DONE)
 		{
-			SDRC_Log.Add("[SDRC_StoryFSM:StoryFSM] Chapter done.", LogLevel.NORMAL);
+			SDRC_Log.Add("[SDRC_StoryFSM:StoryFSM] Chapter done.", LogLevel.SPAM);
 			
 			if (stat)
 			{	
@@ -248,7 +252,7 @@ class SDRC_StoryFSM
 		if (m_State == DC_EStoryState.CHAPTER_OVER)
 		{
 			//NOTE: SetState(CHAPTER_OVER) has enabled a delayed StartNewChapter()
-			SDRC_Log.Add("[SDRC_StoryFSM:StoryFSM] Chapter over.", LogLevel.DEBUG);				
+			SDRC_Log.Add("[SDRC_StoryFSM:StoryFSM] Chapter over. Next in " + ((m_ChapterWaitStart + m_StoriesFrame.m_Config.chapterTimeBetween) - (System.GetTickCount() / 1000)) + " seconds.", LogLevel.DEBUG);
 		}
 		
 		if (m_State == DC_EStoryState.STORY_END)
@@ -293,7 +297,7 @@ class SDRC_StoryFSM
 	{
 		if (m_Chapter.success == DC_EMissionSuccess.WIN)
 		{
-			m_Story.chapterId = m_Chapter.nextChapter[0];			
+			m_Story.chapterId = m_Chapter.nextChapter[0];
 		}
 		
 		if (m_Chapter.success == DC_EMissionSuccess.LOSE)
@@ -309,7 +313,7 @@ class SDRC_StoryFSM
 		else
 		{
 			SetState(DC_EStoryState.CHAPTER_START);
-		}		
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -333,6 +337,7 @@ class SDRC_StoryFSM
 		//If chapter is over, 		
 		if (m_State == DC_EStoryState.CHAPTER_OVER)
 		{
+			m_ChapterWaitStart = (System.GetTickCount() / 1000);
 			GetGame().GetCallqueue().CallLater(StartNewChapter, m_StoriesFrame.m_Config.chapterTimeBetween*1000, false);
 		}
 		

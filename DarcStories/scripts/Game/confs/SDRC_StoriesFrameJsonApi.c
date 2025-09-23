@@ -12,7 +12,7 @@
 		private const int SDRC_STORY_TIME_BETWEEN = 20*60;							//Time between stories
 
 		private const int SDRC_STORY_CYCLE_TIME = 10;								//Time for the chapter to be active
-		private const int SDRC_CHAPTER_TIME_DEFAULT = 30*60;						//Time for the mission to be active
+		private const int SDRC_CHAPTER_TIME_DEFAULT = 45*60;						//Time for the mission to be active
 		private const int SDRC_CHAPTER_TIME_BETWEEN = 10*60;						//Time between chapters
 	#endif
 	
@@ -25,7 +25,7 @@
 		private const int SDRC_STORY_TIME_BETWEEN = 3*60;							//Time between stories
 
 		private const int SDRC_STORY_CYCLE_TIME = 10;								//Time for the chapter to be active
-		private const int SDRC_CHAPTER_TIME_DEFAULT = 2*60;							//Time for the chapter to be active
+		private const int SDRC_CHAPTER_TIME_DEFAULT = 4*60;							//Time for the chapter to be active
 		private const int SDRC_CHAPTER_TIME_BETWEEN = 1*60;							//Time between chapters
 	#endif
 
