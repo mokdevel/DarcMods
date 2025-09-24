@@ -8,7 +8,7 @@ Includes various functions for missions.
 //------------------------------------------------------------------------------------------------
 sealed class SDRC_MissionHelper
 {
-	private const float DC_DEFAULT_SIZE = 5;					//Default size for a mission position
+//	private const float DC_DEFAULT_SIZE = 5;					//Default size for a mission position
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 5;		//How many different spots to try for a mission before giving up
 	private const int DC_LOCATION_SEACRH_RADIUS_INC = 30;		//The increase of search radius for each failed iteration
 	
@@ -37,8 +37,12 @@ sealed class SDRC_MissionHelper
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
 	\param randomPos Position randomization. -1 uses the value set in missionFrame settings 
 	*/	
-	static vector FindMissionPos(vector pos, float size = DC_DEFAULT_SIZE, int randomPos = -1)
+	static vector FindMissionPos(vector pos, float size, int randomPos = -1)
 	{	
+/*		if (size = 0)
+		{
+			size =  = DC_DEFAULT_SIZE;
+		}*/
 		pos = FindWithIterate(pos, size);
 		
 		return pos;
@@ -50,8 +54,13 @@ sealed class SDRC_MissionHelper
 	\param locationTypes Array of EMapDescriptorType to look for a place
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
 	*/	
-	static vector FindMissionPos(array<EMapDescriptorType> locationTypes, float size = DC_DEFAULT_SIZE, int randomPos = -1)
+	static vector FindMissionPos(array<EMapDescriptorType> locationTypes, float size, int randomPos = -1)
 	{	
+/*		if (size = 0)
+		{
+			size =  = DC_DEFAULT_SIZE;
+		}*/
+		
 		//Find a random location
 		vector pos = "0 0 0";
 		
@@ -87,8 +96,13 @@ sealed class SDRC_MissionHelper
 	\param pos Position to start to search for mission position
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
 	*/	
-	static vector FindWithIterate(vector pos, float size = DC_DEFAULT_SIZE, int searchRadius = -1)
+	static vector FindWithIterate(vector pos, float size, int searchRadius = -1)
 	{
+/*		if (size = 0)
+		{
+			size =  = DC_DEFAULT_SIZE;
+		}*/
+		
 		bool positionFound = false;		
 		vector posOrig = pos;
 		
@@ -145,7 +159,7 @@ sealed class SDRC_MissionHelper
 		
 		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 		{					
-			pos = SDRC_MissionHelper.FindMissionPos(locationTypes);
+			pos = SDRC_MissionHelper.FindMissionPos(locationTypes, 1);
 			if (pos == "0 0 0")
 			{
 				return "0 0 0";

@@ -9,31 +9,16 @@ Helper functions for spawning camp class
 class SDRC_Camp : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
+	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();		
 	ref array<EMapDescriptorType> locationTypes = {};	
-	ref array<int> groupCount = {};			//min, max
-	ref array<int> waypointRange = {};		//min, max
-	DC_EWaypointGenerationType waypointGenType;
-	DC_EWaypointMoveType waypointMoveType;
-	ref array<string> groupTypes = {};
-	int aiSkill;
-	float aiPerception;
-	float emptySize = 7;					//The size (radius) of the empty space needed to decide on a mission position.
 	
 	//Optional settings
 	ref SDRC_Loot loot = null;
 	ref array<ref SDRC_Structure> campItems = {};
 	
-	void Set(array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_, int aiSkill_, float aiPerception_, float emptySize_)
+	void Set(array<EMapDescriptorType> locationTypes_)
 	{
 		locationTypes = locationTypes_;
-		groupCount = groupCount_;
-		waypointRange = waypointRange_;
-		waypointGenType = waypointGenType_;
-		waypointMoveType = waypointMoveType_;
-		groupTypes = groupTypes_;
-		aiSkill = aiSkill_;
-		aiPerception = aiPerception_;		
-		emptySize = emptySize_;
 	}
 }
 
@@ -75,18 +60,18 @@ sealed class SDRC_CampHelper
 		else
 		{
 			//Spawn mission AI 
-			int groupCount = Math.RandomInt(camp.groupCount[0], camp.groupCount[1]);
+			int aiCount = camp.ai.GetCount();
 			
-			for (int i = 0; i < groupCount; i++)
+			for (int i = 0; i < aiCount; i++)
 			{
-				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(camp.groupTypes.GetRandomElement(), mission.GetPos(), mission.GetFaction());
+				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(camp.ai.types.GetRandomElement(), mission.GetPos(), mission.GetFaction());
 				if (group)
 				{
-					SDRC_AIHelper.SetAIGroupSkill(group, camp.aiSkill, camp.aiPerception);					
+					SDRC_AIHelper.SetAIGroupSkill(group, camp.ai.GetSkill(), camp.ai.GetPerception());					
 					mission.AddToGroupsList(group);
 					
-					int minRange = camp.waypointRange[0];
-					int maxRange = camp.waypointRange[1];
+					int minRange = camp.ai.waypointRange[0];
+					int maxRange = camp.ai.waypointRange[1];
 					
 					//If there are more than one group and loot, spawn one to protect the loot. 
 					//For the first group, waypointRange is ignored.
@@ -96,14 +81,14 @@ sealed class SDRC_CampHelper
 						maxRange = 30;					
 					}
 					
-					SDRC_WPHelper.CreateMissionAIWaypoints(group, camp.waypointGenType, mission.GetPos(), "0 0 0", camp.waypointMoveType, minRange, maxRange);
+					SDRC_WPHelper.CreateMissionAIWaypoints(group, camp.ai.waypointGenType, mission.GetPos(), "0 0 0", camp.ai.waypointMoveType, minRange, maxRange);
 //					SDRC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, camp.waypointRange[0], camp.waypointRange[1]);
 				}
-				SDRC_Log.Add("[SDRC_campHelper:Spawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
+				SDRC_Log.Add("[SDRC_campHelper:Spawn] AI groups spawned: " + aiCount, LogLevel.DEBUG);								
 			}
 			
 			//Put the loot box in right place
-			if (camp.loot)
+			if ( (camp.loot) && (camp.loot.box == null) )
 			{
 				camp.loot.box = mission.GetFromEntityList(0);
 			}
