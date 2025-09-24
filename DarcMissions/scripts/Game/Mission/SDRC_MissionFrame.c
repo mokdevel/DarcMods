@@ -66,6 +66,9 @@ class SDRC_MissionFrame
 		m_DC_NonValidAreaJsonApi.Populate(m_aNonValidAreas);
 
 		//Checking the enemies found
+		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty: " + SCR_Enum.GetEnumName(DC_EMissionDifficulty, m_Config.difficulty), LogLevel.NORMAL);
+		
+		//Checking the enemies found
 		SDRC_Log.Add("[SDRC_MissionFrame] Enemy factions: " + m_Config.enemyFactions, LogLevel.NORMAL);
 		SDRC_EnemyHelper.SetEnemyFactions(m_Config.enemyFactions);
 

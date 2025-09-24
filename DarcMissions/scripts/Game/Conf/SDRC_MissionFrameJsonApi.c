@@ -5,6 +5,7 @@
 
 	//Release options
 	#ifdef SDRC_RELEASE
+		private const DC_EMissionDifficulty SDRC_MISSION_DIFFICULTY = DC_EMissionDifficulty.NORMAL;
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 10;								//Default amount of dynamic missions to run
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 1.5;
 		private const int SDRC_MISSION_COUNT_STATIC = 6;								//Default amount of static missions to run
@@ -27,9 +28,10 @@
 	
 	//Development time options
 	#ifndef SDRC_RELEASE
-		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//3;//3;//8;
+		private const DC_EMissionDifficulty SDRC_MISSION_DIFFICULTY = DC_EMissionDifficulty.HARD;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 3;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 0;//5;//3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 2;//5;//3;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -48,16 +50,6 @@
 	#endif
 
 //------------------------------------------------------------------------------------------------
-class SDRC_MissionTypeConfig : Managed
-{
-	int count;
-	float countMul;
-	int activeTime;
-	int delayBetween;
-	ref array<DC_EMissionType> missionTypeArray = {};	//List mission types that spawn randomly
-}
-
-//------------------------------------------------------------------------------------------------
 class SDRC_MissionFrameConfig : Managed
 {
 	//Default information
@@ -65,9 +57,10 @@ class SDRC_MissionFrameConfig : Managed
 	string author = "darc";
 	//Mission specific
 	string comment;
+	DC_EMissionDifficulty difficulty;
 	bool recreateConfigs;			//If set to true, all configs are to be written to disk. Should be run only first time.
-	int missionStartDelay;			//Time to wait before spawning the first mission (seconds).
 	//Timing specific
+	int missionStartDelay;			//Time to wait before spawning the first mission (seconds).
 	int missionFrameCycleTime;		//The cycle time to manage mission spawning, deletion etc... (seconds)
 	int missionActiveDistance;		//The distance to a player to keep the mission active.
 	int missionActiveTimeToEnd;		//Time to keep the mission active once all AI is dead. Used for both dynamic and static missions.
@@ -79,8 +72,27 @@ class SDRC_MissionFrameConfig : Managed
 	int minDistanceToPlayer;		//Mission shall not spawn too close to a player.
 	bool showStaticMissionMarker;	//Show static mission marker
 	ref array<string>enemyFactions;	//Factions to use for enemy selection
+	ref SDRC_MissionDifficulty missionDifficulty = new SDRC_MissionDifficulty();
 	ref SDRC_MissionTypeConfig missionDynamic = new SDRC_MissionTypeConfig();
 	ref SDRC_MissionTypeConfig missionStatic = new SDRC_MissionTypeConfig();
+}
+
+//------------------------------------------------------------------------------------------------
+class SDRC_MissionTypeConfig : Managed
+{
+	int count;
+	float countMul;
+	int activeTime;
+	int delayBetween;
+	ref array<DC_EMissionType> missionTypeArray = {};	//List mission types that spawn randomly
+}
+
+class SDRC_MissionDifficulty : Managed
+{
+	//easy, moderate, normal, tough, hard
+	ref array<float> aiCoef = 			{0.5, 1.0, 1.5, 2.5, 4.0};
+	ref array<float> skillCoef = 		{0.2, 0.6, 1.0, 1.3, 1.6};
+	ref array<float> perfectionCoef = 	{0.2, 0.6, 1.0, 1.3, 1.6};
 }
 
 //------------------------------------------------------------------------------------------------
@@ -125,6 +137,8 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 	void SetDefaults()
 	{
 		conf.comment = "Simple comment, not used in game";
+		conf.difficulty = SDRC_MISSION_DIFFICULTY;
+		
 		conf.recreateConfigs = SDRC_MISSION_RECREATE_CONFIGS;
 		conf.missionStartDelay = SDRC_MISSIONFRAME_START_DELAY;
 		conf.missionFrameCycleTime = SDRC_MISSIONFRAME_CYCLE_TIME;
@@ -192,12 +206,12 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.ROADBLOCK};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.SQUATTERS};
-//			conf.missionStatic.missionTypeArray = {DC_EMissionType.STASH};
+			conf.missionStatic.missionTypeArray = {DC_EMissionType.STASH};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTVIP, DC_EMissionType.HVTITEM};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.PATROL, DC_EMissionType.CONVOY, DC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {DC_EMissionType.HVTITEM, DC_EMissionType.SQUATTERS, DC_EMissionType.OCCUPATION, DC_EMissionType.ROADBLOCK, DC_EMissionType.PATROL, DC_EMissionType.HVTVIP};
 //			conf.missionStatic.missionTypeArray = {};
-			conf.missionStatic.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTERS, DC_EMissionType.HVTVIP, DC_EMissionType.HVTITEM};		
+//			conf.missionStatic.missionTypeArray = {DC_EMissionType.HUNTER, DC_EMissionType.CRASHSITE, DC_EMissionType.OCCUPATION, DC_EMissionType.CONVOY, DC_EMissionType.PATROL, DC_EMissionType.SQUATTERS, DC_EMissionType.HVTVIP, DC_EMissionType.HVTITEM};		
 		
 		#endif
 	}
