@@ -48,7 +48,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		vector pos = m_DC_Roadblock.general.pos[0];
 		if (pos == "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Roadblock.locationTypes, m_DC_Roadblock.emptySize, randomPos);
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Roadblock.locationTypes, m_DC_Roadblock.general.emptySize, randomPos);
 		}
 		
 		//If we found a position, let's search more closely
@@ -179,9 +179,9 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 class SDRC_RoadblockConfig : SDRC_MissionConfig
 {
 	//Mission specific
-	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found	
 	ref array<ref SDRC_Camp> subMissions = {};		//List of roadblocks - uses the same structure as for occupations	
 	
+	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
 	{
 		int idx = -1;
@@ -266,6 +266,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	void SetDefaults()
 	{
 		//Default		
+		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.missionList = {0,1,2,3};
 		//Mission specific		
@@ -282,7 +283,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
 			0, "index 0: Roadblock",
-			{"0 0 0"},
+			{"0 0 0"}, 6,
 			"any",
 			"Roadblock near %l",
 			"Look out for trouble.",
@@ -292,6 +293,14 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
 			0		
+		);
+		roadblock.ai.Set(
+			{1, 2},
+			{"G_LAUNCHER", "G_LIGHT", "G_LIGHT"},
+			50, 1.0,
+			{0, 20},
+			DC_EWaypointGenerationType.LOITER,//RANDOM,
+			DC_EWaypointMoveType.PATROLCYCLE,
 		);
 		roadblock.Set(
 			{
@@ -305,15 +314,6 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT,
 				EMapDescriptorType.MDT_FORTRESS
 			},
-			{1, 2},
-			{0, 20},
-			DC_EWaypointGenerationType.LOITER,//RANDOM,
-			DC_EWaypointMoveType.PATROLCYCLE,
-			{
-				"G_LAUNCHER", "G_LIGHT", "G_LIGHT"
-			},
-			50, 1.0,
-			6
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -364,7 +364,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		ref SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
 			1, "index 1: Roadblock",
-			{"0 0 0"},
+			{"0 0 0"}, 6,
 			"any",
 			"Roadblock seen close to %l",
 			"Be careful.",
@@ -374,6 +374,14 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
 			0		
+		);
+		roadblock.ai.Set(
+			{1, 2},
+			{"G_LAUNCHER", "G_HEAVY", "G_LIGHT"},
+			50, 1.0,
+			{0, 10},
+			DC_EWaypointGenerationType.SCATTERED,
+			DC_EWaypointMoveType.PATROLCYCLE,
 		);
 		roadblock.Set(
 			{
@@ -386,15 +394,6 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT,
 				EMapDescriptorType.MDT_FORTRESS
 			},
-			{1, 2},
-			{0, 10},
-			DC_EWaypointGenerationType.SCATTERED,
-			DC_EWaypointMoveType.PATROLCYCLE,
-			{
-				"G_LAUNCHER", "G_HEAVY", "G_LIGHT"
-			},
-			50, 1.0,
-			6
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -512,7 +511,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		ref SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
 			2, "index 2: Roadblock",
-			{"0 0 0"},
+			{"0 0 0"}, 6,
 			"any",
 			"Road is closed near %l",
 			"Are your ready to pay the toll?",
@@ -523,6 +522,14 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
 			0		
 		);		
+		roadblock.ai.Set(
+			{2, 3},
+			{"G_LIGHT", "G_LIGHT", "G_LIGHT", "C_SNIPER", },
+			50, 1.0,
+			{0, 10},
+			DC_EWaypointGenerationType.LOITER,
+			DC_EWaypointMoveType.PATROLCYCLE,
+		);
 		roadblock.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
@@ -534,15 +541,6 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT,
 				EMapDescriptorType.MDT_FORTRESS
 			},
-			{2, 3},
-			{0, 10},
-			DC_EWaypointGenerationType.LOITER,
-			DC_EWaypointMoveType.PATROLCYCLE,
-			{
-				"G_LIGHT", "G_LIGHT", "G_LIGHT", "C_SNIPER", 
-			},
-			50, 1.0,
-			6
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -643,7 +641,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		ref SDRC_Camp roadblock = new SDRC_Camp();
 		roadblock.general.Set(
 			3, "index 3: Roadblock with gates",
-			{"0 0 0"},
+			{"0 0 0"}, 10,
 			"any",
 			"Road near %l is guarded",
 			"Prepare for a mandatory stop.",
@@ -654,6 +652,14 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
 			0		
 		);		
+		roadblock.ai.Set(
+			{2, 3},
+			{"G_LIGHT", "G_LIGHT", "G_HEAVY", "G_ADMIN",},
+			50, 1.0,
+			{0, 10},
+			DC_EWaypointGenerationType.LOITER,
+			DC_EWaypointMoveType.PATROLCYCLE,
+		);
 		roadblock.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
@@ -665,15 +671,6 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT,
 				EMapDescriptorType.MDT_FORTRESS
 			},
-			{2, 3},
-			{0, 10},
-			DC_EWaypointGenerationType.LOITER,
-			DC_EWaypointMoveType.PATROLCYCLE,
-			{
-				"G_LIGHT", "G_LIGHT", "G_HEAVY", "G_ADMIN",
-			},
-			50, 1.0,
-			10
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();

@@ -43,7 +43,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_HvtVip.general, request);
 		
 		//Set defaults
-		m_iGroupCount = Math.RandomInt(m_DC_HvtVip.groupCount[0], m_DC_HvtVip.groupCount[1]);
+		m_iGroupCount = m_DC_HvtVip.ai.GetCount();
 		float radius = 10;					//Default size for the radius. Mainly for requested missions to find the nearest building.
 		array<string> buildingFilter = {};
 
@@ -138,10 +138,10 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		//Spawn AI one by one. Sets missions active once ready.
 		if (m_iSpawnIndex < m_iGroupCount)
 		{
-			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_HvtVip.groupTypes.GetRandomElement(), GetPos(), GetFaction());
+			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_HvtVip.ai.types.GetRandomElement(), GetPos(), GetFaction());
 			if (group)
 			{
-				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_HvtVip.aiSkill, m_DC_HvtVip.aiPerception);					
+				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_HvtVip.ai.GetSkill(), m_DC_HvtVip.ai.GetPerception());					
 				SDRC_AIHelper.SetAIGroupMovementType(group, EMovementType.IDLE);
 				m_Groups.Insert(group);				
 				SDRC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, 10, 50);				
@@ -164,7 +164,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 
 			//Spawn target enemy and add it to mission faction
 			//TBD: The CIV target faction is not set properly
-			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_HvtVip.target, m_DC_HvtVip.aiSkill, m_DC_HvtVip.aiPerception, GetFaction());
+			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_HvtVip.target, m_DC_HvtVip.ai.GetSkill(), m_DC_HvtVip.ai.GetPerception(), GetFaction());
 			if (group)
 			{			
 				m_Groups.Insert(group);
@@ -225,11 +225,10 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 class SDRC_HvtVipConfig : SDRC_MissionConfig
 {
 	//Mission specific
-	
-	//Variables here
 	int buildingRadius;								//The radius to search for suitable buildings.
 	ref array<ref SDRC_HvtVip> subMissions = {};	//List of HvtVips
 	
+	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
 	{
 		int idx = -1;
@@ -249,24 +248,17 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 class SDRC_HvtVip : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
+	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();		
 	ref array<EMapDescriptorType> locationTypes = {};
-	ref array<int> groupCount = {};			//min, max
-	ref array<string> groupTypes = {};
-	int aiSkill;
-	float aiPerception;
 	ref array<string> buildingNames = {};
 	//Optional settings
 	string lootBox = "";					//The loot box
 	ref SDRC_Loot loot = null;
 	string target;
 	
-	void Set(array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<string> groupTypes_, int aiSkill_, float aiPerception_, array<string> buildingNames_, string lootBox_, string target_)
+	void Set(array<EMapDescriptorType> locationTypes_, array<string> buildingNames_, string lootBox_, string target_)
 	{
 		locationTypes = locationTypes_;
-		groupCount = groupCount_;
-		groupTypes = groupTypes_;
-		aiSkill = aiSkill_;
-		aiPerception = aiPerception_;	
 		buildingNames = buildingNames_;	
 		lootBox = lootBox_;
 		target = target_;
@@ -358,7 +350,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
 		HvtVip.general.Set(
 			0, "index 0: HvtVips in cities",
-			{"0 0 0"},
+			{"0 0 0"}, 0, 
 			"any",
 			"Target near %l.",
 			"Assassinate the target",
@@ -368,6 +360,14 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
 			0		
+		);
+		HvtVip.ai.Set(
+			{1, 2},
+			{"G_LIGHT", "G_RECON",},
+			50, 0.6,
+			{0, 0},
+			DC_EWaypointGenerationType.NONE, 
+			DC_EWaypointMoveType.NONE		
 		);
 		HvtVip.Set(
 			{
@@ -380,11 +380,6 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_NAME_TOWN, 
 				EMapDescriptorType.MDT_AIRPORT,
 			},
-			{1,2},
-			{
-				"G_LIGHT", "G_RECON",
-			},
-			50, 0.6,
 			{"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_", "Office_E_", "MountainHotel_"},
 			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
 			"C_OFFICER"
@@ -411,7 +406,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
 		HvtVip.general.Set(
 			1, "index 1: HvtVips in control towers",
-			{"0 0 0"},
+			{"0 0 0"}, 0,
 			"any",
 			"Flight controller near %l.",
 			"Assassinate the target",
@@ -422,15 +417,18 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
 			0		
 		);
+		HvtVip.ai.Set(
+			{1, 3},
+			{"G_LIGHT",},
+			50, 0.6,
+			{0, 0},
+			DC_EWaypointGenerationType.NONE, 
+			DC_EWaypointMoveType.NONE		
+		);
 		HvtVip.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
-			{1,2},
-			{
-				"G_LIGHT",
-			},
-			50, 0.6,
 			{"ControlTowerMilitary_"},
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 			"C_OFFICER"
@@ -458,7 +456,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
 		HvtVip.general.Set(
 			2, "index 2: Businessman with bad business",
-			{"0 0 0"},
+			{"0 0 0"}, 0,
 			"any",
 			"%l is bad for business",
 			"Assassinate the business man conducting bad business.",
@@ -469,15 +467,18 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
 			0		
 		);
+		HvtVip.ai.Set(
+			{1, 2},
+			{"G_HEAVY",},
+			50, 0.6,
+			{0, 0},
+			DC_EWaypointGenerationType.NONE, 
+			DC_EWaypointMoveType.NONE		
+		);
 		HvtVip.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
-			{1,1},
-			{
-				"G_HEAVY",
-			},
-			50, 0.6,
 			{"Office_E_", "Barracks_01_", "Barracks_E_02_", "MountainHotel_"},
 			"{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
 			"{A517C72CEF150898}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_2.et"
@@ -505,7 +506,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
 		HvtVip.general.Set(
 			3, "index 3: Businessman in countryside",
-			{"0 0 0"},
+			{"0 0 0"}, 0, 
 			"any",
 			"Criminal hiding in %l",
 			"Assassinate the criminal boss. He tries to keep low profile.",
@@ -516,15 +517,18 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
 			0		
 		);
+		HvtVip.ai.Set(
+			{1,1},
+			{"G_LIGHT",},
+			50, 0.6,
+			{0, 0},
+			DC_EWaypointGenerationType.NONE, 
+			DC_EWaypointMoveType.NONE		
+		);
 		HvtVip.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
-			{1,1},
-			{
-				"G_LIGHT",
-			},
-			50, 0.6,
 			{"House_"},
 			"{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
 			"{E024A74F8A4BC644}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_1.et"

@@ -36,7 +36,7 @@ class SDRC_Stash_010_JsonApi : SDRC_StashJsonApi
 		ref SDRC_Camp stash = new SDRC_Camp();
 		stash.general.Set(
 			10, "index 10: Random stash",
-			{"0 0 0"},
+			{"0 0 0"}, 3,
 			"any",
 			"Hidden loot near %l",
 			"Loot is yours to take",
@@ -46,19 +46,18 @@ class SDRC_Stash_010_JsonApi : SDRC_StashJsonApi
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_STASH_MAP,
 			0
-		);
-		
-		stash.Set(
-			{
-			},
+		);		
+		stash.ai.Set(
 			{0, 1},
+			{"G_RECON"},
+			50, 1.0,			
 			{50, 300},
 			DC_EWaypointGenerationType.RANDOM,
 			DC_EWaypointMoveType.PATROLCYCLE,
+		);	
+		stash.Set(
 			{
 			},
-			50, 1.0,
-			3
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();

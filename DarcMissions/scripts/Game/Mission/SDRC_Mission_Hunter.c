@@ -48,7 +48,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Hunter.general, request);
 		
 		//Set spawn count
-		m_iGroupsToSpawn = Math.RandomInt(m_DC_Hunter.groupCount[0], m_DC_Hunter.groupCount[1]);
+		m_iGroupsToSpawn = m_DC_Hunter.ai.GetCount();
 		
 		//Find position
 		vector pos = m_DC_Hunter.general.pos[0];
@@ -193,12 +193,12 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		
 		if (spawnLocation)
 		{
-			string groupToSpawn = m_DC_Hunter.groupTypes.GetRandomElement();
+			string groupToSpawn = m_DC_Hunter.ai.types.GetRandomElement();
 			SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(groupToSpawn, spawnLocation, GetFaction());
 			
 			if (group)
 			{
-				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Hunter.aiSkill, m_DC_Hunter.aiPerception);					
+				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Hunter.ai.GetSkill(), m_DC_Hunter.ai.GetPerception());					
 				m_Groups.Insert(group);
 				m_iGroupsSpawned++;
 				SDRC_Log.Add("[SDRC_Mission_Hunter:SpawnHunterGroup] Group spawned to " + spawnLocation, LogLevel.NORMAL);				
@@ -263,11 +263,13 @@ class SDRC_Mission_Hunter : SDRC_Mission
 //------------------------------------------------------------------------------------------------
 class SDRC_HunterConfig : SDRC_MissionConfig
 {
+	//Mission specific
 	int minDistanceToPlayer;						//Hunter group minimum distance to player for spawn
 	int maxDistanceToPlayer;						//...max distance to despawn
 	int rndDistanceToPlayer;						//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
 	ref array<ref SDRC_Hunter> subMissions = {};	//List of hunters
 	
+	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
 	{
 		int idx = -1;
@@ -283,21 +285,11 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 	}			
 }
 
+//------------------------------------------------------------------------------------------------
 class SDRC_Hunter : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
-	ref array<int> groupCount = {1, 2};
-	ref array<string> groupTypes = {}; 		//The prefab names of AI groups or characters. The AI is randomly picked from this list.
-	int aiSkill;							//Skill for AI (0-100). See SCR_AICombatComponent and EAISkill
-	float aiPerception;		
-	
-	void Set(array<int> groupCount_, array<string> groupTypes_, int AISkill_, float aiPerception_)
-	{
-		groupCount = groupCount_;
-		groupTypes = groupTypes_;
-		aiSkill = AISkill_;
-		aiPerception = aiPerception_;				
-	}				
+	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
 }
 
 //------------------------------------------------------------------------------------------------
@@ -387,7 +379,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 		ref SDRC_Hunter hunter = new SDRC_Hunter();
 		hunter.general.Set(
 			0, "index 0: general mission",
-			{"0 0 0"},
+			{"0 0 0"}, 2,
 			"any",
 			"Hunters",
 			"They are coming for you... Last time they were seen close to %l.",
@@ -398,12 +390,13 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_X_MAP,
 			0
 		);
-		hunter.Set(
-			{1, 4},
-			{
-				"G_SMALL"
-			},
-			30, 0.7
+		hunter.ai.Set(
+			{1, 2},
+			{"G_SMALL"},
+			30, 0.7,
+			{0, 0},
+			DC_EWaypointGenerationType.NONE, 
+			DC_EWaypointMoveType.NONE
 		);
 		return hunter;
 	}	
@@ -413,7 +406,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 		ref SDRC_Hunter hunter = new SDRC_Hunter();
 		hunter.general.Set(
 			1, "index 1: general mission",
-			{"0 0 0"},
+			{"0 0 0"}, 2,
 			"any",
 			"Hunters",
 			"Sharpshooters are hunting you. Last known location was near %l.",
@@ -424,12 +417,13 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_X_MAP,
 			0
 		);
-		hunter.Set(
+		hunter.ai.Set(
 			{1, 1},
-			{
-				"G_SNIPER"
-			},
-			40, 0.8
+			{"G_SNIPER"},
+			40, 0.8,
+			{0, 0},
+			DC_EWaypointGenerationType.NONE, 
+			DC_EWaypointMoveType.NONE
 		);
 		return hunter;
 	}		

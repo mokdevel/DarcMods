@@ -36,9 +36,6 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		}
 		m_DC_Occupation = m_Config.subMissions[idx];	
 		HandleRequestGeneralVariables(m_DC_Occupation.general, request);
-				
-		//Camps are randomly rotated
-		m_fSpawnRotation = Math.RandomFloat(0, 360);
 		
 		//Find the position
 		vector pos = m_DC_Occupation.general.pos[0];
@@ -46,11 +43,11 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Occupation.locationTypes, m_DC_Occupation.emptySize);
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Occupation.locationTypes, m_DC_Occupation.general.emptySize);
 		}
 		else
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_Occupation.emptySize);
+			pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_Occupation.general.emptySize);
 		}
 		
 		if (pos == "0 0 0")	//No suitable location found.
@@ -59,6 +56,8 @@ class SDRC_Mission_Occupation : SDRC_Mission
 			return;
 		}	
 
+		//Camps are randomly rotated
+		m_fSpawnRotation = Math.RandomFloat(0, 360);
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Occupation.campItems);
 				
 		SetPos(pos);
@@ -132,9 +131,9 @@ class SDRC_Mission_Occupation : SDRC_Mission
 class SDRC_OccupationConfig : SDRC_MissionConfig
 {
 	//Mission specific	
-	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found
 	ref array<ref SDRC_Camp> subMissions = {};		//List of occupations
 	
+	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
 	{
 		int idx = -1;
@@ -218,6 +217,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 	void SetDefaults()
 	{
 		//Default		
+		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.missionList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
 		//Mission specific		
@@ -237,7 +237,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
 			0, "index 0: Mission in villages and local areas.",
-			{"0 0 0"},
+			{"0 0 0"}, 3,
 			"any",
 			"Guards patroling near %l",
 			"Avoid the location. Loot has already been lost.",
@@ -248,21 +248,19 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			0
 		);
-		
+		occupation.ai.Set(
+			{1, 2},
+			{"G_RECON", "G_LIGHT"},
+			50, 1.0,
+			{50, 300},
+			DC_EWaypointGenerationType.RANDOM,
+			DC_EWaypointMoveType.PATROLCYCLE,
+		);
 		occupation.Set(
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_LOCAL
 			},
-			{1, 2},
-			{50, 300},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.PATROLCYCLE,
-			{
-				"G_RECON", "G_LIGHT"
-			},
-			50, 1.0,
-			3
 		);
 		
 		return occupation;
@@ -274,7 +272,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
 			1, "index 1: Bandit camp spawning to non city areas",
-			{"0 0 0"},
+			{"0 0 0"}, 6,
 			"any",
 			"Bandit camp near %l",
 			"Bandits are protecting their valuable loot.",
@@ -284,6 +282,14 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			0
+		);
+		occupation.ai.Set(
+			{1, 2},
+			{"G_ADMIN", "G_LIGHT", "G_LIGHT"},
+			50, 1.0,
+			{25, 100},
+			DC_EWaypointGenerationType.SCATTERED,//RANDOM,
+			DC_EWaypointMoveType.PATROLCYCLE,
 		);
 		occupation.Set(
 			{
@@ -295,15 +301,6 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT,
 				EMapDescriptorType.MDT_FORTRESS
 			},
-			{1, 2},
-			{25, 100},
-			DC_EWaypointGenerationType.SCATTERED,//RANDOM,
-			DC_EWaypointMoveType.PATROLCYCLE,
-			{
-				"G_ADMIN", "G_LIGHT", "G_LIGHT"
-			},
-			50, 1.0,
-			6
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -357,7 +354,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
 			2, "index 2: Occupation that will spawn mainly to cities and towns.",
-			{"0 0 0"},
+			{"0 0 0"}, 10,
 			"any",
 			"Occupation in %l",
 			"City is being occupied.",
@@ -367,6 +364,16 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			0
+		);
+		occupation.ai.Set(
+			{2, 4},
+			{"G_LIGHT", "G_LIGHT", "G_LIGHT", 
+			 "G_ADMIN", "G_HEAVY", "G_LAUNCHER", "G_MEDICAL"
+			},
+			50, 1.0,
+			{30, 200},
+			DC_EWaypointGenerationType.RADIUS,
+			DC_EWaypointMoveType.RANDOM,		
 		);
 		occupation.Set(
 			{
@@ -380,16 +387,6 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_NAME_TOWN, 
 				EMapDescriptorType.MDT_AIRPORT,
 			},
-			{2, 4},
-			{30, 200},
-			DC_EWaypointGenerationType.RADIUS,
-			DC_EWaypointMoveType.RANDOM,		
-			{
-				"G_LIGHT", "G_LIGHT", "G_LIGHT", 
-				"G_ADMIN", "G_HEAVY", "G_LAUNCHER", "G_MEDICAL"
-			},
-			50, 1.0,
-			10		
 		);
 
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -446,7 +443,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
 			3, "index 3: Car crash in an unusual place",
-			{"0 0 0"},
+			{"0 0 0"}, 6,
 			"any",
 			"Car crash near %l",
 			"Loot is up for grabs.",
@@ -456,6 +453,14 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			0
+		);
+		occupation.ai.Set(
+			{1, 3},
+			{"G_RECON"},
+			50, 1.0,
+			{10, 60},
+			DC_EWaypointGenerationType.RANDOM,
+			DC_EWaypointMoveType.RANDOM,		
 		);
 		occupation.Set(
 			{
@@ -467,15 +472,6 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_RADIO,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 			},
-			{1, 3},
-			{10, 60},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.RANDOM,		
-			{
-				"G_RECON"
-			},
-			50, 1.0,
-			6
 		);
 
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -545,7 +541,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
 			4, "index 4: Campers with a car and a tent",
-			{"0 0 0"},
+			{"0 0 0"}, 12,
 			"any",
 			"Campers near %l",
 			"Rob them before they leave.",
@@ -556,6 +552,14 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			0
 		);
+		occupation.ai.Set(
+			{1, 3},
+			{"G_SPECIAL", "G_HEAVY"},
+			50, 1.0,
+			{10, 90},
+			DC_EWaypointGenerationType.RANDOM,
+			DC_EWaypointMoveType.RANDOM,		
+		);
 		occupation.Set(
 			{
 				EMapDescriptorType.MDT_NAME_RIDGE,
@@ -563,15 +567,6 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_NAME_HILL,
 				EMapDescriptorType.MDT_NAME_VALLEY			
 			},
-			{1, 3},
-			{10, 90},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.RANDOM,		
-			{
-				"G_SPECIAL", "G_HEAVY"
-			},
-			50, 1.0,
-			12
 		);
 
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -657,7 +652,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
 			5, "index 5: A small town",
-			{"0 0 0"},
+			{"0 0 0"}, 30,
 			"any",
 			"Settlement near %l",
 			"The enemies are hiding in a ghost town.",
@@ -668,21 +663,20 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			0
 		);
+		occupation.ai.Set(
+			{1, 3},
+			{"G_SPECIAL", "G_HEAVY"},
+			50, 1.0,
+			{10, 90},
+			DC_EWaypointGenerationType.RANDOM,
+			DC_EWaypointMoveType.RANDOM,		
+		);
 		occupation.Set(
 			{
 				EMapDescriptorType.MDT_NAME_RIDGE,
 				EMapDescriptorType.MDT_FORESTSQUARE,
 				EMapDescriptorType.MDT_NAME_VALLEY			
 			},
-			{1, 3},
-			{10, 90},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.RANDOM,		
-			{
-				"G_SPECIAL", "G_HEAVY"
-			},
-			50, 1.0,
-			30
 		);
 
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -819,7 +813,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
 			6, "index 6: Zombies and Demons.",
-			{"0 0 0"},
+			{"0 0 0"}, 3,
 			"any",
 			"Creatures near %l",
 			"Avoid the location. No loot available.",
@@ -830,22 +824,21 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			0
 		);
-		
+		occupation.ai.Set(
+			{1, 8},
+			{//"C_ZOMBIE", "G_ZOMBIE_SMALL", "G_ZOMBIE_MEDIUM", "G_ZOMBIE_LARGE"
+			 "C_DEMON", "C_DEMON_BOSS"
+			},
+			50, 1.0,
+			{50, 300},
+			DC_EWaypointGenerationType.RANDOM,
+			DC_EWaypointMoveType.PATROLCYCLE,
+		);
 		occupation.Set(
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_LOCAL
 			},
-			{1, 8},
-			{50, 300},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.PATROLCYCLE,
-			{
-//				"C_ZOMBIE", "G_ZOMBIE_SMALL", "G_ZOMBIE_MEDIUM", "G_ZOMBIE_LARGE"
-				"C_DEMON", "C_DEMON_BOSS"
-			},
-			50, 1.0,
-			3
 		);
 		
 		return occupation;

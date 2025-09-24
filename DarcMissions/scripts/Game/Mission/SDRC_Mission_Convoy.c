@@ -145,7 +145,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 					break;
 				case DC_EMissionConvoyState.MOVE_AI:
 					MoveGroupInVehicle(m_Groups[0], m_Vehicle);
-					SDRC_WPHelper.CreateMissionAIWaypoints(m_Groups[0], DC_EWaypointGenerationType.ROUTE, GetPos(), m_vPosDestination, DC_EWaypointMoveType.MOVE);
+					SDRC_WPHelper.CreateMissionAIWaypoints(m_Groups[0], m_DC_Convoy.ai.waypointGenType, GetPos(), m_vPosDestination, m_DC_Convoy.ai.waypointMoveType);
 					missionConvoyState = DC_EMissionConvoyState.RUN;
 					break;
 				case DC_EMissionConvoyState.RUN:
@@ -199,10 +199,10 @@ class SDRC_Mission_Convoy : SDRC_Mission
 
 		//Spawn AI
 		vector posg = GetPos() + "3 0 3";
-		SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(m_DC_Convoy.groupTypes.GetRandomElement(), posg, GetFaction());
+		SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(m_DC_Convoy.ai.types.GetRandomElement(), posg, GetFaction());
 		if (group)
 		{			
-			SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Convoy.aiSkill, m_DC_Convoy.aiPerception);
+			SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Convoy.ai.GetSkill(), m_DC_Convoy.ai.GetPerception());
 			m_Groups.Insert(group);					
 		}
 		
@@ -321,11 +321,10 @@ class SDRC_Mission_Convoy : SDRC_Mission
 class SDRC_ConvoyConfig : SDRC_MissionConfig
 {
 	//Mission specific
-	int convoyTime;									//Time to patrol, in seconds
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
-	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found
 	ref array<ref SDRC_Convoy> subMissions = {};	//List of convoys
 	
+	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
 	{
 		int idx = -1;
@@ -345,21 +344,16 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 class SDRC_Convoy : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
+	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();	
 	ref array<EMapDescriptorType> locationTypes = {};	
-	ref array<string> groupTypes = {};
-	int aiSkill;
-	float aiPerception	
 	ref array<string> vehicleTypes = {};
 	float cruiseSpeed;						//Speed to drive in km/h.
 	//Optional settings
 	ref SDRC_Loot loot = null;	
 	
-	void Set(array<EMapDescriptorType> locationTypes_, array<string> groupTypes_, int aiSkill_, float aiPerception_, array<string> vehicleTypes_, float cruiseSpeed_)
+	void Set(array<EMapDescriptorType> locationTypes_, array<string> vehicleTypes_, float cruiseSpeed_)
 	{
 		locationTypes = locationTypes_;
-		groupTypes = groupTypes_;
-		aiSkill = aiSkill_;
-		aiPerception = aiPerception_;
 		vehicleTypes = vehicleTypes_;
 		cruiseSpeed = cruiseSpeed_;
 	}
@@ -433,6 +427,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 	void SetDefaults()
 	{
 		//Default
+		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.missionList = {0,0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
 		//Mission specific
@@ -451,7 +446,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		ref SDRC_Convoy convoy = new SDRC_Convoy();
 		convoy.general.Set(
 			0, "index 0: Convoy driving from .. to ..",
-			{"0 0 0", "0 0 0"},
+			{"0 0 0", "0 0 0"}, 5,
 			"any",
 			"Convoy is on the move.",
 			"Leaked travel plans show a route from %l to %d",
@@ -461,6 +456,14 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_CONVOY_MAP,
 			0
+		);
+		convoy.ai.Set(
+			{0, 0},
+			{"G_LIGHT", "G_MEDICAL"},
+			50, 1.0,
+			{0, 0},
+			DC_EWaypointGenerationType.ROUTE,
+			DC_EWaypointMoveType.MOVE,
 		);
 		convoy.Set(
 			{
@@ -476,10 +479,6 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_AIRPORT
 			},
-			{
-				"G_LIGHT", "G_MEDICAL"
-			},
-			50, 1.0,
 			{
 				"{01F65EFB8D767A91}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_cargo.et",
 				"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
@@ -512,7 +511,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		ref SDRC_Convoy convoy = new SDRC_Convoy();
 		convoy.general.Set(
 			1, "index 1: Truck driving from .. to ..",
-			{"0 0 0", "0 0 0"},
+			{"0 0 0", "0 0 0"}, 7,
 			"any",
 			"Cargo truck is on the move.",
 			"Follow the route from %l to %d",
@@ -522,6 +521,14 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
 			0
+		);
+		convoy.ai.Set(
+			{0, 0},
+			{"G_RECON"},
+			40, 1.0,
+			{0, 0},
+			DC_EWaypointGenerationType.ROUTE,
+			DC_EWaypointMoveType.MOVE,
 		);
 		convoy.Set(
 			{
@@ -538,10 +545,6 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_AIRPORT
 			},
-			{
-				"G_RECON"
-			},
-			40, 1.0,
 			{
 				"{92264FF932676C13}Prefabs/Vehicles/Wheeled/M923A1/M923A1_ammo.et",
 				"{1449105FD658EDFB}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_CIV_forest.et",
@@ -571,7 +574,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		ref SDRC_Convoy convoy = new SDRC_Convoy();
 		convoy.general.Set(
 			2, "index 2: Armor driving from .. to ..",
-			{"0 0 0", "0 0 0"},
+			{"0 0 0", "0 0 0"}, 7,
 			"any",
 			"Armor spotted",
 			"It's been seen in %l. It's to patrol to %d.",
@@ -581,6 +584,14 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
 			0
+		);
+		convoy.ai.Set(
+			{0, 0},
+			{"G_HEAVY", "G_SPECIAL"},
+			50, 1.0,
+			{0, 0},
+			DC_EWaypointGenerationType.ROUTE,
+			DC_EWaypointMoveType.MOVE,
 		);
 		convoy.Set(
 			{
@@ -597,10 +608,6 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_AIRPORT
 			},
-			{
-				"G_HEAVY", "G_SPECIAL"
-			},
-			50, 1.0,
 			{
 				"{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et",
 				"{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et",
@@ -629,7 +636,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		ref SDRC_Convoy convoy = new SDRC_Convoy();
 		convoy.general.Set(
 			3, "index 3: Vehicle with a gun driving from .. to ..",
-			{"0 0 0", "0 0 0"},
+			{"0 0 0", "0 0 0"}, 7,
 			"any",
 			"Guns on the move",
 			"Look out for a patrol between %l and %d.",
@@ -639,6 +646,14 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_CONVOY_MAP,
 			0
+		);
+		convoy.ai.Set(
+			{0, 0},
+			{"G_RECON", "G_MEDICAL", "G_LIGHT"},
+			50, 1.0,
+			{0, 0},
+			DC_EWaypointGenerationType.ROUTE,
+			DC_EWaypointMoveType.MOVE,
 		);
 		convoy.Set(
 			{
@@ -655,10 +670,6 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_AIRPORT
 			},
-			{
-				"G_RECON", "G_MEDICAL", "G_LIGHT"
-			},
-			50, 1.0,
 			{
 				"{F6B23D17D5067C11}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB.et",
 				"{5168FEA3054D6D15}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB_MERDC.et",

@@ -38,7 +38,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 
 		//Check that ranges are not too big
 		int worldSize = SDRC_Misc.GetWorldSize();
-		SDRC_Log.Add("[SDRC_Mission_Patrol] Worldsize vs maxRange : " + worldSize + " vs " + m_DC_Patrol.waypointRange[1], LogLevel.SPAM);
+		SDRC_Log.Add("[SDRC_Mission_Patrol] Worldsize vs maxRange : " + worldSize + " vs " + m_DC_Patrol.ai.waypointRange[1], LogLevel.SPAM);
 		
 		//Set defaults
 		vector pos = m_DC_Patrol.general.pos[0];
@@ -47,7 +47,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes);
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes, m_DC_Patrol.general.emptySize);
 		}
 	
 		//If failed, stop
@@ -60,7 +60,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		//Find a location for the destination. Only used for route
 		if (m_vPosDestination == "0 0 0")
 		{
-			m_vPosDestination = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes);
+			m_vPosDestination = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes, m_DC_Patrol.general.emptySize);
 			SDRC_Log.Add("[SDRC_Mission_Patrol] Patrol destination: " + m_vPosDestination, LogLevel.SPAM);
 		}
 
@@ -128,25 +128,25 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		IEntity entity;
 
 		//Spawn mission AI 
-		int groupCount = Math.RandomInt(m_DC_Patrol.groupCount[0], m_DC_Patrol.groupCount[1]);
+		int aiCount = m_DC_Patrol.ai.GetCount();
 		
-		for (int i = 0; i < groupCount; i++)
+		for (int i = 0; i < aiCount; i++)
 		{
-			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_Patrol.groupTypes.GetRandomElement(), GetPos(), GetFaction());
+			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_Patrol.ai.types.GetRandomElement(), GetPos(), GetFaction());
 			if (group)
 			{
-				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Patrol.aiSkill, m_DC_Patrol.aiPerception);					
+				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Patrol.ai.GetSkill(), m_DC_Patrol.ai.GetPerception());					
 				m_Groups.Insert(group);
-				if (m_DC_Patrol.waypointGenType == DC_EWaypointGenerationType.ROUTE)
+				if (m_DC_Patrol.ai.waypointGenType == DC_EWaypointGenerationType.ROUTE)
 				{
-					SDRC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointGenType, GetPos(), m_vPosDestination, m_DC_Patrol.waypointMoveType);
+					SDRC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.ai.waypointGenType, GetPos(), m_vPosDestination, m_DC_Patrol.ai.waypointMoveType);
 				}
 				else
 				{
-					SDRC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.waypointGenType, GetPos(), "0 0 0", m_DC_Patrol.waypointMoveType, m_DC_Patrol.waypointRange[0], m_DC_Patrol.waypointRange[1]);
+					SDRC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.ai.waypointGenType, GetPos(), "0 0 0", m_DC_Patrol.ai.waypointMoveType, m_DC_Patrol.ai.waypointRange[0], m_DC_Patrol.ai.waypointRange[1]);
 				}
 			}
-			SDRC_Log.Add("[SDRC_Mission_Patrol:MissionSpawn] AI groups spawned: " + groupCount, LogLevel.DEBUG);								
+			SDRC_Log.Add("[SDRC_Mission_Patrol:MissionSpawn] AI groups spawned: " + aiCount, LogLevel.DEBUG);								
 		}
 			
 		SetState(DC_EMissionState.ACTIVE);
@@ -161,6 +161,7 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
 	ref array<ref SDRC_Patrol> subMissions = {};	//List of patrols
 	
+	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
 	{
 		int idx = -1;
@@ -180,25 +181,12 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 class SDRC_Patrol : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
+	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();		
 	ref array<EMapDescriptorType> locationTypes = {};	
-	ref array<int> groupCount = {};			//min, max	
-	ref array<int> waypointRange = {};		//min, max
-	DC_EWaypointGenerationType waypointGenType;
-	DC_EWaypointMoveType waypointMoveType;
-	ref array<string> groupTypes = {};	
-	int aiSkill;
-	float aiPerception	
 	
-	void Set(array<EMapDescriptorType> locationTypes_, array<int> groupCount_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_, array<string> groupTypes_, int AISkill_, float aiPerception_)
+	void Set(array<EMapDescriptorType> locationTypes_)
 	{
 		locationTypes = locationTypes_;
-		groupCount = groupCount_;
-		waypointRange = waypointRange_;
-		waypointGenType = waypointGenType_;
-		waypointMoveType = waypointMoveType_;
-		groupTypes = groupTypes_;
-		aiSkill = AISkill_;
-		aiPerception = aiPerception_;				
 	}
 }		
 
@@ -290,7 +278,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		ref SDRC_Patrol patrol = new SDRC_Patrol();
 		patrol.general.Set(
 			0, "index 0: Enemy patrols going between two points hopefully following roads",
-			{"0 0 0", "0 0 0"},
+			{"0 0 0", "0 0 0"}, 2,
 			"any",
 			"Patrol spotted near %l",
 			"Intel tells them to travel to %d. Be careful while traveling on roads.",
@@ -301,6 +289,14 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_PATROL_MAP,
 			0
 		);		
+		patrol.ai.Set(
+			{1, 1},
+			{"G_SPECIAL"},
+			50, 1.0,
+			{0, 0},	//Not used with ROUTE
+			DC_EWaypointGenerationType.ROUTE,
+			DC_EWaypointMoveType.MOVE,
+		);
 		patrol.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -312,14 +308,6 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_NAME_RIDGE
 			},
-			{1, 1},
-			{0, 0},	//Not used with ROUTE
-			DC_EWaypointGenerationType.ROUTE,
-			DC_EWaypointMoveType.MOVE,
-			{
-				"G_SPECIAL"
-			},
-			50, 1.0
 		);
 			
 		return patrol;
@@ -331,7 +319,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		ref SDRC_Patrol patrol = new SDRC_Patrol();
 		patrol.general.Set(
 			1, "index 1: Heavy patrol",
-			{"0 0 0", "0 0 0"},
+			{"0 0 0", "0 0 0"}, 2,
 			"any",
 			"Patrol in %l",
 			"Beware!",
@@ -341,7 +329,15 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_PATROL_MAP,
 			0
-		);				
+		);			
+		patrol.ai.Set(
+			{1, 1},
+			{"G_HEAVY", "G_LAUNCHER"},
+			50, 1.0,
+			{200, 800},
+			DC_EWaypointGenerationType.RADIUS,
+			DC_EWaypointMoveType.PATROLCYCLE,
+		);
 		patrol.Set
 		(
 			{
@@ -353,14 +349,6 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT,
 				EMapDescriptorType.MDT_FORTRESS
 			},
-			{1, 1},
-			{200, 800},
-			DC_EWaypointGenerationType.RADIUS,
-			DC_EWaypointMoveType.PATROLCYCLE,
-			{
-				"G_HEAVY", "G_LAUNCHER"
-			},
-			50, 1.0
 		);
 			
 		return patrol;
@@ -372,7 +360,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		ref SDRC_Patrol patrol = new SDRC_Patrol();
 		patrol.general.Set(
 			2, "index 2: Enemy patrols between villages",
-			{"0 0 0", "0 0 0"},
+			{"0 0 0", "0 0 0"}, 2,
 			"any",
 			"Patrol seen in %l",
 			"Be alert!",
@@ -383,20 +371,22 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_PATROL_MAP,
 			0
 		);		
+		patrol.ai.Set(
+			{1, 1},
+			{
+				"G_RECON", "G_LIGHT", "G_SMALL"
+			},
+			50, 1.0,
+			{300, 700},
+			DC_EWaypointGenerationType.SCATTERED,
+			DC_EWaypointMoveType.PATROLCYCLE,
+		);
 		patrol.Set
 		(
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_LOCAL
 			},
-			{1, 1},
-			{300, 700},
-			DC_EWaypointGenerationType.SCATTERED,
-			DC_EWaypointMoveType.PATROLCYCLE,
-			{
-				"G_RECON", "G_LIGHT", "G_SMALL"
-			},
-			50, 1.0
 		);
 		
 		return patrol;
@@ -408,7 +398,7 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		ref SDRC_Patrol patrol = new SDRC_Patrol();
 		patrol.general.Set(			
 			3, "index 3: Small patrols with a few AIs",
-			{"0 0 0", "0 0 0"},
+			{"0 0 0", "0 0 0"}, 2,
 			"any",
 			"Enemy has been seen near %l",
 			"Caution is advised.",
@@ -419,19 +409,21 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_PATROL_MAP,
 			0
 		);				
+		patrol.ai.Set(
+			{1, 1},
+			{
+				"G_SMALL", "G_MEDICAL", "G_RECON"
+			},
+			50, 1.0,
+			{300, 700},
+			DC_EWaypointGenerationType.RANDOM,
+			DC_EWaypointMoveType.PATROLCYCLE,
+		);
 		patrol.Set(
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_LOCAL
 			},
-			{1, 1},
-			{300, 700},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.PATROLCYCLE,
-			{
-				"G_SMALL", "G_MEDICAL", "G_RECON"
-			},
-			50, 1.0
 		);
 		
 		return patrol;

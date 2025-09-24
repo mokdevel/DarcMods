@@ -48,11 +48,11 @@ class SDRC_Mission_Stash : SDRC_Mission
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Stash.locationTypes, m_DC_Stash.emptySize);
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Stash.locationTypes, m_DC_Stash.general.emptySize);
 		}
 		else
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_Stash.emptySize);
+			pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_Stash.general.emptySize);
 		}
 		
 		if (pos == "0 0 0")	//No suitable location found.
@@ -131,7 +131,6 @@ class SDRC_Mission_Stash : SDRC_Mission
 class SDRC_StashConfig : SDRC_MissionConfig
 {
 	//Mission specific	
-	bool disableArsenal;						//Disable arsenal for vehicles so that no other items are found
 	int activeDistance;							//Distance of winning and keeping the mission active
 	ref array<ref SDRC_Camp> subMissions = {};	//List of Stashs
 	
@@ -237,7 +236,7 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 		ref SDRC_Camp stash = new SDRC_Camp();
 		stash.general.Set(
 			0, "index 0: Random stash",
-			{"0 0 0"},
+			{"0 0 0"}, 3,
 			"any",
 			"A stash near %l",
 			"Loot is yours to take",
@@ -247,19 +246,18 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_STASH_MAP,
 			0
-		);
-		
-		stash.Set(
-			{
-			},
-			{0, 0},
+		);		
+		stash.ai.Set(
+			{0, 1},
+			{"G_RECON"},
+			50, 1.0,
 			{50, 300},
 			DC_EWaypointGenerationType.RANDOM,
 			DC_EWaypointMoveType.PATROLCYCLE,
+		);
+		stash.Set(
 			{
 			},
-			50, 1.0,
-			3
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();

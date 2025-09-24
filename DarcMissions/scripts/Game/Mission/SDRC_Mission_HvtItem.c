@@ -51,11 +51,11 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_HvtItem.locationTypes, m_DC_HvtItem.emptySize);
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_HvtItem.locationTypes, m_DC_HvtItem.general.emptySize);
 		}
 		else
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_HvtItem.emptySize);
+			pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_HvtItem.general.emptySize);
 		}
 		
 		if (pos == "0 0 0")	//No suitable location found.
@@ -182,11 +182,9 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 class SDRC_HvtItemConfig : SDRC_MissionConfig
 {
 	//Mission specific
-	
-	//Variables here
-	bool disableArsenal;							//Disable arsenal for vehicles so that no other items are found
 	ref array<ref SDRC_HvtItem> subMissions = {};	//List of HvtItems
 	
+	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
 	{
 		int idx = -1;
@@ -292,7 +290,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		hvtItem.general.Set(
 			0, "index 0: Destroy generator",
-			{"0 0 0"},
+			{"0 0 0"}, 10,
 			"any",
 			"Destroy generator near %l",
 			"The enemy is spreading propaganda.",
@@ -303,6 +301,14 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTITEM_MAP,
 			0
 		);
+		hvtItem.ai.Set(
+			{1, 2},
+			{"G_ADMIN", "G_LIGHT", "G_LIGHT"},
+			50, 1.0,
+			{25, 100},
+			DC_EWaypointGenerationType.LOITER,
+			DC_EWaypointMoveType.PATROLCYCLE,
+		);	
 		hvtItem.Set(
 			{
 				EMapDescriptorType.MDT_NAME_LOCAL,
@@ -313,15 +319,6 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT,
 				EMapDescriptorType.MDT_FORTRESS
 			},
-			{1, 2},
-			{25, 100},
-			DC_EWaypointGenerationType.LOITER,
-			DC_EWaypointMoveType.PATROLCYCLE,
-			{
-				"G_ADMIN", "G_LIGHT", "G_LIGHT"
-			},
-			50, 1.0,
-			6
 		);
 		hvtItem.targetIdx = 1;
 		
@@ -404,7 +401,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		hvtItem.general.Set(
 			1, "index 1: Destroy supplies",
-			{"0 0 0"},
+			{"0 0 0"}, 20,
 			"any",
 			"A supply truck near %l",
 			"A truck has crashed and the supplies needs to be destroyed.",
@@ -415,6 +412,14 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTITEM_MAP,
 			0
 		);
+		hvtItem.ai.Set(
+			{1, 2},
+			{"G_ADMIN", "G_LIGHT", "G_LIGHT", "G_HEAVY"},
+			50, 1.0,
+			{25, 100},
+			DC_EWaypointGenerationType.LOITER,
+			DC_EWaypointMoveType.PATROLCYCLE,
+		);	
 		hvtItem.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -427,15 +432,6 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_NAME_TOWN, 
 				EMapDescriptorType.MDT_AIRPORT,
 			},
-			{1, 2},
-			{25, 100},
-			DC_EWaypointGenerationType.LOITER,
-			DC_EWaypointMoveType.PATROLCYCLE,
-			{
-				"G_ADMIN", "G_LIGHT", "G_LIGHT", "G_HEAVY"
-			},
-			50, 1.0,
-			20
 		);
 		hvtItem.targetIdx = 1;
 		
@@ -504,7 +500,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		hvtItem.general.Set(
 			2, "index 2: Destroy antenna",
-			{"0 0 0"},
+			{"0 0 0"}, 20,
 			"any",
 			"Radio antenna close to %l",
 			"Disrupt the enemy communications. Destroy the antenna.",
@@ -515,6 +511,14 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
 			0
 		);
+		hvtItem.ai.Set(
+			{2, 4},
+			{"G_ADMIN", "G_RECON", "G_SPECIAL", "G_LIGHT"},
+			50, 1.0,
+			{25, 150},
+			DC_EWaypointGenerationType.LOITER,
+			DC_EWaypointMoveType.PATROLCYCLE,
+		);		
 		hvtItem.Set(
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
@@ -525,15 +529,6 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_NAME_VALLEY,
 				EMapDescriptorType.MDT_AIRPORT,
 			},
-			{2, 4},
-			{25, 100},
-			DC_EWaypointGenerationType.LOITER,
-			DC_EWaypointMoveType.PATROLCYCLE,
-			{
-				"G_ADMIN", "G_RECON", "G_SPECIAL", "G_LIGHT"
-			},
-			50, 1.0,
-			20
 		);
 		hvtItem.targetIdx = 9;
 		

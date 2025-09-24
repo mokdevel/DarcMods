@@ -5,7 +5,7 @@
 A chopper flys and crashes. Loot and defending AI is spawned.
 */
 
-const string DC_MISSIONCONFIG_FILE_CRASHSITE = "dc_missionConfig_Convoy.json";
+const string DC_MISSIONCONFIG_FILE_CRASHSITE = "dc_missionConfig_Crashsite.json";
 	
 //------------------------------------------------------------------------------------------------
 enum DC_EMissionCrashSiteState
@@ -13,7 +13,6 @@ enum DC_EMissionCrashSiteState
 	INIT,
 	FLYING,
 	SPAWN_SITE,
-	SPAWN_AI,
 	RUN
 };
 
@@ -31,7 +30,10 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	private float m_fAngle = 0;
 	private IEntity m_Vehicle;
 	private vector m_vVehiclePosOld;
-	
+
+	private int m_iSpawnIndex = 0;						//Counter for the item to spawn
+	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
+		
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_Crashsite(DC_EMissionType missionType, SDRC_MissionRequested request)
 	{
@@ -112,6 +114,10 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		SetMessages(m_Config.showMessage, m_DC_Crashsite.general.winMessage, m_DC_Crashsite.general.loseMessage);		
 		SetWinCondition(m_DC_Crashsite.general.winCondition);*/
 
+		//Camps are randomly rotated
+		m_fSpawnRotation = Math.RandomFloat(0, 360);
+		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Crashsite.campItems);
+		
 		//Set a marker for destination
 		if (!SDRC_Conf.RELEASE)
 		{			
@@ -171,60 +177,30 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 					else
 					{
 						MoveMarker();
-/*						if (m_Config.showMarker)
-						{						
-							SDRC_MapMarkerHelper.DeleteMarker(GetId());
-							//SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, GetId(), "");
-							SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, m_Config.markerType);
-							ShowMarker();
-						}*/
 					}
 					break;
 				case DC_EMissionCrashSiteState.SPAWN_SITE:
-					IEntity entity;
 				
-					SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Crashsite.siteItems);
-				
-					float rotation = Math.RandomFloat(0, 360);			
-					int i = 0;
-				
-					foreach (ref SDRC_Structure item : m_DC_Crashsite.siteItems)
+					bool ready = false;
+
+					ready = SDRC_CampHelper.Spawn(this, m_iSpawnIndex, m_DC_Crashsite, m_fSpawnRotation, m_Config.disableArsenal);
+					m_iSpawnIndex++;			
+					
+					if (ready)
 					{
-						entity = SDRC_SpawnHelper.SpawnStructures(m_DC_Crashsite.siteItems, GetPos(), rotation, i);
-						
-						if (entity != NULL)
-						{ 
-							m_EntityList.Insert(entity);
-						}
-						else
+						if (m_DC_Crashsite.loot)
 						{
-							SDRC_Log.Add("[SDRC_Mission_Crashsite:MissionSpawn] Could not load: " + item.GetResource(), LogLevel.ERROR);				
+							m_DC_Crashsite.loot.box = m_EntityList[1];	//Normally it's the first one, but we have added the chopper in the list as the first one.
 						}
-						
-						i++;			
+													
+						missionCrashSiteState = DC_EMissionCrashSiteState.RUN;
+						SetState(DC_EMissionState.ACTIVE);
 					}
-				
-					//Put loot
-					if (m_DC_Crashsite.loot)			
+					else
 					{
-						m_DC_Crashsite.loot.box = m_EntityList[1];	//Normally it's the first one, but we have added the chopper in the list as the first one.
-						SDRC_LootHelper.SpawnItemsToStorage(m_DC_Crashsite.loot.box, m_DC_Crashsite.loot.items, m_DC_Crashsite.loot.itemChance);
-						SDRC_Log.Add("[SDRC_Mission_Crashsite:MissionSpawn] Loot added.", LogLevel.DEBUG);								
-					}
-								
-					missionCrashSiteState = DC_EMissionCrashSiteState.SPAWN_AI;
-					break;								
-				case DC_EMissionCrashSiteState.SPAWN_AI:
-					SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_Crashsite.groupTypes.GetRandomElement(), GetPos(), GetFaction());				
-					if (group)
-					{
-						SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Crashsite.aiSkill, m_DC_Crashsite.aiPerception);					
-						m_Groups.Insert(group);
-						SDRC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER);
-					}
-					SDRC_Log.Add("[SDRC_Mission_Crashsite:MissionSpawn] AI groups spawned ", LogLevel.DEBUG);								
-					missionCrashSiteState = DC_EMissionCrashSiteState.RUN;
-					SetState(DC_EMissionState.ACTIVE);		//Set the ACTIVE state again to properly get correct AI count.
+						GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds
+						return;				
+					}				
 					break;
 				case DC_EMissionCrashSiteState.RUN:		
 					if (!IsActive())
@@ -245,6 +221,13 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	{			
 		super.MissionEnd();	
 	}
+	
+	//------------------------------------------------------------------------------------------------	
+	override void DoWin()
+	{	
+		SDRC_CampHelper.AddLoot(m_DC_Crashsite);
+		super.DoWin();
+	}	
 	
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
@@ -293,32 +276,15 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 }
 		
 //------------------------------------------------------------------------------------------------
-class SDRC_HelicopterInfo : Managed
-{
-	string resource;
-	float throttle;
-	float rotorForce;
-	float rotor2Force;
-
-	void Set(string resource_, float throttle_, float rotorForce_, float rotor2Force_)
-	{
-		resource = resource_;
-		throttle = throttle_;
-		rotorForce = rotorForce_;
-		rotor2Force = rotor2Force_;
-	};
-}
-
-//------------------------------------------------------------------------------------------------
-
 class SDRC_CrashsiteConfig : SDRC_MissionConfig
 {
-	//Mission specific	
+	//Mission specific
 	int distanceToMission;								//Distance to mission when searching for a mission pos. Overrides missionFrame settings.
 	int distanceToPlayer;								//Distance to player when searching for a mission pos. Overrides missionFrame settings.
 	ref array<int> flyHeight = {};						//min, max - Spawn helicopter between these values.
 	ref array<ref SDRC_Crashsite> subMissions = {};		//List of crashsites
 	
+	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
 	{
 		int idx = -1;
@@ -335,23 +301,26 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 }
 
 //------------------------------------------------------------------------------------------------
-class SDRC_Crashsite : Managed
+class SDRC_Crashsite : SDRC_Camp
 {
-	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
-	ref array<string> groupTypes = {};
-	int aiSkill;
-	float aiPerception;
 	ref array<ref SDRC_HelicopterInfo> helicopterInfo = {};
-	//Optional settings
-	ref SDRC_Loot loot = null;
-	ref array<ref SDRC_Structure> siteItems = {};
-	
-	void Set(array<string> groupTypes_, int aiSkill_, float aiPerception_)
+}
+
+//------------------------------------------------------------------------------------------------
+class SDRC_HelicopterInfo : Managed
+{
+	string resource;
+	float throttle;
+	float rotorForce;
+	float rotor2Force;
+
+	void Set(string resource_, float throttle_, float rotorForce_, float rotor2Force_)
 	{
-		groupTypes = groupTypes_;
-		aiSkill = aiSkill_;
-		aiPerception = aiPerception_;
-	}	
+		resource = resource_;
+		throttle = throttle_;
+		rotorForce = rotorForce_;
+		rotor2Force = rotor2Force_;
+	};
 }
 
 //------------------------------------------------------------------------------------------------
@@ -421,9 +390,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		conf.version = 1;
-		conf.author = "darc";
-		//Default
+		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.missionList = {0,1};		
 		//Mission specific
@@ -441,7 +408,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		ref SDRC_Crashsite crashsite = new SDRC_Crashsite();
 		crashsite.general.Set(
 			0, "index 0: general mission",
-			{"0 0 0"},
+			{"0 0 0"}, 0, 
 			"any",
 			"Helicopter in distress",
 			"A valuable cargo has crashed.",
@@ -452,12 +419,14 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
 			0
 		);
-		crashsite.Set
+		crashsite.ai.Set
 		(
-			{
-				"G_LIGHT", "G_ADMIN"
-			},
-			20, 0.8
+			{1, 2},
+			{"G_LIGHT", "G_ADMIN"},
+			20, 0.8,
+			{0, 0},
+			DC_EWaypointGenerationType.LOITER,
+			DC_EWaypointMoveType.LOITER,
 		);
 		
 		//----------------------------------------------------
@@ -492,28 +461,28 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 			"97.911 1 121.527"
 		);
-		crashsite.siteItems.Insert(crashitem0);
+		crashsite.campItems.Insert(crashitem0);
 
 		ref SDRC_Structure crashitem2 = new SDRC_Structure();
 		crashitem2.Set(
 			"{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
 			"106.274 1 121.108"
 		);
-		crashsite.siteItems.Insert(crashitem2);
+		crashsite.campItems.Insert(crashitem2);
 
 		ref SDRC_Structure crashitem3 = new SDRC_Structure();
 		crashitem3.Set(
 			"{310E849A808F9F5F}PrefabsEditable/Auto/Structures/Military/Camps/Canvas_Covers/US/E_CanvasCover_Folded_US.et",
 			"104.552 1 126.903"
 		);
-		crashsite.siteItems.Insert(crashitem3);
+		crashsite.campItems.Insert(crashitem3);
 
 		ref SDRC_Structure crashitem4 = new SDRC_Structure();
 		crashitem4.Set(
 			"{532795AD51CFBEDF}PrefabsEditable/Auto/Structures/Infrastructure/Piping/E_DieselPipe_01_hose_V2.et",
 			"104.745 1 123.685"
 		);
-		crashsite.siteItems.Insert(crashitem4);
+		crashsite.campItems.Insert(crashitem4);
 
 		ref SDRC_Structure crashitem5 = new SDRC_Structure();
 		crashitem5.Set(
@@ -521,7 +490,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"103.559 1 119.949",
 			"0 -45.003 0"
 		);
-		crashsite.siteItems.Insert(crashitem5);
+		crashsite.campItems.Insert(crashitem5);
 		
 		return crashsite;
 	}
@@ -532,7 +501,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		ref SDRC_Crashsite crashsite = new SDRC_Crashsite();
 		crashsite.general.Set(
 			1, "index 1: general mission",
-			{"0 0 0"},
+			{"0 0 0"}, 0,
 			"any",
 			"Engine damage",
 			"May day, may day! We're going down.",
@@ -543,12 +512,14 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
 			0
 		);
-		crashsite.Set
+		crashsite.ai.Set
 		(
-			{
-				"G_HEAVY", "G_ADMIN"
-			},
-			20, 0.8
+			{1, 2},
+			{"G_HEAVY", "G_ADMIN"},
+			20, 0.8,
+			{0, 0},
+			DC_EWaypointGenerationType.LOITER,
+			DC_EWaypointMoveType.LOITER,
 		);
 		
 		//----------------------------------------------------
@@ -579,14 +550,14 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 			"97.911 1 121.527"
 		);
-		crashsite.siteItems.Insert(crashitem_0);
+		crashsite.campItems.Insert(crashitem_0);
 
 		ref SDRC_Structure crashitem_1 = new SDRC_Structure();
 		crashitem_1.Set(
 			"{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
 			"106.274 1 121.108"
 		);
-		crashsite.siteItems.Insert(crashitem_1);	
+		crashsite.campItems.Insert(crashitem_1);	
 		return crashsite;
 	}
 }

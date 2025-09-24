@@ -39,7 +39,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Squatter.general, request);
 		
 		//Set defaults
-		m_iAiCount = Math.RandomInt(m_DC_Squatter.aiCount[0], m_DC_Squatter.aiCount[1]);
+		m_iAiCount = m_DC_Squatter.ai.GetCount();
 		float radius = 10;					//Default size for the radius. Mainly for requested missions to find the nearest building.
 		array<string>buildingFilter = {};
 		
@@ -135,7 +135,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		if (m_iSpawnIndex < m_iAiCount)
 		{
 			//Each AI is spawned in to its own group to be able to give individual waypoints to a character
-			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.aiTypes.GetRandomElement(), m_DC_Squatter.aiSkill, m_DC_Squatter.aiPerception, GetFaction());
+			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.ai.types.GetRandomElement(), m_DC_Squatter.ai.GetSkill(), m_DC_Squatter.ai.GetPerception(), GetFaction());
 			if (group)
 			{
 				m_Groups.Insert(group);
@@ -172,11 +172,10 @@ class SDRC_Mission_Squatter : SDRC_Mission
 class SDRC_SquatterConfig : SDRC_MissionConfig
 {
 	//Mission specific
-	
-	//Variables here
 	int buildingRadius;									//The radius to search for suitable buildings.
 	ref array<ref SDRC_Squatter> subMissions = {};		//List of squatters
-	
+
+	//------------------------------------------------------------------------------------------------	
 	int GetSubMissionIdx(int subIdx)
 	{
 		int idx = -1;
@@ -196,23 +195,16 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 class SDRC_Squatter : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
+	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();		
 	ref array<EMapDescriptorType> locationTypes = {};
-	ref array<int> aiCount = {};			//min, max
-	ref array<string> aiTypes = {};
-	int aiSkill;
-	float aiPerception;
 	ref array<string> buildingNames = {};
 	//Optional settings
 	string lootBox = "";					//The loot box
 	ref SDRC_Loot loot = null;
 	
-	void Set(array<EMapDescriptorType> locationTypes_, array<int> aiCount_, array<string> aiTypes_, int aiSkill_, float aiPerception_, array<string> buildingNames_, string lootBox_)
+	void Set(array<EMapDescriptorType> locationTypes_, array<string> buildingNames_, string lootBox_)
 	{
 		locationTypes = locationTypes_;
-		aiCount = aiCount_;
-		aiTypes = aiTypes_;
-		aiSkill = aiSkill_;
-		aiPerception = aiPerception_;	
 		buildingNames = buildingNames_;	
 		lootBox = lootBox_;
 	}	
@@ -305,7 +297,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
 			0, "index 0: Squatters in cities",
-			{"0 0 0"},
+			{"0 0 0"}, 0, 
 			"any",
 			"Squatters near %l.",
 			"Building has squatters with loot",		
@@ -315,6 +307,16 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"",
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			0		
+		);
+		squatter.ai.Set(
+			{3, 6},
+			{"C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", 
+			 "C_OFFICER"
+			},
+			50, 0.6,
+			{0, 0},
+			DC_EWaypointGenerationType.NONE, 
+			DC_EWaypointMoveType.NONE
 		);
 		squatter.Set(
 			{
@@ -327,12 +329,6 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_NAME_TOWN, 
 				EMapDescriptorType.MDT_AIRPORT,
 			},
-			{3,6},
-			{
-				"C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", 
-				"C_OFFICER"
-			},
-			50, 0.6,
 			{"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_", "Office_E_", "MountainHotel_"},
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
 		);
@@ -358,7 +354,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
 			1, "index 1: Squatters in control towers",
-			{"0 0 0"},
+			{"0 0 0"}, 0,
 			"any",
 			"Enemy in %l",
 			"Control tower is being guarded.",		
@@ -369,17 +365,21 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			0		
 		);
+		squatter.ai.Set(
+			{6, 10},
+			{"C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", 
+			 "C_HEAVY", "C_HEAVY", 
+			 "C_LAUNCHER", "C_MEDIC", "C_OFFICER"
+			},
+			50, 0.8,
+			{0, 0},
+			DC_EWaypointGenerationType.NONE, 
+			DC_EWaypointMoveType.NONE
+		);
 		squatter.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
-			{6,10},
-			{
-				"C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", 
-				"C_HEAVY", "C_HEAVY", 
-				"C_LAUNCHER", "C_MEDIC", "C_OFFICER"
-			},
-			50, 0.8,
 			{"ControlTowerMilitary_"},
 			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
 		);
@@ -407,7 +407,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
 			2, "index 2: Squatters in military locations",
-			{"0 0 0"},
+			{"0 0 0"}, 0,
 			"any",
 			"Guards around %l",
 			"Military location has loot to steal.",		
@@ -418,17 +418,21 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			0		
 		);
+		squatter.ai.Set(
+			{4, 10},
+			{"C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", 
+			 "C_HEAVY", "C_HEAVY", "C_HEAVY", 
+			 "C_LAUNCHER", "C_MEDIC", "C_OFFICER"
+			},
+			50, 0.8,
+			{0, 0},
+			DC_EWaypointGenerationType.NONE, 
+			DC_EWaypointMoveType.NONE
+		);
 		squatter.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
-			{4,10},
-			{
-				"C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", 
-				"C_HEAVY", "C_HEAVY", "C_HEAVY", 
-				"C_LAUNCHER", "C_MEDIC", "C_OFFICER"
-			},
-			50, 0.8,
 			{"Office_E_", "Barracks_01_", "Barracks_E_02_"},
 			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
 		);
@@ -455,7 +459,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
 			3, "index 3: Military in industrial areas",
-			{"0 0 0"},
+			{"0 0 0"}, 0,
 			"any",
 			"Industrial area near %l",
 			"Military has seized control of an industrial area. Don't shoot the civilians.",
@@ -466,18 +470,22 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			0		
 		);
+		squatter.ai.Set(
+			{2, 6},
+			{"C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", 
+			 "C_HEAVY", "C_HEAVY", "C_HEAVY", 
+			 "C_RECON", "C_RECON", "C_RECON", 
+			 "C_OFFICER"
+			},
+			50, 0.8,
+			{0, 0},
+			DC_EWaypointGenerationType.NONE, 
+			DC_EWaypointMoveType.NONE
+		);
 		squatter.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
-			{2,6},
-			{
-				"C_RIFLEMAN", "C_RIFLEMAN", "C_RIFLEMAN", 
-				"C_HEAVY", "C_HEAVY", "C_HEAVY", 
-				"C_RECON", "C_RECON", "C_RECON", 
-				"C_OFFICER"
-			},
-			50, 0.8,
 			{"DieselPowerPlant_", "CowShed_", "FireStation_", "Warehouse_", "TransformerStation_", "FactoryHall_"},
 			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
 		);
@@ -502,7 +510,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
 			4, "index 4: Enemy in churches and similar",
-			{"0 0 0"},
+			{"0 0 0"}, 0,
 			"any",
 			"Sanctuary visitors near %l",
 			"Holy night, holy loot.",		
@@ -513,15 +521,18 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			0		
 		);
+		squatter.ai.Set(
+			{3, 7},
+			{"C_RIFLEMAN"},
+			50, 0.8,		
+			{0, 0},
+			DC_EWaypointGenerationType.NONE, 
+			DC_EWaypointMoveType.NONE
+		);
 		squatter.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
-			{3,7},
-			{
-				"C_RIFLEMAN"
-			},
-			50, 0.8,		
 			{"Church_", "ChurchSmall_", "Mosque_", "Minaret"},
 			"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et"
 		);
@@ -545,7 +556,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
 		squatter.general.Set(
 			5, "index 5: Shops and houses",
-			{"0 0 0"},
+			{"0 0 0"}, 0,
 			"any",
 			"Burglars seen near %l",
 			"Go rob the robbers.",		
@@ -556,15 +567,18 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			0		
 		);
+		squatter.ai.Set(
+			{2, 6},
+			{"C_SPECIAL"},
+			30, 0.3,
+			{0, 0},
+			DC_EWaypointGenerationType.NONE, 
+			DC_EWaypointMoveType.NONE
+		);
 		squatter.Set(
 			{
 				//We pick any building that matches and ignore location
 			},
-			{2,6},
-			{
-				"C_SPECIAL"
-			},
-			30, 0.3,
 			{"ShopModern_", "House_Town_", "House_Village_", "FarmHouse_", "House_Wooden_"},
 			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
 		);

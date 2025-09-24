@@ -59,6 +59,7 @@ class SDRC_MissionConfig : Managed
 	bool showMarker = true;
 	bool showHint = true;
 	bool showMessage = true;
+	bool disableArsenal;						//Disable arsenal for vehicles so that no other items are found
 	ref array<ref int> missionList = {};		//The list of mission suids.
 	ref array<ref string> missionFiles = {};	//The list of mission files to load.
 }
@@ -69,6 +70,7 @@ class SDRC_MissionConfigGeneral : Managed
 	int subIdx;								//Unique index for the sub mission. 
 	string comment;							//Generic comment to describe the mission. Not used in game.
 	ref array<vector> pos = {};				//Positions for mission. "0 0 0" used for random location chosen from locationTypes. First is mission position, second is destination for missions that need it.
+	float emptySize;						//The size (radius) of the empty space needed to decide on a mission position.
 	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
@@ -88,7 +90,7 @@ class SDRC_MissionConfigGeneral : Managed
 	
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults(int subIdx_ = -1, string comment_ = SDRC_DEFAULT, 
-					 vector pos_ = "0 0 0", 
+					 vector pos_ = "0 0 0", float emptySize_ = 5,
 					 string posName_ = SDRC_DEFAULT, string title_ = SDRC_DEFAULT, string info_ = SDRC_DEFAULT, 
 					 DC_EMissionWinCondition winCondition_ = DC_EMissionWinCondition.DEFAULT, 
 					 string winMessage_ = SDRC_DEFAULT, string loseMessage_ = SDRC_DEFAULT, 
@@ -97,25 +99,118 @@ class SDRC_MissionConfigGeneral : Managed
 					 int xp_ = 0)
 	{
 		array<vector> pos_array = {pos_, "0 0 0"};
-		Set(subIdx_, comment_, pos_array, posName_, title_, info_, winCondition_, winMessage_, loseMessage_, faction_, markerType_, markerIcon_, xp_);
+		Set(subIdx_, comment_, pos_array, emptySize_, posName_, title_, info_, winCondition_, winMessage_, loseMessage_, faction_, markerType_, markerIcon_, xp_);
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void Set(int subIdx_, string comment_, array<vector> pos_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, string markerType_, int markerIcon_, int xp_)
+	void Set(int subIdx_, string comment_, array<vector> pos_, float emptySize_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, string markerType_, int markerIcon_, int xp_)
 	{
 		subIdx = subIdx_;
 		comment = comment_;
 		pos = pos_;
+		emptySize = emptySize_;
 		posName = posName_;
 		title = title_;
 		info = info_;
 		winCondition = winCondition_;
 		winMessage = winMessage_;
 		loseMessage = loseMessage_;
-		faction = faction_;		//SDRC_EnemyHelper.SelectEnemyFaction(faction_);
+		faction = faction_;
 		markerType = markerType_;
 		markerIcon = markerIcon_;
 		xp = xp_;
+	}	
+}
+
+//------------------------------------------------------------------------------------------------
+class SDRC_MissionConfigAi : Managed
+{
+	private ref array<int> count = {};
+	ref array<string> types = {}; 		//The prefab names of AI groups or characters. The AI is randomly picked from this list.
+	private int skill;							//Skill for AI (0-100). See SCR_AICombatComponent and EAISkill
+	private float perception;
+	ref array<int> waypointRange = {};		//min, max
+	DC_EWaypointGenerationType waypointGenType;
+	DC_EWaypointMoveType waypointMoveType;
+	
+	void Set(array<int> count_, array<string> types_, int skill_, float perception_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_)
+	{
+		count = count_;
+		types = types_;
+		skill = skill_;
+		perception = perception_;		
+		waypointRange = waypointRange_;
+		waypointGenType = waypointGenType_;
+		waypointMoveType = waypointMoveType_;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	int GetCount()
+	{
+		int cnt = Math.RandomInt(count[0], count[1]);
+		
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (m_BaseGameMode)
+		{
+			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiCoef[m_BaseGameMode.missionFrame.m_Config.difficulty];
+			
+			int low = count[0] * coef;
+			if (low < count[0])
+			{
+				low = count[0];
+			}
+			int high = count[1] * coef;
+			if (high < count[1])
+			{
+				high = count[1];
+			}
+			cnt = Math.RandomInt(low, high);
+		}
+		
+		return cnt;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*! Return a proper skill value that matches EAISkill	
+		NONE,
+		NOOB 	= 10,
+		ROOKIE	= 20,
+		REGULAR	= 50,
+		VETERAN	= 70,
+		EXPERT 	= 80,
+		CYLON  	= 100
+	*/	
+	int GetSkill()
+	{
+		int sk = skill;
+		
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (m_BaseGameMode)
+		{
+			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.skillCoef[m_BaseGameMode.missionFrame.m_Config.difficulty];
+			sk = skill * coef;
+		}		
+		
+		if (sk < 10) 				{sk = EAISkill.NOOB;}			
+		if (sk >= 20 && sk < 50)	{sk = EAISkill.ROOKIE;}
+		if (sk >= 50 && sk < 70)	{sk = EAISkill.REGULAR;}
+		if (sk >= 70 && sk < 80)	{sk = EAISkill.VETERAN;}
+		if (sk >= 80 && sk < 100)	{sk = EAISkill.EXPERT;}
+		if (sk > 100)				{sk = EAISkill.CYLON;}
+		
+		return sk;
+	}
+	
+	float GetPerception()
+	{
+		float perc = perception;
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (m_BaseGameMode)
+		{
+			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.perfectionCoef[m_BaseGameMode.missionFrame.m_Config.difficulty];
+			perc = perception * coef;
+		}		
+		return perception;
 	}	
 }
 
