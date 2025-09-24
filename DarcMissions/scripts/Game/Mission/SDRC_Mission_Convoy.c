@@ -143,9 +143,15 @@ class SDRC_Mission_Convoy : SDRC_Mission
 					//This state is mainly for delay to give vehicle and AI to finalize spawn. If removed, AI will not enter the vehicle.
 					missionConvoyState = DC_EMissionConvoyState.MOVE_AI;
 					break;
-				case DC_EMissionConvoyState.MOVE_AI:
-					MoveGroupInVehicle(m_Groups[0], m_Vehicle);
-					SDRC_WPHelper.CreateMissionAIWaypoints(m_Groups[0], m_DC_Convoy.ai.waypointGenType, GetPos(), m_vPosDestination, m_DC_Convoy.ai.waypointMoveType);
+				case DC_EMissionConvoyState.MOVE_AI:				
+					MoveGroupsInVehicle(m_Groups, m_Vehicle);				
+					foreach (SCR_AIGroup group : m_Groups)
+					{	
+						if (group)
+						{
+							SDRC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Convoy.ai.waypointGenType, GetPos(), m_vPosDestination, m_DC_Convoy.ai.waypointMoveType);
+						}
+					}
 					missionConvoyState = DC_EMissionConvoyState.RUN;
 					break;
 				case DC_EMissionConvoyState.RUN:
@@ -197,13 +203,20 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		AICarMovementComponent vehicle_c = AICarMovementComponent.Cast(m_Vehicle.FindComponent(AICarMovementComponent));
         vehicle_c.SetCruiseSpeed(m_DC_Convoy.cruiseSpeed);
 
-		//Spawn AI
+		//Spawn mission AI 
+		int aiCount = m_DC_Convoy.ai.GetCount();
 		vector posg = GetPos() + "3 0 3";
-		SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(m_DC_Convoy.ai.types.GetRandomElement(), posg, GetFaction());
-		if (group)
-		{			
-			SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Convoy.ai.GetSkill(), m_DC_Convoy.ai.GetPerception());
-			m_Groups.Insert(group);					
+		
+		for (int i = 0; i < aiCount; i++)
+		{		
+			SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(m_DC_Convoy.ai.types.GetRandomElement(), posg, GetFaction());
+			if (group)
+			{			
+				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Convoy.ai.GetSkill(), m_DC_Convoy.ai.GetPerception());
+				m_Groups.Insert(group);					
+			}
+			
+			posg[0] = posg[0] + 3;
 		}
 		
 		//Put loot
@@ -216,7 +229,36 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		
 		SetState(DC_EMissionState.ACTIVE);		
 	}
+
+	//------------------------------------------------------------------------------------------------
+    private void MoveGroupsInVehicle(array<SCR_AIGroup> groups, IEntity vehicle)
+    {
+		array<AIAgent> groupMembers  = new array<AIAgent>;
 		
+		int i = 0;
+		
+		foreach (SCR_AIGroup group : groups)
+		{				
+			if (group)
+			{
+				group.GetAgents(groupMembers);
+				
+				foreach (AIAgent aiAgent: groupMembers)
+				{
+					bool success = MoveEntityInVehicle(aiAgent, vehicle, i);
+					
+					//Remove those AI that did not fit in the vehicle.
+					if (!success)
+					{
+						SDRC_AIHelper.RemoveAIAgent(aiAgent);
+					}
+					
+					i++;
+				}
+			}
+		}
+	}
+			
 	//------------------------------------------------------------------------------------------------
     private void MoveGroupInVehicle(AIGroup group, IEntity vehicle)
     {
@@ -256,14 +298,15 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		}
 		
 		array<int> slotPrio = {};
-		slotPrio.Insert(-1);
-		slotPrio.Insert(-1);
+		slotPrio.Insert(-1);		//Reserve prio 0 slot for pilot
+		slotPrio.Insert(-1);		//Reserve prio 0 slot for pilot
 		
 		int i = 0;
 						
 		foreach (BaseCompartmentSlot slot : compartments)
 		{
 			bool found = false;
+			
 			if (PilotCompartmentSlot.Cast(slot))
 			{
 				SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] Pilot slot: " + slot, LogLevel.SPAM);
@@ -429,7 +472,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		//Default
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
+		conf.missionList = {2};//{0,0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
 		//Mission specific
 		conf.distanceToPlayer = 500;
 		conf.disableArsenal = true;
@@ -523,8 +566,8 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			0
 		);
 		convoy.ai.Set(
-			{0, 0},
-			{"G_RECON"},
+			{1, 1},
+			{"G_RECON", "G_LIGHT"},
 			40, 1.0,
 			{0, 0},
 			DC_EWaypointGenerationType.ROUTE,
@@ -547,9 +590,12 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			},
 			{
 				"{92264FF932676C13}Prefabs/Vehicles/Wheeled/M923A1/M923A1_ammo.et",
+				"{F1FBD0972FA5FE09}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport.et",
+				"{81FDAD5EB644CC3D}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered.et",
+				"{48A6D4372444B85A}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered_closed.et", 
+				"{16E32C3ABEAFC2C6}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_FIA_transport.et",
 				"{1449105FD658EDFB}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_CIV_forest.et",
-				"{FB219B49A448A8EA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_JZD.et",
-				"{F1FBD0972FA5FE09}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport.et"
+				"{FB219B49A448A8EA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_JZD.et",			
 			},
 			20
 		);
@@ -586,7 +632,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			0
 		);
 		convoy.ai.Set(
-			{0, 0},
+			{2, 3},
 			{"G_HEAVY", "G_SPECIAL"},
 			50, 1.0,
 			{0, 0},
@@ -648,7 +694,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			0
 		);
 		convoy.ai.Set(
-			{0, 0},
+			{1, 2},
 			{"G_RECON", "G_MEDICAL", "G_LIGHT"},
 			50, 1.0,
 			{0, 0},
@@ -690,5 +736,5 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		convoy.loot = loot;		
 				
 		return convoy;	
-	}	
+	}
 }
