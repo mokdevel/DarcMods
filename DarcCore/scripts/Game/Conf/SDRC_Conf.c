@@ -37,7 +37,7 @@ sealed class SDRC_Conf
 	const string DEFAULT_DIR = "dummy";
 	const bool SDRC_ENABLE_DARCSPAWNER = false;
 	const bool SDRC_ENABLE_DARCMISSIONS	= true;
-	const bool SDRC_ENABLE_DARCDEATHMARKER = true;
+	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
 	const bool SDRC_ENABLE_DARCSTORIES = true;
 //	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
 	const bool RELEASE = false;					
