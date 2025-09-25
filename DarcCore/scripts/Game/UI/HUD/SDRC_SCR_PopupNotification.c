@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------------------------
 modded class SCR_PopUpNotification
 {
-	protected DC_EMissionIcon m_Icon;
+	protected SDRC_EMissionIcon m_Icon;
 	protected ImageWidget m_wImageWidget;
 	protected ImageWidget m_wImageWidgetShadow;
 
@@ -9,7 +9,7 @@ modded class SCR_PopUpNotification
 	/*!	
 	Set the icon for a hint
 	*/
-	void SetIcon(DC_EMissionIcon icon)
+	void SetIcon(SDRC_EMissionIcon icon)
 	{
 		m_Icon = icon;
 	}				
@@ -134,7 +134,7 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 		{
 			m_wImageWidget.SetVisible(true);
 			m_wImageWidgetShadow.SetVisible(true);
-/*			if (m_Icon == DC_EMissionIcon.NONE)
+/*			if (m_Icon == SDRC_EMissionIcon.NONE)
 			{
 				m_wImageWidget.SetVisible(false);
 				m_wImageWidgetShadow.SetVisible(false);

@@ -253,7 +253,7 @@ class SDRC_MapSystem : GameSystem
 			{			
 				switch (symbol.type)
 				{
-					case DC_EDrawSymbol.CIRCLE:
+					case SDRC_EDrawSymbol.CIRCLE:
 					{
 						PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
 						drawCommand = DrawCircle(symbol.pos, symbol.radius, symbol.intval);
@@ -263,7 +263,7 @@ class SDRC_MapSystem : GameSystem
 						}
 						break;
 					}
-					case DC_EDrawSymbol.MARKER:
+					case SDRC_EDrawSymbol.MARKER:
 					{
 						if (symbol.visible)
 						{
@@ -285,33 +285,33 @@ class SDRC_MapSystem : GameSystem
 		
 		#ifndef SDRC_RELEASE
 			ImageDrawCommand drawCommand = new ImageDrawCommand();		
-			drawCommand = DrawMarker("1000 0 1500", DC_EMissionIcon.GM_MISSION_X_MAP);
+			drawCommand = DrawMarker("1000 0 1500", SDRC_EMissionIcon.GM_MISSION_X_MAP);
 			m_DrawCommands.Insert(drawCommand);
-			drawCommand = DrawMarker("1100 0 1500", DC_EMissionIcon.GM_MISSION_CONVOY_MAP);
+			drawCommand = DrawMarker("1100 0 1500", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP);
 			m_DrawCommands.Insert(drawCommand);
-			drawCommand = DrawMarker("1200 0 1500", DC_EMissionIcon.GM_MISSION_HUNTER_MAP);
+			drawCommand = DrawMarker("1200 0 1500", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP);
 			m_DrawCommands.Insert(drawCommand);
-			drawCommand = DrawMarker("1300 0 1500", DC_EMissionIcon.GM_MISSION_PATROL_MAP);
+			drawCommand = DrawMarker("1300 0 1500", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP);
 			m_DrawCommands.Insert(drawCommand);
-			drawCommand = DrawMarker("1400 0 1500", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP);
+			drawCommand = DrawMarker("1400 0 1500", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP);
 			m_DrawCommands.Insert(drawCommand);
-			drawCommand = DrawMarker("1500 0 1500", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP);
+			drawCommand = DrawMarker("1500 0 1500", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP);
 			m_DrawCommands.Insert(drawCommand);
-			drawCommand = DrawMarker("1600 0 1500", DC_EMissionIcon.GM_MISSION_CRASHSITE_MAP);
+			drawCommand = DrawMarker("1600 0 1500", SDRC_EMissionIcon.GM_MISSION_CRASHSITE_MAP);
 			m_DrawCommands.Insert(drawCommand);
-			drawCommand = DrawMarker("1700 0 1500", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP);
+			drawCommand = DrawMarker("1700 0 1500", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP);
 			m_DrawCommands.Insert(drawCommand);
-			drawCommand = DrawMarker("1800 0 1500", DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP);
+			drawCommand = DrawMarker("1800 0 1500", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP);
 			m_DrawCommands.Insert(drawCommand);
-			drawCommand = DrawMarker("1900 0 1500", DC_EMissionIcon.GM_MISSION_RADIOACTIVE_MAP);
+			drawCommand = DrawMarker("1900 0 1500", SDRC_EMissionIcon.GM_MISSION_RADIOACTIVE_MAP);
 			m_DrawCommands.Insert(drawCommand);
-			drawCommand = DrawMarker("2000 0 1500", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP);
+			drawCommand = DrawMarker("2000 0 1500", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP);
 			m_DrawCommands.Insert(drawCommand);
-			drawCommand = DrawMarker("2100 0 1500", DC_EMissionIcon.GM_MISSION_HVTITEM_MAP);
+			drawCommand = DrawMarker("2100 0 1500", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP);
 			m_DrawCommands.Insert(drawCommand);
-			drawCommand = DrawMarker("2200 0 1500", DC_EMissionIcon.GM_MISSION_WIN_MAP);
+			drawCommand = DrawMarker("2200 0 1500", SDRC_EMissionIcon.GM_MISSION_WIN_MAP);
 			m_DrawCommands.Insert(drawCommand);
-			drawCommand = DrawMarker("2300 0 1500", DC_EMissionIcon.GM_MISSION_LOSE_MAP);
+			drawCommand = DrawMarker("2300 0 1500", SDRC_EMissionIcon.GM_MISSION_LOSE_MAP);
 			m_DrawCommands.Insert(drawCommand);
 		
 //			DrawImage("2000 0 2000", 32, 64);
@@ -360,12 +360,12 @@ class SDRC_MapSystem : GameSystem
 	Create a drawCommand to draw a marker. 
 	This is actually an image with marker texture.
 	*/
-	ImageDrawCommand DrawMarker(vector center, DC_EMissionIcon icon)
+	ImageDrawCommand DrawMarker(vector center, SDRC_EMissionIcon icon)
 	{
 		string texture = SDRC_IconHelper.GetMarkerTexture(icon);
 		if (texture == "")
 		{
-			SDRC_Log.Add("[SDRC_MapSystem:DrawMarker] Could not find texture for: (" + icon + ") " + SCR_Enum.GetEnumName(DC_EMissionIcon, icon), LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_MapSystem:DrawMarker] Could not find texture for: (" + icon + ") " + SCR_Enum.GetEnumName(SDRC_EMissionIcon, icon), LogLevel.WARNING);
 			return null;
 		}
 		
@@ -430,7 +430,7 @@ class SDRC_MapSystem : GameSystem
 			
 			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
 			{
-				if (symbol.type == DC_EDrawSymbol.MARKER && symbol.visible)
+				if (symbol.type == SDRC_EDrawSymbol.MARKER && symbol.visible)
 				{
 					float distance = vector.DistanceXZ(cursorPos, symbol.pos);
 					//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Checking: " + cursorPos + " vs " + symbol.pos + " d=" + distance + " (" + distanceCheck + ")", LogLevel.NORMAL);

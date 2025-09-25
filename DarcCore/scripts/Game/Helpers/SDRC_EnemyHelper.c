@@ -112,7 +112,7 @@ sealed class SDRC_EnemyHelper
 	}
 
 	//------------------------------------------------------------------------------------------------
-	static ResourceName SelectEnemyFaction(string faction = "")
+	static string SelectEnemyFaction(string faction = "")
 	{
 		
 		if (m_sEnemyFactions.IsEmpty())

@@ -13,7 +13,7 @@
 
 //------------------------------------------------------------------------------------------------
 //Stages in the state machine
-enum DC_EStoryState
+enum SDRC_EStoryState
 {
 	ERROR = -1,
 	NONE = 0,			//Unknown state. Nothing should be run at this state.
@@ -30,14 +30,14 @@ enum DC_EStoryState
 	STORY_END,
 };
 
-enum DC_ENextChapter
+enum SDRC_ENextChapter
 {
 	NONE = 0,
 	WIN = -2,
 	LOSE = -1,
 }
 
-enum DC_EStoryError
+enum SDRC_EStoryError
 {
 	NONE,
 	STORYFRAME_NOT_FOUND,
@@ -57,7 +57,7 @@ class SDRC_Story : Managed
 	string title = "";
 	ref array<string> dependencies = {};	//List of mods needed for the story
 	//Set outside of Set()
-	//DC_EStoryState state = DC_EStoryState.NONE;
+	//SDRC_EStoryState state = SDRC_EStoryState.NONE;
 	ref array<ref SDRC_Chapter> chapters = {};
 	
 	void Set(int id_, int chapterId_, string comment_, string title_, array<string> dependencies_)
@@ -100,12 +100,12 @@ class SDRC_Story : Managed
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void SetState(DC_EStoryState stateToSet)
+	void SetState(SDRC_EStoryState stateToSet)
 	{	
 		state = stateToSet;
 
 		//If chapter is over, 		
-		if (state == DC_EStoryState.CHAPTER_OVER)
+		if (state == SDRC_EStoryState.CHAPTER_OVER)
 		{
 			GetGame().GetCallqueue().CallLater(StartNewChapter, m_Config.chapterTimeBetween*1000, false);
 		}
@@ -117,7 +117,7 @@ class SDRC_Chapter : Managed
 {
 	int id;
 	ref array<int> nextChapter = {};			//Where to go after a win, lose		
-	DC_EMissionType missionType;		//Type of the mission
+	SDRC_EMissionType missionType;		//Type of the mission
 	int subIdx;							//Sub mission index
 	int activeTime;
 	string title = "";
@@ -126,10 +126,10 @@ class SDRC_Chapter : Managed
 	string textLose;
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();		
 	//Default values not to be changed
-	DC_EMissionSuccess success = DC_EMissionSuccess.UNKNOWN;
+	SDRC_EMissionSuccess success = SDRC_EMissionSuccess.UNKNOWN;
 	int chapterEndTime = 0;
 		
-	void Set(int id_, array<int> nextChapter_, DC_EMissionType missionType_, int subIdx_, int activeTime_, string title_, string text_, string textWin_, string textLose_)
+	void Set(int id_, array<int> nextChapter_, SDRC_EMissionType missionType_, int subIdx_, int activeTime_, string title_, string text_, string textWin_, string textLose_)
 	{
 		id = id_;
 		missionType = missionType_;

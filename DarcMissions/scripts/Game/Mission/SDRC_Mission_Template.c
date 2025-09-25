@@ -17,7 +17,7 @@ class SDRC_Mission_Template : SDRC_Mission
 	private ref SDRC_TemplateConfig m_Config = new SDRC_TemplateConfig();
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Template(DC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Template(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Set some defaults
 		//For new mission rtpw, define your own ENUM in SDRC_Mission.c and change here. *DO NOT* use modded enum as the index numbers are to kept.
@@ -52,29 +52,29 @@ class SDRC_Mission_Template : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.SPAWN)
+		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
-			SetState(DC_EMissionState.ACTIVE);
+			SetState(SDRC_EMissionState.ACTIVE);
 		}
 
-		if (GetState() == DC_EMissionState.END)
+		if (GetState() == SDRC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_EMissionState.EXIT);
+			SetState(SDRC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_EMissionState.ACTIVE)
+		if (GetState() == SDRC_EMissionState.ACTIVE)
 		{			
 			//Add code for runtime
 			
 /*			//Eventually when mission is to be ended do this:
-			//SetState(DC_EMissionState.END);
+			//SetState(SDRC_EMissionState.END);
 
 			//For example:
 			if (!IsActive())
 			{
-				SetState(DC_EMissionState.END);
+				SetState(SDRC_EMissionState.END);
 			}
 */
 		}
@@ -148,7 +148,7 @@ class SDRC_TemplateJsonApi : SDRC_JsonApi
 	{
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.general.markerIcon = DC_EMissionIcon.GM_MISSION_X_MAP;
+		conf.general.markerIcon = SDRC_EMissionIcon.GM_MISSION_X_MAP;
 		//Mission specific		
 		conf.general.pos[0] = "0 0 0";
 		conf.general.posName = "any";

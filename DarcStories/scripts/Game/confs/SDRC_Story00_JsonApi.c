@@ -39,9 +39,9 @@ class SDRC_Story00_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			//1, DC_EMissionType.SQUATTERS, 0, 
+			//1, SDRC_EMissionType.SQUATTERS, 0, 
 			1, {2, 2}, 
-			DC_EMissionType.OCCUPATION, 3,
+			SDRC_EMissionType.OCCUPATION, 3,
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			"Chapter 1: Burning Metal"
 			,"The team deployed at dawn. A vehicle crash on a rural road had drawn intelligence attention — reports suggested the wreck contained documents tied to a high-value individual. The destination, dotted with small cities and dense forests, offered both cover and danger. \n\nLanding near the twisted wreck, the squad swept the site. The squad had only minutes before hostile patrols noticed them."
@@ -58,8 +58,8 @@ class SDRC_Story00_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			2, {3, DC_ENextChapter.LOSE},
-			DC_EMissionType.ROADBLOCK, 1,
+			2, {3, SDRC_ENextChapter.LOSE},
+			SDRC_EMissionType.ROADBLOCK, 1,
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			"Chapter 2: The Roadblock"
 			,"The roadblock was crude but fortified—sandbags, steel sheets, and armed guards scanning every passing vehicle. If the squad could breach it, the missing link might be recovered."
@@ -76,8 +76,8 @@ class SDRC_Story00_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			3, {4, DC_ENextChapter.LOSE},
-			DC_EMissionType.HVTVIP, 3, 
+			3, {4, SDRC_ENextChapter.LOSE},
+			SDRC_EMissionType.HVTVIP, 3, 
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			"Chapter 3: The Hit"
 			,"With the salvaged documents secure, the squad moved inland. The coded coordinates pointed towards %l. Recon drones showed faint activity. It seemed to be a staging post, possibly linked to the target’s network. \n\nThe squad prepared: setting observation posts, marking entry routes, and coordinating fire support. Every step forward brought them closer to the unseen figure that loomed over the mission."
@@ -94,8 +94,8 @@ class SDRC_Story00_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			4, {DC_ENextChapter.WIN, DC_ENextChapter.LOSE},
-			DC_EMissionType.STASH, 0, 
+			4, {SDRC_ENextChapter.WIN, SDRC_ENextChapter.LOSE},
+			SDRC_EMissionType.STASH, 0, 
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			"Epilogue: Loot"
 			,"Yeah, there is loot."

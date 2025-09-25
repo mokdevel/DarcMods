@@ -10,7 +10,7 @@ class SDRC_HintHelper
 	\param msg The message to show
 	\param icon Icon to show. By default, icon is not shown
 	*/
-	static void ShowHint(string title, string msg, int timeOut, DC_EMissionIcon icon = -1)
+	static void ShowHint(string title, string msg, int timeOut, SDRC_EMissionIcon icon = -1)
 	{	
 		SDRC_RplHintComp hintManagerComponent = SDRC_RplHintComp.GetInstance();
 		if (hintManagerComponent)

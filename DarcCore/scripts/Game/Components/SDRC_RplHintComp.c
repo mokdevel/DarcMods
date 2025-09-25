@@ -42,7 +42,7 @@ class SDRC_RplHintComp : ScriptComponent
 	\param msg The message to show
 	\param icon Icon to show. By default, icon is not shown
 	*/
- 	void ShowGlobalHint(string title, string msg, int dur, DC_EMissionIcon icon)
+ 	void ShowGlobalHint(string title, string msg, int dur, SDRC_EMissionIcon icon)
     {
         Rpc(RpcDo_ShowHint, title, msg, dur, icon); // broadcast to clients
         RpcDo_ShowHint(title, msg, dur, icon); // try to show on authority
@@ -50,7 +50,7 @@ class SDRC_RplHintComp : ScriptComponent
     
 	//------------------------------------------------------------------------------------------------
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-    protected void RpcDo_ShowHint(string title, string msg, int dur, DC_EMissionIcon icon)
+    protected void RpcDo_ShowHint(string title, string msg, int dur, SDRC_EMissionIcon icon)
     {
 		SDRC_Log.Add("[SDRC_RplHintComp:RpcDo_ShowHint] Hint: " + msg, LogLevel.NORMAL);
 	

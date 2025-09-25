@@ -6,7 +6,7 @@ Includes various functions for missions.
 */
 
 //------------------------------------------------------------------------------------------------
-enum DC_EMissionType
+enum SDRC_EMissionType
 {
 	NONE = 0,
 	HUNTER,
@@ -25,7 +25,7 @@ enum DC_EMissionType
 };
 
 //------------------------------------------------------------------------------------------------
-enum DC_EMissionFailReason
+enum SDRC_EMissionFailReason
 {
 	NONE,
 	POS_IN_WATER,
@@ -35,7 +35,7 @@ enum DC_EMissionFailReason
 };
 
 //------------------------------------------------------------------------------------------------
-enum DC_EMissionDifficulty
+enum SDRC_EMissionDifficulty
 {
 	EASY, 
 	MODERATE, 
@@ -104,68 +104,68 @@ sealed class SDRC_MissionEnumHelper
 	/*!
 	Return the prefab for mission requests
 	*/	
-	static string GetMissionPrefab(DC_EMissionType missionType)
+	static string GetMissionPrefab(SDRC_EMissionType missionType)
 	{
 		string resourceName = "";
 		
 		switch (missionType)
 		{
-/*			case DC_EMissionType.NONE:
+/*			case SDRC_EMissionType.NONE:
 			{
 				resourceName = "";
 				break;
 			}*/
-			case DC_EMissionType.HUNTER:
+			case SDRC_EMissionType.HUNTER:
 			{
 				resourceName = "{907DCF8F8818652B}Prefabs/Systems/DarcMissionHunters.et"; 
 				break;
 			}
-			case DC_EMissionType.OCCUPATION:
+			case SDRC_EMissionType.OCCUPATION:
 			{
 				resourceName = "{922D29EAFA4BB4F1}Prefabs/Systems/DarcMissionOccupation.et"; 
 				break;
 			}
-			case DC_EMissionType.CONVOY:
+			case SDRC_EMissionType.CONVOY:
 			{
 				resourceName = "{CE7D07A8484A1DE9}Prefabs/Systems/DarcMissionConvoy.et"; 
 				break;
 			}
-			case DC_EMissionType.CRASHSITE:
+			case SDRC_EMissionType.CRASHSITE:
 			{
 				resourceName = "{003521A6AD7BEB3C}Prefabs/Systems/DarcMissionCrashsite.et"; 
 				break;
 			}
-			case DC_EMissionType.PATROL:
+			case SDRC_EMissionType.PATROL:
 			{
 				resourceName = "{E8489D032B77CD71}Prefabs/Systems/DarcMissionPatrol.et"; 
 				break;
 			}
-			case DC_EMissionType.SQUATTERS:
+			case SDRC_EMissionType.SQUATTERS:
 			{
 				resourceName = "{0178274B1C19A219}Prefabs/Systems/DarcMissionSquatters.et"; 
 				break;
 			}
-			case DC_EMissionType.ROADBLOCK:
+			case SDRC_EMissionType.ROADBLOCK:
 			{
 				resourceName = "{F1BE2D46F0949F6D}Prefabs/Systems/DarcMissionRoadblock.et"; 
 				break;
 			}			
-			case DC_EMissionType.HVTVIP:
+			case SDRC_EMissionType.HVTVIP:
 			{
 				resourceName = "{6A859F436655EEFA}Prefabs/Systems/DarcMissionHvtVip.et"; 
 				break;
 			}			
-			case DC_EMissionType.HVTITEM:
+			case SDRC_EMissionType.HVTITEM:
 			{
 				resourceName = "{B9D6798E6A963E0C}Prefabs/Systems/DarcMissionHvtItem.et"; 
 				break;
 			}			
-			case DC_EMissionType.STASH:
+			case SDRC_EMissionType.STASH:
 			{
 				resourceName = "{631842AD30537026}Prefabs/Systems/DarcMissionStash.et"; 
 				break;
 			}	
-			/*			case DC_EMissionType.CHOPPER:
+			/*			case SDRC_EMissionType.CHOPPER:
 			{
 				resourceName = "";
 				break;

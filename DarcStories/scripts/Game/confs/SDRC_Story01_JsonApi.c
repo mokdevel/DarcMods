@@ -43,9 +43,9 @@ class SDRC_Story01_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			//1, DC_EMissionType.SQUATTERS, 0, 
+			//1, SDRC_EMissionType.SQUATTERS, 0, 
 			1, {2, 3},
-			DC_EMissionType.OCCUPATION, 3,
+			SDRC_EMissionType.OCCUPATION, 3,
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			""
 			,""
@@ -62,8 +62,8 @@ class SDRC_Story01_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			2, {5, DC_ENextChapter.LOSE},
-			DC_EMissionType.ROADBLOCK, 1,
+			2, {5, SDRC_ENextChapter.LOSE},
+			SDRC_EMissionType.ROADBLOCK, 1,
 			SDRC_CHAPTER_TIME_DEFAULT,
 			""
 			,""
@@ -80,8 +80,8 @@ class SDRC_Story01_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			3, {4, DC_ENextChapter.LOSE},
-			DC_EMissionType.HVTVIP, 3, 
+			3, {4, SDRC_ENextChapter.LOSE},
+			SDRC_EMissionType.HVTVIP, 3, 
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			""
 			,""
@@ -99,7 +99,7 @@ class SDRC_Story01_JsonApi : SDRC_StoryJsonApi
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
 			4, {6, 5},
-			DC_EMissionType.HVTVIP, 3, 
+			SDRC_EMissionType.HVTVIP, 3, 
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			""
 			,""
@@ -116,8 +116,8 @@ class SDRC_Story01_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			5, {7, DC_ENextChapter.LOSE},
-			DC_EMissionType.HVTVIP, 3, 
+			5, {7, SDRC_ENextChapter.LOSE},
+			SDRC_EMissionType.HVTVIP, 3, 
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			""
 			,""
@@ -134,8 +134,8 @@ class SDRC_Story01_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			6, {7, DC_ENextChapter.LOSE},
-			DC_EMissionType.HVTVIP, 3, 
+			6, {7, SDRC_ENextChapter.LOSE},
+			SDRC_EMissionType.HVTVIP, 3, 
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			""
 			,""
@@ -152,8 +152,8 @@ class SDRC_Story01_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			7, {8, DC_ENextChapter.LOSE},
-			DC_EMissionType.HVTVIP, 3, 
+			7, {8, SDRC_ENextChapter.LOSE},
+			SDRC_EMissionType.HVTVIP, 3, 
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			""
 			,""
@@ -170,8 +170,8 @@ class SDRC_Story01_JsonApi : SDRC_StoryJsonApi
 	{
 		ref SDRC_Chapter chapter = new SDRC_Chapter();
 		chapter.Set(
-			8, {DC_ENextChapter.WIN, DC_ENextChapter.LOSE},
-			DC_EMissionType.STASH, 3, 
+			8, {SDRC_ENextChapter.WIN, SDRC_ENextChapter.LOSE},
+			SDRC_EMissionType.STASH, 3, 
 			SDRC_CHAPTER_TIME_DEFAULT,			
 			"Epilogue: Loot"
 			,"Yeah, there is loot."

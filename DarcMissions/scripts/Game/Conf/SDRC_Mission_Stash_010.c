@@ -40,11 +40,12 @@ class SDRC_Stash_010_JsonApi : SDRC_StashJsonApi
 			"any",
 			"Hidden loot near %l",
 			"Loot is yours to take",
-			DC_EMissionWinCondition.FIND_IN_15,
+			SDRC_EMissionWinCondition.FIND_IN_15,
 			"Loot found.",
 			"Loot lost.",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_STASH_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_STASH_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);		
 		stash.ai.Set(
@@ -52,8 +53,8 @@ class SDRC_Stash_010_JsonApi : SDRC_StashJsonApi
 			{"G_RECON"},
 			50, 1.0,			
 			{50, 300},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.RANDOM,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);	
 		stash.Set(
 			{

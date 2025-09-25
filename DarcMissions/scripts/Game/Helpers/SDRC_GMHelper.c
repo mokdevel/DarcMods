@@ -79,7 +79,7 @@ class SDRC_GMHelper
 			{
 				foreach (SDRC_Mission mission : m_BaseGameMode.missionFrame.m_MissionList)
 				{
-					if (mission.GetState() == DC_EMissionState.ACTIVE)
+					if (mission.GetState() == SDRC_EMissionState.ACTIVE)
 					{
 						m_GmComponent.AddSymbolMarker(mission.GetPos(), mission.GetType(), mission.GetMarker(), mission.GetId(), mission.GetTitle());
 					}
@@ -92,13 +92,13 @@ class SDRC_GMHelper
 	/*!	
 	Delete a mission with specific mission ID (DCMxxxx).
 	*/	
-	static void DeleteMission(string id, DC_EMissionSuccess success = DC_EMissionSuccess.DELETED)
+	static void DeleteMission(string id, SDRC_EMissionSuccess success = SDRC_EMissionSuccess.DELETED)
 	{
 		FindGameModeAndComponent();
 		int idx = m_BaseGameMode.missionFrame.FindMissionWithId(id);
 		if (idx != -1)
 		{
-			m_BaseGameMode.missionFrame.m_MissionList[idx].SetState(DC_EMissionState.END);
+			m_BaseGameMode.missionFrame.m_MissionList[idx].SetState(SDRC_EMissionState.END);
 			m_BaseGameMode.missionFrame.m_MissionList[idx].SetSuccess(success);
 			SDRC_Log.Add("[SDRC_GMHelper:DeleteMission] Ending mission: " + id + " - " + m_BaseGameMode.missionFrame.m_MissionList[idx].GetTitle(), LogLevel.DEBUG);				
 		}
@@ -108,21 +108,21 @@ class SDRC_GMHelper
 	/*!	
 	Delete a mission with specific mission ID (DCMxxxx).
 	*/	
-	static void EndMission(string id, DC_EMissionSuccess success)
+	static void EndMission(string id, SDRC_EMissionSuccess success)
 	{
 		FindGameModeAndComponent();
 		int idx = m_BaseGameMode.missionFrame.FindMissionWithId(id);
 		if (idx != -1)
 		{
-			if (success == DC_EMissionSuccess.LOSE)
+			if (success == SDRC_EMissionSuccess.LOSE)
 			{
 				m_BaseGameMode.missionFrame.m_MissionList[idx].DoLose();
 			}
-			if (success == DC_EMissionSuccess.WIN)
+			if (success == SDRC_EMissionSuccess.WIN)
 			{
 				m_BaseGameMode.missionFrame.m_MissionList[idx].DoWin();
 			}
-			SDRC_Log.Add("[SDRC_GMHelper:DeleteMission] Ending mission: " + id + " - (" + SCR_Enum.GetEnumName(DC_EMissionSuccess, success) + ")" + m_BaseGameMode.missionFrame.m_MissionList[idx].GetTitle(), LogLevel.DEBUG);				
+			SDRC_Log.Add("[SDRC_GMHelper:DeleteMission] Ending mission: " + id + " - (" + SCR_Enum.GetEnumName(SDRC_EMissionSuccess, success) + ")" + m_BaseGameMode.missionFrame.m_MissionList[idx].GetTitle(), LogLevel.DEBUG);				
 		}
 	}		
 }

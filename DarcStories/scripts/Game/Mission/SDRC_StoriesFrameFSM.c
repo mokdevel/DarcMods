@@ -2,7 +2,7 @@
 /*!
 Some documentation on the finite state machine (FSM)
 
-States (DC_EStoryState)
+States (SDRC_EStoryState)
 	NONE = 0,			//Unknown state. Nothing should be run at this state.
 	INIT,				//Story frame is being init
 	STORY_WAITING,		//Waiting before starting a mission

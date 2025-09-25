@@ -8,7 +8,7 @@ class SDRC_RplGMCompClass : ScriptComponentClass { }
 SDRC_RplGMCompClass g_RplGMCompClass;
 
 //------------------------------------------------------------------------------------------------
-enum DC_EDrawSymbol
+enum SDRC_EDrawSymbol
 {
 	NONE,
 	CIRCLE,
@@ -20,7 +20,7 @@ class SDRC_GMMapSymbol : Managed
 {
 	//Default information
 	bool visible = true;
-	DC_EDrawSymbol type;
+	SDRC_EDrawSymbol type;
 	vector pos;
 	float radius;
 	int intval;			//Integer value for color or icon or ..
@@ -80,7 +80,7 @@ class SDRC_RplGMComp : ScriptComponent
 		pos[1] = 0;			//Set to zero plane
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
-		symbol.type = DC_EDrawSymbol.CIRCLE;
+		symbol.type = SDRC_EDrawSymbol.CIRCLE;
 		symbol.pos = pos;
 		symbol.radius = radius;
 		symbol.intval = color;
@@ -93,12 +93,12 @@ class SDRC_RplGMComp : ScriptComponent
 	/*!	
 	Add a marker on symbol list
 	*/
- 	void AddSymbolMarker(vector pos, float radius, DC_EMissionIcon icon, string id, string strval)
+ 	void AddSymbolMarker(vector pos, float radius, SDRC_EMissionIcon icon, string id, string strval)
     {
 		pos[1] = 0;			//Set to zero plane
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
-		symbol.type = DC_EDrawSymbol.MARKER;		
+		symbol.type = SDRC_EDrawSymbol.MARKER;		
 		symbol.pos = pos;
 		symbol.radius = 0;
 		symbol.intval = icon;
@@ -125,7 +125,7 @@ class SDRC_RplGMComp : ScriptComponent
  	void DoEndMission(int playerID, string missionId)
 	{
 		SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Ending of " + missionId + " requested by " + playerID, LogLevel.DEBUG);	
-		SDRC_GMHelper.EndMission(missionId, DC_EMissionSuccess.LOSE);
+		SDRC_GMHelper.EndMission(missionId, SDRC_EMissionSuccess.LOSE);
 //		SyncMapSymbols(playerID);
 	}
 		
@@ -160,9 +160,9 @@ class SDRC_RplGMComp : ScriptComponent
 		
 	//------------------------------------------------------------------------------------------------
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-    protected void RpcDo_SyncMapSymbol(DC_EDrawSymbol symbolType, vector pos, float radius, int color, string id, string strval)
+    protected void RpcDo_SyncMapSymbol(SDRC_EDrawSymbol symbolType, vector pos, float radius, int color, string id, string strval)
     {
-		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(DC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.SPAM);
+		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(SDRC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.SPAM);
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
 		symbol.type = symbolType;

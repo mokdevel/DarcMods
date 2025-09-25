@@ -74,7 +74,7 @@ modded class SCR_BaseGameMode
 				}
 				
 				SDRC_MapMarkerHelper.DeleteMarker(playername, true);
-				SDRC_MapMarkerHelper.CreateMapMarker(playerEntity.GetOrigin(), DC_EMissionIcon.ICON_DEATHMARKER_SMALL_MAP, playername, playername, m_Config.markerLifeTime, faction: faction);
+				SDRC_MapMarkerHelper.CreateMapMarker(playerEntity.GetOrigin(), SDRC_EMissionIcon.ICON_DEATHMARKER_SMALL_MAP, playername, playername, m_Config.markerLifeTime, faction: faction);
 			}
 			
 			SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:OnPlayerKilled] Player died: " + playername, LogLevel.DEBUG);        

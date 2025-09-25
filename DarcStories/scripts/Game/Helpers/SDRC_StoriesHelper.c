@@ -37,7 +37,7 @@ sealed class SDRC_StoriesHelper
 			}
 			
 			storyMap[chapter.id].line.Insert(chapter.id);
-			storyMap[chapter.id].line.InsertAt(DC_ENextChapter.NONE, 0);			
+			storyMap[chapter.id].line.InsertAt(SDRC_ENextChapter.NONE, 0);			
 		}
 
 		//Handle the LOSE spots
@@ -59,7 +59,7 @@ sealed class SDRC_StoriesHelper
 		foreach(SDRC_Chapter chapter : story.chapters)
 		{
 			int winIdx = chapter.nextChapter[0];
-			if (storyMap[winIdx].line[0] == DC_ENextChapter.NONE)
+			if (storyMap[winIdx].line[0] == SDRC_ENextChapter.NONE)
 			{			
 				if (storyMap[i].line[1] != i)
 				{
@@ -79,10 +79,10 @@ sealed class SDRC_StoriesHelper
 				
 		//Check that the last chapter has a win condition.
 		int lastIdx = story.chapters.Count() - 1;
-		if (story.chapters[lastIdx].nextChapter[0] == DC_ENextChapter.WIN)
+		if (story.chapters[lastIdx].nextChapter[0] == SDRC_ENextChapter.WIN)
 		{
 			ref SDRC_StoryMapLine sml = new SDRC_StoryMapLine();
-			sml.line.Insert(DC_ENextChapter.WIN);
+			sml.line.Insert(SDRC_ENextChapter.WIN);
 			storyMap.Insert(sml);			
 		}
 		else
@@ -99,7 +99,7 @@ sealed class SDRC_StoriesHelper
 			int idx = storyMap[i + 1].line[1];
 			if (idx > 0)
 			{
-				if ( (storyMap[idx + 1].line[1] == DC_ENextChapter.LOSE)	//Position to be empty with a LOSE marker
+				if ( (storyMap[idx + 1].line[1] == SDRC_ENextChapter.LOSE)	//Position to be empty with a LOSE marker
 				  && (idx != storyMap[i + 2].line[0])						//WIN condition not needed if the LOSE condition is the same as next line
 				   )
 				{
@@ -124,7 +124,7 @@ sealed class SDRC_StoriesHelper
 					}
 					else
 					{
-						storyMap[idx + 1].line.InsertAt(DC_ENextChapter.NONE, 1);
+						storyMap[idx + 1].line.InsertAt(SDRC_ENextChapter.NONE, 1);
 					}
 				}
 			}			
@@ -139,14 +139,14 @@ sealed class SDRC_StoriesHelper
 		i = 0;
 		foreach(SDRC_Chapter chapter : story.chapters)
 		{		
-			if (storyMap[i + 1].line[1] == DC_ENextChapter.LOSE)
+			if (storyMap[i + 1].line[1] == SDRC_ENextChapter.LOSE)
 			{								
 				//Check if there is a win condition below
 				bool isWinBelow = false;				
 				int j = 0;
 				for (j = i + 1; j < story.chapters.Count(); j++)
 				{
-					if ( (storyMap[j].line[1] != DC_ENextChapter.LOSE) && (storyMap[j].line[1] == chapter.nextChapter[0]) )
+					if ( (storyMap[j].line[1] != SDRC_ENextChapter.LOSE) && (storyMap[j].line[1] == chapter.nextChapter[0]) )
 					{
 						isWinBelow = true;
 						break;
@@ -154,7 +154,7 @@ sealed class SDRC_StoriesHelper
 				}
 				
 				//Check if there are double wins 		
-				if ( (storyMap[i + 2].line[0] == chapter.nextChapter[0]) && (chapter.nextChapter[0] == DC_ENextChapter.WIN) )
+				if ( (storyMap[i + 2].line[0] == chapter.nextChapter[0]) && (chapter.nextChapter[0] == SDRC_ENextChapter.WIN) )
 				{
 					storyMap[i + 1].line.InsertAt(storyMap[i + 1].line[0], 1);
 				}
@@ -162,7 +162,7 @@ sealed class SDRC_StoriesHelper
 				{	
 					if (isWinBelow) //..only if there is a WIN below
 					{
-						storyMap[i + 1].line.InsertAt(DC_ENextChapter.NONE, 1);
+						storyMap[i + 1].line.InsertAt(SDRC_ENextChapter.NONE, 1);
 					}
 				}
 			}
@@ -207,11 +207,11 @@ sealed class SDRC_StoriesHelper
 			string line = "";
 			foreach (int char : sml.line)
 			{
-				if (char == DC_ENextChapter.LOSE)
+				if (char == SDRC_ENextChapter.LOSE)
 				{
 					line = line + "[L]";					
 				}
-				else if (char == DC_ENextChapter.WIN)
+				else if (char == SDRC_ENextChapter.WIN)
 				{
 					line = line + "[WIN]";
 				}
@@ -219,7 +219,7 @@ sealed class SDRC_StoriesHelper
 				{
 					line = line + "[" + char.ToString(2) + "]";
 				}
-				if (char == DC_ENextChapter.NONE)
+				if (char == SDRC_ENextChapter.NONE)
 				{
 					line = line + " |  ";
 				}

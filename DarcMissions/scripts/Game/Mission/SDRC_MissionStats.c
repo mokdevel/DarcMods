@@ -3,10 +3,10 @@ class SDRC_MissionStat : Managed
 {
 	string id;						//The mission id assigned by DarcMissions
 	int requestId;					//The request id defined by an external requestor
-	DC_EMissionState state;
-	DC_EMissionSuccess success;
+	SDRC_EMissionState state;
+	SDRC_EMissionSuccess success;
 		
-	void Set(string id_, int requestId_, DC_EMissionState state_, DC_EMissionSuccess success_)
+	void Set(string id_, int requestId_, SDRC_EMissionState state_, SDRC_EMissionSuccess success_)
 	{
 		id = id_;
 		requestId = requestId_;
@@ -21,7 +21,7 @@ class SDRC_MissionStats
 	static private ref array<ref SDRC_MissionStat> m_MissionStatList = {};
 	
 	//------------------------------------------------------------------------------------------------	
-	static void Add(string id, int requestId, DC_EMissionState state, DC_EMissionSuccess success)
+	static void Add(string id, int requestId, SDRC_EMissionState state, SDRC_EMissionSuccess success)
 	{
 		ref SDRC_MissionStat stat = new SDRC_MissionStat();
 		stat.Set(id, requestId, state, success);
@@ -29,7 +29,7 @@ class SDRC_MissionStats
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	static void UpdateState(string id, DC_EMissionState state)
+	static void UpdateState(string id, SDRC_EMissionState state)
 	{
 		int idx = FindIndex(id);
 		if (idx > -1)
@@ -39,7 +39,7 @@ class SDRC_MissionStats
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	static void UpdateSuccess(string id, DC_EMissionSuccess success)
+	static void UpdateSuccess(string id, SDRC_EMissionSuccess success)
 	{
 		int idx = FindIndex(id);
 		if (idx > -1)

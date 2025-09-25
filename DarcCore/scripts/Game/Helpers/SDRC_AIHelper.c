@@ -165,10 +165,10 @@ sealed class SDRC_AIHelper
 		//Using a patrol cycle should make the AI return in to the building
 		array<AIWaypoint> waypoints = {};
 		AIWaypointCycle wpcycle = null;
-		wpcycle = AIWaypointCycle.Cast(SDRC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.PATROLCYCLE));
+		wpcycle = AIWaypointCycle.Cast(SDRC_WPHelper.CreateWaypointEntity(SDRC_EWaypointMoveType.PATROLCYCLE));
 		wpcycle.SetOrigin(pos);
 	
-		AIWaypoint waypoint = SDRC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.PATROL);
+		AIWaypoint waypoint = SDRC_WPHelper.CreateWaypointEntity(SDRC_EWaypointMoveType.PATROL);
 		if (waypoint)
 		{
 			waypoint.SetOrigin(pos);

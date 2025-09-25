@@ -18,8 +18,8 @@ SDRC_DarcMissionEditableRequestCompClass g_DarcMissionEditableRequestClass;
 //! @ingroup Editable_Entities
 class SDRC_DarcMissionEditableRequestComp : SCR_EditableSystemComponent
 {
-	[Attribute(typename.EnumToString(DC_EMissionType, DC_EMissionType.NONE), UIWidgets.ComboBox, desc: "Mission type", enumType: DC_EMissionType)]	
-	protected DC_EMissionType m_MissionType;	//The type of mission
+	[Attribute(typename.EnumToString(SDRC_EMissionType, SDRC_EMissionType.NONE), UIWidgets.ComboBox, desc: "Mission type", enumType: SDRC_EMissionType)]	
+	protected SDRC_EMissionType m_MissionType;	//The type of mission
 	
 	//NOTE: Params are set in SDRC_EditorAttributeBaseValues in file SDRC_BaseValueListEditorAttribute.c
 	[Attribute("-1", desc: "Sub mission index")]	
@@ -32,12 +32,12 @@ class SDRC_DarcMissionEditableRequestComp : SCR_EditableSystemComponent
 	/*!	
 	Return the mission type
 	*/
-	DC_EMissionType GetMissionType()
+	SDRC_EMissionType GetMissionType()
 	{
 		return m_MissionType;
 	}
 	
-	void SetMissionType(DC_EMissionType missionType)
+	void SetMissionType(SDRC_EMissionType missionType)
 	{
 		m_MissionType = missionType;
 	}		
@@ -46,12 +46,12 @@ class SDRC_DarcMissionEditableRequestComp : SCR_EditableSystemComponent
 	/*!	
 	Return the mission type
 	*/
-	DC_EMissionType GetSubIdx()
+	SDRC_EMissionType GetSubIdx()
 	{
 		return m_SubIdx;
 	}
 	
-	void SetSubIdx(DC_EMissionType subIdx)
+	void SetSubIdx(SDRC_EMissionType subIdx)
 	{
 		m_SubIdx = subIdx;
 	}		
@@ -60,7 +60,7 @@ class SDRC_DarcMissionEditableRequestComp : SCR_EditableSystemComponent
 	/*!	
 	Get/set mission subIdx
 	*/
-	DC_EMissionType GetRequestId()
+	SDRC_EMissionType GetRequestId()
 	{
 		return m_RequestId;
 	}	

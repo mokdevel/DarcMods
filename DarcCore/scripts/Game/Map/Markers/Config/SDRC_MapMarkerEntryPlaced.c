@@ -2,7 +2,7 @@
 //! Marker entry which can be placed through map
 
 //NOTE: If you add a new icon, remember to add texture finding to SDRC_IconHelper.GetMarkerTexture
-enum DC_EMissionIcon
+enum SDRC_EMissionIcon
 {
 	NONE = -1,
 	GM_MISSION_X_MAP = 0,

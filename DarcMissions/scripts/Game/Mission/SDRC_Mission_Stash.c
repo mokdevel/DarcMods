@@ -20,7 +20,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Stash(DC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Stash(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
 		m_StashJsonApi.CreateMissionFiles();
@@ -33,7 +33,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
 		if (idx == -1)
 		{
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
 		m_DC_Stash = m_Config.subMissions[idx];
@@ -43,9 +43,9 @@ class SDRC_Mission_Stash : SDRC_Mission
 		m_fSpawnRotation = Math.RandomFloat(0, 360);
 		
 		//Find the position
-		vector pos = m_DC_Stash.general.pos[0];
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Stash.general.pos, m_DC_Stash.general.emptySize, m_DC_Stash.locationTypes);
 		
-		//Find a location for the mission
+/*		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
 			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Stash.locationTypes, m_DC_Stash.general.emptySize);
@@ -53,11 +53,11 @@ class SDRC_Mission_Stash : SDRC_Mission
 		else
 		{
 			pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_Stash.general.emptySize);
-		}
+		}*/
 		
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
 
@@ -75,24 +75,24 @@ class SDRC_Mission_Stash : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.SPAWN)
+		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds
 			return;
 		}
 
-		if (GetState() == DC_EMissionState.END)
+		if (GetState() == SDRC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_EMissionState.EXIT);
+			SetState(SDRC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_EMissionState.ACTIVE)
+		if (GetState() == SDRC_EMissionState.ACTIVE)
 		{	
 			if (!IsActive())
 			{
-				SetState(DC_EMissionState.END);
+				SetState(SDRC_EMissionState.END);
 			}
 		}
 		
@@ -115,7 +115,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 		
 		if (ready)
 		{
-			SetState(DC_EMissionState.ACTIVE);
+			SetState(SDRC_EMissionState.ACTIVE);
 		}
 	}
 	
@@ -240,11 +240,12 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 			"any",
 			"A stash near %l",
 			"Loot is yours to take",
-			DC_EMissionWinCondition.FIND_IN_15,
+			SDRC_EMissionWinCondition.FIND_IN_15,
 			"Loot found.",
 			"Loot lost.",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_STASH_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_STASH_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);		
 		stash.ai.Set(
@@ -252,8 +253,8 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 			{"G_RECON"},
 			50, 1.0,
 			{50, 300},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.RANDOM,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		stash.Set(
 			{

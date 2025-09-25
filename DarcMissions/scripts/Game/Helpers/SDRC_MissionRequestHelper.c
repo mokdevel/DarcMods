@@ -6,7 +6,7 @@ class SDRC_MissionRequested : Managed
 	EntityID entityID = null;
 	int requestId = -1;
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
-	DC_EMissionType missionType = DC_EMissionType.NONE;
+	SDRC_EMissionType missionType = SDRC_EMissionType.NONE;
 }
 
 //------------------------------------------------------------------------------------------------
