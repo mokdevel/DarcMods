@@ -23,7 +23,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	private SCR_AIGroup m_Target = null;
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_HvtVip(DC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_HvtVip(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
 		m_HvtVipJsonApi.CreateMissionFiles();
@@ -36,18 +36,18 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
 		if (idx == -1)
 		{
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
 		m_DC_HvtVip = m_Config.subMissions[idx];			
 		HandleRequestGeneralVariables(m_DC_HvtVip.general, request);
 		
 		//Set defaults
-		m_iGroupCount = m_DC_HvtVip.ai.GetCount();
+		m_iGroupCount = m_DC_HvtVip.ai.GetCount(m_DC_HvtVip.general.difficulty);
 		float radius = 10;					//Default size for the radius. Mainly for requested missions to find the nearest building.
 		array<string> buildingFilter = {};
 
-		vector pos = m_DC_HvtVip.general.pos[0];
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtVip.general.pos);
 						
 		//Find a location for the mission
 		if (IsRequested() && pos != "0 0 0")
@@ -82,7 +82,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		}
 		else //No suitable location found.
 		{
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}			
 		
@@ -101,7 +101,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.SPAWN)
+		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds.
@@ -109,17 +109,17 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 			return;
 		}
 
-		if (GetState() == DC_EMissionState.END)
+		if (GetState() == SDRC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_EMissionState.EXIT);
+			SetState(SDRC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_EMissionState.ACTIVE)
+		if (GetState() == SDRC_EMissionState.ACTIVE)
 		{			
 			if (!IsActive())
 			{
-				SetState(DC_EMissionState.END);
+				SetState(SDRC_EMissionState.END);
 			}
 		}
 		
@@ -141,10 +141,10 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_HvtVip.ai.types.GetRandomElement(), GetPos(), GetFaction());
 			if (group)
 			{
-				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_HvtVip.ai.GetSkill(), m_DC_HvtVip.ai.GetPerception());					
+				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_HvtVip.ai.GetSkill(m_DC_HvtVip.general.difficulty), m_DC_HvtVip.ai.GetPerception(m_DC_HvtVip.general.difficulty));					
 				SDRC_AIHelper.SetAIGroupMovementType(group, EMovementType.IDLE);
 				m_Groups.Insert(group);				
-				SDRC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, 10, 50);				
+				SDRC_WPHelper.CreateMissionAIWaypoints(group, SDRC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", SDRC_EWaypointMoveType.LOITER, 10, 50);				
 			}
 			m_iSpawnIndex++;
 		}
@@ -171,12 +171,16 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 				m_Target = group;
 				SDRC_AIHelper.SetAIGroupMovementType(group, EMovementType.IDLE);
 				Faction faction = SDRC_AIHelper.GetFactionWithName(GetFaction());
+				if (!faction)
+				{
+					SDRC_Log.Add("[SDRC_Mission_HvtVip:MissionSpawn] " +  GetId() + " : Vip target faction not set.", LogLevel.ERROR);													
+				}
 				group.SetFaction(faction);
 			}
 
 			GetGame().GetCallqueue().CallLater(IsTargetDead, AI_TARGET_DEAD_CYCLE_TIME, false);
 								
-			SetState(DC_EMissionState.ACTIVE);			
+			SetState(SDRC_EMissionState.ACTIVE);			
 		}
 	}
 	
@@ -196,7 +200,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	*/
 	void IsTargetDead()
 	{
-		if (GetWinCondition() == DC_EMissionWinCondition.HVT_KILL_VIP && GetState() == DC_EMissionState.ACTIVE && GetSuccess() == DC_EMissionSuccess.UNKNOWN)
+		if (GetWinCondition() == SDRC_EMissionWinCondition.HVT_KILL_VIP && GetState() == SDRC_EMissionState.ACTIVE && GetSuccess() == SDRC_EMissionSuccess.UNKNOWN)
 		{
 			if (SDRC_AIHelper.IsGroupDead(m_Target))
 			{
@@ -334,7 +338,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	{
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,0,1,2,3,3};
+		conf.missionList = {3};//{0,0,1,2,3,3};
 		//Mission specific
 		conf.buildingRadius = 400;
 		//----------------------------------------------------
@@ -354,11 +358,12 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"any",
 			"Target near %l.",
 			"Assassinate the target",
-			DC_EMissionWinCondition.HVT_KILL_VIP,
+			SDRC_EMissionWinCondition.HVT_KILL_VIP,
 			"The target has been neutralized.",
 			"The target escaped.",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0		
 		);
 		HvtVip.ai.Set(
@@ -366,8 +371,8 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			{"G_LIGHT", "G_RECON",},
 			50, 0.6,
 			{0, 0},
-			DC_EWaypointGenerationType.NONE, 
-			DC_EWaypointMoveType.NONE		
+			SDRC_EWaypointGenerationType.NONE, 
+			SDRC_EWaypointMoveType.NONE		
 		);
 		HvtVip.Set(
 			{
@@ -410,11 +415,12 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"any",
 			"Flight controller near %l.",
 			"Assassinate the target",
-			DC_EMissionWinCondition.HVT_KILL_VIP,
+			SDRC_EMissionWinCondition.HVT_KILL_VIP,
 			"The target has been neutralized.",
 			"The target escaped.",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0		
 		);
 		HvtVip.ai.Set(
@@ -422,8 +428,8 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			{"G_LIGHT",},
 			50, 0.6,
 			{0, 0},
-			DC_EWaypointGenerationType.NONE, 
-			DC_EWaypointMoveType.NONE		
+			SDRC_EWaypointGenerationType.NONE, 
+			SDRC_EWaypointMoveType.NONE		
 		);
 		HvtVip.Set(
 			{
@@ -460,11 +466,12 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"any",
 			"%l is bad for business",
 			"Assassinate the business man conducting bad business.",
-			DC_EMissionWinCondition.HVT_KILL_VIP,
+			SDRC_EMissionWinCondition.HVT_KILL_VIP,
 			"The target has been neutralized.",
 			"The target escaped.",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0		
 		);
 		HvtVip.ai.Set(
@@ -472,8 +479,8 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			{"G_HEAVY",},
 			50, 0.6,
 			{0, 0},
-			DC_EWaypointGenerationType.NONE, 
-			DC_EWaypointMoveType.NONE		
+			SDRC_EWaypointGenerationType.NONE, 
+			SDRC_EWaypointMoveType.NONE		
 		);
 		HvtVip.Set(
 			{
@@ -505,16 +512,17 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
 		HvtVip.general.Set(
-			3, "index 3: Businessman in countryside",
+			3, "index 3: Criminal in countryside",
 			{"0 0 0"}, 0, 
 			"any",
 			"Criminal hiding in %l",
 			"Assassinate the criminal boss. He tries to keep low profile.",
-			DC_EMissionWinCondition.HVT_KILL_VIP,
+			SDRC_EMissionWinCondition.HVT_KILL_VIP,
 			"The criminal got what he deserved.",
 			"The judgement day is posponed.",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0		
 		);
 		HvtVip.ai.Set(
@@ -522,8 +530,8 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			{"G_LIGHT",},
 			50, 0.6,
 			{0, 0},
-			DC_EWaypointGenerationType.NONE, 
-			DC_EWaypointMoveType.NONE		
+			SDRC_EWaypointGenerationType.NONE, 
+			SDRC_EWaypointMoveType.NONE		
 		);
 		HvtVip.Set(
 			{

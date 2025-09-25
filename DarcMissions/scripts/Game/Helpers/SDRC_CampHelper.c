@@ -60,14 +60,14 @@ sealed class SDRC_CampHelper
 		else
 		{
 			//Spawn mission AI 
-			int aiCount = camp.ai.GetCount();
+			int aiCount = camp.ai.GetCount(camp.general.difficulty);
 			
 			for (int i = 0; i < aiCount; i++)
 			{
 				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(camp.ai.types.GetRandomElement(), mission.GetPos(), mission.GetFaction());
 				if (group)
 				{
-					SDRC_AIHelper.SetAIGroupSkill(group, camp.ai.GetSkill(), camp.ai.GetPerception());					
+					SDRC_AIHelper.SetAIGroupSkill(group, camp.ai.GetSkill(camp.general.difficulty), camp.ai.GetPerception(camp.general.difficulty));					
 					mission.AddToGroupsList(group);
 					
 					int minRange = camp.ai.waypointRange[0];
@@ -82,7 +82,7 @@ sealed class SDRC_CampHelper
 					}
 					
 					SDRC_WPHelper.CreateMissionAIWaypoints(group, camp.ai.waypointGenType, mission.GetPos(), "0 0 0", camp.ai.waypointMoveType, minRange, maxRange);
-//					SDRC_WPHelper.CreateMissionAIWaypoints(group, DC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", DC_EWaypointMoveType.LOITER, camp.waypointRange[0], camp.waypointRange[1]);
+//					SDRC_WPHelper.CreateMissionAIWaypoints(group, SDRC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", SDRC_EWaypointMoveType.LOITER, camp.waypointRange[0], camp.waypointRange[1]);
 				}
 				SDRC_Log.Add("[SDRC_campHelper:Spawn] AI groups spawned: " + aiCount, LogLevel.DEBUG);								
 			}

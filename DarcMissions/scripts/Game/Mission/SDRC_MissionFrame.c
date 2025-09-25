@@ -13,9 +13,9 @@ Add this to your StartGameTrigger or use SDRC_GameCoreBase.c
 	{
 		if (!m_GameHasStarted)
 		{
-			m_GameHasStarted = true;		
+			m_GameHasStarted = true;
 			MissionFrame = new SDRC_MissionFrame(true);
-			MissionFrame.MissionFrameStart();			
+			MissionFrame.MissionFrameStart();
 		}
 	}
 	//------------------------------------------------------------------------------------------------
@@ -65,8 +65,11 @@ class SDRC_MissionFrame
 		m_DC_NonValidAreaJsonApi.Load();
 		m_DC_NonValidAreaJsonApi.Populate(m_aNonValidAreas);
 
-		//Checking the enemies found
-		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty: " + SCR_Enum.GetEnumName(DC_EMissionDifficulty, m_Config.difficulty), LogLevel.NORMAL);
+		//TBD: Difficulty details
+		//SDRC_Log.Add("[SDRC_MissionFrame] Difficulty: " + SCR_Enum.GetEnumName(SDRC_EMissionDifficulty, m_Config.difficulty), LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI count multiplier: " + m_Config.difficultyAiCountCoefMul, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI skill multiplier: " + m_Config.difficultyAiSkillCoefMul, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI perception multiplier: " + m_Config.difficultyAiPerceptionCoefMul, LogLevel.NORMAL);
 		
 		//Checking the enemies found
 		SDRC_Log.Add("[SDRC_MissionFrame] Enemy factions: " + m_Config.enemyFactions, LogLevel.NORMAL);
@@ -102,7 +105,7 @@ class SDRC_MissionFrame
 		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;		//sec to ms
 		
 		#ifndef SDRC_RELEASE
-			SDRC_DevHelper.SDRC_DevDump();
+			//SDRC_DevHelper.SDRC_DevDump();
 		#endif	
 		
 		/*
@@ -154,7 +157,7 @@ class SDRC_MissionFrame
 	protected void MissionCycleManager()
 	{		
 		ref SDRC_Mission tmpDC_Mission = null;
-		DC_EMissionType missionType = null;
+		SDRC_EMissionType missionType = null;
 		bool staticMissionSpawned = false;
 		int staticMissionsCount = CountStaticMissions();
 		
@@ -180,7 +183,7 @@ class SDRC_MissionFrame
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] MissionCreate failed (static): " + SCR_Enum.GetEnumName(DC_EMissionType, missionType), LogLevel.WARNING);
+				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] MissionCreate failed (static): " + SCR_Enum.GetEnumName(SDRC_EMissionType, missionType), LogLevel.WARNING);
 			}
 			
 			staticMissionSpawned = true;	//Static missions to be spawned faster at startup
@@ -204,14 +207,14 @@ class SDRC_MissionFrame
 				}
 				else	//Spawn a GM requested mission
 				{
-					missionType = DC_EMissionType.REQUESTED;
+					missionType = SDRC_EMissionType.REQUESTED;
 				}
 				
 				//Do the spawning
 				tmpDC_Mission = MissionCreate(missionType);				
 				if (tmpDC_Mission)
 				{
-					if (tmpDC_Mission.GetState() != DC_EMissionState.FAILED)
+					if (tmpDC_Mission.GetState() != SDRC_EMissionState.FAILED)
 					{
 						tmpDC_Mission.InitActiveTime(m_Config.missionDynamic.activeTime);
 						tmpDC_Mission.ResetActiveTime();
@@ -220,7 +223,7 @@ class SDRC_MissionFrame
 				}
 				else
 				{
-					SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] MissionCreate failed (dynamic): " + SCR_Enum.GetEnumName(DC_EMissionType, missionType), LogLevel.WARNING);
+					SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] MissionCreate failed (dynamic): " + SCR_Enum.GetEnumName(SDRC_EMissionType, missionType), LogLevel.WARNING);
 				}
 			}
 		}
@@ -232,7 +235,7 @@ class SDRC_MissionFrame
 			m_MissionList.Insert(tmpDC_Mission);
 			
 			//If there was an error starting the mission, it has been prepared for deletion.
-			if (tmpDC_Mission.GetState() != DC_EMissionState.FAILED)
+			if (tmpDC_Mission.GetState() != SDRC_EMissionState.FAILED)
 			{		
 				//Show marker
 				tmpDC_Mission.ShowMarker();
@@ -276,12 +279,12 @@ class SDRC_MissionFrame
 		{
 			mission = m_MissionList[i];
 						
-			if (mission.GetState() == DC_EMissionState.FAILED)
+			if (mission.GetState() == SDRC_EMissionState.FAILED)
 			{
-				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Mission start failed: " + mission.GetId() + " (" + SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType()) + ")", LogLevel.WARNING);
+				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Mission start failed: " + mission.GetId() + " (" + SCR_Enum.GetEnumName(SDRC_EMissionType, mission.GetType()) + ")", LogLevel.WARNING);
 			}
 
-			if (mission.GetState() == DC_EMissionState.EXIT || mission.GetState() == DC_EMissionState.FAILED)
+			if (mission.GetState() == SDRC_EMissionState.EXIT || mission.GetState() == SDRC_EMissionState.FAILED)
 			{
 				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Deleting mission: " + mission.GetId(), LogLevel.NORMAL);
 				SDRC_DebugHelper.DeleteDebugPos(mission.GetId());
@@ -328,78 +331,78 @@ class SDRC_MissionFrame
 	/*!
 	Creates the mission object
 	*/		
-	protected SDRC_Mission MissionCreate(DC_EMissionType missionType)
+	protected SDRC_Mission MissionCreate(SDRC_EMissionType missionType)
 	{
 		SDRC_Mission tmpDC_Mission = null;
 		SDRC_MissionRequested missionRequest = null;
 		
-		if (missionType == DC_EMissionType.REQUESTED)
+		if (missionType == SDRC_EMissionType.REQUESTED)
 		{					
 			//If mission was requested, fill information from the request
 			missionRequest = SDRC_MissionRequestHelper.FillMissionRequest();
 			missionType = missionRequest.missionType;
 		}
 		
-		SDRC_Log.Add("[SDRC_MissionFrame:MissionCreate] Starting mission of type: " + SCR_Enum.GetEnumName(DC_EMissionType, missionType), LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_MissionFrame:MissionCreate] Starting mission of type: " + SCR_Enum.GetEnumName(SDRC_EMissionType, missionType), LogLevel.DEBUG);
 		
 		switch (missionType)
 		{
-			case DC_EMissionType.NONE:
+			case SDRC_EMissionType.NONE:
 			{
 				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Mission of type NONE ignored.", LogLevel.ERROR);
 				break;
 			}
-			case DC_EMissionType.HUNTER:
+			case SDRC_EMissionType.HUNTER:
 			{
 				tmpDC_Mission = new SDRC_Mission_Hunter(missionType, missionRequest);
 				break;
 			}
-			case DC_EMissionType.OCCUPATION:
+			case SDRC_EMissionType.OCCUPATION:
 			{
 				tmpDC_Mission = new SDRC_Mission_Occupation(missionType, missionRequest);
 				break;
 			}
-			case DC_EMissionType.CONVOY:
+			case SDRC_EMissionType.CONVOY:
 			{
 				tmpDC_Mission = new SDRC_Mission_Convoy(missionType, missionRequest);
 				break;
 			}
-			case DC_EMissionType.CRASHSITE:
+			case SDRC_EMissionType.CRASHSITE:
 			{
 				tmpDC_Mission = new SDRC_Mission_Crashsite(missionType, missionRequest);
 				break;
 			}
-			case DC_EMissionType.PATROL:
+			case SDRC_EMissionType.PATROL:
 			{
 				tmpDC_Mission = new SDRC_Mission_Patrol(missionType, missionRequest);
 				break;
 			}
-			case DC_EMissionType.SQUATTERS:
+			case SDRC_EMissionType.SQUATTERS:
 			{
 				tmpDC_Mission = new SDRC_Mission_Squatter(missionType, missionRequest);
 				break;
 			}
-			case DC_EMissionType.ROADBLOCK:
+			case SDRC_EMissionType.ROADBLOCK:
 			{
 				tmpDC_Mission = new SDRC_Mission_Roadblock(missionType, missionRequest);
 				break;
 			}			
-			case DC_EMissionType.HVTVIP:
+			case SDRC_EMissionType.HVTVIP:
 			{
 				tmpDC_Mission = new SDRC_Mission_HvtVip(missionType, missionRequest);
 				break;
 			}			
-			case DC_EMissionType.HVTITEM:
+			case SDRC_EMissionType.HVTITEM:
 			{
 				tmpDC_Mission = new SDRC_Mission_HvtItem(missionType, missionRequest);
 				break;
 			}			
-			case DC_EMissionType.STASH:
+			case SDRC_EMissionType.STASH:
 			{
 				tmpDC_Mission = new SDRC_Mission_Stash(missionType, missionRequest);
 				break;
 			}			
-/*			case DC_EMissionType.CHOPPER:
+/*			case SDRC_EMissionType.CHOPPER:
 			{
 				tmpDC_Mission = new SDRC_Mission_Chopper(missionType, missionRequest);
 				break;
@@ -464,16 +467,16 @@ class SDRC_MissionFrame
 			{
 				staticString = staticString + "(req)";
 			}
-			string missionType = SCR_Enum.GetEnumName(DC_EMissionType, mission.GetType());
+			string missionType = SCR_Enum.GetEnumName(SDRC_EMissionType, mission.GetType());
 			string missionTitle = mission.GetTitle();
 			if (missionTitle.Length() > cutLen)
 			{
 				missionTitle = mission.GetTitle().Substring(0, cutLen) + "..";
 			}
-			string missionState = SCR_Enum.GetEnumName(DC_EMissionState,  mission.GetState());
+			string missionState = SCR_Enum.GetEnumName(SDRC_EMissionState,  mission.GetState());
 			
 			SDRC_Log.Add("[SDRC_MissionDump] " + i + ": " + mission.GetId() + " (" + missionType + ", " + staticString + ", " + missionState + ") - " + missionTitle + " - " + "Time left: " + mission.GetActiveTime(), LogLevel.NORMAL);
-			aiCount = aiCount + mission.GetAICount();
+			aiCount = aiCount + mission.GetAICountActive();
 			i++;
 		}		
 		string lastLine = "[SDRC_MissionDump] -- AI count: " + aiCount + " -------------------------------------------------------------------------";

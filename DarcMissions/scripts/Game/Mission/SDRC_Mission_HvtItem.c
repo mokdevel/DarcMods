@@ -23,7 +23,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	private IEntity m_Target = null;
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_HvtItem(DC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_HvtItem(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
 		m_HvtItemJsonApi.CreateMissionFiles();
@@ -36,7 +36,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
 		if (idx == -1)
 		{
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
 		m_DC_HvtItem = m_Config.subMissions[idx];			
@@ -46,9 +46,9 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		m_fSpawnRotation = Math.RandomFloat(0, 360);
 		
 		//Find position
-		vector pos = m_DC_HvtItem.general.pos[0];
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtItem.general.pos, m_DC_HvtItem.general.emptySize, m_DC_HvtItem.locationTypes);
 		
-		//Find a location for the mission
+/*		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
 			pos = SDRC_MissionHelper.FindMissionPos(m_DC_HvtItem.locationTypes, m_DC_HvtItem.general.emptySize);
@@ -56,11 +56,11 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		else
 		{
 			pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_HvtItem.general.emptySize);
-		}
+		}*/
 		
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}		
 		
@@ -81,7 +81,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.SPAWN)
+		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds.
@@ -89,17 +89,17 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 			return;
 		}
 
-		if (GetState() == DC_EMissionState.END)
+		if (GetState() == SDRC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_EMissionState.EXIT);
+			SetState(SDRC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_EMissionState.ACTIVE)
+		if (GetState() == SDRC_EMissionState.ACTIVE)
 		{			
 			if (!IsActive())
 			{
-				SetState(DC_EMissionState.END);
+				SetState(SDRC_EMissionState.END);
 			}
 		}
 		
@@ -127,7 +127,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 			
 			GetGame().GetCallqueue().CallLater(IsTargetDestroyed, AI_TARGET_DESTROYED_CYCLE_TIME, false);
 			
-			SetState(DC_EMissionState.ACTIVE);
+			SetState(SDRC_EMissionState.ACTIVE);
 		}
 	}
 	
@@ -145,7 +145,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	*/
 	void IsTargetDestroyed()
 	{
-		if (GetWinCondition() == DC_EMissionWinCondition.HVT_DESTROY_ITEM && GetState() == DC_EMissionState.ACTIVE && GetSuccess() == DC_EMissionSuccess.UNKNOWN)
+		if (GetWinCondition() == SDRC_EMissionWinCondition.HVT_DESTROY_ITEM && GetState() == SDRC_EMissionState.ACTIVE && GetSuccess() == SDRC_EMissionSuccess.UNKNOWN)
 		{
 			bool isDestroyed = false;
 			if (m_Target)
@@ -294,11 +294,12 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			"any",
 			"Destroy generator near %l",
 			"The enemy is spreading propaganda.",
-			DC_EMissionWinCondition.HVT_DESTROY_ITEM,
+			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
 			"Target destroyed.",
 			"You failed in your mission!",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTITEM_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		hvtItem.ai.Set(
@@ -306,8 +307,8 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			{"G_ADMIN", "G_LIGHT", "G_LIGHT"},
 			50, 1.0,
 			{25, 100},
-			DC_EWaypointGenerationType.LOITER,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.LOITER,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);	
 		hvtItem.Set(
 			{
@@ -405,11 +406,12 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			"any",
 			"A supply truck near %l",
 			"A truck has crashed and the supplies needs to be destroyed.",
-			DC_EMissionWinCondition.HVT_DESTROY_ITEM,
+			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
 			"Supplies never reached the enemy. Good work!",
 			"The enemy will fight with their bellies full.",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTITEM_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		hvtItem.ai.Set(
@@ -417,8 +419,8 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			{"G_ADMIN", "G_LIGHT", "G_LIGHT", "G_HEAVY"},
 			50, 1.0,
 			{25, 100},
-			DC_EWaypointGenerationType.LOITER,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.LOITER,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);	
 		hvtItem.Set(
 			{
@@ -504,11 +506,12 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			"any",
 			"Radio antenna close to %l",
 			"Disrupt the enemy communications. Destroy the antenna.",
-			DC_EMissionWinCondition.HVT_DESTROY_ITEM,
+			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
 			"The comms are dead.",
 			"Enemy communication is working loud and clear.",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		hvtItem.ai.Set(
@@ -516,8 +519,8 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			{"G_ADMIN", "G_RECON", "G_SPECIAL", "G_LIGHT"},
 			50, 1.0,
 			{25, 150},
-			DC_EWaypointGenerationType.LOITER,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.LOITER,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);		
 		hvtItem.Set(
 			{

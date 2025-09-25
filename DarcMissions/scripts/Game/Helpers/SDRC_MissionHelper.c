@@ -11,7 +11,41 @@ sealed class SDRC_MissionHelper
 //	private const float DC_DEFAULT_SIZE = 5;					//Default size for a mission position
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 5;		//How many different spots to try for a mission before giving up
 	private const int DC_LOCATION_SEACRH_RADIUS_INC = 30;		//The increase of search radius for each failed iteration
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Select a mission position from the list of positions. "0 0 0" returned as default.
+	\param positions List of positions
+	*/	
+	static vector SelectMissionPos(array<vector>positions, float emptySize = -1, array<EMapDescriptorType> locationTypes = null)
+	{
+		vector pos = "0 0 0";
+		
+		//If multiple positions, pick a random one		
+		if (!positions.IsEmpty())
+		{
+			pos = positions.GetRandomElement();
+		}
+		
+		if (pos == "0 0 0")
+		{		
+			if ( (locationTypes) && (locationTypes.Count() > 0) )
+			{
+				pos = SDRC_MissionHelper.FindMissionPos(locationTypes, emptySize);
+			}
+			else
+			{
+				if (emptySize > -1)
+				{
+					pos = SDRC_MissionHelper.FindMissionPos(pos, emptySize);
+				}
+			}
+		}
+				
+		return pos;
+	}
+
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find a completely random position for a mission. "0 0 0" returned if nothing found.
@@ -241,25 +275,25 @@ sealed class SDRC_MissionHelper
 
 		if (SDRC_Misc.IsPosInWater(pos))
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionFailReason, DC_EMissionFailReason.POS_IN_WATER), LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionFailReason, SDRC_EMissionFailReason.POS_IN_WATER), LogLevel.WARNING);
 			return false;
 		}
 				
 		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, distanceToPlayer))
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionFailReason, DC_EMissionFailReason.PLAYER_TOO_CLOSE), LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionFailReason, SDRC_EMissionFailReason.PLAYER_TOO_CLOSE), LogLevel.WARNING);
 			return false;
 		}
 
 		if (IsAnyMissionCloseToPos(pos, distanceToMission))
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionFailReason, DC_EMissionFailReason.MISSION_TOO_CLOSE), LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionFailReason, SDRC_EMissionFailReason.MISSION_TOO_CLOSE), LogLevel.WARNING);
 			return false;
 		}
 
 		if (IsPosInNonValidArea(pos))
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(DC_EMissionFailReason, DC_EMissionFailReason.IN_NON_VALID_AREA), LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionFailReason, SDRC_EMissionFailReason.IN_NON_VALID_AREA), LogLevel.WARNING);
 			return false;
 		}
 										
@@ -411,7 +445,7 @@ sealed class SDRC_MissionHelper
 				pos = SDRC_MissionHelper.FindMissionPos();
 				if (pos != "0 0 0")
 				{
-					SDRC_MapMarkerHelper.CreateMapMarker(pos, DC_EMissionIcon.ICON_PLUS_SMALL_MAP, "DUMMY_");	//TBD: Create some other debug marker
+					SDRC_MapMarkerHelper.CreateMapMarker(pos, SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, "DUMMY_");	//TBD: Create some other debug marker
 				}
 			}		
 		}

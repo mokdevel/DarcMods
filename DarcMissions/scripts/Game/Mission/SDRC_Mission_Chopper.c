@@ -14,7 +14,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private int idx = 0;	
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Chopper(DC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Chopper(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
 		m_ChopperJsonApi.Load();
@@ -27,10 +27,10 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		SetInfo(m_Config.info);
 		SetPos(pos);
 		SetPosName(posName);
-		SetMarker(m_Config.showMarker, DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, "DARC_MISSION");
+		SetMarker(m_Config.showMarker, SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, "DARC_MISSION");
 		SetShowHint(m_Config.showHint);
 
-		SetState(DC_EMissionState.INIT);			*/
+		SetState(SDRC_EMissionState.INIT);			*/
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -38,24 +38,24 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.INIT)
+		if (GetState() == SDRC_EMissionState.INIT)
 		{
 			MissionSpawn();
-			SetState(DC_EMissionState.ACTIVE);
+			SetState(SDRC_EMissionState.ACTIVE);
 		}
 
-		if (GetState() == DC_EMissionState.END)
+		if (GetState() == SDRC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_EMissionState.EXIT);
+			SetState(SDRC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_EMissionState.ACTIVE)
+		if (GetState() == SDRC_EMissionState.ACTIVE)
 		{			
 			//Add code for runtime
 			
 			//Eventually when mission is to ended do this:
-			//SetState(DC_EMissionState.END);
+			//SetState(SDRC_EMissionState.END);
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);

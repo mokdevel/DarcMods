@@ -17,7 +17,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	private vector m_vPosDestination = "0 0 0";
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Patrol(DC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Patrol(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
 		m_PatrolJsonApi.CreateMissionFiles();
@@ -30,7 +30,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
 		if (idx == -1)
 		{
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
 		m_DC_Patrol = m_Config.subMissions[idx];		
@@ -53,7 +53,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		//If failed, stop
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
 		
@@ -66,7 +66,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 
 		if (pos == "0 0 0" || m_vPosDestination == "0 0 0")	//No suitable location found.
 		{				
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.ROUTE_NOT_FOUND , "From " + pos + " to " + m_vPosDestination);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ROUTE_NOT_FOUND , "From " + pos + " to " + m_vPosDestination);
 			return;
 		}	
 		
@@ -86,18 +86,18 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.SPAWN)
+		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 		}
 
-		if (GetState() == DC_EMissionState.END)
+		if (GetState() == SDRC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_EMissionState.EXIT);
+			SetState(SDRC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_EMissionState.ACTIVE)
+		if (GetState() == SDRC_EMissionState.ACTIVE)
 		{	
 			//Move the position as the first patrol is moving. This way check for player distance works properly.
 			if (m_Groups[0])
@@ -109,7 +109,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			
 			if (!IsActive())
 			{
-				SetState(DC_EMissionState.END);
+				SetState(SDRC_EMissionState.END);
 			}
 		}
 		
@@ -128,16 +128,16 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		IEntity entity;
 
 		//Spawn mission AI 
-		int aiCount = m_DC_Patrol.ai.GetCount();
+		int aiCount = m_DC_Patrol.ai.GetCount(m_DC_Patrol.general.difficulty);
 		
 		for (int i = 0; i < aiCount; i++)
 		{
 			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_Patrol.ai.types.GetRandomElement(), GetPos(), GetFaction());
 			if (group)
 			{
-				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Patrol.ai.GetSkill(), m_DC_Patrol.ai.GetPerception());					
+				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Patrol.ai.GetSkill(m_DC_Patrol.general.difficulty), m_DC_Patrol.ai.GetPerception(m_DC_Patrol.general.difficulty));					
 				m_Groups.Insert(group);
-				if (m_DC_Patrol.ai.waypointGenType == DC_EWaypointGenerationType.ROUTE)
+				if (m_DC_Patrol.ai.waypointGenType == SDRC_EWaypointGenerationType.ROUTE)
 				{
 					SDRC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.ai.waypointGenType, GetPos(), m_vPosDestination, m_DC_Patrol.ai.waypointMoveType);
 				}
@@ -149,7 +149,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			SDRC_Log.Add("[SDRC_Mission_Patrol:MissionSpawn] AI groups spawned: " + aiCount, LogLevel.DEBUG);								
 		}
 			
-		SetState(DC_EMissionState.ACTIVE);
+		SetState(SDRC_EMissionState.ACTIVE);
 	}
 }
 
@@ -282,11 +282,12 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"any",
 			"Patrol spotted near %l",
 			"Intel tells them to travel to %d. Be careful while traveling on roads.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Patrol near %l is no more.",
 			"Patroling completed, the world is saved.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_PATROL_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);		
 		patrol.ai.Set(
@@ -294,8 +295,8 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			{"G_SPECIAL"},
 			50, 1.0,
 			{0, 0},	//Not used with ROUTE
-			DC_EWaypointGenerationType.ROUTE,
-			DC_EWaypointMoveType.MOVE,
+			SDRC_EWaypointGenerationType.ROUTE,
+			SDRC_EWaypointMoveType.MOVE,
 		);
 		patrol.Set(
 			{
@@ -323,11 +324,12 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"any",
 			"Patrol in %l",
 			"Beware!",
-			DC_EMissionWinCondition.AI_KILL_75,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Well done!",
 			"You're not a worthy enemy for this patrol.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_PATROL_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);			
 		patrol.ai.Set(
@@ -335,8 +337,8 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			{"G_HEAVY", "G_LAUNCHER"},
 			50, 1.0,
 			{200, 800},
-			DC_EWaypointGenerationType.RADIUS,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.RADIUS,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		patrol.Set
 		(
@@ -364,11 +366,12 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"any",
 			"Patrol seen in %l",
 			"Be alert!",
-			DC_EMissionWinCondition.AI_KILL_75,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The road from %l to %d is safe again.",
 			"Patrol left the area.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_PATROL_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);		
 		patrol.ai.Set(
@@ -378,8 +381,8 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			},
 			50, 1.0,
 			{300, 700},
-			DC_EWaypointGenerationType.SCATTERED,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.SCATTERED,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		patrol.Set
 		(
@@ -402,11 +405,12 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			"any",
 			"Enemy has been seen near %l",
 			"Caution is advised.",
-			DC_EMissionWinCondition.AI_KILL_50,
+			SDRC_EMissionWinCondition.AI_KILL_50,
 			"Patrol cleared!",
 			"Such a small force was able to beat you.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_PATROL_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);				
 		patrol.ai.Set(
@@ -416,8 +420,8 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			},
 			50, 1.0,
 			{300, 700},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.RANDOM,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		patrol.Set(
 			{

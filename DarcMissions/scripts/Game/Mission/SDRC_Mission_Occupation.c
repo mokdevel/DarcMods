@@ -18,7 +18,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Occupation(DC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Occupation(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
 		m_OccupationJsonApi.CreateMissionFiles();
@@ -31,16 +31,16 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
 		if (idx == -1)
 		{
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
 		m_DC_Occupation = m_Config.subMissions[idx];	
 		HandleRequestGeneralVariables(m_DC_Occupation.general, request);
 		
 		//Find the position
-		vector pos = m_DC_Occupation.general.pos[0];
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Occupation.general.pos, m_DC_Occupation.general.emptySize, m_DC_Occupation.locationTypes);
 		
-		//Find a location for the mission
+/*		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
 			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Occupation.locationTypes, m_DC_Occupation.general.emptySize);
@@ -48,11 +48,11 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		else
 		{
 			pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_Occupation.general.emptySize);
-		}
+		}*/
 		
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
 
@@ -75,24 +75,24 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.SPAWN)
+		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds
 			return;
 		}
 
-		if (GetState() == DC_EMissionState.END)
+		if (GetState() == SDRC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_EMissionState.EXIT);
+			SetState(SDRC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_EMissionState.ACTIVE)
+		if (GetState() == SDRC_EMissionState.ACTIVE)
 		{	
 			if (!IsActive())
 			{
-				SetState(DC_EMissionState.END);
+				SetState(SDRC_EMissionState.END);
 			}
 		}
 		
@@ -115,7 +115,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		
 		if (ready)
 		{
-			SetState(DC_EMissionState.ACTIVE);
+			SetState(SDRC_EMissionState.ACTIVE);
 		}
 	}
 	
@@ -241,11 +241,12 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Guards patroling near %l",
 			"Avoid the location. Loot has already been lost.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Guard patrol eliminated.",
 			"The patrol kept %l safe from you. Pathetic.",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		occupation.ai.Set(
@@ -253,8 +254,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{"G_RECON", "G_LIGHT"},
 			50, 1.0,
 			{50, 300},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.RANDOM,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		occupation.Set(
 			{
@@ -276,11 +277,12 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Bandit camp near %l",
 			"Bandits are protecting their valuable loot.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Camp cleared. Take the loot and leave.",
 			"The camp near %l was never destroyed. Bandits rule!",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		occupation.ai.Set(
@@ -288,8 +290,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{"G_ADMIN", "G_LIGHT", "G_LIGHT"},
 			50, 1.0,
 			{25, 100},
-			DC_EWaypointGenerationType.SCATTERED,//RANDOM,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.SCATTERED,//RANDOM,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		occupation.Set(
 			{
@@ -358,11 +360,12 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Occupation in %l",
 			"City is being occupied.",
-			DC_EMissionWinCondition.AI_KILL_75,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"%l is free again!",
 			"The enemy was stronger this time.",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		occupation.ai.Set(
@@ -372,8 +375,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			},
 			50, 1.0,
 			{30, 200},
-			DC_EWaypointGenerationType.RADIUS,
-			DC_EWaypointMoveType.RANDOM,		
+			SDRC_EWaypointGenerationType.RADIUS,
+			SDRC_EWaypointMoveType.RANDOM,		
 		);
 		occupation.Set(
 			{
@@ -447,11 +450,12 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Car crash near %l",
 			"Loot is up for grabs.",
-			DC_EMissionWinCondition.AI_KILL_75,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"You stopped the get away. Enjoy the spoils.",
 			"Car was fixed and the loot was lost.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		occupation.ai.Set(
@@ -459,8 +463,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{"G_RECON"},
 			50, 1.0,
 			{10, 60},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.RANDOM,		
+			SDRC_EWaypointGenerationType.RANDOM,
+			SDRC_EWaypointMoveType.RANDOM,		
 		);
 		occupation.Set(
 			{
@@ -545,11 +549,12 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Campers near %l",
 			"Rob them before they leave.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"The camp is yours. Enjoy the loot and relax.",
 			"The camp was packed and the campers left with their car.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		occupation.ai.Set(
@@ -557,8 +562,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{"G_SPECIAL", "G_HEAVY"},
 			50, 1.0,
 			{10, 90},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.RANDOM,		
+			SDRC_EWaypointGenerationType.RANDOM,
+			SDRC_EWaypointMoveType.RANDOM,		
 		);
 		occupation.Set(
 			{
@@ -656,11 +661,12 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Settlement near %l",
 			"The enemies are hiding in a ghost town.",
-			DC_EMissionWinCondition.AI_KILL_75,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The ghost town neat %l has been cleared.",
 			"Enemies have left with the loot. Shame on you.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		occupation.ai.Set(
@@ -668,8 +674,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{"G_SPECIAL", "G_HEAVY"},
 			50, 1.0,
 			{10, 90},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.RANDOM,		
+			SDRC_EWaypointGenerationType.RANDOM,
+			SDRC_EWaypointMoveType.RANDOM,		
 		);
 		occupation.Set(
 			{
@@ -817,11 +823,12 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"any",
 			"Creatures near %l",
 			"Avoid the location. No loot available.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Spawns from hell are dead!",
 			"Are you scared of a few ghosts..?",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		occupation.ai.Set(
@@ -831,8 +838,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			},
 			50, 1.0,
 			{50, 300},
-			DC_EWaypointGenerationType.RANDOM,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.RANDOM,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		occupation.Set(
 			{

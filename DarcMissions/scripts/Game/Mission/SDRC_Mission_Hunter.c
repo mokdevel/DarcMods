@@ -28,7 +28,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	private int m_iGroupsToSpawn	= 0;	//Amount of groups to spawn
 	private int m_iGroupsSpawned = 0;	//The amount of groups spawned. Between spawns, a group may be killed so the total of m_Groups is not reliable to know the count.
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Hunter(DC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Hunter(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config	
 		m_HunterJsonApi.CreateMissionFiles();
@@ -41,17 +41,17 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
 		if (idx == -1)
 		{
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
 		m_DC_Hunter = m_Config.subMissions[idx];	
 		HandleRequestGeneralVariables(m_DC_Hunter.general, request);
 		
 		//Set spawn count
-		m_iGroupsToSpawn = m_DC_Hunter.ai.GetCount();
+		m_iGroupsToSpawn = m_DC_Hunter.ai.GetCount(m_DC_Hunter.general.difficulty);
 		
 		//Find position
-		vector pos = m_DC_Hunter.general.pos[0];
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Hunter.general.pos);
 		bool positionFound = false;
 
 		if (pos != "0 0 0")
@@ -85,7 +85,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		
 		if (!positionFound)	//No suitable location found.
 		{				
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
 				
@@ -105,19 +105,19 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.SPAWN)
+		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
-			SetState(DC_EMissionState.ACTIVE);
+			SetState(SDRC_EMissionState.ACTIVE);
 		}
 		
-		if (GetState() == DC_EMissionState.END)
+		if (GetState() == SDRC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_EMissionState.EXIT);
+			SetState(SDRC_EMissionState.EXIT);
 		}
 		
-		if (GetState() == DC_EMissionState.ACTIVE)
+		if (GetState() == SDRC_EMissionState.ACTIVE)
 		{
 			if (m_iGroupsSpawned < m_iGroupsToSpawn)
 			{
@@ -127,7 +127,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 			{
 				if (!IsActive())
 				{
-					SetState(DC_EMissionState.END);
+					SetState(SDRC_EMissionState.END);
 				}
 			}
 		}
@@ -198,7 +198,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 			
 			if (group)
 			{
-				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Hunter.ai.GetSkill(), m_DC_Hunter.ai.GetPerception());					
+				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Hunter.ai.GetSkill(m_DC_Hunter.general.difficulty), m_DC_Hunter.ai.GetPerception(m_DC_Hunter.general.difficulty));					
 				m_Groups.Insert(group);
 				m_iGroupsSpawned++;
 				SDRC_Log.Add("[SDRC_Mission_Hunter:SpawnHunterGroup] Group spawned to " + spawnLocation, LogLevel.NORMAL);				
@@ -246,7 +246,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		
 		if (closestPlayer != null)
 		{
-			AIWaypoint waypoint = SDRC_WPHelper.CreateWaypointEntity(DC_EWaypointMoveType.MOVE);
+			AIWaypoint waypoint = SDRC_WPHelper.CreateWaypointEntity(SDRC_EWaypointMoveType.MOVE);
 			waypoint.SetOrigin(SDRC_Misc.RandomizePos(closestPlayer.GetOrigin(), m_Config.rndDistanceToPlayer));
 			return waypoint;
 		}
@@ -383,11 +383,12 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			"any",
 			"Hunters",
 			"They are coming for you... Last time they were seen close to %l.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"You outsmarted the hunters.",
 			"Hunters lost track of you.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_X_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_X_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		hunter.ai.Set(
@@ -395,8 +396,8 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			{"G_SMALL"},
 			30, 0.7,
 			{0, 0},
-			DC_EWaypointGenerationType.NONE, 
-			DC_EWaypointMoveType.NONE
+			SDRC_EWaypointGenerationType.NONE, 
+			SDRC_EWaypointMoveType.NONE
 		);
 		return hunter;
 	}	
@@ -410,11 +411,12 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			"any",
 			"Hunters",
 			"Sharpshooters are hunting you. Last known location was near %l.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Sharpshooters were not that sharp.",
 			"Sharpshooters lost track of you.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_X_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_X_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		hunter.ai.Set(
@@ -422,8 +424,8 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			{"G_SNIPER"},
 			40, 0.8,
 			{0, 0},
-			DC_EWaypointGenerationType.NONE, 
-			DC_EWaypointMoveType.NONE
+			SDRC_EWaypointGenerationType.NONE, 
+			SDRC_EWaypointMoveType.NONE
 		);
 		return hunter;
 	}		

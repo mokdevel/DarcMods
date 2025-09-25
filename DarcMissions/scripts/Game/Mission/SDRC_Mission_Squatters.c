@@ -19,7 +19,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	private int m_iSpawnIndex = 0;				//Counter for the AI to spawn
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Squatter(DC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Squatter(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
 		m_SquatterJsonApi.CreateMissionFiles();
@@ -32,18 +32,18 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
 		if (idx == -1)
 		{
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
 		m_DC_Squatter = m_Config.subMissions[idx];
 		HandleRequestGeneralVariables(m_DC_Squatter.general, request);
 		
 		//Set defaults
-		m_iAiCount = m_DC_Squatter.ai.GetCount();
+		m_iAiCount = m_DC_Squatter.ai.GetCount(m_DC_Squatter.general.difficulty);
 		float radius = 10;					//Default size for the radius. Mainly for requested missions to find the nearest building.
 		array<string>buildingFilter = {};
 		
-		vector pos = m_DC_Squatter.general.pos[0];
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Squatter.general.pos);
 		
 		//Find a location for the mission
 		if (IsRequested() && pos != "0 0 0")
@@ -78,7 +78,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		}
 		else //No suitable location found.
 		{
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}			
 		
@@ -97,7 +97,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.SPAWN)
+		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds. 
@@ -105,17 +105,17 @@ class SDRC_Mission_Squatter : SDRC_Mission
 			return;
 		}
 
-		if (GetState() == DC_EMissionState.END)
+		if (GetState() == SDRC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_EMissionState.EXIT);
+			SetState(SDRC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_EMissionState.ACTIVE)
+		if (GetState() == SDRC_EMissionState.ACTIVE)
 		{			
 			if (!IsActive())
 			{
-				SetState(DC_EMissionState.END);
+				SetState(SDRC_EMissionState.END);
 			}
 		}
 		
@@ -135,7 +135,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		if (m_iSpawnIndex < m_iAiCount)
 		{
 			//Each AI is spawned in to its own group to be able to give individual waypoints to a character
-			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.ai.types.GetRandomElement(), m_DC_Squatter.ai.GetSkill(), m_DC_Squatter.ai.GetPerception(), GetFaction());
+			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.ai.types.GetRandomElement(), m_DC_Squatter.ai.GetSkill(m_DC_Squatter.general.difficulty), m_DC_Squatter.ai.GetPerception(m_DC_Squatter.general.difficulty), GetFaction());
 			if (group)
 			{
 				m_Groups.Insert(group);
@@ -155,7 +155,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 				SDRC_Log.Add("[SDRC_Mission_Squatter:MissionSpawn] Could not spawn loot box: " + m_DC_Squatter.lootBox, LogLevel.ERROR);								
 			}
 		
-			SetState(DC_EMissionState.ACTIVE);			
+			SetState(SDRC_EMissionState.ACTIVE);			
 		}
 	}
 	
@@ -301,11 +301,12 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Squatters near %l.",
 			"Building has squatters with loot",		
-			DC_EMissionWinCondition.AI_KILL_75,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The loot has been secured.",
 			"Squatters cleaned the house and left you nothing.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0		
 		);
 		squatter.ai.Set(
@@ -315,8 +316,8 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			},
 			50, 0.6,
 			{0, 0},
-			DC_EWaypointGenerationType.NONE, 
-			DC_EWaypointMoveType.NONE
+			SDRC_EWaypointGenerationType.NONE, 
+			SDRC_EWaypointMoveType.NONE
 		);
 		squatter.Set(
 			{
@@ -358,11 +359,12 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Enemy in %l",
 			"Control tower is being guarded.",		
-			DC_EMissionWinCondition.AI_KILL_75,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"You did it! Control in %l has been restored.",
 			"Control in %l has been lost.",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0		
 		);
 		squatter.ai.Set(
@@ -373,8 +375,8 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			},
 			50, 0.8,
 			{0, 0},
-			DC_EWaypointGenerationType.NONE, 
-			DC_EWaypointMoveType.NONE
+			SDRC_EWaypointGenerationType.NONE, 
+			SDRC_EWaypointMoveType.NONE
 		);
 		squatter.Set(
 			{
@@ -411,11 +413,12 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Guards around %l",
 			"Military location has loot to steal.",		
-			DC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Guards have been eliminated.",
 			"Military has collected the loot and left.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0		
 		);
 		squatter.ai.Set(
@@ -426,8 +429,8 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			},
 			50, 0.8,
 			{0, 0},
-			DC_EWaypointGenerationType.NONE, 
-			DC_EWaypointMoveType.NONE
+			SDRC_EWaypointGenerationType.NONE, 
+			SDRC_EWaypointMoveType.NONE
 		);
 		squatter.Set(
 			{
@@ -463,11 +466,12 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Industrial area near %l",
 			"Military has seized control of an industrial area. Don't shoot the civilians.",
-			DC_EMissionWinCondition.AI_KILL_50,
+			SDRC_EMissionWinCondition.AI_KILL_50,
 			"Main enemy forces have been destroyed. Continue to keep an eye for rogues.",
 			"%l is in the hands of the enemy.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0		
 		);
 		squatter.ai.Set(
@@ -479,8 +483,8 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			},
 			50, 0.8,
 			{0, 0},
-			DC_EWaypointGenerationType.NONE, 
-			DC_EWaypointMoveType.NONE
+			SDRC_EWaypointGenerationType.NONE, 
+			SDRC_EWaypointMoveType.NONE
 		);
 		squatter.Set(
 			{
@@ -514,11 +518,12 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Sanctuary visitors near %l",
 			"Holy night, holy loot.",		
-			DC_EMissionWinCondition.AI_KILL_RANDOM,
+			SDRC_EMissionWinCondition.AI_KILL_RANDOM,
 			"Your success will be remembered.",
 			"Your effort has been struck down.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0		
 		);
 		squatter.ai.Set(
@@ -526,8 +531,8 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			{"C_RIFLEMAN"},
 			50, 0.8,		
 			{0, 0},
-			DC_EWaypointGenerationType.NONE, 
-			DC_EWaypointMoveType.NONE
+			SDRC_EWaypointGenerationType.NONE, 
+			SDRC_EWaypointMoveType.NONE
 		);
 		squatter.Set(
 			{
@@ -560,11 +565,12 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			"any",
 			"Burglars seen near %l",
 			"Go rob the robbers.",		
-			DC_EMissionWinCondition.AI_KILL_50,
+			SDRC_EMissionWinCondition.AI_KILL_50,
 			"%l is open for business once again.",
 			"Everything has been stolen.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0		
 		);
 		squatter.ai.Set(
@@ -572,8 +578,8 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			{"C_SPECIAL"},
 			30, 0.3,
 			{0, 0},
-			DC_EWaypointGenerationType.NONE, 
-			DC_EWaypointMoveType.NONE
+			SDRC_EWaypointGenerationType.NONE, 
+			SDRC_EWaypointMoveType.NONE
 		);
 		squatter.Set(
 			{

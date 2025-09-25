@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------------------------
 //Stages in the state machine
-enum DC_EMissionState
+enum SDRC_EMissionState
 {
 	NONE,		//Unknown state. Nothing should be run at this state.
 	INIT,		//The mission is being init. This automatically set when object is created.
@@ -11,7 +11,7 @@ enum DC_EMissionState
 	FAILED		//Mission startup has failed, delete mission
 };
 
-enum DC_EMissionWinCondition
+enum SDRC_EMissionWinCondition
 {
 	DEFAULT = -1,
 	NONE = 0,
@@ -29,7 +29,7 @@ enum DC_EMissionWinCondition
 	FIND_IN_60,
 };
 
-enum DC_EMissionSuccess
+enum SDRC_EMissionSuccess
 {
 	UNKNOWN,	//Success is uncertain. Normal state while mission is running.
 	WIN,		//The mission was a success -> win
@@ -37,7 +37,7 @@ enum DC_EMissionSuccess
 	DELETED		//Mission was deleted prematurely. For example by GM.
 }
 
-enum DC_EMissionError
+enum SDRC_EMissionError
 {
 	NONE,
 	LOCATION_NOT_FOUND,
@@ -74,12 +74,13 @@ class SDRC_MissionConfigGeneral : Managed
 	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
-	DC_EMissionWinCondition winCondition;	//Mission win condidition
+	SDRC_EMissionWinCondition winCondition;	//Mission win condidition
 	string winMessage;						//Message to show when mission is completed
 	string loseMessage;						//Message to show when mission fails
 	string faction;							//Faction for the mission. Setting as empty, works as the default to select from the enemyFactions
 	string markerType;						//Marker type for the mission
 	int markerIcon;							//Marker ID within markerType
+	SDRC_EMissionDifficulty difficulty;		//Difficulty for specific mission
 	int xp;									//Experience given	
 	
 	//------------------------------------------------------------------------------------------------
@@ -92,18 +93,19 @@ class SDRC_MissionConfigGeneral : Managed
 	void SetDefaults(int subIdx_ = -1, string comment_ = SDRC_DEFAULT, 
 					 vector pos_ = "0 0 0", float emptySize_ = 5,
 					 string posName_ = SDRC_DEFAULT, string title_ = SDRC_DEFAULT, string info_ = SDRC_DEFAULT, 
-					 DC_EMissionWinCondition winCondition_ = DC_EMissionWinCondition.DEFAULT, 
+					 SDRC_EMissionWinCondition winCondition_ = SDRC_EMissionWinCondition.DEFAULT, 
 					 string winMessage_ = SDRC_DEFAULT, string loseMessage_ = SDRC_DEFAULT, 
 					 string faction_ = SDRC_DEFAULT, 
 					 string markerType_ = SDRC_DEFAULT, int markerIcon_ = -1, 
+					 SDRC_EMissionDifficulty difficulty_ = SDRC_EMissionDifficulty.NORMAL, 
 					 int xp_ = 0)
 	{
 		array<vector> pos_array = {pos_, "0 0 0"};
-		Set(subIdx_, comment_, pos_array, emptySize_, posName_, title_, info_, winCondition_, winMessage_, loseMessage_, faction_, markerType_, markerIcon_, xp_);
+		Set(subIdx_, comment_, pos_array, emptySize_, posName_, title_, info_, winCondition_, winMessage_, loseMessage_, faction_, markerType_, markerIcon_, difficulty_, xp_);
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void Set(int subIdx_, string comment_, array<vector> pos_, float emptySize_, string posName_, string title_, string info_, DC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, string markerType_, int markerIcon_, int xp_)
+	void Set(int subIdx_, string comment_, array<vector> pos_, float emptySize_, string posName_, string title_, string info_, SDRC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, string markerType_, int markerIcon_, SDRC_EMissionDifficulty difficulty_, int xp_)
 	{
 		subIdx = subIdx_;
 		comment = comment_;
@@ -118,6 +120,7 @@ class SDRC_MissionConfigGeneral : Managed
 		faction = faction_;
 		markerType = markerType_;
 		markerIcon = markerIcon_;
+		difficulty = difficulty_;
 		xp = xp_;
 	}	
 }
@@ -126,14 +129,14 @@ class SDRC_MissionConfigGeneral : Managed
 class SDRC_MissionConfigAi : Managed
 {
 	private ref array<int> count = {};
-	ref array<string> types = {}; 		//The prefab names of AI groups or characters. The AI is randomly picked from this list.
-	private int skill;							//Skill for AI (0-100). See SCR_AICombatComponent and EAISkill
+	ref array<string> types = {}; 			//The prefab names of AI groups or characters. The AI is randomly picked from this list.
+	private int skill;						//Skill for AI (0-100). See SCR_AICombatComponent and EAISkill
 	private float perception;
 	ref array<int> waypointRange = {};		//min, max
-	DC_EWaypointGenerationType waypointGenType;
-	DC_EWaypointMoveType waypointMoveType;
+	SDRC_EWaypointGenerationType waypointGenType;
+	SDRC_EWaypointMoveType waypointMoveType;
 	
-	void Set(array<int> count_, array<string> types_, int skill_, float perception_, array<int> waypointRange_, DC_EWaypointGenerationType waypointGenType_, DC_EWaypointMoveType waypointMoveType_)
+	void Set(array<int> count_, array<string> types_, int skill_, float perception_, array<int> waypointRange_, SDRC_EWaypointGenerationType waypointGenType_, SDRC_EWaypointMoveType waypointMoveType_)
 	{
 		count = count_;
 		types = types_;
@@ -145,14 +148,18 @@ class SDRC_MissionConfigAi : Managed
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	int GetCount()
+	/*! Return the count of AIs for the mission 
+	
+	NOTE: mission and missionFrame difficulty affects the outcome	
+	*/	
+	int GetCount(SDRC_EMissionDifficulty difficulty = SDRC_EMissionDifficulty.NORMAL)
 	{
 		int cnt = Math.RandomInt(count[0], count[1]);
 		
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
 		{
-			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiCoef[m_BaseGameMode.missionFrame.m_Config.difficulty];
+			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiCountCoef[difficulty] * m_BaseGameMode.missionFrame.m_Config.difficultyAiCountCoefMul;
 			
 			int low = count[0] * coef;
 			if (low < count[0])
@@ -171,23 +178,18 @@ class SDRC_MissionConfigAi : Managed
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	/*! Return a proper skill value that matches EAISkill	
-		NONE,
-		NOOB 	= 10,
-		ROOKIE	= 20,
-		REGULAR	= 50,
-		VETERAN	= 70,
-		EXPERT 	= 80,
-		CYLON  	= 100
+	/*! Return a proper skill value that matches EAISkill. 
+	
+	NOTE: mission and missionFrame difficulty affects the outcome	
 	*/	
-	int GetSkill()
+	int GetSkill(SDRC_EMissionDifficulty difficulty = SDRC_EMissionDifficulty.NORMAL)
 	{
 		int sk = skill;
 		
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
 		{
-			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.skillCoef[m_BaseGameMode.missionFrame.m_Config.difficulty];
+			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiSkillCoef[difficulty] * m_BaseGameMode.missionFrame.m_Config.difficultyAiSkillCoefMul;
 			sk = skill * coef;
 		}		
 		
@@ -201,17 +203,23 @@ class SDRC_MissionConfigAi : Managed
 		return sk;
 	}
 	
-	float GetPerception()
+	//------------------------------------------------------------------------------------------------
+	/*! Return a proper perception value. 
+	
+	NOTE: mission and missionFrame difficulty affects the outcome	
+	TBD: I'm a little unsure how this in total affects, but I presume the higher is better.
+	*/
+	float GetPerception(SDRC_EMissionDifficulty difficulty = SDRC_EMissionDifficulty.NORMAL)
 	{
 		float perc = perception;
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
 		{
-			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.perfectionCoef[m_BaseGameMode.missionFrame.m_Config.difficulty];
+			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiPerceptionCoef[difficulty] * m_BaseGameMode.missionFrame.m_Config.difficultyAiPerceptionCoefMul;
 			perc = perception * coef;
 		}		
 		return perception;
-	}	
+	}			
 }
 
 //------------------------------------------------------------------------------------------------
@@ -221,8 +229,8 @@ class SDRC_Mission
 	
 	//Common for all missions
     private string m_sId;
-	private DC_EMissionState m_State;
-	private DC_EMissionType m_Type;
+	private SDRC_EMissionState m_State;
+	private SDRC_EMissionType m_Type;
 	private bool m_bStatic;						//Defines if the mission is dynamic or static. Dynamic is default. 
     private bool m_bShowHint;
     private bool m_bShowMessage;
@@ -234,10 +242,10 @@ class SDRC_Mission
 	//Internals
 	private bool m_bRequested;					//The missions spawn was requested by a an external party (like GM)
 	private int m_iRequestId;					//An ID set by the requestor. Default -1 which means no special ID set.
-	private DC_EMissionSuccess m_Success;
+	private SDRC_EMissionSuccess m_Success;
 	//Internals without getters
-	private int m_StartTime;					//Seconds when mission started
-	private int m_EndTime;						//Seconds when mission shall end.
+	private int m_iStartTime;					//Seconds when mission started
+	private int m_iEndTime;						//Seconds when mission shall end.
 	private int m_iActiveTime;					//Seconds of how long the mission should be active
 	private int m_iActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
 	private int m_iActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
@@ -249,12 +257,12 @@ class SDRC_Mission
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission(DC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		m_sId = DC_ID_PREFIX + SCR_StringHelper.PadLeft(string.ToString(m_MissionIDCounter), 4, "0");
 		m_MissionIDCounter++;
-		m_State = DC_EMissionState.INIT;
-		m_Type = missionType;	//DC_EMissionType.NONE;
+		m_State = SDRC_EMissionState.INIT;
+		m_Type = missionType;	//SDRC_EMissionType.NONE;
 		m_bStatic = false;
 		m_bShowHint = true;
 		m_bShowMessage = true;
@@ -262,7 +270,7 @@ class SDRC_Mission
 		m_iRequestId = -1;
 		
 		//NOTE: m_General default values have been set in the constructor
-//		m_General.winCondition = DC_EMissionWinCondition.AI_KILL_ALL;
+//		m_General.winCondition = SDRC_EMissionWinCondition.AI_KILL_ALL;
 //		m_sMarkerType = "DARC_MISSION";
 
 		if (!request)
@@ -279,8 +287,8 @@ class SDRC_Mission
 		}
 		
 		//Internals
-		m_Success = DC_EMissionSuccess.UNKNOWN;
-		m_StartTime = (System.GetTickCount() / 1000); 	//The time in seconds when the mission was started.
+		m_Success = SDRC_EMissionSuccess.UNKNOWN;
+		m_iStartTime = (System.GetTickCount() / 1000); 	//The time in seconds when the mission was started.
 		SetActiveTime(0);								//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
 		m_iActiveDistance = 0;							//Set a default zero
 		m_bMissionIsEnding = false;
@@ -297,7 +305,7 @@ class SDRC_Mission
 	*/
 	void MissionStart()	
 	{
-		SetState(DC_EMissionState.SPAWN);
+		SetState(SDRC_EMissionState.SPAWN);
 		SDRC_Log.Add("[SDRC_Mission:MissionStart] " +  GetId() + " : State changed to SPAWN", LogLevel.DEBUG);
 		GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.MISSION_RUN_DELAY, false);	
 	}	
@@ -315,15 +323,15 @@ class SDRC_Mission
 	{
 		//SDRC_Log.Add("[SDRC_Mission:MissionRun] Super on: " + GetId(), LogLevel.DEBUG);
 		
-		if (m_State == DC_EMissionState.SPAWN)
+		if (m_State == SDRC_EMissionState.SPAWN)
 		{
 		}
 		
-		if (m_State == DC_EMissionState.END)
+		if (m_State == SDRC_EMissionState.END)
 		{
 		}
 		
-		if (m_State == DC_EMissionState.ACTIVE)
+		if (m_State == SDRC_EMissionState.ACTIVE)
 		{			
 			//Check if a player is close to a mission vehicle. If yes, remove it from entities list so that it's not deleted at the end of mission.
 			int i = 0;
@@ -435,7 +443,7 @@ class SDRC_Mission
 				general.info = request.general.info;
 			}
 			
-			if (request.general.winCondition != DC_EMissionWinCondition.DEFAULT)
+			if (request.general.winCondition != SDRC_EMissionWinCondition.DEFAULT)
 			{
 				general.winCondition = request.general.winCondition;
 			}
@@ -452,11 +460,11 @@ class SDRC_Mission
 			
 			if (request.general.faction == SDRC_DEFAULT)
 			{
-				general.faction = SDRC_EnemyHelper.SelectEnemyFaction("");	//Pick a random 
+				general.faction = "";	//SDRC_EnemyHelper.SelectEnemyFaction("");	//Pick a random 
 			}
 			else //Pick the requested one if defined or random if left empty
 			{
-				general.faction = SDRC_EnemyHelper.SelectEnemyFaction(request.general.faction);
+				general.faction = request.general.faction;	//SDRC_EnemyHelper.SelectEnemyFaction(request.general.faction);
 			}
 			
 			if (request.general.markerType != SDRC_DEFAULT)
@@ -476,7 +484,8 @@ class SDRC_Mission
 		}
 		
 		//TBD: Should this do a dump of mission settings?
-		//Just to print out the faction for mission
+		//Select and print out the faction for mission 
+		general.faction = SDRC_EnemyHelper.SelectEnemyFaction(general.faction);		
 		SetFaction(general.faction);		
 	}	
 
@@ -494,16 +503,16 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	
 	//------------------------------------------------------------------------------------------------
-	DC_EMissionState GetState()
+	SDRC_EMissionState GetState()
 	{
 		return m_State;
 	}
 
-	void SetState(DC_EMissionState state, DC_EMissionError errorReason = DC_EMissionError.NONE, string errorInfo = "")
+	void SetState(SDRC_EMissionState state, SDRC_EMissionError errorReason = SDRC_EMissionError.NONE, string errorInfo = "")
 	{
 		m_State = state;
 		
-		if (state == DC_EMissionState.END)
+		if (state == SDRC_EMissionState.END)
 		{
 			//Things to set when mission is to end
 			
@@ -511,18 +520,18 @@ class SDRC_Mission
 			//m_Config.missionCycleTime = SDRC_Conf.MISSION_END_TIME;
 		}		
 		
-		if (state == DC_EMissionState.ACTIVE)
+		if (state == SDRC_EMissionState.ACTIVE)
 		{			
 			//Things to set when mission goes to active state
-			GetGame().GetCallqueue().CallLater(GetAICountDelayed, 10000);		//Do the counting after a while. AIs needs to be spawned.
+			GetGame().GetCallqueue().CallLater(GetAICountActiveDelayed, 10000);		//Do the counting after a while. AIs needs to be spawned.
 			m_iAIKillPercentageRandom = Math.RandomInt(30, 99);
 		}
 		
-		if (state == DC_EMissionState.FAILED)
+		if (state == SDRC_EMissionState.FAILED)
 		{
-			if (errorReason != DC_EMissionError.NONE)
+			if (errorReason != SDRC_EMissionError.NONE)
 			{
-				SDRC_Log.Add("[SDRC_Mission:SetState] ERROR: " + GetId() + " : " + SCR_Enum.GetEnumName(DC_EMissionError, errorReason) + " " + errorInfo, LogLevel.ERROR);						
+				SDRC_Log.Add("[SDRC_Mission:SetState] ERROR: " + GetId() + " : " + SCR_Enum.GetEnumName(SDRC_EMissionError, errorReason) + " " + errorInfo, LogLevel.ERROR);						
 			}
 		}
 		
@@ -530,18 +539,18 @@ class SDRC_Mission
 	}
 
 	//------------------------------------------------------------------------------------------------
-	DC_EMissionState GetType()
+	SDRC_EMissionState GetType()
 	{
 		return m_Type;
 	}
 
-/*	void SetType(DC_EMissionType type)	//TBD: This setter not needed in theory
+/*	void SetType(SDRC_EMissionType type)	//TBD: This setter not needed in theory
 	{
 		m_Type = type;
 	}*/
 	
 	//------------------------------------------------------------------------------------------------
-	DC_EMissionState GetSubIdx()
+	SDRC_EMissionState GetSubIdx()
 	{
 		return m_General.subIdx;
 	}
@@ -552,7 +561,7 @@ class SDRC_Mission
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	DC_EMissionState IsStatic()
+	SDRC_EMissionState IsStatic()
 	{
 		return m_bStatic;
 	}
@@ -630,28 +639,28 @@ class SDRC_Mission
 	}
 	
 	//------------------------------------------------------------------------------------------------	
-	void SetWinCondition(DC_EMissionWinCondition winCondition)
+	void SetWinCondition(SDRC_EMissionWinCondition winCondition)
 	{
 		m_General.winCondition = winCondition;
 
 		switch (m_General.winCondition)
 		{
-			case DC_EMissionWinCondition.FIND_IN_15:
+			case SDRC_EMissionWinCondition.FIND_IN_15:
 			{
 				InitActiveTime(15*60);
 				break;
 			}
-			case DC_EMissionWinCondition.FIND_IN_30:
+			case SDRC_EMissionWinCondition.FIND_IN_30:
 			{
 				InitActiveTime(30*60);
 				break;
 			}
-			case DC_EMissionWinCondition.FIND_IN_45:
+			case SDRC_EMissionWinCondition.FIND_IN_45:
 			{
 				InitActiveTime(45*60);
 				break;
 			}
-			case DC_EMissionWinCondition.FIND_IN_60:
+			case SDRC_EMissionWinCondition.FIND_IN_60:
 			{
 				InitActiveTime(60*60);
 				break;
@@ -659,7 +668,7 @@ class SDRC_Mission
 		}				
 	}
 	
-	DC_EMissionWinCondition GetWinCondition()
+	SDRC_EMissionWinCondition GetWinCondition()
 	{
 		return m_General.winCondition;
 	}
@@ -711,12 +720,12 @@ class SDRC_Mission
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	DC_EMissionSuccess GetSuccess()
+	SDRC_EMissionSuccess GetSuccess()
 	{
 		return m_Success;
 	}
 	
-	void SetSuccess(DC_EMissionSuccess success)
+	void SetSuccess(SDRC_EMissionSuccess success)
 	{
 		m_Success = success;
 		
@@ -736,12 +745,12 @@ class SDRC_Mission
 	}
 			
 	//------------------------------------------------------------------------------------------------
-	DC_EMissionIcon GetMarker()
+	SDRC_EMissionIcon GetMarker()
 	{
 		return m_General.markerIcon;
 	}
 
-	void SetMarker(DC_EMissionIcon icon, string markerType = "DARC_MISSION")
+	void SetMarker(SDRC_EMissionIcon icon, string markerType = "DARC_MISSION")
 	{
 		m_General.markerIcon = icon;
 		m_General.markerType = markerType;
@@ -833,7 +842,7 @@ class SDRC_Mission
 		}
 		
 		//Check the different winning conditions
-		if ( (m_State == DC_EMissionState.ACTIVE) && (!m_bMissionIsEnding) && (m_iAICountOriginal >= 0) )
+		if ( (m_State == SDRC_EMissionState.ACTIVE) && (!m_bMissionIsEnding) && (m_iAICountOriginal >= 0) )
 		{			
 			float aiKillPercentage;
 			
@@ -843,41 +852,41 @@ class SDRC_Mission
 			}
 			else
 			{
-				aiKillPercentage = (1 - GetAICount()/m_iAICountOriginal);
+				aiKillPercentage = (1 - GetAICountActive()/m_iAICountOriginal);
 			}
 			
 			switch (m_General.winCondition)
 			{
-				case DC_EMissionWinCondition.AI_KILL_ALL:
+				case SDRC_EMissionWinCondition.AI_KILL_ALL:
 				{
 					if (aiKillPercentage > 0.95)
 						isWin = true;					
 					break;
 				}
-				case DC_EMissionWinCondition.AI_KILL_75:
+				case SDRC_EMissionWinCondition.AI_KILL_75:
 				{
 					if (aiKillPercentage > 0.74)
 						isWin = true;					
 					break;
 				}
-				case DC_EMissionWinCondition.AI_KILL_50:
+				case SDRC_EMissionWinCondition.AI_KILL_50:
 				{
 					if (aiKillPercentage > 0.49)
 						isWin = true;					
 					break;
 				}
-				case DC_EMissionWinCondition.AI_KILL_RANDOM:
+				case SDRC_EMissionWinCondition.AI_KILL_RANDOM:
 				{
 					if (aiKillPercentage > m_iAIKillPercentageRandom)
 						isWin = true;					
 					break;
 				}
-				//case DC_EMissionWinCondition.HVT_KILL_VIP:			NOTE: Handles internally in HvtVip mission
-				//case DC_EMissionWinCondition.HVT_DESTROY_ITEM:		NOTE: Handles internally in HvtItem mission
-				case DC_EMissionWinCondition.FIND_IN_15:
-				case DC_EMissionWinCondition.FIND_IN_30:
-				case DC_EMissionWinCondition.FIND_IN_45:
-				case DC_EMissionWinCondition.FIND_IN_60:
+				//case SDRC_EMissionWinCondition.HVT_KILL_VIP:			NOTE: Handles internally in HvtVip mission
+				//case SDRC_EMissionWinCondition.HVT_DESTROY_ITEM:		NOTE: Handles internally in HvtItem mission
+				case SDRC_EMissionWinCondition.FIND_IN_15:
+				case SDRC_EMissionWinCondition.FIND_IN_30:
+				case SDRC_EMissionWinCondition.FIND_IN_45:
+				case SDRC_EMissionWinCondition.FIND_IN_60:
 				{
 					if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_General.pos[0], 0, m_iActiveDistance))
 					{
@@ -895,7 +904,7 @@ class SDRC_Mission
 			}
 		}
 		
-		if (currentTime < m_EndTime)
+		if (currentTime < m_iEndTime)
 		{
 			return true;
 		}
@@ -903,7 +912,7 @@ class SDRC_Mission
 		//Well, if got here, we should not be active anymore
 		
 		//If we won, don't show a lose message
-		if (GetSuccess() != DC_EMissionSuccess.WIN)
+		if (GetSuccess() != SDRC_EMissionSuccess.WIN)
 		{
 			SDRC_Log.Add("[SDRC_Mission:IsActive] " + GetId() + " : Mission LOSE: " + GetTitle(), LogLevel.DEBUG);
 			DoLose();
@@ -920,18 +929,18 @@ class SDRC_Mission
 	void DoWin()
 	{
 		//Mission is soon to be ending
-		SetSuccess(DC_EMissionSuccess.WIN);
+		SetSuccess(SDRC_EMissionSuccess.WIN);
 		m_bMissionIsEnding = true;
 		
 		if (IsShowHint() && IsShowMessage())			
 		{
-			SDRC_MissionHintHelper.Show("Success: " + GetTitle(), GetWinMessage(), DC_EMissionIcon.ICON_WIN_ROUND);
+			SDRC_MissionHintHelper.Show("Success: " + GetTitle(), GetWinMessage(), SDRC_EMissionIcon.ICON_WIN_ROUND);
 		}
 			
 		if (m_bShowMarker)
 		{
 			SDRC_MapMarkerHelper.DeleteMarker(GetId());
-			SetMarker(DC_EMissionIcon.GM_MISSION_WIN_MAP, m_General.markerType);
+			SetMarker(SDRC_EMissionIcon.GM_MISSION_WIN_MAP, m_General.markerType);
 			ShowMarker();
 		}
 		
@@ -946,18 +955,18 @@ class SDRC_Mission
 	*/
 	void DoLose()
 	{
-		SetSuccess(DC_EMissionSuccess.LOSE);
+		SetSuccess(SDRC_EMissionSuccess.LOSE);
 		m_bMissionIsEnding = true;
 		
 		if (IsShowHint() && IsShowMessage())
 		{
-			SDRC_MissionHintHelper.Show("Failure: " + GetTitle(), GetLoseMessage(), DC_EMissionIcon.ICON_LOSE_ROUND);
+			SDRC_MissionHintHelper.Show("Failure: " + GetTitle(), GetLoseMessage(), SDRC_EMissionIcon.ICON_LOSE_ROUND);
 		}
 		
 		if (m_bShowMarker)
 		{
 			SDRC_MapMarkerHelper.DeleteMarker(GetId());
-			SetMarker(DC_EMissionIcon.GM_MISSION_LOSE_MAP, m_General.markerType);
+			SetMarker(SDRC_EMissionIcon.GM_MISSION_LOSE_MAP, m_General.markerType);
 			ShowMarker();
 		}		
 	}
@@ -1008,14 +1017,14 @@ class SDRC_Mission
 	int GetActiveTime()
 	{
 		int currentTime = (System.GetTickCount() / 1000);
-		return m_EndTime - currentTime;
+		return m_iEndTime - currentTime;
 	}		
 		
 	//------------------------------------------------------------------------------------------------
 	void ResetActiveTime()	
 	{
 		int currentTime = (System.GetTickCount() / 1000);		
-		m_EndTime = currentTime + m_iActiveTime;
+		m_iEndTime = currentTime + m_iActiveTime;
 	}
 		
 	//------------------------------------------------------------------------------------------------
@@ -1035,10 +1044,14 @@ class SDRC_Mission
 		info = SDRC_MissionHelper.CreateInfo(info, GetPosName(), destinationName);
 		return info;
 	}
+
+	//------------------------------------------------------------------------------------------------
+	// AI related things
+	//------------------------------------------------------------------------------------------------
 	
 	//------------------------------------------------------------------------------------------------
 	//Count total amount of AI from all groups
-	int GetAICount()
+	int GetAICountActive()
 	{
 		int count = 0;
 		
@@ -1055,9 +1068,9 @@ class SDRC_Mission
 	
 	//------------------------------------------------------------------------------------------------	
 	//Function called when setting state to ACTIVE. AIs needs to be spawned before the counting works properly.
-	private void GetAICountDelayed()
+	private void GetAICountActiveDelayed()
 	{
-		m_iAICountOriginal = GetAICount();
+		m_iAICountOriginal = GetAICountActive();
 		SDRC_Log.Add("[SDRC_Mission:GetAICountDelayed] " + GetId() + " : Spawned " + m_iAICountOriginal + " AIs.", LogLevel.SPAM);
 	}
 }

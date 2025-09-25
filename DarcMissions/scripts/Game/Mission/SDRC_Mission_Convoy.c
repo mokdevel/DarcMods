@@ -10,7 +10,7 @@ Note to self: RADIUS, SCATTERED : This could also work, but support was removed 
 const string DC_MISSIONCONFIG_FILE_CONVOY = "dc_missionConfig_Convoy.json";
 	
 //------------------------------------------------------------------------------------------------
-enum DC_EMissionConvoyState
+enum SDRC_EMissionConvoyState
 {
 	INIT,
 	MOVE_AI,
@@ -24,13 +24,13 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	private ref SDRC_ConvoyConfig m_Config = new SDRC_ConvoyConfig();
 	private ref SDRC_Convoy m_DC_Convoy = new SDRC_Convoy();
 	
-	private DC_EMissionConvoyState missionConvoyState = DC_EMissionConvoyState.INIT;	
+	private SDRC_EMissionConvoyState missionConvoyState = SDRC_EMissionConvoyState.INIT;	
 	
 	private vector m_vPosDestination = "1 1 1";
 	private IEntity m_Vehicle = null;
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Convoy(DC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Convoy(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
 		m_ConvoyJsonApi.CreateMissionFiles();
@@ -43,7 +43,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
 		if (idx == -1)
 		{
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
 		m_DC_Convoy = m_Config.subMissions[idx];		
@@ -68,7 +68,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		//If failed, stop
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
 		
@@ -79,7 +79,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		//If failed, stop
 		if (pos == "0 0 0")
 		{
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.ROAD_FOR_START_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ROAD_FOR_START_NOT_FOUND);
 			return;
 		}
 	
@@ -104,7 +104,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 
 		if (pos == "0 0 0" || m_vPosDestination == "0 0 0")	//No suitable location found.
 		{				
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
 		
@@ -124,26 +124,26 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.SPAWN)
+		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 		}
 
-		if (GetState() == DC_EMissionState.END)
+		if (GetState() == SDRC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_EMissionState.EXIT);
+			SetState(SDRC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_EMissionState.ACTIVE)
+		if (GetState() == SDRC_EMissionState.ACTIVE)
 		{			
 			switch (missionConvoyState)
 			{
-				case DC_EMissionConvoyState.INIT:
+				case SDRC_EMissionConvoyState.INIT:
 					//This state is mainly for delay to give vehicle and AI to finalize spawn. If removed, AI will not enter the vehicle.
-					missionConvoyState = DC_EMissionConvoyState.MOVE_AI;
+					missionConvoyState = SDRC_EMissionConvoyState.MOVE_AI;
 					break;
-				case DC_EMissionConvoyState.MOVE_AI:				
+				case SDRC_EMissionConvoyState.MOVE_AI:				
 					MoveGroupsInVehicle(m_Groups, m_Vehicle);				
 					foreach (SCR_AIGroup group : m_Groups)
 					{	
@@ -152,9 +152,9 @@ class SDRC_Mission_Convoy : SDRC_Mission
 							SDRC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Convoy.ai.waypointGenType, GetPos(), m_vPosDestination, m_DC_Convoy.ai.waypointMoveType);
 						}
 					}
-					missionConvoyState = DC_EMissionConvoyState.RUN;
+					missionConvoyState = SDRC_EMissionConvoyState.RUN;
 					break;
-				case DC_EMissionConvoyState.RUN:
+				case SDRC_EMissionConvoyState.RUN:
 					//Move the position as the convoy is moving. This way check for player distance works properly.
 					//If players have already stolen the vehicle, the map marker will stop moving.
 					if ( (m_Vehicle) && (m_EntityList.Count() > 0) )
@@ -166,7 +166,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 								
 					if (!IsActive())
 					{
-						SetState(DC_EMissionState.END);
+						SetState(SDRC_EMissionState.END);
 					}
 					break;
 			}			
@@ -191,7 +191,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		if (!m_Vehicle)
 		{
 			//Could not spawn vehicle
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.COULD_NOT_SPAWN_VEHICLE, resourceName);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.COULD_NOT_SPAWN_VEHICLE, resourceName);
 			return;			
 		}
 		
@@ -204,7 +204,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
         vehicle_c.SetCruiseSpeed(m_DC_Convoy.cruiseSpeed);
 
 		//Spawn mission AI 
-		int aiCount = m_DC_Convoy.ai.GetCount();
+		int aiCount = m_DC_Convoy.ai.GetCount(m_DC_Convoy.general.difficulty);
 		vector posg = GetPos() + "3 0 3";
 		
 		for (int i = 0; i < aiCount; i++)
@@ -212,7 +212,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(m_DC_Convoy.ai.types.GetRandomElement(), posg, GetFaction());
 			if (group)
 			{			
-				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Convoy.ai.GetSkill(), m_DC_Convoy.ai.GetPerception());
+				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Convoy.ai.GetSkill(m_DC_Convoy.general.difficulty), m_DC_Convoy.ai.GetPerception(m_DC_Convoy.general.difficulty));
 				m_Groups.Insert(group);					
 			}
 			
@@ -227,7 +227,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] Loot added.", LogLevel.DEBUG);								
 		}		
 		
-		SetState(DC_EMissionState.ACTIVE);		
+		SetState(SDRC_EMissionState.ACTIVE);		
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -472,7 +472,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		//Default
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {2};//{0,0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
+		conf.missionList = {0,0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
 		//Mission specific
 		conf.distanceToPlayer = 500;
 		conf.disableArsenal = true;
@@ -493,11 +493,12 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"any",
 			"Convoy is on the move.",
 			"Leaked travel plans show a route from %l to %d",
-			DC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"The convoy was successfully intercepted.",
 			"The convoy reached %d as planned.",
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_CONVOY_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		convoy.ai.Set(
@@ -505,8 +506,8 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			{"G_LIGHT", "G_MEDICAL"},
 			50, 1.0,
 			{0, 0},
-			DC_EWaypointGenerationType.ROUTE,
-			DC_EWaypointMoveType.MOVE,
+			SDRC_EWaypointGenerationType.ROUTE,
+			SDRC_EWaypointMoveType.MOVE,
 		);
 		convoy.Set(
 			{
@@ -558,11 +559,12 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"any",
 			"Cargo truck is on the move.",
 			"Follow the route from %l to %d",
-			DC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Truck stopped, loot grabbed.",
 			"All the goodies in the truck was never for you.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		convoy.ai.Set(
@@ -570,8 +572,8 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			{"G_RECON", "G_LIGHT"},
 			40, 1.0,
 			{0, 0},
-			DC_EWaypointGenerationType.ROUTE,
-			DC_EWaypointMoveType.MOVE,
+			SDRC_EWaypointGenerationType.ROUTE,
+			SDRC_EWaypointMoveType.MOVE,
 		);
 		convoy.Set(
 			{
@@ -624,11 +626,12 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"any",
 			"Armor spotted",
 			"It's been seen in %l. It's to patrol to %d.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Armor destroyed. Well done!",
 			"Were you scared of a piece metal? Cowards!", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		convoy.ai.Set(
@@ -636,8 +639,8 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			{"G_HEAVY", "G_SPECIAL"},
 			50, 1.0,
 			{0, 0},
-			DC_EWaypointGenerationType.ROUTE,
-			DC_EWaypointMoveType.MOVE,
+			SDRC_EWaypointGenerationType.ROUTE,
+			SDRC_EWaypointMoveType.MOVE,
 		);
 		convoy.Set(
 			{
@@ -686,11 +689,12 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"any",
 			"Guns on the move",
 			"Look out for a patrol between %l and %d.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Nice shooting!",
 			"Oh dear, your failure will be remembered.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_CONVOY_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		convoy.ai.Set(
@@ -698,8 +702,8 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			{"G_RECON", "G_MEDICAL", "G_LIGHT"},
 			50, 1.0,
 			{0, 0},
-			DC_EWaypointGenerationType.ROUTE,
-			DC_EWaypointMoveType.MOVE,
+			SDRC_EWaypointGenerationType.ROUTE,
+			SDRC_EWaypointMoveType.MOVE,
 		);
 		convoy.Set(
 			{

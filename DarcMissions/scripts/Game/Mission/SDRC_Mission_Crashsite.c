@@ -8,7 +8,7 @@ A chopper flys and crashes. Loot and defending AI is spawned.
 const string DC_MISSIONCONFIG_FILE_CRASHSITE = "dc_missionConfig_Crashsite.json";
 	
 //------------------------------------------------------------------------------------------------
-enum DC_EMissionCrashSiteState
+enum SDRC_EMissionCrashSiteState
 {
 	INIT,
 	FLYING,
@@ -25,7 +25,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 10;	//How many different spots to try for a mission before giving up	
 			
-	private DC_EMissionCrashSiteState missionCrashSiteState = DC_EMissionCrashSiteState.INIT;
+	private SDRC_EMissionCrashSiteState missionCrashSiteState = SDRC_EMissionCrashSiteState.INIT;
 	private vector m_vPosDestination = "0 0 0";				//The destination where the chopper is flying from mission position
 	private float m_fAngle = 0;
 	private IEntity m_Vehicle;
@@ -35,7 +35,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Crashsite(DC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Crashsite(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
 		m_CrashsiteJsonApi.CreateMissionFiles();
@@ -48,14 +48,14 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
 		if (idx == -1)
 		{
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
 		m_DC_Crashsite = m_Config.subMissions[idx];	
 		HandleRequestGeneralVariables(m_DC_Crashsite.general, request);
 		
 		//Find position
-		vector pos = m_DC_Crashsite.general.pos[0];
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Crashsite.general.pos);
 		bool positionFound = false;
 
 		if (pos != "0 0 0")
@@ -87,7 +87,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		//No suitable location found.
 		if (!positionFound)	
 		{				
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
 		
@@ -121,7 +121,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		//Set a marker for destination
 		if (!SDRC_Conf.RELEASE)
 		{			
-			SDRC_MapMarkerHelper.CreateMapMarker(m_vPosDestination, DC_EMissionIcon.ICON_DEATHMARKER_SMALL_RED_MAP, GetId() + "_1", "Destination");
+			SDRC_MapMarkerHelper.CreateMapMarker(m_vPosDestination, SDRC_EMissionIcon.ICON_DEATHMARKER_SMALL_RED_MAP, GetId() + "_1", "Destination");
 			SDRC_DebugHelper.AddDebugPos(m_vPosDestination, ARGB(50, 255, 0, 0), 10, GetId() + "_1");
 		}
 	}	
@@ -131,27 +131,27 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.SPAWN)
+		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
-			SetState(DC_EMissionState.ACTIVE);
+			SetState(SDRC_EMissionState.ACTIVE);
 		}
 
-		if (GetState() == DC_EMissionState.END)
+		if (GetState() == SDRC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_EMissionState.EXIT);
+			SetState(SDRC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_EMissionState.ACTIVE)
+		if (GetState() == SDRC_EMissionState.ACTIVE)
 		{			
 			switch (missionCrashSiteState)
 			{
-				case DC_EMissionCrashSiteState.INIT:
+				case SDRC_EMissionCrashSiteState.INIT:
 					//This state is here only to give the chopper some time to fly.
-					missionCrashSiteState = DC_EMissionCrashSiteState.FLYING;
+					missionCrashSiteState = SDRC_EMissionCrashSiteState.FLYING;
 					break;
-				case DC_EMissionCrashSiteState.FLYING:
+				case SDRC_EMissionCrashSiteState.FLYING:
 					SetPos(m_Vehicle.GetOrigin());
 				
 					if (!IsStillFlying(m_Vehicle))
@@ -168,18 +168,18 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 						if (m_Config.showMarker)
 						{
 							SDRC_MapMarkerHelper.DeleteMarker(GetId());
-							//SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), DC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, GetId(), "Crash site");
-							SetMarker(DC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, m_DC_Crashsite.general.markerType);
+							//SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), SDRC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, GetId(), "Crash site");
+							SetMarker(SDRC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, m_DC_Crashsite.general.markerType);
 							ShowMarker();
 						}
-						missionCrashSiteState = DC_EMissionCrashSiteState.SPAWN_SITE;
+						missionCrashSiteState = SDRC_EMissionCrashSiteState.SPAWN_SITE;
 					}
 					else
 					{
 						MoveMarker();
 					}
 					break;
-				case DC_EMissionCrashSiteState.SPAWN_SITE:
+				case SDRC_EMissionCrashSiteState.SPAWN_SITE:
 				
 					bool ready = false;
 
@@ -193,8 +193,8 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 							m_DC_Crashsite.loot.box = m_EntityList[1];	//Normally it's the first one, but we have added the chopper in the list as the first one.
 						}
 													
-						missionCrashSiteState = DC_EMissionCrashSiteState.RUN;
-						SetState(DC_EMissionState.ACTIVE);
+						missionCrashSiteState = SDRC_EMissionCrashSiteState.RUN;
+						SetState(SDRC_EMissionState.ACTIVE);
 					}
 					else
 					{
@@ -202,10 +202,10 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 						return;				
 					}				
 					break;
-				case DC_EMissionCrashSiteState.RUN:		
+				case SDRC_EMissionCrashSiteState.RUN:		
 					if (!IsActive())
 					{
-						SetState(DC_EMissionState.END);
+						SetState(SDRC_EMissionState.END);
 					}
 					break;
 				default:
@@ -412,11 +412,12 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"any",
 			"Helicopter in distress",
 			"A valuable cargo has crashed.",
-			DC_EMissionWinCondition.AI_KILL_75,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The loot was salvaged. Crash, burn, loot.",
 			"No loot for you today.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		crashsite.ai.Set
@@ -425,8 +426,8 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			{"G_LIGHT", "G_ADMIN"},
 			20, 0.8,
 			{0, 0},
-			DC_EWaypointGenerationType.LOITER,
-			DC_EWaypointMoveType.LOITER,
+			SDRC_EWaypointGenerationType.LOITER,
+			SDRC_EWaypointMoveType.LOITER,
 		);
 		
 		//----------------------------------------------------
@@ -505,11 +506,12 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			"any",
 			"Engine damage",
 			"May day, may day! We're going down.",
-			DC_EMissionWinCondition.AI_KILL_75,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The loot box was secured.",
 			"The cargo was lost.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
+			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
 		crashsite.ai.Set
@@ -518,8 +520,8 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 			{"G_HEAVY", "G_ADMIN"},
 			20, 0.8,
 			{0, 0},
-			DC_EWaypointGenerationType.LOITER,
-			DC_EWaypointMoveType.LOITER,
+			SDRC_EWaypointGenerationType.LOITER,
+			SDRC_EWaypointMoveType.LOITER,
 		);
 		
 		//----------------------------------------------------

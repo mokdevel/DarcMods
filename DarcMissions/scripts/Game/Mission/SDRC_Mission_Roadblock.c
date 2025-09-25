@@ -18,7 +18,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Roadblock(DC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Roadblock(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
 		m_RoadblockJsonApi.CreateMissionFiles();
@@ -31,7 +31,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
 		if (idx == -1)
 		{
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.WRONG_SUBIDX);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.WRONG_SUBIDX);
 			return;
 		}
 		m_DC_Roadblock = m_Config.subMissions[idx];
@@ -45,7 +45,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		}
 		
 		//Find a location for the mission
-		vector pos = m_DC_Roadblock.general.pos[0];
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Roadblock.general.pos);
 		if (pos == "0 0 0")
 		{
 			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Roadblock.locationTypes, m_DC_Roadblock.general.emptySize, randomPos);
@@ -102,7 +102,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
-			SetState(DC_EMissionState.FAILED, DC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
 		
@@ -123,24 +123,24 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == DC_EMissionState.SPAWN)
+		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 			GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds
 			return;
 		}
 
-		if (GetState() == DC_EMissionState.END)
+		if (GetState() == SDRC_EMissionState.END)
 		{
 			MissionEnd();
-			SetState(DC_EMissionState.EXIT);
+			SetState(SDRC_EMissionState.EXIT);
 		}	
 				
-		if (GetState() == DC_EMissionState.ACTIVE)
+		if (GetState() == SDRC_EMissionState.ACTIVE)
 		{			
 			if (!IsActive())
 			{
-				SetState(DC_EMissionState.END);
+				SetState(SDRC_EMissionState.END);
 			}
 		}
 		
@@ -163,7 +163,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		
 		if (ready)
 		{
-			SetState(DC_EMissionState.ACTIVE);
+			SetState(SDRC_EMissionState.ACTIVE);
 		}
 	}
 	
@@ -287,11 +287,12 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"any",
 			"Roadblock near %l",
 			"Look out for trouble.",
-			DC_EMissionWinCondition.AI_KILL_75,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Roadblock cleared.",
 			"Road was kept safe as planned.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0		
 		);
 		roadblock.ai.Set(
@@ -299,8 +300,8 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			{"G_LAUNCHER", "G_LIGHT", "G_LIGHT"},
 			50, 1.0,
 			{0, 20},
-			DC_EWaypointGenerationType.LOITER,//RANDOM,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.LOITER,//RANDOM,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		roadblock.Set(
 			{
@@ -368,11 +369,12 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"any",
 			"Roadblock seen close to %l",
 			"Be careful.",
-			DC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"These blocks can not stop you.",
 			"Scared of the enemy? %l is not a place for you.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0		
 		);
 		roadblock.ai.Set(
@@ -380,8 +382,8 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			{"G_LAUNCHER", "G_HEAVY", "G_LIGHT"},
 			50, 1.0,
 			{0, 10},
-			DC_EWaypointGenerationType.SCATTERED,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.SCATTERED,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		roadblock.Set(
 			{
@@ -515,11 +517,12 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"any",
 			"Road is closed near %l",
 			"Are your ready to pay the toll?",
-			DC_EMissionWinCondition.AI_KILL_75,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Road cleared.",
 			"The road toll was too much for you.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0		
 		);		
 		roadblock.ai.Set(
@@ -527,8 +530,8 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			{"G_LIGHT", "G_LIGHT", "G_LIGHT", "C_SNIPER", },
 			50, 1.0,
 			{0, 10},
-			DC_EWaypointGenerationType.LOITER,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.LOITER,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		roadblock.Set(
 			{
@@ -645,11 +648,12 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			"any",
 			"Road near %l is guarded",
 			"Prepare for a mandatory stop.",
-			DC_EMissionWinCondition.AI_KILL_75,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Gates do not stop you.",
 			"Guards has left road near %l.", 
 			"",
-			"DARC_MISSION", DC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
 			0		
 		);		
 		roadblock.ai.Set(
@@ -657,8 +661,8 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			{"G_LIGHT", "G_LIGHT", "G_HEAVY", "G_ADMIN",},
 			50, 1.0,
 			{0, 10},
-			DC_EWaypointGenerationType.LOITER,
-			DC_EWaypointMoveType.PATROLCYCLE,
+			SDRC_EWaypointGenerationType.LOITER,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		roadblock.Set(
 			{
