@@ -14,6 +14,7 @@ enum SDRC_EMissionConvoyState
 {
 	INIT,
 	MOVE_AI,
+	GETIN,
 	RUN
 };
 
@@ -143,7 +144,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 					//This state is mainly for delay to give time to vehicle and AI to finalize spawn. If removed, AI will not enter the vehicle.
 					missionConvoyState = SDRC_EMissionConvoyState.MOVE_AI;
 					break;
-				case SDRC_EMissionConvoyState.MOVE_AI:				
+				case SDRC_EMissionConvoyState.MOVE_AI:
 					SDRC_VehicleHelper.MoveGroupsInVehicle(m_Groups, m_Vehicle);				
 					foreach (SCR_AIGroup group : m_Groups)
 					{	
@@ -152,6 +153,10 @@ class SDRC_Mission_Convoy : SDRC_Mission
 							SDRC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Convoy.ai.waypointGenType, GetPos(), m_vPosDestination, m_DC_Convoy.ai.waypointMoveType);
 						}
 					}
+					missionConvoyState = SDRC_EMissionConvoyState.GETIN;
+					break;
+				case SDRC_EMissionConvoyState.GETIN:
+					//This state is mainly for delay to give AI time to climb to the vehicle.
 					missionConvoyState = SDRC_EMissionConvoyState.RUN;
 					break;
 				case SDRC_EMissionConvoyState.RUN:
@@ -186,7 +191,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	{					
 		//Spawn vehicle					
 		string resourceName	= m_DC_Convoy.vehicleTypes.GetRandomElement();
-		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName);
+		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Convoy.general.emptySize);
 		
 		if (!m_Vehicle)
 		{
@@ -376,7 +381,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			0
 		);
 		convoy.ai.Set(
-			{0, 0},
+			{1, 2},
 			{"G_LIGHT", "G_MEDICAL"},
 			50, 1.0,
 			{0, 0},

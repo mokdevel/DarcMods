@@ -44,16 +44,17 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		
 		//Set defaults
 		m_iGroupCount = m_DC_HvtVip.ai.GetCount(m_DC_HvtVip.general.difficulty);
-		float radius = 10;					//Default size for the radius. Mainly for requested missions to find the nearest building.
+		float radius = 100;					//Default size for the radius. 
 		array<string> buildingFilter = {};
 
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtVip.general.pos);
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtVip.general.pos, m_DC_HvtVip.general.emptySize, m_DC_HvtVip.locationTypes);
 						
 		//Find a location for the mission
-		if (IsRequested() && pos != "0 0 0")
+		if (IsRequested())
 		{
 			//If the missions is requested with a position, any building near the location will be accepted.
 			buildingFilter.Insert("");
+			radius = 10;	//Try to find the nearest building.
 		}
 		else
 		{				
@@ -69,7 +70,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 				}
 				else
 				{
-					pos = SDRC_MissionHelper.FindMissionPos(m_DC_HvtVip.locationTypes, 2);
+					pos = SDRC_MissionHelper.FindMissionPos(m_DC_HvtVip.locationTypes, m_DC_HvtVip.general.emptySize);
 				}
 			}
 		}
@@ -338,7 +339,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	{
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {3};//{0,0,1,2,3,3};
+		conf.missionList = {0};//{0,0,1,2,3,3};
 		//Mission specific
 		conf.buildingRadius = 400;
 		//----------------------------------------------------
