@@ -26,11 +26,17 @@ sealed class SDRC_MissionHelper
 			pos = positions.GetRandomElement();
 		}
 		
+		//We should not find with a size of 0
+		if (emptySize == 0)
+		{
+			emptySize = 1;
+		}
+		
 		if (pos == "0 0 0")
 		{		
 			pos = SDRC_MissionHelper.FindMissionPos(locationTypes, emptySize);
 			
-/*			if ( (locationTypes) && (locationTypes.Count() > 0) )
+			if ( (!locationTypes) || (locationTypes.IsEmpty()) )
 			{
 				pos = SDRC_MissionHelper.FindMissionPos(locationTypes, emptySize);
 			}
@@ -40,7 +46,7 @@ sealed class SDRC_MissionHelper
 				{
 					pos = SDRC_MissionHelper.FindMissionPos(pos, emptySize);
 				}
-			}*/
+			}
 		}
 				
 		return pos;

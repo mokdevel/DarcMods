@@ -208,8 +208,8 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
-			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
+//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
+			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
