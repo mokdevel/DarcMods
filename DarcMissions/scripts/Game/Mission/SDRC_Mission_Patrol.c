@@ -44,10 +44,17 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		vector pos = m_DC_Patrol.general.pos[0];
 		m_vPosDestination = m_DC_Patrol.general.pos[1];
 		
+		//For requested missions we want have it as close as possible in the requested place.
+		int randomPos = -1;		
+		if (IsRequested())
+		{
+			randomPos = 0;
+		}
+				
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes, m_DC_Patrol.general.emptySize);
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes, m_DC_Patrol.general.emptySize, randomPos);
 		}
 	
 		//If failed, stop

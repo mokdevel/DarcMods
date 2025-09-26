@@ -5,7 +5,7 @@
 
 class SDRC_Mission_Chopper : SDRC_Mission
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Chopper.json";
+	private const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Chopper.json";
 	
 	private ref SDRC_ChopperJsonApi m_ChopperJsonApi = new SDRC_ChopperJsonApi(DC_MISSIONCONFIG_FILE);	
 	private ref SDRC_ChopperConfig m_Config;

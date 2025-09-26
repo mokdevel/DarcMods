@@ -8,7 +8,7 @@ Functions for various enemy related things
 //------------------------------------------------------------------------------------------------
 sealed class SDRC_EnemyHelper
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_enemyList.json";
+	private const string DC_MISSIONCONFIG_FILE = "dc_enemyList.json";
 		
 	private static ref SDRC_EnemyListJsonApi m_EnemyListJsonApi;
 	private static ref SDRC_ListConfig m_Config;

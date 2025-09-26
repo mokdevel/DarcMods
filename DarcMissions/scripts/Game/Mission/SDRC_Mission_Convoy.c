@@ -62,7 +62,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		
 		if (pos == "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.locationTypes, 5, randomPos);
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.locationTypes, m_DC_Convoy.general.emptySize, randomPos);
 		}
 
 		//If failed, stop
@@ -140,11 +140,11 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			switch (missionConvoyState)
 			{
 				case SDRC_EMissionConvoyState.INIT:
-					//This state is mainly for delay to give vehicle and AI to finalize spawn. If removed, AI will not enter the vehicle.
+					//This state is mainly for delay to give time to vehicle and AI to finalize spawn. If removed, AI will not enter the vehicle.
 					missionConvoyState = SDRC_EMissionConvoyState.MOVE_AI;
 					break;
 				case SDRC_EMissionConvoyState.MOVE_AI:				
-					MoveGroupsInVehicle(m_Groups, m_Vehicle);				
+					SDRC_VehicleHelper.MoveGroupsInVehicle(m_Groups, m_Vehicle);				
 					foreach (SCR_AIGroup group : m_Groups)
 					{	
 						if (group)
@@ -198,14 +198,17 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		m_EntityList.Insert(m_Vehicle);
 		
 		//Disable arsenal
-		SDRC_SpawnHelper.DisableVehicleArsenal(m_Vehicle, resourceName, m_Config.disableArsenal);
+		SDRC_VehicleHelper.DisableVehicleArsenal(m_Vehicle, resourceName, m_Config.disableArsenal);
 		
 		AICarMovementComponent vehicle_c = AICarMovementComponent.Cast(m_Vehicle.FindComponent(AICarMovementComponent));
         vehicle_c.SetCruiseSpeed(m_DC_Convoy.cruiseSpeed);
 
-		//Spawn mission AI 
+		//Spawn mission AI
 		int aiCount = m_DC_Convoy.ai.GetCount(m_DC_Convoy.general.difficulty);
-		vector posg = GetPos() + "3 0 3";
+		vector posg = GetPos();
+		//Move the position slightly to avoid spawning under vehicle
+		posg[0] = posg[0] + m_DC_Convoy.general.emptySize;
+		posg[2] = posg[2] + m_DC_Convoy.general.emptySize;
 		
 		for (int i = 0; i < aiCount; i++)
 		{		
@@ -216,7 +219,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 				m_Groups.Insert(group);					
 			}
 			
-			posg[0] = posg[0] + 3;
+			posg[0] = posg[0] + 4;
 		}
 		
 		//Put loot
@@ -228,135 +231,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		}		
 		
 		SetState(SDRC_EMissionState.ACTIVE);		
-	}
-
-	//------------------------------------------------------------------------------------------------
-    private void MoveGroupsInVehicle(array<SCR_AIGroup> groups, IEntity vehicle)
-    {
-		array<AIAgent> groupMembers  = new array<AIAgent>;
-		
-		int i = 0;
-		
-		foreach (SCR_AIGroup group : groups)
-		{				
-			if (group)
-			{
-				group.GetAgents(groupMembers);
-				
-				foreach (AIAgent aiAgent: groupMembers)
-				{
-					bool success = MoveEntityInVehicle(aiAgent, vehicle, i);
-					
-					//Remove those AI that did not fit in the vehicle.
-					if (!success)
-					{
-						SDRC_AIHelper.RemoveAIAgent(aiAgent);
-					}
-					
-					i++;
-				}
-			}
-		}
-	}
-			
-	//------------------------------------------------------------------------------------------------
-    private void MoveGroupInVehicle(AIGroup group, IEntity vehicle)
-    {
-		array<AIAgent> groupMembers  = new array<AIAgent>;
-		
-		if (group)
-		{
-			group.GetAgents(groupMembers);
-			
-			int i = 0;
-			foreach (AIAgent aiAgent: groupMembers)
-			{
-				bool success = MoveEntityInVehicle(aiAgent, vehicle, i);
-				
-				//Remove those AI that did not fit in the vehicle.
-				if (!success)
-				{
-					SDRC_AIHelper.RemoveAIAgent(aiAgent);
-				}
-				
-				i++;
-			}
-		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-    bool MoveEntityInVehicle(AIAgent aiAgent, IEntity vehicle, int slotIdx)
-    {
-		BaseCompartmentManagerComponent compartmentManager = BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(BaseCompartmentManagerComponent));
-		array<BaseCompartmentSlot> compartments = {};
-		int slots = compartmentManager.GetCompartments(compartments);		
-		
-		if (slotIdx >= slots)
-		{
-			SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] slotIdx incorrect: " + slotIdx + "/" + slots, LogLevel.SPAM);
-			return false;			
-		}
-		
-		array<int> slotPrio = {};
-		slotPrio.Insert(-1);		//Reserve prio 0 slot for pilot
-		slotPrio.Insert(-1);		//Reserve prio 0 slot for pilot
-		
-		int i = 0;
-						
-		foreach (BaseCompartmentSlot slot : compartments)
-		{
-			bool found = false;
-			
-			if (PilotCompartmentSlot.Cast(slot))
-			{
-				SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] Pilot slot: " + slot, LogLevel.SPAM);
-				if (slotPrio[0] == -1)
-				{
-					slotPrio[0] = i;
-					found = true;
-				}
-			}			
-			else if (TurretCompartmentSlot.Cast(slot))
-			{
-				SDRC_Log.Add("[SDRC_Mission_Convoy:MoveEntityInVehicle] Turret slot: " + slot, LogLevel.SPAM);
-				if (slotPrio[1] == -1)
-				{
-					slotPrio[1] = i;
-					found = true;
-				}
-			}
-			
-			if (!found)
-			{
-				slotPrio.Insert(i);
-			}
-			
-			i++;
-		}
-			
-		int idx = slotPrio[slotIdx];
-		if (idx == -1)
-		{
-			idx = slotIdx;
-		}
-		bool success = SetEntityInSlot(aiAgent, vehicle, compartments[idx]);
-
-		return success;
-    }
-	
-	//------------------------------------------------------------------------------------------------
-	bool SetEntityInSlot(AIAgent aiAgent, IEntity vehicle, BaseCompartmentSlot slot)
-	{
-		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(aiAgent.GetControlledEntity());		
-        CompartmentAccessComponent accessComponent = CompartmentAccessComponent.Cast(character.FindComponent(CompartmentAccessComponent));
-		
-		if (slot.IsOccupied() || !slot.IsCompartmentAccessible() || slot.IsReserved())
-		{
-			return false;
-		}
-		bool success = accessComponent.GetInVehicle(vehicle, slot, true, -1, ECloseDoorAfterActions.CLOSE_DOOR, false);
-		
-		return success;
 	}
 }
 	
@@ -472,7 +346,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		//Default
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
+		conf.missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
 		//Mission specific
 		conf.distanceToPlayer = 500;
 		conf.disableArsenal = true;
@@ -493,7 +367,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"any",
 			"Convoy is on the move.",
 			"Leaked travel plans show a route from %l to %d",
-			SDRC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The convoy was successfully intercepted.",
 			"The convoy reached %d as planned.",
 			"",
@@ -559,7 +433,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"any",
 			"Cargo truck is on the move.",
 			"Follow the route from %l to %d",
-			SDRC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Truck stopped, loot grabbed.",
 			"All the goodies in the truck was never for you.", 
 			"",
@@ -568,7 +442,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			0
 		);
 		convoy.ai.Set(
-			{1, 1},
+			{2, 3},
 			{"G_RECON", "G_LIGHT"},
 			40, 1.0,
 			{0, 0},
@@ -591,13 +465,14 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_AIRPORT
 			},
 			{
-				"{92264FF932676C13}Prefabs/Vehicles/Wheeled/M923A1/M923A1_ammo.et",
 				"{F1FBD0972FA5FE09}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport.et",
 				"{81FDAD5EB644CC3D}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered.et",
 				"{48A6D4372444B85A}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered_closed.et", 
 				"{16E32C3ABEAFC2C6}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_FIA_transport.et",
 				"{1449105FD658EDFB}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_CIV_forest.et",
-				"{FB219B49A448A8EA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_JZD.et",			
+				"{FB219B49A448A8EA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_JZD.et",
+				"{66241E0CEDFCEDFF}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_orange.et",
+				"{F66EAD0D2016B6BA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_blue.et",
 			},
 			20
 		);
@@ -626,7 +501,7 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			"any",
 			"Armor spotted",
 			"It's been seen in %l. It's to patrol to %d.",
-			SDRC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Armor destroyed. Well done!",
 			"Were you scared of a piece metal? Cowards!", 
 			"",
@@ -685,11 +560,11 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		ref SDRC_Convoy convoy = new SDRC_Convoy();
 		convoy.general.Set(
 			3, "index 3: Vehicle with a gun driving from .. to ..",
-			{"0 0 0", "0 0 0"}, 7,
+			{"0 0 0", "0 0 0"}, 4,
 			"any",
 			"Guns on the move",
 			"Look out for a patrol between %l and %d.",
-			SDRC_EMissionWinCondition.AI_KILL_ALL,
+			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Nice shooting!",
 			"Oh dear, your failure will be remembered.", 
 			"",
