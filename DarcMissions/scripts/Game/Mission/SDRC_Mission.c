@@ -296,7 +296,7 @@ class SDRC_Mission
 		m_iAICountOriginal = -1;						//Defaults set, updated once mission goes ACTIVE
 		m_iAIKillPercentageRandom = 99;
 		
-		SDRC_MissionStats.Add(m_sId, m_iRequestId, m_State, m_Success);
+		SDRC_MissionStats.Add(m_sId, m_iRequestId, m_Type, m_State, m_Success);
 	}
 
 	//------------------------------------------------------------------------------------------------

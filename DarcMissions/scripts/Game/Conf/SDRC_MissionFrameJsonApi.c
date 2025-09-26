@@ -31,9 +31,9 @@
 	#ifndef SDRC_RELEASE
 		private const float SDRC_MISSION_DIFFICULTY_COEF_MUL = 2.0;						//Difficulty multiplier
 		private const int SDRC_MISSION_MIN_DISTANCE = 200;		
-		private const int SDRC_MISSION_COUNT_DYNAMIC = 30;//3;//3;//8;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 0;//15;//5;//3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 3;//15;//5;//3;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -205,7 +205,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
 		
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
+			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
@@ -219,7 +219,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL, SDRC_EMissionType.PATROL, SDRC_EMissionType.PATROL, SDRC_EMissionType.CONVOY, SDRC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.PATROL, SDRC_EMissionType.HVTVIP};
 //			conf.missionStatic.missionTypeArray = {};
-			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.CONVOY, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.STASH};		
+//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.CONVOY, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.STASH};		
 		
 		#endif
 	}

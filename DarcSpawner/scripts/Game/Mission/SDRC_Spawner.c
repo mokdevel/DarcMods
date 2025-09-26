@@ -225,7 +225,7 @@ class SDRC_Spawner
 				//Disable arsenal
 				if (isVehicle)
 				{
-					SDRC_SpawnHelper.DisableVehicleArsenal(entity, entityToSpawn, m_Config.disableArsenal);
+					SDRC_VehicleHelper.DisableVehicleArsenal(entity, entityToSpawn, m_Config.disableArsenal);
 				}
 					
 				if (spawnSet.showMarker)

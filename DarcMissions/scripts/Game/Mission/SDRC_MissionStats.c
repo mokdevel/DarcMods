@@ -1,15 +1,18 @@
+
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionStat : Managed
 {
 	string id;						//The mission id assigned by DarcMissions
 	int requestId;					//The request id defined by an external requestor
+	SDRC_EMissionType type;			
 	SDRC_EMissionState state;
 	SDRC_EMissionSuccess success;
 		
-	void Set(string id_, int requestId_, SDRC_EMissionState state_, SDRC_EMissionSuccess success_)
+	void Set(string id_, int requestId_, SDRC_EMissionType type_, SDRC_EMissionState state_, SDRC_EMissionSuccess success_)
 	{
 		id = id_;
 		requestId = requestId_;
+		type = type_;
 		state = state_;
 		success = success_;
 	}	
@@ -21,10 +24,19 @@ class SDRC_MissionStats
 	static private ref array<ref SDRC_MissionStat> m_MissionStatList = {};
 	
 	//------------------------------------------------------------------------------------------------	
-	static void Add(string id, int requestId, SDRC_EMissionState state, SDRC_EMissionSuccess success)
+	static void Dump()
+	{
+		foreach (int i, SDRC_MissionStat stat : m_MissionStatList)
+		{
+			SDRC_Log.Add("[SDRC_MissionStat:Dump] " + i + ": " + stat.id + " - " + SCR_Enum.GetEnumName(SDRC_EMissionType, stat.type) + " - " + SCR_Enum.GetEnumName(SDRC_EMissionState, stat.state) + " - " + SCR_Enum.GetEnumName(SDRC_EMissionSuccess, stat.success), LogLevel.NORMAL);
+		}
+	}	
+	
+	//------------------------------------------------------------------------------------------------	
+	static void Add(string id, int requestId, SDRC_EMissionType type, SDRC_EMissionState state, SDRC_EMissionSuccess success)
 	{
 		ref SDRC_MissionStat stat = new SDRC_MissionStat();
-		stat.Set(id, requestId, state, success);
+		stat.Set(id, requestId, type, state, success);
 		m_MissionStatList.Insert(stat);		
 	}
 	
@@ -121,3 +133,15 @@ class SDRC_MissionStats
 	}
 	
 }
+
+//------------------------------------------------------------------------------------------------
+// Remote console 
+//------------------------------------------------------------------------------------------------
+
+/*
+SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+if (m_BaseGameMode)
+{
+	SDRC_MissionStats.Dump();
+}
+*/

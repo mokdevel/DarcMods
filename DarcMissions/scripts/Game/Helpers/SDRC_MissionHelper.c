@@ -8,7 +8,6 @@ Includes various functions for missions.
 //------------------------------------------------------------------------------------------------
 sealed class SDRC_MissionHelper
 {
-//	private const float DC_DEFAULT_SIZE = 5;					//Default size for a mission position
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 5;		//How many different spots to try for a mission before giving up
 	private const int DC_LOCATION_SEACRH_RADIUS_INC = 30;		//The increase of search radius for each failed iteration
 
@@ -69,15 +68,15 @@ sealed class SDRC_MissionHelper
 	Find a position near pos for a mission. "0 0 0" returned if nothing found.
 	\param pos Position to start to search for mission position
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
-	\param randomPos Position randomization. -1 uses the value set in missionFrame settings 
+	\param posRandomization Position randomization. 
 	*/	
-	static vector FindMissionPos(vector pos, float size, int randomPos = -1)
+	static vector FindMissionPos(vector pos, float size, int posRandomization = -1)
 	{	
 /*		if (size = 0)
 		{
 			size =  = DC_DEFAULT_SIZE;
 		}*/
-		pos = FindWithIterate(pos, size);
+		pos = FindWithIterate(pos, size, posRandomization);
 		
 		return pos;
 	}
@@ -87,14 +86,10 @@ sealed class SDRC_MissionHelper
 	Find a location where to spawn a mission. 
 	\param locationTypes Array of EMapDescriptorType to look for a place
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
+	\param posRandomization Position randomization to avoid the same spot every time. -1 uses the value set in missionFrame settings.
 	*/	
-	static vector FindMissionPos(array<EMapDescriptorType> locationTypes, float size, int randomPos = -1)
+	static vector FindMissionPos(array<EMapDescriptorType> locationTypes, float size, int posRandomization = -1)
 	{	
-/*		if (size = 0)
-		{
-			size =  = DC_DEFAULT_SIZE;
-		}*/
-		
 		//Find a random location
 		vector pos = "0 0 0";
 		
@@ -119,7 +114,7 @@ sealed class SDRC_MissionHelper
 			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);			
 		}
 
-		pos = FindWithIterate(pos, size, randomPos);
+		pos = FindWithIterate(pos, size, posRandomization);
 		
 		return pos;
 	}
@@ -130,29 +125,31 @@ sealed class SDRC_MissionHelper
 	\param pos Position to start to search for mission position
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
 	*/	
-	static vector FindWithIterate(vector pos, float size, int searchRadius = -1)
+	static vector FindWithIterate(vector pos, float size, int posRandomization = -1)
 	{
-/*		if (size = 0)
-		{
-			size =  = DC_DEFAULT_SIZE;
-		}*/
-		
 		bool positionFound = false;		
 		vector posOrig = pos;
+		int searchRadius = 0;
 		
-		if (searchRadius == -1)
+		//Define searchRadius
+		if (posRandomization == -1)
 		{
+			//Use the default missionRandomPos as a starting point
 			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+			posRandomization = baseGameMode.missionFrame.m_Config.missionRandomPos;
 			searchRadius = baseGameMode.missionFrame.m_Config.missionRandomPos;
 		}
 				
+		//Use the provided posRandomization as a starting point
+		searchRadius = posRandomization;
+		
 		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 		{
 			//Give the position some randomization so it's not always in the same spot.			
-			pos = SDRC_Misc.RandomizePos(posOrig, searchRadius);
+			pos = SDRC_Misc.RandomizePos(posOrig, posRandomization);
 			
-			//Find the position within searchRadius from pos.			
-			if (SDRC_SpawnHelper.FindEmptyPos(pos, searchRadius, size))
+			//Find the position within posRandomization from pos.			
+			if (SDRC_SpawnHelper.FindEmptyPos(pos, posRandomization, size))
 			{			
 				if (SDRC_MissionHelper.IsValidMissionPos(pos))
 				{				

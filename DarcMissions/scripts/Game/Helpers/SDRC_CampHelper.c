@@ -48,11 +48,11 @@ sealed class SDRC_CampHelper
 				mission.AddToEntityList(entity);
 				//Disable arsenal
 				string resourceName = camp.campItems[idx].GetResource();
-				SDRC_SpawnHelper.DisableVehicleArsenal(entity, resourceName, disableArsenal);				
+				SDRC_VehicleHelper.DisableVehicleArsenal(entity, resourceName, disableArsenal);				
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_campHelper:Spawn] Could not load: " + camp.campItems[idx], LogLevel.ERROR);				
+				SDRC_Log.Add("[SDRC_campHelper:Spawn] Could not load: " + camp.campItems[idx], LogLevel.ERROR);
 			}
 			
 			return false;
