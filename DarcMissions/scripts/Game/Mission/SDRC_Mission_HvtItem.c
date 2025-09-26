@@ -48,16 +48,6 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		//Find position
 		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtItem.general.pos, m_DC_HvtItem.general.emptySize, m_DC_HvtItem.locationTypes);
 		
-/*		//Find a location for the mission
-		if (pos == "0 0 0")
-		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_HvtItem.locationTypes, m_DC_HvtItem.general.emptySize);
-		}
-		else
-		{
-			pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_HvtItem.general.emptySize);
-		}*/
-		
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
@@ -248,6 +238,8 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void CreateMissionFiles()
 	{
+		SDRC_HvtItem_010_JsonApi hvtItem_010_JsonApi = new SDRC_HvtItem_010_JsonApi();		
+		hvtItem_010_JsonApi.Load();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -277,6 +269,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.missionList = {0,1,2};
+		conf.missionFiles.Insert("dc_missionConfig_HvtItem_010.json");		
 		//Mission specific
 		//----------------------------------------------------
 		conf.subMissions.Insert(HvtItem0());				
@@ -524,13 +517,6 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		);		
 		hvtItem.Set(
 			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_RIDGE,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_TOWN, 
-				EMapDescriptorType.MDT_NAME_HILL,
-				EMapDescriptorType.MDT_NAME_VALLEY,
-				EMapDescriptorType.MDT_AIRPORT,
 			},
 		);
 		hvtItem.targetIdx = 9;
@@ -704,5 +690,5 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		hvtItem.campItems.Insert(item_18);
 		
 		return hvtItem;
-	};		
+	};			
 }

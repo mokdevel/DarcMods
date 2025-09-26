@@ -1,3 +1,109 @@
+GenericEntity : "{05A379C7AF6B9F0E}PrefabLibrary/Props/Construction/ConcretePipe_01_Short_Pile.et" {
+ coords 236.217 1 83.768
+ angleY 68.186
+}
+GenericEntity : "{0B141EBFAA428804}PrefabLibrary/Props/Garbage/TrashBin_02/TrashBin_02_patched.et" {
+ coords 233.652 1 88.266
+ angleY 179.995
+}
+GenericEntity : "{1C550797FEBCB68F}PrefabLibrary/Props/Industrial/GasWelder_01.et" {
+ coords 239.7 1 90.486
+ angleY -30.634
+}
+SCR_DestructibleBuildingEntity : "{34B95ECB9BCFE6A5}PrefabLibrary/Props/Infrastructure/ElectricCabinet_01.et" {
+ coords 235.905 0 91.037
+ angleY -180
+}
+GenericEntity : "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et" {
+ coords 231.897 1 93.097
+ angleY 15.421
+}
 SCR_DestructibleBuildingEntity : "{4D100F180B3EFEC1}Prefabs/Structures/Industrial/Containers/Silos/Silo_01/Silo_01.et" {
  coords 236.7 0 92.825
+}
+GenericEntity : "{82666A967534A109}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Wall_USSR_01.et" {
+ coords 230.493 1 90.616
+ angleY -102.913
+}
+$grp GenericEntity : "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et" {
+ {
+  components {
+   Hierarchy "{5D70BA354E208E2C}" {
+    Enabled 1
+   }
+  }
+  coords 233.871 1 96.5
+ }
+ {
+  components {
+   Hierarchy "{5D70BA354E208E2C}" {
+    Enabled 1
+   }
+  }
+  coords 231.741 1 95.613
+  angleY -39.979
+ }
+ {
+  components {
+   Hierarchy "{5D70BA354E208E2C}" {
+    Enabled 1
+   }
+  }
+  coords 242.434 1 85.086
+  angleY -65.317
+ }
+ {
+  components {
+   Hierarchy "{5D70BA354E208E2C}" {
+    Enabled 1
+   }
+  }
+  coords 240.733 1 83.284
+  angleY -29.609
+ }
+}
+GenericEntity : "{AACF7C732B82F6B2}PrefabsEditable/Auto/Compositions/Misc/FreeRoamBuilding/E_SandbagWallBurlap_S_USSR_01.et" {
+ coords 241.156 1 95.904
+ angleY 47.28
+}
+GenericEntity : "{B292AEB29FA68532}PrefabLibrary/Props/Construction/MetalContainer_01.et" {
+ coords 241.622 1 90.374
+ angleY 23.296
+}
+GenericEntity : "{BBA9E7B2D06B7E3E}PrefabsEditable/Auto/Compositions/Misc/FreeRoamBuilding/E_SandbagWallSolidBurlap_S_USSR_01.et" {
+ coords 238.244 1 97.124
+ {
+  GenericEntity {
+   ID "5D70BA356CD2E641"
+   coords 0.605 0 -0.28
+  }
+ }
+}
+SCR_DestructibleBuildingEntity : "{CCB19FE7B8422989}PrefabLibrary/Structures/Ruins/HouseRuin_01_BrickPile_Big.et" {
+ coords 243.369 0 89.788
+ angleY 144.595
+ scale 0.9
+}
+GenericEntity : "{CD37561561F93B58}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Wall_Sign_USSR_01.et" {
+ coords 232.63 1 87.308
+ angleY -140.348
+ {
+  GenericEntity {
+   ID "5CB0D996E74F360C"
+   coords 1.113 0 0.034
+  }
+ }
+}
+GenericEntity : "{CD67070EFAFC28C7}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_burlap.et" {
+ components {
+  Hierarchy "{5D70E0D1B148AC0F}" {
+   Enabled 1
+  }
+ }
+ coords 230.637 1 93.455
+ angleY -79.273
+}
+GenericEntity : "{FEA6D4F59C34A6C4}PrefabLibrary/Props/Military/PalletFuel_01.et" {
+ coords 236.654 1 99.285
+ angleY 33.171
 }
