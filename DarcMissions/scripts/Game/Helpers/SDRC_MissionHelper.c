@@ -28,7 +28,9 @@ sealed class SDRC_MissionHelper
 		
 		if (pos == "0 0 0")
 		{		
-			if ( (locationTypes) && (locationTypes.Count() > 0) )
+			pos = SDRC_MissionHelper.FindMissionPos(locationTypes, emptySize);
+			
+/*			if ( (locationTypes) && (locationTypes.Count() > 0) )
 			{
 				pos = SDRC_MissionHelper.FindMissionPos(locationTypes, emptySize);
 			}
@@ -38,7 +40,7 @@ sealed class SDRC_MissionHelper
 				{
 					pos = SDRC_MissionHelper.FindMissionPos(pos, emptySize);
 				}
-			}
+			}*/
 		}
 				
 		return pos;
@@ -72,10 +74,6 @@ sealed class SDRC_MissionHelper
 	*/	
 	static vector FindMissionPos(vector pos, float size, int posRandomization = -1)
 	{	
-/*		if (size = 0)
-		{
-			size =  = DC_DEFAULT_SIZE;
-		}*/
 		pos = FindWithIterate(pos, size, posRandomization);
 		
 		return pos;

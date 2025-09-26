@@ -224,7 +224,7 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 		conf.activeDistance = 50;
 		conf.missionList = {0};
 		conf.missionFiles.Insert("dc_missionConfig_Stash_010.json");
-		conf.missionFiles.Insert("dc_missionConfig_Stash_01x.json");
+		conf.missionFiles.Insert("dc_missionConfig_Stash_01x.json");	//Just for testing that dummy files don't appear
 		//Mission specific		
 		//----------------------------------------------------
 		conf.subMissions.Insert(Stash0());				

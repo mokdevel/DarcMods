@@ -2,9 +2,6 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
-This mission spawns a stash for loot. This essentially the same as Occupation mission.if
-
-The usage for Stash mission is mainly as a story ending when using DarcStories.
 */
 
 //------------------------------------------------------------------------------------------------
@@ -15,7 +12,6 @@ class SDRC_Stash_010_JsonApi : SDRC_StashJsonApi
 	void SDRC_Stash_010_JsonApi(string fileName = "")
 	{		
 		SetFileName(DC_MISSIONCONFIG_FILE);
-		//SetDefaults();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -27,11 +23,11 @@ class SDRC_Stash_010_JsonApi : SDRC_StashJsonApi
 		conf.missionList = {10};
 		//Mission specific		
 		//----------------------------------------------------
-		conf.subMissions.Insert(Stash10());				
+		conf.subMissions.Insert(Stash010());				
 	};
 	
 	//----------------------------------------------------
-	SDRC_Camp Stash10()
+	SDRC_Camp Stash010()
 	{
 		ref SDRC_Camp stash = new SDRC_Camp();
 		stash.general.Set(
