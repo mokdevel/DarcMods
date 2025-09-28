@@ -404,7 +404,7 @@ sealed class SDRC_SpawnHelper
 		else
 		{
 			//SDRC_DebugHelper.AddDebugPos(pos, ARGB(20, 255, 0, 0), emptySize, "NONE", 15);	//RED
-			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.DEBUG);			
+			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.SPAM);			
 			return false;
 		}
 		return false;
