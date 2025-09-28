@@ -47,7 +47,7 @@ class SDRC_StoriesFrame
 		}
 		
 		m_Config = m_DC_StoriesFrameJsonApi.conf;
-		m_StoryIdx = 0;
+		m_StoryIdx = 2;
 		
 		//Fix seconds to ms
 		SDRC_Log.Add("[SDRC_StoriesFrame] Waiting for " + m_Config.storiesStartDelay + " seconds before starting stories.", LogLevel.NORMAL);
@@ -129,8 +129,6 @@ class SDRC_StoriesFrame
 	protected void StoriesDump()
 	{
 		int i = 0;
-		int aiCount = 0;
-		int cutLen = 32;
 		
 		if (m_StoriesRunning.Count() == 0)
 		{

@@ -101,7 +101,7 @@ class SDRC_StoriesFrameJsonApi : SDRC_JsonApi
 		conf.storyTimeBetween = SDRC_STORY_TIME_BETWEEN;
 		conf.storyCycleTime = SDRC_STORY_CYCLE_TIME;
 		conf.chapterTimeBetween = SDRC_CHAPTER_TIME_BETWEEN;
-		conf.storiesList = {"dc_storyConfig_00.json", "dc_storyConfig_01.json"};
+		conf.storiesList = {"dc_storyConfig_00.json", "dc_storyConfig_01.json", "dc_storyConfig_02.json"};
 		
 		#ifdef SDRC_RELEASE
 		#endif	
@@ -119,5 +119,8 @@ class SDRC_StoriesFrameJsonApi : SDRC_JsonApi
 		
 		SDRC_Story01_JsonApi story01_JsonApi = new SDRC_Story01_JsonApi();		
 		story01_JsonApi.Load();
-	}	
+
+		SDRC_Story02_JsonApi story02_JsonApi = new SDRC_Story02_JsonApi();		
+		story02_JsonApi.Load();
+	}			
 }
