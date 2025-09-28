@@ -38,17 +38,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Occupation.general, request);
 		
 		//Find the position
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Occupation.general.pos, m_DC_Occupation.general.emptySize, m_DC_Occupation.locationTypes);
-		
-/*		//Find a location for the mission
-		if (pos == "0 0 0")
-		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Occupation.locationTypes, m_DC_Occupation.general.emptySize);
-		}
-		else
-		{
-			pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_Occupation.general.emptySize);
-		}*/
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Occupation.general.pos, m_DC_Occupation.general.size, m_DC_Occupation.locationTypes);
 		
 		if (pos == "0 0 0")	//No suitable location found.
 		{				

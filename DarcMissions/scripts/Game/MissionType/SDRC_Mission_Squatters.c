@@ -40,16 +40,17 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		
 		//Set defaults
 		m_iAiCount = m_DC_Squatter.ai.GetCount(m_DC_Squatter.general.difficulty);
-		float radius = 10;					//Default size for the radius. Mainly for requested missions to find the nearest building.
+		float radius = 100;					//Default size for the radius. Mainly for requested missions to find the nearest building.
 		array<string>buildingFilter = {};
 		
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Squatter.general.pos);
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Squatter.general.pos, m_DC_Squatter.general.size, m_DC_Squatter.locationTypes);
 		
 		//Find a location for the mission
-		if (IsRequested() && pos != "0 0 0")
+		if (IsRequested())
 		{
 			//If the missions is requested with a position, any building near the location will be accepted.
 			buildingFilter.Insert("");
+			radius = 10;	//Try to find the nearest building.
 		}
 		else
 		{				
@@ -65,7 +66,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 				}
 				else
 				{
-					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Squatter.locationTypes, 2);
+					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Squatter.locationTypes, m_DC_Squatter.general.size, );
 				}
 			}
 		}
@@ -74,11 +75,12 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		m_Building = SDRC_MissionHelper.FindMissionBuilding(pos, buildingFilter, radius);
 		if (m_Building)
 		{
+			//SDRC_Misc.GetSimpleEntityName(m_Building.GetPrefabData().GetPrefabName())
 			pos = m_Building.GetOrigin();
 		}
 		else //No suitable location found.
 		{
-			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.SUITABLE_BUILDING_NOT_FOUND);
 			return;
 		}			
 		

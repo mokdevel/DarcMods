@@ -63,7 +63,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		
 		if (pos == "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.locationTypes, m_DC_Convoy.general.emptySize, randomPos);
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.locationTypes, m_DC_Convoy.general.size, randomPos);
 		}
 
 		//If failed, stop
@@ -191,7 +191,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	{					
 		//Spawn vehicle					
 		string resourceName	= m_DC_Convoy.vehicleTypes.GetRandomElement();
-		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Convoy.general.emptySize);
+		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Convoy.general.size);
 		
 		if (!m_Vehicle)
 		{
@@ -212,8 +212,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		int aiCount = m_DC_Convoy.ai.GetCount(m_DC_Convoy.general.difficulty);
 		vector posg = GetPos();
 		//Move the position slightly to avoid spawning under vehicle
-		posg[0] = posg[0] + m_DC_Convoy.general.emptySize;
-		posg[2] = posg[2] + m_DC_Convoy.general.emptySize;
+		posg[0] = posg[0] + m_DC_Convoy.general.size;
+		posg[2] = posg[2] + m_DC_Convoy.general.size;
 		
 		for (int i = 0; i < aiCount; i++)
 		{		

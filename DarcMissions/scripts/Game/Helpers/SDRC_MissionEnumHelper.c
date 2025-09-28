@@ -25,16 +25,6 @@ enum SDRC_EMissionType
 };
 
 //------------------------------------------------------------------------------------------------
-enum SDRC_EMissionFailReason
-{
-	NONE,
-	POS_IN_WATER,
-	PLAYER_TOO_CLOSE,
-	MISSION_TOO_CLOSE,
-	IN_NON_VALID_AREA
-};
-
-//------------------------------------------------------------------------------------------------
 enum SDRC_EMissionDifficulty
 {
 	EASY, 

@@ -46,7 +46,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		m_fSpawnRotation = Math.RandomFloat(0, 360);
 		
 		//Find position
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtItem.general.pos, m_DC_HvtItem.general.emptySize, m_DC_HvtItem.locationTypes);
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtItem.general.pos, m_DC_HvtItem.general.size, m_DC_HvtItem.locationTypes);
 		
 		if (pos == "0 0 0")	//No suitable location found.
 		{				

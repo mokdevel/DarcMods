@@ -48,7 +48,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Roadblock.general.pos);
 		if (pos == "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Roadblock.locationTypes, m_DC_Roadblock.general.emptySize, randomPos);
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Roadblock.locationTypes, m_DC_Roadblock.general.size, randomPos);
 		}
 		
 		//If we found a position, let's search more closely

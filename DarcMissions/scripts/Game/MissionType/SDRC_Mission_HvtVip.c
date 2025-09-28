@@ -47,7 +47,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		float radius = 100;					//Default size for the radius. 
 		array<string> buildingFilter = {};
 
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtVip.general.pos, m_DC_HvtVip.general.emptySize, m_DC_HvtVip.locationTypes);
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtVip.general.pos, m_DC_HvtVip.general.size, m_DC_HvtVip.locationTypes);
 						
 		//Find a location for the mission
 		if (IsRequested())
@@ -70,7 +70,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 				}
 				else
 				{
-					pos = SDRC_MissionHelper.FindMissionPos(m_DC_HvtVip.locationTypes, m_DC_HvtVip.general.emptySize);
+					pos = SDRC_MissionHelper.FindMissionPos(m_DC_HvtVip.locationTypes, m_DC_HvtVip.general.size);
 				}
 			}
 		}
@@ -83,7 +83,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		}
 		else //No suitable location found.
 		{
-			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.SUITABLE_BUILDING_NOT_FOUND);
 			return;
 		}			
 		
@@ -339,7 +339,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	{
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0};//{0,0,1,2,3,3};
+		conf.missionList = {0,0,1,2,3,3};
 		//Mission specific
 		conf.buildingRadius = 400;
 		//----------------------------------------------------

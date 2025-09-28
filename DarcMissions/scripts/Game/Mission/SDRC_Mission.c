@@ -45,6 +45,13 @@ enum SDRC_EMissionError
 	ROAD_FOR_START_NOT_FOUND,
 	COULD_NOT_SPAWN_VEHICLE,
 	ROUTE_NOT_FOUND,
+	SUITABLE_BUILDING_NOT_FOUND,
+
+	//Mainly from checking if position is suitable for mission	
+	POSITION_IN_WATER,
+	PLAYER_TOO_CLOSE,
+	MISSION_TOO_CLOSE,
+	IN_NON_VALID_AREA	
 }
 
 const string SDRC_DEFAULT = "default";
@@ -70,7 +77,7 @@ class SDRC_MissionConfigGeneral : Managed
 	int subIdx;								//Unique index for the sub mission. 
 	string comment;							//Generic comment to describe the mission. Not used in game.
 	ref array<vector> pos = {};				//Positions for mission. "0 0 0" used for random location chosen from locationTypes. First is mission position, second is destination for missions that need it.
-	float emptySize;						//The size (radius) of the empty space needed to decide on a mission position.
+	float size;								//The size (radius) of the empty space needed to decide on a mission position.
 	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
@@ -91,7 +98,7 @@ class SDRC_MissionConfigGeneral : Managed
 	
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults(int subIdx_ = -1, string comment_ = SDRC_DEFAULT, 
-					 vector pos_ = "0 0 0", float emptySize_ = 5,
+					 vector pos_ = "0 0 0", float size_ = 5,
 					 string posName_ = SDRC_DEFAULT, string title_ = SDRC_DEFAULT, string info_ = SDRC_DEFAULT, 
 					 SDRC_EMissionWinCondition winCondition_ = SDRC_EMissionWinCondition.DEFAULT, 
 					 string winMessage_ = SDRC_DEFAULT, string loseMessage_ = SDRC_DEFAULT, 
@@ -101,16 +108,16 @@ class SDRC_MissionConfigGeneral : Managed
 					 int xp_ = 0)
 	{
 		array<vector> pos_array = {pos_, "0 0 0"};
-		Set(subIdx_, comment_, pos_array, emptySize_, posName_, title_, info_, winCondition_, winMessage_, loseMessage_, faction_, markerType_, markerIcon_, difficulty_, xp_);
+		Set(subIdx_, comment_, pos_array, size_, posName_, title_, info_, winCondition_, winMessage_, loseMessage_, faction_, markerType_, markerIcon_, difficulty_, xp_);
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void Set(int subIdx_, string comment_, array<vector> pos_, float emptySize_, string posName_, string title_, string info_, SDRC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, string markerType_, int markerIcon_, SDRC_EMissionDifficulty difficulty_, int xp_)
+	void Set(int subIdx_, string comment_, array<vector> pos_, float size_, string posName_, string title_, string info_, SDRC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, string markerType_, int markerIcon_, SDRC_EMissionDifficulty difficulty_, int xp_)
 	{
 		subIdx = subIdx_;
 		comment = comment_;
 		pos = pos_;
-		emptySize = emptySize_;
+		size = size_;
 		posName = posName_;
 		title = title_;
 		info = info_;

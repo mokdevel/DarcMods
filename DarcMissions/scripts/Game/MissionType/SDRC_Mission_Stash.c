@@ -43,7 +43,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 		m_fSpawnRotation = Math.RandomFloat(0, 360);
 		
 		//Find the position
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Stash.general.pos, m_DC_Stash.general.emptySize, m_DC_Stash.locationTypes);
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Stash.general.pos, m_DC_Stash.general.size, m_DC_Stash.locationTypes);
 		
 /*		//Find a location for the mission
 		if (pos == "0 0 0")

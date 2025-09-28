@@ -7,6 +7,7 @@
 	#ifdef SDRC_RELEASE
 		private const float SDRC_MISSION_DIFFICULTY_COEF_MUL = 1.0;						//Difficulty multiplier
 		private const int SDRC_MISSION_MIN_DISTANCE = 500;
+		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 10;								//Default amount of dynamic missions to run
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 1.5;
 		private const int SDRC_MISSION_COUNT_STATIC = 6;								//Default amount of static missions to run
@@ -17,13 +18,12 @@
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 5;				//Minimum delay between static missions. 
 		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 30*60;						//Time to keep the mission active (seconds)
 		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 60*60*10; //10hrs			//Static missions are to be kept alive longer
-		private const int SDRC_MISSION_ACTIVE_DISTANCE = 200;							//Mission is to be removed if no players close to the position after the mission active time has passed.
+		private const int SDRC_MISSION_ACTIVE_DISTANCE = 150;							//Mission is to be removed if no players close to the position after the mission active time has passed.
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 180;						//Mission is kept active this time once all AIs are dead.
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME = 30;							//The cycle to run the mission frame. 
-		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 20;						//You should not be running the frame too often as it's unncecessary
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = true;						//Force recreaction of config files. 
-		private const int SDRC_MISSION_HINT_TIME = 60;									//Seconds to show the mission hint to players
-		private const int SDRC_MISSION_RANDOM_POS = 30;									//The randomization for search radius for mission position 
+		private const int SDRC_MISSION_HINT_TIME = 90;									//Seconds to show the mission hint to players
+		private const int SDRC_MISSION_RANDOM_POS = 100;								//The randomization for search radius for mission position 
 		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;						//Show/hide static mission markers
 	#endif
 	
@@ -31,23 +31,23 @@
 	#ifndef SDRC_RELEASE
 		private const float SDRC_MISSION_DIFFICULTY_COEF_MUL = 2.0;						//Difficulty multiplier
 		private const int SDRC_MISSION_MIN_DISTANCE = 200;		
+		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 3;//15;//5;//3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 0;//15;//5;//3;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 1;//10;//1*20;
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 1;
-		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 13*60;				
+		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 5*60;				
 		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = SDRC_MISSION_ACTIVE_TIME_DYNAMIC * 10;	
-		private const int SDRC_MISSION_ACTIVE_DISTANCE = 200;		
+		private const int SDRC_MISSION_ACTIVE_DISTANCE = 150;
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 45;
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME = 10;//20;
-		private const int SDRC_MISSIONFRAME_CYCLE_TIME_LIMIT = 10;
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = true;
-		private const int SDRC_MISSION_HINT_TIME = 60;
-		private const int SDRC_MISSION_RANDOM_POS = 30;
+		private const int SDRC_MISSION_HINT_TIME = 90;
+		private const int SDRC_MISSION_RANDOM_POS = 100;
 		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;
 	#endif
 
@@ -167,7 +167,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.missionRandomPos = SDRC_MISSION_RANDOM_POS;
 		
 		conf.minDistanceToMission = SDRC_MISSION_MIN_DISTANCE;
-		conf.minDistanceToPlayer = 100;
+		conf.minDistanceToPlayer = SDRC_PLAYER_MIN_DISTANCE;
 		conf.showStaticMissionMarker = SDRC_MISSION_SHOW_STATIC_MARKER;
 		
 		#ifdef SDRC_RELEASE
@@ -209,7 +209,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
-			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
+//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
@@ -219,7 +219,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL, SDRC_EMissionType.PATROL, SDRC_EMissionType.PATROL, SDRC_EMissionType.CONVOY, SDRC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.PATROL, SDRC_EMissionType.HVTVIP};
 //			conf.missionStatic.missionTypeArray = {};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.CONVOY, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.STASH};		
+			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};		
 		
 		#endif
 	}
