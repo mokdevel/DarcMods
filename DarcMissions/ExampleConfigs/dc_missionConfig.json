@@ -2,59 +2,76 @@
 	"version": 1,
 	"author": "darc",
 	"comment": "Simple comment, not used in game",
+	"difficultyAiCountCoefMul": 2.0,
+	"difficultyAiSkillCoefMul": 2.0,
+	"difficultyAiPerceptionCoefMul": 2.0,
 	"recreateConfigs": false,
-	"missionStartDelay": 60,
-	"missionFrameCycleTime": 30,
-	"missionActiveDistance": 200,
-	"missionActiveTimeToEnd": 180,
-	"missionHintTime": 30,
-	"minDistanceToMission": 500,
+	"missionStartDelay": 2,
+	"missionFrameCycleTime": 10,
+	"missionActiveDistance": 150,
+	"missionActiveTimeToEnd": 45,
+	"missionHintTime": 90,
+	"missionRandomPos": 100,
+	"minDistanceToMission": 200,
 	"minDistanceToPlayer": 100,
 	"showStaticMissionMarker": true,
 	"enemyFactions": [
 		"USSR"
 	],
+	"missionDifficulty": {
+		"aiCountCoef": [
+			0.5,
+			0.6000000238418579,
+			1.0,
+			2.0,
+			3.0
+		],
+		"aiSkillCoef": [
+			0.20000000298023225,
+			0.6000000238418579,
+			1.0,
+			1.2999999523162842,
+			1.600000023841858
+		],
+		"aiPerceptionCoef": [
+			0.20000000298023225,
+			0.6000000238418579,
+			1.0,
+			1.2999999523162842,
+			1.600000023841858
+		]
+	},
 	"missionDynamic": {
-		"count": 10,
-		"countMul": 1.5,
-		"activeTime": 900,
-		"delayBetween": 240,
+		"count": 0,
+		"countMul": 2.0,
+		"activeTime": 300,
+		"delayBetween": 1,
 		"missionTypeArray": [
 			1,
 			4,
+			2,
 			3,
-			7,
-			7,
+			5,
+			6,
 			8,
-			8,
-			9,
-			9,
-			6,
-			6,
-			6,
-			6,
-			2,
-			2,
-			2,
-			2,
-			2,
-			2,
-			2,
-			2
+			9
 		]
 	},
 	"missionStatic": {
-		"count": 6,
-		"countMul": 1.0,
-		"activeTime": 36000,
-		"delayBetween": 5,
+		"count": 0,
+		"countMul": 3.0,
+		"activeTime": 3000,
+		"delayBetween": 1,
 		"missionTypeArray": [
-			5,
-			5,
-			5,
 			3,
-			3,
-			7
+			4,
+			1,
+			9,
+			8,
+			2,
+			5,
+			6,
+			10
 		]
 	}
 }

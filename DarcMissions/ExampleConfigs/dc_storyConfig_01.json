@@ -1,0 +1,361 @@
+{
+	"id": 1,
+	"chapterId": 1,
+	"comment": "Story 01",
+	"title": "Takedown",
+	"dependencies": [],
+	"chapters": [
+		{
+			"id": 1,
+			"nextChapter": [
+				2,
+				3
+			],
+			"missionType": 2,
+			"subIdx": 3,
+			"activeTime": 240,
+			"title": "",
+			"text": "",
+			"textWin": "",
+			"textLose": "",
+			"general": {
+				"subIdx": -1,
+				"comment": "Chapter 1",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 5.0,
+				"posName": "default",
+				"title": "Chapter 1",
+				"info": "See map for more information",
+				"winCondition": -1,
+				"winMessage": "See map for more information",
+				"loseMessage": "See map for more information",
+				"faction": "default",
+				"markerType": "default",
+				"markerIcon": -1,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"success": 0,
+			"chapterEndTime": 0
+		},
+		{
+			"id": 2,
+			"nextChapter": [
+				5,
+				-1
+			],
+			"missionType": 7,
+			"subIdx": 1,
+			"activeTime": 240,
+			"title": "",
+			"text": "",
+			"textWin": "",
+			"textLose": "",
+			"general": {
+				"subIdx": -1,
+				"comment": "Chapter 2",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 5.0,
+				"posName": "default",
+				"title": "Chapter 2",
+				"info": "See map for more information",
+				"winCondition": -1,
+				"winMessage": "See map for more information",
+				"loseMessage": "See map for more information",
+				"faction": "default",
+				"markerType": "default",
+				"markerIcon": -1,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"success": 0,
+			"chapterEndTime": 0
+		},
+		{
+			"id": 3,
+			"nextChapter": [
+				4,
+				-1
+			],
+			"missionType": 8,
+			"subIdx": 3,
+			"activeTime": 240,
+			"title": "",
+			"text": "",
+			"textWin": "",
+			"textLose": "",
+			"general": {
+				"subIdx": -1,
+				"comment": "Chapter 3",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 5.0,
+				"posName": "default",
+				"title": "Chapter 3",
+				"info": "See map for more information",
+				"winCondition": -1,
+				"winMessage": "See map for more information",
+				"loseMessage": "See map for more information",
+				"faction": "default",
+				"markerType": "default",
+				"markerIcon": -1,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"success": 0,
+			"chapterEndTime": 0
+		},
+		{
+			"id": 4,
+			"nextChapter": [
+				6,
+				5
+			],
+			"missionType": 8,
+			"subIdx": 3,
+			"activeTime": 240,
+			"title": "",
+			"text": "",
+			"textWin": "",
+			"textLose": "",
+			"general": {
+				"subIdx": -1,
+				"comment": "Chapter 4",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 5.0,
+				"posName": "default",
+				"title": "Chapter 4",
+				"info": "See map for more information",
+				"winCondition": -1,
+				"winMessage": "See map for more information",
+				"loseMessage": "See map for more information",
+				"faction": "default",
+				"markerType": "default",
+				"markerIcon": -1,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"success": 0,
+			"chapterEndTime": 0
+		},
+		{
+			"id": 5,
+			"nextChapter": [
+				7,
+				-1
+			],
+			"missionType": 8,
+			"subIdx": 3,
+			"activeTime": 240,
+			"title": "",
+			"text": "",
+			"textWin": "",
+			"textLose": "",
+			"general": {
+				"subIdx": -1,
+				"comment": "Chapter 5",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 5.0,
+				"posName": "default",
+				"title": "Chapter 5",
+				"info": "See map for more information",
+				"winCondition": -1,
+				"winMessage": "See map for more information",
+				"loseMessage": "See map for more information",
+				"faction": "default",
+				"markerType": "default",
+				"markerIcon": -1,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"success": 0,
+			"chapterEndTime": 0
+		},
+		{
+			"id": 6,
+			"nextChapter": [
+				7,
+				-1
+			],
+			"missionType": 8,
+			"subIdx": 3,
+			"activeTime": 240,
+			"title": "",
+			"text": "",
+			"textWin": "",
+			"textLose": "",
+			"general": {
+				"subIdx": -1,
+				"comment": "Chapter 6",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 5.0,
+				"posName": "default",
+				"title": "Chapter 6",
+				"info": "See map for more information",
+				"winCondition": -1,
+				"winMessage": "See map for more information",
+				"loseMessage": "See map for more information",
+				"faction": "default",
+				"markerType": "default",
+				"markerIcon": -1,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"success": 0,
+			"chapterEndTime": 0
+		},
+		{
+			"id": 7,
+			"nextChapter": [
+				8,
+				-1
+			],
+			"missionType": 8,
+			"subIdx": 3,
+			"activeTime": 240,
+			"title": "",
+			"text": "",
+			"textWin": "",
+			"textLose": "",
+			"general": {
+				"subIdx": -1,
+				"comment": "Chapter 7",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 5.0,
+				"posName": "default",
+				"title": "Chapter 7",
+				"info": "See map for more information",
+				"winCondition": -1,
+				"winMessage": "See map for more information",
+				"loseMessage": "See map for more information",
+				"faction": "default",
+				"markerType": "default",
+				"markerIcon": -1,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"success": 0,
+			"chapterEndTime": 0
+		},
+		{
+			"id": 8,
+			"nextChapter": [
+				-2,
+				-1
+			],
+			"missionType": 10,
+			"subIdx": 3,
+			"activeTime": 240,
+			"title": "Epilogue: Loot",
+			"text": "Yeah, there is loot.",
+			"textWin": "Loot was collected.",
+			"textLose": "Loot was not collected",
+			"general": {
+				"subIdx": -1,
+				"comment": "Epilogue",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 5.0,
+				"posName": "default",
+				"title": "Epilogue: Loot",
+				"info": "See map for more information",
+				"winCondition": -1,
+				"winMessage": "See map for more information",
+				"loseMessage": "See map for more information",
+				"faction": "default",
+				"markerType": "default",
+				"markerIcon": -1,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"success": 0,
+			"chapterEndTime": 0
+		}
+	]
+}

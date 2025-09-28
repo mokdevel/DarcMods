@@ -1,14 +1,12 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 30,
-	"markerType": "DARC_MISSION",
-	"markerIdx": 1,
+	"missionCycleTime": 20,
 	"showMarker": true,
 	"showHint": true,
 	"showMessage": true,
-	"buildingRadius": 400,
-	"squatterList": [
+	"disableArsenal": false,
+	"missionList": [
 		0,
 		1,
 		2,
@@ -21,9 +19,12 @@
 		5,
 		5
 	],
-	"squatters": [
+	"missionFiles": [],
+	"buildingRadius": 400,
+	"subMissions": [
 		{
 			"general": {
+				"subIdx": 0,
 				"comment": "index 0: Squatters in cities",
 				"pos": [
 					[
@@ -32,13 +33,40 @@
 						0.0
 					]
 				],
+				"size": 0.0,
 				"posName": "any",
 				"title": "Squatters near %l.",
 				"info": "Building has squatters with loot",
 				"winCondition": 2,
 				"winMessage": "The loot has been secured.",
 				"loseMessage": "Squatters cleaned the house and left you nothing.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 1,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					3,
+					6
+				],
+				"types": [
+					"C_RIFLEMAN",
+					"C_RIFLEMAN",
+					"C_RIFLEMAN",
+					"C_RIFLEMAN",
+					"C_RIFLEMAN",
+					"C_OFFICER"
+				],
+				"skill": 50,
+				"perception": 0.6000000238418579,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 0,
+				"waypointMoveType": 0
 			},
 			"locationTypes": [
 				59,
@@ -50,20 +78,6 @@
 				61,
 				81
 			],
-			"aiCount": [
-				3,
-				6
-			],
-			"aiTypes": [
-				"C_RIFLEMAN",
-				"C_RIFLEMAN",
-				"C_RIFLEMAN",
-				"C_RIFLEMAN",
-				"C_RIFLEMAN",
-				"C_OFFICER"
-			],
-			"aiSkill": 50,
-			"aiPerception": 0.6000000238418579,
 			"buildingNames": [
 				"ShopModern_",
 				"Villa_",
@@ -98,6 +112,7 @@
 		},
 		{
 			"general": {
+				"subIdx": 1,
 				"comment": "index 1: Squatters in control towers",
 				"pos": [
 					[
@@ -106,33 +121,46 @@
 						0.0
 					]
 				],
+				"size": 0.0,
 				"posName": "any",
 				"title": "Enemy in %l",
 				"info": "Control tower is being guarded.",
 				"winCondition": 2,
 				"winMessage": "You did it! Control in %l has been restored.",
 				"loseMessage": "Control in %l has been lost.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 1,
+				"difficulty": 2,
 				"xp": 0
 			},
+			"ai": {
+				"count": [
+					6,
+					10
+				],
+				"types": [
+					"C_RIFLEMAN",
+					"C_RIFLEMAN",
+					"C_RIFLEMAN",
+					"C_RIFLEMAN",
+					"C_RIFLEMAN",
+					"C_HEAVY",
+					"C_HEAVY",
+					"C_LAUNCHER",
+					"C_MEDIC",
+					"C_OFFICER"
+				],
+				"skill": 50,
+				"perception": 0.800000011920929,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 0,
+				"waypointMoveType": 0
+			},
 			"locationTypes": [],
-			"aiCount": [
-				6,
-				10
-			],
-			"aiTypes": [
-				"C_RIFLEMAN",
-				"C_RIFLEMAN",
-				"C_RIFLEMAN",
-				"C_RIFLEMAN",
-				"C_RIFLEMAN",
-				"C_HEAVY",
-				"C_HEAVY",
-				"C_LAUNCHER",
-				"C_MEDIC",
-				"C_OFFICER"
-			],
-			"aiSkill": 50,
-			"aiPerception": 0.800000011920929,
 			"buildingNames": [
 				"ControlTowerMilitary_"
 			],
@@ -144,13 +172,15 @@
 					"WEAPON_RIFLE",
 					"WEAPON_RIFLE",
 					"WEAPON_RIFLE",
+					"WEAPON_RIFLE_BIG",
+					"WEAPON_RIFLE_BIG",
 					"WEAPON_HANDGUN",
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"UTIL_ATTACHMENT",
-					"UTIL_OPTICS",
-					"UTIL_OPTICS",
+					"UTIL_OPTIC",
+					"UTIL_OPTIC",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
@@ -162,6 +192,7 @@
 		},
 		{
 			"general": {
+				"subIdx": 2,
 				"comment": "index 2: Squatters in military locations",
 				"pos": [
 					[
@@ -170,32 +201,45 @@
 						0.0
 					]
 				],
+				"size": 0.0,
 				"posName": "any",
 				"title": "Guards around %l",
 				"info": "Military location has loot to steal.",
 				"winCondition": 1,
 				"winMessage": "Guards have been eliminated.",
 				"loseMessage": "Military has collected the loot and left.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 1,
+				"difficulty": 2,
 				"xp": 0
 			},
+			"ai": {
+				"count": [
+					4,
+					10
+				],
+				"types": [
+					"C_RIFLEMAN",
+					"C_RIFLEMAN",
+					"C_RIFLEMAN",
+					"C_HEAVY",
+					"C_HEAVY",
+					"C_HEAVY",
+					"C_LAUNCHER",
+					"C_MEDIC",
+					"C_OFFICER"
+				],
+				"skill": 50,
+				"perception": 0.800000011920929,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 0,
+				"waypointMoveType": 0
+			},
 			"locationTypes": [],
-			"aiCount": [
-				4,
-				10
-			],
-			"aiTypes": [
-				"C_RIFLEMAN",
-				"C_RIFLEMAN",
-				"C_RIFLEMAN",
-				"C_HEAVY",
-				"C_HEAVY",
-				"C_HEAVY",
-				"C_LAUNCHER",
-				"C_MEDIC",
-				"C_OFFICER"
-			],
-			"aiSkill": 50,
-			"aiPerception": 0.800000011920929,
 			"buildingNames": [
 				"Office_E_",
 				"Barracks_01_",
@@ -214,8 +258,8 @@
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"UTIL_ATTACHMENT",
-					"UTIL_OPTICS",
-					"UTIL_OPTICS",
+					"UTIL_OPTIC",
+					"UTIL_OPTIC",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
@@ -227,6 +271,7 @@
 		},
 		{
 			"general": {
+				"subIdx": 3,
 				"comment": "index 3: Military in industrial areas",
 				"pos": [
 					[
@@ -235,33 +280,46 @@
 						0.0
 					]
 				],
+				"size": 0.0,
 				"posName": "any",
 				"title": "Industrial area near %l",
 				"info": "Military has seized control of an industrial area. Don't shoot the civilians.",
 				"winCondition": 3,
 				"winMessage": "Main enemy forces have been destroyed. Continue to keep an eye for rogues.",
 				"loseMessage": "%l is in the hands of the enemy.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 1,
+				"difficulty": 2,
 				"xp": 0
 			},
+			"ai": {
+				"count": [
+					2,
+					6
+				],
+				"types": [
+					"C_RIFLEMAN",
+					"C_RIFLEMAN",
+					"C_RIFLEMAN",
+					"C_HEAVY",
+					"C_HEAVY",
+					"C_HEAVY",
+					"C_RECON",
+					"C_RECON",
+					"C_RECON",
+					"C_OFFICER"
+				],
+				"skill": 50,
+				"perception": 0.800000011920929,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 0,
+				"waypointMoveType": 0
+			},
 			"locationTypes": [],
-			"aiCount": [
-				2,
-				6
-			],
-			"aiTypes": [
-				"C_RIFLEMAN",
-				"C_RIFLEMAN",
-				"C_RIFLEMAN",
-				"C_HEAVY",
-				"C_HEAVY",
-				"C_HEAVY",
-				"C_RECON",
-				"C_RECON",
-				"C_RECON",
-				"C_OFFICER"
-			],
-			"aiSkill": 50,
-			"aiPerception": 0.800000011920929,
 			"buildingNames": [
 				"DieselPowerPlant_",
 				"CowShed_",
@@ -291,6 +349,7 @@
 		},
 		{
 			"general": {
+				"subIdx": 4,
 				"comment": "index 4: Enemy in churches and similar",
 				"pos": [
 					[
@@ -299,24 +358,37 @@
 						0.0
 					]
 				],
+				"size": 0.0,
 				"posName": "any",
 				"title": "Sanctuary visitors near %l",
 				"info": "Holy night, holy loot.",
 				"winCondition": 4,
 				"winMessage": "Your success will be remembered.",
 				"loseMessage": "Your effort has been struck down.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 1,
+				"difficulty": 2,
 				"xp": 0
 			},
+			"ai": {
+				"count": [
+					3,
+					7
+				],
+				"types": [
+					"C_RIFLEMAN"
+				],
+				"skill": 50,
+				"perception": 0.800000011920929,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 0,
+				"waypointMoveType": 0
+			},
 			"locationTypes": [],
-			"aiCount": [
-				3,
-				7
-			],
-			"aiTypes": [
-				"C_RIFLEMAN"
-			],
-			"aiSkill": 50,
-			"aiPerception": 0.800000011920929,
 			"buildingNames": [
 				"Church_",
 				"ChurchSmall_",
@@ -331,7 +403,7 @@
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
-					"UTIL_OPTICS",
+					"UTIL_OPTIC",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
@@ -346,6 +418,7 @@
 		},
 		{
 			"general": {
+				"subIdx": 5,
 				"comment": "index 5: Shops and houses",
 				"pos": [
 					[
@@ -354,24 +427,37 @@
 						0.0
 					]
 				],
+				"size": 0.0,
 				"posName": "any",
 				"title": "Burglars seen near %l",
 				"info": "Go rob the robbers.",
 				"winCondition": 3,
 				"winMessage": "%l is open for business once again.",
 				"loseMessage": "Everything has been stolen.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 1,
+				"difficulty": 2,
 				"xp": 0
 			},
+			"ai": {
+				"count": [
+					2,
+					6
+				],
+				"types": [
+					"C_SPECIAL"
+				],
+				"skill": 30,
+				"perception": 0.30000001192092898,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 0,
+				"waypointMoveType": 0
+			},
 			"locationTypes": [],
-			"aiCount": [
-				2,
-				6
-			],
-			"aiTypes": [
-				"C_SPECIAL"
-			],
-			"aiSkill": 30,
-			"aiPerception": 0.30000001192092898,
 			"buildingNames": [
 				"ShopModern_",
 				"House_Town_",

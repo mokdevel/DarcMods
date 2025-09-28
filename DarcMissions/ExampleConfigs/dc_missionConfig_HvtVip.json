@@ -1,14 +1,12 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 30,
-	"markerType": "DARC_MISSION",
-	"markerIdx": 10,
+	"missionCycleTime": 20,
 	"showMarker": true,
 	"showHint": true,
 	"showMessage": true,
-	"buildingRadius": 400,
-	"hvtVipList": [
+	"disableArsenal": false,
+	"missionList": [
 		0,
 		0,
 		1,
@@ -16,9 +14,12 @@
 		3,
 		3
 	],
-	"hvtVips": [
+	"missionFiles": [],
+	"buildingRadius": 400,
+	"subMissions": [
 		{
 			"general": {
+				"subIdx": 0,
 				"comment": "index 0: HvtVips in cities",
 				"pos": [
 					[
@@ -27,13 +28,36 @@
 						0.0
 					]
 				],
+				"size": 0.0,
 				"posName": "any",
 				"title": "Target near %l.",
 				"info": "Assassinate the target",
 				"winCondition": 10,
 				"winMessage": "The target has been neutralized.",
 				"loseMessage": "The target escaped.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 10,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					2
+				],
+				"types": [
+					"G_LIGHT",
+					"G_RECON"
+				],
+				"skill": 50,
+				"perception": 0.6000000238418579,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 0,
+				"waypointMoveType": 0
 			},
 			"locationTypes": [
 				59,
@@ -45,16 +69,6 @@
 				61,
 				81
 			],
-			"groupCount": [
-				1,
-				2
-			],
-			"groupTypes": [
-				"G_LIGHT",
-				"G_RECON"
-			],
-			"aiSkill": 50,
-			"aiPerception": 0.6000000238418579,
 			"buildingNames": [
 				"ShopModern_",
 				"Villa_",
@@ -90,6 +104,7 @@
 		},
 		{
 			"general": {
+				"subIdx": 1,
 				"comment": "index 1: HvtVips in control towers",
 				"pos": [
 					[
@@ -98,24 +113,37 @@
 						0.0
 					]
 				],
+				"size": 0.0,
 				"posName": "any",
 				"title": "Flight controller near %l.",
 				"info": "Assassinate the target",
 				"winCondition": 10,
 				"winMessage": "The target has been neutralized.",
 				"loseMessage": "The target escaped.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 10,
+				"difficulty": 2,
 				"xp": 0
 			},
+			"ai": {
+				"count": [
+					1,
+					3
+				],
+				"types": [
+					"G_LIGHT"
+				],
+				"skill": 50,
+				"perception": 0.6000000238418579,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 0,
+				"waypointMoveType": 0
+			},
 			"locationTypes": [],
-			"groupCount": [
-				1,
-				2
-			],
-			"groupTypes": [
-				"G_LIGHT"
-			],
-			"aiSkill": 50,
-			"aiPerception": 0.6000000238418579,
 			"buildingNames": [
 				"ControlTowerMilitary_"
 			],
@@ -131,10 +159,10 @@
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"UTIL_ATTACHMENT",
-					"UTIL_OPTICS",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES",
+					"UTIL_OPTIC",
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
@@ -147,6 +175,7 @@
 		},
 		{
 			"general": {
+				"subIdx": 2,
 				"comment": "index 2: Businessman with bad business",
 				"pos": [
 					[
@@ -155,24 +184,37 @@
 						0.0
 					]
 				],
+				"size": 0.0,
 				"posName": "any",
 				"title": "%l is bad for business",
 				"info": "Assassinate the business man conducting bad business.",
 				"winCondition": 10,
 				"winMessage": "The target has been neutralized.",
 				"loseMessage": "The target escaped.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 10,
+				"difficulty": 2,
 				"xp": 0
 			},
+			"ai": {
+				"count": [
+					1,
+					2
+				],
+				"types": [
+					"G_HEAVY"
+				],
+				"skill": 50,
+				"perception": 0.6000000238418579,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 0,
+				"waypointMoveType": 0
+			},
 			"locationTypes": [],
-			"groupCount": [
-				1,
-				1
-			],
-			"groupTypes": [
-				"G_HEAVY"
-			],
-			"aiSkill": 50,
-			"aiPerception": 0.6000000238418579,
 			"buildingNames": [
 				"Office_E_",
 				"Barracks_01_",
@@ -191,10 +233,10 @@
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"UTIL_ATTACHMENT",
-					"UTIL_OPTICS",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES",
+					"UTIL_OPTIC",
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
@@ -207,7 +249,8 @@
 		},
 		{
 			"general": {
-				"comment": "index 3: Businessman in countryside",
+				"subIdx": 3,
+				"comment": "index 3: Criminal in countryside",
 				"pos": [
 					[
 						0.0,
@@ -215,24 +258,37 @@
 						0.0
 					]
 				],
+				"size": 0.0,
 				"posName": "any",
 				"title": "Criminal hiding in %l",
 				"info": "Assassinate the criminal boss. He tries to keep low profile.",
 				"winCondition": 10,
 				"winMessage": "The criminal got what he deserved.",
 				"loseMessage": "The judgement day is posponed.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 10,
+				"difficulty": 2,
 				"xp": 0
 			},
+			"ai": {
+				"count": [
+					1,
+					1
+				],
+				"types": [
+					"G_LIGHT"
+				],
+				"skill": 50,
+				"perception": 0.6000000238418579,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 0,
+				"waypointMoveType": 0
+			},
 			"locationTypes": [],
-			"groupCount": [
-				1,
-				1
-			],
-			"groupTypes": [
-				"G_LIGHT"
-			],
-			"aiSkill": 50,
-			"aiPerception": 0.6000000238418579,
 			"buildingNames": [
 				"House_"
 			],
@@ -246,9 +302,9 @@
 					"WEAPON_HANDGUN",
 					"WEAPON_GRENADE",
 					"UTIL_ATTACHMENT",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES",
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",

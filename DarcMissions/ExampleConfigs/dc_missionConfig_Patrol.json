@@ -1,15 +1,12 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 90,
-	"markerType": "DARC_MISSION",
-	"markerIdx": 7,
+	"missionCycleTime": 60,
 	"showMarker": false,
 	"showHint": true,
 	"showMessage": true,
-	"patrolingTime": 0,
-	"distanceToPlayer": 500,
-	"patrolList": [
+	"disableArsenal": false,
+	"missionList": [
 		0,
 		0,
 		0,
@@ -17,9 +14,13 @@
 		2,
 		3
 	],
-	"patrols": [
+	"missionFiles": [],
+	"patrolingTime": 0,
+	"distanceToPlayer": 500,
+	"subMissions": [
 		{
 			"general": {
+				"subIdx": 0,
 				"comment": "index 0: Enemy patrols going between two points hopefully following roads",
 				"pos": [
 					[
@@ -33,13 +34,35 @@
 						0.0
 					]
 				],
+				"size": 2.0,
 				"posName": "any",
 				"title": "Patrol spotted near %l",
 				"info": "Intel tells them to travel to %d. Be careful while traveling on roads.",
 				"winCondition": 1,
 				"winMessage": "Patrol near %l is no more.",
 				"loseMessage": "Patroling completed, the world is saved.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 7,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					1
+				],
+				"types": [
+					"G_SPECIAL"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 4,
+				"waypointMoveType": 2
 			},
 			"locationTypes": [
 				59,
@@ -50,25 +73,11 @@
 				71,
 				64,
 				70
-			],
-			"groupCount": [
-				1,
-				1
-			],
-			"waypointRange": [
-				0,
-				0
-			],
-			"waypointGenType": 4,
-			"waypointMoveType": 2,
-			"groupTypes": [
-				"G_SPECIAL"
-			],
-			"aiSkill": 50,
-			"aiPerception": 1.0
+			]
 		},
 		{
 			"general": {
+				"subIdx": 1,
 				"comment": "index 1: Heavy patrol",
 				"pos": [
 					[
@@ -82,13 +91,36 @@
 						0.0
 					]
 				],
+				"size": 2.0,
 				"posName": "any",
 				"title": "Patrol in %l",
 				"info": "Beware!",
 				"winCondition": 2,
 				"winMessage": "Well done!",
 				"loseMessage": "You're not a worthy enemy for this patrol.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 7,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					1
+				],
+				"types": [
+					"G_HEAVY",
+					"G_LAUNCHER"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					200,
+					800
+				],
+				"waypointGenType": 3,
+				"waypointMoveType": 5
 			},
 			"locationTypes": [
 				64,
@@ -98,26 +130,11 @@
 				80,
 				81,
 				15
-			],
-			"groupCount": [
-				1,
-				1
-			],
-			"waypointRange": [
-				200,
-				800
-			],
-			"waypointGenType": 3,
-			"waypointMoveType": 5,
-			"groupTypes": [
-				"G_HEAVY",
-				"G_LAUNCHER"
-			],
-			"aiSkill": 50,
-			"aiPerception": 1.0
+			]
 		},
 		{
 			"general": {
+				"subIdx": 2,
 				"comment": "index 2: Enemy patrols between villages",
 				"pos": [
 					[
@@ -131,38 +148,46 @@
 						0.0
 					]
 				],
+				"size": 2.0,
 				"posName": "any",
 				"title": "Patrol seen in %l",
 				"info": "Be alert!",
 				"winCondition": 2,
 				"winMessage": "The road from %l to %d is safe again.",
 				"loseMessage": "Patrol left the area.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 7,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					1
+				],
+				"types": [
+					"G_RECON",
+					"G_LIGHT",
+					"G_SMALL"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					300,
+					700
+				],
+				"waypointGenType": 2,
+				"waypointMoveType": 5
 			},
 			"locationTypes": [
 				60,
 				64
-			],
-			"groupCount": [
-				1,
-				1
-			],
-			"waypointRange": [
-				300,
-				700
-			],
-			"waypointGenType": 2,
-			"waypointMoveType": 5,
-			"groupTypes": [
-				"G_RECON",
-				"G_LIGHT",
-				"G_SMALL"
-			],
-			"aiSkill": 50,
-			"aiPerception": 1.0
+			]
 		},
 		{
 			"general": {
+				"subIdx": 3,
 				"comment": "index 3: Small patrols with a few AIs",
 				"pos": [
 					[
@@ -176,35 +201,42 @@
 						0.0
 					]
 				],
+				"size": 2.0,
 				"posName": "any",
 				"title": "Enemy has been seen near %l",
 				"info": "Caution is advised.",
 				"winCondition": 3,
 				"winMessage": "Patrol cleared!",
 				"loseMessage": "Such a small force was able to beat you.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 7,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					1
+				],
+				"types": [
+					"G_SMALL",
+					"G_MEDICAL",
+					"G_RECON"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					300,
+					700
+				],
+				"waypointGenType": 1,
+				"waypointMoveType": 5
 			},
 			"locationTypes": [
 				60,
 				64
-			],
-			"groupCount": [
-				1,
-				1
-			],
-			"waypointRange": [
-				300,
-				700
-			],
-			"waypointGenType": 1,
-			"waypointMoveType": 5,
-			"groupTypes": [
-				"G_SMALL",
-				"G_MEDICAL",
-				"G_RECON"
-			],
-			"aiSkill": 50,
-			"aiPerception": 1.0
+			]
 		}
 	]
 }

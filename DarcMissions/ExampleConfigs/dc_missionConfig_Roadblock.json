@@ -1,22 +1,22 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 30,
-	"markerType": "DARC_MISSION",
-	"markerIdx": 9,
+	"missionCycleTime": 20,
 	"showMarker": true,
 	"showHint": true,
 	"showMessage": true,
-	"disableArsenal": false,
-	"roadblockList": [
+	"disableArsenal": true,
+	"missionList": [
 		0,
 		1,
 		2,
 		3
 	],
-	"roadblocks": [
+	"missionFiles": [],
+	"subMissions": [
 		{
 			"general": {
+				"subIdx": 0,
 				"comment": "index 0: Roadblock",
 				"pos": [
 					[
@@ -25,13 +25,37 @@
 						0.0
 					]
 				],
+				"size": 6.0,
 				"posName": "any",
 				"title": "Roadblock near %l",
 				"info": "Look out for trouble.",
 				"winCondition": 2,
 				"winMessage": "Roadblock cleared.",
 				"loseMessage": "Road was kept safe as planned.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 9,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					2
+				],
+				"types": [
+					"G_LAUNCHER",
+					"G_LIGHT",
+					"G_LIGHT"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					0,
+					20
+				],
+				"waypointGenType": 5,
+				"waypointMoveType": 5
 			},
 			"locationTypes": [
 				61,
@@ -44,24 +68,6 @@
 				81,
 				15
 			],
-			"groupCount": [
-				1,
-				2
-			],
-			"waypointRange": [
-				0,
-				20
-			],
-			"waypointGenType": 5,
-			"waypointMoveType": 5,
-			"groupTypes": [
-				"G_LAUNCHER",
-				"G_LIGHT",
-				"G_LIGHT"
-			],
-			"aiSkill": 50,
-			"aiPerception": 1.0,
-			"emptySize": 6.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -135,6 +141,7 @@
 		},
 		{
 			"general": {
+				"subIdx": 1,
 				"comment": "index 1: Roadblock",
 				"pos": [
 					[
@@ -143,13 +150,37 @@
 						0.0
 					]
 				],
+				"size": 6.0,
 				"posName": "any",
 				"title": "Roadblock seen close to %l",
 				"info": "Be careful.",
 				"winCondition": 1,
 				"winMessage": "These blocks can not stop you.",
 				"loseMessage": "Scared of the enemy? %l is not a place for you.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 9,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					2
+				],
+				"types": [
+					"G_LAUNCHER",
+					"G_HEAVY",
+					"G_LIGHT"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					0,
+					10
+				],
+				"waypointGenType": 2,
+				"waypointMoveType": 5
 			},
 			"locationTypes": [
 				59,
@@ -161,24 +192,6 @@
 				81,
 				15
 			],
-			"groupCount": [
-				1,
-				2
-			],
-			"waypointRange": [
-				0,
-				10
-			],
-			"waypointGenType": 2,
-			"waypointMoveType": 5,
-			"groupTypes": [
-				"G_LAUNCHER",
-				"G_HEAVY",
-				"G_LIGHT"
-			],
-			"aiSkill": 50,
-			"aiPerception": 1.0,
-			"emptySize": 6.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.8999999761581421,
@@ -191,8 +204,8 @@
 					"ITEM_GENERAL",
 					"ITEM_GENERAL",
 					"ITEM_GENERAL",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES"
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE"
 				]
 			},
 			"campItems": [
@@ -356,6 +369,7 @@
 		},
 		{
 			"general": {
+				"subIdx": 2,
 				"comment": "index 2: Roadblock",
 				"pos": [
 					[
@@ -364,13 +378,38 @@
 						0.0
 					]
 				],
+				"size": 6.0,
 				"posName": "any",
 				"title": "Road is closed near %l",
 				"info": "Are your ready to pay the toll?",
 				"winCondition": 2,
 				"winMessage": "Road cleared.",
 				"loseMessage": "The road toll was too much for you.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 9,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					2,
+					3
+				],
+				"types": [
+					"G_LIGHT",
+					"G_LIGHT",
+					"G_LIGHT",
+					"C_SNIPER"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					0,
+					10
+				],
+				"waypointGenType": 5,
+				"waypointMoveType": 5
 			},
 			"locationTypes": [
 				59,
@@ -385,25 +424,6 @@
 				81,
 				15
 			],
-			"groupCount": [
-				2,
-				3
-			],
-			"waypointRange": [
-				0,
-				10
-			],
-			"waypointGenType": 5,
-			"waypointMoveType": 5,
-			"groupTypes": [
-				"G_LIGHT",
-				"G_LIGHT",
-				"G_LIGHT",
-				"C_SNIPER"
-			],
-			"aiSkill": 50,
-			"aiPerception": 1.0,
-			"emptySize": 6.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.6000000238418579,
@@ -411,11 +431,11 @@
 					"WEAPON_LAUNCHER",
 					"WEAPON_RIFLE",
 					"WEAPON_RIFLE",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES",
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE",
 					"ITEM_MEDICAL",
 					"ITEM_GENERAL",
 					"ITEM_GENERAL",
@@ -561,6 +581,7 @@
 		},
 		{
 			"general": {
+				"subIdx": 3,
 				"comment": "index 3: Roadblock with gates",
 				"pos": [
 					[
@@ -569,13 +590,38 @@
 						0.0
 					]
 				],
+				"size": 10.0,
 				"posName": "any",
 				"title": "Road near %l is guarded",
 				"info": "Prepare for a mandatory stop.",
 				"winCondition": 2,
 				"winMessage": "Gates do not stop you.",
 				"loseMessage": "Guards has left road near %l.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 9,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					2,
+					3
+				],
+				"types": [
+					"G_LIGHT",
+					"G_LIGHT",
+					"G_HEAVY",
+					"G_ADMIN"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					0,
+					10
+				],
+				"waypointGenType": 5,
+				"waypointMoveType": 5
 			},
 			"locationTypes": [
 				59,
@@ -590,33 +636,14 @@
 				81,
 				15
 			],
-			"groupCount": [
-				2,
-				3
-			],
-			"waypointRange": [
-				0,
-				10
-			],
-			"waypointGenType": 5,
-			"waypointMoveType": 5,
-			"groupTypes": [
-				"G_LIGHT",
-				"G_LIGHT",
-				"G_HEAVY",
-				"G_ADMIN"
-			],
-			"aiSkill": 50,
-			"aiPerception": 1.0,
-			"emptySize": 10.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.6000000238418579,
 				"items": [
 					"WEAPON_RIFLE",
 					"WEAPON_RIFLE",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES",
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE",
 					"ITEM_MEDICAL",
 					"ITEM_GENERAL",
 					"ITEM_GENERAL",

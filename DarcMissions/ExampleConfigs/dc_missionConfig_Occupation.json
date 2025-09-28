@@ -1,19 +1,35 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 30,
-	"markerType": "DARC_MISSION",
-	"markerIdx": 3,
+	"missionCycleTime": 20,
 	"showMarker": true,
 	"showHint": true,
 	"showMessage": true,
-	"disableArsenal": false,
-	"occupationList": [
-		0
+	"disableArsenal": true,
+	"missionList": [
+		0,
+		0,
+		0,
+		1,
+		1,
+		1,
+		1,
+		2,
+		2,
+		2,
+		2,
+		2,
+		3,
+		3,
+		3,
+		4,
+		5
 	],
-	"occupations": [
+	"missionFiles": [],
+	"subMissions": [
 		{
 			"general": {
+				"subIdx": 0,
 				"comment": "index 0: Mission in villages and local areas.",
 				"pos": [
 					[
@@ -22,40 +38,47 @@
 						0.0
 					]
 				],
+				"size": 3.0,
 				"posName": "any",
 				"title": "Guards patroling near %l",
 				"info": "Avoid the location. Loot has already been lost.",
 				"winCondition": 1,
 				"winMessage": "Guard patrol eliminated.",
 				"loseMessage": "The patrol kept %l safe from you. Pathetic.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 3,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					2
+				],
+				"types": [
+					"G_RECON",
+					"G_LIGHT"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					50,
+					300
+				],
+				"waypointGenType": 1,
+				"waypointMoveType": 5
 			},
 			"locationTypes": [
 				60,
 				64
 			],
-			"groupCount": [
-				1,
-				2
-			],
-			"waypointRange": [
-				50,
-				300
-			],
-			"waypointGenType": 1,
-			"waypointMoveType": 5,
-			"groupTypes": [
-				"G_RECON",
-				"G_LIGHT"
-			],
-			"aiSkill": 50,
-			"aiPerception": 1.0,
-			"emptySize": 3.0,
 			"loot": null,
 			"campItems": []
 		},
 		{
 			"general": {
+				"subIdx": 1,
 				"comment": "index 1: Bandit camp spawning to non city areas",
 				"pos": [
 					[
@@ -64,13 +87,37 @@
 						0.0
 					]
 				],
+				"size": 6.0,
 				"posName": "any",
 				"title": "Bandit camp near %l",
 				"info": "Bandits are protecting their valuable loot.",
 				"winCondition": 1,
 				"winMessage": "Camp cleared. Take the loot and leave.",
 				"loseMessage": "The camp near %l was never destroyed. Bandits rule!",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 3,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					2
+				],
+				"types": [
+					"G_ADMIN",
+					"G_LIGHT",
+					"G_LIGHT"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					25,
+					100
+				],
+				"waypointGenType": 2,
+				"waypointMoveType": 5
 			},
 			"locationTypes": [
 				64,
@@ -81,24 +128,6 @@
 				81,
 				15
 			],
-			"groupCount": [
-				1,
-				2
-			],
-			"waypointRange": [
-				25,
-				100
-			],
-			"waypointGenType": 2,
-			"waypointMoveType": 5,
-			"groupTypes": [
-				"G_ADMIN",
-				"G_LIGHT",
-				"G_LIGHT"
-			],
-			"aiSkill": 50,
-			"aiPerception": 1.0,
-			"emptySize": 6.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -175,6 +204,7 @@
 		},
 		{
 			"general": {
+				"subIdx": 2,
 				"comment": "index 2: Occupation that will spawn mainly to cities and towns.",
 				"pos": [
 					[
@@ -183,13 +213,41 @@
 						0.0
 					]
 				],
+				"size": 10.0,
 				"posName": "any",
 				"title": "Occupation in %l",
 				"info": "City is being occupied.",
 				"winCondition": 2,
 				"winMessage": "%l is free again!",
 				"loseMessage": "The enemy was stronger this time.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 3,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					2,
+					4
+				],
+				"types": [
+					"G_LIGHT",
+					"G_LIGHT",
+					"G_LIGHT",
+					"G_ADMIN",
+					"G_HEAVY",
+					"G_LAUNCHER",
+					"G_MEDICAL"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					30,
+					200
+				],
+				"waypointGenType": 3,
+				"waypointMoveType": 1
 			},
 			"locationTypes": [
 				59,
@@ -202,40 +260,19 @@
 				61,
 				81
 			],
-			"groupCount": [
-				2,
-				4
-			],
-			"waypointRange": [
-				30,
-				200
-			],
-			"waypointGenType": 3,
-			"waypointMoveType": 1,
-			"groupTypes": [
-				"G_LIGHT",
-				"G_LIGHT",
-				"G_LIGHT",
-				"G_ADMIN",
-				"G_HEAVY",
-				"G_LAUNCHER",
-				"G_MEDICAL"
-			],
-			"aiSkill": 50,
-			"aiPerception": 1.0,
-			"emptySize": 10.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.8999999761581421,
 				"items": [
 					"WEAPON_RIFLE",
 					"WEAPON_RIFLE",
+					"WEAPON_RIFLE_BIG",
 					"WEAPON_HANDGUN",
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"UTIL_ATTACHMENT",
-					"UTIL_OPTICS",
+					"UTIL_OPTIC",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
@@ -307,6 +344,7 @@
 		},
 		{
 			"general": {
+				"subIdx": 3,
 				"comment": "index 3: Car crash in an unusual place",
 				"pos": [
 					[
@@ -315,13 +353,35 @@
 						0.0
 					]
 				],
+				"size": 6.0,
 				"posName": "any",
 				"title": "Car crash near %l",
 				"info": "Loot is up for grabs.",
 				"winCondition": 2,
 				"winMessage": "You stopped the get away. Enjoy the spoils.",
 				"loseMessage": "Car was fixed and the loot was lost.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 3,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					3
+				],
+				"types": [
+					"G_RECON"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					10,
+					60
+				],
+				"waypointGenType": 1,
+				"waypointMoveType": 1
 			},
 			"locationTypes": [
 				8,
@@ -332,22 +392,6 @@
 				84,
 				75
 			],
-			"groupCount": [
-				1,
-				3
-			],
-			"waypointRange": [
-				10,
-				60
-			],
-			"waypointGenType": 1,
-			"waypointMoveType": 1,
-			"groupTypes": [
-				"G_RECON"
-			],
-			"aiSkill": 50,
-			"aiPerception": 1.0,
-			"emptySize": 7.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -359,7 +403,7 @@
 					"WEAPON_GRENADE",
 					"WEAPON_GRENADE",
 					"UTIL_ATTACHMENT",
-					"UTIL_OPTICS",
+					"UTIL_OPTIC",
 					"WEAPON_LAUNCHER",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
@@ -456,6 +500,7 @@
 		},
 		{
 			"general": {
+				"subIdx": 4,
 				"comment": "index 4: Campers with a car and a tent",
 				"pos": [
 					[
@@ -464,13 +509,36 @@
 						0.0
 					]
 				],
+				"size": 12.0,
 				"posName": "any",
 				"title": "Campers near %l",
 				"info": "Rob them before they leave.",
 				"winCondition": 1,
 				"winMessage": "The camp is yours. Enjoy the loot and relax.",
 				"loseMessage": "The camp was packed and the campers left with their car.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 3,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					3
+				],
+				"types": [
+					"G_SPECIAL",
+					"G_HEAVY"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					10,
+					90
+				],
+				"waypointGenType": 1,
+				"waypointMoveType": 1
 			},
 			"locationTypes": [
 				70,
@@ -478,23 +546,6 @@
 				63,
 				71
 			],
-			"groupCount": [
-				1,
-				3
-			],
-			"waypointRange": [
-				10,
-				90
-			],
-			"waypointGenType": 1,
-			"waypointMoveType": 1,
-			"groupTypes": [
-				"G_SPECIAL",
-				"G_HEAVY"
-			],
-			"aiSkill": 50,
-			"aiPerception": 1.0,
-			"emptySize": 12.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.4000000059604645,
@@ -508,7 +559,7 @@
 					"WEAPON_GRENADE",
 					"UTIL_ATTACHMENT",
 					"UTIL_ATTACHMENT",
-					"UTIL_OPTICS",
+					"UTIL_OPTIC",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
@@ -630,6 +681,7 @@
 		},
 		{
 			"general": {
+				"subIdx": 5,
 				"comment": "index 5: A small town",
 				"pos": [
 					[
@@ -638,36 +690,42 @@
 						0.0
 					]
 				],
+				"size": 30.0,
 				"posName": "any",
 				"title": "Settlement near %l",
 				"info": "The enemies are hiding in a ghost town.",
 				"winCondition": 2,
 				"winMessage": "The ghost town neat %l has been cleared.",
 				"loseMessage": "Enemies have left with the loot. Shame on you.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 3,
+				"difficulty": 2,
 				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					3
+				],
+				"types": [
+					"G_SPECIAL",
+					"G_HEAVY"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					10,
+					90
+				],
+				"waypointGenType": 1,
+				"waypointMoveType": 1
 			},
 			"locationTypes": [
 				70,
 				8,
 				71
 			],
-			"groupCount": [
-				1,
-				3
-			],
-			"waypointRange": [
-				10,
-				90
-			],
-			"waypointGenType": 1,
-			"waypointMoveType": 1,
-			"groupTypes": [
-				"G_SPECIAL",
-				"G_HEAVY"
-			],
-			"aiSkill": 50,
-			"aiPerception": 1.0,
-			"emptySize": 30.0,
 			"loot": {
 				"box": null,
 				"itemChance": 0.4000000059604645,
@@ -681,7 +739,7 @@
 					"WEAPON_GRENADE",
 					"UTIL_ATTACHMENT",
 					"UTIL_ATTACHMENT",
-					"UTIL_OPTICS",
+					"UTIL_OPTIC",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
 					"ITEM_MEDICAL",
@@ -891,6 +949,55 @@
 					]
 				}
 			]
+		},
+		{
+			"general": {
+				"subIdx": 6,
+				"comment": "index 6: Zombies and Demons.",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 3.0,
+				"posName": "any",
+				"title": "Creatures near %l",
+				"info": "Avoid the location. No loot available.",
+				"winCondition": 1,
+				"winMessage": "Spawns from hell are dead!",
+				"loseMessage": "Are you scared of a few ghosts..?",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 3,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					8
+				],
+				"types": [
+					"C_DEMON",
+					"C_DEMON_BOSS"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					50,
+					300
+				],
+				"waypointGenType": 1,
+				"waypointMoveType": 5
+			},
+			"locationTypes": [
+				60,
+				64
+			],
+			"loot": null,
+			"campItems": []
 		}
 	]
 }

@@ -1,0 +1,97 @@
+{
+	"id": 2,
+	"chapterId": 1,
+	"comment": "Story 02",
+	"title": "Testing",
+	"dependencies": [],
+	"chapters": [
+		{
+			"id": 1,
+			"nextChapter": [
+				2,
+				-1
+			],
+			"missionType": 2,
+			"subIdx": 3,
+			"activeTime": 240,
+			"title": "Chapter 1: Testing",
+			"text": "Briefing",
+			"textWin": "Win text: asdf",
+			"textLose": "Lose text: asdf",
+			"general": {
+				"subIdx": -1,
+				"comment": "Chapter 1",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 5.0,
+				"posName": "default",
+				"title": "Chapter 1: Testing",
+				"info": "See map for more information",
+				"winCondition": -1,
+				"winMessage": "See map for more information",
+				"loseMessage": "See map for more information",
+				"faction": "default",
+				"markerType": "default",
+				"markerIcon": -1,
+				"difficulty": 4,
+				"xp": 0
+			},
+			"success": 0,
+			"chapterEndTime": 0
+		},
+		{
+			"id": 2,
+			"nextChapter": [
+				-2,
+				-1
+			],
+			"missionType": 10,
+			"subIdx": 0,
+			"activeTime": 240,
+			"title": "Epilogue: Loot",
+			"text": "Yeah, there is loot.",
+			"textWin": "Loot was collected.",
+			"textLose": "Loot was not collected",
+			"general": {
+				"subIdx": -1,
+				"comment": "Epilogue",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 5.0,
+				"posName": "default",
+				"title": "Epilogue: Loot",
+				"info": "See map for more information",
+				"winCondition": -1,
+				"winMessage": "See map for more information",
+				"loseMessage": "See map for more information",
+				"faction": "default",
+				"markerType": "default",
+				"markerIcon": -1,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"success": 0,
+			"chapterEndTime": 0
+		}
+	]
+}

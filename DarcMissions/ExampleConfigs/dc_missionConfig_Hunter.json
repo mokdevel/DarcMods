@@ -1,24 +1,25 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 90,
-	"markerType": "DARC_MISSION",
-	"markerIdx": 0,
+	"missionCycleTime": 60,
 	"showMarker": false,
 	"showHint": true,
 	"showMessage": true,
-	"minDistanceToPlayer": 200,
-	"maxDistanceToPlayer": 800,
-	"rndDistanceToPlayer": 60,
-	"hunterList": [
+	"disableArsenal": false,
+	"missionList": [
 		0,
 		0,
 		0,
 		1
 	],
-	"hunters": [
+	"missionFiles": [],
+	"minDistanceToPlayer": 200,
+	"maxDistanceToPlayer": 800,
+	"rndDistanceToPlayer": 60,
+	"subMissions": [
 		{
 			"general": {
+				"subIdx": 0,
 				"comment": "index 0: general mission",
 				"pos": [
 					[
@@ -27,26 +28,40 @@
 						0.0
 					]
 				],
+				"size": 2.0,
 				"posName": "any",
 				"title": "Hunters",
 				"info": "They are coming for you... Last time they were seen close to %l.",
 				"winCondition": 1,
 				"winMessage": "You outsmarted the hunters.",
 				"loseMessage": "Hunters lost track of you.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 0,
+				"difficulty": 2,
 				"xp": 0
 			},
-			"groupCount": [
-				1,
-				4
-			],
-			"groupTypes": [
-				"G_SMALL"
-			],
-			"aiSkill": 30,
-			"aiPerception": 0.699999988079071
+			"ai": {
+				"count": [
+					1,
+					2
+				],
+				"types": [
+					"G_SMALL"
+				],
+				"skill": 30,
+				"perception": 0.699999988079071,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 0,
+				"waypointMoveType": 0
+			}
 		},
 		{
 			"general": {
+				"subIdx": 1,
 				"comment": "index 1: general mission",
 				"pos": [
 					[
@@ -55,23 +70,36 @@
 						0.0
 					]
 				],
+				"size": 2.0,
 				"posName": "any",
 				"title": "Hunters",
 				"info": "Sharpshooters are hunting you. Last known location was near %l.",
 				"winCondition": 1,
 				"winMessage": "Sharpshooters were not that sharp.",
 				"loseMessage": "Sharpshooters lost track of you.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 0,
+				"difficulty": 2,
 				"xp": 0
 			},
-			"groupCount": [
-				1,
-				1
-			],
-			"groupTypes": [
-				"G_SNIPER"
-			],
-			"aiSkill": 40,
-			"aiPerception": 0.800000011920929
+			"ai": {
+				"count": [
+					1,
+					1
+				],
+				"types": [
+					"G_SNIPER"
+				],
+				"skill": 40,
+				"perception": 0.800000011920929,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 0,
+				"waypointMoveType": 0
+			}
 		}
 	]
 }

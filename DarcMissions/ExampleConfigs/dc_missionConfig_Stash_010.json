@@ -1,0 +1,92 @@
+{
+	"version": 1,
+	"author": "darc",
+	"missionCycleTime": 20,
+	"showMarker": true,
+	"showHint": true,
+	"showMessage": true,
+	"disableArsenal": false,
+	"missionList": [
+		10
+	],
+	"missionFiles": [],
+	"activeDistance": 50,
+	"subMissions": [
+		{
+			"general": {
+				"subIdx": 10,
+				"comment": "index 10: Random stash",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 3.0,
+				"posName": "any",
+				"title": "Hidden loot near %l",
+				"info": "Loot is yours to take",
+				"winCondition": 30,
+				"winMessage": "Loot found.",
+				"loseMessage": "Loot lost.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 12,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"ai": {
+				"count": [
+					0,
+					1
+				],
+				"types": [
+					"G_RECON"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					50,
+					300
+				],
+				"waypointGenType": 1,
+				"waypointMoveType": 5
+			},
+			"locationTypes": [],
+			"loot": {
+				"box": null,
+				"itemChance": 0.699999988079071,
+				"items": [
+					"WEAPON_RIFLE",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"WEAPON_HANDGUN",
+					"UTIL_ATTACHMENT",
+					"ITEM_MEDICAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL",
+					"ITEM_GENERAL"
+				]
+			},
+			"campItems": [
+				{
+					"resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+					"position": [
+						100.47000122070313,
+						1.0,
+						144.56199645996095
+					],
+					"rotation": [
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,25 +1,26 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 30,
-	"markerType": "DARC_MISSION",
-	"markerIdx": 5,
+	"missionCycleTime": 20,
 	"showMarker": true,
 	"showHint": true,
 	"showMessage": true,
+	"disableArsenal": true,
+	"missionList": [
+		0,
+		1
+	],
+	"missionFiles": [],
 	"distanceToMission": 100,
 	"distanceToPlayer": 500,
 	"flyHeight": [
 		80,
 		120
 	],
-	"crashsiteList": [
-		0,
-		1
-	],
-	"crashsites": [
+	"subMissions": [
 		{
 			"general": {
+				"subIdx": 0,
 				"comment": "index 0: general mission",
 				"pos": [
 					[
@@ -28,40 +29,38 @@
 						0.0
 					]
 				],
+				"size": 0.0,
 				"posName": "any",
 				"title": "Helicopter in distress",
 				"info": "A valuable cargo has crashed.",
 				"winCondition": 2,
 				"winMessage": "The loot was salvaged. Crash, burn, loot.",
 				"loseMessage": "No loot for you today.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 5,
+				"difficulty": 2,
 				"xp": 0
 			},
-			"groupTypes": [
-				"G_LIGHT",
-				"G_ADMIN"
-			],
-			"aiSkill": 20,
-			"aiPerception": 0.800000011920929,
-			"helicopterInfo": [
-				{
-					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
-					"throttle": 0.800000011920929,
-					"rotorForce": 0.800000011920929,
-					"rotor2Force": 1.0
-				},
-				{
-					"resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
-					"throttle": 0.699999988079071,
-					"rotorForce": 0.8999999761581421,
-					"rotor2Force": 1.0
-				},
-				{
-					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
-					"throttle": 0.800000011920929,
-					"rotorForce": 0.800000011920929,
-					"rotor2Force": -1.0
-				}
-			],
+			"ai": {
+				"count": [
+					1,
+					2
+				],
+				"types": [
+					"G_LIGHT",
+					"G_ADMIN"
+				],
+				"skill": 20,
+				"perception": 0.800000011920929,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 5,
+				"waypointMoveType": 6
+			},
+			"locationTypes": [],
 			"loot": {
 				"box": null,
 				"itemChance": 0.8999999761581421,
@@ -76,7 +75,7 @@
 					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
 				]
 			},
-			"siteItems": [
+			"campItems": [
 				{
 					"resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 					"position": [
@@ -142,10 +141,31 @@
 						0.0
 					]
 				}
+			],
+			"helicopterInfo": [
+				{
+					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+					"throttle": 0.800000011920929,
+					"rotorForce": 0.800000011920929,
+					"rotor2Force": 1.0
+				},
+				{
+					"resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
+					"throttle": 0.699999988079071,
+					"rotorForce": 0.8999999761581421,
+					"rotor2Force": 1.0
+				},
+				{
+					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+					"throttle": 0.800000011920929,
+					"rotorForce": 0.800000011920929,
+					"rotor2Force": -1.0
+				}
 			]
 		},
 		{
 			"general": {
+				"subIdx": 1,
 				"comment": "index 1: general mission",
 				"pos": [
 					[
@@ -154,57 +174,55 @@
 						0.0
 					]
 				],
+				"size": 0.0,
 				"posName": "any",
 				"title": "Engine damage",
 				"info": "May day, may day! We're going down.",
 				"winCondition": 2,
 				"winMessage": "The loot box was secured.",
 				"loseMessage": "The cargo was lost.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 5,
+				"difficulty": 2,
 				"xp": 0
 			},
-			"groupTypes": [
-				"G_HEAVY",
-				"G_ADMIN"
-			],
-			"aiSkill": 20,
-			"aiPerception": 0.800000011920929,
-			"helicopterInfo": [
-				{
-					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
-					"throttle": 0.699999988079071,
-					"rotorForce": 0.800000011920929,
-					"rotor2Force": 1.0
-				},
-				{
-					"resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
-					"throttle": 0.6000000238418579,
-					"rotorForce": 0.8500000238418579,
-					"rotor2Force": 1.0
-				},
-				{
-					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
-					"throttle": 0.75,
-					"rotorForce": 0.75,
-					"rotor2Force": -1.0
-				}
-			],
+			"ai": {
+				"count": [
+					1,
+					2
+				],
+				"types": [
+					"G_HEAVY",
+					"G_ADMIN"
+				],
+				"skill": 20,
+				"perception": 0.800000011920929,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 5,
+				"waypointMoveType": 6
+			},
+			"locationTypes": [],
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
 				"items": [
 					"WEAPON_LAUNCHER",
-					"UTIL_OPTICS",
+					"UTIL_OPTIC",
 					"WEAPON_RIFLE",
 					"WEAPON_RIFLE",
 					"WEAPON_RIFLE",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES",
-					"UTIL_MAGAZINES"
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE",
+					"UTIL_MAGAZINE"
 				]
 			},
-			"siteItems": [
+			"campItems": [
 				{
 					"resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 					"position": [
@@ -230,6 +248,26 @@
 						0.0,
 						0.0
 					]
+				}
+			],
+			"helicopterInfo": [
+				{
+					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+					"throttle": 0.699999988079071,
+					"rotorForce": 0.800000011920929,
+					"rotor2Force": 1.0
+				},
+				{
+					"resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
+					"throttle": 0.6000000238418579,
+					"rotorForce": 0.8500000238418579,
+					"rotor2Force": 1.0
+				},
+				{
+					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+					"throttle": 0.75,
+					"rotorForce": 0.75,
+					"rotor2Force": -1.0
 				}
 			]
 		}

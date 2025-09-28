@@ -1,0 +1,185 @@
+{
+	"id": 0,
+	"chapterId": 1,
+	"comment": "Story 00",
+	"title": "The Hit",
+	"dependencies": [],
+	"chapters": [
+		{
+			"id": 1,
+			"nextChapter": [
+				2,
+				2
+			],
+			"missionType": 2,
+			"subIdx": 3,
+			"activeTime": 240,
+			"title": "Chapter 1: Burning Metal",
+			"text": "The team deployed at dawn. A vehicle crash on a rural road had drawn intelligence attention — reports suggested the wreck contained documents tied to a high-value individual. The destination, dotted with small cities and dense forests, offered both cover and danger. \n\nLanding near the twisted wreck, the squad swept the site. The squad had only minutes before hostile patrols noticed them.",
+			"textWin": "Amid burnt metal and shattered glass, a briefcase survived the flames. Inside, fragments of coordinates and coded notes hinted at movements and safehouses. The team exfiltrated with the documents intact, slipping back into the forest before addition lmilitias closed in. The intel raised more questions than answers, but it was enough to point them deeper into the island’s shadows. \n The trail to the target was not lost—just hidden further, deeper, and more dangerous than before.",
+			"textLose": "Pinned down by enemy patrols, the team was forced to retreat, leaving the documents behind. Flames consumed the wreck as they withdrew, erasing vital clues. The trail to the target was not lost—just hidden further, deeper, and more dangerous than before. \n\nWith the documents lost in the flames, command redirected the squad. Reports indicated that another cache of intel had been smuggled to a militia roadblock deeper inland. The squad advanced along cracked asphalt, the humid air thick with the scent of pine and salt.",
+			"general": {
+				"subIdx": -1,
+				"comment": "Chapter 1",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 5.0,
+				"posName": "default",
+				"title": "Chapter 1: Burning Metal",
+				"info": "See map for more information",
+				"winCondition": -1,
+				"winMessage": "See map for more information",
+				"loseMessage": "See map for more information",
+				"faction": "default",
+				"markerType": "default",
+				"markerIcon": -1,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"success": 0,
+			"chapterEndTime": 0
+		},
+		{
+			"id": 2,
+			"nextChapter": [
+				3,
+				-1
+			],
+			"missionType": 7,
+			"subIdx": 1,
+			"activeTime": 240,
+			"title": "Chapter 2: The Roadblock",
+			"text": "The roadblock was crude but fortified—sandbags, steel sheets, and armed guards scanning every passing vehicle. If the squad could breach it, the missing link might be recovered.",
+			"textWin": "After a precise assault, the roadblock fell. Hidden with the commander, the squad uncovered a satchel of coded manifests. Among the pages: a repeated reference to a “Yellow Sector” and clandestine supply runs—threads leading back to the target.",
+			"textLose": "The attack collapsed under heavy resistance. The squad was forced to withdraw into the forest, leaving the roadblock intact. The intel remained out of reach, and the trail grew colder, leaving the target’s whereabouts shrouded in silence. \n\n<END>",
+			"general": {
+				"subIdx": -1,
+				"comment": "Chapter 2",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 5.0,
+				"posName": "default",
+				"title": "Chapter 2: The Roadblock",
+				"info": "See map for more information",
+				"winCondition": -1,
+				"winMessage": "See map for more information",
+				"loseMessage": "See map for more information",
+				"faction": "default",
+				"markerType": "default",
+				"markerIcon": -1,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"success": 0,
+			"chapterEndTime": 0
+		},
+		{
+			"id": 3,
+			"nextChapter": [
+				4,
+				-1
+			],
+			"missionType": 8,
+			"subIdx": 3,
+			"activeTime": 240,
+			"title": "Chapter 3: The Hit",
+			"text": "With the salvaged documents secure, the squad moved inland. The coded coordinates pointed towards %l. Recon drones showed faint activity. It seemed to be a staging post, possibly linked to the target’s network. \n\nThe squad prepared: setting observation posts, marking entry routes, and coordinating fire support. Every step forward brought them closer to the unseen figure that loomed over the mission.",
+			"textWin": "The team infiltrated quietly, seizing encrypted files and maps before the enemy realized their presence. The evidence confirmed patterns of movement—the target’s trail was narrowing, close enough to prepare for elimination. \n\n<END>",
+			"textLose": "A misstep triggered alarms. Gunfire lit the station, forcing a hasty retreat. In the chaos, the enemy managed to destroy part of their own intel. The squad escaped, but with gaps in the puzzle—the path to the target now unclear. \n\n<END>",
+			"general": {
+				"subIdx": -1,
+				"comment": "Chapter 3",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 5.0,
+				"posName": "default",
+				"title": "Chapter 3: The Hit",
+				"info": "See map for more information",
+				"winCondition": -1,
+				"winMessage": "See map for more information",
+				"loseMessage": "See map for more information",
+				"faction": "default",
+				"markerType": "default",
+				"markerIcon": -1,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"success": 0,
+			"chapterEndTime": 0
+		},
+		{
+			"id": 4,
+			"nextChapter": [
+				-2,
+				-1
+			],
+			"missionType": 10,
+			"subIdx": 0,
+			"activeTime": 240,
+			"title": "Epilogue: Loot",
+			"text": "Yeah, there is loot.",
+			"textWin": "Loot was collected.",
+			"textLose": "Loot was not collected",
+			"general": {
+				"subIdx": -1,
+				"comment": "Epilogue",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 5.0,
+				"posName": "default",
+				"title": "Epilogue: Loot",
+				"info": "See map for more information",
+				"winCondition": -1,
+				"winMessage": "See map for more information",
+				"loseMessage": "See map for more information",
+				"faction": "default",
+				"markerType": "default",
+				"markerIcon": -1,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"success": 0,
+			"chapterEndTime": 0
+		}
+	]
+}

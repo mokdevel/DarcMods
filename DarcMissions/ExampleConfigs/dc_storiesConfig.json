@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"author": "darc",
+	"comment": "Simple comment, not used in game",
+	"storiesStartDelay": 8,
+	"storiesFrameCycleTime": 10,
+	"storyTimeBetween": 180,
+	"storyCycleTime": 10,
+	"chapterTimeBetween": 60,
+	"storiesList": [
+		"dc_storyConfig_00.json",
+		"dc_storyConfig_01.json",
+		"dc_storyConfig_02.json"
+	]
+}
