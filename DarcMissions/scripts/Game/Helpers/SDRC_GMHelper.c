@@ -57,12 +57,10 @@ class SDRC_GMHelper
 	{
 		if ((m_BaseGameMode) && (m_GmComponent))
 		{
-			if (m_BaseGameMode.m_SDRC_Core.m_Config.showOnGMMapNonValidArea)
+			bool visibleForGm = m_BaseGameMode.m_SDRC_Core.m_Config.showOnGMMapNonValidArea;
+			foreach (SDRC_NonValidArea nonValidArea : m_BaseGameMode.missionFrame.m_aNonValidAreas)
 			{
-				foreach (SDRC_NonValidArea nonValidArea : m_BaseGameMode.missionFrame.m_aNonValidAreas)
-				{
-					m_GmComponent.AddSymbolCircle(nonValidArea.pos, nonValidArea.radius, ARGB(75, 255, 0, 0));
-				}
+				m_GmComponent.AddSymbolCircle(visibleForGm, nonValidArea.pos, nonValidArea.radius, ARGB(75, 255, 0, 0));
 			}
 		}
 	}
@@ -75,14 +73,12 @@ class SDRC_GMHelper
 	{
 		if ((m_BaseGameMode) && (m_GmComponent))
 		{
-			if (m_BaseGameMode.m_SDRC_Core.m_Config.showOnGMMapMissionMarker)
+			bool visibleForGm = m_BaseGameMode.m_SDRC_Core.m_Config.showOnGMMapMissionMarker;
+			foreach (SDRC_Mission mission : m_BaseGameMode.missionFrame.m_MissionList)
 			{
-				foreach (SDRC_Mission mission : m_BaseGameMode.missionFrame.m_MissionList)
+				if (mission.GetState() == SDRC_EMissionState.ACTIVE)
 				{
-					if (mission.GetState() == SDRC_EMissionState.ACTIVE)
-					{
-						m_GmComponent.AddSymbolMarker(mission.GetPos(), mission.GetType(), mission.GetMarker(), mission.GetActiveTime(), mission.GetId(), mission.GetTitle());
-					}
+					m_GmComponent.AddSymbolMarker(visibleForGm, mission.GetPos(), mission.GetType(), mission.GetMarker(), mission.GetActiveTime(), mission.GetId(), mission.GetTitle());
 				}
 			}
 		}	
@@ -146,7 +142,7 @@ class SDRC_GMHelper
 			
 			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
 			{
-				if (symbol.type == SDRC_EDrawSymbol.MARKER && symbol.visible)
+				if (symbol.symbolType == SDRC_EDrawSymbol.MARKER && symbol.visible)
 				{
 					float distance = vector.DistanceXZ(pos, symbol.pos);
 					//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Checking: " + cursorPos + " vs " + symbol.pos + " d=" + distance + " (" + distanceCheck + ")", LogLevel.NORMAL);

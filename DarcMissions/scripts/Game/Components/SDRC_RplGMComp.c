@@ -19,15 +19,15 @@ enum SDRC_EDrawSymbol
 class SDRC_GMMapSymbol : Managed
 {
 	//Default information
-	bool visible = true;
+	bool visible = true;			//If true, will be shown on the GM map
 	SDRC_EDrawSymbol symbolType;
 	vector pos;
 	int timeLeft;
 	float radius;
-	int intval;			//Integer value for color or icon or ..
+	int intval;						//Integer value for color or icon or ..
 	string id;
 	string strval;
-	int type;			//Generic type int - used for SDRC_EMissionType
+	int type;						//Generic type int - used for SDRC_EMissionType
 }
 
 //------------------------------------------------------------------------------------------------
@@ -77,11 +77,12 @@ class SDRC_RplGMComp : ScriptComponent
 	/*!	
 	Add a circle on symbol list
 	*/
- 	void AddSymbolCircle(vector pos, float radius, int color, string strval = "")
+ 	void AddSymbolCircle(bool visible, vector pos, float radius, int color, string strval = "")
     {
 		pos[1] = 0;			//Set to zero plane
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
+		symbol.visible = visible;
 		symbol.symbolType = SDRC_EDrawSymbol.CIRCLE;
 		symbol.pos = pos;
 		symbol.timeLeft = -1;
@@ -97,11 +98,12 @@ class SDRC_RplGMComp : ScriptComponent
 	/*!	
 	Add a marker on symbol list
 	*/
- 	void AddSymbolMarker(vector pos, SDRC_EMissionType missionType, SDRC_EMissionIcon icon, int timeLeft, string id, string strval)
+ 	void AddSymbolMarker(bool visible, vector pos, SDRC_EMissionType missionType, SDRC_EMissionIcon icon, int timeLeft, string id, string strval)
     {
 		pos[1] = 0;			//Set to zero plane
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
+		symbol.visible = visible;
 		symbol.symbolType = SDRC_EDrawSymbol.MARKER;
 		symbol.pos = pos;
 		symbol.timeLeft = timeLeft;
@@ -138,7 +140,7 @@ class SDRC_RplGMComp : ScriptComponent
 	*/
  	void DoDeleteMission(int playerID, string missionId)
 	{
-		SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Deletion of " + missionId + " requested by " + playerID, LogLevel.DEBUG);	
+		SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Deletion of " + missionId + " requested by " + playerID, LogLevel.SPAM);	
 		SDRC_GMHelper.DeleteMission(missionId);
 //		SyncMapSymbols(playerID);
 	}
@@ -149,7 +151,7 @@ class SDRC_RplGMComp : ScriptComponent
 	*/
  	void DoEndMission(int playerID, string missionId)
 	{
-		SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Ending of " + missionId + " requested by " + playerID, LogLevel.DEBUG);	
+		SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Ending of " + missionId + " requested by " + playerID, LogLevel.SPAM);	
 		SDRC_GMHelper.EndMission(missionId, SDRC_EMissionSuccess.LOSE);
 //		SyncMapSymbols(playerID);
 	}
@@ -160,7 +162,7 @@ class SDRC_RplGMComp : ScriptComponent
 	*/
  	void SyncMapSymbols(int playerID)
 	{
-		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.SPAM);	
+		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.DEBUG);	
 		//Clear symbols on server
 		ClearSymbols();
 		//Clear symbols on client
@@ -190,7 +192,7 @@ class SDRC_RplGMComp : ScriptComponent
 		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(SDRC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.SPAM);
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
-		symbol.type = symbolType;
+		symbol.symbolType = symbolType;
 		symbol.pos = pos;
 		symbol.timeLeft = timeLeft;
 		symbol.radius = radius;

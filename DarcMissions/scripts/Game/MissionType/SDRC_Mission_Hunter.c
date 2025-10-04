@@ -161,27 +161,30 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	{
 		if (group)
 		{
-			//Check if there are any nearby AI
-			IEntity closestPlayer = SDRC_PlayerHelper.PlayerGetClosestToPos(group.GetLeaderEntity().GetOrigin(), 0, m_Config.maxDistanceToPlayer);
-		
-			if (closestPlayer != null)
-			{
-				if (group.GetAgentsCount() > 0)
+			if (group.GetLeaderEntity())
+			{			
+				//Check if there are any nearby AI
+				IEntity closestPlayer = SDRC_PlayerHelper.PlayerGetClosestToPos(group.GetLeaderEntity().GetOrigin(), 0, m_Config.maxDistanceToPlayer);
+			
+				if (closestPlayer != null)
 				{
-					SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] Creating waypoint for group: " + group.GetID(), LogLevel.SPAM);
-					
-					SDRC_WPHelper.RemoveWaypoints(group);
-					AIWaypoint wp = GetWaypoint(group);
-					group.AddWaypoint(wp);
-					GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.missionCycleTime*1000, false, group);
-					return;
+					if (group.GetAgentsCount() > 0)
+					{
+						SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] Creating waypoint for group: " + group.GetID(), LogLevel.SPAM);
+						
+						SDRC_WPHelper.RemoveWaypoints(group);
+						AIWaypoint wp = GetWaypoint(group);
+						group.AddWaypoint(wp);
+						GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.missionCycleTime*1000, false, group);
+						return;
+					}
 				}
-			}
-			else
-			{
-				// If there aren't any players close, delete the group
-				SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] No players nearby, deleting group: " + group.GetID(), LogLevel.NORMAL);
-				SDRC_AIHelper.GroupDelete(group);
+				else
+				{
+					// If there aren't any players close, delete the group
+					SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] No players nearby, deleting group: " + group.GetID(), LogLevel.NORMAL);
+					SDRC_AIHelper.GroupDelete(group);
+				}
 			}
 		}
 	}	

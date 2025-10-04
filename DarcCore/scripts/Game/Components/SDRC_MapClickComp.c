@@ -15,11 +15,27 @@ class SDRC_MapClickComp : SCR_ScriptedWidgetComponent
 		float worldX, worldY;
 		m_MapEntity.GetMapCursorWorldPosition(worldX, worldY);
 		
+		int idx = SDRC_GMHelper.GetMarkerIndex(worldX, worldY);
+		SDRC_Log.Add("[SDRC_MapClickComp:OnClick] Index: " + idx + " at " + worldX + "," + worldY, LogLevel.NORMAL);
+		
 		SDRC_GMMapSymbol symbol = SDRC_GMHelper.GetMarkerDetails(worldX, worldY);
 		
-//		SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Mission ID: " + worldX + "," + worldY));
-		
-		SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Mission " + symbol.strval + " has " + symbol.timeLeft + " seconds left to complete."));
+		if (symbol)
+		{		
+			int minutes = (symbol.timeLeft / 60);
+			string timeStr = "" + minutes + " minutes";
+			
+			if (symbol.timeLeft < 60)
+			{
+				timeStr = " less than a minute";
+			}
+			
+			SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("You have " + timeStr + " to complete "  + symbol.strval));
+		}
+		else
+		{
+			SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Intel not available."));
+		}
 		
 		return false;
 	}

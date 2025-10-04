@@ -546,7 +546,7 @@ class SDRC_Mission
 	}
 
 	//------------------------------------------------------------------------------------------------
-	SDRC_EMissionState GetType()
+	SDRC_EMissionType GetType()
 	{
 		return m_Type;
 	}

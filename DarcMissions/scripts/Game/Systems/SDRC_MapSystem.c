@@ -144,7 +144,7 @@ class SDRC_MapSystem : GameSystem
 			SDRC_Log.Add("[SDRC_MapSystem:OnMapOpen] SDRC_RplPlayerComp not found", LogLevel.WARNING);		
 		}
 
-		//The rest of the stuff is not for non-GM players.								
+		//The rest of the stuff is only GM mode.								
 		if (!SDRC_PlayerHelper.IsInGMmode())
 		{
 			return;
@@ -234,7 +234,7 @@ class SDRC_MapSystem : GameSystem
 		{
 			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
 			{			
-				switch (symbol.type)
+				switch (symbol.symbolType)
 				{
 					case SDRC_EDrawSymbol.CIRCLE:
 					{
