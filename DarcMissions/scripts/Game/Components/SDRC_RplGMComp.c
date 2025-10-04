@@ -20,12 +20,14 @@ class SDRC_GMMapSymbol : Managed
 {
 	//Default information
 	bool visible = true;
-	SDRC_EDrawSymbol type;
+	SDRC_EDrawSymbol symbolType;
 	vector pos;
+	int timeLeft;
 	float radius;
 	int intval;			//Integer value for color or icon or ..
 	string id;
 	string strval;
+	int type;			//Generic type int - used for SDRC_EMissionType
 }
 
 //------------------------------------------------------------------------------------------------
@@ -80,12 +82,14 @@ class SDRC_RplGMComp : ScriptComponent
 		pos[1] = 0;			//Set to zero plane
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
-		symbol.type = SDRC_EDrawSymbol.CIRCLE;
+		symbol.symbolType = SDRC_EDrawSymbol.CIRCLE;
 		symbol.pos = pos;
+		symbol.timeLeft = -1;
 		symbol.radius = radius;
 		symbol.intval = color;
 		symbol.id = "";
 		symbol.strval = "";
+		symbol.type = -1;
 		m_Symbols.Insert(symbol);
     }
 	
@@ -93,20 +97,41 @@ class SDRC_RplGMComp : ScriptComponent
 	/*!	
 	Add a marker on symbol list
 	*/
- 	void AddSymbolMarker(vector pos, float radius, SDRC_EMissionIcon icon, string id, string strval)
+ 	void AddSymbolMarker(vector pos, SDRC_EMissionType missionType, SDRC_EMissionIcon icon, int timeLeft, string id, string strval)
     {
 		pos[1] = 0;			//Set to zero plane
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
-		symbol.type = SDRC_EDrawSymbol.MARKER;		
+		symbol.symbolType = SDRC_EDrawSymbol.MARKER;
 		symbol.pos = pos;
+		symbol.timeLeft = timeLeft;
 		symbol.radius = 0;
 		symbol.intval = icon;
 		symbol.id = id;
 		symbol.strval = strval;
+		symbol.type = missionType;
 		m_Symbols.Insert(symbol);
     }
-
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Get marker symbol information
+	*/
+	SDRC_GMMapSymbol GetSymbolMarker(int idx)
+	{
+		if (m_Symbols.IsEmpty())
+		{
+			return null;
+		}
+				
+		if (idx < 0 || idx > m_Symbols.Count())
+		{
+			return null;
+		}
+		
+		return m_Symbols[idx];
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Request for a mission deletion
@@ -146,7 +171,7 @@ class SDRC_RplGMComp : ScriptComponent
 		foreach(SDRC_GMMapSymbol symbol : m_Symbols)
 		{
 			SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Syncing: " + symbol.pos, LogLevel.SPAM);	
-	        Rpc(RpcDo_SyncMapSymbol, symbol.type, symbol.pos, symbol.radius, symbol.intval, symbol.id, symbol.strval); 	// broadcast to clients			
+	        Rpc(RpcDo_SyncMapSymbol, symbol.symbolType, symbol.pos, symbol.timeLeft, symbol.radius, symbol.intval, symbol.id, symbol.strval, symbol.type); 	// broadcast to clients			
 		}		
 	}
 
@@ -160,17 +185,19 @@ class SDRC_RplGMComp : ScriptComponent
 		
 	//------------------------------------------------------------------------------------------------
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-    protected void RpcDo_SyncMapSymbol(SDRC_EDrawSymbol symbolType, vector pos, float radius, int color, string id, string strval)
+    protected void RpcDo_SyncMapSymbol(SDRC_EDrawSymbol symbolType, vector pos, int timeLeft, float radius, int color, string id, string strval, int type)
     {
 		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(SDRC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.SPAM);
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
 		symbol.type = symbolType;
 		symbol.pos = pos;
+		symbol.timeLeft = timeLeft;
 		symbol.radius = radius;
 		symbol.intval = color;
 		symbol.id = id;
 		symbol.strval = strval;
+		symbol.type = type;
 		m_Symbols.Insert(symbol);
     }
 }

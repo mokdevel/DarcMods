@@ -13,7 +13,6 @@ class SDRC_MapSystem : GameSystem
 
 	int MARKER_WIDTH = (32 * 0.8);
 	int MARKER_HEIGHT = (64 * 0.8);
-	int MARKER_SIZE_BB = (24 * 0.8);		//Marker 'bounding box size' when searhing for mouse hit
 			
 	//------------------------------------------------------------------------------------------------
 	// System initialization
@@ -100,27 +99,10 @@ class SDRC_MapSystem : GameSystem
 			
 			if (gmComponent)
 			{
-				ShowChatMessage(WidgetManager.Translate("Mission ID: " + gmComponent.m_Symbols[markerIdx].id + " : " + gmComponent.m_Symbols[markerIdx].strval));
+				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Mission ID: " + gmComponent.m_Symbols[markerIdx].id + " : " + gmComponent.m_Symbols[markerIdx].strval + " : time left: " + gmComponent.m_Symbols[markerIdx].timeLeft));
 			}
 		}
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Displays a message in chat
-	*/	
-	static void ShowChatMessage(string message)
-	{
-		PlayerController playerComponent = GetGame().GetPlayerController();
-		if (!playerComponent)
-			return;
-		
-		SCR_ChatComponent chatComponent = SCR_ChatComponent.Cast(playerComponent.FindComponent(SCR_ChatComponent));
-		if (!chatComponent)
-			return;
-		
-		chatComponent.ShowMessage(message);
-	}	
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -140,7 +122,7 @@ class SDRC_MapSystem : GameSystem
 			if ( (playerComponent) && (gmComponent) )
 			{
 				playerComponent.AskForMissionDeletion(gmComponent.m_Symbols[markerIdx].id);
-				ShowChatMessage(WidgetManager.Translate("Deletion requested for Mission ID: " + gmComponent.m_Symbols[markerIdx].id));
+				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Deletion requested for Mission ID: " + gmComponent.m_Symbols[markerIdx].id));
 				gmComponent.m_Symbols[markerIdx].visible = false;
 				m_SymbolCount = 0;	//Ask for map update
 			}
@@ -151,7 +133,18 @@ class SDRC_MapSystem : GameSystem
 	protected void OnMapOpen(MapConfiguration mapConfig)
 	{	
 		//SDRC_Log.Add("[SDRC_MapSystem:OnMapOpen] Opened", LogLevel.DEBUG);
-				
+
+		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
+		if (playerComponent)
+		{
+			playerComponent.AskForInfo();
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_MapSystem:OnMapOpen] SDRC_RplPlayerComp not found", LogLevel.WARNING);		
+		}
+
+		//The rest of the stuff is not for non-GM players.								
 		if (!SDRC_PlayerHelper.IsInGMmode())
 		{
 			return;
@@ -169,16 +162,6 @@ class SDRC_MapSystem : GameSystem
 		m_DrawCommands = new array<ref CanvasWidgetCommand>();		
 		m_SymbolCount = 0;
 
-		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
-		if (playerComponent)
-		{
-			playerComponent.AskForInfo();
-		}
-		else
-		{
-			SDRC_Log.Add("[SDRC_MapSystem:OnMapOpen] SDRC_RplPlayerComp not found", LogLevel.WARNING);		
-		}
-		
 		Enable(true);
 		EnableInput();
 	}
@@ -413,43 +396,9 @@ class SDRC_MapSystem : GameSystem
 	*/
 	protected int FindMarkerIndex()
 	{
-		int symbolIdx = -1;
+		float worldX, worldY;
+		m_MapEntity.GetMapCursorWorldPosition(worldX, worldY);
 		
-		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
-		if (gmComponent)
-		{
-			float worldX, worldY;
-			m_MapEntity.GetMapCursorWorldPosition(worldX, worldY);
-			vector cursorPos = "0 0 0";
-			cursorPos[0] = worldX;
-			cursorPos[2] = worldY - (MARKER_SIZE_BB/2)/m_previousZoom;	//Move the point to check up a little
-			
-			float distanceCheck = MARKER_SIZE_BB/m_previousZoom;
-			
-			int idx = 0;
-			
-			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
-			{
-				if (symbol.type == SDRC_EDrawSymbol.MARKER && symbol.visible)
-				{
-					float distance = vector.DistanceXZ(cursorPos, symbol.pos);
-					//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Checking: " + cursorPos + " vs " + symbol.pos + " d=" + distance + " (" + distanceCheck + ")", LogLevel.NORMAL);
-					if (SDRC_Misc.IsPosNearPos(cursorPos, symbol.pos, distanceCheck))
-					{
-//						SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Found.", LogLevel.NORMAL);
-						symbolIdx = idx;
-						break;
-					}								
-				}
-				idx++;
-			}
-			
-			if (symbolIdx > -1)
-			{
-				SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Found marker - index: " + symbolIdx, LogLevel.SPAM);
-			}
-		}		
-		
-		return symbolIdx;
-	}			
+		return SDRC_GMHelper.GetMarkerIndex(worldX, worldY);
+	}
 }

@@ -21,6 +21,24 @@ FrameWidgetClass {
   }
  }
  {
+  ButtonWidgetClass "{668885C5A3880DE3}" {
+   Name "Button0"
+   Slot FrameWidgetSlot "{668885C5A3880DA4}" {
+    PositionX 26
+    OffsetLeft 26
+    PositionY 0
+    OffsetTop 0
+    SizeX 34
+    OffsetRight -60
+    SizeY 45
+    OffsetBottom -45
+   }
+   components {
+    SDRC_MapClickComp "{668885C5A9684BEE}" {
+    }
+   }
+   style blank
+  }
   VerticalLayoutWidgetClass "{649AABAD8DD1DCB4}" {
    Name "VerticalLayout0"
    Slot FrameWidgetSlot "{5D56BA46E7717D6A}" {

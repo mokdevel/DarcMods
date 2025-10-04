@@ -162,6 +162,23 @@ sealed class SDRC_PlayerHelper
 		}
 		
 		return false;
-	}	
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Displays a message in chat
+	*/	
+	static void ShowChatMessage(string message)
+	{
+		PlayerController playerComponent = GetGame().GetPlayerController();
+		if (!playerComponent)
+			return;
+		
+		SCR_ChatComponent chatComponent = SCR_ChatComponent.Cast(playerComponent.FindComponent(SCR_ChatComponent));
+		if (!chatComponent)
+			return;
+		
+		chatComponent.ShowMessage(message);
+	}		
 }
 
