@@ -21,12 +21,6 @@ class SDRC_GMHelper
 			SDRC_Log.Add("[SDRC_GMHelper:FindGameModeAndComponent] SCR_BaseGameMode not found", LogLevel.ERROR);
 			return;
 		}
-		
-		//If missionFrame is not available yet, stop
- 		if (!m_BaseGameMode.missionFrame)
-		{
-			return;
-		}
 	
 		m_GmComponent = SDRC_RplGMComp.GetInstance();
 		if (!m_GmComponent)
@@ -45,6 +39,13 @@ class SDRC_GMHelper
 	static void AddSymbols()
 	{
 		FindGameModeAndComponent();
+		
+		//If missionFrame is not available yet, stop
+ 		if (!m_BaseGameMode.missionFrame)
+		{
+			return;
+		}
+		
 		AddNonValidAreas();
 		AddMarkers();
 	}
@@ -108,7 +109,9 @@ class SDRC_GMHelper
 		{
 			return null;
 		}
-						
+
+		SDRC_Log.Add("[SDRC_GMHelper:GetMarkerDetails] Searching for symbol: " + idx, LogLevel.SPAM);	
+								
 		return m_GmComponent.GetSymbolMarker(idx);
 	}
 	

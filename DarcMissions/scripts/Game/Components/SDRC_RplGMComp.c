@@ -136,22 +136,22 @@ class SDRC_RplGMComp : ScriptComponent
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Request for a mission deletion
+	Request for a mission deletion.
 	*/
  	void DoDeleteMission(int playerID, string missionId)
 	{
-		SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Deletion of " + missionId + " requested by " + playerID, LogLevel.SPAM);	
+		SDRC_Log.Add("[SDRC_RplGMComp:DoDeleteMission] Deletion of " + missionId + " requested by " + playerID, LogLevel.SPAM);	
 		SDRC_GMHelper.DeleteMission(missionId);
 //		SyncMapSymbols(playerID);
 	}
 		
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Request for a mission deletion
+	Request for a mission ending. Used by DarcStories
 	*/
  	void DoEndMission(int playerID, string missionId)
 	{
-		SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Ending of " + missionId + " requested by " + playerID, LogLevel.SPAM);	
+		SDRC_Log.Add("[SDRC_RplGMComp:DoEndMission] Ending of " + missionId + " requested by " + playerID, LogLevel.SPAM);	
 		SDRC_GMHelper.EndMission(missionId, SDRC_EMissionSuccess.LOSE);
 //		SyncMapSymbols(playerID);
 	}
@@ -162,7 +162,7 @@ class SDRC_RplGMComp : ScriptComponent
 	*/
  	void SyncMapSymbols(int playerID)
 	{
-		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.DEBUG);	
+		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.SPAM);	
 		//Clear symbols on server
 		ClearSymbols();
 		//Clear symbols on client
