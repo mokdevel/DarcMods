@@ -11,7 +11,7 @@ SDRC_RplPlayerCompClass g_RplPlayerCompClass;
 class SDRC_RplPlayerComp : ScriptComponent
 {
 	private static SDRC_RplPlayerComp s_Instance;	
-	 
+		 
     override void OnPostInit(IEntity owner)
     {
 /*        auto hintEnt = SDRC_RplHintEntity.Cast(owner);

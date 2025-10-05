@@ -204,5 +204,19 @@ class SDRC_GMHelper
 			}
 			SDRC_Log.Add("[SDRC_GMHelper:DeleteMission] Ending mission: " + id + " - (" + SCR_Enum.GetEnumName(SDRC_EMissionSuccess, success) + ")" + m_BaseGameMode.missionFrame.m_MissionList[idx].GetTitle(), LogLevel.DEBUG);				
 		}
-	}	
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Shall we show time left for players
+	*/	
+	static bool IsShowMissionTimeLeft()
+	{
+		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
+		if (!gmComponent)
+		{
+			return false;
+		}
+		return gmComponent.m_ShowMissionTimeLeft;
+	}
 }

@@ -71,6 +71,12 @@ class SDRC_MissionFrame
 		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI skill multiplier: " + m_Config.difficultyAiSkillCoefMul, LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI perception multiplier: " + m_Config.difficultyAiPerceptionCoefMul, LogLevel.NORMAL);
 		
+		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
+		if (gmComp)
+		{
+			gmComp.UpdateTimeLeft(m_Config.showMissionTimeLeft);
+		}
+		
 		//Checking the enemies found
 		SDRC_Log.Add("[SDRC_MissionFrame] Enemy factions: " + m_Config.enemyFactions, LogLevel.NORMAL);
 		SDRC_EnemyHelper.SetEnemyFactions(m_Config.enemyFactions);

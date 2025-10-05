@@ -34,7 +34,7 @@
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 3;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 0;//15;//5;//3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 3;//15;//5;//3;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -75,6 +75,7 @@ class SDRC_MissionFrameConfig : Managed
 	int minDistanceToMission;		//Distance to another mission. Two missions shall not be too close to each other.
 	int minDistanceToPlayer;		//Mission shall not spawn too close to a player.
 	bool showStaticMissionMarker;	//Show static mission marker
+	bool showMissionTimeLeft;		//Show mission time left on marker click
 	ref array<string>enemyFactions;	//Factions to use for enemy selection
 	ref SDRC_MissionDifficulty missionDifficulty = new SDRC_MissionDifficulty();
 	ref SDRC_MissionTypeConfig missionDynamic = new SDRC_MissionTypeConfig();
@@ -169,6 +170,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.minDistanceToMission = SDRC_MISSION_MIN_DISTANCE;
 		conf.minDistanceToPlayer = SDRC_PLAYER_MIN_DISTANCE;
 		conf.showStaticMissionMarker = SDRC_MISSION_SHOW_STATIC_MARKER;
+		conf.showMissionTimeLeft = false;
 		
 		#ifdef SDRC_RELEASE
 			conf.enemyFactions = {"USSR"};

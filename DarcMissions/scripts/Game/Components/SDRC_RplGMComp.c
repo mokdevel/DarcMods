@@ -36,6 +36,10 @@ class SDRC_RplGMComp : ScriptComponent
 	private static SDRC_RplGMComp s_Instance;	
 	static ref array<ref SDRC_GMMapSymbol> m_Symbols = {};
 	 
+	[RplProp(onRplName: "OnUpdateTimeLeft")]
+	bool m_ShowMissionTimeLeft = false;
+	
+	//------------------------------------------------------------------------------------------------
     override void OnPostInit(IEntity owner)
     {
 		s_Instance = this;				
@@ -52,6 +56,7 @@ class SDRC_RplGMComp : ScriptComponent
 	
 	//------------------------------------------------------------------------------------------------
 	//! Get instance
+	//TBD: This might be exactly the same GetInstance() above
 	static SDRC_RplGMComp FindInstance()
 	{
 		SDRC_RplGMEntity gmEnt = SDRC_RplGMEntity.GetInstance();
@@ -68,7 +73,7 @@ class SDRC_RplGMComp : ScriptComponent
 	/*!	
 	Return instance to component
 	*/
-	static void ClearSymbols()
+	void ClearSymbols()
 	{
 		m_Symbols.Clear();
 	}
@@ -178,6 +183,9 @@ class SDRC_RplGMComp : ScriptComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	RPL: Clear symbols 
+	*/
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
     protected void RpcDo_ClearSymbols()
     {
@@ -186,6 +194,9 @@ class SDRC_RplGMComp : ScriptComponent
     }
 		
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	RPL: Syncronize symbols to clients
+	*/
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
     protected void RpcDo_SyncMapSymbol(SDRC_EDrawSymbol symbolType, vector pos, int timeLeft, float radius, int color, string id, string strval, int type)
     {
@@ -202,4 +213,32 @@ class SDRC_RplGMComp : ScriptComponent
 		symbol.type = type;
 		m_Symbols.Insert(symbol);
     }
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Update time left attribute
+	*/
+	protected void OnUpdateTimeLeft()
+	{
+		SDRC_Log.Add("[SDRC_RplStoryComp:OnUpdateTimeLeft] TimeLeft updated.", LogLevel.NORMAL);
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	void UpdateTimeLeft(bool timeLeft)
+	{
+		RpcDo_UpdateTimeLeft(timeLeft);
+		Rpc(RpcDo_UpdateTimeLeft, timeLeft);
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	RPL: Time left attribute update
+	*/
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	protected void RpcDo_UpdateTimeLeft(bool timeLeft)
+	{
+		m_ShowMissionTimeLeft = timeLeft;
+
+		Replication.BumpMe();
+	}		
 }
