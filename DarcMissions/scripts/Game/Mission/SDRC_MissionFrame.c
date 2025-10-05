@@ -238,7 +238,7 @@ class SDRC_MissionFrame
 			if (tmpDC_Mission.GetState() != SDRC_EMissionState.FAILED)
 			{		
 				//Show marker
-				tmpDC_Mission.ShowMarker();
+				//tmpDC_Mission.ShowMarker();	//TBD: Moved marker creation to ACTIVE state. If all good, remove this line.
 				//Set the default active distance and time to end
 				tmpDC_Mission.SetActiveDistance(m_Config.missionActiveDistance);
 				tmpDC_Mission.SetActiveTimeToEnd(m_Config.missionActiveTimeToEnd);

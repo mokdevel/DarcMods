@@ -532,6 +532,7 @@ class SDRC_Mission
 			//Things to set when mission goes to active state
 			GetGame().GetCallqueue().CallLater(GetAICountActiveDelayed, 10000);		//Do the counting after a while. AIs needs to be spawned.
 			m_iAIKillPercentageRandom = Math.RandomInt(30, 99);
+			ShowMarker();
 		}
 		
 		if (state == SDRC_EMissionState.FAILED)
