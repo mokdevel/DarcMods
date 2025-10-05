@@ -85,6 +85,8 @@ sealed class SDRC_Misc
 	/*!
 	Returns the (max) size of the world
 	*/	
+	
+	//TBD: Clean up this code
 	static int GetWorldSize()
 	{
 		int worldSize;
@@ -97,6 +99,23 @@ sealed class SDRC_Misc
 			worldSize = m_MapEntity.GetMapSizeY();
 		}*/
 
+//		SDRC_SpawnHelper.FindEntitySize(GenericTerrainEntity);
+//		IEntity ent = GetGame().FindEntity("GenericTerrainEntity");
+		
+/*		IEntity terrain = GetGame().GetWorld().FindEntityByName("Terrain");
+		if (terrain)
+		{
+			vector sums = SDRC_SpawnHelper.FindEntitySize(terrain);
+			Print(sums);			
+		}*/
+		
+/*		GetGame().GetWorld().QueryEntitiesBySphere("0 0 0", 1000000, FindCallback, null, EQueryEntitiesFlags.ALL);
+*/		
+/*		BaseWorld m_World = GetGame().GetWorld();
+        auto ent = GenericTerrainEntity.Cast(owner);
+		IEntity ent = GetGame().GetWorldEntity();
+		BaseRplComponent rplComponent = BaseRplComponent.Cast(ent.FindComponent(BaseRplComponent));*/
+		
 		vector mins, maxs;
 		GetGame().GetWorld().GetBoundBox(mins, maxs);		
 		worldSize = FindMaxValue(maxs);
@@ -104,6 +123,42 @@ sealed class SDRC_Misc
 						
 		return worldSize;
 	}
+	
+	static bool FindCallback(IEntity entity)
+	{
+		static int staph = 0;
+		
+		staph++;
+		
+/*		if (staph > 1000)
+		{
+			return false;
+		}
+		
+		if (entity.ClassName() != "GenericEntity")
+		{
+			SDRC_Log.Add("[SDRC_Misc:FindCallback] Classname:" + entity.ClassName(), LogLevel.DEBUG);
+		}*/
+		
+/*		if (entity.ClassName() == "EnvironmentProbeEntity")
+		{
+			return false;
+		}*/
+		
+		if (entity.ClassName() == "GenericWorldFogEntity")
+		{
+			return false;
+		}
+		
+		if ( (entity.ClassName() == "GenericTerrainEntity") || (entity.ClassName() == "GenericTerrainEntityClass") )
+		{
+			Print("FDOUNFF!!!");
+			vector sums = SDRC_SpawnHelper.FindEntitySize(entity);
+			Print(sums);			
+			return false;
+		}
+		return true;
+	}	
 	
 	//------------------------------------------------------------------------------------------------
 	/*!

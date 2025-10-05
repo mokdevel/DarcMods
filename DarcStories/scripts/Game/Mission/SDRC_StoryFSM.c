@@ -162,8 +162,7 @@ class SDRC_StoryFSM
 		{	
 			if (stat)
 			{
-				//Just for RPL testing.
-				//TBD: The real functionality is not there yet.
+				//Send the RPL information to players about mission timing etc. 
 				SDRC_RplStoryComp storyComp = SDRC_RplStoryComp.GetInstance();
 				if (storyComp)
 				{

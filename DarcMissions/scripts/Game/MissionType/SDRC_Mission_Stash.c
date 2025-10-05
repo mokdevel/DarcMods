@@ -45,16 +45,6 @@ class SDRC_Mission_Stash : SDRC_Mission
 		//Find the position
 		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Stash.general.pos, m_DC_Stash.general.size, m_DC_Stash.locationTypes);
 		
-/*		//Find a location for the mission
-		if (pos == "0 0 0")
-		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Stash.locationTypes, m_DC_Stash.general.emptySize);
-		}
-		else
-		{
-			pos = SDRC_MissionHelper.FindMissionPos(pos, m_DC_Stash.general.emptySize);
-		}*/
-		
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
@@ -224,7 +214,9 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 		conf.activeDistance = 50;
 		conf.missionList = {0};
 		conf.missionFiles.Insert("dc_missionConfig_Stash_010.json");
-		conf.missionFiles.Insert("dc_missionConfig_Stash_01x.json");	//Just for testing that dummy files don't appear
+		#ifndef SDRC_RELEASE
+			conf.missionFiles.Insert("dc_missionConfig_Stash_01x.json");	//Just for testing that dummy files don't appear
+		#endif
 		//Mission specific		
 		//----------------------------------------------------
 		conf.subMissions.Insert(Stash0());				
