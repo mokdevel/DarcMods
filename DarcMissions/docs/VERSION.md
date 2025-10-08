@@ -4,7 +4,32 @@
 
 ## Next release (unreleased)
 
-.. empty ..
+### DarcMissions
+Major changes in the json files. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
+
+This release is 
+* for bug fixing and clean up of configurations. 
+* to get some run time before the new version of Arma Reforger is out.
+* a preparation for new functionality needed for my future ideas.
+
+Main features:
+* New mission: Stash - A secret stash is available for picking. May or may not have guards near it.
+* Clicking on an active mission on map will show remaining time.
+* Faction definition for missions. You can force certain missions to spawn enemies from specific faction.
+* Missions loadable from multiple files. See: ``missionFiles``.
+* Difficulty can be changed in DarcMissions config. See: ``missionDifficulty``.
+* Introduced difficulty option for missions. See: ``difficulty``.
+* Common options in missions use the same structure. See: ``Common parameters``
+* Mission index renamed to subIdx to eventually work as a unique ID.
+
+Fixes:
+* Hunters work properly on Kunar map.
+* Various crash fixes here and there.
+
+### DarcDeathMarker
+Main features:
+* Configuration options added.
+* DeathMarker visibility can be limited to the player faction.
 
 ## 20250824
 Updated json: dc_enemyList.json - remove your existing file.
