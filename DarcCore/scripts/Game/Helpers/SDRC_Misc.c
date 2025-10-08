@@ -83,21 +83,16 @@ sealed class SDRC_Misc
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Returns the (max) size of the world
+	Returns the (max) size of the world bound box
+	
+	NOTE: Some maps may have the bounding box larger than the actualy play area (GenericTerrainEntity). 
+	In these cases the worldsize not correct.	
 	*/	
 	
 	//TBD: Clean up this code
 	static int GetWorldSize()
 	{
 		int worldSize;
-		//TBD: This should work, but returns incorrect size on dedicated server. Check with 1.3 if fixed.
-		/*
-		SCR_MapEntity m_MapEntity = SCR_MapEntity.GetMapInstance();
-		worldSize = m_MapEntity.GetMapSizeX();		
-		if (m_MapEntity.GetMapSizeY() > worldSize)
-		{
-			worldSize = m_MapEntity.GetMapSizeY();
-		}*/
 
 //		SDRC_SpawnHelper.FindEntitySize(GenericTerrainEntity);
 //		IEntity ent = GetGame().FindEntity("GenericTerrainEntity");
@@ -109,13 +104,6 @@ sealed class SDRC_Misc
 			Print(sums);			
 		}*/
 		
-/*		GetGame().GetWorld().QueryEntitiesBySphere("0 0 0", 1000000, FindCallback, null, EQueryEntitiesFlags.ALL);
-*/		
-/*		BaseWorld m_World = GetGame().GetWorld();
-        auto ent = GenericTerrainEntity.Cast(owner);
-		IEntity ent = GetGame().GetWorldEntity();
-		BaseRplComponent rplComponent = BaseRplComponent.Cast(ent.FindComponent(BaseRplComponent));*/
-		
 		vector mins, maxs;
 		GetGame().GetWorld().GetBoundBox(mins, maxs);		
 		worldSize = FindMaxValue(maxs);
@@ -123,42 +111,6 @@ sealed class SDRC_Misc
 						
 		return worldSize;
 	}
-	
-	static bool FindCallback(IEntity entity)
-	{
-		static int staph = 0;
-		
-		staph++;
-		
-/*		if (staph > 1000)
-		{
-			return false;
-		}
-		
-		if (entity.ClassName() != "GenericEntity")
-		{
-			SDRC_Log.Add("[SDRC_Misc:FindCallback] Classname:" + entity.ClassName(), LogLevel.DEBUG);
-		}*/
-		
-/*		if (entity.ClassName() == "EnvironmentProbeEntity")
-		{
-			return false;
-		}*/
-		
-		if (entity.ClassName() == "GenericWorldFogEntity")
-		{
-			return false;
-		}
-		
-		if ( (entity.ClassName() == "GenericTerrainEntity") || (entity.ClassName() == "GenericTerrainEntityClass") )
-		{
-			Print("FDOUNFF!!!");
-			vector sums = SDRC_SpawnHelper.FindEntitySize(entity);
-			Print(sums);			
-			return false;
-		}
-		return true;
-	}	
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -206,6 +158,7 @@ sealed class SDRC_Misc
 			
 			posTmp[1] = GetGame().GetWorld().GetSurfaceY(posTmp[0], posTmp[2]);
 			
+			//If map has ocean, check if position on land
 			if (GetGame().GetWorld().IsOcean())
 			{
 				if (mustBeOnLand)
@@ -220,8 +173,16 @@ sealed class SDRC_Misc
 					positionFound = true;
 				}
 			}
+			else
+			{
+				//If no ocean present, we check that it's not under map
+				if (posTmp[1] >= 0)
+				{
+					positionFound = true;
+				}
+			}
 			
-			if ( (posTmp[1] >= 0) && positionFound )
+			if (positionFound)
 			{
 				break;
 			}
@@ -309,6 +270,21 @@ sealed class SDRC_Misc
 		return true;
 	}	
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Check if position under map. 
+	The case happens when the Y-coordinate is negative so we consider it to be under the map.
+	*/	
+	static bool IsPosUnderMap(vector pos)
+	{
+		if (GetGame().GetWorld().GetSurfaceY(pos[0] , pos[2]) < 0)
+		{
+			return true;
+		}
+		
+		return false;
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Returns the resourceName in human readable format

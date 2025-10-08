@@ -390,7 +390,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			"You outsmarted the hunters.",
 			"Hunters lost track of you.", 
 			"",
-			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_X_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
 			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
@@ -418,7 +418,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			"Sharpshooters were not that sharp.",
 			"Sharpshooters lost track of you.", 
 			"",
-			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_X_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
 			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);

@@ -25,6 +25,7 @@
 		private const int SDRC_MISSION_HINT_TIME = 90;									//Seconds to show the mission hint to players
 		private const int SDRC_MISSION_RANDOM_POS = 100;								//The randomization for search radius for mission position 
 		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;						//Show/hide static mission markers
+		private const bool SDRC_MISSION_SHOW_TIME_LEFT = true;						//Show/hide static mission markers
 	#endif
 	
 	//Development time options
@@ -34,7 +35,7 @@
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 3;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 3;//15;//5;//3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 20;//15;//5;//3;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -49,6 +50,7 @@
 		private const int SDRC_MISSION_HINT_TIME = 90;
 		private const int SDRC_MISSION_RANDOM_POS = 100;
 		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;
+		private const bool SDRC_MISSION_SHOW_TIME_LEFT = true;
 	#endif
 
 //------------------------------------------------------------------------------------------------
@@ -170,7 +172,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.minDistanceToMission = SDRC_MISSION_MIN_DISTANCE;
 		conf.minDistanceToPlayer = SDRC_PLAYER_MIN_DISTANCE;
 		conf.showStaticMissionMarker = SDRC_MISSION_SHOW_STATIC_MARKER;
-		conf.showMissionTimeLeft = false;
+		conf.showMissionTimeLeft = SDRC_MISSION_SHOW_TIME_LEFT;
 		
 		#ifdef SDRC_RELEASE
 			conf.enemyFactions = {"USSR"};
@@ -195,8 +197,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.enemyFactions = {"USAF_USMC", "RHS_RF"};
 //			conf.enemyFactions = {"MEI"};
 		
-			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.HUNTER, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.CONVOY, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.HVTITEM};
-//			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.CONVOY, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS};
+			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.HUNTER};
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY};		
@@ -217,9 +218,6 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP, SDRC_EMissionType.HVTITEM};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL, SDRC_EMissionType.PATROL, SDRC_EMissionType.PATROL, SDRC_EMissionType.CONVOY, SDRC_EMissionType.CONVOY};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.PATROL, SDRC_EMissionType.HVTVIP};
 //			conf.missionStatic.missionTypeArray = {};
 			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};		
 		
