@@ -37,7 +37,7 @@
 				"loseMessage": "Hunters lost track of you.",
 				"faction": "",
 				"markerType": "DARC_MISSION",
-				"markerIcon": 0,
+				"markerIcon": 6,
 				"difficulty": 2,
 				"xp": 0
 			},
@@ -79,7 +79,7 @@
 				"loseMessage": "Sharpshooters lost track of you.",
 				"faction": "",
 				"markerType": "DARC_MISSION",
-				"markerIcon": 0,
+				"markerIcon": 6,
 				"difficulty": 2,
 				"xp": 0
 			},

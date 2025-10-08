@@ -15,6 +15,7 @@
 	"minDistanceToMission": 200,
 	"minDistanceToPlayer": 100,
 	"showStaticMissionMarker": true,
+	"showMissionTimeLeft": true,
 	"enemyFactions": [
 		"USSR"
 	],
@@ -42,23 +43,24 @@
 		]
 	},
 	"missionDynamic": {
-		"count": 0,
+		"count": 3,
 		"countMul": 2.0,
 		"activeTime": 300,
 		"delayBetween": 1,
 		"missionTypeArray": [
-			1,
-			4,
-			2,
 			3,
+			4,
+			1,
+			9,
+			8,
+			2,
 			5,
 			6,
-			8,
-			9
+			10
 		]
 	},
 	"missionStatic": {
-		"count": 0,
+		"count": 20,
 		"countMul": 3.0,
 		"activeTime": 3000,
 		"delayBetween": 1,
