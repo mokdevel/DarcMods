@@ -83,7 +83,9 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 			"tem_buildingtower", "tem_column", "tem_arab", "tem_cover", 
 			"tem_buildingbridge", "tem_arch", "tem_potmarket", "tem_oil_pump", 
 			"tem_brokengate", 
-			"FuelTank_"
+			"FuelTank_",
+			//Kunar
+			"BigHBarrier", "Wall_E", "Wall_ATC", 
 		};
 		conf.emptyPos.limit = 5;
 		conf.emptyPos.ignoreFilter = {
