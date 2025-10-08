@@ -290,6 +290,11 @@ sealed class SDRC_Locations
 		if (mapDescr)
 		{
 			MapItem mapItem = mapDescr.Item();
+			if (!mapItem)
+			{
+				return false;
+			}
+			
 			if ( (mapItem.GetDisplayName() != "") && (SCR_StringHelper.Translate(mapItem.GetDisplayName()) != "") )
 			{
 				m_sName = SCR_StringHelper.Translate(mapItem.GetDisplayName());
