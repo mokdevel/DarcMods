@@ -49,6 +49,7 @@ enum SDRC_EMissionError
 
 	//Mainly from checking if position is suitable for mission	
 	POSITION_IN_WATER,
+	POSITION_UNDER_MAP,
 	PLAYER_TOO_CLOSE,
 	MISSION_TOO_CLOSE,
 	IN_NON_VALID_AREA	

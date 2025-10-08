@@ -281,6 +281,12 @@ sealed class SDRC_MissionHelper
 			return SDRC_EMissionError.POSITION_IN_WATER;
 		}
 				
+		if (SDRC_Misc.IsPosUnderMap(pos))
+		{
+			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.POSITION_UNDER_MAP), LogLevel.SPAM);
+			return SDRC_EMissionError.POSITION_UNDER_MAP;
+		}
+				
 		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, distanceToPlayer))
 		{
 			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.PLAYER_TOO_CLOSE), LogLevel.SPAM);
