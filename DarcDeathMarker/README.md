@@ -6,3 +6,21 @@ Just activate the mod (and dependencies) and you're good to go.
 
 ## Configuration
 No configuration options.
+
+## Core config
+Example: [dc_deathMarkerConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcDeathMarker/ExampleConfigs/dc_deathMarkerConfig.json)
+```
+int version : Version number of the file.
+string author : Author of the missions.
+int markerLifeTime : (seconds) How long the marker is visible on map.
+bool visibleOnlyToFaction : If true, the markers will only be visible for players in the same faction.
+```
+
+# Version history
+
+## 20250910
+### DarcDeathMarker
+Main features:
+* Configuration options added.
+* DeathMarker visibility can be limited to the player faction.
+

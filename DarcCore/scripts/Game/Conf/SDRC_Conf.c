@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-//#define SDRC_RELEASE
+#define SDRC_RELEASE
 
 sealed class SDRC_Conf
 {
@@ -22,7 +22,7 @@ sealed class SDRC_Conf
 	const bool SDRC_ENABLE_DARCSPAWNER = true;			//Enable the spawner mod during development
 	const bool SDRC_ENABLE_DARCMISSIONS = true;			//Enable the missions mod during development
 	const bool SDRC_ENABLE_DARCDEATHMARKER = true;		//Enable death marker mod during development
-	const bool SDRC_ENABLE_DARCSTORIES = true;			//Enable stories mod during development
+	const bool SDRC_ENABLE_DARCSTORIES = false;			//Enable stories mod during development
 //	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA			//If enabled, creates a default configuration
 	const bool RELEASE = true;							//Define for release compilation to workshop
 	const bool OVERWRITE_JSON = false;					//Writes a new conf even if it exists

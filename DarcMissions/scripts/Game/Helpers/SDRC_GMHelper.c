@@ -122,21 +122,23 @@ class SDRC_GMHelper
 	*/
 	static int GetMarkerIndex(float worldX, float worldY)
 	{
-		int MARKER_SIZE_BB = (24 * 0.8);		//Marker 'bounding box size' when searhing for mouse hit		
+		int MARKER_SIZE_BB = 64;//(24 * 0.8);		//Marker 'bounding box size' when searhing for mouse hit		
 		int symbolIdx = -1;
-
+		
 		SCR_MapEntity m_MapEntity = SCR_MapEntity.GetMapInstance();
 		
 		if (!m_MapEntity)
 			return symbolIdx;
 		
 		float currentZoom = m_MapEntity.GetCurrentZoom();
-		
+
+		//SDRC_Log.Add("[SDRC_GMHelper:GetMarkerIndex] pos: " + worldX + " , " + worldY + " z:" + currentZoom, LogLevel.NORMAL);	
+				
 		vector pos = "0 0 0";
 		pos[0] = worldX;
-		pos[2] = worldY - (MARKER_SIZE_BB/2)/currentZoom;	//Move the point to check up a little
+		pos[2] = worldY - (MARKER_SIZE_BB/2);///currentZoom;	//Move the point to check up a little
 		
-		float distanceCheck = MARKER_SIZE_BB/currentZoom;		
+		float distanceCheck = (MARKER_SIZE_BB/2)/currentZoom;		
 				
 		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
 		if (gmComponent)

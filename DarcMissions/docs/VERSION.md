@@ -3,7 +3,9 @@
 # Version history
 
 ## Next release (unreleased)
+...empty...
 
+## 20250910
 ### DarcMissions
 Major changes in the json files. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
 
@@ -15,21 +17,22 @@ This release is
 Main features:
 * New mission: Stash - A secret stash is available for picking. May or may not have guards near it.
 * Clicking on an active mission on map will show remaining time.
-* Faction definition for missions. You can force certain missions to spawn enemies from specific faction.
-* Missions loadable from multiple files. See: ``missionFiles``.
-* Difficulty can be changed in DarcMissions config. See: ``missionDifficulty``.
-* Introduced difficulty option for missions. See: ``difficulty``.
-* Common options in missions use the same structure. See: ``Common parameters``
-* Mission index renamed to subIdx to eventually work as a unique ID.
 
 Fixes:
 * Hunters work properly on Kunar map.
 * Various crash fixes here and there.
+* Convoys have passengers.
 
-### DarcDeathMarker
-Main features:
-* Configuration options added.
-* DeathMarker visibility can be limited to the player faction.
+Configuration changes:
+* dc_missionConfig.json
+  * Difficulty can be configured in DarcMissions config. See: ``missionDifficulty``.
+
+* dc_missionConfig_*.json
+  * Faction definition for missions. You can force certain missions to spawn enemies from specific faction. See: ``faction``
+  * Missions loadable from multiple files. See: ``missionFiles``.
+  * Introduced difficulty option for missions. See: ``difficulty``.
+  * Common options in missions use the same structure. See: ``Common parameters``
+  * Mission index renamed to subIdx to eventually work as a unique ID.
 
 ## 20250824
 Updated json: dc_enemyList.json - remove your existing file.
