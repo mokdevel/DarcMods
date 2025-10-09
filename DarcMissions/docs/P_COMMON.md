@@ -30,6 +30,14 @@ DC_EMissionWinCondition winCondition =
   2 = AI_KILL_75 - ..75%
   3 = AI_KILL_50 - ..50%
   4 = AI_KILL_RANDOM - ..a random % (30%-100%) of AI is killed
+  5..9 = RESERVED FOR FUTURE
+  10 = HVT_KILL_VIP - Specific for HVT_VIP mission. Mission is over when VIP is killed.
+  20 = HVT_DESTROY_ITEM - Specific for HVT_ITEM mission. Mission is over when ITEM is destroyed.
+  21..29 = RESERVED FOR FUTURE
+  30 = FIND_IN_15 - Mission needs to be reached in 15 minutes
+  31 = FIND_IN_30 - Mission needs to be reached in 30 minutes
+  32 = FIND_IN_45 - Mission needs to be reached in 45 minutes
+  33 = FIND_IN_60 - Mission needs to be reached in 60 minutes
 string winMessage : Message to show when mission is completed
 string loseMessage : Message to show when mission fails.
 string faction : Faction for the mission. Setting as empty, works as the default to select from the enemyFactions.
@@ -37,19 +45,24 @@ string markerType : The marker type to use. Default is "DARC_MISSION".
   For Arma Reforger default ones, you can use "PLACED_MILITARY". Other mods may extend this.
 int markerIcon : The index of the icon of defined markerType
 SDRC_EMissionDifficulty difficulty : Difficulty for specific mission
+  0 = EASY
+  1 = MODERATE
+  2 = NORMAL
+  3 = TOUGH 
+  4 = HARD
 int xp = 0 : Experience given - not supported currently
 ```
 
-## General parameters
+## SDRC_MissionConfigAi
 ```
-array<int> groupCount : (min, max) Amount of AI groups of characters to spawn.
-array<string> groupTypes : The prefab names of AI groups or characters. The AI is randomly picked from this list.
+array<int> count : (min, max) Amount of AI groups of characters to spawn.
+array<string> types : The prefab names of AI groups or characters. The AI is randomly picked from this list.
   Example : {
             "{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
             "{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et",
 			"G_LIGHT", "C_OFFICER"
             }
-int aiSkill : Skill for AI (0-100). See SCR_AICombatComponent and EaiSkill.
+int skill : Skill for AI (0-100). See SCR_AICombatComponent and EaiSkill.
   0 = NONE
   10 = NOOB
   20 = ROOKIE
@@ -57,5 +70,5 @@ int aiSkill : Skill for AI (0-100). See SCR_AICombatComponent and EaiSkill.
   70 = VETERAN
   80 = EXPERT
   100 = CYLON
-float aiPerception : How quickly AI reacts to danger. See SCR_AICombatComponent for details on perception factors.
+float perception : How quickly AI reacts to danger. See SCR_AICombatComponent for details on perception factors.
 ```
