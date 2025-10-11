@@ -10,16 +10,10 @@ class SDRC_Camp : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();		
-	ref array<EMapDescriptorType> locationTypes = {};	
 	
 	//Optional settings
 	ref SDRC_Loot loot = null;
-	ref array<ref SDRC_Structure> campItems = {};
-	
-	void Set(array<EMapDescriptorType> locationTypes_)
-	{
-		locationTypes = locationTypes_;
-	}
+	ref array<ref SDRC_Structure> campItems = {};	
 }
 
 sealed class SDRC_CampHelper
