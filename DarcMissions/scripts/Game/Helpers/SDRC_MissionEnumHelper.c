@@ -8,6 +8,7 @@ Includes various functions for missions.
 //------------------------------------------------------------------------------------------------
 enum SDRC_EMissionType
 {
+	ERROR = -1,
 	NONE = 0,
 	HUNTER,
 	OCCUPATION,

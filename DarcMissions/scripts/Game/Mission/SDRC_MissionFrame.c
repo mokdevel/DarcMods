@@ -178,7 +178,15 @@ class SDRC_MissionFrame
 		{
 			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Spawning new static mission", LogLevel.NORMAL);
 			
-			missionType = m_Config.missionStatic.missionTypeArray.GetRandomElement();
+			if (m_Config.missionStatic.missionTypeArray.IsEmpty())
+			{
+				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Error in file dc_missionConfig.json : missionStatic/missionTypeArray is empty.", LogLevel.ERROR);
+				missionType = SDRC_EMissionType.ERROR;
+			}
+			else
+			{
+				missionType = m_Config.missionStatic.missionTypeArray.GetRandomElement();
+			}
 			tmpDC_Mission = MissionCreate(missionType);
 			if (tmpDC_Mission)
 			{
@@ -207,7 +215,15 @@ class SDRC_MissionFrame
 				//GM has not requested any missions to spawn, go for a regular dynamic one
 				if (m_missionsRequested.IsEmpty())
 				{
-					missionType = m_Config.missionDynamic.missionTypeArray.GetRandomElement();
+					if (m_Config.missionDynamic.missionTypeArray.IsEmpty())
+					{
+						SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Error in file dc_missionConfig.json : missionDynamic/missionTypeArray is empty.", LogLevel.ERROR);
+						missionType = SDRC_EMissionType.ERROR;						
+					}
+					else
+					{
+						missionType = m_Config.missionDynamic.missionTypeArray.GetRandomElement();
+					}
 					//If regular mission is to be spawned, static missions have already been handled.
 					m_iStaticTryCount = m_iStaticTryLimit;
 				}
@@ -353,6 +369,11 @@ class SDRC_MissionFrame
 		
 		switch (missionType)
 		{
+			case SDRC_EMissionType.ERROR:
+			{
+				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Incorrect missiontype. Check dc_missionConfig.json for errors.", LogLevel.ERROR);
+				break;
+			}
 			case SDRC_EMissionType.NONE:
 			{
 				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Mission of type NONE ignored.", LogLevel.ERROR);
