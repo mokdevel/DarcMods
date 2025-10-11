@@ -99,7 +99,20 @@ Dependency specific files
 # Version history
 
 ## Next release (unreleased)
-...empty...
+Moved ``locationTypes`` under ``general`` as it's a common attribute for all missions. That said, the mission json files have changes. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs. Hopefully this is one of the last big changes for now.
+NOTE: dc_coreConfig.json and dc_lootList.json have been updated too.
+
+Fixes:
+* Hunters spawn distance fixes.
+
+Changes:
+* dc_missionConfig_*.json
+  * Moved ``locationTypes`` under General. This affects all missions. 
+* dc_coreConfig.json added locationAkas - You can name location names to work as specific locationTypes. For example anything called "military" could be of type MDT_BASE (79). Functionality currently disabled.
+* dc_lootList.json
+  * Added ``GEAR_HEADGEAR`` - helmets and gas masks. More gear lists TBD.
+  * Added ``CLOTHING_HEADGEAR`` - non military head gear like hats. More clothing lists TBD.
+  * Support for MCX Spear 6.8. Included in ``WEAPON_RIFLE``.
 
 ## 20250910
 ### DarcMissions
