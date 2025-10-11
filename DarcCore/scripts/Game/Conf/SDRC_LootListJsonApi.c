@@ -16,8 +16,10 @@
 	UTIL_OPTIC,
 	ITEM_MEDICAL,
 	ITEM_GENERAL,
-	UTIL_MAGAZINE,	//Adds a random magazine
-	UTIL_AMMO		//Adds a random rocket, shell, flare, ..
+	UTIL_MAGAZINE,			//Adds a random magazine
+	UTIL_AMMO,				//Adds a random rocket, shell, flare, ..
+	GEAR_HEADGEAR,			//Head Gear including helmets, gas masks
+	CLOTHING_HEADGEAR,		//Head Gear including hats
 */
 
 /*class SDRC_LootListConfig : SDRC_ListConfig
@@ -82,6 +84,10 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		//Items
 		conf.lists.Insert(lootList50());	
 		conf.lists.Insert(lootList51());
+		//Gear
+		conf.lists.Insert(lootList60());		
+		//Clothing
+		conf.lists.Insert(lootList80());		
 	}
 			
 	//Lootlist: Rifles
@@ -93,8 +99,10 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			{"Prefabs/Weapons/Rifles",
 				"Prefabs/5AB890B71D748750/Weapon_Variants_B",	//M4BlockII
 			},
-			{"Rifle"},
-			{"_Base", "_Sample", "Tutorial", "Mosin", "SVD", "Barrett", "M110", "M21", "M40"}
+			{"Rifle", 
+			"Spear68_", //MCX Spear 6.8
+			},
+			{"_Base", "_Sample", "Tutorial", "Mosin", "SVD", "Barrett", "M110", "M21", "M40",}
 		);
 		return lootList;
 	}
@@ -106,8 +114,12 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		lootList.Set(
 			"WEAPON_RIFLE_BIG",
 			{"Prefabs/Weapons/Rifles"},
-			{"Rifle"},
-			{"_Base", "_Sample", "Tutorial", "AK74", "AKS74", "VZ", "M16" }
+			{"Rifle", 
+			"Spear68_", //MCX Spear 6.8
+			},
+			{"_Base", "_Sample", "Tutorial", "AK74", "AKS74", "VZ", "M16",
+			"Spear68_",	//MCX Spear 6.8
+			}
 		);
 		return lootList;
 	}
@@ -268,4 +280,33 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		);
 		return lootList;
 	}
+	
+	//Lootlist: Gear : Head gear
+	SDRC_List lootList60()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"GEAR_HEADGEAR",
+			{"Prefabs/Characters/HeadGear"},
+			{"Helmet_",
+			"GP-", "M50", "Unix_", //Gasmask items
+			},
+			{"_Base"}
+		);
+		return lootList;
+	}
+
+	//Lootlist: Clothing : Head gear
+	SDRC_List lootList80()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"CLOTHING_HEADGEAR",
+			{"Prefabs/Characters/HeadGear"},
+			{"Hat_", 
+			},
+			{"_Base"}
+		);
+		return lootList;
+	}		
 }
