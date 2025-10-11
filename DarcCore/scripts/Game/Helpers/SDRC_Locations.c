@@ -7,6 +7,20 @@ Functions to find locations (for example cities) from map.
 NOTE: In order to use the caching, FillLocationsCache has to be run at startup.
 */
 
+//------------------------------------------------------------------------------------------------
+class SDRC_LocationAka : Managed
+{
+	EMapDescriptorType type; 
+	ref array<string> names = {};
+	
+	void Set(EMapDescriptorType type_, array<string> names_)
+	{
+		type = type_;
+		names = names_;
+	}
+}
+
+//------------------------------------------------------------------------------------------------
 sealed class SDRC_Locations
 {
 	private static ref array<IEntity> m_aTmpSlots = {};
@@ -168,7 +182,7 @@ sealed class SDRC_Locations
 	/*!
 	Prepare an array with all locations on the map.
 	*/		
-	static void FillLocationsCache()
+	static void FillLocationsCache(array<ref SDRC_LocationAka> locationAkas)
 	{
 		#ifndef SDRC_RELEASE
 			//If SCR_MapEntity does not exist, we most likely are playing in some debug map
@@ -184,6 +198,40 @@ sealed class SDRC_Locations
 		m_LocationsCache.Clear();
 		GetLocations(m_LocationsCache, m_LocationTypeArray);
 		
+		ref MapItem tmpLocation = null;
+		
+		//Handle location akas
+		#ifndef SDRC_RELEASE
+			foreach (MapItem location: m_LocationsCache)
+			{
+				string dispName = location.GetDisplayName();
+				dispName.ToLower();
+				
+				foreach (SDRC_LocationAka aka : locationAkas)
+				{
+					EMapDescriptorType type = aka.type;
+					foreach (string name : aka.names)
+					{
+						if (dispName.Contains(name))
+						{
+	//						location.SetBaseType(type);
+							m_LocationsCache.Insert(location);
+							m_LocationsCache[m_LocationsCache.Count() - 1].SetBaseType(type);
+	/*						tmpLocation = new MapItem();
+							Print(tmpLocation);
+	//						ref IEntity ent = new IEntity();
+							tmpLocation.SetBaseType(type);						
+	//						tmpLocation.Entity().SetOrigin(location.Entity().GetOrigin());
+							vector pos = location.GetPos();
+							tmpLocation.SetPos(pos[0], pos[2]);
+							tmpLocation.SetDisplayName(location.GetDisplayName());						
+							m_LocationsCache.Insert(tmpLocation);*/
+						}
+					}
+				}
+			}
+		#endif
+				
 		//Print debug information
 		#ifndef SDRC_RELEASE
 			foreach (MapItem location: m_LocationsCache)
@@ -424,7 +472,7 @@ sealed class SDRC_Locations
 		EMapDescriptorType.MDT_AIRPORT,
 		EMapDescriptorType.MDT_LANDMARK,
 		EMapDescriptorType.MDT_CAVE,
-		//EMapDescriptorType.MDT_RADIO,
+		EMapDescriptorType.MDT_RADIO,
 		//EMapDescriptorType.MDT_SPAWNPOINT,
 		//EMapDescriptorType.MDT_TASK,
 		//EMapDescriptorType.MDT_ICON,

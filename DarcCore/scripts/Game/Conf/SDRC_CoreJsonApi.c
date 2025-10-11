@@ -16,9 +16,10 @@ class SDRC_CoreConfig : Managed
 	bool debugShowSpheres = true;
 	string fallbackEnemyFaction = "USSR";
 	bool showOnGMMapNonValidArea = true;	
-	bool showOnGMMapMissionMarker = true;	
+	bool showOnGMMapMissionMarker = true;
 	ref array<string> buildingExcludeFilter = {};
 	ref SDRC_EmptyPos emptyPos = new SDRC_EmptyPos();
+	ref array<ref SDRC_LocationAka> locationAkas = {};
 }
 
 //------------------------------------------------------------------------------------------------
@@ -125,5 +126,17 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 			//Trees
 			"tem_palm2",
 		};
+		
+		ref SDRC_LocationAka aka00 = new SDRC_LocationAka();
+		aka00.Set(EMapDescriptorType.MDT_BASE, {"military"});
+		conf.locationAkas.Insert(aka00);
+
+		ref SDRC_LocationAka aka01 = new SDRC_LocationAka();
+		aka01.Set(EMapDescriptorType.MDT_AIRPORT, {"airport"});
+		conf.locationAkas.Insert(aka01);
+
+		ref SDRC_LocationAka aka02 = new SDRC_LocationAka();
+		aka02.Set(EMapDescriptorType.MDT_PORT, {"harbour", "harbor"});
+		conf.locationAkas.Insert(aka02);						
 	}
 };
