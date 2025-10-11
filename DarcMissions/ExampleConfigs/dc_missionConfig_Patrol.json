@@ -35,6 +35,16 @@
 					]
 				],
 				"size": 2.0,
+				"locationTypes": [
+					59,
+					59,
+					59,
+					59,
+					60,
+					71,
+					64,
+					70
+				],
 				"posName": "any",
 				"title": "Patrol spotted near %l",
 				"info": "Intel tells them to travel to %d. Be careful while traveling on roads.",
@@ -63,17 +73,7 @@
 				],
 				"waypointGenType": 4,
 				"waypointMoveType": 2
-			},
-			"locationTypes": [
-				59,
-				59,
-				59,
-				59,
-				60,
-				71,
-				64,
-				70
-			]
+			}
 		},
 		{
 			"general": {
@@ -92,6 +92,15 @@
 					]
 				],
 				"size": 2.0,
+				"locationTypes": [
+					64,
+					62,
+					75,
+					79,
+					80,
+					81,
+					15
+				],
 				"posName": "any",
 				"title": "Patrol in %l",
 				"info": "Beware!",
@@ -121,16 +130,7 @@
 				],
 				"waypointGenType": 3,
 				"waypointMoveType": 5
-			},
-			"locationTypes": [
-				64,
-				62,
-				75,
-				79,
-				80,
-				81,
-				15
-			]
+			}
 		},
 		{
 			"general": {
@@ -149,6 +149,10 @@
 					]
 				],
 				"size": 2.0,
+				"locationTypes": [
+					60,
+					64
+				],
 				"posName": "any",
 				"title": "Patrol seen in %l",
 				"info": "Be alert!",
@@ -179,11 +183,7 @@
 				],
 				"waypointGenType": 2,
 				"waypointMoveType": 5
-			},
-			"locationTypes": [
-				60,
-				64
-			]
+			}
 		},
 		{
 			"general": {
@@ -202,6 +202,10 @@
 					]
 				],
 				"size": 2.0,
+				"locationTypes": [
+					60,
+					64
+				],
 				"posName": "any",
 				"title": "Enemy has been seen near %l",
 				"info": "Caution is advised.",
@@ -232,11 +236,7 @@
 				],
 				"waypointGenType": 1,
 				"waypointMoveType": 5
-			},
-			"locationTypes": [
-				60,
-				64
-			]
+			}
 		}
 	]
 }

@@ -30,6 +30,7 @@
 					]
 				],
 				"size": 0.0,
+				"locationTypes": [],
 				"posName": "any",
 				"title": "Helicopter in distress",
 				"info": "A valuable cargo has crashed.",
@@ -60,7 +61,6 @@
 				"waypointGenType": 5,
 				"waypointMoveType": 6
 			},
-			"locationTypes": [],
 			"loot": {
 				"box": null,
 				"itemChance": 0.8999999761581421,
@@ -175,6 +175,7 @@
 					]
 				],
 				"size": 0.0,
+				"locationTypes": [],
 				"posName": "any",
 				"title": "Engine damage",
 				"info": "May day, may day! We're going down.",
@@ -205,7 +206,6 @@
 				"waypointGenType": 5,
 				"waypointMoveType": 6
 			},
-			"locationTypes": [],
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,

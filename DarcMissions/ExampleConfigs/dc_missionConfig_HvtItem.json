@@ -27,6 +27,15 @@
 					]
 				],
 				"size": 10.0,
+				"locationTypes": [
+					64,
+					62,
+					75,
+					79,
+					80,
+					81,
+					15
+				],
 				"posName": "any",
 				"title": "Destroy generator near %l",
 				"info": "The enemy is spreading propaganda.",
@@ -58,15 +67,6 @@
 				"waypointGenType": 5,
 				"waypointMoveType": 5
 			},
-			"locationTypes": [
-				64,
-				62,
-				75,
-				79,
-				80,
-				81,
-				15
-			],
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -206,6 +206,17 @@
 					]
 				],
 				"size": 20.0,
+				"locationTypes": [
+					59,
+					59,
+					59,
+					59,
+					59,
+					70,
+					60,
+					61,
+					81
+				],
 				"posName": "any",
 				"title": "A supply truck near %l",
 				"info": "A truck has crashed and the supplies needs to be destroyed.",
@@ -238,17 +249,6 @@
 				"waypointGenType": 5,
 				"waypointMoveType": 5
 			},
-			"locationTypes": [
-				59,
-				59,
-				59,
-				59,
-				59,
-				70,
-				60,
-				61,
-				81
-			],
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -366,6 +366,7 @@
 					]
 				],
 				"size": 20.0,
+				"locationTypes": [],
 				"posName": "any",
 				"title": "Radio antenna close to %l",
 				"info": "Disrupt the enemy communications. Destroy the antenna.",
@@ -398,7 +399,6 @@
 				"waypointGenType": 5,
 				"waypointMoveType": 5
 			},
-			"locationTypes": [],
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,

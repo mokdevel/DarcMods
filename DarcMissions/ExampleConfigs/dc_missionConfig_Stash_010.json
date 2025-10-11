@@ -24,6 +24,7 @@
 					]
 				],
 				"size": 3.0,
+				"locationTypes": [],
 				"posName": "any",
 				"title": "Hidden loot near %l",
 				"info": "Loot is yours to take",
@@ -53,15 +54,16 @@
 				"waypointGenType": 1,
 				"waypointMoveType": 5
 			},
-			"locationTypes": [],
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
 				"items": [
 					"WEAPON_RIFLE",
+					"WEAPON_RIFLE",
 					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
+					"WEAPON_GRENADE",
 					"UTIL_ATTACHMENT",
 					"ITEM_MEDICAL",
 					"ITEM_GENERAL",

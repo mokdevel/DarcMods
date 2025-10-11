@@ -26,6 +26,17 @@
 					]
 				],
 				"size": 6.0,
+				"locationTypes": [
+					61,
+					64,
+					70,
+					71,
+					75,
+					79,
+					80,
+					81,
+					15
+				],
 				"posName": "any",
 				"title": "Roadblock near %l",
 				"info": "Look out for trouble.",
@@ -57,17 +68,6 @@
 				"waypointGenType": 5,
 				"waypointMoveType": 5
 			},
-			"locationTypes": [
-				61,
-				64,
-				70,
-				71,
-				75,
-				79,
-				80,
-				81,
-				15
-			],
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -151,6 +151,16 @@
 					]
 				],
 				"size": 6.0,
+				"locationTypes": [
+					59,
+					61,
+					64,
+					75,
+					79,
+					80,
+					81,
+					15
+				],
 				"posName": "any",
 				"title": "Roadblock seen close to %l",
 				"info": "Be careful.",
@@ -182,16 +192,6 @@
 				"waypointGenType": 2,
 				"waypointMoveType": 5
 			},
-			"locationTypes": [
-				59,
-				61,
-				64,
-				75,
-				79,
-				80,
-				81,
-				15
-			],
 			"loot": {
 				"box": null,
 				"itemChance": 0.8999999761581421,
@@ -379,6 +379,19 @@
 					]
 				],
 				"size": 6.0,
+				"locationTypes": [
+					59,
+					59,
+					61,
+					61,
+					61,
+					64,
+					75,
+					79,
+					80,
+					81,
+					15
+				],
 				"posName": "any",
 				"title": "Road is closed near %l",
 				"info": "Are your ready to pay the toll?",
@@ -411,19 +424,6 @@
 				"waypointGenType": 5,
 				"waypointMoveType": 5
 			},
-			"locationTypes": [
-				59,
-				59,
-				61,
-				61,
-				61,
-				64,
-				75,
-				79,
-				80,
-				81,
-				15
-			],
 			"loot": {
 				"box": null,
 				"itemChance": 0.6000000238418579,
@@ -591,6 +591,19 @@
 					]
 				],
 				"size": 10.0,
+				"locationTypes": [
+					59,
+					59,
+					61,
+					61,
+					61,
+					64,
+					75,
+					79,
+					80,
+					81,
+					15
+				],
 				"posName": "any",
 				"title": "Road near %l is guarded",
 				"info": "Prepare for a mandatory stop.",
@@ -623,19 +636,6 @@
 				"waypointGenType": 5,
 				"waypointMoveType": 5
 			},
-			"locationTypes": [
-				59,
-				59,
-				61,
-				61,
-				61,
-				64,
-				75,
-				79,
-				80,
-				81,
-				15
-			],
 			"loot": {
 				"box": null,
 				"itemChance": 0.6000000238418579,

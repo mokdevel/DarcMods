@@ -29,6 +29,16 @@
 					]
 				],
 				"size": 0.0,
+				"locationTypes": [
+					59,
+					59,
+					59,
+					59,
+					59,
+					60,
+					61,
+					81
+				],
 				"posName": "any",
 				"title": "Target near %l.",
 				"info": "Assassinate the target",
@@ -59,16 +69,6 @@
 				"waypointGenType": 0,
 				"waypointMoveType": 0
 			},
-			"locationTypes": [
-				59,
-				59,
-				59,
-				59,
-				59,
-				60,
-				61,
-				81
-			],
 			"buildingNames": [
 				"ShopModern_",
 				"Villa_",
@@ -114,6 +114,7 @@
 					]
 				],
 				"size": 0.0,
+				"locationTypes": [],
 				"posName": "any",
 				"title": "Flight controller near %l.",
 				"info": "Assassinate the target",
@@ -143,7 +144,6 @@
 				"waypointGenType": 0,
 				"waypointMoveType": 0
 			},
-			"locationTypes": [],
 			"buildingNames": [
 				"ControlTowerMilitary_"
 			],
@@ -185,6 +185,7 @@
 					]
 				],
 				"size": 0.0,
+				"locationTypes": [],
 				"posName": "any",
 				"title": "%l is bad for business",
 				"info": "Assassinate the business man conducting bad business.",
@@ -214,7 +215,6 @@
 				"waypointGenType": 0,
 				"waypointMoveType": 0
 			},
-			"locationTypes": [],
 			"buildingNames": [
 				"Office_E_",
 				"Barracks_01_",
@@ -259,6 +259,7 @@
 					]
 				],
 				"size": 0.0,
+				"locationTypes": [],
 				"posName": "any",
 				"title": "Criminal hiding in %l",
 				"info": "Assassinate the criminal boss. He tries to keep low profile.",
@@ -288,7 +289,6 @@
 				"waypointGenType": 0,
 				"waypointMoveType": 0
 			},
-			"locationTypes": [],
 			"buildingNames": [
 				"House_"
 			],

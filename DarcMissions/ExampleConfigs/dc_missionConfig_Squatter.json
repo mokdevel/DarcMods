@@ -34,6 +34,16 @@
 					]
 				],
 				"size": 0.0,
+				"locationTypes": [
+					59,
+					59,
+					59,
+					59,
+					59,
+					60,
+					61,
+					81
+				],
 				"posName": "any",
 				"title": "Squatters near %l.",
 				"info": "Building has squatters with loot",
@@ -68,16 +78,6 @@
 				"waypointGenType": 0,
 				"waypointMoveType": 0
 			},
-			"locationTypes": [
-				59,
-				59,
-				59,
-				59,
-				59,
-				60,
-				61,
-				81
-			],
 			"buildingNames": [
 				"ShopModern_",
 				"Villa_",
@@ -122,6 +122,7 @@
 					]
 				],
 				"size": 0.0,
+				"locationTypes": [],
 				"posName": "any",
 				"title": "Enemy in %l",
 				"info": "Control tower is being guarded.",
@@ -160,7 +161,6 @@
 				"waypointGenType": 0,
 				"waypointMoveType": 0
 			},
-			"locationTypes": [],
 			"buildingNames": [
 				"ControlTowerMilitary_"
 			],
@@ -202,6 +202,7 @@
 					]
 				],
 				"size": 0.0,
+				"locationTypes": [],
 				"posName": "any",
 				"title": "Guards around %l",
 				"info": "Military location has loot to steal.",
@@ -239,7 +240,6 @@
 				"waypointGenType": 0,
 				"waypointMoveType": 0
 			},
-			"locationTypes": [],
 			"buildingNames": [
 				"Office_E_",
 				"Barracks_01_",
@@ -281,6 +281,7 @@
 					]
 				],
 				"size": 0.0,
+				"locationTypes": [],
 				"posName": "any",
 				"title": "Industrial area near %l",
 				"info": "Military has seized control of an industrial area. Don't shoot the civilians.",
@@ -319,7 +320,6 @@
 				"waypointGenType": 0,
 				"waypointMoveType": 0
 			},
-			"locationTypes": [],
 			"buildingNames": [
 				"DieselPowerPlant_",
 				"CowShed_",
@@ -359,6 +359,7 @@
 					]
 				],
 				"size": 0.0,
+				"locationTypes": [],
 				"posName": "any",
 				"title": "Sanctuary visitors near %l",
 				"info": "Holy night, holy loot.",
@@ -388,7 +389,6 @@
 				"waypointGenType": 0,
 				"waypointMoveType": 0
 			},
-			"locationTypes": [],
 			"buildingNames": [
 				"Church_",
 				"ChurchSmall_",
@@ -428,6 +428,7 @@
 					]
 				],
 				"size": 0.0,
+				"locationTypes": [],
 				"posName": "any",
 				"title": "Burglars seen near %l",
 				"info": "Go rob the robbers.",
@@ -457,7 +458,6 @@
 				"waypointGenType": 0,
 				"waypointMoveType": 0
 			},
-			"locationTypes": [],
 			"buildingNames": [
 				"ShopModern_",
 				"House_Town_",

@@ -39,6 +39,10 @@
 					]
 				],
 				"size": 3.0,
+				"locationTypes": [
+					60,
+					64
+				],
 				"posName": "any",
 				"title": "Guards patroling near %l",
 				"info": "Avoid the location. Loot has already been lost.",
@@ -69,10 +73,6 @@
 				"waypointGenType": 1,
 				"waypointMoveType": 5
 			},
-			"locationTypes": [
-				60,
-				64
-			],
 			"loot": null,
 			"campItems": []
 		},
@@ -88,6 +88,15 @@
 					]
 				],
 				"size": 6.0,
+				"locationTypes": [
+					64,
+					62,
+					75,
+					79,
+					80,
+					81,
+					15
+				],
 				"posName": "any",
 				"title": "Bandit camp near %l",
 				"info": "Bandits are protecting their valuable loot.",
@@ -119,15 +128,6 @@
 				"waypointGenType": 2,
 				"waypointMoveType": 5
 			},
-			"locationTypes": [
-				64,
-				62,
-				75,
-				79,
-				80,
-				81,
-				15
-			],
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -214,6 +214,17 @@
 					]
 				],
 				"size": 10.0,
+				"locationTypes": [
+					59,
+					59,
+					59,
+					59,
+					59,
+					70,
+					60,
+					61,
+					81
+				],
 				"posName": "any",
 				"title": "Occupation in %l",
 				"info": "City is being occupied.",
@@ -249,17 +260,6 @@
 				"waypointGenType": 3,
 				"waypointMoveType": 1
 			},
-			"locationTypes": [
-				59,
-				59,
-				59,
-				59,
-				59,
-				70,
-				60,
-				61,
-				81
-			],
 			"loot": {
 				"box": null,
 				"itemChance": 0.8999999761581421,
@@ -354,6 +354,15 @@
 					]
 				],
 				"size": 6.0,
+				"locationTypes": [
+					8,
+					25,
+					62,
+					72,
+					79,
+					84,
+					75
+				],
 				"posName": "any",
 				"title": "Car crash near %l",
 				"info": "Loot is up for grabs.",
@@ -383,15 +392,6 @@
 				"waypointGenType": 1,
 				"waypointMoveType": 1
 			},
-			"locationTypes": [
-				8,
-				25,
-				62,
-				72,
-				79,
-				84,
-				75
-			],
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -510,6 +510,12 @@
 					]
 				],
 				"size": 12.0,
+				"locationTypes": [
+					70,
+					8,
+					63,
+					71
+				],
 				"posName": "any",
 				"title": "Campers near %l",
 				"info": "Rob them before they leave.",
@@ -540,12 +546,6 @@
 				"waypointGenType": 1,
 				"waypointMoveType": 1
 			},
-			"locationTypes": [
-				70,
-				8,
-				63,
-				71
-			],
 			"loot": {
 				"box": null,
 				"itemChance": 0.4000000059604645,
@@ -691,6 +691,11 @@
 					]
 				],
 				"size": 30.0,
+				"locationTypes": [
+					70,
+					8,
+					71
+				],
 				"posName": "any",
 				"title": "Settlement near %l",
 				"info": "The enemies are hiding in a ghost town.",
@@ -721,11 +726,6 @@
 				"waypointGenType": 1,
 				"waypointMoveType": 1
 			},
-			"locationTypes": [
-				70,
-				8,
-				71
-			],
 			"loot": {
 				"box": null,
 				"itemChance": 0.4000000059604645,
@@ -962,6 +962,10 @@
 					]
 				],
 				"size": 3.0,
+				"locationTypes": [
+					60,
+					64
+				],
 				"posName": "any",
 				"title": "Creatures near %l",
 				"info": "Avoid the location. No loot available.",
@@ -992,10 +996,6 @@
 				"waypointGenType": 1,
 				"waypointMoveType": 5
 			},
-			"locationTypes": [
-				60,
-				64
-			],
 			"loot": null,
 			"campItems": []
 		}

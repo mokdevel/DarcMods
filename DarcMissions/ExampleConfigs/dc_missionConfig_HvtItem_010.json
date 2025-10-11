@@ -23,6 +23,7 @@
 					]
 				],
 				"size": 20.0,
+				"locationTypes": [],
 				"posName": "any",
 				"title": "Silo near to %l",
 				"info": "The materials inside shall not end up at the hands of the enemy.",
@@ -56,7 +57,6 @@
 				"waypointGenType": 3,
 				"waypointMoveType": 5
 			},
-			"locationTypes": [],
 			"loot": {
 				"box": null,
 				"itemChance": 0.5,

@@ -27,6 +27,7 @@
 					]
 				],
 				"size": 3.0,
+				"locationTypes": [],
 				"posName": "any",
 				"title": "A stash near %l",
 				"info": "Loot is yours to take",
@@ -56,7 +57,6 @@
 				"waypointGenType": 1,
 				"waypointMoveType": 5
 			},
-			"locationTypes": [],
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,

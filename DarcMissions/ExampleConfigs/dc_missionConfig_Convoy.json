@@ -42,6 +42,19 @@
 					]
 				],
 				"size": 5.0,
+				"locationTypes": [
+					59,
+					59,
+					59,
+					59,
+					60,
+					71,
+					64,
+					70,
+					26,
+					75,
+					81
+				],
 				"posName": "any",
 				"title": "Convoy is on the move.",
 				"info": "Leaked travel plans show a route from %l to %d",
@@ -72,19 +85,6 @@
 				"waypointGenType": 4,
 				"waypointMoveType": 2
 			},
-			"locationTypes": [
-				59,
-				59,
-				59,
-				59,
-				60,
-				71,
-				64,
-				70,
-				26,
-				75,
-				81
-			],
 			"vehicleTypes": [
 				"{01F65EFB8D767A91}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_cargo.et",
 				"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
@@ -124,6 +124,20 @@
 					]
 				],
 				"size": 7.0,
+				"locationTypes": [
+					59,
+					59,
+					59,
+					8,
+					60,
+					71,
+					64,
+					25,
+					72,
+					26,
+					75,
+					81
+				],
 				"posName": "any",
 				"title": "Cargo truck is on the move.",
 				"info": "Follow the route from %l to %d",
@@ -154,20 +168,6 @@
 				"waypointGenType": 4,
 				"waypointMoveType": 2
 			},
-			"locationTypes": [
-				59,
-				59,
-				59,
-				8,
-				60,
-				71,
-				64,
-				25,
-				72,
-				26,
-				75,
-				81
-			],
 			"vehicleTypes": [
 				"{F1FBD0972FA5FE09}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport.et",
 				"{81FDAD5EB644CC3D}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered.et",
@@ -219,6 +219,20 @@
 					]
 				],
 				"size": 7.0,
+				"locationTypes": [
+					59,
+					59,
+					59,
+					8,
+					60,
+					71,
+					64,
+					25,
+					72,
+					26,
+					75,
+					81
+				],
 				"posName": "any",
 				"title": "Armor spotted",
 				"info": "It's been seen in %l. It's to patrol to %d.",
@@ -249,20 +263,6 @@
 				"waypointGenType": 4,
 				"waypointMoveType": 2
 			},
-			"locationTypes": [
-				59,
-				59,
-				59,
-				8,
-				60,
-				71,
-				64,
-				25,
-				72,
-				26,
-				75,
-				81
-			],
 			"vehicleTypes": [
 				"{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et",
 				"{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et",
@@ -307,6 +307,20 @@
 					]
 				],
 				"size": 4.0,
+				"locationTypes": [
+					59,
+					59,
+					59,
+					8,
+					60,
+					71,
+					64,
+					25,
+					72,
+					26,
+					75,
+					81
+				],
 				"posName": "any",
 				"title": "Guns on the move",
 				"info": "Look out for a patrol between %l and %d.",
@@ -338,20 +352,6 @@
 				"waypointGenType": 4,
 				"waypointMoveType": 2
 			},
-			"locationTypes": [
-				59,
-				59,
-				59,
-				8,
-				60,
-				71,
-				64,
-				25,
-				72,
-				26,
-				75,
-				81
-			],
 			"vehicleTypes": [
 				"{F6B23D17D5067C11}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB.et",
 				"{5168FEA3054D6D15}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB_MERDC.et",
