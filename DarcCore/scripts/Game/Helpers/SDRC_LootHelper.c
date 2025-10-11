@@ -76,7 +76,7 @@ sealed class SDRC_LootHelper
 				}
 				
 				bool result = AddToStorage(storage, resource);
-				SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Adding item " + resource + ". Success: " + result, LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Adding item " + resource + ". Success: " + result, LogLevel.SPAM);
 				
 				//Shall we add ammo? Ammo is to be added with itemChance%
 				if ((Math.RandomFloat(0, 1) < itemChance))

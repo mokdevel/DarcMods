@@ -87,6 +87,6 @@ class SDRC_Core
 	void FillLocationCache()
 	{
 		//Initialize locations cache
-		SDRC_Locations.FillLocationsCache();
+		SDRC_Locations.FillLocationsCache(m_Config.locationAkas);
 	}	
 }
