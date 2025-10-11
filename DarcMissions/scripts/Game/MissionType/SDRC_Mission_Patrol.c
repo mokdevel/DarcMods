@@ -54,7 +54,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		//Find a location for the mission
 		if (pos == "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes, m_DC_Patrol.general.size, randomPos);
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.general.locationTypes, m_DC_Patrol.general.size, randomPos);
 		}
 	
 		//If failed, stop
@@ -67,7 +67,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		//Find a location for the destination. Only used for route
 		if (m_vPosDestination == "0 0 0")
 		{
-			m_vPosDestination = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.locationTypes, m_DC_Patrol.general.size);
+			m_vPosDestination = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.general.locationTypes, m_DC_Patrol.general.size);
 			SDRC_Log.Add("[SDRC_Mission_Patrol] Patrol destination: " + m_vPosDestination, LogLevel.SPAM);
 		}
 
@@ -189,12 +189,6 @@ class SDRC_Patrol : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();		
-	ref array<EMapDescriptorType> locationTypes = {};	
-	
-	void Set(array<EMapDescriptorType> locationTypes_)
-	{
-		locationTypes = locationTypes_;
-	}
 }		
 
 //------------------------------------------------------------------------------------------------
@@ -286,6 +280,16 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		patrol.general.Set(
 			0, "index 0: Enemy patrols going between two points hopefully following roads",
 			{"0 0 0", "0 0 0"}, 2,
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_RIDGE
+			},
 			"any",
 			"Patrol spotted near %l",
 			"Intel tells them to travel to %d. Be careful while traveling on roads.",
@@ -305,18 +309,6 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			SDRC_EWaypointGenerationType.ROUTE,
 			SDRC_EWaypointMoveType.MOVE,
 		);
-		patrol.Set(
-			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_VALLEY,
-				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_NAME_RIDGE
-			},
-		);
 			
 		return patrol;
 	};
@@ -328,6 +320,15 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		patrol.general.Set(
 			1, "index 1: Heavy patrol",
 			{"0 0 0", "0 0 0"}, 2,
+			{
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_SETTLEMENT,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_BASE,
+				EMapDescriptorType.MDT_PORT,
+				EMapDescriptorType.MDT_AIRPORT,
+				EMapDescriptorType.MDT_FORTRESS
+			},
 			"any",
 			"Patrol in %l",
 			"Beware!",
@@ -347,18 +348,6 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			SDRC_EWaypointGenerationType.RADIUS,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
-		patrol.Set
-		(
-			{
-				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_NAME_SETTLEMENT,
-				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
-				EMapDescriptorType.MDT_BASE,
-				EMapDescriptorType.MDT_PORT,
-				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_FORTRESS
-			},
-		);
 			
 		return patrol;
 	};
@@ -370,6 +359,10 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		patrol.general.Set(
 			2, "index 2: Enemy patrols between villages",
 			{"0 0 0", "0 0 0"}, 2,
+			{
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_LOCAL
+			},
 			"any",
 			"Patrol seen in %l",
 			"Be alert!",
@@ -391,13 +384,6 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			SDRC_EWaypointGenerationType.SCATTERED,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
-		patrol.Set
-		(
-			{
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_LOCAL
-			},
-		);
 		
 		return patrol;
 	};
@@ -409,6 +395,10 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 		patrol.general.Set(			
 			3, "index 3: Small patrols with a few AIs",
 			{"0 0 0", "0 0 0"}, 2,
+			{
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_LOCAL
+			},
 			"any",
 			"Enemy has been seen near %l",
 			"Caution is advised.",
@@ -429,12 +419,6 @@ class SDRC_PatrolJsonApi : SDRC_JsonApi
 			{300, 700},
 			SDRC_EWaypointGenerationType.RANDOM,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
-		);
-		patrol.Set(
-			{
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_LOCAL
-			},
 		);
 		
 		return patrol;

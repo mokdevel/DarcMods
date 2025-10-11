@@ -33,6 +33,7 @@ class SDRC_HvtItem_010_JsonApi : SDRC_HvtItemJsonApi
 		hvtItem.general.Set(
 			10, "index 10: Destroy silo",
 			{"0 0 0"}, 20,
+			{},
 			"any",
 			"Silo near to %l",
 			"The materials inside shall not end up at the hands of the enemy.",
@@ -52,10 +53,6 @@ class SDRC_HvtItem_010_JsonApi : SDRC_HvtItemJsonApi
 			SDRC_EWaypointGenerationType.RADIUS,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);		
-		hvtItem.Set(
-			{
-			},
-		);
 		hvtItem.targetIdx = 5;
 		
 		ref SDRC_Loot loot = new SDRC_Loot();

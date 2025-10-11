@@ -43,7 +43,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		float radius = 100;					//Default size for the radius. Mainly for requested missions to find the nearest building.
 		array<string>buildingFilter = {};
 		
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Squatter.general.pos, m_DC_Squatter.general.size, m_DC_Squatter.locationTypes);
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Squatter.general.pos, m_DC_Squatter.general.size, m_DC_Squatter.general.locationTypes);
 		
 		//Find a location for the mission
 		if (IsRequested())
@@ -60,13 +60,13 @@ class SDRC_Mission_Squatter : SDRC_Mission
 			if (pos == "0 0 0")
 			{
 				//If no locationTypes defined, we search for any building matching on the map
-				if (m_DC_Squatter.locationTypes.IsEmpty())
+				if (m_DC_Squatter.general.locationTypes.IsEmpty())
 				{
 					radius = -1;
 				}
 				else
 				{
-					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Squatter.locationTypes, m_DC_Squatter.general.size, );
+					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Squatter.general.locationTypes, m_DC_Squatter.general.size, );
 				}
 			}
 		}
@@ -198,15 +198,13 @@ class SDRC_Squatter : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();		
-	ref array<EMapDescriptorType> locationTypes = {};
 	ref array<string> buildingNames = {};
 	//Optional settings
 	string lootBox = "";					//The loot box
 	ref SDRC_Loot loot = null;
 	
-	void Set(array<EMapDescriptorType> locationTypes_, array<string> buildingNames_, string lootBox_)
+	void Set(array<string> buildingNames_, string lootBox_)
 	{
-		locationTypes = locationTypes_;
 		buildingNames = buildingNames_;	
 		lootBox = lootBox_;
 	}	
@@ -300,6 +298,16 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		squatter.general.Set(
 			0, "index 0: Squatters in cities",
 			{"0 0 0"}, 0, 
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_TOWN, 
+				EMapDescriptorType.MDT_AIRPORT,
+			},
 			"any",
 			"Squatters near %l.",
 			"Building has squatters with loot",		
@@ -322,16 +330,6 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.NONE
 		);
 		squatter.Set(
-			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_TOWN, 
-				EMapDescriptorType.MDT_AIRPORT,
-			},
 			{"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_", "Office_E_", "MountainHotel_"},
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
 		);
@@ -358,6 +356,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		squatter.general.Set(
 			1, "index 1: Squatters in control towers",
 			{"0 0 0"}, 0,
+			{
+				//We pick any building that matches and ignore location
+			},
 			"any",
 			"Enemy in %l",
 			"Control tower is being guarded.",		
@@ -381,9 +382,6 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.NONE
 		);
 		squatter.Set(
-			{
-				//We pick any building that matches and ignore location
-			},
 			{"ControlTowerMilitary_"},
 			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
 		);
@@ -412,6 +410,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		squatter.general.Set(
 			2, "index 2: Squatters in military locations",
 			{"0 0 0"}, 0,
+			{
+				//We pick any building that matches and ignore location
+			},
 			"any",
 			"Guards around %l",
 			"Military location has loot to steal.",		
@@ -435,9 +436,6 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.NONE
 		);
 		squatter.Set(
-			{
-				//We pick any building that matches and ignore location
-			},
 			{"Office_E_", "Barracks_01_", "Barracks_E_02_"},
 			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
 		);
@@ -465,6 +463,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		squatter.general.Set(
 			3, "index 3: Military in industrial areas",
 			{"0 0 0"}, 0,
+			{
+				//We pick any building that matches and ignore location
+			},
 			"any",
 			"Industrial area near %l",
 			"Military has seized control of an industrial area. Don't shoot the civilians.",
@@ -489,9 +490,6 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.NONE
 		);
 		squatter.Set(
-			{
-				//We pick any building that matches and ignore location
-			},
 			{"DieselPowerPlant_", "CowShed_", "FireStation_", "Warehouse_", "TransformerStation_", "FactoryHall_"},
 			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
 		);
@@ -517,6 +515,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		squatter.general.Set(
 			4, "index 4: Enemy in churches and similar",
 			{"0 0 0"}, 0,
+			{
+				//We pick any building that matches and ignore location
+			},
 			"any",
 			"Sanctuary visitors near %l",
 			"Holy night, holy loot.",		
@@ -537,9 +538,6 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.NONE
 		);
 		squatter.Set(
-			{
-				//We pick any building that matches and ignore location
-			},
 			{"Church_", "ChurchSmall_", "Mosque_", "Minaret"},
 			"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et"
 		);
@@ -564,6 +562,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		squatter.general.Set(
 			5, "index 5: Shops and houses",
 			{"0 0 0"}, 0,
+			{
+				//We pick any building that matches and ignore location
+			},
 			"any",
 			"Burglars seen near %l",
 			"Go rob the robbers.",		
@@ -584,9 +585,6 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.NONE
 		);
 		squatter.Set(
-			{
-				//We pick any building that matches and ignore location
-			},
 			{"ShopModern_", "House_Town_", "House_Village_", "FarmHouse_", "House_Wooden_"},
 			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
 		);

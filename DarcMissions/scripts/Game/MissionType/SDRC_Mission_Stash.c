@@ -43,7 +43,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 		m_fSpawnRotation = Math.RandomFloat(0, 360);
 		
 		//Find the position
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Stash.general.pos, m_DC_Stash.general.size, m_DC_Stash.locationTypes);
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Stash.general.pos, m_DC_Stash.general.size, m_DC_Stash.general.locationTypes);
 		
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
@@ -229,6 +229,7 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 		stash.general.Set(
 			0, "index 0: Random stash",
 			{"0 0 0"}, 3,
+			{},
 			"any",
 			"A stash near %l",
 			"Loot is yours to take",
@@ -247,10 +248,6 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 			{50, 300},
 			SDRC_EWaypointGenerationType.RANDOM,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
-		);
-		stash.Set(
-			{
-			},
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();

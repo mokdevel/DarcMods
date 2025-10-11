@@ -48,7 +48,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Roadblock.general.pos);
 		if (pos == "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Roadblock.locationTypes, m_DC_Roadblock.general.size, randomPos);
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Roadblock.general.locationTypes, m_DC_Roadblock.general.size, randomPos);
 		}
 		
 		//If we found a position, let's search more closely
@@ -284,6 +284,17 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		roadblock.general.Set(
 			0, "index 0: Roadblock",
 			{"0 0 0"}, 6,
+			{
+				EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_BASE,
+				EMapDescriptorType.MDT_PORT,
+				EMapDescriptorType.MDT_AIRPORT,
+				EMapDescriptorType.MDT_FORTRESS
+			},
 			"any",
 			"Roadblock near %l",
 			"Look out for trouble.",
@@ -302,19 +313,6 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			{0, 20},
 			SDRC_EWaypointGenerationType.LOITER,//RANDOM,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
-		);
-		roadblock.Set(
-			{
-				EMapDescriptorType.MDT_NAME_TOWN,
-				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_NAME_RIDGE,
-				EMapDescriptorType.MDT_NAME_VALLEY,
-				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
-				EMapDescriptorType.MDT_BASE,
-				EMapDescriptorType.MDT_PORT,
-				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_FORTRESS
-			},
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -366,6 +364,16 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		roadblock.general.Set(
 			1, "index 1: Roadblock",
 			{"0 0 0"}, 6,
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_BASE,
+				EMapDescriptorType.MDT_PORT,
+				EMapDescriptorType.MDT_AIRPORT,
+				EMapDescriptorType.MDT_FORTRESS
+			},
 			"any",
 			"Roadblock seen close to %l",
 			"Be careful.",
@@ -384,18 +392,6 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			{0, 10},
 			SDRC_EWaypointGenerationType.SCATTERED,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
-		);
-		roadblock.Set(
-			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_TOWN,
-				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
-				EMapDescriptorType.MDT_BASE,
-				EMapDescriptorType.MDT_PORT,
-				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_FORTRESS
-			},
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -514,6 +510,16 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		roadblock.general.Set(
 			2, "index 2: Roadblock",
 			{"0 0 0"}, 6,
+			{
+				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_BASE,
+				EMapDescriptorType.MDT_PORT,
+				EMapDescriptorType.MDT_AIRPORT,
+				EMapDescriptorType.MDT_FORTRESS
+			},
 			"any",
 			"Road is closed near %l",
 			"Are your ready to pay the toll?",
@@ -532,18 +538,6 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			{0, 10},
 			SDRC_EWaypointGenerationType.LOITER,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
-		);
-		roadblock.Set(
-			{
-				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN,
-				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
-				EMapDescriptorType.MDT_BASE,
-				EMapDescriptorType.MDT_PORT,
-				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_FORTRESS
-			},
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -645,6 +639,16 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		roadblock.general.Set(
 			3, "index 3: Roadblock with gates",
 			{"0 0 0"}, 10,
+			{
+				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_BASE,
+				EMapDescriptorType.MDT_PORT,
+				EMapDescriptorType.MDT_AIRPORT,
+				EMapDescriptorType.MDT_FORTRESS
+			},
 			"any",
 			"Road near %l is guarded",
 			"Prepare for a mandatory stop.",
@@ -663,18 +667,6 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			{0, 10},
 			SDRC_EWaypointGenerationType.LOITER,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
-		);
-		roadblock.Set(
-			{
-				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN,
-				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
-				EMapDescriptorType.MDT_BASE,
-				EMapDescriptorType.MDT_PORT,
-				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_FORTRESS
-			},
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();

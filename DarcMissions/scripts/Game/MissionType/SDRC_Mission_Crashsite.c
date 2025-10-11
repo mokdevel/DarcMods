@@ -408,7 +408,8 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		ref SDRC_Crashsite crashsite = new SDRC_Crashsite();
 		crashsite.general.Set(
 			0, "index 0: general mission",
-			{"0 0 0"}, 0, 
+			{"0 0 0"}, 0,
+			{},
 			"any",
 			"Helicopter in distress",
 			"A valuable cargo has crashed.",
@@ -503,6 +504,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		crashsite.general.Set(
 			1, "index 1: general mission",
 			{"0 0 0"}, 0,
+			{},
 			"any",
 			"Engine damage",
 			"May day, may day! We're going down.",

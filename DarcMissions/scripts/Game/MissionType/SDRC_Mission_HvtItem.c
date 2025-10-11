@@ -46,7 +46,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		m_fSpawnRotation = Math.RandomFloat(0, 360);
 		
 		//Find position
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtItem.general.pos, m_DC_HvtItem.general.size, m_DC_HvtItem.locationTypes);
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtItem.general.pos, m_DC_HvtItem.general.size, m_DC_HvtItem.general.locationTypes);
 		
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
@@ -284,6 +284,15 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		hvtItem.general.Set(
 			0, "index 0: Destroy generator",
 			{"0 0 0"}, 10,
+			{
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_SETTLEMENT,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_BASE,
+				EMapDescriptorType.MDT_PORT,
+				EMapDescriptorType.MDT_AIRPORT,
+				EMapDescriptorType.MDT_FORTRESS
+			},
 			"any",
 			"Destroy generator near %l",
 			"The enemy is spreading propaganda.",
@@ -303,17 +312,6 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			SDRC_EWaypointGenerationType.LOITER,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);	
-		hvtItem.Set(
-			{
-				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_NAME_SETTLEMENT,
-				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
-				EMapDescriptorType.MDT_BASE,
-				EMapDescriptorType.MDT_PORT,
-				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_FORTRESS
-			},
-		);
 		hvtItem.targetIdx = 1;
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -396,6 +394,17 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		hvtItem.general.Set(
 			1, "index 1: Destroy supplies",
 			{"0 0 0"}, 20,
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_TOWN, 
+				EMapDescriptorType.MDT_AIRPORT,
+			},
 			"any",
 			"A supply truck near %l",
 			"A truck has crashed and the supplies needs to be destroyed.",
@@ -415,19 +424,6 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			SDRC_EWaypointGenerationType.LOITER,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);	
-		hvtItem.Set(
-			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_RIDGE,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_TOWN, 
-				EMapDescriptorType.MDT_AIRPORT,
-			},
-		);
 		hvtItem.targetIdx = 1;
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -496,6 +492,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		hvtItem.general.Set(
 			2, "index 2: Destroy antenna",
 			{"0 0 0"}, 20,
+			{},
 			"any",
 			"Radio antenna close to %l",
 			"Disrupt the enemy communications. Destroy the antenna.",
@@ -515,10 +512,6 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 			SDRC_EWaypointGenerationType.LOITER,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);		
-		hvtItem.Set(
-			{
-			},
-		);
 		hvtItem.targetIdx = 9;
 		
 		ref SDRC_Loot loot = new SDRC_Loot();

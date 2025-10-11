@@ -47,7 +47,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		float radius = 100;					//Default size for the radius. 
 		array<string> buildingFilter = {};
 
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtVip.general.pos, m_DC_HvtVip.general.size, m_DC_HvtVip.locationTypes);
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtVip.general.pos, m_DC_HvtVip.general.size, m_DC_HvtVip.general.locationTypes);
 						
 		//Find a location for the mission
 		if (IsRequested())
@@ -64,13 +64,13 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 			if (pos == "0 0 0")
 			{
 				//If no locationTypes defined, we search for any building matching on the map
-				if (m_DC_HvtVip.locationTypes.IsEmpty())
+				if (m_DC_HvtVip.general.locationTypes.IsEmpty())
 				{
 					radius = -1;
 				}
 				else
 				{
-					pos = SDRC_MissionHelper.FindMissionPos(m_DC_HvtVip.locationTypes, m_DC_HvtVip.general.size);
+					pos = SDRC_MissionHelper.FindMissionPos(m_DC_HvtVip.general.locationTypes, m_DC_HvtVip.general.size);
 				}
 			}
 		}
@@ -254,16 +254,14 @@ class SDRC_HvtVip : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();		
-	ref array<EMapDescriptorType> locationTypes = {};
 	ref array<string> buildingNames = {};
 	//Optional settings
 	string lootBox = "";					//The loot box
 	ref SDRC_Loot loot = null;
 	string target;
 	
-	void Set(array<EMapDescriptorType> locationTypes_, array<string> buildingNames_, string lootBox_, string target_)
+	void Set(array<string> buildingNames_, string lootBox_, string target_)
 	{
-		locationTypes = locationTypes_;
 		buildingNames = buildingNames_;	
 		lootBox = lootBox_;
 		target = target_;
@@ -356,6 +354,16 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		HvtVip.general.Set(
 			0, "index 0: HvtVips in cities",
 			{"0 0 0"}, 0, 
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_TOWN, 
+				EMapDescriptorType.MDT_AIRPORT,
+			},
 			"any",
 			"Target near %l.",
 			"Assassinate the target",
@@ -376,16 +384,6 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.NONE		
 		);
 		HvtVip.Set(
-			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_TOWN, 
-				EMapDescriptorType.MDT_AIRPORT,
-			},
 			{"ShopModern_", "Villa_", "MunicipalOffice_", "PubVillage_", "Office_E_", "MountainHotel_"},
 			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
 			"C_OFFICER"
@@ -413,6 +411,9 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		HvtVip.general.Set(
 			1, "index 1: HvtVips in control towers",
 			{"0 0 0"}, 0,
+			{
+				//We pick any building that matches and ignore location
+			},
 			"any",
 			"Flight controller near %l.",
 			"Assassinate the target",
@@ -433,9 +434,6 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.NONE		
 		);
 		HvtVip.Set(
-			{
-				//We pick any building that matches and ignore location
-			},
 			{"ControlTowerMilitary_"},
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 			"C_OFFICER"
@@ -464,6 +462,9 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		HvtVip.general.Set(
 			2, "index 2: Businessman with bad business",
 			{"0 0 0"}, 0,
+			{
+				//We pick any building that matches and ignore location
+			},
 			"any",
 			"%l is bad for business",
 			"Assassinate the business man conducting bad business.",
@@ -484,9 +485,6 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.NONE		
 		);
 		HvtVip.Set(
-			{
-				//We pick any building that matches and ignore location
-			},
 			{"Office_E_", "Barracks_01_", "Barracks_E_02_", "MountainHotel_"},
 			"{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
 			"{A517C72CEF150898}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_2.et"
@@ -515,6 +513,9 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		HvtVip.general.Set(
 			3, "index 3: Criminal in countryside",
 			{"0 0 0"}, 0, 
+			{
+				//We pick any building that matches and ignore location
+			},
 			"any",
 			"Criminal hiding in %l",
 			"Assassinate the criminal boss. He tries to keep low profile.",
@@ -535,9 +536,6 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.NONE		
 		);
 		HvtVip.Set(
-			{
-				//We pick any building that matches and ignore location
-			},
 			{"House_"},
 			"{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
 			"{E024A74F8A4BC644}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_1.et"

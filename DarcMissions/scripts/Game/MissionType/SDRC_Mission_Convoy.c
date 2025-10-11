@@ -63,7 +63,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		
 		if (pos == "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.locationTypes, m_DC_Convoy.general.size, randomPos);
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.general.locationTypes, m_DC_Convoy.general.size, randomPos);
 		}
 
 		//If failed, stop
@@ -87,7 +87,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		//Find a location for the destination
 		if (m_vPosDestination == "0 0 0" && pos != "0 0 0")
 		{
-			m_vPosDestination = SDRC_MissionHelper.FindMissionDestination(m_DC_Convoy.locationTypes, pos, 500);
+			m_vPosDestination = SDRC_MissionHelper.FindMissionDestination(m_DC_Convoy.general.locationTypes, pos, 500);
 			if (m_vPosDestination != "0 0 0")
 			{
 				SDRC_RoadPos roadPos = new SDRC_RoadPos();
@@ -267,15 +267,13 @@ class SDRC_Convoy : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();	
-	ref array<EMapDescriptorType> locationTypes = {};	
 	ref array<string> vehicleTypes = {};
 	float cruiseSpeed;						//Speed to drive in km/h.
 	//Optional settings
 	ref SDRC_Loot loot = null;	
 	
-	void Set(array<EMapDescriptorType> locationTypes_, array<string> vehicleTypes_, float cruiseSpeed_)
+	void Set(array<string> vehicleTypes_, float cruiseSpeed_)
 	{
-		locationTypes = locationTypes_;
 		vehicleTypes = vehicleTypes_;
 		cruiseSpeed = cruiseSpeed_;
 	}
@@ -369,6 +367,19 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		convoy.general.Set(
 			0, "index 0: Convoy driving from .. to ..",
 			{"0 0 0", "0 0 0"}, 5,
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_AIRPORT
+			},
 			"any",
 			"Convoy is on the move.",
 			"Leaked travel plans show a route from %l to %d",
@@ -389,19 +400,6 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.MOVE,
 		);
 		convoy.Set(
-			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_VALLEY,
-				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_NAME_RIDGE,
-				EMapDescriptorType.MDT_HOSPITAL,
-				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
-				EMapDescriptorType.MDT_AIRPORT
-			},
 			{
 				"{01F65EFB8D767A91}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_cargo.et",
 				"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
@@ -435,6 +433,20 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		convoy.general.Set(
 			1, "index 1: Truck driving from .. to ..",
 			{"0 0 0", "0 0 0"}, 7,
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_PARKING,
+				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_AIRPORT
+			},
 			"any",
 			"Cargo truck is on the move.",
 			"Follow the route from %l to %d",
@@ -455,20 +467,6 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.MOVE,
 		);
 		convoy.Set(
-			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_FORESTSQUARE,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_VALLEY,
-				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_FUELSTATION,
-				EMapDescriptorType.MDT_PARKING,
-				EMapDescriptorType.MDT_HOSPITAL,
-				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
-				EMapDescriptorType.MDT_AIRPORT
-			},
 			{
 				"{F1FBD0972FA5FE09}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport.et",
 				"{81FDAD5EB644CC3D}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered.et",
@@ -503,6 +501,20 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		convoy.general.Set(
 			2, "index 2: Armor driving from .. to ..",
 			{"0 0 0", "0 0 0"}, 7,
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_PARKING,
+				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_AIRPORT
+			},
 			"any",
 			"Armor spotted",
 			"It's been seen in %l. It's to patrol to %d.",
@@ -523,20 +535,6 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.MOVE,
 		);
 		convoy.Set(
-			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_FORESTSQUARE,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_VALLEY,
-				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_FUELSTATION,
-				EMapDescriptorType.MDT_PARKING,
-				EMapDescriptorType.MDT_HOSPITAL,
-				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
-				EMapDescriptorType.MDT_AIRPORT
-			},
 			{
 				"{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et",
 				"{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et",
@@ -566,6 +564,20 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		convoy.general.Set(
 			3, "index 3: Vehicle with a gun driving from .. to ..",
 			{"0 0 0", "0 0 0"}, 4,
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_PARKING,
+				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_AIRPORT
+			},
 			"any",
 			"Guns on the move",
 			"Look out for a patrol between %l and %d.",
@@ -586,20 +598,6 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.MOVE,
 		);
 		convoy.Set(
-			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_FORESTSQUARE,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_VALLEY,
-				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_FUELSTATION,
-				EMapDescriptorType.MDT_PARKING,
-				EMapDescriptorType.MDT_HOSPITAL,
-				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
-				EMapDescriptorType.MDT_AIRPORT
-			},
 			{
 				"{F6B23D17D5067C11}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB.et",
 				"{5168FEA3054D6D15}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB_MERDC.et",

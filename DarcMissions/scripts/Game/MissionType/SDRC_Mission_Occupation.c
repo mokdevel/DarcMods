@@ -38,7 +38,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Occupation.general, request);
 		
 		//Find the position
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Occupation.general.pos, m_DC_Occupation.general.size, m_DC_Occupation.locationTypes);
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Occupation.general.pos, m_DC_Occupation.general.size, m_DC_Occupation.general.locationTypes);
 		
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
@@ -228,6 +228,10 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		occupation.general.Set(
 			0, "index 0: Mission in villages and local areas.",
 			{"0 0 0"}, 3,
+			{
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_LOCAL
+			},
 			"any",
 			"Guards patroling near %l",
 			"Avoid the location. Loot has already been lost.",
@@ -247,12 +251,6 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			SDRC_EWaypointGenerationType.RANDOM,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
-		occupation.Set(
-			{
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_LOCAL
-			},
-		);
 		
 		return occupation;
 	};
@@ -264,6 +262,15 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		occupation.general.Set(
 			1, "index 1: Bandit camp spawning to non city areas",
 			{"0 0 0"}, 6,
+			{
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_SETTLEMENT,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_BASE,
+				EMapDescriptorType.MDT_PORT,
+				EMapDescriptorType.MDT_AIRPORT,
+				EMapDescriptorType.MDT_FORTRESS
+			},
 			"any",
 			"Bandit camp near %l",
 			"Bandits are protecting their valuable loot.",
@@ -282,17 +289,6 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{25, 100},
 			SDRC_EWaypointGenerationType.SCATTERED,//RANDOM,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
-		);
-		occupation.Set(
-			{
-				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_NAME_SETTLEMENT,
-				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
-				EMapDescriptorType.MDT_BASE,
-				EMapDescriptorType.MDT_PORT,
-				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_FORTRESS
-			},
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -347,6 +343,17 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		occupation.general.Set(
 			2, "index 2: Occupation that will spawn mainly to cities and towns.",
 			{"0 0 0"}, 10,
+			{
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_TOWN, 
+				EMapDescriptorType.MDT_AIRPORT,
+			},
 			"any",
 			"Occupation in %l",
 			"City is being occupied.",
@@ -367,19 +374,6 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{30, 200},
 			SDRC_EWaypointGenerationType.RADIUS,
 			SDRC_EWaypointMoveType.RANDOM,		
-		);
-		occupation.Set(
-			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_RIDGE,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_TOWN, 
-				EMapDescriptorType.MDT_AIRPORT,
-			},
 		);
 
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -437,6 +431,15 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		occupation.general.Set(
 			3, "index 3: Car crash in an unusual place",
 			{"0 0 0"}, 6,
+			{
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_NAME_SETTLEMENT,
+				EMapDescriptorType.MDT_PARKING,
+				EMapDescriptorType.MDT_BASE,
+				EMapDescriptorType.MDT_RADIO,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+			},
 			"any",
 			"Car crash near %l",
 			"Loot is up for grabs.",
@@ -455,17 +458,6 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{10, 60},
 			SDRC_EWaypointGenerationType.RANDOM,
 			SDRC_EWaypointMoveType.RANDOM,		
-		);
-		occupation.Set(
-			{
-				EMapDescriptorType.MDT_FORESTSQUARE,
-				EMapDescriptorType.MDT_FUELSTATION,
-				EMapDescriptorType.MDT_NAME_SETTLEMENT,
-				EMapDescriptorType.MDT_PARKING,
-				EMapDescriptorType.MDT_BASE,
-				EMapDescriptorType.MDT_RADIO,
-				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
-			},
 		);
 
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -536,6 +528,12 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		occupation.general.Set(
 			4, "index 4: Campers with a car and a tent",
 			{"0 0 0"}, 12,
+			{
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_HILL,
+				EMapDescriptorType.MDT_NAME_VALLEY			
+			},
 			"any",
 			"Campers near %l",
 			"Rob them before they leave.",
@@ -554,14 +552,6 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{10, 90},
 			SDRC_EWaypointGenerationType.RANDOM,
 			SDRC_EWaypointMoveType.RANDOM,		
-		);
-		occupation.Set(
-			{
-				EMapDescriptorType.MDT_NAME_RIDGE,
-				EMapDescriptorType.MDT_FORESTSQUARE,
-				EMapDescriptorType.MDT_NAME_HILL,
-				EMapDescriptorType.MDT_NAME_VALLEY			
-			},
 		);
 
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -648,6 +638,11 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		occupation.general.Set(
 			5, "index 5: A small town",
 			{"0 0 0"}, 30,
+			{
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_VALLEY			
+			},
 			"any",
 			"Settlement near %l",
 			"The enemies are hiding in a ghost town.",
@@ -666,13 +661,6 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			{10, 90},
 			SDRC_EWaypointGenerationType.RANDOM,
 			SDRC_EWaypointMoveType.RANDOM,		
-		);
-		occupation.Set(
-			{
-				EMapDescriptorType.MDT_NAME_RIDGE,
-				EMapDescriptorType.MDT_FORESTSQUARE,
-				EMapDescriptorType.MDT_NAME_VALLEY			
-			},
 		);
 
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -810,6 +798,10 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		occupation.general.Set(
 			6, "index 6: Zombies and Demons.",
 			{"0 0 0"}, 3,
+			{
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_LOCAL
+			},
 			"any",
 			"Creatures near %l",
 			"Avoid the location. No loot available.",
@@ -831,13 +823,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			SDRC_EWaypointGenerationType.RANDOM,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
-		occupation.Set(
-			{
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_LOCAL
-			},
-		);
-		
+	
 		return occupation;
 	}		
 }

@@ -51,8 +51,16 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		m_iGroupsToSpawn = m_DC_Hunter.ai.GetCount(m_DC_Hunter.general.difficulty);
 		
 		//Find position
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Hunter.general.pos);
 		bool positionFound = false;
+//		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Hunter.general.pos);
+		vector pos = m_DC_Hunter.general.pos.GetRandomElement();
+		
+		//For requested missions we want have it as close as possible in the requested place.
+		int randomPos = -1;		
+		if (IsRequested())
+		{
+			randomPos = 0;
+		}
 
 		if (pos != "0 0 0")
 		{
@@ -63,9 +71,16 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		{
 			for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 			{
-				pos = SDRC_Misc.GetRandomWorldPos();
+				if (m_DC_Hunter.general.locationTypes.IsEmpty())
+				{
+					pos = SDRC_Misc.GetRandomWorldPos();
+				}
+				else
+				{
+					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Hunter.general.locationTypes, m_DC_Hunter.general.size, randomPos);
+				}
 							
-				if (SDRC_MissionHelper.IsValidMissionPos(pos))
+				if (SDRC_MissionHelper.IsValidMissionPos(pos) == SDRC_EMissionError.NONE)
 				{			
 					//Find a position close to any player
 					if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, m_Config.maxDistanceToPlayer, m_Config.minDistanceToPlayer))
@@ -365,7 +380,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
 		conf.showMarker = false;
-		conf.missionList = {0,0,0,1};
+		conf.missionList = {2};//{0,0,0,1,1,1,2};
 		//Mission specific
 		conf.minDistanceToPlayer = 200;
 		conf.maxDistanceToPlayer = 800;
@@ -374,6 +389,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		conf.subMissions.Insert(Hunter0());				
 		conf.subMissions.Insert(Hunter1());				
+		conf.subMissions.Insert(Hunter2());				
 	}
 	
 	//----------------------------------------------------
@@ -383,6 +399,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 		hunter.general.Set(
 			0, "index 0: general mission",
 			{"0 0 0"}, 2,
+			{},
 			"any",
 			"Hunters",
 			"They are coming for you... Last time they were seen close to %l.",
@@ -397,7 +414,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 		hunter.ai.Set(
 			{1, 2},
 			{"G_SMALL"},
-			30, 0.7,
+			30, 0.4,
 			{0, 0},
 			SDRC_EWaypointGenerationType.NONE, 
 			SDRC_EWaypointMoveType.NONE
@@ -411,6 +428,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 		hunter.general.Set(
 			1, "index 1: general mission",
 			{"0 0 0"}, 2,
+			{},
 			"any",
 			"Hunters",
 			"Sharpshooters are hunting you. Last known location was near %l.",
@@ -432,4 +450,41 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 		);
 		return hunter;
 	}		
+	//----------------------------------------------------
+	SDRC_Hunter Hunter2()
+	{		
+		ref SDRC_Hunter hunter = new SDRC_Hunter();
+		hunter.general.Set(
+			2, "index 2: Hunters from military",
+			{"0 0 0"}, 2,
+			{
+				EMapDescriptorType.MDT_BASE,
+/*				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_BUNKER,
+				EMapDescriptorType.MDT_FORTRESS,
+				EMapDescriptorType.MDT_AIRPORT,
+				EMapDescriptorType.MDT_BASE,
+				EMapDescriptorType.MDT_PORT,*/
+			},
+			"any",
+			"Recon",
+			"Military base near %l has sent a recon team to hunt you.",
+			SDRC_EMissionWinCondition.AI_KILL_ALL,
+			"Recon team cleared.",
+			"Recon team lost track of you.", 
+			"",
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
+			0
+		);
+		hunter.ai.Set(
+			{1, 2},
+			{"G_RECON"},
+			40, 0.5,
+			{0, 0},
+			SDRC_EWaypointGenerationType.NONE, 
+			SDRC_EWaypointMoveType.NONE
+		);
+		return hunter;
+	}			
 }

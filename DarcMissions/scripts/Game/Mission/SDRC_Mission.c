@@ -79,6 +79,7 @@ class SDRC_MissionConfigGeneral : Managed
 	string comment;							//Generic comment to describe the mission. Not used in game.
 	ref array<vector> pos = {};				//Positions for mission. "0 0 0" used for random location chosen from locationTypes. First is mission position, second is destination for missions that need it.
 	float size;								//The size (radius) of the empty space needed to decide on a mission position.
+	ref array<EMapDescriptorType> locationTypes = {};
 	string posName;							//Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes 
 	string title;							//Title for the hint shown for players
 	string info;							//Details for the hint shown for players
@@ -100,6 +101,7 @@ class SDRC_MissionConfigGeneral : Managed
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults(int subIdx_ = -1, string comment_ = SDRC_DEFAULT, 
 					 vector pos_ = "0 0 0", float size_ = 5,
+					 array<EMapDescriptorType> locationTypes_ = null,
 					 string posName_ = SDRC_DEFAULT, string title_ = SDRC_DEFAULT, string info_ = SDRC_DEFAULT, 
 					 SDRC_EMissionWinCondition winCondition_ = SDRC_EMissionWinCondition.DEFAULT, 
 					 string winMessage_ = SDRC_DEFAULT, string loseMessage_ = SDRC_DEFAULT, 
@@ -109,16 +111,20 @@ class SDRC_MissionConfigGeneral : Managed
 					 int xp_ = 0)
 	{
 		array<vector> pos_array = {pos_, "0 0 0"};
-		Set(subIdx_, comment_, pos_array, size_, posName_, title_, info_, winCondition_, winMessage_, loseMessage_, faction_, markerType_, markerIcon_, difficulty_, xp_);
+		Set(subIdx_, comment_, pos_array, size_, locationTypes_, posName_, title_, info_, winCondition_, winMessage_, loseMessage_, faction_, markerType_, markerIcon_, difficulty_, xp_);
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void Set(int subIdx_, string comment_, array<vector> pos_, float size_, string posName_, string title_, string info_, SDRC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, string markerType_, int markerIcon_, SDRC_EMissionDifficulty difficulty_, int xp_)
+	void Set(int subIdx_, string comment_, array<vector> pos_, float size_, array<EMapDescriptorType> locationTypes_, string posName_, string title_, string info_, SDRC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, string markerType_, int markerIcon_, SDRC_EMissionDifficulty difficulty_, int xp_)
 	{
 		subIdx = subIdx_;
 		comment = comment_;
 		pos = pos_;
 		size = size_;
+		if (locationTypes_)
+		{
+			locationTypes = locationTypes_;
+		}
 		posName = posName_;
 		title = title_;
 		info = info_;
@@ -128,7 +134,7 @@ class SDRC_MissionConfigGeneral : Managed
 		faction = faction_;
 		markerType = markerType_;
 		markerIcon = markerIcon_;
-		difficulty = difficulty_;
+		difficulty = difficulty_;		
 		xp = xp_;
 	}	
 }

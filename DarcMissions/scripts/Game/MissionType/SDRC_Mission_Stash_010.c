@@ -33,6 +33,7 @@ class SDRC_Stash_010_JsonApi : SDRC_StashJsonApi
 		stash.general.Set(
 			10, "index 10: Random stash",
 			{"0 0 0"}, 3,
+			{},
 			"any",
 			"Hidden loot near %l",
 			"Loot is yours to take",
@@ -52,15 +53,11 @@ class SDRC_Stash_010_JsonApi : SDRC_StashJsonApi
 			SDRC_EWaypointGenerationType.RANDOM,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);	
-		stash.Set(
-			{
-			},
-		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"WEAPON_RIFLE",
-				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
+				"WEAPON_RIFLE", "WEAPON_RIFLE",
+				"WEAPON_HANDGUN", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
