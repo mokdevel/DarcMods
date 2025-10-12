@@ -99,6 +99,11 @@ Dependency specific files
 # Version history
 
 ## Next release (unreleased)
+
+..empty..
+
+## 20251012
+### DarcMissions
 Moved ``locationTypes`` under ``general`` as it's a common attribute for all missions. That said, the mission json files have changes. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs. Hopefully this is one of the last big changes for now.
 NOTE: dc_coreConfig.json and dc_lootList.json have been updated too.
 
@@ -113,8 +118,9 @@ Changes:
   * Added ``GEAR_HEADGEAR`` - helmets and gas masks. More gear lists TBD.
   * Added ``CLOTHING_HEADGEAR`` - non military head gear like hats. More clothing lists TBD.
   * Support for MCX Spear 6.8. Included in ``WEAPON_RIFLE``.
+  * Support for Gas Masks mod. Included in ``GEAR_HEADGEAR``.
 
-## 20250910
+## 20251009
 ### DarcMissions
 Major changes in the json files. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
 

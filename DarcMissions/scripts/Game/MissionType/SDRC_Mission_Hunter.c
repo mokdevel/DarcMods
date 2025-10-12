@@ -380,7 +380,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
 		conf.showMarker = false;
-		conf.missionList = {2};//{0,0,0,1,1,1,2};
+		conf.missionList = {0,0,0,1,1,1,2};
 		//Mission specific
 		conf.minDistanceToPlayer = 200;
 		conf.maxDistanceToPlayer = 800;
