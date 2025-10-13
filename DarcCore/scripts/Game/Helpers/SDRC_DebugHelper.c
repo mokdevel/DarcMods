@@ -7,7 +7,12 @@ The entity that takes care of showing debug markers and other things. Currently 
 
 //------------------------------------------------------------------------------------------------
 modded enum SCR_DebugMenuID {
-    MODMENU,
+	#ifndef SDRC_RELEASE
+	    MODMENU = 244,
+	#endif
+	#ifdef SDRC_RELEASE
+		MODMENU,
+	#endif
     MODMENU_WAYPOINTS,
     MODMENU_MARKS,
 	MODMENU_SPHERES
