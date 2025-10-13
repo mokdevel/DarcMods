@@ -118,8 +118,8 @@ class SDRC_Spawner
 	{
 		IEntity entity;
 		bool isVehicle = false;
-		array<MapItem> locations = {};	
-		MapItem location = null;
+		array<SDRC_Location> locations = {};
+		SDRC_Location location = null;
 		vector pos;
 		bool snap = true;
 		float emptyPosRadius = 50;
@@ -140,10 +140,11 @@ class SDRC_Spawner
 		//Find from location types
 		if (!spawnSet.locationTypes.IsEmpty())
 		{
-			SDRC_Locations.GetLocations(locations, spawnSet.locationTypes);
+			SDRC_Locations.GetLocationsCached(locations, spawnSet.locationTypes);
+			//SDRC_Locations.GetLocations(locations, spawnSet.locationTypes);
 			location = locations.GetRandomElement();
-			pos = location.GetPos();
-			SDRC_Log.Add("[SDRC_Spawner:Spawn] Chosen location: " + SCR_StringHelper.Translate(location.Entity().GetName()) + " (" + pos + ")", LogLevel.DEBUG);
+			pos = location.pos;
+			SDRC_Log.Add("[SDRC_Spawner:Spawn] Chosen location: " + location.displayName + " (" + pos + ")", LogLevel.DEBUG);
 		
 			if (m_Config.spawnOnRoad && isVehicle)
 			{
@@ -199,7 +200,7 @@ class SDRC_Spawner
 		{		
 			if (location)
 			{
-				SDRC_Log.Add("[SDRC_Spawner:Spawn] Spawning " + entityToSpawn + " to " + SCR_StringHelper.Translate(location.Entity().GetName()), LogLevel.NORMAL);
+				SDRC_Log.Add("[SDRC_Spawner:Spawn] Spawning " + entityToSpawn + " to " + SCR_StringHelper.Translate(location.displayName), LogLevel.NORMAL);
 			}
 			else
 			{
