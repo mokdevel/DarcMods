@@ -6,7 +6,7 @@ Includes various functions for missions.
 */
 
 //------------------------------------------------------------------------------------------------
-sealed class SDRC_MissionHelper
+class SDRC_MissionHelper
 {
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 5;		//How many different spots to try for a mission before giving up
 	private const int DC_LOCATION_SEACRH_RADIUS_INC = 30;		//The increase of search radius for each failed iteration
@@ -85,8 +85,8 @@ sealed class SDRC_MissionHelper
 		//Find a random location
 		vector pos = "0 0 0";
 		
-		IEntity location = null;
-		array<IEntity> locations = {};
+		SDRC_Location location = null;
+		array<SDRC_Location> locations = {};
 		
 		if ( (locationTypes) && (!locationTypes.IsEmpty()) )
 		{
@@ -105,9 +105,10 @@ sealed class SDRC_MissionHelper
 		else
 		{		
 			location = locations.GetRandomElement();
-			pos = location.GetOrigin();
+			pos = location.pos;//GetOrigin();
 			
-			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);			
+//			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);			
+			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.name + " " + location.pos, LogLevel.DEBUG);			
 		}
 
 		pos = FindWithIterate(pos, size, posRandomization);
@@ -304,7 +305,18 @@ sealed class SDRC_MissionHelper
 			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.IN_NON_VALID_AREA), LogLevel.SPAM);
 			return SDRC_EMissionError.IN_NON_VALID_AREA;
 		}
-										
+
+/*		#ifdef FREEDOM_FIGHTERS
+			JWK_EFactionRole factionRole = JWK.GetTerritoryControl().GetControllingRoleAt(pos);
+			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.IN_FREEDOM_FIGHTERS_SAFEZONE), LogLevel.ERROR);
+			
+			if ( (factionRole == JWK_EFactionRole.PLAYER) || (factionRole == JWK_EFactionRole.SUPPORTING) )
+			{
+				SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.IN_FREEDOM_FIGHTERS_SAFEZONE), LogLevel.SPAM);
+				return SDRC_EMissionError.IN_FREEDOM_FIGHTERS_SAFEZONE;
+			}		
+		#endif*/
+		
 		return SDRC_EMissionError.NONE;
 	}
 
@@ -408,9 +420,19 @@ sealed class SDRC_MissionHelper
 		else
 		{
 			//TBD: This needs to search through suid
+			
+			//TBD: This probably should be moved to SDRC_Mission. We don't have access to subIdx's that are available.
 			if (missionSubIdx > -1 && missionSubIdx < confList.Count())
 			{
 				idx = missionSubIdx;
+/*				foreach (int i, int conf : confList)
+				{
+					if (conf.subIdx == missionSubIdx)
+					{
+						idx = i;
+						break;
+					}
+				}*/
 			}
 			else
 			{
@@ -436,38 +458,4 @@ sealed class SDRC_MissionHelper
 		SDRC_Log.Add("[SDRC_MissionHelper:CreateInfo] Message created: " + msg, LogLevel.SPAM);
 		return msg;
 	}	
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	DEBUG: Test mission positions on map. Only for debugging.
-	This will create a map marker for each position tested.
-	*/	
-	static void DebugTestMissionPos()
-	{	
-		if (!SDRC_Conf.RELEASE)
-		{
-			vector pos;
-	
-			for (int i = 0; i < 400; i++)
-			{		
-				pos = SDRC_MissionHelper.FindMissionPos();
-				if (pos != "0 0 0")
-				{
-					SDRC_MapMarkerHelper.CreateMapMarker(pos, SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, "DUMMY_");	//TBD: Create some other debug marker
-				}
-			}		
-		}
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	DEBUG: Delete the test mission positions on map. Only for debugging.
-	*/	
-	static void DeleteDebugTestMissionPos()
-	{	
-		if (!SDRC_Conf.RELEASE)
-		{
-			SDRC_MapMarkerHelper.DeleteMarker("DUMMY_");
-		}
-	}
 }

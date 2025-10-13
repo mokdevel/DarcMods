@@ -111,21 +111,8 @@ class SDRC_MissionFrame
 		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;		//sec to ms
 		
 		#ifndef SDRC_RELEASE
-			//SDRC_DevHelper.SDRC_DevDump();
+			SDRC_DevHelper.SDRC_DevDump();
 		#endif	
-		
-		/*
-		//Freedom Fighters part
-		JWK_TerritoryControlManagerComponent territoryControlManagerComponent;		
-		territoryControlManagerComponent = JWK_CompT<JWK_TerritoryControlManagerComponent>.FindIn(GetGame().GetGameMode());
-		if (territoryControlManagerComponent)
-		{
-			if (territoryControlManagerComponent.IsInitialized()) 
-			{
-				JWK_EFactionRole role = territoryControlManagerComponent.GetControllingRoleAt("0 0 0");
-			}
-		}
-		*/
 		
 		//Start the mission framework.
 		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStartDelay, false);
@@ -327,8 +314,8 @@ class SDRC_MissionFrame
 		#ifndef SDRC_RELEASE
 			if (SDRC_Conf.SHOW_VALID_MISSION_AREAS)
 			{
-				SDRC_MissionHelper.DeleteDebugTestMissionPos();
-				SDRC_MissionHelper.DebugTestMissionPos();
+				SDRC_DevHelper.DeleteDebugTestMissionPos();
+				SDRC_DevHelper.DebugTestMissionPos();
 			}
 		#endif
 

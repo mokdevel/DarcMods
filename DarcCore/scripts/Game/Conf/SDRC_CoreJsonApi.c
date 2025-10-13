@@ -105,7 +105,7 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 		};
 		conf.emptyPos.objectFilter = {
 			//Rocks etc
-			"Boulder_", "BeachStone_", 
+			"Boulder_", "BeachStone_", "GraniteCliff_",
 			//Misc
 			"BlastCover_",
 			//Building parts

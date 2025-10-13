@@ -5,6 +5,16 @@
 ## Next release (unreleased)
 
 ..empty..
+### DarcMissions
+Fixes:
+
+Changes:
+* dc_coreConfig.json locationAkas - Functionality enabled. You can name location names to work as specific locationTypes. For example anything called "military" becomes type MDT_BASE (79) in addition to the original definition.
+* dc_lootList.json
+  * Added ``GEAR_VEST`` - vests.
+
+### DarcSpawner
+Uses faster cached location information for spawn.
 
 ## 20251012
 ### DarcMissions

@@ -39,7 +39,7 @@ enum SDRC_EMissionSuccess
 
 enum SDRC_EMissionError
 {
-	NONE,
+	NONE = 0,
 	LOCATION_NOT_FOUND,
 	WRONG_SUBIDX,
 	ROAD_FOR_START_NOT_FOUND,
@@ -52,7 +52,7 @@ enum SDRC_EMissionError
 	POSITION_UNDER_MAP,
 	PLAYER_TOO_CLOSE,
 	MISSION_TOO_CLOSE,
-	IN_NON_VALID_AREA	
+	IN_NON_VALID_AREA,
 }
 
 const string SDRC_DEFAULT = "default";

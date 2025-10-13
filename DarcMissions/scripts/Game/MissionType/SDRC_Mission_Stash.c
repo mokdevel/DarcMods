@@ -257,6 +257,7 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_HEADGEAR", "GEAR_HEADGEAR", 
 			};
 		loot.Set(0.7, lootItems);
 		stash.loot = loot;

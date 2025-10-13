@@ -19,6 +19,7 @@
 	UTIL_MAGAZINE,			//Adds a random magazine
 	UTIL_AMMO,				//Adds a random rocket, shell, flare, ..
 	GEAR_HEADGEAR,			//Head Gear including helmets, gas masks
+	GEAR_VEST,				//Vests
 	CLOTHING_HEADGEAR,		//Head Gear including hats
 */
 
@@ -86,6 +87,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		conf.lists.Insert(lootList51());
 		//Gear
 		conf.lists.Insert(lootList60());		
+		conf.lists.Insert(lootList61());		
 		//Clothing
 		conf.lists.Insert(lootList80());		
 	}
@@ -288,14 +290,30 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		lootList.Set(
 			"GEAR_HEADGEAR",
 			{"Prefabs/Characters/HeadGear"},
-			{"Helmet_",
-			"GP-", "M50", "Unix_", //Gasmask items
+			{
+			"{2B00FA02CD45D858}Prefabs/Characters/HeadGear/Gasmasks/M50_M.et",
+			"{18A9924C025A8F67}Prefabs/Characters/HeadGear/Gasmasks/GP-7_M.et",
+			"{D63D851D2DCE0C7B}Prefabs/Characters/HeadGear/Gasmasks/GP-7_F.et",
+//			"Helmet_",
+//			"GP-", "M50", "Unix_", //Gasmask items
 			},
 			{"_Base"}
 		);
 		return lootList;
 	}
 
+	SDRC_List lootList61()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"GEAR_VEST",
+			{"Prefabs/Characters/Vests"},
+			{"Vest_",},
+			{"_Base"}
+		);
+		return lootList;
+	}
+	
 	//Lootlist: Clothing : Head gear
 	SDRC_List lootList80()
 	{

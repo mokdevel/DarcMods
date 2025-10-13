@@ -8,6 +8,16 @@ NOTE: In order to use the caching, FillLocationsCache has to be run at startup.
 */
 
 //------------------------------------------------------------------------------------------------
+class SDRC_Location : Managed
+{
+	vector pos;
+	EMapDescriptorType baseType;
+	string name;
+	string displayName;	
+	string createdName;	
+}
+
+//------------------------------------------------------------------------------------------------
 class SDRC_LocationAka : Managed
 {
 	EMapDescriptorType type; 
@@ -26,18 +36,17 @@ sealed class SDRC_Locations
 	private static ref array<IEntity> m_aTmpSlots = {};
 	private static string m_sName;
 	
-	private static ref array<MapItem> m_LocationsCache = {};
+	private static ref array<ref SDRC_Location> m_LocationsCache = {};
 		
 	//-----------------------------------------------------------------------------------------------
 	/*!
 	Search for locations from the world. The types to search are defined in locationTypeArray.
-	\param locationArray Array to return the list of locations. Can be either MapItem or IEntity.
+	\param locationArray Array to return the list of locations.
 	\param locationTypeArray Array of EMapDescriptorType
 
 	Example:
 	\code
-		private array<MapItem> m_Locations = {};
-		private array<IEntity> m_Locations = {};
+		private array<SDRC_Location> m_Locations = {};
 		private array<EMapDescriptorType> locationTypeArray = {
 			EMapDescriptorType.MDT_NAME_TOWN, 
 			EMapDescriptorType.MDT_NAME_CITY
@@ -45,48 +54,28 @@ sealed class SDRC_Locations
 			
 		SDRC_Locations.GetLocations(m_Locations, locationTypeArray);
 	\endcode
-	*/	
-	static void GetLocations(out array<IEntity> locationArray, array<EMapDescriptorType> locationTypeArray)
+	*/		
+	static void GetLocations(out array<ref SDRC_Location> locationArray, array<EMapDescriptorType> locationTypeArray)
 	{
-		#ifndef SDRC_RELEASE
-			//If SCR_MapEntity does not exist, we most likely are playing in some debug map
-			SCR_MapEntity mapEnt = SCR_MapEntity.GetMapInstance();
-			if (!mapEnt)
-			{
-				return;
-			}
-		#endif
+		array<MapItem> locationArrayMapItem = {};
 		
-		//int stime = System.GetTickCount();
+		GetLocations(locationArrayMapItem, locationTypeArray);
 		
-		private array<MapItem> m_tmpLocationArray = new array<MapItem>;
-		private array<MapItem> m_debugLocationArray = new array<MapItem>;
-
-		foreach (EMapDescriptorType locationType: locationTypeArray)
+		foreach (MapItem tmpMapItem: locationArrayMapItem)
 		{
-			SDRC_Log.Add("[SDRC_Locations:GetLocations] Searching for: " + SCR_Enum.GetEnumName(EMapDescriptorType, locationType), LogLevel.SPAM);
-			
-			m_tmpLocationArray.Clear();
-			SCR_MapEntity.GetMapInstance().GetByType(m_tmpLocationArray, locationType);
-			
-			foreach (MapItem tmpMapItem: m_tmpLocationArray)
-			{
-				tmpMapItem.SetDisplayName(SCR_StringHelper.Translate(tmpMapItem.GetDisplayName()));
-				tmpMapItem.Entity().SetName(tmpMapItem.GetDisplayName());
-				vector origin = tmpMapItem.Entity().GetOrigin();			
-				tmpMapItem.SetPos(origin[0], origin[2]);
-				//tmpMapItem.Entity().SetOrigin(origin);						//Need to put the entity pos ot the mapItem pos
-				locationArray.Insert(tmpMapItem.Entity());
-				
-				m_debugLocationArray.Insert(tmpMapItem);
-			}			
+			SDRC_Location location = new SDRC_Location();
+			vector origin = tmpMapItem.Entity().GetOrigin();			
+			tmpMapItem.SetPos(origin[0], origin[2]);
+			location.pos = tmpMapItem.GetPos();
+			location.baseType = tmpMapItem.GetBaseType();
+			location.name = tmpMapItem.GetDisplayName();
+			location.displayName = SCR_StringHelper.Translate(tmpMapItem.GetDisplayName());
+			location.createdName = CreateName(location.pos);
+			locationArray.Insert(location);
 		}
-				
-		SDRC_Log.Add("[SDRC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
-		ShowDebugInfo(m_debugLocationArray);
 		
-		//int etime = System.GetTickCount();
-		//SDRC_Log.Add("[SDRC_Locations:GetLocations] Searching took: " + (etime-stime), LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
+		ShowDebugInfo(locationArray);		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -114,10 +103,9 @@ sealed class SDRC_Locations
 			
 			foreach (MapItem tmpMapItem: m_tmpLocationArray)
 			{
-				tmpMapItem.SetDisplayName(SCR_StringHelper.Translate(tmpMapItem.GetDisplayName()));
+				//tmpMapItem.SetDisplayName(SCR_StringHelper.Translate(tmpMapItem.GetDisplayName()));
 				vector origin = tmpMapItem.Entity().GetOrigin();			
 				tmpMapItem.SetPos(origin[0], origin[2]);
-				//tmpMapItem.Entity().SetOrigin(origin);						//Need to put the entity pos ot the mapItem pos
 				locationArray.Insert(tmpMapItem);
 			}			
 		}
@@ -151,7 +139,6 @@ sealed class SDRC_Locations
 				SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Name: %1 , DisplayName: %2 , CreatedName: %3, Type: %4 , Pos: %5 , Entity: %6", 
 					location.Entity().GetName(),
 					location.GetDisplayName(),
-//					CreateName(entity),
 					CreateName(location.GetPos()),
 					location.GetBaseType(),
 					location.GetPos(),
@@ -179,6 +166,43 @@ sealed class SDRC_Locations
 	}
 
 	//------------------------------------------------------------------------------------------------
+	static private void ShowDebugInfo(array<ref SDRC_Location> m_tmpLocationArray)
+	{
+		array<IEntity> slots = {};
+
+		if (SDRC_Log.GetLogLevel() == DC_LogLevel.ALL)
+		{		
+			foreach (SDRC_Location location: m_tmpLocationArray)
+			{			
+				SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Name: %2 (%1) , CreatedName: %3, Type: %4 , Pos: %5", 
+					location.name,
+					location.displayName,
+					location.createdName,
+					location.baseType,
+					location.pos,
+					), LogLevel.SPAM);
+
+				slots.Clear();
+				int slotcount = GetLocationSlots(slots, location.pos, 200);
+				
+				SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Found %1 slots.", 
+					slotcount,
+					), LogLevel.SPAM);
+				
+				#ifndef SDRC_RELEASE
+					if (SDRC_Conf.SHOW_MARKER_FOR_LOCATION)
+					{
+						if (location) 
+						{
+							SDRC_DebugHelper.AddDebugPos(location.pos);
+						}
+					}
+				#endif
+			}
+		}
+	}	
+	
+	//------------------------------------------------------------------------------------------------
 	/*!
 	Prepare an array with all locations on the map.
 	*/		
@@ -198,47 +222,37 @@ sealed class SDRC_Locations
 		m_LocationsCache.Clear();
 		GetLocations(m_LocationsCache, m_LocationTypeArray);
 		
-		ref MapItem tmpLocation = null;
-		
 		//Handle location akas
-		#ifndef SDRC_RELEASE
-			foreach (MapItem location: m_LocationsCache)
+		foreach (SDRC_Location location: m_LocationsCache)
+		{
+			string dispName = location.displayName;
+			dispName.ToLower();
+			
+			foreach (SDRC_LocationAka aka : locationAkas)
 			{
-				string dispName = location.GetDisplayName();
-				dispName.ToLower();
-				
-				foreach (SDRC_LocationAka aka : locationAkas)
+				EMapDescriptorType type = aka.type;
+				foreach (string name : aka.names)
 				{
-					EMapDescriptorType type = aka.type;
-					foreach (string name : aka.names)
+					if (dispName.Contains(name))
 					{
-						if (dispName.Contains(name))
-						{
-	//						location.SetBaseType(type);
-							m_LocationsCache.Insert(location);
-							m_LocationsCache[m_LocationsCache.Count() - 1].SetBaseType(type);
-	/*						tmpLocation = new MapItem();
-							Print(tmpLocation);
-	//						ref IEntity ent = new IEntity();
-							tmpLocation.SetBaseType(type);						
-	//						tmpLocation.Entity().SetOrigin(location.Entity().GetOrigin());
-							vector pos = location.GetPos();
-							tmpLocation.SetPos(pos[0], pos[2]);
-							tmpLocation.SetDisplayName(location.GetDisplayName());						
-							m_LocationsCache.Insert(tmpLocation);*/
-						}
+						SDRC_Location locNew = new SDRC_Location();
+						locNew.pos = location.pos;
+						locNew.baseType = type;
+						locNew.name = location.name;
+						locNew.displayName = location.displayName;
+						locNew.createdName = location.createdName;
+						m_LocationsCache.Insert(locNew);
+						SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Added via aka: " + locNew.displayName + " : " + type + " at: " + locNew.pos, LogLevel.SPAM);						
 					}
 				}
 			}
-		#endif
+		}
 				
 		//Print debug information
-		#ifndef SDRC_RELEASE
-			foreach (MapItem location: m_LocationsCache)
-			{
-				SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Found: " + location.GetDisplayName() + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, location.GetBaseType()) + " at: " + location.Entity().GetOrigin(), LogLevel.DEBUG);
-			}		
-		#endif
+		foreach (SDRC_Location location: m_LocationsCache)
+		{
+			SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Found: " + location.displayName + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, location.baseType) + " at: " + location.pos, LogLevel.DEBUG);
+		}		
 		
 		SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Found " + m_LocationsCache.Count() + " items to location cache.", LogLevel.NORMAL);					
 	}	
@@ -247,7 +261,7 @@ sealed class SDRC_Locations
 	/*!
 	Search for locations from the world using the cache. The types to search are defined in locationTypeArray.
 	*/		
-	static void GetLocationsCached(out array<IEntity> locationArray, array<EMapDescriptorType> locationTypeArray)
+	static void GetLocationsCached(out array<SDRC_Location> locationArray, array<EMapDescriptorType> locationTypeArray)
 	{
 		//int stime = System.GetTickCount();
 		
@@ -256,12 +270,12 @@ sealed class SDRC_Locations
 			return;
 		}
 		
-		foreach (MapItem location: m_LocationsCache)
+		foreach (SDRC_Location location: m_LocationsCache)
 		{
-			if (locationTypeArray.Contains(location.GetBaseType()))
+			if (locationTypeArray.Contains(location.baseType))
 			{
-				locationArray.Insert(location.Entity());
-				SDRC_Log.Add("[SDRC_Locations:GetLocationsCached] Found: " + location.GetDisplayName() + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, location.GetBaseType()), LogLevel.SPAM);
+				locationArray.Insert(location);
+				SDRC_Log.Add("[SDRC_Locations:GetLocationsCached] Found: " + location.displayName + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, location.baseType), LogLevel.SPAM);
 			}
 		}		
 		
