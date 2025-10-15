@@ -102,6 +102,24 @@ Dependency specific files
 
 ..empty..
 
+### DarcMissions
+Fixes:
+* Crashsite could crash if the helicopter is destroyed before crashing.
+
+Changes:
+* dc_coreConfig.json locationAkas - Functionality enabled. You can name location names to work as specific locationTypes. For example anything called "military" becomes type MDT_BASE (79) in addition to the original definition.
+* dc_lootList.json
+  * Added ``GEAR_VEST`` - vests.
+
+### DarcSpawner
+Uses faster cached location information for spawn.
+
+### DarcMissionsCompatFF
+A new mod for compatibility with Freedom Fighters
+* Missions are not spawned close the hideouts
+* Controlled areas have a percentage option to spawn missions. 
+* Crashsite helicopters are cleaned from the map at server boot when a player joins the game. We don't want wrecks on the map.
+
 ## 20251012
 ### DarcMissions
 Moved ``locationTypes`` under ``general`` as it's a common attribute for all missions. That said, the mission json files have changes. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs. Hopefully this is one of the last big changes for now.
