@@ -102,19 +102,17 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 			vector direction = vector.Direction(pos, m_vPosDestination);
 			m_fAngle = SDRC_Misc.VectorToAngle(direction);
 			
-			SDRC_Log.Add("[SDRC_Mission_Crashsite] Helicopter flying from " + pos + " to " + m_vPosDestination + ". Angle: " + m_fAngle, LogLevel.DEBUG);
+			float distance = vector.DistanceXZ(pos, m_vPosDestination);
+			
+			SDRC_Log.Add("[SDRC_Mission_Crashsite] Helicopter flying from " + pos + " to " + m_vPosDestination + ". Angle: " + m_fAngle + ". Distance: " + distance, LogLevel.DEBUG);
 		}			
 		
 		SetPos(pos, m_vPosDestination);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Crashsite.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Crashsite.general);		
-/*		SetMarker(m_Config.showMarker, m_DC_Crashsite.general.markerIcon, m_DC_Crashsite.general.markerType);
-		SetHint(m_Config.showHint, m_DC_Crashsite.general.title, m_DC_Crashsite.general.info);		
-		SetMessages(m_Config.showMessage, m_DC_Crashsite.general.winMessage, m_DC_Crashsite.general.loseMessage);		
-		SetWinCondition(m_DC_Crashsite.general.winCondition);*/
 
-		//Camps are randomly rotated
+		//Structures are randomly rotated
 		m_fSpawnRotation = Math.RandomFloat(0, 360);
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Crashsite.campItems);
 		
@@ -134,7 +132,6 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
-			SetState(SDRC_EMissionState.ACTIVE);
 		}
 
 		if (GetState() == SDRC_EMissionState.END)
@@ -151,7 +148,14 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 					//This state is here only to give the chopper some time to fly.
 					missionCrashSiteState = SDRC_EMissionCrashSiteState.FLYING;
 					break;
-				case SDRC_EMissionCrashSiteState.FLYING:
+				case SDRC_EMissionCrashSiteState.FLYING:				
+					if (!m_Vehicle)
+					{
+						SDRC_Log.Add("[SDRC_Mission_Crashsite] Helicopter does not exist. Ending mission.", LogLevel.WARNING);
+						SetState(SDRC_EMissionState.END);
+						break;
+					}
+				
 					SetPos(m_Vehicle.GetOrigin());
 				
 					if (!IsStillFlying(m_Vehicle))
@@ -242,6 +246,11 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		{
 			m_EntityList.Insert(m_Vehicle);
 		}
+		else
+		{
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.COULD_NOT_SPAWN_VEHICLE);
+			return;
+		}
 		
 		VehicleHelicopterSimulation m_Vehicle_s;
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
@@ -256,6 +265,8 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		
         vector vel = {velOrig[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * speed, velOrig[1], velOrig[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * speed };
 		m_Vehicle.GetPhysics().SetVelocity(vel);
+		
+		SetState(SDRC_EMissionState.ACTIVE);
 	}
 	
 	//------------------------------------------------------------------------------------------------

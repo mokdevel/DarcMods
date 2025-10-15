@@ -7,13 +7,13 @@ class SDRC_List : Managed
 	ref array<string> exclude = {};
 	ref array<string> items = {};
 
-	void Set(string id_, array<string> modDir_, array<string> include_, array<string> exclude_)	
+	void Set(string id_, array<string> modDir_, array<string> include_, array<string> exclude_, array<string> items_)	
 	{
 		id = id_;
 		modDir = modDir_;
 		include = include_;
 		exclude = exclude_;
-		items = {};
+		items = items_;
 	}
 }
 
@@ -42,7 +42,7 @@ class SDRC_ListConfig : Managed
 		{
 			array<string> addonList = {};
 			
-			SDRC_Misc.GetAddonList(addonList, false);			
+			SDRC_Misc.GetAddonList(addonList, false);
 			
 			foreach (string addon : addonList)
 			{

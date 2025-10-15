@@ -124,7 +124,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"G_LIGHT",
 			{"Prefabs/Groups"},
 			{"LightFire", "FireTeam", "FireGroup", "RifleSquad", "SentryTeam"},
-			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
+			{}
 		);	
 		return enemyList;
 	}
@@ -136,7 +137,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"G_SNIPER",
 			{"Prefabs/Groups"},
 			{"Sniper", "SharpShooter", "USSR_Spetsnaz_SentryTeam", "VKPO_S_SentryTeam.et"},
-			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
+			{}
 		);		
 		return enemyList;
 	}
@@ -148,7 +150,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"G_LAUNCHER",
 			{"Prefabs/Groups"},
 			{"Team_AT", "Team_GL", "Team_LAT"},
-			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
+			{}
 		);		
 		return enemyList;
 	}
@@ -160,7 +163,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"G_ADMIN",
 			{"Prefabs/Groups"},
 			{"_Platoon"},
-			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
+			{}
 		);		
 		return enemyList;
 	}
@@ -172,7 +176,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"G_MEDICAL",
 			{"Prefabs/Groups"},
 			{"_Medical"},
-			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
+			{}
 		);				
 		return enemyList;
 	}
@@ -184,7 +189,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"G_RECON",
 			{"Prefabs/Groups"},
 			{"_Recon", "_Maneuver"},
-			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
+			{}
 		);					
 		return enemyList;
 	}
@@ -196,7 +202,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"G_HEAVY",
 			{"Prefabs/Groups"},
 			{"MachineGunTeam", "FireTeam", "FireGroup", "Suppress", "Spetsnaz_Squad"},
-			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
+			{}
 		);					
 		return enemyList;
 	}
@@ -208,7 +215,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"G_SPECIAL",
 			{"Prefabs/Groups"},
 			{"GreenBeret", "Sapper", "Sentry", "Spetsnaz"},
-			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
+			{}
 		);					
 		return enemyList;
 	}
@@ -220,7 +228,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"G_SMALL",
 			{"Prefabs/Groups"},			
 			{"Spetsnaz_SentryTeam", "GreenBeret_SentryTeam", "SharpshooterTeam", "MedicalSection", "SapperTeam", "SentryTeam"},
-			{"_Base", "_NotSpawned", "_Remnants", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
+			{}
 		);			
 		return enemyList;
 	}
@@ -233,7 +242,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"C_RIFLEMAN",
 			{"Prefabs/Characters/Factions"},
 			{"Rifleman", "Sapper", "_PL", "_SL"},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
 		);					
 		return enemyList;
 	}
@@ -245,7 +255,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"C_HEAVY",
 			{"Prefabs/Characters/Factions"},			
 			{"_GL", "_MG", "Grenadier", "_Ammo", "_LMG"},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
 		);						
 		return enemyList;
 	}
@@ -259,7 +270,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Scout", "Spotter", "_RTO", "_SL", "_GL",
 				"_AG1", //MEI		
 			},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
 		);					
 		return enemyList;
 	}
@@ -273,7 +285,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"_Officer", "Sergeant", "_AC", 
 				"_Leader", //MEI
 			},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
 		);					
 		return enemyList;
 	}
@@ -287,7 +300,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Crew", "Pilot", "_CC",
 				"MEI_Leader", //MEI
 			},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
 		);					
 		return enemyList;
 	}
@@ -299,7 +313,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"C_SNIPER",
 			{"Prefabs/Characters/Factions"},
 			{"Sniper", "Sharpshooter"},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
 		);					
 		return enemyList;
 	}
@@ -311,7 +326,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"C_LAUNCHER",
 			{"Prefabs/Characters/Factions"},
 			{"_AAT", "_AT", "_AT", "_LAT"},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
 		);					
 		return enemyList;
 	}
@@ -323,7 +339,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"C_MEDIC",
 			{"Prefabs/Characters/Factions"},
 			{"Medic"},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
 		);					
 		return enemyList;
 	}
@@ -338,7 +355,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 				"_Bomb", //MEI
 				"MEI_Rifleman1", //MEI
 			},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
 		);					
 		return enemyList;
 	}
@@ -351,7 +369,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"G_ZOMBIE_SMALL",
 			{"622120A5448725E3/Prefabs/Groups"},
 			{"Group_Zombies"},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random", "_Huge", "_Large", "_Medium"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random", "_Huge", "_Large", "_Medium"},
+			{}
 		);			
 		return enemyList;
 	}
@@ -363,7 +382,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"G_ZOMBIE_MEDIUM",
 			{"622120A5448725E3/Prefabs/Groups"},
 			{"_Medium"},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
 		);			
 		return enemyList;
 	}
@@ -375,7 +395,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"G_ZOMBIE_LARGE",
 			{"622120A5448725E3/Prefabs/Groups"},
 			{"_Huge", "_Large", "_Horde"},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
 		);			
 		return enemyList;
 	}
@@ -387,7 +408,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"C_ZOMBIE",
 			{"622120A5448725E3/Prefabs/Characters"},
 			{"Zombie_", "Character_", "Variant_"},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
 		);			
 		return enemyList;
 	}	
@@ -400,7 +422,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Prefabs/Characters"},
 			{"ShadowTwin", "Whisper",},
 //			{"Plague", "Slander", "Whisper", "Whisperer",  "Mazark"},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
 		);					
 		return enemyList;
 	}
@@ -412,7 +435,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"C_DEMON_BOSS",
 			{"Prefabs/Characters"},
 			{"Stalker Heavy"},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"}
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
 		);					
 		return enemyList;
 	}

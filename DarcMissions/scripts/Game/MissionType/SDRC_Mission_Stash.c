@@ -213,7 +213,7 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.activeDistance = 50;
 		conf.missionList = {0};
-		conf.missionFiles.Insert("dc_missionConfig_Stash_010.json");
+//		conf.missionFiles.Insert("dc_missionConfig_Stash_010.json");
 		#ifndef SDRC_RELEASE
 			conf.missionFiles.Insert("dc_missionConfig_Stash_01x.json");	//Just for testing that dummy files don't appear
 		#endif
@@ -257,7 +257,7 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
-				"GEAR_HEADGEAR", "GEAR_HEADGEAR", 
+				"GEAR_HEADGEAR", "GEAR_HEADGEAR",
 			};
 		loot.Set(0.7, lootItems);
 		stash.loot = loot;

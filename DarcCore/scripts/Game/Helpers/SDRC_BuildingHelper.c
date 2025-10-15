@@ -30,7 +30,7 @@ sealed class SDRC_BuildingHelper
 		else
 		{		
 			m_TmpBuildings.Clear();
-			GetGame().GetWorld().QueryEntitiesBySphere(pos, radius, FindBuildingCallback, null, EQueryEntitiesFlags.STATIC);		
+			GetGame().GetWorld().QueryEntitiesBySphere(pos, radius, FindBuildingCallback, null, EQueryEntitiesFlags.STATIC);
 
 			FilterBuildingList(buildings, m_TmpBuildings, filter);
 		}

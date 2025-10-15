@@ -105,7 +105,10 @@ class SDRC_MissionFrame
 			SDRC_Log.Add("[SDRC_MissionFrame] --------------------- Configs created. ----------------------", LogLevel.WARNING
 			);
 		}
-				
+		
+		//Initialize compatibility for mods
+		SDRC_Compat.Init();
+		
 		//Fix seconds to ms
 		SDRC_Log.Add("[SDRC_MissionFrame] Waiting for " + m_Config.missionStartDelay + " seconds before spawning missions.", LogLevel.NORMAL);
 		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;		//sec to ms
@@ -314,8 +317,8 @@ class SDRC_MissionFrame
 		#ifndef SDRC_RELEASE
 			if (SDRC_Conf.SHOW_VALID_MISSION_AREAS)
 			{
-				SDRC_DevHelper.DeleteDebugTestMissionPos();
-				SDRC_DevHelper.DebugTestMissionPos();
+				SDRC_MissionHelper.DeleteDebugTestMissionPos();
+				SDRC_MissionHelper.DebugTestMissionPos();
 			}
 		#endif
 

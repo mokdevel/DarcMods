@@ -104,7 +104,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			{"Rifle", 
 			"Spear68_", //MCX Spear 6.8
 			},
-			{"_Base", "_Sample", "Tutorial", "Mosin", "SVD", "Barrett", "M110", "M21", "M40",}
+			{"_Base", "_Sample", "Tutorial", "Mosin", "SVD", "Barrett", "M110", "M21", "M40",},
+			{}
 		);
 		return lootList;
 	}
@@ -121,7 +122,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			},
 			{"_Base", "_Sample", "Tutorial", "AK74", "AKS74", "VZ", "M16",
 			"Spear68_",	//MCX Spear 6.8
-			}
+			},
+			{}
 		);
 		return lootList;
 	}
@@ -134,7 +136,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			"WEAPON_HANDGUN",
 			{"Prefabs/Weapons/Handguns"},
 			{"Handgun"},
-			{"_Base"}
+			{"_Base"},
+			{}
 		);
 		return lootList;
 	}
@@ -149,7 +152,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			{"Launcher", 
 			"BC_M79"		//From BigChungusLaunchers
 			},
-			{"_Base"}
+			{"_Base"},
+			{}
 		);
 		return lootList;
 	}
@@ -162,7 +166,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			"WEAPON_SHOTGUN",
 			{"Prefabs/Weapons/Shotguns"},
 			{"Shotgun"},
-			{"_Base"}
+			{"_Base"},
+			{}
 		);
 		return lootList;
 	}
@@ -175,7 +180,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			"WEAPON_MG",
 			{"Prefabs/Weapons/MachineGuns"},
 			{"MG_", "RPD", "RPK"},
-			{"_Base", "_Mounted", "_rear", "_front", "PKMT"}
+			{"_Base", "_Mounted", "_rear", "_front", "PKMT"},
+			{}
 		);
 		return lootList;
 	}	
@@ -188,7 +194,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			"WEAPON_GRENADE",
 			{"Prefabs/Weapons/Grenades"},
 			{""},
-			{"_Base"}
+			{"_Base"},
+			{}
 		);
 		return lootList;
 	}
@@ -209,7 +216,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 				"Prefabs/5AB890B71D748750/Upper",			
 			},
 			{""},
-			{"_Base", "Optic", "Scope"}
+			{"_Base", "Optic", "Scope"},
+			{}
 		);
 		return lootList;
 	}
@@ -226,7 +234,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 				"Prefabs/5ABD0CB57F7E9EB1/Optics/",			//RISLaserAttachments
 			},
 			{"Optic", "Scope"},
-			{"_Base"}
+			{"_Base"},
+			{}
 		);
 		return lootList;
 	}
@@ -239,7 +248,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			"UTIL_MAGAZINES",
 			{"Prefabs/Weapons/Magazines"},
 			{""},
-			{"_Base", "Internal_"}
+			{"_Base", "Internal_"},
+			{}
 		);
 		return lootList;
 	}
@@ -252,7 +262,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			"UTIL_AMMO",
 			{"Prefabs/Weapons/Ammo"},
 			{"Shell", "Rocket", "Grenade", "Flare"},
-			{"_Base", "Internal_", "_Effect", "FlareEffect", "Particles"}
+			{"_Base", "Internal_", "_Effect", "FlareEffect", "Particles"},
+			{}
 		);
 		return lootList;
 	}
@@ -265,7 +276,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			"ITEM_GENERAL",
 			{"Prefabs/Items"},
 			{"Binocular", "Compass", "Flashlight", "PaperMap_01_folded", "Watch_"},
-			{"_Base"}
+			{"_Base"},
+			{}
 		);
 		return lootList;
 	}
@@ -278,7 +290,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			"ITEM_MEDICAL",
 			{"Prefabs/Items/Medicine"},
 			{""},
-			{"_Base"}
+			{"_Base"},
+			{}
 		);
 		return lootList;
 	}
@@ -290,14 +303,11 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		lootList.Set(
 			"GEAR_HEADGEAR",
 			{"Prefabs/Characters/HeadGear"},
-			{
-			"{2B00FA02CD45D858}Prefabs/Characters/HeadGear/Gasmasks/M50_M.et",
-			"{18A9924C025A8F67}Prefabs/Characters/HeadGear/Gasmasks/GP-7_M.et",
-			"{D63D851D2DCE0C7B}Prefabs/Characters/HeadGear/Gasmasks/GP-7_F.et",
-//			"Helmet_",
-//			"GP-", "M50", "Unix_", //Gasmask items
+			{"Helmet_",
+			"GP-", "M50", "Unix_", //Gasmask items
 			},
-			{"_Base"}
+			{"_Base"},
+			{},
 		);
 		return lootList;
 	}
@@ -309,7 +319,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			"GEAR_VEST",
 			{"Prefabs/Characters/Vests"},
 			{"Vest_",},
-			{"_Base"}
+			{"_Base"},
+			{}	
 		);
 		return lootList;
 	}
@@ -323,7 +334,8 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			{"Prefabs/Characters/HeadGear"},
 			{"Hat_", 
 			},
-			{"_Base"}
+			{"_Base"},
+			{}
 		);
 		return lootList;
 	}		

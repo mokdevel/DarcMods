@@ -80,7 +80,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Hunter.general.locationTypes, m_DC_Hunter.general.size, randomPos);
 				}
 							
-				if (SDRC_MissionHelper.IsValidMissionPos(pos) == SDRC_EMissionError.NONE)
+				if (SDRC_MissionPosHelper.IsValidMissionPos(pos) == SDRC_EMissionError.NONE)
 				{			
 					//Find a position close to any player
 					if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, m_Config.maxDistanceToPlayer, m_Config.minDistanceToPlayer))
