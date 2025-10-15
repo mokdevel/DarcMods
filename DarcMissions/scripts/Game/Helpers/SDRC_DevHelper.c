@@ -67,37 +67,4 @@ sealed class SDRC_DevHelper
 				string magazine = SDRC_AmmoHelper.GetCompatibleMagazine(wpn);
 			}*/		
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	DEBUG: Test mission positions on map. Only for debugging.
-	This will create a map marker for each position tested.
-	*/	
-	static void DebugTestMissionPos()
-	{	
-		#ifndef SDRC_RELEASE
-			vector pos;
-	
-			for (int i = 0; i < 400; i++)
-			{		
-				pos = SDRC_MissionHelper.FindMissionPos();
-				if (pos != "0 0 0")
-				{
-					SDRC_MapMarkerHelper.CreateMapMarker(pos, SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, "DUMMY_");	//TBD: Create some other debug marker
-				}
-			}		
-		#endif
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	DEBUG: Delete the test mission positions on map. Only for debugging.
-	*/	
-	static void DeleteDebugTestMissionPos()
-	{	
-		if (!SDRC_Conf.RELEASE)
-		{
-			SDRC_MapMarkerHelper.DeleteMarker("DUMMY_");
-		}
-	}	
 }

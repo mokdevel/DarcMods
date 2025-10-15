@@ -51,7 +51,7 @@ class SDRC_MissionHelper
 	{	
 		vector pos = SDRC_Misc.GetRandomWorldPos();
 		
-		if (IsValidMissionPos(pos, distanceToMission, distanceToPlayer) != SDRC_EMissionError.NONE)
+		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, distanceToMission, distanceToPlayer) != SDRC_EMissionError.NONE)
 		{
 			return "0 0 0";
 		}
@@ -155,7 +155,7 @@ class SDRC_MissionHelper
 			//Find the position within posRandomization from pos.			
 			if (SDRC_SpawnHelper.FindEmptyPos(pos, posRandomization, size))
 			{			
-				failReason = SDRC_MissionHelper.IsValidMissionPos(pos);
+				failReason = SDRC_MissionPosHelper.IsValidMissionPos(pos);
 				if (failReason == SDRC_EMissionError.NONE)
 				{				
 					positionFound = true;
@@ -242,7 +242,7 @@ class SDRC_MissionHelper
 		building = buildings.GetRandomElement();
 		vector bpos = building.GetOrigin();
 		
-		if (IsValidMissionPos(bpos) != SDRC_EMissionError.NONE)
+		if (SDRC_MissionPosHelper.IsValidMissionPos(bpos) != SDRC_EMissionError.NONE)
 		{
 			return null;
 		}
@@ -253,116 +253,6 @@ class SDRC_MissionHelper
 		
 		return building;
 	}		
-				
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Check if given pos is a valid position for mission. 
-
-	\param distanceToMission Distance to another mission. Two missions shall not be too close to each other. -1 will use the default from MissionFrame.
-	\param distanceToPlayer Mission shall not spawn too close to a player. -1 will use the default from MissionFrame.
-	
-	The position shall have ... 
-	- no players nearby
-	- no missions nearby
-	- not in water	
-	*/	
-	static SDRC_EMissionError IsValidMissionPos(vector pos, float distanceToMission = -1, float distanceToPlayer = -1)
-	{	
-		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
-		
-		if (distanceToMission == -1)
-			distanceToMission = baseGameMode.missionFrame.m_Config.minDistanceToMission;
-
-		if (distanceToPlayer == -1)
-			distanceToPlayer = baseGameMode.missionFrame.m_Config.minDistanceToPlayer;
-
-		if (SDRC_Misc.IsPosInWater(pos))
-		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.POSITION_IN_WATER), LogLevel.SPAM);
-			return SDRC_EMissionError.POSITION_IN_WATER;
-		}
-				
-		if (SDRC_Misc.IsPosUnderMap(pos))
-		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.POSITION_UNDER_MAP), LogLevel.SPAM);
-			return SDRC_EMissionError.POSITION_UNDER_MAP;
-		}
-				
-		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, distanceToPlayer))
-		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.PLAYER_TOO_CLOSE), LogLevel.SPAM);
-			return SDRC_EMissionError.PLAYER_TOO_CLOSE;
-		}
-
-		if (IsAnyMissionCloseToPos(pos, distanceToMission))
-		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.MISSION_TOO_CLOSE), LogLevel.SPAM);
-			return SDRC_EMissionError.MISSION_TOO_CLOSE;
-		}
-
-		if (IsPosInNonValidArea(pos))
-		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.IN_NON_VALID_AREA), LogLevel.SPAM);
-			return SDRC_EMissionError.IN_NON_VALID_AREA;
-		}
-
-/*		#ifdef FREEDOM_FIGHTERS
-			JWK_EFactionRole factionRole = JWK.GetTerritoryControl().GetControllingRoleAt(pos);
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.IN_FREEDOM_FIGHTERS_SAFEZONE), LogLevel.ERROR);
-			
-			if ( (factionRole == JWK_EFactionRole.PLAYER) || (factionRole == JWK_EFactionRole.SUPPORTING) )
-			{
-				SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.IN_FREEDOM_FIGHTERS_SAFEZONE), LogLevel.SPAM);
-				return SDRC_EMissionError.IN_FREEDOM_FIGHTERS_SAFEZONE;
-			}		
-		#endif*/
-		
-		return SDRC_EMissionError.NONE;
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Check if any mission is close to given position. Returns true if another mission is within radius
-	*/	
-	static bool IsAnyMissionCloseToPos(vector positionToCheck, int radiusToCheck = 1000)
-	{
-		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
-		
-		foreach (int i, SDRC_Mission mission: baseGameMode.missionFrame.m_MissionList)
-		{
-			float distance = vector.Distance(mission.GetPos(), positionToCheck);
-		
-			if (distance < radiusToCheck)
-			{
-				return true;
-				break;
-			}
-		}
-
-		return false;
-	}		
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Check if pos is within nonValidArea
-	*/	
-	static bool IsPosInNonValidArea(vector pos)
-	{
-		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
-	
-		foreach (SDRC_NonValidArea nonValidArea : baseGameMode.missionFrame.m_aNonValidAreas)
-		{
-			float distance = vector.Distance(pos, nonValidArea.pos);
-		
-			if (distance < nonValidArea.radius)
-			{
-				return true;
-				break;
-			}
-		}
-
-		return false;
-	}			
 
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -458,4 +348,54 @@ class SDRC_MissionHelper
 		SDRC_Log.Add("[SDRC_MissionHelper:CreateInfo] Message created: " + msg, LogLevel.SPAM);
 		return msg;
 	}	
+	
+	
+/*	//------------------------------------------------------------------------------------------------
+	static void Bye()
+	{
+		Print("SDRC Bye: vanilla");
+		return;
+	}*/
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	DEBUG: Test mission positions on map. Only for debugging.
+	This will create a map marker for each position tested.
+	*/	
+	static void DebugTestMissionPos()
+	{	
+		#ifndef SDRC_RELEASE
+			vector pos;
+	
+			for (int i = 0; i < 300; i++)
+			{		
+				#ifndef SDRC_RELEASE
+					//SDRC_HelloHelper.Hello();
+				#endif
+			
+				pos = FindMissionPos();
+/*				if (SDRC_MissionPosHelper.IsValidMissionPos(pos) == SDRC_EMissionError.NONE)
+				{
+					SDRC_MapMarkerHelper.CreateMapMarker(pos, SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, "DUMMY_");	//TBD: Create some other debug marker
+				}*/
+			
+				if (pos != "0 0 0")
+				{
+					SDRC_MapMarkerHelper.CreateMapMarker(pos, SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, "DUMMY_");	//TBD: Create some other debug marker
+				}
+			}		
+		#endif
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	DEBUG: Delete the test mission positions on map. Only for debugging.
+	*/	
+	static void DeleteDebugTestMissionPos()
+	{	
+		if (!SDRC_Conf.RELEASE)
+		{
+			SDRC_MapMarkerHelper.DeleteMarker("DUMMY_");
+		}
+	}		
 }
