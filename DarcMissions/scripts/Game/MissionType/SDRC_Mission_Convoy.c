@@ -12,6 +12,7 @@ const string DC_MISSIONCONFIG_FILE_CONVOY = "dc_missionConfig_Convoy.json";
 //------------------------------------------------------------------------------------------------
 enum SDRC_EMissionConvoyState
 {
+	SPAWN,
 	INIT,
 	MOVE_AI,
 	GETIN,
@@ -25,7 +26,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	private ref SDRC_ConvoyConfig m_Config = new SDRC_ConvoyConfig();
 	private ref SDRC_Convoy m_DC_Convoy = new SDRC_Convoy();
 	
-	private SDRC_EMissionConvoyState missionConvoyState = SDRC_EMissionConvoyState.INIT;	
+	private SDRC_EMissionConvoyState missionConvoyState = SDRC_EMissionConvoyState.SPAWN;	
 	
 	private vector m_vPosDestination = "1 1 1";
 	private IEntity m_Vehicle = null;
@@ -127,19 +128,12 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		
 		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
-			MissionSpawn();
-		}
-
-		if (GetState() == SDRC_EMissionState.END)
-		{
-			MissionEnd();
-			SetState(SDRC_EMissionState.EXIT);
-		}	
-				
-		if (GetState() == SDRC_EMissionState.ACTIVE)
-		{			
 			switch (missionConvoyState)
 			{
+				case SDRC_EMissionConvoyState.SPAWN:
+					MissionSpawn();
+					missionConvoyState = SDRC_EMissionConvoyState.INIT;
+					break;
 				case SDRC_EMissionConvoyState.INIT:
 					//This state is mainly for delay to give time to vehicle and AI to finalize spawn. If removed, AI will not enter the vehicle.
 					missionConvoyState = SDRC_EMissionConvoyState.MOVE_AI;
@@ -158,23 +152,34 @@ class SDRC_Mission_Convoy : SDRC_Mission
 				case SDRC_EMissionConvoyState.GETIN:
 					//This state is mainly for delay to give AI time to climb to the vehicle.
 					missionConvoyState = SDRC_EMissionConvoyState.RUN;
-					break;
+					break;			
 				case SDRC_EMissionConvoyState.RUN:
-					//Move the position as the convoy is moving. This way check for player distance works properly.
-					//If players have already stolen the vehicle, the map marker will stop moving.
-					if ( (m_Vehicle) && (m_EntityList.Count() > 0) )
-					{
-						SetPos(m_Vehicle.GetOrigin());
-						SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
-						MoveMarker();
-					}
-								
-					if (!IsActive())
-					{
-						SetState(SDRC_EMissionState.END);
-					}
+					SetState(SDRC_EMissionState.ACTIVE);
 					break;
-			}			
+			}
+		}
+
+		if (GetState() == SDRC_EMissionState.END)
+		{
+			MissionEnd();
+			SetState(SDRC_EMissionState.EXIT);
+		}	
+				
+		if (GetState() == SDRC_EMissionState.ACTIVE)
+		{			
+			//Move the position as the convoy is moving. This way check for player distance works properly.
+			//If players have already stolen the vehicle, the map marker will stop moving.
+			if ( (m_Vehicle) && (m_EntityList.Count() > 0) )
+			{
+				SetPos(m_Vehicle.GetOrigin());
+				SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
+				MoveMarker();
+			}
+						
+			if (!IsActive())
+			{
+				SetState(SDRC_EMissionState.END);
+			}
 		}
 		
 		GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);
@@ -234,8 +239,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			SDRC_LootHelper.SpawnItemsToStorage(m_DC_Convoy.loot.box, m_DC_Convoy.loot.items, m_DC_Convoy.loot.itemChance);
 			SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] Loot added.", LogLevel.DEBUG);								
 		}		
-		
-		SetState(SDRC_EMissionState.ACTIVE);		
 	}
 }
 	
