@@ -5,6 +5,13 @@
 Helper functions to handle players
 */
 
+class SDRC_PlayerPos : Managed
+{
+	vector pos;
+	float distance;
+	IEntity player;
+}
+
 sealed class SDRC_PlayerHelper
 {
 	//------------------------------------------------------------------------------------------------
@@ -24,7 +31,7 @@ sealed class SDRC_PlayerHelper
 	Find the closest player to a position
 	Original code from: HunterKiller mod by Rabid Squirrel	
 	*/	
-	static IEntity PlayerGetClosestToPos(vector positionToCheck, int distanceAway = 0, int maxDistance = 999999999)
+	static IEntity GetPlayerClosestToPos(vector positionToCheck, int distanceAway = 0, int maxDistance = 999999999)
 	{
 		array<int> players = {};
 		GetGame().GetPlayerManager().GetPlayers(players);
@@ -87,7 +94,54 @@ sealed class SDRC_PlayerHelper
 		
 		return false;
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get players near a position with distance to it. 
+	*/	
+	static void GetPlayersClosestToPosition(out array<ref SDRC_PlayerPos> playerPosArray, vector positionToCheck, int radiusToCheck = -1)
+	{
+		array<int> players = {};
+		
+		GetGame().GetPlayerManager().GetPlayers(players);
+		
+		foreach (int playerId: players)
+		{
+			IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
+			if (player)
+			{
+				float distance = vector.DistanceXZ(player.GetOrigin(), positionToCheck);
+				
+				if (distance > radiusToCheck)
+				{
+					distance = -1;	//If outside of area to check, return -1 and we don't care about this player
+				}
+				
+				if (distance > -1)
+				{
+					ref SDRC_PlayerPos playerPos = new SDRC_PlayerPos();
+					
+					playerPos.pos = player.GetOrigin();
+					playerPos.distance = distance;
+					playerPos.player = player;
+
+					int idx = 0;
+					
+					foreach(int i, SDRC_PlayerPos pPos : playerPosArray)
+					{
+						if (playerPos.distance < pPos.distance)
+						{
+							idx = i;
+							break;
+						}
+						idx = i + 1;
+					}
+					playerPosArray.InsertAt(playerPos, idx);
+				}
+			}			
+		}
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Get player faction

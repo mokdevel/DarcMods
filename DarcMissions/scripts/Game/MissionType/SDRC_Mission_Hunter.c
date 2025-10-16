@@ -177,18 +177,24 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		if (group)
 		{
 			if (group.GetLeaderEntity())
-			{			
+			{					
+				array<ref SDRC_PlayerPos> playerPosArray = new array<ref SDRC_PlayerPos>;
+//				SDRC_PlayerHelper.GetPlayersClosestToPosition(playerPosArray, group.GetLeaderEntity().GetOrigin());
+				SDRC_PlayerHelper.GetPlayersClosestToPosition(playerPosArray, group.GetLeaderEntity().GetOrigin(), m_Config.maxDistanceToPlayer);
+				
 				//Check if there are any nearby AI
-				IEntity closestPlayer = SDRC_PlayerHelper.PlayerGetClosestToPos(group.GetLeaderEntity().GetOrigin(), 0, m_Config.maxDistanceToPlayer);
-			
-				if (closestPlayer != null)
+//				IEntity closestPlayer = SDRC_PlayerHelper.PlayerGetClosestToPos(group.GetLeaderEntity().GetOrigin(), 0, m_Config.maxDistanceToPlayer);
+
+				if (!playerPosArray.IsEmpty())
 				{
+					IEntity closestPlayer = playerPosArray[0].player;
+			
 					if (group.GetAgentsCount() > 0)
 					{
 						SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] Creating waypoint for group: " + group.GetID(), LogLevel.SPAM);
 						
 						SDRC_WPHelper.RemoveWaypoints(group);
-						AIWaypoint wp = GetWaypoint(group);
+						AIWaypoint wp = GetWaypoint(group, closestPlayer.GetOrigin());
 						group.AddWaypoint(wp);
 						GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.missionCycleTime*1000, false, group);
 						return;
@@ -200,7 +206,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 					SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] No players nearby, deleting group: " + group.GetID(), LogLevel.NORMAL);
 					SDRC_AIHelper.GroupDelete(group);
 				}
-			}
+			}			
 		}
 	}	
 		
@@ -258,23 +264,12 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	}
 		
 	//------------------------------------------------------------------------------------------------
-	protected AIWaypoint GetWaypoint(SCR_AIGroup group)
+	protected AIWaypoint GetWaypoint(SCR_AIGroup group, vector pos)
 	{
-		IEntity closestPlayer = SDRC_PlayerHelper.PlayerGetClosestToPos(group.GetLeaderEntity().GetOrigin());
-		
-		if (closestPlayer != null)
-		{
-			AIWaypoint waypoint = SDRC_WPHelper.CreateWaypointEntity(SDRC_EWaypointMoveType.MOVE);
-			waypoint.SetOrigin(SDRC_Misc.RandomizePos(closestPlayer.GetOrigin(), m_Config.rndDistanceToPlayer));
-			return waypoint;
-		}
-		else
-		{
-			SDRC_Log.Add("[SDRC_Mission_Hunter:GetWaypoint] Unable to find player for waypoint creation!", LogLevel.ERROR);
-			SDRC_AIHelper.GroupDelete(group);
-		}
-		
-		return null;
+		//TBD: Check that waypoint is in an allowed area. Not in NonValidArea or similar.
+		AIWaypoint waypoint = SDRC_WPHelper.CreateWaypointEntity(SDRC_EWaypointMoveType.MOVE);
+		waypoint.SetOrigin(SDRC_Misc.RandomizePos(pos, m_Config.rndDistanceToPlayer));
+		return waypoint;
 	}	
 }
 
@@ -378,7 +373,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 	void SetDefaults()
 	{
 		//Default
-		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
+		conf.missionCycleTime = 10;//SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
 		conf.showMarker = false;
 		conf.missionList = {0,0,0,1,1,1,2};
 		//Mission specific
