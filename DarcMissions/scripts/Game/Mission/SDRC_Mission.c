@@ -851,7 +851,7 @@ class SDRC_Mission
 		int currentTime = (System.GetTickCount() / 1000);
 		
 		//Are there players still nearby, reset the timer
-		if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_General.pos[0], 0, m_iActiveDistance))
+		if (SDRC_PlayerHelper.GetPlayerClosestToPos(m_General.pos[0], 0, m_iActiveDistance))
 		{
 			ResetActiveTime();
 		}
@@ -903,7 +903,7 @@ class SDRC_Mission
 				case SDRC_EMissionWinCondition.FIND_IN_45:
 				case SDRC_EMissionWinCondition.FIND_IN_60:
 				{
-					if (SDRC_PlayerHelper.PlayerGetClosestToPos(m_General.pos[0], 0, m_iActiveDistance))
+					if (SDRC_PlayerHelper.GetPlayerClosestToPos(m_General.pos[0], 0, m_iActiveDistance))
 					{
 						isWin = true;
 						break;

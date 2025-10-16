@@ -9,6 +9,7 @@
 ### DarcMissions
 Fixes:
 * Crashsite could crash if the helicopter is destroyed before crashing.
+* Convoy completion issues
 
 Changes:
 * dc_coreConfig.json locationAkas - Functionality enabled. You can name location names to work as specific locationTypes. For example anything called "military" becomes type MDT_BASE (79) in addition to the original definition.
