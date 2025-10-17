@@ -240,6 +240,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"The patrol kept %l safe from you. Pathetic.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			//"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP,
 			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);

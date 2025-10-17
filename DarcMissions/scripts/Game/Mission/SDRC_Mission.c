@@ -546,7 +546,7 @@ class SDRC_Mission
 		{
 			if (errorReason != SDRC_EMissionError.NONE)
 			{
-				SDRC_Log.Add("[SDRC_Mission:SetState] ERROR: " + GetId() + " : " + SCR_Enum.GetEnumName(SDRC_EMissionError, errorReason) + " " + errorInfo, LogLevel.ERROR);						
+				SDRC_Log.Add("[SDRC_Mission:SetState] ERROR: " + GetId() + " : " + SCR_Enum.GetEnumName(SDRC_EMissionError, errorReason) + " " + errorInfo + " (" + SCR_Enum.GetEnumName(SDRC_EMissionType, m_Type) + ")", LogLevel.ERROR);						
 			}
 		}
 		
@@ -760,11 +760,16 @@ class SDRC_Mission
 	}
 			
 	//------------------------------------------------------------------------------------------------
-	SDRC_EMissionIcon GetMarker()
+	SDRC_EMissionIcon GetMarkerIcon()
 	{
 		return m_General.markerIcon;
 	}
 
+	string GetMarkerType()
+	{
+		return m_General.markerType;
+	}
+	
 	void SetMarker(SDRC_EMissionIcon icon, string markerType = "DARC_MISSION")
 	{
 		m_General.markerIcon = icon;
@@ -792,14 +797,15 @@ class SDRC_Mission
 		
 		if (IsShowMarker())
 		{
-			SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), GetMarker(), GetId(), GetTitle());
+			string markerType = GetMarkerType();
+			SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), GetMarkerIcon(), GetId(), GetTitle(), markerTypeString: markerType);
 		}
 	}
 	
 	void MoveMarker()
 	{
 		SDRC_MapMarkerHelper.DeleteMarker(GetId());
-		SetMarker(GetMarker());
+		SetMarker(GetMarkerIcon(), GetMarkerType());
 		ShowMarker();
 	}
 	
@@ -811,6 +817,10 @@ class SDRC_Mission
 		return m_bRequested;
 	}	
 
+	//------------------------------------------------------------------------------------------------
+	// Getters/Setters for information when no access to m_EntityList nor m_Groups
+	//------------------------------------------------------------------------------------------------
+	
 	//------------------------------------------------------------------------------------------------
 	IEntity GetFromEntityList(int index)
 	{
@@ -835,7 +845,12 @@ class SDRC_Mission
 	void AddToGroupsList(SCR_AIGroup group)
 	{
 		m_Groups.Insert(group);
-	}		
+	}
+	
+	int GetGroupsCount()
+	{
+		return m_Groups.Count();
+	}
 
 	//------------------------------------------------------------------------------------------------
 	// ACTIVE state related things
@@ -1003,7 +1018,15 @@ class SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	void SetActiveTimeToEnd(int seconds)	
 	{
-		m_iActiveTimeToEnd = seconds;
+		if (m_iActiveTimeToEnd > 0)
+		{
+			//It has been set by the mission already
+		}
+		else		
+		{
+			//Use provided distance
+			m_iActiveTimeToEnd = seconds;
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
