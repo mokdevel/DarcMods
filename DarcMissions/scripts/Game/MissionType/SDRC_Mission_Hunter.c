@@ -113,6 +113,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		SetMessages(m_Config.showMessage, m_DC_Hunter.general.winMessage, m_DC_Hunter.general.loseMessage);		
 		SetWinCondition(m_DC_Hunter.general.winCondition);*/
 		SetActiveDistance(m_Config.maxDistanceToPlayer);		//Change the m_iActiveDistance to a mission specific one.		
+		SetActiveTimeToEnd(20);									//Change the m_iActiveTimeToEnd to short one as there is no loot to gain.
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -179,32 +180,51 @@ class SDRC_Mission_Hunter : SDRC_Mission
 			if (group.GetLeaderEntity())
 			{					
 				array<ref SDRC_PlayerPos> playerPosArray = new array<ref SDRC_PlayerPos>;
-//				SDRC_PlayerHelper.GetPlayersClosestToPosition(playerPosArray, group.GetLeaderEntity().GetOrigin());
 				SDRC_PlayerHelper.GetPlayersClosestToPosition(playerPosArray, group.GetLeaderEntity().GetOrigin(), m_Config.maxDistanceToPlayer);
 				
-				//Check if there are any nearby AI
-//				IEntity closestPlayer = SDRC_PlayerHelper.PlayerGetClosestToPos(group.GetLeaderEntity().GetOrigin(), 0, m_Config.maxDistanceToPlayer);
-
-				if (!playerPosArray.IsEmpty())
+				//If no players nearby, delete group.
+				if (playerPosArray.IsEmpty())
+				{				
+					SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] No players nearby, deleting group: " + group.GetID(), LogLevel.NORMAL);
+					SDRC_AIHelper.GroupDelete(group);
+					return;
+				}
+				
+				GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.missionCycleTime*1000, false, group);
+				
+				foreach (int i, SDRC_PlayerPos pPos : playerPosArray)
 				{
-					IEntity closestPlayer = playerPosArray[0].player;
-			
+					IEntity closestPlayer = pPos.player;
+					bool inNonValidArea = false;
+
+					//If player in NonValidArea, we run to the other direction for one cycle.
+					if (SDRC_MissionPosHelper.IsPosInNonValidArea(closestPlayer.GetOrigin()))
+					{
+						inNonValidArea = true;
+					}
+					
 					if (group.GetAgentsCount() > 0)
 					{
+						vector pos = closestPlayer.GetOrigin();
+						if (inNonValidArea)
+						{
+							//Oops, let's run away. We count the vector from player to group, and along that line, AI will move away.
+							vector gPos = group.GetOrigin();
+							pos[1] = 0;
+							gPos[1] = 0;
+							vector direction = vector.Direction(pos, gPos);							
+							direction.Normalize();
+							pos = gPos + (direction * 300);
+							pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
+						}
+						
 						SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] Creating waypoint for group: " + group.GetID(), LogLevel.SPAM);
 						
 						SDRC_WPHelper.RemoveWaypoints(group);
-						AIWaypoint wp = GetWaypoint(group, closestPlayer.GetOrigin());
+						AIWaypoint wp = GetWaypoint(group, pos);
 						group.AddWaypoint(wp);
-						GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.missionCycleTime*1000, false, group);
 						return;
 					}
-				}
-				else
-				{
-					// If there aren't any players close, delete the group
-					SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] No players nearby, deleting group: " + group.GetID(), LogLevel.NORMAL);
-					SDRC_AIHelper.GroupDelete(group);
 				}
 			}			
 		}
