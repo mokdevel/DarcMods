@@ -302,7 +302,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		ref SDRC_List lootList = new SDRC_List();
 		lootList.Set(
 			"GEAR_HEADGEAR",
-			{"Prefabs/Characters/HeadGear"},
+			{"Prefabs/Characters/HeadGear", "Prefabs/Clothing"},
 			{"Helmet_",
 			"GP-", "M50", "Unix_", //Gasmask items
 			},
