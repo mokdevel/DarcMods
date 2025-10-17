@@ -49,6 +49,11 @@ sealed class SDRC_MapMarkerHelper
 				
 //		SDRC_Log.Add("[SDRC_MapMarkerHelper:CreateMapMarker] Creating " + typename.StringToEnum(SCR_EMapMarkerType, markerTypeString) + " - " + icon, LogLevel.WARNING);		
 		
+		if (markerTypeString == "")
+		{
+			return;
+		}
+		
 		SCR_EMapMarkerType markerType = typename.StringToEnum(SCR_EMapMarkerType, markerTypeString);
 //		SCR_EMapMarkerType markerType = typename.StringToEnum(SCR_EMapMarkerType, "PLACED_CUSTOM");
 

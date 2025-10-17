@@ -79,7 +79,13 @@ class SDRC_GMHelper
 			{
 				if (mission.GetState() == SDRC_EMissionState.ACTIVE)
 				{
-					m_GmComponent.AddSymbolMarker(visibleForGm, mission.GetPos(), mission.GetType(), mission.GetMarker(), mission.GetActiveTime(), mission.GetId(), mission.GetTitle());
+					//TBD: This should also fill GetMarkerType() information
+					SDRC_EMissionIcon icon = mission.GetMarkerIcon();
+					if (mission.GetMarkerType() == "")
+					{
+						icon = SDRC_EMissionIcon.GM_MISSION_X_MAP;
+					}
+					m_GmComponent.AddSymbolMarker(visibleForGm, mission.GetPos(), mission.GetType(), icon, mission.GetActiveTime(), mission.GetId(), mission.GetTitle());
 				}
 			}
 		}	
