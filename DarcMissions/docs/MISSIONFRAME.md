@@ -49,7 +49,8 @@ bool recreateConfigs : If set to true, all configs are written to disk. Should b
 int missionStartDelay : (seconds) Time to wait before spawning the first mission.
 int missionFrameCycleTime : (seconds) The cycle time to manage mission spawning, deletion etc...
 int missionActiveDistance : The distance to a player to keep the mission active.
-int missionActiveTimeToEnd : (seconds) Time to keep the mission active once all AI is dead. Used for both dynamic and static missions.
+int missionActiveTimeToEnd : (seconds) Time to keep the mission active once all AI is dead. Used for both dynamic and static missions. 
+  NOTE: Patrol and Hunter has a hardcoded 20 seconds defined.
 int missionHintTime : (seconds) Time to show mission hints to players. 0 disables ALL hints.
 int missionRandomPos : The radius to randomize the mission position. This avoids mission appearing always in same place.
 int minDistanceToMission : Distance to another mission. Two missions shall not be too close to each other.
@@ -84,7 +85,8 @@ array<int> missionTypeArray : List mission types that spawn randomly. (DC_EMissi
   6 = SQUATTER
   7 = ROADBLOCK
   8 = HVTVIP
-  9 = HVTITEM (!!!MISSION NOT AVAILABLE YET!!!)
+  9 = HVTITEM
+ 10 = STASH
 ```
 
 ## MissionFrame cycle

@@ -43,6 +43,7 @@ string loseMessage : Message to show when mission fails.
 string faction : Faction for the mission. Setting as empty, works as the default to select from the enemyFactions.
 string markerType : The marker type to use. Default is "DARC_MISSION".
   For Arma Reforger default ones, you can use "PLACED_MILITARY". Other mods may extend this.
+  Leaving markerType empty will hide the icon. Also from GM view.
 int markerIcon : The index of the icon of defined markerType
 SDRC_EMissionDifficulty difficulty : Difficulty for specific mission
   0 = EASY

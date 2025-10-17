@@ -10,11 +10,13 @@
 Fixes:
 * Crashsite could crash if the helicopter is destroyed before crashing.
 * Convoy completion issues
+* If no groups were spawned for Patrol, mission crashed.
 
 Changes:
 * dc_coreConfig.json locationAkas - Functionality enabled. You can name location names to work as specific locationTypes. For example anything called "military" becomes type MDT_BASE (79) in addition to the original definition.
 * dc_lootList.json
   * Added ``GEAR_VEST`` - vests.
+* Patrol and Hunter has a hardcoded 20 seconds as their missionActiveTimeToEnd. Once the AI is dead, quickly remove the mission. 
 
 ### DarcSpawner
 Uses faster cached location information for spawn.
