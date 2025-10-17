@@ -269,7 +269,24 @@ class SDRC_MissionHelper
 		
 		return group;
 	}	
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Spawn a randomly selected mission AI group to given position making sure it's empty. 
+	NOTE: Position is not exact
+	*/
+	static SCR_AIGroup SpawnMissionAIGrouRandom(array<string> groups, vector pos, string faction)
+	{
+		if (groups.IsEmpty())
+		{
+			return null;
+		}
+		
+		string groupToSpawn = groups.GetRandomElement();
+		SCR_AIGroup group = SpawnMissionAIGroup(groupToSpawn, pos, faction);
+		return group;
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Counts the amount of missions for the map
