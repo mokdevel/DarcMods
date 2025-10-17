@@ -101,13 +101,13 @@ class SDRC_NonValidAreaJsonApi : SDRC_JsonApi
 			
 			//Arland
 			SDRC_NonValidArea areaA1 = new SDRC_NonValidArea();
-			areaA1.Set("Arland", "1340 0 2320", 800, "Arland - Airport - for testing");
+			areaA1.Set("Arland", "1340 0 2320", 300, "Arland - Airport - for testing");
 			conf.m_NonValidAreas.Insert(areaA1);
 			SDRC_NonValidArea areaA2 = new SDRC_NonValidArea();
-			areaA2.Set("Arland", "1080 0 3300", 600, "Arland - Harbour - for testing");
+			areaA2.Set("Arland", "1080 0 3300", 400, "Arland - Harbour - for testing");
 			conf.m_NonValidAreas.Insert(areaA2);
 			SDRC_NonValidArea areaA3 = new SDRC_NonValidArea();
-			areaA3.Set("Arland", "4500 0 10700", 700, "Arland - St. Philippe");
+			areaA3.Set("Arland", "4500 0 10700", 300, "Arland - St. Philippe");
 			conf.m_NonValidAreas.Insert(areaA3);
 	
 			//Dummy for Arland, but as worldname is not defined, this will be valid for all worlds.
