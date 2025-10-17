@@ -58,7 +58,8 @@ sealed class SDRC_CampHelper
 			
 			for (int i = 0; i < aiCount; i++)
 			{
-				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(camp.ai.types.GetRandomElement(), mission.GetPos(), mission.GetFaction());
+				//SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(camp.ai.types.GetRandomElement(), mission.GetPos(), mission.GetFaction());
+				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGrouRandom(camp.ai.types, mission.GetPos(), mission.GetFaction());
 				if (group)
 				{
 					SDRC_AIHelper.SetAIGroupSkill(group, camp.ai.GetSkill(camp.general.difficulty), camp.ai.GetPerception(camp.general.difficulty));					
@@ -78,7 +79,7 @@ sealed class SDRC_CampHelper
 					SDRC_WPHelper.CreateMissionAIWaypoints(group, camp.ai.waypointGenType, mission.GetPos(), "0 0 0", camp.ai.waypointMoveType, minRange, maxRange);
 //					SDRC_WPHelper.CreateMissionAIWaypoints(group, SDRC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", SDRC_EWaypointMoveType.LOITER, camp.waypointRange[0], camp.waypointRange[1]);
 				}
-				SDRC_Log.Add("[SDRC_campHelper:Spawn] AI groups spawned: " + aiCount, LogLevel.DEBUG);								
+				SDRC_Log.Add("[SDRC_Mission_Patrol:MissionSpawn] AI groups spawned: " + mission.GetGroupsCount() + " (tried: " + aiCount + ")", LogLevel.DEBUG);
 			}
 			
 			//Put the loot box in right place

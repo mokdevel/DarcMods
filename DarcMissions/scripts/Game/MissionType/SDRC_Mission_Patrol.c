@@ -86,6 +86,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		SetMessages(m_Config.showMessage, m_DC_Patrol.general.winMessage, m_DC_Patrol.general.loseMessage);		
 		SetWinCondition(m_DC_Patrol.general.winCondition);		*/
 		SetActiveDistance(m_Config.distanceToPlayer);		//Change the m_iActiveDistance to a mission specific one.
+		SetActiveTimeToEnd(20);								//Change the m_iActiveTimeToEnd to short one as there is no loot to gain.
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -107,11 +108,14 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		if (GetState() == SDRC_EMissionState.ACTIVE)
 		{	
 			//Move the position as the first patrol is moving. This way check for player distance works properly.
-			if (m_Groups[0])
+			if (!m_Groups.IsEmpty())
 			{
-				SetPos(m_Groups[0].GetOrigin());
-				SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
-				MoveMarker();
+				if (m_Groups[0])
+				{
+					SetPos(m_Groups[0].GetOrigin());
+					SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
+					MoveMarker();
+				}
 			}
 			
 			if (!IsActive())
@@ -139,7 +143,8 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		
 		for (int i = 0; i < aiCount; i++)
 		{
-			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_Patrol.ai.types.GetRandomElement(), GetPos(), GetFaction());
+			//SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_Patrol.ai.types.GetRandomElement(), GetPos(), GetFaction());
+			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGrouRandom(m_DC_Patrol.ai.types, GetPos(), GetFaction());
 			if (group)
 			{
 				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Patrol.ai.GetSkill(m_DC_Patrol.general.difficulty), m_DC_Patrol.ai.GetPerception(m_DC_Patrol.general.difficulty));					
@@ -152,10 +157,10 @@ class SDRC_Mission_Patrol : SDRC_Mission
 				{
 					SDRC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.ai.waypointGenType, GetPos(), "0 0 0", m_DC_Patrol.ai.waypointMoveType, m_DC_Patrol.ai.waypointRange[0], m_DC_Patrol.ai.waypointRange[1]);
 				}
-			}
-			SDRC_Log.Add("[SDRC_Mission_Patrol:MissionSpawn] AI groups spawned: " + aiCount, LogLevel.DEBUG);								
+			}			
+			SDRC_Log.Add("[SDRC_Mission_Patrol:MissionSpawn] AI groups spawned: " + m_Groups.Count() + " (tried: " + aiCount + ")", LogLevel.DEBUG);
 		}
-			
+		
 		SetState(SDRC_EMissionState.ACTIVE);
 	}
 }

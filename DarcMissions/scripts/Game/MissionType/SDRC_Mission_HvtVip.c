@@ -139,7 +139,8 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		//Spawn AI one by one. Sets missions active once ready.
 		if (m_iSpawnIndex < m_iGroupCount)
 		{
-			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_HvtVip.ai.types.GetRandomElement(), GetPos(), GetFaction());
+			//SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_HvtVip.ai.types.GetRandomElement(), GetPos(), GetFaction());
+			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGrouRandom(m_DC_HvtVip.ai.types, GetPos(), GetFaction());
 			if (group)
 			{
 				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_HvtVip.ai.GetSkill(m_DC_HvtVip.general.difficulty), m_DC_HvtVip.ai.GetPerception(m_DC_HvtVip.general.difficulty));					
