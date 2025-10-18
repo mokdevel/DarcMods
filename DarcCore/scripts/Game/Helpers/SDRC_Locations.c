@@ -69,7 +69,12 @@ sealed class SDRC_Locations
 			location.pos = tmpMapItem.GetPos();
 			location.baseType = tmpMapItem.GetBaseType();
 			location.name = tmpMapItem.GetDisplayName();
-			location.displayName = SCR_StringHelper.Translate(tmpMapItem.GetDisplayName());
+			#ifdef EXPERIMENTAL			
+				location.displayName = WidgetManager.Translate(tmpMapItem.GetDisplayName());
+			#endif
+			#ifndef EXPERIMENTAL			
+				location.displayName = SCR_StringHelper.Translate(tmpMapItem.GetDisplayName());
+			#endif
 			location.createdName = CreateName(location.pos);
 			locationArray.Insert(location);
 		}
@@ -357,9 +362,16 @@ sealed class SDRC_Locations
 				return false;
 			}
 			
-			if ( (mapItem.GetDisplayName() != "") && (SCR_StringHelper.Translate(mapItem.GetDisplayName()) != "") )
+		#ifdef EXPERIMENTAL			
+			string dispName = WidgetManager.Translate(mapItem.GetDisplayName());
+		#endif
+		#ifndef EXPERIMENTAL						
+			string dispName = SCR_StringHelper.Translate(mapItem.GetDisplayName());
+		#endif			
+			
+			if ( (mapItem.GetDisplayName() != "") && (dispName != "") )
 			{
-				m_sName = SCR_StringHelper.Translate(mapItem.GetDisplayName());
+				m_sName = dispName;
 				return false;			
 			}
 		}
