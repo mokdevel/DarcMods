@@ -11,6 +11,8 @@ Fixes:
 * Crashsite could crash if the helicopter is destroyed before crashing.
 * Convoy completion issues
 * If no groups were spawned for Patrol, mission crashed.
+* enemyFactions setting was not working properly.
+* Trying to recognize attic in buildings to avoid spawning AI's and loot in non reachable places. If you still see this, please inform which building.
 
 Changes:
 * dc_coreConfig.json locationAkas - Functionality enabled. You can name location names to work as specific locationTypes. For example anything called "military" becomes type MDT_BASE (79) in addition to the original definition.
