@@ -138,7 +138,7 @@ sealed class SDRC_EnemyHelper
 		{			
 			if (m_sFactionList.Contains(faction))
 			{
-				faction = m_sDefaultEnemyFactionKey;
+				//faction = m_sDefaultEnemyFactionKey;
 				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Mission specific: " + faction, LogLevel.SPAM);
 				return faction;
 			}
