@@ -116,7 +116,7 @@ sealed class SDRC_SpawnHelper
 			radius = sums[2];
 		}
 	
-		float empty_radius = 1.2;
+		float empty_radius = 1.6;	//Was: 1.2
 
 		if (!floors.IsEmpty())
 		{
@@ -131,7 +131,8 @@ sealed class SDRC_SpawnHelper
 		pos = SDRC_Misc.RandomizePos(floorpos, radius/8);
 		pos = FindPositinInsideBuilding(building, pos, empty_radius);
 
-		SDRC_DebugHelper.AddDebugPos(pos, ARGB(20, 128, 0, 128), empty_radius, "", 0.5, false);	//Purple for the item position
+		SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 128, 0, 128), empty_radius, "", 0.5, false);	//Purple for the item position
+		SDRC_DebugHelper.AddDebugPos(pos, ARGB(80, 128, 0, 128), 0.1, "", 100, false);			//Purple for the item position
 		
 		entity = SpawnItem(pos, item, rotation, -1, snap);
 		
@@ -157,8 +158,8 @@ sealed class SDRC_SpawnHelper
 		outpos[1] = posStart[1];
 		
 		#ifndef SDRC_RELEASE
-			SDRC_DebugHelper.AddDebugSphere(posStart, ARGB(50, 255, 0, 255), 0.05);				
-			SDRC_DebugHelper.AddDebugSphere(outpos, ARGB(50, 255, 255, 255), 0.2);
+			SDRC_DebugHelper.AddDebugSphere(posStart, ARGB(50, 255, 0, 255), 0.05);		//Purple		
+			SDRC_DebugHelper.AddDebugSphere(outpos, ARGB(50, 255, 255, 255), 0.2);		//White
 		#endif 
 		
 		return outpos;

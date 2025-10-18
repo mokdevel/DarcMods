@@ -108,7 +108,7 @@ class SDRC_MissionHelper
 			pos = location.pos;//GetOrigin();
 			
 //			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);			
-			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.name + " " + location.pos, LogLevel.DEBUG);			
+			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.displayName + " " + location.pos, LogLevel.DEBUG);			
 		}
 
 		pos = FindWithIterate(pos, size, posRandomization);

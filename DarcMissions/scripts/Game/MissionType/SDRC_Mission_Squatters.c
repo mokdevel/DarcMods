@@ -586,6 +586,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		);
 		squatter.Set(
 			{"ShopModern_", "House_Town_", "House_Village_", "FarmHouse_", "House_Wooden_"},
+//			{"House_Village_E_"},
 			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
 		);
 		

@@ -6,6 +6,7 @@ Stupid file to handle a few common variables accross multiple mods
 */
 
 //#define SDRC_RELEASE
+#define EXPERIMENTAL
 
 sealed class SDRC_Conf
 {
@@ -39,7 +40,7 @@ sealed class SDRC_Conf
 	const bool SDRC_ENABLE_DARCMISSIONS	= true;
 	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
 	const bool SDRC_ENABLE_DARCSTORIES = false;
-	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
+//	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
 	const bool RELEASE = false;					
 	const bool OVERWRITE_JSON = true;				
 //	const bool OVERWRITE_JSON = false;				
