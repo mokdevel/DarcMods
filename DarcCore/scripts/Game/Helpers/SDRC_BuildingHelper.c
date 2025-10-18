@@ -162,6 +162,11 @@ sealed class SDRC_BuildingHelper
 		
 		//Finding the building size
 		vector sums = SDRC_SpawnHelper.FindEntitySize(building);
+
+		//Used for debugging		
+		vector size = sums;
+		size[1] = 0;
+	 	float floorMarkerSize = SDRC_Misc.FindMaxValue(sums) / 2;
 	
 		vector pos;
 		pos = building.GetOrigin();
@@ -175,40 +180,47 @@ sealed class SDRC_BuildingHelper
 		posStart[1] = posStartOrig[1] + sums[1];
 		DoFloorTrace(floorsTmp, building, posStart);
 		
-		float mulValX = Math.RandomFloat(0.05, 0.25);
-		float mulValY = Math.RandomFloat(0.05, 0.25);
-		posStart[0] = posStartOrig[0] + (sums[0] * mulValX);
-		posStart[2] = posStartOrig[2] + (sums[2] * mulValY);
-		DoFloorTrace(floorsTmp, building, posStart);
-		
-		mulValX = Math.RandomFloat(0.05, 0.25);
-		mulValY = Math.RandomFloat(0.05, 0.25);
-		posStart[0] = posStartOrig[0] + (sums[0] * mulValX);
-		posStart[2] = posStartOrig[2] - (sums[2] * mulValY);
-		DoFloorTrace(floorsTmp, building, posStart);
-
-		mulValX = Math.RandomFloat(0.05, 0.25);
-		mulValY = Math.RandomFloat(0.05, 0.25);
-		posStart[0] = posStartOrig[0] - (sums[0] * mulValX);
-		posStart[2] = posStartOrig[2] + (sums[2] * mulValY);
-		DoFloorTrace(floorsTmp, building, posStart);
-
-		mulValX = Math.RandomFloat(0.05, 0.25);
-		mulValY = Math.RandomFloat(0.05, 0.25);
-		posStart[0] = posStartOrig[0] - (sums[0] * mulValX);
-		posStart[2] = posStartOrig[2] - (sums[2] * mulValY);
-		DoFloorTrace(floorsTmp, building, posStart);
+		for (int j = 0; j < 1; j++)
+		{
+			float mulValX = Math.RandomFloat(0.05, 0.30);
+			float mulValY = Math.RandomFloat(0.05, 0.30);
+			posStart[0] = posStartOrig[0] + (sums[0] * mulValX);
+			posStart[2] = posStartOrig[2] + (sums[2] * mulValY);
+			DoFloorTrace(floorsTmp, building, posStart);
+			
+			mulValX = Math.RandomFloat(0.05, 0.30);
+			mulValY = Math.RandomFloat(0.05, 0.30);
+			posStart[0] = posStartOrig[0] + (sums[0] * mulValX);
+			posStart[2] = posStartOrig[2] - (sums[2] * mulValY);
+			DoFloorTrace(floorsTmp, building, posStart);
+	
+			mulValX = Math.RandomFloat(0.05, 0.30);
+			mulValY = Math.RandomFloat(0.05, 0.30);
+			posStart[0] = posStartOrig[0] - (sums[0] * mulValX);
+			posStart[2] = posStartOrig[2] + (sums[2] * mulValY);
+			DoFloorTrace(floorsTmp, building, posStart);
+	
+			mulValX = Math.RandomFloat(0.05, 0.30);
+			mulValY = Math.RandomFloat(0.05, 0.30);
+			posStart[0] = posStartOrig[0] - (sums[0] * mulValX);
+			posStart[2] = posStartOrig[2] - (sums[2] * mulValY);
+			DoFloorTrace(floorsTmp, building, posStart);
+		}
 				
 		//Get heights of all scans and sort from lowest to highest.
 		//These are potential floor heights.
 		array<float> floorHeight = {};		
+		const int ROUNDER = 40;
+		
 		foreach (vector posTmp : floorsTmp)
 		{
-			int ival = posTmp[1] * 10;		//Round value
-			float fval = ival / 10;		
+			int ival = posTmp[1] * ROUNDER;		//Round value
+			float fval = ival / ROUNDER;		
 			floorHeight.Insert(fval);		
 		}
 		floorHeight.Sort();
+		
+		float highestHeight = floorHeight[floorHeight.Count() - 1];
 		
 		//Those that are single values, are most likely not proper floor heights. We hit a furniture or some other part of the building.
 		//Clean the list and leave only those with multiples.
@@ -231,13 +243,10 @@ sealed class SDRC_BuildingHelper
 			}		
 		}
 
-		//NOTE: The floors order is from lowest to highest		
+		//TBD: Houses with issues:
+		//- House_Village_E_1L03t.et		
 		
-		//Roof check : If we found multiple floors, the highest one is with high probability the roof. Remove it.
-		if (floors.Count() > 1)
-		{
-			floors.RemoveOrdered(floors.Count() - 1);	//Remove roof as a floor
-		}
+		//NOTE: The floors order is from lowest to highest		
 		
 		//Ground check : If the two last floors are too close to each other, the lowest floor is considered ground
 		if (floors.Count() > 1)
@@ -247,19 +256,73 @@ sealed class SDRC_BuildingHelper
 			{
 				floors.RemoveOrdered(0);				//Remove ground as a floor
 			}
+		}		
+
+		//Start from lowest floor and start to come upwards. See that the next floor is not too far away as it's most likely roof or attic.
+		if (floors.Count() > 1)
+		{
+			array<vector> tmpFloors = {};
+			tmpFloors.Insert(floors[0]);
+			
+			for (int i = 1; i < floors.Count() - 1; i++)
+			{
+				float distance = floors[i + 1][1] - floors[i][1];				
+				SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Distance between floors: " + distance + " in building: " + building.GetPrefabData().GetPrefabName(), LogLevel.WARNING);				
+				
+				if ( (distance < 2.4) && (distance > 0.8) )
+				{
+					tmpFloors.Insert(floors[i]);
+				}
+			}
+			floors.Clear();
+			floors.Copy(tmpFloors);
 		}
 		
+				
+/*		
+		//Roof check : If we found multiple floors, the highest one is with high probability the roof. Remove it.
+		if (floors.Count() > 1)
+		{
+			float roofHeight = floorHeight[floors.Count() - 1];
+			vector highPoint = floors[0];
+			highPoint[1] = highestHeight;
+			
+			SDRC_DebugHelper.AddDebugPos(highPoint, ARGB(20, 255, 0, 0), floorMarkerSize, "", 0.3, false);								//Highest point Red
+			SDRC_DebugHelper.AddDebugPos(floors[floors.Count() - 1], ARGB(20, 255, 0, 255), floorMarkerSize * 0.8, "", 0.3, false);		//Roof Purple
+			
+			//Remove roof as a floor
+			floors.RemoveOrdered(floors.Count() - 1);
+
+			if (floors.Count() > 1)
+			{
+				//Check if the next floor is close to roof. If yes, it's most likely attic
+				float atticHeight = floorHeight[floors.Count() - 1];
+				//float atticDistance = roofHeight - atticHeight;
+				float atticDistance = highestHeight - atticHeight;
+
+				SDRC_DebugHelper.AddDebugPos(floors[floors.Count() - 1], ARGB(20, 0, 255, 0), floorMarkerSize * 0.8, "", 0.3, false);		//Attic Green
+								
+				SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Attic distance from roof: " + atticDistance + " in building: " + building.GetPrefabData().GetPrefabName(), LogLevel.WARNING);
+				
+				//We expect the floor distance to be ~2m. From roof to first floor is ~4m. Anything between would be attic. We try with 3m.
+				if ( atticDistance < 3.0)
+				{
+					//Remove attic as a floor
+					floors.RemoveOrdered(floors.Count() - 1);	
+					SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Removed attic in building: " + building.GetPrefabData().GetPrefabName(), LogLevel.WARNING);
+				}
+			}
+		}
+*/		
 		//Cache values if needed again
 		buildingIDfloorCache.Copy(floors);
 		
 		#ifndef SDRC_RELEASE
 			//Print(floorHeight);
 			//Print(floors);
-			sums[1] = 0;
-		 	float bsize = SDRC_Misc.FindMaxValue(sums) / 2;
 			foreach (vector fpos: floors)
 			{
-				SDRC_DebugHelper.AddDebugPos(fpos, ARGB(20, 255, 255, 0), bsize, "", 0.3, false);
+				SDRC_DebugHelper.AddDebugPos(fpos, ARGB(20, 255, 255, 0), floorMarkerSize, "", 0.3, false);		//Yellow
 			}				
 		#endif 
 				
@@ -282,7 +345,7 @@ sealed class SDRC_BuildingHelper
 
 			#ifndef SDRC_RELEASE
 				//Green debug sphere to show where trace starts
-				SDRC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 0.3);
+				SDRC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 0.1);
 			#endif
 				
 			//trace.Exclude = child;
@@ -313,7 +376,7 @@ sealed class SDRC_BuildingHelper
 		#ifndef SDRC_RELEASE
 			foreach (vector fpos: floors)
 			{
-				SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 0, 0, 255), 0.08);	//Blue ball for the found floor
+				SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 0, 0, 255), 0.06);	//Blue ball for the found floor
 			}				
 		#endif 
 	}	
