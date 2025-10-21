@@ -208,7 +208,7 @@ sealed class SDRC_BuildingHelper
 		}
 				
 		//Get heights of all scans and sort from lowest to highest.
-		//These are potential floor heights.
+		//These are potential floor heights. This will be a long list of duplicates.
 		array<float> floorHeight = {};		
 		const int ROUNDER = 40;
 		
@@ -219,9 +219,34 @@ sealed class SDRC_BuildingHelper
 			floorHeight.Insert(fval);		
 		}
 		floorHeight.Sort();
+		#ifndef SDRC_RELEASE
+			floorHeight.Debug();
+		#endif
 		
+		//Take the highest point found and subtract the the ground level. This an approximate of building height above ground.
 		float highestHeight = floorHeight[floorHeight.Count() - 1];
+		float groundHeight = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
+		float buildingHeight = highestHeight - groundHeight;
 		
+		//Pick only those values were we have a given amount of duplicates.
+		if (floorHeight.Count() > 2)
+		{
+			array<float> tmpfloorHeight = {};
+			for (int i = 0; i < floorHeight.Count() - 2; i++)
+			{
+				if ( (floorHeight[i + 0] == floorHeight[i + 1]) && (floorHeight[i + 1] == floorHeight[i + 2]) )
+				{
+					tmpfloorHeight.Insert(floorHeight[i]);
+				}
+			}
+			
+			floorHeight.Clear();
+			floorHeight.Copy(tmpfloorHeight);
+			#ifndef SDRC_RELEASE
+				floorHeight.Debug();
+			#endif
+		}
+				
 		//Those that are single values, are most likely not proper floor heights. We hit a furniture or some other part of the building.
 		//Clean the list and leave only those with multiples.
 		//For example: {11,15,15,15,19,19,19,22,22} -> {15, 19, 22}
@@ -247,12 +272,21 @@ sealed class SDRC_BuildingHelper
 		//- House_Village_E_1L03t.et		
 		
 		//NOTE: The floors order is from lowest to highest		
-		
-		//Ground check : If the two last floors are too close to each other, the lowest floor is considered ground
-		if (floors.Count() > 1)
+		if (floors.IsEmpty())
 		{
-			float diff = floors[1][1] - floors[0][1];
-			if ( diff < 1.3 )	//Was 1.7
+			SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] No floors found in building: " + building.GetPrefabData().GetPrefabName(), LogLevel.ERROR);				
+			return;
+		}
+
+		//Ground check : 
+		//- If the two last floors are too close to each other, the lowest floor is considered ground.
+		//- If the floor is too close to the ground
+		if (floors.Count() > 2)		//Check is done only if there are multiple floors
+		{
+			float diffG = floors[0][1] - groundHeight;			//Ground difference
+			float diffF = floors[1][1] - floors[0][1];		//Floor difference
+			
+			if ( ( diffF < 1.8 ) || ( diffG < 0.8 ) )
 			{
 				floors.RemoveOrdered(0);				//Remove ground as a floor
 			}
@@ -264,12 +298,15 @@ sealed class SDRC_BuildingHelper
 			array<vector> tmpFloors = {};
 			tmpFloors.Insert(floors[0]);
 			
+			float distanceCheckVal = buildingHeight / (floors.Count() + 1);
+			
 			for (int i = 1; i < floors.Count() - 1; i++)
 			{
-				float distance = floors[i + 1][1] - floors[i][1];				
-				SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Distance between floors: " + distance + " in building: " + building.GetPrefabData().GetPrefabName(), LogLevel.WARNING);				
+				float distance = floors[i + 1][1] - floors[i][1];
+				SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Distance between floors: " + distance + ". Checking with: " + distanceCheckVal + ". Building: " + building.GetPrefabData().GetPrefabName(), LogLevel.WARNING);				
 				
-				if ( (distance < 2.4) && (distance > 0.8) )
+//				if ( (distance < 2.4) && (distance > 0.8) )
+				if ( (distance < distanceCheckVal) && (distance > 1.2) )
 				{
 					tmpFloors.Insert(floors[i]);
 				}
@@ -322,7 +359,8 @@ sealed class SDRC_BuildingHelper
 			//Print(floors);
 			foreach (vector fpos: floors)
 			{
-				SDRC_DebugHelper.AddDebugPos(fpos, ARGB(20, 255, 255, 0), floorMarkerSize, "", 0.3, false);		//Yellow
+				SDRC_DebugHelper.AddDebugPos(fpos, ARGB(20, 255, 255, 0), 12, "", 0.3, false);		//Yellow
+//				SDRC_DebugHelper.AddDebugPos(fpos, ARGB(20, 255, 255, 0), floorMarkerSize, "", 0.3, false);		//Yellow
 			}				
 		#endif 
 				
@@ -366,10 +404,14 @@ sealed class SDRC_BuildingHelper
 //				SDRC_DebugHelper.AddDebugSphere(floorpos + move, ARGB(50, 255, 255, 255), 0.05);				
 			#endif 
 			
-			floors.Insert(floorpos);
+			//Add to floor list only if above ground
+			if ( (floorpos[1] - terrainY) > 0.3)
+			{
+				floors.Insert(floorpos);
+			}
 			posCheck[1] = floorpos[1] - 1;		//Move 1m down from found floor
 			trace.Start = posCheck;
-			
+						
 			i++;
 		}
 		
