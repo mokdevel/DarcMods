@@ -53,6 +53,10 @@ sealed class SDRC_DebugHelper
 	*/
 	static void Setup()
 	{
+		m_Pos.Clear();
+		m_Sphere.Clear();
+		m_Slots.Clear();
+		
 		// Some init script		
 		const string categoryName = "DarcDebug";
 		DiagMenu.RegisterMenu(SCR_DebugMenuID.MODMENU , categoryName, categoryName);

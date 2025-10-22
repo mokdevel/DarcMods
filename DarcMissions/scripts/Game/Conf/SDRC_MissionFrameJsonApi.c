@@ -20,6 +20,7 @@
 		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 60*60*10; //10hrs			//Static missions are to be kept alive longer
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 150;							//Mission is to be removed if no players close to the position after the mission active time has passed.
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 180;						//Mission is kept active this time once all AIs are dead.
+		private const float SDRC_MISSION_ACTIVE_MUL_TO_END = 0.9;
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME = 30;							//The cycle to run the mission frame. 
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = true;						//Force recreaction of config files. 
 		private const int SDRC_MISSION_HINT_TIME = 90;									//Seconds to show the mission hint to players
@@ -31,11 +32,11 @@
 	//Development time options
 	#ifndef SDRC_RELEASE
 		private const float SDRC_MISSION_DIFFICULTY_COEF_MUL = 2.0;						//Difficulty multiplier
-		private const int SDRC_MISSION_MIN_DISTANCE = 200;		
-		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
+		private const int SDRC_MISSION_MIN_DISTANCE = 30;//200;		
+		private const int SDRC_PLAYER_MIN_DISTANCE = 30;//100;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 10;//10;//15;//5;//3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 20;//10;//15;//5;//3;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -45,6 +46,7 @@
 		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = SDRC_MISSION_ACTIVE_TIME_DYNAMIC * 10;	
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 150;
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 45;
+		private const float SDRC_MISSION_ACTIVE_MUL_TO_END = 0.9;
 		private const int SDRC_MISSIONFRAME_CYCLE_TIME = 10;//20;
 		private const bool SDRC_MISSION_RECREATE_CONFIGS = true;
 		private const int SDRC_MISSION_HINT_TIME = 90;
@@ -61,24 +63,23 @@ class SDRC_MissionFrameConfig : Managed
 	string author = "darc";
 	//Mission specific
 	string comment;
-	float difficultyAiCountCoefMul;
-	float difficultyAiSkillCoefMul;
-	float difficultyAiPerceptionCoefMul;
-	bool recreateConfigs;			//If set to true, all configs are to be written to disk. Should be run only first time.
+	bool recreateConfigs;					//If set to true, all configs are to be written to disk. Should be run only first time.
 	//Timing specific
-	int missionStartDelay;			//Time to wait before spawning the first mission (seconds).
-	int missionFrameCycleTime;		//The cycle time to manage mission spawning, deletion etc... (seconds)
-	int missionActiveDistance;		//The distance to a player to keep the mission active.
-	int missionActiveTimeToEnd;		//Time to keep the mission active once all AI is dead. Used for both dynamic and static missions.
-	int missionHintTime;			//Seconds to show mission hints to players. 0 disables hints.
+	int missionStartDelay;					//Time to wait before spawning the first mission (seconds).
+	int missionFrameCycleTime;				//The cycle time to manage mission spawning, deletion etc... (seconds)
+	int missionActiveDistance;				//The distance to a player to keep the mission active.
+	int missionActiveTimeToEnd;				//Time to keep the mission active once all AI is dead. Used for both dynamic and static missions.
+	float missionActiveDistanceMul;			//TBD
+	float missionActiveTimeToEndMul;		//TBD
+	int missionHintTime;					//Seconds to show mission hints to players. 0 disables hints.
 	//Randomization
-	int missionRandomPos;			//The distance to randomize the missions position. This avoids mission appearing always in same place.
+	int missionRandomPos;					//The distance to randomize the missions position. This avoids mission appearing always in same place.
 	//Misc
-	int minDistanceToMission;		//Distance to another mission. Two missions shall not be too close to each other.
-	int minDistanceToPlayer;		//Mission shall not spawn too close to a player.
-	bool showStaticMissionMarker;	//Show static mission marker
-	bool showMissionTimeLeft;		//Show mission time left on marker click
-	ref array<string>enemyFactions;	//Factions to use for enemy selection
+	int minDistanceToMission;				//Distance to another mission. Two missions shall not be too close to each other.
+	int minDistanceToPlayer;				//Mission shall not spawn too close to a player.
+	bool showStaticMissionMarker;			//Show static mission marker
+	bool showMissionTimeLeft;				//Show mission time left on marker click
+	ref array<string>enemyFactions;			//Factions to use for enemy selection
 	ref SDRC_MissionDifficulty missionDifficulty = new SDRC_MissionDifficulty();
 	ref SDRC_MissionTypeConfig missionDynamic = new SDRC_MissionTypeConfig();
 	ref SDRC_MissionTypeConfig missionStatic = new SDRC_MissionTypeConfig();
@@ -97,10 +98,17 @@ class SDRC_MissionTypeConfig : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionDifficulty : Managed
 {
+	float aiCountCoefMul;
+	float aiSkillCoefMul;
+	float aiPerceptionCoefMul;
+	float lootChanceCoefMul;
+	float lootCountCoefMul;
 	//easy, moderate, normal, tough, hard
 	ref array<float> aiCountCoef = 			{0.5, 0.6, 1.0, 2.0, 3.0};
 	ref array<float> aiSkillCoef = 			{0.2, 0.6, 1.0, 1.3, 1.6};
 	ref array<float> aiPerceptionCoef = 	{0.2, 0.6, 1.0, 1.3, 1.6};
+	ref array<float> lootChanceCoef = 		{0.5, 0.6, 1.0, 1.1, 1.2};	
+	ref array<float> lootCountCoef = 		{1.0, 1.0, 1.0, 1.0, 1.0};	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -146,9 +154,11 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 	{
 		conf.comment = "Simple comment, not used in game";
 
-		conf.difficultyAiCountCoefMul = SDRC_MISSION_DIFFICULTY_COEF_MUL;
-		conf.difficultyAiSkillCoefMul = SDRC_MISSION_DIFFICULTY_COEF_MUL;
-		conf.difficultyAiPerceptionCoefMul = SDRC_MISSION_DIFFICULTY_COEF_MUL;		
+		conf.missionDifficulty.aiCountCoefMul = SDRC_MISSION_DIFFICULTY_COEF_MUL;
+		conf.missionDifficulty.aiSkillCoefMul = SDRC_MISSION_DIFFICULTY_COEF_MUL;
+		conf.missionDifficulty.aiPerceptionCoefMul = SDRC_MISSION_DIFFICULTY_COEF_MUL;		
+		conf.missionDifficulty.lootChanceCoefMul = SDRC_MISSION_DIFFICULTY_COEF_MUL;		
+		conf.missionDifficulty.lootCountCoefMul = 1.0;
 				
 		conf.recreateConfigs = SDRC_MISSION_RECREATE_CONFIGS;
 		conf.missionStartDelay = SDRC_MISSIONFRAME_START_DELAY;
@@ -166,6 +176,9 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		
 		conf.missionActiveDistance = SDRC_MISSION_ACTIVE_DISTANCE;
 		conf.missionActiveTimeToEnd = SDRC_MISSION_ACTIVE_TIME_TO_END;
+		conf.missionActiveDistanceMul = SDRC_MISSION_ACTIVE_MUL_TO_END;
+		conf.missionActiveTimeToEnd = SDRC_MISSION_ACTIVE_MUL_TO_END;
+		
 		conf.missionHintTime = SDRC_MISSION_HINT_TIME;
 		conf.missionRandomPos = SDRC_MISSION_RANDOM_POS;
 		

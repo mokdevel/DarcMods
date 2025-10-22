@@ -88,10 +88,6 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Squatter.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Squatter.general);		
-/*		SetMarker(m_Config.showMarker, m_DC_Squatter.general.markerIcon, m_DC_Squatter.general.markerType);
-		SetHint(m_Config.showHint, m_DC_Squatter.general.title, m_DC_Squatter.general.info);
-		SetMessages(m_Config.showMessage, m_DC_Squatter.general.winMessage, m_DC_Squatter.general.loseMessage);				
-		SetWinCondition(m_DC_Squatter.general.winCondition);*/
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -586,7 +582,13 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		);
 		squatter.Set(
 			{"ShopModern_", "House_Town_", "House_Village_", "FarmHouse_", "House_Wooden_"},
+//			{"{6E38A03731914D8F}Prefabs/Structures/Houses/Village/House_Village_E_1I01/House_Village_E_1I01_beige_V2.et"},
+//			{"ControlTower"},
+//			{"House_Village_E_1I01"},
 //			{"House_Village_E_"},
+//			{"Villa_E_"},
+//			{"Villa_E_", "House_Village_E_", "ControlTower"},
+//			{"ShopModern_", "House_Town_", "House_Village_", "FarmHouse_", "House_Wooden_", "Church_"},
 			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
 		);
 		

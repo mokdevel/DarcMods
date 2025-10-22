@@ -28,7 +28,7 @@ enum SDRC_EMissionType
 //------------------------------------------------------------------------------------------------
 enum SDRC_EMissionDifficulty
 {
-	EASY, 
+	EASY = 0, 
 	MODERATE, 
 	NORMAL, 
 	TOUGH, 

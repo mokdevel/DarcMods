@@ -67,9 +67,9 @@ class SDRC_MissionFrame
 
 		//TBD: Difficulty details
 		//SDRC_Log.Add("[SDRC_MissionFrame] Difficulty: " + SCR_Enum.GetEnumName(SDRC_EMissionDifficulty, m_Config.difficulty), LogLevel.NORMAL);
-		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI count multiplier: " + m_Config.difficultyAiCountCoefMul, LogLevel.NORMAL);
-		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI skill multiplier: " + m_Config.difficultyAiSkillCoefMul, LogLevel.NORMAL);
-		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI perception multiplier: " + m_Config.difficultyAiPerceptionCoefMul, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI count multiplier: " + m_Config.missionDifficulty.aiCountCoefMul, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI skill multiplier: " + m_Config.missionDifficulty.aiSkillCoefMul, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI perception multiplier: " + m_Config.missionDifficulty.aiPerceptionCoefMul, LogLevel.NORMAL);
 		
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
 		if (gmComp)
