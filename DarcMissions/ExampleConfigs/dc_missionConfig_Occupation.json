@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 20,
+	"missionCycleTime": 30,
 	"showMarker": true,
 	"showHint": true,
 	"showMessage": true,
@@ -26,6 +26,7 @@
 		5
 	],
 	"missionFiles": [],
+	"secondWave": [],
 	"subMissions": [
 		{
 			"general": {
@@ -72,6 +73,15 @@
 				],
 				"waypointGenType": 1,
 				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"loot": null,
 			"campItems": []
@@ -127,6 +137,15 @@
 				],
 				"waypointGenType": 2,
 				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"loot": {
 				"box": null,
@@ -260,6 +279,15 @@
 				"waypointGenType": 3,
 				"waypointMoveType": 1
 			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
+			},
 			"loot": {
 				"box": null,
 				"itemChance": 0.8999999761581421,
@@ -391,6 +419,15 @@
 				],
 				"waypointGenType": 1,
 				"waypointMoveType": 1
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"loot": {
 				"box": null,
@@ -545,6 +582,15 @@
 				],
 				"waypointGenType": 1,
 				"waypointMoveType": 1
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"loot": {
 				"box": null,
@@ -725,6 +771,15 @@
 				],
 				"waypointGenType": 1,
 				"waypointMoveType": 1
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"loot": {
 				"box": null,
@@ -995,6 +1050,15 @@
 				],
 				"waypointGenType": 1,
 				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"loot": null,
 			"campItems": []

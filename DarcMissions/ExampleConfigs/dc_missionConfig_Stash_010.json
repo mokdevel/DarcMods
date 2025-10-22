@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 20,
+	"missionCycleTime": 30,
 	"showMarker": true,
 	"showHint": true,
 	"showMessage": true,
@@ -10,6 +10,7 @@
 		10
 	],
 	"missionFiles": [],
+	"secondWave": [],
 	"activeDistance": 50,
 	"subMissions": [
 		{
@@ -53,6 +54,15 @@
 				],
 				"waypointGenType": 1,
 				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"loot": {
 				"box": null,

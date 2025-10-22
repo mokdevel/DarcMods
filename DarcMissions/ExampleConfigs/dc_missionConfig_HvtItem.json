@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 20,
+	"missionCycleTime": 30,
 	"showMarker": true,
 	"showHint": true,
 	"showMessage": true,
@@ -14,6 +14,7 @@
 	"missionFiles": [
 		"dc_missionConfig_HvtItem_010.json"
 	],
+	"secondWave": [],
 	"subMissions": [
 		{
 			"general": {
@@ -66,6 +67,15 @@
 				],
 				"waypointGenType": 5,
 				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"loot": {
 				"box": null,
@@ -249,6 +259,15 @@
 				"waypointGenType": 5,
 				"waypointMoveType": 5
 			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
+			},
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -398,6 +417,15 @@
 				],
 				"waypointGenType": 5,
 				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"loot": {
 				"box": null,

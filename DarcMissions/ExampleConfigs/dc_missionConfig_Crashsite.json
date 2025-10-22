@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 20,
+	"missionCycleTime": 30,
 	"showMarker": true,
 	"showHint": true,
 	"showMessage": true,
@@ -11,6 +11,7 @@
 		1
 	],
 	"missionFiles": [],
+	"secondWave": [],
 	"distanceToMission": 100,
 	"distanceToPlayer": 500,
 	"flyHeight": [
@@ -60,6 +61,15 @@
 				],
 				"waypointGenType": 5,
 				"waypointMoveType": 6
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"loot": {
 				"box": null,
@@ -205,6 +215,15 @@
 				],
 				"waypointGenType": 5,
 				"waypointMoveType": 6
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"loot": {
 				"box": null,

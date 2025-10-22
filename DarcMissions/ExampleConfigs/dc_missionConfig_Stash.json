@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 20,
+	"missionCycleTime": 30,
 	"showMarker": true,
 	"showHint": true,
 	"showMessage": true,
@@ -9,10 +9,8 @@
 	"missionList": [
 		0
 	],
-	"missionFiles": [
-		"dc_missionConfig_Stash_010.json",
-		"dc_missionConfig_Stash_01x.json"
-	],
+	"missionFiles": [],
+	"secondWave": [],
 	"activeDistance": 50,
 	"subMissions": [
 		{
@@ -57,6 +55,15 @@
 				"waypointGenType": 1,
 				"waypointMoveType": 5
 			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
+			},
 			"loot": {
 				"box": null,
 				"itemChance": 0.699999988079071,
@@ -72,7 +79,9 @@
 					"ITEM_GENERAL",
 					"ITEM_GENERAL",
 					"ITEM_GENERAL",
-					"ITEM_GENERAL"
+					"ITEM_GENERAL",
+					"GEAR_HEADGEAR",
+					"GEAR_HEADGEAR"
 				]
 			},
 			"campItems": [

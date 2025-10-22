@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 20,
+	"missionCycleTime": 30,
 	"showMarker": true,
 	"showHint": true,
 	"showMessage": true,
@@ -15,6 +15,7 @@
 		3
 	],
 	"missionFiles": [],
+	"secondWave": [],
 	"buildingRadius": 400,
 	"subMissions": [
 		{
@@ -68,6 +69,15 @@
 				],
 				"waypointGenType": 0,
 				"waypointMoveType": 0
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"buildingNames": [
 				"ShopModern_",
@@ -144,6 +154,15 @@
 				"waypointGenType": 0,
 				"waypointMoveType": 0
 			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
+			},
 			"buildingNames": [
 				"ControlTowerMilitary_"
 			],
@@ -214,6 +233,15 @@
 				],
 				"waypointGenType": 0,
 				"waypointMoveType": 0
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"buildingNames": [
 				"Office_E_",
@@ -288,6 +316,15 @@
 				],
 				"waypointGenType": 0,
 				"waypointMoveType": 0
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"buildingNames": [
 				"House_"

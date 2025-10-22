@@ -2,17 +2,16 @@
 	"version": 1,
 	"author": "darc",
 	"comment": "Simple comment, not used in game",
-	"difficultyAiCountCoefMul": 2.0,
-	"difficultyAiSkillCoefMul": 2.0,
-	"difficultyAiPerceptionCoefMul": 2.0,
 	"recreateConfigs": false,
-	"missionStartDelay": 2,
-	"missionFrameCycleTime": 10,
+	"missionStartDelay": 60,
+	"missionFrameCycleTime": 30,
 	"missionActiveDistance": 150,
-	"missionActiveTimeToEnd": 45,
+	"missionActiveTimeToEnd": 180,
+	"missionActiveDistanceMul": 0.8999999761581421,
+	"missionActiveTimeToEndMul": 0.8999999761581421,
 	"missionHintTime": 90,
 	"missionRandomPos": 100,
-	"minDistanceToMission": 200,
+	"minDistanceToMission": 500,
 	"minDistanceToPlayer": 100,
 	"showStaticMissionMarker": true,
 	"showMissionTimeLeft": true,
@@ -20,6 +19,11 @@
 		"USSR"
 	],
 	"missionDifficulty": {
+		"aiCountCoefMul": 1.0,
+		"aiSkillCoefMul": 1.0,
+		"aiPerceptionCoefMul": 1.0,
+		"lootChanceCoefMul": 1.0,
+		"lootCountCoefMul": 1.0,
 		"aiCountCoef": [
 			0.5,
 			0.6000000238418579,
@@ -40,40 +44,63 @@
 			1.0,
 			1.2999999523162842,
 			1.600000023841858
+		],
+		"lootChanceCoef": [
+			0.5,
+			0.6000000238418579,
+			1.0,
+			1.100000023841858,
+			1.2000000476837159
+		],
+		"lootCountCoef": [
+			1.0,
+			1.0,
+			1.0,
+			1.0,
+			1.0
 		]
 	},
 	"missionDynamic": {
-		"count": 3,
-		"countMul": 2.0,
-		"activeTime": 300,
-		"delayBetween": 1,
+		"count": 10,
+		"countMul": 1.5,
+		"activeTime": 1800,
+		"delayBetween": 480,
 		"missionTypeArray": [
-			3,
-			4,
 			1,
-			9,
+			4,
+			3,
+			7,
+			7,
 			8,
-			2,
-			5,
+			8,
+			9,
+			9,
 			6,
-			10
+			6,
+			6,
+			6,
+			2,
+			2,
+			2,
+			2,
+			2,
+			2,
+			2,
+			2
 		]
 	},
 	"missionStatic": {
-		"count": 20,
-		"countMul": 3.0,
-		"activeTime": 3000,
-		"delayBetween": 1,
+		"count": 6,
+		"countMul": 1.0,
+		"activeTime": 36000,
+		"delayBetween": 5,
 		"missionTypeArray": [
-			3,
-			4,
-			1,
-			9,
-			8,
-			2,
 			5,
-			6,
-			10
+			5,
+			5,
+			3,
+			3,
+			7
 		]
 	}
 }

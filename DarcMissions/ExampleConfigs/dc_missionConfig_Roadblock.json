@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 20,
+	"missionCycleTime": 30,
 	"showMarker": true,
 	"showHint": true,
 	"showMessage": true,
@@ -13,6 +13,7 @@
 		3
 	],
 	"missionFiles": [],
+	"secondWave": [],
 	"subMissions": [
 		{
 			"general": {
@@ -67,6 +68,15 @@
 				],
 				"waypointGenType": 5,
 				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"loot": {
 				"box": null,
@@ -191,6 +201,15 @@
 				],
 				"waypointGenType": 2,
 				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"loot": {
 				"box": null,
@@ -424,6 +443,15 @@
 				"waypointGenType": 5,
 				"waypointMoveType": 5
 			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
+			},
 			"loot": {
 				"box": null,
 				"itemChance": 0.6000000238418579,
@@ -635,6 +663,15 @@
 				],
 				"waypointGenType": 5,
 				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			},
 			"loot": {
 				"box": null,

@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 60,
+	"missionCycleTime": 90,
 	"showMarker": false,
 	"showHint": true,
 	"showMessage": true,
@@ -15,6 +15,7 @@
 		3
 	],
 	"missionFiles": [],
+	"secondWave": [],
 	"patrolingTime": 0,
 	"distanceToPlayer": 500,
 	"subMissions": [
@@ -73,6 +74,15 @@
 				],
 				"waypointGenType": 4,
 				"waypointMoveType": 2
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			}
 		},
 		{
@@ -130,6 +140,15 @@
 				],
 				"waypointGenType": 3,
 				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			}
 		},
 		{
@@ -183,6 +202,15 @@
 				],
 				"waypointGenType": 2,
 				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			}
 		},
 		{
@@ -236,6 +264,15 @@
 				],
 				"waypointGenType": 1,
 				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
 			}
 		}
 	]
