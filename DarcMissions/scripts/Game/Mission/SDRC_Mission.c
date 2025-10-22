@@ -175,7 +175,7 @@ class SDRC_MissionConfigAi : Managed
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
 		{
-			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiCountCoef[difficulty] * m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiCountCoefMul;
+			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiCountCoef[difficulty];
 			
 			int low = count[0] * coef;
 			if (low < count[0])
@@ -205,7 +205,7 @@ class SDRC_MissionConfigAi : Managed
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
 		{
-			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiSkillCoef[difficulty] * m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiSkillCoefMul;
+			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiSkillCoef[difficulty];
 			sk = skill * coef;
 		}		
 		
@@ -231,7 +231,7 @@ class SDRC_MissionConfigAi : Managed
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
 		{
-			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiPerceptionCoef[difficulty] * m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiPerceptionCoefMul;
+			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiPerceptionCoef[difficulty];
 			perc = perception * coef;
 		}		
 		return perception;

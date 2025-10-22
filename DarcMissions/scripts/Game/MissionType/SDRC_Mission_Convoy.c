@@ -236,6 +236,9 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		if (m_DC_Convoy.loot)			
 		{
 			m_DC_Convoy.loot.box = m_Vehicle;
+			//Handle loot difficulty
+			m_DC_Convoy.loot.itemChance = SDRC_LootHelper.GetLootChance(m_DC_Convoy.loot.itemChance, m_DC_Convoy.general.difficulty);
+
 			SDRC_LootHelper.SpawnItemsToStorage(m_DC_Convoy.loot.box, m_DC_Convoy.loot.items, m_DC_Convoy.loot.itemChance);
 			SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] Loot added.", LogLevel.DEBUG);								
 		}		

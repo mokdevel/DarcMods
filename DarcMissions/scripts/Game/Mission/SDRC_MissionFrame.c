@@ -64,14 +64,6 @@ class SDRC_MissionFrame
 		//Load non valid area configuration from file		
 		m_DC_NonValidAreaJsonApi.Load();
 		m_DC_NonValidAreaJsonApi.Populate(m_aNonValidAreas);
-
-		//TBD: Difficulty details
-		//SDRC_Log.Add("[SDRC_MissionFrame] Difficulty: " + SCR_Enum.GetEnumName(SDRC_EMissionDifficulty, m_Config.difficulty), LogLevel.NORMAL);
-		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI count multiplier: " + m_Config.missionDifficulty.aiCountCoefMul, LogLevel.NORMAL);
-		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI skill multiplier: " + m_Config.missionDifficulty.aiSkillCoefMul, LogLevel.NORMAL);
-		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI perception multiplier: " + m_Config.missionDifficulty.aiPerceptionCoefMul, LogLevel.NORMAL);
-		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty Loot chance multiplier: " + m_Config.missionDifficulty.lootChanceCoefMul, LogLevel.NORMAL);
-		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty Loot count multiplier: " + m_Config.missionDifficulty.lootCountCoefMul, LogLevel.NORMAL);
 		
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
 		if (gmComp)
