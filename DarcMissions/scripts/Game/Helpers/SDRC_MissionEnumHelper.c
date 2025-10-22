@@ -28,11 +28,12 @@ enum SDRC_EMissionType
 //------------------------------------------------------------------------------------------------
 enum SDRC_EMissionDifficulty
 {
+	RANDOM = -1,
 	EASY = 0, 
 	MODERATE, 
 	NORMAL, 
 	TOUGH, 
-	HARD
+	HARD,
 };
 
 //------------------------------------------------------------------------------------------------
@@ -52,42 +53,52 @@ sealed class SDRC_MissionEnumHelper
 		//Create a default mission configs
 		SDRC_ConvoyJsonApi convoyJsonApi = new SDRC_ConvoyJsonApi(DC_MISSIONCONFIG_FILE_CONVOY);	
 		convoyJsonApi.Load();
+		convoyJsonApi.CreateMissionFiles();
 		delete convoyJsonApi;
 		
 		SDRC_CrashsiteJsonApi crashsiteJsonApi = new SDRC_CrashsiteJsonApi(DC_MISSIONCONFIG_FILE_CRASHSITE);	
 		crashsiteJsonApi.Load();		
+		crashsiteJsonApi.CreateMissionFiles();
 		delete crashsiteJsonApi;
 		
 		SDRC_HunterJsonApi hunterJsonApi = new SDRC_HunterJsonApi(DC_MISSIONCONFIG_FILE_HUNTER);				
 		hunterJsonApi.Load();								
+		hunterJsonApi.CreateMissionFiles();
 		delete hunterJsonApi;
 		
 		SDRC_OccupationJsonApi occupationJsonApi = new SDRC_OccupationJsonApi(DC_MISSIONCONFIG_FILE_OCCUPATION);	
 		occupationJsonApi.Load();		
+		occupationJsonApi.CreateMissionFiles();
 		delete occupationJsonApi;
 		
 		SDRC_PatrolJsonApi patrolJsonApi = new SDRC_PatrolJsonApi(DC_MISSIONCONFIG_FILE_PATROL);	
 		patrolJsonApi.Load();
+		patrolJsonApi.CreateMissionFiles();
 		delete patrolJsonApi;
 		
 		SDRC_SquatterJsonApi squatterJsonApi = new SDRC_SquatterJsonApi(DC_MISSIONCONFIG_FILE_SQUATTER);	
 		squatterJsonApi.Load();
+		squatterJsonApi.CreateMissionFiles();
 		delete squatterJsonApi;		
 		
 		SDRC_RoadblockJsonApi roadblockJsonApi = new SDRC_RoadblockJsonApi(DC_MISSIONCONFIG_FILE_ROADBLOCK);	
 		roadblockJsonApi.Load();
+		roadblockJsonApi.CreateMissionFiles();
 		delete roadblockJsonApi;		
 		
 		SDRC_HvtVipJsonApi hvtVipJsonApi = new SDRC_HvtVipJsonApi(DC_MISSIONCONFIG_FILE_HVTVIP);	
 		hvtVipJsonApi.Load();
+		hvtVipJsonApi.CreateMissionFiles();
 		delete hvtVipJsonApi;				
 		
 		SDRC_HvtItemJsonApi hvtItemJsonApi = new SDRC_HvtItemJsonApi(DC_MISSIONCONFIG_FILE_HVTITEM);	
 		hvtItemJsonApi.Load();
+		hvtItemJsonApi.CreateMissionFiles();
 		delete hvtItemJsonApi;				
 		
 		SDRC_StashJsonApi stashJsonApi = new SDRC_StashJsonApi(DC_MISSIONCONFIG_FILE_STASH);	
 		stashJsonApi.Load();
+		stashJsonApi.CreateMissionFiles();
 		delete stashJsonApi;						
 	}		
 	
