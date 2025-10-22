@@ -49,8 +49,8 @@ The mission frame has the main definitions on mission spawn times, counts, etc. 
 * [Mission Frame Config](./docs/MISSIONCONFIG.md)
 
 Missions are configurable via .json files. Each mission have their own configuration file, but some information is shared. There are:
-* [Common parameters](./docs/P_COMMON.md) that are valid for all missions. 
-* [Camps](./docs/P_CAMP.md) common structure used in multiple missions.
+* [General parameters](./docs/P_COMMON.md) that are valid for all missions. 
+* [Camps](./docs/P_CAMP.md) is a common structure used in multiple missions.
 
 Mission specific parameters for each mission type: 
 * (1) [Hunter](./docs/MISSION_HUNTER.md)
