@@ -77,6 +77,10 @@ SDRC_EWaypointGenerationType waypointGenType : See below
 SDRC_EWaypointMoveType waypointMoveType : See below
 ```
 
+## SDRC_MissionConfigSecondWave 
+
+... TBD ...
+
 ## Waypoint parameters
 The mission AI can be given general rules on how to create waypoints for their movement. You need to define the waypoint generation rule and the movement rule and the rest is created automatically.
 

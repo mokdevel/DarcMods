@@ -35,7 +35,8 @@ Available win conditions:
 ```
 
 ## Mission difficulty
-<TBD>
+
+... TBD ...
 
 ## MissionFrame cycle
 ```
