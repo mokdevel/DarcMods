@@ -45,12 +45,14 @@ The main configuration file for mission frame.
 int version : See General parameters
 string author : See General parameters
 string comment : See General parameters
-bool recreateConfigs : If set to true, all configs are written to disk. Should be run only first time.
+bool recreateConfigs : If set to true, all configs are written to disk. Should be run only first time.	float difficultyAiCountCoefMul;
 int missionStartDelay : (seconds) Time to wait before spawning the first mission.
 int missionFrameCycleTime : (seconds) The cycle time to manage mission spawning, deletion etc...
 int missionActiveDistance : The distance to a player to keep the mission active.
 int missionActiveTimeToEnd : (seconds) Time to keep the mission active once all AI is dead. Used for both dynamic and static missions. 
   NOTE: Patrol and Hunter has a hardcoded 20 seconds defined.
+float missionActiveDistanceMul : <TBD: more documentation>
+float missionActiveTimeToEndMul : <TBD: more documentation>
 int missionHintTime : (seconds) Time to show mission hints to players. 0 disables ALL hints.
 int missionRandomPos : The radius to randomize the mission position. This avoids mission appearing always in same place.
 int minDistanceToMission : Distance to another mission. Two missions shall not be too close to each other.
@@ -60,6 +62,16 @@ array<string> enemyFactions : The array of factions to consider as enemies. "USS
   Tested values: US, USSR, FIA, RHS_USAF, RHS_AFRF, MEI, BALLIEN_BC_FACTION, BACON_622120A5448725E3_FACTION
   Unsupported values: RHS_ION, MEC
   You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission. Example: "enemyFactions": ["FIA", "USSR"]
+float difficultyAiSkillCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
+float difficultyAiPerceptionCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
+float difficultyLootChanceCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
+float difficultyLootCountCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
+SDRC_MissionDifficulty missionDifficulty : Difficulty setting that affects all missions. <TBD: more documentation>
+  EASY = 0
+  MODERATE = 1 
+  NORMAL = 2
+  TOUGH = 3
+  HARD = 4
 SDRC_MissionTypeConfig missionDynamic : Dynamic missions configurations.
 SDRC_MissionTypeConfig missionStatic : Static missions configurations.
 ```
