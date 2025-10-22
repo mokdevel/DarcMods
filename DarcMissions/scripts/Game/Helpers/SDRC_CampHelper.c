@@ -10,6 +10,7 @@ class SDRC_Camp : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();		
+	ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
 	
 	//Optional settings
 	ref SDRC_Loot loot = null;

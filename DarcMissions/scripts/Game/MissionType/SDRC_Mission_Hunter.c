@@ -10,8 +10,6 @@ See: https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller
 Note: The original HunterKiller mod is discontinued.
 */
 
-//TBD: It should be possible to define multiple different hunter types.
-
 const string DC_MISSIONCONFIG_FILE_HUNTER = "dc_missionConfig_Hunter.json";
 
 //------------------------------------------------------------------------------------------------
@@ -323,6 +321,7 @@ class SDRC_Hunter : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
+	ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();
 }
 
 //------------------------------------------------------------------------------------------------
