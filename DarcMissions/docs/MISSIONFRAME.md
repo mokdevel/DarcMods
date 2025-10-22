@@ -62,18 +62,28 @@ array<string> enemyFactions : The array of factions to consider as enemies. "USS
   Tested values: US, USSR, FIA, RHS_USAF, RHS_AFRF, MEI, BALLIEN_BC_FACTION, BACON_622120A5448725E3_FACTION
   Unsupported values: RHS_ION, MEC
   You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission. Example: "enemyFactions": ["FIA", "USSR"]
-float difficultyAiSkillCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
-float difficultyAiPerceptionCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
-float difficultyLootChanceCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
-float difficultyLootCountCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
-SDRC_MissionDifficulty missionDifficulty : Difficulty setting that affects all missions. <TBD: more documentation>
+SDRC_MissionDifficulty missionDifficulty : Difficulty settings.
+SDRC_MissionTypeConfig missionDynamic : Dynamic missions configurations.
+SDRC_MissionTypeConfig missionStatic : Static missions configurations.
+```
+
+### SDRC_MissionDifficulty
+Coef values in the array refer to SDRC_EMissionDifficulty values:
   EASY = 0
   MODERATE = 1 
   NORMAL = 2
   TOUGH = 3
   HARD = 4
-SDRC_MissionTypeConfig missionDynamic : Dynamic missions configurations.
-SDRC_MissionTypeConfig missionStatic : Static missions configurations.
+```
+float difficultyAiSkillCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
+float difficultyAiPerceptionCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
+float difficultyLootChanceCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
+float difficultyLootCountCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
+array<float> aiCountCoef =      {0.5, 0.6, 1.0, 2.0, 3.0};
+array<float> aiSkillCoef =      {0.2, 0.6, 1.0, 1.3, 1.6};
+array<float> aiPerceptionCoef = {0.2, 0.6, 1.0, 1.3, 1.6};
+array<float> lootChanceCoef = 	{0.5, 0.6, 1.0, 1.2, 1.4};	
+array<float> lootCountCoef = 		{1.0, 1.0, 1.0, 1.0, 1.0};	
 ```
 
 ### SDRC_MissionTypeConfig
