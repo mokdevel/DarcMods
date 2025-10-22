@@ -161,23 +161,18 @@ sealed class SDRC_BuildingHelper
 		buildingIDfloorCache.Clear();
 		
 		//Finding the building size
-		vector sums = SDRC_SpawnHelper.FindEntitySize(building);
-
-		//Used for debugging		
-		vector size = sums;
-		size[1] = 0;
-	 	float floorMarkerSize = SDRC_Misc.FindMaxValue(sums) / 2;
+		vector sums = SDRC_SpawnHelper.FindEntitySize(building);	
+		vector pos = building.GetOrigin();
 	
-		vector pos;
-		pos = building.GetOrigin();
-	
-		//Trace from the ceiling down to terrain height.
+		//Trace from the ceiling terrain height up to roof.
 		//We do multiple traces in slightly different positions. This way we can find traces that hit for example furniture.
 		//All trace values are collected to floorsTmp
-		vector posStartOrig = building.GetOrigin();		
-		vector posStart = posStartOrig;
-				
+		vector posStartOrig = building.GetOrigin();
+		posStartOrig[1] = SCR_TerrainHelper.GetTerrainY(posStartOrig);
+		//Trace from terrain to building size
+		vector posStart = posStartOrig;				
 		posStart[1] = posStartOrig[1] + sums[1];
+		
 		DoFloorTrace(floorsTmp, building, posStart);
 		
 		for (int j = 0; j < 1; j++)
@@ -220,32 +215,13 @@ sealed class SDRC_BuildingHelper
 		}
 		floorHeight.Sort();
 		#ifndef SDRC_RELEASE
-			floorHeight.Debug();
+			//floorHeight.Debug();
 		#endif
 		
 		//Take the highest point found and subtract the the ground level. This an approximate of building height above ground.
 		float highestHeight = floorHeight[floorHeight.Count() - 1];
 		float groundHeight = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
 		float buildingHeight = highestHeight - groundHeight;
-		
-		//Pick only those values were we have a given amount of duplicates.
-		if (floorHeight.Count() > 2)
-		{
-			array<float> tmpfloorHeight = {};
-			for (int i = 0; i < floorHeight.Count() - 2; i++)
-			{
-				if ( (floorHeight[i + 0] == floorHeight[i + 1]) && (floorHeight[i + 1] == floorHeight[i + 2]) )
-				{
-					tmpfloorHeight.Insert(floorHeight[i]);
-				}
-			}
-			
-			floorHeight.Clear();
-			floorHeight.Copy(tmpfloorHeight);
-			#ifndef SDRC_RELEASE
-				floorHeight.Debug();
-			#endif
-		}
 				
 		//Those that are single values, are most likely not proper floor heights. We hit a furniture or some other part of the building.
 		//Clean the list and leave only those with multiples.
@@ -268,6 +244,10 @@ sealed class SDRC_BuildingHelper
 			}		
 		}
 
+		#ifndef SDRC_RELEASE
+//			floors.Debug();
+		#endif
+		
 		//TBD: Houses with issues:
 		//- House_Village_E_1L03t.et		
 		
@@ -278,79 +258,34 @@ sealed class SDRC_BuildingHelper
 			return;
 		}
 
-		//Ground check : 
-		//- If the two last floors are too close to each other, the lowest floor is considered ground.
-		//- If the floor is too close to the ground
-		if (floors.Count() > 2)		//Check is done only if there are multiple floors
-		{
-			float diffG = floors[0][1] - groundHeight;			//Ground difference
-			float diffF = floors[1][1] - floors[0][1];		//Floor difference
-			
-			if ( ( diffF < 1.8 ) || ( diffG < 0.8 ) )
-			{
-				floors.RemoveOrdered(0);				//Remove ground as a floor
-			}
-		}		
-
-		//Start from lowest floor and start to come upwards. See that the next floor is not too far away as it's most likely roof or attic.
+		//Remove the highest floor as rood/attic
 		if (floors.Count() > 1)
 		{
-			array<vector> tmpFloors = {};
-			tmpFloors.Insert(floors[0]);
-			
-			float distanceCheckVal = buildingHeight / (floors.Count() + 1);
-			
-			for (int i = 1; i < floors.Count() - 1; i++)
+			SDRC_DebugHelper.AddDebugPos(floors[floors.Count() - 1], ARGB(20, 128, 128, 128), 12, "", 0.3, false);		//Gray for removed floor
+			floors.RemoveOrdered(floors.Count() - 1);			
+		}
+
+		//If only two floors left and the upper floor is in the middle of the house, remove it.
+		if (floors.Count() == 2)
+		{
+			float midBuildingHeight = buildingHeight / 2;
+			if ( (floors[1][1] < midBuildingHeight + 0.5) && (floors[1][1] > midBuildingHeight - 0.5) )
 			{
-				float distance = floors[i + 1][1] - floors[i][1];
-				SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Distance between floors: " + distance + ". Checking with: " + distanceCheckVal + ". Building: " + building.GetPrefabData().GetPrefabName(), LogLevel.WARNING);				
-				
-//				if ( (distance < 2.4) && (distance > 0.8) )
-				if ( (distance < distanceCheckVal) && (distance > 1.2) )
-				{
-					tmpFloors.Insert(floors[i]);
-				}
+				SDRC_DebugHelper.AddDebugPos(floors[floors.Count() - 1], ARGB(20, 128, 128, 128), 12, "", 0.3, false);		//Gray for removed floor
+				floors.RemoveOrdered(1);
 			}
-			floors.Clear();
-			floors.Copy(tmpFloors);
 		}
 		
-				
-/*		
-		//Roof check : If we found multiple floors, the highest one is with high probability the roof. Remove it.
+		//If the two bottom floors are close to each other, we consider the lower one to be on the ground.
 		if (floors.Count() > 1)
 		{
-			float roofHeight = floorHeight[floors.Count() - 1];
-			vector highPoint = floors[0];
-			highPoint[1] = highestHeight;
-			
-			SDRC_DebugHelper.AddDebugPos(highPoint, ARGB(20, 255, 0, 0), floorMarkerSize, "", 0.3, false);								//Highest point Red
-			SDRC_DebugHelper.AddDebugPos(floors[floors.Count() - 1], ARGB(20, 255, 0, 255), floorMarkerSize * 0.8, "", 0.3, false);		//Roof Purple
-			
-			//Remove roof as a floor
-			floors.RemoveOrdered(floors.Count() - 1);
-
-			if (floors.Count() > 1)
+			if ( (floors[1][1] - floors[0][1]) < 1.6)
 			{
-				//Check if the next floor is close to roof. If yes, it's most likely attic
-				float atticHeight = floorHeight[floors.Count() - 1];
-				//float atticDistance = roofHeight - atticHeight;
-				float atticDistance = highestHeight - atticHeight;
-
-				SDRC_DebugHelper.AddDebugPos(floors[floors.Count() - 1], ARGB(20, 0, 255, 0), floorMarkerSize * 0.8, "", 0.3, false);		//Attic Green
-								
-				SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Attic distance from roof: " + atticDistance + " in building: " + building.GetPrefabData().GetPrefabName(), LogLevel.WARNING);
-				
-				//We expect the floor distance to be ~2m. From roof to first floor is ~4m. Anything between would be attic. We try with 3m.
-				if ( atticDistance < 3.0)
-				{
-					//Remove attic as a floor
-					floors.RemoveOrdered(floors.Count() - 1);	
-					SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildingFloors] Removed attic in building: " + building.GetPrefabData().GetPrefabName(), LogLevel.WARNING);
-				}
+				SDRC_DebugHelper.AddDebugPos(floors[0], ARGB(20, 128, 128, 128), 12, "", 0.3, false);		//Gray for removed floor
+				floors.RemoveOrdered(0);
 			}
 		}
-*/		
+		
 		//Cache values if needed again
 		buildingIDfloorCache.Copy(floors);
 		
@@ -360,7 +295,6 @@ sealed class SDRC_BuildingHelper
 			foreach (vector fpos: floors)
 			{
 				SDRC_DebugHelper.AddDebugPos(fpos, ARGB(20, 255, 255, 0), 12, "", 0.3, false);		//Yellow
-//				SDRC_DebugHelper.AddDebugPos(fpos, ARGB(20, 255, 255, 0), floorMarkerSize, "", 0.3, false);		//Yellow
 			}				
 		#endif 
 				
@@ -368,53 +302,78 @@ sealed class SDRC_BuildingHelper
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	static void DoFloorTrace(out array<vector>floors, IEntity entity, vector posStart)
+	static void DoFloorTrace(out array<vector>floors, IEntity entity, vector posEnd)
 	{
-		float terrainY = SCR_TerrainHelper.GetTerrainY(posStart);
+		float terrainY = SCR_TerrainHelper.GetTerrainY(posEnd);
 		
-		vector posEnd;
-		posEnd = posStart;
-		posEnd[1] = terrainY + 0.1;					//Stop 10cm above ground
+		vector posStart;
+		posStart = posEnd;
+		posStart[1] = terrainY - 0.5;					//Start under ground
 	
-		TraceParam trace = new TraceParam();
+		TraceParam traceUp = new TraceParam();
 		{
-			trace.Start = posStart;
-			trace.End = posEnd;
-
-			#ifndef SDRC_RELEASE
-				//Green debug sphere to show where trace starts
-				SDRC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 0.1);
-			#endif
-				
-			//trace.Exclude = child;
-			trace.TargetLayers = EPhysicsLayerDefs.Navmesh;
-			trace.Flags = TraceFlags.ENTS | TraceFlags.WORLD;
-		}		
-
-		vector posCheck = posStart;
-		int i = 0;		
-		while ( (posCheck[1] > terrainY) && (i < 10) )	//Try a maximun of ten times. Just to avoid forever loop
-		{
-			vector floorpos;
-			SCR_TerrainHelper.SnapToGeometry(floorpos, posCheck, {}, entity.GetWorld(), traceParam: trace);
-			
-			#ifndef SDRC_RELEASE
-//				vector move = "0.15 0 0.0";
-//				SDRC_DebugHelper.AddDebugSphere(posCheck, ARGB(50, 255, 0, 255), 0.05);				
-//				SDRC_DebugHelper.AddDebugSphere(floorpos + move, ARGB(50, 255, 255, 255), 0.05);				
-			#endif 
-			
-			//Add to floor list only if above ground
-			if ( (floorpos[1] - terrainY) > 0.3)
-			{
-				floors.Insert(floorpos);
-			}
-			posCheck[1] = floorpos[1] - 1;		//Move 1m down from found floor
-			trace.Start = posCheck;
-						
-			i++;
+			traceUp.Start = posStart;
+			traceUp.End = posEnd;
+			traceUp.TargetLayers = EPhysicsLayerDefs.Navmesh;
+			traceUp.Flags = TraceFlags.ENTS | TraceFlags.WORLD;
 		}
 		
+		TraceParam traceDown = new TraceParam();
+		{
+			traceDown.Start = "0 0 0";
+			traceDown.End = "0 0 0";
+			traceDown.TargetLayers = EPhysicsLayerDefs.Navmesh;
+			traceDown.Flags = TraceFlags.ENTS | TraceFlags.WORLD;
+		}		
+
+		//Print("SDRC SnapToGeometry Start ");
+		
+		vector posCheck = posStart;
+		int i = 0;		
+		while (i < 10)	//Try a maximun of ten times. Just to avoid forever loop
+		{
+			vector floorpos = "0 0 0";
+
+			SCR_TerrainHelper.SnapToGeometry(floorpos, posCheck, {}, entity.GetWorld(), traceParam: traceUp);
+
+			//Print("SDRC SnapToGeometry : " + (posEnd[1] - posCheck[1]) + "/" + posEnd[1] + "/" + posCheck[1] + "/" + floorpos[1]);
+			
+			//If we reached the highest level, stop 5 meters before
+			if (posEnd[1] == floorpos[1])
+			{
+				break;
+			}
+			
+			//Make the trace start above the floor and go through it.
+			vector floorposAbove = floorpos;
+			floorposAbove[1] = floorpos[1] + 1.0;
+			floorpos[1] = floorpos[1] - 0.5;
+						
+			#ifndef SDRC_RELEASE
+				vector move = "0.05 0 0";
+				SDRC_DebugHelper.AddDebugSphere(floorposAbove, ARGB(50, 255, 255, 255), 0.15);				//white
+				SDRC_DebugHelper.AddDebugSphere(floorpos + move, ARGB(50, 128, 255, 128), 0.15);			//light green
+			#endif 
+			
+			traceDown.Start = floorposAbove;
+			traceDown.End = floorpos;
+			SCR_TerrainHelper.SnapToGeometry(floorpos, floorposAbove, {}, entity.GetWorld(), traceParam: traceDown);			
+
+			floorpos[1] = floorpos[1] + 0.1;	//Put the floor 10cm above the found position - just in case
+			floors.Insert(floorpos);
+			posCheck[1] = floorpos[1] + 1;		//Move 1m up from found floor
+			traceUp.Start = posCheck;
+			
+			i++;
+		}
+
+		#ifndef SDRC_RELEASE
+			//Green debug sphere to show where trace starts and ends
+			vector add10 = "0 0 0";	//Move the sphere up so that we don't trace it.
+			SDRC_DebugHelper.AddDebugSphere(posStart, Color.GREEN, 0.2);
+			SDRC_DebugHelper.AddDebugSphere(posEnd + add10, Color.GREEN, 0.2);
+		#endif
+				
 		#ifndef SDRC_RELEASE
 			foreach (vector fpos: floors)
 			{
