@@ -31,10 +31,11 @@ enum SDRC_EMissionWinCondition
 
 enum SDRC_EMissionSuccess
 {
-	UNKNOWN,	//Success is uncertain. Normal state while mission is running.
-	WIN,		//The mission was a success -> win
-	LOSE,		//The mission was a success -> lose
-	DELETED		//Mission was deleted prematurely. For example by GM.
+	UNKNOWN = 0,	//Success is uncertain. Normal state while mission is running.
+	WIN,			//The mission was a success -> win
+	LOSE,			//The mission was a success -> lose
+	WIN_OR_LOSE,	//The missions state either win / lose - used for second wave
+	DELETED,		//Mission was deleted prematurely. For example by GM.
 }
 
 enum SDRC_EMissionError
@@ -67,9 +68,10 @@ class SDRC_MissionConfig : Managed
 	bool showMarker = true;
 	bool showHint = true;
 	bool showMessage = true;
-	bool disableArsenal;						//Disable arsenal for vehicles so that no other items are found
-	ref array<ref int> missionList = {};		//The list of mission suids.
-	ref array<ref string> missionFiles = {};	//The list of mission files to load.
+	bool disableArsenal;										//Disable arsenal for vehicles so that no other items are found
+	ref array<ref int> missionList = {};						//The list of mission suids.
+	ref array<ref string> missionFiles = {};					//The list of mission files to load.
+	ref array<ref SDRC_MissionConfigSecondWave> secondWave = {};
 }
 
 //------------------------------------------------------------------------------------------------
@@ -173,7 +175,7 @@ class SDRC_MissionConfigAi : Managed
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
 		{
-			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiCountCoef[difficulty] * m_BaseGameMode.missionFrame.m_Config.difficultyAiCountCoefMul;
+			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiCountCoef[difficulty] * m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiCountCoefMul;
 			
 			int low = count[0] * coef;
 			if (low < count[0])
@@ -203,7 +205,7 @@ class SDRC_MissionConfigAi : Managed
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
 		{
-			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiSkillCoef[difficulty] * m_BaseGameMode.missionFrame.m_Config.difficultyAiSkillCoefMul;
+			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiSkillCoef[difficulty] * m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiSkillCoefMul;
 			sk = skill * coef;
 		}		
 		
@@ -229,11 +231,23 @@ class SDRC_MissionConfigAi : Managed
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
 		{
-			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiPerceptionCoef[difficulty] * m_BaseGameMode.missionFrame.m_Config.difficultyAiPerceptionCoefMul;
+			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiPerceptionCoef[difficulty] * m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiPerceptionCoefMul;
 			perc = perception * coef;
 		}		
 		return perception;
 	}			
+}
+
+//------------------------------------------------------------------------------------------------
+class SDRC_MissionConfigSecondWave : Managed
+{
+	ref array<int> subIdx = {};									//subIdx from which to choose
+	SDRC_EMissionSuccess activation = SDRC_EMissionSuccess.WIN;	//Which success activates the second wave
+	ref array<int> delay = {};									//(seconds) Delay min-max before spawning second wave
+	ref array<int> distance = {};								//min-max distance for the enemy spawn
+	string info;												//Details for the hint shown for players
+	SDRC_EMissionDifficulty difficulty;							//Difficulty for specific mission
+	int xp;														//Experience given	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -305,6 +319,7 @@ class SDRC_Mission
 		m_iStartTime = (System.GetTickCount() / 1000); 	//The time in seconds when the mission was started.
 		SetActiveTime(0);								//Sets m_EndTick. NOTE: This is properly set in MissionFrame to use the config value. This is just some default.
 		m_iActiveDistance = 0;							//Set a default zero
+		m_iActiveTimeToEnd = 0;							//Set a default zero
 		m_bMissionIsEnding = false;
 		//Win condition related	
 		m_iAICountOriginal = -1;						//Defaults set, updated once mission goes ACTIVE
@@ -931,6 +946,18 @@ class SDRC_Mission
 			{
 				SDRC_Log.Add("[SDRC_Mission:IsActive] " + GetId() + " : Mission WIN: " + GetTitle(), LogLevel.DEBUG);
 				DoWin();
+			}
+		}
+		
+		//If we're in some other success mode the UNKNOWN, start to modify the active time and distance to end.		
+		//This way, the time gets shorter and distance smaller.
+		if (GetSuccess() != SDRC_EMissionSuccess.UNKNOWN)
+		{
+			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+			if (baseGameMode)
+			{
+				m_iActiveTime = m_iActiveTime * baseGameMode.missionFrame.m_Config.missionActiveTimeToEndMul;
+				m_iActiveDistance = m_iActiveDistance * baseGameMode.missionFrame.m_Config.missionActiveDistanceMul;
 			}
 		}
 		
