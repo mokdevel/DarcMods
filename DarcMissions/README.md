@@ -103,21 +103,27 @@ Dependency specific files
 ..empty..
 
 ### DarcMissions
+Major changes in the json files. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
+* Second wave: Added a stub for second wave functionality. Currently does nothing but eventually you can have a second wave of attackers after win (and/or lose).
+
 Fixes:
-* Crashsite could crash if the helicopter is destroyed before crashing.
-* Convoy completion issues
+* Crashsite could crash if the helicopter is destroyed before crash landing.
+* Convoy completion issues.
 * If no groups were spawned for Patrol, mission crashed.
-* enemyFactions setting was not working properly.
-* Trying to recognize attic in buildings to avoid spawning AI's and loot in non reachable places. If you still see this, please inform which building.
+* ``enemyFactions`` setting was not working properly.
+* Improved floor finding in buildings. Trying to recognize attic in buildings to avoid spawning AI's and loot in non reachable places. 
 
 Changes:
 * dc_coreConfig.json locationAkas - Functionality enabled. You can name location names to work as specific locationTypes. For example anything called "military" becomes type MDT_BASE (79) in addition to the original definition.
 * dc_lootList.json
-  * Added ``GEAR_VEST`` - vests.
+  * Added ``GEAR_VEST`` - vests
+  * Added ``GEAR_HANDWEAR`` - gloves
+  * Added ``GEAR_UNIFORM`` - military clothing
+  * Added ``CLOTHING_UNIFORM`` - civilian clothers
 * dc_missionConfig.json
-  * Added ``missionActiveDistanceMul``
-  * Added ``missionActiveTimeToEndMul``
-* Patrol and Hunter has a hardcoded 20 seconds as their missionActiveTimeToEnd. Once the AI is dead, quickly remove the mission. 
+  * Added ``missionActiveDistanceMul`` - multiplier to modify distance on every cycle when in win/lose state. With this you can make the active distance to shrink.
+  * Added ``missionActiveTimeToEndMul`` - same as above but for time.
+* Patrol and Hunter has a hardcoded 20 seconds as their ``missionActiveTimeToEnd``. Once the AI is dead, quickly remove the mission. 
 
 ### DarcSpawner
 Uses faster cached location information for spawn.

@@ -60,6 +60,12 @@ UTIL_ATTACHMENT : Various attachments excluding optics
 UTIL_OPTIC : Optic attachments
 UTIL_MAGAZINE : Adds a random magazine
 UTIL_AMMO : Adds a random rocket, shell, flare, ..
+GEAR_HEADGEAR : Head Gear including helmets, gas masks
+GEAR_VEST : Vests
+GEAR_HANDWEAR : Gloves etc
+GEAR_UNIFORM : Jackets, pants
+CLOTHING_HEADGEAR : Head Gear including hats
+CLOTHING_UNIFORM : Jackets, pants, shirts, 
 ```
 
 # Enemy lists
