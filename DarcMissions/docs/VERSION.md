@@ -15,7 +15,7 @@ Fixes:
 * Convoy completion issues.
 * If no groups were spawned for Patrol, mission crashed.
 * ``enemyFactions`` setting was not working properly.
-* Improved floor finding in buildings. Trying to recognize attic in buildings to avoid spawning AI's and loot in non reachable places. 
+* Improved floor finding in buildings. Trying to recognize attic in buildings to avoid spawning AI's and loot in non reachable places. Still not perfect, but better.
 
 Changes:
 * dc_coreConfig.json locationAkas - Functionality enabled. You can name location names to work as specific locationTypes. For example anything called "military" becomes type MDT_BASE (79) in addition to the original definition.

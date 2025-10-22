@@ -70,6 +70,8 @@ class SDRC_MissionFrame
 		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI count multiplier: " + m_Config.missionDifficulty.aiCountCoefMul, LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI skill multiplier: " + m_Config.missionDifficulty.aiSkillCoefMul, LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty AI perception multiplier: " + m_Config.missionDifficulty.aiPerceptionCoefMul, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty Loot chance multiplier: " + m_Config.missionDifficulty.lootChanceCoefMul, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_MissionFrame] Difficulty Loot count multiplier: " + m_Config.missionDifficulty.lootCountCoefMul, LogLevel.NORMAL);
 		
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
 		if (gmComp)

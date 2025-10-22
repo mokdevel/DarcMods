@@ -69,8 +69,8 @@ class SDRC_MissionFrameConfig : Managed
 	int missionFrameCycleTime;				//The cycle time to manage mission spawning, deletion etc... (seconds)
 	int missionActiveDistance;				//The distance to a player to keep the mission active.
 	int missionActiveTimeToEnd;				//Time to keep the mission active once all AI is dead. Used for both dynamic and static missions.
-	float missionActiveDistanceMul;			//TBD
-	float missionActiveTimeToEndMul;		//TBD
+	float missionActiveDistanceMul;			//Multiplier to modify distance on every cycle when in win/lose state.
+	float missionActiveTimeToEndMul;		//multiplier to modify time on every cycle when in win/lose state.
 	int missionHintTime;					//Seconds to show mission hints to players. 0 disables hints.
 	//Randomization
 	int missionRandomPos;					//The distance to randomize the missions position. This avoids mission appearing always in same place.
@@ -177,7 +177,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.missionActiveDistance = SDRC_MISSION_ACTIVE_DISTANCE;
 		conf.missionActiveTimeToEnd = SDRC_MISSION_ACTIVE_TIME_TO_END;
 		conf.missionActiveDistanceMul = SDRC_MISSION_ACTIVE_MUL_TO_END;
-		conf.missionActiveTimeToEnd = SDRC_MISSION_ACTIVE_MUL_TO_END;
+		conf.missionActiveTimeToEndMul = SDRC_MISSION_ACTIVE_MUL_TO_END;
 		
 		conf.missionHintTime = SDRC_MISSION_HINT_TIME;
 		conf.missionRandomPos = SDRC_MISSION_RANDOM_POS;

@@ -391,14 +391,10 @@ class SDRC_MissionHelper
 				#endif
 			
 				pos = FindMissionPos();
-/*				if (SDRC_MissionPosHelper.IsValidMissionPos(pos) == SDRC_EMissionError.NONE)
-				{
-					SDRC_MapMarkerHelper.CreateMapMarker(pos, SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, "DUMMY_");	//TBD: Create some other debug marker
-				}*/
 			
 				if (pos != "0 0 0")
 				{
-					SDRC_MapMarkerHelper.CreateMapMarker(pos, SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, "DUMMY_");	//TBD: Create some other debug marker
+					SDRC_MapMarkerHelper.CreateMapMarker(pos, SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, "DUMMY_");
 				}
 			}		
 		#endif

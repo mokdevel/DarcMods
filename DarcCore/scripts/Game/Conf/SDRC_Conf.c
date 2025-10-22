@@ -5,8 +5,8 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-//#define SDRC_RELEASE
-#define EXPERIMENTAL
+#define SDRC_RELEASE
+//#define EXPERIMENTAL
 
 sealed class SDRC_Conf
 {
