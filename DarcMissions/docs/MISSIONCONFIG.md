@@ -32,12 +32,8 @@ SDRC_MissionTypeConfig missionStatic : Static missions configurations.
 ```
 
 ### SDRC_MissionDifficulty
-Coef values in the array refer to SDRC_EMissionDifficulty values: {``EASY``, ``MODERATE``, ``NORMAL``, ``TOUGH``, ``HARD``}
+Difficulty setting that affects mission AI behaviour and loot reward. Coef values in the array refer to SDRC_EMissionDifficulty values: {``EASY``, ``MODERATE``, ``NORMAL``, ``TOUGH``, ``HARD``}
 ```
-float difficultyAiSkillCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
-float difficultyAiPerceptionCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
-float difficultyLootChanceCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
-float difficultyLootCountCoefMul : Difficulty setting that affects all missions. <TBD: more documentation>
 array<float> aiCountCoef =      {0.5, 0.6, 1.0, 2.0, 3.0};
 array<float> aiSkillCoef =      {0.2, 0.6, 1.0, 1.3, 1.6};
 array<float> aiPerceptionCoef = {0.2, 0.6, 1.0, 1.3, 1.6};
