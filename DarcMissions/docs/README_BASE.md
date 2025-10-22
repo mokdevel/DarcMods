@@ -23,6 +23,7 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - (7) [Roadblock](./docs/MISSION_ROADBLOCK.md) : AI have setup a road block on the road.
 - (8) [HVT VIP](./docs/MISSION_HVTVIP.md) : High Value Target - VIP : An AI is defined as a High Value Target VIP. Go take him down.
 - (9) [HVT Item](./docs/MISSION_HVTITEM.md) : High Value Target - Item : A structure is to be destroyed. 
+- (10) [Stash](./docs/MISSION_STASH.md) : A stash is spawned with loot. May have guards protecting it.
 
 ## Thanks
 - The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
@@ -45,10 +46,11 @@ Core has common configurations for mods. See:
 
 The mission frame has the main definitions on mission spawn times, counts, etc. See:
 * [Mission Frame](./docs/MISSIONFRAME.md)
+* [Mission Frame Config](./docs/MISSIONCONFIG.md)
 
 Missions are configurable via .json files. Each mission have their own configuration file, but some information is shared. There are:
 * [Common parameters](./docs/P_COMMON.md) that are valid for all missions. 
-* [General parameters](./docs/P_COMMON.md#general-parameters) that are used in multiple mods.
+* [Camps](./docs/P_CAMP.md) common structure used in multiple missions.
 
 Mission specific parameters for each mission type: 
 * (1) [Hunter](./docs/MISSION_HUNTER.md)
@@ -60,6 +62,7 @@ Mission specific parameters for each mission type:
 * (7) [Roadblock](./docs/MISSION_ROADBLOCK.md)
 * (8) [HVT VIP](./docs/MISSION_HVTVIP.md)
 * (9) [HVT Item](./docs/MISSION_HVTITEM.md)
+* (10) [Stash](./docs/MISSION_STASH.md
 
 Other parameter details available:
 * [Lists](./docs/P_LISTS.md) for automatic loot and enemy lists
@@ -91,6 +94,7 @@ Mission specific files
 * [dc_missionConfig_Squatters.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Squatter.json)
 * [dc_missionConfig_HvtItem.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_HvtItem.json)
 * [dc_missionConfig_HvtVip.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_HvtVip.json)
+* [dc_missionConfig_Stash.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Stash.json)
 
 Dependency specific files
 * [dc_coreConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_coreConfig.json) : Configuration file for core.

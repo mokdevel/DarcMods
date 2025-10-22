@@ -23,6 +23,7 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - (7) [Roadblock](./docs/MISSION_ROADBLOCK.md) : AI have setup a road block on the road.
 - (8) [HVT VIP](./docs/MISSION_HVTVIP.md) : High Value Target - VIP : An AI is defined as a High Value Target VIP. Go take him down.
 - (9) [HVT Item](./docs/MISSION_HVTITEM.md) : High Value Target - Item : A structure is to be destroyed. 
+- (10) [Stash](./docs/MISSION_STASH.md) : A stash is spawned with loot. May have guards protecting it.
 
 ## Thanks
 - The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
@@ -45,10 +46,11 @@ Core has common configurations for mods. See:
 
 The mission frame has the main definitions on mission spawn times, counts, etc. See:
 * [Mission Frame](./docs/MISSIONFRAME.md)
+* [Mission Frame Config](./docs/MISSIONCONFIG.md)
 
 Missions are configurable via .json files. Each mission have their own configuration file, but some information is shared. There are:
 * [Common parameters](./docs/P_COMMON.md) that are valid for all missions. 
-* [General parameters](./docs/P_COMMON.md#general-parameters) that are used in multiple mods.
+* [Camps](./docs/P_CAMP.md) common structure used in multiple missions.
 
 Mission specific parameters for each mission type: 
 * (1) [Hunter](./docs/MISSION_HUNTER.md)
@@ -60,6 +62,7 @@ Mission specific parameters for each mission type:
 * (7) [Roadblock](./docs/MISSION_ROADBLOCK.md)
 * (8) [HVT VIP](./docs/MISSION_HVTVIP.md)
 * (9) [HVT Item](./docs/MISSION_HVTITEM.md)
+* (10) [Stash](./docs/MISSION_STASH.md
 
 Other parameter details available:
 * [Lists](./docs/P_LISTS.md) for automatic loot and enemy lists
@@ -91,6 +94,7 @@ Mission specific files
 * [dc_missionConfig_Squatters.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Squatter.json)
 * [dc_missionConfig_HvtItem.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_HvtItem.json)
 * [dc_missionConfig_HvtVip.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_HvtVip.json)
+* [dc_missionConfig_Stash.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Stash.json)
 
 Dependency specific files
 * [dc_coreConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_coreConfig.json) : Configuration file for core.
@@ -104,7 +108,9 @@ Dependency specific files
 
 ### DarcMissions
 Major changes in the json files. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
+* Hunters will not follow players to NonValidAreas. 
 * Second wave: Added a stub for second wave functionality. Currently does nothing but eventually you can have a second wave of attackers after win (and/or lose).
+* ``missionActiveDistance`` and ``missionActiveTimeToEnd`` shrinks slowly to avoid missions being stuck on populated servers.
 
 Fixes:
 * Crashsite could crash if the helicopter is destroyed before crash landing.
@@ -123,7 +129,13 @@ Changes:
 * dc_missionConfig.json
   * Added ``missionActiveDistanceMul`` - multiplier to modify distance on every cycle when in win/lose state. With this you can make the active distance to shrink.
   * Added ``missionActiveTimeToEndMul`` - same as above but for time.
+  * Moved difficulty settings under ``missionDifficulty``. 
+  * Added ``lootChanceCoef`` 
+  * Added ``lootCountCoef`` (currently setting is unused)
 * Patrol and Hunter has a hardcoded 20 seconds as their ``missionActiveTimeToEnd``. Once the AI is dead, quickly remove the mission. 
+
+Known issues:
+* AI from other missions can be tricked to follow you to a NonValidArea.
 
 ### DarcSpawner
 Uses faster cached location information for spawn.

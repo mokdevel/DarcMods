@@ -8,7 +8,9 @@
 
 ### DarcMissions
 Major changes in the json files. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
+* Hunters will not follow players to NonValidAreas. 
 * Second wave: Added a stub for second wave functionality. Currently does nothing but eventually you can have a second wave of attackers after win (and/or lose).
+* ``missionActiveDistance`` and ``missionActiveTimeToEnd`` shrinks slowly to avoid missions being stuck on populated servers.
 
 Fixes:
 * Crashsite could crash if the helicopter is destroyed before crash landing.
@@ -27,7 +29,13 @@ Changes:
 * dc_missionConfig.json
   * Added ``missionActiveDistanceMul`` - multiplier to modify distance on every cycle when in win/lose state. With this you can make the active distance to shrink.
   * Added ``missionActiveTimeToEndMul`` - same as above but for time.
+  * Moved difficulty settings under ``missionDifficulty``. 
+  * Added ``lootChanceCoef`` 
+  * Added ``lootCountCoef`` (currently setting is unused)
 * Patrol and Hunter has a hardcoded 20 seconds as their ``missionActiveTimeToEnd``. Once the AI is dead, quickly remove the mission. 
+
+Known issues:
+* AI from other missions can be tricked to follow you to a NonValidArea.
 
 ### DarcSpawner
 Uses faster cached location information for spawn.
