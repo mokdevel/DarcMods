@@ -5,7 +5,6 @@
 
 	//Release options
 	#ifdef SDRC_RELEASE
-		private const float SDRC_MISSION_DIFFICULTY_COEF_MUL = 1.0;						//Difficulty multiplier
 		private const int SDRC_MISSION_MIN_DISTANCE = 500;
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 10;								//Default amount of dynamic missions to run
@@ -31,7 +30,6 @@
 	
 	//Development time options
 	#ifndef SDRC_RELEASE
-		private const float SDRC_MISSION_DIFFICULTY_COEF_MUL = 2.0;						//Difficulty multiplier
 		private const int SDRC_MISSION_MIN_DISTANCE = 30;//200;		
 		private const int SDRC_PLAYER_MIN_DISTANCE = 30;//100;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
@@ -98,11 +96,6 @@ class SDRC_MissionTypeConfig : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionDifficulty : Managed
 {
-	float aiCountCoefMul;
-	float aiSkillCoefMul;
-	float aiPerceptionCoefMul;
-	float lootChanceCoefMul;
-	float lootCountCoefMul;
 	//easy, moderate, normal, tough, hard
 	ref array<float> aiCountCoef = 			{0.5, 0.6, 1.0, 2.0, 3.0};
 	ref array<float> aiSkillCoef = 			{0.2, 0.6, 1.0, 1.3, 1.6};
@@ -154,12 +147,6 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 	{
 		conf.comment = "Simple comment, not used in game";
 
-		conf.missionDifficulty.aiCountCoefMul = SDRC_MISSION_DIFFICULTY_COEF_MUL;
-		conf.missionDifficulty.aiSkillCoefMul = SDRC_MISSION_DIFFICULTY_COEF_MUL;
-		conf.missionDifficulty.aiPerceptionCoefMul = SDRC_MISSION_DIFFICULTY_COEF_MUL;		
-		conf.missionDifficulty.lootChanceCoefMul = SDRC_MISSION_DIFFICULTY_COEF_MUL;		
-		conf.missionDifficulty.lootCountCoefMul = 1.0;
-				
 		conf.recreateConfigs = SDRC_MISSION_RECREATE_CONFIGS;
 		conf.missionStartDelay = SDRC_MISSIONFRAME_START_DELAY;
 		conf.missionFrameCycleTime = SDRC_MISSIONFRAME_CYCLE_TIME;
