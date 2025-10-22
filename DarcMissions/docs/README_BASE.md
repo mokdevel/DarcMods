@@ -62,7 +62,7 @@ Mission specific parameters for each mission type:
 * (7) [Roadblock](./docs/MISSION_ROADBLOCK.md)
 * (8) [HVT VIP](./docs/MISSION_HVTVIP.md)
 * (9) [HVT Item](./docs/MISSION_HVTITEM.md)
-* (10) [Stash](./docs/MISSION_STASH.md
+* (10) [Stash](./docs/MISSION_STASH.md)
 
 Other parameter details available:
 * [Lists](./docs/P_LISTS.md) for automatic loot and enemy lists
