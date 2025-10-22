@@ -83,7 +83,7 @@ array<float> aiCountCoef =      {0.5, 0.6, 1.0, 2.0, 3.0};
 array<float> aiSkillCoef =      {0.2, 0.6, 1.0, 1.3, 1.6};
 array<float> aiPerceptionCoef = {0.2, 0.6, 1.0, 1.3, 1.6};
 array<float> lootChanceCoef = 	{0.5, 0.6, 1.0, 1.2, 1.4};	
-array<float> lootCountCoef = 		{1.0, 1.0, 1.0, 1.0, 1.0};	
+array<float> lootCountCoef =    {1.0, 1.0, 1.0, 1.0, 1.0};	
 ```
 
 ### SDRC_MissionTypeConfig
