@@ -20,7 +20,10 @@
 	UTIL_AMMO,				//Adds a random rocket, shell, flare, ..
 	GEAR_HEADGEAR,			//Head Gear including helmets, gas masks
 	GEAR_VEST,				//Vests
+	GEAR_HANDWEAR,			//Gloves etc
+	GEAR_UNIFORM,			//Jackets, pants
 	CLOTHING_HEADGEAR,		//Head Gear including hats
+	CLOTHING_UNIFORM,		//Jackets, pants, shirts, 
 */
 
 /*class SDRC_LootListConfig : SDRC_ListConfig
@@ -88,8 +91,11 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		//Gear
 		conf.lists.Insert(lootList60());		
 		conf.lists.Insert(lootList61());		
+		conf.lists.Insert(lootList62());		
+		conf.lists.Insert(lootList63());		
 		//Clothing
 		conf.lists.Insert(lootList80());		
+		conf.lists.Insert(lootList83());		
 	}
 			
 	//Lootlist: Rifles
@@ -324,7 +330,36 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		);
 		return lootList;
 	}
-	
+
+	SDRC_List lootList62()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"GEAR_HANDWEAR",
+			{"Prefabs/Characters/Handwear"},
+			{"Gloves_",},
+			{"_Base"},
+			{}	
+		);
+		return lootList;
+	}
+
+	SDRC_List lootList63()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"GEAR_UNIFORM",
+			{"Prefabs/Characters/Uniforms"},
+			{"Jacket_KZS", "Jacket_Pilot", "Jacket_Tanker", "Jacket_TAZ",
+			 "Pants_KZS", "Pants_Pilot", "Pants_Tanker", "Pants_TAZ",
+			 "Suit_KLMK", "Suit_Pilot", "Suit_Tanker",
+			},
+			{"_Base"},
+			{}	
+		);
+		return lootList;
+	}	
+			
 	//Lootlist: Clothing : Head gear
 	SDRC_List lootList80()
 	{
@@ -336,6 +371,24 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			},
 			{"_Base"},
 			{}
+		);
+		return lootList;
+	}
+
+	//SDRC_List lootList81()
+	//SDRC_List lootList82()
+		
+	SDRC_List lootList83()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"CLOTHING_UNIFORM",
+			{"Prefabs/Characters/Uniforms"},
+			{"_Denim", "_Raincoat", "_Fisherman", "_Trousers", "Shirt_", 
+			 "Jacket_Suit", "Jacket_Pants",
+			},
+			{"_Base"},
+			{}	
 		);
 		return lootList;
 	}		
