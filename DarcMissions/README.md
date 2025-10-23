@@ -70,7 +70,6 @@ Other parameter details available:
 * [Loot](./docs/P_LOOT.md)
 * [Non Valid Areas](./docs/NONVALIDAREAS.md) aka safe zones
 * [Structures](./docs/P_STRUCTURE.md)
-* [Waypoints](./docs/P_WAYPOINTS.md)
 * [Buildings](./docs/P_BUILDING.md)
 
 # Configuration files
@@ -105,6 +104,8 @@ Dependency specific files
 ## Next release (unreleased)
 
 ..empty..
+
+## 20251023
 
 ### DarcMissions
 Major changes in the json files. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.

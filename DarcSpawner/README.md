@@ -10,7 +10,7 @@ Just activate the mod (and dependencies) and you're good to go.
 Configuration is done in .json files.
 
 # Configuration files
-The configuration files will be under your ```profile\DarcMods_conf\*```. Depending on the usage the profile is in your ArmaReforger, ArmaReforgerWorkbench or in your server profile directory. For example ```C:\Users\username\Documents\My Games\ArmaReforger\profile\DarcMods_conf```.
+The configuration files will be under your ```profile\DarcMods\*```. Depending on the usage the profile is in your ArmaReforger, ArmaReforgerWorkbench or in your server profile directory. For example ```C:\Users\username\Documents\My Games\ArmaReforger\profile\DarcMods```.
 
 For examples of configuration files see [ExampleConfigs](https://github.com/mokdevel/DarcMods/tree/main/DarcSpawner/ExampleConfigs).
 
@@ -21,32 +21,31 @@ A random index is chosen from ``spawnSetList`` and the indexed ``spawnSet`` is s
 Example: [dc_spawnerConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner/ExampleConfigs/dc_spawnerConfig.json)
 
 ```
-int version : See Common parameters
-string author : See Common parameters
+int version : Version id of the file
+string author : Author of the file
 bool spawnOnRoad : Spawn the cars on road. If no road network manager found, cars spawned around the map.
 int spawnRndRadius : Random radius where the spawnName spawns. Once a location is found, additional randomization is done to avoid vehicles to be always in the same spot.
 int containerCount : Amount of containers (cars, lootboxes, etc..) to spawn.
 float spawnWorldSizeMultiplier : If containerCount = 0, we search for the world size in km and multiple with this. For example: 4km wide map with spawnWorldSizeMultiplier = 2 results in spawnCount = 8 (4*2)
-bool disableArsenal : See General parameters
-array<int> spawnSetList : The indexes of squatters.
+bool disableArsenal : Disable arsenal for vehicles so that only defined loot items are found.
+array<int> spawnSetList : The indexes of spawnsets.
 array<SCR_DC_SpawnSet> spawnSets : List of spawners
 ```
 
 ### SCR_DC_SpawnSet
 ```
 string comment : See General parameters
-bool showMarker : See Common parameters
-string markerType : See Common parameters
-int markerIdx : See Common parameters
-array<EMapDescriptorType> locationTypes : See Location parameters
+bool showMarker : Show marker on map. False will disable markers.
+string markerType : The marker type to use. Default is "DARC_MISSION".
+  For Arma Reforger default ones, you can use "PLACED_MILITARY". Other mods may extend this.
+int markerIdx : The index of the icon of defined markerType
+array<EMapDescriptorType> locationTypes : See Location parameters in DarcMissions
 array<string> containers : What container to spawn; cars, box, .. All of these will be spawned with spawnChance chance
 SDRC_Loot loot : Loot found in the mission. See Loot parameters
 ```
 
 ## Related documentation:
 Some parameters are described in DarcMissions documentation
-- [Common parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_COMMON.md#common-parameters)
-- [General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_COMMON.md#general-parameters)
 - [Location parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LOCATIONS.md)
 - [Loot](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LOOT.md)
 - [LootLists](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LISTS.md#loot-lists)
