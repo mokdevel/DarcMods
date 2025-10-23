@@ -26,7 +26,7 @@ class SDRC_SpawnSet : Managed
 	string comment;
 	bool showMarker;								//Show a marker 
 	string markerType;								//marker type
-	int markerIdx;									//marker ID
+	int markerIdx;									//marker ID		//TBD: Rename to markerIcon
 	ref array<EMapDescriptorType> locationTypes;
 	ref array<vector> positions;
 	ref array<string> containers;					//What resource to spawn; cars, box, .. All of these will be spawned with spawnChance chance
