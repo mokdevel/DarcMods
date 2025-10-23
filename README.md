@@ -10,10 +10,13 @@ The mod creates a map marker on the position where you died. The marker is activ
 ## DarcMissions
 A mod that spawns various types of PVE missions. Documentation inside mod folder. See: [Documentation](./DarcMissions/README.md)
 
+## DarcMissionsCompatFF
+Compatibility mod for Freedom Fighters.
+
 ## DarcSpawner
 Spawns vehicles (could work with containers too) randomly on map with some loot. Documentation inside mod folder. See: [Documentation](./DarcSpawner/README.md)
 
-# Not mods
+# Development time stuff
 ## DarcDev
 Just some stuff used while developing. Worlds etc...
 
