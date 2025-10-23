@@ -1,7 +1,7 @@
 # DarcMissionsCompatFF
 Compatibility mod for Freedom Fighters.
 
-Functionality:
+## Functionality
 * Missions are not spawned close the hideouts
 * Controlled areas have a percentage option to spawn missions. 
 * Crashsite helicopters are cleaned from the map at server boot when a player joins the game. We don't want wrecks on the map.
@@ -24,7 +24,6 @@ string author : Author of the file
 string comment : Generic comment. Not used in game.
 int hideOutSafeZoneDistance : The radious of a 'safe zone' to a hide out where a mission shall not spawn.
 float spawnRateForGreenZones : The percentage chance to spawn a mission to green zone (0.05 = 5%)
-
 ```
 
 # Version history
