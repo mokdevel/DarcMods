@@ -148,7 +148,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 				m_EntityList.Insert(entity);
 				m_DC_Squatter.loot.box = entity;
 				//Handle loot difficulty
-				m_DC_Squatter.loot.itemChance = SDRC_LootHelper.GetLootChance(m_DC_Squatter.loot.itemChance, m_DC_Squatter.general.difficulty);				
+				m_DC_Squatter.loot.itemChance = SDRC_MissionHelper.GetLootChance(m_DC_Squatter.loot.itemChance, m_DC_Squatter.general.difficulty);				
 			}
 			else
 			{

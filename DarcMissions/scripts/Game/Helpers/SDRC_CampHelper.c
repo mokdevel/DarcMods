@@ -88,7 +88,7 @@ sealed class SDRC_CampHelper
 			{
 				camp.loot.box = mission.GetFromEntityList(0);
 				//Handle loot difficulty
-				camp.loot.itemChance = SDRC_LootHelper.GetLootChance(camp.loot.itemChance, camp.general.difficulty);
+				camp.loot.itemChance = SDRC_MissionHelper.GetLootChance(camp.loot.itemChance, camp.general.difficulty);
 			}
 			
 /*			//Put loot

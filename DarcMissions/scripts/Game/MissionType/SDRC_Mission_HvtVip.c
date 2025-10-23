@@ -159,7 +159,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 				m_EntityList.Insert(entity);
 				m_DC_HvtVip.loot.box = entity;
 				//Handle loot difficulty
-				m_DC_HvtVip.loot.itemChance = SDRC_LootHelper.GetLootChance(m_DC_HvtVip.loot.itemChance, m_DC_HvtVip.general.difficulty);
+				m_DC_HvtVip.loot.itemChance = SDRC_MissionHelper.GetLootChance(m_DC_HvtVip.loot.itemChance, m_DC_HvtVip.general.difficulty);
 			}
 			else
 			{

@@ -202,19 +202,5 @@ sealed class SDRC_LootHelper
 			return false;
 		}
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*! 
-	Recalculate loot spawn chance according to difficulty
-	*/	
-	static float GetLootChance(float chance, SDRC_EMissionDifficulty difficulty = SDRC_EMissionDifficulty.NORMAL)
-	{
-		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
-		if (m_BaseGameMode)
-		{
-			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.lootChanceCoef[difficulty];
-			chance = chance * coef;
-		}		
-		return chance;		
-	}
+
 }
