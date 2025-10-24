@@ -71,7 +71,7 @@ class SDRC_MissionConfig : Managed
 	bool disableArsenal;										//Disable arsenal for vehicles so that no other items are found
 	ref array<ref int> missionList = {};						//The list of mission suids.
 	ref array<ref string> missionFiles = {};					//The list of mission files to load.
-	ref array<ref SDRC_MissionConfigSecondWave> secondWave = {};
+	ref array<ref SDRC_MissionConfigSecondWave> secondWave = {};	//TBD: This is not used anywhere. REMOVE!
 }
 
 //------------------------------------------------------------------------------------------------
@@ -243,11 +243,22 @@ class SDRC_MissionConfigSecondWave : Managed
 {
 	ref array<int> subIdx = {};									//subIdx from which to choose
 	SDRC_EMissionSuccess activation = SDRC_EMissionSuccess.WIN;	//Which success activates the second wave
+	float chance;
 	ref array<int> delay = {};									//(seconds) Delay min-max before spawning second wave
-	ref array<int> distance = {};								//min-max distance for the enemy spawn
 	string info;												//Details for the hint shown for players
 	SDRC_EMissionDifficulty difficulty;							//Difficulty for specific mission
-	int xp;														//Experience given	
+	int xp;														//Experience given
+
+	void Set(array<int> subIdx_, SDRC_EMissionSuccess activation_, float chance_, array<int> delay_, string info_, SDRC_EMissionDifficulty difficulty_, int xp_)	
+	{
+		subIdx = subIdx_;
+		activation = activation_;
+		chance = chance_;
+		delay = delay_;
+		info = info_;
+		difficulty = difficulty_;
+		xp = xp_;
+	}	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -283,6 +294,8 @@ class SDRC_Mission
 	private int m_iAIKillPercentageRandom;		//The random amount of AIs to kill (30%-100%)	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
+	//Second wave object
+	private ref SDRC_MissionConfigSecondWave m_SecondWaveConf = new SDRC_MissionConfigSecondWave();
 	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission(SDRC_EMissionType missionType, SDRC_MissionRequested request)
@@ -833,6 +846,14 @@ class SDRC_Mission
 	}	
 
 	//------------------------------------------------------------------------------------------------
+	// Second Wave functionality
+	//------------------------------------------------------------------------------------------------
+	void SetSecondWaveConf(SDRC_MissionConfigSecondWave secondWaveConf)
+	{
+		m_SecondWaveConf = secondWaveConf;
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	// Getters/Setters for information when no access to m_EntityList nor m_Groups
 	//------------------------------------------------------------------------------------------------
 	
@@ -1004,6 +1025,8 @@ class SDRC_Mission
 		//Set ActiveTimeToEnd to be the final active time
 		SetActiveTime(m_iActiveTimeToEnd);
 		ResetActiveTime();
+		
+		DoSecondWave();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -1025,6 +1048,29 @@ class SDRC_Mission
 			SDRC_MapMarkerHelper.DeleteMarker(GetId());
 			SetMarker(SDRC_EMissionIcon.GM_MISSION_LOSE_MAP, m_General.markerType);
 			ShowMarker();
+		}
+		
+		DoSecondWave();
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Check if second wave needs to be initialized.
+	*/
+	private void DoSecondWave()
+	{
+		if ( (m_SecondWaveConf.activation == GetSuccess()) || (m_SecondWaveConf.activation == SDRC_EMissionSuccess.WIN_OR_LOSE) )
+		{
+			if (Math.RandomFloat(0, 1) < m_SecondWaveConf.chance)
+			{
+				SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+				if (m_BaseGameMode)
+				{
+					int subIdx = 0;
+					SDRC_SecondWave wave = m_BaseGameMode.missionFrame.m_DC_SecondWaveJsonApi.GetWave(0);
+					SDRC_Log.Add("[SDRC_Mission:DoSecondWave] " + subIdx + " : " + wave.comment, LogLevel.DEBUG);
+				}
+			}
 		}		
 	}
 	

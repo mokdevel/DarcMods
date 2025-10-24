@@ -25,6 +25,7 @@ Add this to your StartGameTrigger or use SDRC_GameCoreBase.c
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
 const string DC_MISSIONCONFIG_FILE = "dc_missionConfig.json";
 const string DC_MISSIONCONFIG_FILE_NONVALIDAREA = "dc_nonValidArea.json";
+const string DC_MISSIONCONFIG_FILE_SECONDWAVE = "dc_secondWave.json";
 
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionFrame
@@ -35,9 +36,10 @@ class SDRC_MissionFrame
 	ref SDRC_MissionFrameConfig m_Config;
 	
 	ref SDRC_NonValidAreaJsonApi m_DC_NonValidAreaJsonApi = new SDRC_NonValidAreaJsonApi(DC_MISSIONCONFIG_FILE_NONVALIDAREA);
-	ref SDRC_NonValidAreaConfig m_NonValidAreaConfig;
 	ref array<ref SDRC_NonValidArea> m_aNonValidAreas = {};
-	
+
+	ref SDRC_SecondWaveJsonApi m_DC_SecondWaveJsonApi = new SDRC_SecondWaveJsonApi(DC_MISSIONCONFIG_FILE_SECONDWAVE);
+		
 	private string m_sWorldName;
 	private int m_iMissionCountDynamicMax;				//Max amount of dynamic missions
 	private int m_iMissionCountStaticMax;				//Max amount of static missions
@@ -61,10 +63,15 @@ class SDRC_MissionFrame
 		m_DC_MissionFrameJsonApi.Load();
 		m_Config = m_DC_MissionFrameJsonApi.conf;
 		
-		//Load non valid area configuration from file		
+		//Load non valid area configuration from file
 		m_DC_NonValidAreaJsonApi.Load();
 		m_DC_NonValidAreaJsonApi.Populate(m_aNonValidAreas);
-		
+
+		//Load waves for secondWave functionality
+		m_DC_SecondWaveJsonApi.Load();
+		m_DC_SecondWaveJsonApi.Populate();
+
+		//Update the setting for showing mission time left				
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
 		if (gmComp)
 		{
@@ -319,13 +326,13 @@ class SDRC_MissionFrame
 		//If static mission spawned, we set a shorter time to spawn them quickly at startup
 		if (!staticMissionSpawned)
 		{
-			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Dynamic missions: " + (m_MissionList.Count() - staticCount) + "/" + m_iMissionCountDynamicMax + " - Static missions: " + staticCount + "/" + m_iMissionCountStaticMax + ". Next mission in " + getMissionDelayWait() + " seconds.", LogLevel.NORMAL);
+			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Dynamic: " + (m_MissionList.Count() - staticCount) + "/" + m_iMissionCountDynamicMax + " - Static: " + staticCount + "/" + m_iMissionCountStaticMax + ". Next mission: " + getMissionDelayWait() + " seconds.", LogLevel.NORMAL);
 			MissionDump();
 			GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionFrameCycleTime*1000, false);
 		}				
 		else
 		{
-			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Static missions: " + staticCount + "/" + m_iMissionCountStaticMax + " - try/limit: " + m_iStaticTryCount + "/" + m_iStaticTryLimit, LogLevel.NORMAL);
+			SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Static: " + staticCount + "/" + m_iMissionCountStaticMax + " - try/limit: " + m_iStaticTryCount + "/" + m_iStaticTryLimit, LogLevel.NORMAL);
 			MissionDump();
 			GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStatic.delayBetween*1000, false);
 		}		

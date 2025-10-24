@@ -36,6 +36,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		}
 		m_DC_Roadblock = m_Config.subMissions[idx];
 		HandleRequestGeneralVariables(m_DC_Roadblock.general, request);
+		SetSecondWaveConf(m_DC_Roadblock.secondWave);
 		
 		//For requested missions we want have it as close as possible in the requested place.
 		int randomPos = -1;		
@@ -45,11 +46,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		}
 		
 		//Find a location for the mission
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Roadblock.general.pos);
-		if (pos == "0 0 0")
-		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Roadblock.general.locationTypes, m_DC_Roadblock.general.size, randomPos);
-		}
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Roadblock.general.pos, m_DC_Roadblock.general.size, m_DC_Roadblock.general.locationTypes, randomPos);
 		
 		//If we found a position, let's search more closely
 		if (pos != "0 0 0")
@@ -314,6 +311,13 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			SDRC_EWaypointGenerationType.LOITER,//RANDOM,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
+		
+		roadblock.secondWave.Set(
+			{0}, SDRC_EMissionSuccess.WIN,
+			1.0, {5, 20},
+			"Second Wave coming",
+			SDRC_EMissionDifficulty.NORMAL, 0
+		);		
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
