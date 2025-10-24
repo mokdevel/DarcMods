@@ -5,7 +5,7 @@
 Functions related to vehicles.
 */
 
-sealed class SDRC_VehicleHelper
+class SDRC_VehicleHelper
 {
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -244,5 +244,18 @@ sealed class SDRC_VehicleHelper
 			resourceContainer.SetMaxResourceValue(0, true);
 			resourceContainer.SetOnEmptyBehavior(EResourceContainerOnEmptyBehavior.DELETE);
 		}*/
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	// Persistency related
+	//------------------------------------------------------------------------------------------------
+		
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Fix persistency for vehicle. For example for EPF.
+	*/
+	static void SetPersistency(IEntity entity)
+	{	
+		//Override in compat mod
 	}	
 }

@@ -1027,6 +1027,7 @@ class SDRC_Mission
 		ResetActiveTime();
 		
 		DoSecondWave();
+		GiveReward();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -1068,12 +1069,21 @@ class SDRC_Mission
 				{
 					int subIdx = 0;
 					SDRC_SecondWave wave = m_BaseGameMode.missionFrame.m_DC_SecondWaveJsonApi.GetWave(0);
-					SDRC_Log.Add("[SDRC_Mission:DoSecondWave] " + subIdx + " : " + wave.comment, LogLevel.DEBUG);
+					SDRC_Log.Add("[SDRC_Mission:DoSecondWave] !Just for debugging! : idx:" + subIdx + " : " + wave.comment, LogLevel.DEBUG);
 				}
 			}
 		}		
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Give XP or what not to players
+	*/
+	void GiveReward()
+	{
+		//TBD: Currently does nothing
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	void SetActiveDistance(int distance)	
 	{

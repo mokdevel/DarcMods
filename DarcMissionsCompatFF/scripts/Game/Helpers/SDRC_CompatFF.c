@@ -96,6 +96,53 @@ modded class SDRC_Compat
 }
 
 //------------------------------------------------------------------------------------------------
+modded class SDRC_VehicleHelper
+{
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Fix persistency for vehicle. For example for EPF.
+	*/
+	override static void SetPersistency(IEntity entity)
+	{	
+		//Avoid despawning of vehicles
+		auto persistence = JWK_CompT<EPF_PersistenceComponent>.FindIn(entity);
+		if (persistence) persistence.JWK_SetEnabled(false);
+		//FF despawns vehicles beyond certain distance from players and spawns them back in when they get near for performance, this will disable that.
+		auto streamable = JWK_CompT<JWK_StreamableVehicleComponent>.FindIn(entity);
+		if (streamable) streamable.SetStreamingEnabled(false);		
+		
+		super.SetPersistency(entity);
+	}	
+}
+
+//------------------------------------------------------------------------------------------------
+modded class SDRC_Mission
+{
+	override void GiveReward()
+	{
+		int m_iRewardValue = 500;
+		
+		array<int> playerIds = {};
+		GetGame().GetPlayerManager().GetPlayers(playerIds);
+		if (playerIds.IsEmpty()) return;
+
+		int perPlayerReward = m_iRewardValue / playerIds.Count();
+
+		SDRC_Log.Add("[SDRC_CompatFF:GiveReward] Giving " + perPlayerReward + " money to each player.", LogLevel.DEBUG);
+		
+		foreach (int playerId : playerIds) {
+    		JWK.GetPlayerProfile(playerId).AddMoney_S(perPlayerReward);
+    
+    		JWK.GetPlayerController(playerId).ShowNotification(
+        		ENotification.JWK_QUEST_RECEIVED_MONEY,
+        		JWK.FormatMoney(perPlayerReward)
+    		);
+		}
+		super.GiveReward();
+	}
+}
+
+//------------------------------------------------------------------------------------------------
 class SDRC_CompatFFConfig : Managed
 {
 	//Default information
@@ -106,6 +153,7 @@ class SDRC_CompatFFConfig : Managed
 	//Specific
 	int hideOutSafeZoneDistance = 300;
 	float spawnRateForGreenZones = 0.05; 
+//	bool setEnemyFactionAutomatically = true;
 }
 
 //------------------------------------------------------------------------------------------------
