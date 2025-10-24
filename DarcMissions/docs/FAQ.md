@@ -1,8 +1,11 @@
 # FAQ
 
 ## General
-### Suddenly the mod stopped working/generates errors/behaves oddly/..
+### Q: Suddenly the mod stopped working/generates errors/behaves oddly/..
 It's possible there was an update and the json files are not compatible with the new version. Backup your current ones and then delete the old confs. New ones will be created at startup. 
+
+### Q: Missions are not spawning
+Most likely an update changed the jsons which are not compatible anymore. Backup your current ones and then delete the old confs. New ones will be created at startup. 
 
 ## Configuration related
 ### Q: Where are the configuration json files
