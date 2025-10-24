@@ -31,6 +31,9 @@ float spawnRateForGreenZones : The percentage chance to spawn a mission to green
 ## Next release (unreleased)
 
 ..empty..
+* Crashsite helicopters and convoys are not despawning. 
+  NOTE: The cleanup code for wrecks is triggered when first player joins. This may remove currently existing helicopters and/or convoys. Only happens once.
+* Mission completion gives a reward. The current implementation gives a static 500 to share. To be improved in the future.
 
 ## 20251023
 A new mod for compatibility with Freedom Fighters. First release.
