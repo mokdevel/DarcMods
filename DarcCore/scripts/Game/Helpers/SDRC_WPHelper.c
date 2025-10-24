@@ -145,7 +145,7 @@ sealed class SDRC_WPHelper
 					}
 				}
 								
-				SDRC_Log.Add("[SDRC_WPHelper:CreateMissionAIWaypoints] Adding non-cycle waypoints: " + waypoints.Count(), LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_WPHelper:CreateMissionAIWaypoints] Adding non-cycle waypoints: " + waypoints.Count(), LogLevel.SPAM);
 			}						
 
 			//If now waypoints defined, add a LOITER waypoint as a minimum.

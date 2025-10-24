@@ -113,7 +113,10 @@ sealed class SDRC_LootHelper
 							for (int i = 0; i < magCount; i++)
 							{
 								result = AddToStorage(storage, magazine);
-								SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Adding magazine " + magazine + ". Success: " + result, LogLevel.DEBUG);				
+								if (magazine != "")
+								{
+									SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Adding magazine " + magazine + ". Success: " + result, LogLevel.DEBUG);				
+								}
 							}
 						}
 					}
