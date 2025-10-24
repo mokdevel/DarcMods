@@ -10,16 +10,16 @@ enum SDRC_EMissionType
 {
 	ERROR = -1,
 	NONE = 0,
-	HUNTER,
-	OCCUPATION,
-	CONVOY,
-	CRASHSITE,
-	PATROL,
-	SQUATTERS,
-	ROADBLOCK,
-	HVTVIP,
-	HVTITEM,
-	STASH,
+	HUNTER,			//1
+	OCCUPATION,		//2
+	CONVOY,			//3
+	CRASHSITE,		//4
+	PATROL,			//5
+	SQUATTERS,		//6
+	ROADBLOCK,		//7
+	HVTVIP,			//8
+	HVTITEM,		//9
+	STASH,			//10
 	CHOPPER,	//Mission not ready or working
 	
 	REQUESTED = 100

@@ -27,6 +27,7 @@ modded class SDRC_Compat
 		SDRC_Log.Add("[SDRC_CompatFF] Initializing compatibility: Freedom Fighters", LogLevel.NORMAL);
 
 		GetGame().GetCallqueue().CallLater(WaitForPlayers, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
+//		GetGame().GetCallqueue().CallLater(Clear, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
 		
 		return true;
 	}
