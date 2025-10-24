@@ -1,5 +1,5 @@
 # DarcMissionsCompatFF
-Compatibility mod for Freedom Fighters.
+Compatibility mod for Freedom Fighters. DarcMissions and DarcMissionsCompatFF is thoroughly designed to work on any map without specific configs. 
 
 ## Functionality
 * Missions are not spawned close the hideouts
