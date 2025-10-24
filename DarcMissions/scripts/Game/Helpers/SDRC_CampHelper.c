@@ -60,7 +60,7 @@ sealed class SDRC_CampHelper
 			for (int i = 0; i < aiCount; i++)
 			{
 				//SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(camp.ai.types.GetRandomElement(), mission.GetPos(), mission.GetFaction());
-				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGrouRandom(camp.ai.types, mission.GetPos(), mission.GetFaction());
+				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroupRandom(camp.ai.types, mission.GetPos(), mission.GetFaction());
 				if (group)
 				{
 					SDRC_AIHelper.SetAIGroupSkill(group, camp.ai.GetSkill(camp.general.difficulty), camp.ai.GetPerception(camp.general.difficulty));					

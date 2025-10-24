@@ -275,7 +275,7 @@ class SDRC_MissionHelper
 	Spawn a randomly selected mission AI group to given position making sure it's empty. 
 	NOTE: Position is not exact
 	*/
-	static SCR_AIGroup SpawnMissionAIGrouRandom(array<string> groups, vector pos, string faction)
+	static SCR_AIGroup SpawnMissionAIGroupRandom(array<string> groups, vector pos, string faction)
 	{
 		if (groups.IsEmpty())
 		{

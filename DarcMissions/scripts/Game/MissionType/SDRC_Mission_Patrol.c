@@ -144,7 +144,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		for (int i = 0; i < aiCount; i++)
 		{
 			//SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(m_DC_Patrol.ai.types.GetRandomElement(), GetPos(), GetFaction());
-			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGrouRandom(m_DC_Patrol.ai.types, GetPos(), GetFaction());
+			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroupRandom(m_DC_Patrol.ai.types, GetPos(), GetFaction());
 			if (group)
 			{
 				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Patrol.ai.GetSkill(m_DC_Patrol.general.difficulty), m_DC_Patrol.ai.GetPerception(m_DC_Patrol.general.difficulty));					
