@@ -123,7 +123,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"G_LIGHT",
 			{"Prefabs/Groups"},
-			{"LightFire", "FireTeam", "FireGroup", "RifleSquad", "SentryTeam"},
+			{"LightFire", "FireTeam", "FireGroup", "RifleSquad", "SentryTeam", 
+			 "Regulars_Brick", "InfantrySection"},	//British Forces
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
 		);	
@@ -188,7 +189,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"G_RECON",
 			{"Prefabs/Groups"},
-			{"_Recon", "_Maneuver"},
+			{"_Recon", "_Maneuver", "_RecceTeam"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
 		);					
@@ -201,7 +202,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"G_HEAVY",
 			{"Prefabs/Groups"},
-			{"MachineGunTeam", "FireTeam", "FireGroup", "Suppress", "Spetsnaz_Squad"},
+			{"MachineGunTeam", "FireTeam", "FireGroup", "Suppress", "Spetsnaz_Squad",
+			 "GunGroup"},	//British Forces
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
 		);					
@@ -214,7 +216,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"G_SPECIAL",
 			{"Prefabs/Groups"},
-			{"GreenBeret", "Sapper", "Sentry", "Spetsnaz"},
+			{"GreenBeret", "Sapper", "Sentry", "Spetsnaz", "SpecialForces"},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
 		);					
