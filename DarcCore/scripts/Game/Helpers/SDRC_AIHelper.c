@@ -76,7 +76,8 @@ sealed class SDRC_AIHelper
 		
 		ResourceName name = SDRC_EnemyHelper.SelectEnemy(groupToSpawn, faction);
 		
-		if (name.Contains("Prefabs/Characters/"))
+//		if ( (name.Contains("Prefabs/Characters/")) || (name.Contains("}Beasts/")) || (name.Contains("Prefabs/")))	//TBD: Fix these once halloween monsters are fixed.
+		if ( (name.Contains("Prefabs/Characters/")) )
 		{
 			//Spawn an individual character
 			AIAgent aiAgent = SpawnAIAgent(name, spawnPosition, true, faction);

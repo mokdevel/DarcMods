@@ -115,6 +115,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		
 		conf.lists.Insert(enemyList60());		
 		conf.lists.Insert(enemyList61());				
+		conf.lists.Insert(enemyList62());				
 	}
 				
 	//Group lists
@@ -437,11 +438,26 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"C_DEMON_BOSS",
 			{"Prefabs/Characters", "Beasts"},
 			{"Stalker Heavy", "Zombie_Heavy",
-			"character_115_dupe", "character_115_pump", "character_115_skel.",			
+			"character_115_dupe", "character_115_pump", "character_115_skel.",
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
 		);					
 		return enemyList;
 	}
+	
+	SDRC_List enemyList62()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
+			"C_BEASTS",
+			{"Prefabs/Characters", "Beasts", "Prefabs"},
+//			{"character_115_dupe", "character_115_pump", "character_115_skel.",			
+			{"character_115_dupe", "PumpkinHead", "character_115_skel.",			
+			},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
+		);					
+		return enemyList;
+	}	
 }
