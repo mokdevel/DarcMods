@@ -32,8 +32,9 @@
 	G_ZOMBIE_SMALL
 	G_ZOMBIE_MEDIUM
 	G_ZOMBIE_LARGE
+	C_ZOMBIE
 	C_DEMON
-	C_DEMON_BOSS
+	C_DEMON_BOSS	
 */
 
 //------------------------------------------------------------------------------------------------
@@ -410,20 +411,19 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"C_ZOMBIE",
 			{"622120A5448725E3/Prefabs/Characters"},
 			{"Zombie_", "Character_", "Variant_"},
-			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random", "Zombie_Heavy"},
 			{}
 		);			
 		return enemyList;
 	}	
-	
+		
 	SDRC_List enemyList60()
 	{
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_DEMON",
-			{"Prefabs/Characters"},
-			{"ShadowTwin", "Whisper",},
-//			{"Plague", "Slander", "Whisper", "Whisperer",  "Mazark"},
+			{"Prefabs/Characters", "Beasts"},
+			{"ShadowTwin", "Whisper", },
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
 		);					
@@ -435,8 +435,10 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_DEMON_BOSS",
-			{"Prefabs/Characters"},
-			{"Stalker Heavy"},
+			{"Prefabs/Characters", "Beasts"},
+			{"Stalker Heavy", "Zombie_Heavy",
+			"character_115_dupe", "character_115_pump", "character_115_skel.",			
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
 		);					
