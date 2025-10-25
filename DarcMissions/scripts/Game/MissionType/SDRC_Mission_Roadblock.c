@@ -312,12 +312,14 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		
+		#ifndef USE_OLD_SECONDWAVE
 		roadblock.secondWave.Set(
 			{0}, SDRC_EMissionSuccess.WIN,
 			1.0, {5, 20},
 			"Second Wave coming",
 			SDRC_EMissionDifficulty.NORMAL, 0
-		);		
+		);
+		#endif
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
