@@ -190,8 +190,8 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.enemyFactions = {"US"};
 //			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION"};
 //			conf.enemyFactions = {"BALLIEN_BC_FACTION"};
-//			conf.enemyFactions = {"USSR"};
-			conf.enemyFactions = {"UK"};
+			conf.enemyFactions = {"USSR"};
+//			conf.enemyFactions = {"UK"};
 //			conf.enemyFactions = {"FIA", "US"};
 //			conf.enemyFactions = {"USSR", "FIA", "FIA", "FIA"};
 //			conf.enemyFactions = {"RHS_USAF", "RHS_AFRF"};

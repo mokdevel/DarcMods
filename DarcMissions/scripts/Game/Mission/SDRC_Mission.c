@@ -75,6 +75,8 @@ class SDRC_MissionConfig : Managed
 }
 
 //------------------------------------------------------------------------------------------------
+// GENERAL CONFIG
+//------------------------------------------------------------------------------------------------
 class SDRC_MissionConfigGeneral : Managed
 {
 	int subIdx;								//Unique index for the sub mission. 
@@ -141,6 +143,8 @@ class SDRC_MissionConfigGeneral : Managed
 	}	
 }
 
+//------------------------------------------------------------------------------------------------
+// AI CONFIG
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionConfigAi : Managed
 {
@@ -239,6 +243,23 @@ class SDRC_MissionConfigAi : Managed
 }
 
 //------------------------------------------------------------------------------------------------
+// SECOND WAVE
+//------------------------------------------------------------------------------------------------
+
+#ifdef USE_OLD_SECONDWAVE
+class SDRC_MissionConfigSecondWave : Managed
+{
+	ref array<int> subIdx = {};									//subIdx from which to choose
+	SDRC_EMissionSuccess activation = SDRC_EMissionSuccess.WIN;	//Which success activates the second wave
+	ref array<int> delay = {};									//(seconds) Delay min-max before spawning second wave
+	ref array<int> distance = {};								//min-max distance for the enemy spawn
+	string info;												//Details for the hint shown for players
+	SDRC_EMissionDifficulty difficulty;							//Difficulty for specific mission
+	int xp;														//Experience given	
+}
+#endif
+
+#ifndef USE_OLD_SECONDWAVE
 class SDRC_MissionConfigSecondWave : Managed
 {
 	ref array<int> subIdx = {};									//subIdx from which to choose
@@ -260,7 +281,10 @@ class SDRC_MissionConfigSecondWave : Managed
 		xp = xp_;
 	}	
 }
+#endif
 
+//------------------------------------------------------------------------------------------------
+// MISSION CONFIG
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission
 {
@@ -1062,6 +1086,7 @@ class SDRC_Mission
 	{
 		if ( (m_SecondWaveConf.activation == GetSuccess()) || (m_SecondWaveConf.activation == SDRC_EMissionSuccess.WIN_OR_LOSE) )
 		{
+			#ifndef USE_OLD_SECONDWAVE
 			if (Math.RandomFloat(0, 1) < m_SecondWaveConf.chance)
 			{
 				SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
@@ -1072,6 +1097,7 @@ class SDRC_Mission
 					SDRC_Log.Add("[SDRC_Mission:DoSecondWave] !Just for debugging! : idx:" + subIdx + " : " + wave.comment, LogLevel.DEBUG);
 				}
 			}
+			#endif
 		}		
 	}
 
