@@ -96,6 +96,10 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		//Clothing
 		conf.lists.Insert(lootList80());		
 		conf.lists.Insert(lootList83());		
+		//Freedom Fighters
+		conf.lists.Insert(lootList90());		
+		conf.lists.Insert(lootList91());		
+		conf.lists.Insert(lootList92());		
 	}
 			
 	//Lootlist: Rifles
@@ -391,5 +395,45 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			{}	
 		);
 		return lootList;
-	}		
+	}
+	
+	//Freedom Fighters specific stuff
+	SDRC_List lootList90()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"FF_ITEMS_LOW",
+			{"Prefabs/Items"},
+			{"Backpack", "Radio_", "Tent_", "Lockpick_", "JWK_EpinephrineInjection", },
+			{"_Base"},
+			{}	
+		);
+		return lootList;
+	}
+
+	SDRC_List lootList91()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"FF_ITEMS_MID",
+			{"Prefabs/Items"},
+			{"Dogtags", "Briefcase", "CampingKit", "KeysOld", },
+			{"_Base"},
+			{}	
+		);
+		return lootList;
+	}	
+	
+	SDRC_List lootList92()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"FF_ITEMS_HIGH",
+			{"Prefabs/Items"},
+			{"ShopProxy_Resource_Supplies", },
+			{"_Base"},
+			{}	
+		);
+		return lootList;
+	}			
 }
