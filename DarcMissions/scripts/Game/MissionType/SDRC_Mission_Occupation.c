@@ -211,8 +211,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		//Default		
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {};//{0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
-		conf.missionFiles.Insert("dc_missionConfig_Occupation_010_horror.json");
+		conf.missionList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
+		//conf.missionFiles.Insert("dc_missionConfig_Occupation_010_horror.json");
 		//Mission specific		
 		//----------------------------------------------------
 		conf.subMissions.Insert(Occupation0());				

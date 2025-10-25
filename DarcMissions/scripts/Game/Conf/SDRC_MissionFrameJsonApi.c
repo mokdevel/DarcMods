@@ -188,9 +188,9 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 
 		#ifndef SDRC_RELEASE				
 //			conf.enemyFactions = {"US"};
-			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
+//			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			conf.enemyFactions = {"BALLIEN_BC_FACTION"};
-//			conf.enemyFactions = {"USSR"};
+			conf.enemyFactions = {"USSR"};
 //			conf.enemyFactions = {"UK"};
 //			conf.enemyFactions = {"FIA", "US"};
 //			conf.enemyFactions = {"USSR", "FIA", "FIA", "FIA"};

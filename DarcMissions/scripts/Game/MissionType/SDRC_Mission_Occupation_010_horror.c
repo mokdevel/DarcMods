@@ -21,7 +21,8 @@ class SDRC_Occupation_010_horror_JsonApi : SDRC_OccupationJsonApi
 		//Default		
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {10, 11, 12};		
+//		conf.missionList = {10, 11, 12};		
+		conf.missionList = {10};		
 		//Mission specific		
 		//----------------------------------------------------
 		conf.subMissions.Insert(Occupation010());				
@@ -53,8 +54,8 @@ class SDRC_Occupation_010_horror_JsonApi : SDRC_OccupationJsonApi
 		);
 		occupation.ai.Set(
 			{1, 8},
-			{//"C_ZOMBIE", "G_ZOMBIE_SMALL", "G_ZOMBIE_MEDIUM", "G_ZOMBIE_LARGE"
-			 "C_DEMON", "C_DEMON_BOSS"
+			{//"C_DEMON", "C_DEMON_BOSS"
+			 "C_BEASTS", //"C_BEASTS", "C_BEASTS", "C_BEASTS", "C_BEASTS", "C_BEASTS", "C_BEASTS", 
 			},
 			50, 1.0,
 			{50, 300},
