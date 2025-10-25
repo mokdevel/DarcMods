@@ -71,7 +71,7 @@ class SDRC_MissionConfig : Managed
 	bool disableArsenal;										//Disable arsenal for vehicles so that no other items are found
 	ref array<ref int> missionList = {};						//The list of mission suids.
 	ref array<ref string> missionFiles = {};					//The list of mission files to load.
-	ref array<ref SDRC_MissionConfigSecondWave> secondWave = {};	//TBD: This is not used anywhere. REMOVE!
+//	ref array<ref SDRC_MissionConfigSecondWave> secondWave = {};	//TBD: This is not used anywhere. REMOVE!
 }
 
 //------------------------------------------------------------------------------------------------

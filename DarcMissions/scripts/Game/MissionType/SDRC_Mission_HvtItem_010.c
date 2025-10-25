@@ -1,15 +1,15 @@
-//Mission SDRC_HvtItem_010_JsonApi.c
+//Mission SDRC_HvtItem_010.c
 
 //------------------------------------------------------------------------------------------------
 /*!
 */
 
 //------------------------------------------------------------------------------------------------
-
 class SDRC_HvtItem_010_JsonApi : SDRC_HvtItemJsonApi
 {
 	private const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_HvtItem_010.json";
 
+	//------------------------------------------------------------------------------------------------
 	void SDRC_HvtItem_010_JsonApi(string fileName = "")
 	{		
 		SetFileName(DC_MISSIONCONFIG_FILE);

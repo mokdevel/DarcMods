@@ -180,6 +180,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void CreateMissionFiles()
 	{
+		SDRC_Occupation_010_horror_JsonApi occupation_010_horror_JsonApi = new SDRC_Occupation_010_horror_JsonApi();		
+		occupation_010_horror_JsonApi.Load();		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -209,7 +211,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		//Default		
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
+		conf.missionList = {};//{0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
+		conf.missionFiles.Insert("dc_missionConfig_Occupation_010_horror.json");
 		//Mission specific		
 		//----------------------------------------------------
 		conf.subMissions.Insert(Occupation0());				
@@ -218,7 +221,6 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.subMissions.Insert(Occupation3());				
 		conf.subMissions.Insert(Occupation4());				
 		conf.subMissions.Insert(Occupation5());				
-		conf.subMissions.Insert(Occupation6());				
 	};
 	
 	//----------------------------------------------------
@@ -240,7 +242,6 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			"The patrol kept %l safe from you. Pathetic.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
-			//"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP,
 			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
@@ -791,40 +792,5 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		occupation.campItems.Insert(item_14);
 
 		return occupation;
-	}	
-	
-	SDRC_Camp Occupation6()
-	{
-		ref SDRC_Camp occupation = new SDRC_Camp();
-		occupation.general.Set(
-			6, "index 6: Zombies and Demons.",
-			{"0 0 0"}, 3,
-			{
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_LOCAL
-			},
-			"any",
-			"Creatures near %l",
-			"Avoid the location. No loot available.",
-			SDRC_EMissionWinCondition.AI_KILL_ALL,
-			"Spawns from hell are dead!",
-			"Are you scared of a few ghosts..?",
-			"",
-			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
-			0
-		);
-		occupation.ai.Set(
-			{1, 8},
-			{//"C_ZOMBIE", "G_ZOMBIE_SMALL", "G_ZOMBIE_MEDIUM", "G_ZOMBIE_LARGE"
-			 "C_DEMON", "C_DEMON_BOSS"
-			},
-			50, 1.0,
-			{50, 300},
-			SDRC_EWaypointGenerationType.RANDOM,
-			SDRC_EWaypointMoveType.PATROLCYCLE,
-		);
-	
-		return occupation;
-	}		
+	}			
 }

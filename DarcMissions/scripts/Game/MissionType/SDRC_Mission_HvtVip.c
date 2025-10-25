@@ -257,9 +257,9 @@ class SDRC_HvtVip : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
-	ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();
 	ref array<string> buildingNames = {};
 	//Optional settings
+	ref SDRC_MissionConfigSecondWave secondWave = null;
 	string lootBox = "";					//The loot box
 	ref SDRC_Loot loot = null;
 	string target;

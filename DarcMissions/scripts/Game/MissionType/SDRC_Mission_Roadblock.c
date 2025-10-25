@@ -107,10 +107,6 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(GetPos(), m_DC_Roadblock.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Roadblock.general);		
-/*		SetMarker(m_Config.showMarker, m_DC_Roadblock.general.markerIcon, m_DC_Roadblock.general.markerType);
-		SetHint(m_Config.showHint, m_DC_Roadblock.general.title, m_DC_Roadblock.general.info);
-		SetMessages(m_Config.showMessage, m_DC_Roadblock.general.winMessage, m_DC_Roadblock.general.loseMessage);		
-		SetWinCondition(m_DC_Roadblock.general.winCondition);*/
 
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Roadblock.campItems);
 	}	
@@ -313,15 +309,17 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		
 		#ifndef USE_OLD_SECONDWAVE
-		roadblock.secondWave.Set(
+		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();		
+		secondWave.Set(
 			{0}, SDRC_EMissionSuccess.WIN,
 			1.0, {5, 20},
 			"Second Wave coming",
 			SDRC_EMissionDifficulty.NORMAL, 0
 		);
+		roadblock.secondWave = secondWave;
 		#endif
 		
-		ref SDRC_Loot loot = new SDRC_Loot();
+		ref SDRC_Loot loot = new SDRC_Loot();		
 		array<string> lootItems = {
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",

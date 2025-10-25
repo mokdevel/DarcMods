@@ -9,6 +9,7 @@ class SDRC_Stash_010_JsonApi : SDRC_StashJsonApi
 {
 	private const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Stash_010.json";
 
+	//------------------------------------------------------------------------------------------------
 	void SDRC_Stash_010_JsonApi(string fileName = "")
 	{		
 		SetFileName(DC_MISSIONCONFIG_FILE);
