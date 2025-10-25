@@ -23,9 +23,10 @@ int minDistanceToMission : Distance to another mission. Two missions shall not b
 int minDistanceToPlayer : Mission shall not spawn too close to a player.
 bool showStaticMissionMarker : Show/hide static mission markers. 
 array<string> enemyFactions : The array of factions to consider as enemies. "USSR" by default. 
-  Tested values: US, USSR, FIA, RHS_USAF, RHS_AFRF, MEI, BALLIEN_BC_FACTION, BACON_622120A5448725E3_FACTION
+  Tested values: US, USSR, FIA, UK, RHS_USAF, RHS_AFRF, MEI, BALLIEN_BC_FACTION, BACON_622120A5448725E3_FACTION
   Unsupported values: RHS_ION, MEC
-  You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission. Example: "enemyFactions": ["FIA", "USSR"]
+  You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission.
+  Example: "enemyFactions": ["FIA", "USSR"]
 SDRC_MissionDifficulty missionDifficulty : Difficulty settings.
 SDRC_MissionTypeConfig missionDynamic : Dynamic missions configurations.
 SDRC_MissionTypeConfig missionStatic : Static missions configurations.

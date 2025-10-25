@@ -11,6 +11,7 @@ bool showHint : Show players a hint with details about the missions. False will 
 bool showMessage : Show winmessage and losemessage to players. False will hide these.
 bool disableArsenal : Disable arsenal for vehicles so that only defined loot items are found.
 array<int> missionList : The list of mission suids.
+  Example: "missionList":[0,0,1,1,2] - Missions 0 and 1 will spawn with 40% chance and 2 with 20%
 array<string> missionFiles : The list of mission files to load. The are additional .json files that are of the same type.  
 ```
 
