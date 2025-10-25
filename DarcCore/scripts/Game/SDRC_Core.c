@@ -53,10 +53,9 @@ class SDRC_Core
 		SDRC_Misc.GetAddonList(m_sAddonList, true);
 		SDRC_Log.Add("[SDRC_Core] -------------------------------------", LogLevel.NORMAL);
 
-		SDRC_EnemyHelper.SetDefaultEnemyFaction(m_Config.fallbackEnemyFaction);
+		//SDRC_EnemyHelper.SetDefaultEnemyFaction(m_Config.fallbackEnemyFaction);
 		
 		GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);			
-		GetGame().GetCallqueue().CallLater(FillLocationCache, 3000, false);			
 		
 		//Initialize LootHelper
 		SDRC_LootHelper.Setup();
@@ -81,12 +80,13 @@ class SDRC_Core
 	{
 		//Initialize building cache
 		SDRC_BuildingHelper.FillBuildingsCache(m_Config.buildingExcludeFilter);
+		GetGame().GetCallqueue().CallLater(FillLocationCache, 2000, false);			
 	}
 	
 	//------------------------------------------------------------------------------------------------		
 	void FillLocationCache()
 	{
 		//Initialize locations cache
-		SDRC_Locations.FillLocationsCache(m_Config.locationAkas);
+		SDRC_Locations.FillLocationsCache(m_Config.locationAkas, m_Config.buildingAkas);
 	}	
 }

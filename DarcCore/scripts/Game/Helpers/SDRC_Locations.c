@@ -69,18 +69,13 @@ sealed class SDRC_Locations
 			location.pos = tmpMapItem.GetPos();
 			location.baseType = tmpMapItem.GetBaseType();
 			location.name = tmpMapItem.GetDisplayName();
-			//#ifdef EXPERIMENTAL			
 			location.displayName = WidgetManager.Translate(tmpMapItem.GetDisplayName());
-			/*#endif
-			#ifndef EXPERIMENTAL			
-				location.displayName = SCR_StringHelper.Translate(tmpMapItem.GetDisplayName());
-			#endif*/
 			location.createdName = CreateName(location.pos);
 			locationArray.Insert(location);
 		}
-		
+				
 		SDRC_Log.Add("[SDRC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
-		ShowDebugInfo(locationArray);		
+		ShowDebugInfo(locationArray);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -124,94 +119,9 @@ sealed class SDRC_Locations
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Helper function that just prints the information for debugging purposes.
-	*/	
-	static private void ShowDebugInfo(array<MapItem> m_tmpLocationArray)
-	{
-		array<IEntity> slots = {};
-
-		if (SDRC_Log.GetLogLevel() == DC_LogLevel.ALL)
-		{		
-/*			SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Found %1 locations of type (%2) %3", 
-				m_tmpLocationArray.Count(),
-				locationType,
-			 	SCR_Enum.GetEnumName(EMapDescriptorType, locationType),
-				), LogLevel.DEBUG);*/
-	
-			foreach (MapItem location: m_tmpLocationArray)
-			{	
-				IEntity entity = location.Entity();
-				SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Name: %1 , DisplayName: %2 , CreatedName: %3, Type: %4 , Pos: %5 , Entity: %6", 
-					location.Entity().GetName(),
-					location.GetDisplayName(),
-					CreateName(location.GetPos()),
-					location.GetBaseType(),
-					location.GetPos(),
-					entity
-					), LogLevel.SPAM);
-
-				slots.Clear();
-				int slotcount = GetLocationSlots(slots, location.GetPos(), 200);
-				
-				SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Found %1 slots.", 
-					slotcount,
-					), LogLevel.SPAM);
-				
-				#ifndef SDRC_RELEASE
-					if (SDRC_Conf.SHOW_MARKER_FOR_LOCATION)
-					{
-						if (location) 
-						{
-							SDRC_DebugHelper.AddDebugPos(location);
-						}
-					}
-				#endif
-			}
-		}
-	}
-
-	//------------------------------------------------------------------------------------------------
-	static private void ShowDebugInfo(array<ref SDRC_Location> m_tmpLocationArray)
-	{
-		array<IEntity> slots = {};
-
-		if (SDRC_Log.GetLogLevel() == DC_LogLevel.ALL)
-		{		
-			foreach (SDRC_Location location: m_tmpLocationArray)
-			{			
-				SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Name: %2 (%1) , CreatedName: %3, Type: %4 , Pos: %5", 
-					location.name,
-					location.displayName,
-					location.createdName,
-					location.baseType,
-					location.pos,
-					), LogLevel.SPAM);
-
-				slots.Clear();
-				int slotcount = GetLocationSlots(slots, location.pos, 200);
-				
-				SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Found %1 slots.", 
-					slotcount,
-					), LogLevel.SPAM);
-				
-				#ifndef SDRC_RELEASE
-					if (SDRC_Conf.SHOW_MARKER_FOR_LOCATION)
-					{
-						if (location) 
-						{
-							SDRC_DebugHelper.AddDebugPos(location.pos);
-						}
-					}
-				#endif
-			}
-		}
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
 	Prepare an array with all locations on the map.
 	*/		
-	static void FillLocationsCache(array<ref SDRC_LocationAka> locationAkas)
+	static void FillLocationsCache(array<ref SDRC_LocationAka> locationAkas, array<ref SDRC_LocationAka> buildingAkas)
 	{
 		#ifndef SDRC_RELEASE
 			//If SCR_MapEntity does not exist, we most likely are playing in some debug map
@@ -247,19 +157,42 @@ sealed class SDRC_Locations
 						locNew.displayName = location.displayName;
 						locNew.createdName = location.createdName;
 						m_LocationsCache.Insert(locNew);
-						SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Added via aka: " + locNew.displayName + " : " + type + " at: " + locNew.pos, LogLevel.SPAM);						
+						SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Added via location aka: " + locNew.displayName + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, locNew.baseType) + " at: " + locNew.pos, LogLevel.DEBUG);						
 					}
 				}
 			}
 		}
-				
+
+		//Handle location akas
+		foreach (SDRC_LocationAka aka : buildingAkas)
+		{
+			EMapDescriptorType type = aka.type;
+			array<IEntity> buildings = {};
+			SDRC_BuildingHelper.FindBuildings(buildings, aka.names);		
+
+			foreach (IEntity building : buildings)
+			{
+				SDRC_Location locNew = new SDRC_Location();
+				locNew.pos = building.GetOrigin();
+				locNew.baseType = type;
+				locNew.name = CreateName(building);
+				locNew.displayName = locNew.name;
+				locNew.createdName = locNew.name;
+				m_LocationsCache.Insert(locNew);
+				SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Added via building aka: " + locNew.displayName + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, locNew.baseType) + " at: " + locNew.pos, LogLevel.DEBUG);						
+			}
+		}
+						
 		//Print debug information
 		foreach (SDRC_Location location: m_LocationsCache)
 		{
 			SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Found: " + location.displayName + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, location.baseType) + " at: " + location.pos, LogLevel.DEBUG);
 		}		
 		
-		SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Found " + m_LocationsCache.Count() + " items to location cache.", LogLevel.NORMAL);					
+		SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Found " + m_LocationsCache.Count() + " items to location cache.", LogLevel.NORMAL);
+
+		ShowDebugInfo(m_LocationsCache);
+		//ShowDebugLocationMarker();
 	}	
 
 	//-----------------------------------------------------------------------------------------------
@@ -412,7 +345,103 @@ sealed class SDRC_Locations
 		}
 		return true;
 	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Helper function that just prints the information for debugging purposes.
+	*/	
+	static private void ShowDebugInfo(array<MapItem> m_tmpLocationArray)
+	{
+		array<IEntity> slots = {};
+
+/*		SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Found %1 locations of type (%2) %3", 
+			m_tmpLocationArray.Count(),
+			locationType,
+		 	SCR_Enum.GetEnumName(EMapDescriptorType, locationType),
+			), LogLevel.DEBUG);*/
 	
+		foreach (MapItem location: m_tmpLocationArray)
+		{	
+			IEntity entity = location.Entity();
+			SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Name: %1 , DisplayName: %2 , CreatedName: %3, Type: %4 , Pos: %5 , Entity: %6", 
+				location.Entity().GetName(),
+				location.GetDisplayName(),
+				CreateName(location.GetPos()),
+				location.GetBaseType(),
+				location.GetPos(),
+				entity
+				), LogLevel.SPAM);
+
+			slots.Clear();
+			int slotcount = GetLocationSlots(slots, location.GetPos(), 200);
+			
+			SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Found %1 slots.", 
+				slotcount,
+				), LogLevel.SPAM);
+			
+			#ifndef SDRC_RELEASE
+				if (SDRC_Conf.SHOW_MARKER_FOR_LOCATION)
+				{
+					if (location) 
+					{
+						SDRC_DebugHelper.AddDebugPos(location);
+					}
+				}
+			#endif
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	static private void ShowDebugInfo(array<ref SDRC_Location> m_tmpLocationArray)
+	{
+		array<IEntity> slots = {};
+
+		foreach (SDRC_Location location: m_tmpLocationArray)
+		{			
+			SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Name: %2 (%1) , CreatedName: %3, Type: %4 , Pos: %5", 
+				location.name,
+				location.displayName,
+				location.createdName,
+				location.baseType,
+				location.pos,
+				), LogLevel.SPAM);
+
+			slots.Clear();
+			int slotcount = GetLocationSlots(slots, location.pos, 200);
+			
+			SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Found %1 slots.", 
+				slotcount,
+				), LogLevel.SPAM);
+			
+			#ifndef SDRC_RELEASE
+				if (SDRC_Conf.SHOW_MARKER_FOR_LOCATION)
+				{
+					if (location) 
+					{
+						SDRC_DebugHelper.AddDebugPos(location.pos);
+					}
+				}
+			#endif
+		}
+	}	
+
+/*	//------------------------------------------------------------------------------------------------
+	static private void ShowDebugLocationMarker()
+	{
+		#ifndef SDRC_RELEASE
+			foreach (SDRC_Location location: m_LocationsCache)
+			{			
+				if (SDRC_Conf.SHOW_MARKER_FOR_LOCATION)
+				{
+					if (location) 
+					{
+						SDRC_DebugHelper.AddDebugPos(location.pos);
+					}
+				}
+			}
+		#endif
+	}	*/
+		
 	//------------------------------------------------------------------------------------------------
 	private static ref array<EMapDescriptorType>m_LocationTypeArray =
 	{
