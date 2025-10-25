@@ -12,7 +12,7 @@ sealed class SDRC_EnemyHelper
 		
 	private static ref SDRC_EnemyListJsonApi m_EnemyListJsonApi;
 	private static ref SDRC_ListConfig m_Config;
-	private static string m_sDefaultEnemyFactionKey = "USSR";
+//	private static string m_sDefaultEnemyFactionKey = "USSR";
 	private static ref array<string> m_sEnemyFactions = {};
 	private static ref array<string> m_sFactionList = {};
 	
@@ -100,7 +100,7 @@ sealed class SDRC_EnemyHelper
 		SDRC_EnemyHelper.SanityCheck(m_sEnemyFactions);		
 	}
 	
-	//------------------------------------------------------------------------------------------------
+/*	//------------------------------------------------------------------------------------------------
 	static void SetDefaultEnemyFaction(string faction)
 	{
 		if (faction != "")
@@ -109,14 +109,14 @@ sealed class SDRC_EnemyHelper
 		}
 		
 		SDRC_Log.Add("[SDRC_EnemyHelper:SetDefaultEnemyFaction] Default enemy faction: " + faction, LogLevel.NORMAL);
-	}
+	}*/
 
 	//------------------------------------------------------------------------------------------------
 	static string SelectEnemyFaction(string faction = "")
 	{
-		
 		if (m_sEnemyFactions.IsEmpty())
 		{
+			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] No enemy factions defined.", LogLevel.WARNING);
 			return "";
 		}
 		
@@ -127,12 +127,12 @@ sealed class SDRC_EnemyHelper
 			return faction;
 		}
 		
-		if (faction == "DEFAULT")
+/*		if (faction == "DEFAULT")
 		{
 			faction = m_sDefaultEnemyFactionKey;
 			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] DEFAULT: " + faction, LogLevel.DEBUG);
 			return faction;
-		}
+		}*/
 		
 		if (faction != "")
 		{			
@@ -144,8 +144,9 @@ sealed class SDRC_EnemyHelper
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Incorrect faction requested: " + faction + " . Using default: " + m_sDefaultEnemyFactionKey, LogLevel.WARNING);
-				faction = m_sDefaultEnemyFactionKey;
+//				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Incorrect faction requested: " + faction + " . Using default: " + m_sDefaultEnemyFactionKey, LogLevel.WARNING);
+				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Incorrect faction requested: " + faction, LogLevel.ERROR);
+				faction = "";//m_sDefaultEnemyFactionKey;
 				return faction;
 			}
 		}
