@@ -10,9 +10,9 @@ class SDRC_Camp : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();		
-	ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
 	
 	//Optional settings
+	ref SDRC_MissionConfigSecondWave secondWave = null;//new SDRC_MissionConfigSecondWave();	
 	ref SDRC_Loot loot = null;
 	ref array<ref SDRC_Structure> campItems = {};	
 }
@@ -110,8 +110,17 @@ sealed class SDRC_CampHelper
 	*/
 	static bool AddLoot(SDRC_Camp camp)
 	{
-		//NOTE: Error checking for missing loot or box is done in SpawnItemsToStorage()
-		//NOTE: itemChance difficulty is handled in 
+		if (!camp.loot)
+		{
+			return false;
+		}
+		
+		if (!camp.loot.box)
+		{
+			return false;
+		}
+		
+		//NOTE: itemChance difficulty is handled in TBD
 		SDRC_LootHelper.SpawnItemsToStorage(camp.loot.box, camp.loot.items, camp.loot.itemChance);
 		SDRC_Log.Add("[SDRC_campHelper:AddLoot] Loot added.", LogLevel.DEBUG);								
 		
