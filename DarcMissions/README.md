@@ -1,5 +1,5 @@
 # DarcMissions
-A mission frame work for Arma Reforger. DarcMissions is thoroughly designed to work on any map without specific configs. There are various missions premade and their behaviour can be modified by editing the configuration jsons.
+A mission frame work for Arma Reforger. There are various missions premade and their behaviour can be modified by editing the configuration jsons.
 
 ## Installation
 Just activate the mod (and dependencies) and you're good to go.
@@ -105,8 +105,15 @@ Dependency specific files
 
 ..empty..
 
-## 20251023
+## Update 20251025
+### DarcMissions
+No changes in mission jsons. This is mainly an addition for Freedom Fighters compatibility.
 
+Main features:
+* Support for British Forces
+  * If you're using the faction, delete dc_enemyList.json to get an updated one.
+
+## 20251023
 ### DarcMissions
 Major changes in the json files. The safest way is to backup your current ones if you have made a lot changes. If not, just delete the old confs.
 * Hunters will not follow players to NonValidAreas. 

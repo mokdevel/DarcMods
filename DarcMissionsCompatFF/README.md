@@ -30,10 +30,14 @@ float spawnRateForGreenZones : The percentage chance to spawn a mission to green
 
 ## Next release (unreleased)
 
-..empty..
+... empty ...
+
+## 20251025
+Main features:
 * Crashsite helicopters and convoys are not despawning. 
-  NOTE: The cleanup code for wrecks is triggered when first player joins. This may remove currently existing helicopters and/or convoys. Only happens once.
+  NOTE: The cleanup code for wrecks is triggered when first player joins. This may remove currently existing helicopters and/or convoys. Only happens once at startup.
 * Mission completion gives a reward. The current implementation gives a static 500 to share. To be improved in the future.
+* Support for British Forces - if you're using the faction, delete dc_enemyList.json to get an updated one.
 
 ## 20251023
 A new mod for compatibility with Freedom Fighters. First release.
