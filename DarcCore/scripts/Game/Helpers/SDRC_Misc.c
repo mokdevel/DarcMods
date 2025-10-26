@@ -111,7 +111,31 @@ sealed class SDRC_Misc
 						
 		return worldSize;
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Returns the radius of the world from center to corner.
+	*/	
+	static float GetWorldSizeRadius()
+	{
+		float worldSize = SDRC_Misc.GetWorldSize();		
+		float radius = worldSize;	//TBD: Lazy code as the distance from center to corner is not worldSize
+		return radius;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Returns the center of the world
+	*/	
+	static vector GetWorldCenter()
+	{
+		float worldSize = SDRC_Misc.GetWorldSize();		
+		vector pos = "0 0 0";
+		pos[0] = worldSize/2;
+		pos[2] = pos[0];
+		return pos;
+	}	
+			
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Returns the world name being played.

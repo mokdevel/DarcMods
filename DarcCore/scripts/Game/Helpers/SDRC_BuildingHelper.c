@@ -80,14 +80,14 @@ sealed class SDRC_BuildingHelper
 		SDRC_Log.Add("[SDRC_BuildingHelper:FillBuildingsCache] Searching..", LogLevel.NORMAL);			
 		
 		m_BuildingsCache.Clear();
-		float worldSize = SDRC_Misc.GetWorldSize();		
+/*		float worldSize = SDRC_Misc.GetWorldSize();		
 		vector pos = "0 0 0";
 		pos[0] = worldSize/2;
-		pos[1] = pos[0];
-		float radius = worldSize; 
+		pos[2] = pos[0];
+		float radius = worldSize;*/
 		
 		m_TmpBuildings.Clear();
-		GetGame().GetWorld().QueryEntitiesBySphere(pos, radius, FindBuildingCallback, null, EQueryEntitiesFlags.STATIC);		
+		GetGame().GetWorld().QueryEntitiesBySphere(SDRC_Misc.GetWorldCenter(), SDRC_Misc.GetWorldSizeRadius(), FindBuildingCallback, null, EQueryEntitiesFlags.STATIC);		
 
 		foreach (IEntity building: m_TmpBuildings)
 		{
