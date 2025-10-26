@@ -54,6 +54,8 @@ class SDRC_MissionFrame
 	//------------------------------------------------------------------------------------------------
 	void SDRC_MissionFrame()
 	{
+		SDRC_Spline3D.TestSpline();		
+		
 		SDRC_Log.Add("[SDRC_MissionFrame] Starting SDRC_MissionFrame", LogLevel.NORMAL);
 		s_Instance = this;
 				
@@ -81,6 +83,7 @@ class SDRC_MissionFrame
 		//Checking the enemies found
 		SDRC_Log.Add("[SDRC_MissionFrame] Enemy factions: " + m_Config.enemyFactions, LogLevel.NORMAL);
 		SDRC_EnemyHelper.SetEnemyFactions(m_Config.enemyFactions);
+		SDRC_Log.Add("[SDRC_MissionFrame] Fallback faction: " + SDRC_EnemyHelper.GetDefaultEnemyFaction(), LogLevel.NORMAL);
 
 		//Count amount of dynamic and static missions
 		m_iMissionCountDynamicMax = SDRC_MissionHelper.GetMissionCountForWorld(m_Config.missionDynamic.count, m_Config.missionDynamic.countMul);

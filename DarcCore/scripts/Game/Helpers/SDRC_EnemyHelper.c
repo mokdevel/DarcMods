@@ -12,23 +12,64 @@ sealed class SDRC_EnemyHelper
 		
 	private static ref SDRC_EnemyListJsonApi m_EnemyListJsonApi;
 	private static ref SDRC_ListConfig m_Config;
-//	private static string m_sDefaultEnemyFactionKey = "USSR";
+	private static string m_sDefaultEnemyFactionKey;
+	private static Faction m_DefaultEnemyFaction = null;
 	private static ref array<string> m_sEnemyFactions = {};
 	private static ref array<string> m_sFactionList = {};
 	
 	//------------------------------------------------------------------------------------------------
-	static void Setup()
+	/*! 
+	Setup enemyHelper.
+	This will prepare the enemyLists, factionList and set default enemyFaction
+	*/	
+	static void Setup(string defaultEnemyFaction)
 	{
 		SDRC_Log.Add("[SDRC_EnemyHelper:Setup] Preparing..", LogLevel.NORMAL);
+
+		SDRC_FactionHelper.GetFactionList(m_sFactionList);
+				
+		m_sDefaultEnemyFactionKey = defaultEnemyFaction;
+		m_DefaultEnemyFaction = GetFactionWithName(m_sDefaultEnemyFactionKey);
+		if (!m_DefaultEnemyFaction)
+		{
+			SDRC_Log.Add("[SDRC_EnemyHelper:Setup] Error in setting fallback enemy faction: " + defaultEnemyFaction, LogLevel.ERROR);
+		}
 		
-		SDRC_AIHelper.GetFactionList(m_sFactionList);
 		//Load enemy config
 		m_EnemyListJsonApi = new SDRC_EnemyListJsonApi(DC_MISSIONCONFIG_FILE);
 		m_EnemyListJsonApi.Load();
 		m_Config = m_EnemyListJsonApi.conf;
 		m_Config.Populate();		
 	}
-
+	
+	//------------------------------------------------------------------------------------------------
+	/*! 
+	Select the proper enemy resourcename for spawning. 
+	\param listName The enemyList to check. If a prefab "{xxx}.." is provided, that is returned.
+	*/	
+	static void SetEnemyFactions(array<string>enemyFactions)
+	{
+		SDRC_Log.Add("[SDRC_EnemyHelper:SetEnemyFactions] Setting enemy factions: " + enemyFactions, LogLevel.DEBUG);
+		m_sEnemyFactions = enemyFactions;		
+		SDRC_EnemyHelper.SanityCheck(m_sEnemyFactions);		
+	}	
+		
+	//------------------------------------------------------------------------------------------------
+	static string GetDefaultEnemyFaction()
+	{
+		return m_sDefaultEnemyFactionKey;
+	}
+	
+/*	static void SetDefaultEnemyFaction(string faction)
+	{
+		if (faction != "")
+		{
+			m_sDefaultEnemyFactionKey = faction;
+		}
+		
+		SDRC_Log.Add("[SDRC_EnemyHelper:SetDefaultEnemyFaction] Default enemy faction: " + faction, LogLevel.NORMAL);
+	}*/
+			
 	//------------------------------------------------------------------------------------------------
 	static void SanityCheck(array<string>enemyFactions)
 	{
@@ -93,74 +134,11 @@ sealed class SDRC_EnemyHelper
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	static void SetEnemyFactions(array<string>enemyFactions)
-	{
-		SDRC_Log.Add("[SDRC_EnemyHelper:SetEnemyFactions] Setting enemy factions: " + enemyFactions, LogLevel.DEBUG);
-		m_sEnemyFactions = enemyFactions;		
-		SDRC_EnemyHelper.SanityCheck(m_sEnemyFactions);		
-	}
-	
-/*	//------------------------------------------------------------------------------------------------
-	static void SetDefaultEnemyFaction(string faction)
-	{
-		if (faction != "")
-		{
-			m_sDefaultEnemyFactionKey = faction;
-		}
-		
-		SDRC_Log.Add("[SDRC_EnemyHelper:SetDefaultEnemyFaction] Default enemy faction: " + faction, LogLevel.NORMAL);
-	}*/
-
-	//------------------------------------------------------------------------------------------------
-	static string SelectEnemyFaction(string faction = "")
-	{
-		if (m_sEnemyFactions.IsEmpty())
-		{
-			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] No enemy factions defined.", LogLevel.WARNING);
-			return "";
-		}
-		
-		if (faction == "")	//RANDOM
-		{
-			faction = m_sEnemyFactions.GetRandomElement();
-			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Selected: " + faction, LogLevel.SPAM);
-			return faction;
-		}
-		
-/*		if (faction == "DEFAULT")
-		{
-			faction = m_sDefaultEnemyFactionKey;
-			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] DEFAULT: " + faction, LogLevel.DEBUG);
-			return faction;
-		}*/
-		
-		if (faction != "")
-		{			
-			if (m_sFactionList.Contains(faction))
-			{
-				//faction = m_sDefaultEnemyFactionKey;
-				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Mission specific: " + faction, LogLevel.SPAM);
-				return faction;
-			}
-			else
-			{
-//				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Incorrect faction requested: " + faction + " . Using default: " + m_sDefaultEnemyFactionKey, LogLevel.WARNING);
-				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Incorrect faction requested: " + faction, LogLevel.ERROR);
-				faction = "";//m_sDefaultEnemyFactionKey;
-				return faction;
-			}
-		}
-				
-		SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Selected: " + faction + " (no change)", LogLevel.SPAM);
-		return faction;
-	}
-	
-	//------------------------------------------------------------------------------------------------
 	/*! 
 	Select the proper enemy resourcename for spawning. 
 	\param listName The enemyList to check. If a prefab "{xxx}.." is provided, that is returned.
 	*/	
-	static ResourceName SelectEnemy(string listName, string faction = "DEFAULT")
+	static ResourceName SelectEnemy(string listName, string faction)
 	{
 		int index = -1;		
 		array<string> enemyList = {};
@@ -225,4 +203,67 @@ sealed class SDRC_EnemyHelper
 		SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemy] Selected: (" + listName + ") " + resourceName, LogLevel.DEBUG);
 		return resourceName;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*! 
+	Select faction for the enemy.
+	\param faction The faction requested
+	*/	
+	static string SelectEnemyFaction(string faction = "")
+	{
+		if (m_sEnemyFactions.IsEmpty())
+		{
+			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] No enemy factions defined.", LogLevel.WARNING);
+			return "";
+		}
+		
+		if (faction == "")	//RANDOM
+		{
+			faction = m_sEnemyFactions.GetRandomElement();
+			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Selected: " + faction, LogLevel.SPAM);
+			return faction;
+		}
+		
+		if (faction != "")
+		{			
+			if (m_sFactionList.Contains(faction))
+			{
+				//faction = m_sDefaultEnemyFactionKey;
+				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Mission specific: " + faction, LogLevel.SPAM);
+				return faction;
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Incorrect faction requested: " + faction + " . Using default: " + m_sDefaultEnemyFactionKey, LogLevel.WARNING);
+				faction = m_sDefaultEnemyFactionKey;
+				return faction;
+			}
+		}
+				
+		SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Selected: " + faction + " (no change)", LogLevel.SPAM);
+		return faction;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get Faction with string name
+	*/	
+	static Faction GetFactionWithName(string name)
+	{
+		FactionManager factionManager = GetGame().GetFactionManager();
+		if (!factionManager)
+		{			
+			SDRC_Log.Add("[SDRC_EnemyHelper:GetFactionWithName] No faction manager found.", LogLevel.ERROR);
+			return m_DefaultEnemyFaction;
+		}
+		
+		Faction faction = factionManager.GetFactionByKey(name);
+		if (!faction)
+		{
+			SDRC_Log.Add("[SDRC_EnemyHelper:GetFactionWithName] Using default faction: " + m_sDefaultEnemyFactionKey, LogLevel.WARNING);
+			return m_DefaultEnemyFaction;
+		}
+		
+		return faction;
+	}	
 }

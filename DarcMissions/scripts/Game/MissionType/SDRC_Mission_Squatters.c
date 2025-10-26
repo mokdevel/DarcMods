@@ -66,11 +66,18 @@ class SDRC_Mission_Squatter : SDRC_Mission
 				}
 				else
 				{
-					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Squatter.general.locationTypes, m_DC_Squatter.general.size, );
+					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Squatter.general.locationTypes, m_DC_Squatter.general.size);
 				}
 			}
 		}
 
+		//If failed, stop
+		if (pos == "0 0 0")	//No suitable location found.
+		{				
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
+			return;
+		}	
+		
 		//Find the mission house
 		m_Building = SDRC_MissionHelper.FindMissionBuilding(pos, buildingFilter, radius);
 		if (m_Building)
@@ -133,7 +140,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		if (m_iSpawnIndex < m_iAiCount)
 		{
 			//Each AI is spawned in to its own group to be able to give individual waypoints to a character
-			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.ai.types.GetRandomElement(), m_DC_Squatter.ai.GetSkill(m_DC_Squatter.general.difficulty), m_DC_Squatter.ai.GetPerception(m_DC_Squatter.general.difficulty), GetFaction());
+			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.ai.types.GetRandomElement(), GetFaction(), m_DC_Squatter.ai.GetSkill(m_DC_Squatter.general.difficulty), m_DC_Squatter.ai.GetPerception(m_DC_Squatter.general.difficulty), );
 			if (group)
 			{
 				m_Groups.Insert(group);
@@ -196,9 +203,14 @@ class SDRC_Squatter : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
+	#ifndef NEW_VERSION_WIP	
+		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
+	#endif
 	ref array<string> buildingNames = {};
 	//Optional settings
-	ref SDRC_MissionConfigSecondWave secondWave = null;
+	#ifdef NEW_VERSION_WIP
+		ref SDRC_MissionConfigSecondWave secondWave = null;
+	#endif
 	string lootBox = "";					//The loot box
 	ref SDRC_Loot loot = null;
 	

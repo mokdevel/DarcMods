@@ -274,10 +274,15 @@ class SDRC_Convoy : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();	
+	#ifndef NEW_VERSION_WIP	
+		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
+	#endif
 	ref array<string> vehicleTypes = {};
 	float cruiseSpeed;						//Speed to drive in km/h.
 	//Optional settings
-	ref SDRC_MissionConfigSecondWave secondWave = null;
+	#ifdef NEW_VERSION_WIP	
+		ref SDRC_MissionConfigSecondWave secondWave = null;
+	#endif
 	ref SDRC_Loot loot = null;	
 	
 	void Set(array<string> vehicleTypes_, float cruiseSpeed_)

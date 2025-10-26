@@ -195,7 +195,12 @@ class SDRC_Patrol : Managed
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
 	//Optional settings
-	ref SDRC_MissionConfigSecondWave secondWave = null;
+	#ifndef NEW_VERSION_WIP	
+		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
+	#endif
+	#ifdef NEW_VERSION_WIP		
+		ref SDRC_MissionConfigSecondWave secondWave = null;
+	#endif
 }		
 
 //------------------------------------------------------------------------------------------------

@@ -75,6 +75,13 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 			}
 		}
 
+		//If failed, stop
+		if (pos == "0 0 0")	//No suitable location found.
+		{				
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
+			return;
+		}	
+		
 		//Find the mission house
 		m_Building = SDRC_MissionHelper.FindMissionBuilding(pos, buildingFilter, radius);
 		if (m_Building)
@@ -91,10 +98,6 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_HvtVip.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_HvtVip.general);		
-/*		SetMarker(m_Config.showMarker, m_DC_HvtVip.general.markerIcon, m_DC_HvtVip.general.markerType);
-		SetHint(m_Config.showHint, m_DC_HvtVip.general.title, m_DC_HvtVip.general.info);
-		SetMessages(m_Config.showMessage, m_DC_HvtVip.general.winMessage, m_DC_HvtVip.general.loseMessage);				
-		SetWinCondition(m_DC_HvtVip.general.winCondition);*/
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -167,14 +170,13 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 			}
 
 			//Spawn target enemy and add it to mission faction
-			//TBD: The CIV target faction is not set properly
-			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_HvtVip.target, m_DC_HvtVip.ai.GetSkill(), m_DC_HvtVip.ai.GetPerception(), GetFaction());
+			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_HvtVip.target, GetFaction(), m_DC_HvtVip.ai.GetSkill(), m_DC_HvtVip.ai.GetPerception(), );
 			if (group)
 			{			
 				m_Groups.Insert(group);
 				m_Target = group;
 				SDRC_AIHelper.SetAIGroupMovementType(group, EMovementType.IDLE);
-				Faction faction = SDRC_AIHelper.GetFactionWithName(GetFaction());
+				Faction faction = SDRC_EnemyHelper.GetFactionWithName(GetFaction());
 				if (!faction)
 				{
 					SDRC_Log.Add("[SDRC_Mission_HvtVip:MissionSpawn] " +  GetId() + " : Vip target faction not set.", LogLevel.ERROR);													
@@ -257,9 +259,14 @@ class SDRC_HvtVip : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
+	#ifndef NEW_VERSION_WIP	
+		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
+	#endif
 	ref array<string> buildingNames = {};
 	//Optional settings
-	ref SDRC_MissionConfigSecondWave secondWave = null;
+	#ifdef NEW_VERSION_WIP		
+		ref SDRC_MissionConfigSecondWave secondWave = null;
+	#endif
 	string lootBox = "";					//The loot box
 	ref SDRC_Loot loot = null;
 	string target;

@@ -308,7 +308,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		
-		#ifndef USE_OLD_SECONDWAVE
+		#ifndef NEW_VERSION_WIP
 		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();		
 		secondWave.Set(
 			{0}, SDRC_EMissionSuccess.WIN,

@@ -8,7 +8,9 @@ Functions for various AI actions
 sealed class SDRC_AIHelper
 {			
 	const int AI_SETTING_DELAY = 10000;
-	
+
+	static private ref array<SCR_FactionManager> m_aFactionManagers = {};
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Spawn an AIagent 
@@ -18,7 +20,7 @@ sealed class SDRC_AIHelper
 		SDRC_AIHelper.GroupAddAI(aiAgent);
 	
 	*/
-	static AIAgent SpawnAIAgent(ResourceName resourceName, vector pos, bool snap = true, string faction = "DEFAULT")
+	static AIAgent SpawnAIAgent(ResourceName resourceName, vector pos, string faction, bool snap = true)
 	{
 		Resource resource = null;
 		AIAgent aiAgent = null;
@@ -80,7 +82,7 @@ sealed class SDRC_AIHelper
 		if ( (name.Contains("Prefabs/Characters/")) )
 		{
 			//Spawn an individual character
-			AIAgent aiAgent = SpawnAIAgent(name, spawnPosition, true, faction);
+			AIAgent aiAgent = SpawnAIAgent(name, spawnPosition, faction, true);
 
 			//Add to proper group
 			if (aiAgent)
@@ -124,10 +126,9 @@ sealed class SDRC_AIHelper
 			|------------------------------------------| House size
 		               |---------||---------|            Random spot is 1/6 of house size from the center
 		          |----*----|                            Radius to search for a spot is 1/5 of house size
-	
 	*/
 	
-	static SCR_AIGroup SpawnAIInBuilding(IEntity building, string resourceName, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0, string faction = "DEFAULT")
+	static SCR_AIGroup SpawnAIInBuilding(IEntity building, string resourceName, string faction, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
 		array<vector> floors = {};
 		vector pos, floorpos;
@@ -157,7 +158,7 @@ sealed class SDRC_AIHelper
 		pos = SDRC_Misc.RandomizePos(floorpos, radius/6);
 		pos[1] = pos[1] + 0.2;			
 //		SDRC_DebugHelper.AddDebugSphere(pos, Color.YELLOW, 0.4);
-		AIAgent aiAgent = SDRC_AIHelper.SpawnAIAgent(resourceName, pos, false, faction);
+		AIAgent aiAgent = SDRC_AIHelper.SpawnAIAgent(resourceName, pos, faction, false);
 		
 		SetAISkill(aiAgent, skill, perceptionFactor);
 		
@@ -369,13 +370,13 @@ sealed class SDRC_AIHelper
 			params.Transform[3] = pos;
 				
 			group = SCR_AIGroup.Cast(GetGame().SpawnEntityPrefab(resource, null, params));		
+			group.SetFaction(SDRC_EnemyHelper.GetFactionWithName(faction));
 		}	
 		else
 		{
 			SDRC_Log.Add("[SDRC_AIHelper:GroupCreate] Unable to load group resource.", LogLevel.ERROR);
 			return null;
 		}
-		
 		
 		return group;
 	}
@@ -419,7 +420,7 @@ sealed class SDRC_AIHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find AIagent faction
-	Returns the faction ID for an AIAgent. Returns the default enemy faction in case it's not found.
+	Returns the faction ID for an AIAgent.
 	*/
 	static FactionKey GetAIAgentFactionKey(AIAgent aiAgent)
 	{
@@ -438,12 +439,11 @@ sealed class SDRC_AIHelper
 			else
 			{
 				//Select the enemy faction from a list
-				factionKey = SDRC_EnemyHelper.SelectEnemyFaction("DEFAULT");
+				factionKey = SDRC_EnemyHelper.SelectEnemyFaction();
 				
 				IEntity ent = aiAgent.GetControlledEntity();
 				ResourceName res = ent.GetPrefabData().GetPrefabName();
-				SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] Faction missin from game? FactionKey not found for : " + res, LogLevel.ERROR);
-				SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] Using default enemy faction " + factionKey + ".", LogLevel.WARNING);
+				SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] Faction missing from game? FactionKey not found for : " + res, LogLevel.ERROR);
 			}
 		}
 
@@ -461,54 +461,6 @@ sealed class SDRC_AIHelper
 		return factionKey;
 	}		
 
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Get factionlist
-	*/	
-	static int GetFactionList(out array<string> factionList, bool printList = false)
-	{
-		array<Faction> factions = {};
-		SCR_FactionManager factionManager = SCR_FactionManager.Cast(GetGame().GetFactionManager());
-		
-		if (!factionManager)
-		{			
-			return 0;
-		}
-		
-		factionManager.GetFactionsList(factions);
-
-		foreach (Faction faction : factions)
-		{
-//			string factionName = SCR_StringHelper.Translate(faction.GetFactionName());
-			string factionName = faction.GetFactionKey();
-			factionList.Insert(factionName);
-			
-			if (printList)
-			{
-				SDRC_Log.Add("[SDRC_Misc:GetFactionList] Faction found: " + factionName, LogLevel.NORMAL);				
-			}
-		}
-				
-		return factionList.Count();
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Get Faction with string name
-	*/	
-	static Faction GetFactionWithName(string name)
-	{
-		FactionManager factionManager = GetGame().GetFactionManager();
-		if (!factionManager)
-			return null;
-		
-		Faction faction = factionManager.GetFactionByKey(name);
-		if (!faction)
-			return null;
-		
-		return faction;
-	}						
-				
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Delete an AI
