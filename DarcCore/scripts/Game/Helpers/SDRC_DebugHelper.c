@@ -29,6 +29,15 @@ class SDRC_DebugHelperPos : Managed
 }
 
 //------------------------------------------------------------------------------------------------
+class SDRC_DebugHelperLine : Managed
+{
+	ref array<vector> pos = {};
+	vector direction;
+	int color;
+	string id;
+}
+
+//------------------------------------------------------------------------------------------------
 sealed class SDRC_DebugHelper
 {
 	static bool m_DebugSlots = true;	//TBD: Slots functionality is very untested. Should be under MODMENU
@@ -36,6 +45,7 @@ sealed class SDRC_DebugHelper
 	static ref array<ref SDRC_DebugHelperPos> m_Pos = {};
 	static ref array<ref SDRC_DebugHelperPos> m_Sphere = {};
 //	static ref array<ref SDRC_DebugHelperPos> m_MapCircle = {};
+	static ref array<ref SDRC_DebugHelperLine> m_Line = {};
 	static ref array<IEntity> m_Slots = {};
 
 	//------------------------------------------------------------------------------------------------
@@ -104,7 +114,32 @@ sealed class SDRC_DebugHelper
 		{			
 			SDRC_DebugHelper.DrawSlots();	
 		}
+		
+		SDRC_DebugHelper.DrawLines();
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Draws lines between the waypoints the AI group has.
+	\param 
+	*/
+	static void DrawLines()
+	{
+		const int pLimit = 4;
+		int shapeFlags = ShapeFlags.ONCE;
+		int color = Color.RED;
+		bool isCycle = false;
+		
+		vector p[pLimit];
+
+		foreach (SDRC_DebugHelperLine line : m_Line)
+		{			
+			p[0] = line.pos[0];
+			p[1] = line.pos[1];
+			
+			Shape.CreateLines(line.color, shapeFlags, p, 2);
+		}
+	}		
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -336,7 +371,24 @@ sealed class SDRC_DebugHelper
 			}
 		#endif
 	}					
-	
+
+	//------------------------------------------------------------------------------------------------
+//	static void AddDebugLine(array<vector> pos, int color = Color.BLUE, string id = "NONE")
+	static void AddDebugLine(vector pos0, vector pos1, int color = Color.BLUE, string id = "NONE")
+	{
+		#ifndef SDRC_RELEASE
+//			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
+//			{
+				SDRC_DebugHelperLine dpos = new SDRC_DebugHelperLine;
+				dpos.pos.Insert(pos0);
+				dpos.pos.Insert(pos1);
+				dpos.color = color;
+				dpos.id = id;
+				m_Line.Insert(dpos);
+//			}
+		#endif
+	}					
+		
 	//------------------------------------------------------------------------------------------------
 /*	static void AddMapCircle(vector pos, float radius = 100, int color = Color.BLUE, string id = "NONE")
 	{
