@@ -13,7 +13,10 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private VehicleHelicopterSimulation m_Vehicle_s;
 	private IEntity m_Vehicle;
 	private int idx = 0;	
-	
+
+	private ref array<vector> m_vSplinePoints = new array<vector>();
+	private int spIdx = 0;
+		
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_Chopper(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
@@ -33,14 +36,33 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		}
 		m_DC_Chopper = m_Config.subMissions[idx];	
 		HandleRequestGeneralVariables(m_DC_Chopper.general, request);
+	
+		//Flight path		
+/*		array<vector> pathPoints = {
+			"700 100 2100",
+			"1700 120 3000",
+			"2200 150 1400",
+			"2000 80 2000",
+			"1600 80 2200",
+		};*/
+
+		array<vector> pathPoints = {
+			"0000 050 000",
+			"0200 020 100",
+			"0300 060 400",
+			"0100 080 200",
+			"0300 020 250",
+		};
+		
+			
+		SDRC_Spline3D.GenerateSplinePoints(pathPoints, m_vSplinePoints, 10);
 		
 		//Find position
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
+		vector pos = pathPoints[0];//SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
 		SetPos(pos /*, destination */);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Chopper.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Chopper.general);		
-
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -48,7 +70,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	{
 		super.MissionRun();
 		
-		if (GetState() == SDRC_EMissionState.INIT)
+		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
 			SetState(SDRC_EMissionState.ACTIVE);
@@ -82,15 +104,23 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	{					
 		//Code for whatever you need for spawning things.
 		EntitySpawnParams params = EntitySpawnParams();
-//		string resourceName	= "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et";
 		string resourceName	= "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et";
-		vector pos = "1053 49 2470";
-//		vector pos = "1053 39 2470";
+		vector pos = m_vSplinePoints[0];
 	
 		//Spawn the resource exactly to pos
 		Resource resource = Resource.Load(resourceName);
 		vector transform[4];
-		SDRC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0);	//NOTE: This will snap to ground! 
+
+		vector rotVector = vector.Direction(m_vSplinePoints[0], m_vSplinePoints[1]);
+		rotVector.Normalize();
+//		rotVector.Perpend();
+		rotVector = rotVector.VectorToAngles();
+				
+		Math3D.MatrixIdentity3(transform);
+		Math3D.AnglesToMatrix(rotVector, transform);
+		transform[3] = m_vSplinePoints[0];
+		
+		//SDRC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0, false);
         params.TransformMode = ETransformMode.WORLD;			
         params.Transform = transform;
 		m_Vehicle = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);		
@@ -105,15 +135,23 @@ class SDRC_Mission_Chopper : SDRC_Mission
 //		m_Vehicle_c.<smth smth mas startup time>
 				
 		vector velOrig = m_Vehicle.GetPhysics().GetVelocity();
-        vector rotVector = m_Vehicle.GetAngles();
+        //vector rotVector = m_Vehicle.GetAngles();
+		
+//		vector rotVector = vector.Direction(m_vSplinePoints[0], m_vSplinePoints[1]);
+//		rotVector.Normalize();
+//		pos = result[i] + (direction * 40);
 		
         vector vel = {velOrig[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * 10, velOrig[1], velOrig[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * 10 };
         vector rot = {rotVector[0] + Math.Sin(rotVector[0] * Math.DEG2RAD) * 0, rotVector[1], rotVector[2] + Math.Cos(rotVector[2] * Math.DEG2RAD) * 0 };
 		
-        m_Vehicle.SetAngles(rot);				
-		m_Vehicle.GetPhysics().SetVelocity(vel);
+//        m_Vehicle.SetAngles(rot);	
+//		rotVector.Perpend();
+//        m_Vehicle.SetAngles(rotVector);	
+//        m_Vehicle.SetYawPitchRoll(rotVector);		
+//		m_Vehicle.GetPhysics().SetVelocity(vel);
+		m_Vehicle.GetPhysics().SetVelocity("0 0 0");
 		
-		GetGame().GetCallqueue().CallLater(Path1, 5000);		
+		GetGame().GetCallqueue().CallLater(Path1, 150000);
 	}
 	
 	private void Path1()
@@ -258,7 +296,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 	{
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,1};		
+		conf.missionList = {0};		
 		//Mission specific
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;

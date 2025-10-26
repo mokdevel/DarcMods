@@ -54,7 +54,7 @@ class SDRC_MissionFrame
 	//------------------------------------------------------------------------------------------------
 	void SDRC_MissionFrame()
 	{
-		SDRC_Spline3D.TestSpline();		
+		//SDRC_Spline3D.TestSpline();		
 		
 		SDRC_Log.Add("[SDRC_MissionFrame] Starting SDRC_MissionFrame", LogLevel.NORMAL);
 		s_Instance = this;
@@ -421,11 +421,11 @@ class SDRC_MissionFrame
 				tmpDC_Mission = new SDRC_Mission_Stash(missionType, missionRequest);
 				break;
 			}			
-/*			case SDRC_EMissionType.CHOPPER:
+			case SDRC_EMissionType.CHOPPER:
 			{
 				tmpDC_Mission = new SDRC_Mission_Chopper(missionType, missionRequest);
 				break;
-			}*/
+			}
 			default:
 				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Incorrect mission type: " + missionType, LogLevel.ERROR);
 		}	

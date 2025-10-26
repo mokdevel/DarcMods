@@ -99,7 +99,12 @@ sealed class SDRC_MissionEnumHelper
 		SDRC_StashJsonApi stashJsonApi = new SDRC_StashJsonApi(DC_MISSIONCONFIG_FILE_STASH);	
 		stashJsonApi.Load();
 		stashJsonApi.CreateMissionFiles();
-		delete stashJsonApi;						
+		delete stashJsonApi;
+		
+		SDRC_ChopperJsonApi chopperJsonApi = new SDRC_ChopperJsonApi(DC_MISSIONCONFIG_FILE_STASH);	
+		chopperJsonApi.Load();
+		chopperJsonApi.CreateMissionFiles();
+		delete chopperJsonApi;			
 	}		
 	
 	//------------------------------------------------------------------------------------------------
@@ -167,11 +172,11 @@ sealed class SDRC_MissionEnumHelper
 				resourceName = "{631842AD30537026}Prefabs/Systems/DarcMissionStash.et"; 
 				break;
 			}	
-			/*			case SDRC_EMissionType.CHOPPER:
+			case SDRC_EMissionType.CHOPPER:
 			{
-				resourceName = "";
+				resourceName = "{631842AD30537026}Prefabs/Systems/DarcMissionStash.et"; 	//TBD: Create an own logo for this
 				break;
-			}*/
+			}
 			default:
 				SDRC_Log.Add("[SDRC_MissionEnumHelper:GetMissionPrefab] Incorrect mission type: " + missionType, LogLevel.ERROR);
 		}

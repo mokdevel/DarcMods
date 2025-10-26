@@ -51,6 +51,24 @@ sealed class SDRC_Spline3D
 
 		// Add final control point
 		result.Insert(controlPoints[count - 1]);
+		
+		foreach (int i, vector pos : result)
+		{
+//			Print(pos);
+			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(40, 255, 32, 32), 3);			//Red
+//			SDRC_DebugHelper.AddDebugLine(pos, ARGB(40, 32, 255, 32));				//Green
+			
+			if (i < (result.Count() - 2))
+			{
+				vector direction = vector.Direction(result[i], result[i+1]);
+				direction.Normalize();
+				pos = result[i] + (direction * 40);
+				SDRC_DebugHelper.AddDebugLine(result[i], pos, ARGB(40, 32, 255, 32));				//Green				
+//				SDRC_DebugHelper.AddDebugLine(result[i], result[i+1], ARGB(40, 32, 255, 32));				//Green				
+			}			
+			
+//			SDRC_DebugHelper.AddDebugLine(pos, ARGB(40, 32, 255, 32));				//Green
+		}
 	}
 
 	// Calculate a Catmull–Rom position for t in [0,1]
@@ -70,20 +88,20 @@ sealed class SDRC_Spline3D
 	static void TestSpline()
 	{
 		array<vector> ctrl = {
-			"000 000 000",
-			"200 100 300",
-			"400 400 1600",
-			"700 150 900"
+			"300 100 1000",
+			"800 300 1600",
+			"1200 150 900",
+			"300 150 500",
 		};
 	
 		array<vector> splinePoints = new array<vector>();
 		SDRC_Spline3D.GenerateSplinePoints(ctrl, splinePoints, 20);
 		
-		foreach (vector pos : splinePoints)
+/*		foreach (vector pos : splinePoints)
 		{
 			Print(pos);
-			pos = pos + SDRC_Misc.GetWorldCenter();
-			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(40, 192, 192, 192), 10);			//Gray
-		}
+//			pos = pos + SDRC_Misc.GetWorldCenter();
+			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(40, 255, 32, 32), 6);			//Red
+		}*/
 	}	
 }
