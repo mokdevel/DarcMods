@@ -6,6 +6,11 @@
 
 ..empty..
 
+### DarcMissions
+No changes in mission jsons. This is mainly a bug fix release.
+Fixes:
+* UTIL_MAGAZINE typos (was UTIL_MAGAZINES in a few places)
+
 ## Update 20251025
 ### DarcMissions
 No changes in mission jsons. This is mainly an addition for Freedom Fighters compatibility.
