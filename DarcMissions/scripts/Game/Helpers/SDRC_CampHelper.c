@@ -10,9 +10,13 @@ class SDRC_Camp : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();		
-	
+	#ifndef NEW_VERSION_WIP	
+		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
+	#endif
 	//Optional settings
-	ref SDRC_MissionConfigSecondWave secondWave = null;//new SDRC_MissionConfigSecondWave();	
+	#ifdef NEW_VERSION_WIP		
+		ref SDRC_MissionConfigSecondWave secondWave = null;
+	#endif
 	ref SDRC_Loot loot = null;
 	ref array<ref SDRC_Structure> campItems = {};	
 }

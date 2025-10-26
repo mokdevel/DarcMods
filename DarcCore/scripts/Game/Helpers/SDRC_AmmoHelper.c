@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------------------------
 /*!
 Functions for various ammo/magazine related things
-NOTE: SDRC_LootHelper needs to initialized before using this. UTIL_MAGAZINES and UTIL_AMMO lists has to be available. 
+NOTE: SDRC_LootHelper needs to initialized before using this. UTIL_MAGAZINE and UTIL_AMMO lists has to be available. 
 */
 
 //------------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ sealed class SDRC_AmmoHelper
 		{	
 			m_invManager = InventoryStorageManagerComponent.Cast(m_ammoHelperBox.FindComponent(InventoryStorageManagerComponent));		
 			array<string> itemNames = {};
-			SDRC_LootHelper.GetLootListItems(itemNames, "UTIL_MAGAZINES");
+			SDRC_LootHelper.GetLootListItems(itemNames, "UTIL_MAGAZINE");
 			SDRC_LootHelper.SpawnItemsToStorage(m_ammoHelperBox, itemNames);
 			itemNames = {};
 			SDRC_LootHelper.GetLootListItems(itemNames, "UTIL_AMMO");

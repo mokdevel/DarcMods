@@ -14,13 +14,15 @@ class SDRC_CoreConfig : Managed
 	bool debugShowWaypoints = true;
 	bool debugShowMarks = true;	
 	bool debugShowSpheres = true;
-//	string fallbackEnemyFaction = "USSR";
+	string fallbackEnemyFaction = "US";
 	bool showOnGMMapNonValidArea = true;	
 	bool showOnGMMapMissionMarker = true;
 	ref array<string> buildingExcludeFilter = {};
 	ref SDRC_EmptyPos emptyPos = new SDRC_EmptyPos();
 	ref array<ref SDRC_LocationAka> locationAkas = {};
-	ref array<ref SDRC_LocationAka> buildingAkas = {};
+	#ifdef NEW_VERSION_WIP	
+		ref array<ref SDRC_LocationAka> buildingAkas = {};
+	#endif
 }
 
 //------------------------------------------------------------------------------------------------
@@ -139,7 +141,8 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 		ref SDRC_LocationAka aka02 = new SDRC_LocationAka();
 		aka02.Set(EMapDescriptorType.MDT_PORT, {"harbour", "harbor"});
 		conf.locationAkas.Insert(aka02);						
-		
+
+	#ifdef NEW_VERSION_WIP
 		ref SDRC_LocationAka b_aka00 = new SDRC_LocationAka();
 		b_aka00.Set(EMapDescriptorType.MDT_CHURCH, {"Church", "Mosque_", "Minaret", });
 		conf.buildingAkas.Insert(b_aka00);
@@ -147,5 +150,6 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 		ref SDRC_LocationAka b_aka01 = new SDRC_LocationAka();
 		b_aka01.Set(EMapDescriptorType.MDT_POLICE, {"_Police"});
 		conf.buildingAkas.Insert(b_aka01);
+	#endif
 	}
 };

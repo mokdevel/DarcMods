@@ -121,7 +121,7 @@ sealed class SDRC_Locations
 	/*!
 	Prepare an array with all locations on the map.
 	*/		
-	static void FillLocationsCache(array<ref SDRC_LocationAka> locationAkas, array<ref SDRC_LocationAka> buildingAkas)
+	static void FillLocationsCache(array<ref SDRC_LocationAka> locationAkas, array<ref SDRC_LocationAka> buildingAkas = null)
 	{
 		#ifndef SDRC_RELEASE
 			//If SCR_MapEntity does not exist, we most likely are playing in some debug map
@@ -163,7 +163,8 @@ sealed class SDRC_Locations
 			}
 		}
 
-		//Handle location akas
+	#ifdef NEW_VERSION_WIP
+		//Handle building akas
 		foreach (SDRC_LocationAka aka : buildingAkas)
 		{
 			EMapDescriptorType type = aka.type;
@@ -182,7 +183,8 @@ sealed class SDRC_Locations
 				SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Added via building aka: " + locNew.displayName + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, locNew.baseType) + " at: " + locNew.pos, LogLevel.DEBUG);						
 			}
 		}
-						
+	#endif
+								
 		//Print debug information
 		foreach (SDRC_Location location: m_LocationsCache)
 		{

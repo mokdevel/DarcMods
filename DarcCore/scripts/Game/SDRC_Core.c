@@ -48,12 +48,14 @@ class SDRC_Core
 		{
 			SDRC_Log.Add("[SDRC_Core] World has AIWorld: false", LogLevel.ERROR);
 		}
-		int factionCount = SDRC_AIHelper.GetFactionList(m_sFactionList);
+		int factionCount = SDRC_FactionHelper.GetFactionList(m_sFactionList);
 		SDRC_Log.Add("[SDRC_Core] Factions available: " + factionCount + " - " + m_sFactionList, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_Core] Fallback faction: " + m_Config.fallbackEnemyFaction, LogLevel.NORMAL);
+		
 		SDRC_Misc.GetAddonList(m_sAddonList, true);
 		SDRC_Log.Add("[SDRC_Core] -------------------------------------", LogLevel.NORMAL);
 
-		//SDRC_EnemyHelper.SetDefaultEnemyFaction(m_Config.fallbackEnemyFaction);
+//		SDRC_EnemyHelper.SetDefaultEnemyFaction(m_Config.fallbackEnemyFaction);
 		
 		GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);			
 		
@@ -64,10 +66,10 @@ class SDRC_Core
 		SDRC_AmmoHelper.Setup();
 		
 		//Initialize EnemyHelper
-		SDRC_EnemyHelper.Setup();
+		SDRC_EnemyHelper.Setup(m_Config.fallbackEnemyFaction);
 		
 		//Set debug visibility
-		SDRC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres);							
+		SDRC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres);
 	}
 
 	void ~SDRC_Core()
@@ -87,6 +89,11 @@ class SDRC_Core
 	void FillLocationCache()
 	{
 		//Initialize locations cache
+		#ifdef NEW_VERSION_WIP
 		SDRC_Locations.FillLocationsCache(m_Config.locationAkas, m_Config.buildingAkas);
+		#endif
+		#ifndef NEW_VERSION_WIP
+		SDRC_Locations.FillLocationsCache(m_Config.locationAkas);
+		#endif
 	}	
 }
