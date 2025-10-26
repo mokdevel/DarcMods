@@ -9,6 +9,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	
 	private ref SDRC_ChopperJsonApi m_ChopperJsonApi = new SDRC_ChopperJsonApi(DC_MISSIONCONFIG_FILE);	
 	private ref SDRC_ChopperConfig m_Config;
+	private ref SDRC_Chopper m_DC_Chopper = new SDRC_Chopper();
 	private VehicleHelicopterSimulation m_Vehicle_s;
 	private IEntity m_Vehicle;
 	private int idx = 0;	
@@ -17,20 +18,29 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	void SDRC_Mission_Chopper(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
+		m_ChopperJsonApi.CreateMissionFiles();
 		m_ChopperJsonApi.Load();
+		m_ChopperJsonApi.LoadMissionFiles();		
 		m_Config = m_ChopperJsonApi.conf;
 		
-		string posName = m_Config.posName;
-		vector pos = m_Config.pos;
+		//Pick a configuration for mission
+		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
+		int idx = m_Config.GetSubMissionIdx(GetSubIdx());
+		if (idx == -1)
+		{
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.WRONG_SUBIDX);
+			return;
+		}
+		m_DC_Chopper = m_Config.subMissions[idx];	
+		HandleRequestGeneralVariables(m_DC_Chopper.general, request);
 		
-/*		SetTitle(m_Config.title + "" + posName);
-		SetInfo(m_Config.info);
-		SetPos(pos);
-		SetPosName(posName);
-		SetMarker(m_Config.showMarker, SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, "DARC_MISSION");
-		SetShowHint(m_Config.showHint);
+		//Find position
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
+		SetPos(pos /*, destination */);
+		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Chopper.general.posName));
+		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
+		UpdateGeneral(m_DC_Chopper.general);		
 
-		SetState(SDRC_EMissionState.INIT);			*/
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -141,20 +151,49 @@ class SDRC_Mission_Chopper : SDRC_Mission
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperConfig : SDRC_MissionConfig
 {
-	//Mission specific
-	vector pos;
-	string posName;
-	string title;
-	string info;
+	int distanceToMission;								//Distance to mission when searching for a mission pos. Overrides missionFrame settings.
+	int distanceToPlayer;								//Distance to player when searching for a mission pos. Overrides missionFrame settings.
+	ref array<int> flyHeight = {};						//min, max - Spawn helicopter between these values.
+	ref array<ref SDRC_Chopper> subMissions = {};		//List of crashsites
 	
-	//Variables here
+	//------------------------------------------------------------------------------------------------
+	int GetSubMissionIdx(int subIdx)
+	{
+		int idx = -1;
+		foreach (int i, SDRC_Chopper subMission : subMissions)
+		{
+			if (subMission.general.subIdx == subIdx)
+			{
+				idx = i;
+				break;
+			}
+		}
+		return idx;
+	}		
+	
 }
+
+//------------------------------------------------------------------------------------------------
+class SDRC_Chopper : Managed
+{
+	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
+	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
+	//Optional settings
+	#ifndef NEW_VERSION_WIP	
+		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
+	#endif
+	#ifdef NEW_VERSION_WIP		
+		ref SDRC_MissionConfigSecondWave secondWave = null;
+	#endif	
+	ref array<ref SDRC_HelicopterInfo> helicopterInfo = {};
+}
+
 
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperJsonApi : SDRC_JsonApi
 {
 	ref SDRC_ChopperConfig conf = new SDRC_ChopperConfig();
-
+		
 	//------------------------------------------------------------------------------------------------
 	void SDRC_ChopperJsonApi(string fileName)
 	{
@@ -187,12 +226,10 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		saveContext.WriteValue("", conf);
 		SaveConfigClose(saveContext);
 	}	
-
-/*	//------------------------------------------------------------------------------------------------
+		
+	//------------------------------------------------------------------------------------------------
 	void CreateMissionFiles()
 	{
-		SDRC_Stash_010_JsonApi stash010_JsonApi = new SDRC_Stash_010_JsonApi();		
-		stash010_JsonApi.Load();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -201,10 +238,10 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		//Load mission files
 		foreach (string missionFile : conf.missionFiles)
 		{
-			SDRC_StashJsonApi jsonApi = new SDRC_StashJsonApi(missionFile);		
+			SDRC_ChopperJsonApi jsonApi = new SDRC_ChopperJsonApi(missionFile);		
 			if (jsonApi.Load(false))
 			{
-				foreach (SDRC_Camp subMission : jsonApi.conf.subMissions)
+				foreach (SDRC_Chopper subMission : jsonApi.conf.subMissions)
 				{
 					conf.subMissions.Insert(subMission);
 				}
@@ -214,18 +251,62 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 				}
 			}
 		}
-	}	
-*/				
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
-		//Default
+		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.showMarker = true;		
+		conf.missionList = {0,1};		
 		//Mission specific
-		conf.pos = "0 0 0";
-		conf.posName = "airport";
-		conf.title = "Chopper mission at ";
-		conf.info = "Some additional information for players";
-	}	
+		conf.distanceToMission = 100;
+		conf.distanceToPlayer = 500;
+		conf.flyHeight = {80, 120};
+		//----------------------------------------------------
+		conf.subMissions.Insert(Chopper0());
+	};
+			
+	//----------------------------------------------------
+	SDRC_Chopper Chopper0()
+	{
+		ref SDRC_Chopper chopper = new SDRC_Chopper();
+		chopper.general.Set(
+			0, "index 0: general mission",
+			{"0 0 0"}, 0,
+			{},
+			"any",
+			"Helicopter in distress",
+			"A valuable cargo has crashed.",
+			SDRC_EMissionWinCondition.AI_KILL_75,
+			"The loot was salvaged. Crash, burn, loot.",
+			"No loot for you today.", 
+			"",
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
+			SDRC_EMissionDifficulty.NORMAL,
+			0
+		);
+		chopper.ai.Set
+		(
+			{1, 2},
+			{"G_LIGHT", "G_ADMIN"},
+			20, 0.8,
+			{0, 0},
+			SDRC_EWaypointGenerationType.LOITER,
+			SDRC_EWaypointMoveType.LOITER,
+		);
+		
+		//----------------------------------------------------
+		ref SDRC_HelicopterInfo heli00 = new SDRC_HelicopterInfo();
+			heli00.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et", 0.8, 0.8, 1.0);
+			chopper.helicopterInfo.Insert(heli00);
+		ref SDRC_HelicopterInfo heli01 = new SDRC_HelicopterInfo();
+			heli01.Set("{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",	0.7, 0.9, 1.0);
+			chopper.helicopterInfo.Insert(heli01);
+		ref SDRC_HelicopterInfo heli02 = new SDRC_HelicopterInfo();
+			heli02.Set("{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.8, 0.8, -1.0);
+			chopper.helicopterInfo.Insert(heli02);		
+		
+		return chopper;
+	}
 }
