@@ -255,7 +255,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_List lootList = new SDRC_List();
 		lootList.Set(
-			"UTIL_MAGAZINES",
+			"UTIL_MAGAZINE",
 			{"Prefabs/Weapons/Magazines"},
 			{""},
 			{"_Base", "Internal_"},
