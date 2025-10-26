@@ -81,10 +81,6 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Patrol.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Patrol.general);		
-/*		SetMarker(m_Config.showMarker, m_DC_Patrol.general.markerIcon, m_DC_Patrol.general.markerType);
-		SetHint(m_Config.showHint, m_DC_Patrol.general.title, m_DC_Patrol.general.info);
-		SetMessages(m_Config.showMessage, m_DC_Patrol.general.winMessage, m_DC_Patrol.general.loseMessage);		
-		SetWinCondition(m_DC_Patrol.general.winCondition);		*/
 		SetActiveDistance(m_Config.distanceToPlayer);		//Change the m_iActiveDistance to a mission specific one.
 		SetActiveTimeToEnd(20);								//Change the m_iActiveTimeToEnd to short one as there is no loot to gain.
 	}

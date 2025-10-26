@@ -114,10 +114,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Convoy.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Convoy.general);		
-/*		SetMarker(m_Config.showMarker, m_DC_Convoy.general.markerIcon, m_DC_Convoy.general.markerType);
-		SetHint(m_Config.showHint, m_DC_Convoy.general.title, m_DC_Convoy.general.info);		
-		SetMessages(m_Config.showMessage, m_DC_Convoy.general.winMessage, m_DC_Convoy.general.loseMessage);		
-		SetWinCondition(m_DC_Convoy.general.winCondition);*/
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
 	}	
 	

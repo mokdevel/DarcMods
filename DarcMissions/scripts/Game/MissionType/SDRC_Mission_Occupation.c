@@ -53,11 +53,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Occupation.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
-		UpdateGeneral(m_DC_Occupation.general);		
-/*		SetMarker(m_Config.showMarker, m_DC_Occupation.general.markerIcon, m_DC_Occupation.general.markerType);
-		SetHint(m_Config.showHint, m_DC_Occupation.general.title, m_DC_Occupation.general.info);
-		SetMessages(m_Config.showMessage, m_DC_Occupation.general.winMessage, m_DC_Occupation.general.loseMessage);		
-		SetWinCondition(m_DC_Occupation.general.winCondition);*/
+		UpdateGeneral(m_DC_Occupation.general);
 	}
 	
 	//------------------------------------------------------------------------------------------------
