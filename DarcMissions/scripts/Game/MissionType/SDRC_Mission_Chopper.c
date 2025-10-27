@@ -53,12 +53,11 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			"0100 080 200",
 			"0300 020 250",
 		};
-		
 			
-		SDRC_Spline3D.GenerateSplinePoints(pathPoints, m_vSplinePoints, 10);
+		SDRC_Spline3D.GenerateSplinePoints(pathPoints, m_vSplinePoints, 6, true);
 		
 		//Find position
-		vector pos = pathPoints[0];//SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
+		vector pos = "0 50 0";//pathPoints[0];//SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
 		SetPos(pos /*, destination */);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Chopper.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
@@ -150,9 +149,9 @@ class SDRC_Mission_Chopper : SDRC_Mission
 //        m_Vehicle.SetAngles(rotVector);	
 //        m_Vehicle.SetYawPitchRoll(rotVector);		
 //		m_Vehicle.GetPhysics().SetVelocity(vel);
-		m_Vehicle.GetPhysics().SetVelocity("0 0 0");
+//		m_Vehicle.GetPhysics().SetVelocity("0 0 0");
 		
-		GetGame().GetCallqueue().CallLater(Path1, 150000);
+//		GetGame().GetCallqueue().CallLater(Path1, 150000);
 	}
 	
 	private void Path1()
