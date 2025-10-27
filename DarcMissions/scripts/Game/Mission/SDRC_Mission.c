@@ -71,7 +71,9 @@ class SDRC_MissionConfig : Managed
 	bool disableArsenal;										//Disable arsenal for vehicles so that no other items are found
 	ref array<ref int> missionList = {};						//The list of mission suids.
 	ref array<ref string> missionFiles = {};					//The list of mission files to load.
-//	ref array<ref SDRC_MissionConfigSecondWave> secondWave = {};	//TBD: This is not used anywhere. REMOVE!
+	#ifndef NEW_VERSION_WIP	
+		ref array<ref SDRC_MissionConfigSecondWave> secondWave = {};	//TBD: This is not used anywhere. REMOVE!
+	#endif
 }
 
 //------------------------------------------------------------------------------------------------
@@ -246,7 +248,7 @@ class SDRC_MissionConfigAi : Managed
 // SECOND WAVE
 //------------------------------------------------------------------------------------------------
 
-#ifdef NEW_VERSION_WIP
+#ifndef NEW_VERSION_WIP
 class SDRC_MissionConfigSecondWave : Managed
 {
 	ref array<int> subIdx = {};									//subIdx from which to choose
@@ -259,7 +261,7 @@ class SDRC_MissionConfigSecondWave : Managed
 }
 #endif
 
-#ifndef NEW_VERSION_WIP
+#ifdef NEW_VERSION_WIP
 class SDRC_MissionConfigSecondWave : Managed
 {
 	ref array<int> subIdx = {};									//subIdx from which to choose
@@ -1086,7 +1088,7 @@ class SDRC_Mission
 	{
 		if ( (m_SecondWaveConf.activation == GetSuccess()) || (m_SecondWaveConf.activation == SDRC_EMissionSuccess.WIN_OR_LOSE) )
 		{
-			#ifndef NEW_VERSION_WIP
+			#ifdef NEW_VERSION_WIP
 			if (Math.RandomFloat(0, 1) < m_SecondWaveConf.chance)
 			{
 				SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			

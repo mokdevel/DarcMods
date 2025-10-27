@@ -304,19 +304,19 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			{"G_LAUNCHER", "G_LIGHT", "G_LIGHT"},
 			50, 1.0,
 			{0, 20},
-			SDRC_EWaypointGenerationType.LOITER,//RANDOM,
+			SDRC_EWaypointGenerationType.LOITER,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		
-		#ifndef NEW_VERSION_WIP
-		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();		
-		secondWave.Set(
-			{0}, SDRC_EMissionSuccess.WIN,
-			1.0, {5, 20},
-			"Second Wave coming",
-			SDRC_EMissionDifficulty.NORMAL, 0
-		);
-		roadblock.secondWave = secondWave;
+		#ifdef NEW_VERSION_WIP
+			ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();		
+			secondWave.Set(
+				{0}, SDRC_EMissionSuccess.WIN,
+				1.0, {5, 20},
+				"Second Wave coming",
+				SDRC_EMissionDifficulty.NORMAL, 0
+			);
+			roadblock.secondWave = secondWave;
 		#endif
 		
 		ref SDRC_Loot loot = new SDRC_Loot();		
