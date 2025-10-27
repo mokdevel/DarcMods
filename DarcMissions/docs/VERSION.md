@@ -7,9 +7,11 @@
 ..empty..
 
 ### DarcMissions
-No changes in mission jsons. This is mainly a bug fix release.
+No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
 Fixes:
 * UTIL_MAGAZINE typos (was UTIL_MAGAZINES in a few places)
+* fallbackEnemyFaction had issues when factions are not properly available setup
+  * British Forces faction should work properly.
 
 ## Update 20251025
 ### DarcMissions
