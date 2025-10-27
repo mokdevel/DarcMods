@@ -104,7 +104,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	{					
 		//Code for whatever you need for spawning things.
 		EntitySpawnParams params = EntitySpawnParams();
-		string resourceName	= "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et";
+//		string resourceName	= "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et";
+		string resourceName	= "{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et";
 		vector pos = m_vSplinePoints[0];
 	
 		//Spawn the resource exactly to pos
@@ -128,7 +129,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
         m_Vehicle_s.EngineStart();
         m_Vehicle_s.SetThrottle(1);
-        m_Vehicle_s.RotorSetForceScaleState(0, 1.1);	//Hovering 1.2
+        m_Vehicle_s.RotorSetForceScaleState(0, 1.3);	//Hovering 1.2
         m_Vehicle_s.RotorSetForceScaleState(1, 2);
 
 //		SCR_HelicopterControllerComponent m_Vehicle_c = SCR_HelicopterControllerComponent.Cast(m_Vehicle.FindComponent(SCR_HelicopterControllerComponent));
@@ -310,7 +311,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Chopper chopper = new SDRC_Chopper();
 		chopper.general.Set(
-			0, "index 0: general mission",
+			0, "index 0: JUST FOR TESTING. MISSION DOES NOT WORK!",
 			{"0 0 0"}, 0,
 			{},
 			"any",
