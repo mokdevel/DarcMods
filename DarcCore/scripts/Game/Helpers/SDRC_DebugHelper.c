@@ -53,8 +53,9 @@ sealed class SDRC_DebugHelper
 	{
 		m_Pos.Clear();
 		m_Sphere.Clear();
-		m_Slots.Clear();
 //		m_MapCircle.Clear();
+		m_Line.Clear();
+		m_Slots.Clear();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -128,7 +129,6 @@ sealed class SDRC_DebugHelper
 		const int pLimit = 4;
 		int shapeFlags = ShapeFlags.ONCE;
 		int color = Color.RED;
-		bool isCycle = false;
 		
 		vector p[pLimit];
 
