@@ -62,25 +62,37 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		float distance = GetDistanceFromSpline(m_vSplinePoints, owner.GetOrigin(), closestIndex);
 		
-		DrawLine(origin, m_vSplinePoints[closestIndex], Color.YELLOW);
+		DrawLine(origin, m_vSplinePoints[closestIndex + 1], Color.YELLOW);
 
-		vector rotVector = vector.Direction(m_vSplinePoints[closestIndex + 1], m_vSplinePoints[closestIndex]);
+		vector rotVector = vector.Direction(m_vSplinePoints[closestIndex], m_vSplinePoints[closestIndex + 1]);
+		vector chopVector = vector.Direction(m_vSplinePoints[closestIndex + 1], origin);
+		rotVector.Normalize();
+		owner.SetAngles(rotVector.VectorToAngles());
+//		owner.SetAngles(chopVector);
+		chopVector.Normalize();
+//		owner.SetYawPitchRoll(chopVector);
+		chopVector = chopVector * 10;
+		owner.GetPhysics().SetVelocity(chopVector);
+		
 //		vector rotVector = vector.Direction(origin, m_vSplinePoints[closestIndex]);
 //		rotVector.Normalize();
 //		rotVector = rotVector.VectorToAngles();
 		
-		vector velOrig = owner.GetPhysics().GetVelocity();
+/*		vector velOrig = owner.GetPhysics().GetVelocity();
 		velOrig.Normalize();
+		velOrig = velOrig * 5;
 		
 		float mul = 0.01;
         vector vel = {velOrig[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * mul, velOrig[1], velOrig[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * mul };
         vector rot = {rotVector[0] + Math.Sin(rotVector[0] * Math.DEG2RAD) * mul, rotVector[1], rotVector[2] + Math.Cos(rotVector[2] * Math.DEG2RAD) * mul };
-
-		rot = rot.VectorToAngles();
-		owner.SetAngles(rotVector);
-        owner.SetYawPitchRoll(rotVector);		
-		owner.GetPhysics().SetVelocity(rotVector);
-//		owner.GetPhysics().SetAngularVelocity(vel);
+		rot = rot.VectorToAngles();*/
+		
+//		chopVector.Normalize();
+//		owner.SetAngles(chopVector.VectorToAngles());
+//		owner.SetAngles(chopVector);
+//		chopVector.Perpend();
+//		owner.SetYawPitchRoll(chopVector);
+//		owner.GetPhysics().SetAngularVelocity(rotVector);
 		
 	}
 
