@@ -467,13 +467,20 @@ sealed class SDRC_AIHelper
 	*/
 	static void RemoveAIAgent(AIAgent ai)
 	{
-		IEntity aiEntity = ai.GetControlledEntity();
-		DamageManagerComponent damageManager = DamageManagerComponent.Cast(aiEntity.FindComponent(DamageManagerComponent));
+		if (ai)
+		{		
+			IEntity aiEntity = ai.GetControlledEntity();
+			if (aiEntity)
+			{
+				DamageManagerComponent damageManager = DamageManagerComponent.Cast(aiEntity.FindComponent(DamageManagerComponent));
 				
-		if (damageManager)
-			damageManager.SetHealthScaled(0);
-		
-		SDRC_SpawnHelper.DespawnItem(aiEntity);
+				//TBD: Do we need to set the damage before despawn?
+				if (damageManager)
+					damageManager.SetHealthScaled(0);
+				
+				SDRC_SpawnHelper.DespawnItem(aiEntity);
+			}
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------
