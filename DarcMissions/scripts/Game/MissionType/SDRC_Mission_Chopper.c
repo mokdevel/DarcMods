@@ -15,6 +15,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private int idx = 0;	
 
 	private ref array<vector> m_vSplinePoints = new array<vector>();
+	private ref array<vector> m_vTangentPoints = new array<vector>();
 	private int spIdx = 0;
 		
 	//------------------------------------------------------------------------------------------------
@@ -54,7 +55,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			"0300 020 250",
 		};
 			
-		SDRC_Spline3D.GenerateSplinePoints(pathPoints, m_vSplinePoints, 6, true);
+		SDRC_Spline3D.GenerateSplinePoints(pathPoints, m_vSplinePoints, m_vTangentPoints, 20, true);
 		
 		//Find position
 		vector pos = "0 50 0";//pathPoints[0];//SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
@@ -127,7 +128,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
         m_Vehicle_s.EngineStart();
-        m_Vehicle_s.SetThrottle(1);
+        m_Vehicle_s.SetThrottle(1.0);
         m_Vehicle_s.RotorSetForceScaleState(0, 1.3);	//Hovering 1.2
         m_Vehicle_s.RotorSetForceScaleState(1, 2);
 
