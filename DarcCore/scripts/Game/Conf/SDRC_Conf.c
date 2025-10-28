@@ -36,7 +36,7 @@ sealed class SDRC_Conf
 		
 //Development time options	
 #ifndef SDRC_RELEASE
-	const string DEFAULT_DIR = "dummy";
+	const string DEFAULT_DIR = "dummy_exp";
 	const bool SDRC_ENABLE_DARCSPAWNER = false;
 	const bool SDRC_ENABLE_DARCMISSIONS	= true;
 	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
