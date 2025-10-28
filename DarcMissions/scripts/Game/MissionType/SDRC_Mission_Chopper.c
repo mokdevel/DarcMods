@@ -55,7 +55,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			"0300 020 250",
 		};
 			
-		SDRC_Spline3D.GenerateSplinePoints(pathPoints, m_vSplinePoints, m_vTangentPoints, 20, true);
+		SDRC_Spline3D.GenerateSplinePoints(pathPoints, m_vSplinePoints, m_vTangentPoints, 20);
 		
 		//Find position
 		vector pos = "0 50 0";//pathPoints[0];//SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
@@ -176,8 +176,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 						rotVector[2] + Math.Cos(rotVector[2] * Math.DEG2RAD) * rot0[idx]};
 		
 //        m_Vehicle.SetAngles(rot);		
-        m_Vehicle.SetYawPitchRoll(rot);		
-        m_Vehicle.GetPhysics().SetVelocity(vel);		
+//        m_Vehicle.SetYawPitchRoll(rot);		
+//        m_Vehicle.GetPhysics().SetVelocity(vel);		
 		
 		idx++;
 		if (rotor[idx] != -1)
