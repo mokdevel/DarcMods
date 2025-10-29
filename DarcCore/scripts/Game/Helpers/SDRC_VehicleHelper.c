@@ -11,7 +11,7 @@ class SDRC_VehicleHelper
 	/*!
 	Move multiple groups to a vehicle
 	*/
-    static void MoveGroupsInVehicle(array<SCR_AIGroup> groups, IEntity vehicle)
+    static void MoveGroupsInVehicle(array<SCR_AIGroup> groups, IEntity vehicle, bool forceTeleport = false)
     {
 		array<AIAgent> groupMembers  = new array<AIAgent>;
 		
@@ -25,7 +25,7 @@ class SDRC_VehicleHelper
 				
 				foreach (AIAgent aiAgent: groupMembers)
 				{
-					bool success = MoveEntityInVehicle(aiAgent, vehicle, i);
+					bool success = MoveEntityInVehicle(aiAgent, vehicle, i, forceTeleport);
 					
 					//Remove those AI that did not fit in the vehicle.
 					if (!success)
@@ -43,7 +43,7 @@ class SDRC_VehicleHelper
 	/*!
 	Move single group to a vehicle
 	*/
-    static void MoveGroupInVehicle(AIGroup group, IEntity vehicle)
+    static void MoveGroupInVehicle(AIGroup group, IEntity vehicle, bool forceTeleport = false)
     {
 		array<AIAgent> groupMembers  = new array<AIAgent>;
 		
@@ -54,7 +54,7 @@ class SDRC_VehicleHelper
 			int i = 0;
 			foreach (AIAgent aiAgent: groupMembers)
 			{
-				bool success = MoveEntityInVehicle(aiAgent, vehicle, i);
+				bool success = MoveEntityInVehicle(aiAgent, vehicle, i, forceTeleport);
 				
 				//Remove those AI that did not fit in the vehicle.
 				if (!success)
@@ -71,9 +71,11 @@ class SDRC_VehicleHelper
 	/*!
 	Move individual AI to a vehicle at a predefined or random slot
 	*/	
-    static bool MoveEntityInVehicle(AIAgent aiAgent, IEntity vehicle, int slotIdx)
+    static bool MoveEntityInVehicle(AIAgent aiAgent, IEntity vehicle, int slotIdx, bool forceTeleport = false)
     {
 		BaseCompartmentManagerComponent compartmentManager = BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(BaseCompartmentManagerComponent));
+		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
+		
 		array<BaseCompartmentSlot> compartments = {};
 		int slots = compartmentManager.GetCompartments(compartments);		
 		
@@ -82,11 +84,22 @@ class SDRC_VehicleHelper
 			SDRC_Log.Add("[SDRC_VehicleHelper:MoveEntityInVehicle] slotIdx incorrect: " + slotIdx + "/" + slots, LogLevel.SPAM);
 			return false;			
 		}
-		
+				
+		compartments.Clear();
+		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.PILOT);
+		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.TURRET);
+		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.CARGO);
+		SDRC_Log.Add("[SDRC_VehicleHelper:MoveEntityInVehicle] Compartments found: " + compartments.Count(), LogLevel.DEBUG);
+
+		bool success = SetEntityInSlot(aiAgent, vehicle, compartments[slotIdx], forceTeleport);
+				
+		/* 
+		// OLD SYSTEM
 		array<int> slotPrio = {};
-		slotPrio.Insert(-1);		//Reserve prio 0 slot for pilot
-		slotPrio.Insert(-1);		//Reserve prio 0 slot for pilot
 		
+		slotPrio.Insert(-1);		//Reserve prio 0 slot for pilot
+		slotPrio.Insert(-1);		//Reserve prio 0 slot for pilot
+
 		int i = 0;
 						
 		foreach (BaseCompartmentSlot slot : compartments)
@@ -125,7 +138,8 @@ class SDRC_VehicleHelper
 		{
 			idx = slotIdx;
 		}
-		bool success = SetEntityInSlot(aiAgent, vehicle, compartments[idx]);
+		bool success = SetEntityInSlot(aiAgent, vehicle, compartments[idx], forceTeleport);
+		*/
 
 		return success;
     }
@@ -134,7 +148,7 @@ class SDRC_VehicleHelper
 	/*!
 	Set AI to a specific vehicle slot
 	*/	
-	static bool SetEntityInSlot(AIAgent aiAgent, IEntity vehicle, BaseCompartmentSlot slot)
+	static bool SetEntityInSlot(AIAgent aiAgent, IEntity vehicle, BaseCompartmentSlot slot, bool forceTeleport = false)
 	{
 		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(aiAgent.GetControlledEntity());		
         CompartmentAccessComponent accessComponent = CompartmentAccessComponent.Cast(character.FindComponent(CompartmentAccessComponent));
@@ -143,7 +157,7 @@ class SDRC_VehicleHelper
 		{
 			return false;
 		}
-		bool success = accessComponent.GetInVehicle(vehicle, slot, false, -1, ECloseDoorAfterActions.CLOSE_DOOR, false);
+		bool success = accessComponent.GetInVehicle(vehicle, slot, forceTeleport, -1, ECloseDoorAfterActions.CLOSE_DOOR, false);
 		
 		return success;
 	}
