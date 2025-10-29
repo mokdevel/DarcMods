@@ -11,7 +11,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private ref array<vector> m_vSplinePoints = new array<vector>();
 	private ref array<vector> m_vTangentPoints = new array<vector>();
 	const float SPEED_INTERVAL = 0.2;		
-	const float TURN_INTERVAL = 1.0;		
+	const float TURN_INTERVAL = 0.6;		
 	private float m_fTimeSpeed = 0;
 	private float m_fTimeTurn = 0;
 	int closestIndex;
@@ -102,7 +102,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Draw where we are planning to go
 		float distance = GetDistanceFromSpline(m_vSplinePoints, origin, newClosestIndex);		
 		
-		if ( (distance < 40) && (newClosestIndex == (closestIndex + 1) ) )
+		closestIndex = newClosestIndex + 6;
+		
+/*		if ( (distance < 40) && (newClosestIndex > (closestIndex + 3) ) )
 		{
 			if (newClosestIndex > closestIndex)
 			{
@@ -118,7 +120,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			closestIndex++;
 			closestIndex++;
 			closestIndex++;
-		}
+		}*/
 		
 		m_vDestination = m_vSplinePoints[closestIndex];
 		
@@ -127,10 +129,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 //		owner.GetPhysics().SetVelocity(vVel);		
 
 		bool bDoTurn = false;
-		
+
+		SetVelocity(owner);
+				
 		if (m_fTimeSpeed > SPEED_INTERVAL)
 		{
-			SetVelocity(owner);
+//			SetVelocity(owner);
 			//bDoTurn = true;
 			//SetTurn(owner);
 			m_fTimeSpeed = m_fTimeSpeed - SPEED_INTERVAL;
@@ -170,6 +174,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Define speed
 		float speed = vector.Distance(origin, m_vDestination);
 		float speedMul = 1.0;
+
+/*		vector tangent = m_Spline.GetTangentAt(m_Param).Normalized();				
+		vector targetVel = tangent * m_Speed;		
+		m_CurrentVelocity = SmoothVelocity(m_CurrentVelocity, targetVel, m_VelocitySmoothFactor);		*/
 		
 		//Set velocity
 		vector chopVector = vector.Direction(origin, m_vDestination);
