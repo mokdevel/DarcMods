@@ -11,9 +11,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private ref array<vector> m_vSplinePoints = new array<vector>();
 	private ref array<vector> m_vTangentPoints = new array<vector>();
 	const float SPEED_INTERVAL = 0.2;		
-	const float TURN_INTERVAL = 0.6;		
+	const float TURN_INTERVAL = 0.5;		
 	private float m_fTimeSpeed = 0;
 	private float m_fTimeTurn = 0;
+	private float m_fSpeed = 12;
+	private int m_iSplinePoints = 12;
+	private int m_iDestinationPointAdd = m_fSpeed / 3;
 	int closestIndex;
 	int newClosestIndex;
 	vector m_vDestination;
@@ -102,7 +105,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Draw where we are planning to go
 		float distance = GetDistanceFromSpline(m_vSplinePoints, origin, newClosestIndex);		
 		
-		closestIndex = newClosestIndex + 6;
+		closestIndex = newClosestIndex + m_iDestinationPointAdd;
 		
 /*		if ( (distance < 40) && (newClosestIndex > (closestIndex + 3) ) )
 		{
@@ -182,7 +185,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Set velocity
 		vector chopVector = vector.Direction(origin, m_vDestination);
 		chopVector.Normalize();		
-		chopVector = chopVector * 12;//length;
+		chopVector = chopVector * m_fSpeed;
 //		chopVector = chopVector * speed * speedMul;//length;
 		owner.GetPhysics().SetVelocity(chopVector);		
 	}
@@ -198,7 +201,18 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector angles = vector.Direction(origin, m_vDestination);
 		angles = ComputeAngularVelocity(vDir, angles, deltaTime);
 		
-		float roll = ComputeSplineRoll(m_vSplinePoints[closestIndex - 1], m_vSplinePoints[closestIndex + 0], m_vSplinePoints[closestIndex + 1]);
+		int rollIdxStart = closestIndex - 1;//(m_iDestinationPointAdd / 2);
+		if (rollIdxStart < 0)
+		{
+			rollIdxStart = 0;
+		}
+		int rollIdxEnd = closestIndex + (m_iDestinationPointAdd / 3);
+		if (rollIdxEnd <= closestIndex)
+		{
+			rollIdxEnd = closestIndex + 1;
+		}
+		
+		float roll = ComputeSplineRoll(m_vSplinePoints[rollIdxStart], m_vSplinePoints[closestIndex], m_vSplinePoints[rollIdxEnd]);
 		angles[2] = angles[2] - roll;
 		
 		owner.GetPhysics().SetAngularVelocity(angles);		
@@ -281,7 +295,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			"0120 020 080",
 		};
 			
-		SDRC_Spline3D.GenerateSplinePoints(pathPoints, m_vSplinePoints, m_vTangentPoints, 12, true);
+		SDRC_Spline3D.GenerateSplinePoints(pathPoints, m_vSplinePoints, m_vTangentPoints, m_iSplinePoints, true);
 		m_vDestination = m_vSplinePoints[1];
 	}
 	
