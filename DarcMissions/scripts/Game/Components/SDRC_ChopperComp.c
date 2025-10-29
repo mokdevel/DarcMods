@@ -10,10 +10,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private static SDRC_ChopperComp s_Instance;	
 	private ref array<vector> m_vSplinePoints = new array<vector>();
 	private ref array<vector> m_vTangentPoints = new array<vector>();
-	const float MEASURE_INTERVAL = 1.0;		
-	private float m_fTime = 0;
-	int closestIndex = 1;
-	int newClosestIndex = 1;
+	const float SPEED_INTERVAL = 0.2;		
+	const float TURN_INTERVAL = 1.0;		
+	private float m_fTimeSpeed = 0;
+	private float m_fTimeTurn = 0;
+	int closestIndex;
+	int newClosestIndex;
 	vector m_vDestination;
 	
 	override void OnPostInit(IEntity owner)
@@ -23,7 +25,23 @@ class SDRC_ChopperComp : ScriptGameComponent
 		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
 		Activate(owner);
 		
-		InitFlightPath();		
+		InitFlightPath();
+		
+		closestIndex = 3;
+		newClosestIndex = closestIndex + 1;
+		m_vDestination = m_vSplinePoints[closestIndex];
+
+		//Set chopper initial position		
+		owner.SetOrigin(m_vSplinePoints[0]);
+		vector angles = vector.Direction(owner.GetOrigin(), m_vDestination);
+		angles.Normalize();
+		angles = angles.VectorToAngles();
+		owner.SetYawPitchRoll(angles);
+		
+		SetVelocity(owner);
+		SetTurn(owner, TURN_INTERVAL);
+		
+		
 	}
  
 	//------------------------------------------------------------------------------------------------
@@ -38,7 +56,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------
 	override void EOnFrame(IEntity owner, float timeSlice)
 	{
-		m_fTime += timeSlice;
+		m_fTimeSpeed += timeSlice;
+		m_fTimeTurn += timeSlice;
 
 		vector origin = owner.GetOrigin();
 				
@@ -66,10 +85,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Destination vector
 		vector chopVector = vector.Direction(origin, m_vDestination);
 		chopVector.Normalize();		
-		chopVector = chopVector * 10;
+		chopVector = chopVector * 20;
 		DrawLine(origin, m_vSplinePoints[closestIndex], Color.GRAY);		
 		
-		//Chopper direction vector
+		//Chopper destination direction vector
 		vector angles = vector.Direction(origin, m_vDestination);
 		angles.Normalize();
 		DrawLine(origin, origin + (angles * 10), Color.BLACK);		
@@ -79,15 +98,17 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			Print("SDRC_ChopperComp No VehicleHelicopterSimulation");
 		}
-						
+
 		//Draw where we are planning to go
 		float distance = GetDistanceFromSpline(m_vSplinePoints, origin, newClosestIndex);		
 		
-		if ( (distance < 20) && (newClosestIndex == (closestIndex + 1) ) )
+		if ( (distance < 40) && (newClosestIndex == (closestIndex + 1) ) )
 		{
 			if (newClosestIndex > closestIndex)
 			{
 				closestIndex = newClosestIndex;
+				closestIndex++;
+				closestIndex++;
 				closestIndex++;
 			}
 		}
@@ -95,45 +116,41 @@ class SDRC_ChopperComp : ScriptGameComponent
 		if (newClosestIndex == closestIndex)
 		{
 			closestIndex++;
+			closestIndex++;
+			closestIndex++;
 		}
 		
 		m_vDestination = m_vSplinePoints[closestIndex];
 		
-		
-		//Turn the chopper
-/*		angles = vector.Direction(origin, m_vDestination);
-		angles.Normalize();
-		angles = angles.VectorToAngles();
-		owner.SetYawPitchRoll(angles);			*/
-		
 //		owner.GetPhysics().SetVelocity(chopVector);
 //		vVel = owner.GetPhysics().GetVelocity();
-//		owner.GetPhysics().SetVelocity(vVel);
+//		owner.GetPhysics().SetVelocity(vVel);		
+
+		bool bDoTurn = false;
 		
-		
-		if (m_fTime < MEASURE_INTERVAL)
+		if (m_fTimeSpeed > SPEED_INTERVAL)
 		{
-			return;
+			SetVelocity(owner);
+			//bDoTurn = true;
+			//SetTurn(owner);
+			m_fTimeSpeed = m_fTimeSpeed - SPEED_INTERVAL;
 		}
-		
-		m_fTime = 0;
 
-		//Set velocity
-		chopVector = vector.Direction(origin, m_vDestination);
-		chopVector.Normalize();		
-		chopVector = chopVector * 30;//length;
-		owner.GetPhysics().SetVelocity(chopVector);
-						
-		//Turn the chopper
-		angles = vector.Direction(origin, m_vDestination);
-		angles = ComputeAngularVelocity(vDir, angles, 0.5);
-		owner.GetPhysics().SetAngularVelocity(angles);
-
-		//Turn the chopper
-		angles = owner.GetYawPitchRoll();
-		angles[2] = 0;
-		owner.SetYawPitchRoll(angles);
+		if ( (m_fTimeTurn > TURN_INTERVAL) || (bDoTurn) )
+		{
+//			SetVelocity(owner);
+			SetTurn(owner, m_fTimeTurn);
+			m_fTimeTurn = m_fTimeTurn - TURN_INTERVAL;
 		
+			//Set the chopper YPR			
+/*			float roll = ComputeSplineRoll(m_vSplinePoints[closestIndex - 1], m_vSplinePoints[closestIndex + 0], m_vSplinePoints[closestIndex + 1]);
+			angles = owner.GetYawPitchRoll();
+			angles[2] = roll;
+	//		angles[1] = -10;
+			owner.SetYawPitchRoll(angles);*/
+			
+		}
+				
 		float length = vector.Distance(m_vSplinePoints[closestIndex + 0], m_vSplinePoints[closestIndex + 1]);
 		
 		
@@ -145,6 +162,41 @@ class SDRC_ChopperComp : ScriptGameComponent
 */		
 	}
 
+	//------------------------------------------------------------------------------------------------	
+	void SetVelocity(IEntity owner)
+	{
+		vector origin = owner.GetOrigin();
+		
+		//Define speed
+		float speed = vector.Distance(origin, m_vDestination);
+		float speedMul = 1.0;
+		
+		//Set velocity
+		vector chopVector = vector.Direction(origin, m_vDestination);
+		chopVector.Normalize();		
+		chopVector = chopVector * 12;//length;
+//		chopVector = chopVector * speed * speedMul;//length;
+		owner.GetPhysics().SetVelocity(chopVector);		
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	void SetTurn(IEntity owner, float deltaTime)
+	{
+		//Get chopper direction
+		vector vDir = owner.GetTransformAxis(2);
+		vector origin = owner.GetOrigin();
+		
+		//Turn the chopper
+		vector angles = vector.Direction(origin, m_vDestination);
+		angles = ComputeAngularVelocity(vDir, angles, deltaTime);
+		
+		float roll = ComputeSplineRoll(m_vSplinePoints[closestIndex - 1], m_vSplinePoints[closestIndex + 0], m_vSplinePoints[closestIndex + 1]);
+		angles[2] = angles[2] - roll;
+		
+		owner.GetPhysics().SetAngularVelocity(angles);		
+	}
+	
+	//------------------------------------------------------------------------------------------------	
 	void DrawLine(vector p0, vector p1, int color = Color.RED)
 	{
 		int shapeFlags = ShapeFlags.ONCE;
@@ -154,6 +206,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		Shape.CreateLines(color, shapeFlags, p, 2);		
 	}
 	
+	//------------------------------------------------------------------------------------------------	
 	vector ComputeAngularVelocity(vector v1, vector v2, float deltaTime)
 	{
 	    vector a = v1.Normalized();
@@ -174,20 +227,53 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}	
 	
 	//------------------------------------------------------------------------------------------------
+	float ComputeSplineRoll(vector p0, vector p1, vector p2)
+	{
+	    // Compute forward tangents between points
+	    vector t0 = (p1 - p0).Normalized();
+	    vector t1 = (p2 - p1).Normalized();
+	
+	    // Compute curve axis (cross product)
+	    vector axis = t0 * t1;
+	    float axisLen = axis.Length();
+	
+	    // Handle nearly straight segments
+	    if (axisLen < 0.0001)
+	        return 0.0;
+	
+	    // Compute angle between tangents
+//	    float dot = Math.Clamp(vector.Dot(t0,t1), -1.0, 1.0);
+	    float dot = vector.Dot(t0, t1);
+	    dot = Math.Clamp(dot, -1.0, 1.0);
+	    float angle = Math.Acos(dot);
+	
+	    // Determine roll direction (sign)
+	    float rollSign = 1.0;
+	    if (axis[1] < 0.0)
+	        rollSign = -1.0;
+	
+	    // Convert to degrees and apply sign
+	    float rollDeg = rollSign * angle;// * Math.RAD2DEG;
+	    return rollDeg;
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	/*!	
 	
 	*/
 	void InitFlightPath()	
 	{
 		array<vector> pathPoints = {
-			"0000 050 000",
-			"0200 020 100",
-			"0300 060 400",
-			"0100 080 200",
-			"0300 020 250",
+			"0000 010 000",
+			"0060 040 100",
+			"0030 050 200",
+			"0100 030 240",
+			"0200 030 160",
+			"0220 030 140",
+			"0120 020 080",
 		};
 			
-		SDRC_Spline3D.GenerateSplinePoints(pathPoints, m_vSplinePoints, m_vTangentPoints, 8, true);
+		SDRC_Spline3D.GenerateSplinePoints(pathPoints, m_vSplinePoints, m_vTangentPoints, 12, true);
 		m_vDestination = m_vSplinePoints[1];
 	}
 	

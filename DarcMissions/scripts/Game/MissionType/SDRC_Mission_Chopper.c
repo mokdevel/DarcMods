@@ -11,13 +11,10 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private ref SDRC_ChopperConfig m_Config;
 	private ref SDRC_Chopper m_DC_Chopper = new SDRC_Chopper();
 	private VehicleHelicopterSimulation m_Vehicle_s;
-	private IEntity m_Vehicle;
+	private IEntity m_Vehicle = null;;
+	private SCR_AIGroup m_Crew = null;
 	private int idx = 0;	
 
-	private ref array<vector> m_vSplinePoints = new array<vector>();
-	private ref array<vector> m_vTangentPoints = new array<vector>();
-	private int spIdx = 0;
-		
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_Chopper(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
@@ -37,28 +34,9 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		}
 		m_DC_Chopper = m_Config.subMissions[idx];	
 		HandleRequestGeneralVariables(m_DC_Chopper.general, request);
-	
-		//Flight path		
-/*		array<vector> pathPoints = {
-			"700 100 2100",
-			"1700 120 3000",
-			"2200 150 1400",
-			"2000 80 2000",
-			"1600 80 2200",
-		};*/
 
-		array<vector> pathPoints = {
-			"0000 050 000",
-			"0200 020 100",
-			"0300 060 400",
-			"0100 080 200",
-			"0300 020 250",
-		};
-			
-		SDRC_Spline3D.GenerateSplinePoints(pathPoints, m_vSplinePoints, m_vTangentPoints, 20);
-		
 		//Find position
-		vector pos = "0 50 0";//pathPoints[0];//SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
+		vector pos = "30 10 30";//pathPoints[0];//SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
 		SetPos(pos /*, destination */);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Chopper.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
@@ -102,24 +80,25 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
 	{					
+		
+//		string groupToSpawn = "{30ED11AA4F0D41E5}Prefabs/Groups/OPFOR/Group_USSR_FireGroup.et";
+		string groupToSpawn = "{0D10CCEEC7B3EC34}Prefabs/Groups/OPFOR/Group_USSR_PlatoonHQ.et";
+//		m_Crew = SDRC_AIHelper.SpawnGroup(groupToSpawn, GetPos(), GetFaction());
+		
 		//Code for whatever you need for spawning things.
 		EntitySpawnParams params = EntitySpawnParams();
-//		string resourceName	= "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et";
 		string resourceName	= "{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et";
-		vector pos = m_vSplinePoints[0];
+//		string resourceName	= "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et";
+		vector pos = GetPos();
 	
 		//Spawn the resource exactly to pos
 		Resource resource = Resource.Load(resourceName);
 		vector transform[4];
-
-		vector rotVector = vector.Direction(m_vSplinePoints[0], m_vSplinePoints[1]);
-		rotVector.Normalize();
-//		rotVector.Perpend();
-		rotVector = rotVector.VectorToAngles();
 				
+		vector rotVector = "0 0 0";
 		Math3D.MatrixIdentity3(transform);
 		Math3D.AnglesToMatrix(rotVector, transform);
-		transform[3] = m_vSplinePoints[0];
+		transform[3] = pos;//m_vSplinePoints[0];
 		
 		//SDRC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0, false);
         params.TransformMode = ETransformMode.WORLD;			
@@ -131,62 +110,19 @@ class SDRC_Mission_Chopper : SDRC_Mission
         m_Vehicle_s.SetThrottle(1.0);
         m_Vehicle_s.RotorSetForceScaleState(0, 1.3);	//Hovering 1.2
         m_Vehicle_s.RotorSetForceScaleState(1, 2);
-
-//		SCR_HelicopterControllerComponent m_Vehicle_c = SCR_HelicopterControllerComponent.Cast(m_Vehicle.FindComponent(SCR_HelicopterControllerComponent));
-//		m_Vehicle_c.<smth smth mas startup time>
-				
-		vector velOrig = m_Vehicle.GetPhysics().GetVelocity();
-        //vector rotVector = m_Vehicle.GetAngles();
 		
-//		vector rotVector = vector.Direction(m_vSplinePoints[0], m_vSplinePoints[1]);
-//		rotVector.Normalize();
-//		pos = result[i] + (direction * 40);
-		
-        vector vel = {velOrig[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * 10, velOrig[1], velOrig[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * 10 };
-        vector rot = {rotVector[0] + Math.Sin(rotVector[0] * Math.DEG2RAD) * 0, rotVector[1], rotVector[2] + Math.Cos(rotVector[2] * Math.DEG2RAD) * 0 };
-		
-//        m_Vehicle.SetAngles(rot);	
-//		rotVector.Perpend();
-//        m_Vehicle.SetAngles(rotVector);	
-//        m_Vehicle.SetYawPitchRoll(rotVector);		
-//		m_Vehicle.GetPhysics().SetVelocity(vel);
-//		m_Vehicle.GetPhysics().SetVelocity("0 0 0");
-		
-//		GetGame().GetCallqueue().CallLater(Path1, 150000);
-	}
+		GetGame().GetCallqueue().CallLater(AddCrew, 3000);
+	}	
 	
-	private void Path1()
-	{		
-		array<float> rotor = {1.8, 2.5, 2.2, 1.3, 1.2, -1};
-		array<float> vel0 =  {20,  30,  30,  25,  20};
-		array<float> rot0 =  {10,  20,  20,  -20, -10};
-		
-        m_Vehicle_s.RotorSetForceScaleState(0, rotor[idx]);	//Hovering 1.2
-        m_Vehicle_s.RotorSetForceScaleState(1, 2);
-		
-		vector velOrig = m_Vehicle.GetPhysics().GetVelocity();
-//        vector rotVector = m_Vehicle.GetAngles();
-        vector rotVector = m_Vehicle.GetYawPitchRoll();
-		
-        vector vel = {	velOrig[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * vel0[idx], 
-						velOrig[1] + 0.5, 
-						velOrig[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * vel0[idx] };		
-        vector rot = {	rotVector[0] + Math.Sin(rotVector[0] * Math.DEG2RAD) * rot0[idx], 
-						rotVector[1] + 0.5,
-						rotVector[2] + Math.Cos(rotVector[2] * Math.DEG2RAD) * rot0[idx]};
-		
-//        m_Vehicle.SetAngles(rot);		
-//        m_Vehicle.SetYawPitchRoll(rot);		
-//        m_Vehicle.GetPhysics().SetVelocity(vel);		
-		
-		idx++;
-		if (rotor[idx] != -1)
+	void AddCrew()
+	{
+		if (m_Crew)
 		{
-			GetGame().GetCallqueue().CallLater(Path1, 8000, false);
+			SDRC_VehicleHelper.MoveGroupInVehicle(m_Crew, m_Vehicle, true);
 		}
 	}
 }
-		
+
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperConfig : SDRC_MissionConfig
 {
@@ -208,8 +144,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			}
 		}
 		return idx;
-	}		
-	
+	}			
 }
 
 //------------------------------------------------------------------------------------------------
@@ -226,7 +161,6 @@ class SDRC_Chopper : Managed
 	#endif	
 	ref array<ref SDRC_HelicopterInfo> helicopterInfo = {};
 }
-
 
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperJsonApi : SDRC_JsonApi
