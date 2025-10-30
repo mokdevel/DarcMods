@@ -200,7 +200,7 @@ class SDRC_Spawner
 		{		
 			if (location)
 			{
-				SDRC_Log.Add("[SDRC_Spawner:Spawn] Spawning " + entityToSpawn + " to " + SCR_StringHelper.Translate(location.displayName), LogLevel.NORMAL);
+				SDRC_Log.Add("[SDRC_Spawner:Spawn] Spawning " + entityToSpawn + " to " + WidgetManager.Translate(location.displayName), LogLevel.NORMAL);
 			}
 			else
 			{

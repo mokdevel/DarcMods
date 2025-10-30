@@ -86,6 +86,7 @@ sealed class SDRC_Spline3D
 		}
 	}
 
+	//------------------------------------------------------------------------------------------------
 	// Calculate a Catmull–Rom position for t in [0,1]
 	static vector CatmullRom(vector p0, vector p1, vector p2, vector p3, float t)
 	{
@@ -100,6 +101,7 @@ sealed class SDRC_Spline3D
 		return (term1 + term2 + term3 + term4) * 0.5;
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	// Calculate the tangent (first derivative of Catmull–Rom)
 	static vector CatmullRomTangent(vector p0, vector p1, vector p2, vector p3, float t)
 	{
@@ -112,6 +114,7 @@ sealed class SDRC_Spline3D
 		return (term1 + term2 + term3) * 0.5;
 	}	
 	
+	//------------------------------------------------------------------------------------------------
 	static void TestSpline()
 	{
 		array<vector> ctrl = {
