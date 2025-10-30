@@ -31,6 +31,9 @@ float spawnRateForGreenZones : The percentage chance to spawn a mission to green
 ## Next release (unreleased)
 
 ... empty ...
+## 20251030
+### Update for Arma Reforger 1.6
+Minor fixes and support for 1.6.
 
 ## 20251025
 Main features:

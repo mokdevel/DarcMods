@@ -1,5 +1,5 @@
 # DarcMissions
-A mission frame work for Arma Reforger. There are various missions premade and their behaviour can be modified by editing the configuration jsons. DarcMissions is thoroughly designed to work on any map without specific configs.
+A mission frame work for Arma Reforger. There are various missions premade and their behaviour can be modified by editing the configuration jsons.
 
 ## Installation
 Just activate the mod (and dependencies) and you're good to go.
@@ -105,7 +105,11 @@ Dependency specific files
 
 ..empty..
 
-## Update 20251027
+## 20251030
+### Update for Arma Reforger 1.6
+Minor fixes and support for 1.6.
+
+## 20251027
 ### DarcMissions
 No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
 Fixes:
@@ -113,7 +117,7 @@ Fixes:
 * fallbackEnemyFaction had issues when factions are not properly available setup
   * British Forces faction should work properly.
 
-## Update 20251025
+## 20251025
 ### DarcMissions
 No changes in mission jsons. This is mainly an addition for Freedom Fighters compatibility.
 

@@ -18,6 +18,10 @@ bool visibleOnlyToFaction : If true, the markers will only be visible for player
 
 # Version history
 
+## 20251030
+### Update for Arma Reforger 1.6
+Minor fixes and support for 1.6.
+
 ## 20250910
 ### DarcDeathMarker
 Main features:

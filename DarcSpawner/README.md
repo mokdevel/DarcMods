@@ -49,3 +49,9 @@ Some parameters are described in DarcMissions documentation
 - [Location parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LOCATIONS.md)
 - [Loot](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LOOT.md)
 - [LootLists](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LISTS.md#loot-lists)
+
+# Version history
+
+## 20251030
+### Update for Arma Reforger 1.6
+Minor fixes and support for 1.6.
