@@ -151,11 +151,14 @@ sealed class SDRC_Misc
 		int lastslash = worldName.LastIndexOf("/") + 1;
 		worldName = worldName.Substring(lastslash, worldName.Length() - lastslash - 4);
 		
-		if (worldName.StartsWith("GM_"))
+		if (filterGM)
 		{
-			worldName.Replace("GM_", "");
+			if (worldName.StartsWith("GM_"))
+			{
+				worldName.Replace("GM_", "");
+			}
 		}
-		
+				
 		return worldName;
 	}	
 
