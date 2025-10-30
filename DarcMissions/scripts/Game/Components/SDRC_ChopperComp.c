@@ -21,13 +21,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fLen = 0;
 	private int m_iSegments = 0;
 	private int m_iSegmentPoints = 0;
-	private int m_iDestinationPointAdd = 2;//m_fSpeed / 3;
-	private float m_fTimeTurnInterval = m_fSpeed / 200;
+	private int m_iDestinationPointAdd = 2;
+	private float m_fTimeTurnInterval;
 	
 	//Flight path runtime variables	
 	private float m_fSpeed = 40;
 	private int m_iSpeedAvgCount = 0;
 	private float m_iSpeedAvg = 0;
+	private bool m_bDoTurn = true;
 	
 	int closestIndex;
 	int newClosestIndex;
@@ -52,7 +53,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 		angles.Normalize();
 		angles = angles.VectorToAngles();
 		owner.SetYawPitchRoll(angles);
-		
+
+		m_fTimeTurnInterval = m_fSpeed / 100;
+				
 		SetVelocity(owner);
 		SetTurn(owner, m_fTimeTurnInterval);
 		
@@ -117,12 +120,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Draw where we are planning to go
 		float distance = GetDistanceFromSpline(m_vSplinePoints, origin, newClosestIndex);		
 		
-		bool doTurn = false;
-		
 		if ( (newClosestIndex - closestIndex) < m_iDestinationPointAdd)
 		{		
 			closestIndex = newClosestIndex + m_iDestinationPointAdd;
-			doTurn = true;
+			m_bDoTurn = true;
 		}
 		
 		m_vDestination = m_vSplinePoints[closestIndex];
@@ -135,12 +136,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 			m_fTimeSpeed = m_fTimeSpeed - SPEED_INTERVAL;
 		}*/
 
-		if ( (m_fTimeTurn > m_fTimeTurnInterval) || (doTurn) )
+		if ( (m_fTimeTurn > m_fTimeTurnInterval) || (m_bDoTurn) )
 		{
 //			SetVelocity(owner);
-			SetTurn(owner, m_fTimeTurn);
+			SetTurn(owner, m_fTimeTurnInterval);
 //			m_fTimeTurn = m_fTimeTurn - (m_fTimeTurnInterval * 1.1);
 			m_fTimeTurn = m_fTimeTurn - m_fTimeTurnInterval;
+			m_bDoTurn = false;
 		
 			//Set the chopper YPR			
 /*			float roll = ComputeSplineRoll(m_vSplinePoints[closestIndex - 1], m_vSplinePoints[closestIndex + 0], m_vSplinePoints[closestIndex + 1]);
@@ -194,10 +196,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector vDir = owner.GetTransformAxis(2);
 		vector origin = owner.GetOrigin();
 		
-		//Turn the chopper
-		vector angles = vector.Direction(origin, m_vDestination);
-		angles = ComputeAngularVelocity(vDir, angles, deltaTime);
-		
+		//Calculate roll
 		int rollIdxStart = closestIndex - 1;//(m_iDestinationPointAdd / 2);
 		if (rollIdxStart < 0)
 		{
@@ -210,7 +209,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 		
 		float roll = ComputeSplineRoll(m_vSplinePoints[rollIdxStart], m_vSplinePoints[closestIndex], m_vSplinePoints[rollIdxEnd]);
+		
+		//Turn the chopper
+		vector angles = vector.Direction(origin, m_vDestination);
 		angles[2] = angles[2] - roll;
+		angles = ComputeAngularVelocity(vDir, angles, deltaTime);
 		
 		owner.GetPhysics().SetAngularVelocity(angles);		
 	}
@@ -277,7 +280,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	        rollSign = -1.0;
 	
 	    // Convert to degrees and apply sign
-	    float rollDeg = rollSign * angle;// * Math.RAD2DEG;
+	    float rollDeg = rollSign * angle * Math.RAD2DEG;
 	    return rollDeg;
 	}
 	
@@ -300,10 +303,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		//Arland
 		array<vector> pathPoints = {
-			"1200 010 1500",
+			"1500 010 2000",
 			"1600 020 2300",
-			"2300 020 2500",
-			"2500 010 2250",
+			"2300 040 2500",
+			"2500 010 2250",	//Timber Ridge
+			"3100 030 2800",	//Beauregard
 			"2400 030 1600",
 			"1900 000 1300",
 			"1500 000 2200",
