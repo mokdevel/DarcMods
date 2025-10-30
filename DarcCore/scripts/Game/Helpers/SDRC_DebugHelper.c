@@ -15,7 +15,8 @@ modded enum SCR_DebugMenuID {
 	#endif
     MODMENU_WAYPOINTS,
     MODMENU_MARKS,
-	MODMENU_SPHERES
+	MODMENU_SPHERES,
+	MODMENU_LINES
 }
 
 //------------------------------------------------------------------------------------------------
@@ -75,6 +76,7 @@ sealed class SDRC_DebugHelper
 		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_WAYPOINTS, "", "Show waypoints", categoryName);
 		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_MARKS, "", "Show markers", categoryName);
 		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_SPHERES, "", "Show spheres", categoryName);
+		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_LINES, "", "Show lines", categoryName);
 		}
 	}		
 
@@ -82,11 +84,12 @@ sealed class SDRC_DebugHelper
 	/*!
 	Configure SDRC_DebugHelper.
 	*/
-	static void Configure(bool waypoint, bool marks, bool spheres)
+	static void Configure(bool waypoint, bool marks, bool spheres, bool lines = true)
 	{
 		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_WAYPOINTS, waypoint);
 		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_MARKS, marks);
 		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_SPHERES, marks);
+		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_LINES, lines);
 	}		
 		
 	//------------------------------------------------------------------------------------------------
@@ -111,12 +114,15 @@ sealed class SDRC_DebugHelper
 			SDRC_DebugHelper.DrawSpheres();
 		}
 		
+		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_LINES))
+		{		
+			SDRC_DebugHelper.DrawLines();
+		}
+		
 		if (m_DebugSlots)
 		{			
 			SDRC_DebugHelper.DrawSlots();	
-		}
-		
-		SDRC_DebugHelper.DrawLines();
+		}		
 	}
 	
 	//------------------------------------------------------------------------------------------------
