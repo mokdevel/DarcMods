@@ -10,13 +10,25 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private static SDRC_ChopperComp s_Instance;	
 	private ref array<vector> m_vSplinePoints = new array<vector>();
 	private ref array<vector> m_vTangentPoints = new array<vector>();
-	const float SPEED_INTERVAL = 0.2;		
-	const float TURN_INTERVAL = 0.5;		
-	private float m_fTimeSpeed = 0;
+//	const float SPEED_INTERVAL = 0.2;		
+//	private float m_fTimeSpeed = 0;
 	private float m_fTimeTurn = 0;
-	private float m_fSpeed = 12;
-	private int m_iSplinePoints = 12;
-	private int m_iDestinationPointAdd = m_fSpeed / 3;
+	
+	//Flight path
+	const int SPLINE_POINT_DISTANCE = 30;
+	private float m_fGroundLow = 5;
+	private float m_fGroundHigh = 40;
+	private float m_fLen = 0;
+	private int m_iSegments = 0;
+	private int m_iSegmentPoints = 0;
+	private int m_iDestinationPointAdd = 2;//m_fSpeed / 3;
+	private float m_fTimeTurnInterval = m_fSpeed / 200;
+	
+	//Flight path runtime variables	
+	private float m_fSpeed = 40;
+	private int m_iSpeedAvgCount = 0;
+	private float m_iSpeedAvg = 0;
+	
 	int closestIndex;
 	int newClosestIndex;
 	vector m_vDestination;
@@ -42,7 +54,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		owner.SetYawPitchRoll(angles);
 		
 		SetVelocity(owner);
-		SetTurn(owner, TURN_INTERVAL);
+		SetTurn(owner, m_fTimeTurnInterval);
 		
 		
 	}
@@ -59,7 +71,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------
 	override void EOnFrame(IEntity owner, float timeSlice)
 	{
-		m_fTimeSpeed += timeSlice;
+//		m_fTimeSpeed += timeSlice;
 		m_fTimeTurn += timeSlice;
 
 		vector origin = owner.GetOrigin();
@@ -83,7 +95,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		//Draw chopper direction vector
 		vector vDir = owner.GetTransformAxis(2);
-		DrawLine(origin, origin + (vDir * 10), Color.WHITE);		
+//		DrawLine(origin, origin + (vDir * 10), Color.WHITE);		
 
 		//Destination vector
 		vector chopVector = vector.Direction(origin, m_vDestination);
@@ -105,49 +117,30 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Draw where we are planning to go
 		float distance = GetDistanceFromSpline(m_vSplinePoints, origin, newClosestIndex);		
 		
-		closestIndex = newClosestIndex + m_iDestinationPointAdd;
+		bool doTurn = false;
 		
-/*		if ( (distance < 40) && (newClosestIndex > (closestIndex + 3) ) )
-		{
-			if (newClosestIndex > closestIndex)
-			{
-				closestIndex = newClosestIndex;
-				closestIndex++;
-				closestIndex++;
-				closestIndex++;
-			}
+		if ( (newClosestIndex - closestIndex) < m_iDestinationPointAdd)
+		{		
+			closestIndex = newClosestIndex + m_iDestinationPointAdd;
+			doTurn = true;
 		}
-
-		if (newClosestIndex == closestIndex)
-		{
-			closestIndex++;
-			closestIndex++;
-			closestIndex++;
-		}*/
 		
 		m_vDestination = m_vSplinePoints[closestIndex];
 		
-//		owner.GetPhysics().SetVelocity(chopVector);
-//		vVel = owner.GetPhysics().GetVelocity();
-//		owner.GetPhysics().SetVelocity(vVel);		
-
-		bool bDoTurn = false;
-
 		SetVelocity(owner);
 				
-		if (m_fTimeSpeed > SPEED_INTERVAL)
+/*		if (m_fTimeSpeed > SPEED_INTERVAL)
 		{
-//			SetVelocity(owner);
-			//bDoTurn = true;
 			//SetTurn(owner);
 			m_fTimeSpeed = m_fTimeSpeed - SPEED_INTERVAL;
-		}
+		}*/
 
-		if ( (m_fTimeTurn > TURN_INTERVAL) || (bDoTurn) )
+		if ( (m_fTimeTurn > m_fTimeTurnInterval) || (doTurn) )
 		{
 //			SetVelocity(owner);
 			SetTurn(owner, m_fTimeTurn);
-			m_fTimeTurn = m_fTimeTurn - TURN_INTERVAL;
+//			m_fTimeTurn = m_fTimeTurn - (m_fTimeTurnInterval * 1.1);
+			m_fTimeTurn = m_fTimeTurn - m_fTimeTurnInterval;
 		
 			//Set the chopper YPR			
 /*			float roll = ComputeSplineRoll(m_vSplinePoints[closestIndex - 1], m_vSplinePoints[closestIndex + 0], m_vSplinePoints[closestIndex + 1]);
@@ -175,8 +168,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector origin = owner.GetOrigin();
 		
 		//Define speed
-		float speed = vector.Distance(origin, m_vDestination);
-		float speedMul = 1.0;
+		float speedMul = vector.Distance(origin, m_vDestination);
+		
+		m_iSpeedAvgCount++;
+		m_iSpeedAvg = m_iSpeedAvg + ( (speedMul - m_iSpeedAvg) / m_iSpeedAvgCount) ;
+		
+//		Print("avg:" + m_iSpeedAvg + " / " + speedMul);
 
 /*		vector tangent = m_Spline.GetTangentAt(m_Param).Normalized();				
 		vector targetVel = tangent * m_Speed;		
@@ -185,7 +182,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Set velocity
 		vector chopVector = vector.Direction(origin, m_vDestination);
 		chopVector.Normalize();		
-		chopVector = chopVector * m_fSpeed;
+		chopVector = chopVector * m_fSpeed * (m_iSpeedAvg / 100);
 //		chopVector = chopVector * speed * speedMul;//length;
 		owner.GetPhysics().SetVelocity(chopVector);		
 	}
@@ -231,6 +228,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------	
 	vector ComputeAngularVelocity(vector v1, vector v2, float deltaTime)
 	{
+		if (deltaTime == 0)
+		{
+			return "0 0 0";
+		}
+		
 	    vector a = v1.Normalized();
 	    vector b = v2.Normalized();
 	
@@ -241,8 +243,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	    float angle = Math.Acos(dot); // radians between directions
 	
 	    // avoid division by zero
-	    if (Math.AbsFloat(angle) < 0.0001)
-	        return "0 0 0";
+/*	    if (Math.AbsFloat(angle) < 0.0001)
+	        return "0 0 0"; */
 	
 	    vector angVel = axis.Normalized() * (angle / deltaTime);
 	    return angVel;
@@ -285,7 +287,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/
 	void InitFlightPath()	
 	{
-		array<vector> pathPoints = {
+		//Structures
+/*		array<vector> pathPoints = {
 			"0000 010 000",
 			"0060 040 100",
 			"0030 050 200",
@@ -293,9 +296,48 @@ class SDRC_ChopperComp : ScriptGameComponent
 			"0200 030 160",
 			"0220 030 140",
 			"0120 020 080",
+		};*/
+
+		//Arland
+		array<vector> pathPoints = {
+			"1200 010 1500",
+			"1600 020 2300",
+			"2300 020 2500",
+			"2500 010 2250",
+			"2400 030 1600",
+			"1900 000 1300",
+			"1500 000 2200",
+			"2200 020 2200",
 		};
-			
-		SDRC_Spline3D.GenerateSplinePoints(pathPoints, m_vSplinePoints, m_vTangentPoints, m_iSplinePoints, true);
+		
+		//Count flight path length - straight lines
+		for (int i = 0; i < pathPoints.Count() - 2; i++)
+		{
+			m_fLen = m_fLen + vector.Distance(pathPoints[i], pathPoints[i + 1]);
+		}
+		
+		m_iSegments = pathPoints.Count() - 1;
+		m_iSegmentPoints = (m_fLen/m_iSegments) / SPLINE_POINT_DISTANCE;
+		
+		SDRC_Log.Add("[SDRC_ChopperComp:InitFlightPath] Flight path length: " + m_fLen + " , segments: " + m_iSegments + " fpSegmentPoints: " + m_iSegmentPoints, LogLevel.DEBUG);
+		
+		m_fGroundLow = 5;
+		m_fGroundHigh = 40;
+		
+		foreach (int i, vector pt : pathPoints)
+		{
+			float y = GetGame().GetWorld().GetSurfaceY(pt[0], pt[2]);
+			if (SDRC_Misc.IsPosInWater(pt))	//Is it under water?
+			{
+				y = GetGame().GetWorld().GetOceanHeight(pt[0], pt[2]);;
+			}
+			y = pt[1] + y + Math.RandomFloat(m_fGroundLow, m_fGroundHigh); 
+			vector newPt = pt;
+			newPt[1] = y;
+			pathPoints[i] = newPt;
+		}
+					
+		SDRC_Spline3D.GenerateSplinePoints(pathPoints, m_vSplinePoints, m_vTangentPoints, m_iSegmentPoints, true);
 		m_vDestination = m_vSplinePoints[1];
 	}
 	
