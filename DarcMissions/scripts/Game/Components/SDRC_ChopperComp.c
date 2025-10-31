@@ -25,7 +25,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fTimeTurnInterval;
 	
 	//Flight path runtime variables	
-	private float m_fSpeed = 5;//60;
+	private float m_fSpeed = 40;
 	private int m_iSpeedAvgCount = 0;
 	private float m_iSpeedAvg = 0;
 	private bool m_bDoTurn = true;
@@ -57,7 +57,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		angles = angles.VectorToAngles();
 		owner.SetYawPitchRoll(angles);
 
-		m_fTimeTurnInterval = 2;//m_fSpeed / 100;
+		m_fTimeTurnInterval = m_fSpeed / 100;
 				
 		SetVelocity(owner);
 		SetTurn(owner, m_fTimeTurnInterval);
@@ -202,32 +202,19 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Count the angle from heli up vs world up
 		vector vDir1 = owner.GetTransformAxis(1);
-//		vDir1.Normalize();
-		vector vUp = vector.Up;// * Math.RAD2DEG;	//Up
-//		vUp.Normalize();
+		vector vUp = vector.Up;
 		
 		float ang = GetAngleBetweenVectors(vUp, vDir1);
+		ang = (ang * Math.RAD2DEG) / 200;
 		
-//		vDir1 = vUp - vDir1;
-		
-//		Print("diff: " + vDir1[2]);
 		Print("diff: " + ang * Math.RAD2DEG);
-//		Print("diff: " + vDir1[2] * Math.RAD2DEG);
 
-		vDir.Normalize();	
-		vector vRoll = vector.Forward * -0.5;
-//		vRoll[2] = roll;
-//		vRoll.Normalize();
-//		vRoll = vector.Up;
-		
-//		vector anglesRoll = ComputeAngularVelocity(vector.Forward, vRoll, deltaTime);
-//		vector anglesRoll = ComputeAngularVelocity(vDir, vRoll, deltaTime);
-		vector anglesRoll = ComputeAngularVelocity(origin.Normalized(), vRoll, deltaTime);
-						
 		//Get the heli forward vector
 		vector angles = vector.Direction(origin, m_vDestination);
-		anglesRoll = "0 0 0";
-		if (flip)
+		
+		vector anglesRoll = "0 0 0";
+		
+/*		if (flip)
 		{
 			anglesRoll[2] = 45 * Math.DEG2RAD;			
 			flip = false;
@@ -236,26 +223,19 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			anglesRoll[2] = -45 * Math.DEG2RAD;			
 			flip = true;
-		}
+		}*/
 		
-//		vector currAngV = owner.GetPhysics().GetAngularVelocity();						
-//		angles = angles + currAngV;
-
-		//Turn the roll towards up
-//		angles[2] = angles[2] - (vDir1[2] * Math.RAD2DEG);
-//		angles[2] = angles[2] + 90;
-	
-		vDir.Normalize();	
-		angles.Normalize();	
+//		vDir.Normalize();	
+//		angles.Normalize();	
 		
 		//Turn the roll according to spline
-//		angles[2] = angles[2] - (roll * 2);
+		angles[2] = angles[2] - (roll * 3) - ang;
 //		angles[2] = angles[2] - roll;
 //		angles = angles - vRoll;
 		vector angularVel = ComputeAngularVelocity(vDir, angles, deltaTime);
-//		angles = "0 0 0";
+		angularVel[2] = angularVel[2];// - ang;
 		
-		m_vAngTarget = (angularVel / Math.RAD2DEG);
+		m_vAngTarget = angularVel * Math.DEG2RAD;
 		owner.GetPhysics().SetAngularVelocity(angularVel + anglesRoll);		
 	}
 	
@@ -287,7 +267,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		
 		//Roll vector
-		vector vRoll = m_vRollTarget;
+		vector vRoll = m_vRollTarget * Math.DEG2RAD;
 		vRoll.Normalize();
 		DrawLine(origin, origin + (vRoll * 15), Color.BLUE);		
 
@@ -325,6 +305,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}
 
 	//------------------------------------------------------------------------------------------------	
+	//\param angle in radians
 	float GetAngleBetweenVectors(vector a, vector b)
 	{
 	    // Normalize both vectors
@@ -342,6 +323,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}	
 		
 	//------------------------------------------------------------------------------------------------	
+	//\returns AngVel in radians
 	vector ComputeAngularVelocity(vector v1, vector v2, float deltaTime)
 	{
 		if (deltaTime == 0)
@@ -367,6 +349,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}	
 	
 	//------------------------------------------------------------------------------------------------
+	// \return degrees of roll
+	// \return vector Axis of the roll
 	float ComputeSplineRoll(vector p0, vector p1, vector p2, out vector axis)
 	{
 	    // Compute forward tangents between points
@@ -390,8 +374,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 	    // Determine roll direction (sign)
 	    float rollSign = 1.0;
 	    if (axis[1] < 0.0)
+		{
 	        rollSign = -1.0;
+		}
 
+		axis = axis * rollSign;
+		
 	    // Convert to degrees and apply sign
 	    float rollDeg = rollSign * angle * Math.RAD2DEG;
 	    return rollDeg;
@@ -416,7 +404,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		//Arland
 		array<vector> pathPoints = {
-			"1500 060 2000",
+			"1500 020 2000",
 			"1400 030 2200",
 			"1600 020 2300",
 			"2300 040 2500",
