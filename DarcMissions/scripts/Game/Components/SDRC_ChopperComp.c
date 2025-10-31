@@ -30,6 +30,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_iSpeedAvg = 0;
 	private bool m_bDoTurn = true;
 	private vector m_vRollTarget;
+	private vector m_vAngTarget;
 	
 	int closestIndex;
 	int newClosestIndex;
@@ -204,6 +205,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vDir1 = vector.Direction(origin, vDir1);
 		vDir1.Normalize();
 		vector vUp = vector.Up;// * Math.RAD2DEG;	//Up
+		vUp = vector.Direction(origin, vector.Up);		
 		vUp.Normalize();
 		vDir1 = vDir1 - vUp;
 		Print("diff: " + vDir1[2]);
@@ -214,11 +216,23 @@ class SDRC_ChopperComp : ScriptGameComponent
 //		angles = angles + currAngV;
 
 		//Turn the roll towards up
-		angles[2] = angles[2] - vDir1[2];
+//		angles[2] = angles[2] - (vDir1[2] * Math.RAD2DEG);
+//		angles[2] = angles[2] + 90;
+	
+		vDir.Normalize();	
+		angles.Normalize();	
+		
+		vector vRoll = "0 0 0";
+		vRoll[2] = roll;
+		vRoll.Normalize();
+		
 		//Turn the roll according to spline
-		angles[2] = angles[2] - (roll * 2);
+//		angles[2] = angles[2] - (roll * 2);
+//		angles[2] = angles[2] - roll;
+		angles = angles - vRoll;
 		angles = ComputeAngularVelocity(vDir, angles, deltaTime);
 		
+		m_vAngTarget = (angles / Math.RAD2DEG);
 		owner.GetPhysics().SetAngularVelocity(angles);		
 	}
 	
@@ -243,7 +257,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		DrawLine(origin, origin + (vDir0 * 10), Color.DARK_CYAN);		
 
 		vector vDir1 = owner.GetTransformAxis(1);	//Up
-		DrawLine(origin, origin + (vDir1 * 10), Color.MAGENTA);		
+		DrawLine(origin, origin + (vDir1 * 15), Color.MAGENTA);		
 		
 		vector vUp = vector.Up;						//World Up
 		DrawLine(origin, origin + (vUp * 10), Color.GRAY);		
@@ -252,8 +266,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Roll vector
 		vector vRoll = m_vRollTarget;
 		vRoll.Normalize();
-		DrawLine(origin, origin + (vRoll * 10), Color.BLUE);		
-				
+		DrawLine(origin, origin + (vRoll * 15), Color.BLUE);		
+
+		vector vAng = m_vAngTarget;
+		vAng.Normalize();
+		DrawLine(origin, origin + (vAng * 15), Color.WHITE);
+						
 		//Draw velocity vector
 		vector vVel = owner.GetPhysics().GetVelocity();
 		float currentSpeed = vVel.Length();
