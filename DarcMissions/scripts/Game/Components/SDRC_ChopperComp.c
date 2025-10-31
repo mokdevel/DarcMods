@@ -180,10 +180,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------	
 	void SetTurn(IEntity owner, float deltaTime)
 	{
-		//Get chopper direction
-		vector vDir = owner.GetTransformAxis(2);
-		vector origin = owner.GetOrigin();
-		
 		//Calculate roll
 		int rollIdxStart = closestIndex - 1;//(m_iDestinationPointAdd / 2);
 		if (rollIdxStart < 0)
@@ -199,11 +195,18 @@ class SDRC_ChopperComp : ScriptGameComponent
 		float roll = ComputeSplineRoll(m_vSplinePoints[rollIdxStart], m_vSplinePoints[closestIndex], m_vSplinePoints[rollIdxEnd], m_vRollTarget);
 //		float roll = ComputeSplineRoll(origin, m_vSplinePoints[closestIndex], m_vSplinePoints[rollIdxEnd]);
 
+		//Get chopper direction
+		vector vDir = owner.GetTransformAxis(2);
+		vector origin = owner.GetOrigin();
+		
 		//Count the angle from heli up vs world up
 		vector vDir1 = owner.GetTransformAxis(1);// * Math.RAD2DEG;	//Up from chopper (MAGENTA)
 		vDir1 = vector.Direction(origin, vDir1);
+		vDir1.Normalize();
 		vector vUp = vector.Up;// * Math.RAD2DEG;	//Up
+		vUp.Normalize();
 		vDir1 = vDir1 - vUp;
+		Print("diff: " + vDir1[2]);
 				
 		//Get the heli forward vector
 		vector angles = vector.Direction(origin, m_vDestination);
@@ -211,9 +214,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 //		angles = angles + currAngV;
 
 		//Turn the roll towards up
-//		angles[2] = angles[2] - vDir1[2];
+		angles[2] = angles[2] - vDir1[2];
 		//Turn the roll according to spline
-		angles[2] = angles[2];// - (roll * 5);
+		angles[2] = angles[2] - (roll * 2);
 		angles = ComputeAngularVelocity(vDir, angles, deltaTime);
 		
 		owner.GetPhysics().SetAngularVelocity(angles);		
