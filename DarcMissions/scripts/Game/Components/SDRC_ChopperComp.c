@@ -195,19 +195,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 		
 		float roll = ComputeSplineRoll(m_vSplinePoints[rollIdxStart], m_vSplinePoints[closestIndex], m_vSplinePoints[rollIdxEnd], m_vRollTarget);
-//		float roll = ComputeSplineRoll(origin, m_vSplinePoints[closestIndex], m_vSplinePoints[rollIdxEnd]);
 
 		//Get chopper direction
 		vector vDir = owner.GetTransformAxis(2);
 		vector origin = owner.GetOrigin();
 		
 		//Count the angle from heli up vs world up
-		vector vDir1 = owner.GetTransformAxis(2);
-//		vDir1 = vector.Direction(origin, vDir1);
-		vDir1.Normalize();
+		vector vDir1 = owner.GetTransformAxis(1);
+//		vDir1.Normalize();
 		vector vUp = vector.Up;// * Math.RAD2DEG;	//Up
-//		vUp = vector.Direction(origin, vector.Up);		
-		vUp.Normalize();
+//		vUp.Normalize();
 		
 		float ang = GetAngleBetweenVectors(vUp, vDir1);
 		
