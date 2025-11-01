@@ -221,6 +221,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//See how steep we're turning
 		vector heliVelocity = owner.GetPhysics().GetVelocity();		
 		float angVelTurn = GetAngleBetweenVectors(heliForward, heliVelocity);
+		
+		angVelTurn = angVelTurn + roll;
+		angVelTurn = Math.Clamp(angVelTurn, -0.5, 0.5);
 		m_vRadRollVel = "0 0 0";
 		m_vRadRollVel[2] = -angVelTurn;
 		
