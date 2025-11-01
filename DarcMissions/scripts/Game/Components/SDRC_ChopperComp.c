@@ -25,7 +25,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fTimeTurnInterval;
 	
 	//Flight path runtime variables	
-	private float m_fSpeed = 40;
+	private float m_fSpeed = 30;
 	private int m_iSpeedAvgCount = 0;
 	private float m_iSpeedAvg = 0;
 	private bool m_bDoTurn = true;
@@ -59,7 +59,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		angles = angles.VectorToAngles();
 		owner.SetYawPitchRoll(angles);
 
-		m_fTimeTurnInterval = m_fSpeed / 100;
+		m_fTimeTurnInterval = m_fSpeed / 70;
 				
 		SetVelocity(owner);
 		SetTurn(owner, m_fTimeTurnInterval);
@@ -208,51 +208,25 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
 		vector heliUp = owner.GetTransformAxis(1);
 		heliUp.Normalize();
-		float angRollBack = GetAngleBetweenVectors(vector.Up, heliUp) / 5;
-		m_vRadRollBack = ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 3);
-		
-//		angRollBack = Math.Clamp(angRollBack, -0.2, 0.2);
-//		m_vRadRollBack = "0 0 0";
-//		m_vRadRollBack[2] = angRollBack;
-//		ang = (ang * Math.RAD2DEG) / 50;
-//		ang = 0;
-//		Print("diff: " + ang * Math.RAD2DEG);
+		m_vRadRollBack = ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 20);
 
-		//See how steep we're turning
+		//See how steep we're turning. Roll the helicopter accordingly for more natural flight.
 		vector heliVelocity = owner.GetPhysics().GetVelocity();		
-		float angVelTurn = GetAngleBetweenVectors(heliForward, heliVelocity);
+//		float angVelTurn = GetAngleBetweenVectors(heliForward, heliDirection);
+		float angVelTurn = GetAngleBetweenVectors(heliVelocity, heliDirection);
+//		float angVelTurn = GetAngleBetweenVectors(heliForward, heliVelocity);
 		
 		angVelTurn = angVelTurn + roll;
-		angVelTurn = Math.Clamp(angVelTurn, -0.5, 0.5);
+		angVelTurn = Math.Clamp(angVelTurn, -0.2, 0.2);
 		m_vRadRollVel = "0 0 0";
 		m_vRadRollVel[2] = -angVelTurn;
 		
 		float turnMul = 1;
-		Print("SDRC angVelTurn: " + angVelTurn * Math.RAD2DEG + " , angRollBack: " + angRollBack + " : " + angRollBack * Math.RAD2DEG + " , mul: " + turnMul );
+		Print("SDRC angVelTurn: " + angVelTurn * Math.RAD2DEG + " , mul: " + turnMul );
 		
-/*		//angleTurn = (angleTurn * Math.RAD2DEG) / 1;
-		
-		if (angleTurn != 0)
-		{
-			turnMul = Math.AbsFloat(angleTurn / 2);
-		}
-		
-		roll = roll * turnMul;
-		
-		Math.Clamp(roll, -25.0, 25.0);
-		
-		roll = roll * Math.DEG2RAD;*/
-								
 		//Turn the roll according to spline
-//		heliDirection[2] = heliDirection[2] - (roll * 3) - ang - angleTurn;
-//		heliDirection[2] = heliDirection[2] - roll;// - ang + angleTurn;
-//		heliVelocity[2] = heliVelocity[2] - roll;// - ang + angleTurn;
-//		heliVelocity[2] = heliVelocity[2] - m_vRollTarget;
-//		heliDirection[2] = heliDirection[2] - roll;
-//		heliDirection = heliDirection - vRoll;
 //		vector angularVel = ComputeAngularVelocity(heliForward, heliDirection, deltaTime);
 		vector angularVel = ComputeAngularVelocity(heliForward, heliVelocity, deltaTime);
-//		angularVel[2] = angularVel[2];// - ang;
 		
 		m_vAngTarget = angularVel * Math.DEG2RAD;
 		owner.GetPhysics().SetAngularVelocity(angularVel + m_vRadRollVel + m_vRadRollBack);		
@@ -261,6 +235,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------	
 	void DrawHelicopterVectors(IEntity owner)
 	{
+		if (!DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_LINES))
+		{		
+			return;
+		}
+		
 		vector origin = owner.GetOrigin();
 		
 		//Planned destination
