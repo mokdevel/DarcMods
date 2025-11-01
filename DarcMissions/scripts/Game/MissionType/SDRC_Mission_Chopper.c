@@ -88,7 +88,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		//Code for whatever you need for spawning things.
 		EntitySpawnParams params = EntitySpawnParams();
 //		string resourceName	= "{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et";
-		string resourceName	= "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et";
+//		string resourceName	= "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et";
+		string resourceName	= "{7CB21626B43A2E48}Prefabs/Vehicles/Flying/Jetpack_Flying.et";
 		vector pos = GetPos();
 	
 		//Spawn the resource exactly to pos

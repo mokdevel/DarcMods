@@ -474,9 +474,11 @@ sealed class SDRC_AIHelper
 			{
 				DamageManagerComponent damageManager = DamageManagerComponent.Cast(aiEntity.FindComponent(DamageManagerComponent));
 				
-				//TBD: Do we need to set the damage before despawn?
-				if (damageManager)
-					damageManager.SetHealthScaled(0);
+				#ifndef NEW_VERSION_WIP						
+					//TBD: Do we need to set the damage before despawn?
+					if (damageManager)
+						damageManager.SetHealthScaled(0);
+				#endif
 				
 				SDRC_SpawnHelper.DespawnItem(aiEntity);
 			}

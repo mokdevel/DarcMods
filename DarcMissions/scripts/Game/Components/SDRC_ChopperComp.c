@@ -25,7 +25,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fTimeTurnInterval;
 	
 	//Flight path runtime variables	
-	private float m_fSpeed = 30;
+	private float m_fSpeed = 10;//30;
 	private int m_iSpeedAvgCount = 0;
 	private float m_iSpeedAvg = 0;
 	private bool m_bDoTurn = true;

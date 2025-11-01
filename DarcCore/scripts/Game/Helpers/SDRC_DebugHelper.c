@@ -67,6 +67,7 @@ sealed class SDRC_DebugHelper
 	{
 		m_Pos.Clear();
 		m_Sphere.Clear();
+		m_Line.Clear();
 		m_Slots.Clear();
 		
 		// Some init script		
