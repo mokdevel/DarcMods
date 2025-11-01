@@ -207,11 +207,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
 		vector heliUp = owner.GetTransformAxis(1);
-		float angRollBack = GetAngleBetweenVectors(vector.Up, heliUp);
+		heliUp.Normalize();
+		float angRollBack = GetAngleBetweenVectors(vector.Up, heliUp) / 5;
+		m_vRadRollBack = ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 3);
 		
-		angRollBack = Math.Clamp(angRollBack, -0.2, 0.2);
-		m_vRadRollBack = "0 0 0";
-		m_vRadRollBack[2] = angRollBack;
+//		angRollBack = Math.Clamp(angRollBack, -0.2, 0.2);
+//		m_vRadRollBack = "0 0 0";
+//		m_vRadRollBack[2] = angRollBack;
 //		ang = (ang * Math.RAD2DEG) / 50;
 //		ang = 0;
 //		Print("diff: " + ang * Math.RAD2DEG);
@@ -286,13 +288,17 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		vector vVec = m_vAngTarget;
 		vVec.Normalize();
-		DrawLine(origin, origin + (vVec * 15), Color.WHITE);
+		DrawLine(origin, origin + (vVec * 15), Color.GRAY);
 
 		vVec = m_vRadRollVel;
+		vVec[1] = -vVec[2];
+		vVec[2] = vVec[0];
 		vVec.Normalize();
 		DrawLine(origin, origin + (vVec * 25), Color.WHITE);
 
 		vVec = m_vRadRollBack;
+//		vVec[1] = -vVec[2];
+//		vVec[2] = vVec[0];
 		vVec.Normalize();
 		DrawLine(origin, origin + (vVec * 35), Color.WHITE);
 		
