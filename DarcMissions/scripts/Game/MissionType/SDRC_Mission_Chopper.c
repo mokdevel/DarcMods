@@ -84,6 +84,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 //		string groupToSpawn = "{30ED11AA4F0D41E5}Prefabs/Groups/OPFOR/Group_USSR_FireGroup.et";
 		string groupToSpawn = "{0D10CCEEC7B3EC34}Prefabs/Groups/OPFOR/Group_USSR_PlatoonHQ.et";
 		m_Crew = SDRC_AIHelper.SpawnGroup(groupToSpawn, GetPos(), GetFaction());
+		vector aiPos = "0 1000 0";
+		m_Crew = SDRC_AIHelper.SpawnGroup(groupToSpawn, aiPos, GetFaction());
 		
 		//Code for whatever you need for spawning things.
 		EntitySpawnParams params = EntitySpawnParams();
