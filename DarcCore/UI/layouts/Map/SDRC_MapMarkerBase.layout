@@ -11,6 +11,7 @@ FrameWidgetClass {
   OffsetBottom -88
   Alignment 0.5 0.5
  }
+ "Z Order" 60
  IsPixelPerfect 0
  Clipping False
  "Ignore Cursor" 0
@@ -33,6 +34,7 @@ FrameWidgetClass {
     SizeY 45
     OffsetBottom -45
    }
+   "Is Enabled" 0
    components {
     SDRC_MapClickComp "{668885C5A9684BEE}" {
     }
@@ -52,6 +54,17 @@ FrameWidgetClass {
     Alignment 0.5 0.5
    }
    {
+    TextWidgetClass "{66C4879ACAA72ABF}" {
+     Name "MarkerTimestamp"
+     Slot LayoutSlot "{65671A61829AE7A1}" {
+     }
+     Color 0.0003 0.0003 0.0003 1
+     Text " "
+     "Font Size" 12
+     "Min Font Size" 12
+     "Horizontal Alignment" Center
+     Offset 0 0
+    }
     FrameWidgetClass "{649AABAD8DD1DC89}" {
      Name "Frame0"
      Slot LayoutSlot "{5E3E82F0B6DE3AE5}" {
