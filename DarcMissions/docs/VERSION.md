@@ -6,6 +6,15 @@
 
 ..empty..
 
+## 20251102
+### DarcMissions
+No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
+Fixes:
+- Added better support for Rayzis Optics. Remove your dc_lootList.json to get a new updated one.
+- Marker issue "NULL pointer to instance. Variable 'm_wMarkerTimestamp'" fixed
+- Issue "(E): Math.RandomInt" fixes. Happened when min/max were the same.
+- AI removal is immediate instead of setting first damage. Hopefully fixes some FPS drops reported.
+
 ## 20251030
 ### Update for Arma Reforger 1.6
 Minor fixes and support for 1.6.

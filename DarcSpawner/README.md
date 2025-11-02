@@ -52,6 +52,10 @@ Some parameters are described in DarcMissions documentation
 
 # Version history
 
+## 20251102
+Fixes:
+- Default text for map marker was shown.
+
 ## 20251030
 ### Update for Arma Reforger 1.6
 Minor fixes and support for 1.6.
