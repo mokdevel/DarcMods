@@ -69,7 +69,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 				
 				if (!IsRequested())
 				{
-					roadPointIndex = Math.RandomInt(0, roadPos.roadPts.Count() - 2);
+					roadPointIndex = SDRC_Misc.RandomInt(0, roadPos.roadPts.Count() - 2);
 				}
 				else			
 				{

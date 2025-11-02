@@ -94,7 +94,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		//Set common parameters
 		if (positionFound)	
 		{		
-			pos[1] = pos[1] + Math.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[0]);	//Adjust flight height
+			pos[1] = pos[1] + SDRC_Misc.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[0]);	//Adjust flight height
 			int rnd = SDRC_Misc.GetWorldSize()/8;
 			m_vPosDestination[0] = SDRC_Misc.GetWorldSize()/2 + SDRC_Misc.RandomFloat(-rnd, rnd);
 			m_vPosDestination[2] = SDRC_Misc.GetWorldSize()/2 + SDRC_Misc.RandomFloat(-rnd, rnd);

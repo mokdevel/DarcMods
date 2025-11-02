@@ -50,9 +50,9 @@ sealed class SDRC_WPHelper
 			
 			RemoveWaypoints(group);
 			
-			int rndRange = Math.RandomInt(wpRangeLow, wpRangeHigh);
+			int rndRange = SDRC_Misc.RandomInt(wpRangeLow, wpRangeHigh);
 			int max = rndRange / 30;
-			int rndCount = Math.RandomInt(3, 3 + max);
+			int rndCount = SDRC_Misc.RandomInt(3, 3 + max);
 
 			SDRC_Log.Add("[SDRC_WPHelper:CreateMissionAIWaypoints] Random waypoint count: " + rndCount + " , Random range: " + rndRange, LogLevel.SPAM);
 						
@@ -245,7 +245,7 @@ sealed class SDRC_WPHelper
 			for (int i = 0; i < count; i++)
 			{
 				//Add some additional randomization
-				float rndRange = Math.RandomInt(0, range/21); 
+				float rndRange = SDRC_Misc.RandomInt(0, range/21); 
 				
 				AIWaypoint waypoint = FindAndCreateWaypoint(posFrom, moveType, (range + rndRange), emptyspot);
 				if (waypoint != null)

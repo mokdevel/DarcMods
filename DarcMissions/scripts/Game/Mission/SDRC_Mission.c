@@ -176,7 +176,7 @@ class SDRC_MissionConfigAi : Managed
 	*/	
 	int GetCount(SDRC_EMissionDifficulty difficulty = SDRC_EMissionDifficulty.NORMAL)
 	{
-		int cnt = Math.RandomInt(count[0], count[1]);
+		int cnt = SDRC_Misc.RandomInt(count[0], count[1]);
 		
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
@@ -193,7 +193,7 @@ class SDRC_MissionConfigAi : Managed
 			{
 				high = count[1];
 			}
-			cnt = Math.RandomInt(low, high);
+			cnt = SDRC_Misc.RandomInt(low, high);
 		}
 		
 		return cnt;
@@ -592,7 +592,7 @@ class SDRC_Mission
 		{			
 			//Things to set when mission goes to active state
 			GetGame().GetCallqueue().CallLater(GetAICountActiveDelayed, 10000);		//Do the counting after a while. AIs needs to be spawned.
-			m_iAIKillPercentageRandom = Math.RandomInt(30, 99);
+			m_iAIKillPercentageRandom = SDRC_Misc.RandomInt(30, 99);
 			ShowMarker();
 		}
 		

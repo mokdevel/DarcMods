@@ -9,8 +9,8 @@ sealed class SDRC_Misc
 {
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Return the biggest value in a vector. 
-	Example: [10 12 8] returns 12
+	Returns random float between min and max. 
+	This function just to get rid of an error when min/max are the same.
 	*/
 	static float RandomFloat(float min, float max)
 	{
@@ -20,7 +20,21 @@ sealed class SDRC_Misc
 		}
 		return Math.RandomFloat(min, max);	
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Returns random int between min and max. 
+	This function just to get rid of an error when min/max are the same.
+	*/
+	static float RandomInt(float min, float max)
+	{
+		if (min == max)
+		{
+			return min;
+		}
+		return Math.RandomInt(min, max);	
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Return the biggest value in a vector. 
@@ -192,8 +206,8 @@ sealed class SDRC_Misc
 		
 		for (i = 0; i <= 100; i++)
 		{
-			posTmp[0] = Math.RandomInt(0, worldSize);
-			posTmp[2] = Math.RandomInt(0, worldSize);
+			posTmp[0] = SDRC_Misc.RandomInt(0, worldSize);
+			posTmp[2] = SDRC_Misc.RandomInt(0, worldSize);
 
 			//SDRC_Log.Add("[SDRC_MissionHelper:GetRandomWorldPos] pos: " + posTmp, LogLevel.DEBUG);			
 			
