@@ -42,7 +42,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fSpeedMul = 1;
 	private bool m_bDoTurn = true;
 	private vector m_vRollTarget;
-	private vector m_vAngTarget;
 	private vector m_vRadRollVel;
 	private vector m_vRadRollBack;
 
@@ -99,7 +98,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		//Adjust time depending on the time.
 //		m_fTimeTurnInterval = TIME_TURN_INTERVAL_BASE / m_fSpeed;
-		m_fTimeTurnInterval = m_fSpeed / 60;
+		m_fTimeTurnInterval = m_fSpeed / 90;
 		m_fTimeTurnInterval = Math.Clamp(m_fTimeTurnInterval, 0.2, 1.5);
 				
 		//Count destintation addition along the spline which is dependent on the speed.
@@ -151,9 +150,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 			m_bDoTurn = false;
 		}
 				
-		float length = vector.Distance(m_vSplinePoints[closestIndex + 0], m_vSplinePoints[closestIndex + 1]);
-		
-		
 /* From: SCR_HelicopterCinematicFlyComponent
 		vector velOrig = GetOwner().GetPhysics().GetVelocity();
 		vector rotVector = GetOwner().GetAngles();
@@ -179,8 +175,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Set velocity
 		vector velVector = vector.Direction(origin, m_vDestination);
-		velVector.Normalize();		
-		velVector = velVector * m_fSpeed;
+		vector rotVector = owner.GetAngles();
+		velVector.Normalize();
+		float forceMultiplier = m_fSpeed;
+		float gas = 20.0;
+		velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, velVector[1] * gas, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
+		
+//		velVector = velVector * m_fSpeed;
 //		velVector = velVector * m_fSpeedMax;
 		owner.GetPhysics().SetVelocity(velVector);		
 	}
@@ -199,11 +200,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector heliForward = owner.GetTransformAxis(2);
 		//Get chopper direction
 		vector heliDirection = vector.Direction(origin, m_vDestination);		
-		vector heliDirectionFuture = vector.Direction(m_vDestination, m_vDestinationFuture);
+		vector heliDirectionFuture = vector.Direction(origin, m_vDestinationFuture);
 		
 		//SPEED: Set speed according to previous turns
-		float angle = GetAngleBetweenVectors(heliDirection, heliDirectionFuture);
-		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);	//A ten degree turn is not going to affect the speed
+		float angle = Math.AbsFloat(GetAngleBetweenVectors(heliDirection, heliDirectionFuture));
+		m_fDbgAngle = angle * Math.RAD2DEG;
+		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);
 		m_fSpeedMul = m_fSpeedGain - (m_fSpeedMul / 60);
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
 		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
@@ -234,20 +236,19 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector heliVelocity = owner.GetPhysics().GetVelocity();
 //		float angVelTurn = GetAngleBetweenVectors(heliForward, heliDirection);
 //		float angVelTurn = GetAngleBetweenVectors(heliForward, heliDirectionFuture);
-		float angVelTurn = GetAngleBetweenVectors(heliVelocity, heliDirection);
-//		float angVelTurn = GetAngleBetweenVectors(heliVelocity, heliDirectionFuture);
+//		float angVelTurn = GetAngleBetweenVectors(heliVelocity, heliDirection);
+		float angVelTurn = GetAngleBetweenVectors(heliVelocity, heliDirectionFuture);
 //		float angVelTurn = GetAngleBetweenVectors(heliForward, heliVelocity);
 		
 		angVelTurn = angVelTurn + roll;
-		angVelTurn = Math.Clamp(angVelTurn, -0.4, 0.4);
-		m_fDbgAngle = angVelTurn * Math.RAD2DEG;
+		angVelTurn = Math.Clamp(angVelTurn, -0.7, 0.7);
 		m_vRadRollVel = "0 0 0";
 		m_vRadRollVel[2] = -angVelTurn;
 		
 		//Count the angular velocity
-		vector angularVel = ComputeAngularVelocity(heliForward, heliDirection, deltaTime);
+		vector angularVel = ComputeAngularVelocity(heliVelocity, heliDirection, deltaTime);
+//		vector angularVel = ComputeAngularVelocity(heliForward, heliDirection, deltaTime);
 		
-		m_vAngTarget = angularVel * Math.DEG2RAD;
 		owner.GetPhysics().SetAngularVelocity(angularVel + m_vRadRollVel + m_vRadRollBack);		
 	}
 
@@ -502,11 +503,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vRoll.Normalize();
 //		DrawLine(origin, origin + (vRoll * 15), Color.BLUE);		
 
-		vector vVec = m_vAngTarget;
-		vVec.Normalize();
-		DrawLine(origin, origin + (vVec * 15), Color.GRAY);
-
-		vVec = m_vRadRollVel;
+		vector vVec = m_vRadRollVel;
 		vVec[1] = -vVec[2];
 		vVec[2] = vVec[0];
 		vVec.Normalize();
