@@ -89,7 +89,7 @@ class SDRC_VehicleHelper
 		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.PILOT);
 		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.TURRET);
 		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.CARGO);
-		SDRC_Log.Add("[SDRC_VehicleHelper:MoveEntityInVehicle] Compartments found: " + compartments.Count(), LogLevel.SPAM);
+		SDRC_Log.Add("[SDRC_VehicleHelper:MoveEntityInVehicle] Compartments found: " + compartments.Count(), LogLevel.DEBUG);
 
 		bool success = SetEntityInSlot(aiAgent, vehicle, compartments[slotIdx], forceTeleport);
 				
