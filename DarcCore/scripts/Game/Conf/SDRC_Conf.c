@@ -5,9 +5,9 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-//#define SDRC_RELEASE
+#define SDRC_RELEASE
 //#define EXPERIMENTAL
-#define NEW_VERSION_WIP		//New functionality that affects jsons
+//#define NEW_VERSION_WIP		//New functionality that affects jsons
 
 sealed class SDRC_Conf
 {
@@ -36,9 +36,9 @@ sealed class SDRC_Conf
 		
 //Development time options	
 #ifndef SDRC_RELEASE
-	const string DEFAULT_DIR = "dummy_exp";
-	const bool SDRC_ENABLE_DARCSPAWNER = false;
-	const bool SDRC_ENABLE_DARCMISSIONS	= true;
+	const string DEFAULT_DIR = "dummy";
+	const bool SDRC_ENABLE_DARCSPAWNER = true;
+	const bool SDRC_ENABLE_DARCMISSIONS	= false;
 	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
 	const bool SDRC_ENABLE_DARCSTORIES = false;
 //	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
