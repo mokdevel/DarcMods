@@ -243,8 +243,13 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 				"Prefabs/Weapons/Attachments/BaconOptics/",	//RISLaserAttachments (BaconOptics)
 				"Prefabs/5ABD0CB57F7E9EB1/Optics/",			//RISLaserAttachments
 			},
-			{"Optic", "Scope"},
-			{"_Base"},
+			{"Optic", "Scope",
+			"1P69", "AimPoint", "Collim", "ANPVS", "G33", 	//RAYZIOPTICSPACK
+			"PDC_cover", "Zhukov", 							//RAYZIOPTICSPACK
+			},
+			{"_Base", 
+			"DoNotUse",										//RAYZIOPTICSPACK
+			},
 			{}
 		);
 		return lootList;
