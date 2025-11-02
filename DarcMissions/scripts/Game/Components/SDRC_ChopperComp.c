@@ -13,13 +13,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fTimeTurn = 0;
 
 	//Speed management
-	const float SPEED_INTERVAL = 6;		
+	const float SPEED_INTERVAL = 4;		
 	private float m_fTimeSpeed = 0;
 		
 	//Flight path
 	const int SPLINE_POINT_DISTANCE = 25;
 	const int TIME_TURN_INTERVAL_BASE = 25;
 	const int DESTINATION_POINT_DIV = 15;
+	const int PITCH_ANGLE = 6;				//The angle to use when calculating for speed effect
+	const float ROTOR_FORCE_UP = 18.0;	
 	
 	//Setup parameters
 	private float m_fGroundLow = 5;
@@ -33,8 +35,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fTimeTurnInterval;
 	
 	//Flight path runtime variables	
-	private float m_fSpeedMin = 20;
-	private float m_fSpeedMax = 40;
+	private float m_fSpeedMin = 10;
+	private float m_fSpeedMax = 30;
 	private float m_fSpeedGain = 1.33;
 	private float m_fSpeed = 30;
 	private float m_fSpeedStart;
@@ -99,8 +101,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		//Adjust time depending on the time.
 //		m_fTimeTurnInterval = TIME_TURN_INTERVAL_BASE / m_fSpeed;
-		m_fTimeTurnInterval = m_fSpeed / 90;
-		m_fTimeTurnInterval = Math.Clamp(m_fTimeTurnInterval, 0.2, 1.5);
+		m_fTimeTurnInterval = m_fSpeed / 60;
+		m_fTimeTurnInterval = Math.Clamp(m_fTimeTurnInterval, 0.3, 1.5);
 				
 		//Count destintation addition along the spline which is dependent on the speed.
 		m_iDestinationPointAdd = m_fSpeed / DESTINATION_POINT_DIV;
@@ -179,7 +181,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector rotVector = owner.GetAngles();
 		velVector.Normalize();
 		float forceMultiplier = m_fSpeed;
-		float gas = 20.0;
+		float gas = ROTOR_FORCE_UP;
 		velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, velVector[1] * gas, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
 		
 //		velVector = velVector * m_fSpeed;
@@ -206,9 +208,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector heliDirectionFuture = vector.Direction(origin, m_vDestinationFuture);
 		
 		//SPEED: Set speed according to previous turns
-		float angle = GetAngleBetweenVectors(heliDirection, heliDirectionFuture);
+		float angle = Math.AbsFloat(GetAngleBetweenVectors(heliDirection, heliDirectionFuture));
 		m_fDbgAngle = angle * Math.RAD2DEG;
-		//angle = Math.AbsFloat(angle);
 		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);
 		m_fSpeedMul = m_fSpeedGain - (m_fSpeedMul / 60);
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
@@ -217,10 +218,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fTimeSpeed = 0;	//Start to change speed
 
 		//ROLL PITCH: Change pitch according to speed		
-		m_vRadRollPitch = RotateAroundAxis(heliForward, heliPitch, -angle);
-//		m_vRadRollPitch = RotateAroundAxis(heliForward, heliPitch, 0.2618);
-//		m_vRadRollPitch = RotateAroundAxis("0 0 1", "1 0 0", 0.2618);
-		m_vRadRollPitch = ComputeAngularVelocity(heliForward, m_vRadRollPitch, deltaTime);
+		m_vRadRollPitch = RotateAroundAxis(heliForward, heliPitch, m_fSpeedMul * PITCH_ANGLE * Math.DEG2RAD);
+		m_vRadRollPitch = ComputeAngularVelocity(heliForward, m_vRadRollPitch, deltaTime * 1.5);
 				
 		//ROLL UP (YAW): Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
 		m_vRadRollBack = ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 1.2);
@@ -278,14 +277,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Arland
 		array<vector> pathPoints = {
 			"1500 020 2000",
-			"1400 030 2200",
-			"1600 020 2300",
-			"1900 020 2900",
+			"1400 010 2200",
+			"1600 015 2300",
+			"1900 030 2900",
 			"2300 040 2500",
-			"2400 040 2250",	//Timber Ridge
+			"2400 020 2250",	//Timber Ridge
 			"3100 030 2800",	//Beauregard
 			"2400 030 1600",
-//			"1900 000 1300",
+			"1900 000 1300",
 //			"1500 000 2200",
 //			"2200 020 2200",
 		};
@@ -535,17 +534,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vVec = m_vRadRollBack;
 		vVec.Normalize();
 		DrawLine(origin, origin + (vVec * 35), Color.WHITE);*/
-
-		vector vVec = m_vRadRollPitch;
-		vVec.Normalize();
-		DrawLine(origin, origin + (vVec * 35), Color.CYAN);
-				
 								
 		//Draw velocity vector
 		vector vVel = owner.GetPhysics().GetVelocity();
-		float currentSpeed = vVel.Length();
-//		vVel.Normalize();
-		DrawLine(origin, origin + (vVel * currentSpeed), Color.GRAY_75);			
+		vVel.Normalize();
+//		float currentSpeed = vVel.Length();
+		DrawLine(origin, origin + (vVel * m_fSpeed), Color.GRAY_75);			
 	}
 	
 	//------------------------------------------------------------------------------------------------	
