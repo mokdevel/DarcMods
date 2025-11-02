@@ -44,6 +44,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private vector m_vRollTarget;
 	private vector m_vRadRollVel;
 	private vector m_vRadRollBack;
+	private vector m_vRadRollPitch;
 
 	//Debug stiff
 	private float m_fDbgAngle;
@@ -196,25 +197,32 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		//Get heli position
 		vector origin = owner.GetOrigin();
-		//Get the heli forward vector
+		//Get the heli vectors
+		vector heliPitch = owner.GetTransformAxis(0);
+		vector heliUp = owner.GetTransformAxis(1);
 		vector heliForward = owner.GetTransformAxis(2);
 		//Get chopper direction
 		vector heliDirection = vector.Direction(origin, m_vDestination);		
 		vector heliDirectionFuture = vector.Direction(origin, m_vDestinationFuture);
 		
 		//SPEED: Set speed according to previous turns
-		float angle = Math.AbsFloat(GetAngleBetweenVectors(heliDirection, heliDirectionFuture));
+		float angle = GetAngleBetweenVectors(heliDirection, heliDirectionFuture);
 		m_fDbgAngle = angle * Math.RAD2DEG;
+		//angle = Math.AbsFloat(angle);
 		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);
 		m_fSpeedMul = m_fSpeedGain - (m_fSpeedMul / 60);
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
 		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
 		m_fSpeedStart = m_fSpeed;
 		m_fTimeSpeed = 0;	//Start to change speed
-		
-		//ROLL UP: Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
-		vector heliUp = owner.GetTransformAxis(1);
-		heliUp.Normalize();
+
+		//ROLL PITCH: Change pitch according to speed		
+		m_vRadRollPitch = RotateAroundAxis(heliForward, heliPitch, -angle);
+//		m_vRadRollPitch = RotateAroundAxis(heliForward, heliPitch, 0.2618);
+//		m_vRadRollPitch = RotateAroundAxis("0 0 1", "1 0 0", 0.2618);
+		m_vRadRollPitch = ComputeAngularVelocity(heliForward, m_vRadRollPitch, deltaTime);
+				
+		//ROLL UP (YAW): Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
 		m_vRadRollBack = ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 1.2);
 
 		//ROLL ALONG SPLINE: Calculate roll along the spline
@@ -228,9 +236,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			rollIdxEnd = closestIndex + 1;
 		}
-		
 		float roll = ComputeSplineRoll(m_vSplinePoints[rollIdxStart], m_vSplinePoints[closestIndex], m_vSplinePoints[rollIdxEnd], m_vRollTarget);
-//		roll = 0;
 		
 		//ROLL ON DIRECTION: See how steep we're turning. Roll the helicopter accordingly for more natural flight.
 		vector heliVelocity = owner.GetPhysics().GetVelocity();
@@ -249,7 +255,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector angularVel = ComputeAngularVelocity(heliVelocity, heliDirection, deltaTime);
 //		vector angularVel = ComputeAngularVelocity(heliForward, heliDirection, deltaTime);
 		
-		owner.GetPhysics().SetAngularVelocity(angularVel + m_vRadRollVel + m_vRadRollBack);		
+		owner.GetPhysics().SetAngularVelocity(angularVel + m_vRadRollVel + m_vRadRollBack + m_vRadRollPitch);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -372,6 +378,22 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}	
 	
 	//------------------------------------------------------------------------------------------------
+	vector RotateAroundAxis(vector v, vector axis, float radians)
+	{
+	    axis = axis.Normalized();
+	    
+	    float cosT = Math.Cos(radians);
+	    float sinT = Math.Sin(radians);
+	    
+	    vector term1 = v * cosT;
+//	    vector term2 = vector.Cross(axis, v) * sinT;
+	    vector term2 = (axis * v) * sinT;
+	    vector term3 = axis * vector.Dot(axis, v) * (1.0 - cosT);
+	    
+	    return term1 + term2 + term3;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
 	// \return degrees of roll
 	// \return vector Axis of the roll
 	float ComputeSplineRoll(vector p0, vector p1, vector p2, out vector axis)
@@ -460,8 +482,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector origin = owner.GetOrigin();
 
 		string debugText = 	//"Speedangle:" + angle * Math.RAD2DEG + "\n" +
-						   	"Speed:" + m_fSpeed + "\n" +
-						   	"SpeedStart/Target:" + m_fSpeedStart + "/" + m_fSpeedTarget + "\n" +
+						   	"Speed:" + Math.Round(10*m_fSpeed)/10 + "\n" +
+						   	"SpeedStart/Target:" + Math.Round(10*m_fSpeedStart)/10 + "/" + Math.Round(10*m_fSpeedTarget)/10 + "\n" +
 						   	"SpeedMul:" + m_fSpeedMul + "\n";
 		debugText = debugText + 
 						   	"TurnInternal:" + m_fTimeTurnInterval + "\n" +
@@ -490,7 +512,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 //		DrawLine(origin, origin + (vDir2 * 30), Color.CYAN);		
 
 		vector vDir0 = owner.GetTransformAxis(0);	//Side
-//		DrawLine(origin, origin + (vDir0 * 10), Color.DARK_CYAN);		
+//		DrawLine(origin, origin + (vDir0 * 10), Color.DARK_CYAN);
 
 		vector vDir1 = owner.GetTransformAxis(1);	//Up
 		DrawLine(origin, origin + (vDir1 * 15), Color.MAGENTA);		
@@ -503,16 +525,21 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vRoll.Normalize();
 //		DrawLine(origin, origin + (vRoll * 15), Color.BLUE);		
 
-		vector vVec = m_vRadRollVel;
+/*		vector vVec = m_vRadRollVel;
 		vVec[1] = -vVec[2];
 		vVec[2] = vVec[0];
+		vVec[0] = 0;
 		vVec.Normalize();
-		DrawLine(origin, origin + (vVec * 25), Color.WHITE);
+		DrawLine(origin, origin + (vVec * 45), Color.WHITE);
 
 		vVec = m_vRadRollBack;
 		vVec.Normalize();
-		DrawLine(origin, origin + (vVec * 35), Color.WHITE);
-		
+		DrawLine(origin, origin + (vVec * 35), Color.WHITE);*/
+
+		vector vVec = m_vRadRollPitch;
+		vVec.Normalize();
+		DrawLine(origin, origin + (vVec * 35), Color.CYAN);
+				
 								
 		//Draw velocity vector
 		vector vVel = owner.GetPhysics().GetVelocity();
