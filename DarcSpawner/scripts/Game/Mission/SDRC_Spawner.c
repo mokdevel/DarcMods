@@ -207,7 +207,7 @@ class SDRC_Spawner
 				SDRC_Log.Add("[SDRC_Spawner:Spawn] Spawning " + entityToSpawn + " to (" + pos + ")", LogLevel.NORMAL);
 			}
 			
-			float rotation = Math.RandomFloat(0, 360);
+			float rotation = SDRC_Misc.RandomFloat(0, 360);
 			if (m_Config.spawnOnRoad && isVehicle)
 			{
 				entity = SDRC_SpawnHelper.SpawnItem(pos, entityToSpawn, rotation, -1, snap);

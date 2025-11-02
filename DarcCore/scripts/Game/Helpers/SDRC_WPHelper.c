@@ -258,7 +258,7 @@ sealed class SDRC_WPHelper
 		//Circular
 		if (genType == SDRC_EWaypointGenerationType.RADIUS)
 		{		
-			float startAngle = Math.RandomFloat(0, 360);
+			float startAngle = SDRC_Misc.RandomFloat(0, 360);
 			
 			for (int i = 0; i < count; i++)
 			{				

@@ -40,7 +40,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Stash.general, request);
 				
 		//Camps are randomly rotated
-		m_fSpawnRotation = Math.RandomFloat(0, 360);
+		m_fSpawnRotation = SDRC_Misc.RandomFloat(0, 360);
 		
 		//Find the position
 		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Stash.general.pos, m_DC_Stash.general.size, m_DC_Stash.general.locationTypes);

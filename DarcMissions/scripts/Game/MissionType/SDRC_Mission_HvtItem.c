@@ -43,7 +43,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_HvtItem.general, request);
 		
 		//Camps are randomly rotated
-		m_fSpawnRotation = Math.RandomFloat(0, 360);
+		m_fSpawnRotation = SDRC_Misc.RandomFloat(0, 360);
 		
 		//Find position
 		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtItem.general.pos, m_DC_HvtItem.general.size, m_DC_HvtItem.general.locationTypes);

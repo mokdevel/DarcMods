@@ -47,7 +47,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		}	
 
 		//Camps are randomly rotated
-		m_fSpawnRotation = Math.RandomFloat(0, 360);
+		m_fSpawnRotation = SDRC_Misc.RandomFloat(0, 360);
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Occupation.campItems);
 				
 		SetPos(pos);

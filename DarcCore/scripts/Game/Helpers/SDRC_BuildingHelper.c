@@ -177,26 +177,26 @@ sealed class SDRC_BuildingHelper
 		
 		for (int j = 0; j < 1; j++)
 		{
-			float mulValX = Math.RandomFloat(0.05, 0.30);
-			float mulValY = Math.RandomFloat(0.05, 0.30);
+			float mulValX = SDRC_Misc.RandomFloat(0.05, 0.30);
+			float mulValY = SDRC_Misc.RandomFloat(0.05, 0.30);
 			posStart[0] = posStartOrig[0] + (sums[0] * mulValX);
 			posStart[2] = posStartOrig[2] + (sums[2] * mulValY);
 			DoFloorTrace(floorsTmp, building, posStart);
 			
-			mulValX = Math.RandomFloat(0.05, 0.30);
-			mulValY = Math.RandomFloat(0.05, 0.30);
+			mulValX = SDRC_Misc.RandomFloat(0.05, 0.30);
+			mulValY = SDRC_Misc.RandomFloat(0.05, 0.30);
 			posStart[0] = posStartOrig[0] + (sums[0] * mulValX);
 			posStart[2] = posStartOrig[2] - (sums[2] * mulValY);
 			DoFloorTrace(floorsTmp, building, posStart);
 	
-			mulValX = Math.RandomFloat(0.05, 0.30);
-			mulValY = Math.RandomFloat(0.05, 0.30);
+			mulValX = SDRC_Misc.RandomFloat(0.05, 0.30);
+			mulValY = SDRC_Misc.RandomFloat(0.05, 0.30);
 			posStart[0] = posStartOrig[0] - (sums[0] * mulValX);
 			posStart[2] = posStartOrig[2] + (sums[2] * mulValY);
 			DoFloorTrace(floorsTmp, building, posStart);
 	
-			mulValX = Math.RandomFloat(0.05, 0.30);
-			mulValY = Math.RandomFloat(0.05, 0.30);
+			mulValX = SDRC_Misc.RandomFloat(0.05, 0.30);
+			mulValY = SDRC_Misc.RandomFloat(0.05, 0.30);
 			posStart[0] = posStartOrig[0] - (sums[0] * mulValX);
 			posStart[2] = posStartOrig[2] - (sums[2] * mulValY);
 			DoFloorTrace(floorsTmp, building, posStart);

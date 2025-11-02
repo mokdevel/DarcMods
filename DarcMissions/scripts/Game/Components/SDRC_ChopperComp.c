@@ -292,7 +292,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			{
 				y = GetGame().GetWorld().GetOceanHeight(pt[0], pt[2]);;
 			}
-			y = pt[1] + y + Math.RandomFloat(m_fGroundLow, m_fGroundHigh); 
+			y = pt[1] + y + SDRC_Misc.RandomFloat(m_fGroundLow, m_fGroundHigh); 
 			vector newPt = pt;
 			newPt[1] = y;
 			pathPoints[i] = newPt;

@@ -12,6 +12,20 @@ sealed class SDRC_Misc
 	Return the biggest value in a vector. 
 	Example: [10 12 8] returns 12
 	*/
+	static float RandomFloat(float min, float max)
+	{
+		if (min == max)
+		{
+			return min;
+		}
+		return Math.RandomFloat(min, max);	
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Return the biggest value in a vector. 
+	Example: [10 12 8] returns 12
+	*/
 	static float FindMaxValue(vector vec)
 	{
 		float outfloat = vec[0];
@@ -251,8 +265,8 @@ sealed class SDRC_Misc
 	{
 		vector posRnd = "0 0 0";
 		vector newPos;
-		posRnd[0] = Math.RandomFloat(-range, range);
-		posRnd[2] = Math.RandomFloat(-range, range);
+		posRnd[0] = SDRC_Misc.RandomFloat(-range, range);
+		posRnd[2] = SDRC_Misc.RandomFloat(-range, range);
 		
 		newPos = position + posRnd;
 		

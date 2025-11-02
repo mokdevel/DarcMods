@@ -176,7 +176,7 @@ sealed class SDRC_SpawnHelper
 	*/	
 	static IEntity SpawnItemInBuildingWithLoot(IEntity building, string lootBox, bool addLoot = false, array<string> loot = null, float lootChance = 0)
 	{
-		float rotation = Math.RandomFloat(0, 360);
+		float rotation = SDRC_Misc.RandomFloat(0, 360);
 		IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(building, lootBox, rotation, 2.0, false);
 		if (addLoot)
 		{

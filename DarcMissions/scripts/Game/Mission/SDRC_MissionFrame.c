@@ -118,7 +118,7 @@ class SDRC_MissionFrame
 		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;		//sec to ms
 		
 		#ifndef SDRC_RELEASE
-			SDRC_DevHelper.SDRC_DevDump();
+			//SDRC_DevHelper.SDRC_DevDump();
 		#endif	
 		
 		//Start the mission framework.

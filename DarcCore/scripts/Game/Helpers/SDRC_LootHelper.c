@@ -62,7 +62,7 @@ sealed class SDRC_LootHelper
 		
 		foreach (string itemName: itemNames)
 		{
-			if (Math.RandomFloat(0, 1) < itemChance)
+			if (SDRC_Misc.RandomFloat(0, 1) < itemChance)
 			{
 				ResourceName resource = "";
 				
@@ -79,7 +79,7 @@ sealed class SDRC_LootHelper
 				SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Adding item " + resource + ". Success: " + result, LogLevel.SPAM);
 				
 				//Shall we add ammo? Ammo is to be added with itemChance%
-				if ((Math.RandomFloat(0, 1) < itemChance))
+				if ((SDRC_Misc.RandomFloat(0, 1) < itemChance))
 				{
 					bool addToBox = false;
 					
@@ -105,7 +105,7 @@ sealed class SDRC_LootHelper
 					//Add ammo to box 
 					if (addToBox)
 					{
-						int magCount = Math.RandomFloat(0, 4);
+						int magCount = SDRC_Misc.RandomFloat(0, 4);
 						if (magCount > 0)
 						{
 							string magazine = SDRC_AmmoHelper.GetCompatibleMagazineForPrefab(resource);

@@ -1089,7 +1089,7 @@ class SDRC_Mission
 		if ( (m_SecondWaveConf.activation == GetSuccess()) || (m_SecondWaveConf.activation == SDRC_EMissionSuccess.WIN_OR_LOSE) )
 		{
 			#ifdef NEW_VERSION_WIP
-			if (Math.RandomFloat(0, 1) < m_SecondWaveConf.chance)
+			if (SDRC_Misc.RandomFloat(0, 1) < m_SecondWaveConf.chance)
 			{
 				SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 				if (m_BaseGameMode)
