@@ -32,10 +32,17 @@ class DC_Mmarker : Managed
 }
 
 //------------------------------------------------------------------------------------------------
+/*
+Create a map ma
+*/
 sealed class SDRC_MapMarkerHelper
 {
 	static ref array<ref DC_Mmarker> m_markers = {};
 	
+	//------------------------------------------------------------------------------------------------
+	/*
+	Create a map marker.
+	*/
 	static void CreateMapMarker(vector pos, int icon, string id, string title = "", int lifetime = 0, string markerTypeString = "DARC_MISSION", Faction faction = null)
 	{		
 		#ifndef SDRC_RELEASE
@@ -52,6 +59,12 @@ sealed class SDRC_MapMarkerHelper
 		if (markerTypeString == "")
 		{
 			return;
+		}
+		
+		//NOTE: if title="" or provided as empty, marker will show the default text set for markerbase.
+		if (title == "")
+		{
+			title = " ";
 		}
 		
 		SCR_EMapMarkerType markerType = typename.StringToEnum(SCR_EMapMarkerType, markerTypeString);
