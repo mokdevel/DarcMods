@@ -66,5 +66,44 @@ sealed class SDRC_DevHelper
 			{
 				string magazine = SDRC_AmmoHelper.GetCompatibleMagazine(wpn);
 			}*/		
+	
+//		SpawnTestMission();	
 	}
+
+	static void SpawnTestMission()
+	{
+		string resourceName = SDRC_MissionEnumHelper.GetMissionPrefab(SDRC_EMissionType.OCCUPATION);
+		if (resourceName == "")
+		{
+			//ERROR
+			return;
+		}
+		vector pos = "2000 0 2000";
+		IEntity missionEntity = SDRC_SpawnHelper.SpawnItem(pos, resourceName, 0, -1);
+		if (!missionEntity)
+		{		
+			//ERROR
+			return;
+		}
+		GetGame().GetCallqueue().CallLater(SetMissionParameters_Delayed, 2000, false, missionEntity);
+	}
+	
+	static void SetMissionParameters_Delayed(IEntity missionEntity)
+	{
+		SDRC_DarcMissionGM ent = SDRC_DarcMissionGM.Cast(missionEntity);
+		if (ent)
+		{
+			SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
+			
+			SDRC_DarcMissionEditableRequestComp requestComp = SDRC_DarcMissionEditableRequestComp.Cast(ent.FindComponent(SDRC_DarcMissionEditableRequestComp));
+			requestComp.general = general;
+			requestComp.SetRequestId(1234);
+			requestComp.SetMissionType(SDRC_EMissionType.OCCUPATION);
+			requestComp.SetSubIdx(0);
+		}	
+		else
+		{
+			//ERROR
+		}	
+	}						
 }
