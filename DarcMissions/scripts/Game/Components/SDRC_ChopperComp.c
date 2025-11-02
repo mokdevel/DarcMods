@@ -13,7 +13,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fTimeTurn = 0;
 
 	//Speed management
-	const float SPEED_INTERVAL = 8;		
+	const float SPEED_INTERVAL = 6;		
 	private float m_fTimeSpeed = 0;
 		
 	//Flight path
@@ -34,9 +34,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 	
 	//Flight path runtime variables	
 	private float m_fSpeedMin = 20;
-	private float m_fSpeedMax = 50;
-	private float m_fSpeedGain = 1.23;
+	private float m_fSpeedMax = 40;
+	private float m_fSpeedGain = 1.33;
 	private float m_fSpeed = 30;
+	private float m_fSpeedStart;
 	private float m_fSpeedTarget;
 	private float m_fSpeedMul = 1;
 	private bool m_bDoTurn = true;
@@ -97,7 +98,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector origin = owner.GetOrigin();
 
 		//Adjust time depending on the time.
-		m_fTimeTurnInterval = TIME_TURN_INTERVAL_BASE / m_fSpeed;
+//		m_fTimeTurnInterval = TIME_TURN_INTERVAL_BASE / m_fSpeed;
+		m_fTimeTurnInterval = m_fSpeed / 60;
 		m_fTimeTurnInterval = Math.Clamp(m_fTimeTurnInterval, 0.2, 1.5);
 				
 		//Count destintation addition along the spline which is dependent on the speed.
@@ -109,39 +111,39 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Draw where we are planning to go
 		float distance = GetDistanceFromSpline(m_vSplinePoints, origin, newClosestIndex);		
+
+		if (newClosestIndex > closestIndex)
+		{
+			closestIndex = newClosestIndex;
+			m_bDoTurn = true;
+		}
 		
-/*		if (distance < 2)
+		if (newClosestIndex < closestIndex)
+		{
+//			closestIndex++;
+			m_bDoTurn = true;
+		}
+
+		if (newClosestIndex == closestIndex)
 		{
 			closestIndex++;
-		}
-		else*/
-		{		
-			if ( (newClosestIndex - closestIndex) < m_iDestinationPointAdd)
-			{		
-				closestIndex = newClosestIndex + m_iDestinationPointAdd;
-				m_bDoTurn = true;
-			}
-			else if (newClosestIndex != closestIndex)
-			{
-				closestIndex = newClosestIndex + 1;//++;
-				m_bDoTurn = true;
-			}
+			m_bDoTurn = true;
 		}
 				
 		m_vDestination = m_vSplinePoints[closestIndex + m_iDestinationPointAdd];
 		m_vDestinationFuture = m_vSplinePoints[closestIndex + (m_iDestinationPointAdd * 2)];
 		
+		if (m_fTimeSpeed < SPEED_INTERVAL)
+		{
+			float t = m_fTimeSpeed / SPEED_INTERVAL;
+			m_fSpeed = Math.Lerp(m_fSpeedStart, m_fSpeedTarget, t);
+			m_fSpeed = Math.Clamp(m_fSpeed, m_fSpeedMin, m_fSpeedMax)
+		}
+
 		SetVelocity(owner);
 
 		DrawHelicopterVectors(owner);
 						
-		if (m_fTimeSpeed < SPEED_INTERVAL)
-		{
-			float t = m_fTimeSpeed / SPEED_INTERVAL;
-			m_fSpeed = Math.Lerp(m_fSpeedTarget, m_fSpeed, t);
-			m_fSpeed = Math.Clamp(m_fSpeed, m_fSpeedMin, m_fSpeedMax)
-		}
-
 		if ( (m_fTimeTurn > m_fTimeTurnInterval) && (m_bDoTurn) )
 		{
 			SetTurn(owner, m_fTimeTurnInterval);
@@ -171,13 +173,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector heliDirection = vector.Direction(origin, m_vDestination);				
 		vector heliVelocity = owner.GetPhysics().GetVelocity();
 		
-//		m_fSpeed = m_fSpeed + m_fSpeedChange;
+/*		float t = m_fTimeSpeed / SPEED_INTERVAL;
+		vector lerped = vector.Lerp(origin, m_vDestination, t);
+		vector velVector = vector.Direction(origin, lerped);*/
 		
 		//Set velocity
-		vector chopVector = vector.Direction(origin, m_vDestination);
-		chopVector.Normalize();		
-		chopVector = chopVector * m_fSpeed;
-		owner.GetPhysics().SetVelocity(chopVector);		
+		vector velVector = vector.Direction(origin, m_vDestination);
+		velVector.Normalize();		
+		velVector = velVector * m_fSpeed;
+//		velVector = velVector * m_fSpeedMax;
+		owner.GetPhysics().SetVelocity(velVector);		
 	}
 	
 	//------------------------------------------------------------------------------------------------	
@@ -196,21 +201,21 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector heliDirection = vector.Direction(origin, m_vDestination);		
 		vector heliDirectionFuture = vector.Direction(m_vDestination, m_vDestinationFuture);
 		
-		//Set speed according to previous turns
+		//SPEED: Set speed according to previous turns
 		float angle = GetAngleBetweenVectors(heliDirection, heliDirectionFuture);
 		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);	//A ten degree turn is not going to affect the speed
 		m_fSpeedMul = m_fSpeedGain - (m_fSpeedMul / 60);
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
 		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
-		
+		m_fSpeedStart = m_fSpeed;
 		m_fTimeSpeed = 0;	//Start to change speed
 		
-		//Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
+		//ROLL UP: Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
 		vector heliUp = owner.GetTransformAxis(1);
 		heliUp.Normalize();
 		m_vRadRollBack = ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 1.2);
 
-		//Calculate roll along the spline
+		//ROLL ALONG SPLINE: Calculate roll along the spline
 		int rollIdxStart = closestIndex - 1;//(m_iDestinationPointAdd / 2);
 		if (rollIdxStart < 0)
 		{
@@ -225,11 +230,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 		float roll = ComputeSplineRoll(m_vSplinePoints[rollIdxStart], m_vSplinePoints[closestIndex], m_vSplinePoints[rollIdxEnd], m_vRollTarget);
 //		roll = 0;
 		
-		//See how steep we're turning. Roll the helicopter accordingly for more natural flight.
+		//ROLL ON DIRECTION: See how steep we're turning. Roll the helicopter accordingly for more natural flight.
 		vector heliVelocity = owner.GetPhysics().GetVelocity();
 //		float angVelTurn = GetAngleBetweenVectors(heliForward, heliDirection);
-//		float angVelTurn = GetAngleBetweenVectors(heliVelocity, heliDirection);
-		float angVelTurn = GetAngleBetweenVectors(heliVelocity, heliDirectionFuture);
+//		float angVelTurn = GetAngleBetweenVectors(heliForward, heliDirectionFuture);
+		float angVelTurn = GetAngleBetweenVectors(heliVelocity, heliDirection);
+//		float angVelTurn = GetAngleBetweenVectors(heliVelocity, heliDirectionFuture);
 //		float angVelTurn = GetAngleBetweenVectors(heliForward, heliVelocity);
 		
 		angVelTurn = angVelTurn + roll;
@@ -238,10 +244,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_vRadRollVel = "0 0 0";
 		m_vRadRollVel[2] = -angVelTurn;
 		
-		//Turn the roll according to spline
-//		vector angularVel = ComputeAngularVelocity(heliForward, heliDirection, deltaTime);
-//		vector angularVel = ComputeAngularVelocity(heliVelocity, heliDirectionFuture, deltaTime);
-		vector angularVel = ComputeAngularVelocity(heliForward, heliVelocity, deltaTime);
+		//Count the angular velocity
+		vector angularVel = ComputeAngularVelocity(heliForward, heliDirection, deltaTime);
 		
 		m_vAngTarget = angularVel * Math.DEG2RAD;
 		owner.GetPhysics().SetAngularVelocity(angularVel + m_vRadRollVel + m_vRadRollBack);		
@@ -456,11 +460,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		string debugText = 	//"Speedangle:" + angle * Math.RAD2DEG + "\n" +
 						   	"Speed:" + m_fSpeed + "\n" +
-						   	"SpeedTarget:" + m_fSpeedTarget + "\n" +
+						   	"SpeedStart/Target:" + m_fSpeedStart + "/" + m_fSpeedTarget + "\n" +
 						   	"SpeedMul:" + m_fSpeedMul + "\n";
 		debugText = debugText + 
 						   	"TurnInternal:" + m_fTimeTurnInterval + "\n" +
-//							"DestinationAngle: " + m_fDbgAngle + "\n" +
+//							"m_fTimeSpeed: " + m_fTimeSpeed + "\n" +
 							"DbgAngle: " + m_fDbgAngle + "\n" +
 							"DestinationPointAdd: " + m_iDestinationPointAdd;
 		
