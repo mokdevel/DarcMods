@@ -239,7 +239,7 @@ sealed class SDRC_RoadHelper
 		vector pos = "0 0 0";
 		//Use random angle to search from the position
 		array<float> anglesToTest = {0, 180, 270, 0, 180, 270};
-		int idx = Math.RandomInt(0, 2);
+		int idx = SDRC_Misc.RandomInt(0, 2);
 
 //		idx = 2;
 		for (int i = 0; i < 2; i++)
