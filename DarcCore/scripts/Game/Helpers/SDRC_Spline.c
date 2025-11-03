@@ -113,7 +113,81 @@ sealed class SDRC_Spline3D
 
 		return (term1 + term2 + term3) * 0.5;
 	}	
+
+	//------------------------------------------------------------------------------------------------
+	// \return degrees of roll
+	// \return vector Axis of the roll
+	static float ComputeSplineRoll(vector p0, vector p1, vector p2, out vector axis)
+	{
+	    // Compute forward tangents between points
+	    vector t0 = (p1 - p0).Normalized();
+	    vector t1 = (p2 - p1).Normalized();
 	
+	    // Compute curve axis (cross product)
+	    //vector axis = t0 * t1;
+	    axis = t0 * t1;
+	    float axisLen = axis.Length();
+	
+	    // Handle nearly straight segments
+	    if (axisLen < 0.0001)
+	        return 0.0;
+	
+	    // Compute angle between tangents
+	    float dot = vector.Dot(t0, t1);
+	    dot = Math.Clamp(dot, -1.0, 1.0);
+	    float angle = Math.Acos(dot);
+	
+	    // Determine roll direction (sign)
+	    float rollSign = 1.0;
+	    if (axis[1] < 0.0)
+		{
+	        rollSign = -1.0;
+		}
+
+		axis = axis * rollSign;
+		
+	    // Convert to degrees and apply sign
+	    float rollDeg = rollSign * angle * Math.RAD2DEG;
+	    return rollDeg;
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	//! Gets the shortest 3D distance between a point and a spline
+	//! Extended from SCR_Math3D function
+	//! \param[in] points array of all points forming the spline, minimum 1 point
+	//! \param[in] point point that is being checked
+	//! \return distance from spline, -1 if no points are provided
+	static float GetDistanceFromSpline(notnull array<vector> points, vector point, out int index = 0)
+	{		
+		int count = points.Count();
+		if (count < 1)
+			return -1;
+
+		if (count == 1)
+			return vector.Distance(point, points[0]);
+
+		float tempDistanceSq;
+		vector segmentStart = points[0];
+		float minDistanceSq = vector.DistanceSq(point, segmentStart);
+
+		foreach (int i, vector segmentEnd : points)
+		{
+			if (i == 0)
+				continue;
+
+			tempDistanceSq = Math3D.PointLineSegmentDistanceSqr(point, segmentStart, segmentEnd);
+			if (tempDistanceSq < minDistanceSq)
+			{
+				index = i;
+				minDistanceSq = tempDistanceSq;
+			}
+
+			segmentStart = segmentEnd;
+		}
+
+		return Math.Sqrt(minDistanceSq);
+	}		
+		
 	//------------------------------------------------------------------------------------------------
 	static void TestSpline()
 	{
