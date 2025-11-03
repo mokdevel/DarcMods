@@ -1,5 +1,8 @@
 //SDRC_ChopperComp.c
 
+//Changed done in prefabs:
+// - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
+
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompClass : ScriptGameComponentClass { }
 //SDRC_RplGMCompClass g_RplGMCompClass;
@@ -22,6 +25,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	const int DESTINATION_POINT_DIV = 15;
 	const int PITCH_ANGLE = 6;				//The angle to use when calculating for speed effect
 	const float ROTOR_FORCE_UP = 18.0;	
+	const float TIME_IN_INIT = 25;			//Seconds to be in init state
 	
 	//Setup parameters
 	private float m_fGroundLow = 5;
@@ -29,6 +33,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fLen = 0;
 	
 	//Runtime parameters
+	private bool m_bInInit = true;			//While in init, consider the chopper to be flying.
+	private bool m_bDestroyed = false;
 	private int m_iSegments;
 	private int m_iSegmentPoints;
 	private int m_iDestinationPointAdd;
@@ -36,7 +42,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	
 	//Flight path runtime variables	
 	private float m_fSpeedMin = 10;
-	private float m_fSpeedMax = 30;
+	private float m_fSpeedMax = 20;
 	private float m_fSpeedGain = 1.33;
 	private float m_fSpeed = 30;
 	private float m_fSpeedStart;
@@ -80,13 +86,33 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		SetVelocity(owner);
 		SetTurn(owner, m_fTimeTurnInterval);
+		
+//		GetGame().GetCallqueue().CallLater(SetDamage, (TIME_IN_INIT + 5) * 1000, false, owner);		
+		GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000);
 	}
  
+	void SetDamage(IEntity owner)
+	{
+		DamageManagerComponent damageManager = DamageManagerComponent.Cast(owner.FindComponent(DamageManagerComponent));
+		float health = 0.02;//SDRC_Misc.RandomFloat(0, 0.15);
+		if (damageManager)
+		{
+			damageManager.SetHealthScaled(health);
+		}
+		
+		SDRC_Log.Add("[SDRC_ChopperComp:SetDamage] Setting health: " + health, LogLevel.DEBUG);
+	}
+
+	void InitDone()
+	{
+		m_bInInit = false;
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Return instance to component
 	*/
-	static SDRC_ChopperComp GetInstance()
+	SDRC_ChopperComp GetInstance()
 	{
 		return s_Instance;
 	}
@@ -94,6 +120,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------
 	override void EOnFrame(IEntity owner, float timeSlice)
 	{
+		DrawHelicopterVectors(owner);
+						
+		//If chopper is destroyed, let Reforger handle crash etc.
+		//Checking is done in Turn function. Not needed in every frame.
+		if (m_bDestroyed)
+		{
+			return;
+		}
+				
 		m_fTimeSpeed += timeSlice;
 		m_fTimeTurn += timeSlice;
 
@@ -112,7 +147,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 		
 		//Draw where we are planning to go
-		float distance = GetDistanceFromSpline(m_vSplinePoints, origin, newClosestIndex);		
+		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, origin, newClosestIndex);		
 
 		if (newClosestIndex > closestIndex)
 		{
@@ -144,8 +179,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		SetVelocity(owner);
 
-		DrawHelicopterVectors(owner);
-						
 		if ( (m_fTimeTurn > m_fTimeTurnInterval) && (m_bDoTurn) )
 		{
 			SetTurn(owner, m_fTimeTurnInterval);
@@ -197,6 +230,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 			return;
 		}
 
+		//Check if we're still working .Not needed every frame. //TBD: Could be done every x seconds - not that critical
+		IsStillWorking(owner);
+		
 		//Get heli position
 		vector origin = owner.GetOrigin();
 		//Get the heli vectors
@@ -208,7 +244,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector heliDirectionFuture = vector.Direction(origin, m_vDestinationFuture);
 		
 		//SPEED: Set speed according to previous turns
-		float angle = Math.AbsFloat(GetAngleBetweenVectors(heliDirection, heliDirectionFuture));
+		float angle = Math.AbsFloat(SDRC_Math.GetAngleBetweenVectors(heliDirection, heliDirectionFuture));
 		m_fDbgAngle = angle * Math.RAD2DEG;
 		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);
 		m_fSpeedMul = m_fSpeedGain - (m_fSpeedMul / 60);
@@ -218,11 +254,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fTimeSpeed = 0;	//Start to change speed
 
 		//ROLL PITCH: Change pitch according to speed		
-		m_vRadRollPitch = RotateAroundAxis(heliForward, heliPitch, m_fSpeedMul * PITCH_ANGLE * Math.DEG2RAD);
-		m_vRadRollPitch = ComputeAngularVelocity(heliForward, m_vRadRollPitch, deltaTime * 1.5);
+		m_vRadRollPitch = SDRC_Math.RotateAroundAxis(heliForward, heliPitch, m_fSpeedMul * PITCH_ANGLE * Math.DEG2RAD);
+		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(heliForward, m_vRadRollPitch, deltaTime * 1.5);
 				
 		//ROLL UP (YAW): Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
-		m_vRadRollBack = ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 1.2);
+		m_vRadRollBack = SDRC_Math.ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 1.2);
 
 		//ROLL ALONG SPLINE: Calculate roll along the spline
 		int rollIdxStart = closestIndex - 1;//(m_iDestinationPointAdd / 2);
@@ -235,14 +271,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			rollIdxEnd = closestIndex + 1;
 		}
-		float roll = ComputeSplineRoll(m_vSplinePoints[rollIdxStart], m_vSplinePoints[closestIndex], m_vSplinePoints[rollIdxEnd], m_vRollTarget);
+		float roll = SDRC_Spline3D.ComputeSplineRoll(m_vSplinePoints[rollIdxStart], m_vSplinePoints[closestIndex], m_vSplinePoints[rollIdxEnd], m_vRollTarget);
 		
 		//ROLL ON DIRECTION: See how steep we're turning. Roll the helicopter accordingly for more natural flight.
 		vector heliVelocity = owner.GetPhysics().GetVelocity();
 //		float angVelTurn = GetAngleBetweenVectors(heliForward, heliDirection);
 //		float angVelTurn = GetAngleBetweenVectors(heliForward, heliDirectionFuture);
 //		float angVelTurn = GetAngleBetweenVectors(heliVelocity, heliDirection);
-		float angVelTurn = GetAngleBetweenVectors(heliVelocity, heliDirectionFuture);
+		float angVelTurn = SDRC_Math.GetAngleBetweenVectors(heliVelocity, heliDirectionFuture);
 //		float angVelTurn = GetAngleBetweenVectors(heliForward, heliVelocity);
 		
 		angVelTurn = angVelTurn + roll;
@@ -251,18 +287,56 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_vRadRollVel[2] = -angVelTurn;
 		
 		//Count the angular velocity
-		vector angularVel = ComputeAngularVelocity(heliVelocity, heliDirection, deltaTime);
+		vector angularVel = SDRC_Math.ComputeAngularVelocity(heliVelocity, heliDirection, deltaTime);
 //		vector angularVel = ComputeAngularVelocity(heliForward, heliDirection, deltaTime);
 		
 		owner.GetPhysics().SetAngularVelocity(angularVel + m_vRadRollVel + m_vRadRollBack + m_vRadRollPitch);
 	}
 
 	//------------------------------------------------------------------------------------------------
+	bool IsStillWorking(IEntity owner)
+	{
+		if (m_bInInit)
+		{
+			return true;
+		}
+
+		if ( (SDRC_VehicleHelper.IsWorking(owner)) && (SDRC_VehicleHelper.PilotCountAlive(owner) > 0) )
+		{
+			return true;
+		}
+		
+		m_bDestroyed = true;
+		
+		//Set damage so it should be destroyed on crash
+		DamageManagerComponent damageManager = DamageManagerComponent.Cast(owner.FindComponent(DamageManagerComponent));
+		float damage = SDRC_Misc.RandomFloat(0, 0.15);
+		if (damageManager)
+		{
+			damageManager.SetHealthScaled(damage);		
+		}
+		
+		//Make the chopper while unsteadily
+		VehicleHelicopterSimulation owner_s = VehicleHelicopterSimulation.Cast(owner.FindComponent(VehicleHelicopterSimulation));
+		float force = SDRC_Misc.RandomFloat(0.5, 1.0);
+        owner_s.RotorSetForceScaleState(0, force);
+		force = SDRC_Misc.RandomFloat(0.7, 2.5);
+        owner_s.RotorSetForceScaleState(1, force);
+		
+		return false;
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	/*!	
 	
 	*/
 	void InitFlightPath()	
 	{
+		if (!GetGame().GetWorld())
+		{
+			return;
+		}
+		
 		//Structures
 /*		array<vector> pathPoints = {
 			"0000 010 000",
@@ -320,151 +394,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_vDestination = m_vSplinePoints[1];
 	}
 	
-	//------------------------------------------------------------------------------------------------	
-	// Vector math helpers
-	//------------------------------------------------------------------------------------------------	
-	
-	//------------------------------------------------------------------------------------------------	
-	//\param angle in radians with sign
-	float GetAngleBetweenVectors(vector v1, vector v2)
-	{
-	    // Normalize both vectors
-	    vector a = v1.Normalized();
-	    vector b = v2.Normalized();
-	
-	    // Dot product
-	    float dot = vector.Dot(a, b);
-	
-		// Cross product to get the sign
-	    vector axis = a * b;
-	    float sign = 1.0;
-	    if (axis[1] < 0.0)
-		{
-	        sign = -1.0;
-		}
-		
-	    // Clamp dot to avoid NaN from floating-point errors
-	    dot = Math.Clamp(dot, -1.0, 1.0);
-	
-	    // Return angle in radians
-	    return Math.Acos(dot) * sign;
-	}	
-		
-	//------------------------------------------------------------------------------------------------	
-	//\returns AngVel in radians
-	vector ComputeAngularVelocity(vector v1, vector v2, float deltaTime)
-	{
-		if (deltaTime == 0)
-		{
-			return "0 0 0";
-		}
-		
-	    vector a = v1.Normalized();
-	    vector b = v2.Normalized();
-	
-	    vector axis = a * b; // cross product (rotation axis)
-	    float dot = vector.Dot(a, b);
-	    dot = Math.Clamp(dot, -1.0, 1.0);
-	
-	    float angle = Math.Acos(dot); // radians between directions
-	
-	    // avoid division by zero
-/*	    if (Math.AbsFloat(angle) < 0.0001)
-	        return "0 0 0"; */
-	
-	    vector angVel = axis.Normalized() * (angle / deltaTime);
-	    return angVel;
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	vector RotateAroundAxis(vector v, vector axis, float radians)
-	{
-	    axis = axis.Normalized();
-	    
-	    float cosT = Math.Cos(radians);
-	    float sinT = Math.Sin(radians);
-	    
-	    vector term1 = v * cosT;
-//	    vector term2 = vector.Cross(axis, v) * sinT;
-	    vector term2 = (axis * v) * sinT;
-	    vector term3 = axis * vector.Dot(axis, v) * (1.0 - cosT);
-	    
-	    return term1 + term2 + term3;
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	// \return degrees of roll
-	// \return vector Axis of the roll
-	float ComputeSplineRoll(vector p0, vector p1, vector p2, out vector axis)
-	{
-	    // Compute forward tangents between points
-	    vector t0 = (p1 - p0).Normalized();
-	    vector t1 = (p2 - p1).Normalized();
-	
-	    // Compute curve axis (cross product)
-	    //vector axis = t0 * t1;
-	    axis = t0 * t1;
-	    float axisLen = axis.Length();
-	
-	    // Handle nearly straight segments
-	    if (axisLen < 0.0001)
-	        return 0.0;
-	
-	    // Compute angle between tangents
-	    float dot = vector.Dot(t0, t1);
-	    dot = Math.Clamp(dot, -1.0, 1.0);
-	    float angle = Math.Acos(dot);
-	
-	    // Determine roll direction (sign)
-	    float rollSign = 1.0;
-	    if (axis[1] < 0.0)
-		{
-	        rollSign = -1.0;
-		}
 
-		axis = axis * rollSign;
-		
-	    // Convert to degrees and apply sign
-	    float rollDeg = rollSign * angle * Math.RAD2DEG;
-	    return rollDeg;
-	}
-	
-	//------------------------------------------------------------------------------------------------	
-	//! Gets the shortest 3D distance between a point and a spline
-	//! Extended from SCR_Math3D function
-	//! \param[in] points array of all points forming the spline, minimum 1 point
-	//! \param[in] point point that is being checked
-	//! \return distance from spline, -1 if no points are provided
-	static float GetDistanceFromSpline(notnull array<vector> points, vector point, out int index = 0)
-	{		
-		int count = points.Count();
-		if (count < 1)
-			return -1;
-
-		if (count == 1)
-			return vector.Distance(point, points[0]);
-
-		float tempDistanceSq;
-		vector segmentStart = points[0];
-		float minDistanceSq = vector.DistanceSq(point, segmentStart);
-
-		foreach (int i, vector segmentEnd : points)
-		{
-			if (i == 0)
-				continue;
-
-			tempDistanceSq = Math3D.PointLineSegmentDistanceSqr(point, segmentStart, segmentEnd);
-			if (tempDistanceSq < minDistanceSq)
-			{
-				index = i;
-				minDistanceSq = tempDistanceSq;
-			}
-
-			segmentStart = segmentEnd;
-		}
-
-		return Math.Sqrt(minDistanceSq);
-	}	
 
 	//------------------------------------------------------------------------------------------------	
 	// Debugging things
@@ -479,6 +409,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 			
 		vector origin = owner.GetOrigin();
+		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
+		float health = damageManager.GetHealth();
 
 		string debugText = 	//"Speedangle:" + angle * Math.RAD2DEG + "\n" +
 						   	"Speed:" + Math.Round(10*m_fSpeed)/10 + "\n" +
@@ -488,8 +420,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 						   	"TurnInternal:" + m_fTimeTurnInterval + "\n" +
 //							"m_fTimeSpeed: " + m_fTimeSpeed + "\n" +
 							"DbgAngle: " + m_fDbgAngle + "\n" +
-							"DestinationPointAdd: " + m_iDestinationPointAdd;
-		
+							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n";
+		debugText = debugText + 
+							"In Init:" + m_bInInit + "\n" +
+							"Is working:" + SDRC_VehicleHelper.IsWorking(owner) + "\n" +
+							"Pilot count:" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
+							"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
+							"Health: " + health;
 							
 		DebugTextWorldSpace.Create(GetGame().GetWorld(), debugText, DebugTextFlags.ONCE, origin[0], origin[1], origin[2], 20);
 				
