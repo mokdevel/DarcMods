@@ -477,6 +477,30 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vVel.Normalize();
 //		float currentSpeed = vVel.Length();
 		DrawLine(origin, origin + (vVel * m_fSpeed), Color.GRAY_75);			
+		
+		//Enemy stuff		
+		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(owner.FindComponent(SCR_BaseCompartmentManagerComponent));
+		
+		array<IEntity> occupants = {};
+		scr_compartmentManager.GetOccupants(occupants);
+
+		foreach(IEntity occupant : occupants)
+		{
+			SCR_AICombatComponent aicc = SCR_AICombatComponent.Cast(occupant.FindComponent(SCR_AICombatComponent));
+			if (aicc)
+			{
+				BaseTarget bt = aicc.GetCurrentTarget();
+				if (bt)
+				{
+					IEntity target = bt.GetTargetEntity();
+					if (EntityUtils.IsPlayer(target))
+					{
+						DrawLine(occupant.GetOrigin(), target.GetOrigin(), Color.RED);
+					}
+				}
+			}
+		}
+				
 	}
 	
 	//------------------------------------------------------------------------------------------------	
