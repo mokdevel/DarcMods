@@ -162,6 +162,10 @@ class SDRC_VehicleHelper
 		return success;
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Check if vehicle has atleast one pilot - dead or alive
+	*/	
 	static bool IsPiloted(IEntity vehicle)
 	{
 		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
@@ -177,6 +181,10 @@ class SDRC_VehicleHelper
 		return false;				
 	}
 	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Return the amount of pilots alive in the vehicle
+	*/	
 	static int PilotCountAlive(IEntity vehicle)
 	{
 		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
