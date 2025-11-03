@@ -15,7 +15,7 @@ Vehicle : "{D03C0F6044DB5208}Prefabs/Vehicles/Helicopters/UH1H/UH1H_base.et" {
   SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
    m_UIInfo SCR_EditableEntityUIInfo "{5298E609432D192D}" {
     m_aAuthoredLabels + {
-     37 210
+     TRAIT_PASSENGERS_LARGE TRAIT_SUPPLYSTORAGE_LARGE
     }
     m_EntityBudgetCost {
      SCR_EntityBudgetValue "{5EDC86E4AF8908B6}" {
