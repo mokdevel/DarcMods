@@ -73,6 +73,11 @@ sealed class SDRC_AIHelper
 	
 	static SCR_AIGroup SpawnGroup(string groupToSpawn, vector spawnPosition, string faction)	
 	{
+		if (groupToSpawn == "")
+		{
+			return null;
+		}		
+		
 		Resource resource = null;
 		SCR_AIGroup group = null;
 		

@@ -85,7 +85,16 @@ sealed class SDRC_CampHelper
 					SDRC_WPHelper.CreateMissionAIWaypoints(group, camp.ai.waypointGenType, mission.GetPos(), "0 0 0", camp.ai.waypointMoveType, minRange, maxRange);
 //					SDRC_WPHelper.CreateMissionAIWaypoints(group, SDRC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", SDRC_EWaypointMoveType.LOITER, camp.waypointRange[0], camp.waypointRange[1]);
 				}
-				SDRC_Log.Add("[SDRC_Mission_Patrol:MissionSpawn] AI groups spawned: " + mission.GetGroupsCount() + " (tried: " + aiCount + ")", LogLevel.DEBUG);
+				
+				//Error checking. If more than 0 AI was requested but 0 was spawned, this is an error.
+				if ( (mission.GetGroupsCount() == 0) && (aiCount != 0) )
+				{
+					mission.SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.UNABLE_TO_SPAWN_AI);
+				}
+				else
+				{
+					SDRC_Log.Add("[SDRC_Mission_Patrol:MissionSpawn] AI groups spawned: " + mission.GetGroupsCount() + " (tried: " + aiCount + ")", LogLevel.DEBUG);
+				}
 			}
 			
 			//Put the loot box in right place

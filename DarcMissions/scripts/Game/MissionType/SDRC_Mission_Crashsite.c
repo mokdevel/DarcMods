@@ -192,13 +192,16 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 					
 					if (ready)
 					{
-						if (m_DC_Crashsite.loot)
+						if (GetState() != SDRC_EMissionState.FAILED)
 						{
-							m_DC_Crashsite.loot.box = m_EntityList[1];	//Normally it's the first one, but we have added the chopper in the list as the first one.
+							if (m_DC_Crashsite.loot)
+							{
+								m_DC_Crashsite.loot.box = m_EntityList[1];	//Normally it's the first one, but we have added the chopper in the list as the first one.
+							}
+														
+							missionCrashSiteState = SDRC_EMissionCrashSiteState.RUN;
+							SetState(SDRC_EMissionState.ACTIVE);
 						}
-													
-						missionCrashSiteState = SDRC_EMissionCrashSiteState.RUN;
-						SetState(SDRC_EMissionState.ACTIVE);
 					}
 					else
 					{

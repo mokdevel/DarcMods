@@ -103,7 +103,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 		ready = SDRC_CampHelper.Spawn(this, m_iSpawnIndex, m_DC_Stash, m_fSpawnRotation, m_Config.disableArsenal);
 		m_iSpawnIndex++;			
 		
-		if (ready)
+		if ( (ready) && (GetState() != SDRC_EMissionState.FAILED) )
 		{
 			SetState(SDRC_EMissionState.ACTIVE);
 		}

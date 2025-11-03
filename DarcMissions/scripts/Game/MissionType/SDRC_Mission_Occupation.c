@@ -99,7 +99,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		ready = SDRC_CampHelper.Spawn(this, m_iSpawnIndex, m_DC_Occupation, m_fSpawnRotation, m_Config.disableArsenal);
 		m_iSpawnIndex++;			
 		
-		if (ready)
+		if ( (ready) && (GetState() != SDRC_EMissionState.FAILED) )
 		{
 			SetState(SDRC_EMissionState.ACTIVE);
 		}
@@ -207,7 +207,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		//Default		
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0};//{0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
+		conf.missionList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
 		//conf.missionFiles.Insert("dc_missionConfig_Occupation_010_horror.json");
 		//Mission specific		
 		//----------------------------------------------------
@@ -242,10 +242,10 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			0
 		);
 		occupation.ai.Set(
-			{5, 10},
-			{"C_BEASTS"},
-//			{1, 2},
-//			{"G_RECON", "G_LIGHT"},
+//			{5, 10},
+//			{"C_BEASTS"},
+			{1, 2},
+			{"G_RECON", "G_LIGHT"},
 			50, 1.0,
 			{50, 300},
 			SDRC_EWaypointGenerationType.RANDOM,

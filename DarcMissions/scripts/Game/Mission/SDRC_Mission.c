@@ -47,6 +47,7 @@ enum SDRC_EMissionError
 	COULD_NOT_SPAWN_VEHICLE,
 	ROUTE_NOT_FOUND,
 	SUITABLE_BUILDING_NOT_FOUND,
+	UNABLE_TO_SPAWN_AI,
 
 	//Mainly from checking if position is suitable for mission	
 	POSITION_IN_WATER,

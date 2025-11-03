@@ -110,7 +110,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		ready = SDRC_CampHelper.Spawn(this, m_iSpawnIndex, m_DC_HvtItem, m_fSpawnRotation, m_Config.disableArsenal);
 		m_iSpawnIndex++;			
 		
-		if (ready)
+		if ( (ready) && (GetState() != SDRC_EMissionState.FAILED) )
 		{
 			m_Target = GetFromEntityList(m_DC_HvtItem.targetIdx);
 			SDRC_Log.Add("[SDRC_Mission_HvtItem:MissionSpawn] Target: " + m_Target, LogLevel.DEBUG);

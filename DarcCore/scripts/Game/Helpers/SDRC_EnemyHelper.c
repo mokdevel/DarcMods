@@ -193,14 +193,24 @@ sealed class SDRC_EnemyHelper
 		if (enemyList.IsEmpty())
 		{
 			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemy] Enemy name does not have faction in it. Using the full list.", LogLevel.WARNING);
-			resourceName = m_Config.lists[index].items.GetRandomElement();
+			if (!m_Config.lists[index].items.IsEmpty())
+			{
+				resourceName = m_Config.lists[index].items.GetRandomElement();
+			}
 		}
 		else		
 		{
 			resourceName = enemyList.GetRandomElement();
 		}
 		
-		SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemy] Selected: (" + listName + ") " + resourceName, LogLevel.DEBUG);
+		if (resourceName == "")
+		{
+			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemy] No enemy selected. List  (" + listName + ") has " + enemyList.Count() + " enemies.", LogLevel.ERROR);
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemy] Selected: (" + listName + ") " + resourceName, LogLevel.DEBUG);
+		}
 		return resourceName;
 	}
 	
