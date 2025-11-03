@@ -161,6 +161,52 @@ class SDRC_VehicleHelper
 		
 		return success;
 	}
+
+	static bool IsPiloted(IEntity vehicle)
+	{
+		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
+		
+		array<BaseCompartmentSlot> compartments = {};
+		scr_compartmentManager.GetFreeCompartmentsOfType(compartments, ECompartmentType.PILOT);
+
+		if (compartments.IsEmpty())
+		{
+			return true;
+		}
+		
+		return false;				
+	}
+	
+	static int PilotCountAlive(IEntity vehicle)
+	{
+		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
+		
+		array<IEntity> occupants = {};
+		scr_compartmentManager.GetOccupantsOfType(occupants, ECompartmentType.PILOT);
+		
+		int alive = 0;
+		
+		foreach(IEntity pilot : occupants)
+		{
+			if (SCR_AIDamageHandling.IsAlive(pilot))
+			{
+				alive ++;
+			}
+		}
+
+		return alive;
+	}	
+	
+	
+	
+	//------------------------------------------------------------------------------------------------
+	static bool IsWorking(IEntity vehicle)
+	{
+		if(SCR_AIVehicleUsability.VehicleCanMove(vehicle) && !SCR_AIVehicleUsability.VehicleIsOnFire(vehicle))
+			return true;
+	
+		return false;
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	// Arsenal related
