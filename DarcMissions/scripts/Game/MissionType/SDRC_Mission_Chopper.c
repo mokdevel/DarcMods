@@ -13,6 +13,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private VehicleHelicopterSimulation m_Vehicle_s;
 	private IEntity m_Vehicle = null;;
 	private SCR_AIGroup m_Crew = null;
+	private SCR_AIGroup m_Crew2 = null;
 	private int idx = 0;	
 
 	//------------------------------------------------------------------------------------------------
@@ -36,7 +37,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Chopper.general, request);
 
 		//Find position
-		vector pos = "30 10 30";//pathPoints[0];//SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
+		vector pos = "1300 10 2200";//pathPoints[0];//SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
 		SetPos(pos /*, destination */);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Chopper.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
@@ -84,14 +85,18 @@ class SDRC_Mission_Chopper : SDRC_Mission
 //		string groupToSpawn = "{30ED11AA4F0D41E5}Prefabs/Groups/OPFOR/Group_USSR_FireGroup.et";
 		string groupToSpawn = "{0D10CCEEC7B3EC34}Prefabs/Groups/OPFOR/Group_USSR_PlatoonHQ.et";
 		m_Crew = SDRC_AIHelper.SpawnGroup(groupToSpawn, GetPos(), GetFaction());
-		vector aiPos = "0 1000 0";
-		m_Crew = SDRC_AIHelper.SpawnGroup(groupToSpawn, aiPos, GetFaction());
+		m_Crew2 = SDRC_AIHelper.SpawnGroup(groupToSpawn, GetPos(), GetFaction());
+//		vector aiPos = "0 1000 0";
+//		m_Crew = SDRC_AIHelper.SpawnGroup(groupToSpawn, aiPos, GetFaction());
+//		m_Crew2 = SDRC_AIHelper.SpawnGroup(groupToSpawn, aiPos, GetFaction());
 		
 		//Code for whatever you need for spawning things.
 		EntitySpawnParams params = EntitySpawnParams();
 //		string resourceName	= "{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et";
 //		string resourceName	= "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et";
 		string resourceName	= "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Flying_Patrol.et";
+//		string resourceName	= "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Flying_Patrol.et";
+//		string resourceName	= "{31203FC84104022C}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_M261_Flying_Patrol.et";	//M261 MOD!
 //		string resourceName	= "{7CB21626B43A2E48}Prefabs/Vehicles/Flying/Jetpack_Flying.et";
 		vector pos = GetPos();
 	
@@ -115,14 +120,16 @@ class SDRC_Mission_Chopper : SDRC_Mission
         m_Vehicle_s.RotorSetForceScaleState(0, 1.3);	//Hovering 1.2
         m_Vehicle_s.RotorSetForceScaleState(1, 2);
 		
-		GetGame().GetCallqueue().CallLater(AddCrew, 3000);
+		GetGame().GetCallqueue().CallLater(AddCrew, 6000, false, m_Crew);
+		GetGame().GetCallqueue().CallLater(AddCrew, 7000, false, m_Crew2);
 	}	
 	
-	void AddCrew()
+	void AddCrew(SCR_AIGroup crew)
 	{
-		if (m_Crew)
+		if (crew)
 		{
-			SDRC_VehicleHelper.MoveGroupInVehicle(m_Crew, m_Vehicle, true);
+			SDRC_VehicleHelper.MoveGroupInVehicle(crew, m_Vehicle, true);
+			SDRC_AIHelper.SetAIGroupSkill(crew, EAISkill.CYLON, 10);
 		}
 	}
 }

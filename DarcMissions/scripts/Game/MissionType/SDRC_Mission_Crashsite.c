@@ -100,7 +100,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 			m_vPosDestination[2] = SDRC_Misc.GetWorldSize()/2 + SDRC_Misc.RandomFloat(-rnd, rnd);
 			
 			vector direction = vector.Direction(pos, m_vPosDestination);
-			m_fAngle = SDRC_Misc.VectorToAngle(direction);
+			m_fAngle = SDRC_Math.VectorToAngle(direction);
 			
 			float distance = vector.DistanceXZ(pos, m_vPosDestination);
 			

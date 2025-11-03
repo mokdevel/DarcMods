@@ -93,7 +93,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 								
 				//Find the road direction. Roadblocks shall be aligned to road. 
 				vector direction = vector.Direction(pos, posOnRoad);
-				m_fSpawnRotation = SDRC_Misc.VectorToAngle(direction);
+				m_fSpawnRotation = SDRC_Math.VectorToAngle(direction);
 			}
 		}
 		

@@ -234,7 +234,7 @@ sealed class SDRC_RoadHelper
 	{	
 		//Find the direction the road was heading. We look at the two last points of road and create a direction vector from them.
 		vector direction = vector.Direction(roadPosPrev, roadPosLast);
-		float angle = SDRC_Misc.VectorToAngle(direction);		
+		float angle = SDRC_Math.VectorToAngle(direction);		
 		
 		vector pos = "0 0 0";
 		//Use random angle to search from the position

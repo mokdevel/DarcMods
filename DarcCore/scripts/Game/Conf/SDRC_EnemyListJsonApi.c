@@ -139,7 +139,9 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"G_SNIPER",
 			{"Prefabs/Groups"},
-			{"Sniper", "SharpShooter", "USSR_Spetsnaz_SentryTeam", "VKPO_S_SentryTeam.et"},
+			{"Sniper", "SharpShooter", "USSR_Spetsnaz_SentryTeam", "VKPO_S_SentryTeam.et", 
+			"KS05_SF_GROUP_A", "KS05_SF_GROUP_C", 	//Omega gropus
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
 		);		
@@ -218,7 +220,9 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"G_SPECIAL",
 			{"Prefabs/Groups"},
-			{"GreenBeret", "Sapper", "Sentry", "Spetsnaz", "SpecialForces"},
+			{"GreenBeret", "Sapper", "Sentry", "Spetsnaz", "SpecialForces",
+			"KS05_SF_GROUP_B", //Omega gropus
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
 		);					
@@ -451,9 +455,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_BEASTS",
-			{"Prefabs/Characters", "Beasts", "Prefabs"},
-//			{"character_115_dupe", "character_115_pump", "character_115_skel.",			
-			{"character_115_dupe", "PumpkinHead", "character_115_skel.",			
+			{"Prefabs/Characters"},		
+			{"GhoulHeavy", "PumpkinHead", "Skeleton", //"TreeDemon",
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}

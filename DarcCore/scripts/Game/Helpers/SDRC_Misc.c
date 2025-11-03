@@ -84,17 +84,6 @@ sealed class SDRC_Misc
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Convert a vector to angle in degrees (0-360) to radians 
-	*/
-	static float VectorToAngle(vector direction)
-	{
-    	float angle = Math.Atan2(direction[0], direction[2]);
-    	float degrees = (180 * angle / Math.PI);
-    	return degrees;
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!
 	Returns the available mods
 	*/	
 	static void GetAddonList(out array<string> addonList, bool printList = false)

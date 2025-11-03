@@ -8,8 +8,16 @@ SCR_CampaignFactionManager CampaignFactionManager1 : "{F1AC26310BAE3788}Prefabs/
  }
 }
 Vehicle LAV1 : "{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et" {
- coords 1961.961 48.241 2942.455
+ coords 1926.981 47.273 2959.827
  angles 2.537 -153.687 -2.202
+}
+$grp SCR_AIGroup : "{6D60B510F50F9DC3}Prefabs/Groups/BLUFOR/OmegaGroups/KS05_SF_GROUP_B.et" {
+ {
+  coords 1954.591 60.926 2954.336
+ }
+ {
+  coords 1954.418 60.836 2954.887
+ }
 }
 $grp GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et" {
  {
@@ -22,5 +30,5 @@ $grp GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyC
  }
 }
 SCR_AIGroup : "{D0886786634E55AE}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_Squad.et" {
- coords 1966.102 48.362 2936.766
+ coords 1924.266 47.486 2966.582
 }
