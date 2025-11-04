@@ -26,9 +26,9 @@ array<ResourceName> items : The list of items. This is autofilled, but you can p
 ```
 
 ## SDRC_Aka
-Also known as - other names used for example for factions. In some cases/mods the prefab name don't have the faction name included. The first item in the array is the *faction* and the second name is the name used for filtering.
+Also known as - other names used for example for factions. In some cases/mods the prefab name don't have the faction name included. The first item in the array is the *faction* and the rest of the names are the name used for filtering.
 ```
-array<string> names : The faction name and the filtering name in this order.
+array<string> names : The faction name and the filtering names in this order.
 ```
 
 ### Example
@@ -39,6 +39,23 @@ This is the case for example with RHS. RHS uses the faction name ``RHS_USAF`` bu
     "names": [
       "RHS_USAF",
       "USAF_USMC"
+    ]
+  }
+```
+
+This is the case for example with Tactical Flava. The characters/groups are of faction ``USSR``, but have a naming ``TF_RF``. With the definition below, enemies from USSR faction will be collected from enemies with USSR and TF_RF in their name. The second aka is the same for ``US``.
+```
+"akas": [
+  {
+    "names": [
+      "USSR",
+      "USSR", "TF_RF"
+    ]
+  },
+  {
+    "names": [
+      "US",
+      "US", "TF_US"
     ]
   }
 ```
