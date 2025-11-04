@@ -105,6 +105,16 @@ Dependency specific files
 
 ..empty..
 
+## 20251104
+### DarcMissions
+No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
+Fixes:
+- Added better support for Tactical Flava mod. If you use the mod, remove ``dc_enemyList.json`` to get a new one.
+- Extended ``akas`` functionality in ``dc_enemyList.json`` to support more complex filtering. See docs.
+- Clicking on the map icon did not show the intel / time left.
+- Mission will fail if AI spawn fails.
+- Occupation drop from GM had wrong mission type
+
 ## 20251102
 ### DarcMissions
 No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
