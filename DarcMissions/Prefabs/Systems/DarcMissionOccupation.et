@@ -9,10 +9,11 @@ SDRC_DarcMissionGM : "{C599195C442D7125}Prefabs/Compositions/Misc/CustomEntities
     Icon "{AD5B6FECDE9A1E1E}UI/Textures/Icons/gm_mission_Occupation_round.edds"
     m_Image "{83FBFA44C296A183}UI/Textures/Icons/gm_mission_Occupation.edds"
     m_aAuthoredLabels {
-     7 44001
+     ENTITYTYPE_SYSTEM ENTITYTYPE_DARCMISSIONS
     }
    }
    m_bAutoRegister ALWAYS
+   m_MissionType OCCUPATION
   }
   RplComponent "{663310CA9879E103}" {
    Streamable Disabled
