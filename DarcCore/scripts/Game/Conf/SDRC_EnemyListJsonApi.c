@@ -87,7 +87,15 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_Aka aka01 = new SDRC_Aka();
 		aka01.names = {"RHS_AFRF", "RHS_RF"};
 		conf.akas.Insert(aka01);
-		
+
+		SDRC_Aka aka02 = new SDRC_Aka();
+		aka02.names = {"USSR", "USSR", "TF_RF"};
+		conf.akas.Insert(aka02);
+
+		SDRC_Aka aka03 = new SDRC_Aka();
+		aka03.names = {"US", "US", "TF_US"};
+		conf.akas.Insert(aka03);
+						
 		conf.lists.Insert(enemyList00());
 		conf.lists.Insert(enemyList01());
 		conf.lists.Insert(enemyList02());

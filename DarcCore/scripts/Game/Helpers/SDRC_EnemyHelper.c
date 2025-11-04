@@ -142,6 +142,7 @@ sealed class SDRC_EnemyHelper
 	{
 		int index = -1;		
 		array<string> enemyList = {};
+		array<string> factions = {};
 		
 		if (listName[0] == "{")		//If it is already a resource name, return
 		{		
@@ -150,16 +151,27 @@ sealed class SDRC_EnemyHelper
 		
 		//Select the enemy faction from a list
 		faction = SelectEnemyFaction(faction);
+		//Put the factions as default in the list.
+		factions.Insert(faction);
 
 		//Check if the requested faction has an aka
 		foreach(SDRC_Aka aka : m_Config.akas)
-		{
+		{			
 			if (aka.names[0] == faction)
+			{			
+				factions.Clear();
+				for (int i = 1; i < aka.names.Count(); i++)
+				{
+					factions.Insert(aka.names[i]);					
+				}
+			}
+			
+/*			if (aka.names[0] == faction)
 			{
 				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemy] Using " + aka.names[1] + " for " + faction, LogLevel.DEBUG);
 				faction = aka.names[1];
 				break;
-			}
+			}*/
 		}
 				
 		//Find the right list index		
@@ -182,9 +194,12 @@ sealed class SDRC_EnemyHelper
 		//Filter with faction		
 		foreach(string enemy : m_Config.lists[index].items)
 		{
-			if (enemy.Contains("_" + faction + "_"))
+			foreach(string fac : factions)
 			{
-				enemyList.Insert(enemy);
+				if (enemy.Contains("_" + fac + "_"))
+				{
+					enemyList.Insert(enemy);
+				}
 			}
 		}
 		
