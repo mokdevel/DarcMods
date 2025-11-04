@@ -359,8 +359,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 			"3100 030 2800",	//Beauregard
 			"2400 030 1600",
 			"1900 000 1300",
-//			"1500 000 2200",
-//			"2200 020 2200",
+			"1500 000 2200",
+			"2200 020 2200",
 		};
 		
 		//Count flight path length - straight lines
@@ -413,19 +413,18 @@ class SDRC_ChopperComp : ScriptGameComponent
 		float health = damageManager.GetHealth();
 
 		string debugText = 	//"Speedangle:" + angle * Math.RAD2DEG + "\n" +
-						   	"Speed:" + Math.Round(10*m_fSpeed)/10 + "\n" +
-						   	"SpeedStart/Target:" + Math.Round(10*m_fSpeedStart)/10 + "/" + Math.Round(10*m_fSpeedTarget)/10 + "\n" +
+						   	"Speed:" + Math.Round(10*m_fSpeed)/10 + " - " +
+						   	"Start/Target:" + Math.Round(10*m_fSpeedStart)/10 + "/" + Math.Round(10*m_fSpeedTarget)/10 + "\n" +
 						   	"SpeedMul:" + m_fSpeedMul + "\n";
 		debugText = debugText + 
-						   	"TurnInternal:" + m_fTimeTurnInterval + "\n" +
-//							"m_fTimeSpeed: " + m_fTimeSpeed + "\n" +
-							"DbgAngle: " + m_fDbgAngle + "\n" +
+						   	//"TurnInternal:" + m_fTimeTurnInterval + "\n" +
+							//"DbgAngle: " + m_fDbgAngle + "\n" +
 							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n";
 		debugText = debugText + 
-							"In Init:" + m_bInInit + "\n" +
+							"In Init:" + m_bInInit + ", " +
 							"Is working:" + SDRC_VehicleHelper.IsWorking(owner) + "\n" +
 							"Pilot count:" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
-							"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
+							//"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
 							"Health: " + health;
 							
 		DebugTextWorldSpace.Create(GetGame().GetWorld(), debugText, DebugTextFlags.ONCE, origin[0], origin[1], origin[2], 20);

@@ -244,6 +244,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		occupation.ai.Set(
 //			{5, 10},
 //			{"C_BEASTS"},
+//			{"G_ADMIN", "G_HEAVY", "G_LAUNCHER", "G_MEDICAL", "G_RECON", "G_LIGHT", "G_SPECIAL"},
 			{1, 2},
 			{"G_RECON", "G_LIGHT"},
 			50, 1.0,
