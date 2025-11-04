@@ -34,7 +34,6 @@ FrameWidgetClass {
     SizeY 45
     OffsetBottom -45
    }
-   "Is Enabled" 0
    components {
     SDRC_MapClickComp "{668885C5A9684BEE}" {
     }

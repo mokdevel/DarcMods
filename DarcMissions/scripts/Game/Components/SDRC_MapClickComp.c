@@ -6,7 +6,9 @@ class SDRC_MapClickComp : SCR_ScriptedWidgetComponent
 	{
 		//SCR_MilitaryBaseManager.GetInstance().UpdateBasesSettings();
 		//ShowChatMessage(WidgetManager.Translate("Mission ID: " + gmComponent.m_Symbols[markerIdx].id + " : " + gmComponent.m_Symbols[markerIdx].strval));
-		
+
+		SDRC_Log.Add("[SDRC_MapClickComp:OnClick]", LogLevel.SPAM);
+				
 		if (SDRC_GMHelper.IsShowMissionTimeLeft())
 		{
 			SCR_MapEntity m_MapEntity = SCR_MapEntity.GetMapInstance();
