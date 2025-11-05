@@ -16,18 +16,20 @@ enum SDRC_EDrawSymbol
 }
  
 //------------------------------------------------------------------------------------------------
+// Generic symbol class
+// NOTE: Depending on SDRC_EDrawSymbol type, parameters are used for various topics
 class SDRC_GMMapSymbol : Managed
-{
+{	
 	//Default information
 	bool visible = true;			//If true, will be shown on the GM map
 	SDRC_EDrawSymbol symbolType;
-	vector pos;
-	int timeLeft;
-	float radius;
-	int intval;						//Integer value for color or icon or ..
-	string id;
-	string strval;
-	int type;						//Generic type int - used for SDRC_EMissionType
+	vector vPos;
+	int iTimeLeft;					//Seconds
+	float fRadius;					
+	string sId;						//CIRCLE: 
+	int iIntval;						//Integer value for color or icon or ..
+	string sStrval;
+	int iType;						//Generic type int - used for SDRC_EMissionType
 }
 
 //------------------------------------------------------------------------------------------------
@@ -82,20 +84,20 @@ class SDRC_RplGMComp : ScriptComponent
 	/*!	
 	Add a circle on symbol list
 	*/
- 	void AddSymbolCircle(bool visible, vector pos, float radius, int color, string strval = "")
+ 	void AddSymbolCircle(bool visible, vector pos, string name, float radius, int color, )
     {
 		pos[1] = 0;			//Set to zero plane
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
 		symbol.visible = visible;
 		symbol.symbolType = SDRC_EDrawSymbol.CIRCLE;
-		symbol.pos = pos;
-		symbol.timeLeft = -1;
-		symbol.radius = radius;
-		symbol.intval = color;
-		symbol.id = "";
-		symbol.strval = "";
-		symbol.type = -1;
+		symbol.vPos = pos;
+		symbol.iTimeLeft = -1;
+		symbol.fRadius = radius;						//Radius of the circle
+		symbol.sId = "";								//Unused
+		symbol.iIntval = color;							//Color for the circle
+		symbol.sStrval = "";							//Name of the area
+		symbol.iType = -1;								//Unused
 		m_Symbols.Insert(symbol);
     }
 	
@@ -103,20 +105,20 @@ class SDRC_RplGMComp : ScriptComponent
 	/*!	
 	Add a marker on symbol list
 	*/
- 	void AddSymbolMarker(bool visible, vector pos, SDRC_EMissionType missionType, SDRC_EMissionIcon icon, int timeLeft, string id, string strval)
+ 	void AddSymbolMarker(bool visible, vector pos, SDRC_EMissionType missionType, SDRC_EMissionIcon icon, string markerTypeString, int timeLeft, string id, string strval)
     {
 		pos[1] = 0;			//Set to zero plane
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
 		symbol.visible = visible;
 		symbol.symbolType = SDRC_EDrawSymbol.MARKER;
-		symbol.pos = pos;
-		symbol.timeLeft = timeLeft;
-		symbol.radius = 0;
-		symbol.intval = icon;
-		symbol.id = id;
-		symbol.strval = strval;
-		symbol.type = missionType;
+		symbol.vPos = pos;
+		symbol.iTimeLeft = timeLeft;
+		symbol.fRadius = 0;								//Not used
+		symbol.sId = id;								//Id for the marker
+		symbol.iIntval = icon;							//SDRC_EMissionIcon
+		symbol.sStrval = strval;						//Title of marker
+		symbol.iType = missionType;						//MissionType
 		m_Symbols.Insert(symbol);
     }
 	
@@ -177,8 +179,8 @@ class SDRC_RplGMComp : ScriptComponent
 		
 		foreach(SDRC_GMMapSymbol symbol : m_Symbols)
 		{
-			SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Syncing: " + symbol.pos, LogLevel.SPAM);	
-	        Rpc(RpcDo_SyncMapSymbol, symbol.symbolType, symbol.pos, symbol.timeLeft, symbol.radius, symbol.intval, symbol.id, symbol.strval, symbol.type); 	// broadcast to clients			
+			SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Syncing: " + symbol.vPos, LogLevel.SPAM);	
+	        Rpc(RpcDo_SyncMapSymbol, symbol.symbolType, symbol.vPos, symbol.iTimeLeft, symbol.fRadius, symbol.sId, symbol.iIntval, symbol.sStrval, symbol.iType); 	// broadcast to clients			
 		}		
 	}
 
@@ -198,19 +200,19 @@ class SDRC_RplGMComp : ScriptComponent
 	RPL: Syncronize symbols to clients
 	*/
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-    protected void RpcDo_SyncMapSymbol(SDRC_EDrawSymbol symbolType, vector pos, int timeLeft, float radius, int color, string id, string strval, int type)
+    protected void RpcDo_SyncMapSymbol(SDRC_EDrawSymbol symbolType, vector pos, int timeLeft, float radius, string id, int intval, string strval, int type)
     {
 		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(SDRC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.SPAM);
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
 		symbol.symbolType = symbolType;
-		symbol.pos = pos;
-		symbol.timeLeft = timeLeft;
-		symbol.radius = radius;
-		symbol.intval = color;
-		symbol.id = id;
-		symbol.strval = strval;
-		symbol.type = type;
+		symbol.vPos = pos;
+		symbol.iTimeLeft = timeLeft;
+		symbol.fRadius = radius;
+		symbol.sId = id;
+		symbol.iIntval = intval;
+		symbol.sStrval = strval;
+		symbol.iType = type;
 		m_Symbols.Insert(symbol);
     }
 	

@@ -61,7 +61,7 @@ class SDRC_GMHelper
 			bool visibleForGm = m_BaseGameMode.m_SDRC_Core.m_Config.showOnGMMapNonValidArea;
 			foreach (SDRC_NonValidArea nonValidArea : m_BaseGameMode.missionFrame.m_aNonValidAreas)
 			{
-				m_GmComponent.AddSymbolCircle(visibleForGm, nonValidArea.pos, nonValidArea.radius, ARGB(75, 255, 0, 0));
+				m_GmComponent.AddSymbolCircle(visibleForGm, nonValidArea.pos, nonValidArea.name, nonValidArea.radius, ARGB(75, 255, 0, 0));
 			}
 		}
 	}
@@ -81,11 +81,12 @@ class SDRC_GMHelper
 				{
 					//TBD: This should also fill GetMarkerType() information
 					SDRC_EMissionIcon icon = mission.GetMarkerIcon();
-					if (mission.GetMarkerType() == "")
+					string markerType = mission.GetMarkerType();
+/*					if (mission.GetMarkerType() == "")
 					{
 						icon = SDRC_EMissionIcon.GM_MISSION_X_MAP;
-					}
-					m_GmComponent.AddSymbolMarker(visibleForGm, mission.GetPos(), mission.GetType(), icon, mission.GetActiveTime(), mission.GetId(), mission.GetTitle());
+					}*/
+					m_GmComponent.AddSymbolMarker(visibleForGm, mission.GetPos(), mission.GetType(), icon, markerType, mission.GetActiveTime(), mission.GetId(), mission.GetTitle());
 				}
 			}
 		}	
@@ -155,9 +156,9 @@ class SDRC_GMHelper
 			{
 				if (symbol.symbolType == SDRC_EDrawSymbol.MARKER && symbol.visible)
 				{
-					float distance = vector.DistanceXZ(pos, symbol.pos);
+					float distance = vector.DistanceXZ(pos, symbol.vPos);
 					//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Checking: " + cursorPos + " vs " + symbol.pos + " d=" + distance + " (" + distanceCheck + ")", LogLevel.NORMAL);
-					if (SDRC_Misc.IsPosNearPos(pos, symbol.pos, distanceCheck))
+					if (SDRC_Misc.IsPosNearPos(pos, symbol.vPos, distanceCheck))
 					{
 //						SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Found.", LogLevel.NORMAL);
 						symbolIdx = idx;

@@ -99,7 +99,7 @@ class SDRC_MapSystem : GameSystem
 			
 			if (gmComponent)
 			{
-				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Mission ID: " + gmComponent.m_Symbols[markerIdx].id + " : " + gmComponent.m_Symbols[markerIdx].strval + " : time left: " + gmComponent.m_Symbols[markerIdx].timeLeft));
+				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Mission ID: " + gmComponent.m_Symbols[markerIdx].sId + " : " + gmComponent.m_Symbols[markerIdx].sStrval + " : time left: " + gmComponent.m_Symbols[markerIdx].iTimeLeft));
 			}
 		}
 	}
@@ -121,8 +121,8 @@ class SDRC_MapSystem : GameSystem
 			
 			if ( (playerComponent) && (gmComponent) )
 			{
-				playerComponent.AskForMissionDeletion(gmComponent.m_Symbols[markerIdx].id);
-				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Deletion requested for Mission ID: " + gmComponent.m_Symbols[markerIdx].id));
+				playerComponent.AskForMissionDeletion(gmComponent.m_Symbols[markerIdx].sId);
+				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Deletion requested for Mission ID: " + gmComponent.m_Symbols[markerIdx].sId));
 				gmComponent.m_Symbols[markerIdx].visible = false;
 				m_SymbolCount = 0;	//Ask for map update
 			}
@@ -239,7 +239,7 @@ class SDRC_MapSystem : GameSystem
 					case SDRC_EDrawSymbol.CIRCLE:
 					{
 						PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
-						drawCommand = DrawCircle(symbol.pos, symbol.radius, symbol.intval);
+						drawCommand = DrawCircle(symbol.vPos, symbol.fRadius, symbol.iIntval);
 						if (drawCommand)
 						{
 							m_DrawCommands.Insert(drawCommand);
@@ -251,7 +251,7 @@ class SDRC_MapSystem : GameSystem
 						if (symbol.visible)
 						{
 							ImageDrawCommand drawCommand = new ImageDrawCommand();		
-							drawCommand = DrawMarker(symbol.pos, symbol.intval);
+							drawCommand = DrawMarker(symbol.vPos, symbol.iIntval);
 							if (drawCommand)
 							{
 								m_DrawCommands.Insert(drawCommand);						

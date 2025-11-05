@@ -1,3 +1,10 @@
+//SDRC_MapClickComp.c
+
+//------------------------------------------------------------------------------------------------
+/*!
+This is the component that handles marker click.
+Set this to ButtonWidget on SDRC_MapMarkerBase.layout
+*/
 class SDRC_MapClickComp : SCR_ScriptedWidgetComponent
 {
 	//------------------------------------------------------------------------------------------------
@@ -28,15 +35,15 @@ class SDRC_MapClickComp : SCR_ScriptedWidgetComponent
 			
 			if (symbol)
 			{		
-				int minutes = (symbol.timeLeft / 60);
+				int minutes = (symbol.iTimeLeft / 60);
 				string timeStr = "" + minutes + " minutes";
 				
-				if (symbol.timeLeft < 60)
+				if (symbol.iTimeLeft < 60)
 				{
 					timeStr = " less than a minute";
 				}
 				
-				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("You have " + timeStr + " to complete "  + symbol.strval));
+				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("You have " + timeStr + " to complete "  + symbol.sStrval));
 			}
 			else
 			{
