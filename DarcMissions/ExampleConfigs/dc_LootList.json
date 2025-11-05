@@ -132,15 +132,23 @@
 			],
 			"include": [
 				"Optic",
-				"Scope"
+				"Scope",
+				"1P69",
+				"AimPoint",
+				"Collim",
+				"ANPVS",
+				"G33",
+				"PDC_cover",
+				"Zhukov"
 			],
 			"exclude": [
-				"_Base"
+				"_Base",
+				"DoNotUse"
 			],
 			"items": []
 		},
 		{
-			"id": "UTIL_MAGAZINES",
+			"id": "UTIL_MAGAZINE",
 			"modDir": [
 				"Prefabs/Weapons/Magazines"
 			],
@@ -295,6 +303,52 @@
 				"Shirt_",
 				"Jacket_Suit",
 				"Jacket_Pants"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"items": []
+		},
+		{
+			"id": "FF_ITEMS_LOW",
+			"modDir": [
+				"Prefabs/Items"
+			],
+			"include": [
+				"Backpack",
+				"Radio_",
+				"Tent_",
+				"Lockpick_",
+				"JWK_EpinephrineInjection"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"items": []
+		},
+		{
+			"id": "FF_ITEMS_MID",
+			"modDir": [
+				"Prefabs/Items"
+			],
+			"include": [
+				"Dogtags",
+				"Briefcase",
+				"CampingKit",
+				"KeysOld"
+			],
+			"exclude": [
+				"_Base"
+			],
+			"items": []
+		},
+		{
+			"id": "FF_ITEMS_HIGH",
+			"modDir": [
+				"Prefabs/Items"
+			],
+			"include": [
+				"ShopProxy_Resource_Supplies"
 			],
 			"exclude": [
 				"_Base"

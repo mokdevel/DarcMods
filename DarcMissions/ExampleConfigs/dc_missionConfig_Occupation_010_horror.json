@@ -1,0 +1,192 @@
+{
+	"version": 1,
+	"author": "darc",
+	"missionCycleTime": 30,
+	"showMarker": true,
+	"showHint": true,
+	"showMessage": true,
+	"disableArsenal": true,
+	"missionList": [
+		10
+	],
+	"missionFiles": [],
+	"secondWave": [],
+	"subMissions": [
+		{
+			"general": {
+				"subIdx": 10,
+				"comment": "index 10: Zombies and Demons.",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 3.0,
+				"locationTypes": [
+					60,
+					64
+				],
+				"posName": "any",
+				"title": "Creatures near %l",
+				"info": "Avoid the location. No loot available.",
+				"winCondition": 1,
+				"winMessage": "Spawns from hell are dead!",
+				"loseMessage": "Are you scared of a few ghosts..?",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 15,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					8
+				],
+				"types": [
+					"C_BEASTS"
+				],
+				"skill": 50,
+				"perception": 1.0,
+				"waypointRange": [
+					50,
+					300
+				],
+				"waypointGenType": 1,
+				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
+			},
+			"loot": null,
+			"campItems": []
+		},
+		{
+			"general": {
+				"subIdx": 11,
+				"comment": "index 11: Zombie hordes",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 3.0,
+				"locationTypes": [
+					60,
+					64
+				],
+				"posName": "any",
+				"title": "Zombies near %l",
+				"info": "Braaaainss.....",
+				"winCondition": 2,
+				"winMessage": "The living dead are just dead now.",
+				"loseMessage": "You were tasty.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 17,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					4
+				],
+				"types": [
+					"G_ZOMBIE_SMALL",
+					"G_ZOMBIE_MEDIUM",
+					"G_ZOMBIE_LARGE"
+				],
+				"skill": 50,
+				"perception": 0.30000001192092898,
+				"waypointRange": [
+					50,
+					300
+				],
+				"waypointGenType": 1,
+				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
+			},
+			"loot": null,
+			"campItems": []
+		},
+		{
+			"general": {
+				"subIdx": 12,
+				"comment": "index 12: Demons",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 3.0,
+				"locationTypes": [
+					10,
+					60,
+					62
+				],
+				"posName": "any",
+				"title": "Zombies near %l",
+				"info": "Braaaainss.....",
+				"winCondition": 2,
+				"winMessage": "The living dead are just dead now.",
+				"loseMessage": "You were tasty.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 15,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					4
+				],
+				"types": [
+					"G_ZOMBIE_SMALL",
+					"G_ZOMBIE_MEDIUM",
+					"G_ZOMBIE_LARGE"
+				],
+				"skill": 50,
+				"perception": 0.30000001192092898,
+				"waypointRange": [
+					50,
+					300
+				],
+				"waypointGenType": 1,
+				"waypointMoveType": 5
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
+			},
+			"loot": null,
+			"campItems": []
+		}
+	]
+}

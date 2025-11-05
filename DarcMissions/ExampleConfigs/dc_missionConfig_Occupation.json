@@ -1004,64 +1004,6 @@
 					]
 				}
 			]
-		},
-		{
-			"general": {
-				"subIdx": 6,
-				"comment": "index 6: Zombies and Demons.",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 3.0,
-				"locationTypes": [
-					60,
-					64
-				],
-				"posName": "any",
-				"title": "Creatures near %l",
-				"info": "Avoid the location. No loot available.",
-				"winCondition": 1,
-				"winMessage": "Spawns from hell are dead!",
-				"loseMessage": "Are you scared of a few ghosts..?",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 3,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					8
-				],
-				"types": [
-					"C_DEMON",
-					"C_DEMON_BOSS"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					50,
-					300
-				],
-				"waypointGenType": 1,
-				"waypointMoveType": 5
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": null,
-			"campItems": []
 		}
 	]
 }

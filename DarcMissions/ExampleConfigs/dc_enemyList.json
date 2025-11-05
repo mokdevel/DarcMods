@@ -13,7 +13,9 @@
 				"FireTeam",
 				"FireGroup",
 				"RifleSquad",
-				"SentryTeam"
+				"SentryTeam",
+				"Regulars_Brick",
+				"InfantrySection"
 			],
 			"exclude": [
 				"_Base",
@@ -32,7 +34,9 @@
 				"Sniper",
 				"SharpShooter",
 				"USSR_Spetsnaz_SentryTeam",
-				"VKPO_S_SentryTeam.et"
+				"VKPO_S_SentryTeam.et",
+				"KS05_SF_GROUP_A",
+				"KS05_SF_GROUP_C"
 			],
 			"exclude": [
 				"_Base",
@@ -99,7 +103,8 @@
 			],
 			"include": [
 				"_Recon",
-				"_Maneuver"
+				"_Maneuver",
+				"_RecceTeam"
 			],
 			"exclude": [
 				"_Base",
@@ -119,7 +124,8 @@
 				"FireTeam",
 				"FireGroup",
 				"Suppress",
-				"Spetsnaz_Squad"
+				"Spetsnaz_Squad",
+				"GunGroup"
 			],
 			"exclude": [
 				"_Base",
@@ -138,7 +144,9 @@
 				"GreenBeret",
 				"Sapper",
 				"Sentry",
-				"Spetsnaz"
+				"Spetsnaz",
+				"SpecialForces",
+				"KS05_SF_GROUP_B"
 			],
 			"exclude": [
 				"_Base",
@@ -471,14 +479,16 @@
 				"Variant",
 				"Suppressed",
 				"Unarmed",
-				"_Random"
+				"_Random",
+				"Zombie_Heavy"
 			],
 			"items": []
 		},
 		{
 			"id": "C_DEMON",
 			"modDir": [
-				"Prefabs/Characters"
+				"Prefabs/Characters",
+				"Beasts"
 			],
 			"include": [
 				"ShadowTwin",
@@ -500,10 +510,38 @@
 		{
 			"id": "C_DEMON_BOSS",
 			"modDir": [
+				"Prefabs/Characters",
+				"Beasts"
+			],
+			"include": [
+				"Stalker Heavy",
+				"Zombie_Heavy",
+				"character_115_dupe",
+				"character_115_pump",
+				"character_115_skel."
+			],
+			"exclude": [
+				"_Base",
+				"_NotSpawned",
+				"_Remnants",
+				"/CIV/",
+				"_Randomized",
+				"Variant",
+				"Suppressed",
+				"Unarmed",
+				"_Random"
+			],
+			"items": []
+		},
+		{
+			"id": "C_BEASTS",
+			"modDir": [
 				"Prefabs/Characters"
 			],
 			"include": [
-				"Stalker Heavy"
+				"GhoulHeavy",
+				"PumpkinHead",
+				"Skeleton"
 			],
 			"exclude": [
 				"_Base",
@@ -530,6 +568,20 @@
 			"names": [
 				"RHS_AFRF",
 				"RHS_RF"
+			]
+		},
+		{
+			"names": [
+				"USSR",
+				"USSR",
+				"TF_RF"
+			]
+		},
+		{
+			"names": [
+				"US",
+				"US",
+				"TF_US"
 			]
 		}
 	]

@@ -19,7 +19,7 @@
 			"comment": "index 0: Spawn ambulances",
 			"showMarker": true,
 			"markerType": "DARC_MISSION",
-			"markerIdx": 17,
+			"markerIdx": 53,
 			"locationTypes": [
 				58,
 				64,
@@ -62,7 +62,7 @@
 			"comment": "index 1: Spawn ambulances",
 			"showMarker": true,
 			"markerType": "DARC_MISSION",
-			"markerIdx": 17,
+			"markerIdx": 53,
 			"locationTypes": [
 				59,
 				60,
@@ -100,7 +100,7 @@
 			"comment": "index 2: Spawn civilian cars",
 			"showMarker": true,
 			"markerType": "DARC_MISSION",
-			"markerIdx": 18,
+			"markerIdx": 54,
 			"locationTypes": [
 				59,
 				60,
@@ -137,7 +137,7 @@
 			"comment": "index 3: Spawn loot crates",
 			"showMarker": true,
 			"markerType": "DARC_MISSION",
-			"markerIdx": 19,
+			"markerIdx": 55,
 			"locationTypes": [
 				63,
 				64,
@@ -173,7 +173,7 @@
 			"comment": "index 4: Test to spawn crates to positions",
 			"showMarker": true,
 			"markerType": "DARC_MISSION",
-			"markerIdx": 19,
+			"markerIdx": 55,
 			"locationTypes": [],
 			"positions": [
 				[
