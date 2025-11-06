@@ -1,5 +1,9 @@
 # Common mission parameters
 These parameters are in every mission.
+* [Config](#SDRC_MissionConfig) : These are the basic settings for the mission.
+* [General]
+* [Ai]
+* [QRF] .. aka SecondWave .. TBD
 
 ## SDRC_MissionConfig
 ```
