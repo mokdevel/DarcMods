@@ -22,5 +22,5 @@ array<int> missionList : See Common parameters
 ```
 ```
 # Occupation specific
-array<SDRC_Camp> subMissions : The sub missions
+array<SDRC_Camp> subMissions : List of sub missions
 ```
