@@ -21,7 +21,7 @@ array<int> missionList : See Common parameters
 int minDistanceToPlayer : Hunter group minimum distance to player for spawn
 int maxDistanceToPlayer : ..max distance
 int rndDistanceToPlayer : The error on the location where AI thinks you are. (0..rndDistanceToPlayer).
-array<SDRC_Hunter> hunters : List of hunters
+array<SDRC_Hunter> subMissions : List of hunters
 ```
 
 ## SDRC_Hunter
