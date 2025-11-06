@@ -23,6 +23,7 @@ array<ref SDRC_Convoy> subMissions : The sub missions
 ```
 SDRC_MissionConfigGeneral general : See General parameters
 SDRC_MissionConfigAi ai : 
+# SDRC_Convoy specific
 array<string> vehicleTypes : The prefab names of vehicles. The vehicle is randomly picked from this list.
 float cruiseSpeed : Speed to drive in km/h. 30 is a good value so that the convoy is not driving too fast.
 SCR_DC_Loot loot : (optional) Loot found in the vehicle. 
