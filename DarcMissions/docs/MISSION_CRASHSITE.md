@@ -27,7 +27,7 @@ array<int> missionList : See Common parameters
 int distanceToMission : Distance to mission when searching for a mission pos. Overrides missionFrame settings.
 int distanceToPlayer : Distance to player when searching for a mission pos. Overrides missionFrame settings.
 array<int> flyHeight : (min, max) The helicopter is spawned between these height values. The higher the values, the longer flight. Setting to zero will create the crashsite immediately.
-array<SDRC_Crashsite> subMissions : The sub missions
+array<SDRC_Crashsite> subMissions : List of sub missions
 ```
 
 ### SDRC_Crashsite
