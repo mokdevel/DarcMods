@@ -1,7 +1,7 @@
 # Camp structure
 This is a class that is used by multiple missions.
 
-See [General parameters](./P_COMMON.md) , [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md) , [Camp](./P_CAMP.md)
+See [Common](./P_COMMON.md) , [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md) , [Camp](./P_CAMP.md)
 
 ### SDRC_Camp
 ```
