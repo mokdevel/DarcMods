@@ -34,6 +34,8 @@ array<SDRC_LocationAka> locationAkas : Add locations with a certain type to the 
 
 ## SDRC_LocationAka
 
+[EMapDescriptorType](https://community.bistudio.com/wikidata/external-data/arma-reforger/ArmaReforgerScriptAPIPublic/group__Map.html#ga18c4f596069370b50b7f842cf36d5686) .
+
 ```
 EMapDescriptorType type : The type to use for names.
 array<string> names : Names that are to be added to the location list with selected type.
