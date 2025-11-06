@@ -3,8 +3,10 @@ Example: [dc_missionConfig_Convoy.json](https://github.com/mokdevel/DarcMods/blo
 
 AI patrol is spawned in a vehicle to move around the map. The convoy will go from ```posStart``` to ```posDestination```. When destination has been reached, the patrol will LOITER.
 
-Note on GM requested mission: The location for the mission will be searched from the closest road. If no road is found, the mission will not spawn. The start location is what you define, destination is random unless defined in ``posDestination``.
+### GM requested mission
+The location for the mission will be searched from the closest road. If no road is found, the mission will not spawn. The start location is what you define, destination is random unless defined in ``posDestination``.
 
+### Parameters
 See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md)
 ```
 int version : See Common parameters
