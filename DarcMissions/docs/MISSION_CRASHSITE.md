@@ -31,14 +31,16 @@ array<SDRC_Crashsite> subMissions : List of sub missions
 ```
 
 ### SDRC_Crashsite
+SDRC_Crashsite uses Camp functionality. 
 ```
 SDRC_MissionConfigGeneral general : See General parameters
 SDRC_MissionConfigAi ai : See AI parameters
 ```
 ```
 # SDRC_Crashsite specific
-SCR_DC_Loot loot : (optional) Loot found in the box. 
-array<SDRC_Structure> campItems : (optional) Prefabs to spawn at the crashsite. Note that first item shall be the loot box.
+SDRC_Camp
+  loot : (optional) The loot found in the box spawned near the crash
+  campItems : (optional) Prefabs to spawn at the crashsite. Note that first item shall be the loot box.
 array<SDRC_HelicopterInfo> helicopterInfo : The helicopter is selected randomly.
 ```
 
