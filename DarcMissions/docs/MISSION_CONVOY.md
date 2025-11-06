@@ -13,20 +13,16 @@ int missionCycleTime : See Common parameters
 bool showMarker : See Common parameters
 bool showHint : See Common parameters
 bool showMessage : See Common parameters
-int convoyTime : (seconds) Time to drive around. Once this time has passed and not players nearby, despawn mission.
+bool disableArsenal : See Common parameters
+array<int> missionList : See Common parameters
 int distanceToPlayer : If no players this close to the convoy and convoyTime has passed, despawn mission.
-bool disableArsenal : See General parameters
-array<int> convoyList : The indexes of convoys.
-array<SDRC_Convoy> convoys : List of convoys
+array<ref SDRC_Convoy> subMissions : The sub missions
 ```
 
 ### SDRC_Convoy
 ```
 SDRC_MissionConfigGeneral general : See General parameters
-array<EMapDescriptorType> locationTypes : See Location parameters
-array<string> groupTypes : See General parameters
-int aiSkill : See General parameters
-float aiPerception : See General parameters
+SDRC_MissionConfigAi ai : 
 array<string> vehicleTypes : The prefab names of vehicles. The vehicle is randomly picked from this list.
 float cruiseSpeed : Speed to drive in km/h. 30 is a good value so that the convoy is not driving too fast.
 SCR_DC_Loot loot : (optional) Loot found in the vehicle. 
