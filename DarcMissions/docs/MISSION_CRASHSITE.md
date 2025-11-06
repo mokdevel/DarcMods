@@ -7,7 +7,7 @@ The location for the initial chopper spawn is random and only checks for mission
 
 Note: ```distanceToMission``` and ```distanceToPlayer``` overrides missionFrame settings. The initial helicopter position could start on top of a mission and it does not matter.
 
-See [Common and General parameters](./P_COMMON.md) , [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md)
+See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
@@ -15,22 +15,27 @@ int missionCycleTime : See Common parameters
 bool showMarker : See Common parameters
 bool showHint : See Common parameters
 bool showMessage : See Common parameters
+bool disableArsenal : See Common parameters
+array<int> missionList : See Common parameters
+
 int distanceToMission : Distance to mission when searching for a mission pos. Overrides missionFrame settings.
 int distanceToPlayer : Distance to player when searching for a mission pos. Overrides missionFrame settings.
 array<int> flyHeight : (min, max) The helicopter is spawned between these height values. The higher the values, the longer flight. Setting to zero will create the crashsite immediately.
-array<int> crashsiteList : The indexes of crashsites.
-array<SDRC_Crashsite> crashsites : List of crashsites
+array<SDRC_Crashsite> subMissions : The sub missions
 ```
 
 ### SDRC_Crashsite
 ```
 SDRC_MissionConfigGeneral general : See General parameters
-array<string> groupTypes : See General parameters
-int aiSkill : See General parameters
-float aiPerception : See General parameters
-array<SDRC_HelicopterInfo> helicopterInfo : The helicopter is selected randomly.
+SDRC_MissionConfigAi ai : See AI parameters
+```
+```
+# SDRC_Crashsite specific
+campItems : 
 SCR_DC_Loot loot : (optional) Loot found in the box. 
 array<SDRC_Structure> siteItems : (optional) Prefabs to spawn at the crashsite. Note that first item shall be the loot box.
+
+array<SDRC_HelicopterInfo> helicopterInfo : The helicopter is selected randomly.
 ```
 
 ### SDRC_HelicopterInfo
