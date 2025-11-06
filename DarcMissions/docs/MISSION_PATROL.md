@@ -3,9 +3,11 @@ Example: [dc_missionConfig_Patrol.json](https://github.com/mokdevel/DarcMods/blo
 
 AI patrol is spawned to move around the map. The may have a destination where they're moving to or just randomly roam the map.
 
-Note on GM requested mission: The location is where the mission was dropped.
+### GM requested mission
+The location is where the mission was dropped.
 
-See [Common and General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_COMMON.md)
+### Parameters
+See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi)
 ```
 int version : See Common parameters
 string author : See Common parameters
@@ -13,10 +15,13 @@ int missionCycleTime : See Common parameters
 bool showMarker : See Common parameters
 bool showHint : See Common parameters
 bool showMessage : See Common parameters
-int patrolingTime : (seconds) Time to patrol. Once this time has passed and not players nearby, despawn mission.
+bool disableArsenal : See Common parameters
+array<int> missionList : See Common parameters
+```
+```
+# Patrol specific
 int distanceToPlayer : If no players this close to any players and patrolingTime has passed, despawn mission.
-array<int> patrolList : The indexes of patrols.
-array<SDRC_Patrol> patrols : List of patrols
+array<SDRC_Patrol> subMissions : List of sub missions
 ```
 
 ### SDRC_Patrol
