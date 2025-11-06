@@ -16,7 +16,7 @@ bool showMessage : See Common parameters
 bool disableArsenal : See Common parameters
 array<int> missionList : See Common parameters
 int distanceToPlayer : If no players this close to the convoy and convoyTime has passed, despawn mission.
-array<ref SDRC_Convoy> subMissions : The sub missions
+array<SDRC_Convoy> subMissions : The sub missions
 ```
 
 ### SDRC_Convoy
