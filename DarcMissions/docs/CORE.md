@@ -1,5 +1,5 @@
 # DarcCore
-Core functions for Darc Mods
+Core and common functions for DarcMods. 
 
 # Configuration parameters
 For examples of configuration files see [ExampleConfigs](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions/ExampleConfigs).
@@ -8,7 +8,7 @@ For examples of configuration files see [ExampleConfigs](https://github.com/mokd
 Example: [dc_coreConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_coreConfig.json)
 ```
 int version : Version number of the file.
-string author : Author of the missions.
+string author : Author of the file.
 DC_LogLevel logLevel : Loglevel of debugging information created in to logs.
   0 = NONE   : Nothing is printed
   1 = ERROR  : Only errors and warnings (FATAL, ERROR, WARNING)
@@ -29,13 +29,23 @@ SDRC_EmptyPos emptyPos
   array<string> stopFilter : See section: Empty position finding
   array<string> classFilter : See section: Empty position finding
   array<string> objectFilter : See section: Empty position finding
+array<SDRC_LocationAka> locationAkas : Add locations with a certain type to the list. 
 ```
 
-## Empty position finding
+## SDRC_LocationAka
+
+```
+EMapDescriptorType type : The type to use for names.
+array<string> names : Names that are to be added to the location list with selected type.
+```
+
+
+# Empty position finding
 When searching for an empty position for an spawnable item (mission camp, building, vehicle, ..), we need to do some extra checks in addition to the BI provided functionality. The ``FindEmptyTerrainPosition`` returns areas that are e.g. in the woods or has big objects on it (buildings, rocks, ..). The mod does additional filtering. Once a possible position is found, the mod queries for items within the range. If there are more than ``limit`` items that are considered blockers, the area is not empty and this not suitable for spawning. 
 
 Under ``emptyPos`` you will find these parameters:
 * ``limit`` : The amount of blocking objects that define the area not to be empty.
+  
 * ``ignoreFilter`` : Objects that are not considered as blockers. For example particles.
 * ``stopFilter`` : Objects that immediately will define that the position is not good. For example buildings or large rocks.
 * ``classFilter`` : The classes of objects that might be considered as blockers. More filtering done in the next step.
