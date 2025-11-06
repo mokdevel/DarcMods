@@ -7,7 +7,7 @@ The location for the initial chopper spawn is random and only checks for mission
 
 Note: ```distanceToMission``` and ```distanceToPlayer``` overrides missionFrame settings. The initial helicopter position could start on top of a mission and it does not matter.
 
-See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md)
+See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md) , [Camp](./P_CAMP.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
@@ -31,10 +31,8 @@ SDRC_MissionConfigAi ai : See AI parameters
 ```
 ```
 # SDRC_Crashsite specific
-campItems : 
 SCR_DC_Loot loot : (optional) Loot found in the box. 
-array<SDRC_Structure> siteItems : (optional) Prefabs to spawn at the crashsite. Note that first item shall be the loot box.
-
+array<SDRC_Structure> campItems : (optional) Prefabs to spawn at the crashsite. Note that first item shall be the loot box.
 array<SDRC_HelicopterInfo> helicopterInfo : The helicopter is selected randomly.
 ```
 
