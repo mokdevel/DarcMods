@@ -27,14 +27,12 @@ array<SDRC_Patrol> subMissions : List of sub missions
 ### SDRC_Patrol
 ```
 SDRC_MissionConfigGeneral general : See General parameters
-array<EMapDescriptorType> locationTypes : See Location parameters
-array<int> groupCount : See General parameters
-array<int> waypointRange : See Waypoint parameters. For patrols, the values should be quite big to have them move around the map.
-DC_EWaypointGenerationType waypointGenType : See Waypoint parameters
+SDRC_MissionConfigAi ai : See AI parameters
+```
+Notes on AI parameters:
+```
+waypointRange : For patrols, the values should be quite big to have them move around the map.
+waypointGenType :
   ROUTE : The patrol will go from posStart to posDestination. When destination has been reached, the patrol will LOITER.
   RADIUS, SCATTERED : The patrol will follow a path created with waypointRange starting from posStart. posDestination is ignored.
-DC_EWaypointMoveType waypointMoveType : See Waypoint parameters
-array<string> groupTypes : See General parameters
-int aiSkill : See General parameters
-float aiPerception : See General parameters
 ```
