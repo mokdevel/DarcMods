@@ -6,25 +6,31 @@ AIs are hunting you and following you. They will receive regularly information a
 Note on GM requested mission: The location is where the mission was dropped.
 
 See [Common and General parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_COMMON.md)
-```
 int version : See Common parameters
 string author : See Common parameters
 int missionCycleTime : See Common parameters
 bool showMarker : See Common parameters
 bool showHint : See Common parameters
 bool showMessage : See Common parameters
+bool disableArsenal : See Common parameters
+array<int> missionList : See Common parameters
+```
+```
+# Hunter specific
 int minDistanceToPlayer : Hunter group minimum distance to player for spawn
 int maxDistanceToPlayer : ..max distance
 int rndDistanceToPlayer : The error on the location where AI thinks you are. (0..rndDistanceToPlayer).
-array<int> hunterList : The indexes of hunters.
 array<SDRC_Hunter> hunters : List of hunters
 ```
 
 ## SDRC_Hunter
 ```
-SDRC_MissionConfigGeneral general
-array<int> groupCount : See General parameters
-array<string> groupTypes : See General parameters
-int aiSkill : See General parameters
-float aiPerception : See General parameters
+SDRC_MissionConfigGeneral general : See General parameters
+SDRC_MissionConfigAi ai : See AI parameters
+```
+Hunter AI is defined as any other AI, but will not use any of the parameters below.
+```
+waypointRange
+waypointGenType
+waypointMoveType
 ```
