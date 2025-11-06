@@ -5,7 +5,7 @@ AI patrol is spawned to a location like city. They will patrol the location and 
 
 Note on GM requested mission: The location is where the mission was dropped.
 
-See [Common and General parameters](./P_COMMON.md) , [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md) , [Camp](./P_CAMP.md)
+See [Common](./P_COMMON.md) , [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md) , [Camp](./P_CAMP.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
