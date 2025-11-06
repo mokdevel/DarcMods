@@ -8,6 +8,7 @@ The location is where the mission was dropped.
 
 ### Parameters
 The sub missions use Camp functionality. 
+
 See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md) , [Camp](./P_CAMP.md)
 ```
 int version : See Common parameters
