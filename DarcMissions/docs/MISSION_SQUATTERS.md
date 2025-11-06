@@ -31,6 +31,7 @@ SDRC_MissionConfigGeneral general : See General parameters
 SDRC_MissionConfigAi ai : See AI parameters
 ```
 ```
+# Squatters specific
 array<string> buildingNames : See Building parameters
 string lootBox : The box for loot. See Loot box for compatible values.
 SCR_DC_Loot loot : (optional) Loot found in the mission.  See Loot parameters.
@@ -39,5 +40,4 @@ Notes on AI parameters:
 ```
 types : The list of AI _characters_. The AI is randomly picked from this list. Here you can use:
   C_TYPE of character defined in enemyLists or a resourceName for a character.
-```
 ```
