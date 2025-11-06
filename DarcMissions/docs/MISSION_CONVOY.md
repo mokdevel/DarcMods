@@ -5,7 +5,7 @@ AI patrol is spawned in a vehicle to move around the map. The convoy will go fro
 
 Note on GM requested mission: The location for the mission will be searched from the closest road. If no road is found, the mission will not spawn. The start location is what you define, destination is random unless defined in ``posDestination``.
 
-See [Common](./P_COMMON.md) , [Loot](./P_LOOT.md)
+See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
@@ -22,7 +22,7 @@ array<ref SDRC_Convoy> subMissions : The sub missions
 ### SDRC_Convoy
 ```
 SDRC_MissionConfigGeneral general : See General parameters
-SDRC_MissionConfigAi ai :
+SDRC_MissionConfigAi ai : See AI parameters
 ```
 ```
 # SDRC_Convoy specific
