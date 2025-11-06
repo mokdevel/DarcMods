@@ -18,6 +18,14 @@ array<int> missionList : The list of mission suids.
   Example: "missionList":[0,0,1,1,2] - Missions 0 and 1 will spawn with 40% chance and 2 with 20%
 array<string> missionFiles : The list of mission files to load. The are additional .json files that are of the same type.  
 ```
+### Mission files
+It is possible to define additional missions to be loaded from file. The filename can be with or without path.
+
+Examples:
+``"missionFiles": ["dc_missionConfig_HvtItem_010.json"]`` - The file will be loaded from the same directory as the mission jsons.
+``"missionFiles": ["new/dc_missionConfig_HvtItem_010.json"]`` - The file will be loaded from a ``new`` directory under the the json mission directory. (NOTE: Untested!!)
+
+The missions should define their unique ``subIdx`` to use. The list of ``missionList`` will be appended to already loaded list.
 
 ## SDRC_MissionConfigGeneral
 See [Locations](./P_LOCATIONS.md)
