@@ -1,8 +1,8 @@
 # Common mission parameters
 These parameters are in every mission.
 * [Config](#SDRC_MissionConfig) : These are the basic settings for the mission.
-* [General]
-* [Ai]
+* [General](#SDRC_MissionConfigGeneral) : Parameters for win, lose, messages, markers, difficult for a mission. 
+* [AI](#SDRC_MissionConfigAi) : AI related parameters on count to spawn, type, difficulty and similar.
 * [QRF] .. aka SecondWave .. TBD
 
 ## SDRC_MissionConfig
