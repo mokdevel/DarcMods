@@ -17,6 +17,9 @@ bool showHint : See Common parameters
 bool showMessage : See Common parameters
 int buildingRadius : See Building parameters
 array<int> missionList : See Common parameters
+```
+```
+# HvtVip specific
 array<SDRC_HvtVip> subMissions : List of sub missions
 ```
 
