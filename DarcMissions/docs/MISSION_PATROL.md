@@ -17,6 +17,7 @@ bool showHint : See Common parameters
 bool showMessage : See Common parameters
 bool disableArsenal : See Common parameters
 array<int> missionList : See Common parameters
+array<sring> missionFiles : See Common parameters
 ```
 ```
 # Patrol specific
