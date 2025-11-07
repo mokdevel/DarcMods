@@ -16,7 +16,7 @@ bool showMarker : See Common parameters
 bool showHint : See Common parameters
 bool showMessage : See Common parameters
 int buildingRadius : See Building parameters
-array<int> hvtVipList : The indexes of HvtVips.
+array<int> missionList : See Common parameters
 array<SDRC_Squatter> hvtVips : List of HvtVips
 ```
 
@@ -26,6 +26,7 @@ SDRC_MissionConfigGeneral general : See General parameters
 SDRC_MissionConfigAi ai : See AI parameters
 ```
 ```
+# HvtVip specific
 array<string> buildingNames : See Building parameters
 string lootBox : The box for loot. See Loot box for compatible values.
 SCR_DC_Loot loot : (optional) Loot found in the mission.
@@ -33,4 +34,5 @@ string target : The resourceName of the VIP to eliminate. Here you can use:
   C_TYPE of character defined in enemyLists
   ResourceName for a character. The character will be set to same faction as the mission enemy. For example:
   "{A517C72CEF150898}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_2.et"
+array<SDRC_HvtVip> subMissions : List of sub missions
 ```
