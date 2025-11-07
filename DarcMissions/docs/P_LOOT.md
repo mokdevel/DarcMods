@@ -1,7 +1,7 @@
 ## Loot parameters
 Loot is the reward of a mission. It is usually in a container (vehicle, box, ..) that is spawned in to the mission. The loot box is (in most cases) empty from the start and *only* after mission success, it's filled. 
 
-The box and crat prefabs are special for the mod. If you want to define additional ones, please see 
+The box and crat prefabs are special for the mod. If you want to define additional ones, please see [this](#define-a-new-loot-box).
 
 See [loot box](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LOOT.md#loot-box). 
 
