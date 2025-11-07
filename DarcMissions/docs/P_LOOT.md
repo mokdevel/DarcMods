@@ -1,5 +1,6 @@
 ## Loot parameters
-Loot is the reward of a mission. It is usually in a container (vehicle, box, ..) that is spawned in to the mission. The loot box is (in most cases) empty from the start and *only* after mission success, it's filled. 
+Loot is the reward of a mission. It is usually in a container (vehicle, box, ..) that is spawned in to the mission. The loot box is (in most cases) empty from the start and *only* after mission success, it's filled. There might a small delay and this is by design. The idea is that you should not be able to steal loot without compeliting mission. 
+- Convoys are special cases where the vehicle is filled at spawn.
 
 The box and crat prefabs are special for the mod. If you want to define additional ones, please see [this](#define-a-new-loot-box).
 
