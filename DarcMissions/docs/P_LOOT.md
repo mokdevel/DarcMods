@@ -15,8 +15,10 @@ array<string> items : List of items. This can be prefabs or an lootList.
 ### Example
 The below example shows the different ways you can define the loot. 
 - "box": null : Leave as null. For convoys this will be automatically assigned to the vehicle. For missions with structures, the first structue is considered as the loot target.
-- There is a 75% chance for each of the items to appear in the box
-- Items will include a saline bag and a map. In addition a random rifle and a random general item is added. See [lootList](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LISTS.md#loot-lists)
+- There is a 75% chance for each of the items to appear in the box. For a 100% chance, chnage the value to 1.0.
+- Items will include a saline bag and a map. In addition a random rifle and a random general item is added. See [lootList]
+- If you have defined prefabs that are not available (for example, due to a missing mod), these items will not be spawned. No items will be replacing them.
+(https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LISTS.md#loot-lists)
 ```
 "loot": {
   "box": null,
@@ -31,7 +33,7 @@ The below example shows the different ways you can define the loot.
 ```
 
 ### Loot box
-The loot box (vehicle, box, ..) needs to have certain components available for them to work.
+The loot box (vehicle, box, ..) needs to have certain components available for them to work. Please see [this](#define-a-new-loot-box).
 - Vehicles : Typically works.
 - Box : The default arsenal boxes are not supported and you will need to use special ones. Currently supported values: 
 ```
