@@ -7,7 +7,7 @@ An AI is defined as a High Value Target VIP. Go take him down. The VIP should be
 The building chosen will as close as possible to the location where mission was dropped. In case there are multiple houses beside each other, the mission location might not be exactly what you wanted.
 
 ### Parameters
-See [Common and General parameters](./P_COMMON.md) , [Loot](./P_LOOT.md) , [Building](./P_BUILDING.md)
+See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md) , [Building](./P_BUILDING.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
