@@ -1,20 +1,20 @@
 # DarcMods
 A bunch Arma Reforger mods.
 
-## DarcCore
-The core functions collected under one mod. See: [Documentation](./DarcCore/README.md)
+## DarcMissions
+A mod that spawns various types of PVE missions. See [Documentation](./DarcMissions/README.md) for more information and configuration options.
 
 ## DarcDeathMarker
-The mod creates a map marker on the position where you died. The marker is active 10 minutes and disappears after that. If you die again, another marker replaces the previous one. Documentation inside mod folder. See: [Documentation](./DarcDeathMarker/README.md)
-
-## DarcMissions
-A mod that spawns various types of PVE missions. Documentation inside mod folder. See: [Documentation](./DarcMissions/README.md)
+The mod creates a map marker on the position where you died. The marker is active 10 minutes (by default) and disappears after that. If you die again, another marker replaces the previous one. See [Documentation](./DarcDeathMarker/README.md).
 
 ## DarcMissionsCompatFF
-Compatibility mod for Freedom Fighters.
+Compatibility mod for Freedom Fighters. See [Documentation](./DarcMissionsCompatFF/README.md). 
 
 ## DarcSpawner
-Spawns vehicles (could work with containers too) randomly on map with some loot. Documentation inside mod folder. See: [Documentation](./DarcSpawner/README.md)
+Spawns containers, vehicles and lootboxex, randomly on map with some loot. See [Documentation](./DarcSpawner/README.md) for configuration.
+
+## DarcCore
+The core functions collected under one mod. See: [Documentation](./DarcCore/README.md)
 
 # Development time stuff
 ## DarcDev
