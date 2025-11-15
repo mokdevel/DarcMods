@@ -11,7 +11,7 @@ Please check the FAQ and you can find me on Discord
 * [Road map](docs/ROADMAP.md)
 
 ## Vision
-I wanted to create a simple drop-in mission package where there is minimal configuration needed to get it running. You can take the mod, play it in SP, MP or let it run on a dedicated server. Everything should be randomized so you should never know what is happening in the world. The behaviour of the mod should be close to vanilla and by doing that, you could be running this on top of your other game modes. I've been using this with [Escapists](https://reforger.armaplatform.com/workshop/5F16D7E4A1CBE075-Escapists) just to get a few additional surprises.
+I wanted to create a simple drop-in mission package where there is minimal configuration needed to get it running. You can take the mod, play it in SP, MP or let it run on a dedicated server. Everything should be randomized so you should never know what is happening in the world. The behaviour of the mod should be close to vanilla and by doing that, you could be running this on top of your other game modes. I've been using this with [Escapists](https://reforger.armaplatform.com/workshop/5F16D7E4A1CBE075-Escapists), Overthrow and Freedom Fighters to get a few additional surprises.
 
 ## Missions
 - (1) [Hunter](./docs/MISSION_HUNTER.md) : AIs are hunting you. They have some knowledge of where you are. You can outrun them or take them down. 
