@@ -23,7 +23,7 @@ array<string> missionFiles : See Common parameters
 ```
 ```
 # HvtItem specific
-array<SDRC_HvtItem > subMissions : List of sub missions
+array<SDRC_HvtItem> subMissions : List of sub missions
 ```
 
 ### SDRC_HvtItem 
