@@ -1,5 +1,5 @@
-# Camp structure
-This is a class that is used by multiple missions.
+# Camp functionality
+This is a class that is used by multiple missions. It provides a similar structure of configuration for them and a mission may extend it with mission specific topics. 
 
 See [Common](./P_COMMON.md) , [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md) , [Camp](./P_CAMP.md)
 
