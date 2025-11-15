@@ -30,10 +30,6 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - [HunterKiller mod by Rabid Squirrel](https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller) for the initial kick to get into coding.
 - The great Arma Reforger community and #enfusion_scripting
 
-## Future plans
-- Waypoint functionality for AI to roam buildings in a city
-- New missions: Steal smth and bring the loot somewhere, choppers hunting you
-
 ## Known issues
 - Moving map markers lose the text under them. 
 
