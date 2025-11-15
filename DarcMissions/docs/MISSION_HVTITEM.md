@@ -7,7 +7,9 @@ AIs have built a camp/installation which has a target that needs to be destroyed
 Location chosen will be close to where the mission was dropped. The mission location might not be exactly what you wanted as the it needs to have enough free space to spawn.
 
 ### Parameters
-See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md) , [Building](./P_BUILDING.md)
+The sub missions use Camp functionality. 
+
+See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md) , [Camp](./P_CAMP.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
@@ -17,14 +19,14 @@ bool showHint : See Common parameters
 bool showMessage : See Common parameters
 int buildingRadius : See Building parameters
 array<int> missionList : See Common parameters
-array<sring> missionFiles : See Common parameters
+array<string> missionFiles : See Common parameters
 ```
 ```
-# HvtVip specific
-array<SDRC_HvtVip> subMissions : List of sub missions
+# HvtItem specific
+array<SDRC_HvtItem > subMissions : List of sub missions
 ```
 
-### SDRC_HvtVip
+### SDRC_HvtItem 
 ```
 SDRC_MissionConfigGeneral general : See General parameters
 SDRC_MissionConfigAi ai : See AI parameters
