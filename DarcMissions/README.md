@@ -2,7 +2,7 @@
 A mission frame work for Arma Reforger. There are various missions premade and their behaviour can be modified by editing the configuration jsons. Installation is easy: Just activate the mod (and dependencies) and you're good to go. For more see the dedicated page.
 
 ## Support
-Please check the FAQ and you can find me on Discord
+Please check documentation for more details. You can also find me on Discord.
 * [Installation](docs/INSTALLATION.md)
 * [FAQ](docs/FAQ.md)
 * [Version history](docs/VERSION.md)
