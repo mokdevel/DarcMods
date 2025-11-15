@@ -1,11 +1,9 @@
 # DarcMissions
-A mission frame work for Arma Reforger. There are various missions premade and their behaviour can be modified by editing the configuration jsons.
-
-## Installation
-Just activate the mod (and dependencies) and you're good to go.
+A mission frame work for Arma Reforger. There are various missions premade and their behaviour can be modified by editing the configuration jsons. Installation is easy: Just activate the mod (and dependencies) and you're good to go. For more see the dedicate page.
 
 ## Support
 Please check the FAQ and you can find me on Discord
+* [Installation](docs/INSTALLATION.md)
 * [FAQ](docs/FAQ.md)
 * [Discord](https://discord.com/channels/105462288051380224/1367778477134057523)
 * [GM functionality](docs/GM.md)
