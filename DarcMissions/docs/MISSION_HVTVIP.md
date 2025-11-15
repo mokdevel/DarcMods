@@ -1,7 +1,7 @@
 ## Mission : HVT VIP - High Value Target Very Important Person
 Example: [dc_missionConfig_HvtVip.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_HvtVip.json)
 
-An AI is defined as a High Value Target VIP. Go take him down. The VIP should be staying in place, but will activate (and defend) itself when a player is close by. The missions tries to find floors in the building and spawn AI and the loot box on them. Loot is spawned in th box when a win condition is achieved.
+An AI is defined as a High Value Target VIP. Go take him down. The VIP should be staying in place, but will activate (and defend) itself when a player is close by. The missions tries to find floors in the building and spawn AI and the loot box on them. Loot is spawned in the box when a win condition is achieved.
 
 ### GM requested mission
 The building chosen will as close as possible to the location where mission was dropped. In case there are multiple houses beside each other, the mission location might not be exactly what you wanted.
