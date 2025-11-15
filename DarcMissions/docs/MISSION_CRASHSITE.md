@@ -32,10 +32,6 @@ array<SDRC_Crashsite> subMissions : List of sub missions
 ```
 
 ### SDRC_Crashsite
-```
-SDRC_MissionConfigGeneral general : See General parameters
-SDRC_MissionConfigAi ai : See AI parameters
-```
 SDRC_Crashsite uses Camp functionality. 
 ```
 # SDRC_Crashsite specific
