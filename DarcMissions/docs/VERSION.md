@@ -4,7 +4,12 @@
 
 ## Next release (unreleased)
 
-..empty..
+### DarcMissions
+TBF: 
+- You can drag a vehicle to a crate and it disappears.
+
+Fixes:
+- Removed MDT_RAILWAY from location search. Search took a long time on Gulfcoast Island map.
 
 ## 20251104
 ### DarcMissions

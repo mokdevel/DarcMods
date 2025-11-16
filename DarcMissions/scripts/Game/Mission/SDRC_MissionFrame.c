@@ -138,6 +138,7 @@ class SDRC_MissionFrame
 	void ~SDRC_MissionFrame()
 	{
 		//Clean and delete missions
+		/* TBD: Enable back
 		while (m_MissionList.Count() > 0)
 		{
 			SDRC_Mission mission = m_MissionList[0];
@@ -147,6 +148,7 @@ class SDRC_MissionFrame
 			mission.MissionEnd();
 			m_MissionList.RemoveOrdered(0);			
 		}
+		*/
 		SDRC_Log.Add("[~SDRC_MissionFrame] Stopping SDRC_MissionFrame", LogLevel.NORMAL);
 	}
 	

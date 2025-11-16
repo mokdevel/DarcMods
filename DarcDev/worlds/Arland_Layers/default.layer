@@ -28,10 +28,11 @@ PerceptionManager PerceptionManager1 : "{028DAEAD63E056BE}Prefabs/World/Game/Per
  coords 2049.369 40.666 2043.809
 }
 SCR_BaseGameMode GameMode_Plain1 : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
+ Flags 0x200000 0
  coords 2047.711 40.889 2044.993
 }
 SCR_FactionManager FactionManager_Editor1 : "{4A188E44289B9A50}Prefabs/MP/Managers/Factions/FactionManager_Editor.et" {
- Flags 2097152
+ Flags 0x200000 0x3
  coords 901.379 39 2624.3
  Factions {
   SCR_Faction "{56DEAC40D132400B}" {
@@ -41,8 +42,11 @@ SCR_FactionManager FactionManager_Editor1 : "{4A188E44289B9A50}Prefabs/MP/Manage
  }
 }
 SCR_BaseGameMode GameMode_Deathmatch_Automatic1 : "{B00D51315A1C7150}Prefabs/MP/Modes/Deathmatch/GameMode_Deathmatch_Automatic.et" {
- Flags 2097152
+ Flags 0x200000 0x3
  coords 896.081 39 2619.443
+}
+SCR_GameModeEditor GameMode_Editor1 : "{D2DE7F43D48A3667}Prefabs/MP/Modes/Editor/GameMode_Editor.et" {
+ coords 1412.4 38.99 2085.466
 }
 SCR_SpawnPoint : "{4FEA25583D0975F7}Prefabs/MP/Spawning/SpawnPoint_USSR.et" {
  coords 906.641 39.009 2620.362

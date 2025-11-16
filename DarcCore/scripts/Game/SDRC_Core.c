@@ -39,20 +39,29 @@ class SDRC_Core
 		SDRC_Log.Add("[SDRC_Core] World name: " + SDRC_Misc.GetWorldName(true), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World size: " + SDRC_Misc.GetWorldSize(), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World has ocean: " + GetGame().GetWorld().IsOcean(), LogLevel.NORMAL);
-		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
-		if (aiWorld)
+		
+//		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
+		bool bAiWorld = false;
+//		if (aiWorld)
+		if (GetGame().GetAIWorld())
 		{
-			SDRC_Log.Add("[SDRC_Core] World has AIWorld: true", LogLevel.NORMAL);
+			bAiWorld = true;
 		}
-		else
+		SDRC_Log.Add("[SDRC_Core] World has AIWorld: " + bAiWorld, LogLevel.NORMAL);
+		
+		bool bPersistency = false;
+		if (PersistenceSystem.GetInstance())
 		{
-			SDRC_Log.Add("[SDRC_Core] World has AIWorld: false", LogLevel.ERROR);
+			bPersistency = true;
 		}
+		SDRC_Log.Add("[SDRC_Core] World has persistency: " + bPersistency, LogLevel.NORMAL);
+		
 		int factionCount = SDRC_FactionHelper.GetFactionList(m_sFactionList);
 		SDRC_Log.Add("[SDRC_Core] Factions available: " + factionCount + " - " + m_sFactionList, LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] Fallback faction: " + m_Config.fallbackEnemyFaction, LogLevel.NORMAL);
 		
 		SDRC_Misc.GetAddonList(m_sAddonList, true);
+		
 		SDRC_Log.Add("[SDRC_Core] -------------------------------------", LogLevel.NORMAL);
 
 //		SDRC_EnemyHelper.SetDefaultEnemyFaction(m_Config.fallbackEnemyFaction);

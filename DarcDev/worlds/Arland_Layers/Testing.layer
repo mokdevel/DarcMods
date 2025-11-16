@@ -11,6 +11,9 @@ Vehicle LAV1 : "{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et" {
  coords 1901.728 46.699 2968.801
  angles 2.537 -153.687 -2.202
 }
+Vehicle UAZ1 : "{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et" {
+ coords 2212.915 72.933 2455.537
+}
 $grp SCR_AIGroup : "{6D60B510F50F9DC3}Prefabs/Groups/BLUFOR/OmegaGroups/KS05_SF_GROUP_B.et" {
  {
   coords 1917.863 41.838 2840.224
@@ -21,13 +24,16 @@ $grp SCR_AIGroup : "{6D60B510F50F9DC3}Prefabs/Groups/BLUFOR/OmegaGroups/KS05_SF_
 }
 $grp GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et" {
  {
-  Flags 0x200403 0
+  Flags 0x403 0
   coords 2211.066 72.815 2456.491
  }
  {
   Flags 0x200403 0
   coords 826.67 0.874 1436.823
  }
+}
+SCR_ChimeraCharacter Character_US_Ammo_66E1194564E65D75 : "{CD28EE7C5690D3BB}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Ammo.et" {
+ coords 1931.619 47.468 2959.692
 }
 SCR_AIGroup : "{D0886786634E55AE}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_Squad.et" {
  coords 1924.266 47.486 2966.582

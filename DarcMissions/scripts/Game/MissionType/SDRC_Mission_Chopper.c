@@ -86,6 +86,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		string groupToSpawn = "{0D10CCEEC7B3EC34}Prefabs/Groups/OPFOR/Group_USSR_PlatoonHQ.et";
 		m_Crew = SDRC_AIHelper.SpawnGroup(groupToSpawn, GetPos(), GetFaction());
 		m_Crew2 = SDRC_AIHelper.SpawnGroup(groupToSpawn, GetPos(), GetFaction());
+		//TBD: Set the skill and perception
+		
 //		vector aiPos = "0 1000 0";
 //		m_Crew = SDRC_AIHelper.SpawnGroup(groupToSpawn, aiPos, GetFaction());
 //		m_Crew2 = SDRC_AIHelper.SpawnGroup(groupToSpawn, aiPos, GetFaction());
@@ -112,7 +114,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		//SDRC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0, false);
         params.TransformMode = ETransformMode.WORLD;			
         params.Transform = transform;
-		m_Vehicle = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);		
+		
+		m_Vehicle = SDRC_SpawnHelper.SpawnEntityPrefabPersistency(resource, GetGame().GetWorld(), params);		
 		
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
         m_Vehicle_s.EngineStart();

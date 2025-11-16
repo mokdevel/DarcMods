@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-#define SDRC_RELEASE
+//#define SDRC_RELEASE
 //#define EXPERIMENTAL
 //#define NEW_VERSION_WIP		//New functionality that affects jsons
 
@@ -32,6 +32,7 @@ sealed class SDRC_Conf
 	const bool SHOW_MARKER_FOR_LOCATION = false;		//Show a debug marker for locations
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.NORMAL;
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
+	//TBD: const bool DISABLE_PERSISTENCY = true;
 #endif
 		
 //Development time options	
@@ -49,5 +50,6 @@ sealed class SDRC_Conf
 	const bool SHOW_MARKER_FOR_LOCATION = false;	
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
+	//TBD: const bool DISABLE_PERSISTENCY = true;	
 #endif
 }
