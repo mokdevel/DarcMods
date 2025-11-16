@@ -494,7 +494,7 @@ sealed class SDRC_Locations
 		//EMapDescriptorType.MDT_ROCKS,
 		EMapDescriptorType.MDT_PLAYINGFIELD,
 		//EMapDescriptorType.MDT_POWERLINES,
-		EMapDescriptorType.MDT_RAILWAY,
+		//EMapDescriptorType.MDT_RAILWAY,			//Removed on 2025-11-16 as GulfCoast Island has many of these.
 		EMapDescriptorType.MDT_SHIPWRECK,
 		EMapDescriptorType.MDT_TOURISTSHELTER,
 		//EMapDescriptorType.MDT_TOURISTSIGN,
