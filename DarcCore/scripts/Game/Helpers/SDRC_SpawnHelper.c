@@ -50,10 +50,10 @@ sealed class SDRC_SpawnHelper
 			if (FindEmptyPos(pos, emptyPosRadius, (SDRC_Misc.FindMaxValue(sums)/SIZEDIV) ) )
 			{
 				vector transform[4];
-				GetTransformFromPosAndRot(transform, pos, rotation, snap);
+				SDRC_Math.GetTransformFromPosAndRot(transform, pos, rotation, snap);
 				params.Transform = transform;
 				
-				entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
+				entity = SDRC_SpawnHelper.SpawnEntityPrefabPersistency(resource, GetGame().GetWorld(), params);
 				RebuildNavmesh(entity);
 				
 				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] " + entityName + " spawned to: " + pos, LogLevel.SPAM);
@@ -67,10 +67,10 @@ sealed class SDRC_SpawnHelper
 		{
 			//Spawn the resource exactly to pos
 			vector transform[4];
-			GetTransformFromPosAndRot(transform, pos, rotation, snap);
+			SDRC_Math.GetTransformFromPosAndRot(transform, pos, rotation, snap);
 	        params.TransformMode = ETransformMode.WORLD;			
 	        params.Transform = transform;
-			entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
+			entity = SDRC_SpawnHelper.SpawnEntityPrefabPersistency(resource, GetGame().GetWorld(), params);
 			RebuildNavmesh(entity);
 			
 			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] " + entityName + " spawned to exact position: " + pos, LogLevel.SPAM);
@@ -198,6 +198,44 @@ sealed class SDRC_SpawnHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Wrapper for SpawnEntityPrefab. Handles the persistency setting.
+	Use this rather than calling SpawnEntityPrefab instead.
+	*/
+	static IEntity SpawnEntityPrefabPersistency(Resource resource, BaseWorld world = null, EntitySpawnParams params = null)
+	{
+		IEntity entity = GetGame().SpawnEntityPrefab(resource, world, params);	
+		SetPersistency(entity, false);
+		
+		return entity;
+	}	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Enable/disable persistency for an entity
+	*/
+	static void SetPersistency(IEntity entity, bool persistency = true)
+	{
+		//TBD: if (SDRC_Conf.DISABLE_PERSISTENCY)
+		
+		if (PersistenceSystem.GetInstance())
+		{
+			bool success;
+			
+			if (persistency)
+			{
+				success = PersistenceSystem.GetInstance().StartTracking(entity);
+				SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistency] Persistency enabled for: " + entity.GetPrefabData().GetPrefabName() + " - success: " + success, LogLevel.DEBUG);
+			}
+			else
+			{
+				success = PersistenceSystem.GetInstance().StopTracking(entity);
+				SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistency] Persistency disabled for: " + entity.GetPrefabData().GetPrefabName() + " - success: " + success, LogLevel.DEBUG);
+			}
+		}	
+	}
+		
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Find size of a prefab
 	*/
 	static vector FindPrefabSize(ResourceName resourceName)
@@ -215,7 +253,7 @@ sealed class SDRC_SpawnHelper
 		//Find the proper size of the resource to spawn. 
         params.TransformMode = ETransformMode.WORLD;			
         params.Transform[3] = posNone;
-		entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);
+		entity = SDRC_SpawnHelper.SpawnEntityPrefabPersistency(resource, GetGame().GetWorld(), params);
 		entity.GetWorldBounds(mins, maxs);
 		sums = maxs - mins;		
 
@@ -257,7 +295,7 @@ sealed class SDRC_SpawnHelper
 		{
 			foreach (SDRC_Structure structure : structures)
 			{
-				vector newPos = RotatePosAroundPivot(structure.GetPosition(), "0 0 0", rotation);
+				vector newPos = SDRC_Math.RotatePosAroundPivot(structure.GetPosition(), "0 0 0", rotation);
 				
 				entity = SpawnItem(newPos + pos, structure.GetResource(), structure.GetRotationY() + rotation, emptyPosRadius);
 				if (!entity)
@@ -269,7 +307,7 @@ sealed class SDRC_SpawnHelper
 		}
 		else
 		{
-			vector newPos = RotatePosAroundPivot(structures[index].GetPosition(), "0 0 0", rotation);
+			vector newPos = SDRC_Math.RotatePosAroundPivot(structures[index].GetPosition(), "0 0 0", rotation);
 		
 			entity = SpawnItem(newPos + pos, structures[index].GetResource(), structures[index].GetRotationY() + rotation, emptyPosRadius);
 //			entity = SpawnItem(structures[index].GetPosition() + pos, structures[index].GetResource(), 0, emptyPosRadius);
@@ -331,38 +369,6 @@ sealed class SDRC_SpawnHelper
 		}
 	}	
 
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Get transform from the given position and rotation in XZ plane
-	*/
-	static void GetTransformFromPosAndRot(out vector transform[4], vector pos, float rotation, bool snap = true)
-	{
-		Math3D.MatrixIdentity3(transform);
-		Math3D.AnglesToMatrix(Vector(rotation, 0, 0), transform);
-		transform[3] = pos;
-		if (snap)
-		{
-			SCR_TerrainHelper.SnapAndOrientToTerrain(transform);
-		}
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Rotate a position around a pivot point
-	*/
-	static vector RotatePosAroundPivot(vector pos, vector pivot, float rotation)
-	{
-		vector transform[4];
-		vector newtransform[4];
-
-		Math3D.MatrixIdentity3(transform);
-		transform[3] = pos;
-						
-		SCR_Math3D.RotateAround(transform, pivot, "0 1 0", SDRC_Misc.AngleToRadians(rotation), newtransform);			
-		
-		return newtransform[3];		
-	}
-	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find an empty spot within areaRadius to fit emptySize

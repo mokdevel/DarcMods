@@ -205,8 +205,6 @@ class SDRC_VehicleHelper
 		return alive;
 	}	
 	
-	
-	
 	//------------------------------------------------------------------------------------------------
 	static bool IsWorking(IEntity vehicle)
 	{
@@ -321,9 +319,12 @@ class SDRC_VehicleHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Fix persistency for vehicle. For example for EPF.
+	
+	NOTE: You shall/should override this in your compat mod
 	*/
-	static void SetPersistency(IEntity entity)
+	static void SetPersistency(IEntity entity, bool persistency = true)
 	{	
 		//Override in compat mod
+		SDRC_SpawnHelper.SetPersistency(entity, persistency);
 	}	
 }

@@ -111,7 +111,8 @@ modded class SDRC_VehicleHelper
 		auto streamable = JWK_CompT<JWK_StreamableVehicleComponent>.FindIn(entity);
 		if (streamable) streamable.SetStreamingEnabled(false);		
 		
-		super.SetPersistency(entity);
+		//TBD: We should not set any other persistency stuff in FF
+		//super.SetPersistency(entity);
 	}	
 }
 

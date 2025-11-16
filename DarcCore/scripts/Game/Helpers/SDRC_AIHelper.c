@@ -37,10 +37,10 @@ sealed class SDRC_AIHelper
 		
 		//Spawn the resource exactly to pos
 		vector transform[4];
-		SDRC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0, snap);
+		SDRC_Math.GetTransformFromPosAndRot(transform, pos, 0, snap);
         params.TransformMode = ETransformMode.WORLD;			
         params.Transform = transform;
-		IEntity entity = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), params);		
+		IEntity entity = SDRC_SpawnHelper.SpawnEntityPrefabPersistency(resource, GetGame().GetWorld(), params);		
 		
 		SCR_ChimeraCharacter characterEnt = SCR_ChimeraCharacter.Cast(entity);
 		
@@ -112,7 +112,7 @@ sealed class SDRC_AIHelper
 				params.TransformMode = ETransformMode.WORLD;
 				params.Transform[3] = spawnPosition;
 				
-				group = SCR_AIGroup.Cast(GetGame().SpawnEntityPrefab(resource, null, params));
+				group = SCR_AIGroup.Cast(SDRC_SpawnHelper.SpawnEntityPrefabPersistency(resource, null, params));
 			}
 		}	
 		
@@ -374,7 +374,7 @@ sealed class SDRC_AIHelper
 			params.TransformMode = ETransformMode.WORLD;
 			params.Transform[3] = pos;
 				
-			group = SCR_AIGroup.Cast(GetGame().SpawnEntityPrefab(resource, null, params));		
+			group = SCR_AIGroup.Cast(SDRC_SpawnHelper.SpawnEntityPrefabPersistency(resource, null, params));		
 			group.SetFaction(SDRC_EnemyHelper.GetFactionWithName(faction));
 		}	
 		else
