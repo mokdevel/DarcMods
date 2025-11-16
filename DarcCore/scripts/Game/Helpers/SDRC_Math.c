@@ -88,4 +88,36 @@ sealed class SDRC_Math
     	float degrees = (180 * angle / Math.PI);
     	return degrees;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get transform from the given position and rotation in XZ plane
+	*/
+	static void GetTransformFromPosAndRot(out vector transform[4], vector pos, float rotation, bool snap = true)
+	{
+		Math3D.MatrixIdentity3(transform);
+		Math3D.AnglesToMatrix(Vector(rotation, 0, 0), transform);
+		transform[3] = pos;
+		if (snap)
+		{
+			SCR_TerrainHelper.SnapAndOrientToTerrain(transform);
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Rotate a position around a pivot point
+	*/
+	static vector RotatePosAroundPivot(vector pos, vector pivot, float rotation)
+	{
+		vector transform[4];
+		vector newtransform[4];
+
+		Math3D.MatrixIdentity3(transform);
+		transform[3] = pos;
+						
+		SCR_Math3D.RotateAround(transform, pivot, "0 1 0", SDRC_Misc.AngleToRadians(rotation), newtransform);			
+		
+		return newtransform[3];		
+	}		
 }
