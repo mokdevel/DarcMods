@@ -1,0 +1,78 @@
+GenericEntity : "{4E866C1E6F114AB4}Prefabs/Props/Military/SupplyBox/SupplyPortableContainers/SupplyPortableContainer_01/SupplyPortableContainers_01_large_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  InventoryItemComponent "{66E311A8240AEBE4}" {
+   Enabled 0
+   Attributes SCR_ItemAttributeCollection "{66E311A8240AEBF7}" {
+    ItemDisplayName SCR_InventoryUIInfo "{66E311A8240AEBF4}" {
+     Name "#AR-Supplies_Container_Name"
+     Description "#AR-Supplies_Container_Description"
+     m_aItemHints {
+      SCR_SupplyStoredItemHintUIInfo "{5E72C5BF5336CBDF}" : "{5F4B7F58A4ED6868}Configs/Inventory/ItemHints/ItemCrateSupplyStored_ItemHint.conf" {
+      }
+      SCR_SupplyMoveItemHintUIInfo "{5E72C5BF5204B321}" : "{DC9B90254773E6BE}Configs/Inventory/ItemHints/ItemCrateSupplyMove_ItemHint.conf" {
+      }
+     }
+    }
+    ItemPhysAttributes ItemPhysicalAttributes "{66E311A8240AEBFD}" {
+     Weight 25
+     SizeSetupStrategy Manual
+     ItemDimensions 15 15 15
+     ItemVolume 10000
+    }
+    CustomAttributes {
+     PreviewRenderAttributes "{66E311A8240AEB82}" {
+      CameraPreset Top
+      CameraDistanceToItem 0.6
+     }
+    }
+    m_Size SLOT_2x2
+    m_SlotType SLOT_ANY
+    m_bRefundable 0
+   }
+  }
+  RigidBody "{5872F0EB7DFB5A9D}" {
+   ResponseIndex "TinyDestructible"
+  }
+  SCR_ArsenalComponent "{66E311AB5B0B01E6}" {
+  }
+  SCR_ResourceComponent "{5D247A59598D71AE}" {
+   Enabled 0
+   m_aContainers {
+    SCR_ResourceContainer "{5D3CDAE74F1A6127}" {
+    }
+   }
+  }
+  UniversalInventoryStorageComponent "{66E311A8A8DDD15D}" {
+   Attributes SCR_ItemAttributeCollection "{66E311AB57251F1E}" {
+    ItemDisplayName SCR_InventoryUIInfo "{66E311AB539D464F}" {
+    }
+   }
+  }
+  ActionsManagerComponent "{66E311A8240AEB8A}" {
+   ActionContexts {
+    UserActionContext "{66E311A8240AEB8F}" {
+     UIInfo UIInfo "{66E311A8240AEB8D}" {
+     }
+     ContextName "default"
+     Position PointInfo "{66E311A8240AEB93}" {
+     }
+     Radius 1.5
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{66E311A88EF319F0}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{66E311A8BD290CDE}" {
+      Name "Open Loot"
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   "Parent Node From Parent Entity" 0
+  }
+ }
+}
