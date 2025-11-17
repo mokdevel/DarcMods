@@ -5,11 +5,13 @@
 ## Next release (unreleased)
 
 ### DarcMissions
-TBF: 
-- You can drag a vehicle to a crate and it disappears.
+
+Changes:
+- Added a new loot box ```LootSupplyPortableContainers_01_large_item.et```
 
 Fixes:
 - Removed MDT_RAILWAY from location search. Search took a long time on Gulfcoast Island map.
+- It was possible to drag items like cars in the loot boxes which resulted in a crash.
 
 ## 20251104
 ### DarcMissions
