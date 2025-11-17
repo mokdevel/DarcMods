@@ -4,6 +4,8 @@ GenericEntity : "{7E2EC66747A3FBA3}Prefabs/Props/Crates/CrateWooden_02/CrateWood
   MeshObject "{5872F0EB7FA40561}" {
    Object "{569C9B8C543D3020}Assets/Props/Crates/CrateWooden_02/CrateWooden_02_1x1x1.xob"
   }
+  SCR_ArsenalComponent "{66E311A96BC6A5AA}" {
+  }
   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
    m_aDamagePhases {
     SCR_DamagePhaseData "{5C54D7C1B2724555}" {

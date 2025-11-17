@@ -4,6 +4,8 @@ GenericEntity : "{7030822F7A54F479}Prefabs/Props/Crates/CrateWooden_01_base.et" 
   RigidBody "{5872F0EB7DFB5A9D}" {
    Static 1
   }
+  SCR_ArsenalComponent "{66E311A988FDFA0D}" {
+  }
   UniversalInventoryStorageComponent "{648701879D1D2E68}" {
    Attributes SCR_ItemAttributeCollection "{648701847D60E0AC}" {
     ItemDisplayName SCR_InventoryUIInfo "{648701847A20DAFE}" {
@@ -32,8 +34,6 @@ GenericEntity : "{7030822F7A54F479}Prefabs/Props/Crates/CrateWooden_01_base.et" 
      "Sort Priority" 1000
     }
    }
-  }
-  RplComponent "{648553C1FAD03377}" {
   }
   Hierarchy "{648553C1FEEEB131}" {
   }

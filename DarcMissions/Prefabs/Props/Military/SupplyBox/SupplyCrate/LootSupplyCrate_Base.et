@@ -4,6 +4,8 @@ GenericEntity : "{A5AC0827E24C1929}Prefabs/Props/Core/SupplyBox_Base.et" {
   MeshObject "{5872F0EB7FA40561}" {
    Object "{E535C6A8397ACFE0}Assets/Props/Military/SupplyBox/SupplyCrate/SupplyCrate_01_item.xob"
   }
+  SCR_ArsenalComponent "{66E311A905AAC2F4}" {
+  }
   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
    m_eMaterialSoundType BREAK_WOOD_SOLID
   }

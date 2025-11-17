@@ -1,4 +1,4 @@
-GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/DestructibleMultiPhase_Props_Base.et" {
  ID "F0DBA538AC2A0552"
  components {
   MeshObject "{5872F0EB7FA40561}" {
@@ -9,6 +9,8 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
    ResponseIndex "SmallDestructible"
    ModelGeometry 1
    Static 1
+  }
+  SCR_ArsenalComponent "{66E311A91DD5DE01}" {
   }
   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" : "{76DA308CC9E2AB84}Prefabs/Props/Core/DestructionMultiPhase_Base.ct" {
    Enabled 1
@@ -61,5 +63,5 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
   }
  }
  coords 1333.602 32.001 2181.522
- angleY 68
+ angles 0 68 0
 }
