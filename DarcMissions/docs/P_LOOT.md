@@ -36,14 +36,20 @@ The loot box (vehicle, box, ..) needs to have certain components available for t
 - Vehicles : Typically works.
 - Box : The default arsenal boxes are not supported and you will need to use special ones. Currently supported values: 
 ```
+"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et"
 "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
-"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
 "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
 "{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et"
+"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
+"{DBC8E6A4DD948C96}Prefabs/Props/Military/SupplyBox/SupplyPortableContainers/SupplyPortableContainer_01/LootSupplyPortableContainers_01_large_item.et"
 ```
 
 ### Define a new loot box
 - Duplicate the container prefab to DarcMissions. In theory you could use anything. In to the name, add "Loot" in the beginning.
-- Edit prefab and add components ```UniversalInventoryStorageComponent```, ```ScriptedInventoryStorageManagerComponent``` and ```ActionsManagerComponent```.
+- Edit prefab and add components 
+  - ```UniversalInventoryStorageComponent```
+  - ```ScriptedInventoryStorageManagerComponent```
+  - ```ActionsManagerComponent```
+  - ```SCR_ArsenalComponent``` : without this your box will allow for example vehicles to be inserted
 - Configure as in the image
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/lootboxsettings.png" width=30% height=30%>
