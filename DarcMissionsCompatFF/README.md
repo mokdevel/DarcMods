@@ -31,6 +31,11 @@ float spawnRateForGreenZones : The percentage chance to spawn a mission to green
 ## Next release (unreleased)
 
 ... empty ...
+
+## 20251117
+Fixes:
+- Change for StreamableVehicleComponent_S to match FF conventions
+
 ## 20251030
 ### Update for Arma Reforger 1.6
 Minor fixes and support for 1.6.

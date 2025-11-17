@@ -322,9 +322,21 @@ class SDRC_VehicleHelper
 	
 	NOTE: You shall/should override this in your compat mod
 	*/
+	
+#ifdef NEW_VERSION_WIP	
 	static void SetPersistency(IEntity entity, bool persistency = true)
 	{	
 		//Override in compat mod
 		SDRC_SpawnHelper.SetPersistency(entity, persistency);
 	}	
+#endif	
+
+#ifndef NEW_VERSION_WIP	
+	static void SetPersistency(IEntity entity)
+	{	
+		//Override in compat mod
+		SDRC_SpawnHelper.SetPersistency(entity);
+	}	
+#endif	
+		
 }

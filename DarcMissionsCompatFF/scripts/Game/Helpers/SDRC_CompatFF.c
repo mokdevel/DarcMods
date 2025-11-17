@@ -102,6 +102,25 @@ modded class SDRC_VehicleHelper
 	/*!
 	Fix persistency for vehicle. For example for EPF.
 	*/
+#ifdef NEW_VERSION_WIP		
+	override static void SetPersistency(IEntity entity, bool persistency = true)
+	{	
+		if (persistency)
+		{
+			//Avoid despawning of vehicles
+			auto persistence = JWK_CompT<EPF_PersistenceComponent>.FindIn(entity);
+			if (persistence) persistence.JWK_SetEnabled(false);
+			//FF despawns vehicles beyond certain distance from players and spawns them back in when they get near for performance, this will disable that.
+			auto streamable = JWK_CompT<JWK_StreamableVehicleComponent>.FindIn(entity);
+			if (streamable) streamable.SetStreamingEnabled_S(false);		
+		}
+				
+		//TBD: We should not set any other persistency stuff in FF
+		//super.SetPersistency(entity);
+	}	
+#endif
+		
+#ifndef NEW_VERSION_WIP		
 	override static void SetPersistency(IEntity entity)
 	{	
 		//Avoid despawning of vehicles
@@ -109,11 +128,12 @@ modded class SDRC_VehicleHelper
 		if (persistence) persistence.JWK_SetEnabled(false);
 		//FF despawns vehicles beyond certain distance from players and spawns them back in when they get near for performance, this will disable that.
 		auto streamable = JWK_CompT<JWK_StreamableVehicleComponent>.FindIn(entity);
-		if (streamable) streamable.SetStreamingEnabled(false);		
-		
+		if (streamable) streamable.SetStreamingEnabled_S(false);		
+				
 		//TBD: We should not set any other persistency stuff in FF
 		//super.SetPersistency(entity);
 	}	
+#endif	
 }
 
 //------------------------------------------------------------------------------------------------
