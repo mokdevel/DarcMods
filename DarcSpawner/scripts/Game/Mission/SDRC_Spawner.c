@@ -141,6 +141,13 @@ class SDRC_Spawner
 		if (!spawnSet.locationTypes.IsEmpty())
 		{
 			SDRC_Locations.GetLocationsCached(locations, spawnSet.locationTypes);
+			
+			if (locations.IsEmpty())
+			{
+				SDRC_Log.Add("[SDRC_Spawner:Spawn] No locations found. Check you conf.", LogLevel.ERROR);
+				return false;				
+			}
+			
 			//SDRC_Locations.GetLocations(locations, spawnSet.locationTypes);
 			location = locations.GetRandomElement();
 			pos = location.pos;
