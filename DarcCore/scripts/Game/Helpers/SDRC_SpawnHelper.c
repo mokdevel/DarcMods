@@ -53,7 +53,7 @@ sealed class SDRC_SpawnHelper
 				SDRC_Math.GetTransformFromPosAndRot(transform, pos, rotation, snap);
 				params.Transform = transform;
 				
-				entity = SDRC_SpawnHelper.SpawnEntityPrefabPersistency(resource, GetGame().GetWorld(), params);
+				entity = SDRC_SpawnHelper.SpawnEntityPrefabPersistence(resource, GetGame().GetWorld(), params);
 				RebuildNavmesh(entity);
 				
 				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] " + entityName + " spawned to: " + pos, LogLevel.SPAM);
@@ -70,7 +70,7 @@ sealed class SDRC_SpawnHelper
 			SDRC_Math.GetTransformFromPosAndRot(transform, pos, rotation, snap);
 	        params.TransformMode = ETransformMode.WORLD;			
 	        params.Transform = transform;
-			entity = SDRC_SpawnHelper.SpawnEntityPrefabPersistency(resource, GetGame().GetWorld(), params);
+			entity = SDRC_SpawnHelper.SpawnEntityPrefabPersistence(resource, GetGame().GetWorld(), params);
 			RebuildNavmesh(entity);
 			
 			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] " + entityName + " spawned to exact position: " + pos, LogLevel.SPAM);
@@ -198,42 +198,64 @@ sealed class SDRC_SpawnHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Wrapper for SpawnEntityPrefab. Handles the persistency setting.
+	Wrapper for SpawnEntityPrefab. Handles the Persistence setting.
 	Use this rather than calling SpawnEntityPrefab instead.
 	*/
-	static IEntity SpawnEntityPrefabPersistency(Resource resource, BaseWorld world = null, EntitySpawnParams params = null)
+	static IEntity SpawnEntityPrefabPersistence(Resource resource, BaseWorld world = null, EntitySpawnParams params = null)
 	{
 		IEntity entity = GetGame().SpawnEntityPrefab(resource, world, params);	
-		SetPersistency(entity, false);
+		SetPersistence(entity, false);
 		
 		return entity;
 	}	
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Enable/disable persistency for an entity
+	Enable/disable Persistence for an entity
 	*/
-	static void SetPersistency(IEntity entity, bool persistency = true)
+	static void SetPersistence(IEntity entity, bool persistence = true)
 	{
-		//TBD: if (SDRC_Conf.DISABLE_PERSISTENCY)
+		if (!entity)
+		{
+			return;
+		}
 		
+#ifndef NEW_PERSISTENCE	
+		return;
+#endif
+		
+		GetGame().GetCallqueue().CallLater(SetPersistenceDelayed, SDRC_Conf.PERSISTENCE_DELAY, false, entity, persistence);
+	}
+		
+	static void SetPersistenceDelayed(IEntity entity, bool persistence = true)
+	{
+		//TBD: if (SDRC_Conf.DISABLE_Persistence)
 		if (PersistenceSystem.GetInstance())
 		{
 			bool success;
 			
-			if (persistency)
+			bool isTracked = PersistenceSystem.GetInstance().IsTracked(entity);
+			
+			if (isTracked)
 			{
-				success = PersistenceSystem.GetInstance().StartTracking(entity);
-				SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistency] Persistency enabled for: " + entity.GetPrefabData().GetPrefabName() + " - success: " + success, LogLevel.DEBUG);
+				if (persistence)
+				{
+					success = PersistenceSystem.GetInstance().StartTracking(entity);
+					SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistence] Persistence enabled for: " + entity.GetPrefabData().GetPrefabName() + " - success: " + success, LogLevel.DEBUG);
+				}
+				else
+				{
+					success = PersistenceSystem.GetInstance().StopTracking(entity);
+					SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistence] Persistence disabled for: " + entity.GetPrefabData().GetPrefabName() + " - success: " + success, LogLevel.DEBUG);
+				}
 			}
 			else
 			{
-				success = PersistenceSystem.GetInstance().StopTracking(entity);
-				SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistency] Persistency disabled for: " + entity.GetPrefabData().GetPrefabName() + " - success: " + success, LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistence] Entity: " + entity.GetPrefabData().GetPrefabName() + " does not have Persistence component.", LogLevel.DEBUG);
 			}
 		}	
-	}
-		
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find size of a prefab
@@ -253,7 +275,7 @@ sealed class SDRC_SpawnHelper
 		//Find the proper size of the resource to spawn. 
         params.TransformMode = ETransformMode.WORLD;			
         params.Transform[3] = posNone;
-		entity = SDRC_SpawnHelper.SpawnEntityPrefabPersistency(resource, GetGame().GetWorld(), params);
+		entity = SDRC_SpawnHelper.SpawnEntityPrefabPersistence(resource, GetGame().GetWorld(), params);
 		entity.GetWorldBounds(mins, maxs);
 		sums = maxs - mins;		
 

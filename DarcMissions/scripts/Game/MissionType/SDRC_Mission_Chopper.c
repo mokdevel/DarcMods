@@ -115,7 +115,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
         params.TransformMode = ETransformMode.WORLD;			
         params.Transform = transform;
 		
-		m_Vehicle = SDRC_SpawnHelper.SpawnEntityPrefabPersistency(resource, GetGame().GetWorld(), params);		
+		m_Vehicle = SDRC_SpawnHelper.SpawnEntityPrefabPersistence(resource, GetGame().GetWorld(), params);		
 		
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
         m_Vehicle_s.EngineStart();

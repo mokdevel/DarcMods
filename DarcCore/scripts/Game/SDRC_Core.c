@@ -49,12 +49,12 @@ class SDRC_Core
 		}
 		SDRC_Log.Add("[SDRC_Core] World has AIWorld: " + bAiWorld, LogLevel.NORMAL);
 		
-		bool bPersistency = false;
+		bool bPersistence = false;
 		if (PersistenceSystem.GetInstance())
 		{
-			bPersistency = true;
+			bPersistence = true;
 		}
-		SDRC_Log.Add("[SDRC_Core] World has persistency: " + bPersistency, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_Core] World has persistence: " + bPersistence, LogLevel.NORMAL);
 		
 		int factionCount = SDRC_FactionHelper.GetFactionList(m_sFactionList);
 		SDRC_Log.Add("[SDRC_Core] Factions available: " + factionCount + " - " + m_sFactionList, LogLevel.NORMAL);

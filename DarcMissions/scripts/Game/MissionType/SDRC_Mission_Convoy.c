@@ -205,7 +205,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		
 		//Disable arsenal
 		SDRC_VehicleHelper.DisableVehicleArsenal(m_Vehicle, resourceName, m_Config.disableArsenal);
-		SDRC_VehicleHelper.SetPersistency(m_Vehicle);
+		SDRC_VehicleHelper.SetPersistence(m_Vehicle);
 		
 		AICarMovementComponent vehicle_c = AICarMovementComponent.Cast(m_Vehicle.FindComponent(AICarMovementComponent));
         vehicle_c.SetCruiseSpeed(m_DC_Convoy.cruiseSpeed);

@@ -313,29 +313,29 @@ class SDRC_VehicleHelper
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	// Persistency related
+	// Persistence related
 	//------------------------------------------------------------------------------------------------
 		
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Fix persistency for vehicle. For example for EPF.
+	Fix persistence for vehicle. For example for EPF.
 	
 	NOTE: You shall/should override this in your compat mod
 	*/
 	
-#ifdef NEW_VERSION_WIP	
-	static void SetPersistency(IEntity entity, bool persistency = true)
+#ifdef NEW_PERSISTENCE	
+	static void SetPersistence(IEntity entity, bool persistence = true)
 	{	
 		//Override in compat mod
-		SDRC_SpawnHelper.SetPersistency(entity, persistency);
+		SDRC_SpawnHelper.SetPersistence(entity, persistence);
 	}	
 #endif	
 
-#ifndef NEW_VERSION_WIP	
-	static void SetPersistency(IEntity entity)
+#ifndef NEW_PERSISTENCE	
+	static void SetPersistence(IEntity entity)
 	{	
 		//Override in compat mod
-		SDRC_SpawnHelper.SetPersistency(entity);
+		SDRC_SpawnHelper.SetPersistence(entity);
 	}	
 #endif	
 		

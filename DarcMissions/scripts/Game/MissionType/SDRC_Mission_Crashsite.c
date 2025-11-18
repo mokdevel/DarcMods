@@ -251,7 +251,12 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 			
 			//Disable arsenal
 			SDRC_VehicleHelper.DisableVehicleArsenal(m_Vehicle, helicopterInfo.resource, true);
-			SDRC_VehicleHelper.SetPersistency(m_Vehicle);
+#ifdef NEW_PERSISTENCE	
+			SDRC_VehicleHelper.SetPersistence(m_Vehicle, false);
+#endif
+#ifndef NEW_PERSISTENCE	
+			SDRC_VehicleHelper.SetPersistence(m_Vehicle);
+#endif				
 		}
 		else
 		{

@@ -395,7 +395,7 @@ sealed class SDRC_WPHelper
 		if (!resource)
 			return null;
 		
-		AIWaypoint wp = AIWaypoint.Cast(SDRC_SpawnHelper.SpawnEntityPrefabPersistency(resource));
+		AIWaypoint wp = AIWaypoint.Cast(SDRC_SpawnHelper.SpawnEntityPrefabPersistence(resource));
 		if (!wp)
 			return null;
 		

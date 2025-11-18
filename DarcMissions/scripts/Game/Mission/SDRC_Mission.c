@@ -417,8 +417,7 @@ class SDRC_Mission
 					if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(entity.GetOrigin(), 5))
 					{
 						SDRC_Log.Add("[SDRC_Mission:MissionRun] Vehicle set as persistent: " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
-						SDRC_VehicleHelper.SetPersistency(entity);
-						
+						SDRC_VehicleHelper.SetPersistence(entity);
 						m_EntityList.Remove(i);
 						i--;
 					}

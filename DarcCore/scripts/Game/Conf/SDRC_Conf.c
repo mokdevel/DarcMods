@@ -8,6 +8,7 @@ Stupid file to handle a few common variables accross multiple mods
 //#define SDRC_RELEASE
 //#define EXPERIMENTAL
 //#define NEW_VERSION_WIP		//New functionality (..that affects jsons)
+#define NEW_PERSISTENCE
 
 sealed class SDRC_Conf
 {
@@ -16,7 +17,8 @@ sealed class SDRC_Conf
 	static string subDir = "";
 	static bool coreHasStarted = false;
 	const int MISSION_RUN_DELAY = 5000;					//Time between INIT and SPAWN states.
-	//TBD: const int MISSION_END_TIME = 5000;					//Time to set for mission cycle when mission is set to end.
+	const int PERSISTENCE_DELAY = 5000;					//Time to delay the persistence setting for spawned entities. 
+	//TBD: const int MISSION_END_TIME = 5000;			//Time to set for mission cycle when mission is set to end.
 	
 //Release options	
 #ifdef SDRC_RELEASE
@@ -32,7 +34,7 @@ sealed class SDRC_Conf
 	const bool SHOW_MARKER_FOR_LOCATION = false;		//Show a debug marker for locations
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.NORMAL;
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
-	//TBD: const bool DISABLE_PERSISTENCY = true;
+	//TBD: const bool DISABLE_PERSISTENCE = true;
 #endif
 		
 //Development time options	
@@ -50,6 +52,6 @@ sealed class SDRC_Conf
 	const bool SHOW_MARKER_FOR_LOCATION = false;	
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
-	//TBD: const bool DISABLE_PERSISTENCY = true;	
+	//TBD: const bool DISABLE_PERSISTENCE = true;	
 #endif
 }
