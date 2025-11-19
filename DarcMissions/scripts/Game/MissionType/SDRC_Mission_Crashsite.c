@@ -28,6 +28,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	private SDRC_EMissionCrashSiteState missionCrashSiteState = SDRC_EMissionCrashSiteState.INIT;
 	private vector m_vPosDestination = "0 0 0";				//The destination where the chopper is flying from mission position
 	private float m_fAngle = 0;
+	private float m_fDistance = 0;
 	private IEntity m_Vehicle;
 	private vector m_vVehiclePosOld;
 
@@ -108,9 +109,9 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 			vector direction = vector.Direction(pos, m_vPosDestination);
 			m_fAngle = SDRC_Math.VectorToAngle(direction);
 			
-			float distance = vector.DistanceXZ(pos, m_vPosDestination);
+			m_fDistance = vector.DistanceXZ(pos, m_vPosDestination);
 			
-			SDRC_Log.Add("[SDRC_Mission_Crashsite] Helicopter flying from " + pos + " to " + m_vPosDestination + ". Angle: " + m_fAngle + ". Distance: " + distance, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_Mission_Crashsite] Helicopter flying from " + pos + " to " + m_vPosDestination + ". Angle: " + m_fAngle + ". Distance: " + m_fDistance, LogLevel.DEBUG);
 		}			
 		
 		SetPos(pos, m_vPosDestination);
@@ -270,16 +271,19 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 			return;
 		}
 		
+		float throttleCoef = m_fDistance / 1300;
+		throttleCoef = Math.Clamp(throttleCoef, 0.6, 1.0);
+		
 		VehicleHelicopterSimulation m_Vehicle_s;
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
         m_Vehicle_s.EngineStart();
-        m_Vehicle_s.SetThrottle(helicopterInfo.throttle);
-        m_Vehicle_s.RotorSetForceScaleState(0, helicopterInfo.rotorForce);
+        m_Vehicle_s.SetThrottle(helicopterInfo.throttle * throttleCoef);
+        m_Vehicle_s.RotorSetForceScaleState(0, helicopterInfo.rotorForce * throttleCoef);
         m_Vehicle_s.RotorSetForceScaleState(1, helicopterInfo.rotor2Force);
 
 		vector velOrig = m_Vehicle.GetPhysics().GetVelocity();
         vector rotVector = m_Vehicle.GetAngles();
-		int speed = 40;
+		int speed = SDRC_Misc.RandomFloat(30, 45);
 		
         vector vel = {velOrig[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * speed, velOrig[1], velOrig[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * speed };
 		m_Vehicle.GetPhysics().SetVelocity(vel);
