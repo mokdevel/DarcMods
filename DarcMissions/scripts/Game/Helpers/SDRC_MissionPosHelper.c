@@ -14,13 +14,18 @@ class SDRC_MissionPosHelper
 
 	\param distanceToMission Distance to another mission. Two missions shall not be too close to each other. -1 will use the default from MissionFrame.
 	\param distanceToPlayer Mission shall not spawn too close to a player. -1 will use the default from MissionFrame.
+	\param onlyBasicChecks Check only basic things
 	
-	The position shall have ... 
-	- no players nearby
-	- no missions nearby
-	- not in water	
+	Checks are done for positions:
+	- Basic checks:
+		- not in water	
+		- not under map
+	- Full checks:	
+		- no players nearby
+		- not in a nonValidArea
+		- no missions nearby
 	*/	
-	static SDRC_EMissionError IsValidMissionPos(vector pos, float distanceToMission = -1, float distanceToPlayer = -1)
+	static SDRC_EMissionError IsValidMissionPos(vector pos, float distanceToMission = -1, float distanceToPlayer = -1, bool onlyBasicChecks = false)
 	{	
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		
@@ -30,6 +35,7 @@ class SDRC_MissionPosHelper
 		if (distanceToPlayer == -1)
 			distanceToPlayer = baseGameMode.missionFrame.m_Config.minDistanceToPlayer;
 
+		//Basic checks
 		if (SDRC_Misc.IsPosInWater(pos))
 		{
 			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.POSITION_IN_WATER), LogLevel.SPAM);
@@ -41,17 +47,18 @@ class SDRC_MissionPosHelper
 			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.POSITION_UNDER_MAP), LogLevel.SPAM);
 			return SDRC_EMissionError.POSITION_UNDER_MAP;
 		}
-				
+
+		//If we only check for basic things, return		
+		if (onlyBasicChecks)
+		{
+			return SDRC_EMissionError.NONE;
+		}
+						
+		//Full checks
 		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, distanceToPlayer))
 		{
 			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.PLAYER_TOO_CLOSE), LogLevel.SPAM);
 			return SDRC_EMissionError.PLAYER_TOO_CLOSE;
-		}
-
-		if (IsAnyMissionCloseToPos(pos, distanceToMission))
-		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.MISSION_TOO_CLOSE), LogLevel.SPAM);
-			return SDRC_EMissionError.MISSION_TOO_CLOSE;
 		}
 
 		if (IsPosInNonValidArea(pos))
@@ -60,17 +67,12 @@ class SDRC_MissionPosHelper
 			return SDRC_EMissionError.IN_NON_VALID_AREA;
 		}
 		
-/*		#ifdef FREEDOM_FIGHTERS
-			JWK_EFactionRole factionRole = JWK.GetTerritoryControl().GetControllingRoleAt(pos);
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.IN_FREEDOM_FIGHTERS_SAFEZONE), LogLevel.ERROR);
-			
-			if ( (factionRole == JWK_EFactionRole.PLAYER) || (factionRole == JWK_EFactionRole.SUPPORTING) )
-			{
-				SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.IN_FREEDOM_FIGHTERS_SAFEZONE), LogLevel.SPAM);
-				return SDRC_EMissionError.IN_FREEDOM_FIGHTERS_SAFEZONE;
-			}		
-		#endif*/
-		
+		if (IsAnyMissionCloseToPos(pos, distanceToMission))
+		{
+			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.MISSION_TOO_CLOSE), LogLevel.SPAM);
+			return SDRC_EMissionError.MISSION_TOO_CLOSE;
+		}
+
 		return SDRC_EMissionError.NONE;
 	}
 
