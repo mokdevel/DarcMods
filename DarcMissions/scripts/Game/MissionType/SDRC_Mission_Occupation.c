@@ -37,8 +37,24 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		m_DC_Occupation = m_Config.subMissions[idx];	
 		HandleRequestGeneralVariables(m_DC_Occupation.general, request);
 		
-		//Find the position
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Occupation.general.pos, m_DC_Occupation.general.size, m_DC_Occupation.general.locationTypes);
+		//Find position
+		vector pos = "0 0 0";
+		
+		//For requested missions we want have it as close as possible in the requested place.
+		if (IsRequested())
+		{
+			pos = request.general.pos[0];
+		}
+		else
+		{				
+			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Occupation.general.pos, m_DC_Occupation.general.size, m_DC_Occupation.general.locationTypes);
+		}
+		
+		//If pos has been set, we blindly accept it. Do basic checking for pos.
+		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true) != SDRC_EMissionError.NONE)
+		{
+			pos = "0 0 0";
+		}
 		
 		if (pos == "0 0 0")	//No suitable location found.
 		{				

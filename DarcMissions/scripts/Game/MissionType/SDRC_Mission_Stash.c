@@ -38,12 +38,25 @@ class SDRC_Mission_Stash : SDRC_Mission
 		}
 		m_DC_Stash = m_Config.subMissions[idx];
 		HandleRequestGeneralVariables(m_DC_Stash.general, request);
-				
-		//Camps are randomly rotated
-		m_fSpawnRotation = SDRC_Misc.RandomFloat(0, 360);
+
+		//Find a location for the mission
+		vector pos = "0 0 0";
 		
-		//Find the position
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Stash.general.pos, m_DC_Stash.general.size, m_DC_Stash.general.locationTypes);
+		//For requested missions we want have it as close as possible in the requested place.
+		if (IsRequested())
+		{
+			pos = request.general.pos[0];
+		}
+		else
+		{				
+			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Stash.general.pos, m_DC_Stash.general.size, m_DC_Stash.general.locationTypes);
+		}		
+						
+		//If pos has been set, we blindly accept it. Do basic checking for pos.
+		if (!SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true) == SDRC_EMissionError.NONE)
+		{
+			pos = "0 0 0";
+		}		
 		
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
@@ -51,6 +64,8 @@ class SDRC_Mission_Stash : SDRC_Mission
 			return;
 		}	
 
+		//Camps are randomly rotated
+		m_fSpawnRotation = SDRC_Misc.RandomFloat(0, 360);
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Stash.campItems);
 				
 		SetPos(pos);

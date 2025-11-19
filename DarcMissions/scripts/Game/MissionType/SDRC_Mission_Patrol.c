@@ -41,20 +41,24 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Patrol] Worldsize vs maxRange : " + worldSize + " vs " + m_DC_Patrol.ai.waypointRange[1], LogLevel.SPAM);
 		
 		//Set defaults
-		vector pos = m_DC_Patrol.general.pos[0];
+		vector pos = "0 0 0";
 		m_vPosDestination = m_DC_Patrol.general.pos[1];
 		
 		//For requested missions we want have it as close as possible in the requested place.
-		int randomPos = -1;		
 		if (IsRequested())
 		{
-			randomPos = 0;
+			pos = request.general.pos[0];
+			m_vPosDestination = request.general.pos[1];
 		}
-				
-		//Find a location for the mission
-		if (pos == "0 0 0")
+		else
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.general.locationTypes, m_DC_Patrol.general.size, randomPos);
+			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Patrol.general.pos, m_DC_Patrol.general.size, m_DC_Patrol.general.locationTypes);
+		}
+		
+		//If pos has been set, we blindly accept it. Do basic checking for pos.
+		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true) != SDRC_EMissionError.NONE)
+		{
+			pos = "0 0 0";
 		}
 	
 		//If failed, stop

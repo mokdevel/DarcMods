@@ -52,7 +52,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Convoy.general, request);
 		
 		//Find a location for the mission
-		vector pos = m_DC_Convoy.general.pos[0];
+		vector pos = "0 0 0";
 		m_vPosDestination = m_DC_Convoy.general.pos[1];		//Destination from the defined SDRC_Convoy 
 		
 		//For requested missions we want have it as close as possible in the requested place.
@@ -61,18 +61,15 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			pos = request.general.pos[0];
 			m_vPosDestination = request.general.pos[1];
 		}
-		
-		if (pos != "0 0 0")
-		{
-			//If pos has been set, we blindly accept it. Do basic checking for pos.
-			if (!SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true) == SDRC_EMissionError.NONE)
-			{
-				pos = "0 0 0";
-			}
-		}			
 		else
-		{		
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.general.locationTypes, m_DC_Convoy.general.size);
+		{				
+			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Convoy.general.pos, m_DC_Convoy.general.size, m_DC_Convoy.general.locationTypes);
+		}
+
+		//If pos has been set, we blindly accept it. Do basic checking for pos.
+		if (!SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true) == SDRC_EMissionError.NONE)
+		{
+			pos = "0 0 0";
 		}
 
 		//If failed, stop

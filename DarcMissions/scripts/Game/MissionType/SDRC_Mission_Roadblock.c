@@ -38,21 +38,33 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Roadblock.general, request);
 		SetSecondWaveConf(m_DC_Roadblock.secondWave);
 		
+		//Find a location for the mission
+		vector pos = "0 0 0";
+		
 		//For requested missions we want have it as close as possible in the requested place.
-		int randomPos = -1;		
 		if (IsRequested())
 		{
-			randomPos = 0;
+			pos = request.general.pos[0];
+		}
+		else
+		{				
+			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Roadblock.general.pos, m_DC_Roadblock.general.size, m_DC_Roadblock.general.locationTypes);
 		}
 		
-		//Find a location for the mission
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Roadblock.general.pos, m_DC_Roadblock.general.size, m_DC_Roadblock.general.locationTypes, randomPos);
+		//If pos has been set, we blindly accept it. Do basic checking for pos.
+		if (!SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true) == SDRC_EMissionError.NONE)
+		{
+			pos = "0 0 0";
+		}
 		
 		//If we found a position, let's search more closely
 		if (pos != "0 0 0")
 		{		
-			//Add randomization so that it's not always in the same place
-			pos = SDRC_Misc.RandomizePos(pos, 150);
+			if (!IsRequested())
+			{
+				//Add randomization so that it's not always in the same place
+				pos = SDRC_Misc.RandomizePos(pos, 150);
+			}
 				
 			//Find nearest road
 			SDRC_RoadPos roadPos = new SDRC_RoadPos();				

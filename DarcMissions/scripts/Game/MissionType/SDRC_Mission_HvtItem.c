@@ -42,28 +42,39 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		m_DC_HvtItem = m_Config.subMissions[idx];			
 		HandleRequestGeneralVariables(m_DC_HvtItem.general, request);
 		
-		//Camps are randomly rotated
-		m_fSpawnRotation = SDRC_Misc.RandomFloat(0, 360);
-		
 		//Find position
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtItem.general.pos, m_DC_HvtItem.general.size, m_DC_HvtItem.general.locationTypes);
+		vector pos = "0 0 0";
 		
+		//For requested missions we want have it as close as possible in the requested place.
+		if (IsRequested())
+		{
+			pos = request.general.pos[0];
+		}
+		else
+		{		
+			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtItem.general.pos, m_DC_HvtItem.general.size, m_DC_HvtItem.general.locationTypes);
+		}
+
+		//If pos has been set, we blindly accept it. Do basic checking for pos.
+		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true) != SDRC_EMissionError.NONE)
+		{
+			pos = "0 0 0";
+		}
+				
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}		
 		
+		//Camps are randomly rotated
+		m_fSpawnRotation = SDRC_Misc.RandomFloat(0, 360);
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_HvtItem.campItems);
 		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_HvtItem.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_HvtItem.general);		
-/*		SetMarker(m_Config.showMarker, m_DC_HvtItem.general.markerIcon, m_DC_HvtItem.general.markerType);
-		SetHint(m_Config.showHint, m_DC_HvtItem.general.title, m_DC_HvtItem.general.info);
-		SetMessages(m_Config.showMessage, m_DC_HvtItem.general.winMessage, m_DC_HvtItem.general.loseMessage);				
-		SetWinCondition(m_DC_HvtItem.general.winCondition);*/
 	}	
 	
 	//------------------------------------------------------------------------------------------------

@@ -40,37 +40,50 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		
 		//Set defaults
 		m_iAiCount = m_DC_Squatter.ai.GetCount(m_DC_Squatter.general.difficulty);
-		float radius = 100;					//Default size for the radius. Mainly for requested missions to find the nearest building.
+		float radius = m_Config.buildingRadius;
 		array<string>buildingFilter = {};
 		
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Squatter.general.pos, m_DC_Squatter.general.size, m_DC_Squatter.general.locationTypes);
+		//Find a location for the mission
+		vector pos = "0 0 0";
 		
 		//Find a location for the mission
 		if (IsRequested())
 		{
+			pos = request.general.pos[0];
 			//If the missions is requested with a position, any building near the location will be accepted.
 			buildingFilter.Insert("");
 			radius = 10;	//Try to find the nearest building.
 		}
 		else
-		{				
-			radius = m_Config.buildingRadius;
+		{
+			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Squatter.general.pos, m_DC_Squatter.general.size, m_DC_Squatter.general.locationTypes);
 			buildingFilter = m_DC_Squatter.buildingNames;
-			
-			if (pos == "0 0 0")
+			if (m_DC_Squatter.general.locationTypes.IsEmpty())
 			{
 				//If no locationTypes defined, we search for any building matching on the map
-				if (m_DC_Squatter.general.locationTypes.IsEmpty())
-				{
-					radius = -1;
-				}
-				else
-				{
-					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Squatter.general.locationTypes, m_DC_Squatter.general.size);
-				}
+				radius = -1;
 			}
 		}
+		
+/*		if (pos == "0 0 0")
+		{
+			//If no locationTypes defined, we search for any building matching on the map
+			if (m_DC_Squatter.general.locationTypes.IsEmpty())
+			{
+				radius = -1;
+			}
+			else
+			{
+				pos = SDRC_MissionHelper.FindMissionPos(m_DC_Squatter.general.locationTypes, m_DC_Squatter.general.size);
+			}
+		}*/
 
+		//If pos has been set, we blindly accept it. Do basic checking for pos.
+		if (!SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true) == SDRC_EMissionError.NONE)
+		{
+			pos = "0 0 0";
+		}		
+		
 		//If failed, stop
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
