@@ -67,7 +67,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		}
 
 		//If pos has been set, we blindly accept it. Do basic checking for pos.
-		if (!SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true) == SDRC_EMissionError.NONE)
+		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: IsRequested()) != SDRC_EMissionError.NONE)
 		{
 			pos = "0 0 0";
 		}

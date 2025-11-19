@@ -61,7 +61,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		if (pos != "0 0 0")
 		{
 			//If pos has been set, we blindly accept it. Do basic checking for pos.
-			if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true) == SDRC_EMissionError.NONE)
+			if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: IsRequested()) == SDRC_EMissionError.NONE)
 			{
 				positionFound = true;
 			}
@@ -395,7 +395,7 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 	void SetDefaults()
 	{
 		//Default
-		conf.missionCycleTime = 10;//SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
+		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
 		conf.showMarker = false;
 		conf.missionList = {0,0,0,1,1,1,2};
 		//Mission specific
@@ -476,12 +476,8 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			{"0 0 0"}, 2,
 			{
 				EMapDescriptorType.MDT_BASE,
-/*				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_BUNKER,
 				EMapDescriptorType.MDT_FORTRESS,
-				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_BASE,
-				EMapDescriptorType.MDT_PORT,*/
 			},
 			"any",
 			"Recon",
