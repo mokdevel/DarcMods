@@ -239,10 +239,28 @@ class SDRC_MissionHelper
 			return null;
 		}
 		
-		building = buildings.GetRandomElement();
-		vector bpos = building.GetOrigin();
+		float distance = 1000;
+		int idx = 0;
 		
-		if (SDRC_MissionPosHelper.IsValidMissionPos(bpos) != SDRC_EMissionError.NONE)
+		//Find the closest building to position
+		foreach (int i, IEntity bld : buildings)
+		{
+			float tempDistance = vector.DistanceXZ(bld.GetOrigin(), pos);
+			if (tempDistance < distance)
+			{
+				distance = tempDistance;
+				idx = i;				
+			}
+		}
+
+		building = buildings[idx];
+		/* OLD 
+		building = buildings.GetRandomElement();
+		*/
+
+		vector bpos = building.GetOrigin();
+				
+/*		if (SDRC_MissionPosHelper.IsValidMissionPos(bpos) != SDRC_EMissionError.NONE)
 		{
 			return null;
 		}
@@ -250,6 +268,8 @@ class SDRC_MissionHelper
 		{
 			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionBuilding] Building selected: " + building.GetPrefabData().GetPrefabName() + " " + bpos, LogLevel.DEBUG);
 		}
+*/		
+		SDRC_Log.Add("[SDRC_MissionHelper:FindMissionBuilding] Building selected: " + building.GetPrefabData().GetPrefabName() + " " + bpos, LogLevel.DEBUG);		
 		
 		return building;
 	}		
