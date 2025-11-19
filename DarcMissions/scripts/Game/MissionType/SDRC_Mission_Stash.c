@@ -232,7 +232,7 @@ class SDRC_StashJsonApi : SDRC_JsonApi
 			{},
 			"any",
 			"A stash near %l",
-			"Loot is yours to take",
+			"Hurry, loot is yours to take!",
 			SDRC_EMissionWinCondition.FIND_IN_15,
 			"Loot found.",
 			"Loot lost.",

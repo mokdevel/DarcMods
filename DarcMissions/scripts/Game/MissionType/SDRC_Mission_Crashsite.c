@@ -55,12 +55,18 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Crashsite.general, request);
 		
 		//Find position
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Crashsite.general.pos);
 		bool positionFound = false;
+		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Crashsite.general.pos);
 
+		//For requested missions we want have it as close as possible in the requested place.
+		if (IsRequested())
+		{
+			pos = request.general.pos[0];
+		}
+		
 		if (pos != "0 0 0")
 		{
-			//If pos has been set, we blindly accept it
+			//If pos has been set, we blindly accept it. Flying heli is always above ground.
 			positionFound = true;
 		}			
 		else

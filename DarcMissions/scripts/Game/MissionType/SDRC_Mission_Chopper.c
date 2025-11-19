@@ -132,7 +132,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		if (crew)
 		{
 			SDRC_VehicleHelper.MoveGroupInVehicle(crew, m_Vehicle, true);
-			SDRC_AIHelper.SetAIGroupSkill(crew, EAISkill.CYLON, 10);
+			SDRC_AIHelper.SetAIGroupSettings(crew, EAISkill.CYLON, 10);
 		}
 	}
 }

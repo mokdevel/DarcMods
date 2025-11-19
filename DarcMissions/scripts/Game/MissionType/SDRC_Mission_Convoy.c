@@ -56,15 +56,23 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		m_vPosDestination = m_DC_Convoy.general.pos[1];		//Destination from the defined SDRC_Convoy 
 		
 		//For requested missions we want have it as close as possible in the requested place.
-		int randomPos = -1;		
 		if (IsRequested())
 		{
-			randomPos = 0;
+			pos = request.general.pos[0];
+			m_vPosDestination = request.general.pos[1];
 		}
 		
-		if (pos == "0 0 0")
+		if (pos != "0 0 0")
 		{
-			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.general.locationTypes, m_DC_Convoy.general.size, randomPos);
+			//If pos has been set, we blindly accept it. Do basic checking for pos.
+			if (!SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true) == SDRC_EMissionError.NONE)
+			{
+				pos = "0 0 0";
+			}
+		}			
+		else
+		{		
+			pos = SDRC_MissionHelper.FindMissionPos(m_DC_Convoy.general.locationTypes, m_DC_Convoy.general.size);
 		}
 
 		//If failed, stop
@@ -222,7 +230,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(m_DC_Convoy.ai.types.GetRandomElement(), posg, GetFaction());
 			if (group)
 			{			
-				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Convoy.ai.GetSkill(m_DC_Convoy.general.difficulty), m_DC_Convoy.ai.GetPerception(m_DC_Convoy.general.difficulty));
+				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Convoy.ai.GetSkill(m_DC_Convoy.general.difficulty), m_DC_Convoy.ai.GetPerception(m_DC_Convoy.general.difficulty));
 				m_Groups.Insert(group);					
 			}
 			

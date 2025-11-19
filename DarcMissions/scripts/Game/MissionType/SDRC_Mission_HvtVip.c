@@ -146,7 +146,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroupRandom(m_DC_HvtVip.ai.types, GetPos(), GetFaction());
 			if (group)
 			{
-				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_HvtVip.ai.GetSkill(m_DC_HvtVip.general.difficulty), m_DC_HvtVip.ai.GetPerception(m_DC_HvtVip.general.difficulty));					
+				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_HvtVip.ai.GetSkill(m_DC_HvtVip.general.difficulty), m_DC_HvtVip.ai.GetPerception(m_DC_HvtVip.general.difficulty));					
 				SDRC_AIHelper.SetAIGroupMovementType(group, EMovementType.IDLE);
 				m_Groups.Insert(group);				
 				SDRC_WPHelper.CreateMissionAIWaypoints(group, SDRC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", SDRC_EWaypointMoveType.LOITER, 10, 50);				

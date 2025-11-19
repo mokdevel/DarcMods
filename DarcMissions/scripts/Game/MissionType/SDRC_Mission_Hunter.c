@@ -50,20 +50,21 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		
 		//Find position
 		bool positionFound = false;
-//		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Hunter.general.pos);
 		vector pos = m_DC_Hunter.general.pos.GetRandomElement();
 		
 		//For requested missions we want have it as close as possible in the requested place.
-		int randomPos = -1;		
 		if (IsRequested())
 		{
-			randomPos = 0;
+			pos = request.general.pos[0];
 		}
 
 		if (pos != "0 0 0")
 		{
-			//If pos has been set, we blindly accept it
-			positionFound = true;
+			//If pos has been set, we blindly accept it. Do basic checking for pos.
+			if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true) == SDRC_EMissionError.NONE)
+			{
+				positionFound = true;
+			}
 		}			
 		else
 		{
@@ -75,7 +76,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 				}
 				else
 				{
-					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Hunter.general.locationTypes, m_DC_Hunter.general.size, randomPos);
+					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Hunter.general.locationTypes, m_DC_Hunter.general.size, -1);
 				}
 							
 				if (SDRC_MissionPosHelper.IsValidMissionPos(pos) == SDRC_EMissionError.NONE)
@@ -106,10 +107,6 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Hunter.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Hunter.general);		
-/*		SetMarker(m_Config.showMarker, m_DC_Hunter.general.markerIcon, m_DC_Hunter.general.markerType);
-		SetHint(m_Config.showHint, m_DC_Hunter.general.title, m_DC_Hunter.general.info);		
-		SetMessages(m_Config.showMessage, m_DC_Hunter.general.winMessage, m_DC_Hunter.general.loseMessage);		
-		SetWinCondition(m_DC_Hunter.general.winCondition);*/
 		SetActiveDistance(m_Config.maxDistanceToPlayer);		//Change the m_iActiveDistance to a mission specific one.		
 		SetActiveTimeToEnd(20);									//Change the m_iActiveTimeToEnd to short one as there is no loot to gain.
 	}
@@ -240,7 +237,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 			
 			if (group)
 			{
-				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Hunter.ai.GetSkill(m_DC_Hunter.general.difficulty), m_DC_Hunter.ai.GetPerception(m_DC_Hunter.general.difficulty));					
+				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Hunter.ai.GetSkill(m_DC_Hunter.general.difficulty), m_DC_Hunter.ai.GetPerception(m_DC_Hunter.general.difficulty));					
 				m_Groups.Insert(group);
 				m_iGroupsSpawned++;
 				SDRC_Log.Add("[SDRC_Mission_Hunter:SpawnHunterGroup] Group spawned to " + spawnLocation, LogLevel.NORMAL);				

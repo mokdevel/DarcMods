@@ -7,8 +7,6 @@ Functions for various AI actions
 
 sealed class SDRC_AIHelper
 {			
-	const int AI_SETTING_DELAY = 10000;
-
 	static private ref array<SCR_FactionManager> m_aFactionManagers = {};
 		
 	//------------------------------------------------------------------------------------------------
@@ -165,7 +163,7 @@ sealed class SDRC_AIHelper
 //		SDRC_DebugHelper.AddDebugSphere(pos, Color.YELLOW, 0.4);
 		AIAgent aiAgent = SDRC_AIHelper.SpawnAIAgent(resourceName, pos, faction, false);
 		
-		SetAISkill(aiAgent, skill, perceptionFactor);
+		SetAISettings(aiAgent, skill, perceptionFactor);
 		
 		SCR_AIGroup group = SDRC_AIHelper.GroupAddAI(aiAgent);
 	
@@ -190,16 +188,19 @@ sealed class SDRC_AIHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Set skill and perception for an AI
+	Set settings for AI
+	- skill and perception
+	- persistence
 	
 	See SCR_AICombatComponent for details
+	NOTE: The setting will affect only if the AI has been spawned -> needs to be delayed.
 	*/
-	static void SetAISkill(AIAgent aiAgent, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
+	static void SetAISettings(AIAgent aiAgent, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
-		GetGame().GetCallqueue().CallLater(SetAISkillDelayed, AI_SETTING_DELAY, false, aiAgent, skill, perceptionFactor);
+		GetGame().GetCallqueue().CallLater(SetAISettingsDelayed, SDRC_Conf.AI_SETTING_DELAY, false, aiAgent, skill, perceptionFactor);
 	}
 		
-	static void SetAISkillDelayed(AIAgent aiAgent, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
+	static void SetAISettingsDelayed(AIAgent aiAgent, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
 		if (!aiAgent)
 			return;
@@ -216,22 +217,26 @@ sealed class SDRC_AIHelper
 	        combatComponent.SetPerceptionFactor(perceptionFactor);
 //	        combatComponent.SetCombatType(combatType);
 //	        combatComponent.SetHoldFire(holdFire);
-	    }		
+	    }
+		
+		SDRC_SpawnHelper.SetPersistence(aiAgent, false);		
 	}
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Set skill and perception for all AIs in the group
-	
+	Set settings for AI
+	- skill and perception
+	- persistence
+		
 	See SCR_AICombatComponent for details
 	NOTE: The setting will affect only if the AI has been spawned -> needs to be delayed.	
 	*/
-	static void SetAIGroupSkill(SCR_AIGroup group, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
+	static void SetAIGroupSettings(SCR_AIGroup group, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
-		GetGame().GetCallqueue().CallLater(SetAIGroupSkillDelayed, AI_SETTING_DELAY, false, group, skill, perceptionFactor);
+		GetGame().GetCallqueue().CallLater(SetAIGroupSettingsDelayed, SDRC_Conf.AI_SETTING_DELAY, false, group, skill, perceptionFactor);
 	}
 		
-	static void SetAIGroupSkillDelayed(SCR_AIGroup group, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
+	static void SetAIGroupSettingsDelayed(SCR_AIGroup group, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
 		array<AIAgent> groupMembers  = new array<AIAgent>;
 		
@@ -241,7 +246,7 @@ sealed class SDRC_AIHelper
 			
 			foreach (AIAgent groupMember : groupMembers)
 			{
-				SetAISkillDelayed(groupMember, skill, perceptionFactor);
+				SetAISettingsDelayed(groupMember, skill, perceptionFactor);
 			}
 		}
 	}
@@ -254,7 +259,7 @@ sealed class SDRC_AIHelper
 	*/
 	static void SetAIGroupMovementType(SCR_AIGroup group, EMovementType movementType)
 	{
-		GetGame().GetCallqueue().CallLater(SetAIGroupMovementTypeDelayed, AI_SETTING_DELAY, false, group, movementType);
+		GetGame().GetCallqueue().CallLater(SetAIGroupMovementTypeDelayed, SDRC_Conf.AI_SETTING_DELAY, false, group, movementType);
 	}
 	
 	static void SetAIGroupMovementTypeDelayed(SCR_AIGroup group, EMovementType movementType)
@@ -289,7 +294,7 @@ sealed class SDRC_AIHelper
 	*/
 	static void SetAIGroupEnable(SCR_AIGroup group, bool enable = true)
 	{
-		GetGame().GetCallqueue().CallLater(SetAIGroupEnableDelayed, AI_SETTING_DELAY, false, group, enable);
+		GetGame().GetCallqueue().CallLater(SetAIGroupEnableDelayed, SDRC_Conf.AI_SETTING_DELAY, false, group, enable);
 	}
 	
 	static void SetAIGroupEnableDelayed(SCR_AIGroup group, bool enable)

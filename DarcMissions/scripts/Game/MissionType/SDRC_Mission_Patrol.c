@@ -143,7 +143,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroupRandom(m_DC_Patrol.ai.types, GetPos(), GetFaction());
 			if (group)
 			{
-				SDRC_AIHelper.SetAIGroupSkill(group, m_DC_Patrol.ai.GetSkill(m_DC_Patrol.general.difficulty), m_DC_Patrol.ai.GetPerception(m_DC_Patrol.general.difficulty));					
+				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Patrol.ai.GetSkill(m_DC_Patrol.general.difficulty), m_DC_Patrol.ai.GetPerception(m_DC_Patrol.general.difficulty));					
 				m_Groups.Insert(group);
 				if (m_DC_Patrol.ai.waypointGenType == SDRC_EWaypointGenerationType.ROUTE)
 				{
