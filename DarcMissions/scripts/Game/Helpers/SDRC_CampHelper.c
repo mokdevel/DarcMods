@@ -57,7 +57,7 @@ sealed class SDRC_CampHelper
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_campHelper:Spawn] Could not load: " + camp.campItems[idx], LogLevel.ERROR);
+				SDRC_Log.Add("[SDRC_CampHelper:Spawn] Could not load: " + camp.campItems[idx], LogLevel.ERROR);
 			}
 			
 			return false;
@@ -73,7 +73,7 @@ sealed class SDRC_CampHelper
 				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroupRandom(camp.ai.types, mission.GetPos(), mission.GetFaction());
 				if (group)
 				{
-					SDRC_AIHelper.SetAIGroupSkill(group, camp.ai.GetSkill(camp.general.difficulty), camp.ai.GetPerception(camp.general.difficulty));					
+					SDRC_AIHelper.SetAIGroupSettings(group, camp.ai.GetSkill(camp.general.difficulty), camp.ai.GetPerception(camp.general.difficulty));					
 					mission.AddToGroupsList(group);
 					
 					int minRange = camp.ai.waypointRange[0];
@@ -98,7 +98,7 @@ sealed class SDRC_CampHelper
 				}
 				else
 				{
-					SDRC_Log.Add("[SDRC_Mission_Patrol:MissionSpawn] AI groups spawned: " + mission.GetGroupsCount() + " (tried: " + aiCount + ")", LogLevel.DEBUG);
+					SDRC_Log.Add("[SDRC_CampHelper:Spawn] AI groups spawned: " + mission.GetGroupsCount() + " (tried: " + aiCount + ")", LogLevel.DEBUG);
 				}
 			}
 			
@@ -115,7 +115,7 @@ sealed class SDRC_CampHelper
 			{
 				camp.loot.box = mission.GetFromEntityList(0);
 				SDRC_LootHelper.SpawnItemsToStorage(camp.loot.box, camp.loot.items, camp.loot.itemChance);
-				SDRC_Log.Add("[SDRC_campHelper:Spawn] Loot added.", LogLevel.DEBUG);								
+				SDRC_Log.Add("[SDRC_CampHelper:Spawn] Loot added.", LogLevel.DEBUG);								
 			}*/
 
 			return true;			
@@ -140,7 +140,7 @@ sealed class SDRC_CampHelper
 		
 		//NOTE: itemChance difficulty is handled in TBD
 		SDRC_LootHelper.SpawnItemsToStorage(camp.loot.box, camp.loot.items, camp.loot.itemChance);
-		SDRC_Log.Add("[SDRC_campHelper:AddLoot] Loot added.", LogLevel.DEBUG);								
+		SDRC_Log.Add("[SDRC_CampHelper:AddLoot] Loot added.", LogLevel.DEBUG);								
 		
 		return true;
 	}
