@@ -82,20 +82,21 @@ sealed class SDRC_LootHelper
 				if ((SDRC_Misc.RandomFloat(0, 1) < itemChance))
 				{
 					bool addToBox = false;
-					
-					//If it's defined as a list item, add to box
+										
+					//If it's defined as a WEAPON_ list item, add ammo to box
 					if (itemName.Contains("WEAPON_"))
 					{
 						addToBox = true;
 					}
 					else 
-					{ //If using original prefab name and it's not magazine nor ammo, add to box
+					{ 	//If using original prefab name and it's not magazine, ammo nor an item, add to box
 						if ( !addToBox &&
 						     (!resource.Contains("/Weapons/Magazines/")) && 
 						     (!resource.Contains("/Weapons/Ammo/")) &&
 						     (!resource.Contains("/Weapons/Attachments/")) &&
 						     (!resource.Contains("/Weapons/Grenades/")) &&
-						     (!resource.Contains("Prefabs/Items/"))
+						     (!resource.Contains("Prefabs/Items/")) //&&			//Items
+						     //(!resource.Contains("Prefabs/Characters/"))		//Clothing etc
 						   )
 						{
 							addToBox = true;
@@ -180,7 +181,7 @@ sealed class SDRC_LootHelper
 		items.Copy(m_Config.lists[lootIndex].items);
 		return true;
 	}	
-					
+
 	//------------------------------------------------------------------------------------------------
 	/*! 
 	Try to add an item to a storage of an entity

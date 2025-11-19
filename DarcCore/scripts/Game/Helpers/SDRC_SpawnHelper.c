@@ -44,7 +44,9 @@ sealed class SDRC_SpawnHelper
 			//Find the size
 			vector sums = FindPrefabSize(resourceName);
 			if (sums == "0 0 0")
+			{
 				return null;
+			}
 			
 			//Spawn the resource to a free spot close to pos
 			if (FindEmptyPos(pos, emptyPosRadius, (SDRC_Misc.FindMaxValue(sums)/SIZEDIV) ) )
@@ -229,7 +231,11 @@ sealed class SDRC_SpawnHelper
 		
 	static void SetPersistenceDelayed(IEntity entity, bool persistence = true)
 	{
-		//TBD: if (SDRC_Conf.DISABLE_Persistence)
+		if (!entity)
+		{
+			return;
+		}
+		
 		if (PersistenceSystem.GetInstance())
 		{
 			bool success;
@@ -282,7 +288,7 @@ sealed class SDRC_SpawnHelper
 		SDRC_Log.Add(string.Format("[SDRC_SpawnHelper:FindPrefabSize] Itemsize: %1, X: %2, Y: %3, Z: %4, S: %5", SDRC_Misc.FindMaxValue(sums), maxs[0]-mins[0], maxs[1]-mins[1], maxs[2]-mins[2], sums), LogLevel.SPAM);							
 				
 		//Delete the unnecessary resource that we used for getting the bounding box. Wait for it to initialize properly.
-		GetGame().GetCallqueue().CallLater(DespawnItem, 10000, false, entity);
+		GetGame().GetCallqueue().CallLater(DespawnItem, SDRC_Conf.DESPAWN_ENTITY_USED_FOR_SIZE_DELAY, false, entity);
 		
 		return sums;
 	}

@@ -52,7 +52,7 @@ sealed class SDRC_AmmoHelper
 			FindCompatibleMagazineList(magazineList, wpn);
 			
 			//Delete the unnecessary weapon that we used for finding the magazine
-			GetGame().GetCallqueue().CallLater(SDRC_SpawnHelper.DespawnItem, 10000, false, wpn);
+			GetGame().GetCallqueue().CallLater(SDRC_SpawnHelper.DespawnItem, SDRC_Conf.DESPAWN_ENTITY_USED_FOR_SIZE_DELAY, false, wpn);
 			
 			if (!magazineList.IsEmpty())
 			{
