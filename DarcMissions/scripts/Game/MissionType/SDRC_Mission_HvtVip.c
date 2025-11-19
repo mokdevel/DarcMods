@@ -348,7 +348,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 	{
 		//Default
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,0,1,2,3,3};
+		conf.missionList = {0,1,2,3,3,4};
 		//Mission specific
 		conf.buildingRadius = 400;
 		//----------------------------------------------------
@@ -356,6 +356,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		conf.subMissions.Insert(HvtVip1());				
 		conf.subMissions.Insert(HvtVip2());				
 		conf.subMissions.Insert(HvtVip3());				
+		conf.subMissions.Insert(HvtVip4());				
 	};
 			
 	//----------------------------------------------------
@@ -532,7 +533,7 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 			"Assassinate the criminal boss. He tries to keep low profile.",
 			SDRC_EMissionWinCondition.HVT_KILL_VIP,
 			"The criminal got what he deserved.",
-			"The judgement day is posponed.",
+			"The judgement day is postponed.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
 			SDRC_EMissionDifficulty.NORMAL,
@@ -567,5 +568,55 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 
 		return HvtVip;	
 	};		
-	
+
+	//----------------------------------------------------
+	SDRC_HvtVip HvtVip4()
+	{
+		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
+		HvtVip.general.Set(
+			4, "index 4: Drunks in pubs",
+			{"0 0 0"}, 0, 
+			{
+				//We pick any building that matches and ignore location
+			},
+			"any",
+			"Drunks and punks in %l",
+			"Assassinate the drunk leader. Most likely hides in a pub.",
+			SDRC_EMissionWinCondition.HVT_KILL_VIP,
+			"Free drinks for everyone!",
+			"No drinks for you this time.",
+			"",
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
+			SDRC_EMissionDifficulty.NORMAL,
+			0		
+		);
+		HvtVip.ai.Set(
+			{1,2},
+			{"G_LIGHT", "G_ADMIN", "G_MEDICAL"},
+			50, 0.6,
+			{0, 0},
+			SDRC_EWaypointGenerationType.NONE, 
+			SDRC_EWaypointMoveType.NONE		
+		);
+		HvtVip.Set(
+			{"PubVillage_", "ShopHouse_", },
+			"{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
+			"{A2B367FFF37E6416}Prefabs/Characters/Factions/CIV/Dockworker/Character_CIV_Dockworker_5.et"
+		);
+		
+		ref SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
+				"CLOTHING_HEADGEAR", "CLOTHING_UNIFORM", "CLOTHING_UNIFORM", "CLOTHING_UNIFORM", 
+				"WEAPON_GRENADE", 
+				"UTIL_ATTACHMENT", 
+				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", 
+				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", 
+			};
+		loot.Set(0.7, lootItems);
+		HvtVip.loot = loot;
+
+		return HvtVip;	
+	};		
 }
