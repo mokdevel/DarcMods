@@ -7,7 +7,9 @@
 ### DarcMissions
 
 Changes:
-- Added a new loot box ```LootSupplyPortableContainers_01_large_item.et```
+* Added a new loot box ```LootSupplyPortableContainers_01_large_item.et```
+* Requested missions (e.g. GM spawned) will ignore other missions and players nearby. You can drop many missions on the same spot if you like.
+* Squatters mission: GM spawned mission will pick the nearest building.
 
 Fixes:
 - Removed MDT_RAILWAY from location search. Search took a long time on Gulfcoast Island map.
