@@ -27,33 +27,12 @@ SCR_AIWorld : "{E0A05C76552E7F58}Prefabs/AI/SCR_AIWorld.et" {
 PerceptionManager PerceptionManager1 : "{028DAEAD63E056BE}Prefabs/World/Game/PerceptionManager.et" {
  coords 2049.369 40.666 2043.809
 }
-SCR_BaseGameMode GameMode_Plain1 : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
- Flags 0x200000 0
- coords 2047.711 40.889 2044.993
-}
-SCR_FactionManager FactionManager_Editor1 : "{4A188E44289B9A50}Prefabs/MP/Managers/Factions/FactionManager_Editor.et" {
- Flags 0x200000 0x3
- coords 901.379 39 2624.3
- Factions {
-  SCR_Faction "{56DEAC40D132400B}" {
-  }
-  SCR_Faction "{607AA5C7A94496DA}" {
-  }
- }
-}
-SCR_BaseGameMode GameMode_Deathmatch_Automatic1 : "{B00D51315A1C7150}Prefabs/MP/Modes/Deathmatch/GameMode_Deathmatch_Automatic.et" {
- Flags 0x200000 0x3
- coords 896.081 39 2619.443
-}
-SCR_GameModeEditor GameMode_Editor1 : "{D2DE7F43D48A3667}Prefabs/MP/Modes/Editor/GameMode_Editor.et" {
- coords 1412.4 38.99 2085.466
+SCR_GameModeEditor GameMode_Editor_Full1 : "{DA3986AF1B5032B7}Prefabs/MP/Modes/Editor/GameMode_Editor_Full.et" {
+ coords 1410.139 38.598 2083.971
 }
 SCR_SpawnPoint : "{4FEA25583D0975F7}Prefabs/MP/Spawning/SpawnPoint_USSR.et" {
  coords 906.641 39.009 2620.362
 }
 SCR_SpawnPoint : "{5A2220DD0C16958B}Prefabs/MP/Spawning/SpawnPoint_US.et" {
  coords 913.577 39.009 2624.571
-}
-SCR_LoadoutManager : "{97EF4C1A41F63DDB}Prefabs/MP/Managers/Loadouts/LoadoutManager_USxUSSR.et" {
- coords 2045.277 36.678 2036.786
 }

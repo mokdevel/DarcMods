@@ -16,9 +16,12 @@ sealed class SDRC_Conf
 	const string CORE_CONFIG_FILE = "dc_coreConfig.json";
 	static string subDir = "";
 	static bool coreHasStarted = false;
-	const int MISSION_RUN_DELAY = 5000;					//Time between INIT and SPAWN states.
-	const int PERSISTENCE_DELAY = 5000;					//Time to delay the persistence setting for spawned entities. 
-	//TBD: const int MISSION_END_TIME = 5000;			//Time to set for mission cycle when mission is set to end.
+	const int MISSION_RUN_DELAY = 5000;						//Time between INIT and SPAWN states.
+	const int PERSISTENCE_DELAY = 6000;						//Time to delay the persistence setting for spawned entities. 
+	const int DESPAWN_ENTITY_USED_FOR_SIZE_DELAY = 5000;	//Time to delay the deletion of an entity that was used for defining the size or weapon used for finding the mag.
+	const int AI_SETTING_DELAY = 10000;
+	
+	//TBD: const int MISSION_END_TIME = 5000;				//Time to set for mission cycle when mission is set to end.
 	
 //Release options	
 #ifdef SDRC_RELEASE

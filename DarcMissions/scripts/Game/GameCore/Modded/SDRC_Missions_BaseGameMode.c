@@ -31,7 +31,10 @@ modded class SCR_BaseGameMode
 					SDRC_Log.Add("[SDRC_Missions_BaseGameMode] Failed to create RPLGMHelper.", LogLevel.ERROR);
 					return;
 				}
+//				IEntity entity = SDRC_SpawnHelper.SpawnEntityPrefabPersistence(resource, GetGame().GetWorld())
+//				m_SDRC_RplGMEntity = SDRC_RplHintEntity.Cast(entity);
 				m_SDRC_RplGMEntity = SDRC_RplGMEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));
+				SDRC_SpawnHelper.SetPersistence(m_SDRC_RplGMEntity, false);
 				
 				SDRC_Log.Add("[SDRC_Missions_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
 				GetGame().GetCallqueue().CallLater(StartMissionFrame, 5000, false);	
