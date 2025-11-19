@@ -5,34 +5,43 @@
 ## Next release (unreleased)
 
 ### DarcMissions
-
+No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
+Main features:
+* Persistence (vanilla) handling. All entities (AI, vehicles, buildings) spawned will have the persistence disabled. This means that none of the items should end up in your save and become re-spawned when server boots.
+* Known issues with the current implementation:
+  * AI that was active in a fight, seems to be saved even if persistence was disabled.
+  * The persistence disabling happens with a delay (a few seconds) to allow the entities to spawn properly. If your server crashes during this delay, they may end up in your save.
+  
 Changes:
 * Added a new loot box ```LootSupplyPortableContainers_01_large_item.et```
 * Requested missions (e.g. GM spawned) will ignore other missions and players nearby. You can drop many missions on the same spot if you like.
 * Squatters mission: GM spawned mission will pick the nearest building.
+* Crashsite mission: Additional randomization to flight pattern. Hopefully less landings on sea.
+* HvtVip mission: New sub-mission.
 
 Fixes:
-- Removed MDT_RAILWAY from location search. Search took a long time on Gulfcoast Island map.
-- It was possible to drag items like cars in the loot boxes which resulted in a crash.
+* Removed MDT_RAILWAY from location search. Search took a long time on Gulfcoast Island map.
+* It was possible to drag items like cars in the loot boxes which resulted in a crash.
+* Some of the loot boxes were invisible.
 
 ## 20251104
 ### DarcMissions
 No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
 Fixes:
-- Added better support for Tactical Flava mod. If you use the mod, remove ``dc_enemyList.json`` to get a new one.
-- Extended ``akas`` functionality in ``dc_enemyList.json`` to support more complex filtering. See docs.
-- Clicking on the map icon did not show the intel / time left.
-- Mission will fail if AI spawn fails.
-- Occupation drop from GM had wrong mission type
+* Added better support for Tactical Flava mod. If you use the mod, remove ``dc_enemyList.json`` to get a new one.
+* Extended ``akas`` functionality in ``dc_enemyList.json`` to support more complex filtering. See docs.
+* Clicking on the map icon did not show the intel / time left.
+* Mission will fail if AI spawn fails.
+* Occupation drop from GM had wrong mission type
 
 ## 20251102
 ### DarcMissions
 No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
 Fixes:
-- Added better support for Rayzis Optics. Remove your dc_lootList.json to get a new updated one.
-- Marker issue "NULL pointer to instance. Variable 'm_wMarkerTimestamp'" fixed
-- Issue "(E): Math.RandomInt" fixes. Happened when min/max were the same.
-- AI removal is immediate instead of setting first damage. Hopefully fixes some FPS drops reported.
+* Added better support for Rayzis Optics. Remove your dc_lootList.json to get a new updated one.
+* Marker issue "NULL pointer to instance. Variable 'm_wMarkerTimestamp'" fixed
+* Issue "(E): Math.RandomInt" fixes. Happened when min/max were the same.
+* AI removal is immediate instead of setting first damage. Hopefully fixes some FPS drops reported.
 
 ## 20251030
 ### Update for Arma Reforger 1.6
