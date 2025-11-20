@@ -8,7 +8,7 @@ Stupid file to handle a few common variables accross multiple mods
 //#define SDRC_RELEASE
 //#define EXPERIMENTAL
 //#define NEW_VERSION_WIP		//New functionality (..that affects jsons)
-#define NEW_PERSISTENCE
+//#define NEW_PERSISTENCE
 
 sealed class SDRC_Conf
 {
@@ -20,6 +20,7 @@ sealed class SDRC_Conf
 	const int PERSISTENCE_DELAY = 6000;						//Time to delay the persistence setting for spawned entities. 
 	const int DESPAWN_ENTITY_USED_FOR_SIZE_DELAY = 5000;	//Time to delay the deletion of an entity that was used for defining the size or weapon used for finding the mag.
 	const int AI_SETTING_DELAY = 10000;
+	const int POSITION_RANDOMIZATION = 150;					//Randomization for position. 
 	
 	//TBD: const int MISSION_END_TIME = 5000;				//Time to set for mission cycle when mission is set to end.
 	

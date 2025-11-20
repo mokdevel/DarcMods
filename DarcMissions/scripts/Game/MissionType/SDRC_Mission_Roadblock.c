@@ -48,7 +48,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		}
 		else
 		{				
-			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Roadblock.general.pos, m_DC_Roadblock.general.size, m_DC_Roadblock.general.locationTypes);
+			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Roadblock.general.pos, m_DC_Roadblock.general.size, m_DC_Roadblock.general.locationTypes, SDRC_Conf.POSITION_RANDOMIZATION);
 		}
 		
 		//If pos has been set, we blindly accept it. Do basic checking for pos.

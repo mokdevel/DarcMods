@@ -47,7 +47,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		}
 		else
 		{				
-			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Occupation.general.pos, m_DC_Occupation.general.size, m_DC_Occupation.general.locationTypes);
+			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Occupation.general.pos, m_DC_Occupation.general.size, m_DC_Occupation.general.locationTypes, SDRC_Conf.POSITION_RANDOMIZATION);	//Randomization added to avoid the same position always
 		}
 		
 		//If pos has been set, we blindly accept it. Do basic checking for pos.
