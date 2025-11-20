@@ -10,8 +10,6 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/DestructibleMultiPhase_Pro
    ModelGeometry 1
    Static 1
   }
-  SCR_ArsenalComponent "{66E311A91DD5DE01}" {
-  }
   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" : "{76DA308CC9E2AB84}Prefabs/Props/Core/DestructionMultiPhase_Base.ct" {
    Enabled 1
    m_fBaseHealth 300
@@ -30,13 +28,18 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/DestructibleMultiPhase_Pro
    }
    m_eMaterialSoundType BREAK_PLASTIC
   }
-  UniversalInventoryStorageComponent "{661F07F0EA7385C3}" {
+  SCR_UniversalInventoryStorageComponent "{661F07F0EA7385C3}" {
    Attributes SCR_ItemAttributeCollection "{661F07F35975C1B6}" {
     ItemDisplayName SCR_InventoryUIInfo "{661F07F34467FAE4}" {
     }
+    m_bDraggable 0
+    m_bRefundable 0
    }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 1000
   }
-  ScriptedInventoryStorageManagerComponent "{661F07F0972C6369}" {
+  SCR_InventoryStorageManagerComponent "{661F07F0972C6369}" {
   }
   ActionsManagerComponent "{661F07F0936E4812}" {
    ActionContexts {

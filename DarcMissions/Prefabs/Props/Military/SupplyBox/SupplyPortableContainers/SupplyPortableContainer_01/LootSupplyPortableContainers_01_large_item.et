@@ -34,8 +34,6 @@ GenericEntity : "{4E866C1E6F114AB4}Prefabs/Props/Military/SupplyBox/SupplyPortab
   RigidBody "{5872F0EB7DFB5A9D}" {
    ResponseIndex "TinyDestructible"
   }
-  SCR_ArsenalComponent "{66E311AB5B0B01E6}" {
-  }
   SCR_ResourceComponent "{5D247A59598D71AE}" {
    Enabled 0
    m_aContainers {
@@ -43,11 +41,20 @@ GenericEntity : "{4E866C1E6F114AB4}Prefabs/Props/Military/SupplyBox/SupplyPortab
     }
    }
   }
-  UniversalInventoryStorageComponent "{66E311A8A8DDD15D}" {
+  SCR_UniversalInventoryStorageComponent "{66E311A8A8DDD15D}" {
    Attributes SCR_ItemAttributeCollection "{66E311AB57251F1E}" {
     ItemDisplayName SCR_InventoryUIInfo "{66E311AB539D464F}" {
+     Name "Loot box"
     }
+    m_Size SLOT_2x2
+    m_bDraggable 0
+    m_bRefundable 0
    }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 1000
+  }
+  SCR_InventoryStorageManagerComponent "{66E932829C43A228}" {
   }
   ActionsManagerComponent "{66E311A8240AEB8A}" {
    ActionContexts {

@@ -4,15 +4,20 @@ GenericEntity : "{7030822F7A54F479}Prefabs/Props/Crates/CrateWooden_01_base.et" 
   RigidBody "{5872F0EB7DFB5A9D}" {
    Static 1
   }
-  SCR_ArsenalComponent "{66E311A988FDFA0D}" {
-  }
-  UniversalInventoryStorageComponent "{648701879D1D2E68}" {
+  SCR_UniversalInventoryStorageComponent "{648701879D1D2E68}" {
    Attributes SCR_ItemAttributeCollection "{648701847D60E0AC}" {
     ItemDisplayName SCR_InventoryUIInfo "{648701847A20DAFE}" {
+     Name "Loot box"
     }
+    m_Size SLOT_3x3
+    m_bDraggable 0
+    m_bRefundable 0
    }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 1000
   }
-  ScriptedInventoryStorageManagerComponent "{6487018B8D7DC150}" {
+  SCR_InventoryStorageManagerComponent "{6487018B8D7DC150}" {
   }
   ActionsManagerComponent "{648553C12639279E}" {
    ActionContexts {

@@ -1,41 +1,54 @@
 GenericEntity : "{7030822F7A54F479}Prefabs/Props/Crates/CrateWooden_01_base.et" {
  ID "51E0C144AB96DABD"
  components {
+  MeshObject "{5872F0EB7FA40561}" {
+   Materials {
+    MaterialAssignClass "{66E93283BEE4E637}" {
+     SourceMaterial "CrateWooden_01"
+     AssignedMaterial "{24AD2F3D4740C89E}Assets/Props/Crates/CrateWooden_01/Data/CrateWooden_01_blue.emat"
+    }
+   }
+  }
   RigidBody "{5872F0EB7DFB5A9D}" {
    Static 1
   }
-  SCR_ArsenalComponent "{66E311A9B6DEFBF4}" {
-  }
-  UniversalInventoryStorageComponent "{64889D44AC8CB26F}" {
-   Attributes SCR_ItemAttributeCollection "{64889D4540446FE0}" {
-    ItemDisplayName SCR_InventoryUIInfo "{64889D454C22A460}" {
+  SCR_UniversalInventoryStorageComponent "{66E93283842D9CC3}" {
+   Attributes SCR_ItemAttributeCollection "{66E93283842D8C49}" {
+    ItemDisplayName SCR_InventoryUIInfo "{66E93283842D8C56}" {
+     Name "Loot box"
     }
+    m_Size SLOT_3x3
+    m_bDraggable 0
+    m_bRefundable 0
    }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 1000
   }
-  ScriptedInventoryStorageManagerComponent "{64889D455A02339A}" {
+  SCR_InventoryStorageManagerComponent "{66E93283842D8C61}" {
   }
-  ActionsManagerComponent "{64889D4553C7C06C}" {
+  ActionsManagerComponent "{66E93283842D8C65}" {
    ActionContexts {
-    UserActionContext "{64889D4579AD9561}" {
+    UserActionContext "{66E93283842D8C68}" {
      ContextName "default"
-     Position PointInfo "{64889D45606BC3D2}" {
+     Position PointInfo "{66E93283842D8C72}" {
      }
-     Radius 1.53
+     Radius 1.57
     }
    }
    additionalActions {
-    SCR_OpenStorageAction "{64889D4516FD109F}" {
+    SCR_OpenStorageAction "{66E93283842D8C74}" {
      ParentContextList {
       "default"
      }
-     UIInfo UIInfo "{64889D451C99294D}" {
+     UIInfo UIInfo "{66E93283842D8C78}" {
       Name "Open Loot"
      }
      "Sort Priority" 1000
     }
    }
   }
-  Hierarchy "{64889D45567CFED6}" {
+  Hierarchy "{66E93283842D8C01}" {
   }
  }
  coords 1.956 3.131 -1.565

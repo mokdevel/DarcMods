@@ -4,21 +4,26 @@ GenericEntity : "{A5AC0827E24C1929}Prefabs/Props/Core/SupplyBox_Base.et" {
   MeshObject "{5872F0EB7FA40561}" {
    Object "{E535C6A8397ACFE0}Assets/Props/Military/SupplyBox/SupplyCrate/SupplyCrate_01_item.xob"
   }
-  SCR_ArsenalComponent "{66E311A905AAC2F4}" {
-  }
   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
    m_eMaterialSoundType BREAK_WOOD_SOLID
   }
   SCR_ResourceComponent "{5D247A59598D71AE}" {
    Enabled 0
   }
-  UniversalInventoryStorageComponent "{64889D464A1C1DFE}" {
+  SCR_UniversalInventoryStorageComponent "{64889D464A1C1DFE}" {
    Attributes SCR_ItemAttributeCollection "{64889D46761572CB}" {
     ItemDisplayName SCR_InventoryUIInfo "{64889D4671635226}" {
+     Name "Loot box"
     }
+    m_Size SLOT_3x3
+    m_bDraggable 0
+    m_bRefundable 0
    }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 1000
   }
-  ScriptedInventoryStorageManagerComponent "{6488DB069B96FABC}" {
+  SCR_InventoryStorageManagerComponent "{6488DB069B96FABC}" {
   }
   ActionsManagerComponent "{64889D4667F7E0EB}" {
    ActionContexts {

@@ -4,8 +4,6 @@ GenericEntity : "{7E2EC66747A3FBA3}Prefabs/Props/Crates/CrateWooden_02/CrateWood
   MeshObject "{5872F0EB7FA40561}" {
    Object "{569C9B8C543D3020}Assets/Props/Crates/CrateWooden_02/CrateWooden_02_1x1x1.xob"
   }
-  SCR_ArsenalComponent "{66E311A96BC6A5AA}" {
-  }
   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
    m_aDamagePhases {
     SCR_DamagePhaseData "{5C54D7C1B2724555}" {
@@ -19,13 +17,20 @@ GenericEntity : "{7E2EC66747A3FBA3}Prefabs/Props/Crates/CrateWooden_02/CrateWood
     }
    }
   }
-  UniversalInventoryStorageComponent "{65171C0CB0F935A5}" {
+  SCR_UniversalInventoryStorageComponent "{65171C0CB0F935A5}" {
    Attributes SCR_ItemAttributeCollection "{65171C0D50109096}" {
     ItemDisplayName SCR_InventoryUIInfo "{65171C0D72E91A5C}" {
+     Name "Loot box"
     }
+    m_Size SLOT_3x3
+    m_bDraggable 0
+    m_bRefundable 0
    }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 1000
   }
-  ScriptedInventoryStorageManagerComponent "{65171C0CB94FFBFD}" {
+  SCR_InventoryStorageManagerComponent "{65171C0CB94FFBFD}" {
   }
   ActionsManagerComponent "{65171C0EDC9CDA97}" {
    ActionContexts {
