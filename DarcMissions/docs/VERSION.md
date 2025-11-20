@@ -13,7 +13,7 @@ Main features:
   * The persistence disabling happens with a delay (a few seconds) to allow the entities to spawn properly. If your server crashes during this delay, they may end up in your save.
   
 Changes:
-* Added a new loot box ```LootSupplyPortableContainers_01_large_item.et```
+* Added a new loot boxes ```LootSupplyPortableContainers_01_large_item.et``` , ```LootEquipmentBoxWooden_Equipment_01_US.et```
 * Requested missions (e.g. GM spawned) will ignore other missions and players nearby. You can drop many missions on the same spot if you like.
 * Squatters mission: GM spawned mission will pick the nearest building.
 * Crashsite mission: Additional randomization to flight pattern. Hopefully less landings on sea.
