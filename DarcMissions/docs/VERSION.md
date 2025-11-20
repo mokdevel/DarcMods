@@ -17,6 +17,8 @@ Changes:
 * Requested missions (e.g. GM spawned) will ignore other missions and players nearby. You can drop many missions on the same spot if you like.
 * Squatters mission: GM spawned mission will pick the nearest building.
 * Crashsite mission: Additional randomization to flight pattern. Hopefully less landings on sea.
+* Occupation mission: Additional randomization for the position.
+* Stash mission: Additional randomization for the position.
 * HvtVip mission: New sub-mission.
 
 Fixes:
