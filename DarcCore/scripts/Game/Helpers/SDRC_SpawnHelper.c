@@ -6,7 +6,7 @@ Includes various functions for spawning entities (items) on map.
 */
 
 //------------------------------------------------------------------------------------------------
-sealed class SDRC_SpawnHelper
+class SDRC_SpawnHelper
 {
 	const float SIZEDIV = 1.8;
 	const float EMPTY_POS_RADIUS = 50;	//How far from the center the spawned position can be.
@@ -261,7 +261,7 @@ sealed class SDRC_SpawnHelper
 			}
 		}	
 	}	
-	
+
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find size of a prefab
