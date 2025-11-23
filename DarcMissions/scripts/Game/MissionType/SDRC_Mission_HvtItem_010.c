@@ -62,6 +62,7 @@ class SDRC_HvtItem_010_JsonApi : SDRC_HvtItemJsonApi
 				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
 				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
 			};
 		loot.Set(0.5, lootItems);
 		hvtItem.loot = loot;

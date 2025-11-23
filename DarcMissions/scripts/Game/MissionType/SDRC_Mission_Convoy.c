@@ -209,8 +209,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		m_EntityList.Insert(m_Vehicle);
 		
 		//Disable arsenal
+		SDRC_VehicleHelper.EmptyStorage(m_Vehicle);
 		SDRC_VehicleHelper.DisableVehicleArsenal(m_Vehicle, resourceName, m_Config.disableArsenal);
-		SDRC_VehicleHelper.SetPersistence(m_Vehicle);
 		
 		AICarMovementComponent vehicle_c = AICarMovementComponent.Cast(m_Vehicle.FindComponent(AICarMovementComponent));
         vehicle_c.SetCruiseSpeed(m_DC_Convoy.cruiseSpeed);
@@ -233,7 +233,11 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			
 			posg[0] = posg[0] + 4;
 		}
-		
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	override void DoWin()
+	{	
 		//Put loot
 		if (m_DC_Convoy.loot)			
 		{
@@ -242,8 +246,9 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			m_DC_Convoy.loot.itemChance = SDRC_MissionHelper.GetLootChance(m_DC_Convoy.loot.itemChance, m_DC_Convoy.general.difficulty);
 
 			SDRC_LootHelper.SpawnItemsToStorage(m_DC_Convoy.loot.box, m_DC_Convoy.loot.items, m_DC_Convoy.loot.itemChance);
-			SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] Loot added.", LogLevel.DEBUG);								
+			SDRC_Log.Add("[SDRC_Mission_Convoy:DoWin] Loot added.", LogLevel.DEBUG);								
 		}		
+		super.DoWin();
 	}
 }
 	
@@ -425,11 +430,10 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
-				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
-				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", 
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", 
+				"GEAR_BAG", 
+				"CLOTHING_HEADGEAR", "CLOTHING_UNIFORM",
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
@@ -500,7 +504,9 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", 
 				"WEAPON_LAUNCHER",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
-				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"			
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_BAG", 
+				"CLOTHING_HEADGEAR", "CLOTHING_UNIFORM",
 			};
 		loot.Set(0.9, lootItems);
 		convoy.loot = loot;			
@@ -563,7 +569,8 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 				"WEAPON_HANDGUN", 
 				"WEAPON_LAUNCHER", 
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
-				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"			
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_BAG", "GEAR_BAG", 
 			};
 		loot.Set(0.7, lootItems);
 		convoy.loot = loot;
@@ -626,7 +633,8 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 				"WEAPON_RIFLE", 
 				"WEAPON_HANDGUN", 
 				"WEAPON_GRENADE", "WEAPON_GRENADE", 
-				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"			
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
 			};
 		loot.Set(0.9, lootItems);
 		convoy.loot = loot;		

@@ -338,6 +338,8 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_BAG", 
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
 			};
 		loot.Set(0.7, lootItems);
 		roadblock.loot = loot;
@@ -415,7 +417,8 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
-				"UTIL_MAGAZINE", "UTIL_MAGAZINE"
+				"UTIL_MAGAZINE", "UTIL_MAGAZINE",
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
 			};
 		loot.Set(0.9, lootItems);
 		roadblock.loot = loot;
@@ -562,7 +565,9 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
-				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO"
+				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO",
+				"CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", 
+				"CLOTHING_UNIFORM", "CLOTHING_UNIFORM",			
 			};
 		loot.Set(0.6, lootItems);
 		roadblock.loot = loot;
@@ -692,6 +697,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO",
+				"GEAR_BAG", 			
 			};
 		loot.Set(0.6, lootItems);
 		roadblock.loot = loot;

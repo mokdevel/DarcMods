@@ -258,12 +258,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 			
 			//Disable arsenal
 			SDRC_VehicleHelper.DisableVehicleArsenal(m_Vehicle, helicopterInfo.resource, true);
-#ifdef NEW_PERSISTENCE	
-			SDRC_VehicleHelper.SetPersistence(m_Vehicle, false);
-#endif
-#ifndef NEW_PERSISTENCE	
-			SDRC_VehicleHelper.SetPersistence(m_Vehicle);
-#endif				
+			SDRC_VehicleHelper.EmptyStorage(m_Vehicle);
 		}
 		else
 		{
@@ -478,11 +473,11 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		ref SDRC_Loot crashloot0 = new SDRC_Loot();
 		array<string> lootItems0 = {
-				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-				"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-				"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
-				"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
-				"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", 
+				"ITEM_MEDICAL", "ITEM_MEDICAL", 
+				"GEAR_BAG", 
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
+				"CLOTHING_HEADGEAR", "CLOTHING_UNIFORM",
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
@@ -577,6 +572,8 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 				"UTIL_OPTIC", 
 				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", 
 				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", 
+				"GEAR_BAG", 
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
 			};
 		loot.Set(0.7, lootItems1);
 		crashsite.loot = loot;

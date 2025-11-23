@@ -453,13 +453,13 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_ATTACHMENT", "UTIL_OPTIC", 
 				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", 
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL",
+				"CLOTHING_HEADGEAR", "CLOTHING_UNIFORM",
 			};
 		loot.Set(0.7, lootItems);
 		HvtVip.loot = loot;
@@ -504,13 +504,15 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_ATTACHMENT", "UTIL_OPTIC", 
 				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", 
-				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
+				"ITEM_MEDICAL", "ITEM_MEDICAL",	
 				"ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_BAG", 
+				"CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", 
+				"CLOTHING_UNIFORM",	"CLOTHING_UNIFORM",
 			};
 		loot.Set(0.7, lootItems);
 		HvtVip.loot = loot;
@@ -555,13 +557,13 @@ class SDRC_HvtVipJsonApi : SDRC_JsonApi
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"WEAPON_GRENADE", 
 				"UTIL_ATTACHMENT", 
 				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", 
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_HANDWEAR", "GEAR_UNIFORM", 
 			};
 		loot.Set(0.7, lootItems);
 		HvtVip.loot = loot;

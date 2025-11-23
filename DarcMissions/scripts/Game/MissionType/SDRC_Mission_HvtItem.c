@@ -332,6 +332,7 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_BAG", "GEAR_BAG", 
 			};
 		loot.Set(0.7, lootItems);
 		hvtItem.loot = loot;
@@ -443,6 +444,8 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
 				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"CLOTHING_HEADGEAR", 
+				"CLOTHING_UNIFORM",	"CLOTHING_UNIFORM",			
 			};
 		loot.Set(0.7, lootItems);
 		hvtItem.loot = loot;
@@ -532,6 +535,8 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
 				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_BAG", "GEAR_BAG", 
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
 			};
 		loot.Set(0.7, lootItems);
 		hvtItem.loot = loot;

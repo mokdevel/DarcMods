@@ -365,9 +365,12 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
-				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_BAG", 
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
+				"CLOTHING_HEADGEAR", "CLOTHING_UNIFORM",
 			};
-		loot.Set(0.7, lootItems);
+		loot.Set(0.5, lootItems);
 		squatter.loot = loot;
 
 		return squatter;	
@@ -407,7 +410,7 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		);
 		squatter.Set(
 			{"ControlTowerMilitary_"},
-			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et"
+			"{D15A294D5138ADFF}Prefabs/Props/Military/AmmoBoxes/US/LootEquipmentBoxWooden_Equipment_01_US.et"
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
@@ -419,7 +422,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 				"UTIL_ATTACHMENT",
 				"UTIL_OPTIC", "UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
-				"ITEM_GENERAL", "ITEM_GENERAL"
+				"ITEM_GENERAL", "ITEM_GENERAL",
+				"CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", 
+				"CLOTHING_UNIFORM", "CLOTHING_UNIFORM",
 			};
 		loot.Set(0.8, lootItems);
 		squatter.loot = loot;		
@@ -472,9 +477,10 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 				"UTIL_ATTACHMENT",
 				"UTIL_OPTIC", "UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
-				"ITEM_GENERAL", "ITEM_GENERAL"
+				"ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
 			};
-		loot.Set(0.6, lootItems);
+		loot.Set(0.5, lootItems);
 		squatter.loot = loot;
 		
 		return squatter;	
@@ -524,7 +530,9 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
-				"ITEM_GENERAL", "ITEM_GENERAL"
+				"ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
 			};
 		loot.Set(0.6, lootItems);
 		squatter.loot = loot;
@@ -571,9 +579,12 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
-				"ITEM_GENERAL", "ITEM_GENERAL"
+				"ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_BAG", 
+				"CLOTHING_HEADGEAR", 
+				"CLOTHING_UNIFORM",	"CLOTHING_UNIFORM",	"CLOTHING_UNIFORM",				
 			};
-		loot.Set(0.6, lootItems);
+		loot.Set(0.4, lootItems);
 		squatter.loot = loot;
 		
 		return squatter;	
@@ -624,9 +635,12 @@ class SDRC_SquatterJsonApi : SDRC_JsonApi
 		array<string> lootItems = {
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
-				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_BAG", 
+				"CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", 
+				"CLOTHING_UNIFORM",
 			};
-		loot.Set(0.6, lootItems);
+		loot.Set(0.4, lootItems);
 		squatter.loot = loot;		
 
 		return squatter;						

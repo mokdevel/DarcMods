@@ -315,6 +315,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_BAG", 
+				"CLOTHING_HEADGEAR", "CLOTHING_UNIFORM",
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
 			};
 		loot.Set(0.7, lootItems);
@@ -403,8 +405,9 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_BAG", 
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
-				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
+				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 			};
 		loot.Set(0.9, lootItems);
 		occupation.loot = loot;
@@ -486,7 +489,8 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"UTIL_OPTIC",
 				"WEAPON_LAUNCHER",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
-				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
 			};
 		loot.Set(0.7, lootItems);
 		occupation.loot = loot;
@@ -579,7 +583,9 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"UTIL_ATTACHMENT", "UTIL_ATTACHMENT",
 				"UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
-				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_BAG", "GEAR_BAG", 
+				"GEAR_HEADGEAR", "GEAR_HEADGEAR", 			
 			};
 		loot.Set(0.4, lootItems);
 		occupation.loot = loot;		
@@ -688,7 +694,9 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 				"UTIL_ATTACHMENT", "UTIL_ATTACHMENT",
 				"UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
-				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL"
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", 
+				"CLOTHING_UNIFORM", "CLOTHING_UNIFORM",
 			};
 		loot.Set(0.4, lootItems);
 		occupation.loot = loot;
