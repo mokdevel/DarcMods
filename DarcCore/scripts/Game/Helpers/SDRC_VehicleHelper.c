@@ -213,7 +213,37 @@ class SDRC_VehicleHelper
 	
 		return false;
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Empty vehicle storage
+	*/
+	static void EmptyStorage(IEntity entity)
+	{
+		Vehicle vehicle = Vehicle.Cast(entity);
+		if (!vehicle)
+		{
+			return;
+		}
+		
+		ScriptedInventoryStorageManagerComponent storageManager = ScriptedInventoryStorageManagerComponent.Cast(entity.FindComponent(ScriptedInventoryStorageManagerComponent));			
+		if (storageManager)
+		{			
+			array<IEntity> items = {};
+			storageManager.GetItems(items);
+			
+			foreach (IEntity item : items)
+			{
+				storageManager.TryDeleteItem(item);
+			}
+		}
+		else
+		{
+			ResourceName res = entity.GetPrefabData().GetPrefabName();
+			SDRC_Log.Add("[SDRC_LootHelper:EmptyStorage] storageManager not found on: " + SDRC_Misc.GetSimpleEntityName(res), LogLevel.ERROR);
+		}
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	// Arsenal related
 	//------------------------------------------------------------------------------------------------
