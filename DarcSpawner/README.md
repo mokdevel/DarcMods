@@ -52,6 +52,9 @@ Some parameters are described in DarcMissions documentation
 
 # Version history
 
+## 20251123
+Compatibility compile for DarcCore.
+
 ## 20251102
 Fixes:
 - Default text for map marker was shown.

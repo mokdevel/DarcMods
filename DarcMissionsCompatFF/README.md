@@ -32,6 +32,9 @@ float spawnRateForGreenZones : The percentage chance to spawn a mission to green
 
 ... empty ...
 
+## 20251123
+Compatibility compile for DarcCore.
+
 ## 20251117
 Fixes:
 - Change for StreamableVehicleComponent_S to match FF conventions

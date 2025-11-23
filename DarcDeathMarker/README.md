@@ -18,6 +18,9 @@ bool visibleOnlyToFaction : If true, the markers will only be visible for player
 
 # Version history
 
+## 20251123
+Compatibility compile for DarcCore.
+
 ## 20251030
 ### Update for Arma Reforger 1.6
 Minor fixes and support for 1.6.

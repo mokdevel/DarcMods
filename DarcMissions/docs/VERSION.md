@@ -9,15 +9,16 @@ No changes in mission jsons. This is mainly a bug fix release and preparation fo
 Main features:
 * Persistence (vanilla) handling. All entities (AI, vehicles, buildings) spawned will have the persistence disabled. This means that none of the items should end up in your save and become re-spawned when server boots.
 * Known issues with the current implementation:
-  * AI that was active in a fight, seems to be saved even if persistence was disabled.
+  * AI that was active in a fight, seems to be saved even if persistence was disabled. Sometimes the AI just spawns from the save and stands still like a statue.
   * The persistence disabling happens with a delay (a few seconds) to allow the entities to spawn properly. If your server crashes during this delay, they may end up in your save.
   
 Changes:
-* Added a new loot boxes ```LootSupplyPortableContainers_01_large_item.et``` , ```LootEquipmentBoxWooden_Equipment_01_US.et```
+* Added new loot boxes ```LootSupplyPortableContainers_01_large_item.et``` , ```LootEquipmentBoxWooden_Equipment_01_US.et```
 * Requested missions (e.g. GM spawned) will ignore other missions and players nearby. You can drop many missions on the same spot if you like.
 * Squatters mission: GM spawned mission will pick the nearest building.
 * Crashsite mission: Additional randomization to flight pattern. Hopefully less landings on sea.
 * Occupation mission: Additional randomization for the position.
+* Convoy mission: Loot is spawned only after the mission is completed.
 * Stash mission: Additional randomization for the position.
 * HvtVip mission: New sub-mission.
 
