@@ -76,7 +76,7 @@ sealed class SDRC_LootHelper
 				}
 				
 				bool result = AddToStorage(storage, resource);
-				SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Adding item " + resource + ". Success: " + result, LogLevel.SPAM);
+				SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Adding item " + resource + ". Success: " + result, LogLevel.DEBUG);
 				
 				//Shall we add ammo? Ammo is to be added with itemChance%
 				if ((SDRC_Misc.RandomFloat(0, 1) < itemChance))
@@ -202,7 +202,8 @@ sealed class SDRC_LootHelper
 		}
 		else
 		{
-			SDRC_Log.Add("[SDRC_LootHelper:AddToStorage] storageManager not found", LogLevel.ERROR);
+			ResourceName res = entity.GetPrefabData().GetPrefabName();
+			SDRC_Log.Add("[SDRC_LootHelper:AddToStorage] storageManager not found on: " + SDRC_Misc.GetSimpleEntityName(res), LogLevel.ERROR);
 			return false;
 		}
 	}

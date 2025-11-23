@@ -240,24 +240,24 @@ class SDRC_SpawnHelper
 		{
 			bool success;
 			
+			//Is the instance configured to be persisted or will it be skipped in save-data.
 			bool isTracked = PersistenceSystem.GetInstance().IsTracked(entity);
-			
-			if (isTracked)
+
+			if (!isTracked)
 			{
-				if (persistence)
-				{
-					success = PersistenceSystem.GetInstance().StartTracking(entity);
-					SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistence] Persistence enabled for: " + entity.GetPrefabData().GetPrefabName() + " - success: " + success, LogLevel.DEBUG);
-				}
-				else
-				{
-					success = PersistenceSystem.GetInstance().StopTracking(entity);
-					SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistence] Persistence disabled for: " + entity.GetPrefabData().GetPrefabName() + " - success: " + success, LogLevel.DEBUG);
-				}
+				SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistence] Entity: " + entity.GetPrefabData().GetPrefabName() + " is not tracked or does not have Persistence component.", LogLevel.SPAM);
 			}
-			else
+						
+			if ( (isTracked) && (!persistence) )
 			{
-				SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistence] Entity: " + entity.GetPrefabData().GetPrefabName() + " does not have Persistence component.", LogLevel.DEBUG);
+				success = PersistenceSystem.GetInstance().StopTracking(entity);
+				SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistence] Persistence disabled for: " + entity.GetPrefabData().GetPrefabName() + " - success: " + success, LogLevel.DEBUG);
+			}
+			
+			if (persistence)
+			{
+				success = PersistenceSystem.GetInstance().StartTracking(entity);
+				SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistence] Persistence enabled for: " + entity.GetPrefabData().GetPrefabName() + " - success: " + success, LogLevel.DEBUG);
 			}
 		}	
 	}	

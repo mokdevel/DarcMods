@@ -22,6 +22,7 @@
 	GEAR_VEST,				//Vests
 	GEAR_HANDWEAR,			//Gloves etc
 	GEAR_UNIFORM,			//Jackets, pants
+	GEAR_BAG,				//Bags, backpacks, etc.. 
 	CLOTHING_HEADGEAR,		//Head Gear including hats
 	CLOTHING_UNIFORM,		//Jackets, pants, shirts, 
 */
@@ -93,6 +94,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		conf.lists.Insert(lootList61());		
 		conf.lists.Insert(lootList62());		
 		conf.lists.Insert(lootList63());		
+		conf.lists.Insert(lootList64());		
 		//Clothing
 		conf.lists.Insert(lootList80());		
 		conf.lists.Insert(lootList83());		
@@ -291,7 +293,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 			"ITEM_GENERAL",
 			{"Prefabs/Items"},
 			{"Binocular", "Compass", "Flashlight", "PaperMap_01_folded", "Watch_"},
-			{"_Base"},
+			{"_Base", "BackPack", "Pouch", },
 			{}
 		);
 		return lootList;
@@ -310,7 +312,7 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		);
 		return lootList;
 	}
-	
+
 	//Lootlist: Gear : Head gear
 	SDRC_List lootList60()
 	{
@@ -368,7 +370,21 @@ class SDRC_LootListJsonApi : SDRC_JsonApi
 		);
 		return lootList;
 	}	
-			
+
+	//Lootlist: Bags and backpacks
+	SDRC_List lootList64()
+	{
+		ref SDRC_List lootList = new SDRC_List();
+		lootList.Set(
+			"GEAR_BAG",
+			{"Prefabs/Items/Equipment"},
+			{"BackPack", "Pouch", "/Test/"},
+			{"_Base"},
+			{}
+		);
+		return lootList;
+	}
+				
 	//Lootlist: Clothing : Head gear
 	SDRC_List lootList80()
 	{
