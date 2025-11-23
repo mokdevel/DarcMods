@@ -1,0 +1,25 @@
+GameProject {
+ ID "DarcDevPersistence"
+ GUID "66E12C6740E2D46C"
+ TITLE "DarcDevPersistence"
+ Dependencies {
+  "652EACEC4A8BDBC3" "58D0FB3206B6F859"
+ }
+ Configurations {
+  GameProjectConfig PC {
+   SystemModuleSettings SystemModuleSettings "{5F10A1570304557B}" {
+    DefaultConfig "{8DDC2A311929D52F}Configs/Systems/GameMasterSystems.conf"
+   }
+  }
+  GameProjectConfig XBOX_ONE {
+  }
+  GameProjectConfig XBOX_SERIES {
+  }
+  GameProjectConfig PS4 {
+  }
+  GameProjectConfig PS5 {
+  }
+  GameProjectConfig HEADLESS {
+  }
+ }
+}
