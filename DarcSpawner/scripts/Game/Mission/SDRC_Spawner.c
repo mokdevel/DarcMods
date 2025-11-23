@@ -229,12 +229,15 @@ class SDRC_Spawner
 				m_EntityList.Insert(entity);
 				spawnSet.loot.box = entity;
 				
-				SDRC_LootHelper.SpawnItemsToStorage(entity, spawnSet.loot.items, spawnSet.loot.itemChance);
 				//Disable arsenal
 				if (isVehicle)
 				{
 					SDRC_VehicleHelper.DisableVehicleArsenal(entity, entityToSpawn, m_Config.disableArsenal);
+					SDRC_VehicleHelper.EmptyStorage(entity);					
 				}
+
+				//Add loot				
+				SDRC_LootHelper.SpawnItemsToStorage(entity, spawnSet.loot.items, spawnSet.loot.itemChance);
 					
 				if (spawnSet.showMarker)
 				{
