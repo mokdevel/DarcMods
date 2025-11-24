@@ -209,4 +209,54 @@ sealed class SDRC_Spline3D
 			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(40, 255, 32, 32), 6);			//Red
 		}*/
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	ref static array<vector> m_ctrl = {
+		"300 100 1000",
+		"800 300 1600",
+		"1200 150 900",
+	};
+
+	ref static array<vector> m_ctrlAdds = {
+		"300 150 500",
+		"600 50 800",
+		"1000 150 1200",
+		"700 100 900",
+		"10 50 500",
+	};		
+	
+	//------------------------------------------------------------------------------------------------
+	static void TestSplineAdd(bool showDebug = true)
+	{
+		static int idx = 0;
+
+		if (idx > m_ctrlAdds.Count() - 1)
+		{
+			return;
+		}
+				
+		array<vector> splinePoints = new array<vector>();
+		array<vector> resultTangents = new array<vector>();
+		splinePoints.Clear();
+		resultTangents.Clear();		
+		SDRC_Spline3D.GenerateSplinePoints(m_ctrl, splinePoints, resultTangents, 20);
+		
+		//Prepare the next round
+		int idx0 = SDRC_Misc.RandomInt((splinePoints.Count() / 2), splinePoints.Count() - 1);
+		m_ctrl.Clear();
+		m_ctrl.Insert(splinePoints[idx0]);
+		m_ctrl.Insert(splinePoints[splinePoints.Count() - 1]);
+		m_ctrl.Insert(m_ctrlAdds[idx]);
+		idx++;
+		
+		if (showDebug)
+		{
+			foreach (vector pos : splinePoints)
+			{
+//				Print(pos);
+//				pos = pos + SDRC_Misc.GetWorldCenter();
+				SDRC_DebugHelper.AddDebugSphere(pos, ARGB(40, 255, 32, 32), 6);			//Red
+			}
+		}
+	}	
 }
