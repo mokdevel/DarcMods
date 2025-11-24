@@ -76,6 +76,9 @@ class SDRC_MissionFrameConfig : Managed
 	int minDistanceToMission;				//Distance to another mission. Two missions shall not be too close to each other.
 	int minDistanceToPlayer;				//Mission shall not spawn too close to a player.
 	bool showStaticMissionMarker;			//Show static mission marker
+#ifdef NEW_VERSION_WIP	
+	bool showDynamicMissionMarker;			//Show dynamic mission marker
+#endif
 	bool showMissionTimeLeft;				//Show mission time left on marker click
 	ref array<string>enemyFactions;			//Factions to use for enemy selection
 	ref SDRC_MissionDifficulty missionDifficulty = new SDRC_MissionDifficulty();
@@ -172,6 +175,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.minDistanceToMission = SDRC_MISSION_MIN_DISTANCE;
 		conf.minDistanceToPlayer = SDRC_PLAYER_MIN_DISTANCE;
 		conf.showStaticMissionMarker = SDRC_MISSION_SHOW_STATIC_MARKER;
+		conf.showDynamicMissionMarker = true;
 		conf.showMissionTimeLeft = SDRC_MISSION_SHOW_TIME_LEFT;
 		
 		#ifdef SDRC_RELEASE
@@ -223,7 +227,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
 		
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
+			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
@@ -231,7 +235,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL};
-			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
+//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
 //			conf.missionStatic.missionTypeArray = {};

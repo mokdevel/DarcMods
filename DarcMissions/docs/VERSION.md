@@ -2,8 +2,14 @@
 
 # Version history
 
+## WIP 
+- Added ``showDynamicMissionMarker`` : Show/hide static mission markers. This will override any mission specific ``showMarker`` settings.
+
 ## Next release (unreleased)
 
+
+
+## 20251123
 ### DarcMissions
 No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
 Main features:
@@ -26,6 +32,16 @@ Fixes:
 * Removed MDT_RAILWAY from location search. Search took a long time on Gulfcoast Island map.
 * It was possible to drag items like cars in the loot boxes which resulted in a crash.
 * Some of the loot boxes were invisible.
+
+### DarcDeathMarker
+Compatibility compile for DarcCore.
+
+### DarcMissionsCompatFF
+Compatibility compile for DarcCore.
+
+### DarcSpawner
+Compatibility compile for DarcCore.
+
 
 ## 20251104
 ### DarcMissions
