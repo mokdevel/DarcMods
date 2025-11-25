@@ -206,6 +206,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			return;			
 		}
 		
+		SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] Vehicle spawned: " + m_Vehicle, LogLevel.DEBUG);										
+		
 		m_EntityList.Insert(m_Vehicle);
 		
 		//Disable arsenal

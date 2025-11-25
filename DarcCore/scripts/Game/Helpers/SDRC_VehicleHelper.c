@@ -206,6 +206,19 @@ class SDRC_VehicleHelper
 	}	
 	
 	//------------------------------------------------------------------------------------------------
+	static bool IsVehicle(IEntity entity)
+	{
+		Vehicle vehicle = Vehicle.Cast(entity);
+
+		if (!vehicle)
+		{
+			return false;
+		}
+				
+		return true;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
 	static bool IsWorking(IEntity vehicle)
 	{
 		if(SCR_AIVehicleUsability.VehicleCanMove(vehicle) && !SCR_AIVehicleUsability.VehicleIsOnFire(vehicle))
@@ -220,8 +233,8 @@ class SDRC_VehicleHelper
 	*/
 	static void EmptyStorage(IEntity entity)
 	{
-		Vehicle vehicle = Vehicle.Cast(entity);
-		if (!vehicle)
+		//Vehicle vehicle = Vehicle.Cast(entity);
+		if (!IsVehicle(entity))
 		{
 			return;
 		}
