@@ -121,7 +121,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
         m_Vehicle_s.EngineStart();
         m_Vehicle_s.SetThrottle(1.0);
         m_Vehicle_s.RotorSetForceScaleState(0, 1.3);	//Hovering 1.2
-        m_Vehicle_s.RotorSetForceScaleState(1, 2);
+        m_Vehicle_s.RotorSetForceScaleState(1, 1);
 		
 		GetGame().GetCallqueue().CallLater(AddCrew, 6000, false, m_Crew);
 		GetGame().GetCallqueue().CallLater(AddCrew, 7000, false, m_Crew2);
