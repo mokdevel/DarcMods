@@ -7,4 +7,8 @@ $grp GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyC
   Flags 0x200403 0
   coords 826.67 0.874 1436.823
  }
+ {
+  Flags 0x403 0
+  coords 1225.668 39 2219.527
+ }
 }

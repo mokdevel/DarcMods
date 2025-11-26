@@ -49,12 +49,7 @@ sealed class SDRC_CampHelper
 				string resourceName = camp.campItems[idx].GetResource();
 				SDRC_VehicleHelper.DisableVehicleArsenal(entity, resourceName, disableArsenal);				
 				SDRC_VehicleHelper.EmptyStorage(entity);
-#ifdef NEW_PERSISTENCE	
 				SDRC_VehicleHelper.SetPersistence(entity, false);
-#endif
-#ifndef NEW_PERSISTENCE	
-				SDRC_VehicleHelper.SetPersistence(entity);
-#endif				
 			}
 			else
 			{

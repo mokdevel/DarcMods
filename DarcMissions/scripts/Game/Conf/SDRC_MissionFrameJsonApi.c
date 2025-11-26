@@ -34,7 +34,7 @@
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 1;//10;//15;//5;//3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 10;//10;//15;//5;//3;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -175,7 +175,9 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.minDistanceToMission = SDRC_MISSION_MIN_DISTANCE;
 		conf.minDistanceToPlayer = SDRC_PLAYER_MIN_DISTANCE;
 		conf.showStaticMissionMarker = SDRC_MISSION_SHOW_STATIC_MARKER;
+#ifdef NEW_VERSION_WIP		
 		conf.showDynamicMissionMarker = true;
+#endif
 		conf.showMissionTimeLeft = SDRC_MISSION_SHOW_TIME_LEFT;
 		
 		#ifdef SDRC_RELEASE
@@ -227,8 +229,8 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
 		
-			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
+//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
+			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};

@@ -414,10 +414,11 @@ class SDRC_Mission
 				{
 					SDRC_Log.Add("[SDRC_Mission:MissionRun] Vehicle: " + entity.GetPrefabData().GetPrefabName(), LogLevel.SPAM);
 					
-					if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(entity.GetOrigin(), 5))
+					if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(entity.GetOrigin(), 30))
 					{
-						SDRC_Log.Add("[SDRC_Mission:MissionRun] Vehicle set as persistent: " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
-						SDRC_SpawnHelper.SetPersistenceDelayed(entity, true);
+						SDRC_Log.Add("[SDRC_Mission:MissionRun] Setting vehicle as persistent: " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
+						SDRC_SpawnHelper.SetPersistence(entity, true);
+						//SDRC_SpawnHelper.SetPersistenceDelayed(entity, true);	//TBD: Could immediately call this, by compat mods hae SetPersistence
 						m_EntityList.Remove(i);
 						i--;
 					}
