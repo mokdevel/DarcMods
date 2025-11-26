@@ -206,7 +206,7 @@ class SDRC_SpawnHelper
 	static IEntity SpawnEntityPrefabPersistence(Resource resource, BaseWorld world = null, EntitySpawnParams params = null)
 	{
 		IEntity entity = GetGame().SpawnEntityPrefab(resource, world, params);	
-		SetPersistence(entity, false);
+		SDRC_SpawnHelper.SetPersistence(entity, false);
 		
 		return entity;
 	}	
@@ -221,10 +221,6 @@ class SDRC_SpawnHelper
 		{
 			return;
 		}
-		
-#ifndef NEW_PERSISTENCE	
-		return;
-#endif
 		
 		GetGame().GetCallqueue().CallLater(SetPersistenceDelayed, SDRC_Conf.PERSISTENCE_DELAY, false, entity, persistence);
 	}

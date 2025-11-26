@@ -5,6 +5,7 @@
 Compatibility for Freedom Fighters
 */
 
+//------------------------------------------------------------------------------------------------
 modded class SDRC_Compat
 {	
 	const string DC_COMPATCONFIG_FILE = "dc_compatFFConfig.json";
@@ -92,29 +93,6 @@ modded class SDRC_Compat
 		}
 		
 		return true;
-	}	
-}
-
-//------------------------------------------------------------------------------------------------
-modded class SDRC_SpawnHelper
-{
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Fix persistence for vehicle. For example for EPF.
-	*/
-	override static void SetPersistence(IEntity entity, bool persistence = true)	
-	{	
-		if (SDRC_VehicleHelper.IsVehicle(entity))
-		{
-			//Avoid despawning of vehicles
-			auto JWK_persistence = JWK_CompT<EPF_PersistenceComponent>.FindIn(entity);
-			if (JWK_persistence) JWK_persistence.JWK_SetEnabled(false);
-			//FF despawns vehicles beyond certain distance from players and spawns them back in when they get near for performance, this will disable that.
-			auto streamable = JWK_CompT<JWK_StreamableVehicleComponent>.FindIn(entity);
-			if (streamable) streamable.SetStreamingEnabled_S(false);		
-		}
-						
-		super.SetPersistence(entity, persistence);
 	}	
 }
 

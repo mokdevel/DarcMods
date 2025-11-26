@@ -5,7 +5,7 @@
 Functions related to vehicles.
 */
 
-class SDRC_VehicleHelper
+sealed class SDRC_VehicleHelper
 {
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -13,6 +13,12 @@ class SDRC_VehicleHelper
 	*/
     static void MoveGroupsInVehicle(array<SCR_AIGroup> groups, IEntity vehicle, bool forceTeleport = false)
     {
+		if (!vehicle)
+		{
+			SDRC_Log.Add("[SDRC_VehicleHelper:MoveEntityInVehicle] Vehicle not available (null).", LogLevel.ERROR);
+			return;
+		}
+		
 		array<AIAgent> groupMembers  = new array<AIAgent>;
 		
 		int i = 0;
@@ -45,6 +51,12 @@ class SDRC_VehicleHelper
 	*/
     static void MoveGroupInVehicle(AIGroup group, IEntity vehicle, bool forceTeleport = false)
     {
+		if (!vehicle)
+		{
+			SDRC_Log.Add("[SDRC_VehicleHelper:MoveEntityInVehicle] Vehicle not available (null).", LogLevel.ERROR);
+			return;
+		}
+		
 		array<AIAgent> groupMembers  = new array<AIAgent>;
 		
 		if (group)
@@ -73,6 +85,12 @@ class SDRC_VehicleHelper
 	*/	
     static bool MoveEntityInVehicle(AIAgent aiAgent, IEntity vehicle, int slotIdx, bool forceTeleport = false)
     {
+		if (!vehicle)
+		{
+			SDRC_Log.Add("[SDRC_VehicleHelper:MoveEntityInVehicle] Vehicle not available (null).", LogLevel.ERROR);
+			return false;			
+		}
+		
 		BaseCompartmentManagerComponent compartmentManager = BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(BaseCompartmentManagerComponent));
 		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
 		
@@ -366,20 +384,9 @@ class SDRC_VehicleHelper
 	NOTE: You shall/should override this in your compat mod
 	*/
 	
-#ifdef NEW_PERSISTENCE	
 	static void SetPersistence(IEntity entity, bool persistence = true)
 	{	
 		//Override in compat mod
 		SDRC_SpawnHelper.SetPersistence(entity, persistence);
 	}	
-#endif	
-
-#ifndef NEW_PERSISTENCE	
-	static void SetPersistence(IEntity entity)
-	{	
-		//Override in compat mod
-		SDRC_SpawnHelper.SetPersistence(entity);
-	}	
-#endif	
-		
 }
