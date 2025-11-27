@@ -27,8 +27,15 @@ float spawnRateForGreenZones : The percentage chance to spawn a mission to green
 ```
 
 # Version history
+## WIP 
+* Added new settings:
+  * ``setEnemyFactionAutomatically`` : Automatically set enemy faction from FF. (WIP , placeholder for now)
+  * ``rewardPerUser`` : Shall reward be set per user or for a group.
+  * ``rewardDefault`` : Default reward unless specific reward has been set in a mission. (WIP , placeholder for now)
 
 ## Next release (unreleased)
+* Fixes for Convoy mission
+* Persitence issues with vehicles.
 
 ... empty ...
 
