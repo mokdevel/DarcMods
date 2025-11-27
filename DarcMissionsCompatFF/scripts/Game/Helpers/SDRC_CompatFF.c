@@ -44,7 +44,41 @@ modded class SDRC_Compat
 		
 		GetGame().GetCallqueue().CallLater(Clear, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Count reward
+	*/		
+	static int GetRewardValue()
+	{
 		
+		array<int> playerIds = {};
+		GetGame().GetPlayerManager().GetPlayers(playerIds);
+		if (playerIds.IsEmpty()) 
+		{
+			return 0;
+		}
+
+		int divider = playerIds.Count();
+		int rewardValue = 500;					//Default value
+				
+#ifdef NEW_VERSION_WIP
+		if (m_DC_CompatJsonApi.conf.rewardPerUser)
+		{
+			divider = 1;
+		}
+		
+		rewardValue = m_DC_CompatJsonApi.conf.rewardDefault;
+#endif		
+		int perPlayerReward = rewardValue / divider;
+		
+		return perPlayerReward;		
+	}
+		
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Clear old stuff from map
+	*/		
 	static void Clear()
 	{		
 		SDRC_Log.Add("[SDRC_CompatFF] Clearing old mission stuff from map.", LogLevel.NORMAL);
@@ -101,13 +135,11 @@ modded class SDRC_Mission
 {
 	override void GiveReward()
 	{
-		int m_iRewardValue = 500;
-		
 		array<int> playerIds = {};
 		GetGame().GetPlayerManager().GetPlayers(playerIds);
 		if (playerIds.IsEmpty()) return;
 
-		int perPlayerReward = m_iRewardValue / playerIds.Count();
+		int perPlayerReward = SDRC_Compat.GetRewardValue();
 
 		SDRC_Log.Add("[SDRC_CompatFF:GiveReward] Giving " + perPlayerReward + " money to each player.", LogLevel.DEBUG);
 		
@@ -134,7 +166,11 @@ class SDRC_CompatFFConfig : Managed
 	//Specific
 	int hideOutSafeZoneDistance = 300;
 	float spawnRateForGreenZones = 0.05; 
-//	bool setEnemyFactionAutomatically = true;
+#ifdef NEW_VERSION_WIP
+	bool setEnemyFactionAutomatically = true;	//Automatically set enemy faction from FF. (WIP)
+	bool rewardPerUser = false;					//Shall reward be set per user or for a group
+	int rewardDefault = 500;					//Default reward unless specific reward has been set in a mission. (WIP)
+#endif	
 }
 
 //------------------------------------------------------------------------------------------------
