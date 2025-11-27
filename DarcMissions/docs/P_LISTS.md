@@ -26,7 +26,7 @@ array<ResourceName> items : The list of items. This is autofilled, but you can p
 ```
 
 ## SDRC_Aka
-Also known as - other names used for example for factions. In some cases/mods the prefab name don't have the faction name included. The first item in the array is the *faction* and the rest of the names are the name used for filtering.
+Also known as - other names used for example for factions. In some cases/mods the prefab name don't have the faction name included. The first item in the array is the *faction* and the rest of the names are the name used for filtering. Note that case matters (US != us).
 ```
 array<string> names : The faction name and the filtering names in this order.
 ```
