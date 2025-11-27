@@ -224,15 +224,15 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.missionList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
-		//conf.missionFiles.Insert("dc_missionConfig_Occupation_010_horror.json");
+//		conf.missionFiles.Insert("dc_missionConfig_Occupation_010_horror.json");
 		//Mission specific		
 		//----------------------------------------------------
-		conf.subMissions.Insert(Occupation0());				
-		conf.subMissions.Insert(Occupation1());				
-		conf.subMissions.Insert(Occupation2());				
-		conf.subMissions.Insert(Occupation3());				
-		conf.subMissions.Insert(Occupation4());				
-		conf.subMissions.Insert(Occupation5());				
+		conf.subMissions.Insert(Occupation0());
+		conf.subMissions.Insert(Occupation1());
+		conf.subMissions.Insert(Occupation2());
+		conf.subMissions.Insert(Occupation3());
+		conf.subMissions.Insert(Occupation4());
+		conf.subMissions.Insert(Occupation5());
 	};
 	
 	//----------------------------------------------------
@@ -258,9 +258,6 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			0
 		);
 		occupation.ai.Set(
-//			{5, 10},
-//			{"C_BEASTS"},
-//			{"G_ADMIN", "G_HEAVY", "G_LAUNCHER", "G_MEDICAL", "G_RECON", "G_LIGHT", "G_SPECIAL"},
 			{1, 2},
 			{"G_RECON", "G_LIGHT"},
 			50, 1.0,

@@ -95,7 +95,11 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_Aka aka03 = new SDRC_Aka();
 		aka03.names = {"US", "US", "TF_US"};
 		conf.akas.Insert(aka03);
-						
+
+		SDRC_Aka aka04 = new SDRC_Aka();
+		aka04.names = {"BACON_622120A5448725E3_FACTION", "Zombie", "Zombies"};
+		conf.akas.Insert(aka04);
+								
 		conf.lists.Insert(enemyList00());
 		conf.lists.Insert(enemyList01());
 		conf.lists.Insert(enemyList02());
@@ -126,15 +130,21 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		conf.lists.Insert(enemyList62());				
 	}
 				
-	//Group lists
+	//------------------------------------------------------------------------------------------------
+	// Group lists
+	//------------------------------------------------------------------------------------------------
+	
 	SDRC_List enemyList00()
 	{
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_LIGHT",
-			{"Prefabs/Groups"},
+			{"Prefabs/Groups", "622120A5448725E3/Prefabs/Groups"},	
 			{"LightFire", "FireTeam", "FireGroup", "RifleSquad", "SentryTeam", 
-			 "Regulars_Brick", "InfantrySection"},	//British Forces
+			 "Regulars_Brick", "InfantrySection",						//British Forces
+			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
+//			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies
+			},	
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
 		);	
@@ -146,9 +156,11 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_SNIPER",
-			{"Prefabs/Groups"},
+			{"Prefabs/Groups", "622120A5448725E3/Prefabs/Groups"},	
 			{"Sniper", "SharpShooter", "USSR_Spetsnaz_SentryTeam", "VKPO_S_SentryTeam.et", 
-			"KS05_SF_GROUP_A", "KS05_SF_GROUP_C", 	//Omega gropus
+			 "KS05_SF_GROUP_A", "KS05_SF_GROUP_C", 						//Omega gropus
+			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
+//			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -161,8 +173,11 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_LAUNCHER",
-			{"Prefabs/Groups"},
-			{"Team_AT", "Team_GL", "Team_LAT"},
+			{"Prefabs/Groups", "622120A5448725E3/Prefabs/Groups"},	
+			{"Team_AT", "Team_GL", "Team_LAT",
+			 "Group_Zombies_High",	//Bacon Zombies
+//			 "CIV_Medium", "FIA_Medium", "USSR_Medium", "Tier1_Medium",	//Bacon Zombies
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
 		);		
@@ -174,8 +189,11 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_ADMIN",
-			{"Prefabs/Groups"},
-			{"_Platoon"},
+			{"Prefabs/Groups", "622120A5448725E3/Prefabs/Groups"},	
+			{"_Platoon",
+			 "Group_Zombies_High",	//Bacon Zombies
+//			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
 		);		
@@ -187,8 +205,11 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_MEDICAL",
-			{"Prefabs/Groups"},
-			{"_Medical"},
+			{"Prefabs/Groups", "622120A5448725E3/Prefabs/Groups"},	
+			{"_Medical",
+			 "Group_Zombies_High",	//Bacon Zombies
+//			 "CIV_Medium", "FIA_Medium", "USSR_Medium", "Tier1_Medium",	//Bacon Zombies	
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
 		);				
@@ -200,8 +221,11 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_RECON",
-			{"Prefabs/Groups"},
-			{"_Recon", "_Maneuver", "_RecceTeam"},
+			{"Prefabs/Groups", "622120A5448725E3/Prefabs/Groups"},	
+			{"_Recon", "_Maneuver", "_RecceTeam",
+			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
+//			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
 		);					
@@ -213,9 +237,13 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_HEAVY",
-			{"Prefabs/Groups"},
+			{"Prefabs/Groups", "622120A5448725E3/Prefabs/Groups"},	
 			{"MachineGunTeam", "FireTeam", "FireGroup", "Suppress", "Spetsnaz_Squad",
-			 "GunGroup"},	//British Forces
+			 "GunGroup",										//British Forces
+			 "Group_Zombies_Horde", "Group_Zombies_CIV_Large",	//Bacon Zombies
+//			 "CIV_Large", "FIA_Large", "USSR_Large", "Tier1_Large", 	//Bacon Zombies			
+//			 "AmbientPatrol_Horde", "Zombies_Horde",					//Bacon Zombies	Hordes
+			},	
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
 		);					
@@ -227,9 +255,11 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_SPECIAL",
-			{"Prefabs/Groups"},
+			{"Prefabs/Groups", "622120A5448725E3/Prefabs/Groups"},	
 			{"GreenBeret", "Sapper", "Sentry", "Spetsnaz", "SpecialForces",
-			"KS05_SF_GROUP_B", //Omega gropus
+			 "KS05_SF_GROUP_B", 		//Omega groups
+			 "Group_Zombies_Horde",		//Bacon Zombies
+//			 "CIV_Large", "FIA_Large", "USSR_Large", "Tier1_Large", 	//Bacon Zombies			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -242,22 +272,30 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_SMALL",
-			{"Prefabs/Groups"},			
-			{"Spetsnaz_SentryTeam", "GreenBeret_SentryTeam", "SharpshooterTeam", "MedicalSection", "SapperTeam", "SentryTeam"},
+			{"Prefabs/Groups", "622120A5448725E3/Prefabs/Groups"},	
+			{"Spetsnaz_SentryTeam", "GreenBeret_SentryTeam", "SharpshooterTeam", "MedicalSection", "SapperTeam", "SentryTeam",
+			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
+//			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
 		);			
 		return enemyList;
 	}
 	
+	//------------------------------------------------------------------------------------------------
+	// Character lists		
+	//------------------------------------------------------------------------------------------------
+	
 	SDRC_List enemyList09()
 	{
-		//Character lists		
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_RIFLEMAN",
-			{"Prefabs/Characters/Factions"},
-			{"Rifleman", "Sapper", "_PL", "_SL"},
+			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
+			{"Rifleman", "Sapper", "_PL", "_SL",
+			 "Zombie_CIV", "Zombie_FIA", "Zombie_US", "Zombie_USSR", 	//Bacon Zombies
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
 		);					
@@ -269,8 +307,10 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_HEAVY",
-			{"Prefabs/Characters/Factions"},			
-			{"_GL", "_MG", "Grenadier", "_Ammo", "_LMG"},
+			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
+			{"_GL", "_MG", "Grenadier", "_Ammo", "_LMG",
+			 "Exploder", "Heavy_Tank", 									//Bacon Zombies			
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
 		);						
@@ -282,9 +322,10 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_RECON",
-			{"Prefabs/Characters/Factions"},
+			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"Scout", "Spotter", "_RTO", "_SL", "_GL",
-				"_AG1", //MEI		
+			 "_AG1", //MEI		
+			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -297,9 +338,10 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_OFFICER",
-			{"Prefabs/Characters/Factions"},
+			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"_Officer", "Sergeant", "_AC", 
-				"_Leader", //MEI
+			 "_Leader", //MEI
+			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -312,9 +354,10 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_CREW",
-			{"Prefabs/Characters/Factions"},
+			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"Crew", "Pilot", "_CC",
-				"MEI_Leader", //MEI
+			 "MEI_Leader", //MEI
+			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -327,8 +370,10 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_SNIPER",
-			{"Prefabs/Characters/Factions"},
-			{"Sniper", "Sharpshooter"},
+			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
+			{"Sniper", "Sharpshooter",
+			 "Exploder", 									//Bacon Zombies			
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
 		);					
@@ -340,8 +385,10 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_LAUNCHER",
-			{"Prefabs/Characters/Factions"},
-			{"_AAT", "_AT", "_AT", "_LAT"},
+			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
+			{"_AAT", "_AT", "_AT", "_LAT",
+			 "Exploder", 									//Bacon Zombies			
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
 		);					
@@ -353,8 +400,10 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_MEDIC",
-			{"Prefabs/Characters/Factions"},
-			{"Medic"},
+			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
+			{"Medic",
+			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
 		);					
@@ -366,10 +415,12 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_SPECIAL",
-			{"Prefabs/Characters/Factions"},
+			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"_SF", "_SR", "FIA_AC", 
-				"_Bomb", //MEI
-				"MEI_Rifleman1", //MEI
+			 "_Bomb", //MEI
+			 "MEI_Rifleman1", //MEI
+			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies			
+			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -377,14 +428,17 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		return enemyList;
 	}
 	
-	//Monster - zombies and creatures
+	//------------------------------------------------------------------------------------------------
+	// Monster - zombies
+	//------------------------------------------------------------------------------------------------
+
 	SDRC_List enemyList50()
 	{
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_ZOMBIE_SMALL",
 			{"622120A5448725E3/Prefabs/Groups"},
-			{"Group_Zombies"},
+			{"Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR",},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random", "_Huge", "_Large", "_Medium"},
 			{}
 		);			
@@ -397,7 +451,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"G_ZOMBIE_MEDIUM",
 			{"622120A5448725E3/Prefabs/Groups"},
-			{"_Medium"},
+			{"Group_Zombies_CIV_Large", "Group_Zombies_High",},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
 		);			
@@ -410,7 +464,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"G_ZOMBIE_LARGE",
 			{"622120A5448725E3/Prefabs/Groups"},
-			{"_Huge", "_Large", "_Horde"},
+			{"Group_Zombies_Horde",},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
 		);			
@@ -430,6 +484,10 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		return enemyList;
 	}	
 		
+	//------------------------------------------------------------------------------------------------
+	// Monster - creatures
+	//------------------------------------------------------------------------------------------------
+	
 	SDRC_List enemyList60()
 	{
 		ref SDRC_List enemyList = new SDRC_List();

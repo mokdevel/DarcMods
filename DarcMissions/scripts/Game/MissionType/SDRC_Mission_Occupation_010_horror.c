@@ -22,7 +22,7 @@ class SDRC_Occupation_010_horror_JsonApi : SDRC_OccupationJsonApi
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 //		conf.missionList = {10, 11, 12};		
-		conf.missionList = {10};		
+		conf.missionList = {11, 12};		
 		//Mission specific		
 		//----------------------------------------------------
 		conf.subMissions.Insert(Occupation010());				
@@ -83,7 +83,7 @@ class SDRC_Occupation_010_horror_JsonApi : SDRC_OccupationJsonApi
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The living dead are just dead now.",
 			"You were tasty.",
-			"",
+			"BACON_622120A5448725E3_FACTION",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP,
 			SDRC_EMissionDifficulty.NORMAL,
 			0
@@ -106,7 +106,7 @@ class SDRC_Occupation_010_horror_JsonApi : SDRC_OccupationJsonApi
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
-			12, "index 12: Demons",
+			12, "index 12: Zombies",
 			{"0 0 0"}, 3,
 			{
 				EMapDescriptorType.MDT_CHURCH,
@@ -114,12 +114,12 @@ class SDRC_Occupation_010_horror_JsonApi : SDRC_OccupationJsonApi
 				EMapDescriptorType.MDT_NAME_SETTLEMENT,
 			},
 			"any",
-			"Zombies near %l",
-			"Braaaainss.....",
+			"Horde of zombies seen near %l",
+			"Avoid getting yourself eaten.",
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"The living dead are just dead now.",
-			"You were tasty.",
-			"",
+			"The dead shall stay dead.",
+			"Oh the horrors. You were slain.",
+			"BACON_622120A5448725E3_FACTION",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP,
 			SDRC_EMissionDifficulty.NORMAL,
 			0

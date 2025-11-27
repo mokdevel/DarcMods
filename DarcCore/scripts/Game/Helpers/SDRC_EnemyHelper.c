@@ -196,7 +196,8 @@ sealed class SDRC_EnemyHelper
 		{
 			foreach(string fac : factions)
 			{
-				if (enemy.Contains("_" + fac + "_"))
+//				if (enemy.Contains("_" + fac + "_"))	//This checks for _US_
+				if (enemy.Contains(fac + "_"))			//This checks for US_. TBD: Not sure if this creates issues.
 				{
 					enemyList.Insert(enemy);
 				}
