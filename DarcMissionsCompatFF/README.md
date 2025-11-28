@@ -34,10 +34,13 @@ float spawnRateForGreenZones : The percentage chance to spawn a mission to green
   * ``rewardDefault`` : Default reward unless specific reward has been set in a mission. (WIP , placeholder for now)
 
 ## Next release (unreleased)
-* Fixes for Convoy mission
-* Persitence issues with vehicles.
 
 ... empty ...
+
+## 20251128
+Fixes:
+* Fixes for Convoy mission: mission was completed without interaction.
+* Persistence issues with vehicles. 
 
 ## 20251123
 Compatibility compile for DarcCore.
