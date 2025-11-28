@@ -6,15 +6,20 @@
 - Added ``showDynamicMissionMarker`` : Show/hide static mission markers. This will override any mission specific ``showMarker`` settings.
 
 ## Next release (unreleased)
-No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
-Main features:
-* Proper support for Bacon Zombies. Setting ``BACON_622120A5448725E3_FACTION`` as the enemy faction, will turn all mission enemies to zombies. Storywise may not be perfect as the zombies will setup camps and roadblocks. They will also hunt you with cars (Convoy mission) as they don't know how to disembark a vehicle. 
-  * For proper support, delete your ``dc_enemyList.json`` to get an updated one.
 
 .. empty ..
 
 ## 20251123
-### DarcMissions
+No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
+Main features:
+* Proper support for Bacon Zombies. Setting ``BACON_622120A5448725E3_FACTION`` as the enemy faction, will turn all mission enemies to zombies. Storywise may not be perfect as the zombies will setup camps and roadblocks. They will also hunt you with cars (Convoy mission) as they don't know how to disembark a vehicle. 
+  * For proper support, delete your ``dc_enemyList.json`` to get an updated one.
+  
+Fixes:
+* Fix for location cache crash (hopefully).
+* Fixed a race condition where DarcMissions started to spawn before DarcCore was properly initialized.
+
+## 20251123
 No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
 Main features:
 * Persistence (vanilla) handling. All entities (AI, vehicles, buildings) spawned will have the persistence disabled. This means that none of the items should end up in your save and become re-spawned when server boots.

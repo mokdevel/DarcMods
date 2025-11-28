@@ -203,9 +203,9 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-//			conf.enemyFactions = {"US"};
+			conf.enemyFactions = {"US"};
 //			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
-			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION"};
+//			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION"};
 //			conf.enemyFactions = {"BALLIEN_BC_FACTION"};
 //			conf.enemyFactions = {"USSR"};
 //			conf.enemyFactions = {"TF_RF"};
@@ -236,9 +236,9 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
-			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
+//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
+			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
 //			conf.missionStatic.missionTypeArray = {};

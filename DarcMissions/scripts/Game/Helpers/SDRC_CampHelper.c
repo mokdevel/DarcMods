@@ -126,17 +126,19 @@ sealed class SDRC_CampHelper
 	{
 		if (!camp.loot)
 		{
+			SDRC_Log.Add("[SDRC_CampHelper:AddLoot] No loot defined.", LogLevel.DEBUG);
 			return false;
 		}
 		
 		if (!camp.loot.box)
 		{
+			SDRC_Log.Add("[SDRC_CampHelper:AddLoot] No loot box defined.", LogLevel.DEBUG);
 			return false;
 		}
 		
 		//NOTE: itemChance difficulty is handled in TBD
 		SDRC_LootHelper.SpawnItemsToStorage(camp.loot.box, camp.loot.items, camp.loot.itemChance);
-		SDRC_Log.Add("[SDRC_CampHelper:AddLoot] Loot added.", LogLevel.DEBUG);								
+		SDRC_Log.Add("[SDRC_CampHelper:AddLoot] Loot added.", LogLevel.DEBUG);
 		
 		return true;
 	}

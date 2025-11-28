@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-//#define SDRC_RELEASE
+#define SDRC_RELEASE
 //#define EXPERIMENTAL
 //#define NEW_VERSION_WIP		//New functionality (..that affects jsons)
 
@@ -15,6 +15,7 @@ sealed class SDRC_Conf
 	const string CORE_CONFIG_FILE = "dc_coreConfig.json";
 	static string subDir = "";
 	static bool coreHasStarted = false;
+	static bool coreInitReady = false;
 	const int MISSION_RUN_DELAY = 5000;						//Time between INIT and SPAWN states.
 	const int PERSISTENCE_DELAY = 6000;						//Time to delay the persistence setting for spawned entities. 
 	const int DESPAWN_ENTITY_USED_FOR_SIZE_DELAY = 5000;	//Time to delay the deletion of an entity that was used for defining the size or weapon used for finding the mag.
