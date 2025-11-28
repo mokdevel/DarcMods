@@ -52,6 +52,9 @@ Some parameters are described in DarcMissions documentation
 
 # Version history
 
+## 20251128
+Compatibility compile for DarcCore.
+
 ## 20251123
 Compatibility compile for DarcCore.
 

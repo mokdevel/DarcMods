@@ -9,8 +9,9 @@
 
 .. empty ..
 
-## 20251123
+## 20251128
 No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
+
 Main features:
 * Proper support for Bacon Zombies. Setting ``BACON_622120A5448725E3_FACTION`` as the enemy faction, will turn all mission enemies to zombies. Storywise may not be perfect as the zombies will setup camps and roadblocks. They will also hunt you with cars (Convoy mission) as they don't know how to disembark a vehicle. 
   * For proper support, delete your ``dc_enemyList.json`` to get an updated one.
@@ -21,6 +22,7 @@ Fixes:
 
 ## 20251123
 No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
+
 Main features:
 * Persistence (vanilla) handling. All entities (AI, vehicles, buildings) spawned will have the persistence disabled. This means that none of the items should end up in your save and become re-spawned when server boots.
 * Known issues with the current implementation:
@@ -55,6 +57,7 @@ Compatibility compile for DarcCore.
 ## 20251104
 ### DarcMissions
 No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
+
 Fixes:
 * Added better support for Tactical Flava mod. If you use the mod, remove ``dc_enemyList.json`` to get a new one.
 * Extended ``akas`` functionality in ``dc_enemyList.json`` to support more complex filtering. See docs.
@@ -65,6 +68,7 @@ Fixes:
 ## 20251102
 ### DarcMissions
 No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
+
 Fixes:
 * Added better support for Rayzis Optics. Remove your dc_lootList.json to get a new updated one.
 * Marker issue "NULL pointer to instance. Variable 'm_wMarkerTimestamp'" fixed
@@ -78,6 +82,7 @@ Minor fixes and support for 1.6.
 ## 20251027
 ### DarcMissions
 No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
+
 Fixes:
 * UTIL_MAGAZINE typos (was UTIL_MAGAZINES in a few places)
 * fallbackEnemyFaction had issues when factions are not properly available setup
