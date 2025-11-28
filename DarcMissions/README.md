@@ -1,17 +1,17 @@
 # DarcMissions
-A mission frame work for Arma Reforger. There are various missions premade and their behaviour can be modified by editing the configuration jsons.
-
-## Installation
-Just activate the mod (and dependencies) and you're good to go.
+A mission frame work for Arma Reforger. There are various missions premade and their behaviour can be modified by editing the configuration jsons. Installation is easy: Just activate the mod (and dependencies) and you're good to go. For more see the dedicated page.
 
 ## Support
 Please check the FAQ and you can find me on Discord
+* [Installation](docs/INSTALLATION.md)
 * [FAQ](docs/FAQ.md)
+* [Version history](docs/VERSION.md)
 * [Discord](https://discord.com/channels/105462288051380224/1367778477134057523)
 * [GM functionality](docs/GM.md)
+* [Road map](docs/ROADMAP.md)
 
 ## Vision
-I wanted to create a simple drop-in mission package where there is minimal configuration needed to get it running. You can take the mod, play it in SP, MP or let it run on a dedicated server. Everything should be randomized so you should never know what is happening in the world. The behaviour of the mod should be close to vanilla and by doing that, you could be running this on top of your other game modes. I've been using this with [Escapists](https://reforger.armaplatform.com/workshop/5F16D7E4A1CBE075-Escapists) just to get a few additional surprises.
+I wanted to create a simple drop-in mission package where there is minimal configuration needed to get it running. You can take the mod, play it in SP, MP or let it run on a dedicated server. Everything should be randomized so you should never know what is happening in the world. The behaviour of the mod should be close to vanilla and by doing that, you could be running this on top of your other game modes. I've been using this with [Escapists](https://reforger.armaplatform.com/workshop/5F16D7E4A1CBE075-Escapists), [Overthrow](https://reforger.armaplatform.com/workshop/59B657D731E2A11D-Overthrow) and [Freedom Fighters](https://reforger.armaplatform.com/workshop/CAFEBEEFF0CACC1A-FreedomFighters) to get a few additional surprises.
 
 ## Missions
 - (1) [Hunter](./docs/MISSION_HUNTER.md) : AIs are hunting you. They have some knowledge of where you are. You can outrun them or take them down. 
