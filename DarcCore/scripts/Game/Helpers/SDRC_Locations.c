@@ -63,15 +63,18 @@ sealed class SDRC_Locations
 		
 		foreach (MapItem tmpMapItem: locationArrayMapItem)
 		{
-			SDRC_Location location = new SDRC_Location();
-			vector origin = tmpMapItem.Entity().GetOrigin();			
-			tmpMapItem.SetPos(origin[0], origin[2]);
-			location.pos = tmpMapItem.GetPos();
-			location.baseType = tmpMapItem.GetBaseType();
-			location.name = tmpMapItem.GetDisplayName();
-			location.displayName = WidgetManager.Translate(tmpMapItem.GetDisplayName());
-			location.createdName = CreateName(location.pos);
-			locationArray.Insert(location);
+			if (tmpMapItem.Entity())
+			{
+				SDRC_Location location = new SDRC_Location();
+				vector origin = tmpMapItem.Entity().GetOrigin();			
+				tmpMapItem.SetPos(origin[0], origin[2]);
+				location.pos = tmpMapItem.GetPos();
+				location.baseType = tmpMapItem.GetBaseType();
+				location.name = tmpMapItem.GetDisplayName();
+				location.displayName = WidgetManager.Translate(tmpMapItem.GetDisplayName());
+				location.createdName = CreateName(location.pos);
+				locationArray.Insert(location);
+			}
 		}
 				
 		SDRC_Log.Add("[SDRC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);

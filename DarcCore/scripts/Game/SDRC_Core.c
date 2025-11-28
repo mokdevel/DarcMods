@@ -79,6 +79,7 @@ class SDRC_Core
 		
 		//Set debug visibility
 		SDRC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres);
+		
 	}
 
 	void ~SDRC_Core()
@@ -104,5 +105,9 @@ class SDRC_Core
 		#ifndef NEW_VERSION_WIP
 		SDRC_Locations.FillLocationsCache(m_Config.locationAkas);
 		#endif
+
+		//Core initialized properly
+		SDRC_Conf.coreInitReady = true;
+		SDRC_Log.Add("[SDRC_Core] Init ready.", LogLevel.NORMAL);		
 	}	
 }

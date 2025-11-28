@@ -38,18 +38,33 @@ modded class SCR_BaseGameMode
 //			m_SDRC_RplHintEntity = SDRC_RplHintEntity.Cast(entity);
 			m_SDRC_RplHintEntity = SDRC_RplHintEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));
 			SDRC_SpawnHelper.SetPersistence(m_SDRC_RplHintEntity, false);
-			
-			//Core initialized properly
-			SDRC_Conf.coreHasStarted = true;
-									
+												
 			//For testing
 			//GetGame().GetCallqueue().CallLater(DebugStart, 15000, false);	
+			
+			GetGame().GetCallqueue().CallLater(IsCoreReady, 1000, false);	
 		}
 		else 
 		{
 			SDRC_Log.Add("[SDRC_Core_BaseGameMode:NonMaster] Core not needed for client.", LogLevel.DEBUG);
 		}		
     }
+	
+	//------------------------------------------------------------------------------------------------
+	private void IsCoreReady()
+	{
+		if (SDRC_Conf.coreInitReady)	//Wait for core to be available
+		{		
+			//Core initialized properly
+			SDRC_Conf.coreHasStarted = true;
+			SDRC_Log.Add("[SDRC_Core] Core has started.", LogLevel.NORMAL);
+		}
+		else
+		{
+			GetGame().GetCallqueue().CallLater(IsCoreReady, 1000, false);	
+			SDRC_Log.Add("[SDRC_Core_BaseGameMode:IsCoreReady] Waiting for core init to finalize...", LogLevel.DEBUG);
+		}
+	}	
 	
 	/*
 	private void DebugStart()
