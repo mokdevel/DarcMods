@@ -36,7 +36,7 @@ string comment : Generic comment to describe the mission. Not used in game.
 array<vector> pos : Position(s) for mission. "0 0 0" used for random location chosen from locationTypes.
   [0-n] = The general position for a mission. This could be a mix a location positions and "0 0 0".
   [1] = The destination position for missions that need it - This is a specical case for missions Convoy and Patrol.
-float size :
+float size : The size (radius) of the empty space needed to decide on a mission position.
 array<int> locationTypes : Location types as defined by EMapDescriptorType.
 string posName : Your name for the mission location (like "Harbor near city"). "any" uses location name found from locationTypes. "" will leave the information empty.
 string title : Title for the hint shown for players
