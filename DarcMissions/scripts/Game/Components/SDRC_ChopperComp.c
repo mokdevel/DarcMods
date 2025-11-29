@@ -13,21 +13,29 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private static SDRC_ChopperComp s_Instance;	
 	private ref array<vector> m_vSplinePoints = new array<vector>();
 	private ref array<vector> m_vTangentPoints = new array<vector>();
-	private float m_fTimeTurn = 0;
 
 	//Speed management
 	const float SPEED_INTERVAL = 4;		
 	private float m_fTimeSpeed = 0;
 		
+	//Turn
+	const int TIME_TURN_INTERVAL_BASE = 40;			//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
+	private float m_fTimeTurn = 0;
+	
+	//Pitch
+	const float PITCH_ANGLE = 1;//2;//1.7;					//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
+	private float m_fTimePitch = 0;
+	private float m_fTimePitchInterval = 3;
+	
 	//Flight path
 	const int SPLINE_POINT_DISTANCE = 14;//25;		//Distance between spline points
 	const int POINTS_TO_NEW_DISTANCE = 0;			//How many spline points in to the future flight path is checked before adding new flight points.
 	const int POINTS_TO_SPLINE_START = 2;			//Points to go back from m_iClosestIndex when creating a new flight path 
-	const int TIME_TURN_INTERVAL_BASE = 40;			//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
 	const int DESTINATION_POINT_DIV = 12;			//How many points ahead to look for the destination. This is the divider for speed.
-	const float PITCH_ANGLE = 6;//1.7;					//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
-	const float ROTOR_FORCE_UP = 18.0;	
 	const float TIME_IN_INIT = 25;					//Seconds to be in init state
+	
+	//Helicopter parameters
+	const float ROTOR_FORCE_UP = 18.0;	
 	
 	//Setup parameters
 	private float m_fGroundLow = 5;
@@ -45,7 +53,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//Flight path runtime variables	
 	private float m_fSpeedMin = 10;			//Minimum speed
 	private float m_fSpeedMax = 30;			//Maximum speed
-	private float m_fSpeedGain = 1.20;		//Speed gain aka acceleration
+	private float m_fSpeedGain = 1.0;		//Speed gain aka acceleration
 	private float m_fSpeed = 30;			//Current speed
 	private float m_fSpeedStart;			//Speed lerp start
 	private float m_fSpeedTarget;			//Speed lerp target aka end
@@ -58,6 +66,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 	//Debug stuff
 	private float m_fDbgAngle;
+	private float m_fDbgAnglePitch;
 		
 	int m_iClosestIndex;					//Closest point on spline to heli
 	int m_iNewClosestIndex;
@@ -161,6 +170,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 				
 		m_fTimeSpeed += timeSlice;
 		m_fTimeTurn += timeSlice;
+		m_fTimePitch += timeSlice;
 
 		vector origin = owner.GetOrigin();
 
@@ -224,7 +234,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		if ( (m_fTimeTurn > m_fTimeTurnInterval) && (m_bDoTurn) )
 		{
 			SetTurn(owner, m_fTimeTurnInterval);
-			m_fTimeTurn = m_fTimeTurn - m_fTimeTurnInterval * 1.1;	//Make turning slow
+			m_fTimeTurn = m_fTimeTurn - m_fTimeTurnInterval;// * 1.5;	//Make turning slow
 			m_bDoTurn = false;
 		}
 		
@@ -292,19 +302,32 @@ class SDRC_ChopperComp : ScriptGameComponent
 //		float angle = Math.AbsFloat(SDRC_Math.GetAngleBetweenVectors(heliDirection, heliDirectionFuture));
 		float angle = Math.AbsFloat(SDRC_Math.GetAngleBetweenVectors(heliDirection, m_vDestination));
 		m_fDbgAngle = angle * Math.RAD2DEG;
+		//Count the angle of the turn. The steeper the turn, the slower heli should be moving.
 		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);
-		m_fSpeedMul = m_fSpeedGain - (m_fSpeedMul / 60);
+//		m_fSpeedMul = m_fSpeedGain - (m_fSpeedMul / 40);		
+		m_fSpeedMul = m_fSpeedGain * (1.3 - (m_fSpeedMul / 90));
 		m_fSpeedStart = m_fSpeed;
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
 		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
 		m_fTimeSpeed = 0;	//Start to change speed
 
 		//ROLL PITCH: Change pitch according to speed		
-		m_vRadRollPitch = SDRC_Math.RotateAroundAxis(heliForward, heliPitch, m_fSpeedMul * PITCH_ANGLE * Math.DEG2RAD);
-		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(heliForward, m_vRadRollPitch, deltaTime * 1.5);
+		m_fTimePitchInterval = 2;
+//		m_fTimePitchInterval = deltaTime;
+		
+		if (m_fTimePitch > m_fTimePitchInterval)
+		{
+			m_fTimePitch = m_fTimePitch - m_fTimePitchInterval;
+		
+			m_fDbgAnglePitch = (1 - (m_fSpeedMul) * PITCH_ANGLE * Math.DEG2RAD);
+			m_vRadRollPitch = SDRC_Math.RotateAroundAxis(heliForward, heliPitch, m_fDbgAnglePitch);
+//			m_vRadRollPitch = SDRC_Math.RotateAroundAxis(heliPitch, heliForward, m_fSpeedMul * PITCH_ANGLE * Math.DEG2RAD);
+//			m_vRadRollPitch = SDRC_Math.RotateAroundAxis(heliPitch, m_vDestinationFuture, m_fSpeedMul * PITCH_ANGLE * Math.DEG2RAD);
+			m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(heliForward, m_vRadRollPitch, m_fTimePitchInterval);
+		}
 				
 		//ROLL UP (YAW): Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
-		m_vRadRollBack = SDRC_Math.ComputeAngularVelocity(heliUp, vector.Up, 1);//deltaTime * 0.5);
+		m_vRadRollBack = SDRC_Math.ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 0.2);
 
 		//ROLL ALONG SPLINE: Calculate roll along the spline
 		int rollIdxStart = m_iClosestIndex - 1;//(m_iDestinationPointAdd / 2);
@@ -328,7 +351,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 //		float angVelTurn = GetAngleBetweenVectors(heliForward, heliVelocity);
 		
 		angVelTurn = angVelTurn;// + roll;
-		angVelTurn = Math.Clamp(angVelTurn, -0.7, 0.7);
+		angVelTurn = Math.Clamp(angVelTurn, -0.5, 0.5);
 		m_vRadRollVel = "0 0 0";
 		m_vRadRollVel[2] = -angVelTurn;
 		
@@ -494,6 +517,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		debugText = debugText + 
 						   	"TurnInternal:" + m_fTimeTurnInterval + "\n" +
 							"DbgAngle: " + m_fDbgAngle + "\n" +
+							"DbgAnglePitch: " + m_fDbgAnglePitch * Math.RAD2DEG + "\n" +
 							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n";
 		debugText = debugText + 
 							"In Init:" + m_bInInit + ", " +
