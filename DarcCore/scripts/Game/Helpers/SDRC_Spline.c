@@ -175,6 +175,7 @@ sealed class SDRC_Spline3D
 			if (i == 0)
 				continue;
 
+			//TBD: This could be optimized to stop searching when tempDistanceSq starts to grow. No need to go to the end for chopper mission.
 			tempDistanceSq = Math3D.PointLineSegmentDistanceSqr(point, segmentStart, segmentEnd);
 			if (tempDistanceSq < minDistanceSq)
 			{

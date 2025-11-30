@@ -28,13 +28,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 	
 	//Pitch
 	const float PITCH_ANGLE = 40;					//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
-//	private float m_fTimePitch = 0;
-//	private float m_fTimePitchInterval = 3;
 	
 	//Flight path
 	const int SPLINE_POINT_DISTANCE = 10;//14;//25;		//Distance between spline points
-	const int POINTS_TO_NEW_DISTANCE = 0;			//How many spline points in to the future flight path is checked before adding new flight points.
-	const int POINTS_TO_SPLINE_START = 2;			//Points to go back from m_iClosestIndex when creating a new flight path 
+	const int POINTS_TO_NEW_DISTANCE = 3;			//How many spline points in to the future flight path is checked before adding new flight points.
+	const int POINTS_TO_SPLINE_START = 6;			//Points to go back from m_iClosestIndex when creating a new flight path 
 	const int DESTINATION_POINT_DIV = 12;			//How many points ahead to look for the destination. This is the divider for speed.
 	const float TIME_IN_INIT = 25;					//Seconds to be in init state
 	
@@ -81,8 +79,23 @@ class SDRC_ChopperComp : ScriptGameComponent
 	vector m_vDestination;
 	vector m_vDestinationFuture;
 
-	//Flight path	
+	//Flight path
 	//Arland
+	ref array<vector> m_vPathPoints = {
+		"1500 020 1800",
+		"1500 030 2000",
+		"1300 010 2200",
+	};
+
+	int m_iFlyPathIdx = 0;
+	ref array<vector> m_vFlyPath = {
+		"1700 015 2400",
+		"1300 030 2600",
+		"1700 040 2800",
+		"1300 020 3000",
+	};	
+		
+/*	//Arland
 	ref array<vector> m_vPathPoints = {
 		"1500 020 1800",
 		"1500 030 2000",
@@ -100,7 +113,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		"1900 000 1300",
 		"1500 000 2200",
 		"2200 020 2200",
-	};
+	};*/
 		
 	override void OnPostInit(IEntity owner)
 	{
@@ -384,23 +397,20 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 				
 		m_vPathPoints.Clear();
-		int splineStartIdx = m_iDestinationPointAdd - POINTS_TO_SPLINE_START;
+		int splineStartIdx = m_iClosestIndex  - POINTS_TO_SPLINE_START;
 		if (splineStartIdx < 0)
 		{
 			splineStartIdx = 0;
 		}
 		m_vPathPoints.Insert(m_vSplinePoints[splineStartIdx]);
-		m_vPathPoints.Insert(m_vSplinePoints[m_iDestinationPointAdd]);
-		m_vPathPoints.Insert(m_vSplinePoints[m_vSplinePoints.Count() - 1]);
+		m_vPathPoints.Insert(m_vSplinePoints[m_iClosestIndex]);
 		m_vPathPoints.Insert(RaiseFlyPoint(m_vFlyPath[m_iFlyPathIdx]));
 		m_iFlyPathIdx++;
 
 		SDRC_Spline3D.GenerateSplinePoints(m_vPathPoints, m_vSplinePoints, m_vTangentPoints, m_iSegmentPoints, true);
-		
+
 		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, origin, m_iClosestIndex);	//NOTE: This will set m_iNewClosestIndex
-//		m_iClosestIndex = 1;
 		m_iNewClosestIndex = m_iClosestIndex + 1;
-//		m_vDestination = m_vSplinePoints[m_iClosestIndex];
 	}
 			
 	//------------------------------------------------------------------------------------------------	
