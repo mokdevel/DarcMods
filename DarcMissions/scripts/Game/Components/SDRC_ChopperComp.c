@@ -16,6 +16,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 	//Speed management
 	const float SPEED_INTERVAL = 4;		
+	const float SPEED_GAIN = 1.4;		
 	private float m_fTimeSpeed = 0;
 		
 	//Turn
@@ -53,12 +54,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//Flight path runtime variables	
 	private float m_fSpeedMin = 10;			//Minimum speed
 	private float m_fSpeedMax = 30;			//Maximum speed
-	private float m_fSpeedGain = 1.0;		//Speed gain aka acceleration
+	private float m_fSpeedGain = 1.1;		//Speed gain aka acceleration
 	private float m_fSpeed = 30;			//Current speed
 	private float m_fSpeedStart;			//Speed lerp start
 	private float m_fSpeedTarget;			//Speed lerp target aka end
 	private float m_fSpeedMul = 1;			//Speed multiplier that depends on the turn
 	private bool m_bDoTurn = true;			//If true, modify heli turn axis
+	
+	//Angular velocities
+	private vector m_vAngularVel;
 	private vector m_vRollTarget;
 	private vector m_vRadRollVel;
 	private vector m_vRadRollBack;
@@ -233,11 +237,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Shall we set a new turn
 		if ( (m_fTimeTurn > m_fTimeTurnInterval) && (m_bDoTurn) )
 		{
-			SetTurn(owner, m_fTimeTurnInterval);
+//			SetTurn(owner, m_fTimeTurnInterval);
 			m_fTimeTurn = m_fTimeTurn - m_fTimeTurnInterval;// * 1.5;	//Make turning slow
 			m_bDoTurn = false;
 		}
-		
+
+		SetTurn(owner, m_fTimeTurnInterval);
+				
 		//Check if we need to define a new destination and create a new path
 		CreateFlightPath(origin);
 		
@@ -305,7 +311,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Count the angle of the turn. The steeper the turn, the slower heli should be moving.
 		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);
 //		m_fSpeedMul = m_fSpeedGain - (m_fSpeedMul / 40);		
-		m_fSpeedMul = m_fSpeedGain * (1.3 - (m_fSpeedMul / 90));
+		m_fSpeedMul = m_fSpeedGain * (SPEED_GAIN - (m_fSpeedMul / 90));
 		m_fSpeedStart = m_fSpeed;
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
 		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
@@ -319,7 +325,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			m_fTimePitch = m_fTimePitch - m_fTimePitchInterval;
 		
-			m_fDbgAnglePitch = (1 - (m_fSpeedMul) * PITCH_ANGLE * Math.DEG2RAD);
+//			m_fDbgAnglePitch = (1 - (m_fSpeedMul) * PITCH_ANGLE * Math.DEG2RAD);
+			m_fDbgAnglePitch = 180 * Math.DEG2RAD;
 			m_vRadRollPitch = SDRC_Math.RotateAroundAxis(heliForward, heliPitch, m_fDbgAnglePitch);
 //			m_vRadRollPitch = SDRC_Math.RotateAroundAxis(heliPitch, heliForward, m_fSpeedMul * PITCH_ANGLE * Math.DEG2RAD);
 //			m_vRadRollPitch = SDRC_Math.RotateAroundAxis(heliPitch, m_vDestinationFuture, m_fSpeedMul * PITCH_ANGLE * Math.DEG2RAD);
@@ -327,7 +334,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 				
 		//ROLL UP (YAW): Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
-		m_vRadRollBack = SDRC_Math.ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 0.2);
+		m_vRadRollBack = SDRC_Math.ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 0.5);
 
 		//ROLL ALONG SPLINE: Calculate roll along the spline
 		int rollIdxStart = m_iClosestIndex - 1;//(m_iDestinationPointAdd / 2);
@@ -358,13 +365,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Dummy
 //		m_vRadRollVel = "0 0 0";
 //		m_vRadRollBack = "0 0 0";
-//		m_vRadRollPitch = "0 0 0";
+		m_vRadRollPitch = "0 0 0";
 		
 		//Count the angular velocity
-//		vector angularVel = SDRC_Math.ComputeAngularVelocity(heliVelocity, heliDirection, deltaTime);
-		vector angularVel = SDRC_Math.ComputeAngularVelocity(heliForward, heliDirection, deltaTime);
+//		m_vAngularVel = SDRC_Math.ComputeAngularVelocity(heliVelocity, heliDirection, deltaTime);
+		m_vAngularVel = SDRC_Math.ComputeAngularVelocity(heliForward, heliDirection, deltaTime);
 		
-		owner.GetPhysics().SetAngularVelocity(angularVel + m_vRadRollVel + m_vRadRollBack + m_vRadRollPitch);
+		owner.GetPhysics().SetAngularVelocity(m_vAngularVel + m_vRadRollVel + m_vRadRollBack + m_vRadRollPitch);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -559,6 +566,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vRoll.Normalize();
 //		DrawLine(origin, origin + (vRoll * 15), Color.BLUE);		
 
+		//RollPitch vector
+		vRoll = m_vRadRollPitch * Math.DEG2RAD;
+		vRoll.Normalize();
+//		DrawLine(origin, origin + (vRoll * 15), Color.BLUE);		
+		
 /*		vector vVec = m_vRadRollVel;
 		vVec[1] = -vVec[2];
 		vVec[2] = vVec[0];
