@@ -8,6 +8,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private ref SDRC_ChopperConfig m_Config;
 	private ref SDRC_Chopper m_DC_Chopper = new SDRC_Chopper();
 	
+	private vector m_vPosDestination = "0 0 0";
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
 	private VehicleHelicopterSimulation m_Vehicle_s;
@@ -37,9 +38,23 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Chopper.general, request);
 
 		//Find position
-		bool positionFound = false;
 		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
-
+		
+		m_vPosDestination = m_DC_Chopper.general.pos[1];
+		if (m_vPosDestination == "0 0 0")
+		{		
+			int rnd = SDRC_Misc.GetWorldSize()/8;
+			m_vPosDestination[0] = SDRC_Misc.GetWorldSize()/2 + SDRC_Misc.RandomFloat(-rnd, rnd);
+			m_vPosDestination[2] = SDRC_Misc.GetWorldSize()/2 + SDRC_Misc.RandomFloat(-rnd, rnd);
+		}
+		
+		//No suitable location found.
+		if ( (pos == "0 0 0") || (m_vPosDestination == "0 0 0") )
+		{				
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
+			return;
+		}	
+			
 		//For requested missions we want have it as close as possible in the requested place.
 		if (IsRequested())
 		{
@@ -50,7 +65,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		#ifdef DEBUG_CHOPPER
 		pos = "1300 10 2200";
 		#endif
-		SetPos(pos /*, destination */);
+		SetPos(pos, m_vPosDestination);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Chopper.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Chopper.general);		
@@ -116,15 +131,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
         m_Vehicle_s.RotorSetForceScaleState(0, heliInfo.rotorForce);
         m_Vehicle_s.RotorSetForceScaleState(1, heliInfo.rotor2Force);
 		m_Vehicle_c.SetHeli(m_DC_Chopper.rotorForceUp, m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], m_DC_Chopper.throttle, m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.wpType, m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
-		m_Vehicle_c.InitFlightPath(m_Vehicle, GetPos());
+		m_Vehicle_c.InitFlightPath(m_Vehicle, GetPos(), m_vPosDestination);
 				
-		//Spawn AI				
-/*		vector aiPos = GetPos();// "1300 10 2200";
-//		string groupToSpawn = "{30ED11AA4F0D41E5}Prefabs/Groups/OPFOR/Group_USSR_FireGroup.et";
-		string groupToSpawn = "{0D10CCEEC7B3EC34}Prefabs/Groups/OPFOR/Group_USSR_PlatoonHQ.et";
-		m_Crew = SDRC_AIHelper.SpawnGroup(groupToSpawn, aiPos, GetFaction());
-		m_Crew2 = SDRC_AIHelper.SpawnGroup(groupToSpawn, aiPos, GetFaction());
-*/		
 		//Spawn mission AI
 		int aiCount = m_DC_Chopper.ai.GetCount(m_DC_Chopper.general.difficulty);
 		for (int i = 0; i < aiCount; i++)
@@ -137,47 +145,6 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				m_Groups.Insert(group);					
 			}
 		}
-		
-//		GetGame().GetCallqueue().CallLater(AddCrew, 6000, false, m_Crew);
-//		GetGame().GetCallqueue().CallLater(AddCrew, 7000, false, m_Crew2);
-
-		
-/*						
-		//Code for whatever you need for spawning things.
-		EntitySpawnParams params = EntitySpawnParams();
-//		string resourceName	= "{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et";
-//		string resourceName	= "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et";
-		string resourceName	= "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Flying_Patrol.et";
-//		string resourceName	= "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Flying_Patrol.et";
-//		string resourceName	= "{31203FC84104022C}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_M261_Flying_Patrol.et";	//M261 MOD!
-//		string resourceName	= "{7CB21626B43A2E48}Prefabs/Vehicles/Flying/Jetpack_Flying.et";
-		vector pos = GetPos();
-	
-		//Spawn the resource exactly to pos
-		Resource resource = Resource.Load(resourceName);
-		vector transform[4];
-				
-		vector rotVector = "0 0 0";
-		Math3D.MatrixIdentity3(transform);
-		Math3D.AnglesToMatrix(rotVector, transform);
-		transform[3] = pos;//m_vSplinePoints[0];
-		
-		//SDRC_SpawnHelper.GetTransformFromPosAndRot(transform, pos, 0, false);
-        params.TransformMode = ETransformMode.WORLD;			
-        params.Transform = transform;
-		
-		m_Vehicle = SDRC_SpawnHelper.SpawnEntityPrefabPersistence(resource, GetGame().GetWorld(), params);		
-		
-		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
-        m_Vehicle_s.EngineStart();
-        m_Vehicle_s.SetThrottle(1.0);
-        m_Vehicle_s.RotorSetForceScaleState(0, 1.3);	//Hovering 1.2
-        m_Vehicle_s.RotorSetForceScaleState(1, 1);
-		
-		GetGame().GetCallqueue().CallLater(AddCrew, 6000, false, m_Crew);
-		GetGame().GetCallqueue().CallLater(AddCrew, 7000, false, m_Crew2);
-		
-*/		
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -187,7 +154,6 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		{
 			SDRC_VehicleHelper.MoveGroupInVehicle(group, m_Vehicle, true);
 			SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(m_DC_Chopper.general.difficulty), m_DC_Chopper.ai.GetPerception(m_DC_Chopper.general.difficulty));
-//			SDRC_AIHelper.SetAIGroupSettings(crew, EAISkill.CYLON, 10);
 		}
 	}
 }
@@ -337,35 +303,35 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 	SDRC_HelicopterInfo Heli00()
 	{
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Flying_Patrol.et", 1.01, 1.30, 1.01);
+		heli.Set("{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Flying_Patrol.et", 1.01, 2.20, 1.01);
 		return heli;		
 	}
 	
 	SDRC_HelicopterInfo Heli01()
 	{
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Flying_Patrol.et", 1.01, 1.30, 1.01);
+		heli.Set("{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Flying_Patrol.et", 1.01, 1.40, 1.01);
 		return heli;		
 	}
 	
 	SDRC_HelicopterInfo Heli02()
 	{	
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et",	1.01, 1.30, 1.01);
+		heli.Set("{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et",	1.01, 1.40, 1.01);
 		return heli;		
 	}
 	
 	SDRC_HelicopterInfo Heli03()
 	{	
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",	1.01, 1.30, 1.01);
+		heli.Set("{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",	1.01, 1.40, 1.01);
 		return heli;		
 	}
 	
 	SDRC_HelicopterInfo Heli04()
 	{	
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("{31203FC84104022C}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_M261_Flying_Patrol.et",	1.01, 1.30, 1.01);	//M261 MOD!
+		heli.Set("{31203FC84104022C}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_M261_Flying_Patrol.et",	1.01, 1.40, 1.01);	//M261 MOD!
 		return heli;		
 	}
 	
@@ -375,7 +341,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		ref SDRC_Chopper chopper = new SDRC_Chopper();
 		chopper.general.Set(
 			0, "index 0: Randomly flying chopper",
-			{"0 0 0"}, 0,
+			{"0 0 0", "0 0 0"}, 0,
 			{},
 			"any",
 			"Helicopter patroling",
@@ -392,7 +358,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		(
 			{1, 2},
 			{"G_LIGHT", "G_ADMIN"},
-			20, 0.2,
+			10, 0.1,
 			{0, 0},
 			SDRC_EWaypointGenerationType.LOITER,
 			SDRC_EWaypointMoveType.LOITER,
@@ -400,9 +366,9 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		chopper.Set
 		(
 			{0},
-			{28, 70},
+			{45, 80},
 			{10, 30},
-			1.3, 18,
+			1.2, 19,
 			{300, 1200},
 			SDRC_EHeliWaypointGenerationType.RANDOM,			
 		);
