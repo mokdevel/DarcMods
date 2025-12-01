@@ -366,9 +366,9 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		chopper.Set
 		(
 			{0},
-			{45, 80},
+			{45, 90},
 			{10, 30},
-			1.2, 19,
+			1.2, 35,
 			{300, 1200},
 			SDRC_EHeliWaypointGenerationType.RANDOM,			
 		);

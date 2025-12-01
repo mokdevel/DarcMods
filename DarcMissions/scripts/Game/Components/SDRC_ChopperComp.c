@@ -25,51 +25,53 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 	//Parameters accessible helicopter parameters
 	float m_fRotorForceUp = 18.0;
-	float m_fSpeedMin = 10;			//Minimum speed
-	float m_fSpeedMax = 30;			//Maximum speed
-	float m_fThrottle = 1.1;		//Speed gain aka acceleration
-	float m_fFlyHeightLow = 5;
-	float m_fFlyHeightHigh = 40;
+	float m_fSpeedMin;				//Minimum speed
+	float m_fSpeedMax;				//Maximum speed
+	float m_fThrottle;				//Speed gain aka acceleration
+	float m_fFlyHeightLow;			//Flight height low
+	float m_fFlyHeightHigh;			//Flight height high
 	SDRC_EHeliWaypointGenerationType m_fWpType; 
-	float m_fDistanceLow = 5;
-	float m_fDistanceHigh = 40;
+	float m_fDistanceLow;			//Distance for waypoint min
+	float m_fDistanceHigh;			//..max
 	
 	//Speed management
 	private const float SPEED_INTERVAL = 2;		
-	private const float SPEED_GAIN = 1.2;
+	private const float SPEED_GAIN = 1.1;
 	private float m_fTimeSpeed = 0;
-	
+
 	private float m_fTimeBetweenPts = 1;
 	private float m_fTimeBetweenPtsAvg = 1;
 		
 	//Turn
-	const int TIME_TURN_INTERVAL_BASE = 40;			//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
+	const int TIME_TURN_INTERVAL_BASE = 40;		//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
 	
 	//Pitch
-	const float PITCH_ANGLE = 2.5;					//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
+	const float PITCH_ANGLE = 25;				//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
 	
 	//Roll 
-	const float ROLL_ANGLE_MUL = 1.6;					//Multiplier for roll angle along the spline
+	const float ROLL_ANGLE_MUL = 1.7;			//Multiplier for roll angle along the spline
 	
 	//Flight path
-	const int SEGMENT_POINTS = 10;					//How many points to create for each segment
-	const int POINTS_TO_NEW_DISTANCE = 3;			//How many spline points in to the future flight path is checked before adding new flight points.
-	const int POINTS_TO_SPLINE_START = 6;			//Points to go back from m_iClosestIndex when creating a new flight path 
-	const int DESTINATION_POINT_DIV = 12;			//How many points ahead to look for the destination. This is the divider for speed.
-	const float TIME_IN_INIT = 25;					//Seconds to be in init state
-	const float WP_ANGLE = 40;						//Maximum angle for new destination
+	const int SEGMENT_POINTS = 10;				//How many points to create for each segment
+	const int POINTS_TO_NEW_DISTANCE = 3;		//How many spline points in to the future flight path is checked before adding new flight points.
+	const int POINTS_TO_SPLINE_START = 6;		//Points to go back from m_iClosestIndex when creating a new flight path 
+	const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
+	const float TIME_IN_INIT = 25;				//Seconds to be in init state
+	const float WP_ANGLE = 40;					//Maximum angle for new destination
 	
 	//Runtime parameters
-	private bool m_bInInit = true;			//While in init, consider the chopper to be flying.
+	private bool m_bInInit = true;				//While in init, consider the chopper to be flying.
 	private bool m_bDestroyed = false;
 	private int m_iDestinationPointAdd;
 	private float m_fTimeTurnInterval;
 	
 	//Flight path runtime variables	
-	private float m_fSpeed = 30;			//Current speed
-	private float m_fSpeedStart;			//Speed lerp start
-	private float m_fSpeedTarget;			//Speed lerp target aka end
-	private float m_fSpeedMul = 1;			//Speed multiplier that depends on the turn
+	private vector m_vOrigin;					//Current position
+	private float m_fSpeed;						//Current speed
+	private float m_fSpeedStart;				//Speed lerp start
+	private float m_fSpeedTarget;				//Speed lerp target aka end
+	private float m_fSpeedMul = 1;				//Speed multiplier that depends on the turn
+	private float m_fRotorForceMultiplier = 1.0;
 	
 	//Angular velocities
 	private vector m_vAngularVel;
@@ -88,12 +90,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fDbgAnglePitch;
 	private float m_fDbgAngleRoll;
 	
-	int m_iClosestIndex;					//Closest point on spline to heli
-	int m_iNewClosestIndex;
-	int m_iNextIndex;						//Next index to our m_iClosestIndex - depends on speed
-	int m_iFutureIndex;						//Where we are heading in the long run
-	vector m_vDestination;
-	vector m_vDestinationFuture;
+	private int m_iClosestIndex;				//Closest point on spline to heli
+	private int m_iNewClosestIndex;
+	private int m_iNextIndex;					//Next index to our m_iClosestIndex - depends on speed
+	private int m_iFutureIndex;					//Where we are heading in the long run
+	private vector m_vDestination;
+	private vector m_vDestinationFuture;
 
 	//Flight path
 	//Arland
@@ -140,6 +142,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 //		GetGame().GetCallqueue().CallLater(SetDamage, (TIME_IN_INIT + 5) * 1000, false, owner);		
 		GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000);
+		GetGame().GetCallqueue().CallLater(HandleRotorForce, 1 * 1000, false);
 		Activate(owner);
 	}
  
@@ -165,10 +168,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------
 	override void EOnFrame(IEntity owner, float timeSlice)
 	{
-		vector origin = owner.GetOrigin();
+		m_vOrigin = owner.GetOrigin();
 
 		//Check if we need to define a new destination and create a new path
-		CreateFlightPath(origin);
+		CreateFlightPath(m_vOrigin);
 		
 		//If chopper is destroyed, let Reforger handle crash etc.
 		//Check if we're still working. Not needed every frame. //TBD: Could be done every x seconds - not that critical
@@ -189,7 +192,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_iDestinationPointAdd = Math.Clamp(m_iDestinationPointAdd, 1, 3);
 		
 		//Find where we're going
-		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, origin, m_iNewClosestIndex);	//NOTE: This will set m_iNewClosestIndex
+		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iNewClosestIndex);	//NOTE: This will set m_iNewClosestIndex
 
 		if (m_iNewClosestIndex > m_iClosestIndex)
 		{
@@ -235,10 +238,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		//Get chopper direction
 		m_vHeliForward = owner.GetTransformAxis(2);
-		m_vHeliDirection = vector.Direction(origin, m_vDestination);		
-		m_vHeliDirectionFuture = vector.Direction(origin, m_vDestinationFuture);
+		m_vHeliDirection = vector.Direction(m_vOrigin, m_vDestination);		
+		m_vHeliDirectionFuture = vector.Direction(m_vOrigin, m_vDestinationFuture);
 		
 		//Set velocity 
+		HandleRotorForce();
 		SetVelocity(owner);
 		
 		//Set turn
@@ -252,17 +256,33 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------	
 	private void SetVelocity(IEntity owner)
 	{
-		vector origin = owner.GetOrigin();
-		
 		//Set velocity
-//		vector velVector = m_vHeliDirection;
 		vector velVector = m_vDestination;
 		vector rotVector = owner.GetAngles();
 		velVector.Normalize();
 		float forceMultiplier = m_fSpeed;
-		velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, velVector[1] * m_fRotorForceUp * m_fSpeedMul, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
+		
+		velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, velVector[1] * m_fRotorForceUp * m_fRotorForceMultiplier, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
 		
 		owner.GetPhysics().SetVelocity(velVector);		
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Simulate the use of throttle
+	*/
+	private void HandleRotorForce()
+	{
+//		float diff = -1 * (1 - ((m_vDestination[1] - m_vOrigin[1]) / m_vDestination[1]));
+		float diff = -1 * (1 + (1 - ((m_vSplinePoints[m_iClosestIndex][1] - m_vOrigin[1]) / m_vSplinePoints[m_iClosestIndex][1])));
+		
+		m_fRotorForceMultiplier = diff;
+
+		//If too low, turn the rotor force up
+		if (m_vOrigin[1] < (SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + m_fFlyHeightLow) )
+		{
+			m_fRotorForceMultiplier = 1.4;
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------	
@@ -284,7 +304,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//SPEED: Set speed according to previous turns
 //		float angle = Math.AbsFloat(SDRC_Math.GetAngleBetweenVectors(m_vHeliDirection, m_vDestination));
 		float angle = Math.AbsFloat(SDRC_Math.GetAngleBetweenVectors(m_vHeliForward, m_vHeliDirectionFuture));
-		m_fDbgAngle = angle * Math.RAD2DEG;
+		m_fDbgAngle = angle;
 		//Count the angle of the turn. The steeper the turn, the slower heli should be moving.
 		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);
 		m_fSpeedMul = m_fThrottle * (SPEED_GAIN - (m_fSpeedMul / 90));
@@ -294,10 +314,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fTimeSpeed = 0;	//Start to change speed
 
 		//ROLL PITCH: Change pitch according to speed		
-		m_fDbgAnglePitch = (m_fSpeedMul - 1) * PITCH_ANGLE * Math.DEG2RAD;
+		m_fDbgAnglePitch = (m_fSpeedMul - 3) * PITCH_ANGLE * Math.DEG2RAD;	//No idea why 3 is a good value. :-)
 		m_fDbgAnglePitch = Math.Clamp(m_fDbgAnglePitch, -0.5, 0.5);		
 		m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fDbgAnglePitch);
-		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime);
+		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 0.5);
 						
 		//ROLL UP (YAW): Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
 		m_vRadRollBack = SDRC_Math.ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 0.3);
@@ -459,15 +479,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		foreach (int i, vector pt : m_vPathPoints)
 		{
-			pt[1] = 0;
+			pt[1] = 0;	//We may in the future use the provided Y coord for the points. For now we set it to 0.
 			
 			float flyHeight = SDRC_Misc.RandomFloat(m_fFlyHeightLow, m_fFlyHeightHigh);
-			y = GetGame().GetWorld().GetSurfaceY(pt[0], pt[2]);
-			if (SDRC_Misc.IsPosInWater(pt))	//Is it under water?
-			{
-				y = GetGame().GetWorld().GetOceanHeight(pt[0], pt[2]);;
-			}
-
+			y = SDRC_Misc.GetSurfaceYWithWater(pt);
+			
 			pt[1] = pt[1] + flyHeight + y;
 			m_vPathPoints[i] = pt;
 		}
@@ -496,15 +512,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Make sure the points are at minimum m_fFlyHeightLow from the ground.
 		foreach (int i, vector pt : m_vSplinePoints)
 		{
-			float y = GetGame().GetWorld().GetSurfaceY(pt[0], pt[2]);
-			if (SDRC_Misc.IsPosInWater(pt))	//Is it under water?
-			{
-				y = GetGame().GetWorld().GetOceanHeight(pt[0], pt[2]);
-			}
+			float y = SDRC_Misc.GetSurfaceYWithWater(pt);
 
 			if (pt[1] < (y + m_fFlyHeightLow))
 			{
-				pt[1] = y + m_fFlyHeightLow;	//Make chopper fly higher for a moment
+				pt[1] = y + m_fFlyHeightLow * 1.2;	//Make chopper fly higher for a moment
 				m_vSplinePoints[i] = pt;
 				
 				//TBD: Should be flying higher for a few dots
@@ -601,11 +613,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 						   	"Speed:" + Math.Round(10*m_fSpeed)/10 + " - " +
 						   	"Start/Target:" + Math.Round(10*m_fSpeedStart)/10 + "/" + Math.Round(10*m_fSpeedTarget)/10 + "\n" +
 //						   	"Avg time:" + m_fTimeBetweenPtsAvg + "\n" +
+						   	"Height: " + (origin[1] - SDRC_Misc.GetSurfaceYWithWater(origin)) + "\n" + 
 						   	"SpeedMul:" + m_fSpeedMul + "\n";
 		debugText = debugText + 
-						   	"TurnInternal:" + m_fTimeTurnInterval + "\n" +
-							"DbgAngle: " + m_fDbgAngle + "\n" +
-//							"DbgAnglePitch: " + m_fDbgAnglePitch * Math.RAD2DEG + "\n" +
+						   	"RotorForceMul:" + m_fRotorForceMultiplier + "\n" +
+//						   	"TurnInternal:" + m_fTimeTurnInterval + "\n" +
+							"DbgAngle: " + m_fDbgAngle * Math.RAD2DEG + "\n" +
+							"DbgAnglePitch: " + m_fDbgAnglePitch * Math.RAD2DEG + "\n" +
 //							"DbgAngleRoll: " + m_fDbgAngleRoll * Math.RAD2DEG + "\n" +
 							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n";
 		debugText = debugText + 
