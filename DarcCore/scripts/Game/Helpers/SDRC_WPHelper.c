@@ -13,7 +13,7 @@ enum SDRC_EWaypointGenerationType
 	RADIUS,			//AI follow a path that is close to a circle with a radius. There is some additional randomization to avoid a perfect circle.
 	ROUTE,			//AI follow a route from A to B. The route is created with waypoints along the road.
 	LOITER,			//Currently makes a DEFEND waypoint for the location
-	SLOTS 			//AI goes from a slot to slot. NOTE: This will not work unless the map has slots (the S/M/L letters on map) defined.
+	SLOTS, 			//AI goes from a slot to slot. NOTE: This will not work unless the map has slots (the S/M/L letters on map) defined.
 };
 
 enum SDRC_EWaypointMoveType

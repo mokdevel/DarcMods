@@ -61,7 +61,11 @@ sealed class SDRC_Spline3D
 
 		resultPoints.Insert(lastPoint);
 		resultTangents.Insert(lastTangent);
-		
+	}
+	
+	static void DrawSplinePoints(array<vector> resultPoints, bool showPath = true)
+	{
+	#ifndef SDRC_RELEASE
 		if (showPath)
 		{		
 			foreach (int i, vector pos : resultPoints)
@@ -73,17 +77,12 @@ sealed class SDRC_Spline3D
 					//Show direction vector
 					vector direction = vector.Direction(resultPoints[i], resultPoints[i+1]);
 					direction.Normalize();
-					pos = resultPoints[i] + (direction * 10);
+					pos = resultPoints[i] + (direction * 15);
 					SDRC_DebugHelper.AddDebugLine(resultPoints[i], pos, ARGB(40, 64, 64, 64));				
-						
-					//Show tangent
-					direction = resultTangents[i];
-					direction.Normalize();
-					pos = resultPoints[i] + (direction * 10);
-					SDRC_DebugHelper.AddDebugLine(resultPoints[i], pos, ARGB(40, 32, 32, 32));
 				}			
 			}
 		}
+	#endif
 	}
 
 	//------------------------------------------------------------------------------------------------
