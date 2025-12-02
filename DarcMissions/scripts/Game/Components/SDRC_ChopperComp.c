@@ -358,6 +358,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 		owner.GetPhysics().SetAngularVelocity(m_vAngularVel + m_vRadRollVel + m_vRadRollBack + m_vRadRollPitch);
 	}
 
+	//------------------------------------------------------------------------------------------------	
+	// Flight path things
+	//------------------------------------------------------------------------------------------------	
+	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Create the initial flight path 
@@ -375,7 +379,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_vPathPoints.Insert(vector.Lerp(origin, destination, 0.2));
 		m_vPathPoints.Insert(vector.Lerp(origin, destination, 0.6));
 		m_vPathPoints.Insert(destination);
-		GenerateWayPoint(m_vPathPoints, destination, m_fWpType);
+//		GenerateWayPoint(m_vPathPoints, destination, m_fWpType);
 	#endif
 
 		PrepareFlyPoints(origin);
@@ -398,6 +402,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		owner.SetYawPitchRoll(angles);
 
 		SetVelocity(owner);
+		
+		DrawSplinePoints(m_vPathPoints);		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -447,6 +453,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp:CreateFlightPath] No points!", LogLevel.ERROR);
 		}
+		
+		DrawSplinePoints(m_vPathPoints);
 	}
 
 	//------------------------------------------------------------------------------------------------	
@@ -455,16 +463,17 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/
 	private void GenerateWayPoint(out array<vector> flyPathPoints, vector origin, SDRC_EWaypointGenerationType wpGenType, vector pos = "0 0 0")
 	{
+		float angleChange = SDRC_Misc.RandomFloat(-WP_ANGLE, WP_ANGLE);
+		float distance = SDRC_Misc.RandomFloat(m_fDistanceLow, m_fDistanceHigh);
+		
 		//Random flying for a helicopter
 		if (wpGenType == SDRC_EHeliWaypointGenerationType.RANDOM)
 		{		
-//			float heliAngle = Math.AbsFloat(SDRC_Math.GetAngleBetweenVectors(m_vPathPoints[0], m_vPathPoints[1])) * Math.RAD2DEG;
 			float heliAngle = SDRC_Math.GetAngleBetweenVectors(m_vPathPoints[0], m_vPathPoints[1]) * Math.RAD2DEG;
-			float angleChange = SDRC_Misc.RandomFloat(-WP_ANGLE, WP_ANGLE);
-			float distance = SDRC_Misc.RandomFloat(m_fDistanceLow, m_fDistanceHigh);
-			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle: " + heliAngle + " - Change: " + angleChange + " - Distance: " + distance, LogLevel.DEBUG);
 			vector vec = SDRC_Misc.GetCoordinatesOnCircle(origin, distance, angleChange, heliAngle);
 			m_vPathPoints.Insert(vec);
+			
+			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle: " + heliAngle + " - Change: " + angleChange + " - Distance: " + distance, LogLevel.DEBUG);
 		}
 		
 		//Fly around a certain area
@@ -474,14 +483,47 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Fly to a given destination
 		if (wpGenType == SDRC_EHeliWaypointGenerationType.GOTO)
-		{		
+		{
+			int idx = m_vPathPoints.Count() - 1;
+			pos[0] = SDRC_Misc.GetWorldSize()/2;
+			pos[2] = SDRC_Misc.GetWorldSize()/2;
+			pos = SDRC_Misc.GetCoordinatesOnCircle(pos, SDRC_Misc.GetWorldSize() * 0.2, Math.RandomInt(0, 360));	//TBD: 0.4
+			
+			vector dir0 = vector.Direction(m_vPathPoints[idx - 1], m_vPathPoints[idx + 0]);
+			vector dir1 = vector.Direction(m_vPathPoints[idx + 0], pos);
+			
+//			float heliAngle = SDRC_Math.GetAngleBetweenVectors(origin, pos) * Math.RAD2DEG;
+			dir0 = SDRC_Math.RotateAroundAxis(dir0, vector.Up, 20 * Math.DEG2RAD);
+//			pos = SDRC_Math.RotateAroundAxis(dir0, vector.Up, 0);
+			
+			float heliAngle = SDRC_Math.VectorToAngle(dir0);
+			
+//			pos = SDRC_Math.MovePosToAngle(m_vPathPoints[idx + 0], 200, heliAngle + 20);
+//			pos = SDRC_Math.MovePosToAngle(m_vPathPoints[idx], 400, heliAngle);
+			
+			pos = m_vPathPoints[idx] + dir0.Normalized() * 200;
+			
+			SDRC_DebugHelper.AddDebugPos(pos, ARGB(128, 128, 128, 64), 5.0);
+			
+/*			if (Math.AbsFloat(heliAngle) > WP_ANGLE)
+			{
+				//We need to take a detour
+				heliAngle = heliAngle;
+				distance = vector.DistanceXZ(m_vPathPoints[idx + 0], pos);
+				vector vec = SDRC_Math.MovePosToAngle(m_vPathPoints[idx + 1], (distance / 2), heliAngle * 1.5);
+//				vector vec = SDRC_Misc.GetCoordinatesOnCircle(m_vPathPoints[1], (distance / 2), (heliAngle / 2), heliAngle);				
+				m_vPathPoints.Insert(vec);
+				SDRC_DebugHelper.AddDebugPos(vec, ARGB(128, 128, 128, 64), 5.0);
+			} */
+			m_vPathPoints.Insert(pos);
+			
+			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle: " + heliAngle + " - Change: " + angleChange + " - Distance: " + distance, LogLevel.DEBUG);
 		}
 		
 		//Fly out from the map - for mission ending
 		if (wpGenType == SDRC_EHeliWaypointGenerationType.END)
 		{		
 		}
-				
 	}
 
 	//------------------------------------------------------------------------------------------------	
@@ -511,12 +553,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/	
 	private void CheckFlyPoints(vector origin)
 	{	
-		//Smooth the segments
-		int diffPt = 7;
-		if ((m_vSplinePoints.Count() - 1 - diffPt) < diffPt)
-		{
-			diffPt = m_vSplinePoints.Count() - 1 - diffPt;
-		}
+		const int DIFF_DISTANCE = 7;
+		
+		//Smooth the segments		
+		int diffPt = Math.ClampInt(m_vSplinePoints.Count() - 1 - DIFF_DISTANCE - m_iClosestIndex, 1, DIFF_DISTANCE);
 		
 		//Let's lerp the heights somewhat together for smoother raise/lower
 		for (int i = 0; i < diffPt; i++)
@@ -612,7 +652,23 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------	
 	// Debugging things
 	//------------------------------------------------------------------------------------------------	
-		
+
+	//------------------------------------------------------------------------------------------------	
+	static void DrawSplinePoints(array<vector> resultPoints)
+	{
+	#ifndef SDRC_RELEASE
+		foreach (int i, vector pos : resultPoints)
+		{
+			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(40, 128, 64, 64), 1.0);
+			
+			if (i < (resultPoints.Count() - 1))
+			{
+				SDRC_DebugHelper.AddDebugLine(resultPoints[i], resultPoints[i + 1], ARGB(40, 256, 64, 64));
+			}			
+		}
+	#endif
+	}
+			
 	//------------------------------------------------------------------------------------------------	
 	void DrawHelicopterVectors(IEntity owner)
 	{

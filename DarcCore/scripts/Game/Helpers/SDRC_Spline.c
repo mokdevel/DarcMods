@@ -63,28 +63,6 @@ sealed class SDRC_Spline3D
 		resultTangents.Insert(lastTangent);
 	}
 	
-	static void DrawSplinePoints(array<vector> resultPoints, bool showPath = true)
-	{
-	#ifndef SDRC_RELEASE
-		if (showPath)
-		{		
-			foreach (int i, vector pos : resultPoints)
-			{
-				SDRC_DebugHelper.AddDebugSphere(pos, ARGB(10, 128, 64, 64), 0.5);			//Red
-				
-				if (i < (resultPoints.Count() - 2))
-				{
-					//Show direction vector
-					vector direction = vector.Direction(resultPoints[i], resultPoints[i+1]);
-					direction.Normalize();
-					pos = resultPoints[i] + (direction * 15);
-					SDRC_DebugHelper.AddDebugLine(resultPoints[i], pos, ARGB(40, 64, 64, 64));				
-				}			
-			}
-		}
-	#endif
-	}
-
 	//------------------------------------------------------------------------------------------------
 	// Calculate a Catmull–Rom position for t in [0,1]
 	static vector CatmullRom(vector p0, vector p1, vector p2, vector p3, float t)
@@ -189,6 +167,26 @@ sealed class SDRC_Spline3D
 	}		
 		
 	//------------------------------------------------------------------------------------------------
+	static void DrawSplinePoints(array<vector> resultPoints)
+	{
+	#ifndef SDRC_RELEASE
+		foreach (int i, vector pos : resultPoints)
+		{
+			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(10, 128, 64, 64), 0.5);			//Red
+			
+			if (i < (resultPoints.Count() - 2))
+			{
+				//Show direction vector
+				vector direction = vector.Direction(resultPoints[i], resultPoints[i+1]);
+				direction.Normalize();
+				pos = resultPoints[i] + (direction * 10);
+				SDRC_DebugHelper.AddDebugLine(resultPoints[i], pos, ARGB(20, 64, 64, 64));				
+			}			
+		}
+	#endif
+	}
+
+	//------------------------------------------------------------------------------------------------
 	static void TestSpline()
 	{
 		array<vector> ctrl = {
@@ -226,7 +224,7 @@ sealed class SDRC_Spline3D
 	};		
 	
 	//------------------------------------------------------------------------------------------------
-	static void TestSplineAdd(bool showDebug = true)
+	static void TestSplineAdd()
 	{
 		static int idx = 0;
 
@@ -249,14 +247,13 @@ sealed class SDRC_Spline3D
 		m_ctrl.Insert(m_ctrlAdds[idx]);
 		idx++;
 		
-		if (showDebug)
+	#ifndef SDRC_RELEASE
+		foreach (vector pos : splinePoints)
 		{
-			foreach (vector pos : splinePoints)
-			{
-//				Print(pos);
-//				pos = pos + SDRC_Misc.GetWorldCenter();
-				SDRC_DebugHelper.AddDebugSphere(pos, ARGB(40, 255, 32, 32), 6);			//Red
-			}
+//			Print(pos);
+//			pos = pos + SDRC_Misc.GetWorldCenter();
+			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(40, 255, 32, 32), 6);			//Red
 		}
+	#endif
 	}	
 }

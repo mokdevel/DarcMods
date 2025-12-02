@@ -46,7 +46,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		m_vPosOrigin = SDRC_Misc.GetCoordinatesOnCircle(m_vPosOrigin, SDRC_Misc.GetWorldSize() * 0.7, Math.RandomInt(0, 360));
 	#endif		
 	#ifndef SDRC_RELEASE
-		m_vPosOrigin = SDRC_Misc.GetCoordinatesOnCircle(m_vPosOrigin, SDRC_Misc.GetWorldSize() * 0.2, Math.RandomInt(0, 360));
+		m_vPosOrigin = SDRC_Misc.GetCoordinatesOnCircle(m_vPosOrigin, SDRC_Misc.GetWorldSize() * 0.1, Math.RandomInt(0, 360));
 	#endif
 		
 		//No suitable location found.
@@ -370,8 +370,10 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 			{45, 90},
 			{10, 30},
 			1.2, 100,
-			{300, 600},
-			SDRC_EHeliWaypointGenerationType.RANDOM,			
+//			{300, 600},
+			{200, 400},
+//			SDRC_EHeliWaypointGenerationType.RANDOM,	
+			SDRC_EHeliWaypointGenerationType.GOTO,
 		);
 		
 		return chopper;
