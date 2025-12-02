@@ -244,7 +244,7 @@ sealed class SDRC_RoadHelper
 //		idx = 2;
 		for (int i = 0; i < 2; i++)
 		{				
-			pos = SDRC_Misc.MovePosToAngle(roadPosLast, distanceToCheck, (angle + anglesToTest[idx+i]));
+			pos = SDRC_Math.MovePosToAngle(roadPosLast, distanceToCheck, (angle + anglesToTest[idx+i]));
 			SDRC_DebugHelper.AddDebugPos(pos, ARGB(50, 0, 255, 0), 2, "ROADTEST", 5);
 			BaseRoad road = FindClosestRoad(pos, distanceToCheck);
 			if (road)

@@ -80,13 +80,41 @@ sealed class SDRC_Math
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Convert a vector to angle in degrees (0-360) to radians 
-	//TBD: Might be same as *RAD2DEG
 	*/
 	static float VectorToAngle(vector direction)
 	{
     	float angle = Math.Atan2(direction[0], direction[2]);
+		//TBD: Might be same as *RAD2DEG
     	float degrees = (180 * angle / Math.PI);
     	return degrees;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Convert a vector to angle in radians
+	*/
+	static float VectorToRadians(vector direction)
+	{
+    	float angle = Math.Atan2(direction[0], direction[2]);
+    	return angle;
+	}
+		
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Returns a position that has moved given distance along an angle from given position.
+	\param pos Original position
+	\param distance Distance to move
+	\param angle Move towards this angle (degrees, 0-360).
+	*/
+	static vector MovePosToAngle(vector pos, float distance, float angle)
+	{
+	    float angleInRadians = SDRC_Misc.AngleToRadians(angle);
+	
+	    // Calculate the new x and y coordinates
+	    pos[0] = pos[0] + distance * Math.Cos(angleInRadians);
+	    pos[2] = pos[2] + distance * Math.Sin(angleInRadians);
+		
+		return pos;
 	}
 	
 	//------------------------------------------------------------------------------------------------
