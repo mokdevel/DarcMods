@@ -57,6 +57,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 	const int POINTS_TO_SPLINE_START = 6;		//Points to go back from m_iClosestIndex when creating a new flight path 
 	const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
 	const float TIME_IN_INIT = 25;				//Seconds to be in init state
+	const float ROTOR_FORCE_MUL = 0.9;			//Rotor force multiplier. Bigger value makes the heli react faster to up/down movement
+	const float ROTOR_FORCE_MUL_PANIC = 1.4;	//Rotor force multiplier used when avoiding ground. 
+	
+	//Waypoint values
 	const float WP_ANGLE = 40;					//Maximum angle for new destination
 	
 	//Runtime parameters
@@ -70,8 +74,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fSpeed;						//Current speed
 	private float m_fSpeedStart;				//Speed lerp start
 	private float m_fSpeedTarget;				//Speed lerp target aka end
-	private float m_fSpeedMul = 1;				//Speed multiplier that depends on the turn
-	private float m_fRotorForceMultiplier = 1.0;
+	private float m_fSpeedMul;					//Speed multiplier that depends on the turn
+	private float m_fRotorForceMultiplier;		//Rotor force multiplier that simulates up/down throttle
 	
 	//Angular velocities
 	private vector m_vAngularVel;
@@ -254,6 +258,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}
 
 	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Set velocity vector
+	*/
 	private void SetVelocity(IEntity owner)
 	{
 		//Set velocity
@@ -269,23 +276,32 @@ class SDRC_ChopperComp : ScriptGameComponent
 	
 	//------------------------------------------------------------------------------------------------	
 	/*!	
-	Simulate the use of throttle
+	Simulate the use of throttle.
+	
+	This will modify the rotor force up multiplier trying to keep the heli flying close to the spline points. 
+	In case of too low altitude, panic mode is enabled. 
 	*/
 	private void HandleRotorForce()
 	{
-//		float diff = -1 * (1 - ((m_vDestination[1] - m_vOrigin[1]) / m_vDestination[1]));
-		float diff = -1 * (1 + (1 - ((m_vSplinePoints[m_iClosestIndex][1] - m_vOrigin[1]) / m_vSplinePoints[m_iClosestIndex][1])));
-		
-		m_fRotorForceMultiplier = diff;
+		m_fRotorForceMultiplier = (10 * ROTOR_FORCE_MUL) * ( (m_vSplinePoints[m_iClosestIndex][1] - m_vOrigin[1]) / m_vSplinePoints[m_iClosestIndex][1]);
 
 		//If too low, turn the rotor force up
 		if (m_vOrigin[1] < (SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + m_fFlyHeightLow) )
 		{
-			m_fRotorForceMultiplier = 1.4;
+			m_fRotorForceMultiplier = ROTOR_FORCE_MUL_PANIC;
 		}
 	}
 	
 	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Set turn for heli
+	
+	Multiple angular velocities are calculated.
+	- Speed multiplier : The faster we're going, certain values needs to grow.
+	- Roll pitch : The faster we go, the steeper the heli nose shall point down.
+	- Roll on direction: The steeper the turn we're about to make, roll the heli left or right .
+	- Roll back : Set the heli to return to normal flight position.
+	*/
 	private void SetTurn(IEntity owner, float deltaTime)
 	{
 		if (deltaTime == 0)
@@ -614,20 +630,23 @@ class SDRC_ChopperComp : ScriptGameComponent
 						   	"Start/Target:" + Math.Round(10*m_fSpeedStart)/10 + "/" + Math.Round(10*m_fSpeedTarget)/10 + "\n" +
 //						   	"Avg time:" + m_fTimeBetweenPtsAvg + "\n" +
 						   	"Height: " + (origin[1] - SDRC_Misc.GetSurfaceYWithWater(origin)) + "\n" + 
-						   	"SpeedMul:" + m_fSpeedMul + "\n";
+						   	"SpeedMul:" + m_fSpeedMul + "\n" + 
+							"";		
 		debugText = debugText + 
 						   	"RotorForceMul:" + m_fRotorForceMultiplier + "\n" +
 //						   	"TurnInternal:" + m_fTimeTurnInterval + "\n" +
-							"DbgAngle: " + m_fDbgAngle * Math.RAD2DEG + "\n" +
-							"DbgAnglePitch: " + m_fDbgAnglePitch * Math.RAD2DEG + "\n" +
+//							"DbgAngle: " + m_fDbgAngle * Math.RAD2DEG + "\n" +
+//							"DbgAnglePitch: " + m_fDbgAnglePitch * Math.RAD2DEG + "\n" +
 //							"DbgAngleRoll: " + m_fDbgAngleRoll * Math.RAD2DEG + "\n" +
-							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n";
+//							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n" 
+							"";
 		debugText = debugText + 
 							"In Init:" + m_bInInit + ", " +
 							"Is working:" + SDRC_VehicleHelper.IsWorking(owner) + "\n" +
 							"Pilot count:" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
 							//"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
-							"Health: " + health;
+							"Health: " + health + "\n" + 
+							"";
 
 		DebugTextWorldSpace.Create(GetGame().GetWorld(), debugText, DebugTextFlags.ONCE, origin[0], origin[1], origin[2], 20);
 				

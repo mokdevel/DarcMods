@@ -8,7 +8,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private ref SDRC_ChopperConfig m_Config;
 	private ref SDRC_Chopper m_DC_Chopper = new SDRC_Chopper();
 	
-	private vector m_vPosDestination = "0 0 0";
+	private vector m_vPosOrigin = "0 0 0";
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
 	private VehicleHelicopterSimulation m_Vehicle_s;
@@ -40,16 +40,17 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		//Find position
 		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
 		
-		m_vPosDestination = m_DC_Chopper.general.pos[1];
-		if (m_vPosDestination == "0 0 0")
-		{		
-			int rnd = SDRC_Misc.GetWorldSize()/8;
-			m_vPosDestination[0] = SDRC_Misc.GetWorldSize()/2 + SDRC_Misc.RandomFloat(-rnd, rnd);
-			m_vPosDestination[2] = SDRC_Misc.GetWorldSize()/2 + SDRC_Misc.RandomFloat(-rnd, rnd);
-		}
+		m_vPosOrigin[0] = SDRC_Misc.GetWorldSize()/2;
+		m_vPosOrigin[2] = SDRC_Misc.GetWorldSize()/2;
+	#ifdef SDRC_RELEASE
+		m_vPosOrigin = SDRC_Misc.GetCoordinatesOnCircle(m_vPosOrigin, SDRC_Misc.GetWorldSize() * 0.7, Math.RandomInt(0, 360));
+	#endif		
+	#ifndef SDRC_RELEASE
+		m_vPosOrigin = SDRC_Misc.GetCoordinatesOnCircle(m_vPosOrigin, SDRC_Misc.GetWorldSize() * 0.2, Math.RandomInt(0, 360));
+	#endif
 		
 		//No suitable location found.
-		if ( (pos == "0 0 0") || (m_vPosDestination == "0 0 0") )
+		if (pos == "0 0 0")
 		{				
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
@@ -65,7 +66,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		#ifdef DEBUG_CHOPPER
 		pos = "1300 10 2200";
 		#endif
-		SetPos(pos, m_vPosDestination);
+		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Chopper.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Chopper.general);		
@@ -131,7 +132,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
         m_Vehicle_s.RotorSetForceScaleState(0, heliInfo.rotorForce);
         m_Vehicle_s.RotorSetForceScaleState(1, heliInfo.rotor2Force);
 		m_Vehicle_c.SetHeli(m_DC_Chopper.rotorForceUp, m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], m_DC_Chopper.throttle, m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.wpType, m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
-		m_Vehicle_c.InitFlightPath(m_Vehicle, GetPos(), m_vPosDestination);
+		m_Vehicle_c.InitFlightPath(m_Vehicle, m_vPosOrigin, GetPos());
 				
 		//Spawn mission AI
 		int aiCount = m_DC_Chopper.ai.GetCount(m_DC_Chopper.general.difficulty);
@@ -368,8 +369,8 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 			{0},
 			{45, 90},
 			{10, 30},
-			1.2, 35,
-			{300, 1200},
+			1.2, 100,
+			{300, 600},
 			SDRC_EHeliWaypointGenerationType.RANDOM,			
 		);
 		
