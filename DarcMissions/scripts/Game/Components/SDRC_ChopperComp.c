@@ -144,10 +144,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		s_Instance = this;				
 		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
 		
-//		GetGame().GetCallqueue().CallLater(SetDamage, (TIME_IN_INIT + 5) * 1000, false, owner);		
 		GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000);
-		GetGame().GetCallqueue().CallLater(HandleRotorForce, 1 * 1000, false);
-		Activate(owner);
+//		GetGame().GetCallqueue().CallLater(HandleRotorForce, 1 * 1000, false);
 	}
  
 	//------------------------------------------------------------------------------------------------
@@ -155,7 +153,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 		m_bInInit = false;
 	}
-		
+
+	//------------------------------------------------------------------------------------------------
+	void Ready(IEntity owner)
+	{
+		Activate(owner);
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Return instance to component
@@ -462,62 +466,34 @@ class SDRC_ChopperComp : ScriptGameComponent
 	Functionality to generate future destination(s) for the chopper
 	*/
 	private void GenerateWayPoint(out array<vector> flyPathPoints, vector origin, SDRC_EWaypointGenerationType wpGenType, vector pos = "0 0 0")
-	{
-		float angleChange = SDRC_Misc.RandomFloat(-WP_ANGLE, WP_ANGLE);
-		float distance = SDRC_Misc.RandomFloat(m_fDistanceLow, m_fDistanceHigh);
+	{		
+		array<vector> positions = {};
+		//float distance = SDRC_Misc.RandomFloat(m_fDistanceLow, m_fDistanceHigh);
 		
 		//Random flying for a helicopter
 		if (wpGenType == SDRC_EHeliWaypointGenerationType.RANDOM)
-		{		
-			float heliAngle = SDRC_Math.GetAngleBetweenVectors(m_vPathPoints[0], m_vPathPoints[1]) * Math.RAD2DEG;
-			vector vec = SDRC_Misc.GetCoordinatesOnCircle(origin, distance, angleChange, heliAngle);
-			m_vPathPoints.Insert(vec);
+		{	
 			
-			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle: " + heliAngle + " - Change: " + angleChange + " - Distance: " + distance, LogLevel.DEBUG);
+			pos[0] = SDRC_Misc.GetWorldSize()/2;
+			pos[2] = SDRC_Misc.GetWorldSize()/2;
+			pos = SDRC_Misc.GetCoordinatesOnCircle(pos, SDRC_Misc.GetWorldSize() * 0.4, Math.RandomInt(0, 360));	//TBD: 0.4
+			positions.Insert(pos);
+			
+			CreateFlyPoints(positions);
 		}
 		
 		//Fly around a certain area
 		if (wpGenType == SDRC_EHeliWaypointGenerationType.PATROL)
-		{		
+		{
 		}
 		
 		//Fly to a given destination
 		if (wpGenType == SDRC_EHeliWaypointGenerationType.GOTO)
 		{
-			int idx = m_vPathPoints.Count() - 1;
-			pos[0] = SDRC_Misc.GetWorldSize()/2;
-			pos[2] = SDRC_Misc.GetWorldSize()/2;
-			pos = SDRC_Misc.GetCoordinatesOnCircle(pos, SDRC_Misc.GetWorldSize() * 0.2, Math.RandomInt(0, 360));	//TBD: 0.4
-			
-			vector dir0 = vector.Direction(m_vPathPoints[idx - 1], m_vPathPoints[idx + 0]);
-			vector dir1 = vector.Direction(m_vPathPoints[idx + 0], pos);
-			
-//			float heliAngle = SDRC_Math.GetAngleBetweenVectors(origin, pos) * Math.RAD2DEG;
-			dir0 = SDRC_Math.RotateAroundAxis(dir0, vector.Up, 20 * Math.DEG2RAD);
-//			pos = SDRC_Math.RotateAroundAxis(dir0, vector.Up, 0);
-			
-			float heliAngle = SDRC_Math.VectorToAngle(dir0);
-			
-//			pos = SDRC_Math.MovePosToAngle(m_vPathPoints[idx + 0], 200, heliAngle + 20);
-//			pos = SDRC_Math.MovePosToAngle(m_vPathPoints[idx], 400, heliAngle);
-			
-			pos = m_vPathPoints[idx] + dir0.Normalized() * 200;
-			
-			SDRC_DebugHelper.AddDebugPos(pos, ARGB(128, 128, 128, 64), 5.0);
-			
-/*			if (Math.AbsFloat(heliAngle) > WP_ANGLE)
-			{
-				//We need to take a detour
-				heliAngle = heliAngle;
-				distance = vector.DistanceXZ(m_vPathPoints[idx + 0], pos);
-				vector vec = SDRC_Math.MovePosToAngle(m_vPathPoints[idx + 1], (distance / 2), heliAngle * 1.5);
-//				vector vec = SDRC_Misc.GetCoordinatesOnCircle(m_vPathPoints[1], (distance / 2), (heliAngle / 2), heliAngle);				
-				m_vPathPoints.Insert(vec);
-				SDRC_DebugHelper.AddDebugPos(vec, ARGB(128, 128, 128, 64), 5.0);
-			} */
-			m_vPathPoints.Insert(pos);
-			
-			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle: " + heliAngle + " - Change: " + angleChange + " - Distance: " + distance, LogLevel.DEBUG);
+			pos = "3100 0 2800";
+			positions.Insert(pos);
+	
+			CreateFlyPoints(positions);
 		}
 		
 		//Fly out from the map - for mission ending
@@ -526,6 +502,59 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 	}
 
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Create fly points
+	
+	NOTE: Currently uses only one point of the array
+	*/	
+	private void CreateFlyPoints(array<vector> positions)
+	{
+		//TBD: Future improvement. NOTE: Untested code below
+		/*
+		//Add mid points for too long distances
+		int cnt = m_vPathPoints.Count() - 1;
+		for (int i = 0; i < cnt; i++)
+		{
+			float dist = vector.DistanceXZ(m_vPathPoints[i], m_vPathPoints[i + 1]);
+			if (dist > 100)
+			{
+				vector mid = vector.Lerp(m_vPathPoints[i], m_vPathPoints[i + 1], 0.5);
+				m_vPathPoints.InsertAt(mid, i);
+				i++;
+				cnt++;					
+			}
+		}
+		*/
+		
+		vector pos = positions[0];
+		
+		int idx = m_vPathPoints.Count() - 1;
+		float distance = vector.DistanceXZ(m_vPathPoints[idx], pos);
+				
+		//Current direction		
+		vector dir0 = vector.Direction(m_vPathPoints[idx - 1], m_vPathPoints[idx]);
+		//Direction towards destination
+		vector dir1 = vector.Direction(m_vPathPoints[idx], pos);
+		
+		float heliAngle = SDRC_Math.GetAngleBetweenVectors(dir0, dir1) * Math.RAD2DEG;
+		
+		if (Math.AbsFloat(heliAngle) > WP_ANGLE)
+		{				
+			//We need to take a detour
+			dir0 = SDRC_Math.RotateAroundAxis(dir0, vector.Up, heliAngle * 1.5);
+			vector vec = m_vPathPoints[idx] + dir0.Normalized() * distance / 2;
+			
+			m_vPathPoints.Insert(vec);
+			
+			SDRC_DebugHelper.AddDebugPos(vec, ARGB(128, 128, 128, 64), 5.0);
+		}
+		
+		m_vPathPoints.Insert(pos);
+		
+		SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle: " + heliAngle + " - Distance: " + distance, LogLevel.DEBUG);
+	}	
+		
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Set the requested flight path points between min/max flying height.

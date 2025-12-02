@@ -146,6 +146,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				m_Groups.Insert(group);					
 			}
 		}
+		
+		m_Vehicle_c.Ready(m_Vehicle);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -372,8 +374,8 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 			1.2, 100,
 //			{300, 600},
 			{200, 400},
-//			SDRC_EHeliWaypointGenerationType.RANDOM,	
-			SDRC_EHeliWaypointGenerationType.GOTO,
+			SDRC_EHeliWaypointGenerationType.RANDOM,	
+//			SDRC_EHeliWaypointGenerationType.GOTO,
 		);
 		
 		return chopper;
