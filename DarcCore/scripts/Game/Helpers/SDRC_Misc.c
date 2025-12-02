@@ -278,6 +278,20 @@ sealed class SDRC_Misc
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Return surface height either on land or water.
+	*/	
+	static float GetSurfaceYWithWater(vector position)
+	{
+		float y = GetGame().GetWorld().GetSurfaceY(position[0], position[2]);
+		if (SDRC_Misc.IsPosInWater(position))	//Is it under water?
+		{
+			y = GetGame().GetWorld().GetOceanHeight(position[0], position[2]);
+		}
+		return y;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Check if two positions are within limit distance
 	\param pos0,pos1 Positions to check if they're within limit
 	\param limit How close the positions needs to be to return true
