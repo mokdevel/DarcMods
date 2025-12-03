@@ -254,7 +254,7 @@ sealed class SDRC_Misc
 			pos[2] = SDRC_Misc.GetWorldSize()/2;
 		}
 		
-		pos = SDRC_Misc.GetCoordinatesOnCircle(pos, SDRC_Misc.GetWorldSize() * distancePercentage, Math.RandomInt(0, 360));
+		pos = SDRC_Misc.GetCoordinatesOnCircle(pos, SDRC_Misc.GetWorldSize() * distancePercentage, SDRC_Misc.RandomInt(0, 360));
 		
 		return pos;
 	}

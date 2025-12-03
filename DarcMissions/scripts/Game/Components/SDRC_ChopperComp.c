@@ -61,6 +61,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	const int POINTS_TO_NEW_DISTANCE = 4;		//How many spline points in to the future flight path is checked before adding new flight points.
 	const int POINTS_TO_SPLINE_START = 8;		//Points to go back from m_iClosestIndex when creating a new flight path 
 	const int DESTINATION_POINT_DIV = 20;		//How many points ahead to look for the destination. This is the divider for speed.
+	const int TIME_FORCE_MOVE_POINT = 10;		//Time to wait before force moving a point. This is to fix situations where the chopper gets stuck on a point.
 	const float TIME_IN_INIT = 45;				//Seconds to be in init state. During this time, we don't check for damage or similar things.
 	const float ROTOR_FORCE_MUL = 0.9;			//Rotor force multiplier. Bigger value makes the heli react faster to up/down movement
 	const float ROTOR_FORCE_MUL_PANIC = 1.4;	//Rotor force multiplier used when avoiding ground. 
@@ -172,22 +173,31 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_iDestinationPointAdd = m_fSpeed / DESTINATION_POINT_DIV;
 		m_iDestinationPointAdd = Math.Clamp(m_iDestinationPointAdd, 1, 3);
 		
-		//Find where we're going
-		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iNewClosestIndex);	//NOTE: This will set m_iNewClosestIndex
-
-		if (m_iNewClosestIndex > m_iClosestIndex)
+		//If we've been stuck on a point, force move
+		if (m_fTimeBetweenPts > TIME_FORCE_MOVE_POINT)
 		{
-			m_iClosestIndex = m_iNewClosestIndex;
-			m_fTimeBetweenPtsAvg = m_fTimeBetweenPts;
-			m_fTimeBetweenPts = 0;
-		}
-		else if (m_iNewClosestIndex == m_iClosestIndex)
-		{
+			m_iNewClosestIndex++;
 			m_iClosestIndex++;
-			m_fTimeBetweenPtsAvg = m_fTimeBetweenPts;
-			m_fTimeBetweenPts = 0;
 		}
-						
+		else //Do the normal flying
+		{
+			//Find where we're going
+			float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iNewClosestIndex);	//NOTE: This will set m_iNewClosestIndex
+	
+			if (m_iNewClosestIndex > m_iClosestIndex)
+			{
+				m_iClosestIndex = m_iNewClosestIndex;
+				m_fTimeBetweenPtsAvg = m_fTimeBetweenPts;
+				m_fTimeBetweenPts = 0;
+			}
+			else if (m_iNewClosestIndex == m_iClosestIndex)
+			{
+				m_iClosestIndex++;
+				m_fTimeBetweenPtsAvg = m_fTimeBetweenPts;
+				m_fTimeBetweenPts = 0;
+			}
+		}
+		
 		//Destination point definition
 		m_iFutureIndex = m_iClosestIndex + (m_iDestinationPointAdd * 2);
 		m_iNextIndex = m_iClosestIndex + m_iDestinationPointAdd;
@@ -545,21 +555,24 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private vector GetRandomDestination(vector pos)
 	{
 		float distance = SDRC_Misc.RandomFloat(m_fDistanceLow, m_fDistanceHigh);
-	
+		vector newpos;
+		
 		for (int i = 0; i < 5; i++)
 		{
 			//If distance is under 1.0, use world percentage
 			if (distance < 1.0)
 			{
-				pos = SDRC_Misc.GetRandomWorldPosPercentage(0.2);
-//				pos = SDRC_Misc.GetRandomWorldPosPercentage(distance);
+//				newpos = SDRC_Misc.GetRandomWorldPosPercentage(0.2);
+				newpos = SDRC_Misc.GetRandomWorldPosPercentage(distance);
 			}
 			else
 			{
-				pos = SDRC_Misc.GetCoordinatesOnCircle(pos, distance, SDRC_Misc.RandomInt(0, 360));
+				newpos = SDRC_Misc.GetCoordinatesOnCircle(pos, distance, SDRC_Misc.RandomInt(0, 360));
 			}
-	
-			float angle = GetDestinationAngle(pos);
+
+			SDRC_Log.Add("[SDRC_ChopperComp:GetRandomDestination] Pos: " + newpos, LogLevel.DEBUG);
+				
+			float angle = GetDestinationAngle(newpos);
 			
 			SDRC_Log.Add("[SDRC_ChopperComp:GetRandomDestination] Angle: " + angle, LogLevel.DEBUG);
 
@@ -569,7 +582,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			}			
 		}
 				
-		return pos;
+		return newpos;
 	}
 	
 	//------------------------------------------------------------------------------------------------	
@@ -662,7 +675,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	// Helicopter things
 	//------------------------------------------------------------------------------------------------	
 	
-	void SetHeli(float rotorForceUp, float speedMin, float speedMax, float power, float flyHeightLow, float flyHeightHigh, SDRC_EHeliWaypointGenerationType wpType, int distanceLow, int distanceHigh)
+	void SetHeli(float rotorForceUp, float speedMin, float speedMax, float power, float flyHeightLow, float flyHeightHigh, SDRC_EHeliWaypointGenerationType wpType, float distanceLow, float distanceHigh)
 	{
 		SDRC_Log.Add("[SDRC_ChopperComp:SetHeli] Updating values.", LogLevel.DEBUG);
 		
