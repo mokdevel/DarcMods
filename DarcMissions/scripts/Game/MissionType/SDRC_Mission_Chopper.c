@@ -42,8 +42,13 @@ class SDRC_Mission_Chopper : SDRC_Mission
 
 		//Find position
 		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
+	#ifdef SDRC_RELEASE		
 		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.7);
-		
+	#endif
+	#ifndef SDRC_RELEASE		
+		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.01);
+	#endif
+				
 		//No suitable location found.
 		if (pos == "0 0 0")
 		{				
@@ -316,7 +321,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 	SDRC_HelicopterInfo Heli00()
 	{
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Flying_Patrol.et", 1.01, 2.20, 1.01, 1.2, 1.01);
+		heli.Set("{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Flying_Patrol.et", 1.01, 1.9, 1.01, 1.2, 1.01);
 		return heli;		
 	}
 	
@@ -330,14 +335,14 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 	SDRC_HelicopterInfo Heli02()
 	{	
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et",	1.01, 2.20, 1.01, 1.1, 1.5);
+		heli.Set("{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et",	1.01, 3.80, 1.01, 1.1, 1.01);
 		return heli;		
 	}
 	
 	SDRC_HelicopterInfo Heli03()
 	{	
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",	1.01, 2.20, 1.01, 1.1, 1.5);
+		heli.Set("{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",	1.01, 3.80, 1.01, 1.1, 1.01);
 		return heli;		
 	}
 		
