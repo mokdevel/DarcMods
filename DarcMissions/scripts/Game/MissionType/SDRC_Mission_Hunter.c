@@ -86,12 +86,12 @@ class SDRC_Mission_Hunter : SDRC_Mission
 					{
 						positionFound = true;
 					
-						SDRC_Log.Add("[SDRC_Mission_Hunter] Location for spawn " + pos, LogLevel.DEBUG);
+						SDRC_Log.Add("[SDRC_Mission_Hunter] " +  GetId() + " : Location for spawn " + pos, LogLevel.DEBUG);
 						break;
 					}
 					else
 					{						
-						SDRC_Log.Add("[SDRC_Mission_Hunter] Invalid mission position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
+						SDRC_Log.Add("[SDRC_Mission_Hunter] " +  GetId() + " : Invalid mission position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
 					}
 				}
 			}
@@ -132,7 +132,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		{
 			if (m_iGroupsSpawned < m_iGroupsToSpawn)
 			{
-				SDRC_Log.Add("[SDRC_Mission_Hunter:MissionRun] Waiting for all groups to spawn. " + m_iGroupsSpawned + "/" + m_iGroupsToSpawn + " ready.", LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_Mission_Hunter:MissionRun] " +  GetId() + " : Waiting for all groups to spawn. " + m_iGroupsSpawned + "/" + m_iGroupsToSpawn + " ready.", LogLevel.DEBUG);
 			}
 			else
 			{
@@ -155,16 +155,16 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
 	{					
-		SDRC_Log.Add(("[SDRC_Mission_Hunter:MissionSpawn] Spawning " + m_iGroupsToSpawn + " groups"), LogLevel.NORMAL);
+		SDRC_Log.Add(("[SDRC_Mission_Hunter:MissionSpawn] " +  GetId() + " : Spawning " + m_iGroupsToSpawn + " groups"), LogLevel.NORMAL);
 		
 		for (int i = 1; i <= m_iGroupsToSpawn; i++)
 		{
-			SDRC_Log.Add(("[SDRC_Mission_Hunter:MissionSpawn] Initiating spawn for group " + i + " of " + m_iGroupsToSpawn), LogLevel.DEBUG);
+			SDRC_Log.Add(("[SDRC_Mission_Hunter:MissionSpawn] " +  GetId() + " : Initiating spawn for group " + i + " of " + m_iGroupsToSpawn), LogLevel.DEBUG);
 			
 			GetGame().GetCallqueue().CallLater(SpawnGroup, (DC_GROUP_SPAWN_DELAY + i*1000), false);
 		}
 		
-		SDRC_Log.Add("[SDRC_Mission_Hunter:MissionSpawn] INIT ready. Changing to ACTIVE state", LogLevel.DEBUG);		
+		SDRC_Log.Add("[SDRC_Mission_Hunter:MissionSpawn] " +  GetId() + " : INIT ready. Changing to ACTIVE state", LogLevel.DEBUG);		
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -180,7 +180,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 				//If no players nearby, delete group.
 				if (playerPosArray.IsEmpty())
 				{				
-					SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] No players nearby, deleting group: " + group.GetID(), LogLevel.NORMAL);
+					SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] " +  GetId() + " : No players nearby, deleting group: " + group.GetID(), LogLevel.NORMAL);
 					SDRC_AIHelper.GroupDelete(group);
 					return;
 				}
@@ -213,7 +213,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 							pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
 						}
 						
-						SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] Creating waypoint for group: " + group.GetID(), LogLevel.SPAM);
+						SDRC_Log.Add("[SDRC_Mission_Hunter:GroupLifeCycle] " +  GetId() + " : Creating waypoint for group: " + group.GetID(), LogLevel.SPAM);
 						
 						SDRC_WPHelper.RemoveWaypoints(group);
 						AIWaypoint wp = GetWaypoint(group, pos);
@@ -240,11 +240,11 @@ class SDRC_Mission_Hunter : SDRC_Mission
 				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Hunter.ai.GetSkill(m_DC_Hunter.general.difficulty), m_DC_Hunter.ai.GetPerception(m_DC_Hunter.general.difficulty));					
 				m_Groups.Insert(group);
 				m_iGroupsSpawned++;
-				SDRC_Log.Add("[SDRC_Mission_Hunter:SpawnHunterGroup] Group spawned to " + spawnLocation, LogLevel.NORMAL);				
+				SDRC_Log.Add("[SDRC_Mission_Hunter:SpawnHunterGroup] " +  GetId() + " : Group spawned to " + spawnLocation, LogLevel.NORMAL);				
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_Mission_Hunter:SpawnHunterGroup] Unable to spawn group!", LogLevel.ERROR);
+				SDRC_Log.Add("[SDRC_Mission_Hunter:SpawnHunterGroup] " +  GetId() + " : Unable to spawn group!", LogLevel.ERROR);
 				return;
 			}
 			
@@ -253,7 +253,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		}
 		else
 		{
-			SDRC_Log.Add("[SDRC_Mission_Hunter:SpawnHunterGroup] Unable to find spawn point for group! Retrying...", LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_Mission_Hunter:SpawnHunterGroup] " +  GetId() + " : Unable to find spawn point for group! Retrying...", LogLevel.WARNING);
 			
 			// Try again later
 			GetGame().GetCallqueue().CallLater(SpawnGroup, DC_GROUP_SPAWN_DELAY, false);
@@ -270,10 +270,10 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		
 		if (SDRC_SpawnHelper.FindEmptyPos(pos, 100, 8))
 		{						
-			SDRC_Log.Add("[SDRC_Mission_Hunter:GetSpawnPointForAI] Pos: " + pos, LogLevel.SPAM);
+			SDRC_Log.Add("[SDRC_Mission_Hunter:GetSpawnPointForAI] " +  GetId() + " : Pos: " + pos, LogLevel.SPAM);
 		}
 		else
-			SDRC_Log.Add("[SDRC_Mission_Hunter:GetSpawnPointForAI] Could not find an empty pos.", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_Mission_Hunter:GetSpawnPointForAI] " +  GetId() + " : Could not find an empty pos.", LogLevel.ERROR);
 		
 		return pos;
 	}

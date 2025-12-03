@@ -38,7 +38,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 
 		//Check that ranges are not too big
 		int worldSize = SDRC_Misc.GetWorldSize();
-		SDRC_Log.Add("[SDRC_Mission_Patrol] Worldsize vs maxRange : " + worldSize + " vs " + m_DC_Patrol.ai.waypointRange[1], LogLevel.SPAM);
+		SDRC_Log.Add("[SDRC_Mission_Patrol] " +  GetId() + " : Worldsize vs maxRange : " + worldSize + " vs " + m_DC_Patrol.ai.waypointRange[1], LogLevel.SPAM);
 		
 		//Set defaults
 		vector pos = "0 0 0";
@@ -72,7 +72,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		if (m_vPosDestination == "0 0 0")
 		{
 			m_vPosDestination = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.general.locationTypes, m_DC_Patrol.general.size);
-			SDRC_Log.Add("[SDRC_Mission_Patrol] Patrol destination: " + m_vPosDestination, LogLevel.SPAM);
+			SDRC_Log.Add("[SDRC_Mission_Patrol] " +  GetId() + " : Patrol destination: " + m_vPosDestination, LogLevel.SPAM);
 		}
 
 		if (pos == "0 0 0" || m_vPosDestination == "0 0 0")	//No suitable location found.

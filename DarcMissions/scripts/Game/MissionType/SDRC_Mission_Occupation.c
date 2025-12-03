@@ -382,11 +382,11 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			0
 		);
 		occupation.ai.Set(
-			{2, 4},
+			{3, 5},
 			{"G_LIGHT", "G_LIGHT", "G_LIGHT", 
 			 "G_ADMIN", "G_HEAVY", "G_LAUNCHER", "G_MEDICAL"
 			},
-			50, 1.0,
+			30, 0.6,
 			{30, 200},
 			SDRC_EWaypointGenerationType.RADIUS,
 			SDRC_EWaypointMoveType.RANDOM,		
@@ -469,7 +469,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			0
 		);
 		occupation.ai.Set(
-			{1, 3},
+			{2, 3},
 			{"G_RECON"},
 			50, 1.0,
 			{10, 60},
@@ -564,7 +564,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			0
 		);
 		occupation.ai.Set(
-			{1, 3},
+			{2, 3},
 			{"G_SPECIAL", "G_HEAVY"},
 			50, 1.0,
 			{10, 90},
@@ -675,7 +675,7 @@ class SDRC_OccupationJsonApi : SDRC_JsonApi
 			0
 		);
 		occupation.ai.Set(
-			{1, 3},
+			{2, 3},
 			{"G_SPECIAL", "G_HEAVY"},
 			50, 1.0,
 			{10, 90},

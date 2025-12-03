@@ -172,7 +172,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_Mission_Squatter:MissionSpawn] Could not spawn loot box: " + m_DC_Squatter.lootBox, LogLevel.ERROR);								
+				SDRC_Log.Add("[SDRC_Mission_Squatter:MissionSpawn] " +  GetId() + " : Could not spawn loot box: " + m_DC_Squatter.lootBox, LogLevel.ERROR);								
 			}
 		
 			SetState(SDRC_EMissionState.ACTIVE);			

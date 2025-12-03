@@ -100,12 +100,12 @@ class SDRC_Mission_Convoy : SDRC_Mission
 				m_vPosDestination = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, m_vPosDestination, 1000);
 				if (m_vPosDestination == "0 0 0")
 				{
-					SDRC_Log.Add("[SDRC_Mission_Convoy] No destination road found.", LogLevel.ERROR);
+					SDRC_Log.Add("[SDRC_Mission_Convoy] " +  GetId() + " : No destination road found.", LogLevel.ERROR);
 				}
 			}			
 			else
 			{
-				SDRC_Log.Add("[SDRC_Mission_Convoy] Could not find destination location for ROUTE.", LogLevel.WARNING);
+				SDRC_Log.Add("[SDRC_Mission_Convoy] " +  GetId() + " : Could not find destination location for ROUTE.", LogLevel.WARNING);
 			}
 		}		
 
@@ -206,7 +206,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			return;			
 		}
 		
-		SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] Vehicle spawned: " + m_Vehicle, LogLevel.DEBUG);										
+		SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] " +  GetId() + " : Vehicle spawned: " + m_Vehicle, LogLevel.DEBUG);										
 		
 		m_EntityList.Insert(m_Vehicle);
 		
@@ -248,7 +248,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			m_DC_Convoy.loot.itemChance = SDRC_MissionHelper.GetLootChance(m_DC_Convoy.loot.itemChance, m_DC_Convoy.general.difficulty);
 
 			SDRC_LootHelper.SpawnItemsToStorage(m_DC_Convoy.loot.box, m_DC_Convoy.loot.items, m_DC_Convoy.loot.itemChance);
-			SDRC_Log.Add("[SDRC_Mission_Convoy:DoWin] Loot added.", LogLevel.DEBUG);								
+			SDRC_Log.Add("[SDRC_Mission_Convoy:DoWin] " +  GetId() + " : Loot added.", LogLevel.DEBUG);								
 		}		
 		super.DoWin();
 	}

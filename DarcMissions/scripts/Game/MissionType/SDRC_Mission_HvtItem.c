@@ -124,7 +124,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		if ( (ready) && (GetState() != SDRC_EMissionState.FAILED) )
 		{
 			m_Target = GetFromEntityList(m_DC_HvtItem.targetIdx);
-			SDRC_Log.Add("[SDRC_Mission_HvtItem:MissionSpawn] Target: " + m_Target, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_Mission_HvtItem:MissionSpawn] " +  GetId() + " : Target: " + m_Target, LogLevel.DEBUG);
 			
 			GetGame().GetCallqueue().CallLater(IsTargetDestroyed, AI_TARGET_DESTROYED_CYCLE_TIME, false);
 			
@@ -155,7 +155,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 				if (damageManager)
 				{
 					float health = damageManager.GetHealthScaled();
-					SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] Target health: " + health, LogLevel.SPAM);
+					SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] " +  GetId() + " : Target health: " + health, LogLevel.SPAM);
 					if (health < 0.1)
 					{
 						isDestroyed = true;

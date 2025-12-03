@@ -73,7 +73,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 			if (roadPos.roadPts.Count() < 2)	//We need two points for a road. Having only one point would be a bug on the map.
 			{
 				pos = "0 0 0";
-				SDRC_Log.Add("[SDRC_Mission_Roadblock] No roadpoints found.", LogLevel.ERROR);
+				SDRC_Log.Add("[SDRC_Mission_Roadblock] " +  GetId() + " : No roadpoints found.", LogLevel.ERROR);
 			}
 			else
 			{
@@ -92,10 +92,10 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 				if (roadPointIndex >= roadPos.roadPts.Count() - 1)
 				{
 					roadPointIndex--;
-					SDRC_Log.Add("[SDRC_Mission_Roadblock] Roadpoint index reduced", LogLevel.SPAM);
+					SDRC_Log.Add("[SDRC_Mission_Roadblock] " +  GetId() + " : Roadpoint index reduced", LogLevel.SPAM);
 				}
 				
-				//SDRC_Log.Add("[SDRC_Mission_Roadblock] Roadpoints found: " + roadPos.roadPts.Count() + " idx: " + roadPointIndex, LogLevel.SPAM);
+				//SDRC_Log.Add("[SDRC_Mission_Roadblock] " +  GetId() + " : Roadpoints found: " + roadPos.roadPts.Count() + " idx: " + roadPointIndex, LogLevel.SPAM);
 				
 				pos = roadPos.roadPts[roadPointIndex];
 				posOnRoad = roadPos.roadPts[roadPointIndex + 1];
@@ -404,9 +404,9 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			0		
 		);
 		roadblock.ai.Set(
-			{1, 2},
+			{1, 4},
 			{"G_LAUNCHER", "G_HEAVY", "G_LIGHT"},
-			50, 1.0,
+			30, 0.6,
 			{0, 10},
 			SDRC_EWaypointGenerationType.SCATTERED,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
@@ -551,9 +551,9 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			0		
 		);		
 		roadblock.ai.Set(
-			{2, 3},
+			{2, 4},
 			{"G_LIGHT", "G_LIGHT", "G_LIGHT", "C_SNIPER", },
-			50, 1.0,
+			50, 0.8,
 			{0, 10},
 			SDRC_EWaypointGenerationType.LOITER,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
@@ -682,9 +682,9 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			0		
 		);		
 		roadblock.ai.Set(
-			{2, 3},
+			{2, 4},
 			{"G_LIGHT", "G_LIGHT", "G_HEAVY", "G_ADMIN",},
-			50, 1.0,
+			70, 0.3,
 			{0, 10},
 			SDRC_EWaypointGenerationType.LOITER,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
