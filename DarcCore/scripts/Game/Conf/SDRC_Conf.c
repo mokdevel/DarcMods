@@ -5,9 +5,13 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-#define SDRC_RELEASE
+//#define SDRC_RELEASE
 //#define EXPERIMENTAL
-//#define NEW_VERSION_WIP		//New functionality (..that affects jsons)
+#define NEW_VERSION_WIP		//New functionality (..that affects jsons)
+//#define DEBUG_CHOPPER
+
+//TODO: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//Set SDRC_MissionConfigGeneral faction to be an array
 
 sealed class SDRC_Conf
 {

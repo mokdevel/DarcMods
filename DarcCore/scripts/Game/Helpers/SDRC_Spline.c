@@ -138,10 +138,14 @@ sealed class SDRC_Spline3D
 	{		
 		int count = points.Count();
 		if (count < 1)
+		{
 			return -1;
+		}
 
 		if (count == 1)
+		{
 			return vector.Distance(point, points[0]);
+		}
 
 		float tempDistanceSq;
 		vector segmentStart = points[0];

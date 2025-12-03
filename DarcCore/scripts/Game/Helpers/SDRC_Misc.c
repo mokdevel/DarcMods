@@ -244,6 +244,23 @@ sealed class SDRC_Misc
 
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Find a position from the world center with a distance percentage. 
+	*/	
+	static vector GetRandomWorldPosPercentage(float distancePercentage, vector pos = "-1 -1 -1")
+	{
+		if (pos == "-1 -1 -1")
+		{
+			pos[0] = SDRC_Misc.GetWorldSize()/2;
+			pos[2] = SDRC_Misc.GetWorldSize()/2;
+		}
+		
+		pos = SDRC_Misc.GetCoordinatesOnCircle(pos, SDRC_Misc.GetWorldSize() * distancePercentage, Math.RandomInt(0, 360));
+		
+		return pos;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Move given position range meters away from the given position in X/Y.	
 	*/	
 	static vector RandomizePos(vector position, float range = 100)
@@ -336,7 +353,16 @@ sealed class SDRC_Misc
 		
 		return name;
 	}	
-						
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get current tick time
+	*/	
+	static int GetCurrentTickTime()
+	{
+		return (System.GetTickCount() / 1000);
+	}	
+							
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if a class is available. This can be used to check if a mod has been loaded by checking a class

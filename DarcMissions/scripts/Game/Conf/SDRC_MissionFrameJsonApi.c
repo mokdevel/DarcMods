@@ -34,7 +34,7 @@
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 10;//10;//15;//5;//3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 3;//10;//15;//5;//3;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -100,11 +100,11 @@ class SDRC_MissionTypeConfig : Managed
 class SDRC_MissionDifficulty : Managed
 {
 	//easy, moderate, normal, tough, hard
-	ref array<float> aiCountCoef = 			{0.5, 0.6, 1.0, 2.0, 3.0};
-	ref array<float> aiSkillCoef = 			{0.2, 0.6, 1.0, 1.3, 1.6};
-	ref array<float> aiPerceptionCoef = 	{0.2, 0.6, 1.0, 1.3, 1.6};
-	ref array<float> lootChanceCoef = 		{0.5, 0.6, 1.0, 1.1, 1.2};	
-	ref array<float> lootCountCoef = 		{1.0, 1.0, 1.0, 1.0, 1.0};	
+	ref array<float> aiCountCoef = 			{0.50, 0.60, 1.01, 2.01, 3.01};
+	ref array<float> aiSkillCoef = 			{0.20, 0.60, 1.01, 1.30, 1.60};
+	ref array<float> aiPerceptionCoef = 	{0.20, 0.60, 1.01, 1.30, 1.60};
+	ref array<float> lootChanceCoef = 		{0.50, 0.60, 1.01, 1.10, 1.20};	
+	ref array<float> lootCountCoef = 		{1.01, 1.01, 1.01, 1.01, 1.01};	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -203,11 +203,11 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-			conf.enemyFactions = {"US"};
+//			conf.enemyFactions = {"US"};
+			conf.enemyFactions = {"USSR"};
 //			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION"};
 //			conf.enemyFactions = {"BALLIEN_BC_FACTION"};
-//			conf.enemyFactions = {"USSR"};
 //			conf.enemyFactions = {"TF_RF"};
 //			conf.enemyFactions = {"TF_US"};
 //			conf.enemyFactions = {"RHS_ION"};
@@ -230,7 +230,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
 		
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
+			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
@@ -238,7 +238,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL};
-			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
+//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
 //			conf.missionStatic.missionTypeArray = {};

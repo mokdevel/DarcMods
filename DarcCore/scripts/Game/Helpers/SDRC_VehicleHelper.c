@@ -175,7 +175,7 @@ sealed class SDRC_VehicleHelper
 		{
 			return false;
 		}
-		bool success = accessComponent.GetInVehicle(vehicle, slot, forceTeleport, -1, ECloseDoorAfterActions.CLOSE_DOOR, false);
+		bool success = accessComponent.GetInVehicle(vehicle, slot, forceTeleport, -1, ECloseDoorAfterActions.CLOSE_DOOR, true);
 		
 		return success;
 	}
