@@ -313,7 +313,7 @@ class SDRC_Mission
 	private int m_iStartTime;					//Seconds when mission started
 	private int m_iEndTime;						//Seconds when mission shall end.
 	private int m_iActiveTime;					//Seconds of how long the mission should be active
-	private int m_iActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission.
+	private int m_iActiveDistance;				//The distance to a player to keep the mission active. This is set to default, but could be changed by the mission. Set to -1 to disable the check.
 	private int m_iActiveTimeToEnd;				//The time to keep mission active once all AIs are dead.
 	private bool m_bMissionIsEnding;			//Once all AIs are dead, we're getting close to end the mission.
 	//Win condition related
@@ -942,11 +942,14 @@ class SDRC_Mission
 		int currentTime = (System.GetTickCount() / 1000);
 		
 		//Are there players still nearby, reset the timer
-		if (SDRC_PlayerHelper.GetPlayerClosestToPos(m_General.pos[0], 0, m_iActiveDistance))
+		if (m_iActiveDistance > -1)
 		{
-			ResetActiveTime();
+			if (SDRC_PlayerHelper.GetPlayerClosestToPos(m_General.pos[0], 0, m_iActiveDistance))
+			{
+				ResetActiveTime();
+			}
 		}
-		
+				
 		//Check the different winning conditions
 		if ( (m_State == SDRC_EMissionState.ACTIVE) && (!m_bMissionIsEnding) && (m_iAICountOriginal >= 0) )
 		{			
