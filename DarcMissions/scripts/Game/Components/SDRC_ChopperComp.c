@@ -46,23 +46,18 @@ class SDRC_ChopperComp : ScriptGameComponent
 	const int TIME_TURN_INTERVAL_BASE = 40;			//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
 	
 	//Pitch
-//	const float PITCH_ANGLE = 60;					//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
-	const float PITCH_ANGLE_RAD = 60 * Math.DEG2RAD;
+	const float PITCH_ANGLE_RAD = 60 * Math.DEG2RAD;	//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
+	
 	//Roll 
 	const float ROLL_ANGLE_MUL = 2.4;//1.7;			//Multiplier for roll angle along the spline
 	
 	//Flight path
-//	const int SEGMENT_POINTS = 10;				//How many points to create for each segment
-//	const int POINTS_TO_NEW_DISTANCE = 3;		//How many spline points in to the future flight path is checked before adding new flight points.
-//	const int POINTS_TO_SPLINE_START = 6;		//Points to go back from m_iClosestIndex when creating a new flight path 
-//	const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
-	
 	const int SEGMENT_POINTS = 15;				//How many points to create for each segment
-	const int POINTS_TO_NEW_DISTANCE = 4;		//How many spline points in to the future flight path is checked before adding new flight points.
-	const int POINTS_TO_SPLINE_START = 8;		//Points to go back from m_iClosestIndex when creating a new flight path 
-	const int DESTINATION_POINT_DIV = 20;		//How many points ahead to look for the destination. This is the divider for speed.
-	const int TIME_FORCE_MOVE_POINT = 10;		//Time to wait before force moving a point. This is to fix situations where the chopper gets stuck on a point.
-	const float TIME_IN_INIT = 45;				//Seconds to be in init state. During this time, we don't check for damage or similar things.
+	const int POINTS_TO_NEW_DISTANCE = 2;		//How many spline points in to the future flight path is checked before adding new flight points.
+	const int POINTS_TO_SPLINE_START = 6;		//Points to go back from m_iClosestIndex when creating a new flight path 
+	const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
+	const int TIME_FORCE_MOVE_POINT = 20;		//(seconds) Time to wait before force moving a point. This is to fix situations where the chopper gets stuck on a point.
+	const float TIME_IN_INIT = 45;				//(seconds) Time to be in init state. During this time, we don't check for damage or similar things.
 	const float ROTOR_FORCE_MUL = 0.9;			//Rotor force multiplier. Bigger value makes the heli react faster to up/down movement
 	const float ROTOR_FORCE_MUL_PANIC = 1.4;	//Rotor force multiplier used when avoiding ground. 
 	
@@ -152,9 +147,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 		m_vOrigin = owner.GetOrigin();
 
-		//Check if we need to define a new destination and create a new path
-		CreateFlightPath(m_vOrigin);
-		
 		//If chopper is destroyed, let Reforger handle crash etc.
 		//Check if we're still working. Not needed every frame. //TBD: Could be done every x seconds - not that critical
 		if ( (m_bDestroyed) || (!IsStillWorking(owner)) )
@@ -169,33 +161,39 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fTimeTurnInterval = TIME_TURN_INTERVAL_BASE / m_fSpeed;
 		m_fTimeTurnInterval = Math.Clamp(m_fTimeTurnInterval, 0.6, 3);
 				
-		//Count destintation addition along the spline which is dependent on the speed.
-		m_iDestinationPointAdd = m_fSpeed / DESTINATION_POINT_DIV;
-		m_iDestinationPointAdd = Math.Clamp(m_iDestinationPointAdd, 1, 3);
-		
-		//If we've been stuck on a point, force move
+		//If we've been stuck on a point, force new flight path. 
+		//Sometimes the heli direction and path align so that the closest index does not update.
+		bool bCreateNewPath = false;
 		if (m_fTimeBetweenPts > TIME_FORCE_MOVE_POINT)
 		{
-			m_iNewClosestIndex++;
-			m_iClosestIndex++;
+			bCreateNewPath = true;
 		}
-		else //Do the normal flying
+		
+		//No need to do anything unless we are at the end of spline.
+		if ((m_iClosestIndex + m_iDestinationPointAdd + POINTS_TO_NEW_DISTANCE >= m_vSplinePoints.Count() - 1) || bCreateNewPath)
 		{
-			//Find where we're going
-			float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iNewClosestIndex);	//NOTE: This will set m_iNewClosestIndex
-	
-			if (m_iNewClosestIndex > m_iClosestIndex)
-			{
-				m_iClosestIndex = m_iNewClosestIndex;
-				m_fTimeBetweenPtsAvg = m_fTimeBetweenPts;
-				m_fTimeBetweenPts = 0;
-			}
-			else if (m_iNewClosestIndex == m_iClosestIndex)
-			{
-				m_iClosestIndex++;
-				m_fTimeBetweenPtsAvg = m_fTimeBetweenPts;
-				m_fTimeBetweenPts = 0;
-			}
+			//Define a new destination and create a new path
+			CreateFlightPath(m_vOrigin);
+		}
+		
+		//Count destintation addition along the spline which is dependent on the speed.
+		m_iDestinationPointAdd = m_fSpeed / DESTINATION_POINT_DIV;
+		m_iDestinationPointAdd = Math.ClampInt(m_iDestinationPointAdd, 1, 3);
+		
+		//Find where we're going
+		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iNewClosestIndex);	//NOTE: This will set m_iNewClosestIndex
+
+		if (m_iNewClosestIndex > m_iClosestIndex)
+		{
+			m_iClosestIndex = m_iNewClosestIndex;
+			m_fTimeBetweenPtsAvg = m_fTimeBetweenPts;		//TBD: This is a static value of previous time instead of average 
+			m_fTimeBetweenPts = 0;
+		}
+		else if (m_iNewClosestIndex == m_iClosestIndex)
+		{
+			m_iClosestIndex++;
+			m_fTimeBetweenPtsAvg = m_fTimeBetweenPts;		//TBD: This is a static value of previous time instead of average 
+			m_fTimeBetweenPts = 0;
 		}
 		
 		//Destination point definition
@@ -214,7 +212,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		m_vDestinationFuture = m_vSplinePoints[m_iFutureIndex];
 		
-		//Lerped destination
+		//Lerped m_vDestination that keeps on moving along the spline
 		float td = m_fTimeBetweenPts / m_fTimeBetweenPtsAvg;
 		td = Math.Clamp(td, 0, 1);
 		m_vDestination = vector.Lerp(m_vSplinePoints[m_iNextIndex], m_vDestinationFuture, td);
@@ -241,7 +239,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		#ifndef SDRC_RELEASE
 			DrawHelicopterVectors(owner);
-		#endif
+		#endif		
 	}
 
 	//------------------------------------------------------------------------------------------------	
@@ -360,12 +358,17 @@ class SDRC_ChopperComp : ScriptGameComponent
 			return;
 		}
 		
+		//Clear any existing path points
 		m_vPathPoints.Clear();
+		
+		//Set height for initial starting point
+		origin[1] = SDRC_Misc.RandomFloat(m_fFlyHeightLow, m_fFlyHeightHigh);
+		
+		//Add points to path
 		m_vPathPoints.Insert(origin);		
 		m_vPathPoints.Insert(vector.Lerp(origin, destination, 0.2));
 		m_vPathPoints.Insert(vector.Lerp(origin, destination, 0.6));
 		m_vPathPoints.Insert(destination);
-//		GenerateWayPoint(m_vPathPoints, destination, m_fWpType);
 
 		SetFlyPathHeight(origin);
 		SDRC_Spline3D.GenerateSplinePoints(m_vPathPoints, m_vSplinePoints, m_vTangentPoints, SEGMENT_POINTS, true);
@@ -402,13 +405,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 			return;
 		}
 
-		//No need to do anything unless we are at the end of spline.
-		if (m_iClosestIndex + m_iDestinationPointAdd + POINTS_TO_NEW_DISTANCE < m_vSplinePoints.Count() - 1)
-		{
-			return;
-		}
-		
+		//Clear any existing path points
 		m_vPathPoints.Clear();
+		
+		//Take two points from old spline. This smoothens the spline.
 		int splineStartIdx = m_iClosestIndex  - POINTS_TO_SPLINE_START;
 		if (splineStartIdx < 0)
 		{
@@ -417,6 +417,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_vPathPoints.Insert(m_vSplinePoints[splineStartIdx]);
 		m_vPathPoints.Insert(m_vSplinePoints[m_iClosestIndex]);
 		
+		//Use requested destinations or generate a waypoint.
 		if (m_vFlyDestinations.IsEmpty())
 		{
 			GenerateWayPoint(origin, m_fWpType);
@@ -458,6 +459,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		foreach (int i, vector pt : m_vPathPoints)
 		{
+			//Do not change height of two first points. These are the two points from the previous spline. 
+			if (i < 2)
+			{
+				continue;
+			}
+			
 			pt[1] = 0;	//We may in the future use the provided Y coord for the points. For now we set it to 0.
 			
 			float flyHeight = SDRC_Misc.RandomFloat(m_fFlyHeightLow, m_fFlyHeightHigh);
@@ -474,7 +481,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/	
 	private void CheckSplinePoints(vector origin)
 	{	
-		const int DIFF_DISTANCE = 7;
+/*		const int DIFF_DISTANCE = 7;
 		
 		//Smooth the segments		
 		int diffPt = Math.ClampInt(m_vSplinePoints.Count() - 1 - DIFF_DISTANCE - m_iClosestIndex, 1, DIFF_DISTANCE);
@@ -484,7 +491,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			float l = Math.Lerp(origin[1], m_vSplinePoints[m_iClosestIndex + diffPt][1], i / diffPt);
 			m_vSplinePoints[m_iClosestIndex + i][1] = l;
-		}
+		}*/
 		
 		//Make sure the points are at minimum m_fFlyHeightLow from the ground.
 		foreach (int i, vector pt : m_vSplinePoints)
@@ -728,9 +735,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Make the chopper while unsteadily
 		VehicleHelicopterSimulation owner_s = VehicleHelicopterSimulation.Cast(owner.FindComponent(VehicleHelicopterSimulation));
-		float force = SDRC_Misc.RandomFloat(0.5, 1.0);
+		float force = SDRC_Misc.RandomFloat(0.2, 0.7);
         owner_s.RotorSetForceScaleState(0, force);
-		force = SDRC_Misc.RandomFloat(0.7, 2.5);
+		force = SDRC_Misc.RandomFloat(0.3, 2.5);
         owner_s.RotorSetForceScaleState(1, force);
 		
 		return false;
