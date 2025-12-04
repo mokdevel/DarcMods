@@ -696,7 +696,21 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fDistanceHigh = distanceHigh;
 		m_fWpType =	wpType;
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	void SetSpeed(float min = -1, float max = -1)
+	{
+		if (min > -1)
+		{
+			m_fSpeedMin = min;
+		}
+		
+		if (max > -1)
+		{
+			m_fSpeedMax = max;
+		}			
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	void SetDamage(IEntity owner)
 	{
@@ -735,7 +749,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Make the chopper while unsteadily
 		VehicleHelicopterSimulation owner_s = VehicleHelicopterSimulation.Cast(owner.FindComponent(VehicleHelicopterSimulation));
-		float force = SDRC_Misc.RandomFloat(0.2, 0.7);
+		float force = SDRC_Misc.RandomFloat(0.4, 0.7);
         owner_s.RotorSetForceScaleState(0, force);
 		force = SDRC_Misc.RandomFloat(0.3, 2.5);
         owner_s.RotorSetForceScaleState(1, force);

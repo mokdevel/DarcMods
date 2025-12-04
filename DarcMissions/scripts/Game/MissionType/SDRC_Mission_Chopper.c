@@ -98,8 +98,9 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				if (GetActiveTime() < m_Config.activeTime * 0.2)
 				{
 					m_Vehicle_c.AddDestination(SDRC_Misc.GetRandomWorldPosPercentage(1.0));
+					m_Vehicle_c.SetSpeed(max :  m_DC_Chopper.speed[1] * 1.5);
 					m_bKeepOnFlying = false;
-					SDRC_Log.Add("[SDRC_Mission_Chopper:MissionRun] " +  GetId() + " : Chopper to flies away. Mission ending.", LogLevel.DEBUG);														
+					SDRC_Log.Add("[SDRC_Mission_Chopper:MissionRun] " +  GetId() + " : Chopper to fly away. Mission ending.", LogLevel.DEBUG);														
 				}
 				
 /*				if (SDRC_Misc.GetCurrentTickTime() < m_iFlyEndTime)
@@ -315,7 +316,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		//Mission specific
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;
-		conf.activeTime = 10*60;
+		conf.activeTime = 2*60;
 		
 		//----------------------------------------------------
 		conf.helicopterInfo.Insert(Heli00());
@@ -385,7 +386,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		(
 			{1, 2},
 			{"G_LIGHT", "G_ADMIN"},
-			30, 0.3,
+			30, 0.6,
 			{0, 0},
 			SDRC_EWaypointGenerationType.LOITER,
 			SDRC_EWaypointMoveType.LOITER,
