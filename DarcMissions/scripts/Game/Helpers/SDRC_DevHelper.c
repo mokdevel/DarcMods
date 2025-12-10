@@ -11,7 +11,7 @@ sealed class SDRC_DevHelper
 {
 	static void SDRC_DevDump()	
 	{
-		/*SDRC_MapMarkerHelper.CreateMapMarker("1000 0 1000", SDRC_EMissionIcon.GM_MISSION_X_MAP, "DMC_B", "Here is a text");
+		SDRC_MapMarkerHelper.CreateMapMarker("1000 0 1000", SDRC_EMissionIcon.GM_MISSION_X_MAP, "DMC_B", "Here is a text");
 		SDRC_MapMarkerHelper.CreateMapMarker("1100 0 1000", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP, "DMC_B", "Darc_SK");
 		SDRC_MapMarkerHelper.CreateMapMarker("1200 0 1000", SDRC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, "DMC_B", "Darc_SK");
 		SDRC_MapMarkerHelper.CreateMapMarker("1300 0 1000", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP, "DMC_B", "Darc_SK");
@@ -29,6 +29,7 @@ sealed class SDRC_DevHelper
 		SDRC_MapMarkerHelper.CreateMapMarker("2500 0 1000", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP, "DMC_B", "This is a description for a mission");
 		SDRC_MapMarkerHelper.CreateMapMarker("2600 0 1000", SDRC_EMissionIcon.GM_MISSION_DIAMOND_MAP, "DMC_B", "This is a description for a mission");
 		SDRC_MapMarkerHelper.CreateMapMarker("2700 0 1000", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP, "DMC_B", "This is a description for a mission");
+		SDRC_MapMarkerHelper.CreateMapMarker("2800 0 1000", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, "DMC_B", "This is a description for a mission");
 	
 		SDRC_MapMarkerHelper.CreateMapMarker("1000 0 1300", SDRC_EMissionIcon.GM_MISSION_WIN_MAP, "DMC_B", "This is a description for a mission");
 		SDRC_MapMarkerHelper.CreateMapMarker("1100 0 1300", SDRC_EMissionIcon.GM_MISSION_LOSE_MAP, "DMC_B", "This is a description for a mission");
@@ -38,7 +39,7 @@ sealed class SDRC_DevHelper
 		SDRC_MapMarkerHelper.CreateMapMarker("1200 0 1600", SDRC_EMissionIcon.ICON_DEATHMARKER_SMALL_RED_MAP, "DMC_B", "Here is a text");
 		SDRC_MapMarkerHelper.CreateMapMarker("1300 0 1600", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, "DMC_B", "Here is a text");
 		SDRC_MapMarkerHelper.CreateMapMarker("1400 0 1600", SDRC_EMissionIcon.ICON_EXCLAMATION_SMALL_MAP, "DMC_B", "Here is a text");
-		SDRC_MapMarkerHelper.CreateMapMarker("1500 0 1600", SDRC_EMissionIcon.ICON_CRATE_SMALL_MAP, "DMC_B", "Here is a text");*/
+		SDRC_MapMarkerHelper.CreateMapMarker("1500 0 1600", SDRC_EMissionIcon.ICON_CRATE_SMALL_MAP, "DMC_B", "Here is a text");
 				
 /*			for (int i = 0;i < 250; i++)
 			{

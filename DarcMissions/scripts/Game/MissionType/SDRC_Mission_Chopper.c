@@ -1,10 +1,10 @@
 //Mission SDRC_Mission_Chopper.c
 
+const string DC_MISSIONCONFIG_FILE_CHOPPER = "dc_missionConfig_Chopper.json";
+
 class SDRC_Mission_Chopper : SDRC_Mission
 {
-	private const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Chopper.json";
-	
-	private ref SDRC_ChopperJsonApi m_ChopperJsonApi = new SDRC_ChopperJsonApi(DC_MISSIONCONFIG_FILE);	
+	private ref SDRC_ChopperJsonApi m_ChopperJsonApi = new SDRC_ChopperJsonApi(DC_MISSIONCONFIG_FILE_CHOPPER);	
 	private ref SDRC_ChopperConfig m_Config;
 	private ref SDRC_Chopper m_DC_Chopper = new SDRC_Chopper();
 	
@@ -378,7 +378,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 			"Helicopter destroyed.", 
 			"Helicopter lost track of you.",
 			"",
-			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
 			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
@@ -418,7 +418,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 			"Gunship destroyed.", 
 			"Gunship lost track of you.",
 			"",
-			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
 			SDRC_EMissionDifficulty.NORMAL,
 			0
 		);
