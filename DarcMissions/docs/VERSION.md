@@ -6,6 +6,7 @@
 - Added ``showDynamicMissionMarker`` : Show/hide static mission markers. This will override any mission specific ``showMarker`` settings.
 
 ## Next release (unreleased)
+- Roadblock mission: Removed some of the barbed wires as AIs were bleeding due to them.
 
 .. empty ..
 

@@ -16,7 +16,8 @@ modded enum SCR_DebugMenuID {
     MODMENU_WAYPOINTS,
     MODMENU_MARKS,
 	MODMENU_SPHERES,
-	MODMENU_LINES
+	MODMENU_LINES,
+	MODMENU_INFO,
 }
 
 //------------------------------------------------------------------------------------------------
@@ -78,6 +79,7 @@ sealed class SDRC_DebugHelper
 		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_MARKS, "", "Show markers", categoryName);
 		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_SPHERES, "", "Show spheres", categoryName);
 		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_LINES, "", "Show lines", categoryName);
+		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_INFO, "", "Show info", categoryName);
 		}
 	}		
 
@@ -85,12 +87,13 @@ sealed class SDRC_DebugHelper
 	/*!
 	Configure SDRC_DebugHelper.
 	*/
-	static void Configure(bool waypoint, bool marks, bool spheres, bool lines = true)
+	static void Configure(bool waypoint, bool marks, bool spheres, bool lines = true, bool info = true)
 	{
 		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_WAYPOINTS, waypoint);
 		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_MARKS, marks);
 		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_SPHERES, marks);
 		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_LINES, lines);
+		DiagMenu.SetValue(SCR_DebugMenuID.MODMENU_INFO, info);
 	}		
 		
 	//------------------------------------------------------------------------------------------------
