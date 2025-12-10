@@ -1,0 +1,22 @@
+SDRC_DarcMissionGM : "{C599195C442D7125}Prefabs/Compositions/Misc/CustomEntities/CompositionDecals/CompositionDecal_CigarButts_01.et" {
+ ID "56DEF7205C23FF67"
+ components {
+  SDRC_DarcMissionEditableRequestComp "{671546C94C0F421E}" {
+   m_EntityType SYSTEM
+   m_UIInfo SCR_EditableEntityUIInfoColored "{671546C94C0F4228}" {
+    Name "DarcMissions Chopper"
+    Description "Spawns a random Chopper mission"
+    Icon "{03392FD8BD19DE62}UI/Textures/Icons/gm_mission_Chopper_round.edds"
+    m_Image "{AEA7CFBA76A5CA85}UI/Textures/Icons/gm_mission_Chopper.edds"
+    m_aAuthoredLabels {
+     ENTITYTYPE_SYSTEM ENTITYTYPE_DARCMISSIONS
+    }
+   }
+   m_bAutoRegister ALWAYS
+   m_MissionType CHOPPER
+  }
+  RplComponent "{671546C94C0F4233}" {
+   Streamable Disabled
+  }
+ }
+}
