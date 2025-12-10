@@ -273,7 +273,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		//Default		
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,1,2,3};
+		conf.missionList = {2};//{0,1,2,3};
 		//Mission specific		
 		//----------------------------------------------------
 		conf.subMissions.Insert(Roadblock0());				
@@ -571,7 +571,95 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			};
 		loot.Set(0.6, lootItems);
 		roadblock.loot = loot;
+
+		// Loot item ALWAYS first
+		ref SDRC_Structure item_0 = new SDRC_Structure();
+		item_0.Set(
+		    "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+		    "10.866 1 140.452",
+		    "0 2.385 0"
+		);
+		roadblock.campItems.Insert(item_0);
 		
+		ref SDRC_Structure item_1 = new SDRC_Structure();
+		item_1.Set(
+		    "{5608B9078BF2AC5A}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragonsteeth_01_old_V1.et",
+		    "15.628 0 138.299"
+		);
+		roadblock.campItems.Insert(item_1);
+		
+		ref SDRC_Structure item_2 = new SDRC_Structure();
+		item_2.Set(
+		    "{5608B9078BF2AC5A}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragonsteeth_01_old_V1.et",
+		    "5.514 0 136.293",
+		    "0 -11.07 0"
+		);
+		roadblock.campItems.Insert(item_2);
+		
+		ref SDRC_Structure item_3 = new SDRC_Structure();
+		item_3.Set(
+		    "{5608B9078BF2AC5A}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragonsteeth_01_old_V1.et",
+		    "3.632 0 141.811",
+		    "0 24.752 0"
+		);
+		roadblock.campItems.Insert(item_3);
+		
+		ref SDRC_Structure item_4 = new SDRC_Structure();
+		item_4.Set(
+		    "{5EF52FAE299A831A}Prefabs/Props/Military/Sandbags/Sandbag_01_short_base.et",
+		    "13.68 1 135.766",
+		    "0 -21.115 0"
+		);
+		roadblock.campItems.Insert(item_4);
+		
+		ref SDRC_Structure item_5 = new SDRC_Structure();
+		item_5.Set(
+		    "{5EF52FAE299A831A}Prefabs/Props/Military/Sandbags/Sandbag_01_short_base.et",
+		    "8.664 1 134.464",
+		    "0 6.278 0"
+		);
+		roadblock.campItems.Insert(item_5);
+		
+		ref SDRC_Structure item_6 = new SDRC_Structure();
+		item_6.Set(
+		    "{6A735BB1318B2E76}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_bunker_plastic_camonet.et",
+		    "10.187 1 140.88"
+		);
+		roadblock.campItems.Insert(item_6);
+		
+		ref SDRC_Structure item_7 = new SDRC_Structure();
+		item_7.Set(
+		    "{A76FBE3B139F227A}PrefabsEditable/Auto/Structures/Signs/Military/E_SignCheckpoint_01_stop.et",
+		    "6.063 1 147.099"
+		);
+		roadblock.campItems.Insert(item_7);
+		
+		ref SDRC_Structure item_8 = new SDRC_Structure();
+		item_8.Set(
+		    "{A76FBE3B139F227A}PrefabsEditable/Auto/Structures/Signs/Military/E_SignCheckpoint_01_stop.et",
+		    "12.689 1 147.489",
+		    "0 -9.375 0"
+		);
+		roadblock.campItems.Insert(item_8);
+		
+		ref SDRC_Structure item_9 = new SDRC_Structure();
+		item_9.Set(
+		    "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+		    "14.815 1 145.385",
+		    "0 37.532 0"
+		);
+		roadblock.campItems.Insert(item_9);
+		
+		ref SDRC_Structure item_10 = new SDRC_Structure();
+		item_10.Set(
+		    "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+		    "6.093 1 145.387",
+		    "0 -29.757 0"
+		);
+		roadblock.campItems.Insert(item_10);
+		
+		return roadblock;	
+/*				
 		ref SDRC_Structure item_0 = new SDRC_Structure();
 		item_0.Set(
 		    "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
@@ -650,7 +738,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_9);		
 
-		return roadblock;				
+		return roadblock;				*/
 	}
 	
 	//----------------------------------------------------
@@ -701,7 +789,118 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 			};
 		loot.Set(0.6, lootItems);
 		roadblock.loot = loot;
+
+		// --------------------------------------------------
 		
+		// Loot item ALWAYS first
+		ref SDRC_Structure item_0 = new SDRC_Structure();
+		item_0.Set(
+		    "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+		    "4.106 1 164.03",
+		    "0 32.729 0"
+		);
+		roadblock.campItems.Insert(item_0);
+		
+		// BarGate group ($grp StaticModelEntity)
+		ref SDRC_Structure item_1 = new SDRC_Structure();
+		item_1.Set(
+		    "{07F043DD6AACCD0B}Prefabs/Structures/Infrastructure/Barriers/BarGate_01/BarGate_01.et",
+		    "9.13 0 177.086"
+		);
+		roadblock.campItems.Insert(item_1);
+		
+		ref SDRC_Structure item_2 = new SDRC_Structure();
+		item_2.Set(
+		    "{07F043DD6AACCD0B}Prefabs/Structures/Infrastructure/Barriers/BarGate_01/BarGate_01.et",
+		    "8.797 0 157.636"
+		);
+		roadblock.campItems.Insert(item_2);
+		
+		// Military signs ($grp GenericEntity)
+		ref SDRC_Structure item_3 = new SDRC_Structure();
+		item_3.Set(
+		    "{2FE7AA0EBA71CDFB}Prefabs/Structures/Signs/Large/SignLarge_01_MilitaryBase.et",
+		    "13.018 1 180.409"
+		);
+		roadblock.campItems.Insert(item_3);
+		
+		ref SDRC_Structure item_4 = new SDRC_Structure();
+		item_4.Set(
+		    "{2FE7AA0EBA71CDFB}Prefabs/Structures/Signs/Large/SignLarge_01_MilitaryBase.et",
+		    "12.97 1 154.555",
+		    "0 -180 0"
+		);
+		roadblock.campItems.Insert(item_4);
+		
+		// Transmitter Tower
+		ref SDRC_Structure item_5 = new SDRC_Structure();
+		item_5.Set(
+		    "{6A004A8F0571D456}Prefabs/Structures/Infrastructure/Towers/TransmitterTower_01/TransmitterTower_01_small.et",
+		    "2.711 1 174.351"
+		);
+		roadblock.campItems.Insert(item_5);
+		
+		// Dragon teeth group ($grp StaticModelEntity)
+		ref SDRC_Structure item_6 = new SDRC_Structure();
+		item_6.Set(
+		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+		    "15.871 0 163.515",
+		    "0 28.496 0"
+		);
+		roadblock.campItems.Insert(item_6);
+		
+		ref SDRC_Structure item_7 = new SDRC_Structure();
+		item_7.Set(
+		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+		    "15.682 0 167.103",
+		    "0 -3.796 0"
+		);
+		roadblock.campItems.Insert(item_7);
+		
+		ref SDRC_Structure item_8 = new SDRC_Structure();
+		item_8.Set(
+		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+		    "16.06 0 171.102",
+		    "0 46.018 0"
+		);
+		roadblock.campItems.Insert(item_8);
+		
+		ref SDRC_Structure item_9 = new SDRC_Structure();
+		item_9.Set(
+		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+		    "14.785 0 175.695",
+		    "0 21.038 0"
+		);
+		roadblock.campItems.Insert(item_9);
+		
+		ref SDRC_Structure item_10 = new SDRC_Structure();
+		item_10.Set(
+		    "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+		    "14.358 0 159.652",
+		    "0 54.995 0"
+		);
+		roadblock.campItems.Insert(item_10);
+		
+		
+		// Guard Box
+		ref SDRC_Structure item_11 = new SDRC_Structure();
+		item_11.Set(
+		    "{9498ADA13BCDB218}Prefabs/Structures/Military/Houses/GuardBox_01/GuardBox_01_Base.et",
+		    "3.929 0 166.778",
+		    "0 -90 0"
+		);
+		roadblock.campItems.Insert(item_11);
+		
+		// Trash Bin
+		ref SDRC_Structure item_12 = new SDRC_Structure();
+		item_12.Set(
+		    "{E7117284012B39A4}Prefabs/Props/Garbage/Bins/TrashBin_02_patched.et",
+		    "4.341 1 168.549"
+		);
+		roadblock.campItems.Insert(item_12);
+		
+		return roadblock;
+/*				
 		ref SDRC_Structure item_0 = new SDRC_Structure();
 		item_0.Set(
 		    "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
@@ -790,6 +989,6 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		);
 		roadblock.campItems.Insert(item_10);	
 		
-		return roadblock;				
+		return roadblock;*/
 	}
 }

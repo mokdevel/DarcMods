@@ -6,39 +6,47 @@ $grp StaticModelEntity : "{07F043DD6AACCD0B}Prefabs/Structures/Infrastructure/Ba
   coords 8.797 0 157.636
  }
 }
-$grp StaticModelEntity : "{18822FB3F0D2ED00}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Long.et" {
- {
-  coords 14.847 0 160.266
-  angleY 30.736
- }
- {
-  coords 14.936 0 173.246
-  angleY 160.061
- }
- {
-  coords 15.391 0 166.746
-  angleY -175.406
- }
-}
 $grp GenericEntity : "{2FE7AA0EBA71CDFB}Prefabs/Structures/Signs/Large/SignLarge_01_MilitaryBase.et" {
  {
   coords 13.018 1 180.409
  }
  {
   coords 12.97 1 154.555
-  angleY -180
+  angles 0 -180 0
  }
 }
 GenericEntity : "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et" {
  coords 4.106 1 164.03
- angleY 32.729
+ angles 0 32.729 0
 }
 StaticModelEntity : "{6A004A8F0571D456}Prefabs/Structures/Infrastructure/Towers/TransmitterTower_01/TransmitterTower_01_small.et" {
  coords 2.711 1 174.351
 }
+$grp StaticModelEntity : "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et" {
+ {
+  coords 15.871 0 163.515
+  angles 0 28.496 0
+ }
+ {
+  coords 15.682 0 167.103
+  angles 0 -3.796 0
+ }
+ {
+  coords 16.06 0 171.102
+  angles 0 46.018 0
+ }
+ {
+  coords 14.785 0 175.695
+  angles 0 21.038 0
+ }
+ {
+  coords 14.358 0 159.652
+  angles 0 54.995 0
+ }
+}
 SCR_DestructibleBuildingEntity : "{9498ADA13BCDB218}Prefabs/Structures/Military/Houses/GuardBox_01/GuardBox_01_Base.et" {
  coords 3.929 0 166.778
- angleY -90
+ angles 0 -90 0
 }
 GenericEntity : "{E7117284012B39A4}Prefabs/Props/Garbage/Bins/TrashBin_02_patched.et" {
  coords 4.341 1 168.549
