@@ -88,7 +88,12 @@ sealed class SDRC_IconHelper
 				texture = "{FD181DB538595893}UI/Textures/Icons/gm_mission_Stash_map.edds";
 				break;
 			}
-
+			case SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP:
+			{				
+				texture = "{384CFFB2945C5D54}UI/Textures/Icons/gm_mission_Chopper_map.edds";
+				break;
+			}
+			
 			case SDRC_EMissionIcon.GM_MISSION_BIOHAZARD_MAP:
 			{
 				texture = "{6C698741C70CAC62}UI/Textures/Icons/gm_mission_Biohazard_map.edds";

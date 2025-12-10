@@ -20,7 +20,7 @@ enum SDRC_EMissionType
 	HVTVIP,			//8
 	HVTITEM,		//9
 	STASH,			//10
-	CHOPPER,	//Mission not ready or working
+	CHOPPER,		//11
 	
 	REQUESTED = 100
 };
@@ -101,7 +101,7 @@ sealed class SDRC_MissionEnumHelper
 		stashJsonApi.CreateMissionFiles();
 		delete stashJsonApi;
 		
-		SDRC_ChopperJsonApi chopperJsonApi = new SDRC_ChopperJsonApi(DC_MISSIONCONFIG_FILE_STASH);	
+		SDRC_ChopperJsonApi chopperJsonApi = new SDRC_ChopperJsonApi(DC_MISSIONCONFIG_FILE_CHOPPER);	
 		chopperJsonApi.Load();
 		chopperJsonApi.CreateMissionFiles();
 		delete chopperJsonApi;			
@@ -174,7 +174,7 @@ sealed class SDRC_MissionEnumHelper
 			}	
 			case SDRC_EMissionType.CHOPPER:
 			{
-				resourceName = "{631842AD30537026}Prefabs/Systems/DarcMissionStash.et"; 	//TBD: Create an own logo for this
+				resourceName = "{D934E89EF2C4F392}Prefabs/Systems/DarcMissionChopper.et";
 				break;
 			}
 			default:

@@ -1,7 +1,11 @@
 //------------------------------------------------------------------------------------------------
 //! Marker entry which can be placed through map
 
-//NOTE: If you add a new icon, remember to add texture finding to SDRC_IconHelper.GetMarkerTexture
+//HOWTO add an icon
+// - Add icon name on one RESERVED_XX slot (below) 
+// - Add texture finding to SDRC_IconHelper.GetMarkerTexture
+// - Add icon quad in MapMarkerConfig.conf
+
 enum SDRC_EMissionIcon
 {
 	NONE = -1,
@@ -23,7 +27,7 @@ enum SDRC_EMissionIcon
 	GM_MISSION_DEMON_MAP,
 	GM_MISSION_DIAMOND_MAP,
 	GM_MISSION_ZOMBIE_MAP,
-	RESERVED_18,
+	GM_MISSION_CHOPPER_MAP,
 	RESERVED_19,
 	RESERVED_20,
 	RESERVED_21,
