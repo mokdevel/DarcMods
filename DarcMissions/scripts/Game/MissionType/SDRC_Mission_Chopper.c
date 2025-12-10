@@ -13,7 +13,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private SDRC_ChopperComp m_Vehicle_c;
 	private VehicleHelicopterSimulation m_Vehicle_s;
 	
-//	private int m_iFlyEndTime;				//When to stop flying and fly out of map.
+	private int m_iFlyEndTime;					//How long to fly away
+	private const int MIN_FLY_END_TIME = 120;
 	private bool m_bKeepOnFlying = true;
 	
 	private SCR_AIGroup m_Crew = null;
@@ -46,7 +47,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.7);
 	#endif
 	#ifndef SDRC_RELEASE		
-		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.01);
+		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.7);
 	#endif
 				
 		//No suitable location found.
@@ -63,7 +64,11 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		}
 		
 		//Set end time for mission.
-//		m_iFlyEndTime = SDRC_Misc.GetCurrentTickTime() + m_Config.activeTime;			
+		m_iFlyEndTime = m_Config.activeTime * 0.2;
+		if (m_iFlyEndTime < MIN_FLY_END_TIME)
+		{
+			m_iFlyEndTime = MIN_FLY_END_TIME;
+		}
 		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Chopper.general.posName));
@@ -71,7 +76,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		UpdateGeneral(m_DC_Chopper.general);		
 		InitActiveTime(m_Config.activeTime);
 		SetActiveDistance(-1);					//Disable active distance checking. 
-		SetActiveTimeToEnd(60);					//Change the m_iActiveTimeToEnd to short one as there is no loot to gain.		
+		SetActiveTimeToEnd(m_iFlyEndTime);		//Change the m_iActiveTimeToEnd to short one as there is no loot to gain.		
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -95,26 +100,20 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		{
 			if (m_bKeepOnFlying)
 			{
-				if (GetActiveTime() < m_Config.activeTime * 0.2)
+				if (GetActiveTime() < m_iFlyEndTime)
 				{
-					m_Vehicle_c.AddDestination(SDRC_Misc.GetRandomWorldPosPercentage(1.0));
-					m_Vehicle_c.SetSpeed(max :  m_DC_Chopper.speed[1] * 1.5);
+					if (m_Vehicle)
+					{
+						m_Vehicle_c = SDRC_ChopperComp.Cast(m_Vehicle.FindComponent(SDRC_ChopperComp));
+						if (m_Vehicle_c)
+						{
+							m_Vehicle_c.AddDestination(SDRC_Misc.GetRandomWorldPosPercentage(1.0));
+							m_Vehicle_c.SetSpeed(max :  m_DC_Chopper.speed[1] * 1.5);
+						}
+					}
 					m_bKeepOnFlying = false;
-					SDRC_Log.Add("[SDRC_Mission_Chopper:MissionRun] " +  GetId() + " : Chopper to fly away. Mission ending.", LogLevel.DEBUG);														
+					SDRC_Log.Add("[SDRC_Mission_Chopper:MissionRun] " +  GetId() + " : Chopper to fly away. Mission ending.", LogLevel.DEBUG);
 				}
-				
-/*				if (SDRC_Misc.GetCurrentTickTime() < m_iFlyEndTime)
-				{
-					//Keep the mission alive as we're using mission specific timer. 
-					//This is to avoid mission despawning mid-flight
-					ResetActiveTime();
-				}
-				else
-				{
-					m_Vehicle_c.AddDestination(SDRC_Misc.GetRandomWorldPosPercentage(0.8));
-					m_bKeepOnFlying = false;
-					SDRC_Log.Add("[SDRC_Mission_Chopper:MissionRun] " +  GetId() + " : Chopper to flies away. Mission ending.", LogLevel.DEBUG);														
-				}			*/
 			}
 			
 			if (!IsActive())
@@ -168,7 +167,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			if (group)
 			{			
 				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(m_DC_Chopper.general.difficulty), m_DC_Chopper.ai.GetPerception(m_DC_Chopper.general.difficulty));
-				GetGame().GetCallqueue().CallLater(AddCrewDelayed, 6000, false, group);
+				GetGame().GetCallqueue().CallLater(AddCrewDelayed, 6000 + i * 2000, false, group);
 				m_Groups.Insert(group);					
 			}
 		}
@@ -312,11 +311,11 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 	{
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0};		
+		conf.missionList = {0,0,1,1,1};
 		//Mission specific
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;
-		conf.activeTime = 2*60;
+		conf.activeTime = 5*60;
 		
 		//----------------------------------------------------
 		conf.helicopterInfo.Insert(Heli00());
@@ -326,6 +325,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 //		conf.helicopterInfo.Insert(Heli04());
 		
 		conf.subMissions.Insert(Chopper0());
+		conf.subMissions.Insert(Chopper1());
 	};
 	//----------------------------------------------------
 	SDRC_HelicopterInfo Heli00()
@@ -384,7 +384,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		);
 		chopper.ai.Set
 		(
-			{1, 2},
+			{2, 2},
 			{"G_LIGHT", "G_ADMIN"},
 			30, 0.6,
 			{0, 0},
@@ -393,13 +393,53 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		);
 		chopper.Set
 		(
-			{3},
-			{45, 90},
+			{2},
+			{35, 80},
 			{10, 30},
-			{0.1, 0.2},
+			{0.1, 0.3},
 			SDRC_EHeliWaypointGenerationType.RANDOM,	
 		);
 		
 		return chopper;
 	}
+	
+	//----------------------------------------------------
+	SDRC_Chopper Chopper1()
+	{
+		ref SDRC_Chopper chopper = new SDRC_Chopper();
+		chopper.general.Set(
+			1, "index 1: Gunships",
+			{"0 0 0", "0 0 0"}, 0,
+			{},
+			"any",
+			"Gunship hunter",
+			"You will be shot if you're seen.",
+			SDRC_EMissionWinCondition.AI_KILL_75,
+			"Gunship destroyed.", 
+			"Gunship lost track of you.",
+			"",
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
+			SDRC_EMissionDifficulty.NORMAL,
+			0
+		);
+		chopper.ai.Set
+		(
+			{2, 2},
+			{"G_HEAVY", "G_ADMIN"},
+			60, 1.0,
+			{0, 0},
+			SDRC_EWaypointGenerationType.LOITER,
+			SDRC_EWaypointMoveType.LOITER,
+		);
+		chopper.Set
+		(
+			{0, 1, 3},
+			{40, 80},
+			{10, 30},
+			{0.1, 0.3},
+			SDRC_EHeliWaypointGenerationType.RANDOM,	
+		);
+		
+		return chopper;
+	}	
 }

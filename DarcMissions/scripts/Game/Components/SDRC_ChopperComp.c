@@ -13,7 +13,6 @@ enum SDRC_EHeliWaypointGenerationType
 	RANDOM,		//Random flying for a helicopter
 	PATROL,		//Fly around a certain area
 //	GOTO,		//Fly to a given destination
-	END,		//Fly out from the map - for mission ending
 };
 
 //------------------------------------------------------------------------------------------------
@@ -111,14 +110,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp", LogLevel.NORMAL);
 		s_Instance = this;				
-		
-		GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000);
 	}
  
 	//------------------------------------------------------------------------------------------------
-	void InitDone()
+	void InitDone(IEntity owner)
 	{
 		m_bInInit = false;
+		if (SDRC_VehicleHelper.PilotCountAlive(owner) > 0)
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp] Unable to set pilots.", LogLevel.WARNING);			
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -127,6 +128,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
 		Activate(owner);
+		
+		GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000, false, owner);
 	}
 			
 	//------------------------------------------------------------------------------------------------
@@ -353,10 +356,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/
 	void InitFlightPath(IEntity owner, vector origin, vector destination)	
 	{
-		if (!GetGame().GetWorld())
+/*		if (!GetGame().GetWorld())
 		{
 			return;
-		}
+		}*/
 		
 		//Clear any existing path points
 		m_vPathPoints.Clear();
@@ -400,10 +403,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/
 	void CreateFlightPath(vector origin)
 	{
-		if (!GetGame().GetWorld())
+/*		if (!GetGame().GetWorld())
 		{
 			return;
-		}
+		}*/
 
 		//Clear any existing path points
 		m_vPathPoints.Clear();
@@ -546,13 +549,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			positions.Insert(pos);
 	
 			CreateFlyPoints(positions);
-		}*/
-		
-		//Fly out from the map - for mission ending
-		if (wpGenType == SDRC_EHeliWaypointGenerationType.END)
-		{		
-			
-		}
+		}*/		
 	}
 
 	//------------------------------------------------------------------------------------------------	
@@ -780,41 +777,44 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------	
 	void DrawHelicopterVectors(IEntity owner)
 	{
-		if (!DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_LINES))
-		{		
-			return;
-		}
-			
 		vector origin = owner.GetOrigin();
 		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
 		float health = damageManager.GetHealth();
 
-		string debugText = 	//"Speedangle:" + angle * Math.RAD2DEG + "\n" +
-						   	"Speed:" + Math.Round(10*m_fSpeed)/10 + " - " +
-						   	"Start/Target:" + Math.Round(10*m_fSpeedStart)/10 + "/" + Math.Round(10*m_fSpeedTarget)/10 + "\n" +
-//						   	"Avg time:" + m_fTimeBetweenPtsAvg + "\n" +
-						   	"Height: " + (origin[1] - SDRC_Misc.GetSurfaceYWithWater(origin)) + "\n" + 
-						   	"SpeedMul:" + m_fSpeedMul + "\n" + 
-							"";		
-		debugText = debugText + 
-						   	"RotorForceMul:" + m_fRotorForceMultiplier + "\n" +
-						   	"SplinePoints:" + m_vSplinePoints.Count() + "\n" +
-//						   	"TurnInternal:" + m_fTimeTurnInterval + "\n" +
-//							"DbgAngle: " + m_fDbgAngle * Math.RAD2DEG + "\n" +
-//							"DbgAnglePitch: " + m_fDbgAnglePitch * Math.RAD2DEG + "\n" +
-//							"DbgAngleRoll: " + m_fDbgAngleRoll * Math.RAD2DEG + "\n" +
-//							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n" 
-							"";
-		debugText = debugText + 
-							"In Init:" + m_bInInit + ", " +
-							"Is working:" + SDRC_VehicleHelper.IsWorking(owner) + "\n" +
-							"Pilot count:" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
-							//"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
-							"Health: " + health + "\n" + 
-							"";
-
-		DebugTextWorldSpace.Create(GetGame().GetWorld(), debugText, DebugTextFlags.ONCE, origin[0], origin[1], origin[2], 20);
-				
+		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_INFO))
+		{		
+			string debugText = 	//"Speedangle:" + angle * Math.RAD2DEG + "\n" +
+							   	"Speed:" + Math.Round(10*m_fSpeed)/10 + " - " +
+							   	"Start/Target:" + Math.Round(10*m_fSpeedStart)/10 + "/" + Math.Round(10*m_fSpeedTarget)/10 + "\n" +
+	//						   	"Avg time:" + m_fTimeBetweenPtsAvg + "\n" +
+							   	"Height: " + (origin[1] - SDRC_Misc.GetSurfaceYWithWater(origin)) + "\n" + 
+							   	"SpeedMul:" + m_fSpeedMul + "\n" + 
+								"";		
+			debugText = debugText + 
+							   	"RotorForceMul:" + m_fRotorForceMultiplier + "\n" +
+	//						   	"SplinePoints:" + m_vSplinePoints.Count() + "\n" +
+	//						   	"TurnInternal:" + m_fTimeTurnInterval + "\n" +
+	//							"DbgAngle: " + m_fDbgAngle * Math.RAD2DEG + "\n" +
+	//							"DbgAnglePitch: " + m_fDbgAnglePitch * Math.RAD2DEG + "\n" +
+	//							"DbgAngleRoll: " + m_fDbgAngleRoll * Math.RAD2DEG + "\n" +
+	//							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n" 
+								"";
+			debugText = debugText + 
+								"In Init:" + m_bInInit + ", " +
+								"Is working:" + SDRC_VehicleHelper.IsWorking(owner) + "\n" +
+								"Pilot count:" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
+	//							"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
+	//							"Health: " + health + "\n" + 
+								"";
+		
+			DebugTextWorldSpace.Create(GetGame().GetWorld(), debugText, DebugTextFlags.ONCE, origin[0], origin[1], origin[2], 20);
+		}
+			
+		if (!DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_LINES))
+		{		
+			return;
+		}
+						
 		//Planned destination
 		DrawLine(origin, m_vSplinePoints[m_iClosestIndex], Color.GRAY);		
 		
