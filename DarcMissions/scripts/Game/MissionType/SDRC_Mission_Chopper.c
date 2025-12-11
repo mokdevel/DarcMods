@@ -47,7 +47,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.7);
 	#endif
 	#ifndef SDRC_RELEASE		
-		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.7);
+		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.2);
 	#endif
 				
 		//No suitable location found.
@@ -315,7 +315,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		//Mission specific
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;
-		conf.activeTime = 5*60;
+		conf.activeTime = 20*60;
 		
 		//----------------------------------------------------
 		conf.helicopterInfo.Insert(Heli00());
@@ -394,7 +394,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		chopper.Set
 		(
 			{2},
-			{35, 80},
+			{35, 50},
 			{10, 30},
 			{0.1, 0.3},
 			SDRC_EHeliWaypointGenerationType.RANDOM,	
@@ -434,7 +434,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		chopper.Set
 		(
 			{0, 1, 3},
-			{40, 80},
+			{40, 50},
 			{10, 30},
 			{0.1, 0.3},
 			SDRC_EHeliWaypointGenerationType.RANDOM,	

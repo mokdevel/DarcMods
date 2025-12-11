@@ -23,15 +23,36 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private ref array<vector> m_vTangentPoints = new array<vector>();
 
 	//Parameters accessible helicopter parameters
+	[Attribute(defvalue: "0", desc: "Autostart chopper")]	
+	bool m_bAutoStart;
+	[Attribute(defvalue: "1.0", desc: "Rotor force up")]	
 	float m_fRotorForceUp = 18.0;
+	[Attribute(defvalue: "10.0", desc: "Minimum speed")]	
 	float m_fSpeedMin;				//Minimum speed
+	[Attribute(defvalue: "30.0", desc: "Maximum speed")]	
 	float m_fSpeedMax;				//Maximum speed
+	[Attribute(defvalue: "1.2", desc: "Speed gain aka acceleration")]	
 	float m_fPower;					//Speed gain aka acceleration
+	[Attribute(defvalue: "40.0", desc: "Minimum fly height (from ground level)")]	
 	float m_fFlyHeightLow;			//Flight height low
+	[Attribute(defvalue: "80.0", desc: "Maximum fly height (from ground level)")]	
 	float m_fFlyHeightHigh;			//Flight height high
-	SDRC_EHeliWaypointGenerationType m_fWpType; 
+	[Attribute(defvalue: "200.0", desc: "Minimum distance for waypoint")]	
 	float m_fDistanceLow;			//Distance for waypoint min
+	[Attribute(defvalue: "600.0", desc: "Maximum distance for waypoint")]	
 	float m_fDistanceHigh;			//..max
+	SDRC_EHeliWaypointGenerationType m_fWpType; 
+	
+	//AutoStart parameter defaults
+	[Attribute(defvalue: "1.0", desc: "Throttle")]	
+	float m_fThrottle = 1.0;
+//	[Attribute(defvalue: "2.5", desc: "Rotor force 0")]	
+	[Attribute(defvalue: "1.2", desc: "Rotor force 0")]	
+	float m_fRotorForce0 = 2.5;
+	[Attribute(defvalue: "1.0", desc: "Rotor force 1")]	
+	float m_fRotorForce1 = 1.0;
+	[Attribute(defvalue: "0 0 0", desc: "First destination")]	
+	vector m_fFirstDestination;
 	
 	//Speed management
 	private const float SPEED_INTERVAL = 2;		
@@ -108,8 +129,40 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
 	{
+		if (!GetGame().GetWorld())
+		{
+			return;
+		}
+		
 		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp", LogLevel.NORMAL);
-		s_Instance = this;				
+		s_Instance = this;
+		
+		if (m_bAutoStart)
+		{
+			VehicleHelicopterSimulation chopper_s = VehicleHelicopterSimulation.Cast(owner.FindComponent(VehicleHelicopterSimulation));
+			if (chopper_s)
+			{
+		        chopper_s.EngineStart();
+		        chopper_s.SetThrottle(m_fThrottle);
+		        chopper_s.RotorSetForceScaleState(0, m_fRotorForce0);
+		        chopper_s.RotorSetForceScaleState(1, m_fRotorForce1);
+				SetHeli(m_fRotorForceUp, m_fSpeedMin, m_fSpeedMax, m_fPower, m_fFlyHeightLow, m_fFlyHeightHigh, SDRC_EHeliWaypointGenerationType.RANDOM, m_fDistanceLow, m_fDistanceHigh);						
+				
+				vector destination = m_fFirstDestination;
+				if (m_fFirstDestination == "0 0 0")
+				{
+					//destination = owner.GetOrigin() + "300 0 0";
+					destination = SDRC_Misc.GetCoordinatesOnCircle(owner.GetOrigin(), m_fDistanceLow, SDRC_Misc.RandomInt(0, 360));
+				}
+				
+				InitFlightPath(owner, owner.GetOrigin(), destination);
+				Ready(owner);
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_ChopperComp] VehicleHelicopterSimulation not found.", LogLevel.WARNING);						
+			}
+		}
 	}
  
 	//------------------------------------------------------------------------------------------------
@@ -129,7 +182,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
 		Activate(owner);
 		
-		GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000, false, owner);
+		if (!m_bAutoStart)
+		{
+			GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000, false, owner);
+		}
 	}
 			
 	//------------------------------------------------------------------------------------------------
@@ -364,12 +420,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Clear any existing path points
 		m_vPathPoints.Clear();
 		
-		//Set height for initial starting point
-		origin[1] = SDRC_Misc.RandomFloat(m_fFlyHeightLow, m_fFlyHeightHigh);
+		//Set height for start and destination points
+		if (!m_bAutoStart)	//With autostart, use the origin of the chopper spawn
+		{
+			origin[1] = SDRC_Misc.RandomFloat(m_fFlyHeightLow, m_fFlyHeightHigh);
+		}
+		destination[1] = SDRC_Misc.RandomFloat(m_fFlyHeightLow, m_fFlyHeightHigh);
 		
 		//Add points to path
 		m_vPathPoints.Insert(origin);		
-		m_vPathPoints.Insert(vector.Lerp(origin, destination, 0.2));
+//		m_vPathPoints.Insert(vector.Lerp(origin, destination, 0.2));
 		m_vPathPoints.Insert(vector.Lerp(origin, destination, 0.6));
 		m_vPathPoints.Insert(destination);
 
@@ -692,6 +752,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fDistanceLow = distanceLow;
 		m_fDistanceHigh = distanceHigh;
 		m_fWpType =	wpType;
+		
+		m_fSpeed = m_fSpeedMin;
 	}
 
 	//------------------------------------------------------------------------------------------------
