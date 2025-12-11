@@ -39,5 +39,8 @@ Vehicle : "{98225ED6D5F724D7}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_guns
     }
    }
   }
+  RplComponent "{517AACDFA78F5EE7}" {
+   Streamable Disabled
+  }
  }
 }

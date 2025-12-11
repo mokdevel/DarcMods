@@ -178,5 +178,8 @@ Vehicle : "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et" {
     AnimInstance "{AF1BA65D1709F749}Assets/Vehicles/Helicopters/UH1H/workspace/UH1H_Armed_player.asi"
    }
   }
+  RplComponent "{517AACDFA78F5EE7}" {
+   Streamable Disabled
+  }
  }
 }
