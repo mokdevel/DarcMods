@@ -109,22 +109,15 @@ sealed class SDRC_Misc
 	//TBD: Clean up this code
 	static int GetWorldSize()
 	{
-		int worldSize;
-
-//		SDRC_SpawnHelper.FindEntitySize(GenericTerrainEntity);
-//		IEntity ent = GetGame().FindEntity("GenericTerrainEntity");
+		int worldSize = -1;
 		
-/*		IEntity terrain = GetGame().GetWorld().FindEntityByName("Terrain");
-		if (terrain)
-		{
-			vector sums = SDRC_SpawnHelper.FindEntitySize(terrain);
-			Print(sums);			
-		}*/
-		
-		vector mins, maxs;
-		GetGame().GetWorld().GetBoundBox(mins, maxs);		
-		worldSize = FindMaxValue(maxs);
-		SDRC_Log.Add("[SDRC_Misc:GetWorldSize] Worldsize:" + worldSize, LogLevel.SPAM);
+		if (GetGame().GetWorld())
+		{		
+			vector mins, maxs;
+			GetGame().GetWorld().GetBoundBox(mins, maxs);		
+			worldSize = FindMaxValue(maxs);
+			SDRC_Log.Add("[SDRC_Misc:GetWorldSize] Worldsize:" + worldSize, LogLevel.SPAM);
+		}
 						
 		return worldSize;
 	}
@@ -281,10 +274,15 @@ sealed class SDRC_Misc
 	*/	
 	static float GetSurfaceYWithWater(vector position)
 	{
-		float y = GetGame().GetWorld().GetSurfaceY(position[0], position[2]);
-		if (SDRC_Misc.IsPosInWater(position))	//Is it under water?
-		{
-			y = GetGame().GetWorld().GetOceanHeight(position[0], position[2]);
+		float y = 0;
+		
+		if (GetGame().GetWorld())
+		{		
+			y = GetGame().GetWorld().GetSurfaceY(position[0], position[2]);
+			if (SDRC_Misc.IsPosInWater(position))	//Is it under water?
+			{
+				y = GetGame().GetWorld().GetOceanHeight(position[0], position[2]);
+			}
 		}
 		return y;
 	}	
