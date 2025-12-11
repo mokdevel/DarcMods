@@ -16,10 +16,6 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private int m_iFlyEndTime;					//How long to fly away
 	private const int MIN_FLY_END_TIME = 120;
 	private bool m_bKeepOnFlying = true;
-	
-	private SCR_AIGroup m_Crew = null;
-	private SCR_AIGroup m_Crew2 = null;
-	private int idx = 0;	
 
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_Chopper(SDRC_EMissionType missionType, SDRC_MissionRequested request)
@@ -163,11 +159,13 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		int aiCount = m_DC_Chopper.ai.GetCount(m_DC_Chopper.general.difficulty);
 		for (int i = 0; i < aiCount; i++)
 		{		
-			SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(m_DC_Chopper.ai.types.GetRandomElement(), GetPos(), GetFaction());
+//			SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(m_DC_Chopper.ai.types.GetRandomElement(), GetPos(), GetFaction());
+			vector aiPos = "0 500 0";
+			SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(m_DC_Chopper.ai.types.GetRandomElement(), aiPos, GetFaction());
 			if (group)
 			{			
 				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(m_DC_Chopper.general.difficulty), m_DC_Chopper.ai.GetPerception(m_DC_Chopper.general.difficulty));
-				GetGame().GetCallqueue().CallLater(AddCrewDelayed, 6000 + i * 2000, false, group);
+				GetGame().GetCallqueue().CallLater(AddCrewDelayed, 10000 + i * 4000, false, group);
 				m_Groups.Insert(group);					
 			}
 		}
@@ -394,7 +392,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		chopper.Set
 		(
 			{2},
-			{35, 50},
+			{35, 70},
 			{10, 30},
 			{0.1, 0.3},
 			SDRC_EHeliWaypointGenerationType.RANDOM,	
@@ -434,7 +432,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		chopper.Set
 		(
 			{0, 1, 3},
-			{40, 50},
+			{40, 80},
 			{10, 30},
 			{0.1, 0.3},
 			SDRC_EHeliWaypointGenerationType.RANDOM,	
