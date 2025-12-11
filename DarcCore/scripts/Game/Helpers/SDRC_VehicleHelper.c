@@ -37,6 +37,7 @@ sealed class SDRC_VehicleHelper
 					if (!success)
 					{
 						SDRC_AIHelper.RemoveAIAgent(aiAgent);
+						SDRC_Log.Add("[SDRC_VehicleHelper:MoveGroupsInVehicle] Failed to move AI to vehicle. Deleting.", LogLevel.DEBUG);
 					}
 					
 					i++;
@@ -72,6 +73,7 @@ sealed class SDRC_VehicleHelper
 				if (!success)
 				{
 					SDRC_AIHelper.RemoveAIAgent(aiAgent);
+					SDRC_Log.Add("[SDRC_VehicleHelper:MoveGroupsInVehicle] Failed to move AI to vehicle. Deleting.", LogLevel.DEBUG);
 				}
 				
 				i++;

@@ -66,10 +66,10 @@ sealed class SDRC_DebugHelper
 	*/
 	static void Setup()
 	{
-		m_Pos.Clear();
-		m_Sphere.Clear();
-		m_Line.Clear();
-		m_Slots.Clear();
+//		m_Pos.Clear();
+//		m_Sphere.Clear();
+//		m_Line.Clear();
+//		m_Slots.Clear();
 		
 		// Some init script		
 		const string categoryName = "DarcDebug";
