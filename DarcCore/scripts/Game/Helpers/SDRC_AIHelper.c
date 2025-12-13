@@ -351,7 +351,7 @@ sealed class SDRC_AIHelper
 	/*!
 	Create a group
 	*/
-	static SCR_AIGroup GroupCreate(string faction, vector pos = "0 0 0")
+	static SCR_AIGroup GroupCreate(string faction, vector pos)
 	{
 		string aiBaseGroup = "{F22EDFBEFC193357}Prefabs/Groups/Campaign/Group_FIA_Remnants.et";
 		Resource resource = null;
@@ -393,6 +393,34 @@ sealed class SDRC_AIHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Create a group and
+	*/
+	static SCR_AIGroup GroupCreate(string faction, vector pos, string aiBaseGroup)
+	{
+		Resource resource = null;
+		SCR_AIGroup group = null;
+	
+		resource = Resource.Load(aiBaseGroup);
+		if (resource.IsValid())
+		{
+			EntitySpawnParams params = EntitySpawnParams();
+			params.TransformMode = ETransformMode.WORLD;
+			params.Transform[3] = pos;
+				
+			group = SCR_AIGroup.Cast(SDRC_SpawnHelper.SpawnEntityPrefabPersistence(resource, null, params));		
+			group.SetFaction(SDRC_EnemyHelper.GetFactionWithName(faction));
+		}	
+		else
+		{
+			SDRC_Log.Add("[SDRC_AIHelper:GroupCreate] Unable to load group resource.", LogLevel.ERROR);
+			return null;
+		}
+		
+		return group;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Delete a group
 	*/
 	static void GroupDelete(AIGroup group)
@@ -426,6 +454,45 @@ sealed class SDRC_AIHelper
 		
 		return group;
 	}	
+	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get group IEntitySource
+	*/
+	static IEntitySource GroupGetEntitySource(ResourceName groupName)
+	{
+		Resource resource = Resource.Load(groupName);    
+		IEntitySource entitySource = null;
+		entitySource = SCR_BaseContainerTools.FindEntitySource(resource);
+		
+		return entitySource;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get group IEntitySource prefabs members
+	*/
+	static int GroupGetEntitySourceMembers(ResourceName groupName, out array<ResourceName> groupPrefabs)
+	{
+		IEntitySource entitySource = GroupGetEntitySource(groupName);
+		
+		int count = 0;
+		
+		if (entitySource)
+		{
+			vector pos = "0 500 0";
+			SCR_AIGroup group = SDRC_AIHelper.GroupCreate("US", pos, groupName);
+			
+		    array<vector> groupOffsets = {}; //not needed
+		    SCR_AIGroupClass.GetMembers(entitySource, groupPrefabs, groupOffsets);
+		    count = groupPrefabs.Count();
+			
+			GetGame().GetCallqueue().CallLater(GroupDelete, SDRC_Conf.DESPAWN_ENTITY_USED_FOR_SIZE_DELAY, false, group);			
+		}		
+		
+		return count;
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	/*!

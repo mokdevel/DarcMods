@@ -11,9 +11,13 @@ class SDRC_CoreConfig : Managed
 	string author = "darc";
 	DC_LogLevel logLevel;
 	string subDir;						//Directory specifying a certain conf for play. For example "Escapists"	
-	bool debugShowWaypoints = true;
-	bool debugShowMarks = true;	
-	bool debugShowSpheres = true;
+	bool debugShowWaypoints = false;
+	bool debugShowMarks = false;	
+	bool debugShowSpheres = false;
+	#ifdef NEW_VERSION_WIP	
+		bool debugShowLines = false;
+		bool debugShowInfo = false;
+	#endif
 	string fallbackEnemyFaction = "USSR";
 	bool showOnGMMapNonValidArea = true;	
 	bool showOnGMMapMissionMarker = true;

@@ -78,7 +78,12 @@ class SDRC_Core
 		SDRC_EnemyHelper.Setup(m_Config.fallbackEnemyFaction);
 		
 		//Set debug visibility
+	#ifdef NEW_VERSION_WIP	
+		SDRC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres, m_Config.debugShowLines, m_Config.debugShowInfo);
+	#endif
+	#ifndef NEW_VERSION_WIP			
 		SDRC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres);
+	#endif
 		
 	}
 
