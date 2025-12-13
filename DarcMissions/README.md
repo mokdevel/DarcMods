@@ -24,6 +24,7 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - (8) [HVT VIP](./docs/MISSION_HVTVIP.md) : High Value Target - VIP : An AI is defined as a High Value Target VIP. Go take him down.
 - (9) [HVT Item](./docs/MISSION_HVTITEM.md) : High Value Target - Item : A structure is to be destroyed. 
 - (10) [Stash](./docs/MISSION_STASH.md) : A stash is spawned with loot. May have guards protecting it.
+- (11) [Chopper](./docs/MISSION_CHOPPER.md) : A helicopter is searching for you.
 
 ## Thanks
 - The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
@@ -67,6 +68,7 @@ Other parameter details available:
 * [Non Valid Areas](./docs/NONVALIDAREAS.md) aka safe zones
 * [Structures](./docs/P_STRUCTURE.md)
 * [Buildings](./docs/P_BUILDING.md)
+* [Helicopters](./docs/P_HELICOPTER.md)
 
 # Configuration files
 The configuration files will be under your ```profile\DarcMods\<subConfDir>```. The <subConfDir> is a name for the specific sub directory under DarcMods and can be changed in dc_coreConfig.json. The default directory will be called ```default```.
