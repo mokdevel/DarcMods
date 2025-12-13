@@ -140,7 +140,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 					missionConvoyState = SDRC_EMissionConvoyState.MOVE_AI;
 					break;
 				case SDRC_EMissionConvoyState.MOVE_AI:
-					SDRC_VehicleHelper.MoveGroupsInVehicle(m_Groups, m_Vehicle);				
+//					SDRC_VehicleHelper.MoveGroupsInVehicle(m_Groups, m_Vehicle);				
 					foreach (SCR_AIGroup group : m_Groups)
 					{	
 						if (group)
@@ -216,8 +216,12 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		
 		AICarMovementComponent vehicle_c = AICarMovementComponent.Cast(m_Vehicle.FindComponent(AICarMovementComponent));
         vehicle_c.SetCruiseSpeed(m_DC_Convoy.cruiseSpeed);
-
-		//Spawn mission AI
+		
+		//----------------------------------------------------------------------
+		//OLD WORKING CODE: Spawns AI first on ground and then move to vehicle.
+		//NOTE: If you use this, uncomment the line: SDRC_VehicleHelper.MoveGroupsInVehicle(m_Groups, m_Vehicle);
+		
+/*		//Spawn mission AI
 		int aiCount = m_DC_Convoy.ai.GetCount(m_DC_Convoy.general.difficulty);
 		vector posg = GetPos();
 		//Move the position slightly to avoid spawning under vehicle
@@ -234,6 +238,28 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			}
 			
 			posg[0] = posg[0] + 4;
+		}*/
+		
+		//----------------------------------------------------------------------
+		//TBD: NEW CODE: Spawns AI straight to the vehicle. Unfinished.
+		
+		//Spawn mission AI
+		int aiCount = m_DC_Convoy.ai.GetCount(m_DC_Convoy.general.difficulty);
+		
+		for (int i = 0; i < aiCount; i++)
+		{		
+			string groupToSpawn = m_DC_Convoy.ai.types.GetRandomElement();
+			ResourceName aiType = SDRC_EnemyHelper.SelectEnemy(groupToSpawn, GetFaction());
+			
+//			SCR_AIGroup group = SDRC_AIHelper.GroupCreate(GetFaction(), GetPos(), aiType);
+			SCR_AIGroup group = SDRC_AIHelper.GroupCreate(GetFaction(), GetPos());
+			SDRC_VehicleHelper.SpawnGroupInVehicle(aiType, m_Vehicle, group);
+			
+			if (group)
+			{			
+				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Convoy.ai.GetSkill(m_DC_Convoy.general.difficulty), m_DC_Convoy.ai.GetPerception(m_DC_Convoy.general.difficulty));
+				m_Groups.Insert(group);					
+			}
 		}
 	}
 	
@@ -415,6 +441,8 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		convoy.ai.Set(
 			{1, 2},
 			{"G_LIGHT", "G_MEDICAL"},
+//			{3, 6},
+//			{"C_OFFICER"},
 			50, 1.0,
 			{0, 0},
 			SDRC_EWaypointGenerationType.ROUTE,
