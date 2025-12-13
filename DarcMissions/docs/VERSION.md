@@ -4,11 +4,16 @@
 
 ## WIP 
 - Added ``showDynamicMissionMarker`` : Show/hide static mission markers. This will override any mission specific ``showMarker`` settings.
+- .. empty ..
 
 ## Next release (unreleased)
-- Roadblock mission: Removed some of the barbed wires as AIs were bleeding due to them.
+No changes in mission jsons. This updated introduces a new mission.
 
-.. empty ..
+Main features:
+- Chopper mission: *NEW* A flying helicopter is spawned on the edges of the map and will fly to the mission location. Look out, it's searching for you.
+
+Changes:
+- Roadblock mission: Removed some of the barbed wires as AIs were bleeding due to them.
 
 ## 20251128
 No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.
