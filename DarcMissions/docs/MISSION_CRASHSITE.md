@@ -11,7 +11,7 @@ The location is where the mission was dropped.
 ### Parameters
 Note: ```distanceToMission``` and ```distanceToPlayer``` overrides missionFrame settings. The initial helicopter position could start on top of a mission and it does not matter.
 
-See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md) , [Camp](./P_CAMP.md)
+See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md) , [Camp](./P_CAMP.md), [Helicopter](./P_HELICOPTER.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
@@ -40,24 +40,3 @@ SDRC_Camp
   campItems : (optional) Prefabs to spawn at the crashsite. Note that first item shall be the loot box.
 array<SDRC_HelicopterInfo> helicopterInfo : The helicopter is selected randomly.
 ```
-
-### SDRC_HelicopterInfo
-This defines the helicopter parameters. The default prefabs in Arma Reforger are without their engines running and will simply crash before the flight is possible. For the flying helicopters the prefabs needs to be modified and currently only a couple of options are available.
-
-Currently supported prefabs:
-- ```"{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et"```
-- ```"{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et"```
-
-```
-string resource : The prefab for the helicopter. See supported values above.
-float throttle : The 'speed' the helicopter is flying.
-float rotorForce : Force of the main rotor.
-float rotor2Force : Force of the second rotor.
-```
-
-### Define a new flying helicopter prefab
-- Duplicate the helicopter prefab to DarcMissions. In to the name, add "_flying" at the end.
-- Edit prefab and add components ```SCR_FireplaceComponent```. This is only for the smoke.
-- Modify the engine to be running immediately.
-- Configure as in the image
-<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/helicoptersettings.png" width=30% height=30%>
