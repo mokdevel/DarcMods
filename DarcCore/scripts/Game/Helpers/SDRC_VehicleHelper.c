@@ -9,6 +9,74 @@ sealed class SDRC_VehicleHelper
 {
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Spawn single group to a vehicle
+	*/
+	static void SpawnGroupInVehicle(ResourceName aiResourceName, IEntity vehicle, AIGroup group)
+    {
+		if (!vehicle)
+		{
+			SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Vehicle not available (null).", LogLevel.ERROR);
+			return;
+		}
+		
+		if (!group)
+		{
+			SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Group not available (null).", LogLevel.ERROR);
+			return;
+		}
+		
+		//Find the compartments and prioritize them in order: PILOT, TURRET, CARGO
+		BaseCompartmentManagerComponent compartmentManager = BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(BaseCompartmentManagerComponent));
+		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
+		
+		array<BaseCompartmentSlot> compartments = {};
+		int slots = compartmentManager.GetCompartments(compartments);		
+		
+		compartments.Clear();
+		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.PILOT);
+		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.TURRET);
+		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.CARGO);
+		SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Compartments found: " + compartments.Count(), LogLevel.SPAM);
+
+		//Fill aiPrefabs with the names of AI to spawn
+		array<ResourceName> aiPrefabs = {};
+		
+		//If character, handle separately
+		if (aiResourceName.Contains("Prefabs/Characters/"))
+		{
+			aiPrefabs.Insert(aiResourceName);
+		}
+		else //If group, we need to find the right prefabs to spawn
+		{
+			//Find the list of AIs in the group prefab		
+			int count = SDRC_AIHelper.GroupGetEntitySourceMembers(aiResourceName, aiPrefabs);
+			SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Prefabs found: " + count, LogLevel.DEBUG);
+		}
+			
+		//Do the spawning	
+		foreach(ResourceName aiPrefab : aiPrefabs)
+		{
+			SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Prefab to spawn: " + aiPrefab, LogLevel.DEBUG);
+			foreach(BaseCompartmentSlot compartment : compartments)
+			{
+				if (compartment.IsOccupied() || !compartment.IsCompartmentAccessible() || compartment.IsReserved())
+				{
+					continue;
+				}
+
+				IEntity character = compartment.SpawnCharacterInCompartment(aiPrefab, group);
+				if (character)
+				{
+					compartment.SetReserved(character);
+					SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Spawned.", LogLevel.SPAM);
+					break;
+				}
+			}
+		}
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Move multiple groups to a vehicle
 	*/
     static void MoveGroupsInVehicle(array<SCR_AIGroup> groups, IEntity vehicle, bool forceTeleport = false)
@@ -112,54 +180,6 @@ sealed class SDRC_VehicleHelper
 		SDRC_Log.Add("[SDRC_VehicleHelper:MoveEntityInVehicle] Compartments found: " + compartments.Count(), LogLevel.SPAM);
 
 		bool success = SetEntityInSlot(aiAgent, vehicle, compartments[slotIdx], forceTeleport);
-				
-		/* 
-		// OLD SYSTEM
-		array<int> slotPrio = {};
-		
-		slotPrio.Insert(-1);		//Reserve prio 0 slot for pilot
-		slotPrio.Insert(-1);		//Reserve prio 0 slot for pilot
-
-		int i = 0;
-						
-		foreach (BaseCompartmentSlot slot : compartments)
-		{
-			bool found = false;
-			
-			if (PilotCompartmentSlot.Cast(slot))
-			{
-				SDRC_Log.Add("[SDRC_VehicleHelper:MoveEntityInVehicle] Pilot slot: " + slot, LogLevel.SPAM);
-				if (slotPrio[0] == -1)
-				{
-					slotPrio[0] = i;
-					found = true;
-				}
-			}			
-			else if (TurretCompartmentSlot.Cast(slot))
-			{
-				SDRC_Log.Add("[SDRC_VehicleHelper:MoveEntityInVehicle] Turret slot: " + slot, LogLevel.SPAM);
-				if (slotPrio[1] == -1)
-				{
-					slotPrio[1] = i;
-					found = true;
-				}
-			}
-			
-			if (!found)
-			{
-				slotPrio.Insert(i);
-			}
-			
-			i++;
-		}
-			
-		int idx = slotPrio[slotIdx];
-		if (idx == -1)
-		{
-			idx = slotIdx;
-		}
-		bool success = SetEntityInSlot(aiAgent, vehicle, compartments[idx], forceTeleport);
-		*/
 
 		return success;
     }
@@ -177,7 +197,12 @@ sealed class SDRC_VehicleHelper
 		{
 			return false;
 		}
+		
 		bool success = accessComponent.GetInVehicle(vehicle, slot, forceTeleport, -1, ECloseDoorAfterActions.CLOSE_DOOR, true);
+		if (success)
+		{
+			slot.SetReserved(character);			
+		}
 		
 		return success;
 	}
