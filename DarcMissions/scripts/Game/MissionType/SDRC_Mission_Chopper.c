@@ -154,13 +154,52 @@ class SDRC_Mission_Chopper : SDRC_Mission
         m_Vehicle_s.RotorSetForceScaleState(1, heliInfo.rotor2Force);
 		m_Vehicle_c.SetHeli(heliInfo.rotorForceUp, m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], heliInfo.power, m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.wpType, m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
 		m_Vehicle_c.InitFlightPath(m_Vehicle, m_vPosOrigin, GetPos());
+
+		//Spawn pilots if such is available 
+		ResourceName pilot = SDRC_EnemyHelper.SelectEnemy("C_CREW", GetFaction());
 				
+		if (pilot != "")
+		{
+			SCR_AIGroup group = SDRC_AIHelper.GroupCreate(GetFaction(), GetPos());
+			
+			for (int i = 0; i < 2; i++)
+			{		
+				SDRC_VehicleHelper.SpawnGroupInVehicle(pilot, m_Vehicle, group);
+				
+				if (group)
+				{			
+					SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(m_DC_Chopper.general.difficulty), m_DC_Chopper.ai.GetPerception(m_DC_Chopper.general.difficulty));
+					m_Groups.Insert(group);					
+				}
+			}
+		}
+		
 		//Spawn mission AI
 		int aiCount = m_DC_Chopper.ai.GetCount(m_DC_Chopper.general.difficulty);
+		
+		for (int i = 0; i < aiCount; i++)
+		{		
+			string groupToSpawn = m_DC_Chopper.ai.types.GetRandomElement();
+			ResourceName aiType = SDRC_EnemyHelper.SelectEnemy(groupToSpawn, GetFaction());
+			
+			SCR_AIGroup group = SDRC_AIHelper.GroupCreate(GetFaction(), GetPos());
+			SDRC_VehicleHelper.SpawnGroupInVehicle(aiType, m_Vehicle, group);
+			
+			if (group)
+			{			
+				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(m_DC_Chopper.general.difficulty), m_DC_Chopper.ai.GetPerception(m_DC_Chopper.general.difficulty));
+				m_Groups.Insert(group);					
+			}
+		}		
+/*						
+		//Spawn mission AI
+		int aiCount = m_DC_Chopper.ai.GetCount(m_DC_Chopper.general.difficulty);
+		
 		for (int i = 0; i < aiCount; i++)
 		{		
 //			SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(m_DC_Chopper.ai.types.GetRandomElement(), GetPos(), GetFaction());
-			vector aiPos = "0 500 0";
+//			vector aiPos = "0 500 0";
+			vector aiPos = GetPos();
 			SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(m_DC_Chopper.ai.types.GetRandomElement(), aiPos, GetFaction());
 			if (group)
 			{			
@@ -168,7 +207,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				GetGame().GetCallqueue().CallLater(AddCrewDelayed, 10000 + i * 4000, false, group);
 				m_Groups.Insert(group);					
 			}
-		}
+		}*/
 		
 		m_Vehicle_c.Ready(m_Vehicle);
 	}	
@@ -188,11 +227,11 @@ class SDRC_Mission_Chopper : SDRC_Mission
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperConfig : SDRC_MissionConfig
 {
-	int distanceToMission;								//Distance to mission when searching for a mission pos. Overrides missionFrame settings.
-	int distanceToPlayer;								//Distance to player when searching for a mission pos. Overrides missionFrame settings.
-	int activeTime;										//The time the mission should be running until the chopper flies away.
-	ref array<ref SDRC_HelicopterInfo> helicopterInfo = {};
-	ref array<ref SDRC_Chopper> subMissions = {};		//List of crashsites
+	int distanceToMission;									//Distance to mission when searching for a mission pos. Overrides missionFrame settings.
+	int distanceToPlayer;									//Distance to player when searching for a mission pos. Overrides missionFrame settings.
+	int activeTime;											//The time the mission should be running until the chopper flies away.
+	ref array<ref SDRC_HelicopterInfo> helicopterInfo = {};	//Helicopter details
+	ref array<ref SDRC_Chopper> subMissions = {};			//List of sub missions
 	
 	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
@@ -221,7 +260,7 @@ class SDRC_Chopper : Managed
 	#endif
 	#ifdef NEW_VERSION_WIP		
 		ref SDRC_MissionConfigSecondWave secondWave = null;
-	#endif	
+	#endif
 	
 	//Mission specific
 	ref array<int> heliList = {};
@@ -307,6 +346,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 	//------------------------------------------------------------------------------------------------
 	void SetDefaults()
 	{
+		conf.showMarker = false;
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		conf.missionList = {0,0,1,1,1};
@@ -373,7 +413,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 			"Helicopter patroling",
 			"Avoid being seen.",
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Helicopter destroyed.", 
+			"Helicopter is not your problem anymore.", 
 			"Helicopter lost track of you.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
@@ -393,8 +433,8 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		(
 			{2},
 			{35, 70},
-			{10, 30},
-			{0.1, 0.3},
+			{10, 35},
+			{0.1, 0.5},
 			SDRC_EHeliWaypointGenerationType.RANDOM,	
 		);
 		
@@ -413,7 +453,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 			"Gunship hunter",
 			"You will be shot if you're seen.",
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Gunship destroyed.", 
+			"Gunship funship .. it's gone.", 
 			"Gunship lost track of you.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
@@ -431,7 +471,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		);
 		chopper.Set
 		(
-			{0, 1, 3},
+			{0, 0, 1, 1, 3},
 			{40, 80},
 			{10, 30},
 			{0.1, 0.3},
