@@ -63,12 +63,12 @@ sealed class SDRC_Math
 	/*!
 	Rotate v1 around axis
 	*/
-	static vector RotateAroundAxis(vector v1, vector axis, float radians)
+	static vector RotateAroundAxis(vector v1, vector axis, float angle)
 	{
 	    axis = axis.Normalized();
 	    
-	    float cosT = Math.Cos(radians);
-	    float sinT = Math.Sin(radians);
+	    float cosT = Math.Cos(angle);
+	    float sinT = Math.Sin(angle);
 	    
 	    vector term1 = v1 * cosT;
 	    vector term2 = (axis * v1) * sinT;

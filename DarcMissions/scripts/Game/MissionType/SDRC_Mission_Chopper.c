@@ -72,6 +72,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Chopper.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Chopper.general);		
+		//TBD: If static, time is to be long
 		InitActiveTime(m_Config.activeTime);
 		SetActiveDistance(-1);					//Disable active distance checking. 
 		SetActiveTimeToEnd(m_iFlyEndTime);		//Change the m_iActiveTimeToEnd to short one as there is no loot to gain.		
