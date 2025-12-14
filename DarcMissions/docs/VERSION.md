@@ -3,17 +3,34 @@
 # Version history
 
 ## WIP 
-- Added ``showDynamicMissionMarker`` : Show/hide static mission markers. This will override any mission specific ``showMarker`` settings.
-- .. empty ..
-
-## Next release (unreleased)
-No changes in mission jsons. This updated introduces a new mission.
-
-Main features:
-- Chopper mission: *NEW* A flying helicopter is spawned on the edges of the map and will fly to the mission location. Look out, it's searching for you.
 
 Changes:
-- Roadblock mission: Removed some of the barbed wires as AIs were bleeding due to them.
+* dc_missionConfig.json : Added ``showDynamicMissionMarker`` : Show/hide static mission markers. This will override any mission specific ``showMarker`` settings.
+* Chopper mission: Added ``distanceToStart``, the distance from center of world for mission start.
+
+## Next release (unreleased)
+No changes in mission jsons. 
+
+## 20251214
+No changes in mission jsons. This is mainly a bug fix release.
+
+Main features:
+* Proper support for BallienCreatures Cultists faction. Setting ``BALLIEN_BC_FACTION`` as the enemy faction, will turn all mission enemies to cultists.
+  * For proper support, delete your ``dc_enemyList.json`` to get an updated one.
+
+Changes:
+* Chopper mission: Mission starts closer to center of the world. Fixes the issue with Anizay.
+
+Fixes: 
+
+## 20251213
+No changes in mission jsons. This updated introduces a new mission: Chopper.
+
+Main features:
+* Chopper mission: A flying helicopter is spawned on the edge of the map and will fly to the mission location. Look out, it's searching for you.
+
+Changes:
+* Roadblock mission: Removed some of the barbed wires as AIs were bleeding due to them.
 
 ## 20251128
 No changes in mission jsons. This is mainly a bug fix release and preparation for next bigger update.

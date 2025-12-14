@@ -37,6 +37,9 @@ float spawnRateForGreenZones : The percentage chance to spawn a mission to green
 
 ... empty ...
 
+## 20251213
+Compatibility compile for DarcCore.
+
 ## 20251128
 Fixes:
 * Fixes for Convoy mission: mission was completed without interaction.

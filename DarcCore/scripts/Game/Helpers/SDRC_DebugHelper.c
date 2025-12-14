@@ -65,11 +65,13 @@ sealed class SDRC_DebugHelper
 	Setup the SDRC_DebugHelper. Can be used to run some default code in start.
 	*/
 	static void Setup()
-	{
-//		m_Pos.Clear();
-//		m_Sphere.Clear();
-//		m_Line.Clear();
-//		m_Slots.Clear();
+	{		
+	#ifndef DEBUG_DO_NOT_CLEAR
+		m_Pos.Clear();
+		m_Sphere.Clear();
+		m_Line.Clear();
+		m_Slots.Clear();
+	#endif
 		
 		// Some init script		
 		const string categoryName = "DarcDebug";

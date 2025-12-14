@@ -3,6 +3,8 @@ Example: [dc_missionConfig_Chopper.json](https://github.com/mokdevel/DarcMods/bl
 
 A flying helicopter is spawned on the edges of the map and will fly to the mission location. Once the position is reached, the helicopter will continue to patrol randomly. If the helicopter is armed, AI shoot if an enemy is seen. The shooting is Arma Reforger functionality. Once the mission time is over, the helicopter will fly away (and despawn) ending the mission.
 
+For the first release, there is no loot available. This is to be addressed in future updates.
+
 ### GM requested mission
 The location is where the mission was dropped. The helicopter will fly first to this location.
 
