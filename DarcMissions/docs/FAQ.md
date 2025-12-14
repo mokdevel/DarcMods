@@ -26,6 +26,10 @@ Check that float values are in the format ``0.0`` instead of ``0`` without the .
 ### Q: How to add both US and FIA factions as enemies?
 If you're looking to have both US and FIA enemies randomly, just add "FIA" to ``enemyFactions`` in ``dc_missionConfig.json`` (example: ``"enemyFactions": [ "US", "FIA" ],``). Setting ``["US", "US", "US", "FIA"]`` would give 75% of missions to be US and 25% FIA.
 
+### Q: How to use RHS factions as enemies?
+Set ``RHS_USAF`` or ``RHS_AFRF`` as the enemy faction in ``enemyFactions`` in ``dc_missionConfig.json``.
+See: [mission config](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md)
+
 ### Q: I only want to use GM spawned missions - how?
 If you set both static and dynamic missions count to zero, only GM spawned missions will spawn. GM spawned missions will always spawn even if the maximum dynamic missions has been reached. 
 
