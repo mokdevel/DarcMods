@@ -1,9 +1,9 @@
 //SDRC_ChopperComp.c
 
-//Changed done in prefabs:
+//Changes done in prefabs:
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
-#define HELI_TESTING
+//#define HELI_TESTING
 
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompClass : ScriptGameComponentClass { }
@@ -596,7 +596,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 				pt[1] = y + m_fFlyHeightLow * 1.2;	//Make chopper fly higher for a moment
 				m_vSplinePoints[i] = pt;
 				
-				//TBD: Should be flying higher for a few dots
+				//TBD: Should be flying higher for a few dots before
 				if (i > 0)
 				{
 					m_vSplinePoints[i - 1] = pt;
@@ -651,30 +651,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 		float distance = SDRC_Misc.RandomFloat(m_fDistanceLow, m_fDistanceHigh);
 		vector newpos;
 		
-//		for (int i = 0; i < 5; i++)
-		for (int i = 0; i < 1; i++)
+		//If distance is under 1.0, use world percentage
+		if (distance < 1.0)
 		{
-			//If distance is under 1.0, use world percentage
-			if (distance < 1.0)
-			{
-				newpos = SDRC_Misc.GetRandomWorldPosPercentage(distance);
-			}
-			else
-			{
-				newpos = SDRC_Misc.GetCoordinatesOnCircle(pos, distance, SDRC_Misc.RandomInt(0, 360));
-			}
-
-/*							
-			float angle = GetDestinationAngle(newpos, );
-			
-//			SDRC_Log.Add("[SDRC_ChopperComp:GetRandomDestination] Pos: " + newpos + " , Angle: " + angle, LogLevel.DEBUG);
-
-			//If we find a point with proper angle, stop
-			if (Math.AbsFloat(angle) < (WP_ANGLE * 2.0))
-			{
-				break;
-			}
-			*/
+			newpos = SDRC_Misc.GetRandomWorldPosPercentage(distance);
+		}
+		else
+		{
+			newpos = SDRC_Misc.GetCoordinatesOnCircle(pos, distance, SDRC_Misc.RandomInt(0, 360));
 		}
 				
 		return newpos;
@@ -708,20 +692,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		return angle;
 	}
-
-/*	
-	private float GetDestinationAngle(vector pos, out vector dir0)
-	{
-		int idx = m_vFlyPathPoints.Count() - 1;
-		//Current direction		
-		dir0 = vector.Direction(m_vFlyPathPoints[idx], m_vFlyPathPoints[idx - 1]);
-		//Direction towards destination
-		vector dir1 = vector.Direction(m_vFlyPathPoints[idx], pos);
-		float angle = SDRC_Math.GetAngleBetweenVectors(dir0, dir1) * Math.RAD2DEG;
-		
-		return angle;
-	}
-*/	
 		
 	//------------------------------------------------------------------------------------------------	
 	/*!	
@@ -731,33 +701,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/	
 	private void CreateFlyPoints(array<vector> positions)
 	{
-		//TBD: Future improvement. NOTE: Untested code below
-		/*
-		//Add mid points for too long distances
-		int cnt = m_vFlyPathPoints.Count() - 1;
-		for (int i = 0; i < cnt; i++)
-		{
-			float dist = vector.DistanceXZ(m_vFlyPathPoints[i], m_vFlyPathPoints[i + 1]);
-			if (dist > 100)
-			{
-				vector mid = vector.Lerp(m_vFlyPathPoints[i], m_vFlyPathPoints[i + 1], 0.5);
-				m_vFlyPathPoints.InsertAt(mid, i);
-				i++;
-				cnt++;					
-			}
-		}
-		*/
-		
-		//New code
 		vector destination = positions[0];
 		
 #ifdef HELI_TESTING				
 //		destination = "1600 0 2600";	//113 degrees 
 //		destination = "1300 0 2900";	//64 degrees 
-//		destination = "1000 0 2800";	//34 degrees 
+		destination = "1000 0 2800";	//34 degrees 
 //		destination = "900 0 2800";		//12 degrees 
-		destination = "500 0 2000";		//-94 degrees 
-		destination = "700 0 2700";		//-22 degrees 
+//		destination = "500 0 2000";		//-94 degrees 
+//		destination = "700 0 2700";		//-22 degrees 
 #endif
 		
 		int idx = m_vFlyPathPoints.Count() - 1;
@@ -767,48 +719,38 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector dir1;	//New flight direction
 		float heliAngle = GetDestinationAngle(m_vFlyPathPoints[idx - 1], m_vFlyPathPoints[idx], destination, dir0, dir1);
 				
-/*		//Current direction 
-		vector dir0 = vector.Direction(m_vFlyPathPoints[idx], m_vFlyPathPoints[idx - 1]);
-		//Direction towards destination
-		vector dir1 = vector.Direction(m_vFlyPathPoints[idx], destination);
-		
-		float heliAngle = SDRC_Math.GetAngleBetweenVectors(dir0, dir1) * Math.RAD2DEG;*/
-
-//		float heliAngle = GetDestinationAngle(destination, dir0);
-		
-//		if (Math.AbsFloat(heliAngle) < (WP_ANGLE * 2))
-		if (Math.AbsFloat(heliAngle) < 90)
-		{				
-			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle is very STEEP: " + heliAngle, LogLevel.WARNING);
+#ifdef HELI_TESTING				
+		//For some reason two points on the path are the same. Should not happen. Maybe an issue in spline generation?
+		if (Math.AbsFloat(heliAngle) == 90)
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Why 90?", LogLevel.SPAM);
 		}
-				
+#endif
+		
 		//Is the angle too steep? Re-route.
-//		if (Math.AbsFloat(heliAngle) > WP_ANGLE)
-		if (Math.AbsFloat(heliAngle) < 90)
+		if (Math.AbsFloat(heliAngle) < WP_ANGLE)
 		{				
-			//We need to take a detour. Add an additional point outside of the line to make the route rounder
-			//TBD: We need to add more points for very steep angles. 
-//			dir0 = SDRC_Math.RotateAroundAxis(dir0, vector.Up, heliAngle * -1.5);
+			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle is very STEEP: " + heliAngle, LogLevel.SPAM);
+			//We need to take a detour. Add an additional points outside of the line to make the route rounder
 			dir0 = SDRC_Math.RotateAroundAxis(dir0, vector.Up, heliAngle);
 			dir0.Normalize();
-			vector mid = vector.Lerp(m_vFlyPathPoints[idx], destination, 0.33);
-			vector vec = mid + dir0 * (distance / 4);
-//			vector vec = mid;
+			
+			float lerpRnd = SDRC_Misc.RandomFloat(0.15, 0.33);
+			vector mid = vector.Lerp(m_vFlyPathPoints[idx], destination, lerpRnd);
+			vector vec = mid + dir0 * (distance / 6);
 			m_vFlyPathPoints.Insert(vec);
-			SDRC_DebugHelper.AddDebugPos(vec, ARGB(128, 128, 128, 64), 5.0);
+			SDRC_DebugHelper.AddDebugPos(vec, ARGB(128, 128, 128, 64), 2.0);
 
-			mid = vector.Lerp(m_vFlyPathPoints[idx], destination, 0.66);
+			lerpRnd = SDRC_Misc.RandomFloat(0.4, 0.6);			
+			mid = vector.Lerp(m_vFlyPathPoints[idx], destination, lerpRnd);
 			vec = mid + dir0 * (distance / 4);
 			m_vFlyPathPoints.Insert(vec);
-			SDRC_DebugHelper.AddDebugPos(vec, ARGB(128, 128, 128, 64), 5.0);
-						
-//			vector vec = m_vFlyPathPoints[idx] + dir0.Normalized() * distance / 3;
-			
+			SDRC_DebugHelper.AddDebugPos(vec, ARGB(128, 128, 128, 64), 2.0);
 		}
 				
 		m_vFlyPathPoints.Insert(destination);
 		
-		SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle: " + heliAngle + " - Distance: " + distance, LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle: " + heliAngle + " - Distance: " + distance, LogLevel.SPAM);
 	}		
 
 	//------------------------------------------------------------------------------------------------	
