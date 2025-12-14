@@ -5,10 +5,11 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-#define SDRC_RELEASE
+//#define SDRC_RELEASE
 //#define EXPERIMENTAL
 //#define NEW_VERSION_WIP		//New functionality (..that affects jsons)
 //#define DEBUG_CHOPPER
+//#define DEBUG_DO_NOT_CLEAR	//Leave old lines etc on restart
 
 //TODO: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //Set SDRC_MissionConfigGeneral faction to be an array
@@ -40,6 +41,7 @@ sealed class SDRC_Conf
 	const bool OVERWRITE_JSON = false;					//Writes a new conf even if it exists
 	const bool SHOW_VALID_MISSION_AREAS = false;		//Debug markers for mission position testing drawn on the map
 	const bool SHOW_MARKER_FOR_LOCATION = false;		//Show a debug marker for locations
+	const bool SHOW_DEBUG_INFO = false;
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.NORMAL;
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
 	//TBD: const bool DISABLE_PERSISTENCE = true;
@@ -57,7 +59,8 @@ sealed class SDRC_Conf
 	const bool OVERWRITE_JSON = true;				
 //	const bool OVERWRITE_JSON = false;
 	const bool SHOW_VALID_MISSION_AREAS = false;
-	const bool SHOW_MARKER_FOR_LOCATION = false;	
+	const bool SHOW_MARKER_FOR_LOCATION = false;
+	const bool SHOW_DEBUG_INFO = true;
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
 	//TBD: const bool DISABLE_PERSISTENCE = true;	

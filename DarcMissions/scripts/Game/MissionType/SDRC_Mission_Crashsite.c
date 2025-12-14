@@ -337,6 +337,9 @@ class SDRC_Crashsite : SDRC_Camp
 //------------------------------------------------------------------------------------------------
 class SDRC_HelicopterInfo : Managed
 {
+#ifdef NEW_VERSION_WIP
+	string comment;				//TBD: Functionality to be added
+#endif
 	string resource;
 	float throttle;
 	float rotorForce;

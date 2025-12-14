@@ -48,8 +48,6 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.49);
 	#endif
 
-		m_vPosOrigin = "800 0 2800";	//TBD: Remove
-						
 		//No suitable location found.
 		if (pos == "0 0 0")
 		{				
@@ -134,8 +132,10 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
 	{					
-		//Spawn vehicle					
+		//Spawn vehicle
 		SDRC_HelicopterInfo heliInfo = m_Config.helicopterInfo[m_DC_Chopper.heliList.GetRandomElement()];
+		
+		//TBD: Add error checking in case someone has removed entries from helicopterInfo.
 		
 		string resourceName	= heliInfo.resource;
 		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Chopper.general.size, -1);
@@ -157,11 +157,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
         m_Vehicle_s.RotorSetForceScaleState(0, heliInfo.rotorForce);
         m_Vehicle_s.RotorSetForceScaleState(1, heliInfo.rotor2Force);
 		m_Vehicle_c.SetHeli(heliInfo.rotorForceUp, m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], heliInfo.power, m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.wpType, m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
-//		m_Vehicle_c.InitFlightPath(m_Vehicle, m_vPosOrigin, GetPos());
-		//TBD: Remove
-		vector destPos = "1060 0 2450";
-		m_Vehicle_c.InitFlightPath(m_Vehicle, m_vPosOrigin,destPos);
-		
+		m_Vehicle_c.InitFlightPath(m_Vehicle, m_vPosOrigin, GetPos());
 
 		//Spawn pilots if such is available 
 		ResourceName pilot = SDRC_EnemyHelper.SelectEnemy("C_CREW", GetFaction());
