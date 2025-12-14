@@ -39,7 +39,8 @@ SDRC_MissionConfigAi ai : See AI parameters
 ```
 ```
 # Chopper specific
-array<int> heliList : Indexes to helicopters defined in helicopterInfo
+array<int> heliList : Indexes to helicopters defined in helicopterInfo. 
+  For example: 0 will point to the first helicopter type defined in helicopterInfo. If you want to limit the mission to use only certain type of helicopter, change the values in heliList. You should not remove any of the definitions in helicopterInfo.
 array<int> flyHeight : (min, max) The helicopter will fly between these values from the ground/sea. Helicopter spawns between these values.
 array<int> speed : (min, max) Helicopter speed minimum/maximum.
 array<float> flyDistance : (min, max) Distance for finding new positions.
