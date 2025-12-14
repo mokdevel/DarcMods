@@ -99,7 +99,11 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		SDRC_Aka aka04 = new SDRC_Aka();
 		aka04.names = {"BACON_622120A5448725E3_FACTION", "Zombie", "Zombies"};
 		conf.akas.Insert(aka04);
-								
+
+		SDRC_Aka aka05 = new SDRC_Aka();
+		aka05.names = {"BALLIEN_BC_FACTION", "Cultist", "Cultists"};
+		conf.akas.Insert(aka05);
+										
 		conf.lists.Insert(enemyList00());
 		conf.lists.Insert(enemyList01());
 		conf.lists.Insert(enemyList02());
@@ -144,6 +148,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "Regulars_Brick", "InfantrySection",						//British Forces
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies
+			 "Cultists Light", 											//Ballien Cultists
 			},	
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -161,6 +166,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "KS05_SF_GROUP_A", "KS05_SF_GROUP_C", 						//Omega gropus
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies
+			 "Cultists Light", 											//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -177,6 +183,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Team_AT", "Team_GL", "Team_LAT",
 			 "Group_Zombies_High",	//Bacon Zombies
 //			 "CIV_Medium", "FIA_Medium", "USSR_Medium", "Tier1_Medium",	//Bacon Zombies
+			 "Cultists Medium", 											//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -193,6 +200,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"_Platoon",
 			 "Group_Zombies_High",	//Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
+			 "Cultists Light", 											//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -209,6 +217,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"_Medical",
 			 "Group_Zombies_High",	//Bacon Zombies
 //			 "CIV_Medium", "FIA_Medium", "USSR_Medium", "Tier1_Medium",	//Bacon Zombies	
+			 "Cultists Light", 											//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -225,6 +234,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"_Recon", "_Maneuver", "_RecceTeam",
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
+			 "Cultists Medium", 										//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -239,10 +249,11 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"G_HEAVY",
 			{"Prefabs/Groups", "622120A5448725E3/Prefabs/Groups"},	
 			{"MachineGunTeam", "FireTeam", "FireGroup", "Suppress", "Spetsnaz_Squad",
-			 "GunGroup",										//British Forces
-			 "Group_Zombies_Horde", "Group_Zombies_CIV_Large",	//Bacon Zombies
-//			 "CIV_Large", "FIA_Large", "USSR_Large", "Tier1_Large", 	//Bacon Zombies			
-//			 "AmbientPatrol_Horde", "Zombies_Horde",					//Bacon Zombies	Hordes
+			 "GunGroup",											//British Forces
+			 "Group_Zombies_Horde", "Group_Zombies_CIV_Large",		//Bacon Zombies
+//			 "CIV_Large", "FIA_Large", "USSR_Large", "Tier1_Large", //Bacon Zombies			
+//			 "AmbientPatrol_Horde", "Zombies_Horde",				//Bacon Zombies	Hordes
+			 "Cultists Horde", 										//Ballien Cultists
 			},	
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -260,6 +271,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "KS05_SF_GROUP_B", 		//Omega groups
 			 "Group_Zombies_Horde",		//Bacon Zombies
 //			 "CIV_Large", "FIA_Large", "USSR_Large", "Tier1_Large", 	//Bacon Zombies			
+			 "Cultists Medium", 										//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -273,9 +285,11 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"G_SMALL",
 			{"Prefabs/Groups", "622120A5448725E3/Prefabs/Groups"},	
-			{"Spetsnaz_SentryTeam", "GreenBeret_SentryTeam", "SharpshooterTeam", "MedicalSection", "SapperTeam", "SentryTeam",
+			{"Spetsnaz_SentryTeam", "GreenBeret_SentryTeam", "SentryTeam",
+			 "SharpshooterTeam", "MedicalSection", "SapperTeam", 
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
+			 "Cultists Light", 											//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -294,7 +308,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"C_RIFLEMAN",
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"Rifleman", "Sapper", "_PL", "_SL",
-			 "Zombie_CIV", "Zombie_FIA", "Zombie_US", "Zombie_USSR", 	//Bacon Zombies
+			 "Zombie_CIV", "Zombie_FIA", "Zombie_US", "Zombie_USSR", 			//Bacon Zombies
+			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -310,6 +325,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"_GL", "_MG", "Grenadier", "_Ammo", "_LMG",
 			 "Exploder", "Heavy_Tank", 									//Bacon Zombies			
+			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -326,6 +342,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Scout", "Spotter", "_RTO", "_SL", "_GL",
 			 "_AG1", //MEI		
 			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies
+			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -342,6 +359,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"_Officer", "Sergeant", "_AC", 
 			 "_Leader", //MEI
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
+			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -358,6 +376,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Crew", "Pilot", "_CC",
 			 "MEI_Leader", //MEI
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
+			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -373,6 +392,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"Sniper", "Sharpshooter",
 			 "Exploder", 									//Bacon Zombies			
+			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -388,6 +408,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"_AAT", "_AT", "_AT", "_LAT",
 			 "Exploder", 									//Bacon Zombies			
+			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -403,6 +424,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"Medic",
 			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies
+			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -421,6 +443,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "MEI_Rifleman1", //MEI
 			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies			
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
+			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -438,7 +461,9 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"G_ZOMBIE_SMALL",
 			{"622120A5448725E3/Prefabs/Groups"},
-			{"Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR",},
+			{
+			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR",
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random", "_Huge", "_Large", "_Medium"},
 			{}
 		);			
@@ -451,7 +476,9 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"G_ZOMBIE_MEDIUM",
 			{"622120A5448725E3/Prefabs/Groups"},
-			{"Group_Zombies_CIV_Large", "Group_Zombies_High",},
+			{
+			 "Group_Zombies_CIV_Large", "Group_Zombies_High",
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
 		);			
@@ -464,7 +491,9 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"G_ZOMBIE_LARGE",
 			{"622120A5448725E3/Prefabs/Groups"},
-			{"Group_Zombies_Horde",},
+			{
+			 "Group_Zombies_Horde",
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
 		);			
@@ -494,7 +523,9 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"C_DEMON",
 			{"Prefabs/Characters", "Beasts"},
-			{"ShadowTwin", "Whisper", },
+			{
+			 "ShadowTwin", "Whisper", 
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
 		);					
@@ -507,8 +538,9 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"C_DEMON_BOSS",
 			{"Prefabs/Characters", "Beasts"},
-			{"Stalker Heavy", "Zombie_Heavy",
-			"character_115_dupe", "character_115_pump", "character_115_skel.",
+			{
+			 "Stalker Heavy", "Zombie_Heavy",
+			 "character_115_dupe", "character_115_pump", "character_115_skel.",
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -522,7 +554,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		enemyList.Set(
 			"C_BEASTS",
 			{"Prefabs/Characters"},		
-			{"GhoulHeavy", "PumpkinHead", "Skeleton", //"TreeDemon",
+			{
+			 "GhoulHeavy", "PumpkinHead", "Skeleton", //"TreeDemon",
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
