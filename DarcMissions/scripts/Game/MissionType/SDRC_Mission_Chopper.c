@@ -39,13 +39,17 @@ class SDRC_Mission_Chopper : SDRC_Mission
 
 		//Find position
 		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
-	#ifdef SDRC_RELEASE		
-		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.7);
+
+	#ifdef NEW_VERSION_WIP	
+		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(m_Config.distanceToStart);
+		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.1);
 	#endif
-	#ifndef SDRC_RELEASE		
-		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.2);
+	#ifndef NEW_VERSION_WIP	
+		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.49);
 	#endif
-				
+
+		m_vPosOrigin = "800 0 2800";	//TBD: Remove
+						
 		//No suitable location found.
 		if (pos == "0 0 0")
 		{				
@@ -153,7 +157,11 @@ class SDRC_Mission_Chopper : SDRC_Mission
         m_Vehicle_s.RotorSetForceScaleState(0, heliInfo.rotorForce);
         m_Vehicle_s.RotorSetForceScaleState(1, heliInfo.rotor2Force);
 		m_Vehicle_c.SetHeli(heliInfo.rotorForceUp, m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], heliInfo.power, m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.wpType, m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
-		m_Vehicle_c.InitFlightPath(m_Vehicle, m_vPosOrigin, GetPos());
+//		m_Vehicle_c.InitFlightPath(m_Vehicle, m_vPosOrigin, GetPos());
+		//TBD: Remove
+		vector destPos = "1060 0 2450";
+		m_Vehicle_c.InitFlightPath(m_Vehicle, m_vPosOrigin,destPos);
+		
 
 		//Spawn pilots if such is available 
 		ResourceName pilot = SDRC_EnemyHelper.SelectEnemy("C_CREW", GetFaction());
@@ -229,6 +237,9 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 {
 	int distanceToMission;									//Distance to mission when searching for a mission pos. Overrides missionFrame settings.
 	int distanceToPlayer;									//Distance to player when searching for a mission pos. Overrides missionFrame settings.
+#ifdef NEW_VERSION_WIP	
+	float distanceToStart;
+#endif
 	int activeTime;											//The time the mission should be running until the chopper flies away.
 	ref array<ref SDRC_HelicopterInfo> helicopterInfo = {};	//Helicopter details
 	ref array<ref SDRC_Chopper> subMissions = {};			//List of sub missions
@@ -353,6 +364,9 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		//Mission specific
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;
+	#ifdef NEW_VERSION_WIP	
+		conf.distanceToStart = 0.49;
+	#endif
 		conf.activeTime = 20*60;
 		
 		//----------------------------------------------------
