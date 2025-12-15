@@ -238,7 +238,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		if ((m_iClosestIndex + m_iDestinationPointAdd + POINTS_TO_NEW_DISTANCE >= m_vSplinePoints.Count() - 1) || bCreateNewPath)
 		{
 			//Define a new destination and create a new path
-			CreateFlightPath(m_vOrigin);
+			CreateFlyPath(m_vOrigin);
 		}
 		
 		//Count destintation addition along the spline which is dependent on the speed.
@@ -246,7 +246,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_iDestinationPointAdd = Math.ClampInt(m_iDestinationPointAdd, 1, 3);
 		
 		//Find where we're going
-		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iNewClosestIndex, false);	//NOTE: This will set m_iNewClosestIndex
+		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iNewClosestIndex, true);	//NOTE: This will set m_iNewClosestIndex
 
 		if (m_iNewClosestIndex > m_iClosestIndex)
 		{
@@ -498,7 +498,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	/*!	
 	Create the runtime flight path with waypoint definition
 	*/
-	void CreateFlightPath(vector origin)
+	void CreateFlyPath(vector origin)
 	{
 		//Clear any existing path points
 		m_vFlyPathPoints.Clear();
@@ -534,7 +534,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	
 		SetFlyPathHeight(origin);
 		SDRC_Spline3D.GenerateSplinePoints(m_vFlyPathPoints, m_vSplinePoints, m_iSegmentPoints, true);
-		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, origin, m_iClosestIndex, false);	//NOTE: This will set m_iNewClosestIndex
+		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, origin, m_iClosestIndex, true);	//NOTE: This will set m_iNewClosestIndex
 		m_iNewClosestIndex = m_iClosestIndex + 1;
 		//Check that points are above ground
 		CheckSplinePoints(origin);
@@ -584,18 +584,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/	
 	private void CheckSplinePoints(vector origin)
 	{	
-/*		const int DIFF_DISTANCE = 7;
-		
-		//Smooth the segments		
-		int diffPt = Math.ClampInt(m_vSplinePoints.Count() - 1 - DIFF_DISTANCE - m_iClosestIndex, 1, DIFF_DISTANCE);
-		
-		//Let's lerp the heights somewhat together for smoother raise/lower
-		for (int i = 0; i < diffPt; i++)
-		{
-			float l = Math.Lerp(origin[1], m_vSplinePoints[m_iClosestIndex + diffPt][1], i / diffPt);
-			m_vSplinePoints[m_iClosestIndex + i][1] = l;
-		}*/
-		
 		//Make sure the points are at minimum m_fFlyHeightLow from the ground.
 		foreach (int i, vector pt : m_vSplinePoints)
 		{
@@ -603,14 +591,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 			if (pt[1] < (y + m_fFlyHeightLow))
 			{
-				pt[1] = y + m_fFlyHeightLow * 1.2;	//Make chopper fly higher for a moment
+				pt[1] = y + m_fFlyHeightLow;	//Make chopper fly higher for a moment
 				m_vSplinePoints[i] = pt;
 				
-				//TBD: Should be flying higher for a few dots before
-				if (i > 0)
-				{
-					m_vSplinePoints[i - 1] = pt;
-				}
+				//TBD: We could check N-points back to smooth any steep changes in fly height
 			}
 		}
 	}
