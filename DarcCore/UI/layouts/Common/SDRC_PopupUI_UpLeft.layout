@@ -1,0 +1,124 @@
+FrameWidgetClass {
+ Name "rootFrame"
+ {
+  FrameWidgetClass "{671F08C3E0CEFAD4}" {
+   Name "Frame0"
+   Slot FrameWidgetSlot "{671F08C19C0C897E}" {
+    PositionX 8
+    OffsetLeft 8
+    PositionY 32
+    OffsetTop 32
+    SizeX 600
+    OffsetRight -608
+    SizeY 150
+    OffsetBottom -182
+    Alignment 0 0
+   }
+   {
+    ProgressBarWidgetClass "{671F08C3E0CEFADA}" {
+     Name "Progress"
+     Slot FrameWidgetSlot "{51CEB4305A3864FB}" {
+      PositionX 32
+      OffsetLeft 32
+      PositionY 56
+      OffsetTop 56
+      SizeX 500
+      OffsetRight -532
+      SizeY 4
+      OffsetBottom -60
+     }
+     "Z Order" 10
+     Opacity 0
+     Color 0.761 0.392 0.078 0.824
+     style SimpleWithBackground
+     Maximum 1
+     Current 0.5
+    }
+    RichTextWidgetClass "{671F08C3E0CEFADB}" {
+     Name "Popup"
+     Slot FrameWidgetSlot "{50F4C51DF92631E2}" {
+      Anchor 0.01 0 0.01 0
+      PositionX 56
+      OffsetLeft 56
+      OffsetTop 0
+      SizeX 500
+      OffsetRight -556
+      SizeY 40
+      OffsetBottom -40
+     }
+     Opacity 0
+     Clipping Ancestor
+     Color 0.8211 0.8193 1 1
+     Text "TEXT WIDGET"
+     "Font Size" 25
+     "Min Font Size" 25
+     "Vertical Alignment" Center
+     FontProperties FontProperties "{50F46E94D3213183}" {
+      Font "{EABA4FE9D014CCEF}UI/Fonts/RobotoCondensed/RobotoCondensed_Bold.fnt"
+      ShadowSize 5
+      ShadowOffset 4 4
+     }
+    }
+    RichTextWidgetClass "{671F08C3E0CEFAD8}" {
+     Name "PopupSmall"
+     Slot FrameWidgetSlot "{50F4C51DF92631E2}" {
+      Anchor 0.01 0 0.01 0
+      PositionX 56
+      OffsetLeft 56
+      PositionY 46
+      OffsetTop 46
+      SizeX 500
+      OffsetRight -556
+      SizeY 73.3
+      OffsetBottom -119.3
+      Alignment 0 0
+     }
+     Opacity 0
+     Clipping Ancestor
+     Color 0.791 0.791 0.791 0.824
+     "Font Size" 20
+     "Min Font Size" 20
+     FontProperties FontProperties "{50F46E94D3213183}" {
+      Font "{3E7733BAC8C831F6}UI/Fonts/RobotoCondensed/RobotoCondensed_Regular.fnt"
+      ShadowSize 5
+      ShadowOffset 4 4
+     }
+    }
+    ImageWidgetClass "{671F08C3E0CEFAD9}" {
+     Name "Icon"
+     Slot FrameWidgetSlot "{653CAEA26D22B8EA}" {
+      Anchor 0.01 0 0.01 0
+      PositionX 8
+      OffsetLeft 8
+      PositionY 8
+      OffsetTop 8
+      SizeX 32
+      OffsetRight -40
+      SizeY 32
+      OffsetBottom -40
+     }
+     Color 0.5841 0.5841 0.5841 1
+     Texture "{885DA992DEA7C7BC}UI/Textures/Icons/icon_empty_round.edds"
+     Size 53 52
+    }
+    ImageWidgetClass "{671F08C3E0CEFADE}" {
+     Name "IconShadow"
+     Slot FrameWidgetSlot "{653CAEA26D22B8EA}" {
+      Anchor 0.01 0 0.01 0
+      PositionX 9
+      OffsetLeft 9
+      PositionY 9
+      OffsetTop 9
+      SizeX 32
+      OffsetRight -41
+      SizeY 32
+      OffsetBottom -41
+     }
+     Color 0.0467 0.0467 0.0467 1
+     Texture "{885DA992DEA7C7BC}UI/Textures/Icons/icon_empty_round.edds"
+     Size 53 52
+    }
+   }
+  }
+ }
+}
