@@ -32,22 +32,22 @@ The component has default values that work quite well for the vanilla helicopter
 
 NOTE: DarcMissions will modify these values via ``SDRC_HelicopterInfo``. For a new helicopter, remember to create a proper entry. You can always provide these to me to include in the main mod. 
 
-* ``bool Auto Start`` : When helicopter is spawned in the world, if enabled, it will automatically start to fly from spawn position to First Destination.
-* ``float Rotor Force Up`` : (percentage) The force that pushes the helicopter upwards. A too high value will make the helicopter to raise too fast and does not look nice. The helicopter type/weight will affect so you may need to adjust this.
-* ``float Speed Min`` , ``float Speed Max`` : The min/max speed for flying. Speed is changing depending on the angle where the helicopter is moving.
+* ``Auto Start`` : (bool) When helicopter is spawned in the world, if enabled, it will automatically start to fly from spawn position to First Destination.
+* ``Rotor Force Up`` : (float)(percentage) The force that pushes the helicopter upwards. A too high value will make the helicopter to raise too fast and does not look nice. The helicopter type/weight will affect so you may need to adjust this.
+* ``Speed Min`` , ``Speed Max`` : (float) The min/max speed for flying. Speed is changing depending on the angle where the helicopter is moving.
   * When DarcMissions mission ends, the helicopter will accelerate to 150% of maximum speed.
-* ``float Power`` : The speed gain aka acceleration. Consider this 
-* ``float Fly Height Low`` , ``float Fly Height High`` : The min/max fly height (from ground/sea level). 
+* ``Power`` : (float) The speed gain aka acceleration. Consider this 
+* ``Fly Height Low`` , ``Fly Height High`` : (float) The min/max fly height (from ground/sea level). 
   * This is not an exact value and sometimes the helicopter may fly below or above the set value. If we're flying below the Low value, the helicopter will increase the rotor force up the gain height. The same if we're too high - the rotor force is decreased. We use physics for a natural flight so very steep hills may end up as objects where the helicopter may crash.
   * A DarcMissions helicopter will spawn between these values.
-* ``float Distance Low`` , ``float Distance High`` : The min/max distance for waypoint. This works in two different ways depending if value is over or below 1.0.
+* ``Distance Low`` , ``Distance High`` : (float) The min/max distance for waypoint. This works in two different ways depending if value is over or below 1.0.
   * ``0.1 .. 0.99`` : The distance is worldsize * value (percentage). Having small values will keep the helicopter flying near the center of world.
   * ``1 .. n`` : The distance to fly to next.
 * ``SDRC_EHeliWaypointGenerationType m_fWpType`` : Waypoint type. Currently hidden.
-* ``float Throttle`` : Arma Reforger default throttle. Affects physics.
-* ``float Rotor Force0`` : Arma Reforger default main rotor force. Affects physics.
-* ``float Rotor Force1`` : Arma Reforger default rear rotor force. Affects physics.
-* ``vector First Destination`` : First destination to fly to from the spawn position. The helicopter will continue fly autonomously after that.
+* ``Throttle`` : (float) Arma Reforger default throttle. Affects physics.
+* ``Rotor Force0`` : (float) Arma Reforger default main rotor force. Affects physics.
+* ``Rotor Force1`` : (float) Arma Reforger default rear rotor force. Affects physics.
+* ``First Destination`` : (vector) First destination to fly to from the spawn position. The helicopter will continue fly autonomously after that.
 
 # The flying mechanism
 This is the short version and more documentation to be provided.
