@@ -18,7 +18,7 @@ NOTE: For the moment, there are no pilots/AI added automatically to the helicopt
 - Create a mod with DarcCore as a dependency
 - Select the helicopter you want to use
 - Duplicate the helicopter prefab to your mod. In to the name, add "_Patrol" at the end.
-- Edit prefab and add components ``SDRC_ChopperComp``. This is only for the smoke.
+- Edit prefab and add component ``SDRC_ChopperComp``.
 - Modify the engine to be running immediately.
 - Configure as in the image
 - Open World Editor
