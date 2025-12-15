@@ -26,7 +26,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	private ref SDRC_ConvoyConfig m_Config = new SDRC_ConvoyConfig();
 	private ref SDRC_Convoy m_DC_Convoy = new SDRC_Convoy();
 	
-	private SDRC_EMissionConvoyState missionConvoyState = SDRC_EMissionConvoyState.SPAWN;	
+	private SDRC_EMissionConvoyState missionConvoyState = SDRC_EMissionConvoyState.SPAWN;
 	
 	private vector m_vPosDestination = "1 1 1";
 	private IEntity m_Vehicle = null;

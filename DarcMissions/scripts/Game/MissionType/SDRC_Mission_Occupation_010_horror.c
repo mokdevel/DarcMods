@@ -7,12 +7,12 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_Occupation_010_horror_JsonApi : SDRC_OccupationJsonApi
 {
-	const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_Occupation_010_horror.json";
+	const string DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR = "dc_missionConfig_Occupation_010_horror.json";
 	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Occupation_010_horror_JsonApi(string fileName = "")
 	{
-		SetFileName(DC_MISSIONCONFIG_FILE);
+		SetFileName(DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR);
 	}
 	
 	//------------------------------------------------------------------------------------------------

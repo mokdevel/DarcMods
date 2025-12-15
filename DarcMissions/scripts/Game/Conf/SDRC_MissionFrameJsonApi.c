@@ -25,7 +25,7 @@
 		private const int SDRC_MISSION_HINT_TIME = 90;									//Seconds to show the mission hint to players
 		private const int SDRC_MISSION_RANDOM_POS = 100;								//The randomization for search radius for mission position 
 		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;						//Show/hide static mission markers
-		private const bool SDRC_MISSION_SHOW_TIME_LEFT = true;						//Show/hide static mission markers
+		private const bool SDRC_MISSION_SHOW_TIME_LEFT = true;							//Show/hide static mission markers
 	#endif
 	
 	//Development time options
@@ -34,7 +34,7 @@
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 8;//10;//15;//5;//3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 1;//10;//15;//5;//3;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					

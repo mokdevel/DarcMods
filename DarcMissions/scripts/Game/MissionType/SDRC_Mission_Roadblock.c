@@ -273,7 +273,7 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 		//Default		
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {2};//{0,1,2,3};
+		conf.missionList = {0,1,2,3};
 		//Mission specific		
 		//----------------------------------------------------
 		conf.subMissions.Insert(Roadblock0());				

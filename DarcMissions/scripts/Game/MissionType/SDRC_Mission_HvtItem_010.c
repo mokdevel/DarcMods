@@ -7,12 +7,12 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_HvtItem_010_JsonApi : SDRC_HvtItemJsonApi
 {
-	private const string DC_MISSIONCONFIG_FILE = "dc_missionConfig_HvtItem_010.json";
+	private const string DC_MISSIONCONFIG_FILE_HVTITEM_010 = "dc_missionConfig_HvtItem_010.json";
 
 	//------------------------------------------------------------------------------------------------
 	void SDRC_HvtItem_010_JsonApi(string fileName = "")
 	{		
-		SetFileName(DC_MISSIONCONFIG_FILE);
+		SetFileName(DC_MISSIONCONFIG_FILE_HVTITEM_010);
 	}
 	
 	//------------------------------------------------------------------------------------------------

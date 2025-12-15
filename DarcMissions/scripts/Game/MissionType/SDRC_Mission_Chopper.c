@@ -72,8 +72,10 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Chopper.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Chopper.general);		
-		//TBD: If static, time is to be long
-		InitActiveTime(m_Config.activeTime);
+		if (IsStatic())
+		{
+			InitActiveTime(m_Config.activeTime);
+		}
 		SetActiveDistance(-1);					//Disable active distance checking. 
 		SetActiveTimeToEnd(m_iFlyEndTime);		//Change the m_iActiveTimeToEnd to short one as there is no loot to gain.		
 	}	
@@ -371,7 +373,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		conf.helicopterInfo.Insert(Heli01());
 		conf.helicopterInfo.Insert(Heli02());
 		conf.helicopterInfo.Insert(Heli03());
-//		conf.helicopterInfo.Insert(Heli04());
+		conf.helicopterInfo.Insert(Heli04());
 		
 		conf.subMissions.Insert(Chopper0());
 		conf.subMissions.Insert(Chopper1());
@@ -404,7 +406,14 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		heli.Set("{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",	1.01, 2.80, 1.01, 1.1, 1.01);
 		return heli;		
 	}
-		
+
+	SDRC_HelicopterInfo Heli04()
+	{	
+		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
+		heli.Set("{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et	",	1.01, 2.80, 1.01, 1.1, 1.01);
+		return heli;		
+	}
+			
 /*	SDRC_HelicopterInfo Heli04()
 	{	
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
@@ -433,8 +442,8 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		);
 		chopper.ai.Set
 		(
-			{2, 2},
-			{"G_LIGHT", "G_ADMIN"},
+			{1, 2},
+			{"G_LIGHT", "G_ADMIN", "G_RECON"},
 			30, 0.6,
 			{0, 0},
 			SDRC_EWaypointGenerationType.LOITER,
@@ -444,8 +453,8 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		(
 			{2},
 			{35, 70},
-			{10, 35},
-			{0.1, 0.5},
+			{7, 25},
+			{0.2, 0.5},
 			SDRC_EHeliWaypointGenerationType.RANDOM,	
 		);
 		
@@ -473,8 +482,8 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		);
 		chopper.ai.Set
 		(
-			{2, 2},
-			{"G_HEAVY", "G_ADMIN"},
+			{1, 2},
+			{"G_HEAVY", "G_LIGHT"},
 			60, 1.0,
 			{0, 0},
 			SDRC_EWaypointGenerationType.LOITER,
@@ -482,10 +491,10 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		);
 		chopper.Set
 		(
-			{0, 0, 1, 1, 3},
+			{0, 1, 3, 4},
 			{40, 80},
 			{10, 30},
-			{0.1, 0.3},
+			{0.2, 0.4},
 			SDRC_EHeliWaypointGenerationType.RANDOM,	
 		);
 		
