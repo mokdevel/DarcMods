@@ -51,9 +51,8 @@ sealed class SDRC_Spline3D
 			}
 		}
 
-		// Add final control point and tangent
+		// Add final control point
 		vector lastPoint = controlPoints[count - 1];
-		vector lastTangent = (lastPoint - controlPoints[count - 2]).Normalized();
 
 		resultPoints.Insert(lastPoint);
 	}
@@ -146,6 +145,9 @@ sealed class SDRC_Spline3D
 		vector segmentStart = points[0];
 		float minDistanceSq = vector.DistanceSq(point, segmentStart);
 
+		//The first point is considered the closest one at start
+		index = 0;
+		
 		foreach (int i, vector segmentEnd : points)
 		{
 			if (i == 0)

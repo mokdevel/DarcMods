@@ -1103,9 +1103,9 @@ class SDRC_Mission
 	*/
 	private void DoSecondWave()
 	{
+	#ifdef NEW_VERSION_WIP
 		if ( (m_SecondWaveConf.activation == GetSuccess()) || (m_SecondWaveConf.activation == SDRC_EMissionSuccess.WIN_OR_LOSE) )
 		{
-			#ifdef NEW_VERSION_WIP
 			if (SDRC_Misc.RandomFloat(0, 1) < m_SecondWaveConf.chance)
 			{
 				SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
@@ -1116,8 +1116,8 @@ class SDRC_Mission
 					SDRC_Log.Add("[SDRC_Mission:DoSecondWave] !Just for debugging! : idx:" + subIdx + " : " + wave.comment, LogLevel.DEBUG);
 				}
 			}
-			#endif
 		}		
+	#endif
 	}
 
 	//------------------------------------------------------------------------------------------------

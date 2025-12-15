@@ -23,14 +23,12 @@ NOTE: For the moment, there are no pilots/AI added automatically to the helicopt
 - Configure as in the image
 - Open World Editor
 - Add the helicopter you just created and raise it from ground to the initial flight height.
-- Run. The helicopter should start to fly
+- Run. The helicopter should start to fly.
 
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/choppersettings.png" width=30% height=30%>
 
 ## SDRC_ChopperComp values
 The component has default values that work quite well for the vanilla helicopters.
-
-NOTE: DarcMissions will modify these values via ``SDRC_HelicopterInfo``. For a new helicopter, remember to create a proper entry. You can always provide these to me to include in the main mod. 
 
 * ``Auto Start`` : (bool) When helicopter is spawned in the world, if enabled, it will automatically start to fly from spawn position to First Destination.
 * ``Rotor Force Up`` : (float)(percentage) The force that pushes the helicopter upwards. A too high value will make the helicopter to raise too fast and does not look nice. The helicopter type/weight will affect so you may need to adjust this.
@@ -48,6 +46,8 @@ NOTE: DarcMissions will modify these values via ``SDRC_HelicopterInfo``. For a n
 * ``Rotor Force0`` : (float) Arma Reforger default main rotor force. Affects physics.
 * ``Rotor Force1`` : (float) Arma Reforger default rear rotor force. Affects physics.
 * ``First Destination`` : (vector) First destination to fly to from the spawn position. The helicopter will continue fly autonomously after that.
+
+NOTE: DarcMissions will modify these values via ``SDRC_HelicopterInfo``. For a new helicopter, remember to create a proper entry. You can always provide these to me to include in the main mod. 
 
 # The flying mechanism
 This is the short version and more documentation to be provided.

@@ -232,7 +232,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
 		
-			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
+//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
@@ -244,7 +244,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
 //			conf.missionStatic.missionTypeArray = {};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
+			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE};		
 		
 		#endif

@@ -158,6 +158,8 @@ class SDRC_MissionFrame
 	*/	
 	protected void MissionCycleManager()
 	{		
+		//SDRC_MissionHintHelper.Show("This is a hint!", "This is some text!");
+		
 		ref SDRC_Mission tmpDC_Mission = null;
 		SDRC_EMissionType missionType = null;
 		bool staticMissionSpawned = false;
