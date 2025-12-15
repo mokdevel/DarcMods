@@ -19,7 +19,7 @@ sealed class SDRC_AmmoHelper
 
 		//Put a random box to put all our magazines available.
 		//This is needed for the predicates to work.
-		IEntity m_ammoHelperBox = SDRC_SpawnHelper.SpawnItem("122 1 144", "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et", emptyPosRadius: -1);		
+		m_ammoHelperBox = SDRC_SpawnHelper.SpawnItem("122 1 144", "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et", emptyPosRadius: -1);		
 		
 		if (m_ammoHelperBox)
 		{	

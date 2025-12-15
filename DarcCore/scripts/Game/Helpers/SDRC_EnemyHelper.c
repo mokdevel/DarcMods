@@ -8,7 +8,7 @@ Functions for various enemy related things
 //------------------------------------------------------------------------------------------------
 sealed class SDRC_EnemyHelper
 {
-	private const string DC_MISSIONCONFIG_FILE = "dc_enemyList.json";
+	private const string DC_CONFIG_FILE_ENEMYLIST = "dc_enemyList.json";
 		
 	private static ref SDRC_EnemyListJsonApi m_EnemyListJsonApi;
 	private static ref SDRC_ListConfig m_Config;
@@ -36,7 +36,7 @@ sealed class SDRC_EnemyHelper
 		}
 		
 		//Load enemy config
-		m_EnemyListJsonApi = new SDRC_EnemyListJsonApi(DC_MISSIONCONFIG_FILE);
+		m_EnemyListJsonApi = new SDRC_EnemyListJsonApi(DC_CONFIG_FILE_ENEMYLIST);
 		m_EnemyListJsonApi.Load();
 		m_Config = m_EnemyListJsonApi.conf;
 		m_Config.Populate();		

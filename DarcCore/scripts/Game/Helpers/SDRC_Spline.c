@@ -2,17 +2,15 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
-Includes various small functions. 
+Functions for spline creation
 */
-
 sealed class SDRC_Spline3D
 {
 	// Generates a list of points along a Catmull–Rom spline
 	// Generates points and tangents along a Catmull–Rom spline
-	static void GenerateSplinePoints(notnull array<vector> controlPoints, out array<vector> resultPoints, out array<vector> resultTangents, int samplesPerSegment = 20, bool showPath = false)
+	static void GenerateSplinePoints(notnull array<vector> controlPoints, out array<vector> resultPoints, int samplesPerSegment = 20, bool showPath = false)
 	{
 		resultPoints.Clear();
-		resultTangents.Clear();
 
 		int count = controlPoints.Count();
 		if (count < 3)
@@ -48,10 +46,8 @@ sealed class SDRC_Spline3D
 				float t = j / (float)samplesPerSegment;
 
 				vector point = CatmullRom(p0, p1, p2, p3, t);
-				vector tangent = CatmullRomTangent(p0, p1, p2, p3, t).Normalized();
 
 				resultPoints.Insert(point);
-				resultTangents.Insert(tangent);
 			}
 		}
 
@@ -60,7 +56,6 @@ sealed class SDRC_Spline3D
 		vector lastTangent = (lastPoint - controlPoints[count - 2]).Normalized();
 
 		resultPoints.Insert(lastPoint);
-		resultTangents.Insert(lastTangent);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -134,7 +129,7 @@ sealed class SDRC_Spline3D
 	//! \param[in] points array of all points forming the spline, minimum 1 point
 	//! \param[in] point point that is being checked
 	//! \return distance from spline, -1 if no points are provided
-	static float GetDistanceFromSpline(notnull array<vector> points, vector point, out int index = 0)
+	static float GetDistanceFromSpline(notnull array<vector> points, vector point, out int index = 0, bool quickSearch = false)
 	{		
 		int count = points.Count();
 		if (count < 1)
@@ -167,8 +162,15 @@ sealed class SDRC_Spline3D
 				index = i;
 				minDistanceSq = tempDistanceSq;
 			}
+			else
+			{
+				if ( (index > 0) && (quickSearch) )
+				{
+					break;
+				}
+			}
 
-			segmentStart = segmentEnd;
+			segmentStart = segmentEnd;		
 		}
 
 		return Math.Sqrt(minDistanceSq);
@@ -205,8 +207,7 @@ sealed class SDRC_Spline3D
 		};
 	
 		array<vector> splinePoints = new array<vector>();
-		array<vector> resultTangents = new array<vector>();
-		SDRC_Spline3D.GenerateSplinePoints(ctrl, splinePoints, resultTangents, 20);
+		SDRC_Spline3D.GenerateSplinePoints(ctrl, splinePoints, 20);
 		
 /*		foreach (vector pos : splinePoints)
 		{
@@ -242,10 +243,8 @@ sealed class SDRC_Spline3D
 		}
 				
 		array<vector> splinePoints = new array<vector>();
-		array<vector> resultTangents = new array<vector>();
 		splinePoints.Clear();
-		resultTangents.Clear();		
-		SDRC_Spline3D.GenerateSplinePoints(m_ctrl, splinePoints, resultTangents, 20);
+		SDRC_Spline3D.GenerateSplinePoints(m_ctrl, splinePoints, 20);
 		
 		//Prepare the next round
 		int idx0 = SDRC_Misc.RandomInt((splinePoints.Count() / 2), splinePoints.Count() - 1);
