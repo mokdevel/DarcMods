@@ -21,10 +21,24 @@ class SDRC_SCR_PopUpNotificationClass : SCR_PopUpNotificationClass
 };
 
 //------------------------------------------------------------------------------------------------
+enum SDRC_EHintPosition
+{
+	UP_LEFT = 0,	
+	DOWN_LEFT,
+}
+
+//------------------------------------------------------------------------------------------------
 //! Takes care of dynamic and static onscreen popups
 class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 {
-	protected static const ResourceName SDRC_LAYOUT_NAME = "{92F50A7B6329D030}UI/layouts/Common/SDRC_PopupUI.layout";
+//	protected static const ResourceName SDRC_LAYOUT_NAME = "{92F50A7B6329D030}UI/layouts/Common/SDRC_PopupUI.layout";
+//	protected static const ResourceName SDRC_LAYOUT_NAME = "{E2F724F118342A3A}UI/layouts/Common/SDRC_PopupUI_Low.layout";
+//	protected static const ResourceName SDRC_LAYOUT_NAME = "{E2F724F118342A3A}UI/layouts/Common/SDRC_PopupUI_High.layout";
+	
+	protected string m_sLayout;
+	protected ref array<ResourceName> m_aLayoutList = { "{145602E9714D27EE}UI/layouts/Common/SDRC_PopupUI_UpLeft.layout", 
+														"{E2F724F118342A3A}UI/layouts/Common/SDRC_PopupUI_DownLeft.layout", 
+													  };
 	
 	//------------------------------------------------------------------------------------------------
 	override static SCR_PopUpNotification GetInstance()
@@ -53,7 +67,20 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 		if (!pc || !pc.GetControlledEntity())
 			return;
 
-		Widget root = GetGame().GetHUDManager().CreateLayout(SDRC_LAYOUT_NAME, EHudLayers.MEDIUM, 0);
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!m_BaseGameMode)
+		{
+			return;
+		}
+		
+ 		if (!m_BaseGameMode.m_SDRC_Core)
+		{
+			return;
+		}
+		
+		m_sLayout = m_aLayoutList[m_BaseGameMode.m_SDRC_Core.m_Config.hintPosition];
+		
+		Widget root = GetGame().GetHUDManager().CreateLayout(m_sLayout, EHudLayers.MEDIUM, 0);
 
 		if (!root)
 			return;
@@ -150,7 +177,7 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 	//------------------------------------------------------------------------------------------------
 	void LoadIcon()
 	{
-		Widget root = GetGame().GetHUDManager().CreateLayout(SDRC_LAYOUT_NAME, EHudLayers.MEDIUM, 0);
+		Widget root = GetGame().GetHUDManager().CreateLayout(m_sLayout, EHudLayers.MEDIUM, 0);
 
 		if (!root)		
 			return;

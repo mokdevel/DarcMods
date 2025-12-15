@@ -166,7 +166,6 @@ sealed class SDRC_Locations
 			}
 		}
 
-	#ifdef NEW_VERSION_WIP
 		//Handle building akas
 		foreach (SDRC_LocationAka aka : buildingAkas)
 		{
@@ -186,7 +185,6 @@ sealed class SDRC_Locations
 				SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Added via building aka: " + locNew.displayName + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, locNew.baseType) + " at: " + locNew.pos, LogLevel.DEBUG);						
 			}
 		}
-	#endif
 								
 		//Print debug information
 		foreach (SDRC_Location location: m_LocationsCache)

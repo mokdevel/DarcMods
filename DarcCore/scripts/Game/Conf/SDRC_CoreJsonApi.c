@@ -14,19 +14,17 @@ class SDRC_CoreConfig : Managed
 	bool debugShowWaypoints = SDRC_Conf.SHOW_DEBUG_INFO;
 	bool debugShowMarks = SDRC_Conf.SHOW_DEBUG_INFO;	
 	bool debugShowSpheres = SDRC_Conf.SHOW_DEBUG_INFO;
-	#ifdef NEW_VERSION_WIP	
-		bool debugShowLines = SDRC_Conf.SHOW_DEBUG_INFO;
-		bool debugShowInfo = SDRC_Conf.SHOW_DEBUG_INFO;
-	#endif
+	bool debugShowLines = SDRC_Conf.SHOW_DEBUG_INFO;
+	bool debugShowInfo = SDRC_Conf.SHOW_DEBUG_INFO;
 	string fallbackEnemyFaction = "USSR";
 	bool showOnGMMapNonValidArea = true;	
 	bool showOnGMMapMissionMarker = true;
+//	SDRC_EHintPosition hintPosition = SDRC_EHintPosition.UP_LEFT;
+	SDRC_EHintPosition hintPosition = SDRC_EHintPosition.DOWN_LEFT;
 	ref array<string> buildingExcludeFilter = {};
 	ref SDRC_EmptyPos emptyPos = new SDRC_EmptyPos();
 	ref array<ref SDRC_LocationAka> locationAkas = {};
-	#ifdef NEW_VERSION_WIP	
-		ref array<ref SDRC_LocationAka> buildingAkas = {};
-	#endif
+	ref array<ref SDRC_LocationAka> buildingAkas = {};
 }
 
 //------------------------------------------------------------------------------------------------
