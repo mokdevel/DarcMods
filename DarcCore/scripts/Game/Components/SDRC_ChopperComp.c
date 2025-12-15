@@ -22,7 +22,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 {
 	private static SDRC_ChopperComp s_Instance;	
 	private ref array<vector> m_vSplinePoints = new array<vector>();
-	private ref array<vector> m_vTangentPoints = new array<vector>();
 
 	//Parameters accessible helicopter parameters
 	[Attribute(defvalue: "0", desc: "Autostart chopper")]	
@@ -48,7 +47,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//AutoStart parameter defaults
 	[Attribute(defvalue: "1.0", desc: "Throttle", params: "0.1 3.0 0.1")]	
 	float m_fThrottle;
-//	[Attribute(defvalue: "2.5", desc: "Rotor force 0")]	
 	[Attribute(defvalue: "1.2", desc: "Main rotor force", params: "0.1 3.0 0.1")]	
 	float m_fRotorForce0;
 	[Attribute(defvalue: "1.0", desc: "Rear rotor force", params: "0.1 3.0 0.1")]	
@@ -68,13 +66,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 	const int TIME_TURN_INTERVAL_BASE = 40;			//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
 	
 	//Pitch
-	const float PITCH_ANGLE_RAD = 60 * Math.DEG2RAD;	//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
+	const float PITCH_ANGLE_RAD = 80 * Math.DEG2RAD;	//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
 	
 	//Roll 
 	const float ROLL_ANGLE_MUL = 2.4;//1.7;			//Multiplier for roll angle along the spline
 	
 	//Flight path
-	const int SEGMENT_POINTS = 15;				//How many points to create for each segment
+	int m_iSegmentPoints;						//How many points to create for each segment
 	const int POINTS_TO_NEW_DISTANCE = 2;		//How many spline points in to the future flight path is checked before adding new flight points.
 	const int POINTS_TO_SPLINE_START = 6;		//Points to go back from m_iClosestIndex when creating a new flight path 
 	const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
@@ -187,7 +185,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		Activate(owner);
 		
 		SDRC_Spline3D.DrawSplinePoints(m_vSplinePoints);
-		DrawSplinePoints(m_vFlyPathPoints);		
+		DrawSplinePoints(m_vFlyPathPoints);
 		
 		if (!m_bAutoStart)
 		{
@@ -232,6 +230,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		bool bCreateNewPath = false;
 		if (m_fTimeBetweenPts > TIME_FORCE_MOVE_POINT)
 		{
+//			m_iClosestIndex++;
 			bCreateNewPath = true;
 		}
 		
@@ -247,7 +246,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_iDestinationPointAdd = Math.ClampInt(m_iDestinationPointAdd, 1, 3);
 		
 		//Find where we're going
-		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iNewClosestIndex);	//NOTE: This will set m_iNewClosestIndex
+		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iNewClosestIndex, false);	//NOTE: This will set m_iNewClosestIndex
 
 		if (m_iNewClosestIndex > m_iClosestIndex)
 		{
@@ -334,7 +333,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/
 	private void HandleRotorForce()
 	{
-		m_fRotorForceMultiplier = (10 * ROTOR_FORCE_MUL) * ( (m_vSplinePoints[m_iClosestIndex][1] - m_vOrigin[1]) / m_vSplinePoints[m_iClosestIndex][1]);
+		int idx = m_iClosestIndex;
+		if (idx > m_vSplinePoints.Count() - 1)
+		{
+			idx = m_vSplinePoints.Count() - 1;			
+			SDRC_Log.Add("[SDRC_ChopperComp:HandleRotorForce] Index fixed.", LogLevel.WARNING);
+		}
+		
+		m_fRotorForceMultiplier = (10 * ROTOR_FORCE_MUL) * ( (m_vSplinePoints[idx][1] - m_vOrigin[1]) / m_vSplinePoints[idx][1]);
 
 		//If too low, turn the rotor force up
 		if (m_vOrigin[1] < (SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + m_fFlyHeightLow) )
@@ -373,7 +379,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fDbgAngle = angle;
 		//Count the angle of the turn. The steeper the turn, the slower heli should be moving.
 		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);
-		m_fSpeedMul = m_fPower * (SPEED_GAIN - (m_fSpeedMul / 45));	//90
+		m_fSpeedMul = m_fPower * (SPEED_GAIN - (m_fSpeedMul / 25));	//45
 		m_fSpeedStart = m_fSpeed;
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
 		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
@@ -428,6 +434,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 		destination = "1060 0 2450";		
 	#endif
 		
+		int worldSize = SDRC_Misc.GetWorldSize();
+		m_iSegmentPoints = worldSize/400;
+		m_iSegmentPoints = Math.ClampInt(m_iSegmentPoints, 15, 30);
+		SDRC_Log.Add("[SDRC_ChopperComp:InitFlightPath] Segment point count: " + m_iSegmentPoints, LogLevel.DEBUG);
+		
 		//Clear any existing path points
 		m_vFlyPathPoints.Clear();
 		
@@ -460,7 +471,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			SetFlyPathHeight(origin);
 		}
 		
-		SDRC_Spline3D.GenerateSplinePoints(m_vFlyPathPoints, m_vSplinePoints, m_vTangentPoints, SEGMENT_POINTS, true);
+		SDRC_Spline3D.GenerateSplinePoints(m_vFlyPathPoints, m_vSplinePoints, m_iSegmentPoints, true);
 		//Set final values
 		m_iClosestIndex = 2;
 		m_iNewClosestIndex = m_iClosestIndex + 1;
@@ -491,18 +502,18 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 		//Clear any existing path points
 		m_vFlyPathPoints.Clear();
-		
-		//Take two points from old spline. This smoothens the spline.
-/*		int splineStartIdx = m_iClosestIndex  - POINTS_TO_SPLINE_START;
-		if (splineStartIdx < 0)
+
+/*		//Take two points from old spline. This smoothens the spline.
+//		int splineStartIdx = m_iNewClosestIndex;// - POINTS_TO_SPLINE_START;
+		int splineStartIdx = m_iClosestIndex - POINTS_TO_SPLINE_START;
+		if (splineStartIdx < 1)
 		{
-			splineStartIdx = 0;
+			splineStartIdx = 1;
 		}
 		m_vFlyPathPoints.Insert(m_vSplinePoints[splineStartIdx]);
-		m_vFlyPathPoints.Insert(m_vSplinePoints[m_iClosestIndex]);
-*/
-		//Take two points from old spline. This smoothens the spline.
-		int splineStartIdx = m_vSplinePoints.Count()  - POINTS_TO_SPLINE_START - 1;
+		m_vFlyPathPoints.Insert(m_vSplinePoints[m_vSplinePoints.Count() - 1]);*/
+		
+		int splineStartIdx = m_vSplinePoints.Count() - POINTS_TO_SPLINE_START - 1;
 		if (splineStartIdx < 1)
 		{
 			splineStartIdx = 1;
@@ -522,8 +533,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 	
 		SetFlyPathHeight(origin);
-		SDRC_Spline3D.GenerateSplinePoints(m_vFlyPathPoints, m_vSplinePoints, m_vTangentPoints, SEGMENT_POINTS, true);
-		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, origin, m_iClosestIndex);	//NOTE: This will set m_iNewClosestIndex
+		SDRC_Spline3D.GenerateSplinePoints(m_vFlyPathPoints, m_vSplinePoints, m_iSegmentPoints, true);
+		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, origin, m_iClosestIndex, false);	//NOTE: This will set m_iNewClosestIndex
 		m_iNewClosestIndex = m_iClosestIndex + 1;
 		//Check that points are above ground
 		CheckSplinePoints(origin);
@@ -548,7 +559,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private void SetFlyPathHeight(vector origin)
 	{
 		float y = 0;
-		float yp = 0;
 		
 		foreach (int i, vector pt : m_vFlyPathPoints)
 		{
@@ -706,8 +716,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 #ifdef HELI_TESTING				
 //		destination = "1600 0 2600";	//113 degrees 
 //		destination = "1300 0 2900";	//64 degrees 
-		destination = "1000 0 2800";	//34 degrees 
-//		destination = "900 0 2800";		//12 degrees 
+//		destination = "1000 0 2800";	//34 degrees 
+		destination = "900 0 2800";		//12 degrees 
 //		destination = "500 0 2000";		//-94 degrees 
 //		destination = "700 0 2700";		//-22 degrees 
 #endif
@@ -723,7 +733,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//For some reason two points on the path are the same. Should not happen. Maybe an issue in spline generation?
 		if (Math.AbsFloat(heliAngle) == 90)
 		{
-			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Why 90?", LogLevel.SPAM);
+			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Why 90?", LogLevel.DEBUG);
 		}
 #endif
 		
@@ -731,18 +741,23 @@ class SDRC_ChopperComp : ScriptGameComponent
 		if (Math.AbsFloat(heliAngle) < WP_ANGLE)
 		{				
 			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle is very STEEP: " + heliAngle, LogLevel.SPAM);
+			
+			//Remove the last point
+			vector point = m_vFlyPathPoints[idx];
+			m_vFlyPathPoints.RemoveOrdered(m_vFlyPathPoints.Count() - 1);
+			
 			//We need to take a detour. Add an additional points outside of the line to make the route rounder
 			dir0 = SDRC_Math.RotateAroundAxis(dir0, vector.Up, heliAngle);
 			dir0.Normalize();
 			
 			float lerpRnd = SDRC_Misc.RandomFloat(0.15, 0.33);
-			vector mid = vector.Lerp(m_vFlyPathPoints[idx], destination, lerpRnd);
+			vector mid = vector.Lerp(point, destination, lerpRnd);
 			vector vec = mid + dir0 * (distance / 6);
 			m_vFlyPathPoints.Insert(vec);
 			SDRC_DebugHelper.AddDebugPos(vec, ARGB(128, 128, 128, 64), 2.0);
 
 			lerpRnd = SDRC_Misc.RandomFloat(0.4, 0.6);			
-			mid = vector.Lerp(m_vFlyPathPoints[idx], destination, lerpRnd);
+			mid = vector.Lerp(point, destination, lerpRnd);
 			vec = mid + dir0 * (distance / 4);
 			m_vFlyPathPoints.Insert(vec);
 			SDRC_DebugHelper.AddDebugPos(vec, ARGB(128, 128, 128, 64), 2.0);
@@ -809,14 +824,20 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		SDRC_Log.Add("[SDRC_ChopperComp:SetDamage] Setting health: " + health, LogLevel.DEBUG);
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	void SetAutostart(bool value)
+	{
+		m_bAutoStart = value;
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	bool IsStillWorking(IEntity owner)
 	{
 		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
 		float health = damageManager.GetHealth();
 		
-		//If the chopper is damaged, init is considered done
+		//If the chopper is damaged, init is considered done.
 		if (health < HEALTH_LIMIT)
 		{
 			InitDone(owner);
@@ -898,11 +919,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n" 
 								"";
 			debugText = debugText + 
-								"In Init:" + m_bInInit + ", " +
-								"Is working:" + SDRC_VehicleHelper.IsWorking(owner) + "\n" +
-								"Pilot count:" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
-	//							"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
+								"Init:" + m_bInInit + ", " +
+								"Pilots::" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
+								"Working:" + SDRC_VehicleHelper.IsWorking(owner) +
 								"Health: " + health + "\n" + 
+								
+	//							"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
+								
 								"";
 		
 			DebugTextWorldSpace.Create(GetGame().GetWorld(), debugText, DebugTextFlags.ONCE, origin[0], origin[1], origin[2], 20);
@@ -912,9 +935,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{		
 			return;
 		}
+		
+		int idx = m_iClosestIndex;
+		if (idx > m_vSplinePoints.Count() - 1)
+		{
+			idx = m_vSplinePoints.Count() - 1;			
+			SDRC_Log.Add("[SDRC_ChopperComp:DrawHelicopterVectors] Index fixed.", LogLevel.WARNING);
+		}
 						
 		//Planned destination
-		DrawLine(origin, m_vSplinePoints[m_iClosestIndex], Color.GRAY);		
+		DrawLine(origin, m_vSplinePoints[idx], Color.GRAY);		
 		
 		//Chopper destination direction vector
 		vector vFwd = vector.Direction(origin, m_vDestination);
