@@ -1,0 +1,217 @@
+{
+	"version": 1,
+	"author": "darc",
+	"missionCycleTime": 20,
+	"showMarker": false,
+	"showHint": true,
+	"showMessage": true,
+	"disableArsenal": true,
+	"missionList": [
+		0,
+		0,
+		1,
+		1,
+		1
+	],
+	"missionFiles": [],
+	"secondWave": [],
+	"distanceToMission": 100,
+	"distanceToPlayer": 500,
+	"activeTime": 1200,
+	"helicopterInfo": [
+		{
+			"resource": "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Flying_Patrol.et",
+			"throttle": 1.0099999904632569,
+			"rotorForce": 1.899999976158142,
+			"rotor2Force": 1.0099999904632569,
+			"power": 1.2000000476837159,
+			"rotorForceUp": 1.0099999904632569
+		},
+		{
+			"resource": "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Flying_Patrol.et",
+			"throttle": 1.0099999904632569,
+			"rotorForce": 2.200000047683716,
+			"rotor2Force": 1.0099999904632569,
+			"power": 1.2000000476837159,
+			"rotorForceUp": 1.0099999904632569
+		},
+		{
+			"resource": "{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et",
+			"throttle": 1.0099999904632569,
+			"rotorForce": 2.799999952316284,
+			"rotor2Force": 1.0099999904632569,
+			"power": 1.100000023841858,
+			"rotorForceUp": 1.0099999904632569
+		},
+		{
+			"resource": "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
+			"throttle": 1.0099999904632569,
+			"rotorForce": 2.799999952316284,
+			"rotor2Force": 1.0099999904632569,
+			"power": 1.100000023841858,
+			"rotorForceUp": 1.0099999904632569
+		},
+		{
+			"resource": "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et\t",
+			"throttle": 1.0099999904632569,
+			"rotorForce": 2.799999952316284,
+			"rotor2Force": 1.0099999904632569,
+			"power": 1.100000023841858,
+			"rotorForceUp": 1.0099999904632569
+		}
+	],
+	"subMissions": [
+		{
+			"general": {
+				"subIdx": 0,
+				"comment": "index 0: Randomly flying chopper",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 0.0,
+				"locationTypes": [],
+				"posName": "any",
+				"title": "Helicopter patroling",
+				"info": "Avoid being seen.",
+				"winCondition": 2,
+				"winMessage": "Helicopter is not your problem anymore.",
+				"loseMessage": "Helicopter lost track of you.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 18,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					2
+				],
+				"types": [
+					"G_LIGHT",
+					"G_ADMIN",
+					"G_RECON"
+				],
+				"skill": 30,
+				"perception": 0.6000000238418579,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 5,
+				"waypointMoveType": 6
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
+			},
+			"heliList": [
+				2
+			],
+			"flyHeight": [
+				35,
+				70
+			],
+			"speed": [
+				7,
+				25
+			],
+			"flyDistance": [
+				0.20000000298023225,
+				0.5
+			],
+			"wpType": 1
+		},
+		{
+			"general": {
+				"subIdx": 1,
+				"comment": "index 1: Gunships",
+				"pos": [
+					[
+						0.0,
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						0.0,
+						0.0
+					]
+				],
+				"size": 0.0,
+				"locationTypes": [],
+				"posName": "any",
+				"title": "Gunship hunter",
+				"info": "You will be shot if you're seen.",
+				"winCondition": 2,
+				"winMessage": "Gunship funship .. it's gone.",
+				"loseMessage": "Gunship lost track of you.",
+				"faction": "",
+				"markerType": "DARC_MISSION",
+				"markerIcon": 18,
+				"difficulty": 2,
+				"xp": 0
+			},
+			"ai": {
+				"count": [
+					1,
+					2
+				],
+				"types": [
+					"G_HEAVY",
+					"G_LIGHT"
+				],
+				"skill": 60,
+				"perception": 1.0,
+				"waypointRange": [
+					0,
+					0
+				],
+				"waypointGenType": 5,
+				"waypointMoveType": 6
+			},
+			"secondWave": {
+				"subIdx": [],
+				"activation": 1,
+				"delay": [],
+				"distance": [],
+				"info": "",
+				"difficulty": 0,
+				"xp": 0
+			},
+			"heliList": [
+				0,
+				1,
+				3,
+				4
+			],
+			"flyHeight": [
+				40,
+				80
+			],
+			"speed": [
+				10,
+				30
+			],
+			"flyDistance": [
+				0.20000000298023225,
+				0.4000000059604645
+			],
+			"wpType": 1
+		}
+	]
+}
