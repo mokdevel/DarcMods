@@ -19,7 +19,12 @@ Main features:
   * For proper support, delete your ``dc_enemyList.json`` to get an updated one.
 
 Changes:
-* Chopper mission: Mission starts closer to center of the world. Fixes the issue with Anizay.
+* Chopper mission: 
+  * Mission starts closer to center of the world. Fixes the issue with Anizay.
+  * Improved helicopter flight model. Smoother turning.
+  * Added new helicopter: UH1H_armed_gunship_HEDP_sharkNose_Patrol 
+  * Static missions will use ``activeTime`` defined in dc_missionConfig.json for the flight time.
+* Roadblock mission: Previous fix of barbed wire removal - delete the file to receive the updated file.
 
 Fixes: 
 

@@ -33,9 +33,6 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - [HunterKiller mod by Rabid Squirrel](https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller) for the initial kick to get into coding.
 - The great Arma Reforger community and #enfusion_scripting
 
-## Known issues
-- Moving map markers lose the text under them. 
-
 # Parameters
 All configurations are done via .json files. The information is on one line due to the save functionality in AR. See [FAQ](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/FAQ.md#q-the-oneline-jsons-are-hard-to-readedit) for more.
 The configuration files will be under your ```profile\DarcMods\<subDir>\*```, where the ``subDir`` is defined via ``dc_coreConfig.json``. 
@@ -62,6 +59,7 @@ Mission specific parameters for each mission type:
 * (8) [HVT VIP](./docs/MISSION_HVTVIP.md)
 * (9) [HVT Item](./docs/MISSION_HVTITEM.md)
 * (10) [Stash](./docs/MISSION_STASH.md)
+* (11) [Chopper](./docs/MISSION_CHOPPER.md)
 
 Other parameter details available:
 * [Lists](./docs/P_LISTS.md) for automatic loot and enemy lists
@@ -71,6 +69,8 @@ Other parameter details available:
 * [Structures](./docs/P_STRUCTURE.md)
 * [Buildings](./docs/P_BUILDING.md)
 * [Helicopters](./docs/P_HELICOPTER.md)
+* [Helicopters Crashing](./docs/P_HELICOPTER_CRASH.md)
+* [Helicopters Flying](./docs/P_HELICOPTER_FLY.md)
 
 # Configuration files
 The configuration files will be under your ```profile\DarcMods\<subConfDir>```. The <subConfDir> is a name for the specific sub directory under DarcMods and can be changed in dc_coreConfig.json. The default directory will be called ```default```.
@@ -97,3 +97,4 @@ Mission specific files
 
 Dependency specific files
 * [dc_coreConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_coreConfig.json) : Configuration file for core.
+* [dc_compatFFConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissionsCompatFF/ExampleConfigs/dc_compatFFConfig.json) : Configuration file for core.

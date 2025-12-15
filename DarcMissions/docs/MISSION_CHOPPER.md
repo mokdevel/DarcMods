@@ -51,23 +51,3 @@ SDRC_EHeliWaypointGenerationType wpType : Helicopter way point functionality
   1 = RANDOM : Helicopter will find a new random destination depending on flyDistance
   2 = PATROL : Unused currentlt. *TBD*
 ```
-
-## The flying mechanism
-This is the short version and more documentation to be provided.
-
-The functionality simulates (=fakes) how an AI would be flying the helicopter. The helicopter is provided with a destination or multiple, and a route is calculated to reach it. Depending on the curvature, distance and various other things, the helicopter is made to behave like it's actually flying.
-
-Arma Reforger physics are used to some extent to modify the speed and how the helicopter descents or climbs. AI behaviour on if they see the player and decision to shoot are managed by Arma Reforger.
-
-Parameters used for more natural flying:
-- The steeper the turn, the more helicopter roll is affected.
-- Pitch is modified depending on the speed.
-- Curvature of the flight affects roll but the helicopter tries to return natural flat flying slowly.
-
-### Re-use in mods
-The flight model is done as a component. In theory you can add that to any helicopter and they will gain autonomous flying capabilities. For the moment I suggest not to use this and wait for a few update iterations.
-
-### Issues
-There are various small things that are to be fixed in the future updates:
-- Climb in certain cases is too fast and does not look natural.
-- Flight path finding is simple for the moment. Steep turns sometimes look nice, sometimes not.
