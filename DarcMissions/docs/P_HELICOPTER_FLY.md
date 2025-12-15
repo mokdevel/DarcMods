@@ -62,7 +62,7 @@ Parameters used for more natural flying:
 - Curvature of the flight affects roll but the helicopter tries to return natural flat flying slowly.
 
 ## Re-use in mods
-The flight model is done as a component. In theory you can add that to any helicopter and they will gain autonomous flying capabilities. For the moment I suggest not to use this and wait for a few update iterations.
+The flight model is done as a component. You are free to use it in yours - credits are appreciated. In theory you can add that to any helicopter and they will gain autonomous flying capabilities.
 
 ## Issues
 There are various small things that are to be fixed in the future updates:
