@@ -20,7 +20,7 @@ sealed class SDRC_BuildingHelper
 	\param pos Position to start the search
 	\param radius Search radius. If set to -1, cached data will be used. This is for fast full map search but will ignore pos.
 	*/		
-	static void FindBuildings(out array<IEntity>buildings, array<string>filter, vector pos = "0 0 0", float radius = -1)
+	static void FindBuildings(out array<IEntity> buildings, array<string> filter, vector pos = "0 0 0", float radius = -1)
 	{	
 		if (radius == -1)
 		{
@@ -50,7 +50,7 @@ sealed class SDRC_BuildingHelper
 	\param buildingListSource List to filter
 	\param filter Words used to keep an item in the list
 	*/	
-	static void FilterBuildingList(out array<IEntity>buildings, array<IEntity>buildingListSource, array<string>filter)
+	static void FilterBuildingList(out array<IEntity> buildings, array<IEntity> buildingListSource, array<string> filter)
 	{
 		foreach (IEntity building: buildingListSource)
 		{
@@ -75,7 +75,7 @@ sealed class SDRC_BuildingHelper
 	Prepare an array with all houses on the map.
 	NOTE: The list is not necessarily only buildings but anything you'd like to consider as a point for e.g. mission spawning. 
 	*/		
-	static void FillBuildingsCache(array<string>filter)
+	static void FillBuildingsCache(array<string> filter)
 	{
 		SDRC_Log.Add("[SDRC_BuildingHelper:FillBuildingsCache] Searching..", LogLevel.NORMAL);			
 		
@@ -143,7 +143,7 @@ sealed class SDRC_BuildingHelper
 	static EntityID buildingID = null;	
 	static ref array<vector> buildingIDfloorCache = {};	
 	
-	static void FindBuildingFloors(out array<vector>floors, IEntity building)
+	static void FindBuildingFloors(out array<vector> floors, IEntity building)
 	{
 		array<vector>floorsTmp = {};
 		floors = {};

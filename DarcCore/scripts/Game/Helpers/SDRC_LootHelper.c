@@ -162,7 +162,7 @@ sealed class SDRC_LootHelper
 	/*! 
 	Give full loot list
 	*/	
-	static bool GetLootListItems(out array<string>items, string listName)
+	static bool GetLootListItems(out array<string> items, string listName)
 	{
 		int lootIndex = -1;
 		for (int i = 0; i < m_Config.lists.Count(); i++)		

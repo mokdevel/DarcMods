@@ -47,7 +47,7 @@ sealed class SDRC_EnemyHelper
 	Select the proper enemy resourcename for spawning. 
 	\param listName The enemyList to check. If a prefab "{xxx}.." is provided, that is returned.
 	*/	
-	static void SetEnemyFactions(array<string>enemyFactions)
+	static void SetEnemyFactions(array<string> enemyFactions)
 	{
 		SDRC_Log.Add("[SDRC_EnemyHelper:SetEnemyFactions] Setting enemy factions: " + enemyFactions, LogLevel.DEBUG);
 		m_sEnemyFactions = enemyFactions;		
@@ -71,13 +71,13 @@ sealed class SDRC_EnemyHelper
 	}*/
 			
 	//------------------------------------------------------------------------------------------------
-	static void SanityCheck(array<string>enemyFactions)
+	static void SanityCheck(array<string> enemyFactions)
 	{
 		//Sanity check
 		SDRC_Log.Add("[SDRC_EnemyHelper:SanityCheck] Checking that all factions (" + enemyFactions + ") have enemies.", LogLevel.NORMAL);
 		
-		array<string>factionsFound = {};		
-		array<string>factionsMissing = {};
+		array<string> factionsFound = {};		
+		array<string> factionsMissing = {};
 		
 		foreach (SDRC_List list : m_Config.lists)
 		{

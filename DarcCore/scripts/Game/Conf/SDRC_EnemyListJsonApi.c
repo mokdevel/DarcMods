@@ -308,8 +308,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"C_RIFLEMAN",
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"Rifleman", "Sapper", "_PL", "_SL",
-			 "Zombie_CIV", "Zombie_FIA", "Zombie_US", "Zombie_USSR", 			//Bacon Zombies
-			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists
+			 "Zombie_CIV", "Zombie_FIA", "Zombie_US", "Zombie_USSR", 	//Bacon Zombies
+			 "Civilian Cultist", 										//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -324,8 +324,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"C_HEAVY",
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"_GL", "_MG", "Grenadier", "_Ammo", "_LMG",
-			 "Exploder", "Heavy_Tank", 									//Bacon Zombies			
-			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists
+			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
+			 "Civilian Cultist", 							//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -342,7 +342,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Scout", "Spotter", "_RTO", "_SL", "_GL",
 			 "_AG1", //MEI		
 			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies
-			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists			
+			 "Civilian Cultist", 							//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -359,7 +359,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"_Officer", "Sergeant", "_AC", 
 			 "_Leader", //MEI
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
-			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists			
+			 "Civilian Cultist", 							//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -376,7 +376,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Crew", "Pilot", "_CC",
 			 "MEI_Leader", //MEI
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
-			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists
+			 "Civilian Cultist", 							//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -392,7 +392,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"Sniper", "Sharpshooter",
 			 "Exploder", 									//Bacon Zombies			
-			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists
+			 "Civilian Cultist", 							//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -408,7 +408,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"_AAT", "_AT", "_AT", "_LAT",
 			 "Exploder", 									//Bacon Zombies			
-			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists
+			 "Civilian Cultist", 							//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -424,7 +424,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"Medic",
 			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies
-			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists
+			 "Civilian Cultist", 							//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -443,7 +443,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "MEI_Rifleman1", //MEI
 			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies			
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
-			 "Civilian Cultist 1", "Civilian Cultist 2", "Civilian Cultist 3", 	//Ballien Cultists
+			 "Civilian Cultist", 							//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}

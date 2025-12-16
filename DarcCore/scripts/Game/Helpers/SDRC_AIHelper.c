@@ -549,9 +549,9 @@ sealed class SDRC_AIHelper
 			IEntity aiEntity = ai.GetControlledEntity();
 			if (aiEntity)
 			{
+/*				#ifndef NEW_VERSION_WIP	
 				DamageManagerComponent damageManager = DamageManagerComponent.Cast(aiEntity.FindComponent(DamageManagerComponent));
 				
-/*				#ifndef NEW_VERSION_WIP						
 					//TBD: Do we need to set the damage before despawn?
 					if (damageManager)
 						damageManager.SetHealthScaled(0);
