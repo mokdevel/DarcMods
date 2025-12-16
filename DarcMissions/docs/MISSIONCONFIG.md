@@ -21,12 +21,27 @@ int missionHintTime : (seconds) Time to show mission hints to players. 0 disable
 int missionRandomPos : The radius to randomize the mission position. This avoids mission appearing always in same place.
 int minDistanceToMission : Distance to another mission. Two missions shall not be too close to each other.
 int minDistanceToPlayer : Mission shall not spawn too close to a player.
-bool showStaticMissionMarker : Show/hide static mission markers. 
+bool showStaticMissionMarker : Show/hide static mission markers. This will override any mission specific settings.
+bool showDynamicMissionMarker : Show/hide dynamic mission markers. This will override any mission specific showMarker settings.
 array<string> enemyFactions : The array of factions to consider as enemies. "USSR" by default. 
-  Tested values: US, USSR, FIA, UK, RHS_USAF, RHS_AFRF, MEI, BALLIEN_BC_FACTION, BACON_622120A5448725E3_FACTION, UK
+  Tested values: US, USSR, FIA, UK, RHS_USAF, RHS_AFRF, MEI, UK, BALLIEN_BC_FACTION, BACON_622120A5448725E3_FACTION
   Unsupported values: RHS_ION, MEC
   You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission.
-  Example: "enemyFactions": ["FIA", "USSR"]
+  Example: "enemyFactions": ["FIA", "USSR", "USSR"] - 33% missions are with FIA, 66% with USSR
+array<int> missionLimit : Limits the amount of mission types that are spawned. The limit is total of static and dynamic missions. Requested missions e.g. GM spawned will not respect the limits by design.
+  Below are default/example values:
+    -1, // 0 - NONE
+    2,  // 1 - HUNTER
+    5,  // 2 - OCCUPATION
+    5,  // 3 - CONVOY
+    2,  // 4 - CRASHSITE
+    8,  // 5 - PATROL
+    3,  // 6 - SQUATTERS
+    8,  // 7 - ROADBLOCK
+    2,  // 8 - HVTVIP
+    2,  // 9 - HVTITEM
+    2,  //10 - STASH
+    2,  //11 - CHOPPER
 SDRC_MissionDifficulty missionDifficulty : Difficulty settings.
 SDRC_MissionTypeConfig missionDynamic : Dynamic missions configurations.
 SDRC_MissionTypeConfig missionStatic : Static missions configurations.

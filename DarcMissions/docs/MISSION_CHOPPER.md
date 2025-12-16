@@ -27,6 +27,7 @@ array<string> missionFiles : See Common parameters
 # Crashsite specific
 int distanceToMission : Distance to mission when searching for a mission pos. Overrides missionFrame settings.
 int distanceToPlayer : Distance to player when searching for a mission pos. Overrides missionFrame settings.
+float distanceToStart : (percentage) How far from the world center shall the helicopter spawn.
 int activeTime : (seconds) The time the mission should be running until the chopper flies away.
 array<SDRC_HelicopterInfo> helicopterInfo : Helicopter definitions
 array<SDRC_Chopper> subMissions : List of sub missions

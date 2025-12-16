@@ -5,23 +5,25 @@
 ## WIP 
 
 Changes:
-* dc_missionConfig.json : Added ``showDynamicMissionMarker`` : Show/hide static mission markers. This will override any mission specific ``showMarker`` settings.
 * Chopper mission: Added ``distanceToStart``, the distance from center of world for mission start.
 
 ## Next release (unreleased)
 No changes in mission jsons. 
 
 ## 202512xx
-dcNo changes in mission jsons. This is mainly a bug fix release.
 Changed jsons - remove the files to receive updated ones.
 * dc_coreConfig.json
+* dc_missionConfig.json
 * dc_missionConfig_Roadblock.json
+* dc_missionConfig_Chopper.json
+* dc_enemyList.json
 
 Main features:
 * Proper support for BallienCreatures Cultists faction. Setting ``BALLIEN_BC_FACTION`` as the enemy faction, will turn all mission enemies to cultists.
-  * For proper support, delete your ``dc_enemyList.json`` to get an updated one.  
 * Hint position can be either upper left or lower left corner. 
-* BuildingAkas : You can define buildings to define locations. For example, all police stations can be collected under location type 53 (EMapDescriptorType.MDT_POLICE).
+* You can define buildings to define locations. For example, all police stations can be collected under location type 53 (EMapDescriptorType.MDT_POLICE).
+* You can hide all dynamic mission markers with a single switch.
+* You can limit mission types separately to a maximum count.
 
 Changes:
 * Chopper mission: 
@@ -29,8 +31,14 @@ Changes:
   * Improved helicopter flight model. Smoother turning.
   * Added new helicopter: UH1H_armed_gunship_HEDP_sharkNose_Patrol 
   * Static missions will use ``activeTime`` defined in dc_missionConfig.json for the flight time.
-* Roadblock mission: Previous fix of barbed wire removal - delete the file to receive the updated file.
+* Roadblock mission: 
+  * Previous fix of barbed wire removal - delete the file to receive the updated file.
+  * Added a new road block
 * dc_coreConfig.json: Added ``debugShowLines``, ``debugShowInfo``, ``hintPosition``, ``buildingAkas``
+* dc_missionConfig_Chopper.json : Added ``distanceToStart``
+* dc_missionConfig.json : 
+  * Added ``showDynamicMissionMarker`` : Show/hide static mission markers. This will override any mission specific ``showMarker`` settings.
+  * Added ``missionLimit`` : Limit mission types separately to a maximum count.
 
 Fixes: 
 
