@@ -25,6 +25,7 @@
 		private const int SDRC_MISSION_HINT_TIME = 90;									//Seconds to show the mission hint to players
 		private const int SDRC_MISSION_RANDOM_POS = 100;								//The randomization for search radius for mission position 
 		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;						//Show/hide static mission markers
+		private const bool SDRC_MISSION_SHOW_DYNAMIC_MARKER = true;
 		private const bool SDRC_MISSION_SHOW_TIME_LEFT = true;							//Show/hide static mission markers
 	#endif
 	
@@ -34,7 +35,7 @@
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 1;//10;//15;//5;//3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 3;//10;//15;//5;//3;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -50,6 +51,7 @@
 		private const int SDRC_MISSION_HINT_TIME = 90;
 		private const int SDRC_MISSION_RANDOM_POS = 100;
 		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;
+		private const bool SDRC_MISSION_SHOW_DYNAMIC_MARKER = true;
 		private const bool SDRC_MISSION_SHOW_TIME_LEFT = true;
 	#endif
 
@@ -76,11 +78,10 @@ class SDRC_MissionFrameConfig : Managed
 	int minDistanceToMission;				//Distance to another mission. Two missions shall not be too close to each other.
 	int minDistanceToPlayer;				//Mission shall not spawn too close to a player.
 	bool showStaticMissionMarker;			//Show static mission marker
-#ifdef NEW_VERSION_WIP	
 	bool showDynamicMissionMarker;			//Show dynamic mission marker
-#endif
 	bool showMissionTimeLeft;				//Show mission time left on marker click
-	ref array<string>enemyFactions;			//Factions to use for enemy selection
+	ref array<string> enemyFactions;		//Factions to use for enemy selection
+	ref array<int> missionLimit = {};		//Limits for different types of missions
 	ref SDRC_MissionDifficulty missionDifficulty = new SDRC_MissionDifficulty();
 	ref SDRC_MissionTypeConfig missionDynamic = new SDRC_MissionTypeConfig();
 	ref SDRC_MissionTypeConfig missionStatic = new SDRC_MissionTypeConfig();
@@ -175,13 +176,25 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.minDistanceToMission = SDRC_MISSION_MIN_DISTANCE;
 		conf.minDistanceToPlayer = SDRC_PLAYER_MIN_DISTANCE;
 		conf.showStaticMissionMarker = SDRC_MISSION_SHOW_STATIC_MARKER;
-#ifdef NEW_VERSION_WIP		
-		conf.showDynamicMissionMarker = true;
-#endif
+		conf.showDynamicMissionMarker = SDRC_MISSION_SHOW_DYNAMIC_MARKER;
 		conf.showMissionTimeLeft = SDRC_MISSION_SHOW_TIME_LEFT;
 		
 		#ifdef SDRC_RELEASE
 			conf.enemyFactions = {"USSR"};
+			conf.missionLimit = {
+				  -1, // 0 - NONE
+				  2,  // 1 - HUNTER
+				  5,  // 2 - OCCUPATION
+				  5,  // 3 - CONVOY
+				  2,  // 4 - CRASHSITE
+				  8,  // 5 - PATROL
+				  3,  // 6 - SQUATTERS
+				  8,  // 7 - ROADBLOCK
+				  2,  // 8 - HVTVIP
+				  2,  // 9 - HVTITEM
+				  2,  //10 - STASH
+				  2,  //11 - CHOPPER
+			};
 			conf.missionDynamic.missionTypeArray = {
 											SDRC_EMissionType.STASH, 
 											SDRC_EMissionType.CRASHSITE, 
@@ -205,8 +218,8 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-			conf.enemyFactions = {"US"};
-//			conf.enemyFactions = {"USSR"};
+//			conf.enemyFactions = {"US"};
+			conf.enemyFactions = {"USSR"};
 //			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION"};
 //			conf.enemyFactions = {"BALLIEN_BC_FACTION"};
@@ -220,6 +233,21 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.enemyFactions = {"RHS_USAF", "RHS_AFRF"};
 //			conf.enemyFactions = {"USAF_USMC", "RHS_RF"};
 //			conf.enemyFactions = {"MEI"};
+		
+			conf.missionLimit = {
+				  -1, // 0 - NONE
+				  2,  // 1 - HUNTER
+				  5,  // 2 - OCCUPATION
+				  5,  // 3 - CONVOY
+				  2,  // 4 - CRASHSITE
+				  8,  // 5 - PATROL
+				  3,  // 6 - SQUATTERS
+				  8,  // 7 - ROADBLOCK
+				  2,  // 8 - HVTVIP
+				  2,  // 9 - HVTITEM
+				  2,  //10 - STASH
+				  2,  //11 - CHOPPER
+			};
 		
 			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
@@ -240,11 +268,11 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
+			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
 //			conf.missionStatic.missionTypeArray = {};
-			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
+//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE};		
 		
 		#endif

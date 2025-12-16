@@ -401,13 +401,79 @@ class SDRC_MissionHelper
 		}		
 		return chance;		
 	}		
-	
-/*	//------------------------------------------------------------------------------------------------
-	static void Bye()
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Select the mission type and respect the mission limits
+	\param dynamic To request for a dynamic or static mission
+	*/	
+	static SDRC_EMissionType SelectMissionType(bool dynamic = true)
 	{
-		Print("SDRC Bye: vanilla");
-		return;
-	}*/
+		SDRC_EMissionType missionType = SDRC_EMissionType.NONE;
+		int cnt = 0;
+		
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (m_BaseGameMode)
+		{
+			for (int i = 0; i < 10; i++)
+			{			
+				if (dynamic)
+				{
+					//missionType = m_Config.missionDynamic.missionTypeArray.GetRandomElement();
+					missionType = m_BaseGameMode.missionFrame.m_Config.missionDynamic.missionTypeArray.GetRandomElement();
+				}
+				else
+				{
+					//missionType = m_Config.missionStatic.missionTypeArray.GetRandomElement();
+					missionType = m_BaseGameMode.missionFrame.m_Config.missionStatic.missionTypeArray.GetRandomElement();
+				}
+				
+				cnt = CountMissionsOfType(missionType);
+				
+				//If no limit set, accept the missionType
+				if (m_BaseGameMode.missionFrame.m_Config.missionLimit[missionType] == -1)
+				{
+					break;
+				}
+				
+				//If count is less than limit set, accept the missionType
+				if (cnt < m_BaseGameMode.missionFrame.m_Config.missionLimit[missionType])
+				{
+					break;
+				}
+				
+				SDRC_Log.Add("[SDRC_MissionHelper:SelectMissionType] Trying again.. ", LogLevel.DEBUG);
+			}
+		}
+				
+		SDRC_Log.Add("[SDRC_MissionHelper:SelectMissionType] There are now " + (CountMissionsOfType(missionType) + 1) + " missions of type " + SCR_Enum.GetEnumName(SDRC_EMissionType, missionType), LogLevel.DEBUG);
+		
+		return missionType;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Return the amount of missions of given type
+	\param missionType The mission type to count
+	*/	
+	static int CountMissionsOfType(SDRC_EMissionType missionType)
+	{
+		int cnt = 0;
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (m_BaseGameMode)
+		{
+			foreach(SDRC_Mission mission : m_BaseGameMode.missionFrame.m_MissionList)
+			{
+				if (mission.GetType() == missionType)
+				{
+					cnt++;
+				}
+			}
+			
+				
+		}
+		return cnt;
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	/*!

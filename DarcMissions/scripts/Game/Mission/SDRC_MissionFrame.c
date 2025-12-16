@@ -183,7 +183,8 @@ class SDRC_MissionFrame
 			}
 			else
 			{
-				missionType = m_Config.missionStatic.missionTypeArray.GetRandomElement();
+				missionType = SDRC_MissionHelper.SelectMissionType(false);
+				//missionType = m_Config.missionStatic.missionTypeArray.GetRandomElement();
 			}
 			tmpDC_Mission = MissionCreate(missionType);
 			if (tmpDC_Mission)
@@ -220,7 +221,8 @@ class SDRC_MissionFrame
 					}
 					else
 					{
-						missionType = m_Config.missionDynamic.missionTypeArray.GetRandomElement();
+						missionType = SDRC_MissionHelper.SelectMissionType(true);
+						//missionType = m_Config.missionDynamic.missionTypeArray.GetRandomElement();
 					}
 					//If regular mission is to be spawned, static missions have already been handled.
 					m_iStaticTryCount = m_iStaticTryLimit;
