@@ -1,6 +1,6 @@
 GenericEntity : "{0B24DD72DAF499F4}PrefabsEditable/Auto/Props/Military/AmmoBoxes/EquipmentBoxStack/E_EquipmentBoxStack_US_01_V6_covered.et" {
- coords 80.78 1 94.665
- angleY 89.871
+ coords 49.696 1 94.665
+ angles 0 89.871 0
  {
   GenericEntity {
    ID "56B6871A1414CB69"
@@ -8,29 +8,39 @@ GenericEntity : "{0B24DD72DAF499F4}PrefabsEditable/Auto/Props/Military/AmmoBoxes
   }
  }
 }
-$grp StaticModelEntity : "{172DD50ACF177B9E}Prefabs/Props/Military/Furniture/ChairMilitary_USSR_01.et" {
+$grp GenericEntity : "{172DD50ACF177B9E}Prefabs/Props/Military/Furniture/ChairMilitary_USSR_01.et" {
  {
   coords 79.397 1 92.375
-  angleY -38.585
+  angles 0 -38.585 0
  }
  {
   coords 79.581 1 90.916
-  angleY -152.007
+  angles 0 -152.007 0
  }
 }
 GenericEntity : "{3EC72887AEC40F22}PrefabsEditable/Auto/Props/Furniture/TableOld_01/E_TableOld_01_white.et" {
- coords 79.55 1 91.494
+ coords 48.466 1 91.494
 }
 SCR_DestructibleEntity : "{BEC236C8D6F6E783}PrefabsEditable/Auto/Props/Furniture/ChairRecreation_01/E_ChairRecreation_01_red.et" {
- coords 76.986 1 91.978
- angleY 60.6
+ coords 45.902 1 91.978
+ angles 0 60.6 0
 }
 SCR_DestructibleBuildingEntity : "{C768E842A6F11CEE}Prefabs/Structures/Military/Camps/TentUSSR_01/TentUSSR_01_camonet.et" {
- coords 78.758 0 92.718
+ coords 47.674 0 92.718
+ {
+  GenericEntity {
+   ID "5A04A8A7B4EC66AE"
+   coords 0 0 0
+  }
+  GenericEntity {
+   ID "5690D0044793B50B"
+   coords 0 0 0
+  }
+ }
 }
 Vehicle UAZ469_FIA_uncovered1 : "{E28501E93F8EFDC0}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_FIA_uncovered.et" {
- coords 84.933 1 97.416
- angleY -43.327
+ coords 53.849 1 97.416
+ angles 0 -43.327 0
 }
 GameEntity : "{FF3ED8B26C05A940}PrefabsEditable/Auto/Props/Military/Camps/E_LanternMilitary_US_01.et" {
  coords 76.758 1 92.856

@@ -1,53 +1,93 @@
-GenericEntity : "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et" {
- coords 130.023 1 81.107
-}
 GenericEntity : "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et" {
- coords 132.441 1 85.127
+ coords 74.747 1 79.734
 }
 StaticModelEntity : "{116C488674B5A4A6}Prefabs/Structures/Commercial/FuelStations/FuelStation_E_01/Dst/FuelStation_E_01_roof_Ruin_base.et" {
- coords 143.453 1 79.224
+ coords 85.759 1 73.831
 }
 GenericEntity : "{215C30FCB7EF7E90}PrefabsEditable/Auto/Props/Military/WaterTanks/E_MobileWaterTank_USSR_01.et" {
- coords 143.21 1 73.047
- angleY -104.533
+ coords 85.516 1 67.654
+ angles 0 -104.533 0
 }
 SCR_DestructibleBuildingEntity : "{325991D9993FA95B}Prefabs/Structures/Houses/Village/HouseAddon_Shed_E_01/HouseAddon_Shed_E_01.et" {
- coords 136.378 0 91.665
- angleY -106.094
+ coords 78.684 0 86.272
+ angles 0 -106.094 0
+ {
+  GameEnvironmentProbeEntity {
+   ID "6122C72DCED8A12F"
+   coords 0 1.754 0
+  }
+  GenericEntity {
+   ID "5586B98BB2462125"
+   coords 0 0 0
+  }
+  GenericEntity {
+   ID "5586B98BB2462143"
+   coords 0 0 0
+  }
+  GenericEntity {
+   ID "5586B98BB2462106"
+   coords 0 0 0
+  }
+ }
 }
 StaticModelEntity : "{39AF1EE567E58C60}Prefabs/Structures/Houses/Village/HouseAddon_Shed_E_01/Dst/HouseAddon_Shed_E_01_Ruin_base.et" {
- coords 135.091 1 95.696
- angleY 75.947
+ coords 77.397 1 90.303
+ angles 0 75.947 0
 }
 SCR_DestructibleBuildingEntity : "{4472D9B48597C94D}Prefabs/Structures/Houses/Village/HouseAddon_Workshop_E_01/HouseAddon_Workshop_E_01_base.et" {
- coords 124.517 0 82.525
+ coords 66.823 0 77.132
+ {
+  GameEnvironmentProbeEntity {
+   ID "59F2D56D5069E23C"
+   coords 0.018 1.776 -0.947
+  }
+ }
 }
 GenericEntity : "{46F077BDA1AF95B2}PrefabsEditable/Auto/Props/Industrial/E_BarrelFuel_01_closed.et" {
- coords 128.008 1 71.131
+ coords 70.314 1 65.738
 }
 GenericEntity : "{71165C5EA36C797C}PrefabsEditable/Auto/Props/Infrastructure/SnowBreakers/E_SnowBreaker_E_01_C.et" {
- coords 137.615 1 73.961
- angleY -41.532
+ coords 79.921 1 68.568
+ angles 0 -41.532 0
 }
 GenericEntity : "{74BA7E97319D69C3}PrefabsEditable/Auto/Props/VehicleParts/Tires/E_Tire_Ural4320_pile.et" {
- coords 140.87 1 93.76
+ coords 83.176 1 88.367
+ {
+  GenericEntity {
+   ID "5216C470CA8AD60B"
+   coords -0.051 0.715 0.007
+  }
+  GenericEntity {
+   ID "5216C470CA8AD618"
+   coords 0.004 0.353 -0.002
+  }
+ }
 }
 GenericEntity : "{82008EE10AB80D6E}PrefabsEditable/Auto/Props/Wrecks/E_UAZ469_wreck.et" {
- coords 139.984 1 71.414
- angleY -135.756
+ coords 82.29 1 66.021
+ angles 0 -135.756 0
 }
 GenericEntity : "{A3EF3195AD211CDB}PrefabsEditable/Auto/Props/Industrial/Pallets/E_Pallet_01.et" {
  coords 130.23 1 76.851
- angleY 31.799
+ angles 0 31.799 0
 }
 GenericEntity : "{B724CDD1316A90B1}PrefabsEditable/Auto/Props/Industrial/Pallets/E_MarsBoxContainer_01_Wood.et" {
- coords 143.397 1 90.518
- angleY 20.223
+ coords 85.703 1 85.125
+ angles 0 20.223 0
 }
 StaticModelEntity : "{BE34698CFA200F28}Prefabs/Structures/Houses/Shed/Shed_01/Dst/Shed_01_Ruin.et" {
- coords 134.193 1 94.635
+ coords 76.499 1 89.242
 }
 SCR_DestructibleBuildingEntity : "{ED100C4FA5097FC5}Prefabs/Structures/Houses/Village/HouseAddon_Garage_E_01/HouseAddon_Garage_E_01_base.et" {
- coords 125.158 0 75.105
- angleY 90
+ coords 67.464 0 69.712
+ angles 0 90 0
+ {
+  GameEnvironmentProbeEntity {
+   ID "59F2D56D4A79B44A"
+   coords -0.653 1.631 -0.769
+  }
+ }
+}
+GenericEntity : "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et" {
+ coords 72.329 1 75.714
 }

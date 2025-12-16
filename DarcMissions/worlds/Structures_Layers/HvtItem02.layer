@@ -1,77 +1,123 @@
 GameEntity : "{0E94F28FD722B1D8}Prefabs/Props/Military/Generators/GeneratorFloodlight_US_01.et" {
- coords 241.481 1 131.634
- angleY -23.351
+ coords 237.653 1 115.657
+ angles 0 -23.351 0
 }
 GenericEntity : "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et" {
- coords 239.161 1 129.774
+ coords 235.333 1 113.797
 }
 $grp StaticModelEntity : "{7F8D6A0D827EA34B}Prefabs/Props/Military/Fortification/CzechHedgehog_01_base.et" {
  {
-  coords 253.171 -0 136.978
+  coords 249.343 0 121.001
  }
  {
-  coords 251.835 -0 139.877
+  coords 248.007 0 123.9
  }
  {
-  coords 241.803 0 126.524
+  coords 237.975 0 110.547
  }
 }
 $grp GenericEntity : "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et" {
  {
-  coords 246.482 1 142.942
+  coords 242.654 1 126.965
  }
  {
-  coords 239.978 1 141.694
-  angleY -20.77
+  coords 236.15 1 125.717
+  angles 0 -20.77 0
  }
  {
-  coords 245.447 1 128.339
-  angleY 154.533
+  coords 241.619 1 112.362
+  angles 0 154.533 0
  }
  {
-  coords 250.782 1 132.262
-  angleY 133.763
+  coords 246.954 1 116.285
+  angles 0 133.763 0
  }
 }
 GenericEntity : "{A528F04F41F2A2D0}Prefabs/Structures/Military/Radar/ApproachRadar_RPL5_01/ApproachRadar_RPL5_01_on.et" {
- coords 244.809 1 137.097
+ coords 240.981 1 121.12
 }
 $grp GenericEntity : "{B31A14BC1A0E7776}Prefabs/Props/Military/Sandbags/Sandbag_01_round_burlap.et" {
  {
-  coords 243.004 1 143.131
-  angleY -6.802
+  coords 239.176 1 127.154
+  angles 0 -6.802 0
  }
  {
-  coords 248.668 1 129.663
-  angleY 147.731
+  coords 244.84 1 113.686
+  angles 0 147.731 0
  }
 }
 $grp GenericEntity : "{B547CF929FCC6BB7}Prefabs/Props/Military/Sandbags/Sandbag_01_end_high_burlap.et" {
  {
-  coords 252.245 1 133.815
-  angleY -45.633
+  coords 248.417 1 117.838
+  angles 0 -45.633 0
  }
  {
-  coords 248.517 1 142.565
-  angleY 28.291
+  coords 244.689 1 126.588
+  angles 0 28.291 0
  }
 }
 GenericEntity : "{C32544547260D3F1}PrefabsEditable/Auto/Structures/Civilian/E_Latrine_01.et" {
- coords 235.318 1 130.793
- angleY 149.011
+ coords 231.49 1 114.816
+ angles 0 149.011 0
+ {
+  GenericEntity {
+   ID "55947BCFFC309D76"
+   coords 0 0 -0.001
+  }
+ }
 }
 StaticModelEntity : "{C86856FFC84B573A}PrefabsEditable/Auto/Structures/Military/Fortifications/E_DirtPile_01_large.et" {
- coords 241.817 0.827 136.378
+ coords 237.989 0.827 120.401
 }
 GenericEntity : "{DB4F61D5F37432F7}Prefabs/Props/Military/Camps/PalletFuel_01.et" {
- coords 238.013 1 136.755
- angleY -16.443
+ coords 234.185 1 120.778
+ angles 0 -16.443 0
 }
 SCR_DestructibleBuildingEntity : "{E30E1250FD927736}Prefabs/Structures/Industrial/Houses/PortableCabin_E_01/PortableCabin_E_01_beige.et" {
- coords 236.477 0 133.305
- angleY -36.874
+ coords 232.649 0 117.328
+ angles 0 -36.874 0
+ {
+  Building {
+   ID "587ED58FA42657FD"
+   coords 0 0 -0.001
+  }
+  GameEnvironmentProbeEntity {
+   ID "551EB1ECCBCD770F"
+   coords -0.15 1.704 -0.045
+  }
+  GenericEntity {
+   ID "5B1C952C6C53198C"
+   coords 0 0 0.001
+  }
+  GenericEntity {
+   ID "587ED58FA4265720"
+   coords 0 0 -0.001
+  }
+  GenericEntity {
+   ID "587ED6382B7F2074"
+   coords 0 0 -0.001
+   {
+    GenericEntity {
+     ID "587ECD76F1A64577"
+     coords 1.357 0.288 1.061
+    }
+    GenericEntity {
+     ID "587ECD76F1A6455A"
+     coords 1.094 0.288 1.933
+    }
+    GenericEntity {
+     ID "587ECD76F1A64525"
+     coords 0.38 0.288 -2.679
+    }
+    GenericEntity {
+     ID "587ECD76F1A64648"
+     coords 0.976 0.288 -0.982
+    }
+   }
+  }
+ }
 }
 GenericEntity : "{F922F6F1895F41E4}PrefabsEditable/Auto/Structures/Military/CamoNets/Soviet/E_CamoNet_Folded_Soviet.et" {
  coords 237.727 1 129.295
- angleY 31.985
+ angles 0 31.985 0
 }

@@ -1,24 +1,24 @@
 $grp GenericEntity : "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et" {
  {
-  coords 247.843 1 200.018
+  coords 237.64 1 171.109
  }
  {
-  coords 249.795 1 196.908
-  angleY -24.662
+  coords 239.592 1 167.999
+  angles 0 -24.662 0
  }
 }
 GenericEntity : "{47E0234DF4169EE5}Prefabs/Props/Military/CargoContainers/HvtCargoContainer_01_10ft_US_supplies.et" {
- coords 249.9 1 196.961
- angleY -18.644
+ coords 239.697 1 168.052
+ angles 0 -18.644 0
 }
 GenericEntity : "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et" {
- coords 250.977 1 204.513
- angleY -92.923
+ coords 240.774 1 175.604
+ angles 0 -92.923 0
 }
 SCR_ReplicatedParticleEffectEntity : "{563AD1F822D50049}Prefabs/EffectsModuleEntities/SDRC_BigSmoke.et" {
- coords 249.128 1.952 202.453
+ coords 238.925 1.952 173.544
 }
 GenericEntity : "{9E5EDE35EFBF70B7}PrefabsEditable/Auto/Props/Wrecks/E_M923A1_wreck.et" {
- coords 250.028 1 200.953
- angleY -50.699
+ coords 239.825 1 172.044
+ angles 0 -50.699 0
 }

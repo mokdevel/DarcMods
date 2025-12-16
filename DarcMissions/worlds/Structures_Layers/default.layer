@@ -2,7 +2,7 @@ SCR_AIWorld : "{E0A05C76552E7F58}Prefabs/AI/SCR_AIWorld.et" {
  coords 9.919 1 4.459
 }
 GenericWorldLightEntity {
- coords 120.114 1 105.571
+ coords 7.416 1 13.475
 }
 PerceptionManager PerceptionManager1 : "{028DAEAD63E056BE}Prefabs/World/Game/PerceptionManager.et" {
  coords 26.807 1 12.003

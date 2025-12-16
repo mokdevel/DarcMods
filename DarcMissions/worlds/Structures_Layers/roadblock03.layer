@@ -1,53 +1,83 @@
 $grp StaticModelEntity : "{07F043DD6AACCD0B}Prefabs/Structures/Infrastructure/Barriers/BarGate_01/BarGate_01.et" {
  {
-  coords 9.13 0 177.086
+  coords 9.13 0 167.58
+  {
+   GenericEntity {
+    ID "5EE111167686B083"
+    coords 0 0 0
+   }
+  }
  }
  {
-  coords 8.797 0 157.636
+  coords 8.797 0 148.13
+  {
+   GenericEntity {
+    ID "5EE111167686B083"
+    coords 0 0 0
+   }
+  }
  }
 }
 $grp GenericEntity : "{2FE7AA0EBA71CDFB}Prefabs/Structures/Signs/Large/SignLarge_01_MilitaryBase.et" {
  {
-  coords 13.018 1 180.409
+  coords 13.018 1 170.903
  }
  {
-  coords 12.97 1 154.555
+  coords 12.97 1 145.049
   angles 0 -180 0
  }
 }
 GenericEntity : "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et" {
- coords 4.106 1 164.03
+ coords 4.106 1 154.524
  angles 0 32.729 0
 }
 StaticModelEntity : "{6A004A8F0571D456}Prefabs/Structures/Infrastructure/Towers/TransmitterTower_01/TransmitterTower_01_small.et" {
- coords 2.711 1 174.351
+ coords 2.711 1 164.845
+ {
+  GenericEntity {
+   ID "5E0EE6168CAE86C7"
+   coords -0.565 21.001 0.019
+   {
+    GenericEntity {
+     ID "5E0670C4B6BF785A"
+     coords 0 -0.003 -0.003
+     {
+      GenericEntity {
+       ID "5A0882CA93C16A09"
+       coords 0 0.376 0
+      }
+     }
+    }
+   }
+  }
+ }
 }
 $grp StaticModelEntity : "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et" {
  {
-  coords 15.871 0 163.515
+  coords 15.871 0 154.009
   angles 0 28.496 0
  }
  {
-  coords 15.682 0 167.103
+  coords 15.682 0 157.597
   angles 0 -3.796 0
  }
  {
-  coords 16.06 0 171.102
+  coords 16.06 0 161.596
   angles 0 46.018 0
  }
  {
-  coords 14.785 0 175.695
+  coords 14.785 0 166.189
   angles 0 21.038 0
  }
  {
-  coords 14.358 0 159.652
+  coords 14.358 0 150.146
   angles 0 54.995 0
  }
 }
 SCR_DestructibleBuildingEntity : "{9498ADA13BCDB218}Prefabs/Structures/Military/Houses/GuardBox_01/GuardBox_01_Base.et" {
- coords 3.929 0 166.778
+ coords 3.929 0 157.272
  angles 0 -90 0
 }
 GenericEntity : "{E7117284012B39A4}Prefabs/Props/Garbage/Bins/TrashBin_02_patched.et" {
- coords 4.341 1 168.549
+ coords 4.341 1 159.043
 }

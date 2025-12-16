@@ -1,49 +1,55 @@
 GenericEntity : "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et" {
- coords 10.866 1 140.452
+ coords 10.866 1 129.76
  angles 0 2.385 0
 }
 $grp StaticModelEntity : "{5608B9078BF2AC5A}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragonsteeth_01_old_V1.et" {
  {
-  coords 15.628 0 138.299
+  coords 15.628 0 127.607
  }
  {
-  coords 5.514 0 136.293
+  coords 5.514 0 125.601
   angles 0 -11.07 0
  }
  {
-  coords 3.632 0 141.811
+  coords 3.632 0 131.119
   angles 0 24.752 0
  }
 }
 $grp GenericEntity : "{5EF52FAE299A831A}Prefabs/Props/Military/Sandbags/Sandbag_01_short_base.et" {
  {
-  coords 13.68 1 135.766
+  coords 13.68 1 125.074
   angles 0 -21.115 0
  }
  {
-  coords 8.664 1 134.464
+  coords 8.664 1 123.772
   angles 0 6.278 0
  }
 }
 GenericEntity : "{6A735BB1318B2E76}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_bunker_plastic_camonet.et" {
- coords 10.187 1 140.88
+ coords 10.187 1 130.188
+ {
+  GenericEntity {
+   ID "5690D005C8AE7226"
+   coords 0 0 0
+  }
+ }
 }
 $grp GenericEntity : "{A76FBE3B139F227A}PrefabsEditable/Auto/Structures/Signs/Military/E_SignCheckpoint_01_stop.et" {
  {
-  coords 6.063 1 147.099
+  coords 6.063 1 136.407
  }
  {
-  coords 12.689 1 147.489
+  coords 12.689 1 136.797
   angles 0 -9.375 0
  }
 }
 $grp GenericEntity : "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et" {
  {
-  coords 14.815 1 145.385
+  coords 14.815 1 134.693
   angles 0 37.532 0
  }
  {
-  coords 6.093 1 145.387
+  coords 6.093 1 134.695
   angles 0 -29.757 0
  }
 }

@@ -4,21 +4,21 @@ GenericEntity {
    Object "{97B6EE1A45A88A89}Assets/Vehicles/Helicopters/UH1H/UH1H_Wreck.xob"
   }
  }
- coords 103.251 1 124.179
+ coords 89.066 1 113.082
 }
 GenericEntity : "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et" {
- coords 106.274 1 121.108
+ coords 92.089 1 110.011
 }
 GenericEntity : "{310E849A808F9F5F}PrefabsEditable/Auto/Structures/Military/Camps/Canvas_Covers/US/E_CanvasCover_Folded_US.et" {
- coords 104.552 1 126.903
+ coords 90.367 1 115.806
 }
 StaticModelEntity : "{532795AD51CFBEDF}PrefabsEditable/Auto/Structures/Infrastructure/Piping/E_DieselPipe_01_hose_V2.et" {
- coords 104.745 1 123.685
+ coords 90.56 1 112.588
 }
 GenericEntity : "{7576CB87CAFAE6E8}PrefabsEditable/Auto/Structures/Military/CamoNets/US/E_CamoNet_AssemblyKit_US.et" {
- coords 103.559 1 119.949
- angleY -45.003
+ coords 89.374 1 108.852
+ angles 0 -45.003 0
 }
 GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et" {
- coords 97.911 1 121.527
+ coords 83.726 1 110.43
 }

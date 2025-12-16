@@ -1,29 +1,29 @@
 GameEntity : "{4BEFC7FCCB2BA121}Prefabs/Props/Military/Generators/GeneratorMilitary_USSR_01/HvtGeneratorMilitary_USSR_01.et" {
- coords 249.628 1 176.903
+ coords 241.51 1 152.333
 }
 GenericEntity : "{B4F2701CBBE49C48}Prefabs/Props/Military/Antennas/Antenna_RC292_01.et" {
- coords 246.121 1 174.906
+ coords 238.003 1 150.336
 }
 StaticModelEntity : "{C108EB96CCC73E94}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Table_Radio_US_01.et" {
- coords 243.349 1 176.169
+ coords 235.231 1 151.599
 }
-StaticModelEntity : "{D0974856AF6DAE81}PrefabsEditable/Auto/Props/Military/Furniture/E_ChairMilitary_US_01.et" {
- coords 243.376 1 176.954
- angleY -40.034
+GenericEntity : "{D0974856AF6DAE81}PrefabsEditable/Auto/Props/Military/Furniture/E_ChairMilitary_US_01.et" {
+ coords 235.258 1 152.384
+ angles 0 -40.034 0
 }
 $grp GenericEntity : "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et" {
  {
-  coords 252.327 1 177.128
+  coords 244.209 1 152.558
  }
  {
-  coords 251.787 1 181.118
-  angleY -27.459
+  coords 243.669 1 156.548
+  angles 0 -27.459 0
  }
  {
-  coords 251.091 1 172.209
-  angleY 39.983
+  coords 242.973 1 147.639
+  angles 0 39.983 0
  }
 }
 GenericEntity : "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et" {
- coords 243.294 1 174.755
+ coords 235.176 1 150.185
 }
