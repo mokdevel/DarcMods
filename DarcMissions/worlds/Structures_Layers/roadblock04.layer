@@ -1,0 +1,34 @@
+Vehicle S105_randomized1 : "{128253A267BE9424}Prefabs/Vehicles/Wheeled/S105/S105_randomized.et" {
+ coords 11.498 1 201.622
+ angles 0 56.282 0
+}
+SCR_ReplicatedParticleEffectEntity : "{37439557BBDEC2F9}Prefabs/EffectsModuleEntities/SDRC_SmallSmoke.et" {
+ coords 8.839 1.129 193.246
+}
+StaticModelEntity : "{5D0248A228159B01}Prefabs/Structures/Debris/DebrisPile/DebrisPile_Concrete_01_Debris_V4.et" {
+ coords 15.417 1 198.035
+ angles 0 -25.479 0
+}
+SCR_DestructibleBuildingEntity : "{736EECBB2B5FB5E7}Prefabs/Structures/Infrastructure/Bus/BusShed_E_01/BusShed_E_01_Base.et" {
+ coords 4.526 0 199.825
+ angles 0 90 0
+}
+$grp StaticModelEntity : "{85AA2163519C855D}Prefabs/Structures/Debris/DebrisPile/DebrisPile_Concrete_01_Debris_V2.et" {
+ {
+  coords 11.411 1 199.69
+ }
+ {
+  coords 12.379 1 206.063
+  angles 0 27.574 0
+ }
+}
+StaticModelEntity : "{97F01D47E387935A}Prefabs/Structures/Debris/DebrisPile/DebrisPile_Wood_01.et" {
+ coords 8.553 1 193.821
+}
+SCR_DestructibleBuildingEntity : "{B9E11E1CC3A95088}Prefabs/Structures/Agriculture/Gates/GateCollectiveFarm_02/GateCollectiveFarm_02_SaintPhilippe.et" {
+ coords 9.491 0 207.062
+}
+SCR_DestructibleBuildingEntity : "{F30731717AD0E0F2}Prefabs/Structures/Infrastructure/Landlines/PhoneBooth_E/PhoneBooth_USSR_01.et" {
+ coords 3.854 0 203.36
+ angles 0 -90 0
+}
