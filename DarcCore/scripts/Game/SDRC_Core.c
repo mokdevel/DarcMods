@@ -64,8 +64,6 @@ class SDRC_Core
 		
 		SDRC_Log.Add("[SDRC_Core] -------------------------------------", LogLevel.NORMAL);
 
-//		SDRC_EnemyHelper.SetDefaultEnemyFaction(m_Config.fallbackEnemyFaction);
-		
 		GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);			
 		
 		//Initialize LootHelper
@@ -78,13 +76,7 @@ class SDRC_Core
 		SDRC_EnemyHelper.Setup(m_Config.fallbackEnemyFaction);
 		
 		//Set debug visibility
-	#ifdef NEW_VERSION_WIP	
 		SDRC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres, m_Config.debugShowLines, m_Config.debugShowInfo);
-	#endif
-	#ifndef NEW_VERSION_WIP			
-		SDRC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres);
-	#endif
-		
 	}
 
 	void ~SDRC_Core()
@@ -104,12 +96,7 @@ class SDRC_Core
 	void FillLocationCache()
 	{
 		//Initialize locations cache
-		#ifdef NEW_VERSION_WIP
 		SDRC_Locations.FillLocationsCache(m_Config.locationAkas, m_Config.buildingAkas);
-		#endif
-		#ifndef NEW_VERSION_WIP
-		SDRC_Locations.FillLocationsCache(m_Config.locationAkas);
-		#endif
 
 		//Core initialized properly
 		SDRC_Conf.coreInitReady = true;

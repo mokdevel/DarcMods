@@ -19,8 +19,8 @@ class SDRC_CoreConfig : Managed
 	string fallbackEnemyFaction = "USSR";
 	bool showOnGMMapNonValidArea = true;	
 	bool showOnGMMapMissionMarker = true;
-//	SDRC_EHintPosition hintPosition = SDRC_EHintPosition.UP_LEFT;
-	SDRC_EHintPosition hintPosition = SDRC_EHintPosition.DOWN_LEFT;
+	SDRC_EHintPosition hintPosition = SDRC_EHintPosition.UP_LEFT;
+//	SDRC_EHintPosition hintPosition = SDRC_EHintPosition.DOWN_LEFT;
 	ref array<string> buildingExcludeFilter = {};
 	ref SDRC_EmptyPos emptyPos = new SDRC_EmptyPos();
 	ref array<ref SDRC_LocationAka> locationAkas = {};
@@ -132,6 +132,7 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 			"tem_palm2",
 		};
 		
+		// Location akas
 		ref SDRC_LocationAka aka00 = new SDRC_LocationAka();
 		aka00.Set(EMapDescriptorType.MDT_BASE, {"military"});
 		conf.locationAkas.Insert(aka00);
@@ -144,7 +145,7 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 		aka02.Set(EMapDescriptorType.MDT_PORT, {"harbour", "harbor"});
 		conf.locationAkas.Insert(aka02);						
 
-	#ifdef NEW_VERSION_WIP
+		// Building akas
 		ref SDRC_LocationAka b_aka00 = new SDRC_LocationAka();
 		b_aka00.Set(EMapDescriptorType.MDT_CHURCH, {"Church", "Mosque_", "Minaret", });
 		conf.buildingAkas.Insert(b_aka00);
@@ -152,6 +153,5 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 		ref SDRC_LocationAka b_aka01 = new SDRC_LocationAka();
 		b_aka01.Set(EMapDescriptorType.MDT_POLICE, {"_Police"});
 		conf.buildingAkas.Insert(b_aka01);
-	#endif
 	}
 };
