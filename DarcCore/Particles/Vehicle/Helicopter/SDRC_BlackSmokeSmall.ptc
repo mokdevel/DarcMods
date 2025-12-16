@@ -1,0 +1,97 @@
+EffectDef {
+ Version 2
+ Emitters {
+  EmitterDef fast_smoke {
+   ShapeType Sphere
+   ConeAngle 360 0 45
+   ConeAngleMinDist 18.989
+   ConeAngleRndRange 39.56
+   MaxNum 20
+   BirthRate 2.7
+   BirthRateRND 0.1
+   BirthRateVel 0.2
+   Offset 0 0 0
+   Angles 0 0 90
+   Material "{03CA8CFC9A160CDC}system/wbdata/ParticleEditor/SDRC_defaultMaterial.emat"
+   SizeMultiplier 0.5
+   SizeRND 2
+   RotMultiplier 15
+   RotRND 8
+   RandomRotDir 1
+   RandomAngle 1
+   FlipU Random
+   FlipV Random
+   Velocity 0.08
+   VelocityRND 0.02
+   VelAffect 0.59
+   AirResistance 0.4
+   AirResistanceRND 0.35
+   WindInfluence 0.72
+   GravityMultiply -0.1
+   GravityMultiplyRND 0.03
+   Spring 0
+   AnimFPS 1
+   RandomFrame 1
+   Lifetime 1.9
+   LifetimeRND 4.3
+   LifetimeVelFactor 0.359
+   LifetimeVelSmoothing 1.29
+   Alpha {
+    0 0 0.132 0.737 0.658 0.149 1 0
+   }
+   Emissivity {
+    0 0 0.132 0.737 0.658 0.149 1 0
+   }
+   RotationSpeed {
+    0 0 0.132 0.737 0.658 0.149 1 0
+   }
+   EmittingTime 2.001
+  }
+  EmitterDef smoke_big {
+   ShapeType Box
+   ShapeSize 0.5 0.5 0.4
+   ConeAngle 360 0 55
+   ConeAngleMinDist 80
+   MaxNum 20
+   BirthRateVel 1
+   Offset 0 0.5 0
+   Angles -90 0 0
+   LodMin 0
+   LodMax 1
+   Material "{029D33C344E15DFB}Particles/_Materials/Gas/Smoke_loop_01.emat"
+   SizeMultiplier 3
+   SizeRND 2
+   RotMultiplier 20
+   RandomRotDir 1
+   RandomAngle 1
+   Velocity 0.25
+   VelocityRND 0.25
+   VelAffect 0.2
+   AirResistance 0.6
+   AirResistanceRND 0
+   WindInfluence 1
+   ParentVelRelToAir 0.35
+   GravityMultiply -0.1
+   AnimFPS 60
+   Lifetime 2.8
+   LifetimeRND 1.8
+   LifetimeVelFactor 0.12
+   Color {
+    0 0.209 0.209 0.209 1 0.05 0.05 0.05
+   }
+   Alpha {
+    0 0 0.132 0.737 0.658 0.149 1 0
+   }
+   RotationSpeed {
+    0 0.025 1 1
+   }
+   Size {
+    0 0 0.14 0.128 0.33 0.432 0.612 0.764 1 1
+   }
+  }
+ }
+ MinFPS 1
+ LightOffset 0 3 0
+ LightClipEV -11.385
+ LightRadius 30
+}
