@@ -858,12 +858,7 @@ class SDRC_Mission
 			return;
 		}
 		
-#ifdef NEW_VERSION_WIP		
 		if (IsShowMarker() && baseGameMode.missionFrame.m_Config.showDynamicMissionMarker)
-#endif		
-#ifndef NEW_VERSION_WIP			
-		if (IsShowMarker())
-#endif		
 		{
 			string markerType = GetMarkerType();
 			SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), GetMarkerIcon(), GetId(), GetTitle(), markerTypeString: markerType);

@@ -40,13 +40,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		//Find position
 		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
 
-	#ifdef NEW_VERSION_WIP	
 		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(m_Config.distanceToStart);
-		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.1);
-	#endif
-	#ifndef NEW_VERSION_WIP	
-		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.49);
-	#endif
+		//m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.1);
 
 		//No suitable location found.
 		if (pos == "0 0 0")
@@ -236,9 +231,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 {
 	int distanceToMission;									//Distance to mission when searching for a mission pos. Overrides missionFrame settings.
 	int distanceToPlayer;									//Distance to player when searching for a mission pos. Overrides missionFrame settings.
-#ifdef NEW_VERSION_WIP	
-	float distanceToStart;
-#endif
+	float distanceToStart;									//(percentage) Distance from the center of world for the helicopter to spawn.
 	int activeTime;											//The time the mission should be running until the chopper flies away.
 	ref array<ref SDRC_HelicopterInfo> helicopterInfo = {};	//Helicopter details
 	ref array<ref SDRC_Chopper> subMissions = {};			//List of sub missions
@@ -363,9 +356,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		//Mission specific
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;
-	#ifdef NEW_VERSION_WIP	
 		conf.distanceToStart = 0.49;
-	#endif
 		conf.activeTime = 20*60;
 		
 		//----------------------------------------------------
@@ -382,35 +373,35 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 	SDRC_HelicopterInfo Heli00()
 	{
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Flying_Patrol.et", 1.01, 1.9, 1.01, 1.2, 1.01);
+		heli.Set("Index 0: Vanilla Mi8MT", "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Flying_Patrol.et", 1.01, 1.9, 1.01, 1.2, 1.01);
 		return heli;		
 	}
 	
 	SDRC_HelicopterInfo Heli01()
 	{
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Flying_Patrol.et", 1.01, 2.20, 1.01, 1.2, 1.01);
+		heli.Set("Index 1: Vanilla Mi8MT", "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Flying_Patrol.et", 1.01, 2.20, 1.01, 1.2, 1.01);
 		return heli;		
 	}
 	
 	SDRC_HelicopterInfo Heli02()
 	{	
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et",	1.01, 2.80, 1.01, 1.1, 1.01);
+		heli.Set("Index 2: Vanilla UH1H", "{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et",	1.01, 2.80, 1.01, 1.1, 1.01);
 		return heli;		
 	}
 	
 	SDRC_HelicopterInfo Heli03()
 	{	
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",	1.01, 2.80, 1.01, 1.1, 1.01);
+		heli.Set("Index 3: Vanilla UH1H", "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",	1.01, 2.80, 1.01, 1.1, 1.01);
 		return heli;		
 	}
 
 	SDRC_HelicopterInfo Heli04()
 	{	
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et	",	1.01, 2.80, 1.01, 1.1, 1.01);
+		heli.Set("Index 4: Vanilla UH1H", "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et	",	1.01, 2.80, 1.01, 1.1, 1.01);
 		return heli;		
 	}
 			
