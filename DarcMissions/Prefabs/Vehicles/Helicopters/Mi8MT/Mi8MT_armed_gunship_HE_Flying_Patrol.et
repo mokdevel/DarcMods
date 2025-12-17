@@ -20,6 +20,8 @@ Vehicle : "{98225ED6D5F724D7}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_guns
    }
   }
   SDRC_ChopperComp "{66C548F5776E7383}" {
+   m_fPower 1.1
+   m_fRotorForce0 1.9
   }
   VehicleHelicopterSimulation "{51FAEE57F7DA270E}" {
    Simulation Helicopter "{51FAED9EF37A2D29}" {

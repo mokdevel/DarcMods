@@ -69,6 +69,8 @@ Vehicle : "{D03C0F6044DB5208}Prefabs/Vehicles/Helicopters/UH1H/UH1H_base.et" {
    }
   }
   SDRC_ChopperComp "{66B68B7EB50B855E}" {
+   m_fPower 1.1
+   m_fRotorForce0 2.8
   }
   VehicleHelicopterSimulation "{51FAEE57F7DA270E}" {
    Animation VehicleAnimation "{5D9CEE8599E9D9BA}" {
