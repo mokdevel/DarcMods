@@ -7,7 +7,7 @@
 ## Next release (unreleased)
 No changes in mission jsons. 
 
-## 202512xx
+## 20251217
 Changed jsons - remove the files to receive updated ones.
 * dc_coreConfig.json
 * dc_missionConfig.json
