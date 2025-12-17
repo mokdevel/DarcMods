@@ -56,6 +56,11 @@ sealed class SDRC_VehicleHelper
 		//Do the spawning	
 		foreach(ResourceName aiPrefab : aiPrefabs)
 		{
+			if (aiPrefab == "")
+			{
+				continue;
+			}
+			
 			SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Prefab to spawn: " + aiPrefab, LogLevel.DEBUG);
 			foreach(BaseCompartmentSlot compartment : compartments)
 			{
