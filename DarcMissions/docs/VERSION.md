@@ -4,9 +4,6 @@
 
 ## WIP 
 
-Changes:
-* Chopper mission: Added ``distanceToStart``, the distance from center of world for mission start.
-
 ## Next release (unreleased)
 No changes in mission jsons. 
 
@@ -19,7 +16,8 @@ Changed jsons - remove the files to receive updated ones.
 * dc_enemyList.json
 
 Main features:
-* Proper support for BallienCreatures Cultists faction. Setting ``BALLIEN_BC_FACTION`` as the enemy faction, will turn all mission enemies to cultists.
+* Support for BallienCreatures Cultists faction. Setting ``BALLIEN_BC_FACTION`` as the enemy faction, will turn all mission enemies to cultists.
+* Support for Bandit Faction. Setting ``PLASTICBANDIT`` as the enemy faction, will turn all mission enemies to bandits.
 * Hint position can be either upper left or lower left corner. 
 * You can define buildings to define locations. For example, all police stations can be collected under location type 53 (EMapDescriptorType.MDT_POLICE).
 * You can hide all dynamic mission markers with a single switch.
@@ -34,11 +32,12 @@ Changes:
 * Roadblock mission: 
   * Previous fix of barbed wire removal - delete the file to receive the updated file.
   * Added a new road block
-* dc_coreConfig.json: Added ``debugShowLines``, ``debugShowInfo``, ``hintPosition``, ``buildingAkas``
+* dc_coreConfig.json: Added ``debugShowLines``, ``debugShowInfo``, ``buildingAkas``
 * dc_missionConfig_Chopper.json : Added ``distanceToStart``
 * dc_missionConfig.json : 
   * Added ``showDynamicMissionMarker`` : Show/hide static mission markers. This will override any mission specific ``showMarker`` settings.
   * Added ``missionLimit`` : Limit mission types separately to a maximum count.
+  * Added ``missionHintPosition`` : Set position of hint on screen. 
 
 Fixes: 
 

@@ -18,13 +18,16 @@ int missionActiveTimeToEnd : (seconds) Time to keep the mission active once all 
 float missionActiveDistanceMul : <TBD: more documentation>
 float missionActiveTimeToEndMul : <TBD: more documentation>
 int missionHintTime : (seconds) Time to show mission hints to players. 0 disables ALL hints.
+SDRC_EHintPosition missionHintPosition : Position of the hint/popup. 
+  0 = UP_LEFT : Upper left corner 
+  1 = DOWN_LEFT : Lower left corner 
 int missionRandomPos : The radius to randomize the mission position. This avoids mission appearing always in same place.
 int minDistanceToMission : Distance to another mission. Two missions shall not be too close to each other.
 int minDistanceToPlayer : Mission shall not spawn too close to a player.
 bool showStaticMissionMarker : Show/hide static mission markers. This will override any mission specific settings.
 bool showDynamicMissionMarker : Show/hide dynamic mission markers. This will override any mission specific showMarker settings.
 array<string> enemyFactions : The array of factions to consider as enemies. "USSR" by default. 
-  Tested values: US, USSR, FIA, UK, RHS_USAF, RHS_AFRF, MEI, UK, BALLIEN_BC_FACTION, BACON_622120A5448725E3_FACTION
+  Tested values: US, USSR, FIA, UK, RHS_USAF, RHS_AFRF, MEI, UK, BALLIEN_BC_FACTION, BACON_622120A5448725E3_FACTION, PLASTICBANDIT
   Unsupported values: RHS_ION, MEC
   You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission.
   Example: "enemyFactions": ["FIA", "USSR", "USSR"] - 33% missions are with FIA, 66% with USSR

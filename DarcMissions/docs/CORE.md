@@ -24,9 +24,6 @@ bool debugShowInfo : Only in WB. Show/hide info.
 string fallbackEnemyFaction : (USSR) The default faction to assign to AI in case the proper faction is not available. For example: If FIA is not assigned but a FIA AI is spawned, it's set as USSR
 bool showOnGMMapNonValidArea : When enabled, nonValidAreas are shown on the GM map.
 bool showOnGMMapMissionMarker : When enabled, mission markers are shown on the GM map.
-SDRC_EHintPosition hintPosition : Position of the hint/popup. 
-  0 = UP_LEFT : Upper left corner 
-  1 = DOWN_LEFT : Lower left corner 
 array<string>buildingExcludeFilter : Exclude these prefab names from the cached building list. The list of buildings are cached to avoid a rescan on the map.
 SDRC_EmptyPos emptyPos
   int limit : See section: Empty position finding
