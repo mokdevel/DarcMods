@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"author": "darc",
-	"missionCycleTime": 20,
+	"missionCycleTime": 30,
 	"showMarker": false,
 	"showHint": true,
 	"showMessage": true,
@@ -17,9 +17,11 @@
 	"secondWave": [],
 	"distanceToMission": 100,
 	"distanceToPlayer": 500,
+	"distanceToStart": 0.49000000953674319,
 	"activeTime": 1200,
 	"helicopterInfo": [
 		{
+			"comment": "Index 0: Vanilla Mi8MT",
 			"resource": "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Flying_Patrol.et",
 			"throttle": 1.0099999904632569,
 			"rotorForce": 1.899999976158142,
@@ -28,6 +30,7 @@
 			"rotorForceUp": 1.0099999904632569
 		},
 		{
+			"comment": "Index 1: Vanilla Mi8MT",
 			"resource": "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Flying_Patrol.et",
 			"throttle": 1.0099999904632569,
 			"rotorForce": 2.200000047683716,
@@ -36,6 +39,7 @@
 			"rotorForceUp": 1.0099999904632569
 		},
 		{
+			"comment": "Index 2: Vanilla UH1H",
 			"resource": "{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et",
 			"throttle": 1.0099999904632569,
 			"rotorForce": 2.799999952316284,
@@ -44,6 +48,7 @@
 			"rotorForceUp": 1.0099999904632569
 		},
 		{
+			"comment": "Index 3: Vanilla UH1H",
 			"resource": "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
 			"throttle": 1.0099999904632569,
 			"rotorForce": 2.799999952316284,
@@ -52,7 +57,8 @@
 			"rotorForceUp": 1.0099999904632569
 		},
 		{
-			"resource": "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et\t",
+			"comment": "Index 4: Vanilla UH1H",
+			"resource": "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
 			"throttle": 1.0099999904632569,
 			"rotorForce": 2.799999952316284,
 			"rotor2Force": 1.0099999904632569,

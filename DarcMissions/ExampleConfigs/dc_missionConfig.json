@@ -10,49 +10,65 @@
 	"missionActiveDistanceMul": 0.8999999761581421,
 	"missionActiveTimeToEndMul": 0.8999999761581421,
 	"missionHintTime": 90,
+	"missionHintPosition": 0,
 	"missionRandomPos": 100,
 	"minDistanceToMission": 500,
 	"minDistanceToPlayer": 100,
 	"showStaticMissionMarker": true,
+	"showDynamicMissionMarker": true,
 	"showMissionTimeLeft": true,
 	"enemyFactions": [
 		"USSR"
+	],
+	"missionLimit": [
+		-1,
+		2,
+		5,
+		5,
+		2,
+		8,
+		3,
+		8,
+		2,
+		2,
+		2,
+		2
 	],
 	"missionDifficulty": {
 		"aiCountCoef": [
 			0.5,
 			0.6000000238418579,
-			1.0,
-			2.0,
-			3.0
+			1.0099999904632569,
+			2.009999990463257,
+			3.009999990463257
 		],
 		"aiSkillCoef": [
 			0.20000000298023225,
 			0.6000000238418579,
-			1.0,
+			1.0099999904632569,
 			1.2999999523162842,
 			1.600000023841858
 		],
 		"aiPerceptionCoef": [
 			0.20000000298023225,
 			0.6000000238418579,
-			1.0,
+			1.0099999904632569,
 			1.2999999523162842,
 			1.600000023841858
 		],
 		"lootChanceCoef": [
 			0.5,
 			0.6000000238418579,
-			1.0,
+			1.0099999904632569,
 			1.100000023841858,
 			1.2000000476837159
 		],
 		"lootCountCoef": [
-			1.0,
-			1.0,
-			1.0,
-			1.0,
-			1.0
+			1.0099999904632569,
+			1.0099999904632569,
+			1.0099999904632569,
+			1.0099999904632569,
+			1.0099999904632569
 		]
 	},
 	"missionDynamic": {
@@ -61,7 +77,10 @@
 		"activeTime": 1800,
 		"delayBetween": 480,
 		"missionTypeArray": [
+			10,
 			4,
+			11,
+			11,
 			1,
 			1,
 			3,
@@ -110,10 +129,14 @@
 			5,
 			5,
 			5,
+			5,
+			3,
 			3,
 			3,
 			7,
-			7
+			7,
+			7,
+			11
 		]
 	}
 }
