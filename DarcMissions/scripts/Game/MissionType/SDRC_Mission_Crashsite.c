@@ -339,7 +339,7 @@ class SDRC_HelicopterInfo : Managed
 {
 	string comment;
 	string resource;
-	float throttle;
+	float throttle; 
 	float rotorForce;
 	float rotor2Force;
 	float power;
