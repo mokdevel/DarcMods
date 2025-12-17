@@ -148,7 +148,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "Regulars_Brick", "InfantrySection",						//British Forces
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies
-			 "Cultists Light", 											//Ballien Cultists
+			 "Cultists_Light", 											//Ballien Cultists
+			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team
 			},	
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -166,7 +167,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "KS05_SF_GROUP_A", "KS05_SF_GROUP_C", 						//Omega gropus
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies
-			 "Cultists Light", 											//Ballien Cultists
+			 "Cultists_Light", 											//Ballien Cultists
+			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -183,7 +185,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Team_AT", "Team_GL", "Team_LAT",
 			 "Group_Zombies_High",	//Bacon Zombies
 //			 "CIV_Medium", "FIA_Medium", "USSR_Medium", "Tier1_Medium",	//Bacon Zombies
-			 "Cultists Medium", 											//Ballien Cultists
+			 "Cultists_Medium", 											//Ballien Cultists
+			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -200,7 +203,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"_Platoon",
 			 "Group_Zombies_High",	//Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
-			 "Cultists Light", 											//Ballien Cultists
+			 "Cultists_Light", 											//Ballien Cultists
+			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -217,7 +221,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"_Medical",
 			 "Group_Zombies_High",	//Bacon Zombies
 //			 "CIV_Medium", "FIA_Medium", "USSR_Medium", "Tier1_Medium",	//Bacon Zombies	
-			 "Cultists Light", 											//Ballien Cultists
+			 "Cultists_Light", 											//Ballien Cultists
+			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -234,7 +239,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"_Recon", "_Maneuver", "_RecceTeam",
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
-			 "Cultists Medium", 										//Ballien Cultists
+			 "Cultists_Medium", 										//Ballien Cultists
+			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team		
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -253,7 +259,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "Group_Zombies_Horde", "Group_Zombies_CIV_Large",		//Bacon Zombies
 //			 "CIV_Large", "FIA_Large", "USSR_Large", "Tier1_Large", //Bacon Zombies			
 //			 "AmbientPatrol_Horde", "Zombies_Horde",				//Bacon Zombies	Hordes
-			 "Cultists Horde", 										//Ballien Cultists
+			 "Cultists_Horde", 										//Ballien Cultists
+			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team			
 			},	
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -271,7 +278,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "KS05_SF_GROUP_B", 		//Omega groups
 			 "Group_Zombies_Horde",		//Bacon Zombies
 //			 "CIV_Large", "FIA_Large", "USSR_Large", "Tier1_Large", 	//Bacon Zombies			
-			 "Cultists Medium", 										//Ballien Cultists
+			 "Cultists_Medium", 										//Ballien Cultists
+			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -289,7 +297,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "SharpshooterTeam", "MedicalSection", "SapperTeam", 
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
-			 "Cultists Light", 											//Ballien Cultists
+			 "Cultists_Light", 											//Ballien Cultists
+			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -309,7 +318,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"Rifleman", "Sapper", "_PL", "_SL",
 			 "Zombie_CIV", "Zombie_FIA", "Zombie_US", "Zombie_USSR", 	//Bacon Zombies
-			 "Civilian Cultist", 										//Ballien Cultists
+			 "Civilian_Cultist", 										//Ballien Cultists
+			 "Scav_Rookie", "Stalker_Rookie",							//Bandit faction
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -325,7 +335,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"_GL", "_MG", "Grenadier", "_Ammo", "_LMG",
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
-			 "Civilian Cultist", 							//Ballien Cultists
+			 "Civilian_Cultist", 							//Ballien Cultists
+			 "Scav_Gopnik", "Stalker_Rookie", "Scav_Brute", //Bandit faction			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -342,7 +353,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Scout", "Spotter", "_RTO", "_SL", "_GL",
 			 "_AG1", //MEI		
 			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies
-			 "Civilian Cultist", 							//Ballien Cultists
+			 "Civilian_Cultist", 							//Ballien Cultists
+			 "Scav_Veteran", "Stalker_Veteran",				//Bandit faction			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -359,7 +371,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"_Officer", "Sergeant", "_AC", 
 			 "_Leader", //MEI
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
-			 "Civilian Cultist", 							//Ballien Cultists
+			 "Civilian_Cultist", 							//Ballien Cultists
+			 "Scav_Veteran", "Stalker_Veteran",				//Bandit faction			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -376,7 +389,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Crew", "Pilot", "_CC",
 			 "MEI_Leader", //MEI
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
-			 "Civilian Cultist", 							//Ballien Cultists
+			 "Civilian_Cultist", 							//Ballien Cultists
+			 "Scav_Veteran", "Stalker_Veteran",				//Bandit faction			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -392,7 +406,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"Sniper", "Sharpshooter",
 			 "Exploder", 									//Bacon Zombies			
-			 "Civilian Cultist", 							//Ballien Cultists
+			 "Civilian_Cultist", 							//Ballien Cultists
+			 "Stalker_Shadow", "Stalker_Legend",			//Bandit faction			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -408,7 +423,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"_AAT", "_AT", "_AT", "_LAT",
 			 "Exploder", 									//Bacon Zombies			
-			 "Civilian Cultist", 							//Ballien Cultists
+			 "Civilian_Cultist", 							//Ballien Cultists
+			 "Scav_Brute", 									//Bandit faction			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -424,7 +440,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"Medic",
 			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies
-			 "Civilian Cultist", 							//Ballien Cultists
+			 "Civilian_Cultist", 							//Ballien Cultists
+			 "Scav_Veteran", "Stalker_Veteran",				//Bandit faction						
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -443,7 +460,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "MEI_Rifleman1", //MEI
 			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies			
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
-			 "Civilian Cultist", 							//Ballien Cultists
+			 "Civilian_Cultist", 							//Ballien Cultists
+			 "Stalker_Shadow", "Stalker_Legend",			//Bandit faction						
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
