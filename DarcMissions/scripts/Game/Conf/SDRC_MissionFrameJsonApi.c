@@ -221,11 +221,11 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-//			conf.enemyFactions = {"USSR"};
+			conf.enemyFactions = {"USSR"};
 //			conf.enemyFactions = {"US"};
 //			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION"};
-			conf.enemyFactions = {"BALLIEN_BC_FACTION"};
+//			conf.enemyFactions = {"BALLIEN_BC_FACTION"};
 //			conf.enemyFactions = {"TF_RF"};
 //			conf.enemyFactions = {"TF_US"};
 //			conf.enemyFactions = {"RHS_ION"};
@@ -265,7 +265,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
 		
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
+			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
@@ -276,7 +276,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
 //			conf.missionStatic.missionTypeArray = {};
-			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
+//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE};		
 		
 		#endif
