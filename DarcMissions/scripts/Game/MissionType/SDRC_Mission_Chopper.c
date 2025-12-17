@@ -131,11 +131,11 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private void MissionSpawn()
 	{					
 		//Spawn vehicle
-		SDRC_HelicopterInfo heliInfo = m_Config.helicopterInfo[m_DC_Chopper.heliList.GetRandomElement()];
+//		SDRC_HelicopterInfo heliInfo = m_Config.helicopterInfo[m_DC_Chopper.heliList.GetRandomElement()];
 		
 		//TBD: Add error checking in case someone has removed entries from helicopterInfo.
 		
-		string resourceName	= heliInfo.resource;
+		string resourceName	= m_DC_Chopper.heliList.GetRandomElement();
 		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Chopper.general.size, -1);
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
 		m_Vehicle_c = SDRC_ChopperComp.Cast(m_Vehicle.FindComponent(SDRC_ChopperComp));
@@ -150,11 +150,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " +  GetId() + " : Vehicle spawned: " + m_Vehicle, LogLevel.DEBUG);										
 		
 		m_EntityList.Insert(m_Vehicle);
-        m_Vehicle_s.EngineStart();
-        m_Vehicle_s.SetThrottle(heliInfo.throttle);
-        m_Vehicle_s.RotorSetForceScaleState(0, heliInfo.rotorForce);
-        m_Vehicle_s.RotorSetForceScaleState(1, heliInfo.rotor2Force);
-		m_Vehicle_c.SetHeli(heliInfo.rotorForceUp, m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], heliInfo.power, m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.wpType, m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
+		m_Vehicle_c.SetHeli(m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.wpType, m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
 		m_Vehicle_c.InitFlightPath(m_Vehicle, m_vPosOrigin, GetPos());
 
 		//Spawn pilots if such is available 
@@ -266,13 +262,13 @@ class SDRC_Chopper : Managed
 	#endif
 	
 	//Mission specific
-	ref array<int> heliList = {};
+	ref array<string> heliList = {};
 	ref array<int> flyHeight = {};						//min, max - Spawn helicopter between these values.
 	ref array<int> speed = {};							//min, max - 
 	ref array<float> flyDistance = {};					//min, max - Distance for finding new positions
 	SDRC_EHeliWaypointGenerationType wpType; 
 		
-	void Set(array<int> heliList_, array<int> flyHeight_, array<int> speed_, array<float> flyDistance_, SDRC_EHeliWaypointGenerationType wpType_)
+	void Set(array<string> heliList_, array<int> flyHeight_, array<int> speed_, array<float> flyDistance_, SDRC_EHeliWaypointGenerationType wpType_)
 	{
 		heliList = heliList_;
 		flyHeight = flyHeight_;
@@ -352,7 +348,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		conf.showMarker = false;
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,0,1,1,1};
+		conf.missionList = {1};//{0,0,1,1,1};
 		//Mission specific
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;
@@ -360,66 +356,9 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		conf.activeTime = 20*60;
 		
 		//----------------------------------------------------
-		conf.helicopterInfo.Insert(Heli00());
-		conf.helicopterInfo.Insert(Heli01());
-		conf.helicopterInfo.Insert(Heli02());
-		conf.helicopterInfo.Insert(Heli03());
-		conf.helicopterInfo.Insert(Heli04());
-//		conf.helicopterInfo.Insert(Heli05());
-		
 		conf.subMissions.Insert(Chopper0());
 		conf.subMissions.Insert(Chopper1());
 	};
-	//----------------------------------------------------
-	SDRC_HelicopterInfo Heli00()
-	{
-		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("Index 0: Vanilla Mi8MT", "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Flying_Patrol.et", 1.01, 1.9, 1.01, 1.2, 1.01);
-		return heli;		
-	}
-	
-	SDRC_HelicopterInfo Heli01()
-	{
-		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("Index 1: Vanilla Mi8MT", "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Flying_Patrol.et", 1.01, 2.20, 1.01, 1.2, 1.01);
-		return heli;		
-	}
-	
-	SDRC_HelicopterInfo Heli02()
-	{	
-		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("Index 2: Vanilla UH1H", "{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et",	1.01, 2.80, 1.01, 1.1, 1.01);
-		return heli;		
-	}
-	
-	SDRC_HelicopterInfo Heli03()
-	{	
-		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("Index 3: Vanilla UH1H", "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",	1.01, 2.80, 1.01, 1.1, 1.01);
-		return heli;		
-	}
-
-	SDRC_HelicopterInfo Heli04()
-	{	
-		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("Index 4: Vanilla UH1H", "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",	1.01, 2.80, 1.01, 1.1, 1.01);
-		return heli;		
-	}
-
-	//MI 24 mod specific
-/*	SDRC_HelicopterInfo Heli05()
-	{	
-		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("Index 5: Modded Mi24", "{EDF7AA9A54BFD6F8}Prefabs/Vehicles/Helicopters/Mi24/Mi24V_armed_UPK23_Patrol.et",	1.01, 1.2, 1.01, 1.1, 1.01);
-		return heli;		
-	}*/
-					
-/*	SDRC_HelicopterInfo Heli04()
-	{	
-		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("{31203FC84104022C}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_M261_Flying_Patrol.et",	1.01, 1.40, 1.01);	//M261 MOD!
-		return heli;		
-	}*/
 	
 	//----------------------------------------------------
 	SDRC_Chopper Chopper0()
@@ -451,7 +390,9 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		);
 		chopper.Set
 		(
-			{2},
+			{
+			 "{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et"
+			},
 			{35, 70},
 			{7, 25},
 			{0.2, 0.5},
@@ -491,7 +432,12 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		);
 		chopper.Set
 		(
-			{0, 1, 3, 4},
+			{
+//			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Flying_Patrol.et",
+//			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Flying_Patrol.et",
+			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
+//			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
+			},
 			{40, 80},
 			{10, 30},
 			{0.2, 0.4},
@@ -499,5 +445,5 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		);
 		
 		return chopper;
-	}	
+	}
 }
