@@ -34,8 +34,6 @@ modded class SCR_BaseGameMode
 				SDRC_Log.Add("[SDRC_Core_BaseGameMode] Failed to create RPLHintHelper.", LogLevel.ERROR);
 				return;
 			}
-//			IEntity entity = SDRC_SpawnHelper.SpawnEntityPrefabPersistence(resource, GetGame().GetWorld())
-//			m_SDRC_RplHintEntity = SDRC_RplHintEntity.Cast(entity);
 			m_SDRC_RplHintEntity = SDRC_RplHintEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));
 			SDRC_SpawnHelper.SetPersistence(m_SDRC_RplHintEntity, false);
 												

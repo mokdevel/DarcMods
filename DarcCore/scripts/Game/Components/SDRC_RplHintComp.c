@@ -5,7 +5,8 @@ SDRC_RplHintCompClass g_RplHintCompClass;
 class SDRC_RplHintComp : ScriptComponent
 {
 	private static SDRC_RplHintComp s_Instance;	
-	 
+ 	protected static SDRC_EHintPosition m_Position;
+
 	//------------------------------------------------------------------------------------------------
     override void OnPostInit(IEntity owner)
     {
@@ -42,18 +43,19 @@ class SDRC_RplHintComp : ScriptComponent
 	\param msg The message to show
 	\param icon Icon to show. By default, icon is not shown
 	*/
- 	void ShowGlobalHint(string title, string msg, int dur, SDRC_EMissionIcon icon)
+ 	void ShowGlobalHint(string title, string msg, int dur, SDRC_EMissionIcon icon, SDRC_EHintPosition position = SDRC_EHintPosition.UP_LEFT)
     {
-        Rpc(RpcDo_ShowHint, title, msg, dur, icon); // broadcast to clients
-        RpcDo_ShowHint(title, msg, dur, icon); // try to show on authority
+        Rpc(RpcDo_ShowHint, title, msg, dur, icon, position); 	// broadcast to clients
+        RpcDo_ShowHint(title, msg, dur, icon, position); 		// try to show on authority
     }
     
 	//------------------------------------------------------------------------------------------------
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-    protected void RpcDo_ShowHint(string title, string msg, int dur, SDRC_EMissionIcon icon)
+    protected void RpcDo_ShowHint(string title, string msg, int dur, SDRC_EMissionIcon icon, SDRC_EHintPosition position)
     {
 		SDRC_Log.Add("[SDRC_RplHintComp:RpcDo_ShowHint] Hint: " + msg, LogLevel.NORMAL);
 	
+		SDRC_SCR_PopUpNotification.GetInstance().SetPosition(position);
 		SDRC_SCR_PopUpNotification.GetInstance().SetIcon(icon);
 		SDRC_SCR_PopUpNotification.GetInstance().PopupMsg(title, 20, text2: msg);		
 		return;

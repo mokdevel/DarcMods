@@ -1,5 +1,4 @@
 //Helpers SDRC_MissionHintHelper.c
-
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionHintHelper
 {	
@@ -10,7 +9,7 @@ class SDRC_MissionHintHelper
 	\param msg The message to show
 	\param icon Icon to show. By default, icon is not shown
 	*/
-	static void Show(string title, string msg, SDRC_EMissionIcon icon = SDRC_EMissionIcon.NONE)
+	static void Show(string title, string msg, SDRC_EMissionIcon icon = SDRC_EMissionIcon.NONE, SDRC_EHintPosition position = SDRC_EHintPosition.NONE)
 	{	
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (!m_BaseGameMode)
@@ -24,9 +23,14 @@ class SDRC_MissionHintHelper
 		}
 		
 		int timeout = m_BaseGameMode.missionFrame.m_Config.missionHintTime;
+		if (position == SDRC_EHintPosition.NONE)
+		{
+			position = m_BaseGameMode.missionFrame.m_Config.missionHintPosition;
+		}
+		
 		if (timeout > 0)
 		{
-			SDRC_HintHelper.ShowHint(title, msg, timeout, icon);
+			SDRC_HintHelper.ShowHint(title, msg, timeout, icon, position);
 		}
 	}
 }

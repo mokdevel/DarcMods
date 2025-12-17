@@ -2,6 +2,7 @@
 modded class SCR_PopUpNotification
 {
 	protected SDRC_EMissionIcon m_Icon;
+	protected SDRC_EHintPosition m_Position;
 	protected ImageWidget m_wImageWidget;
 	protected ImageWidget m_wImageWidgetShadow;
 
@@ -13,19 +14,19 @@ modded class SCR_PopUpNotification
 	{
 		m_Icon = icon;
 	}				
+
+	//------------------------------------------------------------------------------------------------
+	void SetPosition(SDRC_EHintPosition position)
+	{
+		//SDRC_Log.Add("[SDRC_SCR_PopUpNotification] SetPosition : " + position, LogLevel.DEBUG);		
+		m_Position = position;
+	}	
 }
 
 //------------------------------------------------------------------------------------------------
 class SDRC_SCR_PopUpNotificationClass : SCR_PopUpNotificationClass
 {
 };
-
-//------------------------------------------------------------------------------------------------
-enum SDRC_EHintPosition
-{
-	UP_LEFT = 0,	
-	DOWN_LEFT,
-}
 
 //------------------------------------------------------------------------------------------------
 //! Takes care of dynamic and static onscreen popups
@@ -70,18 +71,14 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (!m_BaseGameMode)
 		{
+			SDRC_Log.Add("[SDRC_SCR_PopUpNotification] m_BaseGameMode missing.", LogLevel.DEBUG);		
 			return;
 		}
 		
- 		if (!m_BaseGameMode.m_SDRC_Core)
-		{
-			return;
-		}
-		
-		m_sLayout = m_aLayoutList[m_BaseGameMode.m_SDRC_Core.m_Config.hintPosition];
-		
+		m_sLayout = m_aLayoutList[m_Position];		
 		Widget root = GetGame().GetHUDManager().CreateLayout(m_sLayout, EHudLayers.MEDIUM, 0);
-
+//		Widget root = GetGame().GetHUDManager().CreateLayout(SDRC_LAYOUT_NAME, EHudLayers.MEDIUM, 0);
+		
 		if (!root)
 			return;
 
@@ -155,27 +152,17 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void ShowIcon()
+	protected void ShowIcon()
 	{
 		if (m_wImageWidget)
 		{
 			m_wImageWidget.SetVisible(true);
 			m_wImageWidgetShadow.SetVisible(true);
-/*			if (m_Icon == SDRC_EMissionIcon.NONE)
-			{
-				m_wImageWidget.SetVisible(false);
-				m_wImageWidgetShadow.SetVisible(false);
-			}
-			else
-			{
-				m_wImageWidget.SetVisible(true);
-				m_wImageWidgetShadow.SetVisible(true);
-			}*/
 		}		
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void LoadIcon()
+	protected void LoadIcon()
 	{
 		Widget root = GetGame().GetHUDManager().CreateLayout(m_sLayout, EHudLayers.MEDIUM, 0);
 
@@ -195,5 +182,5 @@ class SDRC_SCR_PopUpNotification : SCR_PopUpNotification
 //		m_wImageWidget.SetVisible(false);
 //		m_wImageWidgetShadow.SetVisible(false);
 
-	}	
+	}		
 };

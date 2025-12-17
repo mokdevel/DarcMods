@@ -12,7 +12,7 @@ class SDRC_RplHintEntityClass: GenericEntityClass {}
 class SDRC_RplHintEntity : GenericEntity
 {
 	protected static SDRC_RplHintEntity s_Instance;	
-
+	
 	override void EOnActivate(IEntity owner)
 	{
 		SetEventMask(EntityEvent.FRAME | EntityEvent.POSTFRAME);
