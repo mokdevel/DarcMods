@@ -81,44 +81,66 @@ sealed class SDRC_EnemyHelper
 		
 		foreach (SDRC_List list : m_Config.lists)
 		{
-//			int count = 0;
 			factionsFound.Clear();
 			factionsMissing.Clear();
 			
 			foreach(string faction : enemyFactions)
 			{
-				string factionToTest = faction;
+				array<string> factionsToTest = {};
 				
 				//Check if the requested faction has an aka
 				foreach(SDRC_Aka aka : m_Config.akas)
 				{
 					if (aka.names[0] == faction)
 					{
-						factionToTest = aka.names[1];
-						SDRC_Log.Add("[SDRC_EnemyHelper:SanityCheck] Testing " + faction + " as " + factionToTest, LogLevel.DEBUG);
-						break;
+						for (int i = 1; i < aka.names.Count(); i++)
+						{
+							factionsToTest.Insert(aka.names[i]);					
+						}						
 					}
 				}
 				
-				//Collect factions found
-				foreach(ResourceName enemy : list.items)
+				//If no Akas, add the default
+				if (factionsToTest.IsEmpty())
 				{
-					if (enemy.Contains("_" + factionToTest + "_"))
-					{
-//						count++;
-						factionsFound.Insert(faction);
-						break;
-					}
+					factionsToTest.Insert(faction);
 				}
 
-				//Collect factions missing
-				foreach(ResourceName enemy : list.items)
+				foreach(string factionToTest : factionsToTest)
 				{
-					if (!enemy.Contains("_" + factionToTest + "_"))
+					SDRC_Log.Add("[SDRC_EnemyHelper:SanityCheck] Testing " + faction + " as " + factionToTest, LogLevel.DEBUG);
+					
+					//Collect factions found
+					foreach(ResourceName enemy : list.items)
 					{
-						factionsMissing.Insert(faction);
-						break;
+						if (enemy.Contains("_" + factionToTest + "_"))
+						{
+							if (!factionsFound.Contains(faction))
+							{
+								factionsFound.Insert(faction);
+							}
+							break;
+						}
 					}
+	
+					//Collect factions missing
+/*					foreach(ResourceName enemy : list.items)
+					{
+						if (!enemy.Contains("_" + factionToTest + "_"))
+						{
+							if (!factionsMissing.Contains(faction))
+							{
+								factionsMissing.Insert(faction);
+							}
+							break;
+						}
+					}*/
+				}
+				
+				//Collect factions missing
+				if (!factionsFound.Contains(faction))
+				{
+					factionsMissing.Insert(faction);
 				}
 			}
 			
