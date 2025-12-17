@@ -214,7 +214,6 @@ class SDRC_RoadblockJsonApi : SDRC_JsonApi
 	}
 		
 	//------------------------------------------------------------------------------------------------
-	//------------------------------------------------------------------------------------------------
 	bool Load(bool createMissingFiles = true)
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		

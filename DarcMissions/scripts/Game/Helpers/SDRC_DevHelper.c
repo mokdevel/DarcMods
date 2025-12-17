@@ -5,12 +5,13 @@
 File with random DEV time testing things.
 */
 
-//#define SDRC_RELEASE
-
+//------------------------------------------------------------------------------------------------
 sealed class SDRC_DevHelper
 {
 	static void SDRC_DevDump()	
 	{
+//		GetGame().GetCallqueue().CallLater(ShowTestMessage, 2000, true);
+		
 /*		SDRC_MapMarkerHelper.CreateMapMarker("1000 0 1000", SDRC_EMissionIcon.GM_MISSION_X_MAP, "DMC_B", "Here is a text");
 		SDRC_MapMarkerHelper.CreateMapMarker("1100 0 1000", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP, "DMC_B", "Darc_SK");
 		SDRC_MapMarkerHelper.CreateMapMarker("1200 0 1000", SDRC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, "DMC_B", "Darc_SK");
@@ -71,6 +72,14 @@ sealed class SDRC_DevHelper
 //		SpawnTestMission();	
 	}
 
+
+	//------------------------------------------------------------------------------------------------
+	static void ShowTestMessage()
+	{
+		SDRC_MissionHintHelper.Show("This is a hint!", "This is some text!");
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	static void SpawnTestMission()
 	{
 		string resourceName = SDRC_MissionEnumHelper.GetMissionPrefab(SDRC_EMissionType.OCCUPATION);
@@ -89,6 +98,7 @@ sealed class SDRC_DevHelper
 		GetGame().GetCallqueue().CallLater(SetMissionParameters_Delayed, 2000, false, missionEntity);
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	static void SetMissionParameters_Delayed(IEntity missionEntity)
 	{
 		SDRC_DarcMissionGM ent = SDRC_DarcMissionGM.Cast(missionEntity);

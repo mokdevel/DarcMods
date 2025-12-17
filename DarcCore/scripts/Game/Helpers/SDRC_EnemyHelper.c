@@ -49,7 +49,7 @@ sealed class SDRC_EnemyHelper
 	*/	
 	static void SetEnemyFactions(array<string> enemyFactions)
 	{
-		SDRC_Log.Add("[SDRC_EnemyHelper:SetEnemyFactions] Setting enemy factions: " + enemyFactions, LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_EnemyHelper:SetEnemyFactions] Setting enemy factions: " + enemyFactions, LogLevel.SPAM);
 		m_sEnemyFactions = enemyFactions;		
 		SDRC_EnemyHelper.SanityCheck(m_sEnemyFactions);		
 	}	

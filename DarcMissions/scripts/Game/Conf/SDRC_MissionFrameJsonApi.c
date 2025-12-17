@@ -33,9 +33,9 @@
 	#ifndef SDRC_RELEASE
 		private const int SDRC_MISSION_MIN_DISTANCE = 200;		
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
-		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 10;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 3;//10;//15;//5;//3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 10;//10;//15;//5;//3;//0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -72,6 +72,7 @@ class SDRC_MissionFrameConfig : Managed
 	float missionActiveDistanceMul;			//Multiplier to modify distance on every cycle when in win/lose state.
 	float missionActiveTimeToEndMul;		//multiplier to modify time on every cycle when in win/lose state.
 	int missionHintTime;					//Seconds to show mission hints to players. 0 disables hints.
+	SDRC_EHintPosition missionHintPosition;	//Mission hint position
 	//Randomization
 	int missionRandomPos;					//The distance to randomize the missions position. This avoids mission appearing always in same place.
 	//Misc
@@ -171,6 +172,8 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		conf.missionActiveTimeToEndMul = SDRC_MISSION_ACTIVE_MUL_TO_END;
 		
 		conf.missionHintTime = SDRC_MISSION_HINT_TIME;
+		conf.missionHintPosition = SDRC_EHintPosition.UP_LEFT;
+//		conf.missionHintPosition = SDRC_EHintPosition.DOWN_LEFT;
 		conf.missionRandomPos = SDRC_MISSION_RANDOM_POS;
 		
 		conf.minDistanceToMission = SDRC_MISSION_MIN_DISTANCE;
@@ -218,11 +221,11 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 		#endif	
 
 		#ifndef SDRC_RELEASE				
+//			conf.enemyFactions = {"USSR"};
 //			conf.enemyFactions = {"US"};
-			conf.enemyFactions = {"USSR"};
 //			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION"};
-//			conf.enemyFactions = {"BALLIEN_BC_FACTION"};
+			conf.enemyFactions = {"BALLIEN_BC_FACTION"};
 //			conf.enemyFactions = {"TF_RF"};
 //			conf.enemyFactions = {"TF_US"};
 //			conf.enemyFactions = {"RHS_ION"};
@@ -233,6 +236,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.enemyFactions = {"RHS_USAF", "RHS_AFRF"};
 //			conf.enemyFactions = {"USAF_USMC", "RHS_RF"};
 //			conf.enemyFactions = {"MEI"};
+//			conf.enemyFactions = {"PLASTICBANDIT"};
 		
 			conf.missionLimit = {
 				  -1, // 0 - NONE
@@ -268,11 +272,11 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL};
-			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
+//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
 //			conf.missionStatic.missionTypeArray = {};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
+			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE};		
 		
 		#endif

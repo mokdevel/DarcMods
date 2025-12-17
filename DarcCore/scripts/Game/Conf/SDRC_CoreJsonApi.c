@@ -19,8 +19,6 @@ class SDRC_CoreConfig : Managed
 	string fallbackEnemyFaction = "USSR";
 	bool showOnGMMapNonValidArea = true;	
 	bool showOnGMMapMissionMarker = true;
-	SDRC_EHintPosition hintPosition = SDRC_EHintPosition.UP_LEFT;
-//	SDRC_EHintPosition hintPosition = SDRC_EHintPosition.DOWN_LEFT;
 	ref array<string> buildingExcludeFilter = {};
 	ref SDRC_EmptyPos emptyPos = new SDRC_EmptyPos();
 	ref array<ref SDRC_LocationAka> locationAkas = {};

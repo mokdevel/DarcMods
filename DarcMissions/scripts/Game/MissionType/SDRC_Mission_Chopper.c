@@ -365,6 +365,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		conf.helicopterInfo.Insert(Heli02());
 		conf.helicopterInfo.Insert(Heli03());
 		conf.helicopterInfo.Insert(Heli04());
+//		conf.helicopterInfo.Insert(Heli05());
 		
 		conf.subMissions.Insert(Chopper0());
 		conf.subMissions.Insert(Chopper1());
@@ -401,10 +402,18 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 	SDRC_HelicopterInfo Heli04()
 	{	
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
-		heli.Set("Index 4: Vanilla UH1H", "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et	",	1.01, 2.80, 1.01, 1.1, 1.01);
+		heli.Set("Index 4: Vanilla UH1H", "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",	1.01, 2.80, 1.01, 1.1, 1.01);
 		return heli;		
 	}
-			
+
+	//MI 24 mod specific
+/*	SDRC_HelicopterInfo Heli05()
+	{	
+		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
+		heli.Set("Index 5: Modded Mi24", "{EDF7AA9A54BFD6F8}Prefabs/Vehicles/Helicopters/Mi24/Mi24V_armed_UPK23_Patrol.et",	1.01, 1.2, 1.01, 1.1, 1.01);
+		return heli;		
+	}*/
+					
 /*	SDRC_HelicopterInfo Heli04()
 	{	
 		ref SDRC_HelicopterInfo heli = new SDRC_HelicopterInfo();
