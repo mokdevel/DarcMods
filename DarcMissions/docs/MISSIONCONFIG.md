@@ -57,7 +57,9 @@ The supported factions are listed below
 * ``BACON_622120A5448725E3_FACTION`` : Bacon Zombies - [MOD](https://reforger.armaplatform.com/workshop/622120A5448725E3-BaconZombies)
 * ``PLASTICBANDIT`` : Bandit Faction - [MOD](https://reforger.armaplatform.com/workshop/66C4458756B32594-BanditFaction)
 
-Unsupported values: RHS_ION, MEC
+Unsupported values
+* ``RHS_ION``
+* ``MEC``
 
 ### SDRC_MissionDifficulty
 Difficulty setting that affects mission AI behaviour and loot reward. Coef values in the array refer to SDRC_EMissionDifficulty values: {``EASY``, ``MODERATE``, ``NORMAL``, ``TOUGH``, ``HARD``}
