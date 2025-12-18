@@ -3,7 +3,7 @@
 //Changes done in prefabs:
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
-#define HELI_TESTING
+//#define HELI_TESTING
 
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompClass : ScriptGameComponentClass { }
@@ -26,16 +26,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//Parameters accessible helicopter parameters
 	[Attribute(defvalue: "0", desc: "Autostart chopper")]	
 	bool m_bAutoStart;
-	[Attribute(defvalue: "1.2", desc: "Speed gain aka acceleration", params: "1.0 3.0 0.1")]	
-	float m_fPower;					//Speed gain aka acceleration
-	[Attribute(defvalue: "1.0", desc: "Rotor force up", params: "0.1 3.0 0.1")]	
-	float m_fRotorForceUp;
-	[Attribute(defvalue: "1.2", desc: "Main rotor force", params: "0.1 3.0 0.1")]	
-	float m_fRotorForce0;
-	[Attribute(defvalue: "1.0", desc: "Rear rotor force", params: "0.1 3.0 0.1")]	
-	float m_fRotorForce1;
-	[Attribute(defvalue: "1.0", desc: "Throttle", params: "0.1 3.0 0.1")]	
+	[Attribute(defvalue: "1.2", desc: "Throttle aka acceleration", params: "0.1 3.0 0.1")]	
 	float m_fThrottle;
+	[Attribute(defvalue: "1.1", desc: "Main rotor force", params: "0.1 2.0 0.1")]	
+	float m_fRotorForce0;
+	[Attribute(defvalue: "1.0", desc: "Rear rotor force", params: "0.1 2.0 0.1")]	
+	float m_fRotorForce1;
 	[Attribute(defvalue: "0 0 0", desc: "First destination to fly to.")]	
 	vector m_fFirstDestination;
 	
@@ -56,20 +52,20 @@ class SDRC_ChopperComp : ScriptGameComponent
 	
 	//Speed management
 	private const float SPEED_INTERVAL = 2;		
-	private const float SPEED_GAIN = 1.1;
+	private const float SPEED_GAIN = 1.0;
 	private float m_fTimeSpeed = 0;
 
 	private float m_fTimeBetweenPts = 1;
 	private float m_fTimeBetweenPtsAvg = 1;
 		
 	//Turn
-	const int TIME_TURN_INTERVAL_BASE = 40;			//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
+	const int TIME_TURN_INTERVAL_BASE = 40;				//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
 	
 	//Pitch
 	const float PITCH_ANGLE_RAD = 80 * Math.DEG2RAD;	//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
 	
 	//Roll 
-	const float ROLL_ANGLE_MUL = 2.4;//1.7;			//Multiplier for roll angle along the spline
+	const float ROLL_ANGLE_MUL = 2.4;//1.7;				//Multiplier for roll angle along the spline
 	
 	//Flight path
 	int m_iSegmentPoints;						//How many points to create for each segment
@@ -78,8 +74,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 	const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
 	const int TIME_FORCE_MOVE_POINT = 20;		//(seconds) Time to wait before force moving a point. This is to fix situations where the chopper gets stuck on a point.
 	const float TIME_IN_INIT = 30;				//(seconds) Time to be in init state. During this time, we don't check for damage or similar things.
-	const float ROTOR_FORCE_MUL = 0.9;			//Rotor force multiplier. Bigger value makes the heli react faster to up/down movement
-	const float ROTOR_FORCE_MUL_PANIC = 1.4;	//Rotor force multiplier used when avoiding ground. 
+	
+	//Rotor force multipliers
+	const float ROTOR_FORCE_MUL = 1.0;			//Rotor force multiplier. Bigger value makes the heli react faster to up/down movement
+	const float ROTOR_FORCE_MUL_PANIC = 5.0;	//Rotor force multiplier used when avoiding ground. 
+	const float ROTOR_FORCE_UP_MUL = 1.2;		//Rotor force multiplier in velocity counting
 	
 	//Waypoint values
 	const float WP_ANGLE = 90;					//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
@@ -148,8 +147,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	        chopper_s.RotorSetForceScaleState(0, m_fRotorForce0);
 	        chopper_s.RotorSetForceScaleState(1, m_fRotorForce1);			
 			SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, SDRC_EHeliWaypointGenerationType.RANDOM, m_fDistanceLow, m_fDistanceHigh);						
-			SetRotorForceUp(m_fRotorForceUp);
-			SetPower(m_fPower);
 			
 			if (m_bAutoStart)
 			{
@@ -320,10 +317,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector rotVector = owner.GetAngles();
 		velVector.Normalize();
 		float forceMultiplier = m_fSpeed;
+		float forceRotorUp = m_fRotorForce0 * ROTOR_FORCE_UP_MUL * 10;
 		
-		velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, velVector[1] * m_fRotorForceUp * m_fRotorForceMultiplier, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
+		velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, velVector[1] * forceRotorUp * m_fRotorForceMultiplier, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
 		
-		owner.GetPhysics().SetVelocity(velVector);		
+		owner.GetPhysics().SetVelocity(velVector);
 	}
 	
 	//------------------------------------------------------------------------------------------------	
@@ -342,7 +340,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			SDRC_Log.Add("[SDRC_ChopperComp:HandleRotorForce] Index fixed.", LogLevel.WARNING);
 		}
 		
-		m_fRotorForceMultiplier = (10 * ROTOR_FORCE_MUL) * ( (m_vSplinePoints[idx][1] - m_vOrigin[1]) / m_vSplinePoints[idx][1]);
+		m_fRotorForceMultiplier = (ROTOR_FORCE_MUL * 10) * ( (m_vSplinePoints[idx][1] - m_vOrigin[1]) / m_vSplinePoints[idx][1]);
 
 		//If too low, turn the rotor force up
 		if (m_vOrigin[1] < (SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + m_fFlyHeightLow) )
@@ -381,7 +379,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fDbgAngle = angle;
 		//Count the angle of the turn. The steeper the turn, the slower heli should be moving.
 		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);
-		m_fSpeedMul = m_fPower * (SPEED_GAIN - (m_fSpeedMul / 25));	//45
+		m_fSpeedMul = m_fThrottle * (SPEED_GAIN - (m_fSpeedMul / 25));	//45
+//		m_fSpeedMul = m_fPower * (SPEED_GAIN - (m_fSpeedMul / 25));	//45
 		m_fSpeedStart = m_fSpeed;
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
 		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
@@ -432,7 +431,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			return;
 		}*/
 	#ifdef HELI_TESTING
-		origin = "800 0 2800";
+		origin = "800 50 2800";
 		destination = "1060 0 2450";		
 	#endif
 		
@@ -782,15 +781,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fSpeed = m_fSpeedMin;
 	}
 
-	void SetRotorForceUp(float rotorForceUp)
+/*	void SetRotorForceUp(float rotorForceUp)
 	{
 		m_fRotorForceUp = rotorForceUp * 100;
-	}
+	}*/
 	
-	void SetPower(float power)
+/*	void SetPower(float power)
 	{
 		m_fPower = power;
-	}
+	}*/
 	
 	//------------------------------------------------------------------------------------------------
 	void SetSpeed(float min = -1, float max = -1)
@@ -915,7 +914,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			debugText = debugText + 
 								"Init:" + m_bInInit + ", " +
 								"Pilots::" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
-								"Working:" + SDRC_VehicleHelper.IsWorking(owner) +
+								"Working:" + SDRC_VehicleHelper.IsWorking(owner) + " - " + 
 								"Health: " + health + "\n" + 
 								
 	//							"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
