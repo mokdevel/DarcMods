@@ -7,8 +7,6 @@ A convoy traveling from A to B.
 Note to self: RADIUS, SCATTERED : This could also work, but support was removed as unnecessary. The concoy would follow a path created with waypointRange starting from posStart. posDestination is ignored.
 */
 
-const string DC_MISSIONCONFIG_FILE_CONVOY = "dc_missionConfig_Convoy.json";
-	
 //------------------------------------------------------------------------------------------------
 enum SDRC_EMissionConvoyState
 {
@@ -19,6 +17,8 @@ enum SDRC_EMissionConvoyState
 	RUN
 };
 
+const string DC_MISSIONCONFIG_FILE_CONVOY = "dc_missionConfig_Convoy.json";
+	
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Convoy : SDRC_Mission
 {

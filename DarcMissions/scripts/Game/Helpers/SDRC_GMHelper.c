@@ -129,7 +129,7 @@ class SDRC_GMHelper
 	*/
 	static int GetMarkerIndex(float worldX, float worldY)
 	{
-		int MARKER_SIZE_BB = 64;//(24 * 0.8);		//Marker 'bounding box size' when searhing for mouse hit		
+		const int MARKER_SIZE_BB = 64;//(24 * 0.8);		//Marker 'bounding box size' when searhing for mouse hit		
 		int symbolIdx = -1;
 		
 		SCR_MapEntity m_MapEntity = SCR_MapEntity.GetMapInstance();

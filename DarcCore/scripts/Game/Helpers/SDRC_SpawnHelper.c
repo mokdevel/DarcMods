@@ -118,7 +118,7 @@ class SDRC_SpawnHelper
 			radius = sums[2];
 		}
 	
-		float empty_radius = 1.6;	//Was: 1.2
+		const float EMPTY_RADIUS = 1.6;	//Was: 1.2
 
 		if (!floors.IsEmpty())
 		{
@@ -131,9 +131,9 @@ class SDRC_SpawnHelper
 			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItemInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.WARNING);
 		}
 		pos = SDRC_Misc.RandomizePos(floorpos, radius/8);
-		pos = FindPositinInsideBuilding(building, pos, empty_radius);
+		pos = FindPositinInsideBuilding(building, pos, EMPTY_RADIUS);
 
-		SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 128, 0, 128), empty_radius, "", 0.5, false);	//Purple for the item position
+		SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 128, 0, 128), EMPTY_RADIUS, "", 0.5, false);	//Purple for the item position
 		SDRC_DebugHelper.AddDebugPos(pos, ARGB(80, 128, 0, 128), 0.1, "", 100, false);			//Purple for the item position
 		
 		entity = SpawnItem(pos, item, rotation, -1, snap);

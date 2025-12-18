@@ -51,7 +51,7 @@ sealed class SDRC_EnemyHelper
 	{
 		SDRC_Log.Add("[SDRC_EnemyHelper:SetEnemyFactions] Setting enemy factions: " + enemyFactions, LogLevel.SPAM);
 		m_sEnemyFactions = enemyFactions;		
-		SDRC_EnemyHelper.SanityCheck(m_sEnemyFactions);		
+		SDRC_EnemyHelper.SanityCheck(m_sEnemyFactions);
 	}	
 		
 	//------------------------------------------------------------------------------------------------
@@ -151,6 +151,11 @@ sealed class SDRC_EnemyHelper
 			else
 			{
 				SDRC_Log.Add("[SDRC_EnemyHelper:SanityCheck] " + list.id + " is missing enemies in faction: " + factionsMissing, LogLevel.WARNING);
+				if (list.id.Contains("C_"))
+				{
+					//TBD: The problem with some of the characters is that they don't have any faction IDs. For example: "justASoldier.et"
+					SDRC_Log.Add("[SDRC_EnemyHelper:SanityCheck] For C_xxxx lists, the sanity check may report incorrect info. Check logs for details.", LogLevel.WARNING);
+				}
 			}
 		}		
 	}

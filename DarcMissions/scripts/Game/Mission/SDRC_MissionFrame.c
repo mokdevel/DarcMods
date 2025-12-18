@@ -471,7 +471,7 @@ class SDRC_MissionFrame
 	{
 		int i = 0;
 		int aiCount = 0;
-		int cutLen = 32;
+		const int CUT_LENGTH = 32;
 		
 		if (m_MissionList.Count() == 0)
 		{
@@ -492,9 +492,9 @@ class SDRC_MissionFrame
 			}
 			string missionType = SCR_Enum.GetEnumName(SDRC_EMissionType, mission.GetType());
 			string missionTitle = mission.GetTitle();
-			if (missionTitle.Length() > cutLen)
+			if (missionTitle.Length() > CUT_LENGTH)
 			{
-				missionTitle = mission.GetTitle().Substring(0, cutLen) + "..";
+				missionTitle = mission.GetTitle().Substring(0, CUT_LENGTH) + "..";
 			}
 			string missionState = SCR_Enum.GetEnumName(SDRC_EMissionState,  mission.GetState());
 			

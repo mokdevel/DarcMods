@@ -333,7 +333,7 @@ sealed class SDRC_WPHelper
 	static AIWaypoint FindAndCreateWaypoint(vector position, SDRC_EWaypointMoveType wptype, float range = 0, bool emptyspot = false )
 	{	
 		vector wpPos;
-		float emptyRange = 30;	//Radius of queried area
+		const float EMPTY_RANGE = 30;	//Radius of queried area
 		
 		wpPos = SDRC_Misc.RandomizePos(position, range);
 		
@@ -341,7 +341,7 @@ sealed class SDRC_WPHelper
 
 		if (emptyspot)
 		{
-			SCR_WorldTools().FindEmptyTerrainPosition(wpPosFixed, wpPos, emptyRange, 1, 1, TraceFlags.ENTS|TraceFlags.WORLD|TraceFlags.OCEAN);
+			SCR_WorldTools().FindEmptyTerrainPosition(wpPosFixed, wpPos, EMPTY_RANGE, 1, 1, TraceFlags.ENTS|TraceFlags.WORLD|TraceFlags.OCEAN);
 			wpPos = wpPosFixed;
 		}
 		
