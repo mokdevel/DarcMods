@@ -348,7 +348,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		conf.showMarker = false;
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {1};//{0,0,1,1,1};
+		conf.missionList = {0};//{0,0,1,1,1};
 		//Mission specific
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;
@@ -391,7 +391,8 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		chopper.Set
 		(
 			{
-			 "{82704CE53C89C888}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying_Patrol.et"
+			 "{70A03633AAE61492}Prefabs/Vehicles/Helicopters/UH1H/UH1H_civ_base_Patrol.et",
+			 "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et",
 			},
 			{35, 70},
 			{7, 25},
@@ -433,10 +434,11 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		chopper.Set
 		(
 			{
-//			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Flying_Patrol.et",
-//			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Flying_Patrol.et",
+			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
+			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
 			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
-//			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
+			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
+			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
 			},
 			{40, 80},
 			{10, 30},
