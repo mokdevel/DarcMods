@@ -7,6 +7,16 @@
 ## Next release (unreleased)
 No changes in mission jsons. 
 
+## 202512xx
+
+Main features:
+* Simplified helicopter definition for Chopper mission
+
+Changes:
+* Improved ``BALLIEN_BC_FACTION`` support.
+* Improved ``PLASTICBANDIT`` support.
+* Chopper mission: Removed ``helicopterInfo``. You only need to use prefab name in ``heliList``.
+
 ## 20251217
 Changed jsons - remove the files to receive updated ones.
 * dc_coreConfig.json
