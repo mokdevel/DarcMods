@@ -149,9 +149,8 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies
 			 "Cultists_Light", 											//Ballien Cultists
-			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team
 			},	
-			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
+			{"_Base", "_NotSpawned", "_Remnants", "_Random", "_Heavy"},
 			{}
 		);	
 		return enemyList;
@@ -168,7 +167,6 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies
 			 "Cultists_Light", 											//Ballien Cultists
-			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -186,7 +184,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "Group_Zombies_High",	//Bacon Zombies
 //			 "CIV_Medium", "FIA_Medium", "USSR_Medium", "Tier1_Medium",	//Bacon Zombies
 			 "Cultists_Medium", 											//Ballien Cultists
-			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team			
+			 "PLASTICBANDIT_FireTeam_Heavy",								//Bandit faction
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -204,7 +202,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "Group_Zombies_High",	//Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
 			 "Cultists_Light", 											//Ballien Cultists
-			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team			
+			 "PLASTICBANDIT_Squad",										//Bandit faction random team			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -222,7 +220,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "Group_Zombies_High",	//Bacon Zombies
 //			 "CIV_Medium", "FIA_Medium", "USSR_Medium", "Tier1_Medium",	//Bacon Zombies	
 			 "Cultists_Light", 											//Ballien Cultists
-			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team			
+			 "PLASTICBANDIT_Squad",										//Bandit faction random team			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -240,7 +238,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
 			 "Cultists_Medium", 										//Ballien Cultists
-			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team		
+			 "PLASTICBANDIT_Squad",									//Bandit faction random team		
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -260,7 +258,6 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 //			 "CIV_Large", "FIA_Large", "USSR_Large", "Tier1_Large", //Bacon Zombies			
 //			 "AmbientPatrol_Horde", "Zombies_Horde",				//Bacon Zombies	Hordes
 			 "Cultists_Horde", 										//Ballien Cultists
-			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team			
 			},	
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -279,7 +276,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "Group_Zombies_Horde",		//Bacon Zombies
 //			 "CIV_Large", "FIA_Large", "USSR_Large", "Tier1_Large", 	//Bacon Zombies			
 			 "Cultists_Medium", 										//Ballien Cultists
-			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team			
+			 "PLASTICBANDIT_Squad",										//Bandit faction
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -298,7 +295,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
 			 "Cultists_Light", 											//Ballien Cultists
-			 "PLASTICBANDIT_FireTeam",									//Bandit faction random team			
+			 "PLASTICBANDIT_Patrol",									//Bandit faction
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -571,9 +568,10 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_BEASTS",
-			{"Prefabs/Characters"},		
+			{"Prefabs/Characters", "Beasts"},
 			{
 			 "GhoulHeavy", "PumpkinHead", "Skeleton", //"TreeDemon",
+			 "Whisper", 
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
