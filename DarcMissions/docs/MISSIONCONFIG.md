@@ -30,7 +30,7 @@ array<string> enemyFactions : The array of factions to consider as enemies. "USS
   You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission.
   Example: "enemyFactions": ["FIA", "USSR", "USSR"] - 33% missions are with FIA, 66% with USSR
 array<int> missionLimit : Limits the amount of mission types that are spawned. The limit is total of static and dynamic missions. Requested missions e.g. GM spawned will not respect the limits by design.
-  Below are default/example values:
+  Below are default/example values. In the example only 2 Hunter missions can be active at the same time:
     -1, // 0 - NONE
     2,  // 1 - HUNTER
     5,  // 2 - OCCUPATION
