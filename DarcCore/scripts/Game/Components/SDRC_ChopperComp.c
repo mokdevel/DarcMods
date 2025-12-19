@@ -3,7 +3,9 @@
 //Changes done in prefabs:
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
-//#define HELI_TESTING
+#ifndef SDRC_RELEASE
+//	#define HELI_TESTING
+#endif
 
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompClass : ScriptGameComponentClass { }
@@ -26,7 +28,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//Parameters accessible helicopter parameters
 	[Attribute(defvalue: "0", desc: "Autostart chopper")]	
 	bool m_bAutoStart;
-	[Attribute(defvalue: "1.2", desc: "Throttle aka acceleration", params: "0.1 3.0 0.1")]	
+	[Attribute(defvalue: "1.3", desc: "Throttle aka acceleration", params: "0.1 3.0 0.1")]	
 	float m_fThrottle;
 	[Attribute(defvalue: "1.1", desc: "Main rotor force", params: "0.1 2.0 0.1")]	
 	float m_fRotorForce0;
@@ -70,15 +72,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//Flight path
 	int m_iSegmentPoints;						//How many points to create for each segment
 	const int POINTS_TO_NEW_DISTANCE = 2;		//How many spline points in to the future flight path is checked before adding new flight points.
-	const int POINTS_TO_SPLINE_START = 6;		//Points to go back from m_iClosestIndex when creating a new flight path 
+	const int POINTS_TO_SPLINE_START = 4;		//Points to go back from m_iClosestIndex when creating a new flight path 
 	const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
 	const int TIME_FORCE_MOVE_POINT = 20;		//(seconds) Time to wait before force moving a point. This is to fix situations where the chopper gets stuck on a point.
 	const float TIME_IN_INIT = 30;				//(seconds) Time to be in init state. During this time, we don't check for damage or similar things.
 	
 	//Rotor force multipliers
 	const float ROTOR_FORCE_MUL = 1.0;			//Rotor force multiplier. Bigger value makes the heli react faster to up/down movement
-	const float ROTOR_FORCE_MUL_PANIC = 5.0;	//Rotor force multiplier used when avoiding ground. 
 	const float ROTOR_FORCE_UP_MUL = 1.2;		//Rotor force multiplier in velocity counting
+	const float ROTOR_FORCE_MUL_PANIC = 5.0;	//Rotor force multiplier used when avoiding ground. 
 	
 	//Waypoint values
 	const float WP_ANGLE = 90;					//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
@@ -227,11 +229,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//If we've been stuck on a point, force new flight path. 
 		//Sometimes the heli direction and path align so that the closest index does not update.
 		bool bCreateNewPath = false;
-		if (m_fTimeBetweenPts > TIME_FORCE_MOVE_POINT)
+/*		if (m_fTimeBetweenPts > TIME_FORCE_MOVE_POINT)
 		{
 //			m_iClosestIndex++;
 			bCreateNewPath = true;
-		}
+		}*/
 		
 		//No need to do anything unless we are at the end of spline.
 		if ((m_iClosestIndex + m_iDestinationPointAdd + POINTS_TO_NEW_DISTANCE >= m_vSplinePoints.Count() - 1) || bCreateNewPath)
@@ -258,6 +260,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 			m_iClosestIndex++;
 			m_fTimeBetweenPtsAvg = m_fTimeBetweenPts;		//TBD: This is a static value of previous time instead of average 
 			m_fTimeBetweenPts = 0;
+		}
+		
+		if (m_fTimeBetweenPts > TIME_FORCE_MOVE_POINT)
+		{
+			m_iClosestIndex++;
+//			bCreateNewPath = true;
 		}
 		
 		//Destination point definition
@@ -343,9 +351,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fRotorForceMultiplier = (ROTOR_FORCE_MUL * 10) * ( (m_vSplinePoints[idx][1] - m_vOrigin[1]) / m_vSplinePoints[idx][1]);
 
 		//If too low, turn the rotor force up
-		if (m_vOrigin[1] < (SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + m_fFlyHeightLow) )
+		float surfaceY = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin);		
+		if (m_vOrigin[1] - surfaceY - m_fFlyHeightLow < 0)
 		{
-			m_fRotorForceMultiplier = ROTOR_FORCE_MUL_PANIC;
+			float mul = (m_vOrigin[1] - surfaceY) / m_fFlyHeightLow;
+			m_fRotorForceMultiplier = ROTOR_FORCE_MUL_PANIC * mul;
+			m_fSpeed = Math.Clamp(m_fSpeed * mul, m_fSpeedMin, m_fSpeedMax)
 		}
 	}
 	
@@ -379,7 +390,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fDbgAngle = angle;
 		//Count the angle of the turn. The steeper the turn, the slower heli should be moving.
 		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);
-		m_fSpeedMul = m_fThrottle * (SPEED_GAIN - (m_fSpeedMul / 25));	//45
+		m_fSpeedMul = m_fThrottle * (SPEED_GAIN - (m_fSpeedMul / 35));	//45
 //		m_fSpeedMul = m_fPower * (SPEED_GAIN - (m_fSpeedMul / 25));	//45
 		m_fSpeedStart = m_fSpeed;
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
@@ -387,8 +398,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fTimeSpeed = 0;	//Start to change speed
 
 		//ROLL PITCH: Change pitch according to speed		
-//		m_fDbgAnglePitch = (m_fSpeedMul - 4) * PITCH_ANGLE * Math.DEG2RAD;	//No idea why 3 is a good value. :-)
-		m_fDbgAnglePitch = (m_fSpeedMul - 4) * PITCH_ANGLE_RAD;	//No idea why 3 is a good value. :-)
+		m_fDbgAnglePitch = (m_fSpeedMul - 4) * PITCH_ANGLE_RAD;			//No idea why 4 is a good value. :-)
 		m_fDbgAnglePitch = Math.Clamp(m_fDbgAnglePitch, -0.7, 0.7);		
 		m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fDbgAnglePitch);
 		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 0.5);
@@ -471,7 +481,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			SetFlyPathHeight(origin);
 		}
-		
+
+		m_iSegmentPoints = -1;
 		SDRC_Spline3D.GenerateSplinePoints(m_vFlyPathPoints, m_vSplinePoints, m_iSegmentPoints, true);
 		//Set final values
 		m_iClosestIndex = 2;
@@ -504,23 +515,27 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Clear any existing path points
 		m_vFlyPathPoints.Clear();
 
-/*		//Take two points from old spline. This smoothens the spline.
-//		int splineStartIdx = m_iNewClosestIndex;// - POINTS_TO_SPLINE_START;
-		int splineStartIdx = m_iClosestIndex - POINTS_TO_SPLINE_START;
-		if (splineStartIdx < 1)
-		{
-			splineStartIdx = 1;
-		}
-		m_vFlyPathPoints.Insert(m_vSplinePoints[splineStartIdx]);
-		m_vFlyPathPoints.Insert(m_vSplinePoints[m_vSplinePoints.Count() - 1]);*/
-		
+		//Take two points from old spline. This smoothens the spline.
 		int splineStartIdx = m_vSplinePoints.Count() - POINTS_TO_SPLINE_START - 1;
 		if (splineStartIdx < 1)
 		{
 			splineStartIdx = 1;
 		}
 		m_vFlyPathPoints.Insert(m_vSplinePoints[splineStartIdx - 1]);
-		m_vFlyPathPoints.Insert(m_vSplinePoints[splineStartIdx]);
+		m_vFlyPathPoints.Insert(m_vSplinePoints[splineStartIdx]);		
+		
+/*		int splineStartIdx0 = m_vSplinePoints.Count() - POINTS_TO_SPLINE_START - 1;
+		if (splineStartIdx0 < 1)
+		{
+			splineStartIdx0 = 1;
+		}
+		int splineStartIdx1 = splineStartIdx0 + POINTS_TO_SPLINE_START/2;
+		if (splineStartIdx1 > m_vSplinePoints.Count() - 1)
+		{
+			splineStartIdx1 = m_vSplinePoints.Count() - 1;
+		}
+		m_vFlyPathPoints.Insert(m_vSplinePoints[splineStartIdx0]);
+		m_vFlyPathPoints.Insert(m_vSplinePoints[splineStartIdx1]);*/
 				
 		//Use requested destinations or generate a waypoint.
 		if (m_vFlyDestinations.IsEmpty())
@@ -534,6 +549,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 	
 		SetFlyPathHeight(origin);
+		m_iSegmentPoints = -1;
 		SDRC_Spline3D.GenerateSplinePoints(m_vFlyPathPoints, m_vSplinePoints, m_iSegmentPoints, true);
 		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, origin, m_iClosestIndex, true);	//NOTE: This will set m_iNewClosestIndex
 		m_iNewClosestIndex = m_iClosestIndex + 1;
@@ -780,16 +796,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		m_fSpeed = m_fSpeedMin;
 	}
-
-/*	void SetRotorForceUp(float rotorForceUp)
-	{
-		m_fRotorForceUp = rotorForceUp * 100;
-	}*/
-	
-/*	void SetPower(float power)
-	{
-		m_fPower = power;
-	}*/
 	
 	//------------------------------------------------------------------------------------------------
 	void SetSpeed(float min = -1, float max = -1)
@@ -850,7 +856,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_bDestroyed = true;
 		
 		//Set damage so it should be destroyed on crash
-		float damage = SDRC_Misc.RandomFloat(0, 0.15);
+		float damage = SDRC_Misc.RandomFloat(0, 0.35);
 		if (damageManager)
 		{
 			damageManager.SetHealthScaled(damage);		
@@ -899,8 +905,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 							   	"Speed:" + Math.Round(10*m_fSpeed)/10 + " - " +
 							   	"Start/Target:" + Math.Round(10*m_fSpeedStart)/10 + "/" + Math.Round(10*m_fSpeedTarget)/10 + "\n" +
 	//						   	"Avg time:" + m_fTimeBetweenPtsAvg + "\n" +
-							   	"Height: " + (origin[1] - SDRC_Misc.GetSurfaceYWithWater(origin)) + "\n" + 
-							   	"SpeedMul:" + m_fSpeedMul + "\n" + 
+							   	"Height: " + Math.Round(10*(origin[1] - SDRC_Misc.GetSurfaceYWithWater(origin)))/10 + " - " + 
+							   	"SpeedMul:" + Math.Round(100*m_fSpeedMul)/100 + "\n" + 
 								"";		
 			debugText = debugText + 
 							   	"RotorForceMul:" + m_fRotorForceMultiplier + "\n" +
@@ -912,9 +918,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n" 
 								"";
 			debugText = debugText + 
-								"Init:" + m_bInInit + ", " +
-								"Pilots::" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
-								"Working:" + SDRC_VehicleHelper.IsWorking(owner) + " - " + 
+//								"Init:" + m_bInInit + ", " +
+//								"Pilots::" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
+//								"Working:" + SDRC_VehicleHelper.IsWorking(owner) + " - " + 
 								"Health: " + health + "\n" + 
 								
 	//							"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
