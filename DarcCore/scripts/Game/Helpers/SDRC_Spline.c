@@ -11,7 +11,13 @@ sealed class SDRC_Spline3D
 	static void GenerateSplinePoints(notnull array<vector> controlPoints, out array<vector> resultPoints, int samplesPerSegment = 20, bool showPath = false)
 	{
 		resultPoints.Clear();
-
+		bool variableSamples = false;
+		
+		if (samplesPerSegment == -1)
+		{
+			variableSamples = true;
+		}
+		
 		int count = controlPoints.Count();
 		if (count < 3)
 		{
@@ -26,6 +32,13 @@ sealed class SDRC_Spline3D
 			vector p2;
 			vector p3;
 
+			if (variableSamples)
+			{
+				int divider = SDRC_Misc.RandomInt(10,30);
+				float distance = vector.DistanceXZ(controlPoints[i], controlPoints[i + 1]);
+				samplesPerSegment = Math.ClampInt(distance / divider, 5, 25);
+			}
+						
 			// Handle start and end edges
 			if (i == 0)
 				p0 = controlPoints[i];
