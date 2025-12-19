@@ -342,18 +342,14 @@ class SDRC_HelicopterInfo : Managed
 	float throttle; 
 	float rotorForce;
 	float rotor2Force;
-	float power;
-	float rotorForceUp;
 
-	void Set(string comment_, string resource_, float throttle_, float rotorForce_, float rotor2Force_, float power_, float rotorForceUp_)
+	void Set(string comment_, string resource_, float throttle_, float rotorForce_, float rotor2Force_)
 	{
 		comment = comment_;
 		resource = resource_;
 		throttle = throttle_;
 		rotorForce = rotorForce_;
 		rotor2Force = rotor2Force_;
-		power = power_;
-		rotorForceUp = rotorForceUp_;
 	};
 }
 
@@ -467,13 +463,13 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		ref SDRC_HelicopterInfo heli00 = new SDRC_HelicopterInfo();
-			heli00.Set("Index 0", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et", 0.8, 0.8, 1.0, 0, 0);
+			heli00.Set("Index 0", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et", 0.8, 0.8, 1.0);
 			crashsite.helicopterInfo.Insert(heli00);
 		ref SDRC_HelicopterInfo heli01 = new SDRC_HelicopterInfo();
-			heli01.Set("Index 1", "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",	0.7, 0.9, 1.0, 0, 0);
+			heli01.Set("Index 1", "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",	0.7, 0.9, 1.0);
 			crashsite.helicopterInfo.Insert(heli01);
 		ref SDRC_HelicopterInfo heli02 = new SDRC_HelicopterInfo();
-			heli02.Set("Index 2", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.8, 0.8, -1.0, 0, 0);
+			heli02.Set("Index 2", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.8, 0.8, -1.0);
 			crashsite.helicopterInfo.Insert(heli02);		
 		
 		//----------------------------------------------------
@@ -562,13 +558,13 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		
 		//----------------------------------------------------
 		ref SDRC_HelicopterInfo heli10 = new SDRC_HelicopterInfo();
-			heli10.Set("Index 0", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et", 0.7, 0.8, 1.0, 0, 0);
+			heli10.Set("Index 0", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et", 0.7, 0.8, 1.0);
 			crashsite.helicopterInfo.Insert(heli10);
 		ref SDRC_HelicopterInfo heli11 = new SDRC_HelicopterInfo();
-			heli11.Set("Index 1", "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",	0.6, 0.85, 1.0, 0, 0);
+			heli11.Set("Index 1", "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",	0.6, 0.85, 1.0);
 			crashsite.helicopterInfo.Insert(heli11);
 		ref SDRC_HelicopterInfo heli12 = new SDRC_HelicopterInfo();
-			heli12.Set("Index 2", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.75, 0.75, -1.0, 0, 0);
+			heli12.Set("Index 2", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",	0.75, 0.75, -1.0);
 			crashsite.helicopterInfo.Insert(heli12);		
 		
 		//----------------------------------------------------
