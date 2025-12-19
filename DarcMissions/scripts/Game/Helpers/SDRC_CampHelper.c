@@ -136,8 +136,8 @@ sealed class SDRC_CampHelper
 			return false;
 		}
 
-		SDRC_Log.Add("[SDRC_CampHelper:AddLoot] Adding to: " + camp.loot.box, LogLevel.SPAM);	//TBD: Remove
-		SDRC_Log.Add("[SDRC_CampHelper:AddLoot] Items: " + camp.loot.items, LogLevel.SPAM);	//TBD: Remove
+		SDRC_Log.Add("[SDRC_CampHelper:AddLoot] Adding to: " + camp.loot.box, LogLevel.SPAM);
+		SDRC_Log.Add("[SDRC_CampHelper:AddLoot] Items: " + camp.loot.items, LogLevel.SPAM);
 				
 		//NOTE: itemChance difficulty is handled in TBD
 		SDRC_LootHelper.SpawnItemsToStorage(camp.loot.box, camp.loot.items, camp.loot.itemChance);

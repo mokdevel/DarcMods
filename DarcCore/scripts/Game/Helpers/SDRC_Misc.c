@@ -26,7 +26,7 @@ sealed class SDRC_Misc
 	Returns random int between min and max. 
 	This function just to get rid of an error when min/max are the same.
 	*/
-	static float RandomInt(float min, float max)
+	static int RandomInt(int min, int max)
 	{
 		if (min == max)
 		{

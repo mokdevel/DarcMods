@@ -41,8 +41,10 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
 
 		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(m_Config.distanceToStart);
-		//m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.1);
-
+	#ifndef SDRC_RELEASE
+		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.2);
+	#endif
+		
 		//No suitable location found.
 		if (pos == "0 0 0")
 		{				
@@ -348,7 +350,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		conf.showMarker = false;
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0};//{0,0,1,1,1};
+		conf.missionList = {0,0,1,1,1};
 		//Mission specific
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;
