@@ -15,7 +15,9 @@ Main features:
 Changes:
 * Improved ``BALLIEN_BC_FACTION`` support.
 * Improved ``PLASTICBANDIT`` support.
-* Chopper mission: Removed ``helicopterInfo``. You only need to use prefab name in ``heliList``.
+* Chopper mission: 
+  * Removed ``helicopterInfo``. You only need to use prefab name in ``heliList``.
+  * Added new helicopters
 
 ## 20251217
 Changed jsons - remove the files to receive updated ones.

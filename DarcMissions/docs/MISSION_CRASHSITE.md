@@ -11,7 +11,7 @@ The location is where the mission was dropped.
 ### Parameters
 Note: ```distanceToMission``` and ```distanceToPlayer``` overrides missionFrame settings. The initial helicopter position could start on top of a mission and it does not matter.
 
-See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md) , [Camp](./P_CAMP.md), [Helicopter](./P_HELICOPTER.md)
+See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md) , [Structures](./P_STRUCTURE.md) , [Camp](./P_CAMP.md)
 ```
 int version : See Common parameters
 string author : See Common parameters
@@ -39,4 +39,15 @@ SDRC_Camp
   loot : (optional) The loot found in the box spawned near the crash
   campItems : (optional) Prefabs to spawn at the crashsite. Note that first item shall be the loot box.
 array<SDRC_HelicopterInfo> helicopterInfo : The helicopter is selected randomly.
+```
+
+### SDRC_HelicopterInfo
+This defines the helicopter parameters. The default prefabs in Arma Reforger are without their engines running and will simply crash before the flight is possible. For the flying helicopters the prefabs needs to be modified and currently only a couple of options are available.
+
+```
+string comment : Generic comment to provide details. Not used in game.
+string resource : The prefab for the helicopter. See supported values above.
+float throttle : The 'speed' the helicopter is flying.
+float rotorForce : Force of the main rotor.
+float rotor2Force : Force of the second rotor.
 ```
