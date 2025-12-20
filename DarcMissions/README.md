@@ -68,7 +68,6 @@ Other parameter details available:
 * [Non Valid Areas](./docs/NONVALIDAREAS.md) aka safe zones
 * [Structures](./docs/P_STRUCTURE.md)
 * [Buildings](./docs/P_BUILDING.md)
-* [Helicopters](./docs/P_HELICOPTER.md)
 * [Helicopters Crashing](./docs/P_HELICOPTER_CRASH.md)
 * [Helicopters Flying](./docs/P_HELICOPTER_FLY.md)
 

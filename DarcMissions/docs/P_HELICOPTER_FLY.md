@@ -15,7 +15,6 @@ Currently supported prefabs for Chopper mission:
 - ``"{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et"``
 - ``"{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et"``
 
-
 # Creating a flying helicopter
 Use the Arma Reforger workbench to create your own helicopter mod. The default prefabs in Arma Reforger are without their engines running and will simply crash before the flight is possible.
 
@@ -65,10 +64,21 @@ Parameters used for more natural flying:
 - Pitch is modified depending on the speed.
 - Curvature of the flight affects roll but the helicopter tries to return natural flat flying slowly.
 
-## Re-use in mods
-The flight model is done as a component. You are free to use it in yours - credits are appreciated. In theory you can add that to any helicopter and they will gain autonomous flying capabilities.
+## Re-use in mods and game modes
+The flight model is done as a component. You are free to use it in yours - credits are appreciated. In theory you can add that to any helicopter and they will gain autonomous flying capabilities. 
+
+## HowTo
+- Create a compatibility mod (or include in to your mod).
+- Include DarcCore as a dependency.
+- Choose the helicopter to use.
+- Use the guide above to set the necessary values.
+- Add the component.
+- Spawn and let it fly.
+
+There are a few public functions that you can use. For flyin to destination(s), use ``AddDestination()``. You can call it multiple times to create a fly path. The helicopter will not go exactly to the given point and this is by design. If you want it to fly over a location, set the point behind the location.
 
 ## Issues
 There are various small things that are to be fixed in the future updates:
 - Climb in certain cases is too fast and does not look natural.
 - Flight path finding is simple for the moment. Steep turns sometimes look nice, sometimes not.
+- Some times the helicopter flies nose up after a steep turn. Have not yet found how to avoid that.
