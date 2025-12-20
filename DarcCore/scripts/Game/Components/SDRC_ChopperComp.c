@@ -61,16 +61,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fTimeBetweenPtsAvg = 1;
 		
 	//Turn
-	const int TIME_TURN_INTERVAL_BASE = 40;				//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
+	private const int TIME_TURN_INTERVAL_BASE = 40;				//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
 	
 	//Pitch
-	const float PITCH_ANGLE_RAD = 80 * Math.DEG2RAD;	//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
+	private const float PITCH_ANGLE_RAD = 80 * Math.DEG2RAD;	//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
 	
 	//Roll 
-	const float ROLL_ANGLE_MUL = 2.4;//1.7;				//Multiplier for roll angle along the spline
+	private const float ROLL_ANGLE_MUL = 2.4;//1.7;				//Multiplier for roll angle along the spline
 	
 	//Flight path
-	int m_iSegmentPoints;						//How many points to create for each segment
+	private int m_iSegmentPoints;					//How many points to create for each segment
 	const int POINTS_TO_NEW_DISTANCE = 2;		//How many spline points in to the future flight path is checked before adding new flight points.
 	const int POINTS_TO_SPLINE_START = 4;		//Points to go back from m_iClosestIndex when creating a new flight path 
 	const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
@@ -78,12 +78,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 	const float TIME_IN_INIT = 10;				//(seconds) Time to be in init state. During this time, we don't check for damage or similar things.
 	
 	//Rotor force multipliers
-	const float ROTOR_FORCE_MUL = 1.0;			//Rotor force multiplier. Bigger value makes the heli react faster to up/down movement
-	const float ROTOR_FORCE_UP_MUL = 1.2;		//Rotor force multiplier in velocity counting
-	const float ROTOR_FORCE_MUL_PANIC = 5.0;	//Rotor force multiplier used when avoiding ground. 
+	private const float ROTOR_FORCE_MUL = 1.0;			//Rotor force multiplier. Bigger value makes the heli react faster to up/down movement
+	private const float ROTOR_FORCE_UP_MUL = 1.2;		//Rotor force multiplier in velocity counting
+	private const float ROTOR_FORCE_MUL_PANIC = 5.0;	//Rotor force multiplier used when avoiding ground. 
 	
 	//Waypoint values
-	const float WP_ANGLE = 90;					//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
+	private const float WP_ANGLE = 90;			//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
 												//If chopper destination makes a too steep turn, we will add a few additional points.
 	
 	//Runtime parameters
@@ -114,6 +114,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private vector m_vHeliDirection;
 	private vector m_vHeliDirectionFuture;
 	
+	//Enemy positions
+	private const int ENEMY_FOUND_TIMEOUT = 10;		//Time between enemy position updates
+	private const int ENEMY_FORGET_TIMEOUT = 30;	//Time to forget the enemy position
+	private vector m_vEnemyPosition = "0 0 0";		//Position of last found enemy
+	private int m_iEnemyFoundTimeOut;				//Time to wait to before allowing enemy position 
+	
 	//Debug stuff
 	private float m_fDbgAngle;
 	private float m_fDbgAnglePitch;
@@ -142,6 +148,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		s_Instance = this;
 
 		m_Helicopter_s = VehicleHelicopterSimulation.Cast(GetOwner().GetRootParent().FindComponent(VehicleHelicopterSimulation));
+		m_iEnemyFoundTimeOut = SDRC_Misc.GetCurrentTickTime() + ENEMY_FOUND_TIMEOUT;
 		
 		if (m_Helicopter_s)
 		{
@@ -167,11 +174,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp] VehicleHelicopterSimulation not found.", LogLevel.WARNING);						
 		}
-	}
- 
-	void DoSetupDelayed(IEntity owner)
-	{
-		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -314,6 +316,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Set turn
 		SetTurn(owner, m_fTimeTurnInterval);				
+		
+		//Search for enemies
+		SearchForEnemy(owner);
 		
 		#ifndef SDRC_RELEASE
 			DrawHelicopterVectors(owner);
@@ -869,6 +874,51 @@ class SDRC_ChopperComp : ScriptGameComponent
 		return false;
 	}
 
+	//------------------------------------------------------------------------------------------------
+	bool SearchForEnemy(IEntity owner)
+	{
+		bool found = false;
+		
+		if (m_iEnemyFoundTimeOut > SDRC_Misc.GetCurrentTickTime())
+		{
+			return false;
+		}
+		
+		if ( (SDRC_Misc.GetCurrentTickTime() > m_iEnemyFoundTimeOut + ENEMY_FORGET_TIMEOUT) && (m_vEnemyPosition != "0 0 0") )
+		{
+			m_vEnemyPosition = "0 0 0";
+			SDRC_Log.Add("[SDRC_ChopperComp:SearchForEnemy] Enemy position reset.", LogLevel.DEBUG);
+		}	
+		
+		//Enemy stuff		
+		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(owner.FindComponent(SCR_BaseCompartmentManagerComponent));
+		
+		array<IEntity> occupants = {};
+		scr_compartmentManager.GetOccupants(occupants);
+
+		foreach(IEntity occupant : occupants)
+		{
+			SCR_AICombatComponent aicc = SCR_AICombatComponent.Cast(occupant.FindComponent(SCR_AICombatComponent));
+			if (aicc)
+			{
+				BaseTarget bt = aicc.GetCurrentTarget();
+				if (bt)
+				{
+					IEntity target = bt.GetTargetEntity();
+					if (EntityUtils.IsPlayer(target))
+					{
+						found = true;
+						m_vEnemyPosition = target.GetOrigin();
+						m_iEnemyFoundTimeOut = SDRC_Misc.GetCurrentTickTime() + ENEMY_FOUND_TIMEOUT;
+						SDRC_Log.Add("[SDRC_ChopperComp:SearchForEnemy] Enemy found at " + m_vEnemyPosition, LogLevel.DEBUG);
+						break;
+					}
+				}
+			}
+		}
+		
+		return found;
+	}
 	//------------------------------------------------------------------------------------------------	
 	// Debugging things
 	//------------------------------------------------------------------------------------------------	
@@ -1000,7 +1050,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 //		float currentSpeed = vVel.Length();
 		DrawLine(origin, origin + (vVel * m_fSpeed), Color.GRAY_75);			
 		
-		//Enemy stuff		
+		//Enemy stuff
+		
+		//Draw current enemy sighting		
+		if (m_vEnemyPosition != "0 0 0")
+		{
+			DrawLine(origin, m_vEnemyPosition, Color.PINK);
+		}
+		
+		//Draw eyesight		
 		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(owner.FindComponent(SCR_BaseCompartmentManagerComponent));
 		
 		array<IEntity> occupants = {};
