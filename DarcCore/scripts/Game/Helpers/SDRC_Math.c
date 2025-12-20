@@ -36,7 +36,35 @@ sealed class SDRC_Math
 	    // Return angle in radians
 	    return Math.Acos(dot) * sign;
 	}	
+
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Get angle between (p1, p0) and (p1, p2).
+	
+		Find the angle A. 
 		
+ 		 (p2)  dir1
+			*<-----. (p1)
+			     \_|
+			     A | dir0
+	               V
+			       * (p0)
+	*/	
+	static float GetAngleBetweenThreePoints(vector p0, vector p1, vector p2, out vector dir0 = "0 0 0", out vector dir1 = "0 0 0")
+	{
+		//Use only ZX plane
+		p0[1] = 0;
+		p1[1] = 0;
+		p2[1] = 0;
+		//Current direction		
+		dir0 = vector.Direction(p1, p0);
+		//Direction towards destination
+		dir1 = vector.Direction(p1, p2);
+		float angle = SDRC_Math.GetAngleBetweenVectors(dir0, dir1) * Math.RAD2DEG;
+		
+		return angle;
+	}	
+			
 	//------------------------------------------------------------------------------------------------	
 	//\returns AngVel in radians
 	static vector ComputeAngularVelocity(vector v1, vector v2, float deltaTime)
