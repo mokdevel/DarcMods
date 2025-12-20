@@ -119,6 +119,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private const int ENEMY_FORGET_TIMEOUT = 30;	//Time to forget the enemy position
 	private vector m_vEnemyPosition = "0 0 0";		//Position of last found enemy
 	private int m_iEnemyFoundTimeOut;				//Time to wait to before allowing enemy position 
+	private bool m_bSearchForEnemy;					//Enable/Disable enemy searching
 	
 	//Debug stuff
 	private float m_fDbgAngle;
@@ -177,6 +178,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	/*!
+	Set the helicopter to normal state
+	*/	
 	void InitDone(IEntity owner)
 	{
 		m_bInInit = false;
@@ -187,7 +191,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
-	// Once all init things are done, activate the component
+	/*!
+	Once all init things are done, activate the component
+	*/	
 	void Ready(IEntity owner)
 	{
 		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
@@ -675,35 +681,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 				
 		return newpos;
 	}
-	
-	//------------------------------------------------------------------------------------------------	
-	/*!	
-	Get angle between destination and current path direction.
-	
-		Find the angle A. If it is smaller than 90 deg, the turn is steep
-		
- 		 (p2)  dir1
-			*<-----. (p1)
-			     \_|
-			     A | dir0
-	               V
-			       * (p0)
-	*/	
-	private float GetDestinationAngle(vector p0, vector p1, vector p2, out vector dir0 = "0 0 0", out vector dir1 = "0 0 0")
-	{
-		int idx = m_vFlyPathPoints.Count() - 1;
-		//Use only ZX plane
-		p0[1] = 0;
-		p1[1] = 0;
-		p2[1] = 0;
-		//Current direction		
-		dir0 = vector.Direction(p1, p0);
-		//Direction towards destination
-		dir1 = vector.Direction(p1, p2);
-		float angle = SDRC_Math.GetAngleBetweenVectors(dir0, dir1) * Math.RAD2DEG;
-		
-		return angle;
-	}
 		
 	//------------------------------------------------------------------------------------------------	
 	/*!	
@@ -729,7 +706,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		vector dir0;	//Previous flight direction
 		vector dir1;	//New flight direction
-		float heliAngle = GetDestinationAngle(m_vFlyPathPoints[idx - 1], m_vFlyPathPoints[idx], destination, dir0, dir1);
+		float heliAngle = SDRC_Math.GetAngleBetweenThreePoints(m_vFlyPathPoints[idx - 1], m_vFlyPathPoints[idx], destination, dir0, dir1);
 				
 #ifdef HELI_TESTING				
 		//For some reason two points on the path are the same. Should not happen. Maybe an issue in spline generation?
@@ -780,7 +757,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}	
 		
 	//------------------------------------------------------------------------------------------------	
-	// Helicopter things
+	// Helicopter settings
 	//------------------------------------------------------------------------------------------------	
 	
 	void SetHeli(float speedMin, float speedMax, float flyHeightLow, float flyHeightHigh, SDRC_EHeliWaypointGenerationType wpType, float distanceLow, float distanceHigh)
@@ -874,10 +851,23 @@ class SDRC_ChopperComp : ScriptGameComponent
 		return false;
 	}
 
+	//------------------------------------------------------------------------------------------------	
+	// Enemy searching functionality
+	//------------------------------------------------------------------------------------------------	
+	
 	//------------------------------------------------------------------------------------------------
-	bool SearchForEnemy(IEntity owner)
+	/*!
+	Search for enemy and mark it. The knowledge will eventually be lost. 
+	After a while, we may find another enemy to track.
+	*/			
+	private bool SearchForEnemy(IEntity owner)
 	{
 		bool found = false;
+		
+		if (!m_bSearchForEnemy)
+		{
+			return false;
+		}
 		
 		if (m_iEnemyFoundTimeOut > SDRC_Misc.GetCurrentTickTime())
 		{
@@ -919,14 +909,47 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		return found;
 	}
+	
+	//------------------------------------------------------------------------------------------------	
+	/*!
+	Enable/Disable enemy searching
+	*/		
+	void SetSearchForEnemy(bool value)
+	{
+		m_bSearchForEnemy = value;
+	}
+
+	//------------------------------------------------------------------------------------------------	
+	/*!
+	Get last known enemy position
+	*/
+	vector GetEnemyPosition()
+	{
+		return m_vEnemyPosition;
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	/*!
+	Reset enemy knowledge and timeout
+	*/
+	void EnemyHandled()
+	{
+		m_vEnemyPosition = "0 0 0";
+		m_iEnemyFoundTimeOut = SDRC_Misc.GetCurrentTickTime() + ENEMY_FOUND_TIMEOUT;
+	}	
+		
 	//------------------------------------------------------------------------------------------------	
 	// Debugging things
 	//------------------------------------------------------------------------------------------------	
 
 	//------------------------------------------------------------------------------------------------	
+	/*!
+	Draw the spline points and draw lines
+	*/
 	static void DrawSplinePoints(array<vector> resultPoints)
 	{
 	#ifndef SDRC_RELEASE
+		
 		foreach (int i, vector pos : resultPoints)
 		{
 			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(40, 128, 64, 64), 1.0);
@@ -940,8 +963,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}
 			
 	//------------------------------------------------------------------------------------------------	
+	/*!
+	Draw debugging details of helicopter
+	*/	
 	void DrawHelicopterVectors(IEntity owner)
 	{
+	#ifndef SDRC_RELEASE
+		
 		vector origin = owner.GetOrigin();
 		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
 		float health = damageManager.GetHealth();
@@ -1080,7 +1108,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 				}
 			}
 		}
-				
+	#endif			
 	}
 	
 	//------------------------------------------------------------------------------------------------	
