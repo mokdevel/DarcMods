@@ -350,7 +350,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		conf.showMarker = false;
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,0,1,1,1};
+		conf.missionList = {1};//{0,0,1,1,1};
 		//Mission specific
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;

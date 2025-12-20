@@ -1,3 +1,21 @@
+SCR_AIGroup : "{0A8E20F50DA233E1}Prefabs/Groups/BLUFOR/Group_US_FireTeam_Guard.et" {
+ coords 1159.544 39 2697.947
+}
+Vehicle LAV1 : "{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et" {
+ coords 1034.757 37.594 2604.16
+}
+Vehicle BRDM1 : "{254289B9C09904AB}Prefabs/Vehicles/Wheeled/BRDM2/BRDM2.et" {
+ coords 1076.748 38.301 2630.413
+}
+SCR_AIGroup : "{3BF36BDEEB33AEC9}Prefabs/Groups/BLUFOR/Group_US_SentryTeam.et" {
+ coords 1172.752 39.02 2746.243
+}
+SCR_AIGroup : "{6B2A6EE5002D200F}Prefabs/Groups/BLUFOR/Group_US_EngineerTeam.et" {
+ coords 1258.36 134.248 2595.185
+}
+SCR_AIGroup : "{84E5BBAB25EA23E5}Prefabs/Groups/BLUFOR/Group_US_FireTeam.et" {
+ coords 1258.132 134.429 2594.712
+}
 $grp GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et" {
  {
   Flags 0x403 0
@@ -11,4 +29,26 @@ $grp GenericEntity : "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyC
   Flags 0x403 0
   coords 1225.668 39 2219.527
  }
+}
+Vehicle LAV25_MERDC1 : "{B7A8BAA37CB0AC2B}Prefabs/Vehicles/Wheeled/LAV25/LAV25_MERDC.et" {
+ coords 986.976 39.001 2647.454
+}
+$grp SCR_AIGroup : "{DDF3799FA1387848}Prefabs/Groups/BLUFOR/Group_US_RifleSquad.et" {
+ {
+  coords 1208.853 39 2739.25
+ }
+ {
+  coords 1258.09 134.519 2594.606
+ }
+}
+$grp SCR_AIGroup : "{EF62027CC75A7459}Prefabs/Groups/BLUFOR/Group_US_MedicalSection.et" {
+ {
+  coords 1051.533 39.001 2664.053
+ }
+ {
+  coords 973.926 39.001 2681.912
+ }
+}
+SCR_AIGroup : "{FCF7F5DC4F83955C}Prefabs/Groups/BLUFOR/Group_US_LightFireTeam.et" {
+ coords 1179.025 39 2717.031
 }
