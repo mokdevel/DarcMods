@@ -73,6 +73,7 @@ sealed class SDRC_VehicleHelper
 				if (character)
 				{
 					compartment.SetReserved(character);
+					SDRC_SpawnHelper.SetPersistence(character, false);
 					SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Spawned.", LogLevel.SPAM);
 					break;
 				}
