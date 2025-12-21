@@ -153,7 +153,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		
 		m_EntityList.Insert(m_Vehicle);
 		m_Vehicle_c.SetHeli(m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.wpType, m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
-		m_Vehicle_c.InitFlightPath(m_Vehicle, m_vPosOrigin, GetPos());
+		m_Vehicle_c.InitFlyPath(m_Vehicle, m_vPosOrigin, GetPos());
 
 		//Spawn pilots if such is available 
 		ResourceName pilot = SDRC_EnemyHelper.SelectEnemy("C_CREW", GetFaction());
@@ -350,7 +350,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		conf.showMarker = false;
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {1};//{0,0,1,1,1};
+		conf.missionList = {1};//{0,0,1,1,1,2,2};
 		//Mission specific
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;
@@ -360,6 +360,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		//----------------------------------------------------
 		conf.subMissions.Insert(Chopper0());
 		conf.subMissions.Insert(Chopper1());
+		conf.subMissions.Insert(Chopper2());
 	};
 	
 	//----------------------------------------------------
@@ -384,7 +385,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		chopper.ai.Set
 		(
 			{1, 2},
-			{"G_LIGHT", "G_ADMIN", "G_RECON"},
+			{"G_SMALL", "G_ADMIN", "G_RECON"},
 			30, 0.6,
 			{0, 0},
 			SDRC_EWaypointGenerationType.LOITER,
@@ -427,7 +428,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		chopper.ai.Set
 		(
 			{1, 2},
-			{"G_HEAVY", "G_LIGHT"},
+			{"G_SMALL", "G_LIGHT"},
 			60, 1.0,
 			{0, 0},
 			SDRC_EWaypointGenerationType.LOITER,
@@ -450,4 +451,55 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		
 		return chopper;
 	}
+	
+	//----------------------------------------------------
+	SDRC_Chopper Chopper2()
+	{
+		ref SDRC_Chopper chopper = new SDRC_Chopper();
+		chopper.general.Set(
+			2, "index 2: Patrol around cities and towns",
+			{"0 0 0", "0 0 0"}, 0,
+			{	
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_TOWN, 
+				EMapDescriptorType.MDT_AIRPORT,
+			},
+			"any",
+			"Guardian from the heaven",
+			"Area near %1 is being guarded from the air.",
+			SDRC_EMissionWinCondition.AI_KILL_75,
+			"Guardians are now angels.", 
+			"Guards have left.",
+			"",
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
+			SDRC_EMissionDifficulty.NORMAL,
+			0
+		);
+		chopper.ai.Set
+		(
+			{1, 2},
+			{"G_HEAVY", "G_SMALL"},
+			60, 1.0,
+			{0, 0},
+			SDRC_EWaypointGenerationType.LOITER,
+			SDRC_EWaypointMoveType.LOITER,
+		);
+		chopper.Set
+		(
+			{
+			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
+			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
+			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
+			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
+			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
+			},
+			{30, 60},
+			{7, 25},
+			{200, 400},
+			SDRC_EHeliWaypointGenerationType.PATROL,	
+		);
+		
+		return chopper;
+	}	
 }
