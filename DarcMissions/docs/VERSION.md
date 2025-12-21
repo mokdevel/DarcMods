@@ -11,6 +11,7 @@ No changes in mission jsons.
 
 Main features:
 * Simplified helicopter definition for Chopper mission
+* AI spawned to vehicles set as non-persistent
 
 Changes:
 * Improved ``BALLIEN_BC_FACTION`` support.

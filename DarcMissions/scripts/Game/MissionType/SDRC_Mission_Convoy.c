@@ -399,7 +399,6 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		conf.missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
 		//Mission specific
 		conf.distanceToPlayer = 500;
-		conf.disableArsenal = true;
 		//----------------------------------------------------
 		conf.subMissions.Insert(Convoy0());				
 		conf.subMissions.Insert(Convoy1());				
