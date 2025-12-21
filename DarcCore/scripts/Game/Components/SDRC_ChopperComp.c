@@ -4,7 +4,7 @@
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
 #ifndef SDRC_RELEASE
-	#define HELI_TESTING
+//	#define HELI_TESTING
 #endif
 
 //------------------------------------------------------------------------------------------------
@@ -277,19 +277,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 			//This should never happen
 			m_fTimeBetweenPts = 0;			
 		}
-		
-/*		if (m_iNewClosestIndex > m_iClosestIndex)
-		{
-			m_iClosestIndex = m_iNewClosestIndex;
-			m_fTimeBetweenPtsAvg = m_fTimeBetweenPts;		//TBD: This is a static value of previous time instead of average 
-			m_fTimeBetweenPts = 0;
-		}
-		else if (m_iNewClosestIndex == m_iClosestIndex)
-		{
-			m_iClosestIndex++;
-			m_fTimeBetweenPtsAvg = m_fTimeBetweenPts;		//TBD: This is a static value of previous time instead of average 
-			m_fTimeBetweenPts = 0;
-		}*/
 		
 		if (m_fTimeBetweenPts > TIME_FORCE_MOVE_POINT)
 		{
@@ -565,19 +552,20 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 		m_vFlyPathPoints.Insert(m_vSplinePoints[splineStartIdx - 1]);
 		m_vFlyPathPoints.Insert(m_vSplinePoints[splineStartIdx]);		
-				
-		//Use requested destinations or generate a waypoint.
+			
+		GenerateWayPoint(origin, m_fWpType);
+			
+/*		//Use requested destinations or generate a waypoint.
 		if (m_vFlyDestinations.IsEmpty())
 		{
-			GenerateWayPoint(origin, m_fWpType);			
+			GenerateWayPoint(origin, m_fWpType);
 		}
 
 		//If we created FlyDestinations above in GenerateWayPoint, let's use them
 		if (!m_vFlyDestinations.IsEmpty())
 		{
-//			m_vFlyPathPoints.InsertAll(m_vFlyDestinations);
 			m_vFlyDestinations.Clear();
-		}
+		}*/
 	
 		SetFlyPathHeight(origin);
 		m_iSegmentPoints = -1;
@@ -585,7 +573,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Search the closest indes from the spline start
 		m_iClosestIndex = 0;
 		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, origin, m_iClosestIndex, false);	//NOTE: This will set m_iClosestIndex
-//		m_iNewClosestIndex = m_iClosestIndex + 1;
 		m_iOldClosestIndex = m_iClosestIndex;
 		//Check that points are above ground
 		CheckSplinePoints(origin);
@@ -660,41 +647,37 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/
 	private void GenerateWayPoint(vector origin, SDRC_EWaypointGenerationType wpGenType)
 	{		
-//		array<vector> positions = {};
 		vector pos = "0 0 0";
-		
-		//Random flying for a helicopter
-		if (wpGenType == SDRC_EHeliWaypointGenerationType.RANDOM)
-		{	
-			pos = GetRandomDestination(origin);
-			AddDestination(pos);
-			CreateFlyPathPoints();
-		}
-		
-		//Fly around a certain area
-		if (wpGenType == SDRC_EHeliWaypointGenerationType.PATROL)
+
+		if (m_vFlyDestinations.IsEmpty())
 		{
-			float startAngle = SDRC_Misc.RandomFloat(0, 360);
-			int count = 3;
-			
-			for (int i = 0; i < count; i++)
-			{				
-				float range = Math.RandomFloat(m_fDistanceLow, m_fDistanceHigh);
-				vector vec = SDRC_Misc.GetCoordinatesOnCircle(m_vOriginalDestination, range, i*(360/count), startAngle);
+			//Random flying for a helicopter
+			if (wpGenType == SDRC_EHeliWaypointGenerationType.RANDOM)
+			{	
+				pos = GetRandomDestination(origin);
 				AddDestination(pos);
-			}			
+			}
 			
-//			CreateFlyPathPoints(positions);				
+			//Fly around a certain area
+			if (wpGenType == SDRC_EHeliWaypointGenerationType.PATROL)
+			{
+				float startAngle = SDRC_Misc.RandomFloat(0, 360);
+				int count = 6;
+				
+				for (int i = 0; i < count; i++)
+				{			
+					float range = Math.RandomFloat(m_fDistanceLow, m_fDistanceHigh);
+					pos = SDRC_Misc.GetCoordinatesOnCircle(m_vOriginalDestination, range, i*(360/count), startAngle);
+					AddDestination(pos);
+				}			
+			}
 		}
+
+		//Create points for spline		
+		CreateFlyPathPoints();
 		
-/*		//Fly to a given destination
-		if (wpGenType == SDRC_EHeliWaypointGenerationType.GOTO)
-		{
-			pos = "3100 0 2800";									//TBD: Remove
-			positions.Insert(pos);
-	
-			CreateFlyPathPoints(positions);
-		}*/		
+		//Clear the destinations 
+		m_vFlyDestinations.Clear();
 	}
 
 	//------------------------------------------------------------------------------------------------	
@@ -722,28 +705,26 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Create fly points
-	
-	NOTE: Currently uses only one point of the array
+	Takes the points from m_vFlyDestinations and generates points to be used for spline creation
 	*/	
 	private void CreateFlyPathPoints()
 	{
 
-		
-#ifdef HELI_TESTING				
-		vector dest;
-		//Replace the provided destination for testing purposes
-//		m_vFlyPathPoints.RemoveOrdered(m_vFlyPathPoints.Count() - 1);
-		m_vFlyDestinations.RemoveOrdered(m_vFlyDestinations.Count() - 1);
-//		dest = "1600 0 2600";	//113 degrees 
-		dest = "1300 0 2900";	//64 degrees 
-//		dest = "1000 0 2800";	//34 degrees 
-//		dest = "900 0 2800";		//12 degrees 
-//		dest = "500 0 2000";		//-94 degrees 
-//		dest = "700 0 2700";		//-22 degrees 
-		AddDestination(dest);
-		dest = "1800 0 2800";
-		AddDestination(dest);
-#endif
+		#ifdef HELI_TESTING				
+			vector dest;
+			//Replace the provided destination for testing purposes
+		//	m_vFlyPathPoints.RemoveOrdered(m_vFlyPathPoints.Count() - 1);
+			m_vFlyDestinations.RemoveOrdered(m_vFlyDestinations.Count() - 1);
+		//	dest = "1600 0 2600";	//113 degrees 
+			dest = "1300 0 2900";	//64 degrees 
+		//	dest = "1000 0 2800";	//34 degrees 
+		//	dest = "900 0 2800";		//12 degrees 
+		//	dest = "500 0 2000";		//-94 degrees 
+		//	dest = "700 0 2700";		//-22 degrees 
+			AddDestination(dest);
+			dest = "1800 0 2800";
+			AddDestination(dest);
+		#endif
 		
 		foreach (int idx, vector destination : m_vFlyDestinations)
 		{		
@@ -758,13 +739,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 			vector p2 = destination;
 			float heliAngle = SDRC_Math.GetAngleBetweenThreePoints(p0, p1, p2, dir0, dir1);
 				
-#ifdef HELI_TESTING				
+		#ifdef HELI_TESTING				
 			//For some reason two points on the path are the same. Should not happen. Maybe an issue in spline generation?
 			if (Math.AbsFloat(heliAngle) == 90)
 			{
 				SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Why 90?", LogLevel.DEBUG);
 			}
-#endif		
+		#endif		
+			
 			//Is the angle too steep? Re-route.
 			if (Math.AbsFloat(heliAngle) < WP_ANGLE)
 			{				
