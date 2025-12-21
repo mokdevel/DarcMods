@@ -136,12 +136,15 @@ sealed class SDRC_Spline3D
 	}
 	
 	//------------------------------------------------------------------------------------------------	
-	//! Gets the shortest 3D distance between a point and a spline
-	//! Extended from SCR_Math3D function
-	//! \param[in] points array of all points forming the spline, minimum 1 point
-	//! \param[in] point point that is being checked
-	//! \return distance from spline, -1 if no points are provided
-	static float GetDistanceFromSpline(notnull array<vector> points, vector point, out int index = 0, bool quickSearch = false)
+	/*! Gets the shortest 3D distance between a point and a spline
+	Extended from SCR_Math3D function
+	\param points array of all points forming the spline, minimum 1 point
+	\param point point that is being checked
+	\param index The variable to used to update the index. The search will start from this one till end and update the parameter. If search is to be for the whole spline, set this to 0
+	
+	\return distance from spline, -1 if no points are provided
+	*/
+	static float GetDistanceFromSpline(notnull array<vector> points, vector point, inout int index = 0, bool quickSearch = false)
 	{		
 		int count = points.Count();
 		if (count < 1)
@@ -155,14 +158,14 @@ sealed class SDRC_Spline3D
 		}
 
 		float tempDistanceSq;
-		vector segmentStart = points[0];
+		vector segmentStart = points[index];
 		float minDistanceSq = vector.DistanceSq(point, segmentStart);
 
-		//The first point is considered the closest one at start
-		index = 0;
-		
 		foreach (int i, vector segmentEnd : points)
 		{
+			if (i < index)
+				continue;
+			
 			if (i == 0)
 				continue;
 
