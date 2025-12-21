@@ -71,7 +71,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	
 	//Flight path
 	private vector m_vOriginalDestination;		//Original requested destination
-	private int m_iSegmentPoints;				//How many points to create for each segment
+//	private int m_iSegmentPoints;				//How many points to create for each segment
 	const int POINTS_TO_NEW_DISTANCE = 2;		//How many spline points in to the future flight path is checked before adding new flight points.
 	const int POINTS_TO_SPLINE_START = 4;		//Points to go back from m_iClosestIndex when creating a new flight path 
 	const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
@@ -471,9 +471,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 	#endif
 		
 		int worldSize = SDRC_Misc.GetWorldSize();
-		m_iSegmentPoints = worldSize/400;
-		m_iSegmentPoints = Math.ClampInt(m_iSegmentPoints, 15, 30);
-		SDRC_Log.Add("[SDRC_ChopperComp:InitFlightPath] Segment point count: " + m_iSegmentPoints, LogLevel.DEBUG);
+//		m_iSegmentPoints = worldSize/400;
+//		m_iSegmentPoints = Math.ClampInt(m_iSegmentPoints, 15, 30);
+//		SDRC_Log.Add("[SDRC_ChopperComp:InitFlightPath] Segment point count: " + m_iSegmentPoints, LogLevel.DEBUG);
 		
 		//Clear any existing path points
 		m_vFlyPathPoints.Clear();
@@ -510,8 +510,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 			SetFlyPathHeight(origin);
 		}
 
-		m_iSegmentPoints = -1;
-		SDRC_Spline3D.GenerateSplinePoints(m_vFlyPathPoints, m_vSplinePoints, m_iSegmentPoints, true);
+		//m_iSegmentPoints = -1;
+		SDRC_Spline3D.GenerateSplinePoints(m_vFlyPathPoints, m_vSplinePoints, -1);
 		//Set final values
 		m_iClosestIndex = 2;
 //		m_iNewClosestIndex = m_iClosestIndex + 1;
@@ -554,22 +554,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_vFlyPathPoints.Insert(m_vSplinePoints[splineStartIdx]);		
 			
 		GenerateWayPoint(origin, m_fWpType);
-			
-/*		//Use requested destinations or generate a waypoint.
-		if (m_vFlyDestinations.IsEmpty())
-		{
-			GenerateWayPoint(origin, m_fWpType);
-		}
-
-		//If we created FlyDestinations above in GenerateWayPoint, let's use them
-		if (!m_vFlyDestinations.IsEmpty())
-		{
-			m_vFlyDestinations.Clear();
-		}*/
 	
 		SetFlyPathHeight(origin);
-		m_iSegmentPoints = -1;
-		SDRC_Spline3D.GenerateSplinePoints(m_vFlyPathPoints, m_vSplinePoints, m_iSegmentPoints, true);
+//		m_iSegmentPoints = -1;
+		SDRC_Spline3D.GenerateSplinePoints(m_vFlyPathPoints, m_vSplinePoints, -1);
 		//Search the closest indes from the spline start
 		m_iClosestIndex = 0;
 		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, origin, m_iClosestIndex, false);	//NOTE: This will set m_iClosestIndex
@@ -661,13 +649,19 @@ class SDRC_ChopperComp : ScriptGameComponent
 			//Fly around a certain area
 			if (wpGenType == SDRC_EHeliWaypointGenerationType.PATROL)
 			{
-				float startAngle = SDRC_Misc.RandomFloat(0, 360);
-				int count = 6;
+				int count = 3;
+				int degree = 30; //per count
+				
 				
 				for (int i = 0; i < count; i++)
 				{			
 					float range = Math.RandomFloat(m_fDistanceLow, m_fDistanceHigh);
-					pos = SDRC_Misc.GetCoordinatesOnCircle(m_vOriginalDestination, range, i*(360/count), startAngle);
+					vector dir = SDRC_Math.RotateAroundAxis(m_vHeliDirection, vector.Up, i * degree * Math.DEG2RAD);
+					dir.Normalize();
+					pos = m_vOriginalDestination + dir * range;
+					
+					SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 255, 00, 00), 2.0);
+					
 					AddDestination(pos);
 				}			
 			}
@@ -764,13 +758,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 				vector mid = vector.Lerp(point, destination, lerpRnd);
 				vector vec = mid + dir0 * (distance / 6);
 				m_vFlyPathPoints.Insert(vec);
-				SDRC_DebugHelper.AddDebugPos(vec, ARGB(128, 128, 128, 64), 2.0);
+				SDRC_DebugHelper.AddDebugPos(vec, ARGB(32, 128, 128, 64), 1.0, "", vec[1]);
 	
 				lerpRnd = SDRC_Misc.RandomFloat(0.4, 0.6);			
 				mid = vector.Lerp(point, destination, lerpRnd);
 				vec = mid + dir0 * (distance / 4);
 				m_vFlyPathPoints.Insert(vec);
-				SDRC_DebugHelper.AddDebugPos(vec, ARGB(128, 128, 128, 64), 2.0);
+				SDRC_DebugHelper.AddDebugPos(vec, ARGB(32, 128, 128, 64), 1.0, "", vec[1]);
 			}
 					
 			m_vFlyPathPoints.Insert(destination);
