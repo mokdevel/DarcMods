@@ -582,7 +582,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 		SetFlyPathHeight(origin);
 		m_iSegmentPoints = -1;
 		SDRC_Spline3D.GenerateSplinePoints(m_vFlyPathPoints, m_vSplinePoints, m_iSegmentPoints, true);
-		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, origin, m_iClosestIndex, true);	//NOTE: This will set m_iClosestIndex
+		//Search the closest indes from the spline start
+		m_iClosestIndex = 0;
+		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, origin, m_iClosestIndex, false);	//NOTE: This will set m_iClosestIndex
 //		m_iNewClosestIndex = m_iClosestIndex + 1;
 		m_iOldClosestIndex = m_iClosestIndex;
 		//Check that points are above ground
@@ -739,7 +741,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 //		dest = "500 0 2000";		//-94 degrees 
 //		dest = "700 0 2700";		//-22 degrees 
 		AddDestination(dest);
-		dest = "2200 0 2600";
+		dest = "1800 0 2800";
 		AddDestination(dest);
 #endif
 		
