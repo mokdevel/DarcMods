@@ -8,10 +8,12 @@
 No changes in mission jsons. 
 
 ## 202512xx
+Changed jsons - remove the files to receive updated ones.
+* dc_missionConfig_Chopper.json
 
 Main features:
-* Simplified helicopter definition for Chopper mission
-* AI spawned to vehicles set as non-persistent
+* Simplified helicopter definition for Chopper mission. 
+* Fixes and improvements for Freedom Fighters compatibility
 
 Changes:
 * Improved ``BALLIEN_BC_FACTION`` support.
@@ -19,6 +21,9 @@ Changes:
 * Chopper mission: 
   * Removed ``helicopterInfo``. You only need to use prefab name in ``heliList``.
   * Added new helicopters
+
+Fixes:
+* AI spawned to vehicles set as non-persistent.
 
 ## 20251217
 Changed jsons - remove the files to receive updated ones.

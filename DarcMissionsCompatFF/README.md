@@ -24,18 +24,34 @@ string author : Author of the file
 string comment : Generic comment. Not used in game.
 int hideOutSafeZoneDistance : The radious of a 'safe zone' to a hide out where a mission shall not spawn.
 float spawnRateForGreenZones : The percentage chance to spawn a mission to green zone (0.05 = 5%)
+bool setEnemyFactionAutomatically : Automatically set enemy faction from FF. (WIP , placeholder for now)
+bool rewardPerUser : The amount of money to receive.
+  true: The full reward is given to each player.
+  false: The full reward is split within the group and each player gets reward divided by player count.
+bool rewardDefault : Default reward unless specific reward has been set in mission XP. If mission XP value is zero, rewardDefault will be used.
 ```
 
 # Version history
 ## WIP 
-* Added new settings:
-  * ``setEnemyFactionAutomatically`` : Automatically set enemy faction from FF. (WIP , placeholder for now)
-  * ``rewardPerUser`` : Shall reward be set per user or for a group.
-  * ``rewardDefault`` : Default reward unless specific reward has been set in a mission. (WIP , placeholder for now)
 
 ## Next release (unreleased)
 
 ... empty ...
+
+## 20251222
+The file dc_compatFFConfig.json has changed. Delete the file to receive a new one!
+
+Main features:
+* Reward value can be set either as a default or in missions in the ``xp`` value. If the value is left as-is (zero), ``rewardDefault`` will be used.
+
+Changes:
+* Added new settings:
+  * ``rewardPerUser`` : Shall reward be set per user or for a group.
+  * ``rewardDefault`` : Default reward unless specific reward has been set in a mission.
+  * ``setEnemyFactionAutomatically`` : Automatically set enemy faction from FF. (WIP , placeholder for now)
+
+Fixes:
+* Chopper (and Convoy) missions resolved without interaction.
 
 ## 20251213
 Compatibility compile for DarcCore.
