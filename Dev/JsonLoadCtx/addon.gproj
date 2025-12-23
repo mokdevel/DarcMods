@@ -1,0 +1,8 @@
+GameProject {
+ ID "JsonLoadCtx"
+ GUID "672E71F2149CCFB3"
+ TITLE "JsonLoadCtx"
+ Dependencies {
+  "631EE12D448D7FCC" "58D0FB3206B6F859"
+ }
+}
