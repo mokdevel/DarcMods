@@ -14,25 +14,42 @@ class SDRC_LoadCtx
 	const int DC_COMPAT_WAIT_FOR_PLAYERS_TIME = 15;
 	const int DC_COMPAT_CLEAN_WAIT_TIME = 15;
 	static ref SDRC_LoadCtxJsonApi m_DC_CompatJsonApi = null;
-	static ref array<string> m__cleanUpList = {};
+	static ref SCR_JsonLoadContext loadContext;
+	static ref SDRC_CtxConfig conf = new SDRC_CtxConfig();
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Add you init code here.
 	*/
 	static bool Init()
-	{
-		m_DC_CompatJsonApi = new SDRC_LoadCtxJsonApi(DC_COMPATCONFIG_FILE);		
-		m_DC_CompatJsonApi.Load();
-		
+	{		
 		SDRC_Log.Add("[SDRC_LoadCtx] Initializing..", LogLevel.NORMAL);
+		
+		m_DC_CompatJsonApi = new SDRC_LoadCtxJsonApi(DC_COMPATCONFIG_FILE);		
+		m_DC_CompatJsonApi.Load(conf);
+		
+		SDRC_Log.Add("[SDRC_LoadCtx] Author: " + conf.author, LogLevel.NORMAL);
 
 		return true;
 	}
 }
 
+class SDRC_Config : Managed
+{
+	int vers = -1;
+	
+	void SetDefaults()
+	{	
+		vers = 1;
+	}
+	
+	bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+	}
+}
+
 //------------------------------------------------------------------------------------------------
-class SDRC_CtxConfig : Managed
+class SDRC_CtxConfig : SDRC_Config
 {
 	//Default information
 	int version = -1;
@@ -47,13 +64,24 @@ class SDRC_CtxConfig : Managed
 	int rewardDefault = 500;					//Default reward unless specific reward has been set in a mission. (WIP)
 	ref array<string> names = {};
 	ref array<string> pos = {};
+	
+	//------------------------------------------------------------------------------------------------
+	override void SetDefaults()
+	{	
+		names = {"Janne", "Jorma"};
+		pos = {"1.0 1.0 1.0", "1.1 1.1 1.1"};
+	}
+	
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+		SDRC_CtxConfig data = SDRC_CtxConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}	
 }
 
 //------------------------------------------------------------------------------------------------
 class SDRC_LoadCtxJsonApi : SDRC_JsonApi2
 {
-	ref SDRC_CtxConfig conf = new SDRC_CtxConfig();
-	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_LoadCtxJsonApi(string fileName)
 	{
@@ -61,8 +89,10 @@ class SDRC_LoadCtxJsonApi : SDRC_JsonApi2
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
+	bool Load(Class T, bool createMissingFiles = true)
 	{	
+		SDRC_Config C = SDRC_Config.Cast(T);
+		
 		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
 		{
@@ -70,8 +100,9 @@ class SDRC_LoadCtxJsonApi : SDRC_JsonApi2
 			{
 				return false;
 			}
-			SetDefaults();
-			Save();
+			C.SetDefaults();
+			
+			Save(C);
 //			return true;
 		}
 		
@@ -83,18 +114,18 @@ class SDRC_LoadCtxJsonApi : SDRC_JsonApi2
 			return false;
 		}
 		
-		if (conf.version != DC_FILE_VERSION)
+		if (C.vers != DC_FILE_VERSION)
 		{
             Print("ERROR!", LogLevel.ERROR);
 			return false;
 		}
 		
-		Print(conf);
+		Print(T);
 		return true;
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save()
+	void Save(Class T)
 	{
 		bool useTypeDiscriminator = false;
         ContainerSerializationSaveContext saveContext = new ContainerSerializationSaveContext(false);
@@ -103,11 +134,18 @@ class SDRC_LoadCtxJsonApi : SDRC_JsonApi2
         PrettyJsonSaveContainer container = new PrettyJsonSaveContainer;
         saveContext.SetContainer(container);
 		
-        if (!saveContext.WriteValue("", conf)) 
+		SDRC_Config C = SDRC_Config.Cast(T);
+        if (!C.DoSave(saveContext, T)) 
 		{
             Print("ERROR!", LogLevel.ERROR);
             return;
-        }
+		}
+		
+/*        if (!saveContext.WriteValue("", T)) 
+		{
+            Print("ERROR!", LogLevel.ERROR);
+            return;
+        }*/
         
 		container.SaveToFile(GetFileName());
     }				
@@ -140,10 +178,5 @@ class SDRC_LoadCtxJsonApi : SDRC_JsonApi2
 		SaveConfigClose(saveContext);
 	}*/
 	
-	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
-	{	
-		conf.names = {"Janne", "Jorma"};
-		conf.pos = {"1.0 1.0 1.0", "1.1 1.1 1.1"};
-	}		
+	
 }

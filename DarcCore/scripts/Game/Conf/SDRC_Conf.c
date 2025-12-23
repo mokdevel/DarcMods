@@ -55,8 +55,8 @@ sealed class SDRC_Conf
 	const bool SDRC_ENABLE_DARCSTORIES = false;
 //	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
 	const bool RELEASE = false;					
-//	const bool OVERWRITE_JSON = true;				
-	const bool OVERWRITE_JSON = false;
+	const bool OVERWRITE_JSON = true;				
+//	const bool OVERWRITE_JSON = false;
 	const bool SHOW_VALID_MISSION_AREAS = false;
 	const bool SHOW_MARKER_FOR_LOCATION = false;
 	const bool SHOW_DEBUG_INFO = true;
