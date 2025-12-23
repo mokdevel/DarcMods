@@ -11,6 +11,8 @@ modded class SCR_BaseGameMode
     {
         super.OnGameStart();
 		
+		return;
+		
 		SDRC_Log.Add("[SDRC_Core] Starting..", LogLevel.NORMAL);					
 		SDRC_Log.Add("[SDRC_Core_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
 		
@@ -40,7 +42,7 @@ modded class SCR_BaseGameMode
 			//For testing
 			//GetGame().GetCallqueue().CallLater(DebugStart, 15000, false);	
 			
-			GetGame().GetCallqueue().CallLater(IsCoreReady, 1000, false);	
+			GetGame().GetCallqueue().CallLater(IsCoreReady, 2000, false);	
 		}
 		else 
 		{
@@ -59,7 +61,7 @@ modded class SCR_BaseGameMode
 		}
 		else
 		{
-			GetGame().GetCallqueue().CallLater(IsCoreReady, 1000, false);	
+			GetGame().GetCallqueue().CallLater(IsCoreReady, 2000, false);	
 			SDRC_Log.Add("[SDRC_Core_BaseGameMode:IsCoreReady] Waiting for core init to finalize...", LogLevel.DEBUG);
 		}
 	}	
