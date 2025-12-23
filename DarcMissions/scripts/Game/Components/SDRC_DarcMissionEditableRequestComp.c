@@ -25,9 +25,27 @@ class SDRC_DarcMissionEditableRequestComp : SCR_EditableSystemComponent
 	[Attribute("-1", desc: "Sub mission index")]	
 	protected int m_SubIdx;
 			
-	protected int m_RequestId;
+	protected int m_RequestId;	//ID for the request that you can refer to from other mods.
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Get/set request ID. 
+	*/
+	SDRC_EMissionType GetRequestId()
+	{
+		return m_RequestId;
+	}	
+	
+	void SetRequestId(int requestId)
+	{
+		m_RequestId = requestId;
+	}		
+
+	//------------------------------------------------------------------------------------------------
+	// Mission specific parameters coming from the request
+	//------------------------------------------------------------------------------------------------	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Return the mission type
@@ -54,19 +72,5 @@ class SDRC_DarcMissionEditableRequestComp : SCR_EditableSystemComponent
 	void SetSubIdx(SDRC_EMissionType subIdx)
 	{
 		m_SubIdx = subIdx;
-	}		
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Get/set mission subIdx
-	*/
-	SDRC_EMissionType GetRequestId()
-	{
-		return m_RequestId;
-	}	
-	
-	void SetRequestId(int requestId)
-	{
-		m_RequestId = requestId;
-	}			
+	}				
 }

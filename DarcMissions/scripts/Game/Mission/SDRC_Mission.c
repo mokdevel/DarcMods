@@ -528,14 +528,11 @@ class SDRC_Mission
 			{
 				general.loseMessage = request.general.loseMessage;
 			}
-			
-			if (request.general.faction == SDRC_DEFAULT)
+						
+			if ( (request.general.faction != SDRC_DEFAULT) && (request.general.faction != "") )
 			{
-				general.faction = "";	//SDRC_EnemyHelper.SelectEnemyFaction("");	//Pick a random 
-			}
-			else //Pick the requested one if defined or random if left empty
-			{
-				general.faction = request.general.faction;	//SDRC_EnemyHelper.SelectEnemyFaction(request.general.faction);
+				//Use the factions requested
+				general.faction = request.general.faction;
 			}
 			
 			if (request.general.markerType != SDRC_DEFAULT)
@@ -567,6 +564,7 @@ class SDRC_Mission
 		SetHint(general.title, general.info);
 		SetMessages(general.winMessage, general.loseMessage);		
 		SetWinCondition(general.winCondition);
+		SetXP(general.xp);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -821,7 +819,18 @@ class SDRC_Mission
 	{
 		return m_General.difficulty;
 	}
-				
+			
+	//------------------------------------------------------------------------------------------------
+	int GetXP()
+	{
+		return m_General.xp;
+	}
+
+	void SetXP(int value)
+	{
+		m_General.xp = value;
+	}	
+			
 	//------------------------------------------------------------------------------------------------
 	SDRC_EMissionIcon GetMarkerIcon()
 	{

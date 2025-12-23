@@ -15,6 +15,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	
 	private int m_iFlyEndTime;					//How long to fly away
 	private const int MIN_FLY_END_TIME = 120;
+	private const int MAX_FLY_END_TIME = 300;
 	private bool m_bKeepOnFlying = true;
 
 	//------------------------------------------------------------------------------------------------
@@ -38,12 +39,17 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Chopper.general, request);
 
 		//Find position
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos);
+		vector pos = "0 0 0";
 
-		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(m_Config.distanceToStart);
-	#ifndef SDRC_RELEASE
-		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.2);
-	#endif
+		//For requested missions we want have it as close as possible in the requested place.
+		if (IsRequested())
+		{
+			pos = request.general.pos[0];
+		}
+		else
+		{				
+			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Chopper.general.pos, m_DC_Chopper.general.size, m_DC_Chopper.general.locationTypes, SDRC_Conf.POSITION_RANDOMIZATION);	//Randomization added to avoid the same position always
+		}
 		
 		//No suitable location found.
 		if (pos == "0 0 0")
@@ -51,25 +57,22 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
-			
-		//For requested missions we want have it as close as possible in the requested place.
-		if (IsRequested())
-		{
-			pos = request.general.pos[0];
-		}
+
+		//Where to start the flight		
+		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(m_Config.distanceToStart);
+	#ifndef SDRC_RELEASE
+		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.00001);
+	#endif
 		
 		//Set end time for mission.
 		m_iFlyEndTime = m_Config.activeTime * 0.2;
-		if (m_iFlyEndTime < MIN_FLY_END_TIME)
-		{
-			m_iFlyEndTime = MIN_FLY_END_TIME;
-		}
+		m_iFlyEndTime = Math.ClampInt(m_iFlyEndTime, MIN_FLY_END_TIME, MAX_FLY_END_TIME);
 		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Chopper.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Chopper.general);		
-		if (IsStatic())
+		if (!IsStatic())
 		{
 			InitActiveTime(m_Config.activeTime);
 		}
@@ -105,18 +108,22 @@ class SDRC_Mission_Chopper : SDRC_Mission
 						m_Vehicle_c = SDRC_ChopperComp.Cast(m_Vehicle.FindComponent(SDRC_ChopperComp));
 						if (m_Vehicle_c)
 						{
-							m_Vehicle_c.AddDestination(SDRC_Misc.GetRandomWorldPosPercentage(1.0));
+							vector pos = SDRC_Misc.GetRandomWorldPosPercentage(1.0);
+							m_Vehicle_c.AddDestination(pos);
+							m_Vehicle_c.CreateFlyPath(m_Vehicle.GetOrigin(), true);
 							m_Vehicle_c.SetSpeed(max :  m_DC_Chopper.speed[1] * 1.5);
 						}
 					}
 					m_bKeepOnFlying = false;
+					DoLose();
 					SDRC_Log.Add("[SDRC_Mission_Chopper:MissionRun] " +  GetId() + " : Chopper to fly away. Mission ending.", LogLevel.DEBUG);
 				}
 			}
 			
 			if (!IsActive())
-			{
+			{				
 				SetState(SDRC_EMissionState.END);
+				m_bKeepOnFlying = false;
 			}
 		}
 		
@@ -153,6 +160,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		
 		m_EntityList.Insert(m_Vehicle);
 		m_Vehicle_c.SetHeli(m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.wpType, m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
+		m_Vehicle_c.SetSearchForEnemy(true);
 		m_Vehicle_c.InitFlyPath(m_Vehicle, m_vPosOrigin, GetPos());
 
 		//Spawn pilots if such is available 
@@ -231,7 +239,6 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 	int distanceToPlayer;									//Distance to player when searching for a mission pos. Overrides missionFrame settings.
 	float distanceToStart;									//(percentage) Distance from the center of world for the helicopter to spawn.
 	int activeTime;											//The time the mission should be running until the chopper flies away.
-	ref array<ref SDRC_HelicopterInfo> helicopterInfo = {};	//Helicopter details
 	ref array<ref SDRC_Chopper> subMissions = {};			//List of sub missions
 	
 	//------------------------------------------------------------------------------------------------
@@ -350,12 +357,17 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 		conf.showMarker = false;
 		conf.disableArsenal = true;
 		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {1};//{0,0,1,1,1,2,2};
+		conf.missionList = {0,1,1,1,2,2};
 		//Mission specific
 		conf.distanceToMission = 100;
 		conf.distanceToPlayer = 500;
 		conf.distanceToStart = 0.49;
-		conf.activeTime = 20*60;
+	#ifdef SDRC_RELEASE
+		conf.activeTime = 30*60;
+	#endif
+	#ifndef SDRC_RELEASE
+		conf.activeTime = 2*60;
+	#endif
 		
 		//----------------------------------------------------
 		conf.subMissions.Insert(Chopper0());
@@ -464,10 +476,12 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_TOWN, 
 				EMapDescriptorType.MDT_AIRPORT,
+				EMapDescriptorType.MDT_BASE,
+				EMapDescriptorType.MDT_PORT,
 			},
 			"any",
 			"Guardian from the heaven",
-			"Area near %1 is being guarded from the air.",
+			"Area near %l is being guarded from the air.",
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Guardians are now angels.", 
 			"Guards have left.",
@@ -496,7 +510,7 @@ class SDRC_ChopperJsonApi : SDRC_JsonApi
 			},
 			{30, 60},
 			{7, 25},
-			{200, 400},
+			{50, 200},
 			SDRC_EHeliWaypointGenerationType.PATROL,	
 		);
 		

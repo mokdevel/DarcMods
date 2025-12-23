@@ -49,9 +49,8 @@ modded class SDRC_Compat
 	/*!
 	Count reward
 	*/		
-	static int GetRewardValue()
+	static int GetRewardValue(int rewardValue = 0)
 	{
-		
 		array<int> playerIds = {};
 		GetGame().GetPlayerManager().GetPlayers(playerIds);
 		if (playerIds.IsEmpty()) 
@@ -60,16 +59,16 @@ modded class SDRC_Compat
 		}
 
 		int divider = playerIds.Count();
-		int rewardValue = 500;					//Default value
+		if (rewardValue == 0)
+		{
+			rewardValue = m_DC_CompatJsonApi.conf.rewardDefault;
+		}
 				
-#ifdef NEW_VERSION_WIP
 		if (m_DC_CompatJsonApi.conf.rewardPerUser)
 		{
 			divider = 1;
 		}
-		
-		rewardValue = m_DC_CompatJsonApi.conf.rewardDefault;
-#endif		
+
 		int perPlayerReward = rewardValue / divider;
 		
 		return perPlayerReward;		
@@ -139,7 +138,7 @@ modded class SDRC_Mission
 		GetGame().GetPlayerManager().GetPlayers(playerIds);
 		if (playerIds.IsEmpty()) return;
 
-		int perPlayerReward = SDRC_Compat.GetRewardValue();
+		int perPlayerReward = SDRC_Compat.GetRewardValue(GetXP());
 
 		SDRC_Log.Add("[SDRC_CompatFF:GiveReward] Giving " + perPlayerReward + " money to each player.", LogLevel.DEBUG);
 		
@@ -165,12 +164,10 @@ class SDRC_CompatFFConfig : Managed
 	string comment;
 	//Specific
 	int hideOutSafeZoneDistance = 300;
-	float spawnRateForGreenZones = 0.05; 
-#ifdef NEW_VERSION_WIP
+	float spawnRateForGreenZones = 0.15; 
 	bool setEnemyFactionAutomatically = true;	//Automatically set enemy faction from FF. (WIP)
 	bool rewardPerUser = false;					//Shall reward be set per user or for a group
 	int rewardDefault = 500;					//Default reward unless specific reward has been set in a mission. (WIP)
-#endif	
 }
 
 //------------------------------------------------------------------------------------------------

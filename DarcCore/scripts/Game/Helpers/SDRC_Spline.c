@@ -8,7 +8,7 @@ sealed class SDRC_Spline3D
 {
 	// Generates a list of points along a Catmull–Rom spline
 	// Generates points and tangents along a Catmull–Rom spline
-	static void GenerateSplinePoints(notnull array<vector> controlPoints, out array<vector> resultPoints, int samplesPerSegment = 20, bool showPath = false)
+	static void GenerateSplinePoints(notnull array<vector> controlPoints, out array<vector> resultPoints, int samplesPerSegment = 20)
 	{
 		resultPoints.Clear();
 		bool variableSamples = false;

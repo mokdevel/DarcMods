@@ -90,13 +90,17 @@ sealed class SDRC_Math
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Rotate v1 around axis
+	
+	\param v1
+	\param axis
+	\param radians How many radians to turn
 	*/
-	static vector RotateAroundAxis(vector v1, vector axis, float angle)
+	static vector RotateAroundAxis(vector v1, vector axis, float radians)
 	{
 	    axis = axis.Normalized();
 	    
-	    float cosT = Math.Cos(angle);
-	    float sinT = Math.Sin(angle);
+	    float cosT = Math.Cos(radians);
+	    float sinT = Math.Sin(radians);
 	    
 	    vector term1 = v1 * cosT;
 	    vector term2 = (axis * v1) * sinT;

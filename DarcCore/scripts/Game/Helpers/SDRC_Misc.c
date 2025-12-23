@@ -37,6 +37,16 @@ sealed class SDRC_Misc
 			
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Returns random sign as an int. 
+	*/
+	static int RandomSign()
+	{
+		array<int> signs = {1, -1};
+		return signs.GetRandomElement();
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Return the biggest value in a vector. 
 	Example: [10 12 8] returns 12
 	*/

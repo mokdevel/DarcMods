@@ -15,7 +15,7 @@
 		private const int SDRC_MISSIONFRAME_START_DELAY = 1*60;							//Time to wait before spawning the first mission (seconds)
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 8*60;			//Minimum delay between dynamic missions. 
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 5;				//Minimum delay between static missions. 
-		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 30*60;						//Time to keep the mission active (seconds)
+		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 45*60;						//Time to keep the mission active (seconds)
 		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 60*60*10; //10hrs			//Static missions are to be kept alive longer
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 150;							//Mission is to be removed if no players close to the position after the mission active time has passed.
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 180;						//Mission is kept active this time once all AIs are dead.
@@ -201,13 +201,13 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 			conf.missionDynamic.missionTypeArray = {
 											SDRC_EMissionType.STASH, 
 											SDRC_EMissionType.CRASHSITE, 
-											SDRC_EMissionType.CHOPPER, SDRC_EMissionType.CHOPPER, 
-											SDRC_EMissionType.HUNTER, SDRC_EMissionType.HUNTER, 
+											SDRC_EMissionType.CHOPPER, SDRC_EMissionType.CHOPPER, SDRC_EMissionType.CHOPPER, 
+											SDRC_EMissionType.HUNTER, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HUNTER, 
 											SDRC_EMissionType.CONVOY, SDRC_EMissionType.CONVOY, SDRC_EMissionType.CONVOY, 
-											SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, 
+											SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK,
 											SDRC_EMissionType.HVTVIP, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.HVTVIP,
 											SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTITEM,
-											SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, 
+											SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, 
 											SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, 
 											SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, 
 											SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, 
@@ -277,7 +277,7 @@ class SDRC_MissionFrameJsonApi : SDRC_JsonApi
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
 //			conf.missionStatic.missionTypeArray = {};
 //			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE};		
+//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CHOPPER};		
 		
 		#endif
 	}
