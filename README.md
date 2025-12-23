@@ -22,12 +22,3 @@ Just some stuff used while developing. Worlds etc...
 
 ## DarcLogo
 The files to create logos for the mods.
-
-# Not mods 
-The below list is WIP or otherwise unfinished stuff.
-
-## DarcMarker
-A practice to create own markers. 
-
-## DarcRPL
-Trying to understand the RPL stuff.
