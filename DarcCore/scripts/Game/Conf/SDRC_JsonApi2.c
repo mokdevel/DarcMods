@@ -4,6 +4,8 @@
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J
 // NOTE: Format .json in Notepad++ - press Ctrl+Alt+Shift+M
 
+//#define CTX
+
 const int DC_FILE_VERSION = 1;
 
 //------------------------------------------------------------------------------------------------
@@ -20,8 +22,11 @@ class SDRC_JsonApi2 : JsonApiStruct
 	//------------------------------------------------------------------------------------------------
 	bool Load(Class T, bool createMissingFiles = true)
 	{	
-//		SDRC_MissionConfig C = SDRC_MissionConfig.Cast(T);
+	#ifndef CTX
+		SDRC_MissionConfig C = SDRC_MissionConfig.Cast(T);
+	#else
 		SDRC_MissionConfig2 C = SDRC_MissionConfig2.Cast(T);
+	#endif
 		
 		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
@@ -64,8 +69,11 @@ class SDRC_JsonApi2 : JsonApiStruct
         PrettyJsonSaveContainer container = new PrettyJsonSaveContainer;
         saveContext.SetContainer(container);
 		
-//		SDRC_MissionConfig C = SDRC_MissionConfig.Cast(T);
+	#ifndef CTX		
+		SDRC_MissionConfig C = SDRC_MissionConfig.Cast(T);
+	#else
 		SDRC_MissionConfig2 C = SDRC_MissionConfig2.Cast(T);
+	#endif
         if (!C.DoSave(saveContext, T)) 
 		{
             Print("ERROR!", LogLevel.ERROR);
@@ -175,4 +183,30 @@ class SDRC_JsonApi2 : JsonApiStruct
 	{
 		return m_FileName;
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	void CreateMissionFiles()
+	{
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void LoadMissionFiles()
+	{
+		//Load mission files
+/*		foreach (string missionFile : conf.missionFiles)
+		{
+			SDRC_ChopperJsonApi jsonApi = new SDRC_ChopperJsonApi(missionFile);		
+			if (jsonApi.Load(false))
+			{
+				foreach (SDRC_Chopper subMission : jsonApi.conf.subMissions)
+				{
+					conf.subMissions.Insert(subMission);
+				}
+				foreach (int idx : jsonApi.conf.missionList)
+				{
+					conf.missionList.Insert(idx);
+				}
+			}
+		}*/
+	}		
 }	

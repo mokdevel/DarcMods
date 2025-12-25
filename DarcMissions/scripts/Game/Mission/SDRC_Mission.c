@@ -76,20 +76,20 @@ class SDRC_MissionConfig : Managed
 		ref array<ref SDRC_MissionConfigSecondWave> secondWave = {};	//TBD: This is not used anywhere. REMOVE!
 	#endif
 	
+	bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+	}
+	
 	void SetDefaults()
 	{	
 		version = 1;
-	}
-	
-	bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
-	{
-	}		
+	}	
 }
 
 //------------------------------------------------------------------------------------------------
 // MISSION CONFIG
 //------------------------------------------------------------------------------------------------
-class SDRC_Mission
+class SDRC_Mission : Managed
 {
 	static int m_MissionIDCounter = 1;			//Static counter for mission ID
 	

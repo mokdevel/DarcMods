@@ -83,6 +83,8 @@ class SDRC_MissionConfig2 : Managed
 	
 	bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
 	{
+//		SDRC_CtxConfig data = SDRC_CtxConfig.Cast(T);
+//		return saveContext.WriteValue("", data);
 	}	
 }
 
