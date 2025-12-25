@@ -7,13 +7,6 @@
 const int DC_FILE_VERSION = 1;
 
 //------------------------------------------------------------------------------------------------
-class SDRC_Config : Managed
-{
-	int vers = -1;
-
-}
-
-//------------------------------------------------------------------------------------------------
 class SDRC_JsonApi2 : JsonApiStruct
 {
 	private string m_FileName = "";
@@ -27,6 +20,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 	//------------------------------------------------------------------------------------------------
 	bool Load(Class T, bool createMissingFiles = true)
 	{	
+//		SDRC_MissionConfig C = SDRC_MissionConfig.Cast(T);
 		SDRC_MissionConfig2 C = SDRC_MissionConfig2.Cast(T);
 		
 		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
@@ -70,6 +64,7 @@ class SDRC_JsonApi2 : JsonApiStruct
         PrettyJsonSaveContainer container = new PrettyJsonSaveContainer;
         saveContext.SetContainer(container);
 		
+//		SDRC_MissionConfig C = SDRC_MissionConfig.Cast(T);
 		SDRC_MissionConfig2 C = SDRC_MissionConfig2.Cast(T);
         if (!C.DoSave(saveContext, T)) 
 		{
