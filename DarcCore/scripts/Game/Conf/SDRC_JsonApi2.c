@@ -1,0 +1,106 @@
+//Helpers/SDRC_JsonApi2.c
+
+// For readable jsons, use https://jsonformatter.org
+// NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J
+// NOTE: Format .json in Notepad++ - press Ctrl+Alt+Shift+M
+
+//------------------------------------------------------------------------------------------------
+class SDRC_JsonApi2 : JsonApiStruct
+{
+	private string m_FileName = "";
+				
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Load the json config	
+	\param createMissingFiles Defines if the SDRC_Conf.OVERWRITE_JSON setting is to be respected. If false, overwrite of files will not happen.
+	*/
+	SCR_JsonLoadContext LoadConfig(bool createMissingFiles = true)
+	{	
+		SCR_JsonLoadContext loadContext = new SCR_JsonLoadContext();
+		
+		if (SDRC_Conf.OVERWRITE_JSON && createMissingFiles)
+		{
+			SDRC_Log.Add("[SDRC_JsonApi2] Not release build - overwriting json config on disk.", LogLevel.WARNING);
+			return null;
+		}
+		
+		bool success = loadContext.LoadFromFile(m_FileName);
+		
+		if (!success)
+		{
+			if (createMissingFiles)
+			{
+				SDRC_Log.Add("[SDRC_JsonApi2] Config file load failed or not found (" + m_FileName + "). Creating a default config.", LogLevel.ERROR);
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_JsonApi2] Config file load failed or not found (" + m_FileName + ").", LogLevel.ERROR);
+			}
+			return null;
+		}
+
+		SDRC_Log.Add("[SDRC_JsonApi2] Loading configuration from file: " + m_FileName, LogLevel.NORMAL);
+		
+		return loadContext;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	SCR_JsonSaveContext SaveConfigOpen()
+	{
+		SCR_JsonSaveContext saveContext = new SCR_JsonSaveContext();
+		
+		return saveContext;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void SaveConfigClose(SCR_JsonSaveContext saveContext)
+	{
+//		string dataString = saveContext.ExportToString();
+//		ExpandFromRAW(dataString);
+		
+		SDRC_Log.Add("[SDRC_JsonApi2] This may give some warnings on 'JsonApi Array name='something' found in JSON ... ' . Please ignore.", LogLevel.WARNING);
+		
+		if (!saveContext.SaveToFile(m_FileName))
+		{
+			SDRC_Log.Add("[SDRC_JsonApi2] Config save failed to: " + m_FileName, LogLevel.ERROR);
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_JsonApi2] Config saved to: " + m_FileName, LogLevel.DEBUG);			
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	override void OnError(int errorCode)
+	{
+		// errorCode is EJsonApiError
+		// Event called when pending store operation is finished - callback when error happened
+		SDRC_Log.Add("[SDRC_JsonApi2] Error loading config. " + SCR_Enum.GetEnumName(EJsonApiError, errorCode), LogLevel.ERROR);
+	}		
+
+	//------------------------------------------------------------------------------------------------
+	void SetFileName(string fileName)
+	{			
+		string path = "";
+		string directory = SDRC_Conf.CONF_DIRECTORY;
+		if ( (SDRC_Conf.subDir != "") && (fileName != SDRC_Conf.CORE_CONFIG_FILE) )	//This should never be empty
+		{
+			directory = directory + "/" + SDRC_Conf.subDir
+		}
+		
+		path = "$profile:/" + directory + "/";
+
+		if (!FileIO.MakeDirectory(path))
+		{
+			SDRC_Log.Add("[SDRC_JsonApi2] Could not create path: " + path, LogLevel.ERROR);
+		}
+				
+		m_FileName = path + fileName;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	string GetFileName()
+	{
+		return m_FileName;
+	}	
+}	
