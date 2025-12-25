@@ -4,11 +4,88 @@
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J
 // NOTE: Format .json in Notepad++ - press Ctrl+Alt+Shift+M
 
+const int DC_FILE_VERSION = 1;
+
+//------------------------------------------------------------------------------------------------
+class SDRC_Config : Managed
+{
+	int vers = -1;
+
+}
+
 //------------------------------------------------------------------------------------------------
 class SDRC_JsonApi2 : JsonApiStruct
 {
 	private string m_FileName = "";
-				
+
+	//------------------------------------------------------------------------------------------------
+	void SDRC_JsonApi2(string fileName)
+	{
+		SetFileName(fileName);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	bool Load(Class T, bool createMissingFiles = true)
+	{	
+		SDRC_MissionConfig2 C = SDRC_MissionConfig2.Cast(T);
+		
+		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
+		if (!loadContext)
+		{
+			if (!createMissingFiles)
+			{
+				return false;
+			}
+			C.SetDefaults();
+			
+			Save(C);
+//			return true;
+		}
+		
+		loadContext = LoadConfig(false);
+		
+		if (!loadContext)
+		{
+            Print("ERROR!", LogLevel.ERROR);
+			return false;
+		}
+		
+		if (C.version != DC_FILE_VERSION)
+		{
+            Print("ERROR!", LogLevel.ERROR);
+			return false;
+		}
+		
+		Print(T);
+		return true;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	void Save(Class T)
+	{
+		bool useTypeDiscriminator = false;
+        ContainerSerializationSaveContext saveContext = new ContainerSerializationSaveContext(false);
+		saveContext.EnableTypeDiscriminator(useTypeDiscriminator);
+
+        PrettyJsonSaveContainer container = new PrettyJsonSaveContainer;
+        saveContext.SetContainer(container);
+		
+		SDRC_MissionConfig2 C = SDRC_MissionConfig2.Cast(T);
+        if (!C.DoSave(saveContext, T)) 
+		{
+            Print("ERROR!", LogLevel.ERROR);
+            return;
+		}
+		
+/*        if (!saveContext.WriteValue("", T)) 
+		{
+            Print("ERROR!", LogLevel.ERROR);
+            return;
+        }*/
+        
+		container.SaveToFile(GetFileName());
+    }	
+					
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Load the json config	
