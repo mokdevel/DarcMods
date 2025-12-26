@@ -2,11 +2,12 @@
 
 const string DC_MISSIONCONFIG_FILE_CHOPPER = "dc_missionConfig_Chopper.json";
 
+//------------------------------------------------------------------------------------------------
 class SDRC_Mission_Chopper : SDRC_Mission
 {
 	private ref SDRC_JsonApi2 m_ChopperJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CHOPPER);	
+	private ref SDRC_ChopperConfig m_Config = new SDRC_ChopperConfig();
 	private ref SDRC_Chopper m_DC_Chopper = new SDRC_Chopper();
-	private static ref SDRC_ChopperConfig m_Config = new SDRC_ChopperConfig();
 	
 	private vector m_vPosOrigin = "0 0 0";
 	private IEntity m_Vehicle = null;
@@ -24,7 +25,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		//Load config
 		m_ChopperJsonApi.CreateMissionFiles();
 		m_ChopperJsonApi.Load(m_Config);
-		m_ChopperJsonApi.LoadMissionFiles();
+		m_Config.LoadMissionFiles();
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -441,208 +442,3 @@ class SDRC_Chopper
 		wpType = wpType_;
 	}
 }
-
-//------------------------------------------------------------------------------------------------
-/*class SDRC_ChopperJsonApi : SDRC_JsonApi2
-{
-	ref SDRC_ChopperConfig conf = new SDRC_ChopperConfig();
-		
-	//------------------------------------------------------------------------------------------------
-	void SDRC_ChopperJsonApi(string fileName)
-	{
-		SetFileName(fileName);
-	}
-			
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
-		
-		loadContext.ReadValue("", conf);
-		return true;
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	void Save()
-	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
-	{
-		conf.showMarker = false;
-		conf.disableArsenal = true;
-		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,1,1,1,2,2};
-		//Mission specific
-		conf.distanceToMission = 100;
-		conf.distanceToPlayer = 500;
-		conf.distanceToStart = 0.49;
-	#ifdef SDRC_RELEASE
-		conf.activeTime = 30*60;
-	#endif
-	#ifndef SDRC_RELEASE
-		conf.activeTime = 2*60;
-	#endif
-		
-		//----------------------------------------------------
-		conf.subMissions.Insert(Chopper0());
-		conf.subMissions.Insert(Chopper1());
-		conf.subMissions.Insert(Chopper2());
-	};
-	
-	//----------------------------------------------------
-	SDRC_Chopper Chopper0()
-	{
-		ref SDRC_Chopper chopper = new SDRC_Chopper();
-		chopper.general.Set(
-			0, "index 0: Randomly flying chopper",
-			{"0 0 0", "0 0 0"}, 0,
-			{},
-			"any",
-			"Helicopter patroling",
-			"Avoid being seen.",
-			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Helicopter is not your problem anymore.", 
-			"Helicopter lost track of you.",
-			"",
-			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EMissionDifficulty.NORMAL,
-			0
-		);
-		chopper.ai.Set
-		(
-			{1, 2},
-			{"G_SMALL", "G_ADMIN", "G_RECON"},
-			30, 0.6,
-			{0, 0},
-			SDRC_EWaypointGenerationType.LOITER,
-			SDRC_EWaypointMoveType.LOITER,
-		);
-		chopper.Set
-		(
-			{
-			 "{70A03633AAE61492}Prefabs/Vehicles/Helicopters/UH1H/UH1H_civ_base_Patrol.et",
-			 "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et",
-			},
-			{35, 70},
-			{7, 25},
-			{0.2, 0.5},
-			SDRC_EHeliWaypointGenerationType.RANDOM,	
-		);
-		
-		return chopper;
-	}
-	
-	//----------------------------------------------------
-	SDRC_Chopper Chopper1()
-	{
-		ref SDRC_Chopper chopper = new SDRC_Chopper();
-		chopper.general.Set(
-			1, "index 1: Gunships",
-			{"0 0 0", "0 0 0"}, 0,
-			{},
-			"any",
-			"Gunship hunter",
-			"You will be shot if you're seen.",
-			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Gunship funship .. it's gone.", 
-			"Gunship lost track of you.",
-			"",
-			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EMissionDifficulty.NORMAL,
-			0
-		);
-		chopper.ai.Set
-		(
-			{1, 2},
-			{"G_SMALL", "G_LIGHT"},
-			60, 1.0,
-			{0, 0},
-			SDRC_EWaypointGenerationType.LOITER,
-			SDRC_EWaypointMoveType.LOITER,
-		);
-		chopper.Set
-		(
-			{
-			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
-			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
-			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
-			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
-			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
-			},
-			{40, 80},
-			{10, 30},
-			{0.2, 0.4},
-			SDRC_EHeliWaypointGenerationType.RANDOM,	
-		);
-		
-		return chopper;
-	}
-	
-	//----------------------------------------------------
-	SDRC_Chopper Chopper2()
-	{
-		ref SDRC_Chopper chopper = new SDRC_Chopper();
-		chopper.general.Set(
-			2, "index 2: Patrol around cities and towns",
-			{"0 0 0", "0 0 0"}, 0,
-			{	
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
-				EMapDescriptorType.MDT_NAME_TOWN, 
-				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_BASE,
-				EMapDescriptorType.MDT_PORT,
-			},
-			"any",
-			"Guardian from the heaven",
-			"Area near %l is being guarded from the air.",
-			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Guardians are now angels.", 
-			"Guards have left.",
-			"",
-			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EMissionDifficulty.NORMAL,
-			0
-		);
-		chopper.ai.Set
-		(
-			{1, 2},
-			{"G_HEAVY", "G_SMALL"},
-			60, 1.0,
-			{0, 0},
-			SDRC_EWaypointGenerationType.LOITER,
-			SDRC_EWaypointMoveType.LOITER,
-		);
-		chopper.Set
-		(
-			{
-			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
-			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
-			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
-			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
-			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
-			},
-			{30, 60},
-			{7, 25},
-			{50, 200},
-			SDRC_EHeliWaypointGenerationType.PATROL,	
-		);
-		
-		return chopper;
-	}
-}*/

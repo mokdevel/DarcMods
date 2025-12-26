@@ -5,26 +5,34 @@
 */
 
 //------------------------------------------------------------------------------------------------
-class SDRC_Stash_010_JsonApi : SDRC_StashJsonApi
+class SDRC_StashConfig_010 : SDRC_StashConfig
 {
 	private const string DC_MISSIONCONFIG_FILE_STASH_010 = "dc_missionConfig_Stash_010.json";
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Stash_010_JsonApi(string fileName = "")
+	//This will setup the filename correctly to create the file
+	static string GetFileName()
 	{		
-		SetFileName(DC_MISSIONCONFIG_FILE_STASH_010);
-	}
+		return DC_MISSIONCONFIG_FILE_STASH_010;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+		SDRC_StashConfig_010 data = SDRC_StashConfig_010.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
 	
 	//------------------------------------------------------------------------------------------------
 	override void SetDefaults()
 	{
 		//Default
-		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.activeDistance = 50;
-		conf.missionList = {10};
+		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
+		activeDistance = 50;
+		missionList = {10};
 		//Mission specific		
 		//----------------------------------------------------
-		conf.subMissions.Insert(Stash010());				
+		subMissions.Insert(Stash010());				
 	};
 	
 	//----------------------------------------------------
