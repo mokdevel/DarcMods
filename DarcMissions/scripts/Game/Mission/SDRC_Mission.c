@@ -80,10 +80,14 @@ class SDRC_MissionConfig : Managed
 	{
 	}
 	
+	void LoadMissionFiles()
+	{
+	}	
+	
 	void SetDefaults()
 	{	
 		version = 1;
-	}	
+	}
 }
 
 //------------------------------------------------------------------------------------------------

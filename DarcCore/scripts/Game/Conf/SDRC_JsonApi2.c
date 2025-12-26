@@ -20,7 +20,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	bool Load(Class T, bool createMissingFiles = true)
+	bool Load(Managed T, bool createMissingFiles = true)
 	{	
 	#ifndef CTX
 		SDRC_MissionConfig C = SDRC_MissionConfig.Cast(T);
@@ -38,16 +38,17 @@ class SDRC_JsonApi2 : JsonApiStruct
 			C.SetDefaults();
 			
 			Save(C);
+			loadContext = LoadConfig(false);
 //			return true;
 		}
-		
-		loadContext = LoadConfig(false);
 		
 		if (!loadContext)
 		{
             Print("ERROR!", LogLevel.ERROR);
 			return false;
 		}
+		
+		loadContext.ReadValue("", T);		
 		
 		if (C.version != DC_FILE_VERSION)
 		{
@@ -96,7 +97,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 	*/
 	SCR_JsonLoadContext LoadConfig(bool createMissingFiles = true)
 	{	
-		SCR_JsonLoadContext loadContext = new SCR_JsonLoadContext();
+		SCR_JsonLoadContext loadContext = new SCR_JsonLoadContext(false);
 		
 		if (SDRC_Conf.OVERWRITE_JSON && createMissingFiles)
 		{
@@ -190,10 +191,10 @@ class SDRC_JsonApi2 : JsonApiStruct
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void LoadMissionFiles()
+/*	void LoadMissionFiles()
 	{
 		//Load mission files
-/*		foreach (string missionFile : conf.missionFiles)
+		foreach (string missionFile : conf.missionFiles)
 		{
 			SDRC_ChopperJsonApi jsonApi = new SDRC_ChopperJsonApi(missionFile);		
 			if (jsonApi.Load(false))
@@ -207,6 +208,6 @@ class SDRC_JsonApi2 : JsonApiStruct
 					conf.missionList.Insert(idx);
 				}
 			}
-		}*/
-	}		
+		}
+	}	*/	
 }	
