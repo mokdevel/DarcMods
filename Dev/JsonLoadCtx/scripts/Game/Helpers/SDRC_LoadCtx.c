@@ -11,15 +11,15 @@ class SDRC_LoadCtx
 	const string DC_COMPATCONFIG_FILE = "dc_ctx.json";
 	const int DC_COMPAT_WAIT_FOR_PLAYERS_TIME = 15;
 	const int DC_COMPAT_CLEAN_WAIT_TIME = 15;
-	static ref SDRC_JsonApi2 m_DC_CompatJsonApi = null;
-	static ref SCR_JsonLoadContext loadContext;
-	static ref SDRC_CtxConfig conf = new SDRC_CtxConfig();
+	ref SDRC_JsonApi2 m_DC_CompatJsonApi = null;
+	ref SCR_JsonLoadContext loadContext;
+	ref SDRC_CtxConfig conf = new SDRC_CtxConfig();
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Add you init code here.
 	*/
-	static bool Init()
+	bool Init()
 	{		
 		SDRC_Log.Add("[SDRC_LoadCtx] Initializing..", LogLevel.NORMAL);
 		
