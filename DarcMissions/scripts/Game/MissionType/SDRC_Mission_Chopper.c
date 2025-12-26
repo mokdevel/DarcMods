@@ -23,8 +23,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	void SDRC_Mission_Chopper(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		m_ChopperJsonApi.CreateMissionFiles();
 		m_ChopperJsonApi.Load(m_Config);
+		m_Config.CreateMissionFiles();
 		m_Config.LoadMissionFiles();
 		
 		//Pick a configuration for mission

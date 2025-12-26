@@ -63,9 +63,9 @@ const string SDRC_DEFAULT = "default";
 class SDRC_MissionConfig : Managed
 {
 	//Default information
-	int version = 1;
+	int version = -1;
 	string author = "darc";
-	int missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;	//How often the mission is run
+	int missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;		//How often the mission is run
 	bool showMarker = true;
 	bool showHint = true;
 	bool showMessage = true;
@@ -79,7 +79,11 @@ class SDRC_MissionConfig : Managed
 	bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
 	{
 	}
-	
+
+	void CreateMissionFiles()
+	{
+	}	
+
 	void LoadMissionFiles()
 	{
 	}	

@@ -23,7 +23,6 @@ class SDRC_Mission_Stash : SDRC_Mission
 	void SDRC_Mission_Stash(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		m_StashJsonApi.CreateMissionFiles();
 		m_StashJsonApi.Load(m_Config);
 		m_Config.CreateMissionFiles();
 		m_Config.LoadMissionFiles();
@@ -153,8 +152,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 		foreach (string missionFile : missionFiles)
 		{
 			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
-			ref SDRC_StashConfig conf = new SDRC_StashConfig();
-//			ref SDRC_StashConfig_010 conf = new SDRC_StashConfig_010();
+			SDRC_StashConfig conf = new SDRC_StashConfig();
 			
 			if (jsonApi.Load(conf, false))
 			{
@@ -172,7 +170,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 	}
 
 	//------------------------------------------------------------------------------------------------
-	void CreateMissionFiles()
+	override void CreateMissionFiles()
 	{
 		SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(SDRC_StashConfig_010.GetFileName());				
 		SDRC_StashConfig_010 conf = new SDRC_StashConfig_010();

@@ -99,13 +99,13 @@ sealed class SDRC_MissionEnumHelper
 		SDRC_JsonApi2 stashJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_STASH);	
 		SDRC_StashConfig confStash = new SDRC_StashConfig();		
 		stashJsonApi.Load(confStash);
-		stashJsonApi.CreateMissionFiles();
+		confStash.CreateMissionFiles();
 		delete stashJsonApi;
 		
 		SDRC_JsonApi2 chopperJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CHOPPER);	
 		SDRC_ChopperConfig confChopper = new SDRC_ChopperConfig();		
 		chopperJsonApi.Load(confChopper);
-		chopperJsonApi.CreateMissionFiles();
+		confChopper.CreateMissionFiles();
 		delete chopperJsonApi;
 	}		
 	
