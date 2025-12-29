@@ -81,6 +81,7 @@ GEAR_HEADGEAR : Head Gear including helmets, gas masks
 GEAR_VEST : Vests
 GEAR_HANDWEAR : Gloves etc
 GEAR_UNIFORM : Jackets, pants
+GEAR_BAG : Jackets, pants
 CLOTHING_HEADGEAR : Head Gear including hats
 CLOTHING_UNIFORM : Jackets, pants, shirts, 
 ```
