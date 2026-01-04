@@ -38,100 +38,78 @@
 */
 
 //------------------------------------------------------------------------------------------------
-class SDRC_EnemyListJsonApi : SDRC_JsonApi
+class SDRC_EnemyListConfig : SDRC_ListConfig
 {
-	ref SDRC_ListConfig conf = new SDRC_ListConfig();
+	//------------------------------------------------------------------------------------------------
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+		SDRC_EnemyListConfig data = SDRC_EnemyListConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_EnemyListJsonApi(string fileName)
+	override void SetDefaults()
 	{
-		SetFileName(fileName);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
+		super.SetDefaults();
 		
-		loadContext.ReadValue("", conf);
-		return true;
-	}
-
-	//------------------------------------------------------------------------------------------------
-	void Save()
-	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
-	{		
-		conf.modList = {};
+		modList = {};
 		
 		SDRC_Aka aka00 = new SDRC_Aka();
 		aka00.names = {"RHS_USAF", "USAF_USMC"};
-		conf.akas.Insert(aka00);
+		akas.Insert(aka00);
 
 		SDRC_Aka aka01 = new SDRC_Aka();
 		aka01.names = {"RHS_AFRF", "RHS_RF"};
-		conf.akas.Insert(aka01);
+		akas.Insert(aka01);
 
 		SDRC_Aka aka02 = new SDRC_Aka();
 		aka02.names = {"USSR", "USSR", "TF_RF"};
-		conf.akas.Insert(aka02);
+		akas.Insert(aka02);
 
 		SDRC_Aka aka03 = new SDRC_Aka();
 		aka03.names = {"US", "US", "TF_US"};
-		conf.akas.Insert(aka03);
+		akas.Insert(aka03);
 
 		SDRC_Aka aka04 = new SDRC_Aka();
 		aka04.names = {"BACON_622120A5448725E3_FACTION", "Zombie", "Zombies"};
-		conf.akas.Insert(aka04);
+		akas.Insert(aka04);
 
 		SDRC_Aka aka05 = new SDRC_Aka();
 		aka05.names = {"BALLIEN_BC_FACTION", "Cultist", "Cultists"};
-		conf.akas.Insert(aka05);
-										
-		conf.lists.Insert(enemyList00());
-		conf.lists.Insert(enemyList01());
-		conf.lists.Insert(enemyList02());
-		conf.lists.Insert(enemyList03());
-		conf.lists.Insert(enemyList04());
-		conf.lists.Insert(enemyList05());
-		conf.lists.Insert(enemyList06());
-		conf.lists.Insert(enemyList07());
-		conf.lists.Insert(enemyList08());
-		conf.lists.Insert(enemyList09());
+		akas.Insert(aka05);
+
+		SDRC_Aka aka06 = new SDRC_Aka();
+		aka06.names = {"PLA", "PLAGF", "PLAAF"};
+		akas.Insert(aka06);
+												
+		lists.Insert(enemyList00());
+		lists.Insert(enemyList01());
+		lists.Insert(enemyList02());
+		lists.Insert(enemyList03());
+		lists.Insert(enemyList04());
+		lists.Insert(enemyList05());
+		lists.Insert(enemyList06());
+		lists.Insert(enemyList07());
+		lists.Insert(enemyList08());
+		lists.Insert(enemyList09());
 		
-		conf.lists.Insert(enemyList20());
-		conf.lists.Insert(enemyList21());
-		conf.lists.Insert(enemyList22());
-		conf.lists.Insert(enemyList23());
-		conf.lists.Insert(enemyList24());
-		conf.lists.Insert(enemyList25());
-		conf.lists.Insert(enemyList26());
-		conf.lists.Insert(enemyList27());
+		lists.Insert(enemyList20());
+		lists.Insert(enemyList21());
+		lists.Insert(enemyList22());
+		lists.Insert(enemyList23());
+		lists.Insert(enemyList24());
+		lists.Insert(enemyList25());
+		lists.Insert(enemyList26());
+		lists.Insert(enemyList27());
 		
-		conf.lists.Insert(enemyList50());		
-		conf.lists.Insert(enemyList51());		
-		conf.lists.Insert(enemyList52());		
-		conf.lists.Insert(enemyList53());		
+		lists.Insert(enemyList50());		
+		lists.Insert(enemyList51());		
+		lists.Insert(enemyList52());		
+		lists.Insert(enemyList53());		
 		
-		conf.lists.Insert(enemyList60());		
-		conf.lists.Insert(enemyList61());				
-		conf.lists.Insert(enemyList62());				
+		lists.Insert(enemyList60());		
+		lists.Insert(enemyList61());				
+		lists.Insert(enemyList62());				
 	}
 				
 	//------------------------------------------------------------------------------------------------
@@ -167,6 +145,7 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies
 			 "Cultists_Light", 											//Ballien Cultists
+			 "PLAGF_SentryTeam",										//PLA: Proper Sniper Group is missing
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -453,12 +432,13 @@ class SDRC_EnemyListJsonApi : SDRC_JsonApi
 			"C_SPECIAL",
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters"},
 			{"_SF", "_SR", "FIA_AC", 
-			 "_Bomb", //MEI
-			 "MEI_Rifleman1", //MEI
+			 "_Bomb", 										//MEI
+			 "MEI_Rifleman1", 								//MEI
 			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies			
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
 			 "Civilian_Cultist", 							//Ballien Cultists
 			 "Stalker_Shadow", "Stalker_Legend",			//Bandit faction						
+			 "PLAGF_Scout_RTO",								//PLA
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
