@@ -7,6 +7,10 @@
 ## Next release (unreleased)
 No changes in mission jsons. 
 
+Main features:
+* Support for Chinese People's Liberation Army (PLA) faction.
+* Refactored the json loading/saving. Better looking jsons and provides capability for error checking. 
+
 ## 202512xx
 Changed jsons - remove the files to receive updated ones.
 * dc_missionConfig_Chopper.json

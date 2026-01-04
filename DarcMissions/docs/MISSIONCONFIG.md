@@ -56,6 +56,7 @@ The supported factions are listed below
 * ``BALLIEN_BC_FACTION`` : Ballien Creatures - [MOD](https://reforger.armaplatform.com/workshop/6534B9CEB6D12EE7-BallienCreatures)
 * ``BACON_622120A5448725E3_FACTION`` : Bacon Zombies - [MOD](https://reforger.armaplatform.com/workshop/622120A5448725E3-BaconZombies)
 * ``PLASTICBANDIT`` : Bandit Faction - [MOD](https://reforger.armaplatform.com/workshop/66C4458756B32594-BanditFaction)
+* ``PLA`` : Chinese People's Liberation Army - [MOD](https://reforger.armaplatform.com/workshop/60A6507633AB1954-ChinesePLA)
 
 Unsupported values
 * ``RHS_ION``
