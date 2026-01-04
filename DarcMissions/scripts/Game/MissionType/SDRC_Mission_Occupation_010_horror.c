@@ -5,29 +5,40 @@
 */
 
 //------------------------------------------------------------------------------------------------
-class SDRC_Occupation_010_horror_JsonApi : SDRC_OccupationJsonApi
+class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 {
 	const string DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR = "dc_missionConfig_Occupation_010_horror.json";
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Occupation_010_horror_JsonApi(string fileName = "")
+	//This will setup the filename correctly to create the file
+	static string GetFileName()
+	{		
+		return DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR;
+	}	
+
+	//------------------------------------------------------------------------------------------------
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
 	{
-		SetFileName(DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR);
-	}
-	
+		SDRC_OccupationConfig_010 data = SDRC_OccupationConfig_010.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
+		
 	//------------------------------------------------------------------------------------------------
 	override void SetDefaults()
 	{
+		super.SetDefaults();
+		
 		//Default		
-		conf.disableArsenal = true;
-		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-//		conf.missionList = {10, 11, 12};		
-		conf.missionList = {11, 12};		
+		disableArsenal = true;
+		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
+//		missionList = {10, 11, 12};		
+		missionList = {11, 12};				
 		//Mission specific		
 		//----------------------------------------------------
-		conf.subMissions.Insert(Occupation010());				
-		conf.subMissions.Insert(Occupation011());				
-		conf.subMissions.Insert(Occupation012());				
+		subMissions.Clear();
+		subMissions.Insert(Occupation010());				
+		subMissions.Insert(Occupation011());				
+		subMissions.Insert(Occupation012());				
 	};
 	
 	//----------------------------------------------------

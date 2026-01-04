@@ -19,8 +19,8 @@ enum SDRC_EMissionCrashSiteState
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Crashsite : SDRC_Mission
 {
-	private ref SDRC_CrashsiteJsonApi m_CrashsiteJsonApi = new SDRC_CrashsiteJsonApi(DC_MISSIONCONFIG_FILE_CRASHSITE);	
-	private ref SDRC_CrashsiteConfig m_Config = new SDRC_CrashsiteConfig();
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CRASHSITE);	
+	private ref SDRC_CrashsiteConfig m_Config = new SDRC_CrashsiteConfig();	
 	private ref SDRC_Crashsite m_DC_Crashsite = new SDRC_Crashsite();
 	
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 10;	//How many different spots to try for a mission before giving up	
@@ -39,10 +39,9 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	void SDRC_Mission_Crashsite(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		m_CrashsiteJsonApi.CreateMissionFiles();
-		m_CrashsiteJsonApi.Load();
-		m_CrashsiteJsonApi.LoadMissionFiles();		
-		m_Config = m_CrashsiteJsonApi.conf;
+		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
+		m_Config.CreateMissionFiles();
+		m_Config.LoadMissionFiles();
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -313,6 +312,41 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 	ref array<ref SDRC_Crashsite> subMissions = {};		//List of crashsites
 	
 	//------------------------------------------------------------------------------------------------
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+		SDRC_CrashsiteConfig data = SDRC_CrashsiteConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
+	
+	//------------------------------------------------------------------------------------------------	
+	override void LoadMissionFiles()
+	{
+		//Load mission files
+		foreach (string missionFile : missionFiles)
+		{
+			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
+			SDRC_CrashsiteConfig conf = new SDRC_CrashsiteConfig();
+			
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), false))
+			{
+				foreach (SDRC_Crashsite subMission : conf.subMissions)
+				{
+					subMissions.Insert(subMission);
+				}
+				foreach (int idx : conf.missionList)
+				{
+					missionList.Insert(idx);
+				}
+			}
+		}
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	override void CreateMissionFiles()
+	{
+	}	
+	
+	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
 	{
 		int idx = -1;
@@ -326,110 +360,21 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 		}
 		return idx;
 	}		
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_Crashsite : SDRC_Camp
-{
-	ref array<ref SDRC_HelicopterInfo> helicopterInfo = {};
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_HelicopterInfo : Managed
-{
-	string comment;
-	string resource;
-	float throttle; 
-	float rotorForce;
-	float rotor2Force;
-
-	void Set(string comment_, string resource_, float throttle_, float rotorForce_, float rotor2Force_)
-	{
-		comment = comment_;
-		resource = resource_;
-		throttle = throttle_;
-		rotorForce = rotorForce_;
-		rotor2Force = rotor2Force_;
-	};
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_CrashsiteJsonApi : SDRC_JsonApi
-{
-	ref SDRC_CrashsiteConfig conf = new SDRC_CrashsiteConfig();
-		
-	//------------------------------------------------------------------------------------------------
-	void SDRC_CrashsiteJsonApi(string fileName)
-	{
-		SetFileName(fileName);
-	}
-			
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
-		
-		loadContext.ReadValue("", conf);
-		return true;
-	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save()
+	override void SetDefaults()
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}	
-		
-	//------------------------------------------------------------------------------------------------
-	void CreateMissionFiles()
-	{
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void LoadMissionFiles()
-	{
-		//Load mission files
-		foreach (string missionFile : conf.missionFiles)
-		{
-			SDRC_CrashsiteJsonApi jsonApi = new SDRC_CrashsiteJsonApi(missionFile);		
-			if (jsonApi.Load(false))
-			{
-				foreach (SDRC_Crashsite subMission : jsonApi.conf.subMissions)
-				{
-					conf.subMissions.Insert(subMission);
-				}
-				foreach (int idx : jsonApi.conf.missionList)
-				{
-					conf.missionList.Insert(idx);
-				}
-			}
-		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
-	{
-		conf.disableArsenal = true;
-		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,1};		
+		super.SetDefaults();	
+		disableArsenal = true;
+		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
+		missionList = {0,1};		
 		//Mission specific
-		conf.distanceToMission = 100;
-		conf.distanceToPlayer = 500;
-		conf.flyHeight = {80, 120};
+		distanceToMission = 100;
+		distanceToPlayer = 500;
+		flyHeight = {80, 120};
 		//----------------------------------------------------
-		conf.subMissions.Insert(Crashsite0());
-		conf.subMissions.Insert(Crashsite1());
+		subMissions.Insert(Crashsite0());
+		subMissions.Insert(Crashsite1());
 	};
 			
 	//----------------------------------------------------
@@ -437,7 +382,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Crashsite crashsite = new SDRC_Crashsite();
 		crashsite.general.Set(
-			0, "index 0: general mission",
+			0, "index 0: Crashing cargo",
 			{"0 0 0"}, 0,
 			{},
 			"any",
@@ -532,7 +477,7 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 	{
 		ref SDRC_Crashsite crashsite = new SDRC_Crashsite();
 		crashsite.general.Set(
-			1, "index 1: general mission",
+			1, "index 1: Engine damage",
 			{"0 0 0"}, 0,
 			{},
 			"any",
@@ -595,5 +540,30 @@ class SDRC_CrashsiteJsonApi : SDRC_JsonApi
 		);
 		crashsite.campItems.Insert(crashitem_1);	
 		return crashsite;
-	}
+	}	
+}
+
+//------------------------------------------------------------------------------------------------
+class SDRC_Crashsite : SDRC_Camp
+{
+	ref array<ref SDRC_HelicopterInfo> helicopterInfo = {};
+}
+
+//------------------------------------------------------------------------------------------------
+class SDRC_HelicopterInfo : Managed
+{
+	string comment;
+	string resource;
+	float throttle; 
+	float rotorForce;
+	float rotor2Force;
+
+	void Set(string comment_, string resource_, float throttle_, float rotorForce_, float rotor2Force_)
+	{
+		comment = comment_;
+		resource = resource_;
+		throttle = throttle_;
+		rotorForce = rotorForce_;
+		rotor2Force = rotor2Force_;
+	};
 }

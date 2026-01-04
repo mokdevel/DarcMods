@@ -32,76 +32,51 @@
 }*/
 
 //------------------------------------------------------------------------------------------------
-class SDRC_LootListJsonApi : SDRC_JsonApi
+class SDRC_LootListConfig : SDRC_ListConfig
 {
-	ref SDRC_ListConfig conf = new SDRC_ListConfig();
-	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_LootListJsonApi(string fileName)
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
 	{
-		SetFileName(fileName);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
-		
-		loadContext.ReadValue("", conf);
-		return true;
-	}	
+		SDRC_LootListConfig data = SDRC_LootListConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
 
 	//------------------------------------------------------------------------------------------------
-	void Save()
-	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
+
+	override void SetDefaults()
 	{		
-		conf.modList = {};
+		super.SetDefaults();
+		
+		modList = {};
 		//Weapons
-		conf.lists.Insert(lootList00());		
-		conf.lists.Insert(lootList01());		
-		conf.lists.Insert(lootList02());		
-		conf.lists.Insert(lootList03());		
-		conf.lists.Insert(lootList04());		
-		conf.lists.Insert(lootList06());	
+		lists.Insert(lootList00());		
+		lists.Insert(lootList01());		
+		lists.Insert(lootList02());		
+		lists.Insert(lootList03());		
+		lists.Insert(lootList04());		
+		lists.Insert(lootList06());	
 		//Attachments
-		conf.lists.Insert(lootList20());	
-		conf.lists.Insert(lootList21());	
+		lists.Insert(lootList20());	
+		lists.Insert(lootList21());	
 		//Ammo, magazines
-		conf.lists.Insert(lootList40());	
-		conf.lists.Insert(lootList41());	
+		lists.Insert(lootList40());	
+		lists.Insert(lootList41());	
 		//Items
-		conf.lists.Insert(lootList50());	
-		conf.lists.Insert(lootList51());
+		lists.Insert(lootList50());	
+		lists.Insert(lootList51());
 		//Gear
-		conf.lists.Insert(lootList60());		
-		conf.lists.Insert(lootList61());		
-		conf.lists.Insert(lootList62());		
-		conf.lists.Insert(lootList63());		
-		conf.lists.Insert(lootList64());		
+		lists.Insert(lootList60());		
+		lists.Insert(lootList61());		
+		lists.Insert(lootList62());		
+		lists.Insert(lootList63());		
+		lists.Insert(lootList64());		
 		//Clothing
-		conf.lists.Insert(lootList80());		
-		conf.lists.Insert(lootList83());		
+		lists.Insert(lootList80());		
+		lists.Insert(lootList83());		
 		//Freedom Fighters
-		conf.lists.Insert(lootList90());		
-		conf.lists.Insert(lootList91());		
-		conf.lists.Insert(lootList92());		
+		lists.Insert(lootList90());		
+		lists.Insert(lootList91());		
+		lists.Insert(lootList92());		
 	}
 			
 	//Lootlist: Rifles

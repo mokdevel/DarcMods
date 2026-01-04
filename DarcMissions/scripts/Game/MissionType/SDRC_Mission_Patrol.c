@@ -10,7 +10,7 @@ const string DC_MISSIONCONFIG_FILE_PATROL = "dc_missionConfig_Patrol.json";
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Patrol : SDRC_Mission
 {
-	private ref SDRC_PatrolJsonApi m_PatrolJsonApi = new SDRC_PatrolJsonApi(DC_MISSIONCONFIG_FILE_PATROL);	
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_PATROL);	
 	private ref SDRC_PatrolConfig m_Config = new SDRC_PatrolConfig();	
 	private ref SDRC_Patrol m_DC_Patrol = new SDRC_Patrol();
 	
@@ -20,10 +20,9 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	void SDRC_Mission_Patrol(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		m_PatrolJsonApi.CreateMissionFiles();
-		m_PatrolJsonApi.Load();
-		m_PatrolJsonApi.LoadMissionFiles();			
-		m_Config = m_PatrolJsonApi.conf;
+		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
+		m_Config.CreateMissionFiles();
+		m_Config.LoadMissionFiles();
 
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -166,12 +165,61 @@ class SDRC_Mission_Patrol : SDRC_Mission
 }
 
 //------------------------------------------------------------------------------------------------
+class SDRC_Patrol : Managed
+{
+	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
+	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
+	//Optional settings
+	#ifndef NEW_VERSION_WIP	
+		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
+	#endif
+	#ifdef NEW_VERSION_WIP		
+		ref SDRC_MissionConfigSecondWave secondWave = null;
+	#endif
+}	
+
+//------------------------------------------------------------------------------------------------
 class SDRC_PatrolConfig : SDRC_MissionConfig
 {
 	//Mission specific	
 	int patrolingTime;								//(seconds) Time to patrol. Once this time has passed and no players nearby, despawn mission.
 	int distanceToPlayer;							//If no players this close to any players and patrolingTime has passed, despawn mission.
 	ref array<ref SDRC_Patrol> subMissions = {};	//List of patrols
+	
+	//------------------------------------------------------------------------------------------------
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+		SDRC_PatrolConfig data = SDRC_PatrolConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
+
+	//------------------------------------------------------------------------------------------------	
+	override void LoadMissionFiles()
+	{
+		//Load mission files
+		foreach (string missionFile : missionFiles)
+		{
+			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
+			SDRC_PatrolConfig conf = new SDRC_PatrolConfig();
+			
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), false))
+			{
+				foreach (SDRC_Patrol subMission : conf.subMissions)
+				{
+					subMissions.Insert(subMission);
+				}
+				foreach (int idx : conf.missionList)
+				{
+					missionList.Insert(idx);
+				}
+			}
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------
+	override void CreateMissionFiles()
+	{
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
@@ -187,102 +235,25 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 		}
 		return idx;
 	}	
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_Patrol : Managed
-{
-	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
-	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
-	//Optional settings
-	#ifndef NEW_VERSION_WIP	
-		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
-	#endif
-	#ifdef NEW_VERSION_WIP		
-		ref SDRC_MissionConfigSecondWave secondWave = null;
-	#endif
-}		
-
-//------------------------------------------------------------------------------------------------
-class SDRC_PatrolJsonApi : SDRC_JsonApi
-{
-	ref SDRC_PatrolConfig conf = new SDRC_PatrolConfig();
-
-	//------------------------------------------------------------------------------------------------
-	void SDRC_PatrolJsonApi(string fileName)
-	{
-		SetFileName(fileName);
-	}
-		
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
-		
-		loadContext.ReadValue("", conf);
-		return true;
-	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save()
+	override void SetDefaults()
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}	
-
-	//------------------------------------------------------------------------------------------------
-	void CreateMissionFiles()
-	{
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void LoadMissionFiles()
-	{
-		//Load mission files
-		foreach (string missionFile : conf.missionFiles)
-		{
-			SDRC_PatrolJsonApi jsonApi = new SDRC_PatrolJsonApi(missionFile);		
-			if (jsonApi.Load(false))
-			{
-				foreach (SDRC_Patrol subMission : jsonApi.conf.subMissions)
-				{
-					conf.subMissions.Insert(subMission);
-				}
-				foreach (int idx : jsonApi.conf.missionList)
-				{
-					conf.missionList.Insert(idx);
-				}
-			}
-		}
-	}		
-			
-	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
-	{
+		super.SetDefaults();
+		
 		array<string> lootItems = {};
 		
 		//Default
-		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;
-		conf.showMarker = false;
-		conf.missionList = {0,0,0,1,2,3};
+		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;
+		showMarker = false;
+		missionList = {0,0,0,1,2,3};
 		//Mission specific
-		conf.distanceToPlayer = 500;
+		distanceToPlayer = 500;
 		//----------------------------------------------------
-		conf.subMissions.Insert(Patrol0());
-		conf.subMissions.Insert(Patrol1());
-		conf.subMissions.Insert(Patrol2());
-		conf.subMissions.Insert(Patrol3());
+		subMissions.Insert(Patrol0());
+		subMissions.Insert(Patrol1());
+		subMissions.Insert(Patrol2());
+		subMissions.Insert(Patrol3());
 	};
 	
 	//----------------------------------------------------

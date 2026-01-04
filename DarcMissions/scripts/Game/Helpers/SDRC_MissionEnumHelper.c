@@ -46,66 +46,88 @@ sealed class SDRC_MissionEnumHelper
 	static void CreateAllConfigs()
 	{		
 		//Create a default nonValidArea config
-		SDRC_NonValidAreaJsonApi nonValidAreaJsonApi = new SDRC_NonValidAreaJsonApi(DC_MISSIONCONFIG_FILE_NONVALIDAREA);
-		nonValidAreaJsonApi.Load();
-		delete nonValidAreaJsonApi;		
+		SDRC_JsonApi2 nonValidAreaJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_NONVALIDAREA);	
+		SDRC_NonValidAreaConfig confNonValidArea = new SDRC_NonValidAreaConfig();		
+		nonValidAreaJsonApi.Load(confNonValidArea, SDRC_NonValidAreaConfig.Cast(confNonValidArea));
+		delete confNonValidArea;
+		delete nonValidAreaJsonApi;
 		
 		//Create a default mission configs
-		SDRC_ConvoyJsonApi convoyJsonApi = new SDRC_ConvoyJsonApi(DC_MISSIONCONFIG_FILE_CONVOY);	
-		convoyJsonApi.Load();
-		convoyJsonApi.CreateMissionFiles();
-		delete convoyJsonApi;
+		SDRC_JsonApi2 convoyJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CONVOY);	
+		SDRC_ConvoyConfig confConvoy = new SDRC_ConvoyConfig();		
+		convoyJsonApi.Load(confConvoy, SDRC_MissionConfig.Cast(confConvoy));
+		confConvoy.CreateMissionFiles();
+		delete confConvoy;
+		delete convoyJsonApi;		
 		
-		SDRC_CrashsiteJsonApi crashsiteJsonApi = new SDRC_CrashsiteJsonApi(DC_MISSIONCONFIG_FILE_CRASHSITE);	
-		crashsiteJsonApi.Load();		
-		crashsiteJsonApi.CreateMissionFiles();
+		SDRC_JsonApi2 crashsiteJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CRASHSITE);	
+		SDRC_CrashsiteConfig confCrashsite = new SDRC_CrashsiteConfig();		
+		crashsiteJsonApi.Load(confCrashsite, SDRC_MissionConfig.Cast(confCrashsite));		
+		confCrashsite.CreateMissionFiles();
+		delete confCrashsite;
 		delete crashsiteJsonApi;
 		
-		SDRC_HunterJsonApi hunterJsonApi = new SDRC_HunterJsonApi(DC_MISSIONCONFIG_FILE_HUNTER);				
-		hunterJsonApi.Load();								
-		hunterJsonApi.CreateMissionFiles();
+		SDRC_JsonApi2 hunterJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_HUNTER);	
+		SDRC_HunterConfig confHunter = new SDRC_HunterConfig();		
+		hunterJsonApi.Load(confHunter, SDRC_MissionConfig.Cast(confHunter));		
+		confHunter.CreateMissionFiles();
+		delete confHunter;
 		delete hunterJsonApi;
 		
-		SDRC_OccupationJsonApi occupationJsonApi = new SDRC_OccupationJsonApi(DC_MISSIONCONFIG_FILE_OCCUPATION);	
-		occupationJsonApi.Load();		
-		occupationJsonApi.CreateMissionFiles();
-		delete occupationJsonApi;
+		SDRC_JsonApi2 occupationJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_OCCUPATION);	
+		SDRC_OccupationConfig confOccupation = new SDRC_OccupationConfig();		
+		occupationJsonApi.Load(confOccupation, SDRC_MissionConfig.Cast(confOccupation));		
+		confOccupation.CreateMissionFiles();
+		delete confOccupation;
+		delete occupationJsonApi;			
 		
-		SDRC_PatrolJsonApi patrolJsonApi = new SDRC_PatrolJsonApi(DC_MISSIONCONFIG_FILE_PATROL);	
-		patrolJsonApi.Load();
-		patrolJsonApi.CreateMissionFiles();
-		delete patrolJsonApi;
+		SDRC_JsonApi2 patrolJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_PATROL);	
+		SDRC_PatrolConfig confPatrol = new SDRC_PatrolConfig();		
+		patrolJsonApi.Load(confPatrol, SDRC_MissionConfig.Cast(confPatrol));		
+		confPatrol.CreateMissionFiles();
+		delete confPatrol;
+		delete patrolJsonApi;		
 		
-		SDRC_SquatterJsonApi squatterJsonApi = new SDRC_SquatterJsonApi(DC_MISSIONCONFIG_FILE_SQUATTER);	
-		squatterJsonApi.Load();
-		squatterJsonApi.CreateMissionFiles();
-		delete squatterJsonApi;		
+		SDRC_JsonApi2 squatterJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_SQUATTER);	
+		SDRC_SquatterConfig confSquatter = new SDRC_SquatterConfig();		
+		squatterJsonApi.Load(confSquatter, SDRC_MissionConfig.Cast(confSquatter));
+		confSquatter.CreateMissionFiles();
+		delete confSquatter;
+		delete squatterJsonApi;			
 		
-		SDRC_RoadblockJsonApi roadblockJsonApi = new SDRC_RoadblockJsonApi(DC_MISSIONCONFIG_FILE_ROADBLOCK);	
-		roadblockJsonApi.Load();
-		roadblockJsonApi.CreateMissionFiles();
-		delete roadblockJsonApi;		
+		SDRC_JsonApi2 roadblockJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_ROADBLOCK);	
+		SDRC_RoadblockConfig confRoadblock = new SDRC_RoadblockConfig();		
+		roadblockJsonApi.Load(confRoadblock, SDRC_MissionConfig.Cast(confRoadblock));
+		confRoadblock.CreateMissionFiles();
+		delete confRoadblock;
+		delete roadblockJsonApi;			
 		
-		SDRC_HvtVipJsonApi hvtVipJsonApi = new SDRC_HvtVipJsonApi(DC_MISSIONCONFIG_FILE_HVTVIP);	
-		hvtVipJsonApi.Load();
-		hvtVipJsonApi.CreateMissionFiles();
-		delete hvtVipJsonApi;				
-		
-		SDRC_HvtItemJsonApi hvtItemJsonApi = new SDRC_HvtItemJsonApi(DC_MISSIONCONFIG_FILE_HVTITEM);	
-		hvtItemJsonApi.Load();
-		hvtItemJsonApi.CreateMissionFiles();
-		delete hvtItemJsonApi;				
+		SDRC_JsonApi2 hvtVipJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_HVTVIP);	
+		SDRC_HvtVipConfig confHvtVip = new SDRC_HvtVipConfig();		
+		hvtVipJsonApi.Load(confHvtVip, SDRC_MissionConfig.Cast(confHvtVip));
+		confHvtVip.CreateMissionFiles();
+		delete confHvtVip;
+		delete hvtVipJsonApi;		
+				
+		SDRC_JsonApi2 hvtItemJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_HVTITEM);	
+		SDRC_HvtItemConfig confHvtItem = new SDRC_HvtItemConfig();		
+		hvtItemJsonApi.Load(confHvtItem, SDRC_MissionConfig.Cast(confHvtItem));
+		confHvtItem.CreateMissionFiles();
+		delete confHvtItem;
+		delete hvtItemJsonApi;		
 		
 		SDRC_JsonApi2 stashJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_STASH);	
 		SDRC_StashConfig confStash = new SDRC_StashConfig();		
-		stashJsonApi.Load(confStash);
+		stashJsonApi.Load(confStash, SDRC_MissionConfig.Cast(confStash));
 		confStash.CreateMissionFiles();
+		delete confStash;
 		delete stashJsonApi;
 		
 		SDRC_JsonApi2 chopperJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CHOPPER);	
 		SDRC_ChopperConfig confChopper = new SDRC_ChopperConfig();		
-		chopperJsonApi.Load(confChopper);
+		chopperJsonApi.Load(confChopper, SDRC_MissionConfig.Cast(confChopper));
 		confChopper.CreateMissionFiles();
+		delete confChopper;
 		delete chopperJsonApi;
 	}		
 	

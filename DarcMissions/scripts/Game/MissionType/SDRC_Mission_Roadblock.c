@@ -10,7 +10,7 @@ const string DC_MISSIONCONFIG_FILE_ROADBLOCK = "dc_missionConfig_Roadblock.json"
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Roadblock : SDRC_Mission
 {
-	private ref SDRC_RoadblockJsonApi m_RoadblockJsonApi = new SDRC_RoadblockJsonApi(DC_MISSIONCONFIG_FILE_ROADBLOCK);	
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_ROADBLOCK);	
 	private ref SDRC_RoadblockConfig m_Config = new SDRC_RoadblockConfig();	
 	private ref SDRC_Camp m_DC_Roadblock = new SDRC_Camp;
 	
@@ -21,10 +21,9 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	void SDRC_Mission_Roadblock(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		m_RoadblockJsonApi.CreateMissionFiles();
-		m_RoadblockJsonApi.Load();
-		m_RoadblockJsonApi.LoadMissionFiles();		
-		m_Config = m_RoadblockJsonApi.conf;
+		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
+		m_Config.CreateMissionFiles();
+		m_Config.LoadMissionFiles();
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -187,6 +186,41 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 	ref array<ref SDRC_Camp> subMissions = {};		//List of roadblocks - uses the same structure as for occupations	
 	
 	//------------------------------------------------------------------------------------------------
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+		SDRC_RoadblockConfig data = SDRC_RoadblockConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
+
+	//------------------------------------------------------------------------------------------------	
+	override void LoadMissionFiles()
+	{
+		//Load mission files
+		foreach (string missionFile : missionFiles)
+		{
+			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
+			SDRC_RoadblockConfig conf = new SDRC_RoadblockConfig();
+			
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), false))
+			{
+				foreach (SDRC_Camp subMission : conf.subMissions)
+				{
+					subMissions.Insert(subMission);
+				}
+				foreach (int idx : conf.missionList)
+				{
+					missionList.Insert(idx);
+				}
+			}
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------
+	override void CreateMissionFiles()
+	{
+	}	
+	
+	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
 	{
 		int idx = -1;
@@ -200,86 +234,23 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		}
 		return idx;
 	}		
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_RoadblockJsonApi : SDRC_JsonApi
-{
-	ref SDRC_RoadblockConfig conf = new SDRC_RoadblockConfig();
-		
-	//------------------------------------------------------------------------------------------------
-	void SDRC_RoadblockJsonApi(string fileName)
-	{
-		SetFileName(fileName);
-	}
-		
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
-		
-		loadContext.ReadValue("", conf);
-		return true;
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	void Save()
-	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}	
-
-	//------------------------------------------------------------------------------------------------
-	void CreateMissionFiles()
-	{
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void LoadMissionFiles()
-	{
-		//Load mission files
-		foreach (string missionFile : conf.missionFiles)
-		{
-			SDRC_RoadblockJsonApi jsonApi = new SDRC_RoadblockJsonApi(missionFile);		
-			if (jsonApi.Load(false))
-			{
-				foreach (SDRC_Camp subMission : jsonApi.conf.subMissions)
-				{
-					conf.subMissions.Insert(subMission);
-				}
-				foreach (int idx : jsonApi.conf.missionList)
-				{
-					conf.missionList.Insert(idx);
-				}
-			}
-		}
-	}	
 			
 	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
+	override void SetDefaults()
 	{
+		super.SetDefaults();
+		
 		//Default		
-		conf.disableArsenal = true;
-		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,1,2,3,4};
+		disableArsenal = true;
+		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
+		missionList = {0,1,2,3,4};
 		//Mission specific		
 		//----------------------------------------------------
-		conf.subMissions.Insert(Roadblock0());				
-		conf.subMissions.Insert(Roadblock1());				
-		conf.subMissions.Insert(Roadblock2());				
-		conf.subMissions.Insert(Roadblock3());				
-		conf.subMissions.Insert(Roadblock4());				
+		subMissions.Insert(Roadblock0());				
+		subMissions.Insert(Roadblock1());				
+		subMissions.Insert(Roadblock2());				
+		subMissions.Insert(Roadblock3());				
+		subMissions.Insert(Roadblock4());				
 	};
 	
 	//----------------------------------------------------

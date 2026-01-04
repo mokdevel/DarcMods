@@ -15,24 +15,23 @@ const string DC_MISSIONCONFIG_FILE_HUNTER = "dc_missionConfig_Hunter.json";
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Hunter : SDRC_Mission
 {
-	private ref SDRC_HunterJsonApi m_HunterJsonApi = new SDRC_HunterJsonApi(DC_MISSIONCONFIG_FILE_HUNTER);				
-	private ref SDRC_HunterConfig m_Config = new SDRC_HunterConfig();	
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_HUNTER);	
+	private ref SDRC_HunterConfig m_Config = new SDRC_HunterConfig();
 	private ref SDRC_Hunter m_DC_Hunter = new SDRC_Hunter();
 	
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 10;	//How many different spots to try for a mission before giving up	
 	private const int DC_GROUP_SPAWN_DELAY = 2000;			//Delay between AI group spawns
 	
-	private ref array<IEntity> m_Locations = {};
-	private int m_iGroupsToSpawn	= 0;	//Amount of groups to spawn
+	private int m_iGroupsToSpawn = 0;	//Amount of groups to spawn
 	private int m_iGroupsSpawned = 0;	//The amount of groups spawned. Between spawns, a group may be killed so the total of m_Groups is not reliable to know the count.
+	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_Hunter(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
-		//Load config	
-		m_HunterJsonApi.CreateMissionFiles();
-		m_HunterJsonApi.Load();
-		m_HunterJsonApi.LoadMissionFiles();			
-		m_Config = m_HunterJsonApi.conf;
+		//Load config
+		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
+		m_Config.CreateMissionFiles();
+		m_Config.LoadMissionFiles();
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -289,6 +288,20 @@ class SDRC_Mission_Hunter : SDRC_Mission
 }
 
 //------------------------------------------------------------------------------------------------
+class SDRC_Hunter : Managed
+{
+	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
+	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
+	//Optional settings
+	#ifndef NEW_VERSION_WIP	
+		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
+	#endif
+	#ifdef NEW_VERSION_WIP		
+		ref SDRC_MissionConfigSecondWave secondWave = null;
+	#endif
+}
+
+//------------------------------------------------------------------------------------------------
 class SDRC_HunterConfig : SDRC_MissionConfig
 {
 	//Mission specific
@@ -296,6 +309,42 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 	int maxDistanceToPlayer;						//...max distance to despawn
 	int rndDistanceToPlayer;						//The error on the location where AI thinks you are. (0..rndDistanceToPlayer)  
 	ref array<ref SDRC_Hunter> subMissions = {};	//List of hunters
+	
+	//------------------------------------------------------------------------------------------------
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+		SDRC_HunterConfig data = SDRC_HunterConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
+
+	//------------------------------------------------------------------------------------------------	
+	override void LoadMissionFiles()
+	{
+		//Load mission files
+		foreach (string missionFile : missionFiles)
+		{
+			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
+			SDRC_HunterConfig conf = new SDRC_HunterConfig();
+			
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), false))
+			{
+				foreach (SDRC_Hunter subMission : conf.subMissions)
+				{
+					subMissions.Insert(subMission);
+				}
+				foreach (int idx : conf.missionList)
+				{
+					missionList.Insert(idx);
+				}
+				//conf.missionList.InsertAll(jsonApi.conf.missionList);	//TBD: Not sure why this does not work
+			}
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------
+	override void CreateMissionFiles()
+	{
+	}	
 	
 	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
@@ -311,102 +360,24 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 		}
 		return idx;
 	}			
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_Hunter : Managed
-{
-	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
-	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
-	//Optional settings
-	#ifndef NEW_VERSION_WIP	
-		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
-	#endif
-	#ifdef NEW_VERSION_WIP		
-		ref SDRC_MissionConfigSecondWave secondWave = null;
-	#endif
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_HunterJsonApi : SDRC_JsonApi
-{
-	ref SDRC_HunterConfig conf = new SDRC_HunterConfig();
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_HunterJsonApi(string fileName)
+	override void SetDefaults()
 	{
-		SetFileName(fileName);
-	}
-			
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
+		super.SetDefaults();
 		
-		loadContext.ReadValue("", conf);
-		return true;
-	}
-
-	//------------------------------------------------------------------------------------------------
-	void Save()
-	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}	
-
-	//------------------------------------------------------------------------------------------------
-	void CreateMissionFiles()
-	{
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void LoadMissionFiles()
-	{
-		//Load mission files
-		foreach (string missionFile : conf.missionFiles)
-		{
-			SDRC_HunterJsonApi jsonApi = new SDRC_HunterJsonApi(missionFile);		
-			if (jsonApi.Load(false))
-			{
-				foreach (SDRC_Hunter subMission : jsonApi.conf.subMissions)
-				{
-					conf.subMissions.Insert(subMission);
-				}
-				foreach (int idx : jsonApi.conf.missionList)
-				{
-					conf.missionList.Insert(idx);
-				}
-			}
-		}
-	}
-				
-	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
-	{
-		//Default
-		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
-		conf.showMarker = false;
-		conf.missionList = {0,0,0,1,1,1,2};
+		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
+		showMarker = false;
+		missionList = {0,0,0,1,1,1,2};
 		//Mission specific
-		conf.minDistanceToPlayer = 200;
-		conf.maxDistanceToPlayer = 800;
-		conf.rndDistanceToPlayer = 60;
+		minDistanceToPlayer = 200;
+		maxDistanceToPlayer = 800;
+		rndDistanceToPlayer = 60;
 		
 		//----------------------------------------------------
-		conf.subMissions.Insert(Hunter0());				
-		conf.subMissions.Insert(Hunter1());				
-		conf.subMissions.Insert(Hunter2());				
+		subMissions.Insert(Hunter0());				
+		subMissions.Insert(Hunter1());				
+		subMissions.Insert(Hunter2());				
 	}
 	
 	//----------------------------------------------------
@@ -499,5 +470,5 @@ class SDRC_HunterJsonApi : SDRC_JsonApi
 			SDRC_EWaypointMoveType.NONE
 		);
 		return hunter;
-	}			
+	}				
 }

@@ -60,10 +60,9 @@ enum SDRC_EMissionError
 const string SDRC_DEFAULT = "default";
 
 //------------------------------------------------------------------------------------------------
-class SDRC_MissionConfig : Managed
+class SDRC_MissionConfig : SDRC_Config
 {
 	//Default information
-	int version = -1;
 	string author = "darc";
 	int missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;		//How often the mission is run
 	bool showMarker = true;
@@ -75,10 +74,6 @@ class SDRC_MissionConfig : Managed
 	#ifndef NEW_VERSION_WIP	
 		ref array<ref SDRC_MissionConfigSecondWave> secondWave = {};	//TBD: This is not used anywhere. REMOVE!
 	#endif
-	
-	bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
-	{
-	}
 
 	void CreateMissionFiles()
 	{
@@ -86,12 +81,7 @@ class SDRC_MissionConfig : Managed
 
 	void LoadMissionFiles()
 	{
-	}	
-	
-	void SetDefaults()
-	{	
-		version = 1;
-	}
+	}		
 }
 
 //------------------------------------------------------------------------------------------------

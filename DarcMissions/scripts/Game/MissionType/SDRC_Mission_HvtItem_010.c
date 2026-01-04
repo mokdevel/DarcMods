@@ -5,25 +5,36 @@
 */
 
 //------------------------------------------------------------------------------------------------
-class SDRC_HvtItem_010_JsonApi : SDRC_HvtItemJsonApi
+class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 {
 	private const string DC_MISSIONCONFIG_FILE_HVTITEM_010 = "dc_missionConfig_HvtItem_010.json";
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_HvtItem_010_JsonApi(string fileName = "")
+	//This will setup the filename correctly to create the file
+	static string GetFileName()
 	{		
-		SetFileName(DC_MISSIONCONFIG_FILE_HVTITEM_010);
-	}
+		return DC_MISSIONCONFIG_FILE_HVTITEM_010;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+		SDRC_HvtItemConfig_010 data = SDRC_HvtItemConfig_010.Cast(T);
+		return saveContext.WriteValue("", data);
+	}	
 	
 	//------------------------------------------------------------------------------------------------
 	override void SetDefaults()
 	{
+		super.SetDefaults();
+		
 		//Default
-		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {10};
+		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
+		missionList = {10};
 		//Mission specific		
 		//----------------------------------------------------
-		conf.subMissions.Insert(HvtItem010());				
+		subMissions.Clear();
+		subMissions.Insert(HvtItem010());				
 	};
 	
 	//----------------------------------------------------

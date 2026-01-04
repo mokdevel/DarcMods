@@ -4,10 +4,9 @@
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J , convert to readable format - press Ctrl+Alt+Shift+M
 
 //------------------------------------------------------------------------------------------------
-class SDRC_CoreConfig : Managed
+class SDRC_CoreConfig : SDRC_Config
 {
 	//Default information
-	int version = 1;
 	string author = "darc";
 	DC_LogLevel logLevel;
 	string subDir;						//Directory specifying a certain conf for play. For example "Escapists"	
@@ -23,53 +22,23 @@ class SDRC_CoreConfig : Managed
 	ref SDRC_EmptyPos emptyPos = new SDRC_EmptyPos();
 	ref array<ref SDRC_LocationAka> locationAkas = {};
 	ref array<ref SDRC_LocationAka> buildingAkas = {};
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_CoreJsonApi : SDRC_JsonApi
-{
-	ref SDRC_CoreConfig conf = new SDRC_CoreConfig();
-
-	//------------------------------------------------------------------------------------------------
-	void SDRC_CoreJsonApi(string fileName)
-	{
-		SetFileName(fileName);
-	}
 	
 	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+		SDRC_CoreConfig data = SDRC_CoreConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
+
+	//------------------------------------------------------------------------------------------------
+	override void SetDefaults()
+	{
+		super.SetDefaults();
 		
-		loadContext.ReadValue("", conf);
-		return true;
-	}
-
-	//------------------------------------------------------------------------------------------------
-	void Save()
-	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
-	{
-//		conf.logLevel = DC_LogLevel.DEBUG;	
-		conf.logLevel = SDRC_Conf.DEFAULT_LOGLEVEL;
-		conf.subDir = SDRC_Conf.DEFAULT_DIR;		
-		conf.buildingExcludeFilter = {
+//		logLevel = DC_LogLevel.DEBUG;	
+		logLevel = SDRC_Conf.DEFAULT_LOGLEVEL;
+		subDir = SDRC_Conf.DEFAULT_DIR;		
+		buildingExcludeFilter = {
 			"BrickPile", "WoodPile", "Hotbed", "Henhouse", "PhoneBooth",
 			"AmmoDump", "ElectricCabinet", "ControlBox110kV", "LightBeacon",
 			"PierConcrete", "PierWooden", "Pier_", "SeaBollard", 
@@ -91,22 +60,22 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 			//Kunar
 			"BigHBarrier", "Wall_E", "Wall_ATC", 
 		};
-		conf.emptyPos.limit = 5;
-		conf.emptyPos.ignoreFilter = {
+		emptyPos.limit = 5;
+		emptyPos.ignoreFilter = {
 			"ParticleEffectEntity",
 		};
-		conf.emptyPos.stopFilter = {
+		emptyPos.stopFilter = {
 			"RiverPartEntity", "LakeGeneratorEntity", 
 			"SCR_DestructibleBuildingEntity", 			//Class: Building
 			"GraniteCliff_", "GraniteRock_", 			//Large rocks
 		};		
-		conf.emptyPos.classFilter = {			
+		emptyPos.classFilter = {			
 			"SCR_DestructibleEntity",					//Fences etc
 			"SCR_IndestructibleEnvironmentalEntity",	//Rocks
 			"StaticModelEntity",						
 		 	"Tree",
 		};
-		conf.emptyPos.objectFilter = {
+		emptyPos.objectFilter = {
 			//Rocks etc
 			"Boulder_", "BeachStone_", "GraniteCliff_",
 			//Misc
@@ -133,23 +102,23 @@ class SDRC_CoreJsonApi : SDRC_JsonApi
 		// Location akas
 		ref SDRC_LocationAka aka00 = new SDRC_LocationAka();
 		aka00.Set(EMapDescriptorType.MDT_BASE, {"military"});
-		conf.locationAkas.Insert(aka00);
+		locationAkas.Insert(aka00);
 
 		ref SDRC_LocationAka aka01 = new SDRC_LocationAka();
 		aka01.Set(EMapDescriptorType.MDT_AIRPORT, {"airport"});
-		conf.locationAkas.Insert(aka01);
+		locationAkas.Insert(aka01);
 
 		ref SDRC_LocationAka aka02 = new SDRC_LocationAka();
 		aka02.Set(EMapDescriptorType.MDT_PORT, {"harbour", "harbor"});
-		conf.locationAkas.Insert(aka02);						
+		locationAkas.Insert(aka02);						
 
 		// Building akas
 		ref SDRC_LocationAka b_aka00 = new SDRC_LocationAka();
 		b_aka00.Set(EMapDescriptorType.MDT_CHURCH, {"Church", "Mosque_", "Minaret", });
-		conf.buildingAkas.Insert(b_aka00);
+		buildingAkas.Insert(b_aka00);
 		
 		ref SDRC_LocationAka b_aka01 = new SDRC_LocationAka();
 		b_aka01.Set(EMapDescriptorType.MDT_POLICE, {"_Police"});
-		conf.buildingAkas.Insert(b_aka01);
-	}
-};
+		buildingAkas.Insert(b_aka01);
+	}		
+}

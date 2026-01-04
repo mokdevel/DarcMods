@@ -9,9 +9,9 @@ Functions for various enemy related things
 sealed class SDRC_EnemyHelper
 {
 	private const string DC_CONFIG_FILE_ENEMYLIST = "dc_enemyList.json";
-		
-	private static ref SDRC_EnemyListJsonApi m_EnemyListJsonApi;
-	private static ref SDRC_ListConfig m_Config;
+	private static ref SDRC_JsonApi2 m_JsonApi = null;
+	private static ref SDRC_EnemyListConfig m_Config = new SDRC_EnemyListConfig();			
+	
 	private static string m_sDefaultEnemyFactionKey;
 	private static Faction m_DefaultEnemyFaction = null;
 	private static ref array<string> m_sEnemyFactions = {};
@@ -35,10 +35,9 @@ sealed class SDRC_EnemyHelper
 			SDRC_Log.Add("[SDRC_EnemyHelper:Setup] Error in setting fallback enemy faction: " + defaultEnemyFaction, LogLevel.ERROR);
 		}
 		
-		//Load enemy config
-		m_EnemyListJsonApi = new SDRC_EnemyListJsonApi(DC_CONFIG_FILE_ENEMYLIST);
-		m_EnemyListJsonApi.Load();
-		m_Config = m_EnemyListJsonApi.conf;
+		//Load configuration from file
+		m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_ENEMYLIST);	
+		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config));		
 		m_Config.Populate();		
 	}
 	

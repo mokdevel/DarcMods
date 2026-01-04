@@ -12,7 +12,7 @@ const string DC_MISSIONCONFIG_FILE_STASH = "dc_missionConfig_Stash.json";
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Stash : SDRC_Mission
 {
-	private ref SDRC_JsonApi2 m_StashJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_STASH);	
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_STASH);	
 	private ref SDRC_StashConfig m_Config = new SDRC_StashConfig();	
 	private ref SDRC_Camp m_DC_Stash = new SDRC_Camp();
 	
@@ -23,7 +23,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 	void SDRC_Mission_Stash(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		m_StashJsonApi.Load(m_Config);
+		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
 		m_Config.CreateMissionFiles();
 		m_Config.LoadMissionFiles();
 		
@@ -154,7 +154,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
 			SDRC_StashConfig conf = new SDRC_StashConfig();
 			
-			if (jsonApi.Load(conf, false))
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), false))
 			{
 				foreach (SDRC_Camp subMission : conf.subMissions)
 				{
@@ -164,7 +164,6 @@ class SDRC_StashConfig : SDRC_MissionConfig
 				{
 					missionList.Insert(idx);
 				}
-				//conf.missionList.InsertAll(jsonApi.conf.missionList);	//TBD: Not sure why this does not work
 			}
 		}
 	}
@@ -172,9 +171,10 @@ class SDRC_StashConfig : SDRC_MissionConfig
 	//------------------------------------------------------------------------------------------------
 	override void CreateMissionFiles()
 	{
+		SDRC_Log.Add("[SDRC_StashConfig:CreateMissionFiles] Creating...", LogLevel.NORMAL);					
 		SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(SDRC_StashConfig_010.GetFileName());				
 		SDRC_StashConfig_010 conf = new SDRC_StashConfig_010();
-		jsonApi.Load(conf);
+		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf));
 	}
 				
 	//------------------------------------------------------------------------------------------------	
@@ -195,7 +195,8 @@ class SDRC_StashConfig : SDRC_MissionConfig
 	//------------------------------------------------------------------------------------------------
 	override void SetDefaults()
 	{
-		//Default		
+		super.SetDefaults();
+		
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		activeDistance = 50;
 		missionList = {0,0,0};
@@ -263,74 +264,3 @@ class SDRC_StashConfig : SDRC_MissionConfig
 		return stash;
 	};	
 }
-
-/*
-//------------------------------------------------------------------------------------------------
-class SDRC_StashJsonApi : SDRC_JsonApi
-{
-	ref SDRC_StashConfig conf = new SDRC_StashConfig();
-	
-	//------------------------------------------------------------------------------------------------
-	void SDRC_StashJsonApi(string fileName)
-	{		
-		SetFileName(fileName);
-	}
-			
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
-		
-		loadContext.ReadValue("", conf);
-		return true;
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	void Save()
-	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void CreateMissionFiles()
-	{
-		SDRC_Stash_010_JsonApi stash010_JsonApi = new SDRC_Stash_010_JsonApi();		
-		stash010_JsonApi.Load();
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void LoadMissionFiles()
-	{
-		//Load mission files
-		foreach (string missionFile : conf.missionFiles)
-		{
-			SDRC_StashJsonApi jsonApi = new SDRC_StashJsonApi(missionFile);		
-			if (jsonApi.Load(false))
-			{
-				foreach (SDRC_Camp subMission : jsonApi.conf.subMissions)
-				{
-					conf.subMissions.Insert(subMission);
-				}
-				foreach (int idx : jsonApi.conf.missionList)
-				{
-					conf.missionList.Insert(idx);
-				}
-				//conf.missionList.InsertAll(jsonApi.conf.missionList);	//TBD: Not sure why this does not work
-			}
-		}
-	}
-			
-
-}*/

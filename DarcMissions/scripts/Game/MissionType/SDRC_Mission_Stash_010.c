@@ -26,12 +26,15 @@ class SDRC_StashConfig_010 : SDRC_StashConfig
 	//------------------------------------------------------------------------------------------------
 	override void SetDefaults()
 	{
+		super.SetDefaults();
+		
 		//Default
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		activeDistance = 50;
-		missionList = {10};
+		missionList = {10};		
 		//Mission specific		
 		//----------------------------------------------------
+		subMissions.Clear();
 		subMissions.Insert(Stash010());				
 	};
 	

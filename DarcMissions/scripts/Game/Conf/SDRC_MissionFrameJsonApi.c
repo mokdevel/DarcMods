@@ -56,10 +56,9 @@
 	#endif
 
 //------------------------------------------------------------------------------------------------
-class SDRC_MissionFrameConfig : Managed
+class SDRC_MissionFrameConfig : SDRC_Config
 {
 	//Default information
-	int version = 1;
 	string author = "darc";
 	//Mission specific
 	string comment;
@@ -86,6 +85,151 @@ class SDRC_MissionFrameConfig : Managed
 	ref SDRC_MissionDifficulty missionDifficulty = new SDRC_MissionDifficulty();
 	ref SDRC_MissionTypeConfig missionDynamic = new SDRC_MissionTypeConfig();
 	ref SDRC_MissionTypeConfig missionStatic = new SDRC_MissionTypeConfig();
+	
+	//------------------------------------------------------------------------------------------------
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+		SDRC_MissionFrameConfig data = SDRC_MissionFrameConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
+	
+	//------------------------------------------------------------------------------------------------
+	override void SetDefaults()
+	{
+		super.SetDefaults();
+		
+		comment = "Simple comment, not used in game";
+
+		recreateConfigs = SDRC_MISSION_RECREATE_CONFIGS;
+		missionStartDelay = SDRC_MISSIONFRAME_START_DELAY;
+		missionFrameCycleTime = SDRC_MISSIONFRAME_CYCLE_TIME;
+		
+		missionDynamic.count = SDRC_MISSION_COUNT_DYNAMIC;
+		missionDynamic.countMul = SDRC_MISSION_COUNT_DYNAMIC_MUL;
+		missionDynamic.activeTime = SDRC_MISSION_ACTIVE_TIME_DYNAMIC;
+		missionDynamic.delayBetween = SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC;
+		
+		missionStatic.count = SDRC_MISSION_COUNT_STATIC;
+		missionStatic.countMul = SDRC_MISSION_COUNT_STATIC_MUL;
+		missionStatic.activeTime = SDRC_MISSION_ACTIVE_TIME_STATIC;
+		missionStatic.delayBetween = SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC;
+		
+		missionActiveDistance = SDRC_MISSION_ACTIVE_DISTANCE;
+		missionActiveTimeToEnd = SDRC_MISSION_ACTIVE_TIME_TO_END;
+		missionActiveDistanceMul = SDRC_MISSION_ACTIVE_MUL_TO_END;
+		missionActiveTimeToEndMul = SDRC_MISSION_ACTIVE_MUL_TO_END;
+		
+		missionHintTime = SDRC_MISSION_HINT_TIME;
+		missionHintPosition = SDRC_EHintPosition.UP_LEFT;
+//		missionHintPosition = SDRC_EHintPosition.DOWN_LEFT;
+		missionRandomPos = SDRC_MISSION_RANDOM_POS;
+		
+		minDistanceToMission = SDRC_MISSION_MIN_DISTANCE;
+		minDistanceToPlayer = SDRC_PLAYER_MIN_DISTANCE;
+		showStaticMissionMarker = SDRC_MISSION_SHOW_STATIC_MARKER;
+		showDynamicMissionMarker = SDRC_MISSION_SHOW_DYNAMIC_MARKER;
+		showMissionTimeLeft = SDRC_MISSION_SHOW_TIME_LEFT;
+		
+		#ifdef SDRC_RELEASE
+			enemyFactions = {"USSR"};
+			missionLimit = {
+				  -1, // 0 - NONE
+				  2,  // 1 - HUNTER
+				  5,  // 2 - OCCUPATION
+				  5,  // 3 - CONVOY
+				  2,  // 4 - CRASHSITE
+				  8,  // 5 - PATROL
+				  3,  // 6 - SQUATTERS
+				  8,  // 7 - ROADBLOCK
+				  2,  // 8 - HVTVIP
+				  2,  // 9 - HVTITEM
+				  2,  //10 - STASH
+				  2,  //11 - CHOPPER
+			};
+			missionDynamic.missionTypeArray = {
+											SDRC_EMissionType.STASH, 
+											SDRC_EMissionType.CRASHSITE, 
+											SDRC_EMissionType.CHOPPER, SDRC_EMissionType.CHOPPER, SDRC_EMissionType.CHOPPER, 
+											SDRC_EMissionType.HUNTER, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HUNTER, 
+											SDRC_EMissionType.CONVOY, SDRC_EMissionType.CONVOY, SDRC_EMissionType.CONVOY, 
+											SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK,
+											SDRC_EMissionType.HVTVIP, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.HVTVIP,
+											SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTITEM,
+											SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, 
+											SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, 
+											SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, 
+											SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, 
+											};
+			missionStatic.missionTypeArray = {
+											SDRC_EMissionType.PATROL, SDRC_EMissionType.PATROL, SDRC_EMissionType.PATROL, SDRC_EMissionType.PATROL, 
+											SDRC_EMissionType.CONVOY, SDRC_EMissionType.CONVOY, SDRC_EMissionType.CONVOY, 
+											SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK,
+											SDRC_EMissionType.CHOPPER
+											};
+		#endif	
+
+		#ifndef SDRC_RELEASE				
+//			enemyFactions = {"USSR"};
+//			enemyFactions = {"US"};
+//			enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
+//			enemyFactions = {"BACON_622120A5448725E3_FACTION"};
+//			enemyFactions = {"BALLIEN_BC_FACTION"};
+//			enemyFactions = {"TF_RF"};
+//			enemyFactions = {"TF_US"};
+//			enemyFactions = {"RHS_ION"};
+//			enemyFactions = {"US","UK"};
+//			enemyFactions = {"UK"};
+			enemyFactions = {"PLA"};
+//			enemyFactions = {"FIA", "US"};
+//			enemyFactions = {"USSR", "FIA", "FIA", "FIA"};
+//			enemyFactions = {"RHS_USAF", "RHS_AFRF"};
+//			enemyFactions = {"USAF_USMC", "RHS_RF"};
+//			enemyFactions = {"MEI"};
+//			enemyFactions = {"PLASTICBANDIT"};
+		
+			missionLimit = {
+				  -1, // 0 - NONE
+				  2,  // 1 - HUNTER
+				  5,  // 2 - OCCUPATION
+				  5,  // 3 - CONVOY
+				  2,  // 4 - CRASHSITE
+				  8,  // 5 - PATROL
+				  3,  // 6 - SQUATTERS
+				  8,  // 7 - ROADBLOCK
+				  2,  // 8 - HVTVIP
+				  2,  // 9 - HVTITEM
+				  2,  //10 - STASH
+				  2,  //11 - CHOPPER
+			};
+		
+			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.HUNTER};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY};		
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.PATROL};		
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.STASH};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
+		
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
+			missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
+//			missionStatic.missionTypeArray = {};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CHOPPER};		
+		
+		#endif
+	}
 }
 
 //------------------------------------------------------------------------------------------------
@@ -107,178 +251,4 @@ class SDRC_MissionDifficulty : Managed
 	ref array<float> aiPerceptionCoef = 	{0.20, 0.60, 1.01, 1.30, 1.60};
 	ref array<float> lootChanceCoef = 		{0.50, 0.60, 1.01, 1.10, 1.20};	
 	ref array<float> lootCountCoef = 		{1.01, 1.01, 1.01, 1.01, 1.01};	
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_MissionFrameJsonApi : SDRC_JsonApi
-{
-	ref SDRC_MissionFrameConfig conf = new SDRC_MissionFrameConfig();
-
-	//------------------------------------------------------------------------------------------------
-	void SDRC_MissionFrameJsonApi(string fileName)
-	{
-		SetFileName(fileName);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
-		
-		loadContext.ReadValue("", conf);
-		return true;
-	}	
-
-	//------------------------------------------------------------------------------------------------
-	void Save()
-	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
-	{
-		conf.comment = "Simple comment, not used in game";
-
-		conf.recreateConfigs = SDRC_MISSION_RECREATE_CONFIGS;
-		conf.missionStartDelay = SDRC_MISSIONFRAME_START_DELAY;
-		conf.missionFrameCycleTime = SDRC_MISSIONFRAME_CYCLE_TIME;
-		
-		conf.missionDynamic.count = SDRC_MISSION_COUNT_DYNAMIC;
-		conf.missionDynamic.countMul = SDRC_MISSION_COUNT_DYNAMIC_MUL;
-		conf.missionDynamic.activeTime = SDRC_MISSION_ACTIVE_TIME_DYNAMIC;
-		conf.missionDynamic.delayBetween = SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC;
-		
-		conf.missionStatic.count = SDRC_MISSION_COUNT_STATIC;
-		conf.missionStatic.countMul = SDRC_MISSION_COUNT_STATIC_MUL;
-		conf.missionStatic.activeTime = SDRC_MISSION_ACTIVE_TIME_STATIC;
-		conf.missionStatic.delayBetween = SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC;
-		
-		conf.missionActiveDistance = SDRC_MISSION_ACTIVE_DISTANCE;
-		conf.missionActiveTimeToEnd = SDRC_MISSION_ACTIVE_TIME_TO_END;
-		conf.missionActiveDistanceMul = SDRC_MISSION_ACTIVE_MUL_TO_END;
-		conf.missionActiveTimeToEndMul = SDRC_MISSION_ACTIVE_MUL_TO_END;
-		
-		conf.missionHintTime = SDRC_MISSION_HINT_TIME;
-		conf.missionHintPosition = SDRC_EHintPosition.UP_LEFT;
-//		conf.missionHintPosition = SDRC_EHintPosition.DOWN_LEFT;
-		conf.missionRandomPos = SDRC_MISSION_RANDOM_POS;
-		
-		conf.minDistanceToMission = SDRC_MISSION_MIN_DISTANCE;
-		conf.minDistanceToPlayer = SDRC_PLAYER_MIN_DISTANCE;
-		conf.showStaticMissionMarker = SDRC_MISSION_SHOW_STATIC_MARKER;
-		conf.showDynamicMissionMarker = SDRC_MISSION_SHOW_DYNAMIC_MARKER;
-		conf.showMissionTimeLeft = SDRC_MISSION_SHOW_TIME_LEFT;
-		
-		#ifdef SDRC_RELEASE
-			conf.enemyFactions = {"USSR"};
-			conf.missionLimit = {
-				  -1, // 0 - NONE
-				  2,  // 1 - HUNTER
-				  5,  // 2 - OCCUPATION
-				  5,  // 3 - CONVOY
-				  2,  // 4 - CRASHSITE
-				  8,  // 5 - PATROL
-				  3,  // 6 - SQUATTERS
-				  8,  // 7 - ROADBLOCK
-				  2,  // 8 - HVTVIP
-				  2,  // 9 - HVTITEM
-				  2,  //10 - STASH
-				  2,  //11 - CHOPPER
-			};
-			conf.missionDynamic.missionTypeArray = {
-											SDRC_EMissionType.STASH, 
-											SDRC_EMissionType.CRASHSITE, 
-											SDRC_EMissionType.CHOPPER, SDRC_EMissionType.CHOPPER, SDRC_EMissionType.CHOPPER, 
-											SDRC_EMissionType.HUNTER, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HUNTER, 
-											SDRC_EMissionType.CONVOY, SDRC_EMissionType.CONVOY, SDRC_EMissionType.CONVOY, 
-											SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK,
-											SDRC_EMissionType.HVTVIP, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.HVTVIP,
-											SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTITEM,
-											SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, 
-											SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.SQUATTERS, 
-											SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, 
-											SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.OCCUPATION, 
-											};
-			conf.missionStatic.missionTypeArray = {
-											SDRC_EMissionType.PATROL, SDRC_EMissionType.PATROL, SDRC_EMissionType.PATROL, SDRC_EMissionType.PATROL, 
-											SDRC_EMissionType.CONVOY, SDRC_EMissionType.CONVOY, SDRC_EMissionType.CONVOY, 
-											SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.ROADBLOCK,
-											SDRC_EMissionType.CHOPPER
-											};
-		#endif	
-
-		#ifndef SDRC_RELEASE				
-			conf.enemyFactions = {"USSR"};
-//			conf.enemyFactions = {"US"};
-//			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
-//			conf.enemyFactions = {"BACON_622120A5448725E3_FACTION"};
-//			conf.enemyFactions = {"BALLIEN_BC_FACTION"};
-//			conf.enemyFactions = {"TF_RF"};
-//			conf.enemyFactions = {"TF_US"};
-//			conf.enemyFactions = {"RHS_ION"};
-//			conf.enemyFactions = {"US","UK"};
-//			conf.enemyFactions = {"UK"};
-//			conf.enemyFactions = {"FIA", "US"};
-//			conf.enemyFactions = {"USSR", "FIA", "FIA", "FIA"};
-//			conf.enemyFactions = {"RHS_USAF", "RHS_AFRF"};
-//			conf.enemyFactions = {"USAF_USMC", "RHS_RF"};
-//			conf.enemyFactions = {"MEI"};
-//			conf.enemyFactions = {"PLASTICBANDIT"};
-		
-			conf.missionLimit = {
-				  -1, // 0 - NONE
-				  2,  // 1 - HUNTER
-				  5,  // 2 - OCCUPATION
-				  5,  // 3 - CONVOY
-				  2,  // 4 - CRASHSITE
-				  8,  // 5 - PATROL
-				  3,  // 6 - SQUATTERS
-				  8,  // 7 - ROADBLOCK
-				  2,  // 8 - HVTVIP
-				  2,  // 9 - HVTITEM
-				  2,  //10 - STASH
-				  2,  //11 - CHOPPER
-			};
-		
-			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
-//			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
-//			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.HUNTER};
-//			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY};		
-//			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.PATROL};		
-//			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
-//			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
-//			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.STASH};
-//			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
-//			conf.missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
-		
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
-			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
-//			conf.missionStatic.missionTypeArray = {};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
-//			conf.missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CHOPPER};		
-		
-		#endif
-	}
 }

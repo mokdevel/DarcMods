@@ -10,7 +10,7 @@ const string DC_MISSIONCONFIG_FILE_SQUATTER = "dc_missionConfig_Squatter.json";
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Squatter : SDRC_Mission
 {
-	private ref SDRC_SquatterJsonApi m_SquatterJsonApi = new SDRC_SquatterJsonApi(DC_MISSIONCONFIG_FILE_SQUATTER);	
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_SQUATTER);	
 	private ref SDRC_SquatterConfig m_Config = new SDRC_SquatterConfig();
 	private ref SDRC_Squatter m_DC_Squatter = new SDRC_Squatter();
 	
@@ -22,10 +22,9 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	void SDRC_Mission_Squatter(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		m_SquatterJsonApi.CreateMissionFiles();
-		m_SquatterJsonApi.Load();
-		m_SquatterJsonApi.LoadMissionFiles();	
-		m_Config = m_SquatterJsonApi.conf;
+		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
+		m_Config.CreateMissionFiles();
+		m_Config.LoadMissionFiles();
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -187,29 +186,6 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		super.DoWin();
 	}
 }
-	
-//------------------------------------------------------------------------------------------------
-class SDRC_SquatterConfig : SDRC_MissionConfig
-{
-	//Mission specific
-	int buildingRadius;									//The radius to search for suitable buildings.
-	ref array<ref SDRC_Squatter> subMissions = {};		//List of squatters
-
-	//------------------------------------------------------------------------------------------------	
-	int GetSubMissionIdx(int subIdx)
-	{
-		int idx = -1;
-		foreach (int i, SDRC_Squatter subMission : subMissions)
-		{
-			if (subMission.general.subIdx == subIdx)
-			{
-				idx = i;
-				break;
-			}
-		}
-		return idx;
-	}		
-}
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Squatter : Managed
@@ -233,86 +209,81 @@ class SDRC_Squatter : Managed
 		lootBox = lootBox_;
 	}	
 }
-
+	
 //------------------------------------------------------------------------------------------------
-class SDRC_SquatterJsonApi : SDRC_JsonApi
+class SDRC_SquatterConfig : SDRC_MissionConfig
 {
-	ref SDRC_SquatterConfig conf = new SDRC_SquatterConfig();
-		
-	//------------------------------------------------------------------------------------------------
-	void SDRC_SquatterJsonApi(string fileName)
-	{
-		SetFileName(fileName);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
-		
-		loadContext.ReadValue("", conf);
-		return true;
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	void Save()
-	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}	
+	//Mission specific
+	int buildingRadius;									//The radius to search for suitable buildings.
+	ref array<ref SDRC_Squatter> subMissions = {};		//List of squatters
 
 	//------------------------------------------------------------------------------------------------
-	void CreateMissionFiles()
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
 	{
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void LoadMissionFiles()
+		SDRC_SquatterConfig data = SDRC_SquatterConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
+
+	//------------------------------------------------------------------------------------------------	
+	override void LoadMissionFiles()
 	{
 		//Load mission files
-		foreach (string missionFile : conf.missionFiles)
+		foreach (string missionFile : missionFiles)
 		{
-			SDRC_SquatterJsonApi jsonApi = new SDRC_SquatterJsonApi(missionFile);		
-			if (jsonApi.Load(false))
+			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
+			SDRC_SquatterConfig conf = new SDRC_SquatterConfig();
+			
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), false))
 			{
-				foreach (SDRC_Squatter subMission : jsonApi.conf.subMissions)
+				foreach (SDRC_Squatter subMission : conf.subMissions)
 				{
-					conf.subMissions.Insert(subMission);
+					subMissions.Insert(subMission);
 				}
-				foreach (int idx : jsonApi.conf.missionList)
+				foreach (int idx : conf.missionList)
 				{
-					conf.missionList.Insert(idx);
+					missionList.Insert(idx);
 				}
 			}
 		}
+	}
+
+	//------------------------------------------------------------------------------------------------
+	override void CreateMissionFiles()
+	{
+	}	
+	
+	//------------------------------------------------------------------------------------------------	
+	int GetSubMissionIdx(int subIdx)
+	{
+		int idx = -1;
+		foreach (int i, SDRC_Squatter subMission : subMissions)
+		{
+			if (subMission.general.subIdx == subIdx)
+			{
+				idx = i;
+				break;
+			}
+		}
+		return idx;
 	}		
 			
 	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
+	override void SetDefaults()
 	{
+		super.SetDefaults();
+		
 		//Default
-		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,1,2,2,3,3,3,4,5,5,5};
+		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
+		missionList = {0,1,2,2,3,3,3,4,5,5,5};
 		//Mission specific
-		conf.buildingRadius = 400;
+		buildingRadius = 400;
 		//----------------------------------------------------
-		conf.subMissions.Insert(Squatter0());				
-		conf.subMissions.Insert(Squatter1());				
-		conf.subMissions.Insert(Squatter2());				
-		conf.subMissions.Insert(Squatter3());				
-		conf.subMissions.Insert(Squatter4());				
-		conf.subMissions.Insert(Squatter5());				
+		subMissions.Insert(Squatter0());				
+		subMissions.Insert(Squatter1());				
+		subMissions.Insert(Squatter2());				
+		subMissions.Insert(Squatter3());				
+		subMissions.Insert(Squatter4());				
+		subMissions.Insert(Squatter5());				
 	};
 			
 	//----------------------------------------------------

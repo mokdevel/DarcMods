@@ -5,7 +5,7 @@ const string DC_MISSIONCONFIG_FILE_CHOPPER = "dc_missionConfig_Chopper.json";
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Chopper : SDRC_Mission
 {
-	private ref SDRC_JsonApi2 m_ChopperJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CHOPPER);	
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CHOPPER);	
 	private ref SDRC_ChopperConfig m_Config = new SDRC_ChopperConfig();
 	private ref SDRC_Chopper m_DC_Chopper = new SDRC_Chopper();
 	
@@ -23,7 +23,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	void SDRC_Mission_Chopper(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		m_ChopperJsonApi.Load(m_Config);
+		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
 		m_Config.CreateMissionFiles();
 		m_Config.LoadMissionFiles();
 		
@@ -249,6 +249,8 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 	//------------------------------------------------------------------------------------------------
 	override void SetDefaults()
 	{
+		super.SetDefaults();
+		
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;

@@ -22,7 +22,7 @@ const string DC_MISSIONCONFIG_FILE_CONVOY = "dc_missionConfig_Convoy.json";
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Convoy : SDRC_Mission
 {
-	private ref SDRC_ConvoyJsonApi m_ConvoyJsonApi = new SDRC_ConvoyJsonApi(DC_MISSIONCONFIG_FILE_CONVOY);	
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CONVOY);	
 	private ref SDRC_ConvoyConfig m_Config = new SDRC_ConvoyConfig();
 	private ref SDRC_Convoy m_DC_Convoy = new SDRC_Convoy();
 	
@@ -35,10 +35,15 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	void SDRC_Mission_Convoy(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
+		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
+		m_Config.CreateMissionFiles();
+		m_Config.LoadMissionFiles();
+		
+/*		//Load config
 		m_ConvoyJsonApi.CreateMissionFiles();
 		m_ConvoyJsonApi.Load();
 		m_ConvoyJsonApi.LoadMissionFiles();
-		m_Config = m_ConvoyJsonApi.conf;
+		m_Config = m_ConvoyJsonApi.conf;*/
 
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -288,6 +293,41 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 	ref array<ref SDRC_Convoy> subMissions = {};	//List of convoys
 	
 	//------------------------------------------------------------------------------------------------
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+		SDRC_ConvoyConfig data = SDRC_ConvoyConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
+
+	//------------------------------------------------------------------------------------------------	
+	override void LoadMissionFiles()
+	{
+		//Load mission files
+		foreach (string missionFile : missionFiles)
+		{
+			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
+			SDRC_ConvoyConfig conf = new SDRC_ConvoyConfig();
+			
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), false))
+			{
+				foreach (SDRC_Convoy subMission : conf.subMissions)
+				{
+					subMissions.Insert(subMission);
+				}
+				foreach (int idx : conf.missionList)
+				{
+					missionList.Insert(idx);
+				}
+			}
+		}
+	}	
+		
+	//------------------------------------------------------------------------------------------------
+	override void CreateMissionFiles()
+	{
+	}	
+	
+	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
 	{
 		int idx = -1;
@@ -300,110 +340,24 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			}
 		}
 		return idx;
-	}	
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_Convoy : Managed
-{
-	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
-	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();	
-	#ifndef NEW_VERSION_WIP	
-		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
-	#endif
-	ref array<string> vehicleTypes = {};
-	float cruiseSpeed;						//Speed to drive in km/h.
-	//Optional settings
-	#ifdef NEW_VERSION_WIP	
-		ref SDRC_MissionConfigSecondWave secondWave = null;
-	#endif
-	ref SDRC_Loot loot = null;	
+	}
 	
-	void Set(array<string> vehicleTypes_, float cruiseSpeed_)
-	{
-		vehicleTypes = vehicleTypes_;
-		cruiseSpeed = cruiseSpeed_;
-	}
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_ConvoyJsonApi : SDRC_JsonApi
-{
-	ref SDRC_ConvoyConfig conf = new SDRC_ConvoyConfig();
-
 	//------------------------------------------------------------------------------------------------
-	void SDRC_ConvoyJsonApi(string fileName)
+	override void SetDefaults()
 	{
-		SetFileName(fileName);
-	}
-			
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
+		super.SetDefaults();
 		
-		loadContext.ReadValue("", conf);
-		return true;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void Save()
-	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}	
-
-	//------------------------------------------------------------------------------------------------
-	void CreateMissionFiles()
-	{
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void LoadMissionFiles()
-	{
-		//Load mission files
-		foreach (string missionFile : conf.missionFiles)
-		{
-			SDRC_ConvoyJsonApi jsonApi = new SDRC_ConvoyJsonApi(missionFile);		
-			if (jsonApi.Load(false))
-			{
-				foreach (SDRC_Convoy subMission : jsonApi.conf.subMissions)
-				{
-					conf.subMissions.Insert(subMission);
-				}
-				foreach (int idx : jsonApi.conf.missionList)
-				{
-					conf.missionList.Insert(idx);
-				}
-			}
-		}
-	}
-				
-	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
-	{
 		//Default
-		conf.disableArsenal = true;
-		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
+		disableArsenal = true;
+		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
+		missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
 		//Mission specific
-		conf.distanceToPlayer = 500;
+		distanceToPlayer = 500;
 		//----------------------------------------------------
-		conf.subMissions.Insert(Convoy0());				
-		conf.subMissions.Insert(Convoy1());				
-		conf.subMissions.Insert(Convoy2());
-		conf.subMissions.Insert(Convoy3());
+		subMissions.Insert(Convoy0());				
+		subMissions.Insert(Convoy1());				
+		subMissions.Insert(Convoy2());
+		subMissions.Insert(Convoy3());
 	}
 		
 	//----------------------------------------------------
@@ -669,5 +623,28 @@ class SDRC_ConvoyJsonApi : SDRC_JsonApi
 		convoy.loot = loot;		
 				
 		return convoy;	
+	}
+}
+
+//------------------------------------------------------------------------------------------------
+class SDRC_Convoy : Managed
+{
+	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
+	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();	
+	#ifndef NEW_VERSION_WIP	
+		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
+	#endif
+	ref array<string> vehicleTypes = {};
+	float cruiseSpeed;						//Speed to drive in km/h.
+	//Optional settings
+	#ifdef NEW_VERSION_WIP	
+		ref SDRC_MissionConfigSecondWave secondWave = null;
+	#endif
+	ref SDRC_Loot loot = null;	
+	
+	void Set(array<string> vehicleTypes_, float cruiseSpeed_)
+	{
+		vehicleTypes = vehicleTypes_;
+		cruiseSpeed = cruiseSpeed_;
 	}
 }

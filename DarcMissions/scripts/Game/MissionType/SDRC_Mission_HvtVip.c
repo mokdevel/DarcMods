@@ -10,12 +10,12 @@ const string DC_MISSIONCONFIG_FILE_HVTVIP = "dc_missionConfig_HvtVip.json";
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_HvtVip : SDRC_Mission
 {
-	const int AI_ACTIVATE_DISTANCE = 8;
-	const int AI_TARGET_DEAD_CYCLE_TIME = 5000;
-	
-	private ref SDRC_HvtVipJsonApi m_HvtVipJsonApi = new SDRC_HvtVipJsonApi(DC_MISSIONCONFIG_FILE_HVTVIP);	
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_HVTVIP);	
 	private ref SDRC_HvtVipConfig m_Config = new SDRC_HvtVipConfig();
 	private ref SDRC_HvtVip m_DC_HvtVip = new SDRC_HvtVip();
+	
+	const int AI_ACTIVATE_DISTANCE = 8;
+	const int AI_TARGET_DEAD_CYCLE_TIME = 5000;
 	
 	private IEntity m_Building;					//The building for the mission
 	private int m_iGroupCount;
@@ -26,10 +26,9 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	void SDRC_Mission_HvtVip(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		m_HvtVipJsonApi.CreateMissionFiles();
-		m_HvtVipJsonApi.Load();
-		m_HvtVipJsonApi.LoadMissionFiles();			
-		m_Config = m_HvtVipJsonApi.conf;
+		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
+		m_Config.CreateMissionFiles();
+		m_Config.LoadMissionFiles();
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -230,29 +229,6 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		}
 	}
 }
-	
-//------------------------------------------------------------------------------------------------
-class SDRC_HvtVipConfig : SDRC_MissionConfig
-{
-	//Mission specific
-	int buildingRadius;								//The radius to search for suitable buildings.
-	ref array<ref SDRC_HvtVip> subMissions = {};	//List of HvtVips
-	
-	//------------------------------------------------------------------------------------------------
-	int GetSubMissionIdx(int subIdx)
-	{
-		int idx = -1;
-		foreach (int i, SDRC_HvtVip subMission : subMissions)
-		{
-			if (subMission.general.subIdx == subIdx)
-			{
-				idx = i;
-				break;
-			}
-		}
-		return idx;
-	}	
-}
 
 //------------------------------------------------------------------------------------------------
 class SDRC_HvtVip : Managed
@@ -278,85 +254,80 @@ class SDRC_HvtVip : Managed
 		target = target_;
 	}	
 }
-
+	
 //------------------------------------------------------------------------------------------------
-class SDRC_HvtVipJsonApi : SDRC_JsonApi
+class SDRC_HvtVipConfig : SDRC_MissionConfig
 {
-	ref SDRC_HvtVipConfig conf = new SDRC_HvtVipConfig();
-		
-	//------------------------------------------------------------------------------------------------
-	void SDRC_HvtVipJsonApi(string fileName)
-	{
-		SetFileName(fileName);
-	}
-			
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
-		
-		loadContext.ReadValue("", conf);
-		return true;
-	}
+	//Mission specific
+	int buildingRadius;								//The radius to search for suitable buildings.
+	ref array<ref SDRC_HvtVip> subMissions = {};	//List of HvtVips
 	
 	//------------------------------------------------------------------------------------------------
-	void Save()
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}	
+		SDRC_HvtVipConfig data = SDRC_HvtVipConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
 
-	//------------------------------------------------------------------------------------------------
-	void CreateMissionFiles()
-	{
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void LoadMissionFiles()
+	//------------------------------------------------------------------------------------------------	
+	override void LoadMissionFiles()
 	{
 		//Load mission files
-		foreach (string missionFile : conf.missionFiles)
+		foreach (string missionFile : missionFiles)
 		{
-			SDRC_HvtVipJsonApi jsonApi = new SDRC_HvtVipJsonApi(missionFile);		
-			if (jsonApi.Load(false))
+			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
+			SDRC_HvtVipConfig conf = new SDRC_HvtVipConfig();
+			
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), false))
 			{
-				foreach (SDRC_HvtVip subMission : jsonApi.conf.subMissions)
+				foreach (SDRC_HvtVip subMission : conf.subMissions)
 				{
-					conf.subMissions.Insert(subMission);
+					subMissions.Insert(subMission);
 				}
-				foreach (int idx : jsonApi.conf.missionList)
+				foreach (int idx : conf.missionList)
 				{
-					conf.missionList.Insert(idx);
+					missionList.Insert(idx);
 				}
 			}
 		}
-	}	
-				
+	}
+
 	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
+	override void CreateMissionFiles()
 	{
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	int GetSubMissionIdx(int subIdx)
+	{
+		int idx = -1;
+		foreach (int i, SDRC_HvtVip subMission : subMissions)
+		{
+			if (subMission.general.subIdx == subIdx)
+			{
+				idx = i;
+				break;
+			}
+		}
+		return idx;
+	}	
+		
+	//------------------------------------------------------------------------------------------------
+	override void SetDefaults()
+	{
+		super.SetDefaults();
+		
 		//Default
-		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,1,2,3,3,4};
+		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
+		missionList = {0,1,2,3,3,4};
 		//Mission specific
-		conf.buildingRadius = 400;
+		buildingRadius = 400;
 		//----------------------------------------------------
-		conf.subMissions.Insert(HvtVip0());				
-		conf.subMissions.Insert(HvtVip1());				
-		conf.subMissions.Insert(HvtVip2());				
-		conf.subMissions.Insert(HvtVip3());				
-		conf.subMissions.Insert(HvtVip4());				
+		subMissions.Insert(HvtVip0());				
+		subMissions.Insert(HvtVip1());				
+		subMissions.Insert(HvtVip2());				
+		subMissions.Insert(HvtVip3());				
+		subMissions.Insert(HvtVip4());				
 	};
 			
 	//----------------------------------------------------

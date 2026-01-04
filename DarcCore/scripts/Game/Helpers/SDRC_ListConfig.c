@@ -24,10 +24,9 @@ class SDRC_Aka : Managed
 }
 
 //------------------------------------------------------------------------------------------------
-class SDRC_ListConfig : Managed
+class SDRC_ListConfig : SDRC_Config
 {
 	//Default information
-	int version = 1;
 	string author = "darc";
 	//Config specific
 	ref array<string> modList = {};

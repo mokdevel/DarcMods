@@ -9,6 +9,21 @@
 const int DC_FILE_VERSION = 1;
 
 //------------------------------------------------------------------------------------------------
+class SDRC_Config : Managed
+{
+	int version = -1;
+	
+	bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+	}
+		
+	void SetDefaults()
+	{	
+		version = 1;
+	}	
+}
+
+//------------------------------------------------------------------------------------------------
 class SDRC_JsonApi2 : JsonApiStruct
 {
 	private string m_FileName = "";
@@ -20,14 +35,9 @@ class SDRC_JsonApi2 : JsonApiStruct
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	bool Load(Managed T, bool createMissingFiles = true)
+	//bool Load(Managed T, bool createMissingFiles = true)
+	bool Load(Managed T, SDRC_Config C, bool createMissingFiles = true)
 	{	
-	#ifndef CTX
-		SDRC_MissionConfig C = SDRC_MissionConfig.Cast(T);
-	#else
-		SDRC_MissionConfig2 C = SDRC_MissionConfig2.Cast(T);
-	#endif
-		
 		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
 		{
@@ -37,14 +47,14 @@ class SDRC_JsonApi2 : JsonApiStruct
 			}
 			C.SetDefaults();
 			
-			Save(C);
+			Save(C, SDRC_Config.Cast(C));
 			loadContext = LoadConfig(false);
 //			return true;
 		}
 		
 		if (!loadContext)
 		{
-            Print("ERROR!", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_JsonApi2:Load] loadContext is null - " + T, LogLevel.ERROR);
 			return false;
 		}
 		
@@ -52,16 +62,16 @@ class SDRC_JsonApi2 : JsonApiStruct
 		
 		if (C.version != DC_FILE_VERSION)
 		{
-            Print("ERROR!", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong version number: " + C.version + " (" + DC_FILE_VERSION + " expected.", LogLevel.ERROR);
 			return false;
 		}
 		
-		Print(T);
+//		Print(T);
 		return true;
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save(Class T)
+	void Save(Class T, SDRC_Config C)
 	{
 		bool useTypeDiscriminator = false;
         ContainerSerializationSaveContext saveContext = new ContainerSerializationSaveContext(false);
@@ -69,25 +79,18 @@ class SDRC_JsonApi2 : JsonApiStruct
 
         PrettyJsonSaveContainer container = new PrettyJsonSaveContainer;
         saveContext.SetContainer(container);
-		
-	#ifndef CTX		
-		SDRC_MissionConfig C = SDRC_MissionConfig.Cast(T);
-	#else
-		SDRC_MissionConfig2 C = SDRC_MissionConfig2.Cast(T);
-	#endif
+
         if (!C.DoSave(saveContext, T)) 
 		{
-            Print("ERROR!", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_JsonApi2:Save] Save failed - " + T, LogLevel.ERROR);
             return;
 		}
-		
-/*        if (!saveContext.WriteValue("", T)) 
-		{
-            Print("ERROR!", LogLevel.ERROR);
-            return;
-        }*/
         
-		container.SaveToFile(GetFileName());
+		container.SetMaxDecimalPlaces(1);
+		if (!container.SaveToFile(GetFileName()))
+		{
+			SDRC_Log.Add("[SDRC_JsonApi2:Save] Container SaveToFile failed - " + T, LogLevel.ERROR);
+		}
     }	
 					
 	//------------------------------------------------------------------------------------------------

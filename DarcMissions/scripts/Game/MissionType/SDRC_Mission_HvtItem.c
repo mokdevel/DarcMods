@@ -12,7 +12,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 {
 	const int AI_TARGET_DESTROYED_CYCLE_TIME = 5000;
 	
-	private ref SDRC_HvtItemJsonApi m_HvtItemJsonApi = new SDRC_HvtItemJsonApi(DC_MISSIONCONFIG_FILE_HVTITEM);	
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_HVTITEM);	
 	private ref SDRC_HvtItemConfig m_Config = new SDRC_HvtItemConfig();
 	private ref SDRC_HvtItem m_DC_HvtItem = new SDRC_HvtItem();
 	
@@ -26,10 +26,9 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	void SDRC_Mission_HvtItem(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		m_HvtItemJsonApi.CreateMissionFiles();
-		m_HvtItemJsonApi.Load();
-		m_HvtItemJsonApi.LoadMissionFiles();			
-		m_Config = m_HvtItemJsonApi.conf;
+		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
+		m_Config.CreateMissionFiles();
+		m_Config.LoadMissionFiles();
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -186,6 +185,45 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 	ref array<ref SDRC_HvtItem> subMissions = {};	//List of HvtItems
 	
 	//------------------------------------------------------------------------------------------------
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	{
+		SDRC_HvtItemConfig data = SDRC_HvtItemConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
+	
+	//------------------------------------------------------------------------------------------------
+	override void CreateMissionFiles()
+	{
+		SDRC_Log.Add("[SDRC_StashConfig:CreateMissionFiles] Creating...", LogLevel.NORMAL);					
+		SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(SDRC_HvtItemConfig_010.GetFileName());				
+		SDRC_HvtItemConfig_010 conf = new SDRC_HvtItemConfig_010();
+		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf));		
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	override void LoadMissionFiles()
+	{
+		//Load mission files
+		foreach (string missionFile : missionFiles)
+		{
+			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
+			SDRC_HvtItemConfig conf = new SDRC_HvtItemConfig();
+			
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), false))
+			{
+				foreach (SDRC_HvtItem subMission : conf.subMissions)
+				{
+					subMissions.Insert(subMission);
+				}
+				foreach (int idx : conf.missionList)
+				{
+					missionList.Insert(idx);
+				}
+			}
+		}
+	}	
+
+	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
 	{
 		int idx = -1;
@@ -199,93 +237,21 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		}
 		return idx;
 	}			
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_HvtItem : SDRC_Camp
-{
-	SDRC_Camp camp = SDRC_Camp();
-	int targetIdx; 
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_HvtItemJsonApi : SDRC_JsonApi
-{
-	ref SDRC_HvtItemConfig conf = new SDRC_HvtItemConfig();
+				
+	//------------------------------------------------------------------------------------------------
+	override void SetDefaults()
+	{
+		super.SetDefaults();
 		
-	//------------------------------------------------------------------------------------------------
-	void SDRC_HvtItemJsonApi(string fileName)
-	{
-		SetFileName(fileName);
-	}
-			
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
-		
-		loadContext.ReadValue("", conf);
-		return true;
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	void Save()
-	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}	
-
-	//------------------------------------------------------------------------------------------------
-	void CreateMissionFiles()
-	{
-		SDRC_HvtItem_010_JsonApi hvtItem_010_JsonApi = new SDRC_HvtItem_010_JsonApi();		
-		hvtItem_010_JsonApi.Load();
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void LoadMissionFiles()
-	{
-		//Load mission files
-		foreach (string missionFile : conf.missionFiles)
-		{
-			SDRC_HvtItemJsonApi jsonApi = new SDRC_HvtItemJsonApi(missionFile);		
-			if (jsonApi.Load(false))
-			{
-				foreach (SDRC_HvtItem subMission : jsonApi.conf.subMissions)
-				{
-					conf.subMissions.Insert(subMission);
-				}
-				foreach (int idx : jsonApi.conf.missionList)
-				{
-					conf.missionList.Insert(idx);
-				}
-			}
-		}
-	}	
-			
-	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
-	{
 		//Default
-		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.missionList = {0,1,2};
-		conf.missionFiles.Insert("dc_missionConfig_HvtItem_010.json");		
+		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
+		missionList = {0,1,2};
+		missionFiles.Insert("dc_missionConfig_HvtItem_010.json");		
 		//Mission specific
 		//----------------------------------------------------
-		conf.subMissions.Insert(HvtItem0());				
-		conf.subMissions.Insert(HvtItem1());				
-		conf.subMissions.Insert(HvtItem2());				
+		subMissions.Insert(HvtItem0());				
+		subMissions.Insert(HvtItem1());				
+		subMissions.Insert(HvtItem2());				
 	};
 	
 	//----------------------------------------------------
@@ -699,5 +665,12 @@ class SDRC_HvtItemJsonApi : SDRC_JsonApi
 		hvtItem.campItems.Insert(item_18);
 		
 		return hvtItem;
-	};			
+	};				
+}
+
+//------------------------------------------------------------------------------------------------
+class SDRC_HvtItem : SDRC_Camp
+{
+	SDRC_Camp camp = SDRC_Camp();
+	int targetIdx; 
 }
