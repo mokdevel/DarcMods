@@ -62,7 +62,7 @@ This is the case for example with Tactical Flava. The characters/groups are of f
 
 # Loot lists
 ## Loot list names (id)
-Currently available names are below. For a complete list, please check [SCR_DC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Helpers/SCR_DC_LootListJsonApi.c)
+Currently available names are below. For a complete list, please check [SDRC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Conf/SDRC_LootListJsonApi.c)
 ```
 WEAPON_RIFLE : A random (assault) rifle from any faction.
 WEAPON_RIFLE_BIG : A random "large rifle" from any faction. These for example SVDs and bolt action rifles
@@ -81,6 +81,7 @@ GEAR_HEADGEAR : Head Gear including helmets, gas masks
 GEAR_VEST : Vests
 GEAR_HANDWEAR : Gloves etc
 GEAR_UNIFORM : Jackets, pants
+GEAR_BAG : Jackets, pants
 CLOTHING_HEADGEAR : Head Gear including hats
 CLOTHING_UNIFORM : Jackets, pants, shirts, 
 ```
