@@ -126,7 +126,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 		// Silo
 		SDRC_Structure item_5 = new SDRC_Structure;
 		item_5.Set(
-		    "{4D100F180B3EFEC1}Prefabs/Structures/Industrial/Containers/Silos/Silo_01/Silo_01.et",
+		    "{3C5ECB01F0CA19B0}Prefabs/Structures/Industrial/Containers/Silos/Silo_01/Silo_01_HvtItem.et",
 		    "236.7 0 92.825"
 		);
 		hvtItem.campItems.Insert(item_5);

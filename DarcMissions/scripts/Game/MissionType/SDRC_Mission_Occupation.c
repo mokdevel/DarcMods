@@ -167,7 +167,8 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 	//------------------------------------------------------------------------------------------------
 	override void CreateMissionFiles()
 	{
-		SDRC_Log.Add("[SDRC_OccupationConfig:CreateMissionFiles] Creating...", LogLevel.NORMAL);					
+		super.CreateMissionFiles();
+		
 		SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(SDRC_OccupationConfig_010.GetFileName());				
 		SDRC_OccupationConfig_010 conf = new SDRC_OccupationConfig_010();
 		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf));
