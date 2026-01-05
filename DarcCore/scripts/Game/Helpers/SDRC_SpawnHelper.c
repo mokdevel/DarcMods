@@ -20,6 +20,37 @@ class SDRC_SpawnHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*! 
+	Pick a proper resourceName from the provided list. 
+	A random item is picked and the list is then walked through
+	*/
+	static ResourceName SelectResourceName(array<string> resourceNames)
+	{
+		int index = SDRC_Misc.RandomInt(0, resourceNames.Count() - 1);
+		ResourceName resName = "";
+		
+		for (int i = 0; i < resourceNames.Count() - 1; i++)
+		{
+			Resource resource = Resource.Load(resourceNames[index]);
+			if (resource.IsValid())
+			{
+				resName = resourceNames[index];
+				break;
+			}
+			
+			//Pick the next item in the list.
+			index++;
+			
+			if (index > resourceNames.Count() - 1)
+			{
+				index = 0;
+			}
+		}
+		
+		return resName;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*! 
 	Spawn a resource on the map.
 	\param pos Location on map
 	\param resourceName Name of the resource to spawn
