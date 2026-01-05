@@ -18,7 +18,7 @@ GenericEntity : "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.
  coords 234.178 1 83.148
  angles 0 15.421 0
 }
-SCR_DestructibleBuildingEntity : "{4D100F180B3EFEC1}Prefabs/Structures/Industrial/Containers/Silos/Silo_01/Silo_01.et" {
+SCR_DestructibleBuildingEntity : "{3C5ECB01F0CA19B0}Prefabs/Structures/Industrial/Containers/Silos/Silo_01/Silo_01_HvtItem.et" {
  coords 238.981 0 82.876
 }
 GenericEntity : "{82666A967534A109}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Wall_USSR_01.et" {

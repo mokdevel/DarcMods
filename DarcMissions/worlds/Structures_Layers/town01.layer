@@ -68,7 +68,7 @@ GenericEntity : "{82008EE10AB80D6E}PrefabsEditable/Auto/Props/Wrecks/E_UAZ469_wr
  angles 0 -135.756 0
 }
 GenericEntity : "{A3EF3195AD211CDB}PrefabsEditable/Auto/Props/Industrial/Pallets/E_Pallet_01.et" {
- coords 130.23 1 76.851
+ coords 72.533 1 69.777
  angles 0 31.799 0
 }
 GenericEntity : "{B724CDD1316A90B1}PrefabsEditable/Auto/Props/Industrial/Pallets/E_MarsBoxContainer_01_Wood.et" {
