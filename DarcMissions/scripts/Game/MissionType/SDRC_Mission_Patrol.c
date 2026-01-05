@@ -21,7 +21,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	{
 		//Load config
 		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
-		m_Config.CreateMissionFiles();
+		//m_Config.CreateMissionFiles();
 		m_Config.LoadMissionFiles();
 
 		//Pick a configuration for mission

@@ -436,7 +436,7 @@ class SDRC_MissionHelper
 					break;
 				}
 				
-				//If count is less than limit set, accept the missionType
+				//If count is less than limit set, accept the missionType. 
 				if (cnt < m_BaseGameMode.missionFrame.m_Config.missionLimit[missionType])
 				{
 					break;

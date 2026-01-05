@@ -24,7 +24,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	{
 		//Load config
 		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
-		m_Config.CreateMissionFiles();
+		//m_Config.CreateMissionFiles();
 		m_Config.LoadMissionFiles();
 		
 		//Pick a configuration for mission
@@ -271,6 +271,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		subMissions.Insert(Chopper0());
 		subMissions.Insert(Chopper1());
 		subMissions.Insert(Chopper2());
+		subMissions.Insert(Chopper3());
 	};
 	
 	//----------------------------------------------------
