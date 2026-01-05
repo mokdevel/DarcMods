@@ -144,7 +144,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		
 		//TBD: Add error checking in case someone has removed entries from helicopterInfo.
 		
-		string resourceName	= m_DC_Chopper.heliList.GetRandomElement();
+		string resourceName	= SDRC_SpawnHelper.SelectResourceName(m_DC_Chopper.heliList);		
+//		string resourceName	= m_DC_Chopper.heliList.GetRandomElement();
 		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Chopper.general.size, -1);
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
 		m_Vehicle_c = SDRC_ChopperComp.Cast(m_Vehicle.FindComponent(SDRC_ChopperComp));
@@ -254,7 +255,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,1,1,1,2,2};
+		missionList = {3};//{0,1,1,1,2,2,3,3};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 500;
@@ -412,7 +413,61 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		);
 		
 		return chopper;
-	}	
+	}
+
+	//----------------------------------------------------
+	SDRC_Chopper Chopper3()
+	{
+		ref SDRC_Chopper chopper = new SDRC_Chopper();
+		chopper.general.Set(
+			3, "index 3: Third party choppers",
+			{"0 0 0", "0 0 0"}, 0,
+			{	
+				EMapDescriptorType.MDT_NAME_LOCAL,
+			},
+			"any",
+			"Heli patrol sighted",
+			"Initial destination is near %l.",
+			SDRC_EMissionWinCondition.AI_KILL_75,
+			"Patrol does not bother you anymore.",
+			"Patrol has left.",
+			"",
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
+			SDRC_EMissionDifficulty.NORMAL,
+			0
+		);
+		chopper.ai.Set
+		(
+			{1, 2},
+			{"G_HEAVY", "G_SMALL"},
+			60, 1.0,
+			{0, 0},
+			SDRC_EWaypointGenerationType.LOITER,
+			SDRC_EWaypointMoveType.LOITER,
+		);
+		chopper.Set
+		(
+			{
+			 //From: https://reforger.armaplatform.com/workshop/672F2BB6523FBA29-WZHelisforDarcMissions
+			 "{FED75A40AD78101F}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PK_scout_Patrol.et",
+             "{9515A6A2F7309954}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PKRocketpod_Patrol.et",
+			 "{26436A51FE36D07C}Prefabs/Vehicles/Helicopters/Ka-137/Ka137_Patrol.et",
+			 //From: https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcMissions
+			 "{EDF7AA9A54BFD6F8}Prefabs/Vehicles/Helicopters/Mi24/Mi24V_armed_UPK23_Patrol.et",
+			 "{842F4FB8DACE28D4}Prefabs/Vehicles/Helicopters/MI28/MI28N_Grey_Patrol.et",
+			 //A few default ones to spawn
+			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
+			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
+			},
+			{40, 80},
+			{10, 30},
+			{0.2, 0.4},
+			SDRC_EHeliWaypointGenerationType.RANDOM,	
+		);
+		
+		return chopper;
+	}
+		
 }
 
 //------------------------------------------------------------------------------------------------
