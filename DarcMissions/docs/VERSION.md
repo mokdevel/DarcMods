@@ -10,6 +10,12 @@ No changes in mission jsons.
 Main features:
 * Support for Chinese People's Liberation Army (PLA) faction.
 * Refactored the json loading/saving. Better looking jsons and provides capability for error checking. 
+* Added a new helicopter sub-mission that supports helicopters from:
+** https://reforger.armaplatform.com/workshop/672F2BB6523FBA29-WZHelisforDarcMissions
+** https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcMissions
+
+Changes:
+* Support for Warrior Cultist and Kamikaze Cultist in ``BALLIEN_BC_FACTION``.
 
 ## 202512xx
 Changed jsons - remove the files to receive updated ones.

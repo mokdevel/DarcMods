@@ -45,7 +45,7 @@ class SDRC_ListConfig : SDRC_Config
 			
 			foreach (string addon : addonList)
 			{
-				string name = addon;// + "Prefabs";
+				string name = addon;
 				modList.Insert(name);
 				//SDRC_Log.Add("[SDRC_ListConfig:Populate] Mod found: " + name, LogLevel.DEBUG);				
 			}
