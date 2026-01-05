@@ -19,7 +19,7 @@ class SDRC_Config : Managed
 		
 	void SetDefaults()
 	{	
-		version = 1;
+//		version = 1;
 	}	
 }
 
@@ -35,7 +35,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	bool Load(Managed T, SDRC_Config C, bool createMissingFiles = true)
+	bool Load(Managed T, SDRC_Config C, int version = 1, bool createMissingFiles = true)
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
@@ -44,6 +44,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 			{
 				return false;
 			}
+			C.version = version;
 			C.SetDefaults();
 			
 			Save(C, SDRC_Config.Cast(C));
@@ -56,12 +57,23 @@ class SDRC_JsonApi2 : JsonApiStruct
 			SDRC_Log.Add("[SDRC_JsonApi2:Load] loadContext is null - " + T, LogLevel.ERROR);
 			return false;
 		}
+
+		int versionFromFile;
+		loadContext.ReadValue("version", versionFromFile);
+		
+		if (versionFromFile != version)
+		{
+			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong version number: " + C.version + " (expected: " + version + ") : " + GetFileName(), LogLevel.ERROR);
+			return false;
+		}		
 		
 		loadContext.ReadValue("", T);		
 		
-		if (C.version != DC_FILE_VERSION)
+//		if (C.version != DC_FILE_VERSION)
+		if (C.version != version)
 		{
-			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong version number: " + C.version + " (expected: " + DC_FILE_VERSION + ")", LogLevel.ERROR);
+//			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong version number: " + C.version + " (expected: " + DC_FILE_VERSION + ")", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong version number: " + C.version + " (expected: " + version + ") : " + GetFileName(), LogLevel.ERROR);
 			return false;
 		}
 		
@@ -77,6 +89,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 		saveContext.EnableTypeDiscriminator(useTypeDiscriminator);
 
         PrettyJsonSaveContainer container = new PrettyJsonSaveContainer;
+		container.SetMaxDecimalPlaces(3);
         saveContext.SetContainer(container);
 
         if (!C.DoSave(saveContext, T)) 
@@ -85,7 +98,6 @@ class SDRC_JsonApi2 : JsonApiStruct
             return;
 		}
         
-		container.SetMaxDecimalPlaces(1);
 		if (!container.SaveToFile(GetFileName()))
 		{
 			SDRC_Log.Add("[SDRC_JsonApi2:Save] Container SaveToFile failed - " + T, LogLevel.ERROR);

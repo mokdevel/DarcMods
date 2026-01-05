@@ -6,6 +6,7 @@
 */
 
 const string DC_MISSIONCONFIG_FILE_ROADBLOCK = "dc_missionConfig_Roadblock.json";
+const int DC_MISSIONCONFIG_FILE_ROADBLOCK_VER = 2;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Roadblock : SDRC_Mission
@@ -21,7 +22,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	void SDRC_Mission_Roadblock(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
+		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_ROADBLOCK_VER);
 		//m_Config.CreateMissionFiles();
 		m_Config.LoadMissionFiles();
 		
