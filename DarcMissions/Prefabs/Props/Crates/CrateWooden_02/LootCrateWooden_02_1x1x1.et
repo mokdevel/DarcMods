@@ -17,6 +17,13 @@ GenericEntity : "{7E2EC66747A3FBA3}Prefabs/Props/Crates/CrateWooden_02/CrateWood
     }
    }
   }
+  SCR_EditableEntityComponent "{684AD0EB146CEE3F}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{684AE1A595A13127}" {
+    Name "Loot box"
+   }
+   m_bAutoRegister ALWAYS
+   m_Flags 769
+  }
   SCR_UniversalInventoryStorageComponent "{65171C0CB0F935A5}" {
    Attributes SCR_ItemAttributeCollection "{65171C0D50109096}" {
     ItemDisplayName SCR_InventoryUIInfo "{65171C0D72E91A5C}" {

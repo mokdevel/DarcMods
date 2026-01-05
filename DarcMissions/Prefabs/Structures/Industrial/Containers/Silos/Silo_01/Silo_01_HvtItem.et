@@ -1,0 +1,12 @@
+SCR_DestructibleBuildingEntity : "{188D55350F562E81}Prefabs/Structures/Industrial/Containers/Silos/Silo_01/Silo_01_base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_EditableEntityComponent "{684AE1A4E4DC7175}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{684AE1A4EC95CA67}" {
+    Name "Mission target"
+   }
+   m_bAutoRegister ALWAYS
+   m_Flags 769
+  }
+ }
+}

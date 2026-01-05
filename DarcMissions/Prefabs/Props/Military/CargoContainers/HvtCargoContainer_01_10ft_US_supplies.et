@@ -20,6 +20,15 @@ GenericEntity : "{A46F8469F129E154}Prefabs/Props/Military/CargoContainers/CargoC
    Enabled 1
    m_fBaseHealth 20000
   }
+  SCR_EditableEntityComponent "{684AD0EB0BD39B62}" {
+  }
+  SCR_EditableEntityComponent "{684AD0EB0DCA5F28}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{684AE1A46AE3679D}" {
+    Name "Mission target"
+   }
+   m_bAutoRegister ALWAYS
+   m_Flags 769
+  }
   RplComponent "{5476B36C54387F41}" {
    Enabled 1
   }

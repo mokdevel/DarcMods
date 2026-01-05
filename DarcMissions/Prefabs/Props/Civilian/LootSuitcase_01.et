@@ -28,6 +28,13 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/DestructibleMultiPhase_Pro
    }
    m_eMaterialSoundType BREAK_PLASTIC
   }
+  SCR_EditableEntityComponent "{684AD0EB41919EF0}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{684AE1A5BF6EFB63}" {
+    Name "Loot box"
+   }
+   m_bAutoRegister ALWAYS
+   m_Flags 769
+  }
   SCR_UniversalInventoryStorageComponent "{661F07F0EA7385C3}" {
    Attributes SCR_ItemAttributeCollection "{661F07F35975C1B6}" {
     ItemDisplayName SCR_InventoryUIInfo "{661F07F34467FAE4}" {

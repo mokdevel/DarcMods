@@ -10,6 +10,13 @@ GenericEntity : "{9C4642487946A666}Prefabs/Props/Military/AmmoBoxes/EquipmentBox
   SCR_DestructionMultiPhaseComponent "{58F89684469E44B1}" {
    Enabled 1
   }
+  SCR_EditableEntityComponent "{684AD0EB1DFD9BD2}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{684AE1A589D84558}" {
+    Name "Loot box"
+   }
+   m_bAutoRegister ALWAYS
+   m_Flags 769
+  }
   SCR_SoundDataComponent "{5C53391603B5CF41}" {
    Enabled 1
   }

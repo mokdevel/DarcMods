@@ -12,6 +12,13 @@ GenericEntity : "{7030822F7A54F479}Prefabs/Props/Crates/CrateWooden_01_base.et" 
   RigidBody "{5872F0EB7DFB5A9D}" {
    Static 1
   }
+  SCR_EditableEntityComponent "{684AD0EB7952E377}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{684AE1A5F8F0753E}" {
+    Name "Loot box"
+   }
+   m_bAutoRegister ALWAYS
+   m_Flags 769
+  }
   SCR_UniversalInventoryStorageComponent "{66E93283842D9CC3}" {
    Attributes SCR_ItemAttributeCollection "{66E93283842D8C49}" {
     ItemDisplayName SCR_InventoryUIInfo "{66E93283842D8C56}" {

@@ -5,5 +5,12 @@ GameEntity : "{103CBF9E0B0BC124}Prefabs/Props/Military/Generators/GeneratorMilit
    Enabled 1
    m_fBaseHealth 10000
   }
+  SCR_EditableEntityComponent "{684AE1A406CA7A4B}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{684AE1A40EA52A85}" {
+    Name "Mission target"
+   }
+   m_bAutoRegister ALWAYS
+   m_Flags 769
+  }
  }
 }

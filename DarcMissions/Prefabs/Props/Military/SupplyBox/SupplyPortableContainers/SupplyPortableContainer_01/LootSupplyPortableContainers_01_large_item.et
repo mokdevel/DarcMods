@@ -34,6 +34,13 @@ GenericEntity : "{4E866C1E6F114AB4}Prefabs/Props/Military/SupplyBox/SupplyPortab
   RigidBody "{5872F0EB7DFB5A9D}" {
    ResponseIndex "TinyDestructible"
   }
+  SCR_EditableEntityComponent "{684AD0EB388AFDDA}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{684AE1A448208E7A}" {
+    Name "Loot box"
+   }
+   m_bAutoRegister ALWAYS
+   m_Flags 769
+  }
   SCR_ResourceComponent "{5D247A59598D71AE}" {
    Enabled 0
    m_aContainers {
