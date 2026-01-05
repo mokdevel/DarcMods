@@ -35,7 +35,6 @@ class SDRC_JsonApi2 : JsonApiStruct
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	//bool Load(Managed T, bool createMissingFiles = true)
 	bool Load(Managed T, SDRC_Config C, bool createMissingFiles = true)
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
@@ -62,7 +61,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 		
 		if (C.version != DC_FILE_VERSION)
 		{
-			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong version number: " + C.version + " (" + DC_FILE_VERSION + " expected.", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong version number: " + C.version + " (expected: " + DC_FILE_VERSION + ")", LogLevel.ERROR);
 			return false;
 		}
 		

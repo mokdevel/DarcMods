@@ -169,7 +169,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-//			enemyFactions = {"USSR"};
+			enemyFactions = {"USSR"};
 //			enemyFactions = {"US"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION"};
@@ -179,7 +179,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			enemyFactions = {"RHS_ION"};
 //			enemyFactions = {"US","UK"};
 //			enemyFactions = {"UK"};
-			enemyFactions = {"PLA"};
+//			enemyFactions = {"PLA"};
 //			enemyFactions = {"FIA", "US"};
 //			enemyFactions = {"USSR", "FIA", "FIA", "FIA"};
 //			enemyFactions = {"RHS_USAF", "RHS_AFRF"};
