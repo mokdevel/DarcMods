@@ -6,6 +6,7 @@
 */
 
 const string DC_MISSIONCONFIG_FILE_PATROL = "dc_missionConfig_Patrol.json";
+const int DC_MISSIONCONFIG_FILE_PATROL_VER = 1;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Patrol : SDRC_Mission
@@ -20,8 +21,11 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	void SDRC_Mission_Patrol(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
-		//m_Config.CreateMissionFiles();
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_PATROL_VER))
+		{
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
+			return;
+		}
 		m_Config.LoadMissionFiles();
 
 		//Pick a configuration for mission

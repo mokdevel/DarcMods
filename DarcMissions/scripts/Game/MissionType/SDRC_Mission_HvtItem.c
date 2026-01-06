@@ -6,6 +6,7 @@ High Value Target (HVT) - Item target
 */
 
 const string DC_MISSIONCONFIG_FILE_HVTITEM = "dc_missionConfig_HvtItem.json";
+const int DC_MISSIONCONFIG_FILE_HVTITEM_VER = 1;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_HvtItem : SDRC_Mission
@@ -26,8 +27,11 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	void SDRC_Mission_HvtItem(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config));
-		//m_Config.CreateMissionFiles();
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_HVTITEM_VER))
+		{
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
+			return;
+		}
 		m_Config.LoadMissionFiles();
 		
 		//Pick a configuration for mission
@@ -198,7 +202,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		
 		SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(SDRC_HvtItemConfig_010.GetFileName());				
 		SDRC_HvtItemConfig_010 conf = new SDRC_HvtItemConfig_010();
-		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf));		
+		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), DC_MISSIONCONFIG_FILE_HVTITEM_VER);		
 	}
 	
 	//------------------------------------------------------------------------------------------------

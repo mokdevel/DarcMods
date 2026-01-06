@@ -9,6 +9,7 @@
 */
 
 const string DC_MISSIONCONFIG_FILE_TEMPLATE = "dc_missionConfig_Template.json";
+const int DC_MISSIONCONFIG_FILE_TEMPLATE_VER = 1;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Template : SDRC_Mission
