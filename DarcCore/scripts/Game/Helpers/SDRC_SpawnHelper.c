@@ -226,7 +226,6 @@ class SDRC_SpawnHelper
 	static void DespawnItem(IEntity entity)
 	{
 		SCR_EntityHelper.DeleteEntityAndChildren(entity);
-		//RebuildNavmesh(entity);	//TBD: Not sure if this is needed
 	}
 
 	//------------------------------------------------------------------------------------------------

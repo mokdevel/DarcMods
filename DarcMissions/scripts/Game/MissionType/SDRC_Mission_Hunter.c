@@ -340,7 +340,6 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 				{
 					missionList.Insert(idx);
 				}
-				//conf.missionList.InsertAll(jsonApi.conf.missionList);	//TBD: Not sure why this does not work
 			}
 		}
 	}

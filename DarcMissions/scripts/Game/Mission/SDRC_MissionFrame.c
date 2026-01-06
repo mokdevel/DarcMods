@@ -1,33 +1,17 @@
 //------------------------------------------------------------------------------------------------
 /*!
 This is the mission main framework file. 
-
-Add this to your StartGameTrigger or use SDRC_GameCoreBase.c
-
-	//------------------------------------------------------------------------------------------------
-	// user script
-	private bool m_GameHasStarted = false;
-	private ref SDRC_MissionFrame MissionFrame;
-
-	override void EOnActivate(IEntity owner)
-	{
-		if (!m_GameHasStarted)
-		{
-			m_GameHasStarted = true;
-			MissionFrame = new SDRC_MissionFrame(true);
-			MissionFrame.MissionFrameStart();
-		}
-	}
-	//------------------------------------------------------------------------------------------------
 */
 
 //------------------------------------------------------------------------------------------------
+
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
+
 const string DC_MISSIONCONFIG_FILE_FRAME = "dc_missionConfig.json";
-const int DC_MISSIONCONFIG_FILE_FRAME_VER = 1;
-const string DC_MISSIONCONFIG_FILE_SECONDWAVE = "dc_secondWave.json";
+const int 	 DC_MISSIONCONFIG_FILE_FRAME_VER = 1;
 const string DC_MISSIONCONFIG_FILE_NONVALIDAREA = "dc_nonValidArea.json";
-const int DC_MISSIONCONFIG_FILE_NONVALIDAREA_VER = 1;
+const int 	 DC_MISSIONCONFIG_FILE_NONVALIDAREA_VER = 1;
+const string DC_MISSIONCONFIG_FILE_SECONDWAVE = "dc_secondWave.json";
 
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionFrame
@@ -103,12 +87,10 @@ class SDRC_MissionFrame
 		//Check if a request to create new configs has been made		
 		if (m_Config.recreateConfigs)
 		{
-			SDRC_Log.Add("[SDRC_MissionFrame] ---------------- Creating default configs -------------------", LogLevel.WARNING);
-			SDRC_Log.Add("[SDRC_MissionFrame] - Changing recreateConfigs to false and saving the config.  -", LogLevel.WARNING);
-			m_Config.recreateConfigs = false;
-//TBD:!!	m_DC_MissionFrameJsonApi.Save();
+			SDRC_Log.Add("[SDRC_MissionFrame] ---------------- Creating missing configs -------------------", LogLevel.WARNING);
 			SDRC_Log.Add("[SDRC_MissionFrame] - Creating configs. Existing ones will not be over written. -", LogLevel.WARNING);
 			SDRC_MissionEnumHelper.CreateAllConfigs();
+			m_Config.recreateConfigs = false;
 			SDRC_Log.Add("[SDRC_MissionFrame] --------------------- Configs created. ----------------------", LogLevel.WARNING
 			);
 		}

@@ -115,8 +115,6 @@ sealed class SDRC_Misc
 	NOTE: Some maps may have the bounding box larger than the actualy play area (GenericTerrainEntity). 
 	In these cases the worldsize not correct.	
 	*/	
-	
-	//TBD: Clean up this code
 	static int GetWorldSize()
 	{
 		int worldSize = -1;

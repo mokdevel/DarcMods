@@ -48,9 +48,9 @@ sealed class SDRC_LootHelper
 	*/
 	static void SpawnItemsToStorage(IEntity storage, array<string> itemNames, float itemChance = 1.0)
 	{
-		SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Storage: " + storage, LogLevel.SPAM);		//TBD: Remove
-		SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Items: " + itemNames, LogLevel.SPAM);		//TBD: Remove
-		SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Chance: " + itemChance, LogLevel.SPAM);	//TBD: Remove
+		SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Storage: " + storage, LogLevel.SPAM);
+		SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Items: " + itemNames, LogLevel.SPAM);
+		SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Chance: " + itemChance, LogLevel.SPAM);
 		
 		if (!storage)
 		{

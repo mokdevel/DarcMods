@@ -144,12 +144,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private void MissionSpawn()
 	{					
 		//Spawn vehicle
-//		SDRC_HelicopterInfo heliInfo = m_Config.helicopterInfo[m_DC_Chopper.heliList.GetRandomElement()];
-		
-		//TBD: Add error checking in case someone has removed entries from helicopterInfo.
-		
 		string resourceName	= SDRC_SpawnHelper.SelectResourceName(m_DC_Chopper.heliList);		
-//		string resourceName	= m_DC_Chopper.heliList.GetRandomElement();
 		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Chopper.general.size, -1);
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
 		m_Vehicle_c = SDRC_ChopperComp.Cast(m_Vehicle.FindComponent(SDRC_ChopperComp));
@@ -259,7 +254,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {3};//{0,1,1,1,2,2,3,3};
+		missionList = {0,1,1,1,2,2,3,3};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 500;
