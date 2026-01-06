@@ -62,7 +62,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 	private float m_fTimeBetweenPts = 1;
 	private float m_fTimeBetweenPtsAvg = 1;
-		
+
+	private float m_fTimeBetweenFixes = 30;
+			
 	//Turn
 	private const int TIME_TURN_INTERVAL_BASE = 40;				//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
 	
@@ -185,6 +187,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	override void EOnDeactivate(IEntity owner)
+	{
+		SDRC_DebugHelper.DeleteDebugItems(m_sDid);
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	/*!
 	Set the helicopter to normal state
 	*/	
@@ -206,8 +214,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
 		Activate(owner);
 		
-		SDRC_Spline3D.DrawSplinePoints(m_vSplinePoints, m_sDid);
-		SDRC_Spline3D.DrawSplinePoints(m_vFlyPathPoints, m_sDid);
+		SDRC_DebugHelper.DrawPointList(m_vSplinePoints, m_sDid);
+		SDRC_DebugHelper.DrawPointList(m_vFlyPathPoints, m_sDid, ARGB(10, 64, 64, 192));
 		
 		if (!m_bAutoStart)
 		{
@@ -241,7 +249,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 		
 		m_fTimeSpeed += timeSlice;
-		m_fTimeBetweenPts += timeSlice;		
+		m_fTimeBetweenPts += timeSlice;
+		m_fTimeBetweenFixes -= timeSlice;
 
 		//Adjust time depending on the speed.
 		m_fTimeTurnInterval = TIME_TURN_INTERVAL_BASE / m_fSpeed;
@@ -249,12 +258,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 				
 		//If we've been stuck on a point, force new flight path. 
 		//Sometimes the heli direction and path align so that the closest index does not update.
+		//In these case the helicopter up vector and world up vector is big.
 		bool bCreateNewPath = false;
-/*		if (m_fTimeBetweenPts > TIME_FORCE_MOVE_POINT)
+		float heliUpAngleToWorld = SDRC_Math.GetAngleBetweenVectors(owner.GetTransformAxis(1), vector.Up);	
+		if ( (heliUpAngleToWorld > 1.2) && (m_fTimeBetweenFixes < 0) )
 		{
-//			m_iClosestIndex++;
+			m_fTimeBetweenFixes = 30;	//Give 30secs time to adjust
 			bCreateNewPath = true;
-		}*/
+		}
 		
 		//No need to do anything unless we are at the end of spline.
 		if ((m_iClosestIndex + m_iDestinationPointAdd + POINTS_TO_NEW_DISTANCE >= m_vSplinePoints.Count() - 1) || bCreateNewPath)
@@ -530,8 +541,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		SetVelocity(owner);
 		
-		SDRC_Spline3D.DrawSplinePoints(m_vSplinePoints, m_sDid);
-		SDRC_Spline3D.DrawSplinePoints(m_vFlyPathPoints, m_sDid);		
+		SDRC_DebugHelper.DrawPointList(m_vSplinePoints, m_sDid);
+		SDRC_DebugHelper.DrawPointList(m_vFlyPathPoints, m_sDid, ARGB(10, 64, 64, 192));		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -581,9 +592,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 			SDRC_Log.Add("[SDRC_ChopperComp:CreateFlightPath] No points!", LogLevel.ERROR);
 		}
 		
-		SDRC_DebugHelper.DeleteDebugItems(m_sDid);		
-		SDRC_Spline3D.DrawSplinePoints(m_vSplinePoints, m_sDid);
-		SDRC_Spline3D.DrawSplinePoints(m_vFlyPathPoints, m_sDid);
+		SDRC_DebugHelper.DeleteDebugItems(m_sDid);
+		SDRC_DebugHelper.DrawPointList(m_vSplinePoints, m_sDid);
+		SDRC_DebugHelper.DrawPointList(m_vFlyPathPoints, m_sDid, ARGB(10, 64, 64, 192));
 	}
 
 	//------------------------------------------------------------------------------------------------	
@@ -990,29 +1001,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------	
 	// Debugging things
 	//------------------------------------------------------------------------------------------------	
-
-	//------------------------------------------------------------------------------------------------	
-	/*!
-	Draw the spline points and draw lines
-	*/
-/*	void DrawSplinePoints(array<vector> resultPoints)
-	{
-	#ifndef SDRC_RELEASE
-		//Remove old debug info		
-//		SDRC_DebugHelper.DeleteDebugItems(m_sDid);
-		SDRC_Spline3D.DrawSplinePoints(resultPoints, m_sDid);
-/*		
-		foreach (int i, vector pos : resultPoints)
-		{
-			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(40, 128, 64, 64), 1.0, m_sDid);
-			
-			if (i < (resultPoints.Count() - 1))
-			{
-				SDRC_DebugHelper.AddDebugLine(resultPoints[i], resultPoints[i + 1], ARGB(40, 256, 64, 64), m_sDid);
-			}			
-		}*/
-//	#endif
-//	}
 			
 	//------------------------------------------------------------------------------------------------	
 	/*!
@@ -1030,7 +1018,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			return;
 		}
-		
+
+		vector heliUp = owner.GetTransformAxis(1);
+		float angUp = SDRC_Math.GetAngleBetweenVectors(heliUp, vector.Up);
+				
 		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_INFO))
 		{		
 			string debugText = 	//"Speedangle:" + angle * Math.RAD2DEG + "\n" +
@@ -1055,11 +1046,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 //								"Pilots::" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
 //								"Working:" + SDRC_VehicleHelper.IsWorking(owner) + " - " + 
 								"Health: " + health + "\n" + 
-								
 	//							"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
-								
 								"";
-		
+
+			if (angUp > 1.0)
+			{
+				debugText = debugText + "AngleUp: ******** " + angUp + " ********";
+			}
+					
 			DebugTextWorldSpace.Create(GetGame().GetWorld(), debugText, DebugTextFlags.ONCE, origin[0], origin[1], origin[2], 20);
 		}
 			
