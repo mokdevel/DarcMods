@@ -19,7 +19,6 @@ class SDRC_Config : Managed
 		
 	void SetDefaults()
 	{	
-//		version = 1;
 	}	
 }
 
@@ -35,7 +34,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	bool Load(Managed T, SDRC_Config C, int version = 1, bool createMissingFiles = true)
+	bool Load(Managed T, SDRC_Config C, int version, bool createMissingFiles = true)
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
@@ -58,22 +57,29 @@ class SDRC_JsonApi2 : JsonApiStruct
 			return false;
 		}
 
+		SDRC_Log.Add("[SDRC_JsonApi2:Load] Loading configuration from file: " + GetFileName(), LogLevel.DEBUG);
+		
 		int versionFromFile;
 		loadContext.ReadValue("version", versionFromFile);
 		
 		if (versionFromFile != version)
 		{
-			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong version number: " + C.version + " (expected: " + version + ") : " + GetFileName(), LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong version number: " + versionFromFile + " (expected: " + version + ") : " + GetFileName(), LogLevel.ERROR);
 			return false;
 		}		
 		
-		loadContext.ReadValue("", T);		
-		
-//		if (C.version != DC_FILE_VERSION)
-		if (C.version != version)
+		if(!loadContext.ReadValue("", T))
 		{
-//			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong version number: " + C.version + " (expected: " + DC_FILE_VERSION + ")", LogLevel.ERROR);
-			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong version number: " + C.version + " (expected: " + version + ") : " + GetFileName(), LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_JsonApi2:Load] Error loading file: " + GetFileName(), LogLevel.ERROR);
+			return false;
+		}
+
+		SDRC_Config M = SDRC_Config.Cast(T);
+				
+//		if (C.version != DC_FILE_VERSION)
+		if (M.version == -1)
+		{
+			SDRC_Log.Add("[SDRC_JsonApi2:Load] Error loading file: " + GetFileName(), LogLevel.ERROR);
 			return false;
 		}
 		
@@ -115,7 +121,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 		
 		if (SDRC_Conf.OVERWRITE_JSON && createMissingFiles)
 		{
-			SDRC_Log.Add("[SDRC_JsonApi2] Not release build - overwriting json config on disk.", LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_JsonApi2:LoadConfig] Not release build - overwriting json config on disk.", LogLevel.WARNING);
 			return null;
 		}
 		
@@ -125,16 +131,16 @@ class SDRC_JsonApi2 : JsonApiStruct
 		{
 			if (createMissingFiles)
 			{
-				SDRC_Log.Add("[SDRC_JsonApi2] Config file load failed or not found (" + m_FileName + "). Creating a default config.", LogLevel.ERROR);
+				SDRC_Log.Add("[SDRC_JsonApi2:LoadConfig] Config file load failed or not found (" + m_FileName + "). Creating a default config.", LogLevel.ERROR);
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_JsonApi2] Config file load failed or not found (" + m_FileName + ").", LogLevel.ERROR);
+				SDRC_Log.Add("[SDRC_JsonApi2:LoadConfig] Config file load failed or not found (" + m_FileName + ").", LogLevel.ERROR);
 			}
 			return null;
 		}
 
-		SDRC_Log.Add("[SDRC_JsonApi2] Loading configuration from file: " + m_FileName, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_JsonApi2:LoadConfig] Loading configuration from file: " + m_FileName, LogLevel.SPAM);
 		
 		return loadContext;
 	}	
