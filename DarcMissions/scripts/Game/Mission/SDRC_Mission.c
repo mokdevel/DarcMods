@@ -41,6 +41,8 @@ enum SDRC_EMissionSuccess
 enum SDRC_EMissionError
 {
 	NONE = 0,
+	ERROR_LOADING_JSON,
+	//Mission specific
 	LOCATION_NOT_FOUND,
 	WRONG_SUBIDX,
 	ROAD_FOR_START_NOT_FOUND,
