@@ -15,8 +15,10 @@ class SDRC_EmptyPos : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_Core
 {
-	const string DC_CONFIG_FILE = SDRC_Conf.CORE_CONFIG_FILE;
-	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE);	
+	private const string DC_CONFIG_FILE_CORE = SDRC_Conf.CORE_CONFIG_FILE;
+	private const int DC_CONFIG_FILE_CORE_VER = 1;
+	
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_CORE);	
 	ref SDRC_CoreConfig m_Config = new SDRC_CoreConfig();	
 	
 	private ref array<string> m_sAddonList = {};
@@ -27,7 +29,7 @@ class SDRC_Core
 		SDRC_Log.Add("[SDRC_Core] Starting SDRC_Core", LogLevel.NORMAL);
 		
 		//Load configuration from file
-		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config));
+		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_CONFIG_FILE_CORE_VER);
 
 		SDRC_Log.SetLogLevel(m_Config.logLevel);
 

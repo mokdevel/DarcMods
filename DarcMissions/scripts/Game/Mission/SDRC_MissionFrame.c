@@ -23,8 +23,11 @@ Add this to your StartGameTrigger or use SDRC_GameCoreBase.c
 
 //------------------------------------------------------------------------------------------------
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
+const string DC_MISSIONCONFIG_FILE_FRAME = "dc_missionConfig.json";
+const int DC_MISSIONCONFIG_FILE_FRAME_VER = 1;
 const string DC_MISSIONCONFIG_FILE_SECONDWAVE = "dc_secondWave.json";
 const string DC_MISSIONCONFIG_FILE_NONVALIDAREA = "dc_nonValidArea.json";
+const int DC_MISSIONCONFIG_FILE_NONVALIDAREA_VER = 1;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionFrame
@@ -32,8 +35,7 @@ class SDRC_MissionFrame
 	protected static SDRC_MissionFrame s_Instance;		
 	ref array<ref SDRC_Mission> m_MissionList = new array<ref SDRC_Mission>;
 	
-	private const string DC_MISSIONCONFIG_FILE = "dc_missionConfig.json";
-	private ref SDRC_JsonApi2 m_DC_MissionFrameJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE);	
+	private ref SDRC_JsonApi2 m_DC_MissionFrameJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_FRAME);	
 	ref SDRC_MissionFrameConfig m_Config = new SDRC_MissionFrameConfig();	
 	
 	private ref SDRC_JsonApi2 m_NonValidAreaJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_NONVALIDAREA);	
@@ -64,10 +66,10 @@ class SDRC_MissionFrame
 		m_sWorldName = SDRC_Misc.GetWorldName(true);
 
 		//Load configuration from file		
-		m_DC_MissionFrameJsonApi.Load(m_Config, SDRC_Config.Cast(m_Config));
+		m_DC_MissionFrameJsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_NONVALIDAREA_VER);
 		
 		//Load non valid area configuration from file
-		m_NonValidAreaJsonApi.Load(m_ConfigNonValidArea, SDRC_Config.Cast(m_ConfigNonValidArea));
+		m_NonValidAreaJsonApi.Load(m_ConfigNonValidArea, SDRC_Config.Cast(m_ConfigNonValidArea), DC_MISSIONCONFIG_FILE_FRAME_VER);
 		m_ConfigNonValidArea.Populate(m_aNonValidAreas);
 
 		//Load waves for secondWave functionality

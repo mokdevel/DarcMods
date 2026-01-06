@@ -23,6 +23,8 @@ class SDRC_Loot : Managed
 sealed class SDRC_LootHelper
 {
 	private const string DC_MISSIONCONFIG_FILE_LOOTLIST = "dc_lootList.json";
+	private const int DC_MISSIONCONFIG_FILE_LOOTLIST_VER = 1;
+	
 	private static ref SDRC_JsonApi2 m_JsonApi = null;
 	private static ref SDRC_LootListConfig m_Config = new SDRC_LootListConfig();			
 	
@@ -32,7 +34,7 @@ sealed class SDRC_LootHelper
 		
 		//Load loot config
 		m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_LOOTLIST);	
-		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config));		
+		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_LOOTLIST_VER);		
 		m_Config.Populate();
 	}
 	
