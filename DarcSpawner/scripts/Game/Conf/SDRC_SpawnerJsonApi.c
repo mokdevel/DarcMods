@@ -4,22 +4,6 @@
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J
 
 //------------------------------------------------------------------------------------------------
-class SDRC_SpawnerConfig : Managed
-{
-	//Default information
-	int version = 1;
-	string author = "darc";
-	//Spawner specific
-	bool spawnOnRoad;					//Spawn the cars on road
-	int spawnRndRadius;					//Random radius where the spawnName spawns. 
-	int containerCount;					//Amount of containers (cars, lootboxes, etc..) to spawn
-	float spawnWorldSizeMultiplier;		//If containerCount = 0, we search for the world size in km and multiple with this. For example: 4km wide map with spawnWorldSizeMultiplier = 2 results in containerCount = 8 (4*2)
-	bool disableArsenal;				//Disable arsenal so that no other items are found	
-	ref array<ref int> spawnSetList = {};	
-	ref array<ref SDRC_SpawnSet> spawnSets = {};	
-}
-
-//------------------------------------------------------------------------------------------------
 class SDRC_SpawnSet : Managed
 {
 	//Mission specific	
@@ -45,58 +29,44 @@ class SDRC_SpawnSet : Managed
 }
 
 //------------------------------------------------------------------------------------------------
-class SDRC_SpawnerJsonApi : SDRC_JsonApi
+class SDRC_SpawnerConfig : SDRC_Config
 {
-	ref SDRC_SpawnerConfig conf = new SDRC_SpawnerConfig();
+	//Default information
+	string author = "darc";
+	//Spawner specific
+	bool spawnOnRoad;					//Spawn the cars on road
+	int spawnRndRadius;					//Random radius where the spawnName spawns. 
+	int containerCount;					//Amount of containers (cars, lootboxes, etc..) to spawn
+	float spawnWorldSizeMultiplier;		//If containerCount = 0, we search for the world size in km and multiple with this. For example: 4km wide map with spawnWorldSizeMultiplier = 2 results in containerCount = 8 (4*2)
+	bool disableArsenal;				//Disable arsenal so that no other items are found	
+	ref array<ref int> spawnSetList = {};	
+	ref array<ref SDRC_SpawnSet> spawnSets = {};	
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_SpawnerJsonApi(string fileName)
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
 	{
-		SetFileName(fileName);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
-		
-		loadContext.ReadValue("", conf);
-		return true;
-	}
+		SDRC_SpawnerConfig data = SDRC_SpawnerConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
 
 	//------------------------------------------------------------------------------------------------
-	void Save()
-	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
-	{
-		conf.spawnOnRoad = false;
-		conf.spawnRndRadius = 100;
-		conf.spawnWorldSizeMultiplier = 0;
-		conf.containerCount = 3;//20;
-		conf.disableArsenal = true;
-		conf.spawnSetList = {0,1,2,2,3,3};
+
+	override void SetDefaults()
+	{		
+		super.SetDefaults();	
+
+		spawnOnRoad = false;
+		spawnRndRadius = 100;
+		spawnWorldSizeMultiplier = 0;
+		containerCount = 3;//20;
+		disableArsenal = true;
+		spawnSetList = {0,1,2,2,3,3};
 		//----------------------------------------------------		
-		conf.spawnSets.Insert(SpawnSet0());
-		conf.spawnSets.Insert(SpawnSet1());
-		conf.spawnSets.Insert(SpawnSet2());
-		conf.spawnSets.Insert(SpawnSet3());
-		conf.spawnSets.Insert(SpawnSet4());
+		spawnSets.Insert(SpawnSet0());
+		spawnSets.Insert(SpawnSet1());
+		spawnSets.Insert(SpawnSet2());
+		spawnSets.Insert(SpawnSet3());
+		spawnSets.Insert(SpawnSet4());
 	}	
 	
 	//Different spawner confs

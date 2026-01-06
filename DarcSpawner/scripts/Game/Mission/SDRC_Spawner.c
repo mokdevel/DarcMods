@@ -1,35 +1,19 @@
 //------------------------------------------------------------------------------------------------
 /*!
 This is the main Spawner file. 
-
-Add this to your StartGameTrigger or use SDRC_GameCoreBase.c
-
-	//------------------------------------------------------------------------------------------------
-	// user script
-	private bool m_GameHasStarted = false;
-	private ref SDRC_Spawner DCSpawner;
-
-	override void EOnActivate(IEntity owner)
-	{
-		if (!m_GameHasStarted)
-		{
-			m_GameHasStarted = true;		
-			DCSpawner = new SDRC_Spawner(true);
-			DCSpawner.Run();
-		}
-	}
-	//------------------------------------------------------------------------------------------------
 */
 
-const string DC_CONFIG_FILE_SPAWNER = "dc_spawnerConfig.json";
+//------------------------------------------------------------------------------------------------
 
-//const string SDRC_MODNAME = "DarcSpawner";
+const string DC_CONFIG_FILE_SPAWNER = "dc_spawnerConfig.json";
+const int DC_CONFIG_FILE_SPAWNER_VER = 1;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Spawner
 {
-	ref SDRC_SpawnerJsonApi m_DC_SpawnerConfig = new SDRC_SpawnerJsonApi(DC_CONFIG_FILE_SPAWNER);
-	ref SDRC_SpawnerConfig m_Config;
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_SPAWNER);	
+	private ref SDRC_SpawnerConfig m_Config = new SDRC_SpawnerConfig();	
+	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g. cars, tents, ..) spawned
 	private int m_spawnSetID;
 	private int m_spawnIdx = 0;
@@ -43,13 +27,17 @@ class SDRC_Spawner
 	{
 		SDRC_Log.Add("[SDRC_Spawner] Starting SDRC_Spawner", LogLevel.NORMAL);
 		
-		//Load configuration from file
-		m_DC_SpawnerConfig.Load();
-		m_Config = m_DC_SpawnerConfig.conf;
-
+		//Load config
+		bool success = m_JsonApi.Load(m_Config, SDRC_SpawnerConfig.Cast(m_Config), DC_CONFIG_FILE_SPAWNER_VER);
+		if (!success)
+		{
+			SDRC_Log.Add("[SDRC_Spawner] Error loading " + DC_CONFIG_FILE_SPAWNER + ". SDRC_Spawner not started.", LogLevel.ERROR);
+			return;
+		}			
+		
 		if (m_Config.spawnSetList.Count() == 0)
 		{
-			SDRC_Log.Add("[SDRC_Spawner] No spawnSets defined. Stopping.", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_Spawner] No spawnSets defined. SDRC_Spawner not started.", LogLevel.ERROR);
 			return;			
 		}
 
