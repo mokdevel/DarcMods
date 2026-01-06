@@ -1,4 +1,4 @@
-//Helpers SDRC_Spline.c
+//Helpers SDRC_Spline3D.c
 
 //------------------------------------------------------------------------------------------------
 /*!
@@ -195,12 +195,12 @@ sealed class SDRC_Spline3D
 	}		
 		
 	//------------------------------------------------------------------------------------------------
-	static void DrawSplinePoints(array<vector> resultPoints)
+	static void DrawSplinePoints(array<vector> resultPoints, string id = "")
 	{
 	#ifndef SDRC_RELEASE
 		foreach (int i, vector pos : resultPoints)
 		{
-			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(10, 128, 64, 64), 0.5);			//Red
+			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(10, 128, 64, 64), 0.5, id);			//Red
 			
 			if (i < (resultPoints.Count() - 2))
 			{
@@ -208,7 +208,7 @@ sealed class SDRC_Spline3D
 				vector direction = vector.Direction(resultPoints[i], resultPoints[i+1]);
 				direction.Normalize();
 				pos = resultPoints[i] + (direction * 10);
-				SDRC_DebugHelper.AddDebugLine(resultPoints[i], pos, ARGB(20, 64, 64, 64));				
+				SDRC_DebugHelper.AddDebugLine(resultPoints[i], pos, ARGB(20, 64, 64, 64), id);				
 			}			
 		}
 	#endif
