@@ -1,11 +1,15 @@
 //SDRC_DeathMarker_BaseGameMode.c
 
-const string DC_CONFIG_FILE_DEATHMARKER = "dc_deathMarkerConfig.json";
+//------------------------------------------------------------------------------------------------
 
+const string DC_CONFIG_FILE_DEATHMARKER = "dc_deathMarkerConfig.json";
+const int DC_CONFIG_FILE_DEATHMARKER_VER = 1;
+
+//------------------------------------------------------------------------------------------------
 modded class SCR_BaseGameMode 
 {
-	ref SDRC_DeathMarkerJsonApi m_DC_DeathMarkerConfig;// = new SDRC_DeathMarkerJsonApi(DC_CONFIG_FILE_DEATHMARKER);
-	ref SDRC_DeathMarkerConfig m_Config = null;
+	private ref SDRC_JsonApi2 m_JsonApi = null;	
+	private ref SDRC_DeathMarkerConfig m_Config = new SDRC_DeathMarkerConfig();	
 
 	//------------------------------------------------------------------------------------------------
     override void OnGameStart()
@@ -38,17 +42,15 @@ modded class SCR_BaseGameMode
 	{
 		if (SDRC_Conf.coreHasStarted)	//Wait for core to be available
 		{		
-			m_DC_DeathMarkerConfig = new SDRC_DeathMarkerJsonApi(DC_CONFIG_FILE_DEATHMARKER);
-			//Load configuration from file
-			bool success = m_DC_DeathMarkerConfig.Load();
+			//Load config
+			m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_DEATHMARKER);	
+			bool success = m_JsonApi.Load(m_Config, SDRC_DeathMarkerConfig.Cast(m_Config), DC_CONFIG_FILE_DEATHMARKER_VER);
 			
 			if (!success)
 			{
 				SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:InitDeathMarker] Error loading " + DC_CONFIG_FILE_DEATHMARKER + ". SDRC_DeathMarker not started.", LogLevel.ERROR);
 				return;
 			}			
-			
-			m_Config = m_DC_DeathMarkerConfig.conf;
 		}
 		else
 		{
