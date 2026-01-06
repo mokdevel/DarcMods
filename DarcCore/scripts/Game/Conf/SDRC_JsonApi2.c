@@ -74,14 +74,13 @@ class SDRC_JsonApi2 : JsonApiStruct
 			return false;
 		}
 
-		SDRC_Config M = SDRC_Config.Cast(T);
+/*		SDRC_Config M = SDRC_Config.Cast(T);
 				
-//		if (C.version != DC_FILE_VERSION)
 		if (M.version == -1)
 		{
 			SDRC_Log.Add("[SDRC_JsonApi2:Load] Error loading file: " + GetFileName(), LogLevel.ERROR);
 			return false;
-		}
+		}*/
 		
 //		Print(T);
 		return true;

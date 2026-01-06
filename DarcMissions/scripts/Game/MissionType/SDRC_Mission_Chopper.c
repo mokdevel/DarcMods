@@ -216,6 +216,36 @@ class SDRC_Mission_Chopper : SDRC_Mission
 }
 
 //------------------------------------------------------------------------------------------------
+class SDRC_Chopper
+{
+	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
+	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
+	//Optional settings
+	#ifndef NEW_VERSION_WIP	
+		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
+	#endif
+	#ifdef NEW_VERSION_WIP		
+		ref SDRC_MissionConfigSecondWave secondWave = null;
+	#endif
+	
+	//Mission specific
+	ref array<string> heliList = {};
+	ref array<int> flyHeight = {};						//min, max - Spawn helicopter between these values.
+	ref array<int> speed = {};							//min, max - 
+	ref array<float> flyDistance = {};					//min, max - Distance for finding new positions
+	SDRC_EHeliWaypointGenerationType wpType; 
+		
+	void Set(array<string> heliList_, array<int> flyHeight_, array<int> speed_, array<float> flyDistance_, SDRC_EHeliWaypointGenerationType wpType_)
+	{
+		heliList = heliList_;
+		flyHeight = flyHeight_;
+		speed = speed_;
+		flyDistance = flyDistance_;
+		wpType = wpType_;
+	}
+}
+
+//------------------------------------------------------------------------------------------------
 class SDRC_ChopperConfig : SDRC_MissionConfig
 {
 	int distanceToMission;									//Distance to mission when searching for a mission pos. Overrides missionFrame settings.
@@ -254,7 +284,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,1,1,1,2,2,3,3};
+		missionList = {1};//{0,1,1,1,2,2,3,3};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 500;
@@ -263,7 +293,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		activeTime = 30*60;
 	#endif
 	#ifndef SDRC_RELEASE
-		activeTime = 5*60;
+		activeTime = 25*60;
 	#endif
 		
 		//----------------------------------------------------
@@ -468,34 +498,4 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		return chopper;
 	}
 		
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_Chopper
-{
-	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
-	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
-	//Optional settings
-	#ifndef NEW_VERSION_WIP	
-		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
-	#endif
-	#ifdef NEW_VERSION_WIP		
-		ref SDRC_MissionConfigSecondWave secondWave = null;
-	#endif
-	
-	//Mission specific
-	ref array<string> heliList = {};
-	ref array<int> flyHeight = {};						//min, max - Spawn helicopter between these values.
-	ref array<int> speed = {};							//min, max - 
-	ref array<float> flyDistance = {};					//min, max - Distance for finding new positions
-	SDRC_EHeliWaypointGenerationType wpType; 
-		
-	void Set(array<string> heliList_, array<int> flyHeight_, array<int> speed_, array<float> flyDistance_, SDRC_EHeliWaypointGenerationType wpType_)
-	{
-		heliList = heliList_;
-		flyHeight = flyHeight_;
-		speed = speed_;
-		flyDistance = flyDistance_;
-		wpType = wpType_;
-	}
 }

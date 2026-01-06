@@ -84,7 +84,33 @@ class SDRC_MissionConfig : SDRC_Config
 
 	void LoadMissionFiles()
 	{
-	}		
+	}
+	
+/*	
+	void LoadMissionFiles2(array<Managed> subMissions)
+	{
+//		typename t = SDRC_StashConfig;
+		auto conf = new SDRC_StashConfig();
+		
+		//Load mission files
+		foreach (string missionFile : missionFiles)
+		{
+			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
+			
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), false))
+			{
+//				foreach (SDRC_Camp subMission : conf.subMissions)
+				foreach (auto subMission : conf.subMissions)
+				{
+					subMissions.Insert(subMission);
+				}
+				foreach (int idx : conf.missionList)
+				{
+					missionList.Insert(idx);
+				}
+			}
+		}
+	}		*/
 }
 
 //------------------------------------------------------------------------------------------------

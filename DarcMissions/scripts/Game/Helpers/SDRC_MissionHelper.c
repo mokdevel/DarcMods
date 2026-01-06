@@ -416,37 +416,40 @@ class SDRC_MissionHelper
 		if (m_BaseGameMode)
 		{
 			for (int i = 0; i < 10; i++)
-			{			
+			{	
+				SDRC_EMissionType missionTypeSelected;
+				
 				if (dynamic)
 				{
-					//missionType = m_Config.missionDynamic.missionTypeArray.GetRandomElement();
-					missionType = m_BaseGameMode.missionFrame.m_Config.missionDynamic.missionTypeArray.GetRandomElement();
+					missionTypeSelected = m_BaseGameMode.missionFrame.m_Config.missionDynamic.missionTypeArray.GetRandomElement();
 				}
 				else
 				{
-					//missionType = m_Config.missionStatic.missionTypeArray.GetRandomElement();
-					missionType = m_BaseGameMode.missionFrame.m_Config.missionStatic.missionTypeArray.GetRandomElement();
+					missionTypeSelected = m_BaseGameMode.missionFrame.m_Config.missionStatic.missionTypeArray.GetRandomElement();
 				}
 				
-				cnt = CountMissionsOfType(missionType);
+				cnt = CountMissionsOfType(missionTypeSelected);
 				
-				//If no limit set, accept the missionType
-				if (m_BaseGameMode.missionFrame.m_Config.missionLimit[missionType] == -1)
+				//If no limit set OR if count is less than limit set, accept the missionType
+				if ( (m_BaseGameMode.missionFrame.m_Config.missionLimit[missionTypeSelected] == -1) ||
+				     (cnt < m_BaseGameMode.missionFrame.m_Config.missionLimit[missionTypeSelected]) )
 				{
+					missionType = missionTypeSelected;
 					break;
 				}
 				
-				//If count is less than limit set, accept the missionType. 
-				if (cnt < m_BaseGameMode.missionFrame.m_Config.missionLimit[missionType])
-				{
-					break;
-				}
-				
-				SDRC_Log.Add("[SDRC_MissionHelper:SelectMissionType] Trying again.. ", LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_MissionHelper:SelectMissionType] Trying again.. ", LogLevel.SPAM);
 			}
 		}
-				
-		SDRC_Log.Add("[SDRC_MissionHelper:SelectMissionType] There are now " + (CountMissionsOfType(missionType) + 1) + " missions of type " + SCR_Enum.GetEnumName(SDRC_EMissionType, missionType), LogLevel.DEBUG);
+		
+		if (missionType == SDRC_EMissionType.NONE)
+		{ 
+			SDRC_Log.Add("[SDRC_MissionHelper:SelectMissionType] Missiontype limit reached. Trying again later. Type NONE selected.", LogLevel.WARNING);
+		}
+		else
+		{ 
+			SDRC_Log.Add("[SDRC_MissionHelper:SelectMissionType] There are now " + (cnt + 1) + " missions of type " + SCR_Enum.GetEnumName(SDRC_EMissionType, missionType), LogLevel.DEBUG);
+		}
 		
 		return missionType;
 	}

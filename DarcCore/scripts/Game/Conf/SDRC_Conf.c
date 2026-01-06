@@ -30,13 +30,13 @@ sealed class SDRC_Conf
 	
 //Release options	
 #ifdef SDRC_RELEASE
+	const bool RELEASE = true;							//Define for release compilation to workshop
 	const string DEFAULT_DIR = "default";
 	const bool SDRC_ENABLE_DARCSPAWNER = true;			//Enable the spawner mod during development
 	const bool SDRC_ENABLE_DARCMISSIONS = true;			//Enable the missions mod during development
 	const bool SDRC_ENABLE_DARCDEATHMARKER = true;		//Enable death marker mod during development
 	const bool SDRC_ENABLE_DARCSTORIES = false;			//Enable stories mod during development
 //	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA			//If enabled, creates a default configuration
-	const bool RELEASE = true;							//Define for release compilation to workshop
 	const bool OVERWRITE_JSON = false;					//Writes a new conf even if it exists
 	const bool SHOW_VALID_MISSION_AREAS = false;		//Debug markers for mission position testing drawn on the map
 	const bool SHOW_MARKER_FOR_LOCATION = false;		//Show a debug marker for locations
@@ -48,15 +48,15 @@ sealed class SDRC_Conf
 		
 //Development time options	
 #ifndef SDRC_RELEASE
+	const bool RELEASE = false;
 	const string DEFAULT_DIR = "dummy";
 	const bool SDRC_ENABLE_DARCSPAWNER = false;
 	const bool SDRC_ENABLE_DARCMISSIONS	= true;
 	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
 	const bool SDRC_ENABLE_DARCSTORIES = false;
 	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
-	const bool RELEASE = false;					
-//	const bool OVERWRITE_JSON = true;				
-	const bool OVERWRITE_JSON = false;
+	const bool OVERWRITE_JSON = true;				
+//	const bool OVERWRITE_JSON = false;
 	const bool SHOW_VALID_MISSION_AREAS = false;
 	const bool SHOW_MARKER_FOR_LOCATION = false;
 	const bool SHOW_DEBUG_INFO = true;
