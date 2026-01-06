@@ -140,6 +140,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 	ref array<vector> m_vFlyPathPoints = {};
 	ref array<vector> m_vFlyDestinations = {};	//Requested destinations
 		
+	//Id for debug items
+	private string m_sDid;
+	
 	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
 	{
@@ -150,6 +153,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp", LogLevel.NORMAL);
 		s_Instance = this;
+		m_sDid = SDRC_Misc.GetCurrentTickTime().ToString();
 
 		m_Helicopter_s = VehicleHelicopterSimulation.Cast(GetOwner().GetRootParent().FindComponent(VehicleHelicopterSimulation));
 		m_iEnemyFoundTimeOut = SDRC_Misc.GetCurrentTickTime() + ENEMY_FOUND_TIMEOUT;
@@ -202,8 +206,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
 		Activate(owner);
 		
-		SDRC_Spline3D.DrawSplinePoints(m_vSplinePoints);
-		DrawSplinePoints(m_vFlyPathPoints);
+		SDRC_Spline3D.DrawSplinePoints(m_vSplinePoints, m_sDid);
+		SDRC_Spline3D.DrawSplinePoints(m_vFlyPathPoints, m_sDid);
 		
 		if (!m_bAutoStart)
 		{
@@ -526,8 +530,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		SetVelocity(owner);
 		
-		SDRC_Spline3D.DrawSplinePoints(m_vSplinePoints);
-		DrawSplinePoints(m_vFlyPathPoints);		
+		SDRC_Spline3D.DrawSplinePoints(m_vSplinePoints, m_sDid);
+		SDRC_Spline3D.DrawSplinePoints(m_vFlyPathPoints, m_sDid);		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -577,8 +581,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 			SDRC_Log.Add("[SDRC_ChopperComp:CreateFlightPath] No points!", LogLevel.ERROR);
 		}
 		
-		SDRC_Spline3D.DrawSplinePoints(m_vSplinePoints);
-		DrawSplinePoints(m_vFlyPathPoints);
+		SDRC_DebugHelper.DeleteDebugItems(m_sDid);		
+		SDRC_Spline3D.DrawSplinePoints(m_vSplinePoints, m_sDid);
+		SDRC_Spline3D.DrawSplinePoints(m_vFlyPathPoints, m_sDid);
 	}
 
 	//------------------------------------------------------------------------------------------------	
@@ -668,7 +673,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 					dir.Normalize();
 					pos = m_vOriginalDestination + dir * range;
 					
-					SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 255, 00, 00), 2.0, "", 50 + i * 20);
+					SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 255, 00, 00), 2.0, m_sDid, 50 + i * 20);
 					
 					AddDestination(pos);
 				}			
@@ -770,7 +775,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 				vector mid = vector.Lerp(point, destination, lerpRnd);
 				vector vec = mid + dir0 * (distance / 6);
 				m_vFlyPathPoints.Insert(vec);
-				SDRC_DebugHelper.AddDebugPos(vec, ARGB(32, 128, 128, 64), 1.0, "", vec[1]);
+				SDRC_DebugHelper.AddDebugPos(vec, ARGB(32, 128, 128, 64), 1.0, m_sDid, vec[1]);
 				
 				//If the angle is very steep, add a second point	
 				if (Math.AbsFloat(heliAngle) < (WP_ANGLE / 2))
@@ -779,7 +784,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 					mid = vector.Lerp(point, destination, lerpRnd);
 					vec = mid + dir0 * (distance / 4);
 					m_vFlyPathPoints.Insert(vec);
-					SDRC_DebugHelper.AddDebugPos(vec, ARGB(32, 128, 128, 64), 1.0, "", vec[1]);
+					SDRC_DebugHelper.AddDebugPos(vec, ARGB(32, 128, 128, 64), 1.0, m_sDid, vec[1]);
 				}
 			}
 					
@@ -990,21 +995,24 @@ class SDRC_ChopperComp : ScriptGameComponent
 	/*!
 	Draw the spline points and draw lines
 	*/
-	static void DrawSplinePoints(array<vector> resultPoints)
+/*	void DrawSplinePoints(array<vector> resultPoints)
 	{
 	#ifndef SDRC_RELEASE
-		
+		//Remove old debug info		
+//		SDRC_DebugHelper.DeleteDebugItems(m_sDid);
+		SDRC_Spline3D.DrawSplinePoints(resultPoints, m_sDid);
+/*		
 		foreach (int i, vector pos : resultPoints)
 		{
-			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(40, 128, 64, 64), 1.0);
+			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(40, 128, 64, 64), 1.0, m_sDid);
 			
 			if (i < (resultPoints.Count() - 1))
 			{
-				SDRC_DebugHelper.AddDebugLine(resultPoints[i], resultPoints[i + 1], ARGB(40, 256, 64, 64));
+				SDRC_DebugHelper.AddDebugLine(resultPoints[i], resultPoints[i + 1], ARGB(40, 256, 64, 64), m_sDid);
 			}			
-		}
-	#endif
-	}
+		}*/
+//	#endif
+//	}
 			
 	//------------------------------------------------------------------------------------------------	
 	/*!

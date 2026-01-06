@@ -431,6 +431,43 @@ sealed class SDRC_DebugHelper
 			}			
 		}		
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Deletes all debug items with a certain id. The id works as a wild card.
+	*/
+	static void DeleteDebugItems(string id)
+	{
+		DeleteDebugPos(id);
+		int i;
+		
+		for (i = 0; i < m_Sphere.Count(); i++)		
+		{
+			if (m_Sphere[i].id.Contains(id))
+			{
+				m_Sphere.Remove(i);
+				i--;
+			}			
+		}
+		
+		for (i = 0; i < m_Line.Count(); i++)		
+		{
+			if (m_Line[i].id.Contains(id))
+			{
+				m_Line.Remove(i);
+				i--;
+			}			
+		}
+
+/*		for (i = 0; i < m_Slots.Count(); i++)		
+		{
+			if (m_Slots[i].id.Contains(id))
+			{
+				m_Slots.Remove(i);
+				i--;
+			}			
+		}*/
+	}	
 
 	//------------------------------------------------------------------------------------------------
 	/*!
