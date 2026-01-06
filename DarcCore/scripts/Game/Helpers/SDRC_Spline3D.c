@@ -193,26 +193,6 @@ sealed class SDRC_Spline3D
 
 		return Math.Sqrt(minDistanceSq);
 	}		
-		
-	//------------------------------------------------------------------------------------------------
-	static void DrawSplinePoints(array<vector> resultPoints, string id = "")
-	{
-	#ifndef SDRC_RELEASE
-		foreach (int i, vector pos : resultPoints)
-		{
-			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(10, 128, 64, 64), 0.5, id);			//Red
-			
-			if (i < (resultPoints.Count() - 2))
-			{
-				//Show direction vector
-				vector direction = vector.Direction(resultPoints[i], resultPoints[i+1]);
-				direction.Normalize();
-				pos = resultPoints[i] + (direction * 10);
-				SDRC_DebugHelper.AddDebugLine(resultPoints[i], pos, ARGB(20, 64, 64, 64), id);				
-			}			
-		}
-	#endif
-	}
 
 	//------------------------------------------------------------------------------------------------
 	static void TestSpline()

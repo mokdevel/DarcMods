@@ -385,22 +385,40 @@ sealed class SDRC_DebugHelper
 	}					
 
 	//------------------------------------------------------------------------------------------------
-//	static void AddDebugLine(array<vector> pos, int color = Color.BLUE, string id = "NONE")
 	static void AddDebugLine(vector pos0, vector pos1, int color = Color.BLUE, string id = "NONE")
 	{
 		#ifndef SDRC_RELEASE
-//			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
-//			{
+			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_LINES))
+			{
 				SDRC_DebugHelperLine dpos = new SDRC_DebugHelperLine;
 				dpos.pos.Insert(pos0);
 				dpos.pos.Insert(pos1);
 				dpos.color = color;
 				dpos.id = id;
 				m_Line.Insert(dpos);
-//			}
+			}
 		#endif
 	}					
 		
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Draw a list of points with connecting lines
+	*/	
+	static void DrawPointList(array<vector> points, string id = "", int color = ARGB(10, 128, 64, 64))
+	{
+		#ifndef SDRC_RELEASE
+			foreach (int i, vector pos : points)
+			{
+				SDRC_DebugHelper.AddDebugSphere(pos, color, 0.5, id);			//Red
+				
+				if (i < (points.Count() - 1))
+				{
+					SDRC_DebugHelper.AddDebugLine(points[i], points[i+1], color, id);				
+				}			
+			}
+		#endif
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 /*	static void AddMapCircle(vector pos, float radius = 100, int color = Color.BLUE, string id = "NONE")
 	{
