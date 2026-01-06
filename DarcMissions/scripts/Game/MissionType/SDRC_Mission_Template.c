@@ -14,7 +14,7 @@ const int DC_MISSIONCONFIG_FILE_TEMPLATE_VER = 1;
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Template : SDRC_Mission
 {
-	private ref SDRC_TemplateJsonApi m_TemplateJsonApi = new SDRC_TemplateJsonApi(DC_MISSIONCONFIG_FILE_TEMPLATE);	
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_TEMPLATE);	
 	private ref SDRC_TemplateConfig m_Config = new SDRC_TemplateConfig();
 	
 	//------------------------------------------------------------------------------------------------
@@ -25,8 +25,12 @@ class SDRC_Mission_Template : SDRC_Mission
 		vector pos = GetPos();
 				
 		//Load config
-		m_TemplateJsonApi.Load();
-		m_Config = m_TemplateJsonApi.conf;
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_TEMPLATE_VER))
+		{
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
+			return;
+		}
+		m_Config.LoadMissionFiles();
 		
 		//Check if GM requested mission
 		if (!IsRequested())
