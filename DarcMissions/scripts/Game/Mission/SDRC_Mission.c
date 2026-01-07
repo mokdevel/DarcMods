@@ -694,6 +694,7 @@ class SDRC_Mission : Managed
 			return;
 		}
 		
+		//If dynamic mission, check if we are to show a marker		
 		if (IsShowMarker() && baseGameMode.missionFrame.m_Config.showDynamicMissionMarker)
 		{
 			string markerType = GetMarkerType();

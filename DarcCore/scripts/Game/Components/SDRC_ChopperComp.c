@@ -72,14 +72,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private const float PITCH_ANGLE_RAD = 80 * Math.DEG2RAD;	//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
 	
 	//Roll 
-	private const float ROLL_ANGLE_MUL = 2.4;//1.7;				//Multiplier for roll angle along the spline
+	private const float ROLL_ANGLE_MUL = 2.4;			//Multiplier for roll angle along the spline
 	
 	//Flight path
-	const int POINTS_TO_NEW_DISTANCE = 2;		//How many spline points in to the future flight path is checked before adding new flight points.
-	const int POINTS_TO_SPLINE_START = 4;		//Points to go back from m_iClosestIndex when creating a new flight path 
-	const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
-	const int TIME_FORCE_MOVE_POINT = 20;		//(seconds) Time to wait before force moving a point. This is to fix situations where the chopper gets stuck on a point.
-	const float TIME_IN_INIT = 10;				//(seconds) Time to be in init state. During this time, we don't check for damage or similar things.
+	private const int POINTS_TO_NEW_DISTANCE = 2;		//How many spline points in to the future flight path is checked before adding new flight points.
+	private const int POINTS_TO_SPLINE_START = 4;		//Points to go back from m_iClosestIndex when creating a new flight path 
+	private const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
+//	private const int TIME_FORCE_MOVE_POINT = 20;		//(seconds) Time to wait before force moving a point. This is to fix situations where the chopper gets stuck on a point.
+	private const int TIME_FIX_FLIGHT = 10;				//(seconds) Time to wait between flight fixes when chopper is pointing to the sky.
+	private const float TIME_IN_INIT = 10;				//(seconds) Time to be in init state. During this time, we don't check for damage or similar things.
 	
 	//Rotor force multipliers
 	private const float ROTOR_FORCE_MUL = 1.0;			//Rotor force multiplier. Bigger value makes the heli react faster to up/down movement
@@ -87,12 +88,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private const float ROTOR_FORCE_MUL_PANIC = 5.0;	//Rotor force multiplier used when avoiding ground. 
 	
 	//Waypoint values
-	private const float WP_ANGLE = 60;			//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
-												//If chopper destination makes a too steep turn, we will add a few additional points.
+	private const float WP_ANGLE = 60;					//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
+														//If chopper destination makes a too steep turn, we will add a few additional points.
 	
 	//Runtime parameters
-	private bool m_bInInit = true;				//While in init, consider the chopper to be flying.
-	private bool m_bDestroyed = false;
+	private bool m_bInInit = true;						//While in init, consider the chopper to be flying.
+	private bool m_bDestroyed = false;					//If true, helicopter is considered destroyed and will not generate anymore fly points. AR physics handle the rest.
+	private bool m_bFinalDestination = false;			//If true, once reaching the last point, m_bDestroyed is set true. Heli will stop flying.
+	private bool m_bFinalDestinationReached = false;
 	private int m_iDestinationPointAdd;
 	private float m_fTimeTurnInterval;
 	
@@ -224,6 +227,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}
 			
 	//------------------------------------------------------------------------------------------------
+	/*!
+	Do final clear up of things when heli is to be despawned.
+	*/	
+	void Clear()
+	{
+		SDRC_DebugHelper.DeleteDebugItems(m_sDid);
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	/*!	
 	Return instance to component
 	*/
@@ -263,7 +275,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		float heliUpAngleToWorld = SDRC_Math.GetAngleBetweenVectors(owner.GetTransformAxis(1), vector.Up);	
 		if ( (heliUpAngleToWorld > 1.2) && (m_fTimeBetweenFixes < 0) )
 		{
-			m_fTimeBetweenFixes = 30;	//Give 30secs time to adjust
+			SDRC_Log.Add("[SDRC_ChopperComp] Fixing flight.", LogLevel.DEBUG);						
+			m_fTimeBetweenFixes = TIME_FIX_FLIGHT;	//Time between tries to fix the flight
 			bCreateNewPath = true;
 		}
 		
@@ -287,19 +300,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 			m_iOldClosestIndex = m_iClosestIndex;
 		}
 
-		if (m_iClosestIndex < m_iOldClosestIndex)
+/*		if (m_iClosestIndex < m_iOldClosestIndex)
 		{
 			//This should never happen
 			m_fTimeBetweenPts = 0;			
-		}
+		}*/
 		
-		if (m_fTimeBetweenPts > TIME_FORCE_MOVE_POINT)
+/*		if (m_fTimeBetweenPts > TIME_FORCE_MOVE_POINT)
 		{
-//			m_iClosestIndex++;
-//			m_iClosestIndex = m_iNewClosestIndex;
 			m_fTimeBetweenPts = 0;
-//			bCreateNewPath = true;
-		}
+		}*/
 		
 		//Destination point definition
 		m_iFutureIndex = m_iClosestIndex + (m_iDestinationPointAdd * 2);
@@ -557,6 +567,19 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Clear any existing path points
 		m_vFlyPathPoints.Clear();
 
+		//If we are the final destination, we stop creating waypoints and stop flying.
+		if (m_bFinalDestinationReached)
+		{
+			m_bDestroyed = true;
+			return;
+		}
+		
+		//If final destination was requested, create the last waypoints.
+		if (m_bFinalDestination)
+		{
+			m_bFinalDestinationReached = true;
+		}
+		
 		if (!force)
 		{
 			//Take two points from old spline. This smoothens the spline.
@@ -810,10 +833,17 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Add a destination for future.
+	\param destination Next position to fly to. Multiple destinations can be defined by calling multiple times.
+	\param final Once reaching the destination, helicopter will stop flying. 
 	*/
-	void AddDestination(vector destination)
+	void AddDestination(vector destination, bool final = false)
 	{
 		m_vFlyDestinations.Insert(destination);
+					
+		if (final)
+		{
+			m_bFinalDestination	= true;
+		}
 	}	
 		
 	//------------------------------------------------------------------------------------------------	
@@ -892,6 +922,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 		
 		m_bDestroyed = true;
+		SDRC_DebugHelper.DeleteDebugItems(m_sDid);
 		
 		//Set damage so it should be destroyed on crash
 		float damage = SDRC_Misc.RandomFloat(0, 0.05);

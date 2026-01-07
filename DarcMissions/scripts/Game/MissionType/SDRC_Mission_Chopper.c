@@ -113,7 +113,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 						if (m_Vehicle_c)
 						{
 							vector pos = SDRC_Misc.GetRandomWorldPosPercentage(1.0);
-							m_Vehicle_c.AddDestination(pos);
+							m_Vehicle_c.AddDestination(pos, true);
 							m_Vehicle_c.CreateFlyPath(m_Vehicle.GetOrigin(), true);
 							m_Vehicle_c.SetSpeed(max :  m_DC_Chopper.speed[1] * 1.5);
 						}
@@ -123,11 +123,19 @@ class SDRC_Mission_Chopper : SDRC_Mission
 					SDRC_Log.Add("[SDRC_Mission_Chopper:MissionRun] " +  GetId() + " : Chopper to fly away. Mission ending.", LogLevel.DEBUG);
 				}
 			}
-			
+
 			if (!IsActive())
 			{				
 				SetState(SDRC_EMissionState.END);
 				m_bKeepOnFlying = false;
+			}
+			
+			//Move the marker and mission position to where the helicopter is			
+			if (m_DC_Chopper.wpType == SDRC_EHeliWaypointGenerationType.RANDOM)
+			{
+				SetPos(m_Vehicle.GetOrigin());
+				SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
+				MoveMarker();
 			}
 		}
 		
@@ -137,6 +145,12 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	override void MissionEnd()
 	{			
+		m_Vehicle_c = SDRC_ChopperComp.Cast(m_Vehicle.FindComponent(SDRC_ChopperComp));
+		if (m_Vehicle_c)
+		{
+			m_Vehicle_c.Clear();
+		}
+				
 		super.MissionEnd();
 	}
 	
@@ -204,7 +218,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void AddCrewDelayed(SCR_AIGroup group)
+/*	void AddCrewDelayed(SCR_AIGroup group)
 	{
 		if (group)
 		{
@@ -212,7 +226,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(m_DC_Chopper.general.difficulty), m_DC_Chopper.ai.GetPerception(m_DC_Chopper.general.difficulty));
 			SDRC_Log.Add("[SDRC_Mission_Chopper:AddCrewDelayed] " +  GetId() + " : Added crew to: " + m_Vehicle, LogLevel.DEBUG);										
 		}
-	}
+	}*/
 }
 
 //------------------------------------------------------------------------------------------------
@@ -284,7 +298,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {2};//{0,1,1,1,2,2,3,3};
+		missionList = {0,1,1,1,2,2,3,3};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 500;
