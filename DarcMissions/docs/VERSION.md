@@ -12,13 +12,17 @@ Changed jsons - remove the files to receive updated ones.
 Main features:
 * Refactored the json loading/saving. Better looking jsons and provides capability for (future) error checking. 
 * Support for Chinese People's Liberation Army (PLA) faction.
-* Added a new helicopter sub-mission that supports helicopters from:
+
+Chopper mission:
+* New sub-mission: Helicopter recon. If you're seen, hunters will be sent after you.
+* New sub-mission with support for helicopters from mods below. In case the mods are not available, reverts back to vanilla helicopters.
 ** https://reforger.armaplatform.com/workshop/672F2BB6523FBA29-WZHelisforDarcMissions
 ** https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcMissions
 
 Changes:
 * Support for Warrior Cultist and Kamikaze Cultist in ``BALLIEN_BC_FACTION``.
 * Loot boxes and mission targets (HVT Item) can be deleted/moved in GM. 
+* Helicopter flight model fixes to avoid flying nose-up. Better, not perfect yet.
 
 ## 202512xx
 Changed jsons - remove the files to receive updated ones.
