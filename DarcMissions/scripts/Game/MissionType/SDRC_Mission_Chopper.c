@@ -92,7 +92,14 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
-			SetState(SDRC_EMissionState.ACTIVE);
+			if (GetState() == SDRC_EMissionState.FAILED)
+			{
+				SetState(SDRC_EMissionState.END);
+			}
+			else
+			{
+				SetState(SDRC_EMissionState.ACTIVE);				
+			}
 		}
 
 		if (GetState() == SDRC_EMissionState.END)
@@ -103,27 +110,55 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				
 		if (GetState() == SDRC_EMissionState.ACTIVE)
 		{
+			bool flyAway = false;
+			
+			//Check if we should leave
 			if (m_bKeepOnFlying)
 			{
+				//Have we flown long enough
 				if (GetActiveTime() < m_iFlyEndTime)
 				{
-					if (m_Vehicle)
+					flyAway = true;
+				}
+				
+				//Search waypoint: Check if enemy players has been found
+				if (m_DC_Chopper.wpType == SDRC_EHeliWaypointGenerationType.SEARCH)
+				{
+					if (m_Vehicle_c)
 					{
-						m_Vehicle_c = SDRC_ChopperComp.Cast(m_Vehicle.FindComponent(SDRC_ChopperComp));
-						if (m_Vehicle_c)
+						vector enemyPos = m_Vehicle_c.GetEnemyPosition();
+						if (enemyPos != "0 0 0")
 						{
-							vector pos = SDRC_Misc.GetRandomWorldPosPercentage(1.0);
-							m_Vehicle_c.AddDestination(pos, true);
-							m_Vehicle_c.CreateFlyPath(m_Vehicle.GetOrigin(), true);
-							m_Vehicle_c.SetSpeed(max :  m_DC_Chopper.speed[1] * 1.5);
+							m_Vehicle_c.EnemyHandled();
+							flyAway = true;
+							SpawnHunterMission(enemyPos);
+							SDRC_Log.Add("[SDRC_Mission_Chopper:MissionRun] Enemy found at " + enemyPos + ". Sending Hunters.", LogLevel.NORMAL);
 						}
 					}
-					m_bKeepOnFlying = false;
-					DoLose();
-					SDRC_Log.Add("[SDRC_Mission_Chopper:MissionRun] " +  GetId() + " : Chopper to fly away. Mission ending.", LogLevel.DEBUG);
-				}
+				}				
 			}
 
+			//Is there a request to fly away and end the mission
+			if ( (m_bKeepOnFlying) && (flyAway) )
+			{
+				if (m_Vehicle_c)
+				{
+					float size = SDRC_Misc.GetWorldSize() * 0.7;
+					vector pos = m_Vehicle.GetTransformAxis(2);
+					pos.Normalize();
+					pos = pos * size;
+					m_Vehicle_c.AddDestination(pos, true);
+					m_Vehicle_c.CreateFlyPath(m_Vehicle.GetOrigin(), true);
+					m_Vehicle_c.SetSpeed(max : m_DC_Chopper.speed[1] * 1.5);
+				}
+				SetActiveTime(m_iFlyEndTime);
+				ResetActiveTime();
+				m_bKeepOnFlying = false;
+				DoLose();
+				SDRC_Log.Add("[SDRC_Mission_Chopper:MissionRun] " +  GetId() + " : Chopper to fly away. Mission ending.", LogLevel.DEBUG);
+			}
+			
+			//Check for other reasons to stop flying
 			if (!IsActive())
 			{				
 				SetState(SDRC_EMissionState.END);
@@ -131,11 +166,14 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			}
 			
 			//Move the marker and mission position to where the helicopter is			
-			if (m_DC_Chopper.wpType == SDRC_EHeliWaypointGenerationType.RANDOM)
+			if (m_DC_Chopper.wpType != SDRC_EHeliWaypointGenerationType.PATROL)
 			{
-				SetPos(m_Vehicle.GetOrigin());
-				SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
-				MoveMarker();
+				if (m_Vehicle)
+				{
+					SetPos(m_Vehicle.GetOrigin());
+					SDRC_DebugHelper.MoveDebugPos(GetId(), GetPos());
+					MoveMarker();
+				}
 			}
 		}
 		
@@ -145,7 +183,6 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	override void MissionEnd()
 	{			
-		m_Vehicle_c = SDRC_ChopperComp.Cast(m_Vehicle.FindComponent(SDRC_ChopperComp));
 		if (m_Vehicle_c)
 		{
 			m_Vehicle_c.Clear();
@@ -160,8 +197,12 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		//Spawn vehicle
 		string resourceName	= SDRC_SpawnHelper.SelectResourceName(m_DC_Chopper.heliList);		
 		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Chopper.general.size, -1);
-		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
-		m_Vehicle_c = SDRC_ChopperComp.Cast(m_Vehicle.FindComponent(SDRC_ChopperComp));
+		
+		if (m_Vehicle)
+		{
+			m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
+			m_Vehicle_c = SDRC_ChopperComp.Cast(m_Vehicle.FindComponent(SDRC_ChopperComp));
+		}
 		
 		if ( (!m_Vehicle) || (!m_Vehicle_s) || (!m_Vehicle_c) )
 		{
@@ -170,7 +211,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			return;			
 		}
 		
-		SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " +  GetId() + " : Vehicle spawned: " + m_Vehicle, LogLevel.DEBUG);										
+		SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " +  GetId() + " : Vehicle spawned: " + m_Vehicle, LogLevel.DEBUG);
 		
 		m_EntityList.Insert(m_Vehicle);
 		m_Vehicle_c.SetHeli(m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.wpType, m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
@@ -215,18 +256,57 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		}		
 		
 		m_Vehicle_c.Ready(m_Vehicle);
-	}	
+	}
 	
 	//------------------------------------------------------------------------------------------------
-/*	void AddCrewDelayed(SCR_AIGroup group)
-	{
-		if (group)
+	static void SpawnHunterMission(vector pos)
+	{	
+		//Find a location that does not have players really close by.
+		for (int i = 0; i < 10; i++)
 		{
-			SDRC_VehicleHelper.MoveGroupInVehicle(group, m_Vehicle, true);
-			SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(m_DC_Chopper.general.difficulty), m_DC_Chopper.ai.GetPerception(m_DC_Chopper.general.difficulty));
-			SDRC_Log.Add("[SDRC_Mission_Chopper:AddCrewDelayed] " +  GetId() + " : Added crew to: " + m_Vehicle, LogLevel.DEBUG);										
+			pos = SDRC_Misc.GetCoordinatesOnCircle(pos, SDRC_Misc.RandomInt(150, 200), SDRC_Misc.RandomInt(0, 360));
+			if (SDRC_MissionPosHelper.IsValidMissionPos(pos, 50, 100))
+			{
+				break;
+			}
+			SDRC_Log.Add("[SDRC_Mission_Chopper:SpawnHunterMission] Position not optimal.", LogLevel.WARNING);
 		}
-	}*/
+		
+		string resourceName = SDRC_MissionEnumHelper.GetMissionPrefab(SDRC_EMissionType.HUNTER);
+		if (resourceName == "")
+		{
+			SDRC_Log.Add("[SDRC_Mission_Chopper:SpawnHunterMission] Could not spawn mission.", LogLevel.ERROR);
+			return;
+		}
+		
+		IEntity missionEntity = SDRC_SpawnHelper.SpawnItem(pos, resourceName, 0, -1);
+		if (!missionEntity)
+		{		
+			SDRC_Log.Add("[SDRC_Mission_Chopper:SpawnHunterMission] Could not spawn mission.", LogLevel.ERROR);
+			return;
+		}
+		GetGame().GetCallqueue().CallLater(SetMissionParameters_Delayed, 2000, false, missionEntity);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	static void SetMissionParameters_Delayed(IEntity missionEntity)
+	{
+		SDRC_DarcMissionGM ent = SDRC_DarcMissionGM.Cast(missionEntity);
+		if (ent)
+		{
+			SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
+			
+			SDRC_DarcMissionEditableRequestComp requestComp = SDRC_DarcMissionEditableRequestComp.Cast(ent.FindComponent(SDRC_DarcMissionEditableRequestComp));
+			requestComp.general = general;
+			requestComp.SetRequestId(1234);
+			requestComp.SetMissionType(SDRC_EMissionType.HUNTER);
+			requestComp.SetSubIdx(0);
+		}	
+		else
+		{
+			SDRC_Log.Add("[SDRC_Mission_Chopper:SetMissionParameters_Delayed] Enable to set. Defaults will be used. ", LogLevel.WARNING);
+		}	
+	}		
 }
 
 //------------------------------------------------------------------------------------------------
@@ -298,7 +378,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,1,1,1,2,2,3,3};
+		missionList = {4};//{0,1,1,2,2,3,4,4};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 500;
@@ -315,6 +395,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		subMissions.Insert(Chopper1());
 		subMissions.Insert(Chopper2());
 		subMissions.Insert(Chopper3());
+		subMissions.Insert(Chopper4());
 	};
 	
 	//----------------------------------------------------
@@ -348,7 +429,6 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		chopper.Set
 		(
 			{
-			 "{70A03633AAE61492}Prefabs/Vehicles/Helicopters/UH1H/UH1H_civ_base_Patrol.et",
 			 "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et",
 			},
 			{35, 70},
@@ -511,5 +591,47 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		
 		return chopper;
 	}
+
+	//----------------------------------------------------
+	SDRC_Chopper Chopper4()
+	{
+		ref SDRC_Chopper chopper = new SDRC_Chopper();
+		chopper.general.Set(
+			4, "index 4: Search patrol sending hunters",
+			{"0 0 0", "0 0 0"}, 0,
+			{},
+			"any",
+			"Helicopter recon",
+			"Hide!",
+			SDRC_EMissionWinCondition.AI_KILL_75,
+			"Search patrol avoided.", 
+			"Hunters are sent to your location.",
+			"",
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
+			SDRC_EMissionDifficulty.NORMAL,
+			0
+		);
+		chopper.ai.Set
+		(
+			{1, 2},
+			{"G_LIGHT"},
+			30, 0.6,
+			{0, 0},
+			SDRC_EWaypointGenerationType.LOITER,
+			SDRC_EWaypointMoveType.LOITER,
+		);
+		chopper.Set
+		(
+			{
+			 "{435F663B9456C29E}Prefabs/Vehicles/Helicopters/UH1H/UH1H_civ_livery_v1_Patrol.et",
+			},
+			{35, 70},
+			{7, 25},
+			{0.2, 0.5},
+			SDRC_EHeliWaypointGenerationType.SEARCH,	
+		);
 		
+		return chopper;
+	}	
+			
 }

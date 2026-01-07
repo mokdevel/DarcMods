@@ -16,6 +16,7 @@ enum SDRC_EHeliWaypointGenerationType
 	NONE,
 	RANDOM,		//Random flying for a helicopter
 	PATROL,		//Fly around a certain area
+	SEARCH,		//Random flying search patrol. Once a player is found, mission ends.
 //	GOTO,		//Fly to a given destination
 };
 
@@ -560,7 +561,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	Create the runtime flight path with waypoint definition
 	
 	\param origin The middle point of the path. Typically the helicopter position
-	\param force False: Create normal fly path. True: Stop everything and fly immediately to the last position in m_vFlyPathPoints.
+	\param force - False: Create normal fly path. - True: Stop everything and fly immediately to the last position in m_vFlyPathPoints.
 	*/
 	void CreateFlyPath(vector origin, bool force = false)
 	{
@@ -686,7 +687,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 		if (m_vFlyDestinations.IsEmpty())
 		{
 			//Random flying for a helicopter
-			if (wpGenType == SDRC_EHeliWaypointGenerationType.RANDOM)
+			if ( (wpGenType == SDRC_EHeliWaypointGenerationType.RANDOM) || 
+			     (wpGenType == SDRC_EHeliWaypointGenerationType.SEARCH)
+			   )
 			{	
 				pos = GetRandomDestination(origin);
 				AddDestination(pos);
@@ -897,7 +900,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 		m_bAutoStart = value;
 	}
-			
+				
 	//------------------------------------------------------------------------------------------------
 	bool IsStillWorking(IEntity owner)
 	{
