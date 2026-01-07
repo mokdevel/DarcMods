@@ -28,7 +28,7 @@ class SDRC_SpawnHelper
 		int index = SDRC_Misc.RandomInt(0, resourceNames.Count() - 1);
 		ResourceName resName = "";
 		
-		for (int i = 0; i < resourceNames.Count() - 1; i++)
+		for (int i = -1; i < resourceNames.Count() - 1; i++)	//We start from -1 to handle situation where resourceNames has only one item.
 		{
 			Resource resource = Resource.Load(resourceNames[index]);
 			if (resource.IsValid())
