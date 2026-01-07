@@ -251,8 +251,9 @@ class SDRC_Mission_Hunter : SDRC_Mission
 				return;
 			}
 			
-			// Manage the life cycle for the spawned group
-			GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.missionCycleTime*1000, false, group);
+			// Manage the life cycle for the spawned group. Do the first lifecycle run quickly after spawn.
+//			GetGame().GetCallqueue().CallLater(GroupLifeCycle, m_Config.missionCycleTime*1000, false, group);
+			GetGame().GetCallqueue().CallLater(GroupLifeCycle, 5*1000, false, group);
 		}
 		else
 		{
