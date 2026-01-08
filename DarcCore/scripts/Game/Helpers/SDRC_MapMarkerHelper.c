@@ -75,6 +75,7 @@ sealed class SDRC_MapMarkerHelper
 			return;
 
 		SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
+		
 		markerst.SetType(markerType);
 		markerst.SetCustomText(title);
 		if (faction)
@@ -95,7 +96,7 @@ sealed class SDRC_MapMarkerHelper
 		{
 			markerst.SetMarkerFactionFlags(0);			//Everyone can see the markers
 		}
-				
+						
 		DC_Mmarker dcmarker = new DC_Mmarker(lifetime);
 		dcmarker.id = id;
 		dcmarker.iID = markerst.GetMarkerID();

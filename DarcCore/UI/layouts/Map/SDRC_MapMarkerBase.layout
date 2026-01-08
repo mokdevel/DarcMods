@@ -58,7 +58,7 @@ FrameWidgetClass {
      Slot LayoutSlot "{65671A61829AE7A1}" {
      }
      Color 0.0003 0.0003 0.0003 1
-     Text " "
+     Text ""
      "Font Size" 12
      "Min Font Size" 12
      "Horizontal Alignment" Center
@@ -128,14 +128,6 @@ FrameWidgetClass {
         VerticalAlign 3
        }
        "Is Visible" 0
-       components {
-        SCR_MilitarySymbolUIComponent "{5DB880D56B45FA22}" {
-         m_MilitarySymbol SCR_MilitarySymbol "{5DB880D56FF1176A}" {
-          m_Identity BLUFOR
-          m_Icons INFANTRY
-         }
-        }
-       }
       }
      }
     }
@@ -162,21 +154,20 @@ FrameWidgetClass {
      Slot LayoutSlot "{627C693E4DB0469B}" {
       HorizontalAlign 1
       VerticalAlign 0
-      Padding 0 2 0 0
+      Padding 0 -64 0 64
      }
      "Is Visible" 0
      {
       ImageWidgetClass "{649AABAD8DD1DC9E}" {
        Name "PlatformIcon"
        Slot LayoutSlot "{627C69318E3FFA61}" {
-        HorizontalAlign 2
+        HorizontalAlign 1
         VerticalAlign 1
        }
-       "Is Visible" 0
-       Clipping False
-       Texture "{3262679C50EF4F01}UI/Textures/Icons/icons_wrapperUI.imageset"
-       Image "public"
-       Size 16 16
+       Texture "{F1746A6F0A3A2188}UI/Textures/IconsDifficulty/icon_diff_5.edds"
+       Size 32 4
+       Filter 0
+       "Shadow Offset" 1 1
       }
       TextWidgetClass "{649AABAD8DD1DC9D}" {
        Name "MarkerAuthor"
@@ -185,9 +176,8 @@ FrameWidgetClass {
         VerticalAlign 1
         Padding 2 0 0 0
        }
-       "Is Visible" 0
        Clipping False
-       Text ""
+       Text "TEXT FROM ME"
        "Font Size" 12
        "Min Font Size" 12
        "Horizontal Alignment" Center
@@ -218,6 +208,33 @@ FrameWidgetClass {
       Padding 0 0 0 2
      }
      "Is Visible" 0
+    }
+   }
+  }
+  VerticalLayoutWidgetClass "{6850998B7A531BED}" {
+   Name "VerticalLayout1"
+   Slot FrameWidgetSlot "{6850998B7A531B88}" {
+    Anchor 0.5 0 0.5 0
+    PositionX -17
+    OffsetLeft -17
+    PositionY 31
+    OffsetTop 31
+    SizeX 33
+    OffsetRight -16
+    SizeY 8
+    OffsetBottom -39
+   }
+   "Is Visible" 0
+   {
+    ImageWidgetClass "{685099897D43618C}" {
+     Name "Difficulty"
+     Slot LayoutSlot "{6850BD5C53F7BA55}" {
+      HorizontalAlign 1
+     }
+     Texture "{F1746A6F0A3A2188}UI/Textures/IconsDifficulty/icon_diff_5.edds"
+     Size 32 4
+     "Shadow Offset" 1 1
+     "Shadow Color" 0.162 0.162 0.162 1
     }
    }
   }

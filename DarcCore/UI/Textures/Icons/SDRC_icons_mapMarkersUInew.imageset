@@ -1,10 +1,10 @@
 ImageSetClass {
- RefSize 284 676
+ RefSize 284 788
  Textures {
-  ImageSetTextureClass "{6715532F3771BB40}" {
+  ImageSetTextureClass "{685110A82137758F}" {
    screenSize FHD
-   size 284 676
-   path "{84F3106DED438339}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-100_atlas.edds"
+   size 284 788
+   path "{84F3106DED43833A}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-100_atlas.edds"
   }
  }
  Images {
@@ -150,6 +150,31 @@ ImageSetClass {
   }
   ImageSetDefClass icon_Plus_small_map {
    Pos 170 562
+   Size 54 110
+   Flags 0 0
+  }
+  ImageSetDefClass icon_diff_0_map {
+   Pos 226 562
+   Size 54 110
+   Flags 0 0
+  }
+  ImageSetDefClass icon_diff_1_map {
+   Pos 2 674
+   Size 54 110
+   Flags 0 0
+  }
+  ImageSetDefClass icon_diff_2_map {
+   Pos 58 674
+   Size 54 110
+   Flags 0 0
+  }
+  ImageSetDefClass icon_diff_3_map {
+   Pos 114 674
+   Size 54 110
+   Flags 0 0
+  }
+  ImageSetDefClass icon_diff_4_map {
+   Pos 170 674
    Size 54 110
    Flags 0 0
   }
