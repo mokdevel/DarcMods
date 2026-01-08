@@ -12,6 +12,7 @@ Stupid file to handle a few common variables accross multiple mods
 
 //TODO: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //Set SDRC_MissionConfigGeneral faction to be an array
+//Set SDRC_MissionConfigGeneral difficulty to be an array
 
 sealed class SDRC_Conf
 {

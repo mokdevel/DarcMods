@@ -1,3 +1,6 @@
+Export plugin to 
+https://github.com/StefanTraistaru/batch-export?tab=readme-ov-file
+
 Three icons are needed:
 
 # Map icon: The one shown on map for a mission
@@ -40,3 +43,8 @@ Three icons are needed:
 - In Gimp
 -- Canvas Size 54x150 - center
 -- Canvas Size 54x110
+
+# Difficulty Icon
+- Name: icon_diff_X_map (icon_[LAYER_NAME]_map)
+- Size: 54x110 with DPI 9,6
+- Use export plugin - page, custom size, 54x110
