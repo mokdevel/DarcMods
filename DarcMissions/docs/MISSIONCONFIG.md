@@ -91,11 +91,11 @@ Difficulty affects various aspects of the missions. Each 'coef' has five values 
 * ``lootChanceCoef`` : The multiplier used to modify the loot chance. For each item on the lootlist, the chance is tested.
 * ``lootCountCoef`` : The multiplier used to modify the loot amount. When loot is spawned, the list provided is used. If this value increases the total, amount of items in the lootlist, additional items are added to the list from the original list.
 ```
-array<float> aiCountCoef = 			{0.50, 0.60, 1.01, 2.01, 3.01};
-array<float> aiSkillCoef = 			{0.20, 0.60, 1.01, 1.30, 1.60};
+array<float> aiCountCoef =      {0.50, 0.60, 1.01, 2.01, 3.01};
+array<float> aiSkillCoef =      {0.20, 0.60, 1.01, 1.30, 1.60};
 array<float> aiPerceptionCoef = {0.20, 0.60, 1.01, 1.30, 1.60};
-array<float> lootChanceCoef = 	{0.50, 0.60, 1.01, 1.10, 1.20};	
-array<float> lootCountCoef = 		{0.50, 0.70, 1.01, 1.51, 2.01};	
+array<float> lootChanceCoef =   {0.50, 0.60, 1.01, 1.10, 1.20};	
+array<float> lootCountCoef =    {0.50, 0.70, 1.01, 1.51, 2.01};	
 ```
 
 ### SDRC_MissionTypeConfig
