@@ -61,7 +61,7 @@ sealed class SDRC_CampHelper
 		else
 		{
 			//Spawn mission AI 
-			int aiCount = camp.ai.GetCount(camp.general.difficulty);
+			int aiCount = camp.ai.GetCount(mission.GetDifficulty());
 			
 			for (int i = 0; i < aiCount; i++)
 			{
@@ -69,7 +69,7 @@ sealed class SDRC_CampHelper
 				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroupRandom(camp.ai.types, mission.GetPos(), mission.GetFaction());
 				if (group)
 				{
-					SDRC_AIHelper.SetAIGroupSettings(group, camp.ai.GetSkill(camp.general.difficulty), camp.ai.GetPerception(camp.general.difficulty));					
+					SDRC_AIHelper.SetAIGroupSettings(group, camp.ai.GetSkill(mission.GetDifficulty()), camp.ai.GetPerception(mission.GetDifficulty()));					
 					mission.AddToGroupsList(group);
 					
 					int minRange = camp.ai.waypointRange[0];
@@ -103,7 +103,7 @@ sealed class SDRC_CampHelper
 			{
 				camp.loot.box = mission.GetFromEntityList(0);
 				//Handle loot difficulty
-				camp.loot.itemChance = SDRC_MissionHelper.GetLootChance(camp.loot.itemChance, camp.general.difficulty);
+				camp.loot.itemChance = SDRC_MissionHelper.GetLootChance(camp.loot.itemChance, mission.GetDifficulty());
 			}
 			
 /*			//Put loot

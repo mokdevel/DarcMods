@@ -397,7 +397,7 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 			"No loot for you today.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		crashsite.ai.Set
@@ -492,7 +492,7 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 			"The cargo was lost.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		crashsite.ai.Set

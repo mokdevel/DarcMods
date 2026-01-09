@@ -54,7 +54,7 @@ class SDRC_StashConfig_010 : SDRC_StashConfig
 			"Loot lost.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_STASH_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);		
 		stash.ai.Set(

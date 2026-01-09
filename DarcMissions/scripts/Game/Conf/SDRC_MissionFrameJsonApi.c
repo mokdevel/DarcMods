@@ -26,6 +26,7 @@
 		private const int SDRC_MISSION_RANDOM_POS = 100;								//The randomization for search radius for mission position 
 		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;						//Show/hide static mission markers
 		private const bool SDRC_MISSION_SHOW_DYNAMIC_MARKER = true;
+		private const bool SDRC_MISSION_SHOW_DIFFICULTY_MARKER = true;
 		private const bool SDRC_MISSION_SHOW_TIME_LEFT = true;							//Show/hide static mission markers
 	#endif
 	
@@ -33,9 +34,9 @@
 	#ifndef SDRC_RELEASE
 		private const int SDRC_MISSION_MIN_DISTANCE = 200;		
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
-		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 10;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 4;//10;//15;//5;//3;//0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 8;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -52,6 +53,7 @@
 		private const int SDRC_MISSION_RANDOM_POS = 100;
 		private const bool SDRC_MISSION_SHOW_STATIC_MARKER = true;
 		private const bool SDRC_MISSION_SHOW_DYNAMIC_MARKER = true;
+		private const bool SDRC_MISSION_SHOW_DIFFICULTY_MARKER = true;
 		private const bool SDRC_MISSION_SHOW_TIME_LEFT = true;
 	#endif
 
@@ -62,26 +64,28 @@ class SDRC_MissionFrameConfig : SDRC_Config
 	string author = "darc";
 	//Mission specific
 	string comment;
-	bool recreateConfigs;					//If set to true, all configs are to be written to disk. Should be run only first time.
+	bool recreateConfigs;						//If set to true, all configs are to be written to disk. Should be run only first time.
 	//Timing specific
-	int missionStartDelay;					//Time to wait before spawning the first mission (seconds).
-	int missionFrameCycleTime;				//The cycle time to manage mission spawning, deletion etc... (seconds)
-	int missionActiveDistance;				//The distance to a player to keep the mission active.
-	int missionActiveTimeToEnd;				//Time to keep the mission active once all AI is dead. Used for both dynamic and static missions.
-	float missionActiveDistanceMul;			//Multiplier to modify distance on every cycle when in win/lose state.
-	float missionActiveTimeToEndMul;		//multiplier to modify time on every cycle when in win/lose state.
-	int missionHintTime;					//Seconds to show mission hints to players. 0 disables hints.
-	SDRC_EHintPosition missionHintPosition;	//Mission hint position
+	int missionStartDelay;						//Time to wait before spawning the first mission (seconds).
+	int missionFrameCycleTime;					//The cycle time to manage mission spawning, deletion etc... (seconds)
+	int missionActiveDistance;					//The distance to a player to keep the mission active.
+	int missionActiveTimeToEnd;					//Time to keep the mission active once all AI is dead. Used for both dynamic and static missions.
+	float missionActiveDistanceMul;				//Multiplier to modify distance on every cycle when in win/lose state.
+	float missionActiveTimeToEndMul;			//multiplier to modify time on every cycle when in win/lose state.
+	int missionHintTime;						//Seconds to show mission hints to players. 0 disables hints.
+	SDRC_EHintPosition missionHintPosition;		//Mission hint position
 	//Randomization
-	int missionRandomPos;					//The distance to randomize the missions position. This avoids mission appearing always in same place.
+	int missionRandomPos;						//The distance to randomize the missions position. This avoids mission appearing always in same place.
 	//Misc
-	int minDistanceToMission;				//Distance to another mission. Two missions shall not be too close to each other.
-	int minDistanceToPlayer;				//Mission shall not spawn too close to a player.
-	bool showStaticMissionMarker;			//Show static mission marker
-	bool showDynamicMissionMarker;			//Show dynamic mission marker
-	bool showMissionTimeLeft;				//Show mission time left on marker click
-	ref array<string> enemyFactions;		//Factions to use for enemy selection
-	ref array<int> missionLimit = {};		//Limits for different types of missions
+	int minDistanceToMission;					//Distance to another mission. Two missions shall not be too close to each other.
+	int minDistanceToPlayer;					//Mission shall not spawn too close to a player.
+	bool showStaticMissionMarker;				//Show static mission marker
+	bool showDynamicMissionMarker;				//Show dynamic mission marker
+	bool showMissionDifficulty;					//Show mission difficulty on marker
+	bool showMissionTimeLeft;					//Show mission time left on marker click
+	ref array<string> enemyFactions;			//Factions to use for enemy selection
+	ref array<int> missionLimit = {};			//Limits for different types of missions
+	ref array<int> missionDifficultyList = {};	//Mission difficulty selection list
 	ref SDRC_MissionDifficulty missionDifficulty = new SDRC_MissionDifficulty();
 	ref SDRC_MissionTypeConfig missionDynamic = new SDRC_MissionTypeConfig();
 	ref SDRC_MissionTypeConfig missionStatic = new SDRC_MissionTypeConfig();
@@ -128,6 +132,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 		minDistanceToPlayer = SDRC_PLAYER_MIN_DISTANCE;
 		showStaticMissionMarker = SDRC_MISSION_SHOW_STATIC_MARKER;
 		showDynamicMissionMarker = SDRC_MISSION_SHOW_DYNAMIC_MARKER;
+		showMissionDifficulty = SDRC_MISSION_SHOW_DIFFICULTY_MARKER;
 		showMissionTimeLeft = SDRC_MISSION_SHOW_TIME_LEFT;
 		
 		#ifdef SDRC_RELEASE
@@ -146,6 +151,8 @@ class SDRC_MissionFrameConfig : SDRC_Config
 				  2,  //10 - STASH
 				  2,  //11 - CHOPPER
 			};
+			missionDifficultyList = {0,1,1,2,2,2,2,2,2,2,2,2,2,2,3,3,3,4,4};
+		
 			missionDynamic.missionTypeArray = {
 											SDRC_EMissionType.STASH, 
 											SDRC_EMissionType.CRASHSITE, 
@@ -201,6 +208,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 				  2,  //10 - STASH
 				  -1,  //11 - CHOPPER
 			};
+			missionDifficultyList = {0,1,2,3,4};
 		
 			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
@@ -213,7 +221,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
 		
-			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
@@ -225,7 +233,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
 //			missionStatic.missionTypeArray = {};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
+			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CHOPPER};		
 		
 		#endif

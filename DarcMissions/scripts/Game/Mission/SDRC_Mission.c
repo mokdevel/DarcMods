@@ -376,12 +376,16 @@ class SDRC_Mission : Managed
 			{
 				general.xp = request.general.xp;
 			}
+			
+			general.difficulty = request.general.difficulty;
 		}
 		
 		//TBD: Should this do a dump of mission settings?
+		
 		//Select and print out the faction for mission 
 		general.faction = SDRC_EnemyHelper.SelectEnemyFaction(general.faction);		
-		SetFaction(general.faction);		
+		SetFaction(general.faction);
+		SetDifficulty(general.difficulty);		
 	}	
 
 	//------------------------------------------------------------------------------------------------
@@ -647,6 +651,24 @@ class SDRC_Mission : Managed
 		return m_General.difficulty;
 	}
 			
+	void SetDifficulty(SDRC_EMissionDifficulty difficulty)
+	{
+		if (difficulty == SDRC_EMissionDifficulty.RANDOM)
+		{
+			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+			difficulty = baseGameMode.missionFrame.m_Config.missionDifficultyList.GetRandomElement();
+			if ( (difficulty < SDRC_EMissionDifficulty.EASY) || (difficulty > SDRC_EMissionDifficulty.HARD) )
+			{
+				SDRC_Log.Add("[SDRC_Mission:SetDifficulty] Incorrect value found in missionDifficultyList. Please check dc_missionConfig.json . Reverting to NORMAL difficulty.", LogLevel.WARNING);		
+				difficulty = SDRC_EMissionDifficulty.NORMAL;
+			}
+		}
+		
+		m_General.difficulty = difficulty;
+		
+		SDRC_Log.Add("[SDRC_Mission:SetDifficulty] " +  GetId() + " : " + SCR_Enum.GetEnumName(SDRC_EMissionDifficulty, difficulty) + " (" + difficulty + ")", LogLevel.DEBUG);		
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	int GetXP()
 	{
@@ -699,6 +721,12 @@ class SDRC_Mission : Managed
 		{
 			string markerType = GetMarkerType();
 			SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), GetMarkerIcon(), GetId(), GetTitle(), markerTypeString: markerType);
+			
+			if (baseGameMode.missionFrame.m_Config.showMissionDifficulty)
+			{
+				int difficultyIcon = SDRC_EMissionIcon.ICON_DIFF_0;// + GetDifficulty();
+				SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), difficultyIcon, GetId(), "", markerTypeString: "DARC_MISSION");
+			}
 		}
 	}
 	

@@ -247,7 +247,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		//TBD: NEW CODE: Spawns AI straight to the vehicle. Unfinished.
 		
 		//Spawn mission AI
-		int aiCount = m_DC_Convoy.ai.GetCount(m_DC_Convoy.general.difficulty);
+		int aiCount = m_DC_Convoy.ai.GetCount(GetDifficulty());
 		
 		for (int i = 0; i < aiCount; i++)
 		{		
@@ -260,7 +260,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			
 			if (group)
 			{			
-				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Convoy.ai.GetSkill(m_DC_Convoy.general.difficulty), m_DC_Convoy.ai.GetPerception(m_DC_Convoy.general.difficulty));
+				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Convoy.ai.GetSkill(GetDifficulty()), m_DC_Convoy.ai.GetPerception(GetDifficulty()));
 				m_Groups.Insert(group);					
 			}
 		}
@@ -274,7 +274,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		{
 			m_DC_Convoy.loot.box = m_Vehicle;
 			//Handle loot difficulty
-			m_DC_Convoy.loot.itemChance = SDRC_MissionHelper.GetLootChance(m_DC_Convoy.loot.itemChance, m_DC_Convoy.general.difficulty);
+			m_DC_Convoy.loot.itemChance = SDRC_MissionHelper.GetLootChance(m_DC_Convoy.loot.itemChance, GetDifficulty());
 
 			SDRC_LootHelper.SpawnItemsToStorage(m_DC_Convoy.loot.box, m_DC_Convoy.loot.items, m_DC_Convoy.loot.itemChance);
 			SDRC_Log.Add("[SDRC_Mission_Convoy:DoWin] " +  GetId() + " : Loot added.", LogLevel.DEBUG);								
@@ -387,7 +387,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			"The convoy reached %d as planned.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		convoy.ai.Set(
@@ -455,7 +455,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			"All the goodies in the truck was never for you.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		convoy.ai.Set(
@@ -525,7 +525,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			"Were you scared of a piece metal? Cowards!", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		convoy.ai.Set(
@@ -589,7 +589,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			"Oh dear, your failure will be remembered.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		convoy.ai.Set(

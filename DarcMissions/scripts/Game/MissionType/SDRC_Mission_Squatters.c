@@ -42,7 +42,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Squatter.general, request);
 		
 		//Set defaults
-		m_iAiCount = m_DC_Squatter.ai.GetCount(m_DC_Squatter.general.difficulty);
+		m_iAiCount = m_DC_Squatter.ai.GetCount(GetDifficulty());
 		float radius = m_Config.buildingRadius;
 		array<string>buildingFilter = {};
 		
@@ -156,7 +156,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		if (m_iSpawnIndex < m_iAiCount)
 		{
 			//Each AI is spawned in to its own group to be able to give individual waypoints to a character
-			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.ai.types.GetRandomElement(), GetFaction(), m_DC_Squatter.ai.GetSkill(m_DC_Squatter.general.difficulty), m_DC_Squatter.ai.GetPerception(m_DC_Squatter.general.difficulty), );
+			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.ai.types.GetRandomElement(), GetFaction(), m_DC_Squatter.ai.GetSkill(GetDifficulty()), m_DC_Squatter.ai.GetPerception(GetDifficulty()), );
 			if (group)
 			{
 				m_Groups.Insert(group);
@@ -171,7 +171,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 				m_EntityList.Insert(entity);
 				m_DC_Squatter.loot.box = entity;
 				//Handle loot difficulty
-				m_DC_Squatter.loot.itemChance = SDRC_MissionHelper.GetLootChance(m_DC_Squatter.loot.itemChance, m_DC_Squatter.general.difficulty);				
+				m_DC_Squatter.loot.itemChance = SDRC_MissionHelper.GetLootChance(m_DC_Squatter.loot.itemChance, GetDifficulty());				
 			}
 			else
 			{
@@ -316,7 +316,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			"Squatters cleaned the house and left you nothing.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0		
 		);
 		squatter.ai.Set(
@@ -370,7 +370,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			"Control in %l has been lost.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0		
 		);
 		squatter.ai.Set(
@@ -426,7 +426,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			"Military has collected the loot and left.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0		
 		);
 		squatter.ai.Set(
@@ -480,7 +480,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			"%l is in the hands of the enemy.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0		
 		);
 		squatter.ai.Set(
@@ -534,7 +534,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			"Your effort has been struck down.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0		
 		);
 		squatter.ai.Set(
@@ -584,7 +584,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			"Everything has been stolen.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0		
 		);
 		squatter.ai.Set(

@@ -231,14 +231,14 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				
 				if (group)
 				{			
-					SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(m_DC_Chopper.general.difficulty), m_DC_Chopper.ai.GetPerception(m_DC_Chopper.general.difficulty));
+					SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(GetDifficulty()), m_DC_Chopper.ai.GetPerception(GetDifficulty()));
 					m_Groups.Insert(group);					
 				}
 			}
 		}
 		
 		//Spawn mission AI
-		int aiCount = m_DC_Chopper.ai.GetCount(m_DC_Chopper.general.difficulty);
+		int aiCount = m_DC_Chopper.ai.GetCount(GetDifficulty());
 		
 		for (int i = 0; i < aiCount; i++)
 		{		
@@ -250,7 +250,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			
 			if (group)
 			{			
-				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(m_DC_Chopper.general.difficulty), m_DC_Chopper.ai.GetPerception(m_DC_Chopper.general.difficulty));
+				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(GetDifficulty()), m_DC_Chopper.ai.GetPerception(GetDifficulty()));
 				m_Groups.Insert(group);					
 			}
 		}		
@@ -414,7 +414,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			"Helicopter lost track of you.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		chopper.ai.Set
@@ -456,7 +456,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			"Gunship lost track of you.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		chopper.ai.Set
@@ -509,7 +509,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			"Guards have left.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		chopper.ai.Set
@@ -557,7 +557,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			"Patrol has left.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		chopper.ai.Set
@@ -608,7 +608,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			"Hunters are sent to your location.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		chopper.ai.Set

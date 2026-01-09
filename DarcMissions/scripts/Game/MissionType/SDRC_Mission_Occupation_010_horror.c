@@ -60,7 +60,7 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 			"Are you scared of a few ghosts..?",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		occupation.ai.Set(
@@ -96,7 +96,7 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 			"You were tasty.",
 			"BACON_622120A5448725E3_FACTION",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		occupation.ai.Set(
@@ -132,7 +132,7 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 			"Oh the horrors. You were slain.",
 			"BACON_622120A5448725E3_FACTION",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		occupation.ai.Set(

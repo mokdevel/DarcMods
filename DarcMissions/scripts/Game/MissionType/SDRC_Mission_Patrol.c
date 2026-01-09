@@ -142,7 +142,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		IEntity entity;
 
 		//Spawn mission AI 
-		int aiCount = m_DC_Patrol.ai.GetCount(m_DC_Patrol.general.difficulty);
+		int aiCount = m_DC_Patrol.ai.GetCount(GetDifficulty());
 		
 		for (int i = 0; i < aiCount; i++)
 		{
@@ -150,7 +150,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroupRandom(m_DC_Patrol.ai.types, GetPos(), GetFaction());
 			if (group)
 			{
-				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Patrol.ai.GetSkill(m_DC_Patrol.general.difficulty), m_DC_Patrol.ai.GetPerception(m_DC_Patrol.general.difficulty));					
+				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Patrol.ai.GetSkill(GetDifficulty()), m_DC_Patrol.ai.GetPerception(GetDifficulty()));					
 				m_Groups.Insert(group);
 				if (m_DC_Patrol.ai.waypointGenType == SDRC_EWaypointGenerationType.ROUTE)
 				{
@@ -286,7 +286,7 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 			"Patroling completed, the world is saved.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);		
 		patrol.ai.Set(
@@ -325,7 +325,7 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 			"You're not a worthy enemy for this patrol.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);			
 		patrol.ai.Set(
@@ -359,7 +359,7 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 			"Patrol left the area.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);		
 		patrol.ai.Set(
@@ -395,7 +395,7 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 			"Such a small force was able to beat you.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);				
 		patrol.ai.Set(

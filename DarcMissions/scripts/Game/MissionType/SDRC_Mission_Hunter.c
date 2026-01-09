@@ -49,7 +49,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Hunter.general, request);
 		
 		//Set spawn count
-		m_iGroupsToSpawn = m_DC_Hunter.ai.GetCount(m_DC_Hunter.general.difficulty);
+		m_iGroupsToSpawn = m_DC_Hunter.ai.GetCount(GetDifficulty());
 		
 		//Find position
 		bool positionFound = false;
@@ -240,7 +240,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 			
 			if (group)
 			{
-				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Hunter.ai.GetSkill(m_DC_Hunter.general.difficulty), m_DC_Hunter.ai.GetPerception(m_DC_Hunter.general.difficulty));					
+				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Hunter.ai.GetSkill(GetDifficulty()), m_DC_Hunter.ai.GetPerception(GetDifficulty()));					
 				m_Groups.Insert(group);
 				m_iGroupsSpawned++;
 				SDRC_Log.Add("[SDRC_Mission_Hunter:SpawnHunterGroup] " +  GetId() + " : Group spawned to " + spawnLocation, LogLevel.NORMAL);				
@@ -401,7 +401,7 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 			"Hunters lost track of you.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		hunter.ai.Set(
@@ -430,7 +430,7 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 			"Sharpshooters lost track of you.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		hunter.ai.Set(
@@ -463,7 +463,7 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 			"Recon team lost track of you.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0
 		);
 		hunter.ai.Set(

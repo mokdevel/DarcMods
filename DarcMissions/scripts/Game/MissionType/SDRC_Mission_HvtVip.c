@@ -46,7 +46,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_HvtVip.general, request);
 		
 		//Set defaults
-		m_iGroupCount = m_DC_HvtVip.ai.GetCount(m_DC_HvtVip.general.difficulty);
+		m_iGroupCount = m_DC_HvtVip.ai.GetCount(GetDifficulty());
 		float radius = 100;					//Default size for the radius. 
 		array<string> buildingFilter = {};
 
@@ -149,7 +149,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroupRandom(m_DC_HvtVip.ai.types, GetPos(), GetFaction());
 			if (group)
 			{
-				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_HvtVip.ai.GetSkill(m_DC_HvtVip.general.difficulty), m_DC_HvtVip.ai.GetPerception(m_DC_HvtVip.general.difficulty));					
+				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_HvtVip.ai.GetSkill(GetDifficulty()), m_DC_HvtVip.ai.GetPerception(GetDifficulty()));					
 				SDRC_AIHelper.SetAIGroupMovementType(group, EMovementType.IDLE);
 				m_Groups.Insert(group);				
 				SDRC_WPHelper.CreateMissionAIWaypoints(group, SDRC_EWaypointGenerationType.LOITER, GetPos(), "0 0 0", SDRC_EWaypointMoveType.LOITER, 10, 50);				
@@ -165,7 +165,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 				m_EntityList.Insert(entity);
 				m_DC_HvtVip.loot.box = entity;
 				//Handle loot difficulty
-				m_DC_HvtVip.loot.itemChance = SDRC_MissionHelper.GetLootChance(m_DC_HvtVip.loot.itemChance, m_DC_HvtVip.general.difficulty);
+				m_DC_HvtVip.loot.itemChance = SDRC_MissionHelper.GetLootChance(m_DC_HvtVip.loot.itemChance, GetDifficulty());
 			}
 			else
 			{
@@ -360,7 +360,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"The target escaped.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0		
 		);
 		HvtVip.ai.Set(
@@ -410,7 +410,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"The target escaped.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0		
 		);
 		HvtVip.ai.Set(
@@ -461,7 +461,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"The target escaped.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0		
 		);
 		HvtVip.ai.Set(
@@ -514,7 +514,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"The judgement day is postponed.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0		
 		);
 		HvtVip.ai.Set(
@@ -565,7 +565,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"No drinks for you this time.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EMissionDifficulty.NORMAL,
+			SDRC_EMissionDifficulty.RANDOM,
 			0		
 		);
 		HvtVip.ai.Set(

@@ -37,7 +37,7 @@ class SDRC_MissionConfigGeneral : Managed
 					 string winMessage_ = SDRC_DEFAULT, string loseMessage_ = SDRC_DEFAULT, 
 					 string faction_ = SDRC_DEFAULT, 
 					 string markerType_ = SDRC_DEFAULT, int markerIcon_ = -1, 
-					 SDRC_EMissionDifficulty difficulty_ = SDRC_EMissionDifficulty.NORMAL, 
+					 SDRC_EMissionDifficulty difficulty_ = SDRC_EMissionDifficulty.RANDOM, 
 					 int xp_ = 0)
 	{
 		array<vector> pos_array = {pos_, "0 0 0"};
