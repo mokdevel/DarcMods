@@ -82,6 +82,16 @@ enum SDRC_EMissionIcon
 	ICON_LOSE_ROUND,
 };
 
+enum SDRC_EMissionIconDifficulty
+{
+	//Difficulty
+	ICON_DIFF_0,
+	ICON_DIFF_1,
+	ICON_DIFF_2,
+	ICON_DIFF_3,
+	ICON_DIFF_4,
+}
+
 [BaseContainerProps(), SCR_MapMarkerTitle()]
 class SDRC_MapMarkerEntryPlaced : SCR_MapMarkerEntryPlaced
 {
@@ -89,5 +99,15 @@ class SDRC_MapMarkerEntryPlaced : SCR_MapMarkerEntryPlaced
 	override SCR_EMapMarkerType GetMarkerType()
 	{
 	 	return SCR_EMapMarkerType.DARC_MISSION;
+	}	
+}
+
+[BaseContainerProps(), SCR_MapMarkerTitle()]
+class SDRC_MapMarkerEntryPlaced_Diff : SCR_MapMarkerEntryPlaced
+{
+	//------------------------------------------------------------------------------------------------
+	override SCR_EMapMarkerType GetMarkerType()
+	{
+	 	return SCR_EMapMarkerType.DARC_MISSION_DIFFICULTY;
 	}	
 }

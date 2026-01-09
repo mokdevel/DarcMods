@@ -4,6 +4,7 @@
 //! If you have multiple of similar marker types, you should add a single enum here and diffenrentiate the subtypes based on secondaryID (see SCR_MarkerMilitaryEntry)
 modded enum SCR_EMapMarkerType
 {
-	DARC_MISSION
+	DARC_MISSION,
+	DARC_MISSION_DIFFICULTY
 }
 

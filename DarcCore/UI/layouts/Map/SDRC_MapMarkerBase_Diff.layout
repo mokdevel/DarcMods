@@ -1,0 +1,240 @@
+FrameWidgetClass {
+ Name "rootFrame"
+ Slot FrameWidgetSlot "{5D2691F3AE61A7FC}" {
+  PositionX 0
+  OffsetLeft 0
+  PositionY 0
+  OffsetTop 0
+  SizeX 88
+  OffsetRight -88
+  SizeY 88
+  OffsetBottom -88
+  Alignment 0.5 0.5
+ }
+ "Z Order" 61
+ IsPixelPerfect 0
+ Clipping False
+ "Ignore Cursor" 0
+ components {
+  SCR_MapMarkerWidgetComponent "{5D5280F6FAEE865B}" {
+  }
+  SCR_MapElementMoveComponent "{5E3CD8EAE8051CB0}" {
+  }
+ }
+ {
+  ButtonWidgetClass "{6852876C4076B116}" {
+   Name "Button0"
+   Slot FrameWidgetSlot "{668885C5A3880DA4}" {
+    PositionX 26
+    OffsetLeft 26
+    PositionY 0
+    OffsetTop 0
+    SizeX 34
+    OffsetRight -60
+    SizeY 45
+    OffsetBottom -45
+   }
+   components {
+    SDRC_MapClickComp "{668885C5A9684BEE}" {
+    }
+   }
+   style blank
+  }
+  VerticalLayoutWidgetClass "{6852876C4076B114}" {
+   Name "VerticalLayout0"
+   Slot FrameWidgetSlot "{5D56BA46E7717D6A}" {
+    Anchor 0.5 0.5 0.5 0.5
+    OffsetLeft 0
+    OffsetTop 0
+    SizeX 88
+    OffsetRight -88
+    SizeY 88
+    OffsetBottom -88
+    Alignment 0.5 0.5
+   }
+   {
+    TextWidgetClass "{6852876C4076B11A}" {
+     Name "MarkerTimestamp"
+     Slot LayoutSlot "{65671A61829AE7A1}" {
+     }
+     Color 0.0003 0.0003 0.0003 1
+     Text ""
+     "Font Size" 12
+     "Min Font Size" 12
+     "Horizontal Alignment" Center
+     Offset 0 0
+    }
+    FrameWidgetClass "{6852876C4076B119}" {
+     Name "Frame0"
+     Slot LayoutSlot "{5E3E82F0B6DE3AE5}" {
+      HorizontalAlign 1
+      VerticalAlign 1
+     }
+     {
+      ImageWidgetClass "{6852876C4076B118}" {
+       Name "MarkerIconGlow"
+       Slot FrameWidgetSlot "{5E3E82F0B6D23F67}" {
+        Anchor 0 0 0 0
+        PositionX 2
+        OffsetLeft 2
+        PositionY 4
+        OffsetTop 4
+        SizeX 32
+        OffsetRight -34
+        SizeY 64
+        OffsetBottom -68
+       }
+       Clipping False
+       Color 0.007 0.012 0.014 0.6
+       Texture "{A07F0C1D34FDFD4E}UI/Textures/Icons/SDRC_icons_mapMarkersUInew.imageset"
+       Image "gm_mission_X_map"
+       Size 54 110
+      }
+      ImageWidgetClass "{6852876C4076B11F}" {
+       Name "MarkerIcon"
+       Slot FrameWidgetSlot "{5E3E82F0B6D23F67}" {
+        Anchor 0 0 0 0
+        OffsetLeft 0
+        OffsetTop 0
+        SizeX 32
+        OffsetRight -32
+        SizeY 64
+        OffsetBottom -64
+       }
+       Clipping False
+       Texture "{A07F0C1D34FDFD4E}UI/Textures/Icons/SDRC_icons_mapMarkersUInew.imageset"
+       Image "gm_mission_X_map"
+       Size 54 110
+      }
+     }
+    }
+    SizeLayoutWidgetClass "{6852876C4076B369}" {
+     Name "SymbolWidget"
+     Slot LayoutSlot "{5DB880D509DB9B90}" {
+      HorizontalAlign 1
+      VerticalAlign 1
+     }
+     "Is Enabled" 0
+     "Is Visible" 0
+     AllowWidthOverride 1
+     WidthOverride 56
+     AllowHeightOverride 1
+     HeightOverride 56
+     {
+      OverlayWidgetClass "{6852876C4076B36B}" {
+       Name "SymbolOverlay"
+       Slot AlignableSlot "{5DB880D509AA11C2}" {
+        HorizontalAlign 3
+        VerticalAlign 3
+       }
+       "Is Visible" 0
+      }
+     }
+    }
+    TextWidgetClass "{6852876C4076B36A}" {
+     Name "MarkerText"
+     Slot LayoutSlot "{5D8AED759625D73D}" {
+      Padding 0 -24 0 0
+     }
+     Clipping False
+     "Ignore Cursor" 0
+     Text "Testing a quite long description"
+     "Font Size" 16
+     "Min Font Size" 16
+     "Horizontal Alignment" Center
+     Wrap 1
+     FontProperties FontProperties "{5D2693726AAD1299}" {
+      Font "{3E7733BAC8C831F6}UI/Fonts/RobotoCondensed/RobotoCondensed_Regular.fnt"
+      Bold 1
+      ShadowSize 1
+     }
+    }
+    HorizontalLayoutWidgetClass "{6852876C4076B354}" {
+     Name "HorizontalLayout0"
+     Slot LayoutSlot "{627C693E4DB0469B}" {
+      HorizontalAlign 1
+      VerticalAlign 0
+      Padding 0 -64 0 64
+     }
+     "Is Visible" 0
+     {
+      ImageWidgetClass "{6852876C4076B357}" {
+       Name "PlatformIcon"
+       Slot LayoutSlot "{627C69318E3FFA61}" {
+        HorizontalAlign 1
+        VerticalAlign 1
+       }
+       Size 32 4
+       Filter 0
+       "Shadow Offset" 1 1
+      }
+      TextWidgetClass "{6852876C4076B356}" {
+       Name "MarkerAuthor"
+       Slot LayoutSlot "{5D56BA46CC7AE802}" {
+        HorizontalAlign 0
+        VerticalAlign 1
+        Padding 2 0 0 0
+       }
+       Clipping False
+       Text "TEXT FROM ME"
+       "Font Size" 12
+       "Min Font Size" 12
+       "Horizontal Alignment" Center
+       FontProperties FontProperties "{5D2693726AAD1299}" {
+        Font "{3E7733BAC8C831F6}UI/Fonts/RobotoCondensed/RobotoCondensed_Regular.fnt"
+        ShadowSize 3
+       }
+      }
+      ImageWidgetClass "{6852876C4076FFBE}" {
+       Name "MarkerModeIcon"
+       Slot LayoutSlot "{627C69318E3FFA61}" {
+        HorizontalAlign 2
+        VerticalAlign 1
+       }
+       "Is Visible" 0
+       Clipping False
+       Texture "{3262679C50EF4F01}UI/Textures/Icons/icons_wrapperUI.imageset"
+       Image "public"
+       Size 16 16
+      }
+     }
+    }
+    HorizontalLayoutWidgetClass "{6852876C4076FFB9}" {
+     Name "TypeIconHLayout"
+     Slot LayoutSlot "{5EF69515ACDA89C9}" {
+      HorizontalAlign 1
+      VerticalAlign 0
+      Padding 0 0 0 2
+     }
+     "Is Visible" 0
+    }
+   }
+  }
+  VerticalLayoutWidgetClass "{6852876C4076FFB8}" {
+   Name "VerticalLayout1"
+   Slot FrameWidgetSlot "{6850998B7A531B88}" {
+    Anchor 0.5 0 0.5 0
+    PositionX -17
+    OffsetLeft -17
+    PositionY 31
+    OffsetTop 31
+    SizeX 33
+    OffsetRight -16
+    SizeY 8
+    OffsetBottom -39
+   }
+   "Is Visible" 0
+   {
+    ImageWidgetClass "{6852876C40750FA7}" {
+     Name "Difficulty"
+     Slot LayoutSlot "{6850BD5C53F7BA55}" {
+      HorizontalAlign 1
+     }
+     Size 32 4
+     "Shadow Offset" 1 1
+     "Shadow Color" 0.162 0.162 0.162 1
+    }
+   }
+  }
+ }
+}
