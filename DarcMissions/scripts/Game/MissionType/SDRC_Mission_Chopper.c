@@ -414,7 +414,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			"Helicopter lost track of you.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		chopper.ai.Set
@@ -456,7 +456,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			"Gunship lost track of you.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		chopper.ai.Set
@@ -509,7 +509,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			"Guards have left.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		chopper.ai.Set
@@ -557,7 +557,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			"Patrol has left.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		chopper.ai.Set
@@ -608,7 +608,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			"Hunters are sent to your location.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		chopper.ai.Set

@@ -53,7 +53,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 			"Material in the silo was secured by the enemy.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		hvtItem.ai.Set(

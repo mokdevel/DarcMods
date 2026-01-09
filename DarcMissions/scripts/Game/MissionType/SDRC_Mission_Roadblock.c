@@ -180,7 +180,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	//------------------------------------------------------------------------------------------------	
 	override void DoWin()
 	{	
-		SDRC_CampHelper.AddLoot(m_DC_Roadblock);
+		SDRC_CampHelper.AddLoot(m_DC_Roadblock, GetDifficulty());
 		super.DoWin();
 	}	
 }
@@ -286,7 +286,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			"Road was kept safe as planned.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0		
 		);
 		roadblock.ai.Set(
@@ -304,7 +304,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 				{0}, SDRC_EMissionSuccess.WIN,
 				1.0, {5, 20},
 				"Second Wave coming",
-				SDRC_EMissionDifficulty.RANDOM, 0
+				SDRC_EDifficulty.RANDOM, 0
 			);
 			roadblock.secondWave = secondWave;
 		#endif
@@ -378,7 +378,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			"Scared of the enemy? %l is not a place for you.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0		
 		);
 		roadblock.ai.Set(
@@ -525,7 +525,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			"The road toll was too much for you.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0		
 		);		
 		roadblock.ai.Set(
@@ -664,7 +664,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			"Guards has left road near %l.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0		
 		);		
 		roadblock.ai.Set(
@@ -820,7 +820,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			"Car is fixed, guards left area near %l.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0		
 		);		
 		roadblock.ai.Set(

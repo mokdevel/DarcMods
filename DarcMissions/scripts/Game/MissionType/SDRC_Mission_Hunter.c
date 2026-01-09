@@ -401,7 +401,7 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 			"Hunters lost track of you.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		hunter.ai.Set(
@@ -430,7 +430,7 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 			"Sharpshooters lost track of you.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		hunter.ai.Set(
@@ -463,7 +463,7 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 			"Recon team lost track of you.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		hunter.ai.Set(

@@ -158,7 +158,6 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		}
 		else
 		{
-			//IEntity entity = SDRC_SpawnHelper.SpawnItemInBuildingWithLoot(m_Building, m_DC_HvtVip.lootBox, true, m_DC_HvtVip.loot.items, m_DC_HvtVip.loot.itemChance);			
 			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuildingWithLoot(m_Building, m_DC_HvtVip.lootBox);
 			if (entity)
 			{
@@ -197,7 +196,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	override void DoWin()
 	{	
 		SDRC_Loot loot = m_DC_HvtVip.loot;
-		SDRC_LootHelper.SpawnItemsToStorage(loot.box, loot.items, loot.itemChance);
+		SDRC_LootHelper.SpawnItemsToStorage(loot.box, loot.items, loot.itemChance, GetDifficulty());
 		super.DoWin();
 	}
 	
@@ -360,7 +359,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"The target escaped.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0		
 		);
 		HvtVip.ai.Set(
@@ -410,7 +409,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"The target escaped.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0		
 		);
 		HvtVip.ai.Set(
@@ -461,7 +460,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"The target escaped.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0		
 		);
 		HvtVip.ai.Set(
@@ -514,7 +513,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"The judgement day is postponed.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0		
 		);
 		HvtVip.ai.Set(
@@ -565,7 +564,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"No drinks for you this time.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0		
 		);
 		HvtVip.ai.Set(

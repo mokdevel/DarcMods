@@ -276,7 +276,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			//Handle loot difficulty
 			m_DC_Convoy.loot.itemChance = SDRC_MissionHelper.GetLootChance(m_DC_Convoy.loot.itemChance, GetDifficulty());
 
-			SDRC_LootHelper.SpawnItemsToStorage(m_DC_Convoy.loot.box, m_DC_Convoy.loot.items, m_DC_Convoy.loot.itemChance);
+			SDRC_LootHelper.SpawnItemsToStorage(m_DC_Convoy.loot.box, m_DC_Convoy.loot.items, m_DC_Convoy.loot.itemChance, GetDifficulty());
 			SDRC_Log.Add("[SDRC_Mission_Convoy:DoWin] " +  GetId() + " : Loot added.", LogLevel.DEBUG);								
 		}		
 		super.DoWin();
@@ -387,7 +387,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			"The convoy reached %d as planned.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		convoy.ai.Set(
@@ -455,7 +455,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			"All the goodies in the truck was never for you.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		convoy.ai.Set(
@@ -525,7 +525,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			"Were you scared of a piece metal? Cowards!", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		convoy.ai.Set(
@@ -589,7 +589,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			"Oh dear, your failure will be remembered.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		convoy.ai.Set(

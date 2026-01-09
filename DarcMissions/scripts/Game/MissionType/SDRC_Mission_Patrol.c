@@ -286,7 +286,7 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 			"Patroling completed, the world is saved.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);		
 		patrol.ai.Set(
@@ -325,7 +325,7 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 			"You're not a worthy enemy for this patrol.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);			
 		patrol.ai.Set(
@@ -359,7 +359,7 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 			"Patrol left the area.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);		
 		patrol.ai.Set(
@@ -395,7 +395,7 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 			"Such a small force was able to beat you.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);				
 		patrol.ai.Set(

@@ -19,7 +19,7 @@ class SDRC_MissionConfigGeneral : Managed
 	string faction;							//Faction for the mission. Setting as empty, works as the default to select from the enemyFactions
 	string markerType;						//Marker type for the mission
 	int markerIcon;							//Marker ID within markerType
-	SDRC_EMissionDifficulty difficulty;		//Difficulty for specific mission
+	SDRC_EDifficulty difficulty;			//Difficulty for specific mission
 	int xp;									//Experience given	
 	
 	//------------------------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ class SDRC_MissionConfigGeneral : Managed
 					 string winMessage_ = SDRC_DEFAULT, string loseMessage_ = SDRC_DEFAULT, 
 					 string faction_ = SDRC_DEFAULT, 
 					 string markerType_ = SDRC_DEFAULT, int markerIcon_ = -1, 
-					 SDRC_EMissionDifficulty difficulty_ = SDRC_EMissionDifficulty.RANDOM, 
+					 SDRC_EDifficulty difficulty_ = SDRC_EDifficulty.RANDOM, 
 					 int xp_ = 0)
 	{
 		array<vector> pos_array = {pos_, "0 0 0"};
@@ -45,7 +45,7 @@ class SDRC_MissionConfigGeneral : Managed
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void Set(int subIdx_, string comment_, array<vector> pos_, float size_, array<EMapDescriptorType> locationTypes_, string posName_, string title_, string info_, SDRC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, string markerType_, int markerIcon_, SDRC_EMissionDifficulty difficulty_, int xp_)
+	void Set(int subIdx_, string comment_, array<vector> pos_, float size_, array<EMapDescriptorType> locationTypes_, string posName_, string title_, string info_, SDRC_EMissionWinCondition winCondition_, string winMessage_, string loseMessage_, string faction_, string markerType_, int markerIcon_, SDRC_EDifficulty difficulty_, int xp_)
 	{
 		subIdx = subIdx_;
 		comment = comment_;

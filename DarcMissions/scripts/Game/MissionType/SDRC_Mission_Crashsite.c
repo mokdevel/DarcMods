@@ -242,7 +242,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	//------------------------------------------------------------------------------------------------	
 	override void DoWin()
 	{	
-		SDRC_CampHelper.AddLoot(m_DC_Crashsite);
+		SDRC_CampHelper.AddLoot(m_DC_Crashsite, GetDifficulty());
 		super.DoWin();
 	}	
 	
@@ -397,7 +397,7 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 			"No loot for you today.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		crashsite.ai.Set
@@ -492,7 +492,7 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 			"The cargo was lost.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		crashsite.ai.Set

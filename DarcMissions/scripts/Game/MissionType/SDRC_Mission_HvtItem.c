@@ -138,7 +138,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	//------------------------------------------------------------------------------------------------	
 	override void DoWin()
 	{	
-		SDRC_CampHelper.AddLoot(m_DC_HvtItem);
+		SDRC_CampHelper.AddLoot(m_DC_HvtItem, GetDifficulty());
 		super.DoWin();
 	}
 	
@@ -283,7 +283,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 			"You failed in your mission!",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		hvtItem.ai.Set(
@@ -396,7 +396,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 			"The enemy will fight with their bellies full.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		hvtItem.ai.Set(
@@ -486,7 +486,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 			"Enemy communication is working loud and clear.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		hvtItem.ai.Set(

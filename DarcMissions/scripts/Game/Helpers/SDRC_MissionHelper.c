@@ -391,7 +391,7 @@ class SDRC_MissionHelper
 	/*! 
 	Recalculate loot spawn chance according to difficulty
 	*/	
-	static float GetLootChance(float chance, SDRC_EMissionDifficulty difficulty = SDRC_EMissionDifficulty.NORMAL)
+	static float GetLootChance(float chance, SDRC_EDifficulty difficulty = SDRC_EDifficulty.NORMAL)
 	{
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)

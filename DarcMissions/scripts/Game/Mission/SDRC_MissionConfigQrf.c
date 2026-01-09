@@ -10,7 +10,7 @@ class SDRC_MissionConfigSecondWave : Managed
 	ref array<int> delay = {};									//(seconds) Delay min-max before spawning second wave
 	ref array<int> distance = {};								//min-max distance for the enemy spawn
 	string info;												//Details for the hint shown for players
-	SDRC_EMissionDifficulty difficulty;							//Difficulty for specific mission
+	SDRC_EDifficulty difficulty;								//Difficulty for specific mission
 	int xp;														//Experience given	
 }
 #endif

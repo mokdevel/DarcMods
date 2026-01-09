@@ -127,7 +127,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	//------------------------------------------------------------------------------------------------	
 	override void DoWin()
 	{	
-		SDRC_CampHelper.AddLoot(m_DC_Occupation);
+		SDRC_CampHelper.AddLoot(m_DC_Occupation, GetDifficulty());
 		super.DoWin();
 	}
 }
@@ -232,7 +232,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			"The patrol kept %l safe from you. Pathetic.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		occupation.ai.Set(
@@ -271,7 +271,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			"The camp near %l was never destroyed. Bandits rule!",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		occupation.ai.Set(
@@ -356,7 +356,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			"The enemy was stronger this time.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		occupation.ai.Set(
@@ -443,7 +443,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			"Car was fixed and the loot was lost.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		occupation.ai.Set(
@@ -538,7 +538,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			"The camp was packed and the campers left with their car.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		occupation.ai.Set(
@@ -649,7 +649,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			"Enemies have left with the loot. Shame on you.", 
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);
 		occupation.ai.Set(

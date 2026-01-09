@@ -130,7 +130,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 	//------------------------------------------------------------------------------------------------	
 	override void DoWin()
 	{	
-		SDRC_CampHelper.AddLoot(m_DC_Stash);
+		SDRC_CampHelper.AddLoot(m_DC_Stash, GetDifficulty());
 		super.DoWin();
 	}
 }
@@ -230,7 +230,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 			"Loot lost.",
 			"",
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_STASH_MAP,
-			SDRC_EMissionDifficulty.RANDOM,
+			SDRC_EDifficulty.RANDOM,
 			0
 		);		
 		stash.ai.Set(

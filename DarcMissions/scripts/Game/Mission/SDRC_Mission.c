@@ -646,27 +646,27 @@ class SDRC_Mission : Managed
 	}
 
 	//------------------------------------------------------------------------------------------------
-	SDRC_EMissionDifficulty GetDifficulty()
+	SDRC_EDifficulty GetDifficulty()
 	{
 		return m_General.difficulty;
 	}
 			
-	void SetDifficulty(SDRC_EMissionDifficulty difficulty)
+	void SetDifficulty(SDRC_EDifficulty difficulty)
 	{
-		if (difficulty == SDRC_EMissionDifficulty.RANDOM)
+		if (difficulty == SDRC_EDifficulty.RANDOM)
 		{
 			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 			difficulty = baseGameMode.missionFrame.m_Config.missionDifficultyList.GetRandomElement();
-			if ( (difficulty < SDRC_EMissionDifficulty.EASY) || (difficulty > SDRC_EMissionDifficulty.HARD) )
+			if ( (difficulty < SDRC_EDifficulty.EASY) || (difficulty > SDRC_EDifficulty.HARD) )
 			{
 				SDRC_Log.Add("[SDRC_Mission:SetDifficulty] Incorrect value found in missionDifficultyList. Please check dc_missionConfig.json . Reverting to NORMAL difficulty.", LogLevel.WARNING);		
-				difficulty = SDRC_EMissionDifficulty.NORMAL;
+				difficulty = SDRC_EDifficulty.NORMAL;
 			}
 		}
 		
 		m_General.difficulty = difficulty;
 		
-		SDRC_Log.Add("[SDRC_Mission:SetDifficulty] " +  GetId() + " : " + SCR_Enum.GetEnumName(SDRC_EMissionDifficulty, difficulty) + " (" + difficulty + ")", LogLevel.DEBUG);		
+		SDRC_Log.Add("[SDRC_Mission:SetDifficulty] " +  GetId() + " : " + SCR_Enum.GetEnumName(SDRC_EDifficulty, difficulty) + " (" + difficulty + ")", LogLevel.DEBUG);		
 	}
 		
 	//------------------------------------------------------------------------------------------------
@@ -724,8 +724,8 @@ class SDRC_Mission : Managed
 			
 			if (baseGameMode.missionFrame.m_Config.showMissionDifficulty)
 			{
-				int difficultyIcon = SDRC_EMissionIcon.ICON_DIFF_0;// + GetDifficulty();
-				SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), difficultyIcon, GetId(), "", markerTypeString: "DARC_MISSION");
+				int difficultyIcon = GetDifficulty();	//NOTE: This returns a value 0-4 which represents SDRC_EMissionIconDifficulty
+				SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), difficultyIcon, GetId(), "", markerTypeString: "DARC_MISSION_DIFFICULTY");
 			}
 		}
 	}

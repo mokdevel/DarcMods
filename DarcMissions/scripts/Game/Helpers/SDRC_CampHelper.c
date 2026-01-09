@@ -105,14 +105,6 @@ sealed class SDRC_CampHelper
 				//Handle loot difficulty
 				camp.loot.itemChance = SDRC_MissionHelper.GetLootChance(camp.loot.itemChance, mission.GetDifficulty());
 			}
-			
-/*			//Put loot
-			if (camp.loot)			
-			{
-				camp.loot.box = mission.GetFromEntityList(0);
-				SDRC_LootHelper.SpawnItemsToStorage(camp.loot.box, camp.loot.items, camp.loot.itemChance);
-				SDRC_Log.Add("[SDRC_CampHelper:Spawn] Loot added.", LogLevel.DEBUG);								
-			}*/
 
 			return true;			
 		}		
@@ -122,7 +114,7 @@ sealed class SDRC_CampHelper
 	/*!
 	Spawn loot items. This is usually called at the end of the mission.
 	*/
-	static bool AddLoot(SDRC_Camp camp)
+	static bool AddLoot(SDRC_Camp camp, SDRC_EDifficulty difficulty = SDRC_EDifficulty.IGNORE)
 	{
 		if (!camp.loot)
 		{
@@ -135,12 +127,9 @@ sealed class SDRC_CampHelper
 			SDRC_Log.Add("[SDRC_CampHelper:AddLoot] No loot box defined.", LogLevel.DEBUG);
 			return false;
 		}
-
-		SDRC_Log.Add("[SDRC_CampHelper:AddLoot] Adding to: " + camp.loot.box, LogLevel.SPAM);
-		SDRC_Log.Add("[SDRC_CampHelper:AddLoot] Items: " + camp.loot.items, LogLevel.SPAM);
 				
 		//NOTE: itemChance difficulty is handled in TBD
-		SDRC_LootHelper.SpawnItemsToStorage(camp.loot.box, camp.loot.items, camp.loot.itemChance);
+		SDRC_LootHelper.SpawnItemsToStorage(camp.loot.box, camp.loot.items, camp.loot.itemChance, difficulty);
 		SDRC_Log.Add("[SDRC_CampHelper:AddLoot] Loot added.", LogLevel.DEBUG);
 		
 		return true;

@@ -27,7 +27,7 @@ class SDRC_MissionConfigAi : Managed
 	
 	NOTE: mission and missionFrame difficulty affects the outcome	
 	*/	
-	int GetCount(SDRC_EMissionDifficulty difficulty = SDRC_EMissionDifficulty.NORMAL)
+	int GetCount(SDRC_EDifficulty difficulty = SDRC_EDifficulty.NORMAL)
 	{
 		int cnt = SDRC_Misc.RandomInt(count[0], count[1]);
 		
@@ -57,7 +57,7 @@ class SDRC_MissionConfigAi : Managed
 	
 	NOTE: mission and missionFrame difficulty affects the outcome	
 	*/	
-	int GetSkill(SDRC_EMissionDifficulty difficulty = SDRC_EMissionDifficulty.NORMAL)
+	int GetSkill(SDRC_EDifficulty difficulty = SDRC_EDifficulty.NORMAL)
 	{
 		int sk = skill;
 		
@@ -84,7 +84,7 @@ class SDRC_MissionConfigAi : Managed
 	NOTE: mission and missionFrame difficulty affects the outcome	
 	TBD: I'm a little unsure how this in total affects, but I presume the higher is better.
 	*/
-	float GetPerception(SDRC_EMissionDifficulty difficulty = SDRC_EMissionDifficulty.NORMAL)
+	float GetPerception(SDRC_EDifficulty difficulty = SDRC_EDifficulty.NORMAL)
 	{
 		float perc = perception;
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
