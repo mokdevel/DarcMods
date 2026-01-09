@@ -16,7 +16,7 @@ Currently supported prefabs for Chopper mission:
 - ``"{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et"``
 
 ### Modded
-Modded helicopters are supported through a compatibility mod. Currently available:'
+Modded helicopters are supported through a compatibility mod. Currently available:
 * https://reforger.armaplatform.com/workshop/672F2BB6523FBA29-WZHelisforDarcMissions
 * https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcMissions
 * https://reforger.armaplatform.com/workshop/6850D5F667CEFF94-AH-6MforDarcMissions
