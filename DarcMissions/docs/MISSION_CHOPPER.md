@@ -1,7 +1,14 @@
 ## Mission : Chopper
 Example: [dc_missionConfig_Chopper.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Chopper.json)
 
-A flying helicopter is spawned on the edges of the map and will fly to the mission location. Once the position is reached, the helicopter will continue to patrol randomly. If the helicopter is armed, AI shoot if an enemy is seen. The shooting is Arma Reforger functionality. Once the mission time is over, the helicopter will fly away (and despawn) ending the mission.
+A flying helicopter is spawned on the edges of the map and will fly to the mission location. If the helicopter is armed, AI shoot if an enemy is seen. The shooting is Arma Reforger functionality. 
+
+Once the missions position is reached, the helicopter will 
+* ``RANDOM`` : continue to patrol randomly.
+* ``PATROL`` : patrol around the mission location.
+* ``SEARCH`` : search for players while flying around. If players are found, the mission is over and Hunters are sent to clear out the area. The search is done by the AI itself and finding is depending on the perception value. 
+
+Once the mission time is over, the helicopter will fly away (and despawn) ending the mission.
 
 For the first release, there is no loot available. This is to be addressed in future updates.
 
@@ -48,5 +55,6 @@ array<float> flyDistance : (min, max) Distance for finding new positions.
 SDRC_EHeliWaypointGenerationType wpType : Helicopter way point functionality
   0 = NONE : Unused
   1 = RANDOM : Helicopter will find a new random destination depending on flyDistance
-  2 = PATROL : Unused currentlt. *TBD*
+  2 = PATROL : Helicopter patrols around a given area.
+  3 = SEARCH : Helicopter flies and searches for players. Once player is found, mission completes and Hunters are sent to kill players. 
 ```

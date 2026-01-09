@@ -13,14 +13,15 @@ Recommendation: For mission difficulty settings to take effect, delete all your 
 Main features:
 * Refactored the json loading/saving. Better looking jsons and provides capability for (future) error checking. 
 * Support for Chinese People's Liberation Army (PLA) faction.
-* Mission difficulty settings enabled for all missions. 
-* Mission difficulty can be shown on marker. 
+* Mission difficulty settings enabled for all missions. Mission difficulty is shown on the marker. See documentation for details.
 
 Chopper mission:
-* New sub-mission: Helicopter recon. If you're seen, hunters will be sent after you.
-* New sub-mission with support for helicopters from mods below. In case the mods are not available, reverts back to vanilla helicopters.
+* New sub-mission: Helicopter recon. If you're seen, Hunters will be sent after you.
+* New sub-mission with support for helicopters from mods below. In case the mods are not available, missions revert back to vanilla helicopters.
 ** https://reforger.armaplatform.com/workshop/672F2BB6523FBA29-WZHelisforDarcMissions
 ** https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcMissions
+** https://reforger.armaplatform.com/workshop/6850D5F667CEFF94-AH-6MforDarcMissions
+** https://reforger.armaplatform.com/workshop/684F3C94BD457F85-KA-52forDarcMissions
 
 Changes:
 * Support for Warrior Cultist and Kamikaze Cultist in ``BALLIEN_BC_FACTION``.
