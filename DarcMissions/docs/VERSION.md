@@ -8,10 +8,13 @@ No changes in mission jsons.
 ## Next release (unreleased)
 Changed jsons - remove the files to receive updated ones.
 * dc_missionConfig_Chopper.json
+Recommendation: For mission difficulty settings to take effect, delete all your mission configurations dc_missionConfig_*.json . No need to delete in case you are happy with NORMAL difficulty.
 
 Main features:
 * Refactored the json loading/saving. Better looking jsons and provides capability for (future) error checking. 
 * Support for Chinese People's Liberation Army (PLA) faction.
+* Mission difficulty settings enabled for all missions. 
+* Mission difficulty can be shown on marker. 
 
 Chopper mission:
 * New sub-mission: Helicopter recon. If you're seen, hunters will be sent after you.
@@ -23,6 +26,9 @@ Changes:
 * Support for Warrior Cultist and Kamikaze Cultist in ``BALLIEN_BC_FACTION``.
 * Loot boxes and mission targets (HVT Item) can be deleted/moved in GM. 
 * Helicopter flight model fixes to avoid flying nose-up. Better, not perfect yet.
+* dc_missionConfig.json : 
+  * Added ``showMissionDifficulty`` : Show/hide static mission difficult on markers.
+  * Added ``missionDifficultyList`` : List of difficulty values from which missions select their value.
 
 ## 202512xx
 Changed jsons - remove the files to receive updated ones.

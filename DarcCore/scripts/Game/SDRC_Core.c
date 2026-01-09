@@ -3,6 +3,7 @@
 This is the main Core file. 
 */
 
+//------------------------------------------------------------------------------------------------
 class SDRC_EmptyPos : Managed
 {
 	int limit;
