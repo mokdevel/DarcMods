@@ -59,7 +59,7 @@ sealed class SDRC_LootHelper
 				
 				itemChance = Math.Clamp(itemChance * lootChanceCoef, 0, 1.0);
 				
-				int itemCount = itemNames.Count() * lootCountCoef;
+				int itemCount = Math.Round(itemNames.Count() * lootCountCoef);
 				itemCount = Math.ClampInt(itemCount, 0, 10000);
 				
 				int diff = itemCount - itemNames.Count();
@@ -72,7 +72,6 @@ sealed class SDRC_LootHelper
 				}
 			}						
 		}
-		
 		
 		SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Storage: " + storage, LogLevel.SPAM);
 		SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Items: " + itemNames, LogLevel.SPAM);

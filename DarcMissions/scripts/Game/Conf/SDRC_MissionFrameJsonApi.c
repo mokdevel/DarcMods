@@ -209,7 +209,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 				  -1,  //11 - CHOPPER
 			};
 //			missionDifficultyList = {0,1,2,3,4};
-			missionDifficultyList = {3,4};
+			missionDifficultyList = {0,1};
 		
 			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
@@ -255,7 +255,7 @@ class SDRC_MissionTypeConfig : Managed
 class SDRC_MissionDifficulty : Managed
 {
 	//easy, moderate, normal, tough, hard
-	ref array<float> aiCountCoef = 			{0.50, 0.60, 1.01, 2.01, 3.01};
+	ref array<float> aiCountCoef = 			{0.50, 0.60, 1.01, 1.80, 2.30};
 	ref array<float> aiSkillCoef = 			{0.20, 0.60, 1.01, 1.30, 1.60};
 	ref array<float> aiPerceptionCoef = 	{0.20, 0.60, 1.01, 1.30, 1.60};
 	ref array<float> lootChanceCoef = 		{0.50, 0.60, 1.01, 1.10, 1.20};	

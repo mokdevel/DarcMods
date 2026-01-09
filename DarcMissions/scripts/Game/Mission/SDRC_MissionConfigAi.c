@@ -36,17 +36,17 @@ class SDRC_MissionConfigAi : Managed
 		{
 			float coef = m_BaseGameMode.missionFrame.m_Config.missionDifficulty.aiCountCoef[difficulty];
 			
-			int low = count[0] * coef;
+			int low = Math.Round(count[0] * coef);
 			if (low < count[0])
 			{
 				low = count[0];
 			}
-			int high = count[1] * coef;
+			int high = Math.Round(count[1] * coef);
 			if (high < count[1])
 			{
 				high = count[1];
 			}
-			cnt = SDRC_Misc.RandomInt(low, high);
+			cnt = SDRC_Misc.RandomFloat(low, high);
 		}
 		
 		return cnt;

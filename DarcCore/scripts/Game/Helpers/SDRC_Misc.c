@@ -18,7 +18,7 @@ sealed class SDRC_Misc
 		{
 			return min;
 		}
-		return Math.RandomFloat(min, max);	
+		return Math.RandomFloatInclusive(min, max);	
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ sealed class SDRC_Misc
 		{
 			return min;
 		}
-		return Math.RandomInt(min, max);	
+		return Math.RandomIntInclusive(min, max);	
 	}
 			
 	//------------------------------------------------------------------------------------------------

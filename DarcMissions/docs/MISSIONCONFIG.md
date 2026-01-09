@@ -85,13 +85,13 @@ Difficulty is represented on the mission icon. The left icon is ``EASY`` and ``H
 
 ### SDRC_MissionDifficulty
 Difficulty affects various aspects of the missions. Each 'coef' has five values that refer to the different difficulty level. 
-* ``aiCountCoef`` : The amount of AIs/AI groups for the mission. If mission would spawn 2, on ``EASY``, the amount would drop to 1 (2 * 0.5), but with ``HARD`` the amount would be 6 (2 * 3). In most cases missions define the amount of groups to use and a group may include a high amount of AIs. Thus, you may have a lot to fight.
+* ``aiCountCoef`` : The amount of AIs/AI groups for the mission. If mission would spawn 2, on ``EASY``, the amount would drop to 1 (2 * 0.5), but with ``HARD`` the amount would be 5 (2 * 2.3 = 4.6 .. rounded to 5). In most cases missions define the amount of groups to use and a group may include a high amount of AIs. Thus, you may have a lot to fight.
 * ``aiSkillCoef`` : The multiplier used to modify the AI skills. This refers to ``EAISkill`` value. If the value reaches max value of 100 (CYLON), the AIs will be very good at hitting you.
 * ``aiPerceptionCoef`` : The multiplier used to modify the AI perception. With a high value, AIs are better at spotting you. Unsure what are the actual limits, but from BI code one can see that with 0.4 the AI is threatened and are bad at finding enemies. 1.0 is the normal state and 2.5 is considered vigilant/alerted.
 * ``lootChanceCoef`` : The multiplier used to modify the loot chance. For each item on the lootlist, the chance is tested.
 * ``lootCountCoef`` : The multiplier used to modify the loot amount. When loot is spawned, the list provided is used. If this value increases the total, amount of items in the lootlist, additional items are added to the list from the original list.
 ```
-array<float> aiCountCoef =      {0.50, 0.60, 1.01, 2.01, 3.01};
+array<float> aiCountCoef =      {0.50, 0.60, 1.01, 1.80, 2.30};
 array<float> aiSkillCoef =      {0.20, 0.60, 1.01, 1.30, 1.60};
 array<float> aiPerceptionCoef = {0.20, 0.60, 1.01, 1.30, 1.60};
 array<float> lootChanceCoef =   {0.50, 0.60, 1.01, 1.10, 1.20};	
