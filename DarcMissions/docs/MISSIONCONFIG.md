@@ -43,6 +43,14 @@ array<int> missionLimit : Limits the amount of mission types that are spawned. T
     2,  // 9 - HVTITEM
     2,  //10 - STASH
     2,  //11 - CHOPPER
+array<int> missionDifficultyList : List of difficulties (0-4) from which the mission difficulty is chosen. 
+  Random is the default for missions and the list contains mainly NORMAL difficulty values. This is the most probably selection.
+ -1 = RANDOM
+  0 = EASY
+  1 = MODERATE
+  2 = NORMAL
+  3 = TOUGH
+  4 = HARD
 SDRC_MissionDifficulty missionDifficulty : Difficulty settings.
 SDRC_MissionTypeConfig missionDynamic : Dynamic missions configurations.
 SDRC_MissionTypeConfig missionStatic : Static missions configurations.
@@ -63,13 +71,24 @@ Unsupported values
 * ``MEC``
 
 ### SDRC_MissionDifficulty
-Difficulty setting that affects mission AI behaviour and loot reward. Coef values in the array refer to SDRC_EMissionDifficulty values: {``EASY``, ``MODERATE``, ``NORMAL``, ``TOUGH``, ``HARD``}
+Difficulty setting that affects mission AI behaviour and loot reward. There are five different levels where ``RANDOM`` picks from the ``missionDifficultyList``.
 ```
-array<float> aiCountCoef =      {0.5, 0.6, 1.0, 2.0, 3.0};
-array<float> aiSkillCoef =      {0.2, 0.6, 1.0, 1.3, 1.6};
-array<float> aiPerceptionCoef = {0.2, 0.6, 1.0, 1.3, 1.6};
-array<float> lootChanceCoef = 	{0.5, 0.6, 1.0, 1.2, 1.4};	
-array<float> lootCountCoef =    {1.0, 1.0, 1.0, 1.0, 1.0};	
+-1 = RANDOM
+ 0 = EASY : Low amount of enemies, low amount of loot
+ 1 = MODERATE
+ 2 = NORMAL
+ 3 = TOUGH
+ 4 = HARD : A lot of dangerous enemies with high amount of loot.
+```
+
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/icon_difficulty.png" width=30% height=30%>
+
+```
+array<float> aiCountCoef = 			{0.50, 0.60, 1.01, 2.01, 3.01};
+array<float> aiSkillCoef = 			{0.20, 0.60, 1.01, 1.30, 1.60};
+array<float> aiPerceptionCoef = 	{0.20, 0.60, 1.01, 1.30, 1.60};
+array<float> lootChanceCoef = 		{0.50, 0.60, 1.01, 1.10, 1.20};	
+array<float> lootCountCoef = 		{0.50, 0.70, 1.01, 1.51, 2.01};	
 ```
 
 ### SDRC_MissionTypeConfig
