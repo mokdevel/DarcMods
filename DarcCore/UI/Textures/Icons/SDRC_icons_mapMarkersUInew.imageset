@@ -1,10 +1,10 @@
 ImageSetClass {
  RefSize 284 788
  Textures {
-  ImageSetTextureClass "{685110A82137758F}" {
+  ImageSetTextureClass "{68528D295666B623}" {
    screenSize FHD
    size 284 788
-   path "{84F3106DED43833A}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-100_atlas.edds"
+   path "{84F3106DED438339}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-100_atlas.edds"
   }
  }
  Images {
