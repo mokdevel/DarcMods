@@ -55,7 +55,7 @@ SDRC_MissionDifficulty missionDifficulty : Difficulty settings.
 SDRC_MissionTypeConfig missionDynamic : Dynamic missions configurations.
 SDRC_MissionTypeConfig missionStatic : Static missions configurations.
 ```
-### Factions
+## Factions
 The supported factions are listed below
 * ``US, USSR, FIA`` : Vanilla factions from Arma Reforger
 * ``RHS_USAF, RHS_AFRF``: RHS - [MOD](https://reforger.armaplatform.com/workshop/595F2BF2F44836FB-RHS-StatusQuo)
@@ -70,7 +70,7 @@ Unsupported values
 * ``RHS_ION``
 * ``MEC``
 
-### Difficulty
+## Difficulty
 Difficulty setting that affects mission AI behaviour and loot reward. There are five different levels where ``RANDOM`` picks from the ``missionDifficultyList``.
 ```
 -1 = RANDOM
@@ -80,9 +80,10 @@ Difficulty setting that affects mission AI behaviour and loot reward. There are 
  3 = TOUGH
  4 = HARD : A lot of dangerous enemies with high amount of loot.
 ```
-Difficulty is represented on the mission icon. The left most is ``EASY`` and ``HARD`` is on the right.
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/icon_difficulty.png" width=30% height=30%>
+Difficulty is represented on the mission icon. The left icon is ``EASY`` and ``HARD`` is on the right.
 
+### SDRC_MissionDifficulty
 Difficulty affects various aspects of the missions. Each 'coef' has five values that refer to the different difficulty level. 
 * ``aiCountCoef`` : The amount of AIs/AI groups for the mission. If mission would spawn 2, on ``EASY``, the amount would drop to 1 (2 * 0.5), but with ``HARD`` the amount would be 6 (2 * 3). In most cases missions define the amount of groups to use and a group may include a high amount of AIs. Thus, you may have a lot to fight.
 * ``aiSkillCoef`` : The multiplier used to modify the AI skills. This refers to ``EAISkill`` value. If the value reaches max value of 100 (CYLON), the AIs will be very good at hitting you.
