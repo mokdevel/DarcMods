@@ -1,7 +1,7 @@
 ImageSetClass {
  RefSize 284 788
  Textures {
-  ImageSetTextureClass "{68528D295666B623}" {
+  ImageSetTextureClass "{6853026559C24315}" {
    screenSize FHD
    size 284 788
    path "{84F3106DED438339}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-100_atlas.edds"
@@ -33,17 +33,17 @@ ImageSetClass {
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass gm_mission_Crate_map {
+  ImageSetDefClass gm_mission_Demon_map {
    Pos 2 114
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass gm_mission_Demon_map {
+  ImageSetDefClass gm_mission_Diamond_map {
    Pos 58 114
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass gm_mission_Diamond_map {
+  ImageSetDefClass gm_mission_Gold_map {
    Pos 114 114
    Size 54 110
    Flags 0 0
@@ -88,93 +88,98 @@ ImageSetClass {
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass gm_mission_RadioActive_map {
+  ImageSetDefClass gm_mission_Portal_map {
    Pos 58 338
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass gm_mission_Roadblock_map {
+  ImageSetDefClass gm_mission_RadioActive_map {
    Pos 114 338
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass gm_mission_Squatters_map {
+  ImageSetDefClass gm_mission_Roadblock_map {
    Pos 170 338
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass gm_mission_Stash_map {
+  ImageSetDefClass gm_mission_Squatters_map {
    Pos 226 338
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass gm_mission_Win_map {
+  ImageSetDefClass gm_mission_Stash_map {
    Pos 2 450
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass gm_mission_X_map {
+  ImageSetDefClass gm_mission_Win_map {
    Pos 58 450
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass gm_mission_Zombie_map {
+  ImageSetDefClass gm_mission_X_map {
    Pos 114 450
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass icon_Crate_small_map {
+  ImageSetDefClass gm_mission_Zombie_map {
    Pos 170 450
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass icon_DeathMarker_map {
+  ImageSetDefClass icon_Crate_small_map {
    Pos 226 450
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass icon_DeathMarker_small_map {
+  ImageSetDefClass icon_DeathMarker_map {
    Pos 2 562
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass icon_DeathMarker_small_red_map {
+  ImageSetDefClass icon_DeathMarker_small_map {
    Pos 58 562
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass icon_Exclamation_small_map {
+  ImageSetDefClass icon_DeathMarker_small_red_map {
    Pos 114 562
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass icon_Plus_small_map {
+  ImageSetDefClass icon_Exclamation_small_map {
    Pos 170 562
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass icon_diff_0_map {
+  ImageSetDefClass icon_Plus_small_map {
    Pos 226 562
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass icon_diff_1_map {
+  ImageSetDefClass icon_diff_0_map {
    Pos 2 674
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass icon_diff_2_map {
+  ImageSetDefClass icon_diff_1_map {
    Pos 58 674
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass icon_diff_3_map {
+  ImageSetDefClass icon_diff_2_map {
    Pos 114 674
    Size 54 110
    Flags 0 0
   }
-  ImageSetDefClass icon_diff_4_map {
+  ImageSetDefClass icon_diff_3_map {
    Pos 170 674
+   Size 54 110
+   Flags 0 0
+  }
+  ImageSetDefClass icon_diff_4_map {
+   Pos 226 674
    Size 54 110
    Flags 0 0
   }

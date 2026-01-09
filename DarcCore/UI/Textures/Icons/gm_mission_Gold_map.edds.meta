@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{614156B627595CA2}UI/Textures/Icons/gm_mission_Patrol_map.edds"
+ Name "{9945B5A978A43DE3}UI/Textures/Icons/gm_mission_Gold_map.edds"
  Configurations {
   PNGResourceClass PC : "{DC555BD399D92412}Configs/System/ResourceTypes/PC/TextureUnspecified.conf" {
   }

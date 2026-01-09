@@ -11,47 +11,48 @@ sealed class SDRC_DevHelper
 	static void SDRC_DevDump()	
 	{
 //		GetGame().GetCallqueue().CallLater(ShowTestMessage, 2000, true);
-		SDRC_MapMarkerHelper.CreateMapMarker("1000 0 1900", SDRC_EMissionIconDifficulty.ICON_DIFF_0, "", "*", markerTypeString : "DARC_MISSION_DIFFICULTY");
-		SDRC_MapMarkerHelper.CreateMapMarker("1100 0 1900", SDRC_EMissionIconDifficulty.ICON_DIFF_1, "", "**", markerTypeString : "DARC_MISSION_DIFFICULTY");
-		SDRC_MapMarkerHelper.CreateMapMarker("1200 0 1900", SDRC_EMissionIconDifficulty.ICON_DIFF_2, "", "***", markerTypeString : "DARC_MISSION_DIFFICULTY");
-		SDRC_MapMarkerHelper.CreateMapMarker("1300 0 1900", SDRC_EMissionIconDifficulty.ICON_DIFF_3, "", "****", markerTypeString : "DARC_MISSION_DIFFICULTY");
-		SDRC_MapMarkerHelper.CreateMapMarker("1400 0 1900", SDRC_EMissionIconDifficulty.ICON_DIFF_4, "", "****", markerTypeString : "DARC_MISSION_DIFFICULTY");
+		SDRC_MapMarkerHelper.CreateMapMarker("0300 0 1400", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
+		SDRC_MapMarkerHelper.CreateMapMarker("0300 0 1400", SDRC_EMissionIconDifficulty.ICON_DIFF_0, "", "*", markerTypeString : "DARC_MISSION_DIFFICULTY");
+		SDRC_MapMarkerHelper.CreateMapMarker("0400 0 1400", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
+		SDRC_MapMarkerHelper.CreateMapMarker("0400 0 1400", SDRC_EMissionIconDifficulty.ICON_DIFF_1, "", "**", markerTypeString : "DARC_MISSION_DIFFICULTY");
+		SDRC_MapMarkerHelper.CreateMapMarker("0500 0 1400", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
+		SDRC_MapMarkerHelper.CreateMapMarker("0500 0 1400", SDRC_EMissionIconDifficulty.ICON_DIFF_2, "", "***", markerTypeString : "DARC_MISSION_DIFFICULTY");
+		SDRC_MapMarkerHelper.CreateMapMarker("0600 0 1400", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
+		SDRC_MapMarkerHelper.CreateMapMarker("0600 0 1400", SDRC_EMissionIconDifficulty.ICON_DIFF_3, "", "****", markerTypeString : "DARC_MISSION_DIFFICULTY");
+		SDRC_MapMarkerHelper.CreateMapMarker("0700 0 1400", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
+		SDRC_MapMarkerHelper.CreateMapMarker("0700 0 1400", SDRC_EMissionIconDifficulty.ICON_DIFF_4, "", "****", markerTypeString : "DARC_MISSION_DIFFICULTY");
 		
-		SDRC_MapMarkerHelper.CreateMapMarker("1000 0 1000", SDRC_EMissionIcon.GM_MISSION_X_MAP, "DMC_B", "Here is a text");
-		SDRC_MapMarkerHelper.CreateMapMarker("1100 0 1000", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP, "DMC_B", "Darc_SK");
-		SDRC_MapMarkerHelper.CreateMapMarker("1200 0 1000", SDRC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, "DMC_B", "Darc_SK");
-		SDRC_MapMarkerHelper.CreateMapMarker("1300 0 1000", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP, "DMC_B", "Darc_SK");
-		SDRC_MapMarkerHelper.CreateMapMarker("1400 0 1000", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("1500 0 1000", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("1600 0 1000", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("1700 0 1000", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("1800 0 1000", SDRC_EMissionIcon.GM_MISSION_RADIOACTIVE_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("1900 0 1000", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("2000 0 1000", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("2100 0 1000", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("2200 0 1000", SDRC_EMissionIcon.GM_MISSION_STASH_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("2300 0 1000", SDRC_EMissionIcon.GM_MISSION_BIOHAZARD_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("2400 0 1000", SDRC_EMissionIcon.GM_MISSION_CRATE_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("2400 0 1000", SDRC_EMissionIconDifficulty.ICON_DIFF_0, "DMC_B", markerTypeString : "DARC_MISSION_DIFFICULTY");
-		SDRC_MapMarkerHelper.CreateMapMarker("2500 0 1000", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("2500 0 1000", SDRC_EMissionIconDifficulty.ICON_DIFF_1, "DMC_B", markerTypeString : "DARC_MISSION_DIFFICULTY");
-		SDRC_MapMarkerHelper.CreateMapMarker("2600 0 1000", SDRC_EMissionIcon.GM_MISSION_DIAMOND_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("2600 0 1000", SDRC_EMissionIconDifficulty.ICON_DIFF_2, "DMC_B", markerTypeString : "DARC_MISSION_DIFFICULTY");
-		SDRC_MapMarkerHelper.CreateMapMarker("2700 0 1000", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("2700 0 1000", SDRC_EMissionIconDifficulty.ICON_DIFF_3, "DMC_B", markerTypeString : "DARC_MISSION_DIFFICULTY");
-		SDRC_MapMarkerHelper.CreateMapMarker("2800 0 1000", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("2800 0 1000", SDRC_EMissionIconDifficulty.ICON_DIFF_4, "DMC_B", markerTypeString : "DARC_MISSION_DIFFICULTY");
-	
-		SDRC_MapMarkerHelper.CreateMapMarker("1000 0 1300", SDRC_EMissionIcon.GM_MISSION_WIN_MAP, "DMC_B", "This is a description for a mission");
-		SDRC_MapMarkerHelper.CreateMapMarker("1100 0 1300", SDRC_EMissionIcon.GM_MISSION_LOSE_MAP, "DMC_B", "This is a description for a mission");
-
-		SDRC_MapMarkerHelper.CreateMapMarker("1000 0 1600", SDRC_EMissionIcon.ICON_DEATHMARKER_MAP, "DMC_B", "Here is a text");
-		SDRC_MapMarkerHelper.CreateMapMarker("1100 0 1600", SDRC_EMissionIcon.ICON_DEATHMARKER_SMALL_MAP, "DMC_B", "Here is a text");
-		SDRC_MapMarkerHelper.CreateMapMarker("1200 0 1600", SDRC_EMissionIcon.ICON_DEATHMARKER_SMALL_RED_MAP, "DMC_B", "Here is a text");
-		SDRC_MapMarkerHelper.CreateMapMarker("1300 0 1600", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, "DMC_B", "Here is a text");
-		SDRC_MapMarkerHelper.CreateMapMarker("1400 0 1600", SDRC_EMissionIcon.ICON_EXCLAMATION_SMALL_MAP, "DMC_B", "Here is a text");
-		SDRC_MapMarkerHelper.CreateMapMarker("1500 0 1600", SDRC_EMissionIcon.ICON_CRATE_SMALL_MAP, "DMC_B", "Here is a text");
+		SDRC_MapMarkerHelper.CreateMapMarker("0300 0 1200", SDRC_EMissionIcon.GM_MISSION_WIN_MAP, "DMC_B", "Win");
+		SDRC_MapMarkerHelper.CreateMapMarker("0400 0 1200", SDRC_EMissionIcon.GM_MISSION_LOSE_MAP, "DMC_B", "Lose");
+		SDRC_MapMarkerHelper.CreateMapMarker("0500 0 1200", SDRC_EMissionIcon.ICON_DEATHMARKER_MAP, "DMC_B", "Death");
+		SDRC_MapMarkerHelper.CreateMapMarker("0600 0 1200", SDRC_EMissionIcon.ICON_DEATHMARKER_SMALL_MAP, "DMC_B", "Death sm");
+		SDRC_MapMarkerHelper.CreateMapMarker("0700 0 1200", SDRC_EMissionIcon.ICON_DEATHMARKER_SMALL_RED_MAP, "DMC_B", "Death sm red");
+		SDRC_MapMarkerHelper.CreateMapMarker("0800 0 1200", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, "DMC_B", "Plus sm");
+		SDRC_MapMarkerHelper.CreateMapMarker("0900 0 1200", SDRC_EMissionIcon.ICON_EXCLAMATION_SMALL_MAP, "DMC_B", "Excl sm");
+		SDRC_MapMarkerHelper.CreateMapMarker("1000 0 1200", SDRC_EMissionIcon.ICON_CRATE_SMALL_MAP, "DMC_B", "Crate sm");
 						
+		SDRC_MapMarkerHelper.CreateMapMarker("1000 0 1000", SDRC_EMissionIcon.GM_MISSION_X_MAP, "DMC_B", "X");
+		SDRC_MapMarkerHelper.CreateMapMarker("1100 0 1000", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP, "DMC_B", "Squatters");
+		SDRC_MapMarkerHelper.CreateMapMarker("1200 0 1000", SDRC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, "DMC_B", "Crashsite");
+		SDRC_MapMarkerHelper.CreateMapMarker("1300 0 1000", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP, "DMC_B", "Occupation");
+		SDRC_MapMarkerHelper.CreateMapMarker("1400 0 1000", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP, "DMC_B", "Convoy");
+		SDRC_MapMarkerHelper.CreateMapMarker("1500 0 1000", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, "DMC_B", "Helicopter");
+		SDRC_MapMarkerHelper.CreateMapMarker("1600 0 1000", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
+		SDRC_MapMarkerHelper.CreateMapMarker("1700 0 1000", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP, "DMC_B", "Patrol");
+		SDRC_MapMarkerHelper.CreateMapMarker("1800 0 1000", SDRC_EMissionIcon.GM_MISSION_RADIOACTIVE_MAP, "DMC_B", "Radioactive");
+		SDRC_MapMarkerHelper.CreateMapMarker("1900 0 1000", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP, "DMC_B", "Roadblock");
+		SDRC_MapMarkerHelper.CreateMapMarker("2000 0 1000", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP, "DMC_B", "HVT VIP");
+		SDRC_MapMarkerHelper.CreateMapMarker("2100 0 1000", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP, "DMC_B", "HVT Item");
+		SDRC_MapMarkerHelper.CreateMapMarker("2200 0 1000", SDRC_EMissionIcon.GM_MISSION_STASH_MAP, "DMC_B", "Stash");
+		SDRC_MapMarkerHelper.CreateMapMarker("2300 0 1000", SDRC_EMissionIcon.GM_MISSION_BIOHAZARD_MAP, "DMC_B", "Biohazard");
+		SDRC_MapMarkerHelper.CreateMapMarker("2400 0 1000", SDRC_EMissionIcon.GM_MISSION_GOLD_MAP, "DMC_B", "Gold");
+		SDRC_MapMarkerHelper.CreateMapMarker("2500 0 1000", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP, "DMC_B", "Demon");
+		SDRC_MapMarkerHelper.CreateMapMarker("2600 0 1000", SDRC_EMissionIcon.GM_MISSION_DIAMOND_MAP, "DMC_B", "Diamond");
+		SDRC_MapMarkerHelper.CreateMapMarker("2700 0 1000", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP, "DMC_B", "Zombie");
+		SDRC_MapMarkerHelper.CreateMapMarker("2800 0 1000", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, "DMC_B", "Chopper");
+		SDRC_MapMarkerHelper.CreateMapMarker("2900 0 1000", SDRC_EMissionIcon.GM_MISSION_CAR_SIDE_MAP, "DMC_B", "Car side");
+		SDRC_MapMarkerHelper.CreateMapMarker("3000 0 1000", SDRC_EMissionIcon.GM_MISSION_MEDAL_MAP, "DMC_B", "Medal");
+	
 /*			for (int i = 0;i < 250; i++)
 			{
 				vector pos = SDRC_Misc.GetRandomWorldPos();

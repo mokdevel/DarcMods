@@ -99,9 +99,9 @@ sealed class SDRC_IconHelper
 				texture = "{6C698741C70CAC62}UI/Textures/Icons/gm_mission_Biohazard_map.edds";
 				break;
 			}
-			case SDRC_EMissionIcon.GM_MISSION_CRATE_MAP:
+			case SDRC_EMissionIcon.GM_MISSION_GOLD_MAP:
 			{
-				texture = "{5C58AD3C14E25DE2}UI/Textures/Icons/gm_mission_Crate_map.edds";
+				texture = "{9945B5A978A43DE3}UI/Textures/Icons/gm_mission_Gold_map.edds";
 				break;
 			}
 			case SDRC_EMissionIcon.GM_MISSION_DEMON_MAP:
