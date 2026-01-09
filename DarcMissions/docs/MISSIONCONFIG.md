@@ -70,7 +70,7 @@ Unsupported values
 * ``RHS_ION``
 * ``MEC``
 
-### SDRC_MissionDifficulty
+### Difficulty
 Difficulty setting that affects mission AI behaviour and loot reward. There are five different levels where ``RANDOM`` picks from the ``missionDifficultyList``.
 ```
 -1 = RANDOM
@@ -80,14 +80,16 @@ Difficulty setting that affects mission AI behaviour and loot reward. There are 
  3 = TOUGH
  4 = HARD : A lot of dangerous enemies with high amount of loot.
 ```
-
+Difficulty is represented on the mission icon. The left most is ``EASY`` and ``HARD`` is on the right.
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/icon_difficulty.png" width=30% height=30%>
 
+Difficulty affects various aspects of the missions. Each 'coef' has five values that refer to the different difficulty level. 
+* ``aiCountCoef`` : The amount of AIs/AI groups for the mission. If mission would spawn 2, on ``EASY``, the amount would drop to 1 (2*0.5), but with ``HARD`` the amount would be 6 (2*3). In most cases missions define the amount of groups to use and a group may include a high amount of AIs. Thus, you may have a lot to fight. 
 ```
 array<float> aiCountCoef = 			{0.50, 0.60, 1.01, 2.01, 3.01};
 array<float> aiSkillCoef = 			{0.20, 0.60, 1.01, 1.30, 1.60};
-array<float> aiPerceptionCoef = 	{0.20, 0.60, 1.01, 1.30, 1.60};
-array<float> lootChanceCoef = 		{0.50, 0.60, 1.01, 1.10, 1.20};	
+array<float> aiPerceptionCoef = {0.20, 0.60, 1.01, 1.30, 1.60};
+array<float> lootChanceCoef = 	{0.50, 0.60, 1.01, 1.10, 1.20};	
 array<float> lootCountCoef = 		{0.50, 0.70, 1.01, 1.51, 2.01};	
 ```
 
