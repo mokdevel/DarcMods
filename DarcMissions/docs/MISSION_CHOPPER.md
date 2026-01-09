@@ -3,10 +3,10 @@ Example: [dc_missionConfig_Chopper.json](https://github.com/mokdevel/DarcMods/bl
 
 A flying helicopter is spawned on the edges of the map and will fly to the mission location. If the helicopter is armed, AI shoot if an enemy is seen. The shooting is Arma Reforger functionality. 
 
-Once the missions position is reached, the helicopter will 
-* ``RANDOM`` : continue to patrol randomly.
-* ``PATROL`` : patrol around the mission location.
-* ``SEARCH`` : search for players while flying around. If players are found, the mission is over and Hunters are sent to clear out the area. The search is done by the AI itself and finding is depending on the perception value. 
+Once the missions position is reached, the helicopter will behave depending on the ``wpType``:
+* ``RANDOM`` : Continue to patrol randomly.
+* ``PATROL`` : Patrol around the mission location.
+* ``SEARCH`` : Search for players while flying around. If players are found, the mission is over and Hunters are sent to clear out the area. The search is done by the AI itself and finding is depending on the perception value. 
 
 Once the mission time is over, the helicopter will fly away (and despawn) ending the mission.
 
