@@ -9,9 +9,14 @@ Compatibility for Freedom Fighters
 modded class SDRC_Compat
 {	
 	const string DC_COMPATCONFIG_FILE = "dc_compatFFConfig.json";
+	const int DC_COMPATCONFIG_FILE_VER = 1;
+	
 	const int DC_COMPAT_WAIT_FOR_PLAYERS_TIME = 15;
 	const int DC_COMPAT_CLEAN_WAIT_TIME = 15;
-	static ref SDRC_CompatFFJsonApi m_DC_CompatJsonApi = null;
+	
+	private static ref SDRC_JsonApi2 m_JsonApi = null;	
+	static ref SDRC_CompatFFConfig m_Config = new SDRC_CompatFFConfig();
+	
 	static ref array<string> m_FF_cleanUpList = {};
 	
 	//------------------------------------------------------------------------------------------------
@@ -20,20 +25,43 @@ modded class SDRC_Compat
 	*/
 	override static bool Init()
 	{
-		super.Init();
-		
-		m_DC_CompatJsonApi = new SDRC_CompatFFJsonApi(DC_COMPATCONFIG_FILE);		
-		m_DC_CompatJsonApi.Load();
-		
 		SDRC_Log.Add("[SDRC_CompatFF] Initializing compatibility: Freedom Fighters", LogLevel.NORMAL);
 
-		GetGame().GetCallqueue().CallLater(WaitForPlayers, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
+		super.Init();
+
+		m_JsonApi = new SDRC_JsonApi2(DC_COMPATCONFIG_FILE);		
+
+		//Load config
+		if (!m_JsonApi.Load(m_Config, SDRC_CompatFFConfig.Cast(m_Config), DC_COMPATCONFIG_FILE_VER))
+		{
+			SDRC_Log.Add("[SDRC_CompatFF] Could not initialize compatibility: Freedom Fighters", LogLevel.ERROR);
+			return false;
+		}				
+		
+		// as early as possible
+		EPF_PersistenceManager.GetInstance().GetOnStateChangeEvent().Insert(MyCallback);
+		
+//		GetGame().GetCallqueue().CallLater(WaitForPlayers, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
 //		GetGame().GetCallqueue().CallLater(Clear, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
 		
 		return true;
 	}
 	
-	//------------------------------------------------------------------------------------------------
+	static void MyCallback(EPF_PersistenceManager persistenceManager)
+	{
+	    if (persistenceManager.GetState() != EPF_EPersistenceManagerState.ACTIVE) 
+		{
+			return;
+		}
+		
+		EPF_PersistenceManager.GetInstance().GetOnStateChangeEvent().Remove(MyCallback);
+	    persistenceManager.GetOnStateChangeEvent().Remove(MyCallback);
+	    
+		Clear();
+	}		
+	
+	
+/*	//------------------------------------------------------------------------------------------------
 	static void WaitForPlayers()
 	{
 		if (SDRC_PlayerHelper.PlayerCount() == 0)
@@ -43,13 +71,13 @@ modded class SDRC_Compat
 		}
 		
 		GetGame().GetCallqueue().CallLater(Clear, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
-	}
+	}*/
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Count reward
 	*/		
-	static int GetRewardValue(int rewardValue = 0)
+	static int GetRewardValue(int rewardValue = 0, float rewardMul = 1.0)
 	{
 		array<int> playerIds = {};
 		GetGame().GetPlayerManager().GetPlayers(playerIds);
@@ -61,17 +89,17 @@ modded class SDRC_Compat
 		int divider = playerIds.Count();
 		if (rewardValue == 0)
 		{
-			rewardValue = m_DC_CompatJsonApi.conf.rewardDefault;
+			rewardValue = m_Config.rewardDefault;
 		}
 				
-		if (m_DC_CompatJsonApi.conf.rewardPerUser)
+		if (m_Config.rewardPerUser)
 		{
 			divider = 1;
 		}
 
 		int perPlayerReward = rewardValue / divider;
 		
-		return perPlayerReward;		
+		return perPlayerReward * rewardMul;		
 	}
 		
 	//------------------------------------------------------------------------------------------------
@@ -136,9 +164,19 @@ modded class SDRC_Mission
 	{
 		array<int> playerIds = {};
 		GetGame().GetPlayerManager().GetPlayers(playerIds);
-		if (playerIds.IsEmpty()) return;
+		if (playerIds.IsEmpty()) 
+		{
+			return;
+		}
 
-		int perPlayerReward = SDRC_Compat.GetRewardValue(GetXP());
+		float rewardMul = 1.0;		
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (baseGameMode)
+		{
+			rewardMul = baseGameMode.missionFrame.m_Config.missionDifficulty.rewardCoef[GetDifficulty()];
+		}
+		
+		int perPlayerReward = SDRC_Compat.GetRewardValue(GetXP(), rewardMul);
 
 		SDRC_Log.Add("[SDRC_CompatFF:GiveReward] Giving " + perPlayerReward + " money to each player.", LogLevel.DEBUG);
 		
@@ -155,10 +193,9 @@ modded class SDRC_Mission
 }
 
 //------------------------------------------------------------------------------------------------
-class SDRC_CompatFFConfig : Managed
+class SDRC_CompatFFConfig : SDRC_Config
 {
 	//Default information
-	int version = 1;
 	string author = "darc";
 	//Mission specific
 	string comment;
@@ -168,48 +205,17 @@ class SDRC_CompatFFConfig : Managed
 	bool setEnemyFactionAutomatically = true;	//Automatically set enemy faction from FF. (WIP)
 	bool rewardPerUser = false;					//Shall reward be set per user or for a group
 	int rewardDefault = 500;					//Default reward unless specific reward has been set in a mission. (WIP)
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_CompatFFJsonApi : SDRC_JsonApi
-{
-	ref SDRC_CompatFFConfig conf = new SDRC_CompatFFConfig();
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_CompatFFJsonApi(string fileName)
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
 	{
-		SetFileName(fileName);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
-		
-		loadContext.ReadValue("", conf);
-		return true;
-	}	
-
-	//------------------------------------------------------------------------------------------------
-	void Save()
-	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
-	{	
+		SDRC_CompatFFConfig data = SDRC_CompatFFConfig.Cast(T);
+		return saveContext.WriteValue("", data);
 	}		
+
+	//------------------------------------------------------------------------------------------------
+	override void SetDefaults()
+	{	
+		super.SetDefaults();
+	}			
 }

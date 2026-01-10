@@ -30,7 +30,7 @@ modded class SDRC_MissionPosHelper
 		{		
 			JWK_EFactionRole factionRole = JWK.GetTerritoryControl().GetControllingRoleAt(pos);
 			
-			if (Math.RandomFloat(0, 1) > SDRC_Compat.m_DC_CompatJsonApi.conf.spawnRateForGreenZones)
+			if (Math.RandomFloat(0, 1) > SDRC_Compat.m_Config.spawnRateForGreenZones)
 			{			
 				if ( (factionRole == JWK_EFactionRole.PLAYER) || (factionRole == JWK_EFactionRole.SUPPORTING) )
 				{
@@ -42,7 +42,7 @@ modded class SDRC_MissionPosHelper
 			float distance = JWK_IndexSystem.Get().FindDistanceToNearestXZ(JWK_ResistanceHideoutEntity, pos);
 			//SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Distance: " + distance, LogLevel.DEBUG);
 //			if (distance < HIDEOUT_DISTANCE)
-			if (distance < SDRC_Compat.m_DC_CompatJsonApi.conf.hideOutSafeZoneDistance)
+			if (distance < SDRC_Compat.m_Config.hideOutSafeZoneDistance)
 			{
 				SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.FREEDOM_FIGHTERS_HIDEOUT_TOO_CLOSE), LogLevel.SPAM);
 				return SDRC_EMissionError.FREEDOM_FIGHTERS_HIDEOUT_TOO_CLOSE;
