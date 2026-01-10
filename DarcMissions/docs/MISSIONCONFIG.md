@@ -90,12 +90,14 @@ Difficulty affects various aspects of the missions. Each 'coef' has five values 
 * ``aiPerceptionCoef`` : The multiplier used to modify the AI perception. With a high value, AIs are better at spotting you. Unsure what are the actual limits, but from BI code one can see that with 0.4 the AI is threatened and are bad at finding enemies. 1.0 is the normal state and 2.5 is considered vigilant/alerted.
 * ``lootChanceCoef`` : The multiplier used to modify the loot chance. For each item on the lootlist, the chance is tested.
 * ``lootCountCoef`` : The multiplier used to modify the loot amount. When loot is spawned, the list provided is used. If this value increases the total, amount of items in the lootlist, additional items are added to the list from the original list.
+* ``rewardCoef`` : The multiplier used to modify the reward amount. Reward refers to ``xp`` variable in missions. Currently only Freedom Fighters is providing reward
 ```
 array<float> aiCountCoef =      {0.50, 0.60, 1.01, 1.80, 2.30};
 array<float> aiSkillCoef =      {0.20, 0.60, 1.01, 1.30, 1.60};
 array<float> aiPerceptionCoef = {0.20, 0.60, 1.01, 1.30, 1.60};
 array<float> lootChanceCoef =   {0.50, 0.60, 1.01, 1.10, 1.20};	
 array<float> lootCountCoef =    {0.50, 0.70, 1.01, 1.51, 2.01};	
+array<float> rewardCoef =       {0.50, 0.70, 1.01, 2.01, 3.01};	
 ```
 
 ### SDRC_MissionTypeConfig

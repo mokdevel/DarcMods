@@ -57,14 +57,17 @@ class SDRC_JsonApi2 : JsonApiStruct
 			return false;
 		}
 
-		SDRC_Log.Add("[SDRC_JsonApi2:Load] Loading configuration from file: " + GetFileName(), LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_JsonApi2:Load] Loading configuration from file: " + GetFileName(), LogLevel.NORMAL);
 		
 		int versionFromFile;
 		loadContext.ReadValue("version", versionFromFile);
 		
 		if (versionFromFile != version)
 		{
+			SDRC_Log.Add("[SDRC_JsonApi2:Load] ------------------", LogLevel.ERROR);
 			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong version number: " + versionFromFile + " (expected: " + version + ") : " + GetFileName(), LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_JsonApi2:Load] Please delete the file and restart to receive an updated one: " + GetFileName(), LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_JsonApi2:Load] ------------------", LogLevel.ERROR);
 			return false;
 		}		
 		
@@ -139,7 +142,10 @@ class SDRC_JsonApi2 : JsonApiStruct
 			return null;
 		}
 
-		SDRC_Log.Add("[SDRC_JsonApi2:LoadConfig] Loading configuration from file: " + m_FileName, LogLevel.SPAM);
+		if (loadContext)
+		{
+			SDRC_Log.Add("[SDRC_JsonApi2:LoadConfig] Loading configuration from file: " + m_FileName, LogLevel.SPAM);
+		}
 		
 		return loadContext;
 	}	

@@ -7,12 +7,10 @@ Three icons are needed:
 - Name: gm_mission_MissionName_map
 - Size: 54x110 with DPI 30
 - Color: Black
-- In Gimp
--- Canvas Size 54x110
 
 # Round image for GM drop: The icon shown on the game master entity browser 
 - Name: gm_mission_MissionName_round
-- Hide grayball and location
+- Hide grayball, location, sizebox
 - Size: 53x52 with DPI 30
 - Color: White 
 - In Gimp: 

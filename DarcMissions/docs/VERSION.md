@@ -17,7 +17,8 @@ Main features:
 
 Chopper mission:
 * New sub-mission: Helicopter recon. If you're seen, Hunters will be sent after you.
-* New sub-mission with support for helicopters from mods below. In case the mods are not available, missions revert back to vanilla helicopters.
+* New sub-mission: Helicopter recon. If you're seen, Hunters will be sent after you.
+* Support for helicopters from mods below. In case the mods are not available, missions revert back to vanilla helicopters.
 ** https://reforger.armaplatform.com/workshop/672F2BB6523FBA29-WZHelisforDarcMissions
 ** https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcMissions
 ** https://reforger.armaplatform.com/workshop/6850D5F667CEFF94-AH-6MforDarcMissions
@@ -30,8 +31,9 @@ Changes:
 * dc_missionConfig.json : 
   * Added ``showMissionDifficulty`` : Show/hide static mission difficult on markers.
   * Added ``missionDifficultyList`` : List of difficulty values from which missions select their value.
+  * Added ``rewardCoef`` : Reward multiplier for difficulty level.
 
-## 202512xx
+## 20251222
 Changed jsons - remove the files to receive updated ones.
 * dc_missionConfig_Chopper.json
 
