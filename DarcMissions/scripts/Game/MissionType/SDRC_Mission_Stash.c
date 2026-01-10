@@ -158,7 +158,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
 			SDRC_StashConfig conf = new SDRC_StashConfig();
 			
-			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver))
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false))
 			{
 				foreach (SDRC_Camp subMission : conf.subMissions)
 				{

@@ -237,7 +237,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
 			SDRC_SquatterConfig conf = new SDRC_SquatterConfig();
 			
-			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver))
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false))
 			{
 				foreach (SDRC_Squatter subMission : conf.subMissions)
 				{

@@ -214,7 +214,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
 			SDRC_HvtItemConfig conf = new SDRC_HvtItemConfig();
 			
-			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver))
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false))
 			{
 				foreach (SDRC_HvtItem subMission : conf.subMissions)
 				{
@@ -250,7 +250,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		
 		//Default
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,1,2};
+		missionList = {10, 11, 12};//{0,1,2};
 		missionFiles.Insert("dc_missionConfig_HvtItem_010.json");		
 		//Mission specific
 		//----------------------------------------------------

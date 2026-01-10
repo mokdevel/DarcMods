@@ -154,7 +154,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
 			SDRC_OccupationConfig conf = new SDRC_OccupationConfig();
 			
-			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver))
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false))
 			{
 				foreach (SDRC_Camp subMission : conf.subMissions)
 				{
