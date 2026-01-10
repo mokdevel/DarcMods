@@ -27,7 +27,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
 		}
-		m_Config.LoadMissionFiles();
+		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_OCCUPATION_VER);
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -146,7 +146,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 	}		
 
 	//------------------------------------------------------------------------------------------------	
-	override void LoadMissionFiles()
+	override void LoadMissionFiles(int ver)
 	{
 		//Load mission files
 		foreach (string missionFile : missionFiles)
@@ -154,7 +154,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
 			SDRC_OccupationConfig conf = new SDRC_OccupationConfig();
 			
-			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), false))
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver))
 			{
 				foreach (SDRC_Camp subMission : conf.subMissions)
 				{

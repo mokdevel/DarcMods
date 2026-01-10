@@ -8,9 +8,11 @@ This is the mission main framework file.
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
 
 const string DC_MISSIONCONFIG_FILE_FRAME = "dc_missionConfig.json";
-const int 	 DC_MISSIONCONFIG_FILE_FRAME_VER = 1;
+const int 	 DC_MISSIONCONFIG_FILE_FRAME_VER = 2;
+
 const string DC_MISSIONCONFIG_FILE_NONVALIDAREA = "dc_nonValidArea.json";
 const int 	 DC_MISSIONCONFIG_FILE_NONVALIDAREA_VER = 1;
+
 const string DC_MISSIONCONFIG_FILE_SECONDWAVE = "dc_secondWave.json";
 
 //------------------------------------------------------------------------------------------------
@@ -50,16 +52,24 @@ class SDRC_MissionFrame
 		m_sWorldName = SDRC_Misc.GetWorldName(true);
 
 		//Load configuration from file		
-		m_DC_MissionFrameJsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_NONVALIDAREA_VER);
+		bool successFrame = m_DC_MissionFrameJsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_FRAME_VER);
 		
 		//Load non valid area configuration from file
-		m_NonValidAreaJsonApi.Load(m_ConfigNonValidArea, SDRC_Config.Cast(m_ConfigNonValidArea), DC_MISSIONCONFIG_FILE_FRAME_VER);
+		bool successNoNValid = m_NonValidAreaJsonApi.Load(m_ConfigNonValidArea, SDRC_Config.Cast(m_ConfigNonValidArea), DC_MISSIONCONFIG_FILE_NONVALIDAREA_VER);
+
+		if ( (!successFrame) || (!successNoNValid) )
+		{
+			SDRC_Log.Add("[SDRC_MissionFrame] ****** Could not initialize DarcMissions. Check your logs. ******", LogLevel.ERROR);
+			return;
+		}		
+				
+		//Initialize NonValidAreas
 		m_ConfigNonValidArea.Populate(m_aNonValidAreas);
 
 		//Load waves for secondWave functionality
 		m_DC_SecondWaveJsonApi.Load();
 		m_DC_SecondWaveJsonApi.Populate();
-
+		
 		//Update the setting for showing mission time left				
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
 		if (gmComp)
@@ -466,10 +476,10 @@ class SDRC_MissionFrame
 		SDRC_Log.Add("[SDRC_MissionDump] -- Missions -------------------------------------------------------------------", LogLevel.NORMAL);
 		foreach (SDRC_Mission mission : m_MissionList)
 		{
-			string staticString = "dynamic";
+			string staticString = "dyn";
 			if (mission.IsStatic())
 			{
-				staticString = "static";
+				staticString = "sta";
 			}
 			if (mission.IsRequested())
 			{
@@ -482,8 +492,10 @@ class SDRC_MissionFrame
 				missionTitle = mission.GetTitle().Substring(0, CUT_LENGTH) + "..";
 			}
 			string missionState = SCR_Enum.GetEnumName(SDRC_EMissionState,  mission.GetState());
-			
-			SDRC_Log.Add("[SDRC_MissionDump] " + i + ": " + mission.GetId() + " (" + missionType + ", " + staticString + ", " + missionState + ") - " + missionTitle + " - " + "Time left: " + mission.GetActiveTime(), LogLevel.NORMAL);
+
+			string missionDetails = "" + i + ":" + mission.GetId() + " (" + missionType + "/" + staticString + "/" + missionState + "/" + mission.GetDifficulty() + ")";
+						
+			SDRC_Log.Add("[SDRC_MissionDump] " + missionDetails + ": " + missionTitle + " - " + "Time: " + mission.GetActiveTime(), LogLevel.NORMAL);
 			aiCount = aiCount + mission.GetAICountActive();
 			i++;
 		}		

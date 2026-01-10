@@ -29,7 +29,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
 		}
-		m_Config.LoadMissionFiles();
+		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CHOPPER_VER);
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));

@@ -82,7 +82,7 @@ class SDRC_MissionConfig : SDRC_Config
 		SDRC_Log.Add("[SDRC_MissionConfig:CreateMissionFiles] Creating...", LogLevel.SPAM);							
 	}	
 
-	void LoadMissionFiles()
+	void LoadMissionFiles(int ver)
 	{
 	}
 	

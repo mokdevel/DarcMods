@@ -30,7 +30,7 @@ class SDRC_Mission_Template : SDRC_Mission
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
 		}
-		m_Config.LoadMissionFiles();
+		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_TEMPLATE_VER);
 		
 		//Check if GM requested mission
 		if (!IsRequested())
