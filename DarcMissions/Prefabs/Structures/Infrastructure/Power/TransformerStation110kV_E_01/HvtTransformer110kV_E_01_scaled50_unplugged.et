@@ -1,0 +1,16 @@
+SCR_DestructibleBuildingEntity : "{9B11428D92F2C855}Prefabs/Structures/Infrastructure/Power/TransformerStation110kV_E_01/Transformer110kV_E_01_scaled50.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SignalsManagerComponent "{5A606D483B0E22D3}" {
+   Enabled 0
+  }
+  SoundComponent "{56FAEA1832302C7B}" {
+   Enabled 0
+  }
+  SCR_EditableEntityComponent "{6855142CADFCE0DF}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{6855142F572169DC}" {
+    Name "Mission target"
+   }
+  }
+ }
+}

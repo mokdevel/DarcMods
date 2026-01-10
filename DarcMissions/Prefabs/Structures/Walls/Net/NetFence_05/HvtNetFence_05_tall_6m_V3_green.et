@@ -1,0 +1,19 @@
+SCR_DestructibleEntity : "{23AFAB615558CB88}Prefabs/Structures/Walls/Net/NetFence_05/NetFence_05_tall_6m_V3_base.et" {
+ ID "51E2F0F09703F07B"
+ components {
+  MeshObject "{56DE7C8DCD0F4E0A}" {
+   Materials {
+    MaterialAssignClass "{6855142A73C94F55}" {
+     SourceMaterial "NetFence_05"
+     AssignedMaterial "{98AD5DEA52D31EE9}Assets/Structures/Walls/Net/NetFence_05/Data/NetFence_05_green.emat"
+    }
+    MaterialAssignClass "{6855142A73C97CCC}" {
+     SourceMaterial "NetFence_05_Mesh"
+     AssignedMaterial "{3B2CA9C1355D3DE0}Assets/Structures/Walls/Net/NetFence_05/Data/NetFence_05_Mesh_green.emat"
+    }
+   }
+  }
+  RplComponent "{6855142A7BBE617F}" {
+  }
+ }
+}

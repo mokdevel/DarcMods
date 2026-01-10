@@ -1,0 +1,106 @@
+GenericEntity : "{199D1D4F8F75A122}PrefabsEditable/Auto/Props/Military/Camps/E_ConstructionMaterialPacked_WoodPlanks_01_US.et" {
+ coords 240.651 1 46.726
+ angles 0 38.41 0
+}
+GenericEntity : "{27158976295DB629}PrefabsEditable/Auto/Props/Garbage/Cardboard/E_Cardboard_Pile_06.et" {
+ coords 236.964 1 37.023
+ angles 0 44.15 0
+}
+GenericEntity : "{2DCFC77703348481}Prefabs/Props/Military/HvtFieldKitchenTrailerUSSR_01.et" {
+ coords 235.423 1 38.544
+ angles 0 -29.567 0
+}
+GenericEntity : "{33748AC23F947B6E}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_round_burlap.et" {
+ coords 232.937 1 42.25
+ angles 0 -52.274 0
+}
+GenericEntity : "{4862CD3623FE4E31}PrefabsEditable/Auto/Props/Military/Furniture/E_TableMilitary_USSR_01.et" {
+ coords 245.545 1 37.105
+ angles 0 53.108 0
+}
+$grp GenericEntity : "{496DDD80744F2C44}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_single_burlap.et" {
+ {
+  coords 238.352 1 40.943
+  angles 0 -16.817 0
+ }
+ {
+  coords 240.086 1 43.242
+  angles 0 -43.944 0
+ }
+ {
+  coords 241.272 1 42.138
+  angles 0 12.438 0
+ }
+}
+GenericEntity : "{58D920FC3C3BEA9A}PrefabsEditable/Auto/Props/Garbage/Military/Food/E_GarbageFoodMilitaryUSSR_01.et" {
+ coords 245.345 1.899 37.336
+}
+GenericEntity : "{8893B34565777A0E}PrefabsEditable/Auto/Props/Forest/WoodPile/E_WoodPile_02_A.et" {
+ coords 233.454 1 35.903
+ angles 0 43.147 0
+}
+GenericEntity : "{8BABAE6E7F9B3E39}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_bunker_burlap.et" {
+ coords 240.169 1 37.559
+}
+SCR_DestructibleEntity : "{8CC739F5E368DEF5}PrefabsEditable/Auto/Props/Garbage/Bins/E_TrashBin_02_patched.et" {
+ coords 242.738 1 35.689
+}
+GenericEntity : "{AC5172F00941C060}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_wall_burlap.et" {
+ coords 235.404 1 43.346
+}
+GenericEntity : "{AEDDF16F997CAE6C}PrefabsEditable/Auto/Props/Garbage/Cardboard/E_Cardboard_Pile_04.et" {
+ coords 235.053 1 36.198
+}
+$grp GenericEntity : "{BCC37CB613A921AF}PrefabsEditable/Auto/Props/Military/Furniture/E_ChairMilitary_US_02.et" {
+ {
+  coords 245.197 1 38.108
+  angles 0 172.935 0
+ }
+ {
+  coords 245.702 1 35.913
+  angles 0 -18.034 0
+ }
+ {
+  coords 244.416 1 36.854
+  angles 0 78.367 0
+ }
+}
+GenericEntity : "{C2681EC98CAB2B3A}PrefabsEditable/Auto/Props/Military/Camps/E_WeaponRackCabinet_01.et" {
+ coords 243.746 1 42.286
+ angles 0 -176.301 0
+}
+$grp GenericEntity : "{C8A95738F4ED0644}PrefabsEditable/Auto/Props/Military/Sandbags/Deployable/E_Sandbag_01_round_high_burlap_Deployable.et" {
+ {
+  coords 232.385 1 37.863
+  angles 0 -108.143 0
+ }
+ {
+  coords 239.607 1 32.732
+  angles 0 -160.711 0
+ }
+ {
+  coords 244.669 1 32.775
+  angles 0 138.461 0
+ }
+}
+GenericEntity : "{D2299274C13B1169}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_wall_solid_burlap.et" {
+ coords 243.516 1 42.978
+}
+GenericEntity : "{E2B6B200FF6C86A3}PrefabsEditable/Auto/Props/Garbage/Generic/E_Litter_01_small.et" {
+ coords 243.631 1 35.746
+}
+$grp StaticModelEntity : "{E6AE368A342034CB}PrefabsEditable/Auto/Props/Military/Fortification/E_CzechHedgehog_01_rusty.et" {
+ {
+  coords 248.698 0 38.204
+ }
+ {
+  coords 247.186 0 40.339
+  angles 0 -40.091 0
+ }
+}
+GenericEntity : "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et" {
+ coords 242.935 1 38.6
+}
+GameEntity : "{FF3ED8B26C05A940}PrefabsEditable/Auto/Props/Military/Camps/E_LanternMilitary_US_01.et" {
+ coords 245.82 1.899 36.837
+}

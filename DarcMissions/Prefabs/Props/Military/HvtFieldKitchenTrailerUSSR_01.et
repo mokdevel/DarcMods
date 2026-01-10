@@ -1,0 +1,30 @@
+GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  MeshObject "{5872F0EB7FA40561}" {
+   Object "{69854008C581CA87}Assets/Props/Military/FieldKitchenTrailer/FieldKitchenTrailerUSSR_01.xob"
+  }
+  RigidBody "{5872F0EB7DFB5A9D}" {
+   Mass 3
+   ModelGeometry 1
+   Static 1
+  }
+  SCR_DestructionMultiPhaseComponent "{6854D4673DD85CF2}" {
+   "Additional hit zones" {
+    SCR_HitZone Default {
+     HZDefault 1
+    }
+   }
+   m_fBaseHealth 3000
+   m_eMaterialSoundType BREAK_METAL
+  }
+  SCR_EditableEntityComponent "{6854D467DE2ACABB}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{6854D467C58EE0B5}" {
+    Name "Mission target"
+   }
+  }
+  RplComponent "{6854D46731F16BC2}" {
+  }
+ }
+ coords 2.49 4.269 3.152
+}

@@ -30,11 +30,13 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 		
 		//Default
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {10};
+		missionList = {10, 11, 12};
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Clear();
 		subMissions.Insert(HvtItem010());				
+		subMissions.Insert(HvtItem011());				
+		subMissions.Insert(HvtItem012());				
 	};
 	
 	//----------------------------------------------------
@@ -126,7 +128,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 		// Silo
 		SDRC_Structure item_5 = new SDRC_Structure;
 		item_5.Set(
-		    "{3C5ECB01F0CA19B0}Prefabs/Structures/Industrial/Containers/Silos/Silo_01/Silo_01_HvtItem.et",
+		    "{3C5ECB01F0CA19B0}Prefabs/Structures/Industrial/Containers/Silos/Silo_01/HvtSilo_01.et",
 		    "236.7 0 92.825"
 		);
 		hvtItem.campItems.Insert(item_5);
@@ -181,14 +183,14 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 		);
 		hvtItem.campItems.Insert(item_11);
 		
-		// Metal Container
-		SDRC_Structure item_12 = new SDRC_Structure;
+		// Metal Container - No RplComponent!
+/*		SDRC_Structure item_12 = new SDRC_Structure;
 		item_12.Set(
 		    "{B292AEB29FA68532}PrefabLibrary/Props/Construction/MetalContainer_01.et",
 		    "241.622 1 90.374",
 		    "0 23.296 0"
 		);
-		hvtItem.campItems.Insert(item_12);
+		hvtItem.campItems.Insert(item_12);*/
 		
 		// Sandbag Wall Solid Burlap USSR (with nested entity)
 		SDRC_Structure item_13 = new SDRC_Structure;
@@ -251,4 +253,380 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 		hvtItem.campItems.Insert(item_17);		
 		return hvtItem;
 	};			
+	
+	//----------------------------------------------------
+	SDRC_HvtItem HvtItem011()
+	{
+		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
+		hvtItem.general.Set(
+			11, "index 11: Destroy kitchen",
+			{"0 0 0"}, 20,
+			{},
+			"any",
+			"Soup kitchen near %l",
+			"Make sure the enemy stays hungry.",
+			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
+			"No cooking for the enemy.",
+			"Bellies full, the enemy left.",
+			"",
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
+			SDRC_EDifficulty.RANDOM,
+			0
+		);
+		hvtItem.ai.Set(
+			{1, 3},
+			{"G_ADMIN", "G_SPECIAL", "G_LIGHT", "G_HEAVY"},
+			50, 1.0,
+			{10, 200},
+			SDRC_EWaypointGenerationType.RADIUS,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
+		);		
+		hvtItem.targetIdx = 12;
+		
+		ref SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"WEAPON_RIFLE_BIG", "WEAPON_LAUNCHER", 
+				"UTIL_ATTACHMENT", "UTIL_OPTIC",
+				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
+				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_BAG", "GEAR_BAG", "GEAR_BAG", 
+			};
+		loot.Set(0.5, lootItems);
+		hvtItem.loot = loot;
+		
+		ref SDRC_Structure item_0 = new SDRC_Structure();
+		item_0.Set(
+		    "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+		    "237.735 1 32.544"
+		);
+		hvtItem.campItems.Insert(item_0);
+
+		ref SDRC_Structure item_1 = new SDRC_Structure();
+		item_1.Set(
+		    "{199D1D4F8F75A122}PrefabsEditable/Auto/Props/Military/Camps/E_ConstructionMaterialPacked_WoodPlanks_01_US.et",
+		    "235.451 1 40.67",
+		    "0 38.41 0"
+		);
+		hvtItem.campItems.Insert(item_1);
+		
+		ref SDRC_Structure item_2 = new SDRC_Structure();
+		item_2.Set(
+		    "{27158976295DB629}PrefabsEditable/Auto/Props/Garbage/Cardboard/E_Cardboard_Pile_06.et",
+		    "231.764 1 30.967",
+		    "0 44.15 0"
+		);
+		hvtItem.campItems.Insert(item_2);
+		
+		ref SDRC_Structure item_3 = new SDRC_Structure();
+		item_3.Set(
+		    "{33748AC23F947B6E}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_round_burlap.et",
+		    "227.737 1 36.194",
+		    "0 -52.274 0"
+		);
+		hvtItem.campItems.Insert(item_3);
+		
+		ref SDRC_Structure item_4 = new SDRC_Structure();
+		item_4.Set(
+		    "{4862CD3623FE4E31}PrefabsEditable/Auto/Props/Military/Furniture/E_TableMilitary_USSR_01.et",
+		    "240.345 1 31.049",
+		    "0 53.108 0"
+		);
+		hvtItem.campItems.Insert(item_4);
+		
+		ref SDRC_Structure item_5 = new SDRC_Structure();
+		item_5.Set(
+		    "{496DDD80744F2C44}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_single_burlap.et",
+		    "233.152 1 34.887",
+		    "0 -16.817 0"
+		);
+		hvtItem.campItems.Insert(item_5);
+		
+		ref SDRC_Structure item_6 = new SDRC_Structure();
+		item_6.Set(
+		    "{496DDD80744F2C44}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_single_burlap.et",
+		    "234.886 1 37.186",
+		    "0 -43.944 0"
+		);
+		hvtItem.campItems.Insert(item_6);
+		
+		ref SDRC_Structure item_7 = new SDRC_Structure();
+		item_7.Set(
+		    "{496DDD80744F2C44}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_single_burlap.et",
+		    "236.072 1 36.082",
+		    "0 12.438 0"
+		);
+		hvtItem.campItems.Insert(item_7);
+		
+		ref SDRC_Structure item_8 = new SDRC_Structure();
+		item_8.Set(
+		    "{58D920FC3C3BEA9A}PrefabsEditable/Auto/Props/Garbage/Military/Food/E_GarbageFoodMilitaryUSSR_01.et",
+		    "240.643 1.898 30.882"
+		);
+		hvtItem.campItems.Insert(item_8);
+		
+		ref SDRC_Structure item_9 = new SDRC_Structure();
+		item_9.Set(
+		    "{8893B34565777A0E}PrefabsEditable/Auto/Props/Forest/WoodPile/E_WoodPile_02_A.et",
+		    "228.254 1 29.847",
+		    "0 43.147 0"
+		);
+		hvtItem.campItems.Insert(item_9);
+		
+		ref SDRC_Structure item_10 = new SDRC_Structure();
+		item_10.Set(
+		    "{8BABAE6E7F9B3E39}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_bunker_burlap.et",
+		    "234.969 1 31.503"
+		);
+		hvtItem.campItems.Insert(item_10);
+		
+		ref SDRC_Structure item_11 = new SDRC_Structure();
+		item_11.Set(
+		    "{8CC739F5E368DEF5}PrefabsEditable/Auto/Props/Garbage/Bins/E_TrashBin_02_patched.et",
+		    "237.538 1 29.633"
+		);
+		hvtItem.campItems.Insert(item_11);
+		
+		ref SDRC_Structure item_12 = new SDRC_Structure();
+		item_12.Set(
+		    "{2DCFC77703348481}Prefabs/Props/Military/HvtFieldKitchenTrailerUSSR_01.et",
+		    "230.223 1 32.488",
+		    "0 -29.567 0"
+		);
+		hvtItem.campItems.Insert(item_12);
+		
+		ref SDRC_Structure item_13 = new SDRC_Structure();
+		item_13.Set(
+		    "{AC5172F00941C060}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_wall_burlap.et",
+		    "230.204 1 37.29"
+		);
+		hvtItem.campItems.Insert(item_13);
+		
+		ref SDRC_Structure item_14 = new SDRC_Structure();
+		item_14.Set(
+		    "{AEDDF16F997CAE6C}PrefabsEditable/Auto/Props/Garbage/Cardboard/E_Cardboard_Pile_04.et",
+		    "229.853 1 30.142"
+		);
+		hvtItem.campItems.Insert(item_14);
+		
+		ref SDRC_Structure item_15 = new SDRC_Structure();
+		item_15.Set(
+		    "{BCC37CB613A921AF}PrefabsEditable/Auto/Props/Military/Furniture/E_ChairMilitary_US_02.et",
+		    "239.997 1 32.052",
+		    "0 172.935 0"
+		);
+		hvtItem.campItems.Insert(item_15);
+		
+		ref SDRC_Structure item_16 = new SDRC_Structure();
+		item_16.Set(
+		    "{BCC37CB613A921AF}PrefabsEditable/Auto/Props/Military/Furniture/E_ChairMilitary_US_02.et",
+		    "240.502 1 29.857",
+		    "0 -18.034 0"
+		);
+		hvtItem.campItems.Insert(item_16);
+		
+		ref SDRC_Structure item_17 = new SDRC_Structure();
+		item_17.Set(
+		    "{BCC37CB613A921AF}PrefabsEditable/Auto/Props/Military/Furniture/E_ChairMilitary_US_02.et",
+		    "239.216 1 30.798",
+		    "0 78.367 0"
+		);
+		hvtItem.campItems.Insert(item_17);
+		
+		ref SDRC_Structure item_18 = new SDRC_Structure();
+		item_18.Set(
+		    "{C2681EC98CAB2B3A}PrefabsEditable/Auto/Props/Military/Camps/E_WeaponRackCabinet_01.et",
+		    "238.546 1 36.23",
+		    "0 -176.301 0"
+		);
+		hvtItem.campItems.Insert(item_18);
+		
+		ref SDRC_Structure item_19 = new SDRC_Structure();
+		item_19.Set(
+		    "{C8A95738F4ED0644}PrefabsEditable/Auto/Props/Military/Sandbags/Deployable/E_Sandbag_01_round_high_burlap_Deployable.et",
+		    "227.185 1 31.807",
+		    "0 -108.143 0"
+		);
+		hvtItem.campItems.Insert(item_19);
+		
+		ref SDRC_Structure item_20 = new SDRC_Structure();
+		item_20.Set(
+		    "{C8A95738F4ED0644}PrefabsEditable/Auto/Props/Military/Sandbags/Deployable/E_Sandbag_01_round_high_burlap_Deployable.et",
+		    "234.407 1 26.676",
+		    "0 -160.711 0"
+		);
+		hvtItem.campItems.Insert(item_20);
+		
+		ref SDRC_Structure item_21 = new SDRC_Structure();
+		item_21.Set(
+		    "{C8A95738F4ED0644}PrefabsEditable/Auto/Props/Military/Sandbags/Deployable/E_Sandbag_01_round_high_burlap_Deployable.et",
+		    "239.469 1 26.719",
+		    "0 138.461 0"
+		);
+		hvtItem.campItems.Insert(item_21);
+		
+		ref SDRC_Structure item_22 = new SDRC_Structure();
+		item_22.Set(
+		    "{D2299274C13B1169}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_wall_solid_burlap.et",
+		    "238.316 1 36.922"
+		);
+		hvtItem.campItems.Insert(item_22);
+		
+		ref SDRC_Structure item_23 = new SDRC_Structure();
+		item_23.Set(
+		    "{E2B6B200FF6C86A3}PrefabsEditable/Auto/Props/Garbage/Generic/E_Litter_01_small.et",
+		    "238.431 1 29.69"
+		);
+		hvtItem.campItems.Insert(item_23);
+		
+		ref SDRC_Structure item_24 = new SDRC_Structure();
+		item_24.Set(
+		    "{E6AE368A342034CB}PrefabsEditable/Auto/Props/Military/Fortification/E_CzechHedgehog_01_rusty.et",
+		    "243.498 0 32.148"
+		);
+		hvtItem.campItems.Insert(item_24);
+		
+		ref SDRC_Structure item_25 = new SDRC_Structure();
+		item_25.Set(
+		    "{E6AE368A342034CB}PrefabsEditable/Auto/Props/Military/Fortification/E_CzechHedgehog_01_rusty.et",
+		    "241.986 0 34.283",
+		    "0 -40.091 0"
+		);
+		hvtItem.campItems.Insert(item_25);
+		
+		ref SDRC_Structure item_26 = new SDRC_Structure();
+		item_26.Set(
+		    "{FF3ED8B26C05A940}PrefabsEditable/Auto/Props/Military/Camps/E_LanternMilitary_US_01.et",
+		    "240.281 1.899 31.122"
+		);
+		hvtItem.campItems.Insert(item_26);
+		
+		return hvtItem;
+	};
+	
+	//----------------------------------------------------
+	SDRC_HvtItem HvtItem012()
+	{
+		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
+		hvtItem.general.Set(
+			12, "index 12: Destroy transformer",
+			{"0 0 0"}, 20,
+			{},
+			"any",
+			"Radar near %l",
+			"Silence the radar by destroying the transformer.",
+			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
+			"Enemy eyes are now shut.",
+			"Radar commmunication working as enemy wanted.",
+			"",
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
+			SDRC_EDifficulty.RANDOM,
+			0
+		);
+		hvtItem.ai.Set(
+			{3, 4},
+			{"G_SMALL", "G_SPECIAL", "G_SMALL", "G_SMALL"},
+			50, 1.0,
+			{10, 250},
+			SDRC_EWaypointGenerationType.RADIUS,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
+		);		
+		hvtItem.targetIdx = 2;
+		
+		ref SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"WEAPON_MG", "WEAPON_SHOTGUN", 
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
+				"UTIL_ATTACHMENT", "UTIL_OPTIC",
+				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
+				"ITEM_MEDICAL",
+				"ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
+				"CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", 
+			};
+		loot.Set(0.5, lootItems);
+		hvtItem.loot = loot;
+		
+		ref SDRC_Structure item_0 = new SDRC_Structure();
+		item_0.Set(
+		    "{D15A294D5138ADFF}Prefabs/Props/Military/AmmoBoxes/US/LootEquipmentBoxWooden_Equipment_01_US.et",
+		    "236.56 1.309 13.497",
+		    "0 90 0"
+		);
+		hvtItem.campItems.Insert(item_0);
+		
+		ref SDRC_Structure item_1 = new SDRC_Structure();
+		item_1.Set(
+		    "{11153A8B7A2F5D20}Prefabs/Structures/Military/Antennas/Antenna_BARS_01/Antenna_BARS_01.et",
+		    "242.397 0 8.754"
+		);
+		hvtItem.campItems.Insert(item_1);
+		
+		ref SDRC_Structure item_2 = new SDRC_Structure();
+		item_2.Set(		
+		    "{18F341CBFAA3F78D}Prefabs/Structures/Infrastructure/Power/TransformerStation110kV_E_01/HDOCoil110kV_E_01.et",
+		    "248.275 0 11.055"
+		);
+		hvtItem.campItems.Insert(item_2);
+		
+		ref SDRC_Structure item_3 = new SDRC_Structure();
+		item_3.Set(
+		    "{A5A186A2B8B07018}Prefabs/Structures/Infrastructure/Power/TransformerStation110kV_E_01/HvtTransformer110kV_E_01_scaled50_unplugged.et",
+		    "245.283 0 11.717"
+		);
+		hvtItem.campItems.Insert(item_3);
+		
+		ref SDRC_Structure item_4 = new SDRC_Structure();
+		item_4.Set(
+		    "{504D8F0DB6B637EE}Prefabs/Structures/Signs/Large/SignLarge_01_PowerPlant.et",
+		    "246.387 1 15.151"
+		);
+		hvtItem.campItems.Insert(item_4);
+		
+		ref SDRC_Structure item_5 = new SDRC_Structure();
+		item_5.Set(
+		    "{62FEEA7FEC86C429}Prefabs/Structures/Infrastructure/Power/TransformerStation110kV_E_01/TransformerTopPart110kV_E_01.et",
+		    "244.021 0 10.028"
+		);
+		hvtItem.campItems.Insert(item_5);
+		
+		ref SDRC_Structure item_6 = new SDRC_Structure();
+		item_6.Set(
+		    "{D445D04331B6809E}Prefabs/Structures/Industrial/Houses/PortableCabin_E_01/PortableCabin_E_01_white.et",
+		    "237.828 0 12.826"
+		);
+		hvtItem.campItems.Insert(item_6);
+		
+		ref SDRC_Structure item_7 = new SDRC_Structure();
+		item_7.Set(
+		    "{E75643A38F87D591}Prefabs/Structures/Walls/Net/NetFence_05/HvtNetFence_05_tall_6m_V3_green.et",
+		    "239.572 0 14.667"
+		);
+		hvtItem.campItems.Insert(item_7);
+		
+		ref SDRC_Structure item_8 = new SDRC_Structure();
+		item_8.Set(
+		    "{E75643A38F87D591}Prefabs/Structures/Walls/Net/NetFence_05/HvtNetFence_05_tall_6m_V3_green.et",
+		    "245.797 0 14.66"
+		);
+		hvtItem.campItems.Insert(item_8);
+		
+		ref SDRC_Structure item_9 = new SDRC_Structure();
+		item_9.Set(
+		    "{E75643A38F87D591}Prefabs/Structures/Walls/Net/NetFence_05/HvtNetFence_05_tall_6m_V3_green.et",
+		    "252.03 0 14.651",
+		    "0 90 0"
+		);
+		hvtItem.campItems.Insert(item_9);
+		
+		ref SDRC_Structure item_10 = new SDRC_Structure();
+		item_10.Set(
+		    "{E75643A38F87D591}Prefabs/Structures/Walls/Net/NetFence_05/HvtNetFence_05_tall_6m_V3_green.et",
+		    "247.987 0 7.613",
+		    "0 -180 0"
+		);
+		hvtItem.campItems.Insert(item_10);
+		
+		return hvtItem;
+	};		
 }

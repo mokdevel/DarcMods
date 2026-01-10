@@ -1,0 +1,38 @@
+StaticModelEntity : "{11153A8B7A2F5D20}Prefabs/Structures/Military/Antennas/Antenna_BARS_01/Antenna_BARS_01.et" {
+ coords 242.397 0 8.754
+}
+SCR_DestructibleBuildingEntity : "{18F341CBFAA3F78D}Prefabs/Structures/Infrastructure/Power/TransformerStation110kV_E_01/HDOCoil110kV_E_01.et" {
+ coords 248.275 0 11.055
+}
+GenericEntity : "{504D8F0DB6B637EE}Prefabs/Structures/Signs/Large/SignLarge_01_PowerPlant.et" {
+ coords 246.387 1 15.151
+}
+SCR_DestructibleBuildingEntity : "{62FEEA7FEC86C429}Prefabs/Structures/Infrastructure/Power/TransformerStation110kV_E_01/TransformerTopPart110kV_E_01.et" {
+ coords 244.021 0 10.028
+}
+SCR_DestructibleBuildingEntity : "{A5A186A2B8B07018}Prefabs/Structures/Infrastructure/Power/TransformerStation110kV_E_01/HvtTransformer110kV_E_01_scaled50_unplugged.et" {
+ coords 245.283 0 11.717
+}
+GenericEntity : "{D15A294D5138ADFF}Prefabs/Props/Military/AmmoBoxes/US/LootEquipmentBoxWooden_Equipment_01_US.et" {
+ coords 236.56 1.309 13.497
+ angles 0 90 0
+}
+SCR_DestructibleBuildingEntity : "{D445D04331B6809E}Prefabs/Structures/Industrial/Houses/PortableCabin_E_01/PortableCabin_E_01_white.et" {
+ coords 237.828 0 12.826
+}
+$grp SCR_DestructibleEntity : "{E75643A38F87D591}Prefabs/Structures/Walls/Net/NetFence_05/HvtNetFence_05_tall_6m_V3_green.et" {
+ {
+  coords 239.572 0 14.667
+ }
+ {
+  coords 245.797 0 14.66
+ }
+ {
+  coords 252.03 0 14.651
+  angles 0 90 0
+ }
+ {
+  coords 247.987 0 7.613
+  angles 0 -180 0
+ }
+}
