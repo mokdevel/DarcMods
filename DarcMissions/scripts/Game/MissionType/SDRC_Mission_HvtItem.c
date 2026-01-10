@@ -250,7 +250,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		
 		//Default
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {10, 11, 12};//{0,1,2};
+		missionList = {0,1,2};
 		missionFiles.Insert("dc_missionConfig_HvtItem_010.json");		
 		//Mission specific
 		//----------------------------------------------------

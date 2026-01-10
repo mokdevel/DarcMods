@@ -7,6 +7,11 @@ SCR_DestructibleBuildingEntity : "{9B11428D92F2C855}Prefabs/Structures/Infrastru
   SoundComponent "{56FAEA1832302C7B}" {
    Enabled 0
   }
+  SCR_DestructionMultiPhaseComponent "{6674CA77B0144A3A}" {
+   m_fBaseHealth 3000
+   m_fForceToDamageScale 50
+   m_fDamageThresholdMaximum 3000
+  }
   SCR_EditableEntityComponent "{6855142CADFCE0DF}" {
    m_UIInfo SCR_EditableEntityUIInfo "{6855142F572169DC}" {
     Name "Mission target"

@@ -531,7 +531,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 			SDRC_EWaypointGenerationType.RADIUS,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);		
-		hvtItem.targetIdx = 2;
+		hvtItem.targetIdx = 5;
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
@@ -558,12 +558,12 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 		ref SDRC_Structure item_1 = new SDRC_Structure();
 		item_1.Set(
 		    "{11153A8B7A2F5D20}Prefabs/Structures/Military/Antennas/Antenna_BARS_01/Antenna_BARS_01.et",
-		    "242.397 0 8.754"
+		    "242.397 0 11.532"
 		);
 		hvtItem.campItems.Insert(item_1);
 		
 		ref SDRC_Structure item_2 = new SDRC_Structure();
-		item_2.Set(		
+		item_2.Set(
 		    "{18F341CBFAA3F78D}Prefabs/Structures/Infrastructure/Power/TransformerStation110kV_E_01/HDOCoil110kV_E_01.et",
 		    "248.275 0 11.055"
 		);
@@ -571,8 +571,8 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 		
 		ref SDRC_Structure item_3 = new SDRC_Structure();
 		item_3.Set(
-		    "{A5A186A2B8B07018}Prefabs/Structures/Infrastructure/Power/TransformerStation110kV_E_01/HvtTransformer110kV_E_01_scaled50_unplugged.et",
-		    "245.283 0 11.717"
+		    "{48BD7D41CEBA6E0D}Prefabs/Structures/Military/Sirens/SirenMilitary_E_01/SirenMilitary_E_01.et",
+		    "248.781 0 13.367"
 		);
 		hvtItem.campItems.Insert(item_3);
 		
@@ -585,8 +585,8 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 		
 		ref SDRC_Structure item_5 = new SDRC_Structure();
 		item_5.Set(
-		    "{62FEEA7FEC86C429}Prefabs/Structures/Infrastructure/Power/TransformerStation110kV_E_01/TransformerTopPart110kV_E_01.et",
-		    "244.021 0 10.028"
+		    "{A5A186A2B8B07018}Prefabs/Structures/Infrastructure/Power/TransformerStation110kV_E_01/HvtTransformer110kV_E_01_scaled50_unplugged.et",
+		    "245.283 0 11.717"
 		);
 		hvtItem.campItems.Insert(item_5);
 		
@@ -596,36 +596,6 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 		    "237.828 0 12.826"
 		);
 		hvtItem.campItems.Insert(item_6);
-		
-		ref SDRC_Structure item_7 = new SDRC_Structure();
-		item_7.Set(
-		    "{E75643A38F87D591}Prefabs/Structures/Walls/Net/NetFence_05/HvtNetFence_05_tall_6m_V3_green.et",
-		    "239.572 0 14.667"
-		);
-		hvtItem.campItems.Insert(item_7);
-		
-		ref SDRC_Structure item_8 = new SDRC_Structure();
-		item_8.Set(
-		    "{E75643A38F87D591}Prefabs/Structures/Walls/Net/NetFence_05/HvtNetFence_05_tall_6m_V3_green.et",
-		    "245.797 0 14.66"
-		);
-		hvtItem.campItems.Insert(item_8);
-		
-		ref SDRC_Structure item_9 = new SDRC_Structure();
-		item_9.Set(
-		    "{E75643A38F87D591}Prefabs/Structures/Walls/Net/NetFence_05/HvtNetFence_05_tall_6m_V3_green.et",
-		    "252.03 0 14.651",
-		    "0 90 0"
-		);
-		hvtItem.campItems.Insert(item_9);
-		
-		ref SDRC_Structure item_10 = new SDRC_Structure();
-		item_10.Set(
-		    "{E75643A38F87D591}Prefabs/Structures/Walls/Net/NetFence_05/HvtNetFence_05_tall_6m_V3_green.et",
-		    "247.987 0 7.613",
-		    "0 -180 0"
-		);
-		hvtItem.campItems.Insert(item_10);
 		
 		return hvtItem;
 	};		
