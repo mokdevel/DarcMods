@@ -177,8 +177,13 @@ sealed class SDRC_LootHelper
 			return "";				
 		}
 
-		ResourceName resourceName = m_Config.lists[lootIndex].items.GetRandomElement();
-		SDRC_Log.Add("[SDRC_LootHelper:FindLootItem] Selected: (" + listName + ") " + resourceName, LogLevel.DEBUG);
+		ResourceName resourceName = "";
+		
+		if (!m_Config.lists[lootIndex].items.IsEmpty())
+		{
+			resourceName = m_Config.lists[lootIndex].items.GetRandomElement();
+			SDRC_Log.Add("[SDRC_LootHelper:FindLootItem] Selected: (" + listName + ") " + resourceName, LogLevel.DEBUG);
+		}
 		
 		return resourceName;
 	}
