@@ -7,13 +7,17 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 Changed jsons - remove the files to receive updated ones.
-* dc_missionConfig_Chopper.json
+* dc_missionConfig.json (version update)
+* dc_missionConfig_Chopper.json (new sub-missions)
+* dc_missionConfig_HvtItem.json (new sub-missions)
+
 Recommendation: For mission difficulty settings to take effect, delete all your mission configurations dc_missionConfig_*.json . No need to delete in case you are happy with NORMAL difficulty.
 
 Main features:
-* Refactored the json loading/saving. Better looking jsons and provides capability for (future) error checking. 
+* Refactored the json loading/saving. Better looking jsons and provides capability for error checking. 
 * Support for Chinese People's Liberation Army (PLA) faction.
 * Mission difficulty settings enabled for all missions. Mission difficulty is shown on the marker. See documentation for details.
+** https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md#difficulty
 
 Chopper mission:
 * New sub-mission: Helicopter recon. If you're seen, Hunters will be sent after you.
