@@ -698,9 +698,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 			//Fly around a certain area
 			if (wpGenType == SDRC_EHeliWaypointGenerationType.PATROL)
 			{
-				int count = 3;
-				int degree = 45; 	// Degrees per count
-				int sign = 1;		//SDRC_Misc.RandomSign(); <- does not work very well
+				const int count = 3;
+				const int degree = 45; 	// Degrees per count
+				const int sign = 1;		//SDRC_Misc.RandomSign(); <- does not work very well
 				
 				for (int i = 0; i < count; i++)
 				{			
