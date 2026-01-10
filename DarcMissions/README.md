@@ -29,7 +29,7 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - (10) [Stash](./docs/MISSION_STASH.md) : A stash is spawned with loot. May have guards protecting it.
 - (11) [Chopper](./docs/MISSION_CHOPPER.md) : A helicopter is searching for you.
 
-<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_chopper.jpg" width=15% height=15%><img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_roadblock.jpg" width=15% height=15%><img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_crashsite.jpg" width=15% height=15%>
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_chopper.jpg" width=15% height=15%> <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_roadblock.jpg" width=15% height=15%> <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_crashsite.jpg" width=15% height=15%>
 
 ## Thanks
 - The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
