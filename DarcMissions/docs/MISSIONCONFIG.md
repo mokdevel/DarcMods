@@ -92,7 +92,7 @@ Difficulty affects various aspects of the missions. Each 'coef' has five values 
 * ``lootCountCoef`` : The multiplier used to modify the loot amount. When loot is spawned, the list provided is used. If this value increases the total, amount of items in the lootlist, additional items are added to the list from the original list.
 * ``rewardCoef`` : The multiplier used to modify the reward amount. Reward refers to ``xp`` variable in missions. Currently only Freedom Fighters is providing reward
 ```
-array<float> aiCountCoef =      {0.50, 0.60, 1.01, 1.80, 2.30};
+array<float> aiCountCoef =      {0.50, 0.60, 1.01, 1.40, 2.10};
 array<float> aiSkillCoef =      {0.20, 0.60, 1.01, 1.30, 1.60};
 array<float> aiPerceptionCoef = {0.20, 0.60, 1.01, 1.30, 1.60};
 array<float> lootChanceCoef =   {0.50, 0.60, 1.01, 1.10, 1.20};	

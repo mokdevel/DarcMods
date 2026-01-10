@@ -24,7 +24,7 @@ Chopper mission:
 ** https://reforger.armaplatform.com/workshop/6850D5F667CEFF94-AH-6MforDarcMissions
 ** https://reforger.armaplatform.com/workshop/684F3C94BD457F85-KA-52forDarcMissions
 
-Hvt Item mission:
+HvtItem mission:
 * Two new sub-mission: Soup kitchen and Radar
 
 Changes:
