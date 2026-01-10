@@ -1,5 +1,6 @@
 ## Mission : Chopper
 Example: [dc_missionConfig_Chopper.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Chopper.json)
+
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_chopper.jpg" width=30% height=30%>
 
 A flying helicopter is spawned on the edges of the map and will fly to the mission location. If the helicopter is armed, AI shoot if an enemy is seen. The shooting is Arma Reforger functionality. 
