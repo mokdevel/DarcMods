@@ -1,6 +1,8 @@
 ## Mission : HVT Item - High Value Target Item
 Example: [dc_missionConfig_HvtItem.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_HvtItem.json)
 
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_hvtitem.jpg" width=30% height=30%>
+
 AIs have built a camp/installation which has a target that needs to be destroyed in order to complete the mission. Loot is spawned in the box when a win condition is achieved.
 
 ### GM requested mission

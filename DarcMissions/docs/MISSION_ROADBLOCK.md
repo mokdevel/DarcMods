@@ -1,6 +1,8 @@
 ## Mission : Roadblock
 Example: [dc_missionConfig_Roadblock.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Roadblock.json)
 
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_roadblock.jpg" width=30% height=30%>
+
 AIs have setup roadblocks on roads. They will patrol the location and may have loot with them. Loot is spawned when a win condition is achieved.
 
 ### GM requested mission

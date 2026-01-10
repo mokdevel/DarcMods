@@ -1,6 +1,8 @@
 ## Mission : Crashsite
 Example: [dc_missionConfig_Crashsite.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Crashsite.json)
 
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_crashsite.jpg" width=30% height=30%>
+
 A flying helicopter is spawned in a random location flying towards a random location. The helicopter either crashes or if the speed is reduced enough, it will be destroyed via script. Once the helicopter has crashed, AI will be spawned to protect the crashsite. NOTE: There is no parameter for waypoints and AIs will ```LOITER```. Loot can be added in to the loot box carried. Additional structures can be spawned around the crashed helicopter. 
 
 The location for the initial chopper spawn is random and only checks for mission distance and player distance. The destination is toward map center with randomization. This is to avoid the direction to be towards the map edges. There will be cases where the helicopter flies towards the sea and this is just unfortunate randomization (read: this is by design).

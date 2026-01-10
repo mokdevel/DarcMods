@@ -1,6 +1,8 @@
 ## Mission : Convoy
 Example: [dc_missionConfig_Convoy.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_missionConfig_Convoy.json)
 
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_convoy.jpg" width=30% height=30%>
+
 AI patrol is spawned in a vehicle to move around the map. The convoy will go from ```posStart``` to ```posDestination```. When destination has been reached, the patrol will LOITER.
 
 ### GM requested mission
