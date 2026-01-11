@@ -2,11 +2,11 @@
 Once the mod starts to run it will wait for ```missionStartDelay``` before the missions start to spawn. The missions have their own life cycle with a defined cycle time. Once a mission is completed and no players are near by, the missions will despawn. The missions are active a minimum of ```missionActiveTime```. The time is reset if there is a player within ```missionActiveDistance```. For more details, see [Mission Frame](#mission-frame).
 
 ## Mission position
-Mission position is either defined or randomized. See [General parameters - pos](P_COMMON.md) and [Location parameters](P_LOCATIONS.md). Once a position is chosen, it's checked for validity. The position shall not be .. 
+Mission position is either defined or randomized. See [General parameters - pos](./P_COMMON.md) and [Location parameters](./P_LOCATIONS.md). Once a position is chosen, it's checked for validity. The position shall not be .. 
 - .. too close to another mission
 - .. too close to any player
 - .. in water
-- .. in [non valid area](NONVALIDAREAS.md)
+- .. in [non valid area](./P_NONVALIDAREAS.md)
 
 In the case position is not usable, another try is made. Currently searching is limited to five tries before deciding that no position has been found. In this case, mission will not spawn.
 
