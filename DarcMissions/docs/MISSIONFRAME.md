@@ -19,7 +19,10 @@ In the configuration you can define missions either as a dynamic mission (```mis
 
 * Dynamic missions will spawn on steady pace. The ``activeTime`` should be relatively short so that the missions despawn and new ones are brought to players. Note that no dynamic missions, including GM requested ones, will spawn if static missions are still spawning.
 
-* GM spawned missions are dynamic missions. You can spawn missions as a GM even if you have reached the maximum count of dynamic missions. GM requested missions are spawned with a higher priority compared to normal dynamic missions. If you set both static and dynamic missions to zero, only GM spawned missions will spawn.
+## Requested mossions
+GM can drop in more missions to the map. These are dynamic missions and will add to the total of dynamic missions. Requested missions do not respect the mission limits soy ou can spawn missions as a GM even if you have reached the maximum count of dynamic missions. GM requested missions are spawned with a higher priority compared to normal dynamic missions. If you set both static and dynamic missions to zero, only GM spawned missions will spawn.
+
+Requested missions do not check if a mission position is valid. You can overload an area with multiple missions if that is wanted.
 
 ## Mission end (win or lose)
 Each mission has a win condition. The normal case is to eliminate a certain amount of AI to reach the goal. Once the win condition has been reached, the mission is kept alive for ```missionActiveTimeToEnd``` seconds. The time is reset if there is a player within ```missionActiveDistance```. At the end of a mission, all spawned items will despawn (for example camps) but also vehicles. 
@@ -33,10 +36,6 @@ Available win conditions:
   5-9: RESERVED       : Reserved for future use
   10 = HVT_KILL_VIP   : Kill the target VIP - shall be used only with HVTVIP mission.
 ```
-
-## Mission difficulty
-
-... TBD ...
 
 ## MissionFrame cycle
 ```
