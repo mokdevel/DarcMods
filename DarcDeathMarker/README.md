@@ -17,6 +17,8 @@ bool visibleOnlyToFaction : If true, the markers will only be visible for player
 ```
 
 # Version history
+## 20260111
+Compatibility compile for DarcCore. New json fileformat.
 
 ## 20251213
 Compatibility compile for DarcCore.

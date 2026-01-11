@@ -32,11 +32,8 @@ bool rewardDefault : Default reward unless specific reward has been set in missi
 ```
 
 # Version history
-## WIP 
-
-## Next release (unreleased)
-
-... empty ...
+## 20260111
+Compatibility compile for DarcCore. New json fileformat.
 
 ## 20251222
 The file dc_compatFFConfig.json has changed. Delete the file to receive a new one!

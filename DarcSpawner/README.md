@@ -51,6 +51,8 @@ Some parameters are described in DarcMissions documentation
 - [LootLists](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LISTS.md#loot-lists)
 
 # Version history
+## 20260111
+Compatibility compile for DarcCore. New json fileformat.
 
 ## 20251213
 Compatibility compile for DarcCore.
