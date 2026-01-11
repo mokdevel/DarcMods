@@ -1,356 +1,446 @@
 {
-	"version": 1,
-	"author": "darc",
-	"missionCycleTime": 30,
-	"showMarker": true,
-	"showHint": true,
-	"showMessage": true,
-	"disableArsenal": false,
-	"missionList": [
-		0,
-		0,
-		1,
-		2,
-		3,
-		3
-	],
-	"missionFiles": [],
-	"secondWave": [],
-	"buildingRadius": 400,
-	"subMissions": [
-		{
-			"general": {
-				"subIdx": 0,
-				"comment": "index 0: HvtVips in cities",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 0.0,
-				"locationTypes": [
-					59,
-					59,
-					59,
-					59,
-					59,
-					60,
-					61,
-					81
-				],
-				"posName": "any",
-				"title": "Target near %l.",
-				"info": "Assassinate the target",
-				"winCondition": 10,
-				"winMessage": "The target has been neutralized.",
-				"loseMessage": "The target escaped.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 10,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					2
-				],
-				"types": [
-					"G_LIGHT",
-					"G_RECON"
-				],
-				"skill": 50,
-				"perception": 0.6000000238418579,
-				"waypointRange": [
-					0,
-					0
-				],
-				"waypointGenType": 0,
-				"waypointMoveType": 0
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"buildingNames": [
-				"ShopModern_",
-				"Villa_",
-				"MunicipalOffice_",
-				"PubVillage_",
-				"Office_E_",
-				"MountainHotel_"
-			],
-			"lootBox": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
-			"loot": {
-				"box": null,
-				"itemChance": 0.699999988079071,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_HANDGUN",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"UTIL_ATTACHMENT",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL"
-				]
-			},
-			"target": "C_OFFICER"
-		},
-		{
-			"general": {
-				"subIdx": 1,
-				"comment": "index 1: HvtVips in control towers",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 0.0,
-				"locationTypes": [],
-				"posName": "any",
-				"title": "Flight controller near %l.",
-				"info": "Assassinate the target",
-				"winCondition": 10,
-				"winMessage": "The target has been neutralized.",
-				"loseMessage": "The target escaped.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 10,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					3
-				],
-				"types": [
-					"G_LIGHT"
-				],
-				"skill": 50,
-				"perception": 0.6000000238418579,
-				"waypointRange": [
-					0,
-					0
-				],
-				"waypointGenType": 0,
-				"waypointMoveType": 0
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"buildingNames": [
-				"ControlTowerMilitary_"
-			],
-			"lootBox": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
-			"loot": {
-				"box": null,
-				"itemChance": 0.699999988079071,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"UTIL_ATTACHMENT",
-					"UTIL_OPTIC",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL"
-				]
-			},
-			"target": "C_OFFICER"
-		},
-		{
-			"general": {
-				"subIdx": 2,
-				"comment": "index 2: Businessman with bad business",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 0.0,
-				"locationTypes": [],
-				"posName": "any",
-				"title": "%l is bad for business",
-				"info": "Assassinate the business man conducting bad business.",
-				"winCondition": 10,
-				"winMessage": "The target has been neutralized.",
-				"loseMessage": "The target escaped.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 10,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					2
-				],
-				"types": [
-					"G_HEAVY"
-				],
-				"skill": 50,
-				"perception": 0.6000000238418579,
-				"waypointRange": [
-					0,
-					0
-				],
-				"waypointGenType": 0,
-				"waypointMoveType": 0
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"buildingNames": [
-				"Office_E_",
-				"Barracks_01_",
-				"Barracks_E_02_",
-				"MountainHotel_"
-			],
-			"lootBox": "{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
-			"loot": {
-				"box": null,
-				"itemChance": 0.699999988079071,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"UTIL_ATTACHMENT",
-					"UTIL_OPTIC",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL"
-				]
-			},
-			"target": "{A517C72CEF150898}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_2.et"
-		},
-		{
-			"general": {
-				"subIdx": 3,
-				"comment": "index 3: Criminal in countryside",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 0.0,
-				"locationTypes": [],
-				"posName": "any",
-				"title": "Criminal hiding in %l",
-				"info": "Assassinate the criminal boss. He tries to keep low profile.",
-				"winCondition": 10,
-				"winMessage": "The criminal got what he deserved.",
-				"loseMessage": "The judgement day is posponed.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 10,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					1
-				],
-				"types": [
-					"G_LIGHT"
-				],
-				"skill": 50,
-				"perception": 0.6000000238418579,
-				"waypointRange": [
-					0,
-					0
-				],
-				"waypointGenType": 0,
-				"waypointMoveType": 0
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"buildingNames": [
-				"House_"
-			],
-			"lootBox": "{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
-			"loot": {
-				"box": null,
-				"itemChance": 0.699999988079071,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"WEAPON_GRENADE",
-					"UTIL_ATTACHMENT",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL"
-				]
-			},
-			"target": "{E024A74F8A4BC644}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_1.et"
-		}
-	]
+    "version": 1,
+    "author": "darc",
+    "missionCycleTime": 30,
+    "showMarker": true,
+    "showHint": true,
+    "showMessage": true,
+    "disableArsenal": false,
+    "missionList": [
+        0,
+        1,
+        2,
+        3,
+        3,
+        4
+    ],
+    "missionFiles": [],
+    "secondWave": [],
+    "buildingRadius": 400,
+    "subMissions": [
+        {
+            "general": {
+                "subIdx": 0,
+                "comment": "index 0: HvtVips in cities",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 0.0,
+                "locationTypes": [
+                    59,
+                    59,
+                    59,
+                    59,
+                    59,
+                    60,
+                    61,
+                    81
+                ],
+                "posName": "any",
+                "title": "Target near %l.",
+                "info": "Assassinate the target",
+                "winCondition": 10,
+                "winMessage": "The target has been neutralized.",
+                "loseMessage": "The target escaped.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 10,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_LIGHT",
+                    "G_RECON"
+                ],
+                "skill": 50,
+                "perception": 0.6,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 0,
+                "waypointMoveType": 0
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "buildingNames": [
+                "ShopModern_",
+                "Villa_",
+                "MunicipalOffice_",
+                "PubVillage_",
+                "Office_E_",
+                "MountainHotel_"
+            ],
+            "lootBox": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "UTIL_ATTACHMENT",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL"
+                ]
+            },
+            "target": "C_OFFICER"
+        },
+        {
+            "general": {
+                "subIdx": 1,
+                "comment": "index 1: HvtVips in control towers",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 0.0,
+                "locationTypes": [],
+                "posName": "any",
+                "title": "Flight controller near %l.",
+                "info": "Assassinate the target",
+                "winCondition": 10,
+                "winMessage": "The target has been neutralized.",
+                "loseMessage": "The target escaped.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 10,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    3
+                ],
+                "types": [
+                    "G_LIGHT"
+                ],
+                "skill": 50,
+                "perception": 0.6,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 0,
+                "waypointMoveType": 0
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "buildingNames": [
+                "ControlTowerMilitary_"
+            ],
+            "lootBox": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_UNIFORM"
+                ]
+            },
+            "target": "C_OFFICER"
+        },
+        {
+            "general": {
+                "subIdx": 2,
+                "comment": "index 2: Businessman with bad business",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 0.0,
+                "locationTypes": [],
+                "posName": "any",
+                "title": "%l is bad for business",
+                "info": "Assassinate the business man conducting bad business.",
+                "winCondition": 10,
+                "winMessage": "The target has been neutralized.",
+                "loseMessage": "The target escaped.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 10,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_HEAVY"
+                ],
+                "skill": 50,
+                "perception": 0.6,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 0,
+                "waypointMoveType": 0
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "buildingNames": [
+                "Office_E_",
+                "Barracks_01_",
+                "Barracks_E_02_",
+                "MountainHotel_"
+            ],
+            "lootBox": "{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_BAG",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_UNIFORM",
+                    "CLOTHING_UNIFORM"
+                ]
+            },
+            "target": "{A517C72CEF150898}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_2.et"
+        },
+        {
+            "general": {
+                "subIdx": 3,
+                "comment": "index 3: Criminal in countryside",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 0.0,
+                "locationTypes": [],
+                "posName": "any",
+                "title": "Criminal hiding in %l",
+                "info": "Assassinate the criminal boss. He tries to keep low profile.",
+                "winCondition": 10,
+                "winMessage": "The criminal got what he deserved.",
+                "loseMessage": "The judgement day is postponed.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 10,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    1
+                ],
+                "types": [
+                    "G_LIGHT"
+                ],
+                "skill": 50,
+                "perception": 0.6,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 0,
+                "waypointMoveType": 0
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "buildingNames": [
+                "House_"
+            ],
+            "lootBox": "{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_GRENADE",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_HANDWEAR",
+                    "GEAR_UNIFORM"
+                ]
+            },
+            "target": "{E024A74F8A4BC644}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_1.et"
+        },
+        {
+            "general": {
+                "subIdx": 4,
+                "comment": "index 4: Drunks in pubs",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 0.0,
+                "locationTypes": [],
+                "posName": "any",
+                "title": "Drunks and punks in %l",
+                "info": "Assassinate the drunk leader. Most likely hides in a pub.",
+                "winCondition": 10,
+                "winMessage": "Free drinks for everyone!",
+                "loseMessage": "No drinks for you this time.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 10,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_LIGHT",
+                    "G_ADMIN",
+                    "G_MEDICAL"
+                ],
+                "skill": 50,
+                "perception": 0.6,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 0,
+                "waypointMoveType": 0
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "buildingNames": [
+                "PubVillage_",
+                "ShopHouse_"
+            ],
+            "lootBox": "{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "GEAR_VEST",
+                    "GEAR_HANDWEAR",
+                    "GEAR_UNIFORM",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_UNIFORM",
+                    "CLOTHING_UNIFORM",
+                    "CLOTHING_UNIFORM",
+                    "WEAPON_GRENADE",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL"
+                ]
+            },
+            "target": "{A2B367FFF37E6416}Prefabs/Characters/Factions/CIV/Dockworker/Character_CIV_Dockworker_5.et"
+        }
+    ]
 }

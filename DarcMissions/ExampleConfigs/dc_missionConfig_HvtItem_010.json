@@ -1,334 +1,945 @@
 {
-	"version": 1,
-	"author": "darc",
-	"missionCycleTime": 30,
-	"showMarker": true,
-	"showHint": true,
-	"showMessage": true,
-	"disableArsenal": false,
-	"missionList": [
-		10
-	],
-	"missionFiles": [],
-	"secondWave": [],
-	"subMissions": [
-		{
-			"general": {
-				"subIdx": 10,
-				"comment": "index 10: Destroy silo",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 20.0,
-				"locationTypes": [],
-				"posName": "any",
-				"title": "Silo near to %l",
-				"info": "The materials inside shall not end up at the hands of the enemy.",
-				"winCondition": 20,
-				"winMessage": "The silo is now just a bunch bricks.",
-				"loseMessage": "Material in the silo was secured by the enemy.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 11,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					2,
-					4
-				],
-				"types": [
-					"G_ADMIN",
-					"G_LIGHT",
-					"G_LIGHT",
-					"G_LIGHT",
-					"G_HEAVY"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					10,
-					200
-				],
-				"waypointGenType": 3,
-				"waypointMoveType": 5
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.5,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE",
-					"UTIL_ATTACHMENT",
-					"UTIL_OPTIC",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
-					"position": [
-						231.89700317382813,
-						1.0,
-						93.09700012207031
-					],
-					"rotation": [
-						0.0,
-						15.420999526977539,
-						0.0
-					]
-				},
-				{
-					"resource": "{05A379C7AF6B9F0E}PrefabLibrary/Props/Construction/ConcretePipe_01_Short_Pile.et",
-					"position": [
-						236.2169952392578,
-						1.0,
-						83.76799774169922
-					],
-					"rotation": [
-						0.0,
-						68.18599700927735,
-						0.0
-					]
-				},
-				{
-					"resource": "{0B141EBFAA428804}PrefabLibrary/Props/Garbage/TrashBin_02/TrashBin_02_patched.et",
-					"position": [
-						233.65199279785157,
-						1.0,
-						88.26599884033203
-					],
-					"rotation": [
-						0.0,
-						179.9949951171875,
-						0.0
-					]
-				},
-				{
-					"resource": "{1C550797FEBCB68F}PrefabLibrary/Props/Industrial/GasWelder_01.et",
-					"position": [
-						239.6999969482422,
-						1.0,
-						90.48600006103516
-					],
-					"rotation": [
-						0.0,
-						-30.634000778198243,
-						0.0
-					]
-				},
-				{
-					"resource": "{34B95ECB9BCFE6A5}PrefabLibrary/Props/Infrastructure/ElectricCabinet_01.et",
-					"position": [
-						235.90499877929688,
-						0.0,
-						91.03700256347656
-					],
-					"rotation": [
-						0.0,
-						-180.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{4D100F180B3EFEC1}Prefabs/Structures/Industrial/Containers/Silos/Silo_01/Silo_01.et",
-					"position": [
-						236.6999969482422,
-						0.0,
-						92.82499694824219
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{82666A967534A109}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Wall_USSR_01.et",
-					"position": [
-						230.4929962158203,
-						1.0,
-						90.61599731445313
-					],
-					"rotation": [
-						0.0,
-						-102.91300201416016,
-						0.0
-					]
-				},
-				{
-					"resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
-					"position": [
-						233.87100219726563,
-						1.0,
-						96.5
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
-					"position": [
-						231.74099731445313,
-						1.0,
-						95.61299896240235
-					],
-					"rotation": [
-						0.0,
-						-39.979000091552737,
-						0.0
-					]
-				},
-				{
-					"resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
-					"position": [
-						242.4340057373047,
-						1.0,
-						85.08599853515625
-					],
-					"rotation": [
-						0.0,
-						-65.31700134277344,
-						0.0
-					]
-				},
-				{
-					"resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
-					"position": [
-						240.73300170898438,
-						1.0,
-						83.28399658203125
-					],
-					"rotation": [
-						0.0,
-						-29.608999252319337,
-						0.0
-					]
-				},
-				{
-					"resource": "{AACF7C732B82F6B2}PrefabsEditable/Auto/Compositions/Misc/FreeRoamBuilding/E_SandbagWallBurlap_S_USSR_01.et",
-					"position": [
-						241.156005859375,
-						1.0,
-						95.90399932861328
-					],
-					"rotation": [
-						0.0,
-						47.279998779296878,
-						0.0
-					]
-				},
-				{
-					"resource": "{B292AEB29FA68532}PrefabLibrary/Props/Construction/MetalContainer_01.et",
-					"position": [
-						241.6219940185547,
-						1.0,
-						90.3740005493164
-					],
-					"rotation": [
-						0.0,
-						23.29599952697754,
-						0.0
-					]
-				},
-				{
-					"resource": "{BBA9E7B2D06B7E3E}PrefabsEditable/Auto/Compositions/Misc/FreeRoamBuilding/E_SandbagWallSolidBurlap_S_USSR_01.et",
-					"position": [
-						238.24400329589845,
-						1.0,
-						97.1240005493164
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{CCB19FE7B8422989}PrefabLibrary/Structures/Ruins/HouseRuin_01_BrickPile_Big.et",
-					"position": [
-						243.36900329589845,
-						0.0,
-						89.78800201416016
-					],
-					"rotation": [
-						0.0,
-						144.59500122070313,
-						0.0
-					]
-				},
-				{
-					"resource": "{CD37561561F93B58}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Wall_Sign_USSR_01.et",
-					"position": [
-						232.6300048828125,
-						1.0,
-						87.30799865722656
-					],
-					"rotation": [
-						0.0,
-						-140.34800720214845,
-						0.0
-					]
-				},
-				{
-					"resource": "{CD67070EFAFC28C7}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_burlap.et",
-					"position": [
-						230.63699340820313,
-						1.0,
-						93.45500183105469
-					],
-					"rotation": [
-						0.0,
-						-79.27300262451172,
-						0.0
-					]
-				},
-				{
-					"resource": "{FEA6D4F59C34A6C4}PrefabLibrary/Props/Military/PalletFuel_01.et",
-					"position": [
-						236.6540069580078,
-						1.0,
-						99.28500366210938
-					],
-					"rotation": [
-						0.0,
-						33.17100143432617,
-						0.0
-					]
-				}
-			],
-			"camp": null,
-			"targetIdx": 5
-		}
-	]
+    "version": 1,
+    "author": "darc",
+    "missionCycleTime": 30,
+    "showMarker": true,
+    "showHint": true,
+    "showMessage": true,
+    "disableArsenal": false,
+    "missionList": [
+        10,
+        11,
+        12
+    ],
+    "missionFiles": [
+        "dc_missionConfig_HvtItem_010.json"
+    ],
+    "secondWave": [],
+    "subMissions": [
+        {
+            "general": {
+                "subIdx": 10,
+                "comment": "index 10: Destroy silo",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 20.0,
+                "locationTypes": [],
+                "posName": "any",
+                "title": "Silo near to %l",
+                "info": "The materials inside shall not end up at the hands of the enemy.",
+                "winCondition": 20,
+                "winMessage": "The silo is now just a bunch bricks.",
+                "loseMessage": "Material in the silo was secured by the enemy.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 11,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    2,
+                    4
+                ],
+                "types": [
+                    "G_ADMIN",
+                    "G_LIGHT",
+                    "G_LIGHT",
+                    "G_LIGHT",
+                    "G_HEAVY"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    10,
+                    200
+                ],
+                "waypointGenType": 3,
+                "waypointMoveType": 5
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.5,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_HEADGEAR",
+                    "GEAR_VEST",
+                    "GEAR_HANDWEAR",
+                    "GEAR_UNIFORM"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+                    "position": [
+                        231.897,
+                        1.0,
+                        93.097
+                    ],
+                    "rotation": [
+                        0.0,
+                        15.42,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{05A379C7AF6B9F0E}PrefabLibrary/Props/Construction/ConcretePipe_01_Short_Pile.et",
+                    "position": [
+                        236.216,
+                        1.0,
+                        83.767
+                    ],
+                    "rotation": [
+                        0.0,
+                        68.185,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{0B141EBFAA428804}PrefabLibrary/Props/Garbage/TrashBin_02/TrashBin_02_patched.et",
+                    "position": [
+                        233.651,
+                        1.0,
+                        88.265
+                    ],
+                    "rotation": [
+                        0.0,
+                        179.994,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{1C550797FEBCB68F}PrefabLibrary/Props/Industrial/GasWelder_01.et",
+                    "position": [
+                        239.699,
+                        1.0,
+                        90.486
+                    ],
+                    "rotation": [
+                        0.0,
+                        -30.634,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{34B95ECB9BCFE6A5}PrefabLibrary/Props/Infrastructure/ElectricCabinet_01.et",
+                    "position": [
+                        235.904,
+                        0.0,
+                        91.037
+                    ],
+                    "rotation": [
+                        0.0,
+                        -180.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{3C5ECB01F0CA19B0}Prefabs/Structures/Industrial/Containers/Silos/Silo_01/HvtSilo_01.et",
+                    "position": [
+                        236.699,
+                        0.0,
+                        92.824
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{82666A967534A109}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Wall_USSR_01.et",
+                    "position": [
+                        230.492,
+                        1.0,
+                        90.615
+                    ],
+                    "rotation": [
+                        0.0,
+                        -102.913,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
+                    "position": [
+                        233.871,
+                        1.0,
+                        96.5
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
+                    "position": [
+                        231.74,
+                        1.0,
+                        95.612
+                    ],
+                    "rotation": [
+                        0.0,
+                        -39.979,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
+                    "position": [
+                        242.434,
+                        1.0,
+                        85.085
+                    ],
+                    "rotation": [
+                        0.0,
+                        -65.317,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
+                    "position": [
+                        240.733,
+                        1.0,
+                        83.283
+                    ],
+                    "rotation": [
+                        0.0,
+                        -29.608,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{AACF7C732B82F6B2}PrefabsEditable/Auto/Compositions/Misc/FreeRoamBuilding/E_SandbagWallBurlap_S_USSR_01.et",
+                    "position": [
+                        241.156,
+                        1.0,
+                        95.903
+                    ],
+                    "rotation": [
+                        0.0,
+                        47.279,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{BBA9E7B2D06B7E3E}PrefabsEditable/Auto/Compositions/Misc/FreeRoamBuilding/E_SandbagWallSolidBurlap_S_USSR_01.et",
+                    "position": [
+                        238.244,
+                        1.0,
+                        97.124
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{CCB19FE7B8422989}PrefabLibrary/Structures/Ruins/HouseRuin_01_BrickPile_Big.et",
+                    "position": [
+                        243.369,
+                        0.0,
+                        89.788
+                    ],
+                    "rotation": [
+                        0.0,
+                        144.595,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{CD37561561F93B58}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Wall_Sign_USSR_01.et",
+                    "position": [
+                        232.63,
+                        1.0,
+                        87.307
+                    ],
+                    "rotation": [
+                        0.0,
+                        -140.348,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{CD67070EFAFC28C7}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_burlap.et",
+                    "position": [
+                        230.636,
+                        1.0,
+                        93.455
+                    ],
+                    "rotation": [
+                        0.0,
+                        -79.273,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{FEA6D4F59C34A6C4}PrefabLibrary/Props/Military/PalletFuel_01.et",
+                    "position": [
+                        236.654,
+                        1.0,
+                        99.285
+                    ],
+                    "rotation": [
+                        0.0,
+                        33.171,
+                        0.0
+                    ]
+                }
+            ],
+            "camp": null,
+            "targetIdx": 5
+        },
+        {
+            "general": {
+                "subIdx": 11,
+                "comment": "index 11: Destroy kitchen",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 20.0,
+                "locationTypes": [],
+                "posName": "any",
+                "title": "Soup kitchen near %l",
+                "info": "Make sure the enemy stays hungry.",
+                "winCondition": 20,
+                "winMessage": "No cooking for the enemy.",
+                "loseMessage": "Bellies full, the enemy left.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 11,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    3
+                ],
+                "types": [
+                    "G_ADMIN",
+                    "G_SPECIAL",
+                    "G_LIGHT",
+                    "G_HEAVY"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    10,
+                    200
+                ],
+                "waypointGenType": 3,
+                "waypointMoveType": 5
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.5,
+                "items": [
+                    "WEAPON_RIFLE_BIG",
+                    "WEAPON_LAUNCHER",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_BAG",
+                    "GEAR_BAG",
+                    "GEAR_BAG"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+                    "position": [
+                        237.735,
+                        1.0,
+                        32.543
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{199D1D4F8F75A122}PrefabsEditable/Auto/Props/Military/Camps/E_ConstructionMaterialPacked_WoodPlanks_01_US.et",
+                    "position": [
+                        235.451,
+                        1.0,
+                        40.669
+                    ],
+                    "rotation": [
+                        0.0,
+                        38.409,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{27158976295DB629}PrefabsEditable/Auto/Props/Garbage/Cardboard/E_Cardboard_Pile_06.et",
+                    "position": [
+                        231.764,
+                        1.0,
+                        30.966
+                    ],
+                    "rotation": [
+                        0.0,
+                        44.15,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{33748AC23F947B6E}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_round_burlap.et",
+                    "position": [
+                        227.736,
+                        1.0,
+                        36.194
+                    ],
+                    "rotation": [
+                        0.0,
+                        -52.273,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{4862CD3623FE4E31}PrefabsEditable/Auto/Props/Military/Furniture/E_TableMilitary_USSR_01.et",
+                    "position": [
+                        240.345,
+                        1.0,
+                        31.048
+                    ],
+                    "rotation": [
+                        0.0,
+                        53.108,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{496DDD80744F2C44}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_single_burlap.et",
+                    "position": [
+                        233.151,
+                        1.0,
+                        34.887
+                    ],
+                    "rotation": [
+                        0.0,
+                        -16.816,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{496DDD80744F2C44}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_single_burlap.et",
+                    "position": [
+                        234.886,
+                        1.0,
+                        37.186
+                    ],
+                    "rotation": [
+                        0.0,
+                        -43.944,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{496DDD80744F2C44}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_single_burlap.et",
+                    "position": [
+                        236.072,
+                        1.0,
+                        36.082
+                    ],
+                    "rotation": [
+                        0.0,
+                        12.437,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{58D920FC3C3BEA9A}PrefabsEditable/Auto/Props/Garbage/Military/Food/E_GarbageFoodMilitaryUSSR_01.et",
+                    "position": [
+                        240.643,
+                        1.898,
+                        30.881
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8893B34565777A0E}PrefabsEditable/Auto/Props/Forest/WoodPile/E_WoodPile_02_A.et",
+                    "position": [
+                        228.253,
+                        1.0,
+                        29.847
+                    ],
+                    "rotation": [
+                        0.0,
+                        43.146,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8BABAE6E7F9B3E39}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_bunker_burlap.et",
+                    "position": [
+                        234.968,
+                        1.0,
+                        31.503
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8CC739F5E368DEF5}PrefabsEditable/Auto/Props/Garbage/Bins/E_TrashBin_02_patched.et",
+                    "position": [
+                        237.537,
+                        1.0,
+                        29.632
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{2DCFC77703348481}Prefabs/Props/Military/HvtFieldKitchenTrailerUSSR_01.et",
+                    "position": [
+                        230.223,
+                        1.0,
+                        32.487
+                    ],
+                    "rotation": [
+                        0.0,
+                        -29.566,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{AC5172F00941C060}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_wall_burlap.et",
+                    "position": [
+                        230.203,
+                        1.0,
+                        37.29
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{AEDDF16F997CAE6C}PrefabsEditable/Auto/Props/Garbage/Cardboard/E_Cardboard_Pile_04.et",
+                    "position": [
+                        229.852,
+                        1.0,
+                        30.142
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{BCC37CB613A921AF}PrefabsEditable/Auto/Props/Military/Furniture/E_ChairMilitary_US_02.et",
+                    "position": [
+                        239.996,
+                        1.0,
+                        32.051
+                    ],
+                    "rotation": [
+                        0.0,
+                        172.934,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{BCC37CB613A921AF}PrefabsEditable/Auto/Props/Military/Furniture/E_ChairMilitary_US_02.et",
+                    "position": [
+                        240.501,
+                        1.0,
+                        29.857
+                    ],
+                    "rotation": [
+                        0.0,
+                        -18.034,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{BCC37CB613A921AF}PrefabsEditable/Auto/Props/Military/Furniture/E_ChairMilitary_US_02.et",
+                    "position": [
+                        239.216,
+                        1.0,
+                        30.798
+                    ],
+                    "rotation": [
+                        0.0,
+                        78.366,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{C2681EC98CAB2B3A}PrefabsEditable/Auto/Props/Military/Camps/E_WeaponRackCabinet_01.et",
+                    "position": [
+                        238.546,
+                        1.0,
+                        36.229
+                    ],
+                    "rotation": [
+                        0.0,
+                        -176.3,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{C8A95738F4ED0644}PrefabsEditable/Auto/Props/Military/Sandbags/Deployable/E_Sandbag_01_round_high_burlap_Deployable.et",
+                    "position": [
+                        227.184,
+                        1.0,
+                        31.806
+                    ],
+                    "rotation": [
+                        0.0,
+                        -108.142,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{C8A95738F4ED0644}PrefabsEditable/Auto/Props/Military/Sandbags/Deployable/E_Sandbag_01_round_high_burlap_Deployable.et",
+                    "position": [
+                        234.406,
+                        1.0,
+                        26.676
+                    ],
+                    "rotation": [
+                        0.0,
+                        -160.71,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{C8A95738F4ED0644}PrefabsEditable/Auto/Props/Military/Sandbags/Deployable/E_Sandbag_01_round_high_burlap_Deployable.et",
+                    "position": [
+                        239.468,
+                        1.0,
+                        26.718
+                    ],
+                    "rotation": [
+                        0.0,
+                        138.46,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D2299274C13B1169}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_wall_solid_burlap.et",
+                    "position": [
+                        238.315,
+                        1.0,
+                        36.922
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{E2B6B200FF6C86A3}PrefabsEditable/Auto/Props/Garbage/Generic/E_Litter_01_small.et",
+                    "position": [
+                        238.43,
+                        1.0,
+                        29.69
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{E6AE368A342034CB}PrefabsEditable/Auto/Props/Military/Fortification/E_CzechHedgehog_01_rusty.et",
+                    "position": [
+                        243.498,
+                        0.0,
+                        32.147
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{E6AE368A342034CB}PrefabsEditable/Auto/Props/Military/Fortification/E_CzechHedgehog_01_rusty.et",
+                    "position": [
+                        241.985,
+                        0.0,
+                        34.283
+                    ],
+                    "rotation": [
+                        0.0,
+                        -40.09,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{FF3ED8B26C05A940}PrefabsEditable/Auto/Props/Military/Camps/E_LanternMilitary_US_01.et",
+                    "position": [
+                        240.281,
+                        1.899,
+                        31.121
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ],
+            "camp": null,
+            "targetIdx": 12
+        },
+        {
+            "general": {
+                "subIdx": 12,
+                "comment": "index 12: Destroy transformer",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 20.0,
+                "locationTypes": [],
+                "posName": "any",
+                "title": "Radar near %l",
+                "info": "Silence the radar by destroying the transformer.",
+                "winCondition": 20,
+                "winMessage": "Enemy eyes are now shut.",
+                "loseMessage": "Radar commmunication working as enemy wanted.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 11,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    3,
+                    4
+                ],
+                "types": [
+                    "G_SMALL",
+                    "G_SPECIAL",
+                    "G_SMALL",
+                    "G_SMALL"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    10,
+                    250
+                ],
+                "waypointGenType": 3,
+                "waypointMoveType": 5
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.5,
+                "items": [
+                    "WEAPON_MG",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_HEADGEAR",
+                    "GEAR_VEST",
+                    "GEAR_HANDWEAR",
+                    "GEAR_UNIFORM",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_HEADGEAR"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{D15A294D5138ADFF}Prefabs/Props/Military/AmmoBoxes/US/LootEquipmentBoxWooden_Equipment_01_US.et",
+                    "position": [
+                        236.559,
+                        1.309,
+                        13.496
+                    ],
+                    "rotation": [
+                        0.0,
+                        90.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{11153A8B7A2F5D20}Prefabs/Structures/Military/Antennas/Antenna_BARS_01/Antenna_BARS_01.et",
+                    "position": [
+                        242.397,
+                        0.0,
+                        11.531
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{18F341CBFAA3F78D}Prefabs/Structures/Infrastructure/Power/TransformerStation110kV_E_01/HDOCoil110kV_E_01.et",
+                    "position": [
+                        248.274,
+                        0.0,
+                        11.055
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{48BD7D41CEBA6E0D}Prefabs/Structures/Military/Sirens/SirenMilitary_E_01/SirenMilitary_E_01.et",
+                    "position": [
+                        248.781,
+                        0.0,
+                        13.366
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{504D8F0DB6B637EE}Prefabs/Structures/Signs/Large/SignLarge_01_PowerPlant.et",
+                    "position": [
+                        246.386,
+                        1.0,
+                        15.151
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{A5A186A2B8B07018}Prefabs/Structures/Infrastructure/Power/TransformerStation110kV_E_01/HvtTransformer110kV_E_01_scaled50_unplugged.et",
+                    "position": [
+                        245.283,
+                        0.0,
+                        11.717
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D445D04331B6809E}Prefabs/Structures/Industrial/Houses/PortableCabin_E_01/PortableCabin_E_01_white.et",
+                    "position": [
+                        237.828,
+                        0.0,
+                        12.826
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ],
+            "camp": null,
+            "targetIdx": 5
+        }
+    ]
 }

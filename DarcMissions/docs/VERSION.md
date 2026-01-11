@@ -94,8 +94,6 @@ Changes:
   * Added ``missionLimit`` : Limit mission types separately to a maximum count.
   * Added ``missionHintPosition`` : Set position of hint on screen. 
 
-Fixes: 
-
 ## 20251213
 No changes in mission jsons. This updated introduces a new mission: Chopper.
 

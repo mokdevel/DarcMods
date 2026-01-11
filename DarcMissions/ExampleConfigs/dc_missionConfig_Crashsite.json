@@ -1,294 +1,312 @@
 {
-	"version": 1,
-	"author": "darc",
-	"missionCycleTime": 30,
-	"showMarker": true,
-	"showHint": true,
-	"showMessage": true,
-	"disableArsenal": true,
-	"missionList": [
-		0,
-		1
-	],
-	"missionFiles": [],
-	"secondWave": [],
-	"distanceToMission": 100,
-	"distanceToPlayer": 500,
-	"flyHeight": [
-		80,
-		120
-	],
-	"subMissions": [
-		{
-			"general": {
-				"subIdx": 0,
-				"comment": "index 0: general mission",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 0.0,
-				"locationTypes": [],
-				"posName": "any",
-				"title": "Helicopter in distress",
-				"info": "A valuable cargo has crashed.",
-				"winCondition": 2,
-				"winMessage": "The loot was salvaged. Crash, burn, loot.",
-				"loseMessage": "No loot for you today.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 5,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					2
-				],
-				"types": [
-					"G_LIGHT",
-					"G_ADMIN"
-				],
-				"skill": 20,
-				"perception": 0.800000011920929,
-				"waypointRange": [
-					0,
-					0
-				],
-				"waypointGenType": 5,
-				"waypointMoveType": 6
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.8999999761581421,
-				"items": [
-					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-					"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
-					"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
-					"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
-					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
-					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
-					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
-					"position": [
-						97.91100311279297,
-						1.0,
-						121.5270004272461
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
-					"position": [
-						106.27400207519531,
-						1.0,
-						121.10800170898438
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{310E849A808F9F5F}PrefabsEditable/Auto/Structures/Military/Camps/Canvas_Covers/US/E_CanvasCover_Folded_US.et",
-					"position": [
-						104.552001953125,
-						1.0,
-						126.90299987792969
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{532795AD51CFBEDF}PrefabsEditable/Auto/Structures/Infrastructure/Piping/E_DieselPipe_01_hose_V2.et",
-					"position": [
-						104.74500274658203,
-						1.0,
-						123.68499755859375
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{7576CB87CAFAE6E8}PrefabsEditable/Auto/Structures/Military/CamoNets/US/E_CamoNet_AssemblyKit_US.et",
-					"position": [
-						103.55899810791016,
-						1.0,
-						119.9489974975586
-					],
-					"rotation": [
-						0.0,
-						-45.00299835205078,
-						0.0
-					]
-				}
-			],
-			"helicopterInfo": [
-				{
-					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
-					"throttle": 0.800000011920929,
-					"rotorForce": 0.800000011920929,
-					"rotor2Force": 1.0
-				},
-				{
-					"resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
-					"throttle": 0.699999988079071,
-					"rotorForce": 0.8999999761581421,
-					"rotor2Force": 1.0
-				},
-				{
-					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
-					"throttle": 0.800000011920929,
-					"rotorForce": 0.800000011920929,
-					"rotor2Force": -1.0
-				}
-			]
-		},
-		{
-			"general": {
-				"subIdx": 1,
-				"comment": "index 1: general mission",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 0.0,
-				"locationTypes": [],
-				"posName": "any",
-				"title": "Engine damage",
-				"info": "May day, may day! We're going down.",
-				"winCondition": 2,
-				"winMessage": "The loot box was secured.",
-				"loseMessage": "The cargo was lost.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 5,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					2
-				],
-				"types": [
-					"G_HEAVY",
-					"G_ADMIN"
-				],
-				"skill": 20,
-				"perception": 0.800000011920929,
-				"waypointRange": [
-					0,
-					0
-				],
-				"waypointGenType": 5,
-				"waypointMoveType": 6
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.699999988079071,
-				"items": [
-					"WEAPON_LAUNCHER",
-					"UTIL_OPTIC",
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
-					"position": [
-						97.91100311279297,
-						1.0,
-						121.5270004272461
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
-					"position": [
-						106.27400207519531,
-						1.0,
-						121.10800170898438
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				}
-			],
-			"helicopterInfo": [
-				{
-					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
-					"throttle": 0.699999988079071,
-					"rotorForce": 0.800000011920929,
-					"rotor2Force": 1.0
-				},
-				{
-					"resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
-					"throttle": 0.6000000238418579,
-					"rotorForce": 0.8500000238418579,
-					"rotor2Force": 1.0
-				},
-				{
-					"resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
-					"throttle": 0.75,
-					"rotorForce": 0.75,
-					"rotor2Force": -1.0
-				}
-			]
-		}
-	]
+    "version": 1,
+    "author": "darc",
+    "missionCycleTime": 30,
+    "showMarker": true,
+    "showHint": true,
+    "showMessage": true,
+    "disableArsenal": true,
+    "missionList": [
+        0,
+        1
+    ],
+    "missionFiles": [],
+    "secondWave": [],
+    "distanceToMission": 100,
+    "distanceToPlayer": 500,
+    "flyHeight": [
+        80,
+        120
+    ],
+    "subMissions": [
+        {
+            "general": {
+                "subIdx": 0,
+                "comment": "index 0: Crashing cargo",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 0.0,
+                "locationTypes": [],
+                "posName": "any",
+                "title": "Helicopter in distress",
+                "info": "A valuable cargo has crashed.",
+                "winCondition": 2,
+                "winMessage": "The loot was salvaged. Crash, burn, loot.",
+                "loseMessage": "No loot for you today.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 5,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_LIGHT",
+                    "G_ADMIN"
+                ],
+                "skill": 20,
+                "perception": 0.8,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 5,
+                "waypointMoveType": 6
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.899,
+                "items": [
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "GEAR_BAG",
+                    "GEAR_HEADGEAR",
+                    "GEAR_VEST",
+                    "GEAR_HANDWEAR",
+                    "GEAR_UNIFORM",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_UNIFORM",
+                    "{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
+                    "{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
+                    "{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+                    "position": [
+                        97.911,
+                        1.0,
+                        121.527
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
+                    "position": [
+                        106.274,
+                        1.0,
+                        121.108
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{310E849A808F9F5F}PrefabsEditable/Auto/Structures/Military/Camps/Canvas_Covers/US/E_CanvasCover_Folded_US.et",
+                    "position": [
+                        104.552,
+                        1.0,
+                        126.902
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{532795AD51CFBEDF}PrefabsEditable/Auto/Structures/Infrastructure/Piping/E_DieselPipe_01_hose_V2.et",
+                    "position": [
+                        104.745,
+                        1.0,
+                        123.684
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{7576CB87CAFAE6E8}PrefabsEditable/Auto/Structures/Military/CamoNets/US/E_CamoNet_AssemblyKit_US.et",
+                    "position": [
+                        103.558,
+                        1.0,
+                        119.948
+                    ],
+                    "rotation": [
+                        0.0,
+                        -45.002,
+                        0.0
+                    ]
+                }
+            ],
+            "helicopterInfo": [
+                {
+                    "comment": "Index 0",
+                    "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+                    "throttle": 0.8,
+                    "rotorForce": 0.8,
+                    "rotor2Force": 1.0
+                },
+                {
+                    "comment": "Index 1",
+                    "resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
+                    "throttle": 0.699,
+                    "rotorForce": 0.899,
+                    "rotor2Force": 1.0
+                },
+                {
+                    "comment": "Index 2",
+                    "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+                    "throttle": 0.8,
+                    "rotorForce": 0.8,
+                    "rotor2Force": -1.0
+                }
+            ]
+        },
+        {
+            "general": {
+                "subIdx": 1,
+                "comment": "index 1: Engine damage",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 0.0,
+                "locationTypes": [],
+                "posName": "any",
+                "title": "Engine damage",
+                "info": "May day, may day! We're going down.",
+                "winCondition": 2,
+                "winMessage": "The loot box was secured.",
+                "loseMessage": "The cargo was lost.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 5,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_HEAVY",
+                    "G_ADMIN"
+                ],
+                "skill": 20,
+                "perception": 0.8,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 5,
+                "waypointMoveType": 6
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "WEAPON_LAUNCHER",
+                    "UTIL_OPTIC",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "GEAR_BAG",
+                    "GEAR_HEADGEAR",
+                    "GEAR_VEST",
+                    "GEAR_HANDWEAR",
+                    "GEAR_UNIFORM"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+                    "position": [
+                        97.911,
+                        1.0,
+                        121.527
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
+                    "position": [
+                        106.274,
+                        1.0,
+                        121.108
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ],
+            "helicopterInfo": [
+                {
+                    "comment": "Index 0",
+                    "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+                    "throttle": 0.699,
+                    "rotorForce": 0.8,
+                    "rotor2Force": 1.0
+                },
+                {
+                    "comment": "Index 1",
+                    "resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
+                    "throttle": 0.6,
+                    "rotorForce": 0.85,
+                    "rotor2Force": 1.0
+                },
+                {
+                    "comment": "Index 2",
+                    "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+                    "throttle": 0.75,
+                    "rotorForce": 0.75,
+                    "rotor2Force": -1.0
+                }
+            ]
+        }
+    ]
 }

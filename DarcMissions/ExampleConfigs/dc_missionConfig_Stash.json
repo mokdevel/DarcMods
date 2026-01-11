@@ -1,104 +1,108 @@
 {
-	"version": 1,
-	"author": "darc",
-	"missionCycleTime": 30,
-	"showMarker": true,
-	"showHint": true,
-	"showMessage": true,
-	"disableArsenal": false,
-	"missionList": [
-		0
-	],
-	"missionFiles": [],
-	"secondWave": [],
-	"activeDistance": 50,
-	"subMissions": [
-		{
-			"general": {
-				"subIdx": 0,
-				"comment": "index 0: Random stash",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 3.0,
-				"locationTypes": [],
-				"posName": "any",
-				"title": "A stash near %l",
-				"info": "Loot is yours to take",
-				"winCondition": 30,
-				"winMessage": "Loot found.",
-				"loseMessage": "Loot lost.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 12,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					0,
-					1
-				],
-				"types": [
-					"G_RECON"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					50,
-					300
-				],
-				"waypointGenType": 1,
-				"waypointMoveType": 5
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.699999988079071,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"UTIL_ATTACHMENT",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"GEAR_HEADGEAR",
-					"GEAR_HEADGEAR"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
-					"position": [
-						100.47000122070313,
-						1.0,
-						144.56199645996095
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				}
-			]
-		}
-	]
+    "version": 1,
+    "author": "darc",
+    "missionCycleTime": 30,
+    "showMarker": true,
+    "showHint": true,
+    "showMessage": true,
+    "disableArsenal": false,
+    "missionList": [
+        0,
+        0,
+        0
+    ],
+    "missionFiles": [
+        "dc_missionConfig_Stash_010.json"
+    ],
+    "secondWave": [],
+    "activeDistance": 50,
+    "subMissions": [
+        {
+            "general": {
+                "subIdx": 0,
+                "comment": "index 0: Random stash",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 3.0,
+                "locationTypes": [],
+                "posName": "any",
+                "title": "A stash near %l",
+                "info": "Hurry, loot is yours to take!",
+                "winCondition": 30,
+                "winMessage": "Loot found.",
+                "loseMessage": "Loot lost.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 12,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    0,
+                    1
+                ],
+                "types": [
+                    "G_RECON"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    50,
+                    300
+                ],
+                "waypointGenType": 1,
+                "waypointMoveType": 5
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "UTIL_ATTACHMENT",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_HEADGEAR",
+                    "GEAR_HEADGEAR"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+                    "position": [
+                        100.47,
+                        1.0,
+                        144.561
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        }
+    ]
 }

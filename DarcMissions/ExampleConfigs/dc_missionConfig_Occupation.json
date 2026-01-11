@@ -1,1009 +1,1025 @@
 {
-	"version": 1,
-	"author": "darc",
-	"missionCycleTime": 30,
-	"showMarker": true,
-	"showHint": true,
-	"showMessage": true,
-	"disableArsenal": true,
-	"missionList": [
-		0,
-		0,
-		0,
-		1,
-		1,
-		1,
-		1,
-		2,
-		2,
-		2,
-		2,
-		2,
-		3,
-		3,
-		3,
-		4,
-		5
-	],
-	"missionFiles": [],
-	"secondWave": [],
-	"subMissions": [
-		{
-			"general": {
-				"subIdx": 0,
-				"comment": "index 0: Mission in villages and local areas.",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 3.0,
-				"locationTypes": [
-					60,
-					64
-				],
-				"posName": "any",
-				"title": "Guards patroling near %l",
-				"info": "Avoid the location. Loot has already been lost.",
-				"winCondition": 1,
-				"winMessage": "Guard patrol eliminated.",
-				"loseMessage": "The patrol kept %l safe from you. Pathetic.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 3,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					2
-				],
-				"types": [
-					"G_RECON",
-					"G_LIGHT"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					50,
-					300
-				],
-				"waypointGenType": 1,
-				"waypointMoveType": 5
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": null,
-			"campItems": []
-		},
-		{
-			"general": {
-				"subIdx": 1,
-				"comment": "index 1: Bandit camp spawning to non city areas",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 6.0,
-				"locationTypes": [
-					64,
-					62,
-					75,
-					79,
-					80,
-					81,
-					15
-				],
-				"posName": "any",
-				"title": "Bandit camp near %l",
-				"info": "Bandits are protecting their valuable loot.",
-				"winCondition": 1,
-				"winMessage": "Camp cleared. Take the loot and leave.",
-				"loseMessage": "The camp near %l was never destroyed. Bandits rule!",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 3,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					2
-				],
-				"types": [
-					"G_ADMIN",
-					"G_LIGHT",
-					"G_LIGHT"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					25,
-					100
-				],
-				"waypointGenType": 2,
-				"waypointMoveType": 5
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.699999988079071,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"UTIL_ATTACHMENT",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
-					"position": [
-						100.47000122070313,
-						1.0,
-						144.56199645996095
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et",
-					"position": [
-						96.88500213623047,
-						1.0,
-						144.1840057373047
-					],
-					"rotation": [
-						0.0,
-						119.33399963378906,
-						0.0
-					]
-				},
-				{
-					"resource": "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et",
-					"position": [
-						98.23500061035156,
-						1.0,
-						143.46400451660157
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{EBC3D311A1B64FE6}PrefabsEditable/Auto/Structures/Military/Camps/TentSmallUS_01/E_TentSmallUS_01.et",
-					"position": [
-						96.65299987792969,
-						1.0,
-						146.6009979248047
-					],
-					"rotation": [
-						0.0,
-						-39.20800018310547,
-						0.0
-					]
-				}
-			]
-		},
-		{
-			"general": {
-				"subIdx": 2,
-				"comment": "index 2: Occupation that will spawn mainly to cities and towns.",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 10.0,
-				"locationTypes": [
-					59,
-					59,
-					59,
-					59,
-					59,
-					70,
-					60,
-					61,
-					81
-				],
-				"posName": "any",
-				"title": "Occupation in %l",
-				"info": "City is being occupied.",
-				"winCondition": 2,
-				"winMessage": "%l is free again!",
-				"loseMessage": "The enemy was stronger this time.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 3,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					2,
-					4
-				],
-				"types": [
-					"G_LIGHT",
-					"G_LIGHT",
-					"G_LIGHT",
-					"G_ADMIN",
-					"G_HEAVY",
-					"G_LAUNCHER",
-					"G_MEDICAL"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					30,
-					200
-				],
-				"waypointGenType": 3,
-				"waypointMoveType": 1
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.8999999761581421,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE_BIG",
-					"WEAPON_HANDGUN",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"UTIL_ATTACHMENT",
-					"UTIL_OPTIC",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
-					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
-					"position": [
-						82.80999755859375,
-						1.0,
-						134.6820068359375
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
-					"position": [
-						82.79199981689453,
-						1.0,
-						137.62600708007813
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
-					"position": [
-						85.10199737548828,
-						1.0,
-						133.64100646972657
-					],
-					"rotation": [
-						0.0,
-						114.56900024414063,
-						0.0
-					]
-				},
-				{
-					"resource": "{E1343D495AB1956E}PrefabsEditable/Auto/Structures/Military/CamoNets/Soviet/E_CamoNet_Small_Top_Soviet.et",
-					"position": [
-						82.3030014038086,
-						1.0,
-						134.70399475097657
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				}
-			]
-		},
-		{
-			"general": {
-				"subIdx": 3,
-				"comment": "index 3: Car crash in an unusual place",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 6.0,
-				"locationTypes": [
-					8,
-					25,
-					62,
-					72,
-					79,
-					84,
-					75
-				],
-				"posName": "any",
-				"title": "Car crash near %l",
-				"info": "Loot is up for grabs.",
-				"winCondition": 2,
-				"winMessage": "You stopped the get away. Enjoy the spoils.",
-				"loseMessage": "Car was fixed and the loot was lost.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 3,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					3
-				],
-				"types": [
-					"G_RECON"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					10,
-					60
-				],
-				"waypointGenType": 1,
-				"waypointMoveType": 1
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.699999988079071,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE",
-					"WEAPON_HANDGUN",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"UTIL_ATTACHMENT",
-					"UTIL_OPTIC",
-					"WEAPON_LAUNCHER",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
-					"position": [
-						78.56900024414063,
-						1.0,
-						110.11299896240235
-					],
-					"rotation": [
-						0.0,
-						-34.13600158691406,
-						0.0
-					]
-				},
-				{
-					"resource": "{3A9EC9CE2B10F863}PrefabsEditable/Auto/Props/VehicleParts/Tires/E_Tire_M151A2.et",
-					"position": [
-						77.6709976196289,
-						1.0,
-						117.21199798583985
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{530705FBB61026D2}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_03.et",
-					"position": [
-						76.74299621582031,
-						1.0,
-						111.7040023803711
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{8BAF6C3ACF99388E}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_05.et",
-					"position": [
-						79.36199951171875,
-						1.0,
-						108.87799835205078
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{F8CFFBA89541B0E9}PrefabsEditable/Auto/Props/Crates/E_Crate_01_ivory.et",
-					"position": [
-						80.81900024414063,
-						1.0,
-						113.16600036621094
-					],
-					"rotation": [
-						0.0,
-						28.260000228881837,
-						0.0
-					]
-				},
-				{
-					"resource": "{FA34D99C60B233F0}PrefabsEditable/Auto/Props/Wrecks/E_S105_wreck.et",
-					"position": [
-						79.03600311279297,
-						1.0,
-						113.87899780273438
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				}
-			]
-		},
-		{
-			"general": {
-				"subIdx": 4,
-				"comment": "index 4: Campers with a car and a tent",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 12.0,
-				"locationTypes": [
-					70,
-					8,
-					63,
-					71
-				],
-				"posName": "any",
-				"title": "Campers near %l",
-				"info": "Rob them before they leave.",
-				"winCondition": 1,
-				"winMessage": "The camp is yours. Enjoy the loot and relax.",
-				"loseMessage": "The camp was packed and the campers left with their car.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 3,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					3
-				],
-				"types": [
-					"G_SPECIAL",
-					"G_HEAVY"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					10,
-					90
-				],
-				"waypointGenType": 1,
-				"waypointMoveType": 1
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.4000000059604645,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"UTIL_ATTACHMENT",
-					"UTIL_ATTACHMENT",
-					"UTIL_OPTIC",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{E28501E93F8EFDC0}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_FIA_uncovered.et",
-					"position": [
-						84.93299865722656,
-						1.0,
-						97.41600036621094
-					],
-					"rotation": [
-						0.0,
-						-43.32699966430664,
-						0.0
-					]
-				},
-				{
-					"resource": "{0B24DD72DAF499F4}PrefabsEditable/Auto/Props/Military/AmmoBoxes/EquipmentBoxStack/E_EquipmentBoxStack_US_01_V6_covered.et",
-					"position": [
-						80.77999877929688,
-						1.0,
-						94.66500091552735
-					],
-					"rotation": [
-						0.0,
-						89.87100219726563,
-						0.0
-					]
-				},
-				{
-					"resource": "{172DD50ACF177B9E}Prefabs/Props/Military/Furniture/ChairMilitary_USSR_01.et",
-					"position": [
-						79.39700317382813,
-						1.0,
-						92.375
-					],
-					"rotation": [
-						0.0,
-						-38.584999084472659,
-						0.0
-					]
-				},
-				{
-					"resource": "{172DD50ACF177B9E}Prefabs/Props/Military/Furniture/ChairMilitary_USSR_01.et",
-					"position": [
-						79.58100128173828,
-						1.0,
-						90.91600036621094
-					],
-					"rotation": [
-						0.0,
-						-152.0070037841797,
-						0.0
-					]
-				},
-				{
-					"resource": "{3EC72887AEC40F22}PrefabsEditable/Auto/Props/Furniture/TableOld_01/E_TableOld_01_white.et",
-					"position": [
-						79.55000305175781,
-						1.0,
-						91.49400329589844
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{BEC236C8D6F6E783}PrefabsEditable/Auto/Props/Furniture/ChairRecreation_01/E_ChairRecreation_01_red.et",
-					"position": [
-						76.98600006103516,
-						1.0,
-						91.97799682617188
-					],
-					"rotation": [
-						0.0,
-						60.599998474121097,
-						0.0
-					]
-				},
-				{
-					"resource": "{C768E842A6F11CEE}Prefabs/Structures/Military/Camps/TentUSSR_01/TentUSSR_01_camonet.et",
-					"position": [
-						78.75800323486328,
-						0.0,
-						92.71800231933594
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{FF3ED8B26C05A940}PrefabsEditable/Auto/Props/Military/Camps/E_LanternMilitary_US_01.et",
-					"position": [
-						76.75800323486328,
-						1.0,
-						92.85600280761719
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				}
-			]
-		},
-		{
-			"general": {
-				"subIdx": 5,
-				"comment": "index 5: A small town",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 30.0,
-				"locationTypes": [
-					70,
-					8,
-					71
-				],
-				"posName": "any",
-				"title": "Settlement near %l",
-				"info": "The enemies are hiding in a ghost town.",
-				"winCondition": 2,
-				"winMessage": "The ghost town neat %l has been cleared.",
-				"loseMessage": "Enemies have left with the loot. Shame on you.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 3,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					3
-				],
-				"types": [
-					"G_SPECIAL",
-					"G_HEAVY"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					10,
-					90
-				],
-				"waypointGenType": 1,
-				"waypointMoveType": 1
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.4000000059604645,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"UTIL_ATTACHMENT",
-					"UTIL_ATTACHMENT",
-					"UTIL_OPTIC",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
-					"position": [
-						130.0229949951172,
-						1.0,
-						81.10700225830078
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{116C488674B5A4A6}Prefabs/Structures/Commercial/FuelStations/FuelStation_E_01/Dst/FuelStation_E_01_roof_Ruin_base.et",
-					"position": [
-						143.4530029296875,
-						1.0,
-						79.2239990234375
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{215C30FCB7EF7E90}PrefabsEditable/Auto/Props/Military/WaterTanks/E_MobileWaterTank_USSR_01.et",
-					"position": [
-						143.2100067138672,
-						1.0,
-						73.0469970703125
-					],
-					"rotation": [
-						0.0,
-						-104.53299713134766,
-						0.0
-					]
-				},
-				{
-					"resource": "{325991D9993FA95B}Prefabs/Structures/Houses/Village/HouseAddon_Shed_E_01/HouseAddon_Shed_E_01.et",
-					"position": [
-						136.3780059814453,
-						0.0,
-						91.66500091552735
-					],
-					"rotation": [
-						0.0,
-						-106.09400177001953,
-						0.0
-					]
-				},
-				{
-					"resource": "{39AF1EE567E58C60}Prefabs/Structures/Houses/Village/HouseAddon_Shed_E_01/Dst/HouseAddon_Shed_E_01_Ruin_base.et",
-					"position": [
-						135.09100341796876,
-						1.0,
-						95.69599914550781
-					],
-					"rotation": [
-						0.0,
-						75.9469985961914,
-						0.0
-					]
-				},
-				{
-					"resource": "{4472D9B48597C94D}Prefabs/Structures/Houses/Village/HouseAddon_Workshop_E_01/HouseAddon_Workshop_E_01_base.et",
-					"position": [
-						124.51699829101563,
-						0.0,
-						82.5250015258789
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{46F077BDA1AF95B2}PrefabsEditable/Auto/Props/Industrial/E_BarrelFuel_01_closed.et",
-					"position": [
-						128.00799560546876,
-						1.0,
-						71.13099670410156
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{71165C5EA36C797C}PrefabsEditable/Auto/Props/Infrastructure/SnowBreakers/E_SnowBreaker_E_01_C.et",
-					"position": [
-						137.61500549316407,
-						1.0,
-						73.96099853515625
-					],
-					"rotation": [
-						0.0,
-						-41.53200149536133,
-						0.0
-					]
-				},
-				{
-					"resource": "{74BA7E97319D69C3}PrefabsEditable/Auto/Props/VehicleParts/Tires/E_Tire_Ural4320_pile.et",
-					"position": [
-						140.8699951171875,
-						1.0,
-						93.76000213623047
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{82008EE10AB80D6E}PrefabsEditable/Auto/Props/Wrecks/E_UAZ469_wreck.et",
-					"position": [
-						139.98399353027345,
-						1.0,
-						71.41400146484375
-					],
-					"rotation": [
-						0.0,
-						-135.75599670410157,
-						0.0
-					]
-				},
-				{
-					"resource": "{A3EF3195AD211CDB}PrefabsEditable/Auto/Props/Industrial/Pallets/E_Pallet_01.et",
-					"position": [
-						130.22999572753907,
-						1.0,
-						76.85099792480469
-					],
-					"rotation": [
-						0.0,
-						31.798999786376954,
-						0.0
-					]
-				},
-				{
-					"resource": "{B724CDD1316A90B1}PrefabsEditable/Auto/Props/Industrial/Pallets/E_MarsBoxContainer_01_Wood.et",
-					"position": [
-						143.39700317382813,
-						1.0,
-						90.51799774169922
-					],
-					"rotation": [
-						0.0,
-						20.222999572753908,
-						0.0
-					]
-				},
-				{
-					"resource": "{BE34698CFA200F28}Prefabs/Structures/Houses/Shed/Shed_01/Dst/Shed_01_Ruin.et",
-					"position": [
-						134.1929931640625,
-						1.0,
-						94.63500213623047
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{ED100C4FA5097FC5}Prefabs/Structures/Houses/Village/HouseAddon_Garage_E_01/HouseAddon_Garage_E_01_base.et",
-					"position": [
-						125.15799713134766,
-						0.0,
-						75.1050033569336
-					],
-					"rotation": [
-						0.0,
-						90.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
-					"position": [
-						132.4409942626953,
-						1.0,
-						85.12699890136719
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				}
-			]
-		}
-	]
+    "version": 1,
+    "author": "darc",
+    "missionCycleTime": 30,
+    "showMarker": true,
+    "showHint": true,
+    "showMessage": true,
+    "disableArsenal": true,
+    "missionList": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        4,
+        5
+    ],
+    "missionFiles": [],
+    "secondWave": [],
+    "subMissions": [
+        {
+            "general": {
+                "subIdx": 0,
+                "comment": "index 0: Mission in villages and local areas.",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 3.0,
+                "locationTypes": [
+                    60,
+                    64
+                ],
+                "posName": "any",
+                "title": "Guards patroling near %l",
+                "info": "Avoid the location. Loot has already been lost.",
+                "winCondition": 1,
+                "winMessage": "Guard patrol eliminated.",
+                "loseMessage": "The patrol kept %l safe from you. Pathetic.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 3,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_RECON",
+                    "G_LIGHT"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    50,
+                    300
+                ],
+                "waypointGenType": 1,
+                "waypointMoveType": 5
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": null,
+            "campItems": []
+        },
+        {
+            "general": {
+                "subIdx": 1,
+                "comment": "index 1: Bandit camp spawning to non city areas",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 6.0,
+                "locationTypes": [
+                    64,
+                    62,
+                    75,
+                    79,
+                    80,
+                    81,
+                    15
+                ],
+                "posName": "any",
+                "title": "Bandit camp near %l",
+                "info": "Bandits are protecting their valuable loot.",
+                "winCondition": 1,
+                "winMessage": "Camp cleared. Take the loot and leave.",
+                "loseMessage": "The camp near %l was never destroyed. Bandits rule!",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 3,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_ADMIN",
+                    "G_LIGHT",
+                    "G_LIGHT"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    25,
+                    100
+                ],
+                "waypointGenType": 2,
+                "waypointMoveType": 5
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "UTIL_ATTACHMENT",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_BAG",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_UNIFORM",
+                    "{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+                    "position": [
+                        100.47,
+                        1.0,
+                        144.561
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et",
+                    "position": [
+                        96.885,
+                        1.0,
+                        144.184
+                    ],
+                    "rotation": [
+                        0.0,
+                        119.333,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et",
+                    "position": [
+                        98.235,
+                        1.0,
+                        143.464
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{EBC3D311A1B64FE6}PrefabsEditable/Auto/Structures/Military/Camps/TentSmallUS_01/E_TentSmallUS_01.et",
+                    "position": [
+                        96.652,
+                        1.0,
+                        146.6
+                    ],
+                    "rotation": [
+                        0.0,
+                        -39.208,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "general": {
+                "subIdx": 2,
+                "comment": "index 2: Occupation that will spawn mainly to cities and towns.",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 10.0,
+                "locationTypes": [
+                    59,
+                    59,
+                    59,
+                    59,
+                    59,
+                    70,
+                    60,
+                    61,
+                    81
+                ],
+                "posName": "any",
+                "title": "Occupation in %l",
+                "info": "City is being occupied.",
+                "winCondition": 2,
+                "winMessage": "%l is free again!",
+                "loseMessage": "The enemy was stronger this time.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 3,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    3,
+                    5
+                ],
+                "types": [
+                    "G_LIGHT",
+                    "G_LIGHT",
+                    "G_LIGHT",
+                    "G_ADMIN",
+                    "G_HEAVY",
+                    "G_LAUNCHER",
+                    "G_MEDICAL"
+                ],
+                "skill": 30,
+                "perception": 0.6,
+                "waypointRange": [
+                    30,
+                    200
+                ],
+                "waypointGenType": 3,
+                "waypointMoveType": 1
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.899,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE_BIG",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_BAG",
+                    "{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
+                    "{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+                    "position": [
+                        82.809,
+                        1.0,
+                        134.682
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+                    "position": [
+                        82.791,
+                        1.0,
+                        137.626
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+                    "position": [
+                        85.101,
+                        1.0,
+                        133.641
+                    ],
+                    "rotation": [
+                        0.0,
+                        114.569,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{E1343D495AB1956E}PrefabsEditable/Auto/Structures/Military/CamoNets/Soviet/E_CamoNet_Small_Top_Soviet.et",
+                    "position": [
+                        82.303,
+                        1.0,
+                        134.703
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "general": {
+                "subIdx": 3,
+                "comment": "index 3: Car crash in an unusual place",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 6.0,
+                "locationTypes": [
+                    8,
+                    25,
+                    62,
+                    72,
+                    79,
+                    84,
+                    75
+                ],
+                "posName": "any",
+                "title": "Car crash near %l",
+                "info": "Loot is up for grabs.",
+                "winCondition": 2,
+                "winMessage": "You stopped the get away. Enjoy the spoils.",
+                "loseMessage": "Car was fixed and the loot was lost.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 3,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    2,
+                    3
+                ],
+                "types": [
+                    "G_RECON"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    10,
+                    60
+                ],
+                "waypointGenType": 1,
+                "waypointMoveType": 1
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "WEAPON_LAUNCHER",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_HEADGEAR",
+                    "GEAR_VEST",
+                    "GEAR_HANDWEAR",
+                    "GEAR_UNIFORM"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+                    "position": [
+                        78.569,
+                        1.0,
+                        110.112
+                    ],
+                    "rotation": [
+                        0.0,
+                        -34.136,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{3A9EC9CE2B10F863}PrefabsEditable/Auto/Props/VehicleParts/Tires/E_Tire_M151A2.et",
+                    "position": [
+                        77.67,
+                        1.0,
+                        117.211
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{530705FBB61026D2}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_03.et",
+                    "position": [
+                        76.742,
+                        1.0,
+                        111.704
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8BAF6C3ACF99388E}Prefabs/Props/Garbage/Cardboard/Cardboard_Pile_05.et",
+                    "position": [
+                        79.361,
+                        1.0,
+                        108.877
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{F8CFFBA89541B0E9}PrefabsEditable/Auto/Props/Crates/E_Crate_01_ivory.et",
+                    "position": [
+                        80.819,
+                        1.0,
+                        113.166
+                    ],
+                    "rotation": [
+                        0.0,
+                        28.26,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{FA34D99C60B233F0}PrefabsEditable/Auto/Props/Wrecks/E_S105_wreck.et",
+                    "position": [
+                        79.036,
+                        1.0,
+                        113.878
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "general": {
+                "subIdx": 4,
+                "comment": "index 4: Campers with a car and a tent",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 12.0,
+                "locationTypes": [
+                    70,
+                    8,
+                    63,
+                    71
+                ],
+                "posName": "any",
+                "title": "Campers near %l",
+                "info": "Rob them before they leave.",
+                "winCondition": 1,
+                "winMessage": "The camp is yours. Enjoy the loot and relax.",
+                "loseMessage": "The camp was packed and the campers left with their car.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 3,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    2,
+                    3
+                ],
+                "types": [
+                    "G_SPECIAL",
+                    "G_HEAVY"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    10,
+                    90
+                ],
+                "waypointGenType": 1,
+                "waypointMoveType": 1
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.4,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_BAG",
+                    "GEAR_BAG",
+                    "GEAR_HEADGEAR",
+                    "GEAR_HEADGEAR"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{E28501E93F8EFDC0}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_FIA_uncovered.et",
+                    "position": [
+                        84.932,
+                        1.0,
+                        97.416
+                    ],
+                    "rotation": [
+                        0.0,
+                        -43.326,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{0B24DD72DAF499F4}PrefabsEditable/Auto/Props/Military/AmmoBoxes/EquipmentBoxStack/E_EquipmentBoxStack_US_01_V6_covered.et",
+                    "position": [
+                        80.779,
+                        1.0,
+                        94.665
+                    ],
+                    "rotation": [
+                        0.0,
+                        89.871,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{172DD50ACF177B9E}Prefabs/Props/Military/Furniture/ChairMilitary_USSR_01.et",
+                    "position": [
+                        79.397,
+                        1.0,
+                        92.375
+                    ],
+                    "rotation": [
+                        0.0,
+                        -38.584,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{172DD50ACF177B9E}Prefabs/Props/Military/Furniture/ChairMilitary_USSR_01.et",
+                    "position": [
+                        79.581,
+                        1.0,
+                        90.916
+                    ],
+                    "rotation": [
+                        0.0,
+                        -152.007,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{3EC72887AEC40F22}PrefabsEditable/Auto/Props/Furniture/TableOld_01/E_TableOld_01_white.et",
+                    "position": [
+                        79.55,
+                        1.0,
+                        91.494
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{BEC236C8D6F6E783}PrefabsEditable/Auto/Props/Furniture/ChairRecreation_01/E_ChairRecreation_01_red.et",
+                    "position": [
+                        76.986,
+                        1.0,
+                        91.977
+                    ],
+                    "rotation": [
+                        0.0,
+                        60.599,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{C768E842A6F11CEE}Prefabs/Structures/Military/Camps/TentUSSR_01/TentUSSR_01_camonet.et",
+                    "position": [
+                        78.758,
+                        0.0,
+                        92.718
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{FF3ED8B26C05A940}PrefabsEditable/Auto/Props/Military/Camps/E_LanternMilitary_US_01.et",
+                    "position": [
+                        76.758,
+                        1.0,
+                        92.856
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "general": {
+                "subIdx": 5,
+                "comment": "index 5: A small town",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 30.0,
+                "locationTypes": [
+                    70,
+                    8,
+                    71
+                ],
+                "posName": "any",
+                "title": "Settlement near %l",
+                "info": "The enemies are hiding in a ghost town.",
+                "winCondition": 2,
+                "winMessage": "The ghost town neat %l has been cleared.",
+                "loseMessage": "Enemies have left with the loot. Shame on you.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 3,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    2,
+                    3
+                ],
+                "types": [
+                    "G_SPECIAL",
+                    "G_HEAVY"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    10,
+                    90
+                ],
+                "waypointGenType": 1,
+                "waypointMoveType": 1
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.4,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_UNIFORM",
+                    "CLOTHING_UNIFORM"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+                    "position": [
+                        130.022,
+                        1.0,
+                        81.107
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{116C488674B5A4A6}Prefabs/Structures/Commercial/FuelStations/FuelStation_E_01/Dst/FuelStation_E_01_roof_Ruin_base.et",
+                    "position": [
+                        143.453,
+                        1.0,
+                        79.223
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{215C30FCB7EF7E90}PrefabsEditable/Auto/Props/Military/WaterTanks/E_MobileWaterTank_USSR_01.et",
+                    "position": [
+                        143.21,
+                        1.0,
+                        73.046
+                    ],
+                    "rotation": [
+                        0.0,
+                        -104.532,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{325991D9993FA95B}Prefabs/Structures/Houses/Village/HouseAddon_Shed_E_01/HouseAddon_Shed_E_01.et",
+                    "position": [
+                        136.378,
+                        0.0,
+                        91.665
+                    ],
+                    "rotation": [
+                        0.0,
+                        -106.094,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{39AF1EE567E58C60}Prefabs/Structures/Houses/Village/HouseAddon_Shed_E_01/Dst/HouseAddon_Shed_E_01_Ruin_base.et",
+                    "position": [
+                        135.091,
+                        1.0,
+                        95.695
+                    ],
+                    "rotation": [
+                        0.0,
+                        75.946,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{4472D9B48597C94D}Prefabs/Structures/Houses/Village/HouseAddon_Workshop_E_01/HouseAddon_Workshop_E_01_base.et",
+                    "position": [
+                        124.516,
+                        0.0,
+                        82.525
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{46F077BDA1AF95B2}PrefabsEditable/Auto/Props/Industrial/E_BarrelFuel_01_closed.et",
+                    "position": [
+                        128.007,
+                        1.0,
+                        71.13
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{71165C5EA36C797C}PrefabsEditable/Auto/Props/Infrastructure/SnowBreakers/E_SnowBreaker_E_01_C.et",
+                    "position": [
+                        137.615,
+                        1.0,
+                        73.96
+                    ],
+                    "rotation": [
+                        0.0,
+                        -41.532,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{74BA7E97319D69C3}PrefabsEditable/Auto/Props/VehicleParts/Tires/E_Tire_Ural4320_pile.et",
+                    "position": [
+                        140.869,
+                        1.0,
+                        93.76
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{82008EE10AB80D6E}PrefabsEditable/Auto/Props/Wrecks/E_UAZ469_wreck.et",
+                    "position": [
+                        139.983,
+                        1.0,
+                        71.414
+                    ],
+                    "rotation": [
+                        0.0,
+                        -135.755,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{A3EF3195AD211CDB}PrefabsEditable/Auto/Props/Industrial/Pallets/E_Pallet_01.et",
+                    "position": [
+                        130.229,
+                        1.0,
+                        76.85
+                    ],
+                    "rotation": [
+                        0.0,
+                        31.798,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{B724CDD1316A90B1}PrefabsEditable/Auto/Props/Industrial/Pallets/E_MarsBoxContainer_01_Wood.et",
+                    "position": [
+                        143.397,
+                        1.0,
+                        90.517
+                    ],
+                    "rotation": [
+                        0.0,
+                        20.222,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{BE34698CFA200F28}Prefabs/Structures/Houses/Shed/Shed_01/Dst/Shed_01_Ruin.et",
+                    "position": [
+                        134.192,
+                        1.0,
+                        94.635
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{ED100C4FA5097FC5}Prefabs/Structures/Houses/Village/HouseAddon_Garage_E_01/HouseAddon_Garage_E_01_base.et",
+                    "position": [
+                        125.157,
+                        0.0,
+                        75.105
+                    ],
+                    "rotation": [
+                        0.0,
+                        90.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
+                    "position": [
+                        132.44,
+                        1.0,
+                        85.126
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        }
+    ]
 }

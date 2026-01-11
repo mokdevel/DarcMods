@@ -1,416 +1,429 @@
 {
-	"version": 1,
-	"author": "darc",
-	"missionCycleTime": 30,
-	"showMarker": true,
-	"showHint": true,
-	"showMessage": true,
-	"disableArsenal": true,
-	"missionList": [
-		0,
-		0,
-		0,
-		0,
-		0,
-		0,
-		1,
-		1,
-		1,
-		1,
-		1,
-		2,
-		3,
-		3
-	],
-	"missionFiles": [],
-	"secondWave": [],
-	"distanceToPlayer": 500,
-	"subMissions": [
-		{
-			"general": {
-				"subIdx": 0,
-				"comment": "index 0: Convoy driving from .. to ..",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					],
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 5.0,
-				"locationTypes": [
-					59,
-					59,
-					59,
-					59,
-					60,
-					71,
-					64,
-					70,
-					26,
-					75,
-					81
-				],
-				"posName": "any",
-				"title": "Convoy is on the move.",
-				"info": "Leaked travel plans show a route from %l to %d",
-				"winCondition": 2,
-				"winMessage": "The convoy was successfully intercepted.",
-				"loseMessage": "The convoy reached %d as planned.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 4,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					2
-				],
-				"types": [
-					"G_LIGHT",
-					"G_MEDICAL"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					0,
-					0
-				],
-				"waypointGenType": 4,
-				"waypointMoveType": 2
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"vehicleTypes": [
-				"{01F65EFB8D767A91}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_cargo.et",
-				"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
-				"{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et",
-				"{D4855501D5B12AF2}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_teal.et"
-			],
-			"cruiseSpeed": 30.0,
-			"loot": {
-				"box": null,
-				"itemChance": 0.8999999761581421,
-				"items": [
-					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-					"{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-					"{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
-					"{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/PaperMap_01_folded.et",
-					"{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
-					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
-					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
-					"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
-				]
-			}
-		},
-		{
-			"general": {
-				"subIdx": 1,
-				"comment": "index 1: Truck driving from .. to ..",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					],
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 7.0,
-				"locationTypes": [
-					59,
-					59,
-					59,
-					8,
-					60,
-					71,
-					64,
-					25,
-					72,
-					26,
-					75,
-					81
-				],
-				"posName": "any",
-				"title": "Cargo truck is on the move.",
-				"info": "Follow the route from %l to %d",
-				"winCondition": 2,
-				"winMessage": "Truck stopped, loot grabbed.",
-				"loseMessage": "All the goodies in the truck was never for you.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 4,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					2,
-					3
-				],
-				"types": [
-					"G_RECON",
-					"G_LIGHT"
-				],
-				"skill": 40,
-				"perception": 1.0,
-				"waypointRange": [
-					0,
-					0
-				],
-				"waypointGenType": 4,
-				"waypointMoveType": 2
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"vehicleTypes": [
-				"{F1FBD0972FA5FE09}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport.et",
-				"{81FDAD5EB644CC3D}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered.et",
-				"{48A6D4372444B85A}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered_closed.et",
-				"{16E32C3ABEAFC2C6}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_FIA_transport.et",
-				"{1449105FD658EDFB}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_CIV_forest.et",
-				"{FB219B49A448A8EA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_JZD.et",
-				"{66241E0CEDFCEDFF}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_orange.et",
-				"{F66EAD0D2016B6BA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_blue.et"
-			],
-			"cruiseSpeed": 20.0,
-			"loot": {
-				"box": null,
-				"itemChance": 0.8999999761581421,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"WEAPON_LAUNCHER",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL"
-				]
-			}
-		},
-		{
-			"general": {
-				"subIdx": 2,
-				"comment": "index 2: Armor driving from .. to ..",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					],
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 7.0,
-				"locationTypes": [
-					59,
-					59,
-					59,
-					8,
-					60,
-					71,
-					64,
-					25,
-					72,
-					26,
-					75,
-					81
-				],
-				"posName": "any",
-				"title": "Armor spotted",
-				"info": "It's been seen in %l. It's to patrol to %d.",
-				"winCondition": 2,
-				"winMessage": "Armor destroyed. Well done!",
-				"loseMessage": "Were you scared of a piece metal? Cowards!",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 4,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					2,
-					3
-				],
-				"types": [
-					"G_HEAVY",
-					"G_SPECIAL"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					0,
-					0
-				],
-				"waypointGenType": 4,
-				"waypointMoveType": 2
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"vehicleTypes": [
-				"{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et",
-				"{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et",
-				"{254289B9C09904AB}Prefabs/Vehicles/Wheeled/BRDM2/BRDM2.et"
-			],
-			"cruiseSpeed": 20.0,
-			"loot": {
-				"box": null,
-				"itemChance": 0.699999988079071,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE_BIG",
-					"WEAPON_HANDGUN",
-					"WEAPON_LAUNCHER",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL"
-				]
-			}
-		},
-		{
-			"general": {
-				"subIdx": 3,
-				"comment": "index 3: Vehicle with a gun driving from .. to ..",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					],
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 4.0,
-				"locationTypes": [
-					59,
-					59,
-					59,
-					8,
-					60,
-					71,
-					64,
-					25,
-					72,
-					26,
-					75,
-					81
-				],
-				"posName": "any",
-				"title": "Guns on the move",
-				"info": "Look out for a patrol between %l and %d.",
-				"winCondition": 2,
-				"winMessage": "Nice shooting!",
-				"loseMessage": "Oh dear, your failure will be remembered.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 4,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					2
-				],
-				"types": [
-					"G_RECON",
-					"G_MEDICAL",
-					"G_LIGHT"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					0,
-					0
-				],
-				"waypointGenType": 4,
-				"waypointMoveType": 2
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"vehicleTypes": [
-				"{F6B23D17D5067C11}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB.et",
-				"{5168FEA3054D6D15}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB_MERDC.et",
-				"{3EA6F47D95867114}Prefabs/Vehicles/Wheeled/M998/M1025_armed_M2HB.et",
-				"{DD774A8FD0989A78}Prefabs/Vehicles/Wheeled/M998/M1025_armed_M2HB_MERDC.et"
-			],
-			"cruiseSpeed": 20.0,
-			"loot": {
-				"box": null,
-				"itemChance": 0.8999999761581421,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_HANDGUN",
-					"WEAPON_GRENADE",
-					"WEAPON_GRENADE",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL"
-				]
-			}
-		}
-	]
+    "version": 1,
+    "author": "darc",
+    "missionCycleTime": 30,
+    "showMarker": true,
+    "showHint": true,
+    "showMessage": true,
+    "disableArsenal": true,
+    "missionList": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        3,
+        3
+    ],
+    "missionFiles": [],
+    "secondWave": [],
+    "distanceToPlayer": 500,
+    "subMissions": [
+        {
+            "general": {
+                "subIdx": 0,
+                "comment": "index 0: Convoy driving from .. to ..",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 5.0,
+                "locationTypes": [
+                    59,
+                    59,
+                    59,
+                    59,
+                    60,
+                    71,
+                    64,
+                    70,
+                    26,
+                    75,
+                    81
+                ],
+                "posName": "any",
+                "title": "Convoy is on the move.",
+                "info": "Leaked travel plans show a route from %l to %d",
+                "winCondition": 2,
+                "winMessage": "The convoy was successfully intercepted.",
+                "loseMessage": "The convoy reached %d as planned.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 4,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_LIGHT",
+                    "G_MEDICAL"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "vehicleTypes": [
+                "{01F65EFB8D767A91}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_cargo.et",
+                "{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
+                "{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et",
+                "{D4855501D5B12AF2}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_teal.et"
+            ],
+            "cruiseSpeed": 30.0,
+            "loot": {
+                "box": null,
+                "itemChance": 0.899,
+                "items": [
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_BAG",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_UNIFORM",
+                    "{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
+                    "{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
+                    "{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
+                ]
+            }
+        },
+        {
+            "general": {
+                "subIdx": 1,
+                "comment": "index 1: Truck driving from .. to ..",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 7.0,
+                "locationTypes": [
+                    59,
+                    59,
+                    59,
+                    8,
+                    60,
+                    71,
+                    64,
+                    25,
+                    72,
+                    26,
+                    75,
+                    81
+                ],
+                "posName": "any",
+                "title": "Cargo truck is on the move.",
+                "info": "Follow the route from %l to %d",
+                "winCondition": 2,
+                "winMessage": "Truck stopped, loot grabbed.",
+                "loseMessage": "All the goodies in the truck was never for you.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 4,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    2,
+                    3
+                ],
+                "types": [
+                    "G_RECON",
+                    "G_LIGHT"
+                ],
+                "skill": 40,
+                "perception": 1.0,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "vehicleTypes": [
+                "{F1FBD0972FA5FE09}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport.et",
+                "{81FDAD5EB644CC3D}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered.et",
+                "{48A6D4372444B85A}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered_closed.et",
+                "{16E32C3ABEAFC2C6}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_FIA_transport.et",
+                "{1449105FD658EDFB}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_CIV_forest.et",
+                "{FB219B49A448A8EA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_JZD.et",
+                "{66241E0CEDFCEDFF}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_orange.et",
+                "{F66EAD0D2016B6BA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_blue.et"
+            ],
+            "cruiseSpeed": 20.0,
+            "loot": {
+                "box": null,
+                "itemChance": 0.899,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_LAUNCHER",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_BAG",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_UNIFORM"
+                ]
+            }
+        },
+        {
+            "general": {
+                "subIdx": 2,
+                "comment": "index 2: Armor driving from .. to ..",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 7.0,
+                "locationTypes": [
+                    59,
+                    59,
+                    59,
+                    8,
+                    60,
+                    71,
+                    64,
+                    25,
+                    72,
+                    26,
+                    75,
+                    81
+                ],
+                "posName": "any",
+                "title": "Armor spotted",
+                "info": "It's been seen in %l. It's to patrol to %d.",
+                "winCondition": 2,
+                "winMessage": "Armor destroyed. Well done!",
+                "loseMessage": "Were you scared of a piece metal? Cowards!",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 4,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    2,
+                    3
+                ],
+                "types": [
+                    "G_HEAVY",
+                    "G_SPECIAL"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "vehicleTypes": [
+                "{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et",
+                "{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et",
+                "{254289B9C09904AB}Prefabs/Vehicles/Wheeled/BRDM2/BRDM2.et"
+            ],
+            "cruiseSpeed": 20.0,
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE_BIG",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_LAUNCHER",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_BAG",
+                    "GEAR_BAG"
+                ]
+            }
+        },
+        {
+            "general": {
+                "subIdx": 3,
+                "comment": "index 3: Vehicle with a gun driving from .. to ..",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 4.0,
+                "locationTypes": [
+                    59,
+                    59,
+                    59,
+                    8,
+                    60,
+                    71,
+                    64,
+                    25,
+                    72,
+                    26,
+                    75,
+                    81
+                ],
+                "posName": "any",
+                "title": "Guns on the move",
+                "info": "Look out for a patrol between %l and %d.",
+                "winCondition": 2,
+                "winMessage": "Nice shooting!",
+                "loseMessage": "Oh dear, your failure will be remembered.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 4,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_RECON",
+                    "G_MEDICAL",
+                    "G_LIGHT"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "vehicleTypes": [
+                "{F6B23D17D5067C11}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB.et",
+                "{5168FEA3054D6D15}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB_MERDC.et",
+                "{3EA6F47D95867114}Prefabs/Vehicles/Wheeled/M998/M1025_armed_M2HB.et",
+                "{DD774A8FD0989A78}Prefabs/Vehicles/Wheeled/M998/M1025_armed_M2HB_MERDC.et"
+            ],
+            "cruiseSpeed": 20.0,
+            "loot": {
+                "box": null,
+                "itemChance": 0.899,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_HEADGEAR",
+                    "GEAR_VEST",
+                    "GEAR_HANDWEAR",
+                    "GEAR_UNIFORM"
+                ]
+            }
+        }
+    ]
 }

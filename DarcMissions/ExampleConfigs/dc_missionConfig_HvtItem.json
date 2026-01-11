@@ -1,709 +1,720 @@
 {
-	"version": 1,
-	"author": "darc",
-	"missionCycleTime": 30,
-	"showMarker": true,
-	"showHint": true,
-	"showMessage": true,
-	"disableArsenal": false,
-	"missionList": [
-		0,
-		1,
-		2
-	],
-	"missionFiles": [
-		"dc_missionConfig_HvtItem_010.json"
-	],
-	"secondWave": [],
-	"subMissions": [
-		{
-			"general": {
-				"subIdx": 0,
-				"comment": "index 0: Destroy generator",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 10.0,
-				"locationTypes": [
-					64,
-					62,
-					75,
-					79,
-					80,
-					81,
-					15
-				],
-				"posName": "any",
-				"title": "Destroy generator near %l",
-				"info": "The enemy is spreading propaganda.",
-				"winCondition": 20,
-				"winMessage": "Target destroyed.",
-				"loseMessage": "You failed in your mission!",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 11,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					2
-				],
-				"types": [
-					"G_ADMIN",
-					"G_LIGHT",
-					"G_LIGHT"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					25,
-					100
-				],
-				"waypointGenType": 5,
-				"waypointMoveType": 5
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.699999988079071,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"UTIL_ATTACHMENT",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
-					"position": [
-						243.29400634765626,
-						1.0,
-						174.7550048828125
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{4BEFC7FCCB2BA121}Prefabs/Props/Military/Generators/GeneratorMilitary_USSR_01/HvtGeneratorMilitary_USSR_01.et",
-					"position": [
-						249.6280059814453,
-						1.0,
-						176.9029998779297
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{B4F2701CBBE49C48}Prefabs/Props/Military/Antennas/Antenna_RC292_01.et",
-					"position": [
-						246.12100219726563,
-						1.0,
-						174.906005859375
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{C108EB96CCC73E94}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Table_Radio_US_01.et",
-					"position": [
-						243.3489990234375,
-						1.0,
-						176.16900634765626
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{D0974856AF6DAE81}PrefabsEditable/Auto/Props/Military/Furniture/E_ChairMilitary_US_01.et",
-					"position": [
-						243.37600708007813,
-						1.0,
-						176.95399475097657
-					],
-					"rotation": [
-						0.0,
-						-40.034000396728519,
-						0.0
-					]
-				},
-				{
-					"resource": "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
-					"position": [
-						252.32699584960938,
-						1.0,
-						177.1280059814453
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
-					"position": [
-						251.78700256347657,
-						1.0,
-						181.1179962158203
-					],
-					"rotation": [
-						0.0,
-						-27.458999633789064,
-						0.0
-					]
-				},
-				{
-					"resource": "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
-					"position": [
-						251.09100341796876,
-						1.0,
-						172.20899963378907
-					],
-					"rotation": [
-						0.0,
-						39.983001708984378,
-						0.0
-					]
-				}
-			],
-			"camp": null,
-			"targetIdx": 1
-		},
-		{
-			"general": {
-				"subIdx": 1,
-				"comment": "index 1: Destroy supplies",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 20.0,
-				"locationTypes": [
-					59,
-					59,
-					59,
-					59,
-					59,
-					70,
-					60,
-					61,
-					81
-				],
-				"posName": "any",
-				"title": "A supply truck near %l",
-				"info": "A truck has crashed and the supplies needs to be destroyed.",
-				"winCondition": 20,
-				"winMessage": "Supplies never reached the enemy. Good work!",
-				"loseMessage": "The enemy will fight with their bellies full.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 11,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					2
-				],
-				"types": [
-					"G_ADMIN",
-					"G_LIGHT",
-					"G_LIGHT",
-					"G_HEAVY"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					25,
-					100
-				],
-				"waypointGenType": 5,
-				"waypointMoveType": 5
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.699999988079071,
-				"items": [
-					"UTIL_ATTACHMENT",
-					"UTIL_OPTIC",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
-					"position": [
-						250.9770050048828,
-						1.0,
-						204.51300048828126
-					],
-					"rotation": [
-						0.0,
-						-92.9229965209961,
-						0.0
-					]
-				},
-				{
-					"resource": "{47E0234DF4169EE5}Prefabs/Props/Military/CargoContainers/HvtCargoContainer_01_10ft_US_supplies.et",
-					"position": [
-						249.89999389648438,
-						1.0,
-						196.96099853515626
-					],
-					"rotation": [
-						0.0,
-						-18.643999099731447,
-						0.0
-					]
-				},
-				{
-					"resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
-					"position": [
-						247.84300231933595,
-						1.0,
-						200.01800537109376
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
-					"position": [
-						249.7949981689453,
-						1.0,
-						196.9080047607422
-					],
-					"rotation": [
-						0.0,
-						-24.66200065612793,
-						0.0
-					]
-				},
-				{
-					"resource": "{563AD1F822D50049}Prefabs/EffectsModuleEntities/SDRC_BigSmoke.et",
-					"position": [
-						249.1280059814453,
-						1.9520000219345093,
-						202.4530029296875
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{9E5EDE35EFBF70B7}PrefabsEditable/Auto/Props/Wrecks/E_M923A1_wreck.et",
-					"position": [
-						250.0279998779297,
-						1.0,
-						200.9530029296875
-					],
-					"rotation": [
-						0.0,
-						-50.69900131225586,
-						0.0
-					]
-				}
-			],
-			"camp": null,
-			"targetIdx": 1
-		},
-		{
-			"general": {
-				"subIdx": 2,
-				"comment": "index 2: Destroy antenna",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 20.0,
-				"locationTypes": [],
-				"posName": "any",
-				"title": "Radio antenna close to %l",
-				"info": "Disrupt the enemy communications. Destroy the antenna.",
-				"winCondition": 20,
-				"winMessage": "The comms are dead.",
-				"loseMessage": "Enemy communication is working loud and clear.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 11,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					2,
-					4
-				],
-				"types": [
-					"G_ADMIN",
-					"G_RECON",
-					"G_SPECIAL",
-					"G_LIGHT"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					25,
-					150
-				],
-				"waypointGenType": 5,
-				"waypointMoveType": 5
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.699999988079071,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE_BIG",
-					"UTIL_ATTACHMENT",
-					"UTIL_OPTIC",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
-					"position": [
-						239.16099548339845,
-						1.0,
-						129.7740020751953
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{0E94F28FD722B1D8}Prefabs/Props/Military/Generators/GeneratorFloodlight_US_01.et",
-					"position": [
-						241.4810028076172,
-						1.0,
-						131.63400268554688
-					],
-					"rotation": [
-						0.0,
-						-23.35099983215332,
-						0.0
-					]
-				},
-				{
-					"resource": "{7F8D6A0D827EA34B}Prefabs/Props/Military/Fortification/CzechHedgehog_01_base.et",
-					"position": [
-						253.17100524902345,
-						0.0,
-						136.97799682617188
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{7F8D6A0D827EA34B}Prefabs/Props/Military/Fortification/CzechHedgehog_01_base.et",
-					"position": [
-						251.8350067138672,
-						0.0,
-						139.8769989013672
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{7F8D6A0D827EA34B}Prefabs/Props/Military/Fortification/CzechHedgehog_01_base.et",
-					"position": [
-						241.80299377441407,
-						0.0,
-						126.52400207519531
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
-					"position": [
-						246.48199462890626,
-						1.0,
-						142.94200134277345
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
-					"position": [
-						239.97799682617188,
-						1.0,
-						141.69400024414063
-					],
-					"rotation": [
-						0.0,
-						-20.770000457763673,
-						0.0
-					]
-				},
-				{
-					"resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
-					"position": [
-						245.44700622558595,
-						1.0,
-						128.33900451660157
-					],
-					"rotation": [
-						0.0,
-						154.5330047607422,
-						0.0
-					]
-				},
-				{
-					"resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
-					"position": [
-						250.78199768066407,
-						1.0,
-						132.26199340820313
-					],
-					"rotation": [
-						0.0,
-						133.76300048828126,
-						0.0
-					]
-				},
-				{
-					"resource": "{A528F04F41F2A2D0}Prefabs/Structures/Military/Radar/ApproachRadar_RPL5_01/ApproachRadar_RPL5_01_on.et",
-					"position": [
-						244.8090057373047,
-						1.0,
-						137.0970001220703
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{B31A14BC1A0E7776}Prefabs/Props/Military/Sandbags/Sandbag_01_round_burlap.et",
-					"position": [
-						243.00399780273438,
-						1.0,
-						143.13099670410157
-					],
-					"rotation": [
-						0.0,
-						-6.802000045776367,
-						0.0
-					]
-				},
-				{
-					"resource": "{B31A14BC1A0E7776}Prefabs/Props/Military/Sandbags/Sandbag_01_round_burlap.et",
-					"position": [
-						248.66799926757813,
-						1.0,
-						129.66299438476563
-					],
-					"rotation": [
-						0.0,
-						147.7310028076172,
-						0.0
-					]
-				},
-				{
-					"resource": "{B547CF929FCC6BB7}Prefabs/Props/Military/Sandbags/Sandbag_01_end_high_burlap.et",
-					"position": [
-						252.2449951171875,
-						1.0,
-						133.81500244140626
-					],
-					"rotation": [
-						0.0,
-						-45.632999420166019,
-						0.0
-					]
-				},
-				{
-					"resource": "{B547CF929FCC6BB7}Prefabs/Props/Military/Sandbags/Sandbag_01_end_high_burlap.et",
-					"position": [
-						248.51699829101563,
-						1.0,
-						142.56500244140626
-					],
-					"rotation": [
-						0.0,
-						28.291000366210939,
-						0.0
-					]
-				},
-				{
-					"resource": "{C32544547260D3F1}PrefabsEditable/Auto/Structures/Civilian/E_Latrine_01.et",
-					"position": [
-						235.3179931640625,
-						1.0,
-						130.79299926757813
-					],
-					"rotation": [
-						0.0,
-						149.01100158691407,
-						0.0
-					]
-				},
-				{
-					"resource": "{C86856FFC84B573A}PrefabsEditable/Auto/Structures/Military/Fortifications/E_DirtPile_01_large.et",
-					"position": [
-						241.81700134277345,
-						0.8270000219345093,
-						136.3780059814453
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{DB4F61D5F37432F7}Prefabs/Props/Military/Camps/PalletFuel_01.et",
-					"position": [
-						238.01300048828126,
-						1.0,
-						136.7550048828125
-					],
-					"rotation": [
-						0.0,
-						-16.44300079345703,
-						0.0
-					]
-				},
-				{
-					"resource": "{E30E1250FD927736}Prefabs/Structures/Industrial/Houses/PortableCabin_E_01/PortableCabin_E_01_beige.et",
-					"position": [
-						236.4770050048828,
-						0.0,
-						133.30499267578126
-					],
-					"rotation": [
-						0.0,
-						-36.874000549316409,
-						0.0
-					]
-				},
-				{
-					"resource": "{F922F6F1895F41E4}PrefabsEditable/Auto/Structures/Military/CamoNets/Soviet/E_CamoNet_Folded_Soviet.et",
-					"position": [
-						237.7270050048828,
-						1.0,
-						129.2949981689453
-					],
-					"rotation": [
-						0.0,
-						31.985000610351564,
-						0.0
-					]
-				}
-			],
-			"camp": null,
-			"targetIdx": 9
-		}
-	]
+    "version": 1,
+    "author": "darc",
+    "missionCycleTime": 30,
+    "showMarker": true,
+    "showHint": true,
+    "showMessage": true,
+    "disableArsenal": false,
+    "missionList": [
+        0,
+        1,
+        2
+    ],
+    "missionFiles": [
+        "dc_missionConfig_HvtItem_010.json"
+    ],
+    "secondWave": [],
+    "subMissions": [
+        {
+            "general": {
+                "subIdx": 0,
+                "comment": "index 0: Destroy generator",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 10.0,
+                "locationTypes": [
+                    64,
+                    62,
+                    75,
+                    79,
+                    80,
+                    81,
+                    15
+                ],
+                "posName": "any",
+                "title": "Destroy generator near %l",
+                "info": "The enemy is spreading propaganda.",
+                "winCondition": 20,
+                "winMessage": "Target destroyed.",
+                "loseMessage": "You failed in your mission!",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 11,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_ADMIN",
+                    "G_LIGHT",
+                    "G_LIGHT"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    25,
+                    100
+                ],
+                "waypointGenType": 5,
+                "waypointMoveType": 5
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "UTIL_ATTACHMENT",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_BAG",
+                    "GEAR_BAG"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+                    "position": [
+                        243.294,
+                        1.0,
+                        174.755
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{4BEFC7FCCB2BA121}Prefabs/Props/Military/Generators/GeneratorMilitary_USSR_01/HvtGeneratorMilitary_USSR_01.et",
+                    "position": [
+                        249.628,
+                        1.0,
+                        176.902
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{B4F2701CBBE49C48}Prefabs/Props/Military/Antennas/Antenna_RC292_01.et",
+                    "position": [
+                        246.121,
+                        1.0,
+                        174.906
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{C108EB96CCC73E94}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Table_Radio_US_01.et",
+                    "position": [
+                        243.348,
+                        1.0,
+                        176.169
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D0974856AF6DAE81}PrefabsEditable/Auto/Props/Military/Furniture/E_ChairMilitary_US_01.et",
+                    "position": [
+                        243.376,
+                        1.0,
+                        176.953
+                    ],
+                    "rotation": [
+                        0.0,
+                        -40.034,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
+                    "position": [
+                        252.326,
+                        1.0,
+                        177.128
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
+                    "position": [
+                        251.787,
+                        1.0,
+                        181.117
+                    ],
+                    "rotation": [
+                        0.0,
+                        -27.458,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
+                    "position": [
+                        251.091,
+                        1.0,
+                        172.208
+                    ],
+                    "rotation": [
+                        0.0,
+                        39.983,
+                        0.0
+                    ]
+                }
+            ],
+            "camp": null,
+            "targetIdx": 1
+        },
+        {
+            "general": {
+                "subIdx": 1,
+                "comment": "index 1: Destroy supplies",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 20.0,
+                "locationTypes": [
+                    59,
+                    59,
+                    59,
+                    59,
+                    59,
+                    70,
+                    60,
+                    61,
+                    81
+                ],
+                "posName": "any",
+                "title": "A supply truck near %l",
+                "info": "A truck has crashed and the supplies needs to be destroyed.",
+                "winCondition": 20,
+                "winMessage": "Supplies never reached the enemy. Good work!",
+                "loseMessage": "The enemy will fight with their bellies full.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 11,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_ADMIN",
+                    "G_LIGHT",
+                    "G_LIGHT",
+                    "G_HEAVY"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    25,
+                    100
+                ],
+                "waypointGenType": 5,
+                "waypointMoveType": 5
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_UNIFORM",
+                    "CLOTHING_UNIFORM"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+                    "position": [
+                        250.977,
+                        1.0,
+                        204.513
+                    ],
+                    "rotation": [
+                        0.0,
+                        -92.922,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{47E0234DF4169EE5}Prefabs/Props/Military/CargoContainers/HvtCargoContainer_01_10ft_US_supplies.et",
+                    "position": [
+                        249.899,
+                        1.0,
+                        196.96
+                    ],
+                    "rotation": [
+                        0.0,
+                        -18.643,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
+                    "position": [
+                        247.843,
+                        1.0,
+                        200.018
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{0542578CA422287A}PrefabsEditable/Auto/Props/Industrial/Repair/E_VehicleGarbage_01_pile_medium.et",
+                    "position": [
+                        249.794,
+                        1.0,
+                        196.908
+                    ],
+                    "rotation": [
+                        0.0,
+                        -24.662,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{563AD1F822D50049}Prefabs/EffectsModuleEntities/SDRC_BigSmoke.et",
+                    "position": [
+                        249.128,
+                        1.952,
+                        202.453
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{9E5EDE35EFBF70B7}PrefabsEditable/Auto/Props/Wrecks/E_M923A1_wreck.et",
+                    "position": [
+                        250.027,
+                        1.0,
+                        200.953
+                    ],
+                    "rotation": [
+                        0.0,
+                        -50.699,
+                        0.0
+                    ]
+                }
+            ],
+            "camp": null,
+            "targetIdx": 1
+        },
+        {
+            "general": {
+                "subIdx": 2,
+                "comment": "index 2: Destroy antenna",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 20.0,
+                "locationTypes": [],
+                "posName": "any",
+                "title": "Radio antenna close to %l",
+                "info": "Disrupt the enemy communications. Destroy the antenna.",
+                "winCondition": 20,
+                "winMessage": "The comms are dead.",
+                "loseMessage": "Enemy communication is working loud and clear.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 11,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    2,
+                    4
+                ],
+                "types": [
+                    "G_ADMIN",
+                    "G_RECON",
+                    "G_SPECIAL",
+                    "G_LIGHT"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    25,
+                    150
+                ],
+                "waypointGenType": 5,
+                "waypointMoveType": 5
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE_BIG",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_BAG",
+                    "GEAR_BAG",
+                    "GEAR_HEADGEAR",
+                    "GEAR_VEST",
+                    "GEAR_HANDWEAR",
+                    "GEAR_UNIFORM"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+                    "position": [
+                        239.16,
+                        1.0,
+                        129.774
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{0E94F28FD722B1D8}Prefabs/Props/Military/Generators/GeneratorFloodlight_US_01.et",
+                    "position": [
+                        241.481,
+                        1.0,
+                        131.634
+                    ],
+                    "rotation": [
+                        0.0,
+                        -23.35,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{7F8D6A0D827EA34B}Prefabs/Props/Military/Fortification/CzechHedgehog_01_base.et",
+                    "position": [
+                        253.171,
+                        0.0,
+                        136.977
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{7F8D6A0D827EA34B}Prefabs/Props/Military/Fortification/CzechHedgehog_01_base.et",
+                    "position": [
+                        251.835,
+                        0.0,
+                        139.876
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{7F8D6A0D827EA34B}Prefabs/Props/Military/Fortification/CzechHedgehog_01_base.et",
+                    "position": [
+                        241.802,
+                        0.0,
+                        126.524
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
+                    "position": [
+                        246.481,
+                        1.0,
+                        142.942
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
+                    "position": [
+                        239.977,
+                        1.0,
+                        141.694
+                    ],
+                    "rotation": [
+                        0.0,
+                        -20.77,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
+                    "position": [
+                        245.447,
+                        1.0,
+                        128.339
+                    ],
+                    "rotation": [
+                        0.0,
+                        154.533,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{9C9C4BED9E19C374}Prefabs/Props/Military/Sandbags/Sandbag_01_wall_solid_burlap.et",
+                    "position": [
+                        250.781,
+                        1.0,
+                        132.261
+                    ],
+                    "rotation": [
+                        0.0,
+                        133.763,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{A528F04F41F2A2D0}Prefabs/Structures/Military/Radar/ApproachRadar_RPL5_01/ApproachRadar_RPL5_01_on.et",
+                    "position": [
+                        244.809,
+                        1.0,
+                        137.097
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{B31A14BC1A0E7776}Prefabs/Props/Military/Sandbags/Sandbag_01_round_burlap.et",
+                    "position": [
+                        243.003,
+                        1.0,
+                        143.13
+                    ],
+                    "rotation": [
+                        0.0,
+                        -6.802,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{B31A14BC1A0E7776}Prefabs/Props/Military/Sandbags/Sandbag_01_round_burlap.et",
+                    "position": [
+                        248.667,
+                        1.0,
+                        129.662
+                    ],
+                    "rotation": [
+                        0.0,
+                        147.731,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{B547CF929FCC6BB7}Prefabs/Props/Military/Sandbags/Sandbag_01_end_high_burlap.et",
+                    "position": [
+                        252.244,
+                        1.0,
+                        133.815
+                    ],
+                    "rotation": [
+                        0.0,
+                        -45.632,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{B547CF929FCC6BB7}Prefabs/Props/Military/Sandbags/Sandbag_01_end_high_burlap.et",
+                    "position": [
+                        248.516,
+                        1.0,
+                        142.565
+                    ],
+                    "rotation": [
+                        0.0,
+                        28.291,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{C32544547260D3F1}PrefabsEditable/Auto/Structures/Civilian/E_Latrine_01.et",
+                    "position": [
+                        235.317,
+                        1.0,
+                        130.792
+                    ],
+                    "rotation": [
+                        0.0,
+                        149.011,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{C86856FFC84B573A}PrefabsEditable/Auto/Structures/Military/Fortifications/E_DirtPile_01_large.et",
+                    "position": [
+                        241.817,
+                        0.827,
+                        136.378
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{DB4F61D5F37432F7}Prefabs/Props/Military/Camps/PalletFuel_01.et",
+                    "position": [
+                        238.013,
+                        1.0,
+                        136.755
+                    ],
+                    "rotation": [
+                        0.0,
+                        -16.443,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{E30E1250FD927736}Prefabs/Structures/Industrial/Houses/PortableCabin_E_01/PortableCabin_E_01_beige.et",
+                    "position": [
+                        236.477,
+                        0.0,
+                        133.304
+                    ],
+                    "rotation": [
+                        0.0,
+                        -36.874,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{F922F6F1895F41E4}PrefabsEditable/Auto/Structures/Military/CamoNets/Soviet/E_CamoNet_Folded_Soviet.et",
+                    "position": [
+                        237.727,
+                        1.0,
+                        129.294
+                    ],
+                    "rotation": [
+                        0.0,
+                        31.985,
+                        0.0
+                    ]
+                }
+            ],
+            "camp": null,
+            "targetIdx": 9
+        }
+    ]
 }

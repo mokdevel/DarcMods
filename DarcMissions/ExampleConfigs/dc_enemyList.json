@@ -1,709 +1,730 @@
 {
-	"version": 1,
-	"author": "darc",
-	"modList": [],
-	"lists": [
-		{
-			"id": "G_LIGHT",
-			"modDir": [
-				"Prefabs/Groups",
-				"622120A5448725E3/Prefabs/Groups"
-			],
-			"include": [
-				"LightFire",
-				"FireTeam",
-				"FireGroup",
-				"RifleSquad",
-				"SentryTeam",
-				"Regulars_Brick",
-				"InfantrySection",
-				"Group_Zombies_CIV",
-				"Group_Zombies_FIA",
-				"Group_Zombies_US",
-				"Group_Zombies_USSR",
-				"Cultists_Light",
-				"PLASTICBANDIT_FireTeam"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "G_SNIPER",
-			"modDir": [
-				"Prefabs/Groups",
-				"622120A5448725E3/Prefabs/Groups"
-			],
-			"include": [
-				"Sniper",
-				"SharpShooter",
-				"USSR_Spetsnaz_SentryTeam",
-				"VKPO_S_SentryTeam.et",
-				"KS05_SF_GROUP_A",
-				"KS05_SF_GROUP_C",
-				"Group_Zombies_CIV",
-				"Group_Zombies_FIA",
-				"Group_Zombies_US",
-				"Group_Zombies_USSR",
-				"Cultists_Light",
-				"PLASTICBANDIT_FireTeam"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "G_LAUNCHER",
-			"modDir": [
-				"Prefabs/Groups",
-				"622120A5448725E3/Prefabs/Groups"
-			],
-			"include": [
-				"Team_AT",
-				"Team_GL",
-				"Team_LAT",
-				"Group_Zombies_High",
-				"Cultists_Medium",
-				"PLASTICBANDIT_FireTeam"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "G_ADMIN",
-			"modDir": [
-				"Prefabs/Groups",
-				"622120A5448725E3/Prefabs/Groups"
-			],
-			"include": [
-				"_Platoon",
-				"Group_Zombies_High",
-				"Cultists_Light",
-				"PLASTICBANDIT_FireTeam"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "G_MEDICAL",
-			"modDir": [
-				"Prefabs/Groups",
-				"622120A5448725E3/Prefabs/Groups"
-			],
-			"include": [
-				"_Medical",
-				"Group_Zombies_High",
-				"Cultists_Light",
-				"PLASTICBANDIT_FireTeam"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "G_RECON",
-			"modDir": [
-				"Prefabs/Groups",
-				"622120A5448725E3/Prefabs/Groups"
-			],
-			"include": [
-				"_Recon",
-				"_Maneuver",
-				"_RecceTeam",
-				"Group_Zombies_CIV",
-				"Group_Zombies_FIA",
-				"Group_Zombies_US",
-				"Group_Zombies_USSR",
-				"Cultists_Medium",
-				"PLASTICBANDIT_FireTeam"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "G_HEAVY",
-			"modDir": [
-				"Prefabs/Groups",
-				"622120A5448725E3/Prefabs/Groups"
-			],
-			"include": [
-				"MachineGunTeam",
-				"FireTeam",
-				"FireGroup",
-				"Suppress",
-				"Spetsnaz_Squad",
-				"GunGroup",
-				"Group_Zombies_Horde",
-				"Group_Zombies_CIV_Large",
-				"Cultists_Horde",
-				"PLASTICBANDIT_FireTeam"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "G_SPECIAL",
-			"modDir": [
-				"Prefabs/Groups",
-				"622120A5448725E3/Prefabs/Groups"
-			],
-			"include": [
-				"GreenBeret",
-				"Sapper",
-				"Sentry",
-				"Spetsnaz",
-				"SpecialForces",
-				"KS05_SF_GROUP_B",
-				"Group_Zombies_Horde",
-				"Cultists_Medium",
-				"PLASTICBANDIT_FireTeam"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "G_SMALL",
-			"modDir": [
-				"Prefabs/Groups",
-				"622120A5448725E3/Prefabs/Groups"
-			],
-			"include": [
-				"Spetsnaz_SentryTeam",
-				"GreenBeret_SentryTeam",
-				"SentryTeam",
-				"SharpshooterTeam",
-				"MedicalSection",
-				"SapperTeam",
-				"Group_Zombies_CIV",
-				"Group_Zombies_FIA",
-				"Group_Zombies_US",
-				"Group_Zombies_USSR",
-				"Cultists_Light",
-				"PLASTICBANDIT_FireTeam"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "C_RIFLEMAN",
-			"modDir": [
-				"Prefabs/Characters/Factions",
-				"622120A5448725E3/Prefabs/Characters"
-			],
-			"include": [
-				"Rifleman",
-				"Sapper",
-				"_PL",
-				"_SL",
-				"Zombie_CIV",
-				"Zombie_FIA",
-				"Zombie_US",
-				"Zombie_USSR",
-				"Civilian_Cultist",
-				"Scav_Rookie",
-				"Stalker_Rookie"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "C_HEAVY",
-			"modDir": [
-				"Prefabs/Characters/Factions",
-				"622120A5448725E3/Prefabs/Characters"
-			],
-			"include": [
-				"_GL",
-				"_MG",
-				"Grenadier",
-				"_Ammo",
-				"_LMG",
-				"Exploder",
-				"Heavy_Tank",
-				"Civilian_Cultist",
-				"Scav_Gopnik",
-				"Stalker_Rookie",
-				"Scav_Brute"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "C_RECON",
-			"modDir": [
-				"Prefabs/Characters/Factions",
-				"622120A5448725E3/Prefabs/Characters"
-			],
-			"include": [
-				"Scout",
-				"Spotter",
-				"_RTO",
-				"_SL",
-				"_GL",
-				"_AG1",
-				"Zombie_Military_ALL",
-				"Military_Pistol_ALL",
-				"Civilian_Cultist",
-				"Scav_Veteran",
-				"Stalker_Veteran"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "C_OFFICER",
-			"modDir": [
-				"Prefabs/Characters/Factions",
-				"622120A5448725E3/Prefabs/Characters"
-			],
-			"include": [
-				"_Officer",
-				"Sergeant",
-				"_AC",
-				"_Leader",
-				"Exploder",
-				"Heavy_Tank",
-				"Civilian_Cultist",
-				"Scav_Veteran",
-				"Stalker_Veteran"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "C_CREW",
-			"modDir": [
-				"Prefabs/Characters/Factions",
-				"622120A5448725E3/Prefabs/Characters"
-			],
-			"include": [
-				"Crew",
-				"Pilot",
-				"_CC",
-				"MEI_Leader",
-				"Exploder",
-				"Heavy_Tank",
-				"Civilian_Cultist",
-				"Scav_Veteran",
-				"Stalker_Veteran"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "C_SNIPER",
-			"modDir": [
-				"Prefabs/Characters/Factions",
-				"622120A5448725E3/Prefabs/Characters"
-			],
-			"include": [
-				"Sniper",
-				"Sharpshooter",
-				"Exploder",
-				"Civilian_Cultist",
-				"Stalker_Shadow",
-				"Stalker_Legend"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "C_LAUNCHER",
-			"modDir": [
-				"Prefabs/Characters/Factions",
-				"622120A5448725E3/Prefabs/Characters"
-			],
-			"include": [
-				"_AAT",
-				"_AT",
-				"_AT",
-				"_LAT",
-				"Exploder",
-				"Civilian_Cultist",
-				"Scav_Brute"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "C_MEDIC",
-			"modDir": [
-				"Prefabs/Characters/Factions",
-				"622120A5448725E3/Prefabs/Characters"
-			],
-			"include": [
-				"Medic",
-				"Zombie_Military_ALL",
-				"Military_Pistol_ALL",
-				"Civilian_Cultist",
-				"Scav_Veteran",
-				"Stalker_Veteran"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "C_SPECIAL",
-			"modDir": [
-				"Prefabs/Characters/Factions",
-				"622120A5448725E3/Prefabs/Characters"
-			],
-			"include": [
-				"_SF",
-				"_SR",
-				"FIA_AC",
-				"_Bomb",
-				"MEI_Rifleman1",
-				"Zombie_Military_ALL",
-				"Military_Pistol_ALL",
-				"Exploder",
-				"Heavy_Tank",
-				"Civilian_Cultist",
-				"Stalker_Shadow",
-				"Stalker_Legend"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "G_ZOMBIE_SMALL",
-			"modDir": [
-				"622120A5448725E3/Prefabs/Groups"
-			],
-			"include": [
-				"Group_Zombies_CIV",
-				"Group_Zombies_FIA",
-				"Group_Zombies_US",
-				"Group_Zombies_USSR"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random",
-				"_Huge",
-				"_Large",
-				"_Medium"
-			],
-			"items": []
-		},
-		{
-			"id": "G_ZOMBIE_MEDIUM",
-			"modDir": [
-				"622120A5448725E3/Prefabs/Groups"
-			],
-			"include": [
-				"Group_Zombies_CIV_Large",
-				"Group_Zombies_High"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "G_ZOMBIE_LARGE",
-			"modDir": [
-				"622120A5448725E3/Prefabs/Groups"
-			],
-			"include": [
-				"Group_Zombies_Horde"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "C_ZOMBIE",
-			"modDir": [
-				"622120A5448725E3/Prefabs/Characters"
-			],
-			"include": [
-				"Zombie_",
-				"Character_",
-				"Variant_"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random",
-				"Zombie_Heavy"
-			],
-			"items": []
-		},
-		{
-			"id": "C_DEMON",
-			"modDir": [
-				"Prefabs/Characters",
-				"Beasts"
-			],
-			"include": [
-				"ShadowTwin",
-				"Whisper"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "C_DEMON_BOSS",
-			"modDir": [
-				"Prefabs/Characters",
-				"Beasts"
-			],
-			"include": [
-				"Stalker Heavy",
-				"Zombie_Heavy",
-				"character_115_dupe",
-				"character_115_pump",
-				"character_115_skel."
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random"
-			],
-			"items": []
-		},
-		{
-			"id": "C_BEASTS",
-			"modDir": [
-				"Prefabs/Characters"
-			],
-			"include": [
-				"GhoulHeavy",
-				"PumpkinHead",
-				"Skeleton"
-			],
-			"exclude": [
-				"_Base",
-				"_NotSpawned",
-				"_Remnants",
-				"/CIV/",
-				"_Randomized",
-				"Variant",
-				"Suppressed",
-				"Unarmed",
-				"_Random"
-			],
-			"items": []
-		}
-	],
-	"akas": [
-		{
-			"names": [
-				"RHS_USAF",
-				"USAF_USMC"
-			]
-		},
-		{
-			"names": [
-				"RHS_AFRF",
-				"RHS_RF"
-			]
-		},
-		{
-			"names": [
-				"USSR",
-				"USSR",
-				"TF_RF"
-			]
-		},
-		{
-			"names": [
-				"US",
-				"US",
-				"TF_US"
-			]
-		},
-		{
-			"names": [
-				"BACON_622120A5448725E3_FACTION",
-				"Zombie",
-				"Zombies"
-			]
-		},
-		{
-			"names": [
-				"BALLIEN_BC_FACTION",
-				"Cultist",
-				"Cultists"
-			]
-		}
-	]
+    "version": 1,
+    "author": "darc",
+    "modList": [],
+    "lists": [
+        {
+            "id": "G_LIGHT",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "LightFire",
+                "FireTeam",
+                "FireGroup",
+                "RifleSquad",
+                "SentryTeam",
+                "Regulars_Brick",
+                "InfantrySection",
+                "Group_Zombies_CIV",
+                "Group_Zombies_FIA",
+                "Group_Zombies_US",
+                "Group_Zombies_USSR",
+                "Cultists_Light"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random",
+                "_Heavy"
+            ],
+            "items": []
+        },
+        {
+            "id": "G_SNIPER",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "Sniper",
+                "SharpShooter",
+                "USSR_Spetsnaz_SentryTeam",
+                "VKPO_S_SentryTeam.et",
+                "KS05_SF_GROUP_A",
+                "KS05_SF_GROUP_C",
+                "Group_Zombies_CIV",
+                "Group_Zombies_FIA",
+                "Group_Zombies_US",
+                "Group_Zombies_USSR",
+                "Cultists_Light",
+                "PLAGF_SentryTeam"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "G_LAUNCHER",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "Team_AT",
+                "Team_GL",
+                "Team_LAT",
+                "Group_Zombies_High",
+                "Cultists_Medium",
+                "PLASTICBANDIT_FireTeam_Heavy"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "G_ADMIN",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "_Platoon",
+                "Group_Zombies_High",
+                "Cultists_Light",
+                "PLASTICBANDIT_Squad"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "G_MEDICAL",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "_Medical",
+                "Group_Zombies_High",
+                "Cultists_Light",
+                "PLASTICBANDIT_Squad"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "G_RECON",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "_Recon",
+                "_Maneuver",
+                "_RecceTeam",
+                "Group_Zombies_CIV",
+                "Group_Zombies_FIA",
+                "Group_Zombies_US",
+                "Group_Zombies_USSR",
+                "Cultists_Medium",
+                "PLASTICBANDIT_Squad"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "G_HEAVY",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "MachineGunTeam",
+                "FireTeam",
+                "FireGroup",
+                "Suppress",
+                "Spetsnaz_Squad",
+                "GunGroup",
+                "Group_Zombies_Horde",
+                "Group_Zombies_CIV_Large",
+                "Cultists_Horde"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "G_SPECIAL",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "GreenBeret",
+                "Sapper",
+                "Sentry",
+                "Spetsnaz",
+                "SpecialForces",
+                "KS05_SF_GROUP_B",
+                "Group_Zombies_Horde",
+                "Cultists_Medium",
+                "PLASTICBANDIT_Squad"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "G_SMALL",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "Spetsnaz_SentryTeam",
+                "GreenBeret_SentryTeam",
+                "SentryTeam",
+                "SharpshooterTeam",
+                "MedicalSection",
+                "SapperTeam",
+                "Group_Zombies_CIV",
+                "Group_Zombies_FIA",
+                "Group_Zombies_US",
+                "Group_Zombies_USSR",
+                "Cultists_Light",
+                "PLASTICBANDIT_Patrol"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_RIFLEMAN",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "Rifleman",
+                "Sapper",
+                "_PL",
+                "_SL",
+                "Zombie_CIV",
+                "Zombie_FIA",
+                "Zombie_US",
+                "Zombie_USSR",
+                "Scav_Rookie",
+                "Stalker_Rookie",
+                "Civilian_Cultist",
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_1.et"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_HEAVY",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "_GL",
+                "_MG",
+                "Grenadier",
+                "_Ammo",
+                "_LMG",
+                "Exploder",
+                "Heavy_Tank",
+                "Scav_Gopnik",
+                "Stalker_Rookie",
+                "Scav_Brute",
+                "Civilian_Cultist",
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_2.et"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_RECON",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "Scout",
+                "Spotter",
+                "_RTO",
+                "_SL",
+                "_GL",
+                "_AG1",
+                "Zombie_Military_ALL",
+                "Military_Pistol_ALL",
+                "Scav_Veteran",
+                "Stalker_Veteran",
+                "Civilian_Cultist",
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_OFFICER",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "_Officer",
+                "Sergeant",
+                "_AC",
+                "_Leader",
+                "Exploder",
+                "Heavy_Tank",
+                "Scav_Veteran",
+                "Stalker_Veteran",
+                "Warrior_Cultist",
+                "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_CREW",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "Crew",
+                "Pilot",
+                "_CC",
+                "MEI_Leader",
+                "Exploder",
+                "Heavy_Tank",
+                "Scav_Veteran",
+                "Stalker_Veteran",
+                "Civilian_Cultist",
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_SNIPER",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "Sniper",
+                "Sharpshooter",
+                "Exploder",
+                "Stalker_Shadow",
+                "Stalker_Legend",
+                "Kamikaze_Cultist",
+                "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_LAUNCHER",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "_AAT",
+                "_AT",
+                "_AT",
+                "_LAT",
+                "Exploder",
+                "Scav_Brute",
+                "Warrior_Cultist",
+                "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_MEDIC",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "Medic",
+                "Zombie_Military_ALL",
+                "Military_Pistol_ALL",
+                "Scav_Veteran",
+                "Stalker_Veteran",
+                "Civilian_Cultist",
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_2.et"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_SPECIAL",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "_SF",
+                "_SR",
+                "FIA_AC",
+                "_Bomb",
+                "MEI_Rifleman1",
+                "Zombie_Military_ALL",
+                "Military_Pistol_ALL",
+                "Exploder",
+                "Heavy_Tank",
+                "Stalker_Shadow",
+                "Stalker_Legend",
+                "PLAGF_Scout_RTO",
+                "Kamikaze_Cultist",
+                "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "G_ZOMBIE_SMALL",
+            "modDir": [
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "Group_Zombies_CIV",
+                "Group_Zombies_FIA",
+                "Group_Zombies_US",
+                "Group_Zombies_USSR"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random",
+                "_Huge",
+                "_Large",
+                "_Medium"
+            ],
+            "items": []
+        },
+        {
+            "id": "G_ZOMBIE_MEDIUM",
+            "modDir": [
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "Group_Zombies_CIV_Large",
+                "Group_Zombies_High"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "G_ZOMBIE_LARGE",
+            "modDir": [
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "Group_Zombies_Horde"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_ZOMBIE",
+            "modDir": [
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "Zombie_",
+                "Character_",
+                "Variant_"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random",
+                "Zombie_Heavy"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_DEMON",
+            "modDir": [
+                "Prefabs/Characters",
+                "Beasts"
+            ],
+            "include": [
+                "ShadowTwin",
+                "Whisper",
+                "Kamikaze_Cultist"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_DEMON_BOSS",
+            "modDir": [
+                "Prefabs/Characters",
+                "Beasts"
+            ],
+            "include": [
+                "Stalker Heavy",
+                "Zombie_Heavy",
+                "character_115_dupe",
+                "character_115_pump",
+                "character_115_skel.",
+                "Warrior_Cultist"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_BEASTS",
+            "modDir": [
+                "Prefabs/Characters",
+                "Beasts"
+            ],
+            "include": [
+                "GhoulHeavy",
+                "PumpkinHead",
+                "Skeleton",
+                "Whisper",
+                "Warrior_Cultist"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        }
+    ],
+    "akas": [
+        {
+            "names": [
+                "RHS_USAF",
+                "USAF_USMC"
+            ]
+        },
+        {
+            "names": [
+                "RHS_AFRF",
+                "RHS_RF"
+            ]
+        },
+        {
+            "names": [
+                "USSR",
+                "USSR",
+                "TF_RF"
+            ]
+        },
+        {
+            "names": [
+                "US",
+                "US",
+                "TF_US"
+            ]
+        },
+        {
+            "names": [
+                "BACON_622120A5448725E3_FACTION",
+                "Zombie",
+                "Zombies"
+            ]
+        },
+        {
+            "names": [
+                "BALLIEN_BC_FACTION",
+                "Cultist",
+                "Cultists"
+            ]
+        },
+        {
+            "names": [
+                "ChinesePLA",
+                "PLAGF",
+                "PLAAF"
+            ]
+        }
+    ]
 }

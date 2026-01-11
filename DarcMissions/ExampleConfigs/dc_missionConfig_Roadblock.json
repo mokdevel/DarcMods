@@ -1,1099 +1,1099 @@
 {
-	"version": 1,
-	"author": "darc",
-	"missionCycleTime": 30,
-	"showMarker": true,
-	"showHint": true,
-	"showMessage": true,
-	"disableArsenal": true,
-	"missionList": [
-		0,
-		1,
-		2,
-		3,
-		4
-	],
-	"missionFiles": [],
-	"secondWave": [],
-	"subMissions": [
-		{
-			"general": {
-				"subIdx": 0,
-				"comment": "index 0: Roadblock",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 6.0,
-				"locationTypes": [
-					61,
-					64,
-					70,
-					71,
-					75,
-					79,
-					80,
-					81,
-					15
-				],
-				"posName": "any",
-				"title": "Roadblock near %l",
-				"info": "Look out for trouble.",
-				"winCondition": 2,
-				"winMessage": "Roadblock cleared.",
-				"loseMessage": "Road was kept safe as planned.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 9,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					2
-				],
-				"types": [
-					"G_LAUNCHER",
-					"G_LIGHT",
-					"G_LIGHT"
-				],
-				"skill": 50,
-				"perception": 1.0,
-				"waypointRange": [
-					0,
-					20
-				],
-				"waypointGenType": 5,
-				"waypointMoveType": 5
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.699999988079071,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"WEAPON_HANDGUN",
-					"UTIL_ATTACHMENT",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"GEAR_BAG",
-					"GEAR_HEADGEAR",
-					"GEAR_VEST",
-					"GEAR_HANDWEAR",
-					"GEAR_UNIFORM"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
-					"position": [
-						10.38700008392334,
-						1.0,
-						94.90799713134766
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{3F5EE4D69DBC478C}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_short_plastic.et",
-					"position": [
-						7.0370001792907719,
-						1.0,
-						95.9729995727539
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{3F5EE4D69DBC478C}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_short_plastic.et",
-					"position": [
-						10.177000045776368,
-						1.0,
-						96.02100372314453
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{723870DBB19D30B0}Prefabs/Weapons/Tripods/Tripod_6T5_PKM.et",
-					"position": [
-						8.656000137329102,
-						1.0,
-						95.7969970703125
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				}
-			]
-		},
-		{
-			"general": {
-				"subIdx": 1,
-				"comment": "index 1: Roadblock",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 6.0,
-				"locationTypes": [
-					59,
-					61,
-					64,
-					75,
-					79,
-					80,
-					81,
-					15
-				],
-				"posName": "any",
-				"title": "Roadblock seen close to %l",
-				"info": "Be careful.",
-				"winCondition": 1,
-				"winMessage": "These blocks can not stop you.",
-				"loseMessage": "Scared of the enemy? %l is not a place for you.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 9,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					4
-				],
-				"types": [
-					"G_LAUNCHER",
-					"G_HEAVY",
-					"G_LIGHT"
-				],
-				"skill": 30,
-				"perception": 0.6000000238418579,
-				"waypointRange": [
-					0,
-					10
-				],
-				"waypointGenType": 2,
-				"waypointMoveType": 5
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.8999999761581421,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"GEAR_HEADGEAR",
-					"GEAR_VEST",
-					"GEAR_HANDWEAR",
-					"GEAR_UNIFORM"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
-					"position": [
-						6.814000129699707,
-						1.0,
-						115.15599822998047
-					],
-					"rotation": [
-						0.0,
-						32.729000091552737,
-						0.0
-					]
-				},
-				{
-					"resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
-					"position": [
-						12.579000473022461,
-						0.0,
-						120.9020004272461
-					],
-					"rotation": [
-						0.0,
-						28.496000289916993,
-						0.0
-					]
-				},
-				{
-					"resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
-					"position": [
-						8.218000411987305,
-						0.0,
-						123.02799987792969
-					],
-					"rotation": [
-						0.0,
-						-31.965999603271486,
-						0.0
-					]
-				},
-				{
-					"resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
-					"position": [
-						11.180000305175782,
-						0.0,
-						107.8270034790039
-					],
-					"rotation": [
-						0.0,
-						9.996999740600586,
-						0.0
-					]
-				},
-				{
-					"resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
-					"position": [
-						5.7129998207092289,
-						0.22699999809265138,
-						120.86299896240235
-					],
-					"rotation": [
-						0.0,
-						14.494000434875489,
-						0.0
-					]
-				},
-				{
-					"resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
-					"position": [
-						14.97700023651123,
-						-0.16899999976158143,
-						120.70899963378906
-					],
-					"rotation": [
-						0.0,
-						-16.454999923706056,
-						0.0
-					]
-				},
-				{
-					"resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
-					"position": [
-						7.873000144958496,
-						0.0,
-						108.2750015258789
-					],
-					"rotation": [
-						0.0,
-						-48.948001861572269,
-						0.0
-					]
-				},
-				{
-					"resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
-					"position": [
-						4.5960001945495609,
-						0.0,
-						108.67900085449219
-					],
-					"rotation": [
-						0.0,
-						54.582000732421878,
-						0.0
-					]
-				},
-				{
-					"resource": "{93E06E731212BD96}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Triple.et",
-					"position": [
-						14.151000022888184,
-						0.0,
-						114.89099884033203
-					],
-					"rotation": [
-						0.0,
-						-32.74300003051758,
-						0.0
-					]
-				},
-				{
-					"resource": "{93E06E731212BD96}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Triple.et",
-					"position": [
-						5.13100004196167,
-						0.0,
-						116.3740005493164
-					],
-					"rotation": [
-						0.0,
-						26.7189998626709,
-						0.0
-					]
-				},
-				{
-					"resource": "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
-					"position": [
-						9.489999771118164,
-						1.0,
-						117.72899627685547
-					],
-					"rotation": [
-						0.0,
-						86.01899719238281,
-						0.0
-					]
-				},
-				{
-					"resource": "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
-					"position": [
-						8.267999649047852,
-						1.0,
-						110.00299835205078
-					],
-					"rotation": [
-						0.0,
-						93.26799774169922,
-						0.0
-					]
-				}
-			]
-		},
-		{
-			"general": {
-				"subIdx": 2,
-				"comment": "index 2: Roadblock",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 6.0,
-				"locationTypes": [
-					59,
-					59,
-					61,
-					61,
-					61,
-					64,
-					75,
-					79,
-					80,
-					81,
-					15
-				],
-				"posName": "any",
-				"title": "Road is closed near %l",
-				"info": "Are your ready to pay the toll?",
-				"winCondition": 2,
-				"winMessage": "Road cleared.",
-				"loseMessage": "The road toll was too much for you.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 9,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					2,
-					4
-				],
-				"types": [
-					"G_LIGHT",
-					"G_LIGHT",
-					"G_LIGHT",
-					"C_SNIPER"
-				],
-				"skill": 50,
-				"perception": 0.800000011920929,
-				"waypointRange": [
-					0,
-					10
-				],
-				"waypointGenType": 5,
-				"waypointMoveType": 5
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.6000000238418579,
-				"items": [
-					"WEAPON_LAUNCHER",
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"CLOTHING_HEADGEAR",
-					"CLOTHING_HEADGEAR",
-					"CLOTHING_UNIFORM",
-					"CLOTHING_UNIFORM"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
-					"position": [
-						10.866000175476075,
-						1.0,
-						140.45199584960938
-					],
-					"rotation": [
-						0.0,
-						2.384999990463257,
-						0.0
-					]
-				},
-				{
-					"resource": "{5608B9078BF2AC5A}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragonsteeth_01_old_V1.et",
-					"position": [
-						15.628000259399414,
-						0.0,
-						138.2989959716797
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{5608B9078BF2AC5A}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragonsteeth_01_old_V1.et",
-					"position": [
-						5.513999938964844,
-						0.0,
-						136.29299926757813
-					],
-					"rotation": [
-						0.0,
-						-11.069999694824219,
-						0.0
-					]
-				},
-				{
-					"resource": "{5608B9078BF2AC5A}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragonsteeth_01_old_V1.et",
-					"position": [
-						3.631999969482422,
-						0.0,
-						141.81100463867188
-					],
-					"rotation": [
-						0.0,
-						24.75200080871582,
-						0.0
-					]
-				},
-				{
-					"resource": "{5EF52FAE299A831A}Prefabs/Props/Military/Sandbags/Sandbag_01_short_base.et",
-					"position": [
-						13.680000305175782,
-						1.0,
-						135.76600646972657
-					],
-					"rotation": [
-						0.0,
-						-21.114999771118165,
-						0.0
-					]
-				},
-				{
-					"resource": "{5EF52FAE299A831A}Prefabs/Props/Military/Sandbags/Sandbag_01_short_base.et",
-					"position": [
-						8.663999557495118,
-						1.0,
-						134.46400451660157
-					],
-					"rotation": [
-						0.0,
-						6.2779998779296879,
-						0.0
-					]
-				},
-				{
-					"resource": "{6A735BB1318B2E76}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_bunker_plastic_camonet.et",
-					"position": [
-						10.187000274658204,
-						1.0,
-						140.8800048828125
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{A76FBE3B139F227A}PrefabsEditable/Auto/Structures/Signs/Military/E_SignCheckpoint_01_stop.et",
-					"position": [
-						6.063000202178955,
-						1.0,
-						147.0989990234375
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{A76FBE3B139F227A}PrefabsEditable/Auto/Structures/Signs/Military/E_SignCheckpoint_01_stop.et",
-					"position": [
-						12.689000129699707,
-						1.0,
-						147.48899841308595
-					],
-					"rotation": [
-						0.0,
-						-9.375,
-						0.0
-					]
-				},
-				{
-					"resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
-					"position": [
-						14.8149995803833,
-						1.0,
-						145.38499450683595
-					],
-					"rotation": [
-						0.0,
-						37.53200149536133,
-						0.0
-					]
-				},
-				{
-					"resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
-					"position": [
-						6.0929999351501469,
-						1.0,
-						145.38699340820313
-					],
-					"rotation": [
-						0.0,
-						-29.756999969482423,
-						0.0
-					]
-				}
-			]
-		},
-		{
-			"general": {
-				"subIdx": 3,
-				"comment": "index 3: Roadblock with gates",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 10.0,
-				"locationTypes": [
-					59,
-					59,
-					61,
-					61,
-					61,
-					64,
-					75,
-					79,
-					80,
-					81,
-					15
-				],
-				"posName": "any",
-				"title": "Road near %l is guarded",
-				"info": "Prepare for a mandatory stop.",
-				"winCondition": 2,
-				"winMessage": "Gates do not stop you.",
-				"loseMessage": "Guards has left road near %l.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 9,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					2,
-					4
-				],
-				"types": [
-					"G_LIGHT",
-					"G_LIGHT",
-					"G_HEAVY",
-					"G_ADMIN"
-				],
-				"skill": 70,
-				"perception": 0.30000001192092898,
-				"waypointRange": [
-					0,
-					10
-				],
-				"waypointGenType": 5,
-				"waypointMoveType": 5
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.6000000238418579,
-				"items": [
-					"WEAPON_RIFLE",
-					"WEAPON_RIFLE",
-					"UTIL_MAGAZINE",
-					"UTIL_MAGAZINE",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"UTIL_AMMO",
-					"GEAR_BAG"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
-					"position": [
-						4.105999946594238,
-						1.0,
-						164.02999877929688
-					],
-					"rotation": [
-						0.0,
-						32.729000091552737,
-						0.0
-					]
-				},
-				{
-					"resource": "{07F043DD6AACCD0B}Prefabs/Structures/Infrastructure/Barriers/BarGate_01/BarGate_01.et",
-					"position": [
-						9.130000114440918,
-						0.0,
-						177.08599853515626
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{07F043DD6AACCD0B}Prefabs/Structures/Infrastructure/Barriers/BarGate_01/BarGate_01.et",
-					"position": [
-						8.79699993133545,
-						0.0,
-						157.63600158691407
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{2FE7AA0EBA71CDFB}Prefabs/Structures/Signs/Large/SignLarge_01_MilitaryBase.et",
-					"position": [
-						13.017999649047852,
-						1.0,
-						180.40899658203126
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{2FE7AA0EBA71CDFB}Prefabs/Structures/Signs/Large/SignLarge_01_MilitaryBase.et",
-					"position": [
-						12.970000267028809,
-						1.0,
-						154.55499267578126
-					],
-					"rotation": [
-						0.0,
-						-180.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{6A004A8F0571D456}Prefabs/Structures/Infrastructure/Towers/TransmitterTower_01/TransmitterTower_01_small.et",
-					"position": [
-						2.7109999656677248,
-						1.0,
-						174.3509979248047
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
-					"position": [
-						15.871000289916993,
-						0.0,
-						163.51499938964845
-					],
-					"rotation": [
-						0.0,
-						28.496000289916993,
-						0.0
-					]
-				},
-				{
-					"resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
-					"position": [
-						15.682000160217286,
-						0.0,
-						167.10299682617188
-					],
-					"rotation": [
-						0.0,
-						-3.7960000038146974,
-						0.0
-					]
-				},
-				{
-					"resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
-					"position": [
-						16.059999465942384,
-						0.0,
-						171.1020050048828
-					],
-					"rotation": [
-						0.0,
-						46.018001556396487,
-						0.0
-					]
-				},
-				{
-					"resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
-					"position": [
-						14.78499984741211,
-						0.0,
-						175.69500732421876
-					],
-					"rotation": [
-						0.0,
-						21.038000106811525,
-						0.0
-					]
-				},
-				{
-					"resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
-					"position": [
-						14.357999801635743,
-						0.0,
-						159.65199279785157
-					],
-					"rotation": [
-						0.0,
-						54.994998931884769,
-						0.0
-					]
-				},
-				{
-					"resource": "{9498ADA13BCDB218}Prefabs/Structures/Military/Houses/GuardBox_01/GuardBox_01_Base.et",
-					"position": [
-						3.928999900817871,
-						0.0,
-						166.7779998779297
-					],
-					"rotation": [
-						0.0,
-						-90.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{E7117284012B39A4}Prefabs/Props/Garbage/Bins/TrashBin_02_patched.et",
-					"position": [
-						4.341000080108643,
-						1.0,
-						168.5489959716797
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				}
-			]
-		},
-		{
-			"general": {
-				"subIdx": 4,
-				"comment": "index 4: Burning bus stop",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 20.0,
-				"locationTypes": [
-					59,
-					59,
-					61,
-					61,
-					61,
-					64
-				],
-				"posName": "any",
-				"title": "Bus stop near %l",
-				"info": "Maybe their car needs fixing.",
-				"winCondition": 2,
-				"winMessage": "The area is cleared.",
-				"loseMessage": "Car is fixed, guards left area near %l.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 9,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					2,
-					3
-				],
-				"types": [
-					"G_ADMIN",
-					"G_HEAVY"
-				],
-				"skill": 70,
-				"perception": 0.30000001192092898,
-				"waypointRange": [
-					0,
-					10
-				],
-				"waypointGenType": 5,
-				"waypointMoveType": 5
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			},
-			"loot": {
-				"box": null,
-				"itemChance": 0.6000000238418579,
-				"items": [
-					"UTIL_MAGAZINE",
-					"ITEM_MEDICAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"ITEM_GENERAL",
-					"UTIL_AMMO",
-					"GEAR_BAG",
-					"GEAR_BAG",
-					"CLOTHING_HEADGEAR",
-					"CLOTHING_HEADGEAR",
-					"CLOTHING_HEADGEAR",
-					"CLOTHING_UNIFORM",
-					"CLOTHING_UNIFORM",
-					"CLOTHING_UNIFORM",
-					"GEAR_HANDWEAR",
-					"UTIL_OPTIC"
-				]
-			},
-			"campItems": [
-				{
-					"resource": "{128253A267BE9424}Prefabs/Vehicles/Wheeled/S105/S105_randomized.et",
-					"position": [
-						11.498000144958496,
-						1.0,
-						201.6219940185547
-					],
-					"rotation": [
-						0.0,
-						56.28200149536133,
-						0.0
-					]
-				},
-				{
-					"resource": "{37439557BBDEC2F9}Prefabs/EffectsModuleEntities/SDRC_SmallSmoke.et",
-					"position": [
-						8.83899974822998,
-						1.128999948501587,
-						193.24600219726563
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{5D0248A228159B01}Prefabs/Structures/Debris/DebrisPile/DebrisPile_Concrete_01_Debris_V4.et",
-					"position": [
-						15.416999816894532,
-						1.0,
-						198.03500366210938
-					],
-					"rotation": [
-						0.0,
-						-25.479000091552736,
-						0.0
-					]
-				},
-				{
-					"resource": "{736EECBB2B5FB5E7}Prefabs/Structures/Infrastructure/Bus/BusShed_E_01/BusShed_E_01_Base.et",
-					"position": [
-						4.526000022888184,
-						0.0,
-						199.8249969482422
-					],
-					"rotation": [
-						0.0,
-						90.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{85AA2163519C855D}Prefabs/Structures/Debris/DebrisPile/DebrisPile_Concrete_01_Debris_V2.et",
-					"position": [
-						11.41100025177002,
-						1.0,
-						199.69000244140626
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{85AA2163519C855D}Prefabs/Structures/Debris/DebrisPile/DebrisPile_Concrete_01_Debris_V2.et",
-					"position": [
-						12.378999710083008,
-						1.0,
-						206.06300354003907
-					],
-					"rotation": [
-						0.0,
-						27.573999404907228,
-						0.0
-					]
-				},
-				{
-					"resource": "{97F01D47E387935A}Prefabs/Structures/Debris/DebrisPile/DebrisPile_Wood_01.et",
-					"position": [
-						8.553000450134278,
-						1.0,
-						193.8209991455078
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{B9E11E1CC3A95088}Prefabs/Structures/Agriculture/Gates/GateCollectiveFarm_02/GateCollectiveFarm_02_SaintPhilippe.et",
-					"position": [
-						9.491000175476075,
-						0.0,
-						207.06199645996095
-					],
-					"rotation": [
-						0.0,
-						0.0,
-						0.0
-					]
-				},
-				{
-					"resource": "{F30731717AD0E0F2}Prefabs/Structures/Infrastructure/Landlines/PhoneBooth_E/PhoneBooth_USSR_01.et",
-					"position": [
-						3.8540000915527345,
-						0.0,
-						203.36000061035157
-					],
-					"rotation": [
-						0.0,
-						-90.0,
-						0.0
-					]
-				}
-			]
-		}
-	]
+    "version": 1,
+    "author": "darc",
+    "missionCycleTime": 30,
+    "showMarker": true,
+    "showHint": true,
+    "showMessage": true,
+    "disableArsenal": true,
+    "missionList": [
+        0,
+        1,
+        2,
+        3,
+        4
+    ],
+    "missionFiles": [],
+    "secondWave": [],
+    "subMissions": [
+        {
+            "general": {
+                "subIdx": 0,
+                "comment": "index 0: Roadblock",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 6.0,
+                "locationTypes": [
+                    61,
+                    64,
+                    70,
+                    71,
+                    75,
+                    79,
+                    80,
+                    81,
+                    15
+                ],
+                "posName": "any",
+                "title": "Roadblock near %l",
+                "info": "Look out for trouble.",
+                "winCondition": 2,
+                "winMessage": "Roadblock cleared.",
+                "loseMessage": "Road was kept safe as planned.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 9,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_LAUNCHER",
+                    "G_LIGHT",
+                    "G_LIGHT"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    0,
+                    20
+                ],
+                "waypointGenType": 5,
+                "waypointMoveType": 5
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "UTIL_ATTACHMENT",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_BAG",
+                    "GEAR_HEADGEAR",
+                    "GEAR_VEST",
+                    "GEAR_HANDWEAR",
+                    "GEAR_UNIFORM"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+                    "position": [
+                        10.387,
+                        1.0,
+                        94.907
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{3F5EE4D69DBC478C}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_short_plastic.et",
+                    "position": [
+                        7.037,
+                        1.0,
+                        95.972
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{3F5EE4D69DBC478C}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_short_plastic.et",
+                    "position": [
+                        10.177,
+                        1.0,
+                        96.021
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{723870DBB19D30B0}Prefabs/Weapons/Tripods/Tripod_6T5_PKM.et",
+                    "position": [
+                        8.656,
+                        1.0,
+                        95.796
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "general": {
+                "subIdx": 1,
+                "comment": "index 1: Roadblock",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 6.0,
+                "locationTypes": [
+                    59,
+                    61,
+                    64,
+                    75,
+                    79,
+                    80,
+                    81,
+                    15
+                ],
+                "posName": "any",
+                "title": "Roadblock seen close to %l",
+                "info": "Be careful.",
+                "winCondition": 1,
+                "winMessage": "These blocks can not stop you.",
+                "loseMessage": "Scared of the enemy? %l is not a place for you.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 9,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    4
+                ],
+                "types": [
+                    "G_LAUNCHER",
+                    "G_HEAVY",
+                    "G_LIGHT"
+                ],
+                "skill": 30,
+                "perception": 0.6,
+                "waypointRange": [
+                    0,
+                    10
+                ],
+                "waypointGenType": 2,
+                "waypointMoveType": 5
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.899,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "GEAR_HEADGEAR",
+                    "GEAR_VEST",
+                    "GEAR_HANDWEAR",
+                    "GEAR_UNIFORM"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+                    "position": [
+                        6.814,
+                        1.0,
+                        115.155
+                    ],
+                    "rotation": [
+                        0.0,
+                        32.729,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+                    "position": [
+                        12.579,
+                        0.0,
+                        120.902
+                    ],
+                    "rotation": [
+                        0.0,
+                        28.496,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+                    "position": [
+                        8.218,
+                        0.0,
+                        123.027
+                    ],
+                    "rotation": [
+                        0.0,
+                        -31.965,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+                    "position": [
+                        11.18,
+                        0.0,
+                        107.827
+                    ],
+                    "rotation": [
+                        0.0,
+                        9.996,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+                    "position": [
+                        5.712,
+                        0.226,
+                        120.862
+                    ],
+                    "rotation": [
+                        0.0,
+                        14.494,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+                    "position": [
+                        14.977,
+                        -0.168,
+                        120.708
+                    ],
+                    "rotation": [
+                        0.0,
+                        -16.454,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+                    "position": [
+                        7.873,
+                        0.0,
+                        108.275
+                    ],
+                    "rotation": [
+                        0.0,
+                        -48.948,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+                    "position": [
+                        4.596,
+                        0.0,
+                        108.679
+                    ],
+                    "rotation": [
+                        0.0,
+                        54.582,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{93E06E731212BD96}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Triple.et",
+                    "position": [
+                        14.151,
+                        0.0,
+                        114.89
+                    ],
+                    "rotation": [
+                        0.0,
+                        -32.743,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{93E06E731212BD96}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Triple.et",
+                    "position": [
+                        5.131,
+                        0.0,
+                        116.374
+                    ],
+                    "rotation": [
+                        0.0,
+                        26.718,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
+                    "position": [
+                        9.489,
+                        1.0,
+                        117.728
+                    ],
+                    "rotation": [
+                        0.0,
+                        86.018,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{DDF59362051B28BC}Prefabs/Props/Military/Fortification/BarbedTape_KnifeRest.et",
+                    "position": [
+                        8.267,
+                        1.0,
+                        110.002
+                    ],
+                    "rotation": [
+                        0.0,
+                        93.267,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "general": {
+                "subIdx": 2,
+                "comment": "index 2: Roadblock",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 6.0,
+                "locationTypes": [
+                    59,
+                    59,
+                    61,
+                    61,
+                    61,
+                    64,
+                    75,
+                    79,
+                    80,
+                    81,
+                    15
+                ],
+                "posName": "any",
+                "title": "Road is closed near %l",
+                "info": "Are your ready to pay the toll?",
+                "winCondition": 2,
+                "winMessage": "Road cleared.",
+                "loseMessage": "The road toll was too much for you.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 9,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    2,
+                    4
+                ],
+                "types": [
+                    "G_LIGHT",
+                    "G_LIGHT",
+                    "G_LIGHT",
+                    "C_SNIPER"
+                ],
+                "skill": 50,
+                "perception": 0.8,
+                "waypointRange": [
+                    0,
+                    10
+                ],
+                "waypointGenType": 5,
+                "waypointMoveType": 5
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.6,
+                "items": [
+                    "WEAPON_LAUNCHER",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_UNIFORM",
+                    "CLOTHING_UNIFORM"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+                    "position": [
+                        10.866,
+                        1.0,
+                        140.451
+                    ],
+                    "rotation": [
+                        0.0,
+                        2.384,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{5608B9078BF2AC5A}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragonsteeth_01_old_V1.et",
+                    "position": [
+                        15.628,
+                        0.0,
+                        138.298
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{5608B9078BF2AC5A}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragonsteeth_01_old_V1.et",
+                    "position": [
+                        5.513,
+                        0.0,
+                        136.292
+                    ],
+                    "rotation": [
+                        0.0,
+                        -11.069,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{5608B9078BF2AC5A}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragonsteeth_01_old_V1.et",
+                    "position": [
+                        3.631,
+                        0.0,
+                        141.811
+                    ],
+                    "rotation": [
+                        0.0,
+                        24.752,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{5EF52FAE299A831A}Prefabs/Props/Military/Sandbags/Sandbag_01_short_base.et",
+                    "position": [
+                        13.68,
+                        1.0,
+                        135.766
+                    ],
+                    "rotation": [
+                        0.0,
+                        -21.114,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{5EF52FAE299A831A}Prefabs/Props/Military/Sandbags/Sandbag_01_short_base.et",
+                    "position": [
+                        8.663,
+                        1.0,
+                        134.464
+                    ],
+                    "rotation": [
+                        0.0,
+                        6.277,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{6A735BB1318B2E76}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_bunker_plastic_camonet.et",
+                    "position": [
+                        10.187,
+                        1.0,
+                        140.88
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{A76FBE3B139F227A}PrefabsEditable/Auto/Structures/Signs/Military/E_SignCheckpoint_01_stop.et",
+                    "position": [
+                        6.063,
+                        1.0,
+                        147.098
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{A76FBE3B139F227A}PrefabsEditable/Auto/Structures/Signs/Military/E_SignCheckpoint_01_stop.et",
+                    "position": [
+                        12.689,
+                        1.0,
+                        147.488
+                    ],
+                    "rotation": [
+                        0.0,
+                        -9.375,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+                    "position": [
+                        14.814,
+                        1.0,
+                        145.384
+                    ],
+                    "rotation": [
+                        0.0,
+                        37.532,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+                    "position": [
+                        6.092,
+                        1.0,
+                        145.386
+                    ],
+                    "rotation": [
+                        0.0,
+                        -29.756,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "general": {
+                "subIdx": 3,
+                "comment": "index 3: Roadblock with gates",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 10.0,
+                "locationTypes": [
+                    59,
+                    59,
+                    61,
+                    61,
+                    61,
+                    64,
+                    75,
+                    79,
+                    80,
+                    81,
+                    15
+                ],
+                "posName": "any",
+                "title": "Road near %l is guarded",
+                "info": "Prepare for a mandatory stop.",
+                "winCondition": 2,
+                "winMessage": "Gates do not stop you.",
+                "loseMessage": "Guards has left road near %l.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 9,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    2,
+                    4
+                ],
+                "types": [
+                    "G_LIGHT",
+                    "G_LIGHT",
+                    "G_HEAVY",
+                    "G_ADMIN"
+                ],
+                "skill": 70,
+                "perception": 0.3,
+                "waypointRange": [
+                    0,
+                    10
+                ],
+                "waypointGenType": 5,
+                "waypointMoveType": 5
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.6,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "UTIL_MAGAZINE",
+                    "UTIL_MAGAZINE",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "GEAR_BAG"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+                    "position": [
+                        4.105,
+                        1.0,
+                        164.029
+                    ],
+                    "rotation": [
+                        0.0,
+                        32.729,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{07F043DD6AACCD0B}Prefabs/Structures/Infrastructure/Barriers/BarGate_01/BarGate_01.et",
+                    "position": [
+                        9.13,
+                        0.0,
+                        177.085
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{07F043DD6AACCD0B}Prefabs/Structures/Infrastructure/Barriers/BarGate_01/BarGate_01.et",
+                    "position": [
+                        8.796,
+                        0.0,
+                        157.636
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{2FE7AA0EBA71CDFB}Prefabs/Structures/Signs/Large/SignLarge_01_MilitaryBase.et",
+                    "position": [
+                        13.017,
+                        1.0,
+                        180.408
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{2FE7AA0EBA71CDFB}Prefabs/Structures/Signs/Large/SignLarge_01_MilitaryBase.et",
+                    "position": [
+                        12.97,
+                        1.0,
+                        154.554
+                    ],
+                    "rotation": [
+                        0.0,
+                        -180.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{6A004A8F0571D456}Prefabs/Structures/Infrastructure/Towers/TransmitterTower_01/TransmitterTower_01_small.et",
+                    "position": [
+                        2.71,
+                        1.0,
+                        174.35
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+                    "position": [
+                        15.871,
+                        0.0,
+                        163.514
+                    ],
+                    "rotation": [
+                        0.0,
+                        28.496,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+                    "position": [
+                        15.682,
+                        0.0,
+                        167.102
+                    ],
+                    "rotation": [
+                        0.0,
+                        -3.796,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+                    "position": [
+                        16.059,
+                        0.0,
+                        171.102
+                    ],
+                    "rotation": [
+                        0.0,
+                        46.018,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+                    "position": [
+                        14.784,
+                        0.0,
+                        175.695
+                    ],
+                    "rotation": [
+                        0.0,
+                        21.038,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8B7B5323534404A7}Prefabs/Structures/Military/Fortifications/Dragontooth_01/Dragontooth_01_V2.et",
+                    "position": [
+                        14.357,
+                        0.0,
+                        159.651
+                    ],
+                    "rotation": [
+                        0.0,
+                        54.994,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{9498ADA13BCDB218}Prefabs/Structures/Military/Houses/GuardBox_01/GuardBox_01_Base.et",
+                    "position": [
+                        3.928,
+                        0.0,
+                        166.777
+                    ],
+                    "rotation": [
+                        0.0,
+                        -90.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{E7117284012B39A4}Prefabs/Props/Garbage/Bins/TrashBin_02_patched.et",
+                    "position": [
+                        4.341,
+                        1.0,
+                        168.548
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "general": {
+                "subIdx": 4,
+                "comment": "index 4: Burning bus stop",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 20.0,
+                "locationTypes": [
+                    59,
+                    59,
+                    61,
+                    61,
+                    61,
+                    64
+                ],
+                "posName": "any",
+                "title": "Bus stop near %l",
+                "info": "Maybe their car needs fixing.",
+                "winCondition": 2,
+                "winMessage": "The area is cleared.",
+                "loseMessage": "Car is fixed, guards left area near %l.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 9,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    2,
+                    3
+                ],
+                "types": [
+                    "G_ADMIN",
+                    "G_HEAVY"
+                ],
+                "skill": 70,
+                "perception": 0.3,
+                "waypointRange": [
+                    0,
+                    10
+                ],
+                "waypointGenType": 5,
+                "waypointMoveType": 5
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.6,
+                "items": [
+                    "UTIL_MAGAZINE",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "UTIL_AMMO",
+                    "GEAR_BAG",
+                    "GEAR_BAG",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_UNIFORM",
+                    "CLOTHING_UNIFORM",
+                    "CLOTHING_UNIFORM",
+                    "GEAR_HANDWEAR",
+                    "UTIL_OPTIC"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{128253A267BE9424}Prefabs/Vehicles/Wheeled/S105/S105_randomized.et",
+                    "position": [
+                        11.498,
+                        1.0,
+                        201.621
+                    ],
+                    "rotation": [
+                        0.0,
+                        56.282,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{37439557BBDEC2F9}Prefabs/EffectsModuleEntities/SDRC_SmallSmoke.et",
+                    "position": [
+                        8.838,
+                        1.128,
+                        193.246
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{5D0248A228159B01}Prefabs/Structures/Debris/DebrisPile/DebrisPile_Concrete_01_Debris_V4.et",
+                    "position": [
+                        15.416,
+                        1.0,
+                        198.035
+                    ],
+                    "rotation": [
+                        0.0,
+                        -25.479,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{736EECBB2B5FB5E7}Prefabs/Structures/Infrastructure/Bus/BusShed_E_01/BusShed_E_01_Base.et",
+                    "position": [
+                        4.526,
+                        0.0,
+                        199.824
+                    ],
+                    "rotation": [
+                        0.0,
+                        90.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{85AA2163519C855D}Prefabs/Structures/Debris/DebrisPile/DebrisPile_Concrete_01_Debris_V2.et",
+                    "position": [
+                        11.411,
+                        1.0,
+                        199.69
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{85AA2163519C855D}Prefabs/Structures/Debris/DebrisPile/DebrisPile_Concrete_01_Debris_V2.et",
+                    "position": [
+                        12.378,
+                        1.0,
+                        206.063
+                    ],
+                    "rotation": [
+                        0.0,
+                        27.573,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{97F01D47E387935A}Prefabs/Structures/Debris/DebrisPile/DebrisPile_Wood_01.et",
+                    "position": [
+                        8.553,
+                        1.0,
+                        193.82
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{B9E11E1CC3A95088}Prefabs/Structures/Agriculture/Gates/GateCollectiveFarm_02/GateCollectiveFarm_02_SaintPhilippe.et",
+                    "position": [
+                        9.491,
+                        0.0,
+                        207.061
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{F30731717AD0E0F2}Prefabs/Structures/Infrastructure/Landlines/PhoneBooth_E/PhoneBooth_USSR_01.et",
+                    "position": [
+                        3.854,
+                        0.0,
+                        203.36
+                    ],
+                    "rotation": [
+                        0.0,
+                        -90.0,
+                        0.0
+                    ]
+                }
+            ]
+        }
+    ]
 }

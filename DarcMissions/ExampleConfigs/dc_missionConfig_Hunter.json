@@ -1,183 +1,185 @@
 {
-	"version": 1,
-	"author": "darc",
-	"missionCycleTime": 10,
-	"showMarker": false,
-	"showHint": true,
-	"showMessage": true,
-	"disableArsenal": false,
-	"missionList": [
-		0,
-		0,
-		0,
-		1,
-		1,
-		1,
-		2
-	],
-	"missionFiles": [],
-	"secondWave": [],
-	"minDistanceToPlayer": 200,
-	"maxDistanceToPlayer": 800,
-	"rndDistanceToPlayer": 60,
-	"subMissions": [
-		{
-			"general": {
-				"subIdx": 0,
-				"comment": "index 0: general mission",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 2.0,
-				"locationTypes": [],
-				"posName": "any",
-				"title": "Hunters",
-				"info": "They are coming for you... Last time they were seen close to %l.",
-				"winCondition": 1,
-				"winMessage": "You outsmarted the hunters.",
-				"loseMessage": "Hunters lost track of you.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 6,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					2
-				],
-				"types": [
-					"G_SMALL"
-				],
-				"skill": 30,
-				"perception": 0.4000000059604645,
-				"waypointRange": [
-					0,
-					0
-				],
-				"waypointGenType": 0,
-				"waypointMoveType": 0
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			}
-		},
-		{
-			"general": {
-				"subIdx": 1,
-				"comment": "index 1: general mission",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 2.0,
-				"locationTypes": [],
-				"posName": "any",
-				"title": "Hunters",
-				"info": "Sharpshooters are hunting you. Last known location was near %l.",
-				"winCondition": 1,
-				"winMessage": "Sharpshooters were not that sharp.",
-				"loseMessage": "Sharpshooters lost track of you.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 6,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					1
-				],
-				"types": [
-					"G_SNIPER"
-				],
-				"skill": 40,
-				"perception": 0.800000011920929,
-				"waypointRange": [
-					0,
-					0
-				],
-				"waypointGenType": 0,
-				"waypointMoveType": 0
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			}
-		},
-		{
-			"general": {
-				"subIdx": 2,
-				"comment": "index 2: Hunters from military",
-				"pos": [
-					[
-						0.0,
-						0.0,
-						0.0
-					]
-				],
-				"size": 2.0,
-				"locationTypes": [
-					79
-				],
-				"posName": "any",
-				"title": "Recon",
-				"info": "Military base near %l has sent a recon team to hunt you.",
-				"winCondition": 1,
-				"winMessage": "Recon team cleared.",
-				"loseMessage": "Recon team lost track of you.",
-				"faction": "",
-				"markerType": "DARC_MISSION",
-				"markerIcon": 6,
-				"difficulty": 2,
-				"xp": 0
-			},
-			"ai": {
-				"count": [
-					1,
-					2
-				],
-				"types": [
-					"G_RECON"
-				],
-				"skill": 40,
-				"perception": 0.5,
-				"waypointRange": [
-					0,
-					0
-				],
-				"waypointGenType": 0,
-				"waypointMoveType": 0
-			},
-			"secondWave": {
-				"subIdx": [],
-				"activation": 1,
-				"delay": [],
-				"distance": [],
-				"info": "",
-				"difficulty": 0,
-				"xp": 0
-			}
-		}
-	]
+    "version": 1,
+    "author": "darc",
+    "missionCycleTime": 90,
+    "showMarker": false,
+    "showHint": true,
+    "showMessage": true,
+    "disableArsenal": false,
+    "missionList": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        2
+    ],
+    "missionFiles": [],
+    "secondWave": [],
+    "minDistanceToPlayer": 200,
+    "maxDistanceToPlayer": 800,
+    "rndDistanceToPlayer": 60,
+    "subMissions": [
+        {
+            "general": {
+                "subIdx": 0,
+                "comment": "index 0: general mission",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 2.0,
+                "locationTypes": [],
+                "posName": "any",
+                "title": "Hunters",
+                "info": "They are coming for you... Last time they were seen close to %l.",
+                "winCondition": 1,
+                "winMessage": "You outsmarted the hunters.",
+                "loseMessage": "Hunters lost track of you.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 6,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_SMALL"
+                ],
+                "skill": 30,
+                "perception": 0.4,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 0,
+                "waypointMoveType": 0
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            }
+        },
+        {
+            "general": {
+                "subIdx": 1,
+                "comment": "index 1: general mission",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 2.0,
+                "locationTypes": [],
+                "posName": "any",
+                "title": "Hunters",
+                "info": "Sharpshooters are hunting you. Last known location was near %l.",
+                "winCondition": 1,
+                "winMessage": "Sharpshooters were not that sharp.",
+                "loseMessage": "Sharpshooters lost track of you.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 6,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    1
+                ],
+                "types": [
+                    "G_SNIPER"
+                ],
+                "skill": 40,
+                "perception": 0.8,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 0,
+                "waypointMoveType": 0
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            }
+        },
+        {
+            "general": {
+                "subIdx": 2,
+                "comment": "index 2: Hunters from military",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 2.0,
+                "locationTypes": [
+                    79,
+                    14,
+                    15
+                ],
+                "posName": "any",
+                "title": "Recon",
+                "info": "Military base near %l has sent a recon team to hunt you.",
+                "winCondition": 1,
+                "winMessage": "Recon team cleared.",
+                "loseMessage": "Recon team lost track of you.",
+                "faction": "",
+                "markerType": "DARC_MISSION",
+                "markerIcon": 6,
+                "difficulty": -1,
+                "xp": 0
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_RECON"
+                ],
+                "skill": 40,
+                "perception": 0.5,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 0,
+                "waypointMoveType": 0
+            },
+            "secondWave": {
+                "subIdx": [],
+                "activation": 1,
+                "delay": [],
+                "distance": [],
+                "info": "",
+                "difficulty": 0,
+                "xp": 0
+            }
+        }
+    ]
 }

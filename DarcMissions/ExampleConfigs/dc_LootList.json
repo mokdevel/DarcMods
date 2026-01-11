@@ -1,360 +1,377 @@
 {
-	"version": 1,
-	"author": "darc",
-	"modList": [],
-	"lists": [
-		{
-			"id": "WEAPON_RIFLE",
-			"modDir": [
-				"Prefabs/Weapons/Rifles",
-				"Prefabs/5AB890B71D748750/Weapon_Variants_B"
-			],
-			"include": [
-				"Rifle",
-				"Spear68_"
-			],
-			"exclude": [
-				"_Base",
-				"_Sample",
-				"Tutorial",
-				"Mosin",
-				"SVD",
-				"Barrett",
-				"M110",
-				"M21",
-				"M40"
-			],
-			"items": []
-		},
-		{
-			"id": "WEAPON_RIFLE_BIG",
-			"modDir": [
-				"Prefabs/Weapons/Rifles"
-			],
-			"include": [
-				"Rifle",
-				"Spear68_"
-			],
-			"exclude": [
-				"_Base",
-				"_Sample",
-				"Tutorial",
-				"AK74",
-				"AKS74",
-				"VZ",
-				"M16",
-				"Spear68_"
-			],
-			"items": []
-		},
-		{
-			"id": "WEAPON_HANDGUN",
-			"modDir": [
-				"Prefabs/Weapons/Handguns"
-			],
-			"include": [
-				"Handgun"
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "WEAPON_LAUNCHER",
-			"modDir": [
-				"Prefabs/Weapons/Launchers"
-			],
-			"include": [
-				"Launcher",
-				"BC_M79"
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "WEAPON_SHOTGUN",
-			"modDir": [
-				"Prefabs/Weapons/Shotguns"
-			],
-			"include": [
-				"Shotgun"
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "WEAPON_GRENADE",
-			"modDir": [
-				"Prefabs/Weapons/Grenades"
-			],
-			"include": [
-				""
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "UTIL_ATTACHMENT",
-			"modDir": [
-				"Prefabs/Weapons/Attachments",
-				"Prefabs/5AB890B71D748750/Grip",
-				"Prefabs/5AB890B71D748750/Handguard",
-				"Prefabs/5AB890B71D748750/Lower",
-				"Prefabs/5AB890B71D748750/Muzzle",
-				"Prefabs/5AB890B71D748750/Stock",
-				"Prefabs/5AB890B71D748750/UGL",
-				"Prefabs/5AB890B71D748750/Upper"
-			],
-			"include": [
-				""
-			],
-			"exclude": [
-				"_Base",
-				"Optic",
-				"Scope"
-			],
-			"items": []
-		},
-		{
-			"id": "UTIL_OPTIC",
-			"modDir": [
-				"Prefabs/Weapons/Attachments",
-				"Scopes",
-				"Prefabs/Weapons/Attachments/BaconOptics/",
-				"Prefabs/5ABD0CB57F7E9EB1/Optics/"
-			],
-			"include": [
-				"Optic",
-				"Scope",
-				"1P69",
-				"AimPoint",
-				"Collim",
-				"ANPVS",
-				"G33",
-				"PDC_cover",
-				"Zhukov"
-			],
-			"exclude": [
-				"_Base",
-				"DoNotUse"
-			],
-			"items": []
-		},
-		{
-			"id": "UTIL_MAGAZINE",
-			"modDir": [
-				"Prefabs/Weapons/Magazines"
-			],
-			"include": [
-				""
-			],
-			"exclude": [
-				"_Base",
-				"Internal_"
-			],
-			"items": []
-		},
-		{
-			"id": "UTIL_AMMO",
-			"modDir": [
-				"Prefabs/Weapons/Ammo"
-			],
-			"include": [
-				"Shell",
-				"Rocket",
-				"Grenade",
-				"Flare"
-			],
-			"exclude": [
-				"_Base",
-				"Internal_",
-				"_Effect",
-				"FlareEffect",
-				"Particles"
-			],
-			"items": []
-		},
-		{
-			"id": "ITEM_GENERAL",
-			"modDir": [
-				"Prefabs/Items"
-			],
-			"include": [
-				"Binocular",
-				"Compass",
-				"Flashlight",
-				"PaperMap_01_folded",
-				"Watch_"
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "ITEM_MEDICAL",
-			"modDir": [
-				"Prefabs/Items/Medicine"
-			],
-			"include": [
-				""
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "GEAR_HEADGEAR",
-			"modDir": [
-				"Prefabs/Characters/HeadGear",
-				"Prefabs/Clothing"
-			],
-			"include": [
-				"Helmet_",
-				"GP-",
-				"M50",
-				"Unix_"
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "GEAR_VEST",
-			"modDir": [
-				"Prefabs/Characters/Vests"
-			],
-			"include": [
-				"Vest_"
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "GEAR_HANDWEAR",
-			"modDir": [
-				"Prefabs/Characters/Handwear"
-			],
-			"include": [
-				"Gloves_"
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "GEAR_UNIFORM",
-			"modDir": [
-				"Prefabs/Characters/Uniforms"
-			],
-			"include": [
-				"Jacket_KZS",
-				"Jacket_Pilot",
-				"Jacket_Tanker",
-				"Jacket_TAZ",
-				"Pants_KZS",
-				"Pants_Pilot",
-				"Pants_Tanker",
-				"Pants_TAZ",
-				"Suit_KLMK",
-				"Suit_Pilot",
-				"Suit_Tanker"
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "CLOTHING_HEADGEAR",
-			"modDir": [
-				"Prefabs/Characters/HeadGear"
-			],
-			"include": [
-				"Hat_"
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "CLOTHING_UNIFORM",
-			"modDir": [
-				"Prefabs/Characters/Uniforms"
-			],
-			"include": [
-				"_Denim",
-				"_Raincoat",
-				"_Fisherman",
-				"_Trousers",
-				"Shirt_",
-				"Jacket_Suit",
-				"Jacket_Pants"
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "FF_ITEMS_LOW",
-			"modDir": [
-				"Prefabs/Items"
-			],
-			"include": [
-				"Backpack",
-				"Radio_",
-				"Tent_",
-				"Lockpick_",
-				"JWK_EpinephrineInjection"
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "FF_ITEMS_MID",
-			"modDir": [
-				"Prefabs/Items"
-			],
-			"include": [
-				"Dogtags",
-				"Briefcase",
-				"CampingKit",
-				"KeysOld"
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		},
-		{
-			"id": "FF_ITEMS_HIGH",
-			"modDir": [
-				"Prefabs/Items"
-			],
-			"include": [
-				"ShopProxy_Resource_Supplies"
-			],
-			"exclude": [
-				"_Base"
-			],
-			"items": []
-		}
-	],
-	"akas": []
+    "version": 1,
+    "author": "darc",
+    "modList": [],
+    "lists": [
+        {
+            "id": "WEAPON_RIFLE",
+            "modDir": [
+                "Prefabs/Weapons/Rifles",
+                "Prefabs/5AB890B71D748750/Weapon_Variants_B"
+            ],
+            "include": [
+                "Rifle",
+                "Spear68_"
+            ],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "Mosin",
+                "SVD",
+                "Barrett",
+                "M110",
+                "M21",
+                "M40"
+            ],
+            "items": []
+        },
+        {
+            "id": "WEAPON_RIFLE_BIG",
+            "modDir": [
+                "Prefabs/Weapons/Rifles"
+            ],
+            "include": [
+                "Rifle",
+                "Spear68_"
+            ],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "AK74",
+                "AKS74",
+                "VZ",
+                "M16",
+                "Spear68_"
+            ],
+            "items": []
+        },
+        {
+            "id": "WEAPON_HANDGUN",
+            "modDir": [
+                "Prefabs/Weapons/Handguns"
+            ],
+            "include": [
+                "Handgun"
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        },
+        {
+            "id": "WEAPON_LAUNCHER",
+            "modDir": [
+                "Prefabs/Weapons/Launchers"
+            ],
+            "include": [
+                "Launcher",
+                "BC_M79"
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        },
+        {
+            "id": "WEAPON_SHOTGUN",
+            "modDir": [
+                "Prefabs/Weapons/Shotguns"
+            ],
+            "include": [
+                "Shotgun"
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        },
+        {
+            "id": "WEAPON_GRENADE",
+            "modDir": [
+                "Prefabs/Weapons/Grenades"
+            ],
+            "include": [
+                ""
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        },
+        {
+            "id": "UTIL_ATTACHMENT",
+            "modDir": [
+                "Prefabs/Weapons/Attachments",
+                "Prefabs/5AB890B71D748750/Grip",
+                "Prefabs/5AB890B71D748750/Handguard",
+                "Prefabs/5AB890B71D748750/Lower",
+                "Prefabs/5AB890B71D748750/Muzzle",
+                "Prefabs/5AB890B71D748750/Stock",
+                "Prefabs/5AB890B71D748750/UGL",
+                "Prefabs/5AB890B71D748750/Upper"
+            ],
+            "include": [
+                ""
+            ],
+            "exclude": [
+                "_Base",
+                "Optic",
+                "Scope"
+            ],
+            "items": []
+        },
+        {
+            "id": "UTIL_OPTIC",
+            "modDir": [
+                "Prefabs/Weapons/Attachments",
+                "Scopes",
+                "Prefabs/Weapons/Attachments/BaconOptics/",
+                "Prefabs/5ABD0CB57F7E9EB1/Optics/"
+            ],
+            "include": [
+                "Optic",
+                "Scope",
+                "1P69",
+                "AimPoint",
+                "Collim",
+                "ANPVS",
+                "G33",
+                "PDC_cover",
+                "Zhukov"
+            ],
+            "exclude": [
+                "_Base",
+                "DoNotUse"
+            ],
+            "items": []
+        },
+        {
+            "id": "UTIL_MAGAZINE",
+            "modDir": [
+                "Prefabs/Weapons/Magazines"
+            ],
+            "include": [
+                ""
+            ],
+            "exclude": [
+                "_Base",
+                "Internal_"
+            ],
+            "items": []
+        },
+        {
+            "id": "UTIL_AMMO",
+            "modDir": [
+                "Prefabs/Weapons/Ammo"
+            ],
+            "include": [
+                "Shell",
+                "Rocket",
+                "Grenade",
+                "Flare"
+            ],
+            "exclude": [
+                "_Base",
+                "Internal_",
+                "_Effect",
+                "FlareEffect",
+                "Particles"
+            ],
+            "items": []
+        },
+        {
+            "id": "ITEM_GENERAL",
+            "modDir": [
+                "Prefabs/Items"
+            ],
+            "include": [
+                "Binocular",
+                "Compass",
+                "Flashlight",
+                "PaperMap_01_folded",
+                "Watch_"
+            ],
+            "exclude": [
+                "_Base",
+                "BackPack",
+                "Pouch"
+            ],
+            "items": []
+        },
+        {
+            "id": "ITEM_MEDICAL",
+            "modDir": [
+                "Prefabs/Items/Medicine"
+            ],
+            "include": [
+                ""
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        },
+        {
+            "id": "GEAR_HEADGEAR",
+            "modDir": [
+                "Prefabs/Characters/HeadGear",
+                "Prefabs/Clothing"
+            ],
+            "include": [
+                "Helmet_",
+                "GP-",
+                "M50",
+                "Unix_"
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        },
+        {
+            "id": "GEAR_VEST",
+            "modDir": [
+                "Prefabs/Characters/Vests"
+            ],
+            "include": [
+                "Vest_"
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        },
+        {
+            "id": "GEAR_HANDWEAR",
+            "modDir": [
+                "Prefabs/Characters/Handwear"
+            ],
+            "include": [
+                "Gloves_"
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        },
+        {
+            "id": "GEAR_UNIFORM",
+            "modDir": [
+                "Prefabs/Characters/Uniforms"
+            ],
+            "include": [
+                "Jacket_KZS",
+                "Jacket_Pilot",
+                "Jacket_Tanker",
+                "Jacket_TAZ",
+                "Pants_KZS",
+                "Pants_Pilot",
+                "Pants_Tanker",
+                "Pants_TAZ",
+                "Suit_KLMK",
+                "Suit_Pilot",
+                "Suit_Tanker"
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        },
+        {
+            "id": "GEAR_BAG",
+            "modDir": [
+                "Prefabs/Items/Equipment"
+            ],
+            "include": [
+                "BackPack",
+                "Pouch",
+                "/Test/"
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        },
+        {
+            "id": "CLOTHING_HEADGEAR",
+            "modDir": [
+                "Prefabs/Characters/HeadGear"
+            ],
+            "include": [
+                "Hat_"
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        },
+        {
+            "id": "CLOTHING_UNIFORM",
+            "modDir": [
+                "Prefabs/Characters/Uniforms"
+            ],
+            "include": [
+                "_Denim",
+                "_Raincoat",
+                "_Fisherman",
+                "_Trousers",
+                "Shirt_",
+                "Jacket_Suit",
+                "Jacket_Pants"
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        },
+        {
+            "id": "FF_ITEMS_LOW",
+            "modDir": [
+                "Prefabs/Items"
+            ],
+            "include": [
+                "Backpack",
+                "Radio_",
+                "Tent_",
+                "Lockpick_",
+                "JWK_EpinephrineInjection"
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        },
+        {
+            "id": "FF_ITEMS_MID",
+            "modDir": [
+                "Prefabs/Items"
+            ],
+            "include": [
+                "Dogtags",
+                "Briefcase",
+                "CampingKit",
+                "KeysOld"
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        },
+        {
+            "id": "FF_ITEMS_HIGH",
+            "modDir": [
+                "Prefabs/Items"
+            ],
+            "include": [
+                "ShopProxy_Resource_Supplies"
+            ],
+            "exclude": [
+                "_Base"
+            ],
+            "items": []
+        }
+    ],
+    "akas": []
 }
