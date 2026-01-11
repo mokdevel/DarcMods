@@ -11,7 +11,7 @@
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
    sodipodi:docname="iconmission.svg"
    inkscape:export-batch-path="..\ExportedIcons"
-   inkscape:export-batch-name="icon"
+   inkscape:export-batch-name="gm_mission"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@
      inkscape:window-x="1072"
      inkscape:window-y="280"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" /><defs
+     inkscape:current-layer="g52" /><defs
      id="defs1"><inkscape:path-effect
        effect="fillet_chamfer"
        id="path-effect9"
@@ -54,9 +54,8 @@
      inkscape:groupmode="layer"
      id="layer14"
      inkscape:label="Grayback"
-     style="display:inline"
-     sodipodi:insensitive="true"><rect
-       style="display:inline;fill:#e1e1e1;fill-opacity:1;stroke:#ffffff;stroke-width:4.55824;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0"
+     style="display:inline"><rect
+       style="display:inline;fill:#7b7b7b;fill-opacity:1;stroke:#ffffff;stroke-width:4.55824;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0"
        id="rect7"
        width="793.72717"
        height="390.92194"
@@ -106,7 +105,7 @@
        id="g52"
        inkscape:label="Stash"
        style="display:inline"><rect
-         style="display:inline;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#ff0000;stroke-width:0;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+         style="display:none;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#ff0000;stroke-width:0;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
          id="rect11-8-2-2-6-4"
          width="36.668999"
          height="92.658508"
@@ -122,7 +121,7 @@
          y="312.18671"
          inkscape:label="sizebox_GM_UI"
          sodipodi:insensitive="true" /><circle
-         style="display:inline;fill:#ffffff;fill-opacity:0.672632;stroke:#ffffff;stroke-width:0;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none"
+         style="display:none;fill:#ffffff;fill-opacity:0.672632;stroke:#ffffff;stroke-width:0;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none"
          id="circle50"
          cx="136.30647"
          cy="345.56363"

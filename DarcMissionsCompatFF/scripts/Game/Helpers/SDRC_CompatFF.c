@@ -39,9 +39,9 @@ modded class SDRC_Compat
 		}				
 		
 		// as early as possible
-		EPF_PersistenceManager.GetInstance().GetOnStateChangeEvent().Insert(MyCallback);
+//		EPF_PersistenceManager.GetInstance().GetOnStateChangeEvent().Insert(MyCallback);
 		
-//		GetGame().GetCallqueue().CallLater(WaitForPlayers, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
+		GetGame().GetCallqueue().CallLater(WaitForPlayers, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
 //		GetGame().GetCallqueue().CallLater(Clear, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
 		
 		return true;
@@ -61,7 +61,7 @@ modded class SDRC_Compat
 	}		
 	
 	
-/*	//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
 	static void WaitForPlayers()
 	{
 		if (SDRC_PlayerHelper.PlayerCount() == 0)
@@ -71,7 +71,7 @@ modded class SDRC_Compat
 		}
 		
 		GetGame().GetCallqueue().CallLater(Clear, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
-	}*/
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	/*!

@@ -5,19 +5,27 @@ Three icons are needed:
 
 # Map icon: The one shown on map for a mission
 - Name: gm_mission_MissionName_map
+-- Prefix: gm_mission
+-- Suffix: map
 - Size: 54x110 with DPI 30
+(- Size: 64x131 with DPI 36 --- This could be the future size)
 - Color: Black
 
 # Round image for GM drop: The icon shown on the game master entity browser 
 - Name: gm_mission_MissionName_round
+-- Prefix: gm_mission
+-- Suffix: round
 - Hide grayball, location, sizebox
 - Size: 53x52 with DPI 30
+(- Size: 64x62 with DPI 36 --- This could be the future size)
 - Color: White 
 - In Gimp: 
 -- Invert color
 
 # UI image for GM view: The icon shown on the prefab and seen when dropped on the map by GM
 - Name: gm_mission_MissionName
+-- Prefix: gm_mission
+-- Suffix: N/A
 - Hide grayball
 - Size: 128x100 with DPI 30
 - Color: White
@@ -28,6 +36,8 @@ Three icons are needed:
 
 # Round image for win/lose
 - Name: gm_mission_XXX_round
+-- Prefix: gm_mission
+-- Suffix: round
 - Size: 53x52 with DPI 30
 - Color: White
 - In Gimp: 
@@ -36,6 +46,8 @@ Three icons are needed:
 
 # Other icons
 - Name: icon_IconName
+-- Prefix: icon
+-- Suffix: N/A
 - Size: 54x110 with DPI 30
 - Color: Black
 - In Gimp
@@ -44,5 +56,7 @@ Three icons are needed:
 
 # Difficulty Icon
 - Name: icon_diff_X_map (icon_[LAYER_NAME]_map)
+-- Prefix: icon
+-- Suffix: map
 - Size: 54x110 with DPI 9,6
 - Use export plugin - page, custom size, 54x110

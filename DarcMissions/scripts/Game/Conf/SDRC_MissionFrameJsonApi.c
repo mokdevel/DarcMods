@@ -34,9 +34,9 @@
 	#ifndef SDRC_RELEASE
 		private const int SDRC_MISSION_MIN_DISTANCE = 200;		
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
-		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 10;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 2;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 1;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -176,8 +176,8 @@ class SDRC_MissionFrameConfig : SDRC_Config
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-			enemyFactions = {"USSR"};
-//			enemyFactions = {"US"};
+//			enemyFactions = {"USSR"};
+			enemyFactions = {"US"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION"};
 //			enemyFactions = {"BALLIEN_BC_FACTION"};
@@ -186,7 +186,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			enemyFactions = {"RHS_ION"};
 //			enemyFactions = {"US","UK"};
 //			enemyFactions = {"UK"};
-//			enemyFactions = {"PLA"};
+//			enemyFactions = {"ChinesePLA"};
 //			enemyFactions = {"FIA", "US"};
 //			enemyFactions = {"USSR", "FIA", "FIA", "FIA"};
 //			enemyFactions = {"RHS_USAF", "RHS_AFRF"};
@@ -208,8 +208,8 @@ class SDRC_MissionFrameConfig : SDRC_Config
 				  2,  //10 - STASH
 				  -1,  //11 - CHOPPER
 			};
-//			missionDifficultyList = {0,1,2,3,4};
-			missionDifficultyList = {0,1};
+			missionDifficultyList = {0,1,2,3,4};
+//			missionDifficultyList = {0};
 		
 			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
@@ -223,10 +223,10 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
 		
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
+			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
-			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL};
@@ -255,10 +255,11 @@ class SDRC_MissionTypeConfig : Managed
 class SDRC_MissionDifficulty : Managed
 {
 	//easy, moderate, normal, tough, hard
-	ref array<float> aiCountCoef = 			{0.50, 0.60, 1.01, 1.80, 2.30};
-	ref array<float> aiSkillCoef = 			{0.20, 0.60, 1.01, 1.30, 1.60};
-	ref array<float> aiPerceptionCoef = 	{0.20, 0.60, 1.01, 1.30, 1.60};
-	ref array<float> lootChanceCoef = 		{0.50, 0.60, 1.01, 1.10, 1.20};	
-	ref array<float> lootCountCoef = 		{0.50, 0.70, 1.01, 1.51, 2.01};	
-	ref array<float> rewardCoef = 			{0.50, 0.70, 1.01, 2.01, 3.01};	
+	ref array<float> aiCountCoef = 			{0.50, 0.60, 1.0, 1.40, 1.80};
+	ref array<float> aiSkillCoef = 			{0.20, 0.60, 1.0, 1.30, 1.60};
+	ref array<float> aiPerceptionCoef = 	{0.20, 0.60, 1.0, 1.30, 1.60};
+	ref array<float> lootChanceCoef = 		{0.50, 0.60, 1.0, 1.10, 1.20};	
+	ref array<float> lootCountCoef = 		{0.50, 0.70, 1.0, 1.50, 2.00};	
+	ref array<float> rewardCoef = 			{0.50, 0.70, 1.0, 2.00, 3.00};	
+	ref array<float> qrfChance = 			{0.10, 0.15, 0.2, 0.25, 0.30};	
 }
