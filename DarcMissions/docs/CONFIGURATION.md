@@ -8,38 +8,38 @@ The mod is WIP so the files are getting version changes occasionally.
 
 ## Files
 Core has common configurations for mods. See:
-* [Core](./docs/CORE.md)
+* [Core](./CORE.md)
 
 The mission frame has the main definitions on mission spawn times, counts, etc. See:
-* [Mission Frame](./docs/MISSIONFRAME.md)
-* [Mission Frame Config](./docs/MISSIONCONFIG.md)
+* [Mission Frame](./MISSIONFRAME.md)
+* [Mission Frame Config](./MISSIONCONFIG.md)
 
 Missions are configurable via .json files. Each mission have their own configuration file, but some information is shared. There are:
-* [General parameters](./docs/P_COMMON.md) that are valid for all missions. 
-* [Camps](./docs/P_CAMP.md) is a common structure used in multiple missions.
+* [General parameters](./P_COMMON.md) that are valid for all missions. 
+* [Camps](./P_CAMP.md) is a common structure used in multiple missions.
 
 Mission specific parameters for each mission type: 
-* (1) [Hunter](./docs/MISSION_HUNTER.md)
-* (2) [Occupation](./docs/MISSION_OCCUPATION.md)
-* (3) [Convoy](./docs/MISSION_CONVOY.md)
-* (4) [Crashsite](./docs/MISSION_CRASHSITE.md)
-* (5) [Patrol](./docs/MISSION_PATROL.md)
-* (6) [Squatters](./docs/MISSION_SQUATTERS.md)
-* (7) [Roadblock](./docs/MISSION_ROADBLOCK.md)
-* (8) [HVT VIP](./docs/MISSION_HVTVIP.md)
-* (9) [HVT Item](./docs/MISSION_HVTITEM.md)
-* (10) [Stash](./docs/MISSION_STASH.md)
-* (11) [Chopper](./docs/MISSION_CHOPPER.md)
+* (1) [Hunter](./MISSION_HUNTER.md)
+* (2) [Occupation](./MISSION_OCCUPATION.md)
+* (3) [Convoy](./MISSION_CONVOY.md)
+* (4) [Crashsite](./MISSION_CRASHSITE.md)
+* (5) [Patrol](./MISSION_PATROL.md)
+* (6) [Squatters](./MISSION_SQUATTERS.md)
+* (7) [Roadblock](./MISSION_ROADBLOCK.md)
+* (8) [HVT VIP](./MISSION_HVTVIP.md)
+* (9) [HVT Item](./MISSION_HVTITEM.md)
+* (10) [Stash](./MISSION_STASH.md)
+* (11) [Chopper](./MISSION_CHOPPER.md)
 
 Other parameter details available:
-* [Lists](./docs/P_LISTS.md) for automatic loot and enemy lists
-* [Locations](./docs/P_LOCATIONS.md)
-* [Loot](./docs/P_LOOT.md)
-* [Non Valid Areas](./docs/NONVALIDAREAS.md) aka safe zones
-* [Structures](./docs/P_STRUCTURE.md)
-* [Buildings](./docs/P_BUILDING.md)
-* [Helicopters Crashing](./docs/P_HELICOPTER_CRASH.md)
-* [Helicopters Flying](./docs/P_HELICOPTER_FLY.md)
+* [Lists](./P_LISTS.md) for automatic loot and enemy lists
+* [Locations](./P_LOCATIONS.md)
+* [Loot](./P_LOOT.md)
+* [Non Valid Areas](./NONVALIDAREAS.md) aka safe zones
+* [Structures](./P_STRUCTURE.md)
+* [Buildings](./P_BUILDING.md)
+* [Helicopters Crashing](./P_HELICOPTER_CRASH.md)
+* [Helicopters Flying](./P_HELICOPTER_FLY.md)
 
 # Configuration files
 The configuration files will be under your ```profile\DarcMods\<subConfDir>```. The <subConfDir> is a name for the specific sub directory under DarcMods and can be changed in dc_coreConfig.json. The default directory will be called ```default```.
