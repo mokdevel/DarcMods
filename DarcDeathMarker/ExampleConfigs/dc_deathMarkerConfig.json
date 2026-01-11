@@ -1,6 +1,6 @@
 {
-	"version": 1,
-	"author": "darc",
-	"markerLifeTime": 600,
-	"visibleOnlyToFaction": false
+    "version": 1,
+    "author": "darc",
+    "markerLifeTime": 600,
+    "visibleOnlyToFaction": false
 }
