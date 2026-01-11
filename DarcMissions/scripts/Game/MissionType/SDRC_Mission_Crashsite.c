@@ -242,7 +242,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	//------------------------------------------------------------------------------------------------	
 	override void DoWin()
 	{	
-		SDRC_CampHelper.AddLoot(m_DC_Crashsite, GetDifficulty());
+		SDRC_CampHelper.AddCampLoot(m_DC_Crashsite, GetDifficulty());
 		super.DoWin();
 	}	
 	

@@ -158,13 +158,12 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		}
 		else
 		{
-			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuildingWithLoot(m_Building, m_DC_HvtVip.lootBox);
+			//IEntity entity = SDRC_MissionHelper.SpawnItemInBuildingWithLoot(m_Building, m_DC_HvtVip.lootBox);
+			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(m_Building, m_DC_HvtVip.lootBox);
 			if (entity)
 			{
 				m_EntityList.Insert(entity);
 				m_DC_HvtVip.loot.box = entity;
-				//Handle loot difficulty
-				m_DC_HvtVip.loot.itemChance = SDRC_MissionHelper.GetLootChance(m_DC_HvtVip.loot.itemChance, GetDifficulty());
 			}
 			else
 			{
@@ -196,7 +195,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	override void DoWin()
 	{	
 		SDRC_Loot loot = m_DC_HvtVip.loot;
-		SDRC_LootHelper.SpawnItemsToStorage(loot.box, loot.items, loot.itemChance, GetDifficulty());
+		SDRC_MissionHelper.AddLoot(loot.box, loot.items, loot.itemChance, GetDifficulty());
 		super.DoWin();
 	}
 	

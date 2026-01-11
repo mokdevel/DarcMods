@@ -276,6 +276,68 @@ class SDRC_MissionHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Spawn item in building (with loot)
+	\param building Target building
+	\param lootBox Container for loot
+	\param addLoot If true, add loot
+	\param loot list of items to spawn
+	\param looChance chance for each item to appear in the lootBox
+	*/	
+	static IEntity SpawnItemInBuildingWithLoot(IEntity building, string lootBox, bool addLoot = false, array<string> loot = null, float lootChance = 0, SDRC_EDifficulty difficulty = SDRC_EDifficulty.IGNORE)
+	{
+		float rotation = SDRC_Misc.RandomFloat(0, 360);
+		IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(building, lootBox, rotation, 2.0, false);
+		if (addLoot)
+		{
+			AddLoot(entity, loot, lootChance, difficulty);
+		}
+		
+		return entity;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Add loot to mission storage. Handles difficulty.
+	*/
+	static void AddLoot(IEntity storage, array<string> itemNames, float itemChance = 1.0, SDRC_EDifficulty difficulty = SDRC_EDifficulty.IGNORE)
+	{	
+		//Handle difficulty options
+		if ( (difficulty >= SDRC_EDifficulty.EASY) && (difficulty <= SDRC_EDifficulty.HARD) )
+		{
+			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+			if (baseGameMode)
+			{
+				float lootChanceCoef = baseGameMode.missionFrame.m_Config.missionDifficulty.lootChanceCoef[difficulty];
+				float lootCountCoef = baseGameMode.missionFrame.m_Config.missionDifficulty.lootCountCoef[difficulty];
+				
+				itemChance = Math.Clamp(itemChance * lootChanceCoef, 0, 1.0);
+				
+				int itemCount = Math.Round(itemNames.Count() * lootCountCoef);
+				itemCount = Math.ClampInt(itemCount, 1, 10000);
+				
+				//Spawn always one item so that players know the mission loot worked
+				if (itemCount == 1)
+				{
+					itemChance = 1.0;
+				}
+				
+				//If more items are expected, add them to the list
+				int diff = itemCount - itemNames.Count();
+				if (diff > 0)
+				{
+					for (int i = 0; i < diff; i++)
+					{
+						itemNames.Insert(itemNames.GetRandomElement());
+					}
+				}
+			}						
+		}
+		
+		SDRC_LootHelper.SpawnItemsToStorage(storage, itemNames, itemChance);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Spawn a mission AI group to given position making sure it's empty. 
 	NOTE: Position is not exact
 	*/
@@ -391,7 +453,7 @@ class SDRC_MissionHelper
 	/*! 
 	Recalculate loot spawn chance according to difficulty
 	*/	
-	static float GetLootChance(float chance, SDRC_EDifficulty difficulty = SDRC_EDifficulty.NORMAL)
+/*	static float GetLootChance(float chance, SDRC_EDifficulty difficulty = SDRC_EDifficulty.NORMAL)
 	{
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
@@ -400,7 +462,7 @@ class SDRC_MissionHelper
 			chance = chance * coef;
 		}		
 		return chance;		
-	}		
+	}	*/	
 
 	//------------------------------------------------------------------------------------------------
 	/*!

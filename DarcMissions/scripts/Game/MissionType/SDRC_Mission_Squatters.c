@@ -165,13 +165,11 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		}
 		else
 		{
-			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuildingWithLoot(m_Building, m_DC_Squatter.lootBox);			
+			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(m_Building, m_DC_Squatter.lootBox);
 			if (entity)
 			{
 				m_EntityList.Insert(entity);
 				m_DC_Squatter.loot.box = entity;
-				//Handle loot difficulty
-				m_DC_Squatter.loot.itemChance = SDRC_MissionHelper.GetLootChance(m_DC_Squatter.loot.itemChance, GetDifficulty());				
 			}
 			else
 			{
@@ -186,7 +184,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	override void DoWin()
 	{	
 		ref SDRC_Loot loot = m_DC_Squatter.loot;
-		SDRC_LootHelper.SpawnItemsToStorage(loot.box, loot.items, loot.itemChance, GetDifficulty());
+		SDRC_MissionHelper.AddLoot(loot.box, loot.items, loot.itemChance, GetDifficulty());
 		super.DoWin();
 	}
 }

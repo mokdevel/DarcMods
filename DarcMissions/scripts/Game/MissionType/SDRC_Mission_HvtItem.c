@@ -138,7 +138,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	//------------------------------------------------------------------------------------------------	
 	override void DoWin()
 	{	
-		SDRC_CampHelper.AddLoot(m_DC_HvtItem, GetDifficulty());
+		SDRC_CampHelper.AddCampLoot(m_DC_HvtItem, GetDifficulty());
 		super.DoWin();
 	}
 	

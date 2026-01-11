@@ -273,10 +273,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		if (m_DC_Convoy.loot)			
 		{
 			m_DC_Convoy.loot.box = m_Vehicle;
-			//Handle loot difficulty
-			m_DC_Convoy.loot.itemChance = SDRC_MissionHelper.GetLootChance(m_DC_Convoy.loot.itemChance, GetDifficulty());
-
-			SDRC_LootHelper.SpawnItemsToStorage(m_DC_Convoy.loot.box, m_DC_Convoy.loot.items, m_DC_Convoy.loot.itemChance, GetDifficulty());
+			SDRC_MissionHelper.AddLoot(m_DC_Convoy.loot.box, m_DC_Convoy.loot.items, m_DC_Convoy.loot.itemChance, GetDifficulty());
 			SDRC_Log.Add("[SDRC_Mission_Convoy:DoWin] " +  GetId() + " : Loot added.", LogLevel.DEBUG);								
 		}		
 		super.DoWin();

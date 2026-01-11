@@ -197,27 +197,6 @@ class SDRC_SpawnHelper
 		
 		return outpos;
 	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Spawn item in building (with loot)
-	\param building Target building
-	\param lootBox Container for loot
-	\param addLoot If true, add loot
-	\param loot list of items to spawn
-	\param looChance chance for each item to appear in the lootBox
-	*/	
-	static IEntity SpawnItemInBuildingWithLoot(IEntity building, string lootBox, bool addLoot = false, array<string> loot = null, float lootChance = 0, SDRC_EDifficulty difficulty = SDRC_EDifficulty.IGNORE)
-	{
-		float rotation = SDRC_Misc.RandomFloat(0, 360);
-		IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(building, lootBox, rotation, 2.0, false);
-		if (addLoot)
-		{
-			SDRC_LootHelper.SpawnItemsToStorage(entity, loot, lootChance, difficulty);
-		}
-		
-		return entity;
-	}
 		
 	//------------------------------------------------------------------------------------------------
 	/*!

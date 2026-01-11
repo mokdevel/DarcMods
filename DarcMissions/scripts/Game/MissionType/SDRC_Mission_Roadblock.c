@@ -180,7 +180,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	//------------------------------------------------------------------------------------------------	
 	override void DoWin()
 	{	
-		SDRC_CampHelper.AddLoot(m_DC_Roadblock, GetDifficulty());
+		SDRC_CampHelper.AddCampLoot(m_DC_Roadblock, GetDifficulty());
 		super.DoWin();
 	}	
 }

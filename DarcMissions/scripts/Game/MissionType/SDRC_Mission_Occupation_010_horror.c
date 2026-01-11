@@ -32,7 +32,7 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 //		missionList = {10, 11, 12};		
-		missionList = {11, 12};				
+		missionList = {10};				
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Clear();
@@ -46,7 +46,7 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		occupation.general.Set(
-			10, "index 10: Zombies and Demons.",
+			10, "index 10: Zombie and Demon characters.",
 			{"0 0 0"}, 3,
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
@@ -65,7 +65,8 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 		);
 		occupation.ai.Set(
 			{1, 8},
-			{//"C_DEMON", "C_DEMON_BOSS"
+			{
+			 "C_DEMON", "C_DEMON_BOSS",
 			 "C_BEASTS", //"C_BEASTS", "C_BEASTS", "C_BEASTS", "C_BEASTS", "C_BEASTS", "C_BEASTS", 
 			},
 			50, 1.0,
@@ -101,7 +102,8 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 		);
 		occupation.ai.Set(
 			{1, 4},
-			{"G_ZOMBIE_SMALL", "G_ZOMBIE_MEDIUM", "G_ZOMBIE_LARGE"
+			{
+			 "G_ZOMBIE_SMALL", "G_ZOMBIE_MEDIUM", "G_ZOMBIE_LARGE"
 			},
 			50, 0.3,
 			{50, 300},
@@ -137,7 +139,8 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 		);
 		occupation.ai.Set(
 			{1, 4},
-			{"G_ZOMBIE_SMALL", "G_ZOMBIE_MEDIUM", "G_ZOMBIE_LARGE"
+			{
+			 "G_ZOMBIE_SMALL", "G_ZOMBIE_MEDIUM", "G_ZOMBIE_LARGE"
 			},
 			50, 0.3,
 			{50, 300},

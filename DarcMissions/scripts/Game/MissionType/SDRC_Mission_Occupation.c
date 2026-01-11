@@ -127,7 +127,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	//------------------------------------------------------------------------------------------------	
 	override void DoWin()
 	{	
-		SDRC_CampHelper.AddLoot(m_DC_Occupation, GetDifficulty());
+		SDRC_CampHelper.AddCampLoot(m_DC_Occupation, GetDifficulty());
 		super.DoWin();
 	}
 }
@@ -202,7 +202,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		missionList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
-		missionFiles.Insert("dc_missionConfig_Occupation_010_horror.json");
+//		missionFiles.Insert("dc_missionConfig_Occupation_010_horror.json");
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Insert(Occupation0());

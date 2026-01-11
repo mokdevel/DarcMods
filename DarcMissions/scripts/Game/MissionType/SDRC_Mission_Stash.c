@@ -130,7 +130,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 	//------------------------------------------------------------------------------------------------	
 	override void DoWin()
 	{	
-		SDRC_CampHelper.AddLoot(m_DC_Stash, GetDifficulty());
+		SDRC_CampHelper.AddCampLoot(m_DC_Stash, GetDifficulty());
 		super.DoWin();
 	}
 }

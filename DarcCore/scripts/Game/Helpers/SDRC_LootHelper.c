@@ -46,33 +46,9 @@ sealed class SDRC_LootHelper
 	\param itemNames An array of resource names
 	\param chance The percentage each item may be spawned. 1.0 = 100% so everything is spawned.
 	*/
-	static void SpawnItemsToStorage(IEntity storage, array<string> itemNames, float itemChance = 1.0, SDRC_EDifficulty difficulty = SDRC_EDifficulty.IGNORE)
+//	static void SpawnItemsToStorage(IEntity storage, array<string> itemNames, float itemChance = 1.0, SDRC_EDifficulty difficulty = SDRC_EDifficulty.IGNORE)
+	static void SpawnItemsToStorage(IEntity storage, array<string> itemNames, float itemChance = 1.0)
 	{
-		//Handle difficulty options
-		if ( (difficulty >= SDRC_EDifficulty.EASY) && (difficulty <= SDRC_EDifficulty.HARD) )
-		{
-			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
-			if (baseGameMode)
-			{
-				float lootChanceCoef = baseGameMode.missionFrame.m_Config.missionDifficulty.lootChanceCoef[difficulty];
-				float lootCountCoef = baseGameMode.missionFrame.m_Config.missionDifficulty.lootCountCoef[difficulty];
-				
-				itemChance = Math.Clamp(itemChance * lootChanceCoef, 0, 1.0);
-				
-				int itemCount = Math.Round(itemNames.Count() * lootCountCoef);
-				itemCount = Math.ClampInt(itemCount, 0, 10000);
-				
-				int diff = itemCount - itemNames.Count();
-				if (diff > 0)
-				{
-					for (int i = 0; i < diff; i++)
-					{
-						itemNames.Insert(itemNames.GetRandomElement());
-					}
-				}
-			}						
-		}
-		
 		SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Storage: " + storage, LogLevel.SPAM);
 		SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Items: " + itemNames, LogLevel.SPAM);
 		SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Chance: " + itemChance, LogLevel.SPAM);
