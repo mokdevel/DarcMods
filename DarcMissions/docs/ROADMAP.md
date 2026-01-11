@@ -5,8 +5,6 @@ This is a list of planned without and ETA. Just as a teaser and list of things f
 * Fix the persistency issue of mission items saved to various game modes. Mission items should be temporary and disappear when a server reboots.
 
 ## Next release
-* Helipatrols mission:
-  * Possibly Hunter mission to spawn if player is seen.
 * Json files planned to be compatible.
 
 ## Next major release

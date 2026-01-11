@@ -17,19 +17,7 @@ Main features:
 * Refactored the json loading/saving. Better looking jsons and provides capability for error checking. 
 * Support for Chinese People's Liberation Army (PLA) faction.
 * Mission difficulty settings enabled for all missions. Mission difficulty is shown on the marker. See documentation for details.
-** https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md#difficulty
-
-Chopper mission:
-* New sub-mission: Helicopter recon. If you're seen, Hunters will be sent after you.
-* New sub-mission: Helicopter recon. If you're seen, Hunters will be sent after you.
-* Support for helicopters from mods below. In case the mods are not available, missions revert back to vanilla helicopters.
-** https://reforger.armaplatform.com/workshop/672F2BB6523FBA29-WZHelisforDarcMissions
-** https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcMissions
-** https://reforger.armaplatform.com/workshop/6850D5F667CEFF94-AH-6MforDarcMissions
-** https://reforger.armaplatform.com/workshop/684F3C94BD457F85-KA-52forDarcMissions
-
-HvtItem mission:
-* Two new sub-mission: Soup kitchen and Radar
+  * https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md#difficulty
 
 Changes:
 * Support for Warrior Cultist and Kamikaze Cultist in ``BALLIEN_BC_FACTION``.
@@ -39,6 +27,18 @@ Changes:
   * Added ``showMissionDifficulty`` : Show/hide static mission difficult on markers.
   * Added ``missionDifficultyList`` : List of difficulty values from which missions select their value.
   * Added ``rewardCoef`` : Reward multiplier for difficulty level.
+  
+Chopper mission:
+* New sub-mission: Helicopter recon. If you're seen, Hunters will be sent after you.
+* New sub-mission: Helicopter recon. If you're seen, Hunters will be sent after you.
+* Support for helicopters from compatibility mods below. In case the mods are not available, missions revert back to vanilla helicopters.
+  * https://reforger.armaplatform.com/workshop/672F2BB6523FBA29-WZHelisforDarcMissions
+  * https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcMissions
+  * https://reforger.armaplatform.com/workshop/6850D5F667CEFF94-AH-6MforDarcMissions
+  * https://reforger.armaplatform.com/workshop/684F3C94BD457F85-KA-52forDarcMissions
+
+HvtItem mission:
+* Two new sub-mission: Soup kitchen and Radar
 
 ## 20251222
 Changed jsons - remove the files to receive updated ones.

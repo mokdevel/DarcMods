@@ -26,6 +26,8 @@ int minDistanceToMission : Distance to another mission. Two missions shall not b
 int minDistanceToPlayer : Mission shall not spawn too close to a player.
 bool showStaticMissionMarker : Show/hide static mission markers. This will override any mission specific settings.
 bool showDynamicMissionMarker : Show/hide dynamic mission markers. This will override any mission specific showMarker settings.
+bool showMissionDifficulty : Show/hide mission difficulty on marker
+bool showMissionTimeLeft : Show/hide mission time left on marker click
 array<string> enemyFactions : The array of factions to consider as enemies. "USSR" by default. 
   You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission.
   Example: "enemyFactions": ["FIA", "USSR", "USSR"] - 33% missions are with FIA, 66% with USSR
@@ -81,7 +83,7 @@ Difficulty setting that affects mission AI behaviour and loot reward. There are 
  4 = HARD : A lot of dangerous enemies with high amount of loot.
 ```
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/icon_difficulty.png" width=30% height=30%>
-Difficulty is represented on the mission icon. The left icon is ``EASY`` and ``HARD`` is on the right.
+Difficulty is represented on the mission icon. The left icon is ``EASY`` and ``HARD`` is on the right. The information can be shown/hidden with ``showMissionDifficulty`` parameter.
 
 ### SDRC_MissionDifficulty
 Difficulty affects various aspects of the missions. Each 'coef' has five values that refer to the different difficulty level. 
