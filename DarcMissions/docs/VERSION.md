@@ -1,21 +1,24 @@
-
-
 # Version history
 
 ## WIP 
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+
+..empty..
+
+## 20260111
 Changed jsons - remove the files to receive updated ones.
 * dc_missionConfig.json (version update)
 * dc_missionConfig_Chopper.json (new sub-missions)
 * dc_missionConfig_HvtItem.json (new sub-missions)
+* dc_enemyList.json (support for new Ballien Creatures)
 
 Recommendation: For mission difficulty settings to take effect, delete all your mission configurations dc_missionConfig_*.json . No need to delete in case you are happy with NORMAL difficulty.
 
 Main features:
 * Refactored the json loading/saving. Better looking jsons and provides capability for error checking. 
-* Support for Chinese People's Liberation Army (PLA) faction.
+* Support for Chinese People's Liberation Army (PLA) faction. Use ``ChinesePLA`` as the faction.
 * Mission difficulty settings enabled for all missions. Mission difficulty is shown on the marker. See documentation for details.
   * https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md#difficulty
 
@@ -27,10 +30,11 @@ Changes:
   * Added ``showMissionDifficulty`` : Show/hide static mission difficult on markers.
   * Added ``missionDifficultyList`` : List of difficulty values from which missions select their value.
   * Added ``rewardCoef`` : Reward multiplier for difficulty level.
+  * Added ``qrfChance`` : WIP, CURRENTLY DOES NOTHING
   
 Chopper mission:
 * New sub-mission: Helicopter recon. If you're seen, Hunters will be sent after you.
-* New sub-mission: Helicopter recon. If you're seen, Hunters will be sent after you.
+* New sub-mission: Helicopter patrol. Helicopter will be patroling an area.
 * Support for helicopters from compatibility mods below. In case the mods are not available, missions revert back to vanilla helicopters.
   * https://reforger.armaplatform.com/workshop/672F2BB6523FBA29-WZHelisforDarcMissions
   * https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcMissions

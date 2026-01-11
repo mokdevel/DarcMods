@@ -58,7 +58,7 @@ SDRC_MissionTypeConfig missionDynamic : Dynamic missions configurations.
 SDRC_MissionTypeConfig missionStatic : Static missions configurations.
 ```
 ## Factions
-The supported factions are listed below
+The mission faction is defined in ``enemyFactions`` or individually per sub-mission. The supported factions are listed below.
 * ``US, USSR, FIA`` : Vanilla factions from Arma Reforger
 * ``RHS_USAF, RHS_AFRF``: RHS - [MOD](https://reforger.armaplatform.com/workshop/595F2BF2F44836FB-RHS-StatusQuo)
 * ``MEI`` : Middle East Insurgents - [MOD](https://reforger.armaplatform.com/workshop/64CEC8E005828E5D-MiddleEastInsurgents)
@@ -66,7 +66,7 @@ The supported factions are listed below
 * ``BALLIEN_BC_FACTION`` : Ballien Creatures - [MOD](https://reforger.armaplatform.com/workshop/6534B9CEB6D12EE7-BallienCreatures)
 * ``BACON_622120A5448725E3_FACTION`` : Bacon Zombies - [MOD](https://reforger.armaplatform.com/workshop/622120A5448725E3-BaconZombies)
 * ``PLASTICBANDIT`` : Bandit Faction - [MOD](https://reforger.armaplatform.com/workshop/66C4458756B32594-BanditFaction)
-* ``PLA`` : Chinese People's Liberation Army - [MOD](https://reforger.armaplatform.com/workshop/60A6507633AB1954-ChinesePLA)
+* ``ChinesePLA`` : Chinese People's Liberation Army - [MOD](https://reforger.armaplatform.com/workshop/60A6507633AB1954-ChinesePLA)
 
 Unsupported values
 * ``RHS_ION``
@@ -93,6 +93,7 @@ Difficulty affects various aspects of the missions. Each 'coef' has five values 
 * ``lootChanceCoef`` : The multiplier used to modify the loot chance. For each item on the lootlist, the chance is tested.
 * ``lootCountCoef`` : The multiplier used to modify the loot amount. When loot is spawned, the list provided is used. If this value increases the total, amount of items in the lootlist, additional items are added to the list from the original list.
 * ``rewardCoef`` : The multiplier used to modify the reward amount. Reward refers to ``xp`` variable in missions. Currently only Freedom Fighters is providing reward
+* ``qrfChance`` : Chance to get a QRF (Quick Reaction Force) to your location. **WIP, CURRENTLY DOES NOTHING**
 ```
 array<float> aiCountCoef =      {0.50, 0.60, 1.01, 1.40, 2.10};
 array<float> aiSkillCoef =      {0.20, 0.60, 1.01, 1.30, 1.60};
@@ -100,6 +101,7 @@ array<float> aiPerceptionCoef = {0.20, 0.60, 1.01, 1.30, 1.60};
 array<float> lootChanceCoef =   {0.50, 0.60, 1.01, 1.10, 1.20};	
 array<float> lootCountCoef =    {0.50, 0.70, 1.01, 1.51, 2.01};	
 array<float> rewardCoef =       {0.50, 0.70, 1.01, 2.01, 3.01};	
+array<float> qrfChance =        {0.10, 0.15, 0.20, 0.25, 0.30}; //**WIP**
 ```
 
 ### SDRC_MissionTypeConfig
