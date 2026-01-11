@@ -19,7 +19,7 @@ In the configuration you can define missions either as a dynamic mission (```mis
 
 * Dynamic missions will spawn on steady pace. The ``activeTime`` should be relatively short so that the missions despawn and new ones are brought to players. Note that no dynamic missions, including GM requested ones, will spawn if static missions are still spawning.
 
-## Requested mossions
+## Requested missions
 GM can drop in more missions to the map. These are dynamic missions and will add to the total of dynamic missions. Requested missions do not respect the mission limits soy ou can spawn missions as a GM even if you have reached the maximum count of dynamic missions. GM requested missions are spawned with a higher priority compared to normal dynamic missions. If you set both static and dynamic missions to zero, only GM spawned missions will spawn.
 
 Requested missions do not check if a mission position is valid. You can overload an area with multiple missions if that is wanted.
@@ -34,7 +34,12 @@ Available win conditions:
   3 = AI_KILL_50      : 50%
   4 = AI_KILL_RANDOM  : 30%-100% of AIs to kill. This is set randomly when mission starts.
   5-9: RESERVED       : Reserved for future use
-  10 = HVT_KILL_VIP   : Kill the target VIP - shall be used only with HVTVIP mission.
+  10 = HVT_KILL_VIP   : Kill the target VIP. Shall be used only with HVTVIP mission.
+  20 = HVT_DESTROY_ITEM : Destroy mission target. Even if you kill all AI, mission will not be a win. Shall be used only with HVTITEM mission.
+  30 = FIND_IN_15     : Reach the mission location within 15 minutes to populate the loot.
+  31 = FIND_IN_30     : .. 30 minutes .. 
+  32 = FIND_IN_45     : .. 45 minutes .. 
+  33 = FIND_IN_60     : .. 60 minutes .. 
 ```
 
 ## MissionFrame cycle
