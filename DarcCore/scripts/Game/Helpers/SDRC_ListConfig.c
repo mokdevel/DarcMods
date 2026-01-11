@@ -53,9 +53,23 @@ class SDRC_ListConfig : SDRC_Config
 		
 		foreach (SDRC_List list : lists)
 		{
+			//Add with normal add
 			foreach (string mod : modList)
 			{
 				SDRC_Resources.GetList(list.items, mod, list);
+			}
+			
+			foreach (string res : list.include)
+			{
+				//If the item in include is a resourcename, check if it exists and add
+				if (res[0] == "{")
+				{
+					Resource resource = Resource.Load(res);
+					if (resource.IsValid())
+					{
+						list.items.Insert(res);
+					}					
+				}				
 			}
 			
 			if (SDRC_Log.GetLogLevel() > DC_LogLevel.NORMAL)

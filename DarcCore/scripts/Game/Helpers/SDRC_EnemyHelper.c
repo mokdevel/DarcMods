@@ -114,7 +114,8 @@ sealed class SDRC_EnemyHelper
 					//Collect factions found
 					foreach(ResourceName enemy : list.items)
 					{
-						if (enemy.Contains("_" + factionToTest + "_"))
+//						if (enemy.Contains("_" + factionToTest + "_"))
+						if ( (enemy.Contains("_" + factionToTest + "_")) || (enemy.Contains("_" + factionToTest + ".")) )
 						{
 							if (!factionsFound.Contains(faction))
 							{
@@ -224,10 +225,16 @@ sealed class SDRC_EnemyHelper
 		{
 			foreach(string fac : factions)
 			{
-//				if (enemy.Contains("_" + fac + "_"))	//This checks for _US_
-				if (enemy.Contains(fac + "_"))			//This checks for US_. TBD: Not sure if this creates issues.
+//				if (enemy.Contains("_" + fac + "_"))	//This checks for "_US_"
+				if (enemy.Contains(fac + "_"))			//This checks for "US_".
 				{
 					enemyList.Insert(enemy);
+					continue;
+				}
+				if (enemy.Contains("_" + fac + "."))	//This checks for "_US.". Typically this is not the case, but there are some mods like Ballien Creatures where the naming is different.
+				{
+					enemyList.Insert(enemy);
+					continue;
 				}
 			}
 		}

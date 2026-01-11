@@ -79,7 +79,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 		akas.Insert(aka05);
 
 		SDRC_Aka aka06 = new SDRC_Aka();
-		aka06.names = {"PLA", "PLAGF", "PLAAF"};
+		aka06.names = {"ChinesePLA", "PLAGF", "PLAAF"};
 		akas.Insert(aka06);
 												
 		lists.Insert(enemyList00());
@@ -294,8 +294,9 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters", },
 			{"Rifleman", "Sapper", "_PL", "_SL",
 			 "Zombie_CIV", "Zombie_FIA", "Zombie_US", "Zombie_USSR", 	//Bacon Zombies
-			 "Civilian_Cultist", 										//Ballien Cultists
 			 "Scav_Rookie", "Stalker_Rookie",							//Bandit faction
+			 "Civilian_Cultist", 										//Ballien Cultists
+			 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_1.et",	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -311,8 +312,9 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters", },
 			{"_GL", "_MG", "Grenadier", "_Ammo", "_LMG",
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
-			 "Civilian_Cultist", 							//Ballien Cultists
 			 "Scav_Gopnik", "Stalker_Rookie", "Scav_Brute", //Bandit faction			
+			 "Civilian_Cultist", 							//Ballien Cultists
+			 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_2.et",	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -329,8 +331,9 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{"Scout", "Spotter", "_RTO", "_SL", "_GL",
 			 "_AG1", //MEI		
 			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies
-			 "Civilian_Cultist", 							//Ballien Cultists
 			 "Scav_Veteran", "Stalker_Veteran",				//Bandit faction			
+			 "Civilian_Cultist", 							//Ballien Cultists
+			 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et",	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -347,8 +350,9 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{"_Officer", "Sergeant", "_AC", 
 			 "_Leader", //MEI
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
-			 "Warrior_Cultist", 							//Ballien Cultists
 			 "Scav_Veteran", "Stalker_Veteran",				//Bandit faction			
+			 "Warrior_Cultist", 							//Ballien Cultists
+			 "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et",	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -365,8 +369,9 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{"Crew", "Pilot", "_CC",
 			 "MEI_Leader", //MEI
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
-			 "Civilian_Cultist", 							//Ballien Cultists
 			 "Scav_Veteran", "Stalker_Veteran",				//Bandit faction			
+			 "Civilian_Cultist", 							//Ballien Cultists
+			 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et",	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -382,8 +387,9 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters", },
 			{"Sniper", "Sharpshooter",
 			 "Exploder", 									//Bacon Zombies			
-			 "Kamikaze_Cultist",							//Ballien Cultists
 			 "Stalker_Shadow", "Stalker_Legend",			//Bandit faction			
+			 "Kamikaze_Cultist",							//Ballien Cultists
+			 "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et",	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -399,8 +405,9 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters", },
 			{"_AAT", "_AT", "_AT", "_LAT",
 			 "Exploder", 									//Bacon Zombies			
-			 "Warrior_Cultist", 							//Ballien Cultists
 			 "Scav_Brute", 									//Bandit faction			
+			 "Warrior_Cultist", 							//Ballien Cultists
+			 "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et",	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -416,8 +423,9 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{"Prefabs/Characters/Factions", "622120A5448725E3/Prefabs/Characters", },
 			{"Medic",
 			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies
-			 "Civilian_Cultist", 							//Ballien Cultists
 			 "Scav_Veteran", "Stalker_Veteran",				//Bandit faction						
+			 "Civilian_Cultist", 							//Ballien Cultists
+			 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_2.et",	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -436,9 +444,10 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "MEI_Rifleman1", 								//MEI
 			 "Zombie_Military_ALL", "Military_Pistol_ALL",	//Bacon Zombies			
 			 "Exploder", "Heavy_Tank", 						//Bacon Zombies			
-			 "Kamikaze_Cultist",							//Ballien Cultists
 			 "Stalker_Shadow", "Stalker_Legend",			//Bandit faction						
 			 "PLAGF_Scout_RTO",								//PLA
+			 "Kamikaze_Cultist",							//Ballien Cultists
+			 "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et",	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -517,10 +526,10 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_DEMON",
-			{"Prefabs/Characters", "Beasts"},
+			{"Prefabs/Characters", "Beasts"},				//NOTE: Here we have upper level Prefabs/Characters as filter
 			{
 			 "ShadowTwin", "Whisper", 
-			 "Kamikaze_Cultist",				//Ballien
+			 "Kamikaze_Cultist",							//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -533,11 +542,11 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_DEMON_BOSS",
-			{"Prefabs/Characters", "Beasts"},
+			{"Prefabs/Characters", "Beasts"},				//NOTE: Here we have upper level Prefabs/Characters as filter
 			{
 			 "Stalker Heavy", "Zombie_Heavy",
 			 "character_115_dupe", "character_115_pump", "character_115_skel.",
-			 "Warrior_Cultist", 				//Ballien
+			 "Warrior_Cultist", 							//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -550,10 +559,11 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_BEASTS",
-			{"Prefabs/Characters", "Beasts"},
+			{"Prefabs/Characters", "Beasts"},				//NOTE: Here we have upper level Prefabs/Characters as filter
 			{
-			 "GhoulHeavy", "PumpkinHead", "Skeleton", //"TreeDemon",
+			 "GhoulHeavy", "PumpkinHead", "Skeleton", 		//"TreeDemon",
 			 "Whisper", 
+			 "Warrior_Cultist", 							//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
