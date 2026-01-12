@@ -69,22 +69,22 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Convoy.general.pos, m_DC_Convoy.general.size, m_DC_Convoy.general.locationTypes);
 		}
 
+		//Find nearest road
+		SDRC_RoadPos roadPosStart = new SDRC_RoadPos();				
+		pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPosStart, pos, 1000);
+		
 		//If pos has been set, we blindly accept it. Do basic checking for pos.
 		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: IsRequested()) != SDRC_EMissionError.NONE)
 		{
 			pos = "0 0 0";
 		}
 
-		//If failed, stop
+/*		//If failed, stop
 		if (pos == "0 0 0")	//No suitable location found.
 		{				
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
-		}	
-		
-		//Find nearest road
-		SDRC_RoadPos roadPosStart = new SDRC_RoadPos();				
-		pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPosStart, pos, 1000);
+		}	*/
 		
 		//If failed, stop
 		if (pos == "0 0 0")

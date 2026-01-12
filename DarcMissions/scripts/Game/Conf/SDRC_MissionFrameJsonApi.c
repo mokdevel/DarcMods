@@ -10,7 +10,7 @@
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 10;								//Default amount of dynamic missions to run
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 1.5;
 		private const int SDRC_MISSION_COUNT_STATIC = 6;								//Default amount of static missions to run
-		private const float SDRC_MISSION_COUNT_STATIC_MUL = 1;
+		private const float SDRC_MISSION_COUNT_STATIC_MUL = 1.1;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 30;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 1*60;							//Time to wait before spawning the first mission (seconds)
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 8*60;			//Minimum delay between dynamic missions. 
@@ -34,7 +34,7 @@
 	#ifndef SDRC_RELEASE
 		private const int SDRC_MISSION_MIN_DISTANCE = 200;		
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
-		private const int SDRC_MISSION_COUNT_DYNAMIC = 10;//10;//3;//3;//8;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
 		private const int SDRC_MISSION_COUNT_STATIC = 1;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
@@ -177,7 +177,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 
 		#ifndef SDRC_RELEASE				
 //			enemyFactions = {"USSR"};
-			enemyFactions = {"US"};
+//			enemyFactions = {"US"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION"};
 //			enemyFactions = {"BALLIEN_BC_FACTION"};
@@ -187,6 +187,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			enemyFactions = {"US","UK"};
 //			enemyFactions = {"UK"};
 //			enemyFactions = {"ChinesePLA"};
+			enemyFactions = {"JSDF_RAS"};
 //			enemyFactions = {"FIA", "US"};
 //			enemyFactions = {"USSR", "FIA", "FIA", "FIA"};
 //			enemyFactions = {"RHS_USAF", "RHS_AFRF"};

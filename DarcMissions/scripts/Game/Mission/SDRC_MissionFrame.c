@@ -59,7 +59,7 @@ class SDRC_MissionFrame
 
 		if ( (!successFrame) || (!successNoNValid) )
 		{
-			SDRC_Log.Add("[SDRC_MissionFrame] ****** Could not initialize DarcMissions. Check your logs. ******", LogLevel.ERROR);
+			ShowFailure();
 			return;
 		}		
 				
@@ -153,6 +153,10 @@ class SDRC_MissionFrame
 	*/	
 	protected void MissionCycleManager()
 	{		
+		#ifndef SDRC_RELEASE
+//			SDRC_DevHelper.TestMissionPositions();
+		#endif	
+		
 		ref SDRC_Mission tmpDC_Mission = null;
 		SDRC_EMissionType missionType = null;
 		bool staticMissionSpawned = false;
@@ -541,4 +545,14 @@ class SDRC_MissionFrame
 		
 		return idx;
 	}			
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find mission index with mission id
+	*/		
+	protected void ShowFailure()
+	{		
+		SDRC_Log.Add("[SDRC_MissionFrame] ****** Could not initialize DarcMissions. Check your logs. ******", LogLevel.ERROR);
+		GetGame().GetCallqueue().CallLater(ShowFailure, 10000, false);
+	}	
 }

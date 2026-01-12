@@ -11,7 +11,7 @@ sealed class SDRC_DevHelper
 	static void SDRC_DevDump()	
 	{
 //		GetGame().GetCallqueue().CallLater(ShowTestMessage, 2000, true);
-		SDRC_MapMarkerHelper.CreateMapMarker("0300 0 1400", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
+/*		SDRC_MapMarkerHelper.CreateMapMarker("0300 0 1400", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
 		SDRC_MapMarkerHelper.CreateMapMarker("0300 0 1400", SDRC_EMissionIconDifficulty.ICON_DIFF_0, "", "*", markerTypeString : "DARC_MISSION_DIFFICULTY");
 		SDRC_MapMarkerHelper.CreateMapMarker("0400 0 1400", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
 		SDRC_MapMarkerHelper.CreateMapMarker("0400 0 1400", SDRC_EMissionIconDifficulty.ICON_DIFF_1, "", "**", markerTypeString : "DARC_MISSION_DIFFICULTY");
@@ -52,12 +52,7 @@ sealed class SDRC_DevHelper
 		SDRC_MapMarkerHelper.CreateMapMarker("2800 0 1000", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, "DMC_B", "Chopper");
 		SDRC_MapMarkerHelper.CreateMapMarker("2900 0 1000", SDRC_EMissionIcon.GM_MISSION_CAR_SIDE_MAP, "DMC_B", "Car side");
 		SDRC_MapMarkerHelper.CreateMapMarker("3000 0 1000", SDRC_EMissionIcon.GM_MISSION_MEDAL_MAP, "DMC_B", "Medal");
-	
-/*			for (int i = 0;i < 250; i++)
-			{
-				vector pos = SDRC_Misc.GetRandomWorldPos();
-				SDRC_SpawnHelper.FindEmptyPos(pos, 300, 50);			
-			}*/
+*/
 		
 //			vector pos = "4600 0 6100";
 //			SDRC_SpawnHelper.FindEmptyPos(pos, 300, 60);			
@@ -83,6 +78,24 @@ sealed class SDRC_DevHelper
 //		SpawnTestMission();	
 	}
 
+	//------------------------------------------------------------------------------------------------
+	static void TestMissionPositions()
+	{
+		for (int i = 0;i < 250; i++)
+		{
+			vector pos = SDRC_Misc.GetRandomWorldPos();
+			SDRC_SpawnHelper.FindEmptyPos(pos, 300, 10);			
+			
+			if (pos != "0 0 0")
+			{
+				//If pos has been set, we blindly accept it. Do basic checking for pos.
+				if (SDRC_MissionPosHelper.IsValidMissionPos(pos) == SDRC_EMissionError.NONE)
+				{
+					SDRC_MapMarkerHelper.CreateMapMarker(pos, SDRC_EMissionIcon.ICON_DEATHMARKER_SMALL_MAP, "DEV_HELPER");					
+				}
+			}			
+		}	
+	}
 
 	//------------------------------------------------------------------------------------------------
 	static void ShowTestMessage()
