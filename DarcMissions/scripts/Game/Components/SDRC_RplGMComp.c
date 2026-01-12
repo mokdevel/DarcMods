@@ -27,7 +27,7 @@ class SDRC_GMMapSymbol : Managed
 	int iTimeLeft;					//Seconds
 	float fRadius;					
 	string sId;						//CIRCLE: 
-	int iIntval;						//Integer value for color or icon or ..
+	int iIntval;					//Integer value for color or icon or ..
 	string sStrval;
 	int iType;						//Generic type int - used for SDRC_EMissionType
 }
@@ -84,7 +84,7 @@ class SDRC_RplGMComp : ScriptComponent
 	/*!	
 	Add a circle on symbol list
 	*/
- 	void AddSymbolCircle(bool visible, vector pos, string name, float radius, int color, )
+ 	void AddSymbolCircle(bool visible, vector pos, string name, float radius, int id, int color)
     {
 		pos[1] = 0;			//Set to zero plane
 		
@@ -94,9 +94,9 @@ class SDRC_RplGMComp : ScriptComponent
 		symbol.vPos = pos;
 		symbol.iTimeLeft = -1;
 		symbol.fRadius = radius;						//Radius of the circle
-		symbol.sId = "";								//Unused
+		symbol.sId = id.ToString();						//Index
 		symbol.iIntval = color;							//Color for the circle
-		symbol.sStrval = "";							//Name of the area
+		symbol.sStrval = name;							//Name of the area
 		symbol.iType = -1;								//Unused
 		m_Symbols.Insert(symbol);
     }

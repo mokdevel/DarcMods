@@ -91,15 +91,24 @@ class SDRC_MapSystem : GameSystem
 	protected void OnShowMarkerInfo(float value, EActionTrigger reason)
 	{
 		//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Click.", LogLevel.NORMAL);
-		int markerIdx = FindMarkerIndex();
+		int markerIdx = FindSymbolIndex();
+
+		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
+		if (!gmComponent)
+		{
+			return;
+		}
 		
 		if (markerIdx > -1)
 		{		
-			SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
-			
-			if (gmComponent)
+			if (gmComponent.m_Symbols[markerIdx].symbolType == SDRC_EDrawSymbol.MARKER)
 			{
 				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Mission ID: " + gmComponent.m_Symbols[markerIdx].sId + " : " + gmComponent.m_Symbols[markerIdx].sStrval + " : time left: " + gmComponent.m_Symbols[markerIdx].iTimeLeft));
+			}
+			
+			if (gmComponent.m_Symbols[markerIdx].symbolType == SDRC_EDrawSymbol.CIRCLE)
+			{
+				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("NonValidArea ID: " + gmComponent.m_Symbols[markerIdx].sId + " : " + gmComponent.m_Symbols[markerIdx].sStrval + " : radius: " + gmComponent.m_Symbols[markerIdx].fRadius));
 			}
 		}
 	}
@@ -110,14 +119,19 @@ class SDRC_MapSystem : GameSystem
 	*/	
 	protected void OnMarkerDelete(float value, EActionTrigger reason)
 	{
-		int markerIdx = FindMarkerIndex();
+		int markerIdx = FindSymbolIndex();
 		
-		if (markerIdx > -1)
+		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
+		if (!gmComponent)
+		{
+			return;
+		}
+		
+		if ( (markerIdx > -1) && (gmComponent.m_Symbols[markerIdx].symbolType == SDRC_EDrawSymbol.MARKER) )
 		{		
 			SDRC_Log.Add("[SDRC_MapSystem:OnMarkerDelete] Deleting: " + markerIdx, LogLevel.SPAM);
 			
 			SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
-			SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
 			
 			if ( (playerComponent) && (gmComponent) )
 			{
@@ -394,11 +408,13 @@ class SDRC_MapSystem : GameSystem
 	Find the clicked marker on the map.
 	\return -1 if no marker found
 	*/
-	protected int FindMarkerIndex()
+	protected int FindSymbolIndex()
 	{
 		float worldX, worldY;
 		m_MapEntity.GetMapCursorWorldPosition(worldX, worldY);
 		
-		return SDRC_GMHelper.GetMarkerIndex(worldX, worldY);
+		//SDRC_Log.Add("[SDRC_MapSystem:FindMarkerIndex] Circle: " + SDRC_GMHelper.GetCircleIndex(worldX, worldY));
+		
+		return SDRC_GMHelper.GetSymbolIndex(worldX, worldY);
 	}
 }

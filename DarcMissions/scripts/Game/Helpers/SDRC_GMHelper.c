@@ -59,9 +59,9 @@ class SDRC_GMHelper
 		if ((m_BaseGameMode) && (m_GmComponent))
 		{
 			bool visibleForGm = m_BaseGameMode.m_SDRC_Core.m_Config.showOnGMMapNonValidArea;
-			foreach (SDRC_NonValidArea nonValidArea : m_BaseGameMode.missionFrame.m_aNonValidAreas)
+			foreach (int idx, SDRC_NonValidArea nonValidArea : m_BaseGameMode.missionFrame.m_aNonValidAreas)
 			{
-				m_GmComponent.AddSymbolCircle(visibleForGm, nonValidArea.pos, nonValidArea.name, nonValidArea.radius, ARGB(75, 255, 0, 0));
+				m_GmComponent.AddSymbolCircle(visibleForGm, nonValidArea.pos, nonValidArea.name, nonValidArea.radius, idx, ARGB(75, 255, 0, 0));
 			}
 		}
 	}
@@ -105,7 +105,7 @@ class SDRC_GMHelper
 		
 		if ((m_BaseGameMode) && (m_GmComponent))
 		{		
-			idx = GetMarkerIndex(worldX, worldY);
+			idx = GetSymbolIndex(worldX, worldY);
 		}
 		else
 		{
@@ -127,7 +127,7 @@ class SDRC_GMHelper
 	Find the clicked marker on the map.
 	\return -1 if no marker found
 	*/
-	static int GetMarkerIndex(float worldX, float worldY)
+	static int GetSymbolIndex(float worldX, float worldY)
 	{
 		const int MARKER_SIZE_BB = 64;//(24 * 0.8);		//Marker 'bounding box size' when searhing for mouse hit		
 		int symbolIdx = -1;
@@ -154,13 +154,75 @@ class SDRC_GMHelper
 			
 			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
 			{
+				//SDRC_Log.Add("[SDRC_GMHelper:GetMarkerIndex] Checking: " + pos + " vs " + symbol.vPos + " r=" + radius, LogLevel.NORMAL);
+				
+				//Find symbol: Marker
 				if (symbol.symbolType == SDRC_EDrawSymbol.MARKER && symbol.visible)
 				{
 					float distance = vector.DistanceXZ(pos, symbol.vPos);
-					//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Checking: " + cursorPos + " vs " + symbol.pos + " d=" + distance + " (" + distanceCheck + ")", LogLevel.NORMAL);
 					if (SDRC_Misc.IsPosNearPos(pos, symbol.vPos, distanceCheck))
 					{
-//						SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Found.", LogLevel.NORMAL);
+						SDRC_Log.Add("[SDRC_GMHelper:GetCircleIndex] Found: " + idx, LogLevel.DEBUG);
+						symbolIdx = idx;
+						break;
+					}								
+				}
+				
+				//Find symbol: Circle
+				if (symbol.symbolType == SDRC_EDrawSymbol.CIRCLE)
+				{
+					if (SDRC_Misc.IsPosNearPos(pos, symbol.vPos, symbol.fRadius))
+					{
+						SDRC_Log.Add("[SDRC_GMHelper:GetCircleIndex] Found: " + idx, LogLevel.DEBUG);
+						symbolIdx = idx;
+						break;
+					}								
+				}
+								
+				idx++;
+			}
+			
+			if (symbolIdx > -1)
+			{
+				SDRC_Log.Add("[SDRC_GMHelper:GetMarkerIndex] Found symbol - index: " + symbolIdx, LogLevel.SPAM);
+			}
+		}		
+		
+		return symbolIdx;
+	}			
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Find the clicked circle on the map.
+	\return -1 if no marker found
+	*/
+/*	static int GetCircleIndex(float worldX, float worldY)
+	{
+		int symbolIdx = -1;
+		
+		SCR_MapEntity m_MapEntity = SCR_MapEntity.GetMapInstance();
+		
+		if (!m_MapEntity)
+			return symbolIdx;
+		
+		vector pos = "0 0 0";
+		pos[0] = worldX;
+		pos[2] = worldY;
+				
+		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
+		if (gmComponent)
+		{
+			int idx = 0;
+			
+			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
+			{
+				if (symbol.symbolType == SDRC_EDrawSymbol.CIRCLE)
+				{
+					float radius = symbol.fRadius;
+					SDRC_Log.Add("[SDRC_GMHelper:GetCircleIndex] Checking: " + pos + " vs " + symbol.vPos + " r=" + radius, LogLevel.NORMAL);
+					if (SDRC_Misc.IsPosNearPos(pos, symbol.vPos, radius))
+					{
+						SDRC_Log.Add("[SDRC_GMHelper:GetCircleIndex] Found.", LogLevel.NORMAL);
 						symbolIdx = idx;
 						break;
 					}								
@@ -170,13 +232,13 @@ class SDRC_GMHelper
 			
 			if (symbolIdx > -1)
 			{
-				SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Found marker - index: " + symbolIdx, LogLevel.SPAM);
+				SDRC_Log.Add("[SDRC_GMHelper:GetCircleIndex] Found circle - index: " + symbolIdx, LogLevel.SPAM);
 			}
 		}		
 		
 		return symbolIdx;
-	}			
-		
+	}	*/	
+	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Delete a mission with specific mission ID (DCMxxxx).

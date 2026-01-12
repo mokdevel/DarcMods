@@ -27,7 +27,7 @@ class SDRC_MapClickComp : SCR_ScriptedWidgetComponent
 			m_MapEntity.GetMapCursorWorldPosition(worldX, worldY);
 			
 			#ifndef SDRC_RELEASE
-				int idx = SDRC_GMHelper.GetMarkerIndex(worldX, worldY);
+				int idx = SDRC_GMHelper.GetSymbolIndex(worldX, worldY);
 				SDRC_Log.Add("[SDRC_MapClickComp:OnClick] Index: " + idx + " at " + worldX + "," + worldY, LogLevel.SPAM);
 			#endif
 			
