@@ -4,8 +4,12 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+Changed jsons - remove the files to receive updated ones.
+* dc_enemyConfig.json (Added )
 
-..empty..
+Main features:
+* Refactored the json loading/saving. Better looking jsons and provides capability for error checking. 
+* Support for Japan Self-Defense Forces. Use ``JSDF_RAS`` as the faction. Mod is still under work so it lacks proper groups and characters.
 
 ## 20260111
 Changed jsons - remove the files to receive updated ones.

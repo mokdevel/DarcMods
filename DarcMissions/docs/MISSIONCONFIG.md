@@ -66,7 +66,8 @@ The mission faction is defined in ``enemyFactions`` or individually per sub-miss
 * ``BALLIEN_BC_FACTION`` : Ballien Creatures - [MOD](https://reforger.armaplatform.com/workshop/6534B9CEB6D12EE7-BallienCreatures)
 * ``BACON_622120A5448725E3_FACTION`` : Bacon Zombies - [MOD](https://reforger.armaplatform.com/workshop/622120A5448725E3-BaconZombies)
 * ``PLASTICBANDIT`` : Bandit Faction - [MOD](https://reforger.armaplatform.com/workshop/66C4458756B32594-BanditFaction)
-* ``ChinesePLA`` : Chinese People's Liberation Army - [MOD](https://reforger.armaplatform.com/workshop/60A6507633AB1954-ChinesePLA)
+* ``ChinesePLA`` : Chinese People's Liberation Army (PLA) - [MOD](https://reforger.armaplatform.com/workshop/60A6507633AB1954-ChinesePLA)
+* ``JSDF_RAS`` : Japan Self-Defense Forces (JSDF) - [MOD](https://reforger.armaplatform.com/workshop/658809A83416F34D-JapanSelf-DefenseForces)
 
 Unsupported values
 * ``RHS_ION``
