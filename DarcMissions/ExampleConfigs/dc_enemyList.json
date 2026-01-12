@@ -50,7 +50,8 @@
                 "Group_Zombies_US",
                 "Group_Zombies_USSR",
                 "Cultists_Light",
-                "PLAGF_SentryTeam"
+                "PLAGF_SentryTeam",
+                "JGSDF_2008_SentryTeam"
             ],
             "exclude": [
                 "_Base",
@@ -72,7 +73,8 @@
                 "Team_LAT",
                 "Group_Zombies_High",
                 "Cultists_Medium",
-                "PLASTICBANDIT_FireTeam_Heavy"
+                "PLASTICBANDIT_FireTeam_Heavy",
+                "JGSDF_2008_SentryTeam"
             ],
             "exclude": [
                 "_Base",
@@ -92,7 +94,8 @@
                 "_Platoon",
                 "Group_Zombies_High",
                 "Cultists_Light",
-                "PLASTICBANDIT_Squad"
+                "PLASTICBANDIT_Squad",
+                "JGSDF_2008_SentryTeam"
             ],
             "exclude": [
                 "_Base",
@@ -112,7 +115,8 @@
                 "_Medical",
                 "Group_Zombies_High",
                 "Cultists_Light",
-                "PLASTICBANDIT_Squad"
+                "PLASTICBANDIT_Squad",
+                "JGSDF_2008_LightFireTeam"
             ],
             "exclude": [
                 "_Base",
@@ -137,7 +141,8 @@
                 "Group_Zombies_US",
                 "Group_Zombies_USSR",
                 "Cultists_Medium",
-                "PLASTICBANDIT_Squad"
+                "PLASTICBANDIT_Squad",
+                "JGSDF_2008_LightFireTeam"
             ],
             "exclude": [
                 "_Base",
@@ -162,7 +167,8 @@
                 "GunGroup",
                 "Group_Zombies_Horde",
                 "Group_Zombies_CIV_Large",
-                "Cultists_Horde"
+                "Cultists_Horde",
+                "JGSDF_2008_SentryTeam"
             ],
             "exclude": [
                 "_Base",
@@ -215,7 +221,8 @@
                 "Group_Zombies_US",
                 "Group_Zombies_USSR",
                 "Cultists_Light",
-                "PLASTICBANDIT_Patrol"
+                "PLASTICBANDIT_Patrol",
+                "JGSDF_2008_LightFireTeam"
             ],
             "exclude": [
                 "_Base",
@@ -276,7 +283,8 @@
                 "Stalker_Rookie",
                 "Scav_Brute",
                 "Civilian_Cultist",
-                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_2.et"
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_2.et",
+                "JGSDF_2008_Rifleman"
             ],
             "exclude": [
                 "_Base",
@@ -309,7 +317,8 @@
                 "Scav_Veteran",
                 "Stalker_Veteran",
                 "Civilian_Cultist",
-                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et"
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et",
+                "JGSDF_2008_TL"
             ],
             "exclude": [
                 "_Base",
@@ -340,7 +349,8 @@
                 "Scav_Veteran",
                 "Stalker_Veteran",
                 "Warrior_Cultist",
-                "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et"
+                "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et",
+                "JGSDF_2008_CC"
             ],
             "exclude": [
                 "_Base",
@@ -428,7 +438,8 @@
                 "Exploder",
                 "Scav_Brute",
                 "Warrior_Cultist",
-                "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et"
+                "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et",
+                "JGSDF_2008_TL"
             ],
             "exclude": [
                 "_Base",
@@ -456,7 +467,8 @@
                 "Scav_Veteran",
                 "Stalker_Veteran",
                 "Civilian_Cultist",
-                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_2.et"
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_2.et",
+                "JGSDF_2008_CC"
             ],
             "exclude": [
                 "_Base",
@@ -491,7 +503,8 @@
                 "Stalker_Legend",
                 "PLAGF_Scout_RTO",
                 "Kamikaze_Cultist",
-                "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et"
+                "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et",
+                "JGSDF_2008_Sniper"
             ],
             "exclude": [
                 "_Base",
@@ -724,6 +737,12 @@
                 "ChinesePLA",
                 "PLAGF",
                 "PLAAF"
+            ]
+        },
+        {
+            "names": [
+                "JSDF_RAS",
+                "JGSDF"
             ]
         }
     ]
