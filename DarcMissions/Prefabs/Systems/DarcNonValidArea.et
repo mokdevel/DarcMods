@@ -1,16 +1,11 @@
 SDRC_DarcMissionGM : "{C599195C442D7125}Prefabs/Compositions/Misc/CustomEntities/CompositionDecals/CompositionDecal_CigarButts_01.et" {
  ID "56DEF7205C23FF67"
  components {
-  SCR_EffectsModuleAreaMeshComponent "{685AC124B1F781A4}" {
-   m_fHeight 20
-   m_bStretchMaterial 1
-   m_Material "{0A8FAD171DB3DC49}Assets/Editor/VirtualArea/VirtualArea_01_Focused.emat"
-   m_fWidth 100
-   m_fLenght 100
-  }
   SCR_EffectsModuleComponent "{685AC1251303B6E7}" {
+   Enabled 0
   }
   SDRC_DarcMissionEditableRequestComp "{685ABD76F7C0931F}" {
+   Enabled 0
    m_EntityType SYSTEM
    m_UIInfo SCR_EditableEntityUIInfoColored "{685ABD76F7C09339}" {
     Name "DarcMissions Non Valid Area "
@@ -25,6 +20,25 @@ SDRC_DarcMissionGM : "{C599195C442D7125}Prefabs/Compositions/Misc/CustomEntities
    }
    m_bAutoRegister ALWAYS
    m_MissionType NON_VALID_AREA
+  }
+  SDRC_DarcNonValidAreaEditableRequestComp "{685D1DB5C871B2DD}" {
+   m_UIInfo SCR_EditableEntityUIInfoColored "{685D1DB5FF0BEC1F}" {
+    Name "DarcMissions Non Valid Area "
+    Description "Defines a Non Valid Area (100m)"
+    Icon "{9302166724C7AB80}UI/Textures/Icons/gm_mission_NonValidArea_round.edds"
+    m_Image "{BBC4E6FBEC37D047}UI/Textures/Icons/gm_mission_NonValidArea.edds"
+    m_aAuthoredLabels {
+     ENTITYTYPE_SYSTEM ENTITYTYPE_DARCMISSIONS
+    }
+   }
+   m_MissionType NON_VALID_AREA
+  }
+  SDRC_EffectsModuleAreaMeshComponent "{685AC124B1F781A4}" {
+   m_fHeight 20
+   m_bStretchMaterial 1
+   m_Material "{0A8FAD171DB3DC49}Assets/Editor/VirtualArea/VirtualArea_01_Focused.emat"
+   m_fWidth 100
+   m_fLenght 100
   }
   RplComponent "{685ABD76F7C0933C}" {
    Streamable Disabled

@@ -2,7 +2,7 @@
 Attribute base for slider values for other attributes to inherent from
 */
 [BaseContainerProps()]
-class SDRC_EditorAttributeBaseValues:SCR_EditorAttributeBaseValues
+class SDRC_MissionSubIdxEditorAttributeBaseValues:SCR_EditorAttributeBaseValues
 {
 	override void GetSliderValues(out string sliderValueFormating, out float min, out float max, out float step, out int decimals)
 	{		

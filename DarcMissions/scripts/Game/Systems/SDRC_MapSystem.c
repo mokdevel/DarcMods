@@ -303,6 +303,7 @@ class SDRC_MapSystem : GameSystem
 		}		
 		
 		#ifndef SDRC_RELEASE
+		/*
 			ImageDrawCommand drawCommand = new ImageDrawCommand();		
 			drawCommand = DrawMarker("1000 0 1500", SDRC_EMissionIcon.GM_MISSION_X_MAP);
 			m_DrawCommands.Insert(drawCommand);
@@ -334,6 +335,7 @@ class SDRC_MapSystem : GameSystem
 			m_DrawCommands.Insert(drawCommand);
 		
 //			DrawImage("2000 0 2000", 32, 64);
+		*/
 		#endif
 		
 		if(!m_DrawCommands.IsEmpty())
