@@ -15,9 +15,9 @@ From the entity browser, you can drop..
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_gm_entitylist.jpg" width=30% height=30%>
 
 ## Map information
-Map show information about 
-- NonValidAreas
-- Missions that are in ACTIVE state.
+Show information by clicking on a symbol
+- Missions that are in ACTIVE state. Missions that are still spawning are not shown.
+- NonValidAreas.
 
 ## Map functionality
 
