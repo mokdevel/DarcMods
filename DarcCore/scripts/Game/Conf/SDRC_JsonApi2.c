@@ -90,7 +90,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save(Class T, SDRC_Config C)
+	void Save(Managed T, SDRC_Config C)
 	{
 		bool useTypeDiscriminator = false;
         ContainerSerializationSaveContext saveContext = new ContainerSerializationSaveContext(false);
