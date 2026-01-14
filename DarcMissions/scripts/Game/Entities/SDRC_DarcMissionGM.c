@@ -50,16 +50,40 @@ class SDRC_DarcMissionGM : GenericEntity
 				
 				SDRC_DarcMissionGM ent = SDRC_DarcMissionGM.Cast(owner);
 				if (!ent.IsAdded())
-				{
-					//Add to the requested mission to list for spawning
-					ref SDRC_MissionRequested mission = new SDRC_MissionRequested();
-					mission.entityID = owner.GetID();
-										
-					baseGameMode.missionFrame.m_missionsRequested.Insert(mission);
-					ent.AddedToList();
-					
+				{					
 					ResourceName res = owner.GetPrefabData().GetPrefabName();
-					SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInitDelayed] Found: " + SDRC_Misc.GetSimpleEntityName(res) + " at " + owner.GetOrigin(), LogLevel.DEBUG);				
+					SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInitDelayed] Found: " + SDRC_Misc.GetSimpleEntityName(res) + " at " + owner.GetOrigin(), LogLevel.DEBUG);					
+					
+					//Handle NonValidArea requests
+					SCR_EffectsModuleAreaMeshComponent effComp = SCR_EffectsModuleAreaMeshComponent.Cast(ent.FindComponent(SCR_EffectsModuleAreaMeshComponent));
+					if (effComp)
+					{
+						SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInitDelayed] This is a NonValidArea request.", LogLevel.DEBUG);
+						
+						SDRC_NonValidArea nva = new SDRC_NonValidArea();
+						float width;
+						float length;
+						effComp.GetDimensions2D(width, length);
+						
+						nva.worldName = "";
+						nva.pos = owner.GetOrigin();
+						nva.radius = width;
+						nva.name = SDRC_Locations.CreateName(nva.pos);
+						//baseGameMode.missionFrame.m_aNonValidAreas.Insert(nva);
+						baseGameMode.missionFrame.m_ConfigNonValidArea.m_NonValidAreas.Insert(nva);
+						
+						SDRC_SpawnHelper.DespawnItem(owner);						
+					}
+					else //Handle missions requests
+					{
+						//Add to the requested mission to list for spawning
+						ref SDRC_MissionRequested mission = new SDRC_MissionRequested();
+						mission.entityID = owner.GetID();
+											
+						baseGameMode.missionFrame.m_missionsRequested.Insert(mission);
+						
+						ent.AddedToList();					
+					}
 				}
 			}
 			else

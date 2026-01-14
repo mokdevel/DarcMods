@@ -106,7 +106,7 @@ class SDRC_MissionPosHelper
 	{
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 	
-		foreach (SDRC_NonValidArea nonValidArea : baseGameMode.missionFrame.m_aNonValidAreas)
+		foreach (SDRC_NonValidArea nonValidArea : baseGameMode.missionFrame.m_ConfigNonValidArea.m_NonValidAreas)
 		{
 			float distance = vector.Distance(pos, nonValidArea.pos);
 		

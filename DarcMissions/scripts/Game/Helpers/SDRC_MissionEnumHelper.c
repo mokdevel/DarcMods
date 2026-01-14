@@ -21,6 +21,7 @@ enum SDRC_EMissionType
 	HVTITEM,		//9
 	STASH,			//10
 	CHOPPER,		//11
+	NON_VALID_AREA,	//xx
 	
 	REQUESTED = 100
 };

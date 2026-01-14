@@ -11,7 +11,7 @@ SDRC_RplGMCompClass g_RplGMCompClass;
 enum SDRC_EDrawSymbol
 {
 	NONE,
-	CIRCLE,
+	NON_VALID_AREA,
 	MARKER
 }
  
@@ -26,7 +26,7 @@ class SDRC_GMMapSymbol : Managed
 	vector vPos;
 	int iTimeLeft;					//Seconds
 	float fRadius;					
-	string sId;						//CIRCLE: 
+	string sId;						//
 	int iIntval;					//Integer value for color or icon or ..
 	string sStrval;
 	int iType;						//Generic type int - used for SDRC_EMissionType
@@ -90,7 +90,7 @@ class SDRC_RplGMComp : ScriptComponent
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
 		symbol.visible = visible;
-		symbol.symbolType = SDRC_EDrawSymbol.CIRCLE;
+		symbol.symbolType = SDRC_EDrawSymbol.NON_VALID_AREA;
 		symbol.vPos = pos;
 		symbol.iTimeLeft = -1;
 		symbol.fRadius = radius;						//Radius of the circle
@@ -141,28 +141,6 @@ class SDRC_RplGMComp : ScriptComponent
 		return m_Symbols[idx];
 	}
 	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Request for a mission deletion.
-	*/
- 	void DoDeleteMission(int playerID, string missionId)
-	{
-		SDRC_Log.Add("[SDRC_RplGMComp:DoDeleteMission] Deletion of " + missionId + " requested by " + playerID, LogLevel.SPAM);	
-		SDRC_GMHelper.DeleteMission(missionId);
-//		SyncMapSymbols(playerID);
-	}
-		
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Request for a mission ending. Used by DarcStories
-	*/
- 	void DoEndMission(int playerID, string missionId)
-	{
-		SDRC_Log.Add("[SDRC_RplGMComp:DoEndMission] Ending of " + missionId + " requested by " + playerID, LogLevel.SPAM);	
-		SDRC_GMHelper.EndMission(missionId, SDRC_EMissionSuccess.LOSE);
-//		SyncMapSymbols(playerID);
-	}
-		
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Sync all map symbols to all players
@@ -243,4 +221,66 @@ class SDRC_RplGMComp : ScriptComponent
 
 		Replication.BumpMe();
 	}		
+	
+	//------------------------------------------------------------------------------------------------	
+	// Mission stuff
+	//------------------------------------------------------------------------------------------------	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Request for a mission deletion.
+	*/
+ 	void DoDeleteMission(int playerID, string missionId)
+	{
+		SDRC_Log.Add("[SDRC_RplGMComp:DoDeleteMission] Deletion of " + missionId + " requested by " + playerID, LogLevel.SPAM);	
+		SDRC_GMHelper.DeleteMission(missionId);
+//		SyncMapSymbols(playerID);
+	}
+		
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Request for a mission ending. Used by DarcStories
+	*/
+ 	void DoEndMission(int playerID, string missionId)
+	{
+		SDRC_Log.Add("[SDRC_RplGMComp:DoEndMission] Ending of " + missionId + " requested by " + playerID, LogLevel.SPAM);	
+		SDRC_GMHelper.EndMission(missionId, SDRC_EMissionSuccess.LOSE);
+//		SyncMapSymbols(playerID);
+	}
+		
+	//------------------------------------------------------------------------------------------------	
+	// NonValidArea stuff
+	//------------------------------------------------------------------------------------------------	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Request for NonValidArea size change
+	*/
+ 	void DoNonValidAreaSizeChange(int playerID, string nvaId, float size)
+	{
+		SDRC_Log.Add("[SDRC_RplGMComp:DoNonValidAreaIncrease] Change of " + size + " asked for NonValidArea " + nvaId + ". Requested by " + playerID, LogLevel.DEBUG);	
+		SDRC_GMHelper.NonValidAreaSizeChange(nvaId, size);
+		SyncMapSymbols(playerID);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Request for NonValidArea save to file
+	*/
+ 	void DoNonValidAreaSave(int playerID)
+	{
+		SDRC_Log.Add("[SDRC_RplGMComp:DoNonValidAreaSave] Asked for save. Requested by " + playerID, LogLevel.DEBUG);	
+		SDRC_GMHelper.SaveNonValidAreaData();
+	}
+		
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Request for NonValidArea deletion
+	*/
+ 	void DoDeleteNonValidArea(int playerID, string nvaId)
+	{
+		SDRC_Log.Add("[SDRC_RplGMComp:DoDeleteNonValidArea] Deletion of NonValidArea " + nvaId + " requested by " + playerID, LogLevel.DEBUG);	
+		SDRC_GMHelper.DeleteNonValidArea(nvaId);
+		SyncMapSymbols(playerID);
+	}	
 }

@@ -8,6 +8,7 @@ class SDRC_MapSystem : GameSystem
 	protected vector m_previousPan;
 	protected float m_previousZoom;
 	protected int m_SymbolCount;
+	protected bool m_bNvaChangesDone;	//If true, we have made changes to NonValidAreas and we should ask for a save from server
 
 	protected ResourceName m_Layout = "{F928661E727CC639}UI/layouts/Map/SDRC_MapCanvasLayer.layout";
 
@@ -61,16 +62,18 @@ class SDRC_MapSystem : GameSystem
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Input managers for
-	- Information
-	- Deletion
+	- Information (click on map)
+	- Deletion (have cursor over item and press DELETE)
 	*/	
 	protected void EnableInput()
 	{
 		InputManager inputMgr = GetGame().GetInputManager();
 		if (inputMgr)
 		{
-			inputMgr.AddActionListener("MapSelect", EActionTrigger.DOWN, OnShowMarkerInfo);
-			inputMgr.AddActionListener("MapMarkerDelete", EActionTrigger.DOWN, OnMarkerDelete);
+			inputMgr.AddActionListener("MapSelect", EActionTrigger.DOWN, OnShowSymbolInfo);
+			inputMgr.AddActionListener("MapMarkerDelete", EActionTrigger.DOWN, OnSymbolDelete);
+			inputMgr.AddActionListener("SDRCMapNonValidAreaIncrease", EActionTrigger.DOWN, OnNonValidAreaIncrease);
+			inputMgr.AddActionListener("SDRCMapNonValidAreaDecrease", EActionTrigger.DOWN, OnNonValidAreaDecrease);
 		}
 	}
 			
@@ -79,16 +82,18 @@ class SDRC_MapSystem : GameSystem
 		InputManager inputMgr = GetGame().GetInputManager();
 		if (inputMgr)
 		{
-			inputMgr.RemoveActionListener("MapSelect", EActionTrigger.DOWN, OnShowMarkerInfo);
-			inputMgr.RemoveActionListener("MapMarkerDelete", EActionTrigger.DOWN, OnMarkerDelete);
+			inputMgr.RemoveActionListener("MapSelect", EActionTrigger.DOWN, OnShowSymbolInfo);
+			inputMgr.RemoveActionListener("MapMarkerDelete", EActionTrigger.DOWN, OnSymbolDelete);
+			inputMgr.RemoveActionListener("SDRCMapNonValidAreaIncrease", EActionTrigger.DOWN, OnNonValidAreaIncrease);
+			inputMgr.RemoveActionListener("SDRCMapNonValidAreaDecrease", EActionTrigger.DOWN, OnNonValidAreaDecrease);			
 		}
 	}
-	
+
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Show marker information
 	*/	
-	protected void OnShowMarkerInfo(float value, EActionTrigger reason)
+	protected void OnShowSymbolInfo(float value, EActionTrigger reason)
 	{
 		//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Click.", LogLevel.NORMAL);
 		int markerIdx = FindSymbolIndex();
@@ -106,47 +111,53 @@ class SDRC_MapSystem : GameSystem
 				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Mission ID: " + gmComponent.m_Symbols[markerIdx].sId + " : " + gmComponent.m_Symbols[markerIdx].sStrval + " : time left: " + gmComponent.m_Symbols[markerIdx].iTimeLeft));
 			}
 			
-			if (gmComponent.m_Symbols[markerIdx].symbolType == SDRC_EDrawSymbol.CIRCLE)
+			if (gmComponent.m_Symbols[markerIdx].symbolType == SDRC_EDrawSymbol.NON_VALID_AREA)
 			{
 				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("NonValidArea ID: " + gmComponent.m_Symbols[markerIdx].sId + " : " + gmComponent.m_Symbols[markerIdx].sStrval + " : radius: " + gmComponent.m_Symbols[markerIdx].fRadius));
 			}
 		}
 	}
-	
+			
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Request for a mission deletion
+	Request for a symbol deletion
 	*/	
-	protected void OnMarkerDelete(float value, EActionTrigger reason)
+	protected void OnSymbolDelete(float value, EActionTrigger reason)
 	{
-		int markerIdx = FindSymbolIndex();
+		int symbolIdx = FindSymbolIndex();
 		
+		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
 		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
-		if (!gmComponent)
+		
+		if ( (!gmComponent) || (!playerComponent) )
 		{
 			return;
 		}
-		
-		if ( (markerIdx > -1) && (gmComponent.m_Symbols[markerIdx].symbolType == SDRC_EDrawSymbol.MARKER) )
+
+		SDRC_Log.Add("[SDRC_MapSystem:OnSymbolDelete] Deleting symbol: " + symbolIdx, LogLevel.SPAM);
+				
+		if ( (symbolIdx > -1) && (gmComponent.m_Symbols[symbolIdx].symbolType == SDRC_EDrawSymbol.MARKER) )
 		{		
-			SDRC_Log.Add("[SDRC_MapSystem:OnMarkerDelete] Deleting: " + markerIdx, LogLevel.SPAM);
-			
-			SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
-			
-			if ( (playerComponent) && (gmComponent) )
-			{
-				playerComponent.AskForMissionDeletion(gmComponent.m_Symbols[markerIdx].sId);
-				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Deletion requested for Mission ID: " + gmComponent.m_Symbols[markerIdx].sId));
-				gmComponent.m_Symbols[markerIdx].visible = false;
-				m_SymbolCount = 0;	//Ask for map update
-			}
+			playerComponent.AskForMissionDeletion(gmComponent.m_Symbols[symbolIdx].sId);
+			SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Deletion requested for Mission ID: " + gmComponent.m_Symbols[symbolIdx].sId));
+			gmComponent.m_Symbols[symbolIdx].visible = false;
+			m_SymbolCount = 0;	//Ask for map update
 		}
+		
+		if ( (symbolIdx > -1) && (gmComponent.m_Symbols[symbolIdx].symbolType == SDRC_EDrawSymbol.NON_VALID_AREA) )
+		{
+			SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Deletion requested for NonValidArea: " + gmComponent.m_Symbols[symbolIdx].sId + " : " + gmComponent.m_Symbols[symbolIdx].sStrval));
+			playerComponent.AskForNonValidAreaDeletion(gmComponent.m_Symbols[symbolIdx].sId);
+			m_bNvaChangesDone = true;
+		}		
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	protected void OnMapOpen(MapConfiguration mapConfig)
 	{	
 		//SDRC_Log.Add("[SDRC_MapSystem:OnMapOpen] Opened", LogLevel.DEBUG);
+
+		m_bNvaChangesDone = false;	//No changes on nva done yet
 
 		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
 		if (playerComponent)
@@ -174,7 +185,7 @@ class SDRC_MapSystem : GameSystem
 		m_wCanvasWidget = CanvasWidget.Cast(m_Widget);
 		
 		m_DrawCommands = new array<ref CanvasWidgetCommand>();		
-		m_SymbolCount = 0;
+		m_SymbolCount = 0;	//Ask for map update
 
 		Enable(true);
 		EnableInput();
@@ -204,6 +215,17 @@ class SDRC_MapSystem : GameSystem
 		if (gmComponent)
 		{
 			gmComponent.ClearSymbols();
+		}
+		
+		//If we made changes to NonValidAreas, request for a save
+		if (m_bNvaChangesDone)
+		{
+			SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
+			if (playerComponent)
+			{
+				SDRC_Log.Add("[SDRC_MapSystem:OnMapClose] Asking for NonValidArea save.", LogLevel.DEBUG);		
+				playerComponent.AskForNonValidAreaSave();
+			}
 		}
 	}
 	
@@ -250,7 +272,7 @@ class SDRC_MapSystem : GameSystem
 			{			
 				switch (symbol.symbolType)
 				{
-					case SDRC_EDrawSymbol.CIRCLE:
+					case SDRC_EDrawSymbol.NON_VALID_AREA:
 					{
 						PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
 						drawCommand = DrawCircle(symbol.vPos, symbol.fRadius, symbol.iIntval);
@@ -405,7 +427,7 @@ class SDRC_MapSystem : GameSystem
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Find the clicked marker on the map.
+	Find the clicked symbol on the map.
 	\return -1 if no marker found
 	*/
 	protected int FindSymbolIndex()
@@ -413,8 +435,75 @@ class SDRC_MapSystem : GameSystem
 		float worldX, worldY;
 		m_MapEntity.GetMapCursorWorldPosition(worldX, worldY);
 		
-		//SDRC_Log.Add("[SDRC_MapSystem:FindMarkerIndex] Circle: " + SDRC_GMHelper.GetCircleIndex(worldX, worldY));
-		
 		return SDRC_GMHelper.GetSymbolIndex(worldX, worldY);
 	}
+	
+	//------------------------------------------------------------------------------------------------	
+	// NonValidArea stuff
+	//------------------------------------------------------------------------------------------------	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	NonValidArea size increase/decrease
+	*/	
+	protected void OnNonValidAreaIncrease(float value, EActionTrigger reason)
+	{
+		NonValidAreaChangeSize(50);
+	}
+
+	protected void OnNonValidAreaDecrease(float value, EActionTrigger reason)
+	{
+		NonValidAreaChangeSize(-50);
+	}
+	
+	protected void NonValidAreaChangeSize(float size)
+	{
+		int nvaIdx = FindSymbolIndex();
+
+		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
+		if (!gmComponent)
+		{
+			return;
+		}
+
+		if ( (nvaIdx > -1) && (gmComponent.m_Symbols[nvaIdx].symbolType == SDRC_EDrawSymbol.NON_VALID_AREA) )
+		{		
+			SDRC_Log.Add("[SDRC_MapSystem:NonValidAreaChangeSize] Changing: " + nvaIdx, LogLevel.SPAM);
+			
+			SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
+			
+			if ( (playerComponent) && (gmComponent) )
+			{
+				if ( ((gmComponent.m_Symbols[nvaIdx].fRadius + size) > 0) && 
+				     ((gmComponent.m_Symbols[nvaIdx].fRadius + size) < SDRC_Misc.GetWorldSize()) 
+				   )
+				{
+					playerComponent.AskForNonValidAreaSizeChange(gmComponent.m_Symbols[nvaIdx].sId, size);
+					SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("NonValidArea ID: " + gmComponent.m_Symbols[nvaIdx].sId + " : Radius changed to : " + gmComponent.m_Symbols[nvaIdx].fRadius));
+					m_SymbolCount = 0;	//Ask for map update
+					m_bNvaChangesDone = true;
+				}
+			}
+		}		
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!		
+	The flow of a keypress and RPL stuff
+	
+	When in GM, open map:
+	- Client: OnMapOpen happens 
+	  - playerComponent.AskForInfo() asks for details from server
+	  - SDRC_RplGMComp.gmComp.SyncMapSymbols() 
+	- Client: EnableInput sets the actions for GM
+	  - Keys are defined in "Configs/System/chimeraInputCommon.conf"
+	- Client: A key is pressed to delete a symbol
+	  - OnSymbolDelete() is called. 
+	- Client: Player component is used to ask for the deletion from client to server
+	  - playerComponent.AskForMissionDeletion()
+	- Client->Server: With RPC, the server receives the request: RpcAsk_DeleteMission()
+	- Server: GM component on server, performs the action: DoDeleteMission()
+	- Server: DoDeleteMission() is done
+	
+	*/	
 }

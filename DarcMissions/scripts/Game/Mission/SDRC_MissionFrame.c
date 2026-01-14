@@ -24,9 +24,9 @@ class SDRC_MissionFrame
 	private ref SDRC_JsonApi2 m_DC_MissionFrameJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_FRAME);	
 	ref SDRC_MissionFrameConfig m_Config = new SDRC_MissionFrameConfig();	
 	
-	private ref SDRC_JsonApi2 m_NonValidAreaJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_NONVALIDAREA);	
+	ref SDRC_JsonApi2 m_NonValidAreaJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_NONVALIDAREA);	
 	ref SDRC_NonValidAreaConfig m_ConfigNonValidArea = new SDRC_NonValidAreaConfig();	
-	ref array<ref SDRC_NonValidArea> m_aNonValidAreas = {};
+//	ref array<ref SDRC_NonValidArea> m_aNonValidAreas = {};
 
 	ref SDRC_SecondWaveJsonApi m_DC_SecondWaveJsonApi = new SDRC_SecondWaveJsonApi(DC_MISSIONCONFIG_FILE_SECONDWAVE);
 		
@@ -54,7 +54,7 @@ class SDRC_MissionFrame
 		//Load configuration from file		
 		bool successFrame = m_DC_MissionFrameJsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_FRAME_VER);
 		
-		//Load non valid area configuration from file
+		//Load NonValidArea configuration from file
 		bool successNoNValid = m_NonValidAreaJsonApi.Load(m_ConfigNonValidArea, SDRC_Config.Cast(m_ConfigNonValidArea), DC_MISSIONCONFIG_FILE_NONVALIDAREA_VER);
 
 		if ( (!successFrame) || (!successNoNValid) )
@@ -64,7 +64,7 @@ class SDRC_MissionFrame
 		}		
 				
 		//Initialize NonValidAreas
-		m_ConfigNonValidArea.Populate(m_aNonValidAreas);
+//		m_ConfigNonValidArea.Populate(m_aNonValidAreas);
 
 		//Load waves for secondWave functionality
 		m_DC_SecondWaveJsonApi.Load();

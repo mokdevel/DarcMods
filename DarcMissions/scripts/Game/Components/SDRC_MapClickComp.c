@@ -31,7 +31,7 @@ class SDRC_MapClickComp : SCR_ScriptedWidgetComponent
 				SDRC_Log.Add("[SDRC_MapClickComp:OnClick] Index: " + idx + " at " + worldX + "," + worldY, LogLevel.SPAM);
 			#endif
 			
-			SDRC_GMMapSymbol symbol = SDRC_GMHelper.GetMarkerDetails(worldX, worldY);
+			SDRC_GMMapSymbol symbol = SDRC_GMHelper.GetSymbolDetails(worldX, worldY);
 			
 			if (symbol)
 			{		

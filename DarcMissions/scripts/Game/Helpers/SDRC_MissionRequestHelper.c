@@ -49,7 +49,7 @@ class SDRC_MissionRequestHelper
 			missionRequest.general.pos[0] = pos;
 		}
 				
-		SDRC_SpawnHelper.DespawnItem(missionEntity);				
+		SDRC_SpawnHelper.DespawnItem(missionEntity);
 
 		//Clean the array as we removed an entry. Others could have been removed at the same time.
 		SDRC_MissionRequestHelper.CleanMissionsRequestedArray();						
