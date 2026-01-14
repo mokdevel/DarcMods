@@ -5,11 +5,17 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 Changed jsons - remove the files to receive updated ones.
-* dc_enemyConfig.json (Added )
+* dc_enemyConfig.json (Added Japan Self-Defense Forces)
 
 Main features:
-* Refactored the json loading/saving. Better looking jsons and provides capability for error checking. 
+* GM droppable NonValidArea. You can find it in the same place as the missions. 
+  * Note that it uses the same functionality as mission spawn so there is a slight delay before they appear on the map.
+  * You can edit the size of a NonValidArea in GM view. Hover on top of the red circle on map. Hold Left Control and use scroll wheel to change size.
+  * You can delete a NonValidArea in GM view. Hover on top of the red circle and press DELETE on keyboard.
 * Support for Japan Self-Defense Forces. Use ``JSDF_RAS`` as the faction. Mod is still under work so it lacks proper groups and characters.
+
+Changes:
+* ``worldName`` parameter is deprecated in dc_nonValidArea.json. It is still there but not used for anything. To be removed eventually.
 
 ## 20260111
 Changed jsons - remove the files to receive updated ones.

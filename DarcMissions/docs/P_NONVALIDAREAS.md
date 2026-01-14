@@ -10,7 +10,7 @@ array<SDRC_NonValidArea> nonValidAreas : List of areas where missions shall not 
 
 ## SDRC_NonValidArea
 ```
-string worldName : The world name this should be affecting. For example Arland or Eden. If left empty, area will be valid for all maps. Note that Arland and GM_Arland are considered different maps.
+string worldName : ** DEPRECATED ** Will be removed in the future but left for compatibility reasons for now.
 vector pos : Center position of area
 float radius : Radius from the center where the missions shall not spawn.
 string name : Your own name for the area. Not used by the mod.
