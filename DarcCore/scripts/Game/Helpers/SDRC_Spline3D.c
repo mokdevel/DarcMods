@@ -206,13 +206,8 @@ sealed class SDRC_Spline3D
 	
 		array<vector> splinePoints = new array<vector>();
 		SDRC_Spline3D.GenerateSplinePoints(ctrl, splinePoints, 20);
-		
-/*		foreach (vector pos : splinePoints)
-		{
-			Print(pos);
-//			pos = pos + SDRC_Misc.GetWorldCenter();
-			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(40, 255, 32, 32), 6);			//Red
-		}*/
+
+		SDRC_DebugHelper.DrawPointList(splinePoints, "DEBUG");
 	}
 	
 	//------------------------------------------------------------------------------------------------
