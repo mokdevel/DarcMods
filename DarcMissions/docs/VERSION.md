@@ -4,6 +4,8 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+
+## 20260115
 Changed jsons - remove the files to receive updated ones.
 * dc_enemyConfig.json (Added Japan Self-Defense Forces)
 * dc_secondWave.json (File renamed to dc_qrf.json)
