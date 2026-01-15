@@ -62,11 +62,19 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			return;
 		}	
 
-		//Where to start the flight		
-		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(m_Config.distanceToStart);
+		//Where to start the flight. Find a position further away and fly towards center of the map with some variation. 
+		//This way we arrive quicker to the location. 
+		float distanceToStart = SDRC_Misc.GetWorldSize() * m_Config.distanceToStart;
 	#ifndef SDRC_RELEASE
-		m_vPosOrigin = SDRC_Misc.GetRandomWorldPosPercentage(0.00001);
+		distanceToStart = SDRC_Misc.GetWorldSize() * 0.1;
 	#endif
+		
+		vector worldCenter = "0 0 0";
+		worldCenter[0] = SDRC_Misc.GetWorldSize()/2;
+		worldCenter[2] = worldCenter[0];
+		vector direction = vector.Direction(worldCenter, pos);
+		m_vPosOrigin = pos + direction.Normalized() * distanceToStart;
+		SDRC_Misc.RandomizePos(m_vPosOrigin, 300);
 		
 		//Set end time for mission.
 		m_iFlyEndTime = m_Config.activeTime * 0.2;
@@ -471,14 +479,14 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		chopper.Set
 		(
 			{
-/*			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
+			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
 			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
 			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
 			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
 			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
 			 //From: https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcMissions
 			 "{EDF7AA9A54BFD6F8}Prefabs/Vehicles/Helicopters/Mi24/Mi24V_armed_UPK23_Patrol.et",
-			 "{842F4FB8DACE28D4}Prefabs/Vehicles/Helicopters/MI28/MI28N_Grey_Patrol.et",*/
+			 "{842F4FB8DACE28D4}Prefabs/Vehicles/Helicopters/MI28/MI28N_Grey_Patrol.et",
 			 //From: https://reforger.armaplatform.com/workshop/684F3C94BD457F85-KA-52forDarcMissions
 			 "{490B9AAF7C1DDF1B}Prefabs/Vehicles/Helicopters/KA52/KA52_UPK_X2_Patrol.et",			
 			},
