@@ -1,4 +1,4 @@
-//Helpers SDRC_SpawnerJsonApi.c
+//Helpers SDRC_DeathMarkerConfig.c
 
 // For readable jsons, use https://jsonformatter.org
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J

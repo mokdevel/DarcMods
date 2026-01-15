@@ -5,15 +5,13 @@
 // NOTE: Format .json in Notepad++ - press Ctrl+Alt+Shift+M
 
 //------------------------------------------------------------------------------------------------
-class SDRC_JsonApi : JsonApiStruct
+/*class SDRC_JsonApi_deprecated : JsonApiStruct
 {
 	private string m_FileName = "";
 				
 	//------------------------------------------------------------------------------------------------
-	/*!
-	Load the json config	
-	\param createMissingFiles Defines if the SDRC_Conf.OVERWRITE_JSON setting is to be respected. If false, overwrite of files will not happen.
-	*/
+	// Load the json config	
+	// \param createMissingFiles Defines if the SDRC_Conf.OVERWRITE_JSON setting is to be respected. If false, overwrite of files will not happen.
 	SCR_JsonLoadContext LoadConfig(bool createMissingFiles = true)
 	{	
 		SCR_JsonLoadContext loadContext = new SCR_JsonLoadContext();
@@ -97,4 +95,4 @@ class SDRC_JsonApi : JsonApiStruct
 				
 		m_FileName = path + fileName;
 	}	
-}	
+}	*/

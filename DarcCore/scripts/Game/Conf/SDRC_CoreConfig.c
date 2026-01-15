@@ -1,4 +1,4 @@
-//Helpers SDRC_CoreJsonApi.c
+//Helpers SDRC_CoreConfig.c
 
 // For readable jsons, use https://jsonformatter.org
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J , convert to readable format - press Ctrl+Alt+Shift+M
