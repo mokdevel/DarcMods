@@ -15,7 +15,7 @@ class SDRC_Camp : Managed
 	#endif
 	//Optional settings
 	#ifdef NEW_VERSION_WIP		
-		ref SDRC_MissionConfigSecondWave secondWave = null;
+		ref SDRC_MissionConfigQrf qrf = null;
 	#endif
 	ref SDRC_Loot loot = null;
 	ref array<ref SDRC_Structure> campItems = {};	

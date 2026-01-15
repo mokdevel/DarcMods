@@ -149,8 +149,12 @@ class SDRC_Mission : Managed
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
 	//Second wave object
+#ifndef NEW_VERSION_WIP	
 	private ref SDRC_MissionConfigSecondWave m_SecondWaveConf = new SDRC_MissionConfigSecondWave();
-	
+#endif
+#ifdef NEW_VERSION_WIP
+	private ref SDRC_MissionConfigQrf m_QrfConf = new SDRC_MissionConfigQrf();
+#endif
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
@@ -748,10 +752,19 @@ class SDRC_Mission : Managed
 	//------------------------------------------------------------------------------------------------
 	// Second Wave functionality
 	//------------------------------------------------------------------------------------------------
+	
+#ifndef NEW_VERSION_WIP	
 	void SetSecondWaveConf(SDRC_MissionConfigSecondWave secondWaveConf)
 	{
 		m_SecondWaveConf = secondWaveConf;
 	}
+#endif
+#ifdef NEW_VERSION_WIP
+	void SetQrfConf(SDRC_MissionConfigQrf qrfConf)
+	{
+		m_QrfConf = qrfConf;
+	}
+#endif	
 	
 	//------------------------------------------------------------------------------------------------
 	// Getters/Setters for information when no access to m_EntityList nor m_Groups
@@ -964,9 +977,9 @@ class SDRC_Mission : Managed
 	private void DoSecondWave()
 	{
 	#ifdef NEW_VERSION_WIP
-		if ( (m_SecondWaveConf.activation == GetSuccess()) || (m_SecondWaveConf.activation == SDRC_EMissionSuccess.WIN_OR_LOSE) )
+		if ( (m_QrfConf.activation == GetSuccess()) || (m_QrfConf.activation == SDRC_EMissionSuccess.WIN_OR_LOSE) )
 		{
-			if (SDRC_Misc.RandomFloat(0, 1) < m_SecondWaveConf.chance)
+			if (SDRC_Misc.RandomFloat(0, 1) < m_QrfConf.chance)
 			{
 				SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 				if (m_BaseGameMode)

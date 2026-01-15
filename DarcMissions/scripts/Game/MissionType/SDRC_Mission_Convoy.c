@@ -634,7 +634,7 @@ class SDRC_Convoy : Managed
 	float cruiseSpeed;						//Speed to drive in km/h.
 	//Optional settings
 	#ifdef NEW_VERSION_WIP	
-		ref SDRC_MissionConfigSecondWave secondWave = null;
+		ref SDRC_MissionConfigQrf qrf = null;
 	#endif
 	ref SDRC_Loot loot = null;	
 	

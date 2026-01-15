@@ -13,7 +13,8 @@ const int 	 DC_MISSIONCONFIG_FILE_FRAME_VER = 2;
 const string DC_MISSIONCONFIG_FILE_NONVALIDAREA = "dc_nonValidArea.json";
 const int 	 DC_MISSIONCONFIG_FILE_NONVALIDAREA_VER = 1;
 
-const string DC_MISSIONCONFIG_FILE_SECONDWAVE = "dc_secondWave.json";
+const string DC_MISSIONCONFIG_FILE_SECONDWAVE = "dc_qrf.json";
+const int DC_MISSIONCONFIG_FILE_SECONDWAVE_VER = 1;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionFrame
@@ -26,9 +27,11 @@ class SDRC_MissionFrame
 	
 	ref SDRC_JsonApi2 m_NonValidAreaJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_NONVALIDAREA);	
 	ref SDRC_NonValidAreaConfig m_ConfigNonValidArea = new SDRC_NonValidAreaConfig();	
-//	ref array<ref SDRC_NonValidArea> m_aNonValidAreas = {};
 
-	ref SDRC_SecondWaveJsonApi m_DC_SecondWaveJsonApi = new SDRC_SecondWaveJsonApi(DC_MISSIONCONFIG_FILE_SECONDWAVE);
+	ref SDRC_JsonApi2 m_QrfJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_SECONDWAVE);	
+	ref SDRC_QrfConfig m_ConfigQrf = new SDRC_QrfConfig();	
+	
+//	ref SDRC_SecondWaveJsonApi m_DC_SecondWaveJsonApi = new SDRC_SecondWaveJsonApi(DC_MISSIONCONFIG_FILE_SECONDWAVE);
 		
 	private string m_sWorldName;
 	private int m_iMissionCountDynamicMax;				//Max amount of dynamic missions
@@ -57,7 +60,10 @@ class SDRC_MissionFrame
 		//Load NonValidArea configuration from file
 		bool successNoNValid = m_NonValidAreaJsonApi.Load(m_ConfigNonValidArea, SDRC_Config.Cast(m_ConfigNonValidArea), DC_MISSIONCONFIG_FILE_NONVALIDAREA_VER);
 
-		if ( (!successFrame) || (!successNoNValid) )
+		//Load Qrf configuration from file
+		bool successQrf = m_QrfJsonApi.Load(m_ConfigQrf, SDRC_Config.Cast(m_ConfigQrf), DC_MISSIONCONFIG_FILE_NONVALIDAREA_VER);
+		
+		if ( (!successFrame) || (!successNoNValid) || (!successQrf) )
 		{
 			ShowFailure();
 			return;
@@ -67,8 +73,7 @@ class SDRC_MissionFrame
 //		m_ConfigNonValidArea.Populate(m_aNonValidAreas);
 
 		//Load waves for secondWave functionality
-		m_DC_SecondWaveJsonApi.Load();
-		m_DC_SecondWaveJsonApi.Populate();
+		m_ConfigQrf.Populate();
 		
 		//Update the setting for showing mission time left				
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
@@ -154,7 +159,7 @@ class SDRC_MissionFrame
 	protected void MissionCycleManager()
 	{		
 		#ifndef SDRC_RELEASE
-//			SDRC_DevHelper.TestMissionPositions();
+			SDRC_DevHelper.TestMissionPositions();
 		#endif	
 		
 		ref SDRC_Mission tmpDC_Mission = null;

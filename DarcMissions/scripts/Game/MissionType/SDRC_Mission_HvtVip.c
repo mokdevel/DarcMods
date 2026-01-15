@@ -243,7 +243,7 @@ class SDRC_HvtVip : Managed
 	ref array<string> buildingNames = {};
 	//Optional settings
 	#ifdef NEW_VERSION_WIP		
-		ref SDRC_MissionConfigSecondWave secondWave = null;
+		ref SDRC_MissionConfigQrf qrf = null;
 	#endif
 	string lootBox = "";					//The loot box
 	ref SDRC_Loot loot = null;

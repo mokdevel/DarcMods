@@ -81,6 +81,8 @@ sealed class SDRC_DevHelper
 	//------------------------------------------------------------------------------------------------
 	static void TestMissionPositions()
 	{
+		SDRC_MapMarkerHelper.DeleteMarker("DEV_HELPER");
+		
 		for (int i = 0;i < 250; i++)
 		{
 			vector pos = SDRC_Misc.GetRandomWorldPos();

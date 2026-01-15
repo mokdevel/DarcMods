@@ -40,7 +40,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		m_DC_Roadblock = m_Config.subMissions[idx];
 		HandleRequestGeneralVariables(m_DC_Roadblock.general, request);
 	#ifdef NEW_VERSION_WIP
-		SetSecondWaveConf(m_DC_Roadblock.secondWave);
+		SetQrfConf(m_DC_Roadblock.qrf);
 	#endif
 		
 		//Find a location for the mission
@@ -299,14 +299,12 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		);
 		
 		#ifdef NEW_VERSION_WIP
-			ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();		
-			secondWave.Set(
+			ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+			qrf.Set(
 				{0}, SDRC_EMissionSuccess.WIN,
-				1.0, {5, 20},
-				"Second Wave coming",
-				SDRC_EDifficulty.RANDOM, 0
+				1.0, {5, 20}
 			);
-			roadblock.secondWave = secondWave;
+			roadblock.qrf = qrf;
 		#endif
 		
 		ref SDRC_Loot loot = new SDRC_Loot();		

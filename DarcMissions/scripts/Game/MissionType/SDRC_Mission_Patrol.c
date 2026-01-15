@@ -178,7 +178,7 @@ class SDRC_Patrol : Managed
 		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
 	#endif
 	#ifdef NEW_VERSION_WIP		
-		ref SDRC_MissionConfigSecondWave secondWave = null;
+		ref SDRC_MissionConfigQrf qrf = null;
 	#endif
 }	
 

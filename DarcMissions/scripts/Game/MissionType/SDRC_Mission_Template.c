@@ -108,56 +108,26 @@ class SDRC_TemplateConfig : SDRC_MissionConfig
 	//Common for all
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	//Mission specific Variables here
-}
-
-//------------------------------------------------------------------------------------------------
-class SDRC_TemplateJsonApi : SDRC_JsonApi
-{
-	ref SDRC_TemplateConfig conf = new SDRC_TemplateConfig();
-		
-	//------------------------------------------------------------------------------------------------
-	void SDRC_TemplateJsonApi(string fileName)
-	{
-		SetFileName(fileName);
-	}
-			
-	//------------------------------------------------------------------------------------------------
-	bool Load(bool createMissingFiles = true)
-	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
-		if (!loadContext)
-		{
-			if (!createMissingFiles)
-			{
-				return false;
-			}
-			SetDefaults();
-			Save();
-			return true;
-		}
-		
-		loadContext.ReadValue("", conf);
-		return true;
-	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void Save()
+	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
 	{
-		SCR_JsonSaveContext saveContext = SaveConfigOpen();
-		saveContext.WriteValue("", conf);
-		SaveConfigClose(saveContext);
-	}	
-		
+		SDRC_TemplateConfig data = SDRC_TemplateConfig.Cast(T);
+		return saveContext.WriteValue("", data);
+	}		
+	
 	//------------------------------------------------------------------------------------------------
-	void SetDefaults()
+	override void SetDefaults()
 	{
+		super.SetDefaults();
+		
 		//Default
-		conf.missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		conf.general.markerIcon = SDRC_EMissionIcon.GM_MISSION_X_MAP;
+		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
+		general.markerIcon = SDRC_EMissionIcon.GM_MISSION_X_MAP;
 		//Mission specific		
-		conf.general.pos[0] = "0 0 0";
-		conf.general.posName = "any";
-		conf.general.title = "Template mission";
-		conf.general.info = "Some additional information for players";
-	}	
+		general.pos[0] = "0 0 0";
+		general.posName = "any";
+		general.title = "Template mission";
+		general.info = "Some additional information for players";		
+	}
 }
