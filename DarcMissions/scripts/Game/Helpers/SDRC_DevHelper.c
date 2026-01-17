@@ -11,7 +11,7 @@ sealed class SDRC_DevHelper
 	static void SDRC_DevDump()	
 	{
 //		GetGame().GetCallqueue().CallLater(ShowTestMessage, 2000, true);
-/*		SDRC_MapMarkerHelper.CreateMapMarker("0300 0 1400", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
+		SDRC_MapMarkerHelper.CreateMapMarker("0300 0 1400", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
 		SDRC_MapMarkerHelper.CreateMapMarker("0300 0 1400", SDRC_EMissionIconDifficulty.ICON_DIFF_0, "", "*", markerTypeString : "DARC_MISSION_DIFFICULTY");
 		SDRC_MapMarkerHelper.CreateMapMarker("0400 0 1400", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
 		SDRC_MapMarkerHelper.CreateMapMarker("0400 0 1400", SDRC_EMissionIconDifficulty.ICON_DIFF_1, "", "**", markerTypeString : "DARC_MISSION_DIFFICULTY");
@@ -52,7 +52,7 @@ sealed class SDRC_DevHelper
 		SDRC_MapMarkerHelper.CreateMapMarker("2800 0 1000", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, "DMC_B", "Chopper");
 		SDRC_MapMarkerHelper.CreateMapMarker("2900 0 1000", SDRC_EMissionIcon.GM_MISSION_CAR_SIDE_MAP, "DMC_B", "Car side");
 		SDRC_MapMarkerHelper.CreateMapMarker("3000 0 1000", SDRC_EMissionIcon.GM_MISSION_MEDAL_MAP, "DMC_B", "Medal");
-*/
+		SDRC_MapMarkerHelper.CreateMapMarker("3100 0 1000", SDRC_EMissionIcon.GM_MISSION_PORTAL_MAP, "DMC_B", "Medal");
 		
 //			vector pos = "4600 0 6100";
 //			SDRC_SpawnHelper.FindEmptyPos(pos, 300, 60);			

@@ -77,7 +77,7 @@ sealed class SDRC_Locations
 			}
 		}
 				
-		SDRC_Log.Add("[SDRC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Locations:GetLocations] Found locations: " + locationArray.Count(), LogLevel.DEBUG);
 		ShowDebugInfo(locationArray);
 	}
 	
@@ -113,7 +113,7 @@ sealed class SDRC_Locations
 			}			
 		}
 		
-		SDRC_Log.Add("[SDRC_Locations:GetLocations] Found locations:" + locationArray.Count(), LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Locations:GetLocations] Found locations: " + locationArray.Count(), LogLevel.DEBUG);
 		ShowDebugInfo(locationArray);
 		
 		//int etime = System.GetTickCount();

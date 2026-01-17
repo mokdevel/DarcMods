@@ -36,7 +36,7 @@
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 1;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -176,22 +176,22 @@ class SDRC_MissionFrameConfig : SDRC_Config
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-//			enemyFactions = {"USSR"};
+			enemyFactions = {"USSR"};
 //			enemyFactions = {"US"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION"};
 //			enemyFactions = {"BALLIEN_BC_FACTION"};
 //			enemyFactions = {"TF_RF"};
 //			enemyFactions = {"TF_US"};
-//			enemyFactions = {"RHS_ION"};
 //			enemyFactions = {"US","UK"};
 //			enemyFactions = {"UK"};
 //			enemyFactions = {"ChinesePLA"};
-			enemyFactions = {"JSDF_RAS"};
+//			enemyFactions = {"JSDF_RAS"};
 //			enemyFactions = {"FIA", "US"};
 //			enemyFactions = {"USSR", "FIA", "FIA", "FIA"};
 //			enemyFactions = {"RHS_USAF", "RHS_AFRF"};
 //			enemyFactions = {"USAF_USMC", "RHS_RF"};
+//			enemyFactions = {"RHS_ION"};
 //			enemyFactions = {"MEI"};
 //			enemyFactions = {"PLASTICBANDIT"};
 		
@@ -223,8 +223,8 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
 		
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
-			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
+			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
