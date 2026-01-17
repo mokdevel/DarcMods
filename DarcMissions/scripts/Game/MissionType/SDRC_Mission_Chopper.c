@@ -75,7 +75,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		vector direction = vector.Direction(worldCenter, pos);
 		m_vPosOrigin = pos + direction.Normalized() * distanceToStart;
 		SDRC_Misc.RandomizePos(m_vPosOrigin, 300);
-		
+
 		//Set end time for mission.
 		m_iFlyEndTime = m_Config.activeTime * 0.2;
 		m_iFlyEndTime = Math.ClampInt(m_iFlyEndTime, MIN_FLY_END_TIME, MAX_FLY_END_TIME);
@@ -155,8 +155,9 @@ class SDRC_Mission_Chopper : SDRC_Mission
 					vector pos = m_Vehicle.GetTransformAxis(2);
 					pos.Normalize();
 					pos = pos * size;
+					//TBD: Do a ResetFlyPath() to start a new path. Needs testing.
 					m_Vehicle_c.AddDestination(pos, true);
-					m_Vehicle_c.CreateFlyPath(m_Vehicle.GetOrigin(), true);
+					m_Vehicle_c.CreateFlyPath(m_Vehicle.GetOrigin(), true);		
 					m_Vehicle_c.SetSpeed(max : m_DC_Chopper.speed[1] * 1.5);
 				}
 				SetActiveTime(m_iFlyEndTime);
@@ -204,7 +205,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	{					
 		//Spawn vehicle
 		string resourceName	= SDRC_SpawnHelper.SelectResourceName(m_DC_Chopper.heliList);		
-		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Chopper.general.size, -1);
+//		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Chopper.general.size, -1);
+		m_Vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosOrigin, resourceName, m_DC_Chopper.general.size, -1);
 		
 		if (m_Vehicle)
 		{
@@ -386,7 +388,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,1,1,2,2,3,4,4};
+		missionList = {1};//{0,1,1,2,2,3,4,4};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 500;
@@ -480,7 +482,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		(
 			{
 			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
-			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
+/*			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
 			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
 			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
 			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
@@ -488,7 +490,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			 "{EDF7AA9A54BFD6F8}Prefabs/Vehicles/Helicopters/Mi24/Mi24V_armed_UPK23_Patrol.et",
 			 "{842F4FB8DACE28D4}Prefabs/Vehicles/Helicopters/MI28/MI28N_Grey_Patrol.et",
 			 //From: https://reforger.armaplatform.com/workshop/684F3C94BD457F85-KA-52forDarcMissions
-			 "{490B9AAF7C1DDF1B}Prefabs/Vehicles/Helicopters/KA52/KA52_UPK_X2_Patrol.et",			
+			 "{490B9AAF7C1DDF1B}Prefabs/Vehicles/Helicopters/KA52/KA52_UPK_X2_Patrol.et",		*/	
 			},
 			{40, 80},
 			{10, 30},

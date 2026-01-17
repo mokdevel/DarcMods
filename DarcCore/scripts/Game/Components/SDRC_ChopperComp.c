@@ -4,7 +4,7 @@
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
 #ifndef SDRC_RELEASE
-//	#define HELI_TESTING
+	#define HELI_TESTING
 #endif
 
 //------------------------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private vector m_vOriginalDestination;
 		
 	//Speed management
-	private const float SPEED_INTERVAL = 2;		
+	private const float SPEED_INTERVAL = 1.0;			//(seconds) Interval to modify speed of the helicopter
 	private const float SPEED_GAIN = 1.0;
 	private float m_fTimeSpeed = 0;
 
@@ -133,6 +133,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fDbgAngle;
 	private float m_fDbgAnglePitch;
 	private float m_fDbgAngleRoll;
+	private float m_fDbgAngleRollBack;
 	
 	//Runtime parameters
 	private int m_iClosestIndex;				//Closest point on spline to heli
@@ -454,18 +455,26 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fDbgAnglePitch);
 		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 0.5);
 						
-		//ROLL UP (YAW): Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
-		m_vRadRollBack = SDRC_Math.ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 0.6);
-	
-		//ROLL ON DIRECTION: See how steep we're turning. Roll the helicopter accordingly for more natural flight.
-//		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectors(heliVelocity, m_vHeliDirectionFuture);
-		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectors(m_vHeliForward, m_vHeliDirectionFuture);
-//		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectors(m_vHeliDirection, m_vHeliDirectionFuture);
-//		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectors(m_vHeliForward, m_vHeliDirection);
+		//ROLL ON DIRECTION: See how steep we're turning. Roll the helicopter accordingly for more natural flight. We only care about ZX plane.
+//		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(heliVelocity, m_vHeliDirectionFuture);
+		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliForward, m_vHeliDirectionFuture);
+//		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliDirection, m_vHeliDirectionFuture);
+//		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliForward, m_vHeliDirection);
+		
+/*		vector vec0 = m_vHeliForward;
+		vector vec1 = m_vHeliDirectionFuture;
+		vec0[1] = 0;
+		vec1[1] = 0;
+		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectors(vec0, vec1);*/
+		
 		m_fDbgAngleRoll = Math.Clamp(m_fDbgAngleRoll, -0.5, 0.5) * ROLL_ANGLE_MUL;
 		m_vRadRollVel = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliUp, m_fDbgAngleRoll);
 		m_vRadRollVel = SDRC_Math.ComputeAngularVelocity(heliUp, m_vRadRollVel, deltaTime);
 		
+		//ROLL UP (YAW): Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
+		m_fDbgAngleRollBack = SDRC_Math.GetAngleBetweenVectors(heliUp, vector.Up);
+		m_vRadRollBack = SDRC_Math.ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 0.6);
+	
 		//Dummy
 //		m_vRadRollVel = "0 0 0";
 //		m_vRadRollBack = "0 0 0";
@@ -492,14 +501,19 @@ class SDRC_ChopperComp : ScriptGameComponent
 			return;
 		}*/
 	#ifdef HELI_TESTING
+		//Start near airfield
 		origin = "800 50 2800";
 		destination = "1060 0 2450";		
+	
+		//Fly over hill	
+//		origin = "2000 0 1800";
+//		destination = "3000 0 2800";
 	#endif
 		
 		int worldSize = SDRC_Misc.GetWorldSize();
 		
 		//Clear any existing path points
-		m_vFlyPathPoints.Clear();
+		ResetFlyPath();
 		
 		//Set height for start and destination points
 		
@@ -525,7 +539,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Add points to path
 		m_vFlyPathPoints.Insert(origin);
 //		m_vFlyPathPoints.Insert(vector.Lerp(origin, destination, 0.2));
-		m_vFlyPathPoints.Insert(vector.Lerp(origin, destination, 0.5) + "50 0 50");	//NOTE: The added value is just to avoid the chopper to fly in straight line. Starts to wobble.
+		m_vFlyPathPoints.Insert(vector.Lerp(origin, destination, 0.3));// + "50 0 50");	//NOTE: The added value is just to avoid the chopper to fly in straight line. Starts to wobble.
 		m_vFlyPathPoints.Insert(destination);
 
 		if (!m_bAutoStart)	//With autostart, use the origin of the chopper spawn
@@ -534,16 +548,20 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 
 		SDRC_Spline3D.GenerateSplinePoints(m_vFlyPathPoints, m_vSplinePoints, -1);
+		
 		//Set final values
 		m_iClosestIndex = 2;
 		m_iOldClosestIndex = m_iClosestIndex;		
 		//Check that points are above ground
 		CheckSplinePoints(origin);
+		SDRC_DebugHelper.DrawPointList(m_vSplinePoints, m_sDid);
+		//Smooth the Up curve
+		SDRC_Spline3D.SmoothSplineUpOnly(m_vSplinePoints);
 		
 		m_fSpeed = 0.1;
 		m_fSpeedTarget = m_fSpeed;
 		
-		//Set chopper initial position		
+		//Set chopper initial position
 		owner.SetOrigin(m_vSplinePoints[0]);
 		vector angles = vector.Direction(owner.GetOrigin(), m_vSplinePoints[m_iClosestIndex]);
 		angles.Normalize();
@@ -566,7 +584,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	void CreateFlyPath(vector origin, bool force = false)
 	{
 		//Clear any existing path points
-		m_vFlyPathPoints.Clear();
+		ResetFlyPath();
 
 		//If we are the final destination, we stop creating waypoints and stop flying.
 		if (m_bFinalDestinationReached)
@@ -608,8 +626,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_iClosestIndex = 0;
 		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, origin, m_iClosestIndex, false);	//NOTE: This will set m_iClosestIndex
 		m_iOldClosestIndex = m_iClosestIndex;
+		
 		//Check that points are above ground
-		CheckSplinePoints(origin);
+		SDRC_DebugHelper.DrawPointList(m_vSplinePoints, m_sDid);
+		//Smooth the Up curve
+		SDRC_Spline3D.SmoothSplineUpOnly(m_vSplinePoints);
 		
 		if (m_vSplinePoints.IsEmpty())
 		{
@@ -621,6 +642,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 		SDRC_DebugHelper.DrawPointList(m_vFlyPathPoints, m_sDid, ARGB(10, 64, 64, 192));
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Clear the fly path as a preparation for a completely new path
+	*/
+	void ResetFlyPath()
+	{
+		m_vFlyPathPoints.Clear();
+	}
+	
 	//------------------------------------------------------------------------------------------------	
 	// FlyPoint fixing and sanity check
 	//------------------------------------------------------------------------------------------------	
@@ -755,10 +785,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 
 		#ifdef HELI_TESTING				
-			vector dest;
 			//Replace the provided destination for testing purposes
 		//	m_vFlyPathPoints.RemoveOrdered(m_vFlyPathPoints.Count() - 1);
 			m_vFlyDestinations.RemoveOrdered(m_vFlyDestinations.Count() - 1);
+		
+			//Testing near air field
+			vector dest;	
 		//	dest = "1600 0 2600";	//113 degrees 
 			dest = "1300 0 2900";	//64 degrees 
 		//	dest = "1000 0 2800";	//34 degrees 
@@ -783,7 +815,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			vector p0 = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 2];
 			vector p1 = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1];
 			vector p2 = destination;
-			float heliAngle = SDRC_Math.GetAngleBetweenThreePoints(p0, p1, p2, dir0, dir1);
+			float heliAngle = SDRC_Math.GetAngleBetweenThreePointsXZ(p0, p1, p2, dir0, dir1);
 
 			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Angle: " + heliAngle, LogLevel.SPAM);
 							
@@ -1072,7 +1104,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//						   	"TurnInternal:" + m_fTimeTurnInterval + "\n" +
 	//							"DbgAngle: " + m_fDbgAngle * Math.RAD2DEG + "\n" +
 	//							"DbgAnglePitch: " + m_fDbgAnglePitch * Math.RAD2DEG + "\n" +
-	//							"DbgAngleRoll: " + m_fDbgAngleRoll * Math.RAD2DEG + "\n" +
+								"DbgAngleRoll: " + m_fDbgAngleRoll * Math.RAD2DEG + "\n" +
+								"DbgAngleRollBack: " + m_fDbgAngleRollBack * Math.RAD2DEG + "\n" +
 	//							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n" 
 								"";
 			debugText = debugText + 

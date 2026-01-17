@@ -99,6 +99,52 @@ sealed class SDRC_Spline3D
 	}	
 
 	//------------------------------------------------------------------------------------------------
+	// Smooths ONLY the Up component of a spline
+	// X and Z remain unchanged	
+	static void SmoothSplineUpOnly(array<vector> points, int windowSize = 2)
+	{
+		int count = points.Count();
+		if (count < windowSize + 1)
+		{
+			return;
+		}
+		
+		// Copy original Y values
+		array<float> originalY = new array<float>();
+		
+		for (int i = 0; i < count; i++)
+		{
+			originalY.Insert(points[i][1]);
+		}
+	
+		// Smooth Y using sliding window
+		for (int i = 0; i < count; i++)
+		{
+			float sum = 0.0;
+			int samples = 0;
+	
+			for (int j = -windowSize; j <= windowSize; j++)
+			{
+				int idx = i + j;
+				if (idx < 0 || idx >= count)
+				{
+					continue;
+				}
+	
+				sum += originalY[idx];
+				samples++;
+			}
+	
+			if (samples > 0)
+			{
+				vector p = points[i];
+				p[1] = sum / samples; // modify ONLY Y
+				points[i] = p;
+			}
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	// \return degrees of roll
 	// \return vector Axis of the roll
 	static float ComputeSplineRoll(vector p0, vector p1, vector p2, out vector axis)

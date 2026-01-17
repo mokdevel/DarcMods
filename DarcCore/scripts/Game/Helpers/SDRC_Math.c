@@ -38,6 +38,36 @@ sealed class SDRC_Math
 	}	
 
 	//------------------------------------------------------------------------------------------------	
+	//\param angle in radians with sign
+	static float GetAngleBetweenVectorsXZ(vector v1, vector v2)
+	{
+		//Set Y to zero to set the XZ plane
+		v1[1] = 0;
+		v2[1] = 0;
+		
+	    // Normalize both vectors
+	    vector a = v1.Normalized();
+	    vector b = v2.Normalized();
+	
+	    // Dot product
+	    float dot = vector.Dot(a, b);
+	
+		// Cross product to get the sign
+	    vector axis = a * b;
+	    float sign = 1.0;
+	    if (axis[1] < 0.0)
+		{
+	        sign = -1.0;
+		}
+		
+	    // Clamp dot to avoid NaN from floating-point errors
+	    dot = Math.Clamp(dot, -1.0, 1.0);
+	
+	    // Return angle in radians
+	    return Math.Acos(dot) * sign;
+	}		
+	
+	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Get angle between (p1, p0) and (p1, p2).
 	
@@ -50,9 +80,9 @@ sealed class SDRC_Math
 	               V
 			       * (p0)
 	*/	
-	static float GetAngleBetweenThreePoints(vector p0, vector p1, vector p2, out vector dir0 = "0 0 0", out vector dir1 = "0 0 0")
+	static float GetAngleBetweenThreePointsXZ(vector p0, vector p1, vector p2, out vector dir0 = "0 0 0", out vector dir1 = "0 0 0")
 	{
-		//Use only ZX plane
+		//Use only XZ plane
 		p0[1] = 0;
 		p1[1] = 0;
 		p2[1] = 0;
