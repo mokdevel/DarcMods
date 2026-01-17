@@ -131,6 +131,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies
 			 "Cultists_Light", 											//Ballien Cultists
+			 "CloseProtectionTeam",										//RHS_ION
 			},	
 			{"_Base", "_NotSpawned", "_Remnants", "_Random", "_Heavy"},
 			{}
@@ -151,6 +152,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Cultists_Light", 											//Ballien Cultists
 			 "PLAGF_SentryTeam",										//PLA: Proper Sniper Group is missing
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing
+			 "CloseProtectionTeam",										//RHS_ION
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -170,6 +172,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Cultists_Medium", 										//Ballien Cultists
 			 "PLASTICBANDIT_FireTeam_Heavy",							//Bandit faction
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing			
+			 "CloseProtectionTeam",										//RHS_ION
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -189,6 +192,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Cultists_Light", 											//Ballien Cultists
 			 "PLASTICBANDIT_Squad",										//Bandit faction random team			
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing			
+			 "StaticSecurityTeam",										//RHS_ION						
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -208,6 +212,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Cultists_Light", 											//Ballien Cultists
 			 "PLASTICBANDIT_Squad",										//Bandit faction random team
 			 "JGSDF_2008_LightFireTeam",								//JSFD: Proper Group is missing
+			 "StaticSecurityTeam",										//RHS_ION			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -227,6 +232,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Cultists_Medium", 										//Ballien Cultists
 			 "PLASTICBANDIT_Squad",										//Bandit faction random team		
 			 "JGSDF_2008_LightFireTeam",								//JSFD: Proper Group is missing
+			 "CloseProtectionTeam",										//RHS_ION
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -247,6 +253,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 //			 "AmbientPatrol_Horde", "Zombies_Horde",					//Bacon Zombies	Hordes
 			 "Cultists_Horde", 											//Ballien Cultists
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing
+			 "QuickReactionForce",										//RHS_ION
 			},	
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -266,6 +273,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 //			 "CIV_Large", "FIA_Large", "USSR_Large", "Tier1_Large", 	//Bacon Zombies			
 			 "Cultists_Medium", 										//Ballien Cultists
 			 "PLASTICBANDIT_Squad",										//Bandit faction
+			 "MobileSecurityTeam",										//RHS_ION
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -286,6 +294,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Cultists_Light", 											//Ballien Cultists
 			 "PLASTICBANDIT_Patrol",									//Bandit faction
 			 "JGSDF_2008_LightFireTeam",								//JSFD: Proper Group is missing
+			 "CloseProtectionTeam",										//RHS_ION
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -308,6 +317,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Scav_Rookie", "Stalker_Rookie",							//Bandit faction
 			 "Civilian_Cultist", 										//Ballien Cultists
 			 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_1.et",	//Ballien Cultists
+			 "Marksman",												//RHS_ION
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -327,6 +337,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Civilian_Cultist", 							//Ballien Cultists
 			 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_2.et",	//Ballien Cultists
 			 "JGSDF_2008_Rifleman",							//JSFD: Proper Character is missing
+			 "ION_Scout",									//RHS_ION
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -367,6 +378,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Warrior_Cultist", 							//Ballien Cultists
 			 "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et",	//Ballien Cultists
 			 "JGSDF_2008_CC",								//JSFD: Proper Character is missing
+			 "ION_Scout",									//RHS_ION			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -386,6 +398,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Scav_Veteran", "Stalker_Veteran",				//Bandit faction			
 			 "Civilian_Cultist", 							//Ballien Cultists
 			 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et",	//Ballien Cultists
+			 "ION_Scout",									//RHS_ION			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -404,6 +417,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Stalker_Shadow", "Stalker_Legend",			//Bandit faction			
 			 "Kamikaze_Cultist",							//Ballien Cultists
 			 "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et",	//Ballien Cultists
+			 "ION_SL",										//RHS_ION			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -423,6 +437,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Warrior_Cultist", 							//Ballien Cultists
 			 "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et",	//Ballien Cultists
 			 "JGSDF_2008_TL",								//JSFD: Proper Character is missing
+			 "ION_SL",										//RHS_ION			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -465,6 +480,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Kamikaze_Cultist",							//Ballien Cultists
 			 "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et",	//Ballien Cultists
 			 "JGSDF_2008_Sniper",							//JSFD: Proper Character is missing
+			 "ION_Scout",									//RHS_ION			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
