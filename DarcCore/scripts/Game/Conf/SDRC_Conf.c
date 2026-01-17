@@ -5,13 +5,12 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-#define SDRC_RELEASE
+//#define SDRC_RELEASE
 //#define EXPERIMENTAL
 //#define NEW_VERSION_WIP		//New functionality (..that affects jsons)
 //#define DEBUG_DO_NOT_CLEAR	//Leave old visual debug lines etc on restart
 
 //TODO: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//Set SDRC_MissionConfigGeneral faction to be an array
 //Set SDRC_MissionConfigGeneral difficulty to be an array
 
 sealed class SDRC_Conf
@@ -26,6 +25,7 @@ sealed class SDRC_Conf
 	const int DESPAWN_ENTITY_USED_FOR_SIZE_DELAY = 5000;	//Time to delay the deletion of an entity that was used for defining the size or weapon used for finding the mag.
 	const int AI_SETTING_DELAY = 10000;
 	const int POSITION_RANDOMIZATION = 150;					//Randomization for position. 
+	const int SPAWN_ITEM_DELAY = 1000;						//Time used between AI/item spawns for example for Roadblock items
 	
 	//TBD: const int MISSION_END_TIME = 5000;				//Time to set for mission cycle when mission is set to end.
 	
