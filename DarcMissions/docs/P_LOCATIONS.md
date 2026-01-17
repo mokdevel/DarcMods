@@ -6,9 +6,13 @@ Note that you 'overload' certain value by defining it multiple times. For exampl
 ### EMapDescriptorType
 Below are the typical values selected from [EMapDescriptorType](https://community.bistudio.com/wikidata/external-data/arma-reforger/ArmaReforgerScriptAPIPublic/group__Map.html#ga18c4f596069370b50b7f842cf36d5686) .
 ```
+ 8 = MDT_FORESTSQUARE
 10 = MDT_CHURCH 	
 ..
 14 = MDT_BUNKER
+15 = MDT_FORTRESS
+..
+25 = MDT_FUELSTATION
 ..
 53 = MDT_POLICE	
 ..
@@ -23,9 +27,15 @@ Below are the typical values selected from [EMapDescriptorType](https://communit
 ..
 70 = MDT_NAME_RIDGE
 71 = MDT_NAME_VALLEY
+72 = MDT_PARKING
+..
+75 = MDT_CONSTRUCTION_SITE
 ..
 79 = MDT_BASE 	
 80 = MDT_PORT 	
 81 = MDT_AIRPORT 
+..
+84 = MDT_RADIO
 ```
+
 My humble wish for map makers is that please use the full range of ```EMapDescriptorTypes```. 

@@ -4,6 +4,11 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+Changed jsons - remove the files to receive updated ones.
+* dc_enemyConfig.json (Added RHS ION)
+
+Main features:
+* Support for RHS ION faction. Use ``RHS_ION`` as the faction. Mod is still under work so it lacks various groups and characters.
 
 ## 20260115
 Changed jsons - remove the files to receive updated ones.

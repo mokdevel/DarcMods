@@ -60,7 +60,7 @@ SDRC_MissionTypeConfig missionStatic : Static missions configurations.
 ## Factions
 The mission faction is defined in ``enemyFactions`` or individually per sub-mission. The supported factions are listed below.
 * ``US, USSR, FIA`` : Vanilla factions from Arma Reforger
-* ``RHS_USAF, RHS_AFRF``: RHS - [MOD](https://reforger.armaplatform.com/workshop/595F2BF2F44836FB-RHS-StatusQuo)
+* ``RHS_USAF, RHS_AFRF, RHS_ION``: RHS - [MOD](https://reforger.armaplatform.com/workshop/595F2BF2F44836FB-RHS-StatusQuo)
 * ``MEI`` : Middle East Insurgents - [MOD](https://reforger.armaplatform.com/workshop/64CEC8E005828E5D-MiddleEastInsurgents)
 * ``UK`` : British Forces - [MOD](https://reforger.armaplatform.com/workshop/5AE50EC5B8D6F4AE-BritishForces)
 * ``BALLIEN_BC_FACTION`` : Ballien Creatures - [MOD](https://reforger.armaplatform.com/workshop/6534B9CEB6D12EE7-BallienCreatures)
@@ -70,7 +70,6 @@ The mission faction is defined in ``enemyFactions`` or individually per sub-miss
 * ``JSDF_RAS`` : Japan Self-Defense Forces (JSDF) - [MOD](https://reforger.armaplatform.com/workshop/658809A83416F34D-JapanSelf-DefenseForces)
 
 Unsupported values
-* ``RHS_ION``
 * ``MEC``
 
 ## Difficulty
