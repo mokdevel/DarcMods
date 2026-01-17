@@ -215,7 +215,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 					}
 					else
 					{
-						GetGame().GetCallqueue().CallLater(MissionRun, 2*1000);		//Spawn stuff every two seconds
+						GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_ITEM_DELAY);		//Spawn stuff slowly
 						return;				
 					}				
 					break;

@@ -21,7 +21,6 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	private ref SDRC_Hunter m_DC_Hunter = new SDRC_Hunter();
 	
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 10;	//How many different spots to try for a mission before giving up	
-	private const int DC_GROUP_SPAWN_DELAY = 2000;			//Delay between AI group spawns
 	
 	private int m_iGroupsToSpawn = 0;	//Amount of groups to spawn
 	private int m_iGroupsSpawned = 0;	//The amount of groups spawned. Between spawns, a group may be killed so the total of m_Groups is not reliable to know the count.
@@ -164,7 +163,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		{
 			SDRC_Log.Add(("[SDRC_Mission_Hunter:MissionSpawn] " +  GetId() + " : Initiating spawn for group " + i + " of " + m_iGroupsToSpawn), LogLevel.DEBUG);
 			
-			GetGame().GetCallqueue().CallLater(SpawnGroup, (DC_GROUP_SPAWN_DELAY + i*1000), false);
+			GetGame().GetCallqueue().CallLater(SpawnGroup, (SDRC_Conf.SPAWN_ITEM_DELAY + i*1000), false);
 		}
 		
 		SDRC_Log.Add("[SDRC_Mission_Hunter:MissionSpawn] " +  GetId() + " : INIT ready. Changing to ACTIVE state", LogLevel.DEBUG);		
@@ -260,7 +259,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 			SDRC_Log.Add("[SDRC_Mission_Hunter:SpawnHunterGroup] " +  GetId() + " : Unable to find spawn point for group! Retrying...", LogLevel.WARNING);
 			
 			// Try again later
-			GetGame().GetCallqueue().CallLater(SpawnGroup, DC_GROUP_SPAWN_DELAY, false);
+			GetGame().GetCallqueue().CallLater(SpawnGroup, SDRC_Conf.SPAWN_ITEM_DELAY, false);
 		}
 	}
 
