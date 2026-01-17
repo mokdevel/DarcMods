@@ -87,13 +87,7 @@ sealed class SDRC_IconHelper
 			{
 				texture = "{FD181DB538595893}UI/Textures/Icons/gm_mission_Stash_map.edds";
 				break;
-			}
-			case SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP:
-			{				
-				texture = "{384CFFB2945C5D54}UI/Textures/Icons/gm_mission_Chopper_map.edds";
-				break;
-			}
-			
+			}			
 			case SDRC_EMissionIcon.GM_MISSION_BIOHAZARD_MAP:
 			{
 				texture = "{6C698741C70CAC62}UI/Textures/Icons/gm_mission_Biohazard_map.edds";
@@ -117,6 +111,26 @@ sealed class SDRC_IconHelper
 			case SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP:
 			{
 				texture = "{C2289A3C07D1846A}UI/Textures/Icons/gm_mission_Zombie_map.edds";
+				break;
+			}
+			case SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP:
+			{				
+				texture = "{384CFFB2945C5D54}UI/Textures/Icons/gm_mission_Chopper_map.edds";
+				break;
+			}
+			case SDRC_EMissionIcon.GM_MISSION_CAR_SIDE_MAP:
+			{				
+				texture = "{ECA02B72C95E3679}UI/Textures/Icons/gm_mission_Car_side_map.edds";
+				break;
+			}
+			case SDRC_EMissionIcon.GM_MISSION_MEDAL_MAP:
+			{				
+				texture = "{8324D4D762245B4D}UI/Textures/Icons/gm_mission_Medal_map.edds";
+				break;
+			}
+			case SDRC_EMissionIcon.GM_MISSION_PORTAL_MAP:
+			{				
+				texture = "{F94A25321E590851}UI/Textures/Icons/gm_mission_Portal_map.edds";
 				break;
 			}
 						
