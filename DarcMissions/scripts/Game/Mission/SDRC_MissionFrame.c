@@ -69,10 +69,7 @@ class SDRC_MissionFrame
 			return;
 		}		
 				
-		//Initialize NonValidAreas
-//		m_ConfigNonValidArea.Populate(m_aNonValidAreas);
-
-		//Load waves for secondWave functionality
+		//Load qrfs functionality
 		m_ConfigQrf.Populate();
 		
 		//Update the setting for showing mission time left				

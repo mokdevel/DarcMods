@@ -131,7 +131,8 @@ class SDRC_Mission : Managed
 	
 	//Common for all sub missions
 	private ref SDRC_MissionConfigGeneral m_General = new SDRC_MissionConfigGeneral();
-
+	private string m_sFaction;					//The faction in use for the mission
+	private SDRC_EDifficulty m_sDifficulty;		//The difficulty chosen for the mission
 	//Internals
 	private bool m_bRequested;					//The missions spawn was requested by a an external party (like GM)
 	private int m_iRequestId;					//An ID set by the requestor. Default -1 which means no special ID set.
@@ -359,8 +360,13 @@ class SDRC_Mission : Managed
 			{
 				general.loseMessage = request.general.loseMessage;
 			}
-						
+
+#ifdef NEW_VERSION_WIP									
+			if (!request.general.faction.IsEmpty())
+#endif			
+#ifndef NEW_VERSION_WIP									
 			if ( (request.general.faction != SDRC_DEFAULT) && (request.general.faction != "") )
+#endif			
 			{
 				//Use the factions requested
 				general.faction = request.general.faction;
@@ -386,10 +392,25 @@ class SDRC_Mission : Managed
 		
 		//TBD: Should this do a dump of mission settings?
 		
-		//Select and print out the faction for mission 
-		general.faction = SDRC_EnemyHelper.SelectEnemyFaction(general.faction);		
-		SetFaction(general.faction);
-		SetDifficulty(general.difficulty);		
+		//Select and print out the faction for mission
+#ifdef NEW_VERSION_WIP
+		string faction = "";
+		if (general.faction.Count() > 0)
+		{
+			faction = general.faction.GetRandomElement();
+		}
+		SDRC_EnemyHelper.SelectEnemyFaction(faction);
+#else		
+		string faction = SDRC_EnemyHelper.SelectEnemyFaction(general.faction);		
+#endif		
+		SetFaction(faction);
+		
+#ifdef NEW_VERSION_WIP
+		SDRC_EDifficulty difficulty = general.difficulty.GetRandomElement();
+#else		
+		SDRC_EDifficulty difficulty = general.difficulty;
+#endif		
+		SetDifficulty(difficulty);		
 	}	
 
 	//------------------------------------------------------------------------------------------------
@@ -640,19 +661,19 @@ class SDRC_Mission : Managed
 	//------------------------------------------------------------------------------------------------
 	string GetFaction()
 	{
-		return m_General.faction;
+		return m_sFaction;
 	}
 			
 	void SetFaction(string faction)
 	{
-		m_General.faction = faction;
+		m_sFaction = faction;
 		SDRC_Log.Add("[SDRC_Mission:SetFaction] " +  GetId() + " : " + faction, LogLevel.DEBUG);		
 	}
 
 	//------------------------------------------------------------------------------------------------
 	SDRC_EDifficulty GetDifficulty()
 	{
-		return m_General.difficulty;
+		return m_sDifficulty;
 	}
 			
 	void SetDifficulty(SDRC_EDifficulty difficulty)
@@ -668,7 +689,7 @@ class SDRC_Mission : Managed
 			}
 		}
 		
-		m_General.difficulty = difficulty;
+		m_sDifficulty = difficulty;
 		
 		SDRC_Log.Add("[SDRC_Mission:SetDifficulty] " +  GetId() + " : " + SCR_Enum.GetEnumName(SDRC_EDifficulty, difficulty) + " (" + difficulty + ")", LogLevel.DEBUG);		
 	}
@@ -748,23 +769,6 @@ class SDRC_Mission : Managed
 	{
 		return m_bRequested;
 	}	
-
-	//------------------------------------------------------------------------------------------------
-	// Second Wave functionality
-	//------------------------------------------------------------------------------------------------
-	
-#ifndef NEW_VERSION_WIP	
-	void SetSecondWaveConf(SDRC_MissionConfigSecondWave secondWaveConf)
-	{
-		m_SecondWaveConf = secondWaveConf;
-	}
-#endif
-#ifdef NEW_VERSION_WIP
-	void SetQrfConf(SDRC_MissionConfigQrf qrfConf)
-	{
-		m_QrfConf = qrfConf;
-	}
-#endif	
 	
 	//------------------------------------------------------------------------------------------------
 	// Getters/Setters for information when no access to m_EntityList nor m_Groups
@@ -942,7 +946,7 @@ class SDRC_Mission : Managed
 		SetActiveTime(m_iActiveTimeToEnd);
 		ResetActiveTime();
 		
-		DoSecondWave();
+		DoQrf();
 		GiveReward();
 	}
 	
@@ -967,30 +971,7 @@ class SDRC_Mission : Managed
 			ShowMarker();
 		}
 		
-		DoSecondWave();
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Check if second wave needs to be initialized.
-	*/
-	private void DoSecondWave()
-	{
-	#ifdef NEW_VERSION_WIP
-		if ( (m_QrfConf.activation == GetSuccess()) || (m_QrfConf.activation == SDRC_EMissionSuccess.WIN_OR_LOSE) )
-		{
-			if (SDRC_Misc.RandomFloat(0, 1) < m_QrfConf.chance)
-			{
-				SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
-				if (m_BaseGameMode)
-				{
-					int subIdx = 0;
-					SDRC_SecondWave wave = m_BaseGameMode.missionFrame.m_DC_SecondWaveJsonApi.GetWave(0);
-					SDRC_Log.Add("[SDRC_Mission:DoSecondWave] !Just for debugging! : idx:" + subIdx + " : " + wave.comment, LogLevel.DEBUG);
-				}
-			}
-		}		
-	#endif
+		DoQrf();
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -1065,6 +1046,47 @@ class SDRC_Mission : Managed
 		int currentTime = (System.GetTickCount() / 1000);		
 		m_iEndTime = currentTime + m_iActiveTime;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	// Quick Reaction Forces (QRF) functionality
+	//------------------------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------------------------
+#ifndef NEW_VERSION_WIP	
+	void SetSecondWaveConf(SDRC_MissionConfigSecondWave secondWaveConf)
+	{
+		m_SecondWaveConf = secondWaveConf;
+	}
+#endif
+#ifdef NEW_VERSION_WIP
+	void SetQrfConf(SDRC_MissionConfigQrf qrfConf)
+	{
+		m_QrfConf = qrfConf;
+	}
+#endif	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Check if QRF needs to be initialized.
+	*/
+	private void DoQrf()
+	{
+	#ifdef NEW_VERSION_WIP
+		if ( (m_QrfConf.activation == GetSuccess()) || (m_QrfConf.activation == SDRC_EMissionSuccess.WIN_OR_LOSE) )
+		{
+			if (SDRC_Misc.RandomFloat(0, 1) < m_QrfConf.chance)
+			{
+				SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+				if (m_BaseGameMode)
+				{
+					int subIdx = 0;
+					SDRC_Qrf qrf = m_BaseGameMode.missionFrame.m_ConfigQrf.GetQrf(0);
+					SDRC_Log.Add("[SDRC_Mission:DoSecondWave] !Just for debugging! : idx:" + subIdx + " : " + qrf.comment, LogLevel.DEBUG);
+				}
+			}
+		}		
+	#endif
+	}	
 		
 	//------------------------------------------------------------------------------------------------
 	// Misc functions
