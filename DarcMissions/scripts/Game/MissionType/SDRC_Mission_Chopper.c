@@ -157,7 +157,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 					pos.Normalize();
 					pos = pos * size;
 					m_Vehicle_c.ResetFlyPath();
-					m_Vehicle_c.AddDestination(pos, true);
+					m_Vehicle_c.AddDestination(pos, SDRC_EFlyPathPointType.FINAL);
 					m_Vehicle_c.CreateFlyPath(m_Vehicle.GetOrigin(), true);		
 					m_Vehicle_c.SetSpeed(max : m_DC_Chopper.speed[1] * 1.5);
 				}
@@ -389,7 +389,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0};//{0,1,1,2,2,3,4,4};
+		missionList = {2};//{1,2};//{0,1,1,2,2,3,4,4};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 500;
@@ -552,7 +552,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			},
 			{30, 60},
 			{7, 25},
-			{50, 200},
+			{100, 300},
 			SDRC_EHeliWaypointGenerationType.PATROL,	
 		);
 		
