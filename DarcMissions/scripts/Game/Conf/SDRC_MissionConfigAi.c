@@ -81,8 +81,7 @@ class SDRC_MissionConfigAi : Managed
 	//------------------------------------------------------------------------------------------------
 	/*! Return a proper perception value. 
 	
-	NOTE: mission and missionFrame difficulty affects the outcome	
-	TBD: I'm a little unsure how this in total affects, but I presume the higher is better.
+	NOTE: mission and missionFrame difficulty affects the outcome
 	*/
 	float GetPerception(SDRC_EDifficulty difficulty = SDRC_EDifficulty.NORMAL)
 	{

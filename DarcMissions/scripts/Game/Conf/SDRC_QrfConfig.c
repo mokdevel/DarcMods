@@ -59,12 +59,12 @@ class SDRC_QrfConfig : SDRC_Config
 
 class SDRC_Qrf : Managed
 {
-	int qrfIdx;								//Unique index for the wave. 
-	string comment;							//Generic comment to describe the mission. Not used in game.	
-	string vehicle;							//Vehicle resourcename
-	string info;												//Details for the hint shown for players
-	SDRC_EDifficulty difficulty;								//Difficulty for specific mission
-	int xp;														//Experience given
+	int qrfIdx;									//Unique index for the qrf. 
+	string comment;								//Generic comment to describe the mission. Not used in game.	
+	string vehicle;								//Vehicle resourcename
+	string info;								//Details for the hint shown for players
+	SDRC_EDifficulty difficulty;				//Difficulty for specific mission
+	int xp;										//Experience or other reward given
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();	
 
 	void Set(int qrfIdx_, string comment_, string vehicle_, string info_, SDRC_EDifficulty difficulty_, int xp_)

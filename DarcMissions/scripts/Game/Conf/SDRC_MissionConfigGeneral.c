@@ -82,7 +82,7 @@ class SDRC_MissionConfigGeneral : Managed
 		winMessage = winMessage_;
 		loseMessage = loseMessage_;
 #ifdef NEW_VERSION_WIP
-		if (faction_ != "")			//TBD: The parameter will be an array so this needs to fixed to handle that
+		if (faction_ != "")								//TBD: The parameter will be an array so this needs to fixed to handle that
 		{
 			faction.Clear();		
 			faction.Insert(faction_);
