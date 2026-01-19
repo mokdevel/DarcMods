@@ -4,11 +4,20 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+
+## 20260118
+Minor update mainly for helicopter flight model fixes.
+
 Changed jsons - remove the files to receive updated ones.
 * dc_enemyConfig.json (Added RHS ION)
 
 Main features:
 * Support for RHS ION faction. Use ``RHS_ION`` as the faction. Mod is still under work so it lacks various groups and characters.
+* Chopper mission: 
+  * Improved helicopter flight model. 
+  * Should not wobble anymore. 
+  * Faster flying. 
+  * Better handling of steep hills. 
 
 ## 20260115
 Changed jsons - remove the files to receive updated ones.
