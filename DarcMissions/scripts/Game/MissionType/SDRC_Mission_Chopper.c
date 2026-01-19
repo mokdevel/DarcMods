@@ -389,7 +389,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,1,1,2,2,3,4,4};
+		missionList = {0};//{0,1,1,2,2,3,4,4};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 500;
@@ -407,6 +407,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		subMissions.Insert(Chopper2());
 		subMissions.Insert(Chopper3());
 		subMissions.Insert(Chopper4());
+		subMissions.Insert(Chopper5());
 	};
 	
 	//----------------------------------------------------
@@ -659,5 +660,46 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		
 		return chopper;
 	}	
-			
+
+	//----------------------------------------------------
+	SDRC_Chopper Chopper5()
+	{
+		ref SDRC_Chopper chopper = new SDRC_Chopper();
+		chopper.general.Set(
+			5, "index 5: Landing chopper",
+			{"0 0 0", "0 0 0"}, 0,
+			{},
+			"any",
+			"Helicopter patroling",
+			"Avoid being seen.",
+			SDRC_EMissionWinCondition.AI_KILL_75,
+			"Helicopter is not your problem anymore.", 
+			"Helicopter lost track of you.",
+			"",
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
+			SDRC_EDifficulty.RANDOM,
+			0
+		);
+		chopper.ai.Set
+		(
+			{1, 2},
+			{"G_SMALL", "G_ADMIN", "G_RECON"},
+			30, 0.6,
+			{0, 0},
+			SDRC_EWaypointGenerationType.LOITER,
+			SDRC_EWaypointMoveType.LOITER,
+		);
+		chopper.Set
+		(
+			{
+			 "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et",
+			},
+			{35, 70},
+			{7, 25},
+			{0.2, 0.5},
+			SDRC_EHeliWaypointGenerationType.LANDING,	
+		);
+		
+		return chopper;
+	}					
 }
