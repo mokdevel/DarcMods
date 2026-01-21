@@ -5,8 +5,8 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-#define SDRC_RELEASE
-//#define ENABLE_QRF				//Enable QRF functionality
+//#define SDRC_RELEASE
+#define ENABLE_QRF				//Enable QRF functionality
 //#define NEW_VERSION_WIP			//New functionality (..that affects jsons)
 //#define EXPERIMENTAL
 //#define DEBUG_DO_NOT_CLEAR		//Leave old visual debug lines etc on restart

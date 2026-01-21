@@ -37,7 +37,7 @@ class SDRC_QrfConfig : SDRC_Config
 			0, "index 0: Light group",
 			"",
 			"",
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0,
 		    {}
 		);
@@ -63,16 +63,16 @@ class SDRC_QrfConfig : SDRC_Config
 //------------------------------------------------------------------------------------------------
 class SDRC_Qrf : Managed
 {
-	int qrfIdx;									//Unique index for the qrf. 
-	string comment;								//Generic comment to describe the mission. Not used in game.	
-	string vehicle;								//Vehicle resourcename
-	string info;								//Details for the hint shown for players
-	SDRC_EDifficulty difficulty;				//Difficulty for specific mission
-	int xp;										//Experience or other reward given
+	int qrfIdx;										//Unique index for the qrf. 
+	string comment;									//Generic comment to describe the mission. Not used in game.	
+	string vehicle;									//Vehicle resourcename
+	string info;									//Details for the hint shown for players
+	ref array<SDRC_EDifficulty> difficulty = {}; 	//Difficulty options for qrf
+	int xp;											//Experience or other reward given
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();	
-	ref array<string> modList = {};				//List of mods needed for this mission
+	ref array<string> modList = {};					//List of mods needed for this mission
 
-	void Set(int qrfIdx_, string comment_, string vehicle_, string info_, SDRC_EDifficulty difficulty_, int xp_, array<string> modList_)
+	void Set(int qrfIdx_, string comment_, string vehicle_, string info_, array<SDRC_EDifficulty> difficulty_, int xp_, array<string> modList_)
 	{
 		qrfIdx = qrfIdx_;
 		comment = comment_;

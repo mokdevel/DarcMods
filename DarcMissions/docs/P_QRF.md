@@ -15,7 +15,7 @@ int qrfIdx : Unique index for the qrf.
 string comment : Generic comment to describe the mission. Not used in game.
 string vehicle : Vehicle resourcename for QRF. 
 string info : Details for the hint shown for players
-SDRC_EDifficulty difficulty : Difficulty for specific mission
+array<SDRC_EMissionDifficulty> difficulty : Difficulty for qrf
 int xp : Experience or other reward given
 SDRC_MissionConfigAi ai : See AI parameters
 array<string> modList : (WIP, does nothing) The mods to search for loot. If left empty, all mods enabled will be searched. 
