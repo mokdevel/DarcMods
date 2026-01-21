@@ -10,8 +10,10 @@ No configuration options.
 ## Core config
 Example: [dc_deathMarkerConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcDeathMarker/ExampleConfigs/dc_deathMarkerConfig.json)
 ```
-int version : Version number of the file.
-string author : Author of the missions.
+jsonVersion : Version of the json structure. Do not modify.
+int version : Version number of the file for author use. Not used in game.
+string author : Author of the file. Not used in game.
+string comment : Generic comment to describe the file. Not used in game.
 int markerLifeTime : (seconds) How long the marker is visible on map.
 bool visibleOnlyToFaction : If true, the markers will only be visible for players in the same faction.
 ```
