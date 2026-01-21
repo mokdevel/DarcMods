@@ -1,21 +1,6 @@
 //------------------------------------------------------------------------------------------------
-// SECOND WAVE
+// Quick Reaction Force
 //------------------------------------------------------------------------------------------------
-
-#ifndef NEW_VERSION_WIP
-class SDRC_MissionConfigSecondWave : Managed
-{
-	ref array<int> subIdx = {};									//subIdx from which to choose
-	SDRC_EMissionSuccess activation = SDRC_EMissionSuccess.WIN;	//Which success activates the second wave
-	ref array<int> delay = {};									//(seconds) Delay min-max before spawning second wave
-	ref array<int> distance = {};								//min-max distance for the enemy spawn
-	string info;												//Details for the hint shown for players
-	SDRC_EDifficulty difficulty;								//Difficulty for specific mission
-	int xp;														//Experience given	
-}
-#endif
-
-#ifdef NEW_VERSION_WIP
 class SDRC_MissionConfigQrf : Managed
 {
 	ref array<int> subIdx = {};									//subIdx from which to choose
@@ -31,4 +16,3 @@ class SDRC_MissionConfigQrf : Managed
 		delay = delay_;
 	}	
 }
-#endif

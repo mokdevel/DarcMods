@@ -65,7 +65,9 @@ const string SDRC_DEFAULT = "default";
 class SDRC_MissionConfig : SDRC_Config
 {
 	//Default information
+	int version = 1;
 	string author = "darc";
+	string comment = "";
 	int missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;		//How often the mission is run
 	bool showMarker = true;
 	bool showHint = true;
@@ -73,9 +75,6 @@ class SDRC_MissionConfig : SDRC_Config
 	bool disableArsenal;										//Disable arsenal for vehicles so that no other items are found
 	ref array<ref int> missionList = {};						//The list of mission suids.
 	ref array<ref string> missionFiles = {};					//The list of mission files to load.
-	#ifndef NEW_VERSION_WIP	
-		ref array<ref SDRC_MissionConfigSecondWave> secondWave = {};	//TBD: This is not used anywhere. REMOVE!
-	#endif
 
 	void CreateMissionFiles()
 	{
@@ -149,13 +148,9 @@ class SDRC_Mission : Managed
 	private int m_iAIKillPercentageRandom;		//The random amount of AIs to kill (30%-100%)	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
-	//Second wave object
-#ifndef NEW_VERSION_WIP	
-	private ref SDRC_MissionConfigSecondWave m_SecondWaveConf = new SDRC_MissionConfigSecondWave();
-#endif
-#ifdef NEW_VERSION_WIP
+	//QRF object
 	private ref SDRC_MissionConfigQrf m_QrfConf = new SDRC_MissionConfigQrf();
-#endif
+	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
@@ -361,12 +356,8 @@ class SDRC_Mission : Managed
 				general.loseMessage = request.general.loseMessage;
 			}
 
-#ifdef NEW_VERSION_WIP									
+			general.faction.Clear();
 			if (!request.general.faction.IsEmpty())
-#endif			
-#ifndef NEW_VERSION_WIP									
-			if ( (request.general.faction != SDRC_DEFAULT) && (request.general.faction != "") )
-#endif			
 			{
 				//Use the factions requested
 				general.faction = request.general.faction;
@@ -393,23 +384,19 @@ class SDRC_Mission : Managed
 		//TBD: Should this do a dump of mission settings?
 		
 		//Select and print out the faction for mission
-#ifdef NEW_VERSION_WIP
 		string faction = "";
 		if (general.faction.Count() > 0)
 		{
 			faction = general.faction.GetRandomElement();
 		}
-		SDRC_EnemyHelper.SelectEnemyFaction(faction);
-#else		
-		string faction = SDRC_EnemyHelper.SelectEnemyFaction(general.faction);		
-#endif		
+		faction = SDRC_EnemyHelper.SelectEnemyFaction(faction);
 		SetFaction(faction);
-		
-#ifdef NEW_VERSION_WIP
-		SDRC_EDifficulty difficulty = general.difficulty.GetRandomElement();
-#else		
-		SDRC_EDifficulty difficulty = general.difficulty;
-#endif		
+
+		SDRC_EDifficulty difficulty	= SDRC_EDifficulty.RANDOM;
+		if (general.difficulty.Count() > 0)
+		{
+			difficulty = general.difficulty.GetRandomElement();
+		}
 		SetDifficulty(difficulty);		
 	}	
 
@@ -1058,18 +1045,10 @@ class SDRC_Mission : Managed
 	//------------------------------------------------------------------------------------------------
 	
 	//------------------------------------------------------------------------------------------------
-#ifndef NEW_VERSION_WIP	
-	void SetSecondWaveConf(SDRC_MissionConfigSecondWave secondWaveConf)
-	{
-		m_SecondWaveConf = secondWaveConf;
-	}
-#endif
-#ifdef NEW_VERSION_WIP
 	void SetQrfConf(SDRC_MissionConfigQrf qrfConf)
 	{
 		m_QrfConf = qrfConf;
 	}
-#endif	
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -1077,7 +1056,9 @@ class SDRC_Mission : Managed
 	*/
 	private void DoQrf()
 	{
-	#ifdef NEW_VERSION_WIP
+		//SDRC_Log.Add("[SDRC_Mission:DoQrf] QRF functionality not enabled yet. : idx:" + subIdx + " : " + qrf.comment, LogLevel.WARNING);
+		
+		#ifdef ENABLE_QRF
 		if ( (m_QrfConf.activation == GetSuccess()) || (m_QrfConf.activation == SDRC_EMissionSuccess.WIN_OR_LOSE) )
 		{
 			if (SDRC_Misc.RandomFloat(0, 1) < m_QrfConf.chance)
@@ -1087,11 +1068,11 @@ class SDRC_Mission : Managed
 				{
 					int subIdx = 0;
 					SDRC_Qrf qrf = m_BaseGameMode.missionFrame.m_ConfigQrf.GetQrf(0);
-					SDRC_Log.Add("[SDRC_Mission:DoSecondWave] !Just for debugging! : idx:" + subIdx + " : " + qrf.comment, LogLevel.DEBUG);
+					SDRC_Log.Add("[SDRC_Mission:DoQrf] !Just for debugging! : idx:" + subIdx + " : " + qrf.comment, LogLevel.DEBUG);
 				}
 			}
 		}		
-	#endif
+		#endif
 	}	
 		
 	//------------------------------------------------------------------------------------------------
