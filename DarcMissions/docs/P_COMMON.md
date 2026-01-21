@@ -59,12 +59,12 @@ DC_EMissionWinCondition winCondition =
   33 = FIND_IN_60 - Mission needs to be reached in 60 minutes
 string winMessage : Message to show when mission is completed
 string loseMessage : Message to show when mission fails.
-string faction : Faction for the mission. Setting as empty, works as the default to select from the enemyFactions.
+array<string> faction : Faction for the mission. Setting as empty or "", works as the default to select from the enemyFactions.
 string markerType : The marker type to use. Default is "DARC_MISSION".
   For Arma Reforger default ones, you can use "PLACED_MILITARY". Other mods may extend this.
   Leaving markerType empty will hide the icon. Also from GM view.
 int markerIcon : The index of the icon of defined markerType
-SDRC_EMissionDifficulty difficulty : Difficulty for specific mission
+array<SDRC_EMissionDifficulty> difficulty : Difficulty for specific mission
   0 = EASY
   1 = MODERATE
   2 = NORMAL
