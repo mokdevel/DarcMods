@@ -5,7 +5,7 @@ Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcM
 
 By default all mods are searched, but you can define a limited selection of mods to search in. The typical notation is ``"$ModName:"``. A properly created mod follows the same structure and keeps prefabs in the right places. 
 ```
-int version : See General parameters
+int jsonVersion : See General parameters
 string author : See General parameters
 array<string> modList : The mods to search for loot. If left empty, all mods enabled will be searched.
   Example:
