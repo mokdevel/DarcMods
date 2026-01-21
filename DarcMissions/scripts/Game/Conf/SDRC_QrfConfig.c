@@ -6,7 +6,9 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_QrfConfig : SDRC_Config
 {
+	int version = 1;
 	string author = "darc";
+	string comment = "";
 	ref array<ref SDRC_Qrf> qrfs = {};	//List of different waves
 	
 	//------------------------------------------------------------------------------------------------
@@ -36,7 +38,8 @@ class SDRC_QrfConfig : SDRC_Config
 			"",
 			"",
 			SDRC_EDifficulty.RANDOM,
-			0
+			0,
+		    {}
 		);
 		qrf.ai.Set(
 			{1, 1},
@@ -57,6 +60,7 @@ class SDRC_QrfConfig : SDRC_Config
 	}
 }
 
+//------------------------------------------------------------------------------------------------
 class SDRC_Qrf : Managed
 {
 	int qrfIdx;									//Unique index for the qrf. 
@@ -66,8 +70,9 @@ class SDRC_Qrf : Managed
 	SDRC_EDifficulty difficulty;				//Difficulty for specific mission
 	int xp;										//Experience or other reward given
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();	
+	ref array<string> modList = {};				//List of mods needed for this mission
 
-	void Set(int qrfIdx_, string comment_, string vehicle_, string info_, SDRC_EDifficulty difficulty_, int xp_)
+	void Set(int qrfIdx_, string comment_, string vehicle_, string info_, SDRC_EDifficulty difficulty_, int xp_, array<string> modList_)
 	{
 		qrfIdx = qrfIdx_;
 		comment = comment_;
@@ -75,5 +80,6 @@ class SDRC_Qrf : Managed
 		info = info_;
 		difficulty = difficulty_;
 		xp = xp_;
+		modList = modList_;
 	}		
 }

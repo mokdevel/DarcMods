@@ -31,8 +31,9 @@ class SDRC_SpawnSet : Managed
 //------------------------------------------------------------------------------------------------
 class SDRC_SpawnerConfig : SDRC_Config
 {
-	//Default information
+	int version = 1;
 	string author = "darc";
+	string comment = "";
 	//Spawner specific
 	bool spawnOnRoad;					//Spawn the cars on road
 	int spawnRndRadius;					//Random radius where the spawnName spawns. 

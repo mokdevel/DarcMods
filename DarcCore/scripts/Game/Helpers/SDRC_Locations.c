@@ -481,7 +481,7 @@ sealed class SDRC_Locations
 		EMapDescriptorType.MDT_HIDE,
 		EMapDescriptorType.MDT_BUSSTOP,
 		EMapDescriptorType.MDT_BUSSTATION,
-		EMapDescriptorType.MDT_ROAD,
+		//EMapDescriptorType.MDT_ROAD,
 		//EMapDescriptorType.MDT_FOREST,
 		EMapDescriptorType.MDT_CRANE,
 		EMapDescriptorType.MDT_TRANSFORMER,

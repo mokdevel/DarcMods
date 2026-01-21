@@ -11,7 +11,7 @@ const int DC_FILE_VERSION = 1;
 //------------------------------------------------------------------------------------------------
 class SDRC_Config : Managed
 {
-	int version = -1;
+	int jsonVersion = -1;
 	
 	bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
 	{
@@ -34,7 +34,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	bool Load(Managed T, SDRC_Config C, int version, bool createMissingFiles = true)
+	bool Load(Managed T, SDRC_Config C, int jsonVersion, bool createMissingFiles = true)
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
@@ -43,7 +43,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 			{
 				return false;
 			}
-			C.version = version;
+			C.jsonVersion = jsonVersion;
 			C.SetDefaults();
 			
 			Save(C, SDRC_Config.Cast(C));
@@ -60,12 +60,12 @@ class SDRC_JsonApi2 : JsonApiStruct
 		SDRC_Log.Add("[SDRC_JsonApi2:Load] Loading configuration from file: " + GetFileName(), LogLevel.NORMAL);
 		
 		int versionFromFile;
-		loadContext.ReadValue("version", versionFromFile);
+		loadContext.ReadValue("jsonVersion", versionFromFile);
 		
-		if (versionFromFile != version)
+		if (versionFromFile != jsonVersion)
 		{
 			SDRC_Log.Add("[SDRC_JsonApi2:Load] ------------------", LogLevel.ERROR);
-			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong version number: " + versionFromFile + " (expected: " + version + ") : " + GetFileName(), LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong jsonVersion number: " + versionFromFile + " (expected: " + jsonVersion + ") : " + GetFileName(), LogLevel.ERROR);
 			SDRC_Log.Add("[SDRC_JsonApi2:Load] Please delete the file and restart to receive an updated one: " + GetFileName(), LogLevel.ERROR);
 			SDRC_Log.Add("[SDRC_JsonApi2:Load] ------------------", LogLevel.ERROR);
 			return false;
@@ -79,7 +79,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 
 /*		SDRC_Config M = SDRC_Config.Cast(T);
 				
-		if (M.version == -1)
+		if (M.jsonVersion == -1)
 		{
 			SDRC_Log.Add("[SDRC_JsonApi2:Load] Error loading file: " + GetFileName(), LogLevel.ERROR);
 			return false;

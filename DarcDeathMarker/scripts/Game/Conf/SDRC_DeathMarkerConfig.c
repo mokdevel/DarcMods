@@ -6,8 +6,9 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_DeathMarkerConfig : SDRC_Config
 {
-	//Default information
+	int version = 1;
 	string author = "darc";
+	string comment = "";
 	//Spawner specific
 	int markerLifeTime;				//The lifetime of the marker after which the 
 	bool visibleOnlyToFaction;		//If true, the marker is only visible for other members in the same faction.

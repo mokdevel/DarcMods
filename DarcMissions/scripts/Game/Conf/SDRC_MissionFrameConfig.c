@@ -36,7 +36,7 @@
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 3;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 10;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -149,7 +149,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 				  2,  // 8 - HVTVIP
 				  2,  // 9 - HVTITEM
 				  2,  //10 - STASH
-				  2,  //11 - CHOPPER
+				  3,  //11 - CHOPPER
 			};
 			missionDifficultyList = {0,1,1,2,2,2,2,2,2,2,2,2,2,2,3,3,3,4,4};
 		
@@ -223,14 +223,14 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
 		
-			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL};
+			missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
