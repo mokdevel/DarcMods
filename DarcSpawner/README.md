@@ -21,8 +21,10 @@ A random index is chosen from ``spawnSetList`` and the indexed ``spawnSet`` is s
 Example: [dc_spawnerConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner/ExampleConfigs/dc_spawnerConfig.json)
 
 ```
-int version : Version id of the file
-string author : Author of the file
+jsonVersion : Version of the json structure. Do not modify.
+int version : Version number of the file for author use. Not used in game.
+string author : Author of the file. Not used in game.
+string comment : Generic comment to describe the file. Not used in game.
 bool spawnOnRoad : Spawn the cars on road. If no road network manager found, cars spawned around the map.
 int spawnRndRadius : Random radius where the spawnName spawns. Once a location is found, additional randomization is done to avoid vehicles to be always in the same spot.
 int containerCount : Amount of containers (cars, lootboxes, etc..) to spawn.
