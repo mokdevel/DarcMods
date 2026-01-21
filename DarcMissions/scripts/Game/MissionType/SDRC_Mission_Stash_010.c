@@ -52,9 +52,9 @@ class SDRC_StashConfig_010 : SDRC_StashConfig
 			SDRC_EMissionWinCondition.FIND_IN_15,
 			"Loot found.",
 			"Loot lost.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_STASH_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);		
 		stash.ai.Set(

@@ -173,13 +173,7 @@ class SDRC_Patrol : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
-	//Optional settings
-	#ifndef NEW_VERSION_WIP	
-		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
-	#endif
-	#ifdef NEW_VERSION_WIP		
-		ref SDRC_MissionConfigQrf qrf = null;
-	#endif
+	ref SDRC_MissionConfigQrf qrf = null;
 }	
 
 //------------------------------------------------------------------------------------------------
@@ -251,7 +245,7 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 		//Default
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;
 		showMarker = false;
-		missionList = {0,0,0,1,2,3};
+		missionList = {0};//{0,0,0,1,2,3};
 		//Mission specific
 		distanceToPlayer = 500;
 		//----------------------------------------------------
@@ -284,9 +278,11 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Patrol near %l is no more.",
 			"Patroling completed, the world is saved.", 
-			"",
+			{},
+//			{"", "FIA"},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
+//			{SDRC_EDifficulty.HARD, SDRC_EDifficulty.TOUGH},
 			0
 		);		
 		patrol.ai.Set(
@@ -323,9 +319,9 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Well done!",
 			"You're not a worthy enemy for this patrol.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);			
 		patrol.ai.Set(
@@ -357,9 +353,9 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The road from %l to %d is safe again.",
 			"Patrol left the area.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);		
 		patrol.ai.Set(
@@ -393,9 +389,9 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_50,
 			"Patrol cleared!",
 			"Such a small force was able to beat you.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);				
 		patrol.ai.Set(

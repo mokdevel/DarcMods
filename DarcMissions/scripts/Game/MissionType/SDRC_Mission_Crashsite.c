@@ -395,9 +395,9 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The loot was salvaged. Crash, burn, loot.",
 			"No loot for you today.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		crashsite.ai.Set
@@ -490,9 +490,9 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The loot box was secured.",
 			"The cargo was lost.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		crashsite.ai.Set

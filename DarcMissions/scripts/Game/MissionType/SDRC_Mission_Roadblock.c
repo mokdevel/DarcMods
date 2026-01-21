@@ -39,9 +39,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		}
 		m_DC_Roadblock = m_Config.subMissions[idx];
 		HandleRequestGeneralVariables(m_DC_Roadblock.general, request);
-	#ifdef NEW_VERSION_WIP
 		SetQrfConf(m_DC_Roadblock.qrf);
-	#endif
 		
 		//Find a location for the mission
 		vector pos = "0 0 0";
@@ -284,9 +282,9 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Roadblock cleared.",
 			"Road was kept safe as planned.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);
 		roadblock.ai.Set(
@@ -298,14 +296,12 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		
-		#ifdef NEW_VERSION_WIP
-			ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
-			qrf.Set(
-				{0}, SDRC_EMissionSuccess.WIN,
-				1.0, {5, 20}
-			);
-			roadblock.qrf = qrf;
-		#endif
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0}, SDRC_EMissionSuccess.WIN,
+			1.0, {5, 20}
+		);
+		roadblock.qrf = qrf;
 		
 		ref SDRC_Loot loot = new SDRC_Loot();		
 		array<string> lootItems = {
@@ -374,9 +370,9 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"These blocks can not stop you.",
 			"Scared of the enemy? %l is not a place for you.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);
 		roadblock.ai.Set(
@@ -521,9 +517,9 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Road cleared.",
 			"The road toll was too much for you.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);		
 		roadblock.ai.Set(
@@ -660,9 +656,9 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Gates do not stop you.",
 			"Guards has left road near %l.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);		
 		roadblock.ai.Set(
@@ -816,9 +812,9 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The area is cleared.",
 			"Car is fixed, guards left area near %l.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);		
 		roadblock.ai.Set(

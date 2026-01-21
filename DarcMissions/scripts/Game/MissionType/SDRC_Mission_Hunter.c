@@ -296,13 +296,7 @@ class SDRC_Hunter : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
-	//Optional settings
-	#ifndef NEW_VERSION_WIP	
-		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
-	#endif
-	#ifdef NEW_VERSION_WIP		
-		ref SDRC_MissionConfigQrf qrf = null;
-	#endif
+	ref SDRC_MissionConfigQrf qrf = null;
 }
 
 //------------------------------------------------------------------------------------------------
@@ -398,9 +392,9 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"You outsmarted the hunters.",
 			"Hunters lost track of you.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		hunter.ai.Set(
@@ -427,9 +421,9 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Sharpshooters were not that sharp.",
 			"Sharpshooters lost track of you.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		hunter.ai.Set(
@@ -460,9 +454,9 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Recon team cleared.",
 			"Recon team lost track of you.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		hunter.ai.Set(

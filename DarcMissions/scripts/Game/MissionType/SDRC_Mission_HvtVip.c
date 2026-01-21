@@ -237,14 +237,9 @@ class SDRC_HvtVip : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
-	#ifndef NEW_VERSION_WIP	
-		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
-	#endif
+	ref SDRC_MissionConfigQrf qrf = null;
+	//Mission specific
 	ref array<string> buildingNames = {};
-	//Optional settings
-	#ifdef NEW_VERSION_WIP		
-		ref SDRC_MissionConfigQrf qrf = null;
-	#endif
 	string lootBox = "";					//The loot box
 	ref SDRC_Loot loot = null;
 	string target;
@@ -356,9 +351,9 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.HVT_KILL_VIP,
 			"The target has been neutralized.",
 			"The target escaped.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);
 		HvtVip.ai.Set(
@@ -406,9 +401,9 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.HVT_KILL_VIP,
 			"The target has been neutralized.",
 			"The target escaped.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);
 		HvtVip.ai.Set(
@@ -457,9 +452,9 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.HVT_KILL_VIP,
 			"The target has been neutralized.",
 			"The target escaped.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);
 		HvtVip.ai.Set(
@@ -510,9 +505,9 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.HVT_KILL_VIP,
 			"The criminal got what he deserved.",
 			"The judgement day is postponed.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);
 		HvtVip.ai.Set(
@@ -561,9 +556,9 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.HVT_KILL_VIP,
 			"Free drinks for everyone!",
 			"No drinks for you this time.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);
 		HvtVip.ai.Set(

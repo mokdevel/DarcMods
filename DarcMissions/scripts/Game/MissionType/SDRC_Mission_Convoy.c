@@ -382,9 +382,9 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The convoy was successfully intercepted.",
 			"The convoy reached %d as planned.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		convoy.ai.Set(
@@ -450,9 +450,9 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Truck stopped, loot grabbed.",
 			"All the goodies in the truck was never for you.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		convoy.ai.Set(
@@ -520,9 +520,9 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Armor destroyed. Well done!",
 			"Were you scared of a piece metal? Cowards!", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		convoy.ai.Set(
@@ -584,9 +584,9 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Nice shooting!",
 			"Oh dear, your failure will be remembered.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		convoy.ai.Set(
@@ -627,15 +627,11 @@ class SDRC_Convoy : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();	
-	#ifndef NEW_VERSION_WIP	
-		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
-	#endif
+	ref SDRC_MissionConfigQrf qrf = null;
+	//Mission specific
 	ref array<string> vehicleTypes = {};
 	float cruiseSpeed;						//Speed to drive in km/h.
 	//Optional settings
-	#ifdef NEW_VERSION_WIP	
-		ref SDRC_MissionConfigQrf qrf = null;
-	#endif
 	ref SDRC_Loot loot = null;	
 	
 	void Set(array<string> vehicleTypes_, float cruiseSpeed_)

@@ -153,7 +153,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				{
 					float size = SDRC_Misc.GetWorldSize() * 0.7;
 //					vector pos = m_Vehicle.GetTransformAxis(2);
-					vector pos = m_Vehicle_c.GetDestination();
+					vector pos = m_Vehicle_c.GetCurrentDestination();
 					pos.Normalize();
 					pos = pos * size;
 					m_Vehicle_c.ResetFlyPath();
@@ -325,14 +325,7 @@ class SDRC_Chopper
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
-	//Optional settings
-	#ifndef NEW_VERSION_WIP	
-		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
-	#endif
-	#ifdef NEW_VERSION_WIP		
-		ref SDRC_MissionConfigQrf qrf = null;
-	#endif
-	
+	ref SDRC_MissionConfigQrf qrf = null;
 	//Mission specific
 	ref array<string> heliList = {};
 	ref array<int> flyHeight = {};						//min, max - Spawn helicopter between these values.
@@ -389,7 +382,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {2};//{1,2};//{0,1,1,2,2,3,4,4};
+		missionList = {0,1,1,2,2,3,4,4};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 500;
@@ -424,9 +417,9 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Helicopter is not your problem anymore.", 
 			"Helicopter lost track of you.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		chopper.ai.Set
@@ -466,9 +459,9 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Gunship funship .. it's gone.", 
 			"Gunship lost track of you.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		chopper.ai.Set
@@ -524,9 +517,9 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Guardians are now angels.", 
 			"Guards have left.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		chopper.ai.Set
@@ -575,9 +568,9 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Patrol does not bother you anymore.",
 			"Patrol has left.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		chopper.ai.Set
@@ -628,9 +621,9 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Search patrol avoided.", 
 			"Hunters are sent to your location.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		chopper.ai.Set
@@ -675,9 +668,9 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"Helicopter is not your problem anymore.", 
 			"Helicopter lost track of you.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		chopper.ai.Set

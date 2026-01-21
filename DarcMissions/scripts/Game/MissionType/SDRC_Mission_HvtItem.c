@@ -281,9 +281,9 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
 			"Target destroyed.",
 			"You failed in your mission!",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		hvtItem.ai.Set(
@@ -394,9 +394,9 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
 			"Supplies never reached the enemy. Good work!",
 			"The enemy will fight with their bellies full.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		hvtItem.ai.Set(
@@ -484,9 +484,9 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
 			"The comms are dead.",
 			"Enemy communication is working loud and clear.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		hvtItem.ai.Set(

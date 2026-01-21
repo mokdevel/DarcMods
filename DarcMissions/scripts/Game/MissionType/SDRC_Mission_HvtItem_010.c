@@ -53,9 +53,9 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
 			"The silo is now just a bunch bricks.",
 			"Material in the silo was secured by the enemy.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		hvtItem.ai.Set(
@@ -268,9 +268,9 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
 			"No cooking for the enemy.",
 			"Bellies full, the enemy left.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		hvtItem.ai.Set(
@@ -518,9 +518,9 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
 			"Enemy eyes are now shut.",
 			"Radar commmunication working as enemy wanted.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		hvtItem.ai.Set(

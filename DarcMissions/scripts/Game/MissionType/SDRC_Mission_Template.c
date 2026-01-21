@@ -107,7 +107,9 @@ class SDRC_TemplateConfig : SDRC_MissionConfig
 {
 	//Common for all
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
-	//Mission specific Variables here
+	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
+	ref SDRC_MissionConfigQrf qrf = null;
+	//Mission specific variables here
 	
 	//------------------------------------------------------------------------------------------------
 	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)

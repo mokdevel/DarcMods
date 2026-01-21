@@ -58,9 +58,9 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Spawns from hell are dead!",
 			"Are you scared of a few ghosts..?",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		occupation.ai.Set(
@@ -95,9 +95,9 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The living dead are just dead now.",
 			"You were tasty.",
-			"BACON_622120A5448725E3_FACTION",
+			{"BACON_622120A5448725E3_FACTION"},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		occupation.ai.Set(
@@ -132,9 +132,9 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The dead shall stay dead.",
 			"Oh the horrors. You were slain.",
-			"BACON_622120A5448725E3_FACTION",
+			{"BACON_622120A5448725E3_FACTION"},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		occupation.ai.Set(

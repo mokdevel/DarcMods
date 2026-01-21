@@ -194,14 +194,9 @@ class SDRC_Squatter : Managed
 {
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
-	#ifndef NEW_VERSION_WIP	
-		ref SDRC_MissionConfigSecondWave secondWave = new SDRC_MissionConfigSecondWave();	
-	#endif
+	ref SDRC_MissionConfigQrf qrf = null;
+	//Mission specific
 	ref array<string> buildingNames = {};
-	//Optional settings
-	#ifdef NEW_VERSION_WIP
-		ref SDRC_MissionConfigQrf qrf = null;
-	#endif
 	string lootBox = "";					//The loot box
 	ref SDRC_Loot loot = null;
 	
@@ -312,9 +307,9 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The loot has been secured.",
 			"Squatters cleaned the house and left you nothing.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);
 		squatter.ai.Set(
@@ -366,9 +361,9 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"You did it! Control in %l has been restored.",
 			"Control in %l has been lost.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);
 		squatter.ai.Set(
@@ -422,9 +417,9 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Guards have been eliminated.",
 			"Military has collected the loot and left.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);
 		squatter.ai.Set(
@@ -476,9 +471,9 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_50,
 			"Main enemy forces have been destroyed. Continue to keep an eye for rogues.",
 			"%l is in the hands of the enemy.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);
 		squatter.ai.Set(
@@ -530,9 +525,9 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_RANDOM,
 			"Your success will be remembered.",
 			"Your effort has been struck down.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);
 		squatter.ai.Set(
@@ -580,9 +575,9 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_50,
 			"%l is open for business once again.",
 			"Everything has been stolen.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0		
 		);
 		squatter.ai.Set(

@@ -230,9 +230,9 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Guard patrol eliminated.",
 			"The patrol kept %l safe from you. Pathetic.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		occupation.ai.Set(
@@ -269,9 +269,9 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"Camp cleared. Take the loot and leave.",
 			"The camp near %l was never destroyed. Bandits rule!",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		occupation.ai.Set(
@@ -354,9 +354,9 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"%l is free again!",
 			"The enemy was stronger this time.",
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		occupation.ai.Set(
@@ -441,9 +441,9 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"You stopped the get away. Enjoy the spoils.",
 			"Car was fixed and the loot was lost.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		occupation.ai.Set(
@@ -536,9 +536,9 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			"The camp is yours. Enjoy the loot and relax.",
 			"The camp was packed and the campers left with their car.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		occupation.ai.Set(
@@ -647,9 +647,9 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			"The ghost town neat %l has been cleared.",
 			"Enemies have left with the loot. Shame on you.", 
-			"",
+			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
-			SDRC_EDifficulty.RANDOM,
+			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		occupation.ai.Set(
