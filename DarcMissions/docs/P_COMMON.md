@@ -7,8 +7,10 @@ These parameters are in every mission.
 
 ## SDRC_MissionConfig
 ```
-int version : Version id of the file
-string author : Author of the file
+jsonVersion : Version of the json structure. Do not modify.
+int version : Version number of the file for author use. Not used in game.
+string author : Author of the file. Not used in game.
+string comment : Generic comment to describe the file. Not used in game.
 int missionCycleTime : (seconds) The cycle time the mission states are run
 bool showMarker : Show mission marker on map. False will disable markers.
 bool showHint : Show players a hint with details about the missions. False will disable hints.
