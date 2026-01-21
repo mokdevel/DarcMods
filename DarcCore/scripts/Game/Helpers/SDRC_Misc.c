@@ -297,6 +297,18 @@ sealed class SDRC_Misc
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Sets the current position to surface height
+	*/	
+	static vector SetPosToSurface(vector position)
+	{
+		float yp = SDRC_Misc.GetSurfaceYWithWater(position);
+		position[1] = yp;
+		
+		return position;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Check if two positions are within limit distance
 	\param pos0,pos1 Positions to check if they're within limit
 	\param limit How close the positions needs to be to return true
