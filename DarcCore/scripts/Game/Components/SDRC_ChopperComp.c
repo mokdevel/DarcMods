@@ -4,7 +4,7 @@
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
 #ifndef SDRC_RELEASE
-//	#define HELI_TESTING
+	#define HELI_TESTING
 
 	#ifdef HELI_TESTING
 //		#define HELI_TESTING_AIRPORT
@@ -129,7 +129,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private bool m_bDestroyed = false;					//If true, helicopter is considered destroyed and will not generate anymore fly points. AR physics handle the rest.
 	private bool m_bFinalDestination = false;			//If true, once reaching the last point, m_bDestroyed is set true. Heli will stop flying.
 	private bool m_bFinalDestinationReached = false;
-	private bool m_bDoLanding = false;					//If true, we're doing a landing at the destination
 	private int m_iDestinationPointAdd;
 	private float m_fTimeTurnInterval;
 	
@@ -183,6 +182,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 	//Id for debug items
 	private string m_sDid;
+	
+	//Landing related
+	const float TIME_TO_LAND = 3;				//(seconds)
+	private bool m_bDoLanding = false;			//If true, we're doing a landing at the destination
+	private bool m_bIsOnGround = false;			//If true, we have touched the ground
+	private float m_fTimeLanding;
 	
 	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
@@ -401,7 +406,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Set turn
 		SetTurn(owner, m_fTimeTurnInterval);				
-		HandleLanding();
+		HandleLanding(timeSlice);
 
 		SetVelocity(owner);
 				
@@ -439,51 +444,51 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector heliRoll = owner.GetTransformAxis(2);
 		
 		//SPEED: Set speed according to previous turns
-		//Consider height
-//		float angle = Math.AbsFloat(SDRC_Math.GetAngleBetweenVectors(m_vHeliForward, m_vHeliDirectionFuture));
 		//Ignore height component
 		float angle = Math.AbsFloat(SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliForward, m_vHeliDirectionFuture));
 		m_fDbgAngle = angle;
 		//Count the angle of the turn. The steeper the turn, the slower heli should be moving.
 		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);											//Was 1,90
 		m_fSpeedMul = m_fThrottle * (SPEED_GAIN - (m_fSpeedMul / SPEED_TURN_DIV));
-//		m_fSpeedMul = m_fPower * (SPEED_GAIN - (m_fSpeedMul / 25));	//45
-		
+
 		//In case we're landing, we need to modify the speed
 		m_fSpeedMul = m_fSpeedMul * m_fSpeedLandingMul;
-//		m_fSpeedMul = 1.0;
 		
 		m_fSpeedStart = m_fSpeed;
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
 		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
 		m_fTimeSpeed = 0;	//Start to change speed
-
-		//ROLL PITCH: Change pitch according to speed		
-//		m_fDbgAnglePitch = (m_fSpeedMul - 1) * PITCH_ANGLE_RAD;			//No idea why 4 is a good value. :-)
-//		m_fDbgAnglePitch = -1.5 + (1.0 - m_fSpeedMul) * PITCH_ANGLE_RADX;
-		m_fDbgAnglePitch = -1.3 + PITCH_ANGLE_RAD * m_fSpeedMul;
-//		m_fDbgAnglePitch = m_fSpeedMul * PITCH_ANGLE_RADX;
-		m_fDbgAnglePitch = Math.Clamp(m_fDbgAnglePitch, -0.5, 1.0);
-		m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fDbgAnglePitch);
-		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 0.2);
-						
-		//ROLL ON DIRECTION: See how steep we're turning. Roll the helicopter accordingly for more natural flight. We only care about ZX plane.
-		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliForward, m_vHeliDirectionFuture);
-		m_fDbgAngleRoll = Math.Clamp(m_fDbgAngleRoll, -0.5, 0.5) * ROLL_ANGLE_MUL;
-		m_vRadRollVel = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliUp, m_fDbgAngleRoll);
-		m_vRadRollVel = SDRC_Math.ComputeAngularVelocity(heliUp, m_vRadRollVel, deltaTime);
-		
+				
+		if (m_fSpeedLandingMul > 0.01)
+		{
+			//ROLL PITCH: Change pitch according to speed		
+			m_fDbgAnglePitch = -1.5 + PITCH_ANGLE_RAD * m_fSpeedMul;
+			m_fDbgAnglePitch = Math.Clamp(m_fDbgAnglePitch, -0.5, 1.0);
+			m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fDbgAnglePitch);
+			m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 0.2);
+							
+			//ROLL ON DIRECTION: See how steep we're turning. Roll the helicopter accordingly for more natural flight. We only care about ZX plane.
+			m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliForward, m_vHeliDirectionFuture);
+			m_fDbgAngleRoll = Math.Clamp(m_fDbgAngleRoll, -0.5, 0.5) * ROLL_ANGLE_MUL;
+			m_vRadRollVel = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliUp, m_fDbgAngleRoll);
+			m_vRadRollVel = SDRC_Math.ComputeAngularVelocity(heliUp, m_vRadRollVel, deltaTime);
+			
+			//Count the angular velocity
+			m_vAngularVel = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vHeliDirection, deltaTime);
+		}
+		else
+		{
+			//m_fSpeed = 0.001;
+			//Flatten the chopper
+			m_vAngularVel = vector.Zero;
+			m_vRadRollVel = vector.Zero;
+			//m_vRadRollBack = vector.Zero;
+			m_vRadRollPitch = vector.Zero;
+		}
+			
 		//ROLL UP (YAW): Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
 		m_fDbgAngleRollBack = SDRC_Math.GetAngleBetweenVectors(heliUp, vector.Up);
 		m_vRadRollBack = SDRC_Math.ComputeAngularVelocity(heliUp, vector.Up, deltaTime * 0.6);
-	
-		//Dummy
-//		m_vRadRollVel = "0 0 0";
-//		m_vRadRollBack = "0 0 0";
-//		m_vRadRollPitch = "0 0 0";
-		
-		//Count the angular velocity
-		m_vAngularVel = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vHeliDirection, deltaTime);
 		
 		owner.GetPhysics().SetAngularVelocity(m_vAngularVel + m_vRadRollVel + m_vRadRollBack + m_vRadRollPitch);
 	}
@@ -495,14 +500,19 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private void SetVelocity(IEntity owner)
 	{
 		//Set velocity
-		vector velVector = m_vDestination;
-		vector rotVector = owner.GetAngles();
-		velVector.Normalize();
-		float forceMultiplier = m_fSpeed;
-		float forceRotorUp = m_fRotorForce0 * ROTOR_FORCE_UP_MUL * 10;
+		vector velVector = vector.Zero;
 		
-		velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, velVector[1] * forceRotorUp * m_fRotorForceMultiplier, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
-		
+		if (!m_bIsOnGround)
+		{
+			velVector = m_vDestination;
+			vector rotVector = owner.GetAngles();
+			velVector.Normalize();
+			float forceMultiplier = m_fSpeed;
+			float forceRotorUp = m_fRotorForce0 * ROTOR_FORCE_UP_MUL * 10;
+			
+			velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, velVector[1] * forceRotorUp * m_fRotorForceMultiplier, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
+		}
+				
 		owner.GetPhysics().SetVelocity(velVector);
 	}
 	
@@ -537,70 +547,52 @@ class SDRC_ChopperComp : ScriptGameComponent
 	/*!	
 	Handle landing
 	*/
-	private void HandleLanding()
+	private void HandleLanding(float timeSlice)
 	{
 		const float LANDING_DISTANCE = 100;
-		const float HOVER_HEIGHT = 10;
+		const float HOVER_HEIGHT = 3;
+		const float LANDED_HEIGHT = 0.5;
 
 		if (m_bDoLanding)
 		{		
-			vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];
+			vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];			
 			float distance = vector.Distance(m_vOrigin, lastPt);
 
-			float mul = 1.0;
-			
 			if (distance < LANDING_DISTANCE)
 			{
-				m_vSplinePoints.Clear();
-				m_vSplinePoints.Insert(lastPt);
-				mul = distance / (LANDING_DISTANCE * 2);
-			}
-			
-/*			if (m_iFutureIndex == m_vSplinePoints.Count() - 1)
-			{
-				if (m_vOrigin[1] < SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + HOVER_HEIGHT)
-				{
-					SDRC_Log.Add("[SDRC_Mission_Chopper:HandleLanding] Hovering!", LogLevel.DEBUG);
-					mul = 0;
+				if (!m_Helicopter_s.HasAnyGroundContact())
+				{				
+					m_fTimeLanding += timeSlice;
+					m_fTimeLanding = Math.Clamp(m_fTimeLanding, 0, TIME_TO_LAND);
+	
+					//Set the last point on ground
+					lastPt[1] = SDRC_Misc.GetSurfaceYWithWater(lastPt) + LANDED_HEIGHT;
+					
+					float height = m_Helicopter_s.GetAltitudeAGL() - 1;
+					m_fRotorForceMultiplier = -1 * Math.Clamp(height, 0, 10);
+					
+					m_vSplinePoints.Clear();
+					m_vSplinePoints.Insert(lastPt);
+								
+					float mul = 1 - m_fTimeLanding / TIME_TO_LAND;
+	
+					//Helicopter to descend
+			        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0Orig * mul);
+			        m_Helicopter_s.SetThrottle(m_fThrottleOrig * mul);
+					m_fSpeedMin = 3;// * (mul / 2);
+					m_fSpeedLandingMul = mul;
 				}
-				
-				SDRC_Log.Add("[SDRC_Mission_Chopper:HandleLanding] Landing!", LogLevel.DEBUG);
-				//m_fRotorForceMultiplier = -10 * (1 - mul);
-				//m_fRotorForceMultiplier = -3 * (1 - mul);
-			}*/
-									
-			if (distance < LANDING_DISTANCE)
-			{
-				if (m_vOrigin[1] < SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + HOVER_HEIGHT)
+				else
 				{
-					//SDRC_Log.Add("[SDRC_Mission_Chopper:HandleLanding] Hovering!", LogLevel.DEBUG);
-					mul = 0;
+					SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);					
+					m_bIsOnGround = true;
+					m_Helicopter_s.EngineStop();
+					m_fSpeedMin = 0;
+					m_fSpeedLandingMul = 0;
+					m_fRotorForceMultiplier = 0;
 				}
-				
-				//m_fRotorForce0 = -1;//m_fRotorForce0Orig * mul * 0.25;
-		        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0Orig * mul);
-		        m_Helicopter_s.SetThrottle(m_fThrottleOrig * mul);
-				m_fSpeedLandingMul = mul;
-				m_fSpeedMin = 3;
 			}
 		}		
-				
-/*			
-			if (m_bDoLanding)
-			{		
-				float distance = vector.Distance(m_vOrigin, m_vSplinePoints[m_vSplinePoints.Count() - 1]);
-				
-				if (distance < LANDING_DISTANCE)
-				{
-					float mul = distance / LANDING_DISTANCE;
-					//m_fRotorForce0 = -1;//m_fRotorForce0Orig * mul * 0.25;
-					m_fRotorForceMultiplier = -10 * (1 - mul);
-			        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0 * mul);
-					m_fSpeedLandingMul = mul;
-					m_fSpeedMin = 0;
-				}
-			}
-		}*/
 	}		
 	
 	//------------------------------------------------------------------------------------------------	
@@ -674,7 +666,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Create initial flypath
 		AddFlyPathPoint(origin);
-		AddFlyPathPoint(vector.Lerp(origin, destination, 0.8));
+		AddFlyPathPoint(vector.Lerp(origin, destination, 0.7));
 //		AddFlyPathPoint(destination, fpType);
 		AddDestination(destination, fpType);
 
@@ -772,6 +764,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		array<vector> flyPathPoints = {};
 		GivePoints(flyPathPoints, m_vFlyPathPoints);
 		SDRC_Spline3D.GenerateSplinePoints(flyPathPoints, m_vSplinePoints, -1);
+		
 		//Search the closest indes from the spline start
 		m_iClosestIndex = 0;
 		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, origin, m_iClosestIndex, false);	//NOTE: This will set m_iClosestIndex
@@ -1061,6 +1054,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			destination = SDRC_Misc.SetPosToSurface(destination);
 			m_bDoLanding = true;
+			m_fTimeLanding = 0;
 		}
 		
 		m_vFlyPathPoints.Insert(new SDRC_FlyPathPoint(destination, type));		
