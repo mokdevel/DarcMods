@@ -4,7 +4,7 @@
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
 #ifndef SDRC_RELEASE
-	#define HELI_TESTING
+//	#define HELI_TESTING
 
 	#ifdef HELI_TESTING
 //		#define HELI_TESTING_AIRPORT
@@ -462,10 +462,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 		if (m_fSpeedLandingMul > 0.01)
 		{
 			//ROLL PITCH: Change pitch according to speed		
-			m_fDbgAnglePitch = -1.5 + PITCH_ANGLE_RAD * m_fSpeedMul;
+			m_fDbgAnglePitch = -1.45 + PITCH_ANGLE_RAD * m_fSpeedMul;
 			m_fDbgAnglePitch = Math.Clamp(m_fDbgAnglePitch, -0.5, 1.0);
 			m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fDbgAnglePitch);
-			m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 0.2);
+			m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 0.5);
 							
 			//ROLL ON DIRECTION: See how steep we're turning. Roll the helicopter accordingly for more natural flight. We only care about ZX plane.
 			m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliForward, m_vHeliDirectionFuture);
