@@ -220,6 +220,8 @@ sealed class SDRC_Spline3D
 
 		float tempDistanceSq;
 		vector segmentStart = points[index];
+		
+		//Find the distance to the last known closest point.
 		float minDistanceSq = vector.DistanceSq(point, segmentStart);
 
 		foreach (int i, vector segmentEnd : points)

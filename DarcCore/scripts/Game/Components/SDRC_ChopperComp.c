@@ -100,7 +100,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private const int TIME_TURN_INTERVAL_BASE = 40;		//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
 	
 	//Pitch
-	private const float PITCH_ANGLE_RAD = 80 * Math.DEG2RAD;	//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
+	private const float PITCH_ANGLE_RAD = 1 * Math.DEG2RAD;	//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
 	
 	//Roll 
 	private const float ROLL_ANGLE_MUL = 2.4;			//Multiplier for roll angle along the spline
@@ -350,7 +350,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_iDestinationPointAdd = Math.ClampInt(m_iDestinationPointAdd, 1, 3);
 		
 		//Find where we're going
-		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iClosestIndex, false);	//NOTE: This will set m_iNewClosestIndex
+		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iClosestIndex, false);	//NOTE: This will set m_iClosestIndex
 
 		if (m_iClosestIndex > m_iOldClosestIndex)
 		{
@@ -443,21 +443,27 @@ class SDRC_ChopperComp : ScriptGameComponent
 		float angle = Math.AbsFloat(SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliForward, m_vHeliDirectionFuture));
 		m_fDbgAngle = angle;
 		//Count the angle of the turn. The steeper the turn, the slower heli should be moving.
-		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);
+		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);											//Was 1,90
 		m_fSpeedMul = m_fThrottle * (SPEED_GAIN - (m_fSpeedMul / SPEED_TURN_DIV));
 //		m_fSpeedMul = m_fPower * (SPEED_GAIN - (m_fSpeedMul / 25));	//45
 		
 		//In case we're landing, we need to modify the speed
 		m_fSpeedMul = m_fSpeedMul * m_fSpeedLandingMul;
+//		m_fSpeedMul = 1.0;
 		
 		m_fSpeedStart = m_fSpeed;
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
 		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
 		m_fTimeSpeed = 0;	//Start to change speed
 
+		float PITCH_ANGLE_RADX = 45 * Math.DEG2RAD;
+		
 		//ROLL PITCH: Change pitch according to speed		
-		m_fDbgAnglePitch = (m_fSpeedMul - 4) * PITCH_ANGLE_RAD;			//No idea why 4 is a good value. :-)
-		m_fDbgAnglePitch = Math.Clamp(m_fDbgAnglePitch, -0.7, 0.7);		
+//		m_fDbgAnglePitch = (m_fSpeedMul - 1) * PITCH_ANGLE_RAD;			//No idea why 4 is a good value. :-)
+//		m_fDbgAnglePitch = -1.5 + (1.0 - m_fSpeedMul) * PITCH_ANGLE_RADX;
+		m_fDbgAnglePitch = -1.5 + m_fSpeedMul * PITCH_ANGLE_RADX;
+//		m_fDbgAnglePitch = m_fSpeedMul * PITCH_ANGLE_RADX;
+		//m_fDbgAnglePitch = Math.Clamp(m_fDbgAnglePitch, -0.4, 0.4);		
 		m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fDbgAnglePitch);
 		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 0.5);
 						
@@ -543,22 +549,68 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/
 	private void HandleLanding()
 	{
-		const float LANDING_DISTANCE = 150;
-		
+		const float LANDING_DISTANCE = 100;
+		const float HOVER_HEIGHT = 10;
+
 		if (m_bDoLanding)
 		{		
-			float distance = vector.Distance(m_vOrigin, m_vSplinePoints[m_vSplinePoints.Count() - 1]);
+			vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];
+			float distance = vector.Distance(m_vOrigin, lastPt);
+
+			float mul = 1.0;
 			
 			if (distance < LANDING_DISTANCE)
 			{
-				float mul = distance / LANDING_DISTANCE;
-				//m_fRotorForce0 = -1;//m_fRotorForce0Orig * mul * 0.25;
-				m_fRotorForceMultiplier = -10 * (1 - mul);
-		        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0 * mul);
-				m_fSpeedLandingMul = mul;
-				m_fSpeedMin = 0;
+				m_vSplinePoints.Clear();
+				m_vSplinePoints.Insert(lastPt);
+				mul = distance / (LANDING_DISTANCE * 2);
 			}
-		}
+			
+/*			if (m_iFutureIndex == m_vSplinePoints.Count() - 1)
+			{
+				if (m_vOrigin[1] < SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + HOVER_HEIGHT)
+				{
+					SDRC_Log.Add("[SDRC_Mission_Chopper:HandleLanding] Hovering!", LogLevel.DEBUG);
+					mul = 0;
+				}
+				
+				SDRC_Log.Add("[SDRC_Mission_Chopper:HandleLanding] Landing!", LogLevel.DEBUG);
+				//m_fRotorForceMultiplier = -10 * (1 - mul);
+				//m_fRotorForceMultiplier = -3 * (1 - mul);
+			}*/
+									
+			if (distance < LANDING_DISTANCE)
+			{
+				if (m_vOrigin[1] < SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + HOVER_HEIGHT)
+				{
+					SDRC_Log.Add("[SDRC_Mission_Chopper:HandleLanding] Hovering!", LogLevel.DEBUG);
+					mul = 0;
+				}
+				
+				//m_fRotorForce0 = -1;//m_fRotorForce0Orig * mul * 0.25;
+		        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0Orig * mul);
+		        m_Helicopter_s.SetThrottle(m_fThrottleOrig * mul);
+				m_fSpeedLandingMul = mul;
+				m_fSpeedMin = 3;
+			}
+		}		
+				
+/*			
+			if (m_bDoLanding)
+			{		
+				float distance = vector.Distance(m_vOrigin, m_vSplinePoints[m_vSplinePoints.Count() - 1]);
+				
+				if (distance < LANDING_DISTANCE)
+				{
+					float mul = distance / LANDING_DISTANCE;
+					//m_fRotorForce0 = -1;//m_fRotorForce0Orig * mul * 0.25;
+					m_fRotorForceMultiplier = -10 * (1 - mul);
+			        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0 * mul);
+					m_fSpeedLandingMul = mul;
+					m_fSpeedMin = 0;
+				}
+			}
+		}*/
 	}		
 	
 	//------------------------------------------------------------------------------------------------	
@@ -580,7 +632,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		#ifdef HELI_TESTING_LANDING
 			//Start near airfield
 			origin = "800 50 2800";
-			destination = "1060 0 2450";		
+			destination = "990 0 2560";		
 			m_bDoLanding = true;
 		#endif
 		
@@ -598,9 +650,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	#endif
 		
 		int worldSize = SDRC_Misc.GetWorldSize();
-		
-		//Clear any existing path points
-		ResetFlyPath();
 		
 		//Set height for start and destination points
 		
@@ -627,12 +676,17 @@ class SDRC_ChopperComp : ScriptGameComponent
 		SDRC_EFlyPathPointType fpType = SDRC_EFlyPathPointType.FLY;
 		
 		#ifdef HELI_TESTING_LANDING
-			SDRC_EFlyPathPointType fpType = SDRC_EFlyPathPointType.LAND;
+			fpType = SDRC_EFlyPathPointType.LAND;
 		#endif
 		
+		//Clear any existing path points
+		ResetFlyPath();
+		
+		//Create initial flypath
 		AddFlyPathPoint(origin);
-		AddFlyPathPoint(vector.Lerp(origin, destination, 0.5), fpType);
-		AddFlyPathPoint(destination, fpType);
+		AddFlyPathPoint(vector.Lerp(origin, destination, 0.8));
+//		AddFlyPathPoint(destination, fpType);
+		AddDestination(destination, fpType);
 
 		if (!m_bAutoStart)	//With autostart, use the origin of the chopper spawn
 		{
@@ -651,7 +705,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_iOldClosestIndex = m_iClosestIndex;
 		
 		//Check that points are above ground
-		CheckSplinePoints(origin);
+//		CheckSplinePoints(origin);
 		
 		//Smooth the Up curve
 		SDRC_Spline3D.SmoothSplineUpOnly(m_vSplinePoints);
@@ -735,7 +789,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Check that points are above ground
 		//SDRC_DebugHelper.DrawPointList(m_vSplinePoints, m_sDid);
-		CheckSplinePoints(origin);		
+		CheckSplinePoints(origin);
+		
 		//Smooth the Up curve
 		SDRC_Spline3D.SmoothSplineUpOnly(m_vSplinePoints);
 		
@@ -793,9 +848,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 			else
 			{
 				flyHeight = SDRC_Misc.RandomFloat(m_fFlyHeightLow, m_fFlyHeightHigh);
-				pt[1] = 0;	//We may in the future use the provided Y coord for the points. For now we set it to 0.
 			}
-			
+
+			pt[1] = 0;	//We may in the future use the provided Y coord for the points. For now we set it to 0.
 			pt[1] = pt[1] + flyHeight + y;			
 			m_vFlyPathPoints[i].pt = pt;
 		}
@@ -820,11 +875,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 		
 		//If landing, let's put last point on ground
-		if (m_bDoLanding)
+/*		if (m_bDoLanding)
 		{
 			int lastIdx = m_vSplinePoints.Count() - 1;
 			m_vSplinePoints[lastIdx] = SDRC_Misc.SetPosToSurface(m_vSplinePoints[lastIdx]) + "0 10 0";
-		}
+		}*/
 				
 /*		if (m_bDoLanding)
 		{
@@ -1014,7 +1069,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 		if (type == SDRC_EFlyPathPointType.LAND)
 		{
-//			destination = SDRC_Misc.SetPosToSurface(destination);
+			destination = SDRC_Misc.SetPosToSurface(destination);
 			m_bDoLanding = true;
 		}
 		
@@ -1277,7 +1332,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//						   	"SplinePoints:" + m_vSplinePoints.Count() + "\n" +
 	//						   	"TurnInternal:" + m_fTimeTurnInterval + "\n" +
 	//							"DbgAngle: " + m_fDbgAngle * Math.RAD2DEG + "\n" +
-	//							"DbgAnglePitch: " + m_fDbgAnglePitch * Math.RAD2DEG + "\n" +
+								"DbgAnglePitch: " + m_fDbgAnglePitch * Math.RAD2DEG + "\n" +
 	//							"DbgAngleRoll: " + m_fDbgAngleRoll * Math.RAD2DEG + "\n" +
 	//							"DbgAngleRollBack: " + m_fDbgAngleRollBack * Math.RAD2DEG + "\n" +
 	//							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n" 
