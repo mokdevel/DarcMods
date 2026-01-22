@@ -100,7 +100,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private const int TIME_TURN_INTERVAL_BASE = 40;		//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
 	
 	//Pitch
-	private const float PITCH_ANGLE_RAD = 1 * Math.DEG2RAD;	//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
+	private const float PITCH_ANGLE_RAD = 45 * Math.DEG2RAD;	//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
 	
 	//Roll 
 	private const float ROLL_ANGLE_MUL = 2.4;			//Multiplier for roll angle along the spline
@@ -110,8 +110,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private const int POINTS_TO_SPLINE_START = 4;		//Points to go back from m_iClosestIndex when creating a new flight path 
 	private const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
 //	private const int TIME_FORCE_MOVE_POINT = 20;		//(seconds) Time to wait before force moving a point. This is to fix situations where the chopper gets stuck on a point.
-	private const int TIME_FIX_FLIGHT = 10;				//(seconds) Time to wait between flight fixes when chopper is pointing to the sky.
 	private const float TIME_IN_INIT = 10;				//(seconds) Time to be in init state. During this time, we don't check for damage or similar things.
+
+	private const int FLIGHT_FIX_TIME = 10;				//(seconds) Time to wait between flight fixes when chopper is pointing to the sky.
+	private const int FLIGHT_FIX_ANGLE = 1.35;			//Angle that enforces 
 	
 	//Rotor force multipliers
 	private const float ROTOR_FORCE_MUL = 1.0;			//Rotor force multiplier. Bigger value makes the heli react faster to up/down movement
@@ -328,10 +330,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//In these case the helicopter up vector and world up vector is big.
 		bool bCreateNewPath = false;
 		float heliUpAngleToWorld = SDRC_Math.GetAngleBetweenVectors(owner.GetTransformAxis(1), vector.Up);	
-		if ( (heliUpAngleToWorld > 1.2) && (m_fTimeBetweenFixes < 0) )
+		if ( (heliUpAngleToWorld > FLIGHT_FIX_ANGLE) && (m_fTimeBetweenFixes < 0) )
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp] Fixing flight.", LogLevel.DEBUG);						
-			m_fTimeBetweenFixes = TIME_FIX_FLIGHT;	//Time between tries to fix the flight
+			m_fTimeBetweenFixes = FLIGHT_FIX_TIME;	//Time between tries to fix the flight
 			bCreateNewPath = true;
 		}
 		
@@ -456,29 +458,17 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
 		m_fTimeSpeed = 0;	//Start to change speed
 
-		float PITCH_ANGLE_RADX = 45 * Math.DEG2RAD;
-		
 		//ROLL PITCH: Change pitch according to speed		
 //		m_fDbgAnglePitch = (m_fSpeedMul - 1) * PITCH_ANGLE_RAD;			//No idea why 4 is a good value. :-)
 //		m_fDbgAnglePitch = -1.5 + (1.0 - m_fSpeedMul) * PITCH_ANGLE_RADX;
-		m_fDbgAnglePitch = -1.5 + m_fSpeedMul * PITCH_ANGLE_RADX;
+		m_fDbgAnglePitch = -1.3 + PITCH_ANGLE_RAD * m_fSpeedMul;
 //		m_fDbgAnglePitch = m_fSpeedMul * PITCH_ANGLE_RADX;
-		//m_fDbgAnglePitch = Math.Clamp(m_fDbgAnglePitch, -0.4, 0.4);		
+		m_fDbgAnglePitch = Math.Clamp(m_fDbgAnglePitch, -0.5, 1.0);
 		m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fDbgAnglePitch);
-		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 0.5);
+		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 0.2);
 						
 		//ROLL ON DIRECTION: See how steep we're turning. Roll the helicopter accordingly for more natural flight. We only care about ZX plane.
-//		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(heliVelocity, m_vHeliDirectionFuture);
 		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliForward, m_vHeliDirectionFuture);
-//		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliDirection, m_vHeliDirectionFuture);
-//		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliForward, m_vHeliDirection);
-		
-/*		vector vec0 = m_vHeliForward;
-		vector vec1 = m_vHeliDirectionFuture;
-		vec0[1] = 0;
-		vec1[1] = 0;
-		m_fDbgAngleRoll = SDRC_Math.GetAngleBetweenVectors(vec0, vec1);*/
-		
 		m_fDbgAngleRoll = Math.Clamp(m_fDbgAngleRoll, -0.5, 0.5) * ROLL_ANGLE_MUL;
 		m_vRadRollVel = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliUp, m_fDbgAngleRoll);
 		m_vRadRollVel = SDRC_Math.ComputeAngularVelocity(heliUp, m_vRadRollVel, deltaTime);
@@ -583,7 +573,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			{
 				if (m_vOrigin[1] < SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + HOVER_HEIGHT)
 				{
-					SDRC_Log.Add("[SDRC_Mission_Chopper:HandleLanding] Hovering!", LogLevel.DEBUG);
+					//SDRC_Log.Add("[SDRC_Mission_Chopper:HandleLanding] Hovering!", LogLevel.DEBUG);
 					mul = 0;
 				}
 				
@@ -665,8 +655,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Without autostart, randomize start height
 		if (!m_bAutoStart)	
 		{
-			origin[1] = SDRC_Misc.RandomFloat(m_fFlyHeightLow, m_fFlyHeightHigh);
-			destination[1] = SDRC_Misc.RandomFloat(m_fFlyHeightLow, m_fFlyHeightHigh);
+			origin[1] = SDRC_Misc.RandomFloat(m_fFlyHeightLow, m_fFlyHeightHigh) + SDRC_Misc.GetSurfaceYWithWater(origin);
+			destination[1] = SDRC_Misc.RandomFloat(m_fFlyHeightLow, m_fFlyHeightHigh) + SDRC_Misc.GetSurfaceYWithWater(destination);
 		}
 
 		//Store the original destination
@@ -1362,7 +1352,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		if (idx > m_vSplinePoints.Count() - 1)
 		{
 			idx = m_vSplinePoints.Count() - 1;			
-			SDRC_Log.Add("[SDRC_ChopperComp:DrawHelicopterVectors] Index fixed.", LogLevel.WARNING);
+			//SDRC_Log.Add("[SDRC_ChopperComp:DrawHelicopterVectors] Index fixed.", LogLevel.WARNING);
 		}
 						
 		//Planned destination
