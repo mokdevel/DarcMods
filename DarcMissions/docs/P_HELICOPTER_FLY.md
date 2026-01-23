@@ -81,8 +81,9 @@ The flight model is done as a component. You are free to use it in yours - credi
 - Use the guide above to set the necessary values.
 - Add the component.
 - Spawn and let it fly.
+- Dependency needed: [DarcCore](https://reforger.armaplatform.com/workshop/631EE12D448D7FCC-DarcCore) 
 
-There are a few public functions that you can use. For flyin to destination(s), use ``AddDestination()``. You can call it multiple times to create a fly path. The helicopter will not go exactly to the given point and this is by design. If you want it to fly over a location, set the point behind the location.
+There are a few public functions that you can use. For flying to destination(s), use ``AddDestination()``. You can call it multiple times to create a fly path. The helicopter will not go exactly to the given point and this is by design. If you want it to fly over a location, set the point behind the location.
 
 ## Issues
 There are various small things that are to be fixed in the future updates:
