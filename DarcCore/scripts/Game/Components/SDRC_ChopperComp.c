@@ -4,7 +4,7 @@
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
 #ifndef SDRC_RELEASE
-//	#define HELI_TESTING
+	#define HELI_TESTING
 
 	#ifdef HELI_TESTING
 //		#define HELI_TESTING_AIRPORT
@@ -34,6 +34,25 @@ enum SDRC_EFlyPathPointType
 	FINAL,
 	LAND,
 }
+
+enum SDRC_EHeliState
+{
+	UNKNOWN 		= 0, 
+	UNUSED			= 1 << 1,
+	FLY 			= 1 << 2,
+	DESTROYED		= 1 << 3,
+	LAND			= 1 << 4,
+	GROUND			= 1 << 5,
+	WAIT			= 1 << 6,
+	GETOUT			= 1 << 7,
+	RAISE			= 1 << 8,
+	
+	FINAL_REACHED  	= 1 << 14,
+	GO_FINAL   		= 1 << 15,
+	LANDING			= LAND + WAIT + GETOUT,
+	FLYING			= FLY + GO_FINAL + RAISE,
+}
+
 
 class SDRC_FlyPathPoint
 {
@@ -124,11 +143,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private const float WP_ANGLE = 60;					//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
 														//If chopper destination makes a too steep turn, we will add a few additional points.
 	
+	//Helistate
+	private SDRC_EHeliState m_eHeliState;
+	private bool m_bInInit;
+	
 	//Runtime parameters
-	private bool m_bInInit = true;						//While in init, consider the chopper to be flying.
-	private bool m_bDestroyed = false;					//If true, helicopter is considered destroyed and will not generate anymore fly points. AR physics handle the rest.
-	private bool m_bFinalDestination = false;			//If true, once reaching the last point, m_bDestroyed is set true. Heli will stop flying.
-	private bool m_bFinalDestinationReached = false;
 	private int m_iDestinationPointAdd;
 	private float m_fTimeTurnInterval;
 	
@@ -185,8 +204,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	
 	//Landing related
 	const float TIME_TO_LAND = 3;				//(seconds)
-	private bool m_bDoLanding = false;			//If true, we're doing a landing at the destination
-	private bool m_bIsOnGround = false;			//If true, we have touched the ground
 	private float m_fTimeLanding;
 	
 	//------------------------------------------------------------------------------------------------
@@ -198,6 +215,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 		
 		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp", LogLevel.NORMAL);
+		m_bInInit = true;
+		m_eHeliState = SDRC_EHeliState.FLY;
+		
 		s_Instance = this;
 		m_sDid = SDRC_Misc.GetCurrentTickTime().ToString();
 
@@ -263,13 +283,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
 		Activate(owner);
 		
-		#ifndef SDRC_RELEASE		
+/*		#ifndef SDRC_RELEASE		
 			SDRC_DebugHelper.DrawPointList(m_vSplinePoints, m_sDid);
 		
 			array<vector> flyPathPoints = {};
 			GivePoints(flyPathPoints, m_vFlyPathPoints);
 			SDRC_DebugHelper.DrawPointList(flyPathPoints, m_sDid, ARGB(10, 64, 64, 192));
-		#endif
+		#endif*/
 		
 		if (!m_bAutoStart)
 		{
@@ -317,7 +337,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		//If chopper is destroyed, let Reforger handle crash etc.
 		//Check if we're still working. Not needed every frame. //TBD: Could be done every x seconds - not that critical
-		if ( (m_bDestroyed) || (!IsStillWorking(owner)) )
+		if ( (m_eHeliState == SDRC_EHeliState.DESTROYED) || (!IsStillWorking(owner)) )
 		{
 			return;
 		}
@@ -345,7 +365,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//No need to do anything unless we are at the end of spline.
 		if ((m_iClosestIndex + m_iDestinationPointAdd + POINTS_TO_NEW_DISTANCE >= m_vSplinePoints.Count() - 1) || bCreateNewPath)
 		{
-			if (!m_bDoLanding)
+//			if (m_eHeliState != SDRC_EHeliState.LAND)
+			if (m_eHeliState == SDRC_EHeliState.FLY)
 			{
 				//Define a new destination and create a new path
 				CreateFlyPath(m_vOrigin);
@@ -463,7 +484,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			//ROLL PITCH: Change pitch according to speed		
 			m_fDbgAnglePitch = -1.45 + PITCH_ANGLE_RAD * m_fSpeedMul;
-			m_fDbgAnglePitch = Math.Clamp(m_fDbgAnglePitch, -0.5, 1.0);
+			m_fDbgAnglePitch = Math.Clamp(m_fDbgAnglePitch, -0.5, 0.8);
 			m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fDbgAnglePitch);
 			m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 0.5);
 							
@@ -502,7 +523,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Set velocity
 		vector velVector = vector.Zero;
 		
-		if (!m_bIsOnGround)
+		if (m_eHeliState != SDRC_EHeliState.GROUND)
 		{
 			velVector = m_vDestination;
 			vector rotVector = owner.GetAngles();
@@ -553,7 +574,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		const float HOVER_HEIGHT = 3;
 		const float LANDED_HEIGHT = 0.5;
 
-		if (m_bDoLanding)
+		if (m_eHeliState == SDRC_EHeliState.LAND)
 		{		
 			vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];			
 			float distance = vector.Distance(m_vOrigin, lastPt);
@@ -585,7 +606,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 				else
 				{
 					SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);					
-					m_bIsOnGround = true;
+					m_eHeliState = SDRC_EHeliState.GROUND;
 					m_Helicopter_s.EngineStop();
 					m_fSpeedMin = 0;
 					m_fSpeedLandingMul = 0;
@@ -615,7 +636,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			//Start near airfield
 			origin = "800 50 2800";
 			destination = "990 0 2560";		
-			m_bDoLanding = true;
+//			m_eHeliState == SDRC_EHeliState.LAND;
 		#endif
 		
 		#ifdef HELI_TESTING_AIRPORT
@@ -667,7 +688,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Create initial flypath
 		AddFlyPathPoint(origin);
 		AddFlyPathPoint(vector.Lerp(origin, destination, 0.7));
-//		AddFlyPathPoint(destination, fpType);
 		AddDestination(destination, fpType);
 
 		if (!m_bAutoStart)	//With autostart, use the origin of the chopper spawn
@@ -687,7 +707,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_iOldClosestIndex = m_iClosestIndex;
 		
 		//Check that points are above ground
-//		CheckSplinePoints(origin);
+		CheckSplinePoints(origin);
 		
 		//Smooth the Up curve
 		SDRC_Spline3D.SmoothSplineUpOnly(m_vSplinePoints);
@@ -723,16 +743,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 		ResetFlyPath();
 
 		//If we are the final destination, we stop creating waypoints and stop flying.
-		if (m_bFinalDestinationReached)
+		if (m_eHeliState == SDRC_EHeliState.FINAL_REACHED)
 		{
-			m_bDestroyed = true;
+			m_eHeliState = SDRC_EHeliState.DESTROYED;
 			return;
 		}
 		
 		//If final destination was requested, create the last waypoints.
-		if (m_bFinalDestination)
+		if (m_eHeliState == SDRC_EHeliState.GO_FINAL)
 		{
-			m_bFinalDestinationReached = true;
+			m_eHeliState = SDRC_EHeliState.FINAL_REACHED;
 		}
 		
 		if (!force)
@@ -1053,7 +1073,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		if (type == SDRC_EFlyPathPointType.LAND)
 		{
 			destination = SDRC_Misc.SetPosToSurface(destination);
-			m_bDoLanding = true;
+			m_eHeliState = SDRC_EHeliState.LAND;
 			m_fTimeLanding = 0;
 		}
 		
@@ -1105,7 +1125,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		if (type == SDRC_EFlyPathPointType.FINAL)
 		{
-			m_bFinalDestination	= true;
+			m_eHeliState == SDRC_EHeliState.GO_FINAL;
 		}
 	}	
 
@@ -1169,7 +1189,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 			return true;
 		}
 		
-		m_bDestroyed = true;
+		//Nope, we're done
+		m_eHeliState = SDRC_EHeliState.DESTROYED;	
 		SDRC_DebugHelper.DeleteDebugItems(m_sDid);
 		
 		//Set damage so it should be destroyed on crash
