@@ -439,10 +439,11 @@ class SDRC_MissionHelper
 	/*!
 	Create info to show to players.
 	*/	
-	static string CreateInfo(string msg, string location = "", string destination = "")
+	static string CreateInfo(string msg, string location = "", string destination = "", SDRC_EDifficulty difficulty = SDRC_EDifficulty.NORMAL)
 	{
 		msg = SCR_StringHelper.ReplaceMultiple(msg, {"%l"}, location);
 		msg = SCR_StringHelper.ReplaceMultiple(msg, {"%d"}, destination);
+		msg = SCR_StringHelper.ReplaceMultiple(msg, {"%x"}, SCR_Enum.GetEnumName(SDRC_EDifficulty, difficulty));
 		
 		SDRC_Log.Add("[SDRC_MissionHelper:CreateInfo] Message created: " + msg, LogLevel.SPAM);
 		return msg;
