@@ -213,16 +213,18 @@ class SDRC_MissionFrameConfig : SDRC_Config
 			missionDifficultyList = {0,1,2,3,4};
 //			missionDifficultyList = {0};
 		
-			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.HUNTER};
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY};		
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.PATROL};		
+			missionDynamic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.HUNTER};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.PATROL};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.STASH};
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 		
 			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
