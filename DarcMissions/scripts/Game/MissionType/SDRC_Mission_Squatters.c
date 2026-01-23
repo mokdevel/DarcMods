@@ -288,6 +288,11 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 	SDRC_Squatter Squatter0()
 	{
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Squatters near %l.",
+			"Building has squatters with loot",		
+			"The loot has been secured.",
+			"Squatters cleaned the house and left you nothing.",);
 		squatter.general.Set(
 			0, "index 0: Squatters in cities",
 			{"0 0 0"}, 0, 
@@ -302,11 +307,8 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_AIRPORT,
 			},
 			"any",
-			"Squatters near %l.",
-			"Building has squatters with loot",		
+			{message},		
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"The loot has been secured.",
-			"Squatters cleaned the house and left you nothing.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -349,6 +351,11 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 	SDRC_Squatter Squatter1()
 	{
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Enemy in %l",
+			"Control tower is being guarded.",		
+			"You did it! Control in %l has been restored.",
+			"Control in %l has been lost.",);
 		squatter.general.Set(
 			1, "index 1: Squatters in control towers",
 			{"0 0 0"}, 0,
@@ -356,11 +363,8 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 				//We pick any building that matches and ignore location
 			},
 			"any",
-			"Enemy in %l",
-			"Control tower is being guarded.",		
+			{message},		
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"You did it! Control in %l has been restored.",
-			"Control in %l has been lost.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -405,6 +409,11 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 	SDRC_Squatter Squatter2()
 	{
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Guards around %l",
+			"Military location has loot to steal.",		
+			"Guards have been eliminated.",
+			"Military has collected the loot and left.",);
 		squatter.general.Set(
 			2, "index 2: Squatters in military locations",
 			{"0 0 0"}, 0,
@@ -412,11 +421,8 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 				//We pick any building that matches and ignore location
 			},
 			"any",
-			"Guards around %l",
-			"Military location has loot to steal.",		
+			{message},		
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
-			"Guards have been eliminated.",
-			"Military has collected the loot and left.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -459,6 +465,11 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 	SDRC_Squatter Squatter3()
 	{
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Industrial area near %l",
+			"Military has seized control of an industrial area. Don't shoot the civilians.",
+			"Main enemy forces have been destroyed. Continue to keep an eye for rogues.",
+			"%l is in the hands of the enemy.",);
 		squatter.general.Set(
 			3, "index 3: Military in industrial areas",
 			{"0 0 0"}, 0,
@@ -466,11 +477,8 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 				//We pick any building that matches and ignore location
 			},
 			"any",
-			"Industrial area near %l",
-			"Military has seized control of an industrial area. Don't shoot the civilians.",
+			{message},		
 			SDRC_EMissionWinCondition.AI_KILL_50,
-			"Main enemy forces have been destroyed. Continue to keep an eye for rogues.",
-			"%l is in the hands of the enemy.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -513,6 +521,11 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 	SDRC_Squatter Squatter4()
 	{
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Sanctuary visitors near %l",
+			"Holy night, holy loot.",		
+			"Your success will be remembered.",
+			"Your effort has been struck down.",);
 		squatter.general.Set(
 			4, "index 4: Enemy in churches and similar",
 			{"0 0 0"}, 0,
@@ -520,11 +533,8 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 				//We pick any building that matches and ignore location
 			},
 			"any",
-			"Sanctuary visitors near %l",
-			"Holy night, holy loot.",		
+			{message},		
 			SDRC_EMissionWinCondition.AI_KILL_RANDOM,
-			"Your success will be remembered.",
-			"Your effort has been struck down.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -563,6 +573,11 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 	SDRC_Squatter Squatter5()
 	{
 		ref SDRC_Squatter squatter = new SDRC_Squatter();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Burglars seen near %l",
+			"Go rob the robbers.",		
+			"%l is open for business once again.",
+			"Everything has been stolen.",);
 		squatter.general.Set(
 			5, "index 5: Shops and houses",
 			{"0 0 0"}, 0,
@@ -570,11 +585,8 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 				//We pick any building that matches and ignore location
 			},
 			"any",
-			"Burglars seen near %l",
-			"Go rob the robbers.",		
+			{message},		
 			SDRC_EMissionWinCondition.AI_KILL_50,
-			"%l is open for business once again.",
-			"Everything has been stolen.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP,
 			{SDRC_EDifficulty.RANDOM},

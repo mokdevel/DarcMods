@@ -259,6 +259,11 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 	SDRC_Patrol Patrol0()
 	{
 		ref SDRC_Patrol patrol = new SDRC_Patrol();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Patrol spotted near %l",
+			"Intel tells them to travel to %d. Be careful while traveling on roads.",
+			"Patrol near %l is no more.",
+			"Patroling completed, the world is saved.",);
 		patrol.general.Set(
 			0, "index 0: Enemy patrols going between two points hopefully following roads",
 			{"0 0 0", "0 0 0"}, 2,
@@ -273,11 +278,8 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_NAME_RIDGE
 			},
 			"any",
-			"Patrol spotted near %l",
-			"Intel tells them to travel to %d. Be careful while traveling on roads.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
-			"Patrol near %l is no more.",
-			"Patroling completed, the world is saved.", 
 			{},
 //			{"", "FIA"},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
@@ -301,6 +303,11 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 	SDRC_Patrol Patrol1()
 	{
 		ref SDRC_Patrol patrol = new SDRC_Patrol();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Patrol in %l",
+			"Beware!",
+			"Well done!",
+			"You're not a worthy enemy for this patrol.",);
 		patrol.general.Set(
 			1, "index 1: Heavy patrol",
 			{"0 0 0", "0 0 0"}, 2,
@@ -314,11 +321,8 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_FORTRESS
 			},
 			"any",
-			"Patrol in %l",
-			"Beware!",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Well done!",
-			"You're not a worthy enemy for this patrol.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -340,6 +344,11 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 	SDRC_Patrol Patrol2()
 	{
 		ref SDRC_Patrol patrol = new SDRC_Patrol();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Patrol seen in %l",
+			"Be alert!",
+			"The road from %l to %d is safe again.",
+			"Patrol left the area.",);
 		patrol.general.Set(
 			2, "index 2: Enemy patrols between villages",
 			{"0 0 0", "0 0 0"}, 2,
@@ -348,11 +357,8 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_NAME_LOCAL
 			},
 			"any",
-			"Patrol seen in %l",
-			"Be alert!",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"The road from %l to %d is safe again.",
-			"Patrol left the area.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -376,6 +382,11 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 	SDRC_Patrol Patrol3()
 	{
 		ref SDRC_Patrol patrol = new SDRC_Patrol();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Enemy has been seen near %l",
+			"Caution is advised.",
+			"Patrol cleared!",
+			"Such a small force was able to beat you.",);
 		patrol.general.Set(			
 			3, "index 3: Small patrols with a few AIs",
 			{"0 0 0", "0 0 0"}, 2,
@@ -384,11 +395,8 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_NAME_LOCAL
 			},
 			"any",
-			"Enemy has been seen near %l",
-			"Caution is advised.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_50,
-			"Patrol cleared!",
-			"Such a small force was able to beat you.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP,
 			{SDRC_EDifficulty.RANDOM},

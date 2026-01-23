@@ -360,6 +360,11 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 	SDRC_Convoy Convoy0()
 	{
 		ref SDRC_Convoy convoy = new SDRC_Convoy();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Convoy is on the move.",
+			"Leaked travel plans show a route from %l to %d",
+			"The convoy was successfully intercepted.",
+			"The convoy reached %d as planned.",);
 		convoy.general.Set(
 			0, "index 0: Convoy driving from .. to ..",
 			{"0 0 0", "0 0 0"}, 5,
@@ -377,11 +382,8 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_AIRPORT
 			},
 			"any",
-			"Convoy is on the move.",
-			"Leaked travel plans show a route from %l to %d",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"The convoy was successfully intercepted.",
-			"The convoy reached %d as planned.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -427,6 +429,11 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 	SDRC_Convoy Convoy1()
 	{
 		ref SDRC_Convoy convoy = new SDRC_Convoy();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Cargo truck is on the move.",
+			"Follow the route from %l to %d",
+			"Truck stopped, loot grabbed.",
+			"All the goodies in the truck was never for you.",);
 		convoy.general.Set(
 			1, "index 1: Truck driving from .. to ..",
 			{"0 0 0", "0 0 0"}, 7,
@@ -445,11 +452,8 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_AIRPORT
 			},
 			"any",
-			"Cargo truck is on the move.",
-			"Follow the route from %l to %d",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Truck stopped, loot grabbed.",
-			"All the goodies in the truck was never for you.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
 			{SDRC_EDifficulty.RANDOM},
@@ -497,6 +501,11 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 	SDRC_Convoy Convoy2()
 	{
 		ref SDRC_Convoy convoy = new SDRC_Convoy();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Armor spotted",
+			"It's been seen in %l. It's to patrol to %d.",
+			"Armor destroyed. Well done!",
+			"Were you scared of a piece metal? Cowards!",); 
 		convoy.general.Set(
 			2, "index 2: Armor driving from .. to ..",
 			{"0 0 0", "0 0 0"}, 7,
@@ -515,11 +524,8 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_AIRPORT
 			},
 			"any",
-			"Armor spotted",
-			"It's been seen in %l. It's to patrol to %d.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Armor destroyed. Well done!",
-			"Were you scared of a piece metal? Cowards!", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,		
 			{SDRC_EDifficulty.RANDOM},
@@ -561,6 +567,11 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 	SDRC_Convoy Convoy3()
 	{
 		ref SDRC_Convoy convoy = new SDRC_Convoy();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Guns on the move",
+			"Look out for a patrol between %l and %d.",
+			"Nice shooting!",
+			"Oh dear, your failure will be remembered.",); 
 		convoy.general.Set(
 			3, "index 3: Vehicle with a gun driving from .. to ..",
 			{"0 0 0", "0 0 0"}, 4,
@@ -579,11 +590,8 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_AIRPORT
 			},
 			"any",
-			"Guns on the move",
-			"Look out for a patrol between %l and %d.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Nice shooting!",
-			"Oh dear, your failure will be remembered.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,
 			{SDRC_EDifficulty.RANDOM},

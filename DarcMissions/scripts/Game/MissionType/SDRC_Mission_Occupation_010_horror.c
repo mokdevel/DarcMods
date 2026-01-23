@@ -45,6 +45,11 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 	SDRC_Camp Occupation010()
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Creatures near %l",
+			"Avoid the location. No loot available.",
+			"Spawns from hell are dead!",
+			"Are you scared of a few ghosts..?",);
 		occupation.general.Set(
 			10, "index 10: Zombie and Demon characters.",
 			{"0 0 0"}, 3,
@@ -53,11 +58,8 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 				EMapDescriptorType.MDT_NAME_LOCAL
 			},
 			"any",
-			"Creatures near %l",
-			"Avoid the location. No loot available.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
-			"Spawns from hell are dead!",
-			"Are you scared of a few ghosts..?",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -82,6 +84,11 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 	SDRC_Camp Occupation011()
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Zombies near %l",
+			"Braaaainss.....",
+			"The living dead are just dead now.",
+			"You were tasty.",);
 		occupation.general.Set(
 			11, "index 11: Zombie hordes",
 			{"0 0 0"}, 3,
@@ -90,11 +97,8 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 				EMapDescriptorType.MDT_NAME_LOCAL
 			},
 			"any",
-			"Zombies near %l",
-			"Braaaainss.....",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"The living dead are just dead now.",
-			"You were tasty.",
 			{"BACON_622120A5448725E3_FACTION"},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -118,6 +122,11 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 	SDRC_Camp Occupation012()
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Horde of zombies seen near %l",
+			"Avoid getting yourself eaten.",
+			"The dead shall stay dead.",
+			"Oh the horrors. You were slain.",);
 		occupation.general.Set(
 			12, "index 12: Zombies",
 			{"0 0 0"}, 3,
@@ -127,11 +136,8 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 				EMapDescriptorType.MDT_NAME_SETTLEMENT,
 			},
 			"any",
-			"Horde of zombies seen near %l",
-			"Avoid getting yourself eaten.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"The dead shall stay dead.",
-			"Oh the horrors. You were slain.",
 			{"BACON_622120A5448725E3_FACTION"},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP,
 			{SDRC_EDifficulty.RANDOM},

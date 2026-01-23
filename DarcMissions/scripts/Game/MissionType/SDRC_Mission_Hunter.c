@@ -382,16 +382,18 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 	SDRC_Hunter Hunter0()
 	{		
 		ref SDRC_Hunter hunter = new SDRC_Hunter();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Hunters",
+			"They are coming for you... Last time they were seen close to %l.",
+			"You outsmarted the hunters.",
+			"Hunters lost track of you.",);
 		hunter.general.Set(
 			0, "index 0: general mission",
 			{"0 0 0"}, 2,
 			{},
 			"any",
-			"Hunters",
-			"They are coming for you... Last time they were seen close to %l.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
-			"You outsmarted the hunters.",
-			"Hunters lost track of you.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -411,16 +413,18 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 	SDRC_Hunter Hunter1()
 	{		
 		ref SDRC_Hunter hunter = new SDRC_Hunter();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Hunters",
+			"Sharpshooters are hunting you. Last known location was near %l.",
+			"Sharpshooters were not that sharp.",
+			"Sharpshooters lost track of you.",);		
 		hunter.general.Set(
 			1, "index 1: general mission",
 			{"0 0 0"}, 2,
 			{},
 			"any",
-			"Hunters",
-			"Sharpshooters are hunting you. Last known location was near %l.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
-			"Sharpshooters were not that sharp.",
-			"Sharpshooters lost track of you.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -440,6 +444,11 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 	SDRC_Hunter Hunter2()
 	{		
 		ref SDRC_Hunter hunter = new SDRC_Hunter();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Recon",
+			"Military base near %l has sent a recon team to hunt you.",
+			"Recon team cleared.",
+			"Recon team lost track of you.",);
 		hunter.general.Set(
 			2, "index 2: Hunters from military",
 			{"0 0 0"}, 2,
@@ -449,11 +458,8 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_FORTRESS,
 			},
 			"any",
-			"Recon",
-			"Military base near %l has sent a recon team to hunt you.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
-			"Recon team cleared.",
-			"Recon team lost track of you.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP,
 			{SDRC_EDifficulty.RANDOM},

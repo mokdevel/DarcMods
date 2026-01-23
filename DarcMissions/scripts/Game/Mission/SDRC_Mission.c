@@ -331,29 +331,18 @@ class SDRC_Mission : Managed
 				general.posName = request.general.posName;
 			}
 			
-			if (request.general.title != SDRC_DEFAULT)
+			if (request.general.messages)
 			{
-				general.title = request.general.title;
+				general.messages.Insert(request.general.messages[0]);
 			}
-
-			if (request.general.info != SDRC_DEFAULT)
+			else
 			{
-				general.info = request.general.info;
+				//Fill in some default texts...
 			}
 			
 			if (request.general.winCondition != SDRC_EMissionWinCondition.DEFAULT)
 			{
 				general.winCondition = request.general.winCondition;
-			}
-			
-			if (request.general.winMessage != SDRC_DEFAULT)
-			{
-				general.winMessage = request.general.winMessage;
-			}
-			
-			if (request.general.loseMessage != SDRC_DEFAULT)
-			{
-				general.loseMessage = request.general.loseMessage;
 			}
 
 			general.faction.Clear();
@@ -404,8 +393,7 @@ class SDRC_Mission : Managed
 	void UpdateGeneral(SDRC_MissionConfigGeneral general)
 	{
 		SetMarker(general.markerIcon, general.markerType);
-		SetHint(general.title, general.info);
-		SetMessages(general.winMessage, general.loseMessage);		
+		SetMessages(general.messages.GetRandomElement());
 		SetWinCondition(general.winCondition);
 		SetXP(general.xp);
 	}
@@ -513,44 +501,6 @@ class SDRC_Mission : Managed
 		m_General.posName = posname;
 	}
 
-	//------------------------------------------------------------------------------------------------
-	void SetShowHint(bool showHint)
-	{
-		m_bShowHint = showHint;
-	}
-	
-	bool IsShowHint()
-	{
-		return m_bShowHint;
-	}
-
-	//------------------------------------------------------------------------------------------------
-	void SetHint(string title, string info)
-	{
-		SetTitle(title);
-		SetInfo(info);
-	}
-	
-	string GetTitle()
-	{
-		return m_General.title;
-	}
-	
-	void SetTitle(string title)
-	{
-		m_General.title = FixString(title);
-	}
-
-	string GetInfo()
-	{		
-		return m_General.info;	//GetPosName() + " at " + GetPos();
-	}
-
-	void SetInfo(string info)
-	{		
-		m_General.info = FixString(info);
-	}
-	
 	//------------------------------------------------------------------------------------------------	
 	void SetWinCondition(SDRC_EMissionWinCondition winCondition)
 	{
@@ -587,6 +537,10 @@ class SDRC_Mission : Managed
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	// Message related
+	//------------------------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------------------------
 	void SetShowMessage(bool showMessage)
 	{
 		m_bShowMessage = showMessage;
@@ -598,30 +552,75 @@ class SDRC_Mission : Managed
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void SetMessages(string winMessage, string loseMessage)
+	void SetMessages(SDRC_MissionMessage message)
 	{
-		SetWinMessage(winMessage);
-		SetLoseMessage(loseMessage);
+		if (!message)
+		{
+			m_General.messages.Insert(new SDRC_MissionMessage());
+			SetTitle("Title missing");
+			SetInfo("Info missing");
+			SetWinMessage("Win message missing");
+			SetLoseMessage("Lose message missing");
+		}
+		else
+		{		
+			m_General.messages.Insert(message);
+			SetTitle(message.title);
+			SetInfo(message.info);
+			SetWinMessage(message.win);
+			SetLoseMessage(message.lose);
+		}
+	}
+	
+	string GetTitle()
+	{
+		return m_General.messages[0].title;
+	}
+	
+	void SetTitle(string title)
+	{
+		m_General.messages[0].title = FixString(title);
+	}
+
+	string GetInfo()
+	{		
+		return m_General.messages[0].info;	//GetPosName() + " at " + GetPos();
+	}
+
+	void SetInfo(string info)
+	{		
+		m_General.messages[0].info = FixString(info);
 	}
 	
 	string GetWinMessage()
 	{
-		return m_General.winMessage;
+		return m_General.messages[0].win;
 	}
 	
 	void SetWinMessage(string message)
 	{
-		m_General.winMessage = FixString(message);
+		m_General.messages[0].win = FixString(message);
 	}
 	
 	string GetLoseMessage()
 	{
-		return m_General.loseMessage;
+		return m_General.messages[0].lose;
 	}
 	
 	void SetLoseMessage(string message)
 	{
-		m_General.loseMessage = FixString(message);
+		m_General.messages[0].lose = FixString(message);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void SetShowHint(bool showHint)
+	{
+		m_bShowHint = showHint;
+	}
+	
+	bool IsShowHint()
+	{
+		return m_bShowHint;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -1089,7 +1088,7 @@ class SDRC_Mission : Managed
 			destinationName = SDRC_Locations.CreateName(m_General.pos[1], "any");			
 		}
 		
-		info = SDRC_MissionHelper.CreateInfo(info, GetPosName(), destinationName);
+		info = SDRC_MissionHelper.CreateInfo(info, GetPosName(), destinationName, GetDifficulty());
 		return info;
 	}
 

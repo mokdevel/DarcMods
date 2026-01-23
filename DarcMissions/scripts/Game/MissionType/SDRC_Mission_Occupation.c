@@ -217,6 +217,11 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 	SDRC_Camp Occupation0()
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Guards patroling near %l",
+			"Avoid the location. Loot has already been lost.",
+			"Guard patrol eliminated.",
+			"The patrol kept %l safe from you. Pathetic.",);
 		occupation.general.Set(
 			0, "index 0: Mission in villages and local areas.",
 			{"0 0 0"}, 3,
@@ -225,11 +230,8 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_NAME_LOCAL
 			},
 			"any",
-			"Guards patroling near %l",
-			"Avoid the location. Loot has already been lost.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
-			"Guard patrol eliminated.",
-			"The patrol kept %l safe from you. Pathetic.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -251,6 +253,11 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 	SDRC_Camp Occupation1()
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Bandit camp near %l",
+			"Bandits are protecting their valuable loot.",
+			"Camp cleared. Take the loot and leave.",
+			"The camp near %l was never destroyed. Bandits rule!",);
 		occupation.general.Set(
 			1, "index 1: Bandit camp spawning to non city areas",
 			{"0 0 0"}, 6,
@@ -264,11 +271,8 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_FORTRESS
 			},
 			"any",
-			"Bandit camp near %l",
-			"Bandits are protecting their valuable loot.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
-			"Camp cleared. Take the loot and leave.",
-			"The camp near %l was never destroyed. Bandits rule!",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -334,6 +338,11 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 	SDRC_Camp Occupation2()
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Occupation in %l",
+			"City is being occupied.",
+			"%l is free again!",
+			"The enemy was stronger this time.",);
 		occupation.general.Set(
 			2, "index 2: Occupation that will spawn mainly to cities and towns.",
 			{"0 0 0"}, 10,
@@ -349,11 +358,8 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_AIRPORT,
 			},
 			"any",
-			"Occupation in %l",
-			"City is being occupied.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"%l is free again!",
-			"The enemy was stronger this time.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -423,6 +429,11 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 	SDRC_Camp Occupation3()
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Car crash near %l",
+			"Loot is up for grabs.",
+			"You stopped the get away. Enjoy the spoils.",
+			"Car was fixed and the loot was lost.",);
 		occupation.general.Set(
 			3, "index 3: Car crash in an unusual place",
 			{"0 0 0"}, 6,
@@ -436,11 +447,8 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 			},
 			"any",
-			"Car crash near %l",
-			"Loot is up for grabs.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"You stopped the get away. Enjoy the spoils.",
-			"Car was fixed and the loot was lost.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -521,6 +529,11 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 	SDRC_Camp Occupation4()
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Campers near %l",
+			"Rob them before they leave.",
+			"The camp is yours. Enjoy the loot and relax.",
+			"The camp was packed and the campers left with their car.",);
 		occupation.general.Set(
 			4, "index 4: Campers with a car and a tent",
 			{"0 0 0"}, 12,
@@ -531,11 +544,8 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_NAME_VALLEY			
 			},
 			"any",
-			"Campers near %l",
-			"Rob them before they leave.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
-			"The camp is yours. Enjoy the loot and relax.",
-			"The camp was packed and the campers left with their car.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -633,6 +643,11 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 	SDRC_Camp Occupation5()
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Settlement near %l",
+			"The enemies are hiding in a ghost town.",
+			"The ghost town neat %l has been cleared.",
+			"Enemies have left with the loot. Shame on you.",);
 		occupation.general.Set(
 			5, "index 5: A small town",
 			{"0 0 0"}, 30,
@@ -642,11 +657,8 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_NAME_VALLEY			
 			},
 			"any",
-			"Settlement near %l",
-			"The enemies are hiding in a ghost town.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"The ghost town neat %l has been cleared.",
-			"Enemies have left with the loot. Shame on you.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
 			{SDRC_EDifficulty.RANDOM},

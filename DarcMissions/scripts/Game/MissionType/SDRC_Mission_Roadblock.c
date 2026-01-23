@@ -262,6 +262,11 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 	SDRC_Camp Roadblock0()
 	{
 		SDRC_Camp roadblock = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Roadblock near %l",
+			"Look out for trouble.",
+			"Roadblock cleared.",
+			"Road was kept safe as planned.",);
 		roadblock.general.Set(
 			0, "index 0: Roadblock",
 			{"0 0 0"}, 6,
@@ -277,11 +282,8 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_FORTRESS
 			},
 			"any",
-			"Roadblock near %l",
-			"Look out for trouble.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Roadblock cleared.",
-			"Road was kept safe as planned.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -351,6 +353,11 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 	SDRC_Camp Roadblock1()
 	{
 		ref SDRC_Camp roadblock = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Roadblock seen close to %l",
+			"Be careful.",
+			"These blocks can not stop you.",
+			"Scared of the enemy? %l is not a place for you.",);
 		roadblock.general.Set(
 			1, "index 1: Roadblock",
 			{"0 0 0"}, 6,
@@ -365,11 +372,8 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_FORTRESS
 			},
 			"any",
-			"Roadblock seen close to %l",
-			"Be careful.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
-			"These blocks can not stop you.",
-			"Scared of the enemy? %l is not a place for you.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -498,6 +502,11 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 	SDRC_Camp Roadblock2()
 	{
 		ref SDRC_Camp roadblock = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Road is closed near %l",
+			"Are your ready to pay the toll?",
+			"Road cleared.",
+			"The road toll was too much for you.");
 		roadblock.general.Set(
 			2, "index 2: Roadblock",
 			{"0 0 0"}, 6,
@@ -512,11 +521,8 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_FORTRESS
 			},
 			"any",
-			"Road is closed near %l",
-			"Are your ready to pay the toll?",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Road cleared.",
-			"The road toll was too much for you.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -637,6 +643,11 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 	SDRC_Camp Roadblock3()
 	{
 		ref SDRC_Camp roadblock = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Road near %l is guarded",
+			"Prepare for a mandatory stop.",
+			"Gates do not stop you.",
+			"Guards has left road near %l.",);
 		roadblock.general.Set(
 			3, "index 3: Roadblock with gates",
 			{"0 0 0"}, 10,
@@ -651,11 +662,8 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_FORTRESS
 			},
 			"any",
-			"Road near %l is guarded",
-			"Prepare for a mandatory stop.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Gates do not stop you.",
-			"Guards has left road near %l.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -798,6 +806,11 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 	SDRC_Camp Roadblock4()
 	{
 		ref SDRC_Camp roadblock = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Bus stop near %l",
+			"Maybe their car needs fixing.",
+			"The area is cleared.",
+			"Car is fixed, guards left area near %l.",);
 		roadblock.general.Set(
 			4, "index 4: Burning bus stop",
 			{"0 0 0"}, 20,
@@ -807,11 +820,8 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_NAME_LOCAL,
 			},
 			"any",
-			"Bus stop near %l",
-			"Maybe their car needs fixing.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"The area is cleared.",
-			"Car is fixed, guards left area near %l.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP,
 			{SDRC_EDifficulty.RANDOM},

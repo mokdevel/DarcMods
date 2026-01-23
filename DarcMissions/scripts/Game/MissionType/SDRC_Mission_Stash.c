@@ -218,16 +218,18 @@ class SDRC_StashConfig : SDRC_MissionConfig
 	SDRC_Camp Stash0()
 	{
 		ref SDRC_Camp stash = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("A stash near %l",
+			"Hurry, loot is yours to take!",
+			"Loot found.",
+			"Loot lost.",);
 		stash.general.Set(
 			0, "index 0: Random stash",
 			{"0 0 0"}, 3,
 			{},
 			"any",
-			"A stash near %l",
-			"Hurry, loot is yours to take!",
+			{message},		
 			SDRC_EMissionWinCondition.FIND_IN_15,
-			"Loot found.",
-			"Loot lost.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_STASH_MAP,
 			{SDRC_EDifficulty.RANDOM},

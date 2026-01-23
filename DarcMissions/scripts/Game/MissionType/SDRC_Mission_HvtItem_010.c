@@ -43,16 +43,18 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 	SDRC_HvtItem HvtItem010()
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Silo near to %l",
+			"The materials inside shall not end up at the hands of the enemy.",
+			"The silo is now just a bunch bricks.",
+			"Material in the silo was secured by the enemy.",);
 		hvtItem.general.Set(
 			10, "index 10: Destroy silo",
 			{"0 0 0"}, 20,
 			{},
 			"any",
-			"Silo near to %l",
-			"The materials inside shall not end up at the hands of the enemy.",
+			{message},
 			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
-			"The silo is now just a bunch bricks.",
-			"Material in the silo was secured by the enemy.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
 			{SDRC_EDifficulty.RANDOM},
@@ -258,16 +260,18 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 	SDRC_HvtItem HvtItem011()
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Soup kitchen near %l",
+			"Make sure the enemy stays hungry.",
+			"No cooking for the enemy.",
+			"Bellies full, the enemy left.",);
 		hvtItem.general.Set(
 			11, "index 11: Destroy kitchen",
 			{"0 0 0"}, 20,
 			{},
 			"any",
-			"Soup kitchen near %l",
-			"Make sure the enemy stays hungry.",
+			{message},
 			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
-			"No cooking for the enemy.",
-			"Bellies full, the enemy left.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
 			{SDRC_EDifficulty.RANDOM},
@@ -508,16 +512,18 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 	SDRC_HvtItem HvtItem012()
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Radar near %l",
+			"Silence the radar by destroying the transformer.",
+			"Enemy eyes are now shut.",
+			"Radar commmunication working as enemy wanted.",);
 		hvtItem.general.Set(
 			12, "index 12: Destroy transformer",
 			{"0 0 0"}, 20,
 			{},
 			"any",
-			"Radar near %l",
-			"Silence the radar by destroying the transformer.",
+			{message},
 			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
-			"Enemy eyes are now shut.",
-			"Radar commmunication working as enemy wanted.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
 			{SDRC_EDifficulty.RANDOM},

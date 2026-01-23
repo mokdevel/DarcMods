@@ -332,6 +332,11 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 	SDRC_HvtVip HvtVip0()
 	{
 		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Target near %l.",
+			"Assassinate the target",
+			"The target has been neutralized.",
+			"The target escaped.",);
 		HvtVip.general.Set(
 			0, "index 0: HvtVips in cities",
 			{"0 0 0"}, 0, 
@@ -346,11 +351,8 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_AIRPORT,
 			},
 			"any",
-			"Target near %l.",
-			"Assassinate the target",
+			{message},
 			SDRC_EMissionWinCondition.HVT_KILL_VIP,
-			"The target has been neutralized.",
-			"The target escaped.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -389,6 +391,11 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 	SDRC_HvtVip HvtVip1()
 	{
 		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Flight controller near %l.",
+			"Assassinate the target",
+			"The target has been neutralized.",
+			"The target escaped.",);
 		HvtVip.general.Set(
 			1, "index 1: HvtVips in control towers",
 			{"0 0 0"}, 0,
@@ -396,11 +403,8 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 				//We pick any building that matches and ignore location
 			},
 			"any",
-			"Flight controller near %l.",
-			"Assassinate the target",
+			{message},
 			SDRC_EMissionWinCondition.HVT_KILL_VIP,
-			"The target has been neutralized.",
-			"The target escaped.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -440,6 +444,11 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 	SDRC_HvtVip HvtVip2()
 	{
 		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("%l is bad for business",
+			"Assassinate the business man conducting bad business.",
+			"The target has been neutralized.",
+			"The target escaped.",);
 		HvtVip.general.Set(
 			2, "index 2: Businessman with bad business",
 			{"0 0 0"}, 0,
@@ -447,11 +456,8 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 				//We pick any building that matches and ignore location
 			},
 			"any",
-			"%l is bad for business",
-			"Assassinate the business man conducting bad business.",
+			{message},
 			SDRC_EMissionWinCondition.HVT_KILL_VIP,
-			"The target has been neutralized.",
-			"The target escaped.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -493,6 +499,11 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 	SDRC_HvtVip HvtVip3()
 	{
 		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Criminal hiding in %l",
+			"Assassinate the criminal boss. He tries to keep low profile.",
+			"The criminal got what he deserved.",
+			"The judgement day is postponed.",);
 		HvtVip.general.Set(
 			3, "index 3: Criminal in countryside",
 			{"0 0 0"}, 0, 
@@ -500,11 +511,8 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 				//We pick any building that matches and ignore location
 			},
 			"any",
-			"Criminal hiding in %l",
-			"Assassinate the criminal boss. He tries to keep low profile.",
+			{message},
 			SDRC_EMissionWinCondition.HVT_KILL_VIP,
-			"The criminal got what he deserved.",
-			"The judgement day is postponed.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -544,6 +552,11 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 	SDRC_HvtVip HvtVip4()
 	{
 		ref SDRC_HvtVip HvtVip = new SDRC_HvtVip();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Drunks and punks in %l",
+			"Assassinate the drunk leader. Most likely hides in a pub.",
+			"Free drinks for everyone!",
+			"No drinks for you this time.",);
 		HvtVip.general.Set(
 			4, "index 4: Drunks in pubs",
 			{"0 0 0"}, 0, 
@@ -551,11 +564,8 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 				//We pick any building that matches and ignore location
 			},
 			"any",
-			"Drunks and punks in %l",
-			"Assassinate the drunk leader. Most likely hides in a pub.",
+			{message},
 			SDRC_EMissionWinCondition.HVT_KILL_VIP,
-			"Free drinks for everyone!",
-			"No drinks for you this time.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP,
 			{SDRC_EDifficulty.RANDOM},

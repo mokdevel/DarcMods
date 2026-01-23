@@ -326,6 +326,7 @@ class SDRC_Chopper
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
 	ref SDRC_MissionConfigQrf qrf = null;
+	ref SDRC_Loot loot = null;	
 	//Mission specific
 	ref array<string> heliList = {};
 	ref array<int> flyHeight = {};						//min, max - Spawn helicopter between these values.
@@ -407,16 +408,23 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 	SDRC_Chopper Chopper0()
 	{
 		ref SDRC_Chopper chopper = new SDRC_Chopper();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		ref SDRC_MissionMessage message1 = new SDRC_MissionMessage();
+		message.Set("Helicopter patroling",
+			"Avoid being seen.",
+			"Helicopter is not your problem anymore.", 
+			"Helicopter lost track of you.");
+		message1.Set("Helicopter doing rounds",
+			"This task is %x for you.",
+			"All good, danger avoided.", 
+			"Rounds done.");
 		chopper.general.Set(
 			0, "index 0: Randomly flying chopper",
 			{"0 0 0", "0 0 0"}, 0,
 			{},
 			"any",
-			"Helicopter patroling",
-			"Avoid being seen.",
+			{message, message1},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Helicopter is not your problem anymore.", 
-			"Helicopter lost track of you.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
 			{SDRC_EDifficulty.RANDOM},
@@ -449,16 +457,18 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 	SDRC_Chopper Chopper1()
 	{
 		ref SDRC_Chopper chopper = new SDRC_Chopper();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Gunship hunter",
+			"You will be shot if you're seen.",
+			"Gunship funship .. it's gone.", 
+			"Gunship lost track of you.");
 		chopper.general.Set(
 			1, "index 1: Gunships",
 			{"0 0 0", "0 0 0"}, 0,
 			{},
 			"any",
-			"Gunship hunter",
-			"You will be shot if you're seen.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Gunship funship .. it's gone.", 
-			"Gunship lost track of you.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
 			{SDRC_EDifficulty.RANDOM},
@@ -500,6 +510,11 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 	SDRC_Chopper Chopper2()
 	{
 		ref SDRC_Chopper chopper = new SDRC_Chopper();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Guardian from the heaven",
+			"Area near %l is being guarded from the air.",
+			"Guardians are now angels.", 
+			"Guards have left.",);		
 		chopper.general.Set(
 			2, "index 2: Patrol around cities and towns",
 			{"0 0 0", "0 0 0"}, 0,
@@ -511,12 +526,9 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_BASE,
 				EMapDescriptorType.MDT_PORT,
 			},
-			"any",
-			"Guardian from the heaven",
-			"Area near %l is being guarded from the air.",
+			"any",			
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Guardians are now angels.", 
-			"Guards have left.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
 			{SDRC_EDifficulty.RANDOM},
@@ -556,6 +568,11 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 	SDRC_Chopper Chopper3()
 	{
 		ref SDRC_Chopper chopper = new SDRC_Chopper();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Heli patrol sighted",
+			"Initial destination is near %l.",
+			"Patrol does not bother you anymore.",
+			"Patrol has left.",);
 		chopper.general.Set(
 			3, "index 3: Third party choppers",
 			{"0 0 0", "0 0 0"}, 0,
@@ -563,11 +580,8 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_NAME_LOCAL,
 			},
 			"any",
-			"Heli patrol sighted",
-			"Initial destination is near %l.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Patrol does not bother you anymore.",
-			"Patrol has left.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
 			{SDRC_EDifficulty.RANDOM},
@@ -611,16 +625,18 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 	SDRC_Chopper Chopper4()
 	{
 		ref SDRC_Chopper chopper = new SDRC_Chopper();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Helicopter recon",
+			"Hide!",
+			"Search patrol avoided.", 
+			"Hunters are sent to your location.",);
 		chopper.general.Set(
 			4, "index 4: Search patrol sending hunters",
 			{"0 0 0", "0 0 0"}, 0,
 			{},
 			"any",
-			"Helicopter recon",
-			"Hide!",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Search patrol avoided.", 
-			"Hunters are sent to your location.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
 			{SDRC_EDifficulty.RANDOM},
@@ -658,16 +674,18 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 	SDRC_Chopper Chopper5()
 	{
 		ref SDRC_Chopper chopper = new SDRC_Chopper();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Helicopter patroling",
+			"Avoid being seen.",
+			"Helicopter is not your problem anymore.", 
+			"Helicopter lost track of you.",);
 		chopper.general.Set(
 			5, "index 5: Landing chopper",
 			{"0 0 0", "0 0 0"}, 0,
 			{},
 			"any",
-			"Helicopter patroling",
-			"Avoid being seen.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"Helicopter is not your problem anymore.", 
-			"Helicopter lost track of you.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
 			{SDRC_EDifficulty.RANDOM},

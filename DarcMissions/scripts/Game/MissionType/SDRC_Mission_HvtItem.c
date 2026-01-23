@@ -263,6 +263,11 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 	SDRC_HvtItem HvtItem0()
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Destroy generator near %l",
+			"The enemy is spreading propaganda.",
+			"Target destroyed.",
+			"You failed in your mission!",);
 		hvtItem.general.Set(
 			0, "index 0: Destroy generator",
 			{"0 0 0"}, 10,
@@ -276,11 +281,8 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_FORTRESS
 			},
 			"any",
-			"Destroy generator near %l",
-			"The enemy is spreading propaganda.",
+			{message},
 			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
-			"Target destroyed.",
-			"You failed in your mission!",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -374,6 +376,11 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 	SDRC_HvtItem HvtItem1()
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("A supply truck near %l",
+			"A truck has crashed and the supplies needs to be destroyed.",
+			"Supplies never reached the enemy. Good work!",
+			"The enemy will fight with their bellies full.",);
 		hvtItem.general.Set(
 			1, "index 1: Destroy supplies",
 			{"0 0 0"}, 20,
@@ -389,11 +396,8 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 				EMapDescriptorType.MDT_AIRPORT,
 			},
 			"any",
-			"A supply truck near %l",
-			"A truck has crashed and the supplies needs to be destroyed.",
+			{message},
 			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
-			"Supplies never reached the enemy. Good work!",
-			"The enemy will fight with their bellies full.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -474,16 +478,18 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 	SDRC_HvtItem HvtItem2()
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Radio antenna close to %l",
+			"Disrupt the enemy communications. Destroy the antenna.",
+			"The comms are dead.",
+			"Enemy communication is working loud and clear.",);
 		hvtItem.general.Set(
 			2, "index 2: Destroy antenna",
 			{"0 0 0"}, 20,
 			{},
 			"any",
-			"Radio antenna close to %l",
-			"Disrupt the enemy communications. Destroy the antenna.",
+			{message},
 			SDRC_EMissionWinCondition.HVT_DESTROY_ITEM,
-			"The comms are dead.",
-			"Enemy communication is working loud and clear.",
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP,		
 			{SDRC_EDifficulty.RANDOM},

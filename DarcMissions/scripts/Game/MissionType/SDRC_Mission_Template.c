@@ -129,7 +129,11 @@ class SDRC_TemplateConfig : SDRC_MissionConfig
 		//Mission specific		
 		general.pos[0] = "0 0 0";
 		general.posName = "any";
-		general.title = "Template mission";
-		general.info = "Some additional information for players";		
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();		
+		message.Set("Template mission",
+			"Some additional information for players",
+			"Win",
+			"Lose",);
+		general.messages.Insert(message);
 	}
 }

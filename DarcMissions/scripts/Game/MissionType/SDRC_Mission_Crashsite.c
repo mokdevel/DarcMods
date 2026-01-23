@@ -385,16 +385,18 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 	SDRC_Crashsite Crashsite0()
 	{
 		ref SDRC_Crashsite crashsite = new SDRC_Crashsite();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Helicopter in distress",
+			"A valuable cargo has crashed.",
+			"The loot was salvaged. Crash, burn, loot.",
+			"No loot for you today.",);
 		crashsite.general.Set(
 			0, "index 0: Crashing cargo",
 			{"0 0 0"}, 0,
 			{},
 			"any",
-			"Helicopter in distress",
-			"A valuable cargo has crashed.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"The loot was salvaged. Crash, burn, loot.",
-			"No loot for you today.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
 			{SDRC_EDifficulty.RANDOM},
@@ -480,16 +482,18 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 	SDRC_Crashsite Crashsite1()
 	{
 		ref SDRC_Crashsite crashsite = new SDRC_Crashsite();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Engine damage",
+			"May day, may day! We're going down.",
+			"The loot box was secured.",
+			"The cargo was lost.",);
 		crashsite.general.Set(
 			1, "index 1: Engine damage",
 			{"0 0 0"}, 0,
 			{},
 			"any",
-			"Engine damage",
-			"May day, may day! We're going down.",
+			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
-			"The loot box was secured.",
-			"The cargo was lost.", 
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, 
 			{SDRC_EDifficulty.RANDOM},
