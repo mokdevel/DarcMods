@@ -314,8 +314,9 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 	override void SetDefaults()
 	{
 		super.SetDefaults();
+		missionType = SDRC_EMissionType.HVTVIP;
 		
-		//Default
+		//Default		
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		missionList = {0,1,2,3,3,4};
 		//Mission specific

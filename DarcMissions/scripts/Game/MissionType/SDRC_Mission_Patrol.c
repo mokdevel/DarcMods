@@ -239,13 +239,12 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 	override void SetDefaults()
 	{
 		super.SetDefaults();
+		missionType = SDRC_EMissionType.PATROL;
 		
-		array<string> lootItems = {};
-		
-		//Default
+		//Default		
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;
 		showMarker = false;
-		missionList = {0};//{0,0,0,1,2,3};
+		missionList = {0,0,0,1,2,3};
 		//Mission specific
 		distanceToPlayer = 500;
 		//----------------------------------------------------

@@ -27,6 +27,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 	override void SetDefaults()
 	{
 		super.SetDefaults();
+		missionType = SDRC_EMissionType.HVTITEM;
 		
 		//Default
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;

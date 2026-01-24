@@ -342,6 +342,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 	override void SetDefaults()
 	{
 		super.SetDefaults();
+		missionType = SDRC_EMissionType.CONVOY;
 		
 		//Default
 		disableArsenal = true;

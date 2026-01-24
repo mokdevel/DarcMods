@@ -197,6 +197,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 	override void SetDefaults()
 	{
 		super.SetDefaults();
+		missionType = SDRC_EMissionType.OCCUPATION;
 		
 		//Default		
 		disableArsenal = true;

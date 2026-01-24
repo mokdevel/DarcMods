@@ -363,7 +363,9 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 	override void SetDefaults()
 	{
 		super.SetDefaults();
+		missionType = SDRC_EMissionType.HUNTER;
 		
+		//Default				
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT * 3;		//The cycle with Hunter mission can be really slow
 		showMarker = false;
 		missionList = {0,0,0,1,1,1,2};

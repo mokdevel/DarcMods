@@ -244,6 +244,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 	override void SetDefaults()
 	{
 		super.SetDefaults();
+		missionType = SDRC_EMissionType.ROADBLOCK;
 		
 		//Default		
 		disableArsenal = true;

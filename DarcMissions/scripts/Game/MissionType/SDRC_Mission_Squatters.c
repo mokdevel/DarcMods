@@ -269,8 +269,9 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 	override void SetDefaults()
 	{
 		super.SetDefaults();
+		missionType = SDRC_EMissionType.SQUATTERS;
 		
-		//Default
+		//Default		
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		missionList = {0,1,2,2,3,3,3,4,5,5,5};
 		//Mission specific

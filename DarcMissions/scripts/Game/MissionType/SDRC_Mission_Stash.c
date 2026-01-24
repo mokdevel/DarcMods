@@ -201,7 +201,9 @@ class SDRC_StashConfig : SDRC_MissionConfig
 	override void SetDefaults()
 	{
 		super.SetDefaults();
+		missionType = SDRC_EMissionType.STASH;
 		
+		//Default		
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		activeDistance = 50;
 		missionList = {0,0,0};
