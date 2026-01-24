@@ -64,6 +64,7 @@ const string SDRC_DEFAULT = "default";
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionConfig : SDRC_Config
 {
+	SDRC_EMissionType missionType = SDRC_EMissionType.NONE;
 	//Default information
 	int version = 1;
 	string author = "darc";
@@ -876,7 +877,7 @@ class SDRC_Mission : Managed
 			}
 		}
 		
-		//If we're in some other success mode the UNKNOWN, start to modify the active time and distance to end.		
+		//If we're in some other success mode than UNKNOWN, start to modify the active time and distance to end.		
 		//This way, the time gets shorter and distance smaller.
 		if (GetSuccess() != SDRC_EMissionSuccess.UNKNOWN)
 		{
