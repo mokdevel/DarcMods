@@ -35,6 +35,7 @@ enum SDRC_EFlyWayPointType
 	FLY_AWAY,
 	FLY_AWAY_IMMEDIATELY,
 	LAND,
+	WAIT,
 }
 
 enum SDRC_EHeliState
@@ -341,6 +342,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 			return;
 		}
 		
+		//If on ground, let's see what to do next
+		if (m_eHeliState == SDRC_EHeliState.ON_GROUND) 
+		{
+			if (!m_vFlyDestinations.IsEmpty())
+			{
+				SDRC_Log.Add("[SDRC_ChopperComp] Next: " + SCR_Enum.GetEnumName(SDRC_EFlyWayPointType, m_vFlyDestinations[0].type), LogLevel.DEBUG);
+			}			
+		}
+		
 		m_fTimeSpeed += timeSlice;
 		m_fTimeBetweenPts += timeSlice;
 		m_fTimeBetweenFixes -= timeSlice;
@@ -591,9 +601,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 					float height = m_Helicopter_s.GetAltitudeAGL() - 1;					
 					m_fRotorForceMultiplier = -1 * Math.Clamp(height, 0, 10);
 					
-					//m_vSplinePoints.Clear();
-					//m_vSplinePoints.Insert(lastPt);
-								
 					float mul = 1 - m_fTimeLanding / TIME_TO_LAND;
 	
 					//Helicopter to descend
