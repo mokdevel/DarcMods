@@ -116,7 +116,7 @@ sealed class SDRC_Spline3D
 	//------------------------------------------------------------------------------------------------
 	// Smooths ONLY the Up component of a spline
 	// X and Z remain unchanged	
-	static void SmoothSplineUpOnly(array<vector> points, int windowSize = 2)
+	static void SmoothSplineUpOnly(array<vector> points, int windowSize = 3)
 	{
 		int count = points.Count();
 		if (count < windowSize + 1)

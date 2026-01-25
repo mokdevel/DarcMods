@@ -3,6 +3,8 @@
 const string DC_MISSIONCONFIG_FILE_CHOPPER = "dc_missionConfig_Chopper.json";
 const int DC_MISSIONCONFIG_FILE_CHOPPER_VER = 1;
 
+#define CHOPPER_TESTING
+
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Chopper : SDRC_Mission
 {
@@ -157,8 +159,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 					direction.Normalize();
 					vector pos = m_Vehicle.GetOrigin() + direction * size;
 					
-					m_Vehicle_c.AddDestination(pos, SDRC_EFlyPathPointType.FINAL);
-					m_Vehicle_c.CreateFlyPath(m_Vehicle.GetOrigin(), true);		
+					m_Vehicle_c.AddDestination(pos, SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY);
+					m_Vehicle_c.CreateNewFlight(m_Vehicle.GetOrigin());		
 					m_Vehicle_c.SetSpeed(max : m_DC_Chopper.speed[1] * 1.5);
 				}
 				SetActiveTime(m_iFlyEndTime);
@@ -175,7 +177,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				m_bKeepOnFlying = false;
 			}
 			
-			//Move the marker and mission position to where the helicopter is			
+			//Move the marker and mission position to where the helicopter is
+			//Patrol mission is in one location so no need to change it
 			if (m_DC_Chopper.wpType != SDRC_EHeliWaypointGenerationType.PATROL)
 			{
 				if (m_Vehicle)
@@ -203,7 +206,13 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
-	{					
+	{
+		#ifdef CHOPPER_TESTING
+			m_vPosOrigin = "1310 0 2880";
+			vector routePos = "1170 0 2800";
+			vector landPos = "957 0 2753";
+		#endif
+				
 		//Spawn vehicle
 		string resourceName	= SDRC_SpawnHelper.SelectResourceName(m_DC_Chopper.heliList);		
 //		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Chopper.general.size, -1);
@@ -227,7 +236,15 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		m_EntityList.Insert(m_Vehicle);
 		m_Vehicle_c.SetHeli(m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.wpType, m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
 		m_Vehicle_c.SetSearchForEnemy(true);
-		m_Vehicle_c.InitFlyPath(m_Vehicle, m_vPosOrigin, GetPos());
+
+		#ifdef CHOPPER_TESTING				
+			m_Vehicle_c.AddDestination(routePos);
+			m_Vehicle_c.AddDestination(landPos, SDRC_EFlyWayPointType.LAND);
+			m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
+		#else
+			m_Vehicle_c.AddDestination(GetPos());
+			m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
+		#endif
 
 		//Spawn pilots if such is available 
 		ResourceName pilot = SDRC_EnemyHelper.SelectEnemy("C_CREW", GetFaction());
