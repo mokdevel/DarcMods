@@ -116,7 +116,7 @@ sealed class SDRC_Spline3D
 	//------------------------------------------------------------------------------------------------
 	// Smooths ONLY the Up component of a spline
 	// X and Z remain unchanged	
-	static void SmoothSplineUpOnly(array<vector> points, int windowSize = 3)
+	static void SmoothSplineUpOnly(array<vector> points, int windowSize = 2)
 	{
 		int count = points.Count();
 		if (count < windowSize + 1)
@@ -158,7 +158,35 @@ sealed class SDRC_Spline3D
 			}
 		}
 	}
+
+	//------------------------------------------------------------------------------------------------
+	// Creates a 1D spline from 3 Y-values and samples it
+	static array<float> CreateYSpline(float y0, float y1, float y2, int sampleCount)
+	{
+	    ref array<float> result = new array<float>();
 	
+	    if (sampleCount <= 1)
+	    {
+	        result.Insert(y0);
+	        return result;
+	    }
+	
+	    for (int i = 0; i < sampleCount; i++)
+	    {
+	        float t = i / (float)(sampleCount - 1);
+	        float oneMinusT = 1.0 - t;
+	
+	        float y =
+	            oneMinusT * oneMinusT * y0 +
+	            2.0 * oneMinusT * t * y1 +
+	            t * t * y2;
+	
+	        result.Insert(y);
+	    }
+	
+	    return result;
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	// \return degrees of roll
 	// \return vector Axis of the roll

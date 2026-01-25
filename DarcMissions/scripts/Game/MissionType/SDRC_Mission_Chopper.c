@@ -3,7 +3,9 @@
 const string DC_MISSIONCONFIG_FILE_CHOPPER = "dc_missionConfig_Chopper.json";
 const int DC_MISSIONCONFIG_FILE_CHOPPER_VER = 1;
 
-#define CHOPPER_TESTING
+#ifndef SDRC_RELEASE
+	#define CHOPPER_TESTING
+#endif
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Chopper : SDRC_Mission
