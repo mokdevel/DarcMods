@@ -242,7 +242,9 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		#ifdef CHOPPER_TESTING				
 			m_Vehicle_c.AddDestination(routePos);
 			m_Vehicle_c.AddDestination(landPos, SDRC_EFlyWayPointType.LAND);
-			m_Vehicle_c.AddDestination(landPos, SDRC_EFlyWayPointType.WAIT);
+			vector waitTime = "10 0 0";
+			m_Vehicle_c.AddDestination(waitTime, SDRC_EFlyWayPointType.WAIT);
+			m_Vehicle_c.AddDestination(waitTime, SDRC_EFlyWayPointType.RAISE);
 			m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
 		#else
 			m_Vehicle_c.AddDestination(GetPos());
