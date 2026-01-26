@@ -26,7 +26,6 @@ enum SDRC_EHeliWaypointGenerationType
 	
 	LANDING,	//Land the helicopter
 	FLY_AWAY,	//Fly far away
-//	GOTO,		//Fly to a given destination
 };
 
 //------------------------------------------------------------------------------------------------
@@ -40,6 +39,7 @@ enum SDRC_EFlyWayPointType
 	WAIT,
 	RAISE,
 	STOP_ENGINE,
+	END,
 }
 
 enum SDRC_EHeliState
@@ -88,7 +88,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//Parameters accessible helicopter parameters
 	[Attribute(defvalue: "0", desc: "Autostart chopper")]	
 	bool m_bAutoStart;
-	[Attribute(defvalue: "1.4", desc: "Throttle aka acceleration", params: "0.1 3.0 0.1")]	
+	[Attribute(defvalue: "1.2", desc: "Throttle aka acceleration", params: "0.1 3.0 0.1")]	
 	float m_fThrottle;
 	float m_fThrottleOrig;
 	[Attribute(defvalue: "3.0", desc: "Main rotor force", params: "0.1 10.0 0.1")]	
@@ -134,6 +134,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fTimeBetweenFixes = 30;
 	
 	private float m_fTimeInState = -1;					//The timer to stay in a certain state. This is only in effect when positive value.
+	private bool  m_bTimeInStateEnabled = false;
 			
 	//Turn
 	private const int TIME_TURN_INTERVAL_BASE = 40;		//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
@@ -240,6 +241,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Clear any existing path points
 		ResetFlight();
+		SetTimeInState(0);
+		//Save the original values
+		StoreOriginalValues();
 		
 		m_Helicopter_s = VehicleHelicopterSimulation.Cast(GetOwner().GetRootParent().FindComponent(VehicleHelicopterSimulation));
 		m_iEnemyFoundTimeOut = SDRC_Misc.GetCurrentTickTime() + ENEMY_FOUND_TIMEOUT;
@@ -251,9 +255,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0);
 	        m_Helicopter_s.RotorSetForceScaleState(1, m_fRotorForce1);			
 			SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, SDRC_EHeliWaypointGenerationType.RANDOM, m_fDistanceLow, m_fDistanceHigh);						
-			
-			//Save the original values
-			StoreOriginalValues();
 			
 			if (m_bAutoStart)
 			{
@@ -372,7 +373,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		float heliUpAngleToWorld = SDRC_Math.GetAngleBetweenVectors(owner.GetTransformAxis(1), vector.Up);	
 		if ( (heliUpAngleToWorld > FLIGHT_FIX_ANGLE) && (m_fTimeBetweenFixes < 0) )
 		{
-			SDRC_Log.Add("[SDRC_ChopperComp] Fixing flight.", LogLevel.DEBUG);						
+			SDRC_Log.Add("[SDRC_ChopperComp] Fixing flight.", LogLevel.DEBUG);
 			bCreateNewPath = true;
 		}
 		
@@ -587,7 +588,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private void HandleLanding(float timeSlice)
 	{
 		const float LANDING_DISTANCE = 150;
-		const float TIME_TO_LAND = 10;				//(seconds)
+		const float TIME_TO_LAND = 12;				//(seconds)
 		const float HOVER_HEIGHT = 3;
 		const float LANDED_HEIGHT = 0.5;
 
@@ -643,10 +644,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			SetNextState();	
 		}
-
-//		if ( (m_eHeliState == SDRC_EHeliState.WAIT) && (m_fTimeInState < 0) )
-//		if ( (m_eHeliState != SDRC_EHeliState.FLY) && (m_fTimeInState < 0) )
-		if (m_fTimeInState < 0)
+		
+		//Wait for the state timer to end and go to next state
+		if ( (m_eHeliState != SDRC_EHeliState.FLY) && (m_fTimeInState < 0) && m_bTimeInStateEnabled) 
 		{
 			SetNextState();
 		}
@@ -676,43 +676,76 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			nextType = m_vFlyDestinations[0].type;
 		}
-				
-		if (nextType == SDRC_EFlyWayPointType.FLY)
+
+		switch (nextType)
 		{
-			SetState(SDRC_EHeliState.FLY);
-			ResetOriginalValues();
-			//Don't remove the destination as it has the next point where to fly
-			removeDestination = false;
+			case SDRC_EFlyWayPointType.FLY:
+			{
+				SetState(SDRC_EHeliState.FLY);
+				ResetOriginalValues();
+				//Don't remove the destination as it has the next point where to fly
+				removeDestination = false;
+				break;
+			}			
+			case SDRC_EFlyWayPointType.FLY_AWAY:
+			case SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY:
+			{
+				SetState(SDRC_EHeliState.FLY);
+				ResetOriginalValues();
+				//Fly for a while and then go to END state
+				SetTimeInState(120);
+				AddDestination(vector.Zero, SDRC_EFlyWayPointType.END); 
+				break;
+			}		
+			case SDRC_EFlyWayPointType.END:
+			{
+				SetState(SDRC_EHeliState.DESTROYED);
+				break;
+			}
+			case SDRC_EFlyWayPointType.WAIT:
+			{
+				//Just wait
+				SetState(SDRC_EHeliState.WAIT);
+				SetTimeInState(2); 
+				break;
+			}
+			case SDRC_EFlyWayPointType.RAISE:
+			{
+				SetState(SDRC_EHeliState.RAISE);
+				SetTimeInState(3);
+				break;
+			}	
+			case SDRC_EFlyWayPointType.STOP_ENGINE:
+			{
+				//Stop engine and wait
+				m_Helicopter_s.EngineStop();
+				SetState(SDRC_EHeliState.WAIT);
+				SetTimeInState(30);
+				break;
+			}
 		}
 		
-		if (nextType == SDRC_EFlyWayPointType.WAIT)
-		{
-			//Just wait
-			SetState(SDRC_EHeliState.WAIT);
-			m_fTimeInState = 5; 
-		}
-
-		if (nextType == SDRC_EFlyWayPointType.RAISE)
-		{
-			SetState(SDRC_EHeliState.RAISE);
-			m_fTimeInState = 10;
-		}		
-				
-		if (nextType == SDRC_EFlyWayPointType.STOP_ENGINE)
-		{
-			//Stop engine and wait
-			m_Helicopter_s.EngineStop();
-			SetState(SDRC_EHeliState.WAIT);
-			m_fTimeInState = 30;
-		}
-
 		//Remove the destination is it was handled.		
 		if (removeDestination)
 		{
 			m_vFlyDestinations.RemoveOrdered(0);			
 		}
 	}		
-		
+
+	//------------------------------------------------------------------------------------------------	
+	void SetTimeInState(int seconds)	
+	{
+		m_fTimeInState = seconds;
+		if (seconds == 0)
+		{
+			m_bTimeInStateEnabled = false;
+		}
+		else
+		{
+			m_bTimeInStateEnabled = true;
+		}
+	}
+			
 	//------------------------------------------------------------------------------------------------	
 	// Flight path things
 	//------------------------------------------------------------------------------------------------	
@@ -763,7 +796,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 
 		//Store the original firstDestination
-		m_vOriginalDestination = origin;	//TBD: Do we need this!?!?!?!
+		m_vOriginalDestination = origin;
 		
 		//Create initial flypath
 		//Add points to path. Normally we would use AddDestination, but for the initial flight, we need points in m_vFlightPoints.
@@ -839,10 +872,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Clear any existing path points
 		ResetFlight();
 
-		SDRC_EHeliWaypointGenerationType wpType = m_fWpType;
+//		SDRC_EHeliWaypointGenerationType wpType = m_fWpType;
 		
 		//If we are the final destination, we stop creating waypoints and stop flying.
-		if (m_eHeliState == SDRC_EHeliState.END)
+/*		if (m_eHeliState == SDRC_EHeliState.END)
 		{
 			SetState(SDRC_EHeliState.DESTROYED);
 			return;
@@ -853,10 +886,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			SetState(SDRC_EHeliState.END);
 			wpType = SDRC_EHeliWaypointGenerationType.FLY_AWAY;
-		}
+		} */
 		
 		AddFlyPathPoint(m_vDestinationFuture);
-		GenerateWayPoint(origin, wpType);
+		GenerateWayPoint(origin, m_fWpType);
 	
 		//Create points for spline		
 		CreateFlightPoints();
@@ -1273,6 +1306,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 	void SetState(SDRC_EHeliState state)
 	{
 		m_eHeliState = state;
+		
+		//If in normal flight mode, disable the TimeInState counter
+		if (state == SDRC_EHeliState.FLY)
+		{			
+			SetTimeInState(0)
+		}
+		
 		SDRC_Log.Add("[SDRC_ChopperComp:SetState] State: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.DEBUG);
 	}
 	
@@ -1329,17 +1369,22 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/
 	void AddDestination(vector destination, SDRC_EFlyWayPointType type = SDRC_EFlyWayPointType.FLY)
 	{
+		//Fly away after all destinations have been handled
+		if (type == SDRC_EFlyWayPointType.FLY_AWAY)
+		{
+			SetState(SDRC_EHeliState.FLY_AWAY);
+			m_fWpType = SDRC_EHeliWaypointGenerationType.FLY_AWAY;
+		}
+
+		//Fly away immediately
 		if (type == SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY)
 		{
 			ResetDestinations();
 			SetState(SDRC_EHeliState.FLY_AWAY);
+			m_fWpType = SDRC_EHeliWaypointGenerationType.FLY_AWAY;
 		}
 		
-		if (type == SDRC_EFlyWayPointType.FLY_AWAY)
-		{
-			SetState(SDRC_EHeliState.FLY_AWAY);
-		}
-
+		//Land the chopper
 		if (type == SDRC_EFlyWayPointType.LAND)
 		{
 			SetState(SDRC_EHeliState.LAND);
