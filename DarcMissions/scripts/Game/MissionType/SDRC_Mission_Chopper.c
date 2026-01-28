@@ -157,9 +157,11 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				{
 					//Continue flying to the same direction and out of the map
 					float size = SDRC_Misc.GetWorldSize() * 0.7;
-					vector direction = vector.Direction(m_Vehicle.GetOrigin(), m_Vehicle_c.GetCurrentDestination());
+					vector pos = SDRC_ChopperHelper.GetDestinationForward(m_Vehicle, size);
+					
+/*					vector direction = vector.Direction(m_Vehicle.GetOrigin(), m_Vehicle_c.GetCurrentDestination());
 					direction.Normalize();
-					vector pos = m_Vehicle.GetOrigin() + direction * size;
+					vector pos = m_Vehicle.GetOrigin() + direction * size;*/
 					
 					m_Vehicle_c.AddDestination(pos, SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY);
 					m_Vehicle_c.CreateNewFlight(m_Vehicle.GetOrigin());		
@@ -415,8 +417,8 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		activeTime = 45*60;
 	#endif
 	#ifndef SDRC_RELEASE
-//		activeTime = 25*60;
-		activeTime = 3*60;
+		activeTime = 25*60;
+//		activeTime = 3*60;
 	#endif
 		
 		//----------------------------------------------------

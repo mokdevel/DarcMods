@@ -274,6 +274,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------
 	override void EOnDeactivate(IEntity owner)
 	{
+		Clear();
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Do final clear up of things when heli is to be despawned.
+	*/	
+	void Clear()
+	{
 		SDRC_DebugHelper.DeleteDebugItems(m_sDid);
 	}
 	
@@ -284,6 +293,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	void InitDone(IEntity owner)
 	{
 		m_bInInit = false;
+		
 		if (SDRC_VehicleHelper.PilotCountAlive(owner) == 0)
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp] Unable to set pilots.", LogLevel.WARNING);			
@@ -317,15 +327,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	/*!
-	Do final clear up of things when heli is to be despawned.
-	*/	
-	void Clear()
-	{
-		SDRC_DebugHelper.DeleteDebugItems(m_sDid);
-	}
-	
-	//------------------------------------------------------------------------------------------------
 	/*!	
 	Return instance to component
 	*/
@@ -348,18 +349,28 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fTimeBetweenFixes -= timeSlice;
 		m_fTimeInState -= timeSlice;		
 
+		//Check if we're still working. This section is not needed every frame. //TBD: Could be done every x seconds - not that critical
+		//---
+		if (!SDRC_ChopperHelper.IsStillWorking(owner, m_bInInit))
+		{
+			//Nope, we're done
+			SetState(SDRC_EHeliState.DESTROYED);
+			SDRC_DebugHelper.DeleteDebugItems(m_sDid);
+		}
+
 		//If chopper is destroyed, let Reforger handle crash etc.
-		//Check if we're still working. Not needed every frame. //TBD: Could be done every x seconds - not that critical
-		if ( (m_eHeliState == SDRC_EHeliState.DESTROYED) || (!IsStillWorking(owner)) )
+		if (m_eHeliState == SDRC_EHeliState.DESTROYED)
 		{
 			return;
 		}
 		
-		if (!HandleState())
+		//If the chopper is damaged, init is considered done.
+		if (SDRC_ChopperHelper.GetHealth(owner) < HEALTH_LIMIT)
 		{
-			return;
-		}
-				
+			InitDone(owner);
+		}				
+		//---
+		
 		//Normal flying part
 		
 		//Adjust time depending on the speed.
@@ -443,7 +454,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Set turn
 		SetTurn(owner, m_fTimeTurnInterval);
-		HandleLanding(timeSlice);
+		
+		HandleState(owner, timeSlice);
 
 		SetVelocity(owner);
 				
@@ -580,7 +592,43 @@ class SDRC_ChopperComp : ScriptGameComponent
 			m_fSpeed = Math.Clamp(m_fSpeed * mul, m_fSpeedMin, m_fSpeedMax)
 		}*/
 	}
+
+	//------------------------------------------------------------------------------------------------	
+	// States 
+	//------------------------------------------------------------------------------------------------	
 	
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Handle state (machine)
+	
+	\return true Handle flight model calculations
+	\return false Skip flight model calculations
+	*/
+	private void HandleState(IEntity owner, float timeSlice)
+	{	
+		switch (m_eHeliState)
+		{
+			case SDRC_EHeliState.LAND:
+			{
+				HandleLanding(timeSlice);	
+				break;
+			}
+		
+			//If on ground, let's see what to do next
+			case SDRC_EHeliState.ON_GROUND:
+			{
+				SetNextState(owner);
+				break;
+			}
+		}
+		
+		//Wait for the state timer to end and go to next state
+		if ( (m_eHeliState != SDRC_EHeliState.FLY) && (m_fTimeInState < 0) && m_bTimeInStateEnabled) 
+		{
+			SetNextState(owner);
+		}
+	}	
+
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Handle landing
@@ -591,81 +639,58 @@ class SDRC_ChopperComp : ScriptGameComponent
 		const float TIME_TO_LAND = 12;				//(seconds)
 		const float HOVER_HEIGHT = 3;
 		const float LANDED_HEIGHT = 0.5;
+		
+		vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];			
+		float distance = vector.Distance(m_vOrigin, lastPt);
 
-		if (m_eHeliState == SDRC_EHeliState.LAND)
-		{		
-			vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];			
-			float distance = vector.Distance(m_vOrigin, lastPt);
+		if (distance < LANDING_DISTANCE)
+		{
+			if (!m_Helicopter_s.HasAnyGroundContact())
+			{				
+				m_fTimeLanding += timeSlice;
+				m_fTimeLanding = Math.Clamp(m_fTimeLanding, 0, TIME_TO_LAND);
 
-			if (distance < LANDING_DISTANCE)
-			{
-				if (!m_Helicopter_s.HasAnyGroundContact())
-				{				
-					m_fTimeLanding += timeSlice;
-					m_fTimeLanding = Math.Clamp(m_fTimeLanding, 0, TIME_TO_LAND);
-	
-					//Set the last point on ground
-					lastPt[1] = SDRC_Misc.GetSurfaceYWithWater(lastPt) + LANDED_HEIGHT;
-					
-					float height = m_Helicopter_s.GetAltitudeAGL() - 1;					
-					m_fRotorForceMultiplier = -1 * Math.Clamp(height, 0, 10);
-					
-					float mul = 1 - m_fTimeLanding / TIME_TO_LAND;
-	
-					//Helicopter to descend
-			        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0Orig * mul);
-			        m_Helicopter_s.SetThrottle(m_fThrottleOrig * mul);
-					m_fSpeedMin = distance/height;
-					m_fSpeedLandingMul = mul;
-				}
-				else
-				{
-					SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
-					SetState(SDRC_EHeliState.ON_GROUND);
-					m_fSpeedMin = 0;
-					m_fSpeedLandingMul = 0;
-					m_fRotorForceMultiplier = 0;
-				}
+				//Set the last point on ground
+				lastPt[1] = SDRC_Misc.GetSurfaceYWithWater(lastPt) + LANDED_HEIGHT;
+				
+				float height = m_Helicopter_s.GetAltitudeAGL() - 1;					
+				m_fRotorForceMultiplier = -1 * Math.Clamp(height, 0, 10);
+				
+				float mul = 1 - m_fTimeLanding / TIME_TO_LAND;
+
+				//Helicopter to descend
+		        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0Orig * mul);
+		        m_Helicopter_s.SetThrottle(m_fThrottleOrig * mul);
+//					m_fSpeedMin = distance/height;
+				m_fSpeedMin = Math.Lerp(m_fSpeedMinOrig, 0, distance/height);
+				m_fSpeedLandingMul = mul;
 			}
-		}		
-	}
-
-	//------------------------------------------------------------------------------------------------	
-	/*!	
-	Handle state (machine)
-	
-	\return true Handle flight model calculations
-	\return false Skip flight model calculations
-	*/
-	bool HandleState()
-	{	
-		//If on ground, let's see what to do next
-		if (m_eHeliState == SDRC_EHeliState.ON_GROUND) 
-		{
-			SetNextState();	
+			else
+			{
+				SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
+				SetState(SDRC_EHeliState.ON_GROUND);
+				m_fSpeedMin = 0;
+				m_fSpeedLandingMul = 0;
+				m_fRotorForceMultiplier = 0;
+			}
 		}
-		
-		//Wait for the state timer to end and go to next state
-		if ( (m_eHeliState != SDRC_EHeliState.FLY) && (m_fTimeInState < 0) && m_bTimeInStateEnabled) 
-		{
-			SetNextState();
-		}
-		
-		return true;
 	}	
-
+	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Sets the next destination for an action. 
 	- FLY will start to fly
 	- Others will have some action bound to them.
 	*/
-	void SetNextState()
+	void SetNextState(IEntity owner)
 	{
 		SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.UNDEFINED;
 		
 		//By default we remove the destination
-		bool removeDestination = true;
+		bool isRemoveDestination = true;
+		
+		//If needed, create new flight path
+		bool isCreateFlight = false;
 		
 		//If not destinations defined, start to fly		
 		if (m_vFlyDestinations.IsEmpty())
@@ -684,14 +709,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 				SetState(SDRC_EHeliState.FLY);
 				ResetOriginalValues();
 				//Don't remove the destination as it has the next point where to fly
-				removeDestination = false;
+				isRemoveDestination = false;
 				break;
 			}			
 			case SDRC_EFlyWayPointType.FLY_AWAY:
 			case SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY:
 			{
-				SetState(SDRC_EHeliState.FLY);
 				ResetOriginalValues();
+				SetState(SDRC_EHeliState.FLY);
 				//Fly for a while and then go to END state
 				SetTimeInState(120);
 				AddDestination(vector.Zero, SDRC_EFlyWayPointType.END); 
@@ -711,8 +736,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 			}
 			case SDRC_EFlyWayPointType.RAISE:
 			{
+				ResetOriginalValues();
+				vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, 100);
+				AddDestination(pos, SDRC_EFlyWayPointType.RAISE);
 				SetState(SDRC_EHeliState.RAISE);
-				SetTimeInState(3);
+				SetTimeInState(10);
+				pos = SDRC_ChopperHelper.GetDestinationForward(owner, 200);
+				AddDestination(pos);				
+				isCreateFlight = true;
 				break;
 			}	
 			case SDRC_EFlyWayPointType.STOP_ENGINE:
@@ -725,10 +756,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 			}
 		}
 		
-		//Remove the destination is it was handled.		
-		if (removeDestination)
+		//Remove the destination if it was handled.	By default it is.
+		if (isRemoveDestination)
 		{
-			m_vFlyDestinations.RemoveOrdered(0);			
+			m_vFlyDestinations.RemoveOrdered(0);
+		}
+		
+		//With new destinations, create new flight.
+		if (isCreateFlight)
+		{
+			CreateNewFlight(m_vOrigin);
 		}
 	}		
 
@@ -1046,7 +1083,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			     (wpGenType == SDRC_EHeliWaypointGenerationType.SEARCH)
 			   )
 			{	
-				pos = GetRandomPosition(origin);
+				pos = SDRC_ChopperHelper.GetRandomPosition(origin, m_fDistanceLow, m_fDistanceHigh);
 				AddFlyPathPoint(pos);
 			}
 			
@@ -1083,28 +1120,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 				return;
 			}
 		}
-	}
-
-	//------------------------------------------------------------------------------------------------	
-	/*!	
-	Creates a random destination point
-	*/	
-	private vector GetRandomPosition(vector pos)
-	{
-		float distance = SDRC_Misc.RandomFloat(m_fDistanceLow, m_fDistanceHigh);
-		vector newpos;
-		
-		//If distance is under 1.0, use world percentage
-		if (distance < 1.0)
-		{
-			newpos = SDRC_Misc.GetRandomWorldPosPercentage(distance);
-		}
-		else
-		{
-			newpos = SDRC_Misc.GetCoordinatesOnCircle(pos, distance, SDRC_Misc.RandomInt(0, 360));
-		}
-				
-		return newpos;
 	}
 		
 	//------------------------------------------------------------------------------------------------	
@@ -1223,10 +1238,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 		if (m_vFlightPoints.Count() < 3)
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] This should never happen! ", LogLevel.WARNING);
-/*			vector p0 = m_vFlightPoints[0].pt;
-			vector p1 = m_vFlightPoints[1].pt;
-			vector mid = vector.Lerp(p0, p1, 0.5);
-			AddFlyPathPoint(mid, index: 1);*/
 		}
 				
 		SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Created " + m_vFlightPoints.Count() + " points.", LogLevel.SPAM);
@@ -1283,6 +1294,32 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	private void StoreOriginalValues()
+	{
+		m_fThrottleOrig = m_fThrottle;
+		m_fRotorForce0Orig = m_fRotorForce0;
+		m_fRotorForce1Orig = m_fRotorForce1;
+		m_fSpeedMinOrig = m_fSpeedMin;
+		m_fSpeedMaxOrig = m_fSpeedMax;	
+		
+		//Reset runtime parameters
+		m_fSpeedLandingMul = 1.0;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	private void ResetOriginalValues()
+	{
+		m_fThrottle = m_fThrottleOrig;
+		m_fRotorForce0 = m_fRotorForce0Orig;
+		m_fRotorForce1 = m_fRotorForce1Orig;
+		m_fSpeedMin = m_fSpeedMinOrig;
+		m_fSpeedMax = m_fSpeedMaxOrig;	
+		
+		//Reset runtime parameters
+		m_fSpeedLandingMul = 1.0;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
 	void SetSpeed(float min = -1, float max = -1)
 	{
 		if (min > -1)
@@ -1321,32 +1358,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 		return m_eHeliState;
 	}
-
-	//------------------------------------------------------------------------------------------------
-	private void StoreOriginalValues()
-	{
-		m_fThrottleOrig = m_fThrottle;
-		m_fRotorForce0Orig = m_fRotorForce0;
-		m_fRotorForce1Orig = m_fRotorForce1;
-		m_fSpeedMinOrig = m_fSpeedMin;
-		m_fSpeedMaxOrig = m_fSpeedMax;	
-		
-		//Reset runtime parameters
-		m_fSpeedLandingMul = 1.0;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	private void ResetOriginalValues()
-	{
-		m_fThrottle = m_fThrottleOrig;
-		m_fRotorForce0 = m_fRotorForce0Orig;
-		m_fRotorForce1 = m_fRotorForce1Orig;
-		m_fSpeedMin = m_fSpeedMinOrig;
-		m_fSpeedMax = m_fSpeedMaxOrig;	
-		
-		//Reset runtime parameters
-		m_fSpeedLandingMul = 1.0;
-	}	
 				
 	//------------------------------------------------------------------------------------------------	
 	// Destination settings
@@ -1389,13 +1400,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			SetState(SDRC_EHeliState.LAND);
 		}		
-				
+						
 		m_vFlyDestinations.Insert(new SDRC_FlyPathPoint(destination, type));		
 	}	
-
+	
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Returns the last destination.
+	Returns the last destination from the spline
 	*/
 	vector GetDestination()
 	{
@@ -1405,73 +1416,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Returns the destination where the helicopter is currently going. 
+	NOTE: This is not the final destination on the spline
 	*/
 	vector GetCurrentDestination()
 	{
 		return m_vDestination;
 	}	
-	
-	//------------------------------------------------------------------------------------------------	
-	// Damage settings
-	//------------------------------------------------------------------------------------------------	
-	
-	//------------------------------------------------------------------------------------------------
-	void SetDamage(IEntity owner)
-	{
-		DamageManagerComponent damageManager = DamageManagerComponent.Cast(owner.FindComponent(DamageManagerComponent));
-		float health = SDRC_Misc.RandomFloat(0.0001, 0.0005);
-		if (damageManager)
-		{
-			damageManager.SetHealthScaled(health);
-		}
-		
-		SDRC_Log.Add("[SDRC_ChopperComp:SetDamage] Setting health: " + health, LogLevel.DEBUG);
-	}
-
-	//------------------------------------------------------------------------------------------------
-	bool IsStillWorking(IEntity owner)
-	{
-		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
-		float health = damageManager.GetHealth();
-		
-		//If the chopper is damaged, init is considered done.
-		if (health < HEALTH_LIMIT)
-		{
-			InitDone(owner);
-		}
-
-		//If still in init, don't care if no pilots etc yet set.		
-		if (m_bInInit)
-		{
-			return true;
-		}
-
-		if ( (SDRC_VehicleHelper.IsWorking(owner)) && (SDRC_VehicleHelper.PilotCountAlive(owner) > 0) )
-		{
-			return true;
-		}
-		
-		//Nope, we're done
-		SetState(SDRC_EHeliState.DESTROYED);
-		SDRC_DebugHelper.DeleteDebugItems(m_sDid);
-		
-		//Set damage so it should be destroyed on crash
-		float damage = SDRC_Misc.RandomFloat(0, 0.05);
-		if (damageManager)
-		{
-			damageManager.SetHealthScaled(damage);		
-		}
-		
-		//Make the chopper fly unsteadily
-		float force = SDRC_Misc.RandomFloat(0, 0.1);
-        m_Helicopter_s.RotorSetForceScaleState(0, force);
-		force = SDRC_Misc.RandomFloat(0.1, 2.5);
-        m_Helicopter_s.RotorSetForceScaleState(1, force);
-		force = SDRC_Misc.RandomFloat(0.0, 0.1);
-		m_Helicopter_s.SetThrottle(force);
-		
-		return false;
-	}
 
 	//------------------------------------------------------------------------------------------------	
 	// Enemy searching functionality
@@ -1635,67 +1585,67 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 						
 		//Planned destination
-		DrawLine(origin, m_vSplinePoints[idx], Color.GRAY);		
+		SDRC_ChopperHelper.DrawLine(origin, m_vSplinePoints[idx], Color.GRAY);		
 		
 		//Chopper destination direction vector
 		vector vFwd = vector.Direction(origin, m_vDestination);
 //		vFwd.Normalize();
-//		DrawLine(origin, origin + (vFwd * 20), Color.WHITE);
-//		DrawLine(origin, origin + vFwd, Color.WHITE);
-		DrawLine(origin, m_vDestination, Color.WHITE);
+//		SDRC_ChopperHelper.DrawLine(origin, origin + (vFwd * 20), Color.WHITE);
+//		SDRC_ChopperHelper.DrawLine(origin, origin + vFwd, Color.WHITE);
+		SDRC_ChopperHelper.DrawLine(origin, m_vDestination, Color.WHITE);
 
 		//Chopper future destination direction vector
 		vFwd = vector.Direction(origin, m_vDestinationFuture);
 //		vFwd.Normalize();
 //		DrawLine(origin, origin + (vFwd * 50), Color.BLACK);		
-		DrawLine(origin, origin + vFwd, Color.BLACK);		
+		SDRC_ChopperHelper.DrawLine(origin, origin + vFwd, Color.BLACK);		
 
 		//Draw vectors
 		vector vDir2 = owner.GetTransformAxis(2);	//Forward
-//		DrawLine(origin, origin + (vDir2 * 30), Color.CYAN);		
+//		SDRC_ChopperHelper.DrawLine(origin, origin + (vDir2 * 30), Color.CYAN);		
 
 		vector vDir0 = owner.GetTransformAxis(0);	//Side
-//		DrawLine(origin, origin + (vDir0 * 10), Color.DARK_CYAN);
+//		SDRC_ChopperHelper.DrawLine(origin, origin + (vDir0 * 10), Color.DARK_CYAN);
 
 		vector vDir1 = owner.GetTransformAxis(1);	//Up
-		DrawLine(origin, origin + (vDir1 * 15), Color.MAGENTA);		
+		SDRC_ChopperHelper.DrawLine(origin, origin + (vDir1 * 15), Color.MAGENTA);		
 		
 		vector vUp = vector.Up;						//World Up
-		DrawLine(origin, origin + (vUp * 10), Color.MAGENTA);		
+		SDRC_ChopperHelper.DrawLine(origin, origin + (vUp * 10), Color.MAGENTA);		
 		
 		//Roll vector
 		vector vRoll = m_vRollTarget * Math.DEG2RAD;
 		vRoll.Normalize();
-//		DrawLine(origin, origin + (vRoll * 15), Color.BLUE);		
+//		SDRC_ChopperHelper.DrawLine(origin, origin + (vRoll * 15), Color.BLUE);		
 
 		//RollPitch vector
 		vRoll = m_vRadRollPitch * Math.DEG2RAD;
 		vRoll.Normalize();
-//		DrawLine(origin, origin + (vRoll * 15), Color.BLUE);		
+//		SDRC_ChopperHelper.DrawLine(origin, origin + (vRoll * 15), Color.BLUE);		
 		
 /*		vector vVec = m_vRadRollVel;
 		vVec[1] = -vVec[2];
 		vVec[2] = vVec[0];
 		vVec[0] = 0;
 		vVec.Normalize();
-		DrawLine(origin, origin + (vVec * 45), Color.WHITE);
+		SDRC_ChopperHelper.DrawLine(origin, origin + (vVec * 45), Color.WHITE);
 
 		vVec = m_vRadRollBack;
 		vVec.Normalize();
-		DrawLine(origin, origin + (vVec * 35), Color.WHITE);*/
+		SDRC_ChopperHelper.DrawLine(origin, origin + (vVec * 35), Color.WHITE);*/
 								
 		//Draw velocity vector
 		vector vVel = owner.GetPhysics().GetVelocity();
 		vVel.Normalize();
 //		float currentSpeed = vVel.Length();
-		DrawLine(origin, origin + (vVel * m_fSpeed), Color.GRAY_75);			
+		SDRC_ChopperHelper.DrawLine(origin, origin + (vVel * m_fSpeed), Color.GRAY_75);			
 		
 		//Enemy stuff
 		
 		//Draw current enemy sighting		
 		if (m_vEnemyPosition != "0 0 0")
 		{
-			DrawLine(origin, m_vEnemyPosition, Color.PINK);
+			SDRC_ChopperHelper.DrawLine(origin, m_vEnemyPosition, Color.PINK);
 		}
 		
 		//Draw eyesight		
@@ -1715,21 +1665,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 					IEntity target = bt.GetTargetEntity();
 					if (EntityUtils.IsPlayer(target))
 					{
-						DrawLine(occupant.GetOrigin(), target.GetOrigin(), Color.RED);
+						SDRC_ChopperHelper.DrawLine(occupant.GetOrigin(), target.GetOrigin(), Color.RED);
 					}
 				}
 			}
 		}
 	#endif			
 	}
-	
-	//------------------------------------------------------------------------------------------------	
-	void DrawLine(vector p0, vector p1, int color = Color.RED)
-	{
-		int shapeFlags = ShapeFlags.ONCE;
-		vector p[2];
-		p[0] = p0;
-		p[1] = p1;		
-		Shape.CreateLines(color, shapeFlags, p, 2);		
-	}	
 }
