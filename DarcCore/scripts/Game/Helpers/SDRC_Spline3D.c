@@ -116,9 +116,14 @@ sealed class SDRC_Spline3D
 	//------------------------------------------------------------------------------------------------
 	// Smooths ONLY the Up component of a spline
 	// X and Z remain unchanged	
-	static void SmoothSplineUpOnly(array<vector> points, int windowSize = 2)
+	static void SmoothSplineUpOnly(array<vector> points, int count = 0, int windowSize = 2)
 	{
-		int count = points.Count();
+		//With 0, we smooth all points
+		if (count == 0)
+		{
+			count = points.Count();
+		}
+		
 		if (count < windowSize + 1)
 		{
 			return;
@@ -284,7 +289,7 @@ sealed class SDRC_Spline3D
 
 		return Math.Sqrt(minDistanceSq);
 	}		
-
+	
 	//------------------------------------------------------------------------------------------------
 	static void TestSpline()
 	{

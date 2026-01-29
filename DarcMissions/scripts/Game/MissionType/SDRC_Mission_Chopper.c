@@ -4,7 +4,7 @@ const string DC_MISSIONCONFIG_FILE_CHOPPER = "dc_missionConfig_Chopper.json";
 const int DC_MISSIONCONFIG_FILE_CHOPPER_VER = 1;
 
 #ifndef SDRC_RELEASE
-	#define CHOPPER_TESTING
+//	#define CHOPPER_TESTING
 #endif
 
 //------------------------------------------------------------------------------------------------
@@ -246,6 +246,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			m_Vehicle_c.AddDestination(landPos, SDRC_EFlyWayPointType.LAND);
 			vector waitTime = "10 0 0";
 			m_Vehicle_c.AddDestination(waitTime, SDRC_EFlyWayPointType.WAIT);
+			m_Vehicle_c.AddDestination(waitTime, SDRC_EFlyWayPointType.HOVER);
 			m_Vehicle_c.AddDestination(waitTime, SDRC_EFlyWayPointType.RAISE);
 			m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
 		#else
@@ -253,9 +254,16 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
 		#endif
 
-		//Spawn pilots if such is available 
+		//Select pilots
 		ResourceName pilot = SDRC_EnemyHelper.SelectEnemy("C_CREW", GetFaction());
-				
+
+		if (pilot == "")
+		{
+			//If pilots not available, let's spawn a regular rifleman as a pilot
+			pilot = SDRC_EnemyHelper.SelectEnemy("C_RIFLEMAN", GetFaction());
+		}		
+
+		//Spawn pilots if such is available 
 		if (pilot != "")
 		{
 			SCR_AIGroup group = SDRC_AIHelper.GroupCreate(GetFaction(), GetPos());
@@ -471,6 +479,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			 "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et",
 			},
 			{35, 70},
+//			{25, 90},
 			{7, 25},
 			{0.2, 0.5},
 			SDRC_EHeliWaypointGenerationType.RANDOM,	

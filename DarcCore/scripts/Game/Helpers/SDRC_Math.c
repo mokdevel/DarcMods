@@ -209,5 +209,29 @@ sealed class SDRC_Math
 		SCR_Math3D.RotateAround(transform, pivot, "0 1 0", SDRC_Misc.AngleToRadians(rotation), newtransform);			
 		
 		return newtransform[3];		
-	}		
+	}
+	
+
+	//------------------------------------------------------------------------------------------------
+	// Half bell curve (Gaussian-based)
+	// t in range [0..1]
+	// NOTE: float y = Math.Sin(Math.Sin(t * Math.PI * 0.5) * Math.PI * 0.5); would work for t in range [-1..1]
+	static float HalfBell(float t)
+	{
+		t = t * 2 - 1;
+		float y = (1 + Math.Sin(Math.Sin(t * Math.PI * 0.5) * Math.PI * 0.5)) / 2;
+		return y;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	// Full bell curve (Gaussian-based)
+	// t in range [0..1]
+	static float FullBell(float t)
+	{
+//		t = t * 2 - 1;
+		
+//		float y = (1 + Math.Sin(Math.Sin(t * Math.PI) * Math.PI * 0.5)) / 2;
+		float y = Math.Sin(Math.Sin(t * Math.PI) * Math.PI * 0.5);
+		return y;
+	}	
 }
