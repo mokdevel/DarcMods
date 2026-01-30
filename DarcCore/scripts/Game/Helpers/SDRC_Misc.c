@@ -380,7 +380,31 @@ sealed class SDRC_Misc
 	{
 		return (System.GetTickCount() / 1000);
 	}	
-							
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Format a float to a value for n decimals
+	
+	Original: SCR_EditorSettingsSubMenu.GetSliderText()
+	*/
+	static string FloatWithDecimals(float value, int decimals = 1)
+	{
+		float coef = Math.Pow(10, decimals);
+		value = Math.Round(value * coef);
+		string valueText = value.ToString();
+		if (decimals > 0)
+		{
+			for (int i = 0, count = decimals - valueText.Length() + 1; i < count; i++)
+			{
+				valueText = "0" + valueText;
+			}
+			int length = valueText.Length();
+			valueText = valueText.Substring(0, length - decimals) + "." + valueText.Substring(length - decimals, decimals);
+		}
+
+		return valueText;
+	}	
+								
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if a class is available. This can be used to check if a mod has been loaded by checking a class

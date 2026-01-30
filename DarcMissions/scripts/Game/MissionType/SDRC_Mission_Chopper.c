@@ -4,7 +4,7 @@ const string DC_MISSIONCONFIG_FILE_CHOPPER = "dc_missionConfig_Chopper.json";
 const int DC_MISSIONCONFIG_FILE_CHOPPER_VER = 1;
 
 #ifndef SDRC_RELEASE
-//	#define CHOPPER_TESTING
+	#define CHOPPER_TESTING
 #endif
 
 //------------------------------------------------------------------------------------------------
@@ -163,7 +163,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 					direction.Normalize();
 					vector pos = m_Vehicle.GetOrigin() + direction * size;*/
 					
-					m_Vehicle_c.AddDestination(pos, SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY);
+					m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY, pos);
 					m_Vehicle_c.CreateNewFlight(m_Vehicle.GetOrigin());		
 					m_Vehicle_c.SetSpeed(max : m_DC_Chopper.speed[1] * 1.5);
 				}
@@ -242,12 +242,14 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		m_Vehicle_c.SetSearchForEnemy(true);
 
 		#ifdef CHOPPER_TESTING				
-			m_Vehicle_c.AddDestination(routePos);
-			m_Vehicle_c.AddDestination(landPos, SDRC_EFlyWayPointType.LAND);
-			vector waitTime = "10 0 0";
-			m_Vehicle_c.AddDestination(waitTime, SDRC_EFlyWayPointType.WAIT);
-			m_Vehicle_c.AddDestination(waitTime, SDRC_EFlyWayPointType.HOVER);
-			m_Vehicle_c.AddDestination(waitTime, SDRC_EFlyWayPointType.RAISE);
+			m_Vehicle_c.AddDestination(destination: routePos);
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.LAND, landPos);
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.GET_OUT);
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WAIT, value: 3);
+			vector hoverPos = vector.Zero;
+			hoverPos[1] = m_DC_Chopper.flyHeight[0] + 10;
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.HOVER, hoverPos, 6);
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.RAISE, "200 0 0", 15);
 			m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
 		#else
 			m_Vehicle_c.AddDestination(GetPos());
