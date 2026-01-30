@@ -207,23 +207,28 @@ sealed class SDRC_VehicleHelper
 		array<BaseCompartmentSlot> compartments = {};
 		compartments.Clear();
 		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.CARGO);
-		SDRC_Log.Add("[SDRC_VehicleHelper:MoveEntityInVehicle] Compartments found: " + compartments.Count(), LogLevel.SPAM);
+		SDRC_Log.Add("[SDRC_VehicleHelper:GetOutVehicle] Compartments found: " + compartments.Count(), LogLevel.SPAM);
 
-//		SCR_CompartmentAccessComponent compartmentAccessComponent = SCR_CompartmentAccessComponent.Cast(vehicle.FindComponent(SCR_CompartmentAccessComponent));
-				
 		foreach (BaseCompartmentSlot compartment : compartments)
 		{
-			ChimeraCharacter character = ChimeraCharacter.Cast(compartment.GetOccupant());
+			ChimeraCharacter character = ChimeraCharacter.Cast(compartment.GetOccupant());						
 			if (!character)
 			{
 				continue;
 			}
+			
+			AIControlComponent ctrl = AIControlComponent.Cast(character.FindComponent(AIControlComponent));			
+			SCR_ChimeraAIAgent aiAgent = SCR_ChimeraAIAgent.Cast(ctrl.GetAIAgent());
 			
 			CompartmentAccessComponent compAccess = SCR_CompartmentAccessComponent.Cast(character.GetCompartmentAccessComponent());
 			if (compAccess)
 			{
 				compAccess.GetOutVehicle(EGetOutType.ANIMATED, 0, false, false);
 			}
+			
+			SCR_AIGroup AIgroup = SCR_AIGroup.Cast(aiAgent.GetParentGroup());			
+			
+			SDRC_Log.Add("[SDRC_VehicleHelper:GetOutVehicle] AI in group: " + AIgroup, LogLevel.DEBUG);			
 		}
     }	
 	
