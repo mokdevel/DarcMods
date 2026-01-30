@@ -245,7 +245,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			m_Vehicle_c.AddDestination(destination: routePos);
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.LAND, landPos);
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.GET_OUT);
-			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WAIT, value: 3);
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WAIT, value: 30);
 			vector hoverPos = vector.Zero;
 			hoverPos[1] = m_DC_Chopper.flyHeight[0] + 10;
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.HOVER, hoverPos, 6);

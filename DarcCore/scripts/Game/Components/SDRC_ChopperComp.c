@@ -1183,6 +1183,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 				SetNextState(owner);
 				break;
 			}
+			
+			//If on ground, immediately set next state after touch down
+			case SDRC_EHeliState.GET_OUT:
+			{
+				SDRC_VehicleHelper.GetOutVehicle(owner);
+				SetNextState(owner);
+				break;
+			}
 		}
 		
 		//Wait for the state timer to end and go to next state
@@ -1244,6 +1252,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 			case SDRC_EFlyWayPointType.END:
 			{
 				SetState(SDRC_EHeliState.DESTROYED);
+				break;
+			}
+			case SDRC_EFlyWayPointType.GET_OUT:
+			{
+				SetState(SDRC_EHeliState.GET_OUT);
 				break;
 			}
 			case SDRC_EFlyWayPointType.WAIT:

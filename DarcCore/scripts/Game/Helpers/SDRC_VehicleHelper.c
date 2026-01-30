@@ -192,6 +192,43 @@ sealed class SDRC_VehicleHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Ask AI to get out from vehicle
+	*/	
+    static void GetOutVehicle(IEntity vehicle)
+    {
+		if (!vehicle)
+		{
+			SDRC_Log.Add("[SDRC_VehicleHelper:GetOutVehicle] Vehicle not available (null).", LogLevel.ERROR);
+		}
+		
+		BaseCompartmentManagerComponent compartmentManager = BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(BaseCompartmentManagerComponent));
+		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
+		
+		array<BaseCompartmentSlot> compartments = {};
+		compartments.Clear();
+		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.CARGO);
+		SDRC_Log.Add("[SDRC_VehicleHelper:MoveEntityInVehicle] Compartments found: " + compartments.Count(), LogLevel.SPAM);
+
+//		SCR_CompartmentAccessComponent compartmentAccessComponent = SCR_CompartmentAccessComponent.Cast(vehicle.FindComponent(SCR_CompartmentAccessComponent));
+				
+		foreach (BaseCompartmentSlot compartment : compartments)
+		{
+			ChimeraCharacter character = ChimeraCharacter.Cast(compartment.GetOccupant());
+			if (!character)
+			{
+				continue;
+			}
+			
+			CompartmentAccessComponent compAccess = SCR_CompartmentAccessComponent.Cast(character.GetCompartmentAccessComponent());
+			if (compAccess)
+			{
+				compAccess.GetOutVehicle(EGetOutType.ANIMATED, 0, false, false);
+			}
+		}
+    }	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Set AI to a specific vehicle slot
 	*/	
 	static bool SetEntityInSlot(AIAgent aiAgent, IEntity vehicle, BaseCompartmentSlot slot, bool forceTeleport = false)
