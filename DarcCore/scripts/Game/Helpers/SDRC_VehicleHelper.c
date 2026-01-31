@@ -194,7 +194,7 @@ sealed class SDRC_VehicleHelper
 	/*!
 	Ask AI to get out from vehicle
 	*/	
-    static void GetOutVehicle(IEntity vehicle)
+    static void GetOutVehicle(IEntity vehicle, out array<SCR_AIGroup> groups, ECompartmentType compartmentType = ECompartmentType.CARGO)
     {
 		if (!vehicle)
 		{
@@ -206,9 +206,11 @@ sealed class SDRC_VehicleHelper
 		
 		array<BaseCompartmentSlot> compartments = {};
 		compartments.Clear();
-		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.CARGO);
+		scr_compartmentManager.GetCompartmentsOfType(compartments, compartmentType);
 		SDRC_Log.Add("[SDRC_VehicleHelper:GetOutVehicle] Compartments found: " + compartments.Count(), LogLevel.SPAM);
 
+		array<EntityID> groupIds = {};
+		
 		foreach (BaseCompartmentSlot compartment : compartments)
 		{
 			ChimeraCharacter character = ChimeraCharacter.Cast(compartment.GetOccupant());						
@@ -226,9 +228,16 @@ sealed class SDRC_VehicleHelper
 				compAccess.GetOutVehicle(EGetOutType.ANIMATED, 0, false, false);
 			}
 			
+			//Collect the groups. 
 			SCR_AIGroup AIgroup = SCR_AIGroup.Cast(aiAgent.GetParentGroup());			
 			
-			SDRC_Log.Add("[SDRC_VehicleHelper:GetOutVehicle] AI in group: " + AIgroup, LogLevel.DEBUG);			
+			EntityID groupId = AIgroup.GetID();
+			
+			if (!groupIds.Contains(groupId))
+			{
+				groupIds.Insert(groupId);
+				groups.Insert(AIgroup);
+			}			
 		}
     }	
 	

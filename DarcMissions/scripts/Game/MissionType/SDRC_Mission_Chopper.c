@@ -245,10 +245,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			m_Vehicle_c.AddDestination(destination: routePos);
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.LAND, landPos);
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.GET_OUT);
-			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WAIT, value: 30);
-			vector hoverPos = vector.Zero;
-			hoverPos[1] = m_DC_Chopper.flyHeight[0] + 10;
-			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.HOVER, hoverPos, 6);
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WAIT, value: 12);
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.HOVER_UP, "0 25 0", 6);
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.RAISE, "200 0 0", 15);
 			m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
 		#else
@@ -470,6 +468,8 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		(
 			{1, 2},
 			{"G_SMALL", "G_ADMIN", "G_RECON"},
+//			{3, 3},
+//			{"G_SMALL"},
 			30, 0.6,
 			{0, 0},
 			SDRC_EWaypointGenerationType.LOITER,
