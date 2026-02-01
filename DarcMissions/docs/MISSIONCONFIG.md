@@ -69,6 +69,8 @@ The mission faction is defined in ``enemyFactions`` or individually per sub-miss
 * ``ChinesePLA`` : Chinese People's Liberation Army (PLA) - [MOD](https://reforger.armaplatform.com/workshop/60A6507633AB1954-ChinesePLA)
 * ``JSDF_RAS`` : Japan Self-Defense Forces (JSDF) - [MOD](https://reforger.armaplatform.com/workshop/658809A83416F34D-JapanSelf-DefenseForces)
 
+You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission. Example: ``"enemyFactions": ["FIA", "USSR", "USSR"]`` - 33% missions are with FIA, 66% with USSR
+
 Unsupported values
 * ``MEC``
 
