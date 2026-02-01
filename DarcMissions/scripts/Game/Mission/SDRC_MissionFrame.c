@@ -8,13 +8,13 @@ This is the mission main framework file.
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
 
 const string DC_MISSIONCONFIG_FILE_FRAME = "dc_missionConfig.json";
-const int 	 DC_MISSIONCONFIG_FILE_FRAME_VER = 2;
+const int 	 DC_MISSIONCONFIG_FILE_FRAME_JSONVER = 3;
 
 const string DC_MISSIONCONFIG_FILE_NONVALIDAREA = "dc_nonValidArea.json";
-const int 	 DC_MISSIONCONFIG_FILE_NONVALIDAREA_VER = 1;
+const int 	 DC_MISSIONCONFIG_FILE_NONVALIDAREA_JSONVER = 2;
 
 const string DC_MISSIONCONFIG_FILE_SECONDWAVE = "dc_qrf.json";
-const int DC_MISSIONCONFIG_FILE_SECONDWAVE_VER = 1;
+const int DC_MISSIONCONFIG_FILE_SECONDWAVE_JSONVER = 2;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionFrame
@@ -55,13 +55,13 @@ class SDRC_MissionFrame
 		m_sWorldName = SDRC_Misc.GetWorldName(true);
 
 		//Load configuration from file		
-		bool successFrame = m_DC_MissionFrameJsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_FRAME_VER);
+		bool successFrame = m_DC_MissionFrameJsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_FRAME_JSONVER);
 		
 		//Load NonValidArea configuration from file
-		bool successNoNValid = m_NonValidAreaJsonApi.Load(m_ConfigNonValidArea, SDRC_Config.Cast(m_ConfigNonValidArea), DC_MISSIONCONFIG_FILE_NONVALIDAREA_VER);
+		bool successNoNValid = m_NonValidAreaJsonApi.Load(m_ConfigNonValidArea, SDRC_Config.Cast(m_ConfigNonValidArea), DC_MISSIONCONFIG_FILE_NONVALIDAREA_JSONVER);
 
 		//Load Qrf configuration from file
-		bool successQrf = m_QrfJsonApi.Load(m_ConfigQrf, SDRC_Config.Cast(m_ConfigQrf), DC_MISSIONCONFIG_FILE_NONVALIDAREA_VER);
+		bool successQrf = m_QrfJsonApi.Load(m_ConfigQrf, SDRC_Config.Cast(m_ConfigQrf), DC_MISSIONCONFIG_FILE_NONVALIDAREA_JSONVER);
 		
 		if ( (!successFrame) || (!successNoNValid) || (!successQrf) )
 		{

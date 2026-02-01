@@ -6,7 +6,7 @@ This mission spawns groups to defend a location
 */
 
 const string DC_MISSIONCONFIG_FILE_OCCUPATION = "dc_missionConfig_Occupation.json";
-const int DC_MISSIONCONFIG_FILE_OCCUPATION_VER = 1;
+const int DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER = 2;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Occupation : SDRC_Mission
@@ -22,12 +22,12 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	void SDRC_Mission_Occupation(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_OCCUPATION_VER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
 		}
-		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_OCCUPATION_VER);
+		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER);
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -175,7 +175,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 		
 		SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(SDRC_OccupationConfig_010.GetFileName());				
 		SDRC_OccupationConfig_010 conf = new SDRC_OccupationConfig_010();
-		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), DC_MISSIONCONFIG_FILE_OCCUPATION_VER);
+		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER);
 	}	
 	
 	//------------------------------------------------------------------------------------------------

@@ -6,7 +6,7 @@ This is the main Spawner file.
 //------------------------------------------------------------------------------------------------
 
 const string DC_CONFIG_FILE_SPAWNER = "dc_spawnerConfig.json";
-const int DC_CONFIG_FILE_SPAWNER_VER = 1;
+const int DC_CONFIG_FILE_SPAWNER_JSONVER = 2;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Spawner
@@ -28,7 +28,7 @@ class SDRC_Spawner
 		SDRC_Log.Add("[SDRC_Spawner] Starting SDRC_Spawner", LogLevel.NORMAL);
 		
 		//Load config
-		bool success = m_JsonApi.Load(m_Config, SDRC_SpawnerConfig.Cast(m_Config), DC_CONFIG_FILE_SPAWNER_VER);
+		bool success = m_JsonApi.Load(m_Config, SDRC_SpawnerConfig.Cast(m_Config), DC_CONFIG_FILE_SPAWNER_JSONVER);
 		if (!success)
 		{
 			SDRC_Log.Add("[SDRC_Spawner] Error loading " + DC_CONFIG_FILE_SPAWNER + ". SDRC_Spawner not started.", LogLevel.ERROR);

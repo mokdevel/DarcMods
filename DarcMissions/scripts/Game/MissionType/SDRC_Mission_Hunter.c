@@ -11,7 +11,7 @@ Note: The original HunterKiller mod is discontinued.
 */
 
 const string DC_MISSIONCONFIG_FILE_HUNTER = "dc_missionConfig_Hunter.json";
-const int DC_MISSIONCONFIG_FILE_HUNTER_VER = 1;
+const int DC_MISSIONCONFIG_FILE_HUNTER_JSONVER = 2;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Hunter : SDRC_Mission
@@ -29,12 +29,12 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	void SDRC_Mission_Hunter(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_HUNTER_VER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_HUNTER_JSONVER))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
 		}
-		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_HUNTER_VER);
+		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_HUNTER_JSONVER);
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));

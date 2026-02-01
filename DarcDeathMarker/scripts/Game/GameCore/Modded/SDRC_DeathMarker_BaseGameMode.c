@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------------------------
 
 const string DC_CONFIG_FILE_DEATHMARKER = "dc_deathMarkerConfig.json";
-const int DC_CONFIG_FILE_DEATHMARKER_VER = 1;
+const int DC_CONFIG_FILE_DEATHMARKER_JSONVER = 2;
 
 //------------------------------------------------------------------------------------------------
 modded class SCR_BaseGameMode 
@@ -44,7 +44,7 @@ modded class SCR_BaseGameMode
 		{		
 			//Load config
 			m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_DEATHMARKER);	
-			bool success = m_JsonApi.Load(m_Config, SDRC_DeathMarkerConfig.Cast(m_Config), DC_CONFIG_FILE_DEATHMARKER_VER);
+			bool success = m_JsonApi.Load(m_Config, SDRC_DeathMarkerConfig.Cast(m_Config), DC_CONFIG_FILE_DEATHMARKER_JSONVER);
 			
 			if (!success)
 			{

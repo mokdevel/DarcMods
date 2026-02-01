@@ -18,7 +18,7 @@ enum SDRC_EMissionConvoyState
 };
 
 const string DC_MISSIONCONFIG_FILE_CONVOY = "dc_missionConfig_Convoy.json";
-const int DC_MISSIONCONFIG_FILE_CONVOY_VER = 1;
+const int DC_MISSIONCONFIG_FILE_CONVOY_JSONVER = 2;
 	
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Convoy : SDRC_Mission
@@ -36,12 +36,12 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	void SDRC_Mission_Convoy(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_CONVOY_VER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_CONVOY_JSONVER))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
 		}
-		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CONVOY_VER);
+		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CONVOY_JSONVER);
 
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));

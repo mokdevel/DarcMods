@@ -1,7 +1,7 @@
 //Mission SDRC_Mission_Chopper.c
 
 const string DC_MISSIONCONFIG_FILE_CHOPPER = "dc_missionConfig_Chopper.json";
-const int DC_MISSIONCONFIG_FILE_CHOPPER_VER = 1;
+const int DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER = 2;
 
 #ifndef SDRC_RELEASE
 //	#define CHOPPER_TESTING
@@ -28,12 +28,12 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	void SDRC_Mission_Chopper(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_CHOPPER_VER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
 		}
-		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CHOPPER_VER);
+		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER);
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));

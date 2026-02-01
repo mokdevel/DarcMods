@@ -6,7 +6,7 @@ A chopper flys and crashes. Loot and defending AI is spawned.
 */
 
 const string DC_MISSIONCONFIG_FILE_CRASHSITE = "dc_missionConfig_Crashsite.json";
-const int DC_MISSIONCONFIG_FILE_CRASHSITE_VER = 1;
+const int DC_MISSIONCONFIG_FILE_CRASHSITE_JSONVER = 2;
 	
 //------------------------------------------------------------------------------------------------
 enum SDRC_EMissionCrashSiteState
@@ -40,12 +40,12 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	void SDRC_Mission_Crashsite(SDRC_EMissionType missionType, SDRC_MissionRequested request)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_CRASHSITE_VER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_CRASHSITE_JSONVER))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
 		}
-		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CRASHSITE_VER);
+		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CRASHSITE_JSONVER);
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
