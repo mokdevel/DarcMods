@@ -332,14 +332,17 @@ class SDRC_Mission : Managed
 				general.posName = request.general.posName;
 			}
 			
-			if (request.general.messages)
+			if (request.general.messages.Count() > 0)
 			{
-				general.messages.Insert(request.general.messages[0]);
+				general.messages.Insert(request.general.messages.GetRandomElement());
 			}
-			else
+/*			else
 			{
+				SDRC_MissionMessage defaultMessages = new SDRC_MissionMessage();
 				//Fill in some default texts...
-			}
+				defaultMessages.Set("default", "default", "default", "defatult");
+				general.messages.Insert(defaultMessages);
+			}*/
 			
 			if (request.general.winCondition != SDRC_EMissionWinCondition.DEFAULT)
 			{
