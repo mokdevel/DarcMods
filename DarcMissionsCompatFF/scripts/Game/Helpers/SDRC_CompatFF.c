@@ -9,7 +9,7 @@ Compatibility for Freedom Fighters
 modded class SDRC_Compat
 {	
 	const string DC_COMPATCONFIG_FILE = "dc_compatFFConfig.json";
-	const int DC_COMPATCONFIG_FILE_VER = 1;
+	const int DC_COMPATCONFIG_FILE_JSONVER = 2;
 	
 	const int DC_COMPAT_WAIT_FOR_PLAYERS_TIME = 15;
 	const int DC_COMPAT_CLEAN_WAIT_TIME = 15;
@@ -32,7 +32,7 @@ modded class SDRC_Compat
 		m_JsonApi = new SDRC_JsonApi2(DC_COMPATCONFIG_FILE);		
 
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_CompatFFConfig.Cast(m_Config), DC_COMPATCONFIG_FILE_VER))
+		if (!m_JsonApi.Load(m_Config, SDRC_CompatFFConfig.Cast(m_Config), DC_COMPATCONFIG_FILE_JSONVER))
 		{
 			SDRC_Log.Add("[SDRC_CompatFF] Could not initialize compatibility: Freedom Fighters", LogLevel.ERROR);
 			return false;
@@ -201,7 +201,7 @@ class SDRC_CompatFFConfig : SDRC_Config
 	string comment;
 	//Specific
 	int hideOutSafeZoneDistance = 300;
-	float spawnRateForGreenZones = 0.15; 
+	float spawnRateForGreenZones = 0.25; 
 	bool setEnemyFactionAutomatically = true;	//Automatically set enemy faction from FF. (WIP)
 	bool rewardPerUser = false;					//Shall reward be set per user or for a group
 	int rewardDefault = 500;					//Default reward unless specific reward has been set in a mission. (WIP)
