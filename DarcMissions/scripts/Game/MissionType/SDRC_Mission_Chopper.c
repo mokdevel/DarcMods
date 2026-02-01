@@ -4,7 +4,7 @@ const string DC_MISSIONCONFIG_FILE_CHOPPER = "dc_missionConfig_Chopper.json";
 const int DC_MISSIONCONFIG_FILE_CHOPPER_VER = 1;
 
 #ifndef SDRC_RELEASE
-	#define CHOPPER_TESTING
+//	#define CHOPPER_TESTING
 #endif
 
 //------------------------------------------------------------------------------------------------
@@ -250,7 +250,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.RAISE, "200 0 0", 15);
 			m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
 		#else
-			m_Vehicle_c.AddDestination(GetPos());
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.FLY, GetPos());
 			m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
 		#endif
 
@@ -416,7 +416,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0};//{0,1,1,2,2,3,4,4};
+		missionList = {0,1,1,2,2,3,4,4};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 500;
@@ -483,7 +483,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			{35, 70},
 //			{25, 90},
 			{7, 25},
-			{0.2, 0.5},
+			{0.1, 0.3},
 			SDRC_EHeliWaypointGenerationType.RANDOM,	
 		);
 		
@@ -536,7 +536,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			},
 			{40, 80},
 			{10, 30},
-			{0.2, 0.4},
+			{0.1, 0.3},
 			SDRC_EHeliWaypointGenerationType.RANDOM,	
 		);
 		
@@ -651,7 +651,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			},
 			{40, 80},
 			{10, 30},
-			{0.2, 0.4},
+			{0.1, 0.3},
 			SDRC_EHeliWaypointGenerationType.RANDOM,	
 		);
 		
@@ -700,7 +700,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			},
 			{35, 70},
 			{7, 25},
-			{0.2, 0.5},
+			{0.1, 0.5},
 			SDRC_EHeliWaypointGenerationType.SEARCH,	
 		);
 		

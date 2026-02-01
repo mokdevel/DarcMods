@@ -120,7 +120,7 @@ sealed class SDRC_RoadHelper
 				int i = 0;
 				
 //				pos[1] = 0;		//Distance calculation done on plane at 0 height
-				foreach (vector pt: roadPos.roadPts)
+				foreach (vector pt : roadPos.roadPts)
 				{	
 ///					pt[1] = 0;	//Distance calculation done on plane at 0 height
 					if (SDRC_Misc.IsPosNearPos(pos, pt, (roadPos.distanceToRoad + 10)))
@@ -210,7 +210,7 @@ sealed class SDRC_RoadHelper
 		{	
 			SDRC_Log.Add("[SDRC_RoadHelper] Road to be mirrored.", LogLevel.DEBUG);			
 			int j = roadPts2.Count() - 1;
-			foreach (vector pt: roadPts2)
+			foreach (vector pt : roadPts2)
 			{
 				roadPts1.Insert(roadPts2[j]);
 				j--;

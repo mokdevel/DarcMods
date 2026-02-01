@@ -71,7 +71,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 			return false;
 		}		
 		
-		if(!loadContext.ReadValue("", T))
+		if (!loadContext.ReadValue("", T))
 		{
 			SDRC_Log.Add("[SDRC_JsonApi2:Load] Error loading file: " + GetFileName(), LogLevel.ERROR);
 			return false;

@@ -172,7 +172,7 @@ sealed class SDRC_DebugHelper
 
 		SDRC_AIHelper.GroupFindAll(groups);
 		
-		foreach (AIGroup group: groups)
+		foreach (AIGroup group : groups)
 		{
 			if (group != null)
 			{

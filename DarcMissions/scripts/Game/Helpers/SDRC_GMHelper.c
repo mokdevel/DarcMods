@@ -151,8 +151,8 @@ class SDRC_GMHelper
 		if (gmComponent)
 		{
 			int idx = 0;
-			
-			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
+			 
+			foreach (SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
 			{
 				//SDRC_Log.Add("[SDRC_GMHelper:GetMarkerIndex] Checking: " + pos + " vs " + symbol.vPos + " r=" + radius, LogLevel.NORMAL);
 				

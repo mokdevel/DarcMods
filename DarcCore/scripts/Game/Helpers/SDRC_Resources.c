@@ -45,7 +45,7 @@ sealed class SDRC_Resources
 	*/	
 	static void ExcludeFilter(out array<string> resourceNames, array<string> filters)
 	{	
-		foreach (string filter: filters)
+		foreach (string filter : filters)
 		{
 			filter.ToLower();
 			for (int i = 0; i < resourceNames.Count(); i++)		
@@ -71,8 +71,8 @@ sealed class SDRC_Resources
 		for (int i = 0; i < resourceNames.Count(); i++)		
 		{
 			bool ToBeRemoved = true;
-			foreach (string filter: filters)
-			{
+			foreach (string filter : filters)
+			{ 
 				filter.ToLower();
 				string resourceName = resourceNames[i];
 				resourceName.ToLower();

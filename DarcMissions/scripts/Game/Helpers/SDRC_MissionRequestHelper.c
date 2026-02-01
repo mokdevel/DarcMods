@@ -37,7 +37,13 @@ class SDRC_MissionRequestHelper
 		SDRC_DarcMissionEditableRequestComp requestComp = SDRC_DarcMissionEditableRequestComp.Cast(missionEntity.FindComponent(SDRC_DarcMissionEditableRequestComp));
 		missionRequest.missionType = requestComp.GetMissionType();
 		missionRequest.requestId = requestComp.GetRequestId();		
+		//Prepare general
 		missionRequest.general = requestComp.general;
+/*		//Messages is special case
+		foreach (SDRC_MissionMessage message : requestComp.general.messages)
+		{
+			missionRequest.general.messages.Insert(message);
+		}*/
 		missionRequest.general.subIdx = requestComp.GetSubIdx();
 		
 		//Entity may have been moved so we read the pos before spawning mission.

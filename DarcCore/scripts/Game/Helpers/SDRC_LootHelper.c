@@ -65,7 +65,7 @@ sealed class SDRC_LootHelper
 			return;
 		}
 		
-		foreach (string itemName: itemNames)
+		foreach (string itemName : itemNames)
 		{
 			if (SDRC_Misc.RandomFloat(0, 1) < itemChance)
 			{

@@ -85,12 +85,12 @@ sealed class SDRC_EnemyHelper
 			factionsFound.Clear();
 			factionsMissing.Clear();
 			
-			foreach(string faction : enemyFactions)
+			foreach (string faction : enemyFactions)
 			{
 				array<string> factionsToTest = {};
 				
 				//Check if the requested faction has an aka
-				foreach(SDRC_Aka aka : m_Config.akas)
+				foreach (SDRC_Aka aka : m_Config.akas)
 				{
 					if (aka.names[0] == faction)
 					{
@@ -107,12 +107,12 @@ sealed class SDRC_EnemyHelper
 					factionsToTest.Insert(faction);
 				}
 
-				foreach(string factionToTest : factionsToTest)
+				foreach (string factionToTest : factionsToTest)
 				{
 					SDRC_Log.Add("[SDRC_EnemyHelper:SanityCheck] Testing " + faction + " as " + factionToTest, LogLevel.DEBUG);
 					
 					//Collect factions found
-					foreach(ResourceName enemy : list.items)
+					foreach (ResourceName enemy : list.items)
 					{
 //						if (enemy.Contains("_" + factionToTest + "_"))
 						if ( (enemy.Contains("_" + factionToTest + "_")) || (enemy.Contains("_" + factionToTest + ".")) )
@@ -126,7 +126,7 @@ sealed class SDRC_EnemyHelper
 					}
 	
 					//Collect factions missing
-/*					foreach(ResourceName enemy : list.items)
+/*					foreach (ResourceName enemy : list.items)
 					{
 						if (!enemy.Contains("_" + factionToTest + "_"))
 						{
@@ -184,7 +184,7 @@ sealed class SDRC_EnemyHelper
 		factions.Insert(faction);
 
 		//Check if the requested faction has an aka
-		foreach(SDRC_Aka aka : m_Config.akas)
+		foreach (SDRC_Aka aka : m_Config.akas)
 		{			
 			if (aka.names[0] == faction)
 			{			
@@ -221,9 +221,9 @@ sealed class SDRC_EnemyHelper
 		}
 
 		//Filter with faction		
-		foreach(string enemy : m_Config.lists[index].items)
+		foreach (string enemy : m_Config.lists[index].items)
 		{
-			foreach(string fac : factions)
+			foreach (string fac : factions)
 			{
 //				if (enemy.Contains("_" + fac + "_"))	//This checks for "_US_"
 				if (enemy.Contains(fac + "_"))			//This checks for "US_".

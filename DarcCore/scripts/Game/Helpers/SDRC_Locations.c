@@ -61,7 +61,7 @@ sealed class SDRC_Locations
 		
 		GetLocations(locationArrayMapItem, locationTypeArray);
 		
-		foreach (MapItem tmpMapItem: locationArrayMapItem)
+		foreach (MapItem tmpMapItem : locationArrayMapItem)
 		{
 			if (tmpMapItem.Entity())
 			{
@@ -97,14 +97,14 @@ sealed class SDRC_Locations
 				
 		private array<MapItem> m_tmpLocationArray = new array<MapItem>;
 
-		foreach (EMapDescriptorType locationType: locationTypeArray)
+		foreach (EMapDescriptorType locationType : locationTypeArray)
 		{		
 			SDRC_Log.Add("[SDRC_Locations:GetLocations] Searching for: " + SCR_Enum.GetEnumName(EMapDescriptorType, locationType), LogLevel.SPAM);
 			
 			m_tmpLocationArray.Clear();
 			SCR_MapEntity.GetMapInstance().GetByType(m_tmpLocationArray, locationType);
 			
-			foreach (MapItem tmpMapItem: m_tmpLocationArray)
+			foreach (MapItem tmpMapItem : m_tmpLocationArray)
 			{
 				//tmpMapItem.SetDisplayName(SCR_StringHelper.Translate(tmpMapItem.GetDisplayName()));
 				vector origin = tmpMapItem.Entity().GetOrigin();			
@@ -141,7 +141,7 @@ sealed class SDRC_Locations
 		GetLocations(m_LocationsCache, m_LocationTypeArray);
 		
 		//Handle location akas
-		foreach (SDRC_Location location: m_LocationsCache)
+		foreach (SDRC_Location location : m_LocationsCache)
 		{
 			string dispName = location.displayName;
 			dispName.ToLower();
@@ -187,7 +187,7 @@ sealed class SDRC_Locations
 		}
 								
 		//Print debug information
-		foreach (SDRC_Location location: m_LocationsCache)
+		foreach (SDRC_Location location : m_LocationsCache)
 		{
 			SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Found: " + location.displayName + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, location.baseType) + " at: " + location.pos, LogLevel.DEBUG);
 		}		
@@ -211,7 +211,7 @@ sealed class SDRC_Locations
 			return;
 		}
 		
-		foreach (SDRC_Location location: m_LocationsCache)
+		foreach (SDRC_Location location : m_LocationsCache)
 		{
 			if (locationTypeArray.Contains(location.baseType))
 			{
@@ -328,7 +328,7 @@ sealed class SDRC_Locations
 		m_aTmpSlots.Clear();
 		GetGame().GetWorld().QueryEntitiesBySphere(position, 200, SDRC_Locations.GetLocationSlotsCallBack);
 		
-		foreach (IEntity slot: m_aTmpSlots)
+		foreach (IEntity slot : m_aTmpSlots)
 		{
 			slots.Insert(slot);
 		}
@@ -363,7 +363,7 @@ sealed class SDRC_Locations
 		 	SCR_Enum.GetEnumName(EMapDescriptorType, locationType),
 			), LogLevel.DEBUG);*/
 	
-		foreach (MapItem location: m_tmpLocationArray)
+		foreach (MapItem location : m_tmpLocationArray)
 		{	
 			IEntity entity = location.Entity();
 			SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Name: %1 , DisplayName: %2 , CreatedName: %3, Type: %4 , Pos: %5 , Entity: %6", 
@@ -399,7 +399,7 @@ sealed class SDRC_Locations
 	{
 		array<IEntity> slots = {};
 
-		foreach (SDRC_Location location: m_tmpLocationArray)
+		foreach (SDRC_Location location : m_tmpLocationArray)
 		{			
 			SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Name: %2 (%1) , CreatedName: %3, Type: %4 , Pos: %5", 
 				location.name,

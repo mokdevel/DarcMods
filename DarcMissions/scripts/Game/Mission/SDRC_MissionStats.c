@@ -71,7 +71,7 @@ class SDRC_MissionStats
 	{
 		int i = -1;
 		
-		foreach(SDRC_MissionStat stat : m_MissionStatList)
+		foreach (SDRC_MissionStat stat : m_MissionStatList)
 		{
 			i++;
 			
@@ -89,7 +89,7 @@ class SDRC_MissionStats
 	{
 		int i = -1;
 		
-		foreach(SDRC_MissionStat stat : m_MissionStatList)
+		foreach (SDRC_MissionStat stat : m_MissionStatList)
 		{
 			i++;
 			
@@ -119,7 +119,7 @@ class SDRC_MissionStats
 	{
 		int i = -1;
 		
-		foreach(SDRC_MissionStat stat : m_MissionStatList)
+		foreach (SDRC_MissionStat stat : m_MissionStatList)
 		{
 			i++;
 			

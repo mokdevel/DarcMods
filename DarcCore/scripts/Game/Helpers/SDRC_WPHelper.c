@@ -278,7 +278,7 @@ sealed class SDRC_WPHelper
 			array<vector> routePts = {};
 			SDRC_RoadHelper.CreateRoute(routePts, posFrom, posTo);
 			
-			foreach (vector pt: routePts)
+			foreach (vector pt : routePts)
 			{
 				AIWaypoint waypoint = FindAndCreateWaypoint(pt, moveType, 0, emptyspot);
 				if (waypoint != null)

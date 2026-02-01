@@ -528,7 +528,7 @@ class SDRC_MissionHelper
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
 		{
-			foreach(SDRC_Mission mission : m_BaseGameMode.missionFrame.m_MissionList)
+			foreach (SDRC_Mission mission : m_BaseGameMode.missionFrame.m_MissionList)
 			{
 				if (mission.GetType() == missionType)
 				{

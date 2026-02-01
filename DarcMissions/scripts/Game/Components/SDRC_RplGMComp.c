@@ -155,7 +155,7 @@ class SDRC_RplGMComp : ScriptComponent
 		
 		SDRC_GMHelper.AddSymbols();
 		
-		foreach(SDRC_GMMapSymbol symbol : m_Symbols)
+		foreach (SDRC_GMMapSymbol symbol : m_Symbols)
 		{
 			SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Syncing: " + symbol.vPos, LogLevel.SPAM);	
 	        Rpc(RpcDo_SyncMapSymbol, symbol.symbolType, symbol.vPos, symbol.iTimeLeft, symbol.fRadius, symbol.sId, symbol.iIntval, symbol.sStrval, symbol.iType); 	// broadcast to clients			

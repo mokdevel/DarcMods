@@ -36,7 +36,7 @@ sealed class SDRC_BuildingHelper
 		}
 				
 		//Print debug information
-		foreach (IEntity building: buildings)
+		foreach (IEntity building : buildings)
 		{
 			ResourceName res = building.GetPrefabData().GetPrefabName();
 			SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildings] Found: " + res + " at " + building.GetOrigin(), LogLevel.SPAM);			
@@ -52,7 +52,7 @@ sealed class SDRC_BuildingHelper
 	*/	
 	static void FilterBuildingList(out array<IEntity> buildings, array<IEntity> buildingListSource, array<string> filter)
 	{
-		foreach (IEntity building: buildingListSource)
+		foreach (IEntity building : buildingListSource)
 		{
 			if (!building)
 			{
@@ -89,7 +89,7 @@ sealed class SDRC_BuildingHelper
 		m_TmpBuildings.Clear();
 		GetGame().GetWorld().QueryEntitiesBySphere(SDRC_Misc.GetWorldCenter(), SDRC_Misc.GetWorldSizeRadius(), FindBuildingCallback, null, EQueryEntitiesFlags.STATIC);		
 
-		foreach (IEntity building: m_TmpBuildings)
+		foreach (IEntity building : m_TmpBuildings)
 		{
 			ResourceName buildingName = building.GetPrefabData().GetPrefabName();
 			
@@ -102,7 +102,7 @@ sealed class SDRC_BuildingHelper
 				
 		//Print debug information
 		#ifndef SDRC_RELEASE
-			foreach (IEntity building: m_BuildingsCache)
+			foreach (IEntity building : m_BuildingsCache)
 			{
 				ResourceName res = building.GetPrefabData().GetPrefabName();
 				SDRC_Log.Add("[SDRC_BuildingHelper:FillBuildingsCache] Found: " + res + " at " + building.GetOrigin(), LogLevel.DEBUG);			
@@ -292,7 +292,7 @@ sealed class SDRC_BuildingHelper
 		#ifndef SDRC_RELEASE
 			//Print(floorHeight);
 			//Print(floors);
-			foreach (vector fpos: floors)
+			foreach (vector fpos : floors)
 			{
 				SDRC_DebugHelper.AddDebugPos(fpos, ARGB(20, 255, 255, 0), 12, "", 0.3, false);		//Yellow
 			}				
@@ -375,7 +375,7 @@ sealed class SDRC_BuildingHelper
 		#endif
 				
 		#ifndef SDRC_RELEASE
-			foreach (vector fpos: floors)
+			foreach (vector fpos : floors)
 			{
 				SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 0, 0, 255), 0.06);	//Blue ball for the found floor
 			}				

@@ -54,7 +54,7 @@ sealed class SDRC_VehicleHelper
 		}
 			
 		//Do the spawning	
-		foreach(ResourceName aiPrefab : aiPrefabs)
+		foreach (ResourceName aiPrefab : aiPrefabs)
 		{
 			if (aiPrefab == "")
 			{
@@ -62,7 +62,7 @@ sealed class SDRC_VehicleHelper
 			}
 			
 			SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Prefab to spawn: " + aiPrefab, LogLevel.DEBUG);
-			foreach(BaseCompartmentSlot compartment : compartments)
+			foreach (BaseCompartmentSlot compartment : compartments)
 			{
 				if (compartment.IsOccupied() || !compartment.IsCompartmentAccessible() || compartment.IsReserved())
 				{
@@ -103,7 +103,7 @@ sealed class SDRC_VehicleHelper
 			{
 				group.GetAgents(groupMembers);
 				
-				foreach (AIAgent aiAgent: groupMembers)
+				foreach (AIAgent aiAgent : groupMembers)
 				{
 					bool success = MoveEntityInVehicle(aiAgent, vehicle, i, forceTeleport);
 					
@@ -296,7 +296,7 @@ sealed class SDRC_VehicleHelper
 		
 		int alive = 0;
 		
-		foreach(IEntity pilot : occupants)
+		foreach (IEntity pilot : occupants)
 		{
 			if (SCR_AIDamageHandling.IsAlive(pilot))
 			{
@@ -323,7 +323,7 @@ sealed class SDRC_VehicleHelper
 	//------------------------------------------------------------------------------------------------
 	static bool IsWorking(IEntity vehicle)
 	{
-		if(SCR_AIVehicleUsability.VehicleCanMove(vehicle) && !SCR_AIVehicleUsability.VehicleIsOnFire(vehicle))
+		if (SCR_AIVehicleUsability.VehicleCanMove(vehicle) && !SCR_AIVehicleUsability.VehicleIsOnFire(vehicle))
 			return true;
 	
 		return false;

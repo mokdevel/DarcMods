@@ -268,7 +268,7 @@ class SDRC_MapSystem : GameSystem
 		
 		if (gmComponent)
 		{
-			foreach(SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
+			foreach (SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
 			{			
 				switch (symbol.symbolType)
 				{
@@ -338,7 +338,7 @@ class SDRC_MapSystem : GameSystem
 		*/
 		#endif
 		
-		if(!m_DrawCommands.IsEmpty())
+		if (!m_DrawCommands.IsEmpty())
 		{						
 			m_wCanvasWidget.SetDrawCommands(m_DrawCommands);			
 		}		
