@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-//#define SDRC_RELEASE
+#define SDRC_RELEASE
 //#define ENABLE_QRF				//Enable QRF functionality
 //#define NEW_VERSION_WIP			//New functionality (..that affects jsons)
 //#define EXPERIMENTAL
@@ -58,8 +58,8 @@ sealed class SDRC_Conf
 	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
 	const bool SDRC_ENABLE_DARCSTORIES = false;
 //	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
-//	const bool OVERWRITE_JSON = true;			
-	const bool OVERWRITE_JSON = false;
+	const bool OVERWRITE_JSON = true;			
+//	const bool OVERWRITE_JSON = false;
 	const bool SHOW_VALID_MISSION_AREAS = false;
 	const bool SHOW_MARKER_FOR_LOCATION = false;
 	const bool SHOW_DEBUG_INFO = true;

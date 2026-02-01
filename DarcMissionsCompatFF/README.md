@@ -32,6 +32,9 @@ bool rewardDefault : Default reward unless specific reward has been set in missi
 ```
 
 # Version history
+## 20260201
+Compatibility fix for Freedom Fighters
+
 ## 20260111
 Compatibility compile for DarcCore. New json fileformat.
 

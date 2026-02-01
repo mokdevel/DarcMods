@@ -70,14 +70,15 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		//This way we arrive quicker to the location. 
 		float distanceToStart = SDRC_Misc.GetWorldSize() * m_Config.distanceToStart;
 	#ifndef SDRC_RELEASE
-		distanceToStart = SDRC_Misc.GetWorldSize() * 0.1;
+//		distanceToStart = SDRC_Misc.GetWorldSize() * 0.1;
 	#endif
 		
 		vector worldCenter = "0 0 0";
 		worldCenter[0] = SDRC_Misc.GetWorldSize()/2;
 		worldCenter[2] = worldCenter[0];
-		vector direction = vector.Direction(worldCenter, pos);
-		m_vPosOrigin = pos + direction.Normalized() * distanceToStart;
+		vector direction = vector.Direction(worldCenter, pos);		
+		float distance = distanceToStart - vector.DistanceXZ(pos, worldCenter);		
+		m_vPosOrigin = pos + direction.Normalized() * distance;
 		SDRC_Misc.RandomizePos(m_vPosOrigin, 300);
 
 		//Set end time for mission.

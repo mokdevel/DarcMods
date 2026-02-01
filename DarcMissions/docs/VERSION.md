@@ -5,6 +5,35 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 
+## 20260201
+This update introduces major modifications to json files. These are the updates I've been waiting to push out for quite a while. The unfortunate thing is that this will break your existing json file compatibility. The positive thing is that there are no foreseen changes planned to be introduced in the near future. This current structure should be, not to say final, but close to it.
+
+IMPORTANT: Clear your DarcMods folder to receive new json files.
+
+Main features:
+* Major changes in json files. Do a clean install which means delete all files under DarcMods folder.
+* Compatibility fix for Freedom Fighters
+* Minor fixes here and there.
+
+Mission parameters:
+* ``messages``: You can have multiple different messages for same sub-mission
+* ``faction``: Faction is an array
+* ``difficulty``: Difficulty is an array
+
+Chopper mission: 
+* Improved helicopter flight model. 
+* Improved handling of steep hills. 
+* Known issues: 
+  * Sometimes does an ugly altitude change when changing route
+  * Heli slows down when close to ground to give time to raise. To be smoothed in future updates.
+  * Landing / troop functionality is NOT used yet 
+
+Miscellaneous:
+* Quick Reaction Force (QRF) functionality is not enabled
+* Documentation is not up to date
+* There are some new parameters in json files (like modList) which currently does nothing.
+* All new and renamed parameters are not described fully in this release note.
+
 ## 20260118
 Minor update mainly for helicopter flight model fixes.
 
