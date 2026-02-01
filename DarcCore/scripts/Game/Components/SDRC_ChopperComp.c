@@ -638,19 +638,24 @@ class SDRC_ChopperComp : ScriptGameComponent
 					
 			//Modify if we're too close to the ground, raise very aggressively
 			float altitude = m_Helicopter_s.GetAltitudeAGL();
+			if (altitude == 0)
+			{
+				return;
+			}
+			
 			float refAltitude = m_fFlyHeightLow;
 			
 			if (altitude < refAltitude)
 			{
-				bigMul = 400;
+				bigMul = 300;
+				
+				//If we're too close to ground, slow down the speed to allow time for climb
+//				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin);
+//				float mul = (m_vOrigin[1] - surfaceY) / (m_fFlyHeightLow - surfaceY);
+				float mul = (altitude + 10) / m_fFlyHeightLow;
+				mul = Math.Clamp(mul, 0, 1);
+				m_fSpeed = Math.Clamp(m_fSpeed * mul, m_fSpeedMin, m_fSpeedMax);
 			}
-			
-	/*		if (m_vOrigin[1] - surfaceY - m_fFlyHeightLow < 0)
-			{
-				float mul = (m_vOrigin[1] - surfaceY) / m_fFlyHeightLow;
-				//Slow down the speed to allow time for climb
-				m_fSpeed = Math.Clamp(m_fSpeed * mul, m_fSpeedMin, m_fSpeedMax)
-			}*/
 		}
 		
 		m_fRotorForceMultiplier = 0 - (bigMul * ( (heliHeightFromGround - splineHeightFromGround) / splineHeightFromGround ));	
@@ -1651,7 +1656,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		array<IEntity> occupants = {};
 		scr_compartmentManager.GetOccupants(occupants);
 
-		foreach(IEntity occupant : occupants)
+		foreach (IEntity occupant : occupants)
 		{
 			SCR_AICombatComponent aicc = SCR_AICombatComponent.Cast(occupant.FindComponent(SCR_AICombatComponent));
 			if (aicc)
@@ -1865,7 +1870,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		array<IEntity> occupants = {};
 		scr_compartmentManager.GetOccupants(occupants);
 
-		foreach(IEntity occupant : occupants)
+		foreach (IEntity occupant : occupants)
 		{
 			SCR_AICombatComponent aicc = SCR_AICombatComponent.Cast(occupant.FindComponent(SCR_AICombatComponent));
 			if (aicc)
