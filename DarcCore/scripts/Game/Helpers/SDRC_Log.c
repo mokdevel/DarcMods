@@ -42,6 +42,11 @@ sealed class SDRC_Log
 	//------------------------------------------------------------------------------------------------
 	static void SetLogLevel(DC_LogLevel logLevel)
 	{
+		if (m_LogLevel == DC_LogLevel.NONE)
+		{
+			Print("[SDRC_Log] LogLevel changed to " + SCR_Enum.GetEnumName(DC_LogLevel, logLevel) + ". Nothing will be logged from DarcMods!", LogLevel.WARNING);
+		}
+
 		if (m_LogLevel != logLevel)
 		{
 			Print("[SDRC_Log] LogLevel changed to " + SCR_Enum.GetEnumName(DC_LogLevel, logLevel) + " (was: " + SCR_Enum.GetEnumName(DC_LogLevel, m_LogLevel) + ")", LogLevel.NORMAL);
@@ -84,10 +89,6 @@ sealed class SDRC_Log
 			case LogLevel.WARNING:
 			case LogLevel.ERROR:
 			case LogLevel.FATAL:
-				if ( (m_LogLevel != DC_LogLevel.ALL) && (m_LogLevel != DC_LogLevel.DEBUG) && (m_LogLevel != DC_LogLevel.ERROR))
-				{
-					break;
-				}
 			case LogLevel.NORMAL:
 				Print(string.ToString(logEntry), logLevel);
 			default:

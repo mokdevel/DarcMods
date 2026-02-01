@@ -20,7 +20,12 @@ modded class SCR_BaseGameMode
 
 			//Initialize core
 			m_SDRC_Core = new SDRC_Core();
-					
+
+			if (!m_SDRC_Core.IsCoreStarted())
+			{
+				return;
+			}
+								
 			//Initialize the SDRC_DebugEntity
 			SDRC_Log.Add("[SDRC_Core_BaseGameMode] Creating SDRC_DebugEntity", LogLevel.NORMAL);        
 			m_SDRC_DebugEntity = SDRC_DebugEntity.Cast(GetGame().SpawnEntity(SDRC_DebugEntity, GetGame().GetWorld(), null));

@@ -550,7 +550,7 @@ class SDRC_MissionFrame
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Find mission index with mission id
+	Show a failed startup
 	*/		
 	protected void ShowFailure()
 	{		

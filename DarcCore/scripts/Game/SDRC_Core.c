@@ -19,8 +19,10 @@ class SDRC_Core
 	private const string DC_CONFIG_FILE_CORE = SDRC_Conf.CORE_CONFIG_FILE;
 	private const int DC_CONFIG_FILE_CORE_JSONVER = 2;
 	
-	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_CORE);	
+	private ref SDRC_JsonApi2 m_DC_CoreJsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_CORE);	
 	ref SDRC_CoreConfig m_Config = new SDRC_CoreConfig();	
+	
+	private bool m_bCoreStarted = false;
 	
 	private ref array<string> m_sAddonList = {};
 	private ref array<string> m_sFactionList = {};
@@ -30,8 +32,14 @@ class SDRC_Core
 		SDRC_Log.Add("[SDRC_Core] Starting SDRC_Core", LogLevel.NORMAL);
 		
 		//Load configuration from file
-		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_CONFIG_FILE_CORE_JSONVER);
-
+		bool success = m_DC_CoreJsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_CONFIG_FILE_CORE_JSONVER);
+		
+		if (!success)
+		{
+			ShowFailure();
+			return;
+		}			
+		
 		SDRC_Log.SetLogLevel(m_Config.logLevel);
 
 		//Print general information
@@ -42,9 +50,7 @@ class SDRC_Core
 		SDRC_Log.Add("[SDRC_Core] World size: " + SDRC_Misc.GetWorldSize(), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World has ocean: " + GetGame().GetWorld().IsOcean(), LogLevel.NORMAL);
 		
-//		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
 		bool bAiWorld = false;
-//		if (aiWorld)
 		if (GetGame().GetAIWorld())
 		{
 			bAiWorld = true;
@@ -79,6 +85,8 @@ class SDRC_Core
 		
 		//Set debug visibility
 		SDRC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres, m_Config.debugShowLines, m_Config.debugShowInfo);
+		
+		m_bCoreStarted = true;
 	}
 
 	void ~SDRC_Core()
@@ -86,6 +94,23 @@ class SDRC_Core
 		SDRC_Log.Add("[~SDRC_Core] Stopping SDRC_Core", LogLevel.NORMAL);
 	}
 
+	//------------------------------------------------------------------------------------------------
+	bool IsCoreStarted()
+	{
+		return m_bCoreStarted;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Show a failed startup
+	*/		
+	protected void ShowFailure()
+	{		
+		SDRC_Log.SetLogLevel(DC_LogLevel.ERROR);
+		SDRC_Log.Add("[SDRC_Core] ****** Could not initialize DarcCore. Check your logs. ******", LogLevel.ERROR);
+		GetGame().GetCallqueue().CallLater(ShowFailure, 10000, false);
+	}	
+	
 	//------------------------------------------------------------------------------------------------		
 	void FillBuildingCache()
 	{
