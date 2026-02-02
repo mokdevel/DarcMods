@@ -35,3 +35,6 @@ I wanted to create a simple drop-in mission package where there is minimal confi
 - The work is inspired by [Defent's Mission System (DMS)](https://github.com/Defent/DMS_Exile) in Arma 3.
 - [HunterKiller mod by Rabid Squirrel](https://reforger.armaplatform.com/workshop/597324ECFC025225-HunterKiller) for the initial kick to get into coding.
 - The great Arma Reforger community and #enfusion_scripting
+
+## License
+- APL-ND - see: [Licenses](https://www.bohemia.net/community/licenses)
