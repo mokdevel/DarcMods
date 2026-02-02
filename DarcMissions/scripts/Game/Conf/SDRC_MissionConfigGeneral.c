@@ -66,7 +66,17 @@ class SDRC_MissionConfigGeneral : Managed
 	}
 		
 	//------------------------------------------------------------------------------------------------
-	void Set(int subIdx_, string comment_, array<vector> pos_, float size_, array<EMapDescriptorType> locationTypes_, string posName_, array<ref SDRC_MissionMessage> messages_, SDRC_EMissionWinCondition winCondition_, array<string> faction_, string markerType_, int markerIcon_, array<SDRC_EDifficulty> difficulty_, int xp_)
+	void Set(int subIdx_, string comment_, 
+	         array<vector> pos_, float size_, 
+	         array<EMapDescriptorType> locationTypes_, 
+	         string posName_, 
+	         array<ref SDRC_MissionMessage> messages_, 
+	         SDRC_EMissionWinCondition winCondition_, 
+			 array<string> faction_, 
+			 string markerType_, int markerIcon_, 
+			 array<SDRC_EDifficulty> difficulty_, 
+			 int xp_
+			 )
 	{
 		subIdx = subIdx_;
 		comment = comment_;
@@ -96,19 +106,6 @@ class SDRC_MissionConfigGeneral : Managed
 		{
 			faction = faction_;
 		}
-		
-/*		if (!faction_)
-		{
-			faction.Insert("");
-		}
-		else if (faction_.IsEmpty())
-		{
-			faction.Insert("");
-		}
-		else
-		{
-			faction = faction_;
-		}*/
 
 		markerType = markerType_;
 		markerIcon = markerIcon_;
