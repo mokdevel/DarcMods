@@ -67,7 +67,7 @@ enum SDRC_EHeliState
 [BaseContainerProps()]
 class SDRC_FlyPathPoint
 {
-	[Attribute( defvalue: "1", uiwidget: UIWidgets.SearchComboBox, desc: "SDRC_EFlyWayPointType", enums: ParamEnumArray.FromEnum( SDRC_EFlyWayPointType ) )]
+	[Attribute(defvalue: "1", uiwidget: UIWidgets.SearchComboBox, desc: "SDRC_EFlyWayPointType", enums: ParamEnumArray.FromEnum( SDRC_EFlyWayPointType ) )]
 	SDRC_EFlyWayPointType type;
 	
 	[Attribute(defvalue: "0 0 0", desc: "Position, waiting time, hover height, etc..")]
@@ -75,13 +75,20 @@ class SDRC_FlyPathPoint
 
 	[Attribute(defvalue: "0 0 0", desc: "Position, waiting time, hover height, etc..")]
 	float value
-	
-	void SDRC_FlyPathPoint(SDRC_EFlyWayPointType type_ = SDRC_EFlyWayPointType.FLY, vector pt_ = vector.Zero, float value_ = 0)
+		
+/*	void SDRC_FlyPathPoint(SDRC_EFlyWayPointType type_ = SDRC_EFlyWayPointType.FLY, vector pt_ = vector.Zero, float value_ = 0)
 	{
 		type = type_;
 		pt = pt_;
 		value = value_;		
-	}
+	}*/
+	
+	void Set(SDRC_EFlyWayPointType type_ = SDRC_EFlyWayPointType.FLY, vector pt_ = vector.Zero, float value_ = 0)
+	{
+		type = type_;
+		pt = pt_;
+		value = value_;		
+	}	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -118,12 +125,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 	float m_fDistanceLow;			//Distance for waypoint min
 	[Attribute(defvalue: "0.4", desc: "Maximum distance for waypoint", params: "0.1 1000.0 0.1")]	
 	float m_fDistanceHigh;			//..max
-	SDRC_EHeliWaypointGenerationType m_fWpType; 	
+	SDRC_EHeliWaypointGenerationType m_fWpType = SDRC_EHeliWaypointGenerationType.RANDOM; 	
 
 	//Flight path
 	ref array<ref SDRC_FlyPathPoint> m_vFlightPoints = {};
 	[Attribute("", UIWidgets.Object, "Destinations")]	
-	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations = {};	//Requested destinations
+	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations;	//Requested destinations
+//	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations = {};	//Requested destinations
+	
+	[Attribute(defvalue: "0", desc: "Show debugging information")]	
+	bool m_bShowDebug;
 	
 	//Original destination	
 	private vector m_vOriginalDestination;				//Used to know where to patrol
@@ -236,11 +247,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 			return;
 		}
 		
-		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp", LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp: " + m_vFlyDestinations.Count(), LogLevel.NORMAL);
 		
+		SetEventMask(owner, EntityEvent.INIT);
 		s_Instance = this;
 		m_sDid = SDRC_Misc.GetCurrentTickTime().ToString();
 
+		#ifndef SDRC_RELEASE
+			m_bShowDebug = true;
+		#endif
+		
 		m_bInInit = true;
 		SetState(SDRC_EHeliState.FLY);
 		
@@ -260,13 +276,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 	        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0);
 	        m_Helicopter_s.RotorSetForceScaleState(1, m_fRotorForce1);			
 			SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, SDRC_EHeliWaypointGenerationType.RANDOM, m_fDistanceLow, m_fDistanceHigh);						
-			
+
 			if (m_bAutoStart)
 			{
-				//TBD: Read values from the provided array
-				vector destination = SDRC_Misc.GetCoordinatesOnCircle(owner.GetOrigin(), m_fDistanceLow, SDRC_Misc.RandomInt(0, 360));
-				
-				InitFlight(owner, owner.GetOrigin());
+				//NOTE: This section is to be done in the mod
+				InitFlight(owner, owner.GetOrigin());						
 				Ready(owner);
 			}
 		}
@@ -274,12 +288,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp] VehicleHelicopterSimulation not found.", LogLevel.WARNING);						
 		}
+		
+		super.OnPostInit(owner);
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	override void EOnDeactivate(IEntity owner)
+	void ~SDRC_ChopperComp()
 	{
-		Clear();
+		Clear();		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -311,7 +327,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/	
 	void Ready(IEntity owner)
 	{
-		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
+		//Set ready in a few seconds
+		GetGame().GetCallqueue().CallLater(ReadyDelayed, 2000, false, owner);
+	}
+
+	void ReadyDelayed(IEntity owner)
+	{
+//		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
+		SetEventMask(owner, EntityEvent.FRAME);
 		Activate(owner);
 		
 		if (!m_bAutoStart)
@@ -319,7 +342,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000, false, owner);
 		}
 	}
-			
+				
 	//------------------------------------------------------------------------------------------------
 	void GivePoints(out array<vector> points, array<ref SDRC_FlyPathPoint> flyPathPoints)
 	{
@@ -348,7 +371,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	override void EOnFrame(IEntity owner, float timeSlice)
 	{
 		m_vOrigin = owner.GetOrigin();
-		
+	
 		m_fTimeSpeed += timeSlice;
 		m_fTimeBetweenPts += timeSlice;
 		m_fTimeBetweenFixes -= timeSlice;
@@ -455,7 +478,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_vHeliDirectionFuture = vector.Direction(m_vOrigin, m_vDestinationFuture);
 		
 		//Set velocity 
-		HandleRotorForce();
+		HandleRotorForce(owner);
 		
 		//Set turn
 		SetTurn(owner, m_fTimeTurnInterval);
@@ -479,9 +502,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Search for enemies
 		SearchForEnemy(owner);
 		
-		#ifndef SDRC_RELEASE
-			DrawHelicopterVectors(owner);
-		#endif		
+		DrawHelicopterVectors(owner);
 	}
 	
 	//------------------------------------------------------------------------------------------------	
@@ -521,11 +542,26 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//In case we're landing, we need to modify the speed
 		m_fSpeedMul = m_fSpeedMul * m_fSpeedLandingMul;
 		
+		//Set 
 		m_fSpeedStart = m_fSpeed;
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
+
+		//If we're too close to ground, slow down the speed to allow time for climb
+		float altitude = SDRC_ChopperHelper.GetAltitude(owner);
+		const int ALTITUDE_ADD = 5;
+		if ((altitude + ALTITUDE_ADD) < m_fFlyHeightLow)
+		{		
+//				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin);
+//				float mul = (m_vOrigin[1] - surfaceY) / (m_fFlyHeightLow - surfaceY);
+			float mul = (altitude + 5) / m_fFlyHeightLow;
+			mul = Math.Clamp(mul, 0, 1);
+			m_fSpeedTarget = m_fSpeedTarget * mul;
+		}
+
 		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
 		m_fTimeSpeed = 0;	//Start to change speed
-						
+								
+		//Handle yaw, pitch roll		
 		if (m_fSpeedLandingMul > 0.95)
 		{							
 			//ROLL PITCH: Change pitch according to speed		
@@ -597,14 +633,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 	This will modify the rotor force up multiplier trying to keep the heli flying close to the spline points. 
 	In case of too low altitude, panic mode is enabled. 
 	*/
-	private void HandleRotorForce()
+	private void HandleRotorForce(IEntity owner)
 	{
 		if (m_vDestination == vector.Zero)
 		{
 			return;		
 		}
 
-		float splineHeightFromGround = m_vSplinePointBelow[1];
+		float splineHeightFromGround = m_vSplinePointBelow[1];		
 		float heliHeightFromGround = m_vOrigin[1] - 3;				//Move the origin slightly below the spline
 				
 		//The normal way to slowly go towards the spline
@@ -637,27 +673,18 @@ class SDRC_ChopperComp : ScriptGameComponent
 			}
 					
 			//Modify if we're too close to the ground, raise very aggressively
-			float altitude = m_Helicopter_s.GetAltitudeAGL();
-			if (altitude == 0)
-			{
-				return;
-			}
+			float altitude = SDRC_ChopperHelper.GetAltitude(owner);
 			
-			float refAltitude = m_fFlyHeightLow;
-			
-			if (altitude < refAltitude)
+			if (altitude < m_fFlyHeightLow)
 			{
 				bigMul = 300;
-				
-				//If we're too close to ground, slow down the speed to allow time for climb
-//				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin);
-//				float mul = (m_vOrigin[1] - surfaceY) / (m_fFlyHeightLow - surfaceY);
-				float mul = (altitude + 10) / m_fFlyHeightLow;
-				mul = Math.Clamp(mul, 0, 1);
-				m_fSpeed = Math.Clamp(m_fSpeed * mul, m_fSpeedMin, m_fSpeedMax);
-			}
+			}				
 		}
 		
+		if (splineHeightFromGround == 0)
+		{
+			splineHeightFromGround = 0.01;
+		}
 		m_fRotorForceMultiplier = 0 - (bigMul * ( (heliHeightFromGround - splineHeightFromGround) / splineHeightFromGround ));	
 	}
 			
@@ -696,13 +723,27 @@ class SDRC_ChopperComp : ScriptGameComponent
 		#endif
 	#endif
 		
-		int worldSize = SDRC_Misc.GetWorldSize();
-		
-		//Set height for start and destination points		
+		//Create initial flypath
+		//Add points to path. Normally we would use AddDestination, but for the initial flight, we need points in m_vFlightPoints.
+		AddFlyPathPoint(origin);
+				
 		//With autostart, use the origin of the chopper spawn
 		if (m_bAutoStart)	
 		{
-			//TBD: Destination handling for helis
+			//Fly a bit forward
+			AddDestination(SDRC_EFlyWayPointType.FLY, SDRC_ChopperHelper.GetDestinationForward(owner, 100));
+			
+			//Add destinations
+			foreach (SDRC_FlyPathPoint destination : m_vFlyDestinations)
+			{
+				AddDestination(destination.type, destination.pt, destination.value);
+			}
+			
+			//If no destination were defined, let's create a random one
+			if (m_vFlyDestinations.IsEmpty())
+			{
+				vector destination = SDRC_Misc.GetCoordinatesOnCircle(owner.GetOrigin(), m_fDistanceLow, SDRC_Misc.RandomInt(0, 360));
+			}
 		}
 		else		
 		{
@@ -712,10 +753,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		//Store the original firstDestination
 		m_vOriginalDestination = origin;
-		
-		//Create initial flypath
-		//Add points to path. Normally we would use AddDestination, but for the initial flight, we need points in m_vFlightPoints.
-		AddFlyPathPoint(origin);
 		
 		//Cases:
 		// - Only origin defined -> error
@@ -766,9 +803,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		SetVelocity(owner);
 		
-		#ifndef SDRC_RELEASE
-			DrawDebugPaths();
-		#endif
+		DrawDebugPaths();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -781,22 +816,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 		//Clear any existing path points
 		ResetFlight();
-
-//		SDRC_EHeliWaypointGenerationType wpType = m_fWpType;
-		
-		//If we are the final destination, we stop creating waypoints and stop flying.
-/*		if (m_eHeliState == SDRC_EHeliState.END)
-		{
-			SetState(SDRC_EHeliState.DESTROYED);
-			return;
-		}
-		
-		//If final destination was requested, create the last waypoints.
-		if (m_eHeliState == SDRC_EHeliState.FLY_AWAY)
-		{
-			SetState(SDRC_EHeliState.END);
-			wpType = SDRC_EHeliWaypointGenerationType.FLY_AWAY;
-		} */
 		
 		if (firstDestination == vector.Zero)
 		{		
@@ -830,9 +849,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			SDRC_Log.Add("[SDRC_ChopperComp:CreateFlightPath] No points!", LogLevel.ERROR);
 		}
 		
-		#ifndef SDRC_RELEASE
-			DrawDebugPaths();
-		#endif
+		DrawDebugPaths();
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -992,7 +1009,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 			   )
 			{	
 				pos = SDRC_ChopperHelper.GetRandomPosition(origin, m_fDistanceLow, m_fDistanceHigh);
-//				AddFlyPathPoint(pos);
 				AddDestination(SDRC_EFlyWayPointType.FLY, pos);
 			}
 			
@@ -1074,7 +1090,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 			vector mid = vector.Lerp(p0, p1, 0.5);
 			AddFlyPathPoint(mid, index: 1);
 		}
-				
+
+		//Set the first point to same height as heli. 
+		m_vFlightPoints[0].pt[1] = m_vOrigin[1];
+						
 		//Add destinations .. if any
 		int lastIdx = -1;
 		
@@ -1173,13 +1192,19 @@ class SDRC_ChopperComp : ScriptGameComponent
 			m_fTimeLanding = 0;
 		}
 		
+		SDRC_FlyPathPoint fpp = new SDRC_FlyPathPoint();
+		
 		if (index == -1)
 		{
-			m_vFlightPoints.Insert(new SDRC_FlyPathPoint(type, destination));
+			fpp.Set(type, destination);
+			m_vFlightPoints.Insert(fpp);
+//			m_vFlightPoints.Insert(new SDRC_FlyPathPoint(type, destination));
 		}
 		else
 		{
-			m_vFlightPoints.InsertAt(new SDRC_FlyPathPoint(type, destination), index);
+			fpp.Set(type, destination);
+			m_vFlightPoints.InsertAt(fpp, index);
+//			m_vFlightPoints.InsertAt(new SDRC_FlyPathPoint(type, destination), index);
 		}
 	}		
 
@@ -1350,9 +1375,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 				SetState(SDRC_EHeliState.HOVER);
 				SetTimeInState(m_vFlyDestinations[0].value);
 				
-				#ifndef SDRC_RELEASE
-					DrawDebugPaths();
-				#endif
+				DrawDebugPaths();
 				break;
 			}
 			case SDRC_EFlyWayPointType.STOP_ENGINE:
@@ -1524,8 +1547,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 				break;
 			}			
 		}
-						
-		m_vFlyDestinations.Insert(new SDRC_FlyPathPoint(type, destination, value));		
+
+		SDRC_FlyPathPoint fpp = new SDRC_FlyPathPoint();
+		fpp.Set(type, destination, value);				
+		m_vFlyDestinations.Insert(fpp);
+//		m_vFlyDestinations.Insert(new SDRC_FlyPathPoint(type, destination, value));		
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -1714,14 +1740,17 @@ class SDRC_ChopperComp : ScriptGameComponent
 			
 	void DrawDebugPaths()
 	{
-	#ifndef SDRC_RELEASE
+		if (!m_bShowDebug)
+		{
+			return;
+		}
+		
 		array<vector> flyPathPoints = {};
 		GivePoints(flyPathPoints, m_vFlightPoints);
 		
 		SDRC_DebugHelper.DeleteDebugItems(m_sDid);
 		SDRC_DebugHelper.DrawPointList(m_vSplinePoints, m_sDid);		
 		SDRC_DebugHelper.DrawPointList(flyPathPoints, m_sDid, ARGB(10, 64, 64, 192));
-	#endif	
 	}
 	
 	//------------------------------------------------------------------------------------------------	
@@ -1730,7 +1759,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/	
 	void DrawHelicopterVectors(IEntity owner)
 	{
-	#ifndef SDRC_RELEASE
+		if (!m_bShowDebug)
+		{
+			return;
+		}
 		
 		vector origin = owner.GetOrigin();
 		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
@@ -1886,6 +1918,5 @@ class SDRC_ChopperComp : ScriptGameComponent
 				}
 			}
 		}
-	#endif			
 	}
 }

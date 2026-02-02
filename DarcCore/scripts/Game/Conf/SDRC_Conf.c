@@ -5,15 +5,12 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-#define SDRC_RELEASE
+//#define SDRC_RELEASE
+const bool SHOW_DEBUG_BOOL = true;		//Controls if debug visuals are to be shown. Disable for DarcMissions release.
+//#define DEBUG_DO_NOT_CLEAR		//Leave old visual debug lines etc on restart
 //#define ENABLE_QRF				//Enable QRF functionality
 //#define NEW_VERSION_WIP			//New functionality (..that affects jsons)
 //#define EXPERIMENTAL
-//#define DEBUG_DO_NOT_CLEAR		//Leave old visual debug lines etc on restart
-
-//TODO: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//Fix handling of Faction array in SDRC_MissionConfigGeneral
-//Fix handling of Difficulty array in SDRC_MissionConfigGeneral
 
 sealed class SDRC_Conf
 {
@@ -43,7 +40,8 @@ sealed class SDRC_Conf
 	const bool OVERWRITE_JSON = false;					//Writes a new conf even if it exists
 	const bool SHOW_VALID_MISSION_AREAS = false;		//Debug markers for mission position testing drawn on the map
 	const bool SHOW_MARKER_FOR_LOCATION = false;		//Show a debug marker for locations
-	const bool SHOW_DEBUG_INFO = false;
+	const bool SHOW_DEBUG_INFO = false;					//Sets the default visibility for debug UI
+	const bool SHOW_DEBUG = SHOW_DEBUG_BOOL;		
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.NORMAL;
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
 	//TBD: const bool DISABLE_PERSISTENCE = true;
@@ -63,6 +61,7 @@ sealed class SDRC_Conf
 	const bool SHOW_VALID_MISSION_AREAS = false;
 	const bool SHOW_MARKER_FOR_LOCATION = false;
 	const bool SHOW_DEBUG_INFO = true;
+	const bool SHOW_DEBUG = SHOW_DEBUG_BOOL;	
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
 	//TBD: const bool DISABLE_PERSISTENCE = true;	

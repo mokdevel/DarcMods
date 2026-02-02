@@ -70,7 +70,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		//This way we arrive quicker to the location. 
 		float distanceToStart = SDRC_Misc.GetWorldSize() * m_Config.distanceToStart;
 	#ifndef SDRC_RELEASE
-//		distanceToStart = SDRC_Misc.GetWorldSize() * 0.1;
+		distanceToStart = SDRC_Misc.GetWorldSize() * 0.1;
 	#endif
 		
 		vector worldCenter = "0 0 0";
@@ -299,6 +299,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			}
 		}		
 		
+		//All done, activate
 		m_Vehicle_c.Ready(m_Vehicle);
 	}
 	
@@ -417,7 +418,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,1,1,2,2,3,4,4};
+		missionList = {0};//{0,1,1,2,2,3,4,4};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 500;

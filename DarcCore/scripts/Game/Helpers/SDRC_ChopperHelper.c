@@ -88,7 +88,22 @@ class SDRC_ChopperHelper
 				
 		return false;
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Get helicopter altitude from ground. 
+
+	Could use also float altitude = m_Helicopter_s.GetAltitudeAGL();
+	*/	
+	static float GetAltitude(IEntity owner)
+	{
+		float surfaceY = SDRC_Misc.GetSurfaceYWithWater(owner.GetOrigin());
+		vector origin = owner.GetOrigin();
+		float altitude = origin[1] - surfaceY;
+		
+		return altitude;		
+	}
+		
 	//------------------------------------------------------------------------------------------------	
 	// Damage settings
 	//------------------------------------------------------------------------------------------------	

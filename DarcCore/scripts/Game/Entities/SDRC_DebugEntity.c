@@ -26,6 +26,12 @@ class SDRC_DebugEntity: GenericEntity
 	}
 
 	//------------------------------------------------------------------------------------------------
+	void ~SDRC_DebugEntity()
+	{
+		SDRC_DebugHelper.Clear();
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	/*!
 	Get instance of the SDRC_DebugEntity.
 	\return SDRC_DebugEntity

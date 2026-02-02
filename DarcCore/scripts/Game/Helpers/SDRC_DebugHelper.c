@@ -66,12 +66,9 @@ sealed class SDRC_DebugHelper
 	*/
 	static void Setup()
 	{		
-	#ifndef DEBUG_DO_NOT_CLEAR
-		m_Pos.Clear();
-		m_Sphere.Clear();
-		m_Line.Clear();
-		m_Slots.Clear();
-	#endif
+		#ifndef DEBUG_DO_NOT_CLEAR
+			Clear();
+		#endif
 		
 		// Some init script		
 		const string categoryName = "DarcDebug";
@@ -85,6 +82,18 @@ sealed class SDRC_DebugHelper
 		}
 	}		
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Clear all markers
+	*/
+	static void Clear()
+	{
+		m_Pos.Clear();
+		m_Sphere.Clear();
+		m_Line.Clear();
+		m_Slots.Clear();
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Configure SDRC_DebugHelper.
@@ -333,7 +342,8 @@ sealed class SDRC_DebugHelper
 	
 	static void AddDebugPos(vector pos, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300, bool snap = true)
 	{
-		#ifndef SDRC_RELEASE		
+		if (SDRC_Conf.SHOW_DEBUG)
+		{
 			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
 			{
 				SDRC_DebugHelperPos dpos = new SDRC_DebugHelperPos;
@@ -348,7 +358,7 @@ sealed class SDRC_DebugHelper
 				dpos.height = height;
 				m_Pos.Insert(dpos);
 			}
-		#endif
+		}
 	}				
 	
 	//------------------------------------------------------------------------------------------------
@@ -370,7 +380,8 @@ sealed class SDRC_DebugHelper
 	
 	static void AddDebugSphere(vector pos, int color = Color.BLUE, float radius = 1.0, string id = "NONE")
 	{
-		#ifndef SDRC_RELEASE
+		if (SDRC_Conf.SHOW_DEBUG)
+		{
 			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
 			{
 				SDRC_DebugHelperPos dpos = new SDRC_DebugHelperPos;
@@ -381,13 +392,14 @@ sealed class SDRC_DebugHelper
 				dpos.height = 0;
 				m_Sphere.Insert(dpos);
 			}
-		#endif
+		}
 	}					
 
 	//------------------------------------------------------------------------------------------------
 	static void AddDebugLine(vector pos0, vector pos1, int color = Color.BLUE, string id = "NONE")
 	{
-		#ifndef SDRC_RELEASE
+		if (SDRC_Conf.SHOW_DEBUG)
+		{
 			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_LINES))
 			{
 				SDRC_DebugHelperLine dpos = new SDRC_DebugHelperLine;
@@ -397,7 +409,7 @@ sealed class SDRC_DebugHelper
 				dpos.id = id;
 				m_Line.Insert(dpos);
 			}
-		#endif
+		}
 	}					
 		
 	//------------------------------------------------------------------------------------------------
@@ -406,7 +418,8 @@ sealed class SDRC_DebugHelper
 	*/	
 	static void DrawPointList(array<vector> points, string id = "", int color = ARGB(10, 128, 64, 64))
 	{
-		#ifndef SDRC_RELEASE
+		if (SDRC_Conf.SHOW_DEBUG)
+		{
 			foreach (int i, vector pos : points)
 			{
 				SDRC_DebugHelper.AddDebugSphere(pos, color, 0.5, id);			//Red
@@ -416,7 +429,7 @@ sealed class SDRC_DebugHelper
 					SDRC_DebugHelper.AddDebugLine(points[i], points[i+1], color, id);				
 				}			
 			}
-		#endif
+		}
 	}	
 	
 	//------------------------------------------------------------------------------------------------
