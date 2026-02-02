@@ -15,7 +15,11 @@ class SDRC_ChopperHelper
 	{
 		vector direction = vector.Direction(owner.GetOrigin(), owner.GetTransformAxis(2));
 		direction.Normalize();
-		return owner.GetOrigin() + direction * distance;	
+		vector origin = owner.GetOrigin();
+		vector position = origin + direction * distance;
+		//Keep the flying flat
+		position[1] = origin[1];
+		return position;
 	}
 	
 	//------------------------------------------------------------------------------------------------	

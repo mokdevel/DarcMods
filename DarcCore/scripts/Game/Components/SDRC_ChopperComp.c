@@ -247,7 +247,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			return;
 		}
 		
-		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp: " + m_vFlyDestinations.Count(), LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp", LogLevel.NORMAL);
 		
 		SetEventMask(owner, EntityEvent.INIT);
 		s_Instance = this;
@@ -280,13 +280,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 			if (m_bAutoStart)
 			{
 				//NOTE: This section is to be done in the mod
-				InitFlight(owner, owner.GetOrigin());						
+				InitFlight(owner, owner.GetOrigin());
 				Ready(owner);
 			}
 		}
 		else
 		{
-			SDRC_Log.Add("[SDRC_ChopperComp] VehicleHelicopterSimulation not found.", LogLevel.WARNING);						
+			SDRC_Log.Add("[SDRC_ChopperComp] VehicleHelicopterSimulation not found.", LogLevel.ERROR);						
 		}
 		
 		super.OnPostInit(owner);
@@ -336,6 +336,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 //		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
 		SetEventMask(owner, EntityEvent.FRAME);
 		Activate(owner);
+		
+		DrawDebugPaths();
 		
 		if (!m_bAutoStart)
 		{
@@ -476,17 +478,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_vHeliForward = owner.GetTransformAxis(2);
 		m_vHeliDirection = vector.Direction(m_vOrigin, m_vDestination);		
 		m_vHeliDirectionFuture = vector.Direction(m_vOrigin, m_vDestinationFuture);
-		
-		//Set velocity 
-		HandleRotorForce(owner);
-		
-		//Set turn
-		SetTurn(owner, m_fTimeTurnInterval);
-		
-		HandleState(owner, timeSlice);
 
-		SetVelocity(owner);
-		
 		//Find the point on spline below the helicopter. This is not exact.
 		if (m_vSplinePoints.Count() == 1)
 		{
@@ -499,6 +491,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 		m_vSplinePointBelow = vector.Lerp(m_vSplinePoints[prevIndex], m_vSplinePoints[m_iClosestIndex], td);
 				
+		//Set velocity 
+		HandleRotorForce(owner);
+		
+		//Set turn
+		SetTurn(owner, m_fTimeTurnInterval);
+		
+		HandleState(owner, timeSlice);
+
+		SetVelocity(owner);
+		
 		//Search for enemies
 		SearchForEnemy(owner);
 		
@@ -726,24 +728,35 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Create initial flypath
 		//Add points to path. Normally we would use AddDestination, but for the initial flight, we need points in m_vFlightPoints.
 		AddFlyPathPoint(origin);
+		
+		//If no destination were defined, let's create a random one
+		if (m_vFlyDestinations.IsEmpty())
+		{
+			vector destination = SDRC_Misc.GetCoordinatesOnCircle(owner.GetOrigin(), m_fDistanceLow, SDRC_Misc.RandomInt(0, 360));
+		}
 				
+		//Set chopper to initial position
+		owner.SetOrigin(m_vFlightPoints[0].pt);
+		SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Chopper initial position: " + owner.GetOrigin(), LogLevel.DEBUG);
+		//Turn chopper to face the first destination
+		vector angles = vector.Direction(owner.GetOrigin(), m_vFlyDestinations[0].pt);
+		angles.Normalize();
+		angles = angles.VectorToAngles();
+		owner.SetYawPitchRoll(angles);					
+		
 		//With autostart, use the origin of the chopper spawn
 		if (m_bAutoStart)	
 		{
-			//Fly a bit forward
-			AddDestination(SDRC_EFlyWayPointType.FLY, SDRC_ChopperHelper.GetDestinationForward(owner, 100));
+			//Fly a bit forward to level the chopper
+			AddFlyPathPoint(SDRC_ChopperHelper.GetDestinationForward(owner, 100), index: 0);
+//			AddDestination(SDRC_EFlyWayPointType.FLY, SDRC_ChopperHelper.GetDestinationForward(owner, 100), index: 0);
 			
 			//Add destinations
-			foreach (SDRC_FlyPathPoint destination : m_vFlyDestinations)
+/*			foreach (SDRC_FlyPathPoint destination : m_vFlyDestinations)
 			{
 				AddDestination(destination.type, destination.pt, destination.value);
-			}
+			}*/
 			
-			//If no destination were defined, let's create a random one
-			if (m_vFlyDestinations.IsEmpty())
-			{
-				vector destination = SDRC_Misc.GetCoordinatesOnCircle(owner.GetOrigin(), m_fDistanceLow, SDRC_Misc.RandomInt(0, 360));
-			}
 		}
 		else		
 		{
@@ -776,7 +789,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			SetFlightPointHeight();
 		}
-
+		
 		//Create points for spline
 		CreateFlightPoints();
 		
@@ -794,16 +807,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fSpeed = 0.1;
 		m_fSpeedTarget = m_fSpeed;
 		
-		//Set chopper initial position
-		owner.SetOrigin(m_vSplinePoints[0]);
-		vector angles = vector.Direction(owner.GetOrigin(), m_vSplinePoints[m_iClosestIndex]);
-		angles.Normalize();
-		angles = angles.VectorToAngles();
-		owner.SetYawPitchRoll(angles);
-
-		SetVelocity(owner);
-		
-		DrawDebugPaths();
+		//NOTE: We draw the debug paths once the component is ready
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -1498,9 +1502,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 	/*!	
 	Add a destination for future.
 	\param destination Next position to fly to. Multiple destinations can be defined by calling multiple times.
-	\param type How to fly .. kinda. If set as FINAL, once reaching the destination, helicopter will stop flying. 
+	\param type Flying behaviour
+	\param value Specific value for behaviour
+	\param index At which index on to put the destination. By default, added to the end of array.
 	*/
-	void AddDestination(SDRC_EFlyWayPointType type = SDRC_EFlyWayPointType.FLY, vector destination = vector.Zero, float value = -1)
+	void AddDestination(SDRC_EFlyWayPointType type = SDRC_EFlyWayPointType.FLY, vector destination = vector.Zero, float value = -1, int index = -1)
 	{
 		//In normal case, we just add a destination for future handling. 
 		//Below are a few special cases where we need either react immediately of change some other params.
@@ -1550,7 +1556,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		SDRC_FlyPathPoint fpp = new SDRC_FlyPathPoint();
 		fpp.Set(type, destination, value);				
-		m_vFlyDestinations.Insert(fpp);
+		
+		if (index > -1)
+		{
+			m_vFlyDestinations.InsertAt(fpp, index);
+		}
+		else
+		{
+			m_vFlyDestinations.Insert(fpp);
+		}
 //		m_vFlyDestinations.Insert(new SDRC_FlyPathPoint(type, destination, value));		
 	}	
 	
