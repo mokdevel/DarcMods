@@ -251,7 +251,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		SetEventMask(owner, EntityEvent.INIT);
 		s_Instance = this;
-		m_sDid = SDRC_Misc.GetCurrentTickTime().ToString();
+		m_sDid = SDRC_Misc.GetCurrentTickTime().ToString() + Math.RandomInt(0, 10000);
 
 		#ifndef SDRC_RELEASE
 			m_bShowDebug = true;
@@ -739,24 +739,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 		owner.SetOrigin(m_vFlightPoints[0].pt);
 		SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Chopper initial position: " + owner.GetOrigin(), LogLevel.DEBUG);
 		//Turn chopper to face the first destination
-		vector angles = vector.Direction(owner.GetOrigin(), m_vFlyDestinations[0].pt);
-		angles.Normalize();
-		angles = angles.VectorToAngles();
-		owner.SetYawPitchRoll(angles);					
-		
+		SDRC_Math.TurnEntityTowards(owner, m_vFlyDestinations[0].pt);
+						
 		//With autostart, use the origin of the chopper spawn
 		if (m_bAutoStart)	
 		{
 			//Fly a bit forward to level the chopper
-			AddFlyPathPoint(SDRC_ChopperHelper.GetDestinationForward(owner, 100), index: 0);
-//			AddDestination(SDRC_EFlyWayPointType.FLY, SDRC_ChopperHelper.GetDestinationForward(owner, 100), index: 0);
-			
-			//Add destinations
-/*			foreach (SDRC_FlyPathPoint destination : m_vFlyDestinations)
-			{
-				AddDestination(destination.type, destination.pt, destination.value);
-			}*/
-			
+			AddFlyPathPoint(SDRC_ChopperHelper.GetDestinationForward(owner, 100));
 		}
 		else		
 		{

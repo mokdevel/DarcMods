@@ -404,7 +404,19 @@ sealed class SDRC_Misc
 
 		return valueText;
 	}	
-								
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Pauses the game so that you can fly in GM to check things
+	*/
+	static void PauseGame()
+	{
+		SCR_BaseGameMode gameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+		if (!gameMode)
+			return;
+		gameMode.PauseGame(true, SCR_EPauseReason.MENU);		
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if a class is available. This can be used to check if a mod has been loaded by checking a class

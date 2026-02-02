@@ -210,7 +210,21 @@ sealed class SDRC_Math
 		
 		return newtransform[3];		
 	}
-	
+
+	//------------------------------------------------------------------------------------------------	
+	/*!
+	Turn the entity towards target on XZ plane
+	*/
+	static void TurnEntityTowards(IEntity owner, vector target)
+	{
+		vector p0 = owner.GetOrigin();
+		p0[1] = 10;
+		target[1] = 10;		
+		vector angles = vector.Direction(p0, target);
+		angles.Normalize();
+		angles = angles.VectorToAngles();
+		owner.SetYawPitchRoll(angles);		
+	}	
 
 	//------------------------------------------------------------------------------------------------
 	// Half bell curve (Gaussian-based)

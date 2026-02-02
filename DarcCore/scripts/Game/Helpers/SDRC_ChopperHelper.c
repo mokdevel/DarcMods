@@ -13,7 +13,7 @@ class SDRC_ChopperHelper
 	*/
 	static vector GetDestinationForward(IEntity owner, float distance)
 	{
-		vector direction = vector.Direction(owner.GetOrigin(), owner.GetTransformAxis(2));
+		vector direction = owner.GetTransformAxis(2);
 		direction.Normalize();
 		vector origin = owner.GetOrigin();
 		vector position = origin + direction * distance;
