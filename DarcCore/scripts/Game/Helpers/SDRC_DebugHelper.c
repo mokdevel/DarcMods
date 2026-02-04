@@ -53,11 +53,7 @@ sealed class SDRC_DebugHelper
 	//------------------------------------------------------------------------------------------------
 	static void ~SDRC_DebugHelper()
 	{
-		m_Pos.Clear();
-		m_Sphere.Clear();
-//		m_MapCircle.Clear();
-		m_Line.Clear();
-		m_Slots.Clear();
+		Clear();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -467,27 +463,35 @@ sealed class SDRC_DebugHelper
 	/*!
 	Deletes all debug items with a certain id. The id works as a wild card.
 	*/
-	static void DeleteDebugItems(string id)
+	static void DeleteDebugItems(string id, bool marks = true, bool spheres = true, bool lines = true)
 	{
-		DeleteDebugPos(id);
-		int i;
-		
-		for (i = 0; i < m_Sphere.Count(); i++)		
+		if (marks)
 		{
-			if (m_Sphere[i].id.Contains(id))
-			{
-				m_Sphere.Remove(i);
-				i--;
-			}			
+			DeleteDebugPos(id);
 		}
 		
-		for (i = 0; i < m_Line.Count(); i++)		
-		{
-			if (m_Line[i].id.Contains(id))
+		if (spheres)
+		{				
+			for (int i = 0; i < m_Sphere.Count(); i++)		
 			{
-				m_Line.Remove(i);
-				i--;
-			}			
+				if (m_Sphere[i].id.Contains(id))
+				{
+					m_Sphere.Remove(i);
+					i--;
+				}			
+			}
+		}
+		
+		if (lines)
+		{
+			for (int i = 0; i < m_Line.Count(); i++)		
+			{
+				if (m_Line[i].id.Contains(id))
+				{
+					m_Line.Remove(i);
+					i--;
+				}			
+			}
 		}
 
 /*		for (i = 0; i < m_Slots.Count(); i++)		

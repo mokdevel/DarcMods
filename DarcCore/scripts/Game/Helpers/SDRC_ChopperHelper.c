@@ -136,4 +136,52 @@ class SDRC_ChopperHelper
 		
 		SDRC_Log.Add("[SDRC_ChopperHelper:SetHealth] Setting health: " + health, LogLevel.DEBUG);
 	}
+	
+	//------------------------------------------------------------------------------------------------	
+	// Crew functions
+	//------------------------------------------------------------------------------------------------	
+	static int SpawnCrew(IEntity owner, array<ref SCR_DefaultOccupantData> crewmember, string faction)
+	{		
+		int pilotCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.PILOT);
+		int crewCount = 0;
+		
+		if (crewmember.Count() > 0)
+		{			
+			SCR_AIGroup	gPilot;
+			SCR_AIGroup	gCrew;
+			
+			foreach (int i, SCR_DefaultOccupantData member : crewmember)
+			{
+				ResourceName prefab = member.GetDefaultOccupantPrefab();
+				//Spawn pilots if such is available 
+				vector pos = owner.GetOrigin();
+				pos = pos + "30 0 30";
+				
+				if (i < pilotCount)
+				{
+					if (!gPilot)
+					{
+						gPilot = SDRC_AIHelper.GroupCreate(faction, pos);						
+					}
+					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gPilot);
+				}
+				else
+				{
+					if (!gCrew)
+					{
+						gCrew = SDRC_AIHelper.GroupCreate(faction, pos);						
+					}
+					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gCrew);
+				}
+				
+				crewCount++;
+			}
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_ChopperHelper:SpawnCrew] No crew defined. Without pilots, we will crash.", LogLevel.WARNING);
+		}
+		
+		return crewCount;
+	}
 }

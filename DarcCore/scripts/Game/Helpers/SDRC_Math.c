@@ -80,7 +80,7 @@ sealed class SDRC_Math
 	               V
 			       * (p0)
 	*/	
-	static float GetAngleBetweenThreePointsXZ(vector p0, vector p1, vector p2, out vector dir0 = "0 0 0", out vector dir1 = "0 0 0")
+	static float GetAngleBetweenThreePointsXZ(vector p0, vector p1, vector p2, out vector dir0 = vector.Zero, out vector dir1 = vector.Zero)
 	{
 		//Use only XZ plane
 		p0[1] = 0;
@@ -247,5 +247,46 @@ sealed class SDRC_Math
 //		float y = (1 + Math.Sin(Math.Sin(t * Math.PI) * Math.PI * 0.5)) / 2;
 		float y = Math.Sin(Math.Sin(t * Math.PI) * Math.PI * 0.5);
 		return y;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*! Create a distance offset point p2 between p0 and p1.
+	
+			x = distanceMid aka the point between p0 and p1. 0.5 is in the middle, 1.0 at the end
+			d = distance
+		
+			* (p1)
+			|
+			| 	 	 
+			x---d---> output vector (p2) 
+			|
+			|
+			* (p0)
+	*/
+	static vector CreateOffsetMidPoint(vector p0, vector p1, float distance, float distanceMid = 0.5, bool leftSide = true)
+	{
+	    //Midpoint
+		vector mid = vector.Lerp(p0, p1, distanceMid);
+	
+	    //Tangent direction
+	    vector tangent = p1 - p0;
+	    tangent.Normalize();
+	
+	    //Perpendicular (side) direction
+	    vector side = SCR_Math3D.Cross(vector.Up, tangent);
+	    side.Normalize();
+	
+	    //Choose left or right
+	    if (!leftSide)
+	    {
+	        side = side * -1.0;
+	    }
+	
+		//SDRC_DebugHelper.AddDebugPos(mid, ARGB(255, 0, 0, 255), 1.0, "", 140);
+		
+	    //Offset midpoint
+	    vector p2 = mid + side * distance;
+	
+	    return p2;
 	}	
 }

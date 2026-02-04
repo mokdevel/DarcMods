@@ -221,7 +221,10 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		//Spawn vehicle
 		string resourceName	= SDRC_SpawnHelper.SelectResourceName(m_DC_Chopper.heliList);		
 //		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Chopper.general.size, -1);
-		m_Vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosOrigin, resourceName, m_DC_Chopper.general.size, -1);
+		
+		//Set to initial height
+		m_vPosOrigin[1] = SDRC_Misc.RandomFloat(m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1]) + SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin);		
+		m_Vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosOrigin, resourceName, m_DC_Chopper.general.size, -1, false);
 		
 		if (m_Vehicle)
 		{
@@ -235,8 +238,6 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.COULD_NOT_SPAWN_VEHICLE, resourceName);
 			return;			
 		}
-		
-		SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " +  GetId() + " : Vehicle spawned: " + m_Vehicle, LogLevel.DEBUG);
 		
 		m_EntityList.Insert(m_Vehicle);
 		m_Vehicle_c.SetHeli(m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.wpType, m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
@@ -255,6 +256,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
 		#endif
 
+		SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " +  GetId() + " : Vehicle spawned: " + m_Vehicle + " at: " + m_Vehicle.GetOrigin(), LogLevel.DEBUG);
+		
 		//Select pilots
 		ResourceName pilot = SDRC_EnemyHelper.SelectEnemy("C_CREW", GetFaction());
 
@@ -468,10 +471,10 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		);
 		chopper.ai.Set
 		(
-			{1, 2},
-			{"G_SMALL", "G_ADMIN", "G_RECON"},
-//			{3, 3},
-//			{"G_SMALL"},
+//			{1, 2},
+//			{"G_SMALL", "G_ADMIN", "G_RECON"},
+			{3, 3},
+			{"G_SMALL"},
 			30, 0.6,
 			{0, 0},
 			SDRC_EWaypointGenerationType.LOITER,

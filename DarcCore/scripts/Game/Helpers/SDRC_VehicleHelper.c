@@ -358,7 +358,28 @@ sealed class SDRC_VehicleHelper
 			SDRC_Log.Add("[SDRC_LootHelper:EmptyStorage] storageManager not found on: " + SDRC_Misc.GetSimpleEntityName(res), LogLevel.ERROR);
 		}
 	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get count of compartments of given type (PILOT, GUNNER, CARGO)
+	*/
+	static int GetCompartmentCountOfType(IEntity vehicle, ECompartmentType type)
+	{
+		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
+		if (!scr_compartmentManager)
+		{
+			SDRC_Log.Add("[SDRC_VehicleHelper:GetCompartmentCountOfType] SCR_BaseCompartmentManagerComponent not found.", LogLevel.ERROR);
+			return 0;
+		}
 		
+		array<BaseCompartmentSlot> compartments = {};
+		compartments.Clear();
+		scr_compartmentManager.GetCompartmentsOfType(compartments, type);
+		SDRC_Log.Add("[SDRC_VehicleHelper:GetCompartmentCountOfType] Found: " + compartments.Count() + " (" + type + ")", LogLevel.DEBUG);
+		
+		return compartments.Count();
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	// Arsenal related
 	//------------------------------------------------------------------------------------------------
