@@ -1,27 +1,22 @@
 {
+    "jsonVersion": 2,
+    "missionType": 11,
     "version": 1,
     "author": "darc",
-    "missionCycleTime": 30,
+    "comment": "",
+    "missionCycleTime": 20,
     "showMarker": false,
     "showHint": true,
     "showMessage": true,
     "disableArsenal": true,
     "missionList": [
-        0,
-        1,
-        1,
-        2,
-        2,
-        3,
-        4,
-        4
+        0
     ],
     "missionFiles": [],
-    "secondWave": [],
     "distanceToMission": 100,
     "distanceToPlayer": 500,
     "distanceToStart": 0.49,
-    "activeTime": 1800,
+    "activeTime": 1500,
     "subMissions": [
         {
             "general": {
@@ -42,26 +37,37 @@
                 "size": 0.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Helicopter patroling",
-                "info": "Avoid being seen.",
+                "messages": [
+                    {
+                        "title": "Helicopter patroling",
+                        "info": "Avoid being seen.",
+                        "win": "Helicopter is not your problem anymore.",
+                        "lose": "Helicopter lost track of you."
+                    },
+                    {
+                        "title": "Helicopter doing rounds",
+                        "info": "This task is %x for you.",
+                        "win": "All good, danger avoided.",
+                        "lose": "Rounds done."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "Helicopter is not your problem anymore.",
-                "loseMessage": "Helicopter lost track of you.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 18,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
-                    1,
-                    2
+                    3,
+                    3
                 ],
                 "types": [
-                    "G_SMALL",
-                    "G_ADMIN",
-                    "G_RECON"
+                    "G_SMALL"
                 ],
                 "skill": 30,
                 "perception": 0.6,
@@ -72,15 +78,8 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 6
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
+            "loot": null,
             "heliList": [
                 "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et"
             ],
@@ -93,8 +92,8 @@
                 25
             ],
             "flyDistance": [
-                0.2,
-                0.5
+                0.1,
+                0.3
             ],
             "wpType": 1
         },
@@ -117,16 +116,23 @@
                 "size": 0.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Gunship hunter",
-                "info": "You will be shot if you're seen.",
+                "messages": [
+                    {
+                        "title": "Gunship hunter",
+                        "info": "You will be shot if you're seen.",
+                        "win": "Gunship funship .. it's gone.",
+                        "lose": "Gunship lost track of you."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "Gunship funship .. it's gone.",
-                "loseMessage": "Gunship lost track of you.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 18,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -146,16 +152,16 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 6
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
+            "loot": null,
             "heliList": [
+                "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
+                "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
+                "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
+                "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
+                "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
+                "{EDF7AA9A54BFD6F8}Prefabs/Vehicles/Helicopters/Mi24/Mi24V_armed_UPK23_Patrol.et",
+                "{842F4FB8DACE28D4}Prefabs/Vehicles/Helicopters/MI28/MI28N_Grey_Patrol.et",
                 "{490B9AAF7C1DDF1B}Prefabs/Vehicles/Helicopters/KA52/KA52_UPK_X2_Patrol.et"
             ],
             "flyHeight": [
@@ -167,8 +173,8 @@
                 30
             ],
             "flyDistance": [
-                0.2,
-                0.4
+                0.1,
+                0.3
             ],
             "wpType": 1
         },
@@ -198,16 +204,23 @@
                     80
                 ],
                 "posName": "any",
-                "title": "Guardian from the heaven",
-                "info": "Area near %l is being guarded from the air.",
+                "messages": [
+                    {
+                        "title": "Guardian from the heaven",
+                        "info": "Area near %l is being guarded from the air.",
+                        "win": "Guardians are now angels.",
+                        "lose": "Guards have left."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "Guardians are now angels.",
-                "loseMessage": "Guards have left.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 18,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -227,15 +240,8 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 6
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
+            "loot": null,
             "heliList": [
                 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
                 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
@@ -253,8 +259,8 @@
                 25
             ],
             "flyDistance": [
-                50.0,
-                200.0
+                100.0,
+                300.0
             ],
             "wpType": 2
         },
@@ -279,16 +285,23 @@
                     64
                 ],
                 "posName": "any",
-                "title": "Heli patrol sighted",
-                "info": "Initial destination is near %l.",
+                "messages": [
+                    {
+                        "title": "Heli patrol sighted",
+                        "info": "Initial destination is near %l.",
+                        "win": "Patrol does not bother you anymore.",
+                        "lose": "Patrol has left."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "Patrol does not bother you anymore.",
-                "loseMessage": "Patrol has left.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 18,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -308,15 +321,8 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 6
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
+            "loot": null,
             "heliList": [
                 "{FED75A40AD78101F}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PK_scout_Patrol.et",
                 "{9515A6A2F7309954}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PKRocketpod_Patrol.et",
@@ -336,8 +342,8 @@
                 30
             ],
             "flyDistance": [
-                0.2,
-                0.4
+                0.1,
+                0.3
             ],
             "wpType": 1
         },
@@ -360,16 +366,23 @@
                 "size": 0.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Helicopter recon",
-                "info": "Hide!",
+                "messages": [
+                    {
+                        "title": "Helicopter recon",
+                        "info": "Hide!",
+                        "win": "Search patrol avoided.",
+                        "lose": "Hunters are sent to your location."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "Search patrol avoided.",
-                "loseMessage": "Hunters are sent to your location.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 18,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -388,15 +401,8 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 6
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
+            "loot": null,
             "heliList": [
                 "{435F663B9456C29E}Prefabs/Vehicles/Helicopters/UH1H/UH1H_civ_livery_v1_Patrol.et",
                 "{2B0F7648840C4F6E}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/MH6M_OPFOR_Patrol.et",
@@ -413,10 +419,85 @@
                 25
             ],
             "flyDistance": [
-                0.2,
+                0.1,
                 0.5
             ],
             "wpType": 3
+        },
+        {
+            "general": {
+                "subIdx": 5,
+                "comment": "index 5: Landing chopper",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 0.0,
+                "locationTypes": [],
+                "posName": "any",
+                "messages": [
+                    {
+                        "title": "Helicopter patroling",
+                        "info": "Avoid being seen.",
+                        "win": "Helicopter is not your problem anymore.",
+                        "lose": "Helicopter lost track of you."
+                    }
+                ],
+                "winCondition": 2,
+                "faction": [],
+                "markerType": "DARC_MISSION",
+                "markerIcon": 18,
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_SMALL",
+                    "G_ADMIN",
+                    "G_RECON"
+                ],
+                "skill": 30,
+                "perception": 0.6,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 5,
+                "waypointMoveType": 6
+            },
+            "qrf": null,
+            "loot": null,
+            "heliList": [
+                "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et"
+            ],
+            "flyHeight": [
+                35,
+                70
+            ],
+            "speed": [
+                7,
+                25
+            ],
+            "flyDistance": [
+                0.2,
+                0.5
+            ],
+            "wpType": 4
         }
     ]
 }

@@ -1,5 +1,5 @@
 {
-    "version": 1,
+    "jsonVersion": 2,
     "author": "darc",
     "modList": [],
     "lists": [
@@ -21,7 +21,8 @@
                 "Group_Zombies_FIA",
                 "Group_Zombies_US",
                 "Group_Zombies_USSR",
-                "Cultists_Light"
+                "Cultists_Light",
+                "CloseProtectionTeam"
             ],
             "exclude": [
                 "_Base",
@@ -51,7 +52,8 @@
                 "Group_Zombies_USSR",
                 "Cultists_Light",
                 "PLAGF_SentryTeam",
-                "JGSDF_2008_SentryTeam"
+                "JGSDF_2008_SentryTeam",
+                "CloseProtectionTeam"
             ],
             "exclude": [
                 "_Base",
@@ -74,7 +76,8 @@
                 "Group_Zombies_High",
                 "Cultists_Medium",
                 "PLASTICBANDIT_FireTeam_Heavy",
-                "JGSDF_2008_SentryTeam"
+                "JGSDF_2008_SentryTeam",
+                "CloseProtectionTeam"
             ],
             "exclude": [
                 "_Base",
@@ -95,7 +98,8 @@
                 "Group_Zombies_High",
                 "Cultists_Light",
                 "PLASTICBANDIT_Squad",
-                "JGSDF_2008_SentryTeam"
+                "JGSDF_2008_SentryTeam",
+                "StaticSecurityTeam"
             ],
             "exclude": [
                 "_Base",
@@ -116,7 +120,8 @@
                 "Group_Zombies_High",
                 "Cultists_Light",
                 "PLASTICBANDIT_Squad",
-                "JGSDF_2008_LightFireTeam"
+                "JGSDF_2008_LightFireTeam",
+                "StaticSecurityTeam"
             ],
             "exclude": [
                 "_Base",
@@ -142,7 +147,8 @@
                 "Group_Zombies_USSR",
                 "Cultists_Medium",
                 "PLASTICBANDIT_Squad",
-                "JGSDF_2008_LightFireTeam"
+                "JGSDF_2008_LightFireTeam",
+                "CloseProtectionTeam"
             ],
             "exclude": [
                 "_Base",
@@ -168,7 +174,8 @@
                 "Group_Zombies_Horde",
                 "Group_Zombies_CIV_Large",
                 "Cultists_Horde",
-                "JGSDF_2008_SentryTeam"
+                "JGSDF_2008_SentryTeam",
+                "QuickReactionForce"
             ],
             "exclude": [
                 "_Base",
@@ -193,7 +200,8 @@
                 "KS05_SF_GROUP_B",
                 "Group_Zombies_Horde",
                 "Cultists_Medium",
-                "PLASTICBANDIT_Squad"
+                "PLASTICBANDIT_Squad",
+                "MobileSecurityTeam"
             ],
             "exclude": [
                 "_Base",
@@ -222,7 +230,8 @@
                 "Group_Zombies_USSR",
                 "Cultists_Light",
                 "PLASTICBANDIT_Patrol",
-                "JGSDF_2008_LightFireTeam"
+                "JGSDF_2008_LightFireTeam",
+                "CloseProtectionTeam"
             ],
             "exclude": [
                 "_Base",
@@ -250,7 +259,8 @@
                 "Scav_Rookie",
                 "Stalker_Rookie",
                 "Civilian_Cultist",
-                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_1.et"
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_1.et",
+                "Marksman"
             ],
             "exclude": [
                 "_Base",
@@ -284,7 +294,8 @@
                 "Scav_Brute",
                 "Civilian_Cultist",
                 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_2.et",
-                "JGSDF_2008_Rifleman"
+                "JGSDF_2008_Rifleman",
+                "ION_Scout"
             ],
             "exclude": [
                 "_Base",
@@ -350,7 +361,8 @@
                 "Stalker_Veteran",
                 "Warrior_Cultist",
                 "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et",
-                "JGSDF_2008_CC"
+                "JGSDF_2008_CC",
+                "ION_Scout"
             ],
             "exclude": [
                 "_Base",
@@ -381,7 +393,8 @@
                 "Scav_Veteran",
                 "Stalker_Veteran",
                 "Civilian_Cultist",
-                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et"
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et",
+                "ION_Scout"
             ],
             "exclude": [
                 "_Base",
@@ -409,7 +422,8 @@
                 "Stalker_Shadow",
                 "Stalker_Legend",
                 "Kamikaze_Cultist",
-                "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et"
+                "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et",
+                "ION_SL"
             ],
             "exclude": [
                 "_Base",
@@ -439,7 +453,8 @@
                 "Scav_Brute",
                 "Warrior_Cultist",
                 "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et",
-                "JGSDF_2008_TL"
+                "JGSDF_2008_TL",
+                "ION_SL"
             ],
             "exclude": [
                 "_Base",
@@ -504,7 +519,8 @@
                 "PLAGF_Scout_RTO",
                 "Kamikaze_Cultist",
                 "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et",
-                "JGSDF_2008_Sniper"
+                "JGSDF_2008_Sniper",
+                "ION_Scout"
             ],
             "exclude": [
                 "_Base",

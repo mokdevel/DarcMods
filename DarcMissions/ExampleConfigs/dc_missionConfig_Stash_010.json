@@ -1,7 +1,10 @@
 {
+    "jsonVersion": 2,
+    "missionType": 10,
     "version": 1,
     "author": "darc",
-    "missionCycleTime": 30,
+    "comment": "",
+    "missionCycleTime": 20,
     "showMarker": true,
     "showHint": true,
     "showMessage": true,
@@ -12,7 +15,6 @@
     "missionFiles": [
         "dc_missionConfig_Stash_010.json"
     ],
-    "secondWave": [],
     "activeDistance": 50,
     "subMissions": [
         {
@@ -29,16 +31,23 @@
                 "size": 3.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Hidden loot near %l",
-                "info": "Loot is yours to take",
+                "messages": [
+                    {
+                        "title": "Hidden loot near %l",
+                        "info": "Loot is yours to take",
+                        "win": "Loot found.",
+                        "lose": "Loot lost."
+                    }
+                ],
                 "winCondition": 30,
-                "winMessage": "Loot found.",
-                "loseMessage": "Loot lost.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 12,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -57,15 +66,7 @@
                 "waypointGenType": 1,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.699,

@@ -1,7 +1,10 @@
 {
+    "jsonVersion": 2,
+    "missionType": 5,
     "version": 1,
     "author": "darc",
-    "missionCycleTime": 90,
+    "comment": "",
+    "missionCycleTime": 60,
     "showMarker": false,
     "showHint": true,
     "showMessage": true,
@@ -15,7 +18,6 @@
         3
     ],
     "missionFiles": [],
-    "secondWave": [],
     "patrolingTime": 0,
     "distanceToPlayer": 500,
     "subMissions": [
@@ -47,16 +49,23 @@
                     70
                 ],
                 "posName": "any",
-                "title": "Patrol spotted near %l",
-                "info": "Intel tells them to travel to %d. Be careful while traveling on roads.",
+                "messages": [
+                    {
+                        "title": "Patrol spotted near %l",
+                        "info": "Intel tells them to travel to %d. Be careful while traveling on roads.",
+                        "win": "Patrol near %l is no more.",
+                        "lose": "Patroling completed, the world is saved."
+                    }
+                ],
                 "winCondition": 1,
-                "winMessage": "Patrol near %l is no more.",
-                "loseMessage": "Patroling completed, the world is saved.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 7,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -75,15 +84,7 @@
                 "waypointGenType": 4,
                 "waypointMoveType": 2
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            }
+            "qrf": null
         },
         {
             "general": {
@@ -112,16 +113,23 @@
                     15
                 ],
                 "posName": "any",
-                "title": "Patrol in %l",
-                "info": "Beware!",
+                "messages": [
+                    {
+                        "title": "Patrol in %l",
+                        "info": "Beware!",
+                        "win": "Well done!",
+                        "lose": "You're not a worthy enemy for this patrol."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "Well done!",
-                "loseMessage": "You're not a worthy enemy for this patrol.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 7,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -141,15 +149,7 @@
                 "waypointGenType": 3,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            }
+            "qrf": null
         },
         {
             "general": {
@@ -173,16 +173,23 @@
                     64
                 ],
                 "posName": "any",
-                "title": "Patrol seen in %l",
-                "info": "Be alert!",
+                "messages": [
+                    {
+                        "title": "Patrol seen in %l",
+                        "info": "Be alert!",
+                        "win": "The road from %l to %d is safe again.",
+                        "lose": "Patrol left the area."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "The road from %l to %d is safe again.",
-                "loseMessage": "Patrol left the area.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 7,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -203,15 +210,7 @@
                 "waypointGenType": 2,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            }
+            "qrf": null
         },
         {
             "general": {
@@ -235,16 +234,23 @@
                     64
                 ],
                 "posName": "any",
-                "title": "Enemy has been seen near %l",
-                "info": "Caution is advised.",
+                "messages": [
+                    {
+                        "title": "Enemy has been seen near %l",
+                        "info": "Caution is advised.",
+                        "win": "Patrol cleared!",
+                        "lose": "Such a small force was able to beat you."
+                    }
+                ],
                 "winCondition": 3,
-                "winMessage": "Patrol cleared!",
-                "loseMessage": "Such a small force was able to beat you.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 7,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -265,15 +271,7 @@
                 "waypointGenType": 1,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            }
+            "qrf": null
         }
     ]
 }

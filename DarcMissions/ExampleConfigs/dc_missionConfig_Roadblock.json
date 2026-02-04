@@ -1,7 +1,10 @@
 {
+    "jsonVersion": 2,
+    "missionType": 7,
     "version": 1,
     "author": "darc",
-    "missionCycleTime": 30,
+    "comment": "",
+    "missionCycleTime": 20,
     "showMarker": true,
     "showHint": true,
     "showMessage": true,
@@ -14,7 +17,6 @@
         4
     ],
     "missionFiles": [],
-    "secondWave": [],
     "subMissions": [
         {
             "general": {
@@ -40,16 +42,23 @@
                     15
                 ],
                 "posName": "any",
-                "title": "Roadblock near %l",
-                "info": "Look out for trouble.",
+                "messages": [
+                    {
+                        "title": "Roadblock near %l",
+                        "info": "Look out for trouble.",
+                        "win": "Roadblock cleared.",
+                        "lose": "Road was kept safe as planned."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "Roadblock cleared.",
-                "loseMessage": "Road was kept safe as planned.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 9,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -70,14 +79,16 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
+            "qrf": {
+                "subIdx": [
+                    0
+                ],
                 "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
+                "chance": 1.0,
+                "delay": [
+                    5,
+                    20
+                ]
             },
             "loot": {
                 "box": null,
@@ -178,16 +189,23 @@
                     15
                 ],
                 "posName": "any",
-                "title": "Roadblock seen close to %l",
-                "info": "Be careful.",
+                "messages": [
+                    {
+                        "title": "Roadblock seen close to %l",
+                        "info": "Be careful.",
+                        "win": "These blocks can not stop you.",
+                        "lose": "Scared of the enemy? %l is not a place for you."
+                    }
+                ],
                 "winCondition": 1,
-                "winMessage": "These blocks can not stop you.",
-                "loseMessage": "Scared of the enemy? %l is not a place for you.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 9,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -208,15 +226,7 @@
                 "waypointGenType": 2,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.899,
@@ -422,16 +432,23 @@
                     15
                 ],
                 "posName": "any",
-                "title": "Road is closed near %l",
-                "info": "Are your ready to pay the toll?",
+                "messages": [
+                    {
+                        "title": "Road is closed near %l",
+                        "info": "Are your ready to pay the toll?",
+                        "win": "Road cleared.",
+                        "lose": "The road toll was too much for you."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "Road cleared.",
-                "loseMessage": "The road toll was too much for you.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 9,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -453,15 +470,7 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.6,
@@ -660,16 +669,23 @@
                     15
                 ],
                 "posName": "any",
-                "title": "Road near %l is guarded",
-                "info": "Prepare for a mandatory stop.",
+                "messages": [
+                    {
+                        "title": "Road near %l is guarded",
+                        "info": "Prepare for a mandatory stop.",
+                        "win": "Gates do not stop you.",
+                        "lose": "Guards has left road near %l."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "Gates do not stop you.",
-                "loseMessage": "Guards has left road near %l.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 9,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -691,15 +707,7 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.6,
@@ -914,16 +922,23 @@
                     64
                 ],
                 "posName": "any",
-                "title": "Bus stop near %l",
-                "info": "Maybe their car needs fixing.",
+                "messages": [
+                    {
+                        "title": "Bus stop near %l",
+                        "info": "Maybe their car needs fixing.",
+                        "win": "The area is cleared.",
+                        "lose": "Car is fixed, guards left area near %l."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "The area is cleared.",
-                "loseMessage": "Car is fixed, guards left area near %l.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 9,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -943,15 +958,7 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.6,

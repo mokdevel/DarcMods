@@ -1,7 +1,10 @@
 {
+    "jsonVersion": 2,
+    "missionType": 3,
     "version": 1,
     "author": "darc",
-    "missionCycleTime": 30,
+    "comment": "",
+    "missionCycleTime": 20,
     "showMarker": true,
     "showHint": true,
     "showMessage": true,
@@ -23,7 +26,6 @@
         3
     ],
     "missionFiles": [],
-    "secondWave": [],
     "distanceToPlayer": 500,
     "subMissions": [
         {
@@ -57,16 +59,23 @@
                     81
                 ],
                 "posName": "any",
-                "title": "Convoy is on the move.",
-                "info": "Leaked travel plans show a route from %l to %d",
+                "messages": [
+                    {
+                        "title": "Convoy is on the move.",
+                        "info": "Leaked travel plans show a route from %l to %d",
+                        "win": "The convoy was successfully intercepted.",
+                        "lose": "The convoy reached %d as planned."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "The convoy was successfully intercepted.",
-                "loseMessage": "The convoy reached %d as planned.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 4,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -86,15 +95,7 @@
                 "waypointGenType": 4,
                 "waypointMoveType": 2
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "vehicleTypes": [
                 "{01F65EFB8D767A91}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_cargo.et",
                 "{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
@@ -153,16 +154,23 @@
                     81
                 ],
                 "posName": "any",
-                "title": "Cargo truck is on the move.",
-                "info": "Follow the route from %l to %d",
+                "messages": [
+                    {
+                        "title": "Cargo truck is on the move.",
+                        "info": "Follow the route from %l to %d",
+                        "win": "Truck stopped, loot grabbed.",
+                        "lose": "All the goodies in the truck was never for you."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "Truck stopped, loot grabbed.",
-                "loseMessage": "All the goodies in the truck was never for you.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 4,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -182,15 +190,7 @@
                 "waypointGenType": 4,
                 "waypointMoveType": 2
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "vehicleTypes": [
                 "{F1FBD0972FA5FE09}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport.et",
                 "{81FDAD5EB644CC3D}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered.et",
@@ -260,16 +260,23 @@
                     81
                 ],
                 "posName": "any",
-                "title": "Armor spotted",
-                "info": "It's been seen in %l. It's to patrol to %d.",
+                "messages": [
+                    {
+                        "title": "Armor spotted",
+                        "info": "It's been seen in %l. It's to patrol to %d.",
+                        "win": "Armor destroyed. Well done!",
+                        "lose": "Were you scared of a piece metal? Cowards!"
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "Armor destroyed. Well done!",
-                "loseMessage": "Were you scared of a piece metal? Cowards!",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 4,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -289,15 +296,7 @@
                 "waypointGenType": 4,
                 "waypointMoveType": 2
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "vehicleTypes": [
                 "{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et",
                 "{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et",
@@ -359,16 +358,23 @@
                     81
                 ],
                 "posName": "any",
-                "title": "Guns on the move",
-                "info": "Look out for a patrol between %l and %d.",
+                "messages": [
+                    {
+                        "title": "Guns on the move",
+                        "info": "Look out for a patrol between %l and %d.",
+                        "win": "Nice shooting!",
+                        "lose": "Oh dear, your failure will be remembered."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "Nice shooting!",
-                "loseMessage": "Oh dear, your failure will be remembered.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 4,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -389,15 +395,7 @@
                 "waypointGenType": 4,
                 "waypointMoveType": 2
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "vehicleTypes": [
                 "{F6B23D17D5067C11}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB.et",
                 "{5168FEA3054D6D15}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB_MERDC.et",

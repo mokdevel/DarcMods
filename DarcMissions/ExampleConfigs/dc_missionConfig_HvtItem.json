@@ -1,7 +1,10 @@
 {
+    "jsonVersion": 2,
+    "missionType": 9,
     "version": 1,
     "author": "darc",
-    "missionCycleTime": 30,
+    "comment": "",
+    "missionCycleTime": 20,
     "showMarker": true,
     "showHint": true,
     "showMessage": true,
@@ -14,7 +17,6 @@
     "missionFiles": [
         "dc_missionConfig_HvtItem_010.json"
     ],
-    "secondWave": [],
     "subMissions": [
         {
             "general": {
@@ -38,16 +40,23 @@
                     15
                 ],
                 "posName": "any",
-                "title": "Destroy generator near %l",
-                "info": "The enemy is spreading propaganda.",
+                "messages": [
+                    {
+                        "title": "Destroy generator near %l",
+                        "info": "The enemy is spreading propaganda.",
+                        "win": "Target destroyed.",
+                        "lose": "You failed in your mission!"
+                    }
+                ],
                 "winCondition": 20,
-                "winMessage": "Target destroyed.",
-                "loseMessage": "You failed in your mission!",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 11,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -68,15 +77,7 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
@@ -230,16 +231,23 @@
                     81
                 ],
                 "posName": "any",
-                "title": "A supply truck near %l",
-                "info": "A truck has crashed and the supplies needs to be destroyed.",
+                "messages": [
+                    {
+                        "title": "A supply truck near %l",
+                        "info": "A truck has crashed and the supplies needs to be destroyed.",
+                        "win": "Supplies never reached the enemy. Good work!",
+                        "lose": "The enemy will fight with their bellies full."
+                    }
+                ],
                 "winCondition": 20,
-                "winMessage": "Supplies never reached the enemy. Good work!",
-                "loseMessage": "The enemy will fight with their bellies full.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 11,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -261,15 +269,7 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
@@ -392,16 +392,23 @@
                 "size": 20.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Radio antenna close to %l",
-                "info": "Disrupt the enemy communications. Destroy the antenna.",
+                "messages": [
+                    {
+                        "title": "Radio antenna close to %l",
+                        "info": "Disrupt the enemy communications. Destroy the antenna.",
+                        "win": "The comms are dead.",
+                        "lose": "Enemy communication is working loud and clear."
+                    }
+                ],
                 "winCondition": 20,
-                "winMessage": "The comms are dead.",
-                "loseMessage": "Enemy communication is working loud and clear.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 11,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -423,15 +430,7 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.699,

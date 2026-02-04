@@ -1,13 +1,17 @@
 {
+    "jsonVersion": 2,
     "version": 1,
     "author": "darc",
+    "comment": "",
     "qrfs": [
         {
             "qrfIdx": 0,
             "comment": "index 0: Light group",
             "vehicle": "",
             "info": "",
-            "difficulty": -1,
+            "difficulty": [
+                -1
+            ],
             "xp": 0,
             "ai": {
                 "count": [
@@ -25,7 +29,8 @@
                 ],
                 "waypointGenType": 3,
                 "waypointMoveType": 5
-            }
+            },
+            "modList": []
         }
     ]
 }

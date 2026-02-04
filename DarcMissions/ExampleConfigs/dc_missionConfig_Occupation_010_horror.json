@@ -1,7 +1,10 @@
 {
+    "jsonVersion": 2,
+    "missionType": 2,
     "version": 1,
     "author": "darc",
-    "missionCycleTime": 30,
+    "comment": "",
+    "missionCycleTime": 20,
     "showMarker": true,
     "showHint": true,
     "showMessage": true,
@@ -10,7 +13,6 @@
         10
     ],
     "missionFiles": [],
-    "secondWave": [],
     "subMissions": [
         {
             "general": {
@@ -29,16 +31,23 @@
                     64
                 ],
                 "posName": "any",
-                "title": "Creatures near %l",
-                "info": "Avoid the location. No loot available.",
+                "messages": [
+                    {
+                        "title": "Creatures near %l",
+                        "info": "Avoid the location. No loot available.",
+                        "win": "Spawns from hell are dead!",
+                        "lose": "Are you scared of a few ghosts..?"
+                    }
+                ],
                 "winCondition": 1,
-                "winMessage": "Spawns from hell are dead!",
-                "loseMessage": "Are you scared of a few ghosts..?",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 15,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -59,15 +68,7 @@
                 "waypointGenType": 1,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": null,
             "campItems": []
         },
@@ -88,16 +89,25 @@
                     64
                 ],
                 "posName": "any",
-                "title": "Zombies near %l",
-                "info": "Braaaainss.....",
+                "messages": [
+                    {
+                        "title": "Zombies near %l",
+                        "info": "Braaaainss.....",
+                        "win": "The living dead are just dead now.",
+                        "lose": "You were tasty."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "The living dead are just dead now.",
-                "loseMessage": "You were tasty.",
-                "faction": "BACON_622120A5448725E3_FACTION",
+                "faction": [
+                    "BACON_622120A5448725E3_FACTION"
+                ],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 17,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -118,15 +128,7 @@
                 "waypointGenType": 1,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": null,
             "campItems": []
         },
@@ -148,16 +150,25 @@
                     62
                 ],
                 "posName": "any",
-                "title": "Horde of zombies seen near %l",
-                "info": "Avoid getting yourself eaten.",
+                "messages": [
+                    {
+                        "title": "Horde of zombies seen near %l",
+                        "info": "Avoid getting yourself eaten.",
+                        "win": "The dead shall stay dead.",
+                        "lose": "Oh the horrors. You were slain."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "The dead shall stay dead.",
-                "loseMessage": "Oh the horrors. You were slain.",
-                "faction": "BACON_622120A5448725E3_FACTION",
+                "faction": [
+                    "BACON_622120A5448725E3_FACTION"
+                ],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 15,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -178,15 +189,7 @@
                 "waypointGenType": 1,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": null,
             "campItems": []
         }

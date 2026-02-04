@@ -1,7 +1,10 @@
 {
+    "jsonVersion": 2,
+    "missionType": 1,
     "version": 1,
     "author": "darc",
-    "missionCycleTime": 90,
+    "comment": "",
+    "missionCycleTime": 60,
     "showMarker": false,
     "showHint": true,
     "showMessage": true,
@@ -16,7 +19,6 @@
         2
     ],
     "missionFiles": [],
-    "secondWave": [],
     "minDistanceToPlayer": 200,
     "maxDistanceToPlayer": 800,
     "rndDistanceToPlayer": 60,
@@ -35,16 +37,23 @@
                 "size": 2.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Hunters",
-                "info": "They are coming for you... Last time they were seen close to %l.",
+                "messages": [
+                    {
+                        "title": "Hunters",
+                        "info": "They are coming for you... Last time they were seen close to %l.",
+                        "win": "You outsmarted the hunters.",
+                        "lose": "Hunters lost track of you."
+                    }
+                ],
                 "winCondition": 1,
-                "winMessage": "You outsmarted the hunters.",
-                "loseMessage": "Hunters lost track of you.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 6,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -63,15 +72,7 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            }
+            "qrf": null
         },
         {
             "general": {
@@ -87,16 +88,23 @@
                 "size": 2.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Hunters",
-                "info": "Sharpshooters are hunting you. Last known location was near %l.",
+                "messages": [
+                    {
+                        "title": "Hunters",
+                        "info": "Sharpshooters are hunting you. Last known location was near %l.",
+                        "win": "Sharpshooters were not that sharp.",
+                        "lose": "Sharpshooters lost track of you."
+                    }
+                ],
                 "winCondition": 1,
-                "winMessage": "Sharpshooters were not that sharp.",
-                "loseMessage": "Sharpshooters lost track of you.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 6,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -115,15 +123,7 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            }
+            "qrf": null
         },
         {
             "general": {
@@ -143,16 +143,23 @@
                     15
                 ],
                 "posName": "any",
-                "title": "Recon",
-                "info": "Military base near %l has sent a recon team to hunt you.",
+                "messages": [
+                    {
+                        "title": "Recon",
+                        "info": "Military base near %l has sent a recon team to hunt you.",
+                        "win": "Recon team cleared.",
+                        "lose": "Recon team lost track of you."
+                    }
+                ],
                 "winCondition": 1,
-                "winMessage": "Recon team cleared.",
-                "loseMessage": "Recon team lost track of you.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 6,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -171,15 +178,7 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            }
+            "qrf": null
         }
     ]
 }

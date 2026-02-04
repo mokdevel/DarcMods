@@ -1,7 +1,10 @@
 {
+    "jsonVersion": 2,
+    "missionType": 9,
     "version": 1,
     "author": "darc",
-    "missionCycleTime": 30,
+    "comment": "",
+    "missionCycleTime": 20,
     "showMarker": true,
     "showHint": true,
     "showMessage": true,
@@ -14,7 +17,6 @@
     "missionFiles": [
         "dc_missionConfig_HvtItem_010.json"
     ],
-    "secondWave": [],
     "subMissions": [
         {
             "general": {
@@ -30,16 +32,23 @@
                 "size": 20.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Silo near to %l",
-                "info": "The materials inside shall not end up at the hands of the enemy.",
+                "messages": [
+                    {
+                        "title": "Silo near to %l",
+                        "info": "The materials inside shall not end up at the hands of the enemy.",
+                        "win": "The silo is now just a bunch bricks.",
+                        "lose": "Material in the silo was secured by the enemy."
+                    }
+                ],
                 "winCondition": 20,
-                "winMessage": "The silo is now just a bunch bricks.",
-                "loseMessage": "Material in the silo was secured by the enemy.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 11,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -62,15 +71,7 @@
                 "waypointGenType": 3,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.5,
@@ -339,16 +340,23 @@
                 "size": 20.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Soup kitchen near %l",
-                "info": "Make sure the enemy stays hungry.",
+                "messages": [
+                    {
+                        "title": "Soup kitchen near %l",
+                        "info": "Make sure the enemy stays hungry.",
+                        "win": "No cooking for the enemy.",
+                        "lose": "Bellies full, the enemy left."
+                    }
+                ],
                 "winCondition": 20,
-                "winMessage": "No cooking for the enemy.",
-                "loseMessage": "Bellies full, the enemy left.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 11,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -370,15 +378,7 @@
                 "waypointGenType": 3,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.5,
@@ -776,16 +776,23 @@
                 "size": 20.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Radar near %l",
-                "info": "Silence the radar by destroying the transformer.",
+                "messages": [
+                    {
+                        "title": "Radar near %l",
+                        "info": "Silence the radar by destroying the transformer.",
+                        "win": "Enemy eyes are now shut.",
+                        "lose": "Radar commmunication working as enemy wanted."
+                    }
+                ],
                 "winCondition": 20,
-                "winMessage": "Enemy eyes are now shut.",
-                "loseMessage": "Radar commmunication working as enemy wanted.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 11,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -807,15 +814,7 @@
                 "waypointGenType": 3,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.5,

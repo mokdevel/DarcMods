@@ -1,7 +1,10 @@
 {
+    "jsonVersion": 2,
+    "missionType": 4,
     "version": 1,
     "author": "darc",
-    "missionCycleTime": 30,
+    "comment": "",
+    "missionCycleTime": 20,
     "showMarker": true,
     "showHint": true,
     "showMessage": true,
@@ -11,7 +14,6 @@
         1
     ],
     "missionFiles": [],
-    "secondWave": [],
     "distanceToMission": 100,
     "distanceToPlayer": 500,
     "flyHeight": [
@@ -33,16 +35,23 @@
                 "size": 0.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Helicopter in distress",
-                "info": "A valuable cargo has crashed.",
+                "messages": [
+                    {
+                        "title": "Helicopter in distress",
+                        "info": "A valuable cargo has crashed.",
+                        "win": "The loot was salvaged. Crash, burn, loot.",
+                        "lose": "No loot for you today."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "The loot was salvaged. Crash, burn, loot.",
-                "loseMessage": "No loot for you today.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 5,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -62,15 +71,7 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 6
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.899,
@@ -162,21 +163,21 @@
             "helicopterInfo": [
                 {
                     "comment": "Index 0",
-                    "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+                    "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et",
                     "throttle": 0.8,
                     "rotorForce": 0.8,
                     "rotor2Force": 1.0
                 },
                 {
                     "comment": "Index 1",
-                    "resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
+                    "resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_crashing.et",
                     "throttle": 0.699,
                     "rotorForce": 0.899,
                     "rotor2Force": 1.0
                 },
                 {
                     "comment": "Index 2",
-                    "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+                    "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et",
                     "throttle": 0.8,
                     "rotorForce": 0.8,
                     "rotor2Force": -1.0
@@ -197,16 +198,23 @@
                 "size": 0.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Engine damage",
-                "info": "May day, may day! We're going down.",
+                "messages": [
+                    {
+                        "title": "Engine damage",
+                        "info": "May day, may day! We're going down.",
+                        "win": "The loot box was secured.",
+                        "lose": "The cargo was lost."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "The loot box was secured.",
-                "loseMessage": "The cargo was lost.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 5,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -226,15 +234,7 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 6
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
@@ -287,21 +287,21 @@
             "helicopterInfo": [
                 {
                     "comment": "Index 0",
-                    "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+                    "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et",
                     "throttle": 0.699,
                     "rotorForce": 0.8,
                     "rotor2Force": 1.0
                 },
                 {
                     "comment": "Index 1",
-                    "resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_Flying.et",
+                    "resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_crashing.et",
                     "throttle": 0.6,
                     "rotorForce": 0.85,
                     "rotor2Force": 1.0
                 },
                 {
                     "comment": "Index 2",
-                    "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_flying.et",
+                    "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et",
                     "throttle": 0.75,
                     "rotorForce": 0.75,
                     "rotor2Force": -1.0

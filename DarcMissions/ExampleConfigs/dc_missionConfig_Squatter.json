@@ -1,7 +1,10 @@
 {
+    "jsonVersion": 2,
+    "missionType": 6,
     "version": 1,
     "author": "darc",
-    "missionCycleTime": 30,
+    "comment": "",
+    "missionCycleTime": 20,
     "showMarker": true,
     "showHint": true,
     "showMessage": true,
@@ -20,7 +23,6 @@
         5
     ],
     "missionFiles": [],
-    "secondWave": [],
     "buildingRadius": 400,
     "subMissions": [
         {
@@ -46,16 +48,23 @@
                     81
                 ],
                 "posName": "any",
-                "title": "Squatters near %l.",
-                "info": "Building has squatters with loot",
+                "messages": [
+                    {
+                        "title": "Squatters near %l.",
+                        "info": "Building has squatters with loot",
+                        "win": "The loot has been secured.",
+                        "lose": "Squatters cleaned the house and left you nothing."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "The loot has been secured.",
-                "loseMessage": "Squatters cleaned the house and left you nothing.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 1,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -79,15 +88,7 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "buildingNames": [
                 "ShopModern_",
                 "Villa_",
@@ -141,16 +142,23 @@
                 "size": 0.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Enemy in %l",
-                "info": "Control tower is being guarded.",
+                "messages": [
+                    {
+                        "title": "Enemy in %l",
+                        "info": "Control tower is being guarded.",
+                        "win": "You did it! Control in %l has been restored.",
+                        "lose": "Control in %l has been lost."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "You did it! Control in %l has been restored.",
-                "loseMessage": "Control in %l has been lost.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 1,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -178,15 +186,7 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "buildingNames": [
                 "ControlTowerMilitary_"
             ],
@@ -234,16 +234,23 @@
                 "size": 0.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Guards around %l",
-                "info": "Military location has loot to steal.",
+                "messages": [
+                    {
+                        "title": "Guards around %l",
+                        "info": "Military location has loot to steal.",
+                        "win": "Guards have been eliminated.",
+                        "lose": "Military has collected the loot and left."
+                    }
+                ],
                 "winCondition": 1,
-                "winMessage": "Guards have been eliminated.",
-                "loseMessage": "Military has collected the loot and left.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 1,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -270,15 +277,7 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "buildingNames": [
                 "Office_E_",
                 "Barracks_01_",
@@ -326,16 +325,23 @@
                 "size": 0.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Industrial area near %l",
-                "info": "Military has seized control of an industrial area. Don't shoot the civilians.",
+                "messages": [
+                    {
+                        "title": "Industrial area near %l",
+                        "info": "Military has seized control of an industrial area. Don't shoot the civilians.",
+                        "win": "Main enemy forces have been destroyed. Continue to keep an eye for rogues.",
+                        "lose": "%l is in the hands of the enemy."
+                    }
+                ],
                 "winCondition": 3,
-                "winMessage": "Main enemy forces have been destroyed. Continue to keep an eye for rogues.",
-                "loseMessage": "%l is in the hands of the enemy.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 1,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -363,15 +369,7 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "buildingNames": [
                 "DieselPowerPlant_",
                 "CowShed_",
@@ -421,16 +419,23 @@
                 "size": 0.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Sanctuary visitors near %l",
-                "info": "Holy night, holy loot.",
+                "messages": [
+                    {
+                        "title": "Sanctuary visitors near %l",
+                        "info": "Holy night, holy loot.",
+                        "win": "Your success will be remembered.",
+                        "lose": "Your effort has been struck down."
+                    }
+                ],
                 "winCondition": 4,
-                "winMessage": "Your success will be remembered.",
-                "loseMessage": "Your effort has been struck down.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 1,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -449,15 +454,7 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "buildingNames": [
                 "Church_",
                 "ChurchSmall_",
@@ -504,16 +501,23 @@
                 "size": 0.0,
                 "locationTypes": [],
                 "posName": "any",
-                "title": "Burglars seen near %l",
-                "info": "Go rob the robbers.",
+                "messages": [
+                    {
+                        "title": "Burglars seen near %l",
+                        "info": "Go rob the robbers.",
+                        "win": "%l is open for business once again.",
+                        "lose": "Everything has been stolen."
+                    }
+                ],
                 "winCondition": 3,
-                "winMessage": "%l is open for business once again.",
-                "loseMessage": "Everything has been stolen.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 1,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -532,15 +536,7 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "buildingNames": [
                 "ShopModern_",
                 "House_Town_",

@@ -1,7 +1,10 @@
 {
+    "jsonVersion": 2,
+    "missionType": 2,
     "version": 1,
     "author": "darc",
-    "missionCycleTime": 30,
+    "comment": "",
+    "missionCycleTime": 20,
     "showMarker": true,
     "showHint": true,
     "showMessage": true,
@@ -26,7 +29,6 @@
         5
     ],
     "missionFiles": [],
-    "secondWave": [],
     "subMissions": [
         {
             "general": {
@@ -45,16 +47,23 @@
                     64
                 ],
                 "posName": "any",
-                "title": "Guards patroling near %l",
-                "info": "Avoid the location. Loot has already been lost.",
+                "messages": [
+                    {
+                        "title": "Guards patroling near %l",
+                        "info": "Avoid the location. Loot has already been lost.",
+                        "win": "Guard patrol eliminated.",
+                        "lose": "The patrol kept %l safe from you. Pathetic."
+                    }
+                ],
                 "winCondition": 1,
-                "winMessage": "Guard patrol eliminated.",
-                "loseMessage": "The patrol kept %l safe from you. Pathetic.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 3,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -74,15 +83,7 @@
                 "waypointGenType": 1,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": null,
             "campItems": []
         },
@@ -108,16 +109,23 @@
                     15
                 ],
                 "posName": "any",
-                "title": "Bandit camp near %l",
-                "info": "Bandits are protecting their valuable loot.",
+                "messages": [
+                    {
+                        "title": "Bandit camp near %l",
+                        "info": "Bandits are protecting their valuable loot.",
+                        "win": "Camp cleared. Take the loot and leave.",
+                        "lose": "The camp near %l was never destroyed. Bandits rule!"
+                    }
+                ],
                 "winCondition": 1,
-                "winMessage": "Camp cleared. Take the loot and leave.",
-                "loseMessage": "The camp near %l was never destroyed. Bandits rule!",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 3,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -138,15 +146,7 @@
                 "waypointGenType": 2,
                 "waypointMoveType": 5
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
@@ -248,16 +248,23 @@
                     81
                 ],
                 "posName": "any",
-                "title": "Occupation in %l",
-                "info": "City is being occupied.",
+                "messages": [
+                    {
+                        "title": "Occupation in %l",
+                        "info": "City is being occupied.",
+                        "win": "%l is free again!",
+                        "lose": "The enemy was stronger this time."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "%l is free again!",
-                "loseMessage": "The enemy was stronger this time.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 3,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -282,15 +289,7 @@
                 "waypointGenType": 3,
                 "waypointMoveType": 1
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.899,
@@ -396,16 +395,23 @@
                     75
                 ],
                 "posName": "any",
-                "title": "Car crash near %l",
-                "info": "Loot is up for grabs.",
+                "messages": [
+                    {
+                        "title": "Car crash near %l",
+                        "info": "Loot is up for grabs.",
+                        "win": "You stopped the get away. Enjoy the spoils.",
+                        "lose": "Car was fixed and the loot was lost."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "You stopped the get away. Enjoy the spoils.",
-                "loseMessage": "Car was fixed and the loot was lost.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 3,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -424,15 +430,7 @@
                 "waypointGenType": 1,
                 "waypointMoveType": 1
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
@@ -562,16 +560,23 @@
                     71
                 ],
                 "posName": "any",
-                "title": "Campers near %l",
-                "info": "Rob them before they leave.",
+                "messages": [
+                    {
+                        "title": "Campers near %l",
+                        "info": "Rob them before they leave.",
+                        "win": "The camp is yours. Enjoy the loot and relax.",
+                        "lose": "The camp was packed and the campers left with their car."
+                    }
+                ],
                 "winCondition": 1,
-                "winMessage": "The camp is yours. Enjoy the loot and relax.",
-                "loseMessage": "The camp was packed and the campers left with their car.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 3,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -591,15 +596,7 @@
                 "waypointGenType": 1,
                 "waypointMoveType": 1
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.4,
@@ -755,16 +752,23 @@
                     71
                 ],
                 "posName": "any",
-                "title": "Settlement near %l",
-                "info": "The enemies are hiding in a ghost town.",
+                "messages": [
+                    {
+                        "title": "Settlement near %l",
+                        "info": "The enemies are hiding in a ghost town.",
+                        "win": "The ghost town neat %l has been cleared.",
+                        "lose": "Enemies have left with the loot. Shame on you."
+                    }
+                ],
                 "winCondition": 2,
-                "winMessage": "The ghost town neat %l has been cleared.",
-                "loseMessage": "Enemies have left with the loot. Shame on you.",
-                "faction": "",
+                "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 3,
-                "difficulty": -1,
-                "xp": 0
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
             },
             "ai": {
                 "count": [
@@ -784,15 +788,7 @@
                 "waypointGenType": 1,
                 "waypointMoveType": 1
             },
-            "secondWave": {
-                "subIdx": [],
-                "activation": 1,
-                "delay": [],
-                "distance": [],
-                "info": "",
-                "difficulty": 0,
-                "xp": 0
-            },
+            "qrf": null,
             "loot": {
                 "box": null,
                 "itemChance": 0.4,
