@@ -232,9 +232,22 @@ sealed class SDRC_Math
 
 	//------------------------------------------------------------------------------------------------	
 	/*!
-	Turn the entity towards target on XZ plane
+	Turn the entity towards target
 	*/
 	static void TurnEntityTowards(IEntity owner, vector target)
+	{
+		vector p0 = owner.GetOrigin();
+		vector angles = vector.Direction(p0, target);
+		angles.Normalize();
+		angles = angles.VectorToAngles();
+		owner.SetYawPitchRoll(angles);		
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	/*!
+	Turn the entity towards target on XZ plane
+	*/
+	static void TurnEntityTowardsXZ(IEntity owner, vector target)
 	{
 		vector p0 = owner.GetOrigin();
 		p0[1] = 10;
@@ -244,7 +257,7 @@ sealed class SDRC_Math
 		angles = angles.VectorToAngles();
 		owner.SetYawPitchRoll(angles);		
 	}	
-
+	
 	//------------------------------------------------------------------------------------------------
 	// Half bell curve (Gaussian-based)
 	// t in range [0..1]
@@ -308,5 +321,28 @@ sealed class SDRC_Math
 	    vector p2 = mid + side * distance;
 	
 	    return p2;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*! 
+	Get rotation vector for two points
+	*/
+	static vector GetRotationVector(vector fromDir, vector toDir)
+	{
+	    fromDir.Normalize();
+	    toDir.Normalize();
+	
+	    vector axis = SCR_Math3D.Cross(fromDir, toDir);
+	    float sinAngle = axis.Length();
+	    float cosAngle = vector.Dot(fromDir, toDir);
+	
+	    if (sinAngle < 0.0001)
+	        return "0 0 0"; // no rotation
+	
+	    axis.Normalize();
+	    float angle = Math.Atan2(sinAngle, cosAngle);
+	
+	    // Rotation vector = axis * angle (radians)
+	    return axis * angle;
 	}	
 }

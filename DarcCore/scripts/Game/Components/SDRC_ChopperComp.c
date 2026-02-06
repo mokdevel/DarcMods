@@ -316,7 +316,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 		//Set ready in a few seconds
 		GetGame().GetCallqueue().CallLater(ReadyDelayed, 5000, false, owner);
-		GetGame().GetCallqueue().CallLater(ShootRocket, 2000, true, owner);
+		GetGame().GetCallqueue().CallLater(ShootRocket, 1000, true, owner);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -744,7 +744,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Chopper initial position: " + owner.GetOrigin(), LogLevel.DEBUG);
 		
 		//Turn chopper to face the first destination
-		SDRC_Math.TurnEntityTowards(owner, m_vFlyDestinations[0].pt);
+		SDRC_Math.TurnEntityTowardsXZ(owner, m_vFlyDestinations[0].pt);
 		
 		if (!m_bAutoStart)	//With autostart, use the origin of the chopper spawn
 		{

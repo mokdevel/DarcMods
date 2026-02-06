@@ -11,47 +11,32 @@ class SDRC_ChopperRocketHelper
 		if (!owner)
 			return;
 		
-		// Calculate target position with spread
-		BaseWorld world = GetGame().GetWorld();
-		if (!world)
-			return;
-		
 		// Get ground height at target position
 		float groundY = SDRC_Misc.GetSurfaceYWithWater(targetPos);
-		targetPos[1] = groundY;
+		targetPos[1] = groundY + 10;
 		
 		vector rocketSpawnPos = SDRC_ChopperHelper.GetDestinationForward(owner, 10);
 
-		vector direction = vector.Direction(rocketSpawnPos, targetPos);
-//		direction.Normalize();
-/*
-		EntitySpawnParams params = new EntitySpawnParams();
-		
-		vector transform[4];
-//		Math3D.MatrixIdentity3(transform);
-		Math3D.AnglesToMatrix(direction, transform);
-		
-		transform[3] = rocketSpawnPos;		
-        params.TransformMode = ETransformMode.WORLD;			
-        params.Transform = transform;
-		
-/*		EntitySpawnParams params = new EntitySpawnParams();
-		params.Transform[3] = rocketSpawnPos;
-		params.TransformMode = ETransformMode.WORLD;*/
-		
-		EntitySpawnParams params = EntitySpawnParams();
-		owner.GetWorldTransform(params.Transform);
-		params.TransformMode = ETransformMode.WORLD;
-		Math3D.AnglesToMatrix(direction, params.Transform);
-		params.Transform[3] = rocketSpawnPos;
-		
+//		vector rotation = SDRC_Math.GetRotationVector(rocketSpawnPos, targetPos);
 		
 		ResourceName rocketPrefab = "{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et";
 		
-		IEntity rocket = SDRC_SpawnHelper.SpawnItem(rocketSpawnPos, rocketPrefab, 90, -1, false);
+		EntitySpawnParams params = new EntitySpawnParams();
+		params.Transform[3] = rocketSpawnPos;
+		params.TransformMode = ETransformMode.WORLD;
 		
-//		IEntity rocket = GetGame().SpawnEntityPrefab(Resource.Load(rocketPrefab), world, params);
-//		SDRC_Math.TurnEntityTowards(rocket, targetPos);
+		IEntity rocket = GetGame().SpawnEntityPrefab(Resource.Load(rocketPrefab), GetGame().GetWorld(), params);
+		SDRC_Math.TurnEntityTowards(rocket, targetPos + "0 10 0");
+		
+		vector launchDirection = vector.Direction(rocketSpawnPos, targetPos);
+//		vector launchDirection = vector.Direction(rocketSpawnPos, targetPos + "0 200 0");
+		launchDirection.Normalize();
+		
+/*		vector p0 = rocket.GetOrigin();
+		vector angles = vector.Direction(p0, targetPos);
+		angles.Normalize();
+		angles = angles.VectorToAngles();
+		rocket.SetYawPitchRoll(angles);			*/
 		
 		if (rocket)
 		{
@@ -65,7 +50,7 @@ class SDRC_ChopperRocketHelper
 //				missileMoveComp.AddForce("0 100 0");
 //				missileMoveComp.SetVelocity("0 200 0");
 //				missileMoveComp.SetEventMask(rocket, EntityEvent.FRAME);
-				missileMoveComp.Launch(vector.Zero, vector.Zero, 0, rocket, null, null, null, null);							
+				missileMoveComp.Launch(launchDirection, vector.Zero, 0, rocket, null, null, null, null);							
 //				missileMoveComp.Launch(direction, vector.Zero, 0, rocket, null, null, null, null);							
 			}
 			
