@@ -80,7 +80,7 @@ sealed class SDRC_Math
 	               V
 			       * (p0)
 	*/	
-	static float GetAngleBetweenThreePointsXZ(vector p0, vector p1, vector p2, out vector dir0 = vector.Zero, out vector dir1 = vector.Zero)
+	static float GetRadiansBetweenThreePointsXZ(vector p0, vector p1, vector p2, out vector dir0 = vector.Zero, out vector dir1 = vector.Zero)
 	{
 		//Use only XZ plane
 		p0[1] = 0;
@@ -90,11 +90,30 @@ sealed class SDRC_Math
 		dir0 = vector.Direction(p1, p0);
 		//Direction towards destination
 		dir1 = vector.Direction(p1, p2);
-		float angle = SDRC_Math.GetAngleBetweenVectors(dir0, dir1) * Math.RAD2DEG;
+		float angle = SDRC_Math.GetAngleBetweenVectors(dir0, dir1);
 		
 		return angle;
 	}	
-			
+				
+
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Check if point p2 is on the left side of vector p0-p1
+	*/
+	static float IsPointOnLeft(vector p0, vector p1, vector p2)
+	{
+		float side = (p1[0] - p0[0]) * (p2[2] - p0[2])
+		           - (p1[2] - p0[2]) * (p2[0] - p0[0]);	
+		
+		//Are we on left side?
+		if (side > 0)
+		{
+			return true;
+		}
+		
+		return false;	
+	}
+		
 	//------------------------------------------------------------------------------------------------	
 	//\returns AngVel in radians
 	static vector ComputeAngularVelocity(vector v1, vector v2, float deltaTime)
@@ -250,7 +269,8 @@ sealed class SDRC_Math
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	/*! Create a distance offset point p2 between p0 and p1.
+	/*! 
+	Create a distance offset point p2 between p0 and p1.
 	
 			x = distanceMid aka the point between p0 and p1. 0.5 is in the middle, 1.0 at the end
 			d = distance

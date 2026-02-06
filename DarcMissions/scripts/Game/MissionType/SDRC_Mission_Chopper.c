@@ -165,7 +165,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 					vector pos = m_Vehicle.GetOrigin() + direction * size;*/
 					
 					m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY, pos);
-					m_Vehicle_c.CreateNewFlight(m_Vehicle.GetOrigin());		
+					m_Vehicle_c.CreateNewFlight(m_Vehicle);
 					m_Vehicle_c.SetSpeed(max : m_DC_Chopper.speed[1] * 1.5);
 				}
 				SetActiveTime(m_iFlyEndTime);
