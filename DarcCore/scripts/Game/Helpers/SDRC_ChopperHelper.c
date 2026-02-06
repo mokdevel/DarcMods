@@ -6,15 +6,13 @@ class SDRC_ChopperHelper
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Add a destination forward. 
-	Create a destination from current heli position, along it's 
-	
-	\param destination Next position to fly to. Multiple destinations can be defined by calling multiple times.
-	\param type How to fly .. kinda. If set as FINAL, once reaching the destination, helicopter will stop flying. 
+	Create a destination from current heli position, along it's axis
 	*/
 	static vector GetDestinationForward(IEntity owner, float distance)
 	{
 		vector direction = owner.GetTransformAxis(2);
 		direction.Normalize();
+		direction[1] = 0;
 		vector origin = owner.GetOrigin();
 		vector position = origin + direction * distance;
 		//Keep the flying flat
@@ -184,4 +182,10 @@ class SDRC_ChopperHelper
 		
 		return crewCount;
 	}
+
+	//------------------------------------------------------------------------------------------------	
+	// Misc functions
+	//------------------------------------------------------------------------------------------------	
+
+
 }
