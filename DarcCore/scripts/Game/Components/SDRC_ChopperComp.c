@@ -3,6 +3,8 @@
 //Changes done in prefabs:
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
+//#define ENABLE_ROCKETS
+
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompClass : ScriptGameComponentClass { }
 
@@ -316,7 +318,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 		//Set ready in a few seconds
 		GetGame().GetCallqueue().CallLater(ReadyDelayed, 5000, false, owner);
-		GetGame().GetCallqueue().CallLater(ShootRocket, 1000, true, owner);
+		#ifdef ENABLE_ROCKETS
+			GetGame().GetCallqueue().CallLater(ShootRocket, 1000, true, owner);
+		#endif
 	}
 	
 	//------------------------------------------------------------------------------------------------

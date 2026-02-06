@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-//#define SDRC_RELEASE
+#define SDRC_RELEASE
 const bool SHOW_DEBUG_BOOL = true;		//Controls if debug visuals are to be shown. Disable for DarcMissions release.
 //const bool SHOW_DEBUG_BOOL = false;		//Controls if debug visuals are to be shown. Disable for DarcMissions release.
 //#define DEBUG_DO_NOT_CLEAR		//Leave old visual debug lines etc on restart

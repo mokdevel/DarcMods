@@ -84,14 +84,13 @@ sealed class SDRC_Locations
 	//------------------------------------------------------------------------------------------------
 	static void GetLocations(out array<MapItem> locationArray, array<EMapDescriptorType> locationTypeArray)
 	{
-		#ifndef SDRC_RELEASE
-			//If SCR_MapEntity does not exist, we most likely are playing in some debug map
-			SCR_MapEntity mapEnt = SCR_MapEntity.GetMapInstance();
-			if (!mapEnt)
-			{
-				return;
-			}
-		#endif
+		//If SCR_MapEntity does not exist, we most likely are playing in some debug map
+		SCR_MapEntity mapEnt = SCR_MapEntity.GetMapInstance();
+		if (!mapEnt)
+		{
+			SDRC_Log.Add("[SDRC_Locations:GetLocations] MapInstance not available. No locations will be found.", LogLevel.WARNING);
+			return;
+		}
 
 		//int stime = System.GetTickCount();
 				
