@@ -1,6 +1,8 @@
 {
+    "jsonVersion": 2,
     "version": 1,
     "author": "darc",
+    "comment": "",
     "markerLifeTime": 600,
     "visibleOnlyToFaction": false
 }

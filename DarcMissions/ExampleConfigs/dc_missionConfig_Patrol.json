@@ -4,7 +4,7 @@
     "version": 1,
     "author": "darc",
     "comment": "",
-    "missionCycleTime": 60,
+    "missionCycleTime": 90,
     "showMarker": false,
     "showHint": true,
     "showMessage": true,
