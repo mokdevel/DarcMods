@@ -1,8 +1,13 @@
 # Parameters
 All configurations are done via .json files. The configuration files will be under your ```profile\DarcMods\<subDir>\*```, where the ``subDir`` is defined via ``dc_coreConfig.json``. 
 
-## Version
-Each file has a ``version`` parameter. This tells the version of the structure used for the specific file. This is an internal detail and is not to be used for the author's own versioning. When parameter structure has changed with additional (or deleted) items, the version number is increased. The mod knows which version to expect and will give an error in case a wrong version file is loaded. In these cases, you should delete your old file to receive a new version.
+Examples below:
+* Single player: ``C:\Users\username\Documents\My Games\ArmaReforger\profile\DarcMods``
+* Workbench: ``C:\Users\username\Documents\My Games\ArmaReforgerWorkbench\profile\DarcMods``
+* Dedicated server: ``C:\serverpath\profile\DarcMods``. The profile dir is defined with ``-profile=`` startup parameter.
+
+## Version vs jsonVersion
+Each file has a ``jsonVersion`` parameter. This tells the version of the structure used for the specific file. This is an internal detail and is not to be used for the author's own versioning - for that you can use the ``version`` parameter. When parameter structure has changed with additional (or deleted) items, the ``jsonVersion`` number is increased. The mod knows which version to expect and will give an error in case a wrong version file is loaded. In these cases, you should delete your old file to receive a new version.
 
 The mod is WIP so the files are getting version changes occasionally.
 
