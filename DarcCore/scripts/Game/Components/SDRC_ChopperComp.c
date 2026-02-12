@@ -3,7 +3,7 @@
 //Changes done in prefabs:
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
-//#define ENABLE_ROCKETS
+#define ENABLE_ROCKETS
 
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompClass : ScriptGameComponentClass { }
@@ -121,12 +121,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 	string m_sFaction;
 	[Attribute(desc: "Characters to spawn in the chopper", params: "et")]
 	ref array<ref SCR_DefaultOccupantData> m_aCrew;
-	
+	//Crew settings
+	[Attribute(typename.EnumToString(EAISkill, EAISkill.REGULAR), UIWidgets.ComboBox, desc: "AI skill", enumType: EAISkill)]	
+	EAISkill m_AISkill;	
+	[Attribute(defvalue: "1.0", desc: "AI perception", params: "0.1 3.0 0.1")]	
+	float m_AIPerception;	
+		
 	//Flight path
 	ref array<ref SDRC_FlyPathPoint> m_vFlightPoints = {};
 	[Attribute("", UIWidgets.Object, "Destinations")]	
 	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations;	//Requested destinations
-//	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations = {};	//Requested destinations
 	
 	[Attribute(defvalue: "0", desc: "Show debugging information")]	
 	bool m_bShowDebug;
@@ -274,6 +278,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			if (m_bAutoStart)
 			{
 				//NOTE: This section is to be done in the mod
+				SetSearchForEnemy(true);
 				Ready(owner);
 			}
 		}
@@ -323,7 +328,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Set ready in a few seconds
 		GetGame().GetCallqueue().CallLater(ReadyDelayed, 5000, false, owner);
 		#ifdef ENABLE_ROCKETS
-			GetGame().GetCallqueue().CallLater(ShootRocket, 1000, true, owner);
+//			GetGame().GetCallqueue().CallLater(HandleRocket, 10, true, owner);
 		#endif
 	}
 	
@@ -336,7 +341,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			//Init flight path
 			InitFlight(owner, owner.GetOrigin());
 			//Spawn crew 
-			int crewCount = SDRC_ChopperHelper.SpawnCrew(owner, m_aCrew, m_sFaction);
+			int crewCount = SDRC_ChopperHelper.SpawnCrew(owner, m_aCrew, m_sFaction, m_AISkill, m_AIPerception);
 			SDRC_Log.Add("[SDRC_ChopperComp] Crew count: " + crewCount, LogLevel.DEBUG);
 		}		
 
@@ -350,10 +355,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
-	void ShootRocket(IEntity owner)
+	void HandleRocket(IEntity owner)
 	{
-		vector targetPos = "1700 30 2800";
-		SDRC_ChopperRocketHelper.ShootRocket(owner, targetPos);
+//		SDRC_ChopperEnemyHelper.SearchEnemyForRocket(owner);
 	}	
 					
 	//------------------------------------------------------------------------------------------------
@@ -516,6 +520,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Search for enemies
 		SearchForEnemy(owner);
+		SDRC_ChopperEnemyHelper.SearchEnemyForRocket(owner);
 		
 		DrawHelicopterVectors(owner);
 	}
@@ -1646,33 +1651,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			m_vEnemyPosition = "0 0 0";
 			SDRC_Log.Add("[SDRC_ChopperComp:SearchForEnemy] Enemy position reset.", LogLevel.DEBUG);
-		}	
+		}
 		
-		//Enemy stuff		
-		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(owner.FindComponent(SCR_BaseCompartmentManagerComponent));
-		
-		array<IEntity> occupants = {};
-		scr_compartmentManager.GetOccupants(occupants);
-
-		foreach (IEntity occupant : occupants)
+		m_vEnemyPosition = SDRC_ChopperEnemyHelper.SearchEnemy(owner);
+		if (m_vEnemyPosition != vector.Zero)
 		{
-			SCR_AICombatComponent aicc = SCR_AICombatComponent.Cast(occupant.FindComponent(SCR_AICombatComponent));
-			if (aicc)
-			{
-				BaseTarget bt = aicc.GetCurrentTarget();
-				if (bt)
-				{
-					IEntity target = bt.GetTargetEntity();
-					if (EntityUtils.IsPlayer(target))
-					{
-						found = true;
-						m_vEnemyPosition = target.GetOrigin();
-						m_iEnemyFoundTimeOut = SDRC_Misc.GetCurrentTickTime() + ENEMY_FOUND_TIMEOUT;
-						SDRC_Log.Add("[SDRC_ChopperComp:SearchForEnemy] Enemy found at " + m_vEnemyPosition, LogLevel.DEBUG);
-						break;
-					}
-				}
-			}
+			found = true;
+			m_iEnemyFoundTimeOut = SDRC_Misc.GetCurrentTickTime() + ENEMY_FOUND_TIMEOUT;
 		}
 		
 		return found;
@@ -1893,10 +1878,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 				if (bt)
 				{
 					IEntity target = bt.GetTargetEntity();
-					if (EntityUtils.IsPlayer(target))
-					{
+//					if (EntityUtils.IsPlayer(target))
+//					{
 						SDRC_ChopperHelper.DrawLine(occupant.GetOrigin(), target.GetOrigin(), Color.RED);
-					}
+//					}
 				}
 			}
 		}

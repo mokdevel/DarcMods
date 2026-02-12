@@ -138,7 +138,7 @@ class SDRC_ChopperHelper
 	//------------------------------------------------------------------------------------------------	
 	// Crew functions
 	//------------------------------------------------------------------------------------------------	
-	static int SpawnCrew(IEntity owner, array<ref SCR_DefaultOccupantData> crewmember, string faction)
+	static int SpawnCrew(IEntity owner, array<ref SCR_DefaultOccupantData> crewmember, string faction, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{		
 		int pilotCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.PILOT);
 		int crewCount = 0;
@@ -174,6 +174,17 @@ class SDRC_ChopperHelper
 				
 				crewCount++;
 			}
+			
+			//Set AI skill
+			if (gPilot)
+			{
+				SDRC_AIHelper.SetAIGroupSettings(gPilot, skill, perceptionFactor);
+			}
+			if (gCrew)
+			{
+				SDRC_AIHelper.SetAIGroupSettings(gPilot, skill, perceptionFactor);
+			}
+			
 		}
 		else
 		{
