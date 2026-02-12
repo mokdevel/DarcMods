@@ -244,17 +244,21 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		m_Vehicle_c.SetSearchForEnemy(true);
 
 		#ifdef CHOPPER_TESTING				
-			m_Vehicle_c.AddDestination(destination: routePos);
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.M_LAND_TROOPS, landPos, 12);
+		
+			//The above should result in same the stuff below
+/*			m_Vehicle_c.AddDestination(destination: routePos);
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.LAND, landPos);
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.GET_OUT);
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WAIT, value: 12);
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.HOVER_UP, "0 25 0", 6);
-			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.RAISE, "200 0 0", 15);
-			m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.RAISE, "200 0 0", 15);*/		
 		#else
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.FLY, GetPos());
-			m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
 		#endif
+		
+		//Init flight
+		m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
 
 		SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " +  GetId() + " : Vehicle spawned: " + m_Vehicle + " at: " + m_Vehicle.GetOrigin(), LogLevel.DEBUG);
 		

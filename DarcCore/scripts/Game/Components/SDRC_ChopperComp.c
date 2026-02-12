@@ -34,8 +34,12 @@ enum SDRC_EFlyWayPointType
 	GET_OUT,
 	END,
 	
+	//----	
 	HOVER_UP,				//Does the action and goes to HOVER state
 	STOP_ENGINE,			//Does the action and goes to WAIT state
+	
+	//Macro actions
+	M_LAND_TROOPS,
 }
 
 enum SDRC_EHeliState
@@ -1448,6 +1452,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//In normal case, we just add a destination for future handling. 
 		//Below are a few special cases where we need either react immediately of change some other params.
 
+		bool addFlyPoint = true;
+		
 		switch (type)
 		{
 			case SDRC_EFlyWayPointType.FLY_AWAY:
@@ -1488,19 +1494,35 @@ class SDRC_ChopperComp : ScriptGameComponent
 				//Set hover position to according to destination[1]
 				type = SDRC_EFlyWayPointType.HOVER;
 				break;
+			}		
+			
+			//Macro actions
+			case SDRC_EFlyWayPointType.M_LAND_TROOPS:
+			{
+				AddDestination(SDRC_EFlyWayPointType.LAND, destination);
+				AddDestination(SDRC_EFlyWayPointType.GET_OUT);
+				AddDestination(SDRC_EFlyWayPointType.WAIT, value : value);
+				AddDestination(SDRC_EFlyWayPointType.HOVER_UP, "0 25 0", 6);
+				AddDestination(SDRC_EFlyWayPointType.RAISE, "200 0 0", 15);
+				//All things are already added
+				addFlyPoint = false;
+				break;
 			}			
 		}
 
-		SDRC_FlyPathPoint fpp = new SDRC_FlyPathPoint();
-		fpp.Set(type, destination, value);				
-		
-		if (index > -1)
+		if (addFlyPoint)
 		{
-			m_vFlyDestinations.InsertAt(fpp, index);
-		}
-		else
-		{
-			m_vFlyDestinations.Insert(fpp);
+			SDRC_FlyPathPoint fpp = new SDRC_FlyPathPoint();
+			fpp.Set(type, destination, value);				
+			
+			if (index > -1)
+			{
+				m_vFlyDestinations.InsertAt(fpp, index);
+			}
+			else
+			{
+				m_vFlyDestinations.Insert(fpp);
+			}
 		}
 	}	
 	
