@@ -264,6 +264,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Save the original values
 		StoreOriginalValues();
 		
+		SDRC_ChopperEnemyHelper.GetWeapons(owner);
+		
 		m_Helicopter_s = VehicleHelicopterSimulation.Cast(GetOwner().GetRootParent().FindComponent(VehicleHelicopterSimulation));
 		m_iEnemyFoundTimeOut = SDRC_Misc.GetCurrentTickTime() + ENEMY_FOUND_TIMEOUT;
 		

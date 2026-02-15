@@ -1,0 +1,89 @@
+GenericEntity : "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et" {
+ coords 8875.448 92.978 2639.687
+}
+$grp Vehicle : "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et" {
+ UH1H_armed_Patrol1 {
+  components {
+   SDRC_ChopperComp "{66BA935267DAD8AD}" {
+    m_bAutoStart 1
+    m_fFlyHeightLow 25
+    m_fFlyHeightHigh 40
+    m_aCrew {
+     SCR_DefaultOccupantData "{688B01B8674BCBF6}" {
+      m_sDefaultOccupantPrefab "{DB239B6C4AC64BCE}Prefabs/Characters/Campaign/Final/OPFOR/USSR_Army/Regular/Campaign_USSR_Player_HeliPilot.et"
+     }
+    }
+    m_vFlyDestinations {
+     SDRC_FlyPathPoint "{688B01B812B03238}" {
+      pt 8600 0 2900
+     }
+    }
+    m_bShowDebug 1
+   }
+  }
+  coords 9811.019 44.761 1575.537
+ }
+ UH1H_armed_Patrol2 {
+  components {
+   SDRC_ChopperComp "{66BA935267DAD8AD}" {
+    m_bAutoStart 1
+    m_fFlyHeightLow 25
+    m_fFlyHeightHigh 40
+    m_aCrew {
+     SCR_DefaultOccupantData "{688B01B8674BCBF6}" {
+      m_sDefaultOccupantPrefab "{DB239B6C4AC64BCE}Prefabs/Characters/Campaign/Final/OPFOR/USSR_Army/Regular/Campaign_USSR_Player_HeliPilot.et"
+     }
+    }
+    m_vFlyDestinations {
+     SDRC_FlyPathPoint "{688B01B812B03238}" {
+      pt 8600 0 2900
+     }
+    }
+    m_bShowDebug 1
+   }
+  }
+  coords 9779.981 66.989 1577.386
+ }
+ UH1H_armed_Patrol3 {
+  components {
+   SDRC_ChopperComp "{66BA935267DAD8AD}" {
+    m_bAutoStart 1
+    m_fFlyHeightLow 25
+    m_fFlyHeightHigh 40
+    m_aCrew {
+     SCR_DefaultOccupantData "{688B01B8674BCBF6}" {
+      m_sDefaultOccupantPrefab "{DB239B6C4AC64BCE}Prefabs/Characters/Campaign/Final/OPFOR/USSR_Army/Regular/Campaign_USSR_Player_HeliPilot.et"
+     }
+    }
+    m_vFlyDestinations {
+     SDRC_FlyPathPoint "{688B01B812B03238}" {
+      pt 8600 0 2900
+     }
+    }
+    m_bShowDebug 1
+   }
+  }
+  coords 9881.396 58.823 1577.682
+ }
+ UH1H_armed_Patrol4 {
+  components {
+   SDRC_ChopperComp "{66BA935267DAD8AD}" {
+    m_bAutoStart 1
+    m_fFlyHeightLow 25
+    m_fFlyHeightHigh 40
+    m_aCrew {
+     SCR_DefaultOccupantData "{688B01B8674BCBF6}" {
+      m_sDefaultOccupantPrefab "{DB239B6C4AC64BCE}Prefabs/Characters/Campaign/Final/OPFOR/USSR_Army/Regular/Campaign_USSR_Player_HeliPilot.et"
+     }
+    }
+    m_vFlyDestinations {
+     SDRC_FlyPathPoint "{688B01B812B03238}" {
+      pt 8600 0 2900
+     }
+    }
+    m_bShowDebug 1
+   }
+  }
+  coords 9743.05 55.655 1641.39
+ }
+}

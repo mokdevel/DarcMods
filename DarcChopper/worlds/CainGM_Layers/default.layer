@@ -1,0 +1,24 @@
+Vehicle Mi8MT_armed_gunship_HEDP_Patrol1 : "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et" {
+ components {
+  SDRC_ChopperComp "{66C5298D0A4A70BF}" {
+   m_bAutoStart 1
+   m_fDistanceLow 300
+   m_fDistanceHigh 600
+   m_aCrew {
+    SCR_DefaultOccupantData "{6888740FF58B8484}" {
+     m_sDefaultOccupantPrefab "{8A9CB3744F3B947C}Prefabs/Characters/Campaign/Final/BLUFOR/US_army/Regular/Campaign_US_Player_HeliPilot.et"
+    }
+    SCR_DefaultOccupantData "{6888740FF5F9F3E1}" {
+     m_sDefaultOccupantPrefab "{8A9CB3744F3B947C}Prefabs/Characters/Campaign/Final/BLUFOR/US_army/Regular/Campaign_US_Player_HeliPilot.et"
+    }
+   }
+   m_vFlyDestinations {
+    SDRC_FlyPathPoint "{6888740FE2D8BC80}" {
+     pt 5000 0 7200
+    }
+   }
+   m_bShowDebug 1
+  }
+ }
+ coords 4952.003 510.091 5657.638
+}

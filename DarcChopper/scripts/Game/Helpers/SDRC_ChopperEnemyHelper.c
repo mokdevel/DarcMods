@@ -75,7 +75,7 @@ class SDRC_ChopperEnemyHelper
 	}	
 		
 	//------------------------------------------------------------------------------------------------
-	// Spawn a rocket projectile (fallback method if weapon racks don't work)
+	// Spawn a rocket projectile
 	static void ShootRocket(IEntity owner, vector targetPos)
 	{
 		if (!owner)
@@ -113,5 +113,41 @@ class SDRC_ChopperEnemyHelper
 			
 			SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SetHealth] Rocket: " + rocketPrefab + " shot to: " + rocketSpawnPos, LogLevel.DEBUG);
 		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	// Find weapons
+	//
+	// TBD: This currently does not return anything usable
+	
+	static void GetWeapons(IEntity owner)
+	{
+		array<WeaponSlotComponent> weaponSlots = {};
+		array<BaseWeaponComponent> weaponComponents = {};
+		array<IEntity> weapons = {};
+		
+		BaseWeaponManagerComponent weaponManager = BaseWeaponManagerComponent.Cast(owner.FindComponent(BaseWeaponManagerComponent));
+		
+		if ( !weaponManager )
+		{
+			return ;
+		}
+			
+		weaponManager.GetWeaponsSlots(weaponSlots);
+		weaponManager.GetWeapons(weaponComponents);
+		weaponManager.GetWeaponsList(weapons);
+		
+		string weaponSlotType;
+		
+		// If there is an empty slot of the same type as the weapon on the ground we are able to equip the weapon without replacing anything
+		foreach ( WeaponSlotComponent weaponSlot : weaponSlots )
+		{
+			weaponSlotType = weaponSlot.GetWeaponSlotType();
+			SDRC_Log.Add("[SDRC_ChopperEnemyHelper:GetWeapons] weaponSlotType: " + weaponSlotType, LogLevel.DEBUG);
+			
+/*			if ( !weaponSlot.GetWeaponEntity() )
+				return true;*/
+		}		
+				
 	}
 }

@@ -1,0 +1,86 @@
+SCR_AIGroup : "{0A8E20F50DA233E1}Prefabs/Groups/BLUFOR/Group_US_FireTeam_Guard.et" {
+ coords 1747.363 39 2834.394
+}
+$grp Vehicle : "{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et" {
+ LAV1 {
+  coords 1700 37.937 2800
+ }
+ LAV2 {
+  coords 1686.241 39.001 2844.745
+ }
+}
+SCR_AIGroup : "{1F468430E5AB477E}Prefabs/Groups/BLUFOR/GreenBerets/Suppressed/Group_US_GreenBeret_ReconSquad.et" {
+ coords 1713.375 37.973 2788.524
+}
+SCR_AIGroup : "{35681BE27C302FF5}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_SentryTeam.et" {
+ coords 1733.93 38.999 2858.277
+}
+Vehicle Mi8MT_armed_gunship_HEDP_Patrol1 : "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et" {
+ components {
+  SDRC_ChopperComp "{66C5298D0A4A70BF}" {
+   m_bAutoStart 1
+   m_aCrew {
+    SCR_DefaultOccupantData "{688AF0164A1BF0E9}" {
+     m_sDefaultOccupantPrefab "{DB239B6C4AC64BCE}Prefabs/Characters/Campaign/Final/OPFOR/USSR_Army/Regular/Campaign_USSR_Player_HeliPilot.et"
+    }
+    SCR_DefaultOccupantData "{6898FE4AB5B8D4B0}" {
+     m_sDefaultOccupantPrefab "{E75A35996E5C4505}Prefabs/Characters/Campaign/Final/BLUFOR/US_army/Regular/Campaign_US_Player_MortarCrew.et"
+    }
+    SCR_DefaultOccupantData "{6898FE4AB5C153CE}" {
+     m_sDefaultOccupantPrefab "{7A5EEFF20EA663E6}Prefabs/Characters/Campaign/Final/OPFOR/USSR_Army/Regular/Campaign_USSR_Player_HeliCrew.et"
+    }
+   }
+   m_AISkill CYLON
+   m_AIPerception 2
+   m_vFlyDestinations {
+    SDRC_FlyPathPoint "{688AF01639CE724B}" {
+     pt 1800 0 2700
+    }
+   }
+   m_bShowDebug 1
+  }
+ }
+ coords 2014.505 158.222 2012.818
+}
+Vehicle SP02_GUNSHIP_Patrol1 : "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et" {
+ components {
+  SDRC_ChopperComp "{6724F1578DDEB252}" {
+   m_bAutoStart 1
+   m_aCrew {
+    SCR_DefaultOccupantData "{6898FE4AE4AC02E5}" {
+     m_sDefaultOccupantPrefab "{8A9CB3744F3B947C}Prefabs/Characters/Campaign/Final/BLUFOR/US_army/Regular/Campaign_US_Player_HeliPilot.et"
+    }
+    SCR_DefaultOccupantData "{6898FE4AEF94C2B1}" {
+     m_sDefaultOccupantPrefab "{8652BD1E0C9725D7}Prefabs/Characters/Campaign/Final/BLUFOR/US_army/Regular/Campaign_US_Player_HeliCrew.et"
+    }
+    SCR_DefaultOccupantData "{6898FE4AEFD0CEC7}" {
+     m_sDefaultOccupantPrefab "{8652BD1E0C9725D7}Prefabs/Characters/Campaign/Final/BLUFOR/US_army/Regular/Campaign_US_Player_HeliCrew.et"
+    }
+    SCR_DefaultOccupantData "{6898FE4AEF07154A}" {
+     m_sDefaultOccupantPrefab "{E75A35996E5C4505}Prefabs/Characters/Campaign/Final/BLUFOR/US_army/Regular/Campaign_US_Player_MortarCrew.et"
+    }
+   }
+   m_AISkill CYLON
+   m_AIPerception 2
+   m_vFlyDestinations {
+    SDRC_FlyPathPoint "{6898FE4A983CEAEA}" {
+     pt 1500 0 3100
+    }
+   }
+   m_bShowDebug 1
+  }
+ }
+ coords 1936.115 145.508 2044.224
+}
+GenericEntity : "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et" {
+ coords 1816.888 39.997 2711.117
+}
+SCR_AIGroup : "{D0886786634E55AE}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_Squad.et" {
+ coords 1492.434 38.999 2812.33
+}
+SCR_AIGroup : "{F72EF3429D8C8DF5}Prefabs/Groups/BLUFOR/Group_US_AmmoTeam.et" {
+ coords 1602.82 39.001 2826.141
+}
+GenericEntity : "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et" {
+ coords 1708.14 39.001 2821.721
+}
