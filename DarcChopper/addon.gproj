@@ -1,0 +1,8 @@
+GameProject {
+ ID "DarcChopper"
+ GUID "689EDED542F881AF"
+ TITLE "DarcChopper"
+ Dependencies {
+  "631EE12D448D7FCC" "58D0FB3206B6F859"
+ }
+}
