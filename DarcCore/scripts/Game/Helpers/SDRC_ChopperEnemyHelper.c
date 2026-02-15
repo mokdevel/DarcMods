@@ -52,7 +52,7 @@ class SDRC_ChopperEnemyHelper
 	}
 
 	//------------------------------------------------------------------------------------------------
-	// Is there an enemy in front of us. If it's within the spread, shoot
+	// Is there an enemy in front of us. If it's within sector, shoot
 		
 	static void SearchEnemyForRocket(IEntity owner)
 	{
@@ -63,12 +63,12 @@ class SDRC_ChopperEnemyHelper
 			return;
 		}
 		
-		SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyForRocket] Enemy found.", LogLevel.DEBUG);
-				
-		float angle = SDRC_Math.GetAngleBetweenVectorsXZ(owner.GetOrigin(), enemyPosition);
-		SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyForRocket] Angle: " + angle, LogLevel.DEBUG);
+		//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyForRocket] Enemy found.", LogLevel.DEBUG);
+
+		vector fwd = owner.GetTransformAxis(2);
+		fwd.Normalize();
 		
-		if ( angle < (45 * Math.DEG2RAD) )
+		if (SDRC_Math.IsTargetInSector(owner.GetOrigin(), fwd, enemyPosition, 15) )
 		{
 			ShootRocket(owner, enemyPosition);
 		}
@@ -94,7 +94,7 @@ class SDRC_ChopperEnemyHelper
 		params.TransformMode = ETransformMode.WORLD;
 		
 		IEntity rocket = GetGame().SpawnEntityPrefab(Resource.Load(rocketPrefab), GetGame().GetWorld(), params);
-		SDRC_Math.TurnEntityTowards(rocket, targetPos + "0 10 0");
+		SDRC_Math.TurnEntityTowards(rocket, targetPos + "0 2 0");
 		
 		vector launchDirection = vector.Direction(rocketSpawnPos, targetPos);
 		launchDirection.Normalize();
