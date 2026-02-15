@@ -179,10 +179,46 @@ sealed class SDRC_Math
     	float angle = Math.Atan2(direction[0], direction[2]);
     	return angle;
 	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Checks if target is inside a forward-facing cone
+
+	\param heliPos Position from where to check
+	\param heliForward Forward vector of position
+	\param targetPos Position of target
+	\param maxAngleDeg half-angle of the cone
+	*/
+	static bool IsTargetInSector(
+	    vector heliPos,
+	    vector heliForward,	//Must be normalized!
+	    vector targetPos,
+	    float maxAngleDeg
+	)
+	{
+	    // Direction from heli to target
+	    vector toTarget = targetPos - heliPos;
+	
+	    float dist = toTarget.Length();
 		
+	    if (dist < 0.0001)
+	        return true; // target is on us
+	
+	    toTarget.Normalize();
+	
+	    // Dot product
+	    float dot = vector.Dot(heliForward, toTarget);
+	
+	    // Convert angle to cosine
+	    float cosLimit = Math.Cos(maxAngleDeg * Math.DEG2RAD);
+	
+	    return dot >= cosLimit;
+	}	
+			
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Returns a position that has moved given distance along an angle from given position.
+	
 	\param pos Original position
 	\param distance Distance to move
 	\param angle Move towards this angle (degrees, 0-360).
