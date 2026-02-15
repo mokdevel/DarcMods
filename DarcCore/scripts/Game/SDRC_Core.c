@@ -72,11 +72,7 @@ class SDRC_Core
 		
 		SDRC_Log.Add("[SDRC_Core] -------------------------------------", LogLevel.NORMAL);
 
-		//Building caching takes time, so don't do it, if not needed.
-		if (SDRC_BuildingHelper.IsBuildingCacheNeeded())
-		{
-			GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);
-		}
+		GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);
 		
 		//Initialize LootHelper
 		SDRC_LootHelper.Setup();
@@ -118,8 +114,13 @@ class SDRC_Core
 	//------------------------------------------------------------------------------------------------		
 	void FillBuildingCache()
 	{
-		//Initialize building cache
-		SDRC_BuildingHelper.FillBuildingsCache(m_Config.buildingExcludeFilter);
+		//Building caching takes time, so don't do it, if not needed.
+		if (SDRC_BuildingHelper.IsBuildingCacheNeeded())
+		{	
+			//Initialize building cache
+			SDRC_BuildingHelper.FillBuildingsCache(m_Config.buildingExcludeFilter);
+		}
+	
 		GetGame().GetCallqueue().CallLater(FillLocationCache, 2000, false);			
 	}
 	
