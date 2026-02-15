@@ -12,6 +12,25 @@ sealed class SDRC_BuildingHelper
 	private static ref array<IEntity> m_BuildingsCache = {};
 	private static ref array<IEntity> m_TmpBuildings = {};
 
+	//-----------------------------------------------------------------------------------------------
+	/*!
+	Check if locations are needed to be cached. If not, startup is much faster
+	*/
+	static bool IsBuildingCacheNeeded()
+	{
+		array<string> addonList = {};
+		
+		SDRC_Misc.GetAddonList(addonList, false);
+		
+		if ( addonList.Contains("DarcMissions") || addonList.Contains("DarcSpawner") )
+		{
+			return true;
+		}
+		
+		SDRC_Log.Add("[SDRC_Locations:IsBuildingCacheNeeded] Buildings cache not needed.", LogLevel.WARNING);
+		return false;
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find types of buildings

@@ -37,7 +37,26 @@ sealed class SDRC_Locations
 	private static string m_sName;
 	
 	private static ref array<ref SDRC_Location> m_LocationsCache = {};
+
+	//-----------------------------------------------------------------------------------------------
+	/*!
+	Check if locations are needed to be cached. If not, startup is much faster
+	*/
+	static bool IsLocationCacheNeeded()
+	{
+		array<string> addonList = {};
 		
+		SDRC_Misc.GetAddonList(addonList, false);
+		
+		if ( addonList.Contains("DarcMissions") || addonList.Contains("DarcSpawner") )
+		{
+			return true;
+		}
+		
+		SDRC_Log.Add("[SDRC_Locations:IsLocationCacheNeeded] Locations caching not needed.", LogLevel.WARNING);
+		return false;
+	}
+			
 	//-----------------------------------------------------------------------------------------------
 	/*!
 	Search for locations from the world. The types to search are defined in locationTypeArray.
