@@ -12,6 +12,9 @@ Vehicle : "{CB4D4CF7E887B2D0}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunshi
   SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
    m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
     m_Image "{9DEE4B4C42E77177}UI/Textures/EditorPreviews/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose.edds"
+    m_aAuthoredLabels + {
+     ENTITYTYPE_DARCCHOPPER
+    }
    }
   }
   SDRC_ChopperComp "{671E5A35EADF67E4}" {

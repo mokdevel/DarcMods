@@ -5,6 +5,9 @@ Vehicle : "{98225ED6D5F724D7}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_guns
    m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
     Name "#AR-Vehicle_Mi8MT_Gunship_Name_HEDP"
     m_Image "{8E91157F28C01573}UI/Textures/EditorPreviews/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP.edds"
+    m_aAuthoredLabels + {
+     ENTITYTYPE_DARCCHOPPER
+    }
     m_EntityBudgetCost {
      SCR_EntityBudgetValue "{5EDC86E4AF8908B6}" {
       m_Value 2625

@@ -43,7 +43,7 @@ Vehicle : "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et" {
     Name "#AR-Vehicle_UH1H_Armed_Name"
     m_Image "{753FD16C58C2120F}UI/Textures/EditorPreviews/Vehicles/Helicopters/UH1H/UH1H_armed.edds"
     m_aAuthoredLabels + {
-     TRAIT_ARMED
+     TRAIT_ARMED ENTITYTYPE_DARCCHOPPER
     }
     m_EntityBudgetCost {
      SCR_EntityBudgetValue "{5EDC86E4AF8908B6}" {
