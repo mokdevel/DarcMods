@@ -88,47 +88,60 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private static VehicleHelicopterSimulation m_Helicopter_s;
 	
 	//Parameters accessible helicopter parameters
-	[Attribute(defvalue: "1", desc: "Autostart chopper")]	
+	[Attribute(category: "Chopper", defvalue: "1", desc: "Autostart chopper")]	
 	bool m_bAutoStart;
-	[Attribute(defvalue: "1.2", desc: "Throttle aka acceleration", params: "0.1 3.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "1.2", desc: "Throttle aka acceleration", params: "0.1 3.0 0.1")]	
 	float m_fThrottle;
 	float m_fThrottleOrig;
-	[Attribute(defvalue: "3.0", desc: "Main rotor force", params: "0.1 10.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "3.0", desc: "Main rotor force", params: "0.1 10.0 0.1")]	
 	float m_fRotorForce0;
 	float m_fRotorForce0Orig;
-	[Attribute(defvalue: "1.0", desc: "Rear rotor force", params: "0.1 2.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "1.0", desc: "Rear rotor force", params: "0.1 2.0 0.1")]	
 	float m_fRotorForce1;
 	float m_fRotorForce1Orig;
 	
-	[Attribute(defvalue: "10.0", desc: "Minimum speed", params: "1.0 100.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "10.0", desc: "Minimum speed", params: "1.0 100.0 0.1")]	
 	float m_fSpeedMin;				//Minimum speed
 	float m_fSpeedMinOrig;
-	[Attribute(defvalue: "30.0", desc: "Maximum speed", params: "1.0 100.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "30.0", desc: "Maximum speed", params: "1.0 100.0 0.1")]	
 	float m_fSpeedMax;				//Maximum speed
 	float m_fSpeedMaxOrig;
-	[Attribute(defvalue: "40.0", desc: "Minimum fly height (from ground level)", params: "5 100.0 1")]	
+	[Attribute(category: "Chopper", defvalue: "40.0", desc: "Minimum fly height (from ground level)", params: "5 100.0 1")]	
 	float m_fFlyHeightLow;			//Flight height low
-	[Attribute(defvalue: "80.0", desc: "Maximum fly height (from ground level)", params: "5 100.0 1")]	
+	[Attribute(category: "Chopper", defvalue: "80.0", desc: "Maximum fly height (from ground level)", params: "5 100.0 1")]	
 	float m_fFlyHeightHigh;			//Flight height high
-	[Attribute(defvalue: "0.1", desc: "Minimum distance for waypoint", params: "0.1 1000.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "0.1", desc: "Minimum distance for waypoint", params: "0.1 1000.0 0.1")]	
 	float m_fDistanceLow;			//Distance for waypoint min
-	[Attribute(defvalue: "0.4", desc: "Maximum distance for waypoint", params: "0.1 1000.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "0.4", desc: "Maximum distance for waypoint", params: "0.1 1000.0 0.1")]	
 	float m_fDistanceHigh;			//..max
 	SDRC_EHeliWaypointGenerationType m_fWpType = SDRC_EHeliWaypointGenerationType.RANDOM; 	
 
 	//Crew
-	[Attribute(defvalue: "", desc: "The faction to use")]	
+	[Attribute(category: "AI settings", defvalue: "", desc: "The faction to use")]	
 	string m_sFaction;
-	[Attribute(desc: "Characters to spawn in the chopper", params: "et")]
+	[Attribute(category: "AI settings", desc: "Characters to spawn in the chopper", params: "et")]
 	ref array<ref SCR_DefaultOccupantData> m_aCrew;
 	//Crew settings
-	[Attribute(typename.EnumToString(EAISkill, EAISkill.REGULAR), UIWidgets.ComboBox, desc: "AI skill", enumType: EAISkill)]	
+	[Attribute(category: "AI settings", typename.EnumToString(EAISkill, EAISkill.REGULAR), UIWidgets.ComboBox, desc: "AI skill", enumType: EAISkill)]	
 	EAISkill m_AISkill;	
-	[Attribute(defvalue: "1.0", desc: "AI perception", params: "0.1 3.0 0.1")]	
-	float m_AIPerception;	
+	[Attribute(category: "AI settings", defvalue: "1.0", desc: "AI perception", params: "0.1 3.0 0.1")]	
+	float m_AIPerception;
+
+	[Attribute(category: "Weapons", defvalue: "40.0", desc: "The sector where rockets may be shot", params: "1.0 45.0 1.0")]	
+	float m_RocketSector;
+	[Attribute(category: "Weapons", defvalue: "0.3", desc: "Delay between rockets", params: "0.1 30.0 0.1")]	
+	float m_RocketDelay;
+	float m_fTimeRocketDelay = 0;
+	[Attribute(category: "Weapons", defvalue: "10 0 0", desc: "Rocket spawn position")]	
+	vector m_RocketPosition;
+//	[Attribute(category: "Weapons", params: "et", defvalue: "{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et", desc: "Rocket to use")]	
+	[Attribute(category: "Weapons", params: "et", defvalue: "", desc: "Rocket to use")]	
+	ref array<ref ResourceName> m_RocketPrefabs;	 
+	ResourceName m_RocketPrefab = "";
 		
 	//Flight path
 	ref array<ref SDRC_FlyPathPoint> m_vFlightPoints = {};
+//	[Attribute(category: "Flight path", "", UIWidgets.Object, "Destinations")]	
 	[Attribute("", UIWidgets.Object, "Destinations")]	
 	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations;	//Requested destinations
 	
@@ -288,7 +301,18 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp] VehicleHelicopterSimulation not found.", LogLevel.ERROR);
 		}
-		
+
+		if (m_RocketPrefabs.IsEmpty())
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp] No rockets availabled.", LogLevel.NORMAL);
+		}
+		else
+		{
+//			m_RocketPrefab = m_RocketPrefabs.GetRandomElement();
+			m_RocketPrefab = m_RocketPrefabs[0];
+			SDRC_Log.Add("[SDRC_ChopperComp] Using rockets: " + SDRC_Misc.GetSimpleEntityName(m_RocketPrefab), LogLevel.NORMAL);
+		}
+				
 		super.OnPostInit(owner);
 	}
 	
@@ -395,6 +419,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fTimeBetweenPts += timeSlice;
 		m_fTimeBetweenFixes -= timeSlice;
 		m_fTimeInState -= timeSlice;		
+		m_fTimeRocketDelay += timeSlice;		
 
 		//Check if we're still working. This section is not needed every frame. //TBD: Could be done every x seconds - not that critical
 		//---
@@ -522,7 +547,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Search for enemies
 		SearchForEnemy(owner);
-		SDRC_ChopperEnemyHelper.SearchEnemyForRocket(owner);
+		
+		if (m_fTimeRocketDelay > m_RocketDelay)
+		{
+			SDRC_ChopperEnemyHelper.SearchEnemyForRocket(owner);
+			m_fTimeRocketDelay = 0;
+		}
 		
 		DrawHelicopterVectors(owner);
 	}

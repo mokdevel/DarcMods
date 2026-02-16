@@ -34,14 +34,14 @@ class SDRC_ChopperEnemyHelper
 						if (EntityUtils.IsPlayer(target))
 						{
 							enemyPosition = target.GetOrigin();
-							SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchForEnemy] Player enemy found at " + enemyPosition, LogLevel.DEBUG);
+							//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchForEnemy] Player enemy found at " + enemyPosition, LogLevel.DEBUG);
 							break;
 						}
 					}
 					else
 					{
 						enemyPosition = target.GetOrigin();
-						SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchForEnemy] Enemy found at " + enemyPosition, LogLevel.DEBUG);
+						//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchForEnemy] Enemy found at " + enemyPosition, LogLevel.DEBUG);
 						break;
 					}
 				}
@@ -68,7 +68,15 @@ class SDRC_ChopperEnemyHelper
 		vector fwd = owner.GetTransformAxis(2);
 		fwd.Normalize();
 		
-		if (SDRC_Math.IsTargetInSector(owner.GetOrigin(), fwd, enemyPosition, 15) )
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return;
+		}
+		
+		//chopperComp.m_RocketSector;
+		
+		if (SDRC_Math.IsTargetInSector(owner.GetOrigin(), fwd, enemyPosition, 35) )
 		{
 			ShootRocket(owner, enemyPosition);
 		}
@@ -76,18 +84,42 @@ class SDRC_ChopperEnemyHelper
 		
 	//------------------------------------------------------------------------------------------------
 	// Spawn a rocket projectile
+	
+	//Rockets tested:
+	//{ECD8628EBF7E5F6B}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70.et
+	//{072A755D5CB85D47}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HE_M229.et
+	//{61AF60E0235DC3B1}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HEDP_M247.et
+	
+	//{C9A1612DC5340613}Prefabs/Weapons/Ammo/Ammo_Rocket_S5.et
+	//{EF17BED6DCEE4DE4}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_FRAG_S5MO.et
+	//{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et
+	
 	static void ShootRocket(IEntity owner, vector targetPos)
 	{
 		if (!owner)
+		{
 			return;
+		}
+		
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return;
+		}
+
+		ResourceName rocketPrefab = chopperComp.m_RocketPrefab;	//"{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et";
+		if (rocketPrefab == "")
+		{
+			return;
+		}
 		
 		// Get ground height at target position
 		float groundY = SDRC_Misc.GetSurfaceYWithWater(targetPos);
 		targetPos[1] = groundY + 10;
+								
+//		vector rocketSpawnPos = SDRC_ChopperHelper.GetDestinationForward(owner, 10);
+		vector rocketSpawnPos = SDRC_ChopperHelper.GetDestinationForward(owner, chopperComp.m_RocketPosition[0]);
 		
-		vector rocketSpawnPos = SDRC_ChopperHelper.GetDestinationForward(owner, 10);
-		
-		ResourceName rocketPrefab = "{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et";
 		
 		EntitySpawnParams params = new EntitySpawnParams();
 		params.Transform[3] = rocketSpawnPos;
@@ -107,11 +139,15 @@ class SDRC_ChopperEnemyHelper
 			MissileMoveComponent missileMoveComp = MissileMoveComponent.Cast(rocket.GetRootParent().FindComponent(MissileMoveComponent));
 			if (missileMoveComp)
 			{
-				SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SetHealth] missileMoveComp found!", LogLevel.DEBUG);
-				missileMoveComp.Launch(launchDirection, vector.Zero, 0, rocket, null, null, null, null);							
+				//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SetHealth] missileMoveComp found!", LogLevel.DEBUG);
+				missileMoveComp.Launch(launchDirection, vector.Zero, 10, rocket, null, null, null, null);							
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SetHealth] missileMoveComp not found!", LogLevel.DEBUG);
 			}
 			
-			SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SetHealth] Rocket: " + rocketPrefab + " shot to: " + rocketSpawnPos, LogLevel.DEBUG);
+			//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SetHealth] Rocket: " + rocketPrefab + " shot to: " + rocketSpawnPos, LogLevel.DEBUG);
 		}
 	}
 	

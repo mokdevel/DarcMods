@@ -18,7 +18,7 @@ SCR_AIGroup : "{35681BE27C302FF5}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_Gree
 Vehicle Mi8MT_armed_gunship_HEDP_Patrol1 : "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et" {
  components {
   SDRC_ChopperComp "{66C5298D0A4A70BF}" {
-   m_bAutoStart 1
+   m_sFaction "USSR"
    m_aCrew {
     SCR_DefaultOccupantData "{688AF0164A1BF0E9}" {
      m_sDefaultOccupantPrefab "{DB239B6C4AC64BCE}Prefabs/Characters/Campaign/Final/OPFOR/USSR_Army/Regular/Campaign_USSR_Player_HeliPilot.et"
@@ -32,6 +32,9 @@ Vehicle Mi8MT_armed_gunship_HEDP_Patrol1 : "{3815F0A6CA3FF790}Prefabs/Vehicles/H
    }
    m_AISkill CYLON
    m_AIPerception 2
+   m_RocketPrefabs {
+    "{EF17BED6DCEE4DE4}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_FRAG_S5MO.et"
+   }
    m_vFlyDestinations {
     SDRC_FlyPathPoint "{688AF01639CE724B}" {
      pt 1800 0 2700
@@ -45,7 +48,7 @@ Vehicle Mi8MT_armed_gunship_HEDP_Patrol1 : "{3815F0A6CA3FF790}Prefabs/Vehicles/H
 Vehicle SP02_GUNSHIP_Patrol1 : "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et" {
  components {
   SDRC_ChopperComp "{6724F1578DDEB252}" {
-   m_bAutoStart 1
+   m_sFaction "USSR"
    m_aCrew {
     SCR_DefaultOccupantData "{6898FE4AE4AC02E5}" {
      m_sDefaultOccupantPrefab "{8A9CB3744F3B947C}Prefabs/Characters/Campaign/Final/BLUFOR/US_army/Regular/Campaign_US_Player_HeliPilot.et"
@@ -62,6 +65,10 @@ Vehicle SP02_GUNSHIP_Patrol1 : "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/U
    }
    m_AISkill CYLON
    m_AIPerception 2
+   m_RocketDelay 0.1
+   m_RocketPrefabs {
+    "{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et"
+   }
    m_vFlyDestinations {
     SDRC_FlyPathPoint "{6898FE4A983CEAEA}" {
      pt 1500 0 3100
