@@ -5,21 +5,9 @@ Vehicle : "{98225ED6D5F724D7}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_guns
    m_bCanBePiloted 1
   }
   SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
-   m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
-    Name "#AR-Vehicle_Mi8MT_Gunship_Name_HE"
-    Description "AI piloted"
-    m_Image "{E5760A69CF030784}UI/Textures/EditorPreviews/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE.edds"
-    m_aAuthoredLabels + {
+   m_UIInfo SCR_EditableEntityUIInfo "{5298E609432D192D}" {
+    m_aAutoLabels + {
      ENTITYTYPE_DARCCHOPPER
-    }
-    m_EntityBudgetCost {
-     SCR_EntityBudgetValue "{5EDC86E4AF8908B6}" {
-      m_Value 2625
-     }
-     SCR_EntityBudgetValue "{611E87CA7FF4ED82}" {
-      m_BudgetType RANK_CAPTAIN
-      m_Value 5
-     }
     }
    }
   }

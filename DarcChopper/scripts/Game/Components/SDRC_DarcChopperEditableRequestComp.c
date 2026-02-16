@@ -3,7 +3,10 @@
 //------------------------------------------------------------------------------------------------
 /*!
 Component to modify mission related information via GM. Used with GM placable choppers.
+
+NOTE: This file is currently not used for anything.
 */
+
 
 //------------------------------------------------------------------------------------------------
 [ComponentEditorProps(category: "GameScripted/Editor (Editables)", description: "", icon: "WBData/ComponentEditorProps/componentEditor.png")]

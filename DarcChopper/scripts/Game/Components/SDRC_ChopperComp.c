@@ -88,7 +88,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private static VehicleHelicopterSimulation m_Helicopter_s;
 	
 	//Parameters accessible helicopter parameters
-	[Attribute(defvalue: "0", desc: "Autostart chopper")]	
+	[Attribute(defvalue: "1", desc: "Autostart chopper")]	
 	bool m_bAutoStart;
 	[Attribute(defvalue: "1.2", desc: "Throttle aka acceleration", params: "0.1 3.0 0.1")]	
 	float m_fThrottle;
@@ -117,7 +117,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	SDRC_EHeliWaypointGenerationType m_fWpType = SDRC_EHeliWaypointGenerationType.RANDOM; 	
 
 	//Crew
-	[Attribute(defvalue: "USSR", desc: "The faction to use")]	
+	[Attribute(defvalue: "", desc: "The faction to use")]	
 	string m_sFaction;
 	[Attribute(desc: "Characters to spawn in the chopper", params: "et")]
 	ref array<ref SCR_DefaultOccupantData> m_aCrew;

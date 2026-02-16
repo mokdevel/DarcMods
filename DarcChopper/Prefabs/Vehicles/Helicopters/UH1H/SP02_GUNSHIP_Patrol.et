@@ -1,14 +1,8 @@
 Vehicle : "{3133602B406D131C}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose.et" {
  ID "5DB688595BAB2FD7"
  components {
-  SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
-   m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
-    m_aAuthoredLabels + {
-     ENTITYTYPE_DARCCHOPPER
-    }
-   }
-  }
   SDRC_ChopperComp "{6724F1578DDEB252}" {
+   m_fRotorForce1 2
   }
   VehicleHelicopterSimulation "{51FAEE57F7DA270E}" {
    Simulation Helicopter "{51FAED9EF37A2D29}" {

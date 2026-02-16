@@ -38,26 +38,6 @@ Vehicle : "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et" {
     }
    }
   }
-  SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
-   m_UIInfo SCR_EditableEntityUIInfo "{5298E609432D192D}" {
-    Name "#AR-Vehicle_UH1H_Armed_Name"
-    m_Image "{753FD16C58C2120F}UI/Textures/EditorPreviews/Vehicles/Helicopters/UH1H/UH1H_armed.edds"
-    m_aAuthoredLabels + {
-     TRAIT_ARMED ENTITYTYPE_DARCCHOPPER
-    }
-    m_EntityBudgetCost {
-     SCR_EntityBudgetValue "{5EDC86E4AF8908B6}" {
-      m_Value 1500
-     }
-     SCR_EntityBudgetValue "{5EE71CA1677C234F}" {
-     }
-     SCR_EntityBudgetValue "{5EF07CE9B4A73374}" {
-      m_BudgetType RANK_LIEUTENANT
-      m_Value 4
-     }
-    }
-   }
-  }
   SCR_UniversalInventoryStorageComponent "{5E1E994304F0E0D3}" {
    MultiSlots {
     MultiSlotConfiguration "{66BA8218E2EC25B9}" {
@@ -69,6 +49,7 @@ Vehicle : "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et" {
    }
   }
   SDRC_ChopperComp "{66BA935267DAD8AD}" {
+   m_fRotorForce1 2
   }
   VehicleHelicopterSimulation "{51FAEE57F7DA270E}" {
    Simulation Helicopter "{51FAED9EF37A2D29}" {

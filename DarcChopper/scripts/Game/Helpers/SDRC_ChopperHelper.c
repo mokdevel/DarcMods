@@ -143,14 +143,62 @@ class SDRC_ChopperHelper
 		int pilotCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.PILOT);
 		int crewCount = 0;
 		
-		if (crewmember.Count() > 0)
+		array<ResourceName> crewPrefabs = {}; 
+		
+		//If no faction defined, find the default vehichle faction and use that
+		if (faction == "")
+		{			
+			Vehicle veh = Vehicle.Cast(owner);
+			
+			if (veh)
+			{
+				Faction veh_faction = veh.GetDefaultFaction();
+				if (veh_faction)
+				{
+					faction = veh_faction.GetFactionKey();
+					SDRC_Log.Add("[SDRC_ChopperHelper:SpawnCrew] Vehicle faction: " + faction, LogLevel.DEBUG);
+				}
+			}
+		}
+		
+		//Select crew	
+		if (crewmember.IsEmpty())
+		{
+			//Add pilots			
+			for (int i = 0; i < pilotCount; i++)
+			{
+				crewPrefabs.Insert(SDRC_EnemyHelper.SelectEnemy("C_CREW", faction));
+			}
+			
+			//Add 1-4 random additional riflemen
+			for (int i = 0; i < SDRC_Misc.RandomInt(1, 4); i++)
+			{
+				crewPrefabs.Insert(SDRC_EnemyHelper.SelectEnemy("C_RIFLEMAN", faction));
+			}
+		}
+		else
+		{
+			//Use the provided crew
+			foreach (int i, SCR_DefaultOccupantData member : crewmember)
+			{
+				crewPrefabs.Insert(member.GetDefaultOccupantPrefab());
+			}
+		}
+						
+		//Add the crew
+		if (crewPrefabs.Count() > 0)
 		{			
 			SCR_AIGroup	gPilot;
 			SCR_AIGroup	gCrew;
 			
-			foreach (int i, SCR_DefaultOccupantData member : crewmember)
+			foreach (int i, ResourceName prefab : crewPrefabs)
 			{
-				ResourceName prefab = member.GetDefaultOccupantPrefab();
+				//Skip empty ones
+				if (prefab == "")
+				{
+					continue;
+				}
+				
 				//Spawn pilots if such is available 
 				vector pos = owner.GetOrigin();
 				pos = pos + "30 0 30";
