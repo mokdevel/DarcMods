@@ -52,8 +52,11 @@ class SDRC_ChopperEnemyHelper
 	}
 
 	//------------------------------------------------------------------------------------------------
-	// Is there an enemy in front of us. If it's within sector, shoot
-		
+	/*!
+	Check if there is an enemy in front of us. It needs to be within the sector defined for the chopper.
+	
+	If enemy is found, shoot a rocket.
+	*/
 	static void SearchEnemyForRocket(IEntity owner)
 	{
 		vector enemyPosition = SearchEnemy(owner);
@@ -83,19 +86,24 @@ class SDRC_ChopperEnemyHelper
 	}	
 		
 	//------------------------------------------------------------------------------------------------
-	// Spawn a rocket projectile
+	/*!
+	Shoot the rocket. 
 	
-	//Rockets tested:
-	//{ECD8628EBF7E5F6B}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70.et
-	//{072A755D5CB85D47}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HE_M229.et
-	//{61AF60E0235DC3B1}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HEDP_M247.et
+	This will spawn a rocket projectile towards target. The accuracy is dependent on AI skill defined for the chopper
 	
-	//{C9A1612DC5340613}Prefabs/Weapons/Ammo/Ammo_Rocket_S5.et
-	//{EF17BED6DCEE4DE4}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_FRAG_S5MO.et
-	//{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et
+	Rockets tested:
+	-  {ECD8628EBF7E5F6B}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70.et
+	- {072A755D5CB85D47}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HE_M229.et
+	- {61AF60E0235DC3B1}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HEDP_M247.et
 	
+	- {C9A1612DC5340613}Prefabs/Weapons/Ammo/Ammo_Rocket_S5.et
+	- {EF17BED6DCEE4DE4}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_FRAG_S5MO.et
+	- {EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et
+	*/
 	static void ShootRocket(IEntity owner, vector targetPos)
 	{
+		const float AI_ERROR = 40;
+		
 		if (!owner)
 		{
 			return;
@@ -107,16 +115,20 @@ class SDRC_ChopperEnemyHelper
 			return;
 		}
 
-		ResourceName rocketPrefab = chopperComp.m_RocketPrefab;	//"{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et";
+		ResourceName rocketPrefab = chopperComp.m_RocketPrefab;
 		if (rocketPrefab == "")
 		{
 			return;
 		}
 		
 		// Get ground height at target position
-		float groundY = SDRC_Misc.GetSurfaceYWithWater(targetPos);
-		targetPos[1] = groundY + 10;
-								
+//		float groundY = SDRC_Misc.GetSurfaceYWithWater(targetPos);
+//		targetPos[1] = groundY + 10;
+					
+		//Randomize the position depending on AI skill.			
+		float targetError = ( (100 - chopperComp.m_AISkill)/100 ) * AI_ERROR;
+		targetPos = SDRC_Misc.RandomizePos(targetPos, targetError);
+		
 //		vector rocketSpawnPos = SDRC_ChopperHelper.GetDestinationForward(owner, 10);
 		vector rocketSpawnPos = SDRC_ChopperHelper.GetDestinationForward(owner, chopperComp.m_RocketPosition[0]);
 		
@@ -126,7 +138,7 @@ class SDRC_ChopperEnemyHelper
 		params.TransformMode = ETransformMode.WORLD;
 		
 		IEntity rocket = GetGame().SpawnEntityPrefab(Resource.Load(rocketPrefab), GetGame().GetWorld(), params);
-		SDRC_Math.TurnEntityTowards(rocket, targetPos + "0 2 0");
+		SDRC_Math.TurnEntityTowards(rocket, targetPos + "0 1 0");
 		
 		vector launchDirection = vector.Direction(rocketSpawnPos, targetPos);
 		launchDirection.Normalize();

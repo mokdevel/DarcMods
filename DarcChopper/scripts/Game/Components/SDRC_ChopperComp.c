@@ -122,7 +122,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	[Attribute(category: "AI settings", desc: "Characters to spawn in the chopper", params: "et")]
 	ref array<ref SCR_DefaultOccupantData> m_aCrew;
 	//Crew settings
-	[Attribute(category: "AI settings", typename.EnumToString(EAISkill, EAISkill.REGULAR), UIWidgets.ComboBox, desc: "AI skill", enumType: EAISkill)]	
+//	[Attribute(defvalue: EAISkill.REGULAR.ToString(), UIWidgets.ComboBox, desc: "AI skill in combat", "", ParamEnumArray.FromEnum(EAISkill), category: "Common")]
+	[Attribute(category: "AI settings", defvalue: typename.EnumToString(EAISkill, EAISkill.REGULAR), uiwidget: UIWidgets.ComboBox, desc: "AI skill", enumType: EAISkill)]	
 	EAISkill m_AISkill;	
 	[Attribute(category: "AI settings", defvalue: "1.0", desc: "AI perception", params: "0.1 3.0 0.1")]	
 	float m_AIPerception;
@@ -308,8 +309,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 		else
 		{
-//			m_RocketPrefab = m_RocketPrefabs.GetRandomElement();
-			m_RocketPrefab = m_RocketPrefabs[0];
+			m_RocketPrefab = m_RocketPrefabs.GetRandomElement();
+//			m_RocketPrefab = m_RocketPrefabs[0];
 			SDRC_Log.Add("[SDRC_ChopperComp] Using rockets: " + SDRC_Misc.GetSimpleEntityName(m_RocketPrefab), LogLevel.NORMAL);
 		}
 				
@@ -352,7 +353,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	void Ready(IEntity owner)
 	{
 		//Set ready in a few seconds
-		GetGame().GetCallqueue().CallLater(ReadyDelayed, 5000, false, owner);
+		GetGame().GetCallqueue().CallLater(ReadyDelayed, 1000, false, owner);
 		#ifdef ENABLE_ROCKETS
 //			GetGame().GetCallqueue().CallLater(HandleRocket, 10, true, owner);
 		#endif
