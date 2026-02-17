@@ -132,3 +132,8 @@ array<int> missionTypeArray : List mission types that spawn randomly. (DC_EMissi
  10 = STASH
  11 = Chopper
 ```
+``missionTypeArray`` can be used to define the probability of a mission type. The more you have the same ``missionType`` in the array, the more likely it is to be picked for spawning.
+For example: ``"missionTypeArray": [5,5,1,7,7]`` gives:
+- a 40% chance to get a PATROL mission
+- a 20% chance to get a HUNTER mission
+- a 40% chance to get a ROADBLOCK mission
