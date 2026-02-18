@@ -251,19 +251,20 @@ class SDRC_ChopperHelper
 	Draws lines between the waypoints the AI group has.
 	\param 
 	*/
-//	static void DrawDestinationLines(IEntity owner, array<SDRC_FlyPathPoint> destinations)
 	static void DrawDestinationLines(IEntity owner)
 	{
+		//TBD: Show only in GM
+		
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)
 		{
 			return;
 		}
 		
-/*		if (chopperComp.m_vFlyDestinations.IsEmpty())
+		if (!chopperComp.m_bShowDebug)
 		{
 			return;
-		}*/
+		}
 		
 		const int pLimit = 50;
 		int shapeFlags = ShapeFlags.ONCE;
@@ -273,7 +274,6 @@ class SDRC_ChopperHelper
 		//Add every fifth spline point
 		int closestIndex = ((int)(chopperComp.m_iClosestIndex / 5)) * 5 + 1;
 		int splinePoints = chopperComp.m_vSplinePoints.Count() - 1;
-//		vector prevP = owner.GetOrigin();
 		vector prevP = chopperComp.m_vSplinePoints[closestIndex];
 		
 		for (int i = closestIndex; i < splinePoints; i = i + 5)
@@ -304,8 +304,6 @@ class SDRC_ChopperHelper
 			Shape.CreateLines(Color.DARK_BLUE, shapeFlags, p, 2);
 			prevP = p[1];
 		}
-		
-//		Shape.CreateLines(color, shapeFlags, p, pIdx * 2);
 	}		
 
 }
