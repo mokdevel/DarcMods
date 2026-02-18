@@ -313,8 +313,6 @@ sealed class SDRC_VehicleHelper
 	*/
 	static void GroupFindAll(IEntity vehicle, out array<AIGroup> groups)
 	{
-//		array<AIAgent> agents = {};
-		
 		if (vehicle)
 		{			
 			SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));

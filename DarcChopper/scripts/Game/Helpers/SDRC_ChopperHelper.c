@@ -248,12 +248,85 @@ class SDRC_ChopperHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Draws lines between the waypoints the AI group has.
-	\param 
+	Draws lines to show where chopper is going
+	*/
+	static void HandleWaypoints(IEntity owner)
+	{
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return;
+		}
+
+		array<AIWaypoint> waypoints = {};
+				
+		foreach (AIGroup group : chopperComp.m_aGroups)
+		{
+			if (group != null)
+			{
+				group.GetWaypoints(waypoints);
+				
+				//If group has no waypoints, check the next group
+				if (waypoints.Count() == 0)
+				{
+					continue;
+				}
+
+				//Find if it is a cycle				
+				foreach (AIWaypoint wp : waypoints)
+				{
+					//Skip cycle waypoints
+					if (AIWaypointCycle.Cast(wp) != null)
+					{
+						continue;
+					}
+					
+					if (AIWaypoint.Cast(wp) != null)
+					{
+						vector pos = wp.GetOrigin();
+						
+						EntityPrefabData prefabData = wp.GetPrefabData();
+						ResourceName resourceName = prefabData.GetPrefabName();
+						resourceName = SDRC_Misc.GetSimpleEntityName(resourceName);
+						SDRC_Log.Add("[SDRC_ChopperHelper:HandleWaypoints] Waypoint " + resourceName + " found at: " + pos, LogLevel.DEBUG);						
+						
+						switch (resourceName)
+						{
+							case "E_AIWaypoint_Move":
+							{
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.FLY, pos);
+								break;
+							}						
+							case "E_AIWaypoint_ForcedMove":
+							{
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.FLY_IMMEDIATELY, pos);
+								break;
+							}						
+							case "E_AIWaypoint_Patrol":
+							{
+								break;
+							}						
+						}
+					}
+				}
+				
+				//Clear all waypoints
+				SDRC_WPHelper.RemoveWaypoints(group);	
+			}
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Draws lines to show where chopper is going
 	*/
 	static void DrawDestinationLines(IEntity owner)
 	{
-		//TBD: Show only in GM
+		//The rest of the stuff is only GM mode.								
+		if (!SDRC_PlayerHelper.IsInGMmode())
+		{
+			return;
+		}
 		
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)
@@ -261,12 +334,12 @@ class SDRC_ChopperHelper
 			return;
 		}
 		
-		if (!chopperComp.m_bShowDebug)
+/*		if (!chopperComp.m_bShowDebug)
 		{
 			return;
-		}
+		}*/
 		
-		const int pLimit = 50;
+		const int pLimit = 4;
 		int shapeFlags = ShapeFlags.ONCE;
 	
 		vector p[pLimit] = {};
