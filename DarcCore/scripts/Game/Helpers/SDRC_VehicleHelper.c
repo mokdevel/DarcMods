@@ -306,7 +306,57 @@ sealed class SDRC_VehicleHelper
 
 		return alive;
 	}	
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find all groups in vehicle
+	*/
+	static void GroupFindAll(IEntity vehicle, out array<AIGroup> groups)
+	{
+//		array<AIAgent> agents = {};
+		
+		if (vehicle)
+		{			
+			SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
+			
+			array<IEntity> agents = {};
+			scr_compartmentManager.GetOccupants(agents);
+			
+			groups.Clear();
+			
+			foreach (IEntity agent : agents)
+			{
+				AIGroup group;
+				SCR_ChimeraCharacter chimeraChar = SCR_ChimeraCharacter.Cast(agent);
+				if (!chimeraChar)
+				{
+					continue;
+				}
+				AIControlComponent aicc = chimeraChar.GetAIControlComponent();
+				if (!aicc)
+				{
+					continue;
+				}
+				AIAgent aiAgent = aicc.GetControlAIAgent();
+				if (!aiAgent)
+				{
+					continue;
+				}
+				
+				group = aiAgent.GetParentGroup();
+				if (group != null)
+				{
+					if (!groups.Contains(group))
+					{
+						groups.Insert(group);
+					}
+				}
+			}
+			
+			SDRC_Log.Add("[SDRC_VehicleHelper:GroupFindAll] Groups in vehicle: " + groups.Count(), LogLevel.DEBUG);
+		}
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	static bool IsVehicle(IEntity entity)
 	{
