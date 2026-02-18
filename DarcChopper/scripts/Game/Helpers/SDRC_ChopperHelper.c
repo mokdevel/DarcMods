@@ -246,5 +246,66 @@ class SDRC_ChopperHelper
 	// Misc functions
 	//------------------------------------------------------------------------------------------------	
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Draws lines between the waypoints the AI group has.
+	\param 
+	*/
+//	static void DrawDestinationLines(IEntity owner, array<SDRC_FlyPathPoint> destinations)
+	static void DrawDestinationLines(IEntity owner)
+	{
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return;
+		}
+		
+/*		if (chopperComp.m_vFlyDestinations.IsEmpty())
+		{
+			return;
+		}*/
+		
+		const int pLimit = 50;
+		int shapeFlags = ShapeFlags.ONCE;
+	
+		vector p[pLimit] = {};
+		
+		//Add every fifth spline point
+		int closestIndex = ((int)(chopperComp.m_iClosestIndex / 5)) * 5 + 1;
+		int splinePoints = chopperComp.m_vSplinePoints.Count() - 1;
+//		vector prevP = owner.GetOrigin();
+		vector prevP = chopperComp.m_vSplinePoints[closestIndex];
+		
+		for (int i = closestIndex; i < splinePoints; i = i + 5)
+		{
+			p[0] = prevP;
+			p[1] = chopperComp.m_vSplinePoints[i];
+			Shape.CreateLines(Color.DARK_GREEN, shapeFlags, p, 2);
+			prevP = p[1];
+		} 
+		
+		//Add last splinepoint
+		p[0] = prevP;
+		p[1] = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];
+		Shape.CreateLines(Color.DARK_GREEN, shapeFlags, p, 2);
+		prevP = p[1];
+		
+		//Add destinations if any
+		foreach (SDRC_FlyPathPoint destination : chopperComp.m_vFlyDestinations)
+		{			
+			vector pos = destination.pt;
+			if (pos[1] == 0)
+			{
+				pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 40;
+			}
+			
+			p[0] = prevP;
+			p[1] = pos;
+			Shape.CreateLines(Color.DARK_BLUE, shapeFlags, p, 2);
+			prevP = p[1];
+		}
+		
+//		Shape.CreateLines(color, shapeFlags, p, pIdx * 2);
+	}		
 
 }

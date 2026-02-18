@@ -84,7 +84,7 @@ class SDRC_FlyPathPoint
 class SDRC_ChopperComp : ScriptGameComponent
 {
 	private static SDRC_ChopperComp s_Instance;	
-	private ref array<vector> m_vSplinePoints = new array<vector>();
+	ref array<vector> m_vSplinePoints = new array<vector>();
 	private static VehicleHelicopterSimulation m_Helicopter_s;
 	
 	//Parameters accessible helicopter parameters
@@ -237,7 +237,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fAngleRollBack;			//Remove from final
 	
 	//Runtime parameters
-	private int m_iClosestIndex;				//Closest point on spline to heli
+	int m_iClosestIndex;				//Closest point on spline to heli
 	private int m_iOldClosestIndex;
 	private int m_iNextIndex;					//Next index to our m_iClosestIndex - depends on speed
 	private int m_iFutureIndex;					//Where we are heading in the long run
@@ -555,6 +555,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 			m_fTimeRocketDelay = 0;
 		}
 		
+//		SDRC_ChopperHelper.DrawDestinationLines(owner, m_vFlyDestinations);
+		SDRC_ChopperHelper.DrawDestinationLines(owner);
 		DrawHelicopterVectors(owner);
 	}
 	
