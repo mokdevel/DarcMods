@@ -328,6 +328,17 @@ class SDRC_ChopperHelper
 			return;
 		}
 		
+		SCR_MenuEditorComponent menuManager = SCR_MenuEditorComponent.Cast(SCR_MenuEditorComponent.GetInstance(SCR_MenuEditorComponent, true));
+		if (!menuManager)
+		{
+			return;
+		}
+		
+		if (!menuManager.IsVisible())
+		{
+			return;
+		}
+		
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)
 		{
