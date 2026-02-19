@@ -28,6 +28,7 @@ enum SDRC_EFlyWayPointType
 	FLY_IMMEDIATELY,
 	FLY_AWAY,
 	FLY_AWAY_IMMEDIATELY,
+	PATROL,	
 	LAND,
 	WAIT,
 	RAISE,
@@ -846,9 +847,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 			AddFlyPathPoint(firstDestination);
 		}
 		
-		//Generate a destination point according to requested behaviour
-		GenerateWayPoint(owner, m_fWpType);
-	
 		//Create points for spline		
 		CreateFlightPoints(owner);
 		
@@ -1018,55 +1016,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 	/*!	
 	Functionality to generate future destination(s) for the chopper
 	*/
-	private void GenerateWayPoint(IEntity owner, SDRC_EWaypointGenerationType wpGenType)
+	private void GenerateWayPoint(IEntity owner)
 	{		
-		vector pos = "0 0 0";
-
-		if (m_vFlyDestinations.IsEmpty())
-		{
-			//Random flying for a helicopter
-			if ( (wpGenType == SDRC_EHeliWaypointGenerationType.RANDOM) || 
-			     (wpGenType == SDRC_EHeliWaypointGenerationType.SEARCH)
-			   )
-			{					
-				pos = SDRC_ChopperHelper.GetRandomPosition(owner.GetOrigin(), m_fDistanceLow, m_fDistanceHigh);
-				AddDestination(SDRC_EFlyWayPointType.FLY, pos);
-				AddDebugMarker(pos, ARGB(255, 255, 00, 00), 2.0, m_sDid, 200);				
-			}
-			
-			//Fly around a certain area
-			if (wpGenType == SDRC_EHeliWaypointGenerationType.PATROL)
-			{
-				const int count = 3;
-				const int degree = 45; 	// Degrees per count
-				const int sign = 1;		//SDRC_Misc.RandomSign(); <- does not work very well
-				
-				for (int i = 0; i < count; i++)
-				{			
-					float range = Math.RandomFloat(m_fDistanceLow, m_fDistanceHigh);
-					//Make waypoints around the position to patrol.					
-					vector dir = SDRC_Math.RotateAroundAxis(m_vHeliDirection, vector.Up, sign * i * degree * Math.DEG2RAD);
-					dir.Normalize();
-					pos = m_vOriginalDestination + dir * range;
-					
-					AddDebugMarker(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid, 50 + i * 20);
-					
-					AddFlyPathPoint(pos);
-				}			
-			}
-			
-			//Fly around a certain area
-			if (wpGenType == SDRC_EHeliWaypointGenerationType.LANDING)
-			{
-				return;
-			}
-			
-			//Fly around a certain area
-			if (wpGenType == SDRC_EHeliWaypointGenerationType.FLY_AWAY)
-			{
-				return;
-			}
-		}
+		vector pos = SDRC_ChopperHelper.GetRandomPosition(owner.GetOrigin(), m_fDistanceLow, m_fDistanceHigh);
+		AddDestination(SDRC_EFlyWayPointType.FLY, pos);
+		AddDebugMarker(pos, ARGB(255, 255, 00, 00), 2.0, m_sDid, 200);				
 	}
 		
 	//------------------------------------------------------------------------------------------------	
@@ -1090,6 +1044,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Add destinations .. if any
 		int lastIdx = -1;
 		
+		//Generate a random destination point if needed
+		if (m_vFlyDestinations.IsEmpty())
+		{		
+			GenerateWayPoint(owner);
+		}
+		
+		//Handle destinations
 		foreach (int idx, SDRC_FlyPathPoint flyDestination : m_vFlyDestinations)
 		{		
 			AddDebugMarker(flyDestination.pt, ARGB(32, 255, 128, 64), 1.0, m_sDid, 50);
@@ -1131,6 +1092,34 @@ class SDRC_ChopperComp : ScriptGameComponent
 			
 			AddFlyPathPoint(flyDestination.pt, flyDestination.type);
 			lastIdx = idx;
+			
+			//If request to patrol, create additional points around position
+			if (flyDestination.type == SDRC_EFlyWayPointType.PATROL)
+			{
+				int count = 20;
+				int degree = 45; 		// Degrees per count
+				int sign = 1;			//SDRC_Misc.RandomSign(); <- does not work very well
+				
+				for (int i = 0; i < count; i++)
+				{
+					float value = flyDestination.value;
+					if (value <= 0)
+					{
+						value = 200;
+					}
+					float range = Math.RandomFloat(value * 0.7, value * 1.3);					
+//					float range = Math.RandomFloat(m_fDistanceLow, m_fDistanceHigh);
+					//Make waypoints around the position to patrol.					
+					vector dir = SDRC_Math.RotateAroundAxis(m_vHeliDirection, vector.Up, sign * i * degree * Math.DEG2RAD);
+					dir.Normalize();
+//					pos = m_vOriginalDestination + dir * range;
+					pos = flyDestination.pt + dir * range;
+					
+					AddDebugMarker(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid, 50 + i * 20);
+					
+					AddFlyPathPoint(pos);
+				}					
+			}
 			
 			if (flyDestination.type != SDRC_EFlyWayPointType.FLY)
 			{

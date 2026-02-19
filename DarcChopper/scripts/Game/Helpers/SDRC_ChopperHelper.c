@@ -167,13 +167,23 @@ class SDRC_ChopperHelper
 			//Add pilots			
 			for (int i = 0; i < pilotCount; i++)
 			{
-				crewPrefabs.Insert(SDRC_EnemyHelper.SelectEnemy("C_CREW", faction));
+				ResourceName member = SDRC_EnemyHelper.SelectEnemy("C_CREW", faction);
+				if (member == "")
+				{
+					member = "{472F2B06FF9BF37D}Prefabs/Characters/Factions/CIV/Dockworker/Character_CIV_Dockworker_4.et";
+				}
+				crewPrefabs.Insert(member);
 			}
 			
 			//Add 1-4 random additional riflemen
 			for (int i = 0; i < SDRC_Misc.RandomInt(1, 4); i++)
 			{
-				crewPrefabs.Insert(SDRC_EnemyHelper.SelectEnemy("C_RIFLEMAN", faction));
+				ResourceName member = SDRC_EnemyHelper.SelectEnemy("C_RIFLEMAN", faction);
+				if (member == "")
+				{
+					member = "{472F2B06FF9BF37D}Prefabs/Characters/Factions/CIV/Dockworker/Character_CIV_Dockworker_4.et";
+				}
+				crewPrefabs.Insert(member);
 			}
 		}
 		else
@@ -304,6 +314,7 @@ class SDRC_ChopperHelper
 							}						
 							case "E_AIWaypoint_Patrol":
 							{
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.PATROL, pos);
 								break;
 							}						
 						}
@@ -357,10 +368,15 @@ class SDRC_ChopperHelper
 		
 		//Add every fifth spline point
 		int closestIndex = ((int)(chopperComp.m_iClosestIndex / 5)) * 5 + 1;
-		int splinePoints = chopperComp.m_vSplinePoints.Count() - 1;
+		int splinePointCount = chopperComp.m_vSplinePoints.Count() - 1;
+		if (closestIndex > splinePointCount)
+		{
+			closestIndex = splinePointCount;
+		}
+		
 		vector prevP = chopperComp.m_vSplinePoints[closestIndex];
 		
-		for (int i = closestIndex; i < splinePoints; i = i + 5)
+		for (int i = closestIndex; i < splinePointCount; i = i + 5)
 		{
 			p[0] = prevP;
 			p[1] = chopperComp.m_vSplinePoints[i];
