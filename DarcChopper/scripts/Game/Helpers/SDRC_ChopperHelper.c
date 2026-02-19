@@ -330,6 +330,9 @@ class SDRC_ChopperHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Draws lines to show where chopper is going
+	
+	This only works in WB. 
+	NOTE: Line drawing functionality exists in game for AIs. See: SCR_WaypointLinesEditorUIComponent
 	*/
 	static void DrawDestinationLines(IEntity owner)
 	{
