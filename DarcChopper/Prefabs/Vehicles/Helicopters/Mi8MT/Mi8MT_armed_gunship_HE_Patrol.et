@@ -12,7 +12,8 @@ Vehicle : "{98225ED6D5F724D7}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_guns
    }
   }
   SDRC_ChopperComp "{66C548F5776E7383}" {
-   m_RocketSector 20
+   m_RocketSector 10
+   m_RocketDelay 0.4
    m_RocketPrefabs {
     "{072A755D5CB85D47}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HE_M229.et" "{ECD8628EBF7E5F6B}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70.et" "{61AF60E0235DC3B1}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HEDP_M247.et"
    }
