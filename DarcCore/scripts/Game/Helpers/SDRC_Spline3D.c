@@ -228,7 +228,7 @@ sealed class SDRC_Spline3D
 	    float rollDeg = rollSign * angle * Math.RAD2DEG;
 	    return rollDeg;
 	}
-	
+
 	//------------------------------------------------------------------------------------------------	
 	/*! Gets the shortest 3D distance between a point and a spline
 	Extended from SCR_Math3D function

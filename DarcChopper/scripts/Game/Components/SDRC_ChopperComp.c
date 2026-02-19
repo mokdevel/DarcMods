@@ -469,11 +469,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 			#endif
 			bCreateNewPath = true;
 		}
+		else
+		{
+			//All good, reset fix time
+			m_fTimeBetweenFixes = FLIGHT_FIX_TIME;
+		}
 		
 		//No need to do anything unless we are at the end of spline.
 		if ((m_iClosestIndex + m_iDestinationPointAdd + POINTS_TO_NEW_DISTANCE >= m_vSplinePoints.Count() - 1) || bCreateNewPath)
 		{
-//			if (m_eHeliState != SDRC_EHeliState.LAND)
 			if (m_eHeliState == SDRC_EHeliState.FLY)
 			{
 				//Define a new destination and create a new path
@@ -487,8 +491,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_iDestinationPointAdd = Math.ClampInt(m_iDestinationPointAdd, 1, 3);
 		
 		//Find where we're going
-		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iClosestIndex, false);	//NOTE: This will set m_iClosestIndex
-
+//		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iClosestIndex, false);	//NOTE: This will set m_iClosestIndex
+		m_iClosestIndex = FindNextSplinePointIndex(m_vOrigin, m_iClosestIndex);
+		
 		if (m_iClosestIndex > m_iOldClosestIndex)
 		{
 			m_fTimeBetweenPtsAvg = m_fTimeBetweenPts;		//TBD: This is a static value of previous time instead of average 
@@ -565,6 +570,27 @@ class SDRC_ChopperComp : ScriptGameComponent
 		SDRC_ChopperHelper.HandleWaypoints(owner);				
 		SDRC_ChopperHelper.DrawDestinationLines(owner);
 		DrawHelicopterVectors(owner);
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	private int FindNextSplinePointIndex(vector origin, int currentIndex)
+	{
+		float distance = vector.Distance(origin, m_vSplinePoints[currentIndex]);
+		int newIndex = currentIndex;
+		
+		for (int i = (currentIndex + 1); i < m_vSplinePoints.Count() - 1; i++)
+		{
+			if (vector.Distance(origin, m_vSplinePoints[i]) < distance)
+			{
+				newIndex = i;
+			}
+			else
+			{
+				break;
+			}
+		}
+		
+		return newIndex;
 	}
 	
 	//------------------------------------------------------------------------------------------------	
@@ -1105,7 +1131,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 					float value = flyDestination.value;
 					if (value <= 0)
 					{
-						value = 200;
+						value = 400;
 					}
 					float range = Math.RandomFloat(value * 0.7, value * 1.3);					
 //					float range = Math.RandomFloat(m_fDistanceLow, m_fDistanceHigh);
