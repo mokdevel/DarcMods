@@ -25,6 +25,7 @@ enum SDRC_EFlyWayPointType
 {
 	UNDEFINED,
 	FLY,
+	FLY_IMMEDIATELY,
 	FLY_AWAY,
 	FLY_AWAY_IMMEDIATELY,
 	LAND,
@@ -110,9 +111,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 	float m_fFlyHeightLow;			//Flight height low
 	[Attribute(category: "Chopper", defvalue: "80.0", desc: "Maximum fly height (from ground level)", params: "5 100.0 1")]	
 	float m_fFlyHeightHigh;			//Flight height high
-	[Attribute(category: "Chopper", defvalue: "0.1", desc: "Minimum distance for waypoint", params: "0.1 1000.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "300", desc: "Minimum distance for waypoint", params: "0.1 1000.0 0.1")]	
 	float m_fDistanceLow;			//Distance for waypoint min
-	[Attribute(category: "Chopper", defvalue: "0.4", desc: "Maximum distance for waypoint", params: "0.1 1000.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "500", desc: "Maximum distance for waypoint", params: "0.1 1000.0 0.1")]	
 	float m_fDistanceHigh;			//..max
 	SDRC_EHeliWaypointGenerationType m_fWpType = SDRC_EHeliWaypointGenerationType.RANDOM; 	
 
@@ -127,7 +128,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	EAISkill m_AISkill;	
 	[Attribute(category: "AI settings", defvalue: "1.0", desc: "AI perception", params: "0.1 3.0 0.1")]	
 	float m_AIPerception;
-
+	ref array<AIGroup> m_aGroups = {};
+	
 	[Attribute(category: "Weapons", defvalue: "40.0", desc: "The sector where rockets may be shot", params: "1.0 45.0 1.0")]	
 	float m_RocketSector;
 	[Attribute(category: "Weapons", defvalue: "0.3", desc: "Delay between rockets", params: "0.1 30.0 0.1")]	
@@ -340,10 +342,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 		m_bInInit = false;
 		
+		//Check if pilots were possible to set
 		if (SDRC_VehicleHelper.PilotCountAlive(owner) == 0)
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp] Unable to set pilots.", LogLevel.WARNING);			
 		}
+		
+		//Collect groups in the helicopter 
+		SDRC_VehicleHelper.GroupFindAll(owner, m_aGroups);		
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -554,8 +560,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 			SDRC_ChopperEnemyHelper.SearchEnemyForRocket(owner);
 			m_fTimeRocketDelay = 0;
 		}
-		
-//		SDRC_ChopperHelper.DrawDestinationLines(owner, m_vFlyDestinations);
+
+		SDRC_ChopperHelper.HandleWaypoints(owner);				
 		SDRC_ChopperHelper.DrawDestinationLines(owner);
 		DrawHelicopterVectors(owner);
 	}
@@ -1496,6 +1502,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		switch (type)
 		{
+			case SDRC_EFlyWayPointType.FLY_IMMEDIATELY:
+			{
+				//Fly immediately to a destination
+				ResetDestinations();
+				type = SDRC_EFlyWayPointType.FLY;
+				break;
+			}
 			case SDRC_EFlyWayPointType.FLY_AWAY:
 			{
 				//Fly away after all destinations have been handled
