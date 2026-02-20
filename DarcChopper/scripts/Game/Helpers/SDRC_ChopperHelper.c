@@ -436,18 +436,24 @@ class SDRC_ChopperHelper
 		m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_GREEN));
 		
 		//Add destinations if any
-		foreach (SDRC_FlyPathPoint destination : chopperComp.m_vFlyDestinations)
-		{			
-			vector pos = destination.pt;
-			if (pos[1] == 0)
-			{
-				pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 40;
-			}
-			AddVertice(pos, m_Vertices);
-		}		
-				
-		//Insert into pool of draw commands
-		m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_BLUE));
+		if (!chopperComp.m_vFlyDestinations.IsEmpty())
+		{	
+			//Add last point to be the first for blue lines
+			AddVertice(chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1], m_Vertices);
+			
+			foreach (SDRC_FlyPathPoint destination : chopperComp.m_vFlyDestinations)
+			{			
+				vector pos = destination.pt;
+				if (pos[1] == 0)
+				{
+					pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 40;
+				}
+				AddVertice(pos, m_Vertices);
+			}		
+					
+			//Insert into pool of draw commands
+			m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_BLUE));
+		}
 		
 		if (!m_aDrawCommands.IsEmpty())
 		{
@@ -455,6 +461,10 @@ class SDRC_ChopperHelper
 		}
 	}		
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Calculate the vertice screen coords and add to vertices list
+	*/
 	static void AddVertice(vector pos, out array<float> vertices)
 	{
 		//Calculate screen position of point
@@ -463,6 +473,10 @@ class SDRC_ChopperHelper
 		vertices.Insert(x0[1]);		
 	}
 	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Add vertices to LineDrawCommand and return it
+	*/
 	static LineDrawCommand AddLines(out array<float> vertices, int color = Color.DARK_GREEN)
 	{		
 		//Create draw command
@@ -470,9 +484,8 @@ class SDRC_ChopperHelper
 		line.m_Vertices = {};
 		line.m_iColor = color;
 		line.m_fOutlineWidth = 0;
-		line.m_fWidth = 4;
-		line.m_Vertices.Copy(vertices);//.Insert(x0[0]);
-		//line.m_Vertices.Insert(x0[1]);
+		line.m_fWidth = 2;
+		line.m_Vertices.Copy(vertices);
 		vertices.Clear();
 		return line;
 	}

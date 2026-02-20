@@ -839,8 +839,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		GivePoints(flyPathPoints, m_vFlightPoints);
 		SDRC_Spline3D.GenerateSplinePoints(flyPathPoints, m_vSplinePoints, -1);
 		
-		//Set final values
-		m_iClosestIndex = 2;
+		//Set final values		
+		m_iClosestIndex = 5;
 		m_iOldClosestIndex = m_iClosestIndex;
 		
 		//Check that points are above ground
