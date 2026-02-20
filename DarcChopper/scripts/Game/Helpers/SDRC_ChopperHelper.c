@@ -3,6 +3,12 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperHelper
 {
+	//Line drawing related
+	static CanvasWidget m_wCanvas;
+	static BaseWorld m_World;
+	static WorkspaceWidget m_Workspace;
+	static ref array<ref CanvasWidgetCommand> m_aDrawCommands;
+	
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Add a destination forward. 
@@ -336,19 +342,37 @@ class SDRC_ChopperHelper
 	*/
 	static void DrawDestinationLines(IEntity owner)
 	{
+		array<float> m_Vertices = {};
+
 		//The rest of the stuff is only GM mode.								
 		if (!SDRC_PlayerHelper.IsInGMmode())
 		{
+			if (m_wCanvas)
+			{
+				//If not in GM mode, canvas is not needed.
+				delete m_wCanvas;
+			}
 			return;
 		}
 		
-		SCR_MenuEditorComponent menuManager = SCR_MenuEditorComponent.Cast(SCR_MenuEditorComponent.GetInstance(SCR_MenuEditorComponent, true));
-		if (!menuManager)
+		//Is interface visible
+		if (!SDRC_PlayerHelper.IsGMInterfaceVisible())
 		{
 			return;
 		}
 		
-		if (!menuManager.IsVisible())
+		if (m_wCanvas == null)
+		{
+			m_wCanvas = CanvasWidget.Cast(g_Game.GetWorkspace().CreateWidgetInWorkspace(WidgetType.CanvasWidgetTypeID, 0, 0, 10, 10, WidgetFlags.VISIBLE | WidgetFlags.NOFOCUS, new Color(0.0, 0.0, 0.0, 1.0), 1024));
+			m_World = GetGame().GetWorld();
+			m_Workspace = GetGame().GetWorkspace();
+		}
+				
+		if ( (m_wCanvas) && (m_Workspace) && (m_World) )
+		{
+			//All good
+		}
+		else
 		{
 			return;
 		}
@@ -377,21 +401,39 @@ class SDRC_ChopperHelper
 			closestIndex = splinePointCount;
 		}
 		
-		vector prevP = chopperComp.m_vSplinePoints[closestIndex];
+		m_aDrawCommands = {};
+		
+/*		vector pos1 = "3300 60 2600";
+		vector pos3 = "3000 80 2400";
+		
+		//++ Calculate screen position of points
+		vector x0 = m_Workspace.ProjWorldToScreenNative(pos1, m_World);
+		vector x1 = m_Workspace.ProjWorldToScreenNative(pos3, m_World);
+//		vector x0 = workspace.ProjWorldToScreenNative(pos1, world);
+//		vector x1 = workspace.ProjWorldToScreenNative(pos3, world);
+		
+		//++ Create draw command
+		LineDrawCommand line;
+		line = new LineDrawCommand();	
+		line.m_iColor = Color.RED;
+		line.m_fOutlineWidth = 0;
+		line.m_fWidth = 4;
+		line.m_Vertices = { x0[0], x0[1], x1[0], x1[1] };
+		
+		//++ Insert into pool of draw commands
+		m_aDrawCommands.Insert(line);		*/
+		
+		//Starting point
+		AddVertice(chopperComp.m_vSplinePoints[closestIndex], m_Vertices);
 		
 		for (int i = closestIndex; i < splinePointCount; i = i + 5)
 		{
-			p[0] = prevP;
-			p[1] = chopperComp.m_vSplinePoints[i];
-			Shape.CreateLines(Color.DARK_GREEN, shapeFlags, p, 2);
-			prevP = p[1];
+			AddVertice(chopperComp.m_vSplinePoints[i], m_Vertices);
 		} 
 		
-		//Add last splinepoint
-		p[0] = prevP;
-		p[1] = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];
-		Shape.CreateLines(Color.DARK_GREEN, shapeFlags, p, 2);
-		prevP = p[1];
+		AddVertice(chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1], m_Vertices);
+		//Insert into pool of draw commands
+		m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_GREEN));
 		
 		//Add destinations if any
 		foreach (SDRC_FlyPathPoint destination : chopperComp.m_vFlyDestinations)
@@ -401,12 +443,37 @@ class SDRC_ChopperHelper
 			{
 				pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 40;
 			}
-			
-			p[0] = prevP;
-			p[1] = pos;
-			Shape.CreateLines(Color.DARK_BLUE, shapeFlags, p, 2);
-			prevP = p[1];
+			AddVertice(pos, m_Vertices);
+		}		
+				
+		//Insert into pool of draw commands
+		m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_BLUE));
+		
+		if (!m_aDrawCommands.IsEmpty())
+		{
+			m_wCanvas.SetDrawCommands(m_aDrawCommands);
 		}
 	}		
 
+	static void AddVertice(vector pos, out array<float> vertices)
+	{
+		//Calculate screen position of point
+		vector x0 = m_Workspace.ProjWorldToScreenNative(pos, m_World);
+		vertices.Insert(x0[0]);
+		vertices.Insert(x0[1]);		
+	}
+	
+	static LineDrawCommand AddLines(out array<float> vertices, int color = Color.DARK_GREEN)
+	{		
+		//Create draw command
+		ref LineDrawCommand line = new LineDrawCommand();	
+		line.m_Vertices = {};
+		line.m_iColor = color;
+		line.m_fOutlineWidth = 0;
+		line.m_fWidth = 4;
+		line.m_Vertices.Copy(vertices);//.Insert(x0[0]);
+		//line.m_Vertices.Insert(x0[1]);
+		vertices.Clear();
+		return line;
+	}
 }
