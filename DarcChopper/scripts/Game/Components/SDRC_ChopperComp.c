@@ -3,8 +3,6 @@
 //Changes done in prefabs:
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
-#define ENABLE_ROCKETS
-
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompClass : ScriptGameComponentClass { }
 
@@ -118,7 +116,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	float m_fDistanceHigh;			//..max
 	SDRC_EHeliWaypointGenerationType m_fWpType = SDRC_EHeliWaypointGenerationType.RANDOM; 	
 
-	//Crew
+	//Category: AI settings
 	[Attribute(category: "AI settings", defvalue: "", desc: "The faction to use")]	
 	string m_sFaction;
 	[Attribute(category: "AI settings", desc: "Characters to spawn in the chopper", params: "et")]
@@ -131,6 +129,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	float m_AIPerception;
 	ref array<AIGroup> m_aGroups = {};
 	
+	//Category: Weapons
 	[Attribute(category: "Weapons", defvalue: "40.0", desc: "The sector where rockets may be shot", params: "1.0 45.0 1.0")]	
 	float m_RocketSector;
 	[Attribute(category: "Weapons", defvalue: "0.3", desc: "Delay between rockets", params: "0.1 30.0 0.1")]	
@@ -143,12 +142,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 	ref array<ref ResourceName> m_RocketPrefabs;	 
 	ResourceName m_RocketPrefab = "";
 		
+	//Category: Unsorted
 	//Flight path
 	ref array<ref SDRC_FlyPathPoint> m_vFlightPoints = {};
-//	[Attribute(category: "Flight path", "", UIWidgets.Object, "Destinations")]	
 	[Attribute("", UIWidgets.Object, "Destinations")]	
 	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations;	//Requested destinations
-	
+	//Debug stuff	
 	[Attribute(defvalue: "0", desc: "Show debugging information")]	
 	bool m_bShowDebug;
 	
@@ -180,8 +179,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private const float ROLL_ANGLE_MUL = 2.4;			//Multiplier for roll angle along the spline
 	
 	//Flight path
-	private const int POINTS_TO_NEW_DISTANCE = 2;		//How many spline points in to the future flight path is checked before adding new flight points.
-	private const int POINTS_TO_SPLINE_START = 4;		//Points to go back from m_iClosestIndex when creating a new flight path 
+	private const int POINTS_TO_NEW_DISTANCE = 3;		//How many spline points in to the future flight path is checked before adding new flight points.
+	private const int POINTS_TO_SPLINE_START = 5;		//Points to go back from m_iClosestIndex when creating a new flight path 
 	private const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
 	private const float TIME_IN_INIT = 10;				//(seconds) Time to be in init state. During this time, we don't check for damage or similar things.
 
@@ -237,10 +236,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fDbgAngle;
 	private float m_fAnglePitch;
 	private float m_fAngleRoll;
-	private float m_fAngleRollBack;			//Remove from final
+	private float m_fAngleRollBack;				//Remove from final
 	
 	//Runtime parameters
-	int m_iClosestIndex;				//Closest point on spline to heli
+	int m_iClosestIndex;						//Closest point on spline to heli
 	private int m_iOldClosestIndex;
 	private int m_iNextIndex;					//Next index to our m_iClosestIndex - depends on speed
 	private int m_iFutureIndex;					//Where we are heading in the long run
@@ -248,10 +247,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private vector m_vDestinationFuture;		//Destination where we eventually plan to fly
 	private vector m_vSplinePointBelow;			//The point below heli that is close to the spline
 	
-	//Id for debug items
-	private string m_sDid;
+	//Debug items
+	private string m_sDid;						//Id for debug items
 	ref array<ref CanvasWidgetCommand> m_aDrawCommands = {};		//Line drawing commands
-	ref CanvasWidget m_wCanvas;
+	ref CanvasWidget m_wCanvas;					//Canvas to draw the lines to
 
 	//Landing related
 	private float m_fTimeLanding;
@@ -363,9 +362,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 		//Set ready in a few seconds
 		GetGame().GetCallqueue().CallLater(ReadyDelayed, 1000, false, owner);
-		#ifdef ENABLE_ROCKETS
-//			GetGame().GetCallqueue().CallLater(HandleRocket, 10, true, owner);
-		#endif
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -389,14 +385,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000, false, owner);
 	}
-
-	//------------------------------------------------------------------------------------------------
-	void HandleRocket(IEntity owner)
-	{
-//		SDRC_ChopperEnemyHelper.SearchEnemyForRocket(owner);
-	}	
 					
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	Convert flyPathPoints to simple vector points.
+	TBD: This is stupid code
+	*/
 	void GivePoints(out array<vector> points, array<ref SDRC_FlyPathPoint> flyPathPoints)
 	{
 		points.Clear();
@@ -433,14 +427,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		SDRC_ChopperHelper.DrawDestinationLines(owner);
 		
-		//Check if we're still working. This section is not needed every frame. //TBD: Could be done every x seconds - not that critical
+		//Check if we're still working. 
 		//---
-		//If chopper is destroyed, let Reforger handle crash etc.
+		//TBD: This section is not needed every frame. Could be done every x seconds - not that critical
 		if (m_eHeliState == SDRC_EHeliState.DESTROYED)
 		{
+			//If chopper is destroyed, let Reforger handle crash etc. Just stop everything we used to do on EOnFrame.
 			return;
 		}
 		
+		//Check if we're still functional
 		if (!SDRC_ChopperHelper.IsStillWorking(owner, m_bInInit))
 		{
 			//Nope, we're done
@@ -1160,16 +1156,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		if (m_vFlightPoints.Count() <= 2)
 		{
 			vector p0 = m_vFlightPoints[0].pt;
-			vector p1;
-/*			if (m_vFlightPoints.Count() == 1)
-			{
-				p1 = m_vFlyDestinations[0].pt;
-			}
-			else
-			{	
-				p1 = m_vFlightPoints[1].pt;
-			}*/
-			p1 = m_vFlightPoints[1].pt;
+			vector p1 = m_vFlightPoints[1].pt;
 			vector mid = vector.Lerp(p0, p1, 0.5);
 			AddFlyPathPoint(mid, index: 1);
 		}		
@@ -1523,7 +1510,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 			case SDRC_EFlyWayPointType.FLY_IMMEDIATELY:
 			{
 				//Fly immediately to a destination
+				//Remove any existing destination
 				ResetDestinations();
+				//Modify the spline to end shortly. Remove points from the end.
+				//Take the last one, reduce current one and reduce the point count for new distance. Add a safe margin of 2.
+				int toBeRemoved = (m_vSplinePoints.Count() - 1) - m_iClosestIndex - POINTS_TO_NEW_DISTANCE - 2;
+				for (int i = 0; i < toBeRemoved; i++)
+				{
+					m_vSplinePoints.RemoveOrdered(m_vSplinePoints.Count() - 1);
+				}
+				
 				type = SDRC_EFlyWayPointType.FLY;
 				break;
 			}
