@@ -1,0 +1,51 @@
+Vehicle : "{98225ED6D5F724D7}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_empty.et" {
+ ID "5A7CEB06421662F8"
+ components {
+  SCR_AIVehicleUsageComponent "{60E4E37C467714E8}" {
+   m_bCanBePiloted 1
+  }
+  SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{5298E609432D192D}" {
+    m_sFaction "FIA"
+    m_aAutoLabels {
+     FACTION_FIA SIZE_L ENTITYTYPE_DARCCHOPPER
+    }
+   }
+  }
+  SCR_VehicleFactionAffiliationComponent "{5882CBD9AC741CEC}" {
+   "faction affiliation" "FIA"
+  }
+  SDRC_ChopperComp "{68A92A5959912990}" {
+   m_sFaction "FIA"
+   m_RocketSector 10
+   m_RocketDelay 0.4
+   m_RocketPrefabs {
+    "{072A755D5CB85D47}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HE_M229.et" "{ECD8628EBF7E5F6B}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70.et" "{61AF60E0235DC3B1}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HEDP_M247.et"
+   }
+  }
+  VehicleHelicopterSimulation "{51FAEE57F7DA270E}" {
+   Simulation Helicopter "{51FAED9EF37A2D29}" {
+    Engine HelicopterEngine "{51FAED9EF37A2D2B}" {
+     StartUpTime 0
+    }
+   }
+  }
+  BaseVehicleNodeComponent "{57DA667544C3090A}" {
+   components {
+    SCR_HelicopterControllerComponent "{5CB0B40B1BD943AB}" {
+     MaxStartupTime 0
+    }
+   }
+  }
+  SlotManagerComponent "{55BCE45E438E4CFF}" {
+   Slots {
+    SCR_WeaponRackSlotInfo Hardpoints {
+     Prefab "{73622A6C27813495}Prefabs/Vehicles/Helicopters/Mi8MT/VehParts/WeapSystems/Mi8MT_Hardpoints_HE.et"
+    }
+   }
+  }
+  RplComponent "{517AACDFA78F5EE7}" {
+   Streamable Disabled
+  }
+ }
+}

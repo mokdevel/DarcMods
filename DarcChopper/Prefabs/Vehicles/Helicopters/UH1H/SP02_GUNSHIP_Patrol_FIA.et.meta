@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{774E9DA8AF02F8DA}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol_FIA.et"
+ Configurations {
+  EntityTemplateResourceClass PC {
+  }
+  EntityTemplateResourceClass XBOX_ONE : PC {
+  }
+  EntityTemplateResourceClass XBOX_SERIES : PC {
+  }
+  EntityTemplateResourceClass PS4 : PC {
+  }
+  EntityTemplateResourceClass PS5 : PC {
+  }
+  EntityTemplateResourceClass HEADLESS : PC {
+  }
+ }
+}
