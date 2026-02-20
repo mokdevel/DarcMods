@@ -91,7 +91,16 @@ class SDRC_ChopperHelper
 			force = SDRC_Misc.RandomFloat(0.0, 0.1);
 			helicopter_s.SetThrottle(force);
 		}
-				
+
+		//Remove the canvas and lines if chopper is destroyed
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (chopperComp)
+		{
+			chopperComp.m_aDrawCommands.Clear();
+			chopperComp.m_wCanvas.SetDrawCommands(chopperComp.m_aDrawCommands);
+			delete chopperComp.m_wCanvas;
+		}		
+						
 		return false;
 	}
 
@@ -349,7 +358,7 @@ class SDRC_ChopperHelper
 		}		
 
 		//The rest of the stuff is only GM mode and when interface is visible.								
-		if ( (!SDRC_PlayerHelper.IsInGMmode()) || (!SDRC_PlayerHelper.IsGMInterfaceVisible()) )
+		if ( (!SDRC_PlayerHelper.IsInGMmode()) || (!SDRC_PlayerHelper.IsGMInterfaceVisible()) || chopperComp.GetHeliState() == SDRC_EHeliState.DESTROYED )
 		{
 			if (chopperComp.m_wCanvas)
 			{

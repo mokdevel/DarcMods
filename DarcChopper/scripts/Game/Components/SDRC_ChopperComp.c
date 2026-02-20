@@ -431,6 +431,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fTimeInState -= timeSlice;		
 		m_fTimeRocketDelay += timeSlice;		
 
+		SDRC_ChopperHelper.DrawDestinationLines(owner);
+		
 		//Check if we're still working. This section is not needed every frame. //TBD: Could be done every x seconds - not that critical
 		//---
 		//If chopper is destroyed, let Reforger handle crash etc.
@@ -570,7 +572,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 
 		SDRC_ChopperHelper.HandleWaypoints(owner);				
-		SDRC_ChopperHelper.DrawDestinationLines(owner);
 		DrawHelicopterVectors(owner);
 	}
 	
@@ -1687,6 +1688,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 	void SetAutostart(bool value)
 	{
 		m_bAutoStart = value;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	SDRC_EHeliState GetHeliState()
+	{
+		return m_eHeliState;
 	}
 	
 	//------------------------------------------------------------------------------------------------	
