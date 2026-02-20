@@ -4,7 +4,6 @@
 class SDRC_ChopperHelper
 {
 	//Line drawing related
-	static CanvasWidget m_wCanvas;
 	static BaseWorld m_World;
 	static WorkspaceWidget m_Workspace;
 	
@@ -342,42 +341,42 @@ class SDRC_ChopperHelper
 	static void DrawDestinationLines(IEntity owner)
 	{
 		array<float> m_Vertices = {};
-
-		//The rest of the stuff is only GM mode.								
-		if (!SDRC_PlayerHelper.IsInGMmode())
+		
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
 		{
-			if (m_wCanvas)
+			return;
+		}		
+
+		//The rest of the stuff is only GM mode and when interface is visible.								
+		if ( (!SDRC_PlayerHelper.IsInGMmode()) || (!SDRC_PlayerHelper.IsGMInterfaceVisible()) )
+		{
+			if (chopperComp.m_wCanvas)
 			{
 				//If not in GM mode, canvas is not needed.
-				delete m_wCanvas;
+				delete chopperComp.m_wCanvas;
 			}
 			return;
 		}
 		
-		//Is interface visible
+/*		//Is interface visible
 		if (!SDRC_PlayerHelper.IsGMInterfaceVisible())
 		{
 			return;
-		}
+		}*/
 		
-		if (m_wCanvas == null)
+		if (chopperComp.m_wCanvas == null)
 		{
-			m_wCanvas = CanvasWidget.Cast(g_Game.GetWorkspace().CreateWidgetInWorkspace(WidgetType.CanvasWidgetTypeID, 0, 0, 10, 10, WidgetFlags.VISIBLE | WidgetFlags.NOFOCUS, new Color(0.0, 0.0, 0.0, 1.0), 1024));
+			chopperComp.m_wCanvas = CanvasWidget.Cast(g_Game.GetWorkspace().CreateWidgetInWorkspace(WidgetType.CanvasWidgetTypeID, 0, 0, 10, 10, WidgetFlags.VISIBLE | WidgetFlags.NOFOCUS, new Color(0.0, 0.0, 0.0, 1.0), 1024));
 			m_World = GetGame().GetWorld();
 			m_Workspace = GetGame().GetWorkspace();
 		}
 				
-		if ( (m_wCanvas) && (m_Workspace) && (m_World) )
+		if ( (chopperComp.m_wCanvas) && (m_Workspace) && (m_World) )
 		{
 			//All good
 		}
 		else
-		{
-			return;
-		}
-		
-		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		if (!chopperComp)
 		{
 			return;
 		}
@@ -432,7 +431,7 @@ class SDRC_ChopperHelper
 		
 		if (!chopperComp.m_aDrawCommands.IsEmpty())
 		{
-			m_wCanvas.SetDrawCommands(chopperComp.m_aDrawCommands);
+			chopperComp.m_wCanvas.SetDrawCommands(chopperComp.m_aDrawCommands);
 		}
 	}		
 

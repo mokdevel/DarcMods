@@ -251,7 +251,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//Id for debug items
 	private string m_sDid;
 	ref array<ref CanvasWidgetCommand> m_aDrawCommands = {};		//Line drawing commands
-	
+	ref CanvasWidget m_wCanvas;
+
 	//Landing related
 	private float m_fTimeLanding;
 	
@@ -1791,6 +1792,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 	void DrawHelicopterVectors(IEntity owner)
 	{
 		if (!m_bShowDebug)
+		{
+			return;
+		}
+		
+		if (!SDRC_PlayerHelper.IsGMInterfaceVisible())
 		{
 			return;
 		}
