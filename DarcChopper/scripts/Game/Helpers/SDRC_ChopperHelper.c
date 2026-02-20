@@ -7,7 +7,6 @@ class SDRC_ChopperHelper
 	static CanvasWidget m_wCanvas;
 	static BaseWorld m_World;
 	static WorkspaceWidget m_Workspace;
-	static ref array<ref CanvasWidgetCommand> m_aDrawCommands;
 	
 	//------------------------------------------------------------------------------------------------	
 	/*!	
@@ -388,52 +387,28 @@ class SDRC_ChopperHelper
 			return;
 		}*/
 		
-		const int pLimit = 4;
-		int shapeFlags = ShapeFlags.ONCE;
-	
-		vector p[pLimit] = {};
-		
-		//Add every fifth spline point
-		int closestIndex = ((int)(chopperComp.m_iClosestIndex / 5)) * 5 + 1;
+		//Add every nth spline point
+		int nth = 4;
+		int closestIndex = ((int)(chopperComp.m_iClosestIndex / nth)) * nth + 1;
 		int splinePointCount = chopperComp.m_vSplinePoints.Count() - 1;
 		if (closestIndex > splinePointCount)
 		{
 			closestIndex = splinePointCount;
 		}
 		
-		m_aDrawCommands = {};
-		
-/*		vector pos1 = "3300 60 2600";
-		vector pos3 = "3000 80 2400";
-		
-		//++ Calculate screen position of points
-		vector x0 = m_Workspace.ProjWorldToScreenNative(pos1, m_World);
-		vector x1 = m_Workspace.ProjWorldToScreenNative(pos3, m_World);
-//		vector x0 = workspace.ProjWorldToScreenNative(pos1, world);
-//		vector x1 = workspace.ProjWorldToScreenNative(pos3, world);
-		
-		//++ Create draw command
-		LineDrawCommand line;
-		line = new LineDrawCommand();	
-		line.m_iColor = Color.RED;
-		line.m_fOutlineWidth = 0;
-		line.m_fWidth = 4;
-		line.m_Vertices = { x0[0], x0[1], x1[0], x1[1] };
-		
-		//++ Insert into pool of draw commands
-		m_aDrawCommands.Insert(line);		*/
+		chopperComp.m_aDrawCommands.Clear();// = {};
 		
 		//Starting point
 		AddVertice(chopperComp.m_vSplinePoints[closestIndex], m_Vertices);
 		
-		for (int i = closestIndex; i < splinePointCount; i = i + 5)
+		for (int i = closestIndex; i < splinePointCount; i = i + nth)
 		{
 			AddVertice(chopperComp.m_vSplinePoints[i], m_Vertices);
 		} 
 		
 		AddVertice(chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1], m_Vertices);
 		//Insert into pool of draw commands
-		m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_GREEN));
+		chopperComp.m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_GREEN));
 		
 		//Add destinations if any
 		if (!chopperComp.m_vFlyDestinations.IsEmpty())
@@ -452,12 +427,12 @@ class SDRC_ChopperHelper
 			}		
 					
 			//Insert into pool of draw commands
-			m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_BLUE));
+			chopperComp.m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_BLUE));
 		}
 		
-		if (!m_aDrawCommands.IsEmpty())
+		if (!chopperComp.m_aDrawCommands.IsEmpty())
 		{
-			m_wCanvas.SetDrawCommands(m_aDrawCommands);
+			m_wCanvas.SetDrawCommands(chopperComp.m_aDrawCommands);
 		}
 	}		
 

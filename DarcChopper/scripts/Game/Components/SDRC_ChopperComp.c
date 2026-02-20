@@ -250,6 +250,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	
 	//Id for debug items
 	private string m_sDid;
+	ref array<ref CanvasWidgetCommand> m_aDrawCommands = {};		//Line drawing commands
 	
 	//Landing related
 	private float m_fTimeLanding;

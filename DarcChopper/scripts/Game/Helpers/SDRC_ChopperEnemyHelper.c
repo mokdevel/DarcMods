@@ -40,7 +40,10 @@ class SDRC_ChopperEnemyHelper
 					}
 					else
 					{
-						enemyPosition = target.GetOrigin();
+						if (target)	//Target may have been removed
+						{
+							enemyPosition = target.GetOrigin();
+						}
 						//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchForEnemy] Enemy found at " + enemyPosition, LogLevel.DEBUG);
 						break;
 					}
