@@ -25,7 +25,7 @@ Modded helicopters are supported through a compatibility mod. Currently availabl
 # Creating a flying helicopter
 Use the Arma Reforger workbench to create your own helicopter mod. The default prefabs in Arma Reforger are without their engines running and will simply crash before the flight is possible.
 
-NOTE: For the moment, there are no pilots/AI added automatically to the helicopter.
+NOTE: Below information is slightly outdated.
 
 - Open Arma Reforger Tools
 - Create a mod with DarcCore as a dependency
@@ -37,18 +37,17 @@ NOTE: For the moment, there are no pilots/AI added automatically to the helicopt
 - Open World Editor
 - Add the helicopter you just created and raise it from ground to the initial flight height.
 - Run. The helicopter should start to fly.
+- Pilots/AI is added automatically to the helicopter. This is true for US, USSR and FIA. Other factions are not tested but might work.
 
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/choppersettings.png" width=30% height=30%>
 
 ## SDRC_ChopperComp values
+### Chopper
 The component has default values that work quite well for the vanilla helicopters.
-* ``Auto Start`` : (bool) When helicopter is spawned in the world, if enabled, it will automatically start to fly from spawn position to First Destination.
+* ``Auto Start`` : (bool) When helicopter is spawned in the world, if enabled, it will automatically start to fly from spawn position to First Destination. For modding purposes or DarcMissions use, disable this.
 * ``Throttle`` : (float) Arma Reforger default throttle. Affects physics. The speed gain aka acceleration. Higher value will make the helicopter reach the maximum speed faster. May also affect raise.
 * ``Rotor Force0`` : (float) Arma Reforger default main rotor force. Affects physics. The force that pushes the helicopter upwards. A too high value will make the helicopter to raise too fast and does not look nice. The helicopter type/weight will affect so you may need to adjust this.
 * ``Rotor Force1`` : (float) Arma Reforger default rear rotor force. Affects physics.
-* ``First Destination`` : (vector) First destination to fly to from the spawn position. The helicopter will continue fly autonomously after that.
-
-Values modified by DarcMissions when spawning a mission.
 * ``Speed Min`` , ``Speed Max`` : (float) The min/max speed for flying. Speed is changing depending on the angle where the helicopter is moving.
   * When DarcMissions mission ends, the helicopter will accelerate to 150% of maximum speed.
 * ``Fly Height Low`` , ``Fly Height High`` : (float) The min/max fly height (from ground/sea level). 
@@ -57,7 +56,15 @@ Values modified by DarcMissions when spawning a mission.
 * ``Distance Low`` , ``Distance High`` : (float) The min/max distance for waypoint. This works in two different ways depending if value is over or below 1.0.
   * ``0.1 .. 0.99`` : The distance is worldsize * value (percentage). Having small values will keep the helicopter flying near the center of world.
   * ``1 .. n`` : The distance to fly to next.
-* ``SDRC_EHeliWaypointGenerationType m_fWpType`` : Waypoint type. Currently hidden.
+
+### AI settings
+* TBD
+
+### Weapons
+* TBD
+
+### Unsorted
+* TBD
 
 # The flying mechanism
 This is the short version and more documentation to be provided.
