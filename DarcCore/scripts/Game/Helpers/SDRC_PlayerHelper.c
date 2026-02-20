@@ -220,6 +220,27 @@ sealed class SDRC_PlayerHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Check if interface in GM mode is visible
+	*/	
+	static bool IsGMInterfaceVisible()
+	{
+		//Is interface visible
+		SCR_MenuEditorComponent menuManager = SCR_MenuEditorComponent.Cast(SCR_MenuEditorComponent.GetInstance(SCR_MenuEditorComponent, true));
+		if (!menuManager)
+		{
+			return false;
+		}
+		
+		if (!menuManager.IsVisible())
+		{
+			return false;
+		}
+		
+		return true;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Displays a message in chat
 	*/	
 	static void ShowChatMessage(string message)
