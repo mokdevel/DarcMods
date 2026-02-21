@@ -22,6 +22,14 @@ Parameters are used for more natural flying:
 - Pitch is modified depending on the speed.
 - Curvature of the flight affects roll but the helicopter tries to return natural flat flying slowly.
 
+## Flight path
+The flight path is a spline defined by multiple points (destinations). The helicopter follows it by trying to stay close to it. It's purpose is not to be exact as it's not a train on a track. For example sharp corners will be rounded and additional points are added to make the flight smoother. Sometimes you will see that the destination you want to reach, is not flown through a shortest route. This is by design. AI is making it's own decisions with recommendations coming from you.
+
+## Hills and obstacles
+Flying tries to avoid crashing, but unfortunately this sometimes happens. Like humans, AIs make occasionally bad decisions. Some adjustments are done when being too close to a hill: the raise power is increased and speed is decreased. 
+
+NOTE: Currently there is no ray casting involved to find obstacles in front of the helicopter. An obstacle could be a steep hill or another flying helicopter and crashes sometimes happen.
+
 ## Destruction
 The component is active as long as the helicopter is functional and there is a minimum of one pilot. When the helicopter is deemed non-fuctional, the mod will stop controlling it. Arma Reforger will take control and handle the end of life. The helicopter will fly according to AR physics and this may end up in interesting and funny situations. This is by design.
 
@@ -31,16 +39,23 @@ A crew is needed for the helicopter to fly.
 ## Spawning crew
 If the helicopter prefab does not have crew a assigned, the mod will assign crew members. For pilots, members from C_CREW is selected. The rest of the passengers will be from C_RIFLEMAN. See: [EnemyLists](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LISTS.md#enemy-lists). 
 
+## Factions
+The helicopter itself has a faction attached to it. For example MI8's are assigned for USSR faction and the crew is selected from the same faction. Safe factions to use are US, USSR and FIA, but others should work too.
+
+When the helicopter is spawned, the faction is first checked from ``Faction`` setting in the SDRC_ChopperComp. By default the value is empty and the helicopter assigned faction is used. If the parameter is set, the faction is used for crew spawning. 
+
+NOTE: There is no check for correctness currently. So, a faction defined as USRS will result in errors.
+
 ## Skill and perception
 The skill and perception from Arma Reforger is used for finding enemies. The higher the perception value, the better the AI is able to find its target. A line of sight is needed so you can hide in a building and the AI will not see through walls. The higher the skill, the better the accuracy is.
 
 Skill is define with ``AI Skill`` and percetion by ``AI Perception`` parameters.
 
-## Flying
-First of all, the AIs do not fly the helicopter. There is no behaviour tree for flying. The pilot AI is a passenger and all the flying magic happen by the component. 
-
 ## Finding enemies
 Perception of the AI affects the capability to find an enemy. This is not controlled by the mod. The mod queries the AIs for knowledge of an enemy. If an enemy is found, the mod keeps this enemy as the high value target (HVT). This can be queried by external mods. After a while, similar query is done and the HVT may change. In case, no enemies are known by the AIs, the helicopter will forget the HVT knowledge.
+
+## Flying
+First of all, the AIs do not fly the helicopter. There is no behaviour tree for flying. The pilot AI is a passenger and all the flying magic happen by the component. 
 
 ## Shooting
 ### Machine Guns
@@ -66,4 +81,16 @@ Rocket prefabs tested:
 You can spawn choppers as a GM and they will start to fly around the world randomly. You can control them with waypoints.
 
 ## Entity browser
-The helicopters piloted by AIs can be found by filtering with DarcChopper. 
+The helicopters piloted by AIs can be found by filtering with DarcChopper. There are variants ready made for faction US, USSR and FIA. Drag and drop in to the world, use ALT-key to change altitude. 
+
+NOTE: You can not set the helicopter on ground and let it lift off and start to fly. This is by design.
+
+## First flight
+When spawned, helicopter will check it's altitude to make sure it's above ``Fly Height Low``. If not, the helicopter will be moved and this may look like an ugly jump. A random fly destination is chosen and helicopter is rotated towards it. Then we're ready for flying. 
+
+## Lines: Green and Blue
+You will see green and blue lines on screen when the helicopter is flying. 
+
+* Green: Shows the flight path for the helicopter. This is a spline that is followed while flying. This shows were we're generally going to end. 
+
+NOTE: The lines are drawn on a canvas so they will be on top of the screen items. This is something work on and improve.
