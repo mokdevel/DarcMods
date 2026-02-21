@@ -22,7 +22,13 @@ Parameters are used for more natural flying:
 - Pitch is modified depending on the speed.
 - Curvature of the flight affects roll but the helicopter tries to return natural flat flying slowly.
 
+## Destruction
+The component is active as long as the helicopter is functional and there is a minimum of one pilot. When the helicopter is deemed non-fuctional, the mod will stop controlling it. Arma Reforger will take control and handle the end of life. The helicopter will fly according to AR physics and this may end up in interesting and funny situations. This is by design.
+
 # AI functionality
+## Spawning crew
+If the helicopter prefab does not have crew
+
 ## Flying
 First of all, the AIs do not fly the helicopter. There is no behaviour tree for flying. The pilot AI is a passenger and all the flying magic happen by the component. 
 
@@ -51,3 +57,9 @@ Rocket prefabs tested:
 - {EF17BED6DCEE4DE4}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_FRAG_S5MO.et
 - {EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et
 ```
+
+# GM Functionality
+You can spawn choppers as a GM and they will start to fly around the world randomly. You can control them with waypoints.
+
+## Entity browser
+You can 
