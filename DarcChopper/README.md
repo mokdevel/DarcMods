@@ -88,9 +88,14 @@ NOTE: You can not set the helicopter on ground and let it lift off and start to 
 ## First flight
 When spawned, helicopter will check it's altitude to make sure it's above ``Fly Height Low``. If not, the helicopter will be moved and this may look like an ugly jump. A random fly destination is chosen and helicopter is rotated towards it. Then we're ready for flying. 
 
+## Flight path
+A flight path is assigned to the helicopter and it will start to follow it. The flight path is shown with green lines on screen and once reaching the end, a new flight path is created.
+
 ## Lines: Green and Blue
 You will see green and blue lines on screen when the helicopter is flying. 
 
-* Green: Shows the flight path for the helicopter. This is a spline that is followed while flying. This shows were we're generally going to end. 
+* Green: Shows the flight path for the helicopter. This is a spline that is followed while flying. This shows were we're generally going to end up.
+* Blue: If you've set waypoints for the helicopter, blue straight lines will show the future route. When the helicopter reaches the end of a green line, a check for waypoints (blue lines) is made. If waypoints are available, a new route is created via them and you will see the blue straight lines changing to a green flight path.
 
 NOTE: The lines are drawn on a canvas so they will be on top of the screen items. This is something work on and improve.
+
