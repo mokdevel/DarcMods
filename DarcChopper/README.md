@@ -34,7 +34,7 @@ Perception of the AI affects the capability to find an enemy. This is not contro
 
 ## Shooting
 ### Machine Guns
-AI shooting with MGs is controller by Arma Reforger. This is not controlled by the mod.
+AI shooting with MGs is controller by Arma Reforger and not by the mod. If targets are recognized, the AI will shoot by themselves with accuracy defined by the skill.
 
 ### Rockets
 Arma Reforger does not provide functionality for AIs to use rockets. The mod fakes this by spawning a rocket at ``Rocket Position`` from the helicopter position. The rocket is launched with the capabilities provided by ``MissileMoveComponent``. After this, Arma Reforger handles the physics and related functionality.
