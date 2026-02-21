@@ -102,15 +102,15 @@ G_SPECIAL : Special Forces units.
 G_SMALL	: Small groups with two units. Mixed arms.
 
 //Characters
-C_RIFLEMAN
-C_HEAVY
-C_RECON
-C_OFFICER
-C_CREW
-C_SNIPER
-C_LAUNCHER
-C_MEDIC
-C_SPECIAL
+C_RIFLEMAN : Basic rifle men
+C_HEAVY : Units with bigger guns for example large machine guns
+C_RECON : Units defined as recon units
+C_OFFICER : Commander units
+C_CREW : Pilots or other crew units
+C_SNIPER : Units with sniper gear e.g. larger rifles
+C_LAUNCHER : Units with launchers or other types of explosives
+C_MEDIC : Units with medical gear
+C_SPECIAL : Special forces 
 
 //Zombies and creatures (untested!)
 G_ZOMBIE_SMALL
