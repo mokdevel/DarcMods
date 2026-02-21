@@ -26,14 +26,18 @@ Parameters are used for more natural flying:
 The component is active as long as the helicopter is functional and there is a minimum of one pilot. When the helicopter is deemed non-fuctional, the mod will stop controlling it. Arma Reforger will take control and handle the end of life. The helicopter will fly according to AR physics and this may end up in interesting and funny situations. This is by design.
 
 # AI functionality
-## Spawning crew
-If the helicopter prefab does not have crew
+A crew is needed for the helicopter to fly.  
 
-## Flying
-First of all, the AIs do not fly the helicopter. There is no behaviour tree for flying. The pilot AI is a passenger and all the flying magic happen by the component. 
+## Spawning crew
+If the helicopter prefab does not have crew a assigned, the mod will assign crew members. For pilots, members from C_CREW is selected. The rest of the passengers will be from C_RIFLEMAN. See: [EnemyLists](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LISTS.md#enemy-lists). 
 
 ## Skill and perception
 The skill and perception from Arma Reforger is used for finding enemies. The higher the perception value, the better the AI is able to find its target. A line of sight is needed so you can hide in a building and the AI will not see through walls. The higher the skill, the better the accuracy is.
+
+Skill is define with ``AI Skill`` and percetion by ``AI Perception`` parameters.
+
+## Flying
+First of all, the AIs do not fly the helicopter. There is no behaviour tree for flying. The pilot AI is a passenger and all the flying magic happen by the component. 
 
 ## Finding enemies
 Perception of the AI affects the capability to find an enemy. This is not controlled by the mod. The mod queries the AIs for knowledge of an enemy. If an enemy is found, the mod keeps this enemy as the high value target (HVT). This can be queried by external mods. After a while, similar query is done and the HVT may change. In case, no enemies are known by the AIs, the helicopter will forget the HVT knowledge.
@@ -62,4 +66,4 @@ Rocket prefabs tested:
 You can spawn choppers as a GM and they will start to fly around the world randomly. You can control them with waypoints.
 
 ## Entity browser
-You can 
+The helicopters piloted by AIs can be found by filtering with DarcChopper. 
