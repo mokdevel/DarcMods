@@ -1,4 +1,7 @@
 # DarcChopper
+
+<img src="./thumbnail.png" width=30% height=30%>
+
 The mod introduces functionality to let AIs use helicopters to fly around, attack with guns on the helicopter, use rockets, patrol an area, find enemies, land to bring troops. The mod is still very much WIP.
 
 Functionality is implemented as a single re-usable component.
