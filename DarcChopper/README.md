@@ -89,7 +89,7 @@ NOTE: You can not set the helicopter on ground and let it lift off and start to 
 When spawned, helicopter will check it's altitude to make sure it's above ``Fly Height Low``. If not, the helicopter will be moved and this may look like an ugly jump. A random fly destination is chosen and helicopter is rotated towards it. Then we're ready for flying. 
 
 ## Flight path
-A flight path is assigned to the helicopter and it will start to follow it. The flight path is shown with green lines on screen and once reaching the end, a new flight path is created.
+A flight path is assigned to the helicopter and it will start to follow it. The flight path is shown with green lines on screen and once reaching the end, a new flight path is created. The flight path will be set between ``Fly Height Low`` and ``Fly Height High`` if the location is on ground or too high up. 
 
 ## Lines: Green and Blue
 You will see green and blue lines on screen when the helicopter is flying. 
@@ -98,4 +98,20 @@ You will see green and blue lines on screen when the helicopter is flying.
 * Blue: If you've set waypoints for the helicopter, blue straight lines will show the future route. When the helicopter reaches the end of a green line, a check for waypoints (blue lines) is made. If waypoints are available, a new route is created via them and you will see the blue straight lines changing to a green flight path.
 
 NOTE: The lines are drawn on a canvas so they will be on top of the screen items. This is something work on and improve.
+
+# Waypoints
+You can assign waypoints for the helicopter. Just pick any AI/group or even the helicopter, select a waypoint and drop it on the map. Use ALT-key to change the altitude of the waypoint, but don't worry, if it's on the ground by mistake, it will be set to right flight height. You can set multiple waypoints as a chain and future flight will follow it.
+
+Once a waypoint is dropped, the helicopter will pick it from the map and it will disappear. This means that it has been considered for future use.
+
+Check the supported waypoints below. Other waypoints you define, will disappear from the map and will be discarded.
+
+## Move
+The helicopter is requested to fly to this destination. You can set multiple ones to create a longer route.
+
+## Force Move
+The helicopter is requested to fly to this destination immediately. Any existing plans will be discarded and the new destination is accepted.
+
+## Move Relaxed
+The helicopter is requested to fly to this destination and do rounds around the area. We will circle around the area for a while until continuing normal flight. You can set multiple points for longer patrol times.
 
