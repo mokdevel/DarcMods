@@ -205,10 +205,9 @@ class SDRC_JsonApi2 : JsonApiStruct
 		{
 			directory = SDRC_Conf.CONF_DIRECTORY + "/" + "default";
 			path = "$profile:/" + directory + "/";
-			if (!FileIO.MakeDirectory(path))
-			{
-				SDRC_Log.Add("[SDRC_JsonApi2] Could not create path: " + path, LogLevel.ERROR);
-			}
+			
+			SDRC_Log.Add("[SDRC_Core] Could not find " + tempFilepath + ", looking for " + path + fileName + " instead", LogLevel.WARNING);
+			
 			tempFilepath = path + fileName;
 		}
 		
