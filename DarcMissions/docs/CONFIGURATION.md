@@ -1,5 +1,6 @@
 # Parameters
 All configurations are done via .json files. The configuration files will be under your ```profile\DarcMods\<subDir>\*```, where the ``subDir`` is defined via ``dc_coreConfig.json``. 
+Alternatively, users can pass a command line argument/startup parameter like this ``-darcSubDir yourSubDirHere`` to override the subDir set in ``dc_coreConfig.json``. DarcCore will look in ``profile\DarcMods\<subDir>`` first for config files, then look in ``profile\DarcMods\default`` if they are not found.
 
 Examples below:
 * Single player: ``C:\Users\username\Documents\My Games\ArmaReforger\profile\DarcMods``
