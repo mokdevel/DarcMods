@@ -24,6 +24,22 @@ GM can drop in more missions to the map. These are dynamic missions and will add
 
 Requested missions do not check if a mission position is valid. You can overload an area with multiple missions if that is wanted.
 
+## Mission count
+Various aspects affect the mission count spawned on the map. There are two main types of missions, Static and Dynamic missions (see above). Both have a section for definitions in file ``dc_missionConfig.json`` which you can find under ``missionDynamic`` and ``missionStatic``. The parameter ``count`` defines the maximum amount of missions that will spawn per type. 
+
+The mission types that can spawn are defined in ``missionTypeArray``. This is separate for Dynamic and Static missions so you can define if certain types are available at start up or during gameplay.
+
+
+``missionLimit``
+
+Note from the developer: I like to spawn certain types of missions as Static in to the world to fill it with surprises. Especially Patrol, Convoy and Roadblock missions with a few Chopper missions are good to have in the world. Everything is random, so you never know what is spawned where.
+
+Related documentation:
+* [Mission configuration](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md#sdrc_missiontypeconfig)
+* [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md)
+
+
+
 ## Mission end (win or lose)
 Each mission has a win condition. The normal case is to eliminate a certain amount of AI to reach the goal. Once the win condition has been reached, the mission is kept alive for ```missionActiveTimeToEnd``` seconds. The time is reset if there is a player within ```missionActiveDistance```. At the end of a mission, all spawned items will despawn (for example camps) but also vehicles. 
 Available win conditions:
