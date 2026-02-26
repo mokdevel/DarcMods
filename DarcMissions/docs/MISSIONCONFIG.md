@@ -85,6 +85,7 @@ Difficulty setting that affects mission AI behaviour and loot reward. There are 
  4 = HARD : A lot of dangerous enemies with high amount of loot.
 ```
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/icon_difficulty.png" width=30% height=30%>
+
 Difficulty is represented on the mission icon. The left icon is ``EASY`` and ``HARD`` is on the right. The information can be shown/hidden with ``showMissionDifficulty`` parameter.
 
 ### SDRC_MissionDifficulty
