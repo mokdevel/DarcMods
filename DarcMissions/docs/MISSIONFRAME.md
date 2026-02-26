@@ -38,7 +38,7 @@ NOTE: If you spawn missions via GM, it will not limit the types nor counts. You 
 Note from the developer: I like to spawn certain types of missions as Static in to the world to fill it with surprises. Especially Patrol, Convoy and Roadblock missions with a few Chopper missions are good to have in the world. Everything is random, so you never know what is spawned where.
 
 Related documentation:
-* [Mission configuration](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md#sdrc_missiontypeconfig)
+* [Mission configuration](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md#sdrc_missiontypeconfig) , separate for Dynamic and Static.
 * [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md)
 
 
