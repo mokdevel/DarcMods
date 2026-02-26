@@ -25,12 +25,15 @@ GM can drop in more missions to the map. These are dynamic missions and will add
 Requested missions do not check if a mission position is valid. You can overload an area with multiple missions if that is wanted.
 
 ## Mission count
-Various aspects affect the mission count spawned on the map. There are two main types of missions, Static and Dynamic missions (see above). Both have a section for definitions in file ``dc_missionConfig.json`` which you can find under ``missionDynamic`` and ``missionStatic``. The parameter ``count`` defines the maximum amount of missions that will spawn per type. 
+Various aspects affect the mission count spawned on the map. There are two main types of missions, Static and Dynamic missions (see above). Both have a section for definitions in file ``dc_missionConfig.json`` which you can find under ``missionDynamic`` and ``missionStatic``. The parameter ``count`` defines the maximum amount of missions that will spawn for Dynamic and Static types. 
 
-The mission types that can spawn are defined in ``missionTypeArray``. This is separate for Dynamic and Static missions so you can define if certain types are available at start up or during gameplay.
+The mission types that can spawn are defined in ``missionTypeArray``. This is separate for Dynamic and Static missions so you can define if certain types are available at start up or during gameplay. The mission to spawn is randomly picked from the list, so you never know what missions will be available. 
 
+Certain types of missions have a tendency to find a spawn position easier than others. For example, Crashsite location could happen anywhere so when it's picked from the list, it most likely is spawned. A Hunter mission location needs to have players near by and this is not true for all positions in the world. This could lead to a situation where you have a world full of Crashsites and other missions are not spawning as you would expect. 
 
-``missionLimit``
+To correct this, a parameter ``missionLimit`` is available. With this you can define that a certain ``missionType`` is only spawned to a certain count. For the above example, you could define a limit for Crashsites to e.g. ``2``. This will make it sure that you don't get spammed with spawned Crashsites. 
+
+NOTE: If you spawn missions via GM, it will not limit the types nor counts. You as a GM, have made a decision to spawn a mission, it will be respected. So, you could spawn multiple Crashsites even if it has been limited via ``missionLimit``. GM spawned missions will be counted to the total ``count`` so the mod will not itself spawn more than the mission total or mission limit. 
 
 Note from the developer: I like to spawn certain types of missions as Static in to the world to fill it with surprises. Especially Patrol, Convoy and Roadblock missions with a few Chopper missions are good to have in the world. Everything is random, so you never know what is spawned where.
 
