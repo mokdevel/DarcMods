@@ -1,5 +1,17 @@
 //Mission SDRC_Mission_Chopper.c
 
+//------------------------------------------------------------------------------------------------
+/*!
+Helicopters hunting you, bringing troops, initiating hunters..
+*/
+
+//------------------------------------------------------------------------------------------------
+enum SDRC_EMissionChopperState
+{
+	SPAWN,
+	SPAWN_CREW,
+};
+
 const string DC_MISSIONCONFIG_FILE_CHOPPER = "dc_missionConfig_Chopper.json";
 const int DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER = 2;
 
@@ -13,7 +25,9 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CHOPPER);	
 	private ref SDRC_ChopperConfig m_Config = new SDRC_ChopperConfig();
 	private ref SDRC_Chopper m_DC_Chopper = new SDRC_Chopper();
-	
+
+	private SDRC_EMissionChopperState missionChopperState = SDRC_EMissionChopperState.SPAWN;
+		
 	private vector m_vPosOrigin = "0 0 0";
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
@@ -104,15 +118,27 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		
 		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
-			MissionSpawn();
-			if (GetState() == SDRC_EMissionState.FAILED)
+			switch (missionChopperState)
 			{
-				SetState(SDRC_EMissionState.END);
-			}
-			else
-			{
-				SetState(SDRC_EMissionState.ACTIVE);				
-			}
+				case SDRC_EMissionChopperState.SPAWN:
+					MissionSpawn();
+					if (GetState() == SDRC_EMissionState.FAILED)
+					{
+						SetState(SDRC_EMissionState.END);
+					}
+					else
+					{
+						missionChopperState = SDRC_EMissionChopperState.SPAWN_CREW;
+						//Set a faster MissionRun time during SPAWN
+						GetGame().GetCallqueue().CallLater(MissionRun, 2000);
+						return;
+					}
+					break;
+				case SDRC_EMissionChopperState.SPAWN_CREW:
+					MissionSpawnCrew();
+					SetState(SDRC_EMissionState.ACTIVE);				
+					break;
+			} 			
 		}
 
 		if (GetState() == SDRC_EMissionState.END)
@@ -240,6 +266,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		}
 		
 		m_EntityList.Insert(m_Vehicle);
+		m_Vehicle_c.SetAutostart(false);
 		m_Vehicle_c.SetHeli(m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.wpType, m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
 		m_Vehicle_c.SetSearchForEnemy(true);
 
@@ -261,7 +288,11 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
 
 		SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " +  GetId() + " : Vehicle spawned: " + m_Vehicle + " at: " + m_Vehicle.GetOrigin(), LogLevel.DEBUG);
-		
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	private void MissionSpawnCrew()
+	{
 		//Select pilots
 		ResourceName pilot = SDRC_EnemyHelper.SelectEnemy("C_CREW", GetFaction());
 
@@ -531,10 +562,10 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		);
 		chopper.Set
 		(
-			{
-			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
+			{			
+			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",			
 			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
-			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
+			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",			
 			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
 			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
 			 //From: https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcMissions

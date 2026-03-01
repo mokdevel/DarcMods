@@ -10,23 +10,22 @@ class SDRC_ChopperCompClass : ScriptGameComponentClass { }
 enum SDRC_EHeliWaypointGenerationType
 {
 	NONE,
-	RANDOM,		//Random flying for a helicopter
-	PATROL,		//Fly around a certain area
-	SEARCH,		//Random flying search patrol. Once a player is found, mission ends.
+	RANDOM,					//Random flying for a helicopter
+	PATROL,					//Fly around a certain area
+	SEARCH,					//Random flying search patrol. Once a player is found, mission ends.
 	
-	LANDING,	//Land the helicopter
-	FLY_AWAY,	//Fly far away
+	LANDING,				//Land the helicopter
 };
 
 //------------------------------------------------------------------------------------------------
 enum SDRC_EFlyWayPointType
 {
 	UNDEFINED,
-	FLY,
-	FLY_IMMEDIATELY,
-	FLY_AWAY,
-	FLY_AWAY_IMMEDIATELY,
-	PATROL,	
+	FLY,					//Fly, mormal flight pattern
+	FLY_IMMEDIATELY,		//Fly, but remove all already added destinations
+	FLY_AWAY,				//Fly away as a last move
+	FLY_AWAY_IMMEDIATELY,	//Fly away immediately removing the previous destinations
+	PATROL,					//Patrol around an area
 	LAND,
 	WAIT,
 	RAISE,
@@ -309,7 +308,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		if (m_RocketPrefabs.IsEmpty())
 		{
-			SDRC_Log.Add("[SDRC_ChopperComp] No rockets availabled.", LogLevel.NORMAL);
+			SDRC_Log.Add("[SDRC_ChopperComp] No rockets available.", LogLevel.NORMAL);
 		}
 		else
 		{
@@ -1527,7 +1526,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 			{
 				//Fly away after all destinations have been handled
 				SetState(SDRC_EHeliState.FLY_AWAY);
-				m_fWpType = SDRC_EHeliWaypointGenerationType.FLY_AWAY;
 				break;
 			}
 			case SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY:
@@ -1535,7 +1533,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 				//Fly away immediately
 				ResetDestinations();
 				SetState(SDRC_EHeliState.FLY_AWAY);
-				m_fWpType = SDRC_EHeliWaypointGenerationType.FLY_AWAY;
 				break;
 			}		
 			case SDRC_EFlyWayPointType.LAND:
@@ -1765,7 +1762,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 			
 	void DrawDebugPaths()
 	{
-		if (!m_bShowDebug)
+//		if (!m_bShowDebug)
+		if (!SDRC_Conf.SHOW_DEBUG)
 		{
 			return;
 		}
@@ -1781,7 +1779,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//------------------------------------------------------------------------------------------------	
 	void AddDebugMarker(vector pos, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300, bool snap = true)
 	{	
-		if (!m_bShowDebug)
+//		if (!m_bShowDebug)
+		if (!SDRC_Conf.SHOW_DEBUG)
 		{
 			return;
 		}
@@ -1794,7 +1793,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	*/	
 	void DrawHelicopterVectors(IEntity owner)
 	{
-		if (!m_bShowDebug)
+//		if (!m_bShowDebug)
+		if (!SDRC_Conf.SHOW_DEBUG)		
 		{
 			return;
 		}
@@ -1849,7 +1849,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//							"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
 								"";
 
-			if (angUp > 1.0)
+			if (angUp > 1.3)
 			{
 				debugText = debugText + "AngleUp: ******** " + angUp + " ********";
 			}
