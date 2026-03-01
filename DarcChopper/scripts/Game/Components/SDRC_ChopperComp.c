@@ -164,7 +164,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 	private float m_fTimeBetweenFixes = 30;
 	
-	private float m_fTimeInState = -1;					//The timer to stay in a certain state. This is only in effect when positive value.
+	float m_fTimeInState = -1;							//The timer to stay in a certain state. This is only in effect when positive value.
 	private bool  m_bTimeInStateEnabled = false;
 			
 	//Turn
@@ -225,12 +225,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private vector m_vHeliDirectionFuture;
 	
 	//Enemy positions
-	private const int ENEMY_FOUND_TIMEOUT = 10;		//Time between enemy position updates
-	private const int ENEMY_FORGET_TIMEOUT = 30;	//Time to forget the enemy position
-	vector m_vEnemyPosition = vector.Zero;			//Position of last found enemy
-	private int m_iEnemyFoundTimeOut;				//Time to wait to before allowing enemy position 
-	private bool m_bSearchForEnemy;					//Enable/Disable enemy searching
-	
+	vector m_vEnemyPosition = vector.Zero;		//Position of last found enemy
+	int m_iEnemyFoundTime;						//Time to wait to before allowing enemy position 
+	bool m_bSearchForEnemy;						//Enable/Disable enemy searching
+	int m_iEnemyFoundTimeout = 10;				//Time between enemy position updates
+	int m_iEnemyForgetTimeout = 30;				//Time to forget the enemy position
+		
+
+		
 	//Debug stuff
 	private float m_fDbgAngle;
 	float m_fAnglePitch;
@@ -284,7 +286,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		SDRC_ChopperEnemyHelper.GetWeapons(owner);
 		
 		m_Helicopter_s = VehicleHelicopterSimulation.Cast(GetOwner().GetRootParent().FindComponent(VehicleHelicopterSimulation));
-		m_iEnemyFoundTimeOut = SDRC_Misc.GetCurrentTickTime() + ENEMY_FOUND_TIMEOUT;
+		m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + m_iEnemyFoundTimeout;
 		
 		if (m_Helicopter_s)
 		{
@@ -446,12 +448,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//In these case the helicopter up vector and world up vector is big.
 		bool bCreateNewPath = false;
 		float heliUpAngleToWorld = SDRC_Math.GetAngleBetweenVectors(owner.GetTransformAxis(1), vector.Up);	
-		if ( (heliUpAngleToWorld > FLIGHT_FIX_ANGLE) && (m_fTimeBetweenFixes < 0) )
+		if (heliUpAngleToWorld > FLIGHT_FIX_ANGLE)
 		{
-//			#ifndef SDRC_RELEASE
-				SDRC_Log.Add("[SDRC_ChopperComp] Fixing flight.", LogLevel.DEBUG);
-//			#endif
-			bCreateNewPath = true;
+			if (m_fTimeBetweenFixes < 0)
+			{
+//				#ifndef SDRC_RELEASE
+					SDRC_Log.Add("[SDRC_ChopperComp] Fixing flight.", LogLevel.DEBUG);
+//				#endif
+				//TBD: Change to align the chopper towards target
+				bCreateNewPath = true;
+			}
 		}
 		else
 		{
@@ -464,7 +470,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			m_fTimeBetweenFixes = FLIGHT_FIX_TIME;	//Time between tries to fix the flight
 			
-			if (m_eHeliState == SDRC_EHeliState.FLY)
+			if (   (m_eHeliState == SDRC_EHeliState.FLY) 
+				|| (m_eHeliState == SDRC_EHeliState.FLY_AWAY) 
+			   )
 			{
 				//Define a new destination and create a new path
 				CreateNewFlight(owner);
@@ -545,7 +553,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		SetVelocity(owner);
 		
 		//Search for enemies
-		SearchForEnemy(owner);
+		SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
 		
 		if (m_fTimeRocketDelay > m_RocketDelay)
 		{
@@ -1131,9 +1139,27 @@ class SDRC_ChopperComp : ScriptGameComponent
 					AddFlyPathPoint(pos);
 				}					
 			}
-			
-			if (flyDestination.type != SDRC_EFlyWayPointType.FLY)
+
+			//If request to fly away, set the right state
+			if (flyDestination.type == SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY)
 			{
+				SetNextState(owner, SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY);
+			}			
+			if (flyDestination.type == SDRC_EFlyWayPointType.FLY_AWAY)
+			{
+				SetNextState(owner, SDRC_EFlyWayPointType.FLY_AWAY);
+			}
+
+			//If request to end, stop simulation
+			if (flyDestination.type == SDRC_EFlyWayPointType.END)
+			{
+				SetNextState(owner, SDRC_EFlyWayPointType.END);
+				return;
+			}				
+									
+			//FLY points are handled in a serie. Others one at a time.
+			if (flyDestination.type != SDRC_EFlyWayPointType.FLY)
+			{				
 				break;
 			}
 		}
@@ -1146,12 +1172,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 			vector mid = vector.Lerp(p0, p1, 0.5);
 			AddFlyPathPoint(mid, index: 1);
 		}		
-		
-		//There should always be at least 3 points
-		if (m_vFlightPoints.Count() < 3)
-		{
-			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] This should never happen! ", LogLevel.WARNING);
-		}
 				
 		SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Created " + m_vFlightPoints.Count() + " points.", LogLevel.SPAM);
 
@@ -1194,6 +1214,46 @@ class SDRC_ChopperComp : ScriptGameComponent
 	// States 
 	//------------------------------------------------------------------------------------------------	
 	
+	//------------------------------------------------------------------------------------------------
+	SDRC_EHeliState GetState()
+	{
+		return m_eHeliState;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	void SetState(SDRC_EHeliState state)
+	{
+		m_eHeliState = state;
+		
+		//If in normal flight mode, disable the TimeInState counter
+		if (state == SDRC_EHeliState.FLY)
+		{			
+			SetTimeInState(0)
+		}
+		
+		SDRC_Log.Add("[SDRC_ChopperComp:SetState] State: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.DEBUG);
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	void SetTimeInState(int seconds)	
+	{
+		if (seconds == -1)
+		{
+			seconds = 0;
+		}
+		
+		m_fTimeInState = seconds;
+		
+		if (seconds == 0)
+		{
+			m_bTimeInStateEnabled = false;
+		}
+		else
+		{
+			m_bTimeInStateEnabled = true;
+		}
+	}
+	
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Handle state (machine)
@@ -1214,7 +1274,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 				SetNextState(owner);
 				break;
 			}
-			
+						
 			//If on ground, immediately set next state after touch down
 			case SDRC_EHeliState.GET_OUT:
 			{
@@ -1236,7 +1296,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 		
 		//Wait for the state timer to end and go to next state
-		if ( (m_eHeliState != SDRC_EHeliState.FLY) && (m_fTimeInState < 0) && m_bTimeInStateEnabled) 
+//		if ( (m_eHeliState != SDRC_EHeliState.FLY) && (m_fTimeInState < 0) && m_bTimeInStateEnabled) 
+		if ( (m_fTimeInState < 0) && (m_bTimeInStateEnabled) )
 		{
 			SetNextState(owner);
 		}
@@ -1248,10 +1309,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	- FLY will start to fly
 	- Others will have some action bound to them.
 	*/
-	void SetNextState(IEntity owner)
+	void SetNextState(IEntity owner, SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.UNDEFINED)
 	{
-		SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.UNDEFINED;
-		
 		//By default we remove the destination
 		bool isRemoveDestination = true;
 		
@@ -1261,34 +1320,41 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//First destination for flight. In most cases left at zero.
 		vector firstDestination = vector.Zero;
 		
-		//If not destinations defined, start to fly		
-		if (m_vFlyDestinations.IsEmpty())
-		{
-			nextType = SDRC_EFlyWayPointType.FLY;
-		}
-		else
-		{
-			nextType = m_vFlyDestinations[0].type;
+		if (nextType == SDRC_EFlyWayPointType.UNDEFINED)
+		{		
+			//If not destinations defined, start to fly		
+			if (m_vFlyDestinations.IsEmpty())
+			{
+				nextType = SDRC_EFlyWayPointType.FLY;
+			}
+			else
+			{
+				nextType = m_vFlyDestinations[0].type;
+			}
 		}
 
 		switch (nextType)
 		{
 			case SDRC_EFlyWayPointType.FLY:
 			{
+				ResetOriginalValues();		//Reset heli settings
 				SetState(SDRC_EHeliState.FLY);
-				ResetOriginalValues();
 				//Don't remove the destination as it has the next point where to fly
 				isRemoveDestination = false;
 				break;
 			}			
-			case SDRC_EFlyWayPointType.FLY_AWAY:
-			case SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY:
+			case SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY:	//NOTE: This is not a real state. When set, state will change to FLY_AWAY
 			{
-				ResetOriginalValues();
+				//Don't remove the destination as it will be removed when creating a waypoint in CreateFlightPoints
+				isRemoveDestination = false;
+			}
+			case SDRC_EFlyWayPointType.FLY_AWAY:
+			{
+				ResetOriginalValues();		//Reset heli settings
 				SetState(SDRC_EHeliState.FLY);
 				//Fly for a while and then go to END state
-				SetTimeInState(120);
-				AddDestination(SDRC_EFlyWayPointType.END); 
+				AddDestination(SDRC_EFlyWayPointType.END, owner.GetOrigin()); 
+				isRemoveDestination = false;
 				break;
 			}		
 			case SDRC_EFlyWayPointType.END:
@@ -1309,9 +1375,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 				break;
 			}
 			case SDRC_EFlyWayPointType.RAISE:
-			{
-				//Reset heli settings
-				ResetOriginalValues();
+			{				
+				ResetOriginalValues();		//Reset heli settings
 				
 				//Create a first destination that is a short way to where we're planning to go. Smoothens the flight.
 				firstDestination = SDRC_ChopperHelper.GetDestinationForward(owner, m_vFlyDestinations[0].pt[0] / 5);
@@ -1384,95 +1449,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}		
 
 	//------------------------------------------------------------------------------------------------	
-	void SetTimeInState(int seconds)	
-	{
-		if (seconds == -1)
-		{
-			seconds = 0;
-		}
-		
-		m_fTimeInState = seconds;
-		
-		if (seconds == 0)
-		{
-			m_bTimeInStateEnabled = false;
-		}
-		else
-		{
-			m_bTimeInStateEnabled = true;
-		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void SetState(SDRC_EHeliState state)
-	{
-		m_eHeliState = state;
-		
-		//If in normal flight mode, disable the TimeInState counter
-		if (state == SDRC_EHeliState.FLY)
-		{			
-			SetTimeInState(0)
-		}
-		
-		SDRC_Log.Add("[SDRC_ChopperComp:SetState] State: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.DEBUG);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	SDRC_EHeliState GetState()
-	{
-		return m_eHeliState;
-	}
-				
-	//------------------------------------------------------------------------------------------------	
-	/*!	
-	Handle landing
-	*/
-	private void HandleLanding(float timeSlice)
-	{
-		const float LANDING_DISTANCE = 130;
-		const float TIME_TO_LAND = 9;				//(seconds)
-		const float LANDED_HEIGHT = 0.5;
-		
-		vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];			
-		float distance = vector.Distance(m_vOrigin, lastPt);
-
-		if (distance < LANDING_DISTANCE)
-		{
-			if (!m_Helicopter_s.HasAnyGroundContact())
-			{				
-				//Set the last point on ground
-				lastPt[1] = SDRC_Misc.GetSurfaceYWithWater(lastPt) + LANDED_HEIGHT;
-				m_vSplinePoints[m_vSplinePoints.Count() - 1] = lastPt;
-				
-				m_fTimeLanding += timeSlice;
-				m_fTimeLanding = Math.Clamp(m_fTimeLanding, 0, TIME_TO_LAND);
-				float mul = 1 - m_fTimeLanding / TIME_TO_LAND;
-				
-//				m_fRotorForceMultiplier = -3.2 + -5.5 * SDRC_Math.HalfBell(mul);
-				m_fRotorForceMultiplier = -3.0 + -4.0 * SDRC_Math.FullBell(mul);
-				
-				//Helicopter to descend
-		        m_Helicopter_s.RotorSetForceScaleState(0, 0);
-		        m_Helicopter_s.SetThrottle(0);
-				
-		        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0Orig * mul * 0.01);
-		        m_Helicopter_s.SetThrottle(m_fThrottleOrig * mul);
-				float height = m_Helicopter_s.GetAltitudeAGL();
-				m_fSpeedMin = distance / Math.Clamp(height, 0.1, 1000);
-				m_fSpeedLandingMul = mul;
-			}
-			else
-			{
-				SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
-				SetState(SDRC_EHeliState.ON_GROUND);
-				m_fSpeedMin = 0;
-				m_fSpeedLandingMul = 0;
-				m_fRotorForceMultiplier = 0;
-			}
-		}
-	}	
-	
-	//------------------------------------------------------------------------------------------------	
 	// Destination settings
 	//------------------------------------------------------------------------------------------------	
 	
@@ -1498,30 +1474,23 @@ class SDRC_ChopperComp : ScriptGameComponent
 				//Fly immediately to a destination
 				//Remove any existing destination
 				ResetDestinations();
-				//Modify the spline to end shortly. Remove points from the end.
-				//Take the last one, reduce current one and reduce the point count for new distance. Add a safe margin of 2.
-				int toBeRemoved = (m_vSplinePoints.Count() - 1) - m_iClosestIndex - POINTS_TO_NEW_DISTANCE - 2;
-				for (int i = 0; i < toBeRemoved; i++)
-				{
-					m_vSplinePoints.RemoveOrdered(m_vSplinePoints.Count() - 1);
-				}
-				
+				CutSpline();
 				type = SDRC_EFlyWayPointType.FLY;
-				break;
-			}
-			case SDRC_EFlyWayPointType.FLY_AWAY:
-			{
-				//Fly away after all destinations have been handled
-				SetState(SDRC_EHeliState.FLY_AWAY);
 				break;
 			}
 			case SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY:
 			{
 				//Fly away immediately
 				ResetDestinations();
+				CutSpline();
+				//NOTE: Will drop through FLY_AWAY
+			}		
+			case SDRC_EFlyWayPointType.FLY_AWAY:
+			{
+				//Fly away after all destinations have been handled
 				SetState(SDRC_EHeliState.FLY_AWAY);
 				break;
-			}		
+			}
 			case SDRC_EFlyWayPointType.LAND:
 			{
 				//Land the chopper
@@ -1605,6 +1574,73 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_vFlyDestinations.Clear();
 	}	
 	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Cut spline to create the new destination almost immediately. Remove points from the end.
+	*/
+	void CutSpline()
+	{
+		//Take the last one, reduce current one and reduce the point count for new distance. Add a safe margin of 2.
+		int toBeRemoved = (m_vSplinePoints.Count() - 1) - m_iClosestIndex - POINTS_TO_NEW_DISTANCE - 2;
+		for (int i = 0; i < toBeRemoved; i++)
+		{
+			m_vSplinePoints.RemoveOrdered(m_vSplinePoints.Count() - 1);
+		}
+	}	
+
+	//------------------------------------------------------------------------------------------------	
+	// Special handling
+	//------------------------------------------------------------------------------------------------	
+	
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Handle landing
+	*/
+	private void HandleLanding(float timeSlice)
+	{
+		const float LANDING_DISTANCE = 130;
+		const float TIME_TO_LAND = 9;				//(seconds)
+		const float LANDED_HEIGHT = 0.5;
+		
+		vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];			
+		float distance = vector.Distance(m_vOrigin, lastPt);
+
+		if (distance < LANDING_DISTANCE)
+		{
+			if (!m_Helicopter_s.HasAnyGroundContact())
+			{				
+				//Set the last point on ground
+				lastPt[1] = SDRC_Misc.GetSurfaceYWithWater(lastPt) + LANDED_HEIGHT;
+				m_vSplinePoints[m_vSplinePoints.Count() - 1] = lastPt;
+				
+				m_fTimeLanding += timeSlice;
+				m_fTimeLanding = Math.Clamp(m_fTimeLanding, 0, TIME_TO_LAND);
+				float mul = 1 - m_fTimeLanding / TIME_TO_LAND;
+				
+//				m_fRotorForceMultiplier = -3.2 + -5.5 * SDRC_Math.HalfBell(mul);
+				m_fRotorForceMultiplier = -3.0 + -4.0 * SDRC_Math.FullBell(mul);
+				
+				//Helicopter to descend
+		        m_Helicopter_s.RotorSetForceScaleState(0, 0);
+		        m_Helicopter_s.SetThrottle(0);
+				
+		        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0Orig * mul * 0.01);
+		        m_Helicopter_s.SetThrottle(m_fThrottleOrig * mul);
+				float height = m_Helicopter_s.GetAltitudeAGL();
+				m_fSpeedMin = distance / Math.Clamp(height, 0.1, 1000);
+				m_fSpeedLandingMul = mul;
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
+				SetState(SDRC_EHeliState.ON_GROUND);
+				m_fSpeedMin = 0;
+				m_fSpeedLandingMul = 0;
+				m_fRotorForceMultiplier = 0;
+			}
+		}
+	}	
+		
 	//------------------------------------------------------------------------------------------------	
 	// Helicopter settings
 	//------------------------------------------------------------------------------------------------	
@@ -1677,45 +1713,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------	
-	// Enemy searching functionality
-	//------------------------------------------------------------------------------------------------	
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Search for enemy and mark it. The knowledge will eventually be lost. 
-	After a while, we may find another enemy to track.
-	*/			
-	private bool SearchForEnemy(IEntity owner)
-	{
-		bool found = false;
-		
-		if (!m_bSearchForEnemy)
-		{
-			return false;
-		}
-		
-		if (m_iEnemyFoundTimeOut > SDRC_Misc.GetCurrentTickTime())
-		{
-			return false;
-		}
-		
-		if ( (SDRC_Misc.GetCurrentTickTime() > m_iEnemyFoundTimeOut + ENEMY_FORGET_TIMEOUT) && (m_vEnemyPosition != "0 0 0") )
-		{
-			m_vEnemyPosition = "0 0 0";
-			SDRC_Log.Add("[SDRC_ChopperComp:SearchForEnemy] Enemy position reset.", LogLevel.DEBUG);
-		}
-		
-		m_vEnemyPosition = SDRC_ChopperEnemyHelper.SearchEnemy(owner);
-		if (m_vEnemyPosition != vector.Zero)
-		{
-			found = true;
-			m_iEnemyFoundTimeOut = SDRC_Misc.GetCurrentTickTime() + ENEMY_FOUND_TIMEOUT;
-		}
-		
-		return found;
-	}
-	
-	//------------------------------------------------------------------------------------------------	
 	/*!
 	Enable/Disable enemy searching
 	*/		
@@ -1740,6 +1737,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	void EnemyHandled()
 	{
 		m_vEnemyPosition = "0 0 0";
-		m_iEnemyFoundTimeOut = SDRC_Misc.GetCurrentTickTime() + ENEMY_FOUND_TIMEOUT;
-	}	
+		m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + m_iEnemyFoundTimeout;
+	}
 }

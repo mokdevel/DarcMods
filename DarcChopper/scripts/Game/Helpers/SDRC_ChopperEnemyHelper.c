@@ -3,6 +3,51 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperEnemyHelper
 {
+	//------------------------------------------------------------------------------------------------	
+	// Enemy searching functionality
+	//------------------------------------------------------------------------------------------------	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Search for enemy and mark it. The knowledge will eventually be lost. 
+	After a while, we may find another enemy to track.
+	*/			
+	static bool SearchForEnemy(IEntity owner)
+	{
+		bool found = false;
+	
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return false;
+		}
+			
+		if (!chopperComp.m_bSearchForEnemy)
+		{
+			return false;
+		}
+		
+		if (chopperComp.m_iEnemyFoundTime > SDRC_Misc.GetCurrentTickTime())
+		{
+			return false;
+		}
+		
+		if ( (SDRC_Misc.GetCurrentTickTime() > chopperComp.m_iEnemyFoundTime + chopperComp.m_iEnemyForgetTimeout) && (chopperComp.m_vEnemyPosition != "0 0 0") )
+		{
+			chopperComp.m_vEnemyPosition = "0 0 0";
+			SDRC_Log.Add("[SDRC_ChopperComp:SearchForEnemy] Enemy position reset.", LogLevel.DEBUG);
+		}
+		
+		chopperComp.m_vEnemyPosition = SDRC_ChopperEnemyHelper.SearchEnemy(owner);
+		if (chopperComp.m_vEnemyPosition != vector.Zero)
+		{
+			found = true;
+			chopperComp.m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + chopperComp.m_iEnemyFoundTimeout;
+		}
+		
+		return found;
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Search for enemy and return first enemy position found.

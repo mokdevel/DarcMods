@@ -184,6 +184,9 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				{
 					//Continue flying to the same direction and out of the map
 					float size = SDRC_Misc.GetWorldSize() * 0.7;
+					#ifndef SDRC_RELEASE
+						size = SDRC_Misc.GetWorldSize() * 0.2;
+					#endif
 					vector pos = SDRC_ChopperHelper.GetDestinationForward(m_Vehicle, size);
 					
 /*					vector direction = vector.Direction(m_Vehicle.GetOrigin(), m_Vehicle_c.GetCurrentDestination());
@@ -191,7 +194,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 					vector pos = m_Vehicle.GetOrigin() + direction * size;*/
 					
 					m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY, pos);
-					m_Vehicle_c.CreateNewFlight(m_Vehicle);
+//					m_Vehicle_c.CreateNewFlight(m_Vehicle);
 					m_Vehicle_c.SetSpeed(max : m_DC_Chopper.speed[1] * 1.5);
 				}
 				SetActiveTime(m_iFlyEndTime);
@@ -456,7 +459,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0};//{0,1,1,2,2,3,4,4};
+		missionList = {1};//{0,1,1,2,2,3,4,4};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 500;
@@ -465,8 +468,8 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		activeTime = 45*60;
 	#endif
 	#ifndef SDRC_RELEASE
-		activeTime = 25*60;
-//		activeTime = 3*60;
+//		activeTime = 25*60;
+		activeTime = 2*60 + 10;
 	#endif
 		
 		//----------------------------------------------------
