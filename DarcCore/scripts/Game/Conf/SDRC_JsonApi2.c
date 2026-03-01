@@ -187,7 +187,8 @@ class SDRC_JsonApi2 : JsonApiStruct
 	{
 		string path = "";
 		string directory = SDRC_Conf.CONF_DIRECTORY;
-		if ( (SDRC_Conf.subDir != "") && (fileName != SDRC_Conf.CORE_CONFIG_FILE) )	//This should never be empty
+		if ( (SDRC_Conf.subDir != "") && 					//This should never be empty
+			 (fileName != SDRC_Conf.CORE_CONFIG_FILE) )		//Core config shall be in root of CONF_DIRECTORY
 		{
 			directory = directory + "/" + SDRC_Conf.subDir
 		}
