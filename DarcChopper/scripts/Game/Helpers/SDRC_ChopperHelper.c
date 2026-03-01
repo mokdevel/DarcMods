@@ -3,14 +3,9 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperHelper
 {
-	//Line drawing related
-	static BaseWorld m_World;
-	static WorkspaceWidget m_Workspace;
-	
 	//------------------------------------------------------------------------------------------------	
 	/*!	
-	Add a destination forward. 
-	Create a destination from current heli position, along it's axis
+	Calculate a position in front of current heli position, along it's axis. 
 	*/
 	static vector GetDestinationForward(IEntity owner, float distance)
 	{
@@ -45,16 +40,6 @@ class SDRC_ChopperHelper
 				
 		return newpos;
 	}	
-	
-	//------------------------------------------------------------------------------------------------	
-	static void DrawLine(vector p0, vector p1, int color = Color.RED)
-	{
-		int shapeFlags = ShapeFlags.ONCE;
-		vector p[2];
-		p[0] = p0;
-		p[1] = p1;		
-		Shape.CreateLines(color, shapeFlags, p, 2);		
-	}
 	
 	//------------------------------------------------------------------------------------------------
 	static bool IsStillWorking(IEntity owner, bool inInit)
@@ -265,10 +250,6 @@ class SDRC_ChopperHelper
 		return crewCount;
 	}
 
-	//------------------------------------------------------------------------------------------------	
-	// Misc functions
-	//------------------------------------------------------------------------------------------------	
-
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Draws lines to show where chopper is going
@@ -338,138 +319,5 @@ class SDRC_ChopperHelper
 				SDRC_WPHelper.RemoveWaypoints(group);	
 			}
 		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Draws lines to show where chopper is going
-	
-	This only works in WB. 
-	NOTE: Line drawing functionality exists in game for AIs. See: SCR_WaypointLinesEditorUIComponent
-	*/
-	static void DrawDestinationLines(IEntity owner)
-	{
-		array<float> m_Vertices = {};
-		
-		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		if (!chopperComp)
-		{
-			return;
-		}		
-
-		//The rest of the stuff is only GM mode and when interface is visible.								
-		if ( (!SDRC_PlayerHelper.IsInGMmode()) || (!SDRC_PlayerHelper.IsGMInterfaceVisible()) || chopperComp.GetHeliState() == SDRC_EHeliState.DESTROYED )
-		{
-			if (chopperComp.m_wCanvas)
-			{
-				//If not in GM mode, canvas is not needed.
-				delete chopperComp.m_wCanvas;
-			}
-			return;
-		}
-		
-/*		//Is interface visible
-		if (!SDRC_PlayerHelper.IsGMInterfaceVisible())
-		{
-			return;
-		}*/
-		
-		if (chopperComp.m_wCanvas == null)
-		{
-			chopperComp.m_wCanvas = CanvasWidget.Cast(g_Game.GetWorkspace().CreateWidgetInWorkspace(WidgetType.CanvasWidgetTypeID, 0, 0, 10, 10, WidgetFlags.VISIBLE | WidgetFlags.NOFOCUS, new Color(0.0, 0.0, 0.0, 1.0), 1024));
-			m_World = GetGame().GetWorld();
-			m_Workspace = GetGame().GetWorkspace();
-		}
-				
-		if ( (chopperComp.m_wCanvas) && (m_Workspace) && (m_World) )
-		{
-			//All good
-		}
-		else
-		{
-			return;
-		}
-		
-/*		if (!chopperComp.m_bShowDebug)
-		{
-			return;
-		}*/
-		
-		//Add every nth spline point
-		int nth = 4;
-		int closestIndex = ((int)(chopperComp.m_iClosestIndex / nth)) * nth + 1;
-		int splinePointCount = chopperComp.m_vSplinePoints.Count() - 1;
-		if (closestIndex > splinePointCount)
-		{
-			closestIndex = splinePointCount;
-		}
-		
-		chopperComp.m_aDrawCommands.Clear();// = {};
-		
-		//Starting point
-		AddVertice(chopperComp.m_vSplinePoints[closestIndex], m_Vertices);
-		
-		for (int i = closestIndex; i < splinePointCount; i = i + nth)
-		{
-			AddVertice(chopperComp.m_vSplinePoints[i], m_Vertices);
-		} 
-		
-		AddVertice(chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1], m_Vertices);
-		//Insert into pool of draw commands
-		chopperComp.m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_GREEN));
-		
-		//Add destinations if any
-		if (!chopperComp.m_vFlyDestinations.IsEmpty())
-		{	
-			//Add last point to be the first for blue lines
-			AddVertice(chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1], m_Vertices);
-			
-			foreach (SDRC_FlyPathPoint destination : chopperComp.m_vFlyDestinations)
-			{			
-				vector pos = destination.pt;
-				if (pos[1] == 0)
-				{
-					pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 40;
-				}
-				AddVertice(pos, m_Vertices);
-			}		
-					
-			//Insert into pool of draw commands
-			chopperComp.m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_BLUE));
-		}
-		
-		if (!chopperComp.m_aDrawCommands.IsEmpty())
-		{
-			chopperComp.m_wCanvas.SetDrawCommands(chopperComp.m_aDrawCommands);
-		}
-	}		
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Calculate the vertice screen coords and add to vertices list
-	*/
-	static void AddVertice(vector pos, out array<float> vertices)
-	{
-		//Calculate screen position of point
-		vector x0 = m_Workspace.ProjWorldToScreenNative(pos, m_World);
-		vertices.Insert(x0[0]);
-		vertices.Insert(x0[1]);		
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Add vertices to LineDrawCommand and return it
-	*/
-	static LineDrawCommand AddLines(out array<float> vertices, int color = Color.DARK_GREEN)
-	{		
-		//Create draw command
-		ref LineDrawCommand line = new LineDrawCommand();	
-		line.m_Vertices = {};
-		line.m_iColor = color;
-		line.m_fOutlineWidth = 0;
-		line.m_fWidth = 2;
-		line.m_Vertices.Copy(vertices);
-		vertices.Clear();
-		return line;
 	}
 }
