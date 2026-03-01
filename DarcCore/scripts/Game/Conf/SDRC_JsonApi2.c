@@ -199,11 +199,15 @@ class SDRC_JsonApi2 : JsonApiStruct
 			SDRC_Log.Add("[SDRC_JsonApi2] Could not create path: " + path, LogLevel.ERROR);
 		}
 		
+		m_FileName = path + fileName;		
+		
+		/* TBD: Check that the part below does not introduce something unexpected.
+		
 		// if a config does not exist in the path above defined using subDir, then look at the default path
 		string tempFilepath = path + fileName;
 		if (!FileIO.FileExists(tempFilepath))
 		{
-			directory = SDRC_Conf.CONF_DIRECTORY + "/" + "default";
+			directory = SDRC_Conf.CONF_DIRECTORY + "/" + SDRC_Conf.DEFAULT_DIR;
 			path = "$profile:/" + directory + "/";
 			
 			SDRC_Log.Add("[SDRC_Core] Could not find " + tempFilepath + ", looking for " + path + fileName + " instead", LogLevel.WARNING);
@@ -212,6 +216,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 		}
 		
 		m_FileName = tempFilepath;
+		*/
 	}	
 	
 	//------------------------------------------------------------------------------------------------

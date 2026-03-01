@@ -45,11 +45,13 @@ class SDRC_Core
 		//Print general information
 		SDRC_Conf.subDir = m_Config.subDir;
 
-		// if defined, set subDir to the one we set from a CLI
+		//If defined, set subDir to the one we set from a CLI
 		string subDirCLI;
 		if (System.GetCLIParam("darcSubDir", subDirCLI))
+		{
 			SDRC_Conf.subDir = subDirCLI;
-			SDRC_Log.Add("[SDRC_Core] Overriding subDir defined in dc_coreConfig.json with startup parameter '" + subDirCLI + "'", LogLevel.NORMAL);
+			SDRC_Log.Add("[SDRC_Core] Overriding subDir defined in dc_coreConfig.json with startup parameter " + subDirCLI, LogLevel.NORMAL);
+		}
 
 		SDRC_Log.Add("[SDRC_Core] -------- General information --------", LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] Conf destination: $profile:/" + SDRC_Conf.CONF_DIRECTORY + "/" + SDRC_Conf.subDir, LogLevel.NORMAL);
