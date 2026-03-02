@@ -251,8 +251,28 @@ class SDRC_ChopperHelper
 	}
 
 	//------------------------------------------------------------------------------------------------
+	static void GetOut(IEntity owner)
+	{		
+		array<SCR_AIGroup> groups = {};
+		SDRC_VehicleHelper.GetOutVehicle(owner, groups);
+
+		foreach (SCR_AIGroup group : groups)
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp:HandleState] Create waypoint for AI group: " + group, LogLevel.DEBUG);			
+			
+			vector pos = SDRC_Misc.RandomizePos(owner.GetOrigin(), 50);			
+			SDRC_DebugHelper.AddDebugPos(pos);
+			SDRC_WPHelper.CreateWaypoint(group, pos, SDRC_EWaypointMoveType.MOVE);
+		}				
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	// Waypoint stuff
+	//------------------------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------------------------
 	/*!
-	Draws lines to show where chopper is going
+	Handle waypoints set
 	*/
 	static void HandleWaypoints(IEntity owner)
 	{
@@ -298,19 +318,24 @@ class SDRC_ChopperHelper
 						{
 							case "E_AIWaypoint_Move":
 							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.FLY, pos);
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos);
 								break;
 							}						
 							case "E_AIWaypoint_ForcedMove":
 							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.FLY_IMMEDIATELY, pos);
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY_IMMEDIATELY, pos);
 								break;
 							}						
 							case "E_AIWaypoint_Patrol":
 							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.PATROL, pos);
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_PATROL, pos);
 								break;
-							}						
+							}
+							case "E_AIWaypoint_GetOut":
+							{
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, pos, 20);
+								break;
+							}
 						}
 					}
 				}

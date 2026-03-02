@@ -6,14 +6,10 @@ class SDRC_ChopperDebug
 	//Line drawing related
 	static BaseWorld m_World;
 	static WorkspaceWidget m_Workspace;
-	//static int ctr;
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Draws lines to show where chopper is going
-	
-	This only works in WB. 
-	NOTE: Line drawing functionality exists in game for AIs. See: SCR_WaypointLinesEditorUIComponent
 	*/
 	static void DrawDestinationLines(IEntity owner)
 	{
@@ -36,15 +32,10 @@ class SDRC_ChopperDebug
 			return;
 		}
 		
-/*		//Is interface visible
-		if (!SDRC_PlayerHelper.IsGMInterfaceVisible())
-		{
-			return;
-		}*/
-		
 		if (chopperComp.m_wCanvas == null)
 		{
-			chopperComp.m_wCanvas = CanvasWidget.Cast(g_Game.GetWorkspace().CreateWidgetInWorkspace(WidgetType.CanvasWidgetTypeID, 0, 0, 10, 10, WidgetFlags.VISIBLE | WidgetFlags.NOFOCUS, new Color(0.0, 0.0, 0.0, 1.0), 1024));
+			//Create a canvas to draw the lines. Keep it small as a big canvas will also capture the mouse which we don't want
+			chopperComp.m_wCanvas = CanvasWidget.Cast(g_Game.GetWorkspace().CreateWidgetInWorkspace(WidgetType.CanvasWidgetTypeID, 0, 0, 10, 10, WidgetFlags.VISIBLE | WidgetFlags.NOFOCUS, new Color(0.0, 0.0, 0.0, 1.0), 100000));
 			m_World = GetGame().GetWorld();
 			m_Workspace = GetGame().GetWorkspace();
 		}
@@ -93,25 +84,41 @@ class SDRC_ChopperDebug
 			AddVertice(chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1], m_Vertices);
 			
 			foreach (SDRC_FlyPathPoint destination : chopperComp.m_vFlyDestinations)
-			{			
+			{
+				int color = -1;
+
+				if (destination.type == SDRC_EFlyWayPointType.WP_FLY)
+				{
+					color = Color.DARK_BLUE;
+				}
+				if (destination.type == SDRC_EFlyWayPointType.WP_LAND)
+				{
+					color = Color.DARK_CYAN;
+				}				
+				
+				if (color == -1)
+				{
+					continue;
+				}
+				
 				vector pos = destination.pt;
 				if (pos[1] == 0)
 				{
 					pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 40;
 				}
 				AddVertice(pos, m_Vertices);
+				//Insert into pool of draw commands
+				chopperComp.m_aDrawCommands.Insert(AddLines(m_Vertices, color));
 			}		
 					
-			//Insert into pool of draw commands
-			chopperComp.m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_BLUE));
+//			//Insert into pool of draw commands
+//			chopperComp.m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_BLUE));
 		}
 		
 		if (!chopperComp.m_aDrawCommands.IsEmpty())
 		{
 			chopperComp.m_wCanvas.SetDrawCommands(chopperComp.m_aDrawCommands);			
 		}
-		
-		//ctr++;
 	}		
 	
 	//------------------------------------------------------------------------------------------------
@@ -126,11 +133,6 @@ class SDRC_ChopperDebug
 		{
 			vertices.Insert(x0[0]);
 			vertices.Insert(x0[1]);
-		
-/*			if (ctr > 100)
-			{
-				Print("SDRC x0: " + x0 + " - " + pos);			
-			}*/
 		}
 	}
 	
@@ -153,6 +155,7 @@ class SDRC_ChopperDebug
 	
 	//------------------------------------------------------------------------------------------------	
 	// Debug shapes
+	// These *ONLY* works in WB. 
 	//------------------------------------------------------------------------------------------------	
 
 	//------------------------------------------------------------------------------------------------

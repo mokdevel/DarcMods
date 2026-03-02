@@ -193,7 +193,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 					direction.Normalize();
 					vector pos = m_Vehicle.GetOrigin() + direction * size;*/
 					
-					m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.FLY_AWAY_IMMEDIATELY, pos);
+					m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY, pos);
 //					m_Vehicle_c.CreateNewFlight(m_Vehicle);
 					m_Vehicle_c.SetSpeed(max : m_DC_Chopper.speed[1] * 1.5);
 				}
@@ -274,7 +274,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		m_Vehicle_c.SetSearchForEnemy(true);
 
 		#ifdef CHOPPER_TESTING				
-			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.M_LAND_TROOPS, landPos, 12);
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, landPos, 12);
 		
 			//The above should result in same the stuff below
 /*			m_Vehicle_c.AddDestination(destination: routePos);
@@ -284,7 +284,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.HOVER_UP, "0 25 0", 6);
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.RAISE, "200 0 0", 15);*/		
 		#else
-			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.FLY, GetPos());
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, GetPos());
 		#endif
 		
 		//Init flight
