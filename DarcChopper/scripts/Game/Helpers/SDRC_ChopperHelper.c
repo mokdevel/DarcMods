@@ -174,7 +174,7 @@ class SDRC_ChopperHelper
 			}
 			
 			//Add 1-4 random additional riflemen
-			for (int i = 0; i < SDRC_Misc.RandomInt(1, 4); i++)
+			for (int i = 0; i < SDRC_Misc.RandomInt(2, 8); i++)
 			{
 				ResourceName member = SDRC_EnemyHelper.SelectEnemy("C_RIFLEMAN", faction);
 				if (member == "")

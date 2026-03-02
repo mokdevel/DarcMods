@@ -31,14 +31,14 @@ enum SDRC_EFlyWayPointType
 	WP_RAISE,					//8 - 
 	WP_HOVER,					//9 - 
 	WP_GET_OUT,					//10 - 
-	WP_END,						
+	WP_END,						//11 - 
 	
 	//----	
-	WP_HOVER_UP,				//Does the action and goes to HOVER state
-	WP_STOP_ENGINE,				//Does the action and goes to WAIT state
+	WP_HOVER_UP,				//12 - Does the action and goes to HOVER state
+	WP_STOP_ENGINE,				//13 - Does the action and goes to WAIT state
 	
 	//Macro actions
-	WP_M_LAND_TROOPS,
+	WP_M_LAND_TROOPS = 30,
 }
 
 enum SDRC_EHeliState
@@ -967,7 +967,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		}
 
 		//If we're raising from the ground, put some of the points closer to ground
-		if (m_eHeliState == SDRC_EHeliState.RAISE)
+/*		if (m_eHeliState == SDRC_EHeliState.RAISE)
 		{
 			int count = m_vSplinePoints.Count() - 1;
 			//Find high point, low point and difference
@@ -984,12 +984,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 			}
 			
 			isSmoothingNeeded = false;
-		}
+		}*/
 				
 		//If we're landing set some of the last points close to the ground
 		if (m_eHeliState == SDRC_EHeliState.LAND)
 		{
-			const int POINTS_TO_GROUND = 6;
+			const int POINTS_TO_GROUND = 8;
 			int lastIdx = m_vSplinePoints.Count() - 1;
 
 			//Create a Y spline to replace the given points to smooth the curve for landing
@@ -1152,15 +1152,27 @@ class SDRC_ChopperComp : ScriptGameComponent
 				AddDestination(SDRC_EFlyWayPointType.WP_END, m_vFlightPoints[m_vFlightPoints.Count() - 1].pt); 
 				break;
 			}
+			
+			//These will remove the item from destination list. These are considered handled.
 			case SDRC_EFlyWayPointType.WP_RAISE:
 			{				
 				ResetOriginalValues();		//Reset heli settings
-				SetState(SDRC_EHeliState.RAISE);
-				SetTimeInState(m_vFlyDestinations[0].value);
+				//Create a first destination that is a short way to where we're planning to go. Smoothens the flight.
+				vector pos0 = SDRC_ChopperHelper.GetDestinationForward(owner, m_vFlyDestinations[0].pt[0] / 8);				
+				pos0[1] = (pos0[1] / 2);				//Make it low, to get the helicopter nose down.
+				//Then fly forward
+				vector pos1 = SDRC_ChopperHelper.GetDestinationForward(owner, m_vFlyDestinations[0].pt[0]);				
+				pos1[1] = m_fFlyHeightLow + 5;			//Fly to a point slightly above low fly point
+				
+				for (int i = 0; i < 10; i++)
+				{
+					m_vSplinePoints.Insert(vector.Lerp(pos0, pos1, i/10));
+				}
+				m_iClosestIndex = 0;				
+				SetState(SDRC_EHeliState.FLY);
+				isRemoveDestination = true;
 				break;
-			}	
-			
-			//These will remove the item from destination list. These are considered handled.
+			}				
 			case SDRC_EFlyWayPointType.WP_END:
 			{
 				SetState(SDRC_EHeliState.DESTROYED);
@@ -1182,9 +1194,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 				isRemoveDestination = true;
 				break;
 			}
+			case SDRC_EFlyWayPointType.WP_HOVER_UP:
 			case SDRC_EFlyWayPointType.WP_HOVER:
 			{
-				//NOTE: We do not use AddDestination() for setting the state
+				//NOTE: We do not use AddDestination() for setting the flight. We just add one point in the spline
 				
 				//Reset heli settings
 				ResetOriginalValues();
@@ -1197,9 +1210,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 				//For hovering, we add one point to the spline
 				ResetFlight();
 				
-				vector pos = m_vOrigin;
+				vector pos = owner.GetOrigin();
 				pos[1] = pos[1] + m_vFlyDestinations[0].pt[1];		//Hover above original point
-				m_vSplinePoints.Insert(pos);
+				
+				for (int i = 0; i < 10; i++)
+				{
+					m_vSplinePoints.Insert(pos);
+				}
+				m_iClosestIndex = 0;
+				//CreateNewFlight(owner, firstDestination);
 				
 				//Just wait.
 				SetState(SDRC_EHeliState.HOVER);
@@ -1333,28 +1352,23 @@ class SDRC_ChopperComp : ScriptGameComponent
 						AddFlyPathPoint(pos);
 					}					
 					break;
-				}
-				case SDRC_EFlyWayPointType.WP_RAISE:
+				}				
+/*				case SDRC_EFlyWayPointType.WP_RAISE:
 				{				
 					//Create a first destination that is a short way to where we're planning to go. Smoothens the flight.
 					vector firstDestination = SDRC_ChopperHelper.GetDestinationForward(owner, m_vFlyDestinations[0].pt[0] / 5);
 					//Make it low, to get the helicopter nose down.
 					firstDestination[1] = (firstDestination[1] / 2);
+					AddFlyPathPoint(firstDestination);
 					//Then fly forward
 					pos = SDRC_ChopperHelper.GetDestinationForward(owner, m_vFlyDestinations[0].pt[0]);				
 					pos[1] = m_fFlyHeightLow + 5;	//Fly to a point slightly above low fly point				
 //					AddDestination(SDRC_EFlyWayPointType.WP_RAISE, pos);
 					AddFlyPathPoint(pos);
-//					SetState(SDRC_EHeliState.RAISE);
-					
-					if (flyDestination.value == -1)
-					{
-						//If no time defined, set it to 5
-						flyDestination.value = 5;
-					}
-					SetNextState(owner, flyDestination.type);
+					SetState(SDRC_EHeliState.FLY);
 					break;
-				}								
+				}*/
+				
 /*				case SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY:	//If request to fly away, set the right state
 				case SDRC_EFlyWayPointType.WP_FLY_AWAY:				//If request to fly away, set the right state
 				case SDRC_EFlyWayPointType.WP_END:					//If request to end, stop simulation
@@ -1501,7 +1515,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 				AddDestination(SDRC_EFlyWayPointType.WP_LAND, destination);
 				AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
 				AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value : value);
-				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, "0 25 0", 6);
+				vector hoverPos = vector.Zero;
+				hoverPos[1] = m_fFlyHeightLow;
+				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 12);
 				AddDestination(SDRC_EFlyWayPointType.WP_RAISE, "200 0 0", 15);
 				//All things are already added
 				addFlyPoint = false;
@@ -1699,6 +1715,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	Returns the next waypoint type defined in destinations. Does not modify the destination list.
+	*/
 	SDRC_EFlyWayPointType GetNextWayPointType(SDRC_EFlyWayPointType nextType)
 	{
 		if (m_vFlyDestinations.IsEmpty())

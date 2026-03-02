@@ -192,7 +192,7 @@ sealed class SDRC_VehicleHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Ask AI to get out from vehicle
+	Ask AI to get out from vehicle. By default only cargo team is jumping out.
 	*/	
     static void GetOutVehicle(IEntity vehicle, out array<SCR_AIGroup> groups, ECompartmentType compartmentType = ECompartmentType.CARGO)
     {
