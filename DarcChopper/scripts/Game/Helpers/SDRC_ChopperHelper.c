@@ -174,7 +174,7 @@ class SDRC_ChopperHelper
 			}
 			
 			//Add 1-4 random additional riflemen
-			for (int i = 0; i < SDRC_Misc.RandomInt(2, 8); i++)
+			for (int i = 0; i < SDRC_Misc.RandomInt(4, 8); i++)
 			{
 				ResourceName member = SDRC_EnemyHelper.SelectEnemy("C_RIFLEMAN", faction);
 				if (member == "")
@@ -334,6 +334,19 @@ class SDRC_ChopperHelper
 							case "E_AIWaypoint_GetOut":
 							{
 								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, pos, 20);
+								break;
+							}
+							case "E_AIWaypoint_Defend":
+							{
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_TESTING, pos, 5);
+								break;
+							}
+							case "E_AIWaypoint_Wait":							
+							case "E_AIWaypoint_GetIn":
+							case "E_AIWaypoint_SearchAndDestroy":
+							{
+								SDRC_Log.Add("[SDRC_ChopperHelper:HandleWaypoints] TBD", LogLevel.DEBUG);
+//								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_TESTING, pos, 5);
 								break;
 							}
 						}
