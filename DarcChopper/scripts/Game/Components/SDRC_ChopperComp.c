@@ -20,18 +20,18 @@ enum SDRC_EHeliWaypointGenerationType
 //------------------------------------------------------------------------------------------------
 enum SDRC_EFlyWayPointType
 {
-	WP_UNDEFINED,
-	WP_FLY,						//Fly, mormal flight pattern
-	WP_FLY_IMMEDIATELY,			//Fly, but remove all already added destinations
-	WP_FLY_AWAY,				//Fly away as a last move
-	WP_FLY_AWAY_IMMEDIATELY,	//Fly away immediately removing the previous destinations
-	WP_PATROL,					//Patrol around an area
-	WP_LAND,
-	WP_WAIT,
-	WP_RAISE,
-	WP_HOVER,
-	WP_GET_OUT,
-	WP_END,
+	WP_UNDEFINED,				//0 
+	WP_FLY,						//1 - Fly, mormal flight pattern
+	WP_FLY_IMMEDIATELY,			//2 - Fly, but remove all already added destinations
+	WP_FLY_AWAY,				//3 - Fly away as a last move
+	WP_FLY_AWAY_IMMEDIATELY,	//4 - Fly away immediately removing the previous destinations
+	WP_PATROL,					//5 - Patrol around an area
+	WP_LAND,					//6 - 
+	WP_WAIT,					//7 - 
+	WP_RAISE,					//8 - 
+	WP_HOVER,					//9 - 
+	WP_GET_OUT,					//10 - 
+	WP_END,						
 	
 	//----	
 	WP_HOVER_UP,				//Does the action and goes to HOVER state
@@ -51,7 +51,7 @@ enum SDRC_EHeliState
 	WAIT,					//Velocity disabled
 	RAISE,
 	HOVER,
-//	GET_OUT,
+	GET_OUT,				//One frame state to order AI to get out
 	END,
 	
 	ON_GROUND,				//One frame state for touch down
@@ -70,7 +70,7 @@ class SDRC_FlyPathPoint
 
 	[Attribute(defvalue: "0 0 0", desc: "Position, waiting time, hover height, etc..")]
 	float value
-	
+		
 	void Set(SDRC_EFlyWayPointType type_ = SDRC_EFlyWayPointType.WP_FLY, vector pt_ = vector.Zero, float value_ = 0)
 	{
 		type = type_;
@@ -1041,7 +1041,198 @@ class SDRC_ChopperComp : ScriptGameComponent
 		AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos);
 		SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 255, 00, 00), 2.0, m_sDid, 200);				
 	}
+
+	//------------------------------------------------------------------------------------------------	
+	// States 
+	//------------------------------------------------------------------------------------------------	
+	
+	//------------------------------------------------------------------------------------------------
+	SDRC_EHeliState GetState()
+	{
+		return m_eHeliState;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	void SetState(SDRC_EHeliState state)
+	{
+		m_eHeliState = state;
 		
+		//If in normal flight mode, disable the TimeInState counter
+		if (state == SDRC_EHeliState.FLY)
+		{			
+			SetTimeInState(0)
+		}
+		
+		SDRC_Log.Add("[SDRC_ChopperComp:SetState] State: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.DEBUG);
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	void SetTimeInState(int seconds)	
+	{
+		if (seconds == -1)
+		{
+			seconds = 0;
+		}
+		
+		m_fTimeInState = seconds;
+		
+		if (seconds == 0)
+		{
+			m_bTimeInStateEnabled = false;
+		}
+		else
+		{
+			m_bTimeInStateEnabled = true;
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Handle state (machine)
+	*/
+	private void HandleState(IEntity owner, float timeSlice)
+	{	
+		switch (m_eHeliState)
+		{
+			case SDRC_EHeliState.LAND:
+			{
+				HandleLanding(owner, timeSlice);	
+				break;
+			}
+			
+			case SDRC_EHeliState.GET_OUT:
+			{
+				SetNextState(owner);
+				break;				
+			}			
+		}
+		
+		//Wait for the state timer to end and go to next state
+		if ( (m_eHeliState != SDRC_EHeliState.FLY) && (m_fTimeInState < 0) && m_bTimeInStateEnabled) 
+//		if ( (m_fTimeInState < 0) && (m_bTimeInStateEnabled) )
+		{
+			SetNextState(owner);
+		}
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Sets the next destination for an action. 
+	- FLY will start to fly
+	- Others will have some action bound to them.
+	*/
+	void SetNextState(IEntity owner, SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.WP_UNDEFINED)
+	{
+		//By default we remove the destination
+		bool isRemoveDestination = false;
+		
+		//If needed, create new flight path
+		bool isCreateFlight = false;
+		
+		nextType = GetNextWayPointType(nextType);
+
+		switch (nextType)
+		{
+			case SDRC_EFlyWayPointType.WP_FLY:
+			{
+				ResetOriginalValues();		//Reset heli settings
+				SetState(SDRC_EHeliState.FLY);
+				//Don't remove the destination as it has the next point where to fly
+				break;
+			}			
+			case SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY:	//NOTE: This is not a real state. When set, state will change to FLY_AWAY
+			{
+				//Don't remove the destination as it will be removed when creating a waypoint in CreateFlightPoints
+			}
+			case SDRC_EFlyWayPointType.WP_FLY_AWAY:
+			{
+				ResetOriginalValues();		//Reset heli settings
+				SetState(SDRC_EHeliState.FLY);
+				//Fly for a while and then go to END state
+				AddDestination(SDRC_EFlyWayPointType.WP_END, m_vFlightPoints[m_vFlightPoints.Count() - 1].pt); 
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_RAISE:
+			{				
+				ResetOriginalValues();		//Reset heli settings
+				SetState(SDRC_EHeliState.RAISE);
+				SetTimeInState(m_vFlyDestinations[0].value);
+				break;
+			}	
+			
+			//These will remove the item from destination list. These are considered handled.
+			case SDRC_EFlyWayPointType.WP_END:
+			{
+				SetState(SDRC_EHeliState.DESTROYED);
+				isRemoveDestination = true;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_GET_OUT:
+			{
+				SDRC_ChopperHelper.GetOut(owner);
+				SetState(SDRC_EHeliState.GET_OUT);
+				isRemoveDestination = true;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_WAIT:
+			{
+				//Just wait
+				SetState(SDRC_EHeliState.WAIT);
+				SetTimeInState(m_vFlyDestinations[0].value); 
+				isRemoveDestination = true;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_HOVER:
+			{
+				//NOTE: We do not use AddDestination() for setting the state
+				
+				//Reset heli settings
+				ResetOriginalValues();
+				
+				//Stop heli from moving
+				m_fSpeedMin = 0.3;
+				m_fSpeedMax = 0.6;
+				m_fSpeedLandingMul = 0;
+				
+				//For hovering, we add one point to the spline
+				ResetFlight();
+				
+				vector pos = m_vOrigin;
+				pos[1] = pos[1] + m_vFlyDestinations[0].pt[1];		//Hover above original point
+				m_vSplinePoints.Insert(pos);
+				
+				//Just wait.
+				SetState(SDRC_EHeliState.HOVER);
+				SetTimeInState(m_vFlyDestinations[0].value);
+				
+				SDRC_ChopperDebug.DrawDebugPaths(owner);
+				isRemoveDestination = true;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
+			{
+				//Stop engine and wait
+				m_Helicopter_s.EngineStop();
+				SetState(SDRC_EHeliState.WAIT);
+				SetTimeInState(30);
+				isRemoveDestination = true;
+				break;
+			}
+		}
+		
+		//Remove the destination if it was handled.	By default it is.
+		if (isRemoveDestination)
+		{
+			m_vFlyDestinations.RemoveOrdered(0);
+		}
+		
+		//With new destinations, create new flight.
+/*		if (isCreateFlight)
+		{
+			CreateNewFlight(owner, firstDestination);
+		}*/
+	}		
+
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Create fly points
@@ -1193,9 +1384,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 			vector mid = vector.Lerp(p0, p1, 0.5);
 			AddFlyPathPoint(mid, index: 1);
 		}		
-				
+		
 		SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Created " + m_vFlightPoints.Count() + " points.", LogLevel.SPAM);
-
+		
 		//Clear the destinations 
 		for (int i = 0; i <= lastIdx; i++)
 		{
@@ -1204,7 +1395,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 				m_vFlyDestinations.RemoveOrdered(0);
 			}
 		}		
-		SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Destinations left: " + m_vFlyDestinations.Count(), LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Destinations left: " + m_vFlyDestinations.Count(), LogLevel.DEBUG);		
 	}		
 
 	//------------------------------------------------------------------------------------------------	
@@ -1233,236 +1424,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			m_vFlightPoints.InsertAt(fpp, index);
 		}
 	}		
-
-	//------------------------------------------------------------------------------------------------	
-	// States 
-	//------------------------------------------------------------------------------------------------	
 	
-	//------------------------------------------------------------------------------------------------
-	SDRC_EHeliState GetState()
-	{
-		return m_eHeliState;
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	void SetState(SDRC_EHeliState state)
-	{
-		m_eHeliState = state;
-		
-		//If in normal flight mode, disable the TimeInState counter
-		if (state == SDRC_EHeliState.FLY)
-		{			
-			SetTimeInState(0)
-		}
-		
-		SDRC_Log.Add("[SDRC_ChopperComp:SetState] State: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.DEBUG);
-	}
-	
-	//------------------------------------------------------------------------------------------------	
-	void SetTimeInState(int seconds)	
-	{
-		if (seconds == -1)
-		{
-			seconds = 0;
-		}
-		
-		m_fTimeInState = seconds;
-		
-		if (seconds == 0)
-		{
-			m_bTimeInStateEnabled = false;
-		}
-		else
-		{
-			m_bTimeInStateEnabled = true;
-		}
-	}
-	
-	//------------------------------------------------------------------------------------------------	
-	/*!	
-	Handle state (machine)
-	*/
-	private void HandleState(IEntity owner, float timeSlice)
-	{	
-		switch (m_eHeliState)
-		{
-			case SDRC_EHeliState.LAND:
-			{
-				HandleLanding(owner, timeSlice);	
-				break;
-			}
-			
-			//If on ground, immediately set next flight point state after touch down
-/*			case SDRC_EHeliState.ON_GROUND:
-			{
-				CreateFlightPoints(owner);
-				break;
-			}
-						
-			//After get out, immediately set next state after touch down
-			case SDRC_EHeliState.GET_OUT:
-			{
-				array<SCR_AIGroup> groups = {};
-				SDRC_VehicleHelper.GetOutVehicle(owner, groups);
-		
-				foreach (SCR_AIGroup group : groups)
-				{
-					SDRC_Log.Add("[SDRC_ChopperComp:HandleState] Create waypoint for AI group: " + group, LogLevel.DEBUG);			
-					
-					vector pos = SDRC_Misc.RandomizePos(owner.GetOrigin(), 50);			
-					SDRC_DebugHelper.AddDebugPos(pos);
-					SDRC_WPHelper.CreateWaypoint(group, pos, SDRC_EWaypointMoveType.MOVE);
-				}				
-				
-				SetNextState(owner);
-				break;
-			}*/
-		}
-		
-		//Wait for the state timer to end and go to next state
-		if ( (m_eHeliState != SDRC_EHeliState.FLY) && (m_fTimeInState < 0) && m_bTimeInStateEnabled) 
-//		if ( (m_fTimeInState < 0) && (m_bTimeInStateEnabled) )
-		{
-			SetNextState(owner);
-		}
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	SDRC_EFlyWayPointType GetNextWayPoint()
-	{
-		if (!m_vFlyDestinations.IsEmpty())
-		{
-			return SDRC_EFlyWayPointType.WP_UNDEFINED;
-		}
-		
-		return m_vFlyDestinations[0].type;
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Sets the next destination for an action. 
-	- FLY will start to fly
-	- Others will have some action bound to them.
-	*/
-	void SetNextState(IEntity owner, SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.WP_UNDEFINED)
-	{
-		//By default we remove the destination
-		bool isRemoveDestination = true;
-		
-		//If needed, create new flight path
-		bool isCreateFlight = false;
-		
-		if (nextType == SDRC_EFlyWayPointType.WP_UNDEFINED)
-		{		
-			//If not destinations defined, start to fly		
-			if (m_vFlyDestinations.IsEmpty())
-			{
-				nextType = SDRC_EFlyWayPointType.WP_FLY;
-			}
-			else
-			{
-				nextType = m_vFlyDestinations[0].type;
-			}
-		}
-
-		switch (nextType)
-		{
-			case SDRC_EFlyWayPointType.WP_FLY:
-			{
-				ResetOriginalValues();		//Reset heli settings
-				SetState(SDRC_EHeliState.FLY);
-				//Don't remove the destination as it has the next point where to fly
-				isRemoveDestination = false;
-				break;
-			}			
-			case SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY:	//NOTE: This is not a real state. When set, state will change to FLY_AWAY
-			{
-				//Don't remove the destination as it will be removed when creating a waypoint in CreateFlightPoints
-				isRemoveDestination = false;
-			}
-			case SDRC_EFlyWayPointType.WP_FLY_AWAY:
-			{
-				ResetOriginalValues();		//Reset heli settings
-				SetState(SDRC_EHeliState.FLY);
-				//Fly for a while and then go to END state
-				AddDestination(SDRC_EFlyWayPointType.WP_END, m_vFlightPoints[m_vFlightPoints.Count() - 1].pt); 
-				isRemoveDestination = false;
-				break;
-			}		
-			case SDRC_EFlyWayPointType.WP_END:
-			{
-				SetState(SDRC_EHeliState.DESTROYED);
-				break;
-			}
-/*			case SDRC_EFlyWayPointType.WP_GET_OUT:
-			{
-				SetState(SDRC_EHeliState.GET_OUT);
-				break;
-			}*/
-			case SDRC_EFlyWayPointType.WP_WAIT:
-			{
-				//Just wait
-				SetState(SDRC_EHeliState.WAIT);
-				SetTimeInState(m_vFlyDestinations[0].value); 
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_RAISE:
-			{				
-				ResetOriginalValues();		//Reset heli settings
-				SetState(SDRC_EHeliState.RAISE);
-				SetTimeInState(m_vFlyDestinations[0].value);
-//				isCreateFlight = true;			
-				break;
-			}	
-			case SDRC_EFlyWayPointType.WP_HOVER:
-			{
-				//NOTE: We do not use AddDestination() for setting the state
-				
-				//Reset heli settings
-				ResetOriginalValues();
-				
-				//Stop heli from moving
-				m_fSpeedMin = 0.3;
-				m_fSpeedMax = 0.6;
-				m_fSpeedLandingMul = 0;
-				
-				//For hovering, we add one point to the spline
-				ResetFlight();
-				
-				vector pos = m_vOrigin;
-				pos[1] = pos[1] + m_vFlyDestinations[0].pt[1];		//Hover above original point
-				m_vSplinePoints.Insert(pos);
-				
-				//Just wait.
-				SetState(SDRC_EHeliState.HOVER);
-				SetTimeInState(m_vFlyDestinations[0].value);
-				
-				SDRC_ChopperDebug.DrawDebugPaths(owner);
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
-			{
-				//Stop engine and wait
-				m_Helicopter_s.EngineStop();
-				SetState(SDRC_EHeliState.WAIT);
-				SetTimeInState(30);
-				break;
-			}
-		}
-		
-		//Remove the destination if it was handled.	By default it is.
-		if (isRemoveDestination)
-		{
-			m_vFlyDestinations.RemoveOrdered(0);
-		}
-		
-		//With new destinations, create new flight.
-/*		if (isCreateFlight)
-		{
-			CreateNewFlight(owner, firstDestination);
-		}*/
-	}		
-
 	//------------------------------------------------------------------------------------------------	
 	// Destination settings
 	//------------------------------------------------------------------------------------------------	
@@ -1491,6 +1453,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 				ResetDestinations();
 				CutSpline();
 				type = SDRC_EFlyWayPointType.WP_FLY;
+				SetState(SDRC_EHeliState.FLY);
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY:
@@ -1500,12 +1463,13 @@ class SDRC_ChopperComp : ScriptGameComponent
 				CutSpline();
 				//NOTE: Will drop through FLY_AWAY
 			}		
-/*			case SDRC_EFlyWayPointType.WP_FLY_AWAY:
+			case SDRC_EFlyWayPointType.WP_FLY_AWAY:
 			{
 				//Fly away after all destinations have been handled
 				SetState(SDRC_EHeliState.FLY_AWAY);
 				break;
 			}
+			
 /*			case SDRC_EFlyWayPointType.WP_LAND:
 			{
 				//Land the chopper
@@ -1627,23 +1591,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 			else
 			{
 				SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
-//				SetState(SDRC_EHeliState.ON_GROUND);
 				m_fSpeedMin = 0;
 				m_fSpeedLandingMul = 0;
 				m_fRotorForceMultiplier = 0;
-
-				SDRC_EFlyWayPointType nextWP = GetNextWayPoint();
-								
-				//What to do after landing
-				switch (nextWP)
-				{
-					case SDRC_EFlyWayPointType.GET_OUT:
-					{
-						SDRC_ChopperHelper.GetOut(owner);
-						SetNextState(owner);
-						break;				
-					}
-				}
+				SetNextState(owner);
 			}
 		}
 	}	
@@ -1746,7 +1697,31 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_vEnemyPosition = "0 0 0";
 		m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + m_iEnemyFoundTimeout;
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	SDRC_EFlyWayPointType GetNextWayPointType(SDRC_EFlyWayPointType nextType)
+	{
+		if (m_vFlyDestinations.IsEmpty())
+		{
+			nextType = SDRC_EFlyWayPointType.WP_UNDEFINED;
+		}
+
+		if (nextType == SDRC_EFlyWayPointType.WP_UNDEFINED)
+		{		
+			//If not destinations defined, start to fly		
+			if (m_vFlyDestinations.IsEmpty())
+			{
+				nextType = SDRC_EFlyWayPointType.WP_FLY;
+			}
+			else
+			{
+				nextType = m_vFlyDestinations[0].type;
+			}
+		}		
+				
+		return nextType;
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Returns the final destination from the spline
