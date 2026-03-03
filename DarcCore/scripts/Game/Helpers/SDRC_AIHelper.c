@@ -318,7 +318,41 @@ sealed class SDRC_AIHelper
 			}
 		}
 	}		
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find group that AI belongs to
+	*/
+	static AIGroup GetAIGroup(IEntity agent)
+	{
+		AIGroup group;		
+		AIAgent aiAgent = CastEntityToAIAgent(agent);
+		
+/*		if (!agent)
+		{
+			return null;
+		}
+		
+		SCR_ChimeraCharacter chimeraChar = SCR_ChimeraCharacter.Cast(agent);
+		if (!chimeraChar)
+		{
+			return null;
+		}
+		AIControlComponent aicc = chimeraChar.GetAIControlComponent();
+		if (!aicc)
+		{
+			return null;
+		}
+		AIAgent aiAgent = aicc.GetControlAIAgent(); */
+		if (!aiAgent)
+		{
+			return null;
+		}
+		
+		group = aiAgent.GetParentGroup();		
+		return group;
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find all groups
@@ -604,4 +638,30 @@ sealed class SDRC_AIHelper
 		}
 		return true;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Cast an AI IEntity to an AIAgent
+	*/
+	static AIAgent CastEntityToAIAgent(IEntity agent)
+	{
+		SCR_ChimeraCharacter chimeraChar = SCR_ChimeraCharacter.Cast(agent);
+		if (!chimeraChar)
+		{
+			return null;
+		}
+		AIControlComponent aicc = chimeraChar.GetAIControlComponent();
+		if (!aicc)
+		{
+			return null;
+		}
+		AIAgent aiAgent = aicc.GetControlAIAgent();
+		if (!aiAgent)
+		{
+			return null;
+		}
+		
+		return aiAgent;
+	}
+	
 }

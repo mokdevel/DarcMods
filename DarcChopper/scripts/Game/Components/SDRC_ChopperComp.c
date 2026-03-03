@@ -313,7 +313,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			//Init flight path
 			InitFlight(owner, owner.GetOrigin());
 			//Spawn crew 
-			int crewCount = SDRC_ChopperHelper.SpawnCrew(owner, m_aCrew, m_sFaction, m_AISkill, m_AIPerception);
+			int crewCount = SDRC_ChopperCrewHelper.SpawnCrew(owner, m_aCrew, m_sFaction, m_AISkill, m_AIPerception);
 			SDRC_Log.Add("[SDRC_ChopperComp] Crew count: " + crewCount, LogLevel.DEBUG);
 		}		
 
@@ -973,7 +973,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			}
 			case SDRC_EFlyWayPointType.WP_GET_OUT:
 			{
-				SDRC_ChopperHelper.GetOut(owner);
+				SDRC_ChopperCrewHelper.GetOut(owner);
 				SetState(SDRC_EHeliState.GET_OUT);
 				isRemoveDestination = true;
 				break;

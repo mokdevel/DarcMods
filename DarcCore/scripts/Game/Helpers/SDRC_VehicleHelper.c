@@ -193,6 +193,7 @@ sealed class SDRC_VehicleHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Ask AI to get out from vehicle. By default only cargo team is jumping out.
+	\param groups Groups that were ordered to leave the chopper
 	*/	
     static void GetOutVehicle(IEntity vehicle, out array<SCR_AIGroup> groups, ECompartmentType compartmentType = ECompartmentType.CARGO)
     {
@@ -228,7 +229,7 @@ sealed class SDRC_VehicleHelper
 				compAccess.GetOutVehicle(EGetOutType.ANIMATED, 0, false, false);
 			}
 			
-			//Collect the groups. 
+			//Collect the groups that were ordered to climb out. 
 			SCR_AIGroup AIgroup = SCR_AIGroup.Cast(aiAgent.GetParentGroup());			
 			
 			EntityID groupId = AIgroup.GetID();
@@ -324,7 +325,9 @@ sealed class SDRC_VehicleHelper
 			
 			foreach (IEntity agent : agents)
 			{
-				AIGroup group;
+				AIGroup group = SDRC_AIHelper.GetAIGroup(agent);
+				
+/*				AIGroup group;
 				SCR_ChimeraCharacter chimeraChar = SCR_ChimeraCharacter.Cast(agent);
 				if (!chimeraChar)
 				{
@@ -341,7 +344,8 @@ sealed class SDRC_VehicleHelper
 					continue;
 				}
 				
-				group = aiAgent.GetParentGroup();
+				group = aiAgent.GetParentGroup();*/
+				
 				if (group != null)
 				{
 					if (!groups.Contains(group))
