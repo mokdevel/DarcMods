@@ -7,60 +7,6 @@
 class SDRC_ChopperCompClass : ScriptGameComponentClass { }
 
 //------------------------------------------------------------------------------------------------
-enum SDRC_EHeliWaypointGenerationType
-{
-	NONE,
-	RANDOM,					//Random flying for a helicopter
-	PATROL,					//Fly around a certain area
-	SEARCH,					//Random flying search patrol. Once a player is found, mission ends.
-	
-	LANDING,				//Land the helicopter
-};
-
-//------------------------------------------------------------------------------------------------
-enum SDRC_EFlyWayPointType
-{
-	WP_UNDEFINED,				//0 
-	WP_FLY,						//1 - Fly, mormal flight pattern
-	WP_FLY_IMMEDIATELY,			//2 - Fly, but remove all already added destinations
-	WP_FLY_AWAY,				//3 - Fly away as a last move
-	WP_FLY_AWAY_IMMEDIATELY,	//4 - Fly away immediately removing the previous destinations
-	WP_PATROL,					//5 - Patrol around an area
-	WP_LAND,					//6 - 
-	WP_WAIT,					//7 - 
-	WP_RAISE,					//8 - 
-	WP_HOVER,					//9 - 
-	WP_GET_OUT,					//10 - 
-	WP_END,						//11 - 
-	
-	//----	
-	WP_HOVER_UP,				//12 - Does the action and goes to HOVER state
-	WP_STOP_ENGINE,				//13 - Does the action and goes to WAIT state
-	
-	//Macro actions
-	WP_M_LAND_TROOPS = 30,
-	
-	WP_M_TESTING,				//Just for testing
-}
-
-enum SDRC_EHeliState
-{
-	UNKNOWN,
-	FLY,
-	FLY_AWAY,
-	FLY_AWAY_IMMEDIATELY,	//NOTE: This is not a real state. When set, state will change to FLY_AWAY
-	LAND,
-	WAIT,					//Velocity disabled
-	RAISE,
-	HOVER,
-	GET_OUT,				//One frame state to order AI to get out
-	END,
-	
-	ON_GROUND,				//One frame state for touch down
-	DESTROYED,
-}
-
-//------------------------------------------------------------------------------------------------
 [BaseContainerProps()]
 class SDRC_FlyPathPoint
 {
@@ -211,7 +157,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	float m_fSpeedStart;							//Speed lerp start
 	float m_fSpeedTarget;							//Speed lerp target aka end
 	float m_fSpeedMul;								//Speed multiplier that depends on the turn
-	private float m_fSpeedLandingMul;				//Landing speed modifier
+	float m_fSpeedLandingMul;						//Landing speed modifier
 	float m_fRotorForceMultiplier;					//Rotor force multiplier that simulates up/down throttle
 	
 	//Angular velocities
@@ -283,7 +229,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		ResetFlight();
 		SetTimeInState(0);
 		//Save the original values
-		StoreOriginalValues();
+		SDRC_ChopperCompCore.StoreOriginalValues(owner);
 		
 		SDRC_ChopperEnemyHelper.GetWeapons(owner);
 		
@@ -296,12 +242,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 	        m_Helicopter_s.SetThrottle(m_fThrottle);
 	        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0);
 	        m_Helicopter_s.RotorSetForceScaleState(1, m_fRotorForce1);			
-			SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, SDRC_EHeliWaypointGenerationType.RANDOM, m_fDistanceLow, m_fDistanceHigh);						
+			SDRC_ChopperCompCore.SetHeli(owner, m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, SDRC_EHeliWaypointGenerationType.RANDOM, m_fDistanceLow, m_fDistanceHigh);						
 
 			if (m_bAutoStart)
 			{
 				//NOTE: This section is to be done in the mod
-				SetSearchForEnemy(true);
+				SDRC_ChopperEnemyHelper.SetSearchForEnemy(owner, true);
 				Ready(owner);
 			}
 		}
@@ -340,23 +286,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	/*!
-	Set the helicopter to normal state
-	*/	
-	void InitDone(IEntity owner)
+	/*!	
+	Return instance to component
+	*/
+	SDRC_ChopperComp GetInstance()
 	{
-		m_bInInit = false;
-		
-		//Check if pilots were possible to set
-		if (SDRC_VehicleHelper.PilotCountAlive(owner) == 0)
-		{
-			SDRC_Log.Add("[SDRC_ChopperComp] Unable to set pilots.", LogLevel.WARNING);			
-		}
-		
-		//Collect groups in the helicopter 
-		SDRC_VehicleHelper.GroupFindAll(owner, m_aGroups);		
+		return s_Instance;
 	}
-
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Once all init things are done, activate the component after a small delay
@@ -387,16 +324,25 @@ class SDRC_ChopperComp : ScriptGameComponent
 		Activate(owner);
 		
 		GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000, false, owner);
-	}
+	}	
 	
 	//------------------------------------------------------------------------------------------------
-	/*!	
-	Return instance to component
-	*/
-	SDRC_ChopperComp GetInstance()
+	/*!
+	Set the helicopter to normal state
+	*/	
+	void InitDone(IEntity owner)
 	{
-		return s_Instance;
-	}
+		m_bInInit = false;
+			
+		//Check if pilots were possible to set
+		if (SDRC_VehicleHelper.PilotCountAlive(owner) == 0)
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp] Unable to set pilots.", LogLevel.WARNING);			
+		}
+		
+		//Collect groups in the helicopter 
+		SDRC_VehicleHelper.GroupFindAll(owner, m_aGroups);
+	}	
 	
 	//------------------------------------------------------------------------------------------------	
 	// Flight model functionality
@@ -488,7 +434,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		//Find where we're going
 //		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iClosestIndex, false);	//NOTE: This will set m_iClosestIndex
-		m_iClosestIndex = FindNextSplinePointIndex(m_vOrigin, m_iClosestIndex);
+		m_iClosestIndex = SDRC_ChopperHelper.FindNextSplinePointIndex(m_vOrigin, m_iClosestIndex, m_vSplinePoints);
 		
 		if (m_iClosestIndex > m_iOldClosestIndex)
 		{
@@ -565,27 +511,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		SDRC_ChopperHelper.HandleWaypoints(owner);				
 		SDRC_ChopperDebug.DrawHelicopterVectors(owner);
-	}
-	
-	//------------------------------------------------------------------------------------------------	
-	private int FindNextSplinePointIndex(vector origin, int currentIndex)
-	{
-		float distance = vector.Distance(origin, m_vSplinePoints[currentIndex]);
-		int newIndex = currentIndex;
-		
-		for (int i = (currentIndex + 1); i < m_vSplinePoints.Count() - 1; i++)
-		{
-			if (vector.Distance(origin, m_vSplinePoints[i]) < distance)
-			{
-				newIndex = i;
-			}
-			else
-			{
-				break;
-			}
-		}
-		
-		return newIndex;
 	}
 	
 	//------------------------------------------------------------------------------------------------	
@@ -824,7 +749,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		
 		if (!m_bAutoStart)	//With autostart, use the origin of the chopper spawn
 		{
-			SetFlightPointHeight();
+			SDRC_ChopperHelper.SetFlightPointHeight(owner);
 		}
 		
 		//Create points for spline
@@ -839,7 +764,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_iOldClosestIndex = m_iClosestIndex;
 		
 		//Check that points are above ground
-		SetSplinePointsAboveGround();
+		SDRC_ChopperHelper.SetSplinePointsAboveGround(owner);
 		
 		m_fSpeed = 0.1;
 		m_fSpeedTarget = m_fSpeed;
@@ -871,7 +796,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Create points for spline		
 		CreateFlightPoints(owner);
 		
-		SetFlightPointHeight();
+		SDRC_ChopperHelper.SetFlightPointHeight(owner);
 		array<vector> flyPathPoints = {};
 		SDRC_ChopperDebug.GivePoints(flyPathPoints, m_vFlightPoints);
 		SDRC_Spline3D.GenerateSplinePoints(flyPathPoints, m_vSplinePoints, -1);
@@ -882,7 +807,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_iOldClosestIndex = m_iClosestIndex;
 		
 		//Check that points are above ground
-		SetSplinePointsAboveGround();
+		SDRC_ChopperHelper.SetSplinePointsAboveGround(owner);
 		
 		if (m_vSplinePoints.IsEmpty())
 		{
@@ -901,148 +826,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_vFlightPoints.Clear();
 		m_vSplinePoints.Clear();
 	}
-	
-	//------------------------------------------------------------------------------------------------	
-	// FlyPoint fixing and sanity check
-	//------------------------------------------------------------------------------------------------	
-		
-	//------------------------------------------------------------------------------------------------	
-	/*!	
-	Set the requested flight path points between min/max flying height.
-	*/	
-	private void SetFlightPointHeight()
-	{
-		float y = 0;
-		
-		foreach (int i, SDRC_FlyPathPoint flightPoint : m_vFlightPoints)
-		{
-			vector pt = flightPoint.pt;
-			
-			//Do not change height of two first points. These are the two points from the previous spline. 
-			if (i < 2)
-			{
-				continue;
-			}
-
-			//Initial height will be on ground
-			y = SDRC_Misc.GetSurfaceYWithWater(pt);
-			float flyHeight = 0;
-						
-			if (flightPoint.type == SDRC_EHeliState.LAND)
-			{
-				//Do nothing .. height will be on ground due to y being set and flyHeigt is zero. See above.
-			}
-			else
-			{
-				flyHeight = SDRC_Misc.RandomFloat(m_fFlyHeightLow, m_fFlyHeightHigh);
-			}
-
-			pt[1] = 0;	//We may in the future use the provided Y coord for the points. For now we set it to 0.
-			pt[1] = pt[1] + flyHeight + y;			
-			m_vFlightPoints[i].pt = pt;
-		}
-	}
-		
-	//------------------------------------------------------------------------------------------------	
-	/*!	
-	Check that spline points are above ground. Raise the point if needed.
-	*/	
-	private void SetSplinePointsAboveGround()
-	{	
-		//If we change the Y values, we want to smooth the spline
-		bool isSmoothingNeeded = false;
-		int smoothCount = 0;				//How many points to smooth. 0 = all
-		
-		//Make sure the points are at minimum m_fFlyHeightLow from the ground.
-		foreach (int i, vector pt : m_vSplinePoints)
-		{
-			float y = SDRC_Misc.GetSurfaceYWithWater(pt);
-
-			if (pt[1] < (y + m_fFlyHeightLow))
-			{
-//				pt[1] = y + ( (m_fFlyHeightHigh + m_fFlyHeightLow) / 2 ) ;	//Make chopper fly higher for a moment
-				pt[1] = y + m_fFlyHeightLow + 5;	//Make chopper fly higher for a moment
-				m_vSplinePoints[i] = pt;
-				
-				isSmoothingNeeded = true;
-			}
-		}
-
-		//If we're raising from the ground, put some of the points closer to ground
-/*		if (m_eHeliState == SDRC_EHeliState.RAISE)
-		{
-			int count = m_vSplinePoints.Count() - 1;
-			//Find high point, low point and difference
-			float p0 = m_vOrigin[1];
-			float p1 = m_vSplinePoints[m_vSplinePoints.Count() - 1][1];
-			float pdiff = p1 - p0;
-
-			//Create a Y spline to replace the given points to smooth the curve for raising
-			foreach (int i, vector splinePoint : m_vSplinePoints)
-			{
-				float step = i / m_vSplinePoints.Count();
-				splinePoint[1] = p0 + pdiff * SDRC_Math.HalfBell(step);
-				m_vSplinePoints[i] = splinePoint;
-			}
-			
-			isSmoothingNeeded = false;
-		}*/
-				
-		//If we're landing set some of the last points close to the ground
-		if (m_eHeliState == SDRC_EHeliState.LAND)
-		{
-			const int POINTS_TO_GROUND = 8;
-			int lastIdx = m_vSplinePoints.Count() - 1;
-
-			//Create a Y spline to replace the given points to smooth the curve for landing
-			if (m_vSplinePoints.Count() - 1 > POINTS_TO_GROUND)
-			{
-				//Find high point, low point and difference
-				float p0 = m_vSplinePoints[lastIdx - POINTS_TO_GROUND][1];
-				float p1 = SDRC_Misc.GetSurfaceYWithWater(m_vSplinePoints[lastIdx]);
-				float pdiff = p0 - p1;
-				
-				for (int i = 0; i < POINTS_TO_GROUND; i++)
-				{					
-					float step = 1 - (i / POINTS_TO_GROUND);	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (POINTS_TO_GROUND -1) for full bell curve.
-					
-					vector pt = m_vSplinePoints[lastIdx - POINTS_TO_GROUND + i + 1];
-					pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
-					m_vSplinePoints[lastIdx - POINTS_TO_GROUND + i + 1] = pt;
-				}
-				
-				smoothCount = m_vSplinePoints.Count() - POINTS_TO_GROUND;
-			}
-			else
-			{
-				vector pt = m_vSplinePoints[lastIdx];
-				float y = SDRC_Misc.GetSurfaceYWithWater(pt) + 5;	//Don't put it exactly to zero
-				pt[1] = y;
-				m_vSplinePoints[lastIdx] = pt;				
-			}
-		}		
-		
-		if (isSmoothingNeeded)
-		{
-			//Smooth the Up curve
-			SDRC_Spline3D.SmoothSplineUpOnly(m_vSplinePoints, smoothCount);
-		}
-	}
-	
-	//------------------------------------------------------------------------------------------------	
-	// Waypoint functions
-	//------------------------------------------------------------------------------------------------	
-	
-	//------------------------------------------------------------------------------------------------	
-	/*!	
-	Functionality to generate future destination(s) for the chopper
-	*/
-	private void GenerateWayPoint(IEntity owner)
-	{		
-		vector pos = SDRC_ChopperHelper.GetRandomPosition(owner.GetOrigin(), m_fDistanceLow, m_fDistanceHigh);
-		AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos);
-		SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 255, 00, 00), 2.0, m_sDid, 200);				
-	}
 
 	//------------------------------------------------------------------------------------------------	
 	// States 
@@ -1052,7 +835,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	SDRC_EHeliState GetState()
 	{
 		return m_eHeliState;
-	}	
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	void SetState(SDRC_EHeliState state)
@@ -1131,14 +914,14 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//If needed, create new flight path
 		bool isCreateFlight = false;
 		
-		nextType = GetNextWayPointType(nextType);
+		nextType = SDRC_ChopperHelper.GetNextWayPointType(owner, nextType);
 
 		switch (nextType)
 		{
 			case SDRC_EFlyWayPointType.WP_UNDEFINED:
 			case SDRC_EFlyWayPointType.WP_FLY:
 			{
-				ResetOriginalValues();		//Reset heli settings
+				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
 				SetState(SDRC_EHeliState.FLY);
 				//Don't remove the destination as it has the next point where to fly
 				break;
@@ -1149,7 +932,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			}
 			case SDRC_EFlyWayPointType.WP_FLY_AWAY:
 			{
-				ResetOriginalValues();		//Reset heli settings
+				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
 				SetState(SDRC_EHeliState.FLY);
 				//Fly for a while and then go to END state
 				AddDestination(SDRC_EFlyWayPointType.WP_END, m_vFlightPoints[m_vFlightPoints.Count() - 1].pt); 
@@ -1161,7 +944,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			{				
 				//NOTE: We do not use AddDestination() for setting the flight. We just add one point in the spline
 				
-				ResetOriginalValues();		//Reset heli settings
+				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
 				//For raise, we add points to the spline
 				ResetFlight();
 				
@@ -1209,7 +992,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 				//NOTE: We do not use AddDestination() for setting the flight. We just add one point in the spline
 				
 				//Reset heli settings
-				ResetOriginalValues();
+				SDRC_ChopperCompCore.ResetOriginalValues(owner);
 				
 				//Stop heli from moving
 				m_fSpeedMin = 0.3;
@@ -1262,6 +1045,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 	}		
 
 	//------------------------------------------------------------------------------------------------	
+	// Fly point handling
+	//------------------------------------------------------------------------------------------------	
+	
+	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Create fly points
 	Takes the points from m_vFlyDestinations and generates points to be used for spline creation
@@ -1285,7 +1072,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Generate a random destination point if needed
 		if (m_vFlyDestinations.IsEmpty())
 		{		
-			GenerateWayPoint(owner);
+			SDRC_ChopperHelper.GenerateWayPoint(owner);
 		}
 		
 		//Handle destinations
@@ -1474,7 +1261,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 				//Fly immediately to a destination
 				//Remove any existing destination
 				ResetDestinations();
-				CutSpline();
+				SDRC_ChopperHelper.CutSpline(m_vSplinePoints, m_iClosestIndex);
 				type = SDRC_EFlyWayPointType.WP_FLY;
 				SetState(SDRC_EHeliState.FLY);
 				break;
@@ -1483,7 +1270,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			{
 				//Fly away immediately
 				ResetDestinations();
-				CutSpline();
+				SDRC_ChopperHelper.CutSpline(m_vSplinePoints, m_iClosestIndex);
 				//NOTE: Will drop through FLY_AWAY
 			}		
 			case SDRC_EFlyWayPointType.WP_FLY_AWAY:
@@ -1544,20 +1331,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	{
 		m_vFlyDestinations.Clear();
 	}	
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Cut spline to create the new destination almost immediately. Remove points from the end.
-	*/
-	void CutSpline()
-	{
-		//Take the last one, reduce current one and reduce the point count for new distance. Add a safe margin of 2.
-		int toBeRemoved = (m_vSplinePoints.Count() - 1) - m_iClosestIndex - POINTS_TO_NEW_DISTANCE - 2;
-		for (int i = 0; i < toBeRemoved; i++)
-		{
-			m_vSplinePoints.RemoveOrdered(m_vSplinePoints.Count() - 1);
-		}
-	}	
 
 	//------------------------------------------------------------------------------------------------	
 	// Special handling
@@ -1609,92 +1382,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 			}
 		}
 	}	
-		
-	//------------------------------------------------------------------------------------------------	
-	// Helicopter settings
-	//------------------------------------------------------------------------------------------------	
-	
-	void SetHeli(float speedMin, float speedMax, float flyHeightLow, float flyHeightHigh, SDRC_EHeliWaypointGenerationType wpType, float distanceLow, float distanceHigh)
-	{
-		SDRC_Log.Add("[SDRC_ChopperComp:SetHeli] Updating values.", LogLevel.DEBUG);
-		
-		m_fSpeedMin = speedMin;
-		m_fSpeedMax = speedMax;
-		m_fFlyHeightLow = flyHeightLow;
-		m_fFlyHeightHigh = flyHeightHigh;
-		m_fDistanceLow = distanceLow;
-		m_fDistanceHigh = distanceHigh;
-		m_fWpType =	wpType;
-		
-		m_fSpeed = m_fSpeedMin;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	private void StoreOriginalValues()
-	{
-		m_fThrottleOrig = m_fThrottle;
-		m_fRotorForce0Orig = m_fRotorForce0;
-		m_fRotorForce1Orig = m_fRotorForce1;
-		m_fSpeedMinOrig = m_fSpeedMin;
-		m_fSpeedMaxOrig = m_fSpeedMax;	
-		
-		//Reset runtime parameters
-		m_fSpeedLandingMul = 1.0;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	private void ResetOriginalValues()
-	{
-		m_fThrottle = m_fThrottleOrig;
-		m_fRotorForce0 = m_fRotorForce0Orig;
-		m_fRotorForce1 = m_fRotorForce1Orig;
-		m_fSpeedMin = m_fSpeedMinOrig;
-		m_fSpeedMax = m_fSpeedMaxOrig;	
-		
-		//Reset runtime parameters
-		m_fSpeedLandingMul = 1.0;
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	void SetSpeed(float min = -1, float max = -1)
-	{
-		if (min > -1)
-		{
-			m_fSpeedMin = min;
-		}
-		
-		if (max > -1)
-		{
-			m_fSpeedMax = max;
-		}			
-	}
-
-	//------------------------------------------------------------------------------------------------
-	void SetAutostart(bool value)
-	{
-		m_bAutoStart = value;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	SDRC_EHeliState GetHeliState()
-	{
-		return m_eHeliState;
-	}
 	
 	//------------------------------------------------------------------------------------------------	
-	/*!
-	Enable/Disable enemy searching
-	*/		
-	void SetSearchForEnemy(bool value)
-	{
-		m_bSearchForEnemy = value;
-	}
-
+	// Enemy related
+	//------------------------------------------------------------------------------------------------	
+	
 	//------------------------------------------------------------------------------------------------	
 	/*!
 	Get last known enemy position
 	*/
-	vector GetEnemyPosition()
+	vector GetEnemyPosition(IEntity owner)
 	{
 		return m_vEnemyPosition;
 	}
@@ -1703,55 +1400,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 	/*!
 	Reset enemy knowledge and timeout
 	*/
-	void EnemyHandled()
+	void EnemyHandled(IEntity owner)
 	{
 		m_vEnemyPosition = "0 0 0";
 		m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + m_iEnemyFoundTimeout;
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Returns the next waypoint type defined in destinations. Does not modify the destination list.
-	*/
-	SDRC_EFlyWayPointType GetNextWayPointType(SDRC_EFlyWayPointType nextType)
-	{
-		if (m_vFlyDestinations.IsEmpty())
-		{
-			nextType = SDRC_EFlyWayPointType.WP_UNDEFINED;
-		}
-
-		if (nextType == SDRC_EFlyWayPointType.WP_UNDEFINED)
-		{		
-			//If not destinations defined, start to fly		
-			if (m_vFlyDestinations.IsEmpty())
-			{
-				nextType = SDRC_EFlyWayPointType.WP_FLY;
-			}
-			else
-			{
-				nextType = m_vFlyDestinations[0].type;
-			}
-		}		
-				
-		return nextType;
-	}
-			
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Returns the final destination from the spline
-	*/
-/*	vector GetFinalSplineDestination()
-	{
-		return m_vSplinePoints[m_vSplinePoints.Count() - 1];
-	}		*/
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Returns the destination where the helicopter is currently going. 
-	NOTE: This is not the final destination on the spline
-	*/
-/*	vector GetCurrentSplineDestination()
-	{
-		return m_vDestination;
-	}		*/	
+	}			
 }

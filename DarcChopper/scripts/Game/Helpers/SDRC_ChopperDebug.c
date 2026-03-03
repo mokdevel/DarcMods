@@ -22,7 +22,7 @@ class SDRC_ChopperDebug
 		}		
 
 		//The rest of the stuff is only GM mode and when interface is visible.								
-		if ( (!SDRC_PlayerHelper.IsInGMmode()) || (!SDRC_PlayerHelper.IsGMInterfaceVisible()) || chopperComp.GetHeliState() == SDRC_EHeliState.DESTROYED )
+		if ( (!SDRC_PlayerHelper.IsInGMmode()) || (!SDRC_PlayerHelper.IsGMInterfaceVisible()) || chopperComp.GetState() == SDRC_EHeliState.DESTROYED )
 		{
 			if (chopperComp.m_wCanvas)
 			{
@@ -81,20 +81,31 @@ class SDRC_ChopperDebug
 		if (!chopperComp.m_vFlyDestinations.IsEmpty())
 		{	
 			//Add last point to be the first for blue lines
-			AddVertice(chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1], m_Vertices);
+//			AddVertice(chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1], m_Vertices);
+			vector prevPos = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];
 			
 			foreach (SDRC_FlyPathPoint destination : chopperComp.m_vFlyDestinations)
 			{
 				int color = -1;
 
-				if (destination.type == SDRC_EFlyWayPointType.WP_FLY)
+				switch (destination.type)
 				{
-					color = Color.DARK_BLUE;
+					case SDRC_EFlyWayPointType.WP_FLY:					
+					{
+						color = Color.DARK_BLUE;
+						break;
+					}
+					case SDRC_EFlyWayPointType.WP_LAND:
+					{
+						color = Color.DARK_CYAN;
+						break;
+					}				
+					case SDRC_EFlyWayPointType.WP_PATROL:
+					{
+						color = Color.GRAY;
+						break;
+					}				
 				}
-				if (destination.type == SDRC_EFlyWayPointType.WP_LAND)
-				{
-					color = Color.DARK_CYAN;
-				}				
 				
 				if (color == -1)
 				{
@@ -106,7 +117,10 @@ class SDRC_ChopperDebug
 				{
 					pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 40;
 				}
+				
+				AddVertice(prevPos, m_Vertices);
 				AddVertice(pos, m_Vertices);
+				prevPos = pos;
 				//Insert into pool of draw commands
 				chopperComp.m_aDrawCommands.Insert(AddLines(m_Vertices, color));
 			}		

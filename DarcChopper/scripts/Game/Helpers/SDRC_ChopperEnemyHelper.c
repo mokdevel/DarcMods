@@ -2,7 +2,22 @@
 
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperEnemyHelper
-{
+{	
+	//------------------------------------------------------------------------------------------------	
+	/*!
+	Enable/Disable enemy searching
+	*/		
+	static void SetSearchForEnemy(IEntity owner, bool value)
+	{
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return;
+		}
+		
+		chopperComp.m_bSearchForEnemy = value;
+	}
+
 	//------------------------------------------------------------------------------------------------	
 	// Enemy searching functionality
 	//------------------------------------------------------------------------------------------------	

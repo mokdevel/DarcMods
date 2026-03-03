@@ -1,0 +1,157 @@
+//SDRC_ChopperCompCore.c
+
+//Core functions from SDRC_ChopperComp to shorten the file
+
+//------------------------------------------------------------------------------------------------
+enum SDRC_EHeliWaypointGenerationType
+{
+	NONE,
+	RANDOM,					//Random flying for a helicopter
+	PATROL,					//Fly around a certain area
+	SEARCH,					//Random flying search patrol. Once a player is found, mission ends.
+	
+	LANDING,				//Land the helicopter
+};
+
+//------------------------------------------------------------------------------------------------
+enum SDRC_EFlyWayPointType
+{
+	WP_UNDEFINED,				//0 
+	WP_FLY,						//1 - Fly, mormal flight pattern
+	WP_FLY_IMMEDIATELY,			//2 - Fly, but remove all already added destinations
+	WP_FLY_AWAY,				//3 - Fly away as a last move
+	WP_FLY_AWAY_IMMEDIATELY,	//4 - Fly away immediately removing the previous destinations
+	WP_PATROL,					//5 - Patrol around an area
+	WP_LAND,					//6 - 
+	WP_WAIT,					//7 - 
+	WP_RAISE,					//8 - 
+	WP_HOVER,					//9 - 
+	WP_GET_OUT,					//10 - 
+	WP_END,						//11 - 
+	
+	//----	
+	WP_HOVER_UP,				//12 - Does the action and goes to HOVER state
+	WP_STOP_ENGINE,				//13 - Does the action and goes to WAIT state
+	
+	//Macro actions
+	WP_M_LAND_TROOPS = 30,
+	
+	WP_M_TESTING,				//Just for testing
+}
+
+enum SDRC_EHeliState
+{
+	UNKNOWN,
+	FLY,
+	FLY_AWAY,
+	FLY_AWAY_IMMEDIATELY,	//NOTE: This is not a real state. When set, state will change to FLY_AWAY
+	LAND,
+	WAIT,					//Velocity disabled
+	RAISE,
+	HOVER,
+	GET_OUT,				//One frame state to order AI to get out
+	END,
+	
+	ON_GROUND,				//One frame state for touch down
+	DESTROYED,
+}
+
+//------------------------------------------------------------------------------------------------
+class SDRC_ChopperCompCore
+{
+	//------------------------------------------------------------------------------------------------	
+	// Helicopter settings
+	//------------------------------------------------------------------------------------------------	
+	
+	//------------------------------------------------------------------------------------------------	
+	static void SetHeli(IEntity owner, float speedMin, float speedMax, float flyHeightLow, float flyHeightHigh, SDRC_EHeliWaypointGenerationType wpType, float distanceLow, float distanceHigh)
+	{
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return;
+		}
+		
+		SDRC_Log.Add("[SDRC_ChopperComp:SetHeli] Updating values.", LogLevel.DEBUG);
+	
+		chopperComp.m_fSpeedMin = speedMin;
+		chopperComp.m_fSpeedMax = speedMax;
+		chopperComp.m_fFlyHeightLow = flyHeightLow;
+		chopperComp.m_fFlyHeightHigh = flyHeightHigh;
+		chopperComp.m_fDistanceLow = distanceLow;
+		chopperComp.m_fDistanceHigh = distanceHigh;
+		chopperComp.m_fWpType =	wpType;
+		
+		chopperComp.m_fSpeed = chopperComp.m_fSpeedMin;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	static void StoreOriginalValues(IEntity owner)
+	{
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return;
+		}
+		
+		chopperComp.m_fThrottleOrig = chopperComp.m_fThrottle;
+		chopperComp.m_fRotorForce0Orig = chopperComp.m_fRotorForce0;
+		chopperComp.m_fRotorForce1Orig = chopperComp.m_fRotorForce1;
+		chopperComp.m_fSpeedMinOrig = chopperComp.m_fSpeedMin;
+		chopperComp.m_fSpeedMaxOrig = chopperComp.m_fSpeedMax;	
+		
+		//Reset runtime parameters
+		chopperComp.m_fSpeedLandingMul = 1.0;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	static void ResetOriginalValues(IEntity owner)
+	{
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return;
+		}
+		
+		chopperComp.m_fThrottle = chopperComp.m_fThrottleOrig;
+		chopperComp.m_fRotorForce0 = chopperComp.m_fRotorForce0Orig;
+		chopperComp.m_fRotorForce1 = chopperComp.m_fRotorForce1Orig;
+		chopperComp.m_fSpeedMin = chopperComp.m_fSpeedMinOrig;
+		chopperComp.m_fSpeedMax = chopperComp.m_fSpeedMaxOrig;	
+		
+		//Reset runtime parameters
+		chopperComp.m_fSpeedLandingMul = 1.0;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	void SetSpeed(IEntity owner, float min = -1, float max = -1)
+	{
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return;
+		}
+		
+		if (min > -1)
+		{
+			chopperComp.m_fSpeedMin = min;
+		}
+		
+		if (max > -1)
+		{
+			chopperComp.m_fSpeedMax = max;
+		}			
+	}
+
+	//------------------------------------------------------------------------------------------------
+	void SetAutostart(IEntity owner, bool value)
+	{
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return;
+		}
+		
+		chopperComp.m_bAutoStart = value;
+	}
+}
