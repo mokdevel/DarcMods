@@ -125,7 +125,7 @@ The helicopter is requested to fly to this destination immediately. Any existing
 The helicopter is requested to fly to this destination and do rounds around the area. We will circle around the area for a while until continuing normal flight. You can set multiple points for longer patrol times.
 
 ## <img src="../pics/wp_searchanddestroy.png" width=18 height=18> Search And Destroy
-<img src="./chopperattacklines.png" width=30% height=30%>
+<img src="../pics/chopperattacklines.png" width=30% height=30%>
 The image shows the green movement to the location to attack. The attack will continue (follow the white line) from another angle. The heli will do a detour and attack along the red line. Rinse and repeat. Once all attacks are performed, normal flying will continue.
 
 ## <img src="../pics/wp_getout.png" width=18 height=18> Get Out
