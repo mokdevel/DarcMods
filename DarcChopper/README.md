@@ -129,4 +129,16 @@ The helicopter is requested to fly to this destination and do rounds around the 
 The image shows the green movement to the location to attack. The attack will continue (follow the white line) from another angle. The heli will do a detour and attack along the red line. Rinse and repeat. Once all attacks are performed, normal flying will continue.
 
 ## <img src="../pics/wp_getout.png" width=18 height=18> Get Out
+The helicopter will land to the position, order AIs to get out and move 50m from the helicopter. Only passengers (cargo) will be ordered to get out. Pilots and gunners will stay in the chopper.
 
+This is a macro commmand and does a serie of actions:
+```
+WP_LAND, to destination
+WP_GET_OUT, commands AI to disembark
+WP_WAIT, wait for while to AIs time to get out. Currently 20 seconds.
+WP_HOVER_UP, hover helicopter up to minimum fly height. Currently this is done in 12 seconds.
+WP_RAISE, order helicopter to fly forward for a while. Currently 200 meters
+```
+Once actions are done, we return to normal flight mode.
+
+NOTE: Landing has its issues and needs some rework.
