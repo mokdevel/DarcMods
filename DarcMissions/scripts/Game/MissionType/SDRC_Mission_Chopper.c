@@ -12,6 +12,17 @@ enum SDRC_EMissionChopperState
 	SPAWN_CREW,
 };
 
+//------------------------------------------------------------------------------------------------
+enum SDRC_EHeliWaypointGenerationType
+{
+	NONE,
+	RANDOM,					//Random flying for a helicopter
+	PATROL,					//Fly around a certain area
+	SEARCH,					//Random flying search patrol. Once a player is found, mission ends.
+	
+	LANDING,				//Land the helicopter
+};	
+
 const string DC_MISSIONCONFIG_FILE_CHOPPER = "dc_missionConfig_Chopper.json";
 const int DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER = 2;
 
@@ -270,22 +281,30 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		
 		m_EntityList.Insert(m_Vehicle);
 		m_Vehicle_c.SetAutostart(false);
-		m_Vehicle_c.SetHeli(m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.wpType, m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
-		m_Vehicle_c.SetSearchForEnemy(true);
+		m_Vehicle_c.SetHeli(m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
+		m_Vehicle_c.SetEnemySearchType(m_DC_Chopper.enemyType);
 
-		#ifdef CHOPPER_TESTING				
+		switch (m_DC_Chopper.wpType)
+		{
+			case SDRC_EHeliWaypointGenerationType.RANDOM:			
+			case SDRC_EHeliWaypointGenerationType.SEARCH:
+			{
+				m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, GetPos());
+				break;
+			}
+			case SDRC_EHeliWaypointGenerationType.PATROL:
+			{
+				m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_PATROL, GetPos());
+				m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_PATROL, GetPos());				
+				break;
+			}
+		}
+				
+/*		#ifdef CHOPPER_TESTING				
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, landPos, 12);
-		
-			//The above should result in same the stuff below
-/*			m_Vehicle_c.AddDestination(destination: routePos);
-			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.LAND, landPos);
-			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.GET_OUT);
-			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WAIT, value: 12);
-			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.HOVER_UP, "0 25 0", 6);
-			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.RAISE, "200 0 0", 15);*/		
 		#else
 			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, GetPos());
-		#endif
+		#endif */
 		
 		//Init flight
 		m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
@@ -407,15 +426,17 @@ class SDRC_Chopper
 	ref array<int> flyHeight = {};						//min, max - Spawn helicopter between these values.
 	ref array<int> speed = {};							//min, max - 
 	ref array<float> flyDistance = {};					//min, max - Distance for finding new positions
-	SDRC_EHeliWaypointGenerationType wpType; 
+	SDRC_EHeliWaypointGenerationType wpType;
+	SDRC_EHeliEnemySearchType enemyType;
 		
-	void Set(array<string> heliList_, array<int> flyHeight_, array<int> speed_, array<float> flyDistance_, SDRC_EHeliWaypointGenerationType wpType_)
+	void Set(array<string> heliList_, array<int> flyHeight_, array<int> speed_, array<float> flyDistance_, SDRC_EHeliWaypointGenerationType wpType_, SDRC_EHeliEnemySearchType enemyType_)
 	{
 		heliList = heliList_;
 		flyHeight = flyHeight_;
 		speed = speed_;
 		flyDistance = flyDistance_;
 		wpType = wpType_;
+		enemyType = enemyType_;
 	}
 }
 
@@ -459,7 +480,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {1};//{0,1,1,2,2,3,4,4};
+		missionList = {0,1,1,2,2,3,4,4,5};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 500;
@@ -468,8 +489,8 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		activeTime = 45*60;
 	#endif
 	#ifndef SDRC_RELEASE
-//		activeTime = 25*60;
-		activeTime = 2*60 + 10;
+		activeTime = 25*60;
+		activeTime = 3*60 + 10;
 	#endif
 		
 		//----------------------------------------------------
@@ -527,7 +548,8 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 //			{25, 90},
 			{7, 25},
 			{0.1, 0.3},
-			SDRC_EHeliWaypointGenerationType.RANDOM,	
+			SDRC_EHeliWaypointGenerationType.RANDOM,
+			SDRC_EHeliEnemySearchType.PLAYER,
 		);
 		
 		return chopper;
@@ -581,6 +603,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			{10, 30},
 			{0.1, 0.3},
 			SDRC_EHeliWaypointGenerationType.RANDOM,	
+			SDRC_EHeliEnemySearchType.PLAYER,		
 		);
 		
 		return chopper;
@@ -639,6 +662,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			{7, 25},
 			{100, 300},
 			SDRC_EHeliWaypointGenerationType.PATROL,	
+			SDRC_EHeliEnemySearchType.PLAYER,
 		);
 		
 		return chopper;
@@ -695,7 +719,8 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			{40, 80},
 			{10, 30},
 			{0.1, 0.3},
-			SDRC_EHeliWaypointGenerationType.RANDOM,	
+			SDRC_EHeliWaypointGenerationType.RANDOM,
+			SDRC_EHeliEnemySearchType.PLAYER,		
 		);
 		
 		return chopper;
@@ -707,7 +732,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		ref SDRC_Chopper chopper = new SDRC_Chopper();
 		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
 		message.Set("Helicopter recon",
-			"Hide!",
+			"Hide! If you're seen, hunters will be sent after you.",
 			"Search patrol avoided.", 
 			"Hunters are sent to your location.",);
 		chopper.general.Set(
@@ -744,7 +769,8 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			{35, 70},
 			{7, 25},
 			{0.1, 0.5},
-			SDRC_EHeliWaypointGenerationType.SEARCH,	
+			SDRC_EHeliWaypointGenerationType.SEARCH,
+			SDRC_EHeliEnemySearchType.PLAYER,		
 		);
 		
 		return chopper;
@@ -755,12 +781,66 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 	{
 		ref SDRC_Chopper chopper = new SDRC_Chopper();
 		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Gunship killer",
+			"Everyone is an enemy.",
+			"Sky is safer place now.", 
+			"The crazy pilot is no more.");
+		chopper.general.Set(
+			5, "index 5: Gunships",
+			{"0 0 0", "0 0 0"}, 0,
+			{},
+			"any",
+			{message},
+			SDRC_EMissionWinCondition.AI_KILL_75,
+			{},
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP, 
+			{SDRC_EDifficulty.RANDOM},
+			0
+		);
+		chopper.ai.Set
+		(
+			{1, 2},
+			{"G_SMALL", "G_LIGHT"},
+			60, 1.5,
+			{0, 0},
+			SDRC_EWaypointGenerationType.LOITER,
+			SDRC_EWaypointMoveType.LOITER,
+		);
+		chopper.Set
+		(
+			{			
+			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",			
+			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
+			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",			
+			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
+			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
+			 //From: https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcMissions
+			 "{EDF7AA9A54BFD6F8}Prefabs/Vehicles/Helicopters/Mi24/Mi24V_armed_UPK23_Patrol.et",
+			 "{842F4FB8DACE28D4}Prefabs/Vehicles/Helicopters/MI28/MI28N_Grey_Patrol.et",
+			 //From: https://reforger.armaplatform.com/workshop/684F3C94BD457F85-KA-52forDarcMissions
+			 "{490B9AAF7C1DDF1B}Prefabs/Vehicles/Helicopters/KA52/KA52_UPK_X2_Patrol.et",
+			},
+			{40, 80},
+			{10, 30},
+			{0.1, 0.3},
+			SDRC_EHeliWaypointGenerationType.RANDOM,	
+			SDRC_EHeliEnemySearchType.ANY_CHAR,		
+		);
+		
+		return chopper;
+	}	
+	
+	//----------------------------------------------------
+	SDRC_Chopper Chopper6()
+	{
+		ref SDRC_Chopper chopper = new SDRC_Chopper();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
 		message.Set("Helicopter patroling",
 			"Avoid being seen.",
 			"Helicopter is not your problem anymore.", 
 			"Helicopter lost track of you.",);
 		chopper.general.Set(
-			5, "index 5: Landing chopper",
+			6, "index 6: Landing chopper",
 			{"0 0 0", "0 0 0"}, 0,
 			{},
 			"any",
@@ -788,7 +868,8 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			{35, 70},
 			{7, 25},
 			{0.2, 0.5},
-			SDRC_EHeliWaypointGenerationType.LANDING,	
+			SDRC_EHeliWaypointGenerationType.LANDING,
+			SDRC_EHeliEnemySearchType.PLAYER,		
 		);
 		
 		return chopper;
