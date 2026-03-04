@@ -108,6 +108,8 @@ You can assign waypoints for the helicopter. Just pick any AI/group or even the 
 
 Once a waypoint is dropped, the helicopter will pick it from the map and it will disappear. This means that it has been considered for future use.
 
+<img src="../pics/waypoints.png">
+
 Check the supported waypoints below. Other waypoints you define, will disappear from the map and will be discarded.
 
 ## Move
