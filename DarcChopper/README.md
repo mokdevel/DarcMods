@@ -6,6 +6,8 @@ The mod introduces functionality to let AIs use helicopters to fly around, attac
 
 Functionality is implemented as a single re-usable component.
 
+* [Version history](VERSION.md)
+
 # Re-use in mods and game modes
 The flight model is done as a component (SDRC_ChopperComp). You are free to use it in yours - credits are appreciated. In theory you can add that to any helicopter and they will gain autonomous flying capabilities.
 

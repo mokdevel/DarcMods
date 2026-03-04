@@ -4,14 +4,16 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
-No changes in mission jsons. 
+Changed jsons - remove the files to receive updated ones.
+* dc_missionConfig_Chopper.json (added enemyType)
 
 Main features:
 * Separated DarcChopper as a different mod.
 * Chopper mission: 
   * Hopefully AIs spawn always in the helicopter and not on ground sometimes. 
   * You can give additional commands to helis with GM options.
-
+  * Added a sub-mission "Gunship Killer" which will attack also enemy AIs.
+  
 ## 20260201
 This update introduces major modifications to json files. These are the updates I've been waiting to push out for quite a while. The unfortunate thing is that this will break your existing json file compatibility. The positive thing is that there are no foreseen changes planned to be introduced in the near future. This current structure should be, not to say final, but close to it.
 
