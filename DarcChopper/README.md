@@ -129,6 +129,7 @@ The helicopter is requested to fly to this destination and do rounds around the 
 
 ## <img src="../pics/wp_searchanddestroy.png" width=18 height=18> Search And Destroy
 Search and destroy will order the helicopter to target a location and bomb it. This are will be shot at regardless of if there are enemies or not. The helicopter needs to be aligned to be able to shoot at the location. Multiple runs towards the target may be performed to the AI with one S&D command. 
+
 <img src="../pics/chopperattacklines.png" width=30% height=30%>
 The image shows the green movement to the location to attack. The attack will continue (follow the white line) from another angle. The heli will do a detour and attack along the red line. Rinse and repeat. Once all attacks are performed, normal flying will continue. Wave count, angles and distances are randomized.
 
