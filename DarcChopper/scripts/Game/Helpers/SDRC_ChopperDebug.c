@@ -256,9 +256,14 @@ class SDRC_ChopperDebug
 		{		
 			string debugText = 	//"Speedangle:" + angle * Math.RAD2DEG + "\n" +
 								SCR_Enum.GetEnumName(SDRC_EHeliState, chopperComp.m_eHeliState) + " (" + 
-								SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimeInState) + ")\n" + 
-								"";
-			debugText = debugText + 
+								SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimeInState) + ")";
+								if (chopperComp.m_vEnemyPosition != vector.Zero)
+								{
+									debugText = debugText + " (enemy)";
+								}
+			debugText = debugText + "\n";
+			
+			debugText = debugText +
 							   	"Speed:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeed) + " " +
 							   	"(" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedStart) + "/" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedTarget) + ") " +
 	//						   	"Avg time:" + m_fTimeBetweenPtsAvg + "\n" +

@@ -1,23 +1,19 @@
 //SDRC_ChopperEnemyHelper.c
 
 //------------------------------------------------------------------------------------------------
+enum SDRC_EHeliEnemySearchType
+{
+	NONE,
+	ANY,				//Any target is accepted
+	PLAYER,				//Only players are considered targets
+	ANY_CHAR,			//Players and AI
+//	VEHICLE,			//Any vehicle
+//	VEHICLE_ARMORED,	//Only armored vehicles
+}
+
+//------------------------------------------------------------------------------------------------
 class SDRC_ChopperEnemyHelper
 {	
-	//------------------------------------------------------------------------------------------------	
-	/*!
-	Enable/Disable enemy searching
-	*/		
-	static void SetSearchForEnemy(IEntity owner, bool value)
-	{
-		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		if (!chopperComp)
-		{
-			return;
-		}
-		
-		chopperComp.m_bSearchForEnemy = value;
-	}
-
 	//------------------------------------------------------------------------------------------------	
 	// Enemy searching functionality
 	//------------------------------------------------------------------------------------------------	
@@ -37,7 +33,7 @@ class SDRC_ChopperEnemyHelper
 			return false;
 		}
 			
-		if (!chopperComp.m_bSearchForEnemy)
+		if (chopperComp.m_EnemySearchType == SDRC_EHeliEnemySearchType.NONE)
 		{
 			return false;
 		}
@@ -53,7 +49,13 @@ class SDRC_ChopperEnemyHelper
 			SDRC_Log.Add("[SDRC_ChopperComp:SearchForEnemy] Enemy position reset.", LogLevel.DEBUG);
 		}
 		
-		chopperComp.m_vEnemyPosition = SDRC_ChopperEnemyHelper.SearchEnemy(owner);
+		bool searchOnlyPlayer = false; 
+		if (chopperComp.m_EnemySearchType == SDRC_EHeliEnemySearchType.PLAYER)
+		{
+			searchOnlyPlayer = true;
+		}		
+		
+		chopperComp.m_vEnemyPosition = SDRC_ChopperEnemyHelper.SearchEnemy(owner, searchOnlyPlayer);
 		if (chopperComp.m_vEnemyPosition != vector.Zero)
 		{
 			found = true;

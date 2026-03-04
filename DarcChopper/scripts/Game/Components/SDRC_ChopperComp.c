@@ -61,7 +61,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	float m_fDistanceLow;			//Distance for waypoint min
 	[Attribute(category: "Chopper", defvalue: "500", desc: "Maximum distance for waypoint", params: "0.1 1000.0 0.1")]	
 	float m_fDistanceHigh;			//..max
-	SDRC_EHeliWaypointGenerationType m_fWpType = SDRC_EHeliWaypointGenerationType.RANDOM; 	
 
 	//Category: AI settings
 	[Attribute(category: "AI settings", defvalue: "", desc: "The faction to use")]	
@@ -74,6 +73,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	EAISkill m_AISkill;	
 	[Attribute(category: "AI settings", defvalue: "1.0", desc: "AI perception", params: "0.1 3.0 0.1")]	
 	float m_AIPerception;
+	[Attribute(category: "AI settings", defvalue: typename.EnumToString(SDRC_EHeliEnemySearchType, SDRC_EHeliEnemySearchType.ANY_CHAR), uiwidget: UIWidgets.ComboBox, desc: "Type of enemy to search", enumType: SDRC_EHeliEnemySearchType)]		
+	SDRC_EHeliEnemySearchType m_EnemySearchType;
 	ref array<AIGroup> m_aGroups = {};
 	
 	//Category: Weapons
@@ -175,7 +176,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//Enemy positions
 	vector m_vEnemyPosition = vector.Zero;		//Position of last found enemy
 	int m_iEnemyFoundTime;						//Time to wait to before allowing enemy position 
-	bool m_bSearchForEnemy;						//Enable/Disable enemy searching
 	int m_iEnemyFoundTimeout = 10;				//Time between enemy position updates
 	int m_iEnemyForgetTimeout = 30;				//Time to forget the enemy position
 		
@@ -221,10 +221,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 		SetEventMask(owner, EntityEvent.INIT);
 		s_Instance = this;
 		m_sDid = SDRC_Misc.GetCurrentTickTime().ToString() + Math.RandomInt(0, 10000);
-
-		#ifndef SDRC_RELEASE
-//			m_bShowDebug = true;
-		#endif
 		
 		m_bInInit = true;
 		SetState(SDRC_EHeliState.FLY);
@@ -246,12 +242,12 @@ class SDRC_ChopperComp : ScriptGameComponent
 	        m_Helicopter_s.SetThrottle(m_fThrottle);
 	        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0);
 	        m_Helicopter_s.RotorSetForceScaleState(1, m_fRotorForce1);			
-			SDRC_ChopperCompCore.SetHeli(owner, m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, SDRC_EHeliWaypointGenerationType.RANDOM, m_fDistanceLow, m_fDistanceHigh);						
+			SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, m_fDistanceLow, m_fDistanceHigh);						
 
 			if (m_bAutoStart)
 			{
 				//NOTE: This section is to be done in the mod
-				SDRC_ChopperEnemyHelper.SetSearchForEnemy(owner, true);
+				SetEnemySearchType(true);
 				Ready(owner);
 			}
 		}
@@ -267,7 +263,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 		else
 		{
 			m_RocketPrefab = m_RocketPrefabs.GetRandomElement();
-//			m_RocketPrefab = m_RocketPrefabs[0];
 			SDRC_Log.Add("[SDRC_ChopperComp] Using rockets: " + SDRC_Misc.GetSimpleEntityName(m_RocketPrefab), LogLevel.NORMAL);
 		}
 				
@@ -928,9 +923,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//By default we remove the destination
 		bool isRemoveDestination = false;
 		
-		//If needed, create new flight path
-		bool isCreateFlight = false;
-		
 		nextType = SDRC_ChopperHelper.GetNextWayPointType(owner, nextType);
 
 		switch (nextType)
@@ -1053,12 +1045,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			m_vFlyDestinations.RemoveOrdered(0);
 		}
-		
-		//With new destinations, create new flight.
-/*		if (isCreateFlight)
-		{
-			CreateNewFlight(owner, firstDestination);
-		}*/
 	}		
 
 	//------------------------------------------------------------------------------------------------	
@@ -1081,7 +1067,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		vector pos = owner.GetOrigin() + direction.Normalized() * 200;
 		pos[1] = origin[1];
 		AddFlyPathPoint(pos);
-		SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 255, 00), 1.0, m_sDid, 30);
+		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 255, 00), 1.0, m_sDid, 30);
 						
 		//Add destinations .. if any
 		int lastIdx = -1;
@@ -1095,7 +1081,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//Handle destinations
 		foreach (int idx, SDRC_FlyPathPoint flyDestination : m_vFlyDestinations)
 		{		
-			SDRC_DebugHelper.AddDebugPos(flyDestination.pt, ARGB(32, 255, 128, 64), 1.0, m_sDid, 50);
+			//SDRC_DebugHelper.AddDebugPos(flyDestination.pt, ARGB(32, 255, 128, 64), 1.0, m_sDid, 50);
 			
 			//Distance of last flight point defined and the next destination
 			float distance = vector.DistanceXZ(m_vFlightPoints[m_vFlightPoints.Count() - 1].pt, flyDestination.pt);
@@ -1127,9 +1113,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 								
 				//Find a point along the fly path and move it away from the line along tangent
 				vector vec = SDRC_Math.CreateOffsetMidPoint(point, flyDestination.pt, (distance / divRnd), lerpRnd, isOnLeft);
-				AddFlyPathPoint(vec);
-				
-				SDRC_DebugHelper.AddDebugPos(vec, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
+				AddFlyPathPoint(vec);				
+				//SDRC_DebugHelper.AddDebugPos(vec, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
 			}
 			
 			AddFlyPathPoint(flyDestination.pt, flyDestination.type);
@@ -1158,11 +1143,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 						vector dir = SDRC_Math.RotateAroundAxis(m_vHeliDirection, vector.Up, sign * i * degree * Math.DEG2RAD);
 						dir.Normalize();
 	//					pos = m_vOriginalDestination + dir * range;
-						pos = flyDestination.pt + dir * range;
-						
-						SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid, 50 + i * 20);
-						
+						pos = flyDestination.pt + dir * range;						
 						AddFlyPathPoint(pos);
+						//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid, 50 + i * 20);
 					}					
 					break;
 				}				
@@ -1457,9 +1440,18 @@ class SDRC_ChopperComp : ScriptGameComponent
 	
 	//------------------------------------------------------------------------------------------------	
 	/*!
+	Enable/Disable enemy searching
+	*/		
+	void SetEnemySearchType(SDRC_EHeliEnemySearchType type)
+	{
+		m_EnemySearchType = type;
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	/*!
 	Get last known enemy position
 	*/
-	vector GetEnemyPosition(IEntity owner)
+	vector GetEnemyPosition()
 	{
 		return m_vEnemyPosition;
 	}
@@ -1468,9 +1460,48 @@ class SDRC_ChopperComp : ScriptGameComponent
 	/*!
 	Reset enemy knowledge and timeout
 	*/
-	void EnemyHandled(IEntity owner)
+	void EnemyHandled()
 	{
 		m_vEnemyPosition = "0 0 0";
 		m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + m_iEnemyFoundTimeout;
 	}			
+	
+	//------------------------------------------------------------------------------------------------	
+	// Helicopter settings
+	//------------------------------------------------------------------------------------------------	
+
+	//------------------------------------------------------------------------------------------------	
+	void SetHeli(float speedMin, float speedMax, float flyHeightLow, float flyHeightHigh, float distanceLow, float distanceHigh)
+	{
+		SDRC_Log.Add("[SDRC_ChopperComp:SetHeli] Updating values.", LogLevel.DEBUG);
+	
+		m_fSpeedMin = speedMin;
+		m_fSpeedMax = speedMax;
+		m_fFlyHeightLow = flyHeightLow;
+		m_fFlyHeightHigh = flyHeightHigh;
+		m_fDistanceLow = distanceLow;
+		m_fDistanceHigh = distanceHigh;
+		
+		m_fSpeed = m_fSpeedMin;
+	}	
+		
+	//------------------------------------------------------------------------------------------------
+	void SetSpeed(float min = -1, float max = -1)
+	{
+		if (min > -1)
+		{
+			m_fSpeedMin = min;
+		}
+		
+		if (max > -1)
+		{
+			m_fSpeedMax = max;
+		}			
+	}
+
+	//------------------------------------------------------------------------------------------------
+	void SetAutostart(bool value)
+	{
+		m_bAutoStart = value;
+	}	
 }

@@ -3,17 +3,6 @@
 //Core functions from SDRC_ChopperComp to shorten the file
 
 //------------------------------------------------------------------------------------------------
-enum SDRC_EHeliWaypointGenerationType
-{
-	NONE,
-	RANDOM,					//Random flying for a helicopter
-	PATROL,					//Fly around a certain area
-	SEARCH,					//Random flying search patrol. Once a player is found, mission ends.
-	
-	LANDING,				//Land the helicopter
-};
-
-//------------------------------------------------------------------------------------------------
 enum SDRC_EFlyWayPointType
 {
 	WP_UNDEFINED,				//0 
@@ -64,28 +53,6 @@ class SDRC_ChopperCompCore
 	// Helicopter settings
 	//------------------------------------------------------------------------------------------------	
 	
-	//------------------------------------------------------------------------------------------------	
-	static void SetHeli(IEntity owner, float speedMin, float speedMax, float flyHeightLow, float flyHeightHigh, SDRC_EHeliWaypointGenerationType wpType, float distanceLow, float distanceHigh)
-	{
-		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		if (!chopperComp)
-		{
-			return;
-		}
-		
-		SDRC_Log.Add("[SDRC_ChopperComp:SetHeli] Updating values.", LogLevel.DEBUG);
-	
-		chopperComp.m_fSpeedMin = speedMin;
-		chopperComp.m_fSpeedMax = speedMax;
-		chopperComp.m_fFlyHeightLow = flyHeightLow;
-		chopperComp.m_fFlyHeightHigh = flyHeightHigh;
-		chopperComp.m_fDistanceLow = distanceLow;
-		chopperComp.m_fDistanceHigh = distanceHigh;
-		chopperComp.m_fWpType =	wpType;
-		
-		chopperComp.m_fSpeed = chopperComp.m_fSpeedMin;
-	}
-	
 	//------------------------------------------------------------------------------------------------
 	static void StoreOriginalValues(IEntity owner)
 	{
@@ -123,36 +90,4 @@ class SDRC_ChopperCompCore
 		//Reset runtime parameters
 		chopperComp.m_fSpeedLandingMul = 1.0;
 	}	
-	
-	//------------------------------------------------------------------------------------------------
-	void SetSpeed(IEntity owner, float min = -1, float max = -1)
-	{
-		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		if (!chopperComp)
-		{
-			return;
-		}
-		
-		if (min > -1)
-		{
-			chopperComp.m_fSpeedMin = min;
-		}
-		
-		if (max > -1)
-		{
-			chopperComp.m_fSpeedMax = max;
-		}			
-	}
-
-	//------------------------------------------------------------------------------------------------
-	void SetAutostart(IEntity owner, bool value)
-	{
-		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		if (!chopperComp)
-		{
-			return;
-		}
-		
-		chopperComp.m_bAutoStart = value;
-	}
 }
