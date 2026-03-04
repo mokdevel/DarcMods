@@ -98,6 +98,8 @@ You will see green and blue lines on screen when the helicopter is flying.
 
 * Green: Shows the flight path for the helicopter. This is a spline that is followed while flying. This shows were we're generally going to end up.
 * Blue: If you've set waypoints for the helicopter, blue straight lines will show the future route. When the helicopter reaches the end of a green line, a check for waypoints (blue lines) is made. If waypoints are available, a new route is created via them and you will see the blue straight lines changing to a green flight path.
+* Gray: Shows the flight path towards the area to patrol. Once reaching the destination, a patroling flight path will be created.
+* Red: Location to attack with rockets. This is more like a bombing run where the target location is shot with rockets regardless of if there are enemies or not.
 
 NOTE: The lines are drawn on a canvas so they will be on top of the screen items. This is something work on and improve.
 
@@ -116,4 +118,6 @@ The helicopter is requested to fly to this destination immediately. Any existing
 
 ## Move Relaxed
 The helicopter is requested to fly to this destination and do rounds around the area. We will circle around the area for a while until continuing normal flight. You can set multiple points for longer patrol times.
+
+## 
 
