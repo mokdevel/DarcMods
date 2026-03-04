@@ -106,6 +106,8 @@ You will see green and blue lines on screen when the helicopter is flying.
 
 NOTE: The lines are drawn on a canvas so they will be on top of the screen items. This is something work on and improve.
 
+<img src="../pics/chopperlines.jpg" width=30% height=30%>
+
 # Waypoints
 You can assign waypoints for the helicopter. Just pick any AI/group or even the helicopter, select a waypoint and drop it on the map. Use ALT-key to change the altitude of the waypoint, but don't worry, if it's on the ground by mistake, it will be set to right flight height. You can set multiple waypoints as a chain and future flight will follow it.
 
