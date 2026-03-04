@@ -115,14 +115,18 @@ Once a waypoint is dropped, the helicopter will pick it from the map and it will
 
 Check the supported waypoints below. Other waypoints you define, will disappear from the map and will be discarded.
 
-## Move
+## <img src="../pics/wp_move.png" width=18 height=18> Move 
 The helicopter is requested to fly to this destination. You can set multiple ones to create a longer route.
 
-## Force Move
+## <img src="../pics/wp_forcemove.png" width=18 height=18> Force Move
 The helicopter is requested to fly to this destination immediately. Any existing plans will be discarded and the new destination is accepted.
 
-## Move Relaxed
+## <img src="../pics/wp_moverelaxed.png" width=18 height=18> Move Relaxed
 The helicopter is requested to fly to this destination and do rounds around the area. We will circle around the area for a while until continuing normal flight. You can set multiple points for longer patrol times.
 
-## 
+## <img src="../pics/wp_searchanddestroy.png" width=18 height=18> Search And Destroy
+<img src="./chopperattacklines.png" width=30% height=30%>
+The image shows the green movement to the location to attack. The attack will continue (follow the white line) from another angle. The heli will do a detour and attack along the red line. Rinse and repeat. Once all attacks are performed, normal flying will continue.
+
+## <img src="../pics/wp_getout.png" width=18 height=18> Get Out
 
