@@ -262,8 +262,7 @@ class SDRC_ChopperHelper
 							case "E_AIWaypoint_GetIn":
 							case "E_AIWaypoint_SearchAndDestroy":
 							{
-								SDRC_Log.Add("[SDRC_ChopperHelper:HandleWaypoints] TBD", LogLevel.DEBUG);
-//								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_TESTING, pos, 5);
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_ATTACK, pos, 120);
 								break;
 							}
 						}

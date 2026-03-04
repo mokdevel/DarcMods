@@ -204,6 +204,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fTimeToLand = 9;			//(seconds)
 	private float m_fLandingDistance = 180;		//Distance to start the landing
 	
+	//Attack relaetd
+	float m_fTimerAttack = 0;					//Timer to do attacks
+	vector m_vAttackPosition;					//Position to attack
+	
 	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
 	{
@@ -358,7 +362,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		m_fTimeBetweenFixes -= timeSlice;
 		m_fTimeInState -= timeSlice;		
 		m_fTimeRocketDelay += timeSlice;		
-
+		m_fTimerAttack -= timeSlice;
+		
 		SDRC_ChopperDebug.DrawDestinationLines(owner);
 		
 		//Check if we're still working. 
@@ -499,14 +504,26 @@ class SDRC_ChopperComp : ScriptGameComponent
 		HandleState(owner, timeSlice);
 
 		SetVelocity(owner);
-		
-		//Search for enemies
-		SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
-		
-		if (m_fTimeRocketDelay > m_RocketDelay)
+	
+		//Handle attacks
+		if (m_fTimerAttack < 0)	
 		{
-			SDRC_ChopperEnemyHelper.SearchEnemyForRocket(owner);
-			m_fTimeRocketDelay = 0;
+			//Search for enemies
+			SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
+			
+			if (m_fTimeRocketDelay > m_RocketDelay)
+			{
+				SDRC_ChopperEnemyHelper.SearchEnemyForRocket(owner);
+				m_fTimeRocketDelay = 0;
+			}
+		}
+		else
+		{
+			if (m_fTimeRocketDelay > m_RocketDelay)
+			{
+				SDRC_ChopperEnemyHelper.EnemyFoundForRocket(owner, m_vAttackPosition);
+				m_fTimeRocketDelay = 0;
+			}
 		}
 
 		SDRC_ChopperHelper.HandleWaypoints(owner);				
@@ -1252,7 +1269,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//In normal case, we just add a destination for future handling. 
 		//Below are a few special cases where we need either react immediately of change some other params.
 
-		bool addFlyPoint = true;
+		bool addDestinationPoint = true;
 		
 		switch (type)
 		{
@@ -1291,7 +1308,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 12);
 				AddDestination(SDRC_EFlyWayPointType.WP_RAISE, "200 0 0");
 				//All things are already added
-				addFlyPoint = false;
+				addDestinationPoint = false;
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_M_TESTING:
@@ -1302,14 +1319,46 @@ class SDRC_ChopperComp : ScriptGameComponent
 				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 12);
 				AddDestination(SDRC_EFlyWayPointType.WP_RAISE, "200 0 0");
 				//All things are already added
-				addFlyPoint = false;
+				addDestinationPoint = false;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_ATTACK:
+			{
+				m_vAttackPosition = destination;			//Where to attack
+				m_fTimerAttack = value;						//For how long to continue attacks
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_M_ATTACK:
+			{
+				AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, destination);
+				//Do random count of bombing runs
+				int runCount = SDRC_Misc.RandomInt(0, 4);
+				//Do multiple ones if requested
+				for (int i = 0; i < runCount; i++)
+				{
+					float angle = SDRC_Misc.RandomFloat(0, 360);
+					float distance = SDRC_Misc.RandomFloat(200, 400);
+					vector rndPos = SDRC_Misc.GetCoordinatesOnCircle(destination, distance, angle);
+					AddDestinationPoint(SDRC_EFlyWayPointType.WP_FLY, rndPos, value);
+					distance = SDRC_Misc.RandomFloat(200, 400);
+					rndPos = SDRC_Misc.GetCoordinatesOnCircle(destination, distance, angle + SDRC_Misc.RandomFloat(-120, 120));
+					AddDestinationPoint(SDRC_EFlyWayPointType.WP_FLY, rndPos, value);
+					AddDestinationPoint(SDRC_EFlyWayPointType.WP_ATTACK, destination, value);
+
+				}
+				m_vAttackPosition = destination;			//Where to attack				
+				m_fTimerAttack = value * (runCount + 1);	//For how long to continue attacks. +1 to avoid runCount = 0 resulting in zero time
+				//All things are already added
+				addDestinationPoint = false;
 				break;
 			}
 		}
 
-		if (addFlyPoint)
+		if (addDestinationPoint)
 		{
-			SDRC_FlyPathPoint fpp = new SDRC_FlyPathPoint();
+			AddDestinationPoint(type, destination, value, index);
+			
+/*			SDRC_FlyPathPoint fpp = new SDRC_FlyPathPoint();
 			fpp.Set(type, destination, value);				
 			
 			if (index > -1)
@@ -1319,10 +1368,29 @@ class SDRC_ChopperComp : ScriptGameComponent
 			else
 			{
 				m_vFlyDestinations.Insert(fpp);
-			}
+			}*/
 		}
 	}	
 
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Add a destination
+	*/
+	private void AddDestinationPoint(SDRC_EFlyWayPointType type, vector destination, float value, int index = -1)
+	{
+		SDRC_FlyPathPoint fpp = new SDRC_FlyPathPoint();
+		fpp.Set(type, destination, value);				
+		
+		if (index > -1)
+		{
+			m_vFlyDestinations.InsertAt(fpp, index);
+		}
+		else
+		{
+			m_vFlyDestinations.Insert(fpp);
+		}
+	}		
+	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Clear the destination as a preparation for a completely new path

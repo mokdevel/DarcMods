@@ -88,6 +88,12 @@ class SDRC_ChopperDebug
 			{
 				int color = -1;
 
+				vector pos = destination.pt;
+				if (pos[1] == 0)
+				{
+					pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 40;
+				}
+				
 				switch (destination.type)
 				{
 					case SDRC_EFlyWayPointType.WP_FLY:					
@@ -105,17 +111,17 @@ class SDRC_ChopperDebug
 						color = Color.GRAY;
 						break;
 					}				
+					case SDRC_EFlyWayPointType.WP_ATTACK:
+					{
+						color = Color.RED;
+						pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 10;
+						break;
+					}				
 				}
 				
 				if (color == -1)
 				{
 					continue;
-				}
-				
-				vector pos = destination.pt;
-				if (pos[1] == 0)
-				{
-					pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 40;
 				}
 				
 				AddVertice(prevPos, m_Vertices);
@@ -161,7 +167,7 @@ class SDRC_ChopperDebug
 		line.m_Vertices = {};
 		line.m_iColor = color;
 		line.m_fOutlineWidth = 0;
-		line.m_fWidth = 2;
+		line.m_fWidth = 1.5;
 		line.m_Vertices.Copy(vertices);
 		vertices.Clear();
 		return line;

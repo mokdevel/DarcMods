@@ -129,6 +129,15 @@ class SDRC_ChopperEnemyHelper
 			return;
 		}
 		
+		EnemyFoundForRocket(owner, enemyPosition);
+	}	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Enemy has been found. If we're aligned properly, shoot a rocket.
+	*/
+	static void EnemyFoundForRocket(IEntity owner, vector enemyPosition)
+	{
 		//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyForRocket] Enemy found.", LogLevel.DEBUG);
 
 		vector fwd = owner.GetTransformAxis(2);
@@ -142,12 +151,13 @@ class SDRC_ChopperEnemyHelper
 		
 		//chopperComp.m_RocketSector;
 		
-		if (SDRC_Math.IsTargetInSector(owner.GetOrigin(), fwd, enemyPosition, 35) )
+//		if (SDRC_Math.IsTargetInSector(owner.GetOrigin(), fwd, enemyPosition, 35) )
+		if (SDRC_Math.IsTargetInSector(owner.GetOrigin(), fwd, enemyPosition, chopperComp.m_RocketSector) )
 		{
 			ShootRocket(owner, enemyPosition);
-		}
-	}	
-		
+		}		
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Shoot the rocket. 

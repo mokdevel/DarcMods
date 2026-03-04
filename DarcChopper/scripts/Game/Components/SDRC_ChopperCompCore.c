@@ -32,10 +32,11 @@ enum SDRC_EFlyWayPointType
 	//----	
 	WP_HOVER_UP,				//12 - Does the action and goes to HOVER state
 	WP_STOP_ENGINE,				//13 - Does the action and goes to WAIT state
+	WP_ATTACK,					//14 - Sets attack position and time and then FLY
 	
 	//Macro actions
 	WP_M_LAND_TROOPS = 30,
-	
+	WP_M_ATTACK,
 	WP_M_TESTING,				//Just for testing
 }
 
