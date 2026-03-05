@@ -1,6 +1,6 @@
 # Flying helicopter
 
-# Creating a flying helicopter
+## Creating a flying helicopter
 Use the Arma Reforger workbench to create your own helicopter mod. The default prefabs in Arma Reforger are without their engines running and will simply crash before the flight is possible.
 
 NOTE: Below information is slightly outdated.
@@ -22,6 +22,8 @@ NOTE: Below information is slightly outdated.
 ## SDRC_ChopperComp values
 ### Chopper
 The component has default values that work quite well for the vanilla helicopters.
+
+### Flight settings
 * ``Auto Start`` : (bool) When helicopter is spawned in the world, if enabled, it will automatically start to fly from spawn position to First Destination. For modding purposes or DarcMissions use, disable this.
 * ``Throttle`` : (float) Arma Reforger default throttle. Affects physics. The speed gain aka acceleration. Higher value will make the helicopter reach the maximum speed faster. May also affect raise.
 * ``Rotor Force0`` : (float) Arma Reforger default main rotor force. Affects physics. The force that pushes the helicopter upwards. A too high value will make the helicopter to raise too fast and does not look nice. The helicopter type/weight will affect so you may need to adjust this.
@@ -39,10 +41,15 @@ The component has default values that work quite well for the vanilla helicopter
 * TBD
 
 ### Weapons
-* TBD
+* ``Rocket Sector`` : (degrees) The sector in front of the rocket where the rocket can be shot. This is a cone with this angle left-right. For example: 10 degrees will result in cone of 20 degrees from the nose of the helicopter.
+* ``Rocket Delay`` : (seconds) The time between rockets to be shot. 
+* ``Rocket Position`` : Consists of three parameters
+  * ``X``: The distance from helicopter nose to spawn the rocket
+  * ``Y``: Target Y-position height modificator. Target position is usually on the ground and position is raised according to this value.
+  * ``Z``: TBD - Location of helicopter rocket position left/right. Rockets will be spawned on the side of the helicopter instead of infront of the nose.
 
 ### Unsorted
-* TBD
+* ``Fly Destinations`` : TO BE DOCUMENTED. You can create your own flight patterns here.
 
 ## Re-use in mods and game modes
 The flight model is done as a component. You are free to use it in yours - credits are appreciated. In theory you can add that to any helicopter and they will gain autonomous flying capabilities. 
