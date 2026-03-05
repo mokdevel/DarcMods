@@ -1,26 +1,4 @@
 # Flying helicopter
-Used by: Chopper mission
-
-## Supported prefabs
-Currently supported prefabs for Chopper mission:
-
-### Un-armed
-- ``"{435F663B9456C29E}Prefabs/Vehicles/Helicopters/UH1H/UH1H_civ_livery_v1_Patrol.et"``
-- ``"{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et"``
-
-### Armed
-- ``"{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et"``
-- ``"{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et"``
-- ``"{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et"``
-- ``"{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et"``
-- ``"{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et"``
-
-### Modded
-Modded helicopters are supported through a compatibility mod. Currently available:
-* https://reforger.armaplatform.com/workshop/672F2BB6523FBA29-WZHelisforDarcMissions
-* https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcMissions
-* https://reforger.armaplatform.com/workshop/6850D5F667CEFF94-AH-6MforDarcMissions
-* https://reforger.armaplatform.com/workshop/684F3C94BD457F85-KA-52forDarcMissions
 
 # Creating a flying helicopter
 Use the Arma Reforger workbench to create your own helicopter mod. The default prefabs in Arma Reforger are without their engines running and will simply crash before the flight is possible.

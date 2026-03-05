@@ -60,3 +60,24 @@ SDRC_EHeliWaypointGenerationType wpType : Helicopter way point functionality
   2 = PATROL : Helicopter patrols around a given area.
   3 = SEARCH : Helicopter flies and searches for players. Once player is found, mission completes and Hunters are sent to kill players. 
 ```
+
+## Supported helicopters
+By default there are vanilla helicopters supported. For modded ones, you need a compatibility mod. Currently supported prefabs for Chopper mission are below. You can add the modded ones in the ``heliList`` parameter even if the mod is not available. In this case, the mod will browse through the whole ``heliList`` to find a one available. Suggestion is to add atleast one vanilla helicopter to get the mission to spawn.
+
+### Un-armed
+- ``"{435F663B9456C29E}Prefabs/Vehicles/Helicopters/UH1H/UH1H_civ_livery_v1_Patrol.et"``
+- ``"{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et"``
+
+### Armed
+- ``"{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et"``
+- ``"{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et"``
+- ``"{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et"``
+- ``"{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et"``
+- ``"{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et"``
+
+### Modded
+Modded helicopters are supported through a compatibility mod. Currently available:
+* https://reforger.armaplatform.com/workshop/672F2BB6523FBA29-WZHelisforDarcMissions
+* https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcMissions
+* https://reforger.armaplatform.com/workshop/6850D5F667CEFF94-AH-6MforDarcMissions
+* https://reforger.armaplatform.com/workshop/684F3C94BD457F85-KA-52forDarcMissions

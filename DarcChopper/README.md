@@ -124,11 +124,14 @@ The helicopter is requested to fly to this destination. You can set multiple one
 The helicopter is requested to fly to this destination immediately. Any existing plans will be discarded and the new destination is accepted.
 
 ## <img src="../pics/wp_moverelaxed.png" width=18 height=18> Move Relaxed
+<img src="../pics/chopperpatrol.jpg" width=30% height=30%>
 The helicopter is requested to fly to this destination and do rounds around the area. We will circle around the area for a while until continuing normal flight. You can set multiple points for longer patrol times.
 
 ## <img src="../pics/wp_searchanddestroy.png" width=18 height=18> Search And Destroy
+Search and destroy will order the helicopter to target a location and bomb it. This are will be shot at regardless of if there are enemies or not. The helicopter needs to be aligned to be able to shoot at the location. Multiple runs towards the target may be performed to the AI with one S&D command. 
+
 <img src="../pics/chopperattacklines.png" width=30% height=30%>
-The image shows the green movement to the location to attack. The attack will continue (follow the white line) from another angle. The heli will do a detour and attack along the red line. Rinse and repeat. Once all attacks are performed, normal flying will continue.
+The image shows the green movement to the location to attack. The attack will continue (follow the white line) from another angle. The heli will do a detour and attack along the red line. Rinse and repeat. Once all attacks are performed, normal flying will continue. Wave count, angles and distances are randomized.
 
 ## <img src="../pics/wp_getout.png" width=18 height=18> Get Out
 The helicopter will land to the position, order AIs to get out and move 50m from the helicopter. Only passengers (cargo) will be ordered to get out. Pilots and gunners will stay in the chopper.
