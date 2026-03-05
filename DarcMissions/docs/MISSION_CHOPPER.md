@@ -14,6 +14,9 @@ Once the mission time is over, the helicopter will fly away (and despawn) ending
 
 For the first release, there is no loot available. This is to be addressed in future updates.
 
+### Supported helicopters
+By default there are vanilla helicopters supported. For modded ones, you need a compatibility mod. For a full list, see: [Suppoerted helicopters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md)
+
 ### GM requested mission
 The location is where the mission was dropped. The helicopter will fly first to this location.
 
