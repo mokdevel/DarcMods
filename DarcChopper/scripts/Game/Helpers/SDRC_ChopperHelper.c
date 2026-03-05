@@ -151,7 +151,7 @@ class SDRC_ChopperHelper
 		
 		vector pos = SDRC_ChopperHelper.GetRandomPosition(owner.GetOrigin(), chopperComp.m_fDistanceLow, chopperComp.m_fDistanceHigh);
 		chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos);
-		SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 255, 00, 00), 2.0, chopperComp.m_sDid, 200);				
+		SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 255, 00, 00), 2.0, chopperComp.m_sDid, 200);
 	}
 
 	//------------------------------------------------------------------------------------------------

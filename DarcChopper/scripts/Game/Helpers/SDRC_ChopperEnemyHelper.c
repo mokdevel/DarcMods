@@ -142,16 +142,14 @@ class SDRC_ChopperEnemyHelper
 	{
 		//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyForRocket] Enemy found.", LogLevel.DEBUG);
 
-		vector fwd = owner.GetTransformAxis(2);
-		fwd.Normalize();
-		
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)
 		{
 			return;
 		}
 		
-		//chopperComp.m_RocketSector;
+		vector fwd = owner.GetTransformAxis(2);
+		fwd.Normalize();
 		
 //		if (SDRC_Math.IsTargetInSector(owner.GetOrigin(), fwd, enemyPosition, 35) )
 		if (SDRC_Math.IsTargetInSector(owner.GetOrigin(), fwd, enemyPosition, chopperComp.m_RocketSector) )
@@ -193,6 +191,13 @@ class SDRC_ChopperEnemyHelper
 		ResourceName rocketPrefab = chopperComp.m_RocketPrefab;
 		if (rocketPrefab == "")
 		{
+			//No rocket selected
+			return;
+		}
+		
+		if (chopperComp.m_RocketCount == 0)
+		{
+			//Out of rockets
 			return;
 		}
 		
@@ -203,17 +208,18 @@ class SDRC_ChopperEnemyHelper
 		//Randomize the position depending on AI skill.			
 		float targetError = ( (100 - chopperComp.m_AISkill)/100 ) * AI_ERROR;
 		targetPos = SDRC_Misc.RandomizePos(targetPos, targetError);
+		//Move rocket position up or down according to [1]
+		targetPos[1] = targetPos[1] + chopperComp.m_RocketPosition[1];
 		
 //		vector rocketSpawnPos = SDRC_ChopperHelper.GetDestinationForward(owner, 10);
 		vector rocketSpawnPos = SDRC_ChopperHelper.GetDestinationForward(owner, chopperComp.m_RocketPosition[0]);
-		
 		
 		EntitySpawnParams params = new EntitySpawnParams();
 		params.Transform[3] = rocketSpawnPos;
 		params.TransformMode = ETransformMode.WORLD;
 		
 		IEntity rocket = GetGame().SpawnEntityPrefab(Resource.Load(rocketPrefab), GetGame().GetWorld(), params);
-		SDRC_Math.TurnEntityTowards(rocket, targetPos + "0 1 0");
+		SDRC_Math.TurnEntityTowards(rocket, targetPos);
 		
 		vector launchDirection = vector.Direction(rocketSpawnPos, targetPos);
 		launchDirection.Normalize();
@@ -228,6 +234,8 @@ class SDRC_ChopperEnemyHelper
 			{
 				//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SetHealth] missileMoveComp found!", LogLevel.DEBUG);
 				missileMoveComp.Launch(launchDirection, vector.Zero, 10, rocket, null, null, null, null);							
+				//One rocket shot
+				chopperComp.m_RocketCount--;
 			}
 			else
 			{

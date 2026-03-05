@@ -142,7 +142,7 @@ class SDRC_ChopperCrewHelper
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp:HandleState] Create waypoint for AI group: " + group, LogLevel.DEBUG);			
 			
-			vector pos = SDRC_Misc.RandomizePos(owner.GetOrigin(), 50);			
+			vector pos = SDRC_Misc.RandomizePos(owner.GetOrigin(), 75);			
 			SDRC_DebugHelper.AddDebugPos(pos);
 			SDRC_WPHelper.CreateWaypoint(group, pos, SDRC_EWaypointMoveType.MOVE);
 			

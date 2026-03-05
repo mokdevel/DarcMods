@@ -78,17 +78,19 @@ class SDRC_ChopperComp : ScriptGameComponent
 	ref array<AIGroup> m_aGroups = {};
 	
 	//Category: Weapons
-	[Attribute(category: "Weapons", defvalue: "40.0", desc: "The sector where rockets may be shot", params: "1.0 45.0 1.0")]	
+	[Attribute(category: "Weapons", defvalue: "10.0", desc: "The sector where rockets may be shot", params: "1.0 45.0 1.0")]	
 	float m_RocketSector;
-	[Attribute(category: "Weapons", defvalue: "0.3", desc: "Delay between rockets", params: "0.1 30.0 0.1")]	
+	[Attribute(category: "Weapons", defvalue: "0.5", desc: "Delay between rockets", params: "0.1 30.0 0.1")]	
 	float m_RocketDelay;
 	float m_fTimeRocketDelay = 0;
-	[Attribute(category: "Weapons", defvalue: "10 0 0", desc: "Rocket spawn position")]	
+	[Attribute(category: "Weapons", defvalue: "10 1 0", desc: "Rocket spawn position")]	
 	vector m_RocketPosition;
 //	[Attribute(category: "Weapons", params: "et", defvalue: "{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et", desc: "Rocket to use")]	
 	[Attribute(category: "Weapons", params: "et", defvalue: "", desc: "Rocket to use")]	
 	ref array<ref ResourceName> m_RocketPrefabs;	 
 	ResourceName m_RocketPrefab = "";
+	[Attribute(category: "Weapons", defvalue: "30.0", desc: "The amount of rockets available", params: "-1 100 1")]	
+	int m_RocketCount;
 		
 	//Category: Unsorted
 	//Flight path
@@ -735,6 +737,22 @@ class SDRC_ChopperComp : ScriptGameComponent
 		if (m_vFlyDestinations.IsEmpty())
 		{
 			vector destination = SDRC_Misc.GetCoordinatesOnCircle(owner.GetOrigin(), m_fDistanceLow, SDRC_Misc.RandomInt(0, 360));
+			
+			SCR_CameraEditorComponent cameraManager = SCR_CameraEditorComponent.Cast(SCR_CameraEditorComponent.GetInstance(SCR_CameraEditorComponent));
+			if (cameraManager)
+			{
+				SCR_ManualCamera GMCamera = cameraManager.GetCamera();				
+				if (GMCamera)
+				{
+					vector transform[4];
+					GMCamera.GetTransform(transform);
+					vector angle = transform[2];
+					angle.Normalized();
+					destination = owner.GetOrigin() + angle * m_fDistanceLow;
+					SDRC_DebugHelper.AddDebugPos(destination, ARGB(255, 255, 00, 00), 5.0, m_sDid, 200);
+				}
+			}
+			
 			AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
 		}
 
