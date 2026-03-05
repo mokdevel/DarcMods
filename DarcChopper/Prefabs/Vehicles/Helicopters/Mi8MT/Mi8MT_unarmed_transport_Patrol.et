@@ -9,7 +9,6 @@ Vehicle : "{B6B8C164FD6377EA}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_ba
    }
   }
   SDRC_ChopperComp "{6724F156EB106AA0}" {
-   m_RocketSector 10
   }
   VehicleHelicopterSimulation "{51FAEE57F7DA270E}" {
    Simulation Helicopter "{51FAED9EF37A2D29}" {
