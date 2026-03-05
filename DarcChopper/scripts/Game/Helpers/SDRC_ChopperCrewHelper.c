@@ -142,9 +142,9 @@ class SDRC_ChopperCrewHelper
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp:HandleState] Create waypoint for AI group: " + group, LogLevel.DEBUG);			
 			
-			vector pos = SDRC_Misc.RandomizePos(owner.GetOrigin(), 75);			
+			vector pos = SDRC_Misc.RandomizePos(owner.GetOrigin(), 150);			
 			SDRC_DebugHelper.AddDebugPos(pos);
-			SDRC_WPHelper.CreateWaypoint(group, pos, SDRC_EWaypointMoveType.MOVE);
+			GetGame().GetCallqueue().CallLater(SetWaypointDelayed, 2000, false, group, pos);
 			
 			int index = 0;
 			while (index != -1)
@@ -157,10 +157,21 @@ class SDRC_ChopperCrewHelper
 			}
 		}
 	}
-	
+
+	static void SetWaypointDelayed(SCR_AIGroup group, vector pos)
+	{
+		SDRC_WPHelper.CreateWaypoint(group, pos, SDRC_EWaypointMoveType.MOVE);
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	static void SetPilotAndGunnerActive(IEntity owner, bool activate)
 	{
+		if (!owner)
+		{
+			//Heli has been removed before this action happens
+			return;
+		}
+		
 		//Find pilots
 		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(owner.FindComponent(SCR_BaseCompartmentManagerComponent));
 		

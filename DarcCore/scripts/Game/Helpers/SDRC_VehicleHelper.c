@@ -212,7 +212,8 @@ sealed class SDRC_VehicleHelper
 
 		array<EntityID> groupIds = {};
 		
-		foreach (BaseCompartmentSlot compartment : compartments)
+		
+		foreach (int i, BaseCompartmentSlot compartment : compartments)
 		{
 			ChimeraCharacter character = ChimeraCharacter.Cast(compartment.GetOccupant());						
 			if (!character)
@@ -223,12 +224,16 @@ sealed class SDRC_VehicleHelper
 			AIControlComponent ctrl = AIControlComponent.Cast(character.FindComponent(AIControlComponent));			
 			SCR_ChimeraAIAgent aiAgent = SCR_ChimeraAIAgent.Cast(ctrl.GetAIAgent());
 			
+			GetGame().GetCallqueue().CallLater(GetOutDelayed, i*1000, false, character);
+			
+/*			
 			CompartmentAccessComponent compAccess = SCR_CompartmentAccessComponent.Cast(character.GetCompartmentAccessComponent());
 			if (compAccess)
 			{
-				compAccess.GetOutVehicle(EGetOutType.ANIMATED, 0, false, false);
+//				compAccess.GetOutVehicle(EGetOutType.ANIMATED, 0, false, false);
+				compAccess.GetOutVehicle(EGetOutType.TELEPORT, 0, false, false);
 			}
-			
+*/			
 			//Collect the groups that were ordered to climb out. 
 			SCR_AIGroup AIgroup = SCR_AIGroup.Cast(aiAgent.GetParentGroup());			
 			
@@ -238,9 +243,23 @@ sealed class SDRC_VehicleHelper
 			{
 				groupIds.Insert(groupId);
 				groups.Insert(AIgroup);
-			}			
+				
+//				AIGroup group = aiAgent.GetParentGroup();
+//				AIGroup group = AIGroup.Cast(AIgroup);
+				AIgroup.SetNewLeader(aiAgent);
+			}
 		}
     }	
+	
+	static void GetOutDelayed(ChimeraCharacter character)
+	{
+		CompartmentAccessComponent compAccess = SCR_CompartmentAccessComponent.Cast(character.GetCompartmentAccessComponent());
+		if (compAccess)
+		{
+			compAccess.GetOutVehicle(EGetOutType.ANIMATED, 0, false, false);
+//			compAccess.GetOutVehicle(EGetOutType.TELEPORT, 0, false, false);
+		}
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
