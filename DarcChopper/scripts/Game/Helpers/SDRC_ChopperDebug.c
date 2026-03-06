@@ -288,7 +288,7 @@ class SDRC_ChopperDebug
 								"";		
 			debugText = debugText + 
 							   	"Alt:" + 
-								SDRC_Misc.FloatWithDecimals(origin[1] - SDRC_Misc.GetSurfaceYWithWater(origin)) + " " + 
+								SDRC_Misc.FloatWithDecimals(chopperComp.m_fAltitude) + " " + 
 							   	SDRC_Misc.FloatWithDecimals(helicopter_s.GetAltitudeAGL()) + " " +
 								"\n" + 
 							   	"RotorForceMul:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fRotorForceMultiplier, 2) + "\n" +

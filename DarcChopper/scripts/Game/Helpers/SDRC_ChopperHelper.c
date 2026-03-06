@@ -414,27 +414,30 @@ class SDRC_ChopperHelper
 			//If we're landing set some of the last points close to the ground
 			if (chopperComp.m_eHeliState == SDRC_EHeliState.LAND)
 			{
-				const int POINTS_TO_GROUND = 8;
+				int pointsToGround = 16;
 				int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
+				
+				//Check the it's within limits
+				pointsToGround = Math.ClampInt(pointsToGround, 1, lastIdx - 2);
 	
 				//Create a Y spline to replace the given points to smooth the curve for landing
-				if (chopperComp.m_vSplinePoints.Count() - 1 > POINTS_TO_GROUND)
+				if (chopperComp.m_vSplinePoints.Count() - 1 > pointsToGround)
 				{
 					//Find high point, low point and difference
-					float p0 = chopperComp.m_vSplinePoints[lastIdx - POINTS_TO_GROUND][1];
+					float p0 = chopperComp.m_vSplinePoints[lastIdx - pointsToGround][1];
 					float p1 = SDRC_Misc.GetSurfaceYWithWater(chopperComp.m_vSplinePoints[lastIdx]);
 					float pdiff = p0 - p1;
 					
-					for (int i = 0; i < POINTS_TO_GROUND; i++)
+					for (int i = 0; i < pointsToGround; i++)
 					{					
-						float step = 1 - (i / POINTS_TO_GROUND);	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (POINTS_TO_GROUND -1) for full bell curve.
+						float step = 1 - (i / pointsToGround);	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (POINTS_TO_GROUND -1) for full bell curve.
 						
-						vector pt = chopperComp.m_vSplinePoints[lastIdx - POINTS_TO_GROUND + i + 1];
+						vector pt = chopperComp.m_vSplinePoints[lastIdx - pointsToGround + i + 1];
 						pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
-						chopperComp.m_vSplinePoints[lastIdx - POINTS_TO_GROUND + i + 1] = pt;
+						chopperComp.m_vSplinePoints[lastIdx - pointsToGround + i + 1] = pt;
 					}
 					
-					smoothCount = chopperComp.m_vSplinePoints.Count() - POINTS_TO_GROUND;
+					smoothCount = chopperComp.m_vSplinePoints.Count() - pointsToGround;
 				}
 				else
 				{

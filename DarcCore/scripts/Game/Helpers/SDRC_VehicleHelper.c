@@ -253,6 +253,11 @@ sealed class SDRC_VehicleHelper
 	
 	static void GetOutDelayed(ChimeraCharacter character)
 	{
+		if (!character)
+		{
+			return;
+		}
+		
 		CompartmentAccessComponent compAccess = SCR_CompartmentAccessComponent.Cast(character.GetCompartmentAccessComponent());
 		if (compAccess)
 		{
