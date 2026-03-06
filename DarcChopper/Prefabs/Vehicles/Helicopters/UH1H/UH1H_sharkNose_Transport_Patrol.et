@@ -1,0 +1,39 @@
+Vehicle : "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et" {
+ ID "5DB688595BAB2FD7"
+ components {
+  MeshObject "{51DAA09FEFBFC0E7}" {
+   Materials {
+    MaterialAssignClass "{68CCFCE88997B708}" {
+     SourceMaterial "UH_1H_Body01_6224CA051369DE45"
+     AssignedMaterial "{9E8011EADCCC2F32}Assets/Vehicles/Helicopters/UH1H/Data/UH_1H_Body01_Shark.emat"
+    }
+   }
+  }
+  SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
+   m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
+    m_Image "{BE4BBD236C916F8D}UI/Textures/EditorPreviews/Vehicles/Helicopters/UH1H/UH1H_sharkNose.edds"
+    m_aAutoLabels + {
+     ENTITYTYPE_DARCCHOPPER
+    }
+   }
+  }
+  SDRC_ChopperComp "{68CCFCE8AAE07B70}" {
+   m_fRotorForce1 2
+   m_CargoSeatFill FULL
+  }
+  VehicleHelicopterSimulation "{51FAEE57F7DA270E}" {
+   Simulation Helicopter "{51FAED9EF37A2D29}" {
+    Engine HelicopterEngine "{51FAED9EF37A2D2B}" {
+     StartUpTime 0
+    }
+   }
+  }
+  BaseVehicleNodeComponent "{57DA667544C3090A}" {
+   components {
+    SCR_HelicopterControllerComponent "{5CB0B40B1BD943AB}" {
+     MaxStartupTime 0
+    }
+   }
+  }
+ }
+}
