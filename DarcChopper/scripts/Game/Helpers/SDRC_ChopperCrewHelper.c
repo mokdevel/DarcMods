@@ -6,9 +6,12 @@ class SDRC_ChopperCrewHelper
 	//------------------------------------------------------------------------------------------------	
 	// Crew functions
 	//------------------------------------------------------------------------------------------------	
-	static int SpawnCrew(IEntity owner, array<ref SCR_DefaultOccupantData> crewmember, string faction, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
+	static int SpawnCrew(IEntity owner, SDRC_EHeliCargoSeatFill cargoSeatFill, array<ref SCR_DefaultOccupantData> crewmember, string faction, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{		
 		int pilotCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.PILOT);
+		int gunnerCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.TURRET);
+		int cargoCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.CARGO);
+		
 		int crewCount = 0;
 		
 		array<ResourceName> crewPrefabs = {}; 
@@ -43,8 +46,44 @@ class SDRC_ChopperCrewHelper
 				crewPrefabs.Insert(member);
 			}
 			
-			//Add 1-4 random additional riflemen
-			for (int i = 0; i < SDRC_Misc.RandomInt(4, 8); i++)
+			//Add gunners to turrets			
+			for (int i = 0; i < gunnerCount; i++)
+			{
+				ResourceName member = SDRC_EnemyHelper.SelectEnemy("C_RIFLEMAN", faction);
+				if (member == "")
+				{
+					member = "{472F2B06FF9BF37D}Prefabs/Characters/Factions/CIV/Dockworker/Character_CIV_Dockworker_4.et";
+				}
+				crewPrefabs.Insert(member);
+			}			
+			
+			int cargoCrewCount = 0;		//case: SDRC_EHeliCargoSeatFill.NONE
+			switch (cargoSeatFill)
+			{
+				case SDRC_EHeliCargoSeatFill.RANDOM:
+				{
+					cargoCrewCount = SDRC_Misc.RandomInt(1, cargoCount);
+					break;
+				}
+				case SDRC_EHeliCargoSeatFill.LOW:
+				{
+					cargoCrewCount = SDRC_Misc.RandomInt(1, cargoCount/2);
+					break;
+				}
+				case SDRC_EHeliCargoSeatFill.HALF:
+				{
+					cargoCrewCount = cargoCount / 2;
+					break;
+				}
+				case SDRC_EHeliCargoSeatFill.FULL:
+				{
+					cargoCrewCount = cargoCount;
+					break;
+				}
+			}
+			
+			//Add random additional riflemen
+			for (int i = 0; i < cargoCrewCount; i++)
 			{
 				ResourceName member = SDRC_EnemyHelper.SelectEnemy("C_RIFLEMAN", faction);
 				if (member == "")

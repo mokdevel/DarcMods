@@ -46,6 +46,15 @@ enum SDRC_EHeliState
 	DESTROYED,
 }
 
+enum SDRC_EHeliCargoSeatFill
+{
+	NONE,
+	RANDOM,
+	LOW,
+	HALF,
+	FULL,
+}
+
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompCore
 {

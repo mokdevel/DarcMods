@@ -65,6 +65,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 	//Category: AI settings
 	[Attribute(category: "AI settings", defvalue: "", desc: "The faction to use")]	
 	string m_sFaction;
+	[Attribute(category: "AI settings", defvalue: typename.EnumToString(SDRC_EHeliCargoSeatFill, SDRC_EHeliCargoSeatFill.LOW), uiwidget: UIWidgets.ComboBox, desc: "How to fill cargo seats.", enumType: SDRC_EHeliCargoSeatFill)]		
+	SDRC_EHeliCargoSeatFill m_CargoSeatFill;
 	[Attribute(category: "AI settings", desc: "Characters to spawn in the chopper", params: "et")]
 	ref array<ref SCR_DefaultOccupantData> m_aCrew;
 	//Crew settings
@@ -156,6 +158,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	
 	//Flight path runtime variables	
 	private vector m_vOrigin;						//Current position
+	float m_fAltitude;								//Current altitude from ground
 	float m_fSpeed;									//Current speed
 	float m_fSpeedStart;							//Speed lerp start
 	float m_fSpeedTarget;							//Speed lerp target aka end
@@ -203,8 +206,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 	//Landing related
 	private float m_fTimerLanding;				//Timer for landing
-	private float m_fTimeToLand = 9;			//(seconds)
-	private float m_fLandingDistance = 180;		//Distance to start the landing
+	private float m_fTimeToLand;				//(seconds) How long the landing shall take
+	private float m_fLandingDistance;			//Distance to start the landing
 	
 	//Attack relaetd
 	float m_fTimerAttack = 0;					//Timer to do attacks
@@ -314,7 +317,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			//Init flight path
 			InitFlight(owner, owner.GetOrigin());
 			//Spawn crew 
-			int crewCount = SDRC_ChopperCrewHelper.SpawnCrew(owner, m_aCrew, m_sFaction, m_AISkill, m_AIPerception);
+			int crewCount = SDRC_ChopperCrewHelper.SpawnCrew(owner, m_CargoSeatFill, m_aCrew, m_sFaction, m_AISkill, m_AIPerception);
 			SDRC_Log.Add("[SDRC_ChopperComp] Crew count: " + crewCount, LogLevel.DEBUG);
 		}		
 
@@ -353,6 +356,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	override void EOnFrame(IEntity owner, float timeSlice)
 	{
 		m_vOrigin = owner.GetOrigin();
+		m_fAltitude = m_vOrigin[1] - SDRC_Misc.GetSurfaceYWithWater(m_vOrigin);
 	
 		m_fTimeSpeed += timeSlice;
 		m_fTimeBetweenPts += timeSlice;
@@ -738,6 +742,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			vector destination = SDRC_Misc.GetCoordinatesOnCircle(owner.GetOrigin(), m_fDistanceLow, SDRC_Misc.RandomInt(0, 360));
 			
+			m_fDistanceLow = 300;
+			
 			SCR_CameraEditorComponent cameraManager = SCR_CameraEditorComponent.Cast(SCR_CameraEditorComponent.GetInstance(SCR_CameraEditorComponent));
 			if (cameraManager)
 			{
@@ -753,7 +759,8 @@ class SDRC_ChopperComp : ScriptGameComponent
 				}
 			}
 			
-			AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
+//			AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
+			AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, destination);
 		}
 
 		//Add a point towards the first destination
@@ -1236,6 +1243,24 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			destination = SDRC_Misc.SetPosToSurface(destination);
 			SetState(SDRC_EHeliState.LAND);
+
+			//This varies on helicopter height and speed			
+			float startDistance = m_fSpeed * 10;
+			startDistance = Math.Clamp(startDistance, 100, 1000);
+			
+			/* Count distance from (H)eli to (L)anding. The distance is dependent on speed and height
+			
+				  distance ____----(H)
+				   ____----        |   height
+				(L)----------------*
+				    startDistance
+			*/
+			
+			float distance = Math.Sqrt(startDistance * startDistance + m_fAltitude * m_fAltitude);
+			m_fLandingDistance = startDistance;
+			m_fTimeToLand = (distance / m_fSpeed) * 0.7;
+//			m_fTimeToLand = m_fLandingDistance / 15;
+			
 			m_fTimerLanding = 0;
 		}
 		
@@ -1297,7 +1322,17 @@ class SDRC_ChopperComp : ScriptGameComponent
 				SetState(SDRC_EHeliState.FLY_AWAY);
 				break;
 			}
-	
+			case SDRC_EFlyWayPointType.WP_ATTACK:
+			{
+				m_vAttackPosition = destination;			//Where to attack
+				m_fTimerAttack = value;						//For how long to continue attacks
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_LAND:
+			{
+				break;
+			}
+			
 			//Macro actions
 			case SDRC_EFlyWayPointType.WP_M_LAND_TROOPS:
 			{
@@ -1308,6 +1343,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 				hoverPos[1] = m_fFlyHeightLow;
 				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 12);
 				AddDestination(SDRC_EFlyWayPointType.WP_RAISE, "200 0 0");
+				
 				//All things are already added
 				addDestinationPoint = false;
 				break;
@@ -1321,12 +1357,6 @@ class SDRC_ChopperComp : ScriptGameComponent
 				AddDestination(SDRC_EFlyWayPointType.WP_RAISE, "200 0 0");
 				//All things are already added
 				addDestinationPoint = false;
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_ATTACK:
-			{
-				m_vAttackPosition = destination;			//Where to attack
-				m_fTimerAttack = value;						//For how long to continue attacks
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_M_ATTACK:
@@ -1438,7 +1468,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0Orig * mul * 0.01);
 		        m_Helicopter_s.SetThrottle(m_fThrottleOrig * mul);
 				float height = m_Helicopter_s.GetAltitudeAGL();
-				m_fSpeedMin = distance / Math.Clamp(height, 0.1, 1000);
+				m_fSpeedMin = distance / Math.Clamp(height, 0.01, 1000);
 				m_fSpeedLandingMul = mul;
 			}
 			else
