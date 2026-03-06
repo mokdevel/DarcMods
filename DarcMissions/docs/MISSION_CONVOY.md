@@ -3,7 +3,11 @@ Example: [dc_missionConfig_Convoy.json](https://github.com/mokdevel/DarcMods/blo
 
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_convoy.jpg" width=30% height=30%>
 
-AI patrol is spawned in a vehicle to move around the map. The convoy will go from ```posStart``` to ```posDestination```. When destination has been reached, the patrol will LOITER.
+AI patrol is spawned in a vehicle to move around the map. The convoy will travel between two points. When destination has been reached, the patrol will LOITER.
+
+NOTE that ``pos`` parameter has additional functionality:
+* If ``pos`` is left empty or with zero values, route will be picked from ``locationTypes``.
+* If ``pos`` has two values, the first one is start and the second is destination. 
 
 ### GM requested mission
 The location for the mission will be searched from the closest road. If no road is found, the mission will not spawn. The start location is what you define, destination is random unless defined in ``posDestination``.
