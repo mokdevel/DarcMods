@@ -213,10 +213,10 @@ class SDRC_ChopperDebug
 	static void DrawDebugPaths(IEntity owner)
 	{
 //		if (!m_bShowDebug)
-		if (!SDRC_Conf.SHOW_DEBUG)
+/*		if (!SDRC_Conf.SHOW_DEBUG)
 		{
 			return;
-		}
+		}*/
 		
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)

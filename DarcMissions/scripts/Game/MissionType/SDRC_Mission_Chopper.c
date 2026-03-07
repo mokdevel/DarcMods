@@ -24,7 +24,7 @@ enum SDRC_EHeliWaypointGenerationType
 };	
 
 const string DC_MISSIONCONFIG_FILE_CHOPPER = "dc_missionConfig_Chopper.json";
-const int DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER = 2;
+const int DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER = 3;
 
 #ifndef SDRC_RELEASE
 //	#define CHOPPER_TESTING
@@ -543,6 +543,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		(
 			{
 			 "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et",
+			 "{9902F419417C00AA}Prefabs/Vehicles/Helicopters/UH1H/UH1H_sharkNose_Transport_Patrol.et",
 			},
 			{35, 70},
 //			{25, 90},
@@ -590,6 +591,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			{			
 			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",			
 			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
+			 "{8FD9275E605A1A93}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HE_Patrol.et",
 			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",			
 			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
 			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
@@ -651,6 +653,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			{
 			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
 			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
+			 "{8FD9275E605A1A93}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HE_Patrol.et",
 			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
 			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
 			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
@@ -760,6 +763,8 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		(
 			{
 			 "{435F663B9456C29E}Prefabs/Vehicles/Helicopters/UH1H/UH1H_civ_livery_v1_Patrol.et",
+			 "{9902F419417C00AA}Prefabs/Vehicles/Helicopters/UH1H/UH1H_sharkNose_Transport_Patrol.et",
+			 "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et",
 			//From: https://reforger.armaplatform.com/workshop/6850D5F667CEFF94-AH-6MforDarcMissions
 			 "{2B0F7648840C4F6E}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/MH6M_OPFOR_Patrol.et",
 			 "{19022AB51719F2AD}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/AH6M_OPFOR_M134_Patrol.et",
@@ -811,6 +816,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			{			
 			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",			
 			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
+			 "{8FD9275E605A1A93}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HE_Patrol.et",
 			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",			
 			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
 			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
