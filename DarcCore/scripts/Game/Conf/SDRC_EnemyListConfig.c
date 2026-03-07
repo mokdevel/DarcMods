@@ -85,7 +85,11 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 		SDRC_Aka aka07 = new SDRC_Aka();
 		aka07.names = {"JSDF_RAS", "JGSDF"};
 		akas.Insert(aka07);		
-														
+
+		SDRC_Aka aka08 = new SDRC_Aka();
+		aka08.names = {"Takistan", "TA"};
+		akas.Insert(aka08);	
+																		
 		lists.Insert(enemyList00());
 		lists.Insert(enemyList01());
 		lists.Insert(enemyList02());
@@ -153,6 +157,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "PLAGF_SentryTeam",										//PLA: Proper Sniper Group is missing
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing
 			 "CloseProtectionTeam",										//RHS_ION
+			 "TA_RifleSquad", 											//Takistan
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -193,6 +198,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "PLASTICBANDIT_Squad",										//Bandit faction random team			
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing			
 			 "StaticSecurityTeam",										//RHS_ION						
+			 "TA_SentryTeam",											//Takistan
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -233,6 +239,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "PLASTICBANDIT_Squad",										//Bandit faction random team		
 			 "JGSDF_2008_LightFireTeam",								//JSFD: Proper Group is missing
 			 "CloseProtectionTeam",										//RHS_ION
+			 "TA_Team_Suppress",										//Takistan
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -379,6 +386,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et",	//Ballien Cultists
 			 "JGSDF_2008_CC",								//JSFD: Proper Character is missing
 			 "ION_Scout",									//RHS_ION			
+			 "TA_AR",										//Takistan
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -399,6 +407,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Civilian_Cultist", 							//Ballien Cultists
 			 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et",	//Ballien Cultists
 			 "ION_Scout",									//RHS_ION			
+			 "TA_AR",										//Takistan			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -481,6 +490,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et",	//Ballien Cultists
 			 "JGSDF_2008_Sniper",							//JSFD: Proper Character is missing
 			 "ION_Scout",									//RHS_ION			
+			 "TA_SL",										//Takistan			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
