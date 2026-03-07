@@ -8,6 +8,7 @@ Changed jsons - remove the files to receive updated ones.
 * dc_missionConfig_Chopper.json (added enemyType)
 
 Main features:
+* Server startup parameter ``-darcSubDir``. This can be used to override the ``subDir`` parameter in dc_coreConfig.json.
 * Separated DarcChopper as a different mod.
 * Chopper mission: 
   * Hopefully AIs spawn always in the helicopter and not on ground sometimes. 
