@@ -186,6 +186,11 @@ sealed class SDRC_WPHelper
 	*/
 	static bool CreateWaypoint(AIGroup group, vector pos, SDRC_EWaypointMoveType wptype = SDRC_EWaypointMoveType.MOVE)
 	{
+		if (!group)
+		{
+			return false;
+		}
+		
 		AIWaypoint aiWayPoint;
 		aiWayPoint = FindAndCreateWaypoint(pos, wptype);
 		if (aiWayPoint)
