@@ -414,6 +414,10 @@ sealed class SDRC_AIHelper
 			params.Transform[3] = pos;
 				
 			group = SCR_AIGroup.Cast(SDRC_SpawnHelper.SpawnEntityPrefabPersistence(resource, null, params));		
+			if (!group)
+			{
+				SDRC_Log.Add("[SDRC_AIHelper:GroupCreate] Could not spawn group entity.", LogLevel.ERROR);
+			}
 			group.SetFaction(SDRC_EnemyHelper.GetFactionWithName(faction));
 		}	
 		else
