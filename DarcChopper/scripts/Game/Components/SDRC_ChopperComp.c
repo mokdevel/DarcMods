@@ -3,6 +3,8 @@
 //Changes done in prefabs:
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
+//#define CHOPPER_TESTING
+
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompClass : ScriptGameComponentClass { }
 
@@ -91,8 +93,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 	[Attribute(category: "Weapons", params: "et", defvalue: "", desc: "Rocket to use")]	
 	ref array<ref ResourceName> m_RocketPrefabs;	 
 	ResourceName m_RocketPrefab = "";
-	[Attribute(category: "Weapons", defvalue: "30.0", desc: "The amount of rockets available", params: "-1 100 1")]	
+	[Attribute(category: "Weapons", defvalue: "30", desc: "The amount of rockets available", params: "-1 100 1")]	
 	int m_RocketCount;
+	[Attribute(category: "Weapons", defvalue: "400", desc: "Rockets can be shot within this distance.", params: "100 1000 50")]	
+	int m_RocketRange;
 		
 	//Category: Unsorted
 	//Flight path
@@ -205,9 +209,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 	ref CanvasWidget m_wCanvas;					//Canvas to draw the lines to
 
 	//Landing related
+	private bool m_bIsLanding;					//If true, landing sequence has started
 	private float m_fTimerLanding;				//Timer for landing
 	private float m_fTimeToLand;				//(seconds) How long the landing shall take
 	private float m_fLandingDistance;			//Distance to start the landing
+	private float m_fLandingSpeed;				//The speed to descend the chopper
 	
 	//Attack relaetd
 	float m_fTimerAttack = 0;					//Timer to do attacks
@@ -742,25 +748,38 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			vector destination = SDRC_Misc.GetCoordinatesOnCircle(owner.GetOrigin(), m_fDistanceLow, SDRC_Misc.RandomInt(0, 360));
 			
-			m_fDistanceLow = 300;
-			
-			SCR_CameraEditorComponent cameraManager = SCR_CameraEditorComponent.Cast(SCR_CameraEditorComponent.GetInstance(SCR_CameraEditorComponent));
-			if (cameraManager)
+			#ifdef CHOPPER_TESTING
+				m_fDistanceLow = 200;
+			#endif
+
+/*			if (!SDRC_PlayerHelper.IsInGMmode())
 			{
-				SCR_ManualCamera GMCamera = cameraManager.GetCamera();				
-				if (GMCamera)
+				SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Player not in GM mode!", LogLevel.DEBUG);							
+			}			*/
+						
+//			if (SDRC_PlayerHelper.IsInGMmode())
+//			{			
+				SCR_CameraEditorComponent cameraManager = SCR_CameraEditorComponent.Cast(SCR_CameraEditorComponent.GetInstance(SCR_CameraEditorComponent));
+				if (cameraManager)
 				{
-					vector transform[4];
-					GMCamera.GetTransform(transform);
-					vector angle = transform[2];
-					angle.Normalized();
-					destination = owner.GetOrigin() + angle * m_fDistanceLow;
-					SDRC_DebugHelper.AddDebugPos(destination, ARGB(255, 255, 00, 00), 5.0, m_sDid, 200);
+					SCR_ManualCamera GMCamera = cameraManager.GetCamera();				
+					if (GMCamera)
+					{
+						vector transform[4];
+						GMCamera.GetTransform(transform);
+						vector angle = transform[2];
+						angle.Normalized();
+						destination = owner.GetOrigin() + angle * m_fDistanceLow;
+						SDRC_DebugHelper.AddDebugPos(destination, ARGB(255, 255, 00, 00), 5.0, m_sDid, 200);
+					}
 				}
-			}
+//			}
 			
-//			AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
-			AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, destination);
+			#ifndef CHOPPER_TESTING
+				AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
+			#else
+				AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, destination);
+			#endif
 		}
 
 		//Add a point towards the first destination
@@ -1244,23 +1263,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 			destination = SDRC_Misc.SetPosToSurface(destination);
 			SetState(SDRC_EHeliState.LAND);
 
-			//This varies on helicopter height and speed			
-			float startDistance = m_fSpeed * 10;
-			startDistance = Math.Clamp(startDistance, 100, 1000);
+			m_fLandingDistance =  m_fSpeed * 12;
 			
-			/* Count distance from (H)eli to (L)anding. The distance is dependent on speed and height
-			
-				  distance ____----(H)
-				   ____----        |   height
-				(L)----------------*
-				    startDistance
-			*/
-			
-			float distance = Math.Sqrt(startDistance * startDistance + m_fAltitude * m_fAltitude);
-			m_fLandingDistance = startDistance;
-			m_fTimeToLand = (distance / m_fSpeed) * 0.7;
-//			m_fTimeToLand = m_fLandingDistance / 15;
-			
+			m_bIsLanding = false;
 			m_fTimerLanding = 0;
 		}
 		
@@ -1448,6 +1453,16 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		if (distance < m_fLandingDistance)
 		{
+			if (!m_bIsLanding)
+			{
+				//Time is dependent on position to speed
+				m_fTimeToLand = distance / m_fSpeed;
+				m_fLandingSpeed = -1 * (m_fAltitude / m_fTimeToLand);
+				
+				//We have started landing sequence so no need to count values
+				m_bIsLanding = true;
+			}
+			
 			if (!m_Helicopter_s.HasAnyGroundContact())
 			{				
 				//Set the last point on ground
@@ -1456,10 +1471,10 @@ class SDRC_ChopperComp : ScriptGameComponent
 				
 				m_fTimerLanding += timeSlice;
 				m_fTimerLanding = Math.Clamp(m_fTimerLanding, 0, m_fTimeToLand);
-				float mul = 1 - m_fTimerLanding / m_fTimeToLand;
+				float mul = 1 - m_fTimerLanding / m_fTimeToLand;				
+				float distMul = 1 - distance / m_fLandingDistance;
 				
-//				m_fRotorForceMultiplier = -3.2 + -5.5 * SDRC_Math.HalfBell(mul);
-				m_fRotorForceMultiplier = -3.0 + -4.0 * SDRC_Math.FullBell(mul);
+				m_fRotorForceMultiplier = -1.1 + -1.6 * distMul + m_fLandingSpeed * SDRC_Math.FullBell(mul);
 				
 				//Helicopter to descend
 		        m_Helicopter_s.RotorSetForceScaleState(0, 0);

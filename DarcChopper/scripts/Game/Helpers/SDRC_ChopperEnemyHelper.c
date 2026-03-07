@@ -210,6 +210,14 @@ class SDRC_ChopperEnemyHelper
 		targetPos = SDRC_Misc.RandomizePos(targetPos, targetError);
 		//Move rocket position up or down according to [1]
 		targetPos[1] = targetPos[1] + chopperComp.m_RocketPosition[1];
+
+		float distance = vector.Distance(owner.GetOrigin(), targetPos);
+		
+		if (distance > chopperComp.m_RocketRange)
+		{
+			//Too far away
+			return;
+		}
 		
 //		vector rocketSpawnPos = SDRC_ChopperHelper.GetDestinationForward(owner, 10);
 		vector rocketSpawnPos = SDRC_ChopperHelper.GetDestinationForward(owner, chopperComp.m_RocketPosition[0]);
