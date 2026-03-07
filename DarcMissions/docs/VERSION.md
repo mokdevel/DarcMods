@@ -11,9 +11,9 @@ Changed jsons - remove the files to receive updated ones.
 * OPTIONAL: dc_enemyList.json (support for Takistani Army)
 
 Main features:
-* Support for Takistani Army faction. Use ``Takistan`` as the name. Delete your dc_enemyList.json to get an updated one.
-* Server startup parameter ``-darcSubDir``. This can be used to override the ``subDir`` parameter in dc_coreConfig.json. (SaberSnack)
 * Separated DarcChopper as a different mod.
+* Support for Takistani Army faction. Use ``Takistan`` as the name. Delete your dc_enemyList.json to get an updated one.
+* Server startup parameter ``-darcSubDir``. This can be used to override the ``subDir`` parameter in dc_coreConfig.json. (Credits: SaberSnack)
 * Chopper mission: 
   * Added ``enemyType``.
   * Hopefully AIs spawn always in the helicopter and not on ground sometimes. 

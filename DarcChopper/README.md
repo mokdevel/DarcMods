@@ -4,7 +4,9 @@
 
 The mod introduces functionality to let AIs use helicopters to fly around, attack with guns on the helicopter, use rockets, patrol an area, find enemies, land to bring troops. The mod is still very much WIP.
 
-Functionality is implemented as a single re-usable component.
+Functionality is implemented as a single re-usable component. It is very easy to make your favourite modded helicopter to fly by AIs.
+
+Helicopters can be spawned via GM and can be commanded. Currently available waypoints are listed here: [Waypoints](https://github.com/mokdevel/DarcMods/tree/main/DarcChopper#waypoints)
 
 * [Version history](VERSION.md)
 
