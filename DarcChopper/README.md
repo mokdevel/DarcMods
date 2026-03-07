@@ -99,6 +99,8 @@ A flight path is assigned to the helicopter and it will start to follow it. The 
 ## Lines: Green and Blue
 You will see green and blue lines on screen when the helicopter is flying. 
 
+NOTE: These currently only work in WB and possible single player. Replication functionality is missing so that is TBD.
+
 * Green: Shows the flight path for the helicopter. This is a spline that is followed while flying. This shows were we're generally going to end up.
 * Blue: If you've set waypoints for the helicopter, blue straight lines will show the future route. When the helicopter reaches the end of a green line, a check for waypoints (blue lines) is made. If waypoints are available, a new route is created via them and you will see the blue straight lines changing to a green flight path.
 * Gray: Shows the flight path towards the area to patrol. Once reaching the destination, a patroling flight path will be created.

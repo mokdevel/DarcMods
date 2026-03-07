@@ -58,7 +58,12 @@ SDRC_EHeliWaypointGenerationType wpType : Helicopter way point functionality
   0 = NONE : Unused
   1 = RANDOM : Helicopter will find a new random destination depending on flyDistance
   2 = PATROL : Helicopter patrols around a given area.
-  3 = SEARCH : Helicopter flies and searches for players. Once player is found, mission completes and Hunters are sent to kill players. 
+  3 = SEARCH : Helicopter flies and searches for players. Once player is found, mission completes and Hunters are sent to kill players.   
+SDRC_EHeliEnemySearchType enemyType : Which targets are considered enemies
+  0 = NONE : Ignore all targets
+  1 = ANY : Any target seen is considered as an enemy.
+  2 = PLAYER : Only players are considered targets
+  3 = ANY_CHAR : Any character (player and AI) is considered as an enemy.
 ```
 
 ## Supported helicopters

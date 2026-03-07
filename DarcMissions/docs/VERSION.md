@@ -4,16 +4,22 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+This release is mainly around helicopter functionality. I have separated DarcChopper as a different to allow others to easily use it for their needs. 
+
 Changed jsons - remove the files to receive updated ones.
-* dc_missionConfig_Chopper.json (added enemyType)
+* dc_missionConfig_Chopper.json (added ``enemyType``)
+* OPTIONAL: dc_enemyList.json (support for Takistani Army)
 
 Main features:
-* Server startup parameter ``-darcSubDir``. This can be used to override the ``subDir`` parameter in dc_coreConfig.json.
+* Support for Takistani Army faction. Use ``Takistan`` as the name. Delete your dc_enemyList.json to get an updated one.
+* Server startup parameter ``-darcSubDir``. This can be used to override the ``subDir`` parameter in dc_coreConfig.json. (SaberSnack)
 * Separated DarcChopper as a different mod.
 * Chopper mission: 
+  * Added ``enemyType``.
   * Hopefully AIs spawn always in the helicopter and not on ground sometimes. 
   * You can give additional commands to helis with GM options.
   * Added a sub-mission "Gunship Killer" which will attack also enemy AIs.
+  * The AI has now rockets - take cover.
   
 ## 20260201
 This update introduces major modifications to json files. These are the updates I've been waiting to push out for quite a while. The unfortunate thing is that this will break your existing json file compatibility. The positive thing is that there are no foreseen changes planned to be introduced in the near future. This current structure should be, not to say final, but close to it.
