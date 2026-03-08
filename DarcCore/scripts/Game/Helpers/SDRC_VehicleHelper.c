@@ -225,14 +225,6 @@ sealed class SDRC_VehicleHelper
 			
 			GetGame().GetCallqueue().CallLater(GetOutDelayed, i*2000, false, character, vehicle);
 			
-/*			
-			CompartmentAccessComponent compAccess = SCR_CompartmentAccessComponent.Cast(character.GetCompartmentAccessComponent());
-			if (compAccess)
-			{
-//				compAccess.GetOutVehicle(EGetOutType.ANIMATED, 0, false, false);
-				compAccess.GetOutVehicle(EGetOutType.TELEPORT, 0, false, false);
-			}
-*/			
 			//Collect the groups that were ordered to climb out. 
 			SCR_AIGroup AIgroup = SCR_AIGroup.Cast(aiAgent.GetParentGroup());					
 			EntityID groupId = AIgroup.GetID();
@@ -241,10 +233,6 @@ sealed class SDRC_VehicleHelper
 			{
 				groupIds.Insert(groupId);
 				groups.Insert(AIgroup);
-				
-//				AIGroup group = aiAgent.GetParentGroup();
-//				AIGroup group = AIGroup.Cast(AIgroup);
-//				AIgroup.SetNewLeader(aiAgent);
 			}
 		}
     }	
@@ -259,7 +247,7 @@ sealed class SDRC_VehicleHelper
 		CompartmentAccessComponent compAccess = SCR_CompartmentAccessComponent.Cast(character.GetCompartmentAccessComponent());
 		if (compAccess)
 		{
-			compAccess.GetOutVehicle(EGetOutType.ANIMATED, 0, false, false);
+//			compAccess.GetOutVehicle(EGetOutType.ANIMATED, 0, false, false);
 //			compAccess.GetOutVehicle(EGetOutType.TELEPORT, 0, false, false);
 			
 			// ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -283,12 +271,6 @@ sealed class SDRC_VehicleHelper
 						
 						if (utilityComponent)
 						{
-//							vector dangerPos = SDRC_Misc.RandomizePos(vehicle.GetOrigin(), 50);
-//							vector dangerPos = vehicle.GetOrigin();
-							
-//							SCR_AIMoveFromVehicleHornBehavior moveFromDangerBehavior = new SCR_AIMoveFromVehicleHornBehavior(utilityComponent, null, dangerPos, dangerEntity: vehicle);
-//							SCR_AIMoveFromDangerBehavior moveFromDangerBehavior = new SCR_AIMoveFromDangerBehavior(utilityComponent, null, dangerPos, dangerEntity: vehicle);
-//							SCR_AIMoveFromUnsafeAreaBehavior moveFromDangerBehavior = new SCR_AIMoveFromUnsafeAreaBehavior(utilityComponent, null, vehicle.GetOrigin(), vehicle, 100);
 							SCR_AIMoveFromDangerBehavior moveFromDangerBehavior = new SCR_AIMoveFromVehicleHornBehavior(utilityComponent, null, vector.Zero, dangerEntity: vehicle);
 							
 							utilityComponent.AddAction(moveFromDangerBehavior);

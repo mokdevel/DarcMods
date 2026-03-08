@@ -24,7 +24,8 @@ enum SDRC_EWaypointMoveType
 	PATROL,			//Same as MOVE but with patrol speed.
 	MOVECYCLE,		//Creates move waypoints in cycke. AI will restart the cycle once all waypoints are visited.
 	PATROLCYCLE,	//Same as MOVECYCLE but with patrol speed.
-	LOITER			//If LOITER is chosen for generation, this needs to be in movetype. This is enforced in CreateMissionAIWaypoints
+	LOITER,			//If LOITER is chosen for generation, this needs to be in movetype. This is enforced in CreateMissionAIWaypoints
+	GETOUT,
 };
 
 //------------------------------------------------------------------------------------------------
@@ -390,6 +391,10 @@ sealed class SDRC_WPHelper
 				array<string> wpDefendList = {"{2FCBE5C76E285A7B}Prefabs/AI/Waypoints/AIWaypoint_DefendSmall.et", "{FAD1D789EE291964}Prefabs/AI/Waypoints/AIWaypoint_Defend_Large.et"};
 				wpPrefab = wpDefendList.GetRandomElement();
 //				wpPrefab = "{FAD1D789EE291964}Prefabs/AI/Waypoints/AIWaypoint_Defend_Large.et";
+				break;
+			case SDRC_EWaypointMoveType.GETOUT:
+				wpPrefab = "{E5002E8CD9D1F4AF}Prefabs/AI/Waypoints/AIWaypoint_GetOutInstant.et";
+//				wpPrefab = "{C40316EE26846CAB}Prefabs/AI/Waypoints/AIWaypoint_GetOut.et";
 				break;
 			default: 
 				wpPrefab = "";

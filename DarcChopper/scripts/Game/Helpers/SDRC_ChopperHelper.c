@@ -98,7 +98,7 @@ class SDRC_ChopperHelper
 
 		//Remove the canvas and lines if chopper is destroyed
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		if (chopperComp)
+		if ( (chopperComp) && (chopperComp.m_wCanvas) )
 		{
 			chopperComp.m_aDrawCommands.Clear();
 			chopperComp.m_wCanvas.SetDrawCommands(chopperComp.m_aDrawCommands);

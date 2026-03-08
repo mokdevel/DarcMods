@@ -82,6 +82,8 @@ class SDRC_ChopperCrewHelper
 				}
 			}
 			
+			//cargoCrewCount = 3;				//REMOVE
+			
 			//Add random additional riflemen
 			for (int i = 0; i < cargoCrewCount; i++)
 			{
@@ -101,7 +103,7 @@ class SDRC_ChopperCrewHelper
 				crewPrefabs.Insert(member.GetDefaultOccupantPrefab());
 			}
 		}
-						
+		
 		int crewInGroupCount = 0;
 		
 		//Add the crew
@@ -181,13 +183,12 @@ class SDRC_ChopperCrewHelper
 
 		SDRC_VehicleHelper.GetOutVehicle(owner, groups);
 
-		foreach (SCR_AIGroup group : groups)
+		foreach (int g, SCR_AIGroup group : groups)
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp:HandleState] Create waypoint for AI group: " + group, LogLevel.DEBUG);			
 			
 			vector pos = SDRC_Misc.RandomizePos(owner.GetOrigin(), 300);			
-			SDRC_DebugHelper.AddDebugPos(pos);
-			GetGame().GetCallqueue().CallLater(SetWaypointDelayed, 5000, false, group, pos);
+			GetGame().GetCallqueue().CallLater(SetWaypointDelayed, 3000 + 5000 * g, false, group, pos);
 			
 			int index = 0;
 			while (index != -1)
@@ -203,7 +204,9 @@ class SDRC_ChopperCrewHelper
 
 	static void SetWaypointDelayed(SCR_AIGroup group, vector pos)
 	{
-		//SDRC_WPHelper.CreateWaypoint(group, pos, SDRC_EWaypointMoveType.MOVE);
+		SDRC_WPHelper.CreateWaypoint(group, pos, SDRC_EWaypointMoveType.GETOUT);
+		SDRC_WPHelper.CreateWaypoint(group, pos, SDRC_EWaypointMoveType.MOVE);
+		SDRC_DebugHelper.AddDebugPos(pos);
 	}
 		
 	//------------------------------------------------------------------------------------------------
