@@ -64,14 +64,26 @@ Perception of the AI affects the capability to find an enemy. This is not contro
 ## Flying
 First of all, the AIs do not fly the helicopter. There is no behaviour tree for flying. The pilot AI is a passenger and all the flying magic happen by the component. 
 
-## Shooting
-### Machine Guns
+# Shooting
+## Machine Guns
 AI shooting with MGs is controller by Arma Reforger and not by the mod. If targets are recognized, the AI will shoot by themselves with accuracy defined by the skill.
 
-### Rockets
+## Rockets
 Arma Reforger does not provide functionality for AIs to use rockets. The mod fakes this by spawning a rocket at ``Rocket Position`` from the helicopter position. The rocket is launched with the capabilities provided by ``MissileMoveComponent``. After this, Arma Reforger handles the physics and related functionality.
 
 Currently the helicopter is not queried for available weapons and their rocket ammo. You need to define the rockets for the helicopter to use in ``Rocket Prefabs``. At startup, one of the prefabs is chosen for use. 
+
+### Finding target
+Before a rocket is shot, certain things are checked:
+* The target needs to be an enemy of the helicopter. 
+* The target has been found. See: [Finding enemies](https://github.com/mokdevel/DarcMods/tree/main/DarcChopper#finding-enemies)
+* The found target is within ``Rocket Range``.
+* The found target is within ``Rocket Sector``.
+* (Future: There is a line of sight to the target)
+* The helicopter has rockets available.
+If all of the above is true, the helicopter will launch a rocket.
+
+Note that Search and Destroy will ignore the targets and shoot at the defined location. This happens even if friendlies are there.
 
 Rocket prefabs tested:
 ```	
