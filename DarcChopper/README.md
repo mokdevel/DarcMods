@@ -9,6 +9,8 @@ Functionality is implemented as a single re-usable component. It is very easy to
 Helicopters can be spawned via GM and can be commanded. Currently available waypoints are listed here: [Waypoints](https://github.com/mokdevel/DarcMods/tree/main/DarcChopper#waypoints)
 
 * [Version history](VERSION.md)
+* [Creating a flying helicopter](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter).
+* [Parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md#sdrc_choppercomp-values)
 
 # Re-use in mods and game modes
 The flight model is done as a component (SDRC_ChopperComp). You are free to use it in yours - credits are appreciated. In theory you can add that to any helicopter and they will gain autonomous flying capabilities. For a short HowTo, see: [Creating a flying helicopter](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter).
