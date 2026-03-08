@@ -73,7 +73,18 @@ Arma Reforger does not provide functionality for AIs to use rockets. The mod fak
 
 Currently the helicopter is not queried for available weapons and their rocket ammo. You need to define the rockets for the helicopter to use in ``Rocket Prefabs``. At startup, one of the prefabs is chosen for use. 
 
-### Finding target
+Rocket prefabs tested:
+```	
+- {ECD8628EBF7E5F6B}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70.et
+- {072A755D5CB85D47}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HE_M229.et
+- {61AF60E0235DC3B1}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HEDP_M247.et
+	
+- {C9A1612DC5340613}Prefabs/Weapons/Ammo/Ammo_Rocket_S5.et
+- {EF17BED6DCEE4DE4}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_FRAG_S5MO.et
+- {EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et
+```
+
+### Shooting at a target
 Before a rocket is shot, certain things are checked:
 * The target needs to be an enemy of the helicopter. 
 * The target has been found. See: [Finding enemies](https://github.com/mokdevel/DarcMods/tree/main/DarcChopper#finding-enemies)
@@ -86,17 +97,6 @@ If all of the above is true, the helicopter will launch a rocket.
 <img src="../pics/HelicopterRocket.png" width=50% height=50%>
 
 NOTE: Search and Destroy will ignore the targets and shoot at the defined location. This happens even if friendlies are there.
-
-Rocket prefabs tested:
-```	
-- {ECD8628EBF7E5F6B}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70.et
-- {072A755D5CB85D47}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HE_M229.et
-- {61AF60E0235DC3B1}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HEDP_M247.et
-	
-- {C9A1612DC5340613}Prefabs/Weapons/Ammo/Ammo_Rocket_S5.et
-- {EF17BED6DCEE4DE4}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_FRAG_S5MO.et
-- {EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et
-```
 
 # GM Functionality
 You can spawn choppers as a GM and they will start to fly around the world randomly. You can control them with waypoints.
