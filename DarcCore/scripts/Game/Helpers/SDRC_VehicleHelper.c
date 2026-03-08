@@ -224,7 +224,7 @@ sealed class SDRC_VehicleHelper
 			AIControlComponent ctrl = AIControlComponent.Cast(character.FindComponent(AIControlComponent));			
 			SCR_ChimeraAIAgent aiAgent = SCR_ChimeraAIAgent.Cast(ctrl.GetAIAgent());
 			
-			GetGame().GetCallqueue().CallLater(GetOutDelayed, i*1000, false, character);
+			GetGame().GetCallqueue().CallLater(GetOutDelayed, i*1000, false, character, vehicle);
 			
 /*			
 			CompartmentAccessComponent compAccess = SCR_CompartmentAccessComponent.Cast(character.GetCompartmentAccessComponent());
@@ -251,9 +251,9 @@ sealed class SDRC_VehicleHelper
 		}
     }	
 	
-	static void GetOutDelayed(ChimeraCharacter character)
+	static void GetOutDelayed(ChimeraCharacter character, IEntity vehicle)
 	{
-		if (!character)
+		if ( (!character) || (!vehicle) )
 		{
 			return;
 		}
@@ -263,6 +263,46 @@ sealed class SDRC_VehicleHelper
 		{
 			compAccess.GetOutVehicle(EGetOutType.ANIMATED, 0, false, false);
 //			compAccess.GetOutVehicle(EGetOutType.TELEPORT, 0, false, false);
+			
+			// ///////////////////////////////////////////////////////////////////////////////////////////////
+			//! New Edited ATiM- START
+			//! Added "IEntity vehicle" to this ( GetOutDelayed ) method, used by SCR_AIMoveFromDangerBehavior.
+			AIControlComponent controlComponent = character.GetAIControlComponent();
+			
+			if (controlComponent)
+			{
+				AIAgent agent = controlComponent.GetAIAgent();
+				
+				if (agent)
+				{
+					SCR_ChimeraAIAgent chimeraAIAgent = SCR_ChimeraAIAgent.Cast(agent);
+					
+					if (chimeraAIAgent)
+					{					
+						// compAccess.GetVehicleIn(vehicleEntity);
+						
+						SCR_AIUtilityComponent utilityComponent = chimeraAIAgent.m_UtilityComponent;
+						
+						if (utilityComponent)
+						{
+//							vector dangerPos = SDRC_Misc.RandomizePos(vehicle.GetOrigin(), 50);
+							vector dangerPos = vehicle.GetOrigin();
+							
+//							SCR_AIMoveFromVehicleHornBehavior moveFromDangerBehavior = new SCR_AIMoveFromVehicleHornBehavior(utilityComponent, null, dangerPos, dangerEntity: vehicle);
+							SCR_AIMoveFromDangerBehavior moveFromDangerBehavior = new SCR_AIMoveFromDangerBehavior(utilityComponent, null, dangerPos, dangerEntity: vehicle);
+//							SCR_AIMoveFromUnsafeAreaBehavior moveFromDangerBehavior = new SCR_AIMoveFromUnsafeAreaBehavior(utilityComponent, null, vehicle.GetOrigin(), vehicle, 100);
+							
+							utilityComponent.AddAction(moveFromDangerBehavior);
+							
+							#ifdef WORKBENCH
+								SCR_AIDebugVisualization.VisualizeMessage(utilityComponent.m_OwnerEntity, "SDRC_VehicleHelper > GetOutDelayed > SCR_AIMoveFromDangerBehavior", EAIDebugCategory.NONE, 1.0, Color.White, 11, true);
+							#endif
+						}
+					}
+				}
+			}
+			//! New Edited ATiM- END
+			// ///////////////////////////////////////////////////////////////////////////////////////////////
 		}
 	}
 	

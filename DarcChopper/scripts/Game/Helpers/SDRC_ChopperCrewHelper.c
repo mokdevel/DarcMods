@@ -82,6 +82,8 @@ class SDRC_ChopperCrewHelper
 				}
 			}
 			
+			cargoCrewCount = 1;
+			
 			//Add random additional riflemen
 			for (int i = 0; i < cargoCrewCount; i++)
 			{
@@ -199,7 +201,7 @@ class SDRC_ChopperCrewHelper
 
 	static void SetWaypointDelayed(SCR_AIGroup group, vector pos)
 	{
-		SDRC_WPHelper.CreateWaypoint(group, pos, SDRC_EWaypointMoveType.MOVE);
+		//SDRC_WPHelper.CreateWaypoint(group, pos, SDRC_EWaypointMoveType.MOVE);
 	}
 		
 	//------------------------------------------------------------------------------------------------

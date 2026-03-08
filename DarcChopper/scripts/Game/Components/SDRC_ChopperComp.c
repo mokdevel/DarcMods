@@ -3,7 +3,7 @@
 //Changes done in prefabs:
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
-//#define CHOPPER_TESTING
+#define CHOPPER_TESTING
 
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompClass : ScriptGameComponentClass { }
@@ -749,7 +749,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			vector destination = SDRC_Misc.GetCoordinatesOnCircle(owner.GetOrigin(), m_fDistanceLow, SDRC_Misc.RandomInt(0, 360));
 			
 			#ifdef CHOPPER_TESTING
-				m_fDistanceLow = 200;
+				m_fDistanceLow = 300;
 			#endif
 
 /*			if (!SDRC_PlayerHelper.IsInGMmode())
