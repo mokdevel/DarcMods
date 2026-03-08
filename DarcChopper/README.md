@@ -11,13 +11,13 @@ Helicopters can be spawned via GM and can be commanded. Currently available wayp
 * [Version history](VERSION.md)
 
 # Re-use in mods and game modes
-The flight model is done as a component (SDRC_ChopperComp). You are free to use it in yours - credits are appreciated. In theory you can add that to any helicopter and they will gain autonomous flying capabilities.
+The flight model is done as a component (SDRC_ChopperComp). You are free to use it in yours - credits are appreciated. In theory you can add that to any helicopter and they will gain autonomous flying capabilities. For a short HowTo, see: [Creating a flying helicopter](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter).
 
 ## Modded helicopters
 Modded helicopters or helicopters not included in the mod do not work out of the box. You need to add the component (SDRC_ChopperComp) to them and possibly modify some parameters (like ``rotorforceX``). For a short HowTo, see: [Creating a flying helicopter](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter).
 
 # Configuration parameters
-See: [Parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md)
+See: [Parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md#sdrc_choppercomp-values)
 
 # The flying mechanism
 The functionality simulates (=fakes) how an AI would be flying the helicopter. The helicopter is provided with a destination or multiple, and a route is calculated to reach it. Depending on the curvature, distance and various other things, the helicopter is made to behave like it's actually flying.
