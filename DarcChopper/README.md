@@ -83,6 +83,8 @@ Before a rocket is shot, certain things are checked:
 * The helicopter has rockets available.
 If all of the above is true, the helicopter will launch a rocket.
 
+<img src="../pics/HelicopterRocket.png" width=30% height=30%>
+
 NOTE: Search and Destroy will ignore the targets and shoot at the defined location. This happens even if friendlies are there.
 
 Rocket prefabs tested:
