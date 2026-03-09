@@ -1,5 +1,12 @@
 # Version history
 
+## Next Version
+Main features:
+* Improved Get Out functionality
+
+Fixes:
+* Crew consisted of a mix of various faction soldiers and not from the right faction.
+
 ## 202603xx - FIRST RELEASE
 * The first release of the mod. See [documenation](https://github.com/mokdevel/DarcMods/tree/main/DarcChopper) for more details.
 

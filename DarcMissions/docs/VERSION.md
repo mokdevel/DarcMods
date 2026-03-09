@@ -4,6 +4,10 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+Main features:
+* DarcChopper spawned helicopters will use the defined ``enemyFactions`` values. For example, if you have ``US`` as the enemy, all USSR choppers spawned with GM will be of US faction.
+
+## 20260307
 This release is mainly around helicopter functionality. I have separated DarcChopper as a different to allow others to easily use it for their needs. 
 
 Changed jsons - remove the files to receive updated ones.
