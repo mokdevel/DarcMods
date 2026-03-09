@@ -6,7 +6,7 @@ Use the Arma Reforger workbench to create your own helicopter mod. The default p
 NOTE: Below information is slightly outdated.
 
 - Open Arma Reforger Tools
-- Create a mod with DarcCore as a dependency
+- Create a mod with [DarcCore](https://reforger.armaplatform.com/workshop/631EE12D448D7FCC-DarcCore) as a dependency.
 - Select the helicopter you want to use
 - Duplicate the helicopter prefab to your mod. In to the name, add "_Patrol" at the end.
 - Edit prefab and add component ``SDRC_ChopperComp``.
@@ -16,7 +16,6 @@ NOTE: Below information is slightly outdated.
 - Add the helicopter you just created and raise it from ground to the initial flight height.
 - Run. The helicopter should start to fly.
 - Pilots/AI is added automatically to the helicopter. This is true for US, USSR and FIA. Other factions are not tested but might work.
-- Dependency needed: [DarcCore](https://reforger.armaplatform.com/workshop/631EE12D448D7FCC-DarcCore)
 
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/choppersettings.png" width=30% height=30%> <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/choppersettings_2.png" width=30% height=30%>
 
