@@ -107,7 +107,27 @@ sealed class SDRC_Misc
 			}
 		}
 	}	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Is addon with the a specific name loaded. Mod name has '$' at the beginning and ':' at the end.
 	
+	Example:
+		SDRC_Misc.IsAddonLoaded("$DarcMissions:"))
+	*/	
+	static bool IsAddonLoaded(string addonName)
+	{
+		array<string> addonList;
+		GetAddonList(addonList);
+		
+		if (addonList.Contains(addonName))
+		{
+			return true;
+		}
+		
+		return false;
+	}		
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Returns the (max) size of the world bound box
