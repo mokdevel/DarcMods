@@ -18,6 +18,9 @@ The flight model is done as a component (SDRC_ChopperComp). You are free to use 
 ## Modded helicopters
 Modded helicopters or helicopters not included in the mod do not work out of the box. You need to add the component (SDRC_ChopperComp) to them and possibly modify some parameters (like ``rotorforceX``). For a short HowTo, see: [Creating a flying helicopter](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter).
 
+## Using in your mod
+There are a few public functions that you can use. For flying to destination(s), use ``AddDestination()``. You can call it multiple times to create a fly path. The helicopter will not go exactly to the given point and this is by design. If you want it to fly over a location, set the point behind the location.
+
 # Configuration parameters
 See: [Parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md#sdrc_choppercomp-values)
 
@@ -156,3 +159,11 @@ WP_RAISE, order helicopter to fly forward for a while. Currently 200 meters
 Once actions are done, we return to normal flight mode.
 
 NOTE: Landing has its issues and needs some rework.
+
+# Known issues
+There are various small things that are to be fixed in the future updates:
+- Climb in certain cases is too fast and does not look natural.
+- Flight path finding is simple for the moment. Steep turns sometimes look nice, sometimes not.
+- Some times the helicopter flies nose up after a steep turn. Have not yet found how to avoid that.
+
+
