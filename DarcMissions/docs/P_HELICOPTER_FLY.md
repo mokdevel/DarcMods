@@ -16,8 +16,12 @@ NOTE: Below information is slightly outdated.
 - Add the helicopter you just created and raise it from ground to the initial flight height.
 - Run. The helicopter should start to fly.
 - Pilots/AI is added automatically to the helicopter. This is true for US, USSR and FIA. Other factions are not tested but might work.
+- Dependency needed: [DarcCore](https://reforger.armaplatform.com/workshop/631EE12D448D7FCC-DarcCore)
 
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/choppersettings.png" width=30% height=30%> <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/choppersettings_2.png" width=30% height=30%>
+
+## Re-use in mods and game modes
+The flight model is done as a component. You are free to use it in yours - credits are appreciated. In theory you can add that to any helicopter and they will gain autonomous flying capabilities. 
 
 ## SDRC_ChopperComp values
 ### Chopper
@@ -69,23 +73,3 @@ The component has default values that work quite well for the vanilla helicopter
 
 ### Unsorted
 * ``Fly Destinations`` : TO BE DOCUMENTED. You can create your own flight patterns here.
-
-## Re-use in mods and game modes
-The flight model is done as a component. You are free to use it in yours - credits are appreciated. In theory you can add that to any helicopter and they will gain autonomous flying capabilities. 
-
-## HowTo
-- Create a compatibility mod (or include in to your mod).
-- Include DarcCore as a dependency.
-- Choose the helicopter to use.
-- Use the guide above to set the necessary values.
-- Add the component.
-- Spawn and let it fly.
-- Dependency needed: [DarcCore](https://reforger.armaplatform.com/workshop/631EE12D448D7FCC-DarcCore) 
-
-There are a few public functions that you can use. For flying to destination(s), use ``AddDestination()``. You can call it multiple times to create a fly path. The helicopter will not go exactly to the given point and this is by design. If you want it to fly over a location, set the point behind the location.
-
-## Issues
-There are various small things that are to be fixed in the future updates:
-- Climb in certain cases is too fast and does not look natural.
-- Flight path finding is simple for the moment. Steep turns sometimes look nice, sometimes not.
-- Some times the helicopter flies nose up after a steep turn. Have not yet found how to avoid that.
