@@ -11,13 +11,13 @@ NOTE: Below information is slightly outdated.
 - Duplicate the helicopter prefab to your mod. In to the name, add "_Patrol" at the end.
 - Edit prefab and add component ``SDRC_ChopperComp``.
 - Modify the engine to be running immediately.
-- Configure as in the image
+- Configure as in the images
 - Open World Editor
 - Add the helicopter you just created and raise it from ground to the initial flight height.
 - Run. The helicopter should start to fly.
 - Pilots/AI is added automatically to the helicopter. This is true for US, USSR and FIA. Other factions are not tested but might work.
 
-<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/choppersettings.png" width=30% height=30%>
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/choppersettings.png" width=30% height=30%> <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/choppersettings_2.png" width=30% height=30%>
 
 ## SDRC_ChopperComp values
 ### Chopper
@@ -38,7 +38,12 @@ The component has default values that work quite well for the vanilla helicopter
   * ``1 .. n`` : The distance to fly to next.
 
 ### AI settings
-* TBD
+* ``Faction`` :
+* ``Cargo Seat Fill``
+* ``Crew``
+* ``AI Skill``
+* ``AI Perception``
+* ``Enemy Search Type`` : 
 
 ### Weapons
 * ``Rocket Sector`` : (degrees) The sector in front of the rocket where the rocket can be shot. This is a cone with this angle left-right. For example: 10 degrees will result in cone of 20 degrees from the nose of the helicopter.
@@ -47,6 +52,20 @@ The component has default values that work quite well for the vanilla helicopter
   * ``X``: The distance from helicopter nose to spawn the rocket
   * ``Y``: Target Y-position height modificator. Target position is usually on the ground and position is raised according to this value.
   * ``Z``: TBD - Location of helicopter rocket position left/right. Rockets will be spawned on the side of the helicopter instead of infront of the nose.
+* ``Rocket Prefabs`` : Rockets that are available on the chopper. When chopper is spawned, one of the rocket types is chosen as the one to use.
+
+  Rocket prefabs tested:
+  ```	
+  - {ECD8628EBF7E5F6B}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70.et
+  - {072A755D5CB85D47}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HE_M229.et
+  - {61AF60E0235DC3B1}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HEDP_M247.et
+	
+  - {C9A1612DC5340613}Prefabs/Weapons/Ammo/Ammo_Rocket_S5.et
+  - {EF17BED6DCEE4DE4}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_FRAG_S5MO.et
+  - {EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et
+  ```
+* ``Rocket Count`` : How many rockets are available for shooting. -1 = unlimited.
+* ``Rocket Range`` : The maximum distance to shoot a rocket. See also [Rockets](https://github.com/mokdevel/DarcMods/blob/main/DarcChopper/README.md#rockets)
 
 ### Unsorted
 * ``Fly Destinations`` : TO BE DOCUMENTED. You can create your own flight patterns here.
