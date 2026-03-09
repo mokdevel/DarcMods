@@ -21,6 +21,76 @@ Modded helicopters or helicopters not included in the mod do not work out of the
 ## Using in your mod
 There are a few public functions that you can use. For flying to destination(s), use ``AddDestination()``. You can call it multiple times to create a fly path. The helicopter will not go exactly to the given point and this is by design. If you want it to fly over a location, set the point behind the location.
 
+# GM Functionality
+You can spawn choppers as a GM and they will start to fly around the world randomly. You can control them with waypoints.
+
+## Entity browser
+The helicopters piloted by AIs can be found by filtering with DarcChopper. There are variants ready made for faction US, USSR and FIA. Drag and drop in to the world, use ALT-key to change altitude. 
+
+<img src="../pics/chopperentitybrowser.jpg" width=30% height=30%>
+
+NOTE: You can not set the helicopter on ground and let it lift off and start to fly. This is by design.
+
+## First flight
+When spawned, helicopter will check it's altitude to make sure it's above ``Fly Height Low``. If not, the helicopter will be moved and this may look like an ugly jump. A random fly destination is chosen and helicopter is rotated towards it. Then we're ready for flying. 
+
+## Flight path
+A flight path is assigned to the helicopter and it will start to follow it. The flight path is shown with green lines on screen and once reaching the end, a new flight path is created. The flight path will be set between ``Fly Height Low`` and ``Fly Height High`` if the location is on ground or too high up. 
+
+## Lines: Green and Blue
+You will see green and blue lines on screen when the helicopter is flying. 
+
+NOTE: These currently only work in WB and possible single player. Replication functionality is missing so that is TBD.
+
+* Green: Shows the flight path for the helicopter. This is a spline that is followed while flying. This shows were we're generally going to end up.
+* Blue: If you've set waypoints for the helicopter, blue straight lines will show the future route. When the helicopter reaches the end of a green line, a check for waypoints (blue lines) is made. If waypoints are available, a new route is created via them and you will see the blue straight lines changing to a green flight path.
+* Gray: Shows the flight path towards the area to patrol. Once reaching the destination, a patroling flight path will be created.
+* Red: Location to attack with rockets. This is more like a bombing run where the target location is shot with rockets regardless of if there are enemies or not.
+
+NOTE: The lines are drawn on a canvas so they will be on top of the screen items. This is something work on and improve.
+
+<img src="../pics/chopperlines.jpg" width=30% height=30%>
+
+# Waypoints
+You can assign waypoints for the helicopter. Just pick any AI/group or even the helicopter, select a waypoint and drop it on the map. Use ALT-key to change the altitude of the waypoint, but don't worry, if it's on the ground by mistake, it will be set to right flight height. You can set multiple waypoints as a chain and future flight will follow it.
+
+Once a waypoint is dropped, the helicopter will pick it from the map and it will disappear. This means that it has been considered for future use.
+
+<img src="../pics/waypoints.png">
+
+Check the supported waypoints below. Other waypoints you define, will disappear from the map and will be discarded.
+
+## <img src="../pics/wp_move.png" width=18 height=18> Move 
+The helicopter is requested to fly to this destination. You can set multiple ones to create a longer route.
+
+## <img src="../pics/wp_forcemove.png" width=18 height=18> Force Move
+The helicopter is requested to fly to this destination immediately. Any existing plans will be discarded and the new destination is accepted.
+
+## <img src="../pics/wp_moverelaxed.png" width=18 height=18> Move Relaxed
+<img src="../pics/chopperpatrol.jpg" width=30% height=30%>
+The helicopter is requested to fly to this destination and do rounds around the area. We will circle around the area for a while until continuing normal flight. You can set multiple points for longer patrol times.
+
+## <img src="../pics/wp_searchanddestroy.png" width=18 height=18> Search And Destroy
+Search and destroy will order the helicopter to target a location and bomb it. This are will be shot at regardless of if there are enemies or not. The helicopter needs to be aligned to be able to shoot at the location. Multiple runs towards the target may be performed to the AI with one S&D command. 
+
+<img src="../pics/chopperattacklines.png" width=30% height=30%>
+The image shows the green movement to the location to attack. The attack will continue (follow the white line) from another angle. The heli will do a detour and attack along the red line. Rinse and repeat. Once all attacks are performed, normal flying will continue. Wave count, angles and distances are randomized.
+
+## <img src="../pics/wp_getout.png" width=18 height=18> Get Out
+The helicopter will land to the position, order AIs to get out and move 50m from the helicopter. Only passengers (cargo) will be ordered to get out. Pilots and gunners will stay in the chopper.
+
+This is a macro commmand and does a serie of actions:
+```
+WP_LAND, to destination
+WP_GET_OUT, commands AI to disembark
+WP_WAIT, wait for while to AIs time to get out. Currently 20 seconds.
+WP_HOVER_UP, hover helicopter up to minimum fly height. Currently this is done in 12 seconds.
+WP_RAISE, order helicopter to fly forward for a while. Currently 200 meters
+```
+Once actions are done, we return to normal flight mode.
+
+NOTE: Landing has its issues and needs some rework.
+
 # Configuration parameters
 See: [Parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md#sdrc_choppercomp-values)
 
@@ -91,74 +161,6 @@ If all of the above is true, the helicopter will launch a rocket.
 <img src="../pics/HelicopterRocket.png" width=50% height=50%>
 
 NOTE: Search and Destroy will ignore the targets and shoot at the defined location. This happens even if friendlies are there.
-
-# GM Functionality
-You can spawn choppers as a GM and they will start to fly around the world randomly. You can control them with waypoints.
-
-## Entity browser
-The helicopters piloted by AIs can be found by filtering with DarcChopper. There are variants ready made for faction US, USSR and FIA. Drag and drop in to the world, use ALT-key to change altitude. 
-
-NOTE: You can not set the helicopter on ground and let it lift off and start to fly. This is by design.
-
-## First flight
-When spawned, helicopter will check it's altitude to make sure it's above ``Fly Height Low``. If not, the helicopter will be moved and this may look like an ugly jump. A random fly destination is chosen and helicopter is rotated towards it. Then we're ready for flying. 
-
-## Flight path
-A flight path is assigned to the helicopter and it will start to follow it. The flight path is shown with green lines on screen and once reaching the end, a new flight path is created. The flight path will be set between ``Fly Height Low`` and ``Fly Height High`` if the location is on ground or too high up. 
-
-## Lines: Green and Blue
-You will see green and blue lines on screen when the helicopter is flying. 
-
-NOTE: These currently only work in WB and possible single player. Replication functionality is missing so that is TBD.
-
-* Green: Shows the flight path for the helicopter. This is a spline that is followed while flying. This shows were we're generally going to end up.
-* Blue: If you've set waypoints for the helicopter, blue straight lines will show the future route. When the helicopter reaches the end of a green line, a check for waypoints (blue lines) is made. If waypoints are available, a new route is created via them and you will see the blue straight lines changing to a green flight path.
-* Gray: Shows the flight path towards the area to patrol. Once reaching the destination, a patroling flight path will be created.
-* Red: Location to attack with rockets. This is more like a bombing run where the target location is shot with rockets regardless of if there are enemies or not.
-
-NOTE: The lines are drawn on a canvas so they will be on top of the screen items. This is something work on and improve.
-
-<img src="../pics/chopperlines.jpg" width=30% height=30%>
-
-# Waypoints
-You can assign waypoints for the helicopter. Just pick any AI/group or even the helicopter, select a waypoint and drop it on the map. Use ALT-key to change the altitude of the waypoint, but don't worry, if it's on the ground by mistake, it will be set to right flight height. You can set multiple waypoints as a chain and future flight will follow it.
-
-Once a waypoint is dropped, the helicopter will pick it from the map and it will disappear. This means that it has been considered for future use.
-
-<img src="../pics/waypoints.png">
-
-Check the supported waypoints below. Other waypoints you define, will disappear from the map and will be discarded.
-
-## <img src="../pics/wp_move.png" width=18 height=18> Move 
-The helicopter is requested to fly to this destination. You can set multiple ones to create a longer route.
-
-## <img src="../pics/wp_forcemove.png" width=18 height=18> Force Move
-The helicopter is requested to fly to this destination immediately. Any existing plans will be discarded and the new destination is accepted.
-
-## <img src="../pics/wp_moverelaxed.png" width=18 height=18> Move Relaxed
-<img src="../pics/chopperpatrol.jpg" width=30% height=30%>
-The helicopter is requested to fly to this destination and do rounds around the area. We will circle around the area for a while until continuing normal flight. You can set multiple points for longer patrol times.
-
-## <img src="../pics/wp_searchanddestroy.png" width=18 height=18> Search And Destroy
-Search and destroy will order the helicopter to target a location and bomb it. This are will be shot at regardless of if there are enemies or not. The helicopter needs to be aligned to be able to shoot at the location. Multiple runs towards the target may be performed to the AI with one S&D command. 
-
-<img src="../pics/chopperattacklines.png" width=30% height=30%>
-The image shows the green movement to the location to attack. The attack will continue (follow the white line) from another angle. The heli will do a detour and attack along the red line. Rinse and repeat. Once all attacks are performed, normal flying will continue. Wave count, angles and distances are randomized.
-
-## <img src="../pics/wp_getout.png" width=18 height=18> Get Out
-The helicopter will land to the position, order AIs to get out and move 50m from the helicopter. Only passengers (cargo) will be ordered to get out. Pilots and gunners will stay in the chopper.
-
-This is a macro commmand and does a serie of actions:
-```
-WP_LAND, to destination
-WP_GET_OUT, commands AI to disembark
-WP_WAIT, wait for while to AIs time to get out. Currently 20 seconds.
-WP_HOVER_UP, hover helicopter up to minimum fly height. Currently this is done in 12 seconds.
-WP_RAISE, order helicopter to fly forward for a while. Currently 200 meters
-```
-Once actions are done, we return to normal flight mode.
-
-NOTE: Landing has its issues and needs some rework.
 
 # Known issues
 There are various small things that are to be fixed in the future updates:
