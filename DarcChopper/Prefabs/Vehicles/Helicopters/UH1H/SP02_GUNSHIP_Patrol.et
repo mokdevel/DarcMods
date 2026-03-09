@@ -29,5 +29,8 @@ Vehicle : "{3133602B406D131C}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunshi
     }
    }
   }
+  RplComponent "{517AACDFA78F5EE7}" {
+   Streamable Disabled
+  }
  }
 }
