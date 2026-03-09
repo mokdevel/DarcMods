@@ -10,8 +10,12 @@ sealed class SDRC_VehicleHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Spawn single group to a vehicle
+	\param aiResourceName
+	\param vehicle
+	\param group
+	\param compartmentType The compartment to spawn to. -1 = any free compartment.
 	*/
-	static void SpawnGroupInVehicle(ResourceName aiResourceName, IEntity vehicle, AIGroup group)
+	static void SpawnGroupInVehicle(ResourceName aiResourceName, IEntity vehicle, AIGroup group, ECompartmentType compartmentType = -1)
     {
 		if (!vehicle)
 		{
@@ -33,9 +37,18 @@ sealed class SDRC_VehicleHelper
 		int slots = compartmentManager.GetCompartments(compartments);		
 		
 		compartments.Clear();
-		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.PILOT);
-		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.TURRET);
-		scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.CARGO);
+		
+		if (compartmentType == -1)
+		{
+			scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.PILOT);
+			scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.TURRET);
+			scr_compartmentManager.GetCompartmentsOfType(compartments, ECompartmentType.CARGO);
+		}
+		else 
+		{
+			scr_compartmentManager.GetCompartmentsOfType(compartments, compartmentType);
+		}
+		
 		SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Compartments found: " + compartments.Count(), LogLevel.SPAM);
 
 		//Fill aiPrefabs with the names of AI to spawn
