@@ -12,26 +12,34 @@ class SDRC_ChopperCrewHelper
 		int gunnerCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.TURRET);
 		int cargoCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.CARGO);
 		
-		int crewCount = 0;
-		
+		int crewCount = 0;		
 		array<ResourceName> crewPrefabs = {}; 
 		
-		//If no faction defined, find the default vehichle faction and use that
-		if (faction == "")
-		{			
-			Vehicle veh = Vehicle.Cast(owner);
-			
-			if (veh)
-			{
-				Faction veh_faction = veh.GetDefaultFaction();
-				if (veh_faction)
+		if (SDRC_Misc.IsAddonLoaded("$DarcMissions:"))
+		{
+			//Use default faction for DarcMissions
+			faction = SDRC_EnemyHelper.SelectEnemyFaction(faction);
+		}
+		else
+		{
+			//If no faction defined, find the default vehichle faction and use that
+			if (faction == "")
+			{			
+				Vehicle veh = Vehicle.Cast(owner);
+				
+				if (veh)
 				{
-					faction = veh_faction.GetFactionKey();
-					SDRC_Log.Add("[SDRC_ChopperHelper:SpawnCrew] Vehicle faction: " + faction, LogLevel.DEBUG);
+					Faction veh_faction = veh.GetDefaultFaction();
+					if (veh_faction)
+					{
+						faction = veh_faction.GetFactionKey();
+					}
 				}
 			}
 		}
-		
+
+		SDRC_Log.Add("[SDRC_ChopperHelper:SpawnCrew] Faction used: " + faction, LogLevel.DEBUG);
+				
 		//Select crew	
 		if (crewmember.IsEmpty())
 		{
@@ -123,6 +131,8 @@ class SDRC_ChopperCrewHelper
 				//Spawn pilots if such is available 
 				vector pos = owner.GetOrigin();
 				pos = pos + "30 0 30";
+				
+				//TBD: We 
 				
 				if (i < pilotCount)
 				{
