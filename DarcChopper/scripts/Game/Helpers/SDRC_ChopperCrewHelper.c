@@ -60,7 +60,7 @@ class SDRC_ChopperCrewHelper
 				ResourceName member = SDRC_EnemyHelper.SelectEnemy("C_RIFLEMAN", faction);
 				if (member == "")
 				{
-					member = "{472F2B06FF9BF37D}Prefabs/Characters/Factions/CIV/Dockworker/Character_CIV_Dockworker_4.et";
+					member = "{A2B367FFF37E6416}Prefabs/Characters/Factions/CIV/Dockworker/Character_CIV_Dockworker_5.et";
 				}
 				crewPrefabs.Insert(member);
 			}			
@@ -98,7 +98,7 @@ class SDRC_ChopperCrewHelper
 				ResourceName member = SDRC_EnemyHelper.SelectEnemy("C_RIFLEMAN", faction);
 				if (member == "")
 				{
-					member = "{472F2B06FF9BF37D}Prefabs/Characters/Factions/CIV/Dockworker/Character_CIV_Dockworker_4.et";
+					member = "{CEE7531F4FBAEB38}Prefabs/Characters/Factions/CIV/Dockworker/Character_CIV_Dockworker_6.et";
 				}
 				crewPrefabs.Insert(member);
 			}
@@ -118,6 +118,7 @@ class SDRC_ChopperCrewHelper
 		if (crewPrefabs.Count() > 0)
 		{			
 			SCR_AIGroup	gPilot;
+			SCR_AIGroup	gGunner;
 			SCR_AIGroup	gCrew;
 			
 			foreach (int i, ResourceName prefab : crewPrefabs)
@@ -132,32 +133,43 @@ class SDRC_ChopperCrewHelper
 				vector pos = owner.GetOrigin();
 				pos = pos + "30 0 30";
 				
-				//TBD: We 
-				
 				if (i < pilotCount)
 				{
 					if (!gPilot)
 					{
 						gPilot = SDRC_AIHelper.GroupCreate(faction, pos);						
 					}
-					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gPilot);
+					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gPilot, ECompartmentType.PILOT);
+				}
+				else if (i < (pilotCount + gunnerCount))
+				{
+					if (!gGunner)
+					{
+						gGunner = SDRC_AIHelper.GroupCreate(faction, pos);						
+					}
+					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gGunner, ECompartmentType.TURRET);
 				}
 				else
 				{
-					if ( (!gCrew) || (crewInGroupCount > 2) )
+//					if ( (!gCrew) || (crewInGroupCount > 2) )
+					if (!gCrew)
 					{
 						gCrew = SDRC_AIHelper.GroupCreate(faction, pos);						
 						crewInGroupCount = 0;
 					}
 					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gCrew);
+					crewInGroupCount++;
 				}
 				
-				crewInGroupCount++;
 				crewCount++;
 			}
 			
 			//Set AI skill
-			if (gPilot)
+			if (gPilot) 
+			{
+				SDRC_AIHelper.SetAIGroupSettings(gPilot, skill, perceptionFactor);
+			}
+			if (gGunner)
 			{
 				SDRC_AIHelper.SetAIGroupSettings(gPilot, skill, perceptionFactor);
 			}
