@@ -165,5 +165,6 @@ There are various small things that are to be fixed in the future updates:
 - Climb in certain cases is too fast and does not look natural.
 - Flight path finding is simple for the moment. Steep turns sometimes look nice, sometimes not.
 - Some times the helicopter flies nose up after a steep turn. Have not yet found how to avoid that.
+- On console(s), the pilots are dock workers. Something to fix at some point.
 
 
