@@ -214,6 +214,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fTimeToLand;				//(seconds) How long the landing shall take
 	private float m_fLandingDistance;			//Distance to start the landing
 	private float m_fLandingSpeed;				//The speed to descend the chopper
+	private float m_fSpeedLandingOrig;			//Speed from where we start to descend
 	
 	//Attack relaetd
 	float m_fTimerAttack = 0;					//Timer to do attacks
@@ -749,7 +750,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			vector destination = SDRC_Misc.GetCoordinatesOnCircle(owner.GetOrigin(), m_fDistanceLow, SDRC_Misc.RandomInt(0, 360));
 			
 			#ifdef CHOPPER_TESTING
-				m_fDistanceLow = 300;
+				m_fDistanceLow = SDRC_Misc.RandomInt(250, 400);
 			#endif
 
 /*			if (!SDRC_PlayerHelper.IsInGMmode())
@@ -1262,8 +1263,9 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			destination = SDRC_Misc.SetPosToSurface(destination);
 			SetState(SDRC_EHeliState.LAND);
-
-			m_fLandingDistance =  m_fSpeed * 12;
+			
+			float height = m_Helicopter_s.GetAltitudeAGL();
+			m_fLandingDistance = m_fSpeed * 5 + height * 2.5;
 			
 			m_bIsLanding = false;
 			m_fTimerLanding = 0;
@@ -1335,6 +1337,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 			}
 			case SDRC_EFlyWayPointType.WP_LAND:
 			{
+				//This just falls through
 				break;
 			}
 			
@@ -1453,11 +1456,18 @@ class SDRC_ChopperComp : ScriptGameComponent
 
 		if (distance < m_fLandingDistance)
 		{
+			float height = m_Helicopter_s.GetAltitudeAGL();
+				
 			if (!m_bIsLanding)
 			{
+				//Set the last point on ground
+				//lastPt[1] = SDRC_Misc.GetSurfaceYWithWater(lastPt) + LANDED_HEIGHT;
+				//m_vSplinePoints[m_vSplinePoints.Count() - 1] = lastPt;
+				
+				m_fSpeedLandingOrig = m_fSpeed;
+				
 				//Time is dependent on position to speed
-				m_fTimeToLand = distance / m_fSpeed;
-				m_fLandingSpeed = -1 * (m_fAltitude / m_fTimeToLand);
+				m_fTimeToLand = (4 * m_fLandingDistance) / m_fSpeed;
 				
 				//We have started landing sequence so no need to count values
 				m_bIsLanding = true;
@@ -1465,26 +1475,28 @@ class SDRC_ChopperComp : ScriptGameComponent
 			
 			if (!m_Helicopter_s.HasAnyGroundContact())
 			{				
-				//Set the last point on ground
-				lastPt[1] = SDRC_Misc.GetSurfaceYWithWater(lastPt) + LANDED_HEIGHT;
-				m_vSplinePoints[m_vSplinePoints.Count() - 1] = lastPt;
-				
 				m_fTimerLanding += timeSlice;
 				m_fTimerLanding = Math.Clamp(m_fTimerLanding, 0, m_fTimeToLand);
 				float mul = 1 - m_fTimerLanding / m_fTimeToLand;				
-				float distMul = 1 - distance / m_fLandingDistance;
+				float distMul = distance / m_fLandingDistance;
+
+				//Testing
+				float heightDiff = m_vOrigin[1] - lastPt[1] + (LANDED_HEIGHT * 1);
+				m_fLandingSpeed = -1 * (heightDiff / m_fTimeToLand) * 5.5;
 				
-				m_fRotorForceMultiplier = -1.1 + -1.6 * distMul + m_fLandingSpeed * SDRC_Math.FullBell(mul);
+				m_fRotorForceMultiplier = -3.0 + m_fLandingSpeed * SDRC_Math.FullBell(mul);
+				m_fSpeedMin = 0.01;
+				m_fSpeedMax = m_fSpeedLandingOrig * distMul + 0.01;
 				
 				//Helicopter to descend
 		        m_Helicopter_s.RotorSetForceScaleState(0, 0);
 		        m_Helicopter_s.SetThrottle(0);
 				
-		        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0Orig * mul * 0.01);
-		        m_Helicopter_s.SetThrottle(m_fThrottleOrig * mul);
-				float height = m_Helicopter_s.GetAltitudeAGL();
-				m_fSpeedMin = distance / Math.Clamp(height, 0.01, 1000);
-				m_fSpeedLandingMul = mul;
+/*		        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0Orig * mul * 0.01);
+		        m_Helicopter_s.SetThrottle(m_fThrottleOrig * mul);*/
+				
+				//This affects how flat the helicopter is at the time it's landing.
+				m_fSpeedLandingMul = mul;	
 			}
 			else
 			{
