@@ -124,7 +124,11 @@ If the helicopter prefab does not have crew a assigned, the mod will assign crew
 ## Factions
 The helicopter itself has a faction attached to it. For example MI8's are assigned for USSR faction and the crew is selected from the same faction. Safe factions to use are US, USSR and FIA, but others should work too.
 
-When the helicopter is spawned, the faction is first checked from ``Faction`` setting in the SDRC_ChopperComp. By default the value is empty and the helicopter assigned faction is used. If the parameter is set, the faction is used for crew spawning. 
+When the helicopter is spawned, the faction is first checked from ``Faction`` setting in the SDRC_ChopperComp. By default the value is empty and the helicopter assigned faction is used. If the parameter is set, the faction is used for crew spawning. If you use [DarcMissions](https://github.com/mokdevel/DarcMods/tree/main/DarcMissions) mod, the faction set as ``enemyFactions`` in it, will be used.
+
+Example: 
+* A MI28 (USSR faction helicopter) with FIA setting as faction will spawn with FIA crew.
+* A MI28 (USSR faction helicopter) with FIA setting is used in DarcMissions. The ``enemyFactions`` in DarcMissions is set as ``"US", "UK", "UK"``. The helicopter will spawn with 33% US and 66% UK crew.
 
 NOTE: There is no check for correctness currently. So, a faction defined as USRS will result in errors.
 
