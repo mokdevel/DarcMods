@@ -5,7 +5,7 @@
 Functions related to vehicles.
 */
 
-sealed class SDRC_VehicleHelper
+class SDRC_VehicleHelper
 {
 	//------------------------------------------------------------------------------------------------
 	/*!

@@ -178,7 +178,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 
 		#ifndef SDRC_RELEASE				
 //			enemyFactions = {"USSR"};
-//			enemyFactions = {"US"};
+			enemyFactions = {"US"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION"};
 //			enemyFactions = {"BALLIEN_BC_FACTION"};
@@ -195,7 +195,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			enemyFactions = {"RHS_ION"};
 //			enemyFactions = {"MEI"};
 //			enemyFactions = {"PLASTICBANDIT"};
-			enemyFactions = {"Takistan"};
+//			enemyFactions = {"Takistan"};
 		
 			missionLimit = {
 				  -1, // 0 - NONE

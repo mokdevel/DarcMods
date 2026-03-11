@@ -9,6 +9,16 @@ sealed class SDRC_Misc
 {
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Are we server (master) or not.
+	*/
+	static float IsMaster()
+	{
+		SCR_BaseGameMode gameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());		
+		return gameMode.IsMaster();
+	}
+		
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Returns random float between min and max. 
 	This function just to get rid of an error when min/max are the same.
 	*/
@@ -453,4 +463,24 @@ sealed class SDRC_Misc
 		}
 		return false;
 	}*/
+	
+	//------------------------------------------------------------------------------------------------
+	/* Where the GM camera is facing
+		//Set first destination to where we're looking
+		SCR_CameraEditorComponent cameraManager = SCR_CameraEditorComponent.Cast(SCR_CameraEditorComponent.GetInstance(SCR_CameraEditorComponent));
+		if (cameraManager)
+		{
+			SCR_ManualCamera GMCamera = cameraManager.GetCamera();				
+			if (GMCamera)
+			{
+				vector transform[4];
+				GMCamera.GetTransform(transform);
+				vector angle = transform[2];
+				angle.Normalized();
+//				m_vFirstDestination = owner.GetOrigin() + angle * m_fDistanceLow;
+			}
+		}		
+	
+	*/
+	
 }
