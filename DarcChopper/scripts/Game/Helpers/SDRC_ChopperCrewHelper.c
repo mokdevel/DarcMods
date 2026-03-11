@@ -8,6 +8,8 @@ class SDRC_ChopperCrewHelper
 	//------------------------------------------------------------------------------------------------	
 	static int SpawnCrew(IEntity owner, SDRC_EHeliCargoSeatFill cargoSeatFill, array<ref SCR_DefaultOccupantData> crewmember, string faction, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{				
+		const int CREW_SIZE = 3; 	//The size of a team to split the cargo passengers to. This will be the group size.
+		
 		if (!SDRC_Misc.IsMaster())
 		{
 			SDRC_Log.Add("[SDRC_ChopperCrewHelper:SpawnCrew] Client shall not spawn AI", LogLevel.DEBUG);
@@ -17,14 +19,6 @@ class SDRC_ChopperCrewHelper
 		int pilotCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.PILOT);
 		int gunnerCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.TURRET);
 		int cargoCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.CARGO);
-		
-		//Add one additional pilot and remove him from cargo
-		if (cargoCount > 0)
-		{					
-			//The reason to do this is that MI28 has the guy sitting between pilots. He typically refuses to leave the helicopter.
-			pilotCount++;		
-			cargoCount--;
-		}
 		
 		int crewCount = 0;		
 		array<ResourceName> crewPrefabs = {}; 
@@ -130,7 +124,8 @@ class SDRC_ChopperCrewHelper
 		SCR_AIGroup	gGunner = null;
 		SCR_AIGroup	gCrew = null;
 		
-		int crewInGroupCount = 0;
+		//The first AI to spawn, gets his own group. This is to fix the MI28 middle guys issue that just wants to sit there and get out.
+		int crewInGroupCount = CREW_SIZE;
 		
 		//Add the crew
 		if (crewPrefabs.Count() > 0)
@@ -153,8 +148,7 @@ class SDRC_ChopperCrewHelper
 					{
 						gPilot = SDRC_AIHelper.GroupCreate(faction, pos);						
 					}
-					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gPilot);
-					//NOTE: We could enforce ECompartmentType.PILOT, but for MI28, we may add one additional pilot for the middle seat.
+					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gPilot, ECompartmentType.PILOT);
 				}
 				else if (i < (pilotCount + gunnerCount))
 				{
@@ -166,11 +160,16 @@ class SDRC_ChopperCrewHelper
 				}
 				else
 				{
-					if ( (!gCrew) || (crewInGroupCount > 3) )
-//					if (!gCrew)
+					if ( (!gCrew) || (crewInGroupCount > CREW_SIZE) )
 					{
+						//If have spawned a group earlier, then we can start the counter from zero. 
+						//If not, then continue creating the first group to the max size from crewInGroupCount
+						if (gCrew)
+						{
+							crewInGroupCount = 0;
+						}
+
 						gCrew = SDRC_AIHelper.GroupCreate(faction, pos);						
-						crewInGroupCount = 0;
 					}
 					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gCrew);
 					crewInGroupCount++;
@@ -204,7 +203,7 @@ class SDRC_ChopperCrewHelper
 	//------------------------------------------------------------------------------------------------
 	static void GetOut(IEntity owner)
 	{
-		const int DEACTIVE_TIME = 30;	//How long pilot and gunner are deactivated
+		const int GETOUT_DELAY = 8;	//(seconds) The delay between groups jumping out
 		
 		array<SCR_AIGroup> groups = {};
 	
@@ -214,17 +213,24 @@ class SDRC_ChopperCrewHelper
 			return;
 		}
 		
-		SetPilotAndGunnerActive(owner, false);
-		GetGame().GetCallqueue().CallLater(SetPilotAndGunnerActive, DEACTIVE_TIME * 1000, false, owner, true);
-
 		SDRC_VehicleHelper.GetOutVehicle(owner, groups);
+
+		//Disable gunner and pilots. Otherwise they try to get out too immediately to engage the enemy.
+		SetPilotAndGunnerActive(owner, false);
+		GetGame().GetCallqueue().CallLater(SetPilotAndGunnerActive, groups.Count() * GETOUT_DELAY * 1000 + 5000, false, owner, true);
 
 		foreach (int g, SCR_AIGroup group : groups)
 		{
+			if (g == 0)
+			{
+				//First group is pilots, ignore them
+				continue;
+			}
+			
 			SDRC_Log.Add("[SDRC_ChopperComp:HandleState] Create waypoint for AI group: " + group, LogLevel.DEBUG);			
 			
 			vector pos = SDRC_Misc.RandomizePos(owner.GetOrigin(), 300);			
-			GetGame().GetCallqueue().CallLater(SetWaypointDelayed, 1000 + 8000 * g, false, group, pos);
+			GetGame().GetCallqueue().CallLater(SetWaypointDelayed, 1000 + GETOUT_DELAY * 1000 * g, false, group, pos);
 			
 			int index = 0;
 			while (index != -1)
