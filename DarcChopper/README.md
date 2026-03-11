@@ -173,4 +173,6 @@ There are various small things that are to be fixed in the future updates:
 - Some times the helicopter flies nose up after a steep turn. Have not yet found how to avoid that.
 - On console(s), the pilots are dock workers. Something to fix at some point.
 
+# Thanks
+- ATiM for Get Out functionality for AI to disembark from the helicopter.
 
