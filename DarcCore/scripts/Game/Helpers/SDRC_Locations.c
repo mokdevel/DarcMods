@@ -125,6 +125,10 @@ sealed class SDRC_Locations
 			foreach (MapItem tmpMapItem : m_tmpLocationArray)
 			{
 				//tmpMapItem.SetDisplayName(SCR_StringHelper.Translate(tmpMapItem.GetDisplayName()));
+				if (!tmpMapItem.Entity())
+				{
+					continue;
+				}
 				vector origin = tmpMapItem.Entity().GetOrigin();			
 				tmpMapItem.SetPos(origin[0], origin[2]);
 				locationArray.Insert(tmpMapItem);
@@ -383,15 +387,30 @@ sealed class SDRC_Locations
 	
 		foreach (MapItem location : m_tmpLocationArray)
 		{	
-			IEntity entity = location.Entity();
-			SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Name: %1 , DisplayName: %2 , CreatedName: %3, Type: %4 , Pos: %5 , Entity: %6", 
-				location.Entity().GetName(),
-				location.GetDisplayName(),
-				CreateName(location.GetPos()),
-				location.GetBaseType(),
-				location.GetPos(),
-				entity
-				), LogLevel.SPAM);
+			IEntity entity = location.Entity();			
+			
+			if (entity)
+			{			
+				SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Name: %1 , DisplayName: %2 , CreatedName: %3, Type: %4 , Pos: %5 , Entity: %6", 
+					location.Entity().GetName(),
+					location.GetDisplayName(),
+					CreateName(location.GetPos()),
+					location.GetBaseType(),
+					location.GetPos(),
+					entity
+					), LogLevel.SPAM);
+			}
+			else
+			{
+				SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Name: <no entity> , DisplayName: %2 , CreatedName: %3, Type: %4 , Pos: %5 , Entity: <no entity>", 
+					"",
+					location.GetDisplayName(),
+					CreateName(location.GetPos()),
+					location.GetBaseType(),
+					location.GetPos(),
+					""
+					), LogLevel.SPAM);
+			}
 
 			slots.Clear();
 			int slotcount = GetLocationSlots(slots, location.GetPos(), 200);
