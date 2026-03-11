@@ -519,17 +519,32 @@ sealed class SDRC_AIHelper
 		
 		if (entitySource)
 		{
-			vector pos = "0 500 0";
-			SCR_AIGroup group = SDRC_AIHelper.GroupCreate("US", pos, groupName);
+//			vector pos = "0 500 0";
+//			SCR_AIGroup group = SDRC_AIHelper.GroupCreate("US", pos, groupName);
 			
 		    array<vector> groupOffsets = {}; //not needed
 		    SCR_AIGroupClass.GetMembers(entitySource, groupPrefabs, groupOffsets);
 		    count = groupPrefabs.Count();
 			
-			GetGame().GetCallqueue().CallLater(GroupDelete, SDRC_Conf.DESPAWN_ENTITY_USED_FOR_SIZE_DELAY, false, group);			
+//			GetGame().GetCallqueue().CallLater(GroupDelete, SDRC_Conf.DESPAWN_ENTITY_USED_FOR_SIZE_DELAY, false, group);			
 		}		
 		
 		return count;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	If AI prefab is Randomized, we need to change these to proper AI characters
+	*/
+	static void GroupHandleRandomized(out array<ResourceName> groupPrefabs, string faction)
+	{
+		foreach (int i, ResourceName groupPrefab : groupPrefabs)
+		{
+			if (groupPrefab.Contains("Randomized"))
+			{
+				groupPrefabs[i] = SDRC_EnemyHelper.SelectEnemy("C_RIFLEMAN", faction);
+			}
+		}	
 	}
 	
 	//------------------------------------------------------------------------------------------------

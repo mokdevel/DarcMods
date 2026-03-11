@@ -331,7 +331,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			
 			for (int i = 0; i < 2; i++)
 			{		
-				SDRC_VehicleHelper.SpawnGroupInVehicle(pilot, m_Vehicle, group);
+				SDRC_VehicleHelper.SpawnGroupInVehicle(pilot, m_Vehicle, group, GetFaction());
 				
 				if (group)
 				{			
@@ -350,7 +350,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			ResourceName aiType = SDRC_EnemyHelper.SelectEnemy(groupToSpawn, GetFaction());
 			
 			SCR_AIGroup group = SDRC_AIHelper.GroupCreate(GetFaction(), GetPos());
-			SDRC_VehicleHelper.SpawnGroupInVehicle(aiType, m_Vehicle, group);
+			SDRC_VehicleHelper.SpawnGroupInVehicle(aiType, m_Vehicle, group, GetFaction());
 			
 			if (group)
 			{			

@@ -148,7 +148,7 @@ class SDRC_ChopperCrewHelper
 					{
 						gPilot = SDRC_AIHelper.GroupCreate(faction, pos);						
 					}
-					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gPilot, ECompartmentType.PILOT);
+					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gPilot, faction, ECompartmentType.PILOT);
 				}
 				else if (i < (pilotCount + gunnerCount))
 				{
@@ -156,7 +156,7 @@ class SDRC_ChopperCrewHelper
 					{
 						gGunner = SDRC_AIHelper.GroupCreate(faction, pos);						
 					}
-					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gGunner, ECompartmentType.TURRET);
+					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gGunner, faction, ECompartmentType.TURRET);
 				}
 				else
 				{
@@ -171,7 +171,7 @@ class SDRC_ChopperCrewHelper
 
 						gCrew = SDRC_AIHelper.GroupCreate(faction, pos);						
 					}
-					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gCrew);
+					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gCrew, faction);
 					crewInGroupCount++;
 				}
 				
@@ -230,7 +230,7 @@ class SDRC_ChopperCrewHelper
 			SDRC_Log.Add("[SDRC_ChopperComp:HandleState] Create waypoint for AI group: " + group, LogLevel.DEBUG);			
 			
 			vector pos = SDRC_Misc.RandomizePos(owner.GetOrigin(), 300);			
-			GetGame().GetCallqueue().CallLater(SetWaypointDelayed, 1000 + GETOUT_DELAY * 1000 * g, false, group, pos);
+			GetGame().GetCallqueue().CallLater(SetWaypointDelayed, 1000 + GETOUT_DELAY * 1000 * (g - 1), false, group, pos);
 			
 			int index = 0;
 			while (index != -1)

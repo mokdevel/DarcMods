@@ -256,7 +256,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			
 //			SCR_AIGroup group = SDRC_AIHelper.GroupCreate(GetFaction(), GetPos(), aiType);
 			SCR_AIGroup group = SDRC_AIHelper.GroupCreate(GetFaction(), GetPos());
-			SDRC_VehicleHelper.SpawnGroupInVehicle(aiType, m_Vehicle, group);
+			SDRC_VehicleHelper.SpawnGroupInVehicle(aiType, m_Vehicle, group, GetFaction());
 			
 			if (group)
 			{			
@@ -347,7 +347,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		//Default
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
+		missionList = {0};//{0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
 		//Mission specific
 		distanceToPlayer = 500;
 		//----------------------------------------------------

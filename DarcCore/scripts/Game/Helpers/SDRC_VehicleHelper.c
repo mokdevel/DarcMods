@@ -15,7 +15,7 @@ class SDRC_VehicleHelper
 	\param group
 	\param compartmentType The compartment to spawn to. -1 = any free compartment.
 	*/
-	static void SpawnGroupInVehicle(ResourceName aiResourceName, IEntity vehicle, AIGroup group, ECompartmentType compartmentType = -1)
+	static void SpawnGroupInVehicle(ResourceName aiResourceName, IEntity vehicle, AIGroup group, string faction, ECompartmentType compartmentType = -1)
     {
 		if (!vehicle)
 		{
@@ -65,7 +65,9 @@ class SDRC_VehicleHelper
 			int count = SDRC_AIHelper.GroupGetEntitySourceMembers(aiResourceName, aiPrefabs);
 			SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Prefabs found: " + count, LogLevel.DEBUG);
 		}
-			
+
+		SDRC_AIHelper.GroupHandleRandomized(aiPrefabs, faction);
+					
 		//Do the spawning	
 		foreach (ResourceName aiPrefab : aiPrefabs)
 		{
@@ -236,7 +238,7 @@ class SDRC_VehicleHelper
 			AIControlComponent ctrl = AIControlComponent.Cast(character.FindComponent(AIControlComponent));			
 			SCR_ChimeraAIAgent aiAgent = SCR_ChimeraAIAgent.Cast(ctrl.GetAIAgent());
 			
-			GetGame().GetCallqueue().CallLater(GetOutDelayed, i*2000, false, character, vehicle);
+			GetGame().GetCallqueue().CallLater(GetOutDelayed, i*500, false, character, vehicle);
 			
 			//Collect the groups that were ordered to climb out. 
 			SCR_AIGroup AIgroup = SCR_AIGroup.Cast(aiAgent.GetParentGroup());					
@@ -762,7 +764,7 @@ modded class SCR_AIGetOutVehicle : SCR_AIVehicleBehavior
 			m_Utility.m_CombatMoveState.ApplyNewRequest(rq);
 			
 			#ifdef WORKBENCH
-			SCR_AIDebugVisualization.VisualizeMessage(m_Utility.m_OwnerEntity, "SCR_AIIdleBehavior > OnActionSelected > SCR_AIMoveFromDangerBehavior", EAIDebugCategory.NONE, 1.0, Color.White, 13, true);
+//				SCR_AIDebugVisualization.VisualizeMessage(m_Utility.m_OwnerEntity, "SCR_AIIdleBehavior > OnActionSelected > SCR_AIMoveFromDangerBehavior", EAIDebugCategory.NONE, 1.0, Color.White, 13, true);
 			#endif
 		}
 	}
