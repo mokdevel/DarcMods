@@ -7,7 +7,13 @@ class SDRC_ChopperCrewHelper
 	// Crew functions
 	//------------------------------------------------------------------------------------------------	
 	static int SpawnCrew(IEntity owner, SDRC_EHeliCargoSeatFill cargoSeatFill, array<ref SCR_DefaultOccupantData> crewmember, string faction, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
-	{		
+	{				
+		if (!SDRC_Misc.IsMaster())
+		{
+			SDRC_Log.Add("[SDRC_ChopperCrewHelper:SpawnCrew] Client shall not spawn AI", LogLevel.DEBUG);
+			return -1;
+		}
+		
 		int pilotCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.PILOT);
 		int gunnerCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.TURRET);
 		int cargoCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.CARGO);
@@ -15,7 +21,7 @@ class SDRC_ChopperCrewHelper
 		int crewCount = 0;		
 		array<ResourceName> crewPrefabs = {}; 
 		
-		if (SDRC_Misc.IsAddonLoaded("$DarcMissions:"))
+		if ( SDRC_Misc.IsAddonLoaded("$DarcMissions:") || SDRC_Misc.IsAddonLoaded("$DarcMissionsDEV:") )
 		{
 			//Use default faction for DarcMissions
 			faction = SDRC_EnemyHelper.SelectEnemyFaction(faction);
@@ -112,15 +118,15 @@ class SDRC_ChopperCrewHelper
 			}
 		}
 		
+		SCR_AIGroup	gPilot = null;
+		SCR_AIGroup	gGunner = null;
+		SCR_AIGroup	gCrew = null;
+		
 		int crewInGroupCount = 0;
 		
 		//Add the crew
 		if (crewPrefabs.Count() > 0)
 		{			
-			SCR_AIGroup	gPilot;
-			SCR_AIGroup	gGunner;
-			SCR_AIGroup	gCrew;
-			
 			foreach (int i, ResourceName prefab : crewPrefabs)
 			{
 				//Skip empty ones
@@ -163,27 +169,26 @@ class SDRC_ChopperCrewHelper
 				
 				crewCount++;
 			}
-			
-			//Set AI skill
-			if (gPilot) 
-			{
-				SDRC_AIHelper.SetAIGroupSettings(gPilot, skill, perceptionFactor);
-			}
-			if (gGunner)
-			{
-				SDRC_AIHelper.SetAIGroupSettings(gPilot, skill, perceptionFactor);
-			}
-			if (gCrew)
-			{
-				SDRC_AIHelper.SetAIGroupSettings(gPilot, skill, perceptionFactor);
-			}
-			
 		}
 		else
 		{
 			SDRC_Log.Add("[SDRC_ChopperHelper:SpawnCrew] No crew defined. Without pilots, we will crash.", LogLevel.WARNING);
 		}
-		
+
+		//Set AI skill
+		if (gPilot) 
+		{
+			SDRC_AIHelper.SetAIGroupSettings(gPilot, skill, perceptionFactor);
+		}
+		if (gGunner)
+		{
+			SDRC_AIHelper.SetAIGroupSettings(gGunner, skill, perceptionFactor);
+		}
+		if (gCrew)
+		{
+			SDRC_AIHelper.SetAIGroupSettings(gCrew, skill, perceptionFactor);
+		}
+						
 		return crewCount;
 	}
 

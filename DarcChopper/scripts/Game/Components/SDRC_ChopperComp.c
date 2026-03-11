@@ -3,10 +3,11 @@
 //Changes done in prefabs:
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
-#define CHOPPER_TESTING
+//#define CHOPPER_TESTING
 
 //------------------------------------------------------------------------------------------------
-class SDRC_ChopperCompClass : ScriptGameComponentClass { }
+//class SDRC_ChopperCompClass : ScriptGameComponentClass { }
+class SDRC_ChopperCompClass : ScriptComponentClass { }
 
 //------------------------------------------------------------------------------------------------
 [BaseContainerProps()]
@@ -30,12 +31,14 @@ class SDRC_FlyPathPoint
 }
 
 //------------------------------------------------------------------------------------------------
-class SDRC_ChopperComp : ScriptGameComponent
+//class SDRC_ChopperComp : ScriptGameComponent
+class SDRC_ChopperComp : ScriptComponent
 {
 	private SDRC_ChopperComp s_Instance;	
 	ref array<vector> m_vSplinePoints = new array<vector>();
 	private VehicleHelicopterSimulation m_Helicopter_s;
-	
+	protected RplComponent m_RplComp;
+		
 	//Parameters accessible helicopter parameters
 	[Attribute(category: "Chopper", defvalue: "1", desc: "Autostart chopper")]	
 	bool m_bAutoStart;
@@ -158,17 +161,17 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private int m_iDestinationPointAdd;
 	private float m_fTimeTurnInterval;
 	
-	const int HEALTH_LIMIT = 1000;					//Limit to define the chopper to be heavily damaged. 
+	const int HEALTH_LIMIT = 1000;						//Limit to define the chopper to be heavily damaged. 
 	
 	//Flight path runtime variables	
-	private vector m_vOrigin;						//Current position
-	float m_fAltitude;								//Current altitude from ground
-	float m_fSpeed;									//Current speed
-	float m_fSpeedStart;							//Speed lerp start
-	float m_fSpeedTarget;							//Speed lerp target aka end
-	float m_fSpeedMul;								//Speed multiplier that depends on the turn
-	float m_fSpeedLandingMul;						//Landing speed modifier
-	float m_fRotorForceMultiplier;					//Rotor force multiplier that simulates up/down throttle
+	private vector m_vOrigin;							//Current position
+	float m_fAltitude;									//Current altitude from ground
+	float m_fSpeed;										//Current speed
+	float m_fSpeedStart;								//Speed lerp start
+	float m_fSpeedTarget;								//Speed lerp target aka end
+	float m_fSpeedMul;									//Speed multiplier that depends on the turn
+	float m_fSpeedLandingMul;							//Landing speed modifier
+	float m_fRotorForceMultiplier;						//Rotor force multiplier that simulates up/down throttle
 	
 	//Angular velocities
 	private vector m_vAngularVel;
@@ -216,9 +219,11 @@ class SDRC_ChopperComp : ScriptGameComponent
 	private float m_fLandingSpeed;				//The speed to descend the chopper
 	private float m_fSpeedLandingOrig;			//Speed from where we start to descend
 	
-	//Attack relaetd
+	//Attack related
 	float m_fTimerAttack = 0;					//Timer to do attacks
 	vector m_vAttackPosition;					//Position to attack
+
+	private vector m_vFirstDestination;			//Where to fly first
 	
 	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
@@ -228,8 +233,17 @@ class SDRC_ChopperComp : ScriptGameComponent
 			return;
 		}
 		
-		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp", LogLevel.NORMAL);
+		if (!SDRC_Misc.IsMaster())
+		{		
+			return;
+		}
 		
+		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp", LogLevel.NORMAL);
+
+		#ifdef CHOPPER_TESTING
+			m_fDistanceLow = SDRC_Misc.RandomInt(250, 400);
+		#endif
+				
 		SetEventMask(owner, EntityEvent.INIT);
 		s_Instance = this;
 		m_sDid = SDRC_Misc.GetCurrentTickTime().ToString() + Math.RandomInt(0, 10000);
@@ -323,6 +337,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 		{
 			//Init flight path
 			InitFlight(owner, owner.GetOrigin());
+				
 			//Spawn crew 
 			int crewCount = SDRC_ChopperCrewHelper.SpawnCrew(owner, m_CargoSeatFill, m_aCrew, m_sFaction, m_AISkill, m_AIPerception);
 			SDRC_Log.Add("[SDRC_ChopperComp] Crew count: " + crewCount, LogLevel.DEBUG);
@@ -747,12 +762,17 @@ class SDRC_ChopperComp : ScriptGameComponent
 		//If no destination were defined, let's create a random one
 		if (m_vFlyDestinations.IsEmpty())
 		{
-			vector destination = SDRC_Misc.GetCoordinatesOnCircle(owner.GetOrigin(), m_fDistanceLow, SDRC_Misc.RandomInt(0, 360));
+			if (m_vFirstDestination == vector.Zero)
+			{
+				vector transform[4];
+				owner.GetTransform(transform);
+				vector angle = transform[2];
+				angle.Normalized();
+				m_vFirstDestination = owner.GetOrigin() + angle * m_fDistanceLow;
+				
+//				m_vFirstDestination = SDRC_Misc.GetCoordinatesOnCircle(owner.GetOrigin(), m_fDistanceLow, SDRC_Misc.RandomInt(0, 360));
+			}
 			
-			#ifdef CHOPPER_TESTING
-				m_fDistanceLow = SDRC_Misc.RandomInt(250, 400);
-			#endif
-
 /*			if (!SDRC_PlayerHelper.IsInGMmode())
 			{
 				SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Player not in GM mode!", LogLevel.DEBUG);							
@@ -760,7 +780,7 @@ class SDRC_ChopperComp : ScriptGameComponent
 						
 //			if (SDRC_PlayerHelper.IsInGMmode())
 //			{			
-				SCR_CameraEditorComponent cameraManager = SCR_CameraEditorComponent.Cast(SCR_CameraEditorComponent.GetInstance(SCR_CameraEditorComponent));
+/*				SCR_CameraEditorComponent cameraManager = SCR_CameraEditorComponent.Cast(SCR_CameraEditorComponent.GetInstance(SCR_CameraEditorComponent));
 				if (cameraManager)
 				{
 					SCR_ManualCamera GMCamera = cameraManager.GetCamera();				
@@ -773,14 +793,15 @@ class SDRC_ChopperComp : ScriptGameComponent
 						destination = owner.GetOrigin() + angle * m_fDistanceLow;
 						SDRC_DebugHelper.AddDebugPos(destination, ARGB(255, 255, 00, 00), 5.0, m_sDid, 200);
 					}
-				}
+				}*/
 //			}
 			
 			#ifndef CHOPPER_TESTING
-				AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
+				AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFirstDestination);
 			#else
-				AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, destination);
+				AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, m_vFirstDestination);
 			#endif
+			SDRC_DebugHelper.AddDebugPos(m_vFirstDestination, ARGB(255, 255, 00, 00), 5.0, m_sDid, 200);			
 		}
 
 		//Add a point towards the first destination

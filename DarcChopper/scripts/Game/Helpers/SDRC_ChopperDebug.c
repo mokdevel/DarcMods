@@ -18,6 +18,7 @@ class SDRC_ChopperDebug
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)
 		{
+			Print("Not Found!");
 			return;
 		}		
 
@@ -48,22 +49,6 @@ class SDRC_ChopperDebug
 		{
 			return;
 		}
-		
-/*		SCR_CameraEditorComponent cameraManager = SCR_CameraEditorComponent.Cast(SCR_CameraEditorComponent.GetInstance(SCR_CameraEditorComponent));
-		if (cameraManager)
-		{
-			SCR_ManualCamera GMCamera = cameraManager.GetCamera();				
-			if (GMCamera)
-			{
-				Print("camerapos:" + GMCamera.GetAngles());
-			}
-		}*/
-				
-/*		vector textMat[4];
-		GetGame().GetWorld().GetCurrentCamera(textMat);
-		vector position = textMat[2];
-		Print("camerapos:" + position);*/
-		
 		
 /*		if (!chopperComp.m_bShowDebug)
 		{
