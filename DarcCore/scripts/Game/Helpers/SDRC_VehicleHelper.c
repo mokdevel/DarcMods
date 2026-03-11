@@ -279,22 +279,6 @@ class SDRC_VehicleHelper
 					if (chimeraAIAgent)
 					{
 						chimeraAIAgent.m_bIsGetOutVehicle = true;
-						
-						//! OBSOLET! NOT USED ANYMORE
-//						// compAccess.GetVehicleIn(vehicleEntity);
-//						
-//						SCR_AIUtilityComponent utilityComponent = chimeraAIAgent.m_UtilityComponent;
-//						
-//						if (utilityComponent)
-//						{
-//							SCR_AIMoveFromDangerBehavior moveFromDangerBehavior = new SCR_AIMoveFromVehicleHornBehavior(utilityComponent, null, vector.Zero, dangerEntity: vehicle);
-//							
-//							utilityComponent.AddAction(moveFromDangerBehavior);
-//							
-//							#ifdef WORKBENCH
-//								SCR_AIDebugVisualization.VisualizeMessage(utilityComponent.m_OwnerEntity, "SDRC_VehicleHelper > GetOutDelayed > SCR_AIMoveFromDangerBehavior", EAIDebugCategory.NONE, 1.0, Color.White, 11, true);
-//							#endif
-//						}
 					}
 				}
 			}

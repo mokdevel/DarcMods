@@ -18,6 +18,14 @@ class SDRC_ChopperCrewHelper
 		int gunnerCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.TURRET);
 		int cargoCount = SDRC_VehicleHelper.GetCompartmentCountOfType(owner, ECompartmentType.CARGO);
 		
+		//Add one additional pilot and remove him from cargo
+		if (cargoCount > 0)
+		{					
+			//The reason to do this is that MI28 has the guy sitting between pilots. He typically refuses to leave the helicopter.
+			pilotCount++;		
+			cargoCount--;
+		}
+		
 		int crewCount = 0;		
 		array<ResourceName> crewPrefabs = {}; 
 		
@@ -145,7 +153,8 @@ class SDRC_ChopperCrewHelper
 					{
 						gPilot = SDRC_AIHelper.GroupCreate(faction, pos);						
 					}
-					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gPilot, ECompartmentType.PILOT);
+					SDRC_VehicleHelper.SpawnGroupInVehicle(prefab, owner, gPilot);
+					//NOTE: We could enforce ECompartmentType.PILOT, but for MI28, we may add one additional pilot for the middle seat.
 				}
 				else if (i < (pilotCount + gunnerCount))
 				{
@@ -157,8 +166,8 @@ class SDRC_ChopperCrewHelper
 				}
 				else
 				{
-//					if ( (!gCrew) || (crewInGroupCount > 2) )
-					if (!gCrew)
+					if ( (!gCrew) || (crewInGroupCount > 3) )
+//					if (!gCrew)
 					{
 						gCrew = SDRC_AIHelper.GroupCreate(faction, pos);						
 						crewInGroupCount = 0;
@@ -215,7 +224,7 @@ class SDRC_ChopperCrewHelper
 			SDRC_Log.Add("[SDRC_ChopperComp:HandleState] Create waypoint for AI group: " + group, LogLevel.DEBUG);			
 			
 			vector pos = SDRC_Misc.RandomizePos(owner.GetOrigin(), 300);			
-			GetGame().GetCallqueue().CallLater(SetWaypointDelayed, 3000 + 5000 * g, false, group, pos);
+			GetGame().GetCallqueue().CallLater(SetWaypointDelayed, 1000 + 8000 * g, false, group, pos);
 			
 			int index = 0;
 			while (index != -1)
