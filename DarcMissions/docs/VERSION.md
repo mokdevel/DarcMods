@@ -5,7 +5,11 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 Main features:
-* DarcChopper spawned helicopters will use the defined ``enemyFactions`` values. For example, if you have ``US`` as the enemy, all USSR choppers spawned with GM will be of US faction.
+* DarcChopper spawned helicopters will use the defined ``enemyFactions`` values. For example, if you have ``US`` as the enemy, all choppers spawned with GM will be of US faction.
+
+Fixes:
+* Convoys using PLASTICBANDIT faction, spawned AI without weapons.
+* Handling of groups with 'Randomized' AI.
 
 ## 20260307
 This release is mainly around helicopter functionality. I have separated DarcChopper as a different to allow others to easily use it for their needs. 

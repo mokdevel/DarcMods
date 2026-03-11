@@ -2,7 +2,9 @@
 
 ## Next Version
 Main features:
-* Improved Get Out functionality
+* Proper Get Out functionality for AI to disembark helicopter. (Credits: ATiM)
+* The first flight direction of a heli is where the nose points. 
+* Smoother landing.
 
 Fixes:
 * Crew consisted of a mix of various faction soldiers and not from the right faction.

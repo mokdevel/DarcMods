@@ -11,6 +11,7 @@ Some mod functionality is available for GM use. In order for this to work correc
 From the entity browser, you can drop..
 - Missions to the world. They will be started after a while. For details on how mission will be spawned, is described in the different mission type documentation.
 - NonValidAreas to the world. They will be activated after a while and the icon disappears from the world.
+- DarcChopper helicopters. The spawned helicopters will use the defined ``enemyFactions`` values. For example, if you have ``US`` as the enemy, all USSR choppers spawned with GM will be of US faction. This makes it possible to spawn helis with right enemies.
 
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_gm_entitylist.jpg" width=30% height=30%>
 
