@@ -34,7 +34,7 @@
 	#ifndef SDRC_RELEASE
 		private const int SDRC_MISSION_MIN_DISTANCE = 200;		
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
-		private const int SDRC_MISSION_COUNT_DYNAMIC = 3;//10;//3;//3;//8;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
 		private const int SDRC_MISSION_COUNT_STATIC = 0;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
@@ -178,7 +178,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 
 		#ifndef SDRC_RELEASE				
 //			enemyFactions = {"USSR"};
-			enemyFactions = {"US"};
+//			enemyFactions = {"US"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION"};
 //			enemyFactions = {"BALLIEN_BC_FACTION"};
@@ -194,7 +194,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			enemyFactions = {"USAF_USMC", "RHS_RF"};
 //			enemyFactions = {"RHS_ION"};
 //			enemyFactions = {"MEI"};
-//			enemyFactions = {"PLASTICBANDIT"};
+			enemyFactions = {"PLASTICBANDIT"};
 //			enemyFactions = {"Takistan"};
 		
 			missionLimit = {
@@ -227,8 +227,8 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.STASH};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 		
-			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
+			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
