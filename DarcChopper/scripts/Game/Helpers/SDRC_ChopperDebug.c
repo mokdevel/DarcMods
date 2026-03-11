@@ -18,7 +18,6 @@ class SDRC_ChopperDebug
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)
 		{
-			Print("Not Found!");
 			return;
 		}		
 

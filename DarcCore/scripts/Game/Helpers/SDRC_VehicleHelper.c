@@ -277,21 +277,24 @@ class SDRC_VehicleHelper
 					SCR_ChimeraAIAgent chimeraAIAgent = SCR_ChimeraAIAgent.Cast(agent);
 					
 					if (chimeraAIAgent)
-					{					
-						// compAccess.GetVehicleIn(vehicleEntity);
+					{
+						chimeraAIAgent.m_bIsGetOutVehicle = true;
 						
-						SCR_AIUtilityComponent utilityComponent = chimeraAIAgent.m_UtilityComponent;
-						
-						if (utilityComponent)
-						{
-							SCR_AIMoveFromDangerBehavior moveFromDangerBehavior = new SCR_AIMoveFromVehicleHornBehavior(utilityComponent, null, vector.Zero, dangerEntity: vehicle);
-							
-							utilityComponent.AddAction(moveFromDangerBehavior);
-							
-							#ifdef WORKBENCH
-								SCR_AIDebugVisualization.VisualizeMessage(utilityComponent.m_OwnerEntity, "SDRC_VehicleHelper > GetOutDelayed > SCR_AIMoveFromDangerBehavior", EAIDebugCategory.NONE, 1.0, Color.White, 11, true);
-							#endif
-						}
+						//! OBSOLET! NOT USED ANYMORE
+//						// compAccess.GetVehicleIn(vehicleEntity);
+//						
+//						SCR_AIUtilityComponent utilityComponent = chimeraAIAgent.m_UtilityComponent;
+//						
+//						if (utilityComponent)
+//						{
+//							SCR_AIMoveFromDangerBehavior moveFromDangerBehavior = new SCR_AIMoveFromVehicleHornBehavior(utilityComponent, null, vector.Zero, dangerEntity: vehicle);
+//							
+//							utilityComponent.AddAction(moveFromDangerBehavior);
+//							
+//							#ifdef WORKBENCH
+//								SCR_AIDebugVisualization.VisualizeMessage(utilityComponent.m_OwnerEntity, "SDRC_VehicleHelper > GetOutDelayed > SCR_AIMoveFromDangerBehavior", EAIDebugCategory.NONE, 1.0, Color.White, 11, true);
+//							#endif
+//						}
 					}
 				}
 			}
@@ -604,4 +607,179 @@ class SDRC_VehicleHelper
 		//Override in compat mod
 		SDRC_SpawnHelper.SetPersistence(entity, persistence);
 	}	
+}
+
+//------------------------------------------------------------------------------------------------
+/*!
+New modded "ChimeraAIAgent" class ATiM-
+*/
+//------------------------------------------------------------------------------------------------
+modded class SCR_ChimeraAIAgent : ChimeraAIAgent
+{
+	IEntity m_VehicleEntity = null;
+	bool m_bIsGetOutVehicle = false;
+}
+
+//------------------------------------------------------------------------------------------------
+/*!
+New modded "BehaviorBase" class ATiM-
+*/
+//------------------------------------------------------------------------------------------------
+modded class SCR_AIBehaviorBase : SCR_AIActionBase
+{
+	//---------------------------------------------------------------------------------------------------------------------------------
+	void SCR_AIBehaviorBase(SCR_AIUtilityComponent utility, SCR_AIActivityBase groupActivity)
+	{
+		m_bUseCombatMove = true;
+	}
+}
+
+//------------------------------------------------------------------------------------------------
+/*!
+New modded "GetOutVehicle" class ATiM-
+*/
+//------------------------------------------------------------------------------------------------
+modded class SCR_AIGetOutVehicle : SCR_AIVehicleBehavior
+{
+	protected IEntity m_VehicleEntity;
+	
+	protected bool m_bIsGetOutVehicle;
+	
+	protected SCR_ChimeraAIAgent m_ChimeraAIAgent;
+	
+	//------------------------------------------------------------------------------------------------
+	void SCR_AIGetOutVehicle(SCR_AIUtilityComponent utility, SCR_AIActivityBase groupActivity, IEntity vehicleEntity, float delay_s = 0, float priority = PRIORITY_BEHAVIOR_GET_OUT_VEHICLE, float priorityLevel = PRIORITY_LEVEL_NORMAL)
+	{
+		// m_VehicleEntity = vehicleEntity;
+		
+		if (utility)
+		{
+			AIAgent agent = utility.GetAIAgent();
+			
+			if (agent)
+			{
+				m_ChimeraAIAgent = SCR_ChimeraAIAgent.Cast(agent);
+				
+				if (m_ChimeraAIAgent)
+				{
+					m_VehicleEntity = vehicleEntity;
+					
+					// m_ChimeraAIAgent.m_VehicleEntity = vehicleEntity;
+					
+					// m_bIsGetOutVehicle = m_ChimeraAIAgent.m_bIsGetOutVehicle;
+				}
+			}
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	override void OnActionRemoved()
+	{
+		super.OnActionRemoved();
+		
+		if (m_ChimeraAIAgent)
+		{
+			m_bIsGetOutVehicle = m_ChimeraAIAgent.m_bIsGetOutVehicle;
+			
+			if (m_bIsGetOutVehicle)
+			{
+				MoveFromVehicle();
+				
+				m_ChimeraAIAgent.m_bIsGetOutVehicle = false;
+			}
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void MoveFromVehicle()
+	{
+//		IEntity vehicleEntity;
+//		
+//		if (m_ChimeraAIAgent)
+//			vehicleEntity = chimeraAIAgent.m_VehicleEntity;
+//		
+//		vehicleEntity = m_VehicleEntity;
+		
+		if (m_VehicleEntity)
+		{
+			m_bUseCombatMove = true;
+			
+			vector origin = m_Utility.GetOrigin();
+			
+			SCR_AICombatMoveRequest_Move rq = new SCR_AICombatMoveRequest_Move();
+			
+			rq.m_eReason = SCR_EAICombatMoveReason.MOVE_FROM_DANGER;
+			
+			rq.m_vTargetPos = m_VehicleEntity.GetOrigin();
+			
+			vector vectorAwayFromVehicle = vector.Direction(rq.m_vTargetPos, origin);
+			
+			vectorAwayFromVehicle.Normalize();
+			
+			float asideMoveDistance = 5.0;
+			
+			vector movePos = origin + asideMoveDistance * vectorAwayFromVehicle;
+			
+			rq.m_vMovePos = movePos;
+			
+			//------------------------------------------------------------------------------------------------
+			rq.m_bTryFindCover = true;
+			rq.m_bFailIfNoCover = false;
+			
+			rq.m_fCoverSearchDistMin = 15.0;
+			rq.m_fCoverSearchDistMax = 30.0;
+			
+			rq.m_bCheckCoverVisibility = false;
+			rq.m_bUseCoverSearchDirectivity = false;
+			
+			//------------------------------------------------------------------------------------------------
+			rq.m_bAimAtTarget = false;
+			
+			rq.m_eMovementType = EMovementType.SPRINT;
+			
+			rq.m_fMoveDuration_s = Math.RandomFloat(1.5, 3.0);
+			
+			if (Math.RandomFloat01() < 0.5)
+				rq.m_fMoveDuration_s *= 1.5;
+			
+			if (Math.RandomFloat01() < 0.5)
+				rq.m_eStanceMoving = ECharacterStance.STAND;
+			else
+				rq.m_eStanceMoving = ECharacterStance.CROUCH;
+			
+			if (Math.RandomFloat01() < 0.5)
+				rq.m_eStanceEnd = ECharacterStance.STAND;
+			else
+				rq.m_eStanceEnd = ECharacterStance.CROUCH;
+			
+			rq.m_fCoverSearchSectorHalfAngleRad = 0.5 * Math.PI;
+			
+			rq.m_eDirection = SCR_EAICombatMoveDirection.FORWARD;
+			
+			// rq.m_eDirection = SCR_EAICombatMoveDirection.ANYWHERE;
+			
+			if (Math.RandomFloat01() < 0.5)
+			{
+				if (Math.RandomFloat01() < 0.5)
+					rq.m_eDirection = SCR_EAICombatMoveDirection.LEFT;
+				else
+					rq.m_eDirection = SCR_EAICombatMoveDirection.RIGHT;
+				
+				if (rq.m_eDirection == SCR_EAICombatMoveDirection.LEFT || rq.m_eDirection == SCR_EAICombatMoveDirection.LEFT)
+					rq.m_fCoverSearchSectorHalfAngleRad = 0.3 * Math.PI;
+			}
+			
+			//------------------------------------------------------------------------------------------------
+			if (Math.RandomIntInclusive(0, 1) == 1)
+				rq.m_bAimAtTargetEnd = true;
+			else
+				rq.m_bAimAtTargetEnd = false;
+			
+			m_Utility.m_CombatMoveState.ApplyNewRequest(rq);
+			
+			#ifdef WORKBENCH
+			SCR_AIDebugVisualization.VisualizeMessage(m_Utility.m_OwnerEntity, "SCR_AIIdleBehavior > OnActionSelected > SCR_AIMoveFromDangerBehavior", EAIDebugCategory.NONE, 1.0, Color.White, 13, true);
+			#endif
+		}
+	}
 }

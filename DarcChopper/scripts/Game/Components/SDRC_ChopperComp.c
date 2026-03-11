@@ -3,7 +3,7 @@
 //Changes done in prefabs:
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
-//#define CHOPPER_TESTING
+#define CHOPPER_TESTING
 
 //------------------------------------------------------------------------------------------------
 //class SDRC_ChopperCompClass : ScriptGameComponentClass { }
