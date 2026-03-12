@@ -170,7 +170,10 @@ sealed class SDRC_LootHelper
 	*/	
 	static bool GetLootListItems(out array<string> items, string listName)
 	{
-		int lootIndex = -1;
+		//Find the right list index		
+		int lootIndex = SDRC_ListHelper.FindRightList(m_Config.lists, listName);
+		
+/*		int lootIndex = -1;
 		for (int i = 0; i < m_Config.lists.Count(); i++)		
 		{
 			if (m_Config.lists[i].id == listName)
@@ -178,7 +181,7 @@ sealed class SDRC_LootHelper
 				lootIndex = i;
 				break;
 			}
-		}
+		}*/
 		
 		if (lootIndex == -1)
 		{

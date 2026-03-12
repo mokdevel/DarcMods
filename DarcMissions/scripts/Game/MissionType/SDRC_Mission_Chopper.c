@@ -268,11 +268,12 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		
 		if (m_Vehicle)
 		{
-			m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
+//			m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
 			m_Vehicle_c = SDRC_ChopperComp.Cast(m_Vehicle.FindComponent(SDRC_ChopperComp));
 		}
 		
-		if ( (!m_Vehicle) || (!m_Vehicle_s) || (!m_Vehicle_c) )
+//		if ( (!m_Vehicle) || (!m_Vehicle_s) || (!m_Vehicle_c) )
+		if ( (!m_Vehicle) || (!m_Vehicle_c) )
 		{
 			//Could not spawn vehicle
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.COULD_NOT_SPAWN_VEHICLE, resourceName);

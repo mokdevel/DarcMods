@@ -23,10 +23,13 @@ class SDRC_ChopperCrewHelper
 		int crewCount = 0;		
 		array<ResourceName> crewPrefabs = {}; 
 		
-		if ( SDRC_Misc.IsAddonLoaded("$DarcMissions:") || SDRC_Misc.IsAddonLoaded("$DarcMissionsDEV:") )
+		string factionReason = "";
+		
+		if ( SDRC_Misc.IsAddonLoaded("$DarcMissions:") || SDRC_Misc.IsAddonLoaded("$DarcMissionsDev:") )
 		{
 			//Use default faction for DarcMissions
 			faction = SDRC_EnemyHelper.SelectEnemyFaction(faction);
+			factionReason = "DarcMissions";
 		}
 		else
 		{
@@ -41,12 +44,17 @@ class SDRC_ChopperCrewHelper
 					if (veh_faction)
 					{
 						faction = veh_faction.GetFactionKey();
+						factionReason = "Vehicle default";
 					}
+				}
+				else
+				{
+					factionReason = "user defined on vehicle";
 				}
 			}
 		}
 
-		SDRC_Log.Add("[SDRC_ChopperHelper:SpawnCrew] Faction used: " + faction, LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_ChopperHelper:SpawnCrew] Faction used: " + faction + " - selected from: " + factionReason, LogLevel.DEBUG);
 				
 		//Select crew	
 		if (crewmember.IsEmpty())

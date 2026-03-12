@@ -542,7 +542,7 @@ sealed class SDRC_AIHelper
 		{
 			if (groupPrefab.Contains("Randomized"))
 			{
-				groupPrefabs[i] = SDRC_EnemyHelper.SelectEnemy("C_RIFLEMAN", faction);
+				groupPrefabs[i] = SDRC_EnemyHelper.SelectEnemy("C_RANDOMIZED", faction);
 			}
 		}	
 	}

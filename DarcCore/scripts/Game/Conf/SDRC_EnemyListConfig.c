@@ -28,6 +28,8 @@
 	C_MEDIC
 	C_SPECIAL
 
+	C_RANDOMIZED : This is a collection of C_RIFLEMAN + C_HEAVY + C_RECON. This is generated runtime.
+
 	//Zombies and creatures
 	G_ZOMBIE_SMALL
 	G_ZOMBIE_MEDIUM

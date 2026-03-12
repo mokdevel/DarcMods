@@ -3,7 +3,9 @@
 //Changes done in prefabs:
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
-#define CHOPPER_TESTING
+#ifdef WORKBENCH
+	#define CHOPPER_TESTING
+#endif
 
 //------------------------------------------------------------------------------------------------
 //class SDRC_ChopperCompClass : ScriptGameComponentClass { }
@@ -110,6 +112,10 @@ class SDRC_ChopperComp : ScriptComponent
 	[Attribute(defvalue: "0", desc: "Show debugging information")]	
 	bool m_bShowDebug;
 	
+	//Timing stuff
+	private const float TIME_DELAY_READY = 2;			//(seconds) Time before we spawn AIs and init flight path. This will give time for the chopper to properly initialize
+	private const float TIME_IN_INIT = 5;				//(seconds) Time to be in init state (after READY). During this time, we don't check for damage or similar things.
+	
 	//Original destination	
 	private vector m_vOriginalDestination;				//Used to know where to patrol
 		
@@ -141,7 +147,6 @@ class SDRC_ChopperComp : ScriptComponent
 	private const int POINTS_TO_NEW_DISTANCE = 3;		//How many spline points in to the future flight path is checked before adding new flight points.
 	private const int POINTS_TO_SPLINE_START = 5;		//Points to go back from m_iClosestIndex when creating a new flight path 
 	private const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
-	private const float TIME_IN_INIT = 5;				//(seconds) Time to be in init state. During this time, we don't check for damage or similar things.
 
 	private const int FLIGHT_FIX_TIME = 8;				//(seconds) Time to wait between flight fixes when chopper is pointing to the sky.
 	private const int FLIGHT_FIX_ANGLE = 1.4;			//Angle that enforces 
@@ -226,6 +231,18 @@ class SDRC_ChopperComp : ScriptComponent
 	private vector m_vFirstDestination;			//Where to fly first
 	
 	//------------------------------------------------------------------------------------------------
+	override void EOnInit(IEntity owner)
+	{
+		SDRC_SpawnHelper.SetPersistence(owner, false);
+		
+		if (m_bAutoStart)
+		{
+			Ready(owner);
+		}
+		SDRC_Log.Add("[SDRC_ChopperComp:EOnInit] Here!", LogLevel.DEBUG);
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
 	{
 		if (!GetGame().GetWorld())
@@ -273,8 +290,8 @@ class SDRC_ChopperComp : ScriptComponent
 			if (m_bAutoStart)
 			{
 				//NOTE: This section is to be done in the mod
-				SetEnemySearchType(true);
-				Ready(owner);
+				SetEnemySearchType(SDRC_EHeliEnemySearchType.PLAYER);
+//				Ready(owner);
 			}
 		}
 		else
@@ -326,7 +343,7 @@ class SDRC_ChopperComp : ScriptComponent
 	void Ready(IEntity owner)
 	{
 		//Set ready in a few seconds
-		GetGame().GetCallqueue().CallLater(ReadyDelayed, 1000, false, owner);
+		GetGame().GetCallqueue().CallLater(ReadyDelayed, TIME_DELAY_READY * 1000, false, owner);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -335,14 +352,24 @@ class SDRC_ChopperComp : ScriptComponent
 		// Some things needs to be done delayed
 		if (m_bAutoStart)
 		{
-			//Init flight path
-			InitFlight(owner, owner.GetOrigin());
-				
 			//Spawn crew 
 			int crewCount = SDRC_ChopperCrewHelper.SpawnCrew(owner, m_CargoSeatFill, m_aCrew, m_sFaction, m_AISkill, m_AIPerception);
 			SDRC_Log.Add("[SDRC_ChopperComp] Crew count: " + crewCount, LogLevel.DEBUG);
 		}		
+		
+		GetGame().GetCallqueue().CallLater(ReadyDelayed_2, TIME_DELAY_READY * 1000, false, owner);		
+	}
 
+	//------------------------------------------------------------------------------------------------
+	void ReadyDelayed_2(IEntity owner)
+	{		
+		// Some things needs to be done delayed
+		if (m_bAutoStart)
+		{
+			//Init flight path
+			InitFlight(owner, owner.GetOrigin());
+		}
+				
 		SDRC_ChopperDebug.DrawDebugPaths(owner);
 				
 //		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
@@ -1379,11 +1406,26 @@ class SDRC_ChopperComp : ScriptComponent
 			}
 			case SDRC_EFlyWayPointType.WP_M_TESTING:
 			{
-				vector hoverPos = vector.Zero;
+				int emptySize = 40;
+				if (SDRC_SpawnHelper.FindEmptyPos(destination, 300, emptySize))
+				{
+					//Safe landing position found
+					SDRC_DebugHelper.AddDebugPos(destination, ARGB(255, 64, 255, 64), emptySize, m_sDid, 10.0);				
+					AddDestination(SDRC_EFlyWayPointType.WP_LAND, destination);
+					AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
+					AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value : value);
+				}
+				else
+				{
+					//No safe landing position found
+					AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
+				}
+				
+/*				vector hoverPos = vector.Zero;
 				hoverPos[1] = m_fFlyHeightLow;
 				AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value : value);
 				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 12);
-				AddDestination(SDRC_EFlyWayPointType.WP_RAISE, "200 0 0");
+				AddDestination(SDRC_EFlyWayPointType.WP_RAISE, "200 0 0");*/
 				//All things are already added
 				addDestinationPoint = false;
 				break;

@@ -347,7 +347,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		//Default
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0};//{0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
+		missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
 		//Mission specific
 		distanceToPlayer = 500;
 		//----------------------------------------------------

@@ -631,7 +631,7 @@ modded class SCR_AIGetOutVehicle : SCR_AIVehicleBehavior
 	
 	protected bool m_bIsGetOutVehicle;
 	
-	protected SCR_ChimeraAIAgent m_ChimeraAIAgent;
+	protected SCR_ChimeraAIAgent m_SDRC_ChimeraAIAgent;
 	
 	//------------------------------------------------------------------------------------------------
 	void SCR_AIGetOutVehicle(SCR_AIUtilityComponent utility, SCR_AIActivityBase groupActivity, IEntity vehicleEntity, float delay_s = 0, float priority = PRIORITY_BEHAVIOR_GET_OUT_VEHICLE, float priorityLevel = PRIORITY_LEVEL_NORMAL)
@@ -644,15 +644,15 @@ modded class SCR_AIGetOutVehicle : SCR_AIVehicleBehavior
 			
 			if (agent)
 			{
-				m_ChimeraAIAgent = SCR_ChimeraAIAgent.Cast(agent);
+				m_SDRC_ChimeraAIAgent = SCR_ChimeraAIAgent.Cast(agent);
 				
-				if (m_ChimeraAIAgent)
+				if (m_SDRC_ChimeraAIAgent)
 				{
 					m_VehicleEntity = vehicleEntity;
 					
-					// m_ChimeraAIAgent.m_VehicleEntity = vehicleEntity;
+					// m_SDRC_ChimeraAIAgent.m_VehicleEntity = vehicleEntity;
 					
-					// m_bIsGetOutVehicle = m_ChimeraAIAgent.m_bIsGetOutVehicle;
+					// m_bIsGetOutVehicle = m_SDRC_ChimeraAIAgent.m_bIsGetOutVehicle;
 				}
 			}
 		}
@@ -663,15 +663,15 @@ modded class SCR_AIGetOutVehicle : SCR_AIVehicleBehavior
 	{
 		super.OnActionRemoved();
 		
-		if (m_ChimeraAIAgent)
+		if (m_SDRC_ChimeraAIAgent)
 		{
-			m_bIsGetOutVehicle = m_ChimeraAIAgent.m_bIsGetOutVehicle;
+			m_bIsGetOutVehicle = m_SDRC_ChimeraAIAgent.m_bIsGetOutVehicle;
 			
 			if (m_bIsGetOutVehicle)
 			{
 				MoveFromVehicle();
 				
-				m_ChimeraAIAgent.m_bIsGetOutVehicle = false;
+				m_SDRC_ChimeraAIAgent.m_bIsGetOutVehicle = false;
 			}
 		}
 	}
@@ -681,7 +681,7 @@ modded class SCR_AIGetOutVehicle : SCR_AIVehicleBehavior
 	{
 //		IEntity vehicleEntity;
 //		
-//		if (m_ChimeraAIAgent)
+//		if (m_SDRC_ChimeraAIAgent)
 //			vehicleEntity = chimeraAIAgent.m_VehicleEntity;
 //		
 //		vehicleEntity = m_VehicleEntity;

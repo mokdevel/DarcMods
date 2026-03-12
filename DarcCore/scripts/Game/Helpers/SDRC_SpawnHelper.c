@@ -407,6 +407,10 @@ class SDRC_SpawnHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find an empty spot within areaRadius to fit emptySize
+	
+	\param pos Center position for the area to search. Pos is updated with a new position.
+	\param areaRadius The size of the area to search
+	\param emptySize Size of the empty area to find
 	*/
 	
 	static private int m_obstructCount;

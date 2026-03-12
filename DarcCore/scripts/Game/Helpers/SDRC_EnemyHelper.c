@@ -44,7 +44,31 @@ sealed class SDRC_EnemyHelper
 		//Load configuration from file
 		m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_ENEMYLIST);	
 		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_CONFIG_FILE_ENEMYLIST_JSONVER);		
-		m_Config.Populate();		
+		m_Config.Populate();	
+		
+		//Create a C_RANDOMIZED list
+		array<string> randomizedLists = {"C_RIFLEMAN", "C_HEAVY", "C_RECON"};
+		
+		ref SDRC_List randomizedList = new SDRC_List();
+		randomizedList.Set("C_RANDOMIZED", {}, {}, {}, {});
+		
+		foreach (string rlist : randomizedLists)
+		{		
+			int index = SDRC_ListHelper.FindRightList(m_Config.lists, rlist);
+			if (index != -1)
+			{
+				foreach (string item : m_Config.lists[index].items)
+				{
+					randomizedList.items.Insert(item);
+				}
+			}			
+		}		
+		m_Config.lists.Insert(randomizedList);
+		if (SDRC_Log.GetLogLevel() > DC_LogLevel.NORMAL)
+		{
+			SDRC_Log.Add("[SDRC_EnemyHelper:Setup] List: " + randomizedList.id + " (" + randomizedList.items.Count() + ")", LogLevel.DEBUG);				
+			randomizedList.items.Debug();
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -173,7 +197,6 @@ sealed class SDRC_EnemyHelper
 	*/	
 	static ResourceName SelectEnemy(string listName, string faction)
 	{
-		int index = -1;		
 		array<string> enemyList = {};
 		array<string> factions = {};
 		
@@ -206,16 +229,9 @@ sealed class SDRC_EnemyHelper
 				break;
 			}*/
 		}
-				
+
 		//Find the right list index		
-		for (int i = 0; i < m_Config.lists.Count(); i++)		
-		{
-			if (m_Config.lists[i].id == listName)
-			{
-				index = i;
-				break;
-			}
-		}
+		int index = SDRC_ListHelper.FindRightList(m_Config.lists, listName);
 		
 		//Did we find it?
 		if (index == -1)

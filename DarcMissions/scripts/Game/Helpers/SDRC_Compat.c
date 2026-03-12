@@ -9,7 +9,7 @@ class SDRC_Compat
 {
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Add you init code here.
+	Add your init code here.
 	*/
 	static bool Init()
 	{
