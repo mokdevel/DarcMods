@@ -20,7 +20,7 @@ The location is where the mission was dropped. The helicopter will fly first to 
 ### Parameters
 Note: ```distanceToMission``` and ```distanceToPlayer``` overrides missionFrame settings. The initial helicopter position could start on top of a mission and it does not matter.
 
-See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md) , [Flying Helicopter](./P_HELICOPTER_FLY.md)
+See [Common](./P_COMMON.md) , [AI](./P_COMMON.md#SDRC_MissionConfigAi), [Loot](./P_LOOT.md) , [Flying Helicopter](https://github.com/mokdevel/DarcMods/blob/main/DarcChopper/docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter)
 ```
 int version : See Common parameters
 string author : See Common parameters

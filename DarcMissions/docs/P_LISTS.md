@@ -111,6 +111,7 @@ C_SNIPER : Units with sniper gear e.g. larger rifles
 C_LAUNCHER : Units with launchers or other types of explosives
 C_MEDIC : Units with medical gear
 C_SPECIAL : Special forces 
+C_RANDOMIZED : This is a collection of C_RIFLEMAN + C_HEAVY + C_RECON. This is generated runtime.
 
 //Zombies and creatures (untested!)
 G_ZOMBIE_SMALL

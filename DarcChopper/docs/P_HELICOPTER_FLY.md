@@ -41,12 +41,25 @@ The component has default values that work quite well for the vanilla helicopter
   * ``1 .. n`` : The distance to fly to next.
 
 ### AI settings
-* ``Faction`` :
-* ``Cargo Seat Fill``
-* ``Crew``
-* ``AI Skill``
-* ``AI Perception``
-* ``Enemy Search Type`` : 
+For more details, on AI functionality, read [AI section](https://github.com/mokdevel/DarcMods/tree/main/DarcChopper#ai-functionality)
+
+* ``Faction`` : The override faction to use. The vehicle has a faction assigned to it and this will override it. Faction is used for selecting crew faction.
+* ``Cargo Seat Fill`` : How many passengers to spawn and occupy seats.
+  * ``NONE`` : No AI to spawn in cargo.
+  * ``RANDOM`` : Random count from 1 to FULL
+  * ``LOW`` : Random count from 1 to HALF
+  * ``HALF`` : Half of the available seats are filled
+  * ``FULL`` : All seats are filled
+* ``Crew`` : Array of prefabs to spawn. If left empty, random AI will be added
+* ``AI Skill`` : Skill to define for example how good aim AI has.
+* ``AI Perception`` : How quickly AI reacts to danger and how well targets are recognized.
+* ``Enemy Search Type`` : The chopper is able to recognize enemies. This information is available for external mods for additional functionality. AI may do their own judgement and use e.g. machine guns. This value will not affect the AR provided AI functionality.
+  * ``NONE`` : Nothing is considered as an enemy
+  * ``ANY`` : Any target is accepted as an enemy
+  * ``PLAYER`` : Only players are considered as targets
+  * ``ANY_CHAR`` : Players and AI are considered as targets
+  * ``VEHICLE`` : TBD - Any vehicle is considered as a target
+  * ``VEHICLE_ARMORED`` : TBD - Only armored vehicles are considered as targets
 
 ### Weapons
 * ``Rocket Sector`` : (degrees) The sector in front of the rocket where the rocket can be shot. This is a cone with this angle left-right. For example: 10 degrees will result in cone of 20 degrees from the nose of the helicopter.

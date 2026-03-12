@@ -1,6 +1,8 @@
 # Version history
 
 ## Next Version
+
+## 20260312
 Main features:
 * Proper Get Out functionality for AI to disembark helicopter. (Credits: ATiM)
 * The first flight direction of a heli is where the nose points. 

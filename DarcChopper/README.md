@@ -25,14 +25,14 @@ There are a few public functions that you can use. For flying to destination(s),
 You can spawn choppers as a GM and they will start to fly around the world randomly. You can control them with waypoints.
 
 ## Entity browser
-The helicopters piloted by AIs can be found by filtering with DarcChopper. There are variants ready made for faction US, USSR and FIA. Drag and drop in to the world, use ALT-key to change altitude. 
+The helicopters piloted by AIs can be found by filtering with DarcChopper. There are variants ready made for faction US, USSR and FIA. Drag and drop in to the world, use ALT-key to change altitude. Change rotation with left-shift.
 
-<img src="../pics/chopperentitybrowser.jpg" width=30% height=30%>
+<img src="../pics/chopperentitybrowser.jpg" width=30% height=30%> <img src="../pics/chopperspawn.jpg" width=30% height=30%>
 
 NOTE: You can not set the helicopter on ground and let it lift off and start to fly. This is by design.
 
 ## First flight
-When spawned, helicopter will check it's altitude to make sure it's above ``Fly Height Low``. If not, the helicopter will be moved and this may look like an ugly jump. A random fly destination is chosen and helicopter is rotated towards it. Then we're ready for flying. 
+When spawned, helicopter will check it's altitude to make sure it's above ``Fly Height Low``. If not, the helicopter will be moved and this may look like an ugly jump. Helicopter will start to fly to the direction where the nose is pointing.
 
 ## Flight path
 A flight path is assigned to the helicopter and it will start to follow it. The flight path is shown with green lines on screen and once reaching the end, a new flight path is created. The flight path will be set between ``Fly Height Low`` and ``Fly Height High`` if the location is on ground or too high up. 
@@ -40,7 +40,7 @@ A flight path is assigned to the helicopter and it will start to follow it. The 
 ## Lines: Green and Blue
 You will see green and blue lines on screen when the helicopter is flying. 
 
-NOTE: These currently only work in WB and possible single player. Replication functionality is missing so that is TBD.
+**NOTE: These currently only work in WB and possible single player. Replication functionality is missing so that is TBD.**
 
 * Green: Shows the flight path for the helicopter. This is a spline that is followed while flying. This shows were we're generally going to end up.
 * Blue: If you've set waypoints for the helicopter, blue straight lines will show the future route. When the helicopter reaches the end of a green line, a check for waypoints (blue lines) is made. If waypoints are available, a new route is created via them and you will see the blue straight lines changing to a green flight path.
