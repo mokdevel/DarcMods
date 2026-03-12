@@ -9,14 +9,14 @@ Functionality is implemented as a single re-usable component. It is very easy to
 Helicopters can be spawned via GM and can be commanded. Currently available waypoints are listed here: [Waypoints](https://github.com/mokdevel/DarcMods/tree/main/DarcChopper#waypoints)
 
 * [Version history](VERSION.md)
-* [Creating a flying helicopter](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter)
-* [Parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md#sdrc_choppercomp-values)
+* [Creating a flying helicopter](../docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter)
+* [Parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcChopper/docs/P_HELICOPTER_FLY.md#sdrc_choppercomp-values)
 
 # Re-use in mods and game modes
-The flight model is done as a component (SDRC_ChopperComp). You are free to use it in yours - credits are appreciated. In theory you can add that to any helicopter and they will gain autonomous flying capabilities. For a short HowTo, see: [Creating a flying helicopter](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter).
+The flight model is done as a component (SDRC_ChopperComp). You are free to use it in yours - credits are appreciated. In theory you can add that to any helicopter and they will gain autonomous flying capabilities. For a short HowTo, see: [Creating a flying helicopter](../docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter).
 
 ## Modded helicopters
-Modded helicopters or helicopters not included in the mod do not work out of the box. You need to add the component (SDRC_ChopperComp) to them and possibly modify some parameters (like ``rotorforceX``). For a short HowTo, see: [Creating a flying helicopter](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter).
+Modded helicopters or helicopters not included in the mod do not work out of the box. You need to add the component (SDRC_ChopperComp) to them and possibly modify some parameters (like ``rotorforceX``). For a short HowTo, see: [Creating a flying helicopter](../docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter).
 
 ## Using in your mod
 There are a few public functions that you can use. For flying to destination(s), use ``AddDestination()``. You can call it multiple times to create a fly path. The helicopter will not go exactly to the given point and this is by design. If you want it to fly over a location, set the point behind the location.
