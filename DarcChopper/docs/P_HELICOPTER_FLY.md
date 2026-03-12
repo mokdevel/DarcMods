@@ -17,7 +17,7 @@ NOTE: Below information is slightly outdated.
 - Run. The helicopter should start to fly.
 - Pilots/AI is added automatically to the helicopter. This is true for US, USSR and FIA. Other factions are not tested but might work.
 
-<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/choppersettings.png" width=30% height=30%> <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/choppersettings_2.png" width=30% height=30%>
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/howto_choppersettings_1.png" width=30% height=30%> <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/howto_choppersettings_2.png" width=30% height=30%>
 
 ## Re-use in mods and game modes
 The flight model is done as a component. You are free to use it in yours - credits are appreciated. In theory you can add that to any helicopter and they will gain autonomous flying capabilities. 
