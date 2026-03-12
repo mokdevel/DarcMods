@@ -27,12 +27,14 @@ You can spawn choppers as a GM and they will start to fly around the world rando
 ## Entity browser
 The helicopters piloted by AIs can be found by filtering with DarcChopper. There are variants ready made for faction US, USSR and FIA. Drag and drop in to the world, use ALT-key to change altitude. Change rotation with left-shift.
 
-<img src="../pics/chopperentitybrowser.jpg" width=30% height=30%> <img src="../pics/chopperspawn.jpg" width=30% height=30%>
+<img src="../pics/chopperentitybrowser.jpg" width=30% height=30%>
 
 NOTE: You can not set the helicopter on ground and let it lift off and start to fly. This is by design.
 
 ## First flight
-When spawned, helicopter will check it's altitude to make sure it's above ``Fly Height Low``. If not, the helicopter will be moved and this may look like an ugly jump. Helicopter will start to fly to the direction where the nose is pointing.
+When spawned, helicopter will check it's altitude to make sure it's above ``Fly Height Low``. If not, the helicopter will be moved and this may look like an ugly jump. Helicopter will start to fly to the direction where the nose is pointing - the yellow arrow in the image.
+
+<img src="../pics/chopperspawn.jpg" width=30% height=30%>
 
 ## Flight path
 A flight path is assigned to the helicopter and it will start to follow it. The flight path is shown with green lines on screen and once reaching the end, a new flight path is created. The flight path will be set between ``Fly Height Low`` and ``Fly Height High`` if the location is on ground or too high up. 
