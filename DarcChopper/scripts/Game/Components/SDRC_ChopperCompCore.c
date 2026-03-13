@@ -96,6 +96,14 @@ class SDRC_ChopperCompCore
 		chopperComp.m_fSpeedMin = chopperComp.m_fSpeedMinOrig;
 		chopperComp.m_fSpeedMax = chopperComp.m_fSpeedMaxOrig;	
 		
+		VehicleHelicopterSimulation m_Helicopter_s = VehicleHelicopterSimulation.Cast(owner.GetRootParent().FindComponent(VehicleHelicopterSimulation));
+		if (m_Helicopter_s)
+		{
+	        m_Helicopter_s.SetThrottle(chopperComp.m_fThrottle);
+	        m_Helicopter_s.RotorSetForceScaleState(0, chopperComp.m_fRotorForce0);
+	        m_Helicopter_s.RotorSetForceScaleState(1, chopperComp.m_fRotorForce1);
+		}
+		
 		//Reset runtime parameters
 		chopperComp.m_fSpeedLandingMul = 1.0;
 	}	

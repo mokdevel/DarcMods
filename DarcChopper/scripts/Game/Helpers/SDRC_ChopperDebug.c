@@ -256,7 +256,8 @@ class SDRC_ChopperDebug
 		{		
 			string debugText = 	//"Speedangle:" + angle * Math.RAD2DEG + "\n" +
 								SCR_Enum.GetEnumName(SDRC_EHeliState, chopperComp.m_eHeliState) + " (" + 
-								SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimeInState) + ")";
+								SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimeInState) + ") (L:" + 
+								SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimeToLand) + ")";			
 								if (chopperComp.m_vEnemyPosition != vector.Zero)
 								{
 									debugText = debugText + " (enemy)";
@@ -264,12 +265,14 @@ class SDRC_ChopperDebug
 			debugText = debugText + "\n";
 			
 			debugText = debugText +
-							   	"Speed:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeed) + " " +
-							   	"(" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedStart) + "/" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedTarget) + ") " +
+							   	"Spd:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeed) + " " +
+							   	"min/max:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMin) + "/" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMax) + " " + 
+							   	"sta/tar: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedStart) + "/" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedTarget);
 	//						   	"Avg time:" + m_fTimeBetweenPtsAvg + "\n" +
+								" \n";
+			debugText = debugText +
 							   	"mul:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMul, 2) + " " + 
-							   	"min:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMin) + "\n" + 
-								"";		
+								" \n";
 			debugText = debugText + 
 							   	"Alt:" + 
 								SDRC_Misc.FloatWithDecimals(chopperComp.m_fAltitude) + " " + 

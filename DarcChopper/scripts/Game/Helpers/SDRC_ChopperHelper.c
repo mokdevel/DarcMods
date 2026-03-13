@@ -414,38 +414,44 @@ class SDRC_ChopperHelper
 			//If we're landing set some of the last points close to the ground
 			if (chopperComp.m_eHeliState == SDRC_EHeliState.LAND)
 			{
-				int pointsToGround = 16;
+				int pointsToGround = 12;
 				int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
+//				chopperComp.m_vSplinePoints[lastIdx][1] = SDRC_Misc.GetSurfaceYWithWater(lastPt);// - 50;		//Set the point a few meters below the ground.
 				
-				//Check the it's within limits
+				//Check that point is within limits
 				pointsToGround = Math.ClampInt(pointsToGround, 1, lastIdx - 2);
-	
+
+				//Find high point, low point and difference
+				vector v0 = chopperComp.m_vSplinePoints[lastIdx - pointsToGround];
+				vector v1 = chopperComp.m_vSplinePoints[lastIdx];
+				v1[1] = SDRC_Misc.GetSurfaceYWithWater(v1);
+				
+				float p0 = v0[1];
+				float p1 = v1[1];
+				float pdiff = p0 - p1;
+				
+				chopperComp.m_fLandingDistance = vector.Distance(v0, v1);
+					
 				//Create a Y spline to replace the given points to smooth the curve for landing
 				if (chopperComp.m_vSplinePoints.Count() - 1 > pointsToGround)
 				{
-					//Find high point, low point and difference
-					float p0 = chopperComp.m_vSplinePoints[lastIdx - pointsToGround][1];
-					float p1 = SDRC_Misc.GetSurfaceYWithWater(chopperComp.m_vSplinePoints[lastIdx]);
-					float pdiff = p0 - p1;
-					
 					for (int i = 0; i < pointsToGround; i++)
 					{					
-						float step = 1 - (i / pointsToGround);	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (POINTS_TO_GROUND -1) for full bell curve.
+						float step = 1 - (i / (pointsToGround - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
 						
-						vector pt = chopperComp.m_vSplinePoints[lastIdx - pointsToGround + i + 1];
+						vector pt = chopperComp.m_vSplinePoints[lastIdx - pointsToGround + i + 1];	//TBD: why +1 ?
 						pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
 						chopperComp.m_vSplinePoints[lastIdx - pointsToGround + i + 1] = pt;
 					}
 					
-					smoothCount = chopperComp.m_vSplinePoints.Count() - pointsToGround;
+//					smoothCount = chopperComp.m_vSplinePoints.Count() - pointsToGround;
 				}
-				else
-				{
-					vector pt = chopperComp.m_vSplinePoints[lastIdx];
-					float y = SDRC_Misc.GetSurfaceYWithWater(pt) + 5;	//Don't put it exactly to zero
-					pt[1] = y;
-					chopperComp.m_vSplinePoints[lastIdx] = pt;				
-				}
+				
+/*				vector lastPt = chopperComp.m_vSplinePoints[lastIdx];
+				lastPt[1] = lastPt[1] - 30;
+				chopperComp.m_vSplinePoints[lastIdx] = lastPt;*/
+				
+				isSmoothingNeeded = false;
 			}		
 			
 			if (isSmoothingNeeded)

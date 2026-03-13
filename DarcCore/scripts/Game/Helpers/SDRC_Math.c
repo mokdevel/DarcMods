@@ -381,4 +381,26 @@ sealed class SDRC_Math
 	    // Rotation vector = axis * angle (radians)
 	    return axis * angle;
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*! 
+	Check if a moving point has passed target position in XZ plane
+	*/
+	static bool HasPassedPointXZ(vector startPos, vector targetPos, vector currentPos)
+	{
+	    // Movement direction
+	    vector dir = targetPos - startPos;
+	    dir[1] = 0;
+	
+	    // Vector from target to current position
+	    vector after = currentPos - targetPos;
+	    after[1] = 0;
+	
+	    float d = vector.Dot(dir, after);
+	
+	    if (d > 0)
+	        return true;
+	
+	    return false;
+	}	
 }

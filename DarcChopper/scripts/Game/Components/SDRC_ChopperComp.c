@@ -113,11 +113,12 @@ class SDRC_ChopperComp : ScriptComponent
 	bool m_bShowDebug;
 	
 	//Timing stuff
-	private const float TIME_DELAY_READY = 2;			//(seconds) Time before we spawn AIs and init flight path. This will give time for the chopper to properly initialize
-	private const float TIME_IN_INIT = 5;				//(seconds) Time to be in init state (after READY). During this time, we don't check for damage or similar things.
+	private const float TIME_DELAY_READY = 1;			//(seconds) Time before we spawn AIs and init flight path. This will give time for the chopper to properly initialize
+	private const float TIME_IN_INIT = 20;				//(seconds) Time to be in init state (after READY). During this time, we don't check for damage or similar things.
 	
 	//Original destination	
 	private vector m_vOriginalDestination;				//Used to know where to patrol
+	private vector m_vFirstDestination;					//Where to fly first
 		
 	//Speed management
 	private const float SPEED_INTERVAL = 1.0;			//(seconds) Interval to modify speed of the helicopter
@@ -219,32 +220,39 @@ class SDRC_ChopperComp : ScriptComponent
 	//Landing related
 	private bool m_bIsLanding;					//If true, landing sequence has started
 	private float m_fTimerLanding;				//Timer for landing
-	private float m_fTimeToLand;				//(seconds) How long the landing shall take
-	private float m_fLandingDistance;			//Distance to start the landing
+	float m_fTimeToLand;						//(seconds) How long the landing shall take
+	float m_fLandingDistance;					//Distance to start the landing.
 	private float m_fLandingSpeed;				//The speed to descend the chopper
 	private float m_fSpeedLandingOrig;			//Speed from where we start to descend
+	private vector m_fPositionLandingOrig;		//Position from where we start to descend
 	
 	//Attack related
 	float m_fTimerAttack = 0;					//Timer to do attacks
 	vector m_vAttackPosition;					//Position to attack
 
-	private vector m_vFirstDestination;			//Where to fly first
-	
 	//------------------------------------------------------------------------------------------------
 	override void EOnInit(IEntity owner)
 	{
-		SDRC_SpawnHelper.SetPersistence(owner, false);
+		SetEventMask(owner, EntityEvent.FRAME);
+		Activate(owner);
 		
+		//SDRC_Log.Add("[SDRC_ChopperComp:EOnInit] Here!", LogLevel.DEBUG);
+				
+		SDRC_SpawnHelper.SetPersistence(owner, false);
+
 		if (m_bAutoStart)
 		{
 			Ready(owner);
 		}
-		SDRC_Log.Add("[SDRC_ChopperComp:EOnInit] Here!", LogLevel.DEBUG);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
 	{
+		#ifdef CHOPPER_TESTING
+			m_fDistanceLow = SDRC_Misc.RandomInt(250, 400);
+		#endif
+		
 		if (!GetGame().GetWorld())
 		{
 			return;
@@ -256,10 +264,6 @@ class SDRC_ChopperComp : ScriptComponent
 		}
 		
 		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp", LogLevel.NORMAL);
-
-		#ifdef CHOPPER_TESTING
-			m_fDistanceLow = SDRC_Misc.RandomInt(250, 400);
-		#endif
 				
 		SetEventMask(owner, EntityEvent.INIT);
 		s_Instance = this;
@@ -276,29 +280,28 @@ class SDRC_ChopperComp : ScriptComponent
 		
 		SDRC_ChopperEnemyHelper.GetWeapons(owner);
 		
-		m_Helicopter_s = VehicleHelicopterSimulation.Cast(GetOwner().GetRootParent().FindComponent(VehicleHelicopterSimulation));
 		m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + m_iEnemyFoundTimeout;
 		
+		m_Helicopter_s = VehicleHelicopterSimulation.Cast(GetOwner().GetRootParent().FindComponent(VehicleHelicopterSimulation));
 		if (m_Helicopter_s)
 		{
 	        m_Helicopter_s.EngineStart();
 	        m_Helicopter_s.SetThrottle(m_fThrottle);
 	        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0);
-	        m_Helicopter_s.RotorSetForceScaleState(1, m_fRotorForce1);			
+	        m_Helicopter_s.RotorSetForceScaleState(1, m_fRotorForce1);
 			SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, m_fDistanceLow, m_fDistanceHigh);						
-
+			
 			if (m_bAutoStart)
 			{
 				//NOTE: This section is to be done in the mod
 				SetEnemySearchType(SDRC_EHeliEnemySearchType.PLAYER);
-//				Ready(owner);
 			}
 		}
 		else
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp] VehicleHelicopterSimulation not found.", LogLevel.ERROR);
-		}
-
+		}		
+		
 		if (m_RocketPrefabs.IsEmpty())
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp] No rockets available.", LogLevel.NORMAL);
@@ -347,6 +350,8 @@ class SDRC_ChopperComp : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	//Delayed spawn of AI crew
+	
 	void ReadyDelayed(IEntity owner)
 	{
 		// Some things needs to be done delayed
@@ -361,6 +366,8 @@ class SDRC_ChopperComp : ScriptComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
+	//Delayed flight init and activation
+	
 	void ReadyDelayed_2(IEntity owner)
 	{		
 		// Some things needs to be done delayed
@@ -372,7 +379,6 @@ class SDRC_ChopperComp : ScriptComponent
 				
 		SDRC_ChopperDebug.DrawDebugPaths(owner);
 				
-//		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
 		SetEventMask(owner, EntityEvent.FRAME);
 		Activate(owner);
 		
@@ -404,6 +410,16 @@ class SDRC_ChopperComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	override void EOnFrame(IEntity owner, float timeSlice)
 	{
+		if (m_bInInit)
+		{
+			//Flatten the helicopter while being in init
+			vector heliUp = owner.GetTransformAxis(1);
+			vector straightenAngle = SDRC_Math.ComputeAngularVelocity(heliUp, vector.Up, timeSlice);
+			
+			owner.GetPhysics().SetAngularVelocity(straightenAngle);
+			return;
+		}
+		
 		m_vOrigin = owner.GetOrigin();
 		m_fAltitude = m_vOrigin[1] - SDRC_Misc.GetSurfaceYWithWater(m_vOrigin);
 	
@@ -720,7 +736,6 @@ class SDRC_ChopperComp : ScriptComponent
 				
 		//The normal way to slowly go towards the spline
 		int bigMul = 60;	//was 25
-
 		
 		switch (m_eHeliState)
 		{
@@ -735,7 +750,7 @@ class SDRC_ChopperComp : ScriptComponent
 				//In RAISE state, do somewhat rapid climb slow
 				bigMul = 150;
 				break;
-			}	
+			}
 		}
 				
 		//In fly state, react to low flying
@@ -756,7 +771,7 @@ class SDRC_ChopperComp : ScriptComponent
 			}				
 		}
 		
-		if (splineHeightFromGround == 0)
+		if (splineHeightFromGround <= 0)
 		{
 			splineHeightFromGround = 0.01;
 		}
@@ -796,32 +811,7 @@ class SDRC_ChopperComp : ScriptComponent
 				vector angle = transform[2];
 				angle.Normalized();
 				m_vFirstDestination = owner.GetOrigin() + angle * m_fDistanceLow;
-				
-//				m_vFirstDestination = SDRC_Misc.GetCoordinatesOnCircle(owner.GetOrigin(), m_fDistanceLow, SDRC_Misc.RandomInt(0, 360));
 			}
-			
-/*			if (!SDRC_PlayerHelper.IsInGMmode())
-			{
-				SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Player not in GM mode!", LogLevel.DEBUG);							
-			}			*/
-						
-//			if (SDRC_PlayerHelper.IsInGMmode())
-//			{			
-/*				SCR_CameraEditorComponent cameraManager = SCR_CameraEditorComponent.Cast(SCR_CameraEditorComponent.GetInstance(SCR_CameraEditorComponent));
-				if (cameraManager)
-				{
-					SCR_ManualCamera GMCamera = cameraManager.GetCamera();				
-					if (GMCamera)
-					{
-						vector transform[4];
-						GMCamera.GetTransform(transform);
-						vector angle = transform[2];
-						angle.Normalized();
-						destination = owner.GetOrigin() + angle * m_fDistanceLow;
-						SDRC_DebugHelper.AddDebugPos(destination, ARGB(255, 255, 00, 00), 5.0, m_sDid, 200);
-					}
-				}*/
-//			}
 			
 			#ifndef CHOPPER_TESTING
 				AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFirstDestination);
@@ -1312,8 +1302,8 @@ class SDRC_ChopperComp : ScriptComponent
 			destination = SDRC_Misc.SetPosToSurface(destination);
 			SetState(SDRC_EHeliState.LAND);
 			
-			float height = m_Helicopter_s.GetAltitudeAGL();
-			m_fLandingDistance = m_fSpeed * 5 + height * 2.5;
+//			float height = m_Helicopter_s.GetAltitudeAGL();
+//			m_fLandingDistance = m_fSpeed * 5 + height * 2.5;
 			
 			m_bIsLanding = false;
 			m_fTimerLanding = 0;
@@ -1407,7 +1397,19 @@ class SDRC_ChopperComp : ScriptComponent
 			case SDRC_EFlyWayPointType.WP_M_TESTING:
 			{
 				int emptySize = 40;
-				if (SDRC_SpawnHelper.FindEmptyPos(destination, 300, emptySize))
+				
+				bool foundLandingSpot = false;
+
+				for (int i = 0; i < 3; i++)
+				{
+					if (SDRC_SpawnHelper.FindEmptyPos(destination, 100 + i * 100, emptySize))
+					{
+						foundLandingSpot = true;
+						break;
+					}
+				}
+								
+				if (foundLandingSpot)
 				{
 					//Safe landing position found
 					SDRC_DebugHelper.AddDebugPos(destination, ARGB(255, 64, 255, 64), emptySize, m_sDid, 10.0);				
@@ -1514,8 +1516,9 @@ class SDRC_ChopperComp : ScriptComponent
 	{
 		const float LANDED_HEIGHT = 0.5;
 		
-		vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];			
-		float distance = vector.Distance(m_vOrigin, lastPt);
+		vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];
+//		vector lastPtToBrake = m_vSplinePoints[m_vSplinePoints.Count() - 2];
+		float distance = vector.Distance(owner.GetOrigin(), lastPt);
 
 		if (distance < m_fLandingDistance)
 		{
@@ -1528,10 +1531,12 @@ class SDRC_ChopperComp : ScriptComponent
 				//m_vSplinePoints[m_vSplinePoints.Count() - 1] = lastPt;
 				
 				m_fSpeedLandingOrig = m_fSpeed;
+				m_fSpeedMin = 0.001;
+				m_fPositionLandingOrig = owner.GetOrigin();
 				
 				//Time is dependent on position to speed
-				m_fTimeToLand = (4 * m_fLandingDistance) / m_fSpeed;
-				
+				m_fTimeToLand = (6 * m_fLandingDistance) / m_fSpeed;
+								
 				//We have started landing sequence so no need to count values
 				m_bIsLanding = true;
 			}
@@ -1542,29 +1547,35 @@ class SDRC_ChopperComp : ScriptComponent
 				m_fTimerLanding = Math.Clamp(m_fTimerLanding, 0, m_fTimeToLand);
 				float mul = 1 - m_fTimerLanding / m_fTimeToLand;				
 				float distMul = distance / m_fLandingDistance;
-
-				//Testing
-				float heightDiff = m_vOrigin[1] - lastPt[1] + (LANDED_HEIGHT * 1);
-				m_fLandingSpeed = -1 * (heightDiff / m_fTimeToLand) * 5.5;
-				
-				m_fRotorForceMultiplier = -3.0 + m_fLandingSpeed * SDRC_Math.FullBell(mul);
-				m_fSpeedMin = 0.01;
-				m_fSpeedMax = m_fSpeedLandingOrig * distMul + 0.01;
+								
+				if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, lastPt, owner.GetOrigin()))
+				{
+					m_fSpeedTarget = 0.001;
+					m_fRotorForceMultiplier = m_fRotorForceMultiplier - 8.0;
+				}
+				else
+				{
+					m_fRotorForceMultiplier = m_fRotorForceMultiplier * 2.5 - 1.0;
+					m_fSpeedTarget = m_fSpeedLandingOrig * distMul + 0.01;				
+				}
 				
 				//Helicopter to descend
-		        m_Helicopter_s.RotorSetForceScaleState(0, 0);
-		        m_Helicopter_s.SetThrottle(0);
 				
 /*		        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0Orig * mul * 0.01);
 		        m_Helicopter_s.SetThrottle(m_fThrottleOrig * mul);*/
 				
 				//This affects how flat the helicopter is at the time it's landing.
-				m_fSpeedLandingMul = mul;	
+				m_fSpeedLandingMul = mul;
 			}
 			else
 			{
 				SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
-				m_fSpeedMin = 0;
+				//Disable effect of rotors
+		        m_Helicopter_s.RotorSetForceScaleState(0, 0);
+		        m_Helicopter_s.RotorSetForceScaleState(1, 0);
+		        m_Helicopter_s.SetThrottle(0);
+				//Set values to stop moving
+				m_fSpeedTarget = 0.0001;
 				m_fSpeedLandingMul = 0;
 				m_fRotorForceMultiplier = 0;
 				SetNextState(owner);
