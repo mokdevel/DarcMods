@@ -4,7 +4,7 @@
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
 #ifdef WORKBENCH
-//	#define CHOPPER_TESTING
+	#define CHOPPER_TESTING
 #endif
 
 //------------------------------------------------------------------------------------------------
@@ -816,6 +816,7 @@ class SDRC_ChopperComp : ScriptComponent
 			#ifndef CHOPPER_TESTING
 				AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFirstDestination);
 			#else
+				m_vFirstDestination = "3071 33 2544";
 				AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, m_vFirstDestination);
 			#endif
 			SDRC_DebugHelper.AddDebugPos(m_vFirstDestination, ARGB(255, 255, 00, 00), 5.0, m_sDid, 200);			
@@ -1558,11 +1559,11 @@ class SDRC_ChopperComp : ScriptComponent
 					m_fSpeedTarget = 0.01;					
 					m_fRotorForceMultiplier = m_fRotorForceMultiplier * 4 - 8.0;
 				}
-				else if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, lastPtToBrake, owner.GetOrigin()))
+/*				else if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, lastPtToBrake, owner.GetOrigin()))
 				{
 					m_fSpeedTarget = 0.4;
 					m_fRotorForceMultiplier = m_fRotorForceMultiplier * 3 - 5.0;
-				}
+				}*/
 				else
 				{
 					m_fRotorForceMultiplier = m_fRotorForceMultiplier * 2.5 - 1.0;

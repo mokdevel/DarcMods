@@ -430,7 +430,7 @@ class SDRC_ChopperHelper
 				//Find high point, low point and difference
 				vector v0 = chopperComp.m_vSplinePoints[lastIdx - pointsToGround];
 				vector v1 = chopperComp.m_vSplinePoints[lastIdx];
-				v1[1] = SDRC_Misc.GetSurfaceYWithWater(v1);
+				v1[1] = SDRC_Misc.GetSurfaceYWithWater(v1, true);
 				
 				float p0 = v0[1];
 				float p1 = v1[1];
