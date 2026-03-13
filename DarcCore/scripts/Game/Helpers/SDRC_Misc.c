@@ -310,7 +310,7 @@ sealed class SDRC_Misc
 	/*!
 	Return surface height either on land or water.
 	*/	
-	static float GetSurfaceYWithWater(vector position)
+	static float GetSurfaceYWithWater(vector position, bool doTrace = false)
 	{
 		float y = 0;
 		
@@ -321,6 +321,33 @@ sealed class SDRC_Misc
 			{
 				y = GetGame().GetWorld().GetOceanHeight(position[0], position[2]);
 			}
+			
+			if (doTrace)
+			{
+				//Trace if there is an entity blocking			
+				vector traceStartPos = position;
+			 	traceStartPos[1] = y + 200;
+				vector traceEndPos = position;
+			 	traceEndPos[1] = y;
+				TraceParam param = new TraceParam();
+				{					
+					param.Start = traceStartPos;
+					param.End = traceEndPos;
+//					param.TargetLayers = EPhysicsLayerDefs.Navmesh;
+					param.Flags = TraceFlags.ENTS | TraceFlags.WORLD;
+					param.LayerMask = EPhysicsLayerPresets.Projectile;
+				}					
+	
+				BaseWorld world = GetGame().GetWorld();
+				float traceDistance = world.TraceMove(param, null);
+				float raylength = vector.Distance(traceStartPos, traceEndPos);
+				
+				vector newPos = position;
+				newPos[1] = traceStartPos[1] - (200 * traceDistance);
+				y = newPos[1];
+				
+				SDRC_DebugHelper.AddDebugSphere(newPos, ARGB(40, 255, 32, 32), 6);			//Red
+			}						
 		}
 		return y;
 	}	
