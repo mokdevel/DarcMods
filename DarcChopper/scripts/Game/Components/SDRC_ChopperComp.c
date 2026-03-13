@@ -250,7 +250,7 @@ class SDRC_ChopperComp : ScriptComponent
 	override void OnPostInit(IEntity owner)
 	{
 		#ifdef CHOPPER_TESTING
-			m_fDistanceLow = SDRC_Misc.RandomInt(250, 400);
+			m_fDistanceLow = SDRC_Misc.RandomInt(250, 600);
 		#endif
 		
 		if (!GetGame().GetWorld())
@@ -1387,8 +1387,8 @@ class SDRC_ChopperComp : ScriptComponent
 				AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value : value);
 				vector hoverPos = vector.Zero;
 				hoverPos[1] = m_fFlyHeightLow;
-				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 12);
-				AddDestination(SDRC_EFlyWayPointType.WP_RAISE, "200 0 0");
+				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 8);
+				AddDestination(SDRC_EFlyWayPointType.WP_RAISE, "150 0 0");
 				
 				//All things are already added
 				addDestinationPoint = false;
@@ -1555,23 +1555,23 @@ class SDRC_ChopperComp : ScriptComponent
 				//Check if we're close to landing place, slow down and descent
 				if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, lastPt, owner.GetOrigin()))
 				{
-					m_fSpeedTarget = 0.1;					
-					m_fRotorForceMultiplier = m_fRotorForceMultiplier - 5.0;
+					m_fSpeedTarget = 0.01;					
+					m_fRotorForceMultiplier = m_fRotorForceMultiplier * 4 - 8.0;
 				}
 				else if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, lastPtToBrake, owner.GetOrigin()))
 				{
-					m_fSpeedTarget = 0.2;
-					m_fRotorForceMultiplier = m_fRotorForceMultiplier - 3.0;
+					m_fSpeedTarget = 0.4;
+					m_fRotorForceMultiplier = m_fRotorForceMultiplier * 3 - 5.0;
 				}
 				else
 				{
 					m_fRotorForceMultiplier = m_fRotorForceMultiplier * 2.5 - 1.0;
-					m_fSpeedTarget = m_fSpeedLandingOrig * distMul + 0.01;				
+					m_fSpeedTarget = m_fSpeedLandingOrig * distMul + 0.01;
 				}
 							
-				if (m_fRotorForceMultiplier > -1.5)
+				if (m_fRotorForceMultiplier > -3.0)
 				{
-					m_fRotorForceMultiplier = -2.0;
+					m_fRotorForceMultiplier = -4.5;
 				}
 					
 				//Helicopter to descend
