@@ -255,11 +255,15 @@ class SDRC_ChopperHelper
 							}
 							case "E_AIWaypoint_Defend":
 							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_TESTING, pos, 5);
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TO_FREE_SPOT, pos, 20);
 								break;
 							}
 							case "E_AIWaypoint_Wait":							
 							case "E_AIWaypoint_GetIn":
+							{
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_ATTACK, pos, 120);
+								break;
+							}
 							case "E_AIWaypoint_SearchAndDestroy":
 							{
 								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_ATTACK, pos, 120);
@@ -414,7 +418,9 @@ class SDRC_ChopperHelper
 			//If we're landing set some of the last points close to the ground
 			if (chopperComp.m_eHeliState == SDRC_EHeliState.LAND)
 			{
-				int pointsToGround = 12;
+				int pointsToGround = chopperComp.m_fSpeed / 2;
+				pointsToGround = Math.ClampInt(pointsToGround, 8, 20);
+				
 				int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
 //				chopperComp.m_vSplinePoints[lastIdx][1] = SDRC_Misc.GetSurfaceYWithWater(lastPt);// - 50;		//Set the point a few meters below the ground.
 				

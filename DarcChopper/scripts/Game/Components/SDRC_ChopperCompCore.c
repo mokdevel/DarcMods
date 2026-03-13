@@ -24,7 +24,8 @@ enum SDRC_EFlyWayPointType
 	WP_ATTACK,					//14 - Sets attack position and time and then FLY
 	
 	//Macro actions
-	WP_M_LAND_TROOPS = 30,
+	WP_M_LAND_TROOPS = 30,		//30 - Drop of troops to exact position, wait and leave
+	WP_M_LAND_TO_FREE_SPOT,		//31 - Drop of troops, but search for empty spot
 	WP_M_ATTACK,
 	WP_M_TESTING,				//Just for testing
 }
