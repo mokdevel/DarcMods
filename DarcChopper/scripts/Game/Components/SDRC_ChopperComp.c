@@ -4,7 +4,7 @@
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
 #ifdef WORKBENCH
-	#define CHOPPER_TESTING
+//	#define CHOPPER_TESTING
 #endif
 
 //------------------------------------------------------------------------------------------------
@@ -674,12 +674,12 @@ class SDRC_ChopperComp : ScriptComponent
 		if (m_fSpeedLandingMul < 1.0)
 		{
 			//Do only minor adjustments
-			m_vAngularVel = m_vAngularVel * m_fSpeedLandingMul;
+			m_vAngularVel = m_vAngularVel * m_fSpeedLandingMul * 0.2;
 			m_vRadRollVel = m_vRadRollVel * m_fSpeedLandingMul;
-			m_vRadRollPitch = m_vRadRollPitch * m_fSpeedLandingMul;
+//			m_vRadRollPitch = m_vRadRollPitch * m_fSpeedLandingMul * 0.01;
 		}
 				
-		if (m_fSpeedLandingMul < 0.10)
+		if (m_fSpeedLandingMul < 0.3)
 		{
 			//Flatten the chopper when landing
 			m_vAngularVel = vector.Zero;
@@ -1580,9 +1580,7 @@ class SDRC_ChopperComp : ScriptComponent
 //		vector lastPtToBrake = m_vSplinePoints[m_vSplinePoints.Count() - 3];
 		float distance = vector.Distance(origin, lastPt);
 
-		const float DIV = 1.2;
-		
-		if (distance < (m_fLandingDistance/DIV))
+		if (distance < m_fLandingDistance)
 		{
 			float height = m_Helicopter_s.GetAltitudeAGL();
 				
@@ -1602,11 +1600,6 @@ class SDRC_ChopperComp : ScriptComponent
 				//We have started landing sequence so no need to count values
 				m_bIsLanding = true;
 				m_bFinalLanding = false;
-				
-				//Disable effect of rotors
-		        m_Helicopter_s.RotorSetForceScaleState(0, 0);
-		        m_Helicopter_s.RotorSetForceScaleState(1, 0);
-		        m_Helicopter_s.SetThrottle(0);
 			}
 			
 			if (!m_Helicopter_s.HasAnyGroundContact())
@@ -1614,7 +1607,7 @@ class SDRC_ChopperComp : ScriptComponent
 				m_fTimerLanding += timeSlice;
 				m_fTimerLanding = Math.Clamp(m_fTimerLanding, 0, m_fTimeToLand);
 //				float mul = 1 - m_fTimerLanding / m_fTimeToLand;				
-				float mul = distance / (m_fLandingDistance/DIV);
+				float mul = distance / m_fLandingDistance;
 				float distMul = distance / m_fLandingDistance;
 				float decrMul = origin[1] / lastPt[1];
 				decrMul = Math.Clamp(decrMul, 0.1, 1.0);
