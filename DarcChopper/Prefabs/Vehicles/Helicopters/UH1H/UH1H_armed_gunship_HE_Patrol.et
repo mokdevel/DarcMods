@@ -18,6 +18,7 @@ Vehicle : "{137DCF41459A89BE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunshi
      }
     }
    }
+   m_Flags 69
   }
   SDRC_ChopperComp "{68CCFCE9A1119AD5}" {
    m_fRotorForce1 2

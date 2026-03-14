@@ -43,6 +43,7 @@ Vehicle : "{EF4E5000BC4F6791}Prefabs/Vehicles/Helicopters/UH1H/UH1H_civ_base.et"
      ENTITYTYPE_DARCCHOPPER
     }
    }
+   m_Flags 69
   }
   SCR_ResourceComponent "{647ACC820DF3B1CC}" : "{80C579EC878D62C2}Prefabs/Vehicles/Helicopters/UH1H/CT_ResourceComponent_UH1H.ct" {
   }

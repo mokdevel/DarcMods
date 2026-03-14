@@ -45,6 +45,7 @@ Vehicle : "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et" {
      FACTION_FIA SIZE_M ENTITYTYPE_DARCCHOPPER
     }
    }
+   m_Flags 69
   }
   SCR_UniversalInventoryStorageComponent "{5E1E994304F0E0D3}" {
    MultiSlots {

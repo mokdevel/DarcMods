@@ -11,6 +11,7 @@ Vehicle : "{98225ED6D5F724D7}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_guns
      FACTION_FIA SIZE_L ENTITYTYPE_DARCCHOPPER
     }
    }
+   m_Flags 69
   }
   SCR_VehicleFactionAffiliationComponent "{5882CBD9AC741CEC}" {
    "faction affiliation" "FIA"

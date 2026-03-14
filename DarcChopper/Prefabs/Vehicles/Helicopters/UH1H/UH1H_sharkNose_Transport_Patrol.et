@@ -16,6 +16,7 @@ Vehicle : "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et" {
      ENTITYTYPE_DARCCHOPPER
     }
    }
+   m_Flags 69
   }
   SDRC_ChopperComp "{68CCFCE8AAE07B70}" {
    m_fRotorForce1 2

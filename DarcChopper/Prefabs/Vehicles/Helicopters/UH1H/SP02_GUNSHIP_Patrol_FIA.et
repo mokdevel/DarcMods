@@ -8,6 +8,7 @@ Vehicle : "{3133602B406D131C}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunshi
      FACTION_FIA SIZE_M ENTITYTYPE_DARCCHOPPER
     }
    }
+   m_Flags 69
   }
   SCR_VehicleFactionAffiliationComponent "{5882CBD9AC741CEC}" {
    "faction affiliation" "FIA"

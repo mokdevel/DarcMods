@@ -7,6 +7,7 @@ Vehicle : "{98225ED6D5F724D7}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_guns
      ENTITYTYPE_DARCCHOPPER
     }
    }
+   m_Flags 69
   }
   SDRC_ChopperComp "{66C5298D0A4A70BF}" {
    m_RocketDelay 0.7

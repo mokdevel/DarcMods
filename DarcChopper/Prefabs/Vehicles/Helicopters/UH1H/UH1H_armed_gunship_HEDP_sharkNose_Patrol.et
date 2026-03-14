@@ -15,6 +15,7 @@ Vehicle : "{CB4D4CF7E887B2D0}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunshi
      ENTITYTYPE_DARCCHOPPER
     }
    }
+   m_Flags 69
   }
   SDRC_ChopperComp "{671E5A35EADF67E4}" {
    m_fRotorForce1 2
