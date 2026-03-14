@@ -398,10 +398,10 @@ class SDRC_ChopperDebug
 				if (bt)
 				{
 					IEntity target = bt.GetTargetEntity();
-//					if (EntityUtils.IsPlayer(target))
-//					{
+					if (target)
+					{
 						SDRC_ChopperDebug.DrawLine(occupant.GetOrigin(), target.GetOrigin(), Color.RED);
-//					}
+					}
 				}
 			}
 		}

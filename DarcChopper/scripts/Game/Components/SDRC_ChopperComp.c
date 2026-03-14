@@ -4,7 +4,7 @@
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
 #ifdef WORKBENCH
-//	#define CHOPPER_TESTING
+	#define CHOPPER_TESTING
 #endif
 
 //------------------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ class SDRC_ChopperComp : ScriptComponent
 	[Attribute(category: "Chopper", defvalue: "3.0", desc: "Main rotor force", params: "0.1 10.0 0.1")]	
 	float m_fRotorForce0;
 	float m_fRotorForce0Orig;
-	[Attribute(category: "Chopper", defvalue: "1.0", desc: "Rear rotor force", params: "0.1 2.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "1.2", desc: "Rear rotor force", params: "0.1 2.0 0.1")]	
 	float m_fRotorForce1;
 	float m_fRotorForce1Orig;
 	
@@ -414,10 +414,7 @@ class SDRC_ChopperComp : ScriptComponent
 		if (m_bInInit)
 		{
 			//Flatten the helicopter while being in init
-			vector heliUp = owner.GetTransformAxis(1);
-			vector straightenAngle = SDRC_Math.ComputeAngularVelocity(heliUp, vector.Up, timeSlice);
-			
-			owner.GetPhysics().SetAngularVelocity(straightenAngle);
+			//SDRC_ChopperHelper.SetHorizontal(owner, timeSlice);
 			return;
 		}
 		
@@ -570,7 +567,7 @@ class SDRC_ChopperComp : ScriptComponent
 		
 		HandleState(owner, timeSlice);
 
-		SetVelocity(owner);
+		SetVelocity(owner, timeSlice);
 	
 		//Handle attacks
 		if (m_fTimerAttack < 0)	
@@ -697,7 +694,7 @@ class SDRC_ChopperComp : ScriptComponent
 	/*!	
 	Set velocity vector
 	*/
-	private void SetVelocity(IEntity owner)
+	private void SetVelocity(IEntity owner, float timeSlice)
 	{
 		//Set velocity
 		vector velVector = vector.Zero;
@@ -706,19 +703,20 @@ class SDRC_ChopperComp : ScriptComponent
 		     && (m_eHeliState != SDRC_EHeliState.WAIT)
 		   )
 		{
+			vector rotVector = owner.GetAngles();
 			velVector = m_vDestination;
 			velVector.Normalize();
-			
-			if (m_bFinalLanding)
-			{
-				//If in final landing stages, disable side movement
-				velVector[2] = 0;
-			}
-			
-			vector rotVector = owner.GetAngles();
-			
 			float forceMultiplier = m_fSpeed;
 			float forceRotorUp = m_fRotorForce0 * ROTOR_FORCE_UP_MUL * 10;
+
+			if (m_bFinalLanding)
+			{
+//				//If in final landing stages, disable side movement
+//				velVector[2] = 0;
+//				rotVector[1] = 0;
+				velVector = owner.GetOrigin();
+				velVector.Normalize();
+			}						
 			
 			velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, velVector[1] * forceRotorUp * m_fRotorForceMultiplier, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
 		}
@@ -1597,14 +1595,17 @@ class SDRC_ChopperComp : ScriptComponent
 				//Check if we're close to landing place, slow down and descent
 				if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, m_vSplinePoints[m_vSplinePoints.Count() - 1], owner.GetOrigin()))
 				{
-					m_fSpeedTarget = 0.01;
-					decreasePower = -20;
+					m_fSpeedTarget = 0.2;
+					decreasePower = -18;
 					m_bFinalLanding = true;
 				}
-				if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, m_vSplinePoints[m_vSplinePoints.Count() - 2], owner.GetOrigin()))
+				else if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, m_vSplinePoints[m_vSplinePoints.Count() - 2], owner.GetOrigin()))
 				{
-					m_fSpeedTarget = 0.4;
-					decreasePower = -10;
+					distance = vector.Distance(origin, m_fPositionLandingOrig);
+					
+					m_fSpeedTarget = distance / 4;
+					m_fSpeedTarget = Math.Clamp(decrMul, 1.0, 5.0);
+					decreasePower = -14;
 					m_bFinalLanding = true;
 				}
 
@@ -1628,7 +1629,7 @@ class SDRC_ChopperComp : ScriptComponent
 				SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
 				//Disable effect of rotors
 		        m_Helicopter_s.RotorSetForceScaleState(0, 0);
-		        m_Helicopter_s.RotorSetForceScaleState(1, 0);
+//		        m_Helicopter_s.RotorSetForceScaleState(1, 1);
 		        m_Helicopter_s.SetThrottle(0);
 				//Set values to stop moving
 				m_fSpeedTarget = 0.0001;

@@ -492,7 +492,20 @@ class SDRC_ChopperHelper
 			}
 		}
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Set the entity flat on XZ plane.
+	*/
+	static void SetHorizontal(IEntity owner, float timeSlice)
+	{
+			//Flatten the helicopter while being in init
+			vector ownerUp = owner.GetTransformAxis(1);
+			vector straightenAngle = SDRC_Math.ComputeAngularVelocity(ownerUp, vector.Up, timeSlice);
+			
+			owner.GetPhysics().SetAngularVelocity(straightenAngle);
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Returns the final destination from the spline
