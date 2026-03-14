@@ -151,7 +151,7 @@ class SDRC_ChopperHelper
 		
 		vector pos = SDRC_ChopperHelper.GetRandomPosition(owner.GetOrigin(), chopperComp.m_fDistanceLow, chopperComp.m_fDistanceHigh);
 		chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos);
-		SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 255, 00, 00), 2.0, chopperComp.m_sDid, 200);
+		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 255, 00, 00), 2.0, chopperComp.m_sDid, 200);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -471,7 +471,7 @@ class SDRC_ChopperHelper
 				
 				//Put last point slightly below the actual target
 				vector lastPt = chopperComp.m_vSplinePoints[lastIdx];
-				lastPt[1] = lastPt[1] - 5;
+				lastPt[1] = lastPt[1] - 2;
 				chopperComp.m_vSplinePoints[lastIdx] = lastPt;
 				
 				isSmoothingNeeded = false;

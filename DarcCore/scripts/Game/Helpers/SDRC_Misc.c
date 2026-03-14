@@ -348,7 +348,7 @@ sealed class SDRC_Misc
 				newPos[1] = traceStartPos[1] - (200 * traceDistance);
 				y = newPos[1];
 				
-				SDRC_DebugHelper.AddDebugSphere(newPos, ARGB(40, 255, 32, 32), 6);			//Red
+				//SDRC_DebugHelper.AddDebugSphere(newPos, ARGB(40, 255, 32, 32), 6);			//Red
 			}						
 		}
 		return y;
