@@ -4,7 +4,7 @@
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
 #ifdef WORKBENCH
-	#define CHOPPER_TESTING
+//	#define CHOPPER_TESTING
 #endif
 
 //------------------------------------------------------------------------------------------------
@@ -219,6 +219,7 @@ class SDRC_ChopperComp : ScriptComponent
 
 	//Landing related
 	private bool m_bIsLanding;					//If true, landing sequence has started
+	private bool m_bFinalLanding;				//If true, we're in the final landing stages really close to the target
 	private float m_fTimerLanding;				//Timer for landing
 	float m_fTimeToLand;						//(seconds) How long the landing shall take
 	float m_fLandingDistance;					//Distance to start the landing.
@@ -706,8 +707,16 @@ class SDRC_ChopperComp : ScriptComponent
 		   )
 		{
 			velVector = m_vDestination;
-			vector rotVector = owner.GetAngles();
 			velVector.Normalize();
+			
+			if (m_bFinalLanding)
+			{
+				//If in final landing stages, disable side movement
+				velVector[2] = 0;
+			}
+			
+			vector rotVector = owner.GetAngles();
+			
 			float forceMultiplier = m_fSpeed;
 			float forceRotorUp = m_fRotorForce0 * ROTOR_FORCE_UP_MUL * 10;
 			
@@ -893,6 +902,10 @@ class SDRC_ChopperComp : ScriptComponent
 		CreateFlightPoints(owner);
 		
 		SDRC_ChopperHelper.SetFlightPointHeight(owner);
+		//Set the first points to same height as heli. 
+		m_vFlightPoints[0].pt[1] = m_vOrigin[1];
+		m_vFlightPoints[1].pt[1] = m_vOrigin[1];
+		
 		array<vector> flyPathPoints = {};
 		SDRC_ChopperDebug.GivePoints(flyPathPoints, m_vFlightPoints);
 		SDRC_Spline3D.GenerateSplinePoints(flyPathPoints, m_vSplinePoints, -1);
@@ -903,7 +916,7 @@ class SDRC_ChopperComp : ScriptComponent
 		m_iOldClosestIndex = m_iClosestIndex;
 		
 		//Check that points are above ground
-		SDRC_ChopperHelper.SetSplinePointsAboveGround(owner);
+		SDRC_ChopperHelper.SetSplinePointsAboveGround(owner, 6);
 		
 		if (m_vSplinePoints.IsEmpty())
 		{
@@ -1142,17 +1155,14 @@ class SDRC_ChopperComp : ScriptComponent
 	*/	
 	private void CreateFlightPoints(IEntity owner)
 	{
-		//Set the first point to same height as heli. 
-		m_vFlightPoints[0].pt[1] = m_vOrigin[1];
-		
 		//Get vector from heli position to the first point to fly to.
 		vector origin = owner.GetOrigin();
 		vector direction = vector.Direction(origin, m_vFlightPoints[m_vFlightPoints.Count() - 1].pt);
-		vector pos = owner.GetOrigin() + direction.Normalized() * 200;
+		vector pos = owner.GetOrigin() + direction.Normalized() * 20;
 		pos[1] = origin[1];
 		AddFlyPathPoint(pos);
-		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 255, 00), 1.0, m_sDid, 30);
-						
+		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 255, 00), 1.0, m_sDid, 30); */
+		
 		//Add destinations .. if any
 		int lastIdx = -1;
 		
@@ -1203,6 +1213,15 @@ class SDRC_ChopperComp : ScriptComponent
 			
 			AddFlyPathPoint(flyDestination.pt, flyDestination.type);
 			lastIdx = idx;
+			
+			//If distance is really short, add a mid point
+/*			if (distance < 200)
+			{
+				p0 = m_vFlightPoints[m_vFlightPoints.Count() - 1].pt;
+				p1 = m_vFlightPoints[m_vFlightPoints.Count() - 2].pt;
+				vector mid = vector.Lerp(p0, p1, 0.5);
+				AddFlyPathPoint(mid, index: m_vFlightPoints.Count() - 2);
+			}*/
 			
 			switch (flyDestination.type)
 			{
@@ -1520,10 +1539,12 @@ class SDRC_ChopperComp : ScriptComponent
 	private void HandleLanding(IEntity owner, float timeSlice)
 	{
 		const float LANDED_HEIGHT = 0.5;
-		
+
+		vector origin = owner.GetOrigin();
+				
 		vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];
-		vector lastPtToBrake = m_vSplinePoints[m_vSplinePoints.Count() - 3];
-		float distance = vector.Distance(owner.GetOrigin(), lastPt);
+//		vector lastPtToBrake = m_vSplinePoints[m_vSplinePoints.Count() - 3];
+		float distance = vector.Distance(origin, lastPt);
 
 		if (distance < m_fLandingDistance)
 		{
@@ -1544,6 +1565,7 @@ class SDRC_ChopperComp : ScriptComponent
 								
 				//We have started landing sequence so no need to count values
 				m_bIsLanding = true;
+				m_bFinalLanding = false;
 			}
 			
 			if (!m_Helicopter_s.HasAnyGroundContact())
@@ -1552,24 +1574,29 @@ class SDRC_ChopperComp : ScriptComponent
 				m_fTimerLanding = Math.Clamp(m_fTimerLanding, 0, m_fTimeToLand);
 				float mul = 1 - m_fTimerLanding / m_fTimeToLand;				
 				float distMul = distance / m_fLandingDistance;
+				float decrMul = origin[1] / lastPt[1];
+				decrMul = Math.Clamp(decrMul, 0.1, 1.0);
+
+				m_fSpeedTarget = m_fSpeedLandingOrig * distMul + 0.01;
+								
+				float decreasePower = -1.0;
 				
 				//Check if we're close to landing place, slow down and descent
-				if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, lastPt, owner.GetOrigin()))
+				if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, m_vSplinePoints[m_vSplinePoints.Count() - 1], owner.GetOrigin()))
 				{
-					m_fSpeedTarget = 0.01;					
-					m_fRotorForceMultiplier = m_fRotorForceMultiplier * 4 - 8.0;
+					m_fSpeedTarget = 0.01;
+					decreasePower = -20;
+					m_bFinalLanding = true;
 				}
-/*				else if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, lastPtToBrake, owner.GetOrigin()))
+				if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, m_vSplinePoints[m_vSplinePoints.Count() - 2], owner.GetOrigin()))
 				{
 					m_fSpeedTarget = 0.4;
-					m_fRotorForceMultiplier = m_fRotorForceMultiplier * 3 - 5.0;
-				}*/
-				else
-				{
-					m_fRotorForceMultiplier = m_fRotorForceMultiplier * 2.5 - 1.0;
-					m_fSpeedTarget = m_fSpeedLandingOrig * distMul + 0.01;
+					decreasePower = -10;
+					m_bFinalLanding = true;
 				}
-							
+
+				m_fRotorForceMultiplier = m_fRotorForceMultiplier * 2.5 - decreasePower * decrMul;
+											
 				if (m_fRotorForceMultiplier > -3.0)
 				{
 					m_fRotorForceMultiplier = -4.5;

@@ -114,8 +114,10 @@ sealed class SDRC_Spline3D
 	}	
 
 	//------------------------------------------------------------------------------------------------
-	// Smooths ONLY the Up component of a spline
-	// X and Z remain unchanged	
+	/*! Smooths ONLY the Up component of a spline. X and Z remain unchanged	
+	\param points Points to smooth
+	\param count Points to smooth
+	*/ 
 	static void SmoothSplineUpOnly(array<vector> points, int count = 0, int windowSize = 2)
 	{
 		//With 0, we smooth all points

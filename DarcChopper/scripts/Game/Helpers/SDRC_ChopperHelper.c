@@ -370,9 +370,13 @@ class SDRC_ChopperHelper
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Check that spline points are above ground. Raise the point if needed.
+	\param owner Chopper entity
+	\param skipCount How many points to skip from the beginning.
 	*/	
-	static void SetSplinePointsAboveGround(IEntity owner)
+	static void SetSplinePointsAboveGround(IEntity owner, int skipCount = 0)
 	{	
+		vector origin = owner.GetOrigin();
+		
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (chopperComp)
 		{
@@ -383,6 +387,11 @@ class SDRC_ChopperHelper
 			//Make sure the points are at minimum m_fFlyHeightLow from the ground.
 			foreach (int i, vector pt : chopperComp.m_vSplinePoints)
 			{
+				if (i < skipCount)
+				{
+					continue;
+				}
+				
 				float y = SDRC_Misc.GetSurfaceYWithWater(pt);
 	
 				if (pt[1] < (y + chopperComp.m_fFlyHeightLow))
@@ -418,11 +427,11 @@ class SDRC_ChopperHelper
 			//If we're landing set some of the last points close to the ground
 			if (chopperComp.m_eHeliState == SDRC_EHeliState.LAND)
 			{
-				int pointsToGround = chopperComp.m_fSpeed / 2;
-				pointsToGround = Math.ClampInt(pointsToGround, 6, 15);
+				//Decide a point on the spline for the initial landing to start
+				int pointsToGround = chopperComp.m_fSpeed / 1.6;
+				pointsToGround = Math.ClampInt(pointsToGround, 10, 18);
 				
 				int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
-//				chopperComp.m_vSplinePoints[lastIdx][1] = SDRC_Misc.GetSurfaceYWithWater(lastPt);// - 50;		//Set the point a few meters below the ground.
 				
 				//Check that point is within limits
 				pointsToGround = Math.ClampInt(pointsToGround, 1, lastIdx - 2);
@@ -430,14 +439,21 @@ class SDRC_ChopperHelper
 				//Find high point, low point and difference
 				vector v0 = chopperComp.m_vSplinePoints[lastIdx - pointsToGround];
 				vector v1 = chopperComp.m_vSplinePoints[lastIdx];
+				//The destination point will take any objects like buildings in to account
 				v1[1] = SDRC_Misc.GetSurfaceYWithWater(v1, true);
 				
+				//Define the distance from where to start landing sequence				
+				chopperComp.m_fLandingDistance = vector.Distance(v0, v1);
+
+				//Modify the point amount the make a hook for landing. Starting point (v0) needs to be updated
+				pointsToGround = Math.ClampInt((pointsToGround / 1.2), 1, lastIdx - 2);
+				v0 = chopperComp.m_vSplinePoints[lastIdx - pointsToGround];
+				
+				//Count a landing (bell) curve
 				float p0 = v0[1];
 				float p1 = v1[1];
 				float pdiff = p0 - p1;
-				
-				chopperComp.m_fLandingDistance = vector.Distance(v0, v1);
-					
+									
 				//Create a Y spline to replace the given points to smooth the curve for landing
 				if (chopperComp.m_vSplinePoints.Count() - 1 > pointsToGround)
 				{
@@ -453,9 +469,10 @@ class SDRC_ChopperHelper
 //					smoothCount = chopperComp.m_vSplinePoints.Count() - pointsToGround;
 				}
 				
-/*				vector lastPt = chopperComp.m_vSplinePoints[lastIdx];
-				lastPt[1] = lastPt[1] - 30;
-				chopperComp.m_vSplinePoints[lastIdx] = lastPt;*/
+				//Put last point slightly below the actual target
+				vector lastPt = chopperComp.m_vSplinePoints[lastIdx];
+				lastPt[1] = lastPt[1] - 5;
+				chopperComp.m_vSplinePoints[lastIdx] = lastPt;
 				
 				isSmoothingNeeded = false;
 			}		
@@ -464,6 +481,14 @@ class SDRC_ChopperHelper
 			{
 				//Smooth the Up curve
 				SDRC_Spline3D.SmoothSplineUpOnly(chopperComp.m_vSplinePoints, smoothCount);
+			}
+
+			//After smoothing, set heli original height to points in the beginning. This is to avoid jumping.
+			for (int i = 0; i < skipCount; i++)
+			{
+				vector pt = chopperComp.m_vSplinePoints[i];
+				pt[1] = origin[1];
+				chopperComp.m_vSplinePoints[i] = pt;
 			}
 		}
 	}
