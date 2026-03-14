@@ -1155,10 +1155,23 @@ class SDRC_ChopperComp : ScriptComponent
 	*/	
 	private void CreateFlightPoints(IEntity owner)
 	{
+		float forwardDistance = 20;
+			
+		//If we have a destination and it's far away, increase the 	forwardDistance
+		if (!m_vFlyDestinations.IsEmpty())
+		{
+			float distance = vector.DistanceXZ(owner.GetOrigin(), m_vFlyDestinations[0].pt);
+			if (distance > 200)
+			{
+				forwardDistance = SDRC_Misc.RandomInt( (distance/4), (distance/1.3) );
+			}			
+		}		
+		
 		//Get vector from heli position to the first point to fly to.
 		vector origin = owner.GetOrigin();
 		vector direction = vector.Direction(origin, m_vFlightPoints[m_vFlightPoints.Count() - 1].pt);
-		vector pos = owner.GetOrigin() + direction.Normalized() * 20;
+		//Create one additional point as the first heli path point
+		vector pos = owner.GetOrigin() + direction.Normalized() * forwardDistance;
 		pos[1] = origin[1];
 		AddFlyPathPoint(pos);
 		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 255, 00), 1.0, m_sDid, 30); */
