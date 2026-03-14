@@ -17,6 +17,7 @@ Vehicle : "{98225ED6D5F724D7}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_guns
    "faction affiliation" "FIA"
   }
   SDRC_ChopperComp "{68A92A5959912990}" {
+   m_fRotorForce0 3
    m_sFaction "FIA"
    m_RocketDelay 0.7
    m_RocketPrefabs {

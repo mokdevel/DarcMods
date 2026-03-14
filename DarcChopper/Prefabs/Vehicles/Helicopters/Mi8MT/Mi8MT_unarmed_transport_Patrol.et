@@ -10,6 +10,7 @@ Vehicle : "{B6B8C164FD6377EA}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_ba
    m_Flags 69
   }
   SDRC_ChopperComp "{6724F156EB106AA0}" {
+   m_fRotorForce0 3
    m_CargoSeatFill FULL
   }
   VehicleHelicopterSimulation "{51FAEE57F7DA270E}" {
