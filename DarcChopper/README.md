@@ -93,7 +93,7 @@ WP_RAISE, order helicopter to fly forward for a while. Currently 200 meters
 ```
 Once actions are done, we return to normal flight mode.
 
-## <img src="../pics/wp_defend.png" width=18 height=18> Defend
+## <img src="../pics/wp_defend.png" width=18 height=18> Defend (WIP)
 The helicopter will find a safe spot where to land near the position where the waypoint was positioned. If no safe area is found, normal flight will continue. Once landed, AIs will be ordered to get out and move 50m from the helicopter. Only passengers (cargo) will be ordered to get out. Pilots and gunners will stay in the chopper.
 
 In short: Defend searches for a safe place to land. This is for modders in case you want to provide e.g. a QRF. You tell where you approx want it and chopper will judge if it's a good idea.
