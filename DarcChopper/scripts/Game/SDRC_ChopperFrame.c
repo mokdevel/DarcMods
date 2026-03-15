@@ -17,8 +17,6 @@ class SDRC_ChopperFrame
 	//------------------------------------------------------------------------------------------------
 	void SDRC_ChopperFrame()
 	{
-		//SDRC_Spline3D.TestSpline();		
-		
 		SDRC_Log.Add("[SDRC_ChopperFrame] Starting SDRC_ChopperFrame", LogLevel.NORMAL);
 		s_Instance = this;
 	}
@@ -26,5 +24,29 @@ class SDRC_ChopperFrame
 	void AddChopperToList(IEntity chopper)
 	{
 		m_aChoppers.Insert(chopper);
+	}
+
+	void RemoveChopperFromList(IEntity chopper)
+	{
+		int idx = m_aChoppers.Find(chopper);
+		if (idx > -1)
+		{
+			m_aChoppers.RemoveOrdered(idx);
+		}
+	}
+		
+	int GetChopperCount()
+	{
+		//Check that the choppers still exist
+		for (int i = 0; i < m_aChoppers.Count() - 1; i++)
+		{
+			if (!m_aChoppers[i])
+			{
+				m_aChoppers.RemoveOrdered(i);
+				i--;
+			}
+		}
+		
+		return m_aChoppers.Count();
 	}
 }

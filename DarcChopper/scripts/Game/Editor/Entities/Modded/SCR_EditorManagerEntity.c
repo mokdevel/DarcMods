@@ -17,7 +17,7 @@ modded class SCR_EditorManagerEntity
 			if (timer > REFRESH_TIME)
 			{
 				AskForInfo();
-				SDRC_Log.Add("[SDRC_EditorManagerEntity:IsOpened] Editor opened.", LogLevel.NORMAL);
+				SDRC_Log.Add("[SDRC_EditorManagerEntity:IsOpened] Editor opened.", LogLevel.SPAM);
 				timer = 0;				
 			}			
 		}
@@ -37,9 +37,24 @@ modded class SCR_EditorManagerEntity
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
     protected void RpcAsk_GiveMeInfo(int playerID)
     {
-		SDRC_Log.Add("[SDRC:SCR_EditorManagerEntity:RpcAsk_GiveMeInfo] Asked by: " + playerID, LogLevel.DEBUG);	
+		SDRC_Log.Add("[SDRC:SCR_EditorManagerEntity:RpcAsk_GiveMeInfo] Asked by: " + playerID, LogLevel.SPAM);	
 
-		SendMessageToPlayer(playerID, "Here is your message!");
+		string msg = "Count: ";
+		
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!m_BaseGameMode)
+		{
+			return;
+		}
+ 		if (!m_BaseGameMode.chopperFrame)
+		{
+			return;
+		}
+		
+		int count = m_BaseGameMode.chopperFrame.GetChopperCount();		
+		msg = msg + count;
+		
+		SendMessageToPlayer(playerID, msg);
     }
 	
 	//------------------------------------------------------------------------------------------------
@@ -47,7 +62,7 @@ modded class SCR_EditorManagerEntity
     [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
     void RpcDo_ReceivePrivateMessage(string msg)
     {
-        Print(string.Format("Private client message: %1", msg));
+        Print(string.Format("SDRC:Private client message: %1", msg));
     }	
 	
 	//------------------------------------------------------------------------------------------------
@@ -56,7 +71,9 @@ modded class SCR_EditorManagerEntity
 	    PlayerController pc = GetGame().GetPlayerManager().GetPlayerController(playerID);
 	    if (!pc)
 	        return;
-	
+				
 	    Rpc(RpcDo_ReceivePrivateMessage, msg);
 	}	
+	
+	
 }

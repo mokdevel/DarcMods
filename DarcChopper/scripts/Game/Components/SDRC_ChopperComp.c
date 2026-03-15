@@ -242,16 +242,13 @@ class SDRC_ChopperComp : ScriptComponent
 		}
 		
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
-		if (!m_BaseGameMode)
+		if (m_BaseGameMode)
 		{
-			return;
-		}
- 		if (!m_BaseGameMode.chopperFrame)
-		{
-			return;
-		}
-		
-		m_BaseGameMode.chopperFrame.AddChopperToList(owner);
+	 		if (m_BaseGameMode.chopperFrame)
+			{
+				m_BaseGameMode.chopperFrame.AddChopperToList(owner);
+			}
+		}		
 	}
 	
 	//------------------------------------------------------------------------------------------------

@@ -104,7 +104,16 @@ class SDRC_ChopperHelper
 			chopperComp.m_wCanvas.SetDrawCommands(chopperComp.m_aDrawCommands);
 			delete chopperComp.m_wCanvas;
 		}		
-						
+		
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (m_BaseGameMode)
+		{
+	 		if (m_BaseGameMode.chopperFrame)
+			{
+				m_BaseGameMode.chopperFrame.RemoveChopperFromList(owner);					
+			}
+		}
+		
 		return false;
 	}
 			
