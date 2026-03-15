@@ -91,7 +91,11 @@ WP_RAISE, order helicopter to fly forward for a while. Currently 200 meters
 ```
 Once actions are done, we return to normal flight mode.
 
-NOTE: Landing has its issues and needs some rework.
+## <img src="../pics/wp_defend.png" width=18 height=18> Defend
+The helicopter will find a safe spot where to land near the position where the waypoint was positioned. If no safe area is found, normal flight will continue. Once landed, AIs will be ordered to get out and move 50m from the helicopter. Only passengers (cargo) will be ordered to get out. Pilots and gunners will stay in the chopper.
+
+## <img src="../pics/wp_getout.png" width=18 height=18> Get Out
+The helicopter will land to the position, order AIs to get out and move 50m from the helicopter. Only passengers (cargo) will be ordered to get out. Pilots and gunners will stay in the chopper.
 
 # Configuration parameters
 See: [Parameters](./docs/P_HELICOPTER_FLY.md#sdrc_choppercomp-values)
@@ -174,6 +178,7 @@ There are various small things that are to be fixed in the future updates:
 - Flight path finding is simple for the moment. Steep turns sometimes look nice, sometimes not.
 - Some times the helicopter flies nose up after a steep turn. Have not yet found how to avoid that.
 - On console(s), the pilots are dock workers. Something to fix at some point.
+- Landing has its issues and needs some rework.
 
 # Thanks
 - ATiM for Get Out functionality for AI to disembark from the helicopter.

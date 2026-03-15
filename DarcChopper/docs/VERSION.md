@@ -2,6 +2,19 @@
 
 ## Next Version
 
+## 20260315
+Main features:
+* Improved landing: Much smoother and quite well on target spot
+* Improved flight model: Trying to smoothen the transitions between different states. Should reduce 'jumping up' when going to a new location.
+* Waypoint DEFEND: Chopper will look for a good landing spot near the place where the waypoint was set. WIP, and surely has it's issues.
+* Once landed, chopper will estimate the time needed to wait until crew has jumped out. Sometimes a few AI decide to stay inside and ignore orders- cowards!
+
+Known issues (to be fixed):
+* Whan unloading crew, chopper slightly rotates.
+* On consoles the crew is most likely Dock Workers. This is by current design. 
+* Landing is not perfect. 
+* Transitions from unloading->hover and hover->normal flight are a bit janky.
+
 ## 20260312
 Main features:
 * Proper Get Out functionality for AI to disembark helicopter. (Credits: ATiM)
