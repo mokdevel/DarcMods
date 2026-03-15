@@ -81,6 +81,8 @@ The image shows the green movement to the location to attack. The attack will co
 ## <img src="../pics/wp_getout.png" width=18 height=18> Get Out
 The helicopter will land to the position, order AIs to get out and move 50m from the helicopter. Only passengers (cargo) will be ordered to get out. Pilots and gunners will stay in the chopper.
 
+In short: Getout will blindly accept the spot you ordered. In the middle forest? You'll probably have a bad time.
+
 This is a macro commmand and does a serie of actions:
 ```
 WP_LAND, to destination
@@ -94,8 +96,7 @@ Once actions are done, we return to normal flight mode.
 ## <img src="../pics/wp_defend.png" width=18 height=18> Defend
 The helicopter will find a safe spot where to land near the position where the waypoint was positioned. If no safe area is found, normal flight will continue. Once landed, AIs will be ordered to get out and move 50m from the helicopter. Only passengers (cargo) will be ordered to get out. Pilots and gunners will stay in the chopper.
 
-## <img src="../pics/wp_getout.png" width=18 height=18> Get Out
-The helicopter will land to the position, order AIs to get out and move 50m from the helicopter. Only passengers (cargo) will be ordered to get out. Pilots and gunners will stay in the chopper.
+In short: Defend searches for a safe place to land. This is for modders in case you want to provide e.g. a QRF. You tell where you approx want it and chopper will judge if it's a good idea.
 
 # Configuration parameters
 See: [Parameters](./docs/P_HELICOPTER_FLY.md#sdrc_choppercomp-values)
