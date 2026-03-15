@@ -240,6 +240,18 @@ class SDRC_ChopperComp : ScriptComponent
 		{
 			Ready(owner);
 		}
+		
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!m_BaseGameMode)
+		{
+			return;
+		}
+ 		if (!m_BaseGameMode.chopperFrame)
+		{
+			return;
+		}
+		
+		m_BaseGameMode.chopperFrame.AddChopperToList(owner);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -1691,5 +1703,36 @@ class SDRC_ChopperComp : ScriptComponent
 	void SetAutostart(bool value)
 	{
 		m_bAutoStart = value;
+	}
+	
+	
+    // Client asks server to do something
+    [RplRpc(RplChannel.Reliable, RplRcver.Server)]
+    void RpcAsk_RequestPrivateMessage(string msg)
+    {
+        Print(string.Format("Server received request: %1", msg));
+    }
+
+    // Server sends only to the owner of this component's entity
+    [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
+    void RpcDo_ReceivePrivateMessage(string msg)
+    {
+        Print(string.Format("Private client message: %1", msg));
+    }	
+	
+	void SendMessageToPlayer(int playerId, string msg)
+	{
+	    PlayerController pc = GetGame().GetPlayerManager().GetPlayerController(playerId);
+	    if (!pc)
+	        return;
+
+	    Rpc(RpcDo_ReceivePrivateMessage, msg);
+		
+/*			
+	    DARC_NetComponent netComp = DARC_NetComponent.Cast(pc.FindComponent(DARC_NetComponent));
+	    if (!netComp)
+	        return;
+	
+	    netComp.Rpc(netComp.RpcDo_ReceivePrivateMessage, msg);*/
 	}	
 }
