@@ -79,7 +79,9 @@ Search and destroy will order the helicopter to target a location and bomb it. T
 The image shows the green movement to the location to attack. The attack will continue (follow the white line) from another angle. The heli will do a detour and attack along the red line. Rinse and repeat. Once all attacks are performed, normal flying will continue. Wave count, angles and distances are randomized.
 
 ## <img src="../pics/wp_getout.png" width=18 height=18> Get Out
-The helicopter will land to the position, order AIs to get out and move 50m from the helicopter. Only passengers (cargo) will be ordered to get out. Pilots and gunners will stay in the chopper.
+The helicopter will land to the position, order AIs to get out and move 50m from the helicopter. Only passengers (cargo) will be ordered to get out. Pilots and gunners will stay in the chopper. The cargo crew will be split in to groups of four - this was found to be a good solution to have AIs follow get out orders
+
+NOTE: One of the assigned cargo crew will remain in the chopper. This is by design - MI28 AI in the cockpit, mostly refuses to leave when ordered.
 
 In short: Getout will blindly accept the spot you ordered. In the middle forest? You'll probably have a bad time.
 
@@ -92,8 +94,6 @@ WP_HOVER_UP, hover helicopter up to minimum fly height. Currently this is done i
 WP_RAISE, order helicopter to fly forward for a while. Currently 200 meters
 ```
 Once actions are done, we return to normal flight mode.
-
-NOTE: One of the assigned cargo crew will remain in the chopper. This is by design - MI28 AI in the cockpit, mostly refuses to leave when ordered.
 
 ## <img src="../pics/wp_defend.png" width=18 height=18> Defend (WIP)
 The helicopter will find a safe spot where to land near the position where the waypoint was positioned. If no safe area is found, normal flight will continue. Once landed, AIs will be ordered to get out and move 50m from the helicopter. Only passengers (cargo) will be ordered to get out. Pilots and gunners will stay in the chopper. This is an extension to [Get Out waypoint](https://github.com/mokdevel/DarcMods/tree/main/DarcChopper#-get-out).
