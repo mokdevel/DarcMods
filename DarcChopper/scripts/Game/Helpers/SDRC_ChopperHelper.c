@@ -250,12 +250,12 @@ class SDRC_ChopperHelper
 							}
 							case "E_AIWaypoint_GetOut":
 							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, pos, 10);
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, pos);
 								break;
 							}
 							case "E_AIWaypoint_Defend":
 							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TO_FREE_SPOT, pos, 20);
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TO_FREE_SPOT, pos);
 								break;
 							}
 							case "E_AIWaypoint_Wait":							

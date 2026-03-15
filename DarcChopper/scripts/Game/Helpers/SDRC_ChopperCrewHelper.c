@@ -296,5 +296,23 @@ class SDRC_ChopperCrewHelper
 			SCR_AIGroup AIgroup = SCR_AIGroup.Cast(group);
 			SDRC_AIHelper.SetAIGroupEnableDelayed(AIgroup, activate);			
 		}	
-	}	
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	static int CountCrew(IEntity owner)
+	{
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return 0;
+		}
+		
+		int crewCount = 0;
+		foreach (AIGroup group : chopperComp.m_aGroups)
+		{
+			crewCount = crewCount + group.GetAgentsCount();
+		}
+		
+		return crewCount;
+	}
 }
