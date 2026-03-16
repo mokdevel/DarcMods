@@ -9,11 +9,126 @@ class SDRC_ChopperDebug
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Collect desination lines to show where chopper is going
+	*/
+	static void CollectDestinationLines(IEntity owner, out array<vector> vertices)
+	{
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return;
+		}		
+		
+		if (chopperComp.m_vSplinePoints.IsEmpty())
+		{
+			return;
+		}
+		
+		//Add every nth spline point
+		int nth = 4;
+		int closestIndex = ((int)(chopperComp.m_iClosestIndex / nth)) * nth + 1;
+		int splinePointCount = chopperComp.m_vSplinePoints.Count() - 1;
+		if (closestIndex > splinePointCount)
+		{
+			closestIndex = splinePointCount;
+		}
+
+		// Add spline points
+		
+		//Select color
+		vertices.Insert(SetColor(Color.DARK_GREEN));
+		
+		//Starting point
+		vertices.Insert(chopperComp.m_vSplinePoints[closestIndex]);
+		
+		for (int i = closestIndex; i < splinePointCount; i = i + nth)
+		{
+			vertices.Insert(chopperComp.m_vSplinePoints[i]);
+		} 
+		
+		//Last point
+		vertices.Insert(chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1]);
+
+		//Add destinations if any
+		if (!chopperComp.m_vFlyDestinations.IsEmpty())
+		{	
+			int currentColor = Color.DARK_BLUE;
+			vertices.Insert(SetColor(currentColor));
+			
+			foreach (SDRC_FlyPathPoint destination : chopperComp.m_vFlyDestinations)
+			{
+				int color = -1;
+
+				vector pos = destination.pt;
+				if (pos[1] == 0)
+				{
+					pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 40;
+				}
+				
+				switch (destination.type)
+				{
+					case SDRC_EFlyWayPointType.WP_FLY:					
+					{
+						color = Color.DARK_BLUE;
+						break;
+					}
+					case SDRC_EFlyWayPointType.WP_LAND:
+					{
+						color = Color.DARK_CYAN;
+						break;
+					}				
+					case SDRC_EFlyWayPointType.WP_PATROL:
+					{
+						color = Color.GRAY;
+						break;
+					}				
+					case SDRC_EFlyWayPointType.WP_ATTACK:
+					{
+						color = Color.RED;
+						pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 10;
+						break;
+					}				
+				}
+				
+				//If no color change, skip. 
+				if (color == -1)
+				{
+					//This should never happen
+					continue;
+				}
+				
+				//If needed m change color
+				if (color != currentColor)
+				{
+					currentColor = color;
+					vertices.Insert(SetColor(currentColor));					
+				}
+				
+				vertices.Insert(pos);
+			}		
+		}		
+				
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Create a vector that represents a color change. Format "-1 color 0". -1 is the color change code.
+	*/
+	static vector SetColor(int color)
+	{
+		vector vcol = "-1 0 0";
+		vcol[1] = color;
+		return vcol;
+	}
+		
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Draws lines to show where chopper is going
 	*/
 	static void DrawDestinationLines(IEntity owner)
 	{
-		array<float> m_Vertices = {};
+		array<vector> positions = {};
+		array<float> drawVertices = {};
 		
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)
@@ -53,92 +168,43 @@ class SDRC_ChopperDebug
 		{
 			return;
 		}*/
-		
-		//Add every nth spline point
-		int nth = 4;
-		int closestIndex = ((int)(chopperComp.m_iClosestIndex / nth)) * nth + 1;
-		int splinePointCount = chopperComp.m_vSplinePoints.Count() - 1;
-		if (closestIndex > splinePointCount)
-		{
-			closestIndex = splinePointCount;
-		}
-		
-		chopperComp.m_aDrawCommands.Clear();// = {};
-		
-		//Starting point
-		AddVertice(chopperComp.m_vSplinePoints[closestIndex], m_Vertices);
-		
-		for (int i = closestIndex; i < splinePointCount; i = i + nth)
-		{
-			AddVertice(chopperComp.m_vSplinePoints[i], m_Vertices);
-		} 
-		
-		AddVertice(chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1], m_Vertices);
-		//Insert into pool of draw commands
-		chopperComp.m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_GREEN));
-		
-		//Add destinations if any
-		if (!chopperComp.m_vFlyDestinations.IsEmpty())
-		{	
-			//Add last point to be the first for blue lines
-//			AddVertice(chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1], m_Vertices);
-			vector prevPos = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];
-			
-			foreach (SDRC_FlyPathPoint destination : chopperComp.m_vFlyDestinations)
-			{
-				int color = -1;
 
-				vector pos = destination.pt;
-				if (pos[1] == 0)
-				{
-					pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 40;
-				}
-				
-				switch (destination.type)
-				{
-					case SDRC_EFlyWayPointType.WP_FLY:					
-					{
-						color = Color.DARK_BLUE;
-						break;
-					}
-					case SDRC_EFlyWayPointType.WP_LAND:
-					{
-						color = Color.DARK_CYAN;
-						break;
-					}				
-					case SDRC_EFlyWayPointType.WP_PATROL:
-					{
-						color = Color.GRAY;
-						break;
-					}				
-					case SDRC_EFlyWayPointType.WP_ATTACK:
-					{
-						color = Color.RED;
-						pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 10;
-						break;
-					}				
-				}
-				
-				if (color == -1)
-				{
-					continue;
-				}
-				
-				AddVertice(prevPos, m_Vertices);
-				AddVertice(pos, m_Vertices);
+		CollectDestinationLines(owner, positions);
+		
+		// ----------------		
+		// Do the drawing on canvas
+		chopperComp.m_aDrawCommands.Clear();
+		
+		//Do the line drawing		
+		int color = -1;
+		vector prevPos = vector.Zero;
+		foreach (vector pos : positions)
+		{
+			//Change color
+			if (pos[0] == -1)
+			{
+				color = pos[1];
+				continue;
+			}
+			
+			//If this is the first point we found, let's use that as the previous position. This is the start of the line.
+			if (prevPos == vector.Zero)
+			{
 				prevPos = pos;
-				//Insert into pool of draw commands
-				chopperComp.m_aDrawCommands.Insert(AddLines(m_Vertices, color));
-			}		
-					
-//			//Insert into pool of draw commands
-//			chopperComp.m_aDrawCommands.Insert(AddLines(m_Vertices, Color.DARK_BLUE));
+				continue;
+			}
+			
+			AddVertice(prevPos, drawVertices);
+			AddVertice(pos, drawVertices);
+			prevPos = pos;
+			//Insert into pool of draw commands
+			chopperComp.m_aDrawCommands.Insert(AddLines(drawVertices, color));			
 		}
 		
 		if (!chopperComp.m_aDrawCommands.IsEmpty())
 		{
 			chopperComp.m_wCanvas.SetDrawCommands(chopperComp.m_aDrawCommands);			
-		}
+		}		
 	}		
 	
 	//------------------------------------------------------------------------------------------------
@@ -167,7 +233,7 @@ class SDRC_ChopperDebug
 		line.m_Vertices = {};
 		line.m_iColor = color;
 		line.m_fOutlineWidth = 0;
-		line.m_fWidth = 1.5;
+		line.m_fWidth = 1.0;
 		line.m_Vertices.Copy(vertices);
 		vertices.Clear();
 		return line;
