@@ -39,7 +39,7 @@ class SDRC_ChopperComp : ScriptComponent
 	private SDRC_ChopperComp s_Instance;	
 	ref array<vector> m_vSplinePoints = new array<vector>();
 	private VehicleHelicopterSimulation m_Helicopter_s;
-	protected RplComponent m_RplComp;
+//	protected RplComponent m_RplComp;
 		
 	//Parameters accessible helicopter parameters
 	[Attribute(category: "Chopper", defvalue: "1", desc: "Autostart chopper")]	
@@ -167,7 +167,7 @@ class SDRC_ChopperComp : ScriptComponent
 	private int m_iDestinationPointAdd;
 	private float m_fTimeTurnInterval;
 	
-	const int HEALTH_LIMIT = 1000;						//Limit to define the chopper to be heavily damaged. 
+	const int HEALTH_LIMIT = 500;						//Limit to define the chopper to be heavily damaged. 
 	
 	//Flight path runtime variables	
 	private vector m_vOrigin;							//Current position
@@ -432,7 +432,7 @@ class SDRC_ChopperComp : ScriptComponent
 		m_fTimeRocketDelay += timeSlice;		
 		m_fTimerAttack -= timeSlice;
 		
-		SDRC_ChopperDebug.DrawDestinationLines(owner);
+//		SDRC_ChopperDebug.DrawDestinationLines(owner);
 		
 		//Check if we're still working. 
 		//---

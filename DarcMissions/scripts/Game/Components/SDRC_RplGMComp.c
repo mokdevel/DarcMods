@@ -73,7 +73,7 @@ class SDRC_RplGMComp : ScriptComponent
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Return instance to component
+	Clear symbols
 	*/
 	void ClearSymbols()
 	{

@@ -49,4 +49,14 @@ class SDRC_ChopperFrame
 		
 		return m_aChoppers.Count();
 	}
+	
+	IEntity GetChopperEntity(int index)
+	{
+		if (m_aChoppers.IsEmpty())
+		{
+			return null;
+		}
+		
+		return m_aChoppers[index];
+	}	
 }

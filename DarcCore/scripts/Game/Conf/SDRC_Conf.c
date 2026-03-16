@@ -41,6 +41,7 @@ sealed class SDRC_Conf
 	const bool SDRC_ENABLE_DARCMISSIONS = true;			//Enable the missions mod during development
 	const bool SDRC_ENABLE_DARCDEATHMARKER = true;		//Enable death marker mod during development
 	const bool SDRC_ENABLE_DARCSTORIES = false;			//Enable stories mod during development
+	const bool SDRC_ENABLE_DARCCHOPPER = true;			//Enable chopper mod during development
 //	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA			//If enabled, creates a default configuration
 	const bool OVERWRITE_JSON = false;					//Writes a new conf even if it exists
 	const bool SHOW_VALID_MISSION_AREAS = false;		//Debug markers for mission position testing drawn on the map
@@ -60,6 +61,7 @@ sealed class SDRC_Conf
 	const bool SDRC_ENABLE_DARCMISSIONS	= true;
 	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
 	const bool SDRC_ENABLE_DARCSTORIES = false;
+	const bool SDRC_ENABLE_DARCCHOPPER = true;
 //	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
 	const bool OVERWRITE_JSON = true;			
 //	const bool OVERWRITE_JSON = false;
