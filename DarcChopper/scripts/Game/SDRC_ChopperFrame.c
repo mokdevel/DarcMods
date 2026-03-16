@@ -59,4 +59,9 @@ class SDRC_ChopperFrame
 		
 		return m_aChoppers[index];
 	}	
+	
+	void GetAllChopperEntity(out array<IEntity> choppers)
+	{
+		choppers.Copy(m_aChoppers);		
+	}
 }

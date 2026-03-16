@@ -4,7 +4,7 @@
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
 #ifdef WORKBENCH
-	#define CHOPPER_TESTING
+//	#define CHOPPER_TESTING
 #endif
 
 //------------------------------------------------------------------------------------------------

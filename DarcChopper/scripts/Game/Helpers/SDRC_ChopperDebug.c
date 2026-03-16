@@ -13,6 +13,11 @@ class SDRC_ChopperDebug
 	*/
 	static void CollectDestinationLines(IEntity owner, out array<vector> vertices)
 	{
+		if (!owner)
+		{
+			return;
+		}
+		
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)
 		{

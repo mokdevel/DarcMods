@@ -76,7 +76,8 @@ class SDRC_ChopperHelper
 		}
 		
 		//Set damage so it should be destroyed on crash		
-		SetHealth(owner, SDRC_Misc.RandomFloat(0, 0.05));
+//		SetHealth(owner, SDRC_Misc.RandomFloat(0, 0.05));
+		
 /*		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
 		if (damageManager)
 		{

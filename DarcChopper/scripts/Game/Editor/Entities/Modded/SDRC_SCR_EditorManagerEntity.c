@@ -59,11 +59,6 @@ modded class SCR_EditorManagerEntity
 		{
 			SDRC_LineDrawHelper.CreateDrawCommandsFromData(m_lineData, drawCommands);			
 			m_wCanvas.SetDrawCommands(drawCommands);
-			
-/*			if (!drawCommands.IsEmpty())
-			{
-				m_wCanvas.SetDrawCommands(drawCommands);
-			}*/
 		}
 		
 		super.EOnFrame(owner, timeSlice);
@@ -134,33 +129,40 @@ modded class SCR_EditorManagerEntity
 		{
 			return;
 		}		
-		
-		IEntity chopper = m_BaseGameMode.chopperFrame.GetChopperEntity(0);
-		if (!chopper)
-		{
-			return;
-		}
-
 		if (!SDRC_PlayerHelper.IsGMInterfaceVisible())
 		{
 			drawCommands.Clear();
 			return;
 		}
-			
+		
+		array<IEntity> choppers = {};
+		//IEntity chopper = m_BaseGameMode.chopperFrame.GetChopperEntity(0);
+		m_BaseGameMode.chopperFrame.GetAllChopperEntity(choppers);
+		//if (!chopper)
+		if (choppers.IsEmpty())
+		{
+			return;
+		}
+
 		SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:SyncLineData] Starting..", LogLevel.NORMAL);	
 
 		array<vector> positions = {};
-		SDRC_ChopperDebug.CollectDestinationLines(chopper, positions);
+		
+		foreach (IEntity chopper : choppers)
+		{
+			SDRC_ChopperDebug.CollectDestinationLines(chopper, positions);
+			//Add an end point
+			vector pos = vector.Zero;
+			pos[0] = SDRC_ELineDrawCommand.END;
+			positions.Insert(pos);
+		}
 		
 		foreach (vector pos : positions)
 		{
 	        Rpc(RpcDo_SyncLineData, pos);
 		}
 		
-		//Add an end point
-		vector pos = vector.Zero;
-		pos[0] = SDRC_ELineDrawCommand.END;
-        Rpc(RpcDo_SyncLineData, pos);
+//        Rpc(RpcDo_SyncLineData, pos);
 	}
 		
 }
