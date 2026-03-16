@@ -1,16 +1,14 @@
 modded class SCR_EditorManagerEntity
 {
 	//Line drawing related
-//	static BaseWorld m_World;
-//	static WorkspaceWidget m_Workspace;
 	private CanvasWidget m_wCanvas;									//Canvas to draw the lines to
-	private TextWidget m_FPSWidget;
 	
 	//Synchronized linedata	
 	ref array<vector> m_lineData = {};
 	ref array<ref CanvasWidgetCommand> drawCommands = {};	//Line drawing commands			
 	
 	const int REFRESH_TIME = 1;	//seconds
+	
 	float timer;
 	int ticktimeOld;
 	
@@ -31,17 +29,17 @@ modded class SCR_EditorManagerEntity
 		
 		if (isOpened)
 		{
-			int ticktime = SDRC_Misc.GetCurrentTickTime();			
+			//int ticktime = SDRC_Misc.GetCurrentTickTime();			
+			int ticktime = System.GetTickCount();
 			timer += ticktime - ticktimeOld;
 			ticktimeOld = ticktime;
 			
-			if (timer < REFRESH_TIME)
+			if (timer < (REFRESH_TIME * 1000))
 			{
 				return isOpened;
 			}
 			
 			AskForInfo();
-			SDRC_Log.Add("[SDRC_EditorManagerEntity:IsOpened] Editor opened.", LogLevel.SPAM);
 			timer = 0;
 		}
 		
@@ -56,14 +54,16 @@ modded class SCR_EditorManagerEntity
 	
 	//------------------------------------------------------------------------------------------------
 	override void EOnFrame(IEntity owner, float timeSlice) //--- Active only when the entity is local (see InitOwner())
-	{
+	{		
 		if (m_wCanvas)
 		{
 			SDRC_LineDrawHelper.CreateDrawCommandsFromData(m_lineData, drawCommands);			
-			if (!drawCommands.IsEmpty())
+			m_wCanvas.SetDrawCommands(drawCommands);
+			
+/*			if (!drawCommands.IsEmpty())
 			{
 				m_wCanvas.SetDrawCommands(drawCommands);
-			}
+			}*/
 		}
 		
 		super.EOnFrame(owner, timeSlice);
@@ -82,64 +82,29 @@ modded class SCR_EditorManagerEntity
     protected void RpcAsk_GiveMeInfo(int playerID)
     {
 		SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:RpcAsk_GiveMeInfo] Asked by: " + playerID, LogLevel.SPAM);	
-
-		string msg = "Count: ";
-		
-		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
-		if (!m_BaseGameMode)
-		{
-			return;
-		}
- 		if (!m_BaseGameMode.chopperFrame)
-		{
-			return;
-		}
-		
-		int count = m_BaseGameMode.chopperFrame.GetChopperCount();		
-		msg = msg + count;
-		
-		SendMessageToPlayer(playerID, msg);
 		SyncLineData(playerID);
     }
 	
 	//------------------------------------------------------------------------------------------------
-    //! Server sends only to the owner of this component's entity
-    [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
-    void RpcDo_ReceivePrivateMessage(string msg)
-    {
-        Print(string.Format("SDRC_SCR_EditorManagerEntity:Private client message: %1", msg));
-    }	
-	
-	//------------------------------------------------------------------------------------------------
-	void SendMessageToPlayer(int playerID, string msg)
-	{
-	    PlayerController pc = GetGame().GetPlayerManager().GetPlayerController(playerID);
-	    if (!pc)
-	        return;
-				
-	    Rpc(RpcDo_ReceivePrivateMessage, msg);
-	}	
-
-	//------------------------------------------------------------------------------------------------
 	/*!	
-	RPL: Clear symbols 
+	RPL: Clear line data
 	*/
     [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
-    protected void RpcDo_ClearLines()
+    protected void RpcDo_ClearLineData()
     {
-		SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:RpcDo_ClearLines] Clearing.. ", LogLevel.SPAM);
-		ClearLines();
+		SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:RpcDo_ClearLineData] Clearing.. ", LogLevel.SPAM);
+		ClearLineData();
     }	
 		
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Clear symbols
+	Clear line data
 	*/
-	void ClearLines()
+	void ClearLineData()
 	{
 		m_lineData.Clear();
-	}
-	
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	RPL: Syncronize line data to client
@@ -153,16 +118,12 @@ modded class SCR_EditorManagerEntity
 
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	[Server] Collect the helicopter data and sync to players.
+	[Server] Collect the helicopter data and sync to player.
 	*/
  	void SyncLineData(int playerID)
-	{
-		SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:SyncLineData] Starting..", LogLevel.NORMAL);	
-		
-/*		//Clear lines on server
-		ClearSymbols();*/
+	{		
 		//Clear lines on client
-		Rpc(RpcDo_ClearLines);
+		Rpc(RpcDo_ClearLineData);
 		
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (!m_BaseGameMode)
@@ -174,19 +135,32 @@ modded class SCR_EditorManagerEntity
 			return;
 		}		
 		
-		array<vector> positions = {};
 		IEntity chopper = m_BaseGameMode.chopperFrame.GetChopperEntity(0);
 		if (!chopper)
 		{
 			return;
 		}
-		
+
+		if (!SDRC_PlayerHelper.IsGMInterfaceVisible())
+		{
+			drawCommands.Clear();
+			return;
+		}
+			
+		SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:SyncLineData] Starting..", LogLevel.NORMAL);	
+
+		array<vector> positions = {};
 		SDRC_ChopperDebug.CollectDestinationLines(chopper, positions);
 		
 		foreach (vector pos : positions)
 		{
 	        Rpc(RpcDo_SyncLineData, pos);
-		}		
+		}
+		
+		//Add an end point
+		vector pos = vector.Zero;
+		pos[0] = SDRC_ELineDrawCommand.END;
+        Rpc(RpcDo_SyncLineData, pos);
 	}
 		
 }

@@ -1,5 +1,11 @@
 //SDRC_LineDrawHelper.c
 
+enum SDRC_ELineDrawCommand
+{
+	SET_COLOR = -1,
+	END = -2,
+}
+
 //------------------------------------------------------------------------------------------------
 class SDRC_LineDrawHelper
 {
@@ -17,8 +23,16 @@ class SDRC_LineDrawHelper
 		vector prevPos = vector.Zero;
 		foreach (vector pos : lineData)
 		{
+			//If an end signal is found, we either end or start a new line.
+			if (pos[0] == SDRC_ELineDrawCommand.END)
+			{
+				color = -1;
+				prevPos = vector.Zero;
+				continue;
+			}
+
 			//Change color
-			if (pos[0] == -1)
+			if (pos[0] == SDRC_ELineDrawCommand.SET_COLOR)
 			{
 				color = pos[1];
 				continue;
@@ -37,11 +51,6 @@ class SDRC_LineDrawHelper
 			//Insert into pool of draw commands
 			drawCommands.Insert(AddLines(drawVertices, color));			
 		}
-		
-/*		if (!drawCommands.IsEmpty())
-		{
-			canvas.SetDrawCommands(drawCommands);
-		}*/
 	}
 	
 	//------------------------------------------------------------------------------------------------

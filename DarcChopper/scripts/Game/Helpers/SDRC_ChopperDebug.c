@@ -25,7 +25,9 @@ class SDRC_ChopperDebug
 		}
 		
 		//Add every nth spline point
-		int nth = 4;
+		int nth = (chopperComp.m_vSplinePoints.Count() - chopperComp.m_iClosestIndex) / 8;
+		nth = Math.ClampInt(nth, 4, 15);
+		
 		int closestIndex = ((int)(chopperComp.m_iClosestIndex / nth)) * nth + 1;
 		int splinePointCount = chopperComp.m_vSplinePoints.Count() - 1;
 		if (closestIndex > splinePointCount)
@@ -39,7 +41,7 @@ class SDRC_ChopperDebug
 		vertices.Insert(SetColor(Color.DARK_GREEN));
 		
 		//Starting point
-		vertices.Insert(chopperComp.m_vSplinePoints[closestIndex]);
+		//vertices.Insert(chopperComp.m_vSplinePoints[closestIndex]);
 		
 		for (int i = closestIndex; i < splinePointCount; i = i + nth)
 		{
@@ -52,8 +54,8 @@ class SDRC_ChopperDebug
 		//Add destinations if any
 		if (!chopperComp.m_vFlyDestinations.IsEmpty())
 		{	
-			int currentColor = Color.DARK_BLUE;
-			vertices.Insert(SetColor(currentColor));
+			int currentColor = -1;//Color.DARK_BLUE;
+			//vertices.Insert(SetColor(currentColor));
 			
 			foreach (SDRC_FlyPathPoint destination : chopperComp.m_vFlyDestinations)
 			{
