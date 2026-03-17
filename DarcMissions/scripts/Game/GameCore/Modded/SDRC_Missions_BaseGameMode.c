@@ -28,7 +28,7 @@ modded class SCR_BaseGameMode
 				resource = Resource.Load("{034174406440412B}Prefabs/Helpers/RPLGMHelper.et");
 				if (!resource.IsValid())
 				{
-					SDRC_Log.Add("[SDRC_Missions_BaseGameMode] Failed to create RPLGMHelper.", LogLevel.ERROR);
+					SDRC_Log.Add("[SDRC_Missions_BaseGameMode] Failed to create SDRC_RplGMEntity.", LogLevel.ERROR);
 					return;
 				}
 				m_SDRC_RplGMEntity = SDRC_RplGMEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));

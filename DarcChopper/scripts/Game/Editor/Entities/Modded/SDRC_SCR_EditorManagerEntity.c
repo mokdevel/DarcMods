@@ -50,24 +50,9 @@ modded class SCR_EditorManagerEntity
 			{
 				return isOpened;
 			}
-			
-/*			SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
-			if (!m_BaseGameMode)
-			{
-				return isOpened;
-			}
-			
-	 		if (!m_BaseGameMode.m_SDRC_RplLineDrawEntity)
-			{
-				return isOpened;
-			}		
 
-			SDRC_RplLineDrawComp m_SDRC_RplLineDrawComp = SDRC_RplLineDrawComp.Cast(m_BaseGameMode.m_SDRC_RplLineDrawEntity.FindComponent(SDRC_RplLineDrawComp));
-						
-			m_SDRC_RplLineDrawComp.AskForInfo();
-*/			
-//			SDRC_RplLineDrawComp rplLineDrawComp = SDRC_RplLineDrawComp.FindLocalInstance();
-			SDRC_RplLineDrawComp rplLineDrawComp = SDRC_RplLineDrawComp.GetInstance();
+//			SDRC_RplPlayerComp pcc = SDRC_RplPlayerComp.FindLocalInstance();
+			SDRC_RplLineDrawComp rplLineDrawComp = SDRC_RplLineDrawComp.FindLocalInstance();
 			if (rplLineDrawComp)
 			{
 				rplLineDrawComp.AskForInfo();
@@ -90,25 +75,13 @@ modded class SCR_EditorManagerEntity
 	{		
 		if (m_wCanvas)
 		{
-/*			SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
-			if (!m_BaseGameMode)
-			{
-				return;
-			}
-	 		if (!m_BaseGameMode.m_SDRC_RplLineDrawEntity)
-			{
-				return;
-			}				
-			
-			SDRC_RplLineDrawComp m_SDRC_RplLineDrawComp = SDRC_RplLineDrawComp.Cast(m_BaseGameMode.m_SDRC_RplLineDrawEntity.FindComponent(SDRC_RplLineDrawComp));
-			SDRC_RplLineDrawComp m_SDRC_RplLineDrawComp = SDRC_RplLineDrawComp.Cast(m_BaseGameMode.m_SDRC_RplLineDrawEntity.FindComponent(SDRC_RplLineDrawComp));
-*/			
 			if (!SDRC_PlayerHelper.IsGMInterfaceVisible())
 			{
 				drawCommands.Clear();
 			}
 			else
 			{
+				
 				SDRC_RplLineDrawComp rplLineDrawComp = SDRC_RplLineDrawComp.GetInstance();
 				if (rplLineDrawComp)
 				{

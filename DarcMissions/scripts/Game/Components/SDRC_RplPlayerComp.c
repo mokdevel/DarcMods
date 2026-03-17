@@ -1,8 +1,10 @@
-//SDRC_RPLPlayerComp.c
+//SDRC_RplPlayerComp.c
 
 //------------------------------------------------------------------------------------------------
 /*!
 RPL component to provide GM map information to clients.
+
+NOTE: This has been added to {}}Prefabs/Characters/Core/DefaultPlayerController.et
 */
 class SDRC_RplPlayerCompClass : ScriptComponentClass { }
 SDRC_RplPlayerCompClass g_RplPlayerCompClass;
@@ -14,20 +16,6 @@ class SDRC_RplPlayerComp : ScriptComponent
 		 
     override void OnPostInit(IEntity owner)
     {
-/*        auto hintEnt = SDRC_RplHintEntity.Cast(owner);
-        if (!hintEnt)
-        {
-            SDRC_Log.Add("[SDRC_RplPlayerComp] Entity not found.", LogLevel.ERROR);
-            return;
-        }
-				
-		BaseRplComponent rplComponent = BaseRplComponent.Cast(hintEnt.FindComponent(BaseRplComponent));
-        if (!rplComponent)
-        {
-            SDRC_Log.Add("[SDRC_RplPlayerComp] RplComponent not found.", LogLevel.ERROR);
-            return;
-        }*/
- 
 		s_Instance = this;				
     }
  
@@ -62,14 +50,14 @@ class SDRC_RplPlayerComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	//! Client requests for information
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
-    protected void RpcAsk_GiveMeInfo(int playerID)
+    protected void RpcAsk_GiveMeInfo(int playerId)
     {
-		SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_GiveMeInfo] Asked by: " + playerID, LogLevel.DEBUG);	
+		SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_GiveMeInfo] Asked by: " + playerId, LogLevel.DEBUG);	
 
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
 		if (gmComp)
 		{
-			gmComp.SyncMapSymbols(playerID);
+			gmComp.SyncMapSymbols(playerId);
 		}
     }
 	

@@ -10,6 +10,7 @@ class SDRC_RplGMEntity : GenericEntity
 {
 	protected static SDRC_RplGMEntity s_Instance;	
 
+	//------------------------------------------------------------------------------------------------
 	override void EOnActivate(IEntity owner)
 	{
 		SetEventMask(EntityEvent.FRAME | EntityEvent.POSTFRAME);

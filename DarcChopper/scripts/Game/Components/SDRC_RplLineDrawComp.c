@@ -1,5 +1,11 @@
+//SDRC_RplLineDrawComp.c
+
+//------------------------------------------------------------------------------------------------
+/*!
+
+*/
 class SDRC_RplLineDrawCompClass : ScriptComponentClass { }
-SDRC_RplLineDrawCompClass g_SDRC_RplLineDrawCompClass;
+SDRC_RplLineDrawCompClass g_RplLineDrawCompClass;
  
 //------------------------------------------------------------------------------------------------
 class SDRC_RplLineDrawComp : ScriptComponent
@@ -24,19 +30,10 @@ class SDRC_RplLineDrawComp : ScriptComponent
             SDRC_Log.Add("[SDRC_RplLineDrawComp] RplComponent not found.", LogLevel.ERROR);
             return;
         }
- 
+
 		s_Instance = this;				
     }
  
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Return instance to component
-	*/
-	static SDRC_RplLineDrawComp GetInstance()
-	{
-		return s_Instance;
-	}
-	
 	//------------------------------------------------------------------------------------------------
 	//! Get instance owned by local player
 	static SDRC_RplLineDrawComp FindLocalInstance()
@@ -52,23 +49,29 @@ class SDRC_RplLineDrawComp : ScriptComponent
 	}		
 	
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	Return instance to component
+	*/
+	static SDRC_RplLineDrawComp GetInstance()
+	{
+		return s_Instance;
+	}
+	
+	//------------------------------------------------------------------------------------------------
  	void AskForInfo()
 	{
-		if (GetGame().GetPlayerController())
-		{
-			int playerID = GetGame().GetPlayerController().GetPlayerId();		
-			SDRC_Log.Add("[SDRC_RplLineDrawComp:AskForInfo] Asking: " + playerID, LogLevel.NORMAL);	
-			Rpc(RpcAsk_GiveMeInfo, playerID);
-		}
+		int playerId = GetGame().GetPlayerController().GetPlayerId();		
+		SDRC_Log.Add("[SDRC_RplLineDrawComp:AskForInfo] Asking: " + playerId, LogLevel.NORMAL);	
+		Rpc(RpcAsk_GiveMeInfo, playerId);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	//! Client requests for information
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
-    protected void RpcAsk_GiveMeInfo(int playerID)
+    protected void RpcAsk_GiveMeInfo(int playerId)
     {
-		SDRC_Log.Add("[SDRC_RplLineDrawComp:RpcAsk_GiveMeInfo] Asked by: " + playerID, LogLevel.NORMAL);	
-		SyncLineData(playerID);
+		SDRC_Log.Add("[SDRC_RplLineDrawComp:RpcAsk_GiveMeInfo] Asked by: " + playerId, LogLevel.NORMAL);	
+		SyncLineData(playerId);
     }
 	
 	//------------------------------------------------------------------------------------------------
@@ -106,7 +109,7 @@ class SDRC_RplLineDrawComp : ScriptComponent
 	/*!	
 	[Server] Collect the helicopter data and sync to player.
 	*/
- 	void SyncLineData(int playerID)
+ 	void SyncLineData(int playerId)
 	{		
 		//Clear lines on client
 		Rpc(RpcDo_ClearLineData);

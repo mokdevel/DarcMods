@@ -1,6 +1,8 @@
 //------------------------------------------------------------------------------------------------
 /*!
 This is the line draw helper entity class.
+
+NOTE: This has been added to {}}Prefabs/Characters/Core/DefaultPlayerController.et
 */
 
 //------------------------------------------------------------------------------------------------
