@@ -40,7 +40,7 @@ When spawned, helicopter will check it's altitude to make sure it's above ``Fly 
 A flight path is assigned to the helicopter and it will start to follow it. The flight path is shown with green lines on screen and once reaching the end, a new flight path is created. The flight path will be set between ``Fly Height Low`` and ``Fly Height High`` if the location is on ground or too high up. 
 
 ## Lines: Green and Blue
-You will see green and blue lines on screen when the helicopter is flying. 
+You will see lines of various colors on screen when the helicopter is flying. These will show details of the flight path, but is not exactly what the server sees. The less you have points to follow, the more details the path will show. This is done runtime, so you will see the lines slightly changing their curves while the chopper is flying.
 
 * Green: Shows the flight path for the helicopter. This is a spline that is followed while flying. This shows were we're generally going to end up.
 * Blue: If you've set waypoints for the helicopter, blue straight lines will show the future route. When the helicopter reaches the end of a green line, a check for waypoints (blue lines) is made. If waypoints are available, a new route is created via them and you will see the blue straight lines changing to a green flight path.
@@ -48,6 +48,8 @@ You will see green and blue lines on screen when the helicopter is flying.
 * Red: Location to attack with rockets. This is more like a bombing run where the target location is shot with rockets regardless of if there are enemies or not.
 
 NOTE: The lines are drawn on a canvas so they will be on top of the screen items. This is something work on and improve.
+
+This is WIP and not optimized at all. I'm not sure what happens if you have 20 choppers flying and all their data is synced while drawing lines on screen.
 
 <img src="../pics/chopperlines.jpg" width=30% height=30%>
 
