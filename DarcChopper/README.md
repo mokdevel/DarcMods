@@ -25,14 +25,14 @@ There are a few public functions that you can use. For flying to destination(s),
 You can spawn choppers as a GM and they will start to fly around the world randomly. You can control them with waypoints.
 
 ## Entity browser
-The helicopters piloted by AIs can be found by filtering with DarcChopper. There are variants ready made for faction US, USSR and FIA. Drag and drop in to the world, use ALT-key to change altitude. Change rotation with left-shift.
+The helicopters piloted by AIs can be found by filtering with DarcChopper. There are variants ready made for faction US, USSR and FIA. Drag and drop in to the world, use ``key: ALT`` to change altitude. Change rotation with ``key: LEFT SHIFT``.
 
 <img src="../pics/chopperentitybrowser.jpg" width=30% height=30%>
 
 NOTE: You can not set the helicopter on ground and let it lift off and start to fly. This is by design.
 
 ## First flight
-When spawned, helicopter will check it's altitude to make sure it's above ``Fly Height Low``. If not, the helicopter will be moved and this may look like an ugly jump. Helicopter will start to fly to the direction where the nose is pointing - the yellow arrow in the image.
+When spawned, helicopter will check it's altitude to make sure it's above ``Fly Height Low``. If not, the helicopter will be moved and this may look like an ugly jump. Helicopter will start to fly to the direction where the nose is pointing - the yellow arrow in the image. You can use ``key: ALT`` to change altitude and rotate with ``key: LEFT SHIFT``.
 
 <img src="../pics/chopperspawn.jpg" width=30% height=30%>
 
