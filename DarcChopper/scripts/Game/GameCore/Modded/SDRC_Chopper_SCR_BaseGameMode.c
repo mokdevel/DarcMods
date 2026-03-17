@@ -3,8 +3,8 @@
 modded class SCR_BaseGameMode 
 {	
 	ref SDRC_ChopperFrame chopperFrame;
-//	private SDRC_SCR_EditorManagerEntity m_SDRC_SCR_EditorManagerEntity;
-	private SCR_EditorManagerEntity m_SCR_EditorManagerEntity;
+	SDRC_RplLineDrawEntity m_SDRC_RplLineDrawEntity;
+	SDRC_RplLineDrawComp m_SDRC_RplLineDrawComp;
 	
 	//------------------------------------------------------------------------------------------------
     override void OnGameStart()
@@ -22,24 +22,46 @@ modded class SCR_BaseGameMode
 			}
 					
 			if (IsMaster())
-			{
+			{				
+				//Initialize the SDRC_RplLineDrawEntity
+/*				SDRC_Log.Add("[SDRC_Chopper_BaseGameMode] Creating SDRC_RplLineDrawEntity", LogLevel.NORMAL);        
+				m_SDRC_RplLineDrawEntity = SDRC_RplLineDrawEntity.Cast(GetGame().SpawnEntity(SDRC_RplLineDrawEntity, GetGame().GetWorld(), null));				
+				SDRC_SpawnHelper.SetPersistence(m_SDRC_RplLineDrawEntity, false);
+				
+				SDRC_RplLineDrawComp m_SDRC_RplLineDrawComp = SDRC_RplLineDrawComp.Cast(m_SDRC_RplLineDrawEntity.FindComponent(SDRC_RplLineDrawComp));
+				if (!m_SDRC_RplLineDrawComp)
+				{
+					SDRC_Log.Add("[SDRC_Chopper_BaseGameMode] SDRC_RplLineDrawComp not found.", LogLevel.ERROR);
+				}*/
+
+				//Initialize the SDRC_RplLineDrawEntity
+				Resource resource;				
+				SDRC_Log.Add("[SDRC_Missions_BaseGameMode] Creating SDRC_RplLineDrawEntity", LogLevel.NORMAL);
+				resource = Resource.Load("{CEDB121F1881E0E3}Prefabs/Helpers/RPLLineDrawHelper.et");
+				if (!resource.IsValid())
+				{
+					SDRC_Log.Add("[SDRC_Missions_BaseGameMode] Failed to create SDRC_RplLineDrawEntity.", LogLevel.ERROR);
+					return;
+				}
+				m_SDRC_RplLineDrawEntity = SDRC_RplLineDrawEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));
+				SDRC_SpawnHelper.SetPersistence(m_SDRC_RplLineDrawEntity, false);				
+								
 				//Initialize the SDRC_EditorManager
-				Resource resource;
+/*				Resource resource;
 				SDRC_Log.Add("[SDRC_Chopper_BaseGameMode] Creating SDRC_EditorManager", LogLevel.NORMAL);
-//				resource = Resource.Load("{B3E5CFE4F7DF6361}Prefabs/Editor/SDRC_EditorManager.et");
-				resource = Resource.Load("{788933FFDC706A68}Prefabs/Editor/EditorManager.et");
+				resource = Resource.Load("{CEDB121F1881E0E3}Prefabs/Helpers/RPLLineDrawHelper.et");
 				if (!resource.IsValid())
 				{
 					SDRC_Log.Add("[SDRC_Chopper_BaseGameMode] Failed to create EditorManager.", LogLevel.ERROR);
 					return;
-				}
+				}				
 				m_SCR_EditorManagerEntity = SCR_EditorManagerEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));
 				if (!m_SCR_EditorManagerEntity)
 				{
 					SDRC_Log.Add("[SDRC_Chopper_BaseGameMode] Failed to create EditorManager.", LogLevel.ERROR);
 					return;
 				}
-				SDRC_SpawnHelper.SetPersistence(m_SCR_EditorManagerEntity, false);
+				SDRC_SpawnHelper.SetPersistence(m_SCR_EditorManagerEntity, false);*/
 				
 				SDRC_Log.Add("[SDRC_Chopper_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
 				GetGame().GetCallqueue().CallLater(StartChopperFrame, 5000, false);	

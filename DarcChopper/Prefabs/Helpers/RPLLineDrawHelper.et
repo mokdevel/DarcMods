@@ -1,0 +1,12 @@
+SDRC_RplLineDrawEntity {
+ ID "68E2ECA57C910C20"
+ components {
+  SDRC_RplLineDrawComp "{68E2FA4BEECECD75}" {
+  }
+  RplComponent "{68E2ECA57C910FDA}" {
+   Streamable Disabled
+  }
+  Hierarchy "{68E2ECA57C910FDF}" {
+  }
+ }
+}

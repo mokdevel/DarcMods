@@ -10,13 +10,19 @@ modded class SCR_EditorManagerEntity
 	private CanvasWidget m_wCanvas;									//Canvas to draw the lines to
 	
 	//Synchronized linedata	
-	ref array<vector> m_lineData = {};
 	ref array<ref CanvasWidgetCommand> drawCommands = {};	//Line drawing commands			
 	
 	const int REFRESH_TIME = 1;	//seconds
 	
 	float timer;
 	int ticktimeOld;
+	
+	//------------------------------------------------------------------------------------------------
+	override void EOnInit(IEntity owner)	
+	{
+		//Maybe find m_BaseGameMode and m_SDRC_RplLineDrawEntity here for cleaner code
+		super.EOnInit(owner);
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	override bool IsOpened()
@@ -45,7 +51,28 @@ modded class SCR_EditorManagerEntity
 				return isOpened;
 			}
 			
-			AskForInfo();
+/*			SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+			if (!m_BaseGameMode)
+			{
+				return isOpened;
+			}
+			
+	 		if (!m_BaseGameMode.m_SDRC_RplLineDrawEntity)
+			{
+				return isOpened;
+			}		
+
+			SDRC_RplLineDrawComp m_SDRC_RplLineDrawComp = SDRC_RplLineDrawComp.Cast(m_BaseGameMode.m_SDRC_RplLineDrawEntity.FindComponent(SDRC_RplLineDrawComp));
+						
+			m_SDRC_RplLineDrawComp.AskForInfo();
+*/			
+//			SDRC_RplLineDrawComp rplLineDrawComp = SDRC_RplLineDrawComp.FindLocalInstance();
+			SDRC_RplLineDrawComp rplLineDrawComp = SDRC_RplLineDrawComp.GetInstance();
+			if (rplLineDrawComp)
+			{
+				rplLineDrawComp.AskForInfo();
+			}
+			
 			timer = 0;
 		}
 		
@@ -63,112 +90,35 @@ modded class SCR_EditorManagerEntity
 	{		
 		if (m_wCanvas)
 		{
-			SDRC_LineDrawHelper.CreateDrawCommandsFromData(m_lineData, drawCommands);			
+/*			SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+			if (!m_BaseGameMode)
+			{
+				return;
+			}
+	 		if (!m_BaseGameMode.m_SDRC_RplLineDrawEntity)
+			{
+				return;
+			}				
+			
+			SDRC_RplLineDrawComp m_SDRC_RplLineDrawComp = SDRC_RplLineDrawComp.Cast(m_BaseGameMode.m_SDRC_RplLineDrawEntity.FindComponent(SDRC_RplLineDrawComp));
+			SDRC_RplLineDrawComp m_SDRC_RplLineDrawComp = SDRC_RplLineDrawComp.Cast(m_BaseGameMode.m_SDRC_RplLineDrawEntity.FindComponent(SDRC_RplLineDrawComp));
+*/			
+			if (!SDRC_PlayerHelper.IsGMInterfaceVisible())
+			{
+				drawCommands.Clear();
+			}
+			else
+			{
+				SDRC_RplLineDrawComp rplLineDrawComp = SDRC_RplLineDrawComp.GetInstance();
+				if (rplLineDrawComp)
+				{
+					SDRC_LineDrawHelper.CreateDrawCommandsFromData(rplLineDrawComp.m_lineData, drawCommands);
+				}
+			}
+			
 			m_wCanvas.SetDrawCommands(drawCommands);
 		}
 		
 		super.EOnFrame(owner, timeSlice);
 	}	
-	
-	//------------------------------------------------------------------------------------------------
- 	void AskForInfo()
-	{
-		if (GetGame().GetPlayerController())
-		{
-			int playerID = GetGame().GetPlayerController().GetPlayerId();		
-			SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:AskForInfo] Asking: " + playerID, LogLevel.NORMAL);	
-			Rpc(RpcAsk_GiveMeInfo, playerID);
-		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	//! Client requests for information
-	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
-    protected void RpcAsk_GiveMeInfo(int playerID)
-    {
-		SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:RpcAsk_GiveMeInfo] Asked by: " + playerID, LogLevel.NORMAL);	
-		SyncLineData(playerID);
-    }
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	RPL: Clear line data
-	*/
-    [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
-    protected void RpcDo_ClearLineData()
-    {
-		SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:RpcDo_ClearLineData] Clearing.. ", LogLevel.SPAM);
-		ClearLineData();
-    }	
-		
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Clear line data
-	*/
-	void ClearLineData()
-	{
-		m_lineData.Clear();
-	}	
-		
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	RPL: Syncronize line data to client
-	*/
-    [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
-    protected void RpcDo_SyncLineData(vector pt)
-    {
-		SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:RpcDo_SyncLineData] Adding: " + pt, LogLevel.NORMAL);	
-		m_lineData.Insert(pt);
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	[Server] Collect the helicopter data and sync to player.
-	*/
- 	void SyncLineData(int playerID)
-	{		
-		//Clear lines on client
-		Rpc(RpcDo_ClearLineData);
-		
-		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
-		if (!m_BaseGameMode)
-		{
-			return;
-		}
- 		if (!m_BaseGameMode.chopperFrame)
-		{
-			return;
-		}		
-		if (!SDRC_PlayerHelper.IsGMInterfaceVisible())
-		{
-			drawCommands.Clear();
-			return;
-		}
-		
-		array<IEntity> choppers = {};
-		//IEntity chopper = m_BaseGameMode.chopperFrame.GetChopperEntity(0);
-		m_BaseGameMode.chopperFrame.GetAllChopperEntity(choppers);
-		//if (!chopper)
-		if (choppers.IsEmpty())
-		{
-			return;
-		}
-
-		SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:SyncLineData] Starting..", LogLevel.NORMAL);	
-
-		array<vector> positions = {};
-		
-		foreach (IEntity chopper : choppers)
-		{
-			SDRC_ChopperDebug.CollectDestinationLines(chopper, positions);
-		}
-		
-		foreach (vector pos : positions)
-		{
-	        Rpc(RpcDo_SyncLineData, pos);
-		}
-		
-//        Rpc(RpcDo_SyncLineData, pos);
-	}
-		
 }
