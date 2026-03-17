@@ -62,7 +62,7 @@ class SDRC_ChopperComp : ScriptComponent
 	float m_fSpeedMaxOrig;
 	[Attribute(category: "Chopper", defvalue: "40.0", desc: "Minimum fly height (from ground level)", params: "5 100.0 1")]	
 	float m_fFlyHeightLow;			//Flight height low
-	[Attribute(category: "Chopper", defvalue: "80.0", desc: "Maximum fly height (from ground level)", params: "5 100.0 1")]	
+	[Attribute(category: "Chopper", defvalue: "80.0", desc: "Maximum fly height (from ground level)", params: "5 600.0 1")]	
 	float m_fFlyHeightHigh;			//Flight height high
 	[Attribute(category: "Chopper", defvalue: "300", desc: "Minimum distance for waypoint", params: "0.1 1000.0 0.1")]	
 	float m_fDistanceLow;			//Distance for waypoint min
@@ -965,7 +965,7 @@ class SDRC_ChopperComp : ScriptComponent
 			SetTimeInState(0)
 		}
 		
-		SDRC_Log.Add("[SDRC_ChopperComp:SetState] State: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_ChopperComp:SetState] State: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.SPAM);
 	}
 	
 	//------------------------------------------------------------------------------------------------	
@@ -1209,7 +1209,7 @@ class SDRC_ChopperComp : ScriptComponent
 			vector p2 = flyDestination.pt;
 			float heliAngle = SDRC_Math.GetRadiansBetweenThreePointsXZ(p0, p1, p2) * Math.RAD2DEG;
 
-			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Distance: " + distance + " - Angle: " + heliAngle, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Distance: " + distance + " - Angle: " + heliAngle, LogLevel.SPAM);
 			
 			//Is the angle too steep? Re-route.
 			if ( (Math.AbsFloat(heliAngle) < WP_ANGLE) && (distance > 200) )
@@ -1329,7 +1329,7 @@ class SDRC_ChopperComp : ScriptComponent
 				m_vFlyDestinations.RemoveOrdered(0);
 			}
 		}		
-		SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Destinations left: " + m_vFlyDestinations.Count(), LogLevel.DEBUG);		
+		SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Destinations left: " + m_vFlyDestinations.Count(), LogLevel.SPAM);		
 	}		
 
 	//------------------------------------------------------------------------------------------------	

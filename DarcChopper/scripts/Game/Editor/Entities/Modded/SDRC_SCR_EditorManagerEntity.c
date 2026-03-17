@@ -1,3 +1,9 @@
+//modded class SCR_EditorManagerEntity
+/*class SDRC_SCR_EditorManagerEntityClass : SCR_EditorManagerEntityClass
+{
+}
+*/
+//class SDRC_SCR_EditorManagerEntity : SCR_EditorManagerEntity
 modded class SCR_EditorManagerEntity
 {
 	//Line drawing related
@@ -67,8 +73,12 @@ modded class SCR_EditorManagerEntity
 	//------------------------------------------------------------------------------------------------
  	void AskForInfo()
 	{
-		int playerId = GetGame().GetPlayerController().GetPlayerId();		
-		Rpc(RpcAsk_GiveMeInfo, playerId);
+		if (GetGame().GetPlayerController())
+		{
+			int playerID = GetGame().GetPlayerController().GetPlayerId();		
+			SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:AskForInfo] Asking: " + playerID, LogLevel.NORMAL);	
+			Rpc(RpcAsk_GiveMeInfo, playerID);
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -76,7 +86,7 @@ modded class SCR_EditorManagerEntity
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
     protected void RpcAsk_GiveMeInfo(int playerID)
     {
-		SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:RpcAsk_GiveMeInfo] Asked by: " + playerID, LogLevel.SPAM);	
+		SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:RpcAsk_GiveMeInfo] Asked by: " + playerID, LogLevel.NORMAL);	
 		SyncLineData(playerID);
     }
 	
@@ -151,10 +161,6 @@ modded class SCR_EditorManagerEntity
 		foreach (IEntity chopper : choppers)
 		{
 			SDRC_ChopperDebug.CollectDestinationLines(chopper, positions);
-			//Add an end point
-			vector pos = vector.Zero;
-			pos[0] = SDRC_ELineDrawCommand.END;
-			positions.Insert(pos);
 		}
 		
 		foreach (vector pos : positions)

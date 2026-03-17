@@ -3,6 +3,8 @@
 modded class SCR_BaseGameMode 
 {	
 	ref SDRC_ChopperFrame chopperFrame;
+//	private SDRC_SCR_EditorManagerEntity m_SDRC_SCR_EditorManagerEntity;
+	private SCR_EditorManagerEntity m_SCR_EditorManagerEntity;
 	
 	//------------------------------------------------------------------------------------------------
     override void OnGameStart()
@@ -21,6 +23,24 @@ modded class SCR_BaseGameMode
 					
 			if (IsMaster())
 			{
+				//Initialize the SDRC_EditorManager
+				Resource resource;
+				SDRC_Log.Add("[SDRC_Chopper_BaseGameMode] Creating SDRC_EditorManager", LogLevel.NORMAL);
+//				resource = Resource.Load("{B3E5CFE4F7DF6361}Prefabs/Editor/SDRC_EditorManager.et");
+				resource = Resource.Load("{788933FFDC706A68}Prefabs/Editor/EditorManager.et");
+				if (!resource.IsValid())
+				{
+					SDRC_Log.Add("[SDRC_Chopper_BaseGameMode] Failed to create EditorManager.", LogLevel.ERROR);
+					return;
+				}
+				m_SCR_EditorManagerEntity = SCR_EditorManagerEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));
+				if (!m_SCR_EditorManagerEntity)
+				{
+					SDRC_Log.Add("[SDRC_Chopper_BaseGameMode] Failed to create EditorManager.", LogLevel.ERROR);
+					return;
+				}
+				SDRC_SpawnHelper.SetPersistence(m_SCR_EditorManagerEntity, false);
+				
 				SDRC_Log.Add("[SDRC_Chopper_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
 				GetGame().GetCallqueue().CallLater(StartChopperFrame, 5000, false);	
 			}

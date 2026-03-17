@@ -104,7 +104,7 @@ class SDRC_ChopperDebug
 					continue;
 				}
 				
-				//If needed m change color
+				//If needed, change the color
 				if (color != currentColor)
 				{
 					currentColor = color;
@@ -114,7 +114,11 @@ class SDRC_ChopperDebug
 				vertices.Insert(pos);
 			}		
 		}		
-				
+		
+		//Add an end point
+		vector pos = vector.Zero;
+		pos[0] = SDRC_ELineDrawCommand.END;
+		vertices.Insert(pos);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -132,7 +136,7 @@ class SDRC_ChopperDebug
 	/*!
 	Draws lines to show where chopper is going
 	*/
-	static void DrawDestinationLines(IEntity owner)
+/*	static void DrawDestinationLines(IEntity owner)
 	{
 		array<vector> positions = {};
 		array<float> drawVertices = {};
@@ -176,7 +180,7 @@ class SDRC_ChopperDebug
 			return;
 		}*/
 
-		CollectDestinationLines(owner, positions);
+/*		CollectDestinationLines(owner, positions);
 		
 		// ----------------		
 		// Do the drawing on canvas
@@ -212,13 +216,13 @@ class SDRC_ChopperDebug
 		{
 			chopperComp.m_wCanvas.SetDrawCommands(chopperComp.m_aDrawCommands);			
 		}		
-	}		
+	}		*/
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Calculate the vertice screen coords and add to vertices list
 	*/
-	static void AddVertice(vector pos, out array<float> vertices)
+/*	static void AddVertice(vector pos, out array<float> vertices)
 	{
 		//Calculate screen position of point
 		vector x0 = m_Workspace.ProjWorldToScreenNative(pos, m_World);
@@ -227,13 +231,13 @@ class SDRC_ChopperDebug
 			vertices.Insert(x0[0]);
 			vertices.Insert(x0[1]);
 		}
-	}
+	}*/
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Add vertices to LineDrawCommand and return it
 	*/
-	static LineDrawCommand AddLines(out array<float> vertices, int color = Color.DARK_GREEN)
+/*	static LineDrawCommand AddLines(out array<float> vertices, int color = Color.DARK_GREEN)
 	{		
 		//Create draw command
 		ref LineDrawCommand line = new LineDrawCommand();	
@@ -244,7 +248,7 @@ class SDRC_ChopperDebug
 		line.m_Vertices.Copy(vertices);
 		vertices.Clear();
 		return line;
-	}
+	}*/
 	
 	//------------------------------------------------------------------------------------------------	
 	// Debug shapes
