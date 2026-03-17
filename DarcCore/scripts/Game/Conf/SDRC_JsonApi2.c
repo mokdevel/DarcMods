@@ -44,7 +44,14 @@ class SDRC_JsonApi2 : JsonApiStruct
 			C.jsonVersion = jsonVersion;
 			C.SetDefaults();
 			
+			if (GetGame().IsPlatformGameConsole())
+			{
+				//Do NOT save the files but use the data in memory. This will NOT save any configs on filesystem.
+				return true;			
+			}
+			
 			Save(C, SDRC_Config.Cast(C));
+			
 			loadContext = LoadConfig(false);
 //			return true;
 		}

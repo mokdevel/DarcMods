@@ -476,6 +476,14 @@ sealed class SDRC_Misc
 		gameMode.PauseGame(true, SCR_EPauseReason.MENU);		
 	}
 			
+	//----------------------------------------------------------------------------------------------
+	static string GetPlatformName()
+	{		
+		//GetGame().IsPlatformGameConsole())
+		EPlatform platform = System.GetPlatform();
+		return SCR_Enum.GetEnumName(EPlatform, platform);
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if a class is available. This can be used to check if a mod has been loaded by checking a class
