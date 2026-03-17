@@ -51,7 +51,6 @@ modded class SCR_EditorManagerEntity
 				return isOpened;
 			}
 
-//			SDRC_RplPlayerComp pcc = SDRC_RplPlayerComp.FindLocalInstance();
 			SDRC_RplLineDrawComp rplLineDrawComp = SDRC_RplLineDrawComp.FindLocalInstance();
 			if (rplLineDrawComp)
 			{
@@ -80,13 +79,12 @@ modded class SCR_EditorManagerEntity
 				drawCommands.Clear();
 			}
 			else
-			{
-				
-				SDRC_RplLineDrawComp rplLineDrawComp = SDRC_RplLineDrawComp.GetInstance();
+			{				
+				SDRC_RplLineDrawComp rplLineDrawComp = SDRC_RplLineDrawComp.FindLocalInstance();
 				if (rplLineDrawComp)
 				{
 					SDRC_LineDrawHelper.CreateDrawCommandsFromData(rplLineDrawComp.m_lineData, drawCommands);
-				}
+				}								
 			}
 			
 			m_wCanvas.SetDrawCommands(drawCommands);

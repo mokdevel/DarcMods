@@ -61,7 +61,7 @@ class SDRC_RplLineDrawComp : ScriptComponent
  	void AskForInfo()
 	{
 		int playerId = GetGame().GetPlayerController().GetPlayerId();		
-		SDRC_Log.Add("[SDRC_RplLineDrawComp:AskForInfo] Asking: " + playerId, LogLevel.NORMAL);	
+		//SDRC_Log.Add("[SDRC_RplLineDrawComp:AskForInfo] Asking: " + playerId, LogLevel.NORMAL);	
 		Rpc(RpcAsk_GiveMeInfo, playerId);
 	}
 	
@@ -70,7 +70,7 @@ class SDRC_RplLineDrawComp : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
     protected void RpcAsk_GiveMeInfo(int playerId)
     {
-		SDRC_Log.Add("[SDRC_RplLineDrawComp:RpcAsk_GiveMeInfo] Asked by: " + playerId, LogLevel.NORMAL);	
+		//SDRC_Log.Add("[SDRC_RplLineDrawComp:RpcAsk_GiveMeInfo] Asked by: " + playerId, LogLevel.NORMAL);	
 		SyncLineData(playerId);
     }
 	
@@ -81,7 +81,7 @@ class SDRC_RplLineDrawComp : ScriptComponent
     [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
     protected void RpcDo_ClearLineData()
     {
-		SDRC_Log.Add("[SDRC_RplLineDrawComp:RpcDo_ClearLineData] Clearing.. ", LogLevel.SPAM);
+		//SDRC_Log.Add("[SDRC_RplLineDrawComp:RpcDo_ClearLineData] Clearing.. ", LogLevel.SPAM);
 		ClearLineData();
     }	
 		
@@ -101,7 +101,7 @@ class SDRC_RplLineDrawComp : ScriptComponent
     [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
     protected void RpcDo_SyncLineData(vector pt)
     {
-		SDRC_Log.Add("[SDRC_RplLineDrawComp:RpcDo_SyncLineData] Adding: " + pt, LogLevel.NORMAL);	
+		//SDRC_Log.Add("[SDRC_RplLineDrawComp:RpcDo_SyncLineData] Adding: " + pt, LogLevel.NORMAL);	
 		m_lineData.Insert(pt);
 	}
 
@@ -133,7 +133,7 @@ class SDRC_RplLineDrawComp : ScriptComponent
 			return;
 		}
 
-		SDRC_Log.Add("[SDRC_RplLineDrawComp:SyncLineData] Starting..", LogLevel.NORMAL);	
+		//SDRC_Log.Add("[SDRC_RplLineDrawComp:SyncLineData] Starting..", LogLevel.NORMAL);	
 
 		array<vector> positions = {};
 		
