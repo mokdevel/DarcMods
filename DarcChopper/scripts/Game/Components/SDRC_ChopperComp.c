@@ -39,7 +39,6 @@ class SDRC_ChopperComp : ScriptComponent
 	private SDRC_ChopperComp s_Instance;	
 	ref array<vector> m_vSplinePoints = new array<vector>();
 	private VehicleHelicopterSimulation m_Helicopter_s;
-//	protected RplComponent m_RplComp;
 		
 	//Parameters accessible helicopter parameters
 	[Attribute(category: "Chopper", defvalue: "1", desc: "Autostart chopper")]	
@@ -108,6 +107,9 @@ class SDRC_ChopperComp : ScriptComponent
 	ref array<ref SDRC_FlyPathPoint> m_vFlightPoints = {};
 	[Attribute("", UIWidgets.Object, "Destinations")]	
 	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations;	//Requested destinations
+	//Debug stuff	
+	[Attribute(defvalue: "0", desc: "Vehicle does not need pilots")]	
+	bool m_bUnpiloted;
 	//Debug stuff	
 	[Attribute(defvalue: "0", desc: "Show debugging information")]	
 	bool m_bShowDebug;
@@ -214,8 +216,8 @@ class SDRC_ChopperComp : ScriptComponent
 	
 	//Debug items
 	string m_sDid;								//Id for debug items
-	ref array<ref CanvasWidgetCommand> m_aDrawCommands = {};		//Line drawing commands
-	ref CanvasWidget m_wCanvas;					//Canvas to draw the lines to
+	//ref array<ref CanvasWidgetCommand> m_aDrawCommands = {};		//Line drawing commands
+	//ref CanvasWidget m_wCanvas;					//Canvas to draw the lines to
 
 	//Landing related
 	private bool m_bIsLanding;					//If true, landing sequence has started
