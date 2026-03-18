@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{8ED650434968BC89}Configs/Editor/PlaceableEntities/DarcChopper_Entities.conf"
+ Name "{3A9124B8692C3F39}Configs/Editor/PlaceableEntities/Systems/Systems.conf"
  Configurations {
   CONFResourceClass PC {
   }
