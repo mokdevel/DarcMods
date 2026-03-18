@@ -36,7 +36,7 @@
 		private const int SDRC_PLAYER_MIN_DISTANCE = 100;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 0;//10;
+		private const int SDRC_MISSION_COUNT_STATIC = 3;//10;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -177,7 +177,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-//			enemyFactions = {"USSR"};
+			enemyFactions = {"USSR"};
 //			enemyFactions = {"US"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION"};
@@ -194,7 +194,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			enemyFactions = {"USAF_USMC", "RHS_RF"};
 //			enemyFactions = {"RHS_ION"};
 //			enemyFactions = {"MEI"};
-			enemyFactions = {"PLASTICBANDIT"};
+//			enemyFactions = {"PLASTICBANDIT"};
 //			enemyFactions = {"Takistan"};
 		
 			missionLimit = {
