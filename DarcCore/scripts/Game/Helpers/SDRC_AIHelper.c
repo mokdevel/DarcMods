@@ -493,6 +493,18 @@ sealed class SDRC_AIHelper
 		return group;
 	}	
 	
+	/*
+	IEntitySource groupMemberSource;
+	ResourceName res = "{5B08C42EA0661A20}Prefabs/Groups/OPFOR/KLMK/Group_USSR_LightFireTeam_KLMK.et";
+	Resource resource = Resource.Load(res);
+	groupMemberSource = SCR_BaseContainerTools.FindEntitySource(resource);
+	Print("Entity source: " + groupMemberSource);
+	
+	array<ResourceName> groupPrefabs = new array<ResourceName>;
+	array<vector> groupOffsets = new array<vector>;
+	int groupSize = SCR_AIGroupClass.GetMembers(groupMemberSource, groupPrefabs, groupOffsets);
+	Print("Size: " + groupSize);	
+	*/
 
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -513,8 +525,12 @@ sealed class SDRC_AIHelper
 	*/
 	static int GroupGetEntitySourceMembers(ResourceName groupName, out array<ResourceName> groupPrefabs)
 	{
-		IEntitySource entitySource = GroupGetEntitySource(groupName);
-		
+//		IEntitySource entitySource = GroupGetEntitySource(groupName);
+
+		Resource resource = Resource.Load(groupName);    
+		IEntitySource entitySource = null;
+		entitySource = SCR_BaseContainerTools.FindEntitySource(resource);
+				
 		int count = 0;
 		
 		if (entitySource)
@@ -523,6 +539,7 @@ sealed class SDRC_AIHelper
 //			SCR_AIGroup group = SDRC_AIHelper.GroupCreate("US", pos, groupName);
 			
 		    array<vector> groupOffsets = {}; //not needed
+			GetMembersEx(entitySource, groupPrefabs, groupOffsets);
 		    SCR_AIGroupClass.GetMembers(entitySource, groupPrefabs, groupOffsets);
 		    count = groupPrefabs.Count();
 			
@@ -531,7 +548,32 @@ sealed class SDRC_AIHelper
 		
 		return count;
 	}
+
+	static int GetMembersEx(IEntitySource entitySource, out array<ResourceName> outPrefabs, out array<vector> outOffsets)
+	{
+		//--- Not a group
+		if (!entitySource)
+		{
+			return false;
+		}
+
+		string kok = entitySource.GetClassName();
+		Print("kkk" + kok);
+		
+		if (!entitySource.GetClassName())
+		{
+			return false;
+		}
+				
+		if (!entitySource.GetClassName().ToType().IsInherited(SCR_AIGroup))
+		{
+			return false;
+		}
+		
+		return 0;
+	}
 	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	If AI prefab is Randomized, we need to change these to proper AI characters

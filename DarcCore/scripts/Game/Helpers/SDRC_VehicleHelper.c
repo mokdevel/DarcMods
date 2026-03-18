@@ -339,6 +339,11 @@ class SDRC_VehicleHelper
 	{
 		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
 		
+		if (!scr_compartmentManager)
+		{
+			return 0;
+		}		
+		
 		array<IEntity> occupants = {};
 		scr_compartmentManager.GetOccupantsOfType(occupants, ECompartmentType.PILOT);
 		
@@ -365,6 +370,11 @@ class SDRC_VehicleHelper
 		{			
 			SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
 			
+			if (!scr_compartmentManager)
+			{
+				return;
+			}
+			
 			array<IEntity> agents = {};
 			scr_compartmentManager.GetOccupants(agents);
 			
@@ -373,25 +383,6 @@ class SDRC_VehicleHelper
 			foreach (IEntity agent : agents)
 			{
 				AIGroup group = SDRC_AIHelper.GetAIGroup(agent);
-				
-/*				AIGroup group;
-				SCR_ChimeraCharacter chimeraChar = SCR_ChimeraCharacter.Cast(agent);
-				if (!chimeraChar)
-				{
-					continue;
-				}
-				AIControlComponent aicc = chimeraChar.GetAIControlComponent();
-				if (!aicc)
-				{
-					continue;
-				}
-				AIAgent aiAgent = aicc.GetControlAIAgent();
-				if (!aiAgent)
-				{
-					continue;
-				}
-				
-				group = aiAgent.GetParentGroup();*/
 				
 				if (group != null)
 				{
