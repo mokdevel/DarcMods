@@ -83,12 +83,18 @@ class SDRC_Core
 		SDRC_Log.Add("[SDRC_Core] -------------------------------------", LogLevel.NORMAL);
 
 		GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);
-		
-		//Initialize LootHelper
-		SDRC_LootHelper.Setup();
-		
-		//Initialize AmmoHelper
-		SDRC_AmmoHelper.Setup();
+
+		//Limit where Loot and Ammo helper is needed
+		if (    SDRC_Misc.IsAddonLoaded("$DarcMissions:") || SDRC_Misc.IsAddonLoaded("$DarcMissionsDev:") 
+		     || SDRC_Misc.IsAddonLoaded("$DarcSpawner:") || SDRC_Misc.IsAddonLoaded("$DarcSpawnerDev:") 
+		   )
+		{
+			//Initialize LootHelper
+			SDRC_LootHelper.Setup();
+			
+			//Initialize AmmoHelper
+			SDRC_AmmoHelper.Setup();
+		}
 		
 		//Initialize EnemyHelper
 		SDRC_EnemyHelper.Setup(m_Config.fallbackEnemyFaction);

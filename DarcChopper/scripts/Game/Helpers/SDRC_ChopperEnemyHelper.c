@@ -78,6 +78,11 @@ class SDRC_ChopperEnemyHelper
 		//Enemy stuff		
 		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(owner.FindComponent(SCR_BaseCompartmentManagerComponent));
 		
+		if (!scr_compartmentManager)
+		{
+			return vector.Zero;
+		}
+		
 		array<IEntity> occupants = {};
 		scr_compartmentManager.GetOccupants(occupants);
 

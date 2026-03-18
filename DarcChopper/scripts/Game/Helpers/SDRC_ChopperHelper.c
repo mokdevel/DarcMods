@@ -70,7 +70,19 @@ class SDRC_ChopperHelper
 		}
 
 		//If working and at least one pilot, all good
-		if ( (SDRC_VehicleHelper.IsWorking(owner)) && (SDRC_VehicleHelper.PilotCountAlive(owner) > 0) )
+		int pilotCount = SDRC_VehicleHelper.PilotCountAlive(owner);
+		
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		
+		if (chopperComp)
+		{
+			if (chopperComp.m_bUnpiloted)
+			{
+				pilotCount = 1;
+			}
+		}
+		
+		if ( (SDRC_VehicleHelper.IsWorking(owner)) && (pilotCount > 0) )
 		{
 			return true;
 		}
@@ -96,15 +108,6 @@ class SDRC_ChopperHelper
 			force = SDRC_Misc.RandomFloat(0.0, 0.1);
 			helicopter_s.SetThrottle(force);
 		}
-
-		//Remove the canvas and lines if chopper is destroyed
-		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		if ( (chopperComp) && (chopperComp.m_wCanvas) )
-		{
-			chopperComp.m_aDrawCommands.Clear();
-			chopperComp.m_wCanvas.SetDrawCommands(chopperComp.m_aDrawCommands);
-			delete chopperComp.m_wCanvas;
-		}		
 		
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
