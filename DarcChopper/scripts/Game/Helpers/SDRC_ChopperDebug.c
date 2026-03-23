@@ -368,7 +368,7 @@ class SDRC_ChopperDebug
 //								"Init:" + m_bInInit + ", " +
 //								"Pilots::" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
 //								"Working:" + SDRC_VehicleHelper.IsWorking(owner) + " - " + 
-//								"Health: " + health + "\n" + 
+								"Health: " + health + "\n" + 
 	//							"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
 								"";
 

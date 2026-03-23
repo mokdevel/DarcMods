@@ -5,6 +5,12 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 
+# 20260323
+Small fix update.
+
+Fixes:
+* Chopper mission spawned under ground. Fix in DarcCore. Tested in Anizay, Ruha, Servhiika.
+
 ## 20260312
 Minor update. No changes in jsons.
 

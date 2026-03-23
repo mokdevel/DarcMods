@@ -2,6 +2,13 @@
 
 ## Next Version
 
+# 20260323
+Small fix update.
+
+Fixes:
+* Chopper is properly handling damage.
+* Start up height calculated correctly.
+
 ## 20260315
 Main features:
 * Improved landing: Much smoother and quite well on target spot

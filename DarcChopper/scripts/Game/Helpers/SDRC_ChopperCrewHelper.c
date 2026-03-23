@@ -211,7 +211,7 @@ class SDRC_ChopperCrewHelper
 	//------------------------------------------------------------------------------------------------
 	static void GetOut(IEntity owner)
 	{
-		const int GETOUT_DELAY = 8;	//(seconds) The delay between groups jumping out
+		const int GETOUT_DELAY = 20;	//(seconds) The delay between groups jumping out
 		
 		array<SCR_AIGroup> groups = {};
 	

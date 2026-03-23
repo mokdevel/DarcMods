@@ -82,7 +82,8 @@ class SDRC_ChopperHelper
 			}
 		}
 		
-		if ( (SDRC_VehicleHelper.IsWorking(owner)) && (pilotCount > 0) )
+//		if ( (SDRC_VehicleHelper.IsWorking(owner)) && (pilotCount > 0) )
+		if ( SCR_AIVehicleUsability.VehicleCanMove(owner) && (pilotCount > 0) )
 		{
 			return true;
 		}

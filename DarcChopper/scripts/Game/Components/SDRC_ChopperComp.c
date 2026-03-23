@@ -4,7 +4,7 @@
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
 #ifdef WORKBENCH
-//	#define CHOPPER_TESTING
+	#define CHOPPER_TESTING
 #endif
 
 //------------------------------------------------------------------------------------------------
@@ -808,7 +808,9 @@ class SDRC_ChopperComp : ScriptComponent
 		}*/
 		
 		vector initialPos = owner.GetOrigin();
-		initialPos[1] = Math.Clamp(initialPos[1], m_fFlyHeightLow, m_fFlyHeightHigh);
+		float ypos = SDRC_Misc.GetSurfaceYWithWater(initialPos);
+		
+		initialPos[1] = Math.Clamp(initialPos[1], m_fFlyHeightLow + ypos, m_fFlyHeightHigh + ypos);
 		owner.SetOrigin(initialPos);
 		owner.Update();
 		
