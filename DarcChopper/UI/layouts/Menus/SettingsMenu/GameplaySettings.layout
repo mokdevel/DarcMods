@@ -1,0 +1,54 @@
+HorizontalLayoutWidgetClass {
+ {
+  ScrollLayoutWidgetClass "{000000009881A4C7}" {
+   Prefab "{000000009881A4C7}"
+   {
+    VerticalLayoutWidgetClass "{00000000C099DEEF}" {
+     Prefab "{00000000C099DEEF}"
+     {
+      VerticalLayoutWidgetClass "{68EF296B6FF7916E}" {
+       Name "TitleDarcChopper"
+       Slot LayoutSlot "{684620F9764E9CEC}" {
+        Padding 4 4 4 4
+       }
+       components {
+        SCR_LabelComponent "{68461E42EE57347F}" {
+         m_sLabel "DarcChopper"
+         m_fPaddingTop 4
+        }
+       }
+       {
+        TextWidgetClass "{68EF296B6FF7916C}" {
+         Name "Label"
+         Slot LayoutSlot "{684623F16CEEF664}" {
+          Padding 39 4 39 20
+         }
+         Text "Subheading"
+         FontProperties FontProperties "{684620F901FBA2AE}" {
+          Font "{EABA4FE9D014CCEF}UI/Fonts/RobotoCondensed/RobotoCondensed_Bold.fnt"
+         }
+        }
+        ButtonWidgetClass "{68EF296802C46A09}" : "{C9DF0E6590F6C388}UI/layouts/WidgetLibrary/SpinBox/WLib_SpinBox.layout" {
+         Name "ShowFlyPath"
+         Slot LayoutSlot "{684623F1267D4998}" {
+          Padding 4 4 4 4
+         }
+         components {
+          SCR_SpinBoxComponent "{5472C6CBC0640458}" {
+           m_sLabel "Show flight path"
+           m_sLabelLayout "{F003823FF141983C}UI/layouts/Menus/SettingsMenu/CustomWidgets/SettingsLabel.layout"
+           m_aElementNames {
+            "#AR-UI_No" "#AR-UI_Yes"
+           }
+           m_bCycleMode 1
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

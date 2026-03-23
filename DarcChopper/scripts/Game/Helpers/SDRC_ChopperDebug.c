@@ -131,125 +131,7 @@ class SDRC_ChopperDebug
 		vcol[1] = color;
 		return vcol;
 	}
-		
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Draws lines to show where chopper is going
-	*/
-/*	static void DrawDestinationLines(IEntity owner)
-	{
-		array<vector> positions = {};
-		array<float> drawVertices = {};
-		
-		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		if (!chopperComp)
-		{
-			return;
-		}		
 
-		//The rest of the stuff is only GM mode and when interface is visible.								
-		if ( (!SDRC_PlayerHelper.IsInGMmode()) || (!SDRC_PlayerHelper.IsGMInterfaceVisible()) || chopperComp.GetState() == SDRC_EHeliState.DESTROYED )
-		{
-			if (chopperComp.m_wCanvas)
-			{
-				//If not in GM mode, canvas is not needed.
-				delete chopperComp.m_wCanvas;
-			}
-			return;
-		}
-		
-		if (chopperComp.m_wCanvas == null)
-		{
-			//Create a canvas to draw the lines. Keep it small as a big canvas will also capture the mouse which we don't want
-			chopperComp.m_wCanvas = CanvasWidget.Cast(g_Game.GetWorkspace().CreateWidgetInWorkspace(WidgetType.CanvasWidgetTypeID, 0, 0, 10, 10, WidgetFlags.VISIBLE | WidgetFlags.NOFOCUS, new Color(0.0, 0.0, 0.0, 1.0), 100000));
-			m_World = GetGame().GetWorld();
-			m_Workspace = GetGame().GetWorkspace();
-		}
-				
-		if ( (chopperComp.m_wCanvas) && (m_Workspace) && (m_World) )
-		{
-			//All good
-		}
-		else
-		{
-			return;
-		}
-		
-/*		if (!chopperComp.m_bShowDebug)
-		{
-			return;
-		}*/
-
-/*		CollectDestinationLines(owner, positions);
-		
-		// ----------------		
-		// Do the drawing on canvas
-		chopperComp.m_aDrawCommands.Clear();
-		
-		//Do the line drawing		
-		int color = -1;
-		vector prevPos = vector.Zero;
-		foreach (vector pos : positions)
-		{
-			//Change color
-			if (pos[0] == -1)
-			{
-				color = pos[1];
-				continue;
-			}
-			
-			//If this is the first point we found, let's use that as the previous position. This is the start of the line.
-			if (prevPos == vector.Zero)
-			{
-				prevPos = pos;
-				continue;
-			}
-			
-			AddVertice(prevPos, drawVertices);
-			AddVertice(pos, drawVertices);
-			prevPos = pos;
-			//Insert into pool of draw commands
-			chopperComp.m_aDrawCommands.Insert(AddLines(drawVertices, color));			
-		}
-		
-		if (!chopperComp.m_aDrawCommands.IsEmpty())
-		{
-			chopperComp.m_wCanvas.SetDrawCommands(chopperComp.m_aDrawCommands);			
-		}		
-	}		*/
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Calculate the vertice screen coords and add to vertices list
-	*/
-/*	static void AddVertice(vector pos, out array<float> vertices)
-	{
-		//Calculate screen position of point
-		vector x0 = m_Workspace.ProjWorldToScreenNative(pos, m_World);
-		if (x0[2] > 0)
-		{
-			vertices.Insert(x0[0]);
-			vertices.Insert(x0[1]);
-		}
-	}*/
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Add vertices to LineDrawCommand and return it
-	*/
-/*	static LineDrawCommand AddLines(out array<float> vertices, int color = Color.DARK_GREEN)
-	{		
-		//Create draw command
-		ref LineDrawCommand line = new LineDrawCommand();	
-		line.m_Vertices = {};
-		line.m_iColor = color;
-		line.m_fOutlineWidth = 0;
-		line.m_fWidth = 1.0;
-		line.m_Vertices.Copy(vertices);
-		vertices.Clear();
-		return line;
-	}*/
-	
 	//------------------------------------------------------------------------------------------------	
 	// Debug shapes
 	// These *ONLY* works in WB. 
@@ -368,8 +250,8 @@ class SDRC_ChopperDebug
 //								"Init:" + m_bInInit + ", " +
 //								"Pilots::" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
 //								"Working:" + SDRC_VehicleHelper.IsWorking(owner) + " - " + 
-								"Health: " + health + "\n" + 
-	//							"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
+//								"Health: " + health + "\n" + 
+//								"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
 								"";
 
 			if (angUp > 1.3)

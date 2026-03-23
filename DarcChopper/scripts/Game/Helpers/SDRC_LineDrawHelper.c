@@ -11,12 +11,16 @@ class SDRC_LineDrawHelper
 {
 	static void CreateDrawCommandsFromData(array<vector> lineData, array<ref CanvasWidgetCommand> drawCommands)
 	{
-		//ref array<ref CanvasWidgetCommand> drawCommands = {};	//Line drawing commands
 		array<float> drawVertices = {};
+		drawCommands.Clear();
+		
+		if (!SDRC_MenuHelper.GetShowFlyPath())
+		{
+			return;
+		}
 		
 		// ----------------		
 		// Do the drawing on canvas
-		drawCommands.Clear();
 		
 		//Do the line drawing
 		int color = -1;
