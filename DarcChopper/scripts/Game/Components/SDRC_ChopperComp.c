@@ -151,7 +151,7 @@ class SDRC_ChopperComp : ScriptComponent
 	private const int POINTS_TO_SPLINE_START = 5;		//Points to go back from m_iClosestIndex when creating a new flight path 
 	private const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
 
-	private const int FLIGHT_FIX_TIME = 8;				//(seconds) Time to wait between flight fixes when chopper is pointing to the sky.
+	private const int FLIGHT_FIX_TIME = 2;				//(seconds) Time to wait between flight fixes when chopper is pointing to the sky.
 	private const int FLIGHT_FIX_ANGLE = 1.4;			//Angle that enforces 
 	
 	//Rotor force multipliers
@@ -469,7 +469,7 @@ class SDRC_ChopperComp : ScriptComponent
 		//If we've been stuck on a point, force new flight path. 
 		//Sometimes the heli direction and path align so that the closest index does not update.
 		//In these case the helicopter up vector and world up vector is big.
-		bool bCreateNewPath = false;
+//		bool bCreateNewPath = false;
 		float heliUpAngleToWorld = SDRC_Math.GetAngleBetweenVectors(owner.GetTransformAxis(1), vector.Up);	
 		if (heliUpAngleToWorld > FLIGHT_FIX_ANGLE)
 		{
@@ -479,7 +479,10 @@ class SDRC_ChopperComp : ScriptComponent
 					SDRC_Log.Add("[SDRC_ChopperComp] Fixing flight.", LogLevel.DEBUG);
 				#endif
 				//TBD: Change to align the chopper towards target
-				bCreateNewPath = true;
+				
+				m_vSplinePoints.RemoveOrdered(0);
+				m_fTimeBetweenFixes = FLIGHT_FIX_TIME;
+				//bCreateNewPath = true;
 			}
 		}
 		else
@@ -489,7 +492,8 @@ class SDRC_ChopperComp : ScriptComponent
 		}
 		
 		//No need to do anything unless we are at the end of spline.
-		if ((m_iClosestIndex + m_iDestinationPointAdd + POINTS_TO_NEW_DISTANCE >= m_vSplinePoints.Count() - 1) || bCreateNewPath)
+//		if ((m_iClosestIndex + m_iDestinationPointAdd + POINTS_TO_NEW_DISTANCE >= m_vSplinePoints.Count() - 1) || bCreateNewPath)
+		if (m_iClosestIndex + m_iDestinationPointAdd + POINTS_TO_NEW_DISTANCE >= m_vSplinePoints.Count() - 1)
 		{
 			m_fTimeBetweenFixes = FLIGHT_FIX_TIME;	//Time between tries to fix the flight
 			
@@ -656,8 +660,13 @@ class SDRC_ChopperComp : ScriptComponent
 								
 		//Handle yaw, pitch roll		
 		
-		//ROLL PITCH: Change pitch according to speed		
+		
+		//TBD: For pitch, use m_fSpeedTarget
+		//m_fSpeed = Math.Lerp(m_fSpeedStart, m_fSpeedTarget, ts);
+		
+		//ROLL PITCH: Change pitch according to speed
 		m_fAnglePitch = PITCH_ANGLE_FLAT_RAD + PITCH_ANGLE_RAD * m_fSpeedMul;
+		m_fAnglePitch = Math.Clamp(m_fAnglePitch, -30 * Math.DEG2RAD, 20 * Math.DEG2RAD);	//Nose down, nose up
 		
 		if (m_eHeliState == SDRC_EHeliState.RAISE)
 		{
@@ -723,9 +732,17 @@ class SDRC_ChopperComp : ScriptComponent
 			{
 				velVector[0] = 0;
 				velVector[2] = 0;
+				velVector[1] = Math.Clamp(velVector[1], 0.01, 0.1);
+//				velVector[1] = Math.AbsFloat(velVector[1]) * 10;
 			}
 			
-			velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, velVector[1] * forceRotorUp * m_fRotorForceMultiplier, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
+			float vectorUp = velVector[1] * forceRotorUp * m_fRotorForceMultiplier;
+			
+			vectorUp = Math.Clamp(vectorUp, -30, 30);
+			
+			Print("vec:" + vectorUp);
+			
+			velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, vectorUp, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
 		}
 				
 		owner.GetPhysics().SetVelocity(velVector);
@@ -846,7 +863,7 @@ class SDRC_ChopperComp : ScriptComponent
 		//Add a point towards the first destination
 		vector helipos = owner.GetOrigin();
 		vector direction = vector.Direction(helipos, m_vFlyDestinations[0].pt);
-		vector pos = owner.GetOrigin() + direction.Normalized() * 10;
+		vector pos = owner.GetOrigin() + direction.Normalized() * 100;
 		pos[1] = helipos[1];
 		AddFlyPathPoint(pos);		//point 2 .. some meters towards the destination
 		//AddDebugMarker(pos, ARGB(255, 0, 255, 00), 2.0, m_sDid, 10);
@@ -855,6 +872,7 @@ class SDRC_ChopperComp : ScriptComponent
 		if (m_bAutoStart)
 		{		
 			owner.SetOrigin(m_vFlightPoints[0].pt);
+			owner.Update();			
 		}
 
 		//Store the origin. This value is updated in EOnFrame, but needed already in calculations.
@@ -1584,27 +1602,29 @@ class SDRC_ChopperComp : ScriptComponent
 			}
 			
 			if (!m_Helicopter_s.HasAnyGroundContact())
-			{				
+			{					
 				float distMul = distance / m_fLandingDistance;
 				float decrMul = origin[1] / lastPt[1];
-				decrMul = Math.Clamp(decrMul, 0.1, 1.0);
+				decrMul = Math.Clamp(decrMul, 0.1, 4.0);
 
 				m_fSpeedTarget = m_fSpeedLandingOrig * distMul + 0.01;
 								
 				float decreasePower = -1.0;
 				
 				//Check if we're close to landing place, slow down and descent
-				vector closePos = m_vSplinePoints[m_vSplinePoints.Count() - 3];
+				vector closePos = m_vSplinePoints[m_vSplinePoints.Count() - 4];
 				//If we have passed the point, adjust values
 				if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, closePos, owner.GetOrigin()))
 				{
-					distance = vector.Distance(origin, m_fPositionLandingOrig);
-					float distanceClose = vector.Distance(closePos, m_fPositionLandingOrig);
+					//TBD: use XZ
+					distance = vector.DistanceXZ(origin, m_fPositionLandingOrig);
+					float distanceClose = vector.DistanceXZ(closePos, m_fPositionLandingOrig);
 					float mulc = distanceClose / distance;
 					
 					m_fSpeedTarget = distance / 4;
-					m_fSpeedTarget = Math.Clamp(decrMul, 1.0, 5.0);
-					decreasePower = 5 * ((mulc + decrMul) / 2);
+					//	m_fSpeedTarget = Math.Clamp(decrMul, 1.0, 5.0);
+					m_fSpeedTarget = 8 * distMul + 0.1;
+					decreasePower = 2 * ((mulc + decrMul) / 2);
 					m_bFinalLanding = true;
 				}				
 

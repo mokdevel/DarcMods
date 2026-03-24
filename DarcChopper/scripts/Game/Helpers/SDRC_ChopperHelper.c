@@ -442,8 +442,8 @@ class SDRC_ChopperHelper
 			if (chopperComp.m_eHeliState == SDRC_EHeliState.LAND)
 			{
 				//Decide a point on the spline for the initial landing to start
-				int pointsToGround = chopperComp.m_fSpeed / 1.6;
-				pointsToGround = Math.ClampInt(pointsToGround, 10, 18);
+				int pointsToGround = chopperComp.m_fSpeed / 1.2;
+				pointsToGround = Math.ClampInt(pointsToGround, 10, 20);
 				
 				int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
 				
@@ -484,9 +484,9 @@ class SDRC_ChopperHelper
 				}
 				
 				//Put last point slightly below the actual target
-				vector lastPt = chopperComp.m_vSplinePoints[lastIdx];
+				/*vector lastPt = chopperComp.m_vSplinePoints[lastIdx];
 				lastPt[1] = lastPt[1] - 2;
-				chopperComp.m_vSplinePoints[lastIdx] = lastPt;
+				chopperComp.m_vSplinePoints[lastIdx] = lastPt; */
 				
 				isSmoothingNeeded = false;
 			}		
