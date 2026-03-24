@@ -659,13 +659,14 @@ class SDRC_ChopperComp : ScriptComponent
 		m_fTimeSpeed = 0;	//Start to change speed
 								
 		//Handle yaw, pitch roll		
-		
-		
-		//TBD: For pitch, use m_fSpeedTarget
-		//m_fSpeed = Math.Lerp(m_fSpeedStart, m_fSpeedTarget, ts);
-		
+				
 		//ROLL PITCH: Change pitch according to speed
-		m_fAnglePitch = PITCH_ANGLE_FLAT_RAD + PITCH_ANGLE_RAD * m_fSpeedMul;
+		//OLD: m_fAnglePitch = PITCH_ANGLE_FLAT_RAD + PITCH_ANGLE_RAD * m_fSpeedMul;
+		
+		//mul = (curr-start)/(end-start)
+		float endDiv = Math.Clamp((m_fSpeedTarget - m_fSpeedStart), 0.001, 1000);
+		float speedMul = (m_fSpeed - m_fSpeedStart) / endDiv;
+		m_fAnglePitch = PITCH_ANGLE_FLAT_RAD + PITCH_ANGLE_RAD * speedMul;		
 		m_fAnglePitch = Math.Clamp(m_fAnglePitch, -30 * Math.DEG2RAD, 20 * Math.DEG2RAD);	//Nose down, nose up
 		
 		if (m_eHeliState == SDRC_EHeliState.RAISE)
@@ -733,14 +734,10 @@ class SDRC_ChopperComp : ScriptComponent
 				velVector[0] = 0;
 				velVector[2] = 0;
 				velVector[1] = Math.Clamp(velVector[1], 0.01, 0.1);
-//				velVector[1] = Math.AbsFloat(velVector[1]) * 10;
 			}
 			
 			float vectorUp = velVector[1] * forceRotorUp * m_fRotorForceMultiplier;
-			
 			vectorUp = Math.Clamp(vectorUp, -30, 30);
-			
-			Print("vec:" + vectorUp);
 			
 			velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, vectorUp, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
 		}

@@ -2,6 +2,18 @@
 
 ## Next Version
 
+# 20260324
+Small fix update.
+
+Main features:
+* Fly path lines can be hidden. Settings -> Gameplay -> 
+* Modified speed effect on pitch.
+
+Fixes:
+* Landing parameter changes.
+* Hover issue when landing where chopper was just idling above ground.
+* Upright flying fixes.
+
 # 20260323
 Small fix update.
 
