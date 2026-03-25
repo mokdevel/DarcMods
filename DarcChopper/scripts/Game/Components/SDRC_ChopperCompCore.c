@@ -24,9 +24,12 @@ enum SDRC_EFlyWayPointType
 	WP_ATTACK,					//14 - Sets attack position and time and then FLY
 	
 	//Macro actions
-	WP_M_LAND_TROOPS = 30,		//30 - Drop of troops to exact position, wait and leave
-	WP_M_LAND_TO_FREE_SPOT,		//31 - Drop of troops, but search for empty spot
-	WP_M_ATTACK,
+	WP_M_RESET = 30,			//30 - Reset destinations
+	WP_M_LAND_TROOPS,			//   - Drop of troops to exact position, wait and leave
+	WP_M_LAND_TO_FREE_SPOT,		//   - Drop of troops, but search for empty spot
+	WP_M_EVAC_TROOPS,			//   - Drop troops to a safe spot and stop engine
+	WP_M_ATTACK,				//   - Bomb run on the area without the need to have an enemy
+	WP_M_SEARCH_DESTROY,		//   - Search for enemy by patroling an area. If enemy is found, attack the location.
 	WP_M_TESTING,				//Just for testing
 }
 
@@ -37,7 +40,7 @@ enum SDRC_EHeliState
 	FLY_AWAY,
 	FLY_AWAY_IMMEDIATELY,	//NOTE: This is not a real state. When set, state will change to FLY_AWAY
 	LAND,
-	WAIT,					//Velocity disabled
+	WAIT,					//NOTE: Velocity disabled
 	RAISE,
 	HOVER,
 	GET_OUT,				//One frame state to order AI to get out
@@ -53,8 +56,28 @@ enum SDRC_EHeliCargoSeatFill
 	RANDOM,
 	LOW,
 	HALF,
+	HIGH,
 	FULL,
 }
+
+enum SDRC_EChopperType
+{
+	UNKNOWN,
+	HELICOPTER,
+	DRONE,
+	FIXEDWING,
+}
+
+enum SDRC_EChopperDamageLevel
+{
+	UNKNOWN,
+	UNDAMAGED,
+	LIGHT,
+	MEDIUM,
+	HEAVY,
+	DESTROYED,	
+}
+
 
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompCore

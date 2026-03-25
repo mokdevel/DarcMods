@@ -238,6 +238,11 @@ class SDRC_VehicleHelper
 			AIControlComponent ctrl = AIControlComponent.Cast(character.FindComponent(AIControlComponent));			
 			SCR_ChimeraAIAgent aiAgent = SCR_ChimeraAIAgent.Cast(ctrl.GetAIAgent());
 			
+			if (!aiAgent)
+			{
+				continue;
+			}
+			
 			GetGame().GetCallqueue().CallLater(GetOutDelayed, i*500, false, character, vehicle);
 			
 			//Collect the groups that were ordered to climb out. 
@@ -419,6 +424,51 @@ class SDRC_VehicleHelper
 		return false;
 	}
 
+	//------------------------------------------------------------------------------------------------	
+	// Damage settings
+	//------------------------------------------------------------------------------------------------	
+			
+	//------------------------------------------------------------------------------------------------
+	static float GetHealth(IEntity owner)
+	{
+		float health = -1;
+		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
+		if (damageManager)
+		{
+			health = damageManager.GetHealth();
+			damageManager.GetState()
+			
+		}
+		
+		return health;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	static EDamageState GetDamageState(IEntity owner)
+	{
+		EDamageState state = EDamageState.UNDAMAGED;
+		
+		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
+		if (damageManager)
+		{
+			state = damageManager.GetState();			
+		}
+		
+		return state;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	static void SetHealth(IEntity owner, float health)
+	{
+		DamageManagerComponent damageManager = DamageManagerComponent.Cast(owner.FindComponent(DamageManagerComponent));
+		if (damageManager)
+		{
+			damageManager.SetHealthScaled(health);
+		}
+		
+		SDRC_Log.Add("[SDRC_VehicleHelper:SetHealth] Setting health: " + health, LogLevel.DEBUG);
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Empty vehicle storage

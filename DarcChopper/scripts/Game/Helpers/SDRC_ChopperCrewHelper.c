@@ -99,6 +99,11 @@ class SDRC_ChopperCrewHelper
 					cargoCrewCount = cargoCount / 2;
 					break;
 				}
+				case SDRC_EHeliCargoSeatFill.HIGH:
+				{
+					cargoCrewCount = SDRC_Misc.RandomInt(cargoCount/2, cargoCount);
+					break;
+				}
 				case SDRC_EHeliCargoSeatFill.FULL:
 				{
 					cargoCrewCount = cargoCount;

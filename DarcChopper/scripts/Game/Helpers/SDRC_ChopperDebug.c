@@ -193,8 +193,6 @@ class SDRC_ChopperDebug
 		}
 		
 		vector origin = owner.GetOrigin();
-		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
-		float health = damageManager.GetHealth();
 
 		VehicleHelicopterSimulation helicopter_s = VehicleHelicopterSimulation.Cast(owner.GetRootParent().FindComponent(VehicleHelicopterSimulation));
 		if (!helicopter_s)
@@ -247,10 +245,11 @@ class SDRC_ChopperDebug
 	//							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n" 
 								"";
 			debugText = debugText + 
-//								"Init:" + m_bInInit + ", " +
+								"Init:" + chopperComp.m_bInInit + ", " +
 //								"Pilots::" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
 //								"Working:" + SDRC_VehicleHelper.IsWorking(owner) + " - " + 
-//								"Health: " + health + "\n" + 
+//								"Health: " + SCR_Enum.GetEnumName(EDamageState, SDRC_VehicleHelper.GetDamageState(owner)) + ": " + SDRC_VehicleHelper.GetHealth(owner) + "\n" + 
+								"Health: " + SCR_Enum.GetEnumName(SDRC_EChopperDamageLevel, chopperComp.m_eDamageLevel) + ": " + SDRC_VehicleHelper.GetHealth(owner) + "\n" + 
 //								"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
 								"";
 

@@ -41,6 +41,26 @@ class SDRC_ChopperHelper
 		return newpos;
 	}	
 
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Tries to find a safe landing spot
+	*/	
+	static bool GetSafeLandingPosition(out vector landingSpot, float emptySize = 40, int tries = 3, int searchSize = 100)
+	{
+		bool foundLandingSpot = false;
+
+		for (int i = 0; i < tries; i++)
+		{
+			if (SDRC_SpawnHelper.FindEmptyPos(landingSpot, searchSize + i * searchSize, emptySize))
+			{
+				foundLandingSpot = true;
+				break;
+			}
+		}
+		
+		return foundLandingSpot;
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Get helicopter altitude from ground. 
@@ -54,97 +74,6 @@ class SDRC_ChopperHelper
 		float altitude = origin[1] - surfaceY;
 		
 		return altitude;		
-	}
-		
-	//------------------------------------------------------------------------------------------------	
-	// Damage settings
-	//------------------------------------------------------------------------------------------------	
-
-	//------------------------------------------------------------------------------------------------
-	static bool IsStillWorking(IEntity owner, bool inInit)
-	{
-		//If still in init, don't care if no pilots etc yet set.
-		if (inInit)
-		{
-			return true;
-		}
-
-		//If working and at least one pilot, all good
-		int pilotCount = SDRC_VehicleHelper.PilotCountAlive(owner);
-		
-		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		
-		if (chopperComp)
-		{
-			if (chopperComp.m_bUnpiloted)
-			{
-				pilotCount = 1;
-			}
-		}
-		
-//		if ( (SDRC_VehicleHelper.IsWorking(owner)) && (pilotCount > 0) )
-		if ( SCR_AIVehicleUsability.VehicleCanMove(owner) && (pilotCount > 0) )
-		{
-			return true;
-		}
-		
-		//Set damage so it should be destroyed on crash		
-//		SetHealth(owner, SDRC_Misc.RandomFloat(0, 0.05));
-		
-/*		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
-		if (damageManager)
-		{
-			float damage = SDRC_Misc.RandomFloat(0, 0.05);
-			damageManager.SetHealthScaled(damage);		
-		}*/
-		
-		//Make the chopper fly unsteadily
-		VehicleHelicopterSimulation helicopter_s = VehicleHelicopterSimulation.Cast(owner.GetRootParent().FindComponent(VehicleHelicopterSimulation));
-		if (helicopter_s)
-		{
-			float force = SDRC_Misc.RandomFloat(0, 0.1);
-	        helicopter_s.RotorSetForceScaleState(0, force);
-			force = SDRC_Misc.RandomFloat(0.1, 2.5);
-	        helicopter_s.RotorSetForceScaleState(1, force);
-			force = SDRC_Misc.RandomFloat(0.0, 0.1);
-			helicopter_s.SetThrottle(force);
-		}
-		
-		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
-		if (m_BaseGameMode)
-		{
-	 		if (m_BaseGameMode.chopperFrame)
-			{
-				m_BaseGameMode.chopperFrame.RemoveChopperFromList(owner);					
-			}
-		}
-		
-		return false;
-	}
-			
-	//------------------------------------------------------------------------------------------------
-	static float GetHealth(IEntity owner)
-	{
-		float health = -1;
-		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
-		if (damageManager)
-		{
-			health = damageManager.GetHealth();
-		}
-		
-		return health;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	static void SetHealth(IEntity owner, float health)
-	{
-		DamageManagerComponent damageManager = DamageManagerComponent.Cast(owner.FindComponent(DamageManagerComponent));
-		if (damageManager)
-		{
-			damageManager.SetHealthScaled(health);
-		}
-		
-		SDRC_Log.Add("[SDRC_ChopperHelper:SetHealth] Setting health: " + health, LogLevel.DEBUG);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -272,15 +201,21 @@ class SDRC_ChopperHelper
 								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TO_FREE_SPOT, pos);
 								break;
 							}
-							case "E_AIWaypoint_Wait":							
 							case "E_AIWaypoint_GetIn":
+							{
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_ATTACK, pos, 120);
+								break;
+							}
+							case "E_AIWaypoint_Wait":
+							case "E_AIWaypoint_Suppress_Editor":
+							case "E_AIWaypoint_ArtillerySupport":
 							{
 								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_ATTACK, pos, 120);
 								break;
 							}
 							case "E_AIWaypoint_SearchAndDestroy":
 							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_ATTACK, pos, 120);
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_SEARCH_DESTROY, pos, 120);
 								break;
 							}
 						}
@@ -322,7 +257,7 @@ class SDRC_ChopperHelper
 			}
 
 			//Initial height will be on ground
-			y = SDRC_Misc.GetSurfaceYWithWater(pt);
+			y = SDRC_Misc.GetSurfaceYWithWater(pt, true);
 			float flyHeight = 0;
 						
 			if (flightPoint.type == SDRC_EHeliState.LAND)
