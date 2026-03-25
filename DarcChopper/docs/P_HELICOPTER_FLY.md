@@ -6,7 +6,7 @@ Use the Arma Reforger workbench to create your own helicopter mod. The default p
 NOTE: Below information is slightly outdated.
 
 - Open Arma Reforger Tools
-- Create a mod with [DarcCore](https://reforger.armaplatform.com/workshop/631EE12D448D7FCC-DarcCore) as a dependency.
+- Create a mod with [DarcChopper](https://reforger.armaplatform.com/workshop/689EDED542F881AF-DarcChopper) as a dependency. This will also add [DarcCore](https://reforger.armaplatform.com/workshop/631EE12D448D7FCC-DarcCore) .
 - Select the helicopter you want to use
 - Duplicate the helicopter prefab to your mod. In to the name, add "_Patrol" at the end.
 - Edit prefab and add component ``SDRC_ChopperComp``.
