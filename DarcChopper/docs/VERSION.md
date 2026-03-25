@@ -1,12 +1,14 @@
 # Version history
 
 ## Next Version
+Main features:
+* Fly path lines can be hidden. Settings -> Gameplay -> 
+* When chopper is damaged enough, it will try to make a evacuation landing in a safe place.
 
 # 20260324
 Small fix update.
 
 Main features:
-* Fly path lines can be hidden. Settings -> Gameplay -> 
 * Modified speed effect on pitch.
 
 Fixes:

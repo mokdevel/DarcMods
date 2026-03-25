@@ -49,6 +49,7 @@ For more details, on AI functionality, read [AI section](https://github.com/mokd
   * ``RANDOM`` : Random count from 1 to FULL
   * ``LOW`` : Random count from 1 to HALF
   * ``HALF`` : Half of the available seats are filled
+  * ``HIGH`` : Half to full of the available seats are filled  
   * ``FULL`` : All seats are filled
 * ``Crew`` : Array of prefabs to spawn. If left empty, random AI will be added
 * ``AI Skill`` : Skill to define for example how good aim AI has.
