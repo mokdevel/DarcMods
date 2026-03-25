@@ -100,32 +100,17 @@ modded class SDRC_ChopperComp
 				pilotCount = 1;
 			}
 		}
-		
-/*		float health = SDRC_VehicleHelper.GetHealth(owner);
-		
-		if ( health < (m_fHealthOrig * 0.94) )
-		{
-			m_eDamageLevel = SDRC_EChopperDamageLevel.HEAVY;
-		}	
-		else if ( health < (m_fHealthOrig * 0.96) )
-		{
-			m_eDamageLevel = SDRC_EChopperDamageLevel.MEDIUM;
-		}	
-		else if ( health < (m_fHealthOrig * 0.99) )
-		{
-			m_eDamageLevel = SDRC_EChopperDamageLevel.LIGHT;
-		}	*/
 
-		float damage = SDRC_VehicleHelper.GetDamage(owner);
-		if ( damage < 0.93 )
+		float health = SDRC_VehicleHelper.GetHealthScaled(owner);
+		if ( health < 0.93 )
 		{
 			m_eDamageLevel = SDRC_EChopperDamageLevel.HEAVY;
 		}	
-		else if ( damage < 0.97)
+		else if ( health < 0.97)
 		{
 			m_eDamageLevel = SDRC_EChopperDamageLevel.MEDIUM;
 		}	
-		else if ( damage < 0.99)
+		else if ( health < 0.99)
 		{
 			m_eDamageLevel = SDRC_EChopperDamageLevel.LIGHT;
 		}			
@@ -137,9 +122,6 @@ modded class SDRC_ChopperComp
 			AddDestination(SDRC_EFlyWayPointType.WP_M_RESET);
 			AddDestination(SDRC_EFlyWayPointType.WP_M_EVAC_TROOPS, SDRC_Misc.RandomizePos(owner.GetOrigin(), 600));
 		}		
-		
-		SDRC_VehicleHelper.GetDamage(owner);
-		
 		
 		if ( SCR_AIVehicleUsability.VehicleCanMove(owner) && (pilotCount > 0) )
 		{
@@ -235,11 +217,15 @@ modded class SDRC_ChopperComp
 				m_fTimerAttack = value;						//For how long to continue attacks
 				break;
 			}
-			case SDRC_EFlyWayPointType.WP_GET_OUT:			//Handled in 
+			
+			//These just fall through
+			case SDRC_EFlyWayPointType.WP_GET_OUT:			//Handled in HandleState()
 			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
 			case SDRC_EFlyWayPointType.WP_LAND:
+			case SDRC_EFlyWayPointType.WP_PATROL:
+			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 			{
-				//This just falls through
+				
 				break;
 			}
 			
@@ -296,22 +282,13 @@ modded class SDRC_ChopperComp
 				{
 					//Safe landing position found
 					SDRC_DebugHelper.AddDebugPos(destination, ARGB(32, 64, 255, 64), SAFE_LANDING_SIZE, m_sDid, 10.0);				
-					AddDestination(SDRC_EFlyWayPointType.WP_LAND, destination);
-					AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
-					AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value : value);
+					AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, destination);
 				}
 				else
 				{
 					//No safe landing position found
 					AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
 				}
-				
-/*				vector hoverPos = vector.Zero;
-				hoverPos[1] = m_fFlyHeightLow;
-				AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value : value);
-				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 12);
-				AddDestination(SDRC_EFlyWayPointType.WP_RAISE, "200 0 0");*/
-				//All things are already added
 				addDestinationPoint = false;
 				break;
 			}
@@ -331,7 +308,6 @@ modded class SDRC_ChopperComp
 					rndPos = SDRC_Misc.GetCoordinatesOnCircle(destination, distance, angle + SDRC_Misc.RandomFloat(-120, 120));
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_FLY, rndPos, value);
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_ATTACK, destination, value);
-
 				}
 				m_vAttackPosition = destination;			//Where to attack				
 				m_fTimerAttack = value * (runCount + 1);	//For how long to continue attacks. +1 to avoid runCount = 0 resulting in zero time
@@ -411,6 +387,37 @@ modded class SDRC_ChopperComp
 			SetNextState(owner);
 		}
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Handle attacks
+	- Normal case: If enemy is seen, consider shooting
+	- Attack case: The location to bomb has been assigned. (m_vAttackPosition)
+	*/
+	override private void HandleAttack(IEntity owner)
+	{
+		//Handle attacks:
+		if (m_fTimerAttack < 0)	
+		{
+			//Normal case:
+			SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
+			
+			if (m_fTimeRocketDelay > m_RocketDelay)
+			{
+				SDRC_ChopperEnemyHelper.SearchEnemyForRocket(owner);
+				m_fTimeRocketDelay = 0;
+			}
+		}
+		else
+		{
+			//Attack case:
+			if (m_fTimeRocketDelay > m_RocketDelay)
+			{
+				SDRC_ChopperEnemyHelper.EnemyFoundForRocket(owner, m_vAttackPosition);
+				m_fTimeRocketDelay = 0;
+			}
+		}
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
@@ -592,7 +599,6 @@ modded class SDRC_ChopperComp
 				//If we have passed the point, adjust values
 				if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, closePos, owner.GetOrigin()))
 				{
-					//TBD: use XZ
 					distance = vector.DistanceXZ(origin, m_fPositionLandingOrig);
 					float distanceClose = vector.DistanceXZ(closePos, m_fPositionLandingOrig);
 					float mulc = distanceClose / distance;

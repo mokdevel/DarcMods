@@ -22,6 +22,7 @@ enum SDRC_EFlyWayPointType
 	WP_HOVER_UP,				//12 - Does the action and goes to HOVER state
 	WP_STOP_ENGINE,				//13 - Does the action and goes to WAIT state
 	WP_ATTACK,					//14 - Sets attack position and time and then FLY
+	WP_SEARCH_DESTROY,			//   - Search for enemy by patroling an area. If enemy is found, attack the location.
 	
 	//Macro actions
 	WP_M_RESET = 30,			//30 - Reset destinations
@@ -29,7 +30,6 @@ enum SDRC_EFlyWayPointType
 	WP_M_LAND_TO_FREE_SPOT,		//   - Drop of troops, but search for empty spot
 	WP_M_EVAC_TROOPS,			//   - Drop troops to a safe spot and stop engine
 	WP_M_ATTACK,				//   - Bomb run on the area without the need to have an enemy
-	WP_M_SEARCH_DESTROY,		//   - Search for enemy by patroling an area. If enemy is found, attack the location.
 	WP_M_TESTING,				//Just for testing
 }
 

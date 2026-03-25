@@ -67,7 +67,9 @@ class SDRC_ChopperEnemyHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Search for enemy and return first enemy position found.
+	Search for enemy and return *first* enemy position found.
+	
+	//TBD: Extend to have a parameter where enemy needs to be in front of the heli
 	
 	\return position where enemy was found. vector.Zero returned if no enemies found.
 	*/			
@@ -180,7 +182,7 @@ class SDRC_ChopperEnemyHelper
 	*/
 	static void ShootRocket(IEntity owner, vector targetPos)
 	{
-		const float AI_ERROR = 40;
+		const float AI_ERROR = 30;
 		
 		if (!owner)
 		{
