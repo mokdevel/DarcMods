@@ -431,19 +431,40 @@ class SDRC_VehicleHelper
 	//------------------------------------------------------------------------------------------------
 	static float GetHealth(IEntity owner)
 	{
+		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
+		if (!damageManager)
+		{
+			return 10000;
+		}
+
+		float health = 0;			//Total health for each hitzone
+		
+       	array<HitZone> hitzones = {};
+       	int count = damageManager.GetAllHitZones(hitzones);		
+		
+		foreach (HitZone hitZone : hitzones)
+		{
+			health += hitZone.GetHealth();
+		}
+		
+/*		//This is the simple solution. Not really usable
+		
 		float health = -1;
 		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
 		if (damageManager)
 		{
 			health = damageManager.GetHealth();
 			damageManager.GetState()			
-		}
+		}*/
 		
 		return health;
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	static float GetDamage(IEntity owner)
+	/*!
+	Get vehicle scaled damage. Value is between 0..1 and is an average of all hitzones.
+	*/
+	static float GetHealthScaled(IEntity owner)
 	{
 		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
 		if (!damageManager)
@@ -451,33 +472,17 @@ class SDRC_VehicleHelper
 			return 1;
 		}
 
-		float totalDamage = 0;
-		float scaledDamage = 0;
-		float health = 0;
+		float healthScaled = 0;		//Scaled damage
 		
        	array<HitZone> hitzones = {};
        	int count = damageManager.GetAllHitZones(hitzones);		
 		
 		foreach (HitZone hitZone : hitzones)
 		{
-			scaledDamage += hitZone.GetHealthScaled();
-			health += hitZone.GetHealth();
-			
-			if (hitZone.GetDamageState() == EDamageState.INTERMEDIARY)
-			{
-				totalDamage++;
-			}
-			if (hitZone.GetDamageState() == EDamageState.DESTROYED)
-			{
-				totalDamage++;
-				totalDamage++;
-			}
+			healthScaled += hitZone.GetHealthScaled();
 		}
 		
-		//Print("dam:" + (scaledDamage/count) + "," + (health/count) + "," + totalDamage);
-		
-		return (scaledDamage/count);		
-//		return totalDamage;		
+		return (healthScaled/count);		
 	}
 	
 	//------------------------------------------------------------------------------------------------
