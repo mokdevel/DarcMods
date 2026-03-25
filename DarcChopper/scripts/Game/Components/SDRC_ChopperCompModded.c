@@ -101,28 +101,45 @@ modded class SDRC_ChopperComp
 			}
 		}
 		
-		float health = SDRC_VehicleHelper.GetHealth(owner);
+/*		float health = SDRC_VehicleHelper.GetHealth(owner);
 		
-		if ( health < (m_fHealthOrig * 0.85) )
+		if ( health < (m_fHealthOrig * 0.94) )
 		{
 			m_eDamageLevel = SDRC_EChopperDamageLevel.HEAVY;
 		}	
-		else if ( health < (m_fHealthOrig * 0.93) )
+		else if ( health < (m_fHealthOrig * 0.96) )
 		{
 			m_eDamageLevel = SDRC_EChopperDamageLevel.MEDIUM;
 		}	
-		else if ( health < (m_fHealthOrig * 0.98) )
+		else if ( health < (m_fHealthOrig * 0.99) )
 		{
 			m_eDamageLevel = SDRC_EChopperDamageLevel.LIGHT;
+		}	*/
+
+		float damage = SDRC_VehicleHelper.GetDamage(owner);
+		if ( damage < 0.93 )
+		{
+			m_eDamageLevel = SDRC_EChopperDamageLevel.HEAVY;
 		}	
-		
+		else if ( damage < 0.97)
+		{
+			m_eDamageLevel = SDRC_EChopperDamageLevel.MEDIUM;
+		}	
+		else if ( damage < 0.99)
+		{
+			m_eDamageLevel = SDRC_EChopperDamageLevel.LIGHT;
+		}			
+				
 		//If damage is high, evac!
-		if ( (m_eDamageLevel >= SDRC_EChopperDamageLevel.MEDIUM) && (!m_bInEvac) )
+		if ( ( (m_eDamageLevel == SDRC_EChopperDamageLevel.MEDIUM) || (m_eDamageLevel == SDRC_EChopperDamageLevel.HEAVY) ) && (!m_bInEvac) )
 		{
 			m_bInEvac = true;
 			AddDestination(SDRC_EFlyWayPointType.WP_M_RESET);
-			AddDestination(SDRC_EFlyWayPointType.WP_M_EVAC_TROOPS, SDRC_Misc.RandomizePos(owner.GetOrigin(), 300));
+			AddDestination(SDRC_EFlyWayPointType.WP_M_EVAC_TROOPS, SDRC_Misc.RandomizePos(owner.GetOrigin(), 600));
 		}		
+		
+		SDRC_VehicleHelper.GetDamage(owner);
+		
 		
 		if ( SCR_AIVehicleUsability.VehicleCanMove(owner) && (pilotCount > 0) )
 		{

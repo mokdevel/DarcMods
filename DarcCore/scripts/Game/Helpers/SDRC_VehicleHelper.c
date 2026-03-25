@@ -4,7 +4,6 @@
 /*!
 Functions related to vehicles.
 */
-
 class SDRC_VehicleHelper
 {
 	//------------------------------------------------------------------------------------------------
@@ -257,6 +256,7 @@ class SDRC_VehicleHelper
 		}
     }	
 	
+	//------------------------------------------------------------------------------------------------
 	static void GetOutDelayed(ChimeraCharacter character, IEntity vehicle)
 	{
 		if ( (!character) || (!vehicle) )
@@ -436,11 +436,48 @@ class SDRC_VehicleHelper
 		if (damageManager)
 		{
 			health = damageManager.GetHealth();
-			damageManager.GetState()
-			
+			damageManager.GetState()			
 		}
 		
 		return health;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	static float GetDamage(IEntity owner)
+	{
+		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
+		if (!damageManager)
+		{
+			return 1;
+		}
+
+		float totalDamage = 0;
+		float scaledDamage = 0;
+		float health = 0;
+		
+       	array<HitZone> hitzones = {};
+       	int count = damageManager.GetAllHitZones(hitzones);		
+		
+		foreach (HitZone hitZone : hitzones)
+		{
+			scaledDamage += hitZone.GetHealthScaled();
+			health += hitZone.GetHealth();
+			
+			if (hitZone.GetDamageState() == EDamageState.INTERMEDIARY)
+			{
+				totalDamage++;
+			}
+			if (hitZone.GetDamageState() == EDamageState.DESTROYED)
+			{
+				totalDamage++;
+				totalDamage++;
+			}
+		}
+		
+		//Print("dam:" + (scaledDamage/count) + "," + (health/count) + "," + totalDamage);
+		
+		return (scaledDamage/count);		
+//		return totalDamage;		
 	}
 	
 	//------------------------------------------------------------------------------------------------

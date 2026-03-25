@@ -79,7 +79,7 @@ class SDRC_ChopperComp : ScriptComponent
 //	[Attribute(defvalue: EAISkill.REGULAR.ToString(), UIWidgets.ComboBox, desc: "AI skill in combat", "", ParamEnumArray.FromEnum(EAISkill), category: "Common")]
 	[Attribute(category: "AI settings", defvalue: typename.EnumToString(EAISkill, EAISkill.REGULAR), uiwidget: UIWidgets.ComboBox, desc: "AI skill", enumType: EAISkill)]	
 	EAISkill m_AISkill;	
-	[Attribute(category: "AI settings", defvalue: "1.0", desc: "AI perception", params: "0.1 3.0 0.1")]	
+	[Attribute(category: "AI settings", defvalue: "1.3", desc: "AI perception", params: "0.1 3.0 0.1")]	
 	float m_AIPerception;
 	[Attribute(category: "AI settings", defvalue: typename.EnumToString(SDRC_EHeliEnemySearchType, SDRC_EHeliEnemySearchType.ANY_CHAR), uiwidget: UIWidgets.ComboBox, desc: "Type of enemy to search", enumType: SDRC_EHeliEnemySearchType)]		
 	SDRC_EHeliEnemySearchType m_EnemySearchType;
@@ -165,13 +165,13 @@ class SDRC_ChopperComp : ScriptComponent
 	
 	//Helistate
 	SDRC_EHeliState m_eHeliState;
-	bool m_bInInit;
+	private bool m_bInInit;
 	
 	//Health
 	private float m_fHealthOrig = 0;
 	private bool m_bInEvac = false;
 	SDRC_EChopperDamageLevel m_eDamageLevel = SDRC_EChopperDamageLevel.UNDAMAGED;
-	const int SAFE_LANDING_SIZE = 40;					//Radius of the are to consider safe for landing
+	const int SAFE_LANDING_SIZE = 60;					//Radius of the are to consider safe for landing
 	
 	//Runtime parameters
 	private int m_iDestinationPointAdd;
@@ -202,8 +202,8 @@ class SDRC_ChopperComp : ScriptComponent
 	//Enemy positions
 	vector m_vEnemyPosition = vector.Zero;		//Position of last found enemy
 	int m_iEnemyFoundTime;						//Time to wait to before allowing enemy position 
-	int m_iEnemyFoundTimeout = 10;				//Time between enemy position updates
-	int m_iEnemyForgetTimeout = 30;				//Time to forget the enemy position
+	int m_iEnemyFoundTimeout = 3;				//Time between enemy position updates
+	int m_iEnemyForgetTimeout = 15;				//Time to forget the enemy position
 		
 	//Debug stuff
 	private float m_fDbgAngle;

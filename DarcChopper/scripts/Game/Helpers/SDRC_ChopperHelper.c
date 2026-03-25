@@ -92,7 +92,14 @@ class SDRC_ChopperHelper
 			return;
 		}
 		
-		vector pos = SDRC_ChopperHelper.GetRandomPosition(owner.GetOrigin(), chopperComp.m_fDistanceLow, chopperComp.m_fDistanceHigh);
+		vector orig = owner.GetOrigin();
+		if (SDRC_Misc.RandomFloat(0, 1) < 0.2)
+		{
+			//Occasionally fly towards middle to avoid sliding out of the map
+			orig = SDRC_Misc.GetWorldCenter();
+		}
+		
+		vector pos = SDRC_ChopperHelper.GetRandomPosition(orig, chopperComp.m_fDistanceLow, chopperComp.m_fDistanceHigh);
 		chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos);
 		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 255, 00, 00), 2.0, chopperComp.m_sDid, 200);
 	}

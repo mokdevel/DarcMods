@@ -245,11 +245,12 @@ class SDRC_ChopperDebug
 	//							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n" 
 								"";
 			debugText = debugText + 
-								"Init:" + chopperComp.m_bInInit + ", " +
+//								"Init:" + chopperComp.m_bInInit + ", " +
 //								"Pilots::" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
 //								"Working:" + SDRC_VehicleHelper.IsWorking(owner) + " - " + 
 //								"Health: " + SCR_Enum.GetEnumName(EDamageState, SDRC_VehicleHelper.GetDamageState(owner)) + ": " + SDRC_VehicleHelper.GetHealth(owner) + "\n" + 
-								"Health: " + SCR_Enum.GetEnumName(SDRC_EChopperDamageLevel, chopperComp.m_eDamageLevel) + ": " + SDRC_VehicleHelper.GetHealth(owner) + "\n" + 
+//								"Health: " + SCR_Enum.GetEnumName(SDRC_EChopperDamageLevel, chopperComp.m_eDamageLevel) + ": " + SDRC_VehicleHelper.GetHealth(owner) + "\n" + 
+								"Health: " + SCR_Enum.GetEnumName(SDRC_EChopperDamageLevel, chopperComp.m_eDamageLevel) + ": " + SDRC_VehicleHelper.GetDamage(owner) + "\n" + 
 //								"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
 								"";
 
