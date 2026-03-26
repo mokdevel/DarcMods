@@ -122,7 +122,7 @@ class SDRC_ChopperComp : ScriptComponent
 	
 	//Original destination	
 	private vector m_vOriginalDestination;				//Used to know where to patrol
-	private vector m_vFirstDestination;					//Where to fly first
+//	private vector m_vFirstDestination;					//Where to fly first
 		
 	//Speed management
 	private const float SPEED_INTERVAL = 1.0;			//(seconds) Interval to modify speed of the helicopter
@@ -174,7 +174,6 @@ class SDRC_ChopperComp : ScriptComponent
 		
 	//Health
 	private float m_fHealthOrig = 0;
-	private bool m_bInEvac = false;
 	SDRC_EHeliDamageLevel m_eDamageLevel = SDRC_EHeliDamageLevel.UNDAMAGED;
 	const int SAFE_LANDING_SIZE = 50;					//Radius of the are to consider safe for landing
 	
@@ -303,7 +302,7 @@ class SDRC_ChopperComp : ScriptComponent
 		m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + m_iEnemyFoundTimeout;
 		
 		//Set wheel brake on
-		HelicopterControllerComponent hcc = HelicopterControllerComponent.Cast(GetOwner().GetRootParent().FindComponent(HelicopterControllerComponent));
+		HelicopterControllerComponent hcc = HelicopterControllerComponent.Cast(owner.FindComponent(HelicopterControllerComponent));
 		if (hcc)
 		{
 			hcc.SetPersistentWheelBrake(true);
@@ -393,7 +392,7 @@ class SDRC_ChopperComp : ScriptComponent
 		if (m_bAutoStart)
 		{
 			//Init flight path
-			InitFlight(owner, owner.GetOrigin());
+			InitFlight(owner);
 		}
 
 		SDRC_ChopperDebug.DrawDebugPaths(owner);
@@ -801,70 +800,38 @@ class SDRC_ChopperComp : ScriptComponent
 	/*!	
 	Create the initial flight path 
 	*/
-	void InitFlight(IEntity owner, vector origin)	
+	void InitFlight(IEntity owner, vector destination = vector.Zero)
 	{
 /*		if (!GetGame().GetWorld())
 		{
 			return;
 		}*/
-		
-		vector initialPos = owner.GetOrigin();
-		float ypos = SDRC_Misc.GetSurfaceYWithWater(initialPos, true);
-		
-		initialPos[1] = Math.Clamp(initialPos[1], m_fFlyHeightLow + ypos, m_fFlyHeightHigh + ypos);
-		owner.SetOrigin(initialPos);
-		owner.Update();
-		
-		//Store the original firstDestination
-		m_vOriginalDestination = origin;
-		
-		//Create initial flypath. 		
-		//We add two points to m_vFlightPoints that work as guide for the heli direction. 		
-		AddFlyPathPoint(origin);	//point 1
-		//AddDebugMarker(origin, ARGB(255, 0, 255, 00), 2.0, m_sDid, 10);
-		
-		//If no destination were defined, let's create a random one
-		if (m_vFlyDestinations.IsEmpty())
-		{
-			if (m_vFirstDestination == vector.Zero)
-			{
-				vector transform[4];
-				owner.GetTransform(transform);
-				vector angle = transform[2];
-				angle.Normalized();
-				m_vFirstDestination = owner.GetOrigin() + angle * m_fDistanceLow;
-			}
-			
-			#ifndef CHOPPER_TESTING
-				AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFirstDestination);
-			#else
-				//m_vFirstDestination = "3071 33 2544";
-				AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, m_vFirstDestination);
-			#endif
-			//SDRC_DebugHelper.AddDebugPos(m_vFirstDestination, ARGB(255, 255, 00, 00), 5.0, m_sDid, 200);			
-		}
-
-		//Add a point towards the first destination
-		vector helipos = owner.GetOrigin();
-		vector direction = vector.Direction(helipos, m_vFlyDestinations[0].pt);
-		vector pos = owner.GetOrigin() + direction.Normalized() * 100;
-		pos[1] = helipos[1];
-		AddFlyPathPoint(pos);		//point 2 .. some meters towards the destination
-		//AddDebugMarker(pos, ARGB(255, 0, 255, 00), 2.0, m_sDid, 10);
-		
-		//Set chopper to initial position in case an specific origin was provided
-		if (m_bAutoStart)
-		{		
-			owner.SetOrigin(m_vFlightPoints[0].pt);
-			owner.Update();			
-		}
 
 		//Store the origin. This value is updated in EOnFrame, but needed already in calculations.
 		m_vOrigin = owner.GetOrigin();				
+
+		//Create initial flypath.
+		AddFlyPathPoint(owner.GetOrigin());	//point 1
+		//AddDebugMarker(origin, ARGB(255, 0, 255, 00), 2.0, m_sDid, 10);
+				
+		//TBD: Are we on low altitude? Hover up...
+		/* if (m_vOrigin[1] < SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + m_fFlyHeightLow)
+		{		
+			vector hoverPos = vector.Zero;
+			hoverPos[1] = m_fFlyHeightLow;
+			AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 5);
+		} */
+
+		if (destination == vector.Zero)
+		{
+			destination = SDRC_ChopperHelper.GetDestinationForward(owner, 300);
+		}
+		AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
+
 		SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Chopper initial position: " + owner.GetOrigin(), LogLevel.DEBUG);
 		
 		//Turn chopper to face the first destination
-		SDRC_Math.TurnEntityTowardsXZ(owner, m_vFlyDestinations[0].pt);
+		SDRC_Math.TurnEntityTowardsXZ(owner, destination);
 		
 		if (!m_bAutoStart)	//With autostart, use the origin of the chopper spawn
 		{
@@ -924,7 +891,7 @@ class SDRC_ChopperComp : ScriptComponent
 		SDRC_ChopperDebug.GivePoints(flyPathPoints, m_vFlightPoints);
 		SDRC_Spline3D.GenerateSplinePoints(flyPathPoints, m_vSplinePoints, -1);
 		
-		//Search the closest indes from the spline start
+		//Search the closest index from the spline start
 		m_iClosestIndex = 0;
 		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, owner.GetOrigin(), m_iClosestIndex, false);	//NOTE: This will set m_iClosestIndex
 		m_iOldClosestIndex = m_iClosestIndex;
@@ -961,9 +928,9 @@ class SDRC_ChopperComp : ScriptComponent
 	*/	
 	private void CreateFlightPoints(IEntity owner)
 	{
-		float forwardDistance = 20;
+		float forwardDistance = 40;
 			
-		//If we have a destination and it's far away, increase the 	forwardDistance
+		//If we have a destination and it's far away, increase the forwardDistance
 		if (!m_vFlyDestinations.IsEmpty())
 		{
 			float distance = vector.DistanceXZ(owner.GetOrigin(), m_vFlyDestinations[0].pt);

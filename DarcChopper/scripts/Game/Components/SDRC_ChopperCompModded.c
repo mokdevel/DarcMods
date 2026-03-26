@@ -95,12 +95,6 @@ modded class SDRC_ChopperComp
 		m_vEnemyPosition = "0 0 0";
 		m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + m_iEnemyFoundTimeout;
 	}	
-
-	//------------------------------------------------------------------------------------------------	
-	bool GetEvac()
-	{
-		return m_bInEvac;
-	}	
 	
 	//------------------------------------------------------------------------------------------------	
 	// Damage settings
@@ -143,10 +137,10 @@ modded class SDRC_ChopperComp
 		}			
 				
 		//If damage is high, evac!
-		if ( ( (m_eDamageLevel == SDRC_EHeliDamageLevel.MEDIUM) || (m_eDamageLevel == SDRC_EHeliDamageLevel.HEAVY) ) && (!m_bInEvac) )
-//		if (!m_bInEvac)
+		if ( ( (m_eDamageLevel == SDRC_EHeliDamageLevel.MEDIUM) || (m_eDamageLevel == SDRC_EHeliDamageLevel.HEAVY) ) && (GetBehaviour() != SDRC_EHeliBehaviour.EVAC) )
+//		if (GetBehaviour() != SDRC_EHeliBehaviour.EVAC)
 		{
-			m_bInEvac = true;
+			SetBehaviour(SDRC_EHeliBehaviour.EVAC);
 			AddDestination(SDRC_EFlyWayPointType.WP_M_RESET);
 			AddDestination(SDRC_EFlyWayPointType.WP_M_EVAC_TROOPS, SDRC_Misc.RandomizePos(owner.GetOrigin(), 600));
 		}		
@@ -288,6 +282,7 @@ modded class SDRC_ChopperComp
 					AddDestination(SDRC_EFlyWayPointType.WP_LAND, destination);
 					AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
 					AddDestination(SDRC_EFlyWayPointType.WP_STOP_ENGINE);
+					AddDestination(SDRC_EFlyWayPointType.WP_END);
 				}
 				else
 				{
@@ -452,7 +447,7 @@ modded class SDRC_ChopperComp
 	*/
 	override private void HandleBehaviour(IEntity owner)
 	{
-		if (m_eHeliBehaviour == SDRC_EHeliBehaviour.NORMAL)
+		if ( (m_eHeliBehaviour == SDRC_EHeliBehaviour.NORMAL) || (m_eHeliBehaviour == SDRC_EHeliBehaviour.EVAC) )
 		{
 			return;
 		}
@@ -524,8 +519,7 @@ modded class SDRC_ChopperComp
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
 				SetState(SDRC_EHeliState.FLY);
 				//Fly for a while and then go to END state
-				AddDestination(SDRC_EFlyWayPointType.WP_END, owner.GetOrigin()); 
-//				AddDestination(SDRC_EFlyWayPointType.WP_END, m_vFlightPoints[m_vFlightPoints.Count() - 1].pt); 
+				AddDestination(SDRC_EFlyWayPointType.WP_DESPAWN, owner.GetOrigin()); 
 				break;
 			}
 			
@@ -556,6 +550,13 @@ modded class SDRC_ChopperComp
 				break;
 			}				
 			case SDRC_EFlyWayPointType.WP_END:
+			{
+				SetState(SDRC_EHeliState.DESTROYED);
+				m_vSplinePoints.Clear();
+				isRemoveDestination = true;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_DESPAWN:
 			{
 				SetState(SDRC_EHeliState.DESTROYED);
 				m_vSplinePoints.Clear();

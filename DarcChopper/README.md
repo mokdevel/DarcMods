@@ -53,6 +53,9 @@ This is WIP and not optimized at all. I'm not sure what happens if you have 20 c
 
 <img src="../pics/chopperlines.jpg" width=30% height=30%>
 
+## Damage and evacuation
+If the helicopter receives enough damage, the AI will try to find a safe spot to land the helicopter and disembark. If no safe spot is found, the AI's will fly away from the map.
+
 # Waypoints
 You can assign waypoints for the helicopter. Just pick any AI/group or even the helicopter, select a waypoint and drop it on the map. Use ALT-key to change the altitude of the waypoint, but don't worry, if it's on the ground by mistake, it will be set to right flight height. You can set multiple waypoints as a chain and future flight will follow it.
 
@@ -75,6 +78,9 @@ The helicopter is requested to fly to this destination and do rounds around the 
 ## <img src="../pics/wp_searchanddestroy.png" width=18 height=18> Search And Destroy
 Search and destroy will order the helicopter to target a location and bomb it. This are will be shot at regardless of if there are enemies or not. The helicopter needs to be aligned to be able to shoot at the location. Multiple runs towards the target may be performed to the AI with one S&D command. 
 
+## <img src="../pics/wp_suppressive.png" width=18 height=18> Suppressive Fire
+Suppressive fire will order the helicopter to target a location and bomb it. This are will be shot at regardless of if there are enemies or not. The helicopter needs to be aligned to be able to shoot at the location. Multiple runs towards the target may be performed to the AI with one suppressive fire command. 
+
 <img src="../pics/chopperattacklines.png" width=30% height=30%>
 The image shows the green movement to the location to attack. The attack will continue (follow the white line) from another angle. The heli will do a detour and attack along the red line. Rinse and repeat. Once all attacks are performed, normal flying will continue. Wave count, angles and distances are randomized.
 
@@ -89,9 +95,9 @@ This is a macro commmand and does a serie of actions:
 ```
 WP_LAND, to destination
 WP_GET_OUT, commands AI to disembark
-WP_WAIT, wait for while to AIs time to get out. Currently 20 seconds.
-WP_HOVER_UP, hover helicopter up to minimum fly height. Currently this is done in 12 seconds.
-WP_RAISE, order helicopter to fly forward for a while. Currently 200 meters
+WP_WAIT, wait for while to AIs time to get out. Time is dependent on crew count in cargo.
+WP_HOVER_UP, hover helicopter up to minimum fly height.
+WP_RAISE, order helicopter to fly forward for a while.
 ```
 Once actions are done, we return to normal flight mode.
 

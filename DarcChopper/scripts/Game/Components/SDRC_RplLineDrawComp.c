@@ -122,7 +122,7 @@ class SDRC_RplLineDrawComp : ScriptComponent
  		if (!m_BaseGameMode.chopperFrame)
 		{
 			return;
-		}		
+		}
 		
 		array<IEntity> choppers = {};
 		//IEntity chopper = m_BaseGameMode.chopperFrame.GetChopperEntity(0);

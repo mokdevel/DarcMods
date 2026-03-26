@@ -67,10 +67,7 @@ class SDRC_ChopperDebug
 				int color = -1;
 
 				vector pos = destination.pt;
-				if (pos[1] == 0)
-				{
-					pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 40;
-				}
+				pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 20;
 				
 				switch (destination.type)
 				{
@@ -92,7 +89,6 @@ class SDRC_ChopperDebug
 					case SDRC_EFlyWayPointType.WP_ATTACK:
 					{
 						color = Color.RED;
-						pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 10;
 						break;
 					}
 					case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
@@ -202,6 +198,17 @@ class SDRC_ChopperDebug
 			return;
 		}
 		
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return;
+		}
+		
+		if (chopperComp.GetState() == SDRC_EHeliState.DESTROYED)
+		{
+			return;
+		}		
+		
 		vector origin = owner.GetOrigin();
 
 		VehicleHelicopterSimulation helicopter_s = VehicleHelicopterSimulation.Cast(owner.GetRootParent().FindComponent(VehicleHelicopterSimulation));
@@ -210,12 +217,6 @@ class SDRC_ChopperDebug
 			return;
 		}
 
-		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		if (!chopperComp)
-		{
-			return;
-		}
-		
 		vector heliUp = owner.GetTransformAxis(1);
 		float angUp = SDRC_Math.GetAngleBetweenVectors(heliUp, vector.Up);
 				

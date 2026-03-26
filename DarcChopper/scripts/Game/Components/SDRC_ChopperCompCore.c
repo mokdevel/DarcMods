@@ -17,11 +17,12 @@ enum SDRC_EFlyWayPointType
 	WP_HOVER,					//9 - 
 	WP_GET_OUT,					//10 - 
 	WP_END,						//11 - 
+	WP_DESPAWN,					//12 - 
 	
 	//One shot commands
-	WP_HOVER_UP,				//12 - Does the action and goes to HOVER state
-	WP_STOP_ENGINE,				//13 - Does the action and goes to WAIT state
-	WP_ATTACK,					//14 - Sets attack position and time and then FLY
+	WP_HOVER_UP,				//   - Does the action and goes to HOVER state
+	WP_STOP_ENGINE,				//   - Does the action and goes to WAIT state
+	WP_ATTACK,					//   - Sets attack position and time and then FLY
 	WP_SEARCH_DESTROY,			//   - Search for enemy by patroling an area. If enemy is found, attack the location.
 	
 	//Macro actions
@@ -84,6 +85,7 @@ enum SDRC_EHeliBehaviour
 	UNKNOWN,
 	NORMAL,
 	SEARCH_AND_DESTROY,
+	EVAC,
 }
 
 //------------------------------------------------------------------------------------------------
