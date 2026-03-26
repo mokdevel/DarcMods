@@ -76,10 +76,13 @@ The helicopter is requested to fly to this destination immediately. Any existing
 The helicopter is requested to fly to this destination and do rounds around the area. We will circle around the area for a while until continuing normal flight. You can set multiple points for longer patrol times.
 
 ## <img src="../pics/wp_searchanddestroy.png" width=18 height=18> Search And Destroy
-Search and destroy will order the helicopter to target a location and bomb it. This are will be shot at regardless of if there are enemies or not. The helicopter needs to be aligned to be able to shoot at the location. Multiple runs towards the target may be performed to the AI with one S&D command. 
+Search and destroy will order the helicopter to search for enemies close to the location. If an enemy is found, helicopter will change it's route and try to find a good attack route. Once an attack is performed, the area is patroled. This is a repeated action. Currently will stay 10 minutes in the state while doing other actions too.  
 
 ## <img src="../pics/wp_suppressive.png" width=18 height=18> Suppressive Fire
-Suppressive fire will order the helicopter to target a location and bomb it. This are will be shot at regardless of if there are enemies or not. The helicopter needs to be aligned to be able to shoot at the location. Multiple runs towards the target may be performed to the AI with one suppressive fire command. 
+Suppressive fire will order the helicopter to target a location and bomb it. The area will be shot at regardless of if there are enemies or not. The helicopter needs to be aligned to be able to shoot at the location. Multiple runs towards the target may be performed to the AI with one suppressive fire command. 
+
+## <img src="../pics/wp_artillery.png" width=18 height=18> Artillery Fire
+Artillery fire will order the helicopter to target a location and bomb it. This is done ONCE and then we return to normal flying. The area will be shot at regardless of if there are enemies or not. The helicopter needs to be aligned to be able to shoot at the location.
 
 <img src="../pics/chopperattacklines.png" width=30% height=30%>
 The image shows the green movement to the location to attack. The attack will continue (follow the white line) from another angle. The heli will do a detour and attack along the red line. Rinse and repeat. Once all attacks are performed, normal flying will continue. Wave count, angles and distances are randomized.

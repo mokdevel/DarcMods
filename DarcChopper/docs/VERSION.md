@@ -3,7 +3,27 @@
 ## Next Version
 Main features:
 * Fly path lines can be hidden. Settings -> Gameplay -> 
-* When chopper is damaged enough, it will try to make a evacuation landing in a safe place.
+
+Fixes:
+* Rocket sector slightly increased.
+* Min/Max speed increased to 15/40.
+
+# 20260326
+Main features:
+* First version on behaviour/brain. Currently has states: normal, search and destroy, evac.
+* New logic on waypoints.
+  * Defend: Land and leave troops. Shut down engine.
+  * Search and Destroy: Chopper will patrol the area and when an enemy is found, change it's route and try to attack. This is repeated for 10mins.
+  * Suppressive Fire: The old S&D. Do one or more attack runs on location.
+  *  Artillery Fire: Single attack on a location.
+* Evac functionality: If chopper is damaged enough, AI will try to find a safe location to land. Troops get our and chopper will stop it's enginges. If safe location not found, chopper will fly away to avoid being destroyed.
+Fixes:
+* Added entity type parameter for future.
+
+Known issues:
+* Wheel brakes on MI28 don't stay on. 
+* When chopper lands and shuts down engine, the physics may do a small jump. TBF.
+* There probably are some combinations of behaviour and waypoint use that I have not thought about and will bug. TBF
 
 # 20260324
 Small fix update.
