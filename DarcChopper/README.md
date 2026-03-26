@@ -81,11 +81,11 @@ Search and destroy will order the helicopter to search for enemies close to the 
 ## <img src="../pics/wp_suppressive.png" width=18 height=18> Suppressive Fire
 Suppressive fire will order the helicopter to target a location and bomb it. The area will be shot at regardless of if there are enemies or not. The helicopter needs to be aligned to be able to shoot at the location. Multiple runs towards the target may be performed to the AI with one suppressive fire command. 
 
-## <img src="../pics/wp_artillery.png" width=18 height=18> Artillery Fire
-Artillery fire will order the helicopter to target a location and bomb it. This is done ONCE and then we return to normal flying. The area will be shot at regardless of if there are enemies or not. The helicopter needs to be aligned to be able to shoot at the location.
-
 <img src="../pics/chopperattacklines.png" width=30% height=30%>
 The image shows the green movement to the location to attack. The attack will continue (follow the white line) from another angle. The heli will do a detour and attack along the red line. Rinse and repeat. Once all attacks are performed, normal flying will continue. Wave count, angles and distances are randomized.
+
+## <img src="../pics/wp_artillery.png" width=18 height=18> Artillery Fire
+Artillery fire will order the helicopter to target a location and bomb it. This is done ONCE and then we return to normal flying. The area will be shot at regardless of if there are enemies or not. The helicopter needs to be aligned to be able to shoot at the location.
 
 ## <img src="../pics/wp_getout.png" width=18 height=18> Get Out
 The helicopter will land to the position, order AIs to get out and move 50m from the helicopter. Only passengers (cargo) will be ordered to get out. Pilots and gunners will stay in the chopper. The cargo crew will be split in to groups of four - this was found to be a good solution to have AIs follow get out orders
