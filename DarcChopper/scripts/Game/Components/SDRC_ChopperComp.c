@@ -164,14 +164,19 @@ class SDRC_ChopperComp : ScriptComponent
 														//If chopper destination makes a too steep turn, we will add a few additional points.
 	
 	//Helistate
-	SDRC_EHeliState m_eHeliState;
+	private SDRC_EHeliState m_eHeliState;
 	private bool m_bInInit;
-	
+
+	//HeliBehaviour
+	private SDRC_EHeliBehaviour m_eHeliBehaviour;
+	float m_fTimerBehaviour = 0;						//Timer to stay in behaviour before changing to NORMAL
+	float m_fTimerBehaviourCycle = 0;					//Timer between actions while in non-NORMAL behaviour
+		
 	//Health
 	private float m_fHealthOrig = 0;
 	private bool m_bInEvac = false;
-	SDRC_EChopperDamageLevel m_eDamageLevel = SDRC_EChopperDamageLevel.UNDAMAGED;
-	const int SAFE_LANDING_SIZE = 60;					//Radius of the are to consider safe for landing
+	SDRC_EHeliDamageLevel m_eDamageLevel = SDRC_EHeliDamageLevel.UNDAMAGED;
+	const int SAFE_LANDING_SIZE = 50;					//Radius of the are to consider safe for landing
 	
 	//Runtime parameters
 	private int m_iDestinationPointAdd;
@@ -197,13 +202,13 @@ class SDRC_ChopperComp : ScriptComponent
 	//Heli directions
 	private vector m_vHeliForward;
 	private vector m_vHeliDirection;
-	private vector m_vHeliDirectionFuture;
+	vector m_vHeliDirectionFuture;
 	
 	//Enemy positions
 	vector m_vEnemyPosition = vector.Zero;		//Position of last found enemy
 	int m_iEnemyFoundTime;						//Time to wait to before allowing enemy position 
-	int m_iEnemyFoundTimeout = 3;				//Time between enemy position updates
-	int m_iEnemyForgetTimeout = 15;				//Time to forget the enemy position
+	int m_iEnemyFoundTimeout = 2;				//Time between enemy position updates
+	int m_iEnemyForgetTimeout = 10;				//Time to forget the enemy position
 		
 	//Debug stuff
 	private float m_fDbgAngle;
@@ -285,6 +290,7 @@ class SDRC_ChopperComp : ScriptComponent
 		
 		m_bInInit = true;
 		SetState(SDRC_EHeliState.FLY);
+		SetBehaviour(SDRC_EHeliBehaviour.NORMAL);
 		
 		//Clear any existing path points
 		ResetFlight();
@@ -296,25 +302,21 @@ class SDRC_ChopperComp : ScriptComponent
 		
 		m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + m_iEnemyFoundTimeout;
 		
-		m_Helicopter_s = VehicleHelicopterSimulation.Cast(GetOwner().GetRootParent().FindComponent(VehicleHelicopterSimulation));
-		if (m_Helicopter_s)
+		//Set wheel brake on
+		HelicopterControllerComponent hcc = HelicopterControllerComponent.Cast(GetOwner().GetRootParent().FindComponent(HelicopterControllerComponent));
+		if (hcc)
 		{
-	        m_Helicopter_s.EngineStart();
-	        m_Helicopter_s.SetThrottle(m_fThrottle);
-	        m_Helicopter_s.RotorSetForceScaleState(0, m_fRotorForce0);
-	        m_Helicopter_s.RotorSetForceScaleState(1, m_fRotorForce1);
-			SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, m_fDistanceLow, m_fDistanceHigh);						
-			
-			if (m_bAutoStart)
-			{
-				//NOTE: This section is to be done in the mod
-				SetEnemySearchType(SDRC_EHeliEnemySearchType.PLAYER);
-			}
+			hcc.SetPersistentWheelBrake(true);
 		}
-		else
+		
+		m_Helicopter_s = VehicleHelicopterSimulation.Cast(GetOwner().GetRootParent().FindComponent(VehicleHelicopterSimulation));
+		if (!m_Helicopter_s)
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp] VehicleHelicopterSimulation not found.", LogLevel.ERROR);
-		}		
+		}
+		
+		SetEngine(true, m_fThrottle, m_fRotorForce0, m_fRotorForce1);
+		SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, m_fDistanceLow, m_fDistanceHigh);						
 		
 		if (m_RocketPrefabs.IsEmpty())
 		{
@@ -427,8 +429,7 @@ class SDRC_ChopperComp : ScriptComponent
 		if (m_bInInit)
 		{
 			//If the chopper is damaged, init is considered done.
-//			if (SDRC_VehicleHelper.GetHealth(owner) < HEALTH_LIMIT)
-			if (m_eDamageLevel != SDRC_EChopperDamageLevel.UNDAMAGED)
+			if (m_eDamageLevel != SDRC_EHeliDamageLevel.UNDAMAGED)
 			{
 				InitDone(owner);
 			}
@@ -450,7 +451,9 @@ class SDRC_ChopperComp : ScriptComponent
 		m_fTimeInState -= timeSlice;		
 		m_fTimeRocketDelay += timeSlice;		
 		m_fTimerAttack -= timeSlice;
-		
+		m_fTimerBehaviour -= timeSlice;
+		m_fTimerBehaviourCycle -= timeSlice;
+
 		//---
 		//TBD: This section is not needed every frame. Could be done every x seconds - not that critical
 		//Check if we're still functional	
@@ -460,8 +463,7 @@ class SDRC_ChopperComp : ScriptComponent
 			SetState(SDRC_EHeliState.DESTROYED);
 			SDRC_DebugHelper.DeleteDebugItems(m_sDid);
 			return;
-		}
-		
+		}		
 		//---
 		
 		//Normal flying part
@@ -580,6 +582,7 @@ class SDRC_ChopperComp : ScriptComponent
 		//Handle states, attacks, ...
 		HandleState(owner, timeSlice);
 		HandleAttack(owner);
+		HandleBehaviour(owner);
 
 		//Set velocity
 		SetVelocity(owner, timeSlice);
@@ -806,7 +809,7 @@ class SDRC_ChopperComp : ScriptComponent
 		}*/
 		
 		vector initialPos = owner.GetOrigin();
-		float ypos = SDRC_Misc.GetSurfaceYWithWater(initialPos);
+		float ypos = SDRC_Misc.GetSurfaceYWithWater(initialPos, true);
 		
 		initialPos[1] = Math.Clamp(initialPos[1], m_fFlyHeightLow + ypos, m_fFlyHeightHigh + ypos);
 		owner.SetOrigin(initialPos);
@@ -997,8 +1000,6 @@ class SDRC_ChopperComp : ScriptComponent
 			float distance = vector.DistanceXZ(m_vFlightPoints[m_vFlightPoints.Count() - 1].pt, flyDestination.pt);
 	
 			//Get the angle for the destination
-			vector dir0;	//Previous flight direction
-			vector dir1;	//New flight direction
 			vector p0 = m_vFlightPoints[m_vFlightPoints.Count() - 2].pt;
 			vector p1 = m_vFlightPoints[m_vFlightPoints.Count() - 1].pt;
 			vector p2 = flyDestination.pt;
@@ -1016,7 +1017,7 @@ class SDRC_ChopperComp : ScriptComponent
 				
 				//We need to take a detour. Add an additional points outside of the line to make the route rounder				
 				float lerpRnd = SDRC_Misc.RandomFloat(0.25, 0.65);
-				float divRnd = SDRC_Misc.RandomFloat(1.5, 4);
+				float divRnd = SDRC_Misc.RandomFloat(1.5, 7);
 				
 				//Depending on the angle decide if we re-route left ot right				
 				bool isOnLeft = SDRC_Math.IsPointOnLeft(p0, p1, p2);
@@ -1145,6 +1146,18 @@ class SDRC_ChopperComp : ScriptComponent
 		SDRC_Log.Add("[SDRC_ChopperComp:SetState] State: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.SPAM);
 	}
 	
+	//------------------------------------------------------------------------------------------------
+	SDRC_EHeliBehaviour GetBehaviour()
+	{
+		return m_eHeliBehaviour;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void SetBehaviour(SDRC_EHeliBehaviour behaviour)
+	{
+		m_eHeliBehaviour = behaviour;
+	}	
+	
 	//------------------------------------------------------------------------------------------------	
 	void SetTimeInState(int seconds)	
 	{
@@ -1170,6 +1183,7 @@ class SDRC_ChopperComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------	
 	private void HandleState(IEntity owner, float timeSlice) {}
 	private void HandleAttack(IEntity owner) {}
+	private void HandleBehaviour(IEntity owner) {}
 	private void SetNextState(IEntity owner, SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.WP_UNDEFINED, bool allowRemove = true) {}
 	//------------------------------------------------------------------------------------------------	
 	// Damage settings
@@ -1191,4 +1205,5 @@ class SDRC_ChopperComp : ScriptComponent
 	// Helicopter settings - defined in modded class
 	//------------------------------------------------------------------------------------------------	
 	void SetHeli(float speedMin, float speedMax, float flyHeightLow, float flyHeightHigh, float distanceLow, float distanceHigh) {}
+	void SetEngine(bool engine, float throttle, float rotorForce0, float rotorForce1) {}
 }

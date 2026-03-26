@@ -18,7 +18,7 @@ enum SDRC_EFlyWayPointType
 	WP_GET_OUT,					//10 - 
 	WP_END,						//11 - 
 	
-	//----	
+	//One shot commands
 	WP_HOVER_UP,				//12 - Does the action and goes to HOVER state
 	WP_STOP_ENGINE,				//13 - Does the action and goes to WAIT state
 	WP_ATTACK,					//14 - Sets attack position and time and then FLY
@@ -29,17 +29,18 @@ enum SDRC_EFlyWayPointType
 	WP_M_LAND_TROOPS,			//   - Drop of troops to exact position, wait and leave
 	WP_M_LAND_TO_FREE_SPOT,		//   - Drop of troops, but search for empty spot
 	WP_M_EVAC_TROOPS,			//   - Drop troops to a safe spot and stop engine
-	WP_M_ATTACK,				//   - Bomb run on the area without the need to have an enemy
+//	WP_M_ATTACK,				//   - Bomb run on the area without the need to have an enemy
+	WP_M_SUPPRESSIVE,			//   - Bomb run on the area without the need to have an enemy
 	WP_M_TESTING,				//Just for testing
 }
 
 enum SDRC_EHeliState
 {
 	UNKNOWN,
-	FLY,
-	FLY_AWAY,
+	FLY,					//Normal state
+	FLY_AWAY,				//In this state, when all destinations have been flown through, we fly away and end.
 	FLY_AWAY_IMMEDIATELY,	//NOTE: This is not a real state. When set, state will change to FLY_AWAY
-	LAND,
+	LAND,					//Chopper is landing
 	WAIT,					//NOTE: Velocity disabled
 	RAISE,
 	HOVER,
@@ -68,7 +69,7 @@ enum SDRC_EChopperType
 	FIXEDWING,
 }
 
-enum SDRC_EChopperDamageLevel
+enum SDRC_EHeliDamageLevel
 {
 	UNKNOWN,
 	UNDAMAGED,
@@ -78,6 +79,12 @@ enum SDRC_EChopperDamageLevel
 	DESTROYED,	
 }
 
+enum SDRC_EHeliBehaviour
+{
+	UNKNOWN,
+	NORMAL,
+	SEARCH_AND_DESTROY,
+}
 
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompCore
@@ -120,13 +127,7 @@ class SDRC_ChopperCompCore
 		chopperComp.m_fSpeedMin = chopperComp.m_fSpeedMinOrig;
 		chopperComp.m_fSpeedMax = chopperComp.m_fSpeedMaxOrig;	
 		
-		VehicleHelicopterSimulation m_Helicopter_s = VehicleHelicopterSimulation.Cast(owner.GetRootParent().FindComponent(VehicleHelicopterSimulation));
-		if (m_Helicopter_s)
-		{
-	        m_Helicopter_s.SetThrottle(chopperComp.m_fThrottle);
-	        m_Helicopter_s.RotorSetForceScaleState(0, chopperComp.m_fRotorForce0);
-	        m_Helicopter_s.RotorSetForceScaleState(1, chopperComp.m_fRotorForce1);
-		}
+		chopperComp.SetEngine(true, chopperComp.m_fThrottle, chopperComp.m_fRotorForce0, chopperComp.m_fRotorForce1);
 		
 		//Reset runtime parameters
 		chopperComp.m_fSpeedLandingMul = 1.0;

@@ -88,13 +88,23 @@ class SDRC_ChopperDebug
 					{
 						color = Color.GRAY;
 						break;
-					}				
+					}
 					case SDRC_EFlyWayPointType.WP_ATTACK:
 					{
 						color = Color.RED;
 						pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 10;
 						break;
-					}				
+					}
+					case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
+					{
+						color = Color.WHITE;
+						break;
+					}
+					case SDRC_EFlyWayPointType.WP_FLY_AWAY:
+					{
+						color = Color.PINK;
+						break;
+					}
 				}
 				
 				//If no color change, skip. 
@@ -212,7 +222,7 @@ class SDRC_ChopperDebug
 		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_INFO))
 		{		
 			string debugText = 	//"Speedangle:" + angle * Math.RAD2DEG + "\n" +
-								SCR_Enum.GetEnumName(SDRC_EHeliState, chopperComp.m_eHeliState) + " (" + 
+								SCR_Enum.GetEnumName(SDRC_EHeliState, chopperComp.GetState()) + " (" + 
 								SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimeInState) + ")";			
 								if (chopperComp.m_vEnemyPosition != vector.Zero)
 								{
@@ -249,8 +259,8 @@ class SDRC_ChopperDebug
 //								"Pilots::" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
 //								"Working:" + SDRC_VehicleHelper.IsWorking(owner) + " - " + 
 //								"Health: " + SCR_Enum.GetEnumName(EDamageState, SDRC_VehicleHelper.GetDamageState(owner)) + ": " + SDRC_VehicleHelper.GetHealth(owner) + "\n" + 
-//								"Health: " + SCR_Enum.GetEnumName(SDRC_EChopperDamageLevel, chopperComp.m_eDamageLevel) + ": " + SDRC_VehicleHelper.GetHealth(owner) + "\n" + 
-								"Health: " + SCR_Enum.GetEnumName(SDRC_EChopperDamageLevel, chopperComp.m_eDamageLevel) + ": " + SDRC_VehicleHelper.GetHealthScaled(owner) + "\n" + 
+//								"Health: " + SCR_Enum.GetEnumName(SDRC_EHeliDamageLevel, chopperComp.m_eDamageLevel) + ": " + SDRC_VehicleHelper.GetHealth(owner) + "\n" + 
+								"Health: " + SCR_Enum.GetEnumName(SDRC_EHeliDamageLevel, chopperComp.m_eDamageLevel) + ": " + SDRC_VehicleHelper.GetHealthScaled(owner) + "\n" + 
 //								"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
 								"";
 

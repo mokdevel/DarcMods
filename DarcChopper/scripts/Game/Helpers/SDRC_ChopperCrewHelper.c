@@ -228,15 +228,18 @@ class SDRC_ChopperCrewHelper
 		
 		SDRC_VehicleHelper.GetOutVehicle(owner, groups);
 
-		//Disable gunner and pilots. Otherwise they try to get out too immediately to engage the enemy.
-		SetPilotAndGunnerActive(owner, false);
-		GetGame().GetCallqueue().CallLater(SetPilotAndGunnerActive, groups.Count() * GETOUT_DELAY * 1000 + 5000, false, owner, true);
+		//Disable gunner and pilots. Otherwise they try to get out too immediately to engage the enemy. If in evac, everybody shall leave.
+		if (!chopperComp.GetEvac())
+		{
+			SetPilotAndGunnerActive(owner, false);
+			GetGame().GetCallqueue().CallLater(SetPilotAndGunnerActive, groups.Count() * GETOUT_DELAY * 1000 + 5000, false, owner, true);
+		}
 
 		foreach (int g, SCR_AIGroup group : groups)
 		{
-			if (g == 0)
+			if ( (g == 0) && (!chopperComp.GetEvac()) )
 			{
-				//First group is pilots, ignore them
+				//First group is pilots, ignore them .. unless in evac mode
 				continue;
 			}
 			

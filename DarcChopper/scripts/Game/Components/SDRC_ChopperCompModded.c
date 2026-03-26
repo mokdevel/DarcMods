@@ -42,7 +42,28 @@ modded class SDRC_ChopperComp
 		
 		m_fSpeed = m_fSpeedMin;
 	}	
-	
+
+	//------------------------------------------------------------------------------------------------	
+	override void SetEngine(bool engine, float throttle, float rotorForce0, float rotorForce1)
+	{
+		VehicleHelicopterSimulation heliSimulation = VehicleHelicopterSimulation.Cast(GetOwner().GetRootParent().FindComponent(VehicleHelicopterSimulation));
+		if (heliSimulation)
+		{
+			if (engine)
+			{
+				heliSimulation.EngineStart();
+			}
+			else
+			{
+				heliSimulation.EngineStop();
+			}
+	        
+	        heliSimulation.SetThrottle(throttle);
+	        heliSimulation.RotorSetForceScaleState(0, rotorForce0);
+	        heliSimulation.RotorSetForceScaleState(1, rotorForce1);		
+		}
+	}
+		
 	//------------------------------------------------------------------------------------------------	
 	// Enemy related
 	//------------------------------------------------------------------------------------------------	
@@ -76,6 +97,12 @@ modded class SDRC_ChopperComp
 	}	
 
 	//------------------------------------------------------------------------------------------------	
+	bool GetEvac()
+	{
+		return m_bInEvac;
+	}	
+	
+	//------------------------------------------------------------------------------------------------	
 	// Damage settings
 	//------------------------------------------------------------------------------------------------	
 	
@@ -104,19 +131,20 @@ modded class SDRC_ChopperComp
 		float health = SDRC_VehicleHelper.GetHealthScaled(owner);
 		if ( health < 0.93 )
 		{
-			m_eDamageLevel = SDRC_EChopperDamageLevel.HEAVY;
+			m_eDamageLevel = SDRC_EHeliDamageLevel.HEAVY;
 		}	
 		else if ( health < 0.97)
 		{
-			m_eDamageLevel = SDRC_EChopperDamageLevel.MEDIUM;
+			m_eDamageLevel = SDRC_EHeliDamageLevel.MEDIUM;
 		}	
 		else if ( health < 0.99)
 		{
-			m_eDamageLevel = SDRC_EChopperDamageLevel.LIGHT;
+			m_eDamageLevel = SDRC_EHeliDamageLevel.LIGHT;
 		}			
 				
 		//If damage is high, evac!
-		if ( ( (m_eDamageLevel == SDRC_EChopperDamageLevel.MEDIUM) || (m_eDamageLevel == SDRC_EChopperDamageLevel.HEAVY) ) && (!m_bInEvac) )
+		if ( ( (m_eDamageLevel == SDRC_EHeliDamageLevel.MEDIUM) || (m_eDamageLevel == SDRC_EHeliDamageLevel.HEAVY) ) && (!m_bInEvac) )
+//		if (!m_bInEvac)
 		{
 			m_bInEvac = true;
 			AddDestination(SDRC_EFlyWayPointType.WP_M_RESET);
@@ -203,11 +231,17 @@ modded class SDRC_ChopperComp
 				//Fly away immediately
 				ResetDestinations();
 				SDRC_ChopperHelper.CutSpline(m_vSplinePoints, m_iClosestIndex);
-				//NOTE: Will drop through FLY_AWAY
+				//NOTE: Will drop through WP_FLY_AWAY
 			}		
 			case SDRC_EFlyWayPointType.WP_FLY_AWAY:
 			{
 				//Fly away after all destinations have been handled
+				if (destination == vector.Zero)
+				{
+					vector direction = vector.Direction(SDRC_Misc.GetWorldCenter(), GetOwner().GetOrigin() );
+					destination = GetOwner().GetOrigin() + (direction.Normalized() * (float)SDRC_Misc.GetWorldSize());
+				}
+				
 				SetState(SDRC_EHeliState.FLY_AWAY);
 				break;
 			}
@@ -222,10 +256,15 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_GET_OUT:			//Handled in HandleState()
 			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
 			case SDRC_EFlyWayPointType.WP_LAND:
+			case SDRC_EFlyWayPointType.WP_END:
 			case SDRC_EFlyWayPointType.WP_PATROL:
+			{
+				break;
+			}
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 			{
-				
+				m_eHeliBehaviour = SDRC_EHeliBehaviour.SEARCH_AND_DESTROY;
+				m_fTimerBehaviour = value;
 				break;
 			}
 			
@@ -239,6 +278,7 @@ modded class SDRC_ChopperComp
 				addDestinationPoint = false;
 				break;
 			}
+			case SDRC_EFlyWayPointType.WP_M_LAND_TO_FREE_SPOT:
 			case SDRC_EFlyWayPointType.WP_M_EVAC_TROOPS:
 			{
 				if (SDRC_ChopperHelper.GetSafeLandingPosition(destination, SAFE_LANDING_SIZE))
@@ -276,26 +316,11 @@ modded class SDRC_ChopperComp
 				addDestinationPoint = false;
 				break;
 			}
-			case SDRC_EFlyWayPointType.WP_M_LAND_TO_FREE_SPOT:
+			case SDRC_EFlyWayPointType.WP_M_SUPPRESSIVE:
 			{
-				if (SDRC_ChopperHelper.GetSafeLandingPosition(destination, SAFE_LANDING_SIZE))
-				{
-					//Safe landing position found
-					SDRC_DebugHelper.AddDebugPos(destination, ARGB(32, 64, 255, 64), SAFE_LANDING_SIZE, m_sDid, 10.0);				
-					AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, destination);
-				}
-				else
-				{
-					//No safe landing position found
-					AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
-				}
-				addDestinationPoint = false;
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_M_ATTACK:
-			{
-				AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, destination);
-				//Do random count of bombing runs
+				//Do one attack
+				AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, destination, value);
+				//Add random count of bombing runs
 				int runCount = SDRC_Misc.RandomInt(0, 4);
 				//Do multiple ones if requested
 				for (int i = 0; i < runCount; i++)
@@ -309,7 +334,7 @@ modded class SDRC_ChopperComp
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_FLY, rndPos, value);
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_ATTACK, destination, value);
 				}
-				m_vAttackPosition = destination;			//Where to attack				
+				m_vAttackPosition = destination;			//Where to attack
 				m_fTimerAttack = value * (runCount + 1);	//For how long to continue attacks. +1 to avoid runCount = 0 resulting in zero time
 				//All things are already added
 				addDestinationPoint = false;
@@ -421,6 +446,54 @@ modded class SDRC_ChopperComp
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
+	Handle behaviour
+	- Normal case: Fly and react normally
+	- Attack case: 
+	*/
+	override private void HandleBehaviour(IEntity owner)
+	{
+		if (m_eHeliBehaviour == SDRC_EHeliBehaviour.NORMAL)
+		{
+			return;
+		}
+		
+		if (m_fTimerBehaviour < 0)	
+		{
+			//Normal case:
+			m_eHeliBehaviour = SDRC_EHeliBehaviour.NORMAL;
+			return;
+		}
+		
+		if (m_fTimerBehaviourCycle > 0)
+		{
+			return;
+		}
+		
+		m_fTimerBehaviourCycle = 3;	//10 seconds between cycles
+		
+		switch (m_eHeliBehaviour)
+		{
+			case SDRC_EHeliBehaviour.SEARCH_AND_DESTROY:
+			{
+				vector enemyPos = SDRC_ChopperEnemyHelper.SearchEnemy(owner);
+				
+				if (enemyPos != vector.Zero)
+				{
+					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D set to: " + enemyPos, LogLevel.NORMAL);
+					
+					AddDestination(SDRC_EFlyWayPointType.WP_M_RESET);
+					AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, enemyPos);
+					AddDestination(SDRC_EFlyWayPointType.WP_PATROL, enemyPos);
+					m_fTimerBehaviourCycle = 30;
+				}
+				
+				break;
+			}
+		}
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
 	Sets the next destination for an action. 
 	- FLY will start to fly
 	- Others will have some action bound to them.
@@ -451,7 +524,8 @@ modded class SDRC_ChopperComp
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
 				SetState(SDRC_EHeliState.FLY);
 				//Fly for a while and then go to END state
-				AddDestination(SDRC_EFlyWayPointType.WP_END, m_vFlightPoints[m_vFlightPoints.Count() - 1].pt); 
+				AddDestination(SDRC_EFlyWayPointType.WP_END, owner.GetOrigin()); 
+//				AddDestination(SDRC_EFlyWayPointType.WP_END, m_vFlightPoints[m_vFlightPoints.Count() - 1].pt); 
 				break;
 			}
 			
@@ -484,7 +558,9 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_END:
 			{
 				SetState(SDRC_EHeliState.DESTROYED);
+				m_vSplinePoints.Clear();
 				isRemoveDestination = true;
+				//TBD: DESPAWN!!
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_GET_OUT:
@@ -539,7 +615,8 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
 			{
 				//Stop engine and wait
-				m_Helicopter_s.EngineStop();
+				//m_Helicopter_s.EngineStop();
+				SetEngine(false, 0, 0, 0);
 				SetState(SDRC_EHeliState.WAIT);
 				SetTimeInState(30);
 				isRemoveDestination = true;
@@ -623,7 +700,7 @@ modded class SDRC_ChopperComp
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
+				//SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
 				//Disable effect of rotors
 		        m_Helicopter_s.RotorSetForceScaleState(0, 0);
 		        m_Helicopter_s.RotorSetForceScaleState(1, 0);

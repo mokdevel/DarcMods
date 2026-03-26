@@ -98,8 +98,22 @@ class SDRC_ChopperHelper
 			//Occasionally fly towards middle to avoid sliding out of the map
 			orig = SDRC_Misc.GetWorldCenter();
 		}
+			
+		vector pos;
 		
-		vector pos = SDRC_ChopperHelper.GetRandomPosition(orig, chopperComp.m_fDistanceLow, chopperComp.m_fDistanceHigh);
+		//Create a random position to fly to. Try to avoid very steep turns by doing iterations.
+		for (int i = 0; i < 3; i++)
+		{
+			pos = SDRC_ChopperHelper.GetRandomPosition(orig, chopperComp.m_fDistanceLow, chopperComp.m_fDistanceHigh);	
+			vector dir1 = vector.Direction(owner.GetOrigin(), pos);
+			float angle = SDRC_Math.GetAngleBetweenVectorsXZ(dir1, chopperComp.m_vHeliDirectionFuture);
+			if (Math.AbsFloat(angle) < (110 * Math.DEG2RAD) )
+			{
+				
+				break;
+			}			
+		}
+		
 		chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos);
 		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 255, 00, 00), 2.0, chopperComp.m_sDid, 200);
 	}
@@ -210,19 +224,22 @@ class SDRC_ChopperHelper
 							}
 							case "E_AIWaypoint_GetIn":
 							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_ATTACK, pos, 120);
 								break;
 							}
 							case "E_AIWaypoint_Wait":
 							case "E_AIWaypoint_Suppress_Editor":
+							{
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_SUPPRESSIVE, pos);
+								break;
+							}
 							case "E_AIWaypoint_ArtillerySupport":
 							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_ATTACK, pos, 120);
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, pos, 120);
 								break;
 							}
 							case "E_AIWaypoint_SearchAndDestroy":
 							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, pos);
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, pos, 600);
 								break;
 							}
 						}
@@ -381,7 +398,7 @@ class SDRC_ChopperHelper
 			}*/
 					
 			//If we're landing set some of the last points close to the ground
-			if (chopperComp.m_eHeliState == SDRC_EHeliState.LAND)
+			if (chopperComp.GetState() == SDRC_EHeliState.LAND)
 			{
 				//Decide a point on the spline for the initial landing to start
 				int pointsToGround = chopperComp.m_fSpeed / 1.2;
