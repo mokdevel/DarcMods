@@ -8,7 +8,7 @@ Functionality is implemented as a single re-usable component. It is very easy to
 
 Helicopters can be spawned via GM and can be commanded. Currently available waypoints are listed here: [Waypoints](https://github.com/mokdevel/DarcMods/tree/main/DarcChopper#waypoints)
 
-* [Version history](VERSION.md)
+* [Version history](./docs/VERSION.md)
 * [Creating a flying helicopter](./docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter)
 * [Parameters](./docs/P_HELICOPTER_FLY.md#sdrc_choppercomp-values)
 
