@@ -17,9 +17,11 @@ Main features:
   * Suppressive Fire: The old S&D. Do one or more attack runs on location.
   *  Artillery Fire: Single attack on a location.
 * Evac functionality: If chopper is damaged enough, AI will try to find a safe location to land. Troops get our and chopper will stop it's enginges. If safe location not found, chopper will fly away to avoid being destroyed.
+
 Fixes:
 * Added entity type parameter for future.
 * Renamed ``WP_M_ATTACK`` -> ``WP_M_SUPPRESSIVE``.
+
 Known issues:
 * Wheel brakes on MI28 don't stay on. 
 * When chopper lands and shuts down engine, the physics may do a small jump. TBF.
