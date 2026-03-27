@@ -311,6 +311,7 @@ modded class SDRC_ChopperComp
 				addDestinationPoint = false;
 				break;
 			}
+			case SDRC_EFlyWayPointType.WP_M_ATTACK:
 			case SDRC_EFlyWayPointType.WP_M_SUPPRESSIVE:
 			{
 				//Do one attack

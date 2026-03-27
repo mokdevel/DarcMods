@@ -16,7 +16,7 @@ Vehicle : "{3133602B406D131C}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunshi
   SDRC_ChopperComp "{68A92A59135A6D91}" {
    m_fRotorForce1 2
    m_sFaction "FIA"
-   m_RocketSector 7
+   m_RocketSector 9
    m_RocketPrefabs {
     "{C9A1612DC5340613}Prefabs/Weapons/Ammo/Ammo_Rocket_S5.et" "{EF17BED6DCEE4DE4}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_FRAG_S5MO.et" "{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et"
    }

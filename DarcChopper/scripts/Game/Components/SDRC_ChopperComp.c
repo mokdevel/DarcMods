@@ -53,10 +53,10 @@ class SDRC_ChopperComp : ScriptComponent
 	float m_fRotorForce1;
 	float m_fRotorForce1Orig;
 	
-	[Attribute(category: "Chopper", defvalue: "10.0", desc: "Minimum speed", params: "1.0 100.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "15.0", desc: "Minimum speed", params: "1.0 100.0 0.1")]	
 	float m_fSpeedMin;				//Minimum speed
 	float m_fSpeedMinOrig;
-	[Attribute(category: "Chopper", defvalue: "30.0", desc: "Maximum speed", params: "1.0 100.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "40.0", desc: "Maximum speed", params: "1.0 100.0 0.1")]	
 	float m_fSpeedMax;				//Maximum speed
 	float m_fSpeedMaxOrig;
 	[Attribute(category: "Chopper", defvalue: "40.0", desc: "Minimum fly height (from ground level)", params: "5 100.0 1")]	
@@ -86,7 +86,7 @@ class SDRC_ChopperComp : ScriptComponent
 	ref array<AIGroup> m_aGroups = {};
 	
 	//Category: Weapons
-	[Attribute(category: "Weapons", defvalue: "10.0", desc: "The sector where rockets may be shot", params: "1.0 45.0 1.0")]	
+	[Attribute(category: "Weapons", defvalue: "12.0", desc: "The sector where rockets may be shot", params: "1.0 45.0 1.0")]	
 	float m_RocketSector;
 	[Attribute(category: "Weapons", defvalue: "0.5", desc: "Delay between rockets", params: "0.1 30.0 0.1")]	
 	float m_RocketDelay;
@@ -122,7 +122,6 @@ class SDRC_ChopperComp : ScriptComponent
 	
 	//Original destination	
 	private vector m_vOriginalDestination;				//Used to know where to patrol
-//	private vector m_vFirstDestination;					//Where to fly first
 		
 	//Speed management
 	private const float SPEED_INTERVAL = 1.0;			//(seconds) Interval to modify speed of the helicopter
@@ -136,7 +135,7 @@ class SDRC_ChopperComp : ScriptComponent
 	private float m_fTimeBetweenFixes = 30;
 	
 	float m_fTimeInState = -1;							//The timer to stay in a certain state. This is only in effect when positive value.
-	private bool  m_bTimeInStateEnabled = false;
+	private bool m_bTimeInStateEnabled = false;
 			
 	//Turn
 	private const int TIME_TURN_INTERVAL_BASE = 40;		//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
@@ -203,13 +202,8 @@ class SDRC_ChopperComp : ScriptComponent
 	private vector m_vHeliDirection;
 	vector m_vHeliDirectionFuture;
 	
-	//Enemy positions
-	vector m_vEnemyPosition = vector.Zero;		//Position of last found enemy
-	int m_iEnemyFoundTime;						//Time to wait to before allowing enemy position 
-	int m_iEnemyFoundTimeout = 2;				//Time between enemy position updates
-	int m_iEnemyForgetTimeout = 10;				//Time to forget the enemy position
-		
 	//Debug stuff
+	string m_sDid;								//Id for debug items
 	private float m_fDbgAngle;
 	float m_fAnglePitch;
 	private float m_fAngleRoll;
@@ -224,11 +218,6 @@ class SDRC_ChopperComp : ScriptComponent
 	vector m_vDestinationFuture;				//Destination where we eventually plan to fly
 	vector m_vSplinePointBelow;					//The point below heli that is close to the spline
 	
-	//Debug items
-	string m_sDid;								//Id for debug items
-	//ref array<ref CanvasWidgetCommand> m_aDrawCommands = {};		//Line drawing commands
-	//ref CanvasWidget m_wCanvas;					//Canvas to draw the lines to
-
 	//Landing related
 	private bool m_bIsLanding;					//If true, landing sequence has started
 	private bool m_bFinalLanding;				//If true, we're in the final landing stages really close to the target
@@ -237,9 +226,15 @@ class SDRC_ChopperComp : ScriptComponent
 	private float m_fSpeedLandingOrig;			//Speed from where we start to descend
 	private vector m_fPositionLandingOrig;		//Position from where we start to descend
 	
+	//Enemy positions
+	vector m_vEnemyPosition = vector.Zero;		//Position of last found enemy
+	int m_iEnemyFoundTime;						//Time to wait to before allowing enemy position 
+	int m_iEnemyFoundTimeout = 2;				//Time between enemy position updates
+	int m_iEnemyForgetTimeout = 10;				//Time to forget the enemy position
+		
 	//Attack related
-	float m_fTimerAttack = 0;					//Timer to do attacks
-	vector m_vAttackPosition;					//Position to attack
+	private float m_fTimerAttack = 0;			//Timer to do attacks
+	private vector m_vAttackPosition;			//Position to attack
 
 	//------------------------------------------------------------------------------------------------
 	override void EOnInit(IEntity owner)

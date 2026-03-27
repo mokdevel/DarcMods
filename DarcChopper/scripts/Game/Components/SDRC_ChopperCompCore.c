@@ -28,9 +28,9 @@ enum SDRC_EFlyWayPointType
 	//Macro actions
 	WP_M_RESET = 30,			//30 - Reset destinations
 	WP_M_LAND_TROOPS,			//   - Drop of troops to exact position, wait and leave
-	WP_M_LAND_TO_FREE_SPOT,		//   - Drop of troops, but search for empty spot
+	WP_M_LAND_TO_FREE_SPOT,		//   - Drop of troops, but search for empty spot. Stop engine.
 	WP_M_EVAC_TROOPS,			//   - Drop troops to a safe spot and stop engine
-//	WP_M_ATTACK,				//   - Bomb run on the area without the need to have an enemy
+	WP_M_ATTACK,				//   - Bomb run on the area without the need to have an enemy (TO BE CHANGED!)
 	WP_M_SUPPRESSIVE,			//   - Bomb run on the area without the need to have an enemy
 	WP_M_TESTING,				//Just for testing
 }
