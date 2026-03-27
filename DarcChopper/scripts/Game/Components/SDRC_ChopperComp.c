@@ -79,7 +79,7 @@ class SDRC_ChopperComp : ScriptComponent
 //	[Attribute(defvalue: EAISkill.REGULAR.ToString(), UIWidgets.ComboBox, desc: "AI skill in combat", "", ParamEnumArray.FromEnum(EAISkill), category: "Common")]
 	[Attribute(category: "AI settings", defvalue: typename.EnumToString(EAISkill, EAISkill.REGULAR), uiwidget: UIWidgets.ComboBox, desc: "AI skill", enumType: EAISkill)]	
 	EAISkill m_AISkill;	
-	[Attribute(category: "AI settings", defvalue: "1.3", desc: "AI perception", params: "0.1 3.0 0.1")]	
+	[Attribute(category: "AI settings", defvalue: "1.7", desc: "AI perception", params: "0.1 5.0 0.1")]	
 	float m_AIPerception;
 	[Attribute(category: "AI settings", defvalue: typename.EnumToString(SDRC_EHeliEnemySearchType, SDRC_EHeliEnemySearchType.ANY_CHAR), uiwidget: UIWidgets.ComboBox, desc: "Type of enemy to search", enumType: SDRC_EHeliEnemySearchType)]		
 	SDRC_EHeliEnemySearchType m_EnemySearchType;
@@ -118,7 +118,7 @@ class SDRC_ChopperComp : ScriptComponent
 	
 	//Timing stuff
 	private const float TIME_DELAY_READY = 1;			//(seconds) Time before we spawn AIs and init flight path. This will give time for the chopper to properly initialize
-	private const float TIME_IN_INIT = 2;				//(seconds) Time to be in init state (after READY). During this time, we don't check for damage or similar things.
+	private const float TIME_IN_INIT = 6;				//(seconds) Time to be in init state (after READY). During this time, we don't check for damage or similar things.
 	
 	//Original destination	
 	private vector m_vOriginalDestination;				//Used to know where to patrol
@@ -849,8 +849,8 @@ class SDRC_ChopperComp : ScriptComponent
 		m_vOrigin = owner.GetOrigin();				
 
 		//Create initial flypath.
-		AddFlyPathPoint(owner.GetOrigin());	//point 1
-		//AddDebugMarker(origin, ARGB(255, 0, 255, 00), 2.0, m_sDid, 10);
+		//AddFlyPathPoint(owner.GetOrigin());	//point 1
+		//AddDebugMarker(origin, ARGB(255, 0, 255, 00), 2.0, m_sDid);
 				
 		//TBD: Are we on low altitude? Hover up...
 		/* if (m_vOrigin[1] < SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + m_fFlyHeightLow)
@@ -864,7 +864,6 @@ class SDRC_ChopperComp : ScriptComponent
 		{
 			destination = SDRC_ChopperHelper.GetDestinationForward(owner, 500);
 		}
-		//AddFlyPathPoint(destination);
 		AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
 
 		SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Chopper initial position: " + owner.GetOrigin(), LogLevel.DEBUG);
@@ -966,12 +965,16 @@ class SDRC_ChopperComp : ScriptComponent
 		//Add a few points in front to smooth the flight pattern
 		float forwardDistance = 300;
 		vector origin = owner.GetOrigin();
+		
 		vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, forwardDistance/2);
 		pos[1] = origin[1];
 		AddFlyPathPoint(pos);
+		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid);
+		
 		pos = SDRC_ChopperHelper.GetDestinationForward(owner, forwardDistance);
 		pos[1] = origin[1];
 		AddFlyPathPoint(pos);
+		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 255, 0), 2.0, m_sDid);
 		
 		//Add destinations .. if any
 		int lastIdx = -1;

@@ -227,8 +227,8 @@ sealed class SDRC_Misc
 	static vector GetRandomWorldPos(bool mustBeOnLand = true)
 	{
 		int worldSize = SDRC_Misc.GetWorldSize();
-		vector posTmp = "0 0 0";
-		vector pos = "0 0 0";
+		vector posTmp = vector.Zero;
+		vector pos = vector.Zero;
 		
 		bool positionFound = false;
 		int i = 0;

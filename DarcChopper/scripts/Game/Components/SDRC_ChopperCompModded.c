@@ -244,12 +244,19 @@ modded class SDRC_ChopperComp
 				//Do attack on low altitude.
 				destination[1] = SDRC_Misc.GetSurfaceYWithWater(destination) + m_fFlyHeightLow;				
 				m_vAttackPosition = destination;			//Where to attack
-				m_fTimerAttack = value;						//For how long to continue attacks
-				
-				if (value < 20)
+
+				//With default attack time, set it to 60 seconds
+				if (value == -1)
+				{
+					value = 60;
+				}
+								
+				if (value < 30)
 				{
 					SDRC_Log.Add("[SDRC_ChopperComp:AddDestination] Time assigned to WP_ATTACK is very short: " + value + " seconds.", LogLevel.WARNING);
 				}
+				
+				m_fTimerAttack = value;						//For how long to continue attacks
 				break;
 			}
 			
@@ -334,7 +341,6 @@ modded class SDRC_ChopperComp
 				//Add random count of bombing runs
 				int runCount = SDRC_Misc.RandomInt(0, 4);
 				
-				runCount = 3;
 				//Do multiple ones if requested
 				for (int i = 0; i < runCount; i++)
 				{
