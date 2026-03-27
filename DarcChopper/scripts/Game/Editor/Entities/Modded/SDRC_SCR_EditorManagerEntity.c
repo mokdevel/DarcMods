@@ -29,6 +29,8 @@ modded class SCR_EditorManagerEntity
 	{
 		bool isOpened = super.IsOpened();
 		
+//		return isOpened;
+		
 		if (!isOpened)
 		{
 			if (m_wCanvas)
@@ -36,7 +38,7 @@ modded class SCR_EditorManagerEntity
 				//If not in GM mode, canvas is not needed.
 				delete m_wCanvas;
 			}
-			return isOpened;			
+			return isOpened;
 		}
 		
 		if (isOpened)

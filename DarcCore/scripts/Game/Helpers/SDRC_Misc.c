@@ -113,7 +113,7 @@ sealed class SDRC_Misc
 		{
 			foreach (string addon : addonList)
 			{
-				SDRC_Log.Add("[SDRC_Misc:GetAddonList] Mod found: " + addon, LogLevel.NORMAL);				
+				SDRC_Log.Add("[SDRC_Misc:GetAddonList] Mod found: " + addon, LogLevel.NORMAL);
 			}
 		}
 	}	

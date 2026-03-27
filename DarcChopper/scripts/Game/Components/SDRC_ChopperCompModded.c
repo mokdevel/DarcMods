@@ -241,8 +241,15 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
+				//Do attack on low altitude.
+				destination[1] = SDRC_Misc.GetSurfaceYWithWater(destination) + m_fFlyHeightLow;				
 				m_vAttackPosition = destination;			//Where to attack
 				m_fTimerAttack = value;						//For how long to continue attacks
+				
+				if (value < 20)
+				{
+					SDRC_Log.Add("[SDRC_ChopperComp:AddDestination] Time assigned to WP_ATTACK is very short: " + value + " seconds.", LogLevel.WARNING);
+				}
 				break;
 			}
 			
@@ -312,17 +319,27 @@ modded class SDRC_ChopperComp
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_M_ATTACK:
+			{
+				SDRC_Log.Add("[SDRC_ChopperComp:AddDestination] For modders: WP_M_ATTACK behaviour will change in the future. Use: WP_M_SUPPRESSIVE", LogLevel.WARNING);
+			}
 			case SDRC_EFlyWayPointType.WP_M_SUPPRESSIVE:
 			{
+				if (value == -1)
+				{
+					value = TIME_ATTACK_RUN;
+				}
+				
 				//Do one attack
 				AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, destination, value);
 				//Add random count of bombing runs
 				int runCount = SDRC_Misc.RandomInt(0, 4);
+				
+				runCount = 3;
 				//Do multiple ones if requested
 				for (int i = 0; i < runCount; i++)
 				{
 					float angle = SDRC_Misc.RandomFloat(0, 360);
-					float distance = SDRC_Misc.RandomFloat(200, 400);
+					float distance = SDRC_Misc.RandomFloat(100, 200);
 					vector rndPos = SDRC_Misc.GetCoordinatesOnCircle(destination, distance, angle);
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_FLY, rndPos, value);
 					distance = SDRC_Misc.RandomFloat(200, 400);
@@ -331,7 +348,6 @@ modded class SDRC_ChopperComp
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_ATTACK, destination, value);
 				}
 				m_vAttackPosition = destination;			//Where to attack
-				m_fTimerAttack = value * (runCount + 1);	//For how long to continue attacks. +1 to avoid runCount = 0 resulting in zero time
 				//All things are already added
 				addDestinationPoint = false;
 				break;

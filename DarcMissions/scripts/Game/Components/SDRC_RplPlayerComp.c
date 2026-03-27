@@ -4,8 +4,9 @@
 /*!
 RPL component to provide GM map information to clients.
 
-NOTE: This has been added to {}}Prefabs/Characters/Core/DefaultPlayerController.et
+NOTE: This has been added to {}}Prefabs/Characters/DarcMissions/DefaultPlayerController.et
 */
+[ComponentEditorProps(category: "GameScripted/DarcMissions", description: "DarcMissions Player Helper Component")]
 class SDRC_RplPlayerCompClass : ScriptComponentClass { }
 SDRC_RplPlayerCompClass g_RplPlayerCompClass;
 

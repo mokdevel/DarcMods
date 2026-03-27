@@ -1,3 +1,4 @@
+[ComponentEditorProps(category: "GameScripted/DarcCore", description: "DarcCore Hint Component")]
 class SDRC_RplHintCompClass : ScriptComponentClass { }
 SDRC_RplHintCompClass g_RplHintCompClass;
  

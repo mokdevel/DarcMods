@@ -4,6 +4,7 @@
 /*!
 
 */
+[ComponentEditorProps(category: "GameScripted/DarcChopper", description: "DarcChopper Line Draw Component")]
 class SDRC_RplLineDrawCompClass : ScriptComponentClass { }
 SDRC_RplLineDrawCompClass g_RplLineDrawCompClass;
  

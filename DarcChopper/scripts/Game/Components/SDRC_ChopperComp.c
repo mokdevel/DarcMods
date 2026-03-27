@@ -8,7 +8,7 @@
 #endif
 
 //------------------------------------------------------------------------------------------------
-//class SDRC_ChopperCompClass : ScriptGameComponentClass { }
+[ComponentEditorProps(category: "GameScripted/DarcChopper", description: "DarcChopper Main Component")]
 class SDRC_ChopperCompClass : ScriptComponentClass { }
 
 //------------------------------------------------------------------------------------------------
@@ -233,6 +233,7 @@ class SDRC_ChopperComp : ScriptComponent
 	int m_iEnemyForgetTimeout = 10;				//Time to forget the enemy position
 		
 	//Attack related
+	private const int TIME_ATTACK_RUN = 40;		//Default time for each attack run
 	private float m_fTimerAttack = 0;			//Timer to do attacks
 	private vector m_vAttackPosition;			//Position to attack
 
@@ -859,21 +860,12 @@ class SDRC_ChopperComp : ScriptComponent
 	
 	\param firstDestination 
 	*/
-	void CreateNewFlight(IEntity owner, vector firstDestination = vector.Zero)
+//	void CreateNewFlight(IEntity owner, vector firstDestination = vector.Zero)
+	void CreateNewFlight(IEntity owner)
 	{
 		//Clear any existing path points
 		ResetFlight();
-		
-		//Add an initial flight position. 
-		if (firstDestination == vector.Zero)
-		{		
-			AddFlyPathPoint(m_vDestinationFuture);
-		}
-		else
-		{
-			AddFlyPathPoint(firstDestination);
-		}
-		
+
 		//Create points for spline		
 		CreateFlightPoints(owner);
 		
@@ -887,11 +879,14 @@ class SDRC_ChopperComp : ScriptComponent
 		SDRC_Spline3D.GenerateSplinePoints(flyPathPoints, m_vSplinePoints, -1);
 		
 		//Search the closest index from the spline start
-		m_iClosestIndex = 0;
-		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, owner.GetOrigin(), m_iClosestIndex, false);	//NOTE: This will set m_iClosestIndex
+/*		m_iClosestIndex = 0;
+		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, owner.GetOrigin(), m_iClosestIndex, true);	//NOTE: This will set m_iClosestIndex
 		m_iOldClosestIndex = m_iClosestIndex;
-		
-		//Check that points are above ground
+*/
+		m_iClosestIndex = 0;
+		m_iOldClosestIndex = m_iClosestIndex;
+				
+		//Check that points are above ground. Skip some of the points at start.
 		SDRC_ChopperHelper.SetSplinePointsAboveGround(owner, 6);
 		
 		if (m_vSplinePoints.IsEmpty())
@@ -923,26 +918,15 @@ class SDRC_ChopperComp : ScriptComponent
 	*/	
 	private void CreateFlightPoints(IEntity owner)
 	{
-		float forwardDistance = 40;
-			
-		//If we have a destination and it's far away, increase the forwardDistance
-		if (!m_vFlyDestinations.IsEmpty())
-		{
-			float distance = vector.DistanceXZ(owner.GetOrigin(), m_vFlyDestinations[0].pt);
-			if (distance > 200)
-			{
-				forwardDistance = SDRC_Misc.RandomInt( (distance/4), (distance/1.3) );
-			}			
-		}		
-		
-		//Get vector from heli position to the first point to fly to.
+		//Add a few points in front to smooth the flight pattern
+		float forwardDistance = 300;
 		vector origin = owner.GetOrigin();
-		vector direction = vector.Direction(origin, m_vFlightPoints[m_vFlightPoints.Count() - 1].pt);
-		//Create one additional point as the first heli path point
-		vector pos = owner.GetOrigin() + direction.Normalized() * forwardDistance;
+		vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, forwardDistance/2);
 		pos[1] = origin[1];
 		AddFlyPathPoint(pos);
-		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 255, 00), 1.0, m_sDid, 30); */
+		pos = SDRC_ChopperHelper.GetDestinationForward(owner, forwardDistance);
+		pos[1] = origin[1];
+		AddFlyPathPoint(pos);
 		
 		//Add destinations .. if any
 		int lastIdx = -1;
@@ -950,7 +934,7 @@ class SDRC_ChopperComp : ScriptComponent
 		//Generate a random destination point if needed
 		if (m_vFlyDestinations.IsEmpty())
 		{		
-			SDRC_ChopperHelper.GenerateWayPoint(owner);
+			SDRC_ChopperHelper.GenerateWayPoint(owner, pos);
 		}
 		
 		//Handle destinations

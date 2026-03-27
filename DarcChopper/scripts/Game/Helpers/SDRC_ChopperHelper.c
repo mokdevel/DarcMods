@@ -83,8 +83,11 @@ class SDRC_ChopperHelper
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Functionality to generate future destination(s) for the chopper
+	
+	\param owner ..
+	\param orig The position to use for waypoint generation.
 	*/
-	static void GenerateWayPoint(IEntity owner)
+	static void GenerateWayPoint(IEntity owner, vector orig = vector.Zero)
 	{		
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)
@@ -92,7 +95,11 @@ class SDRC_ChopperHelper
 			return;
 		}
 		
-		vector orig = owner.GetOrigin();
+		if (orig == vector.Zero)
+		{
+			orig = owner.GetOrigin();
+		}
+		
 		if (SDRC_Misc.RandomFloat(0, 1) < 0.2)
 		{
 			//Occasionally fly towards middle to avoid sliding out of the map
