@@ -1,0 +1,9 @@
+SCR_PlayerController {
+ ID "1A9BA6BEFA06E3B1"
+ components {
+  SDRC_DarcChopperSettingsMenuComponent "{68F6AE709A857FEB}" {
+  }
+  SDRC_RplLineDrawComp "{68E32393D55D4AEA}" {
+  }
+ }
+}
