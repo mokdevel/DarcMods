@@ -167,10 +167,19 @@ sealed class SDRC_Misc
 	static float GetWorldSizeRadius()
 	{
 		float worldSize = SDRC_Misc.GetWorldSize();		
-		float radius = worldSize;	//TBD: Lazy code as the distance from center to corner is not worldSize
+		float radius = worldSize * 0.7;	//TBD: Lazy code as the distance from center to corner is not worldSize * 0.7
 		return radius;
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Returns a position at the outer edge of the map
+	*/	
+	static vector GetRandomWorldEdgePosition()
+	{
+		return SDRC_Math.MovePosToAngle(SDRC_Misc.GetWorldCenter(), SDRC_Misc.GetWorldSizeRadius(), SDRC_Misc.RandomFloat(0, 360));
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Returns the center of the world

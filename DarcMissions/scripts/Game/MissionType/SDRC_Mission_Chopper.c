@@ -9,6 +9,7 @@ Helicopters hunting you, bringing troops, initiating hunters..
 enum SDRC_EMissionChopperState
 {
 	SPAWN,
+	SET_FLIGHT,
 	SPAWN_CREW,
 };
 
@@ -98,13 +99,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		distanceToStart = SDRC_Misc.GetWorldSize() * 0.1;
 	#endif
 		
-		vector worldCenter = "0 0 0";
-		worldCenter[0] = SDRC_Misc.GetWorldSize()/2;
-		worldCenter[2] = worldCenter[0];
-		vector direction = vector.Direction(worldCenter, pos);		
-		float distance = distanceToStart - vector.DistanceXZ(pos, worldCenter);		
-		m_vPosOrigin = pos + direction.Normalized() * distance;
-		SDRC_Misc.RandomizePos(m_vPosOrigin, 300);
+		m_vPosOrigin = SDRC_Misc.GetRandomWorldEdgePosition();
 
 		//Set end time for mission.
 		m_iFlyEndTime = m_Config.activeTime * 0.2;
@@ -147,6 +142,11 @@ class SDRC_Mission_Chopper : SDRC_Mission
 					break;
 				case SDRC_EMissionChopperState.SPAWN_CREW:
 					MissionSpawnCrew();
+					GetGame().GetCallqueue().CallLater(MissionRun, 2000);
+					missionChopperState = SDRC_EMissionChopperState.SET_FLIGHT;				
+					break;
+				case SDRC_EMissionChopperState.SET_FLIGHT:
+					MissionSpawnSetFlight();
 					SetState(SDRC_EMissionState.ACTIVE);				
 					break;
 			} 			
@@ -194,18 +194,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				if (m_Vehicle_c)
 				{
 					//Continue flying to the same direction and out of the map
-					float size = SDRC_Misc.GetWorldSize() * 0.7;
-					#ifndef SDRC_RELEASE
-						size = SDRC_Misc.GetWorldSize() * 0.2;
-					#endif
-					vector pos = SDRC_ChopperHelper.GetDestinationForward(m_Vehicle, size);
-					
-/*					vector direction = vector.Direction(m_Vehicle.GetOrigin(), m_Vehicle_c.GetCurrentDestination());
-					direction.Normalize();
-					vector pos = m_Vehicle.GetOrigin() + direction * size;*/
-					
-					m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY, pos);
-//					m_Vehicle_c.CreateNewFlight(m_Vehicle);
+					m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY);
 					m_Vehicle_c.SetSpeed(max : m_DC_Chopper.speed[1] * 1.5);
 				}
 				SetActiveTime(m_iFlyEndTime);
@@ -262,13 +251,16 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		string resourceName	= SDRC_SpawnHelper.SelectResourceName(m_DC_Chopper.heliList);		
 //		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Chopper.general.size, -1);
 		
-		//Set to initial height
+		//Set to initial position, rotation and spawn
+		//TBD: Rotation should be handled in SDRC_ChopperComp
 		m_vPosOrigin[1] = SDRC_Misc.RandomFloat(m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1]) + SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin);		
-		m_Vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosOrigin, resourceName, m_DC_Chopper.general.size, -1, false);
+/*		vector rotation = vector.Direction(m_vPosOrigin, GetPos());		
+		m_Vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosOrigin, resourceName, rotation[1], -1, false);*/
+		
+		m_Vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosOrigin, resourceName, 0, -1, false);
 		
 		if (m_Vehicle)
 		{
-//			m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
 			m_Vehicle_c = SDRC_ChopperComp.Cast(m_Vehicle.FindComponent(SDRC_ChopperComp));
 		}
 		
@@ -284,13 +276,24 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		m_Vehicle_c.SetAutostart(false);
 		m_Vehicle_c.SetHeli(m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
 		m_Vehicle_c.SetEnemySearchType(m_DC_Chopper.enemyType);
+		m_Vehicle_c.Setup(m_Vehicle);
+		//SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, GetPos());
+		
+		return;
+	}
 
+	//------------------------------------------------------------------------------------------------
+	private void MissionSpawnSetFlight()
+	{
+		//Init flight
+		m_Vehicle_c.InitFlight(m_Vehicle, GetPos());
+		
 		switch (m_DC_Chopper.wpType)
 		{
 			case SDRC_EHeliWaypointGenerationType.RANDOM:			
 			case SDRC_EHeliWaypointGenerationType.SEARCH:
 			{
-				m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, GetPos());
+//				m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, GetPos());
 				break;
 			}
 			case SDRC_EHeliWaypointGenerationType.PATROL:
@@ -300,15 +303,6 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				break;
 			}
 		}
-				
-/*		#ifdef CHOPPER_TESTING				
-			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, landPos, 12);
-		#else
-			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, GetPos());
-		#endif */
-		
-		//Init flight
-		m_Vehicle_c.InitFlight(m_Vehicle, m_vPosOrigin);
 
 		SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " +  GetId() + " : Vehicle spawned: " + m_Vehicle + " at: " + m_Vehicle.GetOrigin(), LogLevel.DEBUG);
 	}
@@ -481,7 +475,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,1,1,2,2,3,4,4,5};
+		missionList = {0};//{0,1,1,2,2,3,4,4,5};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 500;
@@ -518,7 +512,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			"All good, danger avoided.", 
 			"Rounds done.");
 		chopper.general.Set(
-			0, "index 0: Randomly flying chopper",
+			0, "index 0: Randomly flying chopper. No specific agenda. May engage.",
 			{"0 0 0", "0 0 0"}, 0,
 			{},
 			"any",

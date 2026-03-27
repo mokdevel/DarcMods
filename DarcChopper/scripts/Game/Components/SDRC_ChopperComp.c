@@ -165,7 +165,8 @@ class SDRC_ChopperComp : ScriptComponent
 	//Helistate
 	private SDRC_EHeliState m_eHeliState;
 	private bool m_bInInit;
-
+	private bool m_bSetupDone = false;					//Setup may be called from mod or via EOnInit. Run it only once.
+	
 	//HeliBehaviour
 	private SDRC_EHeliBehaviour m_eHeliBehaviour;
 	float m_fTimerBehaviour = 0;						//Timer to stay in behaviour before changing to NORMAL
@@ -237,6 +238,15 @@ class SDRC_ChopperComp : ScriptComponent
 	private float m_fTimerAttack = 0;			//Timer to do attacks
 	private vector m_vAttackPosition;			//Position to attack
 
+	
+	//The order of things:
+	//- Spawn chopper via GM or mod
+	//- OnPostInit()
+	//- EOnInit()
+	//- Mod code if any. Here we can set AutoStart to false to control the spawn details ourselves.
+	//- Setup() is run after a delay
+	//- Ready() is automatically called if AutoStart is enabled. If not, remember to call it in your mod!
+	
 	//------------------------------------------------------------------------------------------------
 	override void EOnInit(IEntity owner)
 	{
@@ -244,11 +254,6 @@ class SDRC_ChopperComp : ScriptComponent
 				
 		SDRC_SpawnHelper.SetPersistence(owner, false);
 
-		if (m_bAutoStart)
-		{
-			Ready(owner);
-		}
-		
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
 		{
@@ -257,6 +262,8 @@ class SDRC_ChopperComp : ScriptComponent
 				m_BaseGameMode.chopperFrame.AddChopperToList(owner);
 			}
 		}		
+		
+		GetGame().GetCallqueue().CallLater(Setup, TIME_DELAY_READY * 1000, false, owner);		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -290,10 +297,6 @@ class SDRC_ChopperComp : ScriptComponent
 		//Clear any existing path points
 		ResetFlight();
 		SetTimeInState(0);
-		//Save the original values
-		SDRC_ChopperCompCore.StoreOriginalValues(owner);
-		
-		SDRC_ChopperEnemyHelper.GetWeapons(owner);
 		
 		m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + m_iEnemyFoundTimeout;
 		
@@ -309,20 +312,7 @@ class SDRC_ChopperComp : ScriptComponent
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp] VehicleHelicopterSimulation not found.", LogLevel.ERROR);
 		}
-		
-		SetEngine(true, m_fThrottle, m_fRotorForce0, m_fRotorForce1);
-		SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, m_fDistanceLow, m_fDistanceHigh);						
-		
-		if (m_RocketPrefabs.IsEmpty())
-		{
-			SDRC_Log.Add("[SDRC_ChopperComp] No rockets available.", LogLevel.NORMAL);
-		}
-		else
-		{
-			m_RocketPrefab = m_RocketPrefabs.GetRandomElement();
-			SDRC_Log.Add("[SDRC_ChopperComp] Using rockets: " + SDRC_Misc.GetSimpleEntityName(m_RocketPrefab), LogLevel.NORMAL);
-		}
-				
+
 		super.OnPostInit(owner);
 	}
 	
@@ -352,10 +342,60 @@ class SDRC_ChopperComp : ScriptComponent
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Do setup. This is delayed in case another mod has disabled autostart
+	*/	
+	void Setup(IEntity owner)
+	{
+		if (m_bSetupDone)
+		{
+			return;
+		}
+		
+		m_bSetupDone = true;
+		
+		if (m_bAutoStart)
+		{					
+			SDRC_Log.Add("[SDRC_ChopperComp:Setup] Called from SDRC_ChopperComp", LogLevel.DEBUG);
+			SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, m_fDistanceLow, m_fDistanceHigh);						
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp:Setup] Called from external mod", LogLevel.DEBUG);
+		}
+		
+		//Set engine on		
+		SetEngine(true, m_fThrottle, m_fRotorForce0, m_fRotorForce1);
+		
+		if (m_RocketPrefabs.IsEmpty())
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp] No rockets available.", LogLevel.NORMAL);
+		}
+		else
+		{
+			m_RocketPrefab = m_RocketPrefabs.GetRandomElement();
+			SDRC_Log.Add("[SDRC_ChopperComp] Using rockets: " + SDRC_Misc.GetSimpleEntityName(m_RocketPrefab), LogLevel.NORMAL);
+		}
+	
+		//Save the original values
+		SDRC_ChopperCompCore.StoreOriginalValues(owner);
+		//SDRC_ChopperEnemyHelper.GetWeapons(owner);
+						
+		if (m_bAutoStart)
+		{					
+			Ready(owner);
+		}
+		
+		//IMPORTANT: In a mod, you need to call Ready() yourself after Setup()!!!
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Once all init things are done, activate the component after a small delay
 	*/	
 	void Ready(IEntity owner)
 	{
+		SDRC_Log.Add("[SDRC_ChopperComp:Ready] Called..", LogLevel.DEBUG);
+		
 		//Set ready in a few seconds
 		GetGame().GetCallqueue().CallLater(ReadyDelayed, TIME_DELAY_READY * 1000, false, owner);
 	}
@@ -412,6 +452,8 @@ class SDRC_ChopperComp : ScriptComponent
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp] Unable to set pilots.", LogLevel.WARNING);			
 		}
+		
+		SDRC_Log.Add("[SDRC_ChopperComp:InitDone] DONE!", LogLevel.DEBUG);
 	}	
 	
 	//------------------------------------------------------------------------------------------------	
@@ -820,8 +862,9 @@ class SDRC_ChopperComp : ScriptComponent
 
 		if (destination == vector.Zero)
 		{
-			destination = SDRC_ChopperHelper.GetDestinationForward(owner, 300);
+			destination = SDRC_ChopperHelper.GetDestinationForward(owner, 500);
 		}
+		//AddFlyPathPoint(destination);
 		AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
 
 		SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Chopper initial position: " + owner.GetOrigin(), LogLevel.DEBUG);
@@ -829,10 +872,12 @@ class SDRC_ChopperComp : ScriptComponent
 		//Turn chopper to face the first destination
 		SDRC_Math.TurnEntityTowardsXZ(owner, destination);
 		
-		if (!m_bAutoStart)	//With autostart, use the origin of the chopper spawn
+/*		if (!m_bAutoStart)	//With autostart, use the origin of the chopper spawn
 		{
 			SDRC_ChopperHelper.SetFlightPointHeight(owner);
-		}
+		}*/
+		
+		SDRC_ChopperHelper.SetFlightPointHeight(owner);
 		
 		//Create points for spline
 		CreateFlightPoints(owner);
