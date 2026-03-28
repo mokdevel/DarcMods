@@ -9,6 +9,7 @@ Once the missions position is reached, the helicopter will behave depending on t
 * ``RANDOM`` : Continue to patrol randomly.
 * ``PATROL`` : Patrol around the mission location.
 * ``SEARCH`` : Search for players while flying around. If players are found, the mission is over and Hunters are sent to clear out the area. The search is done by the AI itself and finding is depending on the perception value. 
+* ``SEARCH_AND_DESTROY`` : Search for enemies while flying around. If enemy found, the heli change it's course and find a way to attack you. 
 
 Once the mission time is over, the helicopter will fly away (and despawn) ending the mission.
 
@@ -89,7 +90,9 @@ By default there are vanilla helicopters supported. For modded ones, you need a 
 - ``{FA51AC2732EEF395}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol_FIA.et``
 
 ### Modded
-Modded helicopters are supported through a compatibility mod. Currently available:
+Modded helicopters are supported through a compatibility mod. You can add the modded ones in the ``heliList`` parameter even if the mod is not available. In this case, the mod will browse through the whole ``heliList`` to find a one available.
+
+Currently available:
 * https://reforger.armaplatform.com/workshop/68D2D498670F201F-MH-6MforDarcChopper
 * https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcChopper
 * https://reforger.armaplatform.com/workshop/684F3C94BD457F85-KA-52forDarcChopper
