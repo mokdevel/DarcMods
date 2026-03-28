@@ -8,6 +8,8 @@ Main features:
 Fixes:
 * Search and Destroy was not working as expected.
 * Fine tuned the flight model.
+* Fly path lines can be hidden. Settings -> Gameplay -> DarcChopper -> Show Flight Path
+  * I've had some weird issues with this one. Works in WB and SP. Today it decided to work in MP. Consider WIP.
 
 # 20260327
 Fixes:

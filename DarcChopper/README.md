@@ -192,6 +192,7 @@ There are various small things that are to be fixed in the future updates:
 
 # Thanks
 - ATiM for Get Out functionality for AI to disembark from the helicopter.
+- Rayzi for the settings menu code.
 
 # License
 - APL-ND - see: [Licenses](https://www.bohemia.net/community/licenses)
