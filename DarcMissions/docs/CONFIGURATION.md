@@ -5,7 +5,7 @@ Alternatively, users can pass a command line argument/startup parameter like thi
 Examples below:
 * Single player: ``C:\Users\username\Documents\My Games\ArmaReforger\profile\DarcMods``
 * Workbench: ``C:\Users\username\Documents\My Games\ArmaReforgerWorkbench\profile\DarcMods``
-* Dedicated server: ``C:\serverpath\profile\DarcMods``. The profile dir is defined with ``-profile=`` startup parameter.
+* Dedicated server: ``C:\serverpath\profile\DarcMods``. The profile dir is defined with ``-profile=`` startup parameter. With ``-darcSubDir`` you can define the configuration directory to use.
 
 ## Version vs jsonVersion
 Each file has a ``jsonVersion`` parameter. This tells the version of the structure used for the specific file. This is an internal detail and is not to be used for the author's own versioning - for that you can use the ``version`` parameter. When parameter structure has changed with additional (or deleted) items, the ``jsonVersion`` number is increased. The mod knows which version to expect and will give an error in case a wrong version file is loaded. In these cases, you should delete your old file to receive a new version.
