@@ -4,9 +4,17 @@
 Main features:
 * Fly path lines can be hidden. Settings -> Gameplay -> 
 
+# 20260328
+Fixes:
+* Search and Destroy was not working as expected.
+* Fine tuned the flight model.
+
+# 20260327
 Fixes:
 * Rocket sector slightly increased.
-* Min/Max speed increased to 15/40.
+* Min/Max speed increased to 15/40 for attack helicopters.
+* Hopefully the empty list in GM is finally fixed.
+* ``WP_M_ATTACK`` removal caused a few mods to break. For now, it behaves the same as ``WP_M_SUPPRESSIVE`` but is bound to change to other functionality. Use ``WP_M_SUPPRESSIVE`` in your mod for attack runs on a location.
 
 # 20260326
 Main features:

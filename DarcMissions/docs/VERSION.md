@@ -5,6 +5,16 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 
+# 20260328
+Fixes in Chopper mission. 
+
+Main features:
+* Chopper mission to support DarcChopper functionality. 
+  * RECOMMENDATION: Delete your dc_missionConfig_Chopper.json to receive an updated one. 
+  * Gunship killer uses Search and Destroy 
+  * Adjustments in sub-mission values.
+  * Mission chopper spawns in a random location optimally away from players. If no good place is found, random spawn is done.
+
 # 20260323
 Small fix update.
 
