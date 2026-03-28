@@ -33,12 +33,38 @@ class SDRC_FlyPathPoint
 }
 
 //------------------------------------------------------------------------------------------------
+class SDRC_ChopperParams
+{
+	SDRC_EChopperType type = SDRC_EChopperType.HELICOPTER;
+	//Turn
+	int turnSpeedDivider = 92;						//The divider that affects how much speed is decreased on sharp turns. The higher the value, the less brake.	Was: 42	
+	int turnTimeIntervalBase = 40;					//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
+
+	//Roll 
+	float rollAngleMul = 2.4;						//Multiplier for roll angle along the spline
+	
+	//Pitch
+	float pitchAngleRad 	 =  11 * Math.DEG2RAD;	//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
+	float pitchAngleRadFlat  = -45 * Math.DEG2RAD;	//The pitch angle when chopper is flying flat.
+	float pitchNoseAngleDown = -30 * Math.DEG2RAD;	//Maximum angle to turn the helicopter nose down when in high speed.
+	float pitchNoseAngleUp   =  20 * Math.DEG2RAD;	//Maximum angle to turn the helicopter nose up when braking.
+	
+	//Rotor force multipliers
+	float rotorForceMulUp = 1.3 * 10;				//Rotor force multiplier in velocity counting. Bigger value makes the heli react faster to up/down movement but also starts stutter.
+	
+	//Waypoint values
+	float wpSteepAngle = 60;						//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
+													//If chopper destination makes a too steep turn, we will add a few additional points.
+}
+
+//------------------------------------------------------------------------------------------------
 class SDRC_ChopperComp : ScriptComponent
 {
 	private SDRC_ChopperComp s_Instance;	
 	ref array<vector> m_vSplinePoints = new array<vector>();
 	private VehicleHelicopterSimulation m_Helicopter_s;
-		
+	ref SDRC_ChopperParams params = new SDRC_ChopperParams();
+			
 	//Parameters accessible helicopter parameters
 	[Attribute(category: "Chopper", defvalue: "1", desc: "Autostart chopper")]	
 	bool m_bAutoStart;
@@ -126,7 +152,6 @@ class SDRC_ChopperComp : ScriptComponent
 	//Speed management
 	private const float SPEED_INTERVAL = 1.0;			//(seconds) Interval to modify speed of the helicopter
 	private const float SPEED_GAIN = 1.0;
-	private const int SPEED_TURN_DIV = 92;				//The divider that affects how much speed is decreased on sharp turns. The higher the value, the less brake.	Was: 42
 	private float m_fTimeSpeed = 0;
 
 	private float m_fTimeBetweenPts = 1;
@@ -135,17 +160,7 @@ class SDRC_ChopperComp : ScriptComponent
 	private float m_fTimeBetweenFixes = 30;
 	
 	float m_fTimeInState = -1;							//The timer to stay in a certain state. This is only in effect when positive value.
-	private bool m_bTimeInStateEnabled = false;
-			
-	//Turn
-	private const int TIME_TURN_INTERVAL_BASE = 40;		//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
-	
-	//Pitch
-	private const float PITCH_ANGLE_RAD = 11 * Math.DEG2RAD;		//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
-	private const float PITCH_ANGLE_FLAT_RAD = -45 * Math.DEG2RAD;	//The pitch angle when chopper is flying flat.
-	
-	//Roll 
-	private const float ROLL_ANGLE_MUL = 2.4;			//Multiplier for roll angle along the spline
+	private bool m_bTimeInStateEnabled = false;	
 	
 	//Flight path
 	private const int POINTS_TO_NEW_DISTANCE = 3;		//How many spline points in to the future flight path is checked before adding new flight points.
@@ -154,13 +169,6 @@ class SDRC_ChopperComp : ScriptComponent
 
 	private const int FLIGHT_FIX_TIME = 2;				//(seconds) Time to wait between flight fixes when chopper is pointing to the sky.
 	private const int FLIGHT_FIX_ANGLE = 1.4;			//Angle that enforces 
-	
-	//Rotor force multipliers
-	private const float ROTOR_FORCE_UP_MUL = 1.3;		//Rotor force multiplier in velocity counting. Bigger value makes the heli react faster to up/down movement but also starts stutter.
-	
-	//Waypoint values
-	private const float WP_ANGLE = 60;					//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
-														//If chopper destination makes a too steep turn, we will add a few additional points.
 	
 	//Helistate
 	private SDRC_EHeliState m_eHeliState;
@@ -506,7 +514,7 @@ class SDRC_ChopperComp : ScriptComponent
 		//Normal flying part
 		
 		//Adjust time depending on the speed.
-		m_fTimeTurnInterval = TIME_TURN_INTERVAL_BASE / m_fSpeed;
+		m_fTimeTurnInterval = params.turnTimeIntervalBase / m_fSpeed;
 		m_fTimeTurnInterval = Math.Clamp(m_fTimeTurnInterval, 0.6, 3);
 				
 		//Sometimes the heli direction and path align so that the closest index does not update.
@@ -658,7 +666,7 @@ class SDRC_ChopperComp : ScriptComponent
 		
 		//Count the angle of the turn. The steeper the turn, the slower heli should be moving.
 		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);											//Was 1,90
-		m_fSpeedMul = m_fThrottle * (SPEED_GAIN - (m_fSpeedMul / SPEED_TURN_DIV));
+		m_fSpeedMul = m_fThrottle * (SPEED_GAIN - (m_fSpeedMul / params.turnSpeedDivider));
 
 		//In case we're landing, we need to modify the speed
 		m_fSpeedMul = m_fSpeedMul * m_fSpeedLandingMul;
@@ -672,8 +680,6 @@ class SDRC_ChopperComp : ScriptComponent
 		const int ALTITUDE_ADD = 5;
 		if ((altitude + ALTITUDE_ADD) < m_fFlyHeightLow)
 		{		
-//				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin);
-//				float mul = (m_vOrigin[1] - surfaceY) / (m_fFlyHeightLow - surfaceY);
 			float mul = (altitude + ALTITUDE_ADD) / m_fFlyHeightLow;
 			mul = Math.Clamp(mul, 0, 1);
 			m_fSpeedTarget = m_fSpeedTarget * mul;
@@ -685,13 +691,10 @@ class SDRC_ChopperComp : ScriptComponent
 		//Handle yaw, pitch roll		
 				
 		//ROLL PITCH: Change pitch according to speed
-		//OLD: m_fAnglePitch = PITCH_ANGLE_FLAT_RAD + PITCH_ANGLE_RAD * m_fSpeedMul;
-		
-		//mul = (curr-start)/(end-start)
 		float endDiv = Math.Clamp((m_fSpeedTarget - m_fSpeedStart), 0.001, 1000);
 		float speedMul = (m_fSpeed - m_fSpeedStart) / endDiv;
-		m_fAnglePitch = PITCH_ANGLE_FLAT_RAD + PITCH_ANGLE_RAD * speedMul;		
-		m_fAnglePitch = Math.Clamp(m_fAnglePitch, -30 * Math.DEG2RAD, 20 * Math.DEG2RAD);	//Nose down, nose up
+		m_fAnglePitch = params.pitchAngleRadFlat + params.pitchAngleRad * speedMul;		
+		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleDown, params.pitchNoseAngleUp);	//Nose down, nose up
 		
 		if (m_eHeliState == SDRC_EHeliState.RAISE)
 		{
@@ -704,7 +707,7 @@ class SDRC_ChopperComp : ScriptComponent
 		
 		//ROLL ON DIRECTION: See how steep we're turning. Roll the helicopter accordingly for more natural flight. We only care about ZX plane.
 		m_fAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliForward, m_vHeliDirectionFuture);
-		m_fAngleRoll = Math.Clamp(m_fAngleRoll, -0.5, 0.5) * ROLL_ANGLE_MUL;
+		m_fAngleRoll = Math.Clamp(m_fAngleRoll, -0.5, 0.5) * params.rollAngleMul;
 		m_vRadRollVel = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliUp, m_fAngleRoll);
 		m_vRadRollVel = SDRC_Math.ComputeAngularVelocity(heliUp, m_vRadRollVel, deltaTime);
 		
@@ -751,7 +754,7 @@ class SDRC_ChopperComp : ScriptComponent
 			velVector = m_vDestination;
 			velVector.Normalize();
 			float forceMultiplier = m_fSpeed;
-			float forceRotorUp = m_fRotorForce0 * ROTOR_FORCE_UP_MUL * 10;
+			float forceRotorUp = m_fRotorForce0 * params.rotorForceMulUp;
 			
 			if (m_bFinalLanding)
 			{
@@ -847,10 +850,6 @@ class SDRC_ChopperComp : ScriptComponent
 
 		//Store the origin. This value is updated in EOnFrame, but needed already in calculations.
 		m_vOrigin = owner.GetOrigin();				
-
-		//Create initial flypath.
-		//AddFlyPathPoint(owner.GetOrigin());	//point 1
-		//AddDebugMarker(origin, ARGB(255, 0, 255, 00), 2.0, m_sDid);
 				
 		//TBD: Are we on low altitude? Hover up...
 		/* if (m_vOrigin[1] < SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + m_fFlyHeightLow)
@@ -870,11 +869,6 @@ class SDRC_ChopperComp : ScriptComponent
 		
 		//Turn chopper to face the first destination
 		SDRC_Math.TurnEntityTowardsXZ(owner, destination);
-		
-/*		if (!m_bAutoStart)	//With autostart, use the origin of the chopper spawn
-		{
-			SDRC_ChopperHelper.SetFlightPointHeight(owner);
-		}*/
 		
 		SDRC_ChopperHelper.SetFlightPointHeight(owner);
 		
@@ -1002,7 +996,7 @@ class SDRC_ChopperComp : ScriptComponent
 			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Distance: " + distance + " - Angle: " + heliAngle, LogLevel.SPAM);
 			
 			//Is the angle too steep? Re-route.
-			if ( (Math.AbsFloat(heliAngle) < WP_ANGLE) && (distance > 200) )
+			if ( (Math.AbsFloat(heliAngle) < params.wpSteepAngle) && (distance > 200) )
 			{				
 				SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle is steep: " + heliAngle, LogLevel.SPAM);
 				
