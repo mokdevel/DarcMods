@@ -1,3 +1,7 @@
+//SDRC_DarcChopperSettingsMenuComponent.c
+
+/* This piece of code is a modified version from Aiming Deadzone way of implementing */
+
 [ComponentEditorProps(category: "GameScripted/DarcChopper", description: "DarcChopper User Settings Sync")]
 class SDRC_DarcChopperSettingsMenuComponentClass : ScriptComponentClass {}
 
@@ -59,18 +63,26 @@ class SDRC_DarcChopperSettingsMenuComponent : ScriptComponent
 	void OnSettingRequested(bool b)
 	{
 		if (!m_RplComponent || m_RplComponent.IsMaster())
+		{
 			RPC_OnSettingRequested(b);
+		}
 		else
+		{
 			Rpc(RPC_OnSettingRequested, b);
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------
 	void RequestSaveSetting(bool b)
 	{
 		if (!m_RplComponent || m_RplComponent.IsMaster())
+		{
 			RPC_SaveSettingRequested(b);
+		}
 		else
+		{
 			Rpc(RPC_SaveSettingRequested, b);
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -88,19 +100,15 @@ class SDRC_DarcChopperSettingsMenuComponent : ScriptComponent
 	{
 		SCR_PlayerController controller = SCR_PlayerController.Cast(GetOwner());
 		if (!controller)
+		{
 			return;
+		}
 
 		UUID guid = SCR_PlayerIdentityUtils.GetPlayerIdentityId(controller.GetPlayerId());
 		if (guid.IsNull())
+		{
 			return;
-
-/*		ADZ_RESTCalls restctx = ADZ_RESTCalls.GetInstance();
-        if (!restctx)
-            return;
-        array<string> keys = { 
-			"ShowFlyPath", 
-		};
-        restctx.RequestSetting(guid, keys);*/
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -109,17 +117,15 @@ class SDRC_DarcChopperSettingsMenuComponent : ScriptComponent
 	{
 		SCR_PlayerController controller = SCR_PlayerController.Cast(GetOwner());
 		if (!controller)
+		{
 			return;
+		}
 
 		UUID guid = SCR_PlayerIdentityUtils.GetPlayerIdentityId(controller.GetPlayerId());
 		if (guid.IsNull())
+		{
 			return;
-
-/*		ADZ_RESTCalls restctx = ADZ_RESTCalls.GetInstance();
-		if (!restctx)
-			return;
-
-		restctx.SaveSetting(guid, b);*/
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------

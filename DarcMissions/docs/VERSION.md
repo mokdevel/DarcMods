@@ -14,6 +14,7 @@ Main features:
   * Gunship killer uses Search and Destroy 
   * Adjustments in sub-mission values.
   * Mission chopper spawns in a random location optimally away from players. If no good place is found, random spawn is done.
+  * Support for CmdtCousteau provided choppers. See: https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSION_CHOPPER.md#supported-helicopters
 
 # 20260323
 Small fix update.

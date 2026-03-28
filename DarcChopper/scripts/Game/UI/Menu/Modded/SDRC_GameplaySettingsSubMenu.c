@@ -1,3 +1,7 @@
+//SDRC_GameplaySettingsSubMenu.c
+
+/* This piece of code is a modified version from Aiming Deadzone way of implementing */
+
 //------------------------------------------------------------------------------------------------
 class SDRC_EnableSetting : ModuleGameSettings
 {
