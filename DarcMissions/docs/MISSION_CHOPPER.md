@@ -9,7 +9,7 @@ Once the missions position is reached, the helicopter will behave depending on t
 * ``RANDOM`` : Continue to patrol randomly.
 * ``PATROL`` : Patrol around the mission location.
 * ``SEARCH`` : Search for players while flying around. If players are found, the mission is over and Hunters are sent to clear out the area. The search is done by the AI itself and finding is depending on the perception value. 
-* ``SEARCH_AND_DESTROY`` : Search for enemies while flying around. If enemy found, the heli change it's course and find a way to attack you. 
+* ``SEARCH_AND_DESTROY`` : Search for enemies while flying around. If enemy found, the heli change it's course and find a way to attack the location. 
 
 Once the mission time is over, the helicopter will fly away (and despawn) ending the mission.
 
@@ -59,7 +59,8 @@ SDRC_EHeliWaypointGenerationType wpType : Helicopter way point functionality
   0 = NONE : Unused
   1 = RANDOM : Helicopter will find a new random destination depending on flyDistance
   2 = PATROL : Helicopter patrols around a given area.
-  3 = SEARCH : Helicopter flies and searches for players. Once player is found, mission completes and Hunters are sent to kill players.   
+  3 = SEARCH : Helicopter flies and searches for players. Once player is found, mission completes and Hunters are sent to kill players.
+  4 = SEARCH_AND_DESTROY : Search for enemies while flying around. If enemy found, the heli change it's course and find a way to attack the location. 
 SDRC_EHeliEnemySearchType enemyType : Which targets are considered enemies
   0 = NONE : Ignore all targets
   1 = ANY : Any target seen is considered as an enemy.
