@@ -37,7 +37,7 @@ class SDRC_ChopperParams
 {
 	SDRC_EChopperType type = SDRC_EChopperType.HELICOPTER;
 	//Turn
-	int turnSpeedDivider = 92;						//The divider that affects how much speed is decreased on sharp turns. The higher the value, the less brake.	Was: 42	
+	int turnSpeedDivider = 91;						//The divider that affects how much speed is decreased on sharp turns. The higher the value, the less brake.	Was: 42	
 	int turnTimeIntervalBase = 40;					//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
 
 	//Roll 
@@ -55,6 +55,8 @@ class SDRC_ChopperParams
 	//Waypoint values
 	float wpSteepAngle = 60;						//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
 													//If chopper destination makes a too steep turn, we will add a few additional points.
+	int destinationForwardInitial = 500;			//Distance to fly forward on first fligth at init
+	int destinationForward = 300;			//Distance to fly forward on first fligth at init
 }
 
 //------------------------------------------------------------------------------------------------
@@ -63,7 +65,8 @@ class SDRC_ChopperComp : ScriptComponent
 	private SDRC_ChopperComp s_Instance;	
 	ref array<vector> m_vSplinePoints = new array<vector>();
 	private VehicleHelicopterSimulation m_Helicopter_s;
-	ref SDRC_ChopperParams params = new SDRC_ChopperParams();
+//	ref SDRC_ChopperParams params = new SDRC_ChopperParams();
+	ref SDRC_ChopperParams params = null;
 			
 	//Parameters accessible helicopter parameters
 	[Attribute(category: "Chopper", defvalue: "1", desc: "Autostart chopper")]	
@@ -81,7 +84,7 @@ class SDRC_ChopperComp : ScriptComponent
 	
 	[Attribute(category: "Chopper", defvalue: "15.0", desc: "Minimum speed", params: "1.0 100.0 0.1")]	
 	float m_fSpeedMin;				//Minimum speed
-	float m_fSpeedMinOrig;
+	float m_fSpeedMinOrig = 2;
 	[Attribute(category: "Chopper", defvalue: "40.0", desc: "Maximum speed", params: "1.0 100.0 0.1")]	
 	float m_fSpeedMax;				//Maximum speed
 	float m_fSpeedMaxOrig;
@@ -143,8 +146,8 @@ class SDRC_ChopperComp : ScriptComponent
 	bool m_bShowDebug;
 	
 	//Timing stuff
-	private const float TIME_DELAY_READY = 1;			//(seconds) Time before we spawn AIs and init flight path. This will give time for the chopper to properly initialize
-	private const float TIME_IN_INIT = 6;				//(seconds) Time to be in init state (after READY). During this time, we don't check for damage or similar things.
+	private const float TIME_DELAY_READY = 0.5;			//(seconds) Time before we spawn AIs and init flight path. This will give time for the chopper to properly initialize
+	private const float TIME_IN_INIT = 3;				//(seconds) Time to be in init state (after READY). During this time, we don't check for damage or similar things.
 	
 	//Original destination	
 	private vector m_vOriginalDestination;				//Used to know where to patrol
@@ -292,7 +295,10 @@ class SDRC_ChopperComp : ScriptComponent
 		}
 		
 		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp", LogLevel.NORMAL);
-				
+		
+		SetupTypeParams(owner);
+		SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, m_fDistanceLow, m_fDistanceHigh);						
+		
 		SetEventMask(owner, EntityEvent.INIT);
 		s_Instance = this;
 		m_sDid = SDRC_Misc.GetCurrentTickTime().ToString() + Math.RandomInt(0, 10000);
@@ -361,33 +367,8 @@ class SDRC_ChopperComp : ScriptComponent
 		
 		m_bSetupDone = true;
 		
-		if (m_bAutoStart)
-		{					
-			SDRC_Log.Add("[SDRC_ChopperComp:Setup] Called from SDRC_ChopperComp", LogLevel.DEBUG);
-			SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, m_fDistanceLow, m_fDistanceHigh);						
-		}
-		else
-		{
-			SDRC_Log.Add("[SDRC_ChopperComp:Setup] Called from external mod", LogLevel.DEBUG);
-		}
+		SetupType(owner);
 		
-		//Set engine on		
-		SetEngine(true, m_fThrottle, m_fRotorForce0, m_fRotorForce1);
-		
-		if (m_RocketPrefabs.IsEmpty())
-		{
-			SDRC_Log.Add("[SDRC_ChopperComp] No rockets available.", LogLevel.NORMAL);
-		}
-		else
-		{
-			m_RocketPrefab = m_RocketPrefabs.GetRandomElement();
-			SDRC_Log.Add("[SDRC_ChopperComp] Using rockets: " + SDRC_Misc.GetSimpleEntityName(m_RocketPrefab), LogLevel.NORMAL);
-		}
-	
-		//Save the original values
-		SDRC_ChopperCompCore.StoreOriginalValues(owner);
-		//SDRC_ChopperEnemyHelper.GetWeapons(owner);
-						
 		if (m_bAutoStart)
 		{					
 			Ready(owner);
@@ -409,8 +390,7 @@ class SDRC_ChopperComp : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	//Delayed spawn of AI crew
-	
+	//Delayed spawn of AI crew	
 	void ReadyDelayed(IEntity owner)
 	{
 		// Some things needs to be done delayed
@@ -440,7 +420,7 @@ class SDRC_ChopperComp : ScriptComponent
 		}
 
 		SDRC_ChopperDebug.DrawDebugPaths(owner);
-				
+		
 		SetEventMask(owner, EntityEvent.FRAME);
 		Activate(owner);
 		
@@ -456,9 +436,13 @@ class SDRC_ChopperComp : ScriptComponent
 		m_bInInit = false;
 			
 		//Check if pilots were possible to set
-		if (SDRC_VehicleHelper.PilotCountAlive(owner) == 0)
+		if (m_bUnpiloted)
 		{
-			SDRC_Log.Add("[SDRC_ChopperComp] Unable to set pilots.", LogLevel.WARNING);			
+			SDRC_Log.Add("[SDRC_ChopperComp:InitDone] Unpiloted entity.", LogLevel.DEBUG);			
+		}
+		else if (SDRC_VehicleHelper.PilotCountAlive(owner) == 0)
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp:InitDone] Unable to set pilots.", LogLevel.WARNING);
 		}
 		
 		SDRC_Log.Add("[SDRC_ChopperComp:InitDone] DONE!", LogLevel.DEBUG);
@@ -480,6 +464,9 @@ class SDRC_ChopperComp : ScriptComponent
 			}
 			return;
 		}
+		
+		//See if there are type specific EOnFrame things to do
+		TypeEOnFrame(owner, timeSlice);
 		
 		//If chopper is destroyed, let Reforger handle crash etc. Just stop everything we used to do on EOnFrame.
 		if (m_eHeliState == SDRC_EHeliState.DESTROYED)
@@ -598,7 +585,7 @@ class SDRC_ChopperComp : ScriptComponent
 		{
 			float ts = m_fTimeSpeed / SPEED_INTERVAL;
 			m_fSpeed = Math.Lerp(m_fSpeedStart, m_fSpeedTarget, ts);
-			m_fSpeed = Math.Clamp(m_fSpeed, m_fSpeedMin, m_fSpeedMax)
+			m_fSpeed = Math.Clamp(m_fSpeed, m_fSpeedMin, m_fSpeedMax);
 		}
 
 		//Get chopper direction
@@ -861,7 +848,7 @@ class SDRC_ChopperComp : ScriptComponent
 
 		if (destination == vector.Zero)
 		{
-			destination = SDRC_ChopperHelper.GetDestinationForward(owner, 500);
+			destination = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial);
 		}
 		AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
 
@@ -957,7 +944,7 @@ class SDRC_ChopperComp : ScriptComponent
 	private void CreateFlightPoints(IEntity owner)
 	{
 		//Add a few points in front to smooth the flight pattern
-		float forwardDistance = 300;
+		float forwardDistance = params.destinationForward;
 		vector origin = owner.GetOrigin();
 		
 		vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, forwardDistance/2);
@@ -1166,6 +1153,28 @@ class SDRC_ChopperComp : ScriptComponent
 		}
 	}	
 
+	//------------------------------------------------------------------------------------------------	
+	// Type specific functions. These should be over ridden by the specific type
+	//------------------------------------------------------------------------------------------------	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	This sets up the flight model params for a specific SDRC_EChopperType. Override this function for other types.
+	*/
+	void SetupType(IEntity owner) {}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	This sets up the flight model params for a specific SDRC_EChopperType. Override this function in other types.
+	*/	
+	void SetupTypeParams(IEntity owner) {}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Type specific things within EOnFrame. Override this function in other types.
+	*/	
+	void TypeEOnFrame(IEntity owner, float timeSlice) {}
+		
 	//------------------------------------------------------------------------------------------------	
 	// State Handling  - defined in modded class
 	//------------------------------------------------------------------------------------------------	

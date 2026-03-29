@@ -54,7 +54,7 @@ class SDRC_ChopperCrewHelper
 			}
 		}
 
-		SDRC_Log.Add("[SDRC_ChopperHelper:SpawnCrew] Faction used: " + faction + " - selected from: " + factionReason, LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_ChopperCrewHelper:SpawnCrew] Faction used: " + faction + " - selected from: " + factionReason, LogLevel.DEBUG);
 				
 		//Select crew	
 		if (crewmember.IsEmpty())
@@ -193,7 +193,7 @@ class SDRC_ChopperCrewHelper
 		}
 		else
 		{
-			SDRC_Log.Add("[SDRC_ChopperHelper:SpawnCrew] No crew defined. Without pilots, we will crash.", LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_ChopperCrewHelper:SpawnCrew] No crew defined.", LogLevel.DEBUG);
 		}
 
 		//Set AI skill
@@ -243,7 +243,7 @@ class SDRC_ChopperCrewHelper
 				continue;
 			}
 			
-			SDRC_Log.Add("[SDRC_ChopperComp:HandleState] Create waypoint for AI group: " + group, LogLevel.DEBUG);			
+			SDRC_Log.Add("[SDRC_ChopperCrewHelper:GetOut] Create waypoint for AI group: " + group, LogLevel.DEBUG);			
 			
 			vector pos = SDRC_Misc.RandomizePos(owner.GetOrigin(), 300);			
 			GetGame().GetCallqueue().CallLater(SetWaypointDelayed, 1000 + GETOUT_DELAY * 1000 * (g - 1), false, group, pos);

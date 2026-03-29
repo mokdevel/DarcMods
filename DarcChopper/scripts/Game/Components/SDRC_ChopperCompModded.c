@@ -40,6 +40,9 @@ modded class SDRC_ChopperComp
 		m_fDistanceLow = distanceLow;
 		m_fDistanceHigh = distanceHigh;
 		
+		//Save the original values
+		SDRC_ChopperCompCore.StoreOriginalValues(GetOwner());
+		
 		m_fSpeed = m_fSpeedMin;
 	}	
 
