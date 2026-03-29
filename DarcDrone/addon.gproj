@@ -1,0 +1,8 @@
+GameProject {
+ ID "DarcDrone"
+ GUID "68F8BEC24D7765DB"
+ TITLE "DarcDrone"
+ Dependencies {
+  "689EDED542F881AF" "65AD60E204191D37" "58D0FB3206B6F859"
+ }
+}

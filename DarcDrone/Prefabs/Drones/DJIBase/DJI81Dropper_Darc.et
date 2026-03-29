@@ -1,0 +1,24 @@
+GenericEntity : "{C07C56F97DAB2DEE}Prefabs/Drones/DJIBase/DJI81Dropper.et" {
+ ID "659863D5118F3377"
+ components {
+  SCR_EditableVehicleComponent "{65AF1B36819DCFB8}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{65AF1B36AFD2EE1C}" {
+    m_aAuthoredLabels + {
+     ENTITYTYPE_DARCCHOPPER
+    }
+   }
+   m_Flags 69
+  }
+  SDRC_ChopperComp "{68F8BEC217F852DF}" {
+   m_fSpeedMin 1
+   m_fSpeedMax 8
+   m_fFlyHeightLow 5
+   m_fFlyHeightHigh 30
+   m_EntityType DRONE
+   m_bUnpiloted 1
+  }
+  RplComponent "{659863D793C45A93}" {
+   Streamable Disabled
+  }
+ }
+}
