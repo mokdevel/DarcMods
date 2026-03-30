@@ -37,7 +37,25 @@ modded class SDRC_ChopperComp
 {
 	//------------------------------------------------------------------------------------------------
 	/*!
+	This sets up the flight model params for a specific SDRC_EChopperType. Override this function for other types.
+	This is called immediately when component is initialized.
+	*/	
+	override void SetupTypeParams(IEntity owner)
+	{
+		super.SetupTypeParams(owner);
+		
+		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
+		{
+			return;
+		}
+		
+		params = new SDRC_ChopperParams_Helicopter();
+	}
+		
+	//------------------------------------------------------------------------------------------------
+	/*!
 	This is the setup for a specific SDRC_EChopperType. Override this function in other types.
+	This is a delayed setup make sure the entity is properly initialized. 
 	*/
 	override void SetupType(IEntity owner)
 	{
@@ -68,22 +86,6 @@ modded class SDRC_ChopperComp
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	This sets up the flight model params for a specific SDRC_EChopperType. Override this function for other types.
-	*/	
-	override void SetupTypeParams(IEntity owner)
-	{
-		super.SetupTypeParams(owner);
-		
-		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
-		{
-			return;
-		}
-		
-		params = new SDRC_ChopperParams_Helicopter();
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
 	Type specific things within EOnFrame. Override this function in other types.
 	*/	
 	override void TypeEOnFrame(IEntity owner, float timeSlice)
@@ -97,4 +99,42 @@ modded class SDRC_ChopperComp
 		
 		/* NOTHING NEEDED FOR HELICOPTER */
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Handle attacks
+	- Normal case: If enemy is seen, consider shooting
+	- Attack case: The location to bomb has been assigned. (m_vAttackPosition)
+	*/
+	override void HandleAttack(IEntity owner)
+	{
+		super.HandleAttack(owner);
+		
+		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
+		{
+			return;
+		}
+		
+		//Handle attacks:
+		if (m_fTimerAttack < 0)	
+		{
+			//Normal case:
+			SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
+			
+			if (m_fTimeRocketDelay > m_RocketDelay)
+			{
+				SDRC_ChopperEnemyHelper.SearchEnemyForRocket(owner);
+				m_fTimeRocketDelay = 0;
+			}
+		}
+		else
+		{
+			//Attack case:
+			if (m_fTimeRocketDelay > m_RocketDelay)
+			{
+				SDRC_ChopperEnemyHelper.EnemyFoundForRocket(owner, m_vAttackPosition);
+				m_fTimeRocketDelay = 0;
+			}
+		}
+	}
 }

@@ -397,8 +397,11 @@ class SDRC_ChopperComp : ScriptComponent
 		if (m_bAutoStart)
 		{
 			//Spawn crew 
-			int crewCount = SDRC_ChopperCrewHelper.SpawnCrew(owner, m_CargoSeatFill, m_aCrew, m_sFaction, m_AISkill, m_AIPerception);
-			SDRC_Log.Add("[SDRC_ChopperComp] Crew count: " + crewCount, LogLevel.DEBUG);
+			if (!m_bUnpiloted)
+			{
+				int crewCount = SDRC_ChopperCrewHelper.SpawnCrew(owner, m_CargoSeatFill, m_aCrew, m_sFaction, m_AISkill, m_AIPerception);
+				SDRC_Log.Add("[SDRC_ChopperComp] Crew count: " + crewCount, LogLevel.DEBUG);
+			}
 		}		
 		
 		GetGame().GetCallqueue().CallLater(ReadyDelayed_2, TIME_DELAY_READY * 1000, false, owner);		
@@ -475,7 +478,7 @@ class SDRC_ChopperComp : ScriptComponent
 		}		
 		
 		m_vOrigin = owner.GetOrigin();
-		m_fAltitude = m_vOrigin[1] - SDRC_Misc.GetSurfaceYWithWater(m_vOrigin);
+		m_fAltitude = GetAltitude();
 	
 		m_fTimeSpeed += timeSlice;
 		m_fTimeBetweenPts += timeSlice;
@@ -663,11 +666,11 @@ class SDRC_ChopperComp : ScriptComponent
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
 
 		//If we're too close to ground, slow down the speed to allow time for climb
-		float altitude = SDRC_ChopperHelper.GetAltitude(owner);
+//		float altitude = SDRC_ChopperHelper.GetAltitude(owner);
 		const int ALTITUDE_ADD = 5;
-		if ((altitude + ALTITUDE_ADD) < m_fFlyHeightLow)
+		if ((m_fAltitude + ALTITUDE_ADD) < m_fFlyHeightLow)
 		{		
-			float mul = (altitude + ALTITUDE_ADD) / m_fFlyHeightLow;
+			float mul = (m_fAltitude + ALTITUDE_ADD) / m_fFlyHeightLow;
 			mul = Math.Clamp(mul, 0, 1);
 			m_fSpeedTarget = m_fSpeedTarget * mul;
 		}
@@ -805,9 +808,7 @@ class SDRC_ChopperComp : ScriptComponent
 			}
 					
 			//Modify if we're too close to the ground, raise very aggressively
-			float altitude = SDRC_ChopperHelper.GetAltitude(owner);
-			
-			if (altitude < m_fFlyHeightLow)
+			if (m_fAltitude < m_fFlyHeightLow)
 			{
 				bigMul = 300;
 			}				
@@ -1098,6 +1099,15 @@ class SDRC_ChopperComp : ScriptComponent
 	}		
 
 	//------------------------------------------------------------------------------------------------	
+	/*!
+	Get altitude from helicopter down to first object below
+	*/
+	float GetAltitude()
+	{
+		return m_vOrigin[1] - SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true);
+	}
+	
+	//------------------------------------------------------------------------------------------------	
 	// States 
 	//------------------------------------------------------------------------------------------------	
 	
@@ -1159,15 +1169,17 @@ class SDRC_ChopperComp : ScriptComponent
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	This sets up the flight model params for a specific SDRC_EChopperType. Override this function for other types.
-	*/
-	void SetupType(IEntity owner) {}
+	This sets up the flight model params for a specific SDRC_EChopperType. Override this function in other types.
+	This is called immediately when component is initialized.
+	*/	
+	void SetupTypeParams(IEntity owner) {}
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	This sets up the flight model params for a specific SDRC_EChopperType. Override this function in other types.
-	*/	
-	void SetupTypeParams(IEntity owner) {}
+	This sets up the flight model params for a specific SDRC_EChopperType. Override this function for other types.
+	This is a delayed setup make sure the entity is properly initialized. 
+	*/
+	void SetupType(IEntity owner) {}
 
 	//------------------------------------------------------------------------------------------------
 	/*!

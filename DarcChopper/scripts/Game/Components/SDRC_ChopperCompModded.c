@@ -436,37 +436,6 @@ modded class SDRC_ChopperComp
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Handle attacks
-	- Normal case: If enemy is seen, consider shooting
-	- Attack case: The location to bomb has been assigned. (m_vAttackPosition)
-	*/
-	override private void HandleAttack(IEntity owner)
-	{
-		//Handle attacks:
-		if (m_fTimerAttack < 0)	
-		{
-			//Normal case:
-			SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
-			
-			if (m_fTimeRocketDelay > m_RocketDelay)
-			{
-				SDRC_ChopperEnemyHelper.SearchEnemyForRocket(owner);
-				m_fTimeRocketDelay = 0;
-			}
-		}
-		else
-		{
-			//Attack case:
-			if (m_fTimeRocketDelay > m_RocketDelay)
-			{
-				SDRC_ChopperEnemyHelper.EnemyFoundForRocket(owner, m_vAttackPosition);
-				m_fTimeRocketDelay = 0;
-			}
-		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
 	Handle behaviour
 	- Normal case: Fly and react normally
 	- Attack case: 
@@ -675,7 +644,8 @@ modded class SDRC_ChopperComp
 
 		if (distance < m_fLandingDistance)
 		{
-			float height = m_Helicopter_s.GetAltitudeAGL();
+			//float height = m_Helicopter_s.GetAltitudeAGL();
+			float height = GetAltitude();
 				
 			if (!m_bIsLanding)
 			{

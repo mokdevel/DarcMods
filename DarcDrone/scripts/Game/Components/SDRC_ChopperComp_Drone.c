@@ -22,10 +22,10 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		pitchNoseAngleUp   =  20 * Math.DEG2RAD;
 		
 		//Rotor force multipliers
-		rotorForceMulUp = 1.3 * 10;
+		rotorForceMulUp = 1.4 * 10;
 		
 		//Waypoint values
-		wpSteepAngle = 60;
+		wpSteepAngle = 30;
 														
 		destinationForwardInitial = 150;
 		destinationForward = 100;
@@ -36,40 +36,13 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 modded class SDRC_ChopperComp
 {
 	private bool m_bRegistered = false;
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	This is the setup for a specific SDRC_EChopperType. Override this function in other types
-	*/
-	override void SetupType(IEntity owner)
-	{
-		super.SetupType(owner);
-		
-		if (m_EntityType != SDRC_EChopperType.DRONE)
-		{
-			return;
-		}
-
-		//DRONE specific
-		
-		SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
-		if (droneControllerComponent)
-		{
-			droneControllerComponent.ArmDrone();
-			droneControllerComponent.m_bIsActive = true;
-			droneControllerComponent.m_bIsArmed = true;			
-			droneControllerComponent.m_iOwner = GetGame().GetPlayerController();
-			if (droneControllerComponent.m_iOwner == -1)
-			{
-				droneControllerComponent.m_iOwner = 0;
-			}
-			//droneControllerComponent.m_InputManager.SetActionValue("DroneUp", 3.0);
-		}		
-	}
+	private float grenadeTimer = 2;		//(seconds)
+	SAL_DroneControllerComponent m_DroneControllerComponent;
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	This sets up the flight model params for a specific SDRC_EChopperType. Override this function for other types.
+	This is called immediately when component is initialized.
 	*/	
 	override void SetupTypeParams(IEntity owner)
 	{
@@ -85,6 +58,36 @@ modded class SDRC_ChopperComp
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
+	This is the setup for a specific SDRC_EChopperType. Override this function in other types
+	This is a delayed setup make sure the entity is properly initialized. 
+	*/
+	override void SetupType(IEntity owner)
+	{
+		super.SetupType(owner);
+		
+		if (m_EntityType != SDRC_EChopperType.DRONE)
+		{
+			return;
+		}
+
+		//DRONE specific
+		m_DroneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
+		if (m_DroneControllerComponent)
+		{
+			m_DroneControllerComponent.ArmDrone();
+			m_DroneControllerComponent.m_bIsActive = true;
+			m_DroneControllerComponent.m_bIsArmed = true;			
+			m_DroneControllerComponent.m_iOwner = GetGame().GetPlayerController();
+			if (m_DroneControllerComponent.m_iOwner == -1)
+			{
+				m_DroneControllerComponent.m_iOwner = 0;
+			}
+			//m_DroneControllerComponent.m_InputManager.SetActionValue("DroneUp", 3.0);
+		}		
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Type specific things within EOnFrame. Override this function in other types.
 	*/	
 	override void TypeEOnFrame(IEntity owner, float timeSlice)
@@ -96,22 +99,93 @@ modded class SDRC_ChopperComp
 			return;
 		}
 		
+		grenadeTimer -= timeSlice;
+		
+		//Handle registration to drone manager.
 		if (!m_bRegistered)
 		{
-			SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
-			if (droneControllerComponent)
+			//SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
+			if (m_DroneControllerComponent)
 			{
-				if (droneControllerComponent.m_DroneId != -1)
+				if (m_DroneControllerComponent.m_DroneId != -1)
 				{
-					SDRC_Log.Add("[SDRC_ChopperComp_Drone:SetupType] Registering DroneId: " + droneControllerComponent.m_DroneId, LogLevel.DEBUG);
-					droneControllerComponent.m_DroneManager.m_aActiveDrones.Insert(droneControllerComponent.m_DroneId);
+					SDRC_Log.Add("[SDRC_ChopperComp_Drone:SetupType] Registering DroneId: " + m_DroneControllerComponent.m_DroneId, LogLevel.DEBUG);
+					m_DroneControllerComponent.m_DroneManager.m_aActiveDrones.Insert(m_DroneControllerComponent.m_DroneId);
 					m_bRegistered = true;
 				}
 			}
-		
 		}
 		
+		//Control drone rotor speed
 		InputManager m_InputManager = GetGame().GetInputManager();
 		m_InputManager.SetActionValue("DroneUp", 1.0);		
+		
+		//Drop grenade
+		if (grenadeTimer < 0)
+		{
+			//DroneGrenade(m_DroneControllerComponent.m_DroneId);
+		}		
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Handle attacks
+	- Normal case: If enemy is seen, consider shooting
+	- Attack case: The location to bomb has been assigned. (m_vAttackPosition)
+	*/
+	override void HandleAttack(IEntity owner)
+	{
+		super.HandleAttack(owner);
+		
+		if (m_EntityType != SDRC_EChopperType.DRONE)
+		{
+			return;
+		}
+		
+		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(owner.GetOrigin(), 50, 0))
+		{
+			DroneGrenade(m_DroneControllerComponent.m_DroneId);
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------
+	// DRONE specific stuff
+	//------------------------------------------------------------------------------------------------
+		
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Handles grenadedrop
+	*/	
+	private void DroneGrenade(RplId droneId)
+	{
+		if (!Replication.FindItem(droneId))
+			return;
+		
+		IEntity drone = RplComponent.Cast(Replication.FindItem(droneId)).GetEntity();
+		if (!drone)
+			return;
+		
+		SAL_DropperComponent dropperComp = SAL_DropperComponent.Cast(drone.FindComponent(SAL_DropperComponent));
+		if (!dropperComp)
+			return;
+		
+		SlotManagerComponent slotComp = SlotManagerComponent.Cast(drone.FindComponent(SlotManagerComponent));
+		if (!slotComp)
+			return;
+		
+		IEntity grenade = slotComp.GetSlotByName("GrenadeDropper").GetAttachedEntity();
+		if (grenade == null)
+			return;
+		
+		vector transform[4];
+		grenade.GetTransform(transform);
+		SCR_EntityHelper.DeleteEntityAndChildren(grenade);
+		dropperComp.m_BGrenadeDropped = true;
+		
+		EntitySpawnParams params = new EntitySpawnParams();
+		params.Transform = transform;
+		GetGame().SpawnEntityPrefab(Resource.Load(dropperComp.m_DropperGrenade), GetGame().GetWorld(), params);
+		SAL_DroneConnectionManager.GetInstance().DropGrenadeBroadcast(droneId);
+		
+	}
 }
