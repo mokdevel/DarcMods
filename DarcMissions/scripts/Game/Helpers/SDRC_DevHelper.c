@@ -10,6 +10,8 @@ sealed class SDRC_DevHelper
 {
 	static void SDRC_DevDump()	
 	{
+		return;
+		
 //		GetGame().GetCallqueue().CallLater(ShowTestMessage, 2000, true);
 		SDRC_MapMarkerHelper.CreateMapMarker("0300 0 1400", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
 		SDRC_MapMarkerHelper.CreateMapMarker("0300 0 1400", SDRC_EMissionIconDifficulty.ICON_DIFF_0, "", "*", markerTypeString : "DARC_MISSION_DIFFICULTY");
@@ -75,7 +77,7 @@ sealed class SDRC_DevHelper
 				string magazine = SDRC_AmmoHelper.GetCompatibleMagazine(wpn);
 			}*/		
 	
-//		SpawnTestMission();	
+		//SpawnTestMission();	
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -83,7 +85,7 @@ sealed class SDRC_DevHelper
 	{
 		SDRC_MapMarkerHelper.DeleteMarker("DEV_HELPER");
 		
-		for (int i = 0;i < 250; i++)
+		for (int i = 0;i < 350; i++)
 		{
 			vector pos = SDRC_Misc.GetRandomWorldPos();
 			SDRC_SpawnHelper.FindEmptyPos(pos, 300, 10);			
