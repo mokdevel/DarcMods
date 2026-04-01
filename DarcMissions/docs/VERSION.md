@@ -4,6 +4,13 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+# 20260xxx
+Main features:
+* Added ``maxDistanceToPlayer``. The max distance Dynamic missions will not spawn further from any player 
+
+Fixes:
+* Rewrote the mission position search logic to support ``maxDistanceToPlayer``.
+* Building cache functionality was disabled. 
 
 # 20260328
 Fixes in Chopper mission. 

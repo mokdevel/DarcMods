@@ -23,7 +23,8 @@ SDRC_EHintPosition missionHintPosition : Position of the hint/popup.
   1 = DOWN_LEFT : Lower left corner 
 int missionRandomPos : The radius to randomize the mission position. This avoids mission appearing always in same place.
 int minDistanceToMission : Distance to another mission. Two missions shall not be too close to each other.
-int minDistanceToPlayer : Mission shall not spawn too close to a player.
+int minDistanceToPlayer : Dynamic missions shall not spawn closer than this distance to any player.
+int maxDistanceToPlayer : Dynamic missions shall not spawn further than this distance to any player. -1 disables this check
 bool showStaticMissionMarker : Show/hide static mission markers. This will override any mission specific settings.
 bool showDynamicMissionMarker : Show/hide dynamic mission markers. This will override any mission specific showMarker settings.
 bool showMissionDifficulty : Show/hide mission difficulty on marker

@@ -3,14 +3,15 @@ Once the mod starts to run it will wait for ```missionStartDelay``` before the m
 
 ## Mission position
 Mission position is either defined or randomized. See [General parameters - pos](./P_COMMON.md) and [Location parameters](./P_LOCATIONS.md). Once a position is chosen, it's checked for validity. The position shall not be .. 
-- .. too close to another mission
-- .. too close to any player
+- .. too close to another mission (``minDistanceToMission``)
+- .. too close to any player (``minDistanceToPlayer``)
+- .. too far away from any player (``maxDistanceToPlayer``)
 - .. in water
 - .. in [non valid area](./P_NONVALIDAREAS.md)
 
 In the case position is not usable, another try is made. Currently searching is limited to five tries before deciding that no position has been found. In this case, mission will not spawn.
 
-GM requested missions generally follow the same rule. Depends slightly on the mission requested.
+GM spawned missions will only check for mission not being in water or under map. If you want, you can spawn missions in for example non valid areas. 
 
 ## Dynamic vs Static mission
 In the configuration you can define missions either as a dynamic mission (```missionDynamic```) or static mission (```missionStatic```). The missions are the same but spawning is different. 

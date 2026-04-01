@@ -1,8 +1,13 @@
 # Version history
 
 ## Next Version
+
+
+# 20260xxx
 Main features:
-* Fly path lines can be hidden. Settings -> Gameplay -> 
+
+Fixes:
+* Attack height for rockets was incorrect
 
 # 20260328
 Fixes:
