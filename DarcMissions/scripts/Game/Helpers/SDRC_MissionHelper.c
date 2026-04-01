@@ -39,8 +39,11 @@ class SDRC_MissionHelper
 
 		//If we had an empty positions list, let's search with locationTypes
 		if (pos == "0 0 0")
-		{					
-			pos = SDRC_MissionHelper.FindMissionPosWithLocationTypes(locationTypes, size, posRandomization);
+		{			
+			if (locationTypes)
+			{		
+				pos = SDRC_MissionHelper.FindMissionPosWithLocationTypes(locationTypes, size, posRandomization);
+			}
 		}
 				
 		return pos;

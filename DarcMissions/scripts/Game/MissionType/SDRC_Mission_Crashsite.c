@@ -27,7 +27,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	private const int DC_LOCATION_SEACRH_ITERATIONS = 10;	//How many different spots to try for a mission before giving up	
 			
 	private SDRC_EMissionCrashSiteState missionCrashSiteState = SDRC_EMissionCrashSiteState.INIT;
-	private vector m_vPosDestination = "0 0 0";				//The destination where the chopper is flying from mission position
+	private vector m_vPosOrigin = "0 0 0";				//The origin for the chopper flying to mission position
 	private float m_fAngle = 0;
 	private float m_fDistance = 0;
 	private IEntity m_Vehicle;
@@ -58,8 +58,8 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		m_DC_Crashsite = m_Config.subMissions[idx];	
 		HandleRequestGeneralVariables(m_DC_Crashsite.general, request);
 		
-		//Find position
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Crashsite.general.pos);
+		//The location to crash to.
+		vector pos = "0 0 0";
 
 		//For requested missions we want have it as close as possible in the requested place.
 		if (IsRequested())
@@ -71,18 +71,15 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		{
 			for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 			{
-				if (pos == "0 0 0")
+				pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Crashsite.general.pos, m_DC_Crashsite.general.size, m_DC_Crashsite.general.locationTypes);
+				//pos = SDRC_MissionHelper.FindMissionPosWithDistances(m_Config.distanceToMission, m_Config.distanceToPlayer);					
+				if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: (IsRequested() || IsStatic()), ignoreNonValidArea: IsRequested()) != SDRC_EMissionError.NONE)
 				{
-					pos = SDRC_MissionHelper.FindMissionPosWithDistances(m_Config.distanceToMission, m_Config.distanceToPlayer);					
-					if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: (IsRequested() || IsStatic()), ignoreNonValidArea: IsRequested()) != SDRC_EMissionError.NONE)
-					{
-						pos = "0 0 0";
-					}
+					pos = "0 0 0";
 				}
 				
 				if (pos != "0 0 0")
 				{
-					//positionFound = true;
 					break;
 				}
 				else
@@ -101,20 +98,18 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		
 		//Set common parameters
 		{		
-			pos[1] = pos[1] + SDRC_Misc.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[0]);	//Adjust flight height
-			int rnd = SDRC_Misc.GetWorldSize()/8;
-			m_vPosDestination[0] = SDRC_Misc.GetWorldSize()/2 + SDRC_Misc.RandomFloat(-rnd, rnd);
-			m_vPosDestination[2] = SDRC_Misc.GetWorldSize()/2 + SDRC_Misc.RandomFloat(-rnd, rnd);
+			m_vPosOrigin = SDRC_Misc.GetRandomWorldEdgePosition(0.8);
+			m_vPosOrigin[1] = SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin) + SDRC_Misc.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[1]);	//Adjust flight height
 			
-			vector direction = vector.Direction(pos, m_vPosDestination);
+			vector direction = vector.Direction(m_vPosOrigin, pos);
 			m_fAngle = SDRC_Math.VectorToAngle(direction);
 			
-			m_fDistance = vector.DistanceXZ(pos, m_vPosDestination);
+			m_fDistance = vector.DistanceXZ(pos, m_vPosOrigin);
 			
-			SDRC_Log.Add("[SDRC_Mission_Crashsite] " +  GetId() + " : Helicopter flying from " + pos + " to " + m_vPosDestination + ". Angle: " + m_fAngle + ". Distance: " + m_fDistance, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_Mission_Crashsite] " +  GetId() + " : Helicopter flying from " + m_vPosOrigin + " to " + pos + ". Angle: " + m_fAngle + ". Distance: " + m_fDistance, LogLevel.DEBUG);
 		}			
 		
-		SetPos(pos, m_vPosDestination);
+		SetPos(m_vPosOrigin, pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Crashsite.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Crashsite.general);		
@@ -126,8 +121,9 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		//Set a marker for destination
 		if (!SDRC_Conf.RELEASE)
 		{			
-			SDRC_MapMarkerHelper.CreateMapMarker(m_vPosDestination, SDRC_EMissionIcon.ICON_DEATHMARKER_SMALL_RED_MAP, GetId() + "_1", "Destination");
-			SDRC_DebugHelper.AddDebugPos(m_vPosDestination, ARGB(50, 255, 0, 0), 10, GetId() + "_1");
+			SDRC_MapMarkerHelper.CreateMapMarker(pos, SDRC_EMissionIcon.ICON_DEATHMARKER_SMALL_RED_MAP, GetId() + "_1", "Destination");
+			SDRC_DebugHelper.AddDebugPos(m_vPosOrigin, ARGB(50, 255, 0, 0), 10, GetId() + "_1");
+			SDRC_DebugHelper.AddDebugPos(pos, ARGB(50, 0, 255, 0), 10, GetId() + "_1");
 		}
 	}	
 	
@@ -248,10 +244,10 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	{					
 		EntitySpawnParams params = EntitySpawnParams();
 		SDRC_HelicopterInfo helicopterInfo = m_DC_Crashsite.helicopterInfo.GetRandomElement();
-		vector pos = GetPos();
+		//vector pos = GetPos();
 
-		//Spawn the resource exactly to pos		
-		m_Vehicle = SDRC_SpawnHelper.SpawnItem(pos, helicopterInfo.resource, m_fAngle, -1, false);
+		//Spawn the resource exactly to m_vPosOrigin		
+		m_Vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosOrigin, helicopterInfo.resource, m_fAngle, -1, false);
 		if (m_Vehicle)
 		{
 			m_EntityList.Insert(m_Vehicle);
@@ -267,18 +263,18 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		}
 		
 		float throttleCoef = m_fDistance / 1300;
-		throttleCoef = Math.Clamp(throttleCoef, 0.6, 1.0);
+		throttleCoef = Math.Clamp(throttleCoef, 0.6, 0.95);
 		
 		VehicleHelicopterSimulation m_Vehicle_s;
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));
         m_Vehicle_s.EngineStart();
-        m_Vehicle_s.SetThrottle(helicopterInfo.throttle * throttleCoef);
+        m_Vehicle_s.SetThrottle(helicopterInfo.throttle * 1.2);
         m_Vehicle_s.RotorSetForceScaleState(0, helicopterInfo.rotorForce * throttleCoef);
         m_Vehicle_s.RotorSetForceScaleState(1, helicopterInfo.rotor2Force);
 
 		vector velOrig = m_Vehicle.GetPhysics().GetVelocity();
         vector rotVector = m_Vehicle.GetAngles();
-		int speed = SDRC_Misc.RandomFloat(30, 45);
+		int speed = SDRC_Misc.RandomFloat(60, 85);
 		
         vector vel = {velOrig[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * speed, velOrig[1], velOrig[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * speed };
 		m_Vehicle.GetPhysics().SetVelocity(vel);
@@ -414,13 +410,13 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 		
 		//----------------------------------------------------
 		ref SDRC_HelicopterInfo heli00 = new SDRC_HelicopterInfo();		
-			heli00.Set("Index 0", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et", 0.8, 0.8, 1.0);
+			heli00.Set("Index 0", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et", 1.6, 0.8, 1.0);
 			crashsite.helicopterInfo.Insert(heli00);
 		ref SDRC_HelicopterInfo heli01 = new SDRC_HelicopterInfo();
-			heli01.Set("Index 1", "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_crashing.et",	0.7, 0.9, 1.0);
+			heli01.Set("Index 1", "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_crashing.et",	1.2, 0.9, 1.0);
 			crashsite.helicopterInfo.Insert(heli01);
 		ref SDRC_HelicopterInfo heli02 = new SDRC_HelicopterInfo();
-			heli02.Set("Index 2", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et",	0.8, 0.8, -1.0);
+			heli02.Set("Index 2", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et",	1.4, 0.8, -1.0);
 			crashsite.helicopterInfo.Insert(heli02);		
 		
 		//----------------------------------------------------
@@ -511,13 +507,13 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 		
 		//----------------------------------------------------
 		ref SDRC_HelicopterInfo heli10 = new SDRC_HelicopterInfo();
-			heli10.Set("Index 0", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et", 0.7, 0.8, 1.0);
+			heli10.Set("Index 0", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et", 1.8, 0.8, 1.0);
 			crashsite.helicopterInfo.Insert(heli10);
 		ref SDRC_HelicopterInfo heli11 = new SDRC_HelicopterInfo();
-			heli11.Set("Index 1", "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_crashing.et",	0.6, 0.85, 1.0);
+			heli11.Set("Index 1", "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_crashing.et",	1.3, 0.85, 1.0);
 			crashsite.helicopterInfo.Insert(heli11);
 		ref SDRC_HelicopterInfo heli12 = new SDRC_HelicopterInfo();
-			heli12.Set("Index 2", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et",	0.75, 0.75, -1.0);
+			heli12.Set("Index 2", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et",	1.6, 0.75, 1.0);
 			crashsite.helicopterInfo.Insert(heli12);		
 		
 		//----------------------------------------------------
