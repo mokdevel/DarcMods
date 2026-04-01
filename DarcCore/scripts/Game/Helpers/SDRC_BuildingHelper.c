@@ -22,7 +22,7 @@ sealed class SDRC_BuildingHelper
 		
 		SDRC_Misc.GetAddonList(addonList, false);
 		
-		if ( addonList.Contains("DarcMissions") || addonList.Contains("DarcSpawner") )
+		if ( addonList.Contains("$DarcMissions:") || addonList.Contains("$DarcMissionsDev:") )
 		{
 			return true;
 		}
