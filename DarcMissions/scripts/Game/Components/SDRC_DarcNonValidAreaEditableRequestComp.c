@@ -22,7 +22,8 @@ class SDRC_DarcNonValidAreaEditableRequestComp : SCR_EditableSystemComponent
 	protected SDRC_EMissionType m_MissionType;	//The type of mission
 	
 	//NOTE: Params are set in SDRC_EditorAttributeBaseValues in file SDRC_BaseValueListEditorAttribute.c
-	[Attribute("100", desc: "Radius")]	
+//	[Attribute("200", desc: "Radius")]	
+	[Attribute("200", desc: "Radius", params: "50 1400 100")]	
 	protected float m_width;
 
 	//------------------------------------------------------------------------------------------------

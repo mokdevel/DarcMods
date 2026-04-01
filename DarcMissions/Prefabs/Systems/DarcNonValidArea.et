@@ -31,14 +31,16 @@ SDRC_DarcMissionGM : "{C599195C442D7125}Prefabs/Compositions/Misc/CustomEntities
      ENTITYTYPE_SYSTEM ENTITYTYPE_DARCMISSIONS
     }
    }
+   m_Flags HORIZONTAL
    m_MissionType NON_VALID_AREA
+   m_width 200
   }
   SDRC_EffectsModuleAreaMeshComponent "{685AC124B1F781A4}" {
    m_fHeight 20
    m_bStretchMaterial 1
    m_Material "{0A8FAD171DB3DC49}Assets/Editor/VirtualArea/VirtualArea_01_Focused.emat"
-   m_fWidth 100
-   m_fLenght 100
+   m_fWidth 200
+   m_fLenght 200
   }
   RplComponent "{685ABD76F7C0933C}" {
    Streamable Disabled
