@@ -143,8 +143,12 @@ class SDRC_Core
 	//------------------------------------------------------------------------------------------------		
 	void FillLocationCache()
 	{
-		//Initialize locations cache
-		SDRC_Locations.FillLocationsCache(m_Config.locationAkas, m_Config.buildingAkas);
+		//Building caching takes time, so don't do it, if not needed.
+		if (SDRC_Locations.IsLocationCacheNeeded())
+		{	
+			//Initialize locations cache
+			SDRC_Locations.FillLocationsCache(m_Config.locationAkas, m_Config.buildingAkas);
+		}
 
 		//Core initialized properly
 		SDRC_Conf.coreInitReady = true;

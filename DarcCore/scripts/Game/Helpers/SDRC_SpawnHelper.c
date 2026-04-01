@@ -272,6 +272,13 @@ class SDRC_SpawnHelper
 	Find size of a prefab
 	
 	TBD: Could possibly be done like this - To get the bounding box from the base container, get the BC via Resource.Load(p).GetResource().ToBaseContainer()
+	TBD: Could work like this: 
+
+		SCR_EntitySpawnerSlotComponentClass prefabData = SCR_EntitySpawnerSlotComponentClass.Cast(GetComponentData(GetOwner()));
+		if (!prefabData)
+			return false;
+		trace.Mins = prefabData.GetMinBoundsVector();
+		trace.Maxs = prefabData.GetMaxBoundsVector();			
 	*/
 	static vector FindPrefabSize(ResourceName resourceName)
 	{

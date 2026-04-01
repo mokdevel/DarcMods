@@ -58,7 +58,7 @@ sealed class SDRC_PlayerHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Check is any player is close to given position. Returns true is player between minimumRadius and radiusToCheck
+	Check if any player is close to given position. Returns true is player between minimumRadius and radiusToCheck
 	\param positionToCheck 
 	\param radiusToCheck The radius with within one single player shall be
 	\param minimumRadius The minimum radius how far the found player shall be from positionToCheck
@@ -94,7 +94,7 @@ sealed class SDRC_PlayerHelper
 		
 		return false;
 	}
-
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Get players near a position with distance to it. 
@@ -110,6 +110,11 @@ sealed class SDRC_PlayerHelper
 			IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
 			if (player)
 			{
+				if (!IsAlive(player))
+				{
+					continue;
+				}
+				
 				float distance = vector.DistanceXZ(player.GetOrigin(), positionToCheck);
 				
 				if (distance > radiusToCheck)
@@ -201,6 +206,24 @@ sealed class SDRC_PlayerHelper
 			playerName = playerManager.GetPlayerName(playerId);		
 		}		
 		return playerName;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Check if player is alive
+	*/	
+	static bool IsAlive(IEntity playerEntity)
+	{
+		SCR_DamageManagerComponent damageManager = SCR_DamageManagerComponent.GetDamageManager(playerEntity);
+		
+		if (damageManager)
+		{
+			return damageManager.GetState() != EDamageState.DESTROYED;
+		}
+		else
+		{
+			return true;
+		}
 	}	
 	
 	//------------------------------------------------------------------------------------------------
