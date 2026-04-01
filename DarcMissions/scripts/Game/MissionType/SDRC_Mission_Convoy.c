@@ -33,7 +33,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	private IEntity m_Vehicle = null;
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Convoy(SDRC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Convoy(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
 		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_CONVOY_JSONVER))
@@ -74,7 +74,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPosStart, pos, 1000);
 		
 		//If pos has been set, we blindly accept it. Do basic checking for pos.
-		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: IsRequested()) != SDRC_EMissionError.NONE)
+		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: (IsRequested() || IsStatic()), ignoreNonValidArea: IsRequested()) != SDRC_EMissionError.NONE)
 		{
 			pos = "0 0 0";
 		}

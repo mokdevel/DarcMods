@@ -18,7 +18,7 @@ class SDRC_Mission_Template : SDRC_Mission
 	private ref SDRC_TemplateConfig m_Config = new SDRC_TemplateConfig();
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Template(SDRC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Template(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Set some defaults
 		//For new mission rtpw, define your own ENUM in SDRC_Mission.c and change here. *DO NOT* use modded enum as the index numbers are to kept.

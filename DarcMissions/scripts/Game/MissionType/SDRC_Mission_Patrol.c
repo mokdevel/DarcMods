@@ -18,7 +18,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	private vector m_vPosDestination = "0 0 0";
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Patrol(SDRC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Patrol(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
 		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_PATROL_JSONVER))
@@ -54,12 +54,12 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			m_vPosDestination = request.general.pos[1];
 		}
 		else
-		{
+		{			
 			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Patrol.general.pos, m_DC_Patrol.general.size, m_DC_Patrol.general.locationTypes);
 		}
 		
 		//If pos has been set, we blindly accept it. Do basic checking for pos.
-		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: IsRequested()) != SDRC_EMissionError.NONE)
+		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: (IsRequested() || IsStatic()), ignoreNonValidArea: IsRequested()) != SDRC_EMissionError.NONE)
 		{
 			pos = "0 0 0";
 		}
@@ -74,7 +74,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		//Find a location for the destination. Only used for route
 		if (m_vPosDestination == "0 0 0")
 		{
-			m_vPosDestination = SDRC_MissionHelper.FindMissionPos(m_DC_Patrol.general.locationTypes, m_DC_Patrol.general.size);
+			m_vPosDestination = SDRC_MissionHelper.FindMissionPosWithLocationTypes(m_DC_Patrol.general.locationTypes, m_DC_Patrol.general.size);
 			SDRC_Log.Add("[SDRC_Mission_Patrol] " +  GetId() + " : Patrol destination: " + m_vPosDestination, LogLevel.SPAM);
 		}
 

@@ -37,7 +37,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 	private float m_fSpawnRotation = 0;					//Rotation of the camp for random locations.
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Crashsite(SDRC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Crashsite(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
 		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_CRASHSITE_JSONVER))
@@ -59,7 +59,6 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		HandleRequestGeneralVariables(m_DC_Crashsite.general, request);
 		
 		//Find position
-		bool positionFound = false;
 		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Crashsite.general.pos);
 
 		//For requested missions we want have it as close as possible in the requested place.
@@ -68,23 +67,22 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 			pos = request.general.pos[0];
 		}
 		
-		if (pos != "0 0 0")
-		{
-			//If pos has been set, we blindly accept it. Flying heli is always above ground.
-			positionFound = true;
-		}			
-		else
+		if (pos == "0 0 0")
 		{
 			for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 			{
 				if (pos == "0 0 0")
 				{
-					pos = SDRC_MissionHelper.FindMissionPos(m_Config.distanceToMission, m_Config.distanceToPlayer);
+					pos = SDRC_MissionHelper.FindMissionPosWithDistances(m_Config.distanceToMission, m_Config.distanceToPlayer);					
+					if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: (IsRequested() || IsStatic()), ignoreNonValidArea: IsRequested()) != SDRC_EMissionError.NONE)
+					{
+						pos = "0 0 0";
+					}
 				}
 				
 				if (pos != "0 0 0")
 				{
-					positionFound = true;
+					//positionFound = true;
 					break;
 				}
 				else
@@ -95,14 +93,13 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		}
 
 		//No suitable location found.
-		if (!positionFound)	
+		if (pos == "0 0 0")
 		{				
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
 		
 		//Set common parameters
-		if (positionFound)	
 		{		
 			pos[1] = pos[1] + SDRC_Misc.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[0]);	//Adjust flight height
 			int rnd = SDRC_Misc.GetWorldSize()/8;

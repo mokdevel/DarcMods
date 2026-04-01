@@ -24,7 +24,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	private SCR_AIGroup m_Target = null;
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_HvtVip(SDRC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_HvtVip(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
 		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_HVTVIP_JSONVER))
@@ -73,7 +73,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 				}
 				else
 				{
-					pos = SDRC_MissionHelper.FindMissionPos(m_DC_HvtVip.general.locationTypes, m_DC_HvtVip.general.size);
+					pos = SDRC_MissionHelper.FindMissionPosWithLocationTypes(m_DC_HvtVip.general.locationTypes, m_DC_HvtVip.general.size);
 				}
 			}
 		}

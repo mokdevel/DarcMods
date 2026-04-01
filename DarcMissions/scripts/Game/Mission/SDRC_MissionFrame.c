@@ -8,7 +8,7 @@ This is the mission main framework file.
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
 
 const string DC_MISSIONCONFIG_FILE_FRAME = "dc_missionConfig.json";
-const int 	 DC_MISSIONCONFIG_FILE_FRAME_JSONVER = 3;
+const int 	 DC_MISSIONCONFIG_FILE_FRAME_JSONVER = 4;
 
 const string DC_MISSIONCONFIG_FILE_NONVALIDAREA = "dc_nonValidArea.json";
 const int 	 DC_MISSIONCONFIG_FILE_NONVALIDAREA_JSONVER = 2;
@@ -185,10 +185,10 @@ class SDRC_MissionFrame
 				missionType = SDRC_MissionHelper.SelectMissionType(false);
 				//missionType = m_Config.missionStatic.missionTypeArray.GetRandomElement();
 			}
-			tmpDC_Mission = MissionCreate(missionType);
+			tmpDC_Mission = MissionCreate(missionType, true);
 			if (tmpDC_Mission)
 			{
-				tmpDC_Mission.SetStatic(true);
+//				tmpDC_Mission.SetStatic(true);
 				tmpDC_Mission.InitActiveTime(m_Config.missionStatic.activeTime);
 				tmpDC_Mission.ResetActiveTime();
 //				tmpDC_Mission.ShowMarker();
@@ -350,7 +350,7 @@ class SDRC_MissionFrame
 	/*!
 	Creates the mission object
 	*/		
-	protected SDRC_Mission MissionCreate(SDRC_EMissionType missionType)
+	protected SDRC_Mission MissionCreate(SDRC_EMissionType missionType, bool staticMission = false)
 	{
 		SDRC_Mission tmpDC_Mission = null;
 		SDRC_MissionRequested missionRequest = null;
@@ -378,57 +378,57 @@ class SDRC_MissionFrame
 			}
 			case SDRC_EMissionType.HUNTER:
 			{
-				tmpDC_Mission = new SDRC_Mission_Hunter(missionType, missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Hunter(missionType, missionRequest, staticMission);
 				break;
 			}
 			case SDRC_EMissionType.OCCUPATION:
 			{
-				tmpDC_Mission = new SDRC_Mission_Occupation(missionType, missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Occupation(missionType, missionRequest, staticMission);
 				break;
 			}
 			case SDRC_EMissionType.CONVOY:
 			{
-				tmpDC_Mission = new SDRC_Mission_Convoy(missionType, missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Convoy(missionType, missionRequest, staticMission);
 				break;
 			}
 			case SDRC_EMissionType.CRASHSITE:
 			{
-				tmpDC_Mission = new SDRC_Mission_Crashsite(missionType, missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Crashsite(missionType, missionRequest, staticMission);
 				break;
 			}
 			case SDRC_EMissionType.PATROL:
 			{
-				tmpDC_Mission = new SDRC_Mission_Patrol(missionType, missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Patrol(missionType, missionRequest, staticMission);
 				break;
 			}
 			case SDRC_EMissionType.SQUATTERS:
 			{
-				tmpDC_Mission = new SDRC_Mission_Squatter(missionType, missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Squatter(missionType, missionRequest, staticMission);
 				break;
 			}
 			case SDRC_EMissionType.ROADBLOCK:
 			{
-				tmpDC_Mission = new SDRC_Mission_Roadblock(missionType, missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Roadblock(missionType, missionRequest, staticMission);
 				break;
 			}			
 			case SDRC_EMissionType.HVTVIP:
 			{
-				tmpDC_Mission = new SDRC_Mission_HvtVip(missionType, missionRequest);
+				tmpDC_Mission = new SDRC_Mission_HvtVip(missionType, missionRequest, staticMission);
 				break;
 			}			
 			case SDRC_EMissionType.HVTITEM:
 			{
-				tmpDC_Mission = new SDRC_Mission_HvtItem(missionType, missionRequest);
+				tmpDC_Mission = new SDRC_Mission_HvtItem(missionType, missionRequest, staticMission);
 				break;
 			}			
 			case SDRC_EMissionType.STASH:
 			{
-				tmpDC_Mission = new SDRC_Mission_Stash(missionType, missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Stash(missionType, missionRequest, staticMission);
 				break;
 			}			
 			case SDRC_EMissionType.CHOPPER:
 			{
-				tmpDC_Mission = new SDRC_Mission_Chopper(missionType, missionRequest);
+				tmpDC_Mission = new SDRC_Mission_Chopper(missionType, missionRequest, staticMission);
 				break;
 			}
 			default:

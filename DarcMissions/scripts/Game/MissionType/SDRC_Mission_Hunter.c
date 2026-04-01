@@ -26,7 +26,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	private int m_iGroupsSpawned = 0;	//The amount of groups spawned. Between spawns, a group may be killed so the total of m_Groups is not reliable to know the count.
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Hunter(SDRC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Hunter(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
 		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_HUNTER_JSONVER))
@@ -51,7 +51,6 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		m_iGroupsToSpawn = m_DC_Hunter.ai.GetCount(GetDifficulty());
 		
 		//Find position
-		bool positionFound = false;
 		vector pos = m_DC_Hunter.general.pos.GetRandomElement();
 		
 		//For requested missions we want have it as close as possible in the requested place.
@@ -59,15 +58,6 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		{
 			pos = request.general.pos[0];
 		}
-
-		if (pos != "0 0 0")
-		{
-			//If pos has been set, we blindly accept it. Do basic checking for pos.
-			if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: IsRequested()) == SDRC_EMissionError.NONE)
-			{
-				positionFound = true;
-			}
-		}			
 		else
 		{
 			for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
@@ -78,7 +68,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 				}
 				else
 				{
-					pos = SDRC_MissionHelper.FindMissionPos(m_DC_Hunter.general.locationTypes, m_DC_Hunter.general.size, -1);
+					pos = SDRC_MissionHelper.FindMissionPosWithLocationTypes(m_DC_Hunter.general.locationTypes, m_DC_Hunter.general.size, -1);
 				}
 							
 				if (SDRC_MissionPosHelper.IsValidMissionPos(pos) == SDRC_EMissionError.NONE)
@@ -86,8 +76,6 @@ class SDRC_Mission_Hunter : SDRC_Mission
 					//Find a position close to any player
 					if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, m_Config.maxDistanceToPlayer, m_Config.minDistanceToPlayer))
 					{
-						positionFound = true;
-					
 						SDRC_Log.Add("[SDRC_Mission_Hunter] " +  GetId() + " : Location for spawn " + pos, LogLevel.DEBUG);
 						break;
 					}
@@ -98,8 +86,15 @@ class SDRC_Mission_Hunter : SDRC_Mission
 				}
 			}
 		}
-		
-		if (!positionFound)	//No suitable location found.
+
+		//If pos has been set, we blindly accept it. Do basic checking for pos.
+		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: (IsRequested() || IsStatic()), ignoreNonValidArea: IsRequested() ) != SDRC_EMissionError.NONE)
+		{
+			pos = "0 0 0";
+		}
+			
+		//If failed, stop
+		if (pos == "0 0 0")
 		{				
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;

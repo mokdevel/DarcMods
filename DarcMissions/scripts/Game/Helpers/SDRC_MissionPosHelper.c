@@ -21,55 +21,72 @@ class SDRC_MissionPosHelper
 		- not in water	
 		- not under map
 	- Full checks:	
-		- no players nearby
 		- not in a nonValidArea
+		- no players nearby
+		- no players far away
 		- no missions nearby
 	*/	
-	static SDRC_EMissionError IsValidMissionPos(vector pos, float distanceToMission = -1, float distanceToPlayer = -1, bool onlyBasicChecks = false)
+	static SDRC_EMissionError IsValidMissionPos(vector pos, float distanceToMission = -1, float distanceToPlayer = -1, bool onlyBasicChecks = false, bool ignoreNonValidArea = false)
 	{	
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		
-		if (distanceToMission == -1)
-			distanceToMission = baseGameMode.missionFrame.m_Config.minDistanceToMission;
-
-		if (distanceToPlayer == -1)
-			distanceToPlayer = baseGameMode.missionFrame.m_Config.minDistanceToPlayer;
-
-		//Basic checks
+		// --- Basic checks ---
 		if (SDRC_Misc.IsPosInWater(pos))
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.POSITION_IN_WATER), LogLevel.SPAM);
+			SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.POSITION_IN_WATER), LogLevel.SPAM);
 			return SDRC_EMissionError.POSITION_IN_WATER;
 		}
 				
 		if (SDRC_Misc.IsPosUnderMap(pos))
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.POSITION_UNDER_MAP), LogLevel.SPAM);
+			SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.POSITION_UNDER_MAP), LogLevel.SPAM);
 			return SDRC_EMissionError.POSITION_UNDER_MAP;
 		}
 
+		if (!ignoreNonValidArea)
+		{
+			if (IsPosInNonValidArea(pos))
+			{
+				SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.IN_NON_VALID_AREA), LogLevel.SPAM);
+				return SDRC_EMissionError.IN_NON_VALID_AREA;
+			}
+		}
+		
 		//If we only check for basic things, return		
 		if (onlyBasicChecks)
 		{
 			return SDRC_EMissionError.NONE;
 		}
-						
-		//Full checks
+								
+		// --- Full checks ---
+		if (distanceToMission == -1)
+			distanceToMission = baseGameMode.missionFrame.m_Config.minDistanceToMission;
+
+		if (distanceToPlayer == -1)
+			distanceToPlayer = baseGameMode.missionFrame.m_Config.minDistanceToPlayer;
+		
+		//Check that players are not too close
 		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, distanceToPlayer))
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.PLAYER_TOO_CLOSE), LogLevel.SPAM);
+			SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.PLAYER_TOO_CLOSE), LogLevel.SPAM);
 			return SDRC_EMissionError.PLAYER_TOO_CLOSE;
 		}
 
-		if (IsPosInNonValidArea(pos))
+#ifdef NEW_VERSION_WIP
+		//Check that players are not too far. This check is not done for static missions.
+		if (baseGameMode.missionFrame.m_Config.maxDistanceToPlayer > -1)
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.IN_NON_VALID_AREA), LogLevel.SPAM);
-			return SDRC_EMissionError.IN_NON_VALID_AREA;
+			if (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, baseGameMode.missionFrame.m_Config.maxDistanceToPlayer, distanceToPlayer))
+			{
+				SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.PLAYER_TOO_FAR), LogLevel.SPAM);
+				return SDRC_EMissionError.PLAYER_TOO_FAR;
+			}
 		}
+#endif
 		
 		if (IsAnyMissionCloseToPos(pos, distanceToMission))
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.MISSION_TOO_CLOSE), LogLevel.SPAM);
+			SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.MISSION_TOO_CLOSE), LogLevel.SPAM);
 			return SDRC_EMissionError.MISSION_TOO_CLOSE;
 		}
 

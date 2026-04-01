@@ -8,19 +8,24 @@ Includes various functions for missions.
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionHelper
 {
-	private const int DC_LOCATION_SEACRH_ITERATIONS = 5;		//How many different spots to try for a mission before giving up
-	private const int DC_LOCATION_SEACRH_RADIUS_INC = 30;		//The increase of search radius for each failed iteration
+	private const int DC_LOCATION_SEARCH_ITERATIONS = 8;		//How many different spots to try for a mission before giving up
+	private const int DC_LOCATION_SEARCH_RADIUS_INC = 30;		//The increase of search radius for each failed iteration
 
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Select a mission position from the list of positions. "0 0 0" returned as default.
+	
 	\param positions List of positions
+	\param size Size the mission needs to spawn
+	\param locationTypes Location types needed
+	\param posRandomization Randomization for the found position
+	\return Location not found if "0 0 0" returned.
 	*/	
 	static vector SelectMissionPos(array<vector>positions, float size = 1, array<EMapDescriptorType> locationTypes = null, int posRandomization = -1)
 	{
 		vector pos = "0 0 0";
 		
-		//If multiple positions, pick a random one		
+		//If multiple positions, pick a random one from the list.
 		if (!positions.IsEmpty())
 		{
 			pos = positions.GetRandomElement();
@@ -31,10 +36,11 @@ class SDRC_MissionHelper
 		{
 			size = 1;
 		}
-		
+
+		//If we had an empty positions list, let's search with locationTypes
 		if (pos == "0 0 0")
 		{					
-			pos = SDRC_MissionHelper.FindMissionPos(locationTypes, size, posRandomization);
+			pos = SDRC_MissionHelper.FindMissionPosWithLocationTypes(locationTypes, size, posRandomization);
 		}
 				
 		return pos;
@@ -46,14 +52,15 @@ class SDRC_MissionHelper
 	Find a completely random position for a mission. "0 0 0" returned if nothing found.
 	\param distanceToMission Distance to another mission. Two missions shall not be too close to each other. -1 will use the default from MissionFrame.
 	\param distanceToPlayer Mission shall not spawn too close to a player. -1 will use the default from MissionFrame.
+	\return Location not found if "0 0 0" returned.
 	*/	
-	static vector FindMissionPos(float distanceToMission = -1, float distanceToPlayer = -1)
+	static vector FindMissionPosWithDistances(float distanceToMission = -1, float minDistanceToPlayer = -1)
 	{	
 		vector pos = SDRC_Misc.GetRandomWorldPos();
 		
-		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, distanceToMission, distanceToPlayer) != SDRC_EMissionError.NONE)
+		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true) != SDRC_EMissionError.NONE)
 		{
-			return "0 0 0";
+			pos = "0 0 0";
 		}
 		
 		return pos;
@@ -65,8 +72,9 @@ class SDRC_MissionHelper
 	\param pos Position to start to search for mission position
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
 	\param posRandomization Position randomization. 
+	\return Location not found if "0 0 0" returned.
 	*/	
-	static vector FindMissionPos(vector pos, float size, int posRandomization = -1)
+	static vector FindMissionPosNearPos(vector pos, float size, int posRandomization = -1)
 	{	
 		pos = FindWithIterate(pos, size, posRandomization);
 		
@@ -79,8 +87,9 @@ class SDRC_MissionHelper
 	\param locationTypes Array of EMapDescriptorType to look for a place
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
 	\param posRandomization Position randomization to avoid the same spot every time. -1 uses the value set in missionFrame settings.
+	\return Location not found if "0 0 0" returned.
 	*/	
-	static vector FindMissionPos(array<EMapDescriptorType> locationTypes, float size, int posRandomization = -1)
+	static vector FindMissionPosWithLocationTypes(array<EMapDescriptorType> locationTypes, float size, int posRandomization = -1)
 	{	
 		//Find a random location
 		vector pos = "0 0 0";
@@ -99,7 +108,7 @@ class SDRC_MissionHelper
 			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 			if (baseGameMode)
 			{
-				pos = SDRC_MissionHelper.FindMissionPos(baseGameMode.missionFrame.m_Config.minDistanceToMission, baseGameMode.missionFrame.m_Config.minDistanceToPlayer);
+				pos = SDRC_MissionHelper.FindMissionPosWithDistances(baseGameMode.missionFrame.m_Config.minDistanceToMission, baseGameMode.missionFrame.m_Config.minDistanceToPlayer);
 			}
 		}
 		else
@@ -121,6 +130,7 @@ class SDRC_MissionHelper
 	Find the location close to the position 
 	\param pos Position to start to search for mission position
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
+	\return Location not found if "0 0 0" returned.
 	*/	
 	static vector FindWithIterate(vector pos, float size, int posRandomization = -1)
 	{
@@ -147,7 +157,7 @@ class SDRC_MissionHelper
 		searchRadius = posRandomization;
 		SDRC_EMissionError failReason = SDRC_EMissionError.LOCATION_NOT_FOUND;
 		
-		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
+		for (int i = 0; i < DC_LOCATION_SEARCH_ITERATIONS; i++)
 		{
 			//Give the position some randomization so it's not always in the same spot.			
 			pos = SDRC_Misc.RandomizePos(posOrig, posRandomization);
@@ -155,7 +165,7 @@ class SDRC_MissionHelper
 			//Find the position within posRandomization from pos.			
 			if (SDRC_SpawnHelper.FindEmptyPos(pos, posRandomization, size))
 			{			
-				failReason = SDRC_MissionPosHelper.IsValidMissionPos(pos);
+				failReason = SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true);
 				if (failReason == SDRC_EMissionError.NONE)
 				{				
 					positionFound = true;
@@ -165,8 +175,8 @@ class SDRC_MissionHelper
 			}
 			else
 			{	
-				searchRadius = searchRadius + DC_LOCATION_SEACRH_RADIUS_INC;	//Increase the are with DC_LOCATION_SEACRH_RADIUS_INC
-				SDRC_Log.Add("[SDRC_MissionHelper:FindWithIterate] Invalid position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
+				searchRadius = searchRadius + DC_LOCATION_SEARCH_RADIUS_INC;	//Increase the are with DC_LOCATION_SEARCH_RADIUS_INC
+				SDRC_Log.Add("[SDRC_MissionHelper:FindWithIterate] Invalid position. Try " + (i + 1) + "/" + DC_LOCATION_SEARCH_ITERATIONS, LogLevel.SPAM);
 			}
 		}
 
@@ -194,9 +204,9 @@ class SDRC_MissionHelper
 
 		bool positionFound = false;
 		
-		for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
+		for (int i = 0; i < DC_LOCATION_SEARCH_ITERATIONS; i++)
 		{					
-			pos = SDRC_MissionHelper.FindMissionPos(locationTypes, 1);
+			pos = SDRC_MissionHelper.FindMissionPosWithLocationTypes(locationTypes, 1);
 			if (pos == "0 0 0")
 			{
 				return "0 0 0";
@@ -210,7 +220,7 @@ class SDRC_MissionHelper
 			}
 			else
 			{						
-				SDRC_Log.Add("[SDRC_MissionHelper:FindMissionDestination] Invalid mission position. Try " + (i + 1) + "/" + DC_LOCATION_SEACRH_ITERATIONS, LogLevel.SPAM);
+				SDRC_Log.Add("[SDRC_MissionHelper:FindMissionDestination] Invalid mission position. Try " + (i + 1) + "/" + DC_LOCATION_SEARCH_ITERATIONS, LogLevel.SPAM);
 			}
 		}			
 		
@@ -235,7 +245,7 @@ class SDRC_MissionHelper
 		
 		if (buildings.IsEmpty())
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionBuilding] Could not find suitable building near " + SDRC_Locations.CreateName(pos, "any") + " " + pos, LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionBuilding] Could not find suitable building near " + SDRC_Locations.CreateName(pos, "any") + " " + pos, LogLevel.DEBUG);
 			return null;
 		}
 		
@@ -557,7 +567,7 @@ class SDRC_MissionHelper
 					//SDRC_HelloHelper.Hello();
 				#endif
 			
-				pos = FindMissionPos();
+				pos = FindMissionPosWithDistances();
 			
 				if (pos != "0 0 0")
 				{

@@ -48,7 +48,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private bool m_bKeepOnFlying = true;
 
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Chopper(SDRC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Chopper(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
 		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER))
@@ -102,8 +102,11 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			vector heliPos = SDRC_Misc.GetRandomWorldPos(false);
 			if (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(heliPos, 1000))
 			{
-				m_vPosOrigin = heliPos;
-				break;
+				if (!SDRC_MissionPosHelper.IsPosInNonValidArea(heliPos))
+				{
+					m_vPosOrigin = heliPos;
+					break;
+				}
 			}
 		}
 		

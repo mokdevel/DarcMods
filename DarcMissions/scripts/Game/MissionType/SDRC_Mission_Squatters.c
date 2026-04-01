@@ -20,7 +20,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	private int m_iSpawnIndex = 0;				//Counter for the AI to spawn
 		
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission_Squatter(SDRC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission_Squatter(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
 		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_SQUATTER_JSONVER))
@@ -67,22 +67,9 @@ class SDRC_Mission_Squatter : SDRC_Mission
 				radius = -1;
 			}
 		}
-		
-/*		if (pos == "0 0 0")
-		{
-			//If no locationTypes defined, we search for any building matching on the map
-			if (m_DC_Squatter.general.locationTypes.IsEmpty())
-			{
-				radius = -1;
-			}
-			else
-			{
-				pos = SDRC_MissionHelper.FindMissionPos(m_DC_Squatter.general.locationTypes, m_DC_Squatter.general.size);
-			}
-		}*/
 
 		//If pos has been set, we blindly accept it. Do basic checking for pos.
-		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: IsRequested()) != SDRC_EMissionError.NONE)
+		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: (IsRequested() || IsStatic()), ignoreNonValidArea: IsRequested()) != SDRC_EMissionError.NONE)
 		{
 			pos = "0 0 0";
 		}		
@@ -275,7 +262,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		missionList = {0,1,2,2,3,3,3,4,5,5,5};
 		//Mission specific
-		buildingRadius = 400;
+		buildingRadius = 800;
 		//----------------------------------------------------
 		subMissions.Insert(Squatter0());				
 		subMissions.Insert(Squatter1());				
