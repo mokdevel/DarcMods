@@ -21,7 +21,7 @@ modded class SDRC_MissionPosHelper
 
 	This part for Freedom Fighters support.
 	*/	
-	override static SDRC_EMissionError IsValidMissionPos(vector pos, float distanceToMission = -1, float distanceToPlayer = -1, bool onlyBasicChecks = false)
+	override static SDRC_EMissionError IsValidMissionPos(vector pos, float distanceToMission = -1, float distanceToPlayer = -1, bool onlyBasicChecks = false, bool ignoreNonValidArea = false)
 	{	
 		SDRC_EMissionError missionError = super.IsValidMissionPos(pos, distanceToMission, distanceToPlayer);
 		//SDRC_EMissionError missionError = vanilla.IsValidMissionPos(pos, distanceToMission, distanceToPlayer);
