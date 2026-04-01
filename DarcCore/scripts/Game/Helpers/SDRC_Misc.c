@@ -320,8 +320,9 @@ sealed class SDRC_Misc
 	Return surface height either on land or water.
 	\param position The position to find Y
 	\param doTrace If true, an additional ray cast is done to find the highest point on the location. For example, there could be a building.
+	\param traceHeight From which height the trace should start
 	*/	
-	static float GetSurfaceYWithWater(vector position, bool doTrace = false)
+	static float GetSurfaceYWithWater(vector position, bool doTrace = false, float traceHeightMod = 200)
 	{
 		float y = 0;
 		
@@ -335,9 +336,15 @@ sealed class SDRC_Misc
 			
 			if (doTrace)
 			{
-				//Trace if there is an entity blocking			
+				//Trace if there is an entity, like house, blocking. Trace will also stop on vehicles and other temporary obstacles.
 				vector traceStartPos = position;
-			 	traceStartPos[1] = y + 200;
+				//If trace start would be below current Y or zero, set the current known Y as the starting point
+				if ( (traceStartPos[1] < y) || (traceStartPos[1] == 0) )
+				{
+			 		traceStartPos[1] = y + 0.1;
+				}				
+				traceStartPos[1] = traceStartPos[1] + traceHeightMod;
+				
 				vector traceEndPos = position;
 			 	traceEndPos[1] = y;
 				TraceParam param = new TraceParam();
@@ -351,10 +358,10 @@ sealed class SDRC_Misc
 	
 				BaseWorld world = GetGame().GetWorld();
 				float traceDistance = world.TraceMove(param, null);
-				float raylength = vector.Distance(traceStartPos, traceEndPos);
+				float traceHeight = vector.Distance(traceStartPos, traceEndPos);
 				
 				vector newPos = position;
-				newPos[1] = traceStartPos[1] - (200 * traceDistance);
+				newPos[1] = traceStartPos[1] - (traceHeight * traceDistance);
 				y = newPos[1];
 				
 				//SDRC_DebugHelper.AddDebugSphere(newPos, ARGB(40, 255, 32, 32), 6);			//Red
