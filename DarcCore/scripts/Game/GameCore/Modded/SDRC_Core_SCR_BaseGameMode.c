@@ -45,7 +45,7 @@ modded class SCR_BaseGameMode
 			//For testing
 			//GetGame().GetCallqueue().CallLater(DebugStart, 15000, false);	
 			
-			GetGame().GetCallqueue().CallLater(IsCoreReady, 2000, false);	
+			GetGame().GetCallqueue().CallLater(IsCoreReady, 2000, false);
 		}
 		else 
 		{
@@ -67,7 +67,24 @@ modded class SCR_BaseGameMode
 			GetGame().GetCallqueue().CallLater(IsCoreReady, 2000, false);	
 			SDRC_Log.Add("[SDRC_Core_BaseGameMode:IsCoreReady] Waiting for core init to finalize...", LogLevel.DEBUG);
 		}
+		
+		GetGame().GetCallqueue().CallLater(ErrorReporter, 10000, true);		
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	private void ErrorReporter()
+	{
+		if (!SDRC_Conf.errorList.IsEmpty())
+		{
+			SDRC_Log.Add("[SDRC DarcMods:ErrorReporter] ------------------", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC DarcMods:ErrorReporter] Errors found:", LogLevel.ERROR);
+			foreach (string errorStr : SDRC_Conf.errorList)
+			{
+				SDRC_Log.Add("[SDRC DarcMods:ErrorReporter] - " + errorStr, LogLevel.ERROR);
+			}
+			SDRC_Log.Add("[SDRC DarcMods:ErrorReporter] ------------------", LogLevel.ERROR);
+		}
+	}
 	
 	/*
 	private void DebugStart()
