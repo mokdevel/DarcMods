@@ -211,12 +211,6 @@ class SDRC_ChopperDebug
 		
 		vector origin = owner.GetOrigin();
 
-		VehicleHelicopterSimulation helicopter_s = VehicleHelicopterSimulation.Cast(owner.GetRootParent().FindComponent(VehicleHelicopterSimulation));
-		if (!helicopter_s)
-		{
-			return;
-		}
-
 		vector heliUp = owner.GetTransformAxis(1);
 		float angUp = SDRC_Math.GetAngleBetweenVectors(heliUp, vector.Up);
 				
@@ -229,22 +223,20 @@ class SDRC_ChopperDebug
 								{
 									debugText = debugText + " (enemy)";
 								}
+			float health;
+			chopperComp.GetHealthScaled(owner, health);
+			debugText = debugText + " Hlth: " + SCR_Enum.GetEnumName(SDRC_EHeliDamageLevel, chopperComp.m_eDamageLevel) + " (" + SDRC_Misc.FloatWithDecimals(health, 2) + ")";
 			debugText = debugText + "\n";
 			
 			debugText = debugText +
 							   	"Spd:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeed) + " " +
-							   	"min/max:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMin) + "/" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMax) + " " + 
-							   	"sta/tar: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedStart) + "/" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedTarget);
+							   	"min:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMin) + "/max:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMax) + 
+							   	"/start:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedStart) + "/target:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedTarget) +
+							   	"/mul:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMul, 2) + 
 	//						   	"Avg time:" + m_fTimeBetweenPtsAvg + "\n" +
 								" \n";
-			debugText = debugText +
-							   	"mul:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMul, 2) + " " + 
-								" \n";
 			debugText = debugText + 
-							   	"Alt:" + 
-								SDRC_Misc.FloatWithDecimals(chopperComp.m_fAltitude) + " " + 
-							   	SDRC_Misc.FloatWithDecimals(helicopter_s.GetAltitudeAGL()) + " " +
-								"\n" + 
+							   	"Alt:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fAltitude) + "\n" + 
 							   	"RotorForceMul:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fRotorForceMultiplier, 2) + "\n" +
 	//						   	"SplinePoints:" + m_vSplinePoints.Count() + "\n" +
 	//						   	"TurnInternal:" + m_fTimeTurnInterval + "\n" +
@@ -259,9 +251,6 @@ class SDRC_ChopperDebug
 //								"Init:" + chopperComp.m_bInInit + ", " +
 //								"Pilots::" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
 //								"Working:" + SDRC_VehicleHelper.IsWorking(owner) + " - " + 
-//								"Health: " + SCR_Enum.GetEnumName(EDamageState, SDRC_VehicleHelper.GetDamageState(owner)) + ": " + SDRC_VehicleHelper.GetHealth(owner) + "\n" + 
-//								"Health: " + SCR_Enum.GetEnumName(SDRC_EHeliDamageLevel, chopperComp.m_eDamageLevel) + ": " + SDRC_VehicleHelper.GetHealth(owner) + "\n" + 
-								"Health: " + SCR_Enum.GetEnumName(SDRC_EHeliDamageLevel, chopperComp.m_eDamageLevel) + ": " + SDRC_VehicleHelper.GetHealthScaled(owner) + "\n" + 
 //								"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
 								"";
 
@@ -270,6 +259,12 @@ class SDRC_ChopperDebug
 				debugText = debugText + "AngleUp: ******** " + angUp + " ********";
 			}
 					
+			VehicleHelicopterSimulation helicopter_s = VehicleHelicopterSimulation.Cast(owner.GetRootParent().FindComponent(VehicleHelicopterSimulation));
+			if (helicopter_s)
+			{
+				debugText = debugText + "Alt AGL:" + SDRC_Misc.FloatWithDecimals(helicopter_s.GetAltitudeAGL());
+			}
+			
 			DebugTextWorldSpace.Create(GetGame().GetWorld(), debugText, DebugTextFlags.ONCE, origin[0], origin[1], origin[2], 20);
 		}
 			
@@ -289,16 +284,10 @@ class SDRC_ChopperDebug
 		SDRC_ChopperDebug.DrawLine(origin, chopperComp.m_vSplinePoints[idx], Color.GRAY);		
 		
 		//Chopper destination direction vector
-		vector vFwd = vector.Direction(origin, chopperComp.m_vDestination);
-//		vFwd.Normalize();
-//		SDRC_ChopperDebug.DrawLine(origin, origin + (vFwd * 20), Color.WHITE);
-//		SDRC_ChopperDebug.DrawLine(origin, origin + vFwd, Color.WHITE);
 		SDRC_ChopperDebug.DrawLine(origin, chopperComp.m_vDestination, Color.WHITE);
 
 		//Chopper future destination direction vector
-		vFwd = vector.Direction(origin, chopperComp.m_vDestinationFuture);
-//		vFwd.Normalize();
-//		DrawLine(origin, origin + (vFwd * 50), Color.BLACK);		
+		vector vFwd = vector.Direction(origin, chopperComp.m_vDestinationFuture);
 		SDRC_ChopperDebug.DrawLine(origin, origin + vFwd, Color.BLACK);		
 
 		//Point on spline below the helicopter
@@ -355,21 +344,24 @@ class SDRC_ChopperDebug
 		//Draw eyesight		
 		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(owner.FindComponent(SCR_BaseCompartmentManagerComponent));
 		
-		array<IEntity> occupants = {};
-		scr_compartmentManager.GetOccupants(occupants);
-
-		foreach (IEntity occupant : occupants)
-		{
-			SCR_AICombatComponent aicc = SCR_AICombatComponent.Cast(occupant.FindComponent(SCR_AICombatComponent));
-			if (aicc)
+		if (scr_compartmentManager)
+		{		
+			array<IEntity> occupants = {};
+			scr_compartmentManager.GetOccupants(occupants);
+	
+			foreach (IEntity occupant : occupants)
 			{
-				BaseTarget bt = aicc.GetCurrentTarget();
-				if (bt)
+				SCR_AICombatComponent aicc = SCR_AICombatComponent.Cast(occupant.FindComponent(SCR_AICombatComponent));
+				if (aicc)
 				{
-					IEntity target = bt.GetTargetEntity();
-					if (target)
+					BaseTarget bt = aicc.GetCurrentTarget();
+					if (bt)
 					{
-						SDRC_ChopperDebug.DrawLine(occupant.GetOrigin(), target.GetOrigin(), Color.RED);
+						IEntity target = bt.GetTargetEntity();
+						if (target)
+						{
+							SDRC_ChopperDebug.DrawLine(occupant.GetOrigin(), target.GetOrigin(), Color.RED);
+						}
 					}
 				}
 			}

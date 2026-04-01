@@ -77,6 +77,39 @@ class SDRC_ChopperEnemyHelper
 	{
 		vector enemyPosition = vector.Zero;
 		
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return enemyPosition;
+		}
+		
+		switch (chopperComp.m_EntityType)
+		{
+			case SDRC_EChopperType.HELICOPTER:
+			{
+				enemyPosition = SearchEnemyForHelicopter(owner, SearchOnlyPlayer);
+				break;
+			}
+			case SDRC_EChopperType.DRONE:
+			{
+				enemyPosition = SearchEnemyForDrone(owner, SearchOnlyPlayer);
+				break;
+			}
+		}		
+		
+		return enemyPosition;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	HELICOPTER: Search for enemy and return *first* enemy position found.
+	
+	//TBD: Extend to have a parameter where enemy needs to be in front of the heli
+	*/	
+	static vector SearchEnemyForHelicopter(IEntity owner, bool SearchOnlyPlayer = false)
+	{
+		vector enemyPosition = vector.Zero;
+		
 		//Enemy stuff		
 		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(owner.FindComponent(SCR_BaseCompartmentManagerComponent));
 		
@@ -103,7 +136,7 @@ class SDRC_ChopperEnemyHelper
 						if (EntityUtils.IsPlayer(target))
 						{
 							enemyPosition = target.GetOrigin();
-							//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchForEnemy] Player enemy found at " + enemyPosition, LogLevel.DEBUG);
+							//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyForHelicopter] Player enemy found at " + enemyPosition, LogLevel.DEBUG);
 							break;
 						}
 					}
@@ -113,7 +146,7 @@ class SDRC_ChopperEnemyHelper
 						{
 							enemyPosition = target.GetOrigin();
 						}
-						//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchForEnemy] Enemy found at " + enemyPosition, LogLevel.DEBUG);
+						//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyForHelicopter] Enemy found at " + enemyPosition, LogLevel.DEBUG);
 						break;
 					}
 				}
@@ -123,6 +156,51 @@ class SDRC_ChopperEnemyHelper
 		return enemyPosition;
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	DRONE: Search for enemy and return *first* enemy position found.
+	
+	//TBD: Extend to have a parameter where enemy needs to be in front of the drone
+	*/	
+	static vector SearchEnemyForDrone(IEntity owner, bool SearchOnlyPlayer = false)
+	{
+		vector enemyPosition = vector.Zero;
+
+		array<ref SDRC_PlayerPos> playerPosArray = {};
+		SDRC_PlayerHelper.GetPlayersClosestToPosition(playerPosArray, owner.GetOrigin(), 1000);
+		if (!playerPosArray.IsEmpty())
+		{
+			foreach (SDRC_PlayerPos playerPos : playerPosArray)
+			{
+				//Trace if there is an entity, like house, blocking. Trace will also stop on vehicles and other temporary obstacles.
+				vector traceStartPos = owner.GetOrigin();
+				vector traceEndPos = playerPos.pos;
+				
+				TraceParam param = new TraceParam();
+				{					
+					param.Start = traceStartPos;
+					param.End = traceEndPos;
+					param.Exclude = owner;
+					//param.Flags = TraceFlags.DEFAULT | TraceFlags.ENTS | TraceFlags.ANY_CONTACT;
+					param.Flags = TraceFlags.DEFAULT | TraceFlags.ANY_CONTACT;
+					param.LayerMask = EPhysicsLayerDefs.Projectile;
+				}					
+	
+				BaseWorld world = GetGame().GetWorld();
+				float traceDistance = world.TraceMove(param, null);
+				//float traceDistance = world.TracePosition(param, null);
+				
+				if (traceDistance > 0.99)
+				{
+					enemyPosition = playerPos.pos;
+					SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyForDrone] Enemy found at " + enemyPosition, LogLevel.DEBUG);
+				}
+			}
+		}		
+						
+		return enemyPosition;
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if there is an enemy in front of us. It needs to be within the sector defined for the chopper.

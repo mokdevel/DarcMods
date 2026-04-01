@@ -13,12 +13,12 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		turnTimeIntervalBase = 40;
 	
 		//Roll 
-		rollAngleMul = 2.4;
+		rollAngleMul = 2.8;
 		
 		//Pitch
-		pitchAngleRad 	 =  11 * Math.DEG2RAD;
+		pitchAngleRad 	 =  18 * Math.DEG2RAD;
 		pitchAngleRadFlat  = -45 * Math.DEG2RAD;
-		pitchNoseAngleDown = -30 * Math.DEG2RAD;
+		pitchNoseAngleDown = -40 * Math.DEG2RAD;
 		pitchNoseAngleUp   =  20 * Math.DEG2RAD;
 		
 		//Rotor force multipliers
@@ -27,7 +27,7 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		//Waypoint values
 		wpSteepAngle = 30;
 														
-		destinationForwardInitial = 150;
+		destinationForwardInitial = 200;
 		destinationForward = 100;
 	}
 }
@@ -38,7 +38,7 @@ modded class SDRC_ChopperComp
 	private bool m_bRegistered = false;
 	private float grenadeTimer = 2;		//(seconds)
 	SAL_DroneControllerComponent m_DroneControllerComponent;
-	
+
 	//------------------------------------------------------------------------------------------------
 	/*!
 	This sets up the flight model params for a specific SDRC_EChopperType. Override this function for other types.
@@ -83,7 +83,17 @@ modded class SDRC_ChopperComp
 				m_DroneControllerComponent.m_iOwner = 0;
 			}
 			//m_DroneControllerComponent.m_InputManager.SetActionValue("DroneUp", 3.0);
-		}		
+		}
+		
+		SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY, -1);
+		
+		array<ref SDRC_PlayerPos> playerPosArray = {};
+		SDRC_PlayerHelper.GetPlayersClosestToPosition(playerPosArray, owner.GetOrigin(), 1000);
+		if (!playerPosArray.IsEmpty())
+		{
+			SDRC_PlayerPos ppos = playerPosArray.GetRandomElement();
+			AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, ppos.pos, 600);			
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -104,7 +114,6 @@ modded class SDRC_ChopperComp
 		//Handle registration to drone manager.
 		if (!m_bRegistered)
 		{
-			//SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
 			if (m_DroneControllerComponent)
 			{
 				if (m_DroneControllerComponent.m_DroneId != -1)
@@ -127,6 +136,65 @@ modded class SDRC_ChopperComp
 		}		
 	}	
 	
+	//------------------------------------------------------------------------------------------------	
+	// Misc
+	//------------------------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get scaled health
+	*/	
+	override void GetHealthScaled(IEntity owner, out float health)
+	{
+		super.GetHealthScaled(owner, health);
+		
+		if (m_EntityType != SDRC_EChopperType.DRONE)
+		{
+			return;
+		}
+
+		SCR_DamageManagerComponent m_DamageManager = SCR_DamageManagerComponent.Cast(owner.FindComponent(SCR_DamageManagerComponent));
+
+		health = 1;
+		if (m_DamageManager.IsDestroyed())
+		{
+			m_DroneControllerComponent.ArmDrone();						//The second call 'de-Arms the drone'.
+			
+			InputManager m_InputManager = GetGame().GetInputManager();			
+			m_InputManager.SetActionValue("DroneUp", 0.0);	
+			
+			SAL_DroneSoundComponent soundComponent = SAL_DroneSoundComponent.Cast(owner.FindComponent(SAL_DroneSoundComponent));
+			soundComponent.ShutOffEngine();
+			
+			m_DamageManager.SetHealthScaled(0);
+			health = 0;
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Handle the final parts after damage that breaks flying
+	*/	
+	override void HandleDamageFinal(IEntity owner)
+	{
+		super.HandleDamageFinal(owner);
+		
+		if (m_EntityType != SDRC_EChopperType.DRONE)
+		{
+			return;
+		}
+		
+		//Drop the grenade
+		DroneGrenade(m_DroneControllerComponent.m_DroneId);
+		
+		//Delete the drone
+		delete owner;
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	// State handling
+	//------------------------------------------------------------------------------------------------
+	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Handle attacks
@@ -142,9 +210,12 @@ modded class SDRC_ChopperComp
 			return;
 		}
 		
-		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(owner.GetOrigin(), 50, 0))
+		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(owner.GetOrigin(), 10, 0))
 		{
-			DroneGrenade(m_DroneControllerComponent.m_DroneId);
+			if (SDRC_Misc.RandomFloat(0, 1) < 0.50)
+			{
+				DroneGrenade(m_DroneControllerComponent.m_DroneId);
+			}
 		}
 	}
 

@@ -115,8 +115,7 @@ modded class SDRC_ChopperComp
 		//If working and at least one pilot, all good
 		int pilotCount = SDRC_VehicleHelper.PilotCountAlive(owner);
 		
-		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));		
 		if (chopperComp)
 		{
 			if (chopperComp.m_bUnpiloted)
@@ -125,7 +124,8 @@ modded class SDRC_ChopperComp
 			}
 		}
 
-		float health = SDRC_VehicleHelper.GetHealthScaled(owner);
+		float health;
+		GetHealthScaled(owner, health);
 		if ( health < 0.93 )
 		{
 			m_eDamageLevel = SDRC_EHeliDamageLevel.HEAVY;
@@ -139,43 +139,36 @@ modded class SDRC_ChopperComp
 			m_eDamageLevel = SDRC_EHeliDamageLevel.LIGHT;
 		}			
 				
-		//If damage is high, evac!
-		if ( ( (m_eDamageLevel == SDRC_EHeliDamageLevel.MEDIUM) || (m_eDamageLevel == SDRC_EHeliDamageLevel.HEAVY) ) && (GetBehaviour() != SDRC_EHeliBehaviour.EVAC) )
-//		if (GetBehaviour() != SDRC_EHeliBehaviour.EVAC)
+		switch (m_EntityType)
 		{
-			SetBehaviour(SDRC_EHeliBehaviour.EVAC);
-			AddDestination(SDRC_EFlyWayPointType.WP_M_RESET);
-			AddDestination(SDRC_EFlyWayPointType.WP_M_EVAC_TROOPS, SDRC_Misc.RandomizePos(owner.GetOrigin(), 600));
-		}		
-		
-		if ( SCR_AIVehicleUsability.VehicleCanMove(owner) && (pilotCount > 0) )
-		{
-			return true;
+			case SDRC_EChopperType.HELICOPTER:		
+			{
+				//If damage is high, evac!
+				if ( ( (m_eDamageLevel == SDRC_EHeliDamageLevel.MEDIUM) || (m_eDamageLevel == SDRC_EHeliDamageLevel.HEAVY) ) && (GetBehaviour() != SDRC_EHeliBehaviour.EVAC) )
+				{
+					SetBehaviour(SDRC_EHeliBehaviour.EVAC, -1);
+					AddDestination(SDRC_EFlyWayPointType.WP_M_RESET);
+					AddDestination(SDRC_EFlyWayPointType.WP_M_EVAC_TROOPS, SDRC_Misc.RandomizePos(owner.GetOrigin(), 600));
+				}		
+				
+				if ( SCR_AIVehicleUsability.VehicleCanMove(owner) && (pilotCount > 0) )
+				{
+					return true;	//Still working, RETURN!
+				}
+				break;
+			}
+			case SDRC_EChopperType.DRONE:		
+			{
+				if ( m_eDamageLevel != SDRC_EHeliDamageLevel.HEAVY )
+				{
+					return true;	//Still working, RETURN!
+				}
+				break;
+			}
 		}
 		
-		// We have issues, panic!		
-		
-		//Set damage so it should be destroyed on crash		
-//		SetHealth(owner, SDRC_Misc.RandomFloat(0, 0.05));
-		
-/*		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
-		if (damageManager)
-		{
-			float damage = SDRC_Misc.RandomFloat(0, 0.05);
-			damageManager.SetHealthScaled(damage);		
-		}*/
-		
-		//Make the chopper fly unsteadily
-		VehicleHelicopterSimulation helicopter_s = VehicleHelicopterSimulation.Cast(owner.GetRootParent().FindComponent(VehicleHelicopterSimulation));
-		if (helicopter_s)
-		{
-			float force = SDRC_Misc.RandomFloat(0, 0.1);
-	        helicopter_s.RotorSetForceScaleState(0, force);
-			force = SDRC_Misc.RandomFloat(0.1, 2.5);
-	        helicopter_s.RotorSetForceScaleState(1, force);
-			force = SDRC_Misc.RandomFloat(0.0, 0.1);
-			helicopter_s.SetThrottle(force);
-		}
+		//If we get here, the damage is critical
+		HandleDamageFinal(owner);
 		
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
@@ -244,8 +237,7 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
-				//Do attack on low altitude.
-				destination[1] = SDRC_Misc.GetSurfaceYWithWater(destination) + m_fFlyHeightLow;				
+				//Do attack on low altitude.				
 				m_vAttackPosition = destination;			//Where to attack
 
 				//With default attack time, set it to 60 seconds

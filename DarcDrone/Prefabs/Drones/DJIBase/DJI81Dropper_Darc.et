@@ -11,10 +11,13 @@ GenericEntity : "{C07C56F97DAB2DEE}Prefabs/Drones/DJIBase/DJI81Dropper.et" {
   }
   SDRC_ChopperComp "{68F8BEC217F852DF}" {
    m_fThrottle 1.5
-   m_fSpeedMin 1
-   m_fSpeedMax 8
-   m_fFlyHeightLow 10
-   m_fFlyHeightHigh 30
+   m_fSpeedMin 5
+   m_fSpeedMax 10
+   m_fFlyHeightLow 15
+   m_fFlyHeightHigh 35
+   m_fDistanceLow 100
+   m_fDistanceHigh 300
+   m_CargoSeatFill NONE
    m_EntityType DRONE
    m_bUnpiloted 1
   }

@@ -100,6 +100,56 @@ modded class SDRC_ChopperComp
 		/* NOTHING NEEDED FOR HELICOPTER */
 	}	
 	
+	//------------------------------------------------------------------------------------------------	
+	// Misc
+	//------------------------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get scaled health
+	*/	
+	override void GetHealthScaled(IEntity owner, out float health)
+	{
+		super.GetHealthScaled(owner, health);
+		
+		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
+		{
+			return;
+		}
+
+		health = SDRC_VehicleHelper.GetHealthScaled(owner);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Handle the final parts after damage that breaks flying
+	*/	
+	override void HandleDamageFinal(IEntity owner)
+	{
+		super.HandleDamageFinal(owner);
+		
+		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
+		{
+			return;
+		}
+		
+		//Make the chopper fly unsteadily
+		VehicleHelicopterSimulation helicopter_s = VehicleHelicopterSimulation.Cast(owner.GetRootParent().FindComponent(VehicleHelicopterSimulation));
+		if (helicopter_s)
+		{
+			float force = SDRC_Misc.RandomFloat(0, 0.1);
+	        helicopter_s.RotorSetForceScaleState(0, force);
+			force = SDRC_Misc.RandomFloat(0.1, 2.5);
+	        helicopter_s.RotorSetForceScaleState(1, force);
+			force = SDRC_Misc.RandomFloat(0.0, 0.1);
+			helicopter_s.SetThrottle(force);
+		}				
+	}	
+	
+	//------------------------------------------------------------------------------------------------	
+	// State handling
+	//------------------------------------------------------------------------------------------------
+	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Handle attacks

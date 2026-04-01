@@ -41,7 +41,7 @@ class SDRC_ChopperParams
 	int turnTimeIntervalBase = 40;					//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
 
 	//Roll 
-	float rollAngleMul = 2.4;						//Multiplier for roll angle along the spline
+	float rollAngleMul = 2.4;						//Multiplier for roll angle along the spline. 
 	
 	//Pitch
 	float pitchAngleRad 	 =  11 * Math.DEG2RAD;	//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
@@ -147,7 +147,7 @@ class SDRC_ChopperComp : ScriptComponent
 	
 	//Timing stuff
 	private const float TIME_DELAY_READY = 0.5;			//(seconds) Time before we spawn AIs and init flight path. This will give time for the chopper to properly initialize
-	private const float TIME_IN_INIT = 3;				//(seconds) Time to be in init state (after READY). During this time, we don't check for damage or similar things.
+	private const float TIME_IN_INIT = 0.5;				//(seconds) Time to be in init state (after READY). During this time, we don't check for damage or similar things.
 	
 	//Original destination	
 	private vector m_vOriginalDestination;				//Used to know where to patrol
@@ -179,6 +179,7 @@ class SDRC_ChopperComp : ScriptComponent
 	private bool m_bSetupDone = false;					//Setup may be called from mod or via EOnInit. Run it only once.
 	
 	//HeliBehaviour
+	private const int TIME_IN_BEHAVIOUR = 600;		//(seconds) Default time to stay in behaviour 
 	private SDRC_EHeliBehaviour m_eHeliBehaviour;
 	float m_fTimerBehaviour = 0;						//Timer to stay in behaviour before changing to NORMAL
 	float m_fTimerBehaviourCycle = 0;					//Timer between actions while in non-NORMAL behaviour
@@ -355,6 +356,16 @@ class SDRC_ChopperComp : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	/*!	
+	Return instance to component
+	*/
+	override void OnDelete(IEntity owner)
+	{
+		Deactivate(owner);
+		SDRC_Log.Add("[SDRC_ChopperComp:OnDelete] Deleting: " + owner, LogLevel.DEBUG);
+	}	
+	
+	//------------------------------------------------------------------------------------------------
 	/*!
 	Do setup. This is delayed in case another mod has disabled autostart
 	*/	
@@ -408,8 +419,7 @@ class SDRC_ChopperComp : ScriptComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
-	//Delayed flight init and activation
-	
+	//Delayed group counting, flight init and activation	
 	void ReadyDelayed_2(IEntity owner)
 	{		
 		//Collect groups in the helicopter 
@@ -425,6 +435,7 @@ class SDRC_ChopperComp : ScriptComponent
 		SDRC_ChopperDebug.DrawDebugPaths(owner);
 		
 		SetEventMask(owner, EntityEvent.FRAME);
+		//SetEventMask(owner, EntityEvent.FRAME | EntityEvent.FIXEDFRAME);
 		Activate(owner);
 		
 		GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000, false, owner);
@@ -850,6 +861,8 @@ class SDRC_ChopperComp : ScriptComponent
 		if (destination == vector.Zero)
 		{
 			destination = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial);
+			//Make sure we're on proper flight height.
+			destination[1] = SDRC_ChopperHelper.SetPointHeight(destination, m_fFlyHeightLow, m_fFlyHeightHigh); 
 		}
 		AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
 
@@ -861,7 +874,7 @@ class SDRC_ChopperComp : ScriptComponent
 		SDRC_ChopperHelper.SetFlightPointHeight(owner);
 		
 		//Create points for spline
-		CreateFlightPoints(owner);
+		CreateFlightPoints(owner, true);
 		
 		array<vector> flyPathPoints = {};
 		SDRC_ChopperDebug.GivePoints(flyPathPoints, m_vFlightPoints);
@@ -941,8 +954,9 @@ class SDRC_ChopperComp : ScriptComponent
 	/*!	
 	Create fly points
 	Takes the points from m_vFlyDestinations and generates points to be used for spline creation
+	\param fixHeight Fix the height of the two first points. This is needed at startup.
 	*/	
-	private void CreateFlightPoints(IEntity owner)
+	private void CreateFlightPoints(IEntity owner, bool fixHeight = false)
 	{
 		//Add a few points in front to smooth the flight pattern
 		float forwardDistance = params.destinationForward;
@@ -950,11 +964,19 @@ class SDRC_ChopperComp : ScriptComponent
 		
 		vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, forwardDistance/2);
 		pos[1] = origin[1];
+		if (fixHeight)
+		{
+			pos[1] = SDRC_ChopperHelper.SetPointHeight(pos, m_fFlyHeightLow, m_fFlyHeightHigh); 
+		}
 		AddFlyPathPoint(pos);
 		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid);
 		
 		pos = SDRC_ChopperHelper.GetDestinationForward(owner, forwardDistance);
 		pos[1] = origin[1];
+		if (fixHeight)
+		{
+			pos[1] = SDRC_ChopperHelper.SetPointHeight(pos, m_fFlyHeightLow, m_fFlyHeightHigh); 
+		}
 		AddFlyPathPoint(pos);
 		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 255, 0), 2.0, m_sDid);
 		
@@ -972,6 +994,15 @@ class SDRC_ChopperComp : ScriptComponent
 		{		
 			//SDRC_DebugHelper.AddDebugPos(flyDestination.pt, ARGB(32, 255, 128, 64), 1.0, m_sDid, 50);
 			
+			switch (flyDestination.type)
+			{
+				case SDRC_EFlyWayPointType.WP_ATTACK:
+				{
+					//Attack to be on low altitude
+					flyDestination.pt[1] = SDRC_Misc.GetSurfaceYWithWater(flyDestination.pt) + m_fFlyHeightLow;				
+				}
+			}
+						
 			//Distance of last flight point defined and the next destination
 			float distance = vector.DistanceXZ(m_vFlightPoints[m_vFlightPoints.Count() - 1].pt, flyDestination.pt);
 	
@@ -1104,7 +1135,13 @@ class SDRC_ChopperComp : ScriptComponent
 	*/
 	float GetAltitude()
 	{
-		return m_vOrigin[1] - SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true);
+		//Start to look for a position below heli
+		float y = m_vOrigin[1] - SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, -0.1);
+		if (y < 0)
+		{
+			y = 0;
+		}
+		return y;
 	}
 	
 	//------------------------------------------------------------------------------------------------	
@@ -1138,9 +1175,27 @@ class SDRC_ChopperComp : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void SetBehaviour(SDRC_EHeliBehaviour behaviour)
+	/*!
+	Sets the behaviour.
+	\param time How long to stay in behaviour. -1 = infinite
+	*/	
+	void SetBehaviour(SDRC_EHeliBehaviour behaviour, int time = TIME_IN_BEHAVIOUR)
 	{
 		m_eHeliBehaviour = behaviour;
+
+		//Reset timer for NORMAL
+		if (behaviour == SDRC_EHeliBehaviour.NORMAL)
+		{			
+			time = 0;
+		}
+				
+		//If time is set as -1, make time veeeeery long.
+		if (time == -1)
+		{
+			time = 10000000;
+		}
+		
+		m_fTimerBehaviour = time;
 	}	
 	
 	//------------------------------------------------------------------------------------------------	
@@ -1198,6 +1253,8 @@ class SDRC_ChopperComp : ScriptComponent
 	// Damage settings
 	//------------------------------------------------------------------------------------------------	
 	bool IsStillWorking(IEntity owner, bool inInit) {}
+	void GetHealthScaled(IEntity owner, out float health) {}
+	void HandleDamageFinal(IEntity owner) {}
 	//------------------------------------------------------------------------------------------------	
 	// Destination settings - defined in modded class
 	//------------------------------------------------------------------------------------------------	

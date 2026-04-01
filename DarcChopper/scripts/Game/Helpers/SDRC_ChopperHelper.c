@@ -247,7 +247,22 @@ class SDRC_ChopperHelper
 	//------------------------------------------------------------------------------------------------	
 	// FlyPoint fixing and sanity check
 	//------------------------------------------------------------------------------------------------	
+
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Set a point between min/max *ABOVE* the surface
+	*/	
+	static float SetPointHeight(vector pos, float min, float max)
+	{
+		float height = pos[1];
 		
+		//Make sure we're on proper flight height.
+		float y = SDRC_Misc.GetSurfaceYWithWater(pos, true);
+		height = Math.Clamp(height, (y + min), (y + max) ); 
+		
+		return height;
+	}	
+			
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Set the requested flight path points between min/max flying height.
@@ -265,15 +280,16 @@ class SDRC_ChopperHelper
 		foreach (int i, SDRC_FlyPathPoint flightPoint : chopperComp.m_vFlightPoints)
 		{
 			vector pt = flightPoint.pt;
-			
+
 			//Do not change height of two first points. These are the two points from the previous spline. 
 			if (i < 2)
 			{
 				continue;
 			}
-
+			
 			//Initial height will be on ground
 			y = SDRC_Misc.GetSurfaceYWithWater(pt, true);
+						
 			float flyHeight = 0;
 						
 			if (flightPoint.type == SDRC_EHeliState.LAND)
