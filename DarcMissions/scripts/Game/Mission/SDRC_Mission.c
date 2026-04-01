@@ -55,6 +55,7 @@ enum SDRC_EMissionError
 	POSITION_IN_WATER,
 	POSITION_UNDER_MAP,
 	PLAYER_TOO_CLOSE,
+	PLAYER_TOO_FAR,
 	MISSION_TOO_CLOSE,
 	IN_NON_VALID_AREA,
 }
@@ -153,13 +154,13 @@ class SDRC_Mission : Managed
 	private ref SDRC_MissionConfigQrf m_QrfConf = new SDRC_MissionConfigQrf();
 	
 	//------------------------------------------------------------------------------------------------
-	void SDRC_Mission(SDRC_EMissionType missionType, SDRC_MissionRequested request)
+	void SDRC_Mission(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		m_sId = DC_ID_PREFIX + SCR_StringHelper.PadLeft(string.ToString(m_MissionIDCounter), 4, "0");
 		m_MissionIDCounter++;
 		m_State = SDRC_EMissionState.INIT;
 		m_Type = missionType;	//SDRC_EMissionType.NONE;
-		m_bStatic = false;
+		m_bStatic = staticMission;
 		m_bShowHint = true;
 		m_bShowMessage = true;
 		m_bShowMarker = true;
