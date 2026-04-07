@@ -58,6 +58,14 @@ SDRC_MissionDifficulty missionDifficulty : Difficulty settings.
 SDRC_MissionTypeConfig missionDynamic : Dynamic missions configurations.
 SDRC_MissionTypeConfig missionStatic : Static missions configurations.
 ```
+## More details
+For more details on general topics, see:
+* [Mission position](./MISSIONFRAME.md#mission-position)
+* [Dynamic vs Static missions](./MISSIONFRAME.md#dynamic-vs-static-mission)
+* [Requested missions](./MISSIONFRAME.md#requested-missions)
+* [Mission count](./MISSIONFRAME.md#mission-count)
+* [Mission end](./MISSIONFRAME.md#mission-end-win-or-lose)
+
 ## Factions
 The mission faction is defined in ``enemyFactions`` or individually per sub-mission. The supported factions are listed below.
 * ``US, USSR, FIA`` : Vanilla factions from Arma Reforger

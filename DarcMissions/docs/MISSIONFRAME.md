@@ -13,6 +13,8 @@ In the case position is not usable, another try is made. Currently searching is 
 
 GM spawned missions will only check for mission not being in water or under map. If you want, you can spawn missions in for example non valid areas. 
 
+<img src="https://github.com/mokdevel/DarcMods/blob/main/pics/missionposition.jpg" width=30% height=30%>
+
 ## Dynamic vs Static mission
 In the configuration you can define missions either as a dynamic mission (```missionDynamic```) or static mission (```missionStatic```). The missions are the same but spawning is different. 
 
@@ -41,8 +43,6 @@ Note from the developer: I like to spawn certain types of missions as Static in 
 Related documentation:
 * [Mission configuration](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md#sdrc_missiontypeconfig) , separate for Dynamic and Static.
 * [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md)
-
-
 
 ## Mission end (win or lose)
 Each mission has a win condition. The normal case is to eliminate a certain amount of AI to reach the goal. Once the win condition has been reached, the mission is kept alive for ```missionActiveTimeToEnd``` seconds. The time is reset if there is a player within ```missionActiveDistance```. At the end of a mission, all spawned items will despawn (for example camps) but also vehicles. 
