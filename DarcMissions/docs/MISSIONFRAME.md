@@ -11,6 +11,10 @@ Mission position is either defined or randomized. See [General parameters - pos]
 
 In the case position is not usable, another try is made. Currently searching is limited to five tries before deciding that no position has been found. In this case, mission will not spawn.
 
+### Static missions
+Static missions will check for mission being in water, under map or in nonValidArea. In these cases, mission is not spawn.
+
+### Requested missions
 GM spawned missions will only check for mission not being in water or under map. If you want, you can spawn missions in for example non valid areas. 
 
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/missionposition.jpg" width=30% height=30%>
@@ -22,10 +26,12 @@ In the configuration you can define missions either as a dynamic mission (```mis
 
 * Dynamic missions will spawn on steady pace. The ``activeTime`` should be relatively short so that the missions despawn and new ones are brought to players. Note that no dynamic missions, including GM requested ones, will spawn if static missions are still spawning.
 
-## Requested missions
-GM can drop in more missions to the map. These are dynamic missions and will add to the total of dynamic missions. Requested missions do not respect the mission limits soy ou can spawn missions as a GM even if you have reached the maximum count of dynamic missions. GM requested missions are spawned with a higher priority compared to normal dynamic missions. If you set both static and dynamic missions to zero, only GM spawned missions will spawn.
+* Requested missions are spawned outside of the normal mission spawn logic. These are asked to be spawned by user via GM or another mod has made the request.
 
-Requested missions do not check if a mission position is valid. You can overload an area with multiple missions if that is wanted.
+## Requested missions
+A requested mission is spawned outside of the normal mission spawn logic. This usually means that a user requested a specific mission to spawn via GM or another mod requested a mission to be spawn. Requested missions do not check if a mission position is valid. You can overload an area with multiple missions if that is wanted.
+
+GM can drop in more missions to the map. These are dynamic missions and will add to the total of dynamic missions. Requested missions do not respect the mission limits so you can spawn missions as a GM even if you have reached the maximum count of dynamic missions. GM requested missions are spawned with a higher priority compared to normal dynamic missions. If you set both static and dynamic missions to zero, only GM spawned missions will spawn.
 
 ## Mission count
 Various aspects affect the mission count spawned on the map. There are two main types of missions, Static and Dynamic missions (see above). Both have a section for definitions in file ``dc_missionConfig.json`` which you can find under ``missionDynamic`` and ``missionStatic``. The parameter ``count`` defines the maximum amount of missions that will spawn for Dynamic and Static types. 

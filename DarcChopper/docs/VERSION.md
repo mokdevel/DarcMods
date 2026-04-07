@@ -3,11 +3,11 @@
 ## Next Version
 
 
-# 20260xxx
-Main features:
-
+# 20260407
 Fixes:
 * Attack height for rockets was incorrect
+* Tuned timings on Get Out functionality for crew.
+* Tuned landing curves. Needs still work.
 
 # 20260328
 Fixes:

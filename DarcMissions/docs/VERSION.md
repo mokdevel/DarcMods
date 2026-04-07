@@ -4,9 +4,9 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
-# 20260xxx
+# 20260407
 Main features:
-* Added ``maxDistanceToPlayer``. The max distance Dynamic missions will not spawn further from any player 
+* Added ``maxDistanceToPlayer``. The max distance Dynamic missions will not spawn further from any player. See: https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONFRAME.md#mission-position
 
 Fixes:
 * Rewrote the mission position search logic to support ``maxDistanceToPlayer``.
