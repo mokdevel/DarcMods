@@ -1,5 +1,5 @@
 {
-    "jsonVersion": 3,
+    "jsonVersion": 4,
     "author": "darc",
     "comment": "Simple comment, not used in game",
     "recreateConfigs": true,
@@ -13,8 +13,9 @@
     "missionHintTime": 90,
     "missionHintPosition": 0,
     "missionRandomPos": 100,
-    "minDistanceToMission": 500,
-    "minDistanceToPlayer": 100,
+    "minDistanceToMission": 400,
+    "minDistanceToPlayer": 300,
+    "maxDistanceToPlayer": 2500,
     "showStaticMissionMarker": true,
     "showDynamicMissionMarker": true,
     "showMissionDifficulty": true,
@@ -26,7 +27,7 @@
         -1,
         2,
         5,
-        5,
+        7,
         2,
         8,
         3,
@@ -34,7 +35,7 @@
         2,
         2,
         2,
-        3
+        4
     ],
     "missionDifficultyList": [
         0,
@@ -158,7 +159,7 @@
         ]
     },
     "missionStatic": {
-        "count": 6,
+        "count": 15,
         "countMul": 1.1,
         "activeTime": 36000,
         "delayBetween": 5,

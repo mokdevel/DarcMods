@@ -31,6 +31,1121 @@
                 "_Random",
                 "_Heavy"
             ],
+            "items": [
+                "{CB58D90EA14430AD}Prefabs/Groups/OPFOR/Group_USSR_SentryTeam.et",
+                "{250BBF11AA24076F}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_RifleSquad_NI.et",
+                "{97D45056CFC22FF2}Prefabs/Groups/OPFOR/KLMK/Group_USSR_RifleSquad_KLMK.et",
+                "{5B08C42EA0661A20}Prefabs/Groups/OPFOR/KLMK/Group_USSR_LightFireTeam_KLMK.et",
+                "{8E1B1AEBBB1AA155}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_LightFireTeam_NI.et",
+                "{6E725D44CA973C24}Prefabs/Groups/INDFOR/Group_FIA_SentryTeam.et",
+                "{30ED11AA4F0D41E5}Prefabs/Groups/OPFOR/Group_USSR_FireGroup.et",
+                "{61E209AA5933AC95}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SentryTeam_KLMK.et",
+                "{0A8E20F50DA233E1}Prefabs/Groups/BLUFOR/Group_US_FireTeam_Guard.et",
+                "{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et",
+                "{DDF3799FA1387848}Prefabs/Groups/BLUFOR/Group_US_RifleSquad.et",
+                "{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
+                "{26099EE31B5CC43A}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_FireGroup_NI.et",
+                "{6F72F05752ED62A8}Prefabs/Groups/OPFOR/Group_USSR_FireGroup_Guard.et",
+                "{1BB20A4B3A53D0F5}Prefabs/Groups/INDFOR/Group_FIA_LightFireTeam.et",
+                "{3BF36BDEEB33AEC9}Prefabs/Groups/BLUFOR/Group_US_SentryTeam.et",
+                "{85384D373DB6EBBB}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_SentryTeam_NI.et",
+                "{FCF7F5DC4F83955C}Prefabs/Groups/BLUFOR/Group_US_LightFireTeam.et",
+                "{13A616F83A41C610}Prefabs/Groups/OPFOR/KLMK/Group_USSR_FireGroup_KLMK.et",
+                "{84E5BBAB25EA23E5}Prefabs/Groups/BLUFOR/Group_US_FireTeam.et",
+                "{5BEA04939D148B1D}Prefabs/Groups/INDFOR/Group_FIA_FireTeam.et",
+                "{35681BE27C302FF5}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_SentryTeam.et",
+                "{E552DABF3636C2AD}Prefabs/Groups/OPFOR/Group_USSR_RifleSquad.et",
+                "{CE41AF625D05D0F0}Prefabs/Groups/INDFOR/Group_FIA_RifleSquad.et"
+            ]
+        },
+        {
+            "id": "G_SNIPER",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "Sniper",
+                "SharpShooter",
+                "USSR_Spetsnaz_SentryTeam",
+                "VKPO_S_SentryTeam.et",
+                "KS05_SF_GROUP_A",
+                "KS05_SF_GROUP_C",
+                "Group_Zombies_CIV",
+                "Group_Zombies_FIA",
+                "Group_Zombies_US",
+                "Group_Zombies_USSR",
+                "Cultists_Light",
+                "PLAGF_SentryTeam",
+                "JGSDF_2008_SentryTeam",
+                "CloseProtectionTeam",
+                "TA_RifleSquad"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": [
+                "{6307F42403E9B8A4}Prefabs/Groups/INDFOR/Group_FIA_SharpshooterTeam.et",
+                "{013481F049CB12ED}Prefabs/Groups/BLUFOR/OmegaGroups/KS05_SF_GROUP_A.et",
+                "{88FCF9E9F9EA0AA8}Prefabs/Groups/BLUFOR/OmegaGroups/KS05_SF_GROUP_C.et",
+                "{D807C7047E818488}Prefabs/Groups/BLUFOR/Group_US_SniperTeam.et",
+                "{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et"
+            ]
+        },
+        {
+            "id": "G_LAUNCHER",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "Team_AT",
+                "Team_GL",
+                "Team_LAT",
+                "Group_Zombies_High",
+                "Cultists_Medium",
+                "PLASTICBANDIT_FireTeam_Heavy",
+                "JGSDF_2008_SentryTeam",
+                "CloseProtectionTeam"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": [
+                "{9328FE7DD0019E60}Prefabs/Groups/INDFOR/Group_FIA_Team_LAT.et",
+                "{E382595E188AF8A1}Prefabs/Groups/OPFOR/KLMK/Group_USSR_Team_GL_KLMK.et",
+                "{43C7A28EEB660FF8}Prefabs/Groups/OPFOR/Group_USSR_Team_GL.et",
+                "{2CC26054775FBA2C}Prefabs/Groups/INDFOR/Group_FIA_Team_AT.et",
+                "{A665FE0F7C136660}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_Team_AT_NI.et",
+                "{DE747BC9217D383C}Prefabs/Groups/BLUFOR/Group_US_Team_GL.et",
+                "{2E59ECDA9ED0B993}Prefabs/Groups/OPFOR/Group_USSR_Team_LAT.et",
+                "{A286509C2F94005F}Prefabs/Groups/OPFOR/KLMK/Group_USSR_Team_LAT_KLMK.et",
+                "{CA4790822E4ECE29}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_Team_LAT_NI.et",
+                "{96BAB56E6558788E}Prefabs/Groups/OPFOR/Group_USSR_Team_AT.et",
+                "{FAEA8B9E1252F56E}Prefabs/Groups/BLUFOR/Group_US_Team_LAT.et",
+                "{7318E9EFF22D1116}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_Team_GL_NI.et",
+                "{129039549B0B82FF}Prefabs/Groups/OPFOR/KLMK/Group_USSR_Team_AT_KLMK.et"
+            ]
+        },
+        {
+            "id": "G_ADMIN",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "_Platoon",
+                "Group_Zombies_High",
+                "Cultists_Light",
+                "PLASTICBANDIT_Squad",
+                "JGSDF_2008_SentryTeam",
+                "StaticSecurityTeam",
+                "TA_SentryTeam"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": [
+                "{0D10CCEEC7B3EC34}Prefabs/Groups/OPFOR/Group_USSR_PlatoonHQ.et",
+                "{B7AB5D3F8A7ADAE4}Prefabs/Groups/BLUFOR/Group_US_PlatoonHQ.et",
+                "{1BF443A793E269EB}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_PlatoonHQ_NI.et",
+                "{EE92725E9B949C3D}Prefabs/Groups/INDFOR/Group_FIA_PlatoonHQ.et",
+                "{B69270E9F222F356}Prefabs/Groups/OPFOR/KLMK/Group_USSR_PlatoonHQ_KLMK.et"
+            ]
+        },
+        {
+            "id": "G_MEDICAL",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "_Medical",
+                "Group_Zombies_High",
+                "Cultists_Light",
+                "PLASTICBANDIT_Squad",
+                "JGSDF_2008_LightFireTeam",
+                "StaticSecurityTeam"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": [
+                "{D815658156080328}Prefabs/Groups/OPFOR/Group_USSR_MedicalSection.et",
+                "{EF62027CC75A7459}Prefabs/Groups/BLUFOR/Group_US_MedicalSection.et",
+                "{6A05BCEA5B9B15E7}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_MedicalSection_NI.et",
+                "{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et",
+                "{581106FA58919E89}Prefabs/Groups/INDFOR/Group_FIA_MedicalSection.et"
+            ]
+        },
+        {
+            "id": "G_RECON",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "_Recon",
+                "_Maneuver",
+                "_RecceTeam",
+                "Group_Zombies_CIV",
+                "Group_Zombies_FIA",
+                "Group_Zombies_US",
+                "Group_Zombies_USSR",
+                "Cultists_Medium",
+                "PLASTICBANDIT_Squad",
+                "JGSDF_2008_LightFireTeam",
+                "CloseProtectionTeam",
+                "TA_Team_Suppress"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": [
+                "{D3117480BFB20776}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_ManeuverGroup_NI.et",
+                "{B721D5A8C1B556CE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconTeam.et",
+                "{AC473DE5F4B24E82}Prefabs/Groups/BLUFOR/GreenBerets/Suppressed/Group_US_GreenBeret_ReconTeam.et",
+                "{06F0C9675883F18A}Prefabs/Groups/OPFOR/KLMK/Group_USSR_ReconTeam.et",
+                "{1F468430E5AB477E}Prefabs/Groups/BLUFOR/GreenBerets/Suppressed/Group_US_GreenBeret_ReconSquad.et",
+                "{195CE45AF822820B}Prefabs/Groups/OPFOR/KLMK/Group_USSR_ManeuverGroup_KLMK.et",
+                "{F65B7BB712F46FEE}Prefabs/Groups/BLUFOR/Group_US_ReconTeam.et",
+                "{2E9C920C3ACA2C6F}Prefabs/Groups/INDFOR/Group_FIA_ReconTeam.et",
+                "{666A2B0A6B1967AE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconSquad.et",
+                "{1A5F0D93609DA5DA}Prefabs/Groups/OPFOR/Group_USSR_ManeuverGroup.et"
+            ]
+        },
+        {
+            "id": "G_HEAVY",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "MachineGunTeam",
+                "FireTeam",
+                "FireGroup",
+                "Suppress",
+                "Spetsnaz_Squad",
+                "GunGroup",
+                "Group_Zombies_Horde",
+                "Group_Zombies_CIV_Large",
+                "Cultists_Horde",
+                "JGSDF_2008_SentryTeam",
+                "QuickReactionForce"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": [
+                "{4D3BBEC1A955626A}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_Squad.et",
+                "{5B08C42EA0661A20}Prefabs/Groups/OPFOR/KLMK/Group_USSR_LightFireTeam_KLMK.et",
+                "{8E1B1AEBBB1AA155}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_LightFireTeam_NI.et",
+                "{0A8E20F50DA233E1}Prefabs/Groups/BLUFOR/Group_US_FireTeam_Guard.et",
+                "{30ED11AA4F0D41E5}Prefabs/Groups/OPFOR/Group_USSR_FireGroup.et",
+                "{26099EE31B5CC43A}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_FireGroup_NI.et",
+                "{10E7872ECBF80AC5}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_MachineGunTeam_NI.et",
+                "{6F72F05752ED62A8}Prefabs/Groups/OPFOR/Group_USSR_FireGroup_Guard.et",
+                "{81B6DBF2B88545F5}Prefabs/Groups/BLUFOR/Group_US_Team_Suppress.et",
+                "{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et",
+                "{B721D5A8C1B556CE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconTeam.et",
+                "{22F33D3EC8F281AB}Prefabs/Groups/INDFOR/Group_FIA_MachineGunTeam.et",
+                "{666A2B0A6B1967AE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconSquad.et",
+                "{1C6721180B16D6E5}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_Team_Suppress_NI.et",
+                "{AC473DE5F4B24E82}Prefabs/Groups/BLUFOR/GreenBerets/Suppressed/Group_US_GreenBeret_ReconTeam.et",
+                "{FCF7F5DC4F83955C}Prefabs/Groups/BLUFOR/Group_US_LightFireTeam.et",
+                "{1F468430E5AB477E}Prefabs/Groups/BLUFOR/GreenBerets/Suppressed/Group_US_GreenBeret_ReconSquad.et",
+                "{014B050050A8B5B5}Prefabs/Groups/OPFOR/KLMK/Group_USSR_Team_Suppress_KLMK.et",
+                "{A2F75E45C66B1C0A}Prefabs/Groups/OPFOR/Group_USSR_MachineGunTeam.et",
+                "{84E5BBAB25EA23E5}Prefabs/Groups/BLUFOR/Group_US_FireTeam.et",
+                "{56DC5F9D2D6119F2}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MachineGunTeam_KLMK.et",
+                "{13A616F83A41C610}Prefabs/Groups/OPFOR/KLMK/Group_USSR_FireGroup_KLMK.et",
+                "{1C0502B5729E7231}Prefabs/Groups/OPFOR/Group_USSR_Team_Suppress.et",
+                "{958039B857396B7B}Prefabs/Groups/BLUFOR/Group_US_MachineGunTeam.et",
+                "{5BEA04939D148B1D}Prefabs/Groups/INDFOR/Group_FIA_FireTeam.et",
+                "{1BB20A4B3A53D0F5}Prefabs/Groups/INDFOR/Group_FIA_LightFireTeam.et"
+            ]
+        },
+        {
+            "id": "G_SPECIAL",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "GreenBeret",
+                "Sapper",
+                "Sentry",
+                "Spetsnaz",
+                "SpecialForces",
+                "KS05_SF_GROUP_B",
+                "Group_Zombies_Horde",
+                "Cultists_Medium",
+                "PLASTICBANDIT_Squad",
+                "MobileSecurityTeam"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": [
+                "{CB58D90EA14430AD}Prefabs/Groups/OPFOR/Group_USSR_SentryTeam.et",
+                "{4D3BBEC1A955626A}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_Squad.et",
+                "{BB2E6C2CC2755E9B}Prefabs/Groups/OPFOR/Group_USSR_SapperTeam.et",
+                "{61E209AA5933AC95}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SentryTeam_KLMK.et",
+                "{B721D5A8C1B556CE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconTeam.et",
+                "{D0886786634E55AE}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_Squad.et",
+                "{6D60B510F50F9DC3}Prefabs/Groups/BLUFOR/OmegaGroups/KS05_SF_GROUP_B.et",
+                "{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
+                "{A0E9B5D6EA2072C4}Prefabs/Groups/INDFOR/Group_FIA_SapperTeam.et",
+                "{AC473DE5F4B24E82}Prefabs/Groups/BLUFOR/GreenBerets/Suppressed/Group_US_GreenBeret_ReconTeam.et",
+                "{1F468430E5AB477E}Prefabs/Groups/BLUFOR/GreenBerets/Suppressed/Group_US_GreenBeret_ReconSquad.et",
+                "{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
+                "{3BF36BDEEB33AEC9}Prefabs/Groups/BLUFOR/Group_US_SentryTeam.et",
+                "{85384D373DB6EBBB}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_SentryTeam_NI.et",
+                "{9624D2B39397E148}Prefabs/Groups/BLUFOR/Group_US_SapperTeam.et",
+                "{6AF3751BFA86836E}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_SapperTeam_NI.et",
+                "{35681BE27C302FF5}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_SentryTeam.et",
+                "{6E725D44CA973C24}Prefabs/Groups/INDFOR/Group_FIA_SentryTeam.et",
+                "{666A2B0A6B1967AE}Prefabs/Groups/OPFOR/Spetsnaz/Suppressed/Group_USSR_Spetsnaz_ReconSquad.et"
+            ]
+        },
+        {
+            "id": "G_SMALL",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "Spetsnaz_SentryTeam",
+                "GreenBeret_SentryTeam",
+                "SentryTeam",
+                "SharpshooterTeam",
+                "MedicalSection",
+                "SapperTeam",
+                "Group_Zombies_CIV",
+                "Group_Zombies_FIA",
+                "Group_Zombies_US",
+                "Group_Zombies_USSR",
+                "Cultists_Light",
+                "PLASTICBANDIT_Patrol",
+                "JGSDF_2008_LightFireTeam",
+                "CloseProtectionTeam"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random"
+            ],
+            "items": [
+                "{CB58D90EA14430AD}Prefabs/Groups/OPFOR/Group_USSR_SentryTeam.et",
+                "{D815658156080328}Prefabs/Groups/OPFOR/Group_USSR_MedicalSection.et",
+                "{BB2E6C2CC2755E9B}Prefabs/Groups/OPFOR/Group_USSR_SapperTeam.et",
+                "{61E209AA5933AC95}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SentryTeam_KLMK.et",
+                "{EF62027CC75A7459}Prefabs/Groups/BLUFOR/Group_US_MedicalSection.et",
+                "{8EDE6E160E71ABB4}Prefabs/Groups/OPFOR/KLMK/Group_USSR_SapperTeam_KLMK.et",
+                "{A0E9B5D6EA2072C4}Prefabs/Groups/INDFOR/Group_FIA_SapperTeam.et",
+                "{6A05BCEA5B9B15E7}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_MedicalSection_NI.et",
+                "{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et",
+                "{3BF36BDEEB33AEC9}Prefabs/Groups/BLUFOR/Group_US_SentryTeam.et",
+                "{85384D373DB6EBBB}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_SentryTeam_NI.et",
+                "{4C44B4D8F2820F25}Prefabs/Groups/OPFOR/Spetsnaz/Group_USSR_Spetsnaz_SentryTeam.et",
+                "{6307F42403E9B8A4}Prefabs/Groups/INDFOR/Group_FIA_SharpshooterTeam.et",
+                "{9624D2B39397E148}Prefabs/Groups/BLUFOR/Group_US_SapperTeam.et",
+                "{6AF3751BFA86836E}Prefabs/Groups/OPFOR/Naval_Infantry/Group_USSR_SapperTeam_NI.et",
+                "{35681BE27C302FF5}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_SentryTeam.et",
+                "{6E725D44CA973C24}Prefabs/Groups/INDFOR/Group_FIA_SentryTeam.et",
+                "{581106FA58919E89}Prefabs/Groups/INDFOR/Group_FIA_MedicalSection.et"
+            ]
+        },
+        {
+            "id": "C_RIFLEMAN",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "Rifleman",
+                "Sapper",
+                "_PL",
+                "_SL",
+                "Zombie_CIV",
+                "Zombie_FIA",
+                "Zombie_US",
+                "Zombie_USSR",
+                "Scav_Rookie",
+                "Stalker_Rookie",
+                "Civilian_Cultist",
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_1.et",
+                "Marksman"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": [
+                "{FE65E8C60C751352}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_PL.et",
+                "{426F7FAAC77A2A6D}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_PL.et",
+                "{145DBC42B19FC4D6}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Rifleman_KLMK.et",
+                "{87F1742F031130D3}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerMarksman.et",
+                "{D54A897C8B91FDC4}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerRifleman.et",
+                "{85261D5B04BFA7EE}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_SL.et",
+                "{DD4E3B8CFB7007A0}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerAR.et",
+                "{677B515F119222C2}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_SL.et",
+                "{C26BC8D7D448A5CE}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerSapper.et",
+                "{E45F1E163F5CA080}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_SL.et",
+                "{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
+                "{CBF7A398FE060335}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Sapper.et",
+                "{FCA76613163633F8}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_Sapper.et",
+                "{A8507C7BBAF64A71}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_SL_KLMK.et",
+                "{E8A05D5E0CEAC836}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_PL_KLMK.et",
+                "{AE63E4B79FB45DD1}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Sapper.et",
+                "{8C966363D98C3D2F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_Sapper.et",
+                "{84B40583F4D1B7A3}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_Rifleman.et",
+                "{0BC506AD47804A53}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_PL.et",
+                "{730CDEC4168637B6}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sapper.et",
+                "{0B3167BB0FB68110}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_PL.et",
+                "{6F412F678228D5F7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_Rifleman.et",
+                "{92DBBF345A677BC3}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_SL.et",
+                "{5811F02495F6810E}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_SL.et",
+                "{26A9756790131354}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Rifleman.et",
+                "{D09B45AD0CC76E8A}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerGL.et",
+                "{90D2F1A1CFCA7B5F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Guard/Character_USSR_SL_Guard.et",
+                "{A70AD7146D3FBF41}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Sapper_KLMK.et",
+                "{5436629450D8387A}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_SL.et",
+                "{066644E57BA1E26E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_Sapper.et",
+                "{449C7C4E8A0271F8}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerSurvivor.et",
+                "{8E5EFC9F59D2AFDC}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerSharpshooter.et"
+            ]
+        },
+        {
+            "id": "C_HEAVY",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "_GL",
+                "_MG",
+                "Grenadier",
+                "_Ammo",
+                "_LMG",
+                "Exploder",
+                "Heavy_Tank",
+                "Scav_Gopnik",
+                "Stalker_Rookie",
+                "Scav_Brute",
+                "Civilian_Cultist",
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_2.et",
+                "JGSDF_2008_Rifleman",
+                "ION_Scout"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": [
+                "{F6A45EA59BA3C2E8}Prefabs/Characters/Factions/BLUFOR/US_Army/Guard/Character_US_GL_Guard.et",
+                "{814736B62A897A2D}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/Character_US_SF_LMG_Tigerstripe.et",
+                "{6E1E87ECA5F5A7EA}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_LMG.et",
+                "{84029128FA6F6BB9}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_GL.et",
+                "{58E47E5A4D599432}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_MG.et",
+                "{96C784C502AC37DA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_MG.et",
+                "{F286300A9F54B0FA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_GL.et",
+                "{B823C229EC3981B7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_GL.et",
+                "{CD28EE7C5690D3BB}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Ammo.et",
+                "{B31D4E408AEC99A4}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Ammo.et",
+                "{C110498284A5418F}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_GL.et",
+                "{273F0239FE94FDA5}Prefabs/Characters/Factions/INDFOR/FIA/Special Units/Character_FIA_AC_Partisan_Grenadier.et",
+                "{6B00D3FC285E0AE0}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_GL_KLMK.et",
+                "{5C0DC0BE7F1A7346}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Grenadier.et",
+                "{8E0FE664CE7D1CA9}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_GL.et",
+                "{48F96834C3289E04}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_Ammo.et",
+                "{0B8AC0C3C447F90E}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_LMG.et",
+                "{63B5AEDAB5EDE4B7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_Ammo.et",
+                "{1623EA3AEFACA0E4}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_MG.et",
+                "{8A60AEBD529FEB8B}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_MG_KLMK.et",
+                "{AD44903106ACCD33}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_MG.et",
+                "{77D7BFD355620806}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Ammo_KLMK.et",
+                "{244E2E8B42B42490}Prefabs/Characters/Factions/INDFOR/FIA/Special Units/Character_FIA_MG_Elite.et"
+            ]
+        },
+        {
+            "id": "C_RECON",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "Scout",
+                "Spotter",
+                "_RTO",
+                "_SL",
+                "_GL",
+                "_AG1",
+                "Zombie_Military_ALL",
+                "Military_Pistol_ALL",
+                "Scav_Veteran",
+                "Stalker_Veteran",
+                "Civilian_Cultist",
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et",
+                "JGSDF_2008_TL"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": [
+                "{F6A45EA59BA3C2E8}Prefabs/Characters/Factions/BLUFOR/US_Army/Guard/Character_US_GL_Guard.et",
+                "{612F43A4D5AE765F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_RTO.et",
+                "{85261D5B04BFA7EE}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_SL.et",
+                "{84029128FA6F6BB9}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_GL.et",
+                "{677B515F119222C2}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_SL.et",
+                "{C110498284A5418F}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_GL.et",
+                "{5228D8F587B5EEDC}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_RTO.et",
+                "{B4977616CD19191A}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Scout.et",
+                "{F286300A9F54B0FA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_GL.et",
+                "{B823C229EC3981B7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_GL.et",
+                "{E45F1E163F5CA080}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_SL.et",
+                "{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
+                "{BF1E43FF39AA526B}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_Scout.et",
+                "{23D81C023DBF85AC}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_RTO.et",
+                "{0E4D9E3249328533}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_RTO.et",
+                "{A8507C7BBAF64A71}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_SL_KLMK.et",
+                "{6B00D3FC285E0AE0}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_GL_KLMK.et",
+                "{E94CD0D20A63909E}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Scout_RTO.et",
+                "{371FD0F920B600DD}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Scout.et",
+                "{9C16A2371109644D}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_RTO_KLMK.et",
+                "{0DC67B4DFFD7A361}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Scout_RTO.et",
+                "{3726077BE60962FF}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_RTO.et",
+                "{8E0FE664CE7D1CA9}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_GL.et",
+                "{1CA3D30464EE4674}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Spotter.et",
+                "{92DBBF345A677BC3}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_SL.et",
+                "{2C490E2846A1E884}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Scout.et",
+                "{90D2F1A1CFCA7B5F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Guard/Character_USSR_SL_Guard.et",
+                "{5811F02495F6810E}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_SL.et",
+                "{5436629450D8387A}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_SL.et"
+            ]
+        },
+        {
+            "id": "C_OFFICER",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "_Officer",
+                "Sergeant",
+                "_AC",
+                "_Leader",
+                "Exploder",
+                "Heavy_Tank",
+                "Scav_Veteran",
+                "Stalker_Veteran",
+                "Warrior_Cultist",
+                "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et",
+                "JGSDF_2008_CC",
+                "ION_Scout",
+                "TA_AR"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": [
+                "{4FBA24F7BB43E17D}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Sergeant.et",
+                "{B2A71FE01BA567D6}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Officer.et",
+                "{B4977616CD19191A}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Scout.et",
+                "{D4B48CB2120CD6E0}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_Sergeant.et",
+                "{C0F45FA0C11853D1}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_Officer.et",
+                "{273F0239FE94FDA5}Prefabs/Characters/Factions/INDFOR/FIA/Special Units/Character_FIA_AC_Partisan_Grenadier.et",
+                "{5117311FB822FD1F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Officer.et",
+                "{5C0DC0BE7F1A7346}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Grenadier.et",
+                "{DE15FB5FAFC3E63F}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Officer.et",
+                "{928DC9882A0AC79D}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Sergeant.et",
+                "{9503CB9B3463BA1E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC.et",
+                "{FC13DAA97D49137F}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Sergeant_KLMK.et",
+                "{4E29194BA809DF32}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Medic.et",
+                "{254F12535581E4C2}Prefabs/Characters/Factions/INDFOR/FIA/Special Units/Character_FIA_AC_Partisan.et"
+            ]
+        },
+        {
+            "id": "C_CREW",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "Crew",
+                "Pilot",
+                "_CC",
+                "MEI_Leader",
+                "Exploder",
+                "Heavy_Tank",
+                "Scav_Veteran",
+                "Stalker_Veteran",
+                "Civilian_Cultist",
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et",
+                "ION_Scout",
+                "TA_AR"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": [
+                "{F35F145D4A3F75EF}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_CC.et",
+                "{42A502E3BB727CEB}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_HeliPilot.et",
+                "{A62FA97C4EC64F14}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_HeliPilot.et",
+                "{E1CB513B8B9B08F4}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Crew.et",
+                "{F3AB754B0209BEAC}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_CC.et",
+                "{9FFEF10757E742EB}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Crew.et",
+                "{C8FABF6F093DA775}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_HeliCrew.et",
+                "{7B171A8ADD2664FE}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_CC.et",
+                "{641AD7731E23454B}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_Crew.et",
+                "{4F56119D68E63FF8}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_Crew.et",
+                "{BA010C4C82F3DE92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_CC.et",
+                "{15CD521098748195}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_HeliCrew.et"
+            ]
+        },
+        {
+            "id": "C_SNIPER",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "Sniper",
+                "Sharpshooter",
+                "Exploder",
+                "Stalker_Shadow",
+                "Stalker_Legend",
+                "Kamikaze_Cultist",
+                "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et",
+                "ION_SL"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": [
+                "{976AC400219898FA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Sharpshooter.et",
+                "{ADC2DE949F566202}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_Sharpshooter.et",
+                "{B056E800F6286831}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Sharpshooter_KLMK.et",
+                "{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
+                "{8CDEE565CB49D126}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_Sharpshooter.et",
+                "{CE33AB22F61F3365}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_Sharpshooter.et",
+                "{0F6689B491641155}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Sniper.et",
+                "{8E5EFC9F59D2AFDC}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerSharpshooter.et",
+                "{1FDA92972C1B771B}Prefabs/Characters/Factions/INDFOR/FIA/Special Units/Character_FIA_Rebel_Sharpshooter.et"
+            ]
+        },
+        {
+            "id": "C_LAUNCHER",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "_AAT",
+                "_AT",
+                "_AT",
+                "_LAT",
+                "Exploder",
+                "Scav_Brute",
+                "Warrior_Cultist",
+                "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et",
+                "JGSDF_2008_TL",
+                "ION_SL"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": [
+                "{FDBB366704065748}Prefabs/Characters/Factions/OPFOR/USSR_Army/Guard/Character_USSR_AT_Guard.et",
+                "{27BF1FF235DD6036}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_LAT.et",
+                "{9A12B3F6ABDF70BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_AT_KLMK.et",
+                "{9833B84F57F9F22F}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_LAT_KLMK.et",
+                "{1F8E131008DE0DD1}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_LAT.et",
+                "{BDDBE7D384E49891}Prefabs/Characters/Factions/BLUFOR/US_Army/Guard/Character_US_LAT_Guard.et",
+                "{631158F6898738A4}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_AAT.et",
+                "{F5CF70B790492C70}Prefabs/Characters/Factions/OPFOR/USSR_Army/Guard/Character_USSR_AAT_Guard.et",
+                "{FF43925D26526B95}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AAT.et",
+                "{BF643BE4ADBDFDD3}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_LAT.et",
+                "{27FB27EA116AC78C}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_AT.et",
+                "{E8EF64F8B943A507}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_AAT_KLMK.et",
+                "{C77DFB8546B3F2A2}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_LAT.et",
+                "{D25BC9815A9F9E8D}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AT.et",
+                "{1C78331E156A3D65}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_AT.et",
+                "{D2D6106D52DF6B0A}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_AAT.et"
+            ]
+        },
+        {
+            "id": "C_MEDIC",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "Medic",
+                "Zombie_Military_ALL",
+                "Military_Pistol_ALL",
+                "Scav_Veteran",
+                "Stalker_Veteran",
+                "Civilian_Cultist",
+                "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_2.et",
+                "JGSDF_2008_CC"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": [
+                "{34D564602573EDA1}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_Medic.et",
+                "{D66C215D6F03EFFD}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Medic_KLMK.et",
+                "{4E29194BA809DF32}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Medic.et",
+                "{AB9726163EC1BD81}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Medic.et",
+                "{C9E4FEAF5AAC8D8C}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Medic.et",
+                "{45A02CA25CBA9443}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_Medic.et",
+                "{9A234C5857D92187}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_Medic.et",
+                "{8CA70597606992EC}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Medic.et"
+            ]
+        },
+        {
+            "id": "C_SPECIAL",
+            "modDir": [
+                "Prefabs/Characters/Factions",
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "_SF",
+                "_SR",
+                "FIA_AC",
+                "_Bomb",
+                "MEI_Rifleman1",
+                "Zombie_Military_ALL",
+                "Military_Pistol_ALL",
+                "Exploder",
+                "Heavy_Tank",
+                "Stalker_Shadow",
+                "Stalker_Legend",
+                "PLAGF_Scout_RTO",
+                "Kamikaze_Cultist",
+                "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et",
+                "JGSDF_2008_Sniper",
+                "ION_Scout",
+                "TA_SL"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": [
+                "{814736B62A897A2D}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/Character_US_SF_LMG_Tigerstripe.et",
+                "{6E1E87ECA5F5A7EA}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_LMG.et",
+                "{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
+                "{9A234C5857D92187}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_Medic.et",
+                "{85261D5B04BFA7EE}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_SL.et",
+                "{C49ED6AA2EA02B15}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_SR_KLMK.et",
+                "{9503CB9B3463BA1E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC.et",
+                "{36E28C628A2F83CB}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF.et",
+                "{B2A71FE01BA567D6}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Officer.et",
+                "{5228D8F587B5EEDC}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_RTO.et",
+                "{B4977616CD19191A}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Scout.et",
+                "{B823C229EC3981B7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_GL.et",
+                "{2DB452B3EC386B92}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF.et",
+                "{8CA70597606992EC}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Medic.et",
+                "{C110498284A5418F}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_GL.et",
+                "{ADC2DE949F566202}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_Sharpshooter.et",
+                "{C0F45FA0C11853D1}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_Officer.et",
+                "{FCA76613163633F8}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_Sapper.et",
+                "{273F0239FE94FDA5}Prefabs/Characters/Factions/INDFOR/FIA/Special Units/Character_FIA_AC_Partisan_Grenadier.et",
+                "{730CDEC4168637B6}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sapper.et",
+                "{333DA6244C7DA34C}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_SR.et",
+                "{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
+                "{0B8AC0C3C447F90E}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_LMG.et",
+                "{254F12535581E4C2}Prefabs/Characters/Factions/INDFOR/FIA/Special Units/Character_FIA_AC_Partisan.et",
+                "{5C0DC0BE7F1A7346}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Grenadier.et",
+                "{EFC353CC3FF4475A}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_SR.et",
+                "{5811F02495F6810E}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_SL.et",
+                "{4E29194BA809DF32}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Medic.et"
+            ]
+        },
+        {
+            "id": "G_ZOMBIE_SMALL",
+            "modDir": [
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "Group_Zombies_CIV",
+                "Group_Zombies_FIA",
+                "Group_Zombies_US",
+                "Group_Zombies_USSR"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random",
+                "_Huge",
+                "_Large",
+                "_Medium"
+            ],
+            "items": []
+        },
+        {
+            "id": "G_ZOMBIE_MEDIUM",
+            "modDir": [
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "Group_Zombies_CIV_Large",
+                "Group_Zombies_High"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "G_ZOMBIE_LARGE",
+            "modDir": [
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "Group_Zombies_Horde"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_ZOMBIE",
+            "modDir": [
+                "622120A5448725E3/Prefabs/Characters"
+            ],
+            "include": [
+                "Zombie_",
+                "Character_",
+                "Variant_"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random",
+                "Zombie_Heavy"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_DEMON",
+            "modDir": [
+                "Prefabs/Characters",
+                "Beasts"
+            ],
+            "include": [
+                "ShadowTwin",
+                "Whisper",
+                "Kamikaze_Cultist"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_DEMON_BOSS",
+            "modDir": [
+                "Prefabs/Characters",
+                "Beasts"
+            ],
+            "include": [
+                "Stalker Heavy",
+                "Zombie_Heavy",
+                "character_115_dupe",
+                "character_115_pump",
+                "character_115_skel.",
+                "Warrior_Cultist"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_BEASTS",
+            "modDir": [
+                "Prefabs/Characters",
+                "Beasts"
+            ],
+            "include": [
+                "GhoulHeavy",
+                "PumpkinHead",
+                "Skeleton",
+                "Whisper",
+                "Warrior_Cultist"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": []
+        },
+        {
+            "id": "C_RANDOMIZED",
+            "modDir": [],
+            "include": [],
+            "exclude": [],
+            "items": [
+                "{FE65E8C60C751352}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_PL.et",
+                "{426F7FAAC77A2A6D}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_PL.et",
+                "{145DBC42B19FC4D6}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Rifleman_KLMK.et",
+                "{87F1742F031130D3}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerMarksman.et",
+                "{D54A897C8B91FDC4}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerRifleman.et",
+                "{85261D5B04BFA7EE}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_SL.et",
+                "{DD4E3B8CFB7007A0}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerAR.et",
+                "{677B515F119222C2}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_SL.et",
+                "{C26BC8D7D448A5CE}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerSapper.et",
+                "{E45F1E163F5CA080}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_SL.et",
+                "{DCB41B3746FDD1BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Rifleman.et",
+                "{CBF7A398FE060335}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Sapper.et",
+                "{FCA76613163633F8}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_Sapper.et",
+                "{A8507C7BBAF64A71}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_SL_KLMK.et",
+                "{E8A05D5E0CEAC836}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_PL_KLMK.et",
+                "{AE63E4B79FB45DD1}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Sapper.et",
+                "{8C966363D98C3D2F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_Sapper.et",
+                "{84B40583F4D1B7A3}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_Rifleman.et",
+                "{0BC506AD47804A53}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_PL.et",
+                "{730CDEC4168637B6}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sapper.et",
+                "{0B3167BB0FB68110}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_PL.et",
+                "{6F412F678228D5F7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_Rifleman.et",
+                "{92DBBF345A677BC3}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_SL.et",
+                "{5811F02495F6810E}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_SL.et",
+                "{26A9756790131354}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Rifleman.et",
+                "{D09B45AD0CC76E8A}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerGL.et",
+                "{90D2F1A1CFCA7B5F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Guard/Character_USSR_SL_Guard.et",
+                "{A70AD7146D3FBF41}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Sapper_KLMK.et",
+                "{5436629450D8387A}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_SL.et",
+                "{066644E57BA1E26E}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_Sapper.et",
+                "{449C7C4E8A0271F8}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerSurvivor.et",
+                "{8E5EFC9F59D2AFDC}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/PlayerLoadouts/KS_PlayerSharpshooter.et",
+                "{F6A45EA59BA3C2E8}Prefabs/Characters/Factions/BLUFOR/US_Army/Guard/Character_US_GL_Guard.et",
+                "{814736B62A897A2D}Prefabs/Characters/Factions/BLUFOR/US_Army/KS/Character_US_SF_LMG_Tigerstripe.et",
+                "{6E1E87ECA5F5A7EA}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_LMG.et",
+                "{84029128FA6F6BB9}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_GL.et",
+                "{58E47E5A4D599432}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_MG.et",
+                "{96C784C502AC37DA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_MG.et",
+                "{F286300A9F54B0FA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_GL.et",
+                "{B823C229EC3981B7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_GL.et",
+                "{CD28EE7C5690D3BB}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Ammo.et",
+                "{B31D4E408AEC99A4}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Ammo.et",
+                "{C110498284A5418F}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_GL.et",
+                "{273F0239FE94FDA5}Prefabs/Characters/Factions/INDFOR/FIA/Special Units/Character_FIA_AC_Partisan_Grenadier.et",
+                "{6B00D3FC285E0AE0}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_GL_KLMK.et",
+                "{5C0DC0BE7F1A7346}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Grenadier.et",
+                "{8E0FE664CE7D1CA9}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_GL.et",
+                "{48F96834C3289E04}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_Ammo.et",
+                "{0B8AC0C3C447F90E}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_LMG.et",
+                "{63B5AEDAB5EDE4B7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_Ammo.et",
+                "{1623EA3AEFACA0E4}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_MG.et",
+                "{8A60AEBD529FEB8B}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_MG_KLMK.et",
+                "{AD44903106ACCD33}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_MG.et",
+                "{77D7BFD355620806}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Ammo_KLMK.et",
+                "{244E2E8B42B42490}Prefabs/Characters/Factions/INDFOR/FIA/Special Units/Character_FIA_MG_Elite.et",
+                "{F6A45EA59BA3C2E8}Prefabs/Characters/Factions/BLUFOR/US_Army/Guard/Character_US_GL_Guard.et",
+                "{612F43A4D5AE765F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_RTO.et",
+                "{85261D5B04BFA7EE}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_SL.et",
+                "{84029128FA6F6BB9}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_GL.et",
+                "{677B515F119222C2}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_SL.et",
+                "{C110498284A5418F}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_GL.et",
+                "{5228D8F587B5EEDC}Prefabs/Characters/Factions/BLUFOR/US_Army/GreenBerets/Character_US_SF_RTO.et",
+                "{B4977616CD19191A}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_AC_Scout.et",
+                "{F286300A9F54B0FA}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_GL.et",
+                "{B823C229EC3981B7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_GL.et",
+                "{E45F1E163F5CA080}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_SL.et",
+                "{B6A2736A7201DD23}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_RTO.et",
+                "{BF1E43FF39AA526B}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_Scout.et",
+                "{23D81C023DBF85AC}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_RTO.et",
+                "{0E4D9E3249328533}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_RTO.et",
+                "{A8507C7BBAF64A71}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_SL_KLMK.et",
+                "{6B00D3FC285E0AE0}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_GL_KLMK.et",
+                "{E94CD0D20A63909E}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Scout_RTO.et",
+                "{371FD0F920B600DD}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Scout.et",
+                "{9C16A2371109644D}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_RTO_KLMK.et",
+                "{0DC67B4DFFD7A361}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Scout_RTO.et",
+                "{3726077BE60962FF}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_RTO.et",
+                "{8E0FE664CE7D1CA9}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_GL.et",
+                "{1CA3D30464EE4674}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Spotter.et",
+                "{92DBBF345A677BC3}Prefabs/Characters/Factions/OPFOR/USSR_Army/Naval_Infantry/Character_USSR_NI_SL.et",
+                "{2C490E2846A1E884}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_Scout.et",
+                "{90D2F1A1CFCA7B5F}Prefabs/Characters/Factions/OPFOR/USSR_Army/Guard/Character_USSR_SL_Guard.et",
+                "{5811F02495F6810E}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_SL.et",
+                "{5436629450D8387A}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_SL.et"
+            ]
+        },
+        {
+            "id": "G_LIGHT",
+            "modDir": [
+                "Prefabs/Groups",
+                "622120A5448725E3/Prefabs/Groups"
+            ],
+            "include": [
+                "LightFire",
+                "FireTeam",
+                "FireGroup",
+                "RifleSquad",
+                "SentryTeam",
+                "Regulars_Brick",
+                "InfantrySection",
+                "Group_Zombies_CIV",
+                "Group_Zombies_FIA",
+                "Group_Zombies_US",
+                "Group_Zombies_USSR",
+                "Cultists_Light",
+                "CloseProtectionTeam"
+            ],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
+                "_Random",
+                "_Heavy"
+            ],
             "items": []
         },
         {
@@ -53,7 +1168,8 @@
                 "Cultists_Light",
                 "PLAGF_SentryTeam",
                 "JGSDF_2008_SentryTeam",
-                "CloseProtectionTeam"
+                "CloseProtectionTeam",
+                "TA_RifleSquad"
             ],
             "exclude": [
                 "_Base",
@@ -99,7 +1215,8 @@
                 "Cultists_Light",
                 "PLASTICBANDIT_Squad",
                 "JGSDF_2008_SentryTeam",
-                "StaticSecurityTeam"
+                "StaticSecurityTeam",
+                "TA_SentryTeam"
             ],
             "exclude": [
                 "_Base",
@@ -148,7 +1265,8 @@
                 "Cultists_Medium",
                 "PLASTICBANDIT_Squad",
                 "JGSDF_2008_LightFireTeam",
-                "CloseProtectionTeam"
+                "CloseProtectionTeam",
+                "TA_Team_Suppress"
             ],
             "exclude": [
                 "_Base",
@@ -362,7 +1480,8 @@
                 "Warrior_Cultist",
                 "{E8C16E36B946D92D}Prefabs/Characters/Warrior_Cultist.et",
                 "JGSDF_2008_CC",
-                "ION_Scout"
+                "ION_Scout",
+                "TA_AR"
             ],
             "exclude": [
                 "_Base",
@@ -394,7 +1513,8 @@
                 "Stalker_Veteran",
                 "Civilian_Cultist",
                 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et",
-                "ION_Scout"
+                "ION_Scout",
+                "TA_AR"
             ],
             "exclude": [
                 "_Base",
@@ -520,7 +1640,8 @@
                 "Kamikaze_Cultist",
                 "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et",
                 "JGSDF_2008_Sniper",
-                "ION_Scout"
+                "ION_Scout",
+                "TA_SL"
             ],
             "exclude": [
                 "_Base",
@@ -759,6 +1880,71 @@
             "names": [
                 "JSDF_RAS",
                 "JGSDF"
+            ]
+        },
+        {
+            "names": [
+                "Takistan",
+                "TA"
+            ]
+        },
+        {
+            "names": [
+                "RHS_USAF",
+                "USAF_USMC"
+            ]
+        },
+        {
+            "names": [
+                "RHS_AFRF",
+                "RHS_RF"
+            ]
+        },
+        {
+            "names": [
+                "USSR",
+                "USSR",
+                "TF_RF"
+            ]
+        },
+        {
+            "names": [
+                "US",
+                "US",
+                "TF_US"
+            ]
+        },
+        {
+            "names": [
+                "BACON_622120A5448725E3_FACTION",
+                "Zombie",
+                "Zombies"
+            ]
+        },
+        {
+            "names": [
+                "BALLIEN_BC_FACTION",
+                "Cultist",
+                "Cultists"
+            ]
+        },
+        {
+            "names": [
+                "ChinesePLA",
+                "PLAGF",
+                "PLAAF"
+            ]
+        },
+        {
+            "names": [
+                "JSDF_RAS",
+                "JGSDF"
+            ]
+        },
+        {
+            "names": [
+                "Takistan",
+                "TA"
             ]
         }
     ]

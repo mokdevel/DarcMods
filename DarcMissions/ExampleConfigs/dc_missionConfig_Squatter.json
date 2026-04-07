@@ -23,7 +23,7 @@
         5
     ],
     "missionFiles": [],
-    "buildingRadius": 400,
+    "buildingRadius": 800,
     "subMissions": [
         {
             "general": {

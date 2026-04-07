@@ -1,5 +1,5 @@
 {
-    "jsonVersion": 2,
+    "jsonVersion": 3,
     "missionType": 11,
     "version": 1,
     "author": "darc",
@@ -10,18 +10,26 @@
     "showMessage": true,
     "disableArsenal": true,
     "missionList": [
-        0
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        4,
+        4,
+        5
     ],
     "missionFiles": [],
     "distanceToMission": 100,
-    "distanceToPlayer": 500,
+    "distanceToPlayer": 100,
     "distanceToStart": 0.49,
     "activeTime": 2700,
     "subMissions": [
         {
             "general": {
                 "subIdx": 0,
-                "comment": "index 0: Randomly flying chopper",
+                "comment": "index 0: Randomly flying chopper. No specific agenda. May engage.",
                 "pos": [
                     [
                         0.0,
@@ -81,7 +89,13 @@
             "qrf": null,
             "loot": null,
             "heliList": [
-                "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et"
+                "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et",
+                "{9902F419417C00AA}Prefabs/Vehicles/Helicopters/UH1H/UH1H_sharkNose_Transport_Patrol.et",
+                "{26436A51FE36D07C}Prefabs/Vehicles/Helicopters/Ka-137/Ka137_Patrol.et",
+                "{87314096BD3C9D1A}Prefabs/Vehicles/Helicopters/AH6M/AH6M_M134_Patrol.et",
+                "{C4590C7F97F99DB2}Prefabs/Vehicles/Helicopters/AH6M/MH6M_Patrol.et",
+                "{19022AB51719F2AD}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/AH6M_OPFOR_M134_Patrol.et",
+                "{2B0F7648840C4F6E}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/MH6M_OPFOR_Patrol.et"
             ],
             "flyHeight": [
                 35,
@@ -95,7 +109,8 @@
                 0.1,
                 0.3
             ],
-            "wpType": 1
+            "wpType": 1,
+            "enemyType": 2
         },
         {
             "general": {
@@ -157,26 +172,30 @@
             "heliList": [
                 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
                 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
+                "{8FD9275E605A1A93}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HE_Patrol.et",
                 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
                 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
                 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
+                "{490B9AAF7C1DDF1B}Prefabs/Vehicles/Helicopters/KA52/KA52_UPK_X2_Patrol.et",
                 "{EDF7AA9A54BFD6F8}Prefabs/Vehicles/Helicopters/Mi24/Mi24V_armed_UPK23_Patrol.et",
                 "{842F4FB8DACE28D4}Prefabs/Vehicles/Helicopters/MI28/MI28N_Grey_Patrol.et",
-                "{490B9AAF7C1DDF1B}Prefabs/Vehicles/Helicopters/KA52/KA52_UPK_X2_Patrol.et"
+                "{FED75A40AD78101F}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PK_scout_Patrol.et",
+                "{9515A6A2F7309954}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PKRocketpod_Patrol.et"
             ],
             "flyHeight": [
                 40,
                 80
             ],
             "speed": [
-                10,
-                30
+                15,
+                50
             ],
             "flyDistance": [
                 0.1,
                 0.3
             ],
-            "wpType": 1
+            "wpType": 4,
+            "enemyType": 2
         },
         {
             "general": {
@@ -231,8 +250,8 @@
                     "G_HEAVY",
                     "G_SMALL"
                 ],
-                "skill": 60,
-                "perception": 1.0,
+                "skill": 80,
+                "perception": 1.5,
                 "waypointRange": [
                     0,
                     0
@@ -245,10 +264,15 @@
             "heliList": [
                 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
                 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
+                "{8FD9275E605A1A93}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HE_Patrol.et",
                 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
                 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
                 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
-                "{EDF7AA9A54BFD6F8}Prefabs/Vehicles/Helicopters/Mi24/Mi24V_armed_UPK23_Patrol.et"
+                "{490B9AAF7C1DDF1B}Prefabs/Vehicles/Helicopters/KA52/KA52_UPK_X2_Patrol.et",
+                "{EDF7AA9A54BFD6F8}Prefabs/Vehicles/Helicopters/Mi24/Mi24V_armed_UPK23_Patrol.et",
+                "{842F4FB8DACE28D4}Prefabs/Vehicles/Helicopters/MI28/MI28N_Grey_Patrol.et",
+                "{FED75A40AD78101F}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PK_scout_Patrol.et",
+                "{9515A6A2F7309954}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PKRocketpod_Patrol.et"
             ],
             "flyHeight": [
                 30,
@@ -262,7 +286,8 @@
                 100.0,
                 300.0
             ],
-            "wpType": 2
+            "wpType": 4,
+            "enemyType": 2
         },
         {
             "general": {
@@ -324,12 +349,16 @@
             "qrf": null,
             "loot": null,
             "heliList": [
-                "{FED75A40AD78101F}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PK_scout_Patrol.et",
-                "{9515A6A2F7309954}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PKRocketpod_Patrol.et",
-                "{26436A51FE36D07C}Prefabs/Vehicles/Helicopters/Ka-137/Ka137_Patrol.et",
+                "{87314096BD3C9D1A}Prefabs/Vehicles/Helicopters/AH6M/AH6M_M134_Patrol.et",
+                "{C4590C7F97F99DB2}Prefabs/Vehicles/Helicopters/AH6M/MH6M_Patrol.et",
+                "{19022AB51719F2AD}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/AH6M_OPFOR_M134_Patrol.et",
+                "{2B0F7648840C4F6E}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/MH6M_OPFOR_Patrol.et",
+                "{490B9AAF7C1DDF1B}Prefabs/Vehicles/Helicopters/KA52/KA52_UPK_X2_Patrol.et",
                 "{EDF7AA9A54BFD6F8}Prefabs/Vehicles/Helicopters/Mi24/Mi24V_armed_UPK23_Patrol.et",
                 "{842F4FB8DACE28D4}Prefabs/Vehicles/Helicopters/MI28/MI28N_Grey_Patrol.et",
-                "{490B9AAF7C1DDF1B}Prefabs/Vehicles/Helicopters/KA52/KA52_UPK_X2_Patrol.et",
+                "{26436A51FE36D07C}Prefabs/Vehicles/Helicopters/Ka-137/Ka137_Patrol.et",
+                "{FED75A40AD78101F}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PK_scout_Patrol.et",
+                "{9515A6A2F7309954}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PKRocketpod_Patrol.et",
                 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
                 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et"
             ],
@@ -338,14 +367,15 @@
                 80
             ],
             "speed": [
-                10,
-                30
+                15,
+                45
             ],
             "flyDistance": [
                 0.1,
                 0.3
             ],
-            "wpType": 1
+            "wpType": 2,
+            "enemyType": 2
         },
         {
             "general": {
@@ -369,7 +399,7 @@
                 "messages": [
                     {
                         "title": "Helicopter recon",
-                        "info": "Hide!",
+                        "info": "Hide! If you're seen, hunters will be sent after you.",
                         "win": "Search patrol avoided.",
                         "lose": "Hunters are sent to your location."
                     }
@@ -405,6 +435,8 @@
             "loot": null,
             "heliList": [
                 "{435F663B9456C29E}Prefabs/Vehicles/Helicopters/UH1H/UH1H_civ_livery_v1_Patrol.et",
+                "{9902F419417C00AA}Prefabs/Vehicles/Helicopters/UH1H/UH1H_sharkNose_Transport_Patrol.et",
+                "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et",
                 "{2B0F7648840C4F6E}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/MH6M_OPFOR_Patrol.et",
                 "{19022AB51719F2AD}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/AH6M_OPFOR_M134_Patrol.et",
                 "{C4590C7F97F99DB2}Prefabs/Vehicles/Helicopters/AH6M/MH6M_Patrol.et",
@@ -422,12 +454,13 @@
                 0.1,
                 0.5
             ],
-            "wpType": 3
+            "wpType": 3,
+            "enemyType": 2
         },
         {
             "general": {
                 "subIdx": 5,
-                "comment": "index 5: Landing chopper",
+                "comment": "index 5: Gunships",
                 "pos": [
                     [
                         0.0,
@@ -445,10 +478,10 @@
                 "posName": "any",
                 "messages": [
                     {
-                        "title": "Helicopter patroling",
-                        "info": "Avoid being seen.",
-                        "win": "Helicopter is not your problem anymore.",
-                        "lose": "Helicopter lost track of you."
+                        "title": "Gunship killer",
+                        "info": "Everyone is an enemy.",
+                        "win": "Sky is safer place now.",
+                        "lose": "The crazy pilot is no more."
                     }
                 ],
                 "winCondition": 2,
@@ -468,11 +501,10 @@
                 ],
                 "types": [
                     "G_SMALL",
-                    "G_ADMIN",
-                    "G_RECON"
+                    "G_LIGHT"
                 ],
-                "skill": 30,
-                "perception": 0.6,
+                "skill": 60,
+                "perception": 1.5,
                 "waypointRange": [
                     0,
                     0
@@ -483,21 +515,32 @@
             "qrf": null,
             "loot": null,
             "heliList": [
-                "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et"
+                "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
+                "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
+                "{8FD9275E605A1A93}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HE_Patrol.et",
+                "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
+                "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
+                "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
+                "{490B9AAF7C1DDF1B}Prefabs/Vehicles/Helicopters/KA52/KA52_UPK_X2_Patrol.et",
+                "{EDF7AA9A54BFD6F8}Prefabs/Vehicles/Helicopters/Mi24/Mi24V_armed_UPK23_Patrol.et",
+                "{842F4FB8DACE28D4}Prefabs/Vehicles/Helicopters/MI28/MI28N_Grey_Patrol.et",
+                "{FED75A40AD78101F}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PK_scout_Patrol.et",
+                "{9515A6A2F7309954}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PKRocketpod_Patrol.et"
             ],
             "flyHeight": [
-                35,
-                70
+                40,
+                80
             ],
             "speed": [
-                7,
-                25
+                10,
+                40
             ],
             "flyDistance": [
-                0.2,
-                0.5
+                0.1,
+                0.3
             ],
-            "wpType": 4
+            "wpType": 4,
+            "enemyType": 3
         }
     ]
 }

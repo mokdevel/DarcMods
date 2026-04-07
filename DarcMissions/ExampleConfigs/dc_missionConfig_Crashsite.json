@@ -164,21 +164,21 @@
                 {
                     "comment": "Index 0",
                     "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et",
-                    "throttle": 0.8,
+                    "throttle": 1.6,
                     "rotorForce": 0.8,
                     "rotor2Force": 1.0
                 },
                 {
                     "comment": "Index 1",
                     "resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_crashing.et",
-                    "throttle": 0.699,
+                    "throttle": 1.2,
                     "rotorForce": 0.899,
                     "rotor2Force": 1.0
                 },
                 {
                     "comment": "Index 2",
                     "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et",
-                    "throttle": 0.8,
+                    "throttle": 1.399,
                     "rotorForce": 0.8,
                     "rotor2Force": -1.0
                 }
@@ -288,23 +288,23 @@
                 {
                     "comment": "Index 0",
                     "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et",
-                    "throttle": 0.699,
+                    "throttle": 1.799,
                     "rotorForce": 0.8,
                     "rotor2Force": 1.0
                 },
                 {
                     "comment": "Index 1",
                     "resource": "{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_crashing.et",
-                    "throttle": 0.6,
+                    "throttle": 1.299,
                     "rotorForce": 0.85,
                     "rotor2Force": 1.0
                 },
                 {
                     "comment": "Index 2",
                     "resource": "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et",
-                    "throttle": 0.75,
+                    "throttle": 1.6,
                     "rotorForce": 0.75,
-                    "rotor2Force": -1.0
+                    "rotor2Force": 1.0
                 }
             ]
         }
