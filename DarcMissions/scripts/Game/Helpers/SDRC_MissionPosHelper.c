@@ -65,21 +65,26 @@ class SDRC_MissionPosHelper
 		if (distanceToPlayer == -1)
 			distanceToPlayer = baseGameMode.missionFrame.m_Config.minDistanceToPlayer;
 		
-		//Check that players are not too close
-		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, distanceToPlayer))
+		//If no players in game, ignore this
+		if (SDRC_PlayerHelper.PlayerCount() > 0)
 		{
-			SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.PLAYER_TOO_CLOSE), LogLevel.SPAM);
-			return SDRC_EMissionError.PLAYER_TOO_CLOSE;
-		}
+			//Check that players are not too close
+			if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, distanceToPlayer))
+			{
+				SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.PLAYER_TOO_CLOSE), LogLevel.SPAM);
+				return SDRC_EMissionError.PLAYER_TOO_CLOSE;
+			}
 
 #ifdef NEW_VERSION_WIP
-		//Check that players are not too far. This check is not done for static missions.
-		if (baseGameMode.missionFrame.m_Config.maxDistanceToPlayer > -1)
-		{
-			if (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, baseGameMode.missionFrame.m_Config.maxDistanceToPlayer, distanceToPlayer))
+			//Check that players are not too far. 
+			//This check is not done for static missions.
+			if (baseGameMode.missionFrame.m_Config.maxDistanceToPlayer > -1)
 			{
-				SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.PLAYER_TOO_FAR), LogLevel.SPAM);
-				return SDRC_EMissionError.PLAYER_TOO_FAR;
+				if (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, baseGameMode.missionFrame.m_Config.maxDistanceToPlayer, distanceToPlayer))
+				{
+					SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.PLAYER_TOO_FAR), LogLevel.SPAM);
+					return SDRC_EMissionError.PLAYER_TOO_FAR;
+				}
 			}
 		}
 #endif
