@@ -308,7 +308,7 @@ modded class SDRC_ChopperComp
 				AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
 				
 				int crewCount = SDRC_ChopperCrewHelper.CountCrew(GetOwner());
-				crewCount = 5 + crewCount * 3;	//Give N seconds per AI plus additional time
+				crewCount = 5 + crewCount * 4;	//Give N seconds per AI plus additional time
 				
 				AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value : crewCount);
 				vector hoverPos = vector.Zero;

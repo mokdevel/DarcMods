@@ -242,7 +242,7 @@ class SDRC_VehicleHelper
 				continue;
 			}
 			
-			GetGame().GetCallqueue().CallLater(GetOutDelayed, i*500, false, character, vehicle);
+			GetGame().GetCallqueue().CallLater(GetOutDelayed, (i * 500), false, character, vehicle);
 			
 			//Collect the groups that were ordered to climb out. 
 			SCR_AIGroup AIgroup = SCR_AIGroup.Cast(aiAgent.GetParentGroup());					

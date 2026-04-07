@@ -27,7 +27,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		//Waypoint values
 		wpSteepAngle = 60;
 														
-		destinationForwardInitial = 500;
+		destinationForwardInitial = 400;
 		destinationForward = 300;
 	}
 }

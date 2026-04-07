@@ -3,6 +3,8 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCrewHelper
 {
+	const int GETOUT_DELAY = 5;	//(seconds) The delay between groups jumping out
+	
 	//------------------------------------------------------------------------------------------------	
 	// Crew functions
 	//------------------------------------------------------------------------------------------------	
@@ -216,7 +218,6 @@ class SDRC_ChopperCrewHelper
 	//------------------------------------------------------------------------------------------------
 	static void GetOut(IEntity owner)
 	{
-		const int GETOUT_DELAY = 20;	//(seconds) The delay between groups jumping out
 		
 		array<SCR_AIGroup> groups = {};
 	
@@ -246,6 +247,8 @@ class SDRC_ChopperCrewHelper
 			SDRC_Log.Add("[SDRC_ChopperCrewHelper:GetOut] Create waypoint for AI group: " + group, LogLevel.DEBUG);			
 			
 			vector pos = SDRC_Misc.RandomizePos(owner.GetOrigin(), 300);			
+			//TBD: If position in water, try again.			
+			
 			GetGame().GetCallqueue().CallLater(SetWaypointDelayed, 1000 + GETOUT_DELAY * 1000 * (g - 1), false, group, pos);
 			
 			int index = 0;
@@ -260,11 +263,12 @@ class SDRC_ChopperCrewHelper
 		}
 	}
 
+	//------------------------------------------------------------------------------------------------
 	static void SetWaypointDelayed(SCR_AIGroup group, vector pos)
 	{
 		SDRC_WPHelper.CreateWaypoint(group, pos, SDRC_EWaypointMoveType.GETOUT);
 		SDRC_WPHelper.CreateWaypoint(group, pos, SDRC_EWaypointMoveType.MOVE);
-		SDRC_DebugHelper.AddDebugPos(pos);
+		//SDRC_DebugHelper.AddDebugPos(pos);
 	}
 		
 	//------------------------------------------------------------------------------------------------

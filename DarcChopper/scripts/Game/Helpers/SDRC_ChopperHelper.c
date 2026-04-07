@@ -409,13 +409,13 @@ class SDRC_ChopperHelper
 			if (chopperComp.GetState() == SDRC_EHeliState.LAND)
 			{
 				//Decide a point on the spline for the initial landing to start
-				int pointsToGround = chopperComp.m_fSpeed / 1.2;
-				pointsToGround = Math.ClampInt(pointsToGround, 10, 20);
+				//int pointsToGround = chopperComp.m_fSpeed / 1.2;
 				
 				int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
+				int pointsToGround = lastIdx - 1;
 				
 				//Check that point is within limits
-				pointsToGround = Math.ClampInt(pointsToGround, 1, lastIdx - 2);
+				SDRC_Log.Add("[SDRC_ChopperHelper:SetSplinePointsAboveGround] pointsToGround: " + pointsToGround, LogLevel.DEBUG);			
 
 				//Find high point, low point and difference
 				vector v0 = chopperComp.m_vSplinePoints[lastIdx - pointsToGround];
@@ -426,10 +426,6 @@ class SDRC_ChopperHelper
 				//Define the distance from where to start landing sequence				
 				chopperComp.m_fLandingDistance = vector.Distance(v0, v1);
 
-				//Modify the point amount the make a hook for landing. Starting point (v0) needs to be updated
-				pointsToGround = Math.ClampInt((pointsToGround / 1.2), 1, lastIdx - 2);
-				v0 = chopperComp.m_vSplinePoints[lastIdx - pointsToGround];
-				
 				//Count a landing (bell) curve
 				float p0 = v0[1];
 				float p1 = v1[1];
@@ -441,19 +437,14 @@ class SDRC_ChopperHelper
 					for (int i = 0; i < pointsToGround; i++)
 					{					
 						float step = 1 - (i / (pointsToGround - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
-						
-						vector pt = chopperComp.m_vSplinePoints[lastIdx - pointsToGround + i + 1];	//TBD: why +1 ?
+
+						vector pt = vector.Lerp(v1, v0, step);
 						pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
 						chopperComp.m_vSplinePoints[lastIdx - pointsToGround + i + 1] = pt;
 					}
 					
 //					smoothCount = chopperComp.m_vSplinePoints.Count() - pointsToGround;
 				}
-				
-				//Put last point slightly below the actual target
-				/*vector lastPt = chopperComp.m_vSplinePoints[lastIdx];
-				lastPt[1] = lastPt[1] - 2;
-				chopperComp.m_vSplinePoints[lastIdx] = lastPt; */
 				
 				isSmoothingNeeded = false;
 			}		
