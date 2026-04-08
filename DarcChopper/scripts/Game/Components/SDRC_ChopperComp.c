@@ -135,7 +135,7 @@ class SDRC_ChopperComp : ScriptComponent
 	//Flight path
 	ref array<ref SDRC_FlyPathPoint> m_vFlightPoints = {};
 	[Attribute("", UIWidgets.Object, "Destinations")]	
-	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations;	//Requested destinations
+	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations;		//Requested destinations
 	//Autonomous flying stuff
 	[Attribute(defvalue: typename.EnumToString(SDRC_EChopperType, SDRC_EChopperType.HELICOPTER), uiwidget: UIWidgets.ComboBox, desc: "The type of the entity.", enumType: SDRC_EChopperType)]		
 	SDRC_EChopperType m_EntityType;
@@ -266,15 +266,6 @@ class SDRC_ChopperComp : ScriptComponent
 				
 		SDRC_SpawnHelper.SetPersistence(owner, false);
 
-		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
-		if (m_BaseGameMode)
-		{
-	 		if (m_BaseGameMode.chopperFrame)
-			{
-				m_BaseGameMode.chopperFrame.AddChopperToList(owner);
-			}
-		}		
-		
 		GetGame().GetCallqueue().CallLater(Setup, TIME_DELAY_READY * 1000, false, owner);		
 	}
 	
@@ -313,6 +304,7 @@ class SDRC_ChopperComp : ScriptComponent
 		ResetFlight();
 		SetTimeInState(0);
 		
+		//Initialize enemyFoundTime
 		m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + m_iEnemyFoundTimeout;
 		
 		//Set wheel brake on
@@ -385,6 +377,15 @@ class SDRC_ChopperComp : ScriptComponent
 			Ready(owner);
 		}
 		
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (m_BaseGameMode)
+		{
+	 		if (m_BaseGameMode.chopperFrame)
+			{
+				m_BaseGameMode.chopperFrame.AddChopperToList(owner);
+			}
+		}		
+		
 		//IMPORTANT: In a mod, you need to call Ready() yourself after Setup()!!!
 	}
 	
@@ -401,7 +402,9 @@ class SDRC_ChopperComp : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	//Delayed spawn of AI crew	
+	/*!
+	Delayed spawn of AI crew	
+	*/
 	void ReadyDelayed(IEntity owner)
 	{
 		// Some things needs to be done delayed
@@ -419,12 +422,26 @@ class SDRC_ChopperComp : ScriptComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
-	//Delayed group counting, flight init and activation	
+	/*!
+	Delayed group counting, flight init and activation	
+	*/
 	void ReadyDelayed_2(IEntity owner)
 	{		
 		//Collect groups in the helicopter 
 		SDRC_VehicleHelper.GroupFindAll(owner, m_aGroups);
 						
+		//Add fly destinations added to prefab to the array correctly.
+		array<ref SDRC_FlyPathPoint> flyDestinationsTemp = {};
+		foreach(SDRC_FlyPathPoint fpp : m_vFlyDestinations)
+		{
+			flyDestinationsTemp.Insert(fpp);
+		}
+		ResetDestinations();
+		foreach(SDRC_FlyPathPoint fpp : flyDestinationsTemp)
+		{
+			AddDestination(fpp.type, fpp.pt, fpp.value);
+		}		
+		
 		// Some things needs to be done delayed
 		if (m_bAutoStart)
 		{
@@ -460,6 +477,28 @@ class SDRC_ChopperComp : ScriptComponent
 		}
 		
 		SDRC_Log.Add("[SDRC_ChopperComp:InitDone] DONE!", LogLevel.DEBUG);
+		GetGame().GetCallqueue().CallLater(AddChopperToList, 1000, false, owner);	
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Add the chopper to chopper frame list
+	*/	
+	void AddChopperToList(IEntity owner)
+	{	
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (m_BaseGameMode)
+		{
+	 		if (m_BaseGameMode.chopperFrame)
+			{
+				m_BaseGameMode.chopperFrame.AddChopperToList(owner);
+				SDRC_Log.Add("[SDRC_ChopperComp:AddChopperToList] Chopper added to list.", LogLevel.DEBUG);
+			}
+			else
+			{
+				GetGame().GetCallqueue().CallLater(AddChopperToList, 1000, false, owner);	
+			}
+		}		
 	}	
 	
 	//------------------------------------------------------------------------------------------------	
@@ -946,6 +985,16 @@ class SDRC_ChopperComp : ScriptComponent
 		m_vSplinePoints.Clear();
 	}
 
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Clear the destination as a preparation for a completely new path
+	*/
+	private void ResetDestinations()
+	{
+		m_vFlyDestinations.Clear();
+	}	
+	
 	//------------------------------------------------------------------------------------------------	
 	// Fly point handling
 	//------------------------------------------------------------------------------------------------	

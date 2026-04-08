@@ -413,6 +413,10 @@ class SDRC_ChopperHelper
 				
 				int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
 				int pointsToGround = lastIdx - 1;
+				if (pointsToGround > 10)
+				{
+					pointsToGround = 10;
+				}
 				
 				//Check that point is within limits
 				SDRC_Log.Add("[SDRC_ChopperHelper:SetSplinePointsAboveGround] pointsToGround: " + pointsToGround, LogLevel.DEBUG);			

@@ -15,8 +15,64 @@ SCR_AIGroup : "{1F468430E5AB477E}Prefabs/Groups/BLUFOR/GreenBerets/Suppressed/Gr
 SCR_AIGroup : "{35681BE27C302FF5}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_SentryTeam.et" {
  coords 1733.93 38.999 2858.277
 }
+Vehicle Mi8MT_armed_gunship_HEDP_Patrol1 : "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et" {
+ components {
+  SDRC_ChopperComp "{66C5298D0A4A70BF}" {
+   m_vFlyDestinations {
+    SDRC_FlyPathPoint "{6910810F0FDF55FB}" {
+     pt 3350 0 1900
+    }
+    SDRC_FlyPathPoint "{69109D62C0369ECC}" {
+     pt 3100 0 1800
+    }
+    SDRC_FlyPathPoint "{6910810E6C15C3FA}" {
+     type WP_M_LAND_TROOPS
+     pt 3000 0 1760
+    }
+   }
+  }
+ }
+ coords 3158.636 78.079 2494.416
+ angles 0 167.662 0
+}
 GenericEntity : "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et" {
  coords 1816.888 39.997 2711.117
+}
+$grp Vehicle : "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et" {
+ Mi8MT_armed_gunship_HE_Patrol1 {
+  components {
+   SDRC_ChopperComp "{66C548F5776E7383}" {
+    m_vFlyDestinations {
+     SDRC_FlyPathPoint "{6910B3DF287414AE}" {
+      pt 2000 0 2500
+     }
+     SDRC_FlyPathPoint "{6910B3DFD29B43AB}" {
+      type WP_M_SUPPRESSIVE
+      pt 1700 0 2850
+     }
+    }
+   }
+  }
+  coords 2843.592 110.295 2009.619
+  angles 0 -43.246 0
+ }
+ Mi8MT_armed_gunship_HE_Patrol2 {
+  components {
+   SDRC_ChopperComp "{66C548F5776E7383}" {
+    m_vFlyDestinations {
+     SDRC_FlyPathPoint "{6910CD237D0F9AB1}" {
+      pt 2000 0 2100
+     }
+     SDRC_FlyPathPoint "{6910CD2360BD1EA3}" {
+      type WP_PATROL
+      pt 1900 0 2500
+     }
+    }
+   }
+  }
+  coords 2773.56 128.66 1876.853
+  angles 0 -43.246 0
+ }
 }
 $grp SCR_DestructibleBuildingEntity : "{CEB1F71D46592F3C}Prefabs/Structures/Airport/Hangar_01/Hangar_01.et" {
  {

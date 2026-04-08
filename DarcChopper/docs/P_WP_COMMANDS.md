@@ -1,6 +1,8 @@
 # Commands
 This documentation is for modders who want to command the choppers from script of via prefab. From script, use ``AddDestination()``.
 
+!!! THIS IS WIP !!!
+
 ## Tested (and should work)
 * WP_FLY : Fly, mormal flight pattern
 * WP_FLY_IMMEDIATELY : Fly, but remove all already added destinations

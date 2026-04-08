@@ -308,7 +308,7 @@ modded class SDRC_ChopperComp
 				AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
 				
 				int crewCount = SDRC_ChopperCrewHelper.CountCrew(GetOwner());
-				crewCount = 5 + crewCount * 4;	//Give N seconds per AI plus additional time
+				crewCount = 5 + crewCount * 4;	//Give N seconds per AI plus additional time				
 				
 				AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value : crewCount);
 				vector hoverPos = vector.Zero;
@@ -382,15 +382,6 @@ modded class SDRC_ChopperComp
 		{
 			m_vFlyDestinations.Insert(fpp);
 		}
-	}		
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Clear the destination as a preparation for a completely new path
-	*/
-	private void ResetDestinations()
-	{
-		m_vFlyDestinations.Clear();
 	}		
 
 	//------------------------------------------------------------------------------------------------	

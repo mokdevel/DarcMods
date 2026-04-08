@@ -35,7 +35,7 @@ modded class SCR_BaseGameMode
 				SDRC_SpawnHelper.SetPersistence(m_SDRC_RplLineDrawEntity, false);				
 				
 				SDRC_Log.Add("[SDRC_Chopper_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
-				GetGame().GetCallqueue().CallLater(StartChopperFrame, 5000, false);	
+				GetGame().GetCallqueue().CallLater(StartChopperFrame, 1000, false);	
 			}
 			else 
 			{
