@@ -11,8 +11,11 @@ This documentation is for modders who want to command the choppers from script o
 * WP_STOP_ENGINE : Helicopter engine is stopped. Does the action and goes to WAIT state. 
 * WP_ATTACK : Sets attack position to shoot at. This is performed once.
 * WP_SEARCH_DESTROY : Search for enemy by patroling an area. If enemy is found, attack the location.
+* WP_PATROL : Patrol around an area.
 
 ## Macro commands
+Assigning single macro command will perform a set of single commands. 
+
 * WP_M_LAND_TROOPS : Drop of troops to exact position, wait and leave
   * WP_LAND, WP_GET_OUT, WP_WAIT, WP_HOVER_UP, WP_RAISE
 * WP_M_LAND_TO_FREE_SPOT : Drop of troops, but search for empty spot. Stop engine.
@@ -25,7 +28,6 @@ This documentation is for modders who want to command the choppers from script o
 
 ## Internal commands
 * WP_UNDEFINED : Do not use
-* WP_PATROL : Patrol around an area
 * WP_LAND : Order chopper to do landing sequence
 * WP_WAIT : Wait, before moving to next state
 * WP_RAISE : Raise from ground to lowest flight height
