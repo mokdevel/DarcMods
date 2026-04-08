@@ -11,6 +11,7 @@ Helicopters can be spawned via GM and can be commanded. Currently available wayp
 * [Version history](./docs/VERSION.md)
 * [Creating a flying helicopter](./docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter)
 * [Parameters](./docs/P_HELICOPTER_FLY.md#sdrc_choppercomp-values)
+* [Commands](./docs/P_WP_COMMANDS.md)
 
 # Re-use in mods and game modes
 The flight model is done as a component (SDRC_ChopperComp). You are free to use it in yours - credits are appreciated. In theory you can add that to any helicopter and they will gain autonomous flying capabilities. For a short HowTo, see: [Creating a flying helicopter](./docs/P_HELICOPTER_FLY.md#creating-a-flying-helicopter).
@@ -94,15 +95,7 @@ NOTE: One of the assigned cargo crew will remain in the chopper. This is by desi
 
 In short: Getout will blindly accept the spot you ordered. In the middle forest? You'll probably have a bad time.
 
-This is a macro commmand and does a serie of actions:
-```
-WP_LAND, to destination
-WP_GET_OUT, commands AI to disembark
-WP_WAIT, wait for while to AIs time to get out. Time is dependent on crew count in cargo.
-WP_HOVER_UP, hover helicopter up to minimum fly height.
-WP_RAISE, order helicopter to fly forward for a while.
-```
-Once actions are done, we return to normal flight mode.
+This is a macro commmand and does a serie of actions. Once actions are done, we return to normal flight mode.
 
 ## <img src="../pics/wp_defend.png" width=18 height=18> Defend
 The helicopter will find a safe spot where to land near the position where the waypoint was positioned. If no safe area is found, normal flight will continue. Once landed, AIs will be ordered to get out and move 50m from the helicopter. All passengers including pilots will be ordered to get out. This is an extension to [Get Out waypoint](https://github.com/mokdevel/DarcMods/tree/main/DarcChopper#-get-out).
