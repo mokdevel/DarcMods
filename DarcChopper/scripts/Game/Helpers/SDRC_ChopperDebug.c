@@ -213,7 +213,7 @@ class SDRC_ChopperDebug
 
 		vector heliUp = owner.GetTransformAxis(1);
 		float angUp = SDRC_Math.GetAngleBetweenVectors(heliUp, vector.Up);
-				
+		
 		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_INFO))
 		{		
 			string debugText = 	//"Speedangle:" + angle * Math.RAD2DEG + "\n" +
@@ -332,6 +332,17 @@ class SDRC_ChopperDebug
 		vVel.Normalize();
 //		float currentSpeed = vVel.Length();
 		SDRC_ChopperDebug.DrawLine(origin, origin + (vVel * chopperComp.m_fSpeed), Color.GRAY_75);			
+		
+		//Draw raycast stuff
+		float rayLen = 100;
+		
+		float len = SDRC_Misc.RayCastXZ(origin, SDRC_ChopperHelper.GetDestinationForward(owner, rayLen), owner);
+		int color = Color.GREEN;
+		if (len < 1)
+		{
+			color = Color.RED;
+		}
+		SDRC_ChopperDebug.DrawLine(origin, SDRC_ChopperHelper.GetDestinationForward(owner, rayLen), color);		
 		
 		//Enemy stuff
 		

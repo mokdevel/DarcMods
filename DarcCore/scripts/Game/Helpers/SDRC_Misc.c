@@ -492,7 +492,10 @@ sealed class SDRC_Misc
 		gameMode.PauseGame(true, SCR_EPauseReason.MENU);		
 	}
 			
-	//----------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get platform name
+	*/
 	static string GetPlatformName()
 	{		
 		//GetGame().IsPlatformGameConsole())
@@ -500,6 +503,41 @@ sealed class SDRC_Misc
 		return SCR_Enum.GetEnumName(EPlatform, platform);
 	}
 	
+	//----------------------------------------------------------------------------------------------
+	/*!
+	Raycast from -> to position
+	\param traceStartPos Where trace starts
+	\param traceEndPos Where trace ends
+	\param exclude The entity to exclude - typically the object from where we trace
+	\returns value 0..1, percentage of a path traveled
+	*/
+	static float RayCast(vector traceStartPos, vector traceEndPos, IEntity exclude = null)
+	{
+		TraceParam param = new TraceParam();
+		{					
+			param.Start = traceStartPos;
+			param.End = traceEndPos;
+			param.Flags = TraceFlags.ENTS | TraceFlags.WORLD;
+			param.LayerMask = EPhysicsLayerPresets.Projectile;
+			if (exclude)
+			{
+				param.Exclude = exclude;
+			}
+		}					
+
+		BaseWorld world = GetGame().GetWorld();
+		float traceDistance = world.TraceMove(param, null);
+		
+		return traceDistance;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	static float RayCastXZ(vector traceStartPos, vector traceEndPos, IEntity exclude = null)
+	{
+		traceEndPos[1] = traceStartPos[1];
+		return RayCast(traceStartPos, traceEndPos, exclude);
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if a class is available. This can be used to check if a mod has been loaded by checking a class

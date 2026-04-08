@@ -250,7 +250,7 @@ class SDRC_ChopperHelper
 
 	//------------------------------------------------------------------------------------------------	
 	/*!	
-	Set a point between min/max *ABOVE* the surface
+	Set a point between min/max *ABOVE* the surface/object on surface
 	*/	
 	static float SetPointHeight(vector pos, float min, float max)
 	{
