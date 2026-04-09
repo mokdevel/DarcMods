@@ -82,9 +82,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 	//Misc
 	int minDistanceToMission;					//Distance to another mission. Two missions shall not be too close to each other.
 	int minDistanceToPlayer;					//Mission shall not spawn too close to a player.
-#ifdef NEW_VERSION_WIP
 	int maxDistanceToPlayer;					//Mission shall not spawn further than this to a player.
-#endif
 	bool showStaticMissionMarker;				//Show static mission marker
 	bool showDynamicMissionMarker;				//Show dynamic mission marker
 	bool showMissionDifficulty;					//Show mission difficulty on marker
@@ -136,9 +134,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 		
 		minDistanceToMission = SDRC_MISSION_MIN_DISTANCE;
 		minDistanceToPlayer = SDRC_PLAYER_MIN_DISTANCE;
-#ifdef NEW_VERSION_WIP
 		maxDistanceToPlayer = SDRC_PLAYER_MAX_DISTANCE;
-#endif	
 		showStaticMissionMarker = SDRC_MISSION_SHOW_STATIC_MARKER;
 		showDynamicMissionMarker = SDRC_MISSION_SHOW_DYNAMIC_MARKER;
 		showMissionDifficulty = SDRC_MISSION_SHOW_DIFFICULTY_MARKER;

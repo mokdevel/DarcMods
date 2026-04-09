@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-//#define SDRC_RELEASE
+#define SDRC_RELEASE
 
 #ifdef SDRC_RELEASE
 	const bool SHOW_DEBUG_BOOL = false;		//Controls if debug visuals are to be shown. Disable for DarcMissions release.
@@ -14,7 +14,7 @@ Stupid file to handle a few common variables accross multiple mods
 #endif
 //#define DEBUG_DO_NOT_CLEAR		//Leave old visual debug lines etc on restart
 //#define ENABLE_QRF				//Enable QRF functionality
-#define NEW_VERSION_WIP			//New functionality (..that affects jsons)
+//#define NEW_VERSION_WIP			//New functionality (..that affects jsons)
 //#define EXPERIMENTAL
 
 sealed class SDRC_Conf

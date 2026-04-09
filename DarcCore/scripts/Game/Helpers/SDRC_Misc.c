@@ -320,7 +320,7 @@ sealed class SDRC_Misc
 	Return surface height either on land or water.
 	\param position The position to find Y
 	\param doTrace If true, an additional ray cast is done to find the highest point on the location. For example, there could be a building.
-	\param traceHeight From which height the trace should start
+	\param traceHeightMod From which height the trace should start
 	*/	
 	static float GetSurfaceYWithWater(vector position, bool doTrace = false, float traceHeightMod = 200)
 	{

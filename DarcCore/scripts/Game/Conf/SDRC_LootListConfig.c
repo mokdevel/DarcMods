@@ -26,6 +26,11 @@
 	GEAR_BAG,				//Bags, backpacks, etc.. 
 	CLOTHING_HEADGEAR,		//Head Gear including hats
 	CLOTHING_UNIFORM,		//Jackets, pants, shirts, 
+
+	//Freedom Fighters specific items
+	FF_ITEMS_LOW,			//Low tier loot in FF
+	FF_ITEMS_MID,			//Mids tier loot in FF
+	FF_ITEMS_HIGH,			//High tier loot in FF
 */
 
 /*class SDRC_LootListConfig : SDRC_ListConfig

@@ -75,7 +75,6 @@ class SDRC_MissionPosHelper
 				return SDRC_EMissionError.PLAYER_TOO_CLOSE;
 			}
 
-#ifdef NEW_VERSION_WIP
 			//Check that players are not too far. 
 			//This check is not done for static missions.
 			if (baseGameMode.missionFrame.m_Config.maxDistanceToPlayer > -1)
@@ -87,7 +86,6 @@ class SDRC_MissionPosHelper
 				}
 			}
 		}
-#endif
 		
 		if (IsAnyMissionCloseToPos(pos, distanceToMission))
 		{
