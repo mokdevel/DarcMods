@@ -62,7 +62,7 @@ This is the case for example with Tactical Flava. The characters/groups are of f
 
 # Loot lists
 ## Loot list names (id)
-Currently available names are below. For a complete list, please check [SDRC_LootListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Conf/SDRC_LootListJsonApi.c)
+Currently available names are below. For a complete list, please check [SDRC_LootListConfig.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Conf/SDRC_LootListConfig.c)
 ```
 WEAPON_RIFLE : A random (assault) rifle from any faction.
 WEAPON_RIFLE_BIG : A random "large rifle" from any faction. These for example SVDs and bolt action rifles
@@ -84,11 +84,16 @@ GEAR_UNIFORM : Jackets, pants
 GEAR_BAG : Jackets, pants
 CLOTHING_HEADGEAR : Head Gear including hats
 CLOTHING_UNIFORM : Jackets, pants, shirts, 
+
+//Freedom Fighters specific items
+FF_ITEMS_LOW,			//Low tier loot in FF
+FF_ITEMS_MID,			//Mids tier loot in FF
+FF_ITEMS_HIGH,			//High tier loot in FF
 ```
 
 # Enemy lists
 ## Enemy list names (id)
-Currently available names are below. For a complete list, please check [SCR_DC_EnemyListJsonApi.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Conf/SDRC_EnemyListJsonApi.c)
+Currently available names are below. For a complete list, please check [SDRC_EnemyListConfig.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Conf/SDRC_EnemyListConfig.c)
 ```
 //Groups
 G_LIGHT : Small arms units like rifle men.
