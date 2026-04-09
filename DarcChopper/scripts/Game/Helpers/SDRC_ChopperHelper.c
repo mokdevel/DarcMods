@@ -269,6 +269,11 @@ class SDRC_ChopperHelper
 	*/	
 	static void SetFlightPointHeight(IEntity owner)
 	{
+		if (!owner)
+		{
+			return;
+		}
+		
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)
 		{
@@ -356,6 +361,11 @@ class SDRC_ChopperHelper
 	*/	
 	static void SetSplinePointsAboveGround(IEntity owner, int skipCount = 0)
 	{	
+		if (!owner)
+		{
+			return;
+		}
+		
 		vector origin = owner.GetOrigin();
 		
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));

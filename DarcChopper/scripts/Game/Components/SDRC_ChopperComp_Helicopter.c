@@ -23,12 +23,15 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		
 		//Rotor force multipliers
 		rotorForceMulUp = 1.3 * 10;
-		
+
+		//Obstacle awareness
+		rayLenFront = 400;
+				
 		//Waypoint values
 		wpSteepAngle = 60;
 														
 		destinationForwardInitial = 400;
-		destinationForward = 300;
+		destinationForward = 200;
 	}
 }
 

@@ -21,11 +21,13 @@ class SDRC_ChopperFrame
 		s_Instance = this;
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void AddChopperToList(IEntity chopper)
 	{
 		m_aChoppers.Insert(chopper);
 	}
 
+	//------------------------------------------------------------------------------------------------
 	void RemoveChopperFromList(IEntity chopper)
 	{
 		int idx = m_aChoppers.Find(chopper);
@@ -35,6 +37,7 @@ class SDRC_ChopperFrame
 		}
 	}
 		
+	//------------------------------------------------------------------------------------------------
 	int GetChopperCount()
 	{
 		//Check that the choppers still exist
@@ -50,6 +53,7 @@ class SDRC_ChopperFrame
 		return m_aChoppers.Count();
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	IEntity GetChopperEntity(int index)
 	{
 		if (m_aChoppers.IsEmpty())
@@ -60,6 +64,7 @@ class SDRC_ChopperFrame
 		return m_aChoppers[index];
 	}	
 	
+	//------------------------------------------------------------------------------------------------
 	void GetAllChopperEntity(out array<IEntity> choppers)
 	{
 		choppers.Copy(m_aChoppers);		

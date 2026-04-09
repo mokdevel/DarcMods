@@ -6,18 +6,19 @@
 enum SDRC_EFlyWayPointType
 {
 	WP_UNDEFINED,				//0 
-	WP_FLY,						//1 - Fly, mormal flight pattern
-	WP_FLY_IMMEDIATELY,			//2 - Fly, but remove all already added destinations
-	WP_FLY_AWAY,				//3 - Fly away as a last move
-	WP_FLY_AWAY_IMMEDIATELY,	//4 - Fly away immediately removing the previous destinations
-	WP_PATROL,					//5 - Patrol around an area
-	WP_LAND,					//6 - 
-	WP_WAIT,					//7 - 
-	WP_RAISE,					//8 - 
-	WP_HOVER,					//9 - 
-	WP_GET_OUT,					//10 - 
-	WP_END,						//11 - 
-	WP_DESPAWN,					//12 - 
+	WP_FLY,						//   - Fly, mormal flight pattern
+	WP_FLY_IMMEDIATELY,			//   - Fly, but remove all already added destinations
+	WP_FLY_AWAY,				//   - Fly away as a last move
+	WP_FLY_AWAY_IMMEDIATELY,	//   - Fly away immediately removing the previous destinations
+	WP_PATROL,					//   - Patrol around an area
+	WP_LAND,					//   - 
+	WP_WAIT,					//   - 
+	WP_WAIT_GETOUT,				//   - Wait during get out. Sets the time and goes to WAIT
+	WP_RAISE,					//   - 
+	WP_HOVER,					//   - 
+	WP_GET_OUT,					//   - 
+	WP_END,						//   - 
+	WP_DESPAWN,					//   - 
 	
 	//One shot commands
 	WP_HOVER_UP,				//   - Does the action and goes to HOVER state
@@ -50,6 +51,7 @@ enum SDRC_EHeliState
 	
 	ON_GROUND,				//One frame state for touch down
 	DESTROYED,
+	DESPAWN,
 }
 
 enum SDRC_EHeliCargoSeatFill

@@ -5,6 +5,156 @@
 modded class SDRC_ChopperComp
 {
 	//------------------------------------------------------------------------------------------------	
+	// Helicopter setup
+	//------------------------------------------------------------------------------------------------	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Do setup. This is delayed in case another mod has disabled autostart
+	*/	
+	override void Setup(IEntity owner)
+	{
+		if (m_bSetupDone)
+		{
+			return;
+		}
+		
+		m_bSetupDone = true;
+		
+		SetupType(owner);
+		
+		if (m_bAutoStart)
+		{					
+			Ready(owner);
+		}
+		
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (m_BaseGameMode)
+		{
+	 		if (m_BaseGameMode.chopperFrame)
+			{
+				m_BaseGameMode.chopperFrame.AddChopperToList(owner);
+			}
+		}		
+		
+		//IMPORTANT: In a mod, you need to call Ready() yourself after Setup()!!!
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Once all init things are done, activate the component after a small delay
+	*/	
+	void Ready(IEntity owner)
+	{
+		SDRC_Log.Add("[SDRC_ChopperComp:Ready] Called..", LogLevel.DEBUG);
+		
+		//Set ready in a few seconds
+		GetGame().GetCallqueue().CallLater(ReadyDelayed, TIME_DELAY_READY * 1000, false, owner);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Delayed spawn of AI crew	
+	*/
+	void ReadyDelayed(IEntity owner)
+	{
+		// Some things needs to be done delayed
+		if (m_bAutoStart)
+		{
+			//Spawn crew 
+			if (!m_bUnpiloted)
+			{
+				int crewCount = SDRC_ChopperCrewHelper.SpawnCrew(owner, m_CargoSeatFill, m_aCrew, m_sFaction, m_AISkill, m_AIPerception);
+				SDRC_Log.Add("[SDRC_ChopperComp] Crew count: " + crewCount, LogLevel.DEBUG);
+			}
+		}		
+		
+		GetGame().GetCallqueue().CallLater(ReadyDelayed_2, TIME_DELAY_READY * 1000, false, owner);		
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Delayed group counting, flight init and activation	
+	*/
+	void ReadyDelayed_2(IEntity owner)
+	{
+		if (!owner)
+		{
+			return;
+		}
+		
+		//Collect groups in the helicopter 
+		SDRC_VehicleHelper.GroupFindAll(owner, m_aGroups);
+						
+		//Add fly destinations added to prefab to the array correctly.
+		array<ref SDRC_FlyPathPoint> flyDestinationsTemp = {};
+		foreach(SDRC_FlyPathPoint fpp : m_vFlyDestinations)
+		{
+			flyDestinationsTemp.Insert(fpp);
+		}
+		ResetDestinations();
+		foreach(SDRC_FlyPathPoint fpp : flyDestinationsTemp)
+		{
+			AddDestination(fpp.type, fpp.pt, fpp.value);
+		}		
+		
+		// Some things needs to be done delayed
+		if (m_bAutoStart)
+		{
+			//Init flight path
+			InitFlight(owner);
+		}
+
+		SDRC_ChopperDebug.DrawDebugPaths(owner);
+		
+		if (owner)	//In case the owner was deleted before we ended up here
+		{
+			SetEventMask(owner, EntityEvent.FRAME);
+			//SetEventMask(owner, EntityEvent.FRAME | EntityEvent.FIXEDFRAME);
+			Activate(owner);
+			
+			GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000, false, owner);
+		}
+	}		
+	
+	//------------------------------------------------------------------------------------------------	
+	// Helicopter deletion and despawn
+	//------------------------------------------------------------------------------------------------	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Return instance to component
+	*/
+	override void OnDelete(IEntity owner)
+	{
+		//TBD: Remove from helilist
+		
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (m_BaseGameMode)
+		{
+	 		if (m_BaseGameMode.chopperFrame)
+			{
+				m_BaseGameMode.chopperFrame.RemoveChopperFromList(owner);
+			}
+		}		
+		
+		SDRC_Log.Add("[SDRC_ChopperComp:OnDelete] Deleting: " + owner, LogLevel.DEBUG);
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Do despawn related things
+	*/	
+	override void DeSpawn(IEntity owner)
+	{
+		//TBD: Despawn AI
+		
+		Deactivate(owner);
+		SDRC_Log.Add("[SDRC_ChopperComp:DeSpawn] Despawning: " + owner, LogLevel.DEBUG);
+		delete owner;
+	}
+	
+	//------------------------------------------------------------------------------------------------	
 	// Helicopter settings
 	//------------------------------------------------------------------------------------------------	
 
@@ -256,6 +406,8 @@ modded class SDRC_ChopperComp
 			}
 			
 			//These just fall through
+			case SDRC_EFlyWayPointType.WP_WAIT:
+			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
 			case SDRC_EFlyWayPointType.WP_GET_OUT:			//Handled in HandleState()
 			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
 			case SDRC_EFlyWayPointType.WP_LAND:
@@ -306,11 +458,7 @@ modded class SDRC_ChopperComp
 			{
 				AddDestination(SDRC_EFlyWayPointType.WP_LAND, destination);
 				AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
-				
-				int crewCount = SDRC_ChopperCrewHelper.CountCrew(GetOwner());
-				crewCount = 5 + crewCount * 4;	//Give N seconds per AI plus additional time				
-				
-				AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value : crewCount);
+				AddDestination(SDRC_EFlyWayPointType.WP_WAIT_GETOUT);
 				vector hoverPos = vector.Zero;
 				hoverPos[1] = m_fFlyHeightLow;
 				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 8);
@@ -371,6 +519,13 @@ modded class SDRC_ChopperComp
 	*/
 	private void AddDestinationPoint(SDRC_EFlyWayPointType type, vector destination, float value, int index = -1)
 	{
+		//If height is 0, make it to current heli height
+		if (destination[1] == 0)
+		{
+			vector origin = GetOwner().GetOrigin();
+			destination[1] = origin[1];
+		}
+		
 		SDRC_FlyPathPoint fpp = new SDRC_FlyPathPoint();
 		fpp.Set(type, destination, value);				
 		
@@ -536,10 +691,9 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_DESPAWN:
 			{
-				SetState(SDRC_EHeliState.DESTROYED);
+				SetState(SDRC_EHeliState.DESPAWN);
 				m_vSplinePoints.Clear();
 				isRemoveDestination = true;
-				//TBD: DESPAWN!!
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_GET_OUT:
@@ -554,6 +708,16 @@ modded class SDRC_ChopperComp
 				//Just wait
 				SetState(SDRC_EHeliState.WAIT);
 				SetTimeInState(m_vFlyDestinations[0].value); 
+				isRemoveDestination = true;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
+			{
+				//Wait for disembark. Time is dependent of crew count
+				SetState(SDRC_EHeliState.WAIT);
+				int crewCount = SDRC_ChopperCrewHelper.CountCrew(GetOwner());
+				int time = 5 + crewCount * 4;	//Give N seconds per AI plus additional time				
+				SetTimeInState(time); 
 				isRemoveDestination = true;
 				break;
 			}
@@ -692,5 +856,30 @@ modded class SDRC_ChopperComp
 				SetNextState(owner);
 			}
 		}
-	}		
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	// Misc
+	//------------------------------------------------------------------------------------------------	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Add the chopper to chopper frame list
+	*/	
+	override void AddChopperToList(IEntity owner)
+	{	
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (m_BaseGameMode)
+		{
+	 		if (m_BaseGameMode.chopperFrame)
+			{
+				m_BaseGameMode.chopperFrame.AddChopperToList(owner);
+				SDRC_Log.Add("[SDRC_ChopperComp:AddChopperToList] Chopper added to list.", LogLevel.DEBUG);
+			}
+			else
+			{
+				GetGame().GetCallqueue().CallLater(AddChopperToList, 1000, false, owner);	
+			}
+		}		
+	}			
 }

@@ -52,6 +52,9 @@ class SDRC_ChopperParams
 	//Rotor force multipliers
 	float rotorForceMulUp = 1.3 * 10;				//Rotor force multiplier in velocity counting. Bigger value makes the heli react faster to up/down movement but also starts stutter.
 	
+	//Obstacle awareness
+	float rayLenFront;								//Length of the ray to detect obstacles in front of heli
+	
 	//Waypoint values
 	float wpSteepAngle = 60;						//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
 													//If chopper destination makes a too steep turn, we will add a few additional points.
@@ -348,117 +351,6 @@ class SDRC_ChopperComp : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	/*!	
-	Return instance to component
-	*/
-	override void OnDelete(IEntity owner)
-	{
-		Deactivate(owner);
-		SDRC_Log.Add("[SDRC_ChopperComp:OnDelete] Deleting: " + owner, LogLevel.DEBUG);
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Do setup. This is delayed in case another mod has disabled autostart
-	*/	
-	void Setup(IEntity owner)
-	{
-		if (m_bSetupDone)
-		{
-			return;
-		}
-		
-		m_bSetupDone = true;
-		
-		SetupType(owner);
-		
-		if (m_bAutoStart)
-		{					
-			Ready(owner);
-		}
-		
-		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
-		if (m_BaseGameMode)
-		{
-	 		if (m_BaseGameMode.chopperFrame)
-			{
-				m_BaseGameMode.chopperFrame.AddChopperToList(owner);
-			}
-		}		
-		
-		//IMPORTANT: In a mod, you need to call Ready() yourself after Setup()!!!
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Once all init things are done, activate the component after a small delay
-	*/	
-	void Ready(IEntity owner)
-	{
-		SDRC_Log.Add("[SDRC_ChopperComp:Ready] Called..", LogLevel.DEBUG);
-		
-		//Set ready in a few seconds
-		GetGame().GetCallqueue().CallLater(ReadyDelayed, TIME_DELAY_READY * 1000, false, owner);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Delayed spawn of AI crew	
-	*/
-	void ReadyDelayed(IEntity owner)
-	{
-		// Some things needs to be done delayed
-		if (m_bAutoStart)
-		{
-			//Spawn crew 
-			if (!m_bUnpiloted)
-			{
-				int crewCount = SDRC_ChopperCrewHelper.SpawnCrew(owner, m_CargoSeatFill, m_aCrew, m_sFaction, m_AISkill, m_AIPerception);
-				SDRC_Log.Add("[SDRC_ChopperComp] Crew count: " + crewCount, LogLevel.DEBUG);
-			}
-		}		
-		
-		GetGame().GetCallqueue().CallLater(ReadyDelayed_2, TIME_DELAY_READY * 1000, false, owner);		
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Delayed group counting, flight init and activation	
-	*/
-	void ReadyDelayed_2(IEntity owner)
-	{		
-		//Collect groups in the helicopter 
-		SDRC_VehicleHelper.GroupFindAll(owner, m_aGroups);
-						
-		//Add fly destinations added to prefab to the array correctly.
-		array<ref SDRC_FlyPathPoint> flyDestinationsTemp = {};
-		foreach(SDRC_FlyPathPoint fpp : m_vFlyDestinations)
-		{
-			flyDestinationsTemp.Insert(fpp);
-		}
-		ResetDestinations();
-		foreach(SDRC_FlyPathPoint fpp : flyDestinationsTemp)
-		{
-			AddDestination(fpp.type, fpp.pt, fpp.value);
-		}		
-		
-		// Some things needs to be done delayed
-		if (m_bAutoStart)
-		{
-			//Init flight path
-			InitFlight(owner);
-		}
-
-		SDRC_ChopperDebug.DrawDebugPaths(owner);
-		
-		SetEventMask(owner, EntityEvent.FRAME);
-		//SetEventMask(owner, EntityEvent.FRAME | EntityEvent.FIXEDFRAME);
-		Activate(owner);
-		
-		GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000, false, owner);
-	}	
-	
-	//------------------------------------------------------------------------------------------------
 	/*!
 	Set the helicopter to normal state
 	*/	
@@ -479,28 +371,7 @@ class SDRC_ChopperComp : ScriptComponent
 		SDRC_Log.Add("[SDRC_ChopperComp:InitDone] DONE!", LogLevel.DEBUG);
 		GetGame().GetCallqueue().CallLater(AddChopperToList, 1000, false, owner);	
 	}	
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Add the chopper to chopper frame list
-	*/	
-	void AddChopperToList(IEntity owner)
-	{	
-		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
-		if (m_BaseGameMode)
-		{
-	 		if (m_BaseGameMode.chopperFrame)
-			{
-				m_BaseGameMode.chopperFrame.AddChopperToList(owner);
-				SDRC_Log.Add("[SDRC_ChopperComp:AddChopperToList] Chopper added to list.", LogLevel.DEBUG);
-			}
-			else
-			{
-				GetGame().GetCallqueue().CallLater(AddChopperToList, 1000, false, owner);	
-			}
-		}		
-	}	
-	
+
 	//------------------------------------------------------------------------------------------------	
 	// Flight model functionality
 	//------------------------------------------------------------------------------------------------	
@@ -508,6 +379,12 @@ class SDRC_ChopperComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	override void EOnFrame(IEntity owner, float timeSlice)
 	{
+		if (m_eHeliState == SDRC_EHeliState.DESPAWN)
+		{
+			DeSpawn(owner);
+			return;			
+		}
+		
 		if (m_bInInit)
 		{
 			//If the chopper is damaged, init is considered done.
@@ -830,7 +707,7 @@ class SDRC_ChopperComp : ScriptComponent
 		float heliHeightFromGround = m_vOrigin[1] - 3;				//Move the origin slightly below the spline
 				
 		//The normal way to slowly go towards the spline
-		int bigMul = 60;	//was 25
+		int bigMul = 60;
 		
 		switch (m_eHeliState)
 		{
@@ -853,15 +730,22 @@ class SDRC_ChopperComp : ScriptComponent
 		{
 			//We're below the spline, let's raise bit more agressively
 			if (heliHeightFromGround < splineHeightFromGround)
-			{
+			{				
 				bigMul = 200;
 			}
 					
 			//Modify if we're too close to the ground, raise very aggressively
 			if (m_fAltitude < m_fFlyHeightLow)
-			{
+			{				
 				bigMul = 300;
-			}				
+			}
+
+			//If we're close to an object infront of us, raise			
+			float rayLen = SDRC_Misc.RayCastXZ(owner.GetOrigin(), SDRC_ChopperHelper.GetDestinationForward(owner, params.rayLenFront), owner);			
+			if (rayLen < 1)
+			{
+				bigMul = bigMul + 300 * (2 - rayLen)
+			}			
 		}
 		
 		if (splineHeightFromGround <= 0)
@@ -878,6 +762,13 @@ class SDRC_ChopperComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Create the initial flight path 
+	\param owner The chopper entity
+	\param destination The first destination to fly to.if
+	
+	The first destination priority is:
+	- Parameter destination if assigned
+	- The first fly destination if assigned
+	- Random point in front of heli, if nothing is pre defined
 	*/
 	void InitFlight(IEntity owner, vector destination = vector.Zero)
 	{
@@ -897,13 +788,22 @@ class SDRC_ChopperComp : ScriptComponent
 			AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 5);
 		} */
 
-		if (destination == vector.Zero)
+		//If a fly destination has been assigned, use it
+		if ( (!m_vFlyDestinations.IsEmpty()) && (destination == vector.Zero) )
 		{
-			destination = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial);
-			//Make sure we're on proper flight height.
-			destination[1] = SDRC_ChopperHelper.SetPointHeight(destination, m_fFlyHeightLow, m_fFlyHeightHigh); 
+			destination = m_vFlyDestinations[0].pt;
+		}		
+		else 
+		{		
+			//If no destination has been assigned, create a random one.
+			if (destination == vector.Zero)
+			{
+				destination = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial);
+				//Make sure we're on proper flight height.
+				destination[1] = SDRC_ChopperHelper.SetPointHeight(destination, m_fFlyHeightLow, m_fFlyHeightHigh); 
+			}
+			AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
 		}
-		AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
 
 		SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Chopper initial position: " + owner.GetOrigin(), LogLevel.DEBUG);
 		
@@ -1030,7 +930,7 @@ class SDRC_ChopperComp : ScriptComponent
 		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 255, 0), 2.0, m_sDid);
 		
 		//Add destinations .. if any
-		int lastIdx = -1;
+		int lastIdx = 0;
 		
 		//Generate a random destination point if needed
 		if (m_vFlyDestinations.IsEmpty())
@@ -1038,9 +938,23 @@ class SDRC_ChopperComp : ScriptComponent
 			SDRC_ChopperHelper.GenerateWayPoint(owner, pos);
 		}
 		
+		bool firstDestinationHandled = false;
+		bool oneShotHandled = false;
+		
 		//Handle destinations
 		foreach (int idx, SDRC_FlyPathPoint flyDestination : m_vFlyDestinations)
 		{		
+			//FLY points are handled in a serie. Others one at a time.
+			if (flyDestination.type != SDRC_EFlyWayPointType.WP_FLY)
+			{			
+				oneShotHandled = true;
+				
+				if (firstDestinationHandled)
+				{
+					break;
+				}
+			}
+			
 			//SDRC_DebugHelper.AddDebugPos(flyDestination.pt, ARGB(32, 255, 128, 64), 1.0, m_sDid, 50);
 			
 			switch (flyDestination.type)
@@ -1085,7 +999,6 @@ class SDRC_ChopperComp : ScriptComponent
 			}
 			
 			AddFlyPathPoint(flyDestination.pt, flyDestination.type);
-			lastIdx = idx;
 			
 			switch (flyDestination.type)
 			{
@@ -1120,12 +1033,20 @@ class SDRC_ChopperComp : ScriptComponent
 					break;
 				}
 			}
-									
-			//FLY points are handled in a serie. Others one at a time.
+
+			lastIdx = idx;
+			firstDestinationHandled = true;
+						
+			if (oneShotHandled)
+			{
+				break;
+			}
+			
+/*			//FLY points are handled in a serie. Others one at a time.
 			if (flyDestination.type != SDRC_EFlyWayPointType.WP_FLY)
 			{				
 				break;
-			}
+			}*/
 		}
 
 		//If only two points, add a mid point
@@ -1292,6 +1213,11 @@ class SDRC_ChopperComp : ScriptComponent
 	void TypeEOnFrame(IEntity owner, float timeSlice) {}
 		
 	//------------------------------------------------------------------------------------------------	
+	// Helicopter setup - defined in modded class
+	//------------------------------------------------------------------------------------------------	
+	void Setup(IEntity owner) {}
+	void DeSpawn(IEntity owner) {}
+	//------------------------------------------------------------------------------------------------	
 	// State Handling  - defined in modded class
 	//------------------------------------------------------------------------------------------------	
 	private void HandleState(IEntity owner, float timeSlice) {}
@@ -1299,7 +1225,7 @@ class SDRC_ChopperComp : ScriptComponent
 	private void HandleBehaviour(IEntity owner) {}
 	private void SetNextState(IEntity owner, SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.WP_UNDEFINED, bool allowRemove = true) {}
 	//------------------------------------------------------------------------------------------------	
-	// Damage settings
+	// Damage settings - defined in modded class
 	//------------------------------------------------------------------------------------------------	
 	bool IsStillWorking(IEntity owner, bool inInit) {}
 	void GetHealthScaled(IEntity owner, out float health) {}
@@ -1321,4 +1247,8 @@ class SDRC_ChopperComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------	
 	void SetHeli(float speedMin, float speedMax, float flyHeightLow, float flyHeightHigh, float distanceLow, float distanceHigh) {}
 	void SetEngine(bool engine, float throttle, float rotorForce0, float rotorForce1) {}
+	//------------------------------------------------------------------------------------------------	
+	// Misc - defined in modded class
+	//------------------------------------------------------------------------------------------------	
+	void AddChopperToList(IEntity owner) {}
 }

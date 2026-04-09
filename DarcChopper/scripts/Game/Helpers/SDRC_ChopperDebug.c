@@ -161,6 +161,10 @@ class SDRC_ChopperDebug
 	//------------------------------------------------------------------------------------------------
 	static void DrawDebugPaths(IEntity owner)
 	{
+		if (!owner)
+		{
+			return;
+		}
 //		if (!m_bShowDebug)
 /*		if (!SDRC_Conf.SHOW_DEBUG)
 		{
@@ -334,7 +338,7 @@ class SDRC_ChopperDebug
 		SDRC_ChopperDebug.DrawLine(origin, origin + (vVel * chopperComp.m_fSpeed), Color.GRAY_75);			
 		
 		//Draw raycast stuff
-		float rayLen = 100;
+		float rayLen = chopperComp.params.rayLenFront;
 		
 		float len = SDRC_Misc.RayCastXZ(origin, SDRC_ChopperHelper.GetDestinationForward(owner, rayLen), owner);
 		int color = Color.GREEN;
