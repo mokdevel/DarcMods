@@ -12,6 +12,10 @@ This documentation is for modders who want to command the choppers from script o
 * WP_ATTACK : Sets attack position to shoot at. This is performed once.
 * WP_SEARCH_DESTROY : Search for enemy by patroling an area. If enemy is found, attack the location.
 * WP_PATROL : Patrol around an area.
+* WP_WAIT : Wait, before moving to next state
+* WP_WAIT_GETOUT : Same as WP_WAIT, but time set is dependent on crew count
+* WP_END : Stop running SDRC_ChopperComp and let AR handle everything
+* WP_DESPAWN : Despawn the helicopter
 
 ## Macro commands
 Assigning single macro command will perform a set of single commands. 
@@ -29,12 +33,9 @@ Assigning single macro command will perform a set of single commands.
 ## Internal commands
 * WP_UNDEFINED : Do not use
 * WP_LAND : Order chopper to do landing sequence
-* WP_WAIT : Wait, before moving to next state
 * WP_RAISE : Raise from ground to lowest flight height
 * WP_HOVER : Hover at a certain altitude
 * WP_GET_OUT : Order AI to get out from the chopper
-* WP_END : Do end actions
-* WP_DESPAWN : Despawn the chopper
 * WP_HOVER_UP : Does the action and goes to HOVER state
 * WP_M_RESET : Reset destinations
 * WP_M_TESTING : Just for testing
