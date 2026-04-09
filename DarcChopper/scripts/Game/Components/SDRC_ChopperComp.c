@@ -703,18 +703,15 @@ class SDRC_ChopperComp : ScriptComponent
 			return;		
 		}
 
-		float splineHeightFromGround = m_vSplinePointBelow[1];		
-		float heliHeightFromGround = m_vOrigin[1] - 3;				//Move the origin slightly below the spline
-				
 		//The normal way to slowly go towards the spline
-		int bigMul = 60;
+		int bigMul = 30;
 		
 		switch (m_eHeliState)
 		{
 			case SDRC_EHeliState.HOVER:
 			{
 				//In HOVER state, do movemements slow
-				bigMul = 14;
+				bigMul = 20;
 				break;
 			}		
 			case SDRC_EHeliState.RAISE:
@@ -724,35 +721,51 @@ class SDRC_ChopperComp : ScriptComponent
 				break;
 			}
 		}
-				
+
+		float belowSplineMul = 1;
+		float belowFlyHeightLowMul = 1;
+		float distanceFromSplineMul = 1;
+		float rayLenMul = 1;
+
+		float splineHeightFromGround = m_vSplinePointBelow[1];		
+		float heliHeightFromGround = m_vOrigin[1] - 10;				//Move the origin slightly below the spline
+/*		if (splineHeightFromGround <= 0)
+		{
+			splineHeightFromGround = 0.01;
+		}*/
+		if (heliHeightFromGround <= 0)
+		{
+			heliHeightFromGround = 0.01;
+		}
+
+					
 		//In fly state, react to low flying
 		if (m_eHeliState == SDRC_EHeliState.FLY)
 		{
 			//We're below the spline, let's raise bit more agressively
-			if (heliHeightFromGround < splineHeightFromGround)
+/*			if (heliHeightFromGround < splineHeightFromGround)
 			{				
-				bigMul = 200;
+				belowSplineMul = (m_fFlyHeightLow - m_fAltitude) / m_fAltitude;
 			}
 					
-			//Modify if we're too close to the ground, raise very aggressively
+/*			//Modify if we're too close to the ground, raise very aggressively
 			if (m_fAltitude < m_fFlyHeightLow)
 			{				
-				bigMul = 300;
-			}
+				belowFlyHeightLowMul = (m_fFlyHeightLow - m_fAltitude) / m_fAltitude;
+			}*/
 
 			//If we're close to an object infront of us, raise			
 			float rayLen = SDRC_Misc.RayCastXZ(owner.GetOrigin(), SDRC_ChopperHelper.GetDestinationForward(owner, params.rayLenFront), owner);			
 			if (rayLen < 1)
 			{
-				bigMul = bigMul + 300 * (2 - rayLen)
-			}			
+				rayLenMul = 1 + 10 * (1 - rayLen);
+			}
 		}
 		
-		if (splineHeightFromGround <= 0)
-		{
-			splineHeightFromGround = 0.01;
-		}
-		m_fRotorForceMultiplier = 0 - (bigMul * ( (heliHeightFromGround - splineHeightFromGround) / splineHeightFromGround ));	
+		//distanceFromSplineMul = (heliHeightFromGround - splineHeightFromGround) / splineHeightFromGround;
+		distanceFromSplineMul = (splineHeightFromGround - heliHeightFromGround) / heliHeightFromGround;
+		
+		m_fRotorForceMultiplier = bigMul * belowSplineMul * belowFlyHeightLowMul * distanceFromSplineMul * rayLenMul;
 	}
 			
 	//------------------------------------------------------------------------------------------------	
@@ -1109,7 +1122,7 @@ class SDRC_ChopperComp : ScriptComponent
 		float y = m_vOrigin[1] - SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, -0.1);
 		if (y < 0)
 		{
-			y = 0;
+			y = 0.001;	//Do not set to zero as this is used in some division calculations
 		}
 		return y;
 	}
