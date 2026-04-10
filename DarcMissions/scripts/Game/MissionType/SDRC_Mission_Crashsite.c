@@ -73,7 +73,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 			{
 				pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Crashsite.general.pos, m_DC_Crashsite.general.size, m_DC_Crashsite.general.locationTypes);
 				//pos = SDRC_MissionHelper.FindMissionPosWithDistances(m_Config.distanceToMission, m_Config.distanceToPlayer);					
-				if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: (IsRequested() || IsStatic()), ignoreNonValidArea: IsRequested()) != SDRC_EMissionError.NONE)
+				if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: (IsRequested() || IsStatic()), isRequested: IsRequested()) != SDRC_EMissionError.NONE)
 				{
 					pos = "0 0 0";
 				}
@@ -89,26 +89,33 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 			}
 		}
 
+		//Select origin for flight
+		for (int i = 0; i < 10; i++)
+		{
+			vector orig = SDRC_Misc.GetCoordinatesOnCircle(pos, SDRC_Misc.RandomInt(1000, 2500), SDRC_Misc.RandomInt(0, 360));
+			
+			if (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, 1500 ))
+			{
+				m_fDistance = vector.DistanceXZ(pos, m_vPosOrigin);
+				m_vPosOrigin = orig;
+				break;
+			}
+		}
+
 		//No suitable location found.
-		if (pos == "0 0 0")
+		if ( (pos == "0 0 0") || (m_vPosOrigin == "0 0 0") )
 		{				
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
+
+		//Set origin values and angle
+		m_vPosOrigin[1] = SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin) + SDRC_Misc.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[1]);	//Adjust flight height								
+		m_fAngle = SDRC_Math.VectorToAngle(vector.Direction(m_vPosOrigin, pos));
 		
+		SDRC_Log.Add("[SDRC_Mission_Crashsite] " +  GetId() + " : Helicopter flying from " + m_vPosOrigin + " to " + pos + ". Angle: " + m_fAngle + ". Distance: " + m_fDistance, LogLevel.DEBUG);
+				
 		//Set common parameters
-		{		
-			m_vPosOrigin = SDRC_Misc.GetRandomWorldEdgePosition(0.8);
-			m_vPosOrigin[1] = SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin) + SDRC_Misc.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[1]);	//Adjust flight height
-			
-			vector direction = vector.Direction(m_vPosOrigin, pos);
-			m_fAngle = SDRC_Math.VectorToAngle(direction);
-			
-			m_fDistance = vector.DistanceXZ(pos, m_vPosOrigin);
-			
-			SDRC_Log.Add("[SDRC_Mission_Crashsite] " +  GetId() + " : Helicopter flying from " + m_vPosOrigin + " to " + pos + ". Angle: " + m_fAngle + ". Distance: " + m_fDistance, LogLevel.DEBUG);
-		}			
-		
 		SetPos(m_vPosOrigin, pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Crashsite.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);

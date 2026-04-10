@@ -88,7 +88,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		}
 
 		//If pos has been set, we blindly accept it. Do basic checking for pos.
-		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: (IsRequested() || IsStatic()), ignoreNonValidArea: IsRequested() ) != SDRC_EMissionError.NONE)
+		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: (IsRequested() || IsStatic()), isRequested: IsRequested() ) != SDRC_EMissionError.NONE)
 		{
 			pos = "0 0 0";
 		}

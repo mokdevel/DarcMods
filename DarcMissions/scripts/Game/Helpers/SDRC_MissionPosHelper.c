@@ -17,20 +17,22 @@ class SDRC_MissionPosHelper
 	\param onlyBasicChecks Check only basic things
 	
 	Checks are done for positions:
-	- Basic checks:
+	- Basic checks for all:
 		- not in water	
 		- not under map
-	- Full checks:	
+	- Test for Static missions + Dynamic missions
 		- not in a nonValidArea
 		- no players nearby
+	- Full checks for Dynamic missions
 		- no players far away
 		- no missions nearby
 	*/	
-	static SDRC_EMissionError IsValidMissionPos(vector pos, float distanceToMission = -1, float distanceToPlayer = -1, bool onlyBasicChecks = false, bool ignoreNonValidArea = false)
+	static SDRC_EMissionError IsValidMissionPos(vector pos, float distanceToMission = -1, float distanceToPlayer = -1, bool onlyBasicChecks = false, bool isRequested = false)
 	{	
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		
 		// --- Basic checks ---
+		//These are for all missions
 		if (SDRC_Misc.IsPosInWater(pos))
 		{
 			SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.POSITION_IN_WATER), LogLevel.SPAM);
@@ -43,21 +45,37 @@ class SDRC_MissionPosHelper
 			return SDRC_EMissionError.POSITION_UNDER_MAP;
 		}
 
-		if (!ignoreNonValidArea)
+		//Only position in water and under map is tested for Requested missions
+		if (isRequested)
 		{
-			if (IsPosInNonValidArea(pos))
-			{
-				SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.IN_NON_VALID_AREA), LogLevel.SPAM);
-				return SDRC_EMissionError.IN_NON_VALID_AREA;
-			}
+			//No more tests for requested missions
+			return SDRC_EMissionError.NONE;
 		}
 		
+		//Tests to be included for Static missions (+all)
+		if (IsPosInNonValidArea(pos))
+		{
+			SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.IN_NON_VALID_AREA), LogLevel.SPAM);
+			return SDRC_EMissionError.IN_NON_VALID_AREA;
+		}
+
+		if (SDRC_PlayerHelper.PlayerCount() > 0)
+		{
+			//Check that players are not too close
+			if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, distanceToPlayer))
+			{
+				SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.PLAYER_TOO_CLOSE), LogLevel.SPAM);
+				return SDRC_EMissionError.PLAYER_TOO_CLOSE;
+			}
+		}		
+				
 		//If we only check for basic things, return		
 		if (onlyBasicChecks)
 		{
+			//No more tests for Requested and Static missions 
 			return SDRC_EMissionError.NONE;
 		}
-								
+										
 		// --- Full checks ---
 		if (distanceToMission == -1)
 			distanceToMission = baseGameMode.missionFrame.m_Config.minDistanceToMission;
