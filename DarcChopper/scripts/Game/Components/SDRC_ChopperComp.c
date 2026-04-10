@@ -730,37 +730,25 @@ class SDRC_ChopperComp : ScriptComponent
 			}
 		}
 
-		float belowSplineMul = 1;
 		float belowFlyHeightLowMul = 1;
 		float distanceFromSplineMul = 1;
 		float rayLenMul = 1;
 
 		float splineHeightFromGround = m_vSplinePointBelow[1];		
 		float heliHeightFromGround = m_vOrigin[1] - 10;				//Move the origin slightly below the spline
-/*		if (splineHeightFromGround <= 0)
-		{
-			splineHeightFromGround = 0.01;
-		}*/
 		if (heliHeightFromGround <= 0)
 		{
 			heliHeightFromGround = 0.01;
 		}
-
 					
 		//In fly state, react to low flying
 		if (m_eHeliState == SDRC_EHeliState.FLY)
 		{
-			//We're below the spline, let's raise bit more agressively
-/*			if (heliHeightFromGround < splineHeightFromGround)
-			{				
-				belowSplineMul = (m_fFlyHeightLow - m_fAltitude) / m_fAltitude;
-			}
-					
-/*			//Modify if we're too close to the ground, raise very aggressively
+			//Modify if we're too close to the ground, do additional raise
 			if (m_fAltitude < m_fFlyHeightLow)
 			{				
-				belowFlyHeightLowMul = (m_fFlyHeightLow - m_fAltitude) / m_fAltitude;
-			}*/
+				belowFlyHeightLowMul = 1 + (m_fFlyHeightLow - m_fAltitude) / m_fAltitude;
+			}
 
 			//If we're close to an object infront of us, raise			
 			vector rayEnd = SDRC_ChopperHelper.GetDestinationForward(owner, params.rayLenFront);
@@ -768,14 +756,14 @@ class SDRC_ChopperComp : ScriptComponent
 			float rayLen = SDRC_Misc.RayCastXZ(owner.GetOrigin(), rayEnd, owner);			
 			if (rayLen < 1)
 			{
-				rayLenMul = 1 + 10 * (1 - rayLen);
+				//rayLenMul = 1 + 10 * (1 - rayLen);
+				rayLenMul = 10 * (1.3 - rayLen);
 			}
 		}
 		
-		//distanceFromSplineMul = (heliHeightFromGround - splineHeightFromGround) / splineHeightFromGround;
 		distanceFromSplineMul = (splineHeightFromGround - heliHeightFromGround) / heliHeightFromGround;
 		
-		m_fRotorForceMultiplier = bigMul * belowSplineMul * belowFlyHeightLowMul * distanceFromSplineMul * rayLenMul;
+		m_fRotorForceMultiplier = bigMul * belowFlyHeightLowMul * distanceFromSplineMul * rayLenMul;
 	}
 			
 	//------------------------------------------------------------------------------------------------	

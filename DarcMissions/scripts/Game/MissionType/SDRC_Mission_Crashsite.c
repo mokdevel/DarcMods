@@ -92,9 +92,9 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		//Select origin for flight
 		for (int i = 0; i < 10; i++)
 		{
-			vector orig = SDRC_Misc.GetCoordinatesOnCircle(pos, SDRC_Misc.RandomInt(1000, 2500), SDRC_Misc.RandomInt(0, 360));
+			vector orig = SDRC_Misc.GetCoordinatesOnCircle(pos, SDRC_Misc.RandomInt(1500, 2500), SDRC_Misc.RandomInt(0, 360));
 			
-			if (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, 1500 ))
+			if (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(orig, 1000 ))
 			{
 				m_fDistance = vector.DistanceXZ(pos, m_vPosOrigin);
 				m_vPosOrigin = orig;

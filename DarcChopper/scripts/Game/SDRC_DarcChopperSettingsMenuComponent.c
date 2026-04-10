@@ -14,7 +14,7 @@ class SDRC_DarcChopperSettingsMenuComponent : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	override void EOnInit(IEntity owner)
 	{
-		SDRC_Log.Add("[SDRC_DarcChopperSettingsMenuComponent:EOnInit] Here!", LogLevel.NORMAL);		
+		SDRC_Log.Add("[SDRC_DarcChopperSettingsMenuComponent:EOnInit] Here!", LogLevel.SPAM);		
 		
 		m_RplComponent = RplComponent.Cast(owner.FindComponent(RplComponent));
 		ReadCurrent();
@@ -48,7 +48,7 @@ class SDRC_DarcChopperSettingsMenuComponent : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	protected void OnUserSettingsChanged()
 	{
-		SDRC_Log.Add("[SDRC_DarcChopperSettingsMenuComponent:OnUserSettingsChanged] Here!", LogLevel.NORMAL);		
+		SDRC_Log.Add("[SDRC_DarcChopperSettingsMenuComponent:OnUserSettingsChanged] Here!", LogLevel.SPAM);		
 		
 		bool b = SDRC_SettingsMenuHelper.GetShowFlyPathEnabled();
 

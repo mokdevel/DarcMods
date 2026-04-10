@@ -1,73 +1,19 @@
-$grp Vehicle : "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et" {
- Mi8MT_armed_gunship_HEDP_Patrol1 {
-  components {
-   SDRC_ChopperComp "{66C5298D0A4A70BF}" {
-    m_vFlyDestinations {
-     SDRC_FlyPathPoint "{6910810F0FDF55FB}" {
-      pt 3350 0 1900
-     }
-     SDRC_FlyPathPoint "{69109D62C0369ECC}" {
-      pt 3100 0 1800
-     }
-     SDRC_FlyPathPoint "{6910810E6C15C3FA}" {
-      type WP_M_LAND_TROOPS
-      pt 3000 0 1760
-     }
+Vehicle Mi8MT_armed_gunship_HE_Patrol1 : "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et" {
+ components {
+  SDRC_ChopperComp "{66C548F5776E7383}" {
+   m_fThrottle 1.5
+   m_fSpeedMax 50
+   m_fFlyHeightHigh 160
+   m_vFlyDestinations {
+    SDRC_FlyPathPoint "{6910B3DF287414AE}" {
+     pt 2500 60 2100
+    }
+    SDRC_FlyPathPoint "{6910B3DFD29B43AB}" {
+     pt 3000 160 1900
     }
    }
   }
-  coords 3158.636 78.079 2494.416
-  angles 0 167.662 0
  }
- Mi8MT_armed_gunship_HEDP_Patrol2 {
-  components {
-   SDRC_ChopperComp "{66C5298D0A4A70BF}" {
-    m_fFlyHeightLow 10
-    m_fFlyHeightHigh 30
-    m_vFlyDestinations {
-     SDRC_FlyPathPoint "{6911171CD4FCE7E4}" {
-      pt 3100 0 1400
-     }
-    }
-   }
-  }
-  coords 3719.185 10.631 1506.889
-  angles 0 -87.065 0
- }
-}
-$grp Vehicle : "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et" {
- Mi8MT_armed_gunship_HE_Patrol1 {
-  components {
-   SDRC_ChopperComp "{66C548F5776E7383}" {
-    m_vFlyDestinations {
-     SDRC_FlyPathPoint "{6910B3DF287414AE}" {
-      pt 2000 0 2500
-     }
-     SDRC_FlyPathPoint "{6910B3DFD29B43AB}" {
-      type WP_M_SUPPRESSIVE
-      pt 1700 0 2850
-     }
-    }
-   }
-  }
-  coords 2843.592 110.295 2009.619
-  angles 0 -43.246 0
- }
- Mi8MT_armed_gunship_HE_Patrol2 {
-  components {
-   SDRC_ChopperComp "{66C548F5776E7383}" {
-    m_vFlyDestinations {
-     SDRC_FlyPathPoint "{6910CD237D0F9AB1}" {
-      pt 2000 0 2100
-     }
-     SDRC_FlyPathPoint "{6910CD2360BD1EA3}" {
-      type WP_PATROL
-      pt 1900 0 2500
-     }
-    }
-   }
-  }
-  coords 2773.56 128.66 1876.853
-  angles 0 -43.246 0
- }
+ coords 3005.216 110.295 1837.784
+ angles 0 -43.246 0
 }

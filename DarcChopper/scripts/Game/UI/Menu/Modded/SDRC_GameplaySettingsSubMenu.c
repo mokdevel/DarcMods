@@ -15,7 +15,7 @@ modded class SCR_GameplaySettingsSubMenu
 	//------------------------------------------------------------------------------------------------	
 	protected void SDRC_EntryCreate(string module, string setting, string widget)
 	{
-		SDRC_Log.Add("[SDRC_GameplaySettingsSubMenu:SDRC_EntryCreate] Here!", LogLevel.NORMAL);		
+		SDRC_Log.Add("[SDRC_GameplaySettingsSubMenu:SDRC_EntryCreate] Here!", LogLevel.SPAM);		
 		
 		if (!m_wScroll)
 			return;
