@@ -464,7 +464,7 @@ class SDRC_VehicleHelper
 	/*!
 	Get vehicle scaled damage. Value is between 0..1 and is an average of all hitzones.
 	*/
-	static float GetHealthScaled(IEntity owner)
+	static float GetHealthScaled(IEntity owner, bool simpleCounting = true)
 	{
 		SCR_VehicleDamageManagerComponent damageManager = SCR_VehicleDamageManagerComponent.Cast(owner.FindComponent(SCR_VehicleDamageManagerComponent));
 		if (!damageManager)
@@ -473,16 +473,54 @@ class SDRC_VehicleHelper
 		}
 
 		float healthScaled = 0;		//Scaled damage
+		float healthTotal = 0;		//Total damage used for calculations
 		
        	array<HitZone> hitzones = {};
        	int count = damageManager.GetAllHitZones(hitzones);		
 		
-		foreach (HitZone hitZone : hitzones)
+		if (simpleCounting)
 		{
-			healthScaled += hitZone.GetHealthScaled();
+			//Counts everything including rotors etc
+			foreach (HitZone hitZone : hitzones)
+			{
+				healthTotal += hitZone.GetHealthScaled();
+			}			
+		}
+		else
+		{
+			//Only care about engine and geabox
+			count = 0;
+			foreach (HitZone hitZone : hitzones)
+			{
+				SCR_EngineHitZone hz_e = SCR_EngineHitZone.Cast(hitZone);
+				if (hz_e)
+				{
+					healthTotal += hitZone.GetHealthScaled();
+					count++;
+					continue;
+				}
+					
+				SCR_GearboxHitZone hz_g = SCR_GearboxHitZone.Cast(hitZone);
+				if (hz_g)
+				{
+					healthTotal += hitZone.GetHealthScaled();
+					count++;
+					continue;
+				}
+
+				/*SCR_RotorHitZone hz_r = SCR_RotorHitZone.Cast(hitZone);
+				if (hz_r)
+				{
+					healthTotal += hitZone.GetHealthScaled();	//Rotor damage affects only 25%
+					count++;
+					continue;
+				}*/
+			}
 		}
 		
-		return (healthScaled/count);		
+		healthScaled = healthTotal/count;
+		
+		return healthScaled;
 	}
 	
 	//------------------------------------------------------------------------------------------------

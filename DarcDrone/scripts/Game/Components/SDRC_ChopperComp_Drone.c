@@ -23,7 +23,15 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		
 		//Rotor force multipliers
 		rotorForceMulUp = 1.4 * 10;
-		
+
+		//Obstacle awareness
+		rayLenFront = 100;
+				
+		//Damage levels
+		damageHeavy = 0.60;
+		damageMedium = 0.80;
+		damageLight = 0.90;
+				
 		//Waypoint values
 		wpSteepAngle = 30;
 														

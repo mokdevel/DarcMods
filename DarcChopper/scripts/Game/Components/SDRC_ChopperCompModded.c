@@ -276,15 +276,15 @@ modded class SDRC_ChopperComp
 
 		float health;
 		GetHealthScaled(owner, health);
-		if ( health < 0.93 )
+		if ( health < chopperComp.params.damageHeavy )
 		{
 			m_eDamageLevel = SDRC_EHeliDamageLevel.HEAVY;
 		}	
-		else if ( health < 0.97)
+		else if ( health < chopperComp.params.damageMedium)
 		{
 			m_eDamageLevel = SDRC_EHeliDamageLevel.MEDIUM;
 		}	
-		else if ( health < 0.99)
+		else if ( health < chopperComp.params.damageLight)
 		{
 			m_eDamageLevel = SDRC_EHeliDamageLevel.LIGHT;
 		}			
@@ -361,7 +361,7 @@ modded class SDRC_ChopperComp
 				//Fly immediately to a destination
 				//Remove any existing destination
 				ResetDestinations();
-				SDRC_ChopperHelper.CutSpline(m_vSplinePoints, m_iClosestIndex);
+				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
 				type = SDRC_EFlyWayPointType.WP_FLY;
 				SetState(SDRC_EHeliState.FLY);
 				break;
@@ -370,7 +370,7 @@ modded class SDRC_ChopperComp
 			{
 				//Fly away immediately
 				ResetDestinations();
-				SDRC_ChopperHelper.CutSpline(m_vSplinePoints, m_iClosestIndex);
+				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
 				//NOTE: Will drop through WP_FLY_AWAY
 			}		
 			case SDRC_EFlyWayPointType.WP_FLY_AWAY:
@@ -429,7 +429,7 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_M_RESET:
 			{
 				ResetDestinations();
-				SDRC_ChopperHelper.CutSpline(m_vSplinePoints, m_iClosestIndex);
+				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
 				addDestinationPoint = false;
 				break;
 			}

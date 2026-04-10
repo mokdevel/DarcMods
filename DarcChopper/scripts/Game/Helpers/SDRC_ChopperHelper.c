@@ -341,7 +341,7 @@ class SDRC_ChopperHelper
 	/*!	
 	Cut spline to create the new destination almost immediately. Remove points from the end.
 	*/
-	static void CutSpline(out array<vector> splinePoints, int closestIndex)
+	static void CutSplineTail(out array<vector> splinePoints, int closestIndex)
 	{
 		const int POINTS_TO_NEW_DISTANCE = 3;		//How many spline points in to the future flight path is checked before adding new flight points.
 		
@@ -352,6 +352,18 @@ class SDRC_ChopperHelper
 			splinePoints.RemoveOrdered(splinePoints.Count() - 1);
 		}
 	}		
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Cut spline from the beginning to closestIndex. Remove points from the start.
+	*/
+	static void CutSplineHead(out array<vector> splinePoints, int closestIndex)
+	{
+		for (int i = 0; i < closestIndex; i++)
+		{
+			splinePoints.RemoveOrdered(0);
+		}
+	}	
 	
 	//------------------------------------------------------------------------------------------------	
 	/*!	
@@ -383,8 +395,9 @@ class SDRC_ChopperHelper
 					continue;
 				}
 				
-				float y = SDRC_Misc.GetSurfaceYWithWater(pt);
+				float y = SDRC_Misc.GetSurfaceYWithWater(pt, true);
 	
+				//If we're low, fix the point a bit above the low fly height
 				if (pt[1] < (y + chopperComp.m_fFlyHeightLow))
 				{
 	//				pt[1] = y + ( (m_fFlyHeightHigh + m_fFlyHeightLow) / 2 ) ;	//Make chopper fly higher for a moment

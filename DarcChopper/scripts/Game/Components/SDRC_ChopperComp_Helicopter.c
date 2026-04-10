@@ -26,7 +26,13 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 
 		//Obstacle awareness
 		rayLenFront = 400;
+		rayDown = 50;
 				
+		//Damage levels
+		damageHeavy = 0.90;
+		damageMedium = 0.96;
+		damageLight = 0.98;
+		
 		//Waypoint values
 		wpSteepAngle = 60;
 														
@@ -120,7 +126,7 @@ modded class SDRC_ChopperComp
 			return;
 		}
 
-		health = SDRC_VehicleHelper.GetHealthScaled(owner);
+		health = SDRC_VehicleHelper.GetHealthScaled(owner, false);
 	}
 	
 	//------------------------------------------------------------------------------------------------

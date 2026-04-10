@@ -37,29 +37,35 @@ class SDRC_ChopperParams
 {
 	SDRC_EChopperType type = SDRC_EChopperType.HELICOPTER;
 	//Turn
-	int turnSpeedDivider = 91;						//The divider that affects how much speed is decreased on sharp turns. The higher the value, the less brake.	Was: 42	
-	int turnTimeIntervalBase = 40;					//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
+	int turnSpeedDivider;							//The divider that affects how much speed is decreased on sharp turns. The higher the value, the less brake.	Was: 42	
+	int turnTimeIntervalBase;						//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
 
 	//Roll 
-	float rollAngleMul = 2.4;						//Multiplier for roll angle along the spline. 
+	float rollAngleMul;								//Multiplier for roll angle along the spline. 
 	
 	//Pitch
-	float pitchAngleRad 	 =  11 * Math.DEG2RAD;	//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
-	float pitchAngleRadFlat  = -45 * Math.DEG2RAD;	//The pitch angle when chopper is flying flat.
-	float pitchNoseAngleDown = -30 * Math.DEG2RAD;	//Maximum angle to turn the helicopter nose down when in high speed.
-	float pitchNoseAngleUp   =  20 * Math.DEG2RAD;	//Maximum angle to turn the helicopter nose up when braking.
+	float pitchAngleRad;							//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
+	float pitchAngleRadFlat;						//The pitch angle when chopper is flying flat.
+	float pitchNoseAngleDown;						//Maximum angle to turn the helicopter nose down when in high speed.
+	float pitchNoseAngleUp;							//Maximum angle to turn the helicopter nose up when braking.
 	
 	//Rotor force multipliers
 	float rotorForceMulUp = 1.3 * 10;				//Rotor force multiplier in velocity counting. Bigger value makes the heli react faster to up/down movement but also starts stutter.
 	
 	//Obstacle awareness
 	float rayLenFront;								//Length of the ray to detect obstacles in front of heli
+	float rayDown;									//Distance to point the ray end downward 
+	
+	//Damage levels
+	float damageHeavy;
+	float damageMedium;
+	float damageLight;
 	
 	//Waypoint values
-	float wpSteepAngle = 60;						//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
+	float wpSteepAngle;								//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
 													//If chopper destination makes a too steep turn, we will add a few additional points.
-	int destinationForwardInitial = 500;			//Distance to fly forward on first fligth at init
-	int destinationForward = 300;			//Distance to fly forward on first fligth at init
+	int destinationForwardInitial;					//Distance to fly forward on first fligth at init
+	int destinationForward;							//Distance to fly forward on first fligth at init
 }
 
 //------------------------------------------------------------------------------------------------
@@ -163,7 +169,7 @@ class SDRC_ChopperComp : ScriptComponent
 	private float m_fTimeBetweenPts = 1;
 	private float m_fTimeBetweenPtsAvg = 1;
 
-	private float m_fTimeBetweenFixes = 30;
+	private float m_fTimeBetweenFixes = 0;
 	
 	float m_fTimeInState = -1;							//The timer to stay in a certain state. This is only in effect when positive value.
 	private bool m_bTimeInStateEnabled = false;	
@@ -436,7 +442,6 @@ class SDRC_ChopperComp : ScriptComponent
 				
 		//Sometimes the heli direction and path align so that the closest index does not update.
 		//In these case the helicopter up vector and world up vector is big.
-		//We remove points to force heli to look for future destinations and move there.
 		float heliUpAngleToWorld = SDRC_Math.GetAngleBetweenVectors(owner.GetTransformAxis(1), vector.Up);	
 		if (heliUpAngleToWorld > FLIGHT_FIX_ANGLE)
 		{
@@ -445,17 +450,21 @@ class SDRC_ChopperComp : ScriptComponent
 				#ifdef WORKBENCH
 					SDRC_Log.Add("[SDRC_ChopperComp] Fixing flight.", LogLevel.DEBUG);
 				#endif
-				//TBD: Change to align the chopper towards target
+
+				//Cut the spline and add another point to which the heli should turn to.				
+				SDRC_ChopperHelper.CutSplineHead(m_vSplinePoints, m_iClosestIndex);
 				
-				m_vSplinePoints.RemoveOrdered(0);
-				m_fTimeBetweenFixes = FLIGHT_FIX_TIME;
-				//bCreateNewPath = true;
+				vector direction = vector.Direction(m_vSplinePoints[1], m_vSplinePoints[0]);
+				direction.Normalize();
+				vector newPos = m_vSplinePoints[0] + direction * 200;
+				newPos[1] = m_vOrigin[1];
+				m_vSplinePoints.InsertAt(newPos, 0);
+				m_iClosestIndex = 0;
+				m_fTimeBetweenFixes = FLIGHT_FIX_TIME * 5;	//Let's give some time to do the actual fix
+				
+				SDRC_ChopperDebug.DrawDebugPaths(owner);
+				SDRC_DebugHelper.AddDebugPos(newPos, ARGB(255, 255, 0, 255), 2.0, m_sDid);
 			}
-		}
-		else
-		{
-			//All good, reset fix time
-			m_fTimeBetweenFixes = FLIGHT_FIX_TIME;
 		}
 		
 		//No need to do anything unless we are at the end of spline.
@@ -469,7 +478,6 @@ class SDRC_ChopperComp : ScriptComponent
 			{
 				//Define a new destination and create a new path
 				CreateNewFlight(owner);
-				//m_fTimeBetweenFixes = FLIGHT_FIX_TIME;	//Time between tries to fix the flight
 			}
 		}
 		
@@ -755,7 +763,9 @@ class SDRC_ChopperComp : ScriptComponent
 			}*/
 
 			//If we're close to an object infront of us, raise			
-			float rayLen = SDRC_Misc.RayCastXZ(owner.GetOrigin(), SDRC_ChopperHelper.GetDestinationForward(owner, params.rayLenFront), owner);			
+			vector rayEnd = SDRC_ChopperHelper.GetDestinationForward(owner, params.rayLenFront);
+			rayEnd[1] = rayEnd[1] - params.rayDown;
+			float rayLen = SDRC_Misc.RayCastXZ(owner.GetOrigin(), rayEnd, owner);			
 			if (rayLen < 1)
 			{
 				rayLenMul = 1 + 10 * (1 - rayLen);
@@ -848,10 +858,7 @@ class SDRC_ChopperComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Create the runtime flight path with waypoint definition
-	
-	\param firstDestination 
 	*/
-//	void CreateNewFlight(IEntity owner, vector firstDestination = vector.Zero)
 	void CreateNewFlight(IEntity owner)
 	{
 		//Clear any existing path points
@@ -870,15 +877,12 @@ class SDRC_ChopperComp : ScriptComponent
 		SDRC_Spline3D.GenerateSplinePoints(flyPathPoints, m_vSplinePoints, -1);
 		
 		//Search the closest index from the spline start
-/*		m_iClosestIndex = 0;
-		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, owner.GetOrigin(), m_iClosestIndex, true);	//NOTE: This will set m_iClosestIndex
-		m_iOldClosestIndex = m_iClosestIndex;
-*/
 		m_iClosestIndex = 0;
 		m_iOldClosestIndex = m_iClosestIndex;
 				
 		//Check that points are above ground. Skip some of the points at start.
-		SDRC_ChopperHelper.SetSplinePointsAboveGround(owner, 6);
+		//SDRC_ChopperHelper.SetSplinePointsAboveGround(owner, 6);
+		SDRC_ChopperHelper.SetSplinePointsAboveGround(owner, 0);
 		
 		if (m_vSplinePoints.IsEmpty())
 		{

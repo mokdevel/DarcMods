@@ -166,10 +166,10 @@ class SDRC_ChopperDebug
 			return;
 		}
 //		if (!m_bShowDebug)
-/*		if (!SDRC_Conf.SHOW_DEBUG)
+		if (!SDRC_Conf.SHOW_DEBUG)
 		{
 			return;
-		}*/
+		}
 		
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)
@@ -229,27 +229,35 @@ class SDRC_ChopperDebug
 								}
 			float health;
 			chopperComp.GetHealthScaled(owner, health);
+			
+			string textAltAgl = "";
+			
+			VehicleHelicopterSimulation helicopter_s = VehicleHelicopterSimulation.Cast(owner.GetRootParent().FindComponent(VehicleHelicopterSimulation));
+			if (helicopter_s)
+			{
+				textAltAgl = " AGL:" + SDRC_Misc.FloatWithDecimals(helicopter_s.GetAltitudeAGL());
+			}
+			
 			debugText = debugText + " Hlth: " + SCR_Enum.GetEnumName(SDRC_EHeliDamageLevel, chopperComp.m_eDamageLevel) + " (" + SDRC_Misc.FloatWithDecimals(health, 2) + ")";
 			debugText = debugText + "\n";
 			
 			debugText = debugText +
 							   	"Spd:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeed) + " " +
-							   	"min:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMin) + "/max:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMax) + 
+							   	"(" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMin) + "-" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMax) + ")" + 
 							   	"/start:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedStart) + "/target:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedTarget) +
 							   	"/mul:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fSpeedMul, 2) + 
 	//						   	"Avg time:" + m_fTimeBetweenPtsAvg + "\n" +
 								" \n";
 			debugText = debugText + 
-							   	"Alt:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fAltitude) + "\n" + 
+//							   	"Alt:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fAltitude) + " " + textAltAgl + "\n" + 
 							   	"RotorForceMul:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fRotorForceMultiplier, 2) + "\n" +
-	//						   	"SplinePoints:" + m_vSplinePoints.Count() + "\n" +
-	//						   	"TurnInternal:" + m_fTimeTurnInterval + "\n" +
-	//							"Angle: " + m_fDbgAngle * Math.RAD2DEG + "\n" +
-//								"AnglePitch: " + m_fAnglePitch * Math.RAD2DEG + "\n" +
-								"AnglePitch: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fAnglePitch) + "\n" +
-	//							"AngleRoll: " + m_fAngleRoll * Math.RAD2DEG + "\n" +
-	//							"AngleRollBack: " + m_fAngleRollBack * Math.RAD2DEG + "\n" +
-	//							"DestinationPointAdd: " + m_iDestinationPointAdd + "\n" 
+//						   		"SplinePoints:" + m_vSplinePoints.Count() + "\n" +
+//						   		"TurnInternal:" + m_fTimeTurnInterval + "\n" +
+//								"Angle: " + m_fDbgAngle * Math.RAD2DEG + "\n" +
+//								"AnglePitch: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fAnglePitch) + "\n" +
+//								"AngleRoll: " + m_fAngleRoll * Math.RAD2DEG + "\n" +
+//								"AngleRollBack: " + m_fAngleRollBack * Math.RAD2DEG + "\n" +
+//								"DestinationPointAdd: " + m_iDestinationPointAdd + "\n" 
 								"";
 			debugText = debugText + 
 //								"Init:" + chopperComp.m_bInInit + ", " +
@@ -263,12 +271,6 @@ class SDRC_ChopperDebug
 				debugText = debugText + "AngleUp: ******** " + angUp + " ********";
 			}
 					
-			VehicleHelicopterSimulation helicopter_s = VehicleHelicopterSimulation.Cast(owner.GetRootParent().FindComponent(VehicleHelicopterSimulation));
-			if (helicopter_s)
-			{
-				debugText = debugText + "Alt AGL:" + SDRC_Misc.FloatWithDecimals(helicopter_s.GetAltitudeAGL());
-			}
-			
 			DebugTextWorldSpace.Create(GetGame().GetWorld(), debugText, DebugTextFlags.ONCE, origin[0], origin[1], origin[2], 20);
 		}
 			
@@ -338,15 +340,17 @@ class SDRC_ChopperDebug
 		SDRC_ChopperDebug.DrawLine(origin, origin + (vVel * chopperComp.m_fSpeed), Color.GRAY_75);			
 		
 		//Draw raycast stuff
-		float rayLen = chopperComp.params.rayLenFront;
+		float rayLen = chopperComp.params.rayLenFront;		
+		vector rayEnd = SDRC_ChopperHelper.GetDestinationForward(owner, chopperComp.params.rayLenFront);
+		rayEnd[1] = rayEnd[1] - chopperComp.params.rayDown;
 		
-		float len = SDRC_Misc.RayCastXZ(origin, SDRC_ChopperHelper.GetDestinationForward(owner, rayLen), owner);
+		float len = SDRC_Misc.RayCast(origin, rayEnd, owner);
 		int color = Color.GREEN;
 		if (len < 1)
 		{
 			color = Color.RED;
 		}
-		SDRC_ChopperDebug.DrawLine(origin, SDRC_ChopperHelper.GetDestinationForward(owner, rayLen), color);		
+		SDRC_ChopperDebug.DrawLine(origin, rayEnd, color);		
 		
 		//Enemy stuff
 		
