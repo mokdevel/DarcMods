@@ -15,7 +15,7 @@ This documentation is for modders who want to command the choppers from script o
 * WP_WAIT : Wait, before moving to next state
 * WP_WAIT_GETOUT : Same as WP_WAIT, but time set is dependent on crew count
 * WP_END : Stop running SDRC_ChopperComp and let AR handle everything
-* WP_DESPAWN : Despawn the helicopter
+* WP_DESPAWN : Despawn the helicopter. KNOWN: AI is not despawned so .. lot's of fun. :-)
 
 ## Macro commands
 Assigning single macro command will perform a set of single commands. 

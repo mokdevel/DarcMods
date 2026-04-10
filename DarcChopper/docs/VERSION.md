@@ -2,6 +2,28 @@
 
 ## Next Version
 
+# 202604xx
+Stable and Exp update.
+Fixes:
+* Obstacle avoidance improvements.
+* A possible for fix chopper nose up issue (belly dancing)
+
+# 20260409
+Stable and Exp update.
+Main features:
+* First version ray trace to find obstacles. Flying in Kolguyev is much better now.
+Fixes:
+* Bugs related to modding fixed.
+* New commands: ``WP_WAIT_GETOUT``, ``WP_DESPAWN``
+
+# 20260408
+Minor fixes. Stable and Exp update.
+Fixes:
+* Tuned landing curves. 
+* Defining Fly Destinations in prefab did not work.
+* Added initial documentation on commands.
+  * Use only Tested ones and Macro commands
+  * For example, to land, use ``WP_M_LAND_TROOPS``
 
 # 20260407
 Fixes:

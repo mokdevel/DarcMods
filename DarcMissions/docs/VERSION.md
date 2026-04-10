@@ -4,6 +4,12 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+
+# 202604xx
+Fixes:
+* Crashsite mission spawning on big maps was too far away.
+* Static missions could spawn in front of a player if joining immediately after server started.
+
 # 20260407
 Main features:
 * Added ``maxDistanceToPlayer``. The max distance Dynamic missions will not spawn further from any player. See: https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONFRAME.md#mission-position
