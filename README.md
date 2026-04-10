@@ -11,6 +11,11 @@ A mod that spawns various types of PVE missions. See [Documentation](./DarcMissi
 
 A mod that adds AI flying capabilities to helicopters. See [Documentation](./DarcChopper/README.md).
 
+## DarcChopperExample
+<img src="https://github.com/mokdevel/DarcMods/blob/main/DarcChopperExample/thumbnail.png" width=30% height=30%>
+
+A tutorial mod showing how to use DarcChopper in your own mods. See [Documentation](./DarcChopperExample/README.md). This is not to be used for gameplay.
+
 ## DarcDeathMarker
 <img src="https://github.com/mokdevel/DarcMods/blob/main/DarcDeathMarker/thumbnail.png" width=30% height=30%>
 
