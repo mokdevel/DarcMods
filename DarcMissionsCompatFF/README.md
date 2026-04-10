@@ -32,6 +32,9 @@ bool rewardDefault : Default reward unless specific reward has been set in missi
 ```
 
 # Version history
+## 20260410
+Compatibility with changes in DarcMissions
+
 ## 20260201
 Compatibility fix for Freedom Fighters
 

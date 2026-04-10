@@ -5,7 +5,7 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 
-# 202604xx
+# 20260410
 Fixes:
 * Crashsite mission spawning on big maps was too far away.
 * Static missions could spawn in front of a player if joining immediately after server started.
