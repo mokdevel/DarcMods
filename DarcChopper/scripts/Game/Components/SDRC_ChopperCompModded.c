@@ -387,7 +387,6 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
-				//Do attack on low altitude.				
 				m_vAttackPosition = destination;			//Where to attack
 
 				//With default attack time, set it to 60 seconds
@@ -404,7 +403,13 @@ modded class SDRC_ChopperComp
 				m_fTimerAttack = value;						//For how long to continue attacks
 				break;
 			}
-			
+
+			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
+			{
+				m_vAttackPosition = destination;			//Where to attack
+				break;
+			}			
+						
 			//These just fall through
 			case SDRC_EFlyWayPointType.WP_WAIT:
 			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
@@ -414,7 +419,6 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_END:
 			case SDRC_EFlyWayPointType.WP_PATROL:
 			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
-			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 			{
 				break;
 			}
@@ -617,7 +621,7 @@ modded class SDRC_ChopperComp
 					AddDestination(SDRC_EFlyWayPointType.WP_M_CUT);
 					//Add WP_ATTACK and WP_PATROL to the list of next destinations. These are added as first items in the list and
 					//have to be added in reverse order to have WP_ATTACK as the first item.
-					AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, enemyPos, index: 0);
+					AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, m_vAttackPosition, index: 0);
 					AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, enemyPos, index: 0);
 					m_fTimerBehaviourCycle = ATTACK_CYCLE_WAIT;
 				}
@@ -626,7 +630,7 @@ modded class SDRC_ChopperComp
 					//If no enemy found, add another patrol round in case one is already in the list.
 					if (SDRC_ChopperHelper.GetNextWayPointType(owner) != SDRC_EFlyWayPointType.WP_PATROL_ONCE)
 					{
-						AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, enemyPos, index: 0);
+						AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, m_vAttackPosition, index: 0);
 					}
 				}
 				

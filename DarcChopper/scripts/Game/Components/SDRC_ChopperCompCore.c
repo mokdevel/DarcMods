@@ -6,12 +6,12 @@
 enum SDRC_EFlyWayPointType
 {
 	WP_UNDEFINED,				//0 
-	WP_FLY,						//   - Fly, mormal flight pattern
-	WP_FLY_IMMEDIATELY,			//   - Fly, but remove all already added destinations
-	WP_FLY_AWAY,				//   - Fly away as a last move
-	WP_FLY_AWAY_IMMEDIATELY,	//   - Fly away immediately removing the previous destinations
-	WP_PATROL,					//   - Patrol around an area 
-	WP_PATROL_ONCE,				//   - Do one patrol round around an area.
+	WP_FLY,						//1  - Fly, mormal flight pattern
+	WP_FLY_IMMEDIATELY,			//2  - Fly, but remove all already added destinations
+	WP_FLY_AWAY,				//3  - Fly away as a last move
+	WP_FLY_AWAY_IMMEDIATELY,	//4  - Fly away immediately removing the previous destinations
+	WP_PATROL,					//5  - Patrol around an area 
+	WP_PATROL_ONCE,				//6  - Do one patrol round around an area.
 	WP_LAND,					//   - 
 	WP_WAIT,					//   - 
 	WP_WAIT_GETOUT,				//   - Wait during get out. Sets the time and goes to WAIT

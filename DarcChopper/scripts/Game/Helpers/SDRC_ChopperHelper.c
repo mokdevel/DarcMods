@@ -236,7 +236,7 @@ class SDRC_ChopperHelper
 							}
 							case "E_AIWaypoint_SearchAndDestroy":
 							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, pos, 600);	
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, pos, 30);	
 								break;
 							}
 						}
