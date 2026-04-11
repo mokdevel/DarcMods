@@ -3,6 +3,17 @@ This documentation is for modders who want to command the choppers from script o
 
 !!! THIS IS WIP !!!
 
+## AddDestination
+The function takes three parameters. Depending on the command used, the result may differ. 
+
+* ``type`` : This is the command given to the chopper. The possible options are below.
+* ``destination`` : The destination position where to go. 
+* ``value`` : Additional value that you can provide with the specific command. Usually this is time to perform the action.
+* ``index`` : This is internal and should not be used modders.
+
+### FIFO
+The commands are put in a First-In-First-Out array from where they're picked once the previous command has executed. The exception is ``WP_FLY`` which will be performed in a serie. 
+
 ## Tested (and should work)
 * WP_FLY : Fly, normal flight pattern
 * WP_FLY_IMMEDIATELY : Fly, but remove all already added destinations. This will interrupt any existing flight plans.
@@ -12,10 +23,19 @@ This documentation is for modders who want to command the choppers from script o
 * WP_ATTACK : Sets attack position to shoot at. This is performed once.
 * WP_SEARCH_DESTROY : Search for enemy by patroling an area. If enemy is found, attack the location.
 * WP_PATROL : Patrol around an area.
+* WP_PATROL_ONCE : Do one patrol round around an area.
 * WP_WAIT : Wait, before moving to next state
 * WP_WAIT_GETOUT : Same as WP_WAIT, but time set is dependent on crew count
 * WP_END : Stop running SDRC_ChopperComp and let AR handle everything
 * WP_DESPAWN : Despawn the helicopter. KNOWN: AI is not despawned so .. lot's of fun. :-)
+* WP_M_RESET : Reset destinations. Cut the current flight planned and pick the next destination in the list.
+* WP_M_CUT : Cut the current flight planned and pick the next destination in the list.
+
+### WP_SEARCH_DESTROY
+This will set the behaviour of the chopper to SEARCH_AND_DESTROY_BEHAVIOUR for a given time before returning back to NORMAL_BEHAVIOUR. The chopper will arrive at the destination and start to patrol the area. Enemy is searched with a cycle of 2 seconds. If an enemy is found, current flight is interrupted, and a new flight pattern to attack the enemy is created. Chopper will stay in attack mode for 60 seconds and then resume to patroling. 
+* ``destination`` : The position to keep an eye on. The helicopter will patrol around this area with a circle of 400m.  
+* ``value`` : The time to be in SEARCH_AND_DESTROY_BEHAVIOUR. Once time has passed, we return to NORMAL_BEHAVIOUR.
+  * GM default: 600
 
 ## Macro commands
 Assigning single macro command will perform a set of single commands. 
@@ -37,5 +57,12 @@ Assigning single macro command will perform a set of single commands.
 * WP_HOVER : Hover at a certain altitude
 * WP_GET_OUT : Order AI to get out from the chopper
 * WP_HOVER_UP : Does the action and goes to HOVER state
-* WP_M_RESET : Reset destinations
 * WP_M_TESTING : Just for testing
+
+# Behaviour
+The chopper can be given a behaviour. You should not use the SetBehaviour() API from your mod unless you really know what you're doing. 
+
+* UNKNOWN_BEHAVIOUR : Well, unknown
+* NORMAL_BEHAVIOUR : Normal flight pattern. In this behaviour we select the next destination from the list if any is specified. If not, we create a random flight destination.
+* SEARCH_AND_DESTROY_BEHAVIOUR : The AI is alert and will do search and destroy if an enemy is found
+* EVAC_BEHAVIOUR : The chopper is damaged and we're looking for a landing state.
