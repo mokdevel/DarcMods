@@ -307,7 +307,7 @@ class SDRC_ChopperComp : ScriptComponent
 		
 		m_bInInit = true;
 		SetState(SDRC_EHeliState.FLY);
-		SetBehaviour(SDRC_EHeliBehaviour.NORMAL);
+		SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR);
 		
 		//Clear any existing path points
 		ResetFlight();
@@ -433,9 +433,20 @@ class SDRC_ChopperComp : ScriptComponent
 			return;
 		}		
 		//---
-		
 		//Normal flying part
 		
+		//#ifdef WORKBENCH
+			if (m_fTimeBetweenPts > 20)
+			{
+				
+				SDRC_Log.Add("[SDRC_ChopperComp] Time in point is very long.", LogLevel.DEBUG);
+				if (m_iClosestIndex < m_vSplinePoints.Count() - 1)
+				{
+					m_iClosestIndex++;
+				}						
+			}
+		//#endif		
+	
 		//Adjust time depending on the speed.
 		m_fTimeTurnInterval = params.turnTimeIntervalBase / m_fSpeed;
 		m_fTimeTurnInterval = Math.Clamp(m_fTimeTurnInterval, 0.6, 3);
@@ -1004,23 +1015,34 @@ class SDRC_ChopperComp : ScriptComponent
 			}
 			
 			AddFlyPathPoint(flyDestination.pt, flyDestination.type);
-			
+
+			//Counter used for various actions 
+			int patrolCount = 8;	//Do one round for patrol by default
+						
 			switch (flyDestination.type)
 			{
+				case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
+				{
+					SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, flyDestination.value);
+					break;
+				}				
 				case SDRC_EFlyWayPointType.WP_PATROL:
 				{
-					//If request to patrol, create additional points around position
-			
-					int count = 20;
-					int degree = 45; 		// Degrees per count
+					patrolCount = SDRC_Misc.RandomInt(10, 25);
+					//NOTE: This will fall through to WP_PATROL_ONCE 
+				}
+				case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
+				{
+					//If request to patrol, create additional points around position. We will do _count_ amount of points around the area
+					int degree = 45; 		//Degrees per patrolCount
 					int sign = 1;			//SDRC_Misc.RandomSign(); <- does not work very well
 					
-					for (int i = 0; i < count; i++)
+					for (int i = 0; i < patrolCount; i++)
 					{
 						float value = flyDestination.value;
 						if (value <= 0)
 						{
-							value = 400;
+							value = 400;	//TBD: This is hard coded value for the circle
 						}
 						float range = Math.RandomFloat(value * 0.7, value * 1.3);					
 						//Make waypoints around the position to patrol.					
@@ -1159,7 +1181,7 @@ class SDRC_ChopperComp : ScriptComponent
 		m_eHeliBehaviour = behaviour;
 
 		//Reset timer for NORMAL
-		if (behaviour == SDRC_EHeliBehaviour.NORMAL)
+		if (behaviour == SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR)
 		{			
 			time = 0;
 		}

@@ -112,21 +112,25 @@ class SDRC_ChopperHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Returns the next waypoint type defined in destinations. Does not modify the destination list.
+	Returns the next recommended waypoint type defined in destinations. Does not modify the destination list.
+	
+	WP_FLY is returned as default if destination list is empty.
 	*/
-	static SDRC_EFlyWayPointType GetNextWayPointType(IEntity owner, SDRC_EFlyWayPointType nextType)
+	static SDRC_EFlyWayPointType GetNextWayPointType(IEntity owner, SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.WP_UNDEFINED)
 	{
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)
 		{
 			return SDRC_EFlyWayPointType.WP_UNDEFINED;
 		}		
-		
+
+		//If destinations is empty, set nextType as WP_UNDEFINED		
 		if (chopperComp.m_vFlyDestinations.IsEmpty())
 		{
 			nextType = SDRC_EFlyWayPointType.WP_UNDEFINED;
 		}
 
+		//If nextType is WP_UNDEFINED, return WP_FLY as the default recommendation.
 		if (nextType == SDRC_EFlyWayPointType.WP_UNDEFINED)
 		{		
 			//If not destinations defined, start to fly		
@@ -136,6 +140,7 @@ class SDRC_ChopperHelper
 			}
 			else
 			{
+				//There is a next one defined. Let's provide it.
 				nextType = chopperComp.m_vFlyDestinations[0].type;
 			}
 		}		
@@ -231,7 +236,7 @@ class SDRC_ChopperHelper
 							}
 							case "E_AIWaypoint_SearchAndDestroy":
 							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, pos, 600);
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, pos, 600);	
 								break;
 							}
 						}

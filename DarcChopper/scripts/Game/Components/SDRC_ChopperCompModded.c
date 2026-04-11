@@ -294,9 +294,9 @@ modded class SDRC_ChopperComp
 			case SDRC_EChopperType.HELICOPTER:		
 			{
 				//If damage is high, evac!
-				if ( ( (m_eDamageLevel == SDRC_EHeliDamageLevel.MEDIUM) || (m_eDamageLevel == SDRC_EHeliDamageLevel.HEAVY) ) && (GetBehaviour() != SDRC_EHeliBehaviour.EVAC) )
+				if ( ( (m_eDamageLevel == SDRC_EHeliDamageLevel.MEDIUM) || (m_eDamageLevel == SDRC_EHeliDamageLevel.HEAVY) ) && (GetBehaviour() != SDRC_EHeliBehaviour.EVAC_BEHAVIOUR) )
 				{
-					SetBehaviour(SDRC_EHeliBehaviour.EVAC, -1);
+					SetBehaviour(SDRC_EHeliBehaviour.EVAC_BEHAVIOUR, -1);
 					AddDestination(SDRC_EFlyWayPointType.WP_M_RESET);
 					AddDestination(SDRC_EFlyWayPointType.WP_M_EVAC_TROOPS, SDRC_Misc.RandomizePos(owner.GetOrigin(), 600));
 				}		
@@ -413,19 +413,21 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_LAND:
 			case SDRC_EFlyWayPointType.WP_END:
 			case SDRC_EFlyWayPointType.WP_PATROL:
-			{
-				break;
-			}
+			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 			{
-				m_eHeliBehaviour = SDRC_EHeliBehaviour.SEARCH_AND_DESTROY;
-				m_fTimerBehaviour = value;
 				break;
 			}
 			
 			//------------------------------------------------------------------------------------------------	
 			//Macro actions
 			//------------------------------------------------------------------------------------------------	
+			case SDRC_EFlyWayPointType.WP_M_CUT:
+			{
+				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
+				addDestinationPoint = false;
+				break;
+			}
 			case SDRC_EFlyWayPointType.WP_M_RESET:
 			{
 				ResetDestinations();
@@ -576,11 +578,14 @@ modded class SDRC_ChopperComp
 	/*!	
 	Handle behaviour
 	- Normal case: Fly and react normally
-	- Attack case: 
+	- Attack case: A behaviour cycle is run every ATTACK_CYCLE seconds. If attack is ongoing, perform it for ATTACK_CYCLE_WAIT seconds.
 	*/
 	override private void HandleBehaviour(IEntity owner)
 	{
-		if ( (m_eHeliBehaviour == SDRC_EHeliBehaviour.NORMAL) || (m_eHeliBehaviour == SDRC_EHeliBehaviour.EVAC) )
+		const int ATTACK_CYCLE = 2;
+		const int ATTACK_CYCLE_WAIT = 60;
+		
+		if ( (m_eHeliBehaviour == SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) || (m_eHeliBehaviour == SDRC_EHeliBehaviour.EVAC_BEHAVIOUR) )
 		{
 			return;
 		}
@@ -588,7 +593,7 @@ modded class SDRC_ChopperComp
 		if (m_fTimerBehaviour < 0)	
 		{
 			//Normal case:
-			m_eHeliBehaviour = SDRC_EHeliBehaviour.NORMAL;
+			m_eHeliBehaviour = SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR;
 			return;
 		}
 		
@@ -597,22 +602,32 @@ modded class SDRC_ChopperComp
 			return;
 		}
 		
-		m_fTimerBehaviourCycle = 3;	//10 seconds between cycles
+		m_fTimerBehaviourCycle = ATTACK_CYCLE;
 		
 		switch (m_eHeliBehaviour)
 		{
-			case SDRC_EHeliBehaviour.SEARCH_AND_DESTROY:
+			case SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR:
 			{
 				vector enemyPos = SDRC_ChopperEnemyHelper.SearchEnemy(owner);
 				
 				if (enemyPos != vector.Zero)
 				{
-					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D set to: " + enemyPos, LogLevel.NORMAL);
+					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D: Enemy found, attacking: " + enemyPos, LogLevel.NORMAL);
 					
-					AddDestination(SDRC_EFlyWayPointType.WP_M_RESET);
-					AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, enemyPos);
-					AddDestination(SDRC_EFlyWayPointType.WP_PATROL, enemyPos);
-					m_fTimerBehaviourCycle = 30;
+					AddDestination(SDRC_EFlyWayPointType.WP_M_CUT);
+					//Add WP_ATTACK and WP_PATROL to the list of next destinations. These are added as first items in the list and
+					//have to be added in reverse order to have WP_ATTACK as the first item.
+					AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, enemyPos, index: 0);
+					AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, enemyPos, index: 0);
+					m_fTimerBehaviourCycle = ATTACK_CYCLE_WAIT;
+				}
+				else
+				{
+					//If no enemy found, add another patrol round in case one is already in the list.
+					if (SDRC_ChopperHelper.GetNextWayPointType(owner) != SDRC_EFlyWayPointType.WP_PATROL_ONCE)
+					{
+						AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, enemyPos, index: 0);
+					}
 				}
 				
 				break;

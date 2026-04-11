@@ -56,15 +56,16 @@ class SDRC_ChopperDebug
 		//Last point
 		vertices.Insert(chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1]);
 
+		const int NONE_COLOR = -2;	//NOTE: -1 is Color.WHITE so we another value
+		
 		//Add destinations if any
 		if (!chopperComp.m_vFlyDestinations.IsEmpty())
 		{	
-			int currentColor = -1;//Color.DARK_BLUE;
-			//vertices.Insert(SetColor(currentColor));
+			int currentColor = NONE_COLOR;
 			
 			foreach (SDRC_FlyPathPoint destination : chopperComp.m_vFlyDestinations)
 			{
-				int color = -1;
+				int color = NONE_COLOR;	
 
 				vector pos = destination.pt;
 				pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 20;
@@ -104,7 +105,7 @@ class SDRC_ChopperDebug
 				}
 				
 				//If no color change, skip. 
-				if (color == -1)
+				if (color == -2)
 				{
 					//This should never happen
 					continue;
@@ -220,13 +221,24 @@ class SDRC_ChopperDebug
 		
 		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_INFO))
 		{		
-			string debugText = 	//"Speedangle:" + angle * Math.RAD2DEG + "\n" +
-								SCR_Enum.GetEnumName(SDRC_EHeliState, chopperComp.GetState()) + " (" + 
-								SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimeInState) + ")";			
-								if (chopperComp.m_vEnemyPosition != vector.Zero)
-								{
-									debugText = debugText + " (enemy)";
-								}
+			string debugText = "";
+			//Show time in state
+			if (chopperComp.m_fTimeInState > 0)
+			{
+				debugText = debugText +	SCR_Enum.GetEnumName(SDRC_EHeliState, chopperComp.GetState()) + " (" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimeInState) + ")";
+			}
+
+			if (chopperComp.m_fTimerBehaviour > 0)
+			{
+				debugText = debugText +	SCR_Enum.GetEnumName(SDRC_EHeliBehaviour, chopperComp.GetBehaviour()) + " (" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimerBehaviour) + ")";
+			}
+			
+			//Show if enemy is known			
+			if (chopperComp.m_vEnemyPosition != vector.Zero)
+			{
+				debugText = debugText + " (enemy)";
+			}
+			
 			float health;
 			chopperComp.GetHealthScaled(owner, health);
 			

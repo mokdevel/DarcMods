@@ -10,7 +10,8 @@ enum SDRC_EFlyWayPointType
 	WP_FLY_IMMEDIATELY,			//   - Fly, but remove all already added destinations
 	WP_FLY_AWAY,				//   - Fly away as a last move
 	WP_FLY_AWAY_IMMEDIATELY,	//   - Fly away immediately removing the previous destinations
-	WP_PATROL,					//   - Patrol around an area
+	WP_PATROL,					//   - Patrol around an area 
+	WP_PATROL_ONCE,				//   - Do one patrol round around an area.
 	WP_LAND,					//   - 
 	WP_WAIT,					//   - 
 	WP_WAIT_GETOUT,				//   - Wait during get out. Sets the time and goes to WAIT
@@ -27,7 +28,8 @@ enum SDRC_EFlyWayPointType
 	WP_SEARCH_DESTROY,			//   - Search for enemy by patroling an area. If enemy is found, attack the location.
 	
 	//Macro actions
-	WP_M_RESET = 30,			//30 - Reset destinations
+	WP_M_RESET = 30,			//30 - Reset destinations. Cut the current flight planned and pick the next destination in the list.
+	WP_M_CUT,					//   - Cut the current flight planned and pick the next destination in the list.
 	WP_M_LAND_TROOPS,			//   - Drop of troops to exact position, wait and leave
 	WP_M_LAND_TO_FREE_SPOT,		//   - Drop of troops, but search for empty spot. Stop engine.
 	WP_M_EVAC_TROOPS,			//   - Drop troops to a safe spot and stop engine
@@ -84,10 +86,10 @@ enum SDRC_EHeliDamageLevel
 
 enum SDRC_EHeliBehaviour
 {
-	UNKNOWN,
-	NORMAL,
-	SEARCH_AND_DESTROY,
-	EVAC,
+	UNKNOWN_BEHAVIOUR,
+	NORMAL_BEHAVIOUR,
+	SEARCH_AND_DESTROY_BEHAVIOUR,
+	EVAC_BEHAVIOUR,
 }
 
 //------------------------------------------------------------------------------------------------
