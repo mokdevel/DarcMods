@@ -109,8 +109,10 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 			return;
 		}	
 
-		//Set origin values and angle
-		m_vPosOrigin[1] = SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin) + SDRC_Misc.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[1]);	//Adjust flight height								
+		//Set origin values and angle.
+		pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos);
+		//m_vPosOrigin[1] = SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin) + SDRC_Misc.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[1]);	//Adjust flight height								
+		m_vPosOrigin[1] = pos[1] + SDRC_Misc.RandomInt(m_Config.flyHeight[0], m_Config.flyHeight[1]);	//Adjust flight height								
 		m_fAngle = SDRC_Math.VectorToAngle(vector.Direction(m_vPosOrigin, pos));
 		
 		SDRC_Log.Add("[SDRC_Mission_Crashsite] " +  GetId() + " : Helicopter flying from " + m_vPosOrigin + " to " + pos + ". Angle: " + m_fAngle + ". Distance: " + m_fDistance, LogLevel.DEBUG);
@@ -270,7 +272,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		}
 		
 		float throttleCoef = m_fDistance / 1300;
-		throttleCoef = Math.Clamp(throttleCoef, 0.6, 0.95);
+		throttleCoef = Math.Clamp(throttleCoef, 0.6, 0.9);
 		
 		VehicleHelicopterSimulation m_Vehicle_s;
 		m_Vehicle_s = VehicleHelicopterSimulation.Cast(m_Vehicle.FindComponent(VehicleHelicopterSimulation));

@@ -63,7 +63,7 @@ sealed class SDRC_Conf
 	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
 	const bool SDRC_ENABLE_DARCSTORIES = false;
 	const bool SDRC_ENABLE_DARCCHOPPER = true;
-//	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
+	#define SDRC_CREATE_EXAMPLE_NONVALIDAREA
 	const bool OVERWRITE_JSON = true;			
 //	const bool OVERWRITE_JSON = false;
 	const bool SHOW_VALID_MISSION_AREAS = false;
