@@ -688,7 +688,12 @@ modded class SDRC_ChopperComp
 				
 				//Fly forward
 				vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, m_vFlyDestinations[0].pt[0]);				
-				pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + m_fFlyHeightLow + 5;			//Fly to a point slightly above low fly point
+				float height = m_vFlyDestinations[0].pt[1];
+				if (height == 0)
+				{
+					height = m_fFlyHeightLow + 5;
+				}
+				pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + height;			//Fly to a point slightly above low fly point
 				
 				for (int i = 0; i < 10; i++)
 				{

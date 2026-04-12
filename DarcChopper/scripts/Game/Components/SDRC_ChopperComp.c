@@ -973,60 +973,25 @@ class SDRC_ChopperComp : ScriptComponent
 			
 			//SDRC_DebugHelper.AddDebugPos(flyDestination.pt, ARGB(32, 255, 128, 64), 1.0, m_sDid, 50);
 			
+			bool destinationHandled = false;
+			//Counter used for various actions 
+			int patrolCount = 8;	//Do one round for patrol by default
+			
 			switch (flyDestination.type)
 			{
 				case SDRC_EFlyWayPointType.WP_ATTACK:
 				{
 					//Attack to be on low altitude
 					flyDestination.pt[1] = SDRC_Misc.GetSurfaceYWithWater(flyDestination.pt) + m_fFlyHeightLow;				
+					//NOTE: m_vAttackPosition has been set in AddDestination
 					break;
 				}
-			}
-						
-			//Distance of last flight point defined and the next destination
-			float distance = vector.DistanceXZ(m_vFlightPoints[m_vFlightPoints.Count() - 1].pt, flyDestination.pt);
-	
-			//Get the angle for the destination
-			vector p0 = m_vFlightPoints[m_vFlightPoints.Count() - 2].pt;
-			vector p1 = m_vFlightPoints[m_vFlightPoints.Count() - 1].pt;
-			vector p2 = flyDestination.pt;
-			float heliAngle = SDRC_Math.GetRadiansBetweenThreePointsXZ(p0, p1, p2) * Math.RAD2DEG;
-
-			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Distance: " + distance + " - Angle: " + heliAngle, LogLevel.SPAM);
-			
-			//Is the angle too steep? Re-route.
-			if ( (Math.AbsFloat(heliAngle) < params.wpSteepAngle) && (distance > 200) )
-			{				
-				SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle is steep: " + heliAngle, LogLevel.SPAM);
-				
-				//Get the last point
-				vector point = m_vFlightPoints[m_vFlightPoints.Count() - 1].pt;
-				
-				//We need to take a detour. Add an additional points outside of the line to make the route rounder				
-				float lerpRnd = SDRC_Misc.RandomFloat(0.25, 0.65);
-				float divRnd = SDRC_Misc.RandomFloat(1.5, 7);
-				
-				//Depending on the angle decide if we re-route left ot right				
-				bool isOnLeft = SDRC_Math.IsPointOnLeft(p0, p1, p2);
-								
-				//Find a point along the fly path and move it away from the line along tangent
-				vector vec = SDRC_Math.CreateOffsetMidPoint(point, flyDestination.pt, (distance / divRnd), lerpRnd, isOnLeft);
-				AddFlyPathPoint(vec);				
-				//SDRC_DebugHelper.AddDebugPos(vec, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
-			}
-			
-			AddFlyPathPoint(flyDestination.pt, flyDestination.type);
-
-			//Counter used for various actions 
-			int patrolCount = 8;	//Do one round for patrol by default
-						
-			switch (flyDestination.type)
-			{
 				case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 				{
 					SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, flyDestination.value);
+					//NOTE: m_vAttackPosition has been set in AddDestination
 					break;
-				}				
+				}
 				case SDRC_EFlyWayPointType.WP_PATROL:
 				{
 					patrolCount = SDRC_Misc.RandomInt(10, 25);
@@ -1052,16 +1017,52 @@ class SDRC_ChopperComp : ScriptComponent
 						pos = flyDestination.pt + dir * range;						
 						AddFlyPathPoint(pos);
 						//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid, 50 + i * 20);
-					}					
+					}
+					destinationHandled = true;
 					break;
 				}				
-				default:
-				{
-					SetNextState(owner, flyDestination.type, false);
-					break;
-				}
 			}
-
+					
+			if (!destinationHandled)
+			{	
+				//Distance of last flight point defined and the next destination
+				float distance = vector.DistanceXZ(m_vFlightPoints[m_vFlightPoints.Count() - 1].pt, flyDestination.pt);
+		
+				//Get the angle for the destination
+				vector p0 = m_vFlightPoints[m_vFlightPoints.Count() - 2].pt;
+				vector p1 = m_vFlightPoints[m_vFlightPoints.Count() - 1].pt;
+				vector p2 = flyDestination.pt;
+				float heliAngle = SDRC_Math.GetRadiansBetweenThreePointsXZ(p0, p1, p2) * Math.RAD2DEG;
+	
+				SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Distance: " + distance + " - Angle: " + heliAngle, LogLevel.SPAM);
+				
+				//Is the angle too steep? Re-route.
+//				if ( (Math.AbsFloat(heliAngle) < params.wpSteepAngle) && (distance > 200) )
+				if (Math.AbsFloat(heliAngle) < params.wpSteepAngle)
+				{				
+					SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle is steep: " + heliAngle, LogLevel.SPAM);
+					
+					//Get the last point
+					vector point = m_vFlightPoints[m_vFlightPoints.Count() - 1].pt;
+					
+					//We need to take a detour. Add an additional points outside of the line to make the route rounder				
+					float lerpRnd = SDRC_Misc.RandomFloat(0.25, 0.65);
+					float divRnd = SDRC_Misc.RandomFloat(1.5, 7);
+					
+					//Depending on the angle decide if we re-route left ot right				
+					bool isOnLeft = SDRC_Math.IsPointOnLeft(p0, p1, p2);
+									
+					//Find a point along the fly path and move it away from the line along tangent
+					vector vec = SDRC_Math.CreateOffsetMidPoint(point, flyDestination.pt, (distance / divRnd), lerpRnd, isOnLeft);
+					AddFlyPathPoint(vec);				
+					//SDRC_DebugHelper.AddDebugPos(vec, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
+				}
+				
+				AddFlyPathPoint(flyDestination.pt, flyDestination.type);
+				
+				SetNextState(owner, flyDestination.type, false);
+			}
+						
 			lastIdx = idx;
 			firstDestinationHandled = true;
 						
