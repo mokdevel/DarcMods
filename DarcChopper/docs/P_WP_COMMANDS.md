@@ -30,12 +30,20 @@ The commands are put in a First-In-First-Out array from where they're picked onc
 * WP_DESPAWN : Despawn the helicopter. KNOWN: AI is not despawned so .. lot's of fun. :-)
 * WP_M_RESET : Reset destinations. Cut the current flight planned and pick the next destination in the list.
 * WP_M_CUT : Cut the current flight planned and pick the next destination in the list.
+* WP_RAISE : Raise from ground to lowest flight height
 
 ### WP_SEARCH_DESTROY
 This will set the behaviour of the chopper to SEARCH_AND_DESTROY_BEHAVIOUR for a given time before returning back to NORMAL_BEHAVIOUR. The chopper will arrive at the destination and start to patrol the area. Enemy is searched with a cycle of 2 seconds. If an enemy is found, current flight is interrupted, and a new flight pattern to attack the enemy is created. Chopper will stay in attack mode for 60 seconds and then resume to patroling. 
 * ``destination`` : The position to keep an eye on. The helicopter will patrol around this area with a circle of 400m.  
 * ``value`` : The time to be in SEARCH_AND_DESTROY_BEHAVIOUR. Once time has passed, we return to NORMAL_BEHAVIOUR.
   * GM default: 600
+
+### WP_RAISE
+Raises the helicopter from the current position to given position while moving forward.
+* ``destination[0]`` : The distance to move forward.
+* ``destination[1]`` : The distance from ground to raise to. If left to 0, set the height to (minimum fly height + 5).
+* ``destination[2]`` : Not used
+* ``value`` : Not used
 
 ## Macro commands
 Assigning single macro command will perform a set of single commands. 
@@ -53,7 +61,6 @@ Assigning single macro command will perform a set of single commands.
 ## Internal commands
 * WP_UNDEFINED : Do not use
 * WP_LAND : Order chopper to do landing sequence
-* WP_RAISE : Raise from ground to lowest flight height
 * WP_HOVER : Hover at a certain altitude
 * WP_GET_OUT : Order AI to get out from the chopper
 * WP_HOVER_UP : Does the action and goes to HOVER state

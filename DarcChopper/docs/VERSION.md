@@ -5,6 +5,11 @@
 # 20260410
 Stable and Exp update.
 Fixes:
+* Various fixes on flight model and modding support.
+
+# 20260410
+Stable and Exp update.
+Fixes:
 * Obstacle avoidance improvements.
 * Health calculation based on engine and gearbox health.
 * A possible for fix chopper nose up issue (belly dancing)
