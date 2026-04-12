@@ -979,6 +979,7 @@ class SDRC_ChopperComp : ScriptComponent
 				{
 					//Attack to be on low altitude
 					flyDestination.pt[1] = SDRC_Misc.GetSurfaceYWithWater(flyDestination.pt) + m_fFlyHeightLow;				
+					break;
 				}
 			}
 						
