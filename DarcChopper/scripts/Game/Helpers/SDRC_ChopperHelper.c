@@ -100,8 +100,7 @@ class SDRC_ChopperHelper
 			vector dir1 = vector.Direction(owner.GetOrigin(), pos);
 			float angle = SDRC_Math.GetAngleBetweenVectorsXZ(dir1, chopperComp.m_vHeliDirectionFuture);
 			if (Math.AbsFloat(angle) < (110 * Math.DEG2RAD) )
-			{
-				
+			{				
 				break;
 			}			
 		}
@@ -412,27 +411,36 @@ class SDRC_ChopperHelper
 					isSmoothingNeeded = true;
 				}
 			}
-	
-			//If we're raising from the ground, put some of the points closer to ground
-	/*		if (m_eHeliState == SDRC_EHeliState.RAISE)
+					
+			//If we're braking set points towards the last point
+			if (chopperComp.GetState() == SDRC_EHeliState.BRAKE)
 			{
-				int count = m_vSplinePoints.Count() - 1;
+				int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
+
 				//Find high point, low point and difference
-				float p0 = m_vOrigin[1];
-				float p1 = m_vSplinePoints[m_vSplinePoints.Count() - 1][1];
-				float pdiff = p1 - p0;
-	
-				//Create a Y spline to replace the given points to smooth the curve for raising
-				foreach (int i, vector splinePoint : m_vSplinePoints)
-				{
-					float step = i / m_vSplinePoints.Count();
-					splinePoint[1] = p0 + pdiff * SDRC_Math.HalfBell(step);
-					m_vSplinePoints[i] = splinePoint;
+				vector v0 = chopperComp.m_vSplinePoints[chopperComp.m_iClosestIndex];
+				vector v1 = chopperComp.m_vSplinePoints[lastIdx];
+				
+				//Count a landing (bell) curve
+				float p0 = v0[1];
+				float p1 = v1[1];
+				float pdiff = p0 - p1;
+									
+				//Create a Y spline to replace the given points to smooth the curve for braking
+				int points = lastIdx - chopperComp.m_iClosestIndex;
+				for (int i = 0; i < points; i++)
+				{					
+					float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
+
+					vector pt = vector.Lerp(v1, v0, step);
+					pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
+					chopperComp.m_vSplinePoints[lastIdx - points + i] = pt;
+					chopperComp.m_vSplinePoints[lastIdx - points + i + 1] = pt;	//Ugly hack to make sure the last point is also modified
 				}
 				
 				isSmoothingNeeded = false;
-			}*/
-					
+			}					
+			
 			//If we're landing set some of the last points close to the ground
 			if (chopperComp.GetState() == SDRC_EHeliState.LAND)
 			{
@@ -474,8 +482,6 @@ class SDRC_ChopperHelper
 						pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
 						chopperComp.m_vSplinePoints[lastIdx - pointsToGround + i + 1] = pt;
 					}
-					
-//					smoothCount = chopperComp.m_vSplinePoints.Count() - pointsToGround;
 				}
 				
 				isSmoothingNeeded = false;

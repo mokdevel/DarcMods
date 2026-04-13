@@ -83,9 +83,6 @@ modded class SDRC_ChopperComp
 			return;
 		}
 		
-		//Collect groups in the helicopter 
-		SDRC_VehicleHelper.GroupFindAll(owner, m_aGroups);
-						
 		//Add fly destinations added to prefab to the array correctly.
 		array<ref SDRC_FlyPathPoint> flyDestinationsTemp = {};
 		foreach(SDRC_FlyPathPoint fpp : m_vFlyDestinations)
@@ -388,6 +385,8 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
 				m_vAttackPosition = destination;			//Where to attack
+				//Attack flying to be on low altitude
+				destination[1] = m_fFlyHeightLow;//SDRC_Misc.GetSurfaceYWithWater(destination.pt) + m_fFlyHeightLow;				
 
 				//With default attack time, set it to 60 seconds
 				if (value == -1)
@@ -403,20 +402,32 @@ modded class SDRC_ChopperComp
 				m_fTimerAttack = value;						//For how long to continue attacks
 				break;
 			}
-
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 			{
 				m_vAttackPosition = destination;			//Where to attack
 				break;
-			}			
-						
+			}								
+			case SDRC_EFlyWayPointType.WP_BRAKE:
+			{
+				if (value == 0 )
+				{
+					value = 200;
+				}
+				m_fBrakingDistance = value;
+				break;
+			}
+			
 			//These just fall through
 			case SDRC_EFlyWayPointType.WP_WAIT:
 			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
+			case SDRC_EFlyWayPointType.WP_RAISE:
+			case SDRC_EFlyWayPointType.WP_HOVER:
+			case SDRC_EFlyWayPointType.WP_HOVER_UP:
 			case SDRC_EFlyWayPointType.WP_GET_OUT:			//Handled in HandleState()
+			case SDRC_EFlyWayPointType.WP_END:
+			case SDRC_EFlyWayPointType.WP_DESPAWN:
 			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
 			case SDRC_EFlyWayPointType.WP_LAND:
-			case SDRC_EFlyWayPointType.WP_END:
 			case SDRC_EFlyWayPointType.WP_PATROL:
 			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
 			{
@@ -466,9 +477,12 @@ modded class SDRC_ChopperComp
 				AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
 				AddDestination(SDRC_EFlyWayPointType.WP_WAIT_GETOUT);
 				vector hoverPos = vector.Zero;
-				hoverPos[1] = m_fFlyHeightLow;
-				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 8);
-				AddDestination(SDRC_EFlyWayPointType.WP_RAISE, "150 0 0");
+				//hoverPos[1] = (m_fFlyHeightLow + m_fFlyHeightHigh)/2;	//We don't want to raise to exactly same position
+				hoverPos[1] = m_fFlyHeightLow * 0.7;		//We don't want to raise to exactly same position
+				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 5);
+				vector raisePos = "300 0 0";
+				raisePos[1] = m_fFlyHeightHigh;
+				AddDestination(SDRC_EFlyWayPointType.WP_RAISE, raisePos);
 				
 				//All things are already added
 				addDestinationPoint = false;
@@ -562,7 +576,13 @@ modded class SDRC_ChopperComp
 				HandleLanding(owner, timeSlice);	
 				break;
 			}
-			
+
+			case SDRC_EHeliState.BRAKE:
+			{
+				HandleBraking(owner, timeSlice);	
+				break;
+			}
+						
 			case SDRC_EHeliState.GET_OUT:
 			{
 				SetNextState(owner);
@@ -571,8 +591,9 @@ modded class SDRC_ChopperComp
 		}
 		
 		//Wait for the state timer to end and go to next state
-		if ( (m_eHeliState != SDRC_EHeliState.FLY) && (m_fTimeInState < 0) && m_bTimeInStateEnabled) 
-//		if ( (m_fTimeInState < 0) && (m_bTimeInStateEnabled) )
+		if (    (m_eHeliState != SDRC_EHeliState.FLY) 			//We do not automatically change state when flying
+		     //&& (m_eHeliState != SDRC_EHeliState.RAISE) 		//..or raising
+		     && (m_fTimeInState < 0) && m_bTimeInStateEnabled) 
 		{
 			SetNextState(owner);
 		}
@@ -647,6 +668,9 @@ modded class SDRC_ChopperComp
 	*/
 	override private void SetNextState(IEntity owner, SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.WP_UNDEFINED, bool allowRemove = true)
 	{
+		//Reset the timer between points as we're setting new state with new points.
+		m_fTimeBetweenPts = 0;
+		
 		//By default we remove the destination
 		bool isRemoveDestination = false;
 		
@@ -678,29 +702,38 @@ modded class SDRC_ChopperComp
 			//These will remove the item from destination list. These are considered handled.
 			case SDRC_EFlyWayPointType.WP_RAISE:
 			{				
+				SetState(SDRC_EHeliState.RAISE);
+				//SetTimeInState(10);
 				//NOTE: We do not use AddDestination() for setting the flight. We just add one point in the spline
 				
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
+				m_fSpeed = 0.1;
+				m_fSpeedMin = 0.1;
 				//For raise, we add points to the spline
 				ResetFlight();
 				
-				m_vSplinePoints.Insert(owner.GetOrigin());
+				//m_vSplinePoints.Insert(owner.GetOrigin());
 				
 				//Fly forward
 				vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, m_vFlyDestinations[0].pt[0]);				
 				float height = m_vFlyDestinations[0].pt[1];
-				if (height == 0)
+				if (height == -1)	//See docs
 				{
-					height = m_fFlyHeightLow + 5;
+					height = m_fFlyHeightLow + 2;
 				}
 				pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + height;			//Fly to a point slightly above low fly point
 				
-				for (int i = 0; i < 10; i++)
-				{
-					m_vSplinePoints.Insert(vector.Lerp(owner.GetOrigin(), pos, i/10));
+				float pdiff = pos[1] - m_vOrigin[1];
+				
+				for (int i = 0; i < 20; i++)
+				{	
+					vector pt = vector.Lerp(owner.GetOrigin(), pos, i/20);
+					pt[1] = m_vOrigin[1] + pdiff * SDRC_Math.HalfBell(i/20);
+					m_vSplinePoints.Insert(pt);										
+//					m_vSplinePoints.Insert(vector.Lerp(owner.GetOrigin(), pos, i/20));
 				}
+				
 				m_iClosestIndex = 3;				
-				SetState(SDRC_EHeliState.FLY);
 				
 				SDRC_ChopperDebug.DrawDebugPaths(owner);
 				isRemoveDestination = true;
@@ -740,14 +773,27 @@ modded class SDRC_ChopperComp
 				//Wait for disembark. Time is dependent of crew count
 				SetState(SDRC_EHeliState.WAIT);
 				int crewCount = SDRC_ChopperCrewHelper.CountCrew(GetOwner());
-				int time = 5 + crewCount * 4;	//Give N seconds per AI plus additional time				
+				int time = 5 + crewCount * 4;	//Give N seconds per AI plus additional time
 				SetTimeInState(time); 
 				isRemoveDestination = true;
 				break;
 			}
-			case SDRC_EFlyWayPointType.WP_HOVER_UP:
 			case SDRC_EFlyWayPointType.WP_HOVER:
 			{
+				SetState(SDRC_EHeliState.HOVER);
+				SetTimeInState(m_vFlyDestinations[0].value);
+				//Stop heli from moving
+				m_fSpeed = 0.01;
+				m_fSpeedMin = 0.01;
+				//m_fSpeedMax = 0.2;
+				isRemoveDestination = true;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_HOVER_UP:
+			{
+				SetState(SDRC_EHeliState.HOVER_UP);
+				SetTimeInState(m_vFlyDestinations[0].value);
+				
 				//NOTE: We do not use AddDestination() for setting the flight. We just add one point in the spline
 				
 				//Reset heli settings
@@ -756,7 +802,7 @@ modded class SDRC_ChopperComp
 				//Stop heli from moving
 				m_fSpeedMin = 0.3;
 				m_fSpeedMax = 0.6;
-				m_fSpeedLandingMul = 0;
+				m_fSpeedSlowingMul = 0;
 				
 				//For hovering, we add points to the spline
 				ResetFlight();
@@ -771,9 +817,6 @@ modded class SDRC_ChopperComp
 				m_iClosestIndex = 0;
 				//CreateNewFlight(owner, firstDestination);
 				
-				//Just wait.
-				SetState(SDRC_EHeliState.HOVER);
-				SetTimeInState(m_vFlyDestinations[0].value);
 				
 				SDRC_ChopperDebug.DrawDebugPaths(owner);
 				isRemoveDestination = true;
@@ -864,7 +907,7 @@ modded class SDRC_ChopperComp
 				}
 				
 				//This affects yaw-pitch-roll counting in SetTurn
-				m_fSpeedLandingMul = distMul;
+				m_fSpeedSlowingMul = distMul;
 			}
 			else
 			{
@@ -875,12 +918,55 @@ modded class SDRC_ChopperComp
 		        m_Helicopter_s.SetThrottle(0);
 				//Set values to stop moving
 				m_fSpeedTarget = 0.0001;
-				m_fSpeedLandingMul = 0;
+				m_fSpeedSlowingMul = 0;
 				m_fRotorForceMultiplier = 0;
 				SetNextState(owner);
 			}
 		}
 	}
+	
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Handle braking
+	*/
+	override private void HandleBraking(IEntity owner, float timeSlice)
+	{
+		vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];
+		float distance = vector.Distance(m_vOrigin, lastPt);
+
+		if (distance < m_fBrakingDistance)
+		{
+			if (!m_bIsBraking)
+			{
+				m_fSpeedBrakingOrig = m_fSpeed;
+				m_fPositionBrakingOrig = m_vOrigin;
+								
+				//We have started landing sequence so no need to count values
+				m_bIsBraking = true;
+			}
+			else
+			{
+				float distMul = distance / m_fBrakingDistance;
+				
+				//If we have passed the point, adjust values
+				if (SDRC_Math.HasPassedPointXZ(m_fPositionBrakingOrig, lastPt, owner.GetOrigin()))
+				{
+					distMul = 0;
+				}
+				
+				m_fSpeedTarget = m_fSpeedBrakingOrig * distMul + 0.01;
+				m_fSpeedMin = 0.001;
+				
+				//This affects yaw-pitch-roll counting in SetTurn
+				m_fSpeedSlowingMul = distMul;
+				
+				if (distMul < 0.01)
+				{
+					SetNextState(owner);
+				}
+			}
+		}
+	}	
 	
 	//------------------------------------------------------------------------------------------------	
 	// Misc

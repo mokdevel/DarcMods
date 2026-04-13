@@ -223,9 +223,10 @@ class SDRC_ChopperDebug
 		{		
 			string debugText = "";
 			//Show time in state
+			debugText = debugText +	SCR_Enum.GetEnumName(SDRC_EHeliState, chopperComp.GetState());
 			if (chopperComp.m_fTimeInState > 0)
 			{
-				debugText = debugText +	SCR_Enum.GetEnumName(SDRC_EHeliState, chopperComp.GetState()) + " (" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimeInState) + ")";
+				debugText = debugText +	" (" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimeInState) + ")";
 			}
 
 			if (chopperComp.m_fTimerBehaviour > 0)

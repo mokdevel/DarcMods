@@ -16,13 +16,14 @@ enum SDRC_EFlyWayPointType
 	WP_WAIT,					//   - 
 	WP_WAIT_GETOUT,				//   - Wait during get out. Sets the time and goes to WAIT
 	WP_RAISE,					//   - 
-	WP_HOVER,					//   - 
+	WP_HOVER,					//   - Heli is hovering in one place
+	WP_HOVER_UP,				//   - Heli is hovering up
 	WP_GET_OUT,					//   - 
+	WP_BRAKE,					//   - Slow the heli down to stand still
 	WP_END,						//   - 
 	WP_DESPAWN,					//   - 
 	
 	//One shot commands
-	WP_HOVER_UP,				//   - Does the action and goes to HOVER state
 	WP_STOP_ENGINE,				//   - Does the action and goes to WAIT state
 	WP_ATTACK,					//   - Sets attack position and time and then FLY
 	WP_SEARCH_DESTROY,			//   - Search for enemy by patroling an area. If enemy is found, attack the location.
@@ -45,9 +46,11 @@ enum SDRC_EHeliState
 	FLY_AWAY,				//In this state, when all destinations have been flown through, we fly away and end.
 	FLY_AWAY_IMMEDIATELY,	//NOTE: This is not a real state. When set, state will change to FLY_AWAY
 	LAND,					//Chopper is landing
+	BRAKE,					//Chopper is braking
 	WAIT,					//NOTE: Velocity disabled
-	RAISE,
-	HOVER,
+	RAISE,					//Heli is raising and moving forward to given position
+	HOVER,					//Heli is hovering at given height
+	HOVER_UP,				//Heli is hovering upwards
 	GET_OUT,				//One frame state to order AI to get out
 	END,
 	
@@ -115,7 +118,7 @@ class SDRC_ChopperCompCore
 		chopperComp.m_fSpeedMaxOrig = chopperComp.m_fSpeedMax;	
 		
 		//Reset runtime parameters
-		chopperComp.m_fSpeedLandingMul = 1.0;
+		chopperComp.m_fSpeedSlowingMul = 1.0;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -136,6 +139,6 @@ class SDRC_ChopperCompCore
 		chopperComp.SetEngine(true, chopperComp.m_fThrottle, chopperComp.m_fRotorForce0, chopperComp.m_fRotorForce1);
 		
 		//Reset runtime parameters
-		chopperComp.m_fSpeedLandingMul = 1.0;
+		chopperComp.m_fSpeedSlowingMul = 1.0;
 	}	
 }

@@ -172,6 +172,7 @@ class SDRC_ChopperComp : ScriptComponent
 	private float m_fTimeBetweenFixes = 0;
 	
 	float m_fTimeInState = -1;							//The timer to stay in a certain state. This is only in effect when positive value.
+	float m_fTimeInStateOrig = -1;						//The timer value that was set to m_fTimeInState. This can be used to calculate % gone from the time is was set.
 	private bool m_bTimeInStateEnabled = false;	
 	
 	//Flight path
@@ -209,7 +210,7 @@ class SDRC_ChopperComp : ScriptComponent
 	float m_fSpeedStart;								//Speed lerp start
 	float m_fSpeedTarget;								//Speed lerp target aka end
 	float m_fSpeedMul;									//Speed multiplier that depends on the turn
-	float m_fSpeedLandingMul;							//Landing speed modifier
+	float m_fSpeedSlowingMul;							//[0..1] Landing/braking speed modifier that affects speed and Yaw-Pitch-Roll.
 	float m_fRotorForceMultiplier;						//Rotor force multiplier that simulates up/down throttle
 	
 	//Angular velocities
@@ -247,6 +248,13 @@ class SDRC_ChopperComp : ScriptComponent
 	private float m_fLandingSpeed;				//The speed to descend the chopper
 	private float m_fSpeedLandingOrig;			//Speed from where we start to descend
 	private vector m_fPositionLandingOrig;		//Position from where we start to descend
+	
+	//Braking related
+	private bool m_bIsBraking;					//If true, braking sequence has started
+	float m_fBrakingDistance;					//Distance for braking
+	private float m_fBrakingSpeed;				//The speed to brake the chopper
+	private float m_fSpeedBrakingOrig;			//Speed from where we start to brake
+	private vector m_fPositionBrakingOrig;		//Position from where we start to brake
 	
 	//Enemy positions
 	vector m_vEnemyPosition = vector.Zero;		//Position of last found enemy
@@ -364,6 +372,9 @@ class SDRC_ChopperComp : ScriptComponent
 	{
 		m_bInInit = false;
 			
+		//Collect groups in the helicopter 
+		SDRC_VehicleHelper.GroupFindAll(owner, m_aGroups);
+		
 		//Check if pilots were possible to set
 		if (m_bUnpiloted)
 		{
@@ -434,18 +445,16 @@ class SDRC_ChopperComp : ScriptComponent
 		}		
 		//---
 		//Normal flying part
-		
-		//#ifdef WORKBENCH
-			if (m_fTimeBetweenPts > 20)
-			{
-				
+		if ( (m_fTimeBetweenPts > 20) && (m_eHeliState == SDRC_EHeliState.FLY) )
+		{
+			#ifdef WORKBENCH			
 				SDRC_Log.Add("[SDRC_ChopperComp] Time in point is very long.", LogLevel.DEBUG);
-				if (m_iClosestIndex < m_vSplinePoints.Count() - 1)
-				{
-					m_iClosestIndex++;
-				}						
-			}
-		//#endif		
+			#endif
+			if (m_iClosestIndex < m_vSplinePoints.Count() - 1)
+			{
+				m_iClosestIndex++;
+			}						
+		}
 	
 		//Adjust time depending on the speed.
 		m_fTimeTurnInterval = params.turnTimeIntervalBase / m_fSpeed;
@@ -605,7 +614,7 @@ class SDRC_ChopperComp : ScriptComponent
 		m_fSpeedMul = m_fThrottle * (SPEED_GAIN - (m_fSpeedMul / params.turnSpeedDivider));
 
 		//In case we're landing, we need to modify the speed
-		m_fSpeedMul = m_fSpeedMul * m_fSpeedLandingMul;
+		m_fSpeedMul = m_fSpeedMul * m_fSpeedSlowingMul;
 		
 		//Set 
 		m_fSpeedStart = m_fSpeed;
@@ -650,20 +659,20 @@ class SDRC_ChopperComp : ScriptComponent
 		//Count the angular velocity
 		m_vAngularVel = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vHeliDirection, deltaTime);
 
-		//Handle landing time angular velocities
-		if (m_fSpeedLandingMul < 0.3)
+		//Handle angular velocities when slowing down
+		if (m_fSpeedSlowingMul < 0.3)
 		{
-			//Flatten the chopper when landing
+			//Flatten the chopper when landing/braking
 			m_vAngularVel = vector.Zero;
 			m_vRadRollVel = vector.Zero;
 			m_vRadRollPitch = vector.Zero;
 		}
-		else if (m_fSpeedLandingMul < 1.0)
+		else if (m_fSpeedSlowingMul < 1.0)
 		{
 			//Do only minor adjustments
-			m_vAngularVel = m_vAngularVel * m_fSpeedLandingMul * 0.2;
-			m_vRadRollVel = m_vRadRollVel * m_fSpeedLandingMul;
-//			m_vRadRollPitch = m_vRadRollPitch * m_fSpeedLandingMul * 0.01;
+			m_vAngularVel = m_vAngularVel * m_fSpeedSlowingMul * 0.2;
+			m_vRadRollVel = m_vRadRollVel * m_fSpeedSlowingMul;
+//			m_vRadRollPitch = m_vRadRollPitch * m_fSpeedSlowingMul * 0.01;
 		}
 					
 		//ROLL UP (YAW): Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
@@ -702,7 +711,14 @@ class SDRC_ChopperComp : ScriptComponent
 			float vectorUp = velVector[1] * forceRotorUp * m_fRotorForceMultiplier;
 			vectorUp = Math.Clamp(vectorUp, -30, 30);
 			
-			velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, vectorUp, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
+			if (vectorUp == 0)
+			{
+				velVector = "0 -0.5 0";
+			}
+			else
+			{
+				velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, vectorUp, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
+			}
 		}
 				
 		owner.GetPhysics().SetVelocity(velVector);
@@ -724,22 +740,6 @@ class SDRC_ChopperComp : ScriptComponent
 
 		//The normal way to slowly go towards the spline
 		int bigMul = 30;
-		
-		switch (m_eHeliState)
-		{
-			case SDRC_EHeliState.HOVER:
-			{
-				//In HOVER state, do movemements slow
-				bigMul = 20;
-				break;
-			}		
-			case SDRC_EHeliState.RAISE:
-			{
-				//In RAISE state, do somewhat rapid climb slow
-				bigMul = 150;
-				break;
-			}
-		}
 
 		float belowFlyHeightLowMul = 1;
 		float distanceFromSplineMul = 1;
@@ -751,28 +751,57 @@ class SDRC_ChopperComp : ScriptComponent
 		{
 			heliHeightFromGround = 0.01;
 		}
-					
-		//In fly state, react to low flying
-		if (m_eHeliState == SDRC_EHeliState.FLY)
+		distanceFromSplineMul = (splineHeightFromGround - heliHeightFromGround) / heliHeightFromGround;			
+		
+		//Modify the values depending on state
+		switch (m_eHeliState)
 		{
-			//Modify if we're too close to the ground, do additional raise
-			if (m_fAltitude < m_fFlyHeightLow)
-			{				
-				belowFlyHeightLowMul = 1 + (m_fFlyHeightLow - m_fAltitude) / m_fAltitude;
-			}
-
-			//If we're close to an object infront of us, raise			
-			vector rayEnd = SDRC_ChopperHelper.GetDestinationForward(owner, params.rayLenFront);
-			rayEnd[1] = rayEnd[1] - params.rayDown;
-			float rayLen = SDRC_Misc.RayCastXZ(owner.GetOrigin(), rayEnd, owner);			
-			if (rayLen < 1)
+			case SDRC_EHeliState.HOVER_UP:
 			{
-				//rayLenMul = 1 + 10 * (1 - rayLen);
-				rayLenMul = 10 * (1.3 - rayLen);
+				if (m_fTimeInState > 0)
+				{
+					//In HOVER_UP state, do movemements slow
+					bigMul = bigMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
+				}
+				break;
+			}		
+			case SDRC_EHeliState.RAISE:
+			{
+				//In RAISE state, do slow climb
+				bigMul = 10;
+				break;
+			}
+			case SDRC_EHeliState.BRAKE:
+			{
+				//In BRAKE state, do movemements faster
+				bigMul = bigMul * 3.0;
+				break;
+			}		
+			case SDRC_EHeliState.HOVER:
+			{				
+				//Stay in one place
+				bigMul = 0;
+				break;
+			}
+			case SDRC_EHeliState.FLY:
+			{
+				//Modify if we're too close to the ground, do additional raise
+				if (m_fAltitude < m_fFlyHeightLow)
+				{				
+					belowFlyHeightLowMul = 1 + (m_fFlyHeightLow - m_fAltitude) / m_fAltitude;
+				}
+	
+				//If we're close to an object infront of us, raise			
+				vector rayEnd = SDRC_ChopperHelper.GetDestinationForward(owner, params.rayLenFront);
+				rayEnd[1] = rayEnd[1] - params.rayDown;
+				float rayLen = SDRC_Misc.RayCastXZ(owner.GetOrigin(), rayEnd, owner);			
+				if (rayLen < 1)
+				{
+					//rayLenMul = 1 + 10 * (1 - rayLen);
+					rayLenMul = 10 * (1.3 - rayLen);
+				}
 			}
 		}
-		
-		distanceFromSplineMul = (splineHeightFromGround - heliHeightFromGround) / heliHeightFromGround;
 		
 		m_fRotorForceMultiplier = bigMul * belowFlyHeightLowMul * distanceFromSplineMul * rayLenMul;
 	}
@@ -986,6 +1015,15 @@ class SDRC_ChopperComp : ScriptComponent
 					//NOTE: m_vAttackPosition has been set in AddDestination
 					break;
 				}
+				case SDRC_EFlyWayPointType.WP_BRAKE:
+				{
+					//Brake height modification
+					if (flyDestination.pt[1] != 0)
+					{
+						flyDestination.pt[1] = SDRC_Misc.GetSurfaceYWithWater(flyDestination.pt) + flyDestination.pt[1];				
+					}
+					break;
+				}
 				case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 				{
 					SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, flyDestination.value);
@@ -1070,12 +1108,6 @@ class SDRC_ChopperComp : ScriptComponent
 			{
 				break;
 			}
-			
-/*			//FLY points are handled in a serie. Others one at a time.
-			if (flyDestination.type != SDRC_EFlyWayPointType.WP_FLY)
-			{				
-				break;
-			}*/
 		}
 
 		//If only two points, add a mid point
@@ -1113,7 +1145,14 @@ class SDRC_ChopperComp : ScriptComponent
 			
 			m_bIsLanding = false;
 		}
-		
+
+		if (type == SDRC_EFlyWayPointType.WP_BRAKE)
+		{
+			SetState(SDRC_EHeliState.BRAKE);
+			
+			m_bIsBraking = false;
+		}		
+				
 		SDRC_FlyPathPoint fpp = new SDRC_FlyPathPoint();
 		
 		if (index == -1)
@@ -1206,6 +1245,7 @@ class SDRC_ChopperComp : ScriptComponent
 		}
 		
 		m_fTimeInState = seconds;
+		m_fTimeInStateOrig = seconds;
 		
 		if (seconds == 0)
 		{
@@ -1267,6 +1307,7 @@ class SDRC_ChopperComp : ScriptComponent
 	// Special handling - defined in modded class
 	//------------------------------------------------------------------------------------------------	
 	private void HandleLanding(IEntity owner, float timeSlice) {}
+	private void HandleBraking(IEntity owner, float timeSlice) {}
 	//------------------------------------------------------------------------------------------------	
 	// Enemy related - defined in modded class
 	//------------------------------------------------------------------------------------------------	
