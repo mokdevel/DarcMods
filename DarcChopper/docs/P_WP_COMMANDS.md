@@ -15,22 +15,44 @@ The function takes three parameters. Depending on the command used, the result m
 The commands are put in a First-In-First-Out array from where they're picked once the previous command has executed. The exception is ``WP_FLY`` which will be performed in a serie. 
 
 ## Tested (and should work)
-* WP_FLY : Fly, normal flight pattern
-* WP_FLY_IMMEDIATELY : Fly, but remove all already added destinations. This will interrupt any existing flight plans.
-* WP_FLY_AWAY : Fly away as a last move.
-* WP_FLY_AWAY_IMMEDIATELY : Fly away immediately removing any added destinations. This will interrupt any existing flight plans.
-* WP_STOP_ENGINE : Helicopter engine is stopped. Does the action and goes to WAIT state. 
-* WP_ATTACK : Sets attack position to shoot at. This is performed once.
-* WP_SEARCH_DESTROY : Search for enemy by patroling an area. If enemy is found, attack the location.
-* WP_PATROL : Patrol around an area.
-* WP_PATROL_ONCE : Do one patrol round around an area.
-* WP_WAIT : Wait, before moving to next state
-* WP_WAIT_GETOUT : Same as WP_WAIT, but time set is dependent on crew count
-* WP_END : Stop running SDRC_ChopperComp and let AR handle everything
-* WP_DESPAWN : Despawn the helicopter. KNOWN: AI is not despawned so .. lot's of fun. :-)
-* WP_M_RESET : Reset destinations. Cut the current flight planned and pick the next destination in the list.
-* WP_M_CUT : Cut the current flight planned and pick the next destination in the list.
-* WP_RAISE : Raise from ground to lowest flight height
+* ``WP_ATTACK`` : Sets attack position to shoot at. This is performed once.
+* ``WP_BRAKE``* : Brakes the helicopter speed to stand still.
+* ``WP_DESPAWN`` : Despawn the helicopter. KNOWN: AI is not despawned so .. lot's of fun. :-)
+* ``WP_END`` : Stop running SDRC_ChopperComp and let AR handle everything
+* ``WP_FLY`` : Fly, normal flight pattern
+* ``WP_FLY_AWAY`` : Fly away as a last move.
+* ``WP_FLY_AWAY_IMMEDIATELY`` : Fly away immediately removing any added destinations. This will interrupt any existing flight plans.
+* ``WP_FLY_IMMEDIATELY`` : Fly, but remove all already added destinations. This will interrupt any existing flight plans.
+* ``WP_GET_OUT`` : Order AI to get out from the chopper
+* ``WP_HOVER``* : Hover at a certain altitude
+* ``WP_HOVER_UP``* : Hover the helicopter up from the current height.
+* ``WP_M_CUT`` : Cut the current flight planned and pick the next destination in the list.
+* ``WP_M_RESET`` : Reset destinations. Cut the current flight planned and pick the next destination in the list.
+* ``WP_PATROL`` : Patrol around an area.
+* ``WP_PATROL_ONCE`` : Do one patrol round around an area.
+* ``WP_RAISE``* : Raises the helicopter from the current position to given position while moving forward increasing speed.
+* ``WP_SEARCH_DESTROY``* : Search for enemy by patroling an area. If enemy is found, attack the location.
+* ``WP_STOP_ENGINE`` : Helicopter engine is stopped. Does the action and goes to WAIT state. 
+* ``WP_WAIT`` : Wait, before moving to next state
+* ``WP_WAIT_GETOUT`` : Same as WP_WAIT, but time set is dependent on crew count
+
+### WP_BRAKE
+Brakes the helicopter speed to stand still.
+* ``destination[0][2]`` : The position XZ to stop at.
+* ``destination[1]`` : The relative height from ground to stop at. This is not exact, but rather a wish. If left to 0, normal flight pattern height is set.
+* ``value`` : Distance to start braking. If 0, defaults to 200.
+
+### WP_HOVER
+Hover the helicopter at current height. You should always do a ``WP_BRAKE`` before this.
+* ``destination`` : Not used.
+* ``value`` : Time to stay hovering
+
+### WP_HOVER_UP
+Hover the helicopter up from the current height.
+* ``destination[0]`` : Not used.
+* ``destination[1]`` : The relative distance to raise up.
+* ``destination[2]`` : Not used
+* ``value`` : Time to use for upwards movement
 
 ### WP_SEARCH_DESTROY
 This will set the behaviour of the chopper to SEARCH_AND_DESTROY_BEHAVIOUR for a given time before returning back to NORMAL_BEHAVIOUR. The chopper will arrive at the destination and start to patrol the area. Enemy is searched with a cycle of 2 seconds. If an enemy is found, current flight is interrupted, and a new flight pattern to attack the enemy is created. Chopper will stay in attack mode for 60 seconds and then resume to patroling. 
@@ -39,9 +61,9 @@ This will set the behaviour of the chopper to SEARCH_AND_DESTROY_BEHAVIOUR for a
   * GM default: 600
 
 ### WP_RAISE
-Raises the helicopter from the current position to given position while moving forward.
+Raises the helicopter from the current position to given position while moving forward increasing speed.
 * ``destination[0]`` : The distance to move forward.
-* ``destination[1]`` : The distance from ground to raise to. If left to 0, set the height to (minimum fly height + 5).
+* ``destination[1]`` : The distance from ground to raise to. If left to -1, set the height to (minimum fly height + 5).
 * ``destination[2]`` : Not used
 * ``value`` : Not used
 
@@ -61,9 +83,6 @@ Assigning single macro command will perform a set of single commands.
 ## Internal commands
 * WP_UNDEFINED : Do not use
 * WP_LAND : Order chopper to do landing sequence
-* WP_HOVER : Hover at a certain altitude
-* WP_GET_OUT : Order AI to get out from the chopper
-* WP_HOVER_UP : Does the action and goes to HOVER state
 * WP_M_TESTING : Just for testing
 
 # Behaviour
