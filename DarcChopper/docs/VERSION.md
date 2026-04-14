@@ -2,10 +2,11 @@
 
 ## Next Version
 
-# 20260410
+# 20260414
 Stable and Exp update.
 Fixes:
 * Various fixes on flight model and modding support.
+* New commands: ``WP_HOVER``, ``WP_BRAKE``
 
 # 20260410
 Stable and Exp update.
