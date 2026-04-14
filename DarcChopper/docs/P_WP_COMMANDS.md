@@ -39,8 +39,10 @@ The commands are put in a First-In-First-Out array from where they're picked onc
 ### WP_BRAKE
 Brakes the helicopter speed to stand still.
 * ``destination[0][2]`` : The position XZ to stop at.
-* ``destination[1]`` : The relative height from ground to stop at. This is not exact, but rather a wish. If left to 0, normal flight pattern height is set.
-* ``value`` : Distance to start braking. If 0, defaults to 200.
+* ``destination[1]`` : The relative height from ground to stop at. This is not exact, but rather a wish. 
+  * If 0, normal flight pattern height is set.
+* ``value`` : Distance to start braking. 
+  * If 0, defaults to 200.
 
 ### WP_HOVER
 Hover the helicopter at current height. You should always do a ``WP_BRAKE`` before this.
@@ -62,8 +64,10 @@ This will set the behaviour of the chopper to SEARCH_AND_DESTROY_BEHAVIOUR for a
 
 ### WP_RAISE
 Raises the helicopter from the current position to given position while moving forward increasing speed.
-* ``destination[0]`` : The distance to move forward.
-* ``destination[1]`` : The distance from ground to raise to. If left to -1, set the height to (minimum fly height + 5).
+* ``destination[0]`` : The relative distance to move forward.
+  * If 0, defaults to 200
+* ``destination[1]`` : The relative distance from ground to raise to. 
+  * If -1, set the height to (minimum fly height + 5).
 * ``destination[2]`` : Not used
 * ``value`` : Not used
 

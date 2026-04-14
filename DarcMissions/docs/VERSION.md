@@ -5,7 +5,7 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 
-# 20260414
+# 20260413
 Fixes:
 * Crashsite mission spawning height modified. Should/could crash closer to requested position.
 * Static missions did not spawn correctly if no players in game.

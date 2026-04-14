@@ -4,6 +4,13 @@
 
 # 20260414
 Stable and Exp update.
+Main features:
+* Spawning the chopper on ground, will make it wait 30 seconds before hovering up and starting to fly. Setting on ground in GM makes a small jump (TBF).
+Fixes:
+* ``WP_DESPAWN`` removes also crew in the helicopter.
+
+# 20260413
+Stable and Exp update.
 Fixes:
 * Various fixes on flight model and modding support.
 * New commands: ``WP_HOVER``, ``WP_BRAKE``
