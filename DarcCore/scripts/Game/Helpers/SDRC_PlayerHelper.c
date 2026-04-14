@@ -233,9 +233,12 @@ sealed class SDRC_PlayerHelper
 	static bool IsInGMmode()
 	{
 		SCR_EditorManagerEntity editorManager = SCR_EditorManagerEntity.GetInstance();
-		if (editorManager && editorManager.IsOpened() && !editorManager.IsLimited())
+		if (editorManager)
 		{
-			return true;
+			if (editorManager.IsOpened() && !editorManager.IsLimited())
+			{
+				return true;
+			}
 		}
 		
 		return false;

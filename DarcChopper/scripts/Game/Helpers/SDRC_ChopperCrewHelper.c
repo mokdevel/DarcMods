@@ -216,6 +216,37 @@ class SDRC_ChopperCrewHelper
 	}
 
 	//------------------------------------------------------------------------------------------------
+	static void DespawnCrew(IEntity owner)
+	{
+		array<SCR_AIGroup> groups = {};
+	
+		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (!chopperComp)
+		{
+			return;
+		}
+
+		//Find crew
+		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(owner.FindComponent(SCR_BaseCompartmentManagerComponent));
+		if (!scr_compartmentManager)
+		{
+			return;
+		}
+		
+		array<IEntity> occupants = {};
+		scr_compartmentManager.GetOccupantsOfType(occupants, ECompartmentType.PILOT);
+		scr_compartmentManager.GetOccupantsOfType(occupants, ECompartmentType.TURRET);
+		scr_compartmentManager.GetOccupantsOfType(occupants, ECompartmentType.CARGO);
+		
+		//Remove AI entities
+		for (int i = 0; i < occupants.Count(); i++)
+		{
+			IEntity occupant = occupants[i];
+			SDRC_SpawnHelper.DespawnItem(occupant);			
+		}
+	}	
+	
+	//------------------------------------------------------------------------------------------------
 	static void GetOut(IEntity owner)
 	{
 		
@@ -281,8 +312,12 @@ class SDRC_ChopperCrewHelper
 		}
 		
 		//Find pilots
-		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(owner.FindComponent(SCR_BaseCompartmentManagerComponent));
-		
+		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(owner.FindComponent(SCR_BaseCompartmentManagerComponent));	
+		if (!scr_compartmentManager)
+		{
+			return;
+		}
+				
 		array<IEntity> occupants = {};
 		array<AIGroup> groups = {};
 		scr_compartmentManager.GetOccupantsOfType(occupants, ECompartmentType.PILOT);

@@ -155,8 +155,8 @@ class SDRC_ChopperComp : ScriptComponent
 	bool m_bShowDebug;
 	
 	//Timing stuff
-	private const float TIME_DELAY_READY = 0.5;			//(seconds) Time before we spawn AIs and init flight path. This will give time for the chopper to properly initialize
-	private const float TIME_IN_INIT = 0.5;				//(seconds) Time to be in init state (after READY). During this time, we don't check for damage or similar things.
+	private const float TIME_DELAY_READY = 1;			//(seconds) Time before we spawn AIs and init flight path. This will give time for the chopper to properly initialize
+	private const float TIME_IN_INIT = 1;				//(seconds) Time to be in init state (after READY). During this time, we don't check for damage or similar things.
 	
 	//Original destination	
 	private vector m_vOriginalDestination;				//Used to know where to patrol
@@ -279,20 +279,13 @@ class SDRC_ChopperComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	override void EOnInit(IEntity owner)
 	{
-		//SDRC_Log.Add("[SDRC_ChopperComp:EOnInit] Here!", LogLevel.DEBUG);
-				
+		SDRC_Log.Add("[SDRC_ChopperComp:EOnInit] Here!", LogLevel.DEBUG);
 		SDRC_SpawnHelper.SetPersistence(owner, false);
-
-		GetGame().GetCallqueue().CallLater(Setup, TIME_DELAY_READY * 1000, false, owner);		
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
 	{
-		#ifdef CHOPPER_TESTING
-			m_fDistanceLow = SDRC_Misc.RandomInt(250, 600);
-		#endif
-		
 		if (!GetGame().GetWorld())
 		{
 			return;
@@ -305,10 +298,11 @@ class SDRC_ChopperComp : ScriptComponent
 		
 		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp", LogLevel.NORMAL);
 		
+		//Deactivate(owner);
 		SetupTypeParams(owner);
 		SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, m_fDistanceLow, m_fDistanceHigh);						
 		
-		SetEventMask(owner, EntityEvent.INIT);
+		//SetEventMask(owner, EntityEvent.INIT);
 		s_Instance = this;
 		m_sDid = SDRC_Misc.GetCurrentTickTime().ToString() + Math.RandomInt(0, 10000);
 		m_fHealthOrig = SDRC_VehicleHelper.GetHealth(owner);
@@ -336,7 +330,15 @@ class SDRC_ChopperComp : ScriptComponent
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp] VehicleHelicopterSimulation not found.", LogLevel.ERROR);
 		}
-
+		
+		/* owner.GetPhysics().ChangeSimulationState(SimulationState.COLLISION);
+		owner.GetPhysics().EnableGravity(false);
+		owner.GetPhysics().ClearForces(); */
+		
+		owner.GetPhysics().SetVelocity("0 0 0");
+		
+		GetGame().GetCallqueue().CallLater(Setup, TIME_DELAY_READY * 1000, false, owner);		
+		
 		super.OnPostInit(owner);
 	}
 	
@@ -404,6 +406,9 @@ class SDRC_ChopperComp : ScriptComponent
 		
 		if (m_bInInit)
 		{
+			//While in init, do not move
+			owner.GetPhysics().SetVelocity(vector.Zero);
+			
 			//If the chopper is damaged, init is considered done.
 			if (m_eDamageLevel != SDRC_EHeliDamageLevel.UNDAMAGED)
 			{
@@ -471,14 +476,17 @@ class SDRC_ChopperComp : ScriptComponent
 					SDRC_Log.Add("[SDRC_ChopperComp] Fixing flight.", LogLevel.DEBUG);
 				#endif
 
-				//Cut the spline and add another point to which the heli should turn to.				
+				//Cut the spline
 				SDRC_ChopperHelper.CutSplineHead(m_vSplinePoints, m_iClosestIndex);
 				
+				//Add another point behind the heli. Heli should fix it's flight
 				vector direction = vector.Direction(m_vSplinePoints[1], m_vSplinePoints[0]);
 				direction.Normalize();
 				vector newPos = m_vSplinePoints[0] + direction * 200;
 				newPos[1] = m_vOrigin[1];
 				m_vSplinePoints.InsertAt(newPos, 0);
+				
+				//Reset runtime values
 				m_iClosestIndex = 0;
 				m_fTimeBetweenFixes = FLIGHT_FIX_TIME * 5;	//Let's give some time to do the actual fix
 				
@@ -506,12 +514,11 @@ class SDRC_ChopperComp : ScriptComponent
 		m_iDestinationPointAdd = Math.ClampInt(m_iDestinationPointAdd, 1, 3);
 		
 		//Find where we're going
-//		float distance = SDRC_Spline3D.GetDistanceFromSpline(m_vSplinePoints, m_vOrigin, m_iClosestIndex, false);	//NOTE: This will set m_iClosestIndex
 		m_iClosestIndex = SDRC_ChopperHelper.FindNextSplinePointIndex(m_vOrigin, m_iClosestIndex, m_vSplinePoints);
 		
 		if (m_iClosestIndex > m_iOldClosestIndex)
 		{
-			m_fTimeBetweenPtsAvg = m_fTimeBetweenPts;		//TBD: This is a static value of previous time instead of average 
+			m_fTimeBetweenPtsAvg = m_fTimeBetweenPts;		//TBD: m_fTimeBetweenPtsAvg is a static value of previous time instead of average 
 			m_fTimeBetweenPts = 0;
 			m_iOldClosestIndex = m_iClosestIndex;
 		}
@@ -520,6 +527,7 @@ class SDRC_ChopperComp : ScriptComponent
 		m_iFutureIndex = m_iClosestIndex + (m_iDestinationPointAdd * 2);
 		m_iNextIndex = m_iClosestIndex + m_iDestinationPointAdd;
 
+		//Check that values are within limits
 		if (m_iNextIndex > m_vSplinePoints.Count() - 1)
 		{
 			m_iNextIndex = m_vSplinePoints.Count() - 1;
@@ -529,7 +537,12 @@ class SDRC_ChopperComp : ScriptComponent
 		{
 			m_iFutureIndex = m_vSplinePoints.Count() - 1;
 		}
-		
+
+		if (m_fTimeBetweenPtsAvg == 0)
+		{
+			m_fTimeBetweenPtsAvg = 0.01
+		}
+				
 		//Lerped m_vDestination that keeps on moving along the spline
 		float td = m_fTimeBetweenPts / m_fTimeBetweenPtsAvg;
 		td = Math.Clamp(td, 0, 1);
@@ -721,6 +734,11 @@ class SDRC_ChopperComp : ScriptComponent
 			}
 		}
 				
+		/*if (m_bInInit)
+		{
+			velVector = vector.Zero;
+		}*/
+		
 		owner.GetPhysics().SetVelocity(velVector);
 	}
 	
@@ -831,35 +849,49 @@ class SDRC_ChopperComp : ScriptComponent
 		//Store the origin. This value is updated in EOnFrame, but needed already in calculations.
 		m_vOrigin = owner.GetOrigin();				
 				
-		//TBD: Are we on low altitude? Hover up...
-		/* if (m_vOrigin[1] < SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + m_fFlyHeightLow)
-		{		
-			vector hoverPos = vector.Zero;
-			hoverPos[1] = m_fFlyHeightLow;
-			AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 5);
-		} */
-
-		//If a fly destination has been assigned, use it
-		if ( (!m_vFlyDestinations.IsEmpty()) && (destination == vector.Zero) )
-		{
-			destination = m_vFlyDestinations[0].pt;
-		}		
-		else 
-		{		
-			//If no destination has been assigned, create a random one.
-			if (destination == vector.Zero)
+		//If we're on low altitude, wait for a moment and then hover to start flight
+		if ( (m_vFlyDestinations.IsEmpty()) && (m_vOrigin[1] < SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, owner) + 5) )
+		{	
+/*			vector origin = m_vOrigin;
+			origin[1] = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, owner) - 1;
+			owner.SetOrigin(origin);*/
+				
+			//Check if there is a destination assigned. Use this for the future destination
+			if ( (!m_vFlyDestinations.IsEmpty()) && (destination == vector.Zero) )
 			{
-				destination = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial);
-				//Make sure we're on proper flight height.
-				destination[1] = SDRC_ChopperHelper.SetPointHeight(destination, m_fFlyHeightLow, m_fFlyHeightHigh); 
+				destination = m_vFlyDestinations[0].pt;
 			}
-			AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
+			
+			//The low start destinations are added in the beginning of the list.
+			//These are added in reverse order to index 0
+			vector hoverPos = vector.Zero;
+			hoverPos[1] = (m_fFlyHeightLow + m_fFlyHeightHigh) / 2;
+			AddDestination(SDRC_EFlyWayPointType.WP_RAISE, hoverPos, 5, 0);
+			hoverPos[1] = m_fFlyHeightLow;
+			AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 8, 0);
+			AddDestination(SDRC_EFlyWayPointType.WP_HOVER, "0 0 0", 5, 0);
+		}
+		else //In the air. Normal case to check if a destination was assigned
+		{
+			//If a fly destination has been assigned, use it
+			if ( (!m_vFlyDestinations.IsEmpty()) && (destination == vector.Zero) )
+			{
+				destination = m_vFlyDestinations[0].pt;
+				//Add the destination to the list
+				AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
+			}
+		}
+		
+		//If no destination has been assigned, create a random one to use for rotating the chopper
+		if (destination == vector.Zero)
+		{
+			destination = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial);
+			//Make sure we're on proper flight height.
+			destination[1] = SDRC_ChopperHelper.SetPointHeight(destination, m_fFlyHeightLow, m_fFlyHeightHigh); 
 		}
 
-		SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Chopper initial position: " + owner.GetOrigin(), LogLevel.DEBUG);
-		
 		//Turn chopper to face the first destination
-		SDRC_Math.TurnEntityTowardsXZ(owner, destination);
+		SDRC_Math.TurnEntityTowardsXZ(owner, destination);				
 		
 		SDRC_ChopperHelper.SetFlightPointHeight(owner);
 		
@@ -879,7 +911,9 @@ class SDRC_ChopperComp : ScriptComponent
 		
 		m_fSpeed = 0.1;
 		m_fSpeedTarget = m_fSpeed;
-		
+
+		SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Chopper initial position: " + owner.GetOrigin(), LogLevel.DEBUG);
+				
 		//NOTE: We draw the debug paths once the component is ready
 	}
 	
@@ -1003,8 +1037,7 @@ class SDRC_ChopperComp : ScriptComponent
 			//SDRC_DebugHelper.AddDebugPos(flyDestination.pt, ARGB(32, 255, 128, 64), 1.0, m_sDid, 50);
 			
 			bool destinationHandled = false;
-			//Counter used for various actions 
-			int patrolCount = 8;	//Do one round for patrol by default
+			int patrolCount = 8;	//Do one round for patrol by default (8*45 degrees)
 			
 			switch (flyDestination.type)
 			{
@@ -1022,6 +1055,12 @@ class SDRC_ChopperComp : ScriptComponent
 					{
 						flyDestination.pt[1] = SDRC_Misc.GetSurfaceYWithWater(flyDestination.pt) + flyDestination.pt[1];				
 					}
+					break;
+				}
+				case SDRC_EFlyWayPointType.WP_HOVER:
+				{
+					SetNextState(owner, flyDestination.type, false);					
+					destinationHandled = true;
 					break;
 				}
 				case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
@@ -1174,7 +1213,7 @@ class SDRC_ChopperComp : ScriptComponent
 	float GetAltitude()
 	{
 		//Start to look for a position below heli
-		float y = m_vOrigin[1] - SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, -0.1);
+		float y = m_vOrigin[1] - SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, GetOwner(), -0.1);
 		if (y < 0)
 		{
 			y = 0.001;	//Do not set to zero as this is used in some division calculations

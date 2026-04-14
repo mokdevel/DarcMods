@@ -41,6 +41,13 @@ modded class SCR_EditorManagerEntity
 			return isOpened;
 		}
 		
+		//If in ArmaVision, leave
+		if (IsLimited())
+		{
+			SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:IsOpened] Limited mode.", LogLevel.DEBUG);
+			return isOpened;
+		}
+		
 		if (isOpened)
 		{
 			//int ticktime = SDRC_Misc.GetCurrentTickTime();			
@@ -74,7 +81,7 @@ modded class SCR_EditorManagerEntity
 	//------------------------------------------------------------------------------------------------
 	override void EOnFrame(IEntity owner, float timeSlice) //--- Active only when the entity is local (see InitOwner())
 	{		
-		if (m_wCanvas)
+		if ( (m_wCanvas) && (IsOpened()) )
 		{
 			if (!SDRC_PlayerHelper.IsGMInterfaceVisible())
 			{

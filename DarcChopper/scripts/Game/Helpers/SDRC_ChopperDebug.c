@@ -291,16 +291,18 @@ class SDRC_ChopperDebug
 		{		
 			return;
 		}
-		
+				
 		int idx = chopperComp.m_iClosestIndex;
 		if (idx > chopperComp.m_vSplinePoints.Count() - 1)
 		{
 			idx = chopperComp.m_vSplinePoints.Count() - 1;			
-			//SDRC_Log.Add("[SDRC_ChopperComp:DrawHelicopterVectors] Index fixed.", LogLevel.WARNING);
 		}
-						
+			
 		//Planned destination
-		SDRC_ChopperDebug.DrawLine(origin, chopperComp.m_vSplinePoints[idx], Color.GRAY);		
+		if (idx > -1)	//If no spline points, don't draw this line
+		{
+			SDRC_ChopperDebug.DrawLine(origin, chopperComp.m_vSplinePoints[idx], Color.GRAY);		
+		}
 		
 		//Chopper destination direction vector
 		SDRC_ChopperDebug.DrawLine(origin, chopperComp.m_vDestination, Color.WHITE);

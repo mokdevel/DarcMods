@@ -48,6 +48,30 @@ modded class SDRC_ChopperComp
 	{
 		SDRC_Log.Add("[SDRC_ChopperComp:Ready] Called..", LogLevel.DEBUG);
 		
+		//Add fly destinations added to prefab to the array correctly.
+		array<ref SDRC_FlyPathPoint> flyDestinationsTemp = {};
+		foreach(SDRC_FlyPathPoint fpp : m_vFlyDestinations)
+		{
+			flyDestinationsTemp.Insert(fpp);
+		}
+		ResetDestinations();
+		foreach(SDRC_FlyPathPoint fpp : flyDestinationsTemp)
+		{
+			AddDestination(fpp.type, fpp.pt, fpp.value);
+		}		
+		
+		// Some things needs to be done delayed
+		if (m_bAutoStart)
+		{
+			//Init flight path
+			InitFlight(owner);
+		}
+		
+		SDRC_ChopperDebug.DrawDebugPaths(owner);		
+
+		SetEventMask(owner, EntityEvent.FRAME);
+		Activate(owner);
+				
 		//Set ready in a few seconds
 		GetGame().GetCallqueue().CallLater(ReadyDelayed, TIME_DELAY_READY * 1000, false, owner);
 	}
@@ -83,32 +107,9 @@ modded class SDRC_ChopperComp
 			return;
 		}
 		
-		//Add fly destinations added to prefab to the array correctly.
-		array<ref SDRC_FlyPathPoint> flyDestinationsTemp = {};
-		foreach(SDRC_FlyPathPoint fpp : m_vFlyDestinations)
-		{
-			flyDestinationsTemp.Insert(fpp);
-		}
-		ResetDestinations();
-		foreach(SDRC_FlyPathPoint fpp : flyDestinationsTemp)
-		{
-			AddDestination(fpp.type, fpp.pt, fpp.value);
-		}		
-		
-		// Some things needs to be done delayed
-		if (m_bAutoStart)
-		{
-			//Init flight path
-			InitFlight(owner);
-		}
-
-		SDRC_ChopperDebug.DrawDebugPaths(owner);
-		
 		if (owner)	//In case the owner was deleted before we ended up here
 		{
-			SetEventMask(owner, EntityEvent.FRAME);
-			//SetEventMask(owner, EntityEvent.FRAME | EntityEvent.FIXEDFRAME);
-			Activate(owner);
+			SetEventMask(owner, EntityEvent.INIT);
 			
 			GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000, false, owner);
 		}
@@ -144,8 +145,8 @@ modded class SDRC_ChopperComp
 	*/	
 	override void DeSpawn(IEntity owner)
 	{
-		//TBD: Despawn AI
-		
+		//Despawn AI
+		SDRC_ChopperCrewHelper.DespawnCrew(owner);		
 		Deactivate(owner);
 		SDRC_Log.Add("[SDRC_ChopperComp:DeSpawn] Despawning: " + owner, LogLevel.DEBUG);
 		delete owner;
@@ -715,7 +716,11 @@ modded class SDRC_ChopperComp
 				//m_vSplinePoints.Insert(owner.GetOrigin());
 				
 				//Fly forward
-				vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, m_vFlyDestinations[0].pt[0]);				
+				if (m_vFlyDestinations[0].pt[0] == 0)
+				{
+					m_vFlyDestinations[0].pt[0] = 200;
+				}
+				vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, m_vFlyDestinations[0].pt[0]);
 				float height = m_vFlyDestinations[0].pt[1];
 				if (height == -1)	//See docs
 				{
@@ -750,31 +755,6 @@ modded class SDRC_ChopperComp
 			{
 				SetState(SDRC_EHeliState.DESPAWN);
 				m_vSplinePoints.Clear();
-				isRemoveDestination = true;
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_GET_OUT:
-			{
-				SDRC_ChopperCrewHelper.GetOut(owner);
-				SetState(SDRC_EHeliState.GET_OUT);
-				isRemoveDestination = true;
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_WAIT:
-			{
-				//Just wait
-				SetState(SDRC_EHeliState.WAIT);
-				SetTimeInState(m_vFlyDestinations[0].value); 
-				isRemoveDestination = true;
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
-			{
-				//Wait for disembark. Time is dependent of crew count
-				SetState(SDRC_EHeliState.WAIT);
-				int crewCount = SDRC_ChopperCrewHelper.CountCrew(GetOwner());
-				int time = 5 + crewCount * 4;	//Give N seconds per AI plus additional time
-				SetTimeInState(time); 
 				isRemoveDestination = true;
 				break;
 			}
@@ -822,6 +802,13 @@ modded class SDRC_ChopperComp
 				isRemoveDestination = true;
 				break;
 			}
+			case SDRC_EFlyWayPointType.WP_GET_OUT:
+			{
+				SDRC_ChopperCrewHelper.GetOut(owner);
+				SetState(SDRC_EHeliState.GET_OUT);
+				isRemoveDestination = true;
+				break;
+			}
 			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
 			{
 				//Stop engine and wait
@@ -829,6 +816,24 @@ modded class SDRC_ChopperComp
 				SetEngine(false, 0, 0, 0);
 				SetState(SDRC_EHeliState.WAIT);
 				SetTimeInState(30);
+				isRemoveDestination = true;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_WAIT:
+			{
+				//Just wait
+				SetState(SDRC_EHeliState.WAIT);
+				SetTimeInState(m_vFlyDestinations[0].value); 
+				isRemoveDestination = true;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
+			{
+				//Wait for disembark. Time is dependent of crew count
+				SetState(SDRC_EHeliState.WAIT);
+				int crewCount = SDRC_ChopperCrewHelper.CountCrew(GetOwner());
+				int time = 5 + crewCount * 4;	//Give N seconds per AI plus additional time
+				SetTimeInState(time); 
 				isRemoveDestination = true;
 				break;
 			}

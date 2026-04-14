@@ -322,7 +322,7 @@ sealed class SDRC_Misc
 	\param doTrace If true, an additional ray cast is done to find the highest point on the location. For example, there could be a building.
 	\param traceHeightMod From which height the trace should start
 	*/	
-	static float GetSurfaceYWithWater(vector position, bool doTrace = false, float traceHeightMod = 200)
+	static float GetSurfaceYWithWater(vector position, bool doTrace = false, IEntity exclude = null, float traceHeightMod = 200)
 	{
 		float y = 0;
 		
@@ -351,9 +351,13 @@ sealed class SDRC_Misc
 				{					
 					param.Start = traceStartPos;
 					param.End = traceEndPos;
-//					param.TargetLayers = EPhysicsLayerDefs.Navmesh;
 					param.Flags = TraceFlags.ENTS | TraceFlags.WORLD;
 					param.LayerMask = EPhysicsLayerPresets.Projectile;
+					if (exclude)
+					{
+						param.Exclude = exclude;
+					}					
+					
 				}					
 	
 				BaseWorld world = GetGame().GetWorld();
