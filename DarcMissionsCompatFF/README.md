@@ -32,6 +32,10 @@ bool rewardDefault : Default reward unless specific reward has been set in missi
 ```
 
 # Version history
+## 20260414
+Fixes:
+* Mission position validation fixes which resulted in PLAYER_TOO_FAR errors.
+
 ## 20260410
 Compatibility with changes in DarcMissions
 

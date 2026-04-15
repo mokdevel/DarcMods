@@ -1,13 +1,22 @@
 # Version history
 
 ## Next Version
+# 20260415
+Stable and Exp update. If chopper is spawned within 3m from ground/roof/.., it will first hover for 30secs before taking off. If you want immediate flight, spawn above the ground (use Left-Alt key).
+Fixes:
+* Hovering choppers started to lean to side. 
+* Smoother hover up.
+* Log spam fix
+* Chopper can start flight from on top of an obstacle (e.g. house)
 
 # 20260414
 Stable and Exp update.
 Main features:
-* Spawning the chopper on ground, will make it wait 30 seconds before hovering up and starting to fly. Setting on ground in GM makes a small jump (TBF).
+* Spawning the chopper on ground, will make it wait 30 seconds before hovering up and starting to fly.
 Fixes:
 * ``WP_DESPAWN`` removes also crew in the helicopter.
+* Fixed a random crash issue.
+* Lines were shown for GM also in player screen.
 
 # 20260413
 Stable and Exp update.

@@ -5,6 +5,10 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 
+# 20260414
+Fixes:
+* Mission position validation fixes.
+
 # 20260413
 Fixes:
 * Crashsite mission spawning height modified. Should/could crash closer to requested position.
