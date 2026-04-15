@@ -55,7 +55,8 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		}
 		
 		//If pos has been set, we blindly accept it. Do basic checking for pos.
-		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: (IsRequested() || IsStatic()), isRequested: IsRequested()) != SDRC_EMissionError.NONE)
+		bool obc = (IsRequested() || IsStatic());
+		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested()) != SDRC_EMissionError.NONE)
 		{
 			pos = "0 0 0";
 		}

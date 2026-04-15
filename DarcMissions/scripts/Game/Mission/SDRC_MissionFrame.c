@@ -156,7 +156,7 @@ class SDRC_MissionFrame
 	protected void MissionCycleManager()
 	{		
 		#ifndef SDRC_RELEASE
-			SDRC_DevHelper.TestMissionPositions();
+			//SDRC_DevHelper.TestMissionPositions();
 		#endif	
 		
 		ref SDRC_Mission tmpDC_Mission = null;

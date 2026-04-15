@@ -74,7 +74,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPosStart, pos, 1000);
 		
 		//If pos has been set, we blindly accept it. Do basic checking for pos.
-		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: (IsRequested() || IsStatic()), isRequested: IsRequested()) != SDRC_EMissionError.NONE)
+		bool obc = (IsRequested() || IsStatic());
+		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested()) != SDRC_EMissionError.NONE)
 		{
 			pos = "0 0 0";
 		}

@@ -27,8 +27,10 @@ class SDRC_MissionPosHelper
 		- no players far away
 		- no missions nearby
 	*/	
-	static SDRC_EMissionError IsValidMissionPos(vector pos, float distanceToMission = -1, float distanceToPlayer = -1, bool onlyBasicChecks = false, bool isRequested = false)
+	static SDRC_EMissionError IsValidMissionPos(vector pos, bool onlyBasicChecks = false, bool isRequested = false, float distanceToMission = -1, float distanceToPlayer = -1)
 	{	
+		//SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] OnlyBasicChecks: " +  onlyBasicChecks, LogLevel.DEBUG);
+		
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		
 		// --- Basic checks ---

@@ -393,7 +393,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		for (int i = 0; i < 10; i++)
 		{
 			pos = SDRC_Misc.GetCoordinatesOnCircle(pos, SDRC_Misc.RandomInt(150, 200), SDRC_Misc.RandomInt(0, 360));
-			if (SDRC_MissionPosHelper.IsValidMissionPos(pos, 50, 100))
+			if (SDRC_MissionPosHelper.IsValidMissionPos(pos, distanceToMission: 50, distanceToPlayer: 100))
 			{
 				break;
 			}

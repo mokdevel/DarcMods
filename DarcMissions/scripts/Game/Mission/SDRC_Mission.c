@@ -467,7 +467,7 @@ class SDRC_Mission : Managed
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	SDRC_EMissionState IsStatic()
+	bool IsStatic()
 	{
 		return m_bStatic;
 	}

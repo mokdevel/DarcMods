@@ -61,7 +61,7 @@ class SDRC_MissionHelper
 	{	
 		vector pos = SDRC_Misc.GetRandomWorldPos();
 		
-		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true) != SDRC_EMissionError.NONE)
+		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, true) != SDRC_EMissionError.NONE)
 		{
 			pos = "0 0 0";
 		}
@@ -168,7 +168,7 @@ class SDRC_MissionHelper
 			//Find the position within posRandomization from pos.			
 			if (SDRC_SpawnHelper.FindEmptyPos(pos, posRandomization, size))
 			{			
-				failReason = SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks: true);
+				failReason = SDRC_MissionPosHelper.IsValidMissionPos(pos, true);
 				if (failReason == SDRC_EMissionError.NONE)
 				{				
 					positionFound = true;
