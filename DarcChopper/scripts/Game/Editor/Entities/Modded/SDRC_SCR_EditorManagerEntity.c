@@ -44,7 +44,7 @@ modded class SCR_EditorManagerEntity
 		//If in ArmaVision, leave
 		if (IsLimited())
 		{
-			SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:IsOpened] Limited mode.", LogLevel.DEBUG);
+			//SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity:IsOpened] Limited mode.", LogLevel.DEBUG);
 			return isOpened;
 		}
 		

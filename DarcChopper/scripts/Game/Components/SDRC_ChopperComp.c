@@ -675,7 +675,7 @@ class SDRC_ChopperComp : ScriptComponent
 		//Handle angular velocities when slowing down
 		if (m_fSpeedSlowingMul < 0.3)
 		{
-			//Flatten the chopper when landing/braking
+			//Flatten the chopper when landing/braking/hovering
 			m_vAngularVel = vector.Zero;
 			m_vRadRollVel = vector.Zero;
 			m_vRadRollPitch = vector.Zero;
@@ -767,7 +767,7 @@ class SDRC_ChopperComp : ScriptComponent
 		float heliHeightFromGround = m_vOrigin[1] - 10;				//Move the origin slightly below the spline
 		if (heliHeightFromGround <= 0)
 		{
-			heliHeightFromGround = 0.01;
+			heliHeightFromGround = 1.0;
 		}
 		distanceFromSplineMul = (splineHeightFromGround - heliHeightFromGround) / heliHeightFromGround;			
 		
@@ -780,6 +780,7 @@ class SDRC_ChopperComp : ScriptComponent
 				{
 					//In HOVER_UP state, do movemements slow
 					bigMul = bigMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
+					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
 				}
 				break;
 			}		
@@ -847,15 +848,15 @@ class SDRC_ChopperComp : ScriptComponent
 		}*/
 
 		//Store the origin. This value is updated in EOnFrame, but needed already in calculations.
-		m_vOrigin = owner.GetOrigin();				
+		m_vOrigin = owner.GetOrigin();	
+		float y = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, owner);
 				
 		//If we're on low altitude, wait for a moment and then hover to start flight
-		if ( (m_vFlyDestinations.IsEmpty()) && (m_vOrigin[1] < SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, owner) + 5) )
+		if ( (m_vFlyDestinations.IsEmpty()) && (m_vOrigin[1] < (y + 3) ) )
 		{	
-/*			vector origin = m_vOrigin;
-			origin[1] = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, owner) - 1;
-			owner.SetOrigin(origin);*/
-				
+			m_vOrigin[1] = y + 0.1;
+			owner.SetOrigin(m_vOrigin);
+			
 			//Check if there is a destination assigned. Use this for the future destination
 			if ( (!m_vFlyDestinations.IsEmpty()) && (destination == vector.Zero) )
 			{
@@ -868,8 +869,12 @@ class SDRC_ChopperComp : ScriptComponent
 			hoverPos[1] = (m_fFlyHeightLow + m_fFlyHeightHigh) / 2;
 			AddDestination(SDRC_EFlyWayPointType.WP_RAISE, hoverPos, 5, 0);
 			hoverPos[1] = m_fFlyHeightLow;
-			AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 8, 0);
-			AddDestination(SDRC_EFlyWayPointType.WP_HOVER, "0 0 0", 5, 0);
+			AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 5, 0);
+			#ifdef WORKBENCH			
+				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, "0 0 0", 30, 0);
+			#else
+				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, "0 0 0", 30, 0);
+			#endif
 		}
 		else //In the air. Normal case to check if a destination was assigned
 		{

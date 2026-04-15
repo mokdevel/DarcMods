@@ -765,6 +765,7 @@ modded class SDRC_ChopperComp
 				//Stop heli from moving
 				m_fSpeed = 0.01;
 				m_fSpeedMin = 0.01;
+				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
 				//m_fSpeedMax = 0.2;
 				isRemoveDestination = true;
 				break;

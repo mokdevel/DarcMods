@@ -231,7 +231,7 @@ class SDRC_ChopperDebug
 
 			if (chopperComp.m_fTimerBehaviour > 0)
 			{
-				debugText = debugText +	SCR_Enum.GetEnumName(SDRC_EHeliBehaviour, chopperComp.GetBehaviour()) + " (" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimerBehaviour) + ")";
+				debugText = debugText +	" " + SCR_Enum.GetEnumName(SDRC_EHeliBehaviour, chopperComp.GetBehaviour()) + " (" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimerBehaviour) + ")";
 			}
 			
 			//Show if enemy is known			
