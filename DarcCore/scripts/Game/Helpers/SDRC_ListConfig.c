@@ -1,11 +1,12 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_List : Managed
 {
-	string id;
-	ref array<string> modDir = {};
-	ref array<string> include = {};
-	ref array<string> exclude = {};
-	ref array<string> items = {};
+	string id;							//ID/name of the list
+	ref array<string> modDir = {};		//List of mods to check
+	ref array<string> include = {};		//Include filter
+	ref array<string> exclude = {};		//Exclude filter
+	ref array<string> items = {};		//List of items found
+	ref array<string> factions = {};	//Faction the item belongs to. This is NOT autofilled.
 
 	void Set(string id_, array<string> modDir_, array<string> include_, array<string> exclude_, array<string> items_)	
 	{
@@ -13,7 +14,8 @@ class SDRC_List : Managed
 		modDir = modDir_;
 		include = include_;
 		exclude = exclude_;
-		items = items_;
+		items = items_;		
+		//factions = factions_;
 	}
 }
 

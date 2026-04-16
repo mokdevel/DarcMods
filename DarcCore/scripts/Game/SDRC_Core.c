@@ -82,7 +82,7 @@ class SDRC_Core
 		
 		SDRC_Log.Add("[SDRC_Core] -------------------------------------", LogLevel.NORMAL);
 
-		GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);
+		GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);	//NOTE: If cache is to be filled, is checked in the function below
 
 		//Limit where Loot and Ammo helper is needed
 		if (    SDRC_Misc.IsAddonLoaded("$DarcMissions:") || SDRC_Misc.IsAddonLoaded("$DarcMissionsDev:") 
@@ -95,10 +95,13 @@ class SDRC_Core
 			//Initialize AmmoHelper
 			SDRC_AmmoHelper.Setup();
 		}
-		
+
 		//Initialize EnemyHelper
 		SDRC_EnemyHelper.Setup(m_Config.fallbackEnemyFaction);
 		
+		//Initialize Vehicle
+		SDRC_VehicleListHelper.Setup();
+				
 		//Set debug visibility
 		SDRC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres, m_Config.debugShowLines, m_Config.debugShowInfo);
 		

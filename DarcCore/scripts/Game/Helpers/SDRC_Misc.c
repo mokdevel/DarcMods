@@ -13,7 +13,13 @@ sealed class SDRC_Misc
 	*/
 	static float IsMaster()
 	{
-		SCR_BaseGameMode gameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());		
+		SCR_BaseGameMode gameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+		if (!gameMode)
+		{
+			SDRC_Log.Add("[SDRC_Misc:IsMaster] No game mode found.", LogLevel.ERROR);
+			return false;
+		}
+		
 		return gameMode.IsMaster();
 	}
 		
