@@ -260,6 +260,10 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	{
 		//Spawn vehicle
 		string resourceName	= SDRC_SpawnHelper.SelectResourceName(m_DC_Chopper.heliList);		
+		if (resourceName[0] != "{")
+		{
+			resourceName = SDRC_VehicleListHelper.FindVehicleItem(resourceName, GetFaction());
+		}
 		
 		//Set to initial position, rotation and spawn
 		m_vPosOrigin[1] = SDRC_Misc.RandomFloat(m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1]) + SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin);		
@@ -565,8 +569,8 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		chopper.Set
 		(
 			{
-			 "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et",
-			 "{9902F419417C00AA}Prefabs/Vehicles/Helicopters/UH1H/UH1H_sharkNose_Transport_Patrol.et",
+			 "VEHICLE_CHOPPER_ALL",
+			 "VEHICLE_CHOPPER_ALL",
 			 //From: https://reforger.armaplatform.com/workshop/672F2BB6523FBA29-WZHelisforDarcChopper
 			 "{26436A51FE36D07C}Prefabs/Vehicles/Helicopters/Ka-137/Ka137_Patrol.et",			
  			 //From: https://reforger.armaplatform.com/workshop/68D2D498670F201F-MH-6MforDarcChopper
@@ -619,12 +623,8 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		chopper.Set
 		(
 			{			
-			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",			
-			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
-			 "{8FD9275E605A1A93}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HE_Patrol.et",
-			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",			
-			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
-			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
+			 "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", 
+			 "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", 
 			 //From: https://reforger.armaplatform.com/workshop/684F3C94BD457F85-KA-52forDarcChopper
 			 "{490B9AAF7C1DDF1B}Prefabs/Vehicles/Helicopters/KA52/KA52_UPK_X2_Patrol.et",
 			 //From: https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcChopper
@@ -684,12 +684,8 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		chopper.Set
 		(
 			{
-			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",
-			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
-			 "{8FD9275E605A1A93}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HE_Patrol.et",
-			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",
-			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
-			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
+			 "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", 
+			 "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", 
 			 //From: https://reforger.armaplatform.com/workshop/684F3C94BD457F85-KA-52forDarcChopper
 			 "{490B9AAF7C1DDF1B}Prefabs/Vehicles/Helicopters/KA52/KA52_UPK_X2_Patrol.et",
 			 //From: https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcChopper
@@ -744,7 +740,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		chopper.Set
 		(
 			{
-			 //From: https://reforger.armaplatform.com/workshop/68D2D498670F201F-MH-6MforDarcChopper
+			 //From: https://reforger.armaplatform.com/workshop/68D2D498670F201F-MH-6MforDarcChopper			
 			 "{87314096BD3C9D1A}Prefabs/Vehicles/Helicopters/AH6M/AH6M_M134_Patrol.et",
 			 "{C4590C7F97F99DB2}Prefabs/Vehicles/Helicopters/AH6M/MH6M_Patrol.et",
 			 "{19022AB51719F2AD}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/AH6M_OPFOR_M134_Patrol.et",
@@ -759,8 +755,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			 "{FED75A40AD78101F}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PK_scout_Patrol.et",
 			 "{9515A6A2F7309954}Prefabs/Vehicles/Helicopters/Mi-1/Mi1PKRocketpod_Patrol.et",
 			 //A few default ones to spawn
-			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
-			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
+			 "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", 
 			},
 			{40, 80},
 			{15, 45},
@@ -805,9 +800,9 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		chopper.Set
 		(
 			{
+			 "VEHICLE_CHOPPER_ALL",
+			 "VEHICLE_CHOPPER_TRANSPORT", "VEHICLE_CHOPPER_TRANSPORT", "VEHICLE_CHOPPER_TRANSPORT", "VEHICLE_CHOPPER_TRANSPORT", 
 			 "{435F663B9456C29E}Prefabs/Vehicles/Helicopters/UH1H/UH1H_civ_livery_v1_Patrol.et",
-			 "{9902F419417C00AA}Prefabs/Vehicles/Helicopters/UH1H/UH1H_sharkNose_Transport_Patrol.et",
-			 "{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et",
 			//From: https://reforger.armaplatform.com/workshop/6850D5F667CEFF94-AH-6MforDarcMissions
 			 "{2B0F7648840C4F6E}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/MH6M_OPFOR_Patrol.et",
 			 "{19022AB51719F2AD}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/AH6M_OPFOR_M134_Patrol.et",
@@ -856,13 +851,10 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		);
 		chopper.Set
 		(
-			{			
-			 "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et",			
-			 "{96D1D7E22C123DEE}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_Patrol.et",
-			 "{8FD9275E605A1A93}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HE_Patrol.et",
-			 "{4CFDE3580182C452}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose_Patrol.et",			
-			 "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et",
-			 "{3815F0A6CA3FF790}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HEDP_Patrol.et",
+			{
+			 "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", 
+			 "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", 
+			 "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", "VEHICLE_CHOPPER_ARMED", 
 			 //From: https://reforger.armaplatform.com/workshop/684F3C94BD457F85-KA-52forDarcChopper
 			 "{490B9AAF7C1DDF1B}Prefabs/Vehicles/Helicopters/KA52/KA52_UPK_X2_Patrol.et",
 			 //From: https://reforger.armaplatform.com/workshop/6720D3B2BEBC691E-Mi24and28forDarcChopper

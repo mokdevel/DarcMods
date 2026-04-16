@@ -6,6 +6,19 @@
 //------------------------------------------------------------------------------------------------
 // Types defined by default
 /*
+VEHICLE_WHEELED_ALL
+VEHICLE_WHEELED_MILITARY_ALL
+VEHICLE_WHEELED_CIVILIAN_ALL
+VEHICLE_WHEELED_ARMED
+VEHICLE_WHEELED_CIVILIAN_TRUCK
+VEHICLE_WHEELED_MILITARY_TRUCK
+VEHICLE_WHEELED_CIVILIAN_CAR
+VEHICLE_WHEELED_MILITARY_CAR
+
+VEHICLE_HELICOPTER_ALL
+VEHICLE_CHOPPER_ALL
+VEHICLE_CHOPPER_TRANSPORT
+VEHICLE_CHOPPER_ARMED
 */
 
 //------------------------------------------------------------------------------------------------
@@ -26,17 +39,19 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 		
 		modList = {};
 		//Vehicles
-		lists.Insert(vehicleList00());			
-		lists.Insert(vehicleList01());			
-		lists.Insert(vehicleList02());			
-		lists.Insert(vehicleList03());			
-		lists.Insert(vehicleList04());			
-		lists.Insert(vehicleList05());			
-		lists.Insert(vehicleList06());			
-		lists.Insert(vehicleList07());			
+		lists.Insert(vehicleList00());
+		lists.Insert(vehicleList01());
+		lists.Insert(vehicleList02());
+		lists.Insert(vehicleList03());
+		lists.Insert(vehicleList04());
+		lists.Insert(vehicleList05());
+		lists.Insert(vehicleList06());
+		lists.Insert(vehicleList07());
 		//Helicopters
-		lists.Insert(vehicleList10());			
-		lists.Insert(vehicleList11());			
+		lists.Insert(vehicleList10());
+		lists.Insert(vehicleList11());
+		lists.Insert(vehicleList12());
+		lists.Insert(vehicleList13());
 	}
 			
 	//Vehiclelist: VEHICLE_WHEELED_ALL
@@ -191,12 +206,12 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 		return vehicleList;
 	}	
 	
-	//Vehiclelist: VEHICLE_HELICOPTER
+	//Vehiclelist: VEHICLE_HELICOPTER_ALL
 	SDRC_List vehicleList10()
 	{
 		ref SDRC_List vehicleList = new SDRC_List();
 		vehicleList.Set(
-			"VEHICLE_HELICOPTER",
+			"VEHICLE_HELICOPTER_ALL",
 			{"Prefabs/Vehicles/Helicopters",
 			},
 			{"", 
@@ -211,12 +226,12 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 		return vehicleList;
 	}
 	
-	//Vehiclelist: VEHICLE_CHOPPER
+	//Vehiclelist: VEHICLE_CHOPPER_ALL
 	SDRC_List vehicleList11()
 	{
 		ref SDRC_List vehicleList = new SDRC_List();
 		vehicleList.Set(
-			"VEHICLE_CHOPPER",
+			"VEHICLE_CHOPPER_ALL",
 			{"Prefabs/Vehicles/Helicopters",
 			},
 			{"", 
@@ -229,4 +244,44 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 		);
 		return vehicleList;
 	}
+	
+	//Vehiclelist: VEHICLE_CHOPPER_TRANSPORT
+	SDRC_List vehicleList12()
+	{
+		ref SDRC_List vehicleList = new SDRC_List();
+		vehicleList.Set(
+			"VEHICLE_CHOPPER_TRANSPORT",
+			{"Prefabs/Vehicles/Helicopters",
+			},
+			{"", 
+			},
+			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
+			"_bench", "_gun_mount", "_roof",
+			"Dst", "Lights", "Probes", "VehParts", 
+			"_gunship", "_armed", 
+			},
+			{}
+		);
+		return vehicleList;
+	}
+	
+	//Vehiclelist: VEHICLE_CHOPPER_ARMED
+	SDRC_List vehicleList13()
+	{
+		ref SDRC_List vehicleList = new SDRC_List();
+		vehicleList.Set(
+			"VEHICLE_CHOPPER_ARMED",
+			{"Prefabs/Vehicles/Helicopters",
+			},
+			{"", 
+			},
+			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
+			"_bench", "_gun_mount", "_roof",
+			"Dst", "Lights", "Probes", "VehParts", 
+			"transport",
+			},
+			{}
+		);
+		return vehicleList;
+	}		
 }

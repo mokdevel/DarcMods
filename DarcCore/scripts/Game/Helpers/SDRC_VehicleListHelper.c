@@ -92,69 +92,91 @@ sealed class SDRC_VehicleListHelper
 						{
 							doDelete = true;	
 						}
+						
+						//Military vehicle
+						if (list.id.Contains("MILITARY"))
+						{
+							if (list.factions[i] == "CIV")
+							{
+								doDelete = true;
+							}
+						}
+						//Civilian vehicle
+						if (list.id.Contains("CIV"))
+						{
+							if (list.factions[i] != "CIV")
+							{
+								doDelete = true;
+							}
+						}
+						//Armed vehicle
+						if (list.id.Contains("ARMED"))
+						{
+							if (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.APC)
+							{
+								doDelete = true;
+							}
+						}								
+						//Car
+						if (list.id.Contains("CAR"))
+						{
+							if (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.CAR)
+							{
+								doDelete = true;
+							}
+						}								
+						//Truck
+						if (list.id.Contains("TRUCK"))
+						{
+							if ( (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.TRUCK) 
+							  && (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.COMM_TRUCK) 
+							  && (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.FUEL_TRUCK) 
+							  && (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.SUPPLY_TRUCK) 
+							)  
+							{
+								doDelete = true;
+							}
+						}								
 					}
-					//Military vehicle
-					if (list.id.Contains("MILITARY"))
+					else
 					{
-						if (list.factions[i] == "CIV")
+						// --- Helicopters ---
+								
+						if (list.id.Contains("CHOPPER"))
 						{
-							doDelete = true;
-						}
-					}
-					//Civilian vehicle
-					if (list.id.Contains("CIV"))
-					{
-						if (list.factions[i] != "CIV")
+							if (SCR_BaseContainerTools.FindComponentSourcesOfClass(entitySource, SDRC_ChopperComp, true, componentSources) <= 0)
+							{
+								doDelete = true;
+							}
+						}					
+						
+						if (list.id.Contains("HELICOPTER"))
 						{
-							doDelete = true;
+							if (SCR_BaseContainerTools.FindComponentSourcesOfClass(entitySource, VehicleHelicopterSimulation, true, componentSources) <= 0)
+							{
+								doDelete = true;
+							}
 						}
-					}
-					//Armed vehicle
-					if (list.id.Contains("ARMED"))
-					{
-						if (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.APC)
+						
+						if (list.id.Contains("TRANSPORT"))
 						{
-							doDelete = true;
-						}
-					}								
-					//Car
-					if (list.id.Contains("CAR"))
-					{
-						if (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.CAR)
+							string itemlow = item;
+							itemlow.ToLower();
+							if (!itemlow.Contains("transport"))
+							{
+								doDelete = true;
+							}
+						}					
+						if (list.id.Contains("ARMED"))
 						{
-							doDelete = true;
-						}
-					}								
-					//Truck
-					if (list.id.Contains("TRUCK"))
-					{
-						if ( (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.TRUCK) 
-						  && (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.COMM_TRUCK) 
-						  && (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.FUEL_TRUCK) 
-						  && (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.SUPPLY_TRUCK) 
-						)  
-						{
-							doDelete = true;
-						}
-					}								
-					
-					// --- Helicopters ---
-							
-					if (list.id.Contains("CHOPPER"))
-					{
-						if (SCR_BaseContainerTools.FindComponentSourcesOfClass(entitySource, SDRC_ChopperComp, true, componentSources) <= 0)
-						{
-							doDelete = true;
-						}
+							string itemlow = item;
+							itemlow.ToLower();
+							if ( (!itemlow.Contains("_gunship")) && (!itemlow.Contains("_armed")) )
+							{
+								doDelete = true;
+							}
+						}							
 					}					
-					
-					if (list.id.Contains("HELICOPTER"))
-					{
-						if (SCR_BaseContainerTools.FindComponentSourcesOfClass(entitySource, VehicleHelicopterSimulation, true, componentSources) <= 0)
-						{
-							doDelete = true;
-						}
-					}
 				}
 				
 				if (doDelete)
@@ -192,7 +214,7 @@ sealed class SDRC_VehicleListHelper
 		
 		if (vehicleIndex == -1)
 		{
-			SDRC_Log.Add("[SDRC_LootHelper:FindVehicleItem] No vehicleList with name: " + listName + ". Typo?", LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_VehicleListHelper:FindVehicleItem] No vehicleList with name: " + listName + ". Typo?", LogLevel.WARNING);
 			return "";				
 		}
 
@@ -221,7 +243,7 @@ sealed class SDRC_VehicleListHelper
 				
 				if (resourceName == "")
 				{
-					SDRC_Log.Add("[SDRC_LootHelper:FindVehicleItem] No vehicle matching faction: " + faction + ". Selecting random one.", LogLevel.DEBUG);
+					SDRC_Log.Add("[SDRC_VehicleListHelper:FindVehicleItem] No vehicle matching faction: " + faction + ". Selecting random one.", LogLevel.DEBUG);
 					faction = "";
 				}
 			}
@@ -231,7 +253,7 @@ sealed class SDRC_VehicleListHelper
 				resourceName = m_Config.lists[vehicleIndex].items.GetRandomElement();
 			}
 			
-			SDRC_Log.Add("[SDRC_LootHelper:FindVehicleItem] Selected: (" + listName + ") " + resourceName, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_VehicleListHelper:FindVehicleItem] Selected: (" + listName + ") " + resourceName, LogLevel.DEBUG);
 		}
 		
 		return resourceName;

@@ -201,6 +201,10 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	{					
 		//Spawn vehicle					
 		string resourceName	= m_DC_Convoy.vehicleTypes.GetRandomElement();
+		if (resourceName[0] != "{")
+		{
+			resourceName = SDRC_VehicleListHelper.FindVehicleItem(resourceName, GetFaction());
+		}
 		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Convoy.general.size);
 		
 		if (!m_Vehicle)
@@ -220,32 +224,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		
 		AICarMovementComponent vehicle_c = AICarMovementComponent.Cast(m_Vehicle.FindComponent(AICarMovementComponent));
         vehicle_c.SetCruiseSpeed(m_DC_Convoy.cruiseSpeed);
-		
-		//----------------------------------------------------------------------
-		//OLD WORKING CODE: Spawns AI first on ground and then move to vehicle.
-		//NOTE: If you use this, uncomment the line: SDRC_VehicleHelper.MoveGroupsInVehicle(m_Groups, m_Vehicle);
-		
-/*		//Spawn mission AI
-		int aiCount = m_DC_Convoy.ai.GetCount(m_DC_Convoy.general.difficulty);
-		vector posg = GetPos();
-		//Move the position slightly to avoid spawning under vehicle
-		posg[0] = posg[0] + m_DC_Convoy.general.size;
-		posg[2] = posg[2] + m_DC_Convoy.general.size;
-		
-		for (int i = 0; i < aiCount; i++)
-		{		
-			SCR_AIGroup group = SDRC_AIHelper.SpawnGroup(m_DC_Convoy.ai.types.GetRandomElement(), posg, GetFaction());
-			if (group)
-			{			
-				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Convoy.ai.GetSkill(m_DC_Convoy.general.difficulty), m_DC_Convoy.ai.GetPerception(m_DC_Convoy.general.difficulty));
-				m_Groups.Insert(group);					
-			}
-			
-			posg[0] = posg[0] + 4;
-		}*/
-		
-		//----------------------------------------------------------------------
-		//TBD: NEW CODE: Spawns AI straight to the vehicle. Unfinished.
 		
 		//Spawn mission AI
 		int aiCount = m_DC_Convoy.ai.GetCount(GetDifficulty());
@@ -348,7 +326,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		//Default
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
+		missionList = {0};//{0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
 		//Mission specific
 		distanceToPlayer = 500;
 		//----------------------------------------------------
@@ -403,10 +381,10 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		);
 		convoy.Set(
 			{
-				"{01F65EFB8D767A91}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_cargo.et",
-				"{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
-				"{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et",
-				"{D4855501D5B12AF2}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_teal.et"
+				"VEHICLE_WHEELED_MILITARY_CAR",
+				"VEHICLE_WHEELED_MILITARY_CAR",
+				"VEHICLE_WHEELED_MILITARY_CAR",
+				"VEHICLE_WHEELED_CIVILIAN_CAR",
 			},
 			30
 		);
@@ -471,14 +449,8 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		);
 		convoy.Set(
 			{
-				"{F1FBD0972FA5FE09}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport.et",
-				"{81FDAD5EB644CC3D}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered.et",
-				"{48A6D4372444B85A}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered_closed.et", 
-				"{16E32C3ABEAFC2C6}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_FIA_transport.et",
-				"{1449105FD658EDFB}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_CIV_forest.et",
-				"{FB219B49A448A8EA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_JZD.et",
-				"{66241E0CEDFCEDFF}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_orange.et",
-				"{F66EAD0D2016B6BA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_blue.et",
+				"VEHICLE_WHEELED_MILITARY_TRUCK", "VEHICLE_WHEELED_MILITARY_TRUCK",	"VEHICLE_WHEELED_MILITARY_TRUCK", "VEHICLE_WHEELED_MILITARY_TRUCK", "VEHICLE_WHEELED_MILITARY_TRUCK",
+				"VEHICLE_WHEELED_CIVILIAN_TRUCK",
 			},
 			20
 		);
@@ -543,9 +515,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		);
 		convoy.Set(
 			{
-				"{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et",
-				"{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et",
-				"{254289B9C09904AB}Prefabs/Vehicles/Wheeled/BRDM2/BRDM2.et",
+				"VEHICLE_WHEELED_ARMED",
 			},
 			20
 		);
@@ -609,6 +579,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		);
 		convoy.Set(
 			{
+				"VEHICLE_WHEELED_MILITARY_CAR",
 				"{F6B23D17D5067C11}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB.et",
 				"{5168FEA3054D6D15}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB_MERDC.et",
 				"{3EA6F47D95867114}Prefabs/Vehicles/Wheeled/M998/M1025_armed_M2HB.et",
