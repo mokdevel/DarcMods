@@ -84,6 +84,11 @@ You can define multiple factions and when enemies are chosen, the faction is cho
 Unsupported values
 * ``MEC``
 
+### Mission factions
+Each sub-mission within the specific mission json, has a parameter ``faction``. This is the override faction for the mission. You can define multiple factions and when enemies are chosen, the faction is chosen randomly per sub-mission. Leaving it empty or ``""``, works as the default to select from the ``enemyFactions``.
+
+Example: ``"enemyFactions": ["FIA", "USSR", "USSR", ""]`` - 25% missions are with FIA, 50% with USSR, 25% are picked from values defined in ``enemyFactions``.
+
 ## Difficulty
 Difficulty setting that affects mission AI behaviour and loot reward. There are five different levels where ``RANDOM`` picks from the ``missionDifficultyList``.
 ```
