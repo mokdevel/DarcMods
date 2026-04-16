@@ -178,19 +178,19 @@ sealed class SDRC_VehicleListHelper
 	/*! 
 	Find the the right vehicle
 	*/	
-	static ResourceName FindVehicleItem(string listName)
+	static ResourceName FindVehicleItem(string listName, string faction = "")
 	{
-		int lootIndex = -1;
+		int vehicleIndex = -1;
 		for (int i = 0; i < m_Config.lists.Count(); i++)		
 		{
 			if (m_Config.lists[i].id == listName)
 			{
-				lootIndex = i;
+				vehicleIndex = i;
 				break;
 			}
 		}
 		
-		if (lootIndex == -1)
+		if (vehicleIndex == -1)
 		{
 			SDRC_Log.Add("[SDRC_LootHelper:FindVehicleItem] No vehicleList with name: " + listName + ". Typo?", LogLevel.WARNING);
 			return "";				
@@ -198,9 +198,39 @@ sealed class SDRC_VehicleListHelper
 
 		ResourceName resourceName = "";
 		
-		if (!m_Config.lists[lootIndex].items.IsEmpty())
+		if (!m_Config.lists[vehicleIndex].items.IsEmpty())
 		{
-			resourceName = m_Config.lists[lootIndex].items.GetRandomElement();
+			//If faction defined, try to find a faction suitable vehicle
+			if (faction != "")
+			{
+				int idx = SDRC_Misc.RandomInt(0, m_Config.lists[vehicleIndex].items.Count() - 1);
+				for (int i = 0; i < m_Config.lists[vehicleIndex].items.Count(); i++)
+				{
+					if (m_Config.lists[vehicleIndex].factions[idx] == faction)
+					{
+						resourceName = m_Config.lists[vehicleIndex].items[idx];
+						break;
+					}
+					
+					idx++;
+					if (idx == m_Config.lists[vehicleIndex].items.Count())
+					{
+						idx = 0;
+					}
+				}
+				
+				if (resourceName == "")
+				{
+					SDRC_Log.Add("[SDRC_LootHelper:FindVehicleItem] No vehicle matching faction: " + faction + ". Selecting random one.", LogLevel.DEBUG);
+					faction = "";
+				}
+			}
+			
+			if (faction == "")
+			{
+				resourceName = m_Config.lists[vehicleIndex].items.GetRandomElement();
+			}
+			
 			SDRC_Log.Add("[SDRC_LootHelper:FindVehicleItem] Selected: (" + listName + ") " + resourceName, LogLevel.DEBUG);
 		}
 		
