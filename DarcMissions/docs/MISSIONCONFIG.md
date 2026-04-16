@@ -78,11 +78,18 @@ The mission faction is defined in ``enemyFactions`` or individually per sub-miss
 * ``ChinesePLA`` : Chinese People's Liberation Army (PLA) - [MOD](https://reforger.armaplatform.com/workshop/60A6507633AB1954-ChinesePLA)
 * ``JSDF_RAS`` : Japan Self-Defense Forces (JSDF) - [MOD](https://reforger.armaplatform.com/workshop/658809A83416F34D-JapanSelf-DefenseForces)
 * ``Takistan`` : Takistani Army - [MOD](https://reforger.armaplatform.com/workshop/611A2A77548D2F97-TakistaniArmy)
+* Unsupported values
+  * ``MEC``
 
-You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission. Example: ``"enemyFactions": ["FIA", "USSR", "USSR"]`` - 33% missions are with FIA, 66% with USSR
+You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission. 
 
-Unsupported values
-* ``MEC``
+Example: ``"enemyFactions": ["FIA", "USSR", "USSR"]`` - 33% missions are with FIA, 66% with USSR
+
+
+### Mission factions
+Each sub-mission within the specific mission json, has a parameter ``faction``. This is the override faction for the mission. You can define multiple factions and when enemies are chosen, the faction is chosen randomly per sub-mission. Leaving it empty or ``""``, works as the default to select from the ``enemyFactions``.
+
+Example: ``"enemyFactions": ["FIA", "USSR", "USSR", ""]`` - 25% missions are with FIA, 50% with USSR, 25% are picked from values defined in ``enemyFactions``.
 
 ## Difficulty
 Difficulty setting that affects mission AI behaviour and loot reward. There are five different levels where ``RANDOM`` picks from the ``missionDifficultyList``.
