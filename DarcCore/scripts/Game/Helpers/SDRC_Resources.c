@@ -137,4 +137,31 @@ sealed class SDRC_Resources
 		
 		return factionKey;
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find vehicle type
+	*/		
+	static EVehicleType GetResourceVehicleType(ResourceName resourceName)
+	{
+		EVehicleType vehicleType = EVehicleType.VEHICLE;
+		
+		Resource res = Resource.Load(resourceName);
+		
+		if (!res || !res.IsValid())				
+		{
+			return vehicleType;
+		}
+		
+		BaseContainer baseContainer = res.GetResource().ToBaseContainer();
+		if (!baseContainer)
+		{
+			return null;
+		}
+		
+		baseContainer.Get("m_eVehicleType", vehicleType);
+		//SDRC_Log.Add("[SDRC_Resources:GetResourceVehicleType] Vehicle type: " + vehicleType, LogLevel.DEBUG);
+		
+		return vehicleType;
+	}		
 }

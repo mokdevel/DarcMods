@@ -21,9 +21,18 @@ sealed class SDRC_VehicleListHelper
 		//Load loot config
 		m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_VEHICLELIST);	
 		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_VEHICLELIST_JSONVER);		
-		m_Config.Populate();
+		m_Config.Populate(false);
 		
 		Sanitize();
+		
+		if (SDRC_Log.GetLogLevel() > DC_LogLevel.NORMAL)
+		{
+			foreach (SDRC_List list : m_Config.lists)
+			{
+				SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);	//NOTE: SDRC_ListConfig:Populate left here on purpose! 
+				list.items.Debug();
+			}
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -35,13 +44,12 @@ sealed class SDRC_VehicleListHelper
 		//Let's find the factions for the vehicles
 		foreach (SDRC_List list : m_Config.lists)
 		{
-			SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Setting factions for: " + list.id, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] " + list.id, LogLevel.DEBUG);
 			
 			//foreach (string item : list.items)
-			for (int i = 0; i < list.items.Count() - 1; i++)
+			for (int i = 0; i < list.items.Count(); i++)
 			{			
 				bool doDelete = false;
-				//FactionKey factionKey = string.Empty;
 				string item = list.items[i];				
 				Resource res = Resource.Load(item);
 				
@@ -74,43 +82,77 @@ sealed class SDRC_VehicleListHelper
 				if (!doDelete)
 				{
 					array<IEntityComponentSource> componentSources = {};				
-/*					IEntityComponentSource factionComponentSource = SCR_BaseContainerTools.FindComponentSource(res, FactionAffiliationComponent);
-					IEntityComponentSource factionControlComponentSource = SCR_BaseContainerTools.FindComponentSource(res, SCR_FactionAffiliationComponent);
 					
-					//Find the faction, if any
-					if (factionComponentSource)
-					{
-						factionComponentSource.Get("faction affiliation", factionKey);
-					}
-					else if (factionControlComponentSource)
-					{
-						factionControlComponentSource.Get("m_DefaultFaction", factionKey);
-					}*/
+					// --- Cars ---
 					
-					//factionKey = SDRC_Resources.GetResourceFaction(item);
-					//SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Faction: " + factionKey, LogLevel.SPAM);
-					
+					//Wheeled vehicle
 					if (list.id.Contains("WHEELED"))
 					{
-						if (SCR_BaseContainerTools.FindComponentSourcesOfClass(entitySource, VehicleWheeledSimulation, true, componentSources) > 0)
-						{
-							SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Found: VehicleWheeledSimulation from " + SDRC_Misc.GetSimpleEntityName(item), LogLevel.SPAM);
-						}
-						else
+						if (SCR_BaseContainerTools.FindComponentSourcesOfClass(entitySource, VehicleWheeledSimulation, true, componentSources) <= 0)
 						{
 							doDelete = true;	
 						}
 					}
+					//Military vehicle
+					if (list.id.Contains("MILITARY"))
+					{
+						if (list.factions[i] == "CIV")
+						{
+							doDelete = true;
+						}
+					}
+					//Civilian vehicle
+					if (list.id.Contains("CIV"))
+					{
+						if (list.factions[i] != "CIV")
+						{
+							doDelete = true;
+						}
+					}
+					//Armed vehicle
+					if (list.id.Contains("ARMED"))
+					{
+						if (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.APC)
+						{
+							doDelete = true;
+						}
+					}								
+					//Car
+					if (list.id.Contains("CAR"))
+					{
+						if (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.CAR)
+						{
+							doDelete = true;
+						}
+					}								
+					//Truck
+					if (list.id.Contains("TRUCK"))
+					{
+						if ( (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.TRUCK) 
+						  && (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.COMM_TRUCK) 
+						  && (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.FUEL_TRUCK) 
+						  && (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.SUPPLY_TRUCK) 
+						)  
+						{
+							doDelete = true;
+						}
+					}								
+					
+					// --- Helicopters ---
+							
+					if (list.id.Contains("CHOPPER"))
+					{
+						if (SCR_BaseContainerTools.FindComponentSourcesOfClass(entitySource, SDRC_ChopperComp, true, componentSources) <= 0)
+						{
+							doDelete = true;
+						}
+					}					
 					
 					if (list.id.Contains("HELICOPTER"))
 					{
-						if (SCR_BaseContainerTools.FindComponentSourcesOfClass(entitySource, VehicleHelicopterSimulation, true, componentSources) > 0)
+						if (SCR_BaseContainerTools.FindComponentSourcesOfClass(entitySource, VehicleHelicopterSimulation, true, componentSources) <= 0)
 						{
-							SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Found: VehicleHelicopterSimulation from " + SDRC_Misc.GetSimpleEntityName(item), LogLevel.SPAM);
-						}
-						else
-						{
-							doDelete = true;	
+							doDelete = true;
 						}
 					}
 				}
@@ -120,16 +162,12 @@ sealed class SDRC_VehicleListHelper
 					//Oops, something went wrong. Delete this item
 					SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Removed from list: " + SDRC_Misc.GetSimpleEntityName(item), LogLevel.DEBUG);
 					list.items.RemoveOrdered(i);
+					list.factions.RemoveOrdered(i);
 					i--;
-					if (i < 0)					
-					{
-						i = 0;
-					}
 				}
 				else
 				{
 					//Add faction
-					//list.factions[i] = factionKey;
 					SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Ok: " + SDRC_Misc.GetSimpleEntityName(item) + " (" + list.factions[i] + ")", LogLevel.DEBUG);
 				}
 			}

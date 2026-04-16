@@ -35,7 +35,7 @@ class SDRC_ListConfig : SDRC_Config
 	ref array<ref SDRC_List> lists = {};
 	ref array<ref SDRC_Aka> akas = {};
 	
-	void Populate()
+	void Populate(bool printList = true)
 	{
 		SDRC_Log.Add("[SDRC_ListConfig:Populate] Creating lists..", LogLevel.NORMAL);
 		
@@ -80,7 +80,7 @@ class SDRC_ListConfig : SDRC_Config
 				list.factions.Insert(SDRC_Resources.GetResourceFaction(item));
 			}
 				
-			if (SDRC_Log.GetLogLevel() > DC_LogLevel.NORMAL)
+			if ( (SDRC_Log.GetLogLevel() > DC_LogLevel.NORMAL) && (printList) )
 			{
 				SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);				
 				list.items.Debug();
