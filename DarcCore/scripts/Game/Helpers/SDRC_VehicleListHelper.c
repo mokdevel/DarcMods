@@ -23,15 +23,26 @@ sealed class SDRC_VehicleListHelper
 		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_VEHICLELIST_JSONVER);		
 		m_Config.Populate();
 		
+		Sanitize();
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*! 
+	Remove all non-vehicles. Add faction to the list items.
+	*/	
+	static void Sanitize()
+	{		
 		//Let's find the factions for the vehicles
 		foreach (SDRC_List list : m_Config.lists)
 		{
-			SDRC_Log.Add("[SDRC_VehicleListHelper:Setup] Setting factions for: " + list.id, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Setting factions for: " + list.id, LogLevel.DEBUG);
 			
-			foreach (string item : list.items)
+			//foreach (string item : list.items)
+			for (int i = 0; i < list.items.Count() - 1; i++)
 			{			
 				bool doDelete = false;
-				
+				//FactionKey factionKey = string.Empty;
+				string item = list.items[i];				
 				Resource res = Resource.Load(item);
 				
 				if (!res || !res.IsValid())				
@@ -45,34 +56,28 @@ sealed class SDRC_VehicleListHelper
 					doDelete = true;
 				}
 				
-				BaseContainer baseContainer = res.GetResource().ToBaseContainer();
+				/*BaseContainer baseContainer = res.GetResource().ToBaseContainer();
 				if (!baseContainer)
 				{
 					doDelete = true;
-				}				
+				}*/
 				
-				//All good so far				
+				string containerClass = SCR_BaseContainerTools.GetContainerClassName(res);
+				SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Found: " + containerClass + " from " + SDRC_Misc.GetSimpleEntityName(item), LogLevel.SPAM);				
+				
+				if (containerClass != "Vehicle")
+				{
+					doDelete = true;						
+				}
+				
+				//All good so far
 				if (!doDelete)
 				{
 					array<IEntityComponentSource> componentSources = {};				
-					string containerClass = SCR_BaseContainerTools.GetContainerClassName(res);
-					SDRC_Log.Add("[SDRC_VehicleListHelper:Setup] Found: " + containerClass + " from " + SDRC_Misc.GetSimpleEntityName(item), LogLevel.DEBUG);				
-					
-					if (containerClass != "Vehicle")
-					{
-						doDelete = true;
-					}
-										
-					//IEntityComponentSource componentSource = SCR_EditableFactionComponentClass.GetEditableEntitySource(res);
-					/*IEntityComponentSource componentSource = SCR_BaseContainerTools.FindComponentSource(res, SCR_VehicleFactionAffiliationComponent
-					if (!componentSource)
-					{
-						
-					}*/
-					
-					IEntityComponentSource factionComponentSource = SCR_BaseContainerTools.FindComponentSource(res, FactionAffiliationComponent);
+/*					IEntityComponentSource factionComponentSource = SCR_BaseContainerTools.FindComponentSource(res, FactionAffiliationComponent);
 					IEntityComponentSource factionControlComponentSource = SCR_BaseContainerTools.FindComponentSource(res, SCR_FactionAffiliationComponent);
-					FactionKey factionKey = string.Empty;
+					
+					//Find the faction, if any
 					if (factionComponentSource)
 					{
 						factionComponentSource.Get("faction affiliation", factionKey);
@@ -80,15 +85,16 @@ sealed class SDRC_VehicleListHelper
 					else if (factionControlComponentSource)
 					{
 						factionControlComponentSource.Get("m_DefaultFaction", factionKey);
-					}
+					}*/
 					
-					SDRC_Log.Add("[SDRC_VehicleListHelper:Setup] Faction: " + factionKey, LogLevel.DEBUG);
+					//factionKey = SDRC_Resources.GetResourceFaction(item);
+					//SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Faction: " + factionKey, LogLevel.SPAM);
 					
 					if (list.id.Contains("WHEELED"))
 					{
 						if (SCR_BaseContainerTools.FindComponentSourcesOfClass(entitySource, VehicleWheeledSimulation, true, componentSources) > 0)
 						{
-							SDRC_Log.Add("[SDRC_VehicleListHelper:Setup] Found: VehicleWheeledSimulation from " + SDRC_Misc.GetSimpleEntityName(item), LogLevel.DEBUG);
+							SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Found: VehicleWheeledSimulation from " + SDRC_Misc.GetSimpleEntityName(item), LogLevel.SPAM);
 						}
 						else
 						{
@@ -100,7 +106,7 @@ sealed class SDRC_VehicleListHelper
 					{
 						if (SCR_BaseContainerTools.FindComponentSourcesOfClass(entitySource, VehicleHelicopterSimulation, true, componentSources) > 0)
 						{
-							SDRC_Log.Add("[SDRC_VehicleListHelper:Setup] Found: VehicleHelicopterSimulation from " + SDRC_Misc.GetSimpleEntityName(item), LogLevel.DEBUG);
+							SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Found: VehicleHelicopterSimulation from " + SDRC_Misc.GetSimpleEntityName(item), LogLevel.SPAM);
 						}
 						else
 						{
@@ -111,13 +117,23 @@ sealed class SDRC_VehicleListHelper
 				
 				if (doDelete)
 				{
-					//Oops, something went wrong. 
-					//Delete this item
-					continue;
+					//Oops, something went wrong. Delete this item
+					SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Removed from list: " + SDRC_Misc.GetSimpleEntityName(item), LogLevel.DEBUG);
+					list.items.RemoveOrdered(i);
+					i--;
+					if (i < 0)					
+					{
+						i = 0;
+					}
+				}
+				else
+				{
+					//Add faction
+					//list.factions[i] = factionKey;
+					SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Ok: " + SDRC_Misc.GetSimpleEntityName(item) + " (" + list.factions[i] + ")", LogLevel.DEBUG);
 				}
 			}
 		}
-		
 	}
 
 	//------------------------------------------------------------------------------------------------

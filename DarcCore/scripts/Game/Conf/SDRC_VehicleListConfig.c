@@ -34,8 +34,8 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 	//Vehiclelist: VEHICLE_ALL
 	SDRC_List vehicleList00()
 	{
-		ref SDRC_List lootList = new SDRC_List();
-		lootList.Set(
+		ref SDRC_List vehicleList = new SDRC_List();
+		vehicleList.Set(
 			"VEHICLE_WHEELED_ALL",
 			{"Prefabs/Vehicles/Wheeled",
 			},
@@ -47,14 +47,14 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 			},
 			{}
 		);
-		return lootList;
+		return vehicleList;
 	}		
 	
-	//Vehiclelist: VEHICLE_HELICOPTER
+	//Vehiclelist: HELICOPTER
 	SDRC_List vehicleList10()
 	{
-		ref SDRC_List lootList = new SDRC_List();
-		lootList.Set(
+		ref SDRC_List vehicleList = new SDRC_List();
+		vehicleList.Set(
 			"HELICOPTER",
 			{"Prefabs/Vehicles/Helicopters",
 			},
@@ -66,6 +66,25 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 			},
 			{}
 		);
-		return lootList;
-	}		
+		return vehicleList;
+	}
+	
+	//Vehiclelist: HELICOPTER_CHOPPER
+	SDRC_List vehicleList11()
+	{
+		ref SDRC_List vehicleList = new SDRC_List();
+		vehicleList.Set(
+			"HELICOPTER_CHOPPER",
+			{"Prefabs/Vehicles/Helicopters",
+			},
+			{"", 
+			},
+			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
+			"_bench", "_gun_mount", "_roof",
+			"Dst", "Lights", "Probes", "VehParts", 
+			},
+			{}
+		);
+		return vehicleList;
+	}
 }

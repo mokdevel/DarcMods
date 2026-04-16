@@ -99,7 +99,42 @@ sealed class SDRC_Resources
 	static private bool GetResourcesCallback(ResourceName resourceName, string exactPath = "")
 	{
 		SDRC_Log.Add("[SDRC_Resources:GetResourcesFilter] Found: " + resourceName + " at " + exactPath, LogLevel.SPAM);
-		m_resourceNames.Insert(resourceName);
+		m_resourceNames.Insert(resourceName);		
 		return true;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find resource faction .. if any
+	
+	TBD: Add functionality to recognize AI and group faction
+	*/		
+	static string GetResourceFaction(ResourceName resourceName)
+	{
+		FactionKey factionKey = string.Empty;
+		
+		Resource res = Resource.Load(resourceName);
+		
+		if (!res || !res.IsValid())				
+		{
+			return factionKey;
+		}
+		
+		IEntityComponentSource factionComponentSource = SCR_BaseContainerTools.FindComponentSource(res, FactionAffiliationComponent);
+		IEntityComponentSource factionControlComponentSource = SCR_BaseContainerTools.FindComponentSource(res, SCR_FactionAffiliationComponent);
+		
+		//Find the faction, if any
+		if (factionComponentSource)
+		{
+			factionComponentSource.Get("faction affiliation", factionKey);
+		}
+		else if (factionControlComponentSource)
+		{
+			factionControlComponentSource.Get("m_DefaultFaction", factionKey);
+		}
+		
+		//SDRC_Log.Add("[SDRC_Resources:GetResourceFaction] Faction: " + factionKey, LogLevel.DEBUG);
+		
+		return factionKey;
+	}	
 }
