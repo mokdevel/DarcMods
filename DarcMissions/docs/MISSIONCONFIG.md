@@ -79,7 +79,9 @@ The mission faction is defined in ``enemyFactions`` or individually per sub-miss
 * ``JSDF_RAS`` : Japan Self-Defense Forces (JSDF) - [MOD](https://reforger.armaplatform.com/workshop/658809A83416F34D-JapanSelf-DefenseForces)
 * ``Takistan`` : Takistani Army - [MOD](https://reforger.armaplatform.com/workshop/611A2A77548D2F97-TakistaniArmy)
 
-You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission. Example: ``"enemyFactions": ["FIA", "USSR", "USSR"]`` - 33% missions are with FIA, 66% with USSR
+You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission. 
+
+Example: ``"enemyFactions": ["FIA", "USSR", "USSR"]`` - 33% missions are with FIA, 66% with USSR
 
 Unsupported values
 * ``MEC``
