@@ -1,19 +1,88 @@
-Vehicle Mi8MT_armed_gunship_HE_Patrol1 : "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et" {
- components {
-  SDRC_ChopperComp "{66C548F5776E7383}" {
-   m_fThrottle 1.5
-   m_fSpeedMax 50
-   m_fFlyHeightHigh 160
-   m_vFlyDestinations {
-    SDRC_FlyPathPoint "{6910B3DF287414AE}" {
-     pt 2500 60 2100
-    }
-    SDRC_FlyPathPoint "{6910B3DFD29B43AB}" {
-     pt 3000 160 1900
+Vehicle UAZ1 : "{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et" {
+ coords 3139.809 27.835 2077.538
+}
+$grp Vehicle : "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et" {
+ Mi8MT_armed_gunship_HE_Patrol1 {
+  components {
+   SDRC_ChopperComp "{66C548F5776E7383}" {
+    m_fThrottle 1.5
+    m_fSpeedMax 50
+    m_fFlyHeightHigh 160
+    m_vFlyDestinations {
+     SDRC_FlyPathPoint "{6910B3DF287414AE}" {
+      pt 2500 60 2100
+     }
+     SDRC_FlyPathPoint "{6910B3DFD29B43AB}" {
+      pt 3000 160 1900
+     }
     }
    }
   }
+  coords 3005.216 110.295 1837.784
+  angles 0 -43.246 0
  }
- coords 3005.216 110.295 1837.784
- angles 0 -43.246 0
+ Mi8MT_armed_gunship_HE_Patrol2 {
+  components {
+   SDRC_ChopperComp "{66C548F5776E7383}" {
+    m_CargoSeatFill NONE
+    m_vFlyDestinations {
+     SDRC_FlyPathPoint "{6918F32E65F8985C}" {
+      type WP_M_LAND_TROOPS
+      pt 3000 0 2600
+     }
+    }
+   }
+  }
+  coords 2877.611 110.231 2110.706
+  angles 0 13.741 0
+ }
+ Mi8MT_armed_gunship_HE_Patrol3 {
+  components {
+   SDRC_ChopperComp "{66C548F5776E7383}" {
+    m_CargoSeatFill NONE
+    m_vFlyDestinations {
+     SDRC_FlyPathPoint "{691A692295035D72}" {
+      pt 3300 0 2600
+     }
+     SDRC_FlyPathPoint "{691A69227784F2DC}" {
+      type WP_BRAKE
+      pt 3280 20 2900
+     }
+     SDRC_FlyPathPoint "{691A6C8ED1CB3861}" {
+      type WP_HOVER
+      value 5
+     }
+     SDRC_FlyPathPoint "{691CCAC0B09F8AF4}" {
+      pt 3100 0 2700
+     }
+    }
+   }
+  }
+  coords 3170.729 43.277 2070.447
+  angles 0 13.741 0
+ }
+ Mi8MT_armed_gunship_HE_Patrol4 {
+  components {
+   SDRC_ChopperComp "{66C548F5776E7383}" {
+    m_CargoSeatFill NONE
+    m_vFlyDestinations {
+     SDRC_FlyPathPoint "{691AB497750A7E3D}" {
+      type WP_HOVER
+      value 10
+     }
+     SDRC_FlyPathPoint "{691AB4977EA697DA}" {
+      type WP_HOVER_UP
+      pt 0 30 0
+      value 5
+     }
+     SDRC_FlyPathPoint "{691AB49764E2F2A6}" {
+      type WP_RAISE
+      pt 200 20 0
+     }
+    }
+   }
+  }
+  coords 2956.828 46.026 2447.644
+  angles 0 13.741 0
+ }
 }

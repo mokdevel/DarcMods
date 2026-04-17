@@ -3,6 +3,20 @@ GameProject {
  GUID "692121914CDE6746"
  TITLE "DarcChopperCompatFF"
  Dependencies {
-  "689EDED542F881AF" "631EE12D448D7FCC" "58D0FB3206B6F859" "CAFEBEEFF0CACC1A" "6698F8DD1B444BEB"
+  "689EDED542F881AF" "631EE12D448D7FCC" "58D0FB3206B6F859" "CAFEBEEFF0CACC1A"
+ }
+ Configurations {
+  GameProjectConfig PC {
+  }
+  GameProjectConfig XBOX_ONE {
+  }
+  GameProjectConfig XBOX_SERIES {
+  }
+  GameProjectConfig PS4 {
+  }
+  GameProjectConfig PS5 {
+  }
+  GameProjectConfig HEADLESS {
+  }
  }
 }

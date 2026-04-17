@@ -14,16 +14,6 @@ enum SDRC_EMissionChopperState
 };
 
 //------------------------------------------------------------------------------------------------
-enum SDRC_EHeliWaypointGenerationType
-{
-	NONE,
-	RANDOM,					//Random flying for a helicopter
-	PATROL,					//Fly around a certain area
-	SEARCH,					//Random flying search patrol. Once a player is found, mission ends.
-	SEARCH_AND_DESTROY,		//Search for players and engage in attack if found.
-	
-	LANDING,				//Land the helicopter
-};	
 
 const string DC_MISSIONCONFIG_FILE_CHOPPER = "dc_missionConfig_Chopper.json";
 const int DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER = 3;
