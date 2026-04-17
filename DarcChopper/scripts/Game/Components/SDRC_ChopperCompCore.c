@@ -96,6 +96,20 @@ enum SDRC_EHeliBehaviour
 }
 
 //------------------------------------------------------------------------------------------------
+//NOTE: This is specific for DarcMissions Chopper mission. Here for compatibility for other mods.
+
+enum SDRC_EHeliWaypointGenerationType
+{
+	NONE,
+	RANDOM,					//Random flying for a helicopter
+	PATROL,					//Fly around a certain area
+	SEARCH,					//Random flying search patrol. Once a player is found, mission ends.
+	SEARCH_AND_DESTROY,		//Search for players and engage in attack if found.
+	
+	LANDING,				//Land the helicopter
+};	
+
+//------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompCore
 {
 	//------------------------------------------------------------------------------------------------	
