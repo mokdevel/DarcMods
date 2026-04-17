@@ -29,8 +29,15 @@ class SDRC_SpawnHelper
 		ResourceName resName = "";
 		
 		for (int i = -1; i < resourceNames.Count() - 1; i++)	//We start from -1 to handle situation where resourceNames has only one item.
-		{
-			Resource resource = Resource.Load(resourceNames[index]);
+		{			
+			ResourceName name = resourceNames[index];
+			if (name[0] != "{")
+			{
+				//We expect it to be a list name
+				return name;
+			}
+			
+			Resource resource = Resource.Load(name);
 			if (resource.IsValid())
 			{
 				resName = resourceNames[index];
