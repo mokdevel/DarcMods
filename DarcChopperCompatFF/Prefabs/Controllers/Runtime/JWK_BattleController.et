@@ -1,0 +1,7 @@
+JWK_BattleControllerEntity {
+ ID "59B4D7DB2B7D077F"
+ components {
+  SDRC_JWK_ChopperBattleControllerComponent "{691F377112AC8879}" {
+  }
+ }
+}
