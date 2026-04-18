@@ -45,8 +45,11 @@ class SDRC_ChopperConfigAi : Managed
 class SDRC_ChopperCompatFFConfig : SDRC_Config
 {
 	//Default information
+	int version = 1;
 	string author = "darc";
+	string comment = "";
 	ref array<string> factions = {};						//Factions to use for choppers
+	float spawnChance;										//Chance % that is added to campaign progress
 	ref array<int> spawnDistance = {};						//Distance min/max to spawn the attacking chopper	
 	ref array<int> spawnDelay = {};							//(minutes) The delay before spawning the attacking chopper
 	ref array<ref int> chopperCount = {};					//The amount choppers to spawn
@@ -82,12 +85,14 @@ class SDRC_ChopperCompatFFConfig : SDRC_Config
 		super.SetDefaults();
 		factions = {"FF"};
 		#ifndef TESTING		
+			spawnChance = 0.2;
 			spawnDistance = {1500, 2500};
 			spawnDelay = {5, 15};
 			chopperCount = {0,0,1,1,2,2,2,2,2,2,3};
 			attackTime = 30;
 			attackList = {0};
 		#else
+			spawnChance = 1.0;
 			spawnDistance = {500, 700};
 			spawnDelay = {0, 0};
 			chopperCount = {2};

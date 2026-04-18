@@ -1,0 +1,74 @@
+{
+    "jsonVersion": 1,
+    "version": 1,
+    "author": "darc",
+    "comment": "",
+    "factions": [
+        "FF"
+    ],
+    "spawnChance": 0,
+    "spawnDistance": [
+        1500,
+        2500
+    ],
+    "spawnDelay": [
+        5,
+        15
+    ],
+    "chopperCount": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3
+    ],
+    "attackTime": 30,
+    "attackList": [
+        0
+    ],
+    "attacks": [
+        {
+            "heliList": [
+                "VEHICLE_CHOPPER_ARMED",
+                "VEHICLE_CHOPPER_ARMED",
+                "{26436A51FE36D07C}Prefabs/Vehicles/Helicopters/Ka-137/Ka137_Patrol.et",
+                "{87314096BD3C9D1A}Prefabs/Vehicles/Helicopters/AH6M/AH6M_M134_Patrol.et",
+                "{C4590C7F97F99DB2}Prefabs/Vehicles/Helicopters/AH6M/MH6M_Patrol.et",
+                "{19022AB51719F2AD}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/AH6M_OPFOR_M134_Patrol.et",
+                "{2B0F7648840C4F6E}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/MH6M_OPFOR_Patrol.et"
+            ],
+            "flyHeight": [
+                35,
+                70
+            ],
+            "speed": [
+                7,
+                25
+            ],
+            "flyDistance": [
+                0.1,
+                0.3
+            ],
+            "wpType": 0,
+            "enemyType": 3,
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_SMALL",
+                    "G_LIGHT"
+                ],
+                "skill": 60,
+                "perception": 1.0
+            }
+        }
+    ]
+}

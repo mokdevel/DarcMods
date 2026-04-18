@@ -72,7 +72,14 @@ class SDRC_JWK_ChopperBattleControllerComponent: JWK_EntityComponent
 			return;
 		}
 		
-		m_vPosDestination = owner.GetOrigin();
+		//Do a random check to see if choppers spawn with a chance of progress + spawnChance.
+		float chance = JWK.GameSettingsCache().GetBalanceProgress() + m_Config.spawnChance;
+		if (SDRC_Misc.RandomFloat(0, 1) > chance)
+		{
+			SDRC_Log.Add("[SDRC_JWK_ChopperBattleControllerComponent:OnPostInit] No choppers assigned to battle due to chance: " + chance, LogLevel.NORMAL);
+			return;
+		}
+		
 		m_iChopperCount = m_Config.chopperCount.GetRandomElement();
 		
 		if (m_iChopperCount == 0)
@@ -80,6 +87,8 @@ class SDRC_JWK_ChopperBattleControllerComponent: JWK_EntityComponent
 			SDRC_Log.Add("[SDRC_JWK_ChopperBattleControllerComponent:OnPostInit] No choppers assigned to battle.", LogLevel.NORMAL);
 			return;
 		}
+		
+		m_vPosDestination = owner.GetOrigin();
 		
 		SDRC_Log.Add("[SDRC_JWK_ChopperBattleControllerComponent:OnPostInit] Choppers joining the battle: " + m_iChopperCount, LogLevel.NORMAL);
 		
