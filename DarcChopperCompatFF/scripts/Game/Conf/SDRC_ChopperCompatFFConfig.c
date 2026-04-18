@@ -56,7 +56,7 @@ class SDRC_ChopperCompatFFConfig : SDRC_Config
 	ref array<int> spawnDistance = {};						//Distance min/max to spawn the attacking chopper	
 	ref array<int> spawnDelay = {};							//(minutes) The delay before spawning the attacking chopper
 	ref array<ref int> chopperCount = {};					//The amount choppers to spawn
-	int attackTime;											//(minutes) Time to attacks on area.
+	ref array<int> attackTime = {};							//(minutes) Time to attacks on area.
 	ref array<ref int> attackList = {};						//The list of mission indexes.
 	ref array<ref SDRC_ChopperCompatFF> attacks = {};		//List of sub attacks
 	
@@ -100,8 +100,8 @@ class SDRC_ChopperCompatFFConfig : SDRC_Config
 			spawnChance = 0.2;
 			spawnDistance = {1500, 2500};
 			spawnDelay = {5, 15};
-			chopperCount = {0,0,1,1,2,2,2,2,2,2,3};
-			attackTime = 30;
+			chopperCount = {0,1,1,2,2,2,2,2,2,3};
+			attackTime = {20, 60};
 			attackList = {0};
 		#else
 			spawnChance = 1.0;
