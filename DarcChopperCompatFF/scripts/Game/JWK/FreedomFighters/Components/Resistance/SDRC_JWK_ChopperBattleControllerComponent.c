@@ -185,6 +185,7 @@ class SDRC_JWK_ChopperBattleControllerComponent: JWK_EntityComponent
 		SDRC_Math.TurnEntityTowardsXZ(vehicle, m_vPosDestination);
 		
 		vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, m_vPosDestination, (m_Config.attackTime * 60) );
+		//vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, m_vPosDestination, 10 );
 		vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY);		
 		vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_DESPAWN);		
 		
