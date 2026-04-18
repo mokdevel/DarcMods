@@ -33,9 +33,6 @@ class SDRC_JWK_ChopperBattleControllerComponent: JWK_EntityComponent
 {
 	static const int REFRESH_INTERVAL_MS = 20000;
 	
-	static const string DC_COMPATCONFIG_FILE = "dc_compatFFConfigChopper.json";
-	static const int DC_COMPATCONFIG_FILE_JSONVER = 1;
-	
 	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_COMPATCONFIG_FILE);	
 	private ref SDRC_ChopperCompatFFConfig m_Config = new SDRC_ChopperCompatFFConfig();
 	private ref SDRC_ChopperCompatFF m_DC_Attack = new SDRC_ChopperCompatFF();	
@@ -76,7 +73,7 @@ class SDRC_JWK_ChopperBattleControllerComponent: JWK_EntityComponent
 		float chance = JWK.GameSettingsCache().GetBalanceProgress() + m_Config.spawnChance;
 		if (SDRC_Misc.RandomFloat(0, 1) > chance)
 		{
-			SDRC_Log.Add("[SDRC_JWK_ChopperBattleControllerComponent:OnPostInit] No choppers assigned to battle due to chance: " + chance, LogLevel.NORMAL);
+			SDRC_Log.Add("[SDRC_JWK_ChopperBattleControllerComponent:OnPostInit] No choppers assigned to battle. Chance: " + chance * 100 + "%.", LogLevel.NORMAL);
 			return;
 		}
 		

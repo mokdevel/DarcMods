@@ -6,7 +6,7 @@
     "factions": [
         "FF"
     ],
-    "spawnChance": 0,
+    "spawnChance": 0.2,
     "spawnDistance": [
         1500,
         2500

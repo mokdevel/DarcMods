@@ -1,5 +1,8 @@
 //#define TESTING
 
+static const string DC_COMPATCONFIG_FILE = "dc_compatFFConfigChopper.json";
+static const int DC_COMPATCONFIG_FILE_JSONVER = 1;
+
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompatFF
 {
@@ -54,8 +57,8 @@ class SDRC_ChopperCompatFFConfig : SDRC_Config
 	ref array<int> spawnDelay = {};							//(minutes) The delay before spawning the attacking chopper
 	ref array<ref int> chopperCount = {};					//The amount choppers to spawn
 	int attackTime;											//(minutes) Time to attacks on area.
-	ref array<ref int> attackList = {};						//The list of mission suids.
-	ref array<ref SDRC_ChopperCompatFF> attacks = {};		//List of sub missions
+	ref array<ref int> attackList = {};						//The list of mission indexes.
+	ref array<ref SDRC_ChopperCompatFF> attacks = {};		//List of sub attacks
 	
 	//------------------------------------------------------------------------------------------------
 	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
@@ -63,6 +66,15 @@ class SDRC_ChopperCompatFFConfig : SDRC_Config
 		SDRC_ChopperCompatFFConfig data = SDRC_ChopperCompatFFConfig.Cast(T);
 		return saveContext.WriteValue("", data);
 	}		
+	
+	//------------------------------------------------------------------------------------------------
+	//Loads the conf once to get it on file system
+	static void LoadConfOnce()
+	{
+		SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_COMPATCONFIG_FILE);	
+		SDRC_ChopperCompatFFConfig m_Config = new SDRC_ChopperCompatFFConfig();
+		m_JsonApi.Load(m_Config, SDRC_ChopperCompatFFConfig.Cast(m_Config), DC_COMPATCONFIG_FILE_JSONVER);
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	/*int GetSubMissionIdx(int subIdx)
