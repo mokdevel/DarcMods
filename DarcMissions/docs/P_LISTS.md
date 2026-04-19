@@ -211,3 +211,22 @@ The .json configuration as an example:
   }
   ]
 }
+
+# Vehicle lists
+## Vehicle list names (id)
+Currently available names are below. For a complete list, please check [SDRC_VehicleListConfig.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Conf/SDRC_VehicleListConfig.c)
+```
+VEHICLE_WHEELED_ALL
+VEHICLE_WHEELED_MILITARY_ALL
+VEHICLE_WHEELED_CIVILIAN_ALL
+VEHICLE_WHEELED_ARMED
+VEHICLE_WHEELED_CIVILIAN_TRUCK
+VEHICLE_WHEELED_MILITARY_TRUCK
+VEHICLE_WHEELED_CIVILIAN_CAR
+VEHICLE_WHEELED_MILITARY_CAR
+
+VEHICLE_HELICOPTER_ALL
+VEHICLE_CHOPPER_ALL
+VEHICLE_CHOPPER_TRANSPORT
+VEHICLE_CHOPPER_ARMED
+```
