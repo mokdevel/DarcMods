@@ -111,7 +111,7 @@ sealed class SDRC_LootHelper
 					//Add ammo to box 
 					if (addToBox)
 					{
-						int magCount = SDRC_Misc.RandomFloat(0, 4);
+						int magCount = SDRC_Misc.RandomFloat(0, 6);
 						if (magCount > 0)
 						{
 							string magazine = SDRC_AmmoHelper.GetCompatibleMagazineForPrefab(resource);

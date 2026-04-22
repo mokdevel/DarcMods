@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-//#define SDRC_RELEASE
+#define SDRC_RELEASE
 
 #ifdef SDRC_RELEASE
 	const bool SHOW_DEBUG_BOOL = false;		//Controls if debug visuals are to be shown. Disable for DarcMissions release.
@@ -58,7 +58,7 @@ sealed class SDRC_Conf
 #ifndef SDRC_RELEASE
 	const bool RELEASE = false;
 	const string DEFAULT_DIR = "dummy";
-	const bool SDRC_ENABLE_DARCSPAWNER = false;
+	const bool SDRC_ENABLE_DARCSPAWNER = true;
 	const bool SDRC_ENABLE_DARCMISSIONS	= true;
 	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
 	const bool SDRC_ENABLE_DARCSTORIES = false;

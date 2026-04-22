@@ -59,7 +59,7 @@ class SDRC_SpawnerConfig : SDRC_Config
 		spawnOnRoad = false;
 		spawnRndRadius = 100;
 		spawnWorldSizeMultiplier = 0;
-		containerCount = 3;//20;
+		containerCount = 10;//20;
 		disableArsenal = true;
 		spawnSetList = {0,1,2,2,3,3};
 		//----------------------------------------------------		
@@ -88,7 +88,9 @@ class SDRC_SpawnerConfig : SDRC_Config
 				EMapDescriptorType.MDT_BASE,
 				EMapDescriptorType.MDT_PORT,
 				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_FORTRESS
+				EMapDescriptorType.MDT_FORTRESS,
+				EMapDescriptorType.MDT_CHURCH,
+				EMapDescriptorType.MDT_FUELSTATION,
 			},
 			{},
 			{
@@ -133,7 +135,10 @@ class SDRC_SpawnerConfig : SDRC_Config
 				EMapDescriptorType.MDT_BASE,
 				EMapDescriptorType.MDT_PORT,
 				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_FORTRESS
+				EMapDescriptorType.MDT_FORTRESS,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_HOSPITAL, EMapDescriptorType.MDT_HOSPITAL, EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_HOSPITAL, EMapDescriptorType.MDT_HOSPITAL,
 			},
 			{},
 			{
@@ -174,6 +179,8 @@ class SDRC_SpawnerConfig : SDRC_Config
 				EMapDescriptorType.MDT_NAME_HILL,
 				EMapDescriptorType.MDT_NAME_RIDGE,
 				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_TOWER,
 			},
 			{},
 			{
@@ -211,11 +218,16 @@ class SDRC_SpawnerConfig : SDRC_Config
 			{
 				EMapDescriptorType.MDT_NAME_HILL,
 				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_RIDGE,
 				EMapDescriptorType.MDT_FORESTERLODGE,
 				EMapDescriptorType.MDT_FORESTTRIANGLE,
 				EMapDescriptorType.MDT_FORESTSQUARE,
 				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_CHURCH,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_TOWER,
+				EMapDescriptorType.MDT_HOSPITAL,
 			},
 			{},
 			{

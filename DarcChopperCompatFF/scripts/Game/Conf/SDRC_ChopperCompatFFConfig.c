@@ -99,7 +99,7 @@ class SDRC_ChopperCompatFFConfig : SDRC_Config
 		#ifndef TESTING		
 			spawnChance = 0.2;
 			spawnDistance = {1500, 2500};
-			spawnDelay = {5, 15};
+			spawnDelay = {5, 25};
 			chopperCount = {0,1,1,2,2,2,2,2,2,3};
 			attackTime = {20, 60};
 			attackList = {0};
