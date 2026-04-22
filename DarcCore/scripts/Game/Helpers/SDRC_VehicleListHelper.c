@@ -37,14 +37,14 @@ sealed class SDRC_VehicleListHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*! 
-	Remove all non-vehicles. Add faction to the list items.
+	Clean up the lists.
 	*/	
 	static void Sanitize()
 	{		
 		//Let's find the factions for the vehicles
 		foreach (SDRC_List list : m_Config.lists)
 		{
-			SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] " + list.id, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] LIST: " + list.id, LogLevel.DEBUG);
 			
 			//foreach (string item : list.items)
 			for (int i = 0; i < list.items.Count(); i++)
@@ -82,7 +82,50 @@ sealed class SDRC_VehicleListHelper
 				if (!doDelete)
 				{
 					array<IEntityComponentSource> componentSources = {};				
+
+					// --- Common for all ---
+			
+					//Armed vehicle
+					if (list.id.Contains("ARMED"))
+					{
+						if (!SDRC_Resources.HasResourceTrait(item, EEditableEntityLabel.TRAIT_ARMED))
+						{
+							doDelete = true;
+						}
+					}
+					//Armed vehicle
+					if (list.id.Contains("UNARMED"))
+					{
+						if (SDRC_Resources.HasResourceTrait(item, EEditableEntityLabel.TRAIT_ARMED))
+						{
+							doDelete = true;
+						}
+					}
+					if (list.id.Contains("ARMOR"))
+					{
+						if (!SDRC_Resources.HasResourceTrait(item, EEditableEntityLabel.TRAIT_ARMOR))
+						{
+							doDelete = true;
+						}
+					}						
 					
+					//Military vehicle
+					if (list.id.Contains("MILITARY"))
+					{
+						if (SDRC_Resources.HasResourceTrait(item, EEditableEntityLabel.FACTION_CIV))
+						{
+							doDelete = true;
+						}
+					}
+					//Civilian vehicle
+					if (list.id.Contains("CIV"))
+					{
+						if (!SDRC_Resources.HasResourceTrait(item, EEditableEntityLabel.FACTION_CIV))
+						{
+							doDelete = true;
+						}
+					}					
+				
 					// --- Cars ---
 					
 					//Wheeled vehicle
@@ -92,31 +135,6 @@ sealed class SDRC_VehicleListHelper
 						{
 							doDelete = true;	
 						}
-						
-						//Military vehicle
-						if (list.id.Contains("MILITARY"))
-						{
-							if (list.factions[i] == "CIV")
-							{
-								doDelete = true;
-							}
-						}
-						//Civilian vehicle
-						if (list.id.Contains("CIV"))
-						{
-							if (list.factions[i] != "CIV")
-							{
-								doDelete = true;
-							}
-						}
-						//Armed vehicle
-						if (list.id.Contains("ARMED"))
-						{
-							if (SDRC_Resources.GetResourceVehicleType(item) != EVehicleType.APC)
-							{
-								doDelete = true;
-							}
-						}								
 						//Car
 						if (list.id.Contains("CAR"))
 						{
@@ -158,7 +176,7 @@ sealed class SDRC_VehicleListHelper
 							}
 						}
 						
-						if (list.id.Contains("TRANSPORT"))
+/*						if (list.id.Contains("TRANSPORT"))
 						{
 							string itemlow = item;
 							itemlow.ToLower();
@@ -175,7 +193,7 @@ sealed class SDRC_VehicleListHelper
 							{
 								doDelete = true;
 							}
-						}							
+						}*/
 					}					
 				}
 				

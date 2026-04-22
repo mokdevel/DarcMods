@@ -10,6 +10,8 @@ VEHICLE_WHEELED_ALL
 VEHICLE_WHEELED_MILITARY_ALL
 VEHICLE_WHEELED_CIVILIAN_ALL
 VEHICLE_WHEELED_ARMED
+VEHICLE_WHEELED_UNARMED
+VEHICLE_WHEELED_ARMOR
 VEHICLE_WHEELED_CIVILIAN_TRUCK
 VEHICLE_WHEELED_MILITARY_TRUCK
 VEHICLE_WHEELED_CIVILIAN_CAR
@@ -47,11 +49,13 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 		lists.Insert(vehicleList05());
 		lists.Insert(vehicleList06());
 		lists.Insert(vehicleList07());
+		lists.Insert(vehicleList08());
+		lists.Insert(vehicleList09());
 		//Helicopters
-		lists.Insert(vehicleList10());
-		lists.Insert(vehicleList11());
-		lists.Insert(vehicleList12());
-		lists.Insert(vehicleList13());
+		lists.Insert(vehicleList30());
+		lists.Insert(vehicleList31());
+		lists.Insert(vehicleList32());
+		lists.Insert(vehicleList33());
 	}
 			
 	//Vehiclelist: VEHICLE_WHEELED_ALL
@@ -130,8 +134,46 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 		return vehicleList;
 	}		
 	
-	//Vehiclelist: VEHICLE_WHEELED_CIVILIAN_TRUCK
+	//Vehiclelist: VEHICLE_WHEELED_ARMED
 	SDRC_List vehicleList04()
+	{
+		ref SDRC_List vehicleList = new SDRC_List();
+		vehicleList.Set(
+			"VEHICLE_WHEELED_UNARMED",
+			{"Prefabs/Vehicles/Wheeled",
+			},
+			{"", 
+			},
+			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
+			"_bench", "_gun_mount", "_roof",
+			"Dst", "Lights", "Probes", "VehParts", 
+			},
+			{}
+		);
+		return vehicleList;
+	}	
+	
+	//Vehiclelist: VEHICLE_WHEELED_ARMOR
+	SDRC_List vehicleList05()
+	{
+		ref SDRC_List vehicleList = new SDRC_List();
+		vehicleList.Set(
+			"VEHICLE_WHEELED_ARMOR",
+			{"Prefabs/Vehicles/Wheeled",
+			},
+			{"", 
+			},
+			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
+			"_bench", "_gun_mount", "_roof",
+			"Dst", "Lights", "Probes", "VehParts", 
+			},
+			{}
+		);
+		return vehicleList;
+	}		
+	
+	//Vehiclelist: VEHICLE_WHEELED_CIVILIAN_TRUCK
+	SDRC_List vehicleList06()
 	{
 		ref SDRC_List vehicleList = new SDRC_List();
 		vehicleList.Set(
@@ -150,7 +192,7 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 	}		
 	
 	//Vehiclelist: VEHICLE_WHEELED_MILITARY_TRUCK
-	SDRC_List vehicleList05()
+	SDRC_List vehicleList07()
 	{
 		ref SDRC_List vehicleList = new SDRC_List();
 		vehicleList.Set(
@@ -169,7 +211,7 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 	}		
 	
 	//Vehiclelist: VEHICLE_WHEELED_CIVILIAN_CAR
-	SDRC_List vehicleList06()
+	SDRC_List vehicleList08()
 	{
 		ref SDRC_List vehicleList = new SDRC_List();
 		vehicleList.Set(
@@ -188,7 +230,7 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 	}		
 	
 	//Vehiclelist: VEHICLE_WHEELED_MILITARY_CAR
-	SDRC_List vehicleList07()
+	SDRC_List vehicleList09()
 	{
 		ref SDRC_List vehicleList = new SDRC_List();
 		vehicleList.Set(
@@ -207,7 +249,7 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 	}	
 	
 	//Vehiclelist: VEHICLE_HELICOPTER_ALL
-	SDRC_List vehicleList10()
+	SDRC_List vehicleList30()
 	{
 		ref SDRC_List vehicleList = new SDRC_List();
 		vehicleList.Set(
@@ -227,7 +269,7 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 	}
 	
 	//Vehiclelist: VEHICLE_CHOPPER_ALL
-	SDRC_List vehicleList11()
+	SDRC_List vehicleList31()
 	{
 		ref SDRC_List vehicleList = new SDRC_List();
 		vehicleList.Set(
@@ -246,19 +288,17 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 	}
 	
 	//Vehiclelist: VEHICLE_CHOPPER_TRANSPORT
-	SDRC_List vehicleList12()
+	SDRC_List vehicleList32()
 	{
 		ref SDRC_List vehicleList = new SDRC_List();
 		vehicleList.Set(
 			"VEHICLE_CHOPPER_TRANSPORT",
 			{"Prefabs/Vehicles/Helicopters",
 			},
-			{"", 
-			},
+			{},
 			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
 			"_bench", "_gun_mount", "_roof",
 			"Dst", "Lights", "Probes", "VehParts", 
-			"_gunship", "_armed", 
 			},
 			{}
 		);
@@ -266,19 +306,17 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 	}
 	
 	//Vehiclelist: VEHICLE_CHOPPER_ARMED
-	SDRC_List vehicleList13()
+	SDRC_List vehicleList33()
 	{
 		ref SDRC_List vehicleList = new SDRC_List();
 		vehicleList.Set(
 			"VEHICLE_CHOPPER_ARMED",
 			{"Prefabs/Vehicles/Helicopters",
 			},
-			{"", 
-			},
+			{},
 			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
 			"_bench", "_gun_mount", "_roof",
 			"Dst", "Lights", "Probes", "VehParts", 
-			"transport",
 			},
 			{}
 		);
