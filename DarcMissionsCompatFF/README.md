@@ -24,7 +24,7 @@ string author : Author of the file
 string comment : Generic comment. Not used in game.
 int hideOutSafeZoneDistance : The radious of a 'safe zone' to a hide out where a mission shall not spawn.
 float spawnRateForGreenZones : The percentage chance to spawn a mission to green zone (0.05 = 5%)
-bool setEnemyFactionAutomatically : Automatically set enemy faction from FF. (WIP , placeholder for now)
+bool setEnemyFactionAutomatically : Automatically set enemy faction from FF. This will override any settings in DarcMissions.
 bool rewardPerUser : The amount of money to receive.
   true: The full reward is given to each player.
   false: The full reward is split within the group and each player gets reward divided by player count.
@@ -32,6 +32,11 @@ bool rewardDefault : Default reward unless specific reward has been set in missi
 ```
 
 # Version history
+
+## 202604xx
+Main features:
+* ``setEnemyFactionAutomatically`` functionality. This is ``true`` by default. Automatically set enemy faction from FF. This will override any settings in DarcMissions.
+
 ## 20260414
 Fixes:
 * Mission position validation fixes which resulted in PLAYER_TOO_FAR errors.

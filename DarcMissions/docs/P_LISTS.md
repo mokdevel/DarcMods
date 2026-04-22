@@ -213,15 +213,18 @@ The .json configuration as an example:
 }
 ```
 # Vehicle lists
-## Vehicle list names (id)
-Currently available names are below. For a complete list, please check [SDRC_VehicleListConfig.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Conf/SDRC_VehicleListConfig.c)
-
 NOTE: Documentation and functionality is WIP.
+
+## Vehicle list names (id)
+Currently available names are below. For a complete list, please check [SDRC_VehicleListConfig.c](https://github.com/mokdevel/DarcMods/blob/main/DarcCore/scripts/Game/Conf/SDRC_VehicleListConfig.c). 
+
 ```
 VEHICLE_WHEELED_ALL : All vehicles found.
 VEHICLE_WHEELED_MILITARY_ALL : All non-CIV faction vehicles.
 VEHICLE_WHEELED_CIVILIAN_ALL : All CIV faction vehicles.
-VEHICLE_WHEELED_ARMED : All vehicles of type APC.
+VEHICLE_WHEELED_ARMED : All vehicles with weapons. This includes cars and armor.
+VEHICLE_WHEELED_UNARMED : All vehicles without weapons.
+VEHICLE_WHEELED_ARMOR : All armored vehicles.
 VEHICLE_WHEELED_CIVILIAN_TRUCK : All CIV faction trucks. Vehicle type is any type of truck.
 VEHICLE_WHEELED_MILITARY_TRUCK : All non-CIV faction trucks. Vehicle type is any type of truck.
 VEHICLE_WHEELED_CIVILIAN_CAR : All CIV faction cars. Vehicle type is CAR.
@@ -232,3 +235,14 @@ VEHICLE_CHOPPER_ALL : All choppers found. These have the SDRC_ChopperComp compon
 VEHICLE_CHOPPER_TRANSPORT : All choppers found with 'transport' in their name. These have the SDRC_ChopperComp component.
 VEHICLE_CHOPPER_ARMED : All choppers found with '_gunship' or '_armed' in their name. These have the SDRC_ChopperComp component.
 ```
+
+The filtering is done with keywords. 
+* ``WHEELED`` : The vehicle has VehicleWheeledSimulation component.
+* ``MILITARY`` : Vehicle does not have trait FACTION_CIV.
+* ``CIVILIAN`` : Vehicle has trait FACTION_CIV.
+* ``ARMED`` : Vehicle has trait TRAIT_ARMED.
+* ``UNARMED`` : Vehicle does not have trait TRAIT_ARMED.
+* ``CARD`` : Vehicle is of type CAR
+* ``TRUCK`` : Vehicle is of type TRUCK, COMM_TRUCK, FUEL_TRUCK, SUPPLY_TRUCK 
+* ``HELICOPTER`` : The vehicle has VehicleHelicopterSimulation component.
+* ``CHOPPER`` : The vehicle has SDRC_ChopperComp component.
