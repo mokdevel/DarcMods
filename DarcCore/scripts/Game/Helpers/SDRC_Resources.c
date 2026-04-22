@@ -164,4 +164,193 @@ sealed class SDRC_Resources
 		
 		return vehicleType;
 	}		
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find component within an entity source
+	
+	Original found in: SCR_DestructionIndicesAssignTool
+	*/		
+	static IEntityComponentSource FindComponent(IEntitySource source, string componentType)
+	{
+		for (int i = source.GetComponentCount() - 1; i >= 0; i--)
+		{
+			if (source.GetComponent(i).GetClassName() == componentType)
+				return source.GetComponent(i);
+		}
+
+		return null;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find traits
+	*/		
+	static bool HasResourceTrait(ResourceName resourceName, EEditableEntityLabel trait)
+	{
+		Resource res = Resource.Load(resourceName);
+		
+		IEntitySource entitySource = SCR_BaseContainerTools.FindEntitySource(res);
+		if (!entitySource)
+		{
+			return false;
+		}
+		
+		IEntityComponentSource editableComponentSource = SDRC_Resources.FindComponent(entitySource, "SCR_EditableVehicleComponent");
+		if (!editableComponentSource)
+		{
+			return false;
+		}
+		
+		BaseContainer container = editableComponentSource.GetObject("m_UIInfo");
+		if (!container)
+		{			
+			return false;
+		}
+		
+		array<EEditableEntityLabel> labels = {};
+		container.Get("m_aAutoLabels", labels);
+		foreach (EEditableEntityLabel label : labels)
+		{
+			if (label == trait)
+			{
+				return true;
+			}
+		}
+
+		container.Get("m_aAuthoredLabels", labels);
+		foreach (EEditableEntityLabel label : labels)
+		{
+			if (label == trait)
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}		
 }
+
+/*
+	//ResourceName resourceName = "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et";
+	ResourceName resourceName = "{2A5CFC83306263A4}Prefabs/Props/Industrial/CargoContainers/CargoContainer_01/CargoContainer_02_20ft_ENP.et";
+	
+	Resource res = Resource.Load(resourceName);
+	
+	BaseContainer childContainer;
+	BaseContainer baseContainer = res.GetResource().ToBaseContainer();
+	if (!baseContainer)
+	{
+		Print("No basecontainer");
+		return;
+	}
+	
+	BaseContainerList baseContainerList = baseContainer.GetObjectArray("components");
+	if (!baseContainerList)
+	{
+		Print("No baseContainerList");
+		return;
+	}
+	
+	for (int i, count = baseContainerList.Count(); i < count; i++)
+	{
+		childContainer = baseContainerList.Get(i);
+		if (!childContainer)
+			continue;
+	
+		if (childContainer.GetClassName() == "SCR_DestructionMultiPhaseComponent")
+		{
+			Print("FOUND!");
+			baseContainer = childContainer;
+			break;
+		}
+	}
+	
+	IEntitySource entitySource = SCR_BaseContainerTools.FindEntitySource(res);
+	if (!entitySource)
+	{
+		Print("No entitySource");
+		return;
+	}
+	
+	IEntityComponentSource destructionComponent = SDRC_Resources.FindComponent(entitySource, "SCR_DestructionMultiPhaseComponent");
+	
+	// Setup first phase
+	array<ref SCR_DamagePhaseData> damagePhases = {};
+	destructionComponent.Get("m_aDamagePhases", damagePhases);
+	int damagePhasesCount = damagePhases.Count();
+	Print("Count: " + damagePhasesCount);
+
+*/
+
+/*
+	ResourceName resourceName = "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et";
+	//ResourceName resourceName = "{2A5CFC83306263A4}Prefabs/Props/Industrial/CargoContainers/CargoContainer_01/CargoContainer_02_20ft_ENP.et";
+	
+	Resource res = Resource.Load(resourceName);
+	
+	BaseContainer childContainer;
+	BaseContainer baseContainer = res.GetResource().ToBaseContainer();
+	if (!baseContainer)
+	{
+		Print("No basecontainer");
+		return;
+	}
+	
+	BaseContainerList baseContainerList = baseContainer.GetObjectArray("components");
+	if (!baseContainerList)
+	{
+		Print("No baseContainerList");
+		return;
+	}
+	
+	for (int i, count = baseContainerList.Count(); i < count; i++)
+	{
+		childContainer = baseContainerList.Get(i);
+		if (!childContainer)
+			continue;
+	
+		Print("BCL: " + childContainer.GetClassName());
+		
+		if (childContainer.GetClassName() == "SCR_DestructionMultiPhaseComponent")
+		{
+			Print("FOUND!");
+			baseContainer = childContainer;
+			break;
+		}
+	}
+*/
+
+/*
+ResourceName resourceName = "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et";
+//ResourceName resourceName = "{2A5CFC83306263A4}Prefabs/Props/Industrial/CargoContainers/CargoContainer_01/CargoContainer_02_20ft_ENP.et";
+
+Resource res = Resource.Load(resourceName);
+
+IEntitySource entitySource = SCR_BaseContainerTools.FindEntitySource(res);
+if (!entitySource)
+{
+	Print("No entitySource");
+	return;
+}
+
+IEntityComponentSource editableComponentSource = SDRC_Resources.FindComponent(entitySource, "SCR_EditableVehicleComponent");
+if (!editableComponentSource)
+{
+	Print("No editableComponentSource");
+	return;
+}
+
+BaseContainer container = editableComponentSource.GetObject("m_UIInfo");
+if (!container)
+{
+	Print("No container");
+	return;
+}
+
+// Setup first phase
+array<EEditableEntityLabel> ll = {};
+//container.Get("m_aAuthoredLabels", ll);
+container.Get("m_aAutoLabels", ll);
+int llCount = ll.Count();
+Print("Labels: " + llCount); */
