@@ -38,7 +38,7 @@
 		private const int SDRC_PLAYER_MAX_DISTANCE = 400;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 3;
+		private const int SDRC_MISSION_COUNT_STATIC = 30;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -236,7 +236,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 		
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
-			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
@@ -248,7 +248,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
 //			missionStatic.missionTypeArray = {};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CHOPPER};		
+			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.ROADBLOCK};		
 		
 		#endif
 	}
@@ -272,7 +272,7 @@ class SDRC_MissionDifficulty : Managed
 	ref array<float> aiSkillCoef = 			{0.20, 0.60, 1.0, 1.30, 1.60};
 	ref array<float> aiPerceptionCoef = 	{0.20, 0.60, 1.0, 1.30, 1.60};
 	ref array<float> lootChanceCoef = 		{0.50, 0.60, 1.0, 1.10, 1.20};	
-	ref array<float> lootCountCoef = 		{0.50, 0.70, 1.0, 1.50, 2.00};	
+	ref array<float> lootCountCoef = 		{0.70, 0.90, 1.0, 1.50, 2.00};	
 	ref array<float> rewardCoef = 			{0.50, 0.70, 1.0, 2.00, 3.00};	
 	ref array<float> qrfChance = 			{0.10, 0.15, 0.2, 0.25, 0.30};	
 }

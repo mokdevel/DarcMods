@@ -311,7 +311,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		array<string> lootItems = {
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
-				"UTIL_ATTACHMENT",
+				"UTIL_ATTACHMENT", "UTIL_ATTACHMENT",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"GEAR_BAG", 
@@ -366,12 +366,17 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			{
 				EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_BASE,
 				EMapDescriptorType.MDT_PORT,
 				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_FORTRESS
+				EMapDescriptorType.MDT_FORTRESS,
+				EMapDescriptorType.MDT_CHURCH,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_BUSSTOP,
+				EMapDescriptorType.MDT_BUSSTATION,
 			},
 			"any",
 			{message},
@@ -395,7 +400,8 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
-				"UTIL_MAGAZINE", "UTIL_MAGAZINE",
+				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE",
+				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE",
 				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
 			};
 		loot.Set(0.9, lootItems);
@@ -515,12 +521,17 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			{
 				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE,			
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_BASE,
 				EMapDescriptorType.MDT_PORT,
 				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_FORTRESS
+				EMapDescriptorType.MDT_FORTRESS,
+				EMapDescriptorType.MDT_CHURCH,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_BUSSTOP,
+				EMapDescriptorType.MDT_BUSSTATION,
 			},
 			"any",
 			{message},
@@ -545,7 +556,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
-				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO",
+				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO",
 				"CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", 
 				"CLOTHING_UNIFORM", "CLOTHING_UNIFORM",			
 			};
@@ -656,12 +667,17 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			{
 				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_BASE,
 				EMapDescriptorType.MDT_PORT,
 				EMapDescriptorType.MDT_AIRPORT,
-				EMapDescriptorType.MDT_FORTRESS
+				EMapDescriptorType.MDT_FORTRESS,
+				EMapDescriptorType.MDT_CHURCH,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_BUSSTOP,
+				EMapDescriptorType.MDT_BUSSTATION,
 			},
 			"any",
 			{message},
@@ -683,11 +699,13 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE", "WEAPON_RIFLE",
-				"UTIL_MAGAZINE", "UTIL_MAGAZINE", 
+				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", 
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO",
-				"GEAR_BAG", 			
+				"UTIL_ATTACHMENT", 
+				"UTIL_OPTIC",			
+				"GEAR_BAG", 
 			};
 		loot.Set(0.6, lootItems);
 		roadblock.loot = loot;
@@ -819,7 +837,12 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			{
 				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN, EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_CHURCH,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_BUSSTOP,
+				EMapDescriptorType.MDT_BUSSTATION,
 			},
 			"any",
 			{message},
@@ -848,7 +871,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 				"CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", 
 				"CLOTHING_UNIFORM", "CLOTHING_UNIFORM", "CLOTHING_UNIFORM", 
 				"GEAR_HANDWEAR", 
-				"UTIL_OPTIC", 
+				"UTIL_OPTIC", "UTIL_OPTIC", 
 			};
 		loot.Set(0.6, lootItems);
 		roadblock.loot = loot;

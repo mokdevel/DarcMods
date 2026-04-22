@@ -326,7 +326,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		//Default
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0};//{0,0,0,0,0,0,1,1,1,1,1,2,3,3,};
+		missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,4,4};
 		//Mission specific
 		distanceToPlayer = 500;
 		//----------------------------------------------------
@@ -334,6 +334,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		subMissions.Insert(Convoy1());				
 		subMissions.Insert(Convoy2());
 		subMissions.Insert(Convoy3());
+		subMissions.Insert(Convoy4());
 	}
 		
 	//----------------------------------------------------
@@ -349,15 +350,13 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			0, "index 0: Convoy driving from .. to ..",
 			{"0 0 0", "0 0 0"}, 5,
 			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_VALLEY,
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_NAME_RIDGE,
 				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CHURCH,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_AIRPORT
 			},
@@ -393,8 +392,8 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		array<string> lootItems = {
 				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", 
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", 
-				"GEAR_BAG", 
-				"CLOTHING_HEADGEAR", "CLOTHING_UNIFORM",
+				"GEAR_BAG", "GEAR_BAG", 
+				"CLOTHING_HEADGEAR", "CLOTHING_UNIFORM", "CLOTHING_HEADGEAR", "CLOTHING_UNIFORM",
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
@@ -418,16 +417,15 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			1, "index 1: Truck driving from .. to ..",
 			{"0 0 0", "0 0 0"}, 7,
 			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,			
 				EMapDescriptorType.MDT_FORESTSQUARE,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_VALLEY,
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_FUELSTATION,
 				EMapDescriptorType.MDT_PARKING,
 				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CHURCH,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_AIRPORT
 			},
@@ -484,16 +482,15 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			2, "index 2: Armor driving from .. to ..",
 			{"0 0 0", "0 0 0"}, 7,
 			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_FORESTSQUARE,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE,
 				EMapDescriptorType.MDT_NAME_VALLEY,
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_FUELSTATION,
 				EMapDescriptorType.MDT_PARKING,
 				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CHURCH,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_AIRPORT
 			},
@@ -524,7 +521,9 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		array<string> lootItems = {
 				"WEAPON_RIFLE", "WEAPON_RIFLE_BIG", 
 				"WEAPON_HANDGUN", 
-				"WEAPON_LAUNCHER", 
+				"UTIL_ATTACHMENT", 
+				"UTIL_OPTIC",			
+				"WEAPON_LAUNCHER", "WEAPON_LAUNCHER", 
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"GEAR_BAG", "GEAR_BAG", 
@@ -548,16 +547,15 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			3, "index 3: Vehicle with a gun driving from .. to ..",
 			{"0 0 0", "0 0 0"}, 4,
 			{
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
-				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_FORESTSQUARE,
-				EMapDescriptorType.MDT_NAME_VILLAGE,
+				EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE, 
 				EMapDescriptorType.MDT_NAME_VALLEY,
 				EMapDescriptorType.MDT_NAME_LOCAL,
 				EMapDescriptorType.MDT_FUELSTATION,
 				EMapDescriptorType.MDT_PARKING,
 				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CHURCH,
 				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
 				EMapDescriptorType.MDT_AIRPORT
 			},
@@ -580,17 +578,15 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		convoy.Set(
 			{
 				"VEHICLE_WHEELED_MILITARY_CAR",
-				"{F6B23D17D5067C11}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB.et",
-				"{5168FEA3054D6D15}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB_MERDC.et",
-				"{3EA6F47D95867114}Prefabs/Vehicles/Wheeled/M998/M1025_armed_M2HB.et",
-				"{DD774A8FD0989A78}Prefabs/Vehicles/Wheeled/M998/M1025_armed_M2HB_MERDC.et",
 			},
 			20
 		);
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"WEAPON_RIFLE", 
+				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", 
+				"WEAPON_MG", "WEAPON_MG", 
+				"WEAPON_RIFLE_BIG", "WEAPON_RIFLE_BIG", 
 				"WEAPON_HANDGUN", 
 				"WEAPON_GRENADE", "WEAPON_GRENADE", 
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
@@ -601,6 +597,72 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 				
 		return convoy;	
 	}
+	
+	//----------------------------------------------------
+	SDRC_Convoy Convoy4()
+	{
+		ref SDRC_Convoy convoy = new SDRC_Convoy();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Metallic gear on the road",
+			"A tin can seen going from %l to %d.",
+			"Can opened, enjoy the loot!",
+			"The loot slipped your hands.",); 
+		convoy.general.Set(
+			4, "index 4: Armor vehicle driving from .. to ..",
+			{"0 0 0", "0 0 0"}, 4,
+			{
+				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE, 
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_PARKING,
+				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CHURCH,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_AIRPORT
+			},
+			"any",
+			{message},
+			SDRC_EMissionWinCondition.AI_KILL_75,
+			{},
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,
+			{SDRC_EDifficulty.RANDOM},
+			0
+		);
+		convoy.ai.Set(
+			{1, 2},
+			{"G_RECON", "G_HEAVY", "G_LIGHT"},
+			70, 1.0,
+			{0, 0},
+			SDRC_EWaypointGenerationType.ROUTE,
+			SDRC_EWaypointMoveType.MOVE,
+		);
+		convoy.Set(
+			{
+				"VEHICLE_WHEELED_ARMOR",
+			},
+			20
+		);
+		
+		ref SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", 
+				"WEAPON_MG", 
+				"WEAPON_RIFLE_BIG", 
+				"WEAPON_HANDGUN", 
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
+				"UTIL_ATTACHMENT", 
+				"UTIL_OPTIC",			
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
+			};
+		loot.Set(0.9, lootItems);
+		convoy.loot = loot;		
+				
+		return convoy;	
+	}	
 }
 
 //------------------------------------------------------------------------------------------------
