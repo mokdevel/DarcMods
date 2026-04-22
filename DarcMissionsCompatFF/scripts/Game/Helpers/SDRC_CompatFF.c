@@ -43,7 +43,12 @@ modded class SDRC_Compat
 		
 		GetGame().GetCallqueue().CallLater(WaitForPlayers, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
 //		GetGame().GetCallqueue().CallLater(Clear, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
-		
+
+		if (m_Config.setEnemyFactionAutomatically)
+		{
+			GetGame().GetCallqueue().CallLater(SetEnemyFactionAutomatically, 5000, true);
+		}
+				
 		return true;
 	}
 	
@@ -72,6 +77,56 @@ modded class SDRC_Compat
 		
 		GetGame().GetCallqueue().CallLater(Clear, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Set enemy faction to be the same for missions as is defined for FF.
+	*/		
+	static void SetEnemyFactionAutomatically()
+	{
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (baseGameMode)
+		{						
+			if (baseGameMode.GetState() == SCR_EGameModeState.PREGAME)
+			{
+				SDRC_Log.Add("[SDRC_CompatFF] Waiting.. in PREGAME.", LogLevel.SPAM);
+				return;
+			}
+			
+			JWK_FactionManager factionmanager = JWK_FactionManager.Cast(GetGame().GetFactionManager());
+			
+			if (factionmanager)
+			{
+				JWK_Faction enemyFaction = JWK_Faction.GetByRole(JWK_EFactionRole.ENEMY);
+				string faction = enemyFaction.GetKey();
+				
+				bool doChange = false;
+				
+				if (baseGameMode.missionFrame.m_Config.enemyFactions.Count() > 1)
+				{
+					doChange = true;
+				}
+				else
+				{
+					if (baseGameMode.missionFrame.m_Config.enemyFactions[0] != faction)
+					{
+						doChange = true;
+					}
+				}
+				
+				if (doChange)
+				{
+					baseGameMode.missionFrame.m_Config.enemyFactions.Clear();
+					baseGameMode.missionFrame.m_Config.enemyFactions.Insert(faction);
+					SDRC_Log.Add("[SDRC_CompatFF] Changing faction to: " + faction + ". This will override any enemyFactions setting in DarcMissions.", LogLevel.WARNING);
+				}
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_CompatFF] No factionmanager.", LogLevel.SPAM);
+			}
+		}
+	}	
 	
 	//------------------------------------------------------------------------------------------------
 	/*!

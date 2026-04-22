@@ -40,8 +40,8 @@ modded class SDRC_MissionPosHelper
 						
 			float distance = JWK_IndexSystem.Get().FindDistanceToNearestXZ(JWK_ResistanceHideoutEntity, pos);
 			//SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Distance: " + distance, LogLevel.DEBUG);
-//			if (distance < HIDEOUT_DISTANCE)
-			if (distance < SDRC_Compat.m_Config.hideOutSafeZoneDistance)
+
+			if ( (distance < SDRC_Compat.m_Config.hideOutSafeZoneDistance) && (distance != -1) )	//NOTE: -1 is returned if the game has not yet started.
 			{
 				SDRC_Log.Add("[SDRC_MissionHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.FREEDOM_FIGHTERS_HIDEOUT_TOO_CLOSE), LogLevel.SPAM);
 				return SDRC_EMissionError.FREEDOM_FIGHTERS_HIDEOUT_TOO_CLOSE;
