@@ -155,6 +155,17 @@ class SDRC_MissionFrame
 	*/	
 	protected void MissionCycleManager()
 	{		
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (baseGameMode)
+		{						
+			if (baseGameMode.GetState() == SCR_EGameModeState.PREGAME)
+			{
+				SDRC_Log.Add("[SDRC_MissionFrame:MissionCycleManager] Waiting.. in PREGAME.", LogLevel.DEBUG);
+				GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionFrameCycleTime*1000, false);
+				return;
+			}
+		}
+		
 		#ifndef SDRC_RELEASE
 			//SDRC_DevHelper.TestMissionPositions();
 		#endif	
