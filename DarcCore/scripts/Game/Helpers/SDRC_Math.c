@@ -165,7 +165,6 @@ sealed class SDRC_Math
 	static float VectorToAngle(vector direction)
 	{
     	float angle = Math.Atan2(direction[0], direction[2]);
-		//TBD: Might be same as *RAD2DEG
     	float degrees = (180 * angle / Math.PI);
     	return degrees;
 	}

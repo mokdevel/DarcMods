@@ -326,12 +326,12 @@ sealed class SDRC_DebugHelper
 	\param snap If the cylinder it so snap to the ground
 	*/	
 	
-	static void AddDebugPos(MapItem mapItem, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300, bool snap = true)
+	static void AddDebugPosMapItem(MapItem mapItem, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300, bool snap = true)
 	{
 		AddDebugPos(mapItem.GetPos(), color, radius, id, height, snap);
 	}
 
-	static void AddDebugPos(IEntity entity, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300, bool snap = true)
+	static void AddDebugPosEntity(IEntity entity, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300, bool snap = true)
 	{
 		AddDebugPos(entity.GetOrigin(), color, radius, id, height, snap);
 	}

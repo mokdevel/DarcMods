@@ -426,7 +426,7 @@ sealed class SDRC_Locations
 				{
 					if (location) 
 					{
-						SDRC_DebugHelper.AddDebugPos(location);
+						SDRC_DebugHelper.AddDebugPosMapItem(location);
 					}
 				}
 			#endif
