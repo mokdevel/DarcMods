@@ -49,6 +49,59 @@ class SDRC_MissionHelper
 		return pos;
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Select a mission position from the list of positions. "0 0 0" returned as default.
+	*/	
+	static vector SelectMissionPosFromPairs(out vector destination, array<vector>positions, float size = 1, array<EMapDescriptorType> locationTypes = null, int posRandomization = -1)
+	{
+		//Fill from-to positions for later use
+		array<vector> posFrom = {};
+		array<vector> posTo = {};
+		vector pos = "0 0 0";
+		
+		if (positions.IsEmpty())
+		{
+			posFrom.Insert("0 0 0");
+			posTo.Insert("0 0 0");
+		}
+		else
+		{
+			int count = positions.Count();
+			if (count & 1) // odd number
+			{
+				positions.Insert("0 0 0");
+				SDRC_Log.Add("[SelectMissionPosFromPairs] The count of pos shall be even (from-to pairs). Adding one zero position as a fix. Please check your json.", LogLevel.WARNING);
+			}
+			
+			//Copy values
+			count = (positions.Count() / 2); //Pairs
+			int index = SDRC_Misc.RandomInt(0, count - 1);
+			
+			posFrom.Insert(positions[index*2 + 0]);
+			posTo.Insert(positions[index*2 + 1]);			
+		}
+		
+		if (posFrom[0] == "0 0 0")
+		{
+			pos = SDRC_MissionHelper.SelectMissionPos(posFrom, size, locationTypes, posRandomization);
+		}
+		else
+		{
+			pos = posFrom[0];
+		}
+		
+		if (posTo[0] == "0 0 0")
+		{
+			destination = SDRC_MissionHelper.SelectMissionPos(posFrom, size, locationTypes, posRandomization);
+		}
+		else
+		{
+			destination = posTo[0];
+		}
+		
+		return pos;
+	}	
 		
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -133,6 +186,7 @@ class SDRC_MissionHelper
 	Find the location close to the position 
 	\param pos Position to start to search for mission position
 	\param size Size (radius) of the mission. This size should be the size of the objects to spawn - like a camp.
+	\param posRandomization TBD
 	\return Location not found if "0 0 0" returned.
 	*/	
 	static vector FindWithIterate(vector pos, float size, int posRandomization = -1)
@@ -381,7 +435,90 @@ class SDRC_MissionHelper
 		SCR_AIGroup group = SpawnMissionAIGroup(groupToSpawn, pos, faction);
 		return group;
 	}	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Spawn mission AI from class SDRC_MissionConfigAi
+	*/	
+	static int SpawnAiFromClassAi(SDRC_MissionConfigAi ai, SDRC_Mission mission, vector spawnPos, vector destinationPos)
+	{
+		int groupCount = 0;
+		int aiCount = ai.GetCount(mission.GetDifficulty());
+
+		for (int i = 0; i < aiCount; i++)
+		{
+			SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroupRandom(ai.types, spawnPos, mission.GetFaction());
+			if (group)
+			{
+				groupCount++;
+				SDRC_AIHelper.SetAIGroupSettings(group, ai.GetSkill(mission.GetDifficulty()), ai.GetPerception(mission.GetDifficulty()));					
+				mission.AddToGroupsList(group);
+				
+				//Set waypoint 
+				SDRC_WPHelper.CreateMissionAIWaypoints(group, ai.waypointGenType, spawnPos, destinationPos, ai.waypointMoveType);
+			}
+		}
 		
+		return groupCount;
+	}		
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Spawn mission AI from class SDRC_MissionConfigAi
+	*/	
+	static bool SpawnAiFromClassAiInVehicle(ResourceName vehicleName, SDRC_MissionConfigAi ai, SDRC_Mission mission, vector spawnPos, vector destinationPos)
+	{
+		//Spawn vehicle
+		if (vehicleName[0] != "{")
+		{
+			vehicleName = SDRC_VehicleListHelper.FindVehicleItem(vehicleName, mission.GetFaction());
+		}				
+		
+		ref IEntity vehicle = SDRC_SpawnHelper.SpawnItem(spawnPos, vehicleName, 10);
+		bool success = false;
+		
+		if (!vehicle)
+		{			
+			return false;			
+		}
+				
+		SDRC_Log.Add("[SDRC_MissionHelper:SpawnAiFromClassAiInVehicle] " +  mission.GetId() + " : Vehicle spawned: " + vehicle, LogLevel.DEBUG);										
+		
+		mission.AddToEntityList(vehicle);
+		
+		//Disable arsenal
+		SDRC_VehicleHelper.EmptyStorage(vehicle);
+		SDRC_VehicleHelper.DisableVehicleArsenal(vehicle, vehicleName, true);
+		
+		AICarMovementComponent vehicle_c = AICarMovementComponent.Cast(vehicle.FindComponent(AICarMovementComponent));
+        vehicle_c.SetCruiseSpeed(30);
+		
+		//Spawn mission AI
+		int groupCount = 0;		
+		int aiCount = ai.GetCount(mission.GetDifficulty());
+		
+		for (int i = 0; i < aiCount; i++)
+		{		
+			string groupToSpawn = ai.types.GetRandomElement();
+			ResourceName aiType = SDRC_EnemyHelper.SelectEnemy(groupToSpawn, mission.GetFaction());
+			
+			SCR_AIGroup group = SDRC_AIHelper.GroupCreate(mission.GetFaction(), mission.GetPos());
+			SDRC_VehicleHelper.SpawnGroupInVehicle(aiType, vehicle, group, mission.GetFaction());
+			
+			if (group)
+			{			
+				groupCount++;
+				SDRC_AIHelper.SetAIGroupSettings(group, ai.GetSkill(mission.GetDifficulty()), ai.GetPerception(mission.GetDifficulty()));
+				mission.AddToGroupsList(group);
+				
+				//Set waypoint 
+				SDRC_WPHelper.CreateMissionAIWaypoints(group, ai.waypointGenType, spawnPos, destinationPos, ai.waypointMoveType);				
+			}
+		}
+		
+		return success;
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Counts the amount of missions for the map
@@ -553,7 +690,7 @@ class SDRC_MissionHelper
 		}
 		return cnt;
 	}
-	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	DEBUG: Test mission positions on map. Only for debugging.
@@ -590,5 +727,5 @@ class SDRC_MissionHelper
 		{
 			SDRC_MapMarkerHelper.DeleteMarker("DUMMY_");
 		}
-	}		
+	}
 }

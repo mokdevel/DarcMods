@@ -45,6 +45,7 @@ enum SDRC_EMissionError
 	//Mission specific
 	LOCATION_NOT_FOUND,
 	WRONG_SUBIDX,
+	STARTING_POINT_NOT_FOUND,
 	ROAD_FOR_START_NOT_FOUND,
 	COULD_NOT_SPAWN_VEHICLE,
 	ROUTE_NOT_FOUND,
@@ -795,7 +796,7 @@ class SDRC_Mission : Managed
 	{
 		return m_Groups.Count();
 	}
-
+	
 	//------------------------------------------------------------------------------------------------
 	// ACTIVE state related things
 	//------------------------------------------------------------------------------------------------
@@ -1065,16 +1066,63 @@ class SDRC_Mission : Managed
 		#ifdef ENABLE_QRF
 		if ( (m_QrfConf.activation == GetSuccess()) || (m_QrfConf.activation == SDRC_EMissionSuccess.WIN_OR_LOSE) )
 		{
-			if (SDRC_Misc.RandomFloat(0, 1) < m_QrfConf.chance)
+			if (SDRC_Misc.RandomFloat(0, 1) > m_QrfConf.chance)
 			{
-				SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
-				if (m_BaseGameMode)
-				{
-					int subIdx = 0;
-					SDRC_Qrf qrf = m_BaseGameMode.missionFrame.m_ConfigQrf.GetQrf(0);
-					SDRC_Log.Add("[SDRC_Mission:DoQrf] !Just for debugging! : idx:" + subIdx + " : " + qrf.comment, LogLevel.DEBUG);
-				}
+				SDRC_Log.Add("[SDRC_Mission:DoQrf] QRF not to be sent.", LogLevel.DEBUG);
+				return;
 			}
+			
+			SDRC_Log.Add("[SDRC_Mission:DoQrf] Trying to send QRF.", LogLevel.DEBUG);			
+			
+			SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+			if (m_BaseGameMode)
+			{
+				int subIdx = m_QrfConf.subIdx.GetRandomElement();				
+				SDRC_Qrf qrf = m_BaseGameMode.missionFrame.m_ConfigQrf.GetQrf(subIdx);
+				SDRC_Log.Add("[SDRC_Mission:DoQrf] Selected idx:" + subIdx + " : " + qrf.comment, LogLevel.DEBUG);
+				
+				//Find spawn position
+				float randomAngle = SDRC_Misc.RandomInt(0, 360);
+				float radius = 300;
+				vector spawnPos = vector.Zero;
+				
+				for (int i = 0; i < 12; i++)
+				{
+					vector pos = SDRC_Misc.GetCoordinatesOnCircle(GetPos(), radius + (i*30), i*(360/12), randomAngle);
+					if (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, 200))
+					{
+						//Check that the suggested position is not in water nor nonValidArea
+						if (!SDRC_Misc.IsPosInWater(pos) && !SDRC_Misc.IsPosUnderMap(pos) && !SDRC_MissionPosHelper.IsPosInNonValidArea(pos))
+						{
+							spawnPos = pos;
+							break;
+						}
+					}
+				}
+				
+				if (spawnPos == vector.Zero)
+				{
+					SDRC_Log.Add("[SDRC_Mission:DoQrf] Could not find a position for QRF. Skipping.", LogLevel.ERROR);
+					return;
+				}
+				
+				SDRC_Log.Add("[SDRC_Mission:DoQrf] Spawning QRF.", LogLevel.DEBUG);
+				
+				SDRC_DebugHelper.AddDebugPos(spawnPos, color: Color.YELLOW, id: "qrf");
+				
+				if (qrf.vehicle == "")
+				{
+					int groupCount = SDRC_MissionHelper.SpawnAiFromClassAi(qrf.ai, this, spawnPos, GetPos());
+					SDRC_Log.Add("[SDRC_Mission:DoQrf] Spawned " + groupCount + " groups to QRF.", LogLevel.DEBUG);
+				}
+				else
+				{
+					int groupCount = SDRC_MissionHelper.SpawnAiFromClassAiInVehicle(qrf.vehicle, qrf.ai, this, spawnPos, GetPos());
+					SDRC_Log.Add("[SDRC_Mission:DoQrf] Spawned " + groupCount + " groups to QRF.", LogLevel.DEBUG);
+					
+				}
+				
+			}					
 		}		
 		#endif
 	}	

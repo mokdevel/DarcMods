@@ -250,7 +250,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		//Default		
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,1,2,3,4};
+		missionList = {0};//{0,1,2,3,4};
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Insert(Roadblock0());				
@@ -302,7 +302,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{0}, SDRC_EMissionSuccess.WIN,
+			{30}, SDRC_EMissionSuccess.WIN,
 			1.0, {5, 20}
 		);
 		roadblock.qrf = qrf;

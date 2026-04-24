@@ -32,6 +32,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	private vector m_vPosDestination = "1 1 1";
 	private IEntity m_Vehicle = null;
 	
+	private vector m_vPrevVirtualPos = vector.Zero; 	//Virtual movement previous position
+	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_Convoy(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
@@ -56,7 +58,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		
 		//Find a location for the mission
 		vector pos = "0 0 0";
-		m_vPosDestination = m_DC_Convoy.general.pos[1];		//Destination from the defined SDRC_Convoy 
 		
 		//For requested missions we want have it as close as possible in the requested place.
 		if (IsRequested())
@@ -65,12 +66,19 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			m_vPosDestination = request.general.pos[1];
 		}
 		else
-		{				
-			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Convoy.general.pos, m_DC_Convoy.general.size, m_DC_Convoy.general.locationTypes);
+		{
+			pos = SDRC_MissionHelper.SelectMissionPosFromPairs(m_vPosDestination, m_DC_Convoy.general.pos, m_DC_Convoy.general.size, m_DC_Convoy.general.locationTypes);
 		}
 
+		//If failed, stop
+		if (pos == "0 0 0")
+		{
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.STARTING_POINT_NOT_FOUND);
+			return;
+		}
+				
 		//Find nearest road
-		SDRC_RoadPos roadPosStart = new SDRC_RoadPos();				
+		SDRC_RoadPos roadPosStart = new SDRC_RoadPos();
 		pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPosStart, pos, 1000);
 		
 		//If pos has been set, we blindly accept it. Do basic checking for pos.
@@ -79,13 +87,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		{
 			pos = "0 0 0";
 		}
-
-/*		//If failed, stop
-		if (pos == "0 0 0")	//No suitable location found.
-		{				
-			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
-			return;
-		}	*/
 		
 		//If failed, stop
 		if (pos == "0 0 0")
@@ -97,19 +98,28 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		//Find a location for the destination
 		if (m_vPosDestination == "0 0 0" && pos != "0 0 0")
 		{
-			m_vPosDestination = SDRC_MissionHelper.FindMissionDestination(m_DC_Convoy.general.locationTypes, pos, 500);
-			if (m_vPosDestination != "0 0 0")
+			//Let's try a few times
+			for (int i = 0; i < 5; i++)
 			{
-				SDRC_RoadPos roadPos = new SDRC_RoadPos();
-				m_vPosDestination = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, m_vPosDestination, 1000);
-				if (m_vPosDestination == "0 0 0")
+				m_vPosDestination = SDRC_MissionHelper.FindMissionDestination(m_DC_Convoy.general.locationTypes, pos, 500);
+				if (m_vPosDestination != "0 0 0")
 				{
-					SDRC_Log.Add("[SDRC_Mission_Convoy] " +  GetId() + " : No destination road found.", LogLevel.ERROR);
-				}
-			}			
-			else
+					SDRC_RoadPos roadPos = new SDRC_RoadPos();
+					m_vPosDestination = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, m_vPosDestination, 1000);
+					if (m_vPosDestination != "0 0 0")
+					{
+						break;
+					}
+					else
+					{
+						SDRC_Log.Add("[SDRC_Mission_Convoy] " +  GetId() + " : No destination road found. Iteration: " + i, LogLevel.DEBUG);
+					}
+				}			
+			}
+			
+			if (m_vPosDestination == "0 0 0")
 			{
-				SDRC_Log.Add("[SDRC_Mission_Convoy] " +  GetId() + " : Could not find destination location for ROUTE.", LogLevel.WARNING);
+				SDRC_Log.Add("[SDRC_Mission_Convoy] " +  GetId() + " : Could not find destination for ROUTE.", LogLevel.WARNING);
 			}
 		}		
 
@@ -118,6 +128,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
 			return;
 		}	
+		
+		SDRC_DebugHelper.AddDebugPos(m_vPosDestination, Color.GREEN, 3, id: GetId(), 150);	
 		
 		SetPos(pos, m_vPosDestination);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Convoy.general.posName));
@@ -144,7 +156,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 					missionConvoyState = SDRC_EMissionConvoyState.MOVE_AI;
 					break;
 				case SDRC_EMissionConvoyState.MOVE_AI:
-//					SDRC_VehicleHelper.MoveGroupsInVehicle(m_Groups, m_Vehicle);				
 					foreach (SCR_AIGroup group : m_Groups)
 					{	
 						if (group)
@@ -162,6 +173,9 @@ class SDRC_Mission_Convoy : SDRC_Mission
 					SetState(SDRC_EMissionState.ACTIVE);
 					break;
 			}
+			
+			GetGame().GetCallqueue().CallLater(MissionRun, 2000);	//Run SPAWN steps every 2 secs
+			return;
 		}
 
 		if (GetState() == SDRC_EMissionState.END)
@@ -171,7 +185,13 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		}	
 				
 		if (GetState() == SDRC_EMissionState.ACTIVE)
-		{			
+		{						
+			//Move virtually only if players are available
+			if (SDRC_PlayerHelper.PlayerCount() > 0)
+			{
+				MoveVirtually();
+			}
+			
 			//Move the position as the convoy is moving. This way check for player distance works properly.
 			//If players have already stolen the vehicle, the map marker will stop moving.
 			if ( (m_Vehicle) && (m_EntityList.Count() > 0) )
@@ -257,6 +277,65 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		}		
 		super.DoWin();
 	}
+
+	//------------------------------------------------------------------------------------------------	
+	void MoveVirtually()
+	{
+		#ifdef SDRC_RELEASE
+			const int DISTANCE_PLAYER = 2000;
+		#else
+			const int DISTANCE_PLAYER = 500;		
+		#endif
+		const int DISTANCE_LERP = 100;
+		const int DISTANCE_ROADPOINT = 100;
+		const int DISTANCE_NEAR_WP = 30;
+		
+		//Find waypoint
+		SCR_AIGroup group = m_Groups[0];
+		
+		array<AIWaypoint> waypoints = {};
+		group.GetWaypoints(waypoints);
+		
+		if (waypoints.Count() == 0)
+		{			
+			return;
+		}
+
+		//Find next waypoing
+		vector pos = waypoints[0].GetOrigin();
+		
+		SDRC_DebugHelper.DeleteDebugPos("www");
+		SDRC_DebugHelper.AddDebugPos(pos, id: "www");
+		
+		if (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, DISTANCE_PLAYER))
+		{				
+			//Distance between vehicle and next waypoint
+			float distance = vector.DistanceXZ(m_Vehicle.GetOrigin(), pos);
+			if (distance == 0)
+			{
+				distance = 0.1;
+			}
+			float lerp = Math.Clamp((DISTANCE_LERP / distance), 0, 1);
+			
+			vector newPos = vector.Lerp(m_Vehicle.GetOrigin(), pos, lerp);
+			SDRC_DebugHelper.AddDebugPos(newPos, id: "www");	
+			
+			SDRC_RoadPos roadPosStart = new SDRC_RoadPos();
+			pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPosStart, newPos, DISTANCE_ROADPOINT);
+			if (pos != vector.Zero) 
+			{
+				if (!SDRC_Misc.IsPosNearPos(pos, m_vPrevVirtualPos, DISTANCE_NEAR_WP))
+				{
+					if (SDRC_SpawnHelper.FindEmptyPos(pos, 10, 5))
+					{
+						m_vPrevVirtualPos = pos;
+						m_Vehicle.SetOrigin(pos);
+						SDRC_DebugHelper.AddDebugPos(pos, color: Color.YELLOW, id: "www");
+					}
+				}
+			}
+		}
+	}	
 }
 	
 //------------------------------------------------------------------------------------------------
@@ -327,6 +406,12 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,4,4};
+		
+		#ifndef SDRC_RELEASE
+			missionCycleTime = 8;//SDRC_MISSION_CYCLE_TIME_DEFAULT;
+			missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,4,4};
+		#endif
+		
 		//Mission specific
 		distanceToPlayer = 500;
 		//----------------------------------------------------
@@ -335,6 +420,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		subMissions.Insert(Convoy2());
 		subMissions.Insert(Convoy3());
 		subMissions.Insert(Convoy4());
+		//subMissions.Insert(Convoy5());
 	}
 		
 	//----------------------------------------------------
@@ -348,7 +434,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			"The convoy reached %d as planned.",);
 		convoy.general.Set(
 			0, "index 0: Convoy driving from .. to ..",
-			{"0 0 0", "0 0 0"}, 5,
+			{}, 5,
 			{
 				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE,
@@ -415,7 +501,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			"All the goodies in the truck was never for you.",);
 		convoy.general.Set(
 			1, "index 1: Truck driving from .. to ..",
-			{"0 0 0", "0 0 0"}, 7,
+			{}, 7,
 			{
 				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,			
 				EMapDescriptorType.MDT_FORESTSQUARE,
@@ -480,7 +566,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			"Were you scared of a piece metal? Cowards!",); 
 		convoy.general.Set(
 			2, "index 2: Armor driving from .. to ..",
-			{"0 0 0", "0 0 0"}, 7,
+			{}, 7,
 			{
 				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_FORESTSQUARE,
@@ -545,7 +631,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			"Oh dear, your failure will be remembered.",); 
 		convoy.general.Set(
 			3, "index 3: Vehicle with a gun driving from .. to ..",
-			{"0 0 0", "0 0 0"}, 4,
+			{}, 4,
 			{
 				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_FORESTSQUARE,
@@ -609,7 +695,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			"The loot slipped your hands.",); 
 		convoy.general.Set(
 			4, "index 4: Armor vehicle driving from .. to ..",
-			{"0 0 0", "0 0 0"}, 4,
+			{}, 4,
 			{
 				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
 				EMapDescriptorType.MDT_FORESTSQUARE,
@@ -663,6 +749,79 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 				
 		return convoy;	
 	}	
+
+/*		
+	//----------------------------------------------------
+	SDRC_Convoy Convoy5()
+	{
+		ref SDRC_Convoy convoy = new SDRC_Convoy();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Metallic gear on the road",
+			"A tin can seen going from %l to %d.",
+			"Can opened, enjoy the loot!",
+			"The loot slipped your hands.",); 
+		convoy.general.Set(
+			5, "index 5: Example with defined travel routes",
+			{	
+				"2700 0 1650", "1300 0 2100",	//Arleville - Airport
+				"3130 0 2750", "2700 0 1650",	//Beauregard - Arleville
+				"1300 0 2100", "0 0 0",			//Airport - Somewhere
+				"1700 0 1100", 					//Bald Ridge - *ERROR*
+			}, 4,
+			{
+				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE, 
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_PARKING,
+				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CHURCH,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_AIRPORT
+			},
+			"any",
+			{message},
+			SDRC_EMissionWinCondition.AI_KILL_75,
+			{},
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,
+			{SDRC_EDifficulty.RANDOM},
+			0
+		);
+		convoy.ai.Set(
+			{1, 2},
+			{"G_RECON", "G_HEAVY", "G_LIGHT"},
+			70, 1.0,
+			{0, 0},
+			SDRC_EWaypointGenerationType.ROUTE,
+			SDRC_EWaypointMoveType.MOVE,
+		);
+		convoy.Set(
+			{
+				"VEHICLE_WHEELED_ARMOR",
+			},
+			20
+		);
+		
+		ref SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", 
+				"WEAPON_MG", 
+				"WEAPON_RIFLE_BIG", 
+				"WEAPON_HANDGUN", 
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
+				"UTIL_ATTACHMENT", 
+				"UTIL_OPTIC",			
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
+			};
+		loot.Set(0.9, lootItems);
+		convoy.loot = loot;		
+				
+		return convoy;	
+	}		
+*/	
 }
 
 //------------------------------------------------------------------------------------------------
