@@ -54,7 +54,7 @@ sealed class SDRC_CampHelper
 		}
 		else
 		{
-			//Spawn mission AI 
+			//Spawn mission AI
 			int aiCount = camp.ai.GetCount(mission.GetDifficulty());
 			
 			for (int i = 0; i < aiCount; i++)

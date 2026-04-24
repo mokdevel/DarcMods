@@ -545,5 +545,5 @@ class SDRC_SpawnHelper
 		}
 		
 		return returnval;
-	}
+	}	
 }

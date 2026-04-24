@@ -25,16 +25,11 @@ sealed class SDRC_RoadHelper
 	\param posFrom, posTo Positions for the route start and end
 	\param stepDistance The distance between points to split the route
 	*/
-	static void CreateRoute(out array<vector> routePts, vector posFrom, vector posTo, int stepDistance = 1200)
+	static void CreateRoute(out array<vector> routePts, vector posFrom, vector posTo, int stepDistance = 600)
 	{
 		float distance = vector.DistanceXZ(posFrom, posTo);
 		int ptCount = (distance/stepDistance) + 1;
-		
-		//Limit the ptCount
-		if (ptCount > 4)
-		{
-			ptCount = 4;	//4 will limit the WPs to 16, 3 would limit to 9
-		}
+		ptCount = Math.ClampInt(ptCount, 1, 5);		//4 will limit the WPs to 16, 3 would limit to 9
 			
 		vector posStart = posFrom;
 		SDRC_RoadPos roadPos;
@@ -95,7 +90,7 @@ sealed class SDRC_RoadHelper
 	\param roadPos The structure to have move details of returned position
 	\param pos Position from where to check. If a better pos is found, this will be overwritten with it
 	\param maxDistanceToRoad Limit on how far the road may be from pos. 
-	\return Position on a road close the given position
+	\return Position on a road close the given position. Vector.Zero returned if not found.
 	*/	
 	static vector FindClosestRoadposToPos(out SDRC_RoadPos roadPos, vector pos, float maxDistanceToRoad = 10000)
 	{
@@ -134,7 +129,7 @@ sealed class SDRC_RoadHelper
 					i++;
 				}
 				
-				return "0 0 0";
+				return vector.Zero;
 			}
 		}
 		else
@@ -142,7 +137,7 @@ sealed class SDRC_RoadHelper
 			SDRC_Log.Add("[SDRC_RoadHelper:FindClosestRoadposToPos] RoadNetworkManager not found.", LogLevel.WARNING);
 		}
 		
-		return "0 0 0";
+		return vector.Zero;
 	}
 		
 	//------------------------------------------------------------------------------------------------
