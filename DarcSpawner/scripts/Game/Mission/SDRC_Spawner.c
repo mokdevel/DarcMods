@@ -232,7 +232,7 @@ class SDRC_Spawner
 					SDRC_MapMarkerHelper.CreateMapMarker(entity.GetOrigin(), spawnSet.markerIdx, "", "", markerTypeString: spawnSet.markerType);
 				}
 				
-				SDRC_DebugHelper.AddDebugPos(entity, ARGB(50, 255, 0, 255));
+				SDRC_DebugHelper.AddDebugPosEntity(entity, ARGB(50, 255, 0, 255));
 			}
 			else
 			{
