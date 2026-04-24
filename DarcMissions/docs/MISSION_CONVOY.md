@@ -7,7 +7,13 @@ AI patrol is spawned in a vehicle to move around the map. The convoy will travel
 
 NOTE that ``pos`` parameter has additional functionality:
 * If ``pos`` is left empty or with zero values, route will be picked from ``locationTypes``.
-* If ``pos`` has two values, the first one is start and the second is destination. 
+* If ``pos`` has multiple values, they are considered as pairs. The first one is start and the second is destination. 
+
+Example:
+``[0,0,0],[0,0,0],`` : A random route based on locationTypes
+``[x0,y0,z0],[a0,b0,c0],`` : A route from x0 to a0
+``[x1,0,z1],[a1,0,c1],`` : A route from x1 to a1, the Z-component is not necessary
+``[x2,y2,z2],`` : This is an error as the second pair is missing. This will be used as: ``[x2,y2,z2],[0,0,0]`` where the route is from x2 to a random location based on locationTypes
 
 ### GM requested mission
 The location for the mission will be searched from the closest road. If no road is found, the mission will not spawn. The start location is what you define, destination is random unless defined in ``posDestination``.
