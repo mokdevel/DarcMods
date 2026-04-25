@@ -16,12 +16,12 @@ sealed class SDRC_Resources
 	\param mod From which mod to search for items. Example: "$ArmaReforger:Prefabs/Weapons"
 	\param lootList 
 	*/	
-	static void GetList(out array<string> list, string mod, SDRC_List lootList)
+	static void GetList(out array<string> list, string mod, SDRC_List sdrcList)
 	{
-		foreach (string modDir : lootList.modDir)
+		foreach (string modDir : sdrcList.modDir)
 		{
 			SearchResourcesFilter filter = new SearchResourcesFilter();
-//			filter.rootPath = mod + lootList.modDir;
+//			filter.rootPath = mod + sdrcList.modDir;
 			filter.rootPath = mod + modDir;
 			filter.fileExtensions = {"et"};
 			filter.searchStr = {""};
@@ -30,8 +30,14 @@ sealed class SDRC_Resources
 			m_resourceNames = {};
 			ResourceDatabase.SearchResources(filter, GetResourcesCallback);		
 			
-			IncludeFilter(m_resourceNames, lootList.include);
-			ExcludeFilter(m_resourceNames, lootList.exclude);
+			//Make sure we have some criteria for include
+			if (sdrcList.include.IsEmpty())
+			{
+				sdrcList.include.Insert("");
+			}
+			
+			IncludeFilter(m_resourceNames, sdrcList.include);
+			ExcludeFilter(m_resourceNames, sdrcList.exclude);
 			
 			list.InsertAll(m_resourceNames);
 		}

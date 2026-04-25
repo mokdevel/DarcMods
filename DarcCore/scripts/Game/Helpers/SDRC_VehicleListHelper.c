@@ -249,6 +249,10 @@ sealed class SDRC_VehicleListHelper
 					if (m_Config.lists[vehicleIndex].factions[idx] == faction)
 					{
 						resourceName = m_Config.lists[vehicleIndex].items[idx];
+						if (resourceName == "")
+						{
+							SDRC_Log.Add("[SDRC_VehicleListHelper:FindVehicleItem] No vehicle matching faction: " + faction + ". Selecting random one.", LogLevel.DEBUG);
+						}
 						break;
 					}
 					
@@ -272,6 +276,10 @@ sealed class SDRC_VehicleListHelper
 			}
 			
 			SDRC_Log.Add("[SDRC_VehicleListHelper:FindVehicleItem] Selected: (" + listName + ") " + resourceName, LogLevel.DEBUG);
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_VehicleListHelper:FindVehicleItem] Vehicle list: " + m_Config.lists[vehicleIndex].id + " is empty!", LogLevel.WARNING);
 		}
 		
 		return resourceName;
