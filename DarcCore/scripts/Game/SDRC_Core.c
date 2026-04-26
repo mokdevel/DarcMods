@@ -53,12 +53,21 @@ class SDRC_Core
 			SDRC_Log.Add("[SDRC_Core] Overriding subDir defined in dc_coreConfig.json with startup parameter " + subDirCLI, LogLevel.NORMAL);
 		}
 
+		//Check for road network
+		bool hasRoadNetwork = false;
+		RoadNetworkManager rnManager = SDRC_RoadHelper.GetRoadNetworkManager();
+		if (rnManager)
+		{
+			hasRoadNetwork = true;
+		}
+		
 		SDRC_Log.Add("[SDRC_Core] -------- General information --------", LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] Platform: " + SDRC_Misc.GetPlatformName(), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] Conf destination: $profile:/" + SDRC_Conf.CONF_DIRECTORY + "/" + SDRC_Conf.subDir, LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World name: " + SDRC_Misc.GetWorldName(true), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World size: " + SDRC_Misc.GetWorldSize(), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World has ocean: " + GetGame().GetWorld().IsOcean(), LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_Core] World has road network: " + hasRoadNetwork, LogLevel.NORMAL);
 		
 		bool bAiWorld = false;
 		if (GetGame().GetAIWorld())
