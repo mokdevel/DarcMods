@@ -120,7 +120,7 @@ array<float> aiCountCoef =      {0.50, 0.60, 1.0, 1.40, 1.80};
 array<float> aiSkillCoef =      {0.20, 0.60, 1.0, 1.30, 1.60};
 array<float> aiPerceptionCoef = {0.20, 0.60, 1.0, 1.30, 1.60};
 array<float> lootChanceCoef =   {0.50, 0.60, 1.0, 1.10, 1.20};	
-array<float> lootCountCoef =    {0.50, 0.70, 1.0, 1.50, 2.00};	
+array<float> lootCountCoef =    {0.70, 0.90, 1.0, 1.50, 2.00}	
 array<float> rewardCoef =       {0.50, 0.70, 1.0, 2.00, 3.00};	
 array<float> qrfChance =        {0.80, 0.90, 1.0, 1.20, 1.30};
 ```
