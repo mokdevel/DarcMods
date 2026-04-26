@@ -373,6 +373,13 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"C_OFFICER"
 		);
 		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0}, SDRC_EMissionSuccess.WIN,
+			0.2, {30, 240}
+		);
+		HvtVip.qrf = qrf;			
+		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",
@@ -424,6 +431,13 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 			"C_OFFICER"
 		);
+		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{1, 2, 30}, SDRC_EMissionSuccess.WIN,
+			0.2, {30, 240}
+		);
+		HvtVip.qrf = qrf;			
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
@@ -477,6 +491,13 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
 			"{A517C72CEF150898}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_2.et"
 		);
+		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0}, SDRC_EMissionSuccess.WIN,
+			0.5, {30, 240}
+		);
+		HvtVip.qrf = qrf;			
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
@@ -533,6 +554,13 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"{E024A74F8A4BC644}Prefabs/Characters/Factions/CIV/Businessman/Character_CIV_Businessman_1.et"
 		);
 		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{2}, SDRC_EMissionSuccess.WIN,
+			0.4, {30, 240}
+		);
+		HvtVip.qrf = qrf;			
+		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN",
@@ -585,6 +613,13 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 			"{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
 			"{A2B367FFF37E6416}Prefabs/Characters/Factions/CIV/Dockworker/Character_CIV_Dockworker_5.et"
 		);
+		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0}, SDRC_EMissionSuccess.WIN,
+			0.1, {30, 240}
+		);
+		HvtVip.qrf = qrf;			
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {

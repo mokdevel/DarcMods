@@ -289,6 +289,13 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{1}, SDRC_EMissionSuccess.WIN,
+			0.1, {30, 240}
+		);
+		occupation.qrf = qrf;		
+		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",
@@ -375,6 +382,13 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			SDRC_EWaypointMoveType.RANDOM,		
 		);
 
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{2, 30, 31, 32}, SDRC_EMissionSuccess.WIN,
+			0.4, {30, 240}
+		);
+		occupation.qrf = qrf;		
+		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",	"WEAPON_RIFLE",
@@ -463,6 +477,13 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			SDRC_EWaypointMoveType.RANDOM,		
 		);
 
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0, 2}, SDRC_EMissionSuccess.WIN,
+			0.3, {30, 240}
+		);
+		occupation.qrf = qrf;		
+		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",	"WEAPON_RIFLE",
@@ -561,6 +582,13 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			SDRC_EWaypointMoveType.RANDOM,		
 		);
 
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0}, SDRC_EMissionSuccess.WIN,
+			0.1, {30, 240}
+		);
+		occupation.qrf = qrf;		
+		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",

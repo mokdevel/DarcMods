@@ -250,7 +250,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		//Default		
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0};//{0,1,2,3,4};
+		missionList = {0,1,2,3,4};
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Insert(Roadblock0());				
@@ -303,7 +303,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
 			{30}, SDRC_EMissionSuccess.WIN,
-			1.0, {5, 20}
+			0.2, {30, 240}
 		);
 		roadblock.qrf = qrf;
 		
@@ -394,6 +394,13 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			SDRC_EWaypointGenerationType.SCATTERED,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
+		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0, 1}, SDRC_EMissionSuccess.WIN,
+			0.3, {30, 240}
+		);
+		roadblock.qrf = qrf;		
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
@@ -550,6 +557,13 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
 		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{2, 31}, SDRC_EMissionSuccess.WIN,
+			0.3, {30, 240}
+		);
+		roadblock.qrf = qrf;
+		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_LAUNCHER", "WEAPON_RIFLE", "WEAPON_RIFLE",
@@ -695,6 +709,13 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 			SDRC_EWaypointGenerationType.LOITER,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
+		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{1, 2}, SDRC_EMissionSuccess.WIN,
+			0.3, {30, 240}
+		);
+		roadblock.qrf = qrf;		
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {

@@ -250,7 +250,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	{
 		//Spawn vehicle
 		string resourceName	= SDRC_SpawnHelper.SelectResourceName(m_DC_Chopper.heliList);		
-		if (resourceName[0] != "{")
+		if ( (resourceName[0] != "{") || (resourceName == "") )
 		{
 			resourceName = SDRC_VehicleListHelper.FindVehicleItem(resourceName, GetFaction());
 		}

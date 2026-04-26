@@ -38,7 +38,7 @@
 		private const int SDRC_PLAYER_MAX_DISTANCE = 400;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 1;
+		private const int SDRC_MISSION_COUNT_STATIC = 20;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -181,7 +181,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-			enemyFactions = {"USSR"};
+			enemyFactions = {"FIA"};
 //			enemyFactions = {"US"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION"};
@@ -243,12 +243,13 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL};
-			missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.STASH};
 //			missionStatic.missionTypeArray = {};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.ROADBLOCK};		
+			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CHOPPER};		
 		
 		#endif
 	}
@@ -274,5 +275,5 @@ class SDRC_MissionDifficulty : Managed
 	ref array<float> lootChanceCoef = 		{0.50, 0.60, 1.0, 1.10, 1.20};	
 	ref array<float> lootCountCoef = 		{0.70, 0.90, 1.0, 1.50, 2.00};	
 	ref array<float> rewardCoef = 			{0.50, 0.70, 1.0, 2.00, 3.00};	
-	ref array<float> qrfChance = 			{0.10, 0.15, 0.2, 0.25, 0.30};	
+	ref array<float> qrfChance = 			{0.80, 0.90, 1.0, 1.20, 1.30};
 }

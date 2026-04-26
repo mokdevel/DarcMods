@@ -429,6 +429,14 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 			crashsite.helicopterInfo.Insert(heli02);		
 		
 		//----------------------------------------------------
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0}, SDRC_EMissionSuccess.WIN,
+			0.2, {30, 240}
+		);
+		crashsite.qrf = qrf;
+		
+		//----------------------------------------------------
 		ref SDRC_Loot crashloot0 = new SDRC_Loot();
 		array<string> lootItems0 = {
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", 
@@ -525,6 +533,14 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 			heli12.Set("Index 2", "{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et",	1.6, 0.75, 1.0);
 			crashsite.helicopterInfo.Insert(heli12);		
 		
+		//----------------------------------------------------
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{2}, SDRC_EMissionSuccess.WIN,
+			0.2, {30, 240}
+		);
+		crashsite.qrf = qrf;
+				
 		//----------------------------------------------------
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems1 = {

@@ -300,6 +300,13 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		);	
 		hvtItem.targetIdx = 1;
 		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0, 2}, SDRC_EMissionSuccess.WIN,
+			0.2, {30, 240}
+		);
+		hvtItem.qrf = qrf;		
+		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",
@@ -415,6 +422,13 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		);	
 		hvtItem.targetIdx = 1;
 		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0, 2}, SDRC_EMissionSuccess.WIN,
+			0.2, {30, 240}
+		);
+		hvtItem.qrf = qrf;			
+		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"UTIL_ATTACHMENT", "UTIL_OPTIC",
@@ -506,6 +520,13 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);		
 		hvtItem.targetIdx = 9;
+		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{30}, SDRC_EMissionSuccess.WIN,
+			0.2, {30, 240}
+		);
+		hvtItem.qrf = qrf;
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {

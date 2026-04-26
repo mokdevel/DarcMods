@@ -160,7 +160,7 @@ class SDRC_QrfConfig : SDRC_Config
 		qrf.Set(
 			31, "index 31: Armored vehicle",
 			"",
-			"VEHICLE_WHEELED_ARMED", 30,
+			"VEHICLE_WHEELED_ARMOR", 30,
 			{SDRC_EDifficulty.RANDOM},
 			0,
 		    {}

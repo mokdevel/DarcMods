@@ -13,8 +13,8 @@ const int 	 DC_MISSIONCONFIG_FILE_FRAME_JSONVER = 4;
 const string DC_MISSIONCONFIG_FILE_NONVALIDAREA = "dc_nonValidArea.json";
 const int 	 DC_MISSIONCONFIG_FILE_NONVALIDAREA_JSONVER = 2;
 
-const string DC_MISSIONCONFIG_FILE_SECONDWAVE = "dc_qrf.json";
-const int DC_MISSIONCONFIG_FILE_SECONDWAVE_JSONVER = 2;
+const string DC_MISSIONCONFIG_FILE_QRF = "dc_qrf.json";
+const int DC_MISSIONCONFIG_FILE_QRF_JSONVER = 3;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionFrame
@@ -28,7 +28,7 @@ class SDRC_MissionFrame
 	ref SDRC_JsonApi2 m_NonValidAreaJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_NONVALIDAREA);	
 	ref SDRC_NonValidAreaConfig m_ConfigNonValidArea = new SDRC_NonValidAreaConfig();	
 
-	ref SDRC_JsonApi2 m_QrfJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_SECONDWAVE);	
+	ref SDRC_JsonApi2 m_QrfJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_QRF);	
 	ref SDRC_QrfConfig m_ConfigQrf = new SDRC_QrfConfig();	
 	
 //	ref SDRC_SecondWaveJsonApi m_DC_SecondWaveJsonApi = new SDRC_SecondWaveJsonApi(DC_MISSIONCONFIG_FILE_SECONDWAVE);
@@ -61,7 +61,7 @@ class SDRC_MissionFrame
 		bool successNoNValid = m_NonValidAreaJsonApi.Load(m_ConfigNonValidArea, SDRC_Config.Cast(m_ConfigNonValidArea), DC_MISSIONCONFIG_FILE_NONVALIDAREA_JSONVER);
 
 		//Load Qrf configuration from file
-		bool successQrf = m_QrfJsonApi.Load(m_ConfigQrf, SDRC_Config.Cast(m_ConfigQrf), DC_MISSIONCONFIG_FILE_NONVALIDAREA_JSONVER);
+		bool successQrf = m_QrfJsonApi.Load(m_ConfigQrf, SDRC_Config.Cast(m_ConfigQrf), DC_MISSIONCONFIG_FILE_QRF_JSONVER, safeUpdate: true);
 		
 		if ( (!successFrame) || (!successNoNValid) || (!successQrf) )
 		{
@@ -79,6 +79,7 @@ class SDRC_MissionFrame
 			gmComp.UpdateTimeLeft(m_Config.showMissionTimeLeft);
 		}
 		
+		SDRC_Log.Add("[SDRC_MissionFrame] -------- General information --------", LogLevel.NORMAL);
 		//Checking the enemies found
 		SDRC_Log.Add("[SDRC_MissionFrame] Enemy factions: " + m_Config.enemyFactions, LogLevel.NORMAL);
 		SDRC_EnemyHelper.SetEnemyFactions(m_Config.enemyFactions);
@@ -90,6 +91,7 @@ class SDRC_MissionFrame
 
 		m_iMissionCountStaticMax = SDRC_MissionHelper.GetMissionCountForWorld(m_Config.missionStatic.count, m_Config.missionStatic.countMul);
 		SDRC_Log.Add("[SDRC_MissionFrame] Max static mission count: " + m_iMissionCountStaticMax, LogLevel.NORMAL);		
+		SDRC_Log.Add("[SDRC_MissionFrame] -------------------------------------", LogLevel.NORMAL);
 				
 		//Set some defaults
 		m_iStaticTryCount = 0;

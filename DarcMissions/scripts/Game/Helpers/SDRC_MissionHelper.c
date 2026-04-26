@@ -157,26 +157,41 @@ class SDRC_MissionHelper
 		{
 			SDRC_Locations.GetLocationsCached(locations, locationTypes);
 		}
-		
+
+		//If no locations define, we select a random position
 		if (locations.IsEmpty())
 		{
 			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionLocation] locationTypes is empty. Selecting a random location.", LogLevel.WARNING);
-			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
-			if (baseGameMode)
-			{
-				pos = SDRC_MissionHelper.FindMissionPosWithDistances(baseGameMode.missionFrame.m_Config.minDistanceToMission, baseGameMode.missionFrame.m_Config.minDistanceToPlayer);
-			}
-		}
-		else
-		{		
-			location = locations.GetRandomElement();
-			pos = location.pos;//GetOrigin();
-			
-//			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);			
-			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.displayName + " " + location.pos, LogLevel.DEBUG);			
 		}
 
-		pos = FindWithIterate(pos, size, posRandomization);
+		//Search a few times		
+		for (int i = 0; i < DC_LOCATION_SEARCH_ITERATIONS; i++)
+		{				
+			if (locations.IsEmpty())
+			{
+				SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+				if (baseGameMode)
+				{
+					pos = SDRC_MissionHelper.FindMissionPosWithDistances(baseGameMode.missionFrame.m_Config.minDistanceToMission, baseGameMode.missionFrame.m_Config.minDistanceToPlayer);
+				}
+			}
+			else
+			{	
+				location = locations.GetRandomElement();
+				pos = location.pos;//GetOrigin();
+				
+	//			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.GetName() + " " + location.GetOrigin(), LogLevel.DEBUG);			
+				SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.displayName + " " + location.pos, LogLevel.DEBUG);			
+			}
+	
+			vector newPos = FindWithIterate(pos, size, posRandomization);
+			if (newPos != "0 0 0")
+			{
+				//Found a suitable position. Return.
+				pos = newPos;
+				break;
+			}
+		}
 		
 		return pos;
 	}
@@ -239,7 +254,7 @@ class SDRC_MissionHelper
 
 		if (!positionFound)
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:FindWithIterate] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, failReason), LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_MissionHelper:FindWithIterate] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, failReason), LogLevel.SPAM);
 			return "0 0 0";
 		}
 			
@@ -321,21 +336,7 @@ class SDRC_MissionHelper
 		}
 
 		building = buildings[idx];
-		/* OLD 
-		building = buildings.GetRandomElement();
-		*/
-
 		vector bpos = building.GetOrigin();
-				
-/*		if (SDRC_MissionPosHelper.IsValidMissionPos(bpos) != SDRC_EMissionError.NONE)
-		{
-			return null;
-		}
-		else
-		{
-			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionBuilding] Building selected: " + building.GetPrefabData().GetPrefabName() + " " + bpos, LogLevel.DEBUG);
-		}
-*/		
 		SDRC_Log.Add("[SDRC_MissionHelper:FindMissionBuilding] Building selected: " + building.GetPrefabData().GetPrefabName() + " " + bpos, LogLevel.DEBUG);		
 		
 		return building;

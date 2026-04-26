@@ -291,7 +291,16 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		const int DISTANCE_NEAR_WP = 30;
 		
 		//Find waypoint
-		SCR_AIGroup group = m_Groups[0];
+		if (m_Groups.IsEmpty())
+		{
+			return;
+		}
+		
+		SCR_AIGroup group = m_Groups[0];		
+		if (!group)
+		{
+			return;
+		}
 		
 		array<AIWaypoint> waypoints = {};
 		group.GetWaypoints(waypoints);

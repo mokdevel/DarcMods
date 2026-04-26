@@ -318,6 +318,13 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et"
 		);
 		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0}, SDRC_EMissionSuccess.WIN,
+			0.2, {30, 240}
+		);
+		squatter.qrf = qrf;		
+		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",
@@ -374,6 +381,13 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			{"ControlTowerMilitary_"},
 			"{D15A294D5138ADFF}Prefabs/Props/Military/AmmoBoxes/US/LootEquipmentBoxWooden_Equipment_01_US.et"
 		);
+		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{30, 31, 32}, SDRC_EMissionSuccess.WIN,
+			0.3, {30, 240}
+		);
+		squatter.qrf = qrf;		
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
@@ -433,6 +447,13 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
 		);
 		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{30, 31, 32}, SDRC_EMissionSuccess.WIN,
+			0.4, {30, 240}
+		);
+		squatter.qrf = qrf;		
+		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE",	"WEAPON_RIFLE", "WEAPON_RIFLE",
@@ -490,6 +511,13 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et"
 		);
 		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0, 1, 2}, SDRC_EMissionSuccess.WIN,
+			0.2, {30, 240}
+		);
+		squatter.qrf = qrf;		
+		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_HANDGUN",
@@ -541,6 +569,13 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 			{"Church_", "ChurchSmall_", "Mosque_", "Minaret"},
 			"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et"
 		);
+		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0}, SDRC_EMissionSuccess.WIN,
+			0.2, {30, 240}
+		);
+		squatter.qrf = qrf;		
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
