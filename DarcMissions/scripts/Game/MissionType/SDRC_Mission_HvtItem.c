@@ -55,7 +55,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		}
 		else
 		{		
-			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtItem.general.pos, m_DC_HvtItem.general.size, m_DC_HvtItem.general.locationTypes);
+			pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_HvtItem.general.pos, m_DC_HvtItem.general.size, m_DC_HvtItem.general.locationTypes);
 		}
 
 		//If pos has been set, we blindly accept it. Do basic checking for pos.

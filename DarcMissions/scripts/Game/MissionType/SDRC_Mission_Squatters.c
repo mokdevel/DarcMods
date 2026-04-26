@@ -59,7 +59,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		}
 		else
 		{
-			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Squatter.general.pos, m_DC_Squatter.general.size, m_DC_Squatter.general.locationTypes);
+			pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_Squatter.general.pos, m_DC_Squatter.general.size, m_DC_Squatter.general.locationTypes);
 			buildingFilter = m_DC_Squatter.buildingNames;
 			if (m_DC_Squatter.general.locationTypes.IsEmpty())
 			{
@@ -572,7 +572,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{0}, SDRC_EMissionSuccess.WIN,
+			{0, 3}, SDRC_EMissionSuccess.WIN,
 			0.2, {30, 240}
 		);
 		squatter.qrf = qrf;		

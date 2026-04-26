@@ -67,7 +67,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		}
 		else
 		{
-			pos = SDRC_MissionHelper.SelectMissionPosFromPairs(m_vPosDestination, m_DC_Convoy.general.pos, m_DC_Convoy.general.size, m_DC_Convoy.general.locationTypes);
+			pos = SDRC_MissionPosHelper.SelectMissionPosFromPairs(m_vPosDestination, m_DC_Convoy.general.pos, m_DC_Convoy.general.size, m_DC_Convoy.general.locationTypes);
 		}
 
 		//If failed, stop
@@ -101,7 +101,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			//Let's try a few times
 			for (int i = 0; i < 5; i++)
 			{
-				m_vPosDestination = SDRC_MissionHelper.FindMissionDestination(m_DC_Convoy.general.locationTypes, pos, 500);
+				m_vPosDestination = SDRC_MissionPosHelper.FindMissionDestination(m_DC_Convoy.general.locationTypes, pos, 500);
 				if (m_vPosDestination != "0 0 0")
 				{
 					SDRC_RoadPos roadPos = new SDRC_RoadPos();

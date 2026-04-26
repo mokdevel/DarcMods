@@ -55,7 +55,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		}
 		else
 		{			
-			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Patrol.general.pos, m_DC_Patrol.general.size, m_DC_Patrol.general.locationTypes);
+			pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_Patrol.general.pos, m_DC_Patrol.general.size, m_DC_Patrol.general.locationTypes);
 		}
 		
 		//If pos has been set, we blindly accept it. Do basic checking for pos.
@@ -75,7 +75,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		//Find a location for the destination. Only used for route
 		if (m_vPosDestination == "0 0 0")
 		{
-			m_vPosDestination = SDRC_MissionHelper.FindMissionPosWithLocationTypes(m_DC_Patrol.general.locationTypes, m_DC_Patrol.general.size);
+			m_vPosDestination = SDRC_MissionPosHelper.FindMissionPosWithLocationTypes(m_DC_Patrol.general.locationTypes, m_DC_Patrol.general.size);
 			SDRC_Log.Add("[SDRC_Mission_Patrol] " +  GetId() + " : Patrol destination: " + m_vPosDestination, LogLevel.SPAM);
 		}
 

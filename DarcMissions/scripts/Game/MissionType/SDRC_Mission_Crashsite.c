@@ -71,7 +71,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		{
 			for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 			{
-				pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Crashsite.general.pos, m_DC_Crashsite.general.size, m_DC_Crashsite.general.locationTypes);
+				pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_Crashsite.general.pos, m_DC_Crashsite.general.size, m_DC_Crashsite.general.locationTypes);
 				bool obc = (IsRequested() || IsStatic());
 				if (SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested()) != SDRC_EMissionError.NONE)
 				{

@@ -50,7 +50,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		float radius = 100;					//Default size for the radius. 
 		array<string> buildingFilter = {};
 
-		vector pos = SDRC_MissionHelper.SelectMissionPos(m_DC_HvtVip.general.pos, m_DC_HvtVip.general.size, m_DC_HvtVip.general.locationTypes);
+		vector pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_HvtVip.general.pos, m_DC_HvtVip.general.size, m_DC_HvtVip.general.locationTypes);
 						
 		//Find a location for the mission
 		if (IsRequested())
@@ -73,7 +73,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 				}
 				else
 				{
-					pos = SDRC_MissionHelper.FindMissionPosWithLocationTypes(m_DC_HvtVip.general.locationTypes, m_DC_HvtVip.general.size);
+					pos = SDRC_MissionPosHelper.FindMissionPosWithLocationTypes(m_DC_HvtVip.general.locationTypes, m_DC_HvtVip.general.size);
 				}
 			}
 		}

@@ -52,7 +52,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 		}
 		else
 		{				
-			pos = SDRC_MissionHelper.SelectMissionPos(m_DC_Stash.general.pos, m_DC_Stash.general.size, m_DC_Stash.general.locationTypes, SDRC_Conf.POSITION_RANDOMIZATION);
+			pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_Stash.general.pos, m_DC_Stash.general.size, m_DC_Stash.general.locationTypes, SDRC_Conf.POSITION_RANDOMIZATION);
 		}		
 						
 		//If pos has been set, we blindly accept it. Do basic checking for pos.
@@ -246,6 +246,13 @@ class SDRC_StashConfig : SDRC_MissionConfig
 			SDRC_EWaypointGenerationType.RANDOM,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
+		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{2, 3}, SDRC_EMissionSuccess.WIN,
+			0.2, {30, 240}
+		);
+		stash.qrf = qrf;			
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {

@@ -68,7 +68,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 				}
 				else
 				{
-					pos = SDRC_MissionHelper.FindMissionPosWithLocationTypes(m_DC_Hunter.general.locationTypes, m_DC_Hunter.general.size, -1);
+					pos = SDRC_MissionPosHelper.FindMissionPosWithLocationTypes(m_DC_Hunter.general.locationTypes, m_DC_Hunter.general.size, -1);
 				}
 							
 				if (SDRC_MissionPosHelper.IsValidMissionPos(pos) == SDRC_EMissionError.NONE)
