@@ -32,7 +32,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	bool Load(Managed T, SDRC_Config C, int jsonVersion, bool createMissingFiles = true)
+	bool Load(Managed T, SDRC_Config C, int jsonVersion, bool createMissingFiles = true, bool safeUpdate = false)
 	{	
 		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
@@ -44,6 +44,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 			C.jsonVersion = jsonVersion;
 			C.SetDefaults();
 			
+			//Compatibility thing for consoles
 			if (GetGame().IsPlatformGameConsole())
 			{
 				//Do NOT save the files but use the data in memory. This will NOT save any configs on filesystem.
@@ -53,7 +54,6 @@ class SDRC_JsonApi2 : JsonApiStruct
 			Save(C, SDRC_Config.Cast(C));
 			
 			loadContext = LoadConfig(false);
-//			return true;
 		}
 		
 		if (!loadContext)
@@ -69,13 +69,54 @@ class SDRC_JsonApi2 : JsonApiStruct
 		
 		if (versionFromFile != jsonVersion)
 		{
-			SDRC_Log.Add("[SDRC_JsonApi2:Load] ------------------", LogLevel.ERROR);
-			SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong jsonVersion number: " + versionFromFile + " (expected: " + jsonVersion + ") : " + GetFileName(), LogLevel.ERROR);
-			SDRC_Log.Add("[SDRC_JsonApi2:Load] Please delete the file and restart to receive an updated one: " + GetFileName(), LogLevel.ERROR);
-			SDRC_Log.Add("[SDRC_JsonApi2:Load] ------------------", LogLevel.ERROR);
-			
-			SDRC_Conf.errorList.Insert(GetFileName() + " has been updated. Delete to receive an updated one."); 
-			return false;
+			if (!safeUpdate)
+			{			
+				SDRC_Log.Add("[SDRC_JsonApi2:Load] ------------------", LogLevel.ERROR);
+				SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong jsonVersion number: " + versionFromFile + " (expected: " + jsonVersion + ") : " + GetFileName(), LogLevel.ERROR);
+				SDRC_Log.Add("[SDRC_JsonApi2:Load] Please delete the file and restart to receive an updated one: " + GetFileName(), LogLevel.ERROR);
+				SDRC_Log.Add("[SDRC_JsonApi2:Load] ------------------", LogLevel.ERROR);
+				
+				SDRC_Conf.errorList.Insert(GetFileName() + " has been updated. Delete to receive an updated one."); 
+				
+				return false;
+			}
+			else
+			{			
+				SDRC_Log.Add("[SDRC_JsonApi2:Load] ------------------", LogLevel.WARNING);
+				SDRC_Log.Add("[SDRC_JsonApi2:Load] Wrong jsonVersion number: " + versionFromFile + " (expected: " + jsonVersion + ") : " + GetFileName(), LogLevel.WARNING);
+
+				//Do a safe update of the file. Making a backup and automatically updating a new file.			
+				string backupFile = "";
+				
+				for (int i = 0; i < 10; i++)
+				{
+					backupFile = GetFileName() + "_bak_" + i;
+					
+					if (!FileIO.FileExists(backupFile))
+					{					
+						SDRC_Log.Add("[SDRC_JsonApi2:Load] Making a backup: " + backupFile, LogLevel.WARNING);
+						FileIO.CopyFile(GetFileName(), backupFile);
+						break;
+					}
+					
+					if (i == 9)
+					{
+						SDRC_Log.Add("[SDRC_JsonApi2:Load] Too many backup files under DarcMods. Please delete the files " + GetFileName() + "_bak_N.", LogLevel.ERROR);
+						SDRC_Log.Add("[SDRC_JsonApi2:Load] ------------------", LogLevel.WARNING);
+						return false;
+					}
+				}
+				
+				SDRC_Log.Add("[SDRC_JsonApi2:Load] Creating an updated file: " + GetFileName(), LogLevel.WARNING);
+				SDRC_Log.Add("[SDRC_JsonApi2:Load] ------------------", LogLevel.WARNING);
+				
+				//Save new file
+				C.jsonVersion = jsonVersion;
+				C.SetDefaults();
+				Save(C, SDRC_Config.Cast(C));
+				
+				loadContext = LoadConfig(false);
+			}
 		}		
 		
 		if (!loadContext.ReadValue("", T))

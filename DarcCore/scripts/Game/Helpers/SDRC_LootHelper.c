@@ -34,7 +34,7 @@ sealed class SDRC_LootHelper
 		
 		//Load loot config
 		m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_LOOTLIST);	
-		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_LOOTLIST_JSONVER);		
+		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_LOOTLIST_JSONVER, safeUpdate: true);		
 		m_Config.Populate();
 	}
 	

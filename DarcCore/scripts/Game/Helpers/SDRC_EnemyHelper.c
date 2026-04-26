@@ -43,7 +43,7 @@ sealed class SDRC_EnemyHelper
 		
 		//Load configuration from file
 		m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_ENEMYLIST);	
-		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_CONFIG_FILE_ENEMYLIST_JSONVER);		
+		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_CONFIG_FILE_ENEMYLIST_JSONVER, safeUpdate: true);		
 		m_Config.Populate();	
 		
 		//Create a C_RANDOMIZED list
