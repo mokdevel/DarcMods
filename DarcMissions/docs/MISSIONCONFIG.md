@@ -114,7 +114,7 @@ Difficulty affects various aspects of the missions. Each 'coef' has five values 
 * ``lootChanceCoef`` : The multiplier used to modify the loot chance. For each item on the lootlist, the chance is tested.
 * ``lootCountCoef`` : The multiplier used to modify the loot amount. When loot is spawned, the list provided is used. If this value increases the total, amount of items in the lootlist, additional items are added to the list from the original list.
 * ``rewardCoef`` : The multiplier used to modify the reward amount. Reward refers to ``xp`` variable in missions. Currently only Freedom Fighters is providing reward
-* ``qrfChance`` : Chance to get a QRF (Quick Reaction Force) to your location. This is a multiplier that is used with ``qrf``..
+* ``qrfChance`` : Chance to get a QRF (Quick Reaction Force) to your location. This is the multiplier that that modified QRF chance. See: [QRF](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_COMMON.md#sdrc_missionconfigqrf).
 ```
 array<float> aiCountCoef =      {0.50, 0.60, 1.0, 1.40, 1.80};
 array<float> aiSkillCoef =      {0.20, 0.60, 1.0, 1.30, 1.60};
