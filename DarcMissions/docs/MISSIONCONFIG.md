@@ -114,7 +114,7 @@ Difficulty affects various aspects of the missions. Each 'coef' has five values 
 * ``lootChanceCoef`` : The multiplier used to modify the loot chance. For each item on the lootlist, the chance is tested.
 * ``lootCountCoef`` : The multiplier used to modify the loot amount. When loot is spawned, the list provided is used. If this value increases the total, amount of items in the lootlist, additional items are added to the list from the original list.
 * ``rewardCoef`` : The multiplier used to modify the reward amount. Reward refers to ``xp`` variable in missions. Currently only Freedom Fighters is providing reward
-* ``qrfChance`` : Chance to get a QRF (Quick Reaction Force) to your location. **WIP, CURRENTLY DOES NOTHING**
+* ``qrfChance`` : Chance to get a QRF (Quick Reaction Force) to your location. This is a multiplier that is used with ``qrf``..
 ```
 array<float> aiCountCoef =      {0.50, 0.60, 1.0, 1.40, 1.80};
 array<float> aiSkillCoef =      {0.20, 0.60, 1.0, 1.30, 1.60};
@@ -122,7 +122,7 @@ array<float> aiPerceptionCoef = {0.20, 0.60, 1.0, 1.30, 1.60};
 array<float> lootChanceCoef =   {0.50, 0.60, 1.0, 1.10, 1.20};	
 array<float> lootCountCoef =    {0.50, 0.70, 1.0, 1.50, 2.00};	
 array<float> rewardCoef =       {0.50, 0.70, 1.0, 2.00, 3.00};	
-array<float> qrfChance =        {0.10, 0.15, 0.2, 0.25, 0.30}; //**WIP**
+array<float> qrfChance =        {0.80, 0.90, 1.0, 1.20, 1.30};
 ```
 
 ### SDRC_MissionTypeConfig
