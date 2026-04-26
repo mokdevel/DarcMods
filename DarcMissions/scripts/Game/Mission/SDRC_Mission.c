@@ -1094,23 +1094,7 @@ class SDRC_Mission : Managed
 			SDRC_Log.Add("[SDRC_Mission:DoQrf] Selected idx:" + subIdx + " : " + qrf.comment, LogLevel.DEBUG);
 			
 			//Find spawn position
-			float randomAngle = SDRC_Misc.RandomInt(0, 360);
-			float radius = 300;
-			vector spawnPos = vector.Zero;
-			
-			for (int i = 0; i < 12; i++)
-			{
-				vector pos = SDRC_Misc.GetCoordinatesOnCircle(GetPos(), radius + (i*30), i*(360/12), randomAngle);
-				if (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, 200))
-				{
-					//Check that the suggested position is not in water nor nonValidArea
-					if (!SDRC_Misc.IsPosInWater(pos) && !SDRC_Misc.IsPosUnderMap(pos) && !SDRC_MissionPosHelper.IsPosInNonValidArea(pos))
-					{
-						spawnPos = pos;
-						break;
-					}
-				}
-			}
+			vector spawnPos = FindMissionPosAroundPos(GetPos(), 300);
 			
 			if (spawnPos == vector.Zero)
 			{
@@ -1129,9 +1113,10 @@ class SDRC_Mission : Managed
 			}
 			else
 			{
-				int groupCount = SDRC_MissionHelper.SpawnAiFromClassAiInVehicle(qrf.vehicle, qrf.ai, this, spawnPos, GetPos());
-				SDRC_Log.Add("[SDRC_Mission:DoQrf] Spawned " + groupCount + " groups to QRF.", LogLevel.DEBUG);
+				//TBD: Check if it is a chopper and then spawn a chopper.
 				
+				int groupCount = SDRC_MissionHelper.SpawnAiFromClassAiInVehicle(qrf.vehicle, qrf.ai, this, spawnPos, GetPos());
+				SDRC_Log.Add("[SDRC_Mission:DoQrf] Spawned " + groupCount + " groups to QRF.", LogLevel.DEBUG);				
 			}
 		}		
 		#endif

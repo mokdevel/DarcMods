@@ -82,7 +82,7 @@ class SDRC_ListConfig : SDRC_Config
 				
 			if ( (SDRC_Log.GetLogLevel() > DC_LogLevel.NORMAL) && (printList) )
 			{
-				SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);				
+				SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);
 				list.items.Debug();
 			}
 		}		
