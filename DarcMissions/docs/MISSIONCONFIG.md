@@ -125,8 +125,10 @@ array<float> rewardCoef =       {0.50, 0.70, 1.0, 2.00, 3.00};
 array<float> qrfChance =        {0.80, 0.90, 1.0, 1.20, 1.30};
 ```
 
-### SDRC_MissionTypeConfig
+## Mission type
 The below is valid for both static and dynamic missions
+
+### SDRC_MissionTypeConfig
 ```
 int count : Count of missions.
   0 = No missions will spawn
