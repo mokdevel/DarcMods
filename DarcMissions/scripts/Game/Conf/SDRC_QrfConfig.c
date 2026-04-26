@@ -19,6 +19,10 @@ class SDRC_QrfConfig : SDRC_Config
 	}		
 
 	//------------------------------------------------------------------------------------------------
+	/*!
+	Return a QRF conf.
+	\param index The subIdx to search. -1 will pick a random one from all QRFs.
+	*/	
 	SDRC_Qrf GetQrf(int index = -1)
 	{
 		//If random request, find a random one
@@ -36,6 +40,8 @@ class SDRC_QrfConfig : SDRC_Config
 			}
 		}
 		
+		SDRC_Log.Add("[SDRC_QrfConfig:GetQrf] Wrong index requested: " + index, LogLevel.ERROR);
+		
 		return null;
 	}
 		
@@ -46,6 +52,7 @@ class SDRC_QrfConfig : SDRC_Config
 		qrfs.Insert(Qrf00());
 		qrfs.Insert(Qrf01());
 		qrfs.Insert(Qrf02());
+		qrfs.Insert(Qrf03());
 		//Wheeled
 		qrfs.Insert(Qrf30());
 		qrfs.Insert(Qrf31());
@@ -128,6 +135,30 @@ class SDRC_QrfConfig : SDRC_Config
 			
 		return qrf;
 	};	
+	
+	//----------------------------------------------------
+	SDRC_Qrf Qrf03()
+	{
+		ref SDRC_Qrf qrf = new SDRC_Qrf();
+		qrf.Set(
+			3, "index 3: Spec ops",
+			"",
+			"", 0, 
+			{SDRC_EDifficulty.RANDOM},
+			0,
+		    {}
+		);
+		qrf.ai.Set(
+			{1, 2},
+			{"G_SPECIAL", "G_RECON", },
+			80, 1.3,
+			{100, 200},
+			SDRC_EWaypointGenerationType.ROUTE,
+			SDRC_EWaypointMoveType.MOVE,
+		);
+			
+		return qrf;
+	};		
 	
 	//----------------------------------------------------
 	SDRC_Qrf Qrf30()
