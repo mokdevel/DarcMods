@@ -115,7 +115,7 @@ class SDRC_ChopperComp : ScriptComponent
 	ref array<ref SCR_DefaultOccupantData> m_aCrew;
 	//Crew settings
 //	[Attribute(defvalue: EAISkill.REGULAR.ToString(), UIWidgets.ComboBox, desc: "AI skill in combat", "", ParamEnumArray.FromEnum(EAISkill), category: "Common")]
-	[Attribute(category: "AI settings", defvalue: typename.EnumToString(EAISkill, EAISkill.REGULAR), uiwidget: UIWidgets.ComboBox, desc: "AI skill", enumType: EAISkill)]	
+	[Attribute(category: "AI settings", defvalue: typename.EnumToString(EAISkill, EAISkill.VETERAN), uiwidget: UIWidgets.ComboBox, desc: "AI skill", enumType: EAISkill)]	
 	EAISkill m_AISkill;	
 	[Attribute(category: "AI settings", defvalue: "1.7", desc: "AI perception", params: "0.1 5.0 0.1")]	
 	float m_AIPerception;
