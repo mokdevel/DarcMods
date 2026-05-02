@@ -391,13 +391,13 @@ class SDRC_QrfConfig : SDRC_Config
 //------------------------------------------------------------------------------------------------
 class SDRC_Qrf : Managed
 {
-	int qrfIdx;										//Unique index for the qrf. 
+	int qrfIdx;										//Unique index for the QRF. 
 	string comment;									//Generic comment to describe the mission. Not used in game.	
 	string info;									//Details for the hint shown for players
-	ref array<int> distance = {};					//Spawn distance min/max for qrf
+	ref array<int> distance = {};					//Spawn distance min/max for QRF
 	string vehicle;									//Vehicle resourcename
 	int speed;										//Vehicle cruising speed
-	ref array<SDRC_EDifficulty> difficulty = {}; 	//Difficulty options for qrf
+	ref array<SDRC_EDifficulty> difficulty = {}; 	//Difficulty options for QRF
 	int xp;											//Experience or other reward given
 	ref SDRC_MissionConfigAi ai = new SDRC_MissionConfigAi();
 	ref array<string> modList = {};					//List of mods needed for this mission
