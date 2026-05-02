@@ -18,7 +18,7 @@ A QRF or quick reaction force is an additional attack wave sent to a mission loc
   * Vehicle with AI will move to the location. The moving is done by AR AI logic.
   * Choppers will have a search and destroy objective at the mission location. They will patrol the area for a certain time, before flying away.
 
-## Pre defined QRFs
+## Predefined QRFs
 Currently defined QRFs:
 ```
 0, "index 0: Light group"
