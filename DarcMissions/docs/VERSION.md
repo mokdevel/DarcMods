@@ -5,6 +5,19 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 
+# 20260502
+Main Features:
+* Convoys move virtually when not near players.
+* QRF functionality: Once a mission is cleared, there is a risk of a second wave of attack. Enabled for missions: *Crashsite, HvtItem, HvtVip, Occupation, Roadblock, Squatters, Stash*.
+  * For QRF to work, delete the mission json files related to the above
+  * QRF will arrive by foot, vehicle or as an attack chopper.
+* SafeUpdate functionality. Certain files will auto update without any interaction needs. Currently this is done for the files below and can not be disabled (TBD):
+  * dc_vehicleList.json
+  * dc_qrf.json
+  * dc_lootList.json
+  * dc_enemyList.json
+* Modified mission loot and loot amounts. Slightly more loot now provided.
+
 # 20260414
 Fixes:
 * Mission position validation fixes.

@@ -53,6 +53,9 @@ Some parameters are described in DarcMissions documentation
 - [LootLists](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LISTS.md#loot-lists)
 
 # Version history
+## 20260502
+Compatibility compile for DarcCore.
+
 ## 20260118
 Fixed loot crate prefabs and added more loot.
 
