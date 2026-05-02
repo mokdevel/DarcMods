@@ -1,5 +1,5 @@
 {
-    "jsonVersion": 2,
+    "jsonVersion": 3,
     "version": 1,
     "author": "darc",
     "comment": "",
@@ -7,8 +7,13 @@
         {
             "qrfIdx": 0,
             "comment": "index 0: Light group",
-            "vehicle": "",
             "info": "",
+            "distance": [
+                250,
+                350
+            ],
+            "vehicle": "",
+            "speed": 0,
             "difficulty": [
                 -1
             ],
@@ -27,8 +32,374 @@
                     100,
                     200
                 ],
-                "waypointGenType": 3,
-                "waypointMoveType": 5
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "modList": []
+        },
+        {
+            "qrfIdx": 1,
+            "comment": "index 1: Snipers",
+            "info": "",
+            "distance": [
+                250,
+                350
+            ],
+            "vehicle": "",
+            "speed": 0,
+            "difficulty": [
+                -1
+            ],
+            "xp": 0,
+            "ai": {
+                "count": [
+                    1,
+                    1
+                ],
+                "types": [
+                    "G_SNIPER"
+                ],
+                "skill": 80,
+                "perception": 1.5,
+                "waypointRange": [
+                    100,
+                    200
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "modList": []
+        },
+        {
+            "qrfIdx": 2,
+            "comment": "index 2: Heavy team",
+            "info": "",
+            "distance": [
+                250,
+                350
+            ],
+            "vehicle": "",
+            "speed": 0,
+            "difficulty": [
+                -1
+            ],
+            "xp": 0,
+            "ai": {
+                "count": [
+                    1,
+                    1
+                ],
+                "types": [
+                    "G_HEAVY"
+                ],
+                "skill": 80,
+                "perception": 1.299,
+                "waypointRange": [
+                    100,
+                    200
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "modList": []
+        },
+        {
+            "qrfIdx": 3,
+            "comment": "index 3: Spec ops",
+            "info": "",
+            "distance": [
+                250,
+                350
+            ],
+            "vehicle": "",
+            "speed": 0,
+            "difficulty": [
+                -1
+            ],
+            "xp": 0,
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_SPECIAL",
+                    "G_RECON"
+                ],
+                "skill": 80,
+                "perception": 1.299,
+                "waypointRange": [
+                    100,
+                    200
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "modList": []
+        },
+        {
+            "qrfIdx": 4,
+            "comment": "index 4: MG team",
+            "info": "",
+            "distance": [
+                250,
+                350
+            ],
+            "vehicle": "",
+            "speed": 0,
+            "difficulty": [
+                -1
+            ],
+            "xp": 0,
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_HEAVY",
+                    "G_LAUNCHER"
+                ],
+                "skill": 80,
+                "perception": 1.299,
+                "waypointRange": [
+                    100,
+                    200
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "modList": []
+        },
+        {
+            "qrfIdx": 5,
+            "comment": "index 5: Multiple small groups",
+            "info": "",
+            "distance": [
+                250,
+                350
+            ],
+            "vehicle": "",
+            "speed": 0,
+            "difficulty": [
+                -1
+            ],
+            "xp": 0,
+            "ai": {
+                "count": [
+                    2,
+                    4
+                ],
+                "types": [
+                    "G_SMALL"
+                ],
+                "skill": 80,
+                "perception": 1.299,
+                "waypointRange": [
+                    100,
+                    200
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "modList": []
+        },
+        {
+            "qrfIdx": 6,
+            "comment": "index 6: Deadly recon team",
+            "info": "",
+            "distance": [
+                250,
+                350
+            ],
+            "vehicle": "",
+            "speed": 0,
+            "difficulty": [
+                3,
+                4
+            ],
+            "xp": 0,
+            "ai": {
+                "count": [
+                    1,
+                    1
+                ],
+                "types": [
+                    "G_RECON"
+                ],
+                "skill": 100,
+                "perception": 2.0,
+                "waypointRange": [
+                    100,
+                    200
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "modList": []
+        },
+        {
+            "qrfIdx": 7,
+            "comment": "index 7: Not so sharp snipers",
+            "info": "",
+            "distance": [
+                250,
+                350
+            ],
+            "vehicle": "",
+            "speed": 0,
+            "difficulty": [
+                -1
+            ],
+            "xp": 0,
+            "ai": {
+                "count": [
+                    2,
+                    2
+                ],
+                "types": [
+                    "G_SNIPER"
+                ],
+                "skill": 40,
+                "perception": 1.799,
+                "waypointRange": [
+                    100,
+                    200
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "modList": []
+        },
+        {
+            "qrfIdx": 30,
+            "comment": "index 30: Group in a car",
+            "info": "",
+            "distance": [
+                350,
+                450
+            ],
+            "vehicle": "VEHICLE_WHEELED_MILITARY_CAR",
+            "speed": 30,
+            "difficulty": [
+                -1
+            ],
+            "xp": 0,
+            "ai": {
+                "count": [
+                    1,
+                    1
+                ],
+                "types": [
+                    "G_LIGHT"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    100,
+                    200
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "modList": []
+        },
+        {
+            "qrfIdx": 31,
+            "comment": "index 31: Armored vehicle",
+            "info": "",
+            "distance": [
+                350,
+                450
+            ],
+            "vehicle": "VEHICLE_WHEELED_ARMOR",
+            "speed": 30,
+            "difficulty": [
+                -1
+            ],
+            "xp": 0,
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_LIGHT"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    100,
+                    200
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "modList": []
+        },
+        {
+            "qrfIdx": 32,
+            "comment": "index 32: Armed vehicle",
+            "info": "",
+            "distance": [
+                350,
+                450
+            ],
+            "vehicle": "VEHICLE_WHEELED_ARMED",
+            "speed": 40,
+            "difficulty": [
+                -1
+            ],
+            "xp": 0,
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_LIGHT"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    100,
+                    200
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "modList": []
+        },
+        {
+            "qrfIdx": 60,
+            "comment": "index 60: Armed chopper",
+            "info": "",
+            "distance": [
+                200,
+                250
+            ],
+            "vehicle": "VEHICLE_CHOPPER_ARMED",
+            "speed": 0,
+            "difficulty": [
+                -1
+            ],
+            "xp": 0,
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_LIGHT"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    100,
+                    200
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
             },
             "modList": []
         }

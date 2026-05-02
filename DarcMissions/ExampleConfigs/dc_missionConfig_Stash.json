@@ -68,7 +68,19 @@
                 "waypointGenType": 1,
                 "waypointMoveType": 5
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    2,
+                    3,
+                    5
+                ],
+                "activation": 1,
+                "chance": 0.2,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
@@ -78,6 +90,7 @@
                     "WEAPON_HANDGUN",
                     "WEAPON_HANDGUN",
                     "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
                     "ITEM_MEDICAL",
                     "ITEM_GENERAL",
                     "ITEM_GENERAL",

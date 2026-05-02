@@ -79,7 +79,20 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    0,
+                    2,
+                    4,
+                    5
+                ],
+                "activation": 1,
+                "chance": 0.2,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "buildingNames": [
                 "ShopModern_",
                 "Villa_",
@@ -162,7 +175,20 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    1,
+                    2,
+                    5,
+                    30
+                ],
+                "activation": 1,
+                "chance": 0.2,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "buildingNames": [
                 "ControlTowerMilitary_"
             ],
@@ -242,7 +268,19 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    0,
+                    5,
+                    5
+                ],
+                "activation": 1,
+                "chance": 0.5,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "buildingNames": [
                 "Office_E_",
                 "Barracks_01_",
@@ -326,7 +364,18 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    2,
+                    7
+                ],
+                "activation": 1,
+                "chance": 0.4,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "buildingNames": [
                 "House_"
             ],
@@ -405,7 +454,18 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    0,
+                    2
+                ],
+                "activation": 1,
+                "chance": 0.349,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "buildingNames": [
                 "PubVillage_",
                 "ShopHouse_"

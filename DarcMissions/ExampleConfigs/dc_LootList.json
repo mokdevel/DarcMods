@@ -24,48 +24,8 @@
                 "M21",
                 "M40"
             ],
-            "items": [
-                "{BFF3186D2A9CEFB7}Prefabs/Weapons/Rifles/M16/Rifle_M16A2_carbine_AP2k.et",
-                "{BFEA719491610A45}Prefabs/Weapons/Rifles/AKS74U/Rifle_AKS74U.et",
-                "{135044000CA7BF85}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_carbine_M203_OliveGreen_Solid.et",
-                "{F7571A26F55AD8EF}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_OliveGreen_Solid.et",
-                "{3E413771E1834D2F}Prefabs/Weapons/Rifles/M16/Rifle_M16A2.et",
-                "{83CE659F2C763F28}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_carbine_suppressor_OliveGreen_Sand_Stripes.et",
-                "{877128FBE22FF2C9}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_carbine_suppressor_AP2K_OliveGreen_Sand_Stripes.et",
-                "{92A0764C4EDF7C14}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_carbine_OliveGreen_Solid.et",
-                "{29DD901C0664FC61}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_suppressor_4x20_OliveGreen_Sand_Stripes.et",
-                "{C29B073E2E583220}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_suppressor_M203_OliveGreen_Sand_Stripes.et",
-                "{B036BA26CCFE9E5D}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_OliveGreen_Sand_Stripes.et",
-                "{F97A4AC994231900}Prefabs/Weapons/Rifles/M16/Rifle_M16A2_carbine.et",
-                "{EB404DC9E1BCB750}Prefabs/Weapons/Rifles/AK74/Rifle_AK74N_1P29.et",
-                "{1B332B99C72DAF8B}Prefabs/Weapons/Rifles/AK74/Variants/Rifle_AK74N_PBS4_1P29.et",
-                "{443CEFF17E040B11}Prefabs/Weapons/Rifles/VZ58/Rifle_VZ58V.et",
-                "{EF73725A81669E2C}Prefabs/Weapons/Rifles/M16/Rifle_M16A2_carbine_M203.et",
-                "{ED492F11FCFAE30A}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_carbine_4x20_OliveGreen_Sand_Stripes.et",
-                "{A016D4D3B9D40A58}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_carbine_4x20_OliveGreen_Solid.et",
-                "{5A987A8A13763769}Prefabs/Weapons/Rifles/M16/Rifle_M16A2_M203.et",
-                "{5F3661399CE6BEE6}Prefabs/Weapons/Rifles/AKS74U/Variants/Rifle_AKS74UN_PBS4.et",
-                "{BC6C9476FB3219A7}Prefabs/Weapons/Rifles/AK74/Rifle_AK74N_GP25.et",
-                "{9B4DF9A9F1BD2A1C}Prefabs/Weapons/Rifles/AKS74U/Rifle_AKS74UN_1P29.et",
-                "{4C1FF226DDA3017C}Prefabs/Weapons/Rifles/AK74/Variants/Rifle_AK74N_PBS4_GP25.et",
-                "{22529BCDC9439FCD}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_M203_OliveGreen_Sand_Stripes.et",
-                "{5D29FA916AB8E593}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_carbine_AP2k_OliveGreen_Solid.et",
-                "{43D001A8797EA5C9}Prefabs/Weapons/Rifles/AK74/Variants/Rifle_AK74N_PBS4.et",
-                "{FA5C25BF66A53DCF}Prefabs/Weapons/Rifles/AK74/Rifle_AK74.et",
-                "{96DFD2E7E63B3386}Prefabs/Weapons/Rifles/AK74/Rifle_AK74N.et",
-                "{FA0E25CE35EE945F}Prefabs/Weapons/Rifles/AKS74U/Rifle_AKS74UN.et",
-                "{AE81219082244685}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_carbine_suppressor_M203_OliveGreen_Sand_Stripes.et",
-                "{9C948630078D154D}Prefabs/Weapons/Rifles/VZ58/Rifle_VZ58P.et",
-                "{E57DBDA5C50F07FF}Prefabs/Weapons/Rifles/M16/Rifle_M16A2_carbine_4x20.et",
-                "{EDE7F2CE157306AD}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_carbine_AP2k_OliveGreen_Sand_Stripes.et",
-                "{0B0C4F7940C1CE26}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_4x20_OliveGreen_Sand_Stripes.et",
-                "{D7690D6BB82B50D7}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_carbine_OliveGreen_Sand_Stripes.et",
-                "{B1482FB64E3D2D45}Prefabs/Weapons/Rifles/M16/Rifle_M16A2_4x20.et",
-                "{60B4E42557D61CF9}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_4x20_OliveGreen_Solid.et",
-                "{63E8322E2ADD4AA7}Prefabs/Weapons/Rifles/AK74/Rifle_AK74_GP25.et",
-                "{C417FBA57578B2E1}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_carbine_M203_OliveGreen_Sand_Stripes.et",
-                "{D3F274F6E2A5A924}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_M203_OliveGreen_Solid.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "WEAPON_RIFLE_BIG",
@@ -86,16 +46,8 @@
                 "M16",
                 "Spear68_"
             ],
-            "items": [
-                "{8D6553BEAF8640D1}Prefabs/Weapons/Rifles/M14/Rifle_M21_OliveGreen_Sand_Stripes_Wrapped.et",
-                "{DD17D4BC320A94C8}Prefabs/Weapons/Rifles/M14/Rifle_M21_ARTII_OliveGreen_Sand_Stripes_Wrapped.et",
-                "{6415B7923DE28C1B}Prefabs/Weapons/Rifles/SVD/Rifle_SVD_PSO.et",
-                "{3EB02CDAD5F23C82}Prefabs/Weapons/Rifles/SVD/Rifle_SVD.et",
-                "{B31929F65F0D0279}Prefabs/Weapons/Rifles/M14/Rifle_M21.et",
-                "{81EB948E6414BD6F}Prefabs/Weapons/Rifles/M14/Rifle_M21_ARTII.et",
-                "{F765DED3699B6B4C}Prefabs/Weapons/Rifles/M14/Rifle_M21_ARTII_OliveGreen_Sand_Stripes.et",
-                "{6EDAE05DF7CC8E78}Prefabs/Weapons/Rifles/M14/Rifle_M21_OliveGreen_Sand_Stripes.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "WEAPON_HANDGUN",
@@ -108,10 +60,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": [
-                "{1353C6EAD1DCFE43}Prefabs/Weapons/Handguns/M9/Handgun_M9.et",
-                "{C0F7DD85A86B2900}Prefabs/Weapons/Handguns/PM/Handgun_PM.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "WEAPON_LAUNCHER",
@@ -125,13 +75,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": [
-                "{7C45EC94C698246B}Prefabs/Weapons/Launchers/RPG75/Launcher_RPG75.et",
-                "{722CE6FEC39EE896}Prefabs/Weapons/Launchers/RPG22/Launcher_RPG22.et",
-                "{9C5C20FB0E01E64F}Prefabs/Weapons/Launchers/M72/Launcher_M72A3.et",
-                "{7A82FE978603F137}Prefabs/Weapons/Launchers/RPG7/Launcher_RPG7.et",
-                "{E8A55396050E1762}Prefabs/Weapons/Launchers/RPG7/Launcher_RPG7_PGO7.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "WEAPON_SHOTGUN",
@@ -144,7 +89,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": []
+            "items": [],
+            "factions": []
         },
         {
             "id": "WEAPON_GRENADE",
@@ -157,18 +103,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": [
-                "{3343A055A83CB30D}Prefabs/Weapons/Grenades/M18/Smoke_M18_Red.et",
-                "{14C1A0F061D9DDEE}Prefabs/Weapons/Grenades/M18/Smoke_M18_Violet.et",
-                "{17CACC8BBC442C92}Prefabs/Weapons/Grenades/M18/Smoke_M18_Violet_Repeating.et",
-                "{9DB69176CEF0EE97}Prefabs/Weapons/Grenades/Smoke_ANM8HC.et",
-                "{52703C00E2964549}Prefabs/Weapons/Grenades/M18/Smoke_M18_Red_Repeating.et",
-                "{77EAE5E07DC4678A}Prefabs/Weapons/Grenades/Smoke_RDG2.et",
-                "{E8F00BF730225B00}Prefabs/Weapons/Grenades/Grenade_M67.et",
-                "{645C73791ECA1698}Prefabs/Weapons/Grenades/Grenade_RGD5.et",
-                "{9BBDEE253A16CC66}Prefabs/Weapons/Grenades/M18/Smoke_M18_Yellow.et",
-                "{D41D22DD1B8E921E}Prefabs/Weapons/Grenades/M18/Smoke_M18_Green.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "UTIL_ATTACHMENT",
@@ -190,41 +126,8 @@
                 "Optic",
                 "Scope"
             ],
-            "items": [
-                "{AD045AFAFFC1AB6E}Prefabs/Weapons/Attachments/Stocks/Stock_VZ58/Stock_VZ58_folding.et",
-                "{1A2C3098A3F88658}Prefabs/Weapons/Attachments/Handguards/Handguard_M16A2/Handguard_M16_OliveGreen_Sand_Stripes.et",
-                "{98C79F5FAE12F9B6}Prefabs/Weapons/Attachments/Bayonets/Bayonet_6Kh4.et",
-                "{C374AF8B50B0C6EF}Prefabs/Weapons/Attachments/Muzzle/Suppressor_M16/Suppressor_M16_OliveGreen_Solid.et",
-                "{E06C5B0E2595702B}Prefabs/Weapons/Attachments/Camouflage/Camouflage_M21/Camouflage_Wrap_ARTII.et",
-                "{E52C9791E1554A5F}Prefabs/Weapons/Attachments/Muzzle/Suppressor_M16/Suppressor_M16.et",
-                "{1125E1072C3541D3}Prefabs/Weapons/Attachments/Bayonets/Bayonet_VZ58/Bayonet_VZ58_v3.et",
-                "{F4B9ADFE20D0D6B8}Prefabs/Weapons/Attachments/Bayonets/Bayonet_VZ58/Bayonet_VZ58_v2.et",
-                "{AA44A3B17DFE5ACE}Prefabs/Weapons/Attachments/Underbarrel/UGL_M203_short_Tutorial.et",
-                "{3F1B1BAD1F6DDC28}Prefabs/Weapons/Attachments/Bayonets/Bayonet_VZ58/Bayonet_VZ58_v1.et",
-                "{1ABABE3551512B0A}Prefabs/Weapons/Attachments/Underbarrel/UGL_GP25.et",
-                "{20BCF441EAD9F593}Prefabs/Weapons/Attachments/Handguards/Handguard_M16_carbine/Handguard_M16_carbine.et",
-                "{084D8EDB23D39D93}Prefabs/Weapons/Attachments/Handguards/Handguard_M16_carbine/Handguard_M16_carbine_OliveGreen_Sand_Stripes.et",
-                "{3B96FAC169E27037}Prefabs/Weapons/Attachments/Muzzle/Suppressor_PBS4/Suppressor_PBS4.et",
-                "{775E9992AF575338}Prefabs/Weapons/Attachments/Underbarrel/UGL_M203_long_OliveGreen_Sand_Stripes.et",
-                "{FB1A7F5BC7D935E2}Prefabs/Weapons/Attachments/Handguards/Handguard_M16A2/Handguard_M16.et",
-                "{43FDAF3FA0FF2299}Prefabs/Weapons/Attachments/Underbarrel/UGL_M203_long.et",
-                "{D711F819F3271AC6}Prefabs/Weapons/Attachments/Underbarrel/UGL_M203_short_OliveGreen_Sand_Stripes.et",
-                "{6288A1F1A5E3AC37}Prefabs/Weapons/Attachments/Muzzle/FlashHider_M16A2/FlashHider_M16.et",
-                "{49CC4426C8671477}Prefabs/Weapons/Attachments/Underbarrel/UGL_M203_short_OliveGreen_Solid.et",
-                "{85C85EFC8E49B312}Prefabs/Weapons/Attachments/Handguards/Handguard_M16_carbine/Handguard_M16_carbine_OliveGreen_Solid.et",
-                "{ADDF08D09F1877A4}Prefabs/Weapons/Attachments/Muzzle/Suppressor_M16/Suppressor_M16_OliveGreen_Sand_Stripes.et",
-                "{6DE8BD5167F90D6D}Prefabs/Weapons/Attachments/Underbarrel/UGL_M203_long_OliveGreen_Solid.et",
-                "{AB268D088F2D6291}Prefabs/Weapons/Attachments/Underbarrel/UGL_M203_short.et",
-                "{06D4C36A6D585275}Prefabs/Weapons/Attachments/Muzzle/FlashHider_AKS74u/FlashHider_AKS74u.et",
-                "{4A815EB8B824974A}Prefabs/Weapons/Attachments/Muzzle/FlashHider_AK74/FlashHider_AK74.et",
-                "{6060A767D637310F}Prefabs/Weapons/Attachments/Camouflage/Camouflage_M21/Camouflage_Wrap_M21.et",
-                "{2D26D2AE25429499}Prefabs/Weapons/Attachments/Mounts/Dovetail_PKM/Dovetail_PKM.et",
-                "{D92368B78263A9E0}Prefabs/Weapons/Attachments/Mounts/Dovetail_AK/Dovetail_AK.et",
-                "{2F4BBE174AFAF5E0}Prefabs/Weapons/Attachments/Stocks/Stock_VZ58/Stock_VZ58_fixed.et",
-                "{A97F179B2DA6DE33}Prefabs/Weapons/Attachments/Mounts/Dovetail_NSV/Dovetail_NSV.et",
-                "{558117556F3880A8}Prefabs/Weapons/Attachments/Bayonets/Bayonet_M9.et",
-                "{51C19F66AAC90A29}Prefabs/Weapons/Attachments/Handguards/Handguard_M16A2/Handguard_M16_OliveGreen_Solid.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "UTIL_OPTIC",
@@ -249,23 +152,8 @@
                 "_Base",
                 "DoNotUse"
             ],
-            "items": [
-                "{304664561B760EE0}Prefabs/Weapons/Attachments/Optics/Optic_ARTII/Optic_ARTII_OliveGreen_Sand_Stripes_Wrapped.et",
-                "{E5E9DBBF3BFB88C6}Prefabs/Weapons/Attachments/Optics/Optic_PGO7/Optic_PGO7V3.et",
-                "{C850A33226B8F9C1}Prefabs/Weapons/Attachments/Optics/Optic_PSO1/Optic_PSO1.et",
-                "{B8764E1CDC4F4F22}Prefabs/Weapons/Attachments/Optics/Optic_AP2k/Collim_AP2k_OliveGreen_Solid.et",
-                "{886A96EF3F14BCD2}Prefabs/Weapons/Attachments/Optics/UK59_4x8/Optic_UK59_4x8.et",
-                "{ACDF49FACD0701A8}Prefabs/Weapons/Attachments/Optics/Optic_1P29/Optic_1P29.et",
-                "{08286DDBB1F33FF1}Prefabs/Weapons/Attachments/Optics/Optic_AP2k/Collim_AP2k.et",
-                "{78E6C499CFFB8882}Prefabs/Weapons/Attachments/Optics/Optic_ARTII/Optic_ARTII_OliveGreen_Sand_Stripes.et",
-                "{B623482E2704B69A}Prefabs/Weapons/Attachments/Optics/Optic_SPP/Optic_SPP.et",
-                "{B9773AC7CCDAD633}Prefabs/Weapons/Attachments/Optics/Optic_4x20/Optic_4x20_OliveGreen_Solid.et",
-                "{44AAA61117B6CA8E}Prefabs/Weapons/Attachments/Optics/Optic_4x20/Optic_4x20_OliveGreen_Sand_Stripes.et",
-                "{D2018EDB1BBF4C88}Prefabs/Weapons/Attachments/Optics/Optic_ARTII/Optic_ARTII.et",
-                "{849A70689F8DCE05}Prefabs/Weapons/Attachments/Optics/Optic_SPP/Optic_SPP_Disabled.et",
-                "{BD496EE1B40DC510}Prefabs/Weapons/Attachments/Optics/Optic_4x20/Optic_4x20.et",
-                "{519E60CCCDCA456A}Prefabs/Weapons/Attachments/Optics/Optic_AP2k/Collim_AP2k_OliveGreen_Sand_Stripes.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "UTIL_MAGAZINE",
@@ -279,74 +167,8 @@
                 "_Base",
                 "Internal_"
             ],
-            "items": [
-                "{AAF51CFA75A9CF8B}Prefabs/Weapons/Magazines/Box_762x51_M60_100rnd_4AP_1Tracer.et",
-                "{7DD9CA7DE97AB9C0}Prefabs/Weapons/Magazines/NSV/Box_127x108_NSV_50rnd_API.et",
-                "{B386EEE8AED8E386}Prefabs/Weapons/Magazines/Box_762x54_PK_250rnd_Tracer.et",
-                "{EA806763FE4EDDDF}Prefabs/Weapons/Magazines/Box_145x114_KPVT_50rnd_APIT.et",
-                "{B909BD4BF4048A2A}Prefabs/Weapons/Magazines/Box_145x114_KPVT_50rnd_IAI.et",
-                "{50A242E5D9742C62}Prefabs/Weapons/Magazines/Box_127x99_M2_100rnd_4AP_1Tracer.et",
-                "{E5E9C5897CF47F44}Prefabs/Weapons/Magazines/Box_762x54_PK_100rnd_4Ball_1Tracer.et",
-                "{9C05543A503DB80E}Prefabs/Weapons/Magazines/Magazine_9x19_M9_15rnd_Ball.et",
-                "{1C260E65B7F290BA}Prefabs/Weapons/Magazines/Box_762x54_PK_250rnd_Ball.et",
-                "{8E0429589CD8A49A}Prefabs/Weapons/Magazines/Magazine_M242/Box_25x137_M242_150rnd_HEIT.et",
-                "{4D2C1E8F3A81F894}Prefabs/Weapons/Magazines/Box_762x51_M60_100rnd_4Ball_1Tracer.et",
-                "{9CCB46C6EE632C1A}Prefabs/Weapons/Magazines/Magazine_762x54_SVD_10rnd_Sniper.et",
-                "{48720FC416263FC1}Prefabs/Weapons/Magazines/Vz58/Magazine_762x39_Vz58_30rnd_Ball.et",
-                "{25CE9A2A7EAD5B9D}Prefabs/Weapons/Magazines/Box_127x99_M2_100rnd_AP.et",
-                "{FAFA0D71E75CEBE2}Prefabs/Weapons/Magazines/Vz58/Magazine_762x39_Vz58_30rnd_Tracer.et",
-                "{2EBF60EF24B108FC}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M855_Ball.et",
-                "{423D78F865E8AF8A}Prefabs/Weapons/Magazines/Box_762x51_M60_500rnd_2Ball_1Tracer.et",
-                "{B8921B7BFE8CAEF0}Prefabs/Weapons/Magazines/Box_127x99_M2_100rnd_Ball.et",
-                "{4A3649DFF8A3F0E3}Prefabs/Weapons/Magazines/Magazine_762x54_SVD_10rnd_Tracer.et",
-                "{BC74DAC891D48540}Prefabs/Weapons/Magazines/Magazine_545x39_RPK_45rnd_Ball.et",
-                "{D8F2CA92583B23D3}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M855_M856_Last_5Tracer.et",
-                "{03094E059B554A9C}Prefabs/Weapons/Magazines/UK59/Box_762x54_UK59_50rnd_4Ball_1Tracer.et",
-                "{F7C9D35FB2AFADFF}Prefabs/Weapons/Magazines/Magazine_762x51_M14_20rnd_M62_Tracer.et",
-                "{8B853CDD11BA916E}Prefabs/Weapons/Magazines/Magazine_9x18_PM_8rnd_Ball.et",
-                "{A9A385FE1F7BF4BD}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M856_Tracer.et",
-                "{96DD0591AFDCC579}Prefabs/Weapons/Magazines/Magazine_M240_Coax/Box_762x51_M240_coax_200rnd_4Ball_1Tracer.et",
-                "{BB6613EBCE484822}Prefabs/Weapons/Magazines/UK59/Box_762x54_UK59_50rnd_Ball.et",
-                "{9458584521CCA4E2}Prefabs/Weapons/Magazines/Magazine_M240_Coax/Box_762x51_M240_coax_200rnd_4AP_1Tracer.et",
-                "{BFD6872B1C069136}Prefabs/Weapons/Magazines/Box_145x114_KPVT_50rnd_API.et",
-                "{4EEDDB27C023B8B9}Prefabs/Weapons/Magazines/Box_556x45_M249_200rnd_Tracer.et",
-                "{7ECA478D7C80ACC0}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M193_M196_Last_5Tracer.et",
-                "{E5912E45754CD421}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Tracer.et",
-                "{BEEA49E27174B224}Prefabs/Weapons/Magazines/Box_762x54_PK_100rnd_Tracer.et",
-                "{AD8AB93729348C3E}Prefabs/Weapons/Magazines/Box_762x51_M60_100rnd_Tracer.et",
-                "{5897D01F41DB5D2D}Prefabs/Weapons/Magazines/Magazine_545x39_RPK_45rnd_Tracer.et",
-                "{8257B5AFDE7AE5CB}Prefabs/Weapons/Magazines/Box_145x114_KPVT_50rnd_4API_1APIT.et",
-                "{D8421F6E70B2FB4F}Prefabs/Weapons/Magazines/Box_762x54_PK_250rnd_4Ball_1Tracer.et",
-                "{06809ADCCDBAB8FB}Prefabs/Weapons/Magazines/Magazine_M242/Box_25x137_M242_60rnd_APDST.et",
-                "{EF0B3DA0429425EC}Prefabs/Weapons/Magazines/Magazine_M240_Coax/Box_762x51_M240_coax_200rnd_Ball.et",
-                "{4CD3159446EC131B}Prefabs/Weapons/Magazines/NSV/Box_127x108_NSV_50rnd_APIT.et",
-                "{289E27BB8C346D82}Prefabs/Weapons/Magazines/Magazine_M240_Coax/Box_762x51_M240_coax_200rnd_AP.et",
-                "{CC7F787C3ECF678F}Prefabs/Weapons/Magazines/Box_127x99_M2_100rnd_4Ball_1Tracer.et",
-                "{06D722FC2666EB83}Prefabs/Weapons/Magazines/Box_556x45_M249_200rnd_4Ball_1Tracer.et",
-                "{BCB5E5C608ECFF50}Prefabs/Weapons/Magazines/Magazine_762x51_M14_20rnd_M80.et",
-                "{FB5EB0F6D447E858}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M193_Ball.et",
-                "{C319540BC96AE9BB}Prefabs/Weapons/Magazines/Magazine_762x51_M14_20rnd_M61_AP.et",
-                "{9B34796F40125F85}Prefabs/Weapons/Magazines/Magazine_M240_Coax/Box_762x51_M240_coax_200rnd_Tracer.et",
-                "{627255315038152A}Prefabs/Weapons/Magazines/Magazine_762x51_M14_20rnd_SpecialBall.et",
-                "{C820846B0521423B}Prefabs/Weapons/Magazines/Box_127x99_M2_100rnd_4AP_1APIT.et",
-                "{77595CB9F596E6AC}Prefabs/Weapons/Magazines/Magazine_762x54_SVD_10rnd_LPS.et",
-                "{843D9B182BCD2765}Prefabs/Weapons/Magazines/NSV/Box_127x108_NSV_50rnd_4AP_1APIT.et",
-                "{0A84AA5A3884176F}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Last_5Tracer.et",
-                "{D78C667F59829717}Prefabs/Weapons/Magazines/Magazine_545x39_RPK_45rnd_4Ball_1Tracer.et",
-                "{982F5BA41A3738CF}Prefabs/Weapons/Magazines/Box_762x51_M60_100rnd_Ball.et",
-                "{F7D5504B665E1375}Prefabs/Weapons/Magazines/Box_762x51_M60_500rnd_Tracer.et",
-                "{4068585808DF8DF2}Prefabs/Weapons/Magazines/Box_127x99_M2_100rnd_Tracer.et",
-                "{A827B610B7CD4158}Prefabs/Weapons/Magazines/Vz58/Magazine_762x39_Vz58_30rnd_Last_5Tracer.et",
-                "{75632A0CA07D3817}Prefabs/Weapons/Magazines/Box_762x51_M60_100rnd_AP.et",
-                "{19600CCA33279D20}Prefabs/Weapons/Magazines/Magazine_762x54_SVD_10rnd_7BZ3API.et",
-                "{0AFA7580D190A36A}Prefabs/Weapons/Magazines/UK59/Box_762x54_UK59_50rnd_Tracer.et",
-                "{4FCBBDF274FD2157}Prefabs/Weapons/Magazines/Box_556x45_M249_200rnd_Ball.et",
-                "{4575737B3D3A4505}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M196_Tracer.et",
-                "{A6737DA00653A39C}Prefabs/Weapons/Magazines/Box_762x54_PK_100rnd_Ball.et",
-                "{AFC7F529E6293E2A}Prefabs/Weapons/Magazines/Box_762x54_PK_250rnd_2Ball_1Tracer.et",
-                "{BBB50A815A2F916B}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Ball.et",
-                "{3D9AD4314FE34F5B}Prefabs/Weapons/Magazines/Box_762x51_M60_500rnd_Ball.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "UTIL_AMMO",
@@ -366,60 +188,8 @@
                 "FlareEffect",
                 "Particles"
             ],
-            "items": [
-                "{896EA6475D6451DF}Prefabs/Weapons/Ammo/Ammo_Flare_40mm_StarParachute_Green.et",
-                "{5375FA7CB1F68573}Prefabs/Weapons/Ammo/Ammo_Grenade_HE_M406.et",
-                "{F69A3E81F633C73C}Prefabs/Weapons/Ammo/Ammo_Flare_30mm_RSP30_Green.et",
-                "{ECD8628EBF7E5F6B}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70.et",
-                "{2D86FDF6894069B3}Prefabs/Weapons/Ammo/Ammo_Rocket_M72A3_Penetrator.et",
-                "{D924100C5EA67F89}Prefabs/Weapons/Ammo/Ammo_Flare_30mm_RSP30_Red.et",
-                "{98DB57ECEDC81CC2}Prefabs/Weapons/Ammo/Ammo_Flare_40mm_M583A1_White.et",
-                "{675D3E87D5F45FFD}Prefabs/Weapons/Ammo/Ammo_Grenade_HEDP_M433_Penetrator.et",
-                "{DD6844AB03FDA84F}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Practice_M879.et",
-                "{61AF60E0235DC3B1}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HEDP_M247.et",
-                "{E6EC1F21E22709F0}Prefabs/Weapons/Ammo/Ammo_Rocket_PG7VM_Penetrator.et",
-                "{C9A1612DC5340613}Prefabs/Weapons/Ammo/Ammo_Rocket_S5.et",
-                "{262F0D09C4130826}Prefabs/Weapons/Ammo/Ammo_Grenade_HE_VOG25.et",
-                "{47665331979536BC}Prefabs/Weapons/Ammo/Ammo_Flare_40mm_StarParachute_White.et",
-                "{EF17BED6DCEE4DE4}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_FRAG_S5MO.et",
-                "{C8A906FB198D1A33}Prefabs/Weapons/Ammo/Ammo_Shell_82mm_Illum_S832S.et",
-                "{3892CBF73CC2A05F}Prefabs/Weapons/Ammo/Ammo_Flare_30mm_RSP30_White.et",
-                "{C7BD0094290E1FBD}Prefabs/Weapons/Ammo/Ammo_Rocket_RPG75_Penetrator.et",
-                "{511ED66D8C3E1030}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HEDP_M247_Spall.et",
-                "{609E216CBF8D0B68}Prefabs/Weapons/Ammo/Ammo_Rocket_PG7VL.et",
-                "{32E12D322E107F1C}Prefabs/Weapons/Ammo/Ammo_Rocket_PG7VM.et",
-                "{072A755D5CB85D47}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HE_M229.et",
-                "{AA658D334766D4EE}Prefabs/Weapons/Ammo/Ammo_Rocket_PG7VR.et",
-                "{05CCC91E8047C24C}Prefabs/Weapons/Ammo/Ammo_Rocket_PG7VR_Penetrator.et",
-                "{924FB4A21503BBA2}Prefabs/Weapons/Ammo/Ammo_Flare_40mm_StarParachute_Red.et",
-                "{319E0E9E7E359F55}Prefabs/Weapons/Ammo/Ammo_Rocket_PG7VL_Spall.et",
-                "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et",
-                "{2A63C909016C4C41}Prefabs/Weapons/Ammo/Ammo_Flare_40mm_M662_Red.et",
-                "{0AF10C206CF1A283}Prefabs/Weapons/Ammo/Ammo_Flare_40mm_M661_Green.et",
-                "{B40479180A86C261}Prefabs/Weapons/Ammo/Ammo_Rocket_M72A3_Spall.et",
-                "{E05D215E76BE8BE2}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO_Spall.et",
-                "{EDC9C1FB7F55A32D}Prefabs/Weapons/Ammo/Ammo_Grenade_HEDP_M433_Spall.et",
-                "{7CC1697D08638B5C}Prefabs/Weapons/Ammo/Ammo_Rocket_PG7VM_Spall.et",
-                "{321E862FF13CE4C5}Prefabs/Weapons/Ammo/Ammo_Rocket_PG7VR_Spall.et",
-                "{7C8D575F843FDEB4}Prefabs/Weapons/Ammo/Ammo_Rocket_S5KO_Penetrator.et",
-                "{9A38F14A74F91F68}Prefabs/Weapons/Ammo/Ammo_Rocket_PG22_Spall.et",
-                "{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et",
-                "{BFA788E974D10C82}Prefabs/Weapons/Ammo/Ammo_Rocket_PG7VL_Penetrator.et",
-                "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et",
-                "{ECCAF9A1B72B4D2B}Prefabs/Weapons/Ammo/Ammo_Rocket_PG22.et",
-                "{906F07BD0366E08F}Prefabs/Weapons/Ammo/Ammo_Flare_40mm_VG40OP_White.et",
-                "{98EC9C526AFBA282}Prefabs/Weapons/Ammo/Ammo_Shell_82mm_HE_O832DU.et",
-                "{9BB49BA0F6A0DDDB}Prefabs/Weapons/Ammo/Ammo_Rocket_RPG75_Spall.et",
-                "{0CB1A646A51F6E0D}Prefabs/Weapons/Ammo/Ammo_Rocket_RPG75.et",
-                "{DD2065AE34D8DFA9}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Illum_M853A1.et",
-                "{A544A2C131DE2C64}Prefabs/Weapons/Ammo/Ammo_Shell_82mm_Smoke_D832DU.et",
-                "{79FA751EEBE25DDE}Prefabs/Weapons/Ammo/Ammo_Rocket_M72A3.et",
-                "{1663496AE5B9F10B}Prefabs/Weapons/Ammo/Ammo_Grenade_HEDP_M433.et",
-                "{1FA4AAB93A178168}Prefabs/Weapons/Ammo/Ammo_Rocket_PG22_Penetrator.et",
-                "{F1540F188E872E03}Prefabs/Weapons/Ammo/Ammo_Rocket_Hydra70_HEDP_M247_Penetrator.et",
-                "{0D0EF81F5F5DCC67}Prefabs/Weapons/Ammo/Shell_82mm_Charge_Ring.et",
-                "{4B94AD7F5B4055DF}Prefabs/Weapons/Ammo/Shell_81mm_Charge_Ring.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "ITEM_GENERAL",
@@ -438,28 +208,8 @@
                 "BackPack",
                 "Pouch"
             ],
-            "items": [
-                "{F849217AB3BA88BE}Prefabs/Items/Equipment/Maps/Map_Paper_01/PaperMap_01_folded_USSR.et",
-                "{C819E0B7454461F2}Prefabs/Items/Equipment/Compass/Compass_Adrianov_Map.et",
-                "{243948B23D90BECB}Prefabs/Items/Equipment/Binoculars/Binoculars_B8/Binoculars_B8.et",
-                "{78ED4FEF62BBA728}Prefabs/Items/Equipment/Watches/Watch_SandY184A.et",
-                "{61A705D76908160C}Prefabs/Items/Equipment/Watches/Watch_Orlik38/Watch_Orlik38.et",
-                "{6ECDF523E1035A0F}Prefabs/Items/Equipment/Watches/Watch_SandY184A_Map.et",
-                "{7CEF68E2BC68CE71}Prefabs/Items/Equipment/Compass/Compass_Adrianov.et",
-                "{72691366C26BD901}Prefabs/Items/Equipment/Compass/Compass_SY183_Map.et",
-                "{3A421547BC29F679}Prefabs/Items/Equipment/Flashlights/Flashlight_MX991/Flashlight_MX991.et",
-                "{983B57B8E95C1F52}Prefabs/Items/Equipment/Maps/Map_Paper_01/PaperMap_01_folded_FIA.et",
-                "{DCB293AEF79CCD7D}Prefabs/Items/Equipment/Watches/Watch_Orlik38/Watch_Orlik38_Map.et",
-                "{922F95F91943F69A}Prefabs/Items/Equipment/Maps/Map_Paper_01/PaperMap_01_folded_US.et",
-                "{575EA58E67448C2A}Prefabs/Items/Equipment/Flashlights/Flashlight_Soviet_01/Flashlight_Soviet_01.et",
-                "{6FD6C96121905202}Prefabs/Items/Equipment/Watches/Watch_Vostok.et",
-                "{13772C903CB5E4F7}Prefabs/Items/Equipment/Maps/Map_Paper_01/PaperMap_01_folded.et",
-                "{6D4780D5233AD3DD}Prefabs/Items/Equipment/Maps/Map_Paper_01/PaperMap_01_folded_Kolguyev.et",
-                "{0CF54B9A85D8E0D4}Prefabs/Items/Equipment/Binoculars/Binoculars_M22/Binoculars_M22.et",
-                "{61D4F80E49BF9B12}Prefabs/Items/Equipment/Compass/Compass_SY183.et",
-                "{F2539FA5706E51E4}Prefabs/Items/Equipment/Binoculars/Binoculars_B12/Binoculars_B12.et",
-                "{4FAD128BE9F66C6F}Prefabs/Items/Equipment/Watches/Watch_Vostok_Map.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "ITEM_MEDICAL",
@@ -472,18 +222,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": [
-                "{A81F501D3EF6F38E}Prefabs/Items/Medicine/FieldDressing_01/FieldDressing_US_01.et",
-                "{CDCC313B2FB76FE7}Prefabs/Items/Medicine/FieldDressing_01/Gauze_01.et",
-                "{C98FCC6CA6C56069}Prefabs/Items/Medicine/AspirinBottle.et",
-                "{C3F1FA1E2EC2B345}Prefabs/Items/Medicine/FieldDressing_01/FieldDressing_USSR_01.et",
-                "{D70216B1B2889129}Prefabs/Items/Medicine/Tourniquet_01/Tourniquet_US_01.et",
-                "{80E75A71C29190DB}Prefabs/Items/Medicine/Tourniquet_01/Tourniquet_USSR_01.et",
-                "{AF3411AAF94D18C2}Prefabs/Items/Medicine/Gauze_02/Gauze_02.et",
-                "{0D9A5DCF89AE7AA9}Prefabs/Items/Medicine/MorphineInjection_01/MorphineInjection_01.et",
-                "{00E36F41CA310E2A}Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et",
-                "{527D7C5D2E476BDC}Prefabs/Items/Medicine/SalineBag_01/SalineBag_USSR_01.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "GEAR_HEADGEAR",
@@ -500,34 +240,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": [
-                "{B74A4FF0DD8BB116}Prefabs/Characters/HeadGear/Helmet_PASGT_01/Helmet_PASGT_01.et",
-                "{D4028ED16DEE99EE}Prefabs/Characters/HeadGear/Helmet_SSh68_01/Helmet_SSh68_01_camonet.et",
-                "{E49D9EE7E2B3016C}Prefabs/Characters/HeadGear/Helmet_ZSh5_01/Helmet_ZSh5_01.et",
-                "{C8EAB0985B66824A}Prefabs/Characters/HeadGear/Helmet_DH132_01/Helmet_DH132A_01.et",
-                "{17D989D6B4A6F87B}Prefabs/Characters/HeadGear/Helmet_SPH4_01/Helmet_SPH4_USFlag_01.et",
-                "{7B8DBD3608627755}Prefabs/Characters/HeadGear/Helmet_SPH4_01/Helmet_SPH4_USFlag_02.et",
-                "{E873B54F01D7C6D8}Prefabs/Characters/HeadGear/Helmet_M1_01/Helmet_M1_01_Cover_Woodland.et",
-                "{3D74845B9D0867B0}Prefabs/Characters/HeadGear/Helmet_SSh68_01/Helmet_SSh68_01_cover.et",
-                "{79D240C0D2390F4A}Prefabs/Characters/HeadGear/Helmet_PASGT_01/Helmet_PASGT_01_goggles.et",
-                "{483A80042765275F}Prefabs/Characters/HeadGear/Helmet_SPH4_01/Helmet_SPH4_01.et",
-                "{A7E6D7ECD5F684D7}Prefabs/Characters/HeadGear/Helmet_SSh68_01/Helmet_SSh68_01.et",
-                "{F31A715FFDB2BD8E}Prefabs/Characters/HeadGear/Helmet_M1_01/Helmet_M1_01_Cover_Frogskin.et",
-                "{BD96E8EEBD78694C}Prefabs/Characters/HeadGear/Helmet_SPH4_01/Helmet_SPH4_Goose_01.et",
-                "{D6B1ACA46036E9CE}Prefabs/Characters/HeadGear/Helmet_TSh4_01/Helmet_TSh4_01_open.et",
-                "{5F8928B41FB86990}Prefabs/Characters/HeadGear/Helmet_SSh68_01/Helmet_SSh68_01_cover_KZS.et",
-                "{FE5C49069C2499D9}Prefabs/Characters/HeadGear/Helmet_PASGT_01/Helmet_PASGT_01_cover.et",
-                "{12035A212B2BE371}Prefabs/Characters/HeadGear/Helmet_SSh68_01/Helmet_SSh68_01_cover_KLMK_net.et",
-                "{DD35D5EBA6364E77}Prefabs/Characters/HeadGear/Helmet_SSh68_01/Helmet_SSh68_01_cover_KLMK.et",
-                "{66196D85AB93D2BE}Prefabs/Characters/HeadGear/Helmet_SSh68_01/Helmet_SSh68_01_camo.et",
-                "{EB2F05A3751B905A}Prefabs/Characters/HeadGear/Helmet_TSh4_01/Helmet_TSh4_01.et",
-                "{E456D2F5F718AEBE}Prefabs/Characters/HeadGear/Helmet_M1_01/Helmet_M1_01_Cover_Wineleaf.et",
-                "{2E1199EFECE50F35}Prefabs/Characters/HeadGear/Helmet_M1_01/Helmet_M1_01_Cover_ERDL.et",
-                "{03C1F3DB6BB9796A}Prefabs/Characters/HeadGear/Helmet_PASGT_01/Helmet_PASGT_01_cover_w_scrim.et",
-                "{E685A8D337D36204}Prefabs/Characters/HeadGear/Helmet_PASGT_01/Helmet_PASGT_01_cover_w_goggles.et",
-                "{22963D69CA50EB9E}Prefabs/Characters/HeadGear/Helmet_SSh68_01/Helmet_SSh68_01_net.et",
-                "{6E14F80C250F85FC}Prefabs/Characters/HeadGear/Helmet_M1_01/Helmet_M1_01.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "GEAR_VEST",
@@ -540,58 +254,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": [
-                "{41174B59DA65659A}Prefabs/Characters/Vests/Vest_SovietHarness/Vest_SovietHarness_GrenadeBandolier.et",
-                "{D562ED744D4BFB7E}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_assembled.et",
-                "{6065A0A410E65A45}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_officer_Black.et",
-                "{7F56A8069BEC01CE}Prefabs/Characters/Vests/Vest_SovietHarness/Vest_SovietHarness_GrenadePouch_Black.et",
-                "{C5A8B378E38AA4FF}Prefabs/Characters/Vests/Vest_SovietHarness/Vest_SovietHarness_GrenadePouch.et",
-                "{B699C9B282352EDE}Prefabs/Characters/Vests/Vest_SovietHarness/Vest_SovietHarness_Suspenders.et",
-                "{4CBDC206FEF9897C}Prefabs/Characters/Vests/Vest_6B3/Vest_6B3.et",
-                "{725C5E1C75CADAF4}Prefabs/Characters/Vests/Vest_M69/Vest_M69_M81woodland.et",
-                "{477A190AF2A17B8A}Prefabs/Characters/Vests/Vest_ALICE/Variants/Vest_ALICE_MG.et",
-                "{9713FE6DDCC9510D}Prefabs/Characters/Vests/Vest_Lifchik/Vest_Lifchik.et",
-                "{C8516078375CBE45}Prefabs/Characters/Vests/Vest_Lifchik/Vest_Lifchik_GL.et",
-                "{F928D90B6E4B9166}Prefabs/Characters/Vests/Vest_SovietHarness/Vest_SovietHarness_belt_dummy.et",
-                "{ACB6C2B49C1230F9}Prefabs/Characters/Vests/Vest_ALICE/Vest_ALICE_belt_dummy.et",
-                "{0BC230E08CEA02B6}Prefabs/Characters/Vests/Vest_ALICE/Vest_ALICE_belt.et",
-                "{ED5574EA7F63B457}Prefabs/Characters/Vests/Vest_Type56/Vest_Type56.et",
-                "{F1C194CD245C9C59}Prefabs/Characters/Vests/Vest_SovietHarness/Vest_SovietHarness_Suspenders_Black.et",
-                "{FCF7AA10222C6F49}Prefabs/Characters/Vests/Vest_SovietHarness/Vest_SovietHarness_belt_dummy_Black.et",
-                "{12C8933903D18885}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_sharpshooter.et",
-                "{A51B5534915AE3B6}Prefabs/Characters/Vests/Vest_SovietHarness/Vest_SovietHarness_belt_empty.et",
-                "{9CEA24A1A9CC2675}Prefabs/Characters/Vests/Vest_ALICE/Variants/Vest_ALICE_sniper.et",
-                "{506EF3B2F0A69D34}Prefabs/Characters/Vests/Vest_NAZ/Vest_NAZ.et",
-                "{15067AD09803580D}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_MG.et",
-                "{ADE19B33DCBB9005}Prefabs/Characters/Vests/Vest_6B2/Vest_6B2.et",
-                "{0684998C1B890BEC}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_AR_Black.et",
-                "{9344E8C1A7CABF8D}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_MG_Black.et",
-                "{9945D5435F12C370}Prefabs/Characters/Vests/Vest_M79GrenadeCarrier/Vest_M79GrenadeCarrier.et",
-                "{F9ACDDE62D906D61}Prefabs/Characters/Vests/Vest_M69/Vest_M69_olive.et",
-                "{9A21918AC35AC182}Prefabs/Characters/Vests/Vest_ALICE/Vest_ALICE_buttpack.et",
-                "{B95BD66EA8F863C8}Prefabs/Characters/Vests/Vest_ALICE/Vest_ALICE_suspenders_2.et",
-                "{7DF2186D2BEC4A63}Prefabs/Characters/Vests/Vest_SovietHarness/Vest_SovietHarness_belt_dummy_Inflatable.et",
-                "{B2D127CB5D584A75}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_sharpshooter_Black.et",
-                "{156DC7109CEE6F69}Prefabs/Characters/Vests/Vest_ALICE/Variants/Vest_ALICE_AR.et",
-                "{02DF51DB063ABD36}Prefabs/Characters/Vests/Vest_ALICE/Vest_ALICE_firstaid.et",
-                "{AB84E597273FAECA}Prefabs/Characters/Vests/Vest_Lifchik/Vest_Lifchik_GrenadeBelt.et",
-                "{2835A0EA3B79E63E}Prefabs/Characters/Vests/Vest_ALICE/Variants/Vest_ALICE_rifleman.et",
-                "{6726C63F4F56F12F}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_medic.et",
-                "{F2D03ED36FAC87FF}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_officer.et",
-                "{51545851688567F1}Prefabs/Characters/Vests/Vest_ALICE/Vest_ALICE_suspenders_1.et",
-                "{F4AC2175FE718ED4}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_Commander_Black.et",
-                "{08155E701A949620}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_rifleman.et",
-                "{BD205C7B90BD399E}Prefabs/Characters/Vests/Vest_ALICE/Variants/Vest_ALICE_officer.et",
-                "{2E8829632CBA7A9B}Prefabs/Characters/Vests/Vest_ALICE/Variants/Vest_ALICE_commander.et",
-                "{FD2EF7E70C8C0441}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_rifleman_Black.et",
-                "{F396524995F06BFA}Prefabs/Characters/Vests/Vest_SRU21P/Vest_SRU21P.et",
-                "{4711A4CAF64C4CEE}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_AR.et",
-                "{24D075FF9267099A}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_medic_Black.et",
-                "{D11383C5E70AAA89}Prefabs/Characters/Vests/Vest_SovietHarness/Vest_SovietHarness_MedicalPouch.et",
-                "{4B57C11AA5161760}Prefabs/Characters/Vests/Vest_PASGT/Vest_PASGT.et",
-                "{D8DDD4941197A929}Prefabs/Characters/Vests/Vest_SovietHarness/Variants/Vest_SovietHarness_Commander.et",
-                "{18B8B9316B590643}Prefabs/Characters/Vests/Vest_ALICE/Variants/Vest_ALICE_GL.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "GEAR_HANDWEAR",
@@ -604,11 +268,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": [
-                "{8266820FFDE17477}Prefabs/Characters/Handwear/Gloves_Wool_01/Gloves_Wool_01.et",
-                "{D19C474FA0F42CC4}Prefabs/Characters/Handwear/Gloves_Pilot_US_01/Gloves_Pilot_US_01.et",
-                "{4F71E7468E78DDD2}Prefabs/Characters/Handwear/Gloves_Leather_01/Gloves_Leather_01.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "GEAR_UNIFORM",
@@ -631,22 +292,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": [
-                "{27364244288DA83B}Prefabs/Characters/Uniforms/Pants_TAZ83/Pants_TAZ83_01.et",
-                "{DC91A67E1074AAC0}Prefabs/Characters/Uniforms/Pants_Tanker_USSR_01/Pants_Tanker_USSR_01_tucked.et",
-                "{5E17C1AE66A6FF00}Prefabs/Characters/Uniforms/Pants_KZS/Pants_KZS.et",
-                "{6835DAF42A09E23C}Prefabs/Characters/Uniforms/Jacket_Pilot_USSR_01/Jacket_Pilot_USSR_01.et",
-                "{CF221A167DE87E57}Prefabs/Characters/Uniforms/Suit_KLMK/Suit_KLMK.et",
-                "{1D99585CF8E34D91}Prefabs/Characters/Uniforms/Suit_Tanker_US_01/Suit_Tanker_US_01.et",
-                "{F1E29085C62F0D55}Prefabs/Characters/Uniforms/Jacket_KZS/Jacket_KZS.et",
-                "{6B7F32F1F8A191B0}Prefabs/Characters/Uniforms/Pants_Pilot_USSR_01/Pants_Pilot_USSR_01_tucked.et",
-                "{27494A16F172A97B}Prefabs/Characters/Uniforms/Pants_Tanker_USSR_01/Pants_Tanker_USSR_01.et",
-                "{CC2BAD4EACC9B2CA}Prefabs/Characters/Uniforms/Jacket_TAZ83/Jacket_TAZ83_01.et",
-                "{A4145024AE7084F6}Prefabs/Characters/Uniforms/Suit_Tanker_US_01/Suit_Tanker_US_01_tucked.et",
-                "{78C9B02C0CBD594C}Prefabs/Characters/Uniforms/Jacket_Tanker_USSR_01/Jacket_Tanker_USSR_01.et",
-                "{B137B7CE988557D2}Prefabs/Characters/Uniforms/Suit_Pilot_US_01/Suit_Pilot_US_01.et",
-                "{83DFA8F68CA40B10}Prefabs/Characters/Uniforms/Pants_Pilot_USSR_01/Pants_Pilot_USSR_01.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "GEAR_BAG",
@@ -661,41 +308,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": [
-                "{06B68C58B72EAAC6}Prefabs/Items/Equipment/Backpacks/Backpack_ALICE_Medium.et",
-                "{F03EAAE51C256CFA}Prefabs/Items/Equipment/Accessories/Pouch_Soviet_100rnd_PKM/Pouch_Soviet_100rnd_PKM.et",
-                "{841162A79157C494}Prefabs/Items/Equipment/Backpacks/Backpack_ALICE_Medium_frame.et",
-                "{7F39A38AB2C316F3}Prefabs/Items/Equipment/Test/CharacterWeaponStorage.et",
-                "{0D39750E5695B9D8}Prefabs/Items/Equipment/Backpacks/Backpack_RPG_Gunner.et",
-                "{11F1F37C80152062}Prefabs/Items/Equipment/Test/InventoryTestBackpack.et",
-                "{8C3C6924C9ECC06A}Prefabs/Items/Equipment/Test/InventoryTestLoadoutStorage.et",
-                "{D39F54EC5B108045}Prefabs/Items/Equipment/Accessories/Pouch_Soviet_100rnd_PKM/Pouch_Soviet_100rnd_PKM_Black.et",
-                "{26223738A07F8202}Prefabs/Items/Equipment/Backpacks/Backpack_RPG_Assistant_Black.et",
-                "{6A39B5843B3F36DA}Prefabs/Items/Equipment/Backpacks/Backpack_RPG_Assistant.et",
-                "{FDA7B6630DB87991}Prefabs/Items/Equipment/Backpacks/Backpack_M70_Swiss.et",
-                "{95D4766BBE46F23D}Prefabs/Items/Equipment/Backpacks/Backpack_IIFS_FieldPack.et",
-                "{443304F1EC50BC27}Prefabs/Items/Equipment/Backpacks/Backpack_Veshmeshok_Black.et",
-                "{E90F2EB67A9CF49A}Prefabs/Items/Equipment/Backpacks/Backpack_Medical_Soviet_NoCross_02.et",
-                "{AC298BA8A7D27007}Prefabs/Items/Equipment/Backpacks/Backpack_Medical_Soviet_NoCross_01.et",
-                "{B6EEF03975F21E4E}Prefabs/Items/Equipment/Accessories/Pouch_Soviet_45rnd_RPK74/Pouch_Soviet_45rnd_RPK74.et",
-                "{E3154E0EAC48D67B}Prefabs/Items/Equipment/Accessories/Pouch_ALICE_30rnd_STANAG/Pouch_ALICE_30rnd_STANAG.et",
-                "{7AC107CA7AFC9B59}Prefabs/Items/Equipment/Backpacks/Backpack_Medical_Soviet.et",
-                "{8C9F39278B899AE6}Prefabs/Items/Equipment/Accessories/Pouch_Soviet_30rnd_AK74/Pouch_Soviet_30rnd_AK74.et",
-                "{D58833B85D5C777A}Prefabs/Items/Equipment/Accessories/Pouch_Soviet_45rnd_RPK74/Pouch_Soviet_45rnd_RPK74_Black.et",
-                "{4805E67E2AE30F8D}Prefabs/Items/Equipment/Backpacks/Backpack_Medical_M5.et",
-                "{4F018E3CF74D8636}Prefabs/Items/Equipment/Accessories/Pouch_ALICE_200rnd_M249/Pouch_ALICE_200rnd_M249.et",
-                "{7E9C22C159E879A2}Prefabs/Items/Equipment/Accessories/Holster_M12/Holster_M12_magpouch.et",
-                "{3DE0155EC9767B98}Prefabs/Items/Equipment/Backpacks/Backpack_Veshmeshok.et",
-                "{9BD20A721C3BF593}Prefabs/Items/Equipment/Accessories/Holster_PM/Holster_PM_magpouch_Black.et",
-                "{79015191C0E77E48}Prefabs/Items/Equipment/Backpacks/Backpack_Medical_Soviet_02.et",
-                "{D3C36A56E140D8AB}Prefabs/Items/Equipment/Accessories/Holster_PM/Holster_PM_magpouch.et",
-                "{5C5C6EE05EE2FF1A}Prefabs/Items/Equipment/Backpacks/Backpack_ALICE_Medium_assembled.et",
-                "{EA5FBB191D7747AB}Prefabs/Items/Equipment/Accessories/Pouch_Soviet_30rnd_AK74/Pouch_Soviet_30rnd_AK74_Black.et",
-                "{9C00CF3A286C048F}Prefabs/Items/Equipment/Accessories/Pouch_ALICE_20rnd_M14/Pouch_ALICE_20rnd_M14.et",
-                "{9A201604DEF3BAAC}Prefabs/Items/Equipment/Backpacks/Backpack_RPG_Gunner_Black.et",
-                "{41A9C55B61F375F0}Prefabs/Items/Equipment/Backpacks/Backpack_Kolobok.et",
-                "{A01218E4F8EE0DE7}Prefabs/Items/Equipment/Accessories/Pouch_Soviet_10rnd_SVD/Pouch_Soviet_10rnd_SVD.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "CLOTHING_HEADGEAR",
@@ -708,51 +322,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": [
-                "{477D52F01DC45C55}Prefabs/Characters/HeadGear/Hat_TruckerCap_01/Hat_TruckerCap_01_pohona.et",
-                "{6852E0D026AA8F79}Prefabs/Characters/HeadGear/Hat_Panama_Soviet/Hat_Panama_Soviet_01_v2.et",
-                "{793EEE2C133176F9}Prefabs/Characters/HeadGear/Hat_Panama_Soviet/Hat_Panama_Soviet_01_v1.et",
-                "{112EF132833109C8}Prefabs/Characters/HeadGear/Hat_Hard_01/Hat_Hard_01_green.et",
-                "{C0B4276A1405ED14}Prefabs/Characters/HeadGear/Hat_RadiovkaBeret_01/Hat_RadiovkaBeret_01_beige.et",
-                "{D8D9EE7F3966589E}Prefabs/Characters/HeadGear/Hat_Knitted_01/Hat_Knitted_01_red.et",
-                "{6BCAA9E5BC957693}Prefabs/Characters/HeadGear/Hat_ZmijovkaCap_01/Hat_ZmijovkaCap_01_black.et",
-                "{89FD00CB2909667D}Prefabs/Characters/HeadGear/Hat_M88_01/Hat_M88_01_v1_TTsKO.et",
-                "{554D761A11D3D7EC}Prefabs/Characters/HeadGear/Hat_TruckerCap_01/Hat_TruckerCap_01_sawmillregina.et",
-                "{2B29B7E1C6BD1048}Prefabs/Characters/HeadGear/Hat_M88_01/Hat_M88_01_v1.et",
-                "{B54B78383E64268F}Prefabs/Characters/HeadGear/Hat_M88_01/Hat_M88_01_v2.et",
-                "{67662815EFF734DD}Prefabs/Characters/HeadGear/Hat_FlatCap_01/Hat_FlatCap_01_darkgrey.et",
-                "{F545C1BE7C99954A}Prefabs/Characters/HeadGear/Hat_Patrol_US_01/Hat_Patrol_US_01.et",
-                "{9911F55EC05D1A64}Prefabs/Characters/HeadGear/Hat_Patrol_US_01/Hat_Patrol_US_02.et",
-                "{C9886336AAD9F74C}Prefabs/Characters/HeadGear/Hat_TruckerCap_01/Hat_TruckerCap_01_enp.et",
-                "{75C92359E352391E}Prefabs/Characters/HeadGear/Hat_RadiovkaBeret_01/Hat_RadiovkaBeret_01_brown_Dirty.et",
-                "{19231774D1D67091}Prefabs/Characters/HeadGear/Hat_Boonie_US_01/Hat_Boonie_US_TigerStripe.et",
-                "{E97A86BB050ED6D1}Prefabs/Characters/HeadGear/Hat_FlatCap_01/Hat_FlatCap_01_blue_Dirty.et",
-                "{6D225E61B31D513A}Prefabs/Characters/HeadGear/Hat_ZmijovkaCap_01/Hat_ZmijovkaCap_01_green.et",
-                "{A22C976003AA5BA3}Prefabs/Characters/HeadGear/Hat_Ushanka_01/Hat_Ushanka_01_folded.et",
-                "{E12126CDE731EED5}Prefabs/Characters/HeadGear/Hat_Boonie_US_01/Hat_Boonie_US_01.et",
-                "{6FEB0D9130EC400E}Prefabs/Characters/HeadGear/Hat_FlatCap_01/Hat_FlatCap_01_lightgrey.et",
-                "{B02281435AED8274}Prefabs/Characters/HeadGear/Hat_M70_01/Hat_M70_01.et",
-                "{17674905311133D7}Prefabs/Characters/HeadGear/Hat_TruckerCap_01/Hat_TruckerCap_01_alsworth.et",
-                "{6B2256EBB8E267DD}Prefabs/Characters/HeadGear/Hat_Knitted_01/Hat_Knitted_01_blue.et",
-                "{5D7350496AEA24C8}Prefabs/Characters/HeadGear/Hat_RadiovkaBeret_01/Hat_RadiovkaBeret_01_black_Dirty.et",
-                "{B9687B8829272E14}Prefabs/Characters/HeadGear/Hat_Knitted_01/Hat_Knitted_01_brown.et",
-                "{5977C0A606B65E6D}Prefabs/Characters/HeadGear/Hat_TruckerCap_01/Hat_TruckerCap_01_moto.et",
-                "{323641C91965842E}Prefabs/Characters/HeadGear/Hat_Ushanka_01/Hat_Ushanka_01_unfolded.et",
-                "{F6F24096665C6279}Prefabs/Characters/HeadGear/Hat_FlatCap_01/Hat_FlatCap_01_darkgrey_Dirty.et",
-                "{8F5261C6B57B95C8}Prefabs/Characters/HeadGear/Hat_Hard_01/Hat_Hard_01_yellow.et",
-                "{6E0EC7AC1F6D748F}Prefabs/Characters/HeadGear/Hat_RadiovkaBeret_01/Hat_RadiovkaBeret_01_brown.et",
-                "{DD565E2C7E00A5BB}Prefabs/Characters/HeadGear/Hat_FlatCap_01/Hat_FlatCap_01_blue.et",
-                "{3E2C2A050DE84A64}Prefabs/Characters/HeadGear/Hat_TruckerCap_01/Hat_TruckerCap_01_fkdynamo.et",
-                "{56915D05E3190762}Prefabs/Characters/HeadGear/Hat_Patrol_US_01/Hat_Patrol_US_01_TigerStripe.et",
-                "{6D08415FD18F2775}Prefabs/Characters/HeadGear/Hat_TruckerCap_01/Hat_TruckerCap_01_everon.et",
-                "{024D6092DA006DD1}Prefabs/Characters/HeadGear/Hat_Hard_01/Hat_Hard_01_blue.et",
-                "{1B568A254D1E519B}Prefabs/Characters/HeadGear/Hat_ZmijovkaCap_01/Hat_ZmijovkaCap_01_red.et",
-                "{3523CB7D5961246B}Prefabs/Characters/HeadGear/Hat_PeakedCap_USSR_01/Hat_PeakedCap_USSR_01.et",
-                "{BE19A15F1073E7BD}Prefabs/Characters/HeadGear/Hat_Knitted_01/Hat_Knitted_01_black.et",
-                "{8D75122D5BF561FB}Prefabs/Characters/HeadGear/Hat_Boonie_US_01/Hat_Boonie_US_olive.et",
-                "{DF26044449C06EAB}Prefabs/Characters/HeadGear/Hat_Hard_01/Hat_Hard_01_white.et",
-                "{200D967D2612147C}Prefabs/Characters/HeadGear/Hat_RadiovkaBeret_01/Hat_RadiovkaBeret_01_black.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "CLOTHING_UNIFORM",
@@ -771,42 +342,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": [
-                "{690819A92A3A8D14}Prefabs/Characters/Uniforms/Jacket_Raincoat_01/Jacket_Raincoat_01_orange.et",
-                "{810C95A02A459359}Prefabs/Characters/Uniforms/Shirt_CottonShirt_01/Shirt_CottonShirt_01_V5_Dirty.et",
-                "{FEEC97AEB32EFB9B}Prefabs/Characters/Uniforms/Shirt_CottonShirt_01/Shirt_CottonShirt_01_V2_Dirty.et",
-                "{EB0D74A43F74B522}Prefabs/Characters/Uniforms/Jacket_Denim_01/Jacket_Denim_01_strippedShirt.et",
-                "{65B7093231FBF67E}Prefabs/Characters/Uniforms/Pants_Trousers_01/Pants_Trousers_01_LightBrown.et",
-                "{5E4878BA1A8D0AE9}Prefabs/Characters/Uniforms/Shirt_CottonShirt_01/Shirt_CottonShirt_01_V4.et",
-                "{0B1F0174869E0351}Prefabs/Characters/Uniforms/Pants_Fisherman_01/Pants_Fisherman_01_green.et",
-                "{637C5D826FE183DE}Prefabs/Characters/Uniforms/Shirt_CottonShirt_01/Shirt_CottonShirt_01_V3.et",
-                "{86E0117B630414B5}Prefabs/Characters/Uniforms/Shirt_CottonShirt_01/Shirt_CottonShirt_01_V2.et",
-                "{27162F1F6EE6581A}Prefabs/Characters/Uniforms/Jacket_Denim_01/Jacket_Denim_01_brownShirt.et",
-                "{7F1451790F3D75BD}Prefabs/Characters/Uniforms/Jacket_Raincoat_01/Jacket_Raincoat_01_green.et",
-                "{B0F4EAC29E9058EA}Prefabs/Characters/Uniforms/Shirt_Turtleneck_01/Shirt_Turtleneck_01_grey.et",
-                "{BBD4344316689D82}Prefabs/Characters/Uniforms/Shirt_CottonShirt_01/Shirt_CottonShirt_01_V5.et",
-                "{AE93D885FDF713D4}Prefabs/Characters/Uniforms/Jacket_Suit_01/Jacket_Suit_01_black_V1.et",
-                "{E652D625A46A00FC}Prefabs/Characters/Uniforms/Jacket_Suit_01/Jacket_Suit_01_Grey_V1.et",
-                "{5B29F970DC4022D5}Prefabs/Characters/Uniforms/Pants_Fisherman_01/Pants_Fisherman_01_orange.et",
-                "{BE1CB68B053279DC}Prefabs/Characters/Uniforms/Shirt_CottonShirt_01/Shirt_CottonShirt_01_V1_Dirty.et",
-                "{7F0CD5E5DF17FF15}Prefabs/Characters/Uniforms/Shirt_CottonShirt_01/Shirt_CottonShirt_01_V4_Dirty.et",
-                "{17DBD854BFF6CD8D}Prefabs/Characters/Uniforms/Shirt_Turtleneck_01/Shirt_Turtleneck_01_grey_Dirty.et",
-                "{CF185061C5C13DBF}Prefabs/Characters/Uniforms/Pants_Fisherman_01/Pants_Fisherman_01_yellow.et",
-                "{D78000A3AAAC12AC}Prefabs/Characters/Uniforms/Shirt_CottonShirt_01/Shirt_CottonShirt_01_V6.et",
-                "{D0C27D8DB0CC73D9}Prefabs/Characters/Uniforms/Shirt_CottonShirt_01/Shirt_CottonShirt_01_V1.et",
-                "{6925E6C63EBCF623}Prefabs/Characters/Uniforms/Pants_Trousers_01/Pants_Trousers_01_DarkBrown.et",
-                "{5BEE8146EAA1893B}Prefabs/Characters/Uniforms/Shirt_Turtleneck_01/Shirt_Turtleneck_01_DarkBlue_Dirty.et",
-                "{C1FCB4859C59111E}Prefabs/Characters/Uniforms/Shirt_CottonShirt_01/Shirt_CottonShirt_01_V6_Dirty.et",
-                "{00ECD7EB467C97D7}Prefabs/Characters/Uniforms/Shirt_CottonShirt_01/Shirt_CottonShirt_01_V3_Dirty.et",
-                "{23A15812C40D34C2}Prefabs/Characters/Uniforms/Jacket_Denim_01/Jacket_Denim_01_strippedShirt_dirty.et",
-                "{52AB6EC3FE535303}Prefabs/Characters/Uniforms/Jacket_Suit_01/Jacket_Suit_01_Brown_V1.et",
-                "{6A3F994EFFE22995}Prefabs/Characters/Uniforms/Shirt_Turtleneck_01/Shirt_Turtleneck_01_DarkBlue.et",
-                "{537FD11C135757AC}Prefabs/Characters/Uniforms/Pants_Trousers_01/Pants_Trousers_01_DarkGrey_Dirty.et",
-                "{5A8C9A020BD7ABA6}Prefabs/Characters/Uniforms/Pants_Trousers_01/Pants_Trousers_01_DarkGrey.et",
-                "{3C44AF5729CA80AB}Prefabs/Characters/Uniforms/Shirt_Turtleneck_01/Shirt_Turtleneck_01_beige_Dirty.et",
-                "{50F8B1F928F93ABD}Prefabs/Characters/Uniforms/Shirt_Turtleneck_01/Shirt_Turtleneck_01_beige.et",
-                "{FD39B0B833BB927E}Prefabs/Characters/Uniforms/Jacket_Raincoat_01/Jacket_Raincoat_01_yellow.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "FF_ITEMS_LOW",
@@ -823,36 +360,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": [
-                "{841162A79157C494}Prefabs/Items/Equipment/Backpacks/Backpack_ALICE_Medium_frame.et",
-                "{9B6B61BB3FE3DFB0}Prefabs/Items/Equipment/Radios/Radio_ANPRC77.et",
-                "{79015191C0E77E48}Prefabs/Items/Equipment/Backpacks/Backpack_Medical_Soviet_02.et",
-                "{9A201604DEF3BAAC}Prefabs/Items/Equipment/Backpacks/Backpack_RPG_Gunner_Black.et",
-                "{26223738A07F8202}Prefabs/Items/Equipment/Backpacks/Backpack_RPG_Assistant_Black.et",
-                "{FDA7B6630DB87991}Prefabs/Items/Equipment/Backpacks/Backpack_M70_Swiss.et",
-                "{95D4766BBE46F23D}Prefabs/Items/Equipment/Backpacks/Backpack_IIFS_FieldPack.et",
-                "{73950FBA2D7DB5C5}Prefabs/Items/Equipment/Radios/Radio_ANPRC68.et",
-                "{E1A5D4B878AA8980}Prefabs/Items/Equipment/Radios/Radio_R148.et",
-                "{E90F2EB67A9CF49A}Prefabs/Items/Equipment/Backpacks/Backpack_Medical_Soviet_NoCross_02.et",
-                "{AC298BA8A7D27007}Prefabs/Items/Equipment/Backpacks/Backpack_Medical_Soviet_NoCross_01.et",
-                "{73EFD7591F4134D3}Prefabs/Items/Equipment/Radios/Radio_RF10/Radio_RF10.et",
-                "{7AC107CA7AFC9B59}Prefabs/Items/Equipment/Backpacks/Backpack_Medical_Soviet.et",
-                "{6A39B5843B3F36DA}Prefabs/Items/Equipment/Backpacks/Backpack_RPG_Assistant.et",
-                "{EE55606EA809CDDE}Prefabs/Items/Equipment/Tents/Tent_US.et",
-                "{4181B1C8B5E56392}Prefabs/Items/Equipment/Radios/Radio_R107M_FIA.et",
-                "{4805E67E2AE30F8D}Prefabs/Items/Equipment/Backpacks/Backpack_Medical_M5.et",
-                "{3DE0155EC9767B98}Prefabs/Items/Equipment/Backpacks/Backpack_Veshmeshok.et",
-                "{54C68E438DD34265}Prefabs/Items/Equipment/Radios/Radio_R107M.et",
-                "{540C08AD5F21A5FA}Prefabs/Items/Equipment/Radios/Radio_R148_FIA.et",
-                "{41A9C55B61F375F0}Prefabs/Items/Equipment/Backpacks/Backpack_Kolobok.et",
-                "{5C5C6EE05EE2FF1A}Prefabs/Items/Equipment/Backpacks/Backpack_ALICE_Medium_assembled.et",
-                "{443304F1EC50BC27}Prefabs/Items/Equipment/Backpacks/Backpack_Veshmeshok_Black.et",
-                "{0D39750E5695B9D8}Prefabs/Items/Equipment/Backpacks/Backpack_RPG_Gunner.et",
-                "{06B68C58B72EAAC6}Prefabs/Items/Equipment/Backpacks/Backpack_ALICE_Medium.et",
-                "{02238AA6EEB084D1}Prefabs/Items/Equipment/Tents/Tent_USSR.et",
-                "{677DDAF7F9AE1765}Prefabs/Items/Equipment/Tents/Tent_Deployable_FIA.et",
-                "{11F1F37C80152062}Prefabs/Items/Equipment/Test/InventoryTestBackpack.et"
-            ]
+            "items": [],
+            "factions": []
         },
         {
             "id": "FF_ITEMS_MID",
@@ -868,7 +377,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": []
+            "items": [],
+            "factions": []
         },
         {
             "id": "FF_ITEMS_HIGH",
@@ -881,376 +391,8 @@
             "exclude": [
                 "_Base"
             ],
-            "items": []
-        },
-        {
-            "id": "WEAPON_RIFLE",
-            "modDir": [
-                "Prefabs/Weapons/Rifles",
-                "Prefabs/5AB890B71D748750/Weapon_Variants_B"
-            ],
-            "include": [
-                "Rifle",
-                "Spear68_"
-            ],
-            "exclude": [
-                "_Base",
-                "_Sample",
-                "Tutorial",
-                "Mosin",
-                "SVD",
-                "Barrett",
-                "M110",
-                "M21",
-                "M40"
-            ],
-            "items": []
-        },
-        {
-            "id": "WEAPON_RIFLE_BIG",
-            "modDir": [
-                "Prefabs/Weapons/Rifles"
-            ],
-            "include": [
-                "Rifle",
-                "Spear68_"
-            ],
-            "exclude": [
-                "_Base",
-                "_Sample",
-                "Tutorial",
-                "AK74",
-                "AKS74",
-                "VZ",
-                "M16",
-                "Spear68_"
-            ],
-            "items": []
-        },
-        {
-            "id": "WEAPON_HANDGUN",
-            "modDir": [
-                "Prefabs/Weapons/Handguns"
-            ],
-            "include": [
-                "Handgun"
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
-        },
-        {
-            "id": "WEAPON_LAUNCHER",
-            "modDir": [
-                "Prefabs/Weapons/Launchers"
-            ],
-            "include": [
-                "Launcher",
-                "BC_M79"
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
-        },
-        {
-            "id": "WEAPON_SHOTGUN",
-            "modDir": [
-                "Prefabs/Weapons/Shotguns"
-            ],
-            "include": [
-                "Shotgun"
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
-        },
-        {
-            "id": "WEAPON_GRENADE",
-            "modDir": [
-                "Prefabs/Weapons/Grenades"
-            ],
-            "include": [
-                ""
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
-        },
-        {
-            "id": "UTIL_ATTACHMENT",
-            "modDir": [
-                "Prefabs/Weapons/Attachments",
-                "Prefabs/5AB890B71D748750/Grip",
-                "Prefabs/5AB890B71D748750/Handguard",
-                "Prefabs/5AB890B71D748750/Lower",
-                "Prefabs/5AB890B71D748750/Muzzle",
-                "Prefabs/5AB890B71D748750/Stock",
-                "Prefabs/5AB890B71D748750/UGL",
-                "Prefabs/5AB890B71D748750/Upper"
-            ],
-            "include": [
-                ""
-            ],
-            "exclude": [
-                "_Base",
-                "Optic",
-                "Scope"
-            ],
-            "items": []
-        },
-        {
-            "id": "UTIL_OPTIC",
-            "modDir": [
-                "Prefabs/Weapons/Attachments",
-                "Scopes",
-                "Prefabs/Weapons/Attachments/BaconOptics/",
-                "Prefabs/5ABD0CB57F7E9EB1/Optics/"
-            ],
-            "include": [
-                "Optic",
-                "Scope",
-                "1P69",
-                "AimPoint",
-                "Collim",
-                "ANPVS",
-                "G33",
-                "PDC_cover",
-                "Zhukov"
-            ],
-            "exclude": [
-                "_Base",
-                "DoNotUse"
-            ],
-            "items": []
-        },
-        {
-            "id": "UTIL_MAGAZINE",
-            "modDir": [
-                "Prefabs/Weapons/Magazines"
-            ],
-            "include": [
-                ""
-            ],
-            "exclude": [
-                "_Base",
-                "Internal_"
-            ],
-            "items": []
-        },
-        {
-            "id": "UTIL_AMMO",
-            "modDir": [
-                "Prefabs/Weapons/Ammo"
-            ],
-            "include": [
-                "Shell",
-                "Rocket",
-                "Grenade",
-                "Flare"
-            ],
-            "exclude": [
-                "_Base",
-                "Internal_",
-                "_Effect",
-                "FlareEffect",
-                "Particles"
-            ],
-            "items": []
-        },
-        {
-            "id": "ITEM_GENERAL",
-            "modDir": [
-                "Prefabs/Items"
-            ],
-            "include": [
-                "Binocular",
-                "Compass",
-                "Flashlight",
-                "PaperMap_01_folded",
-                "Watch_"
-            ],
-            "exclude": [
-                "_Base",
-                "BackPack",
-                "Pouch"
-            ],
-            "items": []
-        },
-        {
-            "id": "ITEM_MEDICAL",
-            "modDir": [
-                "Prefabs/Items/Medicine"
-            ],
-            "include": [
-                ""
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
-        },
-        {
-            "id": "GEAR_HEADGEAR",
-            "modDir": [
-                "Prefabs/Characters/HeadGear",
-                "Prefabs/Clothing"
-            ],
-            "include": [
-                "Helmet_",
-                "GP-",
-                "M50",
-                "Unix_"
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
-        },
-        {
-            "id": "GEAR_VEST",
-            "modDir": [
-                "Prefabs/Characters/Vests"
-            ],
-            "include": [
-                "Vest_"
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
-        },
-        {
-            "id": "GEAR_HANDWEAR",
-            "modDir": [
-                "Prefabs/Characters/Handwear"
-            ],
-            "include": [
-                "Gloves_"
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
-        },
-        {
-            "id": "GEAR_UNIFORM",
-            "modDir": [
-                "Prefabs/Characters/Uniforms"
-            ],
-            "include": [
-                "Jacket_KZS",
-                "Jacket_Pilot",
-                "Jacket_Tanker",
-                "Jacket_TAZ",
-                "Pants_KZS",
-                "Pants_Pilot",
-                "Pants_Tanker",
-                "Pants_TAZ",
-                "Suit_KLMK",
-                "Suit_Pilot",
-                "Suit_Tanker"
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
-        },
-        {
-            "id": "GEAR_BAG",
-            "modDir": [
-                "Prefabs/Items/Equipment"
-            ],
-            "include": [
-                "BackPack",
-                "Pouch",
-                "/Test/"
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
-        },
-        {
-            "id": "CLOTHING_HEADGEAR",
-            "modDir": [
-                "Prefabs/Characters/HeadGear"
-            ],
-            "include": [
-                "Hat_"
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
-        },
-        {
-            "id": "CLOTHING_UNIFORM",
-            "modDir": [
-                "Prefabs/Characters/Uniforms"
-            ],
-            "include": [
-                "_Denim",
-                "_Raincoat",
-                "_Fisherman",
-                "_Trousers",
-                "Shirt_",
-                "Jacket_Suit",
-                "Jacket_Pants"
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
-        },
-        {
-            "id": "FF_ITEMS_LOW",
-            "modDir": [
-                "Prefabs/Items"
-            ],
-            "include": [
-                "Backpack",
-                "Radio_",
-                "Tent_",
-                "Lockpick_",
-                "JWK_EpinephrineInjection"
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
-        },
-        {
-            "id": "FF_ITEMS_MID",
-            "modDir": [
-                "Prefabs/Items"
-            ],
-            "include": [
-                "Dogtags",
-                "Briefcase",
-                "CampingKit",
-                "KeysOld"
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
-        },
-        {
-            "id": "FF_ITEMS_HIGH",
-            "modDir": [
-                "Prefabs/Items"
-            ],
-            "include": [
-                "ShopProxy_Resource_Supplies"
-            ],
-            "exclude": [
-                "_Base"
-            ],
-            "items": []
+            "items": [],
+            "factions": []
         }
     ],
     "akas": []

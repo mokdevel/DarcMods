@@ -71,7 +71,18 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 6
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    0,
+                    4
+                ],
+                "activation": 1,
+                "chance": 0.3,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "loot": {
                 "box": null,
                 "itemChance": 0.899,
@@ -234,7 +245,19 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 6
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    2,
+                    6,
+                    7
+                ],
+                "activation": 1,
+                "chance": 0.3,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "loot": {
                 "box": null,
                 "itemChance": 0.699,

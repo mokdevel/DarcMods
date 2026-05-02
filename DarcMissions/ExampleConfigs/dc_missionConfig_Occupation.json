@@ -146,7 +146,19 @@
                 "waypointGenType": 2,
                 "waypointMoveType": 5
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    1,
+                    4,
+                    5
+                ],
+                "activation": 1,
+                "chance": 0.1,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
@@ -155,6 +167,7 @@
                     "WEAPON_HANDGUN",
                     "WEAPON_HANDGUN",
                     "WEAPON_HANDGUN",
+                    "UTIL_ATTACHMENT",
                     "UTIL_ATTACHMENT",
                     "ITEM_MEDICAL",
                     "ITEM_GENERAL",
@@ -242,7 +255,9 @@
                     59,
                     59,
                     59,
+                    59,
                     70,
+                    60,
                     60,
                     61,
                     81
@@ -289,7 +304,22 @@
                 "waypointGenType": 3,
                 "waypointMoveType": 1
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    2,
+                    4,
+                    30,
+                    31,
+                    32,
+                    60
+                ],
+                "activation": 1,
+                "chance": 0.699,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "loot": {
                 "box": null,
                 "itemChance": 0.899,
@@ -302,6 +332,7 @@
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
                     "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
                     "UTIL_OPTIC",
                     "ITEM_MEDICAL",
                     "ITEM_MEDICAL",
@@ -389,6 +420,7 @@
                     8,
                     25,
                     62,
+                    60,
                     72,
                     79,
                     84,
@@ -430,19 +462,34 @@
                 "waypointGenType": 1,
                 "waypointMoveType": 1
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    0,
+                    2,
+                    3
+                ],
+                "activation": 1,
+                "chance": 0.5,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
                 "items": [
                     "WEAPON_RIFLE",
                     "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
                     "WEAPON_HANDGUN",
+                    "WEAPON_SHOTGUN",
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
                     "UTIL_ATTACHMENT",
                     "UTIL_OPTIC",
+                    "WEAPON_LAUNCHER",
                     "WEAPON_LAUNCHER",
                     "ITEM_MEDICAL",
                     "ITEM_MEDICAL",
@@ -557,7 +604,8 @@
                     70,
                     8,
                     63,
-                    71
+                    71,
+                    10
                 ],
                 "posName": "any",
                 "messages": [
@@ -581,7 +629,12 @@
             "ai": {
                 "count": [
                     2,
-                    3
+                    2,
+                    2,
+                    3,
+                    3,
+                    30,
+                    31
                 ],
                 "types": [
                     "G_SPECIAL",
@@ -596,7 +649,19 @@
                 "waypointGenType": 1,
                 "waypointMoveType": 1
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    0,
+                    3,
+                    6
+                ],
+                "activation": 1,
+                "chance": 0.1,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "loot": {
                 "box": null,
                 "itemChance": 0.4,
@@ -608,6 +673,8 @@
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_SHOTGUN",
                     "UTIL_ATTACHMENT",
                     "UTIL_ATTACHMENT",
                     "UTIL_OPTIC",
@@ -773,7 +840,8 @@
             "ai": {
                 "count": [
                     2,
-                    3
+                    3,
+                    30
                 ],
                 "types": [
                     "G_SPECIAL",
@@ -794,6 +862,9 @@
                 "itemChance": 0.4,
                 "items": [
                     "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_MG",
+                    "WEAPON_SHOTGUN",
                     "WEAPON_HANDGUN",
                     "WEAPON_HANDGUN",
                     "WEAPON_HANDGUN",

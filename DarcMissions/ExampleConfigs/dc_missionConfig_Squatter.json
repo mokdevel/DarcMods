@@ -88,7 +88,18 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    0,
+                    3
+                ],
+                "activation": 1,
+                "chance": 0.2,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "buildingNames": [
                 "ShopModern_",
                 "Villa_",
@@ -107,6 +118,7 @@
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
+                    "UTIL_ATTACHMENT",
                     "UTIL_ATTACHMENT",
                     "ITEM_MEDICAL",
                     "ITEM_MEDICAL",
@@ -186,7 +198,19 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    30,
+                    31,
+                    32
+                ],
+                "activation": 1,
+                "chance": 0.699,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "buildingNames": [
                 "ControlTowerMilitary_"
             ],
@@ -200,6 +224,10 @@
                     "WEAPON_RIFLE",
                     "WEAPON_RIFLE_BIG",
                     "WEAPON_RIFLE_BIG",
+                    "WEAPON_LAUNCHER",
+                    "WEAPON_LAUNCHER",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_SHOTGUN",
                     "WEAPON_HANDGUN",
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
@@ -277,7 +305,19 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    30,
+                    31,
+                    32
+                ],
+                "activation": 1,
+                "chance": 0.6,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "buildingNames": [
                 "Office_E_",
                 "Barracks_01_",
@@ -295,6 +335,7 @@
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
+                    "WEAPON_SHOTGUN",
                     "UTIL_ATTACHMENT",
                     "UTIL_OPTIC",
                     "UTIL_OPTIC",
@@ -369,7 +410,20 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    0,
+                    1,
+                    2,
+                    3
+                ],
+                "activation": 1,
+                "chance": 0.5,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "buildingNames": [
                 "DieselPowerPlant_",
                 "CowShed_",
@@ -387,6 +441,10 @@
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_SHOTGUN",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_ATTACHMENT",
                     "UTIL_ATTACHMENT",
                     "ITEM_MEDICAL",
                     "ITEM_MEDICAL",
@@ -394,6 +452,9 @@
                     "ITEM_MEDICAL",
                     "ITEM_GENERAL",
                     "ITEM_GENERAL",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_ATTACHMENT",
                     "GEAR_HEADGEAR",
                     "GEAR_VEST",
                     "GEAR_HANDWEAR",
@@ -454,7 +515,19 @@
                 "waypointGenType": 0,
                 "waypointMoveType": 0
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    0,
+                    3,
+                    4
+                ],
+                "activation": 1,
+                "chance": 0.3,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "buildingNames": [
                 "Church_",
                 "ChurchSmall_",
@@ -470,6 +543,7 @@
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
                     "UTIL_OPTIC",
+                    "UTIL_OPTIC",
                     "ITEM_MEDICAL",
                     "ITEM_MEDICAL",
                     "ITEM_MEDICAL",
@@ -480,6 +554,8 @@
                     "ITEM_GENERAL",
                     "ITEM_GENERAL",
                     "GEAR_BAG",
+                    "GEAR_BAG",
+                    "CLOTHING_HEADGEAR",
                     "CLOTHING_HEADGEAR",
                     "CLOTHING_UNIFORM",
                     "CLOTHING_UNIFORM",
@@ -550,6 +626,12 @@
                 "itemChance": 0.4,
                 "items": [
                     "UTIL_ATTACHMENT",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_ATTACHMENT",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_SHOTGUN",
+                    "UTIL_OPTIC",
                     "ITEM_MEDICAL",
                     "ITEM_MEDICAL",
                     "ITEM_MEDICAL",
@@ -561,6 +643,7 @@
                     "ITEM_GENERAL",
                     "ITEM_GENERAL",
                     "ITEM_GENERAL",
+                    "GEAR_BAG",
                     "GEAR_BAG",
                     "CLOTHING_HEADGEAR",
                     "CLOTHING_HEADGEAR",

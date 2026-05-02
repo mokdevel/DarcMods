@@ -23,7 +23,9 @@
         1,
         2,
         3,
-        3
+        3,
+        4,
+        4
     ],
     "missionFiles": [],
     "distanceToPlayer": 500,
@@ -32,29 +34,20 @@
             "general": {
                 "subIdx": 0,
                 "comment": "index 0: Convoy driving from .. to ..",
-                "pos": [
-                    [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    [
-                        0.0,
-                        0.0,
-                        0.0
-                    ]
-                ],
+                "pos": [],
                 "size": 5.0,
                 "locationTypes": [
                     59,
                     59,
                     59,
-                    59,
+                    60,
+                    60,
                     60,
                     71,
                     64,
                     70,
                     26,
+                    10,
                     75,
                     81
                 ],
@@ -97,10 +90,10 @@
             },
             "qrf": null,
             "vehicleTypes": [
-                "{01F65EFB8D767A91}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_cargo.et",
-                "{543799AC5C52989C}Prefabs/Vehicles/Wheeled/S1203/S1203_transport_beige.et",
-                "{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et",
-                "{D4855501D5B12AF2}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_teal.et"
+                "VEHICLE_WHEELED_MILITARY_CAR",
+                "VEHICLE_WHEELED_MILITARY_CAR",
+                "VEHICLE_WHEELED_MILITARY_CAR",
+                "VEHICLE_WHEELED_CIVILIAN_CAR"
             ],
             "cruiseSpeed": 30.0,
             "loot": {
@@ -114,8 +107,14 @@
                     "ITEM_GENERAL",
                     "ITEM_GENERAL",
                     "GEAR_BAG",
+                    "GEAR_BAG",
+                    "UTIL_OPTIC",
+                    "CLOTHING_HEADGEAR",
                     "CLOTHING_HEADGEAR",
                     "CLOTHING_UNIFORM",
+                    "CLOTHING_UNIFORM",
+                    "GEAR_HANDWEAR",
+                    "GEAR_HANDWEAR",
                     "{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
                     "{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",
                     "{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"
@@ -126,18 +125,7 @@
             "general": {
                 "subIdx": 1,
                 "comment": "index 1: Truck driving from .. to ..",
-                "pos": [
-                    [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    [
-                        0.0,
-                        0.0,
-                        0.0
-                    ]
-                ],
+                "pos": [],
                 "size": 7.0,
                 "locationTypes": [
                     59,
@@ -145,11 +133,13 @@
                     59,
                     8,
                     60,
+                    60,
                     71,
                     64,
                     25,
                     72,
                     26,
+                    10,
                     75,
                     81
                 ],
@@ -192,14 +182,12 @@
             },
             "qrf": null,
             "vehicleTypes": [
-                "{F1FBD0972FA5FE09}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport.et",
-                "{81FDAD5EB644CC3D}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered.et",
-                "{48A6D4372444B85A}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered_closed.et",
-                "{16E32C3ABEAFC2C6}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_FIA_transport.et",
-                "{1449105FD658EDFB}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_CIV_forest.et",
-                "{FB219B49A448A8EA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_JZD.et",
-                "{66241E0CEDFCEDFF}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_orange.et",
-                "{F66EAD0D2016B6BA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_blue.et"
+                "VEHICLE_WHEELED_MILITARY_TRUCK",
+                "VEHICLE_WHEELED_MILITARY_TRUCK",
+                "VEHICLE_WHEELED_MILITARY_TRUCK",
+                "VEHICLE_WHEELED_MILITARY_TRUCK",
+                "VEHICLE_WHEELED_MILITARY_TRUCK",
+                "VEHICLE_WHEELED_CIVILIAN_TRUCK"
             ],
             "cruiseSpeed": 20.0,
             "loot": {
@@ -212,6 +200,8 @@
                     "WEAPON_HANDGUN",
                     "WEAPON_HANDGUN",
                     "WEAPON_LAUNCHER",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_SHOTGUN",
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
@@ -224,6 +214,9 @@
                     "ITEM_GENERAL",
                     "GEAR_BAG",
                     "CLOTHING_HEADGEAR",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_UNIFORM",
+                    "CLOTHING_UNIFORM",
                     "CLOTHING_UNIFORM"
                 ]
             }
@@ -232,18 +225,7 @@
             "general": {
                 "subIdx": 2,
                 "comment": "index 2: Armor driving from .. to ..",
-                "pos": [
-                    [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    [
-                        0.0,
-                        0.0,
-                        0.0
-                    ]
-                ],
+                "pos": [],
                 "size": 7.0,
                 "locationTypes": [
                     59,
@@ -251,11 +233,14 @@
                     59,
                     8,
                     60,
+                    60,
+                    60,
                     71,
                     64,
                     25,
                     72,
                     26,
+                    10,
                     75,
                     81
                 ],
@@ -298,9 +283,7 @@
             },
             "qrf": null,
             "vehicleTypes": [
-                "{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et",
-                "{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et",
-                "{254289B9C09904AB}Prefabs/Vehicles/Wheeled/BRDM2/BRDM2.et"
+                "VEHICLE_WHEELED_ARMED"
             ],
             "cruiseSpeed": 20.0,
             "loot": {
@@ -309,7 +292,13 @@
                 "items": [
                     "WEAPON_RIFLE",
                     "WEAPON_RIFLE_BIG",
+                    "WEAPON_RIFLE_BIG",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_SHOTGUN",
                     "WEAPON_HANDGUN",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "WEAPON_LAUNCHER",
                     "WEAPON_LAUNCHER",
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
@@ -330,18 +319,7 @@
             "general": {
                 "subIdx": 3,
                 "comment": "index 3: Vehicle with a gun driving from .. to ..",
-                "pos": [
-                    [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    [
-                        0.0,
-                        0.0,
-                        0.0
-                    ]
-                ],
+                "pos": [],
                 "size": 4.0,
                 "locationTypes": [
                     59,
@@ -349,11 +327,13 @@
                     59,
                     8,
                     60,
+                    60,
                     71,
                     64,
                     25,
                     72,
                     26,
+                    10,
                     75,
                     81
                 ],
@@ -397,10 +377,7 @@
             },
             "qrf": null,
             "vehicleTypes": [
-                "{F6B23D17D5067C11}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB.et",
-                "{5168FEA3054D6D15}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB_MERDC.et",
-                "{3EA6F47D95867114}Prefabs/Vehicles/Wheeled/M998/M1025_armed_M2HB.et",
-                "{DD774A8FD0989A78}Prefabs/Vehicles/Wheeled/M998/M1025_armed_M2HB_MERDC.et"
+                "VEHICLE_WHEELED_MILITARY_CAR"
             ],
             "cruiseSpeed": 20.0,
             "loot": {
@@ -408,9 +385,118 @@
                 "itemChance": 0.899,
                 "items": [
                     "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_MG",
+                    "WEAPON_MG",
+                    "WEAPON_RIFLE_BIG",
+                    "WEAPON_RIFLE_BIG",
+                    "WEAPON_RIFLE_BIG",
                     "WEAPON_HANDGUN",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_SHOTGUN",
                     "WEAPON_GRENADE",
                     "WEAPON_GRENADE",
+                    "WEAPON_LAUNCHER",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_HEADGEAR",
+                    "GEAR_VEST",
+                    "GEAR_HANDWEAR",
+                    "GEAR_UNIFORM"
+                ]
+            }
+        },
+        {
+            "general": {
+                "subIdx": 4,
+                "comment": "index 4: Armor vehicle driving from .. to ..",
+                "pos": [],
+                "size": 4.0,
+                "locationTypes": [
+                    59,
+                    59,
+                    59,
+                    8,
+                    60,
+                    60,
+                    71,
+                    64,
+                    25,
+                    72,
+                    26,
+                    10,
+                    75,
+                    81
+                ],
+                "posName": "any",
+                "messages": [
+                    {
+                        "title": "Metallic gear on the road",
+                        "info": "A tin can seen going from %l to %d.",
+                        "win": "Can opened, enjoy the loot!",
+                        "lose": "The loot slipped your hands."
+                    }
+                ],
+                "winCondition": 2,
+                "faction": [],
+                "markerType": "DARC_MISSION",
+                "markerIcon": 4,
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_RECON",
+                    "G_HEAVY",
+                    "G_LIGHT"
+                ],
+                "skill": 70,
+                "perception": 1.0,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "qrf": null,
+            "vehicleTypes": [
+                "VEHICLE_WHEELED_ARMOR"
+            ],
+            "cruiseSpeed": 20.0,
+            "loot": {
+                "box": null,
+                "itemChance": 0.899,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_MG",
+                    "WEAPON_MG",
+                    "WEAPON_RIFLE_BIG",
+                    "WEAPON_RIFLE_BIG",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_LAUNCHER",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
                     "ITEM_GENERAL",
                     "ITEM_GENERAL",
                     "ITEM_GENERAL",

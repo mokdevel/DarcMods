@@ -77,12 +77,32 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 5
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    0,
+                    2,
+                    4,
+                    5,
+                    6
+                ],
+                "activation": 1,
+                "chance": 0.349,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
                 "items": [
                     "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_SHOTGUN",
                     "WEAPON_HANDGUN",
                     "WEAPON_HANDGUN",
                     "WEAPON_HANDGUN",
@@ -269,13 +289,38 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 5
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    0,
+                    2,
+                    6,
+                    7
+                ],
+                "activation": 1,
+                "chance": 0.349,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
                 "items": [
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_SHOTGUN",
                     "UTIL_ATTACHMENT",
                     "UTIL_OPTIC",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
                     "UTIL_AMMO",
                     "UTIL_AMMO",
                     "UTIL_AMMO",
@@ -292,7 +337,11 @@
                     "ITEM_GENERAL",
                     "CLOTHING_HEADGEAR",
                     "CLOTHING_UNIFORM",
-                    "CLOTHING_UNIFORM"
+                    "CLOTHING_UNIFORM",
+                    "GEAR_VEST",
+                    "GEAR_VEST",
+                    "GEAR_HANDWEAR",
+                    "GEAR_HANDWEAR"
                 ]
             },
             "campItems": [
@@ -430,7 +479,22 @@
                 "waypointGenType": 5,
                 "waypointMoveType": 5
             },
-            "qrf": null,
+            "qrf": {
+                "subIdx": [
+                    2,
+                    3,
+                    5,
+                    30,
+                    31,
+                    32
+                ],
+                "activation": 1,
+                "chance": 0.4,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
@@ -439,6 +503,8 @@
                     "WEAPON_RIFLE",
                     "WEAPON_RIFLE",
                     "WEAPON_RIFLE_BIG",
+                    "WEAPON_MG",
+                    "WEAPON_MG",
                     "UTIL_ATTACHMENT",
                     "UTIL_OPTIC",
                     "UTIL_AMMO",
