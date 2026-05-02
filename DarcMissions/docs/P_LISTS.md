@@ -1,7 +1,7 @@
 # Lists
-The mod is capable of creating automatic lists to be used with missions. You can also define your own sets by following the same notation as in the example. Do not reuse the same ids as is already available as a ``lootListName`` or ``enemyListName``.
+The mod is capable of creating automatic lists to be used with missions. You can also define your own sets by following the same notation as in the example. Do not reuse the same ids as is already available as a ``lootListName``, ``enemyListName`` or ``vehicleListName``.
 
-Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json) , [dc_enemyList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_enemyList.json)
+Example: [dc_lootList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_LootList.json) , [dc_enemyList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_enemyList.json) , [dc_vehicleList.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_vehicleList.json)
 
 By default all mods are searched, but you can define a limited selection of mods to search in. The typical notation is ``"$ModName:"``. A properly created mod follows the same structure and keeps prefabs in the right places. 
 ```
