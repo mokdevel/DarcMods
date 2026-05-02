@@ -10,9 +10,12 @@ A QRF or quick reaction force is an additional attack wave sent to a mission loc
 * The ``activation`` rule is checked for the mission. If it matches, we check for chance.
 * The ``chance`` is modified by the difficult ``qrfChance``. The values are multiplied and the value represents percentage (1.0 = 100%).
   * Example: A mission with HARD difficulty has a ``qrfChance`` of 1.2. A 0.5 ``chance`` results in a 60% chance to get a QRF (0.5*1.2).
-* A location within ``distance`` is searched. If found, the AI with the possible vehicle is spawned.
+* A location within ``distance`` is searched. If found, continue to the next step.
 * The QRF attack will wait for ``delay`` time seconds before spawning.
-* QRF AI will have a destination waypoint to come to the mission location.
+* Spawn the AI with the possible vehicle.
+* QRF will have a destination waypoint to the mission location.
+  * AI will move to the location.
+  * Vehicle with AI will move to the location. The moving is done by AR AI logic.
   * Choppers will have a search and destroy objective at the mission location. They will patrol the area for a certain time, before flying away.
 
 ## Pre defined QRFs
