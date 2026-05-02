@@ -40,6 +40,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		}
 		m_DC_Squatter = m_Config.subMissions[idx];
 		HandleRequestGeneralVariables(m_DC_Squatter.general, request);
+		SetQrfConf(m_DC_Squatter.qrf);
 		
 		//Set defaults
 		m_iAiCount = m_DC_Squatter.ai.GetCount(GetDifficulty());
@@ -320,7 +321,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{0}, SDRC_EMissionSuccess.WIN,
+			{0, 3, }, SDRC_EMissionSuccess.WIN,
 			0.2, {30, 240}
 		);
 		squatter.qrf = qrf;		
@@ -385,7 +386,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
 			{30, 31, 32}, SDRC_EMissionSuccess.WIN,
-			0.3, {30, 240}
+			0.7, {30, 240}
 		);
 		squatter.qrf = qrf;		
 		
@@ -393,6 +394,8 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 		array<string> lootItems = {
 				"WEAPON_RIFLE",	"WEAPON_RIFLE", "WEAPON_RIFLE",
 				"WEAPON_RIFLE_BIG", "WEAPON_RIFLE_BIG", 
+				"WEAPON_LAUNCHER", "WEAPON_LAUNCHER", 
+				"WEAPON_SHOTGUN", "WEAPON_SHOTGUN", 				
 				"WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_ATTACHMENT",
@@ -450,7 +453,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
 			{30, 31, 32}, SDRC_EMissionSuccess.WIN,
-			0.4, {30, 240}
+			0.6, {30, 240}
 		);
 		squatter.qrf = qrf;		
 		
@@ -459,6 +462,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 				"WEAPON_RIFLE",	"WEAPON_RIFLE", "WEAPON_RIFLE",
 				"WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
+				"WEAPON_SHOTGUN",
 				"UTIL_ATTACHMENT",
 				"UTIL_OPTIC", "UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
@@ -513,8 +517,8 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{0, 1, 2}, SDRC_EMissionSuccess.WIN,
-			0.2, {30, 240}
+			{0, 1, 2, 3, }, SDRC_EMissionSuccess.WIN,
+			0.5, {30, 240}
 		);
 		squatter.qrf = qrf;		
 		
@@ -522,9 +526,11 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 		array<string> lootItems = {
 				"WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
-				"UTIL_ATTACHMENT", "UTIL_ATTACHMENT", "UTIL_ATTACHMENT",
+				"WEAPON_SHOTGUN", "WEAPON_SHOTGUN", 
+				"UTIL_ATTACHMENT", "UTIL_ATTACHMENT", "UTIL_ATTACHMENT",			
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL",
+				"UTIL_ATTACHMENT", "UTIL_ATTACHMENT", "UTIL_ATTACHMENT", 
 				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
 				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
 			};
@@ -572,19 +578,19 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{0, 3}, SDRC_EMissionSuccess.WIN,
-			0.2, {30, 240}
+			{0, 3, 4, }, SDRC_EMissionSuccess.WIN,
+			0.3, {30, 240}
 		);
 		squatter.qrf = qrf;		
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
-				"UTIL_OPTIC",
+				"UTIL_OPTIC", "UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL",
-				"GEAR_BAG", 
-				"CLOTHING_HEADGEAR", 
+				"GEAR_BAG", "GEAR_BAG", 
+				"CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", 
 				"CLOTHING_UNIFORM",	"CLOTHING_UNIFORM",	"CLOTHING_UNIFORM",				
 			};
 		loot.Set(0.4, lootItems);
@@ -638,11 +644,12 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"UTIL_ATTACHMENT",
+				"UTIL_ATTACHMENT", "UTIL_ATTACHMENT", "UTIL_ATTACHMENT", "UTIL_ATTACHMENT",
+				"WEAPON_SHOTGUN", "WEAPON_SHOTGUN", 
 				"UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
-				"GEAR_BAG", 
+				"GEAR_BAG", "GEAR_BAG", 
 				"CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", 
 				"CLOTHING_UNIFORM",
 			};

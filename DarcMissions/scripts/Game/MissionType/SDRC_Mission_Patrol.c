@@ -38,7 +38,8 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		}
 		m_DC_Patrol = m_Config.subMissions[idx];		
 		HandleRequestGeneralVariables(m_DC_Patrol.general, request);
-
+		SetQrfConf(m_DC_Patrol.qrf);
+		
 		//Check that ranges are not too big
 		int worldSize = SDRC_Misc.GetWorldSize();
 		SDRC_Log.Add("[SDRC_Mission_Patrol] " +  GetId() + " : Worldsize vs maxRange : " + worldSize + " vs " + m_DC_Patrol.ai.waypointRange[1], LogLevel.SPAM);

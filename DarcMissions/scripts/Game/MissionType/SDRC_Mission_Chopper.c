@@ -58,6 +58,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		}
 		m_DC_Chopper = m_Config.subMissions[idx];	
 		HandleRequestGeneralVariables(m_DC_Chopper.general, request);
+		SetQrfConf(m_DC_Chopper.qrf);
 
 		//Find position
 		vector pos = "0 0 0";

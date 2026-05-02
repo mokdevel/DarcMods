@@ -431,8 +431,8 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 		//----------------------------------------------------
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{0}, SDRC_EMissionSuccess.WIN,
-			0.2, {30, 240}
+			{0, 4}, SDRC_EMissionSuccess.WIN,
+			0.3, {30, 240}
 		);
 		crashsite.qrf = qrf;
 		
@@ -536,8 +536,8 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 		//----------------------------------------------------
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{2}, SDRC_EMissionSuccess.WIN,
-			0.2, {30, 240}
+			{2, 6, 7, }, SDRC_EMissionSuccess.WIN,
+			0.3, {30, 240}
 		);
 		crashsite.qrf = qrf;
 				

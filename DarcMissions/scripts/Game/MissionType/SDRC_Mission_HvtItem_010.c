@@ -70,7 +70,14 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);		
 		hvtItem.targetIdx = 5;
-		
+
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0, 2, 6, 7, 31, 32,}, SDRC_EMissionSuccess.WIN,
+			0.35, {30, 240}
+		);
+		hvtItem.qrf = qrf;		
+				
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE", "WEAPON_RIFLE", 
@@ -287,6 +294,13 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);		
 		hvtItem.targetIdx = 12;
+		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0, 1, 2, 3, 4, }, SDRC_EMissionSuccess.WIN,
+			0.35, {30, 240}
+		);
+		hvtItem.qrf = qrf;		
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
@@ -539,6 +553,13 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);		
 		hvtItem.targetIdx = 5;
+		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{0, 30, 31, 32, 60, }, SDRC_EMissionSuccess.WIN,
+			0.35, {30, 240}
+		);
+		hvtItem.qrf = qrf;		
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {

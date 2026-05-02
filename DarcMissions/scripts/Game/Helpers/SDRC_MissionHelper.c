@@ -171,7 +171,7 @@ class SDRC_MissionHelper
 	/*!
 	Spawn mission AI from class SDRC_MissionConfigAi
 	*/	
-	static bool SpawnAiFromClassAiInVehicle(ResourceName vehicleName, SDRC_MissionConfigAi ai, SDRC_Mission mission, vector spawnPos, vector destinationPos)
+	static int SpawnAiFromClassAiInVehicle(ResourceName vehicleName, SDRC_MissionConfigAi ai, SDRC_Mission mission, vector spawnPos, vector destinationPos)
 	{
 		//Spawn vehicle
 		if (vehicleName[0] != "{")
@@ -179,14 +179,29 @@ class SDRC_MissionHelper
 			vehicleName = SDRC_VehicleListHelper.FindVehicleItem(vehicleName, mission.GetFaction());
 		}				
 		
-		ref IEntity vehicle = SDRC_SpawnHelper.SpawnItem(spawnPos, vehicleName, 10);
-		bool success = false;
+		ref IEntity vehicle = null;
 		
-		if (!vehicle)
-		{			
-			return false;			
+		bool isChopper = false;
+		if (SDRC_Resources.HasResourceTrait(vehicleName, EEditableEntityLabel.ENTITYTYPE_DARCCHOPPER))
+		{
+			//Chopper spawn
+			isChopper = true;
+			spawnPos[1] = SDRC_Misc.GetSurfaceYWithWater(spawnPos) + 30;
+			vehicle = SDRC_SpawnHelper.SpawnItem(spawnPos, vehicleName, emptyPosRadius: -1, snap: false);
+		}
+		else
+		{
+			//Vehicle spawn
+			vehicle = SDRC_SpawnHelper.SpawnItem(spawnPos, vehicleName);
 		}
 		
+		//bool success = false;
+
+		if (!vehicle)
+		{			
+			return -1;			
+		}
+
 		SDRC_Log.Add("[SDRC_MissionHelper:SpawnAiFromClassAiInVehicle] " +  mission.GetId() + " : Vehicle spawned: " + vehicle, LogLevel.DEBUG);										
 		
 		mission.AddToEntityList(vehicle);
@@ -195,33 +210,81 @@ class SDRC_MissionHelper
 		SDRC_VehicleHelper.EmptyStorage(vehicle);
 		SDRC_VehicleHelper.DisableVehicleArsenal(vehicle, vehicleName, true);
 		
-		AICarMovementComponent vehicle_c = AICarMovementComponent.Cast(vehicle.FindComponent(AICarMovementComponent));
-        vehicle_c.SetCruiseSpeed(30);
+		int groupCount = 0;
 		
-		//Spawn mission AI
-		int groupCount = 0;		
-		int aiCount = ai.GetCount(mission.GetDifficulty());
-		
-		for (int i = 0; i < aiCount; i++)
-		{		
-			string groupToSpawn = ai.types.GetRandomElement();
-			ResourceName aiType = SDRC_EnemyHelper.SelectEnemy(groupToSpawn, mission.GetFaction());
+		if (!isChopper)
+		{
+			AICarMovementComponent vehicle_c = AICarMovementComponent.Cast(vehicle.FindComponent(AICarMovementComponent));
+	        vehicle_c.SetCruiseSpeed(30);
 			
-			SCR_AIGroup group = SDRC_AIHelper.GroupCreate(mission.GetFaction(), mission.GetPos());
-			SDRC_VehicleHelper.SpawnGroupInVehicle(aiType, vehicle, group, mission.GetFaction());
+			//Spawn mission AI
+			groupCount = 0;
+			int aiCount = ai.GetCount(mission.GetDifficulty());
 			
-			if (group)
-			{			
-				groupCount++;
-				SDRC_AIHelper.SetAIGroupSettings(group, ai.GetSkill(mission.GetDifficulty()), ai.GetPerception(mission.GetDifficulty()));
-				mission.AddToGroupsList(group);
+			for (int i = 0; i < aiCount; i++)
+			{		
+				string groupToSpawn = ai.types.GetRandomElement();
+				ResourceName aiType = SDRC_EnemyHelper.SelectEnemy(groupToSpawn, mission.GetFaction());
 				
-				//Set waypoint 
-				SDRC_WPHelper.CreateMissionAIWaypoints(group, ai.waypointGenType, spawnPos, destinationPos, ai.waypointMoveType);				
+				SCR_AIGroup group = SDRC_AIHelper.GroupCreate(mission.GetFaction(), mission.GetPos());
+				SDRC_VehicleHelper.SpawnGroupInVehicle(aiType, vehicle, group, mission.GetFaction());
+				
+				if (group)
+				{			
+					groupCount++;
+					SDRC_AIHelper.SetAIGroupSettings(group, ai.GetSkill(mission.GetDifficulty()), ai.GetPerception(mission.GetDifficulty()));
+					mission.AddToGroupsList(group);
+					
+					//Set waypoint 
+					SDRC_WPHelper.CreateMissionAIWaypoints(group, ai.waypointGenType, spawnPos, destinationPos, ai.waypointMoveType);				
+				}
 			}
 		}
+		else
+		{
+			SDRC_ChopperComp vehicle_c = SDRC_ChopperComp.Cast(vehicle.FindComponent(SDRC_ChopperComp));
+			
+			if (!vehicle_c)
+			{			
+				delete vehicle;
+				return false;			
+			}
+			
+			vehicle_c.SetAutostart(false);
+			vehicle_c.SetEnemySearchType(SDRC_EHeliEnemySearchType.PLAYER);
+			vehicle_c.Setup(vehicle);
+	
+			//Spawn mission AI
+			groupCount = 0;		
+			int aiCount = ai.GetCount(mission.GetDifficulty());
+			
+			for (int i = 0; i < aiCount; i++)
+			{		
+				string groupToSpawn = ai.types.GetRandomElement();
+				ResourceName aiType = SDRC_EnemyHelper.SelectEnemy(groupToSpawn, mission.GetFaction());
+				
+				SCR_AIGroup group = SDRC_AIHelper.GroupCreate(mission.GetFaction(), mission.GetPos());
+				SDRC_VehicleHelper.SpawnGroupInVehicle(aiType, vehicle, group, mission.GetFaction());
+				
+				if (group)
+				{			
+					groupCount++;
+					SDRC_AIHelper.SetAIGroupSettings(group, ai.GetSkill(mission.GetDifficulty()), ai.GetPerception(mission.GetDifficulty()));
+					mission.AddToGroupsList(group);
+				}
+			}
+			
+			//Add our flight path
+			int time = SDRC_Misc.RandomInt(300, mission.GetActiveTime() - 120);		//QRF chopper will fly away 2 mins before mission end
+			SDRC_Log.Add("[SDRC_MissionHelper:SpawnAiFromClassAiInVehicle] Chopper will fly away after " + time + " seconds.", LogLevel.DEBUG);
+			vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, destinationPos, time);
+			vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY);
+			vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_DESPAWN);			
+			
+			vehicle_c.Ready(vehicle);
+		}
 		
-		return success;
+		return groupCount;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -366,7 +429,7 @@ class SDRC_MissionHelper
 		}
 		else
 		{ 
-			SDRC_Log.Add("[SDRC_MissionHelper:SelectMissionType] There are now " + (cnt + 1) + " missions of type " + SCR_Enum.GetEnumName(SDRC_EMissionType, missionType), LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_MissionHelper:SelectMissionType] There are now " + (cnt + 1) + " missions of type " + SCR_Enum.GetEnumName(SDRC_EMissionType, missionType), LogLevel.SPAM);
 		}
 		
 		return missionType;

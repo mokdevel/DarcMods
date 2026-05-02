@@ -46,6 +46,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		}
 		m_DC_Hunter = m_Config.subMissions[idx];	
 		HandleRequestGeneralVariables(m_DC_Hunter.general, request);
+		SetQrfConf(m_DC_Hunter.qrf);
 		
 		//Set spawn count
 		m_iGroupsToSpawn = m_DC_Hunter.ai.GetCount(GetDifficulty());

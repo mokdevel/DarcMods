@@ -1065,58 +1065,69 @@ class SDRC_Mission : Managed
 		
 		#ifdef ENABLE_QRF
 		//If no QRF defned, return
+		if (!m_QrfConf)
+		{
+			SDRC_Log.Add("[SDRC_Mission:DoQrf] " + GetId() + " : No QRF sent as none defined.", LogLevel.DEBUG);
+			return;
+		}
+		
 		if (m_QrfConf.subIdx.IsEmpty())
 		{
+			SDRC_Log.Add("[SDRC_Mission:DoQrf] " + GetId() + " : No QRF sent as subIdx is empty.", LogLevel.DEBUG);
 			return;
 		}
 		
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (!m_BaseGameMode)
 		{
-			SDRC_Log.Add("[SDRC_Mission:DoQrf] SCR_BaseGameMode not found.", LogLevel.ERROR);			
+			SDRC_Log.Add("[SDRC_Mission:DoQrf] " + GetId() + " : SCR_BaseGameMode not found.", LogLevel.ERROR);			
 			return;
 		}		
 		
 		if ( (m_QrfConf.activation == GetSuccess()) || (m_QrfConf.activation == SDRC_EMissionSuccess.WIN_OR_LOSE) )
 		{
-			#ifdef SDRC_RELEASE
-				if (SDRC_Misc.RandomFloat(0, 1) > (m_QrfConf.chance * m_BaseGameMode.missionFrame.m_Config.missionDifficulty.qrfChance[GetDifficulty()]) )
-				{
-					SDRC_Log.Add("[SDRC_Mission:DoQrf] QRF not to be sent.", LogLevel.DEBUG);
-					return;
-				}
+			#ifdef SDRC_RELEASE //Development version will always do a QRF
+			if (SDRC_Misc.RandomFloat(0, 1) > (m_QrfConf.chance * m_BaseGameMode.missionFrame.m_Config.missionDifficulty.qrfChance[GetDifficulty()]) )
+			{
+				SDRC_Log.Add("[SDRC_Mission:DoQrf] " + GetId() + " : QRF not to be sent.", LogLevel.DEBUG);
+				return;
+			}
 			#endif
 			
-			SDRC_Log.Add("[SDRC_Mission:DoQrf] Trying to send QRF.", LogLevel.DEBUG);			
+			SDRC_Log.Add("[SDRC_Mission:DoQrf] " + GetId() + " : Trying to send QRF.", LogLevel.DEBUG);			
 			
 			int subIdx = m_QrfConf.subIdx.GetRandomElement();
 			SDRC_Qrf qrf = m_BaseGameMode.missionFrame.m_ConfigQrf.GetQrf(subIdx);
-			SDRC_Log.Add("[SDRC_Mission:DoQrf] Selected idx:" + subIdx + " : " + qrf.comment, LogLevel.DEBUG);
 			
-			//Find spawn position
-			vector spawnPos = FindMissionPosAroundPos(GetPos(), 300);
-			
-			if (spawnPos == vector.Zero)
+			if (!qrf)
 			{
-				SDRC_Log.Add("[SDRC_Mission:DoQrf] Could not find a position for QRF. Skipping.", LogLevel.ERROR);
 				return;
 			}
 			
-			SDRC_Log.Add("[SDRC_Mission:DoQrf] Spawning QRF.", LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_Mission:DoQrf] " + GetId() + " : Selected idx: " + subIdx + " : " + qrf.comment, LogLevel.NORMAL);
+			
+			//Find spawn position
+			vector spawnPos = SDRC_MissionPosHelper.FindMissionPosAroundPos(GetPos(), SDRC_Misc.RandomInt(qrf.distance[0], qrf.distance[1]));
+			
+			if (spawnPos == vector.Zero)
+			{
+				SDRC_Log.Add("[SDRC_Mission:DoQrf] " + GetId() + " : Could not find a position for QRF. Skipping.", LogLevel.ERROR);
+				return;
+			}
+			
+			SDRC_Log.Add("[SDRC_Mission:DoQrf] " + GetId() + " : Spawning QRF.", LogLevel.DEBUG);
 			
 			SDRC_DebugHelper.AddDebugPos(spawnPos, color: Color.YELLOW, id: "qrf");
 			
 			if (qrf.vehicle == "")
 			{
 				int groupCount = SDRC_MissionHelper.SpawnAiFromClassAi(qrf.ai, this, spawnPos, GetPos());
-				SDRC_Log.Add("[SDRC_Mission:DoQrf] Spawned " + groupCount + " groups to QRF.", LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_Mission:DoQrf] " + GetId() + " : Spawned " + groupCount + " groups to QRF.", LogLevel.DEBUG);
 			}
 			else
 			{
-				//TBD: Check if it is a chopper and then spawn a chopper.
-				
 				int groupCount = SDRC_MissionHelper.SpawnAiFromClassAiInVehicle(qrf.vehicle, qrf.ai, this, spawnPos, GetPos());
-				SDRC_Log.Add("[SDRC_Mission:DoQrf] Spawned " + groupCount + " groups to QRF.", LogLevel.DEBUG);				
+				SDRC_Log.Add("[SDRC_Mission:DoQrf] " + GetId() + " : Spawned " + groupCount + " groups to QRF.", LogLevel.DEBUG);
 			}
 		}		
 		#endif

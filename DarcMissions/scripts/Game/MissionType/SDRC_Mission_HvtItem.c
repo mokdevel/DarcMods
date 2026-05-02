@@ -44,6 +44,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		}
 		m_DC_HvtItem = m_Config.subMissions[idx];			
 		HandleRequestGeneralVariables(m_DC_HvtItem.general, request);
+		SetQrfConf(m_DC_HvtItem.qrf);
 		
 		//Find position
 		vector pos = "0 0 0";
@@ -302,14 +303,15 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{0, 2}, SDRC_EMissionSuccess.WIN,
-			0.2, {30, 240}
+			{0, 2, 4, 5, 6, }, SDRC_EMissionSuccess.WIN,
+			0.35, {30, 240}
 		);
 		hvtItem.qrf = qrf;		
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"WEAPON_RIFLE",
+				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
+				"WEAPON_SHOTGUN", "WEAPON_SHOTGUN", "WEAPON_SHOTGUN", 
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"UTIL_ATTACHMENT",
 				"ITEM_MEDICAL",
@@ -424,19 +426,24 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{0, 2}, SDRC_EMissionSuccess.WIN,
-			0.2, {30, 240}
+			{0, 2, 6, 7, }, SDRC_EMissionSuccess.WIN,
+			0.35, {30, 240}
 		);
 		hvtItem.qrf = qrf;			
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
+				"WEAPON_SHOTGUN", "WEAPON_SHOTGUN", 
 				"UTIL_ATTACHMENT", "UTIL_OPTIC",
+				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
+				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
 				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
 				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"CLOTHING_HEADGEAR", 
-				"CLOTHING_UNIFORM",	"CLOTHING_UNIFORM",			
+				"CLOTHING_UNIFORM",	"CLOTHING_UNIFORM",		
+				"GEAR_VEST", "GEAR_VEST", 
+				"GEAR_HANDWEAR", "GEAR_HANDWEAR", 
 			};
 		loot.Set(0.7, lootItems);
 		hvtItem.loot = loot;
@@ -523,15 +530,18 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{30}, SDRC_EMissionSuccess.WIN,
-			0.2, {30, 240}
+			{2, 3, 5, 30, 31, 32}, SDRC_EMissionSuccess.WIN,
+			0.4, {30, 240}
 		);
 		hvtItem.qrf = qrf;
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE_BIG",
-				"UTIL_ATTACHMENT", "UTIL_OPTIC",
+				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", 
+				"WEAPON_RIFLE_BIG",
+				"WEAPON_MG", "WEAPON_MG",
+				"UTIL_ATTACHMENT", 
+				"UTIL_OPTIC",
 				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
 				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",

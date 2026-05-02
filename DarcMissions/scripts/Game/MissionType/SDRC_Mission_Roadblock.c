@@ -302,17 +302,20 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{30}, SDRC_EMissionSuccess.WIN,
-			0.2, {30, 240}
+			{30, 30, 30, 32, 32, 32, 60}, SDRC_EMissionSuccess.WIN,
+			0.3, {30, 240}
+//			{60}, SDRC_EMissionSuccess.WIN,
+//			1.0, {30, 240}
 		);
 		roadblock.qrf = qrf;
 		
 		ref SDRC_Loot loot = new SDRC_Loot();		
 		array<string> lootItems = {
-				"WEAPON_RIFLE",
+				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
+				"WEAPON_RIFLE_BIG",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"UTIL_ATTACHMENT", "UTIL_ATTACHMENT",
-				"ITEM_MEDICAL",
+				"ITEM_MEDICAL", "ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"GEAR_BAG", 
 				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
@@ -397,8 +400,8 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{0, 1}, SDRC_EMissionSuccess.WIN,
-			0.3, {30, 240}
+			{0, 1, 3, 4, }, SDRC_EMissionSuccess.WIN,
+			0.4, {30, 240}
 		);
 		roadblock.qrf = qrf;		
 		
@@ -406,6 +409,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		array<string> lootItems = {
 				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
 				"ITEM_MEDICAL",
+				"UTIL_OPTIC", "UTIL_OPTIC", 
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE",
 				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE",
@@ -566,7 +570,8 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"WEAPON_LAUNCHER", "WEAPON_RIFLE", "WEAPON_RIFLE",
+				"WEAPON_LAUNCHER", "WEAPON_LAUNCHER", 
+				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
 				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
@@ -713,13 +718,15 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
 			{1, 2}, SDRC_EMissionSuccess.WIN,
-			0.3, {30, 240}
+			0.5, {30, 240}
 		);
 		roadblock.qrf = qrf;		
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE", "WEAPON_RIFLE",
+				"WEAPON_RIFLE_BIG", "WEAPON_RIFLE_BIG",
+				"WEAPON_SHOTGUN", "WEAPON_SHOTGUN", 
 				"UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", "UTIL_MAGAZINE", 
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
@@ -888,6 +895,8 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"UTIL_AMMO", 
+				"WEAPON_SHOTGUN", "WEAPON_SHOTGUN", 
+				"WEAPON_MG", 
 				"GEAR_BAG", "GEAR_BAG", 
 				"CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", 
 				"CLOTHING_UNIFORM", "CLOTHING_UNIFORM", "CLOTHING_UNIFORM", 

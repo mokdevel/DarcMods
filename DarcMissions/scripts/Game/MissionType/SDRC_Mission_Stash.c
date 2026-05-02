@@ -41,7 +41,8 @@ class SDRC_Mission_Stash : SDRC_Mission
 		}
 		m_DC_Stash = m_Config.subMissions[idx];
 		HandleRequestGeneralVariables(m_DC_Stash.general, request);
-
+		SetQrfConf(m_DC_Stash.qrf);
+		
 		//Find a location for the mission
 		vector pos = "0 0 0";
 		
@@ -249,7 +250,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{2, 3}, SDRC_EMissionSuccess.WIN,
+			{2, 3, 5, }, SDRC_EMissionSuccess.WIN,
 			0.2, {30, 240}
 		);
 		stash.qrf = qrf;			
@@ -259,6 +260,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"UTIL_ATTACHMENT",
+				"UTIL_OPTIC",
 				"ITEM_MEDICAL",
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"GEAR_HEADGEAR", "GEAR_HEADGEAR",

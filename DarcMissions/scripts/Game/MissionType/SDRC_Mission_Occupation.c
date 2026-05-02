@@ -39,6 +39,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 		}
 		m_DC_Occupation = m_Config.subMissions[idx];	
 		HandleRequestGeneralVariables(m_DC_Occupation.general, request);
+		SetQrfConf(m_DC_Occupation.qrf);
 		
 		//Find position
 		vector pos = "0 0 0";
@@ -291,7 +292,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{1}, SDRC_EMissionSuccess.WIN,
+			{1, 4, 5, }, SDRC_EMissionSuccess.WIN,
 			0.1, {30, 240}
 		);
 		occupation.qrf = qrf;		
@@ -384,8 +385,8 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{2, 30, 31, 32}, SDRC_EMissionSuccess.WIN,
-			0.4, {30, 240}
+			{2, 4, 30, 31, 32, 60}, SDRC_EMissionSuccess.WIN,
+			0.7, {30, 240}
 		);
 		occupation.qrf = qrf;		
 		
@@ -479,15 +480,16 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{0, 2}, SDRC_EMissionSuccess.WIN,
-			0.3, {30, 240}
+			{0, 2, 3, }, SDRC_EMissionSuccess.WIN,
+			0.5, {30, 240}
 		);
 		occupation.qrf = qrf;		
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"WEAPON_RIFLE",	"WEAPON_RIFLE",
+				"WEAPON_RIFLE",	"WEAPON_RIFLE", "WEAPON_RIFLE",
 				"WEAPON_HANDGUN",
+				"WEAPON_SHOTGUN", 
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_ATTACHMENT",
 				"UTIL_OPTIC",
@@ -574,7 +576,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			0
 		);
 		occupation.ai.Set(
-			{2, 3},
+			{2, 2, 2, 3, 3, 30, 31},
 			{"G_SPECIAL", "G_HEAVY"},
 			50, 1.0,
 			{10, 90},
@@ -584,7 +586,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{0, 3}, SDRC_EMissionSuccess.WIN,
+			{0, 3, 6, }, SDRC_EMissionSuccess.WIN,
 			0.1, {30, 240}
 		);
 		occupation.qrf = qrf;		
@@ -594,6 +596,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 				"WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
+				"WEAPON_SHOTGUN", "WEAPON_SHOTGUN", 
 				"UTIL_ATTACHMENT", "UTIL_ATTACHMENT",
 				"UTIL_OPTIC",
 				"ITEM_MEDICAL", "ITEM_MEDICAL",	"ITEM_MEDICAL",	"ITEM_MEDICAL",
@@ -694,7 +697,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			0
 		);
 		occupation.ai.Set(
-			{2, 3},
+			{2, 3, 30, },
 			{"G_SPECIAL", "G_HEAVY"},
 			50, 1.0,
 			{10, 90},
@@ -704,7 +707,9 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"WEAPON_RIFLE",
+				"WEAPON_RIFLE", "WEAPON_RIFLE",
+				"WEAPON_MG",
+				"WEAPON_SHOTGUN", 
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
 				"UTIL_ATTACHMENT", "UTIL_ATTACHMENT",

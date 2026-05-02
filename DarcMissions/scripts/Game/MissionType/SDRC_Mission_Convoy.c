@@ -55,6 +55,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		}
 		m_DC_Convoy = m_Config.subMissions[idx];		
 		HandleRequestGeneralVariables(m_DC_Convoy.general, request);
+		SetQrfConf(m_DC_Convoy.qrf);
 		
 		//Find a location for the mission
 		vector pos = "0 0 0";
@@ -488,7 +489,10 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", 
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", 
 				"GEAR_BAG", "GEAR_BAG", 
-				"CLOTHING_HEADGEAR", "CLOTHING_UNIFORM", "CLOTHING_HEADGEAR", "CLOTHING_UNIFORM",
+				"UTIL_OPTIC", 
+				"CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", 
+				"CLOTHING_UNIFORM", "CLOTHING_UNIFORM", 
+				"GEAR_HANDWEAR", "GEAR_HANDWEAR", 
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
@@ -553,10 +557,12 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
 				"WEAPON_HANDGUN", "WEAPON_HANDGUN", 
 				"WEAPON_LAUNCHER",
+				"WEAPON_SHOTGUN", "WEAPON_SHOTGUN", 
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"GEAR_BAG", 
-				"CLOTHING_HEADGEAR", "CLOTHING_UNIFORM",
+				"CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", 
+				"CLOTHING_UNIFORM", "CLOTHING_UNIFORM", "CLOTHING_UNIFORM",
 			};
 		loot.Set(0.9, lootItems);
 		convoy.loot = loot;			
@@ -614,7 +620,9 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"WEAPON_RIFLE", "WEAPON_RIFLE_BIG", 
+				"WEAPON_RIFLE", 
+				"WEAPON_RIFLE_BIG", "WEAPON_RIFLE_BIG", 
+				"WEAPON_SHOTGUN", "WEAPON_SHOTGUN", 
 				"WEAPON_HANDGUN", 
 				"UTIL_ATTACHMENT", 
 				"UTIL_OPTIC",			
@@ -681,9 +689,11 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		array<string> lootItems = {
 				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", 
 				"WEAPON_MG", "WEAPON_MG", 
-				"WEAPON_RIFLE_BIG", "WEAPON_RIFLE_BIG", 
+				"WEAPON_RIFLE_BIG", "WEAPON_RIFLE_BIG", "WEAPON_RIFLE_BIG", 
 				"WEAPON_HANDGUN", 
+				"WEAPON_SHOTGUN", "WEAPON_SHOTGUN", 
 				"WEAPON_GRENADE", "WEAPON_GRENADE", 
+				"WEAPON_LAUNCHER", 
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
 				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
 			};
@@ -744,10 +754,12 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
 				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", 
-				"WEAPON_MG", 
-				"WEAPON_RIFLE_BIG", 
+				"WEAPON_MG", "WEAPON_MG", 
+				"WEAPON_RIFLE_BIG", "WEAPON_RIFLE_BIG", 
 				"WEAPON_HANDGUN", 
+				"WEAPON_SHOTGUN", "WEAPON_SHOTGUN", "WEAPON_SHOTGUN", 
 				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
+				"WEAPON_LAUNCHER", 
 				"UTIL_ATTACHMENT", 
 				"UTIL_OPTIC",			
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",

@@ -44,6 +44,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		}
 		m_DC_HvtVip = m_Config.subMissions[idx];			
 		HandleRequestGeneralVariables(m_DC_HvtVip.general, request);
+		SetQrfConf(m_DC_HvtVip.qrf);
 		
 		//Set defaults
 		m_iGroupCount = m_DC_HvtVip.ai.GetCount(GetDifficulty());
@@ -375,7 +376,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{0}, SDRC_EMissionSuccess.WIN,
+			{0, 2, 4, 5, }, SDRC_EMissionSuccess.WIN,
 			0.2, {30, 240}
 		);
 		HvtVip.qrf = qrf;			
@@ -434,7 +435,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{1, 2, 30}, SDRC_EMissionSuccess.WIN,
+			{1, 2, 5, 30}, SDRC_EMissionSuccess.WIN,
 			0.2, {30, 240}
 		);
 		HvtVip.qrf = qrf;			
@@ -494,7 +495,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{0}, SDRC_EMissionSuccess.WIN,
+			{0, 5, 5, }, SDRC_EMissionSuccess.WIN,
 			0.5, {30, 240}
 		);
 		HvtVip.qrf = qrf;			
@@ -556,7 +557,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{2}, SDRC_EMissionSuccess.WIN,
+			{2, 7, }, SDRC_EMissionSuccess.WIN,
 			0.4, {30, 240}
 		);
 		HvtVip.qrf = qrf;			
@@ -616,8 +617,8 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{0}, SDRC_EMissionSuccess.WIN,
-			0.1, {30, 240}
+			{0, 2, }, SDRC_EMissionSuccess.WIN,
+			0.35, {30, 240}
 		);
 		HvtVip.qrf = qrf;			
 		
