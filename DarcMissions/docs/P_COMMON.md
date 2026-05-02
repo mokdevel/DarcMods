@@ -3,7 +3,7 @@ These parameters are in every mission.
 * [Config](#SDRC_MissionConfig) : These are the basic settings for the mission.
 * [General](#SDRC_MissionConfigGeneral) : Parameters for win, lose, messages, markers, difficult for a mission. 
 * [AI](#SDRC_MissionConfigAi) : AI related parameters on count to spawn, type, difficulty and similar.
-* [QRF] .. aka SecondWave .. TBD
+* [QRF](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_QRF.md) : The second wave of attacks to be sent to mission location.
 
 ## SDRC_MissionConfig
 ```
