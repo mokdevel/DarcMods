@@ -1,4 +1,6 @@
 # QRF - Quick Reaction Force
+Example: [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/ExampleConfigs/dc_qrf.json)
+
 A QRF or quick reaction force is an additional attack wave sent to a mission location once the mission is about to end.
 
 **NOTE:** QRFs are defined in the mission config. If you're not seeing any, delete your dc_missionConfig_XXX.json files to receive new ones.
