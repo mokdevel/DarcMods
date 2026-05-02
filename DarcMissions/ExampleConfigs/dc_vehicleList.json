@@ -1,0 +1,331 @@
+{
+    "jsonVersion": 2,
+    "author": "darc",
+    "modList": [],
+    "lists": [
+        {
+            "id": "VEHICLE_WHEELED_ALL",
+            "modDir": [
+                "Prefabs/Vehicles/Wheeled"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "VEHICLE_WHEELED_MILITARY_ALL",
+            "modDir": [
+                "Prefabs/Vehicles/Wheeled"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "VEHICLE_WHEELED_CIVILIAN_ALL",
+            "modDir": [
+                "Prefabs/Vehicles/Wheeled"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "VEHICLE_WHEELED_ARMED",
+            "modDir": [
+                "Prefabs/Vehicles/Wheeled"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "VEHICLE_WHEELED_UNARMED",
+            "modDir": [
+                "Prefabs/Vehicles/Wheeled"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "VEHICLE_WHEELED_ARMOR",
+            "modDir": [
+                "Prefabs/Vehicles/Wheeled"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "VEHICLE_WHEELED_CIVILIAN_TRUCK",
+            "modDir": [
+                "Prefabs/Vehicles/Wheeled"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "VEHICLE_WHEELED_MILITARY_TRUCK",
+            "modDir": [
+                "Prefabs/Vehicles/Wheeled"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "VEHICLE_WHEELED_CIVILIAN_CAR",
+            "modDir": [
+                "Prefabs/Vehicles/Wheeled"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "VEHICLE_WHEELED_MILITARY_CAR",
+            "modDir": [
+                "Prefabs/Vehicles/Wheeled"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "VEHICLE_HELICOPTER_ALL",
+            "modDir": [
+                "Prefabs/Vehicles/Helicopters"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts",
+                "_patrol"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "VEHICLE_CHOPPER_ALL",
+            "modDir": [
+                "Prefabs/Vehicles/Helicopters"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "VEHICLE_CHOPPER_TRANSPORT",
+            "modDir": [
+                "Prefabs/Vehicles/Helicopters"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "VEHICLE_CHOPPER_ARMED",
+            "modDir": [
+                "Prefabs/Vehicles/Helicopters"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts"
+            ],
+            "items": [],
+            "factions": []
+        }
+    ],
+    "akas": []
+}
