@@ -1,6 +1,9 @@
 # QRF - Quick Reaction Force
 A QRF or quick reaction force is an additional attack wave sent to a mission location once the mission is about to end.
 
+**NOTE:** QRFs are defined in the mission config. If you're not seeing any, delete your dc_missionConfig_XXX.json files to receive new ones.
+
+## Steps for spawn
 * The mission ends with a WIN or LOSE condition.
 * The ``activation`` rule is checked for the mission. If it matches, we check for chance.
 * The ``chance`` is modified by the difficult ``qrfChance``. The values are multiplied and the value represents percentage (1.0 = 100%).
