@@ -181,7 +181,9 @@ class SDRC_MissionFrameConfig : SDRC_Config
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-			enemyFactions = {"FIA"};
+//			enemyFactions = {"FIA"};
+//			enemyFactions = {"AFOA"};
+			enemyFactions = {"DSF"};
 //			enemyFactions = {"US"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION"};

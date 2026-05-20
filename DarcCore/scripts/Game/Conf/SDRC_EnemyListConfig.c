@@ -91,7 +91,15 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 		SDRC_Aka aka08 = new SDRC_Aka();
 		aka08.names = {"Takistan", "TA"};
 		akas.Insert(aka08);	
-																		
+
+		SDRC_Aka aka09 = new SDRC_Aka();
+		aka09.names = {"AFOA", "Argentina"};
+		akas.Insert(aka09);	
+	
+		SDRC_Aka aka10 = new SDRC_Aka();
+		aka10.names = {"DSF", "SAS", "SBS"};
+		akas.Insert(aka10);				
+																				
 		lists.Insert(enemyList00());
 		lists.Insert(enemyList01());
 		lists.Insert(enemyList02());
@@ -138,6 +146,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies
 			 "Cultists_Light", 											//Ballien Cultists
 			 "CloseProtectionTeam",										//RHS_ION
+			 "DSF_1983_SBS_Patrol",										//1st RM DSF			
 			},	
 			{"_Base", "_NotSpawned", "_Remnants", "_Random", "_Heavy"},
 			{}
@@ -160,6 +169,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing
 			 "CloseProtectionTeam",										//RHS_ION
 			 "TA_RifleSquad", 											//Takistan
+			 "Argentina_Sentry",										//1st RM AFOA
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -180,6 +190,8 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "PLASTICBANDIT_FireTeam_Heavy",							//Bandit faction
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing			
 			 "CloseProtectionTeam",										//RHS_ION
+			 "Argentina_AT",											//1st RM AFOA
+			 "DSF_1983_SAS_Patrol",										//1st RM DSF
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -201,6 +213,8 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing			
 			 "StaticSecurityTeam",										//RHS_ION						
 			 "TA_SentryTeam",											//Takistan
+			 "Argentina_Sentry",										//1st RM AFOA
+			 "DSF_1983_SAS_SpecialProjectsTeam",						//1st RM DSF
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -221,6 +235,8 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "PLASTICBANDIT_Squad",										//Bandit faction random team
 			 "JGSDF_2008_LightFireTeam",								//JSFD: Proper Group is missing
 			 "StaticSecurityTeam",										//RHS_ION			
+			 "Argentina_Sentry",										//1st RM AFOA
+			 "DSF_1983_SAS_Patrol",										//1st RM DSF			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -242,6 +258,8 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "JGSDF_2008_LightFireTeam",								//JSFD: Proper Group is missing
 			 "CloseProtectionTeam",										//RHS_ION
 			 "TA_Team_Suppress",										//Takistan
+			 "Argentina_Sentry",										//1st RM AFOA
+			 "DSF_1983_SAS_Patrol",										//1st RM DSF			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -263,6 +281,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Cultists_Horde", 											//Ballien Cultists
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing
 			 "QuickReactionForce",										//RHS_ION
+			 "Recce",													//1st RM DSF
 			},	
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -283,6 +302,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Cultists_Medium", 										//Ballien Cultists
 			 "PLASTICBANDIT_Squad",										//Bandit faction
 			 "MobileSecurityTeam",										//RHS_ION
+			 "SAS_SpecialProjectsTeam",									//1st RM DSF
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -304,6 +324,8 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "PLASTICBANDIT_Patrol",									//Bandit faction
 			 "JGSDF_2008_LightFireTeam",								//JSFD: Proper Group is missing
 			 "CloseProtectionTeam",										//RHS_ION
+			 "Argentina_Sentry",										//1st RM AFOA			
+			 "DSF_1983_SAS_Patrol",										//1st RM DSF
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -327,6 +349,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Civilian_Cultist", 										//Ballien Cultists
 			 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_1.et",	//Ballien Cultists
 			 "Marksman",												//RHS_ION
+			 "1983_SBS_RTO", "1983_SBS_SL", 							//1st RM DSF
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -347,6 +370,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_2.et",	//Ballien Cultists
 			 "JGSDF_2008_Rifleman",							//JSFD: Proper Character is missing
 			 "ION_Scout",									//RHS_ION
+			 "1983_SASRTO", "1983_SAS_SL", 					//1st RM DSF
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -367,6 +391,8 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Civilian_Cultist", 							//Ballien Cultists
 			 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et",	//Ballien Cultists
 			 "JGSDF_2008_TL",								//JSFD: Proper Character is missing
+			 "Argentina_NCO",								//1st RM AFOA			
+			 "SAS_Trooper", 								//1st RM DSF
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -410,6 +436,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et",	//Ballien Cultists
 			 "ION_Scout",									//RHS_ION			
 			 "TA_AR",										//Takistan			
+			 "SP_Trooper", 									//1st RM DSF
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -429,6 +456,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Kamikaze_Cultist",							//Ballien Cultists
 			 "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et",	//Ballien Cultists
 			 "ION_SL",										//RHS_ION			
+			 "Argentina_NCO",								//1st RM AFOA			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -493,6 +521,8 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "JGSDF_2008_Sniper",							//JSFD: Proper Character is missing
 			 "ION_Scout",									//RHS_ION			
 			 "TA_SL",										//Takistan			
+			 "Argentina_MAT",								//1st RM AFOA
+			 "SP_Trooper", "SP_Sapper",	"SAS_Demolitionist", //1st RM DSF			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}

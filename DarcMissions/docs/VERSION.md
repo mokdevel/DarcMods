@@ -5,6 +5,9 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 
+Main Features:
+* Support for Argentinian Infantry Forces from mod 1st RM Factions. Use ``AFOA`` or ``DSF`` as the faction.
+
 # 20260502
 Main Features:
 * Convoys move virtually when not near players.
