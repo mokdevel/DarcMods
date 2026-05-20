@@ -1,5 +1,8 @@
 //SDRC_ChopperComp.c
 
+// NOTE: The classes SDRC_ChopperCompClass and SDRC_ChopperComp are defined in DarcCore so that VehicleListHelper works 
+//       also with other mods. This is why they are modded here.
+
 //Changes done in prefabs:
 // - SCR_AIVehicleUsageComponent : Set true to Can Be Piloted
 
@@ -9,7 +12,7 @@
 
 //------------------------------------------------------------------------------------------------
 [ComponentEditorProps(category: "GameScripted/DarcChopper", description: "DarcChopper Main Component")]
-class SDRC_ChopperCompClass : ScriptComponentClass { }
+modded class SDRC_ChopperCompClass : ScriptComponentClass { }
 
 //------------------------------------------------------------------------------------------------
 [BaseContainerProps()]
@@ -69,7 +72,7 @@ class SDRC_ChopperParams
 }
 
 //------------------------------------------------------------------------------------------------
-class SDRC_ChopperComp : ScriptComponent
+modded class SDRC_ChopperComp : ScriptComponent
 {
 	private SDRC_ChopperComp s_Instance;	
 	ref array<vector> m_vSplinePoints = new array<vector>();
