@@ -1,6 +1,7 @@
 # Version history
 
 ## Next Version
+
 # 20260415
 Stable and Exp update. If chopper is spawned within 3m from ground/roof/.., it will first hover for 30secs before taking off. If you want immediate flight, spawn above the ground (use Left-Alt key).
 Fixes:

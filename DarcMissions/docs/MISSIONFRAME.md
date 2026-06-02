@@ -51,7 +51,10 @@ Related documentation:
 * [dc_missionConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md)
 
 ## Mission end (win or lose)
-Each mission has a win condition. The normal case is to eliminate a certain amount of AI to reach the goal. Once the win condition has been reached, the mission is kept alive for ```missionActiveTimeToEnd``` seconds. The time is reset if there is a player within ```missionActiveDistance```. At the end of a mission, all spawned items will despawn (for example camps) but also vehicles. 
+Each mission has a win condition. The normal case is to eliminate a certain amount of AI to reach the goal. Once the win condition has been reached, the mission is kept alive for ``missionActiveTimeToEnd`` seconds. The time is reset if there is a player within ``missionActiveDistance``. At the end of a mission, all spawned items will despawn (for example camps) but also vehicles.
+
+For each cycle of ``missionActiveTimeToEnd``, the time and distance values are modified by ``missionActiveDistanceMul`` and ``missionActiveTimeToEndMul``. This means that the active time and distance is decreased gradually to make sure the missions despawn at some point. 
+
 Available win conditions:
 ```
   0 = NONE 			  : Unused

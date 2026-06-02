@@ -4,11 +4,16 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+<empty>
 
+## 20260601
 Main Features:
 * Support for Argentinian Infantry Forces from mod 1st RM Factions. Use ``AFOA`` or ``DSF`` as the faction.
 
-# 20260502
+Fixes:
+* Loot box spawning crashes (fix for 1.7).
+
+## 20260502
 Main Features:
 * Convoys move virtually when not near players.
 * QRF functionality: Once a mission is cleared, there is a risk of a second wave of attack. Enabled for missions: *Crashsite, HvtItem, HvtVip, Occupation, Roadblock, Squatters, Stash*.
@@ -21,21 +26,21 @@ Main Features:
   * dc_enemyList.json
 * Modified mission loot and loot amounts. Slightly more loot now provided.
 
-# 20260414
+## 20260414
 Fixes:
 * Mission position validation fixes.
 
-# 20260413
+## 20260413
 Fixes:
 * Crashsite mission spawning height modified. Should/could crash closer to requested position.
 * Static missions did not spawn correctly if no players in game.
 
-# 20260410
+## 20260410
 Fixes:
 * Crashsite mission spawning on big maps was too far away.
 * Static missions could spawn in front of a player if joining immediately after server started.
 
-# 20260407
+## 20260407
 Main features:
 * Added ``maxDistanceToPlayer``. The max distance Dynamic missions will not spawn further from any player. See: https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONFRAME.md#mission-position
 
@@ -43,7 +48,7 @@ Fixes:
 * Rewrote the mission position search logic to support ``maxDistanceToPlayer``.
 * Building cache functionality was disabled. 
 
-# 20260328
+## 20260328
 Fixes in Chopper mission. 
 
 Main features:
@@ -54,7 +59,7 @@ Main features:
   * Mission chopper spawns in a random location optimally away from players. If no good place is found, random spawn is done.
   * Support for CmdtCousteau provided choppers. See: https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSION_CHOPPER.md#supported-helicopters
 
-# 20260323
+## 20260323
 Small fix update.
 
 Fixes:

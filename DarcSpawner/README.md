@@ -53,6 +53,12 @@ Some parameters are described in DarcMissions documentation
 - [LootLists](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LISTS.md#loot-lists)
 
 # Version history
+
+## 20260601
+Fixes:
+* Mod can be run stand alone. There was a dependency to DarcChopper.
+* Loot box spawning crashes (fix for 1.7).
+
 ## 20260502
 Compatibility compile for DarcCore.
 
