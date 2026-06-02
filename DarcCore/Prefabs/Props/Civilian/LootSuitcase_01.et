@@ -46,7 +46,7 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/DestructibleMultiPhase_Pro
    MaxCumulativeVolume 10000
    m_fMaxWeight 1000
   }
-  SCR_InventoryStorageManagerComponent "{661F07F0972C6369}" {
+  ScriptedInventoryStorageManagerComponent "{697F1A5D51532AE2}" {
   }
   ActionsManagerComponent "{661F07F0936E4812}" {
    ActionContexts {

@@ -61,7 +61,7 @@ GenericEntity : "{4E866C1E6F114AB4}Prefabs/Props/Military/SupplyBox/SupplyPortab
    MaxCumulativeVolume 10000
    m_fMaxWeight 1000
   }
-  SCR_InventoryStorageManagerComponent "{66E932829C43A228}" {
+  ScriptedInventoryStorageManagerComponent "{697F1A5AF5002A24}" {
   }
   ActionsManagerComponent "{66E311A8240AEB8A}" {
    ActionContexts {

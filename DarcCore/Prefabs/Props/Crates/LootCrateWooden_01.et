@@ -24,7 +24,7 @@ GenericEntity : "{7030822F7A54F479}Prefabs/Props/Crates/CrateWooden_01_base.et" 
    MaxCumulativeVolume 10000
    m_fMaxWeight 1000
   }
-  SCR_InventoryStorageManagerComponent "{6487018B8D7DC150}" {
+  ScriptedInventoryStorageManagerComponent "{697F1A5ABB0A5D4A}" {
   }
   ActionsManagerComponent "{648553C12639279E}" {
    ActionContexts {

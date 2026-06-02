@@ -31,7 +31,7 @@ GenericEntity : "{A5AC0827E24C1929}Prefabs/Props/Core/SupplyBox_Base.et" {
    MaxItemSize 1000 1000 1000
    m_fMaxWeight 1000000
   }
-  SCR_InventoryStorageManagerComponent "{6488DB069B96FABC}" {
+  ScriptedInventoryStorageManagerComponent "{697F1A5A250132F9}" {
   }
   ActionsManagerComponent "{64889D4667F7E0EB}" {
    ActionContexts {

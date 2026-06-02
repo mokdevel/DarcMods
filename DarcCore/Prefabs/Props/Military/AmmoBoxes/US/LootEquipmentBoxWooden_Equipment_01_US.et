@@ -35,7 +35,7 @@ GenericEntity : "{9C4642487946A666}Prefabs/Props/Military/AmmoBoxes/EquipmentBox
    MaxCumulativeVolume 10000
    m_fMaxWeight 1000
   }
-  SCR_InventoryStorageManagerComponent "{66E93285EB021DD2}" {
+  ScriptedInventoryStorageManagerComponent "{697F1A5AB663DD76}" {
   }
   ActionsManagerComponent "{5476B36C403D4CC0}" {
    Enabled 1
