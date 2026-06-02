@@ -204,6 +204,8 @@ sealed class SDRC_LootHelper
 		//NOTE: The below Resource.Load will result in an error if the ResourceName is not available. For example from 
 		//if (FileIO.FileExists("Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et")) ... 
 				
+		SDRC_Log.Add("[SDRC_LootHelper:AddToStorage] Adding to: " + entity, LogLevel.DEBUG);
+		
 		Resource resource = Resource.Load(item);
 		if (!resource.IsValid())
 			return null;		

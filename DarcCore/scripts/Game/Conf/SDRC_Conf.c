@@ -7,8 +7,6 @@ Stupid file to handle a few common variables accross multiple mods
 
 #define SDRC_RELEASE
 
-#define ENABLE_QRF						//Enable QRF functionality
-
 #ifdef SDRC_RELEASE
 	const bool SHOW_DEBUG_BOOL = false;		//Controls if debug visuals are to be shown. Disable for DarcMissions release.
 #else

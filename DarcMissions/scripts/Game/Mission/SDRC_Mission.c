@@ -1063,7 +1063,6 @@ class SDRC_Mission : Managed
 	{
 		//SDRC_Log.Add("[SDRC_Mission:DoQrf] QRF functionality not enabled yet. : idx:" + subIdx + " : " + qrf.comment, LogLevel.WARNING);
 		
-		#ifdef ENABLE_QRF
 		//If no QRF defned, return
 		if (!m_QrfConf)
 		{
@@ -1130,7 +1129,6 @@ class SDRC_Mission : Managed
 				SDRC_Log.Add("[SDRC_Mission:DoQrf] " + GetId() + " : Spawned " + groupCount + " groups to QRF.", LogLevel.DEBUG);
 			}
 		}		
-		#endif
 	}	
 		
 	//------------------------------------------------------------------------------------------------

@@ -74,7 +74,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 	int missionActiveDistance;					//The distance to a player to keep the mission active.
 	int missionActiveTimeToEnd;					//Time to keep the mission active once all AI is dead. Used for both dynamic and static missions.
 	float missionActiveDistanceMul;				//Multiplier to modify distance on every cycle when in win/lose state.
-	float missionActiveTimeToEndMul;			//multiplier to modify time on every cycle when in win/lose state.
+	float missionActiveTimeToEndMul;			//Multiplier to modify time on every cycle when in win/lose state.
 	int missionHintTime;						//Seconds to show mission hints to players. 0 disables hints.
 	SDRC_EHintPosition missionHintPosition;		//Mission hint position
 	//Randomization
