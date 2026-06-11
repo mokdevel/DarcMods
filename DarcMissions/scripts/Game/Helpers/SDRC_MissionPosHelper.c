@@ -9,7 +9,7 @@ Includes various functions for position check for valid areas.
 class SDRC_MissionPosHelper
 {
 	private const int DC_LOCATION_SEARCH_ITERATIONS = 8;		//How many different spots to try for a mission before giving up
-	private const int DC_LOCATION_SEARCH_RADIUS_INC = 30;		//The increase of search radius for each failed iteration
+	private const int DC_LOCATION_SEARCH_RADIUS_INC = 40;		//The increase of search radius for each failed iteration
 
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -21,7 +21,7 @@ class SDRC_MissionPosHelper
 	\param posRandomization Randomization for the found position
 	\return Location not found if "0 0 0" returned.
 	*/	
-	static vector SelectMissionPos(array<vector>positions, float size = 1, array<EMapDescriptorType> locationTypes = null, int posRandomization = -1)
+	static vector SelectMissionPos(array<vector>positions, float size = 1, bool onlyBasicChecks = true, array<EMapDescriptorType> locationTypes = null, int posRandomization = -1)
 	{
 		vector pos = "0 0 0";
 		
@@ -42,7 +42,7 @@ class SDRC_MissionPosHelper
 		{			
 			if (locationTypes)
 			{		
-				pos = SDRC_MissionPosHelper.FindMissionPosWithLocationTypes(locationTypes, size, posRandomization);
+				pos = SDRC_MissionPosHelper.FindMissionPosWithLocationTypes(locationTypes, size, onlyBasicChecks, posRandomization);
 			}
 		}
 				
@@ -53,7 +53,7 @@ class SDRC_MissionPosHelper
 	/*!
 	Select a mission position from the list of positions. "0 0 0" returned as default.
 	*/	
-	static vector SelectMissionPosFromPairs(out vector destination, array<vector>positions, float size = 1, array<EMapDescriptorType> locationTypes = null, int posRandomization = -1)
+	static vector SelectMissionPosFromPairs(out vector destination, array<vector>positions, float size = 1, bool onlyBasicChecks = true, array<EMapDescriptorType> locationTypes = null, int posRandomization = -1)
 	{
 		//Fill from-to positions for later use
 		array<vector> posFrom = {};
@@ -84,7 +84,7 @@ class SDRC_MissionPosHelper
 		
 		if (posFrom[0] == "0 0 0")
 		{
-			pos = SDRC_MissionPosHelper.SelectMissionPos(posFrom, size, locationTypes, posRandomization);
+			pos = SDRC_MissionPosHelper.SelectMissionPos(posFrom, size, onlyBasicChecks, locationTypes, posRandomization);
 		}
 		else
 		{
@@ -93,7 +93,7 @@ class SDRC_MissionPosHelper
 		
 		if (posTo[0] == "0 0 0")
 		{
-			destination = SDRC_MissionPosHelper.SelectMissionPos(posFrom, size, locationTypes, posRandomization);
+			destination = SDRC_MissionPosHelper.SelectMissionPos(posFrom, size, onlyBasicChecks, locationTypes, posRandomization);
 		}
 		else
 		{
@@ -174,7 +174,7 @@ class SDRC_MissionPosHelper
 	\param posRandomization Position randomization to avoid the same spot every time. -1 uses the value set in missionFrame settings.
 	\return Location not found if "0 0 0" returned.
 	*/	
-	static vector FindMissionPosWithLocationTypes(array<EMapDescriptorType> locationTypes, float size, int posRandomization = -1)
+	static vector FindMissionPosWithLocationTypes(array<EMapDescriptorType> locationTypes, float size, bool onlyBasicChecks = true, int posRandomization = -1)
 	{	
 		//Find a random location
 		vector pos = "0 0 0";
@@ -213,7 +213,7 @@ class SDRC_MissionPosHelper
 				SDRC_Log.Add("[SDRC_MissionHelper:FindMissionPos] Searching near: " + location.displayName + " " + location.pos, LogLevel.DEBUG);			
 			}
 	
-			vector newPos = FindWithIterate(pos, size, posRandomization);
+			vector newPos = FindWithIterate(pos, size, onlyBasicChecks, posRandomization);
 			if (newPos != "0 0 0")
 			{
 				//Found a suitable position. Return.
@@ -233,7 +233,7 @@ class SDRC_MissionPosHelper
 	\param posRandomization TBD
 	\return Location not found if "0 0 0" returned.
 	*/	
-	static vector FindWithIterate(vector pos, float size, int posRandomization = -1)
+	static vector FindWithIterate(vector pos, float size, bool onlyBasicChecks = true, int posRandomization = -1)
 	{
 		bool positionFound = false;		
 		vector posOrig = pos;
@@ -261,12 +261,12 @@ class SDRC_MissionPosHelper
 		for (int i = 0; i < DC_LOCATION_SEARCH_ITERATIONS; i++)
 		{
 			//Give the position some randomization so it's not always in the same spot.			
-			pos = SDRC_Misc.RandomizePos(posOrig, posRandomization);
+			pos = SDRC_Misc.RandomizePos(posOrig, searchRadius);
 			
-			//Find the position within posRandomization from pos.			
-			if (SDRC_SpawnHelper.FindEmptyPos(pos, posRandomization, size))
+			//Find the position within searchRadius from pos.			
+			if (SDRC_SpawnHelper.FindEmptyPos(pos, searchRadius, size))
 			{			
-				failReason = SDRC_MissionPosHelper.IsValidMissionPos(pos, true);
+				failReason = SDRC_MissionPosHelper.IsValidMissionPos(pos, onlyBasicChecks);
 				if (failReason == SDRC_EMissionError.NONE)
 				{				
 					positionFound = true;
@@ -277,7 +277,7 @@ class SDRC_MissionPosHelper
 			else
 			{	
 				searchRadius = searchRadius + DC_LOCATION_SEARCH_RADIUS_INC;	//Increase the are with DC_LOCATION_SEARCH_RADIUS_INC
-				SDRC_Log.Add("[SDRC_MissionHelper:FindWithIterate] Invalid position. Try " + (i + 1) + "/" + DC_LOCATION_SEARCH_ITERATIONS, LogLevel.SPAM);
+				SDRC_Log.Add("[SDRC_MissionHelper:FindWithIterate] Invalid position. Try " + (i + 1) + "/" + DC_LOCATION_SEARCH_ITERATIONS + ", searchRadius: " searchRadius+ , LogLevel.SPAM);
 			}
 		}
 

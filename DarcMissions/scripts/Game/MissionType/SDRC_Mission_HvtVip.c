@@ -51,7 +51,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		float radius = 100;					//Default size for the radius. 
 		array<string> buildingFilter = {};
 
-		vector pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_HvtVip.general.pos, m_DC_HvtVip.general.size, m_DC_HvtVip.general.locationTypes);
+		vector pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_HvtVip.general.pos, m_DC_HvtVip.general.size, true, m_DC_HvtVip.general.locationTypes);
 						
 		//Find a location for the mission
 		if (IsRequested())

@@ -70,7 +70,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		}
 		else
 		{				
-			pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_Chopper.general.pos, m_DC_Chopper.general.size, m_DC_Chopper.general.locationTypes, SDRC_Conf.POSITION_RANDOMIZATION);	//Randomization added to avoid the same position always
+			pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_Chopper.general.pos, m_DC_Chopper.general.size, true, m_DC_Chopper.general.locationTypes, SDRC_Conf.POSITION_RANDOMIZATION);	//Randomization added to avoid the same position always
 		}
 		
 		//No suitable location found.

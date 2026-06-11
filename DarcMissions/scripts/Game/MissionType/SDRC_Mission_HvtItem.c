@@ -48,6 +48,8 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		
 		//Find position
 		vector pos = "0 0 0";
+		//If pos has been set, we blindly accept it. Do basic checking for pos.
+		bool obc = (IsRequested() || IsStatic());
 		
 		//For requested missions we want have it as close as possible in the requested place.
 		if (IsRequested())
@@ -56,21 +58,16 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		}
 		else
 		{		
-			pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_HvtItem.general.pos, m_DC_HvtItem.general.size, m_DC_HvtItem.general.locationTypes);
+			pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_HvtItem.general.pos, m_DC_HvtItem.general.size, obc, m_DC_HvtItem.general.locationTypes);
 		}
 
-		//If pos has been set, we blindly accept it. Do basic checking for pos.
-		bool obc = (IsRequested() || IsStatic());
-		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested()) != SDRC_EMissionError.NONE)
+		SDRC_EMissionError missionError = SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested());
+		if (missionError != SDRC_EMissionError.NONE)
 		{
 			pos = "0 0 0";
-		}
-				
-		if (pos == "0 0 0")	//No suitable location found.
-		{				
-			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, missionError);
 			return;
-		}		
+		}
 		
 		//Camps are randomly rotated
 		m_fSpawnRotation = SDRC_Misc.RandomFloat(0, 360);

@@ -59,6 +59,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		
 		//Find a location for the mission
 		vector pos = "0 0 0";
+		//If pos has been set, we blindly accept it. Do basic checking for pos.
+		bool obc = (IsRequested() || IsStatic());
 		
 		//For requested missions we want have it as close as possible in the requested place.
 		if (IsRequested())
@@ -68,7 +70,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		}
 		else
 		{
-			pos = SDRC_MissionPosHelper.SelectMissionPosFromPairs(m_vPosDestination, m_DC_Convoy.general.pos, m_DC_Convoy.general.size, m_DC_Convoy.general.locationTypes);
+			pos = SDRC_MissionPosHelper.SelectMissionPosFromPairs(m_vPosDestination, m_DC_Convoy.general.pos, m_DC_Convoy.general.size, obc, m_DC_Convoy.general.locationTypes);
 		}
 
 		//If failed, stop
@@ -82,8 +84,6 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		SDRC_RoadPos roadPosStart = new SDRC_RoadPos();
 		pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPosStart, pos, 1000);
 		
-		//If pos has been set, we blindly accept it. Do basic checking for pos.
-		bool obc = (IsRequested() || IsStatic());
 		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested()) != SDRC_EMissionError.NONE)
 		{
 			pos = "0 0 0";
@@ -290,6 +290,11 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		const int DISTANCE_LERP = 100;
 		const int DISTANCE_ROADPOINT = 100;
 		const int DISTANCE_NEAR_WP = 30;
+		
+		if (!m_Vehicle)
+		{
+			return;
+		}
 		
 		//Find waypoint
 		if (m_Groups.IsEmpty())

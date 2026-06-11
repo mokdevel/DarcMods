@@ -43,6 +43,8 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		
 		//Find a location for the mission
 		vector pos = "0 0 0";
+		//If pos has been set, we blindly accept it. Do basic checking for pos.
+		bool obc = (IsRequested() || IsStatic());
 		
 		//For requested missions we want have it as close as possible in the requested place.
 		if (IsRequested())
@@ -51,11 +53,9 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		}
 		else
 		{				
-			pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_Roadblock.general.pos, m_DC_Roadblock.general.size, m_DC_Roadblock.general.locationTypes, SDRC_Conf.POSITION_RANDOMIZATION);
+			pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_Roadblock.general.pos, m_DC_Roadblock.general.size, obc, m_DC_Roadblock.general.locationTypes, SDRC_Conf.POSITION_RANDOMIZATION);
 		}
 		
-		//If pos has been set, we blindly accept it. Do basic checking for pos.
-		bool obc = (IsRequested() || IsStatic());
 		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested()) != SDRC_EMissionError.NONE)
 		{
 			pos = "0 0 0";

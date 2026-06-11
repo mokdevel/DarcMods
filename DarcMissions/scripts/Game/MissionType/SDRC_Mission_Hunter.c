@@ -53,6 +53,8 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		
 		//Find position
 		vector pos = m_DC_Hunter.general.pos.GetRandomElement();
+		//If pos has been set, we blindly accept it. Do basic checking for pos.
+		bool obc = (IsRequested() || IsStatic());
 		
 		//For requested missions we want have it as close as possible in the requested place.
 		if (IsRequested())
@@ -88,19 +90,13 @@ class SDRC_Mission_Hunter : SDRC_Mission
 			}
 		}
 
-		//If pos has been set, we blindly accept it. Do basic checking for pos.
-		bool obc = (IsRequested() || IsStatic());
-		if (SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested()) != SDRC_EMissionError.NONE)
+		SDRC_EMissionError missionError = SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested());
+		if (missionError != SDRC_EMissionError.NONE)
 		{
 			pos = "0 0 0";
-		}
-			
-		//If failed, stop
-		if (pos == "0 0 0")
-		{				
-			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
+			SetState(SDRC_EMissionState.FAILED, missionError);
 			return;
-		}	
+		}			
 				
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Hunter.general.posName));

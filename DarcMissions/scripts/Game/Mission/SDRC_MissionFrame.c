@@ -173,7 +173,7 @@ class SDRC_MissionFrame
 		#endif	
 		
 		ref SDRC_Mission tmpDC_Mission = null;
-		SDRC_EMissionType missionType = null;
+		SDRC_EMissionType missionType = SDRC_EMissionType.NONE;
 		bool staticMissionSpawned = false;
 		int staticMissionsCount = CountStaticMissions();
 		

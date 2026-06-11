@@ -60,6 +60,8 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		
 		//The location to crash to.
 		vector pos = "0 0 0";
+		//If pos has been set, we blindly accept it. Do basic checking for pos.
+		bool obc = (IsRequested() || IsStatic());
 
 		//For requested missions we want have it as close as possible in the requested place.
 		if (IsRequested())
@@ -71,8 +73,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		{
 			for (int i = 0; i < DC_LOCATION_SEACRH_ITERATIONS; i++)
 			{
-				pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_Crashsite.general.pos, m_DC_Crashsite.general.size, m_DC_Crashsite.general.locationTypes);
-				bool obc = (IsRequested() || IsStatic());
+				pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_Crashsite.general.pos, m_DC_Crashsite.general.size, true, m_DC_Crashsite.general.locationTypes);
 				if (SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested()) != SDRC_EMissionError.NONE)
 				{
 					pos = "0 0 0";

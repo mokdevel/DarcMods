@@ -4,7 +4,13 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
-<empty>
+Fixes: 
+* Map marker text was not visible.
+
+## 20260610
+Fixes:
+* Fixed mission position search issues. Should result in less mission start failures.
+* Crash when Convoy mission vehicle is not available while doing virtual movement.
 
 ## 20260601
 Main Features:
