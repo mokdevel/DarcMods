@@ -2,6 +2,10 @@
 
 ## Next Version
 
+## 20260611
+Fixes:
+* Giving Force Move to a chopper still raising, resulted in a hovering heli. You can now immediately give a Force Move command. The initial flight is not as smooth as by using a normal Move command.
+
 # 20260415
 Stable and Exp update. If chopper is spawned within 3m from ground/roof/.., it will first hover for 30secs before taking off. If you want immediate flight, spawn above the ground (use Left-Alt key).
 Fixes:

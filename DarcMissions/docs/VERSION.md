@@ -4,6 +4,16 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+<empty>
+
+Fixes:
+
+Internals:
+* Changed ``ContainerSerializationSaveContext`` to ``SaveContainerContext``
+* Changed ``SCR_JsonLoadContext`` to ``JsonLoadContext``
+* Added additional aiAgent is null checks.
+
+## 20260611
 Fixes: 
 * Map marker text was not visible.
 
