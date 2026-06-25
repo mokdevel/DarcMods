@@ -77,6 +77,7 @@ sealed class SDRC_MapMarkerHelper
 		SCR_MapMarkerBase markerst = new SCR_MapMarkerBase();
 		
 		markerst.SetType(markerType);
+		
 		markerst.SetCustomText(title);
 		if (faction)
 		{

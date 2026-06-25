@@ -143,6 +143,27 @@ class SDRC_ChopperCompCore
 		{
 			return;
 		}
+
+		ResetOriginalValuesComp(chopperComp);
+/*		chopperComp.m_fThrottle = chopperComp.m_fThrottleOrig;
+		chopperComp.m_fRotorForce0 = chopperComp.m_fRotorForce0Orig;
+		chopperComp.m_fRotorForce1 = chopperComp.m_fRotorForce1Orig;
+		chopperComp.m_fSpeedMin = chopperComp.m_fSpeedMinOrig;
+		chopperComp.m_fSpeedMax = chopperComp.m_fSpeedMaxOrig;	
+		
+		chopperComp.SetEngine(true, chopperComp.m_fThrottle, chopperComp.m_fRotorForce0, chopperComp.m_fRotorForce1);
+		
+		//Reset runtime parameters
+		chopperComp.m_fSpeedSlowingMul = 1.0;*/
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	static void ResetOriginalValuesComp(SDRC_ChopperComp chopperComp)
+	{
+		if (!chopperComp)
+		{
+			return;
+		}
 		
 		chopperComp.m_fThrottle = chopperComp.m_fThrottleOrig;
 		chopperComp.m_fRotorForce0 = chopperComp.m_fRotorForce0Orig;
@@ -154,5 +175,5 @@ class SDRC_ChopperCompCore
 		
 		//Reset runtime parameters
 		chopperComp.m_fSpeedSlowingMul = 1.0;
-	}	
+	}		
 }

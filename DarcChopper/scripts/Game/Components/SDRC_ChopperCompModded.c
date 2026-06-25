@@ -359,6 +359,7 @@ modded class SDRC_ChopperComp
 				//Fly immediately to a destination
 				//Remove any existing destination
 				ResetDestinations();
+				SDRC_ChopperCompCore.ResetOriginalValuesComp(this);
 				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
 				type = SDRC_EFlyWayPointType.WP_FLY;
 				SetState(SDRC_EHeliState.FLY);
@@ -368,6 +369,7 @@ modded class SDRC_ChopperComp
 			{
 				//Fly away immediately
 				ResetDestinations();
+				SDRC_ChopperCompCore.ResetOriginalValuesComp(this);
 				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
 				//NOTE: Will drop through WP_FLY_AWAY
 			}		
@@ -447,6 +449,7 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_M_RESET:
 			{
 				ResetDestinations();
+				SDRC_ChopperCompCore.ResetOriginalValuesComp(this);
 				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
 				addDestinationPoint = false;
 				break;
