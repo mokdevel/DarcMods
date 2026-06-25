@@ -727,7 +727,7 @@ class SDRC_Mission : Managed
 	void ShowMarker()
 	{
 		//If static mission, check if we are to show a marker
-		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		if (IsStatic() && !baseGameMode.missionFrame.m_Config.showStaticMissionMarker)
 		{
 			return;
@@ -737,12 +737,16 @@ class SDRC_Mission : Managed
 		if (IsShowMarker() && baseGameMode.missionFrame.m_Config.showDynamicMissionMarker)
 		{
 			string markerType = GetMarkerType();
-			SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), GetMarkerIcon(), GetId(), GetTitle(), markerTypeString: markerType);
 			
 			if (baseGameMode.missionFrame.m_Config.showMissionDifficulty)
 			{
 				int difficultyIcon = GetDifficulty();	//NOTE: This returns a value 0-4 which represents SDRC_EMissionIconDifficulty
-				SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), difficultyIcon, GetId(), "", markerTypeString: "DARC_MISSION_DIFFICULTY");
+				SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), GetMarkerIcon(), GetId(), "", markerTypeString: markerType);
+				SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), difficultyIcon, GetId(), GetTitle(), markerTypeString: "DARC_MISSION_DIFFICULTY");
+			}
+			else
+			{
+				SDRC_MapMarkerHelper.CreateMapMarker(GetPos(), GetMarkerIcon(), GetId(), GetTitle(), markerTypeString: markerType);
 			}
 		}
 	}
