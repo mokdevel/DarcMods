@@ -482,6 +482,12 @@ sealed class SDRC_AIHelper
 	*/
 	static SCR_AIGroup GroupAddAI(AIAgent aiAgent, SCR_AIGroup group = null)
 	{
+		if (!aiAgent)
+		{
+			SDRC_Log.Add("[SDRC_AIHelper:GroupAddAI] aiAgent is null.", LogLevel.ERROR);			
+			return null;
+		}
+		
 		if (!group)
 		{
 			string faction = GetAIAgentFactionKey(aiAgent);
@@ -596,6 +602,11 @@ sealed class SDRC_AIHelper
 	*/
 	static FactionKey GetAIAgentFactionKey(AIAgent aiAgent)
 	{
+		if (!aiAgent)
+		{
+			SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] aiAgent is null.", LogLevel.ERROR);			
+		}
+		
 		FactionKey factionKey = "";
 
 		//SDRC_Log.Add("[SDRC_AIHelper:GetAIAgentFactionKey] Checking: " + aiAgent, LogLevel.DEBUG);
