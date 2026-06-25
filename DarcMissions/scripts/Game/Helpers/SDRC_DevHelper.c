@@ -10,7 +10,7 @@ sealed class SDRC_DevHelper
 {
 	static void SDRC_DevDump()	
 	{
-		return;
+		//return;
 		
 //		GetGame().GetCallqueue().CallLater(ShowTestMessage, 2000, true);
 		SDRC_MapMarkerHelper.CreateMapMarker("0300 0 1400", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
