@@ -261,7 +261,7 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 	ref array<ref SDRC_HvtVip> subMissions = {};	//List of HvtVips
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_HvtVipConfig data = SDRC_HvtVipConfig.Cast(T);
 		return saveContext.WriteValue("", data);

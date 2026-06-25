@@ -361,7 +361,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 	ref array<ref SDRC_Convoy> subMissions = {};	//List of convoys
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_ConvoyConfig data = SDRC_ConvoyConfig.Cast(T);
 		return saveContext.WriteValue("", data);

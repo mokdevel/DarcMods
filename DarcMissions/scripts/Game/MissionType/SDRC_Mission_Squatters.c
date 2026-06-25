@@ -200,7 +200,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 	ref array<ref SDRC_Squatter> subMissions = {};		//List of squatters
 
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_SquatterConfig data = SDRC_SquatterConfig.Cast(T);
 		return saveContext.WriteValue("", data);

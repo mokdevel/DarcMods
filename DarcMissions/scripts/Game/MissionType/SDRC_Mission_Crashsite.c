@@ -319,7 +319,7 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 	ref array<ref SDRC_Crashsite> subMissions = {};		//List of crashsites
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_CrashsiteConfig data = SDRC_CrashsiteConfig.Cast(T);
 		return saveContext.WriteValue("", data);

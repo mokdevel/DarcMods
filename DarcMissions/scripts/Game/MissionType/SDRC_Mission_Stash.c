@@ -142,7 +142,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 	ref array<ref SDRC_Camp> subMissions = {};	//List of Stashs
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_StashConfig data = SDRC_StashConfig.Cast(T);
 		return saveContext.WriteValue("", data);

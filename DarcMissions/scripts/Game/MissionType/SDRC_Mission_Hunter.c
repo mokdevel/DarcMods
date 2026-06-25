@@ -302,7 +302,7 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 	ref array<ref SDRC_Hunter> subMissions = {};	//List of hunters
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_HunterConfig data = SDRC_HunterConfig.Cast(T);
 		return saveContext.WriteValue("", data);

@@ -14,7 +14,7 @@ class SDRC_DeathMarkerConfig : SDRC_Config
 	bool visibleOnlyToFaction;		//If true, the marker is only visible for other members in the same faction.
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_DeathMarkerConfig data = SDRC_DeathMarkerConfig.Cast(T);
 		return saveContext.WriteValue("", data);

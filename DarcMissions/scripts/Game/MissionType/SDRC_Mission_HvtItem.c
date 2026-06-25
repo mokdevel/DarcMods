@@ -188,7 +188,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 	ref array<ref SDRC_HvtItem> subMissions = {};	//List of HvtItems
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_HvtItemConfig data = SDRC_HvtItemConfig.Cast(T);
 		return saveContext.WriteValue("", data);

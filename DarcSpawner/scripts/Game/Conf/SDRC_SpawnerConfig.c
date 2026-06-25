@@ -44,7 +44,7 @@ class SDRC_SpawnerConfig : SDRC_Config
 	ref array<ref SDRC_SpawnSet> spawnSets = {};	
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_SpawnerConfig data = SDRC_SpawnerConfig.Cast(T);
 		return saveContext.WriteValue("", data);

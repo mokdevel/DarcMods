@@ -43,7 +43,7 @@
 class SDRC_EnemyListConfig : SDRC_ListConfig
 {
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_EnemyListConfig data = SDRC_EnemyListConfig.Cast(T);
 		return saveContext.WriteValue("", data);

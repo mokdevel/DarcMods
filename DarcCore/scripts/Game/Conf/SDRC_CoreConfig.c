@@ -24,7 +24,7 @@ class SDRC_CoreConfig : SDRC_Config
 	ref array<ref SDRC_LocationAka> buildingAkas = {};
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_CoreConfig data = SDRC_CoreConfig.Cast(T);
 		return saveContext.WriteValue("", data);

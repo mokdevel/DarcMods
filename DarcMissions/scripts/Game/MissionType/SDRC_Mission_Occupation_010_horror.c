@@ -17,7 +17,7 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 	}	
 
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_OccupationConfig_010 data = SDRC_OccupationConfig_010.Cast(T);
 		return saveContext.WriteValue("", data);

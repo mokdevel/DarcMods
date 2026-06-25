@@ -28,7 +28,7 @@ class SDRC_QrfConfig : SDRC_Config
 	ref array<ref SDRC_Qrf> qrfs = {};	//List of different waves
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_QrfConfig data = SDRC_QrfConfig.Cast(T);
 		return saveContext.WriteValue("", data);

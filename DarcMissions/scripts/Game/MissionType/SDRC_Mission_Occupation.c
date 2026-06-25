@@ -138,7 +138,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 	ref array<ref SDRC_Camp> subMissions = {};		//List of occupations
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_OccupationConfig data = SDRC_OccupationConfig.Cast(T);
 		return saveContext.WriteValue("", data);

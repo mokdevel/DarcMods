@@ -27,7 +27,7 @@ VEHICLE_CHOPPER_ARMED
 class SDRC_VehicleListConfig : SDRC_ListConfig
 {
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_VehicleListConfig data = SDRC_VehicleListConfig.Cast(T);
 		return saveContext.WriteValue("", data);

@@ -11,7 +11,7 @@ class SDRC_Config : Managed
 {
 	int jsonVersion = -1;
 	
-	bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 	}
 		
@@ -34,7 +34,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 	//------------------------------------------------------------------------------------------------
 	bool Load(Managed T, SDRC_Config C, int jsonVersion, bool createMissingFiles = true, bool safeUpdate = false)
 	{	
-		SCR_JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
+		JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
 		{
 			if (!createMissingFiles)
@@ -141,7 +141,7 @@ class SDRC_JsonApi2 : JsonApiStruct
 	void Save(Managed T, SDRC_Config C)
 	{
 		bool useTypeDiscriminator = false;
-        ContainerSerializationSaveContext saveContext = new ContainerSerializationSaveContext(false);
+        SaveContainerContext saveContext = new SaveContainerContext(false);
 		saveContext.EnableTypeDiscriminator(useTypeDiscriminator);
 
         PrettyJsonSaveContainer container = new PrettyJsonSaveContainer;
@@ -165,9 +165,9 @@ class SDRC_JsonApi2 : JsonApiStruct
 	Load the json config	
 	\param createMissingFiles Defines if the SDRC_Conf.OVERWRITE_JSON setting is to be respected. If false, overwrite of files will not happen.
 	*/
-	SCR_JsonLoadContext LoadConfig(bool createMissingFiles = true)
+	JsonLoadContext LoadConfig(bool createMissingFiles = true)
 	{	
-		SCR_JsonLoadContext loadContext = new SCR_JsonLoadContext(false);
+		JsonLoadContext loadContext = new JsonLoadContext(false);
 		
 		if (SDRC_Conf.OVERWRITE_JSON && createMissingFiles)
 		{
@@ -199,15 +199,15 @@ class SDRC_JsonApi2 : JsonApiStruct
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	SCR_JsonSaveContext SaveConfigOpen()
+	JsonLoadContext SaveConfigOpen()
 	{
-		SCR_JsonSaveContext saveContext = new SCR_JsonSaveContext();
+		JsonLoadContext saveContext = new JsonLoadContext();
 		
 		return saveContext;
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void SaveConfigClose(SCR_JsonSaveContext saveContext)
+	void SaveConfigClose(JsonSaveContext saveContext)
 	{
 //		string dataString = saveContext.ExportToString();
 //		ExpandFromRAW(dataString);

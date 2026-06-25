@@ -191,7 +191,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 	ref array<ref SDRC_Camp> subMissions = {};		//List of roadblocks - uses the same structure as for occupations	
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_RoadblockConfig data = SDRC_RoadblockConfig.Cast(T);
 		return saveContext.WriteValue("", data);

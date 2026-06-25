@@ -17,7 +17,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_HvtItemConfig_010 data = SDRC_HvtItemConfig_010.Cast(T);
 		return saveContext.WriteValue("", data);

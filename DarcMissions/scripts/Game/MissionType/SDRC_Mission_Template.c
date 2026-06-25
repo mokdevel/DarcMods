@@ -112,7 +112,7 @@ class SDRC_TemplateConfig : SDRC_MissionConfig
 	//Mission specific variables here
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_TemplateConfig data = SDRC_TemplateConfig.Cast(T);
 		return saveContext.WriteValue("", data);

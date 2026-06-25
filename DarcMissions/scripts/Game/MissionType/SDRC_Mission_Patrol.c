@@ -183,7 +183,7 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 	ref array<ref SDRC_Patrol> subMissions = {};	//List of patrols
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_PatrolConfig data = SDRC_PatrolConfig.Cast(T);
 		return saveContext.WriteValue("", data);

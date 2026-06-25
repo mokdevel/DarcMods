@@ -468,7 +468,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 	ref array<ref SDRC_Chopper> subMissions = {};			//List of sub missions
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_ChopperConfig data = SDRC_ChopperConfig.Cast(T);
 		return saveContext.WriteValue("", data);

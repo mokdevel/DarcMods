@@ -17,7 +17,7 @@ class SDRC_StashConfig_010 : SDRC_StashConfig
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_StashConfig_010 data = SDRC_StashConfig_010.Cast(T);
 		return saveContext.WriteValue("", data);

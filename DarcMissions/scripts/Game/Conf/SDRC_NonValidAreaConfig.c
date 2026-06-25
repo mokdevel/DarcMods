@@ -38,7 +38,7 @@ class SDRC_NonValidAreaConfig : SDRC_Config
 	ref array<ref SDRC_NonValidArea> m_NonValidAreas = {};		//List of areas where missions shall not spawn.
 
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_NonValidAreaConfig data = SDRC_NonValidAreaConfig.Cast(T);
 		return saveContext.WriteValue("", data);
