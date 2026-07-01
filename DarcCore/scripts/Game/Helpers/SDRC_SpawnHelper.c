@@ -263,13 +263,13 @@ class SDRC_SpawnHelper
 			if ( (isTracked) && (!persistence) )
 			{
 				success = PersistenceSystem.GetInstance().StopTracking(entity);
-				SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistence] Persistence disabled for: " + entity.GetPrefabData().GetPrefabName() + " - success: " + success, LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistence] Persistence disabled for: " + entity.GetPrefabData().GetPrefabName() + " - success: " + success, LogLevel.SPAM);
 			}
 			
 			if (persistence)
 			{
 				success = PersistenceSystem.GetInstance().StartTracking(entity);
-				SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistence] Persistence enabled for: " + entity.GetPrefabData().GetPrefabName() + " - success: " + success, LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_SpawnHelper:SetPersistence] Persistence enabled for: " + entity.GetPrefabData().GetPrefabName() + " - success: " + success, LogLevel.SPAM);
 			}
 		}	
 	}	
