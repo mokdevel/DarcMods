@@ -262,7 +262,7 @@ class SDRC_CompatFFConfig : SDRC_Config
 	int rewardDefault = 500;					//Default reward unless specific reward has been set in a mission. (WIP)
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_CompatFFConfig data = SDRC_CompatFFConfig.Cast(T);
 		return saveContext.WriteValue("", data);
