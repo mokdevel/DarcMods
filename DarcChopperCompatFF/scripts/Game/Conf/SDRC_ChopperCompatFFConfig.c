@@ -1,7 +1,16 @@
-//#define TESTING
+#define TESTING
 
 static const string DC_COMPATCONFIG_FILE = "dc_compatFFConfigChopper.json";
 static const int DC_COMPATCONFIG_FILE_JSONVER = 1;
+
+/* HOW TO TEST
+- Move player to a city
+- #ff battlestart 
+-- This will start the battle and spawn a chopper
+- #ff battleresolve win (or lose)
+
+See: https://www.johnnykerner.dev/FreedomFighters/modding/dev-tools/chat-commands/index.html
+*/
 
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperCompatFF
@@ -61,7 +70,7 @@ class SDRC_ChopperCompatFFConfig : SDRC_Config
 	ref array<ref SDRC_ChopperCompatFF> attacks = {};		//List of sub attacks
 	
 	//------------------------------------------------------------------------------------------------
-	override bool DoSave(ContainerSerializationSaveContext saveContext, Class T)
+	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
 		SDRC_ChopperCompatFFConfig data = SDRC_ChopperCompatFFConfig.Cast(T);
 		return saveContext.WriteValue("", data);
@@ -108,7 +117,7 @@ class SDRC_ChopperCompatFFConfig : SDRC_Config
 			spawnDistance = {500, 700};
 			spawnDelay = {0, 0};
 			chopperCount = {2};
-			attackTime = 1;
+			attackTime = {20, 60};
 			attackList = {0};
 		#endif		
 		//----------------------------------------------------
