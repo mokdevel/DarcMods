@@ -6,6 +6,7 @@ No changes in mission jsons.
 ## Next release (unreleased)
 <empty>
 
+## 20260701
 Fixes:
 * Fix for AI not spawning properly inside choppers and convoys. (Thanks Gramps!)
 
