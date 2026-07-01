@@ -7,6 +7,7 @@ No changes in mission jsons.
 <empty>
 
 Fixes:
+* Fix for AI not spawning properly inside choppers and convoys. (Thanks Gramps!)
 
 Internals:
 * Changed ``ContainerSerializationSaveContext`` to ``SaveContainerContext``

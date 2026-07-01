@@ -2,6 +2,10 @@
 
 ## Next Version
 
+## 20260701
+Fixes:
+* Fix for AI not spawning properly inside choppers. (Thanks Gramps!)
+
 ## 20260611
 Fixes:
 * Giving Force Move to a chopper still raising, resulted in a hovering heli. You can now immediately give a Force Move command. The initial flight is not as smooth as by using a normal Move command.
