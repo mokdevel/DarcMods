@@ -85,8 +85,8 @@ The mission faction is defined in ``enemyFactions`` or individually per sub-miss
 You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission. 
 
 Example: ``"enemyFactions": ["FIA", "USSR", "USSR"]`` - 33% missions are with FIA, 66% with USSR
-
-NOTE: If you're playing [Freedom Fighters](https://reforger.armaplatform.com/workshop/CAFEBEEFF0CACC1A-FreedomFighters) and have [DarcMissionsCompatFF](https://reforger.armaplatform.com/workshop/6698F8DD1B444BEB-DarcMissionsCompatFF) in use, it may override the ``enemyFactions`` setting. Please see ``setEnemyFactionAutomatically`` in [DarcMissionsCompatFF](https://github.com/mokdevel/DarcMods/tree/main/DarcMissionsCompatFF#parameters).
+### Freedom Fighters
+If you're playing [Freedom Fighters](https://reforger.armaplatform.com/workshop/CAFEBEEFF0CACC1A-FreedomFighters) and have [DarcMissionsCompatFF](https://reforger.armaplatform.com/workshop/6698F8DD1B444BEB-DarcMissionsCompatFF) in use, it may override the ``enemyFactions`` setting. Please see ``setEnemyFactionAutomatically`` in [DarcMissionsCompatFF](https://github.com/mokdevel/DarcMods/tree/main/DarcMissionsCompatFF#parameters).
 
 ### Mission factions
 Each sub-mission within the specific mission json, has a parameter ``faction``. This is the override faction for the mission. You can define multiple factions and when enemies are chosen, the faction is chosen randomly per sub-mission. Leaving it empty or ``""``, works as the default to select from the ``enemyFactions``.

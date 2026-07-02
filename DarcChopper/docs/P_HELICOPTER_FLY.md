@@ -43,7 +43,9 @@ The component has default values that work quite well for the vanilla helicopter
 ### AI settings
 For more details, on AI functionality, read [AI section](https://github.com/mokdevel/DarcMods/tree/main/DarcChopper#ai-functionality)
 
-* ``Faction`` : The override faction to use. The vehicle has a faction assigned to it and this will override it. Faction is used for selecting crew faction.
+* ``Faction`` : Faction is used for selecting crew faction. You can use this to override the defaul faction.
+  * ``empty`` : Vehicle assigned faction will be used. 
+  * ``FACTION`` : The assigned faction will be used and the default vehicle faction be overridden. Example: ``US``.
 * ``Cargo Seat Fill`` : How many passengers to spawn and occupy seats.
   * ``NONE`` : No AI to spawn in cargo.
   * ``RANDOM`` : Random count from 1 to FULL

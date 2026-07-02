@@ -32,6 +32,11 @@ The helicopters piloted by AIs can be found by filtering with DarcChopper. There
 
 NOTE: You can not set the helicopter on ground and let it lift off and start to fly. This is by design.
 
+## Faction selection
+Faction selection for the helicopter affects the selection of AI to spawn inside the helicopter. 
+* If the mod is used as a stand-alone, the default assigned for the vehicle will be used. See: [Faction](https://github.com/mokdevel/DarcMods/blob/main/DarcChopper/docs/P_HELICOPTER_FLY.md#ai-settings)
+* If the mod is used with DarcMissions, the faction assigned will be overriden by the faction used by DarcMissions. See: [Factions](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md#factions)
+
 ## First flight
 When spawned, helicopter will check it's altitude to make sure it's above ``Fly Height Low``. If not, the helicopter will be moved and this may look like an ugly jump. Helicopter will start to fly to the direction where the nose is pointing - the yellow arrow in the image. You can use ``key: ALT`` to change altitude and rotate with ``key: LEFT SHIFT``.
 
