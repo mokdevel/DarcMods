@@ -70,6 +70,26 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 		SDRC_Aka aka01 = new SDRC_Aka();
 		aka01.names = {"RHS_AFRF", "USSR"};
 		akas.Insert(aka01);		
+		
+		SDRC_Aka aka02 = new SDRC_Aka();
+		aka02.names = {"MEI", "USSR"};
+		akas.Insert(aka02);		
+
+		SDRC_Aka aka03 = new SDRC_Aka();
+		aka03.names = {"Takistan", "USSR"};
+		akas.Insert(aka03);
+		
+		SDRC_Aka aka04 = new SDRC_Aka();
+		aka04.names = {"ChinesePLA", "USSR"};
+		akas.Insert(aka04);
+		
+		SDRC_Aka aka05 = new SDRC_Aka();
+		aka05.names = {"JSDF_RAS", "US"};
+		akas.Insert(aka05);
+		
+		SDRC_Aka aka06 = new SDRC_Aka();
+		aka06.names = {"UK", "US"};
+		akas.Insert(aka06);		
 	}
 			
 	//Vehiclelist: VEHICLE_WHEELED_ALL
