@@ -169,6 +169,24 @@ The filtering is done with keywords.
 * ``HELICOPTER`` : The vehicle has VehicleHelicopterSimulation component.
 * ``CHOPPER`` : The vehicle has SDRC_ChopperComp component.
 
+## SDRC_Aka
+Also known as - other names used for example for factions. If you want a certain faction to use specific vehicles from a specific faction, you can define them here. The first item in the array is the *faction* and the second name is the *renamed faction*.
+```
+array<string> names : The faction name and the renamed faction name in this order.
+```
+
+### Example
+This is the case for example with RHS. RHS uses the faction name ``RHS_USAF`` but there are no vehicles with that faction (by default). You would like to have ``US`` faction vehicles for the faction use.
+```
+"akas": [
+  {
+    "names": [
+      "RHS_USAF",
+      "US"
+    ]
+  }
+```
+
 # Examples
 ## Example lootList
 The below example with the name ```WEAPON_RIFLE``` will search three mods for items matching the include and exclude filters. The full path for the search is ```$Modname:Prefabs/Weapons/Rifles``` where the ``$Modname`` parameter is picked from the modList. Internally we're searching for all files ending in ```.et```. Initally all items will be listed. 
