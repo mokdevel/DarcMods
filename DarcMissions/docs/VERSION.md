@@ -9,6 +9,7 @@ No changes in mission jsons.
 ## 20260703
 Main Features:
 * 'Akas' for vehicles. You can define a faction to use vehicles from specific faction. For example, RHS_USAF to use US helicopters and vehicles. Some defaults defined in dc_vehicleList.json.
+* dc_vehicleList.json will auto update to latest.
 
 ## 20260701
 Fixes:

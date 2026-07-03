@@ -9,7 +9,7 @@ Functions for various vehicle list related things
 sealed class SDRC_VehicleListHelper
 {
 	private const string DC_MISSIONCONFIG_FILE_VEHICLELIST = "dc_vehicleList.json";
-	private const int DC_MISSIONCONFIG_FILE_VEHICLELIST_JSONVER = 2;
+	private const int DC_MISSIONCONFIG_FILE_VEHICLELIST_JSONVER = 3;
 	
 	private static ref SDRC_JsonApi2 m_JsonApi = null;
 	private static ref SDRC_VehicleListConfig m_Config = new SDRC_VehicleListConfig();			

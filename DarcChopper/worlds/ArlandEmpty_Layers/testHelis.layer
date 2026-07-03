@@ -72,12 +72,15 @@ $grp Vehicle : "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed
      }
      SDRC_FlyPathPoint "{691AB4977EA697DA}" {
       type WP_HOVER_UP
-      pt 0 30 0
+      pt 0 40 0
       value 5
      }
      SDRC_FlyPathPoint "{691AB49764E2F2A6}" {
       type WP_RAISE
-      pt 200 20 0
+      pt 200 60 0
+     }
+     SDRC_FlyPathPoint "{69C740199AEF59C6}" {
+      pt 3300 0 2600
      }
     }
    }
