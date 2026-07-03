@@ -505,7 +505,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			
 			if (   (m_eHeliState == SDRC_EHeliState.FLY) 
 				|| (m_eHeliState == SDRC_EHeliState.FLY_AWAY) 
-//				|| (m_eHeliState == SDRC_EHeliState.RAISE)
+				|| (m_eHeliState == SDRC_EHeliState.RAISE)
 			   )
 			{
 				//Define a new destination and create a new path
@@ -791,7 +791,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			case SDRC_EHeliState.RAISE:
 			{
 				//In RAISE state, do slow climb
-				bigMul = 10;
+				bigMul = 40;
 				break;
 			}
 			case SDRC_EHeliState.BRAKE:

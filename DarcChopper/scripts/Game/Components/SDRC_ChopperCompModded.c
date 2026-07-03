@@ -712,12 +712,6 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_RAISE:
 			{				
 				SetState(SDRC_EHeliState.RAISE);
-				int stateTime = m_vFlyDestinations[0].value;
-				if (stateTime == 0)
-				{
-					stateTime = 5;
-				}
-				SetTimeInState(stateTime);
 				
 				//NOTE: We do not use AddDestination() for setting the flight. We just add points in the spline
 				
@@ -747,7 +741,7 @@ modded class SDRC_ChopperComp
 				
 				float pdiff = pos[1] - m_vOrigin[1];
 				
-				const int RAISE_POINT_COUNT = 8;
+				const int RAISE_POINT_COUNT = 12;
 				
 				for (int i = 0; i < RAISE_POINT_COUNT; i++)
 				{	
@@ -760,9 +754,17 @@ modded class SDRC_ChopperComp
 				m_iClosestIndex = 3;				
 				
 				//Make a short flight forward to stabilize flight
-				vector pos2 = SDRC_ChopperHelper.GetDestinationForward(owner, m_vFlyDestinations[0].pt[0] * 10);
+				vector pos2 = SDRC_ChopperHelper.GetDestinationForward(owner, m_vFlyDestinations[0].pt[0] * 2);
 				pos2[1] = pos[1];
-				AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos, index: 1);
+				AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos2, index: 1);
+				
+				//We enforce a time unless it has been defined
+				int stateTime = m_vFlyDestinations[0].value;
+				if (stateTime <= 0)	
+				{
+					stateTime = m_vFlyDestinations[0].pt[0] / 30;	//For 200m, it's around 7 secs
+				}
+				SetTimeInState(stateTime);				
 				
 				SDRC_ChopperDebug.DrawDebugPaths(owner);
 				isRemoveDestination = true;
