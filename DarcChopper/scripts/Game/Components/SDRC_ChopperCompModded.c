@@ -419,7 +419,7 @@ modded class SDRC_ChopperComp
 				m_fBrakingDistance = value;
 				break;
 			}
-			
+
 			//These just fall through
 			case SDRC_EFlyWayPointType.WP_WAIT:
 			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
@@ -683,6 +683,11 @@ modded class SDRC_ChopperComp
 		switch (nextType)
 		{
 			case SDRC_EFlyWayPointType.WP_UNDEFINED:
+/*			case SDRC_EFlyWayPointType.WP_LAND:
+			{
+				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
+				break;
+			}*/
 			case SDRC_EFlyWayPointType.WP_FLY:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
@@ -707,12 +712,21 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_RAISE:
 			{				
 				SetState(SDRC_EHeliState.RAISE);
-				//SetTimeInState(10);
-				//NOTE: We do not use AddDestination() for setting the flight. We just add one point in the spline
+				int stateTime = m_vFlyDestinations[0].value;
+				if (stateTime == 0)
+				{
+					stateTime = 5;
+				}
+				SetTimeInState(stateTime);
 				
-				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
-				m_fSpeed = 0.1;
-				m_fSpeedMin = 0.1;
+				//NOTE: We do not use AddDestination() for setting the flight. We just add points in the spline
+				
+				SDRC_ChopperCompCore.ResetOriginalValues(owner);	//Reset heli settings
+				m_fSpeed = 2;										//Set a speed to start the raise from	
+				m_fSpeedMax = m_fSpeedMin * 1.5;
+				m_fSpeedMin = 2;
+				m_fThrottle = 2.5;
+				
 				//For raise, we add points to the spline
 				ResetFlight();
 				
@@ -727,21 +741,28 @@ modded class SDRC_ChopperComp
 				float height = m_vFlyDestinations[0].pt[1];
 				if (height == -1)	//See docs
 				{
-					height = m_fFlyHeightLow + 2;
+					height = m_fFlyHeightLow + 5;
 				}
 				pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + height;			//Fly to a point slightly above low fly point
 				
 				float pdiff = pos[1] - m_vOrigin[1];
 				
-				for (int i = 0; i < 20; i++)
+				const int RAISE_POINT_COUNT = 8;
+				
+				for (int i = 0; i < RAISE_POINT_COUNT; i++)
 				{	
-					vector pt = vector.Lerp(owner.GetOrigin(), pos, i/20);
-					pt[1] = m_vOrigin[1] + pdiff * SDRC_Math.HalfBell(i/20);
-					m_vSplinePoints.Insert(pt);										
-//					m_vSplinePoints.Insert(vector.Lerp(owner.GetOrigin(), pos, i/20));
+					vector pt = vector.Lerp(owner.GetOrigin(), pos, i / RAISE_POINT_COUNT);
+					pt[1] = m_vOrigin[1] + pdiff * SDRC_Math.HalfBell(i / RAISE_POINT_COUNT);
+					m_vSplinePoints.Insert(pt);
+//					m_vSplinePoints.Insert(vector.Lerp(owner.GetOrigin(), pos, i/RAISE_POINT_COUNT));
 				}
 				
 				m_iClosestIndex = 3;				
+				
+				//Make a short flight forward to stabilize flight
+				vector pos2 = SDRC_ChopperHelper.GetDestinationForward(owner, m_vFlyDestinations[0].pt[0] * 10);
+				pos2[1] = pos[1];
+				AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos, index: 1);
 				
 				SDRC_ChopperDebug.DrawDebugPaths(owner);
 				isRemoveDestination = true;

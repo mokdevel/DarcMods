@@ -505,6 +505,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			
 			if (   (m_eHeliState == SDRC_EHeliState.FLY) 
 				|| (m_eHeliState == SDRC_EHeliState.FLY_AWAY) 
+//				|| (m_eHeliState == SDRC_EHeliState.RAISE)
 			   )
 			{
 				//Define a new destination and create a new path
@@ -660,7 +661,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		if (m_eHeliState == SDRC_EHeliState.RAISE)
 		{
 			//Turn nose down
-			m_fAnglePitch = -15 * Math.DEG2RAD;
+			m_fAnglePitch = -25 * Math.DEG2RAD;
 		}
 		
 		m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fAnglePitch);
@@ -870,11 +871,11 @@ modded class SDRC_ChopperComp : ScriptComponent
 			//These are added in reverse order to index 0
 			vector hoverPos = vector.Zero;
 			hoverPos[1] = (m_fFlyHeightLow + m_fFlyHeightHigh) / 2;
-			AddDestination(SDRC_EFlyWayPointType.WP_RAISE, hoverPos, 5, 0);
+			AddDestination(SDRC_EFlyWayPointType.WP_RAISE, hoverPos, index: 0);
 			hoverPos[1] = m_fFlyHeightLow;
 			AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 5, 0);
 			#ifdef WORKBENCH			
-				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, "0 0 0", 30, 0);
+				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, "0 0 0", 8, 0);
 			#else
 				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, "0 0 0", 30, 0);
 			#endif

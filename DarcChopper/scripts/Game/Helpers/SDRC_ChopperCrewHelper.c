@@ -51,7 +51,7 @@ class SDRC_ChopperCrewHelper
 				}
 				else
 				{
-					factionReason = "user defined on vehicle";
+					factionReason = "Defined on vehicle by user/modder";
 				}
 			}
 		}

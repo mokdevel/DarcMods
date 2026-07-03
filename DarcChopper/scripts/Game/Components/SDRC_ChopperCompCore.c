@@ -12,13 +12,13 @@ enum SDRC_EFlyWayPointType
 	WP_FLY_AWAY_IMMEDIATELY,	//4  - Fly away immediately removing the previous destinations
 	WP_PATROL,					//5  - Patrol around an area 
 	WP_PATROL_ONCE,				//6  - Do one patrol round around an area.
-	WP_LAND,					//   - 
-	WP_WAIT,					//   - 
-	WP_WAIT_GETOUT,				//   - Wait during get out. Sets the time and goes to WAIT
-	WP_RAISE,					//   - 
-	WP_HOVER,					//   - Heli is hovering in one place
-	WP_HOVER_UP,				//   - Heli is hovering up
-	WP_GET_OUT,					//   - 
+	WP_LAND,					//7  - 
+	WP_WAIT,					//8  - 
+	WP_WAIT_GETOUT,				//9  - Wait during get out. Sets the time and goes to WAIT
+	WP_RAISE,					//10 - 
+	WP_HOVER,					//11 - Heli is hovering in one place
+	WP_HOVER_UP,				//12 - Heli is hovering up
+	WP_GET_OUT,					//13 - 
 	WP_BRAKE,					//   - Slow the heli down to stand still
 	WP_END,						//   - 
 	WP_DESPAWN,					//   - 
@@ -42,16 +42,16 @@ enum SDRC_EFlyWayPointType
 enum SDRC_EHeliState
 {
 	UNKNOWN,
-	FLY,					//Normal state
-	FLY_AWAY,				//In this state, when all destinations have been flown through, we fly away and end.
-	FLY_AWAY_IMMEDIATELY,	//NOTE: This is not a real state. When set, state will change to FLY_AWAY
-	LAND,					//Chopper is landing
-	BRAKE,					//Chopper is braking
-	WAIT,					//NOTE: Velocity disabled
-	RAISE,					//Heli is raising and moving forward to given position
-	HOVER,					//Heli is hovering at given height
-	HOVER_UP,				//Heli is hovering upwards
-	GET_OUT,				//One frame state to order AI to get out
+	FLY,					// 1 - Normal state
+	FLY_AWAY,				// 2 - In this state, when all destinations have been flown through, we fly away and end.
+	FLY_AWAY_IMMEDIATELY,	// 3 - NOTE: This is not a real state. When set, state will change to FLY_AWAY
+	LAND,					// 4 - Chopper is landing
+	BRAKE,					// 5 - Chopper is braking
+	WAIT,					// 6 - NOTE: Velocity disabled
+	RAISE,					// 7 - Heli is raising and moving forward to given position
+	HOVER,					// 8 - Heli is hovering at given height
+	HOVER_UP,				// 9 - Heli is hovering upwards
+	GET_OUT,				//10 - One frame state to order AI to get out
 	END,
 	
 	ON_GROUND,				//One frame state for touch down
