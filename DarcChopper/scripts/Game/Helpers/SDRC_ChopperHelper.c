@@ -323,6 +323,11 @@ class SDRC_ChopperHelper
 	//------------------------------------------------------------------------------------------------	
 	static int FindNextSplinePointIndex(vector origin, int currentIndex, array<vector> splinePoints)
 	{
+		if (splinePoints.IsEmpty())
+		{
+			return 0;
+		}
+		
 		float distance = vector.Distance(origin, splinePoints[currentIndex]);
 		int newIndex = currentIndex;
 		

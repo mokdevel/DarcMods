@@ -844,6 +844,8 @@ modded class SDRC_ChopperComp
 				SetState(SDRC_EHeliState.WAIT);
 				SetTimeInState(30);
 				isRemoveDestination = true;
+				
+				//ResetFlight();	//TBD: Check if lines are staying on screen after stop engine 
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_WAIT:
@@ -868,8 +870,11 @@ modded class SDRC_ChopperComp
 		
 		//Remove the destination if it was handled.	By default it is.
 		if ( (isRemoveDestination) && (allowRemove) )
-		{
-			m_vFlyDestinations.RemoveOrdered(0);
+		{			
+			if (!m_vFlyDestinations.IsEmpty())
+			{
+				m_vFlyDestinations.RemoveOrdered(0);
+			}
 		}
 	}		
 			
