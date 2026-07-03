@@ -236,6 +236,19 @@ sealed class SDRC_VehicleListHelper
 			return "";				
 		}
 
+		//Fix faction according to aka
+		foreach (SDRC_Aka aka : m_Config.akas)
+		{
+			if (aka.names.Count() > 1)
+			{
+				if (faction == aka.names[0])
+				{
+					faction = aka.names[1];
+				}
+			}
+		}
+		
+		//Find the proper vehicle		
 		ResourceName resourceName = "";
 		
 		if (!m_Config.lists[vehicleIndex].items.IsEmpty())
