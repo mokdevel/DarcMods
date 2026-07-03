@@ -2,6 +2,11 @@
 
 ## Next Version
 
+## 20260703
+Fixes:
+* Giving certain commands during RAISE state, resulted in floating helicopter.
+* RAISE to FLY movement is smoother.
+
 ## 20260701
 Fixes:
 * Fix for AI not spawning properly inside choppers. (Thanks Gramps!)

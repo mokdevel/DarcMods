@@ -6,6 +6,10 @@ No changes in mission jsons.
 ## Next release (unreleased)
 <empty>
 
+## 20260703
+Main Features:
+* 'Akas' for vehicles. You can define a faction to use vehicles from specific faction. For example, RHS_USAF to use US helicopters and vehicles. Some defaults defined in dc_vehicleList.json.
+
 ## 20260701
 Fixes:
 * Fix for AI not spawning properly inside choppers and convoys. (Thanks Gramps!)
