@@ -1,6 +1,8 @@
 # Version history
 
 ## Next Version
+Fixes:
+* Waypoint lines are not shown for helicopters that have landed.
 
 ## 20260703
 Fixes:

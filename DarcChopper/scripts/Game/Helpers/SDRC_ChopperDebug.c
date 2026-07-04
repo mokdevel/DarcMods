@@ -28,7 +28,12 @@ class SDRC_ChopperDebug
 		{
 			return;
 		}
-		
+
+		if (chopperComp.GetState() == SDRC_EHeliState.DESTROYED)
+		{
+			return;
+		}
+				
 		//Add every nth spline point
 		int nth = (chopperComp.m_vSplinePoints.Count() - chopperComp.m_iClosestIndex) / 8;
 		nth = Math.ClampInt(nth, 4, 15);
