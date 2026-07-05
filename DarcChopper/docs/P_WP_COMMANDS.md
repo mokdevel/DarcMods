@@ -115,23 +115,23 @@ This will set the behaviour of the chopper to SEARCH_AND_DESTROY_BEHAVIOUR for a
 ## Macro commands
 Assigning single macro command will perform a set of single commands. 
 
-* WP_M_LAND_TROOPS : Drop of troops to exact position, wait and leave
+* ``WP_M_LAND_TROOPS`` : Drop of troops to exact position, wait and leave
   * WP_LAND, WP_GET_OUT, WP_WAIT, WP_HOVER_UP, WP_RAISE
-* WP_M_LAND_TO_FREE_SPOT : Drop of troops, but search for empty spot. Stop engine.
+* ``WP_M_LAND_TO_FREE_SPOT`` : Drop of troops, but search for empty spot. Stop engine.
   * Search for safe spot, WP_LAND, WP_GET_OUT, WP_STOP_ENGINE, WP_END
-* WP_M_EVAC_TROOPS : Drop troops to a safe spot and stop engine. This action is automatically done if helicopter is heavily damaged.
+* ``WP_M_EVAC_TROOPS`` : Drop troops to a safe spot and stop engine. This action is automatically done if helicopter is heavily damaged.
   * Search for safe spot, WP_LAND, WP_GET_OUT, WP_STOP_ENGINE, WP_END
-* WP_M_ATTACK : For now, same as WP_M_SUPPRESSIVE. Will be changed!
-* WP_M_SUPPRESSIVE : Bomb run on the area without the need to have an enemy
+* ``WP_M_ATTACK`` : For now, same as WP_M_SUPPRESSIVE. Will be changed!
+* ``WP_M_SUPPRESSIVE`` : Bomb run on the area without the need to have an enemy
   * WP_ATTACK, WP_FLY, WP_FLY - randomly multiple times
 
 ## Internal commands
 Not to be used for normal use.
 
-* WP_UNDEFINED : Do not use
-* WP_M_RESET : Reset destinations. Cut the current flight planned and pick the next destination in the list.
-* WP_M_CUT : Cut the current flight planned and pick the next destination in the list.
-* WP_M_TESTING : Just for testing
+* ``WP_UNDEFINED`` : Do not use
+* ``WP_M_RESET`` : Reset destinations. Cut the current flight planned and pick the next destination in the list.
+* ``WP_M_CUT`` : Cut the current flight planned and pick the next destination in the list.
+* ``WP_M_TESTING`` : Just for testing
 
 # Behaviour
 The chopper can be given a behaviour. You should not use the SetBehaviour() API from your mod unless you really know what you're doing. 
