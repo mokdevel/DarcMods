@@ -36,31 +36,31 @@ The commands are put in a First-In-First-Out array from where they're picked onc
 * ``WP_SEARCH_DESTROY``* : Search for enemy by patroling an area. If enemy is found, attack the location.
 
 ### WP_FLY
-<TBD>
+_TBD_
 
 ### WP_FLY_AWAY
-<TBD>
+_TBD_
 
 ### WP_FLY_AWAY_IMMEDIATELY
-<TBD>
+_TBD_
 
 ### WP_FLY_IMMEDIATELY
-<TBD>
+_TBD_
 
 ### WP_PATROL
-<TBD>
+_TBD_
 
 ### WP_PATROL_ONCE
-<TBD>
+_TBD_
 
 ### WP_LAND
-<TBD>
+_TBD_
 
 ### WP_WAIT
-<TBD>
+_TBD_
 
 ### WP_WAIT_GETOUT
-<TBD>
+_TBD_
 
 ### WP_RAISE
 Raises the helicopter from the current position to given position while moving forward increasing speed.
@@ -84,7 +84,7 @@ Hover the helicopter up from the current height.
 * ``value`` : Time to use for upwards movement
 
 ### WP_GET_OUT
-<TBD>
+_TBD_
 
 ### WP_BRAKE
 Brakes the helicopter speed to stand still.
@@ -95,16 +95,16 @@ Brakes the helicopter speed to stand still.
   * If 0, defaults to 200.
 
 ### WP_END
-<TBD>
+_TBD_
 
 ### WP_DESPAWN
-<TBD>
+_TBD_
 
 ### WP_STOP_ENGINE
-<TBD>
+_TBD_
 
 ### WP_ATTACK
-<TBD>
+_TBD_
 
 ### WP_SEARCH_DESTROY
 This will set the behaviour of the chopper to SEARCH_AND_DESTROY_BEHAVIOUR for a given time before returning back to NORMAL_BEHAVIOUR. The chopper will arrive at the destination and start to patrol the area. Enemy is searched with a cycle of 2 seconds. If an enemy is found, current flight is interrupted, and a new flight pattern to attack the enemy is created. Chopper will stay in attack mode for 60 seconds and then resume to patroling. 
