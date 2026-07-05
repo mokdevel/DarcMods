@@ -15,34 +15,61 @@ The function takes three parameters. Depending on the command used, the result m
 The commands are put in a First-In-First-Out array from where they're picked once the previous command has executed. The exception is ``WP_FLY`` which will be performed in a serie. 
 
 ## Tested (and should work)
-* ``WP_ATTACK`` : Sets attack position to shoot at. This is performed once.
-* ``WP_BRAKE``* : Brakes the helicopter speed to stand still.
-* ``WP_DESPAWN`` : Despawn the helicopter. KNOWN: AI is not despawned so .. lot's of fun. :-)
-* ``WP_END`` : Stop running SDRC_ChopperComp and let AR handle everything
 * ``WP_FLY`` : Fly, normal flight pattern
 * ``WP_FLY_AWAY`` : Fly away as a last move.
 * ``WP_FLY_AWAY_IMMEDIATELY`` : Fly away immediately removing any added destinations. This will interrupt any existing flight plans.
 * ``WP_FLY_IMMEDIATELY`` : Fly, but remove all already added destinations. This will interrupt any existing flight plans.
-* ``WP_GET_OUT`` : Order AI to get out from the chopper
-* ``WP_HOVER``* : Hover at a certain altitude
-* ``WP_HOVER_UP``* : Hover the helicopter up from the current height.
-* ``WP_M_CUT`` : Cut the current flight planned and pick the next destination in the list.
-* ``WP_M_RESET`` : Reset destinations. Cut the current flight planned and pick the next destination in the list.
 * ``WP_PATROL`` : Patrol around an area.
 * ``WP_PATROL_ONCE`` : Do one patrol round around an area.
-* ``WP_RAISE``* : Raises the helicopter from the current position to given position while moving forward increasing speed.
-* ``WP_SEARCH_DESTROY``* : Search for enemy by patroling an area. If enemy is found, attack the location.
-* ``WP_STOP_ENGINE`` : Helicopter engine is stopped. Does the action and goes to WAIT state. 
+* ``WP_LAND`` : Order chopper to do landing sequence
 * ``WP_WAIT`` : Wait, before moving to next state
 * ``WP_WAIT_GETOUT`` : Same as WP_WAIT, but time set is dependent on crew count
+* ``WP_RAISE``* : Raises the helicopter from the current position to given position while moving forward increasing speed.
+* ``WP_HOVER``* : Hover at a certain altitude
+* ``WP_HOVER_UP``* : Hover the helicopter up from the current height.
+* ``WP_GET_OUT`` : Order AI to get out from the chopper
+* ``WP_BRAKE``* : Brakes the helicopter speed to stand still.
+* ``WP_END`` : Stop running SDRC_ChopperComp and let AR handle everything
+* ``WP_DESPAWN`` : Despawn the helicopter. KNOWN: AI is not despawned so .. lot's of fun. :-)
+* ``WP_STOP_ENGINE`` : Helicopter engine is stopped. Does the action and goes to WAIT state. 
+* ``WP_ATTACK`` : Sets attack position to shoot at. This is performed once.
+* ``WP_SEARCH_DESTROY``* : Search for enemy by patroling an area. If enemy is found, attack the location.
 
-### WP_BRAKE
-Brakes the helicopter speed to stand still.
-* ``destination[0][2]`` : The position XZ to stop at.
-* ``destination[1]`` : The relative height from ground to stop at. This is not exact, but rather a wish. 
-  * If 0, normal flight pattern height is set.
-* ``value`` : Distance to start braking. 
-  * If 0, defaults to 200.
+### WP_FLY
+<TBD>
+
+### WP_FLY_AWAY
+<TBD>
+
+### WP_FLY_AWAY_IMMEDIATELY
+<TBD>
+
+### WP_FLY_IMMEDIATELY
+<TBD>
+
+### WP_PATROL
+<TBD>
+
+### WP_PATROL_ONCE
+<TBD>
+
+### WP_LAND
+<TBD>
+
+### WP_WAIT
+<TBD>
+
+### WP_WAIT_GETOUT
+<TBD>
+
+### WP_RAISE
+Raises the helicopter from the current position to given position while moving forward increasing speed.
+* ``destination[0]`` : The relative distance to move forward.
+  * If 0, defaults to 200
+* ``destination[1]`` : The relative distance from ground to raise to. 
+  * If -1, set the height to (minimum fly height + 5).
+* ``destination[2]`` : Not used
+* ``value`` : Not used
 
 ### WP_HOVER
 Hover the helicopter at current height. You should always do a ``WP_BRAKE`` before this.
@@ -56,20 +83,34 @@ Hover the helicopter up from the current height.
 * ``destination[2]`` : Not used
 * ``value`` : Time to use for upwards movement
 
+### WP_GET_OUT
+<TBD>
+
+### WP_BRAKE
+Brakes the helicopter speed to stand still.
+* ``destination[0][2]`` : The position XZ to stop at.
+* ``destination[1]`` : The relative height from ground to stop at. This is not exact, but rather a wish. 
+  * If 0, normal flight pattern height is set.
+* ``value`` : Distance to start braking. 
+  * If 0, defaults to 200.
+
+### WP_END
+<TBD>
+
+### WP_DESPAWN
+<TBD>
+
+### WP_STOP_ENGINE
+<TBD>
+
+### WP_ATTACK
+<TBD>
+
 ### WP_SEARCH_DESTROY
 This will set the behaviour of the chopper to SEARCH_AND_DESTROY_BEHAVIOUR for a given time before returning back to NORMAL_BEHAVIOUR. The chopper will arrive at the destination and start to patrol the area. Enemy is searched with a cycle of 2 seconds. If an enemy is found, current flight is interrupted, and a new flight pattern to attack the enemy is created. Chopper will stay in attack mode for 60 seconds and then resume to patroling. 
 * ``destination`` : The position to keep an eye on. The helicopter will patrol around this area with a circle of 400m.  
 * ``value`` : The time to be in SEARCH_AND_DESTROY_BEHAVIOUR. Once time has passed, we return to NORMAL_BEHAVIOUR.
   * GM default: 600
-
-### WP_RAISE
-Raises the helicopter from the current position to given position while moving forward increasing speed.
-* ``destination[0]`` : The relative distance to move forward.
-  * If 0, defaults to 200
-* ``destination[1]`` : The relative distance from ground to raise to. 
-  * If -1, set the height to (minimum fly height + 5).
-* ``destination[2]`` : Not used
-* ``value`` : Not used
 
 ## Macro commands
 Assigning single macro command will perform a set of single commands. 
@@ -85,8 +126,11 @@ Assigning single macro command will perform a set of single commands.
   * WP_ATTACK, WP_FLY, WP_FLY - randomly multiple times
 
 ## Internal commands
+Not to be used for normal use.
+
 * WP_UNDEFINED : Do not use
-* WP_LAND : Order chopper to do landing sequence
+* WP_M_RESET : Reset destinations. Cut the current flight planned and pick the next destination in the list.
+* WP_M_CUT : Cut the current flight planned and pick the next destination in the list.
 * WP_M_TESTING : Just for testing
 
 # Behaviour
