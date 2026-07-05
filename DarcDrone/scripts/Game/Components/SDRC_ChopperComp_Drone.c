@@ -10,6 +10,8 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		type = SDRC_EChopperType.DRONE;
 		//Turn
 		turnSpeedDivider = 45;
+		turnSpeedDegreeMin = 1;
+		turnSpeedDegreeMax = 90;
 		turnTimeIntervalBase = 40;
 	
 		//Roll 
@@ -26,6 +28,7 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 
 		//Obstacle awareness
 		rayLenFront = 100;
+		rayDown = 50;
 				
 		//Damage levels
 		damageHeavy = 0.60;
@@ -37,6 +40,9 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 														
 		destinationForwardInitial = 200;
 		destinationForward = 100;
+		
+		//Flight pattern related
+		patrolRadius = 100;
 	}
 }
 
@@ -93,7 +99,7 @@ modded class SDRC_ChopperComp
 			//m_DroneControllerComponent.m_InputManager.SetActionValue("DroneUp", 3.0);
 		}
 		
-		SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY, -1);
+		SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, -1);
 		
 		array<ref SDRC_PlayerPos> playerPosArray = {};
 		SDRC_PlayerHelper.GetPlayersClosestToPosition(playerPosArray, owner.GetOrigin(), 1000);
@@ -261,10 +267,9 @@ modded class SDRC_ChopperComp
 		SCR_EntityHelper.DeleteEntityAndChildren(grenade);
 		dropperComp.m_BGrenadeDropped = true;
 		
-		EntitySpawnParams params = new EntitySpawnParams();
-		params.Transform = transform;
-		GetGame().SpawnEntityPrefab(Resource.Load(dropperComp.m_DropperGrenade), GetGame().GetWorld(), params);
-		SAL_DroneConnectionManager.GetInstance().DropGrenadeBroadcast(droneId);
-		
+		EntitySpawnParams spawnParams = EntitySpawnParams();
+		spawnParams.Transform = transform;
+		GetGame().SpawnEntityPrefab(Resource.Load(dropperComp.m_DropperGrenade), GetGame().GetWorld(), spawnParams);
+		SAL_DroneConnectionManager.GetInstance().DropGrenadeBroadcast(droneId);		
 	}
 }

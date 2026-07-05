@@ -41,6 +41,8 @@ class SDRC_ChopperParams
 	SDRC_EChopperType type = SDRC_EChopperType.HELICOPTER;
 	//Turn
 	int turnSpeedDivider;							//The divider that affects how much speed is decreased on sharp turns. The higher the value, the less brake.	Was: 42	
+	int turnSpeedDegreeMin;							//Min/Max angles that affects the speed decrease on turns.
+	int turnSpeedDegreeMax;
 	int turnTimeIntervalBase;						//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
 
 	//Roll 
@@ -69,6 +71,10 @@ class SDRC_ChopperParams
 													//If chopper destination makes a too steep turn, we will add a few additional points.
 	int destinationForwardInitial;					//Distance to fly forward on first fligth at init
 	int destinationForward;							//Distance to fly forward on first fligth at init
+	
+	//Flight pattern related
+	int patrolRadius;								//Default radius for WP_PATROL and WP_PATROL_ONCE commands
+	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -192,7 +198,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	private bool m_bSetupDone = false;					//Setup may be called from mod or via EOnInit. Run it only once.
 	
 	//HeliBehaviour
-	private const int TIME_IN_BEHAVIOUR = 600;		//(seconds) Default time to stay in behaviour 
+	private const int TIME_IN_BEHAVIOUR = 600;			//(seconds) Default time to stay in behaviour 
 	private SDRC_EHeliBehaviour m_eHeliBehaviour;
 	float m_fTimerBehaviour = 0;						//Timer to stay in behaviour before changing to NORMAL
 	float m_fTimerBehaviourCycle = 0;					//Timer between actions while in non-NORMAL behaviour
@@ -442,7 +448,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_fTimerBehaviourCycle -= timeSlice;
 
 		//---
-		//TBD: This section is not needed every frame. Could be done every x seconds - not that critical
 		//Check if we're still functional	
 		if (!IsStillWorking(owner, m_bInInit))
 		{
@@ -627,7 +632,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_fDbgAngle = angle;
 		
 		//Count the angle of the turn. The steeper the turn, the slower heli should be moving.
-		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), 1, 90);											//Was 1,90
+		m_fSpeedMul = Math.Clamp((angle * Math.RAD2DEG), params.turnSpeedDegreeMin, params.turnSpeedDegreeMax);
 		m_fSpeedMul = m_fThrottle * (SPEED_GAIN - (m_fSpeedMul / params.turnSpeedDivider));
 
 		//In case we're landing, we need to modify the speed
@@ -820,7 +825,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 				float rayLen = SDRC_Misc.RayCastXZ(owner.GetOrigin(), rayEnd, owner);			
 				if (rayLen < 1)
 				{
-					//rayLenMul = 1 + 10 * (1 - rayLen);
 					rayLenMul = 10 * (1.3 - rayLen);
 				}
 			}
@@ -1094,7 +1098,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 						float value = flyDestination.value;
 						if (value <= 0)
 						{
-							value = 400;	//TBD: This is hard coded value for the circle
+							value = params.patrolRadius;
 						}
 						float range = Math.RandomFloat(value * 0.7, value * 1.3);					
 						//Make waypoints around the position to patrol.					

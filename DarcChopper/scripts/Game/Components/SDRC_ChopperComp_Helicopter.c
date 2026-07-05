@@ -10,6 +10,8 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		type = SDRC_EChopperType.HELICOPTER;
 		//Turn
 		turnSpeedDivider = 92;
+		turnSpeedDegreeMin = 1;
+		turnSpeedDegreeMax = 90;
 		turnTimeIntervalBase = 40;
 	
 		//Roll 
@@ -38,6 +40,9 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 														
 		destinationForwardInitial = 400;
 		destinationForward = 200;
+		
+		//Flight pattern related
+		patrolRadius = 300;		
 	}
 }
 
