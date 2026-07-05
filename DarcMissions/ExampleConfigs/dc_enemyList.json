@@ -22,7 +22,8 @@
                 "Group_Zombies_US",
                 "Group_Zombies_USSR",
                 "Cultists_Light",
-                "CloseProtectionTeam"
+                "CloseProtectionTeam",
+                "DSF_1983_SBS_Patrol"
             ],
             "exclude": [
                 "_Base",
@@ -55,7 +56,8 @@
                 "PLAGF_SentryTeam",
                 "JGSDF_2008_SentryTeam",
                 "CloseProtectionTeam",
-                "TA_RifleSquad"
+                "TA_RifleSquad",
+                "Argentina_Sentry"
             ],
             "exclude": [
                 "_Base",
@@ -80,7 +82,9 @@
                 "Cultists_Medium",
                 "PLASTICBANDIT_FireTeam_Heavy",
                 "JGSDF_2008_SentryTeam",
-                "CloseProtectionTeam"
+                "CloseProtectionTeam",
+                "Argentina_AT",
+                "DSF_1983_SAS_Patrol"
             ],
             "exclude": [
                 "_Base",
@@ -104,7 +108,9 @@
                 "PLASTICBANDIT_Squad",
                 "JGSDF_2008_SentryTeam",
                 "StaticSecurityTeam",
-                "TA_SentryTeam"
+                "TA_SentryTeam",
+                "Argentina_Sentry",
+                "DSF_1983_SAS_SpecialProjectsTeam"
             ],
             "exclude": [
                 "_Base",
@@ -127,7 +133,9 @@
                 "Cultists_Light",
                 "PLASTICBANDIT_Squad",
                 "JGSDF_2008_LightFireTeam",
-                "StaticSecurityTeam"
+                "StaticSecurityTeam",
+                "Argentina_Sentry",
+                "DSF_1983_SAS_Patrol"
             ],
             "exclude": [
                 "_Base",
@@ -156,7 +164,9 @@
                 "PLASTICBANDIT_Squad",
                 "JGSDF_2008_LightFireTeam",
                 "CloseProtectionTeam",
-                "TA_Team_Suppress"
+                "TA_Team_Suppress",
+                "Argentina_Sentry",
+                "DSF_1983_SAS_Patrol"
             ],
             "exclude": [
                 "_Base",
@@ -184,7 +194,8 @@
                 "Group_Zombies_CIV_Large",
                 "Cultists_Horde",
                 "JGSDF_2008_SentryTeam",
-                "QuickReactionForce"
+                "QuickReactionForce",
+                "Recce"
             ],
             "exclude": [
                 "_Base",
@@ -211,7 +222,8 @@
                 "Group_Zombies_Horde",
                 "Cultists_Medium",
                 "PLASTICBANDIT_Squad",
-                "MobileSecurityTeam"
+                "MobileSecurityTeam",
+                "SAS_SpecialProjectsTeam"
             ],
             "exclude": [
                 "_Base",
@@ -242,7 +254,9 @@
                 "Cultists_Light",
                 "PLASTICBANDIT_Patrol",
                 "JGSDF_2008_LightFireTeam",
-                "CloseProtectionTeam"
+                "CloseProtectionTeam",
+                "Argentina_Sentry",
+                "DSF_1983_SAS_Patrol"
             ],
             "exclude": [
                 "_Base",
@@ -272,7 +286,9 @@
                 "Stalker_Rookie",
                 "Civilian_Cultist",
                 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_1.et",
-                "Marksman"
+                "Marksman",
+                "1983_SBS_RTO",
+                "1983_SBS_SL"
             ],
             "exclude": [
                 "_Base",
@@ -308,7 +324,9 @@
                 "Civilian_Cultist",
                 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_2.et",
                 "JGSDF_2008_Rifleman",
-                "ION_Scout"
+                "ION_Scout",
+                "1983_SASRTO",
+                "1983_SAS_SL"
             ],
             "exclude": [
                 "_Base",
@@ -343,7 +361,9 @@
                 "Stalker_Veteran",
                 "Civilian_Cultist",
                 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et",
-                "JGSDF_2008_TL"
+                "JGSDF_2008_TL",
+                "Argentina_NCO",
+                "SAS_Trooper"
             ],
             "exclude": [
                 "_Base",
@@ -412,7 +432,8 @@
                 "Civilian_Cultist",
                 "{DFC792E39288F721}Prefabs/Characters/Civilian_Cultist_3.et",
                 "ION_Scout",
-                "TA_AR"
+                "TA_AR",
+                "SP_Trooper"
             ],
             "exclude": [
                 "_Base",
@@ -442,7 +463,8 @@
                 "Stalker_Legend",
                 "Kamikaze_Cultist",
                 "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et",
-                "ION_SL"
+                "ION_SL",
+                "Argentina_NCO"
             ],
             "exclude": [
                 "_Base",
@@ -543,7 +565,11 @@
                 "{B7CA600660E7743B}Prefabs/Characters/Kamikaze_Cultist_1.et",
                 "JGSDF_2008_Sniper",
                 "ION_Scout",
-                "TA_SL"
+                "TA_SL",
+                "Argentina_MAT",
+                "SP_Trooper",
+                "SP_Sapper",
+                "SAS_Demolitionist"
             ],
             "exclude": [
                 "_Base",
@@ -796,6 +822,19 @@
             "names": [
                 "Takistan",
                 "TA"
+            ]
+        },
+        {
+            "names": [
+                "AFOA",
+                "Argentina"
+            ]
+        },
+        {
+            "names": [
+                "DSF",
+                "SAS",
+                "SBS"
             ]
         }
     ]

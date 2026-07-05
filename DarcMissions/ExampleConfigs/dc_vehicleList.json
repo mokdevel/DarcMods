@@ -1,5 +1,5 @@
 {
-    "jsonVersion": 2,
+    "jsonVersion": 3,
     "author": "darc",
     "modList": [],
     "lists": [
@@ -327,5 +327,48 @@
             "factions": []
         }
     ],
-    "akas": []
+    "akas": [
+        {
+            "names": [
+                "RHS_USAF",
+                "US"
+            ]
+        },
+        {
+            "names": [
+                "RHS_AFRF",
+                "USSR"
+            ]
+        },
+        {
+            "names": [
+                "MEI",
+                "USSR"
+            ]
+        },
+        {
+            "names": [
+                "Takistan",
+                "USSR"
+            ]
+        },
+        {
+            "names": [
+                "ChinesePLA",
+                "USSR"
+            ]
+        },
+        {
+            "names": [
+                "JSDF_RAS",
+                "US"
+            ]
+        },
+        {
+            "names": [
+                "UK",
+                "US"
+            ]
+        }
+    ]
 }
