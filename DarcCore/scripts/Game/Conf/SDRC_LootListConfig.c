@@ -17,8 +17,8 @@
 	ITEM_GENERAL,
 	UTIL_ATTACHMENT,
 	UTIL_OPTIC,
-	UTIL_MAGAZINE,			//Adds a random magazine
-	UTIL_AMMO,				//Adds a random rocket, shell, flare, ..
+	UTIL_MAGAZINE,			//Adds random magazines with ammoCount
+	UTIL_AMMO,				//Adds random rocket, shell, flare, .. with ammoCount
 	GEAR_HEADGEAR,			//Head Gear including helmets, gas masks
 	GEAR_VEST,				//Vests
 	GEAR_HANDWEAR,			//Gloves etc
@@ -40,6 +40,8 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_LootListConfig : SDRC_ListConfig
 {
+	ref array<int> ammoCount = {1, 6};	// min/max count of ammo/magazines added for weapon spawned in loot.
+	
 	//------------------------------------------------------------------------------------------------
 	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{

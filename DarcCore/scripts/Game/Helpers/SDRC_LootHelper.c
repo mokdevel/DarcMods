@@ -23,7 +23,7 @@ class SDRC_Loot : Managed
 sealed class SDRC_LootHelper
 {
 	private const string DC_MISSIONCONFIG_FILE_LOOTLIST = "dc_lootList.json";
-	private const int DC_MISSIONCONFIG_FILE_LOOTLIST_JSONVER = 2;
+	private const int DC_MISSIONCONFIG_FILE_LOOTLIST_JSONVER = 3;
 	
 	private static ref SDRC_JsonApi2 m_JsonApi = null;
 	private static ref SDRC_LootListConfig m_Config = new SDRC_LootListConfig();			
@@ -79,9 +79,19 @@ sealed class SDRC_LootHelper
 				{
 					resource = FindLootItem(itemName);
 				}
+
+				int itemCount = 1;
+
+				if ( (itemName.Contains("UTIL_MAGAZINE")) || (itemName.Contains("UTIL_AMMO")) )
+				{
+					itemCount = SDRC_Misc.RandomFloat(m_Config.ammoCount[0], m_Config.ammoCount[1]);					
+				}
 				
-				bool result = AddToStorage(storage, resource);
-				SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Adding item " + resource + ". Success: " + result, LogLevel.DEBUG);
+				for (int i = 0; i < itemCount; i++)
+				{
+					bool result = AddToStorage(storage, resource);
+					SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Adding item " + resource + ". Success: " + result, LogLevel.DEBUG);
+				}				
 				
 				//Shall we add ammo? Ammo is to be added with itemChance%
 				if ((SDRC_Misc.RandomFloat(0, 1) < itemChance))
@@ -111,14 +121,16 @@ sealed class SDRC_LootHelper
 					//Add ammo to box 
 					if (addToBox)
 					{
-						int magCount = SDRC_Misc.RandomFloat(0, 6);
-						if (magCount > 0)
+						int ammoCount = SDRC_Misc.RandomFloat(m_Config.ammoCount[0], m_Config.ammoCount[1]);
+						
+						if (ammoCount > 0)
 						{
+							//Find the right magazine for added weapon
 							string magazine = SDRC_AmmoHelper.GetCompatibleMagazineForPrefab(resource);
 						
-							for (int i = 0; i < magCount; i++)
+							for (int i = 0; i < ammoCount; i++)
 							{
-								result = AddToStorage(storage, magazine);
+								bool result = AddToStorage(storage, magazine);
 								if (magazine != "")
 								{
 									SDRC_Log.Add("[SDRC_LootHelper:SpawnItemsToStorage] Adding magazine " + magazine + ". Success: " + result, LogLevel.DEBUG);				
