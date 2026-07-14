@@ -3,18 +3,18 @@ Example: [dc_missionConfig_Chopper.json](https://github.com/mokdevel/DarcMods/bl
 
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_chopper.jpg" width=30% height=30%>
 
-A flying helicopter is spawned on the edges of the map and will fly to the mission location. If the helicopter is armed, AI shoot if an enemy is seen. The shooting is Arma Reforger functionality. 
-
-### SDRC_EHeliWaypointGenerationType wpType
-Once the missions position is reached, the helicopter will behave depending on the ``wpType``:
-* ``RANDOM`` : Continue to patrol randomly.
-* ``PATROL`` : Patrol around the mission location.
-* ``SEARCH`` : Search for players while flying around. If players are found, the mission is over and Hunters are sent to clear out the area. The search is done by the AI itself and finding is depending on the perception value. 
-* ``SEARCH_AND_DESTROY`` : Search for enemies while flying around. If enemy found, the heli change it's course and find a way to attack the location. 
-
-Once the mission time is over, the helicopter will fly away (and despawn) ending the mission.
+A flying helicopter is spawned on the edges of the map and will fly to the mission location. If the helicopter is armed, AI shoot if an enemy is seen. The shooting the machine gun is Arma Reforger functionality. Shooting rockets is from the mod itself.
+* Once the missions position is reached, the helicopter will behave depending on the waypoint generation type (``wpType``).
+* Once the mission time is over, the helicopter will fly away (and despawn) ending the mission.
 
 For the first release, there is no loot available. This is to be addressed in future updates.
+
+### Waypoint generation
+Once the missions position is reached, the helicopter will behave depending on the ``wpType``:
+* ``1 - RANDOM`` : Continue to patrol randomly.
+* ``2 - PATROL`` : Patrol around the mission location.
+* ``3 - SEARCH`` : Search for players while flying around. If players are found, the mission is over and Hunters are sent to clear out the area. The search is done by the AI itself and finding is depending on the perception value. 
+* ``4 - SEARCH_AND_DESTROY`` : Search for enemies while flying around. If enemy found, the heli change it's course and find a way to attack the location. 
 
 ### GM requested mission
 The location is where the mission was dropped. The helicopter will fly first to this location.
