@@ -31,7 +31,7 @@ sealed class SDRC_AIHelper
 			return null;
 		}
 		
-		EntitySpawnParams params = EntitySpawnParams();
+		EntitySpawnParams params = new EntitySpawnParams();
 		
 		//Spawn the resource exactly to pos
 		vector transform[4];
