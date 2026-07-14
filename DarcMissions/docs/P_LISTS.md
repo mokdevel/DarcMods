@@ -26,7 +26,7 @@ LootList has a specific parameter for the minimum and maximum count of ammos/mag
 ```
 array<int> ammoCount : The min/max count of ammo/magazines added for weapon spawned in loot.
 ```
-NOTE: Chance to spawn loot depends on the [Difficulty](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md#difficulty). For weapons and ammo, this is checked separately. For example: A weapon may have a 30% chance to be spawned. Ammo for it has an also 30% chance. So you may still have a weapon spawning without ammo.
+NOTE: Chance to spawn loot depends on the [Difficulty](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md#difficulty). For weapons and ammo, this is checked separately. For example: A weapon may have a 30% chance to be spawned. Ammo for it has also a 30% chance. So you may still get a weapon spawning without ammo.
 
 ## SDRC_List
 The functionality goes through the modDir and gets every file with the ending of ```.et```. The list is first filtered with ```include``` words and then filtered with ```exclude```words. Note that any item you may have defined manually goes through the same filtering and may be removed if the ```exclude``` word matches.
@@ -224,7 +224,12 @@ The .json configuration as an example:
       "{E8F00BF730225B00}Prefabs/Weapons/Grenades/Grenade_M67.et"
     ]
   }
-  ]
+  ],
+  "akas": [],
+  "ammoCount": [
+    1,
+    6
+    ]
 }
 ```
 All items under each mods ```/Weapons/Rifles``` will be collected initially. The list could be very long but below is a section.
@@ -243,6 +248,7 @@ The ```include``` filter ("Rifle") matches the list so everything is included. T
 "{B036BA26CCFE9E5D}Prefabs/Weapons/Rifles/M16/Variants/Rifle_M16A2_OliveGreen_Sand_Stripes.et"
 "{FA0E25CE35EE945F}Prefabs/Weapons/Rifles/AKS74U/Rifle_AKS74UN.et"
 ```
+When spawning a weapon, possible ammo or magazine count will be between 1 and 6.
 
 ## Example enemyList
 The below example with the name ```G_LIGHT``` will search all available mods for items matching the include and exclude filters. The full path for the search is ```$Modname:Prefabs/Groups``` where the ``$Modname`` parameter is picked from the modList. internally we're searching for all files ending in ```.et```. Initally all items will be listed. All items matching the ```include``` filter will be included. The ```exclude``` filter picks out anything with "_Base", "_NotSpawned", .. from the list.
