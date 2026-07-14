@@ -428,7 +428,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		
 		#ifndef SDRC_RELEASE
 			missionCycleTime = 8;//SDRC_MISSION_CYCLE_TIME_DEFAULT;
-			missionList = {0};//{0,0,0,0,0,0,1,1,1,1,1,2,3,3,4,4};
+			missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,4,4};
 		#endif
 		
 		//Mission specific
@@ -495,9 +495,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
-				"UTIL_MAGAZINE", "UTIL_MAGAZINE","UTIL_MAGAZINE","UTIL_MAGAZINE","UTIL_MAGAZINE",
-/*				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", 
+				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", 
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", 
 				"GEAR_BAG", "GEAR_BAG", 
 				"UTIL_OPTIC", 
@@ -507,7 +505,6 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
-			*/
 			};
 		loot.Set(0.9, lootItems);
 		convoy.loot = loot;			
