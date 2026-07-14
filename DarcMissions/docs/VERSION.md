@@ -7,6 +7,9 @@ No changes in mission jsons.
 Main Features:
 * Added ``ammoCount`` to LootList. You can define the min/max count of ammo/magazines added for weapon spawned in loot.
 
+Fixes:
+* Improved checking on player vicinity for Convoys moving virtually.
+
 ## 20260703
 Main Features:
 * 'Akas' for vehicles. You can define a faction to use vehicles from specific faction. For example, RHS_USAF to use US helicopters and vehicles. Some defaults defined in dc_vehicleList.json.

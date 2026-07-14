@@ -5,6 +5,7 @@ Example: [dc_missionConfig_Chopper.json](https://github.com/mokdevel/DarcMods/bl
 
 A flying helicopter is spawned on the edges of the map and will fly to the mission location. If the helicopter is armed, AI shoot if an enemy is seen. The shooting is Arma Reforger functionality. 
 
+### SDRC_EHeliWaypointGenerationType wpType
 Once the missions position is reached, the helicopter will behave depending on the ``wpType``:
 * ``RANDOM`` : Continue to patrol randomly.
 * ``PATROL`` : Patrol around the mission location.
