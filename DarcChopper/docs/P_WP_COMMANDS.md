@@ -48,7 +48,8 @@ _TBD_
 _TBD_
 
 ### WP_PATROL
-_TBD_
+* ``destination`` : Position to circle around.
+* ``value`` : The radius of the cirle.
 
 ### WP_PATROL_ONCE
 _TBD_

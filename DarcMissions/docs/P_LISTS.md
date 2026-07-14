@@ -21,6 +21,12 @@ array<string> modList : The mods to search for loot. If left empty, all mods ena
 array<SDRC_List> lists : The defined lists. 
 array<ref SDRC_Aka> akas : The defined 'akas'. See details at he bottom of the page.
 ```
+### LootList specific
+LootList has a specific parameter for the minimum and maximum count of ammos/magazines to spawn for a weapon. This will affect both weapons (prefab names and WEAPON_ tags) as well as items added with UTIL_MAGAZINE and UTIL_AMMO. 
+```
+array<int> ammoCount : The min/max count of ammo/magazines added for weapon spawned in loot.
+```
+NOTE: Chance to spawn loot depends on the [Difficulty](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/MISSIONCONFIG.md#difficulty). For weapons and ammo, this is checked separately. For example: A weapon may have a 30% chance to be spawned. Ammo for it has an also 30% chance. So you may still have a weapon spawning without ammo.
 
 ## SDRC_List
 The functionality goes through the modDir and gets every file with the ending of ```.et```. The list is first filtered with ```include``` words and then filtered with ```exclude```words. Note that any item you may have defined manually goes through the same filtering and may be removed if the ```exclude``` word matches.
@@ -82,8 +88,8 @@ ITEM_MEDICAL : Medical items
 ITEM_GENERAL : General items
 UTIL_ATTACHMENT : Various attachments excluding optics
 UTIL_OPTIC : Optic attachments
-UTIL_MAGAZINE : Adds a random magazine
-UTIL_AMMO : Adds a random rocket, shell, flare, ..
+UTIL_MAGAZINE : Adds random magazines with ammoCount
+UTIL_AMMO : Adds random rocket, shell, flare, .. with ammoCount
 GEAR_HEADGEAR : Head Gear including helmets, gas masks
 GEAR_VEST : Vests
 GEAR_HANDWEAR : Gloves etc

@@ -4,7 +4,8 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
-<empty>
+Main Features:
+* Added ``ammoCount`` to LootList. You can define the min/max count of ammo/magazines added for weapon spawned in loot.
 
 ## 20260703
 Main Features:
