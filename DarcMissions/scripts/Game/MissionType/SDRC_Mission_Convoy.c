@@ -319,10 +319,12 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		//Find next waypoing
 		vector pos = waypoints[0].GetOrigin();
 		
-		SDRC_DebugHelper.DeleteDebugPos("www");
-		SDRC_DebugHelper.AddDebugPos(pos, id: "www");
+		SDRC_DebugHelper.DeleteDebugPos("virtualConvoy");
+		SDRC_DebugHelper.AddDebugPos(pos, id: "virtualConvoy");
 		
-		if (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, DISTANCE_PLAYER))
+		if (   (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, DISTANCE_PLAYER))
+			&& (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(m_Vehicle.GetOrigin(), DISTANCE_PLAYER))
+		   )
 		{				
 			//Distance between vehicle and next waypoint
 			float distance = vector.DistanceXZ(m_Vehicle.GetOrigin(), pos);
@@ -333,19 +335,21 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			float lerp = Math.Clamp((DISTANCE_LERP / distance), 0, 1);
 			
 			vector newPos = vector.Lerp(m_Vehicle.GetOrigin(), pos, lerp);
-			SDRC_DebugHelper.AddDebugPos(newPos, id: "www");	
+			SDRC_DebugHelper.AddDebugPos(newPos, id: "virtualConvoy");	
 			
 			SDRC_RoadPos roadPosStart = new SDRC_RoadPos();
 			pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPosStart, newPos, DISTANCE_ROADPOINT);
 			if (pos != vector.Zero) 
 			{
-				if (!SDRC_Misc.IsPosNearPos(pos, m_vPrevVirtualPos, DISTANCE_NEAR_WP))
+				if ( (!SDRC_Misc.IsPosNearPos(pos, m_vPrevVirtualPos, DISTANCE_NEAR_WP))	//Don't move too close to a WP
+					&& (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, DISTANCE_PLAYER))		//Don't move too close a player
+				   )
 				{
 					if (SDRC_SpawnHelper.FindEmptyPos(pos, 10, 5))
 					{
 						m_vPrevVirtualPos = pos;
 						m_Vehicle.SetOrigin(pos);
-						SDRC_DebugHelper.AddDebugPos(pos, color: Color.YELLOW, id: "www");
+						SDRC_DebugHelper.AddDebugPos(pos, color: Color.YELLOW, id: "virtualConvoy");
 					}
 				}
 			}
@@ -424,7 +428,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		
 		#ifndef SDRC_RELEASE
 			missionCycleTime = 8;//SDRC_MISSION_CYCLE_TIME_DEFAULT;
-			missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,4,4};
+			missionList = {0};//{0,0,0,0,0,0,1,1,1,1,1,2,3,3,4,4};
 		#endif
 		
 		//Mission specific
@@ -491,7 +495,9 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
-				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", 
+				"UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", "UTIL_AMMO", 
+				"UTIL_MAGAZINE", "UTIL_MAGAZINE","UTIL_MAGAZINE","UTIL_MAGAZINE","UTIL_MAGAZINE",
+/*				"ITEM_MEDICAL", "ITEM_MEDICAL", "ITEM_MEDICAL", 
 				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", 
 				"GEAR_BAG", "GEAR_BAG", 
 				"UTIL_OPTIC", 
@@ -501,6 +507,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et",		//This item from Escapists
 				"{377BE4876BC891A1}Prefabs/Items/Medicine/EpinephrineInjection_01.et"		//This item from Escapists
+			*/
 			};
 		loot.Set(0.9, lootItems);
 		convoy.loot = loot;			
