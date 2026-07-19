@@ -1,0 +1,11 @@
+$grp GenericEntity : "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et" {
+ {
+  coords 828.688 0.912 1495.915
+ }
+ {
+  coords 1222.542 38.998 2193.106
+ }
+}
+SCR_DestructibleBuildingEntity : "{FF48B5059EB0AC65}Prefabs/Structures/Commercial/Shops/ShopHouse_E_2l01/ShopHouse_E_2I01t_drugstore.et" {
+ coords 2291.009 -0 1583.029
+}
