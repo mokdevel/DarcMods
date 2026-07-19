@@ -97,7 +97,18 @@ class SDRC_Mission_Hunter : SDRC_Mission
 			SetState(SDRC_EMissionState.FAILED, missionError);
 			return;
 		}			
-				
+
+		array<ref SDRC_PlayerPos> playerPosArray = new array<ref SDRC_PlayerPos>;
+		SDRC_PlayerHelper.GetPlayersClosestToPosition(playerPosArray, pos, m_Config.maxDistanceToPlayer);
+		
+		//If no players nearby, don't start the mission
+		if (playerPosArray.IsEmpty())
+		{				
+			pos = "0 0 0";
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.NO_PLAYERS_NEARBY);
+			return;
+		}
+		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Hunter.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);

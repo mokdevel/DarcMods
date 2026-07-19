@@ -51,6 +51,7 @@ enum SDRC_EMissionError
 	ROUTE_NOT_FOUND,
 	SUITABLE_BUILDING_NOT_FOUND,
 	UNABLE_TO_SPAWN_AI,
+	NO_PLAYERS_NEARBY,
 
 	//Mainly from checking if position is suitable for mission	
 	POSITION_IN_WATER,
