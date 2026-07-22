@@ -45,7 +45,7 @@ modded class SCR_BaseGameMode
 			//For testing
 			//GetGame().GetCallqueue().CallLater(DebugStart, 15000, false);	
 			
-			GetGame().GetCallqueue().CallLater(IsCoreReady, 2000, false);
+			GetGame().GetCallqueue().CallLater(WaitingForCore, 2000, false);
 		}
 		else 
 		{
@@ -54,18 +54,18 @@ modded class SCR_BaseGameMode
     }
 	
 	//------------------------------------------------------------------------------------------------
-	private void IsCoreReady()
+	private void WaitingForCore()
 	{
 		if (SDRC_Conf.coreInitReady)	//Wait for core to be available
 		{		
 			//Core initialized properly
 			SDRC_Conf.coreHasStarted = true;
-			SDRC_Log.Add("[SDRC_Core] Core has started.", LogLevel.NORMAL);
+			SDRC_Log.Add("[SDRC_Core_BaseGameMode:WaitingForCore] Core has started.", LogLevel.NORMAL);
 		}
 		else
 		{
-			GetGame().GetCallqueue().CallLater(IsCoreReady, 2000, false);	
-			SDRC_Log.Add("[SDRC_Core_BaseGameMode:IsCoreReady] Waiting for core init to finalize...", LogLevel.DEBUG);
+			GetGame().GetCallqueue().CallLater(WaitingForCore, 2000, false);	
+			SDRC_Log.Add("[SDRC_Core_BaseGameMode:WaitingForCore] Waiting for core init to finalize...", LogLevel.DEBUG);
 		}
 		
 		GetGame().GetCallqueue().CallLater(ErrorReporter, 10000, true);		

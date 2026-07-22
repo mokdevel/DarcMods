@@ -23,6 +23,8 @@ class SDRC_Core
 	ref SDRC_CoreConfig m_Config = new SDRC_CoreConfig();	
 	
 	private bool m_bCoreStarted = false;
+	private bool m_bLocationCacheReady = false;
+	private bool m_bBuildingCacheReady = false;
 	
 	private ref array<string> m_sAddonList = {};
 	private ref array<string> m_sFactionList = {};
@@ -113,8 +115,13 @@ class SDRC_Core
 				
 		//Set debug visibility
 		SDRC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres, m_Config.debugShowLines, m_Config.debugShowInfo);
-		
+
+		//All good so far, core has started.
 		m_bCoreStarted = true;
+		
+			
+		GetGame().GetCallqueue().CallLater(IsCoreReady, 2000, false);	
+		
 	}
 
 	void ~SDRC_Core()
@@ -122,6 +129,30 @@ class SDRC_Core
 		SDRC_Log.Add("[~SDRC_Core] Stopping SDRC_Core", LogLevel.NORMAL);
 	}
 
+	
+	//------------------------------------------------------------------------------------------------
+	private void IsCoreReady()
+	{
+		//Wait for core to be ready with all stuff
+		if (	m_bLocationCacheReady
+		     && m_bBuildingCacheReady
+		     && SDRC_LootHelper.IsReady()
+		     && SDRC_AmmoHelper.IsReady()
+		     && SDRC_EnemyHelper.IsReady()
+		     && SDRC_VehicleListHelper.IsReady()
+		   )
+		{		
+			//Core initialized properly
+			SDRC_Conf.coreInitReady = true;
+			SDRC_Log.Add("[SDRC_Core] Core init ready.", LogLevel.NORMAL);
+		}
+		else
+		{
+			GetGame().GetCallqueue().CallLater(IsCoreReady, 2000, false);	
+			SDRC_Log.Add("[SDRC_Core] Waiting for core init to finalize...", LogLevel.DEBUG);
+		}
+	}		
+	
 	//------------------------------------------------------------------------------------------------
 	bool IsCoreStarted()
 	{
@@ -148,7 +179,10 @@ class SDRC_Core
 			//Initialize building cache
 			SDRC_BuildingHelper.FillBuildingsCache(m_Config.buildingExcludeFilter);
 		}
-	
+		SDRC_Log.Add("[SDRC_Core:FillBuildingCache] Done!", LogLevel.DEBUG);
+		m_bBuildingCacheReady = true;
+		
+		//Scan for locations
 		GetGame().GetCallqueue().CallLater(FillLocationCache, 2000, false);			
 	}
 	
@@ -162,8 +196,7 @@ class SDRC_Core
 			SDRC_Locations.FillLocationsCache(m_Config.locationAkas, m_Config.buildingAkas);
 		}
 
-		//Core initialized properly
-		SDRC_Conf.coreInitReady = true;
-		SDRC_Log.Add("[SDRC_Core] Init ready.", LogLevel.NORMAL);		
+		SDRC_Log.Add("[SDRC_Core:FillLocationCache] Done!", LogLevel.DEBUG);
+		m_bLocationCacheReady = true;
 	}	
 }

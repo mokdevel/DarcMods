@@ -11,6 +11,7 @@ sealed class SDRC_AmmoHelper
 {
 	private static InventoryStorageManagerComponent m_invManager;// = new InventoryStorageManagerComponent();
 	private static IEntity m_ammoHelperBox;
+	private static bool m_isReady = false;
 	
 	//------------------------------------------------------------------------------------------------
 	static void Setup()
@@ -35,8 +36,20 @@ sealed class SDRC_AmmoHelper
 		{
 			SDRC_Log.Add("[SDRC_AmmoHelper:Setup] Could not spawn box for ammohelper.", LogLevel.WARNING);
 		}
+		
+		SDRC_Log.Add("[SDRC_AmmoHelper:Setup] Done!", LogLevel.DEBUG);
+		m_isReady = true;
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Checker to see if everything is ready.
+	*/
+	static bool IsReady()
+	{
+		return m_isReady;
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Find a random compatible magazine for a given weapon

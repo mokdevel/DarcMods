@@ -28,6 +28,8 @@ sealed class SDRC_LootHelper
 	private static ref SDRC_JsonApi2 m_JsonApi = null;
 	private static ref SDRC_LootListConfig m_Config = new SDRC_LootListConfig();			
 	
+	private static bool m_isReady = false;
+	
 	static void Setup()
 	{
 		SDRC_Log.Add("[SDRC_LootHelper:Setup] Preparing..", LogLevel.NORMAL);
@@ -35,7 +37,23 @@ sealed class SDRC_LootHelper
 		//Load loot config
 		m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_LOOTLIST);	
 		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_LOOTLIST_JSONVER, safeUpdate: true);		
-		m_Config.Populate();
+		m_Config.Populate(fastScan: false);
+		
+		SDRC_Log.Add("[SDRC_LootHelper:Setup] Done!", LogLevel.DEBUG);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Checker to see if everything is ready.
+	*/
+	static bool IsReady()
+	{
+		if (m_Config.IsReady())
+		{
+			m_isReady = true;
+		}
+		
+		return m_isReady;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -150,9 +168,9 @@ sealed class SDRC_LootHelper
 	static ResourceName FindLootItem(string listName)
 	{
 		int lootIndex = -1;
-		for (int i = 0; i < m_Config.lists.Count(); i++)		
+		for (int i = 0; i < m_Config.m_lists.Count(); i++)		
 		{
-			if (m_Config.lists[i].id == listName)
+			if (m_Config.m_lists[i].id == listName)
 			{
 				lootIndex = i;
 				break;
@@ -167,9 +185,9 @@ sealed class SDRC_LootHelper
 
 		ResourceName resourceName = "";
 		
-		if (!m_Config.lists[lootIndex].items.IsEmpty())
+		if (!m_Config.m_lists[lootIndex].items.IsEmpty())
 		{
-			resourceName = m_Config.lists[lootIndex].items.GetRandomElement();
+			resourceName = m_Config.m_lists[lootIndex].items.GetRandomElement();
 			SDRC_Log.Add("[SDRC_LootHelper:FindLootItem] Selected: (" + listName + ") " + resourceName, LogLevel.DEBUG);
 		}
 		
@@ -183,12 +201,12 @@ sealed class SDRC_LootHelper
 	static bool GetLootListItems(out array<string> items, string listName)
 	{
 		//Find the right list index		
-		int lootIndex = SDRC_ListHelper.FindRightList(m_Config.lists, listName);
+		int lootIndex = SDRC_ListHelper.FindRightList(m_Config.m_lists, listName);
 		
 /*		int lootIndex = -1;
-		for (int i = 0; i < m_Config.lists.Count(); i++)		
+		for (int i = 0; i < m_Config.m_lists.Count(); i++)		
 		{
-			if (m_Config.lists[i].id == listName)
+			if (m_Config.m_lists[i].id == listName)
 			{
 				lootIndex = i;
 				break;
@@ -203,7 +221,7 @@ sealed class SDRC_LootHelper
 
 		SDRC_Log.Add("[SDRC_LootHelper:GetLootListItems] Found: " + listName, LogLevel.DEBUG);
 				
-		items.Copy(m_Config.lists[lootIndex].items);
+		items.Copy(m_Config.m_lists[lootIndex].items);
 		return true;
 	}	
 

@@ -30,16 +30,27 @@ class SDRC_ListConfig : SDRC_Config
 {
 	//Default information
 	string author = "darc";
-	//Config specific
-	ref array<string> modList = {};
-	ref array<ref SDRC_List> lists = {};
-	ref array<ref SDRC_Aka> akas = {};
+	bool m_bPrintList = true;
+	bool m_bScanReady = false;
 	
-	void Populate(bool printList = true)
+	//Config specific
+	ref array<string> m_modList = {};
+	ref array<ref SDRC_List> m_lists = {};
+	ref array<ref SDRC_Aka> m_akas = {};
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Scan mods for items, enemies etc.
+	\param fastScan True to do an immediate scan. False will use a delayed scan to avoid server load.
+	\param printList If the lists will be printed for debugging purposes.
+	*/	
+	void Populate(bool fastScan = true, bool printList = true)
 	{
 		SDRC_Log.Add("[SDRC_ListConfig:Populate] Creating lists..", LogLevel.NORMAL);
-		
-		if (modList.IsEmpty())
+	
+		m_bPrintList = printList;
+			
+		if (m_modList.IsEmpty())
 		{
 			array<string> addonList = {};
 			
@@ -48,43 +59,80 @@ class SDRC_ListConfig : SDRC_Config
 			foreach (string addon : addonList)
 			{
 				string name = addon;
-				modList.Insert(name);
+				m_modList.Insert(name);
 				//SDRC_Log.Add("[SDRC_ListConfig:Populate] Mod found: " + name, LogLevel.DEBUG);				
 			}
 		}
 		
-		foreach (SDRC_List list : lists)
+		foreach (int idx, SDRC_List list : m_lists)
 		{
-			//Add with normal add
-			foreach (string mod : modList)
+			bool lastItem = false;
+			if (idx == m_lists.Count() - 1)
 			{
-				SDRC_Resources.GetList(list.items, mod, list);
+				lastItem = true;
+				SDRC_Log.Add("[SDRC_ListConfig:Populate] Adding last item.", LogLevel.DEBUG);
 			}
 			
-			foreach (string res : list.include)
+			if (fastScan)
 			{
-				//If the item in include is a resourcename, check if it exists and add
-				if (res[0] == "{")
-				{
-					Resource resource = Resource.Load(res);
-					if (resource.IsValid())
-					{
-						list.items.Insert(res);
-					}					
-				}				
+				DoScan(list, lastItem);
 			}
-			
-			//Add factions
-			foreach (string item : list.items)
+			else
 			{
-				list.factions.Insert(SDRC_Resources.GetResourceFaction(item));
-			}
-				
-			if ( (SDRC_Log.GetLogLevel() > DC_LogLevel.NORMAL) && (printList) )
-			{
-				SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);
-				list.items.Debug();
+				GetGame().GetCallqueue().CallLater(DoScan, 2000 + idx * 300, false, list, lastItem);
 			}
 		}		
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	void DoScan(SDRC_List list, bool lastItem)
+	{
+		SDRC_Log.Add("[SDRC_ListConfig:DoScan] Scanning: " + list.id, LogLevel.DEBUG);
+		
+		//Add with normal add
+		foreach (string mod : m_modList)
+		{
+			SDRC_Resources.GetList(list.items, mod, list);
+		}
+		
+		foreach (string res : list.include)
+		{
+			//If the item in include is a resourcename, check if it exists and add
+			if (res[0] == "{")
+			{
+				Resource resource = Resource.Load(res);
+				if (resource.IsValid())
+				{
+					list.items.Insert(res);
+				}					
+			}				
+		}
+		
+		//Add factions
+		foreach (string item : list.items)
+		{
+			list.factions.Insert(SDRC_Resources.GetResourceFaction(item));
+		}
+			
+		if ( (SDRC_Log.GetLogLevel() > DC_LogLevel.NORMAL) && (m_bPrintList) )
+		{
+			SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);
+			list.items.Debug();
+		}
+		
+		//Set scanning as done!
+		if (lastItem)
+		{
+			m_bScanReady = true;
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Returns true if all scannings are finalized.
+	*/
+	bool IsReady()
+	{
+		return m_bScanReady;
 	}	
 }
