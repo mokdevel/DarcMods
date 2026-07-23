@@ -22,6 +22,7 @@ sealed class SDRC_Conf
 	const string CONF_DIRECTORY = "DarcMods";
 	const string CORE_CONFIG_FILE = "dc_coreConfig.json";
 	static string subDir = "";
+	static bool cacheLists = false;							//Reuse saved items[] until the mod set changes (from m_bCacheLists)
 	static bool coreHasStarted = false;
 	static bool coreInitReady = false;
 	const int MISSION_RUN_DELAY = 5000;						//Time between INIT and SPAWN states.
