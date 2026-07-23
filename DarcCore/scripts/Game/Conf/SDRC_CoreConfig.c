@@ -18,6 +18,7 @@ class SDRC_CoreConfig : SDRC_Config
 	string fallbackEnemyFaction = "USSR";
 	bool showOnGMMapNonValidArea = true;	
 	bool showOnGMMapMissionMarker = true;
+	bool m_bCacheLists = false;				//Reuse saved list items[] between boots until the loaded mod set changes (skips the full prefab re-scan). Default off = current behaviour.
 	ref array<string> buildingExcludeFilter = {};
 	ref SDRC_EmptyPos emptyPos = new SDRC_EmptyPos();
 	ref array<ref SDRC_LocationAka> locationAkas = {};

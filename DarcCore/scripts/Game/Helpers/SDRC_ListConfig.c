@@ -32,7 +32,8 @@ class SDRC_ListConfig : SDRC_Config
 	string author = "darc";
 	bool m_bPrintList = true;
 	bool m_bScanReady = false;
-	
+	string m_sModListHash = "";			//Signature of the loaded mod set when items[] were last scanned (used by SDRC_Conf.cacheLists)
+
 	//Config specific
 	ref array<string> m_modList = {};
 	ref array<ref SDRC_List> m_lists = {};
@@ -60,10 +61,22 @@ class SDRC_ListConfig : SDRC_Config
 			{
 				string name = addon;
 				m_modList.Insert(name);
-				//SDRC_Log.Add("[SDRC_ListConfig:Populate] Mod found: " + name, LogLevel.DEBUG);				
+				//SDRC_Log.Add("[SDRC_ListConfig:Populate] Mod found: " + name, LogLevel.DEBUG);
 			}
 		}
-		
+
+		//Cache: if enabled and the loaded mod set is unchanged since the last scan (and items[]
+		//are already present), skip the expensive folder re-scan and reuse the saved lists.
+		string currentHash = BuildModListHash();
+		if (SDRC_Conf.cacheLists && m_sModListHash == currentHash && HasCachedItems())
+		{
+			SDRC_Log.Add("[SDRC_ListConfig:Populate] Cache hit (mod set unchanged) -> skipping scan.", LogLevel.NORMAL);
+			EnsureFactions();
+			m_bScanReady = true;
+			return;
+		}
+		m_sModListHash = currentHash;
+
 		foreach (int idx, SDRC_List list : m_lists)
 		{
 			bool lastItem = false;
@@ -84,6 +97,49 @@ class SDRC_ListConfig : SDRC_Config
 		}		
 	}	
 	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Cheap, order-independent signature of the loaded mod set. Used to decide whether the cached
+	items[] are still valid (i.e. no mod was added/removed/updated since the last scan).
+	*/
+	protected string BuildModListHash()
+	{
+		string sig = m_modList.Count().ToString();
+		foreach (string m : m_modList)
+			sig = sig + "|" + m;
+		return sig;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	True if at least one list already has resolved items[] (so the cache is usable).
+	*/
+	protected bool HasCachedItems()
+	{
+		foreach (SDRC_List list : m_lists)
+			if (!list.items.IsEmpty())
+				return true;
+		return false;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	factions[] is not persisted with the config, so rebuild it from the cached items[] when a scan
+	is skipped. Still far cheaper than a full folder scan.
+	*/
+	protected void EnsureFactions()
+	{
+		foreach (SDRC_List list : m_lists)
+		{
+			if (list.items.Count() == list.factions.Count())
+				continue;
+
+			list.factions.Clear();
+			foreach (string item : list.items)
+				list.factions.Insert(SDRC_Resources.GetResourceFaction(item));
+		}
+	}
+
 	//------------------------------------------------------------------------------------------------
 	void DoScan(SDRC_List list, bool lastItem)
 	{

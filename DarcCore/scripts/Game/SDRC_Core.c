@@ -46,6 +46,7 @@ class SDRC_Core
 
 		//Print general information
 		SDRC_Conf.subDir = m_Config.subDir;
+		SDRC_Conf.cacheLists = m_Config.m_bCacheLists;
 
 		//If defined, set subDir to the one we set from a CLI
 		string subDirCLI;
