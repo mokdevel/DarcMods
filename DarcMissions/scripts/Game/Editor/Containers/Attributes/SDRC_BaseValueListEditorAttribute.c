@@ -13,7 +13,7 @@ class SDRC_MissionSubIdxEditorAttributeBaseValues:SCR_EditorAttributeBaseValues
 			int num = baseGameMode.missionFrame.justAnumber;	//TBD: Remove, just for testing
 		
 			m_fMin = -1;
-			m_fMax = num;//Math.RandomInt(0,12);
+			m_fMax = num;
 			m_fStep = 1;
 			m_iDecimals = 0;
 			

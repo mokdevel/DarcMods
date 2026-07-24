@@ -20,6 +20,16 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 		int subIdx; 
 		subIdx = missionComp.GetSubIdx();
 		
+		//Modify the scale with a hacky-hack way. 
+		//The value is used 
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());	
+		
+		if (baseGameMode)		
+		{		
+			//baseGameMode.missionFrame.justAnumber = Math.RandomInt(0, 10);
+			baseGameMode.missionFrame.justAnumber = missionComp.GetMissionType() * 2;
+		}		
+		
 		return SCR_BaseEditorAttributeVar.CreateInt(subIdx);
 	}
 

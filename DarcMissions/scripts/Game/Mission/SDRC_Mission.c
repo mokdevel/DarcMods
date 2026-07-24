@@ -89,6 +89,29 @@ class SDRC_MissionConfig : SDRC_Config
 	{
 	}
 	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Return the biggest index used in missionList.
+	*/		
+	int FindBiggestIndex()
+	{
+		int bigIndex = -1;
+		foreach (int index : missionList)
+		{
+			if (index > bigIndex)
+			{
+				bigIndex = index
+			}
+		}
+		
+		return bigIndex;		
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	TBD: LoadMissionFiles2 should be in this class, but currently I don't know how to handle all 
+	     different missions classes in one single function.
+	*/		
 /*	
 	void LoadMissionFiles2(array<Managed> subMissions)
 	{

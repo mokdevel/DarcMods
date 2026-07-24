@@ -30,6 +30,24 @@ class SDRC_DarcMissionEditableRequestComp : SCR_EditableSystemComponent
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
+	Handle slider things when adding to world
+	*/
+	/* override void OnPostInit(IEntity owner)
+	{
+		super.OnPostInit(owner);
+		
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());	
+		
+		if (baseGameMode)		
+		{		
+			baseGameMode.missionFrame.justAnumber = Math.RandomInt(0, 10);
+		}		
+		
+		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp] Dropped the entity: " + owner, LogLevel.DEBUG);	
+	}	*/
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
 	Get/set request ID. 
 	*/
 	SDRC_EMissionType GetRequestId()
