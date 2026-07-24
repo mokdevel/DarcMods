@@ -99,7 +99,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			{"Rifle", 
 			"Spear68_", //MCX Spear 6.8
 			},
-			{"_Base", "_Sample", "Tutorial", "Mosin", "SVD", "Barrett", "M110", "M21", "M40",},
+			{"_Base", "_Sample", "debug", "Tutorial", "Mosin", "SVD", "Barrett", "M110", "M21", "M40",},
 			{}
 		);
 		return lootList;
@@ -115,7 +115,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			{"Rifle", 
 			"Spear68_", //MCX Spear 6.8
 			},
-			{"_Base", "_Sample", "Tutorial", "AK74", "AKS74", "VZ", "M16",
+			{"_Base", "_Sample", "debug", "Tutorial", "AK74", "AKS74", "VZ", "M16",
 			"Spear68_",	//MCX Spear 6.8
 			},
 			{}
@@ -131,7 +131,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"WEAPON_HANDGUN",
 			{"Prefabs/Weapons/Handguns"},
 			{"Handgun"},
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{}
 		);
 		return lootList;
@@ -147,7 +147,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			{"Launcher", 
 			"BC_M79"		//From BigChungusLaunchers
 			},
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{}
 		);
 		return lootList;
@@ -161,7 +161,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"WEAPON_SHOTGUN",
 			{"Prefabs/Weapons/Shotguns"},
 			{"Shotgun"},
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{}
 		);
 		return lootList;
@@ -175,7 +175,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"WEAPON_MG",
 			{"Prefabs/Weapons/MachineGuns"},
 			{"MG_", "RPD", "RPK"},
-			{"_Base", "_Mounted", "_rear", "_front", "PKMT"},
+			{"_Base", "_Sample", "debug", "_Mounted", "_rear", "_front", "PKMT"},
 			{}
 		);
 		return lootList;
@@ -189,7 +189,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"WEAPON_GRENADE",
 			{"Prefabs/Weapons/Grenades"},
 			{""},
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{}
 		);
 		return lootList;
@@ -211,7 +211,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 				"Prefabs/5AB890B71D748750/Upper",			
 			},
 			{""},
-			{"_Base", "Optic", "Scope"},
+			{"_Base", "_Sample", "debug", "Optic", "Scope"},
 			{}
 		);
 		return lootList;
@@ -232,7 +232,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"1P69", "AimPoint", "Collim", "ANPVS", "G33", 	//RAYZIOPTICSPACK
 			"PDC_cover", "Zhukov", 							//RAYZIOPTICSPACK
 			},
-			{"_Base", 
+			{"_Base", "_Sample", "debug", 
 			"DoNotUse",										//RAYZIOPTICSPACK
 			},
 			{}
@@ -248,7 +248,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"UTIL_MAGAZINE",
 			{"Prefabs/Weapons/Magazines"},
 			{""},
-			{"_Base", "Internal_"},
+			{"_Base", "_Sample", "debug", "Internal_"},
 			{}
 		);
 		return lootList;
@@ -262,7 +262,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"UTIL_AMMO",
 			{"Prefabs/Weapons/Ammo"},
 			{"Shell", "Rocket", "Grenade", "Flare"},
-			{"_Base", "Internal_", "_Effect", "FlareEffect", "Particles"},
+			{"_Base", "_Sample", "debug", "Internal_", "_Effect", "FlareEffect", "Particles"},
 			{}
 		);
 		return lootList;
@@ -276,7 +276,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"ITEM_GENERAL",
 			{"Prefabs/Items"},
 			{"Binocular", "Compass", "Flashlight", "PaperMap_01_folded", "Watch_"},
-			{"_Base", "BackPack", "Pouch", },
+			{"_Base", "_Sample", "debug", "BackPack", "Pouch", },
 			{}
 		);
 		return lootList;
@@ -290,7 +290,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"ITEM_MEDICAL",
 			{"Prefabs/Items/Medicine"},
 			{""},
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{}
 		);
 		return lootList;
@@ -306,7 +306,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			{"Helmet_",
 			"GP-", "M50", "Unix_", //Gasmask items
 			},
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{},
 		);
 		return lootList;
@@ -319,7 +319,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"GEAR_VEST",
 			{"Prefabs/Characters/Vests"},
 			{"Vest_",},
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{}	
 		);
 		return lootList;
@@ -332,7 +332,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"GEAR_HANDWEAR",
 			{"Prefabs/Characters/Handwear"},
 			{"Gloves_",},
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{}	
 		);
 		return lootList;
@@ -348,7 +348,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			 "Pants_KZS", "Pants_Pilot", "Pants_Tanker", "Pants_TAZ",
 			 "Suit_KLMK", "Suit_Pilot", "Suit_Tanker",
 			},
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{}	
 		);
 		return lootList;
@@ -362,7 +362,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"GEAR_BAG",
 			{"Prefabs/Items/Equipment"},
 			{"BackPack", "Pouch", "/Test/"},
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{}
 		);
 		return lootList;
@@ -377,7 +377,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			{"Prefabs/Characters/HeadGear"},
 			{"Hat_", 
 			},
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{}
 		);
 		return lootList;
@@ -395,7 +395,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			{"_Denim", "_Raincoat", "_Fisherman", "_Trousers", "Shirt_", 
 			 "Jacket_Suit", "Jacket_Pants",
 			},
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{}	
 		);
 		return lootList;
@@ -409,7 +409,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"FF_ITEMS_LOW",
 			{"Prefabs/Items"},
 			{"Backpack", "Radio_", "Tent_", "Lockpick_", "JWK_EpinephrineInjection", },
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{}	
 		);
 		return lootList;
@@ -422,7 +422,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"FF_ITEMS_MID",
 			{"Prefabs/Items"},
 			{"Dogtags", "Briefcase", "CampingKit", "KeysOld", },
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{}	
 		);
 		return lootList;
@@ -435,7 +435,7 @@ class SDRC_LootListConfig : SDRC_ListConfig
 			"FF_ITEMS_HIGH",
 			{"Prefabs/Items"},
 			{"ShopProxy_Resource_Supplies", },
-			{"_Base"},
+			{"_Base", "_Sample", "debug"},
 			{}	
 		);
 		return lootList;
