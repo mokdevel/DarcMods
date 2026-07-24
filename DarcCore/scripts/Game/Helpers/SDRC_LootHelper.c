@@ -26,20 +26,29 @@ sealed class SDRC_LootHelper
 	private const int DC_MISSIONCONFIG_FILE_LOOTLIST_JSONVER = 3;
 	
 	private static ref SDRC_JsonApi2 m_JsonApi = null;
-	private static ref SDRC_LootListConfig m_Config = new SDRC_LootListConfig();
+	private static ref SDRC_LootListConfig m_Config = null;
 	
-	private static bool m_isReady = false;
+	private static bool m_bIsReady = false;
 	
-	static void Setup()
-	{
-		SDRC_Log.Add("[SDRC_LootHelper:Setup] Preparing..", LogLevel.NORMAL);
+	static bool Scan(int index)
+	{		
+		if (!m_Config)
+		{		
+			SDRC_Log.Add("[SDRC_LootHelper:Scan] Preparing..", LogLevel.NORMAL);
+			//Load loot config
+			m_Config = new SDRC_LootListConfig();
+			m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_LOOTLIST);	
+			m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_LOOTLIST_JSONVER, safeUpdate: true);		
+		}
 		
-		//Load loot config
-		m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_LOOTLIST);	
-		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_LOOTLIST_JSONVER, safeUpdate: true);		
-		m_Config.Populate(fastScan: false);
+		m_bIsReady = m_Config.Populate(index);
 		
-		SDRC_Log.Add("[SDRC_LootHelper:Setup] Done!", LogLevel.DEBUG);
+		if (m_bIsReady)
+		{
+			SDRC_Log.Add("[SDRC_LootHelper:Scan] Done!", LogLevel.DEBUG);
+		}
+		
+		return m_bIsReady;
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -48,12 +57,7 @@ sealed class SDRC_LootHelper
 	*/
 	static bool IsReady()
 	{
-		if (m_Config.IsReady())
-		{
-			m_isReady = true;
-		}
-		
-		return m_isReady;
+		return m_bIsReady;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -234,7 +238,7 @@ sealed class SDRC_LootHelper
 		//NOTE: The below Resource.Load will result in an error if the ResourceName is not available. For example from 
 		//if (FileIO.FileExists("Prefabs/Items/Medicine/SalineBag_01/SalineBag_US_01.et")) ... 
 				
-		SDRC_Log.Add("[SDRC_LootHelper:AddToStorage] Adding to: " + entity, LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_LootHelper:AddToStorage] Adding to: " + entity, LogLevel.SPAM);
 		
 		Resource resource = Resource.Load(item);
 		if (!resource.IsValid())

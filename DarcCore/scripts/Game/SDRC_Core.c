@@ -14,6 +14,19 @@ class SDRC_EmptyPos : Managed
 }
 
 //------------------------------------------------------------------------------------------------
+enum SDRC_ECoreScanState
+{
+	INIT,
+	ENEMY,
+	VEHICLE,
+	LOOT,
+	AMMO,
+	BUILDINGCACHE,
+	LOCATIONCACHE,
+	READY
+};
+
+//------------------------------------------------------------------------------------------------
 class SDRC_Core
 {
 	private const string DC_CONFIG_FILE_CORE = SDRC_Conf.CORE_CONFIG_FILE;
@@ -23,8 +36,11 @@ class SDRC_Core
 	ref SDRC_CoreConfig m_Config = new SDRC_CoreConfig();	
 	
 	private bool m_bCoreStarted = false;
-	private bool m_bLocationCacheReady = false;
-	private bool m_bBuildingCacheReady = false;
+	private bool m_bCoreInitStarted = false;
+	
+	private bool m_bListScanReady = false;
+	private int m_iListIndex = 0;
+	private SDRC_ECoreScanState m_iScanState = SDRC_ECoreScanState.INIT;
 	
 	private ref array<string> m_sAddonList = {};
 	private ref array<string> m_sFactionList = {};
@@ -93,34 +109,18 @@ class SDRC_Core
 		
 		SDRC_Log.Add("[SDRC_Core] -------------------------------------", LogLevel.NORMAL);
 
-		GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);	//NOTE: If cache is to be filled, is checked in the function below
-
-		//Initialize EnemyHelper
-		SDRC_EnemyHelper.Setup(m_Config.fallbackEnemyFaction);
-		
-		//Initialize Vehicle list
-		SDRC_VehicleListHelper.Setup();
-
-		//Limit where Loot and Ammo helper is needed
-		if (    SDRC_Misc.IsAddonLoaded("$DarcMissions:") || SDRC_Misc.IsAddonLoaded("$DarcMissionsDev:") 
-		     || SDRC_Misc.IsAddonLoaded("$DarcSpawner:") || SDRC_Misc.IsAddonLoaded("$DarcSpawnerDev:") 
-		   )
-		{			
-			//Initialize AmmoHelper
-			SDRC_AmmoHelper.Setup();
-			
-			//Initialize LootHelper
-			SDRC_Conf.lootListScanReady = false;
-			SDRC_LootHelper.Setup();
-		}
+//		GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);	//NOTE: If cache is to be filled, it is checked inside the function below
 						
 		//Set debug visibility
 		SDRC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres, m_Config.debugShowLines, m_Config.debugShowInfo);
 
-		//All good so far, core has started.
-		m_bCoreStarted = true;
+		//Run the init - fill lists, fill caches, etc ... 
+		InitLoop();
+		
+		//All good so far, core init has started.
+		m_bCoreInitStarted = true;
 			
-		GetGame().GetCallqueue().CallLater(IsCoreReady, 2000, false);	
+//		GetGame().GetCallqueue().CallLater(IsCoreReady, 2000, false);	
 	}
 
 	void ~SDRC_Core()
@@ -128,18 +128,11 @@ class SDRC_Core
 		SDRC_Log.Add("[~SDRC_Core] Stopping SDRC_Core", LogLevel.NORMAL);
 	}
 	
-	//------------------------------------------------------------------------------------------------
+/*	//------------------------------------------------------------------------------------------------
 	private void IsCoreReady()
 	{
 		//Wait for core to be ready with all stuff
-		if (	m_bLocationCacheReady
-		     && m_bBuildingCacheReady
-			 && SDRC_Conf.lootListScanReady	//TBD: This is an ugly hack!
-/*		     && SDRC_LootHelper.IsReady()
-		     && SDRC_AmmoHelper.IsReady()
-		     && SDRC_EnemyHelper.IsReady()
-		     && SDRC_VehicleListHelper.IsReady()*/
-		   )
+		if (m_bCoreStarted)
 		{		
 			//Core initialized properly
 			SDRC_Conf.coreInitReady = true;
@@ -150,12 +143,12 @@ class SDRC_Core
 			GetGame().GetCallqueue().CallLater(IsCoreReady, 2000, false);	
 			SDRC_Log.Add("[SDRC_Core] Waiting for core init to finalize...", LogLevel.DEBUG);
 		}
-	}		
+	}		*/
 	
 	//------------------------------------------------------------------------------------------------
-	bool IsCoreStarted()
+	bool IsCoreInitStarted()
 	{
-		return m_bCoreStarted;
+		return m_bCoreInitStarted;
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -169,6 +162,103 @@ class SDRC_Core
 		GetGame().GetCallqueue().CallLater(ShowFailure, 10000, false);
 	}	
 	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Do scanning of loot, enemies, etc...
+	*/		
+	void InitLoop()
+	{
+		bool fullScan = false;
+		bool allDone = false;
+		
+		//Limit where Loot and Ammo helper is needed
+		if (    SDRC_Misc.IsAddonLoaded("$DarcMissions:") || SDRC_Misc.IsAddonLoaded("$DarcMissionsDev:") 
+		     || SDRC_Misc.IsAddonLoaded("$DarcSpawner:") || SDRC_Misc.IsAddonLoaded("$DarcSpawnerDev:") 
+		   )
+		{
+			fullScan = true;			
+		}
+	
+		switch (m_iScanState)
+		{
+			case SDRC_ECoreScanState.INIT:
+				//Add very specific startup things here
+				m_iScanState++;
+				break;
+			case SDRC_ECoreScanState.ENEMY:
+				//Initialize EnemyHelper
+				if (SDRC_EnemyHelper.Scan(m_iListIndex, m_Config.fallbackEnemyFaction))
+				{
+					m_iListIndex = 0;
+					m_iScanState++;
+				}
+				else
+				{
+					m_iListIndex++;
+				}
+				break;
+			case SDRC_ECoreScanState.VEHICLE:
+				if (fullScan)
+				{
+					//Initialize Vehicle list
+					if (SDRC_VehicleListHelper.Scan(m_iListIndex))
+					{
+						m_iListIndex = 0;
+						m_iScanState++;
+					}
+					else
+					{
+						m_iListIndex++;
+					}
+				}
+				break;
+			case SDRC_ECoreScanState.LOOT:
+				if (fullScan)
+				{
+					//Initialize LootHelper
+					if (SDRC_LootHelper.Scan(m_iListIndex))
+					{
+						m_iListIndex = 0;
+						m_iScanState++;
+					}
+					else
+					{
+						m_iListIndex++;
+					}
+				}
+				break;
+			case SDRC_ECoreScanState.AMMO:
+				if (fullScan)
+				{
+					//Initialize AmmoHelper
+					SDRC_AmmoHelper.Setup();
+					m_iScanState++;
+				}
+				break;
+			case SDRC_ECoreScanState.BUILDINGCACHE:
+				FillBuildingCache();
+				m_iScanState++;
+				break;
+			case SDRC_ECoreScanState.LOCATIONCACHE:
+				FillLocationCache();
+				m_iScanState++;
+				break;
+			case SDRC_ECoreScanState.READY:
+				allDone = true;
+			
+				//Everything related to core start up has been done! 
+				SDRC_Conf.coreInitReady = true;
+				SDRC_Log.Add("[SDRC_Core] Core init ready.", LogLevel.NORMAL);
+				m_bCoreStarted = true;
+				break;
+		}
+		
+		if (!allDone)
+		{
+			GetGame().GetCallqueue().CallLater(InitLoop, SDRC_Conf.LIST_LOAD_DELAY, false);	
+		}
+	}
+	
 	//------------------------------------------------------------------------------------------------		
 	void FillBuildingCache()
 	{
@@ -179,10 +269,6 @@ class SDRC_Core
 			SDRC_BuildingHelper.FillBuildingsCache(m_Config.buildingExcludeFilter);
 		}
 		SDRC_Log.Add("[SDRC_Core:FillBuildingCache] Done!", LogLevel.DEBUG);
-		m_bBuildingCacheReady = true;
-		
-		//Scan for locations
-		GetGame().GetCallqueue().CallLater(FillLocationCache, 2000, false);			
 	}
 	
 	//------------------------------------------------------------------------------------------------		
@@ -196,6 +282,5 @@ class SDRC_Core
 		}
 
 		SDRC_Log.Add("[SDRC_Core:FillLocationCache] Done!", LogLevel.DEBUG);
-		m_bLocationCacheReady = true;
 	}	
 }

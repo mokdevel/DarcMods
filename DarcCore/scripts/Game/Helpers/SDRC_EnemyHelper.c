@@ -12,70 +12,78 @@ sealed class SDRC_EnemyHelper
 	private const int DC_CONFIG_FILE_ENEMYLIST_JSONVER = 2;
 	
 	private static ref SDRC_JsonApi2 m_JsonApi = null;
-	private static ref SDRC_EnemyListConfig m_Config = new SDRC_EnemyListConfig();			
+	private static ref SDRC_EnemyListConfig m_Config = null;
 	
 	private static string m_sDefaultEnemyFactionKey;
 	private static Faction m_DefaultEnemyFaction = null;
 	private static ref array<string> m_sEnemyFactions = {};
 	private static ref array<string> m_sFactionList = {};
 	
-	private static bool m_isReady = false;	
-	private bool m_bPrintList = true;	
+	private static bool m_bIsReady = false;
 	
 	//------------------------------------------------------------------------------------------------
 	/*! 
 	Setup enemyHelper.
 	This will prepare the enemyLists, factionList and set default enemyFaction
 	*/	
-	static void Setup(string defaultEnemyFaction)
+	static bool Scan(int index, string defaultEnemyFaction)
 	{
-		SDRC_Log.Add("[SDRC_EnemyHelper:Setup] Preparing..", LogLevel.NORMAL);
-
-		SDRC_FactionHelper.GetFactionList(m_sFactionList);
-		
-		//By default, all factions can be used. This may later be changed by a mod like DarcMissions
-		SDRC_FactionHelper.GetFactionList(m_sEnemyFactions);
-		SDRC_Log.Add("[SDRC_EnemyHelper:Setup] Default enemyFactions: " + m_sEnemyFactions, LogLevel.NORMAL);
-				
-		m_sDefaultEnemyFactionKey = defaultEnemyFaction;
-		m_DefaultEnemyFaction = GetFactionWithName(m_sDefaultEnemyFactionKey);
-		if (!m_DefaultEnemyFaction)
-		{
-			SDRC_Log.Add("[SDRC_EnemyHelper:Setup] Error in setting fallback enemy faction: " + defaultEnemyFaction, LogLevel.ERROR);
-		}
-		
-		//Load configuration from file
-		m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_ENEMYLIST);	
-		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_CONFIG_FILE_ENEMYLIST_JSONVER, safeUpdate: true);		
-		m_Config.Populate();	
-		
-		//Create a C_RANDOMIZED list
-		array<string> randomizedLists = {"C_RIFLEMAN", "C_HEAVY", "C_RECON"};
-		
-		ref SDRC_List randomizedList = new SDRC_List();
-		randomizedList.Set("C_RANDOMIZED", {}, {}, {}, {});
-		
-		foreach (string rlist : randomizedLists)
+		if (!m_Config)
 		{		
-			int index = SDRC_ListHelper.FindRightList(m_Config.m_lists, rlist);
-			if (index != -1)
+			SDRC_Log.Add("[SDRC_EnemyHelper:Scan] Preparing..", LogLevel.NORMAL);
+	
+			SDRC_FactionHelper.GetFactionList(m_sFactionList);
+			
+			//By default, all factions can be used. This may later be changed by a mod like DarcMissions
+			SDRC_FactionHelper.GetFactionList(m_sEnemyFactions);
+			SDRC_Log.Add("[SDRC_EnemyHelper:Scan] Default enemyFactions: " + m_sEnemyFactions, LogLevel.NORMAL);
+					
+			m_sDefaultEnemyFactionKey = defaultEnemyFaction;
+			m_DefaultEnemyFaction = GetFactionWithName(m_sDefaultEnemyFactionKey);
+			if (!m_DefaultEnemyFaction)
 			{
-				foreach (string item : m_Config.m_lists[index].items)
-				{
-					randomizedList.items.Insert(item);
-				}
-			}			
-		}		
-		m_Config.m_lists.Insert(randomizedList);
+				SDRC_Log.Add("[SDRC_EnemyHelper:Scan] Error in setting fallback enemy faction: " + defaultEnemyFaction, LogLevel.ERROR);
+			}
+			
+			//Load configuration from file
+			m_Config = new SDRC_EnemyListConfig();
+			m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_ENEMYLIST);	
+			m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_CONFIG_FILE_ENEMYLIST_JSONVER, safeUpdate: true);		
+		}
+	
+		m_bIsReady = m_Config.Populate(index);
 		
-		SDRC_Log.Add("[SDRC_EnemyHelper:Setup] List: " + randomizedList.id + " (" + randomizedList.items.Count() + ")", LogLevel.DEBUG);				
-		if (SDRC_Log.GetLogLevel() > DC_LogLevel.DEBUG)
+		if (m_bIsReady)
 		{
-			randomizedList.items.Debug();
+			//Create a C_RANDOMIZED list
+			array<string> randomizedLists = {"C_RIFLEMAN", "C_HEAVY", "C_RECON"};
+			
+			ref SDRC_List randomizedList = new SDRC_List();
+			randomizedList.Set("C_RANDOMIZED", {}, {}, {}, {});
+			
+			foreach (string rlist : randomizedLists)
+			{		
+				int listIndex = SDRC_ListHelper.FindRightList(m_Config.m_lists, rlist);
+				if (listIndex != -1)
+				{
+					foreach (string item : m_Config.m_lists[listIndex].items)
+					{
+						randomizedList.items.Insert(item);
+					}
+				}			
+			}		
+			m_Config.m_lists.Insert(randomizedList);
+			
+			SDRC_Log.Add("[SDRC_EnemyHelper:Setup] List: " + randomizedList.id + " (" + randomizedList.items.Count() + ")", LogLevel.DEBUG);				
+			if (SDRC_Log.GetLogLevel() > DC_LogLevel.DEBUG)
+			{
+				randomizedList.items.Debug();
+			}
+			
+			SDRC_Log.Add("[SDRC_EnemyHelper:Setup] Done!", LogLevel.DEBUG);
 		}
 		
-		SDRC_Log.Add("[SDRC_EnemyHelper:Setup] Done!", LogLevel.DEBUG);
-		m_isReady = true;
+		return m_bIsReady;		
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -84,7 +92,7 @@ sealed class SDRC_EnemyHelper
 	*/
 	static bool IsReady()
 	{
-		return m_isReady;
+		return m_bIsReady;
 	}
 	
 	//------------------------------------------------------------------------------------------------

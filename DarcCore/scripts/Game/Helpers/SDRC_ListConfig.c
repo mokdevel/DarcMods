@@ -43,11 +43,11 @@ class SDRC_ListConfig : SDRC_Config
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Scan mods for items, enemies etc.
-	\param fastScan True to do an immediate scan. False will use a delayed scan to avoid server load.
+	\param index The index of the 
 	*/	
-	void Populate(bool fastScan = true)
+	bool Populate(int index, bool doPrint = true)
 	{
-		SDRC_Log.Add("[SDRC_ListConfig:Populate] Creating lists..", LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_ListConfig:Populate] Creating lists..", LogLevel.SPAM);
 	
 		if (m_modList.IsEmpty())
 		{
@@ -62,29 +62,27 @@ class SDRC_ListConfig : SDRC_Config
 				//SDRC_Log.Add("[SDRC_ListConfig:Populate] Mod found: " + name, LogLevel.DEBUG);				
 			}
 		}
-		
-		foreach (int idx, SDRC_List list : m_lists)
+
+		if (index > m_lists.Count() - 1)
 		{
-			bool lastItem = false;
-			if (idx == m_lists.Count() - 1)
-			{
-				lastItem = true;
-				SDRC_Log.Add("[SDRC_ListConfig:Populate] Adding last item.", LogLevel.DEBUG);
-			}
-			
-			if (fastScan)
-			{
-				DoScan(list, lastItem);
-			}
-			else
-			{
-				GetGame().GetCallqueue().CallLater(DoScan, 2000 + idx * 1000, false, list, lastItem);
-			}
-		}		
+			SDRC_Log.Add("[SDRC_ListConfig:Populate] Wrong index number: " + index + ". Stopping!", LogLevel.ERROR);
+			return true;
+		}
+				
+		if (index == m_lists.Count() - 1)
+		{
+			SDRC_Log.Add("[SDRC_ListConfig:Populate] All scanned.", LogLevel.DEBUG);
+			return true;
+		}
+		
+		SDRC_List list = m_lists[index];
+		DoScan(list, doPrint);
+		
+		return false;
 	}	
 	
 	//------------------------------------------------------------------------------------------------
-	void DoScan(SDRC_List list, bool lastItem)
+	void DoScan(SDRC_List list, bool doPrint = true)
 	{
 		SDRC_Log.Add("[SDRC_ListConfig:DoScan] Scanning: " + list.id, LogLevel.DEBUG);
 		
@@ -112,18 +110,17 @@ class SDRC_ListConfig : SDRC_Config
 		{
 			list.factions.Insert(SDRC_Resources.GetResourceFaction(item));
 		}
-			
-		SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);
-		if (SDRC_Log.GetLogLevel() > DC_LogLevel.DEBUG)
+	
+		//Print a normal list report
+		if (doPrint)
+		{
+			SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);
+		}		
+		
+		//Print a detailed list of items when debug level is ALL
+		if ( (SDRC_Log.GetLogLevel() > DC_LogLevel.DEBUG) && (doPrint) )
 		{
 			list.items.Debug();
-		}
-		
-		//Set scanning as done!
-		if (lastItem)
-		{
-			SDRC_Conf.lootListScanReady = true;
-			//m_bScanReady = true;
 		}
 	}
 	
@@ -131,9 +128,9 @@ class SDRC_ListConfig : SDRC_Config
 	/*!
 	Returns true if all scannings are finalized.
 	*/
-	bool IsReady()
+/*	bool IsReady()
 	{
 		return true;
 		//return m_bScanReady;
-	}	
+	}	*/
 }

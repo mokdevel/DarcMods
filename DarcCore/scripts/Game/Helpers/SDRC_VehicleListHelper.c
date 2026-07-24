@@ -12,32 +12,43 @@ sealed class SDRC_VehicleListHelper
 	private const int DC_MISSIONCONFIG_FILE_VEHICLELIST_JSONVER = 3;
 	
 	private static ref SDRC_JsonApi2 m_JsonApi = null;
-	private static ref SDRC_VehicleListConfig m_Config = new SDRC_VehicleListConfig();			
+	private static ref SDRC_VehicleListConfig m_Config = null;
 	
-	private static bool m_isReady = false;
+	private static bool m_bIsReady = false;
 	
-	static void Setup()
+	static bool Scan(int index)
 	{
-		SDRC_Log.Add("[SDRC_VehicleListHelper:Setup] Preparing..", LogLevel.NORMAL);
+		if (!m_Config)
+		{		
+			SDRC_Log.Add("[SDRC_VehicleListHelper:Scan] Preparing..", LogLevel.NORMAL);
+			
+			//Load vehicle list config
+			m_Config = new SDRC_VehicleListConfig();
+			m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_VEHICLELIST);	
+			m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_VEHICLELIST_JSONVER, safeUpdate: true);		
+		}
 		
-		//Load vehicle list config
-		m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_VEHICLELIST);	
-		m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_VEHICLELIST_JSONVER, safeUpdate: true);		
-		m_Config.Populate(false);
+		m_bIsReady = m_Config.Populate(index, false);
 		
-		Sanitize();
-		
-		if (SDRC_Log.GetLogLevel() > DC_LogLevel.NORMAL)
+		if (m_bIsReady)
 		{
+			Sanitize();
+			
 			foreach (SDRC_List list : m_Config.m_lists)
 			{
 				SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);	//NOTE: SDRC_ListConfig:Populate left here on purpose! 
-				list.items.Debug();
+				
+				//Print a detailed list of items when debug level is ALL
+				if (SDRC_Log.GetLogLevel() > DC_LogLevel.DEBUG)
+				{				
+					list.items.Debug();
+				}
 			}
+			
+			SDRC_Log.Add("[SDRC_VehicleListHelper:Scan] Done!", LogLevel.DEBUG);			
 		}
 		
-		SDRC_Log.Add("[SDRC_VehicleListHelper:Setup] Done!", LogLevel.DEBUG);
-		m_isReady = true;
+		return m_bIsReady;
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -46,7 +57,7 @@ sealed class SDRC_VehicleListHelper
 	*/
 	static bool IsReady()
 	{
-		return m_isReady;
+		return m_bIsReady;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -58,7 +69,7 @@ sealed class SDRC_VehicleListHelper
 		//Let's find the factions for the vehicles
 		foreach (SDRC_List list : m_Config.m_lists)
 		{
-			SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] LIST: " + list.id, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] LIST: " + list.id, LogLevel.SPAM);
 			
 			//foreach (string item : list.items)
 			for (int i = 0; i < list.items.Count(); i++)
