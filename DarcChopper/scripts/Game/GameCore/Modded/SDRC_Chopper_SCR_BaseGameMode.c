@@ -57,7 +57,7 @@ modded class SCR_BaseGameMode
 		}
 		else
 		{
-			GetGame().GetCallqueue().CallLater(StartChopperFrame, 2000, false);	
+			GetGame().GetCallqueue().CallLater(StartChopperFrame, 5000, false);	
 			SDRC_Log.Add("[SDRC_Chopper_BaseGameMode:StartChopperFrame] Core not running. Waiting...", LogLevel.DEBUG);
 		}
 	}

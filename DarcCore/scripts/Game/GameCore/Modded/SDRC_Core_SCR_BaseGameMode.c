@@ -21,13 +21,14 @@ modded class SCR_BaseGameMode
 			//Initialize core
 			m_SDRC_Core = new SDRC_Core();
 
-			if (!m_SDRC_Core.IsCoreStarted())
+			if (!m_SDRC_Core.IsCoreInitStarted())
 			{
+				SDRC_Log.Add("[SDRC_Core_BaseGameMode] Error starting Core!", LogLevel.ERROR);
 				return;
 			}
 								
 			//Initialize the SDRC_DebugEntity
-			SDRC_Log.Add("[SDRC_Core_BaseGameMode] Creating SDRC_DebugEntity", LogLevel.NORMAL);        
+			SDRC_Log.Add("[SDRC_Core_BaseGameMode] Creating SDRC_DebugEntity", LogLevel.NORMAL);
 			m_SDRC_DebugEntity = SDRC_DebugEntity.Cast(GetGame().SpawnEntity(SDRC_DebugEntity, GetGame().GetWorld(), null));
 			
 			//Initialize the SDRC_HintEntity
@@ -45,7 +46,7 @@ modded class SCR_BaseGameMode
 			//For testing
 			//GetGame().GetCallqueue().CallLater(DebugStart, 15000, false);	
 			
-			GetGame().GetCallqueue().CallLater(WaitingForCore, 5000, false);
+			GetGame().GetCallqueue().CallLater(WaitingForCore, 100, false);
 		}
 		else 
 		{
@@ -64,8 +65,8 @@ modded class SCR_BaseGameMode
 		}
 		else
 		{
-			GetGame().GetCallqueue().CallLater(WaitingForCore, 5000, false);	
-			SDRC_Log.Add("[SDRC_Core_BaseGameMode:WaitingForCore] Waiting for core init to finalize...", LogLevel.DEBUG);
+			GetGame().GetCallqueue().CallLater(WaitingForCore, 100, false);	
+			SDRC_Log.Add("[SDRC_Core_BaseGameMode:WaitingForCore] Waiting for core init to finalize...", LogLevel.SPAM);
 		}
 		
 		GetGame().GetCallqueue().CallLater(ErrorReporter, 10000, true);		
