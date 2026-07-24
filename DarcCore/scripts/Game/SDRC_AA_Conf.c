@@ -52,6 +52,7 @@ sealed class SDRC_Conf
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.NORMAL;
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
 	//TBD: const bool DISABLE_PERSISTENCE = true;
+	const int LIST_LOAD_DELAY = 100;
 #endif
 		
 //Development time options	
@@ -73,7 +74,6 @@ sealed class SDRC_Conf
 	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.DEBUG;
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
 	//TBD: const bool DISABLE_PERSISTENCE = true;	
+	const int LIST_LOAD_DELAY = 10;
 #endif
-	
-	static bool lootListScanReady = false;
 }
