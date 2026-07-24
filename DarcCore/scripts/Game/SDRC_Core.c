@@ -95,40 +95,38 @@ class SDRC_Core
 
 		GetGame().GetCallqueue().CallLater(FillBuildingCache, 2000, false);	//NOTE: If cache is to be filled, is checked in the function below
 
+		//Initialize EnemyHelper
+		SDRC_EnemyHelper.Setup(m_Config.fallbackEnemyFaction);
+		
+		//Initialize Vehicle list
+		SDRC_VehicleListHelper.Setup();
+
 		//Limit where Loot and Ammo helper is needed
 		if (    SDRC_Misc.IsAddonLoaded("$DarcMissions:") || SDRC_Misc.IsAddonLoaded("$DarcMissionsDev:") 
 		     || SDRC_Misc.IsAddonLoaded("$DarcSpawner:") || SDRC_Misc.IsAddonLoaded("$DarcSpawnerDev:") 
 		   )
-		{
-			//Initialize LootHelper
-			SDRC_LootHelper.Setup();
-			
+		{			
 			//Initialize AmmoHelper
 			SDRC_AmmoHelper.Setup();
+			
+			//Initialize LootHelper
+			SDRC_Conf.lootListScanReady = false;
+			SDRC_LootHelper.Setup();
 		}
-
-		//Initialize EnemyHelper
-		SDRC_EnemyHelper.Setup(m_Config.fallbackEnemyFaction);
-		
-		//Initialize Vehicle
-		SDRC_VehicleListHelper.Setup();
-				
+						
 		//Set debug visibility
 		SDRC_DebugHelper.Configure(m_Config.debugShowWaypoints, m_Config.debugShowMarks, m_Config.debugShowSpheres, m_Config.debugShowLines, m_Config.debugShowInfo);
 
 		//All good so far, core has started.
 		m_bCoreStarted = true;
-		
 			
 		GetGame().GetCallqueue().CallLater(IsCoreReady, 2000, false);	
-		
 	}
 
 	void ~SDRC_Core()
 	{
 		SDRC_Log.Add("[~SDRC_Core] Stopping SDRC_Core", LogLevel.NORMAL);
 	}
-
 	
 	//------------------------------------------------------------------------------------------------
 	private void IsCoreReady()
@@ -136,10 +134,11 @@ class SDRC_Core
 		//Wait for core to be ready with all stuff
 		if (	m_bLocationCacheReady
 		     && m_bBuildingCacheReady
-		     && SDRC_LootHelper.IsReady()
+			 && SDRC_Conf.lootListScanReady	//TBD: This is an ugly hack!
+/*		     && SDRC_LootHelper.IsReady()
 		     && SDRC_AmmoHelper.IsReady()
 		     && SDRC_EnemyHelper.IsReady()
-		     && SDRC_VehicleListHelper.IsReady()
+		     && SDRC_VehicleListHelper.IsReady()*/
 		   )
 		{		
 			//Core initialized properly

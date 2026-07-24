@@ -26,7 +26,7 @@ sealed class SDRC_LootHelper
 	private const int DC_MISSIONCONFIG_FILE_LOOTLIST_JSONVER = 3;
 	
 	private static ref SDRC_JsonApi2 m_JsonApi = null;
-	private static ref SDRC_LootListConfig m_Config = new SDRC_LootListConfig();			
+	private static ref SDRC_LootListConfig m_Config = new SDRC_LootListConfig();
 	
 	private static bool m_isReady = false;
 	

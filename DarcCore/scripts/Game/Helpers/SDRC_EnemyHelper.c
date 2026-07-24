@@ -19,7 +19,8 @@ sealed class SDRC_EnemyHelper
 	private static ref array<string> m_sEnemyFactions = {};
 	private static ref array<string> m_sFactionList = {};
 	
-	private static bool m_isReady = false;
+	private static bool m_isReady = false;	
+	private bool m_bPrintList = true;	
 	
 	//------------------------------------------------------------------------------------------------
 	/*! 
@@ -66,9 +67,10 @@ sealed class SDRC_EnemyHelper
 			}			
 		}		
 		m_Config.m_lists.Insert(randomizedList);
-		if (SDRC_Log.GetLogLevel() > DC_LogLevel.NORMAL)
+		
+		SDRC_Log.Add("[SDRC_EnemyHelper:Setup] List: " + randomizedList.id + " (" + randomizedList.items.Count() + ")", LogLevel.DEBUG);				
+		if (SDRC_Log.GetLogLevel() > DC_LogLevel.DEBUG)
 		{
-			SDRC_Log.Add("[SDRC_EnemyHelper:Setup] List: " + randomizedList.id + " (" + randomizedList.items.Count() + ")", LogLevel.DEBUG);				
 			randomizedList.items.Debug();
 		}
 		

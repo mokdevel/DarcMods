@@ -74,4 +74,6 @@ sealed class SDRC_Conf
 //	const DC_LogLevel DEFAULT_LOGLEVEL = DC_LogLevel.ALL;
 	//TBD: const bool DISABLE_PERSISTENCE = true;	
 #endif
+	
+	static bool lootListScanReady = false;
 }

@@ -30,26 +30,25 @@ class SDRC_ListConfig : SDRC_Config
 {
 	//Default information
 	string author = "darc";
-	bool m_bPrintList = true;
-	bool m_bScanReady = false;
 	
 	//Config specific
 	ref array<string> m_modList = {};
 	ref array<ref SDRC_List> m_lists = {};
 	ref array<ref SDRC_Aka> m_akas = {};
 	
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//NOTE: Any variable added here will be stored in the json!
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Scan mods for items, enemies etc.
 	\param fastScan True to do an immediate scan. False will use a delayed scan to avoid server load.
-	\param printList If the lists will be printed for debugging purposes.
 	*/	
-	void Populate(bool fastScan = true, bool printList = true)
+	void Populate(bool fastScan = true)
 	{
 		SDRC_Log.Add("[SDRC_ListConfig:Populate] Creating lists..", LogLevel.NORMAL);
 	
-		m_bPrintList = printList;
-			
 		if (m_modList.IsEmpty())
 		{
 			array<string> addonList = {};
@@ -79,7 +78,7 @@ class SDRC_ListConfig : SDRC_Config
 			}
 			else
 			{
-				GetGame().GetCallqueue().CallLater(DoScan, 2000 + idx * 300, false, list, lastItem);
+				GetGame().GetCallqueue().CallLater(DoScan, 2000 + idx * 1000, false, list, lastItem);
 			}
 		}		
 	}	
@@ -114,16 +113,17 @@ class SDRC_ListConfig : SDRC_Config
 			list.factions.Insert(SDRC_Resources.GetResourceFaction(item));
 		}
 			
-		if ( (SDRC_Log.GetLogLevel() > DC_LogLevel.NORMAL) && (m_bPrintList) )
+		SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);
+		if (SDRC_Log.GetLogLevel() > DC_LogLevel.DEBUG)
 		{
-			SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);
 			list.items.Debug();
 		}
 		
 		//Set scanning as done!
 		if (lastItem)
 		{
-			m_bScanReady = true;
+			SDRC_Conf.lootListScanReady = true;
+			//m_bScanReady = true;
 		}
 	}
 	
@@ -133,6 +133,7 @@ class SDRC_ListConfig : SDRC_Config
 	*/
 	bool IsReady()
 	{
-		return m_bScanReady;
+		return true;
+		//return m_bScanReady;
 	}	
 }
