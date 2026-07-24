@@ -43,27 +43,23 @@ sealed class SDRC_MissionEnumHelper
 		delete nonValidAreaJsonApi;
 		
 		//Create a default mission configs
-		SDRC_JsonApi2 convoyJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CONVOY);	
-		SDRC_ConvoyConfig confConvoy = new SDRC_ConvoyConfig();		
-		convoyJsonApi.Load(confConvoy, SDRC_MissionConfig.Cast(confConvoy), DC_MISSIONCONFIG_FILE_CONVOY_JSONVER);
-		confConvoy.CreateMissionFiles();
-		confConvoy.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CONVOY_JSONVER);
-		delete confConvoy;
-		delete convoyJsonApi;		
+		//NOTE: Order is important so that missionBigIndex is filled correctly!
 		
-		SDRC_JsonApi2 crashsiteJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CRASHSITE);	
-		SDRC_CrashsiteConfig confCrashsite = new SDRC_CrashsiteConfig();		
-		crashsiteJsonApi.Load(confCrashsite, SDRC_MissionConfig.Cast(confCrashsite), DC_MISSIONCONFIG_FILE_CRASHSITE_JSONVER);		
-		confCrashsite.CreateMissionFiles();
-		confCrashsite.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CRASHSITE_JSONVER);
-		delete confCrashsite;
-		delete crashsiteJsonApi;
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode)
+		{		
+			SDRC_Log.Add("[CreateAllConfigs] Could not find baseGameMode.", LogLevel.WARNING);
+		}		
 		
 		SDRC_JsonApi2 hunterJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_HUNTER);	
 		SDRC_HunterConfig confHunter = new SDRC_HunterConfig();		
 		hunterJsonApi.Load(confHunter, SDRC_MissionConfig.Cast(confHunter), DC_MISSIONCONFIG_FILE_HUNTER_JSONVER);
 		confHunter.CreateMissionFiles();
 		confHunter.LoadMissionFiles(DC_MISSIONCONFIG_FILE_HUNTER_JSONVER);
+		if (baseGameMode) 
+		{		
+			baseGameMode.missionBigIndex.Insert(confHunter.FindBiggestIndex());
+		}		
 		delete confHunter;
 		delete hunterJsonApi;
 		
@@ -72,14 +68,46 @@ sealed class SDRC_MissionEnumHelper
 		occupationJsonApi.Load(confOccupation, SDRC_MissionConfig.Cast(confOccupation), DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER);		
 		confOccupation.CreateMissionFiles();
 		confOccupation.LoadMissionFiles(DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER);
+		if (baseGameMode) 
+		{		
+			baseGameMode.missionBigIndex.Insert(confOccupation.FindBiggestIndex());
+		}		
 		delete confOccupation;
 		delete occupationJsonApi;			
+		
+		SDRC_JsonApi2 convoyJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CONVOY);	
+		SDRC_ConvoyConfig confConvoy = new SDRC_ConvoyConfig();		
+		convoyJsonApi.Load(confConvoy, SDRC_MissionConfig.Cast(confConvoy), DC_MISSIONCONFIG_FILE_CONVOY_JSONVER);
+		confConvoy.CreateMissionFiles();
+		confConvoy.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CONVOY_JSONVER);
+		if (baseGameMode) 
+		{		
+			baseGameMode.missionBigIndex.Insert(confConvoy.FindBiggestIndex());
+		}		
+		delete confConvoy;
+		delete convoyJsonApi;		
+		
+		SDRC_JsonApi2 crashsiteJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CRASHSITE);	
+		SDRC_CrashsiteConfig confCrashsite = new SDRC_CrashsiteConfig();		
+		crashsiteJsonApi.Load(confCrashsite, SDRC_MissionConfig.Cast(confCrashsite), DC_MISSIONCONFIG_FILE_CRASHSITE_JSONVER);		
+		confCrashsite.CreateMissionFiles();
+		confCrashsite.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CRASHSITE_JSONVER);
+		if (baseGameMode) 
+		{		
+			baseGameMode.missionBigIndex.Insert(confCrashsite.FindBiggestIndex());
+		}		
+		delete confCrashsite;
+		delete crashsiteJsonApi;
 		
 		SDRC_JsonApi2 patrolJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_PATROL);	
 		SDRC_PatrolConfig confPatrol = new SDRC_PatrolConfig();		
 		patrolJsonApi.Load(confPatrol, SDRC_MissionConfig.Cast(confPatrol), DC_MISSIONCONFIG_FILE_PATROL_JSONVER);		
 		confPatrol.CreateMissionFiles();
 		confPatrol.LoadMissionFiles(DC_MISSIONCONFIG_FILE_PATROL_JSONVER);
+		if (baseGameMode) 
+		{		
+			baseGameMode.missionBigIndex.Insert(confPatrol.FindBiggestIndex());
+		}
 		delete confPatrol;
 		delete patrolJsonApi;		
 		
@@ -88,6 +116,10 @@ sealed class SDRC_MissionEnumHelper
 		squatterJsonApi.Load(confSquatter, SDRC_MissionConfig.Cast(confSquatter), DC_MISSIONCONFIG_FILE_SQUATTER_JSONVER);
 		confSquatter.CreateMissionFiles();
 		confSquatter.LoadMissionFiles(DC_MISSIONCONFIG_FILE_SQUATTER_JSONVER);
+		if (baseGameMode) 
+		{		
+			baseGameMode.missionBigIndex.Insert(confSquatter.FindBiggestIndex());
+		}
 		delete confSquatter;
 		delete squatterJsonApi;			
 		
@@ -96,6 +128,10 @@ sealed class SDRC_MissionEnumHelper
 		roadblockJsonApi.Load(confRoadblock, SDRC_MissionConfig.Cast(confRoadblock), DC_MISSIONCONFIG_FILE_ROADBLOCK_JSONVER);
 		confRoadblock.CreateMissionFiles();
 		confRoadblock.LoadMissionFiles(DC_MISSIONCONFIG_FILE_ROADBLOCK_JSONVER);
+		if (baseGameMode) 
+		{		
+			baseGameMode.missionBigIndex.Insert(confRoadblock.FindBiggestIndex());
+		}		
 		delete confRoadblock;
 		delete roadblockJsonApi;			
 		
@@ -104,6 +140,10 @@ sealed class SDRC_MissionEnumHelper
 		hvtVipJsonApi.Load(confHvtVip, SDRC_MissionConfig.Cast(confHvtVip), DC_MISSIONCONFIG_FILE_HVTVIP_JSONVER);
 		confHvtVip.CreateMissionFiles();
 		confHvtVip.LoadMissionFiles(DC_MISSIONCONFIG_FILE_HVTVIP_JSONVER);
+		if (baseGameMode) 
+		{		
+			baseGameMode.missionBigIndex.Insert(confHvtVip.FindBiggestIndex());
+		}		
 		delete confHvtVip;
 		delete hvtVipJsonApi;		
 				
@@ -112,6 +152,10 @@ sealed class SDRC_MissionEnumHelper
 		hvtItemJsonApi.Load(confHvtItem, SDRC_MissionConfig.Cast(confHvtItem), DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER);
 		confHvtItem.CreateMissionFiles();
 		confHvtItem.LoadMissionFiles(DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER);
+		if (baseGameMode) 
+		{		
+			baseGameMode.missionBigIndex.Insert(confHvtItem.FindBiggestIndex());
+		}		
 		delete confHvtItem;
 		delete hvtItemJsonApi;		
 		
@@ -120,6 +164,10 @@ sealed class SDRC_MissionEnumHelper
 		stashJsonApi.Load(confStash, SDRC_MissionConfig.Cast(confStash), DC_MISSIONCONFIG_FILE_STASH_JSONVER);
 		confStash.CreateMissionFiles();
 		confStash.LoadMissionFiles(DC_MISSIONCONFIG_FILE_STASH_JSONVER);
+		if (baseGameMode) 
+		{		
+			baseGameMode.missionBigIndex.Insert(confStash.FindBiggestIndex());
+		}		
 		delete confStash;
 		delete stashJsonApi;
 		
@@ -128,6 +176,10 @@ sealed class SDRC_MissionEnumHelper
 		chopperJsonApi.Load(confChopper, SDRC_MissionConfig.Cast(confChopper), DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER);
 		confChopper.CreateMissionFiles();
 		confChopper.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER);
+		if (baseGameMode) 
+		{		
+			baseGameMode.missionBigIndex.Insert(confChopper.FindBiggestIndex());
+		}	
 		delete confChopper;
 		delete chopperJsonApi;
 	}		

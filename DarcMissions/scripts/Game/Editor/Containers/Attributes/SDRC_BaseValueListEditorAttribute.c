@@ -10,7 +10,7 @@ class SDRC_MissionSubIdxEditorAttributeBaseValues:SCR_EditorAttributeBaseValues
 		
 		if (baseGameMode)		
 		{		
-			int num = baseGameMode.missionFrame.justAnumber;	//TBD: Remove, just for testing
+			int num = baseGameMode.missionBigIndexForEdit;
 		
 			m_fMin = -1;
 			m_fMax = num;
