@@ -63,16 +63,16 @@ sealed class SDRC_EnemyHelper
 			
 			foreach (string rlist : randomizedLists)
 			{		
-				int listIndex = SDRC_ListHelper.FindRightList(m_Config.m_lists, rlist);
+				int listIndex = SDRC_ListHelper.FindRightList(m_Config.lists, rlist);
 				if (listIndex != -1)
 				{
-					foreach (string item : m_Config.m_lists[listIndex].items)
+					foreach (string item : m_Config.lists[listIndex].items)
 					{
 						randomizedList.items.Insert(item);
 					}
 				}			
 			}		
-			m_Config.m_lists.Insert(randomizedList);
+			m_Config.lists.Insert(randomizedList);
 			
 			SDRC_Log.Add("[SDRC_EnemyHelper:Setup] List: " + randomizedList.id + " (" + randomizedList.items.Count() + ")", LogLevel.DEBUG);				
 			if (SDRC_Log.GetLogLevel() > DC_LogLevel.DEBUG)
@@ -132,7 +132,7 @@ sealed class SDRC_EnemyHelper
 		array<string> factionsFound = {};		
 		array<string> factionsMissing = {};
 		
-		foreach (SDRC_List list : m_Config.m_lists)
+		foreach (SDRC_List list : m_Config.lists)
 		{
 			factionsFound.Clear();
 			factionsMissing.Clear();
@@ -142,7 +142,7 @@ sealed class SDRC_EnemyHelper
 				array<string> factionsToTest = {};
 				
 				//Check if the requested faction has an aka
-				foreach (SDRC_Aka aka : m_Config.m_akas)
+				foreach (SDRC_Aka aka : m_Config.akas)
 				{
 					if (aka.names[0] == faction)
 					{
@@ -235,7 +235,7 @@ sealed class SDRC_EnemyHelper
 		factions.Insert(faction);
 
 		//Check if the requested faction has an aka
-		foreach (SDRC_Aka aka : m_Config.m_akas)
+		foreach (SDRC_Aka aka : m_Config.akas)
 		{			
 			if (aka.names[0] == faction)
 			{			
@@ -255,7 +255,7 @@ sealed class SDRC_EnemyHelper
 		}
 
 		//Find the right list index		
-		int index = SDRC_ListHelper.FindRightList(m_Config.m_lists, listName);
+		int index = SDRC_ListHelper.FindRightList(m_Config.lists, listName);
 		
 		//Did we find it?
 		if (index == -1)
@@ -265,7 +265,7 @@ sealed class SDRC_EnemyHelper
 		}
 
 		//Filter with faction		
-		foreach (string enemy : m_Config.m_lists[index].items)
+		foreach (string enemy : m_Config.lists[index].items)
 		{
 			foreach (string fac : factions)
 			{
@@ -288,9 +288,9 @@ sealed class SDRC_EnemyHelper
 		if (enemyList.IsEmpty())
 		{
 			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemy] Enemy name does not have faction in it. Using the full list.", LogLevel.WARNING);
-			if (!m_Config.m_lists[index].items.IsEmpty())
+			if (!m_Config.lists[index].items.IsEmpty())
 			{
-				resourceName = m_Config.m_lists[index].items.GetRandomElement();
+				resourceName = m_Config.lists[index].items.GetRandomElement();
 			}
 		}
 		else		

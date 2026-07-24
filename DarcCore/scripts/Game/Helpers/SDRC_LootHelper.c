@@ -172,9 +172,9 @@ sealed class SDRC_LootHelper
 	static ResourceName FindLootItem(string listName)
 	{
 		int lootIndex = -1;
-		for (int i = 0; i < m_Config.m_lists.Count(); i++)		
+		for (int i = 0; i < m_Config.lists.Count(); i++)		
 		{
-			if (m_Config.m_lists[i].id == listName)
+			if (m_Config.lists[i].id == listName)
 			{
 				lootIndex = i;
 				break;
@@ -189,9 +189,9 @@ sealed class SDRC_LootHelper
 
 		ResourceName resourceName = "";
 		
-		if (!m_Config.m_lists[lootIndex].items.IsEmpty())
+		if (!m_Config.lists[lootIndex].items.IsEmpty())
 		{
-			resourceName = m_Config.m_lists[lootIndex].items.GetRandomElement();
+			resourceName = m_Config.lists[lootIndex].items.GetRandomElement();
 			SDRC_Log.Add("[SDRC_LootHelper:FindLootItem] Selected: (" + listName + ") " + resourceName, LogLevel.DEBUG);
 		}
 		
@@ -205,12 +205,12 @@ sealed class SDRC_LootHelper
 	static bool GetLootListItems(out array<string> items, string listName)
 	{
 		//Find the right list index		
-		int lootIndex = SDRC_ListHelper.FindRightList(m_Config.m_lists, listName);
+		int lootIndex = SDRC_ListHelper.FindRightList(m_Config.lists, listName);
 		
 /*		int lootIndex = -1;
-		for (int i = 0; i < m_Config.m_lists.Count(); i++)		
+		for (int i = 0; i < m_Config.lists.Count(); i++)		
 		{
-			if (m_Config.m_lists[i].id == listName)
+			if (m_Config.lists[i].id == listName)
 			{
 				lootIndex = i;
 				break;
@@ -225,7 +225,7 @@ sealed class SDRC_LootHelper
 
 		SDRC_Log.Add("[SDRC_LootHelper:GetLootListItems] Found: " + listName, LogLevel.DEBUG);
 				
-		items.Copy(m_Config.m_lists[lootIndex].items);
+		items.Copy(m_Config.lists[lootIndex].items);
 		return true;
 	}	
 

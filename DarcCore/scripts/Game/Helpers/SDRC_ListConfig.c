@@ -32,9 +32,9 @@ class SDRC_ListConfig : SDRC_Config
 	string author = "darc";
 	
 	//Config specific
-	ref array<string> m_modList = {};
-	ref array<ref SDRC_List> m_lists = {};
-	ref array<ref SDRC_Aka> m_akas = {};
+	ref array<string> modList = {};
+	ref array<ref SDRC_List> lists = {};
+	ref array<ref SDRC_Aka> akas = {};
 	
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//NOTE: Any variable added here will be stored in the json!
@@ -49,7 +49,7 @@ class SDRC_ListConfig : SDRC_Config
 	{
 		SDRC_Log.Add("[SDRC_ListConfig:Populate] Creating lists..", LogLevel.SPAM);
 	
-		if (m_modList.IsEmpty())
+		if (modList.IsEmpty())
 		{
 			array<string> addonList = {};
 			
@@ -58,24 +58,24 @@ class SDRC_ListConfig : SDRC_Config
 			foreach (string addon : addonList)
 			{
 				string name = addon;
-				m_modList.Insert(name);
+				modList.Insert(name);
 				//SDRC_Log.Add("[SDRC_ListConfig:Populate] Mod found: " + name, LogLevel.DEBUG);				
 			}
 		}
 
-		if (index > m_lists.Count() - 1)
+		if (index > lists.Count() - 1)
 		{
 			SDRC_Log.Add("[SDRC_ListConfig:Populate] Wrong index number: " + index + ". Stopping!", LogLevel.ERROR);
 			return true;
 		}
 				
-		if (index == m_lists.Count() - 1)
+		if (index == lists.Count() - 1)
 		{
 			SDRC_Log.Add("[SDRC_ListConfig:Populate] All scanned.", LogLevel.DEBUG);
 			return true;
 		}
 		
-		SDRC_List list = m_lists[index];
+		SDRC_List list = lists[index];
 		DoScan(list, doPrint);
 		
 		return false;
@@ -87,7 +87,7 @@ class SDRC_ListConfig : SDRC_Config
 		SDRC_Log.Add("[SDRC_ListConfig:DoScan] Scanning: " + list.id, LogLevel.DEBUG);
 		
 		//Add with normal add
-		foreach (string mod : m_modList)
+		foreach (string mod : modList)
 		{
 			SDRC_Resources.GetList(list.items, mod, list);
 		}

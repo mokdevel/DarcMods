@@ -34,7 +34,7 @@ sealed class SDRC_VehicleListHelper
 		{
 			Sanitize();
 			
-			foreach (SDRC_List list : m_Config.m_lists)
+			foreach (SDRC_List list : m_Config.lists)
 			{
 				SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);	//NOTE: SDRC_ListConfig:Populate left here on purpose! 
 				
@@ -67,7 +67,7 @@ sealed class SDRC_VehicleListHelper
 	static void Sanitize()
 	{		
 		//Let's find the factions for the vehicles
-		foreach (SDRC_List list : m_Config.m_lists)
+		foreach (SDRC_List list : m_Config.lists)
 		{
 			SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] LIST: " + list.id, LogLevel.SPAM);
 			
@@ -246,9 +246,9 @@ sealed class SDRC_VehicleListHelper
 	static ResourceName FindVehicleItem(string listName, string faction = "")
 	{
 		int vehicleIndex = -1;
-		for (int i = 0; i < m_Config.m_lists.Count(); i++)		
+		for (int i = 0; i < m_Config.lists.Count(); i++)		
 		{
-			if (m_Config.m_lists[i].id == listName)
+			if (m_Config.lists[i].id == listName)
 			{
 				vehicleIndex = i;
 				break;
@@ -262,7 +262,7 @@ sealed class SDRC_VehicleListHelper
 		}
 
 		//Fix faction according to aka
-		foreach (SDRC_Aka aka : m_Config.m_akas)
+		foreach (SDRC_Aka aka : m_Config.akas)
 		{
 			if (aka.names.Count() > 1)
 			{
@@ -276,17 +276,17 @@ sealed class SDRC_VehicleListHelper
 		//Find the proper vehicle		
 		ResourceName resourceName = "";
 		
-		if (!m_Config.m_lists[vehicleIndex].items.IsEmpty())
+		if (!m_Config.lists[vehicleIndex].items.IsEmpty())
 		{
 			//If faction defined, try to find a faction suitable vehicle
 			if (faction != "")
 			{
-				int idx = SDRC_Misc.RandomInt(0, m_Config.m_lists[vehicleIndex].items.Count() - 1);
-				for (int i = 0; i < m_Config.m_lists[vehicleIndex].items.Count(); i++)
+				int idx = SDRC_Misc.RandomInt(0, m_Config.lists[vehicleIndex].items.Count() - 1);
+				for (int i = 0; i < m_Config.lists[vehicleIndex].items.Count(); i++)
 				{
-					if (m_Config.m_lists[vehicleIndex].factions[idx] == faction)
+					if (m_Config.lists[vehicleIndex].factions[idx] == faction)
 					{
-						resourceName = m_Config.m_lists[vehicleIndex].items[idx];
+						resourceName = m_Config.lists[vehicleIndex].items[idx];
 						if (resourceName == "")
 						{
 							SDRC_Log.Add("[SDRC_VehicleListHelper:FindVehicleItem] No vehicle matching faction: " + faction + ". Selecting random one.", LogLevel.DEBUG);
@@ -295,7 +295,7 @@ sealed class SDRC_VehicleListHelper
 					}
 					
 					idx++;
-					if (idx == m_Config.m_lists[vehicleIndex].items.Count())
+					if (idx == m_Config.lists[vehicleIndex].items.Count())
 					{
 						idx = 0;
 					}
@@ -310,14 +310,14 @@ sealed class SDRC_VehicleListHelper
 			
 			if (faction == "")
 			{
-				resourceName = m_Config.m_lists[vehicleIndex].items.GetRandomElement();
+				resourceName = m_Config.lists[vehicleIndex].items.GetRandomElement();
 			}
 			
 			SDRC_Log.Add("[SDRC_VehicleListHelper:FindVehicleItem] Selected: (" + listName + ") " + resourceName, LogLevel.DEBUG);
 		}
 		else
 		{
-			SDRC_Log.Add("[SDRC_VehicleListHelper:FindVehicleItem] Vehicle list: " + m_Config.m_lists[vehicleIndex].id + " is empty!", LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_VehicleListHelper:FindVehicleItem] Vehicle list: " + m_Config.lists[vehicleIndex].id + " is empty!", LogLevel.WARNING);
 		}
 		
 		return resourceName;

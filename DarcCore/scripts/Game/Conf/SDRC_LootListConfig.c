@@ -55,36 +55,36 @@ class SDRC_LootListConfig : SDRC_ListConfig
 	{		
 		super.SetDefaults();
 		
-		m_modList = {};
+		lists = {};
 		//Weapons
-		m_lists.Insert(lootList00());		
-		m_lists.Insert(lootList01());		
-		m_lists.Insert(lootList02());		
-		m_lists.Insert(lootList03());		
-		m_lists.Insert(lootList04());		
-		m_lists.Insert(lootList06());	
+		lists.Insert(lootList00());		
+		lists.Insert(lootList01());		
+		lists.Insert(lootList02());		
+		lists.Insert(lootList03());		
+		lists.Insert(lootList04());		
+		lists.Insert(lootList06());	
 		//Attachments
-		m_lists.Insert(lootList20());	
-		m_lists.Insert(lootList21());	
+		lists.Insert(lootList20());	
+		lists.Insert(lootList21());	
 		//Ammo, magazines
-		m_lists.Insert(lootList40());	
-		m_lists.Insert(lootList41());	
+		lists.Insert(lootList40());	
+		lists.Insert(lootList41());	
 		//Items
-		m_lists.Insert(lootList50());	
-		m_lists.Insert(lootList51());
+		lists.Insert(lootList50());	
+		lists.Insert(lootList51());
 		//Gear
-		m_lists.Insert(lootList60());		
-		m_lists.Insert(lootList61());		
-		m_lists.Insert(lootList62());		
-		m_lists.Insert(lootList63());		
-		m_lists.Insert(lootList64());		
+		lists.Insert(lootList60());		
+		lists.Insert(lootList61());		
+		lists.Insert(lootList62());		
+		lists.Insert(lootList63());		
+		lists.Insert(lootList64());		
 		//Clothing
-		m_lists.Insert(lootList80());		
-		m_lists.Insert(lootList83());		
+		lists.Insert(lootList80());		
+		lists.Insert(lootList83());		
 		//Freedom Fighters
-		m_lists.Insert(lootList90());		
-		m_lists.Insert(lootList91());		
-		m_lists.Insert(lootList92());		
+		lists.Insert(lootList90());		
+		lists.Insert(lootList91());		
+		lists.Insert(lootList92());		
 	}
 			
 	//Lootlist: Rifles

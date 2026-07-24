@@ -54,80 +54,80 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 	{
 		super.SetDefaults();
 		
-		m_modList = {};
+		lists = {};
 		
 		SDRC_Aka aka00 = new SDRC_Aka();
 		aka00.names = {"RHS_USAF", "USAF_USMC"};
-		m_akas.Insert(aka00);
+		akas.Insert(aka00);
 
 		SDRC_Aka aka01 = new SDRC_Aka();
 		aka01.names = {"RHS_AFRF", "RHS_RF"};
-		m_akas.Insert(aka01);
+		akas.Insert(aka01);
 
 		SDRC_Aka aka02 = new SDRC_Aka();
 		aka02.names = {"USSR", "USSR", "TF_RF"};
-		m_akas.Insert(aka02);
+		akas.Insert(aka02);
 
 		SDRC_Aka aka03 = new SDRC_Aka();
 		aka03.names = {"US", "US", "TF_US"};
-		m_akas.Insert(aka03);
+		akas.Insert(aka03);
 
 		SDRC_Aka aka04 = new SDRC_Aka();
 		aka04.names = {"BACON_622120A5448725E3_FACTION", "Zombie", "Zombies"};
-		m_akas.Insert(aka04);
+		akas.Insert(aka04);
 
 		SDRC_Aka aka05 = new SDRC_Aka();
 		aka05.names = {"BALLIEN_BC_FACTION", "Cultist", "Cultists"};
-		m_akas.Insert(aka05);
+		akas.Insert(aka05);
 
 		SDRC_Aka aka06 = new SDRC_Aka();
 		aka06.names = {"ChinesePLA", "PLAGF", "PLAAF"};
-		m_akas.Insert(aka06);
+		akas.Insert(aka06);
 
 		SDRC_Aka aka07 = new SDRC_Aka();
 		aka07.names = {"JSDF_RAS", "JGSDF"};
-		m_akas.Insert(aka07);		
+		akas.Insert(aka07);		
 
 		SDRC_Aka aka08 = new SDRC_Aka();
 		aka08.names = {"Takistan", "TA"};
-		m_akas.Insert(aka08);	
+		akas.Insert(aka08);	
 
 		SDRC_Aka aka09 = new SDRC_Aka();
 		aka09.names = {"AFOA", "Argentina"};
-		m_akas.Insert(aka09);	
+		akas.Insert(aka09);	
 	
 		SDRC_Aka aka10 = new SDRC_Aka();
 		aka10.names = {"DSF", "SAS", "SBS"};
-		m_akas.Insert(aka10);				
+		akas.Insert(aka10);				
 																				
-		m_lists.Insert(enemyList00());
-		m_lists.Insert(enemyList01());
-		m_lists.Insert(enemyList02());
-		m_lists.Insert(enemyList03());
-		m_lists.Insert(enemyList04());
-		m_lists.Insert(enemyList05());
-		m_lists.Insert(enemyList06());
-		m_lists.Insert(enemyList07());
-		m_lists.Insert(enemyList08());
-		m_lists.Insert(enemyList09());
+		lists.Insert(enemyList00());
+		lists.Insert(enemyList01());
+		lists.Insert(enemyList02());
+		lists.Insert(enemyList03());
+		lists.Insert(enemyList04());
+		lists.Insert(enemyList05());
+		lists.Insert(enemyList06());
+		lists.Insert(enemyList07());
+		lists.Insert(enemyList08());
+		lists.Insert(enemyList09());
 		
-		m_lists.Insert(enemyList20());
-		m_lists.Insert(enemyList21());
-		m_lists.Insert(enemyList22());
-		m_lists.Insert(enemyList23());
-		m_lists.Insert(enemyList24());
-		m_lists.Insert(enemyList25());
-		m_lists.Insert(enemyList26());
-		m_lists.Insert(enemyList27());
+		lists.Insert(enemyList20());
+		lists.Insert(enemyList21());
+		lists.Insert(enemyList22());
+		lists.Insert(enemyList23());
+		lists.Insert(enemyList24());
+		lists.Insert(enemyList25());
+		lists.Insert(enemyList26());
+		lists.Insert(enemyList27());
 		
-		m_lists.Insert(enemyList50());		
-		m_lists.Insert(enemyList51());		
-		m_lists.Insert(enemyList52());		
-		m_lists.Insert(enemyList53());		
+		lists.Insert(enemyList50());		
+		lists.Insert(enemyList51());		
+		lists.Insert(enemyList52());		
+		lists.Insert(enemyList53());		
 		
-		m_lists.Insert(enemyList60());		
-		m_lists.Insert(enemyList61());				
-		m_lists.Insert(enemyList62());				
+		lists.Insert(enemyList60());		
+		lists.Insert(enemyList61());				
+		lists.Insert(enemyList62());				
 	}
 				
 	//------------------------------------------------------------------------------------------------

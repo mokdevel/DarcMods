@@ -39,57 +39,57 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 	{		
 		super.SetDefaults();
 		
-		m_modList = {};
+		lists = {};
 		//Vehicles
-		m_lists.Insert(vehicleList00());
-		m_lists.Insert(vehicleList01());
-		m_lists.Insert(vehicleList02());
-		m_lists.Insert(vehicleList03());
-		m_lists.Insert(vehicleList04());
-		m_lists.Insert(vehicleList05());
-		m_lists.Insert(vehicleList06());
-		m_lists.Insert(vehicleList07());
-		m_lists.Insert(vehicleList08());
-		m_lists.Insert(vehicleList09());
+		lists.Insert(vehicleList00());
+		lists.Insert(vehicleList01());
+		lists.Insert(vehicleList02());
+		lists.Insert(vehicleList03());
+		lists.Insert(vehicleList04());
+		lists.Insert(vehicleList05());
+		lists.Insert(vehicleList06());
+		lists.Insert(vehicleList07());
+		lists.Insert(vehicleList08());
+		lists.Insert(vehicleList09());
 		//Helicopters
-		m_lists.Insert(vehicleList30());
-		m_lists.Insert(vehicleList31());
-		m_lists.Insert(vehicleList32());
-		m_lists.Insert(vehicleList33());
+		lists.Insert(vehicleList30());
+		lists.Insert(vehicleList31());
+		lists.Insert(vehicleList32());
+		lists.Insert(vehicleList33());
 
 		#ifndef SDRC_RELEASE
 			SDRC_Aka akaTest = new SDRC_Aka();
 			akaTest.names = {"USSR", "FIA"};
-			m_akas.Insert(akaTest);	
+			akas.Insert(akaTest);	
 		#endif
 				
 		SDRC_Aka aka00 = new SDRC_Aka();
 		aka00.names = {"RHS_USAF", "US"};
-		m_akas.Insert(aka00);	
+		akas.Insert(aka00);	
 		
 		SDRC_Aka aka01 = new SDRC_Aka();
 		aka01.names = {"RHS_AFRF", "USSR"};
-		m_akas.Insert(aka01);		
+		akas.Insert(aka01);		
 		
 		SDRC_Aka aka02 = new SDRC_Aka();
 		aka02.names = {"MEI", "USSR"};
-		m_akas.Insert(aka02);		
+		akas.Insert(aka02);		
 
 		SDRC_Aka aka03 = new SDRC_Aka();
 		aka03.names = {"Takistan", "USSR"};
-		m_akas.Insert(aka03);
+		akas.Insert(aka03);
 		
 		SDRC_Aka aka04 = new SDRC_Aka();
 		aka04.names = {"ChinesePLA", "USSR"};
-		m_akas.Insert(aka04);
+		akas.Insert(aka04);
 		
 		SDRC_Aka aka05 = new SDRC_Aka();
 		aka05.names = {"JSDF_RAS", "US"};
-		m_akas.Insert(aka05);
+		akas.Insert(aka05);
 		
 		SDRC_Aka aka06 = new SDRC_Aka();
 		aka06.names = {"UK", "US"};
-		m_akas.Insert(aka06);		
+		akas.Insert(aka06);		
 	}
 			
 	//Vehiclelist: VEHICLE_WHEELED_ALL
