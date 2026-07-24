@@ -80,11 +80,19 @@ class SDRC_MissionConfig : SDRC_Config
 	ref array<ref int> missionList = {};						//The list of mission suids.
 	ref array<ref string> missionFiles = {};					//The list of mission files to load.
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Override to create external mission files 
+	*/		
 	void CreateMissionFiles()
 	{
 		SDRC_Log.Add("[SDRC_MissionConfig:CreateMissionFiles] Creating...", LogLevel.SPAM);
 	}	
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Override to load mission files. Remember to call super to add the unique suids to a list
+	*/		
 	void LoadMissionFiles(int ver)
 	{
 		array<int> suids = {};

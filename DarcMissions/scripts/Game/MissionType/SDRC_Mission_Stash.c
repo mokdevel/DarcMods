@@ -163,6 +163,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 				{
 					subMissions.Insert(subMission);
 				}
+				
 				foreach (int idx : conf.missionList)
 				{
 					missionList.Insert(idx);
@@ -180,7 +181,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 		
 		SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(SDRC_StashConfig_010.GetFileName());				
 		SDRC_StashConfig_010 conf = new SDRC_StashConfig_010();
-		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), DC_MISSIONCONFIG_FILE_STASH_JSONVER);
+		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), DC_MISSIONCONFIG_FILE_STASH_JSONVER, silent: true);
 	}
 				
 	//------------------------------------------------------------------------------------------------	

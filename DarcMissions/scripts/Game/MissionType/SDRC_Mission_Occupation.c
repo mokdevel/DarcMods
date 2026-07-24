@@ -176,7 +176,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 		
 		SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(SDRC_OccupationConfig_010.GetFileName());				
 		SDRC_OccupationConfig_010 conf = new SDRC_OccupationConfig_010();
-		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER);
+		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER, silent: true);
 	}	
 	
 	//------------------------------------------------------------------------------------------------

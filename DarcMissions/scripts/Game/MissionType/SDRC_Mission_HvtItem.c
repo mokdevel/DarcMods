@@ -226,7 +226,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		
 		SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(SDRC_HvtItemConfig_010.GetFileName());				
 		SDRC_HvtItemConfig_010 conf = new SDRC_HvtItemConfig_010();
-		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER);		
+		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER, silent: true);		
 	}
 	
 	//------------------------------------------------------------------------------------------------
