@@ -32,7 +32,16 @@ class SDRC_JsonApi2 : JsonApiStruct
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	bool Load(Managed T, SDRC_Config C, int jsonVersion, bool createMissingFiles = true, bool safeUpdate = false)
+	/*!
+	Load the json config
+	\param T <TBD> 
+	\param C <TBD> 
+	\param jsonVersion Version of the file. Parameter inside json.
+	\param createMissingFiles If true, any missing file will be created.
+	\param safeUpdate If true, file is automatically updated to the latest one. A backup of is made of the old file.
+	\param silent If true, some logging is hidden
+	*/
+	bool Load(Managed T, SDRC_Config C, int jsonVersion, bool createMissingFiles = true, bool safeUpdate = false, bool silent = false)
 	{	
 		JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
@@ -62,7 +71,10 @@ class SDRC_JsonApi2 : JsonApiStruct
 			return false;
 		}
 
-		SDRC_Log.Add("[SDRC_JsonApi2:Load] Loading configuration from file: " + GetFileName(), LogLevel.NORMAL);
+		if (!silent)
+		{
+			SDRC_Log.Add("[SDRC_JsonApi2:Load] Loading from file: " + GetFileName(), LogLevel.NORMAL);
+		}
 		
 		int versionFromFile;
 		loadContext.ReadValue("jsonVersion", versionFromFile);
