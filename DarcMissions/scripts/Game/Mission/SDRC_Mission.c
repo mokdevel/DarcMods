@@ -105,7 +105,7 @@ class SDRC_MissionConfig : SDRC_Config
 			}
 		}
 		
-		SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] Found suids: " + missionList.Count() + " : " + suids, LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] Found suids: " + missionList.Count() + " : " + suids, LogLevel.SPAM);
 	}
 	
 	//------------------------------------------------------------------------------------------------
