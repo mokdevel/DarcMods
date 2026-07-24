@@ -118,6 +118,18 @@ class SDRC_TemplateConfig : SDRC_MissionConfig
 		return saveContext.WriteValue("", data);
 	}		
 	
+	//------------------------------------------------------------------------------------------------	
+	override void LoadMissionFiles(int ver)
+	{
+		super.LoadMissionFiles(ver);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	override void CreateMissionFiles()
+	{
+		super.CreateMissionFiles();
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	override void SetDefaults()
 	{

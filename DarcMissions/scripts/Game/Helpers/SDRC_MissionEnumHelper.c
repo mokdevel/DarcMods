@@ -47,6 +47,7 @@ sealed class SDRC_MissionEnumHelper
 		SDRC_ConvoyConfig confConvoy = new SDRC_ConvoyConfig();		
 		convoyJsonApi.Load(confConvoy, SDRC_MissionConfig.Cast(confConvoy), DC_MISSIONCONFIG_FILE_CONVOY_JSONVER);
 		confConvoy.CreateMissionFiles();
+		confConvoy.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CONVOY_JSONVER);
 		delete confConvoy;
 		delete convoyJsonApi;		
 		
@@ -54,13 +55,15 @@ sealed class SDRC_MissionEnumHelper
 		SDRC_CrashsiteConfig confCrashsite = new SDRC_CrashsiteConfig();		
 		crashsiteJsonApi.Load(confCrashsite, SDRC_MissionConfig.Cast(confCrashsite), DC_MISSIONCONFIG_FILE_CRASHSITE_JSONVER);		
 		confCrashsite.CreateMissionFiles();
+		confCrashsite.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CRASHSITE_JSONVER);
 		delete confCrashsite;
 		delete crashsiteJsonApi;
 		
 		SDRC_JsonApi2 hunterJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_HUNTER);	
 		SDRC_HunterConfig confHunter = new SDRC_HunterConfig();		
-		hunterJsonApi.Load(confHunter, SDRC_MissionConfig.Cast(confHunter), DC_MISSIONCONFIG_FILE_HUNTER_JSONVER);		
+		hunterJsonApi.Load(confHunter, SDRC_MissionConfig.Cast(confHunter), DC_MISSIONCONFIG_FILE_HUNTER_JSONVER);
 		confHunter.CreateMissionFiles();
+		confHunter.LoadMissionFiles(DC_MISSIONCONFIG_FILE_HUNTER_JSONVER);
 		delete confHunter;
 		delete hunterJsonApi;
 		
@@ -68,6 +71,7 @@ sealed class SDRC_MissionEnumHelper
 		SDRC_OccupationConfig confOccupation = new SDRC_OccupationConfig();		
 		occupationJsonApi.Load(confOccupation, SDRC_MissionConfig.Cast(confOccupation), DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER);		
 		confOccupation.CreateMissionFiles();
+		confOccupation.LoadMissionFiles(DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER);
 		delete confOccupation;
 		delete occupationJsonApi;			
 		
@@ -75,6 +79,7 @@ sealed class SDRC_MissionEnumHelper
 		SDRC_PatrolConfig confPatrol = new SDRC_PatrolConfig();		
 		patrolJsonApi.Load(confPatrol, SDRC_MissionConfig.Cast(confPatrol), DC_MISSIONCONFIG_FILE_PATROL_JSONVER);		
 		confPatrol.CreateMissionFiles();
+		confPatrol.LoadMissionFiles(DC_MISSIONCONFIG_FILE_PATROL_JSONVER);
 		delete confPatrol;
 		delete patrolJsonApi;		
 		
@@ -82,6 +87,7 @@ sealed class SDRC_MissionEnumHelper
 		SDRC_SquatterConfig confSquatter = new SDRC_SquatterConfig();		
 		squatterJsonApi.Load(confSquatter, SDRC_MissionConfig.Cast(confSquatter), DC_MISSIONCONFIG_FILE_SQUATTER_JSONVER);
 		confSquatter.CreateMissionFiles();
+		confSquatter.LoadMissionFiles(DC_MISSIONCONFIG_FILE_SQUATTER_JSONVER);
 		delete confSquatter;
 		delete squatterJsonApi;			
 		
@@ -89,6 +95,7 @@ sealed class SDRC_MissionEnumHelper
 		SDRC_RoadblockConfig confRoadblock = new SDRC_RoadblockConfig();		
 		roadblockJsonApi.Load(confRoadblock, SDRC_MissionConfig.Cast(confRoadblock), DC_MISSIONCONFIG_FILE_ROADBLOCK_JSONVER);
 		confRoadblock.CreateMissionFiles();
+		confRoadblock.LoadMissionFiles(DC_MISSIONCONFIG_FILE_ROADBLOCK_JSONVER);
 		delete confRoadblock;
 		delete roadblockJsonApi;			
 		
@@ -96,6 +103,7 @@ sealed class SDRC_MissionEnumHelper
 		SDRC_HvtVipConfig confHvtVip = new SDRC_HvtVipConfig();		
 		hvtVipJsonApi.Load(confHvtVip, SDRC_MissionConfig.Cast(confHvtVip), DC_MISSIONCONFIG_FILE_HVTVIP_JSONVER);
 		confHvtVip.CreateMissionFiles();
+		confHvtVip.LoadMissionFiles(DC_MISSIONCONFIG_FILE_HVTVIP_JSONVER);
 		delete confHvtVip;
 		delete hvtVipJsonApi;		
 				
@@ -103,6 +111,7 @@ sealed class SDRC_MissionEnumHelper
 		SDRC_HvtItemConfig confHvtItem = new SDRC_HvtItemConfig();		
 		hvtItemJsonApi.Load(confHvtItem, SDRC_MissionConfig.Cast(confHvtItem), DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER);
 		confHvtItem.CreateMissionFiles();
+		confHvtItem.LoadMissionFiles(DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER);
 		delete confHvtItem;
 		delete hvtItemJsonApi;		
 		
@@ -110,6 +119,7 @@ sealed class SDRC_MissionEnumHelper
 		SDRC_StashConfig confStash = new SDRC_StashConfig();		
 		stashJsonApi.Load(confStash, SDRC_MissionConfig.Cast(confStash), DC_MISSIONCONFIG_FILE_STASH_JSONVER);
 		confStash.CreateMissionFiles();
+		confStash.LoadMissionFiles(DC_MISSIONCONFIG_FILE_STASH_JSONVER);
 		delete confStash;
 		delete stashJsonApi;
 		
@@ -117,6 +127,7 @@ sealed class SDRC_MissionEnumHelper
 		SDRC_ChopperConfig confChopper = new SDRC_ChopperConfig();		
 		chopperJsonApi.Load(confChopper, SDRC_MissionConfig.Cast(confChopper), DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER);
 		confChopper.CreateMissionFiles();
+		confChopper.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER);
 		delete confChopper;
 		delete chopperJsonApi;
 	}		

@@ -99,15 +99,15 @@ class SDRC_MissionFrame
 		m_iLastMissionSpawnTime = (System.GetTickCount() / 1000) - m_Config.missionStatic.delayBetween;		//Fix the timer so that first mission immediately spawns		
 		
 		//Check if a request to create new configs has been made		
-		if (m_Config.recreateConfigs)
-		{
+//		if (m_Config.recreateConfigs)
+//		{
 			SDRC_Log.Add("[SDRC_MissionFrame] ---------------- Creating missing configs -------------------", LogLevel.WARNING);
 			SDRC_Log.Add("[SDRC_MissionFrame] - Creating configs. Existing ones will not be over written. -", LogLevel.WARNING);
 			SDRC_MissionEnumHelper.CreateAllConfigs();
-			m_Config.recreateConfigs = false;
+//			m_Config.recreateConfigs = false;
 			SDRC_Log.Add("[SDRC_MissionFrame] --------------------- Configs created. ----------------------", LogLevel.WARNING
 			);
-		}
+//		}
 		
 		//Initialize compatibility for mods
 		SDRC_Compat.Init();
@@ -116,7 +116,7 @@ class SDRC_MissionFrame
 		SDRC_Log.Add("[SDRC_MissionFrame] Waiting for " + m_Config.missionStartDelay + " seconds before spawning missions.", LogLevel.NORMAL);
 		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;		//sec to ms
 		
-		#ifndef SDRC_RELEASE
+		#ifdef SDRC_Conf.SHOW_DEBUG
 			SDRC_DevHelper.SDRC_DevDump();
 		#endif	
 		

@@ -392,6 +392,8 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 				}
 			}
 		}
+		
+		super.LoadMissionFiles(ver);
 	}	
 		
 	//------------------------------------------------------------------------------------------------

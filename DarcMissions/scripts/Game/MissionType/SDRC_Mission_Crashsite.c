@@ -346,11 +346,14 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 				}
 			}
 		}
+		
+		super.LoadMissionFiles(ver);
 	}	
 	
 	//------------------------------------------------------------------------------------------------
 	override void CreateMissionFiles()
 	{
+		super.CreateMissionFiles();
 	}	
 	
 	//------------------------------------------------------------------------------------------------

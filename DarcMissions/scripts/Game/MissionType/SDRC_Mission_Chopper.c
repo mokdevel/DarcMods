@@ -474,6 +474,37 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		return saveContext.WriteValue("", data);
 	}		
 	
+	//------------------------------------------------------------------------------------------------	
+	override void LoadMissionFiles(int ver)
+	{
+		//Load mission files
+		foreach (string missionFile : missionFiles)
+		{
+			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
+			SDRC_ChopperConfig conf = new SDRC_ChopperConfig();
+			
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false))
+			{
+				foreach (SDRC_Chopper subMission : conf.subMissions)
+				{
+					subMissions.Insert(subMission);
+				}
+				foreach (int idx : conf.missionList)
+				{
+					missionList.Insert(idx);
+				}
+			}
+		}
+		
+		super.LoadMissionFiles(ver);
+	}	
+		
+	//------------------------------------------------------------------------------------------------
+	override void CreateMissionFiles()
+	{
+		super.CreateMissionFiles();
+	}		
+	
 	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
 	{

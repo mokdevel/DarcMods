@@ -227,6 +227,8 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 				}
 			}
 		}
+		
+		super.LoadMissionFiles(ver);
 	}
 
 	//------------------------------------------------------------------------------------------------

@@ -82,11 +82,22 @@ class SDRC_MissionConfig : SDRC_Config
 
 	void CreateMissionFiles()
 	{
-		SDRC_Log.Add("[SDRC_MissionConfig:CreateMissionFiles] Creating...", LogLevel.SPAM);							
+		SDRC_Log.Add("[SDRC_MissionConfig:CreateMissionFiles] Creating...", LogLevel.SPAM);
 	}	
 
 	void LoadMissionFiles(int ver)
 	{
+		array<int> suids = {};
+		
+		foreach (int id : missionList)		
+		{
+			if (!suids.Contains(id))
+			{
+				suids.Insert(id);
+			}
+		}
+		
+		SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] Found suids: " + missionList.Count() + " : " + suids, LogLevel.DEBUG);
 	}
 	
 	//------------------------------------------------------------------------------------------------

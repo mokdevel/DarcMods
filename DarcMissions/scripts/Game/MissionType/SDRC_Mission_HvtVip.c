@@ -288,6 +288,8 @@ class SDRC_HvtVipConfig : SDRC_MissionConfig
 				}
 			}
 		}
+		
+		super.LoadMissionFiles(ver);
 	}
 
 	//------------------------------------------------------------------------------------------------

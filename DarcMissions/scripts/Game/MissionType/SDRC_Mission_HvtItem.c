@@ -195,16 +195,6 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 	}		
 	
 	//------------------------------------------------------------------------------------------------
-	override void CreateMissionFiles()
-	{
-		super.CreateMissionFiles();
-		
-		SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(SDRC_HvtItemConfig_010.GetFileName());				
-		SDRC_HvtItemConfig_010 conf = new SDRC_HvtItemConfig_010();
-		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER);		
-	}
-	
-	//------------------------------------------------------------------------------------------------
 	override void LoadMissionFiles(int ver)
 	{
 		//Load mission files
@@ -225,8 +215,20 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 				}
 			}
 		}
+		
+		super.LoadMissionFiles(ver);
 	}	
-
+	
+	//------------------------------------------------------------------------------------------------
+	override void CreateMissionFiles()
+	{
+		super.CreateMissionFiles();
+		
+		SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(SDRC_HvtItemConfig_010.GetFileName());				
+		SDRC_HvtItemConfig_010 conf = new SDRC_HvtItemConfig_010();
+		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER);		
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	int GetSubMissionIdx(int subIdx)
 	{

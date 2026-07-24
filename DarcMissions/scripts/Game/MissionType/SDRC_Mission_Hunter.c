@@ -340,6 +340,8 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 				}
 			}
 		}
+		
+		super.LoadMissionFiles(ver);
 	}
 
 	//------------------------------------------------------------------------------------------------

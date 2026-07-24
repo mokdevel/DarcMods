@@ -210,6 +210,8 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 				}
 			}
 		}
+		
+		super.LoadMissionFiles(ver);
 	}
 
 	//------------------------------------------------------------------------------------------------

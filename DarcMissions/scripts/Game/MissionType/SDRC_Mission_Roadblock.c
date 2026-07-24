@@ -218,6 +218,8 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 				}
 			}
 		}
+		
+		super.LoadMissionFiles(ver);
 	}
 
 	//------------------------------------------------------------------------------------------------
