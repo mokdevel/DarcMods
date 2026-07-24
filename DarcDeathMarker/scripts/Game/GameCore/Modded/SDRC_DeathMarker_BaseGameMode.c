@@ -12,14 +12,14 @@ modded class SCR_BaseGameMode
 	private ref SDRC_DeathMarkerConfig m_Config = new SDRC_DeathMarkerConfig();	
 
 	//------------------------------------------------------------------------------------------------
-    override void OnGameStart()
+    override void OnGameModeStart()
     {
-        super.OnGameStart();
+        super.OnGameModeStart();
 		
 		if (SDRC_Conf.SDRC_ENABLE_DARCDEATHMARKER)
 		{
 			SDRC_Log.Add("[SDRC_DeathMarker] Starting..", LogLevel.NORMAL);		
-			SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:OnGameModeStart]", LogLevel.DEBUG);
 	
 			if (!SDRC_Conf.RELEASE)
 			{

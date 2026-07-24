@@ -6,14 +6,14 @@ modded class SCR_BaseGameMode
 	private SDRC_RplLineDrawEntity m_SDRC_RplLineDrawEntity;
 	
 	//------------------------------------------------------------------------------------------------
-    override void OnGameStart()
+    override void OnGameModeStart()
     {
-        super.OnGameStart();
+        super.OnGameModeStart();
 		
 		if (SDRC_Conf.SDRC_ENABLE_DARCCHOPPER)
 		{	
 			SDRC_Log.Add("[SDRC_Chopper] Starting..", LogLevel.NORMAL);					
-			SDRC_Log.Add("[SDRC_Chopper_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_Chopper_BaseGameMode:OnGameModeStart]", LogLevel.DEBUG);
 	
 			if (!SDRC_Conf.RELEASE)
 			{
@@ -34,7 +34,7 @@ modded class SCR_BaseGameMode
 				m_SDRC_RplLineDrawEntity = SDRC_RplLineDrawEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));
 				SDRC_SpawnHelper.SetPersistence(m_SDRC_RplLineDrawEntity, false);				
 				
-				SDRC_Log.Add("[SDRC_Chopper_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
+				SDRC_Log.Add("[SDRC_Chopper_BaseGameMode:IsMaster] OnGameModeStart", LogLevel.DEBUG);        
 				GetGame().GetCallqueue().CallLater(StartChopperFrame, 1000, false);	
 			}
 			else 

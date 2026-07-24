@@ -7,16 +7,16 @@ modded class SCR_BaseGameMode
 	private SDRC_DebugEntity m_SDRC_DebugEntity;
 	private SDRC_RplHintEntity m_SDRC_RplHintEntity;
 	
-    override void OnGameStart()
+    override void OnGameModeStart()
     {
-        super.OnGameStart();
+        super.OnGameModeStart();
 		
 		SDRC_Log.Add("[SDRC_Core] Starting..", LogLevel.NORMAL);					
-		SDRC_Log.Add("[SDRC_Core_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Core_BaseGameMode:OnGameModeStart]", LogLevel.DEBUG);
 		
 		if (IsMaster())
 		{
-			SDRC_Log.Add("[SDRC_Core_BaseGameMode:IsMaster] OnGameStart", LogLevel.SPAM);        
+			SDRC_Log.Add("[SDRC_Core_BaseGameMode:IsMaster] OnGameModeStart", LogLevel.SPAM);        
 
 			//Initialize core
 			m_SDRC_Core = new SDRC_Core();
@@ -45,7 +45,7 @@ modded class SCR_BaseGameMode
 			//For testing
 			//GetGame().GetCallqueue().CallLater(DebugStart, 15000, false);	
 			
-			GetGame().GetCallqueue().CallLater(WaitingForCore, 2000, false);
+			GetGame().GetCallqueue().CallLater(WaitingForCore, 5000, false);
 		}
 		else 
 		{
@@ -64,7 +64,7 @@ modded class SCR_BaseGameMode
 		}
 		else
 		{
-			GetGame().GetCallqueue().CallLater(WaitingForCore, 2000, false);	
+			GetGame().GetCallqueue().CallLater(WaitingForCore, 5000, false);	
 			SDRC_Log.Add("[SDRC_Core_BaseGameMode:WaitingForCore] Waiting for core init to finalize...", LogLevel.DEBUG);
 		}
 		

@@ -6,14 +6,14 @@ modded class SCR_BaseGameMode
 	//private 
 	ref SDRC_Spawner dcSpawner;
 
-    override void OnGameStart()
+    override void OnGameModeStart()
     {
-	    super.OnGameStart();
+	    super.OnGameModeStart();
 		
 		if (SDRC_Conf.SDRC_ENABLE_DARCSPAWNER)
 		{			
 			SDRC_Log.Add("[SDRC_Spawner] Starting..", LogLevel.NORMAL);		
-			SDRC_Log.Add("[SDRC_Spawner_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_Spawner_BaseGameMode:OnGameModeStart]", LogLevel.DEBUG);
 			
 			if (!SDRC_Conf.RELEASE)
 			{
@@ -22,7 +22,7 @@ modded class SCR_BaseGameMode
 			
 			if (IsMaster())
 			{
-				SDRC_Log.Add("[SDRC_Spawner_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
+				SDRC_Log.Add("[SDRC_Spawner_BaseGameMode:IsMaster] OnGameModeStart", LogLevel.DEBUG);        
 				GetGame().GetCallqueue().CallLater(StartSpawner, 15000, false);	
 			}
 			else 

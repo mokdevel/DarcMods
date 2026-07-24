@@ -6,14 +6,14 @@ modded class SCR_BaseGameMode
 	private SDRC_RplGMEntity m_SDRC_RplGMEntity;
 	
 	//------------------------------------------------------------------------------------------------
-    override void OnGameStart()
+    override void OnGameModeStart()
     {
-        super.OnGameStart();
+        super.OnGameModeStart();
 		
 		if (SDRC_Conf.SDRC_ENABLE_DARCMISSIONS)
 		{	
 			SDRC_Log.Add("[SDRC_Missions] Starting..", LogLevel.NORMAL);					
-			SDRC_Log.Add("[SDRC_Missions_BaseGameMode:OnGameStart]", LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_Missions_BaseGameMode:OnGameModeStart]", LogLevel.DEBUG);
 	
 			if (!SDRC_Conf.RELEASE)
 			{
@@ -34,7 +34,7 @@ modded class SCR_BaseGameMode
 				m_SDRC_RplGMEntity = SDRC_RplGMEntity.Cast(GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld()));
 				SDRC_SpawnHelper.SetPersistence(m_SDRC_RplGMEntity, false);
 				
-				SDRC_Log.Add("[SDRC_Missions_BaseGameMode:IsMaster] OnGameStart", LogLevel.DEBUG);        
+				SDRC_Log.Add("[SDRC_Missions_BaseGameMode:IsMaster] OnGameModeStart", LogLevel.DEBUG);        
 				GetGame().GetCallqueue().CallLater(StartMissionFrame, 5000, false);	
 			}
 			else 
