@@ -4,11 +4,18 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+
+## 20260725
 Main Features:
-* Added ``ammoCount`` to LootList. You can define the min/max count of ammo/magazines added for weapon spawned in loot.
+* Refactored the list loading at startup. Should be server friendly, but slightly slower. Should/could fix issues with heavily modded servers failing to start. 
+* dc_lootList.json 
+  * Added ``ammoCount`` to LootList. You can define the min/max count of ammo/magazines added for weapon spawned in loot.
+  * Updated to exclude debug items. 
+  * File will update itself.
 
 Fixes:
 * Improved checking on player vicinity for Convoys moving virtually.
+* Mod waits for gamemode to start before starting to run. This could have side effects.
 
 ## 20260703
 Main Features:

@@ -19,6 +19,11 @@ bool visibleOnlyToFaction : If true, the markers will only be visible for player
 ```
 
 # Version history
+
+## 20260725
+Fixes:
+* Mod waits for gamemode to start before starting to run. This could have side effects.
+
 ## 20260601
 Fixes:
 * Mod can be run stand alone. There was a dependency to DarcChopper.

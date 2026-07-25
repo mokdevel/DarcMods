@@ -1,7 +1,10 @@
 # Version history
 
 ## Next Version
+
+## 20260725
 Fixes:
+* Mod waits for gamemode to start before starting to run. This could have side effects.
 * Waypoint lines are not shown for helicopters that have landed.
 
 ## 20260703
