@@ -41,7 +41,7 @@ sealed class SDRC_LootHelper
 			m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_LOOTLIST_JSONVER, safeUpdate: true);		
 		}
 		
-		m_bIsReady = m_Config.Populate(index);
+		m_bIsReady = m_Config.Populate(index, false);
 		
 		if (m_bIsReady)
 		{

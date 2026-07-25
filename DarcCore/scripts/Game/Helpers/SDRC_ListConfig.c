@@ -112,13 +112,10 @@ class SDRC_ListConfig : SDRC_Config
 		}
 	
 		//Print a normal list report
-		if (doPrint)
-		{
-			SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);
-		}		
+		SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);
 		
 		//Print a detailed list of items when debug level is ALL
-		if ( (SDRC_Log.GetLogLevel() > DC_LogLevel.DEBUG) && (doPrint) )
+		if ( (SDRC_Log.GetLogLevel() > DC_LogLevel.NORMAL) && (doPrint) )
 		{
 			list.items.Debug();
 		}

@@ -99,7 +99,16 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 		SDRC_Aka aka10 = new SDRC_Aka();
 		aka10.names = {"DSF", "SAS", "SBS"};
 		akas.Insert(aka10);				
-																				
+							
+		//Tactical Flava - WIP		
+		SDRC_Aka aka11 = new SDRC_Aka();
+		aka11.names = {"TF_RF", "TF_RF"};
+		akas.Insert(aka11);		
+
+		SDRC_Aka aka12 = new SDRC_Aka();
+		aka12.names = {"TF_US", "TF_US"};
+		akas.Insert(aka12);
+															
 		lists.Insert(enemyList00());
 		lists.Insert(enemyList01());
 		lists.Insert(enemyList02());

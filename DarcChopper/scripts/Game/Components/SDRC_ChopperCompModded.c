@@ -70,6 +70,8 @@ modded class SDRC_ChopperComp
 		SDRC_ChopperDebug.DrawDebugPaths(owner);		
 
 		SetEventMask(owner, EntityEvent.FRAME);
+//		SetEventMask(owner, EntityEvent.FIXEDFRAME | EntityEvent.FRAME | EntityEvent.SIMULATE);
+//		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
 		Activate(owner);
 				
 		//Set ready in a few seconds

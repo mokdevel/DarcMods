@@ -5,8 +5,6 @@ SDRC_RplLineDrawEntity {
   }
   SDRC_RplPlayerComp "{68E300AAE03CB465}" {
   }
-  SDRC_RplPlayerComp2 "{68E32392DAFCC417}" {
-  }
   RplComponent "{68E2ECA57C910FDA}" {
    Streamable Disabled
   }
