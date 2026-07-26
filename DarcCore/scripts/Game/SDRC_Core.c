@@ -211,6 +211,10 @@ class SDRC_Core
 						m_iListIndex++;
 					}
 				}
+				else //Move to next state if fullscan was not expected
+				{
+					m_iScanState++;
+				}
 				break;
 			case SDRC_ECoreScanState.LOOT:
 				if (fullScan)
@@ -226,12 +230,20 @@ class SDRC_Core
 						m_iListIndex++;
 					}
 				}
+				else //Move to next state if fullscan was not expected
+				{
+					m_iScanState++;
+				}
 				break;
 			case SDRC_ECoreScanState.AMMO:
 				if (fullScan)
 				{
 					//Initialize AmmoHelper
 					SDRC_AmmoHelper.Setup();
+					m_iScanState++;
+				}
+				else //Move to next state if fullscan was not expected
+				{
 					m_iScanState++;
 				}
 				break;

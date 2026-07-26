@@ -496,7 +496,7 @@ class SDRC_VehicleHelper
 			return 1;
 		}
 
-		float healthScaled = 0;		//Scaled damage
+		float healthScaled = 1.0;	//Scaled damage - set to 100% as default
 		float healthTotal = 0;		//Total damage used for calculations
 		
        	array<HitZone> hitzones = {};
@@ -541,8 +541,11 @@ class SDRC_VehicleHelper
 				}*/
 			}
 		}
-		
-		healthScaled = healthTotal/count;
+
+		if (count > 0)
+		{
+			healthScaled = healthTotal/count;
+		}
 		
 		return healthScaled;
 	}

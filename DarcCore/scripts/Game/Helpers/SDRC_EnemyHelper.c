@@ -56,6 +56,7 @@ sealed class SDRC_EnemyHelper
 		if (m_bIsReady)
 		{
 			//Create a C_RANDOMIZED list
+			//Choose randomized characters from randomizedLists defined below
 			array<string> randomizedLists = {"C_RIFLEMAN", "C_HEAVY", "C_RECON"};
 			
 			ref SDRC_List randomizedList = new SDRC_List();
@@ -70,7 +71,7 @@ sealed class SDRC_EnemyHelper
 					{
 						randomizedList.items.Insert(item);
 					}
-				}			
+				}
 			}		
 			m_Config.lists.Insert(randomizedList);
 			
@@ -79,7 +80,7 @@ sealed class SDRC_EnemyHelper
 			{
 				randomizedList.items.Debug();
 			}
-			
+							
 			SDRC_Log.Add("[SDRC_EnemyHelper:Setup] Done!", LogLevel.DEBUG);
 		}
 		
