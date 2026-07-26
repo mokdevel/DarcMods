@@ -7,9 +7,6 @@ GenericEntity : "{C07C56F97DAB2DEE}Prefabs/Drones/DJIBase/DJI81Dropper.et" {
   SAL_DroneHUDComponent "{65A23C4DFE108560}" {
    Enabled 0
   }
-  SAL_DroneHealthComponent "{65A29C6C04B54BFD}" {
-   Enabled 0
-  }
   SAL_DroneRangeFinderComponent "{65AD4D53172F854B}" {
    Enabled 0
   }

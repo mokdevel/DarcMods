@@ -50,7 +50,7 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 modded class SDRC_ChopperComp
 {
 	private bool m_bRegistered = false;
-	private float grenadeTimer = 2;		//(seconds)
+//	private float grenadeTimer = 2;		//(seconds)
 	SAL_DroneControllerComponent m_DroneControllerComponent;
 
 	//------------------------------------------------------------------------------------------------
@@ -58,9 +58,9 @@ modded class SDRC_ChopperComp
 	This sets up the flight model params for a specific SDRC_EChopperType. Override this function for other types.
 	This is called immediately when component is initialized.
 	*/	
-	override void SetupTypeParams(IEntity owner)
+	override void TypeSetupParams(IEntity owner)
 	{
-		super.SetupTypeParams(owner);
+		super.TypeSetupParams(owner);
 		
 		if (m_EntityType != SDRC_EChopperType.DRONE)
 		{
@@ -75,9 +75,9 @@ modded class SDRC_ChopperComp
 	This is the setup for a specific SDRC_EChopperType. Override this function in other types
 	This is a delayed setup make sure the entity is properly initialized. 
 	*/
-	override void SetupType(IEntity owner)
+	override void TypeSetup(IEntity owner)
 	{
-		super.SetupType(owner);
+		super.TypeSetup(owner);
 		
 		if (m_EntityType != SDRC_EChopperType.DRONE)
 		{
@@ -116,14 +116,14 @@ modded class SDRC_ChopperComp
 	*/	
 	override void TypeEOnFrame(IEntity owner, float timeSlice)
 	{
-		super.SetupTypeParams(owner);
+		super.TypeEOnFrame(owner, timeSlice);
 		
 		if (m_EntityType != SDRC_EChopperType.DRONE)
 		{
 			return;
 		}
 		
-		grenadeTimer -= timeSlice;
+//		grenadeTimer -= timeSlice;
 		
 		//Handle registration to drone manager.
 		if (!m_bRegistered)
@@ -132,22 +132,25 @@ modded class SDRC_ChopperComp
 			{
 				if (m_DroneControllerComponent.m_DroneId != -1)
 				{
-					SDRC_Log.Add("[SDRC_ChopperComp_Drone:SetupType] Registering DroneId: " + m_DroneControllerComponent.m_DroneId, LogLevel.DEBUG);
+					SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeEOnFrame] Registering DroneId: " + m_DroneControllerComponent.m_DroneId, LogLevel.DEBUG);
 					m_DroneControllerComponent.m_DroneManager.m_aActiveDrones.Insert(m_DroneControllerComponent.m_DroneId);
 					m_bRegistered = true;
 				}
 			}
 		}
-		
+
+//		SAL_DroneSoundComponent soundComponent = SAL_DroneSoundComponent.Cast(owner.FindComponent(SAL_DroneSoundComponent));
+//		soundComponent.StartEngine();
+				
 		//Control drone rotor speed
 		InputManager m_InputManager = GetGame().GetInputManager();
-		m_InputManager.SetActionValue("DroneUp", 1.0);		
+		m_InputManager.SetActionValue("DroneUp", 1.0);
 		
-		//Drop grenade
+/*		//Drop grenade
 		if (grenadeTimer < 0)
 		{
-			//DroneGrenade(m_DroneControllerComponent.m_DroneId);
-		}		
+//			DroneGrenade(m_DroneControllerComponent.m_DroneId);
+		}		*/
 	}	
 	
 	//------------------------------------------------------------------------------------------------	
@@ -158,9 +161,9 @@ modded class SDRC_ChopperComp
 	/*!
 	Get scaled health
 	*/	
-	override void GetHealthScaled(IEntity owner, out float health)
+	override void TypeGetHealthScaled(IEntity owner, out float health)
 	{
-		super.GetHealthScaled(owner, health);
+		super.TypeGetHealthScaled(owner, health);
 		
 		if (m_EntityType != SDRC_EChopperType.DRONE)
 		{
@@ -189,9 +192,9 @@ modded class SDRC_ChopperComp
 	/*!
 	Handle the final parts after damage that breaks flying
 	*/	
-	override void HandleDamageFinal(IEntity owner)
+	override void TypeHandleDamageFinal(IEntity owner)
 	{
-		super.HandleDamageFinal(owner);
+		super.TypeHandleDamageFinal(owner);
 		
 		if (m_EntityType != SDRC_EChopperType.DRONE)
 		{
