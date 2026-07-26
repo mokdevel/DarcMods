@@ -21,7 +21,7 @@ modded class SDRC_ChopperComp
 		
 		m_bSetupDone = true;
 		
-		SetupType(owner);
+		TypeSetup(owner);
 		
 		if (m_bAutoStart)
 		{					
@@ -275,7 +275,7 @@ modded class SDRC_ChopperComp
 		}
 
 		float health;
-		GetHealthScaled(owner, health);
+		TypeGetHealthScaled(owner, health);
 		if ( health < chopperComp.params.damageHeavy )
 		{
 			m_eDamageLevel = SDRC_EHeliDamageLevel.HEAVY;
@@ -318,7 +318,7 @@ modded class SDRC_ChopperComp
 		}
 		
 		//If we get here, the damage is critical
-		HandleDamageFinal(owner);
+		TypeHandleDamageFinal(owner);
 		
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)

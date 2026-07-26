@@ -54,9 +54,9 @@ modded class SDRC_ChopperComp
 	This sets up the flight model params for a specific SDRC_EChopperType. Override this function for other types.
 	This is called immediately when component is initialized.
 	*/	
-	override void SetupTypeParams(IEntity owner)
+	override void TypeSetupParams(IEntity owner)
 	{
-		super.SetupTypeParams(owner);
+		super.TypeSetupParams(owner);
 		
 		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
 		{
@@ -71,9 +71,9 @@ modded class SDRC_ChopperComp
 	This is the setup for a specific SDRC_EChopperType. Override this function in other types.
 	This is a delayed setup make sure the entity is properly initialized. 
 	*/
-	override void SetupType(IEntity owner)
+	override void TypeSetup(IEntity owner)
 	{
-		super.SetupType(owner);
+		super.TypeSetup(owner);
 		
 		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
 		{
@@ -104,7 +104,7 @@ modded class SDRC_ChopperComp
 	*/	
 	override void TypeEOnFrame(IEntity owner, float timeSlice)
 	{
-		super.SetupTypeParams(owner);
+		super.TypeEOnFrame(owner);
 		
 		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
 		{
@@ -122,9 +122,9 @@ modded class SDRC_ChopperComp
 	/*!
 	Get scaled health
 	*/	
-	override void GetHealthScaled(IEntity owner, out float health)
+	override void TypeGetHealthScaled(IEntity owner, out float health)
 	{
-		super.GetHealthScaled(owner, health);
+		super.TypeGetHealthScaled(owner, health);
 		
 		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
 		{
@@ -138,9 +138,9 @@ modded class SDRC_ChopperComp
 	/*!
 	Handle the final parts after damage that breaks flying
 	*/	
-	override void HandleDamageFinal(IEntity owner)
+	override void TypeHandleDamageFinal(IEntity owner)
 	{
-		super.HandleDamageFinal(owner);
+		super.TypeHandleDamageFinal(owner);
 		
 		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
 		{

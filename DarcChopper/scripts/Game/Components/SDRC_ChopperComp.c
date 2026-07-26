@@ -308,7 +308,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp", LogLevel.NORMAL);
 		
 		//Deactivate(owner);
-		SetupTypeParams(owner);
+		TypeSetupParams(owner);
 		SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, m_fDistanceLow, m_fDistanceHigh);						
 		
 		//SetEventMask(owner, EntityEvent.INIT);
@@ -344,7 +344,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 		owner.GetPhysics().EnableGravity(false);
 		owner.GetPhysics().ClearForces(); */
 		
-		owner.GetPhysics().SetVelocity("0 0 0");
+		if (owner.GetPhysics())
+		{		
+			owner.GetPhysics().SetVelocity("0 0 0");
+		}
 		
 		GetGame().GetCallqueue().CallLater(Setup, TIME_DELAY_READY * 1000, false, owner);		
 		
@@ -1318,14 +1321,14 @@ modded class SDRC_ChopperComp : ScriptComponent
 	This sets up the flight model params for a specific SDRC_EChopperType. Override this function in other types.
 	This is called immediately when component is initialized.
 	*/	
-	void SetupTypeParams(IEntity owner) {}
+	void TypeSetupParams(IEntity owner) {}
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	This sets up the flight model params for a specific SDRC_EChopperType. Override this function for other types.
 	This is a delayed setup make sure the entity is properly initialized. 
 	*/
-	void SetupType(IEntity owner) {}
+	void TypeSetup(IEntity owner) {}
 
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -1349,8 +1352,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 	// Damage settings - defined in modded class
 	//------------------------------------------------------------------------------------------------	
 	bool IsStillWorking(IEntity owner, bool inInit) {}
-	void GetHealthScaled(IEntity owner, out float health) {}
-	void HandleDamageFinal(IEntity owner) {}
+	void TypeGetHealthScaled(IEntity owner, out float health) {}
+	void TypeHandleDamageFinal(IEntity owner) {}
 	//------------------------------------------------------------------------------------------------	
 	// Destination settings - defined in modded class
 	//------------------------------------------------------------------------------------------------	

@@ -246,7 +246,7 @@ class SDRC_ChopperDebug
 			}
 			
 			float health;
-			chopperComp.GetHealthScaled(owner, health);
+			chopperComp.TypeGetHealthScaled(owner, health);
 			
 			string textAltAgl = "";
 			
