@@ -221,6 +221,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	float m_fSpeedMul;									//Speed multiplier that depends on the turn
 	float m_fSpeedSlowingMul;							//[0..1] Landing/braking speed modifier that affects speed and Yaw-Pitch-Roll.
 	float m_fRotorForceMultiplier;						//Rotor force multiplier that simulates up/down throttle
+	vector m_vVelocityVector;							//Velocity vector stored in case it's needed by external mods
 	
 	//Angular velocities
 	private vector m_vAngularVel;
@@ -751,6 +752,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			velVector = vector.Zero;
 		}*/
 		
+		m_vVelocityVector = velVector;
 		owner.GetPhysics().SetVelocity(velVector);
 	}
 	
