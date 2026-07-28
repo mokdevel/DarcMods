@@ -33,9 +33,14 @@ modded class SAL_DroneControllerComponent
 			return;
 		
 		//Everything below is all on the client
-		if (System.IsConsoleApp())
+//		if (System.IsConsoleApp())
+//			return;
+
+		if (SDRC_Misc.IsMaster())
+		{
+			ServerFrameChecks(owner, timeSlice);
 			return;
-			
+		}
 		
 		ClientFrameChecks(owner, timeSlice);
 		
@@ -117,6 +122,28 @@ modded class SAL_DroneControllerComponent
 		}
 	}
 
+	override void ServerFrameChecks(IEntity owner, float timeSlice)
+	{
+		Physics rigidBody = GetOwner().GetPhysics();
+		if (owner.GetParent() == null && rigidBody.GetSimulationState() == 0)
+		{
+			rigidBody.ChangeSimulationState(SimulationState.SIMULATION);
+			rigidBody.SetActive(true);
+		}
+				
+		// Makes sure everyone is tracking the drones new position if no one is controlling it, if you dont do this picking up the drone breaks
+		if (!m_bIsConnected)
+		{
+			rigidBody.EnableGravity(1);
+			SendPacketServer(owner, timeSlice);
+			
+//			if (!IsOnGround(owner))
+//				SendPacketServer(owner, timeSlice);
+		}
+		else
+			rigidBody.EnableGravity(0);
+	}	
+	
 	override void SendPacket(IEntity owner, float timeSlice)
 	{
 		//darc: Force some RPMs. TBD: Could be taken from ChopperComp
@@ -166,7 +193,13 @@ modded class SAL_DroneControllerComponent
 		vector transform[4];
 		owner.GetTransform(transform);
 		
-		m_vCurrentVelocity = "0.5 0.5 0.5";
+		SDRC_ChopperComp cc = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (cc)
+		{
+			m_vCurrentVelocity = cc.m_vVelocityVector;
+		}
+		
+		//m_vCurrentVelocity = "0.5 0.5 0.5";
 		
 		if (m_vCurrentVelocity != "0 0 0")
 		{
@@ -195,6 +228,9 @@ modded class SAL_DroneControllerComponent
 		}
 		else
 			m_DroneManager.ReplicateTransform(packet);
+
+		//darc: This section added here. We want to server to sync the drone to other players constantly. This was in fixed frame.
+//		SendPacket(owner, timeSlice);
 	}	
 		
 	override void ArmDrone()
@@ -262,6 +298,8 @@ modded class SAL_DroneControllerComponent
 	
 	override void EOnFixedFrame(IEntity owner, float timeSlice)
 	{
+		return;
+		
 		//Everything below is all on the client
 		if (System.IsConsoleApp())
 		{

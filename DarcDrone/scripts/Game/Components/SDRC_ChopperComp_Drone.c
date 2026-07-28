@@ -76,7 +76,8 @@ modded class SDRC_ChopperComp
 			m_DroneControllerComponent.ArmDrone();
 			m_DroneControllerComponent.m_bIsActive = true;
 //			m_DroneControllerComponent.m_bIsArmed = true;			
-			m_DroneControllerComponent.m_iOwner = 0;
+			m_DroneControllerComponent.m_iOwner = -2;			//Set it as random ID. Shall not match a real player.
+			m_DroneControllerComponent.m_bIsConnected = true;
 /*			m_DroneControllerComponent.m_iOwner = GetGame().GetPlayerController();
 			if (m_DroneControllerComponent.m_iOwner == -1)
 			{

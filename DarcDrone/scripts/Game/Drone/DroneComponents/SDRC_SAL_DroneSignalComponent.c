@@ -2,6 +2,10 @@ modded class SAL_DroneSignalComponent
 {
 	override void EOnFixedFrame(IEntity owner, float timeSlice)
 	{
+		//darc: This part is happening on the client side. We do not want the client to do anything 
+		//		related to movement.
+		return;
+		
 		if (System.IsConsoleApp())
 			return;
 		
