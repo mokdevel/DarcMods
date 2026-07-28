@@ -89,3 +89,7 @@ $grp Vehicle : "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed
   angles 0 13.741 0
  }
 }
+Vehicle C130J_SDRC1 : "{C4E5C42A5211DB2E}Prefabs/Vehicles/FixedWing/C-130/C130J_SDRC.et" {
+ coords 664.148 168.999 2580.515
+ angles 0 75 0
+}

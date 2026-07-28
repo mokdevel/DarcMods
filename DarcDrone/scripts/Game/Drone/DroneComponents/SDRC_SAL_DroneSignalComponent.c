@@ -8,14 +8,18 @@ modded class SAL_DroneSignalComponent
 		if (m_Id == -1)
 			m_Id = RplComponent.Cast(owner.FindComponent(RplComponent)).Id();
 		
+		/*
 		if (m_DroneController.m_iOwner != SCR_PlayerController.GetLocalPlayerId()  || !m_DroneManager.m_aActiveDrones.Contains(m_Id))
 			return;
+		*/
 		
 		int antennaMultiplier = 1;
+		/*
 		if (m_DroneManager.IsPlayerAntennaOwner(SCR_PlayerController.GetLocalPlayerId()))
 		{
 			antennaMultiplier = SAL_DroneAntennaComponent.Cast(m_DroneManager.GetPlayersAntenna(SCR_PlayerController.GetLocalPlayerId()).FindComponent(SAL_DroneAntennaComponent)).m_iAntennaRangeMultiplier;
 		}
+		*/
 		
 		if (m_fTimer < 0.01)
 		{
@@ -26,12 +30,13 @@ modded class SAL_DroneSignalComponent
 			m_fTimer = 0;
 
 		/* Start: Changes by darc */		
+		//Set the playerorigin to the same place as the drone. There is no real AI/player using radio to control.
 		vector droneOrigin = owner.GetOrigin();
 		vector playerOrigin = droneOrigin;
-		if (SCR_PlayerController.GetLocalControlledEntity())
+/*		if (SCR_PlayerController.GetLocalControlledEntity())
 		{
 			playerOrigin = SCR_PlayerController.GetLocalControlledEntity().GetOrigin();
-		}
+		}*/
 		/* End: Changes by darc */		
 		
 		int distanceFrom = vector.Distance(playerOrigin, droneOrigin);

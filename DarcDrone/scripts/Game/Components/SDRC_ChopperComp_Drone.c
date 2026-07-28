@@ -75,13 +75,19 @@ modded class SDRC_ChopperComp
 		{
 			m_DroneControllerComponent.ArmDrone();
 			m_DroneControllerComponent.m_bIsActive = true;
-			m_DroneControllerComponent.m_bIsArmed = true;			
-			m_DroneControllerComponent.m_iOwner = GetGame().GetPlayerController();
+//			m_DroneControllerComponent.m_bIsArmed = true;			
+			m_DroneControllerComponent.m_iOwner = 0;
+/*			m_DroneControllerComponent.m_iOwner = GetGame().GetPlayerController();
 			if (m_DroneControllerComponent.m_iOwner == -1)
 			{
 				m_DroneControllerComponent.m_iOwner = 0;
-			}
+			}*/
 			//m_DroneControllerComponent.m_InputManager.SetActionValue("DroneUp", 3.0);
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeSetup] SAL_DroneControllerComponent not found! Aborting. ", LogLevel.ERROR);
+			return;
 		}
 		
 		SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, -1);
@@ -93,6 +99,8 @@ modded class SDRC_ChopperComp
 			SDRC_PlayerPos ppos = playerPosArray.GetRandomElement();
 			AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, ppos.pos, 600);			
 		}
+		
+		SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeSetup] Done - DroneId: " + m_DroneControllerComponent.m_DroneId, LogLevel.DEBUG);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -115,7 +123,7 @@ modded class SDRC_ChopperComp
 			{
 				if (m_DroneControllerComponent.m_DroneId != -1)
 				{
-					SDRC_Log.Add("[SDRC_ChopperComp_Drone:SetupType] Registering DroneId: " + m_DroneControllerComponent.m_DroneId, LogLevel.DEBUG);
+					SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeEOnFrame] Registering DroneId: " + m_DroneControllerComponent.m_DroneId, LogLevel.DEBUG);
 					m_DroneControllerComponent.m_DroneManager.m_aActiveDrones.Insert(m_DroneControllerComponent.m_DroneId);
 					m_bRegistered = true;
 				}
@@ -124,7 +132,7 @@ modded class SDRC_ChopperComp
 		
 		//Control drone rotor speed
 		InputManager m_InputManager = GetGame().GetInputManager();
-		m_InputManager.SetActionValue("DroneUp", 1.0);		
+		m_InputManager.SetActionValue("DroneUp", 1.0);
 	}	
 	
 	//------------------------------------------------------------------------------------------------	
@@ -149,6 +157,8 @@ modded class SDRC_ChopperComp
 		health = 1;
 		if (m_DamageManager.IsDestroyed())
 		{
+			SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeGetHealthScaled] Drone destroyer - DroneId: " + m_DroneControllerComponent.m_DroneId, LogLevel.DEBUG);
+			
 			m_DroneControllerComponent.ArmDrone();						//The second call 'de-Arms the drone'.
 			
 			InputManager m_InputManager = GetGame().GetInputManager();			

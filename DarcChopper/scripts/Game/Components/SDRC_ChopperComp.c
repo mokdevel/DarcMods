@@ -1337,7 +1337,19 @@ modded class SDRC_ChopperComp : ScriptComponent
 	Type specific things within EOnFrame. Override this function in other types.
 	*/	
 	void TypeEOnFrame(IEntity owner, float timeSlice) {}
-		
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Type specific <TBD>
+	*/	
+	void TypeGetHealthScaled(IEntity owner, out float health) {}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Type specific <TBD>
+	*/	
+	void TypeHandleDamageFinal(IEntity owner) {}
+			
 	//------------------------------------------------------------------------------------------------	
 	// Helicopter setup - defined in modded class
 	//------------------------------------------------------------------------------------------------	
@@ -1354,8 +1366,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 	// Damage settings - defined in modded class
 	//------------------------------------------------------------------------------------------------	
 	bool IsStillWorking(IEntity owner, bool inInit) {}
-	void TypeGetHealthScaled(IEntity owner, out float health) {}
-	void TypeHandleDamageFinal(IEntity owner) {}
 	//------------------------------------------------------------------------------------------------	
 	// Destination settings - defined in modded class
 	//------------------------------------------------------------------------------------------------	
