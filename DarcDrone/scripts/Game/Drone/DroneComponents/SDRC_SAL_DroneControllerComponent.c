@@ -13,13 +13,14 @@ modded class SAL_DroneControllerComponent
 			if (m_GarbageSystem.IsInserted(owner))
 				m_GarbageSystem.Withdraw(owner);
 		
-		if (IsOnGround(owner) && m_iOwner == -1)
+/*		if (IsOnGround(owner) && m_iOwner == -1)
 		{
 			m_bIsActive = false;
 			return;
 		}
 		else
-			m_bIsActive = true;
+			m_bIsActive = true;*/
+		
 		// Needed for deconstructor
 		if (m_DroneId == -1)
 			m_DroneId = RplComponent.Cast(owner.FindComponent(RplComponent)).Id();
@@ -132,6 +133,11 @@ modded class SAL_DroneControllerComponent
 		}
 				
 		// Makes sure everyone is tracking the drones new position if no one is controlling it, if you dont do this picking up the drone breaks
+		
+		rigidBody.EnableGravity(1);
+		SendPacketServer(owner, timeSlice);
+				
+/*		TBD: Some component is disabling connection... need to investigate where that happens.
 		if (!m_bIsConnected)
 		{
 			rigidBody.EnableGravity(1);
@@ -141,7 +147,7 @@ modded class SAL_DroneControllerComponent
 //				SendPacketServer(owner, timeSlice);
 		}
 		else
-			rigidBody.EnableGravity(0);
+			rigidBody.EnableGravity(0);*/
 	}	
 	
 	override void SendPacket(IEntity owner, float timeSlice)
