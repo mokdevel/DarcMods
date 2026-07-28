@@ -1,7 +1,13 @@
 modded class SAL_DroneControllerComponent
 {
-	override void EOnFrame(IEntity owner, float timeSlice)
+//	override void EOnFrame(IEntity owner, float timeSlice)
+	override void EOnFixedFrame(IEntity owner, float timeSlice)
 	{
+		if (!SDRC_Misc.IsMaster())
+		{
+			return;
+		}
+		
 		//super.EOnFrame(owner, timeSlice);
 		if (owner.GetParent() != null)
 			return;
@@ -152,6 +158,8 @@ modded class SAL_DroneControllerComponent
 	
 	override void SendPacket(IEntity owner, float timeSlice)
 	{
+		return;
+		
 		//darc: Force some RPMs. TBD: Could be taken from ChopperComp
 		m_aRotorRPM[0] = 0.5;
 		m_aRotorRPM[1] = 0.5;
@@ -205,8 +213,6 @@ modded class SAL_DroneControllerComponent
 			m_vCurrentVelocity = cc.m_vVelocityVector;
 		}
 		
-		//m_vCurrentVelocity = "0.5 0.5 0.5";
-		
 		if (m_vCurrentVelocity != "0 0 0")
 		{
 			rigidBody.SetVelocity(m_vCurrentVelocity);
@@ -221,7 +227,9 @@ modded class SAL_DroneControllerComponent
 		packet.SetTimeSlice(timeSlice);
 		packet.SetIsTriggerd(m_bIsTriggered);
 		packet.SetBatteryLevel(m_BatteryComponent.m_fCurrentBattery);
-		if (m_bIsTriggered)
+		//packet.SetVelocity(cc.m_vVelocityVector);		//darc
+		
+		/*if (m_bIsTriggered)
 		{
 			//Set the position of the drone to where it hit on the clients screen
 			SAL_DroneExplosionComponent droneExplComp = SAL_DroneExplosionComponent.Cast(owner.FindComponent(SAL_DroneExplosionComponent));
@@ -233,12 +241,84 @@ modded class SAL_DroneControllerComponent
 			m_DroneManager.ExplodeDroneServer(packet);
 		}
 		else
-			m_DroneManager.ReplicateTransform(packet);
+			m_DroneManager.ReplicateTransform(packet);*/
+		
+		ReplicateTransformS(packet);
 
 		//darc: This section added here. We want to server to sync the drone to other players constantly. This was in fixed frame.
 //		SendPacket(owner, timeSlice);
 	}	
+
+	void ReplicateTransformS(SAL_DroneNetworkPacket packet)
+	{
+		//Print(string.Format("RpcDo_ReplicateTransform called. IsServer=%1 IsClient=%2", Replication.IsServer(), Replication.IsClient() ));
+		Rpc(RpcDo_ReplicateTransformS, packet);
+	}
+	
+//	[RplRpc(RplChannel.Unreliable, RplRcver.Owner)]
+//	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	[RplRpc(RplChannel.Unreliable, RplRcver.Broadcast)]
+	void RpcDo_ReplicateTransformS(SAL_DroneNetworkPacket packet)
+	{
+		vector transform[4];
+		packet.GetTransform(transform);
 		
+		if (!Replication.FindItem(packet.GetDrone()))
+			return;
+		
+		IEntity drone = RplComponent.Cast(Replication.FindItem(packet.GetDrone())).GetEntity();
+		if (!drone)
+			return;
+		
+		if (!SAL_DroneConnectionManager.GetInstance())
+			return;
+		
+		SAL_DroneControllerComponent droneController = SAL_DroneControllerComponent.Cast(drone.FindComponent(SAL_DroneControllerComponent));
+
+		//Send the transform to clients from server.		
+		if (droneController.m_iOwner != SCR_PlayerController.GetLocalPlayerId())  // Only apply if not the controller
+		{
+			Print("trfs: " + transform[3]);
+			
+			GenericEntity droneEntity = GenericEntity.Cast(drone);
+			droneEntity.SetTransform(transform);
+			droneEntity.Update();
+			droneEntity.OnTransformReset();
+			
+			RplId rotors[4];
+			packet.GetRotors(rotors);
+			
+			float rotorRPMs[4];
+			packet.GetRotorRPMs(rotorRPMs);
+			float averageRPM = (rotorRPMs[0] + rotorRPMs[1] + rotorRPMs[2] + rotorRPMs[3]) / 4;
+			
+			SAL_DroneSoundComponent soundComp = SAL_DroneSoundComponent.Cast(drone.FindComponent(SAL_DroneSoundComponent));
+			if (soundComp)
+				soundComp.m_fAverageRotorRPM = averageRPM;
+			
+			if (droneController.m_bIsArmed)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					if (!Replication.FindItem(rotors[i]))
+						 continue;
+					
+					IEntity rotor = RplComponent.Cast(Replication.FindItem(rotors[i])).GetEntity();
+					if (!rotor) continue;
+					
+					float degPerSecond = rotorRPMs[i] * 6.0;
+					int m_aRotorSpinDir[4] = { 1, -1, -1, 1 };					
+					float rotationAmount = m_aRotorSpinDir[i] * degPerSecond * packet.GetTimeSlice();
+					vector oldAngles = rotor.GetLocalAngles();
+					oldAngles[1] = oldAngles[1] + rotationAmount;
+					rotor.SetAngles(oldAngles);
+				}
+			}
+			
+			SAL_DroneBatteryComponent.Cast(droneEntity.FindComponent(SAL_DroneBatteryComponent)).m_fCurrentBattery = packet.GetBatteryLevel();
+		}
+	}	
+			
 	override void ArmDrone()
 	{
 		m_bIsArmed = !m_bIsArmed;
@@ -302,7 +382,8 @@ modded class SAL_DroneControllerComponent
 		rigidBody.EnableGravity(1);
 	}	
 	
-	override void EOnFixedFrame(IEntity owner, float timeSlice)
+	override void EOnFrame(IEntity owner, float timeSlice)
+//	override void EOnFixedFrame(IEntity owner, float timeSlice)
 	{
 		return;
 		

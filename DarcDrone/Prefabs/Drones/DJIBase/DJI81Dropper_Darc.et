@@ -1,6 +1,9 @@
 GenericEntity : "{C07C56F97DAB2DEE}Prefabs/Drones/DJIBase/DJI81Dropper.et" {
  ID "659863D5118F3377"
  components {
+  SAL_DroneRangeFinderComponent "{65AD4D53172F854B}" {
+   Enabled 0
+  }
   SCR_EditableVehicleComponent "{65AF1B36819DCFB8}" {
    m_UIInfo SCR_EditableEntityUIInfo "{65AF1B36AFD2EE1C}" {
     m_aAuthoredLabels + {

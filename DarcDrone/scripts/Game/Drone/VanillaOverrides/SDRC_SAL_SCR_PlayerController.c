@@ -49,6 +49,8 @@ modded class SCR_PlayerController
 	}
 	
 	[RplRpc(RplChannel.Unreliable, RplRcver.Owner)]
+//	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+//	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
 	override void RpcDo_ReplicateTransform(SAL_DroneNetworkPacket packet)
 	{
 		vector transform[4];
