@@ -10,8 +10,6 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		type = SDRC_EChopperType.DRONE;
 		//Turn
 		turnSpeedDivider = 45;
-		turnSpeedDegreeMin = 1;
-		turnSpeedDegreeMax = 90;
 		turnTimeIntervalBase = 40;
 	
 		//Roll 
@@ -25,24 +23,12 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		
 		//Rotor force multipliers
 		rotorForceMulUp = 1.4 * 10;
-
-		//Obstacle awareness
-		rayLenFront = 100;
-		rayDown = 50;
-				
-		//Damage levels
-		damageHeavy = 0.60;
-		damageMedium = 0.80;
-		damageLight = 0.90;
-				
+		
 		//Waypoint values
 		wpSteepAngle = 30;
 														
 		destinationForwardInitial = 200;
 		destinationForward = 100;
-		
-		//Flight pattern related
-		patrolRadius = 100;
 	}
 }
 
@@ -50,7 +36,6 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 modded class SDRC_ChopperComp
 {
 	private bool m_bRegistered = false;
-//	private float grenadeTimer = 2;		//(seconds)
 	SAL_DroneControllerComponent m_DroneControllerComponent;
 
 	//------------------------------------------------------------------------------------------------
@@ -123,8 +108,6 @@ modded class SDRC_ChopperComp
 			return;
 		}
 		
-//		grenadeTimer -= timeSlice;
-		
 		//Handle registration to drone manager.
 		if (!m_bRegistered)
 		{
@@ -132,25 +115,16 @@ modded class SDRC_ChopperComp
 			{
 				if (m_DroneControllerComponent.m_DroneId != -1)
 				{
-					SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeEOnFrame] Registering DroneId: " + m_DroneControllerComponent.m_DroneId, LogLevel.DEBUG);
+					SDRC_Log.Add("[SDRC_ChopperComp_Drone:SetupType] Registering DroneId: " + m_DroneControllerComponent.m_DroneId, LogLevel.DEBUG);
 					m_DroneControllerComponent.m_DroneManager.m_aActiveDrones.Insert(m_DroneControllerComponent.m_DroneId);
 					m_bRegistered = true;
 				}
 			}
 		}
-
-//		SAL_DroneSoundComponent soundComponent = SAL_DroneSoundComponent.Cast(owner.FindComponent(SAL_DroneSoundComponent));
-//		soundComponent.StartEngine();
-				
+		
 		//Control drone rotor speed
 		InputManager m_InputManager = GetGame().GetInputManager();
-		m_InputManager.SetActionValue("DroneUp", 1.0);
-		
-/*		//Drop grenade
-		if (grenadeTimer < 0)
-		{
-//			DroneGrenade(m_DroneControllerComponent.m_DroneId);
-		}		*/
+		m_InputManager.SetActionValue("DroneUp", 1.0);		
 	}	
 	
 	//------------------------------------------------------------------------------------------------	

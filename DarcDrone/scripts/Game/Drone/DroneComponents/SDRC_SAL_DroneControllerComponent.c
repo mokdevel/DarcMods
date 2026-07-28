@@ -1,12 +1,8 @@
-modded class SAL_DroneControllerComponentClass: ScriptComponentClass 
-{
-}
-
-modded class SAL_DroneControllerComponent: ScriptComponent
+modded class SAL_DroneControllerComponent
 {
 	override void EOnFrame(IEntity owner, float timeSlice)
 	{
-		//super.EOnFrame(owner, timeSlice);
+		super.EOnFrame(owner, timeSlice);
 		if (owner.GetParent() != null)
 			return;
 		
@@ -49,9 +45,7 @@ modded class SAL_DroneControllerComponent: ScriptComponent
 		if (!SCR_PlayerController.GetLocalControlledEntity())
 				return;
 			
-/*		--- Modded by darc ---
-		
-		BaseWeaponManagerComponent weaponMan = BaseWeaponManagerComponent.Cast(ChimeraCharacter.Cast(SCR_PlayerController.GetLocalControlledEntity()).FindComponent(BaseWeaponManagerComponent));
+/*		BaseWeaponManagerComponent weaponMan = BaseWeaponManagerComponent.Cast(ChimeraCharacter.Cast(SCR_PlayerController.GetLocalControlledEntity()).FindComponent(BaseWeaponManagerComponent));
 		if (!weaponMan)
 			return;
 		
@@ -67,8 +61,8 @@ modded class SAL_DroneControllerComponent: ScriptComponent
 		
 			if (weaponMan.GetCurrentWeapon().GetOwner().GetPrefabData().GetPrefabName() != "{E2434ED1318D8476}Prefabs/Characters/Items/DroneController.et")
 				return;
-		}
-*/		
+		}*/
+		
 		
 		if (m_InputManager.GetActionValue("ArmDrone") > 0)
 				ArmDrone();
@@ -120,139 +114,5 @@ modded class SAL_DroneControllerComponent: ScriptComponent
 			
 			m_SoundComponent.m_fAverageRotorRPM = averageRPM;
 		}
-	}
-	
-	override void ClientFrameChecks(IEntity owner, float timeSlice)
-	{
-		Physics rigidBody = GetOwner().GetPhysics();
-		if (owner.GetParent() == null && rigidBody.GetSimulationState() == 0)
-		{
-			rigidBody.ChangeSimulationState(SimulationState.SIMULATION);
-			rigidBody.SetActive(true);
-		}
-		
-		// Makes sure everyone is tracking the drones new position if no one is controlling it, if you dont do this picking up the drone breaks
-		if (!m_bIsConnected)
-			rigidBody.EnableGravity(1);
-		else if (m_bIsConnected && m_iOwner != SCR_PlayerController.GetLocalPlayerId())
-			rigidBody.EnableGravity(0);
-		
-		if (m_SoundComponent)
-		{
-			if (!m_SoundComponent.IsEngineOn() && m_bIsArmed)
-				m_SoundComponent.StartEngine();
-			else if (m_SoundComponent.IsEngineOn() && !m_bIsArmed)
-				m_SoundComponent.ShutOffEngine();
-		}
-		vector transform[4];
-		owner.GetTransform(transform);
-
-/*		//darc
-		SDRC_ChopperComp cc = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		if (cc)
-		{
-			owner.GetPhysics().SetVelocity(cc.m_vVelocityVector);
-		}
-		//darc
-*/					
-		//Enables the gravity for the person controlling the drone
-		if (m_iOwner == SCR_PlayerController.GetLocalPlayerId())
-			rigidBody.EnableGravity(1);
-	}
-	
-	override void ServerFrameChecks(IEntity owner, float timeSlice)
-	{
-		Physics rigidBody = GetOwner().GetPhysics();
-		if (owner.GetParent() == null && rigidBody.GetSimulationState() == 0)
-		{
-			rigidBody.ChangeSimulationState(SimulationState.SIMULATION);
-			rigidBody.SetActive(true);
-		}
-		
-		// Makes sure everyone is tracking the drones new position if no one is controlling it, if you dont do this picking up the drone breaks
-		if (!m_bIsConnected)
-		{
-			rigidBody.EnableGravity(1);
-			if (!IsOnGround(owner))
-				SendPacketServer(owner, timeSlice);
-		}
-		else
-			rigidBody.EnableGravity(0);
-	}
-	
-	override void SendPacket(IEntity owner, float timeSlice)
-	{
-		Physics rigidBody = GetOwner().GetPhysics();
-		vector transform[4];
-		owner.GetTransform(transform);
-				
-		SAL_DroneNetworkPacket packet = new SAL_DroneNetworkPacket;
-		packet.SetOwner(owner);			//darc
-		packet.SetDrone(m_DroneId);
-		packet.SetRotors(m_aRotorsRplId);
-		packet.SetRotorRPMs(m_aRotorRPM);
-		packet.SetTransform(transform);
-		packet.SetTimeSlice(timeSlice);
-		packet.SetIsTriggerd(m_bIsTriggered);
-		packet.SetBatteryLevel(m_BatteryComponent.m_fCurrentBattery);
-		
-		//darc
-/*		SDRC_ChopperComp cc = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		if (cc)
-		{
-			vector vel = rigidBody.GetVelocity() - cc.m_vVelocityVector;
-			packet.SetVelocity(vel);
-		}*/
-		//darc
-		
-		packet.SetVelocity(rigidBody.GetVelocity());
-//		packet.SetVelocity("2.1 2.1 2.1");
-		if (m_bIsTriggered)
-		{
-			//Set the position of the drone to where it hit on the clients screen
-			SAL_DroneExplosionComponent droneExplComp = SAL_DroneExplosionComponent.Cast(owner.FindComponent(SAL_DroneExplosionComponent));
-			transform[3] = droneExplComp.m_HitEntity.CoordToParent(droneExplComp.m_vHitVector);
-			
-			packet.SetExplosion(droneExplComp.m_sExplosionEffect);
-			packet.SetTransform(transform);
-			SCR_PlayerController.Cast(GetGame().GetPlayerController()).ExplodeDrone(packet);
-		}
-		else
-			SCR_PlayerController.Cast(GetGame().GetPlayerController()).SendTransformToServer(packet);
-	}
-	
-	override void SendPacketServer(IEntity owner, float timeSlice)
-	{
-		Physics rigidBody = GetOwner().GetPhysics();
-		vector transform[4];
-		owner.GetTransform(transform);
-		
-		if (m_vCurrentVelocity != "0 0 0")
-		{
-			rigidBody.SetVelocity(m_vCurrentVelocity);
-			m_vCurrentVelocity = "0 0 0";
-		}
-		
-		SAL_DroneNetworkPacket packet = new SAL_DroneNetworkPacket;
-		packet.SetDrone(m_DroneId);
-		packet.SetRotors(m_aRotorsRplId);
-		packet.SetRotorRPMs(m_aRotorRPM);
-		packet.SetTransform(transform);
-		packet.SetTimeSlice(timeSlice);
-		packet.SetIsTriggerd(m_bIsTriggered);
-		packet.SetBatteryLevel(m_BatteryComponent.m_fCurrentBattery);
-		if (m_bIsTriggered)
-		{
-			//Set the position of the drone to where it hit on the clients screen
-			SAL_DroneExplosionComponent droneExplComp = SAL_DroneExplosionComponent.Cast(owner.FindComponent(SAL_DroneExplosionComponent));
-			transform[3] = droneExplComp.m_HitEntity.CoordToParent(droneExplComp.m_vHitVector);
-			
-			packet.SetExplosion(droneExplComp.m_sExplosionEffect);
-			packet.SetTransform(transform);
-			packet.SetExplosion(SAL_DroneExplosionComponent.Cast(owner.FindComponent(SAL_DroneExplosionComponent)).m_sExplosionEffect);
-			m_DroneManager.ExplodeDroneServer(packet);
-		}
-		else
-			m_DroneManager.ReplicateTransform(packet);
 	}
 }

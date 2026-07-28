@@ -1,15 +1,6 @@
 GenericEntity : "{C07C56F97DAB2DEE}Prefabs/Drones/DJIBase/DJI81Dropper.et" {
  ID "659863D5118F3377"
  components {
-  SAL_DroneCleanUpComponent "{65E8A9CED2D961C9}" {
-   Enabled 0
-  }
-  SAL_DroneHUDComponent "{65A23C4DFE108560}" {
-   Enabled 0
-  }
-  SAL_DroneRangeFinderComponent "{65AD4D53172F854B}" {
-   Enabled 0
-  }
   SCR_EditableVehicleComponent "{65AF1B36819DCFB8}" {
    m_UIInfo SCR_EditableEntityUIInfo "{65AF1B36AFD2EE1C}" {
     m_aAuthoredLabels + {
@@ -17,10 +8,6 @@ GenericEntity : "{C07C56F97DAB2DEE}Prefabs/Drones/DJIBase/DJI81Dropper.et" {
     }
    }
    m_Flags 69
-  }
-  SCR_FireplaceComponent "{69CA9ED80E157FFE}" {
-   m_sParticle "{E454B3B05B8A3A90}Particles/Props/Sparks_Electric_Medium.ptc"
-   m_vParticleOffset 0 0 0
   }
   SDRC_ChopperComp "{68F8BEC217F852DF}" {
    m_fThrottle 1.5
