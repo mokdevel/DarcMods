@@ -1,3 +1,33 @@
+//------------------------------------------------------------------------------------------------	
+/*!	
+
+This is the biggest difference to the original drone code. As we do not have a real controlling AI, 
+we can do the movement handling etc on server side. 
+
+Runtime
+
+- There is no player controlling the drone with a DroneController.et. These sections have been removed.
+- Flight model is coming from DarcChopper but is parametrized for drone use.
+
+Movement replication
+
+- We do not use PlayerController for movement replication.
+- Instead of listening to client commands, we order commands from server side. The new transform (position etc..) 
+  is replicated to clients on EOnFixedFrame speed. On client side, we lerp the position/rotation on EOnFrame. 
+  This gives a quite smooth flight.  
+
+Grenade drop
+
+- The drone is capable of finding an enemy. It will drop a grenade with a given chance.
+
+To be done
+
+- Yammers do not currently affect the drone
+
+Code: darc
+*/
+//------------------------------------------------------------------------------------------------
+
 modded class SAL_DroneControllerComponent
 {
 	vector m_TargetTransform[4] = {};
@@ -163,41 +193,16 @@ modded class SAL_DroneControllerComponent
 	override void SendPacket(IEntity owner, float timeSlice)
 	{
 		return;
-		
-		Physics rigidBody = GetOwner().GetPhysics();
-		vector transform[4];
-		owner.GetTransform(transform);
-				
-		SAL_DroneNetworkPacket packet = new SAL_DroneNetworkPacket;
-		packet.SetDrone(m_DroneId);
-		packet.SetRotors(m_aRotorsRplId);
-		packet.SetRotorRPMs(m_aRotorRPM);
-		packet.SetTransform(transform);
-		packet.SetTimeSlice(timeSlice);
-		packet.SetIsTriggerd(m_bIsTriggered);
-		packet.SetBatteryLevel(m_BatteryComponent.m_fCurrentBattery);
-		packet.SetVelocity(rigidBody.GetVelocity());
-		if (m_bIsTriggered)
-		{
-			//Set the position of the drone to where it hit on the clients screen
-			SAL_DroneExplosionComponent droneExplComp = SAL_DroneExplosionComponent.Cast(owner.FindComponent(SAL_DroneExplosionComponent));
-			transform[3] = droneExplComp.m_HitEntity.CoordToParent(droneExplComp.m_vHitVector);
-			
-			packet.SetExplosion(droneExplComp.m_sExplosionEffect);
-			packet.SetTransform(transform);
-			SCR_PlayerController.Cast(GetGame().GetPlayerController()).ExplodeDrone(packet);
-		}
-		else
-			SCR_PlayerController.Cast(GetGame().GetPlayerController()).SendTransformToServer(packet);
 	}
 	
 	override void SendPacketServer(IEntity owner, float timeSlice)
 	{
 		//darc: Force some RPMs. TBD: Could be taken from ChopperComp
-		m_aRotorRPM[0] = 500;
-		m_aRotorRPM[1] = 500;
-		m_aRotorRPM[2] = 500;
-		m_aRotorRPM[3] = 500;
+		m_iThrottle = 1.0;
+		m_aRotorRPM[0] = m_iMaxThrustRPM * m_iThrottle;
+		m_aRotorRPM[1] = m_iMaxThrustRPM * m_iThrottle;
+		m_aRotorRPM[2] = m_iMaxThrustRPM * m_iThrottle;
+		m_aRotorRPM[3] = m_iMaxThrustRPM * m_iThrottle;
 		//darc		
 		
 		Physics rigidBody = GetOwner().GetPhysics();
@@ -224,7 +229,6 @@ modded class SAL_DroneControllerComponent
 		packet.SetTimeSlice(timeSlice);
 		packet.SetIsTriggerd(m_bIsTriggered);
 		packet.SetBatteryLevel(m_BatteryComponent.m_fCurrentBattery);
-		//packet.SetVelocity(cc.m_vVelocityVector);		//darc
 		
 		/*if (m_bIsTriggered)
 		{
@@ -241,14 +245,16 @@ modded class SAL_DroneControllerComponent
 			m_DroneManager.ReplicateTransform(packet);*/
 		
 		ReplicateTransformS(packet);
-
-		//darc: This section added here. We want to server to sync the drone to other players constantly. This was in fixed frame.
-//		SendPacket(owner, timeSlice);
 	}	
 
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Replicate the transform from server to client
+	*/
 	void ReplicateTransformS(SAL_DroneNetworkPacket packet)
 	{
 		//Print(string.Format("RpcDo_ReplicateTransform called. IsServer=%1 IsClient=%2", Replication.IsServer(), Replication.IsClient() ));
+		RpcDo_ReplicateTransformS(packet);
 		Rpc(RpcDo_ReplicateTransformS, packet);
 	}
 	
@@ -284,10 +290,6 @@ modded class SAL_DroneControllerComponent
 			rigidBody.SetActive(true);
 			rigidBody.EnableGravity(0);
 		}
-/*		
-		droneEntity.SetTransform(transform);
-		droneEntity.Update();
-		droneEntity.OnTransformReset();*/
 			
 		RplId rotors[4];
 		packet.GetRotors(rotors);
@@ -298,14 +300,9 @@ modded class SAL_DroneControllerComponent
 
 		SAL_DroneSoundComponent soundComp = SAL_DroneSoundComponent.Cast(drone.FindComponent(SAL_DroneSoundComponent));
 		if (soundComp)
+		{
 			soundComp.m_fAverageRotorRPM = averageRPM;
-
-		//darc: Maybe not the right place...
-		if (!soundComp.IsEngineOn() && m_bIsArmed)
-			soundComp.StartEngine();
-		else if (soundComp.IsEngineOn() && !m_bIsArmed)
-			soundComp.ShutOffEngine();
-		//darc
+		}
 		
 		if (droneController.m_bIsArmed)
 		{
@@ -400,11 +397,55 @@ modded class SAL_DroneControllerComponent
 		owner.SetTransform(current);		
 		owner.Update();
 		//owner.OnTransformReset();
+		
+		Print("Sim.");
+		
+		SAL_DroneSoundComponent soundComp = SAL_DroneSoundComponent.Cast(owner.FindComponent(SAL_DroneSoundComponent));
+		if (soundComp)
+		{
+			//darc: Maybe not the right place...
+			if (!soundComp.IsEngineOn() && m_bIsArmed)
+			{
+				Print("[SDRC_SAL_DroneControllerComponent:EOnSimulate] Sound.");
+				soundComp.StartEngine();
+			}
+			else if (soundComp.IsEngineOn() && !m_bIsArmed)
+			{
+				soundComp.ShutOffEngine();
+			}
+			//darc
+		}
+		
+		Print("t:" + m_iThrottle + "/" + m_iMaxThrustRPM);		
+		
+		//Get the rotors spinning
+		UpdateSimulatedRPMs(timeSlice);
+		SpinRotors(timeSlice);
 	}
 	
 	override void EOnSimulate(IEntity owner, float timeSlice)
 	{
-		//No simulation used
-		return;
+		vanilla.EOnSimulate(owner, timeSlice);
+
+		#ifdef WORKBENCH		
+			SAL_DroneSoundComponent soundComp = SAL_DroneSoundComponent.Cast(owner.FindComponent(SAL_DroneSoundComponent));
+			if (soundComp)
+			{
+				//darc: Maybe not the right place...
+				if (!soundComp.IsEngineOn() && m_bIsArmed)
+				{
+					soundComp.StartEngine();
+				}
+				else if (soundComp.IsEngineOn() && !m_bIsArmed)
+				{
+					soundComp.ShutOffEngine();
+				}
+				//darc
+			}
+			
+			//Get the rotors spinning
+			UpdateSimulatedRPMs(timeSlice);
+			SpinRotors(timeSlice);
+		#endif
 	}	
 }

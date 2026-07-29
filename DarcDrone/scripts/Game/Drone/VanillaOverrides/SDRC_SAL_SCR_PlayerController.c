@@ -1,4 +1,4 @@
-modded class SCR_PlayerController
+/*modded class SCR_PlayerController
 {
 	// === CLIENT → SERVER ===
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
@@ -22,11 +22,11 @@ modded class SCR_PlayerController
 		vector transform[4];
 		packet.GetTransform(transform);
 		
-/*		if (vector.Distance(drone.GetOrigin(), transform[3]) > 10)
+		if (vector.Distance(drone.GetOrigin(), transform[3]) > 10)
 		{
 			SAL_DroneConnectionManager.GetInstance().TeleportDroneBack(packet.GetDrone(), transform);
 			return;
-		}*/
+		}
 		
 		GenericEntity droneEntity = GenericEntity.Cast(drone);
 		droneEntity.SetTransform(transform);
@@ -109,3 +109,4 @@ modded class SCR_PlayerController
 		}
 	}
 }
+*/

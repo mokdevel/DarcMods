@@ -75,7 +75,6 @@ modded class SDRC_ChopperComp
 		{
 			m_DroneControllerComponent.ArmDrone();
 			m_DroneControllerComponent.m_bIsActive = true;
-//			m_DroneControllerComponent.m_bIsArmed = true;			
 			m_DroneControllerComponent.m_iOwner = -2;			//Set it as random ID. Shall not match a real player.
 			m_DroneControllerComponent.m_bIsConnected = true;
 /*			m_DroneControllerComponent.m_iOwner = GetGame().GetPlayerController();
@@ -132,9 +131,9 @@ modded class SDRC_ChopperComp
 		}
 		
 		//Control drone rotor speed
-		InputManager m_InputManager = GetGame().GetInputManager();
+//		InputManager m_InputManager = GetGame().GetInputManager();
 		//m_InputManager.SetActionValue("DroneUp", 1.0);
-		m_InputManager.SetActionValue("DroneUp", 0.0);
+//		m_InputManager.SetActionValue("DroneUp", 0.0);
 	}	
 	
 	//------------------------------------------------------------------------------------------------	
