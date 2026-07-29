@@ -1,8 +1,13 @@
 modded class SAL_DroneControllerComponent
 {
+	override void OnPostInit(IEntity owner)
+	{
+		SetEventMask(owner, EntityEvent.INIT | EntityEvent.SIMULATE | EntityEvent.FIXEDFRAME);
+	}
+	
 //	override void EOnFrame(IEntity owner, float timeSlice)
 	override void EOnFixedFrame(IEntity owner, float timeSlice)
-	{
+	{		
 		if (!SDRC_Misc.IsMaster())
 		{
 			return;
@@ -273,16 +278,25 @@ modded class SAL_DroneControllerComponent
 		//Send the transform to clients from server.		
 		if (droneController.m_iOwner != SCR_PlayerController.GetLocalPlayerId())  // Only apply if not the controller
 		{
-			Print("trf0: " + transform[0]);
-			Print("trf1: " + transform[1]);
-			Print("trf2: " + transform[2]);
+/*			vector vec = "2423.47 104.238 1434.47";
+			vec[1] = 100;
+			transform[3] = vec;
+
 			Print("trf3: " + transform[3]);
-			
+*/						
 			GenericEntity droneEntity = GenericEntity.Cast(drone);
+			Physics rigidBody = droneEntity.GetPhysics();
+			if (rigidBody)
+			{
+				rigidBody.ChangeSimulationState(SimulationState.SIMULATION);
+				rigidBody.SetActive(true);
+				rigidBody.EnableGravity(0);
+			}
+			
 			droneEntity.SetTransform(transform);
 			droneEntity.Update();
 			//droneEntity.OnTransformReset();
-			
+						
 			RplId rotors[4];
 			packet.GetRotors(rotors);
 			
@@ -290,9 +304,6 @@ modded class SAL_DroneControllerComponent
 			packet.GetRotorRPMs(rotorRPMs);
 			float averageRPM = (rotorRPMs[0] + rotorRPMs[1] + rotorRPMs[2] + rotorRPMs[3]) / 4;
 
-			Print("rpm: " + averageRPM);
-			
-						
 			SAL_DroneSoundComponent soundComp = SAL_DroneSoundComponent.Cast(drone.FindComponent(SAL_DroneSoundComponent));
 			if (soundComp)
 				soundComp.m_fAverageRotorRPM = averageRPM;
@@ -386,6 +397,7 @@ modded class SAL_DroneControllerComponent
 	override void EOnFrame(IEntity owner, float timeSlice)
 //	override void EOnFixedFrame(IEntity owner, float timeSlice)
 	{
+		vanilla.EOnFrame(owner, timeSlice);
 		return;
 		
 		//Everything below is all on the client
