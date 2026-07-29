@@ -133,7 +133,8 @@ modded class SDRC_ChopperComp
 		
 		//Control drone rotor speed
 		InputManager m_InputManager = GetGame().GetInputManager();
-		m_InputManager.SetActionValue("DroneUp", 1.0);
+		//m_InputManager.SetActionValue("DroneUp", 1.0);
+		m_InputManager.SetActionValue("DroneUp", 0.0);
 	}	
 	
 	//------------------------------------------------------------------------------------------------	

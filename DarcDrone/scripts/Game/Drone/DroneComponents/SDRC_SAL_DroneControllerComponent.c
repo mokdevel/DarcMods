@@ -49,6 +49,8 @@ modded class SAL_DroneControllerComponent
 			return;
 		}
 		
+		return;
+		
 		ClientFrameChecks(owner, timeSlice);
 		
 		//Rest of the code non drone controllers don't need to worry about
@@ -160,13 +162,6 @@ modded class SAL_DroneControllerComponent
 	{
 		return;
 		
-		//darc: Force some RPMs. TBD: Could be taken from ChopperComp
-		m_aRotorRPM[0] = 0.5;
-		m_aRotorRPM[1] = 0.5;
-		m_aRotorRPM[2] = 0.5;
-		m_aRotorRPM[3] = 0.5;
-		//darc		
-		
 		Physics rigidBody = GetOwner().GetPhysics();
 		vector transform[4];
 		owner.GetTransform(transform);
@@ -197,10 +192,10 @@ modded class SAL_DroneControllerComponent
 	override void SendPacketServer(IEntity owner, float timeSlice)
 	{
 		//darc: Force some RPMs. TBD: Could be taken from ChopperComp
-		m_aRotorRPM[0] = 0.5;
-		m_aRotorRPM[1] = 0.5;
-		m_aRotorRPM[2] = 0.5;
-		m_aRotorRPM[3] = 0.5;
+		m_aRotorRPM[0] = 500;
+		m_aRotorRPM[1] = 500;
+		m_aRotorRPM[2] = 500;
+		m_aRotorRPM[3] = 500;
 		//darc		
 		
 		Physics rigidBody = GetOwner().GetPhysics();
@@ -278,12 +273,15 @@ modded class SAL_DroneControllerComponent
 		//Send the transform to clients from server.		
 		if (droneController.m_iOwner != SCR_PlayerController.GetLocalPlayerId())  // Only apply if not the controller
 		{
-			Print("trfs: " + transform[3]);
+			Print("trf0: " + transform[0]);
+			Print("trf1: " + transform[1]);
+			Print("trf2: " + transform[2]);
+			Print("trf3: " + transform[3]);
 			
 			GenericEntity droneEntity = GenericEntity.Cast(drone);
 			droneEntity.SetTransform(transform);
 			droneEntity.Update();
-			droneEntity.OnTransformReset();
+			//droneEntity.OnTransformReset();
 			
 			RplId rotors[4];
 			packet.GetRotors(rotors);
@@ -291,7 +289,10 @@ modded class SAL_DroneControllerComponent
 			float rotorRPMs[4];
 			packet.GetRotorRPMs(rotorRPMs);
 			float averageRPM = (rotorRPMs[0] + rotorRPMs[1] + rotorRPMs[2] + rotorRPMs[3]) / 4;
+
+			Print("rpm: " + averageRPM);
 			
+						
 			SAL_DroneSoundComponent soundComp = SAL_DroneSoundComponent.Cast(drone.FindComponent(SAL_DroneSoundComponent));
 			if (soundComp)
 				soundComp.m_fAverageRotorRPM = averageRPM;
@@ -379,7 +380,7 @@ modded class SAL_DroneControllerComponent
 			rigidBody.EnableGravity(1);*/
 		
 		//darc: Force set gravity for everyone.
-		rigidBody.EnableGravity(1);
+		rigidBody.EnableGravity(0);
 	}	
 	
 	override void EOnFrame(IEntity owner, float timeSlice)
@@ -419,7 +420,7 @@ modded class SAL_DroneControllerComponent
 	override void EOnSimulate(IEntity owner, float timeSlice)
 	{
 		//super.EOnSimulate(owner, timeSlice);
-		Physics rigidBody = GetOwner().GetPhysics();
+/*		Physics rigidBody = GetOwner().GetPhysics();
 		if (!rigidBody) return;
 		
 		if (!m_DroneManager) 
@@ -454,8 +455,11 @@ modded class SAL_DroneControllerComponent
 			(owner.GetTransformAxis(0) * controlTorque[0]) +
 			(owner.GetTransformAxis(1) * controlTorque[1]) +
 			(owner.GetTransformAxis(2) * controlTorque[2]);
-
+*/
 		//Get the rotors spinning and the drone in the sky
+		
+		m_iThrottle = 1.0;	//darc: This is a value between 0.0 - 1.0
+		
 		UpdateSimulatedRPMs(timeSlice);
 		SpinRotors(timeSlice);
 		//rigidBody.ApplyImpulse(m_vThrustForce);

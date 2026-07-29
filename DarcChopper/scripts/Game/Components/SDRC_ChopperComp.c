@@ -338,12 +338,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_Helicopter_s = VehicleHelicopterSimulation.Cast(GetOwner().GetRootParent().FindComponent(VehicleHelicopterSimulation));
 		if (!m_Helicopter_s)
 		{
-			SDRC_Log.Add("[SDRC_ChopperComp] VehicleHelicopterSimulation not found.", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_ChopperComp] VehicleHelicopterSimulation not found.", LogLevel.WARNING);
 		}
-		
-		/* owner.GetPhysics().ChangeSimulationState(SimulationState.COLLISION);
-		owner.GetPhysics().EnableGravity(false);
-		owner.GetPhysics().ClearForces(); */
 		
 		if (owner.GetPhysics())
 		{		
