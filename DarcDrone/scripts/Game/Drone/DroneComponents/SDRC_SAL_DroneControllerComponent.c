@@ -1,5 +1,7 @@
 modded class SAL_DroneControllerComponent
 {
+	vector m_TargetTransform[4] = {};
+	
 //	override void EOnFrame(IEntity owner, float timeSlice)
 	override void EOnFixedFrame(IEntity owner, float timeSlice)
 	{		
@@ -286,7 +288,7 @@ modded class SAL_DroneControllerComponent
 			droneEntity.Update();
 			droneEntity.OnTransformReset();
 
-			RplComponent droneComp = RplComponent.Cast(Replication.FindItem(packet.GetDrone()));
+			/*RplComponent droneComp = RplComponent.Cast(Replication.FindItem(packet.GetDrone()));
 			if (droneComp)
 			{
 				IEntity dronex = droneComp.GetEntity();
@@ -296,7 +298,7 @@ modded class SAL_DroneControllerComponent
 					dronex.GetTransform(prevTransform);
 					droneComp.ForceNodeMovement(prevTransform[3]);
 				}
-			}
+			}*/
 									
 			RplId rotors[4];
 			packet.GetRotors(rotors);
