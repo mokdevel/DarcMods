@@ -71,8 +71,6 @@ modded class SCR_PlayerController
 		//Send the transform to clients from server.		
 		if (droneController.m_iOwner != SCR_PlayerController.GetLocalPlayerId())  // Only apply if not the controller
 		{
-			Print("trf: " + transform[3]);
-			
 			GenericEntity droneEntity = GenericEntity.Cast(drone);
 			droneEntity.SetTransform(transform);
 			droneEntity.Update();

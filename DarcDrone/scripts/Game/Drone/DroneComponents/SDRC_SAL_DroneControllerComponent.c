@@ -1,10 +1,5 @@
 modded class SAL_DroneControllerComponent
 {
-	override void OnPostInit(IEntity owner)
-	{
-		SetEventMask(owner, EntityEvent.INIT | EntityEvent.SIMULATE | EntityEvent.FIXEDFRAME);
-	}
-	
 //	override void EOnFrame(IEntity owner, float timeSlice)
 	override void EOnFixedFrame(IEntity owner, float timeSlice)
 	{		
@@ -277,13 +272,7 @@ modded class SAL_DroneControllerComponent
 
 		//Send the transform to clients from server.		
 		if (droneController.m_iOwner != SCR_PlayerController.GetLocalPlayerId())  // Only apply if not the controller
-		{
-/*			vector vec = "2423.47 104.238 1434.47";
-			vec[1] = 100;
-			transform[3] = vec;
-
-			Print("trf3: " + transform[3]);
-*/						
+		{		
 			GenericEntity droneEntity = GenericEntity.Cast(drone);
 			Physics rigidBody = droneEntity.GetPhysics();
 			if (rigidBody)
@@ -295,8 +284,20 @@ modded class SAL_DroneControllerComponent
 			
 			droneEntity.SetTransform(transform);
 			droneEntity.Update();
-			//droneEntity.OnTransformReset();
-						
+			droneEntity.OnTransformReset();
+
+			RplComponent droneComp = RplComponent.Cast(Replication.FindItem(packet.GetDrone()));
+			if (droneComp)
+			{
+				IEntity dronex = droneComp.GetEntity();
+				if (dronex)
+				{
+					vector prevTransform[4];
+					dronex.GetTransform(prevTransform);
+					droneComp.ForceNodeMovement(prevTransform[3]);
+				}
+			}
+									
 			RplId rotors[4];
 			packet.GetRotors(rotors);
 			
@@ -307,6 +308,13 @@ modded class SAL_DroneControllerComponent
 			SAL_DroneSoundComponent soundComp = SAL_DroneSoundComponent.Cast(drone.FindComponent(SAL_DroneSoundComponent));
 			if (soundComp)
 				soundComp.m_fAverageRotorRPM = averageRPM;
+
+			//darc: Maybe not the right place...
+			if (!soundComp.IsEngineOn() && m_bIsArmed)
+				soundComp.StartEngine();
+			else if (soundComp.IsEngineOn() && !m_bIsArmed)
+				soundComp.ShutOffEngine();
+			//darc
 			
 			if (droneController.m_bIsArmed)
 			{
@@ -431,8 +439,12 @@ modded class SAL_DroneControllerComponent
 	
 	override void EOnSimulate(IEntity owner, float timeSlice)
 	{
+		return;
+		
 		//super.EOnSimulate(owner, timeSlice);
-/*		Physics rigidBody = GetOwner().GetPhysics();
+		Print("sim");
+		
+		Physics rigidBody = GetOwner().GetPhysics();
 		if (!rigidBody) return;
 		
 		if (!m_DroneManager) 
@@ -467,14 +479,14 @@ modded class SAL_DroneControllerComponent
 			(owner.GetTransformAxis(0) * controlTorque[0]) +
 			(owner.GetTransformAxis(1) * controlTorque[1]) +
 			(owner.GetTransformAxis(2) * controlTorque[2]);
-*/
+		
 		//Get the rotors spinning and the drone in the sky
 		
 		m_iThrottle = 1.0;	//darc: This is a value between 0.0 - 1.0
 		
 		UpdateSimulatedRPMs(timeSlice);
 		SpinRotors(timeSlice);
-		//rigidBody.ApplyImpulse(m_vThrustForce);
-		//rigidBody.ApplyTorque(worldTorque * timeSlice);
+		rigidBody.ApplyImpulse(m_vThrustForce);
+		rigidBody.ApplyTorque(worldTorque * timeSlice);
 	}	
 }
