@@ -1,7 +1,7 @@
 # DarcDrone
 <img src="https://github.com/mokdevel/DarcMods/blob/main/DarcDrone/thumbnail.png" width=30% height=30%>
 
-AI controlled drones using the DarcChopper flight frame and Realistic Combat Drones from Salami. 
+AI controlled drones using the DarcChopper flight frame and [Realistic Combat Drones](https://reforger.armaplatform.com/workshop/65AD60E204191D37-RealisticCombatDrones) from Salami. 
 
 These are deadly. The drones are using the Search and Destroy functionality of DarcChopper to search for players and drop a bomb. 
 
