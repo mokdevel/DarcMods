@@ -53,6 +53,7 @@ modded class SDRC_ChopperComp
 	/*!
 	This sets up the flight model params for a specific SDRC_EChopperType. Override this function for other types.
 	This is called immediately when component is initialized.
+	Executed only on server!
 	*/	
 	override void TypeSetupParams(IEntity owner)
 	{
@@ -70,6 +71,7 @@ modded class SDRC_ChopperComp
 	/*!
 	This is the setup for a specific SDRC_EChopperType. Override this function in other types.
 	This is a delayed setup make sure the entity is properly initialized. 
+	Executed only on server!
 	*/
 	override void TypeSetup(IEntity owner)
 	{

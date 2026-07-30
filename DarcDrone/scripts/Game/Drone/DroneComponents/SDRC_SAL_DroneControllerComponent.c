@@ -31,7 +31,29 @@ Code: darc
 modded class SAL_DroneControllerComponent
 {
 	vector m_TargetTransform[4] = {};
+
+	override void OnPostInit(IEntity owner)
+	{		
+		super.OnPostInit(owner);
+		
+		//DRONE specific things to set on server and client
+		SAL_DroneControllerComponent m_DroneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
+		if (m_DroneControllerComponent)
+		{
+			m_DroneControllerComponent.ArmDrone();
+			m_DroneControllerComponent.m_bIsActive = true;
+			m_DroneControllerComponent.m_iOwner = -2;			//Set it as random ID. Shall not match a real player.
+			m_DroneControllerComponent.m_bIsConnected = true;
+
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeSetup] SAL_DroneControllerComponent not found! Aborting. ", LogLevel.ERROR);
+			return;
+		}		
+	}
 	
+		
 	override void EOnFixedFrame(IEntity owner, float timeSlice)
 	{		
 		//Do these things only on server side
@@ -253,7 +275,6 @@ modded class SAL_DroneControllerComponent
 	*/
 	void ReplicateTransformS(SAL_DroneNetworkPacket packet)
 	{
-		//Print(string.Format("RpcDo_ReplicateTransform called. IsServer=%1 IsClient=%2", Replication.IsServer(), Replication.IsClient() ));
 		RpcDo_ReplicateTransformS(packet);
 		Rpc(RpcDo_ReplicateTransformS, packet);
 	}
@@ -298,7 +319,8 @@ modded class SAL_DroneControllerComponent
 		packet.GetRotorRPMs(rotorRPMs);
 		float averageRPM = (rotorRPMs[0] + rotorRPMs[1] + rotorRPMs[2] + rotorRPMs[3]) / 4;
 
-		SAL_DroneSoundComponent soundComp = SAL_DroneSoundComponent.Cast(drone.FindComponent(SAL_DroneSoundComponent));
+		//SAL_DroneSoundComponent soundComp = SAL_DroneSoundComponent.Cast(drone.FindComponent(SAL_DroneSoundComponent));
+		SAL_DroneSoundComponent soundComp = SAL_DroneSoundComponent.Cast(droneEntity.FindComponent(SAL_DroneSoundComponent));
 		if (soundComp)
 		{
 			soundComp.m_fAverageRotorRPM = averageRPM;
@@ -312,7 +334,8 @@ modded class SAL_DroneControllerComponent
 					 continue;
 				
 				IEntity rotor = RplComponent.Cast(Replication.FindItem(rotors[i])).GetEntity();
-				if (!rotor) continue;
+				if (!rotor) 
+					continue;
 				
 				float degPerSecond = rotorRPMs[i] * 6.0;
 				int m_aRotorSpinDir[4] = { 1, -1, -1, 1 };					
@@ -398,15 +421,12 @@ modded class SAL_DroneControllerComponent
 		owner.Update();
 		//owner.OnTransformReset();
 		
-		Print("Sim.");
-		
 		SAL_DroneSoundComponent soundComp = SAL_DroneSoundComponent.Cast(owner.FindComponent(SAL_DroneSoundComponent));
 		if (soundComp)
 		{
 			//darc: Maybe not the right place...
 			if (!soundComp.IsEngineOn() && m_bIsArmed)
 			{
-				Print("[SDRC_SAL_DroneControllerComponent:EOnSimulate] Sound.");
 				soundComp.StartEngine();
 			}
 			else if (soundComp.IsEngineOn() && !m_bIsArmed)
@@ -415,8 +435,6 @@ modded class SAL_DroneControllerComponent
 			}
 			//darc
 		}
-		
-		Print("t:" + m_iThrottle + "/" + m_iMaxThrustRPM);		
 		
 		//Get the rotors spinning
 		UpdateSimulatedRPMs(timeSlice);

@@ -5,12 +5,13 @@
 modded class SDRC_ChopperComp
 {
 	//------------------------------------------------------------------------------------------------	
-	// Helicopter setup
+	// Chopper setup
 	//------------------------------------------------------------------------------------------------	
 
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Do setup. This is delayed in case another mod has disabled autostart
+	Executed only on server!
 	*/	
 	override void Setup(IEntity owner)
 	{

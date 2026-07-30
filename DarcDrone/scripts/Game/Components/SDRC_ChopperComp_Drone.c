@@ -36,12 +36,13 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 modded class SDRC_ChopperComp
 {
 	private bool m_bRegistered = false;
-	SAL_DroneControllerComponent m_DroneControllerComponent;
+	//SAL_DroneControllerComponent m_DroneControllerComponent;
 
 	//------------------------------------------------------------------------------------------------
 	/*!
 	This sets up the flight model params for a specific SDRC_EChopperType. Override this function for other types.
 	This is called immediately when component is initialized.
+	Executed only on server!
 	*/	
 	override void TypeSetupParams(IEntity owner)
 	{
@@ -59,6 +60,7 @@ modded class SDRC_ChopperComp
 	/*!
 	This is the setup for a specific SDRC_EChopperType. Override this function in other types
 	This is a delayed setup make sure the entity is properly initialized. 
+	Executed only on server!
 	*/
 	override void TypeSetup(IEntity owner)
 	{
@@ -69,7 +71,7 @@ modded class SDRC_ChopperComp
 			return;
 		}
 
-		//DRONE specific
+/*		//DRONE specific
 		m_DroneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
 		if (m_DroneControllerComponent)
 		{
@@ -77,18 +79,18 @@ modded class SDRC_ChopperComp
 			m_DroneControllerComponent.m_bIsActive = true;
 			m_DroneControllerComponent.m_iOwner = -2;			//Set it as random ID. Shall not match a real player.
 			m_DroneControllerComponent.m_bIsConnected = true;
-/*			m_DroneControllerComponent.m_iOwner = GetGame().GetPlayerController();
-			if (m_DroneControllerComponent.m_iOwner == -1)
-			{
-				m_DroneControllerComponent.m_iOwner = 0;
-			}*/
+			m_DroneControllerComponent.m_iOwner = GetGame().GetPlayerController();
+//			if (m_DroneControllerComponent.m_iOwner == -1)
+//			{
+//				m_DroneControllerComponent.m_iOwner = 0;
+//			}
 			//m_DroneControllerComponent.m_InputManager.SetActionValue("DroneUp", 3.0);
 		}
 		else
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeSetup] SAL_DroneControllerComponent not found! Aborting. ", LogLevel.ERROR);
 			return;
-		}
+		}*/
 		
 		SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, -1);
 		
@@ -99,8 +101,16 @@ modded class SDRC_ChopperComp
 			SDRC_PlayerPos ppos = playerPosArray.GetRandomElement();
 			AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, ppos.pos, 600);			
 		}
-		
-		SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeSetup] Done - DroneId: " + m_DroneControllerComponent.m_DroneId, LogLevel.DEBUG);
+
+		SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
+		if (droneControllerComponent)
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeSetup] Done - DroneId: " + droneControllerComponent.m_DroneId, LogLevel.DEBUG);
+		}				
+		else
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeSetup] Failed. Could not fine SAL_DroneControllerComponent.", LogLevel.ERROR);
+		}		
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -119,12 +129,13 @@ modded class SDRC_ChopperComp
 		//Handle registration to drone manager.
 		if (!m_bRegistered)
 		{
-			if (m_DroneControllerComponent)
+			SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
+			if (droneControllerComponent)
 			{
-				if (m_DroneControllerComponent.m_DroneId != -1)
+				if (droneControllerComponent.m_DroneId != -1)
 				{
-					SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeEOnFrame] Registering DroneId: " + m_DroneControllerComponent.m_DroneId, LogLevel.DEBUG);
-					m_DroneControllerComponent.m_DroneManager.m_aActiveDrones.Insert(m_DroneControllerComponent.m_DroneId);
+					SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeEOnFrame] Registering DroneId: " + droneControllerComponent.m_DroneId, LogLevel.DEBUG);
+					droneControllerComponent.m_DroneManager.m_aActiveDrones.Insert(droneControllerComponent.m_DroneId);
 					m_bRegistered = true;
 				}
 			}
@@ -153,23 +164,27 @@ modded class SDRC_ChopperComp
 			return;
 		}
 
-		SCR_DamageManagerComponent m_DamageManager = SCR_DamageManagerComponent.Cast(owner.FindComponent(SCR_DamageManagerComponent));
-
+		SCR_DamageManagerComponent damageManager = SCR_DamageManagerComponent.Cast(owner.FindComponent(SCR_DamageManagerComponent));
+		SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
+		
 		health = 1;
-		if (m_DamageManager.IsDestroyed())
+		if ( (damageManager) && (droneControllerComponent) )
 		{
-			SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeGetHealthScaled] Drone destroyer - DroneId: " + m_DroneControllerComponent.m_DroneId, LogLevel.DEBUG);
-			
-			m_DroneControllerComponent.ArmDrone();						//The second call 'de-Arms the drone'.
-			
-			InputManager m_InputManager = GetGame().GetInputManager();			
-			m_InputManager.SetActionValue("DroneUp", 0.0);	
-			
-			SAL_DroneSoundComponent soundComponent = SAL_DroneSoundComponent.Cast(owner.FindComponent(SAL_DroneSoundComponent));
-			soundComponent.ShutOffEngine();
-			
-			m_DamageManager.SetHealthScaled(0);
-			health = 0;
+			if (damageManager.IsDestroyed())
+			{
+				SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeGetHealthScaled] Drone destroyer - DroneId: " + droneControllerComponent.m_DroneId, LogLevel.DEBUG);
+				
+				droneControllerComponent.ArmDrone();						//The second call 'de-Arms the drone'.
+				
+				InputManager m_InputManager = GetGame().GetInputManager();			
+				m_InputManager.SetActionValue("DroneUp", 0.0);	
+				
+				SAL_DroneSoundComponent soundComponent = SAL_DroneSoundComponent.Cast(owner.FindComponent(SAL_DroneSoundComponent));
+				soundComponent.ShutOffEngine();
+				
+				damageManager.SetHealthScaled(0);
+				health = 0;
+			}
 		}
 	}
 
@@ -187,7 +202,11 @@ modded class SDRC_ChopperComp
 		}
 		
 		//Drop the grenade
-		DroneGrenade(m_DroneControllerComponent.m_DroneId);
+		SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
+		if (droneControllerComponent)
+		{
+			DroneGrenade(droneControllerComponent.m_DroneId);
+		}
 		
 		//Delete the drone
 		delete owner;
@@ -216,7 +235,11 @@ modded class SDRC_ChopperComp
 		{
 			if (SDRC_Misc.RandomFloat(0, 1) < 0.50)
 			{
-				DroneGrenade(m_DroneControllerComponent.m_DroneId);
+				SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
+				if (droneControllerComponent)
+				{
+					DroneGrenade(droneControllerComponent.m_DroneId);
+				}
 			}
 		}
 	}
