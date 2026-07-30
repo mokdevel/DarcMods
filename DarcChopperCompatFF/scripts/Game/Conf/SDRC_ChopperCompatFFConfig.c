@@ -1,4 +1,4 @@
-#define TESTING
+//#define TESTING
 
 static const string DC_COMPATCONFIG_FILE = "dc_compatFFConfigChopper.json";
 static const int DC_COMPATCONFIG_FILE_JSONVER = 1;
@@ -106,10 +106,10 @@ class SDRC_ChopperCompatFFConfig : SDRC_Config
 		super.SetDefaults();
 		factions = {"FF"};
 		#ifndef TESTING		
-			spawnChance = 0.2;
+			spawnChance = 0.3;
 			spawnDistance = {1500, 2500};
 			spawnDelay = {5, 25};
-			chopperCount = {0,1,1,2,2,2,2,2,2,3};
+			chopperCount = {1,1,1,2,2,2,2,2,2,3,3};
 			attackTime = {20, 60};
 			attackList = {0};
 		#else

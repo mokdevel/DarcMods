@@ -37,5 +37,10 @@ array<ref SDRC_ChopperCompatFF> attacks : List of attacks
 ```
 
 # Version history
-## 202604xx
+
+## 20260730
+Fixes:
+*  dc_compatFFConfigChopper.json was created with test settings. Optionally you could delete the file and receive an updated one at startup.
+
+## 20260421
 First version
