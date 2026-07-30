@@ -26,5 +26,5 @@ Nothing for the moment.
 
 # Version history
 
-## 20260726
+## 202608xx
 First release
