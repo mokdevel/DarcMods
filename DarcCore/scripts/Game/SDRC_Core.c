@@ -49,6 +49,18 @@ class SDRC_Core
 	{
 		SDRC_Log.Add("[SDRC_Core] Starting SDRC_Core", LogLevel.NORMAL);
 		
+		if ( SDRC_Misc.IsAddonLoaded("$DarcCore:") && SDRC_Misc.IsAddonLoaded("$DarcCoreDev:") )
+		{
+			//Duplicate core running. This shall not happen ever!
+			SDRC_Log.Add("[SDRC_Core] ----------------------------------------------------------------", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_Core] You have two versions of DarcCore running (DEV/PROD). Aborting.", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_Core] This is most likely due to you having mods with dependencies to \n PROD while testing DEV versions.", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_Core] ----------------------------------------------------------------", LogLevel.ERROR);
+			
+			ShowFailure();
+			return;
+		}		
+		
 		//Load configuration from file
 		bool success = m_DC_CoreJsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_CONFIG_FILE_CORE_JSONVER);
 		
