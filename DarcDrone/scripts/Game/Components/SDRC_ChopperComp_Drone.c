@@ -4,10 +4,11 @@
 
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperParams_Drone : SDRC_ChopperParams
-{
+{	
 	void SDRC_ChopperParams_Drone()
 	{
 		type = SDRC_EChopperType.DRONE;
+			
 		//Turn
 		turnSpeedDivider = 45;
 		turnTimeIntervalBase = 40;
@@ -36,8 +37,7 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 modded class SDRC_ChopperComp
 {
 	private bool m_bRegistered = false;
-	//SAL_DroneControllerComponent m_DroneControllerComponent;
-
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	This sets up the flight model params for a specific SDRC_EChopperType. Override this function for other types.
@@ -53,7 +53,7 @@ modded class SDRC_ChopperComp
 			return;
 		}
 		
-		params = new SDRC_ChopperParams_Drone();
+		params = new SDRC_ChopperParams_Drone();		
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -61,6 +61,7 @@ modded class SDRC_ChopperComp
 	This is the setup for a specific SDRC_EChopperType. Override this function in other types
 	This is a delayed setup make sure the entity is properly initialized. 
 	Executed only on server!
+	Called from OnPostInit.
 	*/
 	override void TypeSetup(IEntity owner)
 	{
@@ -71,27 +72,6 @@ modded class SDRC_ChopperComp
 			return;
 		}
 
-/*		//DRONE specific
-		m_DroneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
-		if (m_DroneControllerComponent)
-		{
-			m_DroneControllerComponent.ArmDrone();
-			m_DroneControllerComponent.m_bIsActive = true;
-			m_DroneControllerComponent.m_iOwner = -2;			//Set it as random ID. Shall not match a real player.
-			m_DroneControllerComponent.m_bIsConnected = true;
-			m_DroneControllerComponent.m_iOwner = GetGame().GetPlayerController();
-//			if (m_DroneControllerComponent.m_iOwner == -1)
-//			{
-//				m_DroneControllerComponent.m_iOwner = 0;
-//			}
-			//m_DroneControllerComponent.m_InputManager.SetActionValue("DroneUp", 3.0);
-		}
-		else
-		{
-			SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeSetup] SAL_DroneControllerComponent not found! Aborting. ", LogLevel.ERROR);
-			return;
-		}*/
-		
 		SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, -1);
 		
 		array<ref SDRC_PlayerPos> playerPosArray = {};
