@@ -5,9 +5,10 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 
-## 20260xxx
+## 20260731
 Fixes:
 * List loading ignored the last item defined in any of the lists.
+* Chopper missions armed helicopters did not spawn.
 
 ## 20260725
 Main Features:
