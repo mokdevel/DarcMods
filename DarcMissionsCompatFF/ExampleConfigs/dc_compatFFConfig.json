@@ -3,7 +3,7 @@
     "author": "darc",
     "comment": "",
     "hideOutSafeZoneDistance": 300,
-    "spawnRateForGreenZones": 0.35,
+    "spawnRateForGreenZones": 0.25,
     "setEnemyFactionAutomatically": true,
     "rewardPerUser": false,
     "rewardDefault": 500

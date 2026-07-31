@@ -6,29 +6,32 @@
     "factions": [
         "FF"
     ],
-    "spawnChance": 0.2,
+    "spawnChance": 0.3,
     "spawnDistance": [
         1500,
         2500
     ],
     "spawnDelay": [
         5,
-        15
+        25
     ],
     "chopperCount": [
-        0,
-        0,
         1,
         1,
+        1,
         2,
         2,
         2,
         2,
         2,
         2,
+        3,
         3
     ],
-    "attackTime": 30,
+    "attackTime": [
+        20,
+        60
+    ],
     "attackList": [
         0
     ],

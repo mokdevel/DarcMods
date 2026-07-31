@@ -33,7 +33,7 @@ bool rewardDefault : Default reward unless specific reward has been set in missi
 
 # Version history
 
-## 20260xxx
+## 20260731
 Fixes:
 * Configuration file load issues.
 
