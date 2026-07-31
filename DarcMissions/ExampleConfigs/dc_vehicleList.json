@@ -281,7 +281,7 @@
             "factions": []
         },
         {
-            "id": "VEHICLE_CHOPPER_TRANSPORT",
+            "id": "VEHICLE_CHOPPER_ARMED",
             "modDir": [
                 "Prefabs/Vehicles/Helicopters"
             ],
@@ -304,7 +304,7 @@
             "factions": []
         },
         {
-            "id": "VEHICLE_CHOPPER_ARMED",
+            "id": "VEHICLE_CHOPPER_TRANSPORT",
             "modDir": [
                 "Prefabs/Vehicles/Helicopters"
             ],
@@ -328,6 +328,12 @@
         }
     ],
     "akas": [
+        {
+            "names": [
+                "USSR",
+                "FIA"
+            ]
+        },
         {
             "names": [
                 "RHS_USAF",

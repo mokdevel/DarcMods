@@ -4,7 +4,7 @@
     "version": 1,
     "author": "darc",
     "comment": "",
-    "missionCycleTime": 20,
+    "missionCycleTime": 30,
     "showMarker": false,
     "showHint": true,
     "showMessage": true,
@@ -24,7 +24,7 @@
     "distanceToMission": 100,
     "distanceToPlayer": 100,
     "distanceToStart": 0.49,
-    "activeTime": 1500,
+    "activeTime": 2700,
     "subMissions": [
         {
             "general": {

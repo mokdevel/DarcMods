@@ -1,5 +1,5 @@
 {
-    "jsonVersion": 2,
+    "jsonVersion": 3,
     "author": "darc",
     "modList": [],
     "lists": [
@@ -835,6 +835,18 @@
                 "DSF",
                 "SAS",
                 "SBS"
+            ]
+        },
+        {
+            "names": [
+                "TF_RF",
+                "TF_RF"
+            ]
+        },
+        {
+            "names": [
+                "TF_US",
+                "TF_US"
             ]
         }
     ]

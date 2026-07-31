@@ -1,5 +1,5 @@
 {
-    "jsonVersion": 2,
+    "jsonVersion": 3,
     "author": "darc",
     "modList": [],
     "lists": [
@@ -16,6 +16,7 @@
             "exclude": [
                 "_Base",
                 "_Sample",
+                "debug",
                 "Tutorial",
                 "Mosin",
                 "SVD",
@@ -39,6 +40,7 @@
             "exclude": [
                 "_Base",
                 "_Sample",
+                "debug",
                 "Tutorial",
                 "AK74",
                 "AKS74",
@@ -58,7 +60,9 @@
                 "Handgun"
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
@@ -73,7 +77,9 @@
                 "BC_M79"
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
@@ -87,7 +93,9 @@
                 "Shotgun"
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
@@ -101,7 +109,9 @@
                 ""
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
@@ -123,6 +133,8 @@
             ],
             "exclude": [
                 "_Base",
+                "_Sample",
+                "debug",
                 "Optic",
                 "Scope"
             ],
@@ -150,6 +162,8 @@
             ],
             "exclude": [
                 "_Base",
+                "_Sample",
+                "debug",
                 "DoNotUse"
             ],
             "items": [],
@@ -165,6 +179,8 @@
             ],
             "exclude": [
                 "_Base",
+                "_Sample",
+                "debug",
                 "Internal_"
             ],
             "items": [],
@@ -183,6 +199,8 @@
             ],
             "exclude": [
                 "_Base",
+                "_Sample",
+                "debug",
                 "Internal_",
                 "_Effect",
                 "FlareEffect",
@@ -205,6 +223,8 @@
             ],
             "exclude": [
                 "_Base",
+                "_Sample",
+                "debug",
                 "BackPack",
                 "Pouch"
             ],
@@ -220,7 +240,9 @@
                 ""
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
@@ -238,7 +260,9 @@
                 "Unix_"
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
@@ -252,7 +276,9 @@
                 "Vest_"
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
@@ -266,7 +292,9 @@
                 "Gloves_"
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
@@ -290,7 +318,9 @@
                 "Suit_Tanker"
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
@@ -306,7 +336,9 @@
                 "/Test/"
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
@@ -320,7 +352,9 @@
                 "Hat_"
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
@@ -340,7 +374,9 @@
                 "Jacket_Pants"
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
@@ -358,7 +394,9 @@
                 "JWK_EpinephrineInjection"
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
@@ -375,7 +413,9 @@
                 "KeysOld"
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
@@ -389,11 +429,17 @@
                 "ShopProxy_Resource_Supplies"
             ],
             "exclude": [
-                "_Base"
+                "_Base",
+                "_Sample",
+                "debug"
             ],
             "items": [],
             "factions": []
         }
     ],
-    "akas": []
+    "akas": [],
+    "ammoCount": [
+        1,
+        6
+    ]
 }

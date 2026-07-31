@@ -4,7 +4,7 @@
     "version": 1,
     "author": "darc",
     "comment": "",
-    "missionCycleTime": 20,
+    "missionCycleTime": 30,
     "showMarker": true,
     "showHint": true,
     "showMessage": true,
@@ -104,7 +104,7 @@
             },
             "campItems": [
                 {
-                    "resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+                    "resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
                     "position": [
                         100.47,
                         1.0,
