@@ -8,6 +8,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 	void SDRC_ChopperParams_Helicopter()
 	{
 		type = SDRC_EChopperType.HELICOPTER;
+				
 		//Turn
 		turnSpeedDivider = 92;
 		turnSpeedDegreeMin = 1;
@@ -54,6 +55,7 @@ modded class SDRC_ChopperComp
 	This sets up the flight model params for a specific SDRC_EChopperType. Override this function for other types.
 	This is called immediately when component is initialized.
 	Executed only on server!
+	Called from OnPostInit.
 	*/	
 	override void TypeSetupParams(IEntity owner)
 	{

@@ -8,8 +8,8 @@ Compatibility for Freedom Fighters
 //------------------------------------------------------------------------------------------------
 modded class SDRC_Compat
 {	
-	const string DC_COMPATCONFIG_FILE = "dc_compatFFConfig.json";
-	const int DC_COMPATCONFIG_FILE_JSONVER = 2;
+	const string DC_COMPATCONFIG_FF_FILE = "dc_compatFFConfig.json";
+	const int DC_COMPATCONFIG_FF_FILE_JSONVER = 2;
 	
 	const int DC_COMPAT_WAIT_FOR_PLAYERS_TIME = 15;
 	const int DC_COMPAT_CLEAN_WAIT_TIME = 15;
@@ -29,10 +29,10 @@ modded class SDRC_Compat
 
 		super.Init();
 
-		m_JsonApi = new SDRC_JsonApi2(DC_COMPATCONFIG_FILE);		
+		m_JsonApi = new SDRC_JsonApi2(DC_COMPATCONFIG_FF_FILE);		
 
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_CompatFFConfig.Cast(m_Config), DC_COMPATCONFIG_FILE_JSONVER))
+		if (!m_JsonApi.Load(m_Config, SDRC_CompatFFConfig.Cast(m_Config), DC_COMPATCONFIG_FF_FILE_JSONVER))
 		{
 			SDRC_Log.Add("[SDRC_CompatFF] Could not initialize compatibility: Freedom Fighters", LogLevel.ERROR);
 			return false;
@@ -42,7 +42,6 @@ modded class SDRC_Compat
 //		EPF_PersistenceManager.GetInstance().GetOnStateChangeEvent().Insert(MyCallback);
 		
 		GetGame().GetCallqueue().CallLater(WaitForPlayers, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
-//		GetGame().GetCallqueue().CallLater(Clear, DC_COMPAT_CLEAN_WAIT_TIME*1000, false);
 
 		if (m_Config.setEnemyFactionAutomatically)
 		{

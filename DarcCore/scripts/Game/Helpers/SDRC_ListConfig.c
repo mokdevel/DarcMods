@@ -63,13 +63,13 @@ class SDRC_ListConfig : SDRC_Config
 			}
 		}
 
-		if (index > lists.Count() - 1)
+		if (index > lists.Count())	//NOTE: This will go to the last index and not to -1!
 		{
 			SDRC_Log.Add("[SDRC_ListConfig:Populate] Wrong index number: " + index + ". Stopping!", LogLevel.ERROR);
 			return true;
 		}
 				
-		if (index == lists.Count() - 1)
+		if (index == lists.Count())	//NOTE: This will go to the last index and not to -1!
 		{
 			SDRC_Log.Add("[SDRC_ListConfig:Populate] All scanned.", LogLevel.DEBUG);
 			return true;

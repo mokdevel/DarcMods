@@ -111,22 +111,22 @@ sealed class SDRC_VehicleListHelper
 					// --- Common for all ---
 			
 					//Armed vehicle
-					if (list.id.Contains("ARMED"))
+					if (list.id.Contains("_ARMED"))
 					{
 						if (!SDRC_Resources.HasResourceTrait(item, EEditableEntityLabel.TRAIT_ARMED))
 						{
 							doDelete = true;
 						}
 					}
-					//Armed vehicle
-					if (list.id.Contains("UNARMED"))
+					//Unarmed vehicle
+					if ( (list.id.Contains("_UNARMED")) || (list.id.Contains("_TRANSPORT")) )
 					{
 						if (SDRC_Resources.HasResourceTrait(item, EEditableEntityLabel.TRAIT_ARMED))
 						{
 							doDelete = true;
 						}
 					}
-					if (list.id.Contains("ARMOR"))
+					if (list.id.Contains("_ARMOR"))
 					{
 						if (!SDRC_Resources.HasResourceTrait(item, EEditableEntityLabel.TRAIT_ARMOR))
 						{
@@ -135,7 +135,7 @@ sealed class SDRC_VehicleListHelper
 					}						
 					
 					//Military vehicle
-					if (list.id.Contains("MILITARY"))
+					if (list.id.Contains("_MILITARY"))
 					{
 						if (SDRC_Resources.HasResourceTrait(item, EEditableEntityLabel.FACTION_CIV))
 						{
@@ -143,7 +143,7 @@ sealed class SDRC_VehicleListHelper
 						}
 					}
 					//Civilian vehicle
-					if (list.id.Contains("CIV"))
+					if (list.id.Contains("_CIV"))
 					{
 						if (!SDRC_Resources.HasResourceTrait(item, EEditableEntityLabel.FACTION_CIV))
 						{

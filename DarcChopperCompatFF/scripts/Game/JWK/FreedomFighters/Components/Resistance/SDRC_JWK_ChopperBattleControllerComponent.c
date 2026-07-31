@@ -33,7 +33,7 @@ class SDRC_JWK_ChopperBattleControllerComponent: JWK_EntityComponent
 {
 	static const int REFRESH_INTERVAL_MS = 20000;
 	
-	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_COMPATCONFIG_FILE);	
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_COMPATCONFIG_CHOPPER_FILE);	
 	private ref SDRC_ChopperCompatFFConfig m_Config = new SDRC_ChopperCompatFFConfig();
 	private ref SDRC_ChopperCompatFF m_DC_Attack = new SDRC_ChopperCompatFF();	
 	
@@ -63,7 +63,7 @@ class SDRC_JWK_ChopperBattleControllerComponent: JWK_EntityComponent
 		}
 		
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_ChopperCompatFFConfig.Cast(m_Config), DC_COMPATCONFIG_FILE_JSONVER))
+		if (!m_JsonApi.Load(m_Config, SDRC_ChopperCompatFFConfig.Cast(m_Config), DC_COMPATCONFIG_CHOPPER_FILE_JSONVER))
 		{
 			//Error
 			return;

@@ -1,7 +1,9 @@
 //#define TESTING
 
-static const string DC_COMPATCONFIG_FILE = "dc_compatFFConfigChopper.json";
-static const int DC_COMPATCONFIG_FILE_JSONVER = 1;
+//NOTE: These are set as global as SDRC_JWK_ChopperBattleControllerComponent is loading this too.
+
+static const string DC_COMPATCONFIG_CHOPPER_FILE = "dc_compatFFConfigChopper.json";
+static const int DC_COMPATCONFIG_CHOPPER_FILE_JSONVER = 1;
 
 /* HOW TO TEST
 - Move player to a city
@@ -80,9 +82,9 @@ class SDRC_ChopperCompatFFConfig : SDRC_Config
 	//Loads the conf once to get it on file system
 	static void LoadConfOnce()
 	{
-		SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_COMPATCONFIG_FILE);	
+		SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_COMPATCONFIG_CHOPPER_FILE);	
 		SDRC_ChopperCompatFFConfig m_Config = new SDRC_ChopperCompatFFConfig();
-		m_JsonApi.Load(m_Config, SDRC_ChopperCompatFFConfig.Cast(m_Config), DC_COMPATCONFIG_FILE_JSONVER);
+		m_JsonApi.Load(m_Config, SDRC_ChopperCompatFFConfig.Cast(m_Config), DC_COMPATCONFIG_CHOPPER_FILE_JSONVER);
 	}
 	
 	//------------------------------------------------------------------------------------------------

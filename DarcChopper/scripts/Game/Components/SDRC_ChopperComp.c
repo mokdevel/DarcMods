@@ -39,6 +39,7 @@ class SDRC_FlyPathPoint
 class SDRC_ChopperParams
 {
 	SDRC_EChopperType type = SDRC_EChopperType.HELICOPTER;
+	
 	//Turn
 	int turnSpeedDivider;							//The divider that affects how much speed is decreased on sharp turns. The higher the value, the less brake.	Was: 42	
 	int turnSpeedDegreeMin;							//Min/Max angles that affects the speed decrease on turns.

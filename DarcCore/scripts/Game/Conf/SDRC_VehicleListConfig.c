@@ -309,26 +309,8 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 		return vehicleList;
 	}
 	
-	//Vehiclelist: VEHICLE_CHOPPER_TRANSPORT
-	SDRC_List vehicleList32()
-	{
-		ref SDRC_List vehicleList = new SDRC_List();
-		vehicleList.Set(
-			"VEHICLE_CHOPPER_TRANSPORT",
-			{"Prefabs/Vehicles/Helicopters",
-			},
-			{},
-			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
-			"_bench", "_gun_mount", "_roof",
-			"Dst", "Lights", "Probes", "VehParts", 
-			},
-			{}
-		);
-		return vehicleList;
-	}
-	
 	//Vehiclelist: VEHICLE_CHOPPER_ARMED
-	SDRC_List vehicleList33()
+	SDRC_List vehicleList32()
 	{
 		ref SDRC_List vehicleList = new SDRC_List();
 		vehicleList.Set(
@@ -344,4 +326,22 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 		);
 		return vehicleList;
 	}		
+	
+	//Vehiclelist: VEHICLE_CHOPPER_TRANSPORT
+	SDRC_List vehicleList33()
+	{
+		ref SDRC_List vehicleList = new SDRC_List();
+		vehicleList.Set(
+			"VEHICLE_CHOPPER_TRANSPORT",
+			{"Prefabs/Vehicles/Helicopters",
+			},
+			{},
+			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
+			"_bench", "_gun_mount", "_roof",
+			"Dst", "Lights", "Probes", "VehParts", 
+			},
+			{}
+		);
+		return vehicleList;
+	}	
 }
