@@ -82,13 +82,27 @@ class SDRC_ChopperFrame
 
 
 //------------------------------------------------------------------------------------------------
+
+class SDRC_ChopperCompConfig_Drone
+{
+	//Drone specific
+	float dropChance = 0.5;
+	int dropDistanceToPlayer = 10;
+}
+
+class SDRC_ChopperCompConfig_Helicopter
+{
+	//Drone specific
+	float justATest = 0;
+}
+
 class SDRC_ChopperCompConfig : SDRC_Config
 {
 	//Default information
 	string author = "darc";
-	//Drone specific
-	float dropChance;
-	int dropDistanceToPlayer;
+	
+	ref SDRC_ChopperCompConfig_Drone drone = new SDRC_ChopperCompConfig_Drone();
+	ref SDRC_ChopperCompConfig_Helicopter helicopter = new SDRC_ChopperCompConfig_Helicopter();
 	
 	//------------------------------------------------------------------------------------------------
 	override bool DoSave(SaveContainerContext saveContext, Class T)
@@ -101,8 +115,5 @@ class SDRC_ChopperCompConfig : SDRC_Config
 	override void SetDefaults()
 	{
 		super.SetDefaults();
-		
-		dropChance = 0.5;
-		dropDistanceToPlayer = 10;
 	}
 }

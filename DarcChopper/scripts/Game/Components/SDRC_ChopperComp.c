@@ -1331,6 +1331,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Type specific faction setup.
+	*/	
+	void TypeSetFaction(IEntity owner, string faction = "") {}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Type specific things within EOnFrame. Override this function in other types.
 	*/	
 	void TypeEOnFrame(IEntity owner, float timeSlice) {}

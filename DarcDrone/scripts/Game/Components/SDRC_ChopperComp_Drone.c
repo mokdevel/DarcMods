@@ -89,10 +89,25 @@ modded class SDRC_ChopperComp
 		}				
 		else
 		{
-			SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeSetup] Failed. Could not fine SAL_DroneControllerComponent.", LogLevel.ERROR);
-		}		
+			SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeSetup] Failed. Could not find SAL_DroneControllerComponent.", LogLevel.ERROR);
+		}
+		
+		FactionAffiliationComponent factComp = FactionAffiliationComponent.Cast(owner.FindComponent(FactionAffiliationComponent));
+		if (factComp)
+		{
+			string faction = SDRC_ChopperCrewHelper.SelectFaction(owner, faction);
+
+			SAL_DroneConnectionManager dcm = SAL_DroneConnectionManager.GetInstance();
+			if (dcm)
+			{
+				int droneId = RplComponent.Cast(owner.FindComponent(RplComponent)).Id();
+				dcm.UpdateDroneFactionServer(droneId, faction);
+				dcm.RpcDo_UpdateDroneFactionServer(droneId, faction);
+			}
+//			factComp.SetAffiliatedFactionByKey(faction);
+		}
 	}
-	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Type specific things within EOnFrame. Override this function in other types.
@@ -156,8 +171,8 @@ modded class SDRC_ChopperComp
 				
 				droneControllerComponent.ArmDrone();						//The second call 'de-Arms the drone'.
 				
-				InputManager m_InputManager = GetGame().GetInputManager();			
-				m_InputManager.SetActionValue("DroneUp", 0.0);	
+				//InputManager m_InputManager = GetGame().GetInputManager();			
+				//m_InputManager.SetActionValue("DroneUp", 0.0);	
 				
 				SAL_DroneSoundComponent soundComponent = SAL_DroneSoundComponent.Cast(owner.FindComponent(SAL_DroneSoundComponent));
 				soundComponent.ShutOffEngine();
@@ -210,10 +225,21 @@ modded class SDRC_ChopperComp
 		{
 			return;
 		}
-		
-		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(owner.GetOrigin(), 10, 0))
+
+		float chance = 0.5;
+		int distance = 10;
+
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (m_BaseGameMode)
 		{
-			if (SDRC_Misc.RandomFloat(0, 1) < 0.50)
+			
+			chance = m_BaseGameMode.chopperFrame.m_Config.drone.dropChance;
+			distance = m_BaseGameMode.chopperFrame.m_Config.drone.dropDistanceToPlayer;
+		}		
+		
+		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(owner.GetOrigin(), distance, 0))
+		{
+			if (SDRC_Misc.RandomFloat(0, 1) < chance)
 			{
 				SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
 				if (droneControllerComponent)

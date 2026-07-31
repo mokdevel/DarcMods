@@ -25,39 +25,8 @@ class SDRC_ChopperCrewHelper
 		int crewCount = 0;		
 		array<ResourceName> crewPrefabs = {}; 
 		
-		string factionReason = "";
+		faction = SelectFaction(owner, faction);
 		
-		if ( SDRC_Misc.IsAddonLoaded("$DarcMissions:") || SDRC_Misc.IsAddonLoaded("$DarcMissionsDev:") )
-		{
-			//Use default faction for DarcMissions
-			faction = SDRC_EnemyHelper.SelectEnemyFaction(faction);
-			factionReason = "DarcMissions";
-		}
-		else
-		{
-			//If no faction defined, find the default vehichle faction and use that
-			if (faction == "")
-			{			
-				Vehicle veh = Vehicle.Cast(owner);
-				
-				if (veh)
-				{
-					Faction veh_faction = veh.GetDefaultFaction();
-					if (veh_faction)
-					{
-						faction = veh_faction.GetFactionKey();
-						factionReason = "Vehicle default";
-					}
-				}
-				else
-				{
-					factionReason = "Defined on vehicle by user/modder";
-				}
-			}
-		}
-
-		SDRC_Log.Add("[SDRC_ChopperCrewHelper:SpawnCrew] Faction used: " + faction + " - selected from: " + factionReason, LogLevel.DEBUG);
-				
 		//Select crew	
 		if (crewmember.IsEmpty())
 		{
@@ -362,4 +331,52 @@ class SDRC_ChopperCrewHelper
 		
 		return crewCount;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	static string SelectFaction(IEntity owner, string faction)
+	{		
+		string factionReason = "";
+		
+		if ( SDRC_Misc.IsAddonLoaded("$DarcMissions:") || SDRC_Misc.IsAddonLoaded("$DarcMissionsDev:") )
+		{
+			//Use default faction for DarcMissions
+			faction = SDRC_EnemyHelper.SelectEnemyFaction(faction);
+			factionReason = "DarcMissions";
+		}
+		else
+		{
+			//If no faction defined, find the default vehichle faction and use that
+			if (faction == "")
+			{			
+				Vehicle veh = Vehicle.Cast(owner);
+				
+				if (veh)
+				{
+					Faction veh_faction = veh.GetDefaultFaction();
+					if (veh_faction)
+					{
+						faction = veh_faction.GetFactionKey();
+						factionReason = "Vehicle default";
+					}
+				}
+				else
+				{
+					FactionAffiliationComponent factComp = FactionAffiliationComponent.Cast(owner.FindComponent(FactionAffiliationComponent));
+					if (factComp)
+					{
+						faction = factComp.GetAffiliatedFactionKey();
+						factionReason = "Default from FactionAffiliationComponent";
+					}
+				}
+				
+/*				else
+				{
+					factionReason = "Defined on vehicle by user/modder";
+				}*/
+			}
+		}
+		SDRC_Log.Add("[SDRC_ChopperCrewHelper:SelectFaction] Faction used: " + faction + " - selected from: " + factionReason, LogLevel.DEBUG);
+		
+		return faction;	
+	}	
 }
