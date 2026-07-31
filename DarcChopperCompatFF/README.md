@@ -1,6 +1,5 @@
 # DarcChopperCompatFF
 Compatibility mod for Freedom Fighters that integrates DarcChoppers to game play. DarcMissions and DarcMissionsCompatFF is thoroughly designed to work on any map without specific configs. 
-
 <img src="https://github.com/mokdevel/DarcMods/blob/main/DarcChopperCompatFF/thumbnail.png" width=30% height=30%>
 
 ## Functionality
@@ -38,9 +37,11 @@ array<ref SDRC_ChopperCompatFF> attacks : List of attacks
 
 # Version history
 
-## 20260730
+## 20260xxx
 Fixes:
-*  dc_compatFFConfigChopper.json was created with test settings. Optionally you could delete the file and receive an updated one at startup.
+* Mod waits for gamemode to start before starting to run. This could have side effects.
+* dc_compatFFConfigChopper.json was created with test settings. Recommendation is to delete the file and receive an updated one at startup.
+* Configuration file load issues.
 
 ## 20260421
 First version

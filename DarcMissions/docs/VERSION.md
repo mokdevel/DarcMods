@@ -5,6 +5,10 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 
+## 20260xxx
+Fixes:
+* List loading ignored the last item defined in any of the lists.
+
 ## 20260725
 Main Features:
 * Refactored the list loading at startup. Should be server friendly, but slightly slower. Should/could fix issues with heavily modded servers failing to start. 

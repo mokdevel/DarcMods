@@ -33,6 +33,10 @@ bool rewardDefault : Default reward unless specific reward has been set in missi
 
 # Version history
 
+## 20260xxx
+Fixes:
+* Configuration file load issues.
+
 ## 20260421
 Main features:
 * ``setEnemyFactionAutomatically`` functionality. This is ``true`` by default. Automatically set enemy faction from FF. This will override any settings in DarcMissions.
