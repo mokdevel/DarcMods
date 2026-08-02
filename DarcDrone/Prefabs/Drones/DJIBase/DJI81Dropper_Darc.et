@@ -25,6 +25,7 @@ GenericEntity : "{C07C56F97DAB2DEE}Prefabs/Drones/DJIBase/DJI81Dropper.et" {
    m_fDistanceLow 100
    m_fDistanceHigh 300
    m_CargoSeatFill NONE
+   m_EnemySearchType PLAYER
    m_EntityType DRONE
    m_bUnpiloted 1
   }
