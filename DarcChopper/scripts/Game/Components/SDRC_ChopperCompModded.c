@@ -281,7 +281,7 @@ modded class SDRC_ChopperComp
 
 		float health;
 		TypeGetHealthScaled(owner, health);
-		if ( health < chopperComp.params.damageHeavy )
+		if ( health <= chopperComp.params.damageHeavy )
 		{
 			m_eDamageLevel = SDRC_EHeliDamageLevel.HEAVY;
 		}	

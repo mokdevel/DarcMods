@@ -1352,7 +1352,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	Type specific <TBD>
 	*/	
 	void TypeHandleDamageFinal(IEntity owner) {}
-			
+
 	//------------------------------------------------------------------------------------------------	
 	// Helicopter setup - defined in modded class
 	//------------------------------------------------------------------------------------------------	

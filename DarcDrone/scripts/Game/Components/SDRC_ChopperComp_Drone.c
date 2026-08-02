@@ -11,6 +11,8 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 			
 		//Turn
 		turnSpeedDivider = 45;
+		turnSpeedDegreeMin = 1;
+		turnSpeedDegreeMax = 90;
 		turnTimeIntervalBase = 40;
 	
 		//Roll 
@@ -24,12 +26,24 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		
 		//Rotor force multipliers
 		rotorForceMulUp = 1.4 * 10;
+
+		//Obstacle awareness
+		rayLenFront = 400;
+		rayDown = 50;
+				
+		//Damage levels
+		damageHeavy = 0.10;
+		damageMedium = 0.50;
+		damageLight = 0.80;
 		
 		//Waypoint values
 		wpSteepAngle = 30;
 														
 		destinationForwardInitial = 200;
 		destinationForward = 100;
+		
+		//Flight pattern related
+		patrolRadius = 150;				
 	}
 }
 
@@ -103,6 +117,7 @@ modded class SDRC_ChopperComp
 				int droneId = RplComponent.Cast(owner.FindComponent(RplComponent)).Id();
 				dcm.UpdateDroneFactionServer(droneId, faction);
 				dcm.RpcDo_UpdateDroneFactionServer(droneId, faction);
+				SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeSetup] Faction: " + faction, LogLevel.DEBUG);
 			}
 //			factComp.SetAffiliatedFactionByKey(faction);
 		}
@@ -167,7 +182,7 @@ modded class SDRC_ChopperComp
 		{
 			if (damageManager.IsDestroyed())
 			{
-				SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeGetHealthScaled] Drone destroyer - DroneId: " + droneControllerComponent.m_DroneId, LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_ChopperComp_Drone:TypeGetHealthScaled] Drone destroyed: " + droneControllerComponent.m_DroneId, LogLevel.DEBUG);
 				
 				droneControllerComponent.ArmDrone();						//The second call 'de-Arms the drone'.
 				

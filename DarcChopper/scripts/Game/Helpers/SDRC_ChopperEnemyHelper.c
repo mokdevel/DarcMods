@@ -87,12 +87,12 @@ class SDRC_ChopperEnemyHelper
 		{
 			case SDRC_EChopperType.HELICOPTER:
 			{
-				enemyPosition = SearchEnemyForHelicopter(owner, SearchOnlyPlayer);
+				enemyPosition = SearchEnemyWithAI(owner, SearchOnlyPlayer);
 				break;
 			}
 			case SDRC_EChopperType.DRONE:
 			{
-				enemyPosition = SearchEnemyForDrone(owner, SearchOnlyPlayer);
+				enemyPosition = SearchEnemyWithTrace(owner, SearchOnlyPlayer);
 				break;
 			}
 		}		
@@ -102,11 +102,11 @@ class SDRC_ChopperEnemyHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	HELICOPTER: Search for enemy and return *first* enemy position found.
+	Search for enemy and return *first* enemy position found. This will use the AIs vision functionality.
 	
 	//TBD: Extend to have a parameter where enemy needs to be in front of the heli
 	*/	
-	static vector SearchEnemyForHelicopter(IEntity owner, bool SearchOnlyPlayer = false)
+	static vector SearchEnemyWithAI(IEntity owner, bool SearchOnlyPlayer = false)
 	{
 		vector enemyPosition = vector.Zero;
 		
@@ -158,11 +158,12 @@ class SDRC_ChopperEnemyHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	DRONE: Search for enemy and return *first* enemy position found.
+	Search for enemy and return *first* enemy position found. This will throw a ray towards players. 
+	If there are obstacles, enemy is not seen.
 	
 	//TBD: Extend to have a parameter where enemy needs to be in front of the drone
 	*/	
-	static vector SearchEnemyForDrone(IEntity owner, bool SearchOnlyPlayer = false)
+	static vector SearchEnemyWithTrace(IEntity owner, bool SearchOnlyPlayer = false)
 	{
 		vector enemyPosition = vector.Zero;
 
