@@ -44,22 +44,25 @@ class SDRC_ChopperParams
 	int turnSpeedDivider;							//The divider that affects how much speed is decreased on sharp turns. The higher the value, the less brake.	Was: 42	
 	int turnSpeedDegreeMin;							//Min/Max angles that affects the speed decrease on turns.
 	int turnSpeedDegreeMax;
-	int turnTimeIntervalBase;						//Time to divide with speed to define the final turn time. Smaller value makes heli turn faster.
+	int turnTimeIntervalBase;						//Time to divide with speed to define the final turn time. Smaller value makes vehicle turn faster.
 
 	//Roll 
 	float rollAngleMul;								//Multiplier for roll angle along the spline. 
 	
 	//Pitch
-	float pitchAngleRad;							//The pitch angle to use when calculating for speed effect. The faster the heli goes, the steeper the nose should be down.
+	float pitchAngleRad;							//The pitch angle to use when calculating for speed effect. The faster the vehicle goes, the steeper the nose should be down.
 	float pitchAngleRadFlat;						//The pitch angle when chopper is flying flat.
 	float pitchNoseAngleDown;						//Maximum angle to turn the helicopter nose down when in high speed.
 	float pitchNoseAngleUp;							//Maximum angle to turn the helicopter nose up when braking.
 	
 	//Rotor force multipliers
-	float rotorForceMulUp = 1.3 * 10;				//Rotor force multiplier in velocity counting. Bigger value makes the heli react faster to up/down movement but also starts stutter.
+	float rotorForceMulUp							//Rotor force multiplier in velocity counting. Bigger value makes the vehicle react faster to up/down movement but also starts stutter.
+	int   rotorForceNormal; 						//.. normal flight situation
+	int   rotorForceRaise; 							//.. when raising from stand still
+	int   rotorForceHover; 							//.. when hovering in one place
 	
 	//Obstacle awareness
-	float rayLenFront;								//Length of the ray to detect obstacles in front of heli
+	float rayLenFront;								//Length of the ray to detect obstacles in front of vehicle
 	float rayDown;									//Distance to point the ray end downward 
 	
 	//Damage levels
@@ -768,7 +771,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		}
 
 		//The normal way to slowly go towards the spline
-		int bigMul = 30;
+		int bigMul = params.rotorForceNormal;
 
 		float belowFlyHeightLowMul = 1;
 		float distanceFromSplineMul = 1;
@@ -798,7 +801,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			case SDRC_EHeliState.RAISE:
 			{
 				//In RAISE state, do slow climb
-				bigMul = 40;
+				bigMul = params.rotorForceRaise;
 				break;
 			}
 			case SDRC_EHeliState.BRAKE:
@@ -810,7 +813,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			case SDRC_EHeliState.HOVER:
 			{				
 				//Stay in one place
-				bigMul = 0;
+				bigMul = params.rotorForceHover;
 				break;
 			}
 			case SDRC_EHeliState.FLY:

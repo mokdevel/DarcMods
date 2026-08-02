@@ -26,6 +26,9 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		
 		//Rotor force multipliers
 		rotorForceMulUp = 1.4 * 10;
+		rotorForceNormal = 30;
+		rotorForceRaise = 40;
+		rotorForceHover = 1;
 
 		//Obstacle awareness
 		rayLenFront = 400;
@@ -38,9 +41,12 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		
 		//Waypoint values
 		wpSteepAngle = 30;
-														
-		destinationForwardInitial = 200;
-		destinationForward = 100;
+												
+		destinationForwardInitial = 400;
+		destinationForward = 200;
+				
+//		destinationForwardInitial = 200;
+//		destinationForward = 100;
 		
 		//Flight pattern related
 		patrolRadius = 150;				

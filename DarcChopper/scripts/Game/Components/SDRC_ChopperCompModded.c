@@ -94,6 +94,7 @@ modded class SDRC_ChopperComp
 				int crewCount = SDRC_ChopperCrewHelper.SpawnCrew(owner, m_CargoSeatFill, m_aCrew, m_sFaction, m_AISkill, m_AIPerception);
 				SDRC_Log.Add("[SDRC_ChopperComp] Crew count: " + crewCount, LogLevel.DEBUG);
 			}
+			else
 			{
 				//NOTE: SDRC_ChopperCrewHelper.SpawnCrew will set the faction. Make sure you set 
 				//		faction for unpiloted ones somewhere else.
@@ -281,6 +282,7 @@ modded class SDRC_ChopperComp
 
 		float health;
 		TypeGetHealthScaled(owner, health);
+		
 		if ( health <= chopperComp.params.damageHeavy )
 		{
 			m_eDamageLevel = SDRC_EHeliDamageLevel.HEAVY;

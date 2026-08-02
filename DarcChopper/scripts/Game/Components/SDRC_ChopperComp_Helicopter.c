@@ -26,6 +26,9 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		
 		//Rotor force multipliers
 		rotorForceMulUp = 1.3 * 10;
+		rotorForceNormal = 30;
+		rotorForceRaise = 40;
+		rotorForceHover = 0;
 
 		//Obstacle awareness
 		rayLenFront = 400;
