@@ -88,6 +88,8 @@ class SDRC_ChopperCompConfig_Drone
 	//Drone specific
 	float dropChance = 0.5;
 	int dropDistanceToPlayer = 10;
+	int searchDistance = 300;
+	int searchTime = 600;
 }
 
 class SDRC_ChopperCompConfig_Helicopter

@@ -36,52 +36,6 @@ class SDRC_FlyPathPoint
 }
 
 //------------------------------------------------------------------------------------------------
-class SDRC_ChopperParams
-{
-	SDRC_EChopperType type = SDRC_EChopperType.HELICOPTER;
-	
-	//Turn
-	int turnSpeedDivider;							//The divider that affects how much speed is decreased on sharp turns. The higher the value, the less brake.	Was: 42	
-	int turnSpeedDegreeMin;							//Min/Max angles that affects the speed decrease on turns.
-	int turnSpeedDegreeMax;
-	int turnTimeIntervalBase;						//Time to divide with speed to define the final turn time. Smaller value makes vehicle turn faster.
-
-	//Roll 
-	float rollAngleMul;								//Multiplier for roll angle along the spline. 
-	
-	//Pitch
-	float pitchAngleRad;							//The pitch angle to use when calculating for speed effect. The faster the vehicle goes, the steeper the nose should be down.
-	float pitchAngleRadFlat;						//The pitch angle when chopper is flying flat.
-	float pitchNoseAngleDown;						//Maximum angle to turn the helicopter nose down when in high speed.
-	float pitchNoseAngleUp;							//Maximum angle to turn the helicopter nose up when braking.
-	
-	//Rotor force multipliers
-	float rotorForceMulUp							//Rotor force multiplier in velocity counting. Bigger value makes the vehicle react faster to up/down movement but also starts stutter.
-	int   rotorForceNormal; 						//.. normal flight situation
-	int   rotorForceRaise; 							//.. when raising from stand still
-	int   rotorForceHover; 							//.. when hovering in one place
-	
-	//Obstacle awareness
-	float rayLenFront;								//Length of the ray to detect obstacles in front of vehicle
-	float rayDown;									//Distance to point the ray end downward 
-	
-	//Damage levels
-	float damageHeavy;
-	float damageMedium;
-	float damageLight;
-	
-	//Waypoint values
-	float wpSteepAngle;								//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
-													//If chopper destination makes a too steep turn, we will add a few additional points.
-	int destinationForwardInitial;					//Distance to fly forward on first fligth at init
-	int destinationForward;							//Distance to fly forward on first fligth at init
-	
-	//Flight pattern related
-	int patrolRadius;								//Default radius for WP_PATROL and WP_PATROL_ONCE commands
-	
-}
-
-//------------------------------------------------------------------------------------------------
 modded class SDRC_ChopperComp : ScriptComponent
 {
 	private SDRC_ChopperComp s_Instance;	
@@ -285,10 +239,19 @@ modded class SDRC_ChopperComp : ScriptComponent
 	//The order of things:
 	//- Spawn chopper via GM or mod
 	//- OnPostInit()
+	//  - Calls TypeSetupParams()
 	//- EOnInit()
-	//- Mod code if any. Here we can set AutoStart to false to control the spawn details ourselves.
+	//- External mod code if any after this. Here we can set AutoStart to false to control the spawn details ourselves.
+	//
+	//If AutoStart is enabled, we continue automatically with steps below.
 	//- Setup() is run after a delay
+	//  - Calls TypeSetup()
 	//- Ready() is automatically called if AutoStart is enabled. If not, remember to call it in your mod!
+	//- ReadyDelayed() .. to do delayed spawn of AI crew
+	//- ReadyDelayed_2() .. to do delayed counting of pilots
+	//- InitDone() 
+	//  - Calls TypeInitDone()
+	//- EOnFrame()
 	
 	//------------------------------------------------------------------------------------------------
 	override void EOnInit(IEntity owner)
@@ -313,6 +276,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		SDRC_Log.Add("[SDRC_ChopperComp] Starting SDRC_ChopperComp", LogLevel.NORMAL);
 		
 		//Deactivate(owner);
+		//Set chopper type specific params
 		TypeSetupParams(owner);
 		SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, m_fDistanceLow, m_fDistanceHigh);						
 		
@@ -386,7 +350,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 	void InitDone(IEntity owner)
 	{
 		m_bInInit = false;
-			
+
+		//Run chopper type specific InitDone
+		TypeInitDone(owner);
+					
 		//Collect groups in the helicopter 
 		SDRC_VehicleHelper.GroupFindAll(owner, m_aGroups);
 		
@@ -1332,6 +1299,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 	*/
 	void TypeSetup(IEntity owner) {}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Type specific init finalization
+	*/	
+	void TypeInitDone(IEntity owner) {}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Type specific faction setup.

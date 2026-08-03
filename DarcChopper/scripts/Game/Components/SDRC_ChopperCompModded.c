@@ -608,7 +608,7 @@ modded class SDRC_ChopperComp
 		     //&& (m_eHeliState != SDRC_EHeliState.RAISE) 		//..or raising
 		     && (m_fTimeInState < 0) && m_bTimeInStateEnabled) 
 		{
-			SetNextState(owner);
+				SetNextState(owner);
 		}
 	}	
 	

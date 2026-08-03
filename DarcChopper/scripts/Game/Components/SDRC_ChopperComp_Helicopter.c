@@ -107,6 +107,22 @@ modded class SDRC_ChopperComp
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Type specific init finalization
+	*/	
+	override void TypeInitDone(IEntity owner)
+	{
+		super.TypeInitDone(owner);
+		
+		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
+		{
+			return;
+		}
+		
+		/* NOTHING NEEDED FOR HELICOPTER */
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Type specific things within EOnFrame. Override this function in other types.
 	*/	
 	override void TypeEOnFrame(IEntity owner, float timeSlice)

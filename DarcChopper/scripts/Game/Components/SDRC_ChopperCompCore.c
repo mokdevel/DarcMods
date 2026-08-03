@@ -1,6 +1,52 @@
 //SDRC_ChopperCompCore.c
 
-//Core functions from SDRC_ChopperComp to shorten the file
+//Core classes/functions from SDRC_ChopperComp to shorten the file
+
+//------------------------------------------------------------------------------------------------
+class SDRC_ChopperParams
+{
+	SDRC_EChopperType type = SDRC_EChopperType.UNKNOWN;
+	
+	//Turn
+	int turnSpeedDivider;							//The divider that affects how much speed is decreased on sharp turns. The higher the value, the less brake.	Was: 42	
+	int turnSpeedDegreeMin;							//Min/Max angles that affects the speed decrease on turns.
+	int turnSpeedDegreeMax;
+	int turnTimeIntervalBase;						//Time to divide with speed to define the final turn time. Smaller value makes vehicle turn faster.
+
+	//Roll 
+	float rollAngleMul;								//Multiplier for roll angle along the spline. 
+	
+	//Pitch
+	float pitchAngleRad;							//The pitch angle to use when calculating for speed effect. The faster the vehicle goes, the steeper the nose should be down.
+	float pitchAngleRadFlat;						//The pitch angle when chopper is flying flat.
+	float pitchNoseAngleDown;						//Maximum angle to turn the helicopter nose down when in high speed.
+	float pitchNoseAngleUp;							//Maximum angle to turn the helicopter nose up when braking.
+	
+	//Rotor force multipliers
+	float rotorForceMulUp							//Rotor force multiplier in velocity counting. Bigger value makes the vehicle react faster to up/down movement but also starts stutter.
+	int   rotorForceNormal; 						//.. normal flight situation
+	int   rotorForceRaise; 							//.. when raising from stand still
+	int   rotorForceHover; 							//.. when hovering in one place
+	
+	//Obstacle awareness
+	float rayLenFront;								//Length of the ray to detect obstacles in front of vehicle
+	float rayDown;									//Distance to point the ray end downward 
+	
+	//Damage levels
+	float damageHeavy;
+	float damageMedium;
+	float damageLight;
+	
+	//Waypoint values
+	float wpSteepAngle;								//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
+													//If chopper destination makes a too steep turn, we will add a few additional points.
+	int destinationForwardInitial;					//Distance to fly forward on first fligth at init
+	int destinationForward;							//Distance to add points forward when creating new flight path
+	
+	//Flight pattern related
+	int patrolRadius;								//Default radius for WP_PATROL and WP_PATROL_ONCE commands
+	
+}
 
 //------------------------------------------------------------------------------------------------
 enum SDRC_EFlyWayPointType

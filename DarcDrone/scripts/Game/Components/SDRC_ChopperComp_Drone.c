@@ -41,12 +41,9 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		
 		//Waypoint values
 		wpSteepAngle = 30;
-												
-		destinationForwardInitial = 400;
-		destinationForward = 200;
 				
-//		destinationForwardInitial = 200;
-//		destinationForward = 100;
+		destinationForwardInitial = 100;
+		destinationForward = 100;
 		
 		//Flight pattern related
 		patrolRadius = 150;				
@@ -92,16 +89,17 @@ modded class SDRC_ChopperComp
 			return;
 		}
 
-		SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, -1);
+//		SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, -1);
+		SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
 		
-		array<ref SDRC_PlayerPos> playerPosArray = {};
+/*		array<ref SDRC_PlayerPos> playerPosArray = {};
 		SDRC_PlayerHelper.GetPlayersClosestToPosition(playerPosArray, owner.GetOrigin(), 1000);
 		if (!playerPosArray.IsEmpty())
 		{
 			SDRC_PlayerPos ppos = playerPosArray.GetRandomElement();
-			AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, ppos.pos, 600);			
-		}
-
+			AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, ppos.pos, 600);
+		} */
+		
 		SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
 		if (droneControllerComponent)
 		{
@@ -129,6 +127,32 @@ modded class SDRC_ChopperComp
 		}
 	}
 		
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Type specific init finalization
+	*/	
+	override void TypeInitDone(IEntity owner)
+	{
+		super.TypeInitDone(owner);
+		
+		if (m_EntityType != SDRC_EChopperType.DRONE)
+		{
+			return;
+		}
+
+		//Set a search and destroy location
+		int searchDistance = 300;
+		int searchTime = 600;		
+		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (m_BaseGameMode)
+		{
+			searchDistance = m_BaseGameMode.chopperFrame.m_Config.drone.searchDistance;
+			searchTime = m_BaseGameMode.chopperFrame.m_Config.drone.searchTime;
+		}		
+		vector destination = SDRC_ChopperHelper.GetDestinationForward(owner, searchDistance);
+		AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, destination, searchTime);				
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Type specific things within EOnFrame. Override this function in other types.
@@ -253,7 +277,6 @@ modded class SDRC_ChopperComp
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
 		{
-			
 			chance = m_BaseGameMode.chopperFrame.m_Config.drone.dropChance;
 			distance = m_BaseGameMode.chopperFrame.m_Config.drone.dropDistanceToPlayer;
 		}		
