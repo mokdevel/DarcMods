@@ -652,7 +652,7 @@ modded class SDRC_ChopperComp
 		//Let's check if we have an enemy near by. 
 		vector enemyPos = SDRC_ChopperEnemyHelper.SearchEnemy(owner);
 
-		//If yes, let's, 
+		//If yes, become aggressive
 		if (enemyPos != vector.Zero)
 		{
 			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR);

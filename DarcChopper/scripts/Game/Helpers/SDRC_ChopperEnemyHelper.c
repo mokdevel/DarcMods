@@ -92,7 +92,7 @@ class SDRC_ChopperEnemyHelper
 			}
 			case SDRC_EChopperType.DRONE:
 			{
-				enemyPosition = SearchEnemyWithTrace(owner, SearchOnlyPlayer);
+				enemyPosition = SearchEnemyWithTrace(owner, SearchOnlyPlayer, chopperComp.params.rayLenEnemy);
 				break;
 			}
 		}		
@@ -163,19 +163,26 @@ class SDRC_ChopperEnemyHelper
 	
 	//TBD: Extend to have a parameter where enemy needs to be in front of the drone
 	*/	
-	static vector SearchEnemyWithTrace(IEntity owner, bool SearchOnlyPlayer = false)
+	static vector SearchEnemyWithTrace(IEntity owner, bool SearchOnlyPlayer = false, int rayLen = 200)
 	{
 		vector enemyPosition = vector.Zero;
 
-		array<ref SDRC_PlayerPos> playerPosArray = {};
-		SDRC_PlayerHelper.GetPlayersClosestToPosition(playerPosArray, owner.GetOrigin(), 1000);
-		if (!playerPosArray.IsEmpty())
+		array<ref SDRC_PlayerPos> enemyPosArray = {};
+		
+		if (SearchOnlyPlayer)
 		{
-			foreach (SDRC_PlayerPos playerPos : playerPosArray)
+			SDRC_PlayerHelper.GetPlayersClosestToPosition(enemyPosArray, owner.GetOrigin(), rayLen);			
+		}
+		
+		//TBD: Find also AI characters of enemy faction
+		
+		if (!enemyPosArray.IsEmpty())
+		{
+			foreach (SDRC_PlayerPos enemyPos : enemyPosArray)
 			{
 				//Trace if there is an entity, like house, blocking. Trace will also stop on vehicles and other temporary obstacles.
 				vector traceStartPos = owner.GetOrigin();
-				vector traceEndPos = playerPos.pos;
+				vector traceEndPos = enemyPos.pos;
 				
 				TraceParam param = new TraceParam();
 				{					
@@ -193,7 +200,7 @@ class SDRC_ChopperEnemyHelper
 				
 				if (traceDistance > 0.99)
 				{
-					enemyPosition = playerPos.pos;
+					enemyPosition = enemyPos.pos;
 					SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyForDrone] Enemy found at " + enemyPosition, LogLevel.DEBUG);
 				}
 			}

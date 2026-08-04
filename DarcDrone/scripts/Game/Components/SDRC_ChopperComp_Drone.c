@@ -32,8 +32,11 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 
 		//Obstacle awareness
 		rayLenFront = 400;
-		rayDown = 50;
+		rayDown = 50;		
 				
+		//Enemy awareness
+		rayLenEnemy = 200;
+		
 		//Damage levels
 		damageHeavy = 0.10;
 		damageMedium = 0.50;
@@ -262,15 +265,22 @@ modded class SDRC_ChopperComp
 	- Normal case: If enemy is seen, consider shooting
 	- Attack case: The location to bomb has been assigned. (m_vAttackPosition)
 	*/
-	override void HandleAttack(IEntity owner)
+	override void TypeHandleAttack(IEntity owner)
 	{
-		super.HandleAttack(owner);
+		super.TypeHandleAttack(owner);
 		
 		if (m_EntityType != SDRC_EChopperType.DRONE)
 		{
 			return;
 		}
 
+		SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
+		
+		if (m_vEnemyPosition != vector.Zero)
+		{
+			return;
+		}
+		
 		float chance = 0.5;
 		int distance = 10;
 
@@ -279,13 +289,13 @@ modded class SDRC_ChopperComp
 		{
 			chance = m_BaseGameMode.chopperFrame.m_Config.drone.dropChance;
 			distance = m_BaseGameMode.chopperFrame.m_Config.drone.dropDistanceToPlayer;
-		}		
+		}
 		
-		if ( (m_vEnemyPosition != vector.Zero) && (GetBehaviour() != SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR) )
+/*		if ( (m_vEnemyPosition != vector.Zero) && (GetBehaviour() != SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR) )
 		{		
 			int time = SDRC_Misc.RandomInt(1, 10) * 0.5;//60;
 			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, time);
-		}
+		}*/
 		
 		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(owner.GetOrigin(), distance, 0))
 		{

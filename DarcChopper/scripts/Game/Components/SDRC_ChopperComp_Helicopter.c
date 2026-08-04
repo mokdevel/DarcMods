@@ -34,6 +34,9 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		rayLenFront = 400;
 		rayDown = 50;
 				
+		//Enemy awareness
+		rayLenEnemy = 1000;
+		
 		//Damage levels
 		damageHeavy = 0.90;
 		damageMedium = 0.96;
@@ -193,9 +196,9 @@ modded class SDRC_ChopperComp
 	- Normal case: If enemy is seen, consider shooting
 	- Attack case: The location to bomb has been assigned. (m_vAttackPosition)
 	*/
-	override void HandleAttack(IEntity owner)
+	override void TypeHandleAttack(IEntity owner)
 	{
-		super.HandleAttack(owner);
+		super.TypeHandleAttack(owner);
 		
 		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
 		{

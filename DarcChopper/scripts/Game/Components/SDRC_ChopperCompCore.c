@@ -32,6 +32,9 @@ class SDRC_ChopperParams
 	float rayLenFront;								//Length of the ray to detect obstacles in front of vehicle
 	float rayDown;									//Distance to point the ray end downward 
 	
+	//Enemy awareness
+	int rayLenEnemy;								//Max distance to see an enemy
+	
 	//Damage levels
 	float damageHeavy;
 	float damageMedium;

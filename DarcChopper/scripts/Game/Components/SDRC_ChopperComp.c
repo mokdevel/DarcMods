@@ -564,7 +564,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		
 		//Handle states, attacks, ...
 		HandleState(owner, timeSlice);
-		HandleAttack(owner);
+		TypeHandleAttack(owner);
 		HandleBehaviour(owner);
 
 		//Set velocity
@@ -1331,6 +1331,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 	*/	
 	void TypeHandleDamageFinal(IEntity owner) {}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Type specific <TBD>
+	*/	
+	void TypeHandleAttack(IEntity owner) {}
+	
 	//------------------------------------------------------------------------------------------------	
 	// Helicopter setup - defined in modded class
 	//------------------------------------------------------------------------------------------------	
@@ -1340,7 +1346,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 	// State Handling  - defined in modded class
 	//------------------------------------------------------------------------------------------------	
 	private void HandleState(IEntity owner, float timeSlice) {}
-	private void HandleAttack(IEntity owner) {}
 	private void HandleBehaviour(IEntity owner) {}
 	private void SetNextState(IEntity owner, SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.WP_UNDEFINED, bool allowRemove = true) {}
 	//------------------------------------------------------------------------------------------------	
