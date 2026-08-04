@@ -54,3 +54,10 @@ float throttle : The 'speed' the helicopter is flying.
 float rotorForce : Force of the main rotor.
 float rotor2Force : Force of the second rotor.
 ```
+
+## Supported helicopters
+By default there are a few vanilla helicopters supported. For modded ones, you need a compatibility mod. Currently supported prefabs for CrashSite mission are below. 
+
+### Un-armed
+- ``{40A3EEECFF765793}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_crashing.et``
+- ``{6D71309125B8AEA2}Prefabs/Vehicles/Helicopters/UH1H/UH1H_crashing.et``
