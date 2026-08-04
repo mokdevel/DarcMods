@@ -46,7 +46,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		destinationForward = 200;
 		
 		//Flight pattern related
-		patrolRadius = 300;		
+		patrolRadius = 300;	
 	}
 }
 

@@ -623,12 +623,19 @@ modded class SDRC_ChopperComp
 		const int ATTACK_CYCLE = 2;
 		const int ATTACK_CYCLE_WAIT = 60;
 		
-		if ( (m_eHeliBehaviour == SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) || (m_eHeliBehaviour == SDRC_EHeliBehaviour.EVAC_BEHAVIOUR) )
+		//When in EVAC or PASSIVE mode, stay there.
+		if ( (m_eHeliBehaviour == SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR) || (m_eHeliBehaviour == SDRC_EHeliBehaviour.EVAC_BEHAVIOUR) )
 		{
 			return;
 		}
 		
-		if (m_fTimerBehaviour < 0)	
+		//Only when we're flying, do things.
+		if (GetState() != SDRC_EHeliState.FLY)
+		{
+			return;
+		}
+		
+		if ( (m_fTimerBehaviour < 0) && (GetBehaviour() != SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) )
 		{
 			//Normal case:
 			m_eHeliBehaviour = SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR;
@@ -642,12 +649,19 @@ modded class SDRC_ChopperComp
 		
 		m_fTimerBehaviourCycle = ATTACK_CYCLE;
 		
+		//Let's check if we have an enemy near by. 
+		vector enemyPos = SDRC_ChopperEnemyHelper.SearchEnemy(owner);
+
+		//If yes, let's, 
+		if (enemyPos != vector.Zero)
+		{
+			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR);
+		}			
+						
 		switch (m_eHeliBehaviour)
 		{
 			case SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR:
 			{
-				vector enemyPos = SDRC_ChopperEnemyHelper.SearchEnemy(owner);
-				
 				if (enemyPos != vector.Zero)
 				{
 					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D: Enemy found, attacking: " + enemyPos, LogLevel.NORMAL);

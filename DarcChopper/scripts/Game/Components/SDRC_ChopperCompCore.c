@@ -44,8 +44,7 @@ class SDRC_ChopperParams
 	int destinationForward;							//Distance to add points forward when creating new flight path
 	
 	//Flight pattern related
-	int patrolRadius;								//Default radius for WP_PATROL and WP_PATROL_ONCE commands
-	
+	int patrolRadius;								//Default radius for WP_PATROL and WP_PATROL_ONCE commands	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -137,9 +136,10 @@ enum SDRC_EHeliDamageLevel
 enum SDRC_EHeliBehaviour
 {
 	UNKNOWN_BEHAVIOUR,
-	NORMAL_BEHAVIOUR,
-	SEARCH_AND_DESTROY_BEHAVIOUR,
-	EVAC_BEHAVIOUR,
+	NORMAL_BEHAVIOUR,				//Normal state which changes to S&D if an enemy is seen.
+	SEARCH_AND_DESTROY_BEHAVIOUR,	//S&D looking for enemies. Returns to NORMAL if enemies are lost.
+	EVAC_BEHAVIOUR,					//Chopper is doing an evac or landing
+	PASSIVE_BEHAVIOUR,				//Just flying around
 }
 
 //------------------------------------------------------------------------------------------------

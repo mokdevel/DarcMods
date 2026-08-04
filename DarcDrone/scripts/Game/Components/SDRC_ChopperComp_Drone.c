@@ -46,7 +46,7 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		destinationForward = 100;
 		
 		//Flight pattern related
-		patrolRadius = 150;				
+		patrolRadius = 100;
 	}
 }
 
@@ -140,7 +140,7 @@ modded class SDRC_ChopperComp
 			return;
 		}
 
-		//Set a search and destroy location
+/*		//Set a search and destroy location
 		int searchDistance = 300;
 		int searchTime = 600;		
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
@@ -150,7 +150,7 @@ modded class SDRC_ChopperComp
 			searchTime = m_BaseGameMode.chopperFrame.m_Config.drone.searchTime;
 		}		
 		vector destination = SDRC_ChopperHelper.GetDestinationForward(owner, searchDistance);
-		AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, destination, searchTime);				
+		AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, destination, searchTime);				*/
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -280,6 +280,12 @@ modded class SDRC_ChopperComp
 			chance = m_BaseGameMode.chopperFrame.m_Config.drone.dropChance;
 			distance = m_BaseGameMode.chopperFrame.m_Config.drone.dropDistanceToPlayer;
 		}		
+		
+		if ( (m_vEnemyPosition != vector.Zero) && (GetBehaviour() != SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR) )
+		{		
+			int time = SDRC_Misc.RandomInt(1, 10) * 0.5;//60;
+			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, time);
+		}
 		
 		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(owner.GetOrigin(), distance, 0))
 		{
