@@ -34,6 +34,7 @@ class SDRC_ChopperParams
 	
 	//Enemy awareness
 	int rayLenEnemy;								//Max distance to see an enemy
+	int timeSearchAndDestroy;						//(seconds) Time to be in search and destroy behaviour
 	
 	//Damage levels
 	float damageHeavy;

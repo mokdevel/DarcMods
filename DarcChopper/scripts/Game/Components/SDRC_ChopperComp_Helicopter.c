@@ -36,6 +36,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 				
 		//Enemy awareness
 		rayLenEnemy = 1000;
+		timeSearchAndDestroy = 600;
 		
 		//Damage levels
 		damageHeavy = 0.90;
@@ -192,7 +193,8 @@ modded class SDRC_ChopperComp
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Handle attacks
+	Handle attacks. Search for the enemy and then react on the finding.
+	
 	- Normal case: If enemy is seen, consider shooting
 	- Attack case: The location to bomb has been assigned. (m_vAttackPosition)
 	*/

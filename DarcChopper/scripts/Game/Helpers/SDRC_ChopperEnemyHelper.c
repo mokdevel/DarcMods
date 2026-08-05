@@ -55,7 +55,7 @@ class SDRC_ChopperEnemyHelper
 			searchOnlyPlayer = true;
 		}		
 		
-		chopperComp.m_vEnemyPosition = SDRC_ChopperEnemyHelper.SearchEnemy(owner, searchOnlyPlayer);
+		chopperComp.m_vEnemyPosition = SDRC_ChopperEnemyHelper.DoEnemySearch(owner, searchOnlyPlayer);
 		if (chopperComp.m_vEnemyPosition != vector.Zero)
 		{
 			found = true;
@@ -73,7 +73,7 @@ class SDRC_ChopperEnemyHelper
 	
 	\return position where enemy was found. vector.Zero returned if no enemies found.
 	*/			
-	static vector SearchEnemy(IEntity owner, bool SearchOnlyPlayer = false)
+	static vector DoEnemySearch(IEntity owner, bool SearchOnlyPlayer = false)
 	{
 		vector enemyPosition = vector.Zero;
 		
@@ -180,35 +180,21 @@ class SDRC_ChopperEnemyHelper
 		{
 			foreach (SDRC_PlayerPos enemyPos : enemyPosArray)
 			{
+				//TBD: Check that the target is an enemy from faction check.
+				
 				//Trace if there is an entity, like house, blocking. Trace will also stop on vehicles and other temporary obstacles.
 				vector traceStartPos = owner.GetOrigin();
 				vector traceEndPos = enemyPos.pos;
-				
-				TraceParam param = new TraceParam();
-				{					
-					param.Start = traceStartPos;
-					param.End = traceEndPos;
-					param.Exclude = owner;
-					//param.Flags = TraceFlags.DEFAULT | TraceFlags.ENTS | TraceFlags.ANY_CONTACT;
-					param.Flags = TraceFlags.DEFAULT | TraceFlags.ANY_CONTACT;
-					param.LayerMask = EPhysicsLayerDefs.Projectile;
-				}					
-	
-				BaseWorld world = GetGame().GetWorld();
-				float traceDistance = world.TraceMove(param, null);
-				//float traceDistance = world.TracePosition(param, null);
-				
-				if (traceDistance > 0.99)
+				if (SDRC_Math.IsTargetInLos(traceStartPos, traceEndPos, owner))
 				{
 					enemyPosition = enemyPos.pos;
-					SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyForDrone] Enemy found at " + enemyPosition, LogLevel.DEBUG);
 				}
 			}
 		}		
 						
 		return enemyPosition;
 	}
-		
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if there is an enemy in front of us. It needs to be within the sector defined for the chopper.
@@ -217,7 +203,7 @@ class SDRC_ChopperEnemyHelper
 	*/
 	static void SearchEnemyForRocket(IEntity owner)
 	{
-		vector enemyPosition = SearchEnemy(owner);
+		vector enemyPosition = DoEnemySearch(owner);	
 
 		if (enemyPosition == vector.Zero)
 		{

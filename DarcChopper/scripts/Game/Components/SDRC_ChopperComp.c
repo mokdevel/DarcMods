@@ -287,7 +287,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		
 		m_bInInit = true;
 		SetState(SDRC_EHeliState.FLY);
-		SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR);
+		SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
 		
 		//Clear any existing path points
 		ResetFlight();
@@ -1049,7 +1049,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 					break;
 				}
 				case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
-				{
+				{	
+//					if (m_vAttackPosition != vector.Zero)
+					
 					SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, flyDestination.value);
 					//NOTE: m_vAttackPosition has been set in AddDestination
 					break;
@@ -1239,9 +1241,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Sets the behaviour.
-	\param time How long to stay in behaviour. -1 = infinite
+	\param time (seconds) How long to stay in behaviour. -1 = infinite
 	*/	
-	void SetBehaviour(SDRC_EHeliBehaviour behaviour, int time = TIME_IN_BEHAVIOUR)
+	void SetBehaviour(SDRC_EHeliBehaviour behaviour, int time)
 	{
 		m_eHeliBehaviour = behaviour;
 

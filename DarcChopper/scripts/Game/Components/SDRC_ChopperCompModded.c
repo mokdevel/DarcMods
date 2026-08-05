@@ -416,6 +416,7 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 			{
+				value = params.timeSearchAndDestroy;
 				m_vAttackPosition = destination;			//Where to attack
 				break;
 			}								
@@ -649,28 +650,41 @@ modded class SDRC_ChopperComp
 		
 		m_fTimerBehaviourCycle = ATTACK_CYCLE;
 		
-		//Let's check if we have an enemy near by. 
-		vector enemyPos = SDRC_ChopperEnemyHelper.SearchEnemy(owner);
+//		//Let's check if we have an enemy near by. 
+//		vector enemyPos = SDRC_ChopperEnemyHelper.SearchEnemy(owner);
 
-		//If yes, become aggressive
-		if (enemyPos != vector.Zero)
+		//Let's check if we have an enemy near by. 
+		if (m_vEnemyPosition != vector.Zero)
 		{
-			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR);
+			//If yes, become aggressive
+			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, params.timeSearchAndDestroy);
 		}			
 						
 		switch (m_eHeliBehaviour)
 		{
 			case SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR:
 			{
-				if (enemyPos != vector.Zero)
+				//Make sure we have a proper patrol position. 
+				//The priority is m_vAttackPosition (last ordered attack position) -> m_vEnemyPosition (last seen enemy) -> around itself 
+				vector patrolPos = m_vAttackPosition;
+				if (patrolPos == vector.Zero)
 				{
-					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D: Enemy found, attacking: " + enemyPos, LogLevel.NORMAL);
+					patrolPos = m_vEnemyPosition;
+				}
+				if (patrolPos == vector.Zero)
+				{
+					patrolPos = owner.GetOrigin();
+				}
+				
+				if (m_vEnemyPosition != vector.Zero)
+				{
+					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D: Enemy found, attacking: " + m_vEnemyPosition, LogLevel.NORMAL);
 					
 					AddDestination(SDRC_EFlyWayPointType.WP_M_CUT);
 					//Add WP_ATTACK and WP_PATROL to the list of next destinations. These are added as first items in the list and
 					//have to be added in reverse order to have WP_ATTACK as the first item.
-					AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, m_vAttackPosition, index: 0);
-					AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, enemyPos, index: 0);
+					AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, patrolPos, index: 0);
+					AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, m_vEnemyPosition, index: 0);
 					m_fTimerBehaviourCycle = ATTACK_CYCLE_WAIT;
 				}
 				else
@@ -678,7 +692,7 @@ modded class SDRC_ChopperComp
 					//If no enemy found, add another patrol round in case one is already in the list.
 					if (SDRC_ChopperHelper.GetNextWayPointType(owner) != SDRC_EFlyWayPointType.WP_PATROL_ONCE)
 					{
-						AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, m_vAttackPosition, index: 0);
+						AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, patrolPos, index: 0);
 					}
 				}
 				
