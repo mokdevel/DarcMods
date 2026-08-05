@@ -4,6 +4,8 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+Main Features:
+* New keyword VEHICLE_TRACKED_ARMED. This will collect all tanks in to a list.
 
 ## 20260731
 Fixes:

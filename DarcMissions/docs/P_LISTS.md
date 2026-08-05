@@ -157,6 +157,7 @@ VEHICLE_WHEELED_CIVILIAN_TRUCK : All CIV faction trucks. Vehicle type is any typ
 VEHICLE_WHEELED_MILITARY_TRUCK : All non-CIV faction trucks. Vehicle type is any type of truck.
 VEHICLE_WHEELED_CIVILIAN_CAR : All CIV faction cars. Vehicle type is CAR.
 VEHICLE_WHEELED_MILITARY_CAR : All non-CIV faction cars. Vehicle type is CAR.
+VEHICLE_TRACKED_ARMED : All tanks with weapons.
 
 VEHICLE_HELICOPTER_ALL : All helicopters found.
 VEHICLE_CHOPPER_ALL : All choppers found. These have the SDRC_ChopperComp component.
