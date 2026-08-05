@@ -94,11 +94,17 @@ sealed class SDRC_VehicleListHelper
 				{
 					doDelete = true;
 				}*/
+
+				if (list.id.Contains("VEHICLE_TRACKED_ARMED"))
+				{
+					int x = 0;
+				}
 				
+								
 				string containerClass = SCR_BaseContainerTools.GetContainerClassName(res);
 				SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Found: " + containerClass + " from " + SDRC_Misc.GetSimpleEntityName(item), LogLevel.SPAM);				
 				
-				if (containerClass != "Vehicle")
+				if ( (containerClass != "Vehicle") && (containerClass != "Tank") )
 				{
 					doDelete = true;						
 				}

@@ -11,11 +11,14 @@ VEHICLE_WHEELED_MILITARY_ALL
 VEHICLE_WHEELED_CIVILIAN_ALL
 VEHICLE_WHEELED_ARMED
 VEHICLE_WHEELED_UNARMED
-VEHICLE_WHEELED_ARMED
+VEHICLE_WHEELED_ARMOR
+
 VEHICLE_WHEELED_CIVILIAN_TRUCK
 VEHICLE_WHEELED_MILITARY_TRUCK
 VEHICLE_WHEELED_CIVILIAN_CAR
 VEHICLE_WHEELED_MILITARY_CAR
+
+VEHICLE_TRACKED_ARMED
 
 VEHICLE_HELICOPTER_ALL
 VEHICLE_CHOPPER_ALL
@@ -51,6 +54,7 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 		lists.Insert(vehicleList07());
 		lists.Insert(vehicleList08());
 		lists.Insert(vehicleList09());
+		lists.Insert(vehicleList10());
 		//Helicopters
 		lists.Insert(vehicleList30());
 		lists.Insert(vehicleList31());
@@ -261,6 +265,24 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 		vehicleList.Set(
 			"VEHICLE_WHEELED_MILITARY_CAR",
 			{"Prefabs/Vehicles/Wheeled",
+			},
+			{},
+			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
+			"_bench", "_gun_mount", "_roof",
+			"Dst", "Lights", "Probes", "VehParts", 
+			},
+			{}
+		);
+		return vehicleList;
+	}	
+	
+	//Vehiclelist: VEHICLE_TRACKED_ARMED
+	SDRC_List vehicleList10()
+	{
+		ref SDRC_List vehicleList = new SDRC_List();
+		vehicleList.Set(
+			"VEHICLE_TRACKED_ARMED",
+			{"Prefabs/Vehicles/Tracked",
 			},
 			{},
 			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
