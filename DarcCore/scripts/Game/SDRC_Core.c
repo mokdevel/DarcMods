@@ -113,7 +113,7 @@ class SDRC_Core
 		}
 		SDRC_Log.Add("[SDRC_Core] World has persistence: " + bPersistence, LogLevel.NORMAL);
 		
-		int factionCount = SDRC_FactionHelper.GetFactionList(m_sFactionList);
+		int factionCount = SDRC_FactionHelper.GetFactionKeyList(m_sFactionList);
 		SDRC_Log.Add("[SDRC_Core] Factions available: " + factionCount + " - " + m_sFactionList, LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] Fallback faction: " + m_Config.fallbackEnemyFaction, LogLevel.NORMAL);
 		

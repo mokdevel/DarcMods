@@ -183,20 +183,16 @@ sealed class SDRC_Math
 	/*!
 	Checks if target is inside a forward-facing cone
 
-	\param heliPos Position from where to check
-	\param heliForward Forward vector of position
+	\param position Position from where to check
+	\param forward Forward vector of position. Must be normalized!
 	\param targetPos Position of target
 	\param maxAngleDeg half-angle of the cone
 	*/
-	static bool IsTargetInSector(
-	    vector heliPos,
-	    vector heliForward,	//Must be normalized!
-	    vector targetPos,
-	    float maxAngleDeg
+	static bool IsTargetInSector(vector position, vector forward, vector targetPos, float maxAngleDeg
 	)
 	{
 	    // Direction from heli to target
-	    vector toTarget = targetPos - heliPos;
+	    vector toTarget = targetPos - position;
 	
 	    float dist = toTarget.Length();
 		
@@ -206,14 +202,50 @@ sealed class SDRC_Math
 	    toTarget.Normalize();
 	
 	    // Dot product
-	    float dot = vector.Dot(heliForward, toTarget);
+	    float dot = vector.Dot(forward, toTarget);
 	
 	    // Convert angle to cosine
 	    float cosLimit = Math.Cos(maxAngleDeg * Math.DEG2RAD);
 	
 	    return dot >= cosLimit;
 	}	
-			
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Checks if target is in line of sight
+
+	\param traceStartPos Where to start the trace
+	\param traceEndPos Where to start the trace
+	\param owner The entity to skip for the trace. In case it's a big one, the trace may hit it.
+	\return position where enemy was found. vector.Zero returned if no enemies found.	
+	*/
+	static bool IsTargetInLos(vector traceStartPos, vector traceEndPos, IEntity owner = null)
+	{
+		bool inLos = true;
+		
+		TraceParam param = new TraceParam();
+		{					
+			param.Start = traceStartPos;
+			param.End = traceEndPos;
+			param.Exclude = owner;
+			//param.Flags = TraceFlags.DEFAULT | TraceFlags.ENTS | TraceFlags.ANY_CONTACT;
+			param.Flags = TraceFlags.DEFAULT | TraceFlags.ANY_CONTACT;
+			param.LayerMask = EPhysicsLayerDefs.Projectile;
+		}					
+	
+		BaseWorld world = GetGame().GetWorld();
+		float traceDistance = world.TraceMove(param, null);
+		//float traceDistance = world.TracePosition(param, null);
+		
+		if (traceDistance > 0.99)
+		{
+			inLos = true;
+			SDRC_Log.Add("[SDRC_Math:doLosTrace] target in los: " + traceEndPos, LogLevel.DEBUG);
+		}	
+		
+		return inLos;
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Returns a position that has moved given distance along an angle from given position.

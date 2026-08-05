@@ -32,10 +32,10 @@ sealed class SDRC_EnemyHelper
 		{		
 			SDRC_Log.Add("[SDRC_EnemyHelper:Scan] Preparing..", LogLevel.NORMAL);
 	
-			SDRC_FactionHelper.GetFactionList(m_sFactionList);
+			SDRC_FactionHelper.GetFactionKeyList(m_sFactionList);
 			
 			//By default, all factions can be used. This may later be changed by a mod like DarcMissions
-			SDRC_FactionHelper.GetFactionList(m_sEnemyFactions);
+			SDRC_FactionHelper.GetFactionKeyList(m_sEnemyFactions);
 			SDRC_Log.Add("[SDRC_EnemyHelper:Scan] Default enemyFactions: " + m_sEnemyFactions, LogLevel.NORMAL);
 					
 			m_sDefaultEnemyFactionKey = defaultEnemyFaction;
