@@ -36,6 +36,7 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 				
 		//Enemy awareness
 		rayLenEnemy = 200;
+		timeSearchAndDestroy = 10;//60;
 		
 		//Damage levels
 		damageHeavy = 0.10;
@@ -93,7 +94,7 @@ modded class SDRC_ChopperComp
 		}
 
 //		SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, -1);
-		SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
+//		SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
 		
 /*		array<ref SDRC_PlayerPos> playerPosArray = {};
 		SDRC_PlayerHelper.GetPlayersClosestToPosition(playerPosArray, owner.GetOrigin(), 1000);
@@ -261,9 +262,9 @@ modded class SDRC_ChopperComp
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Handle attacks
-	- Normal case: If enemy is seen, consider shooting
-	- Attack case: The location to bomb has been assigned. (m_vAttackPosition)
+	Handle attacks. Search for the enemy and then react on the finding.
+	
+	- Normal case: If enemy is seen, consider dropping the grenade.
 	*/
 	override void TypeHandleAttack(IEntity owner)
 	{
@@ -297,6 +298,7 @@ modded class SDRC_ChopperComp
 			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, time);
 		}*/
 		
+		//Any target near position?
 		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(owner.GetOrigin(), distance, 0))
 		{
 			if (SDRC_Misc.RandomFloat(0, 1) < chance)
