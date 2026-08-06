@@ -20,10 +20,11 @@ GenericEntity : "{C07C56F97DAB2DEE}Prefabs/Drones/DJIBase/DJI81Dropper.et" {
    m_fThrottle 1.5
    m_fSpeedMin 5
    m_fSpeedMax 10
-   m_fFlyHeightLow 15
-   m_fFlyHeightHigh 35
-   m_fDistanceLow 100
-   m_fDistanceHigh 300
+   m_fFlyHeightLow 10
+   m_fFlyHeightHigh 25
+   m_fDistanceLow 80
+   m_fDistanceHigh 200
+   m_sFaction "US"
    m_CargoSeatFill NONE
    m_EnemySearchType PLAYER
    m_EntityType DRONE

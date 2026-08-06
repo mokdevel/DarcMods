@@ -617,12 +617,13 @@ modded class SDRC_ChopperComp
 	/*!	
 	Handle behaviour
 	- Normal case: Fly and react normally
-	- Attack case: A behaviour cycle is run every ATTACK_CYCLE seconds. If attack is ongoing, perform it for ATTACK_CYCLE_WAIT seconds.
+	- Active case: A behaviour cycle is run every BEHAVIOUR_CHECK_CYCLE seconds. If we're in a behaviour, 
+				after this time, we check if there is a need to change the behaviour. This is quite rapid 
+				checking
 	*/
 	override private void HandleBehaviour(IEntity owner)
 	{
-		const int ATTACK_CYCLE = 2;
-		const int ATTACK_CYCLE_WAIT = 60;
+		const int BEHAVIOUR_CHECK_CYCLE = 2;
 		
 		//When in EVAC or PASSIVE mode, stay there.
 		if ( (m_eHeliBehaviour == SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR) || (m_eHeliBehaviour == SDRC_EHeliBehaviour.EVAC_BEHAVIOUR) )
@@ -648,15 +649,12 @@ modded class SDRC_ChopperComp
 			return;
 		}
 		
-		m_fTimerBehaviourCycle = ATTACK_CYCLE;
-		
-//		//Let's check if we have an enemy near by. 
-//		vector enemyPos = SDRC_ChopperEnemyHelper.SearchEnemy(owner);
+		m_fTimerBehaviourCycle = BEHAVIOUR_CHECK_CYCLE;
 
 		//Let's check if we have an enemy near by. 
 		if (m_vEnemyPosition != vector.Zero)
 		{
-			//If yes, become aggressive
+			//If yes, become aggressive and/or reset timer.
 			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, params.timeSearchAndDestroy);
 		}			
 						
@@ -685,7 +683,7 @@ modded class SDRC_ChopperComp
 					//have to be added in reverse order to have WP_ATTACK as the first item.
 					AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, patrolPos, index: 0);
 					AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, m_vEnemyPosition, index: 0);
-					m_fTimerBehaviourCycle = ATTACK_CYCLE_WAIT;
+					m_fTimerBehaviourCycle = params.timeSearchAndDestroy;
 				}
 				else
 				{

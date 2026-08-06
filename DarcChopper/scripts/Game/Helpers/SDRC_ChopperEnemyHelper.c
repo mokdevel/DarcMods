@@ -167,12 +167,22 @@ class SDRC_ChopperEnemyHelper
 	{
 		vector enemyPosition = vector.Zero;
 
+		//Find the owner faction
+		string chopperFaction = "";
+		SDRC_ChopperComp cc = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		if (cc)
+		{
+			chopperFaction = cc.m_sFaction;
+		}
+		
+		//Find enemies nearby
 		array<ref SDRC_PlayerPos> enemyPosArray = {};
 		
 		if (SearchOnlyPlayer)
 		{
 			SDRC_PlayerHelper.GetPlayersClosestToPosition(enemyPosArray, owner.GetOrigin(), rayLen);			
 		}
+		
 		
 		//TBD: Find also AI characters of enemy faction
 		
@@ -182,12 +192,18 @@ class SDRC_ChopperEnemyHelper
 			{
 				//TBD: Check that the target is an enemy from faction check.
 				
-				//Trace if there is an entity, like house, blocking. Trace will also stop on vehicles and other temporary obstacles.
-				vector traceStartPos = owner.GetOrigin();
-				vector traceEndPos = enemyPos.pos;
-				if (SDRC_Math.IsTargetInLos(traceStartPos, traceEndPos, owner))
+				Faction targetFaction = SDRC_PlayerHelper.GetPlayerFaction(enemyPos.player);
+				string targetFactionKey = targetFaction.GetFactionKey();
+				
+				if (SDRC_FactionHelper.IsEnemies(targetFactionKey, chopperFaction))
 				{
-					enemyPosition = enemyPos.pos;
+					//Trace if there is an entity, like house, blocking. Trace will also stop on vehicles and other temporary obstacles.
+					vector traceStartPos = owner.GetOrigin();
+					vector traceEndPos = enemyPos.pos;
+					if (SDRC_Math.IsTargetInLos(traceStartPos, traceEndPos, owner))
+					{
+						enemyPosition = enemyPos.pos;
+					}
 				}
 			}
 		}		

@@ -18,9 +18,6 @@ SCR_AIGroup : "{35681BE27C302FF5}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_Gree
 GenericEntity : "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et" {
  coords 1816.888 39.997 2711.117
 }
-SCR_DestructibleBuildingEntity : "{BEF9077AF9F93AE7}Prefabs/Structures/Houses/Village/House_Mountain_E_1I01/House_Mountain_E_1I01.et" {
- coords 1238.663 -0.001 2315.138
-}
 $grp SCR_DestructibleBuildingEntity : "{CEB1F71D46592F3C}Prefabs/Structures/Airport/Hangar_01/Hangar_01.et" {
  {
   coords 3093.493 0.001 2711.051

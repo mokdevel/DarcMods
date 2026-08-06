@@ -240,7 +240,7 @@ sealed class SDRC_Math
 		if (traceDistance > 0.99)
 		{
 			inLos = true;
-			SDRC_Log.Add("[SDRC_Math:doLosTrace] target in los: " + traceEndPos, LogLevel.DEBUG);
+			//SDRC_Log.Add("[SDRC_Math:doLosTrace] target in los: " + traceEndPos, LogLevel.DEBUG);
 		}	
 		
 		return inLos;

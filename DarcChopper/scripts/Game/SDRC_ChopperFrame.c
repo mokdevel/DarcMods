@@ -86,7 +86,7 @@ class SDRC_ChopperFrame
 class SDRC_ChopperCompConfig_Drone
 {
 	//Drone specific
-	float dropChance = 0.5;
+	float dropChance = 1.0;
 	int dropDistanceToPlayer = 10;
 }
 

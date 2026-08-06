@@ -36,7 +36,7 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 				
 		//Enemy awareness
 		rayLenEnemy = 200;
-		timeSearchAndDestroy = 10;//60;
+		timeSearchAndDestroy = 30;
 		
 		//Damage levels
 		damageHeavy = 0.10;
