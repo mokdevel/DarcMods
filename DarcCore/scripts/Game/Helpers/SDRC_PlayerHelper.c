@@ -195,22 +195,6 @@ sealed class SDRC_PlayerHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Check if given faction is enemy
-	*/	
-	static bool IsEnemyFaction(string faction)
-	{
-		array<string> enemyFactions = SDRC_FactionHelper.GetEnemyFactionKeys();
-		
-		if (enemyFactions.Contains(faction))
-		{
-			return true;
-		}
-		
-		return false;
-	}
-		
-	//------------------------------------------------------------------------------------------------
-	/*!
 	Get player name
 	*/	
 	static string GetPlayerName(int playerId)

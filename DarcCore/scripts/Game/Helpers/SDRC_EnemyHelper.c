@@ -16,8 +16,8 @@ sealed class SDRC_EnemyHelper
 	
 	private static string m_sDefaultEnemyFactionKey;
 	private static Faction m_DefaultEnemyFaction = null;
-	private static ref array<string> m_sEnemyFactions = {};
-	private static ref array<string> m_sFactionList = {};
+	private static ref array<string> m_sFactionList = {};		//Full faction list populated once at start up
+	private static ref array<string> m_sEnemyFactions = {};		//Enemy faction list populated at start up, but may later change by another mod via SetEnemyFactions()
 	
 	private static bool m_bIsReady = false;
 	
@@ -31,12 +31,13 @@ sealed class SDRC_EnemyHelper
 		if (!m_Config)
 		{		
 			SDRC_Log.Add("[SDRC_EnemyHelper:Scan] Preparing..", LogLevel.NORMAL);
-	
+
+			//Collect the full list of factions	
 			SDRC_FactionHelper.GetFactionKeyList(m_sFactionList);
 			
 			//By default, all factions can be used. This may later be changed by a mod like DarcMissions
 			SDRC_FactionHelper.GetFactionKeyList(m_sEnemyFactions);
-			SDRC_Log.Add("[SDRC_EnemyHelper:Scan] Default enemyFactions: " + m_sEnemyFactions, LogLevel.NORMAL);
+			SDRC_Log.Add("[SDRC_EnemyHelper:Scan] enemyFactions available: " + m_sEnemyFactions, LogLevel.NORMAL);
 					
 			m_sDefaultEnemyFactionKey = defaultEnemyFaction;
 			m_DefaultEnemyFaction = GetFactionWithName(m_sDefaultEnemyFactionKey);
@@ -98,8 +99,10 @@ sealed class SDRC_EnemyHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*! 
-	Select the proper enemy resourcename for spawning. 
-	\param listName The enemyList to check. If a prefab "{xxx}.." is provided, that is returned.
+	Select the proper enemy factions. This will do a sanity check to check all factions have proper 
+	AIs assigned.
+	
+	\param enemyFactions The list of factions to consider enemy.
 	*/	
 	static void SetEnemyFactions(array<string> enemyFactions)
 	{
@@ -325,6 +328,7 @@ sealed class SDRC_EnemyHelper
 		
 		if (faction == "")	//RANDOM
 		{
+			//Select random faction from the assigned m_sEnemyFactions list.
 			faction = m_sEnemyFactions.GetRandomElement();
 			SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Selected: " + faction, LogLevel.SPAM);
 			return faction;
@@ -332,10 +336,11 @@ sealed class SDRC_EnemyHelper
 		
 		if (faction != "")
 		{			
+			//Select the requested faction
 			if (m_sFactionList.Contains(faction))
 			{
 				//faction = m_sDefaultEnemyFactionKey;
-				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Mission specific: " + faction, LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_EnemyHelper:SelectEnemyFaction] Requested specific: " + faction, LogLevel.DEBUG);
 				return faction;
 			}
 			else
