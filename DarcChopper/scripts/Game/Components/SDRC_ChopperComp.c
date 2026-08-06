@@ -907,7 +907,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 	Create the runtime flight path with waypoint definition
 	*/
 	void CreateNewFlight(IEntity owner)
-	{
+	{		
+		vector oldHeight = m_vSplinePoints[m_vSplinePoints.Count() - 1];
+		
 		//Clear any existing path points
 		ResetFlight();
 
@@ -915,10 +917,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 		CreateFlightPoints(owner);
 		
 		SDRC_ChopperHelper.SetFlightPointHeight(owner);
-		//Set the first points to same height as heli. 
-		m_vFlightPoints[0].pt[1] = m_vOrigin[1];
-		m_vFlightPoints[1].pt[1] = m_vOrigin[1];
-		
+		//Set the first points to same height as old ending spline. This smooths the flight
+		m_vFlightPoints[0].pt[1] = oldHeight[1];
+		m_vFlightPoints[1].pt[1] = oldHeight[1];
+				
 		array<vector> flyPathPoints = {};
 		SDRC_ChopperDebug.GivePoints(flyPathPoints, m_vFlightPoints);
 		SDRC_Spline3D.GenerateSplinePoints(flyPathPoints, m_vSplinePoints, -1);
@@ -975,6 +977,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 		float forwardDistance = params.destinationForward;
 		vector origin = owner.GetOrigin();
 		
+		//Height is set to same as heli, but this is only needed at initial flight. 
+		//Later on, CreateNewFlight() will set these heights to old spline height.
 		vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, forwardDistance/2);
 		pos[1] = origin[1];
 		if (fixHeight)
@@ -1050,8 +1054,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 				}
 				case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 				{	
-//					if (m_vAttackPosition != vector.Zero)
-					
 					SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, flyDestination.value);
 					//NOTE: m_vAttackPosition has been set in AddDestination
 					break;

@@ -311,7 +311,7 @@ class SDRC_ChopperHelper
 			}
 
 			pt[1] = 0;	//We may in the future use the provided Y coord for the points. For now we set it to 0.
-			pt[1] = pt[1] + flyHeight + y;			
+			pt[1] = pt[1] + flyHeight + y;
 			chopperComp.m_vFlightPoints[i].pt = pt;
 		}
 	}	
@@ -409,7 +409,6 @@ class SDRC_ChopperHelper
 				//If we're low, fix the point a bit above the low fly height
 				if (pt[1] < (y + chopperComp.m_fFlyHeightLow))
 				{
-	//				pt[1] = y + ( (m_fFlyHeightHigh + m_fFlyHeightLow) / 2 ) ;	//Make chopper fly higher for a moment
 					pt[1] = y + chopperComp.m_fFlyHeightLow + 5;	//Make chopper fly higher for a moment
 					chopperComp.m_vSplinePoints[i] = pt;
 					

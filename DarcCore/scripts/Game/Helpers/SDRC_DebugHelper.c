@@ -412,13 +412,13 @@ sealed class SDRC_DebugHelper
 	/*!
 	Draw a list of points with connecting lines
 	*/	
-	static void DrawPointList(array<vector> points, string id = "", int color = ARGB(10, 128, 64, 64))
+	static void DrawPointList(array<vector> points, string id = "", int color = ARGB(10, 128, 64, 64), float size = 0.5)
 	{
 		if (SDRC_Conf.SHOW_DEBUG)
 		{
 			foreach (int i, vector pos : points)
 			{
-				SDRC_DebugHelper.AddDebugSphere(pos, color, 0.5, id);			//Red
+				SDRC_DebugHelper.AddDebugSphere(pos, color, size, id);			//Red
 				
 				if (i < (points.Count() - 1))
 				{
