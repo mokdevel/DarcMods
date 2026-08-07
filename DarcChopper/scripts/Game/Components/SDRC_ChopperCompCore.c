@@ -18,9 +18,9 @@ class SDRC_ChopperParams
 	
 	//Pitch
 	float pitchAngleRad;							//The pitch angle to use when calculating for speed effect. The faster the vehicle goes, the steeper the nose should be down.
-	float pitchAngleRadFlat;						//The pitch angle when chopper is flying flat.
-	float pitchNoseAngleDown;						//Maximum angle to turn the helicopter nose down when in high speed.
-	float pitchNoseAngleUp;							//Maximum angle to turn the helicopter nose up when braking.
+	float pitchAngleRadFlat;						//The pitch angle when chopper is flying flat. This value shall be between pitchNoseAngleDown and pitchNoseAngleUp
+	float pitchNoseAngleDown;						//Maximum angle to turn the vehicle nose down when in high speed.
+	float pitchNoseAngleUp;							//Maximum angle to turn the vehicle nose up when braking.
 	
 	//Rotor force multipliers
 	float rotorForceMulUp							//Rotor force multiplier in velocity counting. Bigger value makes the vehicle react faster to up/down movement but also starts stutter.
@@ -32,9 +32,14 @@ class SDRC_ChopperParams
 	float rayLenFront;								//Length of the ray to detect obstacles in front of vehicle
 	float rayDown;									//Distance to point the ray end downward 
 	
-	//Enemy awareness
+	//Flight parameters
+	float detourLerpPosition;						//Value that is reduced from the detour lerp position (0.65). Shall not be bigger than default.
+	float detourDivider;							//Divider addition to defaul value (1.5). 
+	
+	//Attack and enemy related
 	int rayLenEnemy;								//Max distance to see an enemy
 	int timeSearchAndDestroy;						//(seconds) Time to be in search and destroy behaviour
+	float attackHeightMul;							//Height multiplier to use for attack position. This will take m_fFlyHeightLow and multiply with this value.
 	
 	//Damage levels
 	float damageHeavy;
@@ -68,13 +73,13 @@ enum SDRC_EFlyWayPointType
 	WP_HOVER,					//11 - Heli is hovering in one place
 	WP_HOVER_UP,				//12 - Heli is hovering up
 	WP_GET_OUT,					//13 - 
-	WP_BRAKE,					//   - Slow the heli down to stand still
-	WP_END,						//   - 
-	WP_DESPAWN,					//   - 
+	WP_BRAKE,					//14 - Slow the heli down to stand still
+	WP_END,						//15 - 
+	WP_DESPAWN,					//16 - 
 	
 	//One shot commands
-	WP_STOP_ENGINE,				//   - Does the action and goes to WAIT state
-	WP_ATTACK,					//   - Sets attack position and time and then FLY
+	WP_STOP_ENGINE,				//17 - Does the action and goes to WAIT state
+	WP_ATTACK,					//18 - Sets attack position and time and then FLY
 	WP_SEARCH_DESTROY,			//   - Search for enemy by patroling an area. If enemy is found, attack the location.
 	
 	WP_M_LAND_TROOPS,			//   - Drop of troops to exact position, wait and leave

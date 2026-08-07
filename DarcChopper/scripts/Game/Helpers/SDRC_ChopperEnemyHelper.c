@@ -86,6 +86,7 @@ class SDRC_ChopperEnemyHelper
 		switch (chopperComp.m_EntityType)
 		{
 			case SDRC_EChopperType.HELICOPTER:
+			case SDRC_EChopperType.FIXEDWING:			
 			{
 				enemyPosition = SearchEnemyWithAI(owner, SearchOnlyPlayer);
 				break;

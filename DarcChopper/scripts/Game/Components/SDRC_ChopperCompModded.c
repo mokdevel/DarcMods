@@ -314,7 +314,15 @@ modded class SDRC_ChopperComp
 				}
 				break;
 			}
-			case SDRC_EChopperType.DRONE:		
+			case SDRC_EChopperType.DRONE:
+			{
+				if ( m_eDamageLevel != SDRC_EHeliDamageLevel.HEAVY )
+				{
+					return true;	//Still working, RETURN!
+				}
+				break;
+			}
+			case SDRC_EChopperType.FIXEDWING:
 			{
 				if ( m_eDamageLevel != SDRC_EHeliDamageLevel.HEAVY )
 				{
@@ -397,8 +405,8 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
 				m_vAttackPosition = destination;			//Where to attack
-				//Attack flying to be on low altitude
-				destination[1] = m_fFlyHeightLow;//SDRC_Misc.GetSurfaceYWithWater(destination.pt) + m_fFlyHeightLow;				
+				//Attack flying to be on low altitude. The height will be modified in CreateFlightPoints()!
+				//destination[1] = m_fFlyHeightLow * params.attackHeightMul;	//TBD: 
 
 				//With default attack time, set it to 60 seconds
 				if (value == -1)

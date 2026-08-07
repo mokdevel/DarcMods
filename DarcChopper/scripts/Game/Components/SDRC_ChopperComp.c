@@ -626,7 +626,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
 		m_fTimeSpeed = 0;	//Start to change speed
 								
-		//Handle yaw, pitch roll		
+		//Handle yaw, pitch, roll		
 				
 		//ROLL PITCH: Change pitch according to speed
 		float endDiv = Math.Clamp((m_fSpeedTarget - m_fSpeedStart), 0.001, 1000);
@@ -908,7 +908,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 	*/
 	void CreateNewFlight(IEntity owner)
 	{		
-		vector oldHeight = m_vSplinePoints[m_vSplinePoints.Count() - 1];
+//		vector oldHeight = m_vSplinePoints[m_vSplinePoints.Count() - 1];
+		vector oldHeight = m_vSplinePoints[m_iClosestIndex];
 		
 		//Clear any existing path points
 		ResetFlight();
@@ -1033,7 +1034,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 				case SDRC_EFlyWayPointType.WP_ATTACK:
 				{
 					//Attack to be on low altitude
-					flyDestination.pt[1] = SDRC_Misc.GetSurfaceYWithWater(flyDestination.pt) + m_fFlyHeightLow;				
+					flyDestination.pt[1] = SDRC_Misc.GetSurfaceYWithWater(flyDestination.pt) + m_fFlyHeightLow * params.attackHeightMul;
 					//NOTE: m_vAttackPosition has been set in AddDestination
 					break;
 				}
@@ -1112,9 +1113,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 					vector point = m_vFlightPoints[m_vFlightPoints.Count() - 1].pt;
 					
 					//We need to take a detour. Add an additional points outside of the line to make the route rounder				
-					float lerpRnd = SDRC_Misc.RandomFloat(0.25, 0.65);
-					float divRnd = SDRC_Misc.RandomFloat(1.5, 7);
+					const float LERP_RND_DEFAULT = 0.65;
+					const float DIV_RND_DEFAULT = 1.5;
 					
+					float lerpRnd = SDRC_Misc.RandomFloat((LERP_RND_DEFAULT - params.detourLerpPosition), LERP_RND_DEFAULT);
+					float divRnd = SDRC_Misc.RandomFloat(DIV_RND_DEFAULT, (DIV_RND_DEFAULT + params.detourDivider));
+										
 					//Depending on the angle decide if we re-route left ot right				
 					bool isOnLeft = SDRC_Math.IsPointOnLeft(p0, p1, p2);
 									

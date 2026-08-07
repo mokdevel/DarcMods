@@ -31,12 +31,17 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		rotorForceHover = 1;
 
 		//Obstacle awareness
-		rayLenFront = 400;
+		rayLenFront = 200;
 		rayDown = 50;		
 				
-		//Enemy awareness
+		//Flight parameters
+		detourLerpPosition = 0.4;
+		detourDivider = 5.5;
+		
+		//Attack and enemy related
 		rayLenEnemy = 200;
-		timeSearchAndDestroy = 30;
+		timeSearchAndDestroy = 60;
+		attackHeightMul = 0.2;
 		
 		//Damage levels
 		damageHeavy = 0.10;
@@ -277,7 +282,7 @@ modded class SDRC_ChopperComp
 
 		SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
 		
-		if (m_vEnemyPosition != vector.Zero)
+		if (m_vEnemyPosition == vector.Zero)
 		{
 			return;
 		}
@@ -291,12 +296,6 @@ modded class SDRC_ChopperComp
 			chance = m_BaseGameMode.chopperFrame.m_Config.drone.dropChance;
 			distance = m_BaseGameMode.chopperFrame.m_Config.drone.dropDistanceToPlayer;
 		}
-		
-/*		if ( (m_vEnemyPosition != vector.Zero) && (GetBehaviour() != SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR) )
-		{		
-			int time = SDRC_Misc.RandomInt(1, 10) * 0.5;//60;
-			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, time);
-		}*/
 		
 		//Any target near position?
 		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(owner.GetOrigin(), distance, 0))

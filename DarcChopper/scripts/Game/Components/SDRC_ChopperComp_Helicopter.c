@@ -21,7 +21,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		//Pitch
 		pitchAngleRad 	 =  11 * Math.DEG2RAD;
 		pitchAngleRadFlat  = -45 * Math.DEG2RAD;
-		pitchNoseAngleDown = -30 * Math.DEG2RAD;
+		pitchNoseAngleDown = -52 * Math.DEG2RAD;
 		pitchNoseAngleUp   =  20 * Math.DEG2RAD;
 		
 		//Rotor force multipliers
@@ -34,9 +34,14 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		rayLenFront = 400;
 		rayDown = 50;
 				
-		//Enemy awareness
+		//Flight parameters
+		detourLerpPosition = 0.4;
+		detourDivider = 5.5;
+		
+		//Attack and enemy related
 		rayLenEnemy = 1000;
 		timeSearchAndDestroy = 600;
+		attackHeightMul = 1.0;
 		
 		//Damage levels
 		damageHeavy = 0.90;
@@ -131,7 +136,7 @@ modded class SDRC_ChopperComp
 	*/	
 	override void TypeEOnFrame(IEntity owner, float timeSlice)
 	{
-		super.TypeEOnFrame(owner);
+		super.TypeEOnFrame(owner, timeSlice);
 		
 		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
 		{

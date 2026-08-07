@@ -301,15 +301,21 @@ class SDRC_ChopperHelper
 						
 			float flyHeight = 0;
 						
-			if (flightPoint.type == SDRC_EHeliState.LAND)
+			if (flightPoint.type == SDRC_EFlyWayPointType.WP_LAND)
 			{
 				//Do nothing .. height will be on ground due to y being set and flyHeigt is zero. See above.
+			}
+			else if (flightPoint.type == SDRC_EFlyWayPointType.WP_ATTACK)
+			{
+				//Do nothing .. height is defined for the attack point.
+				//TBD: When spline is created, the height is still set to minimum. We maybe should have a specific 
+				//	   ATTACK state and the height handling specific for it.
 			}
 			else
 			{
 				flyHeight = SDRC_Misc.RandomFloat(chopperComp.m_fFlyHeightLow, chopperComp.m_fFlyHeightHigh);
 			}
-
+			
 			pt[1] = 0;	//We may in the future use the provided Y coord for the points. For now we set it to 0.
 			pt[1] = pt[1] + flyHeight + y;
 			chopperComp.m_vFlightPoints[i].pt = pt;
