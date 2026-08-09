@@ -10,8 +10,9 @@ Main Features:
   * Tested with M2 Bradley and M1 Abrams from TheSpaceStrider
     * https://reforger.armaplatform.com/workshop/63120AE07E6C0966
     * https://reforger.armaplatform.com/workshop/5D1880C4AD410C14
-* Convoy mission: New mission with tanks. Recommendation is to delete dc_missionConfig_Convoy.json and receive an updated one at startup. 
-* dc_qrf.json: New QRF with tank. File will automatically update. WIP and needs more testing.
+* dc_missionConfig_Convoy.json: Added a new Convoy mission: New mission with tanks. Recommendation is to delete the mission file and receive an updated one at startup.
+* dc_qrf.json: New QRF with tank. File will automatically update. WIP and needs more testing. Added to Occupation, Roadblock and Squatters. If you are using tanks, delete the mission files to receive updated ones.
+* Support for friendly helicopters. The choppers named as FRIEND will spawn with the playable faction. See: https://github.com/mokdevel/DarcMods/tree/main/DarcChopper#friendly-choppers
 	
 ## 20260731
 Fixes:

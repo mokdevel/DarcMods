@@ -2,7 +2,7 @@
 
 ## Next Version
 Main features:
-* Added choppes with faction ``FRIEND``. The helicopters will spawn with the playable faction to support players. You can find them in the spawn list with name FRIEND.
+* Added choppers with faction ``FRIEND``. The helicopters will spawn with the playable faction to support players. You can find them in the spawn list with name FRIEND.
 * Minor changes in flight model for smoother flight.
 
 Fixes:

@@ -43,6 +43,7 @@ array<ref SDRC_ChopperCompatFF> attacks : List of attacks
 ## 20260809
 Main Feature:
 * Support for friendly choppers.
+  * Known issue: If you spawn a friendly chopper too far away from player, FF will remove the chopper. Same happens if they fly too far away. Something to fix but not for this release.
 
 ## 20260731
 Fixes:
