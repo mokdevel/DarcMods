@@ -1,0 +1,8 @@
+GameProject {
+ ID "TestFly"
+ GUID "6A0F25345EB1DAC2"
+ TITLE "TestFly"
+ Dependencies {
+  "69F2C98504A67580" "68F8BEC24D7765DB" "58D0FB3206B6F859"
+ }
+}
