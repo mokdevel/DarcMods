@@ -1,0 +1,39 @@
+Vehicle : "{3133602B406D131C}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed_gunship_HEDP_sharkNose.et" {
+ ID "5DB688595BAB2FD7"
+ components {
+  SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
+   m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
+    Name "FRIEND"
+    m_aAutoLabels + {
+     ENTITYTYPE_DARCCHOPPER
+    }
+   }
+   m_Flags 69
+  }
+  SDRC_ChopperComp "{6A128BD5DF63483D}" {
+   m_fRotorForce1 2
+   m_sFaction "FRIEND"
+   m_RocketSector 9
+   m_RocketPrefabs {
+    "{C9A1612DC5340613}Prefabs/Weapons/Ammo/Ammo_Rocket_S5.et" "{EF17BED6DCEE4DE4}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_FRAG_S5MO.et" "{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et"
+   }
+  }
+  VehicleHelicopterSimulation "{51FAEE57F7DA270E}" {
+   Simulation Helicopter "{51FAED9EF37A2D29}" {
+    Engine HelicopterEngine "{51FAED9EF37A2D2B}" {
+     StartUpTime 0
+    }
+   }
+  }
+  BaseVehicleNodeComponent "{57DA667544C3090A}" {
+   components {
+    SCR_HelicopterControllerComponent "{5CB0B40B1BD943AB}" {
+     MaxStartupTime 0
+    }
+   }
+  }
+  RplComponent "{517AACDFA78F5EE7}" {
+   Streamable Disabled
+  }
+ }
+}
