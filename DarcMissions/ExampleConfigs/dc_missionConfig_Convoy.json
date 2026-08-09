@@ -25,7 +25,8 @@
         3,
         3,
         4,
-        4
+        4,
+        5
     ],
     "missionFiles": [],
     "distanceToPlayer": 500,
@@ -472,9 +473,119 @@
             },
             "qrf": null,
             "vehicleTypes": [
-                "VEHICLE_WHEELED_ARMOR"
+                "VEHICLE_WHEELED_ARMOR",
+                "VEHICLE_WHEELED_ARMOR",
+                "VEHICLE_WHEELED_ARMOR",
+                "VEHICLE_WHEELED_ARMED"
             ],
             "cruiseSpeed": 20.0,
+            "loot": {
+                "box": null,
+                "itemChance": 0.899,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_MG",
+                    "WEAPON_MG",
+                    "WEAPON_RIFLE_BIG",
+                    "WEAPON_RIFLE_BIG",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_LAUNCHER",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_HEADGEAR",
+                    "GEAR_VEST",
+                    "GEAR_HANDWEAR",
+                    "GEAR_UNIFORM"
+                ]
+            }
+        },
+        {
+            "general": {
+                "subIdx": 5,
+                "comment": "index 5: Armed tracked vehicle driving from .. to ..",
+                "pos": [],
+                "size": 6.0,
+                "locationTypes": [
+                    59,
+                    59,
+                    59,
+                    8,
+                    60,
+                    60,
+                    71,
+                    64,
+                    25,
+                    72,
+                    26,
+                    10,
+                    75,
+                    81
+                ],
+                "posName": "any",
+                "messages": [
+                    {
+                        "title": "Heavily armed gear on the move",
+                        "info": "Tracks are leading from from %l to %d.",
+                        "win": "Destroyed! Enjoy the loot!",
+                        "lose": "Loot is not yours today."
+                    }
+                ],
+                "winCondition": 2,
+                "faction": [],
+                "markerType": "DARC_MISSION",
+                "markerIcon": 4,
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
+            },
+            "ai": {
+                "count": [
+                    2,
+                    3
+                ],
+                "types": [
+                    "G_RECON",
+                    "G_HEAVY",
+                    "G_LIGHT"
+                ],
+                "skill": 70,
+                "perception": 1.0,
+                "waypointRange": [
+                    0,
+                    0
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "qrf": null,
+            "vehicleTypes": [
+                "VEHICLE_WHEELED_ARMED",
+                "VEHICLE_TRACKED_ARMED",
+                "VEHICLE_TRACKED_ARMED",
+                "VEHICLE_TRACKED_ARMED",
+                "VEHICLE_TRACKED_ARMED",
+                "VEHICLE_TRACKED_ARMED",
+                "VEHICLE_TRACKED_ARMED",
+                "VEHICLE_TRACKED_ARMED",
+                "VEHICLE_TRACKED_ARMED"
+            ],
+            "cruiseSpeed": 15.0,
             "loot": {
                 "box": null,
                 "itemChance": 0.899,

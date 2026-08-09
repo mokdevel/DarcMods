@@ -1,5 +1,5 @@
 {
-    "jsonVersion": 3,
+    "jsonVersion": 4,
     "version": 1,
     "author": "darc",
     "comment": "",
@@ -355,6 +355,39 @@
                 "count": [
                     1,
                     2
+                ],
+                "types": [
+                    "G_LIGHT"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    100,
+                    200
+                ],
+                "waypointGenType": 4,
+                "waypointMoveType": 2
+            },
+            "modList": []
+        },
+        {
+            "qrfIdx": 33,
+            "comment": "index 33: Armed tracked vehicle",
+            "info": "",
+            "distance": [
+                350,
+                450
+            ],
+            "vehicle": "VEHICLE_TRACKED_ARMED",
+            "speed": 30,
+            "difficulty": [
+                -1
+            ],
+            "xp": 0,
+            "ai": {
+                "count": [
+                    2,
+                    3
                 ],
                 "types": [
                     "G_LIGHT"

@@ -1,6 +1,11 @@
 {
     "jsonVersion": 1,
     "author": "darc",
-    "dropChance": 0.5,
-    "dropDistanceToPlayer": 10
+    "drone": {
+        "dropChance": 1.0,
+        "dropDistanceToPlayer": 10
+    },
+    "helicopter": {
+        "justATest": 0.0
+    }
 }
