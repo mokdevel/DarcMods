@@ -2,6 +2,11 @@
 
 ## Next Version
 
+* Added helicopters with faction ``FRIEND``. These will spawn with the playable faction to support players. 
+
+Fixes:
+* UH1H_armed_Patrol and UH1H_armed_Patrol_FIA did not have TRAIT_ARMED
+
 ## 20260725
 Fixes:
 * Mod waits for gamemode to start before starting to run. This could have side effects.
