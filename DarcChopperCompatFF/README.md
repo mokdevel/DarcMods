@@ -44,6 +44,7 @@ array<ref SDRC_ChopperCompatFF> attacks : List of attacks
 Main Feature:
 * Support for friendly choppers.
   * Known issue: If you spawn a friendly chopper too far away from player, FF will remove the chopper. Same happens if they fly too far away. Something to fix but not for this release.
+  * Known issue: There is an error ``The object ___ has no RplComponent. This will not be seen by players.`` which I'm investigating. Reason unknown and happens only with FF.
 
 ## 20260731
 Fixes:
