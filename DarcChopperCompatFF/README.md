@@ -40,6 +40,10 @@ array<ref SDRC_ChopperCompatFF> attacks : List of attacks
 
 # Version history
 
+## 20260809
+Main Feature:
+* Support for friendly choppers.
+
 ## 20260731
 Fixes:
 * Mod waits for gamemode to start before starting to run. This could have side effects.

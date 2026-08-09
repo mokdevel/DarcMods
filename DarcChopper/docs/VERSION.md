@@ -1,8 +1,9 @@
 # Version history
 
 ## Next Version
-
-* Added helicopters with faction ``FRIEND``. These will spawn with the playable faction to support players. 
+Main features:
+* Added choppes with faction ``FRIEND``. The helicopters will spawn with the playable faction to support players. You can find them in the spawn list with name FRIEND.
+* Minor changes in flight model for smoother flight.
 
 Fixes:
 * UH1H_armed_Patrol and UH1H_armed_Patrol_FIA did not have TRAIT_ARMED

@@ -5,10 +5,14 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 Main Features:
-* New keyword VEHICLE_TRACKED_ARMED. This will collect all tanks in to a list.
-  * Tested with 
-* dc_vehicleList.json suppoer for VEHICLE_TRACKED_ARMED. The file will automatically update.
-
+* dc_vehicleList.json: Support for new keyword ``VEHICLE_TRACKED_ARMED``. This will collect all tanks in to a list. File will automatically update.
+* Tracked ones have been tested with tanks below. If should/could work out of the box with other tanks that have the ``TRAIT_TRACKED`` set. Consider this as a PoC for the moment and there are improvements needed. 
+  * Tested with M2 Bradley and M1 Abrams from TheSpaceStrider
+    * https://reforger.armaplatform.com/workshop/63120AE07E6C0966
+    * https://reforger.armaplatform.com/workshop/5D1880C4AD410C14
+* Convoy mission: New mission with tanks. Recommendation is to delete dc_missionConfig_Convoy.json and receive an updated one at startup. 
+* dc_qrf.json: New QRF with tank. File will automatically update. WIP and needs more testing.
+	
 ## 20260731
 Fixes:
 * List loading ignored the last item defined in any of the lists.
