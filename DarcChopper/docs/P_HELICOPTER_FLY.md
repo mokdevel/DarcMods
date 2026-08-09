@@ -46,6 +46,7 @@ For more details, on AI functionality, read [AI section](https://github.com/mokd
 * ``Faction`` : Faction is used for selecting crew faction. You can use this to override the defaul faction.
   * ``empty`` : Vehicle assigned faction will be used. 
   * ``FACTION`` : The assigned faction will be used and the default vehicle faction be overridden. Example: ``US``.
+  * ``FRIEND`` : The assigned faction will be selected from playable factions. This will spawn a player friendly faction. If multiple playable factions are defined, a random one will be chosen.
 * ``Cargo Seat Fill`` : How many passengers to spawn and occupy seats.
   * ``NONE`` : No AI to spawn in cargo.
   * ``RANDOM`` : Random count from 1 to FULL
