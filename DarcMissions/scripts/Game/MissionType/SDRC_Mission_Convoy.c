@@ -430,7 +430,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		
 		#ifndef SDRC_RELEASE
 			missionCycleTime = 8;//SDRC_MISSION_CYCLE_TIME_DEFAULT;
-			missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,4,4};
+			missionList = {5};//{0,0,0,0,0,0,1,1,1,1,1,2,3,3,4,4};
 		#endif
 		
 		//Mission specific
@@ -441,7 +441,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		subMissions.Insert(Convoy2());
 		subMissions.Insert(Convoy3());
 		subMissions.Insert(Convoy4());
-		//subMissions.Insert(Convoy5());
+		subMissions.Insert(Convoy5());
 	}
 		
 	//----------------------------------------------------
@@ -757,7 +757,8 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		);
 		convoy.Set(
 			{
-				"VEHICLE_WHEELED_ARMOR",
+				"VEHICLE_WHEELED_ARMOR", "VEHICLE_WHEELED_ARMOR", "VEHICLE_WHEELED_ARMOR", 
+				"VEHICLE_WHEELED_ARMED", 
 			},
 			20
 		);
@@ -782,6 +783,76 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		return convoy;	
 	}	
 
+	//----------------------------------------------------
+	SDRC_Convoy Convoy5()
+	{
+		ref SDRC_Convoy convoy = new SDRC_Convoy();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Heavily armed gear on the move",
+			"Tracks are leading from from %l to %d.",
+			"Destroyed! Enjoy the loot!",
+			"Loot is not yours today.",); 
+		convoy.general.Set(
+			5, "index 5: Armed tracked vehicle driving from .. to ..",
+			{}, 6,
+			{
+				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE, 
+				EMapDescriptorType.MDT_NAME_VALLEY,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_FUELSTATION,
+				EMapDescriptorType.MDT_PARKING,
+				EMapDescriptorType.MDT_HOSPITAL,
+				EMapDescriptorType.MDT_CHURCH,
+				EMapDescriptorType.MDT_CONSTRUCTION_SITE,
+				EMapDescriptorType.MDT_AIRPORT
+			},
+			"any",
+			{message},
+			SDRC_EMissionWinCondition.AI_KILL_75,
+			{},
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP,
+			{SDRC_EDifficulty.RANDOM},
+			0
+		);
+		convoy.ai.Set(
+			{2, 3},
+			{"G_RECON", "G_HEAVY", "G_LIGHT"},
+			70, 1.0,
+			{0, 0},
+			SDRC_EWaypointGenerationType.ROUTE,
+			SDRC_EWaypointMoveType.MOVE,
+		);
+		convoy.Set(
+			{
+				"VEHICLE_WHEELED_ARMED",
+				"VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", 
+				"VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", 
+			},
+			15
+		);
+		
+		ref SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", 
+				"WEAPON_MG", "WEAPON_MG", 
+				"WEAPON_RIFLE_BIG", "WEAPON_RIFLE_BIG", 
+				"WEAPON_HANDGUN", 
+				"WEAPON_SHOTGUN", "WEAPON_SHOTGUN", "WEAPON_SHOTGUN", 
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE", 
+				"WEAPON_LAUNCHER", 
+				"UTIL_ATTACHMENT", 
+				"UTIL_OPTIC",			
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"GEAR_HEADGEAR", "GEAR_VEST", "GEAR_HANDWEAR", "GEAR_UNIFORM", 
+			};
+		loot.Set(0.9, lootItems);
+		convoy.loot = loot;		
+				
+		return convoy;	
+	}		
+	
 /*		
 	//----------------------------------------------------
 	SDRC_Convoy Convoy5()

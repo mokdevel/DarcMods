@@ -16,6 +16,7 @@ Pre defined groups:
 	30, "index 30: Group in a car",
 	31, "index 31: Armored vehicle",
 	32, "index 32: Armed vehicle",
+	33, "index 32: Armed tracked vehicle",
 	60, "index 60: Armed chopper",
 */
 
@@ -77,6 +78,7 @@ class SDRC_QrfConfig : SDRC_Config
 		qrfs.Insert(Qrf30());
 		qrfs.Insert(Qrf31());
 		qrfs.Insert(Qrf32());
+		qrfs.Insert(Qrf33());
 		//Chopper
 		qrfs.Insert(Qrf60());
 	}
@@ -361,6 +363,31 @@ class SDRC_QrfConfig : SDRC_Config
 			
 		return qrf;
 	};	
+	
+	//----------------------------------------------------
+	SDRC_Qrf Qrf33()
+	{
+		ref SDRC_Qrf qrf = new SDRC_Qrf();
+		qrf.Set(
+			33, "index 33: Armed tracked vehicle",
+			"",
+			{350, 450},
+			"VEHICLE_TRACKED_ARMED", 30,
+			{SDRC_EDifficulty.RANDOM},
+			0,
+		    {}
+		);
+		qrf.ai.Set(
+			{2, 3},
+			{"G_LIGHT"},
+			50, 1.0,
+			{100, 200},
+			SDRC_EWaypointGenerationType.ROUTE,
+			SDRC_EWaypointMoveType.MOVE,
+		);
+			
+		return qrf;
+	};		
 	
 	//----------------------------------------------------
 	SDRC_Qrf Qrf60()

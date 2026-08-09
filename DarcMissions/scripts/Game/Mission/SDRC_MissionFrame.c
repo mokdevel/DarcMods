@@ -14,7 +14,7 @@ const string DC_MISSIONCONFIG_FILE_NONVALIDAREA = "dc_nonValidArea.json";
 const int 	 DC_MISSIONCONFIG_FILE_NONVALIDAREA_JSONVER = 2;
 
 const string DC_MISSIONCONFIG_FILE_QRF = "dc_qrf.json";
-const int DC_MISSIONCONFIG_FILE_QRF_JSONVER = 3;
+const int DC_MISSIONCONFIG_FILE_QRF_JSONVER = 4;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionFrame
