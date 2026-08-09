@@ -383,7 +383,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{30, 31, 32}, SDRC_EMissionSuccess.WIN,
+			{30, 31, 32, 33}, SDRC_EMissionSuccess.WIN,
 			0.7, {30, 240}
 		);
 		squatter.qrf = qrf;		

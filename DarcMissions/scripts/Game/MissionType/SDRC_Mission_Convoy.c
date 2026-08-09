@@ -426,7 +426,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		//Default
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,4,4};
+		missionList = {0,0,0,0,0,0,1,1,1,1,1,2,3,3,4,4,5};
 		
 		#ifndef SDRC_RELEASE
 			missionCycleTime = 8;//SDRC_MISSION_CYCLE_TIME_DEFAULT;

@@ -304,7 +304,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{30, 30, 30, 32, 32, 32, 60}, SDRC_EMissionSuccess.WIN,
+			{30, 30, 30, 32, 32, 32, 33, 60}, SDRC_EMissionSuccess.WIN,
 			0.3, {30, 240}
 //			{60}, SDRC_EMissionSuccess.WIN,
 //			1.0, {30, 240}
@@ -565,7 +565,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{2, 31}, SDRC_EMissionSuccess.WIN,
+			{2, 31, 33}, SDRC_EMissionSuccess.WIN,
 			0.3, {30, 240}
 		);
 		roadblock.qrf = qrf;

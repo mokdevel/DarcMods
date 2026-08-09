@@ -384,7 +384,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{2, 4, 30, 31, 32, 60}, SDRC_EMissionSuccess.WIN,
+			{2, 4, 30, 31, 32, 33, 60}, SDRC_EMissionSuccess.WIN,
 			0.7, {30, 240}
 		);
 		occupation.qrf = qrf;		
