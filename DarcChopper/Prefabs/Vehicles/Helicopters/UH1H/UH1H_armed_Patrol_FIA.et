@@ -1,4 +1,4 @@
-Vehicle : "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et" {
+Vehicle : "{DDDD9B51F1234DF3}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed.et" {
  ID "5DB688595BAB2FD7"
  components {
   SCR_HelicopterSoundComponent "{5A7CE769E7A9C43E}" {
@@ -12,26 +12,22 @@ Vehicle : "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et" {
     }
     CompartmentDoorInfo "{60F8D2B4A57BB87E}" {
      OpenDoorAction SCR_OpenVehicleDoorUserAction "{60B8C998D577B72E}" {
-      ParentContextList {
-       "" ""
+      ParentContextList +{
       }
      }
      CloseDoorAction SCR_CloseVehicleDoorUserAction "{60B8C998F02D67D1}" {
-      ParentContextList {
-       "" ""
+      ParentContextList +{
       }
      }
      FakeDoor 1
     }
     CompartmentDoorInfo "{60F8D2B4B6C9A956}" {
      OpenDoorAction SCR_OpenVehicleDoorUserAction "{60B8C998D577B72E}" {
-      ParentContextList {
-       "" ""
+      ParentContextList +{
       }
      }
      CloseDoorAction SCR_CloseVehicleDoorUserAction "{60B8C998F02D67D1}" {
-      ParentContextList {
-       "" ""
+      ParentContextList +{
       }
      }
      FakeDoor 1
@@ -40,16 +36,15 @@ Vehicle : "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et" {
   }
   SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
    m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
-    m_sFaction "FIA"
-    m_aAutoLabels {
-     FACTION_FIA SIZE_M ENTITYTYPE_DARCCHOPPER
+    m_aAutoLabels + {
+     ENTITYTYPE_DARCCHOPPER
     }
    }
    m_Flags 69
   }
   SCR_UniversalInventoryStorageComponent "{5E1E994304F0E0D3}" {
    MultiSlots {
-    MultiSlotConfiguration "{68A92A590FF8D1A9}" {
+    MultiSlotConfiguration "{6A128BD48115B68E}" {
      SlotTemplate InventoryStorageSlot MGammo {
       Prefab "{423D78F865E8AF8A}Prefabs/Weapons/Magazines/Box_762x51_M60_500rnd_2Ball_1Tracer.et"
      }
@@ -57,11 +52,9 @@ Vehicle : "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et" {
     }
    }
   }
-  SCR_VehicleFactionAffiliationComponent "{5882CBD9AC741CEC}" {
-   "faction affiliation" "FIA"
-  }
-  SDRC_ChopperComp "{68A92A590FF8D1B6}" {
+  SDRC_ChopperComp "{6A128BD48115B6A7}" {
    m_fRotorForce1 2
+   m_CargoSeatFill HALF
    m_RocketSector 9
   }
   VehicleHelicopterSimulation "{51FAEE57F7DA270E}" {
@@ -147,16 +140,16 @@ Vehicle : "{70BAEEFC2D3FEE64}Prefabs/Vehicles/Helicopters/UH1H/UH1H.et" {
      Radius 0.7
      Height 2
     }
-    UserActionContext "{68A92A590FF8D15A}" {
+    UserActionContext "{6A128BD48115B649}" {
      ContextName "door_gunner_l"
-     Position PointInfo "{68A92A590FF8D158}" {
+     Position PointInfo "{6A128BD48115B64E}" {
       Offset -1.5 1.6 0
       Angles 0 -90 0
      }
     }
-    UserActionContext "{68A92A590FF8D15E}" {
+    UserActionContext "{6A128BD48115B653}" {
      ContextName "door_gunner_r"
-     Position PointInfo "{68A92A590FF8D15C}" {
+     Position PointInfo "{6A128BD48115B652}" {
       Offset 1.5 1.6 0
       Angles 0 90 0
      }
