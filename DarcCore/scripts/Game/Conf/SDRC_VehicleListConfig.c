@@ -325,6 +325,7 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
 			"_bench", "_gun_mount", "_roof",
 			"Dst", "Lights", "Probes", "VehParts", 
+			"_friend",								//Do not include AI choppers
 			},
 			{}
 		);
@@ -343,6 +344,7 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
 			"_bench", "_gun_mount", "_roof",
 			"Dst", "Lights", "Probes", "VehParts", 
+			"_friend",								//Do not include AI choppers
 			},
 			{}
 		);
@@ -361,6 +363,7 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
 			"_bench", "_gun_mount", "_roof",
 			"Dst", "Lights", "Probes", "VehParts", 
+			"_friend",								//Do not include AI choppers
 			},
 			{}
 		);

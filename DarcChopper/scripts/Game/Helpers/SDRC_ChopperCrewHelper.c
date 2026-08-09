@@ -337,6 +337,21 @@ class SDRC_ChopperCrewHelper
 	{		
 		string factionReason = "";
 		
+		if (faction == "FRIEND")
+		{
+			array<string> friendlyFactions = {};
+			SDRC_FactionHelper.GetFactionKeyListPlayable(friendlyFactions);
+			if (!friendlyFactions.IsEmpty())
+			{
+				faction = friendlyFactions.GetRandomElement();
+				factionReason = "Friendly faction";
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_ChopperCrewHelper:SelectFaction] Friendly faction requested, but none found.", LogLevel.WARNING);				
+			}
+		}
+		
 		if ( SDRC_Misc.IsAddonLoaded("$DarcMissions:") || SDRC_Misc.IsAddonLoaded("$DarcMissionsDev:") )
 		{
 			//Use default faction for DarcMissions

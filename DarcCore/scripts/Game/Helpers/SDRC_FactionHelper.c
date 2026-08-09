@@ -4,7 +4,7 @@
 /*!
 Functions for various faction related things
 */
-sealed class SDRC_FactionHelper
+class SDRC_FactionHelper
 {			
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -38,7 +38,7 @@ sealed class SDRC_FactionHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Get factionKey list
+	Get factionKey list of all available factions.
 	*/	
 	static int GetFactionKeyList(out array<string> factionList, bool printList = false)
 	{
@@ -70,6 +70,48 @@ sealed class SDRC_FactionHelper
 		return factionList.Count();
 	}	
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get factionKey list for playable factions.
+	*/	
+	static int GetFactionKeyListPlayable(out array<string> factionList, bool printList = false)
+	{
+		array<Faction> factions = {};
+		SCR_FactionManager factionManager = SCR_FactionManager.Cast(GetGame().GetFactionManager());
+		
+		if (!factionManager)
+		{			
+			SDRC_Log.Add("[SDRC_FactionHelper:GetFactionList] No faction manager found.", LogLevel.ERROR);
+			return 0;
+		}
+		
+		factionManager.GetFactionsList(factions);
+
+		foreach (Faction faction : factions)
+		{
+			string factionName = faction.GetFactionKey();
+			
+			bool playable = false;
+			SCR_Faction scrFaction = SCR_Faction.Cast(faction);
+        	if (scrFaction)
+			{
+				playable = scrFaction.IsPlayable();
+			}
+			
+			if ( (factionName != "") && (playable) )
+			{
+				factionList.Insert(factionName);
+			}
+			
+			if (printList)
+			{
+				SDRC_Log.Add("[SDRC_FactionHelper:GetFactionList] Faction found: " + factionName, LogLevel.NORMAL);				
+			}
+		}
+				
+		return factionList.Count();
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Compare two faction keys and determine if they're enemies to each other.

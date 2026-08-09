@@ -9,7 +9,7 @@ Functions for various vehicle list related things
 sealed class SDRC_VehicleListHelper
 {
 	private const string DC_MISSIONCONFIG_FILE_VEHICLELIST = "dc_vehicleList.json";
-	private const int DC_MISSIONCONFIG_FILE_VEHICLELIST_JSONVER = 3;
+	private const int DC_MISSIONCONFIG_FILE_VEHICLELIST_JSONVER = 4;
 	
 	private static ref SDRC_JsonApi2 m_JsonApi = null;
 	private static ref SDRC_VehicleListConfig m_Config = null;
@@ -39,7 +39,7 @@ sealed class SDRC_VehicleListHelper
 				SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);	//NOTE: SDRC_ListConfig:Populate left here on purpose! 
 				
 				//Print a detailed list of items when debug level is ALL
-				if (SDRC_Log.GetLogLevel() > DC_LogLevel.DEBUG)
+				//if (SDRC_Log.GetLogLevel() > DC_LogLevel.DEBUG)
 				{				
 					list.items.Debug();
 				}
