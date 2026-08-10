@@ -1,0 +1,28 @@
+GenericEntity : "{77CA4803A4A2B8E3}Prefabs/Drones/FPVBase/FPVRpg.et" {
+ ID "65932E3D2F6C309A"
+ components {
+  SCR_EditableVehicleComponent "{65AF169A26951569}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{65AF169A49E83200}" {
+    m_aAutoLabels {
+     FACTION_USSR SIZE_M ENTITYTYPE_DARCCHOPPER
+    }
+   }
+  }
+  SCR_FireplaceComponent "{6A150A7923687F2B}" {
+   m_sParticle "{0A512F25BFD2D30D}Particles/Enviroment/electrical_short_medium.ptc"
+   m_vParticleOffset 0 0 0
+  }
+  SDRC_ChopperComp "{6A150A79370FCB22}" {
+   m_fSpeedMin 5
+   m_fSpeedMax 10
+   m_fFlyHeightLow 10
+   m_fFlyHeightHigh 25
+   m_fDistanceLow 80
+   m_fDistanceHigh 200
+   m_sFaction "USSR"
+   m_EnemySearchType PLAYER
+   m_EntityType DRONE
+   m_bUnpiloted 1
+  }
+ }
+}
