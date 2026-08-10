@@ -407,13 +407,15 @@ modded class SDRC_ChopperComp
 			{
 				m_vAttackPosition = destination;			//Where to attack
 
-				//For drone, the attack position needs to a bit further than the one defined. 
+				//For drone, the attack position needs to a bit further than the one defined. We want a fly by towards or over the player.
 				if (params.type == SDRC_EChopperType.DRONE)
 				{				
 					//Move it along the flight path.
 					vector direction = vector.Direction(m_vSplinePoints[m_vSplinePoints.Count() - 1], destination);
 					direction.Normalize();
-					m_vAttackPosition = destination + direction * 50;
+					direction[1] = 0;		//Move only on XZ plane
+					m_vAttackPosition = destination + (direction * 100);
+					destination = m_vAttackPosition;
 				}				
 
 				//With default attack time, set it to 60 seconds

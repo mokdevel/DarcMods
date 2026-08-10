@@ -41,7 +41,7 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		//Attack and enemy related
 		rayLenEnemy = 200;
 		timeSearchAndDestroy = 60;
-		attackHeightMul = -0.2;
+		attackHeightMul = -0.3;
 		
 		//Damage levels
 		damageHeavy = 0.10;

@@ -1268,7 +1268,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			time = 10000000;
 		}
 		
-		SDRC_Log.Add("[SDRC_ChopperComp:SetBehaviour] Setting: " + SCR_Enum.GetEnumName(SDRC_EHeliBehaviour, behaviour), LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_ChopperComp:SetBehaviour] Setting: " + SCR_Enum.GetEnumName(SDRC_EHeliBehaviour, behaviour), LogLevel.SPAM);
 		
 		m_fTimerBehaviour = time;
 	}	
