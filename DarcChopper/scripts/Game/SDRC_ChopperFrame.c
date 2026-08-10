@@ -86,13 +86,15 @@ class SDRC_ChopperFrame
 class SDRC_ChopperCompConfig_Drone
 {
 	//Drone specific
+	bool persistent = false;
 	float dropChance = 1.0;
 	int dropDistanceToPlayer = 10;
 }
 
 class SDRC_ChopperCompConfig_Helicopter
 {
-	//Drone specific
+	//Helicopter specific
+	bool persistent = false;
 	float justATest = 0;
 }
 

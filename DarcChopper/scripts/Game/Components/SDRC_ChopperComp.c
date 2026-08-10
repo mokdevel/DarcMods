@@ -279,7 +279,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 		//Set chopper type specific params
 		TypeSetupParams(owner);
 		SetHeli(m_fSpeedMin, m_fSpeedMax, m_fFlyHeightLow, m_fFlyHeightHigh, m_fDistanceLow, m_fDistanceHigh);						
-		
+
+		//Disable persistence for choppers. We don't need them to be stored.
+		SDRC_SpawnHelper.SetPersistence(owner, false);
+				
 		//SetEventMask(owner, EntityEvent.INIT);
 		s_Instance = this;
 		m_sDid = SDRC_Misc.GetCurrentTickTime().ToString() + Math.RandomInt(0, 10000);
@@ -968,7 +971,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	
 	//------------------------------------------------------------------------------------------------	
 	/*!	
-	Create fly points
+	Create fly points for spline creation
 	Takes the points from m_vFlyDestinations and generates points to be used for spline creation
 	\param fixHeight Fix the height of the two first points. This is needed at startup.
 	*/	
@@ -1035,6 +1038,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 				{
 					//Attack to be on low altitude
 					flyDestination.pt[1] = SDRC_Misc.GetSurfaceYWithWater(flyDestination.pt) + m_fFlyHeightLow * params.attackHeightMul;
+					SetState(SDRC_EHeliState.ATTACK);
 					//NOTE: m_vAttackPosition has been set in AddDestination
 					break;
 				}

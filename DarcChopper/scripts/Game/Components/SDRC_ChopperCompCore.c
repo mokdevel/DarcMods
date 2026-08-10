@@ -107,6 +107,7 @@ enum SDRC_EHeliState
 	HOVER,					// 8 - Heli is hovering at given height
 	HOVER_UP,				// 9 - Heli is hovering upwards
 	GET_OUT,				//10 - One frame state to order AI to get out
+	ATTACK,					//11 - Added when WP_ATTACK is handled to inform that spline height checking can go below minimum height
 	END,
 	
 	ON_GROUND,				//One frame state for touch down

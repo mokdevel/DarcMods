@@ -402,100 +402,108 @@ class SDRC_ChopperHelper
 			bool isSmoothingNeeded = false;
 			int smoothCount = 0;				//How many points to smooth. 0 = all
 			
-			//Make sure the points are at minimum m_fFlyHeightLow from the ground.
-			foreach (int i, vector pt : chopperComp.m_vSplinePoints)
+			if (chopperComp.GetState() == SDRC_EHeliState.ATTACK) 
 			{
-				if (i < skipCount)
-				{
-					continue;
-				}
-				
-				float y = SDRC_Misc.GetSurfaceYWithWater(pt, true);
-	
-				//If we're low, fix the point a bit above the low fly height
-				if (pt[1] < (y + chopperComp.m_fFlyHeightLow))
-				{
-					pt[1] = y + chopperComp.m_fFlyHeightLow + 5;	//Make chopper fly higher for a moment
-					chopperComp.m_vSplinePoints[i] = pt;
-					
-					isSmoothingNeeded = true;
-				}
+				//isSmoothingNeeded = true;
+				chopperComp.SetState(SDRC_EHeliState.FLY);
 			}
+			else
+			{			
+				//Make sure the points are at minimum m_fFlyHeightLow from the ground.
+				foreach (int i, vector pt : chopperComp.m_vSplinePoints)
+				{
+					if (i < skipCount)
+					{
+						continue;
+					}
 					
-			//If we're braking set points towards the last point
-			if (chopperComp.GetState() == SDRC_EHeliState.BRAKE)
-			{
-				int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
-
-				//Find high point, low point and difference
-				vector v0 = chopperComp.m_vSplinePoints[chopperComp.m_iClosestIndex];
-				vector v1 = chopperComp.m_vSplinePoints[lastIdx];
-				
-				//Count a landing (bell) curve
-				float p0 = v0[1];
-				float p1 = v1[1];
-				float pdiff = p0 - p1;
-									
-				//Create a Y spline to replace the given points to smooth the curve for braking
-				int points = lastIdx - chopperComp.m_iClosestIndex;
-				for (int i = 0; i < points; i++)
-				{					
-					float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
-
-					vector pt = vector.Lerp(v1, v0, step);
-					pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
-					chopperComp.m_vSplinePoints[lastIdx - points + i] = pt;
-					chopperComp.m_vSplinePoints[lastIdx - points + i + 1] = pt;	//Ugly hack to make sure the last point is also modified
-				}
-				
-				isSmoothingNeeded = false;
-			}					
-			
-			//If we're landing set some of the last points close to the ground
-			if (chopperComp.GetState() == SDRC_EHeliState.LAND)
-			{
-				//Decide a point on the spline for the initial landing to start
-				//int pointsToGround = chopperComp.m_fSpeed / 1.2;
-				
-				int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
-				int pointsToGround = lastIdx - 1;
-				if (pointsToGround > 10)
-				{
-					pointsToGround = 10;
-				}
-				
-				//Check that point is within limits
-				SDRC_Log.Add("[SDRC_ChopperHelper:SetSplinePointsAboveGround] pointsToGround: " + pointsToGround, LogLevel.DEBUG);			
-
-				//Find high point, low point and difference
-				vector v0 = chopperComp.m_vSplinePoints[lastIdx - pointsToGround];
-				vector v1 = chopperComp.m_vSplinePoints[lastIdx];
-				//The destination point will take any objects like buildings in to account
-				v1[1] = SDRC_Misc.GetSurfaceYWithWater(v1, true);
-				
-				//Define the distance from where to start landing sequence				
-				chopperComp.m_fLandingDistance = vector.Distance(v0, v1);
-
-				//Count a landing (bell) curve
-				float p0 = v0[1];
-				float p1 = v1[1];
-				float pdiff = p0 - p1;
-									
-				//Create a Y spline to replace the given points to smooth the curve for landing
-				if (chopperComp.m_vSplinePoints.Count() - 1 > pointsToGround)
-				{
-					for (int i = 0; i < pointsToGround; i++)
-					{					
-						float step = 1 - (i / (pointsToGround - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
-
-						vector pt = vector.Lerp(v1, v0, step);
-						pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
-						chopperComp.m_vSplinePoints[lastIdx - pointsToGround + i + 1] = pt;
+					float y = SDRC_Misc.GetSurfaceYWithWater(pt, true);
+		
+					//If we're low, fix the point a bit above the low fly height
+					if (pt[1] < (y + chopperComp.m_fFlyHeightLow))
+					{
+						pt[1] = y + chopperComp.m_fFlyHeightLow + 5;	//Make chopper fly higher for a moment
+						chopperComp.m_vSplinePoints[i] = pt;
+						
+						isSmoothingNeeded = true;
 					}
 				}
+						
+				//If we're braking set points towards the last point
+				if (chopperComp.GetState() == SDRC_EHeliState.BRAKE)
+				{
+					int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
+	
+					//Find high point, low point and difference
+					vector v0 = chopperComp.m_vSplinePoints[chopperComp.m_iClosestIndex];
+					vector v1 = chopperComp.m_vSplinePoints[lastIdx];
+					
+					//Count a landing (bell) curve
+					float p0 = v0[1];
+					float p1 = v1[1];
+					float pdiff = p0 - p1;
+										
+					//Create a Y spline to replace the given points to smooth the curve for braking
+					int points = lastIdx - chopperComp.m_iClosestIndex;
+					for (int i = 0; i < points; i++)
+					{					
+						float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
+	
+						vector pt = vector.Lerp(v1, v0, step);
+						pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
+						chopperComp.m_vSplinePoints[lastIdx - points + i] = pt;
+						chopperComp.m_vSplinePoints[lastIdx - points + i + 1] = pt;	//Ugly hack to make sure the last point is also modified
+					}
+					
+					isSmoothingNeeded = false;
+				}					
 				
-				isSmoothingNeeded = false;
-			}		
+				//If we're landing set some of the last points close to the ground
+				if (chopperComp.GetState() == SDRC_EHeliState.LAND) 
+				{
+					//Decide a point on the spline for the initial landing to start
+					//int pointsToGround = chopperComp.m_fSpeed / 1.2;
+					
+					int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
+					int pointsToGround = lastIdx - 1;
+					if (pointsToGround > 10)
+					{
+						pointsToGround = 10;
+					}
+					
+					//Check that point is within limits
+					SDRC_Log.Add("[SDRC_ChopperHelper:SetSplinePointsAboveGround] pointsToGround: " + pointsToGround, LogLevel.DEBUG);			
+	
+					//Find high point, low point and difference
+					vector v0 = chopperComp.m_vSplinePoints[lastIdx - pointsToGround];
+					vector v1 = chopperComp.m_vSplinePoints[lastIdx];
+					//The destination point will take any objects like buildings in to account
+					v1[1] = SDRC_Misc.GetSurfaceYWithWater(v1, true);
+					
+					//Define the distance from where to start landing sequence				
+					chopperComp.m_fLandingDistance = vector.Distance(v0, v1);
+	
+					//Count a landing (bell) curve
+					float p0 = v0[1];
+					float p1 = v1[1];
+					float pdiff = p0 - p1;
+										
+					//Create a Y spline to replace the given points to smooth the curve for landing
+					if (chopperComp.m_vSplinePoints.Count() - 1 > pointsToGround)
+					{
+						for (int i = 0; i < pointsToGround; i++)
+						{					
+							float step = 1 - (i / (pointsToGround - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
+	
+							vector pt = vector.Lerp(v1, v0, step);
+							pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
+							chopperComp.m_vSplinePoints[lastIdx - pointsToGround + i + 1] = pt;
+						}
+					}
+					
+					isSmoothingNeeded = false;
+				}		
+			}
 			
 			if (isSmoothingNeeded)
 			{

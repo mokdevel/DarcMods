@@ -13,7 +13,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		turnSpeedDivider = 92;
 		turnSpeedDegreeMin = 1;
 		turnSpeedDegreeMax = 90;
-		turnTimeIntervalBase = 40;
+		turnTimeIntervalBase = 60;
 	
 		//Roll 
 		rollAngleMul = 2.4;
@@ -41,7 +41,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		//Attack and enemy related
 		rayLenEnemy = 1000;
 		timeSearchAndDestroy = 600;
-		attackHeightMul = 1.0;
+		attackHeightMul = 0.5;
 		
 		//Damage levels
 		damageHeavy = 0.90;
