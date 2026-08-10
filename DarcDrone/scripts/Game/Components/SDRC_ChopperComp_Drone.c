@@ -41,7 +41,7 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		//Attack and enemy related
 		rayLenEnemy = 200;
 		timeSearchAndDestroy = 60;
-		attackHeightMul = 0.2;
+		attackHeightMul = -0.2;
 		
 		//Damage levels
 		damageHeavy = 0.10;
@@ -306,7 +306,19 @@ modded class SDRC_ChopperComp
 				if (droneControllerComponent)
 				{
 					DroneGrenade(droneControllerComponent.m_DroneId);
+					AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY); 
 				}
+			}
+		}
+		
+		//If on a very low altitude, drop grenade and self destruct
+		if (m_fAltitude < 2)
+		{
+			SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
+			if (droneControllerComponent)
+			{
+				DroneGrenade(droneControllerComponent.m_DroneId);
+				AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY); 
 			}
 		}
 	}
