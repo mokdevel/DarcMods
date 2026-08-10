@@ -399,14 +399,22 @@ modded class SDRC_ChopperComp
 					destination = GetOwner().GetOrigin() + (direction.Normalized() * (float)SDRC_Misc.GetWorldSize());
 				}
 				
+				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, -1);	//Become passive once flying away.
 				SetState(SDRC_EHeliState.FLY_AWAY);
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
 				m_vAttackPosition = destination;			//Where to attack
-				//Attack flying to be on low altitude. The height will be modified in CreateFlightPoints()!
-				//destination[1] = m_fFlyHeightLow * params.attackHeightMul;	//TBD: 
+
+				//For drone, the attack position needs to a bit further than the one defined. 
+				if (params.type == SDRC_EChopperType.DRONE)
+				{				
+					//Move it along the flight path.
+					vector direction = vector.Direction(m_vSplinePoints[m_vSplinePoints.Count() - 1], destination);
+					direction.Normalize();
+					m_vAttackPosition = destination + direction * 50;
+				}				
 
 				//With default attack time, set it to 60 seconds
 				if (value == -1)

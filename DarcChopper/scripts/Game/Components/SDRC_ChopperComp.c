@@ -1036,8 +1036,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			{
 				case SDRC_EFlyWayPointType.WP_ATTACK:
 				{
-					//Attack to be on low altitude
-					flyDestination.pt[1] = SDRC_Misc.GetSurfaceYWithWater(flyDestination.pt) + m_fFlyHeightLow * params.attackHeightMul;
+					//Attack to be on low altitude. This will be set in SDRC_ChopperHelper.SetSplinePointsAboveGround()
 					SetState(SDRC_EHeliState.ATTACK);
 					//NOTE: m_vAttackPosition has been set in AddDestination
 					break;
