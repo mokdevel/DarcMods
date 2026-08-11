@@ -221,13 +221,23 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	private void MissionSpawn()
 	{					
 		//Spawn vehicle					
-		string resourceNameRequested = m_DC_Convoy.vehicleTypes.GetRandomElement();
+//		string resourceNameRequested = m_DC_Convoy.vehicleTypes.GetRandomElement();
+		
+		string resourceNameRequested = SDRC_VehicleListHelper.FindPopulatedListVehicle(m_DC_Convoy.vehicleTypes);
 		string resourceName = "";
 		
 		if (resourceNameRequested[0] != "{")
 		{
 			resourceName = SDRC_VehicleListHelper.FindVehicleItem(resourceNameRequested, GetFaction());
 		}
+		
+		if (resourceName == "")
+		{
+			//Could not find a vehicle to spawn
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.COULD_NOT_FIND_VEHICLE_TO_SPAWN, "Maybe the list you are trying to use is empty?");
+			return;			
+		}
+		
 		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Convoy.general.size);
 		
 		if (!m_Vehicle)
@@ -828,9 +838,9 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		);
 		convoy.Set(
 			{
+				"VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", 
+				"VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", 
 				"VEHICLE_WHEELED_ARMED",
-				"VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", 
-				"VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", "VEHICLE_TRACKED_ARMED", 
 			},
 			15
 		);

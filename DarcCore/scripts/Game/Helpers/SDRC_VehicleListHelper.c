@@ -272,7 +272,7 @@ sealed class SDRC_VehicleListHelper
 			}
 		}
 */		
-		int vehicleIndex = FindVehicleIndex(listName);
+		int vehicleIndex = SDRC_ListHelper.FindListIndex(m_Config.lists, listName);
 		
 		if (vehicleIndex == -1)
 		{
@@ -344,26 +344,10 @@ sealed class SDRC_VehicleListHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*! 
-	Find the the right index to match the listName
+	Find the the right vehicle
 	*/	
-	static int FindVehicleIndex(string listName, string faction = "")
+	static string FindPopulatedListVehicle(array<string> testList)
 	{
-		int index = -1;
-		for (int i = 0; i < m_Config.lists.Count(); i++)		
-		{
-			if (m_Config.lists[i].id == listName)
-			{
-				index = i;
-				break;
-			}
-		}
-		
-		if (index == -1)
-		{
-			SDRC_Log.Add("[SDRC_VehicleListHelper:FindVehicleIndex] No list found with name: " + listName + ". Typo?", LogLevel.WARNING);
-			return "";				
-		}
-		
-		return index;
-	}		
+		return SDRC_ListHelper.FindPopulatedList(m_Config.lists, testList);
+	}	
 }

@@ -65,7 +65,7 @@ sealed class SDRC_EnemyHelper
 			
 			foreach (string rlist : randomizedLists)
 			{		
-				int listIndex = SDRC_ListHelper.FindRightList(m_Config.lists, rlist);
+				int listIndex = SDRC_ListHelper.FindListIndex(m_Config.lists, rlist);
 				if (listIndex != -1)
 				{
 					foreach (string item : m_Config.lists[listIndex].items)
@@ -259,7 +259,7 @@ sealed class SDRC_EnemyHelper
 		}
 
 		//Find the right list index		
-		int index = SDRC_ListHelper.FindRightList(m_Config.lists, listName);
+		int index = SDRC_ListHelper.FindListIndex(m_Config.lists, listName);
 		
 		//Did we find it?
 		if (index == -1)
