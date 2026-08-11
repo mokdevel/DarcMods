@@ -58,7 +58,7 @@ class SDRC_ListHelper
 			return listName;
 		}
 		
-		for (int i = 0; i < testList.Count() - 1; i++)
+		for (int i = 0; i < testList.Count(); i++)
 		{
 			string l_name = testList[ri];
 			

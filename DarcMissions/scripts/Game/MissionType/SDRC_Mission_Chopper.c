@@ -544,7 +544,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,1,1,2,2,3,4,4,5};
+		missionList = {4};//{0,1,1,2,2,3,4,4,5};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 100;
@@ -837,14 +837,15 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		chopper.Set
 		(
 			{
-			 "VEHICLE_CHOPPER_ALL",
+			 "{CD4EA91AC53CBCC4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol_FIA.et"
+/*			 "VEHICLE_CHOPPER_ALL",
 			 "VEHICLE_CHOPPER_TRANSPORT", "VEHICLE_CHOPPER_TRANSPORT", "VEHICLE_CHOPPER_TRANSPORT", "VEHICLE_CHOPPER_TRANSPORT", 
 			 "{435F663B9456C29E}Prefabs/Vehicles/Helicopters/UH1H/UH1H_civ_livery_v1_Patrol.et",
 			//From: https://reforger.armaplatform.com/workshop/6850D5F667CEFF94-AH-6MforDarcMissions
 			 "{2B0F7648840C4F6E}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/MH6M_OPFOR_Patrol.et",
 			 "{19022AB51719F2AD}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/AH6M_OPFOR_M134_Patrol.et",
 			 "{C4590C7F97F99DB2}Prefabs/Vehicles/Helicopters/AH6M/MH6M_Patrol.et",
-			 "{87314096BD3C9D1A}Prefabs/Vehicles/Helicopters/AH6M/AH6M_M134_Patrol.et"
+			 "{87314096BD3C9D1A}Prefabs/Vehicles/Helicopters/AH6M/AH6M_M134_Patrol.et"*/
 			},
 			{35, 70},
 			{7, 25},

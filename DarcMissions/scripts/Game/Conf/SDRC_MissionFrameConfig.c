@@ -38,14 +38,14 @@
 		private const int SDRC_PLAYER_MAX_DISTANCE = 1200;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 4;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 12;
+		private const int SDRC_MISSION_COUNT_STATIC = 8;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 1;
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 1;
 		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 5*60;				
-		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 5*60;//SDRC_MISSION_ACTIVE_TIME_DYNAMIC * 10;	
+		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 8*60;//SDRC_MISSION_ACTIVE_TIME_DYNAMIC * 10;	
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 150;
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 45;
 		private const float SDRC_MISSION_ACTIVE_MUL_TO_END = 0.9;
@@ -225,8 +225,8 @@ class SDRC_MissionFrameConfig : SDRC_Config
 			missionDifficultyList = {0,1,2,3,4};
 //			missionDifficultyList = {0};
 		
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
-			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY};
+			missionDynamic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.HUNTER};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
