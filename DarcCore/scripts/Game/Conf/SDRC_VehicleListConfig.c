@@ -24,6 +24,8 @@ VEHICLE_HELICOPTER_ALL
 VEHICLE_CHOPPER_ALL
 VEHICLE_CHOPPER_TRANSPORT
 VEHICLE_CHOPPER_ARMED
+
+VEHICLE_CHOPPER_DRONE
 */
 
 //------------------------------------------------------------------------------------------------
@@ -60,6 +62,8 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 		lists.Insert(vehicleList31());
 		lists.Insert(vehicleList32());
 		lists.Insert(vehicleList33());
+		//Drones
+		lists.Insert(vehicleList40());
 
 		#ifndef SDRC_RELEASE
 			SDRC_Aka akaTest = new SDRC_Aka();
@@ -321,7 +325,7 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 			"VEHICLE_CHOPPER_ALL",
 			{"Prefabs/Vehicles/Helicopters",
 			},
-			{},
+			{},	//Could use "_Patrol", but others may use other prefixes
 			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
 			"_bench", "_gun_mount", "_roof",
 			"Dst", "Lights", "Probes", "VehParts", 
@@ -340,7 +344,7 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 			"VEHICLE_CHOPPER_ARMED",
 			{"Prefabs/Vehicles/Helicopters",
 			},
-			{},
+			{},	//Could use "_Patrol", but others may use other prefixes
 			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
 			"_bench", "_gun_mount", "_roof",
 			"Dst", "Lights", "Probes", "VehParts", 
@@ -359,7 +363,7 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 			"VEHICLE_CHOPPER_TRANSPORT",
 			{"Prefabs/Vehicles/Helicopters",
 			},
-			{},
+			{},	//Could use "_Patrol", but others may use other prefixes
 			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
 			"_bench", "_gun_mount", "_roof",
 			"Dst", "Lights", "Probes", "VehParts", 
@@ -369,4 +373,24 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 		);
 		return vehicleList;
 	}	
+	
+	//Vehiclelist: VEHICLE_CHOPPER_DRONE
+	SDRC_List vehicleList40()
+	{
+		ref SDRC_List vehicleList = new SDRC_List();
+		vehicleList.Set(
+			"VEHICLE_CHOPPER_DRONE",
+			{"Prefabs/Drones",
+			},
+			{"_Darc"},
+			{"_Base", "_Sample", "Tutorial", "_Conflict", "_randomized", 
+			"_bench", "_gun_mount", "_roof",
+			"Dst", "Lights", "Probes", "VehParts", 
+			"_friend",								//Do not include AI choppers
+			},
+			{}
+		);
+		return vehicleList;
+	}	
+	
 }

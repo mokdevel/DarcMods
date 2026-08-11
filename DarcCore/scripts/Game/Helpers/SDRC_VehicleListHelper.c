@@ -95,16 +95,27 @@ sealed class SDRC_VehicleListHelper
 					doDelete = true;
 				}*/
 
-				if (list.id.Contains("VEHICLE_TRACKED_ARMED"))
-				{
-					int x = 0;
-				}
-				
+				#ifndef SDRC_RELEASE
+					//Just for being able to set a breaking point when debugging
+					if (list.id.Contains("VEHICLE_CHOPPER_DRONE"))
+					{
+						int x = 0;
+					}
+				#endif				
 								
 				string containerClass = SCR_BaseContainerTools.GetContainerClassName(res);
 				SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Found: " + containerClass + " from " + SDRC_Misc.GetSimpleEntityName(item), LogLevel.SPAM);				
-				
-				if ( (containerClass != "Vehicle") && (containerClass != "Tank") )
+
+				//Special handling for drones				
+				if (list.id.Contains("VEHICLE_CHOPPER_DRONE"))
+				{
+					if (!item.Contains("_Darc"))
+					{
+						doDelete = true;
+					}
+				}
+				//Check that the it is a Vehicle or Tank
+				else if ( (containerClass != "Vehicle") && (containerClass != "Tank") )
 				{
 					doDelete = true;						
 				}
@@ -112,7 +123,7 @@ sealed class SDRC_VehicleListHelper
 				//All good so far
 				if (!doDelete)
 				{
-					array<IEntityComponentSource> componentSources = {};				
+					array<IEntityComponentSource> componentSources = {};
 
 					// --- Common for all ---
 			
@@ -251,7 +262,7 @@ sealed class SDRC_VehicleListHelper
 	*/	
 	static ResourceName FindVehicleItem(string listName, string faction = "")
 	{
-		int vehicleIndex = -1;
+/*		int vehicleIndex = -1;
 		for (int i = 0; i < m_Config.lists.Count(); i++)		
 		{
 			if (m_Config.lists[i].id == listName)
@@ -260,6 +271,8 @@ sealed class SDRC_VehicleListHelper
 				break;
 			}
 		}
+*/		
+		int vehicleIndex = FindVehicleIndex(listName);
 		
 		if (vehicleIndex == -1)
 		{
@@ -328,4 +341,29 @@ sealed class SDRC_VehicleListHelper
 		
 		return resourceName;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*! 
+	Find the the right index to match the listName
+	*/	
+	static int FindVehicleIndex(string listName, string faction = "")
+	{
+		int index = -1;
+		for (int i = 0; i < m_Config.lists.Count(); i++)		
+		{
+			if (m_Config.lists[i].id == listName)
+			{
+				index = i;
+				break;
+			}
+		}
+		
+		if (index == -1)
+		{
+			SDRC_Log.Add("[SDRC_VehicleListHelper:FindVehicleIndex] No list found with name: " + listName + ". Typo?", LogLevel.WARNING);
+			return "";				
+		}
+		
+		return index;
+	}		
 }
