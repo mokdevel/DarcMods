@@ -46,16 +46,10 @@ class SDRC_ChopperEnemyHelper
 		if ( (SDRC_Misc.GetCurrentTickTime() > chopperComp.m_iEnemyFoundTime + chopperComp.m_iEnemyForgetTimeout) && (chopperComp.m_vEnemyPosition != "0 0 0") )
 		{
 			chopperComp.m_vEnemyPosition = "0 0 0";
-			SDRC_Log.Add("[SDRC_ChopperComp:SearchForEnemy] Enemy position reset.", LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchForEnemy] Enemy position reset.", LogLevel.DEBUG);
 		}
 		
-		bool searchOnlyPlayer = false; 
-		if (chopperComp.m_EnemySearchType == SDRC_EHeliEnemySearchType.PLAYER)
-		{
-			searchOnlyPlayer = true;
-		}		
-		
-		chopperComp.m_vEnemyPosition = SDRC_ChopperEnemyHelper.DoEnemySearch(owner, searchOnlyPlayer);
+		chopperComp.m_vEnemyPosition = SDRC_ChopperEnemyHelper.DoEnemySearch(owner);
 		if (chopperComp.m_vEnemyPosition != vector.Zero)
 		{
 			found = true;
@@ -73,7 +67,7 @@ class SDRC_ChopperEnemyHelper
 	
 	\return position where enemy was found. vector.Zero returned if no enemies found.
 	*/			
-	static vector DoEnemySearch(IEntity owner, bool SearchOnlyPlayer = false)
+	static vector DoEnemySearch(IEntity owner)
 	{
 		vector enemyPosition = vector.Zero;
 		
@@ -88,12 +82,12 @@ class SDRC_ChopperEnemyHelper
 			case SDRC_EChopperType.HELICOPTER:
 			case SDRC_EChopperType.FIXEDWING:			
 			{
-				enemyPosition = SearchEnemyWithAI(owner, SearchOnlyPlayer);
+				enemyPosition = SearchEnemyWithAI(owner);
 				break;
 			}
 			case SDRC_EChopperType.DRONE:
 			{
-				enemyPosition = SearchEnemyWithTrace(owner, SearchOnlyPlayer, chopperComp.params.rayLenEnemy);
+				enemyPosition = SearchEnemyWithTrace(owner, chopperComp.params.rayLenEnemy);
 				break;
 			}
 		}		
@@ -103,11 +97,64 @@ class SDRC_ChopperEnemyHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Check if we're to only search players as enemies
+	*/	
+	static bool IsSearchOnlyPlayer(IEntity owner)
+	{
+		bool searchOnlyPlayer = false;
+		
+		SDRC_ChopperComp cc = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		
+		if (!cc)
+		{
+			SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyWithAI] SDRC_ChopperComp not found.", LogLevel.WARNING);			
+		}
+		
+		//If searching only for players
+		if ( (cc.m_EnemySearchType == SDRC_EHeliEnemySearchType.PLAYER) || 
+		     (cc.m_EnemySearchType == SDRC_EHeliEnemySearchType.ANY_CHAR) || 
+		     (cc.m_EnemySearchType == SDRC_EHeliEnemySearchType.ANY) 
+		   )
+		{
+			searchOnlyPlayer = true;
+		}
+		
+		return searchOnlyPlayer;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Check if we're to only search AI as enemies
+	*/	
+	static bool IsSearchOnlyAI(IEntity owner)
+	{
+		bool searchOnlyAI = false;
+		
+		SDRC_ChopperComp cc = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
+		
+		if (!cc)
+		{
+			SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyWithAI] SDRC_ChopperComp not found.", LogLevel.WARNING);			
+		}
+		
+		//If searching only for AI enemies
+		if ( (cc.m_EnemySearchType == SDRC_EHeliEnemySearchType.ANY_CHAR) || 
+		     (cc.m_EnemySearchType == SDRC_EHeliEnemySearchType.ANY) 
+		   )
+		{
+			searchOnlyAI = true;
+		}
+		
+		return searchOnlyAI;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Search for enemy and return *first* enemy position found. This will use the AIs vision functionality.
 	
 	//TBD: Extend to have a parameter where enemy needs to be in front of the heli
 	*/	
-	static vector SearchEnemyWithAI(IEntity owner, bool SearchOnlyPlayer = false)
+	static vector SearchEnemyWithAI(IEntity owner)
 	{
 		vector enemyPosition = vector.Zero;
 		
@@ -132,7 +179,7 @@ class SDRC_ChopperEnemyHelper
 				{
 					IEntity target = bt.GetTargetEntity();					
 					
-					if (SearchOnlyPlayer)
+					if (IsSearchOnlyPlayer(owner))
 					{
 						if (EntityUtils.IsPlayer(target))
 						{
@@ -164,29 +211,59 @@ class SDRC_ChopperEnemyHelper
 	
 	//TBD: Extend to have a parameter where enemy needs to be in front of the drone
 	*/	
-	static vector SearchEnemyWithTrace(IEntity owner, bool SearchOnlyPlayer = false, int rayLen = 200)
+	static vector SearchEnemyWithTrace(IEntity owner, int rayLen = 200)
 	{
 		vector enemyPosition = vector.Zero;
 
 		//Find the owner faction
 		string chopperFaction = "";
 		SDRC_ChopperComp cc = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		if (cc)
+		
+		if (!cc)
 		{
-			chopperFaction = cc.m_sFaction;
+			SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyWithTrace] SDRC_ChopperComp not found.", LogLevel.ERROR);			
 		}
 		
-		//Find enemies nearby
+		chopperFaction = cc.m_sFaction;
+		
+		//enemy arrays
 		array<ref SDRC_PlayerPos> enemyPosArray = {};
+		array<AIGroup> enemyGroups = {};
 		
-		if (SearchOnlyPlayer)
+		//Search for player enemies
+		if (IsSearchOnlyPlayer(owner))
 		{
-			SDRC_PlayerHelper.GetPlayersClosestToPosition(enemyPosArray, owner.GetOrigin(), rayLen);			
+			SDRC_PlayerHelper.GetPlayersClosestToPosition(enemyPosArray, owner.GetOrigin(), rayLen);
+		}
+
+		//Search for AI enemies
+		if (IsSearchOnlyAI(owner))
+		{
+			//Find all AI characters of near position			
+			array<AIGroup> groups = {};
+			
+			SDRC_AIHelper.GroupFindAll(groups);
+			
+			foreach (int i, AIGroup group : groups)
+			{
+				if (vector.Distance(group.GetOrigin(), owner.GetOrigin()) < rayLen)
+				{
+					enemyGroups.Insert(group);
+					i++;
+					//Found
+//					FactionKey factionKey = SDRC_AIHelper.GetGroupFactionKey(group);
+					
+				}
+				
+				//Find only 10 groups as max
+				if (i > 10)
+				{
+					break;
+				}
+			}
 		}
 		
-		
-		//TBD: Find also AI characters of enemy faction
-		
+		//First search for players. These are priority enemy.
 		if (!enemyPosArray.IsEmpty())
 		{
 			foreach (SDRC_PlayerPos enemyPos : enemyPosArray)
@@ -208,7 +285,25 @@ class SDRC_ChopperEnemyHelper
 				}
 			}
 		}		
-						
+		
+		//If no players found, search for enemy AI				
+		if (enemyPosition == vector.Zero)
+		{
+			if (!enemyGroups.IsEmpty())
+			{
+				foreach (AIGroup group : enemyGroups)
+				{
+					Faction faction = SCR_AIGroup.Cast(group).GetFaction();
+					string targetFactionKey = faction.GetFactionKey();
+					if (SDRC_FactionHelper.IsEnemies(targetFactionKey, chopperFaction))
+					{
+						enemyPosition = group.GetOrigin();
+						break;
+					}					
+				}
+			}
+		}
+		
 		return enemyPosition;
 	}
 	

@@ -577,8 +577,7 @@ sealed class SDRC_AIHelper
 		}
 		
 		return 0;
-	}
-	
+	}	
 		
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -597,8 +596,8 @@ sealed class SDRC_AIHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Find AIagent faction
-	Returns the faction ID for an AIAgent.
+	Find AIagent factionKey
+	Returns the factionKey for an AIAgent.
 	*/
 	static FactionKey GetAIAgentFactionKey(AIAgent aiAgent)
 	{
@@ -644,6 +643,23 @@ sealed class SDRC_AIHelper
 		return factionKey;
 	}		
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find the AI group factionKey	
+	*/
+	static FactionKey GetGroupFactionKey(SCR_AIGroup group)
+	{
+		if (!group)
+		{
+			SDRC_Log.Add("[SDRC_AIHelper:GetGroupFactionKey] group is null.", LogLevel.ERROR);			
+		}
+		
+		FactionKey factionKey = "";
+		Faction groupFaction = group.GetFaction();
+		
+		return factionKey;
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Delete an AI
