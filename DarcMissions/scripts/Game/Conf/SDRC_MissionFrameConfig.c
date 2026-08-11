@@ -239,8 +239,8 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS};
 		
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
-			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
+			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};

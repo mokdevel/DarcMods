@@ -250,11 +250,26 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private void MissionSpawn()
 	{
 		//Spawn vehicle
-		string resourceName	= SDRC_SpawnHelper.SelectResourceName(m_DC_Chopper.heliList);		
+		string resourceNameRequested = SDRC_VehicleListHelper.FindPopulatedListVehicle(m_DC_Chopper.heliList);
+		string resourceName = "";
+		
+		if (resourceNameRequested[0] != "{")
+		{
+			resourceName = SDRC_VehicleListHelper.FindVehicleItem(resourceNameRequested, GetFaction());
+		}
+		
+		if (resourceName == "")
+		{
+			//Could not find a vehicle to spawn
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.COULD_NOT_FIND_VEHICLE_TO_SPAWN, "Maybe the list you are trying to use is empty?");
+			return;			
+		}
+		
+/*		string resourceName	= SDRC_SpawnHelper.SelectResourceName(m_DC_Chopper.heliList);		
 		if ( (resourceName[0] != "{") || (resourceName == "") )
 		{
 			resourceName = SDRC_VehicleListHelper.FindVehicleItem(resourceName, GetFaction());
-		}
+		}*/
 		
 		//Set to initial position, rotation and spawn
 		m_vPosOrigin[1] = SDRC_Misc.RandomFloat(m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1]) + SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin);		

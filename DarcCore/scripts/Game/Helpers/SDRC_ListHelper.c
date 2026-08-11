@@ -26,6 +26,11 @@ class SDRC_ListHelper
 			}
 		}
 		
+		if (index == -1)
+		{
+			int x = 0;
+		}
+		
 		return index;
 	}
 	
@@ -67,13 +72,15 @@ class SDRC_ListHelper
 					return l_name;
 				}
 			}
-
-			int l_idx = FindListIndex(lists, l_name);
-			
-			if (!lists[l_idx].items.IsEmpty())
+			else
 			{
-				listName = lists[l_idx].id;
-				break;
+				int l_idx = FindListIndex(lists, l_name);
+				
+				if (!lists[l_idx].items.IsEmpty())
+				{
+					listName = lists[l_idx].id;
+					break;
+				}
 			}
 			
 			//Try next one.

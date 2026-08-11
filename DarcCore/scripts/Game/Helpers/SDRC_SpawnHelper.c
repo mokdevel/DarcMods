@@ -21,7 +21,9 @@ class SDRC_SpawnHelper
 	//------------------------------------------------------------------------------------------------
 	/*! 
 	Pick a proper resourceName from the provided list. 
-	A random item is picked and the list is then walked through
+		
+	A random item is picked. We try to load the resource, and if success, return it. If not, continue going through the list.
+	\return Empty if no proper name is found
 	*/
 	static ResourceName SelectResourceName(array<string> resourceNames)
 	{
