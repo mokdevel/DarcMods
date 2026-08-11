@@ -1332,19 +1332,19 @@ modded class SDRC_ChopperComp : ScriptComponent
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Type specific <TBD>
+	Type specific to get scaled health
 	*/	
 	void TypeGetHealthScaled(IEntity owner, out float health) {}
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Type specific <TBD>
+	Type specific handling of the final parts after damage that breaks flying
 	*/	
 	void TypeHandleDamageFinal(IEntity owner) {}
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Type specific <TBD>
+	Type specific handling of attacks. Search for the enemy and then react on the finding.
 	*/	
 	void TypeHandleAttack(IEntity owner) {}
 	

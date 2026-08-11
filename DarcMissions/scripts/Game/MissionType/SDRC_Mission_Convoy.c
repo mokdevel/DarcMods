@@ -221,17 +221,19 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	private void MissionSpawn()
 	{					
 		//Spawn vehicle					
-		string resourceName	= m_DC_Convoy.vehicleTypes.GetRandomElement();
-		if (resourceName[0] != "{")
+		string resourceNameRequested = m_DC_Convoy.vehicleTypes.GetRandomElement();
+		string resourceName = "";
+		
+		if (resourceNameRequested[0] != "{")
 		{
-			resourceName = SDRC_VehicleListHelper.FindVehicleItem(resourceName, GetFaction());
+			resourceName = SDRC_VehicleListHelper.FindVehicleItem(resourceNameRequested, GetFaction());
 		}
 		m_Vehicle = SDRC_SpawnHelper.SpawnItem(GetPos(), resourceName, m_DC_Convoy.general.size);
 		
 		if (!m_Vehicle)
 		{
 			//Could not spawn vehicle
-			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.COULD_NOT_SPAWN_VEHICLE, resourceName);
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.COULD_NOT_SPAWN_VEHICLE, resourceNameRequested);
 			return;			
 		}
 		

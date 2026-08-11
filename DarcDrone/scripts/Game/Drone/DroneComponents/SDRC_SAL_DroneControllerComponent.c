@@ -374,7 +374,7 @@ modded class SAL_DroneControllerComponent
 	
 	override bool HasController()
 	{
-		//The drone has always an AI with a controller.
+		//The drone has always an imaginary AI with a controller.
 		//TBD: We could assign an AI that works as the driver for the drone. Handled in e.g. ChopperComp
 		return true;
 	}
