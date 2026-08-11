@@ -15,13 +15,12 @@ GenericEntity : "{522D1916AE149FCA}Prefabs/Drones/DJIBase/DJIM14Dropper.et" {
   SDRC_ChopperComp "{6A1501BF2C5134A0}" {
    m_fThrottle 1.5
    m_fSpeedMin 5
-   m_fSpeedMax 10
+   m_fSpeedMax 15
    m_fFlyHeightLow 10
    m_fFlyHeightHigh 25
    m_fDistanceLow 80
    m_fDistanceHigh 200
    m_sFaction "US"
-   m_EnemySearchType PLAYER
    m_EntityType DRONE
    m_bUnpiloted 1
   }
