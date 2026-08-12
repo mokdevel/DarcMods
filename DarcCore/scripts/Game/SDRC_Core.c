@@ -7,10 +7,11 @@ This is the main Core file.
 class SDRC_EmptyPos : Managed
 {
 	int limit;
-	ref array<string> ignoreFilter = {};
-	ref array<string> stopFilter = {};
-	ref array<string> classFilter = {};
-	ref array<string> objectFilter = {};
+	//Obstruction object filters
+	ref array<string> ignoreFilter = {};	//Ignore these classes or resourcename. Small items that do not obstruct.
+	ref array<string> stopFilter = {};		//Large objects that will stop search immediately. Like big rocks.
+	ref array<string> classFilter = {};		//Classes that obstruct and are counted towards the limit.
+	ref array<string> objectFilter = {};	//Objects that obstruct and are counted towards the limit.
 }
 
 //------------------------------------------------------------------------------------------------

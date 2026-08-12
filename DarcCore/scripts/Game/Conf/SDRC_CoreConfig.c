@@ -63,6 +63,8 @@ class SDRC_CoreConfig : SDRC_Config
 		emptyPos.limit = 5;
 		emptyPos.ignoreFilter = {
 			"ParticleEffectEntity",
+			"DecalEntity",
+			"Granite_BeachCluster_01",					//Small rocks that 
 		};
 		emptyPos.stopFilter = {
 			"RiverPartEntity", "LakeGeneratorEntity", 

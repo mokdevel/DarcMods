@@ -88,8 +88,10 @@ class SDRC_SpawnHelper
 				return null;
 			}
 			
+			float maxSize = SDRC_Misc.FindMaxValue(sums);
+			
 			//Spawn the resource to a free spot close to pos
-			if (FindEmptyPos(pos, emptyPosRadius, (SDRC_Misc.FindMaxValue(sums)/SIZEDIV) ) )
+			if (FindEmptyPos(pos, emptyPosRadius, (maxSize/SIZEDIV) ) )
 			{
 				vector transform[4];
 				SDRC_Math.GetTransformFromPosAndRot(transform, pos, rotation, snap);
@@ -102,7 +104,8 @@ class SDRC_SpawnHelper
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] Could not find an empty spot for " + entityName, LogLevel.ERROR);			
+				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] Could not find an empty spot for " + entityName + " of size: " + maxSize , LogLevel.ERROR);
+				SDRC_DebugHelper.AddDebugPos(pos, Color.RED, maxSize, "SPAWN_DEBUG", 50);
 			}
 		}
 		else
@@ -422,37 +425,39 @@ class SDRC_SpawnHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Find an empty spot within areaRadius to fit emptySize
+	Find an empty spot within areaRadius to fit objectSize
 	
 	\param pos Center position for the area to search. Pos is updated with a new position.
 	\param areaRadius The size of the area to search
-	\param emptySize Size of the empty area to find
+	\param objectSize Size of the empty area to find
 	*/
 	
 	static private int m_obstructCount;
 	
-	static bool FindEmptyPos(out vector pos, float areaRadius, float emptySize)
+	static bool FindEmptyPos(out vector pos, float areaRadius, float objectSize)
 	{		
 		vector posFixed;
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		
+		//Reset m_obstructCount. It will be updated with FindEntitiesCallback()
 		m_obstructCount = 0;
 				
-//		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize, 20, TraceFlags.ENTS|TraceFlags.WORLD|TraceFlags.OCEAN|TraceFlags.ANY_CONTACT))
-//		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize, 20, TraceFlags.ENTS|TraceFlags.OCEAN|TraceFlags.WORLD))
-		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, emptySize, 20, TraceFlags.ENTS|TraceFlags.OCEAN) && m_obstructCount == 0)
+//		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, objectSize, 20, TraceFlags.ENTS|TraceFlags.WORLD|TraceFlags.OCEAN|TraceFlags.ANY_CONTACT))
+//		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, objectSize, 20, TraceFlags.ENTS|TraceFlags.OCEAN|TraceFlags.WORLD))
+		if (SCR_WorldTools().FindEmptyTerrainPosition(posFixed, pos, areaRadius, objectSize, 3, TraceFlags.ENTS|TraceFlags.OCEAN) && m_obstructCount == 0)
 		{	
 			pos = posFixed;
-			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Found: " + pos, LogLevel.SPAM);			
+			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Checking obstructing objects at: " + pos, LogLevel.SPAM);			
 			
-			//TBD: For some reason the emptySize when doing a query is wider than the actual area.
-			GetGame().GetWorld().QueryEntitiesBySphere(pos, emptySize * 0.7, FindEntitiesCallback, null, EQueryEntitiesFlags.ALL);
+			//NOTE: For some reason the objectSize when doing a query is wider than the actual area. We reduce the size.
+			GetGame().GetWorld().QueryEntitiesBySphere(pos, objectSize * 0.4, FindEntitiesCallback, null, EQueryEntitiesFlags.ALL);
 		}
 		else	//FindEmptyTerrainPosition did not find a spot
 		{
 			m_obstructCount = baseGameMode.m_SDRC_Core.m_Config.emptyPos.limit;
 		}
 		
+		//If in water, 
 		if (SDRC_Misc.IsPosInWater(pos))
 		{
 			m_obstructCount = baseGameMode.m_SDRC_Core.m_Config.emptyPos.limit;
@@ -460,13 +465,14 @@ class SDRC_SpawnHelper
 		
 		if (m_obstructCount < baseGameMode.m_SDRC_Core.m_Config.emptyPos.limit)
 		{
-			//SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 0, 255, 0), emptySize, "NONE", 20);	//GREEN
+			//SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 0, 255, 0), objectSize, "NONE", 20);	//GREEN
 			return true;
 		}
 		else
 		{
-			//SDRC_DebugHelper.AddDebugPos(pos, ARGB(20, 255, 0, 0), emptySize, "NONE", 15);	//RED
-			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.SPAM);			
+			//SDRC_DebugHelper.AddDebugPos(pos, ARGB(20, 255, 0, 0), objectSize, "NONE", 15);	//RED
+			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Obstructing objects: " + m_obstructCount, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.SPAM);
 			return false;
 		}
 		return false;
@@ -490,7 +496,7 @@ class SDRC_SpawnHelper
 			{
 				return true;	//Just continue...
 			}
-			
+
 			if (!entity.GetPrefabData())
 			{
 				SDRC_Log.Add("[SDRC_SpawnHelper:FindEntitiesCallback] GetPrefabData fails for: " + entity, LogLevel.SPAM);
@@ -504,7 +510,16 @@ class SDRC_SpawnHelper
 					SDRC_Log.Add("[SDRC_SpawnHelper:FindEntitiesCallback] Entity at zero: " + entity, LogLevel.SPAM);
 				}
 			#endif
-			
+
+			//Get resource name of the prefab
+			ResourceName resName = entity.GetPrefabData().GetPrefabName();
+
+			//Completely ignore these. The objects should be small ones that can be ignored.
+			if (SCR_StringHelper.ContainsAny(resName, baseGameMode.m_SDRC_Core.m_Config.emptyPos.ignoreFilter) )
+			{
+				return true;	//Just continue...
+			}
+						
 			//Stop immediately when these are found
 			if (SCR_StringHelper.ContainsAny(entity.ClassName(), baseGameMode.m_SDRC_Core.m_Config.emptyPos.stopFilter) )
 			{
@@ -515,8 +530,6 @@ class SDRC_SpawnHelper
 			else //Then do normal checking
 			{
 //				SDRC_Log.Add("[SDRC_SpawnHelper:FindEntitiesCallback] Entity: " + entity, LogLevel.DEBUG);
-				
-				ResourceName resName = entity.GetPrefabData().GetPrefabName();
 				
 				if (SCR_StringHelper.ContainsAny(resName, baseGameMode.m_SDRC_Core.m_Config.emptyPos.stopFilter) && !obstruct)
 				{

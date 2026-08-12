@@ -80,7 +80,7 @@ sealed class SDRC_Locations
 	{
 		array<MapItem> locationArrayMapItem = {};
 		
-		GetLocations(locationArrayMapItem, locationTypeArray);
+		GetLocationsMapItem(locationArrayMapItem, locationTypeArray);
 		
 		foreach (MapItem tmpMapItem : locationArrayMapItem)
 		{
@@ -103,13 +103,13 @@ sealed class SDRC_Locations
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	static void GetLocations(out array<MapItem> locationArray, array<EMapDescriptorType> locationTypeArray)
+	static void GetLocationsMapItem(out array<MapItem> locationArray, array<EMapDescriptorType> locationTypeArray)
 	{
 		//If SCR_MapEntity does not exist, we most likely are playing in some debug map
 		SCR_MapEntity mapEnt = SCR_MapEntity.GetMapInstance();
 		if (!mapEnt)
 		{
-			SDRC_Log.Add("[SDRC_Locations:GetLocations] MapInstance not available. No locations will be found.", LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_Locations:GetLocationsMapItem] MapInstance not available. No locations will be found.", LogLevel.WARNING);
 			return;
 		}
 
@@ -119,7 +119,7 @@ sealed class SDRC_Locations
 
 		foreach (EMapDescriptorType locationType : locationTypeArray)
 		{		
-			SDRC_Log.Add("[SDRC_Locations:GetLocations] Searching for: " + SCR_Enum.GetEnumName(EMapDescriptorType, locationType), LogLevel.SPAM);
+			SDRC_Log.Add("[SDRC_Locations:GetLocationsMapItem] Searching for: " + SCR_Enum.GetEnumName(EMapDescriptorType, locationType), LogLevel.SPAM);
 			
 			m_tmpLocationArray.Clear();
 			SCR_MapEntity.GetMapInstance().GetByType(m_tmpLocationArray, locationType);
@@ -137,11 +137,11 @@ sealed class SDRC_Locations
 			}			
 		}
 		
-		SDRC_Log.Add("[SDRC_Locations:GetLocations] Found locations: " + locationArray.Count(), LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Locations:GetLocationsMapItem] Found locations: " + locationArray.Count(), LogLevel.DEBUG);
 		ShowDebugInfo(locationArray);
 		
 		//int etime = System.GetTickCount();
-		//SDRC_Log.Add("[SDRC_Locations:GetLocations] Searching took: " + (etime-stime), LogLevel.DEBUG);
+		//SDRC_Log.Add("[SDRC_Locations:GetLocationsMapItem] Searching took: " + (etime-stime), LogLevel.DEBUG);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -387,6 +387,12 @@ sealed class SDRC_Locations
 		 	SCR_Enum.GetEnumName(EMapDescriptorType, locationType),
 			), LogLevel.DEBUG);*/
 	
+		LogLevel logLevel = LogLevel.SPAM;
+		
+		#ifndef SDRC_RELEASE
+//			logLevel = LogLevel.DEBUG;
+		#endif 
+		
 		foreach (MapItem location : m_tmpLocationArray)
 		{	
 			IEntity entity = location.Entity();			
@@ -397,10 +403,10 @@ sealed class SDRC_Locations
 					location.Entity().GetName(),
 					location.GetDisplayName(),
 					CreateName(location.GetPos()),
-					location.GetBaseType(),
+					SCR_Enum.GetEnumName(EMapDescriptorType, location.GetBaseType()),
 					location.GetPos(),
 					entity
-					), LogLevel.SPAM);
+					), logLevel);
 			}
 			else
 			{
@@ -408,10 +414,10 @@ sealed class SDRC_Locations
 					"",
 					location.GetDisplayName(),
 					CreateName(location.GetPos()),
-					location.GetBaseType(),
+					SCR_Enum.GetEnumName(EMapDescriptorType, location.GetBaseType()),
 					location.GetPos(),
 					""
-					), LogLevel.SPAM);
+					), logLevel);
 			}
 
 			slots.Clear();
@@ -419,7 +425,7 @@ sealed class SDRC_Locations
 			
 			SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Found %1 slots.", 
 				slotcount,
-				), LogLevel.SPAM);
+				), logLevel);
 			
 			#ifndef SDRC_RELEASE
 				if (SDRC_Conf.SHOW_MARKER_FOR_LOCATION)
@@ -438,22 +444,28 @@ sealed class SDRC_Locations
 	{
 		array<IEntity> slots = {};
 
+		LogLevel logLevel = LogLevel.SPAM;
+		
+		#ifndef SDRC_RELEASE
+//			logLevel = LogLevel.DEBUG;
+		#endif 
+		
 		foreach (SDRC_Location location : m_tmpLocationArray)
 		{			
 			SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Name: %2 (%1) , CreatedName: %3, Type: %4 , Pos: %5", 
 				location.name,
 				location.displayName,
 				location.createdName,
-				location.baseType,
+				SCR_Enum.GetEnumName(EMapDescriptorType, location.baseType),
 				location.pos,
-				), LogLevel.SPAM);
+				), logLevel);
 
 			slots.Clear();
 			int slotcount = GetLocationSlots(slots, location.pos, 200);
-			
+						
 			SDRC_Log.Add( string.Format("[SDRC_Locations:ShowDebugInfo] Found %1 slots.", 
 				slotcount,
-				), LogLevel.SPAM);
+				), logLevel);
 			
 			#ifndef SDRC_RELEASE
 				if (SDRC_Conf.SHOW_MARKER_FOR_LOCATION)

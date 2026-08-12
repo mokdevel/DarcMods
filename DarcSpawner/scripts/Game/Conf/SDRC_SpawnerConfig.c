@@ -59,9 +59,9 @@ class SDRC_SpawnerConfig : SDRC_Config
 		spawnOnRoad = false;
 		spawnRndRadius = 100;
 		spawnWorldSizeMultiplier = 0;
-		containerCount = 10;//20;
+		containerCount = 20;//20;
 		disableArsenal = true;
-		spawnSetList = {0,1,2,2,3,3};
+		spawnSetList = {0};//{0,1,2,2,3,3};
 		//----------------------------------------------------		
 		spawnSets.Insert(SpawnSet0());
 		spawnSets.Insert(SpawnSet1());

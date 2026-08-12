@@ -13,6 +13,7 @@ class SDRC_Spawner
 {
 	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_SPAWNER);	
 	private ref SDRC_SpawnerConfig m_Config = new SDRC_SpawnerConfig();	
+//	private ref SDRC_SpawnerConfig_Animals m_Config = new SDRC_SpawnerConfig_Animals();
 	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g. cars, tents, ..) spawned
 	private int m_spawnSetID;
@@ -29,6 +30,7 @@ class SDRC_Spawner
 		
 		//Load config
 		bool success = m_JsonApi.Load(m_Config, SDRC_SpawnerConfig.Cast(m_Config), DC_CONFIG_FILE_SPAWNER_JSONVER);
+//		bool success = m_JsonApi.Load(m_Config, SDRC_SpawnerConfig_Animals.Cast(m_Config), DC_CONFIG_FILE_SPAWNER_JSONVER);
 		if (!success)
 		{
 			SDRC_Log.Add("[SDRC_Spawner] Error loading " + DC_CONFIG_FILE_SPAWNER + ". SDRC_Spawner not started.", LogLevel.ERROR);
@@ -70,7 +72,7 @@ class SDRC_Spawner
 	*/	
 	void Run()
 	{
-		SDRC_Log.Add("[SDRC_Spawner:Run] Running", LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Spawner:Run] Running", LogLevel.SPAM);
 
 		if (m_spawnIdx < m_spawnCount)		
 		{	
@@ -153,8 +155,17 @@ class SDRC_Spawner
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_Spawner:Spawn] Randomizing position", LogLevel.SPAM);			
-				pos = SDRC_Misc.RandomizePos(pos, m_Config.spawnRndRadius);
+				//Randomize position and try to find a spot not in water.
+				SDRC_Log.Add("[SDRC_Spawner:Spawn] Randomizing position", LogLevel.SPAM);
+				for (int i = 0; i < 5; i++)
+				{
+					pos = SDRC_Misc.RandomizePos(pos, m_Config.spawnRndRadius);
+					if (!SDRC_Misc.IsPosInWater(pos))
+					{
+						break;
+					}
+				}
+				
 			}
 		}
 		else //Use positions
@@ -195,7 +206,7 @@ class SDRC_Spawner
 		{		
 			if (location)
 			{
-				SDRC_Log.Add("[SDRC_Spawner:Spawn] Spawning " + entityToSpawn + " to " + WidgetManager.Translate(location.displayName), LogLevel.NORMAL);
+				SDRC_Log.Add("[SDRC_Spawner:Spawn] Spawning " + entityToSpawn + " to " + WidgetManager.Translate(location.displayName) + " (" + pos + ")", LogLevel.NORMAL);
 			}
 			else
 			{
@@ -215,7 +226,6 @@ class SDRC_Spawner
 			if (entity != NULL)
 			{ 
 				m_EntityList.Insert(entity);
-				spawnSet.loot.box = entity;
 				
 				//Disable arsenal
 				if (isVehicle)
@@ -224,8 +234,13 @@ class SDRC_Spawner
 					SDRC_VehicleHelper.EmptyStorage(entity);					
 				}
 
-				//Add loot				
-				SDRC_LootHelper.SpawnItemsToStorage(entity, spawnSet.loot.items, spawnSet.loot.itemChance);
+				//Add loot if it is defined. 
+				if (spawnSet.loot)
+				{
+					//Set the spawned entity as the target.
+					spawnSet.loot.box = entity;
+					SDRC_LootHelper.SpawnItemsToStorage(entity, spawnSet.loot.items, spawnSet.loot.itemChance);
+				}
 					
 				if (spawnSet.showMarker)
 				{
