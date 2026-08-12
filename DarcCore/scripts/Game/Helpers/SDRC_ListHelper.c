@@ -65,10 +65,11 @@ class SDRC_ListHelper
 			//If it is a prefab name, try loading it 
 			if (l_name[0] == "{")
 			{
-				//If success, we can continue.
 				Resource resource = Resource.Load(l_name);
 				if (resource.IsValid())
 				{
+					//If success, we choose this one. 
+					//NOTE: Faction may still be wrong.
 					return l_name;
 				}
 			}

@@ -65,11 +65,14 @@ class SDRC_VehicleListConfig : SDRC_ListConfig
 		//Drones
 		lists.Insert(vehicleList40());
 
+/*		//Uncomment to test that akas work. This will change USSR to FIA!
+		
 		#ifndef SDRC_RELEASE
 			SDRC_Aka akaTest = new SDRC_Aka();
 			akaTest.names = {"USSR", "FIA"};
 			akas.Insert(akaTest);	
 		#endif
+		*/
 				
 		SDRC_Aka aka00 = new SDRC_Aka();
 		aka00.names = {"RHS_USAF", "US"};

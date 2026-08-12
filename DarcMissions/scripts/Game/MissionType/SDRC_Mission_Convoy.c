@@ -221,14 +221,22 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	private void MissionSpawn()
 	{					
 		//Spawn vehicle					
-//		string resourceNameRequested = m_DC_Convoy.vehicleTypes.GetRandomElement();
-		
 		string resourceNameRequested = SDRC_VehicleListHelper.FindPopulatedListVehicle(m_DC_Convoy.vehicleTypes);
 		string resourceName = "";
 		
 		if (resourceNameRequested[0] != "{")
 		{
 			resourceName = SDRC_VehicleListHelper.FindVehicleItem(resourceNameRequested, GetFaction());
+		}
+		else
+		{
+			resourceName = resourceNameRequested;
+			//Check faction for prefabs
+			string faction = SDRC_Resources.GetResourceFaction(resourceName);
+			if (faction != GetFaction())
+			{
+				SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] Faction not correct: " + resourceName, LogLevel.WARNING);
+			}
 		}
 		
 		if (resourceName == "")
@@ -247,7 +255,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			return;			
 		}
 		
-		SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] " +  GetId() + " : Vehicle spawned: " + m_Vehicle, LogLevel.DEBUG);										
+		SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] " +  GetId() + " : Vehicle spawned: " + SDRC_Misc.GetSimpleEntityName(resourceName) + " at: " + m_Vehicle.GetOrigin(), LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] " +  GetId() + " : Vehicle: " + m_Vehicle, LogLevel.SPAM);
 		
 		m_EntityList.Insert(m_Vehicle);
 		

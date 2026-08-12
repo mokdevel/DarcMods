@@ -257,6 +257,16 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		{
 			resourceName = SDRC_VehicleListHelper.FindVehicleItem(resourceNameRequested, GetFaction());
 		}
+		else
+		{
+			resourceName = resourceNameRequested;
+			//Check faction for prefabs
+			string faction = SDRC_Resources.GetResourceFaction(resourceName);
+			if (faction != GetFaction())
+			{
+				SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] Faction not correct: " + resourceName, LogLevel.WARNING);
+			}
+		}
 		
 		if (resourceName == "")
 		{
@@ -264,12 +274,6 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.COULD_NOT_FIND_VEHICLE_TO_SPAWN, "Maybe the list you are trying to use is empty?");
 			return;			
 		}
-		
-/*		string resourceName	= SDRC_SpawnHelper.SelectResourceName(m_DC_Chopper.heliList);		
-		if ( (resourceName[0] != "{") || (resourceName == "") )
-		{
-			resourceName = SDRC_VehicleListHelper.FindVehicleItem(resourceName, GetFaction());
-		}*/
 		
 		//Set to initial position, rotation and spawn
 		m_vPosOrigin[1] = SDRC_Misc.RandomFloat(m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1]) + SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin);		
@@ -289,7 +293,10 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.COULD_NOT_SPAWN_VEHICLE, resourceName);
 			return;			
 		}
-		
+
+		SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " +  GetId() + " : Vehicle spawned: " + SDRC_Misc.GetSimpleEntityName(resourceName) + " at: " + m_Vehicle.GetOrigin(), LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " +  GetId() + " : Vehicle: " + m_Vehicle, LogLevel.SPAM);
+				
 		m_EntityList.Insert(m_Vehicle);
 		m_Vehicle_c.SetAutostart(false);
 		m_Vehicle_c.SetHeli(m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
@@ -341,8 +348,6 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				break;
 			}
 		}
-
-		SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " +  GetId() + " : Vehicle spawned: " + m_Vehicle + " at: " + m_Vehicle.GetOrigin(), LogLevel.DEBUG);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -544,7 +549,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {4};//{0,1,1,2,2,3,4,4,5};
+		missionList = {0,1,1,2,2,3,4,4,5};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 100;
@@ -837,15 +842,15 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		chopper.Set
 		(
 			{
-			 "{CD4EA91AC53CBCC4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol_FIA.et"
-/*			 "VEHICLE_CHOPPER_ALL",
+//			 "{CD4EA91AC53CBCC4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol_FIA.et"
+//			 "{435F663B9456C29E}Prefabs/Vehicles/Helicopters/UH1H/UH1H_civ_livery_v1_Patrol.et",
+			 "VEHICLE_CHOPPER_ALL",
 			 "VEHICLE_CHOPPER_TRANSPORT", "VEHICLE_CHOPPER_TRANSPORT", "VEHICLE_CHOPPER_TRANSPORT", "VEHICLE_CHOPPER_TRANSPORT", 
-			 "{435F663B9456C29E}Prefabs/Vehicles/Helicopters/UH1H/UH1H_civ_livery_v1_Patrol.et",
 			//From: https://reforger.armaplatform.com/workshop/6850D5F667CEFF94-AH-6MforDarcMissions
 			 "{2B0F7648840C4F6E}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/MH6M_OPFOR_Patrol.et",
 			 "{19022AB51719F2AD}Prefabs/Vehicles/Helicopters/AH6M/OPFOR/AH6M_OPFOR_M134_Patrol.et",
 			 "{C4590C7F97F99DB2}Prefabs/Vehicles/Helicopters/AH6M/MH6M_Patrol.et",
-			 "{87314096BD3C9D1A}Prefabs/Vehicles/Helicopters/AH6M/AH6M_M134_Patrol.et"*/
+			 "{87314096BD3C9D1A}Prefabs/Vehicles/Helicopters/AH6M/AH6M_M134_Patrol.et"
 			},
 			{35, 70},
 			{7, 25},
