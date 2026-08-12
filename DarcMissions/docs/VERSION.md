@@ -4,6 +4,13 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+
+## 20260812
+Fixes:
+* List handling improvements. 
+  * Improved vehicles to be selected from proper faction in Convoy and Chopper missions.
+
+## 20260809
 Main Features:
 * dc_vehicleList.json: Support for new keyword ``VEHICLE_TRACKED_ARMED``. This will collect all tanks in to a list. File will automatically update.
 * Tracked ones have been tested with tanks below. If should/could work out of the box with other tanks that have the ``TRAIT_TRACKED`` set. Consider this as a PoC for the moment and there are improvements needed. 

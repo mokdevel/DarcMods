@@ -43,7 +43,7 @@ string markerType : The marker type to use. Default is "DARC_MISSION".
 int markerIdx : The index of the icon of defined markerType
 array<EMapDescriptorType> locationTypes : See Location parameters in DarcMissions
 array<string> containers : What container to spawn; cars, box, .. All of these will be spawned with spawnChance chance
-SDRC_Loot loot : Loot found in the mission. See Loot parameters
+SDRC_Loot loot : Loot found in the mission. See Loot parameters. Set to null if you are spawning entities that are not to be considered as loot containers.
 ```
 
 ## Related documentation:
@@ -53,6 +53,10 @@ Some parameters are described in DarcMissions documentation
 - [LootLists](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LISTS.md#loot-lists)
 
 # Version history
+
+## 20260812
+Fixes:
+* Loot parameter was not possible to leave empty.
 
 ## 20260725
 Fixes:

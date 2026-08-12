@@ -29,7 +29,7 @@ Compatibility mod for Freedom Fighters. See [Documentation](./DarcMissionsCompat
 ## DarcSpawner
 <img src="https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner/thumbnail.png" width=30% height=30%>
 
-Spawns containers, vehicles and lootboxex, randomly on map with some loot. See [Documentation](./DarcSpawner/README.md) for configuration.
+Spawns containers, vehicles, lootboxes and other entities, randomly on map with or without loot. See [Documentation](./DarcSpawner/README.md) for configuration.
 
 ## DarcDrone
 <img src="https://github.com/mokdevel/DarcMods/blob/main/DarcDrone/thumbnail.png" width=30% height=30%>
@@ -42,8 +42,11 @@ AI controlled drones using the DarcChopper flight frame. These are deadly. See [
 The core functions collected under one mod. See: [Documentation](./DarcCore/README.md)
 
 # Development time stuff
-## DarcDev
+## DarcDevXxxx
 Just some stuff used while developing. Worlds etc...
+
+## DarcTestXxxx
+Just some stuff used while testing things.
 
 ## DarcLogo
 The files to create logos for the mods.

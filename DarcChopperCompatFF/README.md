@@ -42,8 +42,8 @@ array<ref SDRC_ChopperCompatFF> attacks : List of attacks
 
 ## Next Version
 
-## 20260810
-Main Feature:
+## 20260812
+Fixes:
 * Disable streaming and persistence for choppers.
 
 ## 20260809
