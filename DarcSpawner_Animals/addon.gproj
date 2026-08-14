@@ -1,0 +1,24 @@
+GameProject {
+ ID "DarcSpawner_Animals"
+ GUID "6A18782245D36F45"
+ TITLE "DarcSpawner_Animals"
+ Dependencies {
+  "631C9C204D8FAF47" "6A04798F752CBE57" "58D0FB3206B6F859"
+ }
+ Configurations {
+  GameProjectConfig PC {
+  }
+  GameProjectConfig XBOX_ONE {
+  }
+  GameProjectConfig XBOX_SERIES {
+  }
+  GameProjectConfig PS4 {
+  }
+  GameProjectConfig PS5 {
+  }
+  GameProjectConfig HEADLESS {
+  }
+  GameProjectConfig XBOX {
+  }
+ }
+}
