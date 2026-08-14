@@ -130,17 +130,35 @@ sealed class SDRC_Misc
 	
 	Example:
 		SDRC_Misc.IsAddonLoaded("$DarcMissions:"))
+		SDRC_Misc.IsAddonLoaded("$DarcMiss*"))		<- You can use * as a wildcard
 	*/	
 	static bool IsAddonLoaded(string addonName)
 	{
 		array<string> addonList;
 		GetAddonList(addonList);
 		
-		if (addonList.Contains(addonName))
+		//Shall we search with wildcard
+		if (addonName.Contains("*"))
 		{
-			return true;
+			string addonToTest = addonName.Substring(0, addonName.Length() - 2);
+			
+			foreach (string addonListItem : addonList)
+			{
+				if (addonListItem.Contains(addonToTest))
+				{
+					return true;
+				}
+			}
 		}
-		
+		else 
+		{
+			//Nope, check with full name
+			if (addonList.Contains(addonName))
+			{
+				return true;
+			}
+		}
+				
 		return false;
 	}		
 		
