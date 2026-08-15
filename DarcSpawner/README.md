@@ -17,7 +17,13 @@ The configuration files will be under your ```profile\DarcMods\*```. Depending o
 For examples of configuration files see [ExampleConfigs](https://github.com/mokdevel/DarcMods/tree/main/DarcSpawner/ExampleConfigs).
 
 ## How does the spawn happen?
-A random index is chosen from ``spawnSetList`` and the indexed ``spawnSet`` is selected. Depending on the parameters, random spawning will happen. A random item from ``entities`` is selected. A location is chosen from the map of type ``locationTypes``. The exact position is A) randomized with ``spawnRndRadius`` or B) if ``spawnOnRoad`` is set, a position on a road is searched (only for vehicles). ``spawnCount`` is the maximum amount of containers to spawn. If loot is defined, loot items are added to the entities which has the capability to store items.
+A random index is chosen from ``spawnSetList`` and the indexed ``spawnSet`` is selected. Depending on the parameters, random spawning will happen. A random item from ``entities`` is selected. A location is chosen from the map of type ``locationTypes``. 
+
+The exact position is 
+  * randomized with ``spawnRndRadius`` or 
+  * if ``spawnOnRoad`` is set, a position on a road is searched. 
+
+``spawnCount`` is the maximum amount of containers to spawn. If loot is defined, loot items are added to the entities which has the capability to store items.
 
 ## Spawner config
 Example: [dc_spawnerConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner/ExampleConfigs/dc_spawnerConfig.json)
