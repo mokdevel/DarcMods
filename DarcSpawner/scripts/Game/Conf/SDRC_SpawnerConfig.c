@@ -13,10 +13,13 @@ class SDRC_SpawnSet : Managed
 	int markerIdx;									//marker ID		//TBD: Rename to markerIcon
 	ref array<EMapDescriptorType> locationTypes;
 	ref array<vector> positions;
-	ref array<string> containers;					//What resource to spawn; cars, box, .. All of these will be spawned with spawnChance chance
+	ref array<string> entities;					//What resource to spawn; cars, box, .. All of these will be spawned with spawnChance chance
+	int spawnRndRadius;								//Random radius where the spawnName spawns. 
+	bool spawnOnRoad;								//Spawn the cars on road
+	bool disableArsenal;							//Disable arsenal so that no other items are found		
 	ref SDRC_Loot loot = null;
 	
-	void Set(string comment_, bool showMarker_, string markerType_, int markerIdx_, array<EMapDescriptorType> locationTypes_, array<vector> positions_, array<string> containers_)
+	void Set(string comment_, bool showMarker_, string markerType_, int markerIdx_, array<EMapDescriptorType> locationTypes_, array<vector> positions_, array<string> entities_, int spawnRndRadius_, bool spawnOnRoad_, bool disableArsenal_)
 	{
 		comment = comment_;
 		showMarker = showMarker_;
@@ -24,7 +27,10 @@ class SDRC_SpawnSet : Managed
 		markerIdx = markerIdx_;		
 		locationTypes = locationTypes_;
 		positions = positions_;
-		containers = containers_;
+		entities = entities_;
+		spawnRndRadius = spawnRndRadius_;
+		spawnOnRoad = spawnOnRoad_;
+		disableArsenal = disableArsenal_;
 	}
 }
 
@@ -35,12 +41,9 @@ class SDRC_SpawnerConfig : SDRC_Config
 	string author = "darc";
 	string comment = "";
 	//Spawner specific
-	bool spawnOnRoad;					//Spawn the cars on road
-	int spawnRndRadius;					//Random radius where the spawnName spawns. 
-	int containerCount;					//Amount of containers (cars, lootboxes, etc..) to spawn
+	int spawnCount;						//Amount of containers (cars, lootboxes, etc..) to spawn
 	float spawnWorldSizeMultiplier;		//If containerCount = 0, we search for the world size in km and multiple with this. For example: 4km wide map with spawnWorldSizeMultiplier = 2 results in containerCount = 8 (4*2)
-	bool disableArsenal;				//Disable arsenal so that no other items are found	
-	ref array<ref int> spawnSetList = {};	
+	ref array<int> spawnSetList = {};	
 	ref array<ref SDRC_SpawnSet> spawnSets = {};	
 	
 	//------------------------------------------------------------------------------------------------
@@ -56,11 +59,8 @@ class SDRC_SpawnerConfig : SDRC_Config
 	{		
 		super.SetDefaults();	
 
-		spawnOnRoad = false;
-		spawnRndRadius = 100;
 		spawnWorldSizeMultiplier = 0;
-		containerCount = 20;//20;
-		disableArsenal = true;
+		spawnCount = 20;//20;
 		spawnSetList = {0};//{0,1,2,2,3,3};
 		//----------------------------------------------------		
 		spawnSets.Insert(SpawnSet0());
@@ -100,7 +100,8 @@ class SDRC_SpawnerConfig : SDRC_Config
 				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
 				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
 				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
-			}
+			},
+			100, true, true,
 		);
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
@@ -147,7 +148,8 @@ class SDRC_SpawnerConfig : SDRC_Config
 				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
 				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
 				"{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
-			}
+			},
+			100, true, true,
 		);
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
@@ -192,7 +194,8 @@ class SDRC_SpawnerConfig : SDRC_Config
 				"{5F5AAFE8465D9D62}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_cargo_FIA.et",
 				"{BDE16A6AE9942D44}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_transport_FIA.et",
 				"{9B3A89DD33FF0483}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_blue.et",
-			}
+			},
+			100, true, true,
 		);
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
@@ -237,7 +240,8 @@ class SDRC_SpawnerConfig : SDRC_Config
 				"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
 				"{D15A294D5138ADFF}Prefabs/Props/Military/AmmoBoxes/US/LootEquipmentBoxWooden_Equipment_01_US.et",
 				"{DBC8E6A4DD948C96}Prefabs/Props/Military/SupplyBox/SupplyPortableContainers/SupplyPortableContainer_01/LootSupplyPortableContainers_01_large_item.et",
-			}
+			},
+			100, false, true,
 		);
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {
@@ -273,7 +277,8 @@ class SDRC_SpawnerConfig : SDRC_Config
 				"{D15A294D5138ADFF}Prefabs/Props/Military/AmmoBoxes/US/LootEquipmentBoxWooden_Equipment_01_US.et",
 				"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
 				"{DBC8E6A4DD948C96}Prefabs/Props/Military/SupplyBox/SupplyPortableContainers/SupplyPortableContainer_01/LootSupplyPortableContainers_01_large_item.et",
-			}
+			},
+			100, false, true,
 		);
 		ref SDRC_Loot loot = new SDRC_Loot();
 		array<string> lootItems = {

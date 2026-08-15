@@ -6,14 +6,13 @@ This is the main Spawner file.
 //------------------------------------------------------------------------------------------------
 
 const string DC_CONFIG_FILE_SPAWNER = "dc_spawnerConfig.json";
-const int DC_CONFIG_FILE_SPAWNER_JSONVER = 2;
+const int DC_CONFIG_FILE_SPAWNER_JSONVER = 3;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Spawner
 {
 	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_SPAWNER);	
 	private ref SDRC_SpawnerConfig m_Config = new SDRC_SpawnerConfig();	
-//	private ref SDRC_SpawnerConfig_Animals m_Config = new SDRC_SpawnerConfig_Animals();
 	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g. cars, tents, ..) spawned
 	private int m_spawnSetID;
@@ -21,50 +20,69 @@ class SDRC_Spawner
 	private int m_spawnCount;
 	private int m_failCount = 0;						//Counter for failed spawns
 	private int m_failLimit = 0;						//Limit for fails before stopping. This is 2* maximum amount.
-	private ref array<vector> m_positionsUsed = {};			//When using position spawning, avoid spawning to same positions.
+	private bool m_bHasRoadNetwork = true;				//Check if road network is available
+	private ref array<vector> m_positionsUsed = {};		//When using position spawning, avoid spawning to same positions.
 		
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Spawner()
 	{
 		SDRC_Log.Add("[SDRC_Spawner] Starting SDRC_Spawner", LogLevel.NORMAL);
 		
-		//Load config
-		bool success = m_JsonApi.Load(m_Config, SDRC_SpawnerConfig.Cast(m_Config), DC_CONFIG_FILE_SPAWNER_JSONVER);
-//		bool success = m_JsonApi.Load(m_Config, SDRC_SpawnerConfig_Animals.Cast(m_Config), DC_CONFIG_FILE_SPAWNER_JSONVER);
-		if (!success)
+		//If addons present, load those
+		if (SDRC_Misc.IsAddonLoaded("$DarcSpawner_*:"))
 		{
-			SDRC_Log.Add("[SDRC_Spawner] Error loading " + DC_CONFIG_FILE_SPAWNER + ". SDRC_Spawner not started.", LogLevel.ERROR);
-			return;
-		}			
+			LoadAddon(m_Config);
+		}
+		else
+		{
+			//Load config
+			bool success = m_JsonApi.Load(m_Config, SDRC_SpawnerConfig.Cast(m_Config), DC_CONFIG_FILE_SPAWNER_JSONVER, safeUpdate: true);
+			if (!success)
+			{
+				SDRC_Log.Add("[SDRC_Spawner] Error loading " + DC_CONFIG_FILE_SPAWNER + ". DarcSpawner not started.", LogLevel.ERROR);
+				return;
+			}
+		}
 		
-		if (m_Config.spawnSetList.Count() == 0)
+		if ( (m_Config.spawnSetList.IsEmpty()) || (m_Config.spawnSets.IsEmpty()) )
 		{
-			SDRC_Log.Add("[SDRC_Spawner] No spawnSets defined. SDRC_Spawner not started.", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_Spawner] No spawnSets defined. DarcSpawner not started.", LogLevel.ERROR);
 			return;			
 		}
 
 		//Max amount of spawnNames to spawn
-		m_spawnCount = m_Config.containerCount;		
+		m_spawnCount = m_Config.spawnCount;		
 		if (m_spawnCount == 0)
 		{			
 			m_spawnCount = (SDRC_Misc.GetWorldSize() * m_Config.spawnWorldSizeMultiplier) / 1000;
 			SDRC_Log.Add("[SDRC_Spawner] m_spawnCount = Worldsize: " + SDRC_Misc.GetWorldSize() + " * " + m_Config.spawnWorldSizeMultiplier, LogLevel.DEBUG);			
 		}		
 		m_failLimit = m_spawnCount * 2;
-		SDRC_Log.Add("[SDRC_Spawner] Maximum spawnCount: " + m_spawnCount, LogLevel.DEBUG);
 		
-		//Check if RoadNetworkManager is available. 		
+		SDRC_Log.Add("[SDRC_Spawner] --- Settings --------------------", LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Spawner] Maximum spawnCount: " + m_spawnCount, LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_Spawner] spawnSets defines: " + m_Config.spawnSets.Count(), LogLevel.DEBUG);
+		//Check if RoadNetworkManager is available.
 		if (!SDRC_RoadHelper.GetRoadNetworkManager())
 		{
-			m_Config.spawnOnRoad = false;
-			SDRC_Log.Add("[SDRC_Spawner] RoadNetworkManager not defined. Vehicles will not be spawned on roads.", LogLevel.WARNING);
+			m_bHasRoadNetwork = false;
+			SDRC_Log.Add("[SDRC_Spawner] RoadNetworkManager not defined. Entities will not be spawned on roads.", LogLevel.WARNING);
 		}
+		SDRC_Log.Add("[SDRC_Spawner] --- Settings --------------------", LogLevel.DEBUG);		
 	}
 
 	void ~SDRC_Spawner()
 	{
 		SDRC_Log.Add("[~SDRC_Spawner] Stopping SDRC_Spawner", LogLevel.NORMAL);
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	A class to be overriden by the addon.
+	*/	
+	void LoadAddon(out SDRC_SpawnerConfig mainConf)
+	{
+	}	
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -114,12 +132,14 @@ class SDRC_Spawner
 		bool snap = true;
 		float emptyPosRadius = 50;
 		
+		//Select a random spawnSet
 		int idx = m_Config.spawnSetList.GetRandomElement();
 		SDRC_SpawnSet spawnSet = m_Config.spawnSets[idx];
 
 		SDRC_Log.Add("[SDRC_Spawner:Spawn] Using index: " + idx, LogLevel.DEBUG);
-				
-		string entityToSpawn = spawnSet.containers.GetRandomElement();		
+
+		//Select random entity
+		string entityToSpawn = spawnSet.entities.GetRandomElement();		
 		
 		if (entityToSpawn.Contains("Vehicle"))
 		{
@@ -134,7 +154,7 @@ class SDRC_Spawner
 			
 			if (locations.IsEmpty())
 			{
-				SDRC_Log.Add("[SDRC_Spawner:Spawn] No locations found. Check you conf.", LogLevel.ERROR);
+				SDRC_Log.Add("[SDRC_Spawner:Spawn] No locations found. Check your conf.", LogLevel.ERROR);
 				return false;				
 			}
 			
@@ -143,7 +163,8 @@ class SDRC_Spawner
 			pos = location.pos;
 			SDRC_Log.Add("[SDRC_Spawner:Spawn] Chosen location: " + location.displayName + " (" + pos + ")", LogLevel.DEBUG);
 		
-			if (m_Config.spawnOnRoad && isVehicle)
+//			if (m_bHasRoadNetwork && isVehicle)
+			if (m_bHasRoadNetwork && spawnSet.spawnOnRoad)
 			{
 				SDRC_RoadPos roadPos = new SDRC_RoadPos();
 				vector tmpPos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPos, pos);
@@ -159,7 +180,7 @@ class SDRC_Spawner
 				SDRC_Log.Add("[SDRC_Spawner:Spawn] Randomizing position", LogLevel.SPAM);
 				for (int i = 0; i < 5; i++)
 				{
-					pos = SDRC_Misc.RandomizePos(pos, m_Config.spawnRndRadius);
+					pos = SDRC_Misc.RandomizePos(pos, spawnSet.spawnRndRadius);
 					if (!SDRC_Misc.IsPosInWater(pos))
 					{
 						break;
@@ -214,7 +235,8 @@ class SDRC_Spawner
 			}
 			
 			float rotation = SDRC_Misc.RandomFloat(0, 360);
-			if (m_Config.spawnOnRoad && isVehicle)
+//			if (m_bHasRoadNetwork && isVehicle)
+			if (m_bHasRoadNetwork && spawnSet.spawnOnRoad)
 			{
 				entity = SDRC_SpawnHelper.SpawnItem(pos, entityToSpawn, rotation, -1, snap);
 			}
@@ -230,7 +252,7 @@ class SDRC_Spawner
 				//Disable arsenal
 				if (isVehicle)
 				{
-					SDRC_VehicleHelper.DisableVehicleArsenal(entity, entityToSpawn, m_Config.disableArsenal);
+					SDRC_VehicleHelper.DisableVehicleArsenal(entity, entityToSpawn, spawnSet.disableArsenal);
 					SDRC_VehicleHelper.EmptyStorage(entity);					
 				}
 

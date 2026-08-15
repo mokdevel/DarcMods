@@ -35,13 +35,27 @@ modded class SDRC_Spawner
 			return;			
 		}
 
-		CopyData(mainConf, m_Config_Animal);
+		CopyData(mainConf, SDRC_SpawnerConfig.Cast(m_Config_Animal));
 		
 		super.LoadAddon(mainConf);
 	}
 	
-	void CopyData(out SDRC_SpawnerConfig mainConf, SDRC_SpawnerConfig_Animals sourceConf)
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Copy data from addon the main spawner configuration
+	*/	
+	void CopyData(out SDRC_SpawnerConfig mainConf, SDRC_SpawnerConfig sourceConf)
 	{
+		mainConf.version = -1;
+		mainConf.author = sourceConf.author + ", ";
+		mainConf.comment = sourceConf.comment + ". ";
+		mainConf.spawnWorldSizeMultiplier = sourceConf.spawnWorldSizeMultiplier;
+		//Take the largest count as the max
+		if (sourceConf.spawnCount > mainConf.spawnCount)
+		{
+			mainConf.spawnCount = sourceConf.spawnCount;
+		}
+		
 		int biggestIndex = SDRC_Misc.FindMaxArrayValue(mainConf.spawnSetList);
 
 		foreach (int setListIndex : m_Config_Animal.spawnSetList)

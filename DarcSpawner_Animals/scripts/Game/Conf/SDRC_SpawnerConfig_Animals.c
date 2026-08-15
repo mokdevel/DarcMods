@@ -4,20 +4,8 @@
 // NOTE: View .json in Notepad++ - press Ctrl+Alt+Shift+J
 
 //------------------------------------------------------------------------------------------------
-class SDRC_SpawnerConfig_Animals : SDRC_Config
+class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 {
-	int version = 1;
-	string author = "darc";
-	string comment = "";
-	//Spawner specific
-	bool spawnOnRoad;					//Spawn the cars on road
-	int spawnRndRadius;					//Random radius where the spawnName spawns. 
-	int containerCount;					//Amount of containers (cars, lootboxes, etc..) to spawn
-	float spawnWorldSizeMultiplier;		//If containerCount = 0, we search for the world size in km and multiple with this. For example: 4km wide map with spawnWorldSizeMultiplier = 2 results in containerCount = 8 (4*2)
-	bool disableArsenal;				//Disable arsenal so that no other items are found	
-	ref array<ref int> spawnSetList = {};	
-	ref array<ref SDRC_SpawnSet> spawnSets = {};	
-	
 	//------------------------------------------------------------------------------------------------
 	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
@@ -26,25 +14,24 @@ class SDRC_SpawnerConfig_Animals : SDRC_Config
 	}		
 
 	//------------------------------------------------------------------------------------------------
-
 	override void SetDefaults()
 	{		
 		super.SetDefaults();	
 
-		spawnOnRoad = false;
-		spawnRndRadius = 200;
+		version = 1;
+		author = "darc";
+		comment = "";
 		spawnWorldSizeMultiplier = 0;
-		containerCount = 20;
-		disableArsenal = true;
+		spawnCount = 20;
 		spawnSetList = {0,1};
 		//----------------------------------------------------		
-		spawnSets.Insert(SpawnSet0());
-		spawnSets.Insert(SpawnSet1());
+		spawnSets.Insert(SpawnSet0_Animals());
+		spawnSets.Insert(SpawnSet1_Animals());
 	}	
 	
 	//Different spawner confs
 	//----------------------------------------------------
-	SDRC_SpawnSet SpawnSet0()
+	SDRC_SpawnSet SpawnSet0_Animals()
 	{
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(		
@@ -61,13 +48,14 @@ class SDRC_SpawnerConfig_Animals : SDRC_Config
 			{},
 			{
 				"{D1509D4108A75FF4}Prefabs/Animals/Deer.et",
-			}
+			},
+			200, false, false,
 		);
 		
 		return spawnSet;
 	}
 	
-	SDRC_SpawnSet SpawnSet1()
+	SDRC_SpawnSet SpawnSet1_Animals()
 	{
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(		
@@ -84,7 +72,8 @@ class SDRC_SpawnerConfig_Animals : SDRC_Config
 			{},
 			{
 				"{2274A55C0B226999}Prefabs/Animals/Wolf.et",
-			}
+			},
+			200, false, false,
 		);
 		
 		return spawnSet;

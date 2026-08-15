@@ -1,5 +1,5 @@
 # DarcSpawner
-Spawns vehicles or other containers randomly on map with some loot. Once everything is spawned, the mod will stop running.
+Spawns vehicles, items or other entities randomly on map with or without loot. Once everything is spawned, the mod will stop running.
 
 The position for a spawn is searched from locations listed.
 
@@ -15,7 +15,7 @@ The configuration files will be under your ```profile\DarcMods\*```. Depending o
 For examples of configuration files see [ExampleConfigs](https://github.com/mokdevel/DarcMods/tree/main/DarcSpawner/ExampleConfigs).
 
 ## How does the spawn happen?
-A random index is chosen from ``spawnSetList`` and the indexed ``spawnSet`` is selected. Depending on the parameters, random spawning will happen. A random item from ``containers`` is selected. A location is chosen from the map of type ``locationTypes``. The exact position is A) randomized with ``spawnRndRadius`` or B) if ``spawnOnRoad`` is set, a position on a road is searched (only for vehicles). ``spawnCount`` is the maximum amount of containers to spawn. Loot items are then added to the container.
+A random index is chosen from ``spawnSetList`` and the indexed ``spawnSet`` is selected. Depending on the parameters, random spawning will happen. A random item from ``entities`` is selected. A location is chosen from the map of type ``locationTypes``. The exact position is A) randomized with ``spawnRndRadius`` or B) if ``spawnOnRoad`` is set, a position on a road is searched (only for vehicles). ``spawnCount`` is the maximum amount of containers to spawn. If loot is defined, loot items are added to the entities which has the capability to store items.
 
 ## Spawner config
 Example: [dc_spawnerConfig.json](https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner/ExampleConfigs/dc_spawnerConfig.json)
@@ -25,11 +25,8 @@ jsonVersion : Version of the json structure. Do not modify.
 int version : Version number of the file for author use. Not used in game.
 string author : Author of the file. Not used in game.
 string comment : Generic comment to describe the file. Not used in game.
-bool spawnOnRoad : Spawn the cars on road. If no road network manager found, cars spawned around the map.
-int spawnRndRadius : Random radius where the spawnName spawns. Once a location is found, additional randomization is done to avoid vehicles to be always in the same spot.
-int containerCount : Amount of containers (cars, lootboxes, etc..) to spawn.
+int spawnCount : Amount of entities (cars, lootboxes, etc..) to spawn.
 float spawnWorldSizeMultiplier : If containerCount = 0, we search for the world size in km and multiple with this. For example: 4km wide map with spawnWorldSizeMultiplier = 2 results in spawnCount = 8 (4*2)
-bool disableArsenal : Disable arsenal for vehicles so that only defined loot items are found.
 array<int> spawnSetList : The indexes of spawnsets.
 array<SCR_DC_SpawnSet> spawnSets : List of spawners
 ```
@@ -42,7 +39,10 @@ string markerType : The marker type to use. Default is "DARC_MISSION".
   For Arma Reforger default ones, you can use "PLACED_MILITARY". Other mods may extend this.
 int markerIdx : The index of the icon of defined markerType
 array<EMapDescriptorType> locationTypes : See Location parameters in DarcMissions
-array<string> containers : What container to spawn; cars, box, .. All of these will be spawned with spawnChance chance
+array<string> entities : What entities to spawn; cars, box, .. The entity to spawn is chosen randomly from the list.
+int spawnRndRadius : Random radius where the spawnSet spawns. Once a location is found, additional randomization is done to avoid containers to be always in the same spot.
+bool spawnOnRoad : Spawn the entities on a road. If no road network manager found, entities will be spawned as if this parameter would be false.
+bool disableArsenal : Disable arsenal for vehicles so that only defined loot items are found.
 SDRC_Loot loot : Loot found in the mission. See Loot parameters. Set to null if you are spawning entities that are not to be considered as loot containers.
 ```
 
