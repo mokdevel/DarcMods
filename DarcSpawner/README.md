@@ -19,11 +19,13 @@ For examples of configuration files see [ExampleConfigs](https://github.com/mokd
 ## How does the spawn happen?
 A random index is chosen from ``spawnSetList`` and the indexed ``spawnSet`` is selected. A random item from ``entities`` is selected. 
 
-From the ``spawnSet`` location is chosen from the map of type ``locationTypes`` or if coordinates are defined in ``positions``, that position is used. Location type is information found from the map itself. Map makers set a parameter called ``EMapDescriptorType`` to an object to describe what the specific location is. For example, for a city, an object would have the ``EMapDescriptorType`` defined with value ``MDT_NAME_CITY``. With this information we can find various areas on the map. For more, see: [Location parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LOCATIONS.md)
+From the ``spawnSet`` location is chosen from the map of type ``locationTypes`` or if coordinates are defined in ``positions``, that position is used. Location type is information found from the map itself. Map makers set a parameter called ``EMapDescriptorType`` to an object to describe what the specific location is. For example, for a city, an object would have the ``EMapDescriptorType`` defined with value ``MDT_NAME_CITY``. With this information we know that this area is considered as a city. For more, see: [Location parameters](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LOCATIONS.md)
 
-The exact position is 
+The exact position is found with the position of the ``locationTypes`` or as defined in ``positions``. The position is then..
   * randomized with ``spawnRndRadius`` or 
   * if ``spawnOnRoad`` is set, a position on a road is searched. 
+
+Randomization is recommended as we don't want the spawn to happen always in the same spot.
 
 ``spawnCount`` is the maximum amount of containers to spawn. If loot is defined, loot items are added to the entities which has the capability to store items.
 
