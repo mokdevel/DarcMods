@@ -37,6 +37,8 @@ Spawns entities like vehicles, crates, animals, mines .. any items randomly on m
 Spawns animals randomly on map. All credits to Holden Shift for the amazing French Animals mod:
 [French Animals](https://reforger.armaplatform.com/workshop/6A04798F752CBE57-BAR_FrenchAnimals)
 
+See [Documentation](./DarcSpawner/README.md#animals) for configuration.
+
 ## DarcDrone
 <img src="https://github.com/mokdevel/DarcMods/blob/main/DarcDrone/thumbnail.png" width=30% height=30%>
 
