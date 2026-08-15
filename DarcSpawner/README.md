@@ -63,7 +63,7 @@ DarcSpawner supports addons to create additional configurations. Addon functiona
 Spawns animals randomly on map. 
 
 All credits to Holden Shift for the amazing French Animals mod:
-https://reforger.armaplatform.com/workshop/6A04798F752CBE57-BAR_FrenchAnimals
+[French Animals](https://reforger.armaplatform.com/workshop/6A04798F752CBE57-BAR_FrenchAnimals)
 
 ### Notes
 * Currently spawns individual animals: Wolf, Deer, Doe, Rabbit, Fox

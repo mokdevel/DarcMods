@@ -34,7 +34,8 @@ Spawns entities like vehicles, crates, animals, mines .. any items randomly on m
 ### Addon: DarcSpawner_Animals
 <img src="https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner_Animals/thumbnail.png" width=30% height=30%>
 
-Spawns animals randomly on map. 
+Spawns animals randomly on map. All credits to Holden Shift for the amazing French Animals mod:
+[French Animals](https://reforger.armaplatform.com/workshop/6A04798F752CBE57-BAR_FrenchAnimals)
 
 ## DarcDrone
 <img src="https://github.com/mokdevel/DarcMods/blob/main/DarcDrone/thumbnail.png" width=30% height=30%>
