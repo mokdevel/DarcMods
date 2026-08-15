@@ -1,4 +1,6 @@
 # DarcMissionsCompatFF
+<img src="https://github.com/mokdevel/DarcMods/blob/main/DarcMissionsCompatFF/thumbnail.png" width=30% height=30%>
+
 Compatibility mod for Freedom Fighters. DarcMissions and DarcMissionsCompatFF is thoroughly designed to work on any map without specific configs. 
 
 ## Functionality

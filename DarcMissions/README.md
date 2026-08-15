@@ -1,5 +1,6 @@
 # DarcMissions
 <img src="https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/thumbnail.png" width=30% height=30%>
+
 A mission frame work for Arma Reforger. There are various missions premade and their behaviour can be modified by editing the configuration jsons. Installation is easy: Just activate the mod (and dependencies) and you're good to go. For more see the dedicated page.
 
 You can take the mod, play it in SP, MP or let it run on a dedicated server. Everything is randomized so you should never know what is happening in the world. The behaviour of the mod should be close to vanilla and by doing that, you could be running this on top of your other game modes. The mod is thoroughly designed to work on any map without specific configs.

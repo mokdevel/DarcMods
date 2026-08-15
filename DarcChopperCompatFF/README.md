@@ -1,6 +1,7 @@
 # DarcChopperCompatFF
-Compatibility mod for Freedom Fighters that integrates DarcChoppers to game play. DarcMissions and DarcMissionsCompatFF is thoroughly designed to work on any map without specific configs. 
 <img src="https://github.com/mokdevel/DarcMods/blob/main/DarcChopperCompatFF/thumbnail.png" width=30% height=30%>
+
+Compatibility mod for Freedom Fighters that integrates DarcChoppers to game play. DarcMissions and DarcMissionsCompatFF is thoroughly designed to work on any map without specific configs.
 
 ## Functionality
 * Choppers join battle with a random chance.

@@ -1,4 +1,6 @@
 # DarcSpawner
+<img src="https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner/thumbnail.png" width=30% height=30%>
+
 Spawns vehicles, items or other entities randomly on map with or without loot. Once everything is spawned, the mod will stop running.
 
 The position for a spawn is searched from locations listed.
@@ -56,6 +58,8 @@ Some parameters are described in DarcMissions documentation
 DarcSpawner supports addons to create additional configurations. Addon functionality is WIP so there might be issues.
 
 ## Animals
+<img src="https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner_Animals/thumbnail.png" width=30% height=30%>
+
 Spawns animals randomly on map. 
 
 All credits to Holden Shift for the amazing French Animals mod:
