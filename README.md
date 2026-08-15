@@ -31,7 +31,7 @@ Compatibility mod for Freedom Fighters. See [Documentation](./DarcMissionsCompat
 
 Spawns entities like vehicles, crates, animals, mines .. any items randomly on map. The entity can be defined to contain loot to it is perfect for spawning random loot crates for players to find. See [Documentation](./DarcSpawner/README.md) for configuration.
 
-### DarcSpawner_Animals (addon)
+### Addon: DarcSpawner_Animals
 <img src="https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner_Animals/thumbnail.png" width=30% height=30%>
 
 Spawns animals randomly on map. 
