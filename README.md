@@ -29,7 +29,12 @@ Compatibility mod for Freedom Fighters. See [Documentation](./DarcMissionsCompat
 ## DarcSpawner
 <img src="https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner/thumbnail.png" width=30% height=30%>
 
-Spawns containers, vehicles, lootboxes and other entities, randomly on map with or without loot. See [Documentation](./DarcSpawner/README.md) for configuration.
+Spawns entities like vehicles, crates, animals, mines .. any items randomly on map. The entity can be defined to contain loot to it is perfect for spawning random loot crates for players to find. See [Documentation](./DarcSpawner/README.md) for configuration.
+
+### DarcSpawner_Animals (addon)
+<img src="https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner_Animals/thumbnail.png" width=30% height=30%>
+
+Spawns animals randomly on map. 
 
 ## DarcDrone
 <img src="https://github.com/mokdevel/DarcMods/blob/main/DarcDrone/thumbnail.png" width=30% height=30%>

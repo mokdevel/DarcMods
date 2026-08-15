@@ -52,7 +52,28 @@ Some parameters are described in DarcMissions documentation
 - [Loot](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LOOT.md)
 - [LootLists](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LISTS.md#loot-lists)
 
+# Addons
+DarcSpawner supports addons to create additional configurations. Addon functionality is WIP so there might be issues.
+
+## Animals
+Spawns animals randomly on map. 
+
+All credits to Holden Shift for the amazing French Animals mod:
+https://reforger.armaplatform.com/workshop/6A04798F752CBE57-BAR_FrenchAnimals
+
+### Notes
+* Currently spawns individual animals: Wolf, Deer, Doe, Rabbit, Fox
+* Works on all maps just by enabling the mod.
+* All configuration done via json files located in your profiles directory (after first run).
+
 # Version history
+
+## 202608xx
+Main Features:
+* Addons functionality.
+
+Fixes:
+* Improved position finding for items to be spawned.
 
 ## 20260812
 Fixes:
