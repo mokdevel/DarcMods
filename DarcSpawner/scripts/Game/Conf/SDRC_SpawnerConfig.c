@@ -57,17 +57,15 @@ class SDRC_SpawnerConfig : SDRC_Config
 
 	override void SetDefaults()
 	{		
-		super.SetDefaults();	
-
 		spawnWorldSizeMultiplier = 0;
 		spawnCount = 20;//20;
-		spawnSetList = {0};//{0,1,2,2,3,3};
+		spawnSetList = {0,1,2,2,3,3};
 		//----------------------------------------------------		
 		spawnSets.Insert(SpawnSet0());
 		spawnSets.Insert(SpawnSet1());
 		spawnSets.Insert(SpawnSet2());
 		spawnSets.Insert(SpawnSet3());
-		spawnSets.Insert(SpawnSet4());
+		spawnSets.Insert(SpawnSet4());	//For testing
 	}	
 	
 	//Different spawner confs
@@ -294,5 +292,4 @@ class SDRC_SpawnerConfig : SDRC_Config
 		
 		return spawnSet;
 	}
-	
 }
