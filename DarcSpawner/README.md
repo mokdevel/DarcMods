@@ -65,6 +65,8 @@ Spawns animals randomly on map.
 All credits to Holden Shift for the amazing French Animals mod:
 [French Animals](https://reforger.armaplatform.com/workshop/6A04798F752CBE57-BAR_FrenchAnimals)
 
+Example: [dc_spawnerConfig_Animals.json](https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner/ExampleConfigs/dc_spawnerConfig_Animals.json)
+
 ### Notes
 * Currently spawns individual animals: Wolf, Deer, Doe, Rabbit, Fox
 * Works on all maps just by enabling the mod.

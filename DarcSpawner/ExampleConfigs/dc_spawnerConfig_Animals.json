@@ -1,0 +1,131 @@
+{
+    "jsonVersion": 1,
+    "version": 1,
+    "author": "darc",
+    "comment": "",
+    "spawnCount": 20,
+    "spawnWorldSizeMultiplier": 0.0,
+    "spawnSetList": [
+        0,
+        0,
+        0,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4
+    ],
+    "spawnSets": [
+        {
+            "comment": "index 0: Spawn deer",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                7,
+                8,
+                58,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{D1509D4108A75FF4}Prefabs/Animals/Deer.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 1: Spawn wolf",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                7,
+                8,
+                58,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{2274A55C0B226999}Prefabs/Animals/Wolf.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 2: Spawn doe",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                7,
+                8,
+                58,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{2C626C751F814327}Prefabs/Animals/Doe.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 3: Spawn fox",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                7,
+                8,
+                58,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{97CEDAB6748616EB}Prefabs/Animals/Fox.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 4: Spawn rabbit",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                7,
+                8,
+                58,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{3C106059EE4089FD}Prefabs/Animals/Rabbit.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        }
+    ]
+}
