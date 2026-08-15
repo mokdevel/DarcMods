@@ -1,13 +1,18 @@
 ## Location parameters
 A mission location position (see: [General parameters - pos](P_COMMON.md)) can be defined manually at certain coordinates or as "0 0 0". In the latter case, the mission position is chosen randomly from the map from locations defined in locationTypes. The different types are defined as [EMapDescriptorType](https://community.bistudio.com/wikidata/external-data/arma-reforger/ArmaReforgerScriptAPIPublic/group__Map.html#ga18c4f596069370b50b7f842cf36d5686). 
 
-Note that you 'overload' certain value by defining it multiple times. For example ```locationTypes = {59, 59, 59, 59, 60};``` will choose a CITY 80% of the time and only 20% time a village.
+Location type is information found from the map itself. Map makers set a parameter called ``EMapDescriptorType`` to an object to describe what the specific location is. For example, for a city, an object would have the ``EMapDescriptorType`` defined with value ``MDT_NAME_CITY``. With this information we know that this area is considered as a city. 
+
+You 'overload' certain value by defining it multiple times. For example ```locationTypes = {59, 59, 59, 59, 60};``` will choose a CITY 80% of the time and only 20% time a village.
 
 ### EMapDescriptorType
 Below are the typical values selected from [EMapDescriptorType](https://community.bistudio.com/wikidata/external-data/arma-reforger/ArmaReforgerScriptAPIPublic/group__Map.html#ga18c4f596069370b50b7f842cf36d5686) .
 ```
+ 7 = MDT_FORESTTRIANGLE 
  8 = MDT_FORESTSQUARE
+ 9 = MDT_CALVARY 
 10 = MDT_CHURCH 	
+11 = MDT_CHAPEL 
 ..
 14 = MDT_BUNKER
 15 = MDT_FORTRESS
