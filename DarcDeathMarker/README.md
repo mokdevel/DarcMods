@@ -1,4 +1,6 @@
 # DarcDeathMarker
+<img src="https://github.com/mokdevel/DarcMods/blob/main/DarcDeathMarker/thumbnail.png" width=30% height=30%>
+
 The mod creates a map marker on the position where you died. The marker is active 10 minutes and disappears after that. If you die again, another marker replaces the previous one.
 
 ## Installation
