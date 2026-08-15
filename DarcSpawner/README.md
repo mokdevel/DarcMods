@@ -74,12 +74,17 @@ Example: [dc_spawnerConfig_Animals.json](https://github.com/mokdevel/DarcMods/bl
 
 # Version history
 
-## 202608xx
+## 20260815
+
+### DarcSpawner
 Main Features:
 * Addons functionality.
 
 Fixes:
 * Improved position finding for items to be spawned.
+
+### DarcSpawner_Animals
+* First release
 
 ## 20260812
 Fixes:

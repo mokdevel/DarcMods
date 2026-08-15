@@ -1,13 +1,10 @@
 {
-    "jsonVersion": 2,
+    "jsonVersion": 3,
     "version": 1,
     "author": "darc",
     "comment": "",
-    "spawnOnRoad": false,
-    "spawnRndRadius": 100,
-    "containerCount": 3,
+    "spawnCount": 20,
     "spawnWorldSizeMultiplier": 0.0,
-    "disableArsenal": true,
     "spawnSetList": [
         0,
         1,
@@ -32,10 +29,12 @@
                 79,
                 80,
                 81,
-                15
+                15,
+                10,
+                25
             ],
             "positions": [],
-            "containers": [
+            "entities": [
                 "{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
                 "{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
                 "{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
@@ -43,6 +42,9 @@
                 "{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
                 "{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et"
             ],
+            "spawnRndRadius": 100,
+            "spawnOnRoad": true,
+            "disableArsenal": true,
             "loot": {
                 "box": null,
                 "itemChance": 0.899,
@@ -79,16 +81,25 @@
                 79,
                 80,
                 81,
-                15
+                15,
+                25,
+                26,
+                26,
+                26,
+                26,
+                26
             ],
             "positions": [],
-            "containers": [
+            "entities": [
                 "{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et",
                 "{3B1EB924602C7A07}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance_MERDC.et",
                 "{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
                 "{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et",
                 "{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et"
             ],
+            "spawnRndRadius": 100,
+            "spawnOnRoad": true,
+            "disableArsenal": true,
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
@@ -120,10 +131,12 @@
                 60,
                 63,
                 70,
-                64
+                64,
+                25,
+                19
             ],
             "positions": [],
-            "containers": [
+            "entities": [
                 "{54C3CC22DEBD57BE}Prefabs/Vehicles/Wheeled/S105/S105_beige.et",
                 "{321016E0F9361A22}Prefabs/Vehicles/Wheeled/S105/S105_lightgreen.et",
                 "{6E485048122CEEEE}Prefabs/Vehicles/Wheeled/S1203/S1203_cargo_red.et",
@@ -133,6 +146,9 @@
                 "{BDE16A6AE9942D44}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_transport_FIA.et",
                 "{9B3A89DD33FF0483}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_uncovered_CIV_blue.et"
             ],
+            "spawnRndRadius": 100,
+            "spawnOnRoad": true,
+            "disableArsenal": true,
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
@@ -156,21 +172,29 @@
             "locationTypes": [
                 63,
                 64,
+                60,
                 70,
                 5,
                 7,
                 8,
-                71
+                71,
+                10,
+                25,
+                19,
+                26
             ],
             "positions": [],
-            "containers": [
+            "entities": [
                 "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
                 "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+                "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
                 "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
                 "{D15A294D5138ADFF}Prefabs/Props/Military/AmmoBoxes/US/LootEquipmentBoxWooden_Equipment_01_US.et",
-                "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
                 "{DBC8E6A4DD948C96}Prefabs/Props/Military/SupplyBox/SupplyPortableContainers/SupplyPortableContainer_01/LootSupplyPortableContainers_01_large_item.et"
             ],
+            "spawnRndRadius": 100,
+            "spawnOnRoad": false,
+            "disableArsenal": true,
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
@@ -213,7 +237,7 @@
                     2349.16
                 ]
             ],
-            "containers": [
+            "entities": [
                 "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
                 "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
                 "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
@@ -221,6 +245,9 @@
                 "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
                 "{DBC8E6A4DD948C96}Prefabs/Props/Military/SupplyBox/SupplyPortableContainers/SupplyPortableContainer_01/LootSupplyPortableContainers_01_large_item.et"
             ],
+            "spawnRndRadius": 100,
+            "spawnOnRoad": false,
+            "disableArsenal": true,
             "loot": {
                 "box": null,
                 "itemChance": 0.699,
