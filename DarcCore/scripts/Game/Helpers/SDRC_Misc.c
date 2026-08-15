@@ -85,6 +85,37 @@ sealed class SDRC_Misc
 
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Return the biggest value in an array. 
+	
+	In case the array is empty, 0 is returned. You should not call this with an empty array in case the 
+	value to be found is important.
+	
+	Example: [10 12 8 6] returns 12
+	*/
+	static int FindMaxArrayValue(array<int> values)
+	{
+		if (values.IsEmpty())
+		{
+			SDRC_Log.Add("[SDRC_Misc:FindMaxArrayValue] Array is empty! Returning 0 as a value.", LogLevel.SPAM);
+			return 0;
+		}
+		
+		int biggest = values[0];
+		
+		foreach (int val : values)
+		{
+			if (val > biggest)
+			{
+				biggest = val;
+			}
+		}
+
+		return biggest;				
+	}
+	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Find a point on circle with given radius and angle in degrees (0-360)
 	*/
     static vector GetCoordinatesOnCircle(vector vec, float radius, float angleInDegrees, float startAngle = 0)
