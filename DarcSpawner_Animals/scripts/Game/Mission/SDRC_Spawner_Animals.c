@@ -14,7 +14,7 @@ modded class SDRC_Spawner
 	private ref SDRC_SpawnerConfig_Animals m_Config_Animal = null;
 		
 	//------------------------------------------------------------------------------------------------
-	override void LoadAddon(out SDRC_SpawnerConfig mainConf)
+	override void LoadAddon(out array<ref SDRC_SpawnerConfig> spawnerConfigs)
 	{
 		SDRC_Log.Add("[SDRC_Spawner:LoadAddon] Loading addon: " + DC_CONFIG_ADDON_NAME_ANIMALS, LogLevel.NORMAL);
 		
@@ -35,9 +35,11 @@ modded class SDRC_Spawner
 			return;			
 		}
 
-		CopyData(mainConf, SDRC_SpawnerConfig.Cast(m_Config_Animal));
+//		CopyData(mainConf, SDRC_SpawnerConfig.Cast(m_Config_Animal));
 		
-		super.LoadAddon(mainConf);
+		spawnerConfigs.Insert(m_Config_Animal);
+		
+		super.LoadAddon(spawnerConfigs);
 	}
 	
 	//------------------------------------------------------------------------------------------------

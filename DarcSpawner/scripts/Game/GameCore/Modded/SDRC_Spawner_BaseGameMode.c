@@ -54,7 +54,6 @@ modded class SCR_BaseGameMode
 		if (SDRC_Conf.coreHasStarted)
 		{		
 			dcSpawner = new SDRC_Spawner();
-			dcSpawner.Run();
 		}
 		else
 		{

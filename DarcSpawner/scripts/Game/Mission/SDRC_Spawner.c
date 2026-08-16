@@ -11,16 +11,24 @@ const int DC_CONFIG_FILE_SPAWNER_JSONVER = 3;
 //------------------------------------------------------------------------------------------------
 class SDRC_Spawner
 {
-	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_SPAWNER);	
-	private ref SDRC_SpawnerConfig m_Config = new SDRC_SpawnerConfig();	
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_SPAWNER);
+	
+	private ref array<ref SDRC_SpawnerConfig> m_SpawnerConfigs = {};
+	
+//	private ref SDRC_SpawnerConfig m_Config = new SDRC_SpawnerConfig();	
+	private ref SDRC_SpawnerConfig m_Config = null;
+	
+	private int m_iSpawnerConfigIndex = 0;				//Which spawner we're spawning
+	private bool m_bHasRoadNetwork = true;				//Check if road network is available	
 	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g. cars, tents, ..) spawned
 	private int m_spawnSetID;
-	private int m_spawnIdx = 0;
+
+	//Run time parameters that needs to be reset for each new spawner run
+	private int m_spawnIdx;
 	private int m_spawnCount;
-	private int m_failCount = 0;						//Counter for failed spawns
-	private int m_failLimit = 0;						//Limit for fails before stopping. This is 2* maximum amount.
-	private bool m_bHasRoadNetwork = true;				//Check if road network is available
+	private int m_failCount;							//Counter for failed spawns
+	private int m_failLimit;							//Limit for fails before stopping. This is 2* maximum amount.
 	private ref array<vector> m_positionsUsed = {};		//When using position spawning, avoid spawning to same positions.
 		
 	//------------------------------------------------------------------------------------------------
@@ -31,7 +39,7 @@ class SDRC_Spawner
 		//If addons present, load those
 		if (SDRC_Misc.IsAddonLoaded("$DarcSpawner_*:"))
 		{
-			LoadAddon(m_Config);
+			LoadAddon(m_SpawnerConfigs);
 		}
 		else
 		{
@@ -44,33 +52,22 @@ class SDRC_Spawner
 			}
 		}
 		
-		if ( (m_Config.spawnSetList.IsEmpty()) || (m_Config.spawnSets.IsEmpty()) )
+		if (m_SpawnerConfigs.IsEmpty())
 		{
-			SDRC_Log.Add("[SDRC_Spawner] No spawnSets defined. DarcSpawner not started.", LogLevel.ERROR);
-			return;			
+			SDRC_Log.Add("[SDRC_Spawner] No spawner configs defined. DarcSpawner not started.", LogLevel.ERROR);
 		}
 
-		//Max amount of spawnNames to spawn
-		m_spawnCount = m_Config.spawnCount;		
-		if (m_spawnCount == 0)
-		{			
-			m_spawnCount = (SDRC_Misc.GetWorldSize() * m_Config.spawnWorldSizeMultiplier) / 1000;
-			SDRC_Log.Add("[SDRC_Spawner] m_spawnCount = Worldsize: " + SDRC_Misc.GetWorldSize() + " * " + m_Config.spawnWorldSizeMultiplier, LogLevel.DEBUG);			
-		}		
-		m_failLimit = m_spawnCount * 2;
-		
-		SDRC_Log.Add("[SDRC_Spawner] --- Settings --------------------", LogLevel.DEBUG);
-		SDRC_Log.Add("[SDRC_Spawner] Maximum spawnCount: " + m_spawnCount, LogLevel.DEBUG);
-		SDRC_Log.Add("[SDRC_Spawner] spawnSets defines: " + m_Config.spawnSets.Count(), LogLevel.DEBUG);
 		//Check if RoadNetworkManager is available.
 		if (!SDRC_RoadHelper.GetRoadNetworkManager())
 		{
 			m_bHasRoadNetwork = false;
 			SDRC_Log.Add("[SDRC_Spawner] RoadNetworkManager not defined. Entities will not be spawned on roads.", LogLevel.WARNING);
 		}
-		SDRC_Log.Add("[SDRC_Spawner] --- Settings --------------------", LogLevel.DEBUG);		
-	}
-
+				
+		StartSpawner();
+	}		
+		
+	//------------------------------------------------------------------------------------------------
 	void ~SDRC_Spawner()
 	{
 		SDRC_Log.Add("[~SDRC_Spawner] Stopping SDRC_Spawner", LogLevel.NORMAL);
@@ -80,10 +77,52 @@ class SDRC_Spawner
 	/*!
 	A class to be overriden by the addon.
 	*/	
-	void LoadAddon(out SDRC_SpawnerConfig mainConf)
+	void LoadAddon(out array<ref SDRC_SpawnerConfig> spawnerConfigs)
 	{
 	}	
 	
+	//------------------------------------------------------------------------------------------------
+	void StartSpawner()
+	{	
+		if (m_iSpawnerConfigIndex > m_SpawnerConfigs.Count() - 1)
+		{
+			SDRC_Log.Add("[SDRC_Spawner:StartSpawner] All done, stopping.", LogLevel.NORMAL);
+			return;
+		}
+		
+		//Set the spawner config
+		m_Config = m_SpawnerConfigs[m_iSpawnerConfigIndex];
+		//Reset values for each spawner.
+		m_spawnIdx = 0;
+		m_spawnCount = 0;
+		m_failCount = 0;						//Counter for failed spawns
+		m_failLimit = 0;						//Limit for fails before stopping. This is 2* maximum amount.
+		array<vector> m_positionsUsed = {};		//When using position spawning, avoid spawning to same positions.
+		
+		SDRC_Log.Add("[SDRC_Spawner] --- Starting spawner: " + m_Config.comment, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_Spawner] Spawner author: " + m_Config.author, LogLevel.NORMAL);
+		
+		if ( (m_Config.spawnSetList.IsEmpty()) || (m_Config.spawnSets.IsEmpty()) )
+		{
+			SDRC_Log.Add("[SDRC_Spawner] No spawnSets defined.", LogLevel.ERROR);
+			return;			
+		}
+
+		//Max amount of spawnNames to spawn
+		m_spawnCount = m_Config.spawnCount;		
+		if (m_spawnCount == 0)
+		{			
+			m_spawnCount = (SDRC_Misc.GetWorldSize() * m_Config.spawnWorldSizeMultiplier) / 1000;
+			SDRC_Log.Add("[SDRC_Spawner] m_spawnCount = Worldsize: " + SDRC_Misc.GetWorldSize() + " * " + m_Config.spawnWorldSizeMultiplier, LogLevel.SPAM);
+		}		
+		m_failLimit = m_spawnCount * 2;
+		
+		SDRC_Log.Add("[SDRC_Spawner] Maximum spawnCount: " + m_spawnCount, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_Spawner] spawnSets defines: " + m_Config.spawnSets.Count(), LogLevel.DEBUG);
+		
+		Run();
+	}
+
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Run the spawner. Spawn items with some delay.
@@ -103,18 +142,23 @@ class SDRC_Spawner
 				m_failCount++;
 			}
 			
+			//TBD: Do we need m_failCount checking ?
 			if (m_failCount < m_failLimit)
 			{
 				GetGame().GetCallqueue().CallLater(Run, 3000, false);
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_Spawner:Run] Spawned " + m_EntityList.Count() + "/" + m_spawnCount + ". Some spawns failed. Stopping.", LogLevel.NORMAL);
+				SDRC_Log.Add("[SDRC_Spawner:Run] Spawned " + m_EntityList.Count() + "/" + m_spawnCount + ". Some spawns failed.", LogLevel.NORMAL);
 			}
 		}				
 		else
 		{
-			SDRC_Log.Add("[SDRC_Spawner:Run] Spawned " + m_EntityList.Count() + "/" + m_spawnCount + ". All done, stopping.", LogLevel.NORMAL);
+			SDRC_Log.Add("[SDRC_Spawner:Run] Spawned " + m_EntityList.Count() + "/" + m_spawnCount, LogLevel.NORMAL);
+			
+			//Start another spawner
+			m_iSpawnerConfigIndex++;
+			StartSpawner();
 		}
 	}
 	

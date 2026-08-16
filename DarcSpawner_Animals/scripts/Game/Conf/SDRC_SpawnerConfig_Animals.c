@@ -18,7 +18,7 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 	{		
 		version = 1;
 		author = "darc";
-		comment = "";
+		comment = "Animal spawner using French Animals mod. ";
 		spawnWorldSizeMultiplier = 0;
 		spawnCount = 20;
 		spawnSetList = {0,0,0,1,2,2,3,3,4};
