@@ -1,6 +1,3 @@
-SCR_AIGroup : "{0A8E20F50DA233E1}Prefabs/Groups/BLUFOR/Group_US_FireTeam_Guard.et" {
- coords 1747.363 39 2834.394
-}
 $grp Vehicle : "{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et" {
  LAV1 {
   coords 1700 37.937 2800
@@ -8,15 +5,6 @@ $grp Vehicle : "{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et" {
  LAV2 {
   coords 1686.241 39.001 2844.745
  }
-}
-SCR_AIGroup : "{1F468430E5AB477E}Prefabs/Groups/BLUFOR/GreenBerets/Suppressed/Group_US_GreenBeret_ReconSquad.et" {
- coords 1713.375 37.973 2788.524
-}
-SCR_AIGroup : "{35681BE27C302FF5}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_SentryTeam.et" {
- coords 1733.93 38.999 2858.277
-}
-GenericEntity : "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et" {
- coords 1816.888 39.997 2711.117
 }
 $grp SCR_DestructibleBuildingEntity : "{CEB1F71D46592F3C}Prefabs/Structures/Airport/Hangar_01/Hangar_01.et" {
  {
@@ -27,15 +15,9 @@ $grp SCR_DestructibleBuildingEntity : "{CEB1F71D46592F3C}Prefabs/Structures/Airp
   angles 0 24.326 0
  }
 }
-SCR_AIGroup : "{D0886786634E55AE}Prefabs/Groups/BLUFOR/GreenBerets/Group_US_GreenBeret_Squad.et" {
- coords 1492.434 38.999 2812.33
-}
 StaticModelEntity : "{E95CB8F4C4B2C210}Prefabs/Decals/Markings/Runway/Decal_Helipad_01.et" {
  coords 3069.493 46.222 2544.428
  angles 1.383 0 0
-}
-SCR_AIGroup : "{F72EF3429D8C8DF5}Prefabs/Groups/BLUFOR/Group_US_AmmoTeam.et" {
- coords 1602.82 39.001 2826.141
 }
 GenericEntity : "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et" {
  coords 1708.14 39.001 2821.721

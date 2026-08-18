@@ -59,7 +59,7 @@ sealed class SDRC_Conf
 #ifndef SDRC_RELEASE
 	const bool RELEASE = false;
 	const string DEFAULT_DIR = "debug";
-	const bool SDRC_ENABLE_DARCSPAWNER = true;
+	const bool SDRC_ENABLE_DARCSPAWNER = false;
 	const bool SDRC_ENABLE_DARCMISSIONS	= true;
 	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
 	const bool SDRC_ENABLE_DARCSTORIES = false;

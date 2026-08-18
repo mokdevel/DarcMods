@@ -451,7 +451,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 		
 		#ifndef SDRC_RELEASE
 			missionCycleTime = 8;//SDRC_MISSION_CYCLE_TIME_DEFAULT;
-			missionList = {5};//{0,0,0,0,0,0,1,1,1,1,1,2,3,3,4,4};
+			missionList = {0};//{0,0,0,0,0,0,1,1,1,1,1,2,3,3,4,4};
 		#endif
 		
 		//Mission specific

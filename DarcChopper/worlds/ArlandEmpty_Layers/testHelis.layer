@@ -1,7 +1,3 @@
-Vehicle C130J_SDRC1 {
- coords 664.148 168.999 2580.515
- angles 0 75 0
-}
 Vehicle UAZ1 : "{259EE7B78C51B624}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469.et" {
  coords 3139.809 27.835 2077.538
 }
