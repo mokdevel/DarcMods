@@ -2,6 +2,9 @@
 
 ## Next Version
 
+Fixes: 
+* Incorrect amount of AI spawning especially in vehicles. Thanks to Captain Sprocket for reporting. 
+
 ## 20260812
 Main features:
 * While in attack, chopper will do a slight dive.

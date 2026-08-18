@@ -36,11 +36,20 @@ array<SDRC_LocationAka> buildingAkas : Add buildings with a certain type to the 
 ```
 
 ## SDRC_LocationAka
-[EMapDescriptorType](https://community.bistudio.com/wikidata/external-data/arma-reforger/ArmaReforgerScriptAPIPublic/group__Map.html#ga18c4f596069370b50b7f842cf36d5686) .
+This type is used for both locations and buildings searching to assign as a specific [EMapDescriptorType](https://community.bistudio.com/wikidata/external-data/arma-reforger/ArmaReforgerScriptAPIPublic/group__Map.html#ga18c4f596069370b50b7f842cf36d5686) .
 
+### locationAkas
+Finds location names to be included in the specified type.
 ```
 EMapDescriptorType type : The type to use for names.
-array<string> names : Names that are to be added to the location list with selected type.
+array<string> names : Location names that are to be added to the location list with selected type.
+```
+
+### buildingAkas
+Finds building names to be included in the specified type.
+```
+EMapDescriptorType type : The type to use for names.
+array<string> names : Building names that are to be added to the location list with selected type.
 ```
 
 # Empty position finding
