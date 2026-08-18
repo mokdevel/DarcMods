@@ -66,7 +66,7 @@ class SDRC_VehicleHelper
 		}
 
 		SDRC_AIHelper.GroupHandleRandomized(aiPrefabs, faction);
-					
+			
 		//Do the spawning	
 		foreach (ResourceName aiPrefab : aiPrefabs)
 		{
@@ -622,7 +622,7 @@ class SDRC_VehicleHelper
 		array<BaseCompartmentSlot> compartments = {};
 		compartments.Clear();
 		scr_compartmentManager.GetCompartmentsOfType(compartments, type);
-		SDRC_Log.Add("[SDRC_VehicleHelper:GetCompartmentCountOfType] Found: " + compartments.Count() + " (" + type + ")", LogLevel.DEBUG);
+		SDRC_Log.Add("[SDRC_VehicleHelper:GetCompartmentCountOfType] Found: " + compartments.Count() + " (" + SCR_Enum.GetEnumName(ECompartmentType, type)  + ")", LogLevel.DEBUG);
 		
 		return compartments.Count();
 	}

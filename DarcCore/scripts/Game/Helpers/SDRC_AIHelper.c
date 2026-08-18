@@ -387,11 +387,12 @@ sealed class SDRC_AIHelper
 	*/
 	static SCR_AIGroup GroupCreate(string faction, vector pos)
 	{
-		string aiBaseGroup = "{F22EDFBEFC193357}Prefabs/Groups/Campaign/Group_FIA_Remnants.et";
+//		string aiBaseGroup = "{F22EDFBEFC193357}Prefabs/Groups/Campaign/Group_FIA_Remnants.et";
+		string aiBaseGroup = "{000CD338713F2B5A}Prefabs/AI/Groups/Group_Base.et";
 		Resource resource = null;
 		SCR_AIGroup group = null;
 		
-		switch (faction)
+/*		switch (faction)
 		{
 			case "USSR":
 				aiBaseGroup = "{9E45E4F7AE1CB45A}Prefabs/Groups/Campaign/Group_USSR.et";
@@ -404,7 +405,7 @@ sealed class SDRC_AIHelper
 				break;
 			default:
 				//FIA
-		}
+		}*/
 	
 		resource = Resource.Load(aiBaseGroup);
 		if (resource.IsValid())
