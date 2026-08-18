@@ -26,11 +26,6 @@ class SDRC_ListHelper
 			}
 		}
 		
-		if (index == -1)
-		{
-			int x = 0;
-		}
-		
 		return index;
 	}
 	

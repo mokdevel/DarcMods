@@ -471,7 +471,7 @@ class SDRC_SpawnHelper
 		else
 		{
 			//SDRC_DebugHelper.AddDebugPos(pos, ARGB(20, 255, 0, 0), objectSize, "NONE", 15);	//RED
-			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Obstructing objects: " + m_obstructCount, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Obstructing objects: " + m_obstructCount, LogLevel.SPAM);
 			SDRC_Log.Add("[SDRC_SpawnHelper:FindEmptyPos] Empty spot not found. Using original.", LogLevel.SPAM);
 			return false;
 		}

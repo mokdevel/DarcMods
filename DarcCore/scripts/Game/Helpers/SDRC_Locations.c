@@ -44,13 +44,14 @@ sealed class SDRC_Locations
 	*/
 	static bool IsLocationCacheNeeded()
 	{
-		array<string> addonList = {};
+/*		array<string> addonList = {};
 		
 		SDRC_Misc.GetAddonList(addonList, false);
 		
-		if ( addonList.Contains("$DarcMissions:") || addonList.Contains("$DarcSpawner:") 
+/*		if ( addonList.Contains("$DarcMissions:") || addonList.Contains("$DarcSpawner:") 
 		  || addonList.Contains("$DarcMissionsDev:") || addonList.Contains("$DarcSpawnerDev:") 
-		   )
+		   )*/
+		if ( SDRC_Misc.IsAddonLoaded("$DarcMissions*") || SDRC_Misc.IsAddonLoaded("$DarcSpawner*") )
 		{
 			return true;
 		}
@@ -189,7 +190,7 @@ sealed class SDRC_Locations
 				}
 			}
 		}
-
+		
 		//Handle building akas
 		foreach (SDRC_LocationAka aka : buildingAkas)
 		{
@@ -206,10 +207,52 @@ sealed class SDRC_Locations
 				locNew.displayName = locNew.name;
 				locNew.createdName = locNew.name;
 				m_LocationsCache.Insert(locNew);
-				SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Added via building aka: " + locNew.displayName + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, locNew.baseType) + " at: " + locNew.pos, LogLevel.DEBUG);						
+				SDRC_Log.Add("[SDRC_Locations:FillLocationsCache] Added via building aka: " + locNew.displayName + " : " + SCR_Enum.GetEnumName(EMapDescriptorType, locNew.baseType) + " at: " + locNew.pos, LogLevel.SPAM);						
 			}
 		}
-								
+	}	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Prepare an array with all locations on the map.
+	*/		
+	static void FillAreaCache(array<ref SDRC_LocationAka> locationAkas, array<ref SDRC_LocationAka> buildingAkas = null)
+	{
+		#ifndef SDRC_RELEASE
+			//If SCR_MapEntity does not exist, we most likely are playing in some debug map
+			SCR_MapEntity mapEnt = SCR_MapEntity.GetMapInstance();
+			if (!mapEnt)
+			{
+				return;
+			}
+		#endif		
+		
+		SDRC_Log.Add("[SDRC_Locations:FillAreaCache] Searching..", LogLevel.NORMAL);			
+
+		//Handle location akas with special handling
+		foreach (SDRC_LocationAka aka : locationAkas)
+		{
+			if (aka.names.Contains("SPECIAL_HANDLING"))
+			{
+				EMapDescriptorType type = aka.type;
+				switch (type)
+				{
+					case EMapDescriptorType.MDT_FOREST:
+					{
+						AddAreaToCache(EMapDescriptorType.MDT_FOREST, " forest", 200, 0.8);
+						break;						
+					}
+				}
+			}
+		}		
+	}
+	
+	//-----------------------------------------------------------------------------------------------
+	/*!
+	Print out debug data of locations
+	*/		
+	static void DumpLocationsCache()
+	{				
 		//Print debug information
 		foreach (SDRC_Location location : m_LocationsCache)
 		{
@@ -221,7 +264,7 @@ sealed class SDRC_Locations
 		ShowDebugInfo(m_LocationsCache);
 		//ShowDebugLocationMarker();
 	}	
-
+	
 	//-----------------------------------------------------------------------------------------------
 	/*!
 	Search for locations from the world using the cache. The types to search are defined in locationTypeArray.
@@ -479,6 +522,109 @@ sealed class SDRC_Locations
 		}
 	}	
 
+	//------------------------------------------------------------------------------------------------
+	static private void AddAreaToCache(EMapDescriptorType type, string prefix, int cellSize, float limit)
+	{
+		int worldSize = SDRC_Misc.GetWorldSize();
+		
+		SoundWorld soundWorld;
+		ChimeraWorld chimeraWorld = ChimeraWorld.CastFrom(GetGame().GetWorld());
+		if (chimeraWorld)
+			soundWorld = chimeraWorld.GetSoundWorld();
+
+		if ( (!chimeraWorld) || (!soundWorld) )
+		{
+			SDRC_Log.Add("[SDRC_Locations:AddAreaToCache] Can not search for " + SCR_Enum.GetEnumName(EMapDescriptorType, type) + " due to missing ChimeraWorld or SoundWorld.", LogLevel.WARNING);
+			return;
+		}
+		
+		//Mapcoords
+		int x = cellSize / 2;
+		int y = cellSize / 2;
+		vector pos = vector.Zero;
+		
+		while (y < worldSize)
+		{
+			while (x < worldSize)
+			{
+				pos[0] = x;
+				pos[2] = y;
+				pos = SDRC_Misc.SetPosToSurface(pos);
+				
+				bool areaPosOk = true;
+				
+				if (!SDRC_Misc.IsPosInWater(pos))
+				{
+					float sea, forest, city, meadow;
+					//TBD: Extend to find meadow
+					for (int i = 0; i < 4; i++)
+					{
+						//Try a few positions around the position
+						vector testPos = SDRC_Misc.RandomizePos(pos, cellSize / 4);
+						testPos = SDRC_Misc.SetPosToSurface(testPos);
+						
+						soundWorld.GetMapValuesAtPos(testPos, sea, forest, city, meadow);
+						
+						float limitVal = 0;
+						
+						switch (type)
+						{
+	/*						case EMapDescriptorType.MDT_FOREST: 
+							{
+								limitVal = sea;
+								break;
+							}*/
+							case EMapDescriptorType.MDT_FOREST: 
+							{
+								limitVal = forest;
+								break;
+							}
+	/*						case EMapDescriptorType.MDT_FOREST: 
+							{
+								limitVal = city;
+								break;
+							}
+							case EMapDescriptorType.MDT_FOREST: 
+							{
+								limitVal = meadow;
+								break;
+							}*/
+						}
+						
+						if (limitVal < limit)
+						{
+							areaPosOk = false;
+							break;
+						}
+					}
+					
+					if (areaPosOk)
+					{
+						SDRC_Location locNew = new SDRC_Location();
+						locNew.pos = pos;
+						locNew.baseType = type;
+						locNew.name = CreateName(pos) + prefix;
+						locNew.displayName = locNew.name;
+						locNew.createdName = locNew.name;
+						m_LocationsCache.Insert(locNew);
+						
+						#ifndef SDRC_RELEASE
+							//if (SDRC_Conf.SHOW_MARKER_FOR_LOCATION)
+							{
+								SDRC_DebugHelper.AddDebugPos(pos, ARGB(50, 0, 255, 0), (cellSize / 2), height: 20);
+							}
+						#endif						
+					}
+				}
+				
+				x += cellSize;
+			}
+			
+			x = cellSize / 2;
+			y += cellSize;
+		}
+	}
+	
 /*	//------------------------------------------------------------------------------------------------
 	static private void ShowDebugLocationMarker()
 	{
@@ -533,7 +679,7 @@ sealed class SDRC_Locations
 		EMapDescriptorType.MDT_BUSSTOP,
 		EMapDescriptorType.MDT_BUSSTATION,
 		//EMapDescriptorType.MDT_ROAD,
-		//EMapDescriptorType.MDT_FOREST,
+		EMapDescriptorType.MDT_FOREST,
 		EMapDescriptorType.MDT_CRANE,
 		EMapDescriptorType.MDT_TRANSFORMER,
 		EMapDescriptorType.MDT_TRANSMITTER,

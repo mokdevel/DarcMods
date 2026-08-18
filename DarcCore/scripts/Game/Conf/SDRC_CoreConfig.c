@@ -114,6 +114,10 @@ class SDRC_CoreConfig : SDRC_Config
 		aka02.Set(EMapDescriptorType.MDT_PORT, {"harbour", "harbor"});
 		locationAkas.Insert(aka02);						
 
+		ref SDRC_LocationAka aka03 = new SDRC_LocationAka();
+		aka03.Set(EMapDescriptorType.MDT_FOREST, {"SPECIAL_HANDLING"});		//This has a special handling!
+		locationAkas.Insert(aka03);						
+		
 		// Building akas
 		ref SDRC_LocationAka b_aka00 = new SDRC_LocationAka();
 		b_aka00.Set(EMapDescriptorType.MDT_CHURCH, {"Church", "Mosque_", "Minaret", });

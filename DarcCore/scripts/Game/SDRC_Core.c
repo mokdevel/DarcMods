@@ -24,6 +24,8 @@ enum SDRC_ECoreScanState
 	AMMO,
 	BUILDINGCACHE,
 	LOCATIONCACHE,
+	AREACACHE,
+	DUMPCACHE,
 	READY
 };
 
@@ -262,11 +264,19 @@ class SDRC_Core
 				}
 				break;
 			case SDRC_ECoreScanState.BUILDINGCACHE:
-				FillBuildingCache();
+				FillBuildingCache();	//This needs to be done first as buildings are needed in FillLocationCache() part.
 				m_iScanState++;
 				break;
 			case SDRC_ECoreScanState.LOCATIONCACHE:
 				FillLocationCache();
+				m_iScanState++;
+				break;
+			case SDRC_ECoreScanState.AREACACHE:
+				FillAreaCache();
+				m_iScanState++;
+				break;
+			case SDRC_ECoreScanState.DUMPCACHE:
+				SDRC_Locations.DumpLocationsCache();
 				m_iScanState++;
 				break;
 			case SDRC_ECoreScanState.READY:
@@ -300,7 +310,7 @@ class SDRC_Core
 	//------------------------------------------------------------------------------------------------		
 	void FillLocationCache()
 	{
-		//Building caching takes time, so don't do it, if not needed.
+		//Location caching takes time, so don't do it, if not needed.
 		if (SDRC_Locations.IsLocationCacheNeeded())
 		{	
 			//Initialize locations cache
@@ -308,5 +318,18 @@ class SDRC_Core
 		}
 
 		SDRC_Log.Add("[SDRC_Core:FillLocationCache] Done!", LogLevel.DEBUG);
+	}	
+	
+	//------------------------------------------------------------------------------------------------		
+	void FillAreaCache()
+	{
+		//Area caching takes time, so don't do it, if not needed. It is not needed if locations are not needed.
+		if (SDRC_Locations.IsLocationCacheNeeded())
+		{	
+			//Initialize locations cache
+			SDRC_Locations.FillAreaCache(m_Config.locationAkas, m_Config.buildingAkas);
+		}
+
+		SDRC_Log.Add("[SDRC_Core:FillAreaCache] Done!", LogLevel.DEBUG);
 	}	
 }
