@@ -4,8 +4,11 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+
+## 20260818.1
 Main Features:
-* Added MDT_FOREST as a location type. Forests will be searched during startup and collected to the location cache.
+* Added functionality for map descriptor MDT_FOREST (34) as a location type. Forests will be searched during startup and collected to the location cache.
+  * Optional: To enable this functionality, delete dc_coreConfig.json file.
 
 ## 20260818
 Fixes: 
