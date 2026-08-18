@@ -43,18 +43,21 @@ class SDRC_Spawner
 		}
 		else
 		{
-			//Load config
+			//Load default config
+			m_Config = new SDRC_SpawnerConfig();
 			bool success = m_JsonApi.Load(m_Config, SDRC_SpawnerConfig.Cast(m_Config), DC_CONFIG_FILE_SPAWNER_JSONVER, safeUpdate: true);
 			if (!success)
 			{
 				SDRC_Log.Add("[SDRC_Spawner] Error loading " + DC_CONFIG_FILE_SPAWNER + ". DarcSpawner not started.", LogLevel.ERROR);
 				return;
 			}
+			m_SpawnerConfigs.Insert(m_Config);
 		}
 		
 		if (m_SpawnerConfigs.IsEmpty())
 		{
 			SDRC_Log.Add("[SDRC_Spawner] No spawner configs defined. DarcSpawner not started.", LogLevel.ERROR);
+			return;
 		}
 
 		//Check if RoadNetworkManager is available.

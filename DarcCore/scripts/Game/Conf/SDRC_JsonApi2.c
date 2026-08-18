@@ -43,6 +43,12 @@ class SDRC_JsonApi2 : JsonApiStruct
 	*/
 	bool Load(Managed T, SDRC_Config C, int jsonVersion, bool createMissingFiles = true, bool safeUpdate = false, bool silent = false)
 	{	
+		if ( (!T) || (!C) )
+		{
+			SDRC_Log.Add("[SDRC_JsonApi2:Load] Classes missing! ", LogLevel.ERROR);
+			return false;
+		}
+		
 		JsonLoadContext loadContext = LoadConfig(createMissingFiles);		
 		if (!loadContext)
 		{
