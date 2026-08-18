@@ -89,6 +89,7 @@ Example: [dc_spawnerConfig_Animals.json](https://github.com/mokdevel/DarcMods/bl
 Main Features:
 * Addons functionality extended. Support for multiple spawner addons.  
 * New map descriptor MDT_FOREST (34). The locations are populated and cached at startup automatically from the map. 
+  * To enable this functionality, delete dc_coreConfig.json file. 
 
 ### DarcSpawner_Animals
 * Added spawners for territories.
