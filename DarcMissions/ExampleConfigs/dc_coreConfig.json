@@ -2,12 +2,12 @@
     "jsonVersion": 2,
     "author": "darc",
     "logLevel": 3,
-    "subDir": "default",
-    "debugShowWaypoints": false,
-    "debugShowMarks": false,
-    "debugShowSpheres": false,
-    "debugShowLines": false,
-    "debugShowInfo": false,
+    "subDir": "debug",
+    "debugShowWaypoints": true,
+    "debugShowMarks": true,
+    "debugShowSpheres": true,
+    "debugShowLines": true,
+    "debugShowInfo": true,
     "fallbackEnemyFaction": "USSR",
     "showOnGMMapNonValidArea": true,
     "showOnGMMapMissionMarker": true,
@@ -65,7 +65,9 @@
     "emptyPos": {
         "limit": 5,
         "ignoreFilter": [
-            "ParticleEffectEntity"
+            "ParticleEffectEntity",
+            "DecalEntity",
+            "Granite_BeachCluster_01"
         ],
         "stopFilter": [
             "RiverPartEntity",
@@ -121,6 +123,12 @@
             "names": [
                 "harbour",
                 "harbor"
+            ]
+        },
+        {
+            "type": 34,
+            "names": [
+                "SPECIAL_HANDLING"
             ]
         }
     ],

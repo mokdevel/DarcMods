@@ -1,20 +1,32 @@
 {
-    "jsonVersion": 1,
+    "jsonVersion": 2,
     "version": 1,
     "author": "darc",
-    "comment": "",
-    "spawnCount": 20,
+    "comment": "Animal spawner using French Animals mod. ",
+    "spawnCount": 30,
     "spawnWorldSizeMultiplier": 0.0,
     "spawnSetList": [
         0,
         0,
         0,
+        0,
+        0,
+        1,
         1,
         2,
         2,
+        2,
         3,
         3,
-        4
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        8
     ],
     "spawnSets": [
         {
@@ -23,8 +35,10 @@
             "markerType": "DARC_MISSION",
             "markerIdx": 53,
             "locationTypes": [
-                7,
-                8,
+                34,
+                34,
+                34,
+                34,
                 58,
                 64,
                 60,
@@ -45,8 +59,10 @@
             "markerType": "DARC_MISSION",
             "markerIdx": 53,
             "locationTypes": [
-                7,
-                8,
+                34,
+                34,
+                34,
+                34,
                 58,
                 64,
                 60,
@@ -67,8 +83,10 @@
             "markerType": "DARC_MISSION",
             "markerIdx": 53,
             "locationTypes": [
-                7,
-                8,
+                34,
+                34,
+                34,
+                34,
                 58,
                 64,
                 60,
@@ -89,8 +107,10 @@
             "markerType": "DARC_MISSION",
             "markerIdx": 53,
             "locationTypes": [
-                7,
-                8,
+                34,
+                34,
+                34,
+                34,
                 58,
                 64,
                 60,
@@ -111,8 +131,10 @@
             "markerType": "DARC_MISSION",
             "markerIdx": 53,
             "locationTypes": [
-                7,
-                8,
+                34,
+                34,
+                34,
+                34,
                 58,
                 64,
                 60,
@@ -121,6 +143,102 @@
             "positions": [],
             "entities": [
                 "{3C106059EE4089FD}Prefabs/Animals/Rabbit.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 5: Spawn rabbit territory",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{BA1181A14A63C725}Prefabs/Zones/BAR_TerritoryMarker_Rabbit.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 6: Spawn deer territory",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{2C5C9488DD7E937D}Prefabs/Zones/BAR_TerritoryMarker_Deer.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 7: Spawn fox territory",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{6C64DC5B5FA4904B}Prefabs/Zones/BAR_TerritoryMarker_Fox.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 8: Spawn wolf territory",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{5BBDC814E9639041}Prefabs/Zones/BAR_TerritoryMarker_Wolf.et"
             ],
             "spawnRndRadius": 200,
             "spawnOnRoad": false,
