@@ -5,6 +5,13 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 
+## 20260818
+Main Features:
+* Added MDT_FOREST as a location type. Forests will be searched during startup and collected to the location cache.
+
+Fixes: 
+* Incorrect amount of AI spawning especially in vehicles. Thanks to Captain Sprocket for reporting. 
+
 ## 20260812
 Fixes:
 * List handling improvements. 

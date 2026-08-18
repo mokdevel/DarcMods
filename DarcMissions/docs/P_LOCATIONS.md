@@ -35,6 +35,7 @@ Below are the typical values selected from [EMapDescriptorType](https://communit
 ..
 32 = MDT_BUSSTATION
 ..
+34 = MDT_FOREST		//Special: Includes areas that have forest sounds. Search is not exact.
 35 = MDT_CRANE
 36 = MDT_TRANSFORMER
 37 = MDT_TRANSMITTER
