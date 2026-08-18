@@ -85,7 +85,10 @@ class SDRC_SpawnHelper
 			vector sums = FindPrefabSize(resourceName);
 			if (sums == "0 0 0")
 			{
-				return null;
+				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItem] " + entityName + " has a size of 0." + pos, LogLevel.DEBUG);
+				//Setting a fake size
+				sums[0] = 0.01;
+				//return null;
 			}
 			
 			float maxSize = SDRC_Misc.FindMaxValue(sums);
