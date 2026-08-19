@@ -129,6 +129,8 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 		lists.Insert(enemyList26());
 		lists.Insert(enemyList27());
 		
+		lists.Insert(enemyList45());
+		
 		lists.Insert(enemyList50());		
 		lists.Insert(enemyList51());		
 		lists.Insert(enemyList52());		
@@ -538,6 +540,24 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 		);					
 		return enemyList;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	// Civilians
+	//------------------------------------------------------------------------------------------------
+	
+	SDRC_List enemyList45()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
+			"C_CIV",
+			{"Prefabs/Characters/Factions/CIV"},
+			{
+			},
+			{"_Base", "_NotSpawned", "_Remnants", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
+		);					
+		return enemyList;
+	}	
 	
 	//------------------------------------------------------------------------------------------------
 	// Monster - zombies

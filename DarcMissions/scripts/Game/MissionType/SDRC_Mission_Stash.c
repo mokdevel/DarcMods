@@ -151,6 +151,10 @@ class SDRC_StashConfig : SDRC_MissionConfig
 	//------------------------------------------------------------------------------------------------	
 	override void LoadMissionFiles(int ver)
 	{
+//		array<string> result = {};
+		string path = "$profile:/" + SDRC_Conf.CONF_DIRECTORY + "/" + SDRC_Conf.subDir + "/";
+		SDRC_Misc.GetFileList(missionFiles, path, ".json", "dc_missionConfig_Stash_", true);
+		
 		//Load mission files
 		foreach (string missionFile : missionFiles)
 		{
@@ -209,7 +213,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		activeDistance = 50;
 		missionList = {0,0,0};
-		missionFiles.Insert("dc_missionConfig_Stash_010.json");
+//		missionFiles.Insert("dc_missionConfig_Stash_010.json");
 /*		#ifndef SDRC_RELEASE
 			missionFiles.Insert("dc_missionConfig_Stash_01x.json");	//Just for testing that dummy files don't appear
 		#endif*/

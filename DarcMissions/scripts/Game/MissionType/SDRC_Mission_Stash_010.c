@@ -31,15 +31,15 @@ class SDRC_StashConfig_010 : SDRC_StashConfig
 		//Default
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		activeDistance = 50;
-		missionList = {10};		
+		missionList = {0};		
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Clear();
-		subMissions.Insert(Stash010());				
+		subMissions.Insert(Stash_010_0());				
 	};
 	
 	//----------------------------------------------------
-	SDRC_Camp Stash010()
+	SDRC_Camp Stash_010_0()
 	{
 		ref SDRC_Camp stash = new SDRC_Camp();
 		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
@@ -48,7 +48,7 @@ class SDRC_StashConfig_010 : SDRC_StashConfig
 			"Loot found.",
 			"Loot lost.",);
 		stash.general.Set(
-			10, "index 10: Random stash",
+			0, "index 0: Random stash",
 			{"0 0 0"}, 3,
 			{},
 			"any",

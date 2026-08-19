@@ -596,7 +596,37 @@ sealed class SDRC_Misc
 		traceEndPos[1] = traceStartPos[1];
 		return RayCast(traceStartPos, traceEndPos, exclude);
 	}	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get file list from a directory
+	*/
+	static int GetFileList(out array<ref string> fileNames, string path, string extension, string includeFilter = "", bool removePath = false)
+	{		
+		FileIO.FindFiles(fileNames.Insert, path, extension);
 		
+		for (int i = 0; i < fileNames.Count(); i++)
+		{
+			if (!fileNames[i].Contains(includeFilter))
+			{
+				fileNames.Remove(i);
+				i--;
+			}
+		}
+		
+		if (removePath)
+		{
+			foreach (string fileName : fileNames)
+			{
+				int lastslash = fileName.LastIndexOf("/") + 1;
+				fileName = fileName.Substring(lastslash, fileName.Length() - lastslash);
+			}
+		}
+		
+		//Print("Files: " + fileNames);
+		return fileNames.Count();
+	}	
+			
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Check if a class is available. This can be used to check if a mod has been loaded by checking a class
