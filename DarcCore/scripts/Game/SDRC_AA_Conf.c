@@ -26,7 +26,7 @@ sealed class SDRC_Conf
 	static bool coreInitReady = false;
 	const int MISSION_RUN_DELAY = 5000;						//Time between INIT and SPAWN states.
 	const int PERSISTENCE_DELAY = 6000;						//Time to delay the persistence setting for spawned entities. 
-	const int DESPAWN_ENTITY_USED_FOR_SIZE_DELAY = 5000;	//Time to delay the deletion of an entity that was used for defining the size or weapon used for finding the mag.
+	const int DESPAWN_ENTITY_USED_FOR_SIZE_DELAY = 1000;	//Time to delay the deletion of an entity that was used for defining the size or weapon used for finding the mag.
 	const int AI_SETTING_DELAY = 10000;
 	const int POSITION_RANDOMIZATION = 150;					//Randomization for position. 
 	const int SPAWN_ITEM_DELAY = 1000;						//Time used between AI/item spawns for example for Roadblock items
@@ -59,7 +59,7 @@ sealed class SDRC_Conf
 #ifndef SDRC_RELEASE
 	const bool RELEASE = false;
 	const string DEFAULT_DIR = "debug";
-	const bool SDRC_ENABLE_DARCSPAWNER = false;
+	const bool SDRC_ENABLE_DARCSPAWNER = true;
 	const bool SDRC_ENABLE_DARCMISSIONS	= true;
 	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
 	const bool SDRC_ENABLE_DARCSTORIES = false;

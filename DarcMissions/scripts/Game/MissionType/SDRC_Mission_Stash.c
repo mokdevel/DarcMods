@@ -165,12 +165,24 @@ class SDRC_StashConfig : SDRC_MissionConfig
 			{
 				foreach (SDRC_Camp subMission : conf.subMissions)
 				{
-					subMissions.Insert(subMission);
-				}
+					//We need to fix the subIdx so that there are no duplicates				
+					//Find the usable subIdx by searching the current biggest one + 1.
+					int freeIndex = SDRC_Misc.FindMaxArrayValue(missionList) + 1;
 				
-				foreach (int idx : conf.missionList)
-				{
-					missionList.Insert(idx);
+					//Fix indexes
+					int subIdx = subMission.general.subIdx;
+					subMission.general.subIdx = freeIndex;
+					
+					//Add the subMissions to the main list. 
+					subMissions.Insert(subMission);
+					
+					foreach (int idx : conf.missionList)
+					{
+						if (idx == subIdx)
+						{
+							missionList.Insert(freeIndex);
+						}
+					}
 				}
 			}
 		}
@@ -212,7 +224,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 		//Default		
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		activeDistance = 50;
-		missionList = {0,0,0};
+		missionList = {0,0,0,1};
 //		missionFiles.Insert("dc_missionConfig_Stash_010.json");
 /*		#ifndef SDRC_RELEASE
 			missionFiles.Insert("dc_missionConfig_Stash_01x.json");	//Just for testing that dummy files don't appear
@@ -220,6 +232,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Insert(Stash0());				
+		subMissions.Insert(Stash1());				
 	};
 	
 	//----------------------------------------------------
@@ -237,7 +250,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 			{},
 			"any",
 			{message},		
-			SDRC_EMissionWinCondition.FIND_IN_15,
+			SDRC_EMissionWinCondition.FIND_IN_30,
 			{},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_STASH_MAP,
 			{SDRC_EDifficulty.RANDOM},
@@ -286,4 +299,67 @@ class SDRC_StashConfig : SDRC_MissionConfig
 		
 		return stash;
 	};	
+	
+	//----------------------------------------------------
+	SDRC_Camp Stash1()
+	{
+		ref SDRC_Camp stash = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Hidden weapons near %l",
+			"Hurry, loot is yours to take!",
+			"Weapons found.",
+			"Someone found the stash and left you nothing.",);
+		stash.general.Set(
+			1, "index 1: Random weapon stash",
+			{"0 0 0"}, 3,
+			{},
+			"any",
+			{message},		
+			SDRC_EMissionWinCondition.FIND_IN_30,
+			{},
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_STASH_MAP,
+			{SDRC_EDifficulty.RANDOM},
+			0
+		);		
+		stash.ai.Set(
+			{0, 1},
+			{"G_LIGHT"},
+			50, 1.0,
+			{50, 300},
+			SDRC_EWaypointGenerationType.RANDOM,
+			SDRC_EWaypointMoveType.PATROLCYCLE,
+		);
+		
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{2, 3, 5, }, SDRC_EMissionSuccess.WIN,
+			0.2, {30, 240}
+		);
+		stash.qrf = qrf;			
+		
+		ref SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE", "WEAPON_RIFLE",
+				"WEAPON_RIFLE_BIG", "WEAPON_RIFLE_BIG", "WEAPON_LAUNCHER", "WEAPON_LAUNCHER",
+				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
+				"UTIL_ATTACHMENT",
+				"UTIL_OPTIC",
+			};
+		loot.Set(0.7, lootItems);
+		stash.loot = loot;
+		
+		ref SDRC_Structure item_0 = new SDRC_Structure();
+		item_0.Set(
+//			"{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+//			"{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+//			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+//			"{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
+			"{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
+//			"{DBC8E6A4DD948C96}Prefabs/Props/Military/SupplyBox/SupplyPortableContainers/SupplyPortableContainer_01/LootSupplyPortableContainers_01_large_item.et",
+			"100.47 1 144.562"
+		);
+		stash.campItems.Insert(item_0);
+		
+		return stash;
+	};		
 }

@@ -92,7 +92,7 @@ sealed class SDRC_Misc
 	
 	Example: [10 12 8 6] returns 12
 	*/
-	static int FindMaxArrayValue(array<int> values)
+	static int FindMaxArrayValue(array<ref int> values)
 	{
 		if (values.IsEmpty())
 		{
@@ -616,10 +616,11 @@ sealed class SDRC_Misc
 		
 		if (removePath)
 		{
-			foreach (string fileName : fileNames)
+			foreach (int i, string fileName : fileNames)
 			{
 				int lastslash = fileName.LastIndexOf("/") + 1;
 				fileName = fileName.Substring(lastslash, fileName.Length() - lastslash);
+				fileNames[i] = fileName;
 			}
 		}
 		
