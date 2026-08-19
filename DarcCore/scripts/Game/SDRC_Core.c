@@ -86,6 +86,9 @@ class SDRC_Core
 			SDRC_Log.Add("[SDRC_Core] Overriding subDir defined in dc_coreConfig.json with startup parameter " + subDirCLI, LogLevel.NORMAL);
 		}
 
+		//Set the full path
+		SDRC_Conf.subDirPath = "$profile:/" + SDRC_Conf.CONF_DIRECTORY + "/" + SDRC_Conf.subDir + "/";
+		
 		//Check for road network
 		bool hasRoadNetwork = false;
 		RoadNetworkManager rnManager = SDRC_RoadHelper.GetRoadNetworkManager();

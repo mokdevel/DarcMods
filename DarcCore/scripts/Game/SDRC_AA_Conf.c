@@ -21,7 +21,8 @@ sealed class SDRC_Conf
 {
 	const string CONF_DIRECTORY = "DarcMods";
 	const string CORE_CONFIG_FILE = "dc_coreConfig.json";
-	static string subDir = "";
+	static string subDir = "";								//Updated in SDRC_Core_BaseGameMode
+	static string subDirPath = "";							//Updated in SDRC_Core_BaseGameMode
 	static bool coreHasStarted = false;
 	static bool coreInitReady = false;
 	const int MISSION_RUN_DELAY = 5000;						//Time between INIT and SPAWN states.

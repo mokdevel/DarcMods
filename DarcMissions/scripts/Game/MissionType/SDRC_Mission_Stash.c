@@ -151,15 +151,19 @@ class SDRC_StashConfig : SDRC_MissionConfig
 	//------------------------------------------------------------------------------------------------	
 	override void LoadMissionFiles(int ver)
 	{
-//		array<string> result = {};
-		string path = "$profile:/" + SDRC_Conf.CONF_DIRECTORY + "/" + SDRC_Conf.subDir + "/";
-		SDRC_Misc.GetFileList(missionFiles, path, ".json", "dc_missionConfig_Stash_", true);
+//		string path = "$profile:/" + SDRC_Conf.CONF_DIRECTORY + "/" + SDRC_Conf.subDir + "/";
+//		SDRC_Misc.GetFileList(missionFiles, path, ".json", "dc_missionConfig_Stash_", true);
+		SDRC_Misc.GetFileList(missionFiles, SDRC_Conf.subDirPath, ".json", "dc_missionConfig_Stash_", true);
 		
 		//Load mission files
 		foreach (string missionFile : missionFiles)
 		{
 			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
 			SDRC_StashConfig conf = new SDRC_StashConfig();
+			
+/*			SDRC_MissionConfig conf = null;
+			conf = SDRC_StashConfig.Cast(conf);
+			conf = new SDRC_StashConfig();*/
 			
 			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false))
 			{

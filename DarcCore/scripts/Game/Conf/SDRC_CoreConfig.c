@@ -9,7 +9,7 @@ class SDRC_CoreConfig : SDRC_Config
 	//Default information
 	string author = "darc";
 	DC_LogLevel logLevel;
-	string subDir;						//Directory specifying a certain conf for play. For example "Escapists"	
+	string subDir;							//Directory specifying a certain conf for play. For example "Escapists"	
 	bool debugShowWaypoints = SDRC_Conf.SHOW_DEBUG_INFO;
 	bool debugShowMarks = SDRC_Conf.SHOW_DEBUG_INFO;	
 	bool debugShowSpheres = SDRC_Conf.SHOW_DEBUG_INFO;
@@ -37,7 +37,7 @@ class SDRC_CoreConfig : SDRC_Config
 		
 //		logLevel = DC_LogLevel.DEBUG;	
 		logLevel = SDRC_Conf.DEFAULT_LOGLEVEL;
-		subDir = SDRC_Conf.DEFAULT_DIR;		
+		subDir = SDRC_Conf.DEFAULT_DIR;
 		buildingExcludeFilter = {
 			"BrickPile", "WoodPile", "Hotbed", "Henhouse", "PhoneBooth",
 			"AmmoDump", "ElectricCabinet", "ControlBox110kV", "LightBeacon",
