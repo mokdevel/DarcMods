@@ -21,7 +21,7 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		comment = "Animal spawner using French Animals mod. ";
 		spawnWorldSizeMultiplier = 0;
 		spawnCount = 30;
-		spawnSetList = {0,0,0,0,0,1,1,2,2,2,3,3,3,4,4 ,5,5,6,6,7,8, 9, 10};
+		spawnSetList = {1};//{0,0,0,0,0,1,1,2,2,2,3,3,3,4,4 ,5,5,6,6,7,8, 9, 10};
 		//----------------------------------------------------		
 		spawnSets.Insert(SpawnSet0_Animals());
 		spawnSets.Insert(SpawnSet1_Animals());
@@ -257,7 +257,7 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 			},
 			{},
 			{
-				"{5BBDC814E9639041}Prefabs/Zones/BAR_TerritoryMarker_Wolf.et",
+				"{DE061A93287F06F8}Prefabs/Animals/Bear.et",
 			},
 			200, false, false,
 		);
