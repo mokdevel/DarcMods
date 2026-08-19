@@ -21,7 +21,7 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		comment = "Animal spawner using French Animals mod. ";
 		spawnWorldSizeMultiplier = 0;
 		spawnCount = 30;
-		spawnSetList = {0,0,0,0,0,1,1,2,2,2,3,3,3,4,4 ,5,5,6,6,7,8};
+		spawnSetList = {0,0,0,0,0,1,1,2,2,2,3,3,3,4,4 ,5,5,6,6,7,8, 9, 10};
 		//----------------------------------------------------		
 		spawnSets.Insert(SpawnSet0_Animals());
 		spawnSets.Insert(SpawnSet1_Animals());
@@ -33,6 +33,8 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		spawnSets.Insert(SpawnSet6_Animals());
 		spawnSets.Insert(SpawnSet7_Animals());
 		spawnSets.Insert(SpawnSet8_Animals());
+		spawnSets.Insert(SpawnSet9_Animals());	//Bear
+		spawnSets.Insert(SpawnSet10_Animals());
 	}	
 	
 	//Different spawner confs
@@ -185,7 +187,6 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 				EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST,
 				EMapDescriptorType.MDT_NAME_GENERIC,
 				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_NAME_VILLAGE, 
 				EMapDescriptorType.MDT_NAME_SETTLEMENT,
 			},
 			{},
@@ -208,7 +209,6 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 				EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST,
 				EMapDescriptorType.MDT_NAME_GENERIC,
 				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_NAME_VILLAGE, 
 				EMapDescriptorType.MDT_NAME_SETTLEMENT,
 			},
 			{},
@@ -231,7 +231,6 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 				EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST,
 				EMapDescriptorType.MDT_NAME_GENERIC,
 				EMapDescriptorType.MDT_NAME_LOCAL,
-				EMapDescriptorType.MDT_NAME_VILLAGE, 
 				EMapDescriptorType.MDT_NAME_SETTLEMENT,
 			},
 			{},
@@ -243,4 +242,48 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		
 		return spawnSet;
 	}				
+	
+	SDRC_SpawnSet SpawnSet9_Animals()
+	{
+		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
+		spawnSet.Set(		
+			"index 9: Spawn bear",
+			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			{
+				EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST,
+				EMapDescriptorType.MDT_NAME_GENERIC,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_SETTLEMENT,
+			},
+			{},
+			{
+				"{5BBDC814E9639041}Prefabs/Zones/BAR_TerritoryMarker_Wolf.et",
+			},
+			200, false, false,
+		);
+		
+		return spawnSet;
+	}					
+	
+	SDRC_SpawnSet SpawnSet10_Animals()
+	{
+		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
+		spawnSet.Set(		
+			"index 10: Spawn bear territory",
+			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			{
+				EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST,
+				EMapDescriptorType.MDT_NAME_GENERIC,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_SETTLEMENT,
+			},
+			{},
+			{
+				"{A7CF77DBCA3EFF20}Prefabs/Zones/BAR_TerritoryMarker_Bear.et",
+			},
+			200, false, false,
+		);
+		
+		return spawnSet;
+	}					
 }
