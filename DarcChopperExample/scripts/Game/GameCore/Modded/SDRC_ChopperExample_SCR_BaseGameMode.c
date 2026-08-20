@@ -1,14 +1,16 @@
-//Modded/SDRC_Core_BaseGameMode.c
+//Modded/SDRC_ChopperExample_SCR_BaseGameMode.c
 
 modded class SCR_BaseGameMode 
 {		
 	ref SDRC_ChopperExample_1 m_ChopperExample_1;
 	ref SDRC_ChopperExample_2 m_ChopperExample_2;
+	ref SDRC_ChopperExample_3 m_ChopperExample_3;
+	ref SDRC_ChopperExample_4 m_ChopperExample_4;
 	
 	//------------------------------------------------------------------------------------------------
-    override void OnGameStart()
+    override void OnGameModeStart()
     {
-        super.OnGameStart();
+        super.OnGameModeStart();
 		
 		if (SDRC_Conf.SDRC_ENABLE_DARCCHOPPER)
 		{	
@@ -21,8 +23,7 @@ modded class SCR_BaseGameMode
 					
 			if (IsMaster())
 			{				
-				m_ChopperExample_1 = new SDRC_ChopperExample_1();				
-				m_ChopperExample_2 = new SDRC_ChopperExample_2();				
+				GetGame().GetCallqueue().CallLater(StartChopperExample, 1000, false);					
 			}
 			else 
 			{
@@ -34,4 +35,21 @@ modded class SCR_BaseGameMode
 			SDRC_Log.Add("[SDRC_Chopper] Not started. Development build?", LogLevel.ERROR);
 		}		
     }
+	
+	//------------------------------------------------------------------------------------------------
+	private void StartChopperExample()
+	{
+		if (SDRC_Conf.coreHasStarted)	//Wait for core to be available
+		{		
+//				m_ChopperExample_1 = new SDRC_ChopperExample_1();				
+//				m_ChopperExample_2 = new SDRC_ChopperExample_2();				
+//				m_ChopperExample_3 = new SDRC_ChopperExample_3();				
+				m_ChopperExample_4 = new SDRC_ChopperExample_4();				
+		}
+		else
+		{
+			GetGame().GetCallqueue().CallLater(StartChopperExample, 5000, false);	
+			SDRC_Log.Add("[SDRC_ChopperExample_SCR_BaseGameMode:StartChopperExample] Core not running. Waiting...", LogLevel.DEBUG);
+		}
+	}	
 }
