@@ -7,15 +7,15 @@ Once crew is out, fly back to original position and fly away.
 */
 
 //------------------------------------------------------------------------------------------------
-class SDRC_ChopperExample_3
+class SDRC_ChopperExample_4
 {
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
-	vector m_vPosOrigin = "1300 0 3000";
-	vector m_vFlyHereFirst = "1100 0 2900";
+	vector m_vPosOrigin = "1730 0 2530";
+	vector m_vFlyHereFirst = "1480 0 2370";
 	float m_fMinFlyHeight = 30;
 	//------------------------------------------------------------------------------------------------
-	void SDRC_ChopperExample_3()
+	void SDRC_ChopperExample_4()
 	{
 		//Set to initial position height
 		if (m_vPosOrigin[1] == 0)
@@ -43,9 +43,9 @@ class SDRC_ChopperExample_3
 		//Disable autostart to set things our selves. Call Ready() after the setup.
 //		m_Vehicle_c.SetAutostart(false);
 		//Modify some values to our liking
-		m_Vehicle_c.SetHeli(10, 30, 		//Min/max speed
-		                    m_fMinFlyHeight, 60, 		//Min/max height
-		                    200, 800);		//Min/max distance for new destination
+		m_Vehicle_c.SetHeli(10, 30, 				//Min/max speed
+		                    m_fMinFlyHeight, 60, 	//Min/max height
+		                    200, 800);				//Min/max distance for new destination
 		//Only react to players as enemies
 		m_Vehicle_c.SetEnemySearchType(SDRC_EHeliEnemySearchType.PLAYER);
 		
@@ -53,12 +53,14 @@ class SDRC_ChopperExample_3
 //		m_Vehicle_c.Setup(m_Vehicle);
 //		m_Vehicle_c.Ready(m_Vehicle);
 
+		//Turn vehicle towards first flight position
+		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, m_vFlyHereFirst);
 		//Add our flight path
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFlyHereFirst);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_LAND, "908 0 2820");
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_WAIT_GETOUT);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value: 5);
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "1350 10 2286", 200);
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_LAND, "1350 0 2286");		
+//		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, "0 -100 0");
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value: 25);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_STOP_ENGINE);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_END);
 	}	

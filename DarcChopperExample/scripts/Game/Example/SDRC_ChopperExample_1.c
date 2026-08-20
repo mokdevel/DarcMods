@@ -11,7 +11,6 @@ class SDRC_ChopperExample_1
 {
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
-	//private VehicleHelicopterSimulation m_Vehicle_s;
 	vector m_vPosOrigin = "1360 0 2140";
 	vector m_vFlyHereFirst = "1000 0 2700";
 	float m_fMinFlyHeight = 30;
@@ -25,7 +24,7 @@ class SDRC_ChopperExample_1
 		}
 		
 		//Select chopper and spawn
-		string resourceName	= "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et";		
+		string resourceName	= "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et";
 		m_Vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosOrigin, resourceName, 0, -1, false);
 		
 		//Find the chopper component
@@ -41,9 +40,8 @@ class SDRC_ChopperExample_1
 			return;			
 		}
 
-		//Do setup
-		m_Vehicle_c.Setup(m_Vehicle);
-
+		//Turn vehicle towards first flight position
+		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, m_vFlyHereFirst);
 		//Add our flight path
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFlyHereFirst);
 	}	

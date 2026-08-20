@@ -11,7 +11,6 @@ class SDRC_ChopperExample_2
 {
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
-	//private VehicleHelicopterSimulation m_Vehicle_s;
 	vector m_vPosOrigin = "1300 0 2100";
 	vector m_vFlyHereFirst = "1600 0 2300";
 	float m_fMinFlyHeight = 30;
@@ -41,17 +40,21 @@ class SDRC_ChopperExample_2
 			return;			
 		}
 		
-		//m_Vehicle_c.SetAutostart(false);
+		//Disable autostart to set things our selves. Call Ready() after the setup.
+//		m_Vehicle_c.SetAutostart(false);
 		//Modify some values to our liking
-		m_Vehicle_c.SetHeli(10, 30, 		//Min/max speed
-		                    30, 60, 		//Min/max height
-		                    200, 800);		//Min/max distance for new destination
+		m_Vehicle_c.SetHeli(10, 30, 				//Min/max speed
+		                    m_fMinFlyHeight, 60, 	//Min/max height
+		                    200, 800);				//Min/max distance for new destination
 		//Only react to players as enemies
 		m_Vehicle_c.SetEnemySearchType(SDRC_EHeliEnemySearchType.PLAYER);
 		
 		//Do setup
-		m_Vehicle_c.Setup(m_Vehicle);
-
+//		m_Vehicle_c.Setup(m_Vehicle);
+//		m_Vehicle_c.Ready(m_Vehicle);
+		
+		//Turn vehicle towards first flight position
+		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, m_vFlyHereFirst);
 		//Add our flight path
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFlyHereFirst);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, "1800 0 2300");
