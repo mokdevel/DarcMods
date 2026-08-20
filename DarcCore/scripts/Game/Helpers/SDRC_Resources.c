@@ -360,3 +360,36 @@ array<EEditableEntityLabel> ll = {};
 container.Get("m_aAutoLabels", ll);
 int llCount = ll.Count();
 Print("Labels: " + llCount); */
+
+
+//------------------------------------------
+/*Find all classes
+
+Resource resource = Resource.Load("{F0EC3EFF70B174B0}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance_FIA.et");
+		if (!resource)
+			return;
+
+		BaseResourceObject prefabBase = resource.GetResource();
+		if (!prefabBase)
+			return;
+
+		// Is not a prefab
+		if (!prefabBase.ToEntitySource())
+			return;
+
+		// Prefab
+		BaseContainer prefabSrc = prefabBase.ToBaseContainer();
+		if (!prefabSrc)
+			return;
+
+		BaseContainerList components = prefabSrc.GetObjectArray("components");
+		if (!components)
+			return;
+
+		BaseContainer component = null;
+		for (int c = components.Count() - 1; c >= 0; c--)
+		{
+			component = components.Get(c);
+			Print("comp:" + component + " - " + component.GetClassName());
+		}
+*/

@@ -44,19 +44,12 @@ sealed class SDRC_Locations
 	*/
 	static bool IsLocationCacheNeeded()
 	{
-/*		array<string> addonList = {};
-		
-		SDRC_Misc.GetAddonList(addonList, false);
-		
-/*		if ( addonList.Contains("$DarcMissions:") || addonList.Contains("$DarcSpawner:") 
-		  || addonList.Contains("$DarcMissionsDev:") || addonList.Contains("$DarcSpawnerDev:") 
-		   )*/
 		if ( SDRC_Misc.IsAddonLoaded("$DarcMissions*") || SDRC_Misc.IsAddonLoaded("$DarcSpawner*") )
 		{
 			return true;
 		}
 		
-		SDRC_Log.Add("[SDRC_Locations:IsLocationCacheNeeded] Locations caching not needed.", LogLevel.WARNING);
+		SDRC_Log.Add("[SDRC_Locations:IsLocationCacheNeeded] Locations cache not needed.", LogLevel.WARNING);
 		return false;
 	}
 			
