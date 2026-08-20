@@ -297,6 +297,20 @@ class SDRC_SpawnHelper
 	*/
 	static vector FindPrefabSize(ResourceName resourceName)
 	{
+		//Find if there are some common classes so we can avoid spawning it
+		string className = SCR_BaseContainerTools.GetContainerClassName(resourceName);
+		
+		//Character
+		if (className == "SCR_ChimeraCharacter")
+		{
+			return "0.5 1.6 0.5";
+		}
+		//Group
+		if (className == "SCR_AIGroup")
+		{
+			return "3.0 1.6 3.0";
+		}
+				
 		IEntity entity = NULL;
 //		vector posFixed;
 		vector posNone = {0,1000,0};

@@ -21,7 +21,7 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		comment = "Animal spawner using French Animals mod. ";
 		spawnWorldSizeMultiplier = 0;
 		spawnCount = 30;
-		spawnSetList = {1};//{0,0,0,0,0,1,1,2,2,2,3,3,3,4,4 ,5,5,6,6,7,8, 9, 10};
+		spawnSetList = {9,10,11};//{0,0,0,0,0,1,1,2,2,2,3,3,3,4,4,11,11 ,5,5,6,6,7,8, 9, 10};
 		//----------------------------------------------------		
 		spawnSets.Insert(SpawnSet0_Animals());
 		spawnSets.Insert(SpawnSet1_Animals());
@@ -35,6 +35,7 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		spawnSets.Insert(SpawnSet8_Animals());
 		spawnSets.Insert(SpawnSet9_Animals());	//Bear
 		spawnSets.Insert(SpawnSet10_Animals());
+		spawnSets.Insert(SpawnSet11_Animals());
 	}	
 	
 	//Different spawner confs
@@ -286,4 +287,26 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		
 		return spawnSet;
 	}					
+	
+	SDRC_SpawnSet SpawnSet11_Animals()
+	{
+		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
+		spawnSet.Set(		
+			"index 11: Deer & Doe herd",
+			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			{
+				EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST,
+				EMapDescriptorType.MDT_NAME_GENERIC,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_SETTLEMENT,
+			},
+			{},
+			{
+				"{7E392EFF0B595795}Prefabs/Animals_Groups/Deer_Doe_Group.et",
+			},
+			200, false, false,
+		);
+		
+		return spawnSet;
+	}
 }
