@@ -3,6 +3,14 @@
 ## Next Version
 
 ## 20260818
+Main features:
+* Added WP_HOVER_DOWN
+* Added WP_LAND_VERTICAL
+
+Fixes: 
+* Fixed WP_BRAKE flight pattern
+
+## 20260818
 Fixes: 
 * Incorrect amount of AI spawning especially in vehicles. Thanks to Captain Sprocket for reporting. 
 

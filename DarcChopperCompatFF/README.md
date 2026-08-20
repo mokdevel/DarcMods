@@ -43,6 +43,10 @@ array<ref SDRC_ChopperCompatFF> attacks : List of attacks
 
 ## Next Version
 
+## 202608xx
+Fixes:
+* Sometimes helicopters were found floating with their engines off in the air.
+
 ## 20260812
 Fixes:
 * Disable streaming and persistence for choppers.

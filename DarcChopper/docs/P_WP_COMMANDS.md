@@ -58,7 +58,9 @@ _TBD_
 _TBD_
 
 ### WP_WAIT
-_TBD_
+Orders the helicopter to wait in its current state 
+* ``destination`` : Not used.
+* ``value`` : Time in seconds to wait until moving to next WP_command.
 
 ### WP_WAIT_GETOUT
 _TBD_
@@ -84,14 +86,21 @@ Hover the helicopter up from the current height.
 * ``destination[2]`` : Not used
 * ``value`` : Time to use for upwards movement
 
+### WP_HOVER_DOWN
+Hover the helicopter down from the current height.
+* ``destination[0]`` : Not used.
+* ``destination[1]`` : The relative distance to raise up.
+* ``destination[2]`` : Not used
+* ``value`` : Time to use for upwards movement
+
 ### WP_GET_OUT
 _TBD_
 
 ### WP_BRAKE
 Brakes the helicopter speed to stand still.
 * ``destination[0][2]`` : The position XZ to stop at.
-* ``destination[1]`` : The relative height from ground to stop at. This is not exact, but rather a wish. 
-  * If 0, normal flight pattern height is set.
+* ``destination[1]`` : The height from ground to stop at. This is not exact, but rather a wish. 
+  * If -1, normal flight pattern height is set.
 * ``value`` : Distance to start braking. 
   * If 0, defaults to 200.
 
