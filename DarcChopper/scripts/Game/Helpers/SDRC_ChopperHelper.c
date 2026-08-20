@@ -301,19 +301,23 @@ class SDRC_ChopperHelper
 						
 			float flyHeight = 0;
 						
-			if (flightPoint.type == SDRC_EFlyWayPointType.WP_LAND)
+			switch (flightPoint.type)
 			{
-				//Do nothing .. height will be on ground due to y being set and flyHeigt is zero. See above.
-			}
-			else if (flightPoint.type == SDRC_EFlyWayPointType.WP_ATTACK)
-			{
-				//Do nothing .. height is defined for the attack point.
-				//TBD: When spline is created, the height is still set to minimum. We maybe should have a specific 
-				//	   ATTACK state and the height handling specific for it.
-			}
-			else
-			{
-				flyHeight = SDRC_Misc.RandomFloat(chopperComp.m_fFlyHeightLow, chopperComp.m_fFlyHeightHigh);
+				case SDRC_EFlyWayPointType.WP_HOVER_UP: //Do nothing .. 
+				case SDRC_EFlyWayPointType.WP_ATTACK: 	//Do nothing .. height is defined for the attack point.
+					//TBD: When spline is created, the height is still set to minimum. We maybe should have a specific ATTACK state and the height handling specific for it.
+				case SDRC_EFlyWayPointType.WP_LAND:		//Do nothing .. height will be on ground due to y being set and flyHeigt is zero. See above.
+					break;
+				case SDRC_EFlyWayPointType.WP_BRAKE: //Do nothing .. 
+				{
+					if (flightPoint.value != 0)
+					{
+						break;
+					}
+					//If 0, drop through default
+				}
+				default:
+					flyHeight = SDRC_Misc.RandomFloat(chopperComp.m_fFlyHeightLow, chopperComp.m_fFlyHeightHigh);
 			}
 			
 			pt[1] = 0;	//We may in the future use the provided Y coord for the points. For now we set it to 0.
@@ -402,18 +406,33 @@ class SDRC_ChopperHelper
 		if (chopperComp)
 		{
 			//Default heights
-			float flyHeightLow = chopperComp.m_fFlyHeightLow;
+			float lowestHeight = chopperComp.m_fFlyHeightLow;
 			int lowAdd = 5;
-						
+
+			//Modify attack height defaults						
 			if (chopperComp.GetState() == SDRC_EHeliState.ATTACK) 
 			{
-				//Attack height is the lowest point. Could be below m_fFlyHeightLow
-				flyHeightLow = flyHeightLow * chopperComp.params.attackHeightMul;
+				//Attack height is the lowest point modified by attackHeightMul. The final attackHeight could be below m_fFlyHeightLow
+				lowestHeight = lowestHeight * chopperComp.params.attackHeightMul;
 				lowAdd = 0;
 				chopperComp.SetState(SDRC_EHeliState.FLY);
 			}
-			
-			//Make sure the points are at minimum flyHeightLow from the ground.
+
+			if (chopperComp.GetState() == SDRC_EHeliState.BRAKE) 
+			{
+				//Braking height is the last point. Could be below m_fFlyHeightLow
+				vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];				
+				lowestHeight = lastPoint[1];
+				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(lastPoint, true);
+				if (lowestHeight < surfaceY)
+				{
+					lowestHeight = surfaceY;
+				}
+				lowAdd = 0;
+			}
+						
+			//Make sure the points are at minimum lowestHeight from the ground.
+			//This is done first in all cases. Other states will modify these later in the function.
 			foreach (int i, vector pt : chopperComp.m_vSplinePoints)
 			{
 				if (i < skipCount)
@@ -421,20 +440,21 @@ class SDRC_ChopperHelper
 					continue;
 				}
 
-				float y = SDRC_Misc.GetSurfaceYWithWater(pt, true);
+				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(pt, true);
 
 				//With lowAdd = 0, just accept the height. No modification.
 				if (lowAdd == 0)
 				{
-					pt[1] = y + flyHeightLow;
+					pt[1] = surfaceY + lowestHeight;
 					chopperComp.m_vSplinePoints[i] = pt;
 					
 					isSmoothingNeeded = true;
 				}
-				else if (pt[1] < (y + flyHeightLow))
+				//If point lower than requested point, set lowest flight height
+				else if (pt[1] < (surfaceY + lowestHeight))
 				{
-					//If we're low, fix the point a bit above the flyHeightLow fly height
-					pt[1] = y + flyHeightLow + lowAdd;	//Make chopper fly higher for a moment
+					//If we're low, fix the point a bit above the lowestHeight fly height
+					pt[1] = surfaceY + lowestHeight + lowAdd;	//Make chopper fly higher for a moment
 					chopperComp.m_vSplinePoints[i] = pt;
 					
 					isSmoothingNeeded = true;
@@ -447,10 +467,11 @@ class SDRC_ChopperHelper
 				int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
 
 				//Find high point, low point and difference
-				vector v0 = chopperComp.m_vSplinePoints[chopperComp.m_iClosestIndex];
+				vector v0 = origin;//chopperComp.m_vSplinePoints[chopperComp.m_iClosestIndex];
 				vector v1 = chopperComp.m_vSplinePoints[lastIdx];
+				v1[1] = lowestHeight;
 				
-				//Count a landing (bell) curve
+				//Count a braking (bell) curve
 				float p0 = v0[1];
 				float p1 = v1[1];
 				float pdiff = p0 - p1;

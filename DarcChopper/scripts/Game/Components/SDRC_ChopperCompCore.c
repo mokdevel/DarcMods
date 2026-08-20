@@ -66,20 +66,22 @@ enum SDRC_EFlyWayPointType
 	WP_FLY_AWAY_IMMEDIATELY,	//4  - Fly away immediately removing the previous destinations
 	WP_PATROL,					//5  - Patrol around an area 
 	WP_PATROL_ONCE,				//6  - Do one patrol round around an area.
-	WP_LAND,					//7  - 
-	WP_WAIT,					//8  - 
-	WP_WAIT_GETOUT,				//9  - Wait during get out. Sets the time and goes to WAIT
-	WP_RAISE,					//10 - 
-	WP_HOVER,					//11 - Heli is hovering in one place
-	WP_HOVER_UP,				//12 - Heli is hovering up
-	WP_GET_OUT,					//13 - 
-	WP_BRAKE,					//14 - Slow the heli down to stand still
-	WP_END,						//15 - 
-	WP_DESPAWN,					//16 - 
+	WP_LAND,					//7  - Normal landing
+	WP_LAND_VERTICAL,			//8  - Normal landing
+	WP_WAIT,					//9  - 
+	WP_WAIT_GETOUT,				//10 - Wait during get out. Sets the time and goes to WAIT
+	WP_RAISE,					//11 - 
+	WP_HOVER,					//12 - Heli is hovering in one place
+	WP_HOVER_UP,				//13 - Heli is hovering up
+	WP_HOVER_DOWN,				//14 - Heli is hovering down
+	WP_GET_OUT,					//15 - 
+	WP_BRAKE,					//16 - Slow the heli down to stand still
+	WP_END,						//17 - 
+	WP_DESPAWN,					//18 - 
 	
 	//One shot commands
-	WP_STOP_ENGINE,				//17 - Does the action and goes to WAIT state
-	WP_ATTACK,					//18 - Sets attack position and time and then FLY
+	WP_STOP_ENGINE,				//19 - Does the action and goes to WAIT state
+	WP_ATTACK,					//20 - Sets attack position and time and then FLY
 	WP_SEARCH_DESTROY,			//   - Search for enemy by patroling an area. If enemy is found, attack the location.
 	
 	WP_M_LAND_TROOPS,			//   - Drop of troops to exact position, wait and leave
@@ -101,13 +103,15 @@ enum SDRC_EHeliState
 	FLY_AWAY,				// 2 - In this state, when all destinations have been flown through, we fly away and end.
 	FLY_AWAY_IMMEDIATELY,	// 3 - NOTE: This is not a real state. When set, state will change to FLY_AWAY
 	LAND,					// 4 - Chopper is landing
-	BRAKE,					// 5 - Chopper is braking
-	WAIT,					// 6 - NOTE: Velocity disabled
-	RAISE,					// 7 - Heli is raising and moving forward to given position
-	HOVER,					// 8 - Heli is hovering at given height
-	HOVER_UP,				// 9 - Heli is hovering upwards
-	GET_OUT,				//10 - One frame state to order AI to get out
-	ATTACK,					//11 - Added when WP_ATTACK is handled to inform that spline height checking can go below minimum height
+	LAND_VERTICAL,			// 5 - Chopper is landing vertically
+	BRAKE,					// 6 - Chopper is braking
+	WAIT,					// 7 - NOTE: Velocity disabled
+	RAISE,					// 8 - Heli is raising and moving forward to given position
+	HOVER,					// 9 - Heli is hovering at given height
+	HOVER_UP,				//10 - Heli is hovering upwards
+	HOVER_DOWN,				//11 - Heli is hovering upwards
+	GET_OUT,				//12 - One frame state to order AI to get out
+	ATTACK,					//13 - Added when WP_ATTACK is handled to inform that spline height checking can go below minimum height
 	END,
 	
 	ON_GROUND,				//One frame state for touch down

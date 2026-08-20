@@ -15,6 +15,12 @@ modded class SDRC_ChopperComp
 	*/	
 	override void Setup(IEntity owner)
 	{
+		GetGame().GetCallqueue().CallLater(Setup_Delayed, TIME_DELAY_READY * 1000, false, owner);		
+		
+	}	
+	
+	void Setup_Delayed(IEntity owner)
+	{
 		if (m_bSetupDone)
 		{
 			return;
@@ -38,7 +44,7 @@ modded class SDRC_ChopperComp
 			}
 		}		
 		
-		//IMPORTANT: In a mod, you need to call Ready() yourself after Setup()!!!
+		//IMPORTANT: In a mod, you need to call Ready() yourself after Setup() in case you don't have autostart enabled!!!
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -268,30 +274,50 @@ modded class SDRC_ChopperComp
 			return true;
 		}
 
-		//If working and at least one pilot, all good
+		//If working and at least one pilot, all good		
 		int pilotCount = SDRC_VehicleHelper.PilotCountAlive(owner);
 		
-		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));		
+		if (!m_bPilotCountTrusted)
+		{
+			if (pilotCount == 0)
+			{
+				pilotCount = 1;
+			}
+			else
+			{
+				//We found one, we can trust the pilot count
+				m_bPilotCountTrusted = true;
+				SDRC_Log.Add("[SDRC_ChopperComp:InitDone] Pilot count can be trusted.", LogLevel.DEBUG);
+			}
+		}
+
+		if (m_bUnpiloted)
+		{
+			pilotCount = 1;
+			m_bPilotCountTrusted = true;
+		}
+				
+/*		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));		
 		if (chopperComp)
 		{
 			if (chopperComp.m_bUnpiloted)
 			{
 				pilotCount = 1;
 			}
-		}
+		}*/
 
 		float health;
 		TypeGetHealthScaled(owner, health);
 		
-		if ( health <= chopperComp.params.damageHeavy )
+		if ( health <= params.damageHeavy )
 		{
 			m_eDamageLevel = SDRC_EHeliDamageLevel.HEAVY;
 		}	
-		else if ( health < chopperComp.params.damageMedium)
+		else if ( health < params.damageMedium)
 		{
 			m_eDamageLevel = SDRC_EHeliDamageLevel.MEDIUM;
 		}	
-		else if ( health < chopperComp.params.damageLight)
+		else if ( health < params.damageLight)
 		{
 			m_eDamageLevel = SDRC_EHeliDamageLevel.LIGHT;
 		}			
@@ -454,11 +480,13 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_RAISE:
 			case SDRC_EFlyWayPointType.WP_HOVER:
 			case SDRC_EFlyWayPointType.WP_HOVER_UP:
+			case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
 			case SDRC_EFlyWayPointType.WP_GET_OUT:			//Handled in HandleState()
 			case SDRC_EFlyWayPointType.WP_END:
 			case SDRC_EFlyWayPointType.WP_DESPAWN:
 			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
 			case SDRC_EFlyWayPointType.WP_LAND:
+			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
 			case SDRC_EFlyWayPointType.WP_PATROL:
 			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
 			{
@@ -509,7 +537,6 @@ modded class SDRC_ChopperComp
 				AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
 				AddDestination(SDRC_EFlyWayPointType.WP_WAIT_GETOUT);
 				vector hoverPos = vector.Zero;
-				//hoverPos[1] = (m_fFlyHeightLow + m_fFlyHeightHigh)/2;	//We don't want to raise to exactly same position
 				hoverPos[1] = m_fFlyHeightLow * 0.7;		//We don't want to raise to exactly same position
 				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 5);
 				vector raisePos = "300 0 0";
@@ -736,9 +763,14 @@ modded class SDRC_ChopperComp
 		switch (nextType)
 		{
 			case SDRC_EFlyWayPointType.WP_UNDEFINED:
+			{
+				//Should never happen
+				break;
+			}
 /*			case SDRC_EFlyWayPointType.WP_LAND:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
+				SetState(SDRC_EHeliState.LAND);
 				break;
 			}*/
 			case SDRC_EFlyWayPointType.WP_FLY:
@@ -850,8 +882,17 @@ modded class SDRC_ChopperComp
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_HOVER_UP:
+			case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
 			{
-				SetState(SDRC_EHeliState.HOVER_UP);
+				if (nextType == SDRC_EFlyWayPointType.WP_HOVER_DOWN)
+				{
+					SetState(SDRC_EHeliState.HOVER_DOWN);
+				}
+				if (nextType == SDRC_EFlyWayPointType.WP_HOVER_UP)
+				{
+					SetState(SDRC_EHeliState.HOVER_UP);
+				}
+				
 				SetTimeInState(m_vFlyDestinations[0].value);
 				
 				//NOTE: We do not use AddDestination() for setting the flight. We just add one point in the spline
@@ -876,7 +917,6 @@ modded class SDRC_ChopperComp
 				}
 				m_iClosestIndex = 0;
 				//CreateNewFlight(owner, firstDestination);
-				
 				
 				SDRC_ChopperDebug.DrawDebugPaths(owner);
 				isRemoveDestination = true;

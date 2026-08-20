@@ -122,8 +122,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 	bool m_bShowDebug;
 	
 	//Timing stuff
-	private const float TIME_DELAY_READY = 1;			//(seconds) Time before we spawn AIs and init flight path. This will give time for the chopper to properly initialize
-	private const float TIME_IN_INIT = 1;				//(seconds) Time to be in init state (after READY). During this time, we don't check for damage or similar things.
+	private const float TIME_DELAY_READY = 0.2;			//(seconds) Time before we spawn AIs and init flight path. This will give time for the chopper to properly initialize
+	private const float TIME_IN_INIT = 2;				//(seconds) Time to be in init state (after READY). During this time, we don't check for damage or similar things.
 	
 	//Original destination	
 	private vector m_vOriginalDestination;				//Used to know where to patrol
@@ -165,6 +165,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 	private float m_fHealthOrig = 0;
 	SDRC_EHeliDamageLevel m_eDamageLevel = SDRC_EHeliDamageLevel.UNDAMAGED;
 	const int SAFE_LANDING_SIZE = 50;					//Radius of the are to consider safe for landing
+	
+	//Crew 
+	bool m_bPilotCountTrusted = false;					//Is pilot count trusted. When a chopper is spawned far away from GM, the AI are streamed out. 
+														//Asking for SCR_BaseCompartmentManagerComponent.GetOccupantsOfType() before the first streaming in, returns 0.
+														//If crew spawn succeeded, we *assume* the pilots are there. Once they stream in, pilot count can be trusted in 
+														//the future. IMO, a bug in AR.
 	
 	//Runtime parameters
 	private int m_iDestinationPointAdd;
@@ -317,7 +323,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 			owner.GetPhysics().SetVelocity("0 0 0");
 		}
 		
-		GetGame().GetCallqueue().CallLater(Setup, TIME_DELAY_READY * 1000, false, owner);		
+		Setup(owner);
+//		GetGame().GetCallqueue().CallLater(Setup, TIME_DELAY_READY * 1000, false, owner);		
 		
 		super.OnPostInit(owner);
 	}
@@ -364,10 +371,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 		if (m_bUnpiloted)
 		{
 			SDRC_Log.Add("[SDRC_ChopperComp:InitDone] Unpiloted entity.", LogLevel.DEBUG);			
+			m_bPilotCountTrusted = true;
 		}
 		else if (SDRC_VehicleHelper.PilotCountAlive(owner) == 0)
 		{
-			SDRC_Log.Add("[SDRC_ChopperComp:InitDone] Unable to set pilots.", LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_ChopperComp:InitDone] Pilot count uncertain. To be checked later.", LogLevel.DEBUG);
+			m_bPilotCountTrusted = false;
 		}
 		
 		SDRC_Log.Add("[SDRC_ChopperComp:InitDone] DONE!", LogLevel.DEBUG);
@@ -429,7 +438,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			SetState(SDRC_EHeliState.DESTROYED);
 			SDRC_DebugHelper.DeleteDebugItems(m_sDid);
 			return;
-		}		
+		}
 		//---
 		//Normal flying part
 		if ( (m_fTimeBetweenPts > 20) && (m_eHeliState == SDRC_EHeliState.FLY) )
@@ -768,6 +777,16 @@ modded class SDRC_ChopperComp : ScriptComponent
 				}
 				break;
 			}		
+			case SDRC_EHeliState.HOVER_DOWN:
+			{
+				if (m_fTimeInState > 0)
+				{
+					//In HOVER_DOWN state, do movemements slow
+					bigMul = bigMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
+					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
+				}
+				break;
+			}		
 			case SDRC_EHeliState.RAISE:
 			{
 				//In RAISE state, do slow climb
@@ -807,7 +826,30 @@ modded class SDRC_ChopperComp : ScriptComponent
 		
 		m_fRotorForceMultiplier = bigMul * belowFlyHeightLowMul * distanceFromSplineMul * rayLenMul;
 	}
-			
+
+	//------------------------------------------------------------------------------------------------	
+	// Reset
+	//------------------------------------------------------------------------------------------------	
+				
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Clear the fly path as a preparation for a completely new path
+	*/
+	void ResetFlight()
+	{
+		m_vFlightPoints.Clear();
+		m_vSplinePoints.Clear();
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Clear the destination as a preparation for a completely new path
+	*/
+	private void ResetDestinations()
+	{
+		m_vFlyDestinations.Clear();
+	}	
+	
 	//------------------------------------------------------------------------------------------------	
 	// Flight path things
 	//------------------------------------------------------------------------------------------------	
@@ -945,26 +987,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 		SDRC_ChopperDebug.DrawDebugPaths(owner);
 	}
 
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Clear the fly path as a preparation for a completely new path
-	*/
-	void ResetFlight()
-	{
-		m_vFlightPoints.Clear();
-		m_vSplinePoints.Clear();
-	}
-
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Clear the destination as a preparation for a completely new path
-	*/
-	private void ResetDestinations()
-	{
-		m_vFlyDestinations.Clear();
-	}	
-	
 	//------------------------------------------------------------------------------------------------	
 	// Fly point handling
 	//------------------------------------------------------------------------------------------------	
@@ -1043,8 +1065,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 				}
 				case SDRC_EFlyWayPointType.WP_BRAKE:
 				{
+					SetState(SDRC_EHeliState.BRAKE);
 					//Brake height modification
-					if (flyDestination.pt[1] != 0)
+					if (flyDestination.pt[1] != -1)
 					{
 						flyDestination.pt[1] = SDRC_Misc.GetSurfaceYWithWater(flyDestination.pt) + flyDestination.pt[1];				
 					}
