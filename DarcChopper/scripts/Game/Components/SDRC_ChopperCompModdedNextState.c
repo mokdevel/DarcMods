@@ -39,6 +39,7 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_LAND:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
+				//Set the state so that when creating flight 
 				SetState(SDRC_EHeliState.LAND);
 				break;
 			}
@@ -187,7 +188,7 @@ modded class SDRC_ChopperComp
 				vector pos = owner.GetOrigin();
 				pos[1] = pos[1] + m_vFlyDestinations[0].pt[1];		//Hover above original point
 				
-				for (int i = 0; i < 10; i++)
+				for (int i = 0; i < 3; i++)
 				{
 					m_vSplinePoints.Insert(pos);
 				}

@@ -398,12 +398,6 @@ modded class SDRC_ChopperComp
 			// Normal actions without the need for any additional handling
 			// These just fall through and do a basic AddDestinationPoint()
 			//------------------------------------------------------------------------------------------------				
-			case SDRC_EFlyWayPointType.WP_WAIT:
-			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
-			case SDRC_EFlyWayPointType.WP_RAISE:
-			case SDRC_EFlyWayPointType.WP_HOVER:
-			case SDRC_EFlyWayPointType.WP_HOVER_UP:
-			case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
 			case SDRC_EFlyWayPointType.WP_GET_OUT:			//Handled in HandleState()
 			case SDRC_EFlyWayPointType.WP_END:
 			case SDRC_EFlyWayPointType.WP_DESPAWN:
@@ -415,7 +409,20 @@ modded class SDRC_ChopperComp
 			{
 				break;
 			}
-			
+			case SDRC_EFlyWayPointType.WP_RAISE:
+			case SDRC_EFlyWayPointType.WP_WAIT:
+			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
+			case SDRC_EFlyWayPointType.WP_HOVER:
+			case SDRC_EFlyWayPointType.WP_HOVER_UP:
+			case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
+			{
+				if (value < 1)
+				{
+					SDRC_Log.Add("[SDRC_ChopperComp:AddDestination] Time assigned to " + SCR_Enum.GetEnumName(SDRC_EFlyWayPointType, type) + " is very short: " + value + " seconds.", LogLevel.WARNING);					
+				}
+				break;
+			}
+						
 			//------------------------------------------------------------------------------------------------	
 			// Normal actions
 			//------------------------------------------------------------------------------------------------	

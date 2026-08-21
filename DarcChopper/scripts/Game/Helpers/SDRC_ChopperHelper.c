@@ -285,7 +285,6 @@ class SDRC_ChopperHelper
 		}
 		
 		vector origin = owner.GetOrigin();
-		float y = 0;
 		
 		foreach (int i, SDRC_FlyPathPoint flightPoint : chopperComp.m_vFlightPoints)
 		{
@@ -298,8 +297,7 @@ class SDRC_ChopperHelper
 			}
 			
 			//Initial height will be on ground
-			y = SDRC_Misc.GetSurfaceYWithWater(pt, true);
-						
+			float y = SDRC_Misc.GetSurfaceYWithWater(pt, true);
 			float flyHeight = 0;
 						
 			switch (flightPoint.type)
@@ -312,15 +310,10 @@ class SDRC_ChopperHelper
 				case SDRC_EFlyWayPointType.WP_BRAKE: //Do nothing .. 
 				{	
 					//NOTE: If braking height was set to 0, the point height has been set to the same as helicopter at the time. See: AddDestinationPoint()
-/*					flyHeight = flightPoint.pt[1];
-					if (flyHeight == -1)
-					{
-						//Brake on current flight height
-						flyHeight = origin[1];
-					}*/
 					break;
 				}
 				default:
+					//TBD: Change to do only relatively big changes.
 					flyHeight = SDRC_Misc.RandomFloat(chopperComp.m_fFlyHeightLow, chopperComp.m_fFlyHeightHigh);
 			}
 			
@@ -391,6 +384,7 @@ class SDRC_ChopperHelper
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Check that spline points are above ground. Raise the point if needed.
+	This handles special cases liks ATTACK, BRAKE, LAND, .. to set the final spline points to right height.
 	\param owner Chopper entity
 	\param skipCount How many points to skip from the beginning.
 	*/	
@@ -555,7 +549,6 @@ class SDRC_ChopperHelper
 			pt[1] = origin[1];
 			chopperComp.m_vSplinePoints[i] = pt;
 		}
-		
 	}
 
 	//------------------------------------------------------------------------------------------------

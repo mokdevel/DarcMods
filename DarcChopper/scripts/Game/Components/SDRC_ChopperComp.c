@@ -772,7 +772,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 				if (m_fTimeInState > 0)
 				{
 					//In HOVER_UP state, do movemements slow
-					bigMul = bigMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
+					bigMul = 2 * bigMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
 					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
 				}
 				break;
@@ -782,7 +782,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 				if (m_fTimeInState > 0)
 				{
 					//In HOVER_DOWN state, do movemements slow
-					bigMul = bigMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
+					bigMul = 3 * bigMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
 					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
 				}
 				break;
