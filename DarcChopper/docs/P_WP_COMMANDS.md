@@ -50,7 +50,8 @@ _TBD_
 ### WP_PATROL
 * ``destination`` : Position to circle around.
 * ``value`` : The radius of the cirle.
-
+  * If 0 or empty, defaults to internal chopper type parameter patrolRadius
+  
 ### WP_PATROL_ONCE
 _TBD_
 
@@ -68,7 +69,7 @@ _TBD_
 ### WP_RAISE
 Raises the helicopter from the current position to given position while moving forward increasing speed.
 * ``destination[0]`` : The relative distance to move forward.
-  * If 0, defaults to 200
+  * If 0 or empty, defaults to 200
 * ``destination[1]`` : The relative distance from ground to raise to. 
   * If -1, set the height to (minimum fly height + 5).
 * ``destination[2]`` : Not used

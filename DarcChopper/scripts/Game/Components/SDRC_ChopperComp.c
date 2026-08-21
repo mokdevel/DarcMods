@@ -969,10 +969,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 		
 		//4. Set first flight points to same height as the helicopter. This smooths the flight.
 		vector origin = owner.GetOrigin();
-		m_vFlightPoints[0].pt[1] = origin[1];
-		m_vFlightPoints[1].pt[1] = origin[1];
-		//m_vFlightPoints[0].pt[1] = oldHeight[1];
-		//m_vFlightPoints[1].pt[1] = oldHeight[1];
+		//m_vFlightPoints[0].pt[1] = origin[1];
+		//m_vFlightPoints[1].pt[1] = origin[1];
+		m_vFlightPoints[0].pt[1] = oldHeight[1];
+		m_vFlightPoints[1].pt[1] = oldHeight[1];
 				
 		//5. Generate the spline
 		array<vector> flyPathPoints = {};
@@ -1050,6 +1050,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			//FLY points are handled in a serie. Others one at a time.
 			if (flyDestination.type != SDRC_EFlyWayPointType.WP_FLY)
 			{			
+				//If we're doing something else than flying, just do it once.
 				oneShotHandled = true;
 				
 				if (firstDestinationHandled)
@@ -1065,70 +1066,16 @@ modded class SDRC_ChopperComp : ScriptComponent
 			
 			switch (flyDestination.type)
 			{
-				case SDRC_EFlyWayPointType.WP_BRAKE:
-				{
-					int x = 0;
-					break;
-				}
-				
-				/*case SDRC_EFlyWayPointType.WP_ATTACK:
-				{
-					//Attack to be on low altitude. This will be set in SDRC_ChopperHelper.SetSplinePointsAboveGround()
-					SetState(SDRC_EHeliState.ATTACK);
-					//NOTE: m_vAttackPosition has been set in AddDestination
-					break;
-				}
-				case SDRC_EFlyWayPointType.WP_BRAKE:
-				{
-					SetState(SDRC_EHeliState.BRAKE);
-					//Brake height modification
-					if (flyDestination.pt[1] != -1)
-					{
-						flyDestination.pt[1] = SDRC_Misc.GetSurfaceYWithWater(flyDestination.pt) + flyDestination.pt[1];				
-					}
-					break;
-				}
-				case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
-				{	
-					SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, flyDestination.value);
-					//NOTE: m_vAttackPosition has been set in AddDestination
-					break;
-				}*/
 				case SDRC_EFlyWayPointType.WP_HOVER:
+				case SDRC_EFlyWayPointType.WP_PATROL:
+				case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
 				{
+					//Special case where the flight points are added in SetNextState()
+					
 					SetNextState(owner, flyDestination.type, false);					
 					destinationHandled = true;
 					break;
-				}
-				case SDRC_EFlyWayPointType.WP_PATROL:
-				{
-					patrolCount = SDRC_Misc.RandomInt(10, 25);
-					//NOTE: This will fall through to WP_PATROL_ONCE 
-				}
-				case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
-				{
-					//If request to patrol, create additional points around position. We will do _count_ amount of points around the area
-					int degree = 45; 		//Degrees per patrolCount
-					int sign = 1;			//SDRC_Misc.RandomSign(); <- does not work very well
-					
-					for (int i = 0; i < patrolCount; i++)
-					{
-						float value = flyDestination.value;
-						if (value <= 0)
-						{
-							value = params.patrolRadius;
-						}
-						float range = Math.RandomFloat(value * 0.7, value * 1.3);					
-						//Make waypoints around the position to patrol.					
-						vector dir = SDRC_Math.RotateAroundAxis(m_vHeliDirection, vector.Up, sign * i * degree * Math.DEG2RAD);
-						dir.Normalize();
-						pos = flyDestination.pt + dir * range;						
-						AddFlyPathPoint(pos);
-						//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid, 50 + i * 20);
-					}
-					destinationHandled = true;
-					break;
-				}				
+				}		
 			}
 					
 			//If destination has already been set, skip the re-routing etc.
@@ -1221,12 +1168,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 				//NOTE: m_vAttackPosition has been set in AddDestination
 				break;
 			}
-			case SDRC_EFlyWayPointType.WP_BRAKE:
-			{
-				SetState(SDRC_EHeliState.BRAKE);
-				//NOTE: The final height will be set in SetFlightPointHeight
-				break;
-			}
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 			{	
 				SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, value);
@@ -1238,12 +1179,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 				destination = SDRC_Misc.SetPosToSurface(destination);
 				SetState(SDRC_EHeliState.LAND);				
 				m_bIsLanding = false;
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_BRAKE:
-			{
-				SetState(SDRC_EHeliState.BRAKE);			
-				m_bIsBraking = false;
 				break;
 			}
 		}

@@ -395,6 +395,28 @@ modded class SDRC_ChopperComp
 		switch (type)
 		{
 			//------------------------------------------------------------------------------------------------	
+			// Normal actions without the need for any additional handling
+			// These just fall through and do a basic AddDestinationPoint()
+			//------------------------------------------------------------------------------------------------				
+			case SDRC_EFlyWayPointType.WP_WAIT:
+			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
+			case SDRC_EFlyWayPointType.WP_RAISE:
+			case SDRC_EFlyWayPointType.WP_HOVER:
+			case SDRC_EFlyWayPointType.WP_HOVER_UP:
+			case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
+			case SDRC_EFlyWayPointType.WP_GET_OUT:			//Handled in HandleState()
+			case SDRC_EFlyWayPointType.WP_END:
+			case SDRC_EFlyWayPointType.WP_DESPAWN:
+			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
+			case SDRC_EFlyWayPointType.WP_LAND:
+			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
+			case SDRC_EFlyWayPointType.WP_PATROL:
+			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
+			{
+				break;
+			}
+			
+			//------------------------------------------------------------------------------------------------	
 			// Normal actions
 			//------------------------------------------------------------------------------------------------	
 			case SDRC_EFlyWayPointType.WP_FLY_IMMEDIATELY:
@@ -471,25 +493,6 @@ modded class SDRC_ChopperComp
 					value = 200;
 				}
 				m_fBrakingDistance = value;
-				break;
-			}
-
-			//These just fall through
-			case SDRC_EFlyWayPointType.WP_WAIT:
-			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
-			case SDRC_EFlyWayPointType.WP_RAISE:
-			case SDRC_EFlyWayPointType.WP_HOVER:
-			case SDRC_EFlyWayPointType.WP_HOVER_UP:
-			case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
-			case SDRC_EFlyWayPointType.WP_GET_OUT:			//Handled in HandleState()
-			case SDRC_EFlyWayPointType.WP_END:
-			case SDRC_EFlyWayPointType.WP_DESPAWN:
-			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
-			case SDRC_EFlyWayPointType.WP_LAND:
-			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
-			case SDRC_EFlyWayPointType.WP_PATROL:
-			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
-			{
 				break;
 			}
 			
@@ -633,6 +636,7 @@ modded class SDRC_ChopperComp
 		switch (m_eHeliState)
 		{
 			case SDRC_EHeliState.LAND:
+			case SDRC_EHeliState.LAND_VERTICAL:
 			{
 				HandleLanding(owner, timeSlice);	
 				break;
@@ -760,8 +764,12 @@ modded class SDRC_ChopperComp
 		//By default we remove the destination
 		bool isRemoveDestination = false;
 		
+		//Check that next waypoint type is valid
 		nextType = SDRC_ChopperHelper.GetNextWayPointType(owner, nextType);
 
+		//Parameters needed below.
+		int patrolCount = 8;				//Do one round for patrol by default (8*45 degrees)
+		
 		switch (nextType)
 		{
 			case SDRC_EFlyWayPointType.WP_UNDEFINED:
@@ -769,12 +777,23 @@ modded class SDRC_ChopperComp
 				//Should never happen
 				break;
 			}
-/*			case SDRC_EFlyWayPointType.WP_LAND:
+			case SDRC_EFlyWayPointType.WP_BRAKE:
+				SetState(SDRC_EHeliState.BRAKE);			
+				//NOTE: The final height will be set in SetFlightPointHeight
+				m_bIsBraking = false;
+				break;
+			case SDRC_EFlyWayPointType.WP_LAND:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
 				SetState(SDRC_EHeliState.LAND);
 				break;
-			}*/
+			}
+			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
+			{
+				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
+				SetState(SDRC_EHeliState.LAND_VERTICAL);
+				break;
+			}
 			case SDRC_EFlyWayPointType.WP_FLY:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
@@ -800,16 +819,17 @@ modded class SDRC_ChopperComp
 			{				
 				SetState(SDRC_EHeliState.RAISE);
 				
-				//NOTE: We do not use AddDestination() for setting the flight. We just add points in the spline
+				//NOTE: We do not use AddDestination() for setting the flight. We just add points in the spline.				
 				
-				SDRC_ChopperCompCore.ResetOriginalValues(owner);	//Reset heli settings
+				//Clear flight as we are adding the points ourselves.
+				ResetFlight();
+				
+				//Reset heli settings
+				SDRC_ChopperCompCore.ResetOriginalValues(owner);	//Reset heli settings				
 				m_fSpeed = 2;										//Set a speed to start the raise from	
 				m_fSpeedMax = m_fSpeedMin * 1.5;
 				m_fSpeedMin = 2;
 				m_fThrottle = 2.5;
-				
-				//For raise, we add points to the spline
-				ResetFlight();
 				
 				//m_vSplinePoints.Insert(owner.GetOrigin());
 				
@@ -897,7 +917,10 @@ modded class SDRC_ChopperComp
 				
 				SetTimeInState(m_vFlyDestinations[0].value);
 				
-				//NOTE: We do not use AddDestination() for setting the flight. We just add one point in the spline
+				//NOTE: We do not use AddDestination() for setting the flight. We just add points in the spline.
+				
+				//Clear flight as we are adding the points ourselves.
+				ResetFlight();
 				
 				//Reset heli settings
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);
@@ -906,9 +929,6 @@ modded class SDRC_ChopperComp
 				m_fSpeedMin = 0.3;
 				m_fSpeedMax = 0.6;
 				m_fSpeedSlowingMul = 0;
-				
-				//For hovering, we add points to the spline
-				ResetFlight();
 				
 				vector pos = owner.GetOrigin();
 				pos[1] = pos[1] + m_vFlyDestinations[0].pt[1];		//Hover above original point
@@ -961,6 +981,36 @@ modded class SDRC_ChopperComp
 				isRemoveDestination = true;
 				break;
 			}
+			case SDRC_EFlyWayPointType.WP_PATROL:
+			{
+				patrolCount = SDRC_Misc.RandomInt(10, 25);
+				//NOTE: This will fall through to WP_PATROL_ONCE 
+			}
+			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
+			{
+				//If request to patrol, create additional points around position. We will do _count_ amount of points around the area
+				int degree = 45; 		//Degrees per patrolCount
+				int sign = 1;			//SDRC_Misc.RandomSign(); <- does not work very well
+				
+				for (int i = 0; i < patrolCount; i++)
+				{
+					float value = m_vFlyDestinations[0].value;
+					if (value <= 0)
+					{
+						value = params.patrolRadius;
+					}
+					float range = Math.RandomFloat(value * 0.7, value * 1.3);					
+					//Make waypoints around the position to patrol.					
+					vector dir = SDRC_Math.RotateAroundAxis(m_vHeliDirection, vector.Up, sign * i * degree * Math.DEG2RAD);
+					dir.Normalize();
+					vector pos = m_vFlyDestinations[0].pt + dir * range;						
+					AddFlyPathPoint(pos);
+					//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid, 50 + i * 20);
+				}
+				break;
+			}				
+			default:
+				SDRC_Log.Add("[SDRC_ChopperComp:SetNextState] State not defined: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.WARNING);
 		}
 		
 		//Remove the destination if it was handled.	By default it is.
