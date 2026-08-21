@@ -24,7 +24,7 @@ class SDRC_FlyPathPoint
 	[Attribute(defvalue: "0 0 0", desc: "Position, waiting time, hover height, etc..")]
 	vector pt;
 
-	[Attribute(defvalue: "0 0 0", desc: "Position, waiting time, hover height, etc..")]
+	[Attribute(defvalue: "0", desc: "Position, waiting time, hover height, etc..")]
 	float value
 		
 	void Set(SDRC_EFlyWayPointType type_ = SDRC_EFlyWayPointType.WP_FLY, vector pt_ = vector.Zero, float value_ = 0)
@@ -956,27 +956,36 @@ modded class SDRC_ChopperComp : ScriptComponent
 //		vector oldHeight = m_vSplinePoints[m_vSplinePoints.Count() - 1];
 		vector oldHeight = m_vSplinePoints[m_iClosestIndex];
 		
-		//Clear any existing path points
+		// 1.Clear any existing path points. 
 		ResetFlight();
 
-		//Create points for spline		
+		//2. Create flight points. These are the main points on the path which are then used for spline	creation.
+		//   The points may be below the flight height (e.g. landing).
+		//   This will also set the next state for the chopper.
 		CreateFlightPoints(owner);
 		
+		//3. By default, check that flight points are above the minimum flight height.
 		SDRC_ChopperHelper.SetFlightPointHeight(owner);
-		//Set the first points to same height as old ending spline. This smooths the flight
-		m_vFlightPoints[0].pt[1] = oldHeight[1];
-		m_vFlightPoints[1].pt[1] = oldHeight[1];
+		
+		//4. Set first flight points to same height as the helicopter. This smooths the flight.
+		vector origin = owner.GetOrigin();
+		m_vFlightPoints[0].pt[1] = origin[1];
+		m_vFlightPoints[1].pt[1] = origin[1];
+		//m_vFlightPoints[0].pt[1] = oldHeight[1];
+		//m_vFlightPoints[1].pt[1] = oldHeight[1];
 				
+		//5. Generate the spline
 		array<vector> flyPathPoints = {};
 		SDRC_ChopperDebug.GivePoints(flyPathPoints, m_vFlightPoints);
 		SDRC_Spline3D.GenerateSplinePoints(flyPathPoints, m_vSplinePoints, -1);
 		
-		//Search the closest index from the spline start
+		//6. Set the closest index from the spline start. This will set the near future destination.
 		m_iClosestIndex = 0;
 		m_iOldClosestIndex = m_iClosestIndex;
 				
-		//Check that points are above ground. Skip some of the points at start.
-		//SDRC_ChopperHelper.SetSplinePointsAboveGround(owner, 6);
+		//7. Check that points are above ground. 
+		//   This will also handle special spline handling depending on the state assigned for the chopper.
+		//SDRC_ChopperHelper.SetSplinePointsAboveGround(owner, 6);	//Skip some of the points at start
 		SDRC_ChopperHelper.SetSplinePointsAboveGround(owner, 0);
 		
 		if (m_vSplinePoints.IsEmpty())
@@ -1051,12 +1060,18 @@ modded class SDRC_ChopperComp : ScriptComponent
 			
 			//SDRC_DebugHelper.AddDebugPos(flyDestination.pt, ARGB(32, 255, 128, 64), 1.0, m_sDid, 50);
 			
-			bool destinationHandled = false;
-			int patrolCount = 8;	//Do one round for patrol by default (8*45 degrees)
+			bool destinationHandled = false;	//Set true, if destination was added
+			int patrolCount = 8;				//Do one round for patrol by default (8*45 degrees)
 			
 			switch (flyDestination.type)
 			{
-				case SDRC_EFlyWayPointType.WP_ATTACK:
+				case SDRC_EFlyWayPointType.WP_BRAKE:
+				{
+					int x = 0;
+					break;
+				}
+				
+				/*case SDRC_EFlyWayPointType.WP_ATTACK:
 				{
 					//Attack to be on low altitude. This will be set in SDRC_ChopperHelper.SetSplinePointsAboveGround()
 					SetState(SDRC_EHeliState.ATTACK);
@@ -1073,16 +1088,16 @@ modded class SDRC_ChopperComp : ScriptComponent
 					}
 					break;
 				}
-				case SDRC_EFlyWayPointType.WP_HOVER:
-				{
-					SetNextState(owner, flyDestination.type, false);					
-					destinationHandled = true;
-					break;
-				}
 				case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 				{	
 					SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, flyDestination.value);
 					//NOTE: m_vAttackPosition has been set in AddDestination
+					break;
+				}*/
+				case SDRC_EFlyWayPointType.WP_HOVER:
+				{
+					SetNextState(owner, flyDestination.type, false);					
+					destinationHandled = true;
 					break;
 				}
 				case SDRC_EFlyWayPointType.WP_PATROL:
@@ -1116,6 +1131,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 				}				
 			}
 					
+			//If destination has already been set, skip the re-routing etc.
 			if (!destinationHandled)
 			{	
 				//Distance of last flight point defined and the next destination
@@ -1154,7 +1170,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 					//SDRC_DebugHelper.AddDebugPos(vec, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
 				}
 				
-				AddFlyPathPoint(flyDestination.pt, flyDestination.type);
+				AddFlyPathPoint(flyDestination.pt, flyDestination.type, flyDestination.value);
 				
 				SetNextState(owner, flyDestination.type, false);
 			}
@@ -1179,7 +1195,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		
 		SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Created " + m_vFlightPoints.Count() + " points.", LogLevel.SPAM);
 		
-		//Clear the destinations 
+		//Remove the destinations that have been handled
 		for (int i = 0; i <= lastIdx; i++)
 		{
 			if (!m_vFlyDestinations.IsEmpty())			//Destination may have been deleted SetNextState 
@@ -1194,33 +1210,55 @@ modded class SDRC_ChopperComp : ScriptComponent
 	/*!	
 	Add a point to fly path. 
 	*/
-	private void AddFlyPathPoint(vector destination, SDRC_EFlyWayPointType type = SDRC_EFlyWayPointType.WP_FLY, int index = -1)
+	private void AddFlyPathPoint(vector destination, SDRC_EFlyWayPointType type = SDRC_EFlyWayPointType.WP_FLY, float value = 0, int index = -1)
 	{
-		if (type == SDRC_EFlyWayPointType.WP_LAND)
+		switch (type)
 		{
-			destination = SDRC_Misc.SetPosToSurface(destination);
-			SetState(SDRC_EHeliState.LAND);
-			
-			m_bIsLanding = false;
+			case SDRC_EFlyWayPointType.WP_ATTACK:
+			{
+				//Attack to be on low altitude. This will be set in SDRC_ChopperHelper.SetSplinePointsAboveGround()
+				SetState(SDRC_EHeliState.ATTACK);
+				//NOTE: m_vAttackPosition has been set in AddDestination
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_BRAKE:
+			{
+				SetState(SDRC_EHeliState.BRAKE);
+				//NOTE: The final height will be set in SetFlightPointHeight
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
+			{	
+				SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, value);
+				//NOTE: m_vAttackPosition has been set in AddDestination
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_LAND:
+			{
+				destination = SDRC_Misc.SetPosToSurface(destination);
+				SetState(SDRC_EHeliState.LAND);				
+				m_bIsLanding = false;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_BRAKE:
+			{
+				SetState(SDRC_EHeliState.BRAKE);			
+				m_bIsBraking = false;
+				break;
+			}
 		}
 
-		if (type == SDRC_EFlyWayPointType.WP_BRAKE)
-		{
-			SetState(SDRC_EHeliState.BRAKE);
-			
-			m_bIsBraking = false;
-		}		
-				
+		//Add the point to flypath				
 		SDRC_FlyPathPoint fpp = new SDRC_FlyPathPoint();
 		
 		if (index == -1)
 		{
-			fpp.Set(type, destination);
+			fpp.Set(type, destination, value);
 			m_vFlightPoints.Insert(fpp);
 		}
 		else
 		{
-			fpp.Set(type, destination);
+			fpp.Set(type, destination, value);
 			m_vFlightPoints.InsertAt(fpp, index);
 		}
 	}		

@@ -100,9 +100,9 @@ _TBD_
 Brakes the helicopter speed to stand still.
 * ``destination[0][2]`` : The position XZ to stop at.
 * ``destination[1]`` : The height from ground to stop at. This is not exact, but rather a wish. 
-  * If -1, normal flight pattern height is set.
+  * If 0, normal flight pattern height is set.
 * ``value`` : Distance to start braking. 
-  * If 0, defaults to 200.
+  * If 0 or empty, defaults to 200.
 
 ### WP_END
 _TBD_

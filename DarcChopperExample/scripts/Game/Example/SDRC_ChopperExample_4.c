@@ -57,7 +57,7 @@ class SDRC_ChopperExample_4
 		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, m_vFlyHereFirst);
 		//Add our flight path
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFlyHereFirst);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "1350 10 2286", 200);
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "1350 0.1 2286", 200);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_LAND, "1350 0 2286");		
 //		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, "0 -100 0");
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value: 25);

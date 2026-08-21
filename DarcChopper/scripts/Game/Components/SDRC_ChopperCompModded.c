@@ -598,7 +598,9 @@ modded class SDRC_ChopperComp
 	*/
 	private void AddDestinationPoint(SDRC_EFlyWayPointType type, vector destination, float value, int index = -1)
 	{
-		//If height is 0, make it to current heli height
+		//!!!!
+		//NOTE: If height (destination[1]) is 0, make it to current heli height
+		//!!!!
 		if (destination[1] == 0)
 		{
 			vector origin = GetOwner().GetOrigin();

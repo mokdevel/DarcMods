@@ -284,6 +284,7 @@ class SDRC_ChopperHelper
 			return;
 		}
 		
+		vector origin = owner.GetOrigin();
 		float y = 0;
 		
 		foreach (int i, SDRC_FlyPathPoint flightPoint : chopperComp.m_vFlightPoints)
@@ -309,12 +310,15 @@ class SDRC_ChopperHelper
 				case SDRC_EFlyWayPointType.WP_LAND:		//Do nothing .. height will be on ground due to y being set and flyHeigt is zero. See above.
 					break;
 				case SDRC_EFlyWayPointType.WP_BRAKE: //Do nothing .. 
-				{
-					if (flightPoint.value != 0)
+				{	
+					//NOTE: If braking height was set to 0, the point height has been set to the same as helicopter at the time. See: AddDestinationPoint()
+/*					flyHeight = flightPoint.pt[1];
+					if (flyHeight == -1)
 					{
-						break;
-					}
-					//If 0, drop through default
+						//Brake on current flight height
+						flyHeight = origin[1];
+					}*/
+					break;
 				}
 				default:
 					flyHeight = SDRC_Misc.RandomFloat(chopperComp.m_fFlyHeightLow, chopperComp.m_fFlyHeightHigh);
