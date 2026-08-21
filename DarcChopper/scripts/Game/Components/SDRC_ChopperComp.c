@@ -644,7 +644,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 		float endDiv = Math.Clamp((m_fSpeedTarget - m_fSpeedStart), 0.001, 1000);
 		float speedMul = (m_fSpeed - m_fSpeedStart) / endDiv;
 		m_fAnglePitch = params.pitchAngleRadFlat + params.pitchAngleRad * speedMul;		
-		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleDown, params.pitchNoseAngleUp);	//Nose down, nose up
+//		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleDown, params.pitchNoseAngleUp);	//Nose down, nose up
+		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleUp, params.pitchNoseAngleDown);	//Nose down, nose up
 		
 		if (m_eHeliState == SDRC_EHeliState.RAISE)
 		{
@@ -778,6 +779,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 				break;
 			}		
 			case SDRC_EHeliState.HOVER_DOWN:
+			case SDRC_EHeliState.LAND_VERTICAL:
 			{
 				if (m_fTimeInState > 0)
 				{
@@ -971,8 +973,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 		vector origin = owner.GetOrigin();
 		//m_vFlightPoints[0].pt[1] = origin[1];
 		//m_vFlightPoints[1].pt[1] = origin[1];
-		m_vFlightPoints[0].pt[1] = oldHeight[1];
-		m_vFlightPoints[1].pt[1] = oldHeight[1];
+		//m_vFlightPoints[0].pt[1] = oldHeight[1];
+		//m_vFlightPoints[1].pt[1] = oldHeight[1];
+		m_vFlightPoints[0].pt[1] = m_vSplinePointBelow[1];
+		m_vFlightPoints[1].pt[1] = m_vSplinePointBelow[1];
 				
 		//5. Generate the spline
 		array<vector> flyPathPoints = {};
@@ -1367,6 +1371,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	// Special handling - defined in modded class
 	//------------------------------------------------------------------------------------------------	
 	private void HandleLanding(IEntity owner, float timeSlice) {}
+	private void HandleLandingVertical(IEntity owner, float timeSlice) {}
 	private void HandleBraking(IEntity owner, float timeSlice) {}
 	//------------------------------------------------------------------------------------------------	
 	// Enemy related - defined in modded class

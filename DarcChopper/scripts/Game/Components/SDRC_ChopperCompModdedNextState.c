@@ -36,19 +36,6 @@ modded class SDRC_ChopperComp
 				//NOTE: The final height will be set in SetFlightPointHeight
 				m_bIsBraking = false;
 				break;
-			case SDRC_EFlyWayPointType.WP_LAND:
-			{
-				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
-				//Set the state so that when creating flight 
-				SetState(SDRC_EHeliState.LAND);
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
-			{
-				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
-				SetState(SDRC_EHeliState.LAND_VERTICAL);
-				break;
-			}
 			case SDRC_EFlyWayPointType.WP_FLY:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
@@ -157,6 +144,24 @@ modded class SDRC_ChopperComp
 				//m_fSpeedMax = 0.2;
 				isRemoveDestination = true;
 				break;
+			}
+			case SDRC_EFlyWayPointType.WP_LAND:
+			{
+				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
+				//Set the state so that when creating flight 
+				SetState(SDRC_EHeliState.LAND);
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
+			{
+				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
+				m_vFlyDestinations[0].value = 0;						//Set the time in state to 0 
+				m_vFlyDestinations[0].pt = m_vOrigin;
+				m_vFlyDestinations[0].pt[1] = m_vOrigin[1] - SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true) - 1;	//Set the point slightly below surface level
+				
+				SetState(SDRC_EHeliState.LAND_VERTICAL);
+				//Drop through to WP_HOVER_DOWN to get the spline points
+				//break;
 			}
 			case SDRC_EFlyWayPointType.WP_HOVER_UP:
 			case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
@@ -361,7 +366,37 @@ modded class SDRC_ChopperComp
 			}
 		}
 	}
+
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Handle landing
+	*/
+	override private void HandleLandingVertical(IEntity owner, float timeSlice)
+	{
+		vector origin = owner.GetOrigin();
+				
+		vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];
+		float distance = vector.Distance(origin, lastPt);
+
+		if (distance < m_fLandingDistance)
+		{
+			if (m_Helicopter_s.HasAnyGroundContact())
+			{					
+				//SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
+				//Disable effect of rotors
+		        m_Helicopter_s.RotorSetForceScaleState(0, 0);
+		        m_Helicopter_s.RotorSetForceScaleState(1, 0);
+		        m_Helicopter_s.SetThrottle(0);
+				//Set values to stop moving
+				m_fSpeedTarget = 0.0001;
+				m_fSpeedSlowingMul = 0;
+				m_fRotorForceMultiplier = 0;
+				SetNextState(owner);
+			}
+		}
+	}
 	
+		
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Handle braking

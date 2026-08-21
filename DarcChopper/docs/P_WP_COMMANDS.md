@@ -56,7 +56,14 @@ _TBD_
 _TBD_
 
 ### WP_LAND
-_TBD_
+Land the helicopter to destination following a generated flight path. The chopper tries to land to the destination spot, but it's not guaranteed.
+* ``destination`` : Position to land to. 
+* ``value`` : Not used.
+
+### WP_LAND_VERTICAL
+Land the helicopter to the spot where it is currently. You should use WP_BRAKE before using WP_LAND_VERTICAL to stop the flight.
+* ``destination`` : Not used.
+* ``value`` : Not used.
 
 ### WP_WAIT
 Orders the helicopter to wait in its current state 

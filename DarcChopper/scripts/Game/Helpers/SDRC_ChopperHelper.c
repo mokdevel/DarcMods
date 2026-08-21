@@ -465,7 +465,7 @@ class SDRC_ChopperHelper
 				int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
 
 				//Find high point, low point and difference
-				vector v0 = origin;//chopperComp.m_vSplinePoints[chopperComp.m_iClosestIndex];
+				vector v0 = chopperComp.m_vSplinePointBelow;
 				vector v1 = chopperComp.m_vSplinePoints[lastIdx];
 				v1[1] = lowestHeight;
 				
