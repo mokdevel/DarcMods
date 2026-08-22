@@ -21,21 +21,23 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		comment = "Animal spawner using French Animals mod. ";
 		spawnWorldSizeMultiplier = 0;
 		spawnCount = 30;
-		spawnSetList = {9,10,11};//{0,0,0,0,0,1,1,2,2,2,3,3,3,4,4,11,11 ,5,5,6,6,7,8, 9, 10};
+		spawnSetList = {0,0,0,0,0,0,1,1,1,2,2,2,3,3,4,4,9 ,5,6,6,7,8,10};
 		//----------------------------------------------------		
-		spawnSets.Insert(SpawnSet0_Animals());
-		spawnSets.Insert(SpawnSet1_Animals());
-		spawnSets.Insert(SpawnSet2_Animals());
-		spawnSets.Insert(SpawnSet3_Animals());
-		spawnSets.Insert(SpawnSet4_Animals());
+		spawnSets.Insert(SpawnSet0_Animals());	//Deer
+		spawnSets.Insert(SpawnSet1_Animals());	//Wolf
+		spawnSets.Insert(SpawnSet2_Animals());	//Doe
+		spawnSets.Insert(SpawnSet3_Animals());	//Fox
+		spawnSets.Insert(SpawnSet4_Animals());	//Rabbit
 		//Territories
-		spawnSets.Insert(SpawnSet5_Animals());
-		spawnSets.Insert(SpawnSet6_Animals());
-		spawnSets.Insert(SpawnSet7_Animals());
-		spawnSets.Insert(SpawnSet8_Animals());
+		spawnSets.Insert(SpawnSet5_Animals());	//Rabbit territory
+		spawnSets.Insert(SpawnSet6_Animals());	//Deer territory
+		spawnSets.Insert(SpawnSet7_Animals());	//Fox territory
+		spawnSets.Insert(SpawnSet8_Animals());	//Wolf territory
 		spawnSets.Insert(SpawnSet9_Animals());	//Bear
-		spawnSets.Insert(SpawnSet10_Animals());
-		spawnSets.Insert(SpawnSet11_Animals());
+		spawnSets.Insert(SpawnSet10_Animals());	//Bear territory
+		//Do not use these at this stage
+		spawnSets.Insert(SpawnSet11_Animals());	//Deer & Doe herd
+		spawnSets.Insert(SpawnSet12_Animals());	//Animal spawner - do not use for the moment.	
 	}	
 	
 	//Different spawner confs
@@ -309,4 +311,26 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		
 		return spawnSet;
 	}
+
+	SDRC_SpawnSet SpawnSet12_Animals()
+	{
+		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
+		spawnSet.Set(		
+			"index 12: Animal spawner",
+			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			{
+				EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST,
+				EMapDescriptorType.MDT_NAME_GENERIC,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_SETTLEMENT,
+			},
+			{},
+			{
+				"{7A9F719732B83B4A}Prefabs/Animals_Spawner/Animals_Spawner.et",
+			},
+			200, false, false,
+		);
+		
+		return spawnSet;
+	}		
 }

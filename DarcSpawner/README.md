@@ -84,6 +84,13 @@ Example: [dc_spawnerConfig_Animals.json](https://github.com/mokdevel/DarcMods/bl
 
 # Version history
 
+## 20260822
+### DarcSpawner_Animals
+* Added spawners for bear and bear territory and 
+  * Bear can not be hunted down. This is by design.
+  * Deer&doe herd and Animals spawner are not supported yet even if they are in the json.
+* dc_spawnerConfig_Animals.json has been updated. The file will auto update itself. Any changes you've done in the previous conf, you need to redo (e.g. spawn on road settings). Backup file in the profile directory.
+
 ## 20260815
 ### DarcSpawner
 Main Features:
