@@ -19,10 +19,10 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		rollAngleMul = 2.4;
 		
 		//Pitch
-		pitchAngleRad 	   =  15 * Math.DEG2RAD;
-		pitchAngleRadFlat  = -45 * Math.DEG2RAD;
+		pitchAngleRad 	   =  5 * Math.DEG2RAD;
+		pitchAngleRadFlat  = -25 * Math.DEG2RAD;	//0 points 45 degress downwards
 		pitchNoseAngleDown = pitchAngleRadFlat - (5 * Math.DEG2RAD);
-		pitchNoseAngleUp   = pitchAngleRadFlat + (60 * Math.DEG2RAD);
+		pitchNoseAngleUp   = pitchAngleRadFlat + (30 * Math.DEG2RAD);
 		
 		//Rotor force multipliers
 		rotorForceMulUp = 1.3 * 10;

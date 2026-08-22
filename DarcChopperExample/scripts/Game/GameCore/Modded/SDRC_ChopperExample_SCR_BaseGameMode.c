@@ -43,8 +43,8 @@ modded class SCR_BaseGameMode
 		if (SDRC_Conf.coreHasStarted)	//Wait for core to be available
 		{		
 				m_ChopperExample_1 = new SDRC_ChopperExample_1();
-//				m_ChopperExample_2 = new SDRC_ChopperExample_2();				
-//				m_ChopperExample_3 = new SDRC_ChopperExample_3();				
+				m_ChopperExample_2 = new SDRC_ChopperExample_2();				
+				m_ChopperExample_3 = new SDRC_ChopperExample_3();				
 				m_ChopperExample_4 = new SDRC_ChopperExample_4();				
 //				m_ChopperExample_5 = new SDRC_ChopperExample_5();
 		}
