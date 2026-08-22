@@ -626,7 +626,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
 
 		//If we're too close to ground, slow down the speed to allow time for climb
-//		float altitude = SDRC_ChopperHelper.GetAltitude(owner);
 		const int ALTITUDE_ADD = 5;
 		if ((m_fAltitude + ALTITUDE_ADD) < m_fFlyHeightLow)
 		{		
@@ -635,26 +634,41 @@ modded class SDRC_ChopperComp : ScriptComponent
 			m_fSpeedTarget = m_fSpeedTarget * mul;
 		}
 
-		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
+//		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
+		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, 0, m_fSpeedMax);
 		m_fTimeSpeed = 0;	//Start to change speed
 								
 		//Handle yaw, pitch, roll		
 				
 		//ROLL PITCH: Change pitch according to speed
-		float endDiv = Math.Clamp((m_fSpeedTarget - m_fSpeedStart), 0.001, 1000);
+		//float endDiv = Math.Clamp((m_fSpeedTarget - m_fSpeedStart), 0.001, 1000);
+/*		float endDiv = Math.Clamp((m_fSpeedTarget - m_fSpeedStart), -100, 1000);
+		if (endDiv == 0)
+		{
+			endDiv = 0.001
+		}
 		float speedMul = (m_fSpeed - m_fSpeedStart) / endDiv;
-		m_fAnglePitch = params.pitchAngleRadFlat + params.pitchAngleRad * speedMul;		
-//		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleDown, params.pitchNoseAngleUp);	//Nose down, nose up
-		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleUp, params.pitchNoseAngleDown);	//Nose down, nose up
+		if (speedMul != 0)
+		{
+			int hh = 0;
+		}
+		
+		float speedMul = (m_fSpeed - m_fSpeedStart) / endDiv;
+		
+		
+		m_fAnglePitch = params.pitchAngleRadFlat + params.pitchAngleRad * speedMul;*/
+		m_fAnglePitch = params.pitchAngleRadFlat + params.pitchAngleRad * (m_fSpeedMul - 1);		
+		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleDown, params.pitchNoseAngleUp);	//Nose down, nose up
+//		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleUp, params.pitchNoseAngleDown);	//Nose down, nose up
 		
 		if (m_eHeliState == SDRC_EHeliState.RAISE)
 		{
 			//Turn nose down
-			m_fAnglePitch = -25 * Math.DEG2RAD;
+			m_fAnglePitch = params.pitchNoseAngleDown * Math.DEG2RAD;
 		}
 		
 		m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fAnglePitch);
-		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 0.5);
+		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 0.5);// * 0.2);
 		
 		//ROLL ON DIRECTION: See how steep we're turning. Roll the helicopter accordingly for more natural flight. We only care about ZX plane.
 		m_fAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliForward, m_vHeliDirectionFuture);
@@ -666,7 +680,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_vAngularVel = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vHeliDirection, deltaTime);
 
 		//Handle angular velocities when slowing down
-		if (m_fSpeedSlowingMul < 0.3)
+		if (m_fSpeedSlowingMul < 0.2)
 		{
 			//Flatten the chopper when landing/braking/hovering
 			m_vAngularVel = vector.Zero;
@@ -676,9 +690,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 		else if (m_fSpeedSlowingMul < 1.0)
 		{
 			//Do only minor adjustments
-			m_vAngularVel = m_vAngularVel * m_fSpeedSlowingMul * 0.2;
-			m_vRadRollVel = m_vRadRollVel * m_fSpeedSlowingMul;
-//			m_vRadRollPitch = m_vRadRollPitch * m_fSpeedSlowingMul * 0.01;
+//			m_vAngularVel = m_vAngularVel * m_fSpeedSlowingMul * 0.2;
+//			m_vRadRollVel = m_vRadRollVel * m_fSpeedSlowingMul;
+////			m_vRadRollPitch = m_vRadRollPitch * m_fSpeedSlowingMul * 0.01;
 		}
 					
 		//ROLL UP (YAW): Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.

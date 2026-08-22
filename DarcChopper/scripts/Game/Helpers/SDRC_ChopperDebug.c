@@ -272,7 +272,7 @@ class SDRC_ChopperDebug
 //						   		"SplinePoints:" + m_vSplinePoints.Count() + "\n" +
 //						   		"TurnInternal:" + m_fTimeTurnInterval + "\n" +
 //								"Angle: " + m_fDbgAngle * Math.RAD2DEG + "\n" +
-//								"AnglePitch: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fAnglePitch) + "\n" +
+								"AnglePitch: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fAnglePitch) + "\n" +
 //								"AngleRoll: " + m_fAngleRoll * Math.RAD2DEG + "\n" +
 //								"AngleRollBack: " + m_fAngleRollBack * Math.RAD2DEG + "\n" +
 //								"DestinationPointAdd: " + m_iDestinationPointAdd + "\n" 
