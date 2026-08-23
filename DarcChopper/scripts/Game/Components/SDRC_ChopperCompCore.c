@@ -23,10 +23,10 @@ class SDRC_ChopperParams
 	float pitchNoseAngleUp;							//Maximum angle to turn the vehicle nose up when braking.
 	
 	//Rotor force multipliers
-	float rotorForceMulUp							//Rotor force multiplier in velocity counting. Bigger value makes the vehicle react faster to up/down movement but also starts stutter.
-	int   rotorForceNormal; 						//.. normal flight situation
-	int   rotorForceRaise; 							//.. when raising from stand still
-	int   rotorForceHover; 							//.. when hovering in one place
+	float fRotorForceMulUp							//Rotor force multiplier in velocity counting. Bigger value makes the vehicle react faster to up/down movement but also starts stutter.
+	int   iRotorForceNormal; 						//.. normal flight situation
+	int   iRotorForceRaise; 						//.. when raising from stand still
+	int   iRotorForceHover; 						//.. when hovering in one place
 	
 	//Obstacle awareness
 	float rayLenFront;								//Length of the ray to detect obstacles in front of vehicle

@@ -488,7 +488,13 @@ class SDRC_ChopperHelper
 				
 				isSmoothingNeeded = false;
 			}					
-			
+
+			//Set a small landing distance for vertical landing. Needed to touch down check.
+			if (chopperComp.GetState() == SDRC_EHeliState.LAND_VERTICAL) 
+			{
+				chopperComp.m_fLandingDistance = 10;	//Just set a distance near by the landing spot. This is the spot below.
+			}
+						
 			//If we're landing set some of the last points close to the ground
 			if (chopperComp.GetState() == SDRC_EHeliState.LAND) 
 			{

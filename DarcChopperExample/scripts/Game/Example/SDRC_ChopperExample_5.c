@@ -2,8 +2,8 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
-This is a very simple example of spawning a chopper and set an initial destination. After reaching
-the destination, it will patrol around the location.
+This is a very simple example of spawning a chopper and a destination to patrol around. After reaching
+the destination, patroling will start.
 */
 
 //------------------------------------------------------------------------------------------------

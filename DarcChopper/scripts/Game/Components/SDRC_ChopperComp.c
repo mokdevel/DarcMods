@@ -138,7 +138,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 
 	private float m_fTimeBetweenFixes = 0;
 	
-	float m_fTimeInState = -1;							//The timer to stay in a certain state. This is only in effect when positive value.
+	float m_fTimeInState = -1;							//The timer to stay in a certain state. This is only in effect when positive value. This value is DECREASING.
 	float m_fTimeInStateOrig = -1;						//The timer value that was set to m_fTimeInState. This can be used to calculate % gone from the time is was set.
 	private bool m_bTimeInStateEnabled = false;	
 	
@@ -710,7 +710,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			velVector = m_vDestination;
 			velVector.Normalize();
 			float forceMultiplier = m_fSpeed;
-			float forceRotorUp = m_fRotorForce0 * params.rotorForceMulUp;
+			float forceRotorUp = m_fRotorForce0 * params.fRotorForceMulUp;
 			
 			if (m_bFinalLanding)
 			{
@@ -756,7 +756,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		}
 
 		//The normal way to slowly go towards the spline
-		int bigMul = params.rotorForceNormal;
+		int rotorForce = params.iRotorForceNormal;
 
 		float belowFlyHeightLowMul = 1;
 		float distanceFromSplineMul = 1;
@@ -777,39 +777,47 @@ modded class SDRC_ChopperComp : ScriptComponent
 			{
 				if (m_fTimeInState > 0)
 				{
-					//In HOVER_UP state, do movemements slow
-					bigMul = 2 * bigMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
+					//In hovering state, do smooth movemements
+					rotorForce = 2 * rotorForce * (1 - (m_fTimeInState/m_fTimeInStateOrig));
 					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
 				}
 				break;
 			}		
 			case SDRC_EHeliState.HOVER_DOWN:
-			case SDRC_EHeliState.LAND_VERTICAL:
 			{
 				if (m_fTimeInState > 0)
 				{
-					//In HOVER_DOWN state, do movemements slow
-					bigMul = 3 * bigMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
+					//In hovering state, do smooth movemements
+					rotorForce = -1 * rotorForce * (1 - (m_fTimeInState/m_fTimeInStateOrig));
 					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
 				}
+				break;
+			}
+			case SDRC_EHeliState.LAND_VERTICAL:
+			{
+				const int LAND_VERTICAL_SPEED_UP_TIME = 3;	//Spend 3 seconds to increase rotorForce
+				float percentage = Math.Clamp(m_fTimeInState/LAND_VERTICAL_SPEED_UP_TIME, 0, 1);
+				rotorForce = -1 * rotorForce * percentage;
+				//distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
+				distanceFromSplineMul = distanceFromSplineMul * percentage;
 				break;
 			}		
 			case SDRC_EHeliState.RAISE:
 			{
 				//In RAISE state, do slow climb
-				bigMul = params.rotorForceRaise;
+				rotorForce = params.iRotorForceRaise;
 				break;
 			}
 			case SDRC_EHeliState.BRAKE:
 			{
 				//In BRAKE state, do movemements faster
-				bigMul = bigMul * 3.0;
+				rotorForce = rotorForce * 3.0;
 				break;
 			}		
 			case SDRC_EHeliState.HOVER:
 			{				
 				//Stay in one place
-				bigMul = params.rotorForceHover;
+				rotorForce = params.iRotorForceHover;
 				break;
 			}
 			case SDRC_EHeliState.FLY:
@@ -831,7 +839,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			}
 		}
 		
-		m_fRotorForceMultiplier = bigMul * belowFlyHeightLowMul * distanceFromSplineMul * rayLenMul;
+		m_fRotorForceMultiplier = rotorForce * belowFlyHeightLowMul * distanceFromSplineMul * rayLenMul;
 	}
 
 	//------------------------------------------------------------------------------------------------	

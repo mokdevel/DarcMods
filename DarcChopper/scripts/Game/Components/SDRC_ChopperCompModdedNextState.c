@@ -155,9 +155,12 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
-				m_vFlyDestinations[0].value = 0;						//Set the time in state to 0 
+				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true);
+				float distanceY = m_vOrigin[1] - SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true);
+//				m_vFlyDestinations[0].value = Math.AbsFloat(distanceY / (params.iRotorForceRaise / 100));	//Count an estimate time needed for landing
+				m_vFlyDestinations[0].value = 60;				//Just set some timer value. One minute for the max time.
 				m_vFlyDestinations[0].pt = m_vOrigin;
-				m_vFlyDestinations[0].pt[1] = m_vOrigin[1] - SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true) - 1;	//Set the point slightly below surface level
+				m_vFlyDestinations[0].pt[1] = distanceY - 1;	//Set the point slightly below surface level
 				
 				SetState(SDRC_EHeliState.LAND_VERTICAL);
 				//Drop through to WP_HOVER_DOWN to get the spline points
