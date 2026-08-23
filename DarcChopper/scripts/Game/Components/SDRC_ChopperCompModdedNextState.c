@@ -138,8 +138,9 @@ modded class SDRC_ChopperComp
 				SetState(SDRC_EHeliState.HOVER);
 				SetTimeInState(m_vFlyDestinations[0].value);
 				//Stop heli from moving
-				m_fSpeed = 0.01;
-				m_fSpeedMin = 0.01;
+				m_bOnlyVerticalMovement = true;
+/*				m_fSpeed = 0.01;
+				m_fSpeedMin = 0.01;*/
 				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
 				//m_fSpeedMax = 0.2;
 				isRemoveDestination = true;
@@ -168,8 +169,9 @@ modded class SDRC_ChopperComp
 				m_fLandingDistance = vector.Distance(m_vOrigin, pos);
 				
 				//Stop heli from moving
-				m_fSpeedMin = 0.01;
-				m_fSpeedMax = 0.01;
+				m_bOnlyVerticalMovement = true;
+/*				m_fSpeedMin = 0.01;
+				m_fSpeedMax = 0.01;*/
 				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
 				
 				for (int i = 0; i < 3; i++)
@@ -203,8 +205,9 @@ modded class SDRC_ChopperComp
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);
 				
 				//Stop heli from moving
-				m_fSpeedMin = 0.3;
-				m_fSpeedMax = 0.6;
+				m_bOnlyVerticalMovement = true;
+/*				m_fSpeedMin = 0.3;
+				m_fSpeedMax = 0.6;*/
 				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
 				
 				vector pos = owner.GetOrigin();
@@ -328,7 +331,7 @@ modded class SDRC_ChopperComp
 								
 				//We have started landing sequence so no need to count values
 				m_bIsLanding = true;
-				m_bFinalLanding = false;
+				m_bOnlyVerticalMovement = false;
 			}
 			
 			if (!m_Helicopter_s.HasAnyGroundContact())
@@ -354,7 +357,7 @@ modded class SDRC_ChopperComp
 					//	m_fSpeedTarget = Math.Clamp(decrMul, 1.0, 5.0);
 					m_fSpeedTarget = 8 * distMul + 0.1;
 					decreasePower = 2 * ((mulc + decrMul) / 2);
-					m_bFinalLanding = true;
+					m_bOnlyVerticalMovement = true;
 				}				
 
 				m_fRotorForceMultiplier = m_fRotorForceMultiplier * 2.5 - decreasePower * decrMul;
@@ -385,7 +388,7 @@ modded class SDRC_ChopperComp
 				
 		vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];
 		float distance = vector.Distance(origin, lastPt);
-
+		
 		if (distance < m_fLandingDistance)
 		{
 			if (m_Helicopter_s.HasAnyGroundContact())

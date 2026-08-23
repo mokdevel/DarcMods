@@ -179,15 +179,16 @@ modded class SDRC_ChopperComp : ScriptComponent
 	private float m_fTimeTurnInterval;
 	
 	//Flight path runtime variables	
-	private vector m_vOrigin;							//Current position
-	float m_fAltitude;									//Current altitude from ground
-	float m_fSpeed;										//Current speed
-	float m_fSpeedStart;								//Speed lerp start
-	float m_fSpeedTarget;								//Speed lerp target aka end
-	float m_fSpeedMul;									//Speed multiplier that depends on the turn
-	float m_fSpeedSlowingMul;							//[0..1] Landing/braking speed modifier that affects speed and Yaw-Pitch-Roll.
-	float m_fRotorForceMultiplier;						//Rotor force multiplier that simulates up/down throttle
-	vector m_vVelocityVector;							//Velocity vector stored in case it's needed by external mods
+	private vector m_vOrigin;					//Current position
+	float m_fAltitude;							//Current altitude from ground
+	float m_fSpeed;								//Current speed
+	float m_fSpeedStart;						//Speed lerp start
+	float m_fSpeedTarget;						//Speed lerp target aka end
+	float m_fSpeedMul;							//Speed multiplier that depends on the turn
+	float m_fSpeedSlowingMul;					//[0..1] Landing/braking speed modifier that affects speed and Yaw-Pitch-Roll.
+	float m_fRotorForceMultiplier;				//Rotor force multiplier that simulates up/down throttle
+	vector m_vVelocityVector;					//Velocity vector stored in case it's needed by external mods
+	bool m_bOnlyVerticalMovement;				//If true, we only allow vertical movement. Used with landing, hovering, etc..
 	
 	//Angular velocities
 	private vector m_vAngularVel;
@@ -219,7 +220,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 	
 	//Landing related
 	private bool m_bIsLanding;					//If true, landing sequence has started
-	private bool m_bFinalLanding;				//If true, we're in the final landing stages really close to the target
 	float m_fLandingDistance;					//Distance to start the landing.
 	private float m_fLandingSpeed;				//The speed to descend the chopper
 	private float m_fSpeedLandingOrig;			//Speed from where we start to descend
@@ -715,8 +715,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 			float forceMultiplier = m_fSpeed;
 			float forceRotorUp = m_fRotorForce0 * params.fRotorForceMulUp;
 			
-			if (m_bFinalLanding)
+			//Disable all other movement except vertical one.
+			if (m_bOnlyVerticalMovement)
 			{
+				forceMultiplier = 0;
 				velVector[0] = 0;
 				velVector[2] = 0;
 				velVector[1] = Math.Clamp(velVector[1], 0.01, 0.1);
@@ -734,11 +736,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 				velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, vectorUp, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
 			}
 		}
-				
-		/*if (m_bInInit)
-		{
-			velVector = vector.Zero;
-		}*/
 		
 		m_vVelocityVector = velVector;
 		owner.GetPhysics().SetVelocity(velVector);
@@ -759,7 +756,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		}
 
 		//The normal way to slowly go towards the spline
-		int rotorForce = params.iRotorForceNormal;
+		float rotorForce = params.iRotorForceNormal;
 
 		float belowFlyHeightLowMul = 1;
 		float distanceFromSplineMul = 1;
@@ -773,7 +770,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 		}
 		//Absolute distance be it below or above the spline
 		distanceFromSplineMul = (splineHeightFromGround - heliHeightFromGround) / heliHeightFromGround;
-		
+
+		const int VERTICAL_SPEED_UP_TIME = 3;	//Spend 3 seconds to increase rotorForce
+				
 		//Modify the values depending on state
 		switch (m_eHeliState)
 		{
@@ -781,9 +780,13 @@ modded class SDRC_ChopperComp : ScriptComponent
 			{
 				if (m_fTimeInStateLeft > 0)
 				{
-					//In hovering state, do smooth movemements
+					float percentage = Math.Clamp(m_fTimeInStateBeen/VERTICAL_SPEED_UP_TIME, 0, 1);
+					rotorForce = 3 * rotorForce * percentage;
+					distanceFromSplineMul = Math.AbsFloat(distanceFromSplineMul) * percentage;
+					
+/*					//In hovering state, do smooth movemements
 					rotorForce = 2 * rotorForce * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));
-					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));
+					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));*/
 				}
 				break;
 			}		
@@ -791,16 +794,19 @@ modded class SDRC_ChopperComp : ScriptComponent
 			{
 				if (m_fTimeInStateLeft > 0)
 				{
-					//In hovering state, do smooth movemements
+					float percentage = Math.Clamp(m_fTimeInStateBeen/VERTICAL_SPEED_UP_TIME, 0, 1);
+					rotorForce = -3 * rotorForce * percentage;
+					distanceFromSplineMul = Math.AbsFloat(distanceFromSplineMul) * percentage;
+					
+/*					//In hovering state, do smooth movemements
 					rotorForce = -1 * rotorForce * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));
-					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));
+					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));*/
 				}
 				break;
 			}
 			case SDRC_EHeliState.LAND_VERTICAL:
 			{
-				const int LAND_VERTICAL_SPEED_UP_TIME = 3;	//Spend 3 seconds to increase rotorForce
-				float percentage = Math.Clamp(m_fTimeInStateBeen/LAND_VERTICAL_SPEED_UP_TIME, 0, 1);
+				float percentage = Math.Clamp(m_fTimeInStateBeen/VERTICAL_SPEED_UP_TIME, 0, 1);
 				rotorForce = -3 * rotorForce * percentage;
 				distanceFromSplineMul = Math.AbsFloat(distanceFromSplineMul) * percentage;
 				break;
