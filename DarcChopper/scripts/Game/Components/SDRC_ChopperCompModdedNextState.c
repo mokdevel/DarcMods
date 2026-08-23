@@ -155,16 +155,30 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
-				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true);
-				float distanceY = m_vOrigin[1] - SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true);
-//				m_vFlyDestinations[0].value = Math.AbsFloat(distanceY / (params.iRotorForceRaise / 100));	//Count an estimate time needed for landing
-				m_vFlyDestinations[0].value = 60;				//Just set some timer value. One minute for the max time.
-				m_vFlyDestinations[0].pt = m_vOrigin;
-				m_vFlyDestinations[0].pt[1] = distanceY - 1;	//Set the point slightly below surface level
 				
 				SetState(SDRC_EHeliState.LAND_VERTICAL);
-				//Drop through to WP_HOVER_DOWN to get the spline points
-				//break;
+				SetTimeInState(60);								//Just set some timer value. One minute for the max time.
+
+				//Clear flight as we are adding the points ourselves.
+				ResetFlight();
+
+				vector pos = m_vOrigin;
+				pos[1] = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, owner) - 1;	//Set the point slightly below surface level
+				//Set the landing distance to be from the helicopter height to slightly below ground. This is needed for the touch down check.
+				m_fLandingDistance = vector.Distance(m_vOrigin, pos);
+				
+				//Stop heli from moving
+				m_fSpeedMin = 0.01;
+				m_fSpeedMax = 0.01;
+				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
+				
+				for (int i = 0; i < 3; i++)
+				{
+					m_vSplinePoints.Insert(pos);
+				}
+				m_iClosestIndex = 0;
+				isRemoveDestination = true;
+				break;				
 			}
 			case SDRC_EFlyWayPointType.WP_HOVER_UP:
 			case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
@@ -191,7 +205,7 @@ modded class SDRC_ChopperComp
 				//Stop heli from moving
 				m_fSpeedMin = 0.3;
 				m_fSpeedMax = 0.6;
-				m_fSpeedSlowingMul = 0;
+				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
 				
 				vector pos = owner.GetOrigin();
 				pos[1] = pos[1] + m_vFlyDestinations[0].pt[1];		//Hover above original point
@@ -203,7 +217,7 @@ modded class SDRC_ChopperComp
 				m_iClosestIndex = 0;
 				//CreateNewFlight(owner, firstDestination);
 				
-				SDRC_ChopperDebug.DrawDebugPaths(owner);
+				//SDRC_ChopperDebug.DrawDebugPaths(owner);
 				isRemoveDestination = true;
 				break;
 			}
@@ -356,16 +370,7 @@ modded class SDRC_ChopperComp
 			}
 			else
 			{
-				//SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
-				//Disable effect of rotors
-		        m_Helicopter_s.RotorSetForceScaleState(0, 0);
-		        m_Helicopter_s.RotorSetForceScaleState(1, 0);
-		        m_Helicopter_s.SetThrottle(0);
-				//Set values to stop moving
-				m_fSpeedTarget = 0.0001;
-				m_fSpeedSlowingMul = 0;
-				m_fRotorForceMultiplier = 0;
-				SetNextState(owner);
+				HandleGroundContact(owner);		
 			}
 		}
 	}
@@ -384,22 +389,30 @@ modded class SDRC_ChopperComp
 		if (distance < m_fLandingDistance)
 		{
 			if (m_Helicopter_s.HasAnyGroundContact())
-			{					
-				//SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
-				//Disable effect of rotors
-		        m_Helicopter_s.RotorSetForceScaleState(0, 0);
-		        m_Helicopter_s.RotorSetForceScaleState(1, 0);
-		        m_Helicopter_s.SetThrottle(0);
-				//Set values to stop moving
-				m_fSpeedTarget = 0.0001;
-				m_fSpeedSlowingMul = 0;
-				m_fRotorForceMultiplier = 0;
-				SetNextState(owner);
+			{			
+				HandleGroundContact(owner);		
 			}
 		}
 	}
+
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Handle ground contact
+	*/
+	private void HandleGroundContact(IEntity owner)
+	{
+		//SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
+		//Disable effect of rotors
+        m_Helicopter_s.RotorSetForceScaleState(0, 0);
+        m_Helicopter_s.RotorSetForceScaleState(1, 0);
+        m_Helicopter_s.SetThrottle(0);
+		//Set values to stop moving
+		m_fSpeedTarget = 0.0001;
+		m_fSpeedSlowingMul = 0;
+		m_fRotorForceMultiplier = 0;
+		SetNextState(owner);
+	}	
 	
-		
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Handle braking
@@ -421,15 +434,17 @@ modded class SDRC_ChopperComp
 			}
 			else
 			{
-				float distMul = distance / m_fBrakingDistance;
+				float distMul = distance / (m_fBrakingDistance * 0.8);	//We use a shorter braking distance to keep the speed up for a bit longer
+				m_fSpeedTarget = m_fSpeedBrakingOrig * distMul + 0.01;
+//				m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, 1, 100);
 				
 				//If we have passed the point, adjust values
 				if (SDRC_Math.HasPassedPointXZ(m_fPositionBrakingOrig, lastPt, owner.GetOrigin()))
 				{
+					m_fSpeedTarget = 0.001;
 					distMul = 0;
 				}
 				
-				m_fSpeedTarget = m_fSpeedBrakingOrig * distMul + 0.01;
 				m_fSpeedMin = 0.001;
 				
 				//This affects yaw-pitch-roll counting in SetTurn

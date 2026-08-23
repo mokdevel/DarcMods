@@ -297,7 +297,7 @@ class SDRC_ChopperHelper
 			}
 			
 			//Initial height will be on ground
-			float y = SDRC_Misc.GetSurfaceYWithWater(pt, true);
+			float y = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
 			float flyHeight = 0;
 						
 			switch (flightPoint.type)
@@ -313,11 +313,11 @@ class SDRC_ChopperHelper
 					break;
 				}
 				default:
+					pt[1] = 0;	//We may in the future use the provided Y coord for the points. For now we set it to 0.
 					//TBD: Change to do only relatively big changes.
 					flyHeight = SDRC_Misc.RandomFloat(chopperComp.m_fFlyHeightLow, chopperComp.m_fFlyHeightHigh);
 			}
 			
-			pt[1] = 0;	//We may in the future use the provided Y coord for the points. For now we set it to 0.
 			pt[1] = pt[1] + flyHeight + y;
 			chopperComp.m_vFlightPoints[i].pt = pt;
 		}
@@ -407,7 +407,7 @@ class SDRC_ChopperHelper
 			float lowestHeight = chopperComp.m_fFlyHeightLow;
 			int lowAdd = 5;
 
-			//Modify attack height defaults						
+			//Modify attack height defaults
 			if (chopperComp.GetState() == SDRC_EHeliState.ATTACK) 
 			{
 				//Attack height is the lowest point modified by attackHeightMul. The final attackHeight could be below m_fFlyHeightLow
@@ -416,12 +416,13 @@ class SDRC_ChopperHelper
 				chopperComp.SetState(SDRC_EHeliState.FLY);
 			}
 
+			//Modify brake height defaults
 			if (chopperComp.GetState() == SDRC_EHeliState.BRAKE) 
 			{
 				//Braking height is the last point. Could be below m_fFlyHeightLow
 				vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];				
 				lowestHeight = lastPoint[1];
-				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(lastPoint, true);
+				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(lastPoint, true, owner);
 				if (lowestHeight < surfaceY)
 				{
 					lowestHeight = surfaceY;
@@ -438,7 +439,7 @@ class SDRC_ChopperHelper
 					continue;
 				}
 
-				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(pt, true);
+				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
 
 				//With lowAdd = 0, just accept the height. No modification.
 				if (lowAdd == 0)
@@ -489,12 +490,6 @@ class SDRC_ChopperHelper
 				isSmoothingNeeded = false;
 			}					
 
-			//Set a small landing distance for vertical landing. Needed to touch down check.
-			if (chopperComp.GetState() == SDRC_EHeliState.LAND_VERTICAL) 
-			{
-				chopperComp.m_fLandingDistance = 10;	//Just set a distance near by the landing spot. This is the spot below.
-			}
-						
 			//If we're landing set some of the last points close to the ground
 			if (chopperComp.GetState() == SDRC_EHeliState.LAND) 
 			{
@@ -515,7 +510,7 @@ class SDRC_ChopperHelper
 				vector v0 = chopperComp.m_vSplinePoints[lastIdx - pointsToGround];
 				vector v1 = chopperComp.m_vSplinePoints[lastIdx];
 				//The destination point will take any objects like buildings in to account
-				v1[1] = SDRC_Misc.GetSurfaceYWithWater(v1, true);
+				v1[1] = SDRC_Misc.GetSurfaceYWithWater(v1, true, owner);
 				
 				//Define the distance from where to start landing sequence				
 				chopperComp.m_fLandingDistance = vector.Distance(v0, v1);

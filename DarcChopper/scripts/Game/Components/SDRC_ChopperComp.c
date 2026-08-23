@@ -138,7 +138,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 
 	private float m_fTimeBetweenFixes = 0;
 	
-	float m_fTimeInState = -1;							//The timer to stay in a certain state. This is only in effect when positive value. This value is DECREASING.
+	//State timers. These are used and activated when the state changes.
+	float m_fTimeInStateLeft = -1;						//DECREASING to zero. The time left to stay in the state. This is only in effect when positive value.
+	float m_fTimeInStateBeen = -1;						//INCREASING time. The time we have been in the state.
 	float m_fTimeInStateOrig = -1;						//The timer value that was set to m_fTimeInState. This can be used to calculate % gone from the time is was set.
 	private bool m_bTimeInStateEnabled = false;	
 	
@@ -424,7 +426,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_fTimeSpeed += timeSlice;
 		m_fTimeBetweenPts += timeSlice;
 		m_fTimeBetweenFixes -= timeSlice;
-		m_fTimeInState -= timeSlice;		
+		m_fTimeInStateLeft -= timeSlice;		
+		m_fTimeInStateBeen += timeSlice;		
 		m_fTimeRocketDelay += timeSlice;		
 		m_fTimerAttack -= timeSlice;
 		m_fTimerBehaviour -= timeSlice;
@@ -644,7 +647,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		float mul = m_fSpeedMul;
 		if (mul < 1)
 		{
-			mul = -15 * (1 + (1 - m_fSpeedSlowingMul));
+			mul = -30 * (1 + (1 - m_fSpeedSlowingMul));
 		}
 		
 		m_fAnglePitch = params.pitchAngleRadFlat + params.pitchAngleRad * mul;
@@ -763,43 +766,43 @@ modded class SDRC_ChopperComp : ScriptComponent
 		float rayLenMul = 1;
 
 		float splineHeightFromGround = m_vSplinePointBelow[1];		
-		float heliHeightFromGround = m_vOrigin[1] - 10;				//Move the origin slightly below the spline
+		float heliHeightFromGround = m_vOrigin[1];// - 10;				//Move the origin slightly below the spline
 		if (heliHeightFromGround <= 0)
 		{
 			heliHeightFromGround = 1.0;
 		}
-		distanceFromSplineMul = (splineHeightFromGround - heliHeightFromGround) / heliHeightFromGround;			
+		//Absolute distance be it below or above the spline
+		distanceFromSplineMul = (splineHeightFromGround - heliHeightFromGround) / heliHeightFromGround;
 		
 		//Modify the values depending on state
 		switch (m_eHeliState)
 		{
 			case SDRC_EHeliState.HOVER_UP:
 			{
-				if (m_fTimeInState > 0)
+				if (m_fTimeInStateLeft > 0)
 				{
 					//In hovering state, do smooth movemements
-					rotorForce = 2 * rotorForce * (1 - (m_fTimeInState/m_fTimeInStateOrig));
-					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
+					rotorForce = 2 * rotorForce * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));
+					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));
 				}
 				break;
 			}		
 			case SDRC_EHeliState.HOVER_DOWN:
 			{
-				if (m_fTimeInState > 0)
+				if (m_fTimeInStateLeft > 0)
 				{
 					//In hovering state, do smooth movemements
-					rotorForce = -1 * rotorForce * (1 - (m_fTimeInState/m_fTimeInStateOrig));
-					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
+					rotorForce = -1 * rotorForce * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));
+					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));
 				}
 				break;
 			}
 			case SDRC_EHeliState.LAND_VERTICAL:
 			{
 				const int LAND_VERTICAL_SPEED_UP_TIME = 3;	//Spend 3 seconds to increase rotorForce
-				float percentage = Math.Clamp(m_fTimeInState/LAND_VERTICAL_SPEED_UP_TIME, 0, 1);
-				rotorForce = -1 * rotorForce * percentage;
-				//distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInState/m_fTimeInStateOrig));
-				distanceFromSplineMul = distanceFromSplineMul * percentage;
+				float percentage = Math.Clamp(m_fTimeInStateBeen/LAND_VERTICAL_SPEED_UP_TIME, 0, 1);
+				rotorForce = -3 * rotorForce * percentage;
+				distanceFromSplineMul = Math.AbsFloat(distanceFromSplineMul) * percentage;
 				break;
 			}		
 			case SDRC_EHeliState.RAISE:
@@ -1293,10 +1296,15 @@ modded class SDRC_ChopperComp : ScriptComponent
 		{
 			seconds = 0;
 		}
-		
-		m_fTimeInState = seconds;
+
+		//Store original time
 		m_fTimeInStateOrig = seconds;
+		//Set the time to the default. Value is decreased in EOnFrame
+		m_fTimeInStateLeft = seconds;
+		//Reset the timer we've been in the state. Value is increased in EOnFrame
+		m_fTimeInStateBeen = 0;
 		
+		//If a time was requested, mark that we have a state with a timer
 		if (seconds == 0)
 		{
 			m_bTimeInStateEnabled = false;

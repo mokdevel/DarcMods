@@ -667,7 +667,7 @@ modded class SDRC_ChopperComp
 		//Wait for the state timer to end and go to next state
 		if (    (m_eHeliState != SDRC_EHeliState.FLY) 			//We do not automatically change state when flying
 		     //&& (m_eHeliState != SDRC_EHeliState.RAISE) 		//..or raising
-		     && (m_fTimeInState < 0) && m_bTimeInStateEnabled) 
+		     && (m_fTimeInStateLeft < 0) && m_bTimeInStateEnabled) 
 		{
 				SetNextState(owner);
 		}
