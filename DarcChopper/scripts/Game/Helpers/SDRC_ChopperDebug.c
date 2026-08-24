@@ -279,9 +279,10 @@ class SDRC_ChopperDebug
 								"";
 			debugText = debugText + 
 //								"Init:" + chopperComp.m_bInInit + ", " +
-//								"Pilots::" + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
-//								"Working:" + SDRC_VehicleHelper.IsWorking(owner) + " - " + 
-//								"Is piloted:" + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
+//								"Pilots: " + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
+								"Groups: " + chopperComp.m_aGroups.Count() + "\n" +
+//								"Working: " + SDRC_VehicleHelper.IsWorking(owner) + " - " + 
+//								"Is piloted: " + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
 								"";
 
 			if (angUp > 1.3)

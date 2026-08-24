@@ -305,24 +305,27 @@ class SDRC_ChopperHelper
 			}
 			
 			//Initial height will be on ground
-			//float y = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
+			float y = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
 			float flyHeight = 0;
 						
 			switch (flightPoint.type)
 			{
 				case SDRC_EFlyWayPointType.WP_HOVER_UP: //Do nothing .. 
-				case SDRC_EFlyWayPointType.WP_ATTACK: 	//Do nothing .. height is defined for the attack point.
-					//TBD: When spline is created, the height is still set to minimum. We maybe should have a specific ATTACK state and the height handling specific for it.
+					break;
 				case SDRC_EFlyWayPointType.WP_LAND:		//Do nothing .. height will be on ground due to y being set and flyHeigt is zero. See above.
 					break;
-				case SDRC_EFlyWayPointType.WP_BRAKE: 	//Do nothing .. 
-				{	
-					//NOTE: If braking height was set to 0, the point height has been set to the same as helicopter at the time. See: AddDestinationPoint()
+				case SDRC_EFlyWayPointType.WP_BRAKE: 	//Do nothing .. NOTE: If braking height was set to 0, the point height has been set to the same as helicopter at the time. See: AddDestinationPoint()
 					break;
+				case SDRC_EFlyWayPointType.WP_ATTACK:
+				{
+					//Raise the attack point to a minimum of ground level
+					if (pt[1] < y)
+					{
+						pt[1] = pt[1] + y;
+					}
 				}
 				default:
 				{
-					//pt[1] = 0;	//We may in the future use the provided Y coord for the points. For now we set it to 0.
 					//TBD: Change to do only relatively big changes.
 					if (pt[1] == 0)
 					{
@@ -332,7 +335,7 @@ class SDRC_ChopperHelper
 				}
 			}
 			
-			pt[1] = pt[1] + flyHeight;// + y;
+			pt[1] = pt[1] + flyHeight;
 			chopperComp.m_vFlightPoints[i].pt = pt;
 		}
 	}	
@@ -410,6 +413,8 @@ class SDRC_ChopperHelper
 		}
 		
 		vector origin = owner.GetOrigin();
+		vector oldHeight = origin;
+		
 		//If we change the Y values, we want to smooth the spline
 		bool isSmoothingNeeded = false;
 		int smoothCount = 0;				//How many points to smooth. 0 = all
@@ -418,137 +423,112 @@ class SDRC_ChopperHelper
 		if (chopperComp)
 		{
 			//Default heights
+			oldHeight = chopperComp.m_vSplinePoints[chopperComp.m_iClosestIndex];
 			float lowestHeight = chopperComp.m_fFlyHeightLow;
 			int lowAdd = 5;
 
-			//Modify attack height defaults
-			if (chopperComp.GetState() == SDRC_EHeliState.ATTACK) 
+			//Use a local heliState as it could be changed later in the function
+			SDRC_EHeliState heliState = chopperComp.GetState();
+			
+			switch (heliState)
 			{
-				//Attack height is the lowest point modified by attackHeightMul. The final attackHeight could be below m_fFlyHeightLow
-				lowestHeight = lowestHeight * chopperComp.params.attackHeightMul;
-				lowAdd = 0;
-				chopperComp.SetState(SDRC_EHeliState.FLY);
-			}
-
-			//Modify brake height defaults
-			if (chopperComp.GetState() == SDRC_EHeliState.BRAKE) 
-			{
-				//Braking height is the last point. Could be below m_fFlyHeightLow
-				vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];				
-				lowestHeight = lastPoint[1];
-				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(lastPoint, true, owner);
-				if (lowestHeight < surfaceY)
+				case SDRC_EHeliState.ATTACK:
 				{
-					lowestHeight = surfaceY;
+					//Modify attack height defaults
+					//Attack height is the lowest point modified by attackHeightMul. The final attackHeight could be below m_fFlyHeightLow
+					vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];				
+					lowestHeight = chopperComp.m_fFlyHeightLow * chopperComp.params.attackHeightMul + lastPoint[1];
+					lowAdd = 0;
+					//We know where to attack so return to normal flight mode
+					chopperComp.SetState(SDRC_EHeliState.FLY);
+					break;
 				}
-				lowAdd = 0;
-			}
-						
+				case SDRC_EHeliState.BRAKE:
+				{
+					//Modify brake height defaults
+					//Braking height is the last point. Could be below m_fFlyHeightLow
+					vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];				
+					lowestHeight = lastPoint[1];
+					float surfaceY = SDRC_Misc.GetSurfaceYWithWater(lastPoint, true, owner);
+					if (lowestHeight < surfaceY)
+					{
+						lowestHeight = surfaceY;
+					}
+					lowAdd = 0;
+					break;
+				}
+			}		
+				
 			//Make sure the points are at minimum lowestHeight from the ground.
 			//This is done first in all cases. Other states will modify these later in the function.
-			foreach (int i, vector pt : chopperComp.m_vSplinePoints)
+			if (lowAdd > 0)
 			{
-				if (i < skipCount)
+				foreach (int i, vector pt : chopperComp.m_vSplinePoints)
 				{
-					continue;
-				}
-
-				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
-
-				//With lowAdd = 0, just accept the height. No modification.
-				if (lowAdd == 0)
-				{
-					pt[1] = surfaceY + lowestHeight;
-					chopperComp.m_vSplinePoints[i] = pt;
-					
-					isSmoothingNeeded = true;
-				}
-				//If point lower than requested point, set lowest flight height
-				else if (pt[1] < (surfaceY + lowestHeight))
-				{
-					//If we're low, fix the point a bit above the lowestHeight fly height
-					pt[1] = surfaceY + lowestHeight + lowAdd;	//Make chopper fly higher for a moment
-					chopperComp.m_vSplinePoints[i] = pt;
-					
-					isSmoothingNeeded = true;
-				}
-			}
-					
-			//If we're braking set points towards the last point
-			if (chopperComp.GetState() == SDRC_EHeliState.BRAKE)
-			{
-				int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
-
-				//Find high point, low point and difference
-				vector v0 = chopperComp.m_vSplinePointBelow;
-				vector v1 = chopperComp.m_vSplinePoints[lastIdx];
-				v1[1] = lowestHeight;
-				
-				//Count a braking (bell) curve
-				float p0 = v0[1];
-				float p1 = v1[1];
-				float pdiff = p0 - p1;
-									
-				//Create a Y spline to replace the given points to smooth the curve for braking
-				int points = lastIdx - chopperComp.m_iClosestIndex;
-				for (int i = 0; i < points; i++)
-				{					
-					float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
-
-					vector pt = vector.Lerp(v1, v0, step);
-					pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
-					chopperComp.m_vSplinePoints[lastIdx - points + i] = pt;
-					chopperComp.m_vSplinePoints[lastIdx - points + i + 1] = pt;	//Ugly hack to make sure the last point is also modified
-				}
-				
-				isSmoothingNeeded = false;
-			}					
-
-			//If we're landing set some of the last points close to the ground
-			if (chopperComp.GetState() == SDRC_EHeliState.LAND) 
-			{
-				//Decide a point on the spline for the initial landing to start
-				//int pointsToGround = chopperComp.m_fSpeed / 1.2;
-				
-				int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
-				int pointsToGround = lastIdx - 1;
-				if (pointsToGround > 10)
-				{
-					pointsToGround = 10;
-				}
-				
-				//Check that point is within limits
-				SDRC_Log.Add("[SDRC_ChopperHelper:SetSplinePointsAboveGround] pointsToGround: " + pointsToGround, LogLevel.DEBUG);			
-
-				//Find high point, low point and difference
-				vector v0 = chopperComp.m_vSplinePoints[lastIdx - pointsToGround];
-				vector v1 = chopperComp.m_vSplinePoints[lastIdx];
-				//The destination point will take any objects like buildings in to account
-				v1[1] = SDRC_Misc.GetSurfaceYWithWater(v1, true, owner);
-				
-				//Define the distance from where to start landing sequence				
-				chopperComp.m_fLandingDistance = vector.Distance(v0, v1);
-
-				//Count a landing (bell) curve
-				float p0 = v0[1];
-				float p1 = v1[1];
-				float pdiff = p0 - p1;
-									
-				//Create a Y spline to replace the given points to smooth the curve for landing
-				if (chopperComp.m_vSplinePoints.Count() - 1 > pointsToGround)
-				{
-					for (int i = 0; i < pointsToGround; i++)
-					{					
-						float step = 1 - (i / (pointsToGround - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
-
-						vector pt = vector.Lerp(v1, v0, step);
-						pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
-						chopperComp.m_vSplinePoints[lastIdx - pointsToGround + i + 1] = pt;
+					if (i < skipCount)
+					{
+						continue;
+					}
+	
+					float surfaceY = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
+	
+					//With lowAdd = 0, just accept the height. No modification.
+/*					if (lowAdd == 0)
+					{
+						pt[1] = surfaceY + lowestHeight;
+						chopperComp.m_vSplinePoints[i] = pt;
+						
+						isSmoothingNeeded = true;
+					}*/
+					//If point lower than requested point, set lowest flight height
+					if (pt[1] < (surfaceY + lowestHeight))
+					{
+						//If we're low, fix the point a bit above the lowestHeight fly height
+						pt[1] = surfaceY + lowestHeight + lowAdd;	//Make chopper fly higher for a moment
+						chopperComp.m_vSplinePoints[i] = pt;
+						
+						isSmoothingNeeded = true;
 					}
 				}
-				
-				isSmoothingNeeded = false;
-			}		
+			}
+								
+			//Create a smooth curve
+			switch (heliState)
+			{
+				case SDRC_EHeliState.ATTACK:
+				case SDRC_EHeliState.BRAKE:
+				{
+					//If we're braking set points towards the last point			
+					int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
+	
+					//Find high point, low point and difference
+					vector v0 = chopperComp.m_vSplinePointBelow;
+					vector v1 = chopperComp.m_vSplinePoints[lastIdx];
+					v1[1] = lowestHeight;
+					
+					//Count a braking (bell) curve
+					float p0 = v0[1];
+					float p1 = v1[1];
+					float pdiff = p0 - p1;
+										
+					//Create a Y spline to replace the given points to smooth the curve for braking
+					int points = lastIdx - chopperComp.m_iClosestIndex;
+					for (int i = 0; i < points; i++)
+					{					
+						float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
+	
+						vector pt = vector.Lerp(v1, v0, step);
+						pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
+						chopperComp.m_vSplinePoints[lastIdx - points + i] = pt;
+						chopperComp.m_vSplinePoints[lastIdx - points + i + 1] = pt;	//Ugly hack to make sure the last point is also modified
+					}
+					
+					isSmoothingNeeded = false;
+					break;
+				}
+				default:
+					;
+			}
 		}
 		
 		if (isSmoothingNeeded)
@@ -558,12 +538,14 @@ class SDRC_ChopperHelper
 		}
 
 		//After smoothing, set heli original height to points in the beginning. This is to avoid jumping.
-		for (int i = 0; i < skipCount; i++)
+//		for (int i = 0; i < skipCount; i++)
+/*		for (int i = 0; i < 2; i++)
 		{
 			vector pt = chopperComp.m_vSplinePoints[i];
-			pt[1] = origin[1];
+//			pt[1] = origin[1];
+			pt[1] = oldHeight[1];
 			chopperComp.m_vSplinePoints[i] = pt;
-		}
+		}*/
 	}
 
 	//------------------------------------------------------------------------------------------------

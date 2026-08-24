@@ -463,6 +463,7 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
+				//Set attack position. At this stage, it could be at 0 height
 				m_vAttackPosition = destination;
 				
 				//For drone, the attack position needs to a bit further than the one defined. We want a fly by towards or over the player.
@@ -476,7 +477,7 @@ modded class SDRC_ChopperComp
 					destination = m_vAttackPosition;
 				}				
 
-				//Set attack position on ground, unles some other height was defined.
+				//Set attack position on ground, unless some other height was defined.
 				if (m_vAttackPosition[1] == 0)
 				{
 					m_vAttackPosition[1] = SDRC_Misc.GetSurfaceYWithWater(destination, true);
