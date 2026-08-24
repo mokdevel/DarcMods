@@ -2,6 +2,8 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
+Summary: spawn - initial destination - land troops - stop engine
+
 An example of spawning a chopper and set an initial fly path and eventually landing at the airfield. 
 Once crew is out, fly back to original position and fly away.
 */
@@ -55,7 +57,9 @@ class SDRC_ChopperExample_3
 
 		//Add our flight path
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFlyHereFirst);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_LAND, "908 0 2820");
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "908 3 2820");
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_LAND_VERTICAL);
+//		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_LAND, "908 0 2820");
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_WAIT_GETOUT);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value: 5);

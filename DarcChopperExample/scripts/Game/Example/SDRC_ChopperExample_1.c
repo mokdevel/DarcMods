@@ -2,8 +2,10 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
+Summary: spawn - initial destination - fly
+
 This is a very simple example of spawning a chopper and set an initial destination. After reaching
-the destination, it will start to fly randomly 
+the destination, it will start to fly randomly.
 */
 
 //------------------------------------------------------------------------------------------------

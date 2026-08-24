@@ -1,23 +1,23 @@
-//Mission SDRC_ChopperExample_5.c
+//Mission SDRC_ChopperExample_6.c
 
 //------------------------------------------------------------------------------------------------
 /*!
-Summary: spawn - initial destination - fly - patrol around area
+Summary: spawn - initial destination - fly zig-zag
 
-This is a very simple example of spawning a chopper and a destination to patrol around. After reaching
-the destination, patroling will start.
+This is a very simple example of spawning a chopper and set an initial destination and additional 
+points to create a zig-azg flight.
 */
 
 //------------------------------------------------------------------------------------------------
-class SDRC_ChopperExample_5
+class SDRC_ChopperExample_6
 {
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
-	vector m_vPosOrigin = "2830 0 2070";
-	vector m_vFlyHereFirst = "2680 0 1800";
+	vector m_vPosOrigin = "2443 0 1488";
+	vector m_vFlyHereFirst = "2443 0 1638";
 	float m_fMinFlyHeight = 30;
 	//------------------------------------------------------------------------------------------------
-	void SDRC_ChopperExample_5()
+	void SDRC_ChopperExample_6()
 	{
 		//Set to initial position height
 		if (m_vPosOrigin[1] == 0)
@@ -46,6 +46,8 @@ class SDRC_ChopperExample_5
 		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, m_vFlyHereFirst);
 		//Add our flight path
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFlyHereFirst);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_PATROL, "2750 0 1640");
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, "2573 0 1703");
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, "2415 0 1798");
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, "2607 0 1900");
 	}	
 }

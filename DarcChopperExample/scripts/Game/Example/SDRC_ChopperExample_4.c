@@ -2,6 +2,8 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
+Summary: spawn - initial destination - fly - brake - hover up/down - land - stop enging
+
 An example of spawning a chopper and set an initial fly path and eventually landing at the airfield. 
 Once crew is out, fly back to original position and fly away.
 */
@@ -24,8 +26,8 @@ class SDRC_ChopperExample_4
 		}
 		
 		//Select chopper and spawn
-//		string resourceName	= "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et";		
-		string resourceName	= "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et";		
+		string resourceName	= "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et";		
+//		string resourceName	= "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et";		
 		m_Vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosOrigin, resourceName, 0, -1, false);
 		
 		//Find the chopper component
@@ -59,7 +61,8 @@ class SDRC_ChopperExample_4
 		//Add our flight path
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFlyHereFirst);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "1350 3 2287", 100);
-//		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 10);
+//		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "1465 3 2668", 100);
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 60);
 //		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, "0 30 0", 10);
 //		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER_DOWN, "0 -30 0", 10);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_LAND_VERTICAL);

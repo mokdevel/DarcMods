@@ -2,6 +2,8 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
+Summary: spawn - initial destination - fly a while - land troops - fly - fly away
+
 An example of spawning a chopper and set an initial fly path and eventually landing at the airfield. 
 Once crew is out, fly back to original position and fly away.
 */
