@@ -291,6 +291,11 @@ modded class SDRC_ChopperComp
 				//We found one, we can trust the pilot count
 				m_bPilotCountTrusted = true;
 				SDRC_Log.Add("[SDRC_ChopperComp:InitDone] Pilot count can be trusted.", LogLevel.DEBUG);
+				//Recalculate the groups
+				if (m_aGroups.IsEmpty())
+				{
+					SDRC_VehicleHelper.GroupFindAll(owner, m_aGroups);
+				}
 			}
 		}
 
