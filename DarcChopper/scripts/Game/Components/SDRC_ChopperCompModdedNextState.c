@@ -4,6 +4,9 @@
 //class SDRC_ChopperComp : ScriptGameComponent
 modded class SDRC_ChopperComp
 {
+	const float BRAKING_DISTANCE_END = 3.0;		//The distance to tell that we've reached the destination
+	const int VERTICAL_SPLINE_POINTS = 3;		//How many vertical spline points to create
+	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Sets the next destination for an action. 
@@ -174,7 +177,7 @@ modded class SDRC_ChopperComp
 				m_fSpeedMax = 0.01;*/
 				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
 				
-				for (int i = 0; i < 3; i++)
+				for (int i = 0; i < VERTICAL_SPLINE_POINTS; i++)
 				{
 					m_vSplinePoints.Insert(pos);
 				}
@@ -213,7 +216,7 @@ modded class SDRC_ChopperComp
 				vector pos = owner.GetOrigin();
 				pos[1] = pos[1] + m_vFlyDestinations[0].pt[1];		//Hover above original point
 				
-				for (int i = 0; i < 3; i++)
+				for (int i = 0; i < VERTICAL_SPLINE_POINTS; i++)
 				{
 					m_vSplinePoints.Insert(pos);
 				}
@@ -423,7 +426,7 @@ modded class SDRC_ChopperComp
 	override private void HandleBraking(IEntity owner, float timeSlice)
 	{
 		vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];
-		float distance = vector.Distance(m_vOrigin, lastPt);
+		float distance = vector.DistanceXZ(m_vOrigin, lastPt);
 
 		if (distance < m_fBrakingDistance)
 		{
@@ -453,7 +456,7 @@ modded class SDRC_ChopperComp
 				//This affects yaw-pitch-roll counting in SetTurn
 				m_fSpeedSlowingMul = distMul;
 				
-				if (distMul < 0.01)
+				if ( (distMul < 0.01) || (distance < BRAKING_DISTANCE_END) )
 				{
 					SetNextState(owner);
 				}

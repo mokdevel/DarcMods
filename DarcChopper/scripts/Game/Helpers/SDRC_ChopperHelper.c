@@ -151,7 +151,7 @@ class SDRC_ChopperHelper
 	/*!
 	Handle waypoints set
 	*/
-	static void HandleWaypoints(IEntity owner)
+	static void HandleAIWaypoints(IEntity owner)
 	{
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)
@@ -190,6 +190,14 @@ class SDRC_ChopperHelper
 						ResourceName resourceName = prefabData.GetPrefabName();
 						resourceName = SDRC_Misc.GetSimpleEntityName(resourceName);
 						SDRC_Log.Add("[SDRC_ChopperHelper:HandleWaypoints] Waypoint " + resourceName + " found at: " + pos, LogLevel.DEBUG);						
+						
+						//If we're really close, set to zero. 
+						if (Math.AbsFloat(pos[1] - SDRC_Misc.GetSurfaceYWithWater(pos, true, wp)) < 1.0)
+						{
+							//It's on ground. Let's set the height to zero.
+							//In SetFlightPointHeight(), a zeroed height will be set between m_fFlyHeightLow and m_fFlyHeightHigh
+							pos[1] = 0;
+						}
 						
 						switch (resourceName)
 						{
@@ -297,7 +305,7 @@ class SDRC_ChopperHelper
 			}
 			
 			//Initial height will be on ground
-			float y = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
+			//float y = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
 			float flyHeight = 0;
 						
 			switch (flightPoint.type)
@@ -307,18 +315,24 @@ class SDRC_ChopperHelper
 					//TBD: When spline is created, the height is still set to minimum. We maybe should have a specific ATTACK state and the height handling specific for it.
 				case SDRC_EFlyWayPointType.WP_LAND:		//Do nothing .. height will be on ground due to y being set and flyHeigt is zero. See above.
 					break;
-				case SDRC_EFlyWayPointType.WP_BRAKE: //Do nothing .. 
+				case SDRC_EFlyWayPointType.WP_BRAKE: 	//Do nothing .. 
 				{	
 					//NOTE: If braking height was set to 0, the point height has been set to the same as helicopter at the time. See: AddDestinationPoint()
 					break;
 				}
 				default:
-					pt[1] = 0;	//We may in the future use the provided Y coord for the points. For now we set it to 0.
+				{
+					//pt[1] = 0;	//We may in the future use the provided Y coord for the points. For now we set it to 0.
 					//TBD: Change to do only relatively big changes.
-					flyHeight = SDRC_Misc.RandomFloat(chopperComp.m_fFlyHeightLow, chopperComp.m_fFlyHeightHigh);
+					if (pt[1] == 0)
+					{
+						//flyheight = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
+						flyHeight = SDRC_Misc.RandomFloat(chopperComp.m_fFlyHeightLow, chopperComp.m_fFlyHeightHigh);
+					}
+				}
 			}
 			
-			pt[1] = pt[1] + flyHeight + y;
+			pt[1] = pt[1] + flyHeight;// + y;
 			chopperComp.m_vFlightPoints[i].pt = pt;
 		}
 	}	

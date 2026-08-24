@@ -217,8 +217,7 @@ class SDRC_ChopperCrewHelper
 	
 	//------------------------------------------------------------------------------------------------
 	static void GetOut(IEntity owner)
-	{
-		
+	{		
 		array<SCR_AIGroup> groups = {};
 	
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
@@ -326,7 +325,10 @@ class SDRC_ChopperCrewHelper
 		int crewCount = 0;
 		foreach (AIGroup group : chopperComp.m_aGroups)
 		{
-			crewCount = crewCount + group.GetAgentsCount();
+			if (group)
+			{
+				crewCount = crewCount + group.GetAgentsCount();
+			}
 		}
 		
 		return crewCount;

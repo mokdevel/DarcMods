@@ -7,6 +7,7 @@ modded class SCR_BaseGameMode
 	ref SDRC_ChopperExample_3 m_ChopperExample_3;
 	ref SDRC_ChopperExample_4 m_ChopperExample_4;
 	ref SDRC_ChopperExample_5 m_ChopperExample_5;
+	ref SDRC_ChopperExample_6 m_ChopperExample_6;
 	
 	//------------------------------------------------------------------------------------------------
     override void OnGameModeStart()
@@ -44,9 +45,10 @@ modded class SCR_BaseGameMode
 		{		
 //				m_ChopperExample_1 = new SDRC_ChopperExample_1();
 //				m_ChopperExample_2 = new SDRC_ChopperExample_2();				
-//				m_ChopperExample_3 = new SDRC_ChopperExample_3();				
-				m_ChopperExample_4 = new SDRC_ChopperExample_4();				
+//				m_ChopperExample_3 = new SDRC_ChopperExample_3();
+//				m_ChopperExample_4 = new SDRC_ChopperExample_4();				
 //				m_ChopperExample_5 = new SDRC_ChopperExample_5();
+				m_ChopperExample_6 = new SDRC_ChopperExample_6();
 		}
 		else
 		{

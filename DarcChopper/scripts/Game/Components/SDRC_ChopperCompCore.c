@@ -74,12 +74,12 @@ enum SDRC_EFlyWayPointType
 	WP_HOVER,					//12 - Heli is hovering in one place
 	WP_HOVER_UP,				//13 - Heli is hovering up
 	WP_HOVER_DOWN,				//14 - Heli is hovering down
-	WP_GET_OUT,					//15 - 
-	WP_BRAKE,					//16 - Slow the heli down to stand still
-	WP_END,						//17 - 
-	WP_DESPAWN,					//18 - 
+	WP_BRAKE,					//15 - Slow the heli down to stand still
+	WP_END,						//16 - 
+	WP_DESPAWN,					//17 - 
 	
 	//One shot commands
+	WP_GET_OUT,					//18 - Orders AI to get out
 	WP_STOP_ENGINE,				//19 - Does the action and goes to WAIT state
 	WP_ATTACK,					//20 - Sets attack position and time and then FLY
 	WP_SEARCH_DESTROY,			//   - Search for enemy by patroling an area. If enemy is found, attack the location.

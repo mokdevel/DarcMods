@@ -15,22 +15,26 @@ The function takes three parameters. Depending on the command used, the result m
 The commands are put in a First-In-First-Out array from where they're picked once the previous command has executed. The exception is ``WP_FLY`` which will be performed in a serie. 
 
 ## Tested (and should work)
+* ``WP_UNDEFINED`` : Undefined
 * ``WP_FLY`` : Fly, normal flight pattern
+* ``WP_FLY_IMMEDIATELY`` : Fly, but remove all already added destinations. This will interrupt any existing flight plans.
 * ``WP_FLY_AWAY`` : Fly away as a last move.
 * ``WP_FLY_AWAY_IMMEDIATELY`` : Fly away immediately removing any added destinations. This will interrupt any existing flight plans.
-* ``WP_FLY_IMMEDIATELY`` : Fly, but remove all already added destinations. This will interrupt any existing flight plans.
 * ``WP_PATROL`` : Patrol around an area.
 * ``WP_PATROL_ONCE`` : Do one patrol round around an area.
 * ``WP_LAND`` : Order chopper to do landing sequence
+* ``WP_LAND_VERTICAL`` : Order chopper to do a vertical landing sequence
 * ``WP_WAIT`` : Wait, before moving to next state
 * ``WP_WAIT_GETOUT`` : Same as WP_WAIT, but time set is dependent on crew count
 * ``WP_RAISE``* : Raises the helicopter from the current position to given position while moving forward increasing speed.
 * ``WP_HOVER``* : Hover at a certain altitude
 * ``WP_HOVER_UP``* : Hover the helicopter up from the current height.
-* ``WP_GET_OUT`` : Order AI to get out from the chopper
+* ``WP_HOVER_DOWN``* : Hover the helicopter down from the current height.
 * ``WP_BRAKE``* : Brakes the helicopter speed to stand still.
 * ``WP_END`` : Stop running SDRC_ChopperComp and let AR handle everything
 * ``WP_DESPAWN`` : Despawn the helicopter. KNOWN: AI is not despawned so .. lot's of fun. :-)
+
+* ``WP_GET_OUT`` : Order AI to get out from the chopper
 * ``WP_STOP_ENGINE`` : Helicopter engine is stopped. Does the action and goes to WAIT state. 
 * ``WP_ATTACK`` : Sets attack position to shoot at. This is performed once.
 * ``WP_SEARCH_DESTROY``* : Search for enemy by patroling an area. If enemy is found, attack the location.
@@ -38,13 +42,13 @@ The commands are put in a First-In-First-Out array from where they're picked onc
 ### WP_FLY
 _TBD_
 
+### WP_FLY_IMMEDIATELY
+_TBD_
+
 ### WP_FLY_AWAY
 _TBD_
 
 ### WP_FLY_AWAY_IMMEDIATELY
-_TBD_
-
-### WP_FLY_IMMEDIATELY
 _TBD_
 
 ### WP_PATROL
@@ -71,7 +75,9 @@ Orders the helicopter to wait in its current state
 * ``value`` : Time in seconds to wait until moving to next WP_command.
 
 ### WP_WAIT_GETOUT
-_TBD_
+Defines a time to wait for the crew to get out. This activates WP_WAIT but calculates the time depending on the crew count. This should be called after ``WP_GET_OUT`` to set the delay or you can use ``WP_WAIT`` to set it yourself.
+* ``destination`` : Not used.
+* ``value`` : Not used.
 
 ### WP_RAISE
 Raises the helicopter from the current position to given position while moving forward increasing speed.
@@ -108,9 +114,9 @@ _TBD_
 Brakes the helicopter speed to stand still.
 * ``destination[0][2]`` : The position XZ to stop at.
 * ``destination[1]`` : The height from ground to stop at. This is not exact, but rather a wish. 
-  * If 0, normal flight pattern height is set.
+  * If -999, the height will be set to helicopter current height.
 * ``value`` : Distance to start braking. 
-  * If 0 or empty, defaults to 200.
+  * If -1 or empty, defaults to 200.
 
 ### WP_END
 _TBD_

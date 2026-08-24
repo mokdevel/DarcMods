@@ -585,7 +585,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		//Set velocity
 		SetVelocity(owner, timeSlice);
 
-		SDRC_ChopperHelper.HandleWaypoints(owner);				
+		SDRC_ChopperHelper.HandleAIWaypoints(owner);				
 		SDRC_ChopperDebug.DrawHelicopterVectors(owner);
 	}
 	
@@ -704,7 +704,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 	{
 		//Set velocity
 		vector velVector = vector.Zero;
-		
+
+		//This modification is weird. The choppers have a slight drag to the right. It's unknown where it comes from, but this removes/reduces it. 
+		//For now, leaving this ugly hack here.			
+		const float FIX_DRAG_VALUE = 0.86;
+		float dragFixValue = FIX_DRAG_VALUE;
+				
 		if (    (m_eHeliState != SDRC_EHeliState.ON_GROUND)
 		     && (m_eHeliState != SDRC_EHeliState.WAIT)
 		   )
@@ -714,7 +719,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			velVector.Normalize();
 			float forceMultiplier = m_fSpeed;
 			float forceRotorUp = m_fRotorForce0 * params.fRotorForceMulUp;
-			
+
 			//Disable all other movement except vertical one.
 			if (m_bOnlyVerticalMovement)
 			{
@@ -722,6 +727,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 				velVector[0] = 0;
 				velVector[2] = 0;
 				velVector[1] = Math.Clamp(velVector[1], 0.01, 0.1);
+				dragFixValue = 0;
 			}
 			
 			float vectorUp = velVector[1] * forceRotorUp * m_fRotorForceMultiplier;
@@ -735,8 +741,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 			{
 				velVector = {velVector[0] + Math.Sin(rotVector[1] * Math.DEG2RAD) * forceMultiplier, vectorUp, velVector[2] + Math.Cos(rotVector[1] * Math.DEG2RAD) * forceMultiplier};
 			}
+			
+			velVector[2] = velVector[2] - dragFixValue;
 		}
-		
+				
 		m_vVelocityVector = velVector;
 		owner.GetPhysics().SetVelocity(velVector);
 	}
@@ -997,8 +1005,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 		//m_vFlightPoints[1].pt[1] = origin[1];
 		//m_vFlightPoints[0].pt[1] = oldHeight[1];
 		//m_vFlightPoints[1].pt[1] = oldHeight[1];
-		m_vFlightPoints[0].pt[1] = m_vSplinePointBelow[1];
-		m_vFlightPoints[1].pt[1] = m_vSplinePointBelow[1];
+		m_vFlightPoints[0].pt[1] = m_vSplinePointBelow[1];// - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
+		m_vFlightPoints[1].pt[1] = m_vSplinePointBelow[1];// - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
 				
 		//5. Generate the spline
 		array<vector> flyPathPoints = {};
@@ -1044,7 +1052,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 		pos[1] = origin[1];
 		if (fixHeight)
 		{
-			pos[1] = SDRC_ChopperHelper.SetPointHeight(pos, m_fFlyHeightLow, m_fFlyHeightHigh); 
+			//pos[1] = SDRC_ChopperHelper.SetPointHeight(pos, m_fFlyHeightLow, m_fFlyHeightHigh); 
+			//First point to be on same height even if below m_fFlyHeightLow. Removes jumps
+			pos[1] = SDRC_ChopperHelper.SetPointHeight(pos, 0, m_fFlyHeightHigh); 
 		}
 		AddFlyPathPoint(pos);
 		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid);

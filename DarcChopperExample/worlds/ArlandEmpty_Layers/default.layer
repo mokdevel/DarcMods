@@ -36,6 +36,11 @@ SCR_SpawnPoint : "{4FEA25583D0975F7}Prefabs/MP/Spawning/SpawnPoint_USSR.et" {
 SCR_SpawnPoint : "{5A2220DD0C16958B}Prefabs/MP/Spawning/SpawnPoint_US.et" {
  coords 913.577 39.009 2624.571
 }
-StaticModelEntity : "{E95CB8F4C4B2C210}Prefabs/Decals/Markings/Runway/Decal_Helipad_01.et" {
- coords 1350.12 39 2287.375
+$grp StaticModelEntity : "{E95CB8F4C4B2C210}Prefabs/Decals/Markings/Runway/Decal_Helipad_01.et" {
+ {
+  coords 1350.12 39 2287.375
+ }
+ {
+  coords 1465.739 38.156 2668.491
+ }
 }

@@ -4,6 +4,9 @@
 //class SDRC_ChopperComp : ScriptGameComponent
 modded class SDRC_ChopperComp
 {
+	const int DEFAULT_ATTACK_TIME = 60;			//(seconds) The time to stay in attack mode
+	const int DEFAULT_BRAKE_DISTANCE = 200;		//Default distance to brake
+	
 	//------------------------------------------------------------------------------------------------	
 	// Chopper setup
 	//------------------------------------------------------------------------------------------------	
@@ -402,16 +405,16 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_END:
 			case SDRC_EFlyWayPointType.WP_DESPAWN:
 			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
-			case SDRC_EFlyWayPointType.WP_LAND:
+//			case SDRC_EFlyWayPointType.WP_LAND:
 			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
 			case SDRC_EFlyWayPointType.WP_PATROL:
 			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
+			case SDRC_EFlyWayPointType.WP_RAISE:
+			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
 			{
 				break;
 			}
-			case SDRC_EFlyWayPointType.WP_RAISE:
 			case SDRC_EFlyWayPointType.WP_WAIT:
-			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
 			case SDRC_EFlyWayPointType.WP_HOVER:
 			case SDRC_EFlyWayPointType.WP_HOVER_UP:
 			case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
@@ -460,8 +463,8 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
-				m_vAttackPosition = destination;			//Where to attack
-
+				m_vAttackPosition = destination;
+				
 				//For drone, the attack position needs to a bit further than the one defined. We want a fly by towards or over the player.
 				if (params.type == SDRC_EChopperType.DRONE)
 				{				
@@ -473,10 +476,16 @@ modded class SDRC_ChopperComp
 					destination = m_vAttackPosition;
 				}				
 
-				//With default attack time, set it to 60 seconds
+				//Set attack position on ground, unles some other height was defined.
+				if (m_vAttackPosition[1] == 0)
+				{
+					m_vAttackPosition[1] = SDRC_Misc.GetSurfaceYWithWater(destination, true);
+				}
+				
+				//With default attack time, set it to DEFAULT_ATTACK_TIME seconds
 				if (value == -1)
 				{
-					value = 60;
+					value = DEFAULT_ATTACK_TIME;
 				}
 								
 				if (value < 30)
@@ -495,10 +504,16 @@ modded class SDRC_ChopperComp
 			}								
 			case SDRC_EFlyWayPointType.WP_BRAKE:
 			{
-				if (value == 0 )
+				if (value == -1)
 				{
-					value = 200;
+					value = DEFAULT_BRAKE_DISTANCE;
 				}
+				
+				if (value < 50)
+				{
+					SDRC_Log.Add("[SDRC_ChopperComp:AddDestination] The distance (value) for WP_BRAKE is very short: " + value, LogLevel.WARNING);
+				}
+				
 				m_fBrakingDistance = value;
 				break;
 			}
@@ -506,6 +521,16 @@ modded class SDRC_ChopperComp
 			//------------------------------------------------------------------------------------------------	
 			//Macro actions
 			//------------------------------------------------------------------------------------------------	
+			case SDRC_EFlyWayPointType.WP_LAND:
+			{
+				//Get the distance from last spline point to the braking destination
+				float distance = vector.DistanceXZ(m_vSplinePoints[m_vSplinePoints.Count() - 1], destination);
+				AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, destination, distance);
+				AddDestination(SDRC_EFlyWayPointType.WP_LAND_VERTICAL, destination, value);
+//				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
+				addDestinationPoint = false;
+				break;
+			}
 			case SDRC_EFlyWayPointType.WP_M_CUT:
 			{
 				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
@@ -579,9 +604,11 @@ modded class SDRC_ChopperComp
 					float angle = SDRC_Misc.RandomFloat(0, 360);
 					float distance = SDRC_Misc.RandomFloat(100, 200);
 					vector rndPos = SDRC_Misc.GetCoordinatesOnCircle(destination, distance, angle);
+					rndPos[1] = 0;	//Zero height to get a random height in SetFlightPointHeight()
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_FLY, rndPos, value);
 					distance = SDRC_Misc.RandomFloat(200, 400);
 					rndPos = SDRC_Misc.GetCoordinatesOnCircle(destination, distance, angle + SDRC_Misc.RandomFloat(-120, 120));
+					rndPos[1] = 0;	//Zero height to get a random height in SetFlightPointHeight()
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_FLY, rndPos, value);
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_ATTACK, destination, value);
 				}
@@ -611,7 +638,7 @@ modded class SDRC_ChopperComp
 		//!!!!
 		//NOTE: If height (destination[1]) is 0, make it to current heli height
 		//!!!!
-		if (destination[1] == 0)
+		if (destination[1] == -999)
 		{
 			vector origin = GetOwner().GetOrigin();
 			destination[1] = origin[1];
