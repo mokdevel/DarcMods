@@ -525,7 +525,11 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_LAND:
 			{
 				//Get the distance from last spline point to the braking destination
-				float distance = vector.DistanceXZ(m_vSplinePoints[m_vSplinePoints.Count() - 1], destination);
+				float distance = DEFAULT_BRAKE_DISTANCE;
+				if (!m_vSplinePoints.IsEmpty())
+				{
+					distance = vector.DistanceXZ(m_vSplinePoints[m_vSplinePoints.Count() - 1], destination);
+				}
 				AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, destination, distance);
 				AddDestination(SDRC_EFlyWayPointType.WP_LAND_VERTICAL, destination, value);
 //				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);

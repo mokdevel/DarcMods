@@ -654,11 +654,11 @@ modded class SDRC_ChopperComp : ScriptComponent
 //		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleDown, params.pitchNoseAngleUp);	//Nose down, nose up
 		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleUp, params.pitchNoseAngleDown);	//Nose down, nose up
 		
-		if (m_eHeliState == SDRC_EHeliState.RAISE)
+/*		if (m_eHeliState == SDRC_EHeliState.RAISE)
 		{
 			//Turn nose down
 			m_fAnglePitch = params.pitchNoseAngleDown * Math.DEG2RAD;
-		}
+		}*/
 		
 		//Turn helicopter nose m_fAnglePitch amount up or down
 		m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fAnglePitch);
