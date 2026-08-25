@@ -5,6 +5,11 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 
+Main Features:
+* Spawn positions inside buildings use cover positions. Enemies and loot should not spawn under floor or inside walls/stairs/..
+  * Those buildings that locations that do not provide cover or have issues with navmesh will use the old system
+* ``missionFiles`` is deprecated. Mission files are automatically searched from the file system. 
+
 ## 20260818.1
 Main Features:
 * Added functionality for map descriptor MDT_FOREST (34) as a location type. Forests will be searched during startup and collected to the location cache.

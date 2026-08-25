@@ -18,17 +18,29 @@ bool showMessage : Show winmessage and losemessage to players. False will hide t
 bool disableArsenal : Disable arsenal for vehicles so that only defined loot items are found.
 array<int> missionList : The list of mission suids.
   Example: "missionList":[0,0,1,1,2] - Missions 0 and 1 will spawn with 40% chance and 2 with 20%
-array<string> missionFiles : The list of mission files to load. The are additional .json files that are of the same type.  
+array<string> missionFiles : DEPRECATED. See below.
 ```
-### Mission files
-It is possible to define additional missions to be loaded from file. The filename can be with or without path.
+## Mission files
+It is possible to define additional missions to be loaded from file system. The configuration directory is searched for additional .json files that are of the same type. The filename shall follow the naming of the main mission file added with an ``_`` and your filename. 
 
-Examples:
+For example: A new patrol mission based on the original ``dc_missionConfig_Patrol.json`` shall be named as ``dc_missionConfig_Patrol_NewFile.json``.
 
+**UNTESTED**
+The files can be in a subdirectory under the main directory.
 ``"missionFiles": ["dc_missionConfig_HvtItem_010.json"]`` - The file will be loaded from the same directory as the mission jsons.
-``"missionFiles": ["new/dc_missionConfig_HvtItem_010.json"]`` - The file will be loaded from a ``new`` directory under the the json mission directory. (NOTE: Untested!!)
+``"missionFiles": ["new/dc_missionConfig_HvtItem_010.json"]`` - The file will be loaded from a ``new`` directory under the the json mission directory.
 
-The missions should define their unique ``subIdx`` to use. The list of ``missionList`` will be appended to already loaded list.
+The missions ``subIdx`` will be modified automatically. The list of ``missionList`` will be appended to already loaded list.
+### Example
+You plan to create a new mission file with Patrol missions.
+* You create a new mission json file that has the same parameters as ``dc_missionConfig_Patrol.json``. Make a copy of an existing one and modify.
+* You rename it as ``dc_missionConfig_Patrol_MyPatrolMissions.json``
+* You create ``subMissions`` with subIdx 0,1,2. Three new missions. 
+* You define ``"missionList": [0,1,1,2,2]``
+* There are already 2 other missions in other files (subIdx 0 and 1) with ``"missionList": [0,1]``.
+* When your files is loaded, your subIdx will be renumbered and ``missionList`` combined. 
+  * Your subIdx 0 will become 2 as 0 and 1 are already defined.
+  * The list will look like this internally: ``"missionList": [0,1, 2,3,3,4,4]``. 2,3,4 are your old 0,1,2.
 
 ## SDRC_MissionConfigGeneral
 See [Locations](./P_LOCATIONS.md)
