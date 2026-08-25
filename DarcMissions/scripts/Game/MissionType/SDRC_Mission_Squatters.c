@@ -51,9 +51,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		//Find a location for the mission
 		vector pos = "0 0 0";
 		//If pos has been set, we blindly accept it. 
-		//Do basic checking for pos in general, but static squatter missions may end up in same location if buildings are very few like control towers.
-//		bool obc = (IsRequested() || IsStatic());
-		bool obc = (IsRequested());
+		bool obc = (IsRequested() || IsStatic());
 		
 		//Find a location for the mission
 		if (IsRequested())
@@ -299,7 +297,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 		
 		//Default		
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {1};//{0,1,2,2,3,3,3,4,5,5,5};
+		missionList = {0,1,2,2,3,3,3,4,5,5,5};
 		//Mission specific
 		buildingRadius = 800;
 		//----------------------------------------------------

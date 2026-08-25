@@ -127,6 +127,11 @@ class SDRC_CoverHelper
 			index = m_aCovers.GetRandomIndex();
 		}
 		
+		if (index == -1)		
+		{
+			int xx = 0;
+		}
+		
 		return m_aCovers[index].pos;
 	}
 	
@@ -180,7 +185,7 @@ class SDRC_CoverHelper
 			m_CoverQueryProps.m_vSectorPos = m_Pos + heightAdjust;
 			
 			bool coverFound = m_CoverMgr.GetBestCover("Soldiers", m_PathFindindingComp, m_CoverQueryProps, coverPos, coverTallestPos, tileX, tileY, coverId);	
-			if (coverFound)
+			if ( (coverFound) && (coverPos != vector.Zero) )
 			{
 				ref SDRC_CoverPos tmpCoverPos = new SDRC_CoverPos();
 				tmpCoverPos.tileX = tileX;
@@ -200,6 +205,15 @@ class SDRC_CoverHelper
 		
 		//All collected, free them
 		FreeCovers();
+		
+		if (m_aCovers.IsEmpty())
+		{
+			SDRC_Log.Add("[SDRC_CoverHelper:FindBuildingCovers] No covers found at: " + m_Pos, LogLevel.WARNING);			
+			SDRC_DebugHelper.AddDebugSphere(m_Pos, ARGB(50, 0, 128, 0), m_BuildingSize / 2);
+			
+			m_Ready = false;
+			return;
+		}
 		
 		m_Ready = true;
 	}	

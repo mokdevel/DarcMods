@@ -19,6 +19,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	const int AI_TARGET_DEAD_CYCLE_TIME = 5000;
 	
 	private IEntity m_Building;					//The building for the mission
+	private ref SDRC_CoverHelper coverHelper = null;
 	private int m_iGroupCount;
 	private int m_iSpawnIndex = 0;				//Counter for the AI to spawn
 	private SCR_AIGroup m_Target = null;
@@ -51,7 +52,10 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		float radius = 100;					//Default size for the radius. 
 		array<string> buildingFilter = {};
 
-		vector pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_HvtVip.general.pos, m_DC_HvtVip.general.size, true, m_DC_HvtVip.general.locationTypes);
+		//If pos has been set, we blindly accept it. 
+		bool obc = (IsRequested() || IsStatic());
+		
+		vector pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_HvtVip.general.pos, m_DC_HvtVip.general.size, obc, m_DC_HvtVip.general.locationTypes);
 						
 		//Find a location for the mission
 		if (IsRequested())
@@ -98,6 +102,17 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 			return;
 		}			
 		
+		SDRC_EMissionError missionError = SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested());
+		if (missionError != SDRC_EMissionError.NONE)
+		{
+			pos = "0 0 0";
+			SetState(SDRC_EMissionState.FAILED, missionError);
+			return;
+		}
+		
+		//Helper to find spots (covers) inside a building.
+		coverHelper = new SDRC_CoverHelper(m_Building);		
+		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_HvtVip.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
@@ -111,9 +126,22 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		
 		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
-			MissionSpawn();
+			if (coverHelper.IsRunning())
+			{
+				//All good, waiting for coverHelper to finalize
+				if (coverHelper.IsReady())
+				{
+					MissionSpawn();
+					//NOTE: ACTIVE set inside MissionSpawn()
+				}
+			}
+			else
+			{
+				//Nope, some error happened in initializing SDRC_CoverHelper. Use the old system.
+				MissionSpawn();
+			}
+			
 			GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_ITEM_DELAY);		//Spawn stuff slowly
-			//NOTE: ACTIVE set inside MissionSpawn()
 			return;
 		}
 
@@ -159,20 +187,19 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		}
 		else
 		{
-			//IEntity entity = SDRC_MissionHelper.SpawnItemInBuildingWithLoot(m_Building, m_DC_HvtVip.lootBox);
-			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(m_Building, m_DC_HvtVip.lootBox);
-			if (entity)
+			//--- Spawn the target enemy
+			
+			//Shall we use old or new system
+			vector pos = vector.Zero;
+			
+			if (coverHelper.IsReady())
 			{
-				m_EntityList.Insert(entity);
-				m_DC_HvtVip.loot.box = entity;
+				//Use new system. If pos is set, AI will be spawned at the requested position.
+				pos = coverHelper.GetPosition(0);
 			}
-			else
-			{
-				SDRC_Log.Add("[SDRC_Mission_HvtVip:MissionSpawn] " +  GetId() + " : Could not spawn loot box: " + m_DC_HvtVip.lootBox, LogLevel.ERROR);								
-			}
-
+			
 			//Spawn target enemy and add it to mission faction
-			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_HvtVip.target, GetFaction(), m_DC_HvtVip.ai.GetSkill(), m_DC_HvtVip.ai.GetPerception(), );
+			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_HvtVip.target, GetFaction(), m_DC_HvtVip.ai.GetSkill(), m_DC_HvtVip.ai.GetPerception(), pos);
 			if (group)
 			{			
 				m_Groups.Insert(group);
@@ -186,6 +213,30 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 				group.SetFaction(faction);
 			}
 
+			//--- Spawn the loot
+			
+			//Shall we use old or new system
+			pos = vector.Zero;
+			bool snap = true;
+			
+			if (coverHelper.IsReady())
+			{
+				//Use new system. If pos is set, AI will be spawned at the requested position.
+				pos = coverHelper.GetPosition(1);
+				snap = false;
+			}			
+			
+			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(m_Building, m_DC_HvtVip.lootBox, snap: snap, pos: pos);
+			if (entity)
+			{
+				m_EntityList.Insert(entity);
+				m_DC_HvtVip.loot.box = entity;
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_Mission_HvtVip:MissionSpawn] " +  GetId() + " : Could not spawn loot box: " + m_DC_HvtVip.lootBox, LogLevel.ERROR);								
+			}
+			
 			GetGame().GetCallqueue().CallLater(IsTargetDead, AI_TARGET_DEAD_CYCLE_TIME, false);
 								
 			SetState(SDRC_EMissionState.ACTIVE);			
