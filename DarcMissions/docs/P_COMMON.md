@@ -25,22 +25,22 @@ It is possible to define additional missions to be loaded from file system. The 
 
 For example: A new patrol mission based on the original ``dc_missionConfig_Patrol.json`` shall be named as ``dc_missionConfig_Patrol_NewFile.json``.
 
-**UNTESTED**
-The files can be in a subdirectory under the main directory.
+The missions ``subIdx`` will be modified automatically. The list of ``missionList`` will be appended to already loaded list.
+
+**UNTESTED**: The files can be in a subdirectory under the main directory.
 ``"missionFiles": ["dc_missionConfig_HvtItem_010.json"]`` - The file will be loaded from the same directory as the mission jsons.
 ``"missionFiles": ["new/dc_missionConfig_HvtItem_010.json"]`` - The file will be loaded from a ``new`` directory under the the json mission directory.
 
-The missions ``subIdx`` will be modified automatically. The list of ``missionList`` will be appended to already loaded list.
 ### Example
 You plan to create a new mission file with Patrol missions.
 * You create a new mission json file that has the same parameters as ``dc_missionConfig_Patrol.json``. Make a copy of an existing one and modify.
 * You rename it as ``dc_missionConfig_Patrol_MyPatrolMissions.json``
-* You create ``subMissions`` with subIdx 0,1,2. Three new missions. 
+* You create ``subMissions`` with subIdx ``0,1,2``. Three new missions. 
 * You define ``"missionList": [0,1,1,2,2]``
-* There are already 2 other missions in other files (subIdx 0 and 1) with ``"missionList": [0,1]``.
-* When your files is loaded, your subIdx will be renumbered and ``missionList`` combined. 
+* There are already two other missions in other files (subIdx 0 and 1) with definition ``"missionList": [0,1]``.
+* When your file is loaded, your subIdx will be renumbered and ``missionList`` combined. 
   * Your subIdx 0 will become 2 as 0 and 1 are already defined.
-  * The list will look like this internally: ``"missionList": [0,1, 2,3,3,4,4]``. 2,3,4 are your old 0,1,2.
+  * The list will look like this internally: ``"missionList": [0,1,2,3,3,4,4]``. ``2,3,4`` are your old ``0,1,2``.
 
 ## SDRC_MissionConfigGeneral
 See [Locations](./P_LOCATIONS.md)
