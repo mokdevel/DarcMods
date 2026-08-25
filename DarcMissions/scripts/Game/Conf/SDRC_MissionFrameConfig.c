@@ -33,8 +33,8 @@
 	
 	//Development time options
 	#ifndef SDRC_RELEASE
-		private const int SDRC_MISSION_MIN_DISTANCE = 10;//200;		
-		private const int SDRC_PLAYER_MIN_DISTANCE = 300;		
+		private const int SDRC_MISSION_MIN_DISTANCE = 200;		
+		private const int SDRC_PLAYER_MIN_DISTANCE = 10;//300;		
 		private const int SDRC_PLAYER_MAX_DISTANCE = 1200;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;

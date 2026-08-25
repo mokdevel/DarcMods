@@ -133,7 +133,7 @@ sealed class SDRC_AIHelper
 	
 	static SCR_AIGroup SpawnAIInBuilding(IEntity building, string resourceName, string faction, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0, vector pos = vector.Zero)
 	{
-		if (pos != vector.Zero)
+		if (pos == vector.Zero)
 		{		
 			array<vector> floors = {};
 			vector floorpos;

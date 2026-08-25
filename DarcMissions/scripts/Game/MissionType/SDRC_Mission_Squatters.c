@@ -50,8 +50,10 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		
 		//Find a location for the mission
 		vector pos = "0 0 0";
-		//If pos has been set, we blindly accept it. Do basic checking for pos.
-		bool obc = (IsRequested() || IsStatic());
+		//If pos has been set, we blindly accept it. 
+		//Do basic checking for pos in general, but static squatter missions may end up in same location if buildings are very few like control towers.
+//		bool obc = (IsRequested() || IsStatic());
+		bool obc = (IsRequested());
 		
 		//Find a location for the mission
 		if (IsRequested())
@@ -72,14 +74,6 @@ class SDRC_Mission_Squatter : SDRC_Mission
 			}
 		}
 
-		SDRC_EMissionError missionError = SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested());
-		if (missionError != SDRC_EMissionError.NONE)
-		{
-			pos = "0 0 0";
-			SetState(SDRC_EMissionState.FAILED, missionError);
-			return;
-		}			
-		
 		//Find the mission house
 		m_Building = SDRC_MissionHelper.FindMissionBuilding(pos, buildingFilter, radius);
 		if (m_Building)
@@ -90,6 +84,14 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		else //No suitable location found.
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.SUITABLE_BUILDING_NOT_FOUND);
+			return;
+		}			
+		
+		SDRC_EMissionError missionError = SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested());
+		if (missionError != SDRC_EMissionError.NONE)
+		{
+			pos = "0 0 0";
+			SetState(SDRC_EMissionState.FAILED, missionError);
 			return;
 		}			
 		
@@ -157,12 +159,13 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		//Spawn AI one by one. Sets missions active once ready.
 		if (m_iSpawnIndex < m_iAiCount)
 		{
+			//Shall we use old or new system
 			vector pos = vector.Zero;
 			
 			if (coverHelper.IsReady())
 			{
 				//Use new system. If pos is set, AI will be spawned at the requested position.
-				pos = coverHelper.GetPosition();
+				pos = coverHelper.GetPosition(m_iSpawnIndex);
 			}
 				
 			//Each AI is spawned in to its own group to be able to give individual waypoints to a character
@@ -175,7 +178,18 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		}
 		else
 		{
-			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(m_Building, m_DC_Squatter.lootBox);
+			//Shall we use old or new system
+			vector pos = vector.Zero;
+			bool snap = true;
+			
+			if (coverHelper.IsReady())
+			{
+				//Use new system. If pos is set, AI will be spawned at the requested position.
+				pos = coverHelper.GetPosition(m_iSpawnIndex);
+				snap = false;
+			}
+			
+			IEntity entity = SDRC_SpawnHelper.SpawnItemInBuilding(m_Building, m_DC_Squatter.lootBox, snap: snap, pos: pos);
 			if (entity)
 			{
 				m_EntityList.Insert(entity);

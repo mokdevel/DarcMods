@@ -147,43 +147,47 @@ class SDRC_SpawnHelper
 		               |---------||---------|            Random spot is 1/8 of house size from the center
 	
 	*/
-	static IEntity SpawnItemInBuilding(IEntity building, string item, float rotation = 0, float emptyPosRadius = EMPTY_POS_RADIUS, bool snap = true)
+	static IEntity SpawnItemInBuilding(IEntity building, string item, float rotation = 0, float emptyPosRadius = EMPTY_POS_RADIUS, bool snap = true, vector pos = vector.Zero)
 	{
 		IEntity entity = NULL;
 		array<vector> floors = {};
-		vector pos, floorpos;
+		vector floorpos;
 		
-		SDRC_BuildingHelper.FindBuildingFloors(floors, building);
-
-		//Find the building size. The bigger X or Y value will be used as the radius
-		vector sums = SDRC_SpawnHelper.FindEntitySize(building);
-		//Pick the radius to be the bigger one from X/Y
-		float radius = sums[0];
-		if (sums[0] < sums[2])
-		{
-			radius = sums[2];
-		}
+		if (pos == vector.Zero)
+		{		
+			SDRC_BuildingHelper.FindBuildingFloors(floors, building);
 	
-		const float EMPTY_RADIUS = 1.6;	//Was: 1.2
-
-		if (!floors.IsEmpty())
-		{
-			floorpos = floors.GetRandomElement();
+			//Find the building size. The bigger X or Y value will be used as the radius
+			vector sums = SDRC_SpawnHelper.FindEntitySize(building);
+			//Pick the radius to be the bigger one from X/Y
+			float radius = sums[0];
+			if (sums[0] < sums[2])
+			{
+				radius = sums[2];
+			}
+		
+			const float EMPTY_RADIUS = 1.6;	//Was: 1.2
+	
+			if (!floors.IsEmpty())
+			{
+				floorpos = floors.GetRandomElement();
+			}
+			else
+			{
+				floorpos = building.GetOrigin();
+				ResourceName res = building.GetPrefabData().GetPrefabName();
+				SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItemInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.WARNING);
+			}
+			pos = SDRC_Misc.RandomizePos(floorpos, radius/8);
+			pos = FindPositinInsideBuilding(building, pos, EMPTY_RADIUS);
+	
+			SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 128, 0, 128), EMPTY_RADIUS, "", 0.5, false);	//Purple for the item position
 		}
-		else
-		{
-			floorpos = building.GetOrigin();
-			ResourceName res = building.GetPrefabData().GetPrefabName();
-			SDRC_Log.Add("[SDRC_SpawnHelper:SpawnItemInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.WARNING);
-		}
-		pos = SDRC_Misc.RandomizePos(floorpos, radius/8);
-		pos = FindPositinInsideBuilding(building, pos, EMPTY_RADIUS);
-
-		SDRC_DebugHelper.AddDebugPos(pos, ARGB(40, 128, 0, 128), EMPTY_RADIUS, "", 0.5, false);	//Purple for the item position
-		SDRC_DebugHelper.AddDebugPos(pos, ARGB(80, 128, 0, 128), 0.1, "", 100, false);			//Purple for the item position
 		
 		entity = SpawnItem(pos, item, rotation, -1, snap);
-		
+
+		SDRC_DebugHelper.AddDebugPos(pos, ARGB(80, 128, 0, 128), 0.1, "", 100, false);			//Purple for the item position
+				
 		return entity;
 	}	
 

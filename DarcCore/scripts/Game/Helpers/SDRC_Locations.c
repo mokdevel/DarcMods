@@ -602,7 +602,7 @@ sealed class SDRC_Locations
 						m_LocationsCache.Insert(locNew);
 						
 						#ifndef SDRC_RELEASE
-							//if (SDRC_Conf.SHOW_MARKER_FOR_LOCATION)
+							if (SDRC_Conf.SHOW_MARKER_FOR_LOCATION)
 							{
 								SDRC_DebugHelper.AddDebugPos(pos, ARGB(50, 0, 255, 0), (cellSize / 2), height: 20);
 							}

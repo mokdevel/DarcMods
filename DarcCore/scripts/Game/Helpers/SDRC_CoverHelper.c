@@ -17,7 +17,7 @@ class SDRC_CoverPos
 
 class SDRC_CoverHelper
 {
-	const int COVER_COUNT = 30;					//Amount of covers to search
+	const int COVER_COUNT = 40;					//Amount of covers to search
 	
 	private IEntity m_Building = null;
 	private float m_BuildingSize = 0;			//The max width
@@ -46,9 +46,16 @@ class SDRC_CoverHelper
 
 		m_Pos = building.GetOrigin();
 		vector sums = SDRC_SpawnHelper.FindEntitySize(building);
-		m_BuildingHeight = sums[1];
 		sums[1] = 0;
 		m_BuildingSize = SDRC_Misc.FindMaxValue(sums);
+		
+		//Do a trace from sky down to the building roof
+		vector tracePosStart = m_Pos + "0 200 0";
+		float traceHeight = SDRC_Misc.GetSurfaceYWithWater(tracePosStart, true);
+		vector tracePos = m_Pos;
+		tracePos[1] = traceHeight;
+		SDRC_DebugHelper.AddDebugSphere(tracePos, ARGB(50, 128, 0, 0), 1);		
+		m_BuildingHeight = traceHeight - SCR_TerrainHelper.GetTerrainY(m_Pos);
 		
 		string resourceName = "{5B1996C05B1E51A4}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AR.et";
 		m_AiAgent = SDRC_AIHelper.SpawnAIAgent(resourceName, m_Pos, "", true);
@@ -133,7 +140,8 @@ class SDRC_CoverHelper
 			{
 				//Ok... we failed. 
 				m_Ready = false;
-				//And stop...
+				//And stop... Free covers and delete AI.
+				FreeCovers();		
 				return; 
 			}
 			
@@ -203,6 +211,7 @@ class SDRC_CoverHelper
 		{
 			m_CoverMgr.SetOccupiedCover(coverPos.tileX, coverPos.tileY, coverPos.coverId, false);			
 		}
+		SDRC_AIHelper.GroupDelete(m_Group);
 	}
 	
 	//------------------------------------------------------------------------------------------------
