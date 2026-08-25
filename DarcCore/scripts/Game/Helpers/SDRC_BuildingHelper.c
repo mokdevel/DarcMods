@@ -58,7 +58,8 @@ class SDRC_BuildingHelper
 		foreach (IEntity building : buildings)
 		{
 			ResourceName res = building.GetPrefabData().GetPrefabName();
-			SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildings] Found: " + res + " at " + building.GetOrigin() + " id:" + building.GetID(), LogLevel.SPAM);			
+			SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildings] Found: " + res + " at " + building.GetOrigin(), LogLevel.SPAM);
+//			SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildings] Found: " + res + " at " + building.GetOrigin() + " id:" + building.GetID(), LogLevel.SPAM);			
 		}		
 	}
 
@@ -123,9 +124,9 @@ class SDRC_BuildingHelper
 		#ifndef SDRC_RELEASE
 			foreach (IEntity building : m_BuildingsCache)
 			{
-				ResourceName res = building.GetPrefabData().GetPrefabName();
-//				SDRC_Log.Add("[SDRC_BuildingHelper:FillBuildingsCache] Found: " + res + " at " + building.GetOrigin(), LogLevel.DEBUG);
-				SDRC_Log.Add("[SDRC_BuildingHelper:FillBuildingsCache] Found: " + res + " at " + building.GetOrigin() + " id: " + building.GetID(), LogLevel.DEBUG);			
+				ResourceName res = SDRC_Misc.GetSimpleEntityName(building.GetPrefabData().GetPrefabName());
+				SDRC_Log.Add("[SDRC_BuildingHelper:FillBuildingsCache] Found: " + res + " at " + building.GetOrigin(), LogLevel.DEBUG);
+//				SDRC_Log.Add("[SDRC_BuildingHelper:FillBuildingsCache] Found: " + res + " at " + building.GetOrigin() + " id: " + building.GetID(), LogLevel.DEBUG);			
 			}		
 		#endif
 		

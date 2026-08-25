@@ -131,34 +131,38 @@ sealed class SDRC_AIHelper
 		          |----*----|                            Radius to search for a spot is 1/5 of house size
 	*/
 	
-	static SCR_AIGroup SpawnAIInBuilding(IEntity building, string resourceName, string faction, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
+	static SCR_AIGroup SpawnAIInBuilding(IEntity building, string resourceName, string faction, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0, vector pos = vector.Zero)
 	{
-		array<vector> floors = {};
-		vector pos, floorpos;
-
-		SDRC_BuildingHelper.FindBuildingFloors(floors, building);
-				
-		//Find the building size. The bigger X or Y value will be used as the radius
-		vector sums = SDRC_SpawnHelper.FindEntitySize(building);
-		//Pick the radius to be the bigger one from X/Y
-		float radius = sums[0];
-		if (sums[0] < sums[2])
-		{
-			radius = sums[2];
-		}
+		if (pos != vector.Zero)
+		{		
+			array<vector> floors = {};
+			vector floorpos;
 	
-		if (!floors.IsEmpty())
-		{
-			floorpos = floors.GetRandomElement();
-		}
-		else
-		{
-			floorpos = building.GetOrigin();
-			ResourceName res = building.GetPrefabData().GetPrefabName();
-			SDRC_Log.Add("[SDRC_AIHelper:SpawnAIInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.SPAM);
+			SDRC_BuildingHelper.FindBuildingFloors(floors, building);
+					
+			//Find the building size. The bigger X or Y value will be used as the radius
+			vector sums = SDRC_SpawnHelper.FindEntitySize(building);
+			//Pick the radius to be the bigger one from X/Y
+			float radius = sums[0];
+			if (sums[0] < sums[2])
+			{
+				radius = sums[2];
+			}
+		
+			if (!floors.IsEmpty())
+			{
+				floorpos = floors.GetRandomElement();
+			}
+			else
+			{
+				floorpos = building.GetOrigin();
+				ResourceName res = building.GetPrefabData().GetPrefabName();
+				SDRC_Log.Add("[SDRC_AIHelper:SpawnAIInBuilding] No floors found from: " + res + " . Spawn will be interesting...", LogLevel.SPAM);
+			}
+			
+			pos = SDRC_Misc.RandomizePos(floorpos, radius/6);
 		}
 		
-		pos = SDRC_Misc.RandomizePos(floorpos, radius/6);
 		pos[1] = pos[1] + 0.2;			
 //		SDRC_DebugHelper.AddDebugSphere(pos, Color.YELLOW, 0.4);
 		AIAgent aiAgent = SDRC_AIHelper.SpawnAIAgent(resourceName, pos, faction, false);

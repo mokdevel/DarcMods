@@ -120,7 +120,8 @@ class SDRC_Mission_Squatter : SDRC_Mission
 			}
 			else
 			{
-				//Nope, some error happened in initializing SDRC_CoverHelper
+				//Nope, some error happened in initializing SDRC_CoverHelper. Use the old system.
+				MissionSpawn();
 			}
 			
 			GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_ITEM_DELAY);		//Spawn stuff slowly
@@ -156,8 +157,16 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		//Spawn AI one by one. Sets missions active once ready.
 		if (m_iSpawnIndex < m_iAiCount)
 		{
+			vector pos = vector.Zero;
+			
+			if (coverHelper.IsReady())
+			{
+				//Use new system. If pos is set, AI will be spawned at the requested position.
+				pos = coverHelper.GetPosition();
+			}
+				
 			//Each AI is spawned in to its own group to be able to give individual waypoints to a character
-			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.ai.types.GetRandomElement(), GetFaction(), m_DC_Squatter.ai.GetSkill(GetDifficulty()), m_DC_Squatter.ai.GetPerception(GetDifficulty()), );
+			SCR_AIGroup group = SDRC_AIHelper.SpawnAIInBuilding(m_Building, m_DC_Squatter.ai.types.GetRandomElement(), GetFaction(), m_DC_Squatter.ai.GetSkill(GetDifficulty()), m_DC_Squatter.ai.GetPerception(GetDifficulty()), pos);
 			if (group)
 			{
 				m_Groups.Insert(group);
@@ -276,7 +285,7 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 		
 		//Default		
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,1,2,2,3,3,3,4,5,5,5};
+		missionList = {1};//{0,1,2,2,3,3,3,4,5,5,5};
 		//Mission specific
 		buildingRadius = 800;
 		//----------------------------------------------------

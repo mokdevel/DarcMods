@@ -20,17 +20,24 @@ class SDRC_CoverHelper
 	const int COVER_COUNT = 30;					//Amount of covers to search
 	
 	private IEntity m_Building = null;
-	private float m_BuildingSize = 0;
+	private float m_BuildingSize = 0;			//The max width
+	private float m_BuildingHeight = 0;			//The height 
 	
 	private vector m_Pos = vector.Zero;
 	private ref array<ref SDRC_CoverPos> m_aCovers = {};
 	private bool m_Running = false;				//All good and necessary components were found
 	private bool m_Ready = false;				//Cover finding is ready
 
+	const int NAVMESH_LOAD_TRY_LIMIT = 10;
+	private int m_iNavmeshLoadTries = 0;
+	
 	private AIPathfindingComponent m_PathFindindingComp;
 	private ChimeraCoverManagerComponent m_CoverMgr;
 	private ref CoverQueryProperties m_CoverQueryProps = new CoverQueryProperties();
 	private NavmeshWorldComponent m_Navmesh;
+	
+	private AIAgent m_AiAgent = null;
+	private SCR_AIGroup m_Group = null;
 	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_CoverHelper(IEntity building)
@@ -39,31 +46,33 @@ class SDRC_CoverHelper
 
 		m_Pos = building.GetOrigin();
 		vector sums = SDRC_SpawnHelper.FindEntitySize(building);
+		m_BuildingHeight = sums[1];
+		sums[1] = 0;
 		m_BuildingSize = SDRC_Misc.FindMaxValue(sums);
 		
 		string resourceName = "{5B1996C05B1E51A4}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AR.et";
-		AIAgent aiAgent = SDRC_AIHelper.SpawnAIAgent(resourceName, m_Pos, "", true);
+		m_AiAgent = SDRC_AIHelper.SpawnAIAgent(resourceName, m_Pos, "", true);
 		
-		string faction = SDRC_AIHelper.GetAIAgentFactionKey(aiAgent);
-		SCR_AIGroup group = SDRC_AIHelper.GroupCreate(faction, aiAgent.GetOrigin());
-		if (!group)
+		string faction = SDRC_AIHelper.GetAIAgentFactionKey(m_AiAgent);
+		m_Group = SDRC_AIHelper.GroupCreate(faction, m_AiAgent.GetOrigin());
+		if (!m_Group)
 		{
 			SDRC_Log.Add("[SDRC_CoverHelper] Could not spawn AIAgent.", LogLevel.ERROR);
 			return;
 		}	
 		
-		group.SetNewLeader(aiAgent);
-		group.AddAgent(aiAgent);
+		m_Group.SetNewLeader(m_AiAgent);
+		m_Group.AddAgent(m_AiAgent);
 		
 		AIWorld aiWorld = GetGame().GetAIWorld();
 		if (aiWorld)
 			m_CoverMgr = ChimeraCoverManagerComponent.Cast(aiWorld.FindComponent(ChimeraCoverManagerComponent));
 		
-		IEntity entity = aiAgent.GetControlledEntity();
+		IEntity entity = m_AiAgent.GetControlledEntity();
 		if (entity)
 			m_PathFindindingComp = AIPathfindingComponent.Cast(entity.FindComponent(AIPathfindingComponent));
 		
-		m_PathFindindingComp = AIPathfindingComponent.Cast(group.FindComponent(AIPathfindingComponent));		
+		m_PathFindindingComp = AIPathfindingComponent.Cast(m_Group.FindComponent(AIPathfindingComponent));		
 		
 		if (!m_CoverMgr || !m_PathFindindingComp)
 		{
@@ -98,14 +107,58 @@ class SDRC_CoverHelper
 	}
 		
 	//------------------------------------------------------------------------------------------------
+	vector GetPosition(int index = -1)
+	{
+		if (index == -1)
+		{
+			index = m_aCovers.GetRandomIndex();
+		}
+		
+		if (index >= m_aCovers.Count())
+		{
+			SDRC_Log.Add("[SDRC_CoverHelper:GetPosition] Index out of bounds. Using random.", LogLevel.ERROR);
+			index = m_aCovers.GetRandomIndex();
+		}
+		
+		return m_aCovers[index].pos;
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	void FindBuildingCovers()
 	{
 		if (!m_Navmesh.IsTileLoaded(m_Pos))
 		{
-			m_Navmesh.LoadTileIn(m_Pos);
-			SDRC_Log.Add("[SDRC_CoverHelper:FindBuildingCovers] Requested tile loading.", LogLevel.DEBUG);
-			GetGame().GetCallqueue().CallLater(FindBuildingCovers, 1000, false);		
-			return;
+			//Try only for a few times 
+			if (m_iNavmeshLoadTries > NAVMESH_LOAD_TRY_LIMIT)
+			{
+				//Ok... we failed. 
+				m_Ready = false;
+				//And stop...
+				return; 
+			}
+			
+			if (m_iNavmeshLoadTries == 0)
+			{			
+				//Load tile
+				m_Navmesh.LoadTileIn(m_Pos);
+				//Load some neighboring tiles too
+	/*			vector tileNeighbor = {m_BuildingSize, 0, m_BuildingSize};
+				m_Navmesh.LoadTileIn(m_Pos + tileNeighbor);
+				tileNeighbor = {-m_BuildingSize, 0, -m_BuildingSize};
+				m_Navmesh.LoadTileIn(m_Pos + tileNeighbor);*/
+				
+				SDRC_Log.Add("[SDRC_CoverHelper:FindBuildingCovers] Requested tile loading.", LogLevel.DEBUG);
+			}
+			
+			m_iNavmeshLoadTries++;
+
+			//Once valid, continue			
+			if (!m_Navmesh.IsTileValid(m_Pos))
+			{		
+				//Not yet, wait...
+				GetGame().GetCallqueue().CallLater(FindBuildingCovers, 2000, false);		
+				return;				
+			}
 		}		
 		
 		//Tile was loaded. Find the covers
@@ -114,19 +167,33 @@ class SDRC_CoverHelper
 		
 		for (int i = 0; i < COVER_COUNT; i++)
 		{
+			vector heightAdjust = vector.Zero;
+			heightAdjust[1] = Math.Round(SDRC_Misc.RandomFloat(0, (m_BuildingHeight - 5) / 2) * 2) + 1;
+			m_CoverQueryProps.m_vSectorPos = m_Pos + heightAdjust;
+			
 			bool coverFound = m_CoverMgr.GetBestCover("Soldiers", m_PathFindindingComp, m_CoverQueryProps, coverPos, coverTallestPos, tileX, tileY, coverId);	
-			Print("coverFound: " + coverFound);
-//			Print("coverPos:" + coverPos);
-			ref SDRC_CoverPos tmpCoverPos = new SDRC_CoverPos();
-			tmpCoverPos.tileX = tileX;
-			tmpCoverPos.tileY = tileY;
-			tmpCoverPos.coverId = coverId;
-			tmpCoverPos.pos = coverPos;
-			m_aCovers.Insert(tmpCoverPos);
-
-			m_CoverMgr.SetOccupiedCover(tileX, tileY, coverId, true);
-			SDRC_DebugHelper.AddDebugSphere(coverPos, ARGB(50, 0, 128, 0), 0.25);
+			if (coverFound)
+			{
+				ref SDRC_CoverPos tmpCoverPos = new SDRC_CoverPos();
+				tmpCoverPos.tileX = tileX;
+				tmpCoverPos.tileY = tileY;
+				tmpCoverPos.coverId = coverId;
+				tmpCoverPos.pos = coverPos;
+				m_aCovers.Insert(tmpCoverPos);
+	
+				m_CoverMgr.SetOccupiedCover(tileX, tileY, coverId, true);
+				SDRC_DebugHelper.AddDebugSphere(coverPos, ARGB(50, 0, 128, 0), 0.25);
+			}
+			else
+			{
+				int xx = 0;
+			}
 		}
+		
+		//All collected, free them
+		FreeCovers();
+		
+		m_Ready = true;
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -150,7 +217,7 @@ class SDRC_CoverHelper
 		float distance = vector.DistanceXZ(m_CoverQueryProps.m_vThreatPos, m_Pos);
 		m_CoverQueryProps.m_fQuerySectorAngleCosMin = -1;
 		m_CoverQueryProps.m_fSectorDistMin = 0;
-		m_CoverQueryProps.m_fSectorDistMax = 20;
+		m_CoverQueryProps.m_fSectorDistMax = m_BuildingSize;
 		m_CoverQueryProps.m_fCoverHeightMin = 0;
 		m_CoverQueryProps.m_fCoverHeightMax = 2.0;
 		m_CoverQueryProps.m_fCoverToThreatAngleCosMin = -1; //Full circle
