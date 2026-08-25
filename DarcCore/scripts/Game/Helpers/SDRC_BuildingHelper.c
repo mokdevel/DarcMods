@@ -7,7 +7,7 @@ Functions related to buildings on map
 NOTE: In order to use the caching, FillBuildingsCache has to be run at startup.
 */
 
-sealed class SDRC_BuildingHelper
+class SDRC_BuildingHelper
 {
 	private static ref array<IEntity> m_BuildingsCache = {};
 	private static ref array<IEntity> m_TmpBuildings = {};
@@ -58,7 +58,7 @@ sealed class SDRC_BuildingHelper
 		foreach (IEntity building : buildings)
 		{
 			ResourceName res = building.GetPrefabData().GetPrefabName();
-			SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildings] Found: " + res + " at " + building.GetOrigin(), LogLevel.SPAM);			
+			SDRC_Log.Add("[SDRC_BuildingHelper:FindBuildings] Found: " + res + " at " + building.GetOrigin() + " id:" + building.GetID(), LogLevel.SPAM);			
 		}		
 	}
 
@@ -124,7 +124,8 @@ sealed class SDRC_BuildingHelper
 			foreach (IEntity building : m_BuildingsCache)
 			{
 				ResourceName res = building.GetPrefabData().GetPrefabName();
-				SDRC_Log.Add("[SDRC_BuildingHelper:FillBuildingsCache] Found: " + res + " at " + building.GetOrigin(), LogLevel.DEBUG);			
+//				SDRC_Log.Add("[SDRC_BuildingHelper:FillBuildingsCache] Found: " + res + " at " + building.GetOrigin(), LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_BuildingHelper:FillBuildingsCache] Found: " + res + " at " + building.GetOrigin() + " id: " + building.GetID(), LogLevel.DEBUG);			
 			}		
 		#endif
 		

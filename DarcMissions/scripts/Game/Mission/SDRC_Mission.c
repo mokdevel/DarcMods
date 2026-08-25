@@ -3,7 +3,7 @@
 enum SDRC_EMissionState
 {
 	NONE,		//Unknown state. Nothing should be run at this state.
-	INIT,		//The mission is being init. This automatically set when object is created.
+	INIT,		//The mission is being init. This automatically set when object is created. Mission should not run any code in this state!
 	SPAWN,		//Things are spawned etc. This automatically set when INIT is success.
 	ACTIVE,		//Normal state when mission is running.	
 	END,		//Mission is ending. Things are cleaned, despawned etc.

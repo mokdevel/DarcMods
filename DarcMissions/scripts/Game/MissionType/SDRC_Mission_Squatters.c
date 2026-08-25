@@ -16,6 +16,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	private ref SDRC_Squatter m_DC_Squatter = new SDRC_Squatter();
 	
 	private IEntity m_Building;					//The building for the mission
+	private ref SDRC_CoverHelper coverHelper = null;
 	private int m_iAiCount;
 	private int m_iSpawnIndex = 0;				//Counter for the AI to spawn
 		
@@ -92,6 +93,9 @@ class SDRC_Mission_Squatter : SDRC_Mission
 			return;
 		}			
 		
+		//Helper to find spots (covers) inside a building.
+		coverHelper = new SDRC_CoverHelper(m_Building);		
+		
 		SetPos(pos);
 		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Squatter.general.posName));
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
@@ -105,9 +109,21 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		
 		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
-			MissionSpawn();
+			if (coverHelper.IsRunning())
+			{
+				//All good, waiting for coverHelper to finalize
+				if (coverHelper.IsReady())
+				{
+					MissionSpawn();
+					//NOTE: ACTIVE set inside MissionSpawn()
+				}
+			}
+			else
+			{
+				//Nope, some error happened in initializing SDRC_CoverHelper
+			}
+			
 			GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_ITEM_DELAY);		//Spawn stuff slowly
-			//NOTE: ACTIVE set inside MissionSpawn()
 			return;
 		}
 
@@ -158,7 +174,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 			}
 			else
 			{
-				SDRC_Log.Add("[SDRC_Mission_Squatter:MissionSpawn] " +  GetId() + " : Could not spawn loot box: " + m_DC_Squatter.lootBox, LogLevel.ERROR);								
+				SDRC_Log.Add("[SDRC_Mission_Squatter:MissionSpawn] " +  GetId() + " : Could not spawn loot box: " + m_DC_Squatter.lootBox, LogLevel.ERROR);
 			}
 		
 			SetState(SDRC_EMissionState.ACTIVE);			
