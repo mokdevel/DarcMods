@@ -5,6 +5,7 @@ modded class SCR_BaseGameMode
 	ref SDRC_MissionFrame missionFrame = null;
 	private SDRC_RplGMEntity m_SDRC_RplGMEntity;
 	
+	//------------------------------------------------------------------------------------------------
 	//Values needed for runtime SDRC_MissionSubIdxEditorAttributeBaseValues modifying. Ugly hack!
 	//AR does not provide proper runtime editing of the editable values so trick the game. We use 
 	//a global value that can be set and read in SDRC_MissionSubIdxEditorAttributeBaseValues
@@ -12,7 +13,8 @@ modded class SCR_BaseGameMode
 	
 	ref array<int> missionBigIndex = {0};	//The largest index found in the missionListMission. First item is prefilled to reflect SDRC_EMissionType.NONE
 	int missionBigIndexForEdit = 0;			//The index to use for the specific 
-	
+	//------------------------------------------------------------------------------------------------
+		
 	//------------------------------------------------------------------------------------------------
     override void OnGameModeStart()
     {

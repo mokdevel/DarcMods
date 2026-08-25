@@ -395,7 +395,18 @@ class SDRC_MissionPosHelper
 				return SDRC_EMissionError.PLAYER_TOO_CLOSE;
 			}
 		}		
-				
+
+		//Check if the mission is exactly at same pos as some other mission. This could be the case when a building is used for mission.
+		foreach (SDRC_Mission mission : baseGameMode.missionFrame.m_MissionList)
+		{
+			if (SDRC_Misc.IsPosNearPos(mission.GetPos(), pos, 10))
+//			if (mission.GetPos() == pos)
+			{
+				SDRC_Log.Add("[SDRC_MissionPosHelper:IsValidMissionPos] Failed: " + SCR_Enum.GetEnumName(SDRC_EMissionError, SDRC_EMissionError.MISSION_IN_SAME_POSITION), LogLevel.SPAM);
+				return SDRC_EMissionError.MISSION_IN_SAME_POSITION;
+			}
+		}
+								
 		//If we only check for basic things, return		
 		if (onlyBasicChecks)
 		{

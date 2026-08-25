@@ -61,6 +61,7 @@ enum SDRC_EMissionError
 	PLAYER_TOO_FAR,
 	MISSION_TOO_CLOSE,
 	IN_NON_VALID_AREA,
+	MISSION_IN_SAME_POSITION,
 }
 
 const string SDRC_DEFAULT = "default";
