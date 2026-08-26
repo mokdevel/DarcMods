@@ -116,6 +116,12 @@ class SDRC_CoverHelper
 	//------------------------------------------------------------------------------------------------
 	vector GetPosition(int index = -1)
 	{
+		if (m_aCovers.IsEmpty())		
+		{
+			SDRC_Log.Add("[SDRC_CoverHelper:GetPosition] No covers found.", LogLevel.ERROR);
+			return vector.Zero;
+		}
+		
 		if (index == -1)
 		{
 			index = m_aCovers.GetRandomIndex();
@@ -125,11 +131,6 @@ class SDRC_CoverHelper
 		{
 			SDRC_Log.Add("[SDRC_CoverHelper:GetPosition] Index out of bounds. Using random.", LogLevel.ERROR);
 			index = m_aCovers.GetRandomIndex();
-		}
-		
-		if (index == -1)		
-		{
-			int xx = 0;
 		}
 		
 		return m_aCovers[index].pos;
