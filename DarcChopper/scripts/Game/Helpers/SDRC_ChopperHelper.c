@@ -425,7 +425,6 @@ class SDRC_ChopperHelper
 			//Default heights
 			oldHeight = chopperComp.m_vSplinePoints[chopperComp.m_iClosestIndex];
 			float lowestHeight = chopperComp.m_fFlyHeightLow;
-			int lowAdd = 5;
 
 			//Use a local heliState as it could be changed later in the function
 			SDRC_EHeliState heliState = chopperComp.GetState();
@@ -438,9 +437,11 @@ class SDRC_ChopperHelper
 					//Attack height is the lowest point modified by attackHeightMul. The final attackHeight could be below m_fFlyHeightLow
 					vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];				
 					lowestHeight = chopperComp.m_fFlyHeightLow * chopperComp.params.attackHeightMul + lastPoint[1];
-					lowAdd = 0;
 					//We know where to attack so return to normal flight mode
 					chopperComp.SetState(SDRC_EHeliState.FLY);
+					
+					CreateEndCurveJ(chopperComp, lowestHeight);
+					isSmoothingNeeded = false;
 					break;
 				}
 				case SDRC_EHeliState.BRAKE:
@@ -455,134 +456,44 @@ class SDRC_ChopperHelper
 						//...but always above ground
 						lowestHeight = surfaceY;
 					}
-					lowAdd = 0;
+					
+//					CreateEndCurveJ(chopperComp, lowestHeight);
+					CreateEndCurveSteep(chopperComp, lowestHeight);
+					isSmoothingNeeded = false;
 					break;
 				}
 				default:
 				{
 					//Make sure the points are at minimum lowestHeight from the ground.
 					//This is done first in all cases. Other states will modify these later in the function.
-					if (lowAdd > 0)
+					foreach (int i, vector pt : chopperComp.m_vSplinePoints)
 					{
-						foreach (int i, vector pt : chopperComp.m_vSplinePoints)
+						if (i < skipCount)
 						{
-							if (i < skipCount)
-							{
-								continue;
-							}
-			
-							float surfaceY = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
-			
-							//With lowAdd = 0, just accept the height. No modification.
-		/*					if (lowAdd == 0)
-							{
-								pt[1] = surfaceY + lowestHeight;
-								chopperComp.m_vSplinePoints[i] = pt;
-								
-								isSmoothingNeeded = true;
-							}*/
-							//If point lower than requested point, set lowest flight height
-							if (pt[1] < (surfaceY + lowestHeight))
-							{
-								//If we're low, fix the point a bit above the lowestHeight fly height
-								pt[1] = surfaceY + lowestHeight + lowAdd;	//Make chopper fly higher for a moment
-								chopperComp.m_vSplinePoints[i] = pt;
-								
-								isSmoothingNeeded = true;
-							}
+							continue;
+						}
+		
+						float surfaceY = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
+		
+						//With lowAdd = 0, just accept the height. No modification.
+	/*					if (lowAdd == 0)
+						{
+							pt[1] = surfaceY + lowestHeight;
+							chopperComp.m_vSplinePoints[i] = pt;
+							
+							isSmoothingNeeded = true;
+						}*/
+						//If point lower than requested point, set lowest flight height
+						if (pt[1] < (surfaceY + lowestHeight))
+						{
+							//If we're low, fix the point a bit above the lowestHeight fly height
+							pt[1] = surfaceY + lowestHeight + 5;	//Make chopper fly higher for a moment
+							chopperComp.m_vSplinePoints[i] = pt;
+							
+							isSmoothingNeeded = true;
 						}
 					}
 				}
-			}
-							
-			//Create a smooth curve
-			switch (heliState)
-			{
-/*				case SDRC_EHeliState.ATTACK:
-				case SDRC_EHeliState.BRAKE:
-				{
-					//If we're braking set points towards the last point			
-					int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
-	
-					//Find high point, low point and difference
-					vector v0 = chopperComp.m_vSplinePointBelow;
-					vector v1 = chopperComp.m_vSplinePoints[lastIdx];
-					v1[1] = lowestHeight;
-					
-					//Count a braking (bell) curve
-					float p0 = v0[1];
-					float p1 = v1[1];
-					float pdiff = p0 - p1;
-										
-					//Create a Y spline to replace the given points to smooth the curve for braking
-					int points = lastIdx - chopperComp.m_iClosestIndex;
-					for (int i = 0; i < points; i++)
-					{					
-						float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
-	
-						vector pt = vector.Lerp(v1, v0, step);
-						pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
-						chopperComp.m_vSplinePoints[lastIdx - points + i] = pt;
-						chopperComp.m_vSplinePoints[lastIdx - points + i + 1] = pt;	//Ugly hack to make sure the last point is also modified
-					}
-					
-					isSmoothingNeeded = false;
-					break;
-				}*/
-				//If we're landing set some of the last points close to the ground
-				case SDRC_EHeliState.BRAKE:
-				{
-					//If we're braking set points towards the last point			
-					int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
-					int firstIdx = chopperComp.m_iClosestIndex;
-
-					//The max distance from current point to destination
-					float maxDistance = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePointBelow, chopperComp.m_vSplinePoints[lastIdx]));
-					
-					//Calculate the point from where to turn the curve down.
-					for (int i = firstIdx; i < lastIdx; i++)
-					{
-						float distanceToTarget = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePoints[i], chopperComp.m_vSplinePoints[lastIdx]));
-						if (distanceToTarget < maxDistance / 1.1)
-						{
-							firstIdx = i;
-							break;
-						}
-					}
-					
-					//Start to brake immediately
-					chopperComp.m_fBrakingDistance = maxDistance;
-					
-					//Find high point, low point and difference
-					vector v0 = chopperComp.m_vSplinePoints[firstIdx];
-					vector v1 = chopperComp.m_vSplinePoints[lastIdx];
-					v1[1] = lowestHeight;
-					
-					//Count a braking (bell) curve
-					float p0 = v0[1];
-					float p1 = v1[1];
-					float pdiff = p0 - p1;
-					
-					//Create a Y spline to replace the given points to smooth the curve for braking
-					int points = lastIdx - firstIdx;
-					for (int i = 0; i < points; i++)
-					{					
-						float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
-	
-						vector ptc = SDRC_Misc.GetCoordinatesOnCircle(vector.Zero, 100, 90 * (i / points));
-						Print("ptc: " + ptc);
-						
-						vector pt = vector.Lerp(v1, v0, step);						
-						pt[1] = p1 + pdiff * (ptc[0] / 100);
-						chopperComp.m_vSplinePoints[lastIdx - points + i] = pt;
-						chopperComp.m_vSplinePoints[lastIdx - points + i + 1] = pt;	//Ugly hack to make sure the last point is also modified
-					}
-					
-					isSmoothingNeeded = false;
-					break;
-				}					
-				default:
-					;
 			}
 		}
 		
@@ -603,9 +514,96 @@ class SDRC_ChopperHelper
 		}*/
 	}
 
-	static void CreateEndCurveSteep()
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Create a curve that looks like a J
+	
+		     |
+		__--"
+	
+	*/
+	static void CreateEndCurveJ(SDRC_ChopperComp chopperComp, float lowestHeight)
 	{
+		//If we're braking set points towards the last point			
+		int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
+
+		//Find high point, low point and difference
+		vector v0 = chopperComp.m_vSplinePointBelow;
+		vector v1 = chopperComp.m_vSplinePoints[lastIdx];
+		v1[1] = lowestHeight;
 		
+		//Count a braking (bell) curve
+		float p0 = v0[1];
+		float p1 = v1[1];
+		float pdiff = p0 - p1;
+							
+		//Create a Y spline to replace the given points to smooth the curve for braking
+		int points = lastIdx - chopperComp.m_iClosestIndex;
+		for (int i = 0; i < points; i++)
+		{					
+			float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
+
+			vector pt = vector.Lerp(v1, v0, step);
+			pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
+			chopperComp.m_vSplinePoints[lastIdx - points + i] = pt;
+			chopperComp.m_vSplinePoints[lastIdx - points + i + 1] = pt;	//Ugly hack to make sure the last point is also modified
+		}	
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Create a steep dropping curve
+	
+		 ,--´´
+		|
+	*/
+	static void CreateEndCurveSteep(SDRC_ChopperComp chopperComp, float lowestHeight)
+	{
+		//If we're braking set points towards the last point			
+		int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
+		int firstIdx = chopperComp.m_iClosestIndex;
+
+		//The max distance from current point to destination
+		float maxDistance = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePointBelow, chopperComp.m_vSplinePoints[lastIdx]));
+		
+		//Calculate the point from where to turn the curve down.
+		for (int i = firstIdx; i < lastIdx; i++)
+		{
+			float distanceToTarget = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePoints[i], chopperComp.m_vSplinePoints[lastIdx]));
+			if (distanceToTarget < maxDistance / 1.1)
+			{
+				firstIdx = i;
+				break;
+			}
+		}
+		
+		//Start to brake immediately
+		chopperComp.m_fBrakingDistance = maxDistance;
+		
+		//Find high point, low point and difference
+		vector v0 = chopperComp.m_vSplinePoints[firstIdx];
+		vector v1 = chopperComp.m_vSplinePoints[lastIdx];
+		v1[1] = lowestHeight;
+		
+		//Count a braking (bell) curve
+		float p0 = v0[1];
+		float p1 = v1[1];
+		float pdiff = p0 - p1;
+		
+		//Create a Y spline to replace the given points to smooth the curve for braking
+		int points = lastIdx - firstIdx;
+		for (int i = 0; i < points; i++)
+		{					
+			float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
+
+			vector ptc = SDRC_Misc.GetCoordinatesOnCircle(vector.Zero, 100, 90 * (i / points));
+			Print("ptc: " + ptc);
+			
+			vector pt = vector.Lerp(v1, v0, step);						
+			pt[1] = p1 + pdiff * (ptc[0] / 100);
+			chopperComp.m_vSplinePoints[lastIdx - points + i] = pt;
+			chopperComp.m_vSplinePoints[lastIdx - points + i + 1] = pt;	//Ugly hack to make sure the last point is also modified
+		}		
 	}
 	
 	//------------------------------------------------------------------------------------------------
