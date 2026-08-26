@@ -11,4 +11,7 @@ $grp GenericEntity : "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.
  {
   coords 2450.974 78.069 1780.508
  }
+ {
+  coords 1400 38.407 2330
+ }
 }

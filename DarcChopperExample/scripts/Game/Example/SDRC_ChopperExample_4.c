@@ -14,7 +14,8 @@ class SDRC_ChopperExample_4
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
 	vector m_vPosOrigin = "1730 0 2530";
-	vector m_vFlyHereFirst = "1480 0 2370";
+//	vector m_vFlyHereFirst = "1480 0 2370";
+	vector m_vFlyHereFirst = "1400 0 2330";
 	float m_fMinFlyHeight = 30;
 	//------------------------------------------------------------------------------------------------
 	void SDRC_ChopperExample_4()
@@ -60,7 +61,7 @@ class SDRC_ChopperExample_4
 		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, m_vFlyHereFirst);
 		//Add our flight path
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFlyHereFirst);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "1350 3 2287", 100);
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "1350 3 2287");//, 200);
 //		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "1465 3 2668", 100);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 60);
 //		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, "0 30 0", 10);

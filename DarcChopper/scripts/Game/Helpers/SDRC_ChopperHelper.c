@@ -495,7 +495,7 @@ class SDRC_ChopperHelper
 			//Create a smooth curve
 			switch (heliState)
 			{
-				case SDRC_EHeliState.ATTACK:
+/*				case SDRC_EHeliState.ATTACK:
 				case SDRC_EHeliState.BRAKE:
 				{
 					//If we're braking set points towards the last point			
@@ -525,7 +525,54 @@ class SDRC_ChopperHelper
 					
 					isSmoothingNeeded = false;
 					break;
-				}
+				}*/
+				//If we're landing set some of the last points close to the ground
+				case SDRC_EHeliState.BRAKE:
+				{
+					//If we're braking set points towards the last point			
+					int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
+	
+					//Find high point, low point and difference
+					vector v0 = chopperComp.m_vSplinePointBelow;
+					vector v1 = chopperComp.m_vSplinePoints[lastIdx];
+					v1[1] = lowestHeight;
+					
+					//Count a braking (bell) curve
+					float p0 = v0[1];
+					float p1 = v1[1];
+					float pdiff = p0 - p1;
+									
+					int index = chopperComp.m_iClosestIndex;
+/*					for (int i = index; i < lastIdx; i++)
+					{
+						float distanceToTarget = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePoints[i], chopperComp.m_vSplinePoints[lastIdx]));
+						if (distanceToTarget < chopperComp.m_fBrakingDistance)
+						{
+							index = i;
+							break;
+						}
+						//Print("Dist: " + distanceToTarget + " : " + i);
+					}*/
+					
+					//Create a Y spline to replace the given points to smooth the curve for braking
+//					int points = lastIdx - chopperComp.m_iClosestIndex;
+					int points = lastIdx - index;
+					for (int i = 0; i < points; i++)
+					{					
+						float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
+	
+						vector ptc = SDRC_Misc.GetCoordinatesOnCircle(vector.Zero, 100, 90 * (i / points));
+						Print("ptc: " + ptc);
+						
+						vector pt = vector.Lerp(v1, v0, step);
+						pt[1] = p1 + pdiff * (ptc[0] / 100);
+						chopperComp.m_vSplinePoints[lastIdx - points + i] = pt;
+						chopperComp.m_vSplinePoints[lastIdx - points + i + 1] = pt;	//Ugly hack to make sure the last point is also modified
+					}
+					
+					isSmoothingNeeded = false;
+					break;
+				}					
 				default:
 					;
 			}

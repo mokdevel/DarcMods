@@ -512,7 +512,15 @@ modded class SDRC_ChopperComp
 			{
 				if (value == -1)
 				{
-					value = DEFAULT_BRAKE_DISTANCE;
+					if (!m_vFlyDestinations.IsEmpty() )
+					{
+						vector pos = m_vFlyDestinations[m_vFlyDestinations.Count() - 1].pt;
+						value = Math.AbsFloat(vector.DistanceXZ(pos, destination)) / 1.5;
+					}
+					else					
+					{
+						value = DEFAULT_BRAKE_DISTANCE;
+					}
 				}
 				
 				if (value < 50)
