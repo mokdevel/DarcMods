@@ -14,8 +14,8 @@ class SDRC_ChopperExample_4
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
 	vector m_vPosOrigin = "1730 0 2530";
-//	vector m_vFlyHereFirst = "1480 0 2370";
-	vector m_vFlyHereFirst = "1400 0 2330";
+	vector m_vFlyHereFirst = "1480 0 2370";
+//	vector m_vFlyHereFirst = "1400 0 2330";
 	float m_fMinFlyHeight = 30;
 	//------------------------------------------------------------------------------------------------
 	void SDRC_ChopperExample_4()
