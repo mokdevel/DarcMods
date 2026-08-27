@@ -13,8 +13,7 @@ class SDRC_ChopperExample_6
 {
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
-	vector m_vPosOrigin = "2500 0 2500";
-	vector m_vFlyHereFirst = "2500 0 2200";
+	vector m_vPosOrigin = "2400 0 600";
 	float m_fMinFlyHeight = 30;
 	//------------------------------------------------------------------------------------------------
 	void SDRC_ChopperExample_6()
@@ -42,12 +41,19 @@ class SDRC_ChopperExample_6
 			return;			
 		}
 
+		//Do setup
+		vector flyHereFirst = m_vPosOrigin + "100 0 0";
+		
 		//Turn vehicle towards first flight position
-		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, m_vFlyHereFirst);
+		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, flyHereFirst);
 		//Add our flight path
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFlyHereFirst);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, "2950 0 2100");
-//		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, "2450 0 1780");
-//		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, "2607 0 1900");
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, flyHereFirst + "200 0 200");
+		SDRC_DebugHelper.AddDebugPos(flyHereFirst + "200 0 200", ARGB(255, 255, 0, 192), 2.0);
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, flyHereFirst + "-200 0 400");
+		SDRC_DebugHelper.AddDebugPos(flyHereFirst + "-200 0 400", ARGB(255, 255, 0, 128), 2.0);
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, flyHereFirst + "200 0 600");
+		SDRC_DebugHelper.AddDebugPos(flyHereFirst + "200 0 600", ARGB(255, 255, 0, 64), 2.0);
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, flyHereFirst + "-200 0 800");
+		SDRC_DebugHelper.AddDebugPos(flyHereFirst + "-200 0 800", ARGB(255, 255, 0, 64), 2.0);
 	}	
 }

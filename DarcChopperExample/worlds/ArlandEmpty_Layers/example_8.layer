@@ -1,0 +1,12 @@
+Vehicle Mi8MT_armed_gunship_HE_Patrol2 : "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et" {
+ components {
+  SDRC_ChopperComp "{66C548F5776E7383}" {
+   m_vFlyDestinationsOnPrefab {
+    SDRC_FlyPathPoint "{6A367407129F416C}" {
+     pt 1900 0 1900
+    }
+   }
+  }
+ }
+ coords 1854.068 92.674 992.127
+}

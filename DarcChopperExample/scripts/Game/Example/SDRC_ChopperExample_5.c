@@ -14,7 +14,6 @@ class SDRC_ChopperExample_5
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
 	vector m_vPosOrigin = "2830 0 2070";
-	vector m_vFlyHereFirst = "2680 0 1800";
 	float m_fMinFlyHeight = 30;
 	//------------------------------------------------------------------------------------------------
 	void SDRC_ChopperExample_5()
@@ -41,11 +40,14 @@ class SDRC_ChopperExample_5
 			Print("[SDRC_ChopperExample_1] Could not spawn chopper", LogLevel.ERROR);
 			return;			
 		}
-
+		//Do setup
+		vector flyHereFirst = "2680 0 1800";
+		
+		
 		//Turn vehicle towards first flight position
-		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, m_vFlyHereFirst);
+		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, flyHereFirst);
 		//Add our flight path
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFlyHereFirst);
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, flyHereFirst);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_PATROL, "2750 0 1640");
 	}	
 }

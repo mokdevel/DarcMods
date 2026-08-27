@@ -14,7 +14,6 @@ class SDRC_ChopperExample_3
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
 	vector m_vPosOrigin = "1300 0 3000";
-	vector m_vFlyHereFirst = "1100 0 2900";
 	float m_fMinFlyHeight = 30;
 	//------------------------------------------------------------------------------------------------
 	void SDRC_ChopperExample_3()
@@ -42,79 +41,30 @@ class SDRC_ChopperExample_3
 			return;			
 		}
 		
-		//Disable autostart to set things our selves. Call Ready() after the setup.
-//		m_Vehicle_c.SetAutostart(false);
 		//Modify some values to our liking
 		m_Vehicle_c.SetHeli(10, 30, 		//Min/max speed
 		                    m_fMinFlyHeight, 60, 		//Min/max height
 		                    200, 800);		//Min/max distance for new destination
 		//Only react to players as enemies
 		m_Vehicle_c.SetEnemySearchType(SDRC_EHeliEnemySearchType.PLAYER);
-		
-		//Do setup
-//		m_Vehicle_c.Setup(m_Vehicle);
-//		m_Vehicle_c.Ready(m_Vehicle);
 
+		//Do setup
+		vector flyHereFirst = "1100 0 2900";		
+		
+		//Turn vehicle towards first flight position
+		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, flyHereFirst);
 		//Add our flight path
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, m_vFlyHereFirst);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "908 3 2820");
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_LAND_VERTICAL);
-//		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_LAND, "908 0 2820");
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, flyHereFirst);
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_M_LAND, "908 0 2820");		
+/*			
+			//Optionally you can set the braking and vertical landing that is done by WP_M_LAND
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "908 3 2820");
+			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_LAND_VERTICAL);
+*/		
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_WAIT_GETOUT);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value: 5);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_STOP_ENGINE);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_END);
 	}	
-
-	//------------------------------------------------------------------------------------------------
-/*	private void MissionSpawnCrew()
-	{
-		//Select pilots
-		ResourceName pilot = SDRC_EnemyHelper.SelectEnemy("C_CREW", GetFaction());
-
-		if (pilot == "")
-		{
-			//If pilots not available, let's spawn a regular rifleman as a pilot
-			pilot = SDRC_EnemyHelper.SelectEnemy("C_RIFLEMAN", GetFaction());
-		}		
-
-		//Spawn pilots if such is available 
-		if (pilot != "")
-		{
-			SCR_AIGroup group = SDRC_AIHelper.GroupCreate(GetFaction(), GetPos());
-			
-			for (int i = 0; i < 2; i++)
-			{		
-				SDRC_VehicleHelper.SpawnGroupInVehicle(pilot, m_Vehicle, group, GetFaction());
-				
-				if (group)
-				{			
-					SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(GetDifficulty()), m_DC_Chopper.ai.GetPerception(GetDifficulty()));
-					m_Groups.Insert(group);					
-				}
-			}
-		}
-		
-		//Spawn mission AI
-		int aiCount = m_DC_Chopper.ai.GetCount(GetDifficulty());
-		
-		for (int i = 0; i < aiCount; i++)
-		{		
-			string groupToSpawn = m_DC_Chopper.ai.types.GetRandomElement();
-			ResourceName aiType = SDRC_EnemyHelper.SelectEnemy(groupToSpawn, GetFaction());
-			
-			SCR_AIGroup group = SDRC_AIHelper.GroupCreate(GetFaction(), GetPos());
-			SDRC_VehicleHelper.SpawnGroupInVehicle(aiType, m_Vehicle, group, GetFaction());
-			
-			if (group)
-			{			
-				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(GetDifficulty()), m_DC_Chopper.ai.GetPerception(GetDifficulty()));
-				m_Groups.Insert(group);					
-			}
-		}		
-		
-		//All done, activate
-		m_Vehicle_c.Ready(m_Vehicle);
-	}	*/
 }
