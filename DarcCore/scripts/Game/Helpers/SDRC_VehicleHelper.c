@@ -85,7 +85,7 @@ class SDRC_VehicleHelper
 				
 				IEntity character = compartment.SpawnCharacterInCompartment(aiPrefab, group);
 				
-/*				RplComponent entityRpl = RplComponent.Cast(character.GetOwner().FindComponent(RplComponent));
+/*				RplComponent entityRpl = RplComponent.Cast(character.FindComponent(RplComponent));
 				if (entityRpl)
 				{
 					entityRpl.EnableStreaming(false);
@@ -100,7 +100,8 @@ class SDRC_VehicleHelper
 					CharacterControllerComponent characterController = chimeraCharacter.GetCharacterController();			
 					AIControlComponent aiControlComponent = characterController.GetAIControlComponent();
 					AIAgent aiAgent = aiControlComponent.GetControlAIAgent();			
-					aiAgent.SetLOD(1);					
+					//aiAgent.SetLOD(1);					
+					aiAgent.SetPermanentLOD(1);					
 					// ---
 					
 					compartment.SetReserved(character);
