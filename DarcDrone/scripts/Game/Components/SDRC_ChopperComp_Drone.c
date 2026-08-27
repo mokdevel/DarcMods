@@ -19,16 +19,16 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		rollAngleMul = 2.8;
 		
 		//Pitch
-		pitchAngleRad 	 =  18 * Math.DEG2RAD;
-		pitchAngleRadFlat  = -45 * Math.DEG2RAD;
-		pitchNoseAngleDown = -40 * Math.DEG2RAD;
-		pitchNoseAngleUp   =  20 * Math.DEG2RAD;
+		pitchAngleRad 	   =  10 * Math.DEG2RAD;
+		pitchAngleRadFlat  = -85 * Math.DEG2RAD;	//0 points XX degress downwards
+		pitchNoseAngleDown = pitchAngleRadFlat + (10 * Math.DEG2RAD);
+		pitchNoseAngleUp   = pitchAngleRadFlat - (60 * Math.DEG2RAD);
 		
 		//Rotor force multipliers
-		rotorForceMulUp = 1.4 * 10;
-		rotorForceNormal = 30;
-		rotorForceRaise = 40;
-		rotorForceHover = 1;
+		fRotorForceMulUp = 1.4 * 10;
+		iRotorForceNormal = 30;
+		iRotorForceRaise = 40;
+		iRotorForceHover = 1;
 
 		//Obstacle awareness
 		rayLenFront = 200;
