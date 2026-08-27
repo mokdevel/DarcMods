@@ -83,6 +83,7 @@ class SDRC_ChopperDebug
 						break;
 					}
 					case SDRC_EFlyWayPointType.WP_LAND:
+					case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
 					{
 						color = Color.DARK_CYAN;
 						break;

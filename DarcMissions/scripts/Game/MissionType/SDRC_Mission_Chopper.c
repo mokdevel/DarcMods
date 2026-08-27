@@ -314,26 +314,14 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	{
 		//Init flight
 		
-		//If distance is very long, split it to multiple waypoints. 
-/*		int wpCount = vector.DistanceXZ(m_Vehicle.GetOrigin(), GetPos()) / 500;
-		
-		vector pos = vector.Lerp(m_Vehicle.GetOrigin(), GetPos(), 1/wpCount);
-		m_Vehicle_c.InitFlight(m_Vehicle, GetPos());
-		
-		for (int i = 1; i < wpCount; i++)
-		{
-			pos = vector.Lerp(m_Vehicle.GetOrigin(), GetPos(), i/wpCount);
-			m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos);
-		}*/
-		
-		m_Vehicle_c.InitFlight(m_Vehicle, GetPos());
+		m_Vehicle_c.InitFlight(m_Vehicle);
 		
 		switch (m_DC_Chopper.wpType)
 		{
 			case SDRC_EHeliWaypointGenerationType.RANDOM:			
 			case SDRC_EHeliWaypointGenerationType.SEARCH:
 			{
-//				m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, GetPos());
+				m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, GetPos());
 				break;
 			}
 			case SDRC_EHeliWaypointGenerationType.SEARCH_AND_DESTROY:

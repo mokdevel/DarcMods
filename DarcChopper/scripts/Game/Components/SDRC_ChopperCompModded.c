@@ -58,17 +58,12 @@ modded class SDRC_ChopperComp
 	{
 		SDRC_Log.Add("[SDRC_ChopperComp:Ready] Called..", LogLevel.DEBUG);
 		
-		//Add fly destinations added to prefab to the array correctly.
-		array<ref SDRC_FlyPathPoint> flyDestinationsTemp = {};
-		foreach(SDRC_FlyPathPoint fpp : m_vFlyDestinations)
+		//Add fly destinations added to prefab to the beginning of array.
+/*		array<ref SDRC_FlyPathPoint> flyDestinationsTemp = {};
+		foreach(SDRC_FlyPathPoint fpp : m_vFlyDestinationsOnPrefab)
 		{
 			flyDestinationsTemp.Insert(fpp);
-		}
-		ResetDestinations();
-		foreach(SDRC_FlyPathPoint fpp : flyDestinationsTemp)
-		{
-			AddDestination(fpp.type, fpp.pt, fpp.value);
-		}		
+		}*/
 		
 		// Some things needs to be done delayed
 		if (m_bAutoStart)
@@ -76,12 +71,36 @@ modded class SDRC_ChopperComp
 			//Init flight path
 			InitFlight(owner);
 		}
+
+		//Any assigned destination on the prefab will be added to the end
+		foreach(SDRC_FlyPathPoint fpp : m_vFlyDestinationsOnPrefab)
+		{
+			AddDestination(fpp.type, fpp.pt, fpp.value);
+		}		
+
+		//Prepare the first flight spline
+		SDRC_ChopperHelper.SetFlightPointHeight(owner);
 		
+		//Create points for spline
+		CreateFlightPoints(owner, true);
+		
+		array<vector> flyPathPoints = {};
+		SDRC_ChopperDebug.GivePoints(flyPathPoints, m_vFlightPoints);
+		SDRC_Spline3D.GenerateSplinePoints(flyPathPoints, m_vSplinePoints, -1);
+		
+		//Set final values		
+		m_iClosestIndex = 5;
+		m_iOldClosestIndex = m_iClosestIndex;
+		
+		//Check that points are above ground
+		SDRC_ChopperHelper.SetSplinePointsAboveGround(owner);
+		
+		m_fSpeed = 0.1;
+		m_fSpeedTarget = m_fSpeed;		
+						
 		SDRC_ChopperDebug.DrawDebugPaths(owner);		
 
 		SetEventMask(owner, EntityEvent.FRAME);
-//		SetEventMask(owner, EntityEvent.FIXEDFRAME | EntityEvent.FRAME | EntityEvent.SIMULATE);
-//		SetEventMask(owner, EntityEvent.FRAME | EntityEvent.POSTFRAME);
 		Activate(owner);
 				
 		//Set ready in a few seconds
@@ -410,7 +429,6 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_END:
 			case SDRC_EFlyWayPointType.WP_DESPAWN:
 			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
-//			case SDRC_EFlyWayPointType.WP_LAND:
 			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
 			case SDRC_EFlyWayPointType.WP_PATROL:
 			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
@@ -536,6 +554,8 @@ modded class SDRC_ChopperComp
 			//Macro actions
 			//------------------------------------------------------------------------------------------------	
 			case SDRC_EFlyWayPointType.WP_LAND:
+				SDRC_Log.Add("[SDRC_ChopperComp:AddDestination] WP_LAND is deprecated. Use WP_M_LAND instead.", LogLevel.WARNING);
+			case SDRC_EFlyWayPointType.WP_M_LAND:
 			{
 				//Get the distance from last spline point to the braking destination
 				float distance = DEFAULT_BRAKE_DISTANCE;
@@ -570,7 +590,7 @@ modded class SDRC_ChopperComp
 				{
 					//Safe landing position found
 					SDRC_DebugHelper.AddDebugPos(destination, ARGB(32, 64, 255, 64), SAFE_LANDING_SIZE, m_sDid, 10.0);				
-					AddDestination(SDRC_EFlyWayPointType.WP_LAND, destination);
+					AddDestination(SDRC_EFlyWayPointType.WP_M_LAND, destination);
 					AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
 					AddDestination(SDRC_EFlyWayPointType.WP_STOP_ENGINE);
 					AddDestination(SDRC_EFlyWayPointType.WP_END);
@@ -586,7 +606,7 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_M_LAND_TROOPS:
 			{
-				AddDestination(SDRC_EFlyWayPointType.WP_LAND, destination);
+				AddDestination(SDRC_EFlyWayPointType.WP_M_LAND, destination);
 				AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
 				AddDestination(SDRC_EFlyWayPointType.WP_WAIT_GETOUT);
 				vector hoverPos = vector.Zero;

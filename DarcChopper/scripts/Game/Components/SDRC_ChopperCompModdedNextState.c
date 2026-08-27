@@ -149,13 +149,13 @@ modded class SDRC_ChopperComp
 				isRemoveDestination = true;
 				break;
 			}
-			case SDRC_EFlyWayPointType.WP_LAND:
+/*			case SDRC_EFlyWayPointType.WP_LAND:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
 				//Set the state so that when creating flight 
 				SetState(SDRC_EHeliState.LAND);
 				break;
-			}
+			}*/
 			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings

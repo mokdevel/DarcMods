@@ -313,7 +313,10 @@ class SDRC_ChopperHelper
 				case SDRC_EFlyWayPointType.WP_HOVER_UP: //Do nothing .. 
 					break;
 				case SDRC_EFlyWayPointType.WP_LAND:		//Do nothing .. height will be on ground due to y being set and flyHeigt is zero. See above.
+				{
+					int x = 0;
 					break;
+				}
 				case SDRC_EFlyWayPointType.WP_BRAKE: 	//Do nothing .. NOTE: If braking height was set to 0, the point height has been set to the same as helicopter at the time. See: AddDestinationPoint()
 					break;
 				case SDRC_EFlyWayPointType.WP_ATTACK:
@@ -440,12 +443,13 @@ class SDRC_ChopperHelper
 					//We know where to attack so return to normal flight mode
 					chopperComp.SetState(SDRC_EHeliState.FLY);
 					
-					CreateEndCurveJ(chopperComp, lowestHeight);
+					CreateEndCurveSteep(chopperComp, lowestHeight);
 					isSmoothingNeeded = false;
 					break;
 				}
 				case SDRC_EHeliState.BRAKE:
 				{
+					const int BRAKING_DISTANCE_LIMIT = 90;
 					//Modify brake height defaults
 					//Braking height is the last point. Could be below m_fFlyHeightLow...
 					vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];				
@@ -457,8 +461,15 @@ class SDRC_ChopperHelper
 						lowestHeight = surfaceY;
 					}
 					
-//					CreateEndCurveJ(chopperComp, lowestHeight);
-					CreateEndCurveSteep(chopperComp, lowestHeight);
+					//Depending on the braking distance, define the curve type
+					if (chopperComp.m_fBrakingDistance < BRAKING_DISTANCE_LIMIT)
+					{						
+						CreateEndCurveSteep(chopperComp, lowestHeight);
+					}
+					else
+					{						
+						CreateEndCurveJ(chopperComp, lowestHeight);
+					}
 					isSmoothingNeeded = false;
 					break;
 				}
@@ -518,8 +529,8 @@ class SDRC_ChopperHelper
 	/*!	
 	Create a curve that looks like a J
 	
-		     |
-		__--"
+		        /
+		___---"´
 	
 	*/
 	static void CreateEndCurveJ(SDRC_ChopperComp chopperComp, float lowestHeight)
@@ -554,8 +565,8 @@ class SDRC_ChopperHelper
 	/*!	
 	Create a steep dropping curve
 	
-		 ,--´´
-		|
+		 ,--**'''
+		/
 	*/
 	static void CreateEndCurveSteep(SDRC_ChopperComp chopperComp, float lowestHeight)
 	{

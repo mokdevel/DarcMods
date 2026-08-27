@@ -84,6 +84,13 @@ class SDRC_VehicleHelper
 				}
 				
 				IEntity character = compartment.SpawnCharacterInCompartment(aiPrefab, group);
+				
+/*				RplComponent entityRpl = RplComponent.Cast(character.GetOwner().FindComponent(RplComponent));
+				if (entityRpl)
+				{
+					entityRpl.EnableStreaming(false);
+				}*/
+				
 				if (character)
 				{
 					// This fixes the issue where AI is spawned invisible and not entering the vehicle before GM is moving. 

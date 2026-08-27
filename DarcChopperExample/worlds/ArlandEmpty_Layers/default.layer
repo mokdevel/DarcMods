@@ -30,6 +30,23 @@ PerceptionManager PerceptionManager1 : "{028DAEAD63E056BE}Prefabs/World/Game/Per
 SCR_GameModeEditor GameMode_Editor_Full1 : "{DA3986AF1B5032B7}Prefabs/MP/Modes/Editor/GameMode_Editor_Full.et" {
  coords 1410.139 38.598 2083.971
 }
+$grp GenericEntity : "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et" {
+ {
+  coords 2500 104.031 2500
+ }
+ {
+  coords 2523.821 140.557 2204.28
+ }
+ {
+  coords 2950 54.75 2100
+ }
+ {
+  coords 2450.974 78.069 1780.508
+ }
+ {
+  coords 1400 38.407 2330
+ }
+}
 SCR_SpawnPoint : "{4FEA25583D0975F7}Prefabs/MP/Spawning/SpawnPoint_USSR.et" {
  coords 906.641 39.009 2620.362
 }

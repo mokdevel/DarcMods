@@ -66,8 +66,8 @@ enum SDRC_EFlyWayPointType
 	WP_FLY_AWAY_IMMEDIATELY,	//4  - Fly away immediately removing the previous destinations
 	WP_PATROL,					//5  - Patrol around an area 
 	WP_PATROL_ONCE,				//6  - Do one patrol round around an area.
-	WP_LAND,					//7  - Normal landing
-	WP_LAND_VERTICAL,			//8  - Normal landing
+	WP_LAND,					//7  - DO NOT USE - use WP_M_LAND instead. Left for compatibility.
+	WP_LAND_VERTICAL,			//8  - Landing vertically down
 	WP_WAIT,					//9  - 
 	WP_WAIT_GETOUT,				//10 - Wait during get out. Sets the time and goes to WAIT
 	WP_RAISE,					//11 - 
@@ -84,6 +84,7 @@ enum SDRC_EFlyWayPointType
 	WP_ATTACK,					//20 - Sets attack position and time and then FLY
 	WP_SEARCH_DESTROY,			//   - Search for enemy by patroling an area. If enemy is found, attack the location.
 	
+	WP_M_LAND,					//   - Land to a position by doing WP_BRAKE and WP_LAND
 	WP_M_LAND_TROOPS,			//   - Drop of troops to exact position, wait and leave
 	WP_M_LAND_TO_FREE_SPOT,		//   - Drop of troops, but search for empty spot. Stop engine.
 	WP_M_EVAC_TROOPS,			//   - Drop troops to a safe spot and stop engine

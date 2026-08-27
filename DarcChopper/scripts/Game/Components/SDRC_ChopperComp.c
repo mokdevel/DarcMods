@@ -111,7 +111,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 	//Flight path
 	ref array<ref SDRC_FlyPathPoint> m_vFlightPoints = {};
 	[Attribute("", UIWidgets.Object, "Destinations")]	
-	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations;		//Requested destinations
+	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinationsOnPrefab;	//Requested destinations set on the prefab. These will be used FIRST
+	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations = {};			//Requested destinations set with AddDestination()
 	//Autonomous flying stuff
 	[Attribute(defvalue: typename.EnumToString(SDRC_EChopperType, SDRC_EChopperType.HELICOPTER), uiwidget: UIWidgets.ComboBox, desc: "The type of the entity.", enumType: SDRC_EChopperType)]		
 	SDRC_EChopperType m_EntityType;
@@ -893,35 +894,32 @@ modded class SDRC_ChopperComp : ScriptComponent
 	\param destination The first destination to fly to.if
 	
 	The first destination priority is:
-	- Parameter destination if assigned
+	- If on a low altitude, set to raise
+	- If no destinations set, create one infront of chopper. Turn the chopper towards it.
 	- The first fly destination if assigned
 	- Random point in front of heli, if nothing is pre defined
 	*/
-	void InitFlight(IEntity owner, vector destination = vector.Zero)
+	void InitFlight(IEntity owner)
 	{
 /*		if (!GetGame().GetWorld())
 		{
 			return;
 		}*/
 
+		vector destination = vector.Zero;
+		
 		//Store the origin. This value is updated in EOnFrame, but needed already in calculations.
 		m_vOrigin = owner.GetOrigin();	
 		float y = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, owner);
 				
 		//If we're on low altitude, wait for a moment and then hover to start flight
-		if ( (m_vFlyDestinations.IsEmpty()) && (m_vOrigin[1] < (y + 3) ) )
+		if ( m_vOrigin[1] < (y + 3) )
 		{	
 			m_vOrigin[1] = y + 0.1;
 			owner.SetOrigin(m_vOrigin);
 			
-			//Check if there is a destination assigned. Use this for the future destination
-			if ( (!m_vFlyDestinations.IsEmpty()) && (destination == vector.Zero) )
-			{
-				destination = m_vFlyDestinations[0].pt;
-			}
-			
 			//The low start destinations are added in the beginning of the list.
-			//These are added in reverse order to index 0
+			//These are added in !reverse! order to index 0
 			vector hoverPos = vector.Zero;
 			hoverPos[1] = (m_fFlyHeightLow + m_fFlyHeightHigh) / 2;
 			AddDestination(SDRC_EFlyWayPointType.WP_RAISE, hoverPos, index: 0);
@@ -933,7 +931,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, "0 0 0", 30, 0);
 			#endif
 		}
-		else //In the air. Normal case to check if a destination was assigned
+/*		else //In the air. Normal case to check if a destination was assigned
 		{
 			//If a fly destination has been assigned, use it
 			if ( (!m_vFlyDestinations.IsEmpty()) && (destination == vector.Zero) )
@@ -942,37 +940,19 @@ modded class SDRC_ChopperComp : ScriptComponent
 				//Add the destination to the list
 				AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
 			}
-		}
+		}*/
 		
-		//If no destination has been assigned, create a random one to use for rotating the chopper
-		if (destination == vector.Zero)
+		//If no destination has been assigned, create a random one to use for rotating the chopper and fly first to
+		if (m_vFlyDestinations.IsEmpty())
 		{
 			destination = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial);
 			//Make sure we're on proper flight height.
 			destination[1] = SDRC_ChopperHelper.SetPointHeight(destination, m_fFlyHeightLow, m_fFlyHeightHigh); 
+			AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);			
+			
+			//Turn chopper to face the first destination
+			SDRC_Math.TurnEntityTowardsXZ(owner, destination);							
 		}
-
-		//Turn chopper to face the first destination
-		SDRC_Math.TurnEntityTowardsXZ(owner, destination);				
-		
-		SDRC_ChopperHelper.SetFlightPointHeight(owner);
-		
-		//Create points for spline
-		CreateFlightPoints(owner, true);
-		
-		array<vector> flyPathPoints = {};
-		SDRC_ChopperDebug.GivePoints(flyPathPoints, m_vFlightPoints);
-		SDRC_Spline3D.GenerateSplinePoints(flyPathPoints, m_vSplinePoints, -1);
-		
-		//Set final values		
-		m_iClosestIndex = 5;
-		m_iOldClosestIndex = m_iClosestIndex;
-		
-		//Check that points are above ground
-		SDRC_ChopperHelper.SetSplinePointsAboveGround(owner);
-		
-		m_fSpeed = 0.1;
-		m_fSpeedTarget = m_fSpeed;
 
 		SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Chopper initial position: " + owner.GetOrigin(), LogLevel.DEBUG);
 				
@@ -1210,7 +1190,11 @@ modded class SDRC_ChopperComp : ScriptComponent
 				//NOTE: m_vAttackPosition has been set in AddDestination
 				break;
 			}
-			case SDRC_EFlyWayPointType.WP_LAND:
+/*			case SDRC_EFlyWayPointType.WP_LAND:
+			{
+				int x = 0;
+			}*/
+			case SDRC_EFlyWayPointType.WP_M_LAND:
 			{
 				destination = SDRC_Misc.SetPosToSurface(destination);
 				SetState(SDRC_EHeliState.LAND);				

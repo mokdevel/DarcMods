@@ -59,10 +59,12 @@ _TBD_
 ### WP_PATROL_ONCE
 _TBD_
 
-### WP_LAND
-Land the helicopter to destination following a generated flight path. The chopper tries to land to the destination spot, but it's not guaranteed.
+### WP_M_LAND
+Land the helicopter to destination following a generated flight path. The chopper tries to land exactly at the destination spot, but it's not guaranteed.
 * ``destination`` : Position to land to. 
 * ``value`` : Not used.
+
+NOTE: This was called WP_LAND earlier and is now deprecated. WP_LAND has been left for compatibility and will behave as WP_M_LAND.
 
 ### WP_LAND_VERTICAL
 Land the helicopter to the spot where it is currently. You should use WP_BRAKE before using WP_LAND_VERTICAL to stop the flight.
@@ -139,7 +141,9 @@ This will set the behaviour of the chopper to SEARCH_AND_DESTROY_BEHAVIOUR for a
 ## Macro commands
 Assigning single macro command will perform a set of single commands. 
 
-* ``WP_M_LAND_TROOPS`` : Drop of troops to exact position, wait and leave
+* ``WP_M_LAND`` : Land on the provided position
+  * WP_BRAKE, WP_LAND_VERTICAL
+* ``WP_M_LAND_TROOPS`` : Drop of troops to position, wait and leave
   * WP_LAND, WP_GET_OUT, WP_WAIT, WP_HOVER_UP, WP_RAISE
 * ``WP_M_LAND_TO_FREE_SPOT`` : Drop of troops, but search for empty spot. Stop engine.
   * Search for safe spot, WP_LAND, WP_GET_OUT, WP_STOP_ENGINE, WP_END
