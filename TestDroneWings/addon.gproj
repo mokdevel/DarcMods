@@ -1,0 +1,8 @@
+GameProject {
+ ID "TestDroneWings"
+ GUID "6A385CB548E8DF45"
+ TITLE "TestDroneWings"
+ Dependencies {
+  "6A385BD047636834" "68F8BEC24D7765DB" "58D0FB3206B6F859"
+ }
+}
