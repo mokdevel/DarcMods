@@ -382,9 +382,12 @@ class SDRC_SpawnHelper
 		}
 		else
 		{
-			vector newPos = SDRC_Math.RotatePosAroundPivot(structures[index].GetPosition(), "0 0 0", rotation);
+			vector newPos = pos + SDRC_Math.RotatePosAroundPivot(structures[index].GetPosition(), "0 0 0", rotation);		
+			
+			//TBD: This could be fixed so that items would be spawned on top of each other. For example, lamp on a table.
+			//newPos[1] = SDRC_Misc.GetSurfaceYWithWater(newPos);
 		
-			entity = SpawnItem(newPos + pos, structures[index].GetResource(), structures[index].GetRotationY() + rotation, emptyPosRadius);
+			entity = SpawnItem(newPos, structures[index].GetResource(), structures[index].GetRotationY() + rotation, emptyPosRadius, snap: true);
 //			entity = SpawnItem(structures[index].GetPosition() + pos, structures[index].GetResource(), 0, emptyPosRadius);
 			if (!entity)
 			{
