@@ -163,6 +163,10 @@ class SDRC_StashConfig : SDRC_MissionConfig
 			{
 				foreach (SDRC_Camp subMission : conf.subMissions)
 				{
+					//We need to fix the subIdx so that there are no duplicates				
+					//Find the usable subIdx by searching the current biggest one + 1.
+					int freeIndex = subMissions.Count();
+					
 					foreach (string mod : subMission.general.modList)
 					{
 						if (!SDRC_Misc.IsAddonLoaded(mod))
@@ -173,11 +177,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 							}
 						}
 						else
-						{
-							//We need to fix the subIdx so that there are no duplicates				
-							//Find the usable subIdx by searching the current biggest one + 1.
-							int freeIndex = SDRC_Misc.FindMaxArrayValue(missionList) + 1;
-						
+						{						
 							//Fix indexes
 							int subIdx = subMission.general.subIdx;
 							subMission.general.subIdx = freeIndex;

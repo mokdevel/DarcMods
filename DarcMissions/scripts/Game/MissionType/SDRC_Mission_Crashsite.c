@@ -338,17 +338,42 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 			{
 				foreach (SDRC_Crashsite subMission : conf.subMissions)
 				{
-					subMissions.Insert(subMission);
-				}
-				foreach (int idx : conf.missionList)
-				{
-					missionList.Insert(idx);
+					//We need to fix the subIdx so that there are no duplicates				
+					//Find the usable subIdx by searching the current biggest one + 1.
+					int freeIndex = subMissions.Count();
+					
+					foreach (string mod : subMission.general.modList)
+					{
+						if (!SDRC_Misc.IsAddonLoaded(mod))
+						{
+							if (!silent)
+							{
+								SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] For " + subMission.general.comment + " (" + missionFile + ") to work, a mod is needed: " + mod, LogLevel.WARNING);
+							}
+						}
+						else
+						{						
+							//Fix indexes
+							int subIdx = subMission.general.subIdx;
+							subMission.general.subIdx = freeIndex;
+							
+							//Add the subMissions to the main list. 
+							subMissions.Insert(subMission);
+							
+							foreach (int idx : conf.missionList)
+							{
+								if (idx == subIdx)
+								{
+									missionList.Insert(freeIndex);
+								}
+							}
+						}
+					}
 				}
 			}
-		}
-		
-		super.LoadMissionFiles(ver);
-	}	
+		}		
+		super.LoadMissionFiles(ver);			
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	override void CreateMissionFiles()
