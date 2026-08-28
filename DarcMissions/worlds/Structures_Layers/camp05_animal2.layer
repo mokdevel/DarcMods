@@ -1,0 +1,32 @@
+StaticModelEntity : "{0765187447161CA5}PrefabsEditable/Auto/Props/Agriculture/Farm/E_HaystackDryer_01.et" {
+ coords 76.469 -0 153.561
+}
+GenericEntity : "{3EC72887AEC40F22}PrefabsEditable/Auto/Props/Furniture/TableOld_01/E_TableOld_01_white.et" {
+ coords 78.828 1 152.901
+ angles 0 49.265 0
+}
+GenericEntity : "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et" {
+ coords 76.974 1 146.917
+ angles 0 -15.517 0
+}
+GenericEntity : "{61F3E9080A364769}PrefabsEditable/Auto/Props/Commercial/ScaleShop_01/E_ScaleShop_01_white.et" {
+ coords 79.395 1.9 152.504
+ angles 0 -133.511 0
+}
+SCR_DestructibleEntity : "{71ED9316907C2D93}PrefabsEditable/Auto/Props/Civilian/BenchStreet/E_BenchStreet_02.et" {
+ coords 78.843 1 148.518
+ angles 0 -42.813 0
+}
+GenericEntity : "{833407E494B205DA}PrefabsEditable/Auto/Props/Decorations/E_AnimalHide_01.et" {
+ coords 78.739 1.898 152.984
+ angles 0 -42.731 0
+}
+GameEntity : "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et" {
+ coords 77.6 1 149.62
+}
+GenericEntity : "{EED14401BED18DBF}PrefabsEditable/Auto/Props/Crates/E_BoxWooden_01.et" {
+ coords 78.373 1 152.144
+}
+GenericEntity : "{FFD8A0190FACB2B2}PrefabsEditable/Auto/Props/Agriculture/Farm/E_HayPile_01.et" {
+ coords 74.709 1 149.956
+}

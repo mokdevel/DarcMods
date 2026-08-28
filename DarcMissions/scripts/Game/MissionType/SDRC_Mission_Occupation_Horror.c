@@ -5,9 +5,9 @@
 */
 
 //------------------------------------------------------------------------------------------------
-class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
+class SDRC_OccupationConfig_Horror : SDRC_OccupationConfig
 {
-	const string DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR = "dc_missionConfig_Occupation_010_horror.json";
+	const string DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR = "dc_missionConfig_Occupation_Horror.json";
 	
 	//------------------------------------------------------------------------------------------------
 	//This will setup the filename correctly to create the file
@@ -19,7 +19,7 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 	//------------------------------------------------------------------------------------------------
 	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
-		SDRC_OccupationConfig_010 data = SDRC_OccupationConfig_010.Cast(T);
+		SDRC_OccupationConfig_Horror data = SDRC_OccupationConfig_Horror.Cast(T);
 		return saveContext.WriteValue("", data);
 	}		
 		
@@ -32,18 +32,18 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 		//Default		
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-//		missionList = {10, 11, 12};		
-		missionList = {10};				
+//		missionList = {0, 1, 2};		
+		missionList = {0};				
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Clear();
-		subMissions.Insert(Occupation010());				
-		subMissions.Insert(Occupation011());				
-		subMissions.Insert(Occupation012());				
+		subMissions.Insert(Occupation_H_0());				
+		subMissions.Insert(Occupation_H_1());				
+		subMissions.Insert(Occupation_H_2());				
 	};
 	
 	//----------------------------------------------------
-	SDRC_Camp Occupation010()
+	SDRC_Camp Occupation_H_0()
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
@@ -51,8 +51,9 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 			"Avoid the location. No loot available.",
 			"Spawns from hell are dead!",
 			"Are you scared of a few ghosts..?",);
+		occupation.general.modList.Insert("$Zombies:");	//TBD: Fix to correct one!
 		occupation.general.Set(
-			10, "index 10: Zombie and Demon characters.",
+			0, "index 0: Zombie and Demon characters.",
 			{"0 0 0"}, 3,
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
@@ -82,7 +83,7 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 	}
 	
 	//----------------------------------------------------
-	SDRC_Camp Occupation011()
+	SDRC_Camp Occupation_H_1()
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
@@ -90,8 +91,9 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 			"Braaaainss.....",
 			"The living dead are just dead now.",
 			"You were tasty.",);
+		occupation.general.modList.Insert("$Zombies:");	//TBD: Fix to correct one!
 		occupation.general.Set(
-			11, "index 11: Zombie hordes",
+			1, "index 1: Zombie hordes",
 			{"0 0 0"}, 3,
 			{
 				EMapDescriptorType.MDT_NAME_VILLAGE,
@@ -120,7 +122,7 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 	}
 	
 	//----------------------------------------------------
-	SDRC_Camp Occupation012()
+	SDRC_Camp Occupation_H_2()
 	{
 		ref SDRC_Camp occupation = new SDRC_Camp();
 		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
@@ -129,7 +131,7 @@ class SDRC_OccupationConfig_010 : SDRC_OccupationConfig
 			"The dead shall stay dead.",
 			"Oh the horrors. You were slain.",);
 		occupation.general.Set(
-			12, "index 12: Zombies",
+			2, "index 2: Zombies",
 			{"0 0 0"}, 3,
 			{
 				EMapDescriptorType.MDT_CHURCH,

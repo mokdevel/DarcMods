@@ -1,0 +1,17 @@
+GenericEntity : "{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et" {
+ coords 55.428 1 148.327
+ angles 0 61.122 0
+}
+GenericEntity : "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et" {
+ coords 58.769 1 150.205
+}
+StaticModelEntity : "{8BF02124660AB745}PrefabsEditable/Auto/Structures/Military/Camps/TentSmallFIA_01/E_TentSmallFIA_01.et" {
+ coords 56.363 1 152.164
+}
+GenericEntity : "{C9CFDED29542A968}Prefabs/Props/Military/Furniture/CotMilitary_US_01.et" {
+ coords 57.644 1 147.257
+ angles 0 -24.081 0
+}
+GameEntity : "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et" {
+ coords 56.534 1 149.107
+}
