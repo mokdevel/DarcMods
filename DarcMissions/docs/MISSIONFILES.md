@@ -11,6 +11,8 @@ The missions ``subIdx`` will be modified automatically. The list of ``missionLis
 ``"missionFiles": ["dc_missionConfig_HvtItem_NewMissions.json"]`` - The file will be loaded from the same directory as the mission jsons.
 ``"missionFiles": ["new/dc_missionConfig_HvtItem_NewMissions.json"]`` - The file will be loaded from a ``new`` directory under the the json mission directory.
 
+**NOTE:** All mission types are not prepared for this yet. Occupation, Stash and HvtItem works.
+
 ### Example
 You plan to create a new mission file with Patrol missions.
 * You create a new mission json file that has the same parameters as ``dc_missionConfig_Patrol.json``. Make a copy of an existing one and modify.
