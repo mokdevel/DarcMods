@@ -27,7 +27,6 @@ There is limited error checking in the file loading so be careful when defining 
 # Dependencies
 I want to avoid the situation where you need to have a lot of mods just to run DarcMissions. The minimum shall be just DarcMissions and you will get a default set of missions. By adding additional mods, the system will enable additional missions. 
 
-# Supported mods
 Each submission has a parameter ``modList``. See: [P_COMMON](https://github.com/mokdevel/DarcMods/blob/91b541bdb11c11b4ed2561ab8aeea8417162b214/DarcMissions/docs/P_COMMON.md#sdrc_missionconfig)
 ```
 array<string> modList : List of mods needed for this mission.
@@ -40,6 +39,8 @@ If the submission has defined a modList, the mods are checked to be available. I
 ```
 
 The mod name is found <TBD>.
+
+# Supported mods
 
 ## French Animals 
 * [Workshop link](https://reforger.armaplatform.com/workshop/6A04798F752CBE57-BAR_FrenchAnimals)
