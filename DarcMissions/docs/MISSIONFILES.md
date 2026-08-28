@@ -45,11 +45,11 @@ The mod name is found <TBD>.
 # Supported mods
 
 ## French Animals 
-* [Workshop link](https://reforger.armaplatform.com/workshop/6A04798F752CBE57-BAR_FrenchAnimals)
-If you add this mod in to your server list, this will enable additional animal related missions (Occupation). 
+* [BAR_FrenchAnimals](https://reforger.armaplatform.com/workshop/6A04798F752CBE57-BAR_FrenchAnimals)
+If you add this mod in to your server list, this will enable additional animal related missions of type Occupation. 
 
 It is recommended to use also DarcSpawner_Animals to get random wild life in to the world.
-* [Workshop link](https://reforger.armaplatform.com/workshop/6A18782245D36F45-DarcSpawner_Animals)
+* [DarcSpawner_Animals](https://reforger.armaplatform.com/workshop/6A18782245D36F45-DarcSpawner_Animals)
   
 # Mission packs
 <TBD>
