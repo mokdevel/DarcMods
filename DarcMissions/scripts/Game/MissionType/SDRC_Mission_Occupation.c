@@ -27,7 +27,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
 		}
-		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER);
+		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER, silent: true);
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -145,8 +145,10 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 	}		
 
 	//------------------------------------------------------------------------------------------------	
-	override void LoadMissionFiles(int ver)
+	override void LoadMissionFiles(int ver, bool silent = false)
 	{
+		SDRC_Misc.GetFileList(missionFiles, SDRC_Conf.subDirPath, ".json", "dc_missionConfig_Occupation_", true);
+		
 		//Load mission files
 		foreach (string missionFile : missionFiles)
 		{
@@ -157,26 +159,55 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			{
 				foreach (SDRC_Camp subMission : conf.subMissions)
 				{
-					subMissions.Insert(subMission);
-				}
-				foreach (int idx : conf.missionList)
-				{
-					missionList.Insert(idx);
+					//We need to fix the subIdx so that there are no duplicates				
+					//Find the usable subIdx by searching the current biggest one + 1.
+					int freeIndex = subMissions.Count();
+					
+					foreach (string mod : subMission.general.modList)
+					{
+						if (!SDRC_Misc.IsAddonLoaded(mod))
+						{
+							if (!silent)
+							{
+								SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] For " + subMission.general.comment + " (" + missionFile + ") to work, a mod is needed: " + mod, LogLevel.WARNING);
+							}
+						}
+						else
+						{						
+							//Fix indexes
+							int subIdx = subMission.general.subIdx;
+							subMission.general.subIdx = freeIndex;
+							
+							//Add the subMissions to the main list. 
+							subMissions.Insert(subMission);
+							
+							foreach (int idx : conf.missionList)
+							{
+								if (idx == subIdx)
+								{
+									missionList.Insert(freeIndex);
+								}
+							}
+						}
+					}
 				}
 			}
-		}
-		
-		super.LoadMissionFiles(ver);
+		}		
+		super.LoadMissionFiles(ver);			
 	}
-
+	
 	//------------------------------------------------------------------------------------------------
 	override void CreateMissionFiles()
 	{
 		super.CreateMissionFiles();
 		
-		SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(SDRC_OccupationConfig_010.GetFileName());				
-		SDRC_OccupationConfig_010 conf = new SDRC_OccupationConfig_010();
-		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER, silent: true);
+		SDRC_JsonApi2 jsonApi0 = new SDRC_JsonApi2(SDRC_OccupationConfig_Horror.GetFileName());				
+		SDRC_OccupationConfig_Horror conf0 = new SDRC_OccupationConfig_Horror();
+		jsonApi0.Load(conf0, SDRC_MissionConfig.Cast(conf0), DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER, silent: true);
+		
+		SDRC_JsonApi2 jsonApi1 = new SDRC_JsonApi2(SDRC_OccupationConfig_Animals.GetFileName());				
+		SDRC_OccupationConfig_Animals conf1 = new SDRC_OccupationConfig_Animals();
+		jsonApi1.Load(conf1, SDRC_MissionConfig.Cast(conf1), DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER, silent: true);		
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -203,7 +234,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 		//Default		
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
+		missionList = {};//{0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
 //		missionFiles.Insert("dc_missionConfig_Occupation_010_horror.json");
 		//Mission specific		
 		//----------------------------------------------------

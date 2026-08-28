@@ -119,7 +119,7 @@ class SDRC_TemplateConfig : SDRC_MissionConfig
 	}		
 	
 	//------------------------------------------------------------------------------------------------	
-	override void LoadMissionFiles(int ver)
+	override void LoadMissionFiles(int ver, bool silent = false)
 	{
 		super.LoadMissionFiles(ver);
 	}

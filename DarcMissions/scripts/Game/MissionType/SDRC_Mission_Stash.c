@@ -29,7 +29,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
 		}
-		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_STASH_JSONVER);
+		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_STASH_JSONVER, silent: true);
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -149,10 +149,8 @@ class SDRC_StashConfig : SDRC_MissionConfig
 	}		
 
 	//------------------------------------------------------------------------------------------------	
-	override void LoadMissionFiles(int ver)
+	override void LoadMissionFiles(int ver, bool silent = false)
 	{
-//		string path = "$profile:/" + SDRC_Conf.CONF_DIRECTORY + "/" + SDRC_Conf.subDir + "/";
-//		SDRC_Misc.GetFileList(missionFiles, path, ".json", "dc_missionConfig_Stash_", true);
 		SDRC_Misc.GetFileList(missionFiles, SDRC_Conf.subDirPath, ".json", "dc_missionConfig_Stash_", true);
 		
 		//Load mission files
@@ -161,37 +159,45 @@ class SDRC_StashConfig : SDRC_MissionConfig
 			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
 			SDRC_StashConfig conf = new SDRC_StashConfig();
 			
-/*			SDRC_MissionConfig conf = null;
-			conf = SDRC_StashConfig.Cast(conf);
-			conf = new SDRC_StashConfig();*/
-			
 			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false))
 			{
 				foreach (SDRC_Camp subMission : conf.subMissions)
 				{
-					//We need to fix the subIdx so that there are no duplicates				
-					//Find the usable subIdx by searching the current biggest one + 1.
-					int freeIndex = SDRC_Misc.FindMaxArrayValue(missionList) + 1;
-				
-					//Fix indexes
-					int subIdx = subMission.general.subIdx;
-					subMission.general.subIdx = freeIndex;
-					
-					//Add the subMissions to the main list. 
-					subMissions.Insert(subMission);
-					
-					foreach (int idx : conf.missionList)
+					foreach (string mod : subMission.general.modList)
 					{
-						if (idx == subIdx)
+						if (!SDRC_Misc.IsAddonLoaded(mod))
 						{
-							missionList.Insert(freeIndex);
+							if (!silent)
+							{
+								SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] For " + subMission.general.comment + " (" + missionFile + ") to work, a mod is needed: " + mod, LogLevel.WARNING);
+							}
+						}
+						else
+						{
+							//We need to fix the subIdx so that there are no duplicates				
+							//Find the usable subIdx by searching the current biggest one + 1.
+							int freeIndex = SDRC_Misc.FindMaxArrayValue(missionList) + 1;
+						
+							//Fix indexes
+							int subIdx = subMission.general.subIdx;
+							subMission.general.subIdx = freeIndex;
+							
+							//Add the subMissions to the main list. 
+							subMissions.Insert(subMission);
+							
+							foreach (int idx : conf.missionList)
+							{
+								if (idx == subIdx)
+								{
+									missionList.Insert(freeIndex);
+								}
+							}
 						}
 					}
 				}
 			}
-		}
-		
-		super.LoadMissionFiles(ver);
+		}		
+		super.LoadMissionFiles(ver);			
 	}
 
 	//------------------------------------------------------------------------------------------------

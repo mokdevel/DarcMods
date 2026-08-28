@@ -393,7 +393,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 	}		
 
 	//------------------------------------------------------------------------------------------------	
-	override void LoadMissionFiles(int ver)
+	override void LoadMissionFiles(int ver, bool silent = false)
 	{
 		//Load mission files
 		foreach (string missionFile : missionFiles)

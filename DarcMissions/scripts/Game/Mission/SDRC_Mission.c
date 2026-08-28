@@ -95,7 +95,7 @@ class SDRC_MissionConfig : SDRC_Config
 	/*!
 	Override to load mission files. Remember to call super to add the unique suids to a list
 	*/		
-	void LoadMissionFiles(int ver)
+	void LoadMissionFiles(int ver, bool silent = false)
 	{
 		array<int> suids = {};
 		
