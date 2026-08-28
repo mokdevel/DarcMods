@@ -13,7 +13,7 @@ The missions ``subIdx`` will be modified automatically. The list of ``missionLis
 
 **NOTE:** All mission types are not prepared for this yet. Occupation, Stash and HvtItem works.
 
-### Example
+## Example
 You plan to create a new mission file with Patrol missions.
 * You create a new mission json file that has the same parameters as ``dc_missionConfig_Patrol.json``. Make a copy of an existing one and modify.
 * You rename it as ``dc_missionConfig_Patrol_MyPatrolMissions.json``
@@ -52,7 +52,7 @@ It is recommended to use also DarcSpawner_Animals to get random wild life in to 
 * [DarcSpawner_Animals](https://reforger.armaplatform.com/workshop/6A18782245D36F45-DarcSpawner_Animals)
   
 # Mission packs
-<TBD>
+* TBD
 
 ### How to create a mission packs
-<TBD>
+* TBD
