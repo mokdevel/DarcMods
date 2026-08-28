@@ -1,0 +1,8 @@
+GameProject {
+ ID "TestMissionsAnimals"
+ GUID "6A38593210053CB2"
+ TITLE "TestMissionsAnimals"
+ Dependencies {
+  "6A18782245D36F45" "652EACEC4A8BDBC3" "58D0FB3206B6F859"
+ }
+}
