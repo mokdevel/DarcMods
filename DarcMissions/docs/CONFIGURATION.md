@@ -19,6 +19,7 @@ Core has common configurations for mods. See:
 The mission frame has the main definitions on mission spawn times, counts, etc. See:
 * [Mission Frame](./MISSIONFRAME.md)
 * [Mission Frame Config](./MISSIONCONFIG.md)
+* [Mission files](./MISSIONFILES.md)
 
 Missions are configurable via .json files. Each mission have their own configuration file, but some information is shared. There are:
 * [General parameters](./P_COMMON.md) that are valid for all missions. 

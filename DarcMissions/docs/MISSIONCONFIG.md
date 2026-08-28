@@ -65,6 +65,7 @@ For more details on general topics, see:
 * [Requested missions](./MISSIONFRAME.md#requested-missions)
 * [Mission count](./MISSIONFRAME.md#mission-count)
 * [Mission end](./MISSIONFRAME.md#mission-end-win-or-lose)
+* [Mission files](./MISSIONFILES.md)
 
 ## Factions
 The mission faction is defined in ``enemyFactions`` or individually per sub-mission. The supported factions are listed below.

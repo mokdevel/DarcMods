@@ -9,6 +9,8 @@ Main Features:
 * Spawn positions inside buildings use cover positions. Enemies and loot should not spawn under floor or inside walls/stairs/..
   * Those buildings that locations that do not provide cover or have issues with navmesh will use the old system
 * ``missionFiles`` is deprecated. Mission files are automatically searched from the file system. 
+* Preparation for mission pack functionality. 
+* New Occupation missions related to animals.
 
 ## 20260818.1
 Main Features:
