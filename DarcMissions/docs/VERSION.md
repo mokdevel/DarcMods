@@ -10,7 +10,7 @@ Main Features:
   * Those buildings that locations that do not provide cover or have issues with navmesh will use the old system
 * ``missionFiles`` is deprecated. Mission files are automatically searched from the file system. 
 * Preparation for mission pack functionality. 
-* New Occupation missions related to animals.
+* New Occupation missions related to animals. Enable French Animals and the missions will be available.
 
 ## 20260818.1
 Main Features:
