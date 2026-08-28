@@ -1,0 +1,8 @@
+GameProject {
+ ID "DarcWings"
+ GUID "6A385BD047636834"
+ TITLE "DarcWings"
+ Dependencies {
+  "689EDED542F881AF" "69389797227E64A8" "58D0FB3206B6F859"
+ }
+}

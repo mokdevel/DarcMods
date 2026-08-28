@@ -1,0 +1,21 @@
+Vehicle : "{08F4BDDAD3E2EB7C}Prefabs/Vehicles/FixedWing/C-130/C130J.et" {
+ ID "33AB4402FEA1CF72"
+ components {
+  C130_EngineController "{695CD3E3DB9DF774}" {
+   m_iInitialEngineOn 1
+  }
+  SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
+   m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
+    m_aAutoLabels + {
+     ENTITYTYPE_DARCCHOPPER
+    }
+   }
+  }
+  SDRC_ChopperComp "{69F2C9853E094FCA}" {
+   m_fSpeedMin 80
+   m_fSpeedMax 100
+   m_fFlyHeightHigh 160
+   m_EntityType FIXEDWING
+  }
+ }
+}
