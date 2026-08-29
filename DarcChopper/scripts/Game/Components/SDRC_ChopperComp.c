@@ -791,7 +791,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 				{
 					float percentage = Math.Clamp(m_fTimeInStateBeen/VERTICAL_SPEED_UP_TIME, 0, 1);
 					rotorForce = 3 * rotorForce * percentage;
-					distanceFromSplineMul = Math.AbsFloat(distanceFromSplineMul) * percentage;
+					distanceFromSplineMul = distanceFromSplineMul * percentage;
 					
 /*					//In hovering state, do smooth movemements
 					rotorForce = 2 * rotorForce * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));
@@ -804,8 +804,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 				if (m_fTimeInStateLeft > 0)
 				{
 					float percentage = Math.Clamp(m_fTimeInStateBeen/VERTICAL_SPEED_UP_TIME, 0, 1);
-					rotorForce = -3 * rotorForce * percentage;
-					distanceFromSplineMul = Math.AbsFloat(distanceFromSplineMul) * percentage;
+					rotorForce = 3 * rotorForce * percentage;
+					distanceFromSplineMul = distanceFromSplineMul * percentage;
 					
 /*					//In hovering state, do smooth movemements
 					rotorForce = -1 * rotorForce * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));

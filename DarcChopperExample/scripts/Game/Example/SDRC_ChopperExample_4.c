@@ -59,9 +59,9 @@ class SDRC_ChopperExample_4
 		//Add our flight path		
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, flyHereFirst);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "1350 3 2287");
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 10);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, "0 30 0", 10);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER_DOWN, "0 -10 0", 10);
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 8);				//Hover for 8 seconds
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, "0 30 0", 8);			//Raise up 30 meters. Stay in the state or 8 seconds.
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER_DOWN, "0 -20 0", 8);		//Hover down 20 meters. Stay in the state or 8 seconds.
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_LAND_VERTICAL);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value: 25);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_STOP_ENGINE);
