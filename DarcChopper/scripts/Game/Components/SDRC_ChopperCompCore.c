@@ -77,11 +77,12 @@ enum SDRC_EFlyWayPointType
 	WP_BRAKE,					//15 - Slow the heli down to stand still
 	WP_END,						//16 - 
 	WP_DESPAWN,					//17 - 
+	WP_CRASH,					//18 - 
 	
 	//One shot commands
-	WP_GET_OUT,					//18 - Orders AI to get out
-	WP_STOP_ENGINE,				//19 - Does the action and goes to WAIT state
-	WP_ATTACK,					//20 - Sets attack position and time and then FLY
+	WP_GET_OUT,					//19 - Orders AI to get out
+	WP_STOP_ENGINE,				//20 - Does the action and goes to WAIT state
+	WP_ATTACK,					//21 - Sets attack position and time and then FLY
 	WP_SEARCH_DESTROY,			//   - Search for enemy by patroling an area. If enemy is found, attack the location.
 	
 	WP_M_LAND,					//   - Land to a position by doing WP_BRAKE and WP_LAND
@@ -92,7 +93,7 @@ enum SDRC_EFlyWayPointType
 	WP_M_SUPPRESSIVE,			//   - Bomb run on the area without the need to have an enemy
 	
 	//Macro actions
-	WP_M_RESET = 30,			//30 - Reset destinations. Cut the current flight planned and pick the next destination in the list.
+	WP_M_RESET = 50,			//50 - Reset destinations. Cut the current flight planned and pick the next destination in the list.
 	WP_M_CUT,					//   - Cut the current flight planned and pick the next destination in the list.
 	WP_M_TESTING,				//Just for testing
 }
@@ -107,13 +108,15 @@ enum SDRC_EHeliState
 	LAND_VERTICAL,			// 5 - Chopper is landing vertically
 	BRAKE,					// 6 - Chopper is braking
 	WAIT,					// 7 - NOTE: Velocity disabled
-	RAISE,					// 8 - Heli is raising and moving forward to given position
-	HOVER,					// 9 - Heli is hovering at given height
-	HOVER_UP,				//10 - Heli is hovering upwards
-	HOVER_DOWN,				//11 - Heli is hovering upwards
+	RAISE,					// 8 - Chopper is raising and moving forward to given position
+	HOVER,					// 9 - Chopper is hovering at given height
+	HOVER_UP,				//10 - Chopper is hovering upwards
+	HOVER_DOWN,				//11 - Chopper is hovering upwards
 	GET_OUT,				//12 - One frame state to order AI to get out
-	ATTACK,					//13 - Added when WP_ATTACK is handled to inform that spline height checking can go below minimum height
+	ATTACK,					//13 - Added when WP_ATTACK is handled to inform that spline height checking can go below minimum height	
+	CRASH,					//14 - Chopper has a target to crash
 	END,
+	
 	
 	ON_GROUND,				//One frame state for touch down
 	DESTROYED,

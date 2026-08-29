@@ -291,7 +291,10 @@ modded class SDRC_ChopperComp
 					//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid, 50 + i * 20);
 				}
 				break;
-			}				
+			}			
+			case SDRC_EFlyWayPointType.WP_CRASH:
+				SetState(SDRC_EHeliState.CRASH);			
+				break;
 			default:
 				SDRC_Log.Add("[SDRC_ChopperComp:SetNextState] State not defined: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.WARNING);
 		}
