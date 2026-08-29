@@ -21,7 +21,7 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		comment = "Animal spawner using French Animals mod. ";
 		spawnWorldSizeMultiplier = 0;
 		spawnCount = 30;
-		spawnSetList = {0,0,0,0,0,0,1,1,1,2,2,2,3,3,4,4,9 ,5,6,6,7,8,10};
+		spawnSetList = {0,0,0,0,0,0,1,1,1,2,2,2,3,3,4,4,9,12,12 ,5,6,6,7,8,10};
 		//----------------------------------------------------		
 		spawnSets.Insert(SpawnSet0_Animals());	//Deer
 		spawnSets.Insert(SpawnSet1_Animals());	//Wolf
@@ -37,7 +37,8 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		spawnSets.Insert(SpawnSet10_Animals());	//Bear territory
 		//Do not use these at this stage
 		spawnSets.Insert(SpawnSet11_Animals());	//Deer & Doe herd
-		spawnSets.Insert(SpawnSet12_Animals());	//Animal spawner - do not use for the moment.	
+		spawnSets.Insert(SpawnSet12_Animals());	//Crow
+		//spawnSets.Insert(SpawnSetXX_Animals());	//Animal spawner - do not use for the moment.	
 	}	
 	
 	//Different spawner confs
@@ -316,7 +317,32 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 	{
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(		
-			"index 12: Animal spawner",
+			"index 12: Crows",
+			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			{
+				EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST,
+				EMapDescriptorType.MDT_NAME_GENERIC,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_SETTLEMENT,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+			},
+			{},
+			{
+				"{B7A1C7E192803CFE}Prefabs/Animals/Crow.et",
+			},
+			200, false, false,
+		);
+		
+		return spawnSet;
+	}		
+	
+	SDRC_SpawnSet SpawnSetXX_Animals()
+	{
+		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
+		spawnSet.Set(		
+			"index XX: Animal spawner",
 			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
 			{
 				EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST,
