@@ -1,8 +1,6 @@
 # Commands
 This documentation is for modders who want to command the choppers from script of via prefab. From script, use ``AddDestination()``.
 
-!!! THIS IS WIP !!!
-
 ## AddDestination
 The function takes three parameters. Depending on the command used, the result may differ. 
 
@@ -40,24 +38,36 @@ List of available commands:
 * ``WP_SEARCH_DESTROY`` : Search for enemy by patroling an area. If enemy is found, attack the location.
 
 ### WP_FLY
-_TBD_
+Fly, normal flight pattern. If you have multiple WP_FLY assigned, these will be processed in a serie to create a longer flight pattern.
+* ``destination`` : Position to fly to.
+* ``value`` : Not used.
 
 ### WP_FLY_IMMEDIATELY
-_TBD_
+Interrupts and clears all existing flight destinations assigned and assigns a single destination to fly to immediately. 
+* ``destination`` : Position to fly to.
+* ``value`` : Not used.
 
 ### WP_FLY_AWAY
-_TBD_
+Assigns an "end" destination far away close to map border. This is command to tell a chopper that soon it's time to despawn.
+* ``destination`` : Not used in normal cases. Will generate a position far away. If destination is set, will fly there.
+* ``value`` : Not used.
 
 ### WP_FLY_AWAY_IMMEDIATELY
-_TBD_
+Interrupts and clears all existing flight destinations assigned and assigns a single "end" destination to fly to immediately. 
+* ``destination`` : Not used in normal cases. Will generate a position far away. If destination is set, will fly there.
+* ``value`` : Not used.
 
 ### WP_PATROL
+Creates a flight pattern to circle around a position. This will do a random amount of circling around the position. If you want longer patroling, set multiple WP_PATROL after each other.
 * ``destination`` : Position to circle around.
 * ``value`` : The radius of the cirle.
   * If 0 or empty, defaults to internal chopper type parameter patrolRadius
   
 ### WP_PATROL_ONCE
-_TBD_
+Creates a flight pattern to circle around a position. This will do a single circle around the position. If you want longer patroling, use WP_PATROL.
+* ``destination`` : Position to circle around.
+* ``value`` : The radius of the cirle.
+  * If 0 or empty, defaults to internal chopper type parameter patrolRadius
 
 ### WP_M_LAND
 Land the helicopter to destination following a generated flight path. The chopper tries to land exactly at the destination spot, but it's not guaranteed.

@@ -3,12 +3,15 @@
 ## Next Version
 
 ## 20260818
-Main features:
+* Landing curves finetuned. Should land nicely on spot now. Obstacle awareness to be added later for those tight landings.
 * Added WP_HOVER_DOWN
 * Added WP_LAND_VERTICAL
+* Fixed WP_HOVER and WP_HOVER_UP
+* Updated documentation: https://github.com/mokdevel/DarcMods/blob/main/DarcChopper/docs/P_WP_COMMANDS.md
 
 Fixes: 
 * Fixed WP_BRAKE flight pattern
+* Choppers spawning with AI and just staying in the air.
 
 ## 20260818
 Fixes: 
