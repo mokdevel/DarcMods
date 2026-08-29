@@ -1,5 +1,5 @@
 {
-    "jsonVersion": 2,
+    "jsonVersion": 4,
     "version": 1,
     "author": "darc",
     "comment": "Animal spawner using French Animals mod. ",
@@ -11,22 +11,26 @@
         0,
         0,
         0,
+        0,
         1,
         1,
+        1,
         2,
         2,
         2,
-        3,
         3,
         3,
         4,
         4,
-        5,
+        9,
+        12,
+        12,
         5,
         6,
         6,
         7,
-        8
+        8,
+        10
     ],
     "spawnSets": [
         {
@@ -185,7 +189,6 @@
                 34,
                 58,
                 64,
-                60,
                 62
             ],
             "positions": [],
@@ -209,7 +212,6 @@
                 34,
                 58,
                 64,
-                60,
                 62
             ],
             "positions": [],
@@ -233,12 +235,106 @@
                 34,
                 58,
                 64,
-                60,
                 62
             ],
             "positions": [],
             "entities": [
                 "{5BBDC814E9639041}Prefabs/Zones/BAR_TerritoryMarker_Wolf.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 9: Spawn bear",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{DE061A93287F06F8}Prefabs/Animals/Bear.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 10: Spawn bear territory",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{A7CF77DBCA3EFF20}Prefabs/Zones/BAR_TerritoryMarker_Bear.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 11: Deer & Doe herd",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{7E392EFF0B595795}Prefabs/Animals_Groups/Deer_Doe_Group.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 12: Crows",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64,
+                62,
+                59,
+                61,
+                60
+            ],
+            "positions": [],
+            "entities": [
+                "{B7A1C7E192803CFE}Prefabs/Animals/Crow.et"
             ],
             "spawnRndRadius": 200,
             "spawnOnRoad": false,

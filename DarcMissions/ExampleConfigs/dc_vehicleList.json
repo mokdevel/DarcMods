@@ -1,5 +1,5 @@
 {
-    "jsonVersion": 3,
+    "jsonVersion": 4,
     "author": "darc",
     "modList": [],
     "lists": [
@@ -234,6 +234,29 @@
             "factions": []
         },
         {
+            "id": "VEHICLE_TRACKED_ARMED",
+            "modDir": [
+                "Prefabs/Vehicles/Tracked"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
             "id": "VEHICLE_HELICOPTER_ALL",
             "modDir": [
                 "Prefabs/Vehicles/Helicopters"
@@ -275,7 +298,8 @@
                 "Dst",
                 "Lights",
                 "Probes",
-                "VehParts"
+                "VehParts",
+                "_friend"
             ],
             "items": [],
             "factions": []
@@ -298,7 +322,8 @@
                 "Dst",
                 "Lights",
                 "Probes",
-                "VehParts"
+                "VehParts",
+                "_friend"
             ],
             "items": [],
             "factions": []
@@ -321,19 +346,40 @@
                 "Dst",
                 "Lights",
                 "Probes",
-                "VehParts"
+                "VehParts",
+                "_friend"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "VEHICLE_CHOPPER_DRONE",
+            "modDir": [
+                "Prefabs/Drones"
+            ],
+            "include": [
+                "_Darc"
+            ],
+            "exclude": [
+                "_Base",
+                "_Sample",
+                "Tutorial",
+                "_Conflict",
+                "_randomized",
+                "_bench",
+                "_gun_mount",
+                "_roof",
+                "Dst",
+                "Lights",
+                "Probes",
+                "VehParts",
+                "_friend"
             ],
             "items": [],
             "factions": []
         }
     ],
     "akas": [
-        {
-            "names": [
-                "USSR",
-                "FIA"
-            ]
-        },
         {
             "names": [
                 "RHS_USAF",

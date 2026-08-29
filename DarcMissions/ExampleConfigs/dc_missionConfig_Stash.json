@@ -12,11 +12,10 @@
     "missionList": [
         0,
         0,
-        0
+        0,
+        1
     ],
-    "missionFiles": [
-        "dc_missionConfig_Stash_010.json"
-    ],
+    "missionFiles": [],
     "activeDistance": 50,
     "subMissions": [
         {
@@ -41,7 +40,7 @@
                         "lose": "Loot lost."
                     }
                 ],
-                "winCondition": 30,
+                "winCondition": 31,
                 "faction": [],
                 "markerType": "DARC_MISSION",
                 "markerIcon": 12,
@@ -105,6 +104,103 @@
             "campItems": [
                 {
                     "resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+                    "position": [
+                        100.47,
+                        1.0,
+                        144.561
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "general": {
+                "subIdx": 1,
+                "comment": "index 1: Random weapon stash",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 3.0,
+                "locationTypes": [],
+                "posName": "any",
+                "messages": [
+                    {
+                        "title": "Hidden weapons near %l",
+                        "info": "Hurry, loot is yours to take!",
+                        "win": "Weapons found.",
+                        "lose": "Someone found the stash and left you nothing."
+                    }
+                ],
+                "winCondition": 31,
+                "faction": [],
+                "markerType": "DARC_MISSION",
+                "markerIcon": 12,
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
+            },
+            "ai": {
+                "count": [
+                    0,
+                    1
+                ],
+                "types": [
+                    "G_LIGHT"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    50,
+                    300
+                ],
+                "waypointGenType": 1,
+                "waypointMoveType": 5
+            },
+            "qrf": {
+                "subIdx": [
+                    2,
+                    3,
+                    5
+                ],
+                "activation": 1,
+                "chance": 0.2,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE_BIG",
+                    "WEAPON_RIFLE_BIG",
+                    "WEAPON_LAUNCHER",
+                    "WEAPON_LAUNCHER",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et",
                     "position": [
                         100.47,
                         1.0,

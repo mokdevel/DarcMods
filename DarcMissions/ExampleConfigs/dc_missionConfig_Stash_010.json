@@ -10,17 +10,16 @@
     "showMessage": true,
     "disableArsenal": false,
     "missionList": [
-        10
+        0,
+        1
     ],
-    "missionFiles": [
-        "dc_missionConfig_Stash_010.json"
-    ],
+    "missionFiles": [],
     "activeDistance": 50,
     "subMissions": [
         {
             "general": {
-                "subIdx": 10,
-                "comment": "index 10: Random stash",
+                "subIdx": 0,
+                "comment": "index 0: Random stash",
                 "pos": [
                     [
                         0.0,
@@ -91,9 +90,94 @@
                 {
                     "resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
                     "position": [
-                        100.47,
+                        0.0,
                         1.0,
-                        144.561
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "general": {
+                "subIdx": 1,
+                "comment": "index 1: Briefcase in a city",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 3.0,
+                "locationTypes": [
+                    59,
+                    61
+                ],
+                "posName": "any",
+                "messages": [
+                    {
+                        "title": "A briefcase has been lost near %l",
+                        "info": "There is valuable loot to find.",
+                        "win": "Loot found.",
+                        "lose": "The loot was briefly your, but is gone now."
+                    }
+                ],
+                "winCondition": 32,
+                "faction": [],
+                "markerType": "DARC_MISSION",
+                "markerIcon": 12,
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_RECON"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    50,
+                    300
+                ],
+                "waypointGenType": 1,
+                "waypointMoveType": 5
+            },
+            "qrf": null,
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "UTIL_ATTACHMENT",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "UTIL_OPTIC",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{14B16D7580478D1A}Prefabs/Props/Civilian/LootSuitcase_01.et",
+                    "position": [
+                        0.0,
+                        1.0,
+                        0.0
                     ],
                     "rotation": [
                         0.0,

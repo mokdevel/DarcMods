@@ -1,0 +1,201 @@
+{
+    "jsonVersion": 2,
+    "missionType": 2,
+    "version": 1,
+    "author": "darc",
+    "comment": "",
+    "missionCycleTime": 30,
+    "showMarker": true,
+    "showHint": true,
+    "showMessage": true,
+    "disableArsenal": true,
+    "missionList": [
+        0
+    ],
+    "missionFiles": [],
+    "subMissions": [
+        {
+            "general": {
+                "subIdx": 0,
+                "comment": "index 0: Zombie and Demon characters.",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 3.0,
+                "locationTypes": [
+                    60,
+                    64
+                ],
+                "posName": "any",
+                "messages": [
+                    {
+                        "title": "Creatures near %l",
+                        "info": "Avoid the location. No loot available.",
+                        "win": "Spawns from hell are dead!",
+                        "lose": "Are you scared of a few ghosts..?"
+                    }
+                ],
+                "winCondition": 1,
+                "faction": [],
+                "markerType": "DARC_MISSION",
+                "markerIcon": 15,
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": [
+                    "$Zombies:"
+                ]
+            },
+            "ai": {
+                "count": [
+                    1,
+                    8
+                ],
+                "types": [
+                    "C_DEMON",
+                    "C_DEMON_BOSS",
+                    "C_BEASTS"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    50,
+                    300
+                ],
+                "waypointGenType": 1,
+                "waypointMoveType": 5
+            },
+            "qrf": null,
+            "loot": null,
+            "campItems": []
+        },
+        {
+            "general": {
+                "subIdx": 1,
+                "comment": "index 1: Zombie hordes",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 3.0,
+                "locationTypes": [
+                    60,
+                    64
+                ],
+                "posName": "any",
+                "messages": [
+                    {
+                        "title": "Zombies near %l",
+                        "info": "Braaaainss.....",
+                        "win": "The living dead are just dead now.",
+                        "lose": "You were tasty."
+                    }
+                ],
+                "winCondition": 2,
+                "faction": [
+                    "BACON_622120A5448725E3_FACTION"
+                ],
+                "markerType": "DARC_MISSION",
+                "markerIcon": 17,
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": [
+                    "$Zombies:"
+                ]
+            },
+            "ai": {
+                "count": [
+                    1,
+                    4
+                ],
+                "types": [
+                    "G_ZOMBIE_SMALL",
+                    "G_ZOMBIE_MEDIUM",
+                    "G_ZOMBIE_LARGE"
+                ],
+                "skill": 50,
+                "perception": 0.3,
+                "waypointRange": [
+                    50,
+                    300
+                ],
+                "waypointGenType": 1,
+                "waypointMoveType": 5
+            },
+            "qrf": null,
+            "loot": null,
+            "campItems": []
+        },
+        {
+            "general": {
+                "subIdx": 2,
+                "comment": "index 2: Zombies",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 3.0,
+                "locationTypes": [
+                    10,
+                    60,
+                    62
+                ],
+                "posName": "any",
+                "messages": [
+                    {
+                        "title": "Horde of zombies seen near %l",
+                        "info": "Avoid getting yourself eaten.",
+                        "win": "The dead shall stay dead.",
+                        "lose": "Oh the horrors. You were slain."
+                    }
+                ],
+                "winCondition": 2,
+                "faction": [
+                    "BACON_622120A5448725E3_FACTION"
+                ],
+                "markerType": "DARC_MISSION",
+                "markerIcon": 15,
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
+            },
+            "ai": {
+                "count": [
+                    1,
+                    4
+                ],
+                "types": [
+                    "G_ZOMBIE_SMALL",
+                    "G_ZOMBIE_MEDIUM",
+                    "G_ZOMBIE_LARGE"
+                ],
+                "skill": 50,
+                "perception": 0.3,
+                "waypointRange": [
+                    50,
+                    300
+                ],
+                "waypointGenType": 1,
+                "waypointMoveType": 5
+            },
+            "qrf": null,
+            "loot": null,
+            "campItems": []
+        }
+    ]
+}

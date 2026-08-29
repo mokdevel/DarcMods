@@ -1,5 +1,5 @@
 {
-    "jsonVersion": 3,
+    "jsonVersion": 4,
     "author": "darc",
     "modList": [],
     "lists": [
@@ -576,6 +576,25 @@
                 "_NotSpawned",
                 "_Remnants",
                 "/CIV/",
+                "_Randomized",
+                "Variant",
+                "Suppressed",
+                "Unarmed",
+                "_Random"
+            ],
+            "items": [],
+            "factions": []
+        },
+        {
+            "id": "C_CIV",
+            "modDir": [
+                "Prefabs/Characters/Factions/CIV"
+            ],
+            "include": [],
+            "exclude": [
+                "_Base",
+                "_NotSpawned",
+                "_Remnants",
                 "_Randomized",
                 "Variant",
                 "Suppressed",

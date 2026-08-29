@@ -575,7 +575,6 @@
             },
             "qrf": null,
             "vehicleTypes": [
-                "VEHICLE_WHEELED_ARMED",
                 "VEHICLE_TRACKED_ARMED",
                 "VEHICLE_TRACKED_ARMED",
                 "VEHICLE_TRACKED_ARMED",
@@ -583,7 +582,8 @@
                 "VEHICLE_TRACKED_ARMED",
                 "VEHICLE_TRACKED_ARMED",
                 "VEHICLE_TRACKED_ARMED",
-                "VEHICLE_TRACKED_ARMED"
+                "VEHICLE_TRACKED_ARMED",
+                "VEHICLE_WHEELED_ARMED"
             ],
             "cruiseSpeed": 15.0,
             "loot": {

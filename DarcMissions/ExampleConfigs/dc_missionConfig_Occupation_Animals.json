@@ -1,0 +1,523 @@
+{
+    "jsonVersion": 2,
+    "missionType": 2,
+    "version": 1,
+    "author": "darc",
+    "comment": "",
+    "missionCycleTime": 30,
+    "showMarker": true,
+    "showHint": true,
+    "showMessage": true,
+    "disableArsenal": true,
+    "missionList": [
+        0,
+        1,
+        2
+    ],
+    "missionFiles": [],
+    "subMissions": [
+        {
+            "general": {
+                "subIdx": 0,
+                "comment": "index 0: Poachers",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 3.0,
+                "locationTypes": [
+                    60,
+                    64,
+                    34
+                ],
+                "posName": "any",
+                "messages": [
+                    {
+                        "title": "Poachers near %l",
+                        "info": "Poachers are hunting a stag.",
+                        "win": "Humans, the enemies of the nature are cleared.",
+                        "lose": "Oh deer, you failed."
+                    }
+                ],
+                "winCondition": 1,
+                "faction": [],
+                "markerType": "DARC_MISSION",
+                "markerIcon": 15,
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": [
+                    "$BARFrenchAnimals:"
+                ]
+            },
+            "ai": {
+                "count": [
+                    1,
+                    1
+                ],
+                "types": [
+                    "G_SMALL"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    50,
+                    80
+                ],
+                "waypointGenType": 1,
+                "waypointMoveType": 5
+            },
+            "qrf": null,
+            "loot": {
+                "box": null,
+                "itemChance": 0.899,
+                "items": [
+                    "UTIL_OPTIC",
+                    "GEAR_HEADGEAR",
+                    "GEAR_HEADGEAR",
+                    "GEAR_HEADGEAR",
+                    "GEAR_HANDWEAR",
+                    "GEAR_HANDWEAR",
+                    "CLOTHING_UNIFORM",
+                    "CLOTHING_UNIFORM",
+                    "CLOTHING_UNIFORM"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+                    "position": [
+                        20.0,
+                        0.0,
+                        20.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D1509D4108A75FF4}Prefabs/Animals/Deer.et",
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{2C5C9488DD7E937D}Prefabs/Zones/BAR_TerritoryMarker_Deer.et",
+                    "position": [
+                        50.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "general": {
+                "subIdx": 1,
+                "comment": "index 1: Deer Hunters",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 10.0,
+                "locationTypes": [
+                    60,
+                    64,
+                    34
+                ],
+                "posName": "any",
+                "messages": [
+                    {
+                        "title": "Hunter camp near %l",
+                        "info": "Hunters are looking for meat.",
+                        "win": "Camp cleared. Time to loot.",
+                        "lose": "Hunters left with a nice catch."
+                    }
+                ],
+                "winCondition": 1,
+                "faction": [],
+                "markerType": "DARC_MISSION",
+                "markerIcon": 15,
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": [
+                    "$BARFrenchAnimals:"
+                ]
+            },
+            "ai": {
+                "count": [
+                    1,
+                    1
+                ],
+                "types": [
+                    "G_SMALL",
+                    "G_SNIPER"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    50,
+                    100
+                ],
+                "waypointGenType": 1,
+                "waypointMoveType": 5
+            },
+            "qrf": null,
+            "loot": {
+                "box": null,
+                "itemChance": 0.6,
+                "items": [
+                    "UTIL_OPTIC",
+                    "WEAPON_RIFLE_BIG",
+                    "WEAPON_RIFLE_BIG",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et",
+                    "position": [
+                        58.769,
+                        1.0,
+                        150.205
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{39C308BBB5945B85}Prefabs/Props/Military/Furniture/ChairMilitary_US_02.et",
+                    "position": [
+                        55.428,
+                        1.0,
+                        148.326
+                    ],
+                    "rotation": [
+                        0.0,
+                        61.122,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{8BF02124660AB745}PrefabsEditable/Auto/Structures/Military/Camps/TentSmallFIA_01/E_TentSmallFIA_01.et",
+                    "position": [
+                        56.362,
+                        1.0,
+                        152.164
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{C9CFDED29542A968}Prefabs/Props/Military/Furniture/CotMilitary_US_01.et",
+                    "position": [
+                        57.644,
+                        1.0,
+                        147.257
+                    ],
+                    "rotation": [
+                        0.0,
+                        -24.08,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et",
+                    "position": [
+                        56.534,
+                        1.0,
+                        149.106
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{7E392EFF0B595795}Prefabs/Animals_Groups/Deer_Doe_Group.et",
+                    "position": [
+                        56.0,
+                        0.0,
+                        100.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{2C5C9488DD7E937D}Prefabs/Zones/BAR_TerritoryMarker_Deer.et",
+                    "position": [
+                        50.0,
+                        0.0,
+                        100.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "general": {
+                "subIdx": 2,
+                "comment": "index 2: Wolves and Hunters",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 20.0,
+                "locationTypes": [
+                    60,
+                    64,
+                    34
+                ],
+                "posName": "any",
+                "messages": [
+                    {
+                        "title": "Meat packers near %l",
+                        "info": "Not good, wolves seen near the area.",
+                        "win": "Loot is yours but look out for wild life.",
+                        "lose": "Packing done."
+                    }
+                ],
+                "winCondition": 1,
+                "faction": [],
+                "markerType": "DARC_MISSION",
+                "markerIcon": 15,
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": [
+                    "$BARFrenchAnimals:"
+                ]
+            },
+            "ai": {
+                "count": [
+                    1,
+                    1
+                ],
+                "types": [
+                    "G_RECON"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    50,
+                    100
+                ],
+                "waypointGenType": 1,
+                "waypointMoveType": 5
+            },
+            "qrf": null,
+            "loot": {
+                "box": null,
+                "itemChance": 0.6,
+                "items": [
+                    "UTIL_OPTIC",
+                    "WEAPON_RIFLE_BIG",
+                    "WEAPON_RIFLE_BIG",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+                    "position": [
+                        76.973,
+                        1.0,
+                        146.917
+                    ],
+                    "rotation": [
+                        0.0,
+                        -15.517,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{0765187447161CA5}PrefabsEditable/Auto/Props/Agriculture/Farm/E_HaystackDryer_01.et",
+                    "position": [
+                        76.469,
+                        -0.0,
+                        153.561
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{3EC72887AEC40F22}PrefabsEditable/Auto/Props/Furniture/TableOld_01/E_TableOld_01_white.et",
+                    "position": [
+                        78.828,
+                        1.0,
+                        152.901
+                    ],
+                    "rotation": [
+                        0.0,
+                        49.264,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{61F3E9080A364769}PrefabsEditable/Auto/Props/Commercial/ScaleShop_01/E_ScaleShop_01_white.et",
+                    "position": [
+                        79.394,
+                        1.899,
+                        152.503
+                    ],
+                    "rotation": [
+                        0.0,
+                        -133.511,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{71ED9316907C2D93}PrefabsEditable/Auto/Props/Civilian/BenchStreet/E_BenchStreet_02.et",
+                    "position": [
+                        78.843,
+                        1.0,
+                        148.518
+                    ],
+                    "rotation": [
+                        0.0,
+                        -42.812,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{833407E494B205DA}PrefabsEditable/Auto/Props/Decorations/E_AnimalHide_01.et",
+                    "position": [
+                        78.738,
+                        1.898,
+                        152.983
+                    ],
+                    "rotation": [
+                        0.0,
+                        -42.73,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D9842C11742C00CF}Prefabs/Props/Civilian/Fireplace_01.et",
+                    "position": [
+                        77.599,
+                        1.0,
+                        149.619
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{EED14401BED18DBF}PrefabsEditable/Auto/Props/Crates/E_BoxWooden_01.et",
+                    "position": [
+                        78.373,
+                        1.0,
+                        152.143
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{FFD8A0190FACB2B2}PrefabsEditable/Auto/Props/Agriculture/Farm/E_HayPile_01.et",
+                    "position": [
+                        74.708,
+                        1.0,
+                        149.955
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{2274A55C0B226999}Prefabs/Animals/Wolf.et",
+                    "position": [
+                        0.0,
+                        1.0,
+                        50.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{2274A55C0B226999}Prefabs/Animals/Wolf.et",
+                    "position": [
+                        0.0,
+                        1.0,
+                        60.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{5BBDC814E9639041}Prefabs/Zones/BAR_TerritoryMarker_Wolf.et",
+                    "position": [
+                        0.0,
+                        1.0,
+                        30.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        }
+    ]
+}

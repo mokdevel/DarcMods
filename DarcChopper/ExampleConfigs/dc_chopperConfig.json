@@ -2,10 +2,12 @@
     "jsonVersion": 1,
     "author": "darc",
     "drone": {
+        "persistent": false,
         "dropChance": 1.0,
         "dropDistanceToPlayer": 10
     },
     "helicopter": {
+        "persistent": false,
         "justATest": 0.0
     }
 }
