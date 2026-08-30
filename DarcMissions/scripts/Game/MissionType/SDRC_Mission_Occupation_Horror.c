@@ -7,15 +7,21 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_OccupationConfig_Horror : SDRC_OccupationConfig
 {
-	const string DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR = "dc_missionConfig_Occupation_Horror.json";
+	private const string DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR = "dc_missionConfig_Occupation_Horror.json";
+	private const int DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR_JSONVER = 2;
 	
 	//------------------------------------------------------------------------------------------------
-	//This will setup the filename correctly to create the file
 	static string GetFileName()
 	{		
 		return DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR;
 	}	
 
+	//------------------------------------------------------------------------------------------------
+	static int GetFileVersion()
+	{		
+		return DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR_JSONVER;
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{

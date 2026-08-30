@@ -8,14 +8,20 @@
 class SDRC_StashConfig_010 : SDRC_StashConfig
 {
 	private const string DC_MISSIONCONFIG_FILE_STASH_010 = "dc_missionConfig_Stash_010.json";
-
+	private const int DC_MISSIONCONFIG_FILE_STASH_010_JSONVER = 2;
+	
 	//------------------------------------------------------------------------------------------------
-	//This will setup the filename correctly to create the file
 	static string GetFileName()
 	{		
 		return DC_MISSIONCONFIG_FILE_STASH_010;
 	}	
-	
+
+	//------------------------------------------------------------------------------------------------
+	static int GetFileVersion()
+	{		
+		return DC_MISSIONCONFIG_FILE_STASH_010_JSONVER;
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{

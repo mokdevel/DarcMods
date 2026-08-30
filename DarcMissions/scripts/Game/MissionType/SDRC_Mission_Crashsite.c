@@ -334,7 +334,7 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
 			SDRC_CrashsiteConfig conf = new SDRC_CrashsiteConfig();
 			
-			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false))
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false, safeUpdate: true))
 			{
 				foreach (SDRC_Crashsite subMission : conf.subMissions)
 				{

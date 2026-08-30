@@ -401,7 +401,7 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
 			SDRC_ConvoyConfig conf = new SDRC_ConvoyConfig();
 			
-			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false))
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false, safeUpdate: true))
 			{
 				foreach (SDRC_Convoy subMission : conf.subMissions)
 				{

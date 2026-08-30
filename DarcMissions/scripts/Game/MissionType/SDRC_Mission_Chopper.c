@@ -491,7 +491,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
 			SDRC_ChopperConfig conf = new SDRC_ChopperConfig();
 			
-			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false))
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false, safeUpdate: true))
 			{
 				foreach (SDRC_Chopper subMission : conf.subMissions)
 				{

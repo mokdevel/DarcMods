@@ -8,14 +8,20 @@
 class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 {
 	private const string DC_MISSIONCONFIG_FILE_HVTITEM_010 = "dc_missionConfig_HvtItem_010.json";
-
+	private const int DC_MISSIONCONFIG_FILE_HVTITEM_010_JSONVER = 2;
+	
 	//------------------------------------------------------------------------------------------------
-	//This will setup the filename correctly to create the file
 	static string GetFileName()
 	{		
 		return DC_MISSIONCONFIG_FILE_HVTITEM_010;
 	}	
-	
+
+	//------------------------------------------------------------------------------------------------
+	static int GetFileVersion()
+	{		
+		return DC_MISSIONCONFIG_FILE_HVTITEM_010_JSONVER;
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{

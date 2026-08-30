@@ -7,15 +7,21 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_OccupationConfig_Animals : SDRC_OccupationConfig
 {
-	const string DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR = "dc_missionConfig_Occupation_Animals.json";
+	private const string DC_MISSIONCONFIG_FILE_OCCUPATION_ANIMALS = "dc_missionConfig_Occupation_Animals.json";
+	private const int DC_MISSIONCONFIG_FILE_OCCUPATION_ANIMALS_JSONVER = 2;
 	
 	//------------------------------------------------------------------------------------------------
-	//This will setup the filename correctly to create the file
 	static string GetFileName()
 	{		
-		return DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR;
+		return DC_MISSIONCONFIG_FILE_OCCUPATION_ANIMALS;
 	}	
 
+	//------------------------------------------------------------------------------------------------
+	static int GetFileVersion()
+	{		
+		return DC_MISSIONCONFIG_FILE_OCCUPATION_ANIMALS_JSONVER;
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	override bool DoSave(SaveContainerContext saveContext, Class T)
 	{
@@ -33,6 +39,7 @@ class SDRC_OccupationConfig_Animals : SDRC_OccupationConfig
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		missionList = {0,1,2};				
+//		missionList = {};//{3};//{0,1,2};				
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Clear();

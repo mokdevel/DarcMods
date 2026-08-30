@@ -22,7 +22,7 @@ class SDRC_Mission_Occupation : SDRC_Mission
 	void SDRC_Mission_Occupation(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER/*, safeUpdate: true*/))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
@@ -155,7 +155,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 			SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(missionFile);
 			SDRC_OccupationConfig conf = new SDRC_OccupationConfig();
 			
-			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false))
+			if (jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), ver, false, safeUpdate: true))
 			{
 				foreach (SDRC_Camp subMission : conf.subMissions)
 				{
@@ -203,11 +203,11 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 		
 		SDRC_JsonApi2 jsonApi0 = new SDRC_JsonApi2(SDRC_OccupationConfig_Horror.GetFileName());				
 		SDRC_OccupationConfig_Horror conf0 = new SDRC_OccupationConfig_Horror();
-		jsonApi0.Load(conf0, SDRC_MissionConfig.Cast(conf0), DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER, silent: true);
+		jsonApi0.Load(conf0, SDRC_MissionConfig.Cast(conf0), SDRC_OccupationConfig_Horror.GetFileVersion(), silent: true);
 		
 		SDRC_JsonApi2 jsonApi1 = new SDRC_JsonApi2(SDRC_OccupationConfig_Animals.GetFileName());				
 		SDRC_OccupationConfig_Animals conf1 = new SDRC_OccupationConfig_Animals();
-		jsonApi1.Load(conf1, SDRC_MissionConfig.Cast(conf1), DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER, silent: true);		
+		jsonApi1.Load(conf1, SDRC_MissionConfig.Cast(conf1), SDRC_OccupationConfig_Animals.GetFileVersion(), silent: true);		
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -234,8 +234,12 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 		//Default		
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {};//{0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5};		
-//		missionFiles.Insert("dc_missionConfig_Occupation_010_horror.json");
+		missionList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5,6};
+
+		#ifndef SDRC_RELEASE
+			missionList = {};
+		#endif
+				
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Insert(Occupation0());
@@ -244,6 +248,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 		subMissions.Insert(Occupation3());
 		subMissions.Insert(Occupation4());
 		subMissions.Insert(Occupation5());
+		subMissions.Insert(Occupation6());
 	};
 	
 	//----------------------------------------------------
@@ -867,4 +872,218 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 
 		return occupation;
 	}			
+
+	//----------------------------------------------------
+	SDRC_Camp Occupation6()
+	{
+		ref SDRC_Camp occupation = new SDRC_Camp();
+		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
+		message.Set("Training camp near %l",
+			"The enemies are training for an operation. Destroy the camp.",
+			"Training facilities cleared.",
+			"Training completed. Enemy is planning their next step.",);
+		occupation.general.Set(
+			6, "index 6: Training camp",
+			{"0 0 0"}, 30,
+			{
+				EMapDescriptorType.MDT_NAME_RIDGE,
+				EMapDescriptorType.MDT_FORESTSQUARE,
+				EMapDescriptorType.MDT_NAME_VALLEY			
+			},
+			"any",
+			{message},
+			SDRC_EMissionWinCondition.AI_KILL_75,
+			{},
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP,
+			{SDRC_EDifficulty.RANDOM},
+			0
+		);
+		occupation.ai.Set(
+			{2, 3, 30, },
+			{"G_SPECIAL", "G_ADMIN", "G_RECON", },
+			50, 1.0,
+			{10, 90},
+			SDRC_EWaypointGenerationType.RANDOM,
+			SDRC_EWaypointMoveType.RANDOM,		
+		);
+
+		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
+		qrf.Set(
+			{5, }, SDRC_EMissionSuccess.WIN,
+			0.8, {30, 240}
+		);
+		occupation.qrf = qrf;		
+		
+		ref SDRC_Loot loot = new SDRC_Loot();
+		array<string> lootItems = {
+				"WEAPON_RIFLE", 
+				"WEAPON_SHOTGUN", 
+				"WEAPON_HANDGUN", "WEAPON_HANDGUN", "WEAPON_HANDGUN",
+				"WEAPON_GRENADE", "WEAPON_GRENADE", "WEAPON_GRENADE",
+				"UTIL_ATTACHMENT", "UTIL_ATTACHMENT",
+				"UTIL_OPTIC",
+				"ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL", "ITEM_GENERAL",
+				"CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", "CLOTHING_HEADGEAR", 
+				"CLOTHING_UNIFORM", "CLOTHING_UNIFORM", "CLOTHING_UNIFORM",
+			};
+		loot.Set(0.7, lootItems);
+		occupation.loot = loot;
+		
+		ref SDRC_Structure item_0 = new SDRC_Structure();
+		item_0.Set(
+			"{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+			"74.027 1 109.192",
+			"0 15.628 0"
+		);
+		occupation.campItems.Insert(item_0);
+	
+		ref SDRC_Structure item_1 = new SDRC_Structure();
+		item_1.Set(
+			"{06C4174747E7032B}PrefabsEditable/Auto/Props/Military/Camps/E_WeaponRackStand_01.et",
+			"75.097 1 106.59",
+			"0 -94.079 0"
+		);
+		occupation.campItems.Insert(item_1);
+	
+		ref SDRC_Structure item_2 = new SDRC_Structure();
+		item_2.Set(
+			"{09070D8EB9398742}Prefabs/Props/Military/Training/Obstacles/ObstacleVault_01.et",
+			"70.994 1 103.725",
+			"0 -40.792 0"
+		);
+		occupation.campItems.Insert(item_2);
+	
+		ref SDRC_Structure item_3 = new SDRC_Structure();
+		item_3.Set(
+			"{3AE0A97C6595801F}Prefabs/Props/Military/WaterTanks/MobileWaterTank_USSR_01.et",
+			"63.036 1 105.053",
+			"0 23.071 0"
+		);
+		occupation.campItems.Insert(item_3);
+	
+		ref SDRC_Structure item_4 = new SDRC_Structure();
+		item_4.Set(
+			"{6B68854FD47B936F}Prefabs/Props/Military/Training/Obstacles/ObstacleBridge_01_platform.et",
+			"75.442 1 106.903"
+		);
+		occupation.campItems.Insert(item_4);
+	
+		ref SDRC_Structure item_5 = new SDRC_Structure();
+		item_5.Set(
+			"{6F0064DD846893A3}Prefabs/Props/Military/Training/Obstacles/ObstacleWindow_01.et",
+			"67.339 1 116.088",
+			"0 -45.708 0"
+		);
+		occupation.campItems.Insert(item_5);
+	
+		ref SDRC_Structure item_6 = new SDRC_Structure();
+		item_6.Set(
+			"{948A10A7AF89EE17}PrefabsEditable/Auto/Props/Infrastructure/SnowBreakers/E_SnowBreaker_E_01_B.et",
+			"75.756 1 104.568"
+		);
+		occupation.campItems.Insert(item_6);
+	
+		ref SDRC_Structure item_7 = new SDRC_Structure();
+		item_7.Set(
+			"{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+			"69.678 1 117.309"
+		);
+		occupation.campItems.Insert(item_7);
+	
+		ref SDRC_Structure item_8 = new SDRC_Structure();
+		item_8.Set(
+			"{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+			"65.969 1 113.605",
+			"0 -80.823 0"
+		);
+		occupation.campItems.Insert(item_8);
+	
+		ref SDRC_Structure item_9 = new SDRC_Structure();
+		item_9.Set(
+			"{B8576ECF78CDBCD7}Prefabs/Props/Military/Training/Obstacles/ObstacleBridge_01_start.et",
+			"75.437 1 110.861"
+		);
+		occupation.campItems.Insert(item_9);
+	
+		ref SDRC_Structure item_10 = new SDRC_Structure();
+		item_10.Set(
+			"{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+			"61.438 1 111.659"
+		);
+		occupation.campItems.Insert(item_10);
+	
+		ref SDRC_Structure item_11 = new SDRC_Structure();
+		item_11.Set(
+			"{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+			"61.137 1 115.216"
+		);
+		occupation.campItems.Insert(item_11);
+	
+		ref SDRC_Structure item_12 = new SDRC_Structure();
+		item_12.Set(
+			"{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+			"62.137 1 118.99"
+		);
+		occupation.campItems.Insert(item_12);
+	
+		ref SDRC_Structure item_13 = new SDRC_Structure();
+		item_13.Set(
+			"{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+			"65.362 1 119.239"
+		);
+		occupation.campItems.Insert(item_13);
+	
+		ref SDRC_Structure item_14 = new SDRC_Structure();
+		item_14.Set(
+			"{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+			"63.478 1 119.165"
+		);
+		occupation.campItems.Insert(item_14);
+	
+		ref SDRC_Structure item_15 = new SDRC_Structure();
+		item_15.Set(
+			"{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+			"61.366 1 117.06"
+		);
+		occupation.campItems.Insert(item_15);
+	
+		ref SDRC_Structure item_16 = new SDRC_Structure();
+		item_16.Set(
+			"{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+			"61.351 1 113.416"
+		);
+		occupation.campItems.Insert(item_16);
+	
+		ref SDRC_Structure item_17 = new SDRC_Structure();
+		item_17.Set(
+			"{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+			"62.744 1 110.476"
+		);
+		occupation.campItems.Insert(item_17);
+	
+		ref SDRC_Structure item_18 = new SDRC_Structure();
+		item_18.Set(
+			"{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+			"66.495 1 118.265"
+		);
+		occupation.campItems.Insert(item_18);
+	
+		ref SDRC_Structure item_19 = new SDRC_Structure();
+		item_19.Set(
+			"{D6F8A419B10274F2}PrefabsEditable/Auto/Props/Military/Camps/E_Duckboard_01.et",
+			"69.32 1 114.49",
+			"0 -63.018 0"
+		);
+		occupation.campItems.Insert(item_19);
+	
+		ref SDRC_Structure item_20 = new SDRC_Structure();
+		item_20.Set(
+			"{E4B5C357EF215746}Prefabs/Props/Military/Training/Obstacles/ObstacleCrawl_01.et",
+			"65.87 1 111.656",
+			"0 -42.335 0"
+		);
+		occupation.campItems.Insert(item_20);
+
+		return occupation;
+	}		
 }
