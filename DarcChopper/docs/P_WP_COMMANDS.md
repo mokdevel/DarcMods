@@ -31,11 +31,19 @@ List of available commands:
 * ``WP_BRAKE`` : Brakes the helicopter speed to stand still.
 * ``WP_END`` : Stop running SDRC_ChopperComp and let AR handle everything
 * ``WP_DESPAWN`` : Despawn the helicopter. KNOWN: AI is not despawned so .. lot's of fun. :-)
+* ``WP_CRASH`` : TBD
 
 * ``WP_GET_OUT`` : Order AI to get out from the chopper
 * ``WP_STOP_ENGINE`` : Helicopter engine is stopped. Does the action and goes to WAIT state. 
 * ``WP_ATTACK`` : Sets attack position to shoot at. This is performed once.
 * ``WP_SEARCH_DESTROY`` : Search for enemy by patroling an area. If enemy is found, attack the location.
+* ``WP_RESET`` : Reset destinations and helicopter settings to defaults.
+* ``WP_CUT`` : Cut the current flight spline and pick the next destination in the list.
+
+### WP_UNDEFINED
+Undefined - not to be used
+* ``destination`` : Not used.
+* ``value`` : Not used.
 
 ### WP_FLY
 Fly, normal flight pattern. If you have multiple WP_FLY assigned, these will be processed in a serie to create a longer flight pattern.
@@ -119,9 +127,6 @@ Hover the helicopter down from the current height.
 * ``destination[2]`` : Not used
 * ``value`` : Time to use for upwards movement
 
-### WP_GET_OUT
-_TBD_
-
 ### WP_BRAKE
 Brakes the helicopter speed to stand still.
 * ``destination[0][2]`` : The position XZ to stop at.
@@ -136,6 +141,12 @@ _TBD_
 ### WP_DESPAWN
 _TBD_
 
+### WP_CRASH
+_TBD_
+
+### WP_GET_OUT
+_TBD_
+
 ### WP_STOP_ENGINE
 _TBD_
 
@@ -143,10 +154,22 @@ _TBD_
 _TBD_
 
 ### WP_SEARCH_DESTROY
-This will set the behaviour of the chopper to SEARCH_AND_DESTROY_BEHAVIOUR for a given time before returning back to NORMAL_BEHAVIOUR. The chopper will arrive at the destination and start to patrol the area. Enemy is searched with a cycle of 2 seconds. If an enemy is found, current flight is interrupted, and a new flight pattern to attack the enemy is created. Chopper will stay in attack mode for 60 seconds and then resume to patroling. 
-* ``destination`` : The position to keep an eye on. The helicopter will patrol around this area with a circle of 400m.  
-* ``value`` : The time to be in SEARCH_AND_DESTROY_BEHAVIOUR. Once time has passed, we return to NORMAL_BEHAVIOUR.
+This will set the behaviour of the chopper to ``SEARCH_AND_DESTROY_BEHAVIOUR`` for a given time before returning back to ``NORMAL_BEHAVIOUR``. The chopper will arrive at the destination and start to patrol the area. Enemy is searched with a cycle of 2 seconds. If an enemy is found, current flight is interrupted, and a new flight pattern to attack the enemy is created. Chopper will stay in attack mode for 60 seconds and then resume to patroling. 
+* ``destination`` : The position to keep an eye on. The helicopter will patrol around this area with a circle of patrolRadius defined in (internal) parameters. Default for helicopter is 300m.  
+* ``value`` : The time to be in ``SEARCH_AND_DESTROY_BEHAVIOUR``. Once time has passed, we return to ``NORMAL_BEHAVIOUR``.
   * GM default: 600
+  
+Note that if you have a long time and you give the chopper an order to land, the given order is only respected once the time in behaviour has ended. To break this, use a ``WP_FLY_IMMEDIATELY`` or ``WP_RESET`` before giving the new order. Logic is that the chopper will perform its prefious task till the end and only after that listen to new ones.
+
+### WP_RESET
+Reset destinations and helicopter settings to defaults. Cuts the current flight planned and pick the next destination in the list.
+* ``destination`` : Not used.
+* ``value`` : Not used.
+
+### WP_CUT
+Cut the current flight planned and pick the next destination in the list. Different from WP_RESET as destinations are not cleared and old chopper settings are kept.
+* ``destination`` : Not used.
+* ``value`` : Not used.
 
 ## Macro commands
 Assigning single macro command will perform a set of single commands. 
@@ -167,8 +190,6 @@ Assigning single macro command will perform a set of single commands.
 Not to be used for normal use.
 
 * ``WP_UNDEFINED`` : Do not use
-* ``WP_M_RESET`` : Reset destinations. Cut the current flight planned and pick the next destination in the list.
-* ``WP_M_CUT`` : Cut the current flight planned and pick the next destination in the list.
 * ``WP_M_TESTING`` : Just for testing
 
 # Behaviour

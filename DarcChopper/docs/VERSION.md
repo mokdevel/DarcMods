@@ -2,7 +2,8 @@
 
 ## Next Version
 
-## 20260818
+## 20260829
+Main features:
 * Landing curves finetuned. Should land nicely on spot now. Obstacle awareness to be added later for those tight landings.
 * Added WP_HOVER_DOWN
 * Added WP_LAND_VERTICAL
@@ -12,6 +13,8 @@
 Fixes: 
 * Fixed WP_BRAKE flight pattern
 * Choppers spawning with AI and just staying in the air.
+
+Known: There are areas in the flight model that needs finetuning especially on steep curves. TBF.
 
 ## 20260818
 Fixes: 

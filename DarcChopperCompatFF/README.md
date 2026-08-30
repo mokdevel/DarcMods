@@ -43,7 +43,7 @@ array<ref SDRC_ChopperCompatFF> attacks : List of attacks
 
 ## Next Version
 
-## 202608xx
+## 20260829
 Fixes:
 * Sometimes helicopters were found floating with their engines off in the air.
 
