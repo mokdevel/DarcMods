@@ -143,9 +143,9 @@ class SDRC_MissionHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Spawn mission AI from class SDRC_MissionConfigAi
+	Spawn mission AI from class SDRC_MissionConfigAI
 	*/	
-	static int SpawnAiFromClassAi(SDRC_MissionConfigAi ai, SDRC_Mission mission, vector spawnPos, vector destinationPos)
+	static int SpawnAIFromClassAI(SDRC_MissionConfigAi ai, SDRC_Mission mission, vector spawnPos, vector destinationPos)
 	{
 		int groupCount = 0;
 		int aiCount = ai.GetCount(mission.GetDifficulty());
@@ -171,7 +171,7 @@ class SDRC_MissionHelper
 	/*!
 	Spawn mission AI from class SDRC_MissionConfigAi
 	*/	
-	static int SpawnAiFromClassAiInVehicle(ResourceName vehicleName, SDRC_MissionConfigAi ai, SDRC_Mission mission, vector spawnPos, vector destinationPos)
+	static int SpawnAIFromClassAIInVehicle(ResourceName vehicleName, SDRC_MissionConfigAi ai, SDRC_Mission mission, vector spawnPos, vector destinationPos)
 	{
 		//Spawn vehicle
 		if (vehicleName[0] != "{")

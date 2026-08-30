@@ -1169,12 +1169,12 @@ class SDRC_Mission : Managed
 			
 			if (qrf.vehicle == "")
 			{
-				int groupCount = SDRC_MissionHelper.SpawnAiFromClassAi(qrf.ai, this, spawnPos, GetPos());
+				int groupCount = SDRC_MissionHelper.SpawnAIFromClassAI(qrf.ai, this, spawnPos, GetPos());
 				SDRC_Log.Add("[SDRC_Mission:DoQrf] " + GetId() + " : Spawned " + groupCount + " groups to QRF.", LogLevel.DEBUG);
 			}
 			else
 			{
-				int groupCount = SDRC_MissionHelper.SpawnAiFromClassAiInVehicle(qrf.vehicle, qrf.ai, this, spawnPos, GetPos());
+				int groupCount = SDRC_MissionHelper.SpawnAIFromClassAIInVehicle(qrf.vehicle, qrf.ai, this, spawnPos, GetPos());
 				SDRC_Log.Add("[SDRC_Mission:DoQrf] " + GetId() + " : Spawned " + groupCount + " groups to QRF.", LogLevel.DEBUG);
 			}
 		}		

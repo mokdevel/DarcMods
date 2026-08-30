@@ -4,7 +4,17 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+Fixes:
+* Group entity is set as non-persistent.
 
+## 20260830
+Main Features:
+* Added a new Occupation mission: Training camp
+* Optional: Delete dc_missionConfig_Occupation.json to receive an updated one.
+Fixes:
+* Made a small mistake in last update where Occupation mission list was left empty. 
+  * If Occupation missions are not spawning, delete dc_missionConfig_Occupation.json to receive an updated one.
+  
 ## 20260829
 Main Features:
 * Spawn positions inside buildings use cover positions. Enemies and loot should not spawn under floor or inside walls/stairs/..

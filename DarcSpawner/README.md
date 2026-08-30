@@ -84,7 +84,7 @@ Example: [dc_spawnerConfig_Animals.json](https://github.com/mokdevel/DarcMods/bl
 
 # Version history
 
-## 202608xx
+## 20260829
 ### DarcSpawner_Animals
 Main Features:
 * Added spawners for crows and cows

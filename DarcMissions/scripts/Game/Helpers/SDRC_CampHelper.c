@@ -19,7 +19,8 @@ sealed class SDRC_CampHelper
 {
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Spawn camp items, AI and loot defined in a SDRC_camp structure
+	Spawn camp items, AI and loot defined in a SDRC_camp structure one item/AI/.. for each call. 
+	
 	\param mission Mission that is calling this
 	\param idx Index of the item to spawn. This needs to be increased each run.
 	\param camp The SDRC_camp structure to use
@@ -59,7 +60,6 @@ sealed class SDRC_CampHelper
 			
 			for (int i = 0; i < aiCount; i++)
 			{
-				//SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroup(camp.ai.types.GetRandomElement(), mission.GetPos(), mission.GetFaction());
 				SCR_AIGroup group = SDRC_MissionHelper.SpawnMissionAIGroupRandom(camp.ai.types, mission.GetPos(), mission.GetFaction());
 				if (group)
 				{
