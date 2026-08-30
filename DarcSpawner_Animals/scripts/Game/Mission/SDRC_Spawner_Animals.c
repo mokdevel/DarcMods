@@ -8,7 +8,7 @@ modded class SDRC_Spawner
 {
 	const string DC_CONFIG_ADDON_NAME_ANIMALS = "Animals";
 	const string DC_CONFIG_FILE_SPAWNER_ANIMALS = "dc_spawnerConfig_Animals.json";
-	const int DC_CONFIG_FILE_SPAWNER_ANIMALS_JSONVER = 4;
+	const int DC_CONFIG_FILE_SPAWNER_ANIMALS_JSONVER = 5;
 	
 	private ref SDRC_JsonApi2 m_JsonApi_Animals = null;
 	private ref SDRC_SpawnerConfig_Animals m_Config_Animal = null;

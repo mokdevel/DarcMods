@@ -21,7 +21,7 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		comment = "Animal spawner using French Animals mod. ";
 		spawnWorldSizeMultiplier = 0;
 		spawnCount = 30;
-		spawnSetList = {0,0,0,0,0,0,1,1,1,2,2,2,3,3,4,4,9,12,12 ,5,6,6,7,8,10};
+		spawnSetList = {0,0,0,0,0,0,1,1,1,2,2,2,3,3,4,4,9,12,12,13,14,14 ,5,6,6,7,8,10};
 		//----------------------------------------------------		
 		spawnSets.Insert(SpawnSet0_Animals());	//Deer
 		spawnSets.Insert(SpawnSet1_Animals());	//Wolf
@@ -38,6 +38,8 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		//Do not use these at this stage
 		spawnSets.Insert(SpawnSet11_Animals());	//Deer & Doe herd
 		spawnSets.Insert(SpawnSet12_Animals());	//Crow
+		spawnSets.Insert(SpawnSet13_Animals());	//Crow
+		spawnSets.Insert(SpawnSet14_Animals());	//Crow
 		//spawnSets.Insert(SpawnSetXX_Animals());	//Animal spawner - do not use for the moment.	
 	}	
 	
@@ -305,7 +307,7 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 			},
 			{},
 			{
-				"{7E392EFF0B595795}Prefabs/Animals_Groups/Deer_Doe_Group.et",
+				"{C995128A47763199}PrefabsEditable/Animals_Groups/E_Deer_Doe_Group.et",
 			},
 			200, false, false,
 		);
@@ -331,6 +333,54 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 			{},
 			{
 				"{B7A1C7E192803CFE}Prefabs/Animals/Crow.et",
+			},
+			200, false, false,
+		);
+		
+		return spawnSet;
+	}		
+	
+	SDRC_SpawnSet SpawnSet13_Animals()
+	{
+		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
+		spawnSet.Set(		
+			"index 13: Multiple crows",
+			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			{
+				EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST,
+				EMapDescriptorType.MDT_NAME_GENERIC,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_SETTLEMENT,
+				EMapDescriptorType.MDT_NAME_CITY,
+				EMapDescriptorType.MDT_NAME_TOWN,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+			},
+			{},
+			{
+				"{07C00BFA28960E0A}PrefabsEditable/Animals_Groups/E_Crow_Group.et",
+			},
+			200, false, false,
+		);
+		
+		return spawnSet;
+	}		
+
+	SDRC_SpawnSet SpawnSet14_Animals()
+	{
+		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
+		spawnSet.Set(		
+			"index 14: Cows",
+			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			{
+				EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST,
+				EMapDescriptorType.MDT_NAME_GENERIC,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_SETTLEMENT,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+			},
+			{},
+			{
+				"{11630E7955BEF10C}PrefabsEditable/Animals/E_Cow.et	",
 			},
 			200, false, false,
 		);

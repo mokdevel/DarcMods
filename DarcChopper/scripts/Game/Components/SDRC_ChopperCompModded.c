@@ -357,7 +357,7 @@ modded class SDRC_ChopperComp
 				if ( ( (m_eDamageLevel == SDRC_EHeliDamageLevel.MEDIUM) || (m_eDamageLevel == SDRC_EHeliDamageLevel.HEAVY) ) && (GetBehaviour() != SDRC_EHeliBehaviour.EVAC_BEHAVIOUR) )
 				{
 					SetBehaviour(SDRC_EHeliBehaviour.EVAC_BEHAVIOUR, -1);
-					AddDestination(SDRC_EFlyWayPointType.WP_M_RESET);
+					AddDestination(SDRC_EFlyWayPointType.WP_RESET);
 					AddDestination(SDRC_EFlyWayPointType.WP_M_EVAC_TROOPS, SDRC_Misc.RandomizePos(owner.GetOrigin(), 600));
 				}		
 				
@@ -549,6 +549,20 @@ modded class SDRC_ChopperComp
 				m_fBrakingDistance = value;
 				break;
 			}
+			case SDRC_EFlyWayPointType.WP_CUT:
+			{
+				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
+				addDestinationPoint = false;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_RESET:
+			{
+				ResetDestinations();
+				SDRC_ChopperCompCore.ResetOriginalValuesComp(this);
+				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
+				addDestinationPoint = false;
+				break;
+			}
 			
 			//------------------------------------------------------------------------------------------------	
 			//Macro actions
@@ -566,20 +580,6 @@ modded class SDRC_ChopperComp
 				AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, destination, distance);
 				AddDestination(SDRC_EFlyWayPointType.WP_LAND_VERTICAL, destination, value);
 //				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
-				addDestinationPoint = false;
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_M_CUT:
-			{
-				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
-				addDestinationPoint = false;
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_M_RESET:
-			{
-				ResetDestinations();
-				SDRC_ChopperCompCore.ResetOriginalValuesComp(this);
-				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
 				addDestinationPoint = false;
 				break;
 			}
@@ -803,7 +803,7 @@ modded class SDRC_ChopperComp
 				{
 					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D: Enemy found, attacking: " + m_vEnemyPosition, LogLevel.NORMAL);
 					
-					AddDestination(SDRC_EFlyWayPointType.WP_M_CUT);
+					AddDestination(SDRC_EFlyWayPointType.WP_CUT);
 					//Add WP_ATTACK and WP_PATROL to the list of next destinations. These are added as first items in the list and
 					//have to be added in reverse order to have WP_ATTACK as the first item.
 					AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, patrolPos, index: 0);

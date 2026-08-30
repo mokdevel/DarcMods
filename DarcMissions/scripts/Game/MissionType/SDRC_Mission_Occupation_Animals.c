@@ -199,7 +199,7 @@ class SDRC_OccupationConfig_Animals : SDRC_OccupationConfig
 				
 		ref SDRC_Structure item_5 = new SDRC_Structure();
 		item_5.Set(
-			"{7E392EFF0B595795}Prefabs/Animals_Groups/Deer_Doe_Group.et",
+			"{C995128A47763199}PrefabsEditable/Animals_Groups/E_Deer_Doe_Group.et",
 			"56 0 100"
 		);
 		occupation.campItems.Insert(item_5);

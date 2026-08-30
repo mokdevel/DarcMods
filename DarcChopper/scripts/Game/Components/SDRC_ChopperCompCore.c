@@ -84,17 +84,17 @@ enum SDRC_EFlyWayPointType
 	WP_STOP_ENGINE,				//20 - Does the action and goes to WAIT state
 	WP_ATTACK,					//21 - Sets attack position and time and then FLY
 	WP_SEARCH_DESTROY,			//   - Search for enemy by patroling an area. If enemy is found, attack the location.
+	WP_RESET,					//   - Reset destinations and flight patg. Cut the current flight planned and pick the next destination in the list.
+	WP_CUT,						//   - Cut the current flight planned and pick the next destination in the list.
 	
-	WP_M_LAND,					//   - Land to a position by doing WP_BRAKE and WP_LAND
+	//Macro actions
+	WP_M_LAND,					//50 - Land to a position by doing WP_BRAKE and WP_LAND
 	WP_M_LAND_TROOPS,			//   - Drop of troops to exact position, wait and leave
 	WP_M_LAND_TO_FREE_SPOT,		//   - Drop of troops, but search for empty spot. Stop engine.
 	WP_M_EVAC_TROOPS,			//   - Drop troops to a safe spot and stop engine
 	WP_M_ATTACK,				//   - Bomb run on the area without the need to have an enemy (TO BE CHANGED!)
 	WP_M_SUPPRESSIVE,			//   - Bomb run on the area without the need to have an enemy
 	
-	//Macro actions
-	WP_M_RESET = 50,			//50 - Reset destinations. Cut the current flight planned and pick the next destination in the list.
-	WP_M_CUT,					//   - Cut the current flight planned and pick the next destination in the list.
 	WP_M_TESTING,				//Just for testing
 }
 

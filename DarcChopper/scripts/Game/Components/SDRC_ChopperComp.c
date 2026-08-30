@@ -881,6 +881,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 	private void ResetDestinations()
 	{
 		m_vFlyDestinations.Clear();
+		m_vAttackPosition = vector.Zero;
+		m_fTimerBehaviour = 0;
+		SetTimeInState(0);
 	}	
 	
 	//------------------------------------------------------------------------------------------------	
