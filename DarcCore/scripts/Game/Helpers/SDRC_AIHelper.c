@@ -424,6 +424,8 @@ sealed class SDRC_AIHelper
 				SDRC_Log.Add("[SDRC_AIHelper:GroupCreate] Could not spawn group entity.", LogLevel.ERROR);
 			}
 			group.SetFaction(SDRC_EnemyHelper.GetFactionWithName(faction));
+			//Set group as non-persistent
+			SDRC_SpawnHelper.SetPersistence(group, false);
 		}	
 		else
 		{
