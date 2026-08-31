@@ -30,6 +30,9 @@ PerceptionManager PerceptionManager1 : "{028DAEAD63E056BE}Prefabs/World/Game/Per
 SCR_GameModeEditor GameMode_Editor_Full1 : "{DA3986AF1B5032B7}Prefabs/MP/Modes/Editor/GameMode_Editor_Full.et" {
  coords 1410.139 38.598 2083.971
 }
+SCR_DestructibleBuildingEntity : "{38A5F3E4578087AB}Prefabs/Structures/Houses/Town/House_Town_E_2I01/House_Town_E_2I01.et" {
+ coords 1350 0.001 2400
+}
 $grp GenericEntity : "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et" {
  {
   coords 2500 104.031 2500

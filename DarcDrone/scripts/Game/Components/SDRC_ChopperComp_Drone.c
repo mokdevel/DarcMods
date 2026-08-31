@@ -2,13 +2,20 @@
 
 //This is the modified component for drone use
 
+modded enum SDRC_EChopperSubType
+{
+	DRONE_DROPPER,
+	DRONE_CRASHER,
+}
+
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 {	
 	void SDRC_ChopperParams_Drone()
 	{
 		type = SDRC_EChopperType.DRONE;
-			
+		//NOTE: SubType has been set in the prefab
+		
 		//Turn
 		turnSpeedDivider = 45;
 		turnSpeedDegreeMin = 1;
@@ -29,7 +36,8 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		iRotorForceNormal = 30;
 		iRotorForceRaise = 40;
 		iRotorForceHover = 1;
-
+		iRotorForceCrash = 10;
+		
 		//Obstacle awareness
 		rayLenFront = 200;
 		rayDown = 50;		
@@ -63,6 +71,7 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 modded class SDRC_ChopperComp
 {
 	private bool m_bRegistered = false;
+	private bool m_bAttackDone = false;
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -280,6 +289,11 @@ modded class SDRC_ChopperComp
 			return;
 		}
 
+		if (m_bAttackDone)
+		{
+			return;
+		}
+		
 		SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
 		
 		if (m_vEnemyPosition == vector.Zero)
@@ -297,28 +311,57 @@ modded class SDRC_ChopperComp
 			distance = m_BaseGameMode.chopperFrame.m_Config.drone.dropDistanceToPlayer;
 		}
 		
-		//Any target near position?
-		if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(owner.GetOrigin(), distance, 0))
+		if (SDRC_Misc.RandomFloat(0, 1) > chance)
 		{
-			if (SDRC_Misc.RandomFloat(0, 1) < chance)
-			{
-				SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
-				if (droneControllerComponent)
-				{
-					DroneGrenade(droneControllerComponent.m_DroneId);
-					AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY); 
-				}
-			}
+			return;
 		}
 		
-		//If on a very low altitude, drop grenade and self destruct
-		if (m_fAltitude < 2)
+		switch (m_EntitySubType)
 		{
-			SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
-			if (droneControllerComponent)
+			case SDRC_EChopperSubType.DRONE_DROPPER:
 			{
-				DroneGrenade(droneControllerComponent.m_DroneId);
-				AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY); 
+				//Any target near position?
+				if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(owner.GetOrigin(), distance, 0))
+				{
+					SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
+					if (droneControllerComponent)
+					{
+						DroneGrenade(droneControllerComponent.m_DroneId);
+						AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY); 
+						SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
+						m_bAttackDone = true;
+					}
+				}
+				
+				//If on a very low altitude, drop grenade and self destruct
+				if (m_fAltitude < 2)
+				{
+					SAL_DroneControllerComponent droneControllerComponent = SAL_DroneControllerComponent.Cast(owner.FindComponent(SAL_DroneControllerComponent));		
+					if (droneControllerComponent)
+					{
+						DroneGrenade(droneControllerComponent.m_DroneId);
+						AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY); 
+						SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
+						m_bAttackDone = true;
+					}
+				}
+				break;
+			}
+			case SDRC_EChopperSubType.DRONE_CRASHER:
+			{
+				//Any target near position?
+				if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(owner.GetOrigin(), distance * 10, 0))
+				{
+					vector rndPos = vector.Zero; 
+					rndPos[0] = SDRC_Misc.RandomInt(-150, 150);
+					rndPos[2] = SDRC_Misc.RandomInt(-150, 150);
+					AddDestination(SDRC_EFlyWayPointType.WP_FLY_IMMEDIATELY, owner.GetOrigin() + rndPos); 
+					AddDestination(SDRC_EFlyWayPointType.WP_CRASH, owner.GetOrigin()); 
+					AddDestination(SDRC_EFlyWayPointType.WP_END); 					
+					SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
+					m_bAttackDone = true;					
+				}
+				break;
 			}
 		}
 	}
