@@ -1,13 +1,16 @@
-//Modded/SDRC_ChopperExample_SCR_BaseGameMode.c
+//Modded/SDRC_ChopperExample_0SCR_BaseGameMode.c
 
 modded class SCR_BaseGameMode 
 {		
-	ref SDRC_ChopperExample_1 m_ChopperExample_1;
-	ref SDRC_ChopperExample_2 m_ChopperExample_2;
-	ref SDRC_ChopperExample_3 m_ChopperExample_3;
-	ref SDRC_ChopperExample_4 m_ChopperExample_4;
-	ref SDRC_ChopperExample_5 m_ChopperExample_5;
-	ref SDRC_ChopperExample_6 m_ChopperExample_6;
+	ref SDRC_ChopperExample_01 m_ChopperExample_1;
+	ref SDRC_ChopperExample_02 m_ChopperExample_2;
+	ref SDRC_ChopperExample_03 m_ChopperExample_3;
+	ref SDRC_ChopperExample_04 m_ChopperExample_4;
+	ref SDRC_ChopperExample_05 m_ChopperExample_5;
+	ref SDRC_ChopperExample_06 m_ChopperExample_6;
+	//ref SDRC_ChopperExample_07 - NOTE: These are prefabs in the example world and do not contain any code. 
+	//ref SDRC_ChopperExample_08 - NOTE: These are prefabs in the example world and do not contain any code.  
+	ref SDRC_ChopperExample_09 m_ChopperExample_9;
 	
 	//------------------------------------------------------------------------------------------------
     override void OnGameModeStart()
@@ -43,17 +46,18 @@ modded class SCR_BaseGameMode
 	{
 		if (SDRC_Conf.coreHasStarted)	//Wait for core to be available
 		{		
-//				m_ChopperExample_1 = new SDRC_ChopperExample_1();
-//				m_ChopperExample_2 = new SDRC_ChopperExample_2();				
-//				m_ChopperExample_3 = new SDRC_ChopperExample_3();
-				m_ChopperExample_4 = new SDRC_ChopperExample_4();				
-//				m_ChopperExample_5 = new SDRC_ChopperExample_5();
-//				m_ChopperExample_6 = new SDRC_ChopperExample_6();
+//				m_ChopperExample_1 = new SDRC_ChopperExample_01();
+//				m_ChopperExample_2 = new SDRC_ChopperExample_02();				
+//				m_ChopperExample_3 = new SDRC_ChopperExample_03();
+//				m_ChopperExample_4 = new SDRC_ChopperExample_04();				
+//				m_ChopperExample_5 = new SDRC_ChopperExample_05();
+//				m_ChopperExample_6 = new SDRC_ChopperExample_06();
+				m_ChopperExample_9 = new SDRC_ChopperExample_09();
 		}
 		else
 		{
 			GetGame().GetCallqueue().CallLater(StartChopperExample, 2000, false);	
-			SDRC_Log.Add("[SDRC_ChopperExample_SCR_BaseGameMode:StartChopperExample] Core not running. Waiting...", LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_ChopperExample_0SCR_BaseGameMode:StartChopperExample] Core not running. Waiting...", LogLevel.DEBUG);
 		}
 	}	
 }

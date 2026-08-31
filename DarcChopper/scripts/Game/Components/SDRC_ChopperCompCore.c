@@ -27,6 +27,7 @@ class SDRC_ChopperParams
 	int   iRotorForceNormal; 						//.. normal flight situation
 	int   iRotorForceRaise; 						//.. when raising from stand still
 	int   iRotorForceHover; 						//.. when hovering in one place
+	int   iRotorForceCrash; 						//.. when crashin. Bigger value causes a deeper curve
 	
 	//Obstacle awareness
 	float rayLenFront;								//Length of the ray to detect obstacles in front of vehicle
@@ -139,6 +140,11 @@ enum SDRC_EChopperType
 	HELICOPTER,
 	DRONE,
 	FIXEDWING,
+}
+
+enum SDRC_EChopperSubType
+{
+	DEFAULT
 }
 
 enum SDRC_EHeliDamageLevel

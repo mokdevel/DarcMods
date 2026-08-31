@@ -34,6 +34,12 @@ modded class SDRC_ChopperComp
 				//Should never happen
 				break;
 			}
+			case SDRC_EFlyWayPointType.WP_CRASH:
+				SetState(SDRC_EHeliState.CRASH);
+				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, -1);
+				//NOTE: The final height will be set in SetFlightPointHeight
+				m_bIsCrashing = false;
+				break;
 			case SDRC_EFlyWayPointType.WP_BRAKE:
 				SetState(SDRC_EHeliState.BRAKE);			
 				//NOTE: The final height will be set in SetFlightPointHeight
@@ -406,24 +412,6 @@ modded class SDRC_ChopperComp
 
 	//------------------------------------------------------------------------------------------------	
 	/*!	
-	Handle ground contact
-	*/
-	private void HandleGroundContact(IEntity owner)
-	{
-		//SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
-		//Disable effect of rotors
-        m_Helicopter_s.RotorSetForceScaleState(0, 0);
-        m_Helicopter_s.RotorSetForceScaleState(1, 0);
-        m_Helicopter_s.SetThrottle(0);
-		//Set values to stop moving
-		m_fSpeedTarget = 0.0001;
-		m_fSpeedSlowingMul = 0;
-		m_fRotorForceMultiplier = 0;
-		SetNextState(owner);
-	}	
-	
-	//------------------------------------------------------------------------------------------------	
-	/*!	
 	Handle braking
 	*/
 	override private void HandleBraking(IEntity owner, float timeSlice)
@@ -465,5 +453,74 @@ modded class SDRC_ChopperComp
 				}
 			}
 		}
+	}	
+	
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Handle crashing
+	*/
+	override private void HandleCrashing(IEntity owner, float timeSlice)
+	{
+		if (!m_bIsCrashing)
+		{
+			m_fPositionCrashingOrig = m_vOrigin;
+
+			//Disable effect of rotors
+			if (m_Helicopter_s)
+			{
+		        m_Helicopter_s.RotorSetForceScaleState(0, 0);
+		        m_Helicopter_s.RotorSetForceScaleState(1, 0);
+		        m_Helicopter_s.SetThrottle(0);
+			}
+						
+			//We have started landing sequence so no need to count values
+			m_bIsCrashing = true;
+		}
+		else
+		{
+			if (m_Helicopter_s)
+			{
+				if (m_Helicopter_s.HasAnyGroundContact())
+				{			
+					SetNextState(owner);			
+				}			
+				else
+				{
+					//If we have passed the point, go to next state
+					if (SDRC_Math.HasPassedPointXZ(m_fPositionCrashingOrig, m_vSplinePoints[m_vSplinePoints.Count() - 1], owner.GetOrigin()))
+					{
+						SetNextState(owner);		
+					}
+				}
+			}
+			else
+			{
+				if (m_fAltitude < 0.1)
+				{
+					SetNextState(owner);			
+				}				
+			}
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Handle ground contact
+	*/
+	private void HandleGroundContact(IEntity owner)
+	{
+		//SDRC_Log.Add("[SDRC_ChopperComp:HandleLanding] Ground contact!", LogLevel.DEBUG);
+		//Disable effect of rotors
+		if (m_Helicopter_s)
+		{		
+	        m_Helicopter_s.RotorSetForceScaleState(0, 0);
+	        m_Helicopter_s.RotorSetForceScaleState(1, 0);
+	        m_Helicopter_s.SetThrottle(0);
+		}
+		//Set values to stop moving
+		m_fSpeedTarget = 0.0001;
+		m_fSpeedSlowingMul = 0;
+		m_fRotorForceMultiplier = 0;
+		SetNextState(owner);
 	}	
 }

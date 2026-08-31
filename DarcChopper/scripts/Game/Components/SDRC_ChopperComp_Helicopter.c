@@ -8,7 +8,8 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 	void SDRC_ChopperParams_Helicopter()
 	{
 		type = SDRC_EChopperType.HELICOPTER;
-				
+		//NOTE: SubType has been set in the prefab
+						
 		//Turn
 		turnSpeedDivider = 240;
 		turnSpeedDegreeMin = 1;
@@ -29,7 +30,8 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		iRotorForceNormal = 30;
 		iRotorForceRaise = 40;
 		iRotorForceHover = 0;
-
+		iRotorForceCrash = 8;
+		
 		//Obstacle awareness
 		rayLenFront = 400;
 		rayDown = 50;

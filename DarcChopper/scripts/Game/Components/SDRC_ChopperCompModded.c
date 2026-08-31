@@ -434,6 +434,7 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
 			case SDRC_EFlyWayPointType.WP_RAISE:
 			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
+			case SDRC_EFlyWayPointType.WP_CRASH:
 			{
 				break;
 			}
@@ -720,6 +721,11 @@ modded class SDRC_ChopperComp
 			case SDRC_EHeliState.BRAKE:
 			{
 				HandleBraking(owner, timeSlice);	
+				break;
+			}
+			case SDRC_EHeliState.CRASH:
+			{
+				HandleCrashing(owner, timeSlice);	
 				break;
 			}
 			case SDRC_EHeliState.GET_OUT:

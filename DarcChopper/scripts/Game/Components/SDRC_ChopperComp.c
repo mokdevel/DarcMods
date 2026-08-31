@@ -116,6 +116,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 	//Autonomous flying stuff
 	[Attribute(defvalue: typename.EnumToString(SDRC_EChopperType, SDRC_EChopperType.HELICOPTER), uiwidget: UIWidgets.ComboBox, desc: "The type of the entity.", enumType: SDRC_EChopperType)]		
 	SDRC_EChopperType m_EntityType;
+	[Attribute(defvalue: typename.EnumToString(SDRC_EChopperSubType, SDRC_EChopperSubType.DEFAULT), uiwidget: UIWidgets.ComboBox, desc: "The sub type of the entity.", enumType: SDRC_EChopperSubType)]
+	SDRC_EChopperType m_EntitySubType;
 	[Attribute(defvalue: "0", desc: "Entity does not need pilots")]	
 	bool m_bUnpiloted;
 	//Debug stuff	
@@ -232,6 +234,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 	private float m_fBrakingSpeed;				//The speed to brake the chopper
 	private float m_fSpeedBrakingOrig;			//Speed from where we start to brake
 	private vector m_fPositionBrakingOrig;		//Position from where we start to brake
+	
+	//Crashing related
+	private bool m_bIsCrashing;					//If true, crashing sequence has started
+	private vector m_fPositionCrashingOrig;		//Position from where we start to crash
 	
 	//Enemy positions
 	vector m_vEnemyPosition = vector.Zero;		//Position of last found enemy
@@ -629,13 +635,16 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_fSpeedStart = m_fSpeed;
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
 
-		//If we're too close to ground, slow down the speed to allow time for climb
-		const int ALTITUDE_ADD = 5;
-		if ((m_fAltitude + ALTITUDE_ADD) < m_fFlyHeightLow)
-		{		
-			float mul = (m_fAltitude + ALTITUDE_ADD) / m_fFlyHeightLow;
-			mul = Math.Clamp(mul, 0, 1);
-			m_fSpeedTarget = m_fSpeedTarget * mul;
+		if (GetState() != SDRC_EHeliState.CRASH)	//In crashing, we don't slow down
+		{
+			//If we're too close to ground, slow down the speed to allow time for climb
+			const int ALTITUDE_ADD = 5;
+			if ((m_fAltitude + ALTITUDE_ADD) < m_fFlyHeightLow)
+			{		
+				float mul = (m_fAltitude + ALTITUDE_ADD) / m_fFlyHeightLow;
+				mul = Math.Clamp(mul, 0, 1);
+				m_fSpeedTarget = m_fSpeedTarget * mul;
+			}
 		}
 
 //		m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, m_fSpeedMin, m_fSpeedMax);
@@ -654,12 +663,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_fAnglePitch = params.pitchAngleRadFlat + params.pitchAngleRad * mul;
 //		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleDown, params.pitchNoseAngleUp);	//Nose down, nose up
 		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleUp, params.pitchNoseAngleDown);	//Nose down, nose up
-		
-/*		if (m_eHeliState == SDRC_EHeliState.RAISE)
-		{
-			//Turn nose down
-			m_fAnglePitch = params.pitchNoseAngleDown * Math.DEG2RAD;
-		}*/
 		
 		//Turn helicopter nose m_fAnglePitch amount up or down
 		m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fAnglePitch);
@@ -681,13 +684,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 			m_vAngularVel = vector.Zero;
 			m_vRadRollVel = vector.Zero;
 			m_vRadRollPitch = vector.Zero;
-		}
-		else if (m_fSpeedSlowingMul < 1.0)
-		{
-			//Do only minor adjustments
-//			m_vAngularVel = m_vAngularVel * m_fSpeedSlowingMul * 0.2;
-//			m_vRadRollVel = m_vRadRollVel * m_fSpeedSlowingMul;
-////			m_vRadRollPitch = m_vRadRollPitch * m_fSpeedSlowingMul * 0.01;
 		}
 					
 		//ROLL UP (YAW): Count the angle from heli up vs world up. The heli should slowly move back to horizontal flight.
@@ -792,10 +788,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 					float percentage = Math.Clamp(m_fTimeInStateBeen/VERTICAL_SPEED_UP_TIME, 0, 1);
 					rotorForce = 3 * rotorForce * percentage;
 					distanceFromSplineMul = distanceFromSplineMul * percentage;
-					
-/*					//In hovering state, do smooth movemements
-					rotorForce = 2 * rotorForce * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));
-					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));*/
 				}
 				break;
 			}		
@@ -806,10 +798,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 					float percentage = Math.Clamp(m_fTimeInStateBeen/VERTICAL_SPEED_UP_TIME, 0, 1);
 					rotorForce = 3 * rotorForce * percentage;
 					distanceFromSplineMul = distanceFromSplineMul * percentage;
-					
-/*					//In hovering state, do smooth movemements
-					rotorForce = -1 * rotorForce * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));
-					distanceFromSplineMul = distanceFromSplineMul * (1 - (m_fTimeInStateLeft/m_fTimeInStateOrig));*/
 				}
 				break;
 			}
@@ -830,6 +818,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 			{
 				//In BRAKE state, do movemements faster
 				rotorForce = rotorForce * 3.0;
+				break;
+			}		
+			case SDRC_EHeliState.CRASH:
+			{
+				//In CRASH state, do movemements faster
+				rotorForce = rotorForce * params.iRotorForceCrash;
 				break;
 			}		
 			case SDRC_EHeliState.HOVER:
@@ -1397,6 +1391,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	private void HandleLanding(IEntity owner, float timeSlice) {}
 	private void HandleLandingVertical(IEntity owner, float timeSlice) {}
 	private void HandleBraking(IEntity owner, float timeSlice) {}
+	private void HandleCrashing(IEntity owner, float timeSlice) {}
 	//------------------------------------------------------------------------------------------------	
 	// Enemy related - defined in modded class
 	//------------------------------------------------------------------------------------------------	

@@ -93,6 +93,7 @@ class SDRC_ChopperDebug
 						color = Color.GRAY;
 						break;
 					}
+					case SDRC_EFlyWayPointType.WP_CRASH:
 					case SDRC_EFlyWayPointType.WP_ATTACK:
 					{
 						color = Color.RED;

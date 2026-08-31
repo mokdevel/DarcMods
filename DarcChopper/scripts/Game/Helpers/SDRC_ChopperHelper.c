@@ -313,11 +313,10 @@ class SDRC_ChopperHelper
 				case SDRC_EFlyWayPointType.WP_HOVER_UP: //Do nothing .. 
 					break;
 				case SDRC_EFlyWayPointType.WP_LAND:		//Do nothing .. height will be on ground due to y being set and flyHeigt is zero. See above.
-				{
-					int x = 0;
 					break;
-				}
 				case SDRC_EFlyWayPointType.WP_BRAKE: 	//Do nothing .. NOTE: If braking height was set to 0, the point height has been set to the same as helicopter at the time. See: AddDestinationPoint()
+					break;
+				case SDRC_EFlyWayPointType.WP_CRASH: 	//Do nothing .. height will be on ground due to y being set and flyHeigt is zero. See above.
 					break;
 				case SDRC_EFlyWayPointType.WP_ATTACK:
 				{
@@ -447,12 +446,20 @@ class SDRC_ChopperHelper
 					isSmoothingNeeded = false;
 					break;
 				}
+				case SDRC_EHeliState.CRASH:
+				{
+					vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];
+					lowestHeight = SDRC_Misc.GetSurfaceYWithWater(lastPoint) - 2;
+					CreateEndCurveSteep(chopperComp, lowestHeight);
+					isSmoothingNeeded = false;
+					break;
+				}
 				case SDRC_EHeliState.BRAKE:
 				{
 					const int BRAKING_DISTANCE_LIMIT = 90;
 					//Modify brake height defaults
 					//Braking height is the last point. Could be below m_fFlyHeightLow...
-					vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];				
+					vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];
 					lowestHeight = lastPoint[1];
 					float surfaceY = SDRC_Misc.GetSurfaceYWithWater(lastPoint, true, owner);
 					if (lowestHeight < surfaceY)

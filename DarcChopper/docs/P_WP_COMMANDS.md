@@ -136,13 +136,19 @@ Brakes the helicopter speed to stand still.
   * If -1 or empty, defaults to 200.
 
 ### WP_END
-_TBD_
+Ends the SDRC_ChopperComp component functionality. The entity is left for Arma Reforger to handle.
+* ``destination`` : Not used.
+* ``value`` : Not used.
 
 ### WP_DESPAWN
-_TBD_
+Despawn the helicopter and the crew.
+* ``destination`` : Not used.
+* ``value`` : Not used.
 
 ### WP_CRASH
-_TBD_
+Creates a flight pattern to crash the chopper to a destination. Once touching ground, next state is set. You should always have a state after this for example WP_END.
+* ``destination`` : Position to crash to.
+* ``value`` : Not used.
 
 ### WP_GET_OUT
 _TBD_
