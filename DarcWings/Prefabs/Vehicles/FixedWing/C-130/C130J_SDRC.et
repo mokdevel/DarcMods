@@ -16,6 +16,7 @@ Vehicle : "{08F4BDDAD3E2EB7C}Prefabs/Vehicles/FixedWing/C-130/C130J.et" {
    m_fSpeedMax 100
    m_fFlyHeightHigh 160
    m_EntityType FIXEDWING
+   m_EntitySubType WINGS_C130
   }
  }
 }

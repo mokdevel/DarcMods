@@ -2,12 +2,18 @@
 
 //This is the modified component for fixed wing use
 
+modded enum SDRC_EChopperSubType
+{
+	WINGS_C130
+}
+
 //------------------------------------------------------------------------------------------------
 class SDRC_ChopperParams_Fixedwing : SDRC_ChopperParams
 {
 	void SDRC_ChopperParams_Fixedwing()
 	{
 		type = SDRC_EChopperType.FIXEDWING;
+		//NOTE: SubType has been set in the prefab
 				
 		//Turn
 		turnSpeedDivider = 92;
@@ -29,7 +35,8 @@ class SDRC_ChopperParams_Fixedwing : SDRC_ChopperParams
 		iRotorForceNormal = 30;
 		iRotorForceRaise = 40;
 		iRotorForceHover = 0;
-
+		iRotorForceCrash = 4;
+		
 		//Obstacle awareness
 		rayLenFront = 700;
 		rayDown = 50;
