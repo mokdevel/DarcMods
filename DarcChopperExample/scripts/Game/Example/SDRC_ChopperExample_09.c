@@ -1,4 +1,4 @@
-//Mission SDRC_ChopperExample_3.c
+//Mission SDRC_ChopperExample_09.c
 
 //------------------------------------------------------------------------------------------------
 /*!
@@ -9,14 +9,14 @@ and turning engines off.
 */
 
 //------------------------------------------------------------------------------------------------
-class SDRC_ChopperExample_4
+class SDRC_ChopperExample_09
 {
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
-	vector m_vPosOrigin = "1730 0 2530";
+	vector m_vPosOrigin = "1700 0 2500";
 	float m_fMinFlyHeight = 30;
 	//------------------------------------------------------------------------------------------------
-	void SDRC_ChopperExample_4()
+	void SDRC_ChopperExample_09()
 	{
 		//Set to initial position height
 		if (m_vPosOrigin[1] == 0)
@@ -38,7 +38,7 @@ class SDRC_ChopperExample_4
 		//Check that all is good
 		if ( (!m_Vehicle) || (!m_Vehicle_c) )
 		{
-			Print("[SDRC_ChopperExample_1] Could not spawn chopper", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_ChopperExample_09] Could not spawn chopper", LogLevel.ERROR);
 			return;			
 		}
 		
@@ -58,13 +58,7 @@ class SDRC_ChopperExample_4
 		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, flyHereFirst);
 		//Add our flight path		
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, flyHereFirst);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "1350 3 2287");
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 8);				//Hover for 8 seconds
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, "0 30 0", 8);			//Raise up 30 meters. Stay in the state or 8 seconds.
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER_DOWN, "0 -20 0", 8);		//Hover down 20 meters. Stay in the state or 8 seconds.
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_LAND_VERTICAL);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value: 25);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_STOP_ENGINE);
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_CRASH, "1350 3 2400");
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_END);
 	}	
 }

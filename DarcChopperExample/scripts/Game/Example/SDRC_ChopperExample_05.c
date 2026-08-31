@@ -1,22 +1,22 @@
-//Mission SDRC_ChopperExample_1.c
+//Mission SDRC_ChopperExample_05.c
 
 //------------------------------------------------------------------------------------------------
 /*!
-Summary: spawn - initial destination - fly
+Summary: spawn - initial destination - fly - patrol around area
 
-This is a very simple example of spawning a chopper and set an initial destination. After reaching
-the destination, it will start to fly randomly.
+This is a very simple example of spawning a chopper and a destination to patrol around. After reaching
+the destination, patroling will start.
 */
 
 //------------------------------------------------------------------------------------------------
-class SDRC_ChopperExample_1
+class SDRC_ChopperExample_05
 {
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
-	vector m_vPosOrigin = "1360 0 2140";
+	vector m_vPosOrigin = "2830 0 2070";
 	float m_fMinFlyHeight = 30;
 	//------------------------------------------------------------------------------------------------
-	void SDRC_ChopperExample_1()
+	void SDRC_ChopperExample_05()
 	{
 		//Set to initial position height
 		if (m_vPosOrigin[1] == 0)
@@ -37,16 +37,17 @@ class SDRC_ChopperExample_1
 		//Check that all is good
 		if ( (!m_Vehicle) || (!m_Vehicle_c) )
 		{
-			Print("[SDRC_ChopperExample_1] Could not spawn chopper", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC_ChopperExample_05] Could not spawn chopper", LogLevel.ERROR);
 			return;			
 		}
-
 		//Do setup
-		vector flyHereFirst = "1000 0 2700";
+		vector flyHereFirst = "2680 0 1800";
+		
 		
 		//Turn vehicle towards first flight position
 		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, flyHereFirst);
 		//Add our flight path
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, flyHereFirst);
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_PATROL, "2750 0 1640");
 	}	
 }
