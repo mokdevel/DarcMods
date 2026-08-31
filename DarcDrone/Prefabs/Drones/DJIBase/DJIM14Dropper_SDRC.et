@@ -22,6 +22,7 @@ GenericEntity : "{522D1916AE149FCA}Prefabs/Drones/DJIBase/DJIM14Dropper.et" {
    m_fDistanceHigh 200
    m_sFaction "US"
    m_EntityType DRONE
+   m_EntitySubType DRONE_DROPPER
    m_bUnpiloted 1
   }
  }

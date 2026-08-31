@@ -20,8 +20,8 @@ GenericEntity : "{77CA4803A4A2B8E3}Prefabs/Drones/FPVBase/FPVRpg.et" {
    m_fDistanceLow 80
    m_fDistanceHigh 200
    m_sFaction "USSR"
-   m_EnemySearchType PLAYER
    m_EntityType DRONE
+   m_EntitySubType DRONE_CRASHER
    m_bUnpiloted 1
   }
  }

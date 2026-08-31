@@ -1,4 +1,4 @@
-GenericEntity : "{198FC6ADBB37E556}Prefabs/Drones/FPVBase/FPV_OFCP.et" {
+GenericEntity : "{E2BC2F5C24A925B9}Prefabs/Drones/FPVBase/FPV_OG7V.et" {
  ID "65932E3D2F6C309A"
  components {
   SCR_EditableVehicleComponent "{65AF169A26951569}" {
@@ -8,21 +8,21 @@ GenericEntity : "{198FC6ADBB37E556}Prefabs/Drones/FPVBase/FPV_OFCP.et" {
     }
    }
   }
-  SCR_FireplaceComponent "{6A150A78A0BC0C82}" {
-   m_sParticle "{0A512F25BFD2D30D}Particles/Enviroment/electrical_short_medium.ptc"
+  SCR_FireplaceComponent "{6A150A796B05C518}" {
+   m_sParticle "{FE399364B14304AA}Particles/Enviroment/electrical_short_small_loop.ptc"
    m_vParticleOffset 0 0 0
   }
-  SDRC_ChopperComp "{6A150A78B4FB2261}" {
+  SDRC_ChopperComp "{6A150A797F83F814}" {
    m_fThrottle 1.5
    m_fSpeedMin 5
    m_fSpeedMax 10
    m_fFlyHeightLow 10
    m_fFlyHeightHigh 25
-   m_fDistanceLow 80
-   m_fDistanceHigh 200
+   m_fDistanceLow 60
+   m_fDistanceHigh 180
    m_sFaction "USSR"
-   m_EnemySearchType PLAYER
    m_EntityType DRONE
+   m_EntitySubType DRONE_CRASHER
    m_bUnpiloted 1
   }
  }

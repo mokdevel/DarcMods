@@ -24,6 +24,7 @@ GenericEntity : "{C07C56F97DAB2DEE}Prefabs/Drones/DJIBase/DJI81Dropper.et" {
    m_sFaction "US"
    m_CargoSeatFill NONE
    m_EntityType DRONE
+   m_EntitySubType DRONE_DROPPER
    m_bUnpiloted 1
   }
   RplComponent "{659863D793C45A93}" {
