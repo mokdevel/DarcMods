@@ -1119,9 +1119,16 @@ modded class SDRC_ChopperComp : ScriptComponent
 				SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Distance: " + distance + " - Angle: " + heliAngle, LogLevel.DEBUG);
 				
 				//Is the angle too steep? Re-route.
-//				if ( (Math.AbsFloat(heliAngle) < params.wpSteepAngle) && (distance > 200) )
 				if (Math.AbsFloat(heliAngle) < params.wpSteepAngle)
 				{				
+					// Rerouting creates points CD for a path ABE
+					//
+					//       _C__B 
+					//      /    |
+					//     D     |
+					//    |      A (usually origin)
+					//    E      
+					//
 					SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle is steep: " + heliAngle, LogLevel.SPAM);
 					
 					//Get the last point
@@ -1139,14 +1146,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 
 					//Find a point along the fly path and move it away from the line along tangent					
 					vector vec2 = SDRC_Math.CreateOffsetMidPoint(point, flyDestination.pt, (distance / divRnd), lerpRnd, isOnLeft);
-					
-					//Find a point at the end of the flight line to make the curve rounder
+					//Find a similar point but now between the start and vec2
 					vector vec1 = SDRC_Math.CreateOffsetMidPoint(point, vec2, (distance / 4), 0.5, isOnLeft);
-					AddFlyPathPoint(vec1);				
-					
+					AddFlyPathPoint(vec1);									
 					AddFlyPathPoint(vec2);
-					SDRC_DebugHelper.AddDebugPos(vec1, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
-					SDRC_DebugHelper.AddDebugPos(vec2, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
+					//SDRC_DebugHelper.AddDebugPos(vec1, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
+					//SDRC_DebugHelper.AddDebugPos(vec2, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
 				}
 				
 				AddFlyPathPoint(flyDestination.pt, flyDestination.type, flyDestination.value);
