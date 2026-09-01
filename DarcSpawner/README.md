@@ -78,11 +78,18 @@ All credits to Holden Shift for the amazing French Animals mod:
 Example: [dc_spawnerConfig_Animals.json](https://github.com/mokdevel/DarcMods/blob/main/DarcSpawner/ExampleConfigs/dc_spawnerConfig_Animals.json)
 
 ### Notes
-* Currently spawns individual animals: Wolf, Deer, Doe, Rabbit, Fox
+* Spawns either individual animals or groups when available: Wolf, Deer, Doe, Rabbit, Fox, Crows, ...
+* Spawns territories for animals for those that have them available.
 * Works on all maps just by enabling the mod.
 * All configuration done via json files located in your profiles directory (after first run).
 
 # Version history
+
+## 20260901
+### DarcSpawner_Animals
+Main Features:
+* Added spawners for chickens
+* dc_spawnerConfig_Animals.json has been updated. The file will auto update itself. Any changes you've done in the previous conf, you need to redo (e.g. spawn on road settings). Backup file in the profile directory.
 
 ## 20260829
 ### DarcSpawner_Animals

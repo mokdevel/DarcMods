@@ -4,7 +4,13 @@
 No changes in mission jsons. 
 
 ## Next release (unreleased)
+
+## 20260901
+Main Features:
+* Added a new HvtItem mission: Kill Wolf (enabled when BAR_FrenchAnimals mod is loaded)
+
 Fixes:
+* Mission file loading only included some of the missions.
 * Group entity is set as non-persistent.
 
 ## 20260830
