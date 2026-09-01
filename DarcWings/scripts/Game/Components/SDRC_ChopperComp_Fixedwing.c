@@ -42,7 +42,7 @@ class SDRC_ChopperParams_Fixedwing : SDRC_ChopperParams
 		rayDown = 50;
 				
 		//Flight parameters
-		detourLerpPosition = 0.2;
+		detourLerpPosition = 0.4;
 		detourDivider = 1.0;
 		
 		//Attack and enemy related

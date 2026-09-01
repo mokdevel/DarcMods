@@ -38,7 +38,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 				
 		//Flight parameters
 		detourLerpPosition = 0.4;
-		detourDivider = 5.5;
+		detourDivider = 2.5;		//Was 5.5
 		
 		//Attack and enemy related
 		rayLenEnemy = 1000;

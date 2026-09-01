@@ -455,7 +455,8 @@ class SDRC_ChopperHelper
 					//We know where to attack so return to normal flight mode
 					chopperComp.SetState(SDRC_EHeliState.FLY);
 					
-					CreateEndCurveJ(chopperComp, lowestHeight);
+					//TBD: The J-curve currently modifies the whole flight including XZ so does not fit attacking. Needs fixing.
+					//CreateEndCurveJ(chopperComp, lowestHeight);
 					isSmoothingNeeded = false;
 					break;
 				}
