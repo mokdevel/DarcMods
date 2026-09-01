@@ -21,7 +21,7 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		comment = "Animal spawner using French Animals mod. ";
 		spawnWorldSizeMultiplier = 0;
 		spawnCount = 30;
-		spawnSetList = {0,0,0,0,0,0,1,1,1,2,2,2,3,3,4,4,9,12,12,13,14,14 ,5,6,6,7,8,10};
+		spawnSetList = {0,0,0,0,0,0,1,1,1,2,2,2,3,3,4,4,9,12,12,13,14,14,15 ,5,6,6,7,8,10};
 		//----------------------------------------------------		
 		spawnSets.Insert(SpawnSet0_Animals());	//Deer
 		spawnSets.Insert(SpawnSet1_Animals());	//Wolf
@@ -39,7 +39,8 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		spawnSets.Insert(SpawnSet11_Animals());	//Deer & Doe herd
 		spawnSets.Insert(SpawnSet12_Animals());	//Crow
 		spawnSets.Insert(SpawnSet13_Animals());	//Crow
-		spawnSets.Insert(SpawnSet14_Animals());	//Crow
+		spawnSets.Insert(SpawnSet14_Animals());	//Cows
+		spawnSets.Insert(SpawnSet15_Animals());	//Chickens
 		//spawnSets.Insert(SpawnSetXX_Animals());	//Animal spawner - do not use for the moment.	
 	}	
 	
@@ -387,6 +388,29 @@ class SDRC_SpawnerConfig_Animals : SDRC_SpawnerConfig
 		
 		return spawnSet;
 	}		
+	
+	SDRC_SpawnSet SpawnSet15_Animals()
+	{
+		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
+		spawnSet.Set(		
+			"index 15: Chickens",
+			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			{
+				EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST, EMapDescriptorType.MDT_FOREST,
+				EMapDescriptorType.MDT_NAME_GENERIC,
+				EMapDescriptorType.MDT_NAME_LOCAL,
+				EMapDescriptorType.MDT_NAME_SETTLEMENT,
+				EMapDescriptorType.MDT_NAME_VILLAGE,
+			},
+			{},
+			{
+				"{EF861077F4847DD6}PrefabsEditable/Animals_Groups/E_Chicken_Group.et	",
+			},
+			200, false, false,
+		);
+		
+		return spawnSet;
+	}	
 	
 	SDRC_SpawnSet SpawnSetXX_Animals()
 	{
