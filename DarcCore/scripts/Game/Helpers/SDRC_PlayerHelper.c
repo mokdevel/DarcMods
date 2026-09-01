@@ -71,6 +71,29 @@ sealed class SDRC_PlayerHelper
 	*/	
 	static bool IsAnyPlayerCloseToPos(vector positionToCheck, int radiusToCheck = 1000, int minimumRadius = 0)
 	{
+		vector pos = AnyPlayerPosCloseToPos(positionToCheck, radiusToCheck, minimumRadius);
+		if (pos == vector.Zero)
+		{
+			return false;
+		}
+		return true;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Check if any player is close to given position. Returns position of player between minimumRadius and radiusToCheck
+	\param positionToCheck 
+	\param radiusToCheck The radius with within one single player shall be
+	\param minimumRadius The minimum radius how far the found player shall be from positionToCheck
+	
+	*-----)+++++++++++++)  + = the area that returns true
+	^     ^             ^
+	|     |             radiusToCheck
+	|     minimumRadius
+	position to check	
+	*/	
+	static vector AnyPlayerPosCloseToPos(vector positionToCheck, int radiusToCheck = 1000, int minimumRadius = 0)
+	{
 		array<int> players = {};
 		GetGame().GetPlayerManager().GetPlayers(players);
 		
@@ -85,16 +108,16 @@ sealed class SDRC_PlayerHelper
 				{
 					if (distance > minimumRadius)
 					{
-						return true;
+						return player.GetOrigin();
 						break;
 					}
 				}				
 			}
 		}
 		
-		return false;
-	}
-	
+		return vector.Zero;
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Get players near a position with distance to it. 
