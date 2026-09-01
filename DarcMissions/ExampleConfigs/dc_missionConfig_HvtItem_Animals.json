@@ -1,0 +1,145 @@
+{
+    "jsonVersion": 2,
+    "missionType": 9,
+    "version": 1,
+    "author": "darc",
+    "comment": "",
+    "missionCycleTime": 30,
+    "showMarker": true,
+    "showHint": true,
+    "showMessage": true,
+    "disableArsenal": false,
+    "missionList": [
+        0
+    ],
+    "missionFiles": [],
+    "subMissions": [
+        {
+            "general": {
+                "subIdx": 0,
+                "comment": "index 0: Kill wolf",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 20.0,
+                "locationTypes": [],
+                "posName": "any",
+                "messages": [
+                    {
+                        "title": "Wolf near %l",
+                        "info": "Help the farmers to get rid of the wolf. Look out for other hunters. ",
+                        "win": "Wolf is not huffing and puffing anymore.",
+                        "lose": "Wolf still roams free as the nature intended."
+                    }
+                ],
+                "winCondition": 20,
+                "faction": [],
+                "markerType": "DARC_MISSION",
+                "markerIcon": 11,
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": [
+                    "$BARFrenchAnimals:"
+                ]
+            },
+            "ai": {
+                "count": [
+                    1,
+                    2
+                ],
+                "types": [
+                    "G_SNIPER",
+                    "G_SNIPER",
+                    "G_RECON",
+                    "G_RECON"
+                ],
+                "skill": 80,
+                "perception": 1.0,
+                "waypointRange": [
+                    10,
+                    200
+                ],
+                "waypointGenType": 3,
+                "waypointMoveType": 5
+            },
+            "qrf": null,
+            "loot": {
+                "box": null,
+                "itemChance": 0.5,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_RIFLE",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "UTIL_AMMO",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_MEDICAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "GEAR_HEADGEAR",
+                    "GEAR_VEST",
+                    "GEAR_HANDWEAR",
+                    "GEAR_UNIFORM"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{4A9E0C3D18D5A1B8}Prefabs/Props/Crates/LootCrateWooden_01_blue.et",
+                    "position": [
+                        0.0,
+                        1.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D2E246D3F0FFF5D2}PrefabsEditable/Animals/E_Wolf.et",
+                    "position": [
+                        3.0,
+                        1.0,
+                        3.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{761D0D0A6993785C}PrefabsEditable/Zones/E_BAR_TerritoryMarker_Wolf.et",
+                    "position": [
+                        5.0,
+                        1.0,
+                        5.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ],
+            "camp": null,
+            "targetIdx": 1
+        }
+    ]
+}
