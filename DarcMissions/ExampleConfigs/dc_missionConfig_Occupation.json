@@ -9,7 +9,26 @@
     "showHint": true,
     "showMessage": true,
     "disableArsenal": true,
-    "missionList": [],
+    "missionList": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        4,
+        5,
+        6
+    ],
     "missionFiles": [],
     "subMissions": [
         {
@@ -1066,6 +1085,379 @@
                     "rotation": [
                         0.0,
                         0.0,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "general": {
+                "subIdx": 6,
+                "comment": "index 6: Training camp",
+                "pos": [
+                    [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                ],
+                "size": 30.0,
+                "locationTypes": [
+                    70,
+                    8,
+                    71
+                ],
+                "posName": "any",
+                "messages": [
+                    {
+                        "title": "Training camp near %l",
+                        "info": "The enemies are training for an operation. Destroy the camp.",
+                        "win": "Training facilities cleared.",
+                        "lose": "Training completed. Enemy is planning their next step."
+                    }
+                ],
+                "winCondition": 2,
+                "faction": [],
+                "markerType": "DARC_MISSION",
+                "markerIcon": 3,
+                "difficulty": [
+                    -1
+                ],
+                "xp": 0,
+                "modList": []
+            },
+            "ai": {
+                "count": [
+                    2,
+                    3,
+                    30
+                ],
+                "types": [
+                    "G_SPECIAL",
+                    "G_ADMIN",
+                    "G_RECON"
+                ],
+                "skill": 50,
+                "perception": 1.0,
+                "waypointRange": [
+                    10,
+                    90
+                ],
+                "waypointGenType": 1,
+                "waypointMoveType": 1
+            },
+            "qrf": {
+                "subIdx": [
+                    5
+                ],
+                "activation": 1,
+                "chance": 0.8,
+                "delay": [
+                    30,
+                    240
+                ]
+            },
+            "loot": {
+                "box": null,
+                "itemChance": 0.699,
+                "items": [
+                    "WEAPON_RIFLE",
+                    "WEAPON_SHOTGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_HANDGUN",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "WEAPON_GRENADE",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_ATTACHMENT",
+                    "UTIL_OPTIC",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "ITEM_GENERAL",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_HEADGEAR",
+                    "CLOTHING_UNIFORM",
+                    "CLOTHING_UNIFORM",
+                    "CLOTHING_UNIFORM"
+                ]
+            },
+            "campItems": [
+                {
+                    "resource": "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et",
+                    "position": [
+                        74.027,
+                        1.0,
+                        109.192
+                    ],
+                    "rotation": [
+                        0.0,
+                        15.628,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{06C4174747E7032B}PrefabsEditable/Auto/Props/Military/Camps/E_WeaponRackStand_01.et",
+                    "position": [
+                        75.097,
+                        1.0,
+                        106.589
+                    ],
+                    "rotation": [
+                        0.0,
+                        -94.079,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{09070D8EB9398742}Prefabs/Props/Military/Training/Obstacles/ObstacleVault_01.et",
+                    "position": [
+                        70.994,
+                        1.0,
+                        103.724
+                    ],
+                    "rotation": [
+                        0.0,
+                        -40.791,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{3AE0A97C6595801F}Prefabs/Props/Military/WaterTanks/MobileWaterTank_USSR_01.et",
+                    "position": [
+                        63.035,
+                        1.0,
+                        105.053
+                    ],
+                    "rotation": [
+                        0.0,
+                        23.07,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{6B68854FD47B936F}Prefabs/Props/Military/Training/Obstacles/ObstacleBridge_01_platform.et",
+                    "position": [
+                        75.442,
+                        1.0,
+                        106.902
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{6F0064DD846893A3}Prefabs/Props/Military/Training/Obstacles/ObstacleWindow_01.et",
+                    "position": [
+                        67.338,
+                        1.0,
+                        116.087
+                    ],
+                    "rotation": [
+                        0.0,
+                        -45.708,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{948A10A7AF89EE17}PrefabsEditable/Auto/Props/Infrastructure/SnowBreakers/E_SnowBreaker_E_01_B.et",
+                    "position": [
+                        75.755,
+                        1.0,
+                        104.568
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+                    "position": [
+                        69.678,
+                        1.0,
+                        117.308
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et",
+                    "position": [
+                        65.969,
+                        1.0,
+                        113.605
+                    ],
+                    "rotation": [
+                        0.0,
+                        -80.822,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{B8576ECF78CDBCD7}Prefabs/Props/Military/Training/Obstacles/ObstacleBridge_01_start.et",
+                    "position": [
+                        75.436,
+                        1.0,
+                        110.861
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+                    "position": [
+                        61.437,
+                        1.0,
+                        111.658
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+                    "position": [
+                        61.137,
+                        1.0,
+                        115.216
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+                    "position": [
+                        62.137,
+                        1.0,
+                        118.989
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+                    "position": [
+                        65.361,
+                        1.0,
+                        119.238
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+                    "position": [
+                        63.478,
+                        1.0,
+                        119.165
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+                    "position": [
+                        61.366,
+                        1.0,
+                        117.059
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+                    "position": [
+                        61.351,
+                        1.0,
+                        113.416
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+                    "position": [
+                        62.743,
+                        1.0,
+                        110.475
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et",
+                    "position": [
+                        66.495,
+                        1.0,
+                        118.264
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{D6F8A419B10274F2}PrefabsEditable/Auto/Props/Military/Camps/E_Duckboard_01.et",
+                    "position": [
+                        69.319,
+                        1.0,
+                        114.489
+                    ],
+                    "rotation": [
+                        0.0,
+                        -63.018,
+                        0.0
+                    ]
+                },
+                {
+                    "resource": "{E4B5C357EF215746}Prefabs/Props/Military/Training/Obstacles/ObstacleCrawl_01.et",
+                    "position": [
+                        65.87,
+                        1.0,
+                        111.655
+                    ],
+                    "rotation": [
+                        0.0,
+                        -42.334,
                         0.0
                     ]
                 }

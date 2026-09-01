@@ -1,5 +1,5 @@
 {
-    "jsonVersion": 4,
+    "jsonVersion": 5,
     "version": 1,
     "author": "darc",
     "comment": "Animal spawner using French Animals mod. ",
@@ -25,6 +25,9 @@
         9,
         12,
         12,
+        13,
+        14,
+        14,
         5,
         6,
         6,
@@ -308,7 +311,7 @@
             ],
             "positions": [],
             "entities": [
-                "{7E392EFF0B595795}Prefabs/Animals_Groups/Deer_Doe_Group.et"
+                "{C995128A47763199}PrefabsEditable/Animals_Groups/E_Deer_Doe_Group.et"
             ],
             "spawnRndRadius": 200,
             "spawnOnRoad": false,
@@ -335,6 +338,56 @@
             "positions": [],
             "entities": [
                 "{B7A1C7E192803CFE}Prefabs/Animals/Crow.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 13: Multiple crows",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64,
+                62,
+                59,
+                61,
+                60
+            ],
+            "positions": [],
+            "entities": [
+                "{07C00BFA28960E0A}PrefabsEditable/Animals_Groups/E_Crow_Group.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 14: Cows",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64,
+                62,
+                60
+            ],
+            "positions": [],
+            "entities": [
+                "{11630E7955BEF10C}PrefabsEditable/Animals/E_Cow.et\t"
             ],
             "spawnRndRadius": 200,
             "spawnOnRoad": false,
