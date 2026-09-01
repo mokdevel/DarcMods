@@ -37,17 +37,17 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 		
 		//Default
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {10, 11, 12};
+		missionList = {};//{0,1,2};
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Clear();
-		subMissions.Insert(HvtItem010());				
-		subMissions.Insert(HvtItem011());				
-		subMissions.Insert(HvtItem012());				
+		subMissions.Insert(HvtItem_010());				
+		subMissions.Insert(HvtItem_011());				
+		subMissions.Insert(HvtItem_012());				
 	};
 	
 	//----------------------------------------------------
-	SDRC_HvtItem HvtItem010()
+	SDRC_HvtItem HvtItem_010()
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
@@ -56,7 +56,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 			"The silo is now just a bunch bricks.",
 			"Material in the silo was secured by the enemy.",);
 		hvtItem.general.Set(
-			10, "index 10: Destroy silo",
+			0, "index 0: Destroy silo",
 			{"0 0 0"}, 20,
 			{},
 			"any",
@@ -271,7 +271,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 	};			
 	
 	//----------------------------------------------------
-	SDRC_HvtItem HvtItem011()
+	SDRC_HvtItem HvtItem_011()
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
@@ -280,7 +280,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 			"No cooking for the enemy.",
 			"Bellies full, the enemy left.",);
 		hvtItem.general.Set(
-			11, "index 11: Destroy kitchen",
+			1, "index 1: Destroy kitchen",
 			{"0 0 0"}, 20,
 			{},
 			"any",
@@ -530,7 +530,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 	};
 	
 	//----------------------------------------------------
-	SDRC_HvtItem HvtItem012()
+	SDRC_HvtItem HvtItem_012()
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
@@ -539,7 +539,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 			"Enemy eyes are now shut.",
 			"Radar commmunication working as enemy wanted.",);
 		hvtItem.general.Set(
-			12, "index 12: Destroy transformer",
+			2, "index 2: Destroy transformer",
 			{"0 0 0"}, 20,
 			{},
 			"any",

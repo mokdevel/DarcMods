@@ -163,30 +163,35 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 					//Find the usable subIdx by searching the current biggest one + 1.
 					int freeIndex = subMissions.Count();
 					
+					bool modsOk = true;
+					
 					foreach (string mod : subMission.general.modList)
 					{
 						if (!SDRC_Misc.IsAddonLoaded(mod))
 						{
 							if (!silent)
 							{
+								modsOk = false;
 								SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] For " + subMission.general.comment + " (" + missionFile + ") to work, a mod is needed: " + mod, LogLevel.WARNING);
+								break;								
 							}
 						}
-						else
-						{						
-							//Fix indexes
-							int subIdx = subMission.general.subIdx;
-							subMission.general.subIdx = freeIndex;
-							
-							//Add the subMissions to the main list. 
-							subMissions.Insert(subMission);
-							
-							foreach (int idx : conf.missionList)
+					}
+					
+					if (modsOk)
+					{
+						//Fix indexes
+						int subIdx = subMission.general.subIdx;
+						subMission.general.subIdx = freeIndex;
+						
+						//Add the subMissions to the main list. 
+						subMissions.Insert(subMission);
+						
+						foreach (int idx : conf.missionList)
+						{
+							if (idx == subIdx)
 							{
-								if (idx == subIdx)
-								{
-									missionList.Insert(freeIndex);
-								}
+								missionList.Insert(freeIndex);
 							}
 						}
 					}
@@ -237,7 +242,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 		missionList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5,6};
 
 		#ifndef SDRC_RELEASE
-			missionList = {};
+			//missionList = {};
 		#endif
 				
 		//Mission specific		

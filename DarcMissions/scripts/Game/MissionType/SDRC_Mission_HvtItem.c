@@ -197,6 +197,8 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 	//------------------------------------------------------------------------------------------------
 	override void LoadMissionFiles(int ver, bool silent = false)
 	{
+		SDRC_Misc.GetFileList(missionFiles, SDRC_Conf.subDirPath, ".json", "dc_missionConfig_HvtItem_", true);
+		
 		//Load mission files
 		foreach (string missionFile : missionFiles)
 		{
@@ -211,30 +213,35 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 					//Find the usable subIdx by searching the current biggest one + 1.
 					int freeIndex = subMissions.Count();
 					
+					bool modsOk = true;
+					
 					foreach (string mod : subMission.general.modList)
 					{
 						if (!SDRC_Misc.IsAddonLoaded(mod))
 						{
 							if (!silent)
 							{
+								modsOk = false;
 								SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] For " + subMission.general.comment + " (" + missionFile + ") to work, a mod is needed: " + mod, LogLevel.WARNING);
+								break;								
 							}
 						}
-						else
-						{						
-							//Fix indexes
-							int subIdx = subMission.general.subIdx;
-							subMission.general.subIdx = freeIndex;
-							
-							//Add the subMissions to the main list. 
-							subMissions.Insert(subMission);
-							
-							foreach (int idx : conf.missionList)
+					}
+					
+					if (modsOk)
+					{
+						//Fix indexes
+						int subIdx = subMission.general.subIdx;
+						subMission.general.subIdx = freeIndex;
+						
+						//Add the subMissions to the main list. 
+						subMissions.Insert(subMission);
+						
+						foreach (int idx : conf.missionList)
+						{
+							if (idx == subIdx)
 							{
-								if (idx == subIdx)
-								{
-									missionList.Insert(freeIndex);
-								}
+								missionList.Insert(freeIndex);
 							}
 						}
 					}
@@ -249,9 +256,13 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 	{
 		super.CreateMissionFiles();
 		
-		SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(SDRC_HvtItemConfig_010.GetFileName());				
-		SDRC_HvtItemConfig_010 conf = new SDRC_HvtItemConfig_010();
-		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), SDRC_HvtItemConfig_010.GetFileVersion(), silent: true);		
+		SDRC_JsonApi2 jsonApi0 = new SDRC_JsonApi2(SDRC_HvtItemConfig_010.GetFileName());				
+		SDRC_HvtItemConfig_010 conf0 = new SDRC_HvtItemConfig_010();
+		jsonApi0.Load(conf0, SDRC_MissionConfig.Cast(conf0), SDRC_HvtItemConfig_010.GetFileVersion(), silent: true);
+		
+		SDRC_JsonApi2 jsonApi1 = new SDRC_JsonApi2(SDRC_HvtItemConfig_Animals.GetFileName());				
+		SDRC_HvtItemConfig_Animals conf1 = new SDRC_HvtItemConfig_Animals();
+		jsonApi1.Load(conf1, SDRC_MissionConfig.Cast(conf1), SDRC_HvtItemConfig_Animals.GetFileVersion(), silent: true);				
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -277,8 +288,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		
 		//Default
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,1,2};
-		missionFiles.Insert("dc_missionConfig_HvtItem_010.json");		
+		missionList = {};//{0,1,2};
 		//Mission specific
 		//----------------------------------------------------
 		subMissions.Insert(HvtItem0());				
