@@ -1,0 +1,75 @@
+GenericEntity : "{06C4174747E7032B}PrefabsEditable/Auto/Props/Military/Camps/E_WeaponRackStand_01.et" {
+ coords 75.097 1 106.59
+ angles 0 -94.079 0
+}
+GenericEntity : "{09070D8EB9398742}Prefabs/Props/Military/Training/Obstacles/ObstacleVault_01.et" {
+ coords 70.994 1 103.725
+ angles 0 -40.792 0
+}
+GenericEntity : "{3AE0A97C6595801F}Prefabs/Props/Military/WaterTanks/MobileWaterTank_USSR_01.et" {
+ coords 63.036 1 105.053
+ angles 0 23.071 0
+}
+GenericEntity : "{6B68854FD47B936F}Prefabs/Props/Military/Training/Obstacles/ObstacleBridge_01_platform.et" {
+ coords 75.442 1 106.903
+}
+GenericEntity : "{6F0064DD846893A3}Prefabs/Props/Military/Training/Obstacles/ObstacleWindow_01.et" {
+ coords 67.339 1 116.088
+ angles 0 -45.708 0
+}
+GenericEntity : "{948A10A7AF89EE17}PrefabsEditable/Auto/Props/Infrastructure/SnowBreakers/E_SnowBreaker_E_01_B.et" {
+ coords 75.756 1 104.568
+}
+$grp GenericEntity : "{B6307C189CCCA0B9}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_plastic.et" {
+ {
+  coords 69.678 1 117.309
+ }
+ {
+  coords 65.969 1 113.605
+  angles 0 -80.823 0
+ }
+}
+GenericEntity : "{B8576ECF78CDBCD7}Prefabs/Props/Military/Training/Obstacles/ObstacleBridge_01_start.et" {
+ coords 75.437 1 110.861
+}
+$grp GenericEntity : "{D08B33729A0C2743}PrefabsEditable/Auto/Props/Infrastructure/ConeTraffic/E_ConeTraffic_01_red.et" {
+ {
+  coords 61.438 1 111.659
+ }
+ {
+  coords 61.137 1 115.216
+ }
+ {
+  coords 62.137 1 118.99
+ }
+ {
+  coords 65.362 1 119.239
+ }
+ {
+  coords 63.478 1 119.165
+ }
+ {
+  coords 61.366 1 117.06
+ }
+ {
+  coords 61.351 1 113.416
+ }
+ {
+  coords 62.744 1 110.476
+ }
+ {
+  coords 66.495 1 118.265
+ }
+}
+GenericEntity : "{D6F8A419B10274F2}PrefabsEditable/Auto/Props/Military/Camps/E_Duckboard_01.et" {
+ coords 69.32 1 114.49
+ angles 0 -63.018 0
+}
+GenericEntity : "{E4B5C357EF215746}Prefabs/Props/Military/Training/Obstacles/ObstacleCrawl_01.et" {
+ coords 65.87 1 111.656
+ angles 0 -42.335 0
+}
+GenericEntity : "{F9CB8E28C2B3DF2B}Prefabs/Props/Crates/CrateWooden_02/LootCrateWooden_02_1x1x1.et" {
+ coords 74.027 1 109.192
+ angles 0 15.628 0
+}
