@@ -48,7 +48,7 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		
 		//Attack and enemy related
 		rayLenEnemy = 200;
-		timeSearchAndDestroy = 60;
+		timeSearchAndDestroy = 120;
 		attackHeightMul = -0.3;
 		
 		//Damage levels
@@ -276,6 +276,50 @@ modded class SDRC_ChopperComp
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
+	Setup attacks. Search for the enemy and then react on the finding.
+	
+	- Normal case: If enemy is seen, consider dropping the grenade.
+	*/
+	override void TypeAttackSetup(IEntity owner, vector hostilePos = vector.Zero)
+	{
+		super.TypeAttackSetup(owner, hostilePos);
+		
+		if (m_EntityType != SDRC_EChopperType.DRONE)
+		{
+			return;
+		}
+
+		//For dropper drone, the attack position needs to a bit further than the one defined. We want a fly by towards or over the player.
+		if (m_EntitySubType == SDRC_EChopperSubType.DRONE_DROPPER)
+		{				
+			//Move it along the flight path.
+			vector fromPos = m_vOrigin;
+			if (!m_vSplinePoints.IsEmpty())
+			{
+				fromPos = m_vSplinePoints[m_vSplinePoints.Count() - 1];
+			}
+			vector direction = vector.Direction(fromPos, m_vAttackPosition);
+			direction.Normalize();
+			direction[1] = 0;		//Move only on XZ plane
+			m_vAttackPosition = m_vAttackPosition + (direction * 100);
+		}
+		
+		//For dropper drone, the attack position needs to a bit further than the one defined. We want a fly by towards or over the player.
+		if (m_EntitySubType == SDRC_EChopperSubType.DRONE_CRASHER)
+		{
+			vector rndPos = vector.Zero; 
+			rndPos[0] = SDRC_Misc.RandomInt(-params.patrolRadius, params.patrolRadius);
+			rndPos[2] = SDRC_Misc.RandomInt(-params.patrolRadius, params.patrolRadius);
+			
+			AddDestination(SDRC_EFlyWayPointType.WP_FLY_IMMEDIATELY, owner.GetOrigin() + rndPos); 
+			AddDestination(SDRC_EFlyWayPointType.WP_CRASH, m_vAttackPosition); 
+			AddDestination(SDRC_EFlyWayPointType.WP_END); 					
+			SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
 	Handle attacks. Search for the enemy and then react on the finding.
 	
 	- Normal case: If enemy is seen, consider dropping the grenade.
@@ -350,15 +394,11 @@ modded class SDRC_ChopperComp
 			case SDRC_EChopperSubType.DRONE_CRASHER:
 			{
 				//Any target near position?
-				if (SDRC_PlayerHelper.IsAnyPlayerCloseToPos(owner.GetOrigin(), distance * 10, 0))
+				vector pos = SDRC_PlayerHelper.AnyPlayerPosCloseToPos(owner.GetOrigin(), distance * 10, 0);
+				
+				if (pos != vector.Zero)
 				{
-					vector rndPos = vector.Zero; 
-					rndPos[0] = SDRC_Misc.RandomInt(-150, 150);
-					rndPos[2] = SDRC_Misc.RandomInt(-150, 150);
-					AddDestination(SDRC_EFlyWayPointType.WP_FLY_IMMEDIATELY, owner.GetOrigin() + rndPos); 
-					AddDestination(SDRC_EFlyWayPointType.WP_CRASH, owner.GetOrigin()); 
-					AddDestination(SDRC_EFlyWayPointType.WP_END); 					
-					SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
+					AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, pos); 
 					m_bAttackDone = true;					
 				}
 				break;

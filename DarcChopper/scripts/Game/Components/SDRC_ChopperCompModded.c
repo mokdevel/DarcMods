@@ -4,9 +4,6 @@
 //class SDRC_ChopperComp : ScriptGameComponent
 modded class SDRC_ChopperComp
 {
-	const int DEFAULT_ATTACK_TIME = 60;			//(seconds) The time to stay in attack mode
-	const int DEFAULT_BRAKE_DISTANCE = 200;		//Default distance to brake
-	
 	//------------------------------------------------------------------------------------------------	
 	// Chopper setup
 	//------------------------------------------------------------------------------------------------	
@@ -280,7 +277,7 @@ modded class SDRC_ChopperComp
 	void EnemyHandled()
 	{
 		m_vEnemyPosition = "0 0 0";
-		m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + m_iEnemyFoundTimeout;
+		m_fEnemyFoundTimer = m_fEnemyFoundTimeout;
 	}	
 	
 	//------------------------------------------------------------------------------------------------	
@@ -490,17 +487,6 @@ modded class SDRC_ChopperComp
 				//Set attack position. At this stage, it could be at 0 height
 				m_vAttackPosition = destination;
 				
-				//For drone, the attack position needs to a bit further than the one defined. We want a fly by towards or over the player.
-				if (params.type == SDRC_EChopperType.DRONE)
-				{				
-					//Move it along the flight path.
-					vector direction = vector.Direction(m_vSplinePoints[m_vSplinePoints.Count() - 1], destination);
-					direction.Normalize();
-					direction[1] = 0;		//Move only on XZ plane
-					m_vAttackPosition = destination + (direction * 100);
-					destination = m_vAttackPosition;
-				}				
-
 				//Set attack position on ground, unless some other height was defined.
 				if (m_vAttackPosition[1] == 0)
 				{
@@ -518,7 +504,7 @@ modded class SDRC_ChopperComp
 					SDRC_Log.Add("[SDRC_ChopperComp:AddDestination] Time assigned to WP_ATTACK is very short: " + value + " seconds.", LogLevel.WARNING);
 				}
 				
-				m_fTimerAttack = value;						//For how long to continue attacks
+				m_fTimerAttackToSet = value;				//For how long to continue attacks
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
@@ -627,11 +613,6 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_M_SUPPRESSIVE:
 			{
-				if (value == -1)
-				{
-					value = TIME_ATTACK_RUN;
-				}
-				
 				//Do one attack
 				AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, destination, value);
 				//Add random count of bombing runs
@@ -644,11 +625,11 @@ modded class SDRC_ChopperComp
 					float distance = SDRC_Misc.RandomFloat(100, 200);
 					vector rndPos = SDRC_Misc.GetCoordinatesOnCircle(destination, distance, angle);
 					rndPos[1] = 0;	//Zero height to get a random height in SetFlightPointHeight()
-					AddDestinationPoint(SDRC_EFlyWayPointType.WP_FLY, rndPos, value);
+					AddDestinationPoint(SDRC_EFlyWayPointType.WP_FLY, rndPos, 0);
 					distance = SDRC_Misc.RandomFloat(200, 400);
 					rndPos = SDRC_Misc.GetCoordinatesOnCircle(destination, distance, angle + SDRC_Misc.RandomFloat(-120, 120));
 					rndPos[1] = 0;	//Zero height to get a random height in SetFlightPointHeight()
-					AddDestinationPoint(SDRC_EFlyWayPointType.WP_FLY, rndPos, value);
+					AddDestinationPoint(SDRC_EFlyWayPointType.WP_FLY, rndPos, 0);
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_ATTACK, destination, value);
 				}
 				m_vAttackPosition = destination;			//Where to attack
@@ -675,7 +656,7 @@ modded class SDRC_ChopperComp
 	private void AddDestinationPoint(SDRC_EFlyWayPointType type, vector destination, float value, int index = -1)
 	{
 		//!!!!
-		//NOTE: If height (destination[1]) is 0, make it to current heli height
+		//NOTE: If height (destination[1]) is -999, make it to current heli height
 		//!!!!
 		if (destination[1] == -999)
 		{
@@ -754,7 +735,7 @@ modded class SDRC_ChopperComp
 	*/
 	override private void HandleBehaviour(IEntity owner)
 	{
-		const int BEHAVIOUR_CHECK_CYCLE = 2;
+		const int BEHAVIOUR_CHECK_CYCLE = 1;
 		
 		//When in EVAC or PASSIVE mode, stay there.
 		if ( (m_eHeliBehaviour == SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR) || (m_eHeliBehaviour == SDRC_EHeliBehaviour.EVAC_BEHAVIOUR) )
@@ -768,13 +749,16 @@ modded class SDRC_ChopperComp
 			return;
 		}
 		
+		//Return to normal state
 		if ( (m_fTimerBehaviour < 0) && (GetBehaviour() != SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) )
 		{
 			//Normal case:
 			m_eHeliBehaviour = SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR;
+			ResetAttack();
 			return;
 		}
 		
+		//Handle behaviour in cycles of BEHAVIOUR_CHECK_CYCLE seconds
 		if (m_fTimerBehaviourCycle > 0)
 		{
 			return;
@@ -782,7 +766,13 @@ modded class SDRC_ChopperComp
 		
 		m_fTimerBehaviourCycle = BEHAVIOUR_CHECK_CYCLE;
 
-		//Let's check if we have an enemy near by. 
+		//Do not change attack course if we're already in attack.
+		if (m_fTimerAttack > 0)
+		{
+			return;
+		}
+		
+		//If enemy is near by, enter S&D behaviour
 		if (m_vEnemyPosition != vector.Zero)
 		{
 			//If yes, become aggressive and/or reset timer.
@@ -793,35 +783,39 @@ modded class SDRC_ChopperComp
 		{
 			case SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR:
 			{
-				//Make sure we have a proper patrol position. 
+				//Make sure we have a proper danger position. 
 				//The priority is m_vAttackPosition (last ordered attack position) -> m_vEnemyPosition (last seen enemy) -> around itself 
-				vector patrolPos = m_vAttackPosition;
-				if (patrolPos == vector.Zero)
+				vector hostilePos = m_vAttackPosition;
+				if (hostilePos == vector.Zero)
 				{
-					patrolPos = m_vEnemyPosition;
+					hostilePos = m_vEnemyPosition;
 				}
-				if (patrolPos == vector.Zero)
+				if (hostilePos == vector.Zero)
 				{
-					patrolPos = owner.GetOrigin();
+					hostilePos = owner.GetOrigin();
 				}
+				
+				m_vAttackPosition = hostilePos;
 				
 				if (m_vEnemyPosition != vector.Zero)
 				{
 					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D: Enemy found, attacking: " + m_vEnemyPosition, LogLevel.NORMAL);
+
+					TypeAttackSetup(owner, hostilePos);
 					
-					AddDestination(SDRC_EFlyWayPointType.WP_CUT);
-					//Add WP_ATTACK and WP_PATROL to the list of next destinations. These are added as first items in the list and
-					//have to be added in reverse order to have WP_ATTACK as the first item.
-					AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, patrolPos, index: 0);
-					AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, m_vEnemyPosition, index: 0);
-					m_fTimerBehaviourCycle = params.timeSearchAndDestroy;
+					//Set attack timer. Usually set when we come here, but a check just in case.
+					if (m_fTimerAttackToSet <= 0)
+					{
+						m_fTimerAttackToSet = DEFAULT_ATTACK_TIME;
+					}
+					m_fTimerAttack = m_fTimerAttackToSet;
 				}
 				else
 				{
-					//If no enemy found, add another patrol round in case one is already in the list.
+					//If no enemy found, add another patrol round
 					if (SDRC_ChopperHelper.GetNextWayPointType(owner) != SDRC_EFlyWayPointType.WP_PATROL_ONCE)
 					{
-						AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, patrolPos, index: 0);
+						AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, hostilePos, index: 0);
 					}
 				}
 				

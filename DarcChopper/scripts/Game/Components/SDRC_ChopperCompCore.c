@@ -54,7 +54,7 @@ class SDRC_ChopperParams
 	int destinationForward;							//Distance to add points forward when creating new flight path
 	
 	//Flight pattern related
-	int patrolRadius;								//Default radius for WP_PATROL and WP_PATROL_ONCE commands	
+	int patrolRadius;								//Default radius for WP_PATROL and WP_PATROL_ONCE commands. The radius will be between 70% - 130
 }
 
 //------------------------------------------------------------------------------------------------

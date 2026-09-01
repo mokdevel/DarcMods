@@ -95,7 +95,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	float m_RocketSector;
 	[Attribute(category: "Weapons", defvalue: "0.5", desc: "Delay between rockets", params: "0.1 30.0 0.1")]	
 	float m_RocketDelay;
-	float m_fTimeRocketDelay = 0;
+	float m_fTimerRocketDelay = 0;
 	[Attribute(category: "Weapons", defvalue: "10 1 0", desc: "Rocket spawn position")]	
 	vector m_RocketPosition;
 //	[Attribute(category: "Weapons", params: "et", defvalue: "{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et", desc: "Rocket to use")]	
@@ -229,6 +229,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	private vector m_fPositionLandingOrig;		//Position from where we start to descend
 	
 	//Braking related
+	const int DEFAULT_BRAKE_DISTANCE = 200;		//Default distance to brake
 	private bool m_bIsBraking;					//If true, braking sequence has started
 	float m_fBrakingDistance;					//Distance for braking
 	private float m_fBrakingSpeed;				//The speed to brake the chopper
@@ -241,15 +242,15 @@ modded class SDRC_ChopperComp : ScriptComponent
 	
 	//Enemy positions
 	vector m_vEnemyPosition = vector.Zero;		//Position of last found enemy
-	int m_iEnemyFoundTime;						//Time to wait to before allowing enemy position 
-	int m_iEnemyFoundTimeout = 2;				//Time between enemy position updates
-	int m_iEnemyForgetTimeout = 10;				//Time to forget the enemy position
+	float m_fEnemyFoundTimer;					//Time to wait to before allowing enemy position 
+	float m_fEnemyFoundTimeout = 2;				//Time between enemy position updates
+//	float m_fEnemyForgetTimeout = 10;			//Time to forget the enemy position
 		
 	//Attack related
-	private const int TIME_ATTACK_RUN = 40;		//Default time for each attack run
-	private float m_fTimerAttack = 0;			//Timer to do attacks
 	private vector m_vAttackPosition;			//Position to attack
-
+	const int DEFAULT_ATTACK_TIME = 60;			//(seconds) The time to stay in attack mode
+	float m_fTimerAttack = 0;					//Timer to do attacks
+	private float m_fTimerAttackToSet = 0;		//Timer to set when attack starts
 	
 	//The order of things:
 	//- Spawn chopper via GM or mod
@@ -312,7 +313,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		SetTimeInState(0);
 		
 		//Initialize enemyFoundTime
-		m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + m_iEnemyFoundTimeout;
+		m_fEnemyFoundTimer = m_fEnemyFoundTimeout;
 		
 		//Set wheel brake on
 		HelicopterControllerComponent hcc = HelicopterControllerComponent.Cast(owner.FindComponent(HelicopterControllerComponent));
@@ -435,11 +436,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_fTimeBetweenFixes -= timeSlice;
 		m_fTimeInStateLeft -= timeSlice;		
 		m_fTimeInStateBeen += timeSlice;		
-		m_fTimeRocketDelay += timeSlice;		
+		m_fTimerRocketDelay -= timeSlice;		
 		m_fTimerAttack -= timeSlice;
 		m_fTimerBehaviour -= timeSlice;
 		m_fTimerBehaviourCycle -= timeSlice;
-
+		m_fEnemyFoundTimer -= timeSlice;
+		
 		//---
 		//Check if we're still functional	
 		if (!IsStillWorking(owner, m_bInInit))
@@ -870,16 +872,27 @@ modded class SDRC_ChopperComp : ScriptComponent
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Clear the destination as a preparation for a completely new path
+	Clear the destination as a preparation for a completely new path. This also resets timers.
 	*/
 	private void ResetDestinations()
 	{
 		m_vFlyDestinations.Clear();
-		m_vAttackPosition = vector.Zero;
+		ResetAttack();
 		m_fTimerBehaviour = 0;
 		SetTimeInState(0);
 	}	
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Reset attack details
+	*/
+	void ResetAttack()
+	{
+		m_vAttackPosition = vector.Zero;
+		m_fTimerAttack = 0;
+		m_fTimerAttackToSet = 0;
+	}
+		
 	//------------------------------------------------------------------------------------------------	
 	// Flight path things
 	//------------------------------------------------------------------------------------------------	
@@ -1313,6 +1326,46 @@ modded class SDRC_ChopperComp : ScriptComponent
 	}	
 
 	//------------------------------------------------------------------------------------------------	
+	// Helicopter setup - defined in modded class
+	//------------------------------------------------------------------------------------------------	
+	void Setup(IEntity owner) {}
+	void DeSpawn(IEntity owner) {}
+	//------------------------------------------------------------------------------------------------	
+	// State Handling  - defined in modded class
+	//------------------------------------------------------------------------------------------------	
+	private void HandleState(IEntity owner, float timeSlice) {}
+	private void HandleBehaviour(IEntity owner) {}
+	private void SetNextState(IEntity owner, SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.WP_UNDEFINED, bool allowRemove = true) {}
+	//------------------------------------------------------------------------------------------------	
+	// Damage settings - defined in modded class
+	//------------------------------------------------------------------------------------------------	
+	bool IsStillWorking(IEntity owner, bool inInit) {}
+	//------------------------------------------------------------------------------------------------	
+	// Destination settings - defined in modded class
+	//------------------------------------------------------------------------------------------------	
+	void AddDestination(SDRC_EFlyWayPointType type = SDRC_EFlyWayPointType.WP_FLY, vector destination = vector.Zero, float value = -1, int index = -1) {}
+	//------------------------------------------------------------------------------------------------	
+	// Special handling - defined in modded class
+	//------------------------------------------------------------------------------------------------	
+	private void HandleLanding(IEntity owner, float timeSlice) {}
+	private void HandleLandingVertical(IEntity owner, float timeSlice) {}
+	private void HandleBraking(IEntity owner, float timeSlice) {}
+	private void HandleCrashing(IEntity owner, float timeSlice) {}
+	//------------------------------------------------------------------------------------------------	
+	// Enemy related - defined in modded class
+	//------------------------------------------------------------------------------------------------	
+	void SetEnemySearchType(SDRC_EHeliEnemySearchType type) {}
+	//------------------------------------------------------------------------------------------------	
+	// Helicopter settings - defined in modded class
+	//------------------------------------------------------------------------------------------------	
+	void SetHeli(float speedMin, float speedMax, float flyHeightLow, float flyHeightHigh, float distanceLow, float distanceHigh) {}
+	void SetEngine(bool engine, float throttle, float rotorForce0, float rotorForce1) {}
+	//------------------------------------------------------------------------------------------------	
+	// Misc - defined in modded class
+	//------------------------------------------------------------------------------------------------	
+	void AddChopperToList(IEntity owner) {}
+	
+	//------------------------------------------------------------------------------------------------	
 	// Type specific functions. These should be over ridden by the specific type
 	//------------------------------------------------------------------------------------------------	
 	
@@ -1364,45 +1417,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 	/*!
 	Type specific handling of attacks. Search for the enemy and then react on the finding.
 	*/	
-	void TypeHandleAttack(IEntity owner) {}
-	
-	//------------------------------------------------------------------------------------------------	
-	// Helicopter setup - defined in modded class
-	//------------------------------------------------------------------------------------------------	
-	void Setup(IEntity owner) {}
-	void DeSpawn(IEntity owner) {}
-	//------------------------------------------------------------------------------------------------	
-	// State Handling  - defined in modded class
-	//------------------------------------------------------------------------------------------------	
-	private void HandleState(IEntity owner, float timeSlice) {}
-	private void HandleBehaviour(IEntity owner) {}
-	private void SetNextState(IEntity owner, SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.WP_UNDEFINED, bool allowRemove = true) {}
-	//------------------------------------------------------------------------------------------------	
-	// Damage settings - defined in modded class
-	//------------------------------------------------------------------------------------------------	
-	bool IsStillWorking(IEntity owner, bool inInit) {}
-	//------------------------------------------------------------------------------------------------	
-	// Destination settings - defined in modded class
-	//------------------------------------------------------------------------------------------------	
-	void AddDestination(SDRC_EFlyWayPointType type = SDRC_EFlyWayPointType.WP_FLY, vector destination = vector.Zero, float value = -1, int index = -1) {}
-	//------------------------------------------------------------------------------------------------	
-	// Special handling - defined in modded class
-	//------------------------------------------------------------------------------------------------	
-	private void HandleLanding(IEntity owner, float timeSlice) {}
-	private void HandleLandingVertical(IEntity owner, float timeSlice) {}
-	private void HandleBraking(IEntity owner, float timeSlice) {}
-	private void HandleCrashing(IEntity owner, float timeSlice) {}
-	//------------------------------------------------------------------------------------------------	
-	// Enemy related - defined in modded class
-	//------------------------------------------------------------------------------------------------	
-	void SetEnemySearchType(SDRC_EHeliEnemySearchType type) {}
-	//------------------------------------------------------------------------------------------------	
-	// Helicopter settings - defined in modded class
-	//------------------------------------------------------------------------------------------------	
-	void SetHeli(float speedMin, float speedMax, float flyHeightLow, float flyHeightHigh, float distanceLow, float distanceHigh) {}
-	void SetEngine(bool engine, float throttle, float rotorForce0, float rotorForce1) {}
-	//------------------------------------------------------------------------------------------------	
-	// Misc - defined in modded class
-	//------------------------------------------------------------------------------------------------	
-	void AddChopperToList(IEntity owner) {}
+	void TypeAttackSetup(IEntity owner, vector hostilePos) {}
+	void TypeHandleAttack(IEntity owner) {}		
 }

@@ -80,32 +80,44 @@ class SDRC_ChopperHelper
 			return;
 		}
 		
-		if (orig == vector.Zero)
+		//If attacking, create an attack WP
+		if ( (chopperComp.m_fTimerAttack > 0) && (chopperComp.m_vEnemyPosition != vector.Zero) )
 		{
-			orig = owner.GetOrigin();
-		}
-		
-		if (SDRC_Misc.RandomFloat(0, 1) < 0.2)
-		{
-			//Occasionally fly towards middle to avoid sliding out of the map
-			orig = SDRC_Misc.GetWorldCenter();
-		}
+			float radius = chopperComp.params.patrolRadius * SDRC_Misc.RandomFloat(0.7, 1.3);
 			
-		vector pos;
-		
-		//Create a random position to fly to. Try to avoid very steep turns by doing iterations.
-		for (int i = 0; i < 3; i++)
+			vector fwdPoint = SDRC_ChopperHelper.GetDestinationForward(owner, radius);
+			chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, fwdPoint);
+			chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, chopperComp.m_vEnemyPosition);
+		}
+		else	//If not attacking, create a normal flight pos
 		{
-			pos = SDRC_ChopperHelper.GetRandomPosition(orig, chopperComp.m_fDistanceLow, chopperComp.m_fDistanceHigh);	
-			vector dir1 = vector.Direction(owner.GetOrigin(), pos);
-			float angle = SDRC_Math.GetAngleBetweenVectorsXZ(dir1, chopperComp.m_vHeliDirectionFuture);
-			if (Math.AbsFloat(angle) < (110 * Math.DEG2RAD) )
-			{				
-				break;
-			}			
+			if (orig == vector.Zero)
+			{
+				orig = owner.GetOrigin();
+			}
+			
+			//Occasionally fly towards middle to avoid sliding out of the map
+			if (SDRC_Misc.RandomFloat(0, 1) < 0.2)
+			{
+				orig = SDRC_Misc.GetWorldCenter();
+			}
+			
+			vector pos;
+			
+			//Create a random position to fly to. Try to avoid very steep turns by doing iterations.
+			for (int i = 0; i < 10; i++)
+			{
+				pos = SDRC_ChopperHelper.GetRandomPosition(orig, chopperComp.m_fDistanceLow, chopperComp.m_fDistanceHigh);	
+				vector dir1 = vector.Direction(owner.GetOrigin(), pos);
+				float angle = SDRC_Math.GetAngleBetweenVectorsXZ(dir1, chopperComp.m_vHeliDirectionFuture);
+				if (Math.AbsFloat(angle) < (2 * chopperComp.params.wpSteepAngle * Math.DEG2RAD) )
+				{				
+					break;
+				}			
+			}
+			chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos);
 		}
 		
-		chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos);
 		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 255, 00, 00), 2.0, chopperComp.m_sDid, 200);
 	}
 
@@ -438,11 +450,12 @@ class SDRC_ChopperHelper
 					//Modify attack height defaults
 					//Attack height is the lowest point modified by attackHeightMul. The final attackHeight could be below m_fFlyHeightLow
 					vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];				
-					lowestHeight = chopperComp.m_fFlyHeightLow * chopperComp.params.attackHeightMul + lastPoint[1];
+					//lowestHeight = chopperComp.m_fFlyHeightLow * chopperComp.params.attackHeightMul + lastPoint[1];
+					lowestHeight = SDRC_Misc.GetSurfaceYWithWater(lastPoint, true, owner) +  chopperComp.m_fFlyHeightLow * chopperComp.params.attackHeightMul;
 					//We know where to attack so return to normal flight mode
 					chopperComp.SetState(SDRC_EHeliState.FLY);
 					
-					CreateEndCurveSteep(chopperComp, lowestHeight);
+					CreateEndCurveJ(chopperComp, lowestHeight);
 					isSmoothingNeeded = false;
 					break;
 				}
@@ -595,6 +608,12 @@ class SDRC_ChopperHelper
 			}
 		}
 		
+		if ((lastIdx - firstIdx) <= 1)
+		{
+			//Only one point, move firstIdx back one.
+			firstIdx--;			
+		}
+		
 		//Start to brake immediately
 		chopperComp.m_fBrakingDistance = maxDistance;
 		
@@ -615,7 +634,6 @@ class SDRC_ChopperHelper
 			float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
 
 			vector ptc = SDRC_Misc.GetCoordinatesOnCircle(vector.Zero, 100, 90 * (i / points));
-			Print("ptc: " + ptc);
 			
 			vector pt = vector.Lerp(v1, v0, step);						
 			pt[1] = p1 + pdiff * (ptc[0] / 100);

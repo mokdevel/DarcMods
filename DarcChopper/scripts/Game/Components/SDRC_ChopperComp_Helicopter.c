@@ -42,7 +42,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		
 		//Attack and enemy related
 		rayLenEnemy = 1000;
-		timeSearchAndDestroy = 600;
+		timeSearchAndDestroy = 4*60;
 		attackHeightMul = 0.5;
 		
 		//Damage levels
@@ -197,7 +197,35 @@ modded class SDRC_ChopperComp
 	//------------------------------------------------------------------------------------------------	
 	// State handling
 	//------------------------------------------------------------------------------------------------
+
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Setup attacks. Search for the enemy and then react on the finding.
 	
+	- Normal case: If enemy is seen, consider dropping the grenade.
+	*/
+	override void TypeAttackSetup(IEntity owner, vector hostilePos = vector.Zero)
+	{
+		super.TypeAttackSetup(owner, hostilePos);
+		
+		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
+		{
+			return;
+		}
+
+		AddDestination(SDRC_EFlyWayPointType.WP_CUT);
+		//Add WP_ATTACK and WP_PATROL to the list of next destinations. These are added as first items in the list and
+		//have to be added in reverse order to have WP_ATTACK as the first item.
+//		AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, hostilePos, index: 0);		//Note: index is used!
+//		vector direction = vector.Direction(owner.GetOrigin(), m_vEnemyPosition);
+//		direction.Normalize();
+//		vector fwdPoint = owner.GetOrigin() + direction * 200;
+		
+//		AddDestination(SDRC_EFlyWayPointType.WP_FLY, fwdPoint, index: 0);				//Note: index is used!
+//		AddDestination(SDRC_EFlyWayPointType.WP_FLY, fwdPoint, index: 0);				//Note: index is used!
+		AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, m_vEnemyPosition, index: 0);	//Note: index is used!
+	}
+			
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Handle attacks. Search for the enemy and then react on the finding.
@@ -220,19 +248,19 @@ modded class SDRC_ChopperComp
 			//Normal case:
 			SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
 			
-			if (m_fTimeRocketDelay > m_RocketDelay)
+			if (m_fTimerRocketDelay < 0)
 			{
 				SDRC_ChopperEnemyHelper.SearchEnemyForRocket(owner);
-				m_fTimeRocketDelay = 0;
+				m_fTimerRocketDelay = m_RocketDelay;
 			}
 		}
 		else
 		{
 			//Attack case:
-			if (m_fTimeRocketDelay > m_RocketDelay)
+			if (m_fTimerRocketDelay < 0)
 			{
 				SDRC_ChopperEnemyHelper.EnemyFoundForRocket(owner, m_vAttackPosition);
-				m_fTimeRocketDelay = 0;
+				m_fTimerRocketDelay = m_RocketDelay;
 			}
 		}
 	}

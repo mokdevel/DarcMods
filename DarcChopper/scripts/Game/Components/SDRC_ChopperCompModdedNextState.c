@@ -34,17 +34,26 @@ modded class SDRC_ChopperComp
 				//Should never happen
 				break;
 			}
+			case SDRC_EFlyWayPointType.WP_ATTACK:
+			{
+				//Do nothing
+				break;
+			}
 			case SDRC_EFlyWayPointType.WP_CRASH:
+			{
 				SetState(SDRC_EHeliState.CRASH);
 				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, -1);
 				//NOTE: The final height will be set in SetFlightPointHeight
 				m_bIsCrashing = false;
 				break;
+			}
 			case SDRC_EFlyWayPointType.WP_BRAKE:
+			{
 				SetState(SDRC_EHeliState.BRAKE);			
 				//NOTE: The final height will be set in SetFlightPointHeight
 				m_bIsBraking = false;
 				break;
+			}
 			case SDRC_EFlyWayPointType.WP_FLY:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
@@ -296,6 +305,13 @@ modded class SDRC_ChopperComp
 					AddFlyPathPoint(pos);
 					//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid, 50 + i * 20);
 				}
+				
+				//If we have a known enemy position, fly to it.
+				if (m_vEnemyPosition != vector.Zero)
+				{
+					AddFlyPathPoint(m_vEnemyPosition);
+				}
+				
 				break;
 			}			
 			case SDRC_EFlyWayPointType.WP_CRASH:
@@ -478,24 +494,23 @@ modded class SDRC_ChopperComp
 		}
 		else
 		{
-			if (m_Helicopter_s)
+			//If we have passed the point, go to next state
+			if (SDRC_Math.HasPassedPointXZ(m_fPositionCrashingOrig, m_vSplinePoints[m_vSplinePoints.Count() - 1], owner.GetOrigin()))
 			{
+				SetNextState(owner);				
+			}			
+			else if (m_Helicopter_s)
+			{
+				//Test ground contact
 				if (m_Helicopter_s.HasAnyGroundContact())
 				{			
 					SetNextState(owner);			
 				}			
-				else
-				{
-					//If we have passed the point, go to next state
-					if (SDRC_Math.HasPassedPointXZ(m_fPositionCrashingOrig, m_vSplinePoints[m_vSplinePoints.Count() - 1], owner.GetOrigin()))
-					{
-						SetNextState(owner);		
-					}
-				}
 			}
-			else
+			else 
 			{
-				if (m_fAltitude < 0.1)
+				//If no component to use for ground contact, check with altitude
+				if ( (SDRC_Misc.GetSurfaceYWithWater(m_vOrigin)) < (m_vOrigin[1] + 0.1) )
 				{
 					SetNextState(owner);			
 				}				

@@ -169,11 +169,13 @@ Note that if you have a long time and you give the chopper an order to land, the
 
 ### WP_RESET
 Reset destinations and helicopter settings to defaults. Cuts the current flight planned and pick the next destination in the list.
+* Queued: No
 * ``destination`` : Not used.
 * ``value`` : Not used.
 
 ### WP_CUT
 Cut the current flight planned and pick the next destination in the list. Different from WP_RESET as destinations are not cleared and old chopper settings are kept.
+* Queued: No
 * ``destination`` : Not used.
 * ``value`` : Not used.
 

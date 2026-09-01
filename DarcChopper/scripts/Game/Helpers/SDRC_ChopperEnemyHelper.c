@@ -38,22 +38,28 @@ class SDRC_ChopperEnemyHelper
 			return false;
 		}
 		
-		if (chopperComp.m_iEnemyFoundTime > SDRC_Misc.GetCurrentTickTime())
+		//Search on cyclic time
+		if (chopperComp.m_fEnemyFoundTimer > 0)
 		{
 			return false;
 		}
+		chopperComp.m_fEnemyFoundTimer = chopperComp.m_fEnemyFoundTimeout;
+		chopperComp.m_vEnemyPosition = "0 0 0";
+		SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchForEnemy] Enemy position reset.", LogLevel.SPAM);
 		
-		if ( (SDRC_Misc.GetCurrentTickTime() > chopperComp.m_iEnemyFoundTime + chopperComp.m_iEnemyForgetTimeout) && (chopperComp.m_vEnemyPosition != "0 0 0") )
+/*		if ( (chopperComp.m_fEnemyFoundTimer < (-1 * chopperComp.m_fEnemyForgetTimeout)) && (chopperComp.m_vEnemyPosition != "0 0 0") )
 		{
 			chopperComp.m_vEnemyPosition = "0 0 0";
 			SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchForEnemy] Enemy position reset.", LogLevel.DEBUG);
-		}
+		}*/
 		
 		chopperComp.m_vEnemyPosition = SDRC_ChopperEnemyHelper.DoEnemySearch(owner);
 		if (chopperComp.m_vEnemyPosition != vector.Zero)
 		{
 			found = true;
-			chopperComp.m_iEnemyFoundTime = SDRC_Misc.GetCurrentTickTime() + chopperComp.m_iEnemyFoundTimeout;
+//			chopperComp.m_fEnemyFoundTimer = chopperComp.m_fEnemyForgetTimeout;
+			//Set enemy knowledge to be as long as the attack is ongoing
+			chopperComp.m_fEnemyFoundTimer = chopperComp.m_fTimerAttack;
 		}
 		
 		return found;

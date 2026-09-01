@@ -244,7 +244,7 @@ class SDRC_ChopperDebug
 			//Show if enemy is known			
 			if (chopperComp.m_vEnemyPosition != vector.Zero)
 			{
-				debugText = debugText + " (enemy)";
+				debugText = debugText + " (enemy: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimerAttack) + ")";
 			}
 			
 			float health;
@@ -258,7 +258,7 @@ class SDRC_ChopperDebug
 				textAltAgl = " AGL:" + SDRC_Misc.FloatWithDecimals(helicopter_s.GetAltitudeAGL());
 			}
 			
-			debugText = debugText + " Hlth: " + SCR_Enum.GetEnumName(SDRC_EHeliDamageLevel, chopperComp.m_eDamageLevel) + " (" + SDRC_Misc.FloatWithDecimals(health, 2) + ")";
+			debugText = debugText + " H: " + SCR_Enum.GetEnumName(SDRC_EHeliDamageLevel, chopperComp.m_eDamageLevel) + " (" + SDRC_Misc.FloatWithDecimals(health, 2) + ")";
 			debugText = debugText + "\n";
 			
 			debugText = debugText +
@@ -274,7 +274,7 @@ class SDRC_ChopperDebug
 //						   		"SplinePoints:" + m_vSplinePoints.Count() + "\n" +
 //						   		"TurnInternal:" + m_fTimeTurnInterval + "\n" +
 //								"Angle: " + m_fDbgAngle * Math.RAD2DEG + "\n" +
-								"AnglePitch: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fAnglePitch) + "\n" +
+//								"AnglePitch: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fAnglePitch) + "\n" +
 //								"AngleRoll: " + m_fAngleRoll * Math.RAD2DEG + "\n" +
 //								"AngleRollBack: " + m_fAngleRollBack * Math.RAD2DEG + "\n" +
 //								"DestinationPointAdd: " + m_iDestinationPointAdd + "\n" 
@@ -282,7 +282,7 @@ class SDRC_ChopperDebug
 			debugText = debugText + 
 //								"Init:" + chopperComp.m_bInInit + ", " +
 //								"Pilots: " + SDRC_VehicleHelper.PilotCountAlive(owner) + "\n" +
-								"Groups: " + chopperComp.m_aGroups.Count() + "\n" +
+//								"Groups: " + chopperComp.m_aGroups.Count() + "\n" +
 //								"Working: " + SDRC_VehicleHelper.IsWorking(owner) + " - " + 
 //								"Is piloted: " + SDRC_VehicleHelper.IsPiloted(owner) + "\n" +
 								"";
