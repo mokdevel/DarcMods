@@ -83,7 +83,7 @@ class SDRC_ChopperHelper
 		//If attacking, create an attack WP
 		if ( (chopperComp.m_fTimerAttack > 0) && (chopperComp.m_vEnemyPosition != vector.Zero) )
 		{
-			float radius = chopperComp.params.patrolRadius * SDRC_Misc.RandomFloat(0.7, 1.3);
+			float radius = chopperComp.params.patrolRadius * SDRC_Misc.RandomFloat(0.9, 1.8);
 			
 			vector fwdPoint = SDRC_ChopperHelper.GetDestinationForward(owner, radius);
 			chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, fwdPoint);
@@ -445,7 +445,7 @@ class SDRC_ChopperHelper
 			
 			switch (heliState)
 			{
-				case SDRC_EHeliState.ATTACK:
+				/*case SDRC_EHeliState.ATTACK:
 				{
 					//Modify attack height defaults
 					//Attack height is the lowest point modified by attackHeightMul. The final attackHeight could be below m_fFlyHeightLow
@@ -459,7 +459,7 @@ class SDRC_ChopperHelper
 					//CreateEndCurveJ(chopperComp, lowestHeight);
 					isSmoothingNeeded = false;
 					break;
-				}
+				}*/
 				case SDRC_EHeliState.CRASH:
 				{
 					vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];

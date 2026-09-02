@@ -506,6 +506,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			if (   (m_eHeliState == SDRC_EHeliState.FLY) 
 				|| (m_eHeliState == SDRC_EHeliState.FLY_AWAY) 
 				|| (m_eHeliState == SDRC_EHeliState.RAISE)
+				|| (m_eHeliState == SDRC_EHeliState.ATTACK)
 			   )
 			{
 				//Define a new destination and create a new path
@@ -1135,11 +1136,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 					vector point = m_vFlightPoints[m_vFlightPoints.Count() - 1].pt;
 					
 					//We need to take a detour. Add an additional points outside of the line to make the route rounder				
-					const float LERP_RND_DEFAULT = 0.65;
-					const float DIV_RND_DEFAULT = 1.5;
-					
-					float lerpRnd = SDRC_Misc.RandomFloat((LERP_RND_DEFAULT - params.detourLerpPosition), LERP_RND_DEFAULT);
-					float divRnd = SDRC_Misc.RandomFloat(DIV_RND_DEFAULT, (DIV_RND_DEFAULT + params.detourDivider));
+					float lerpRnd = SDRC_Misc.RandomFloat(params.detourLerpPosition * 0.5, params.detourLerpPosition * 1.5);
+					float divRnd = SDRC_Misc.RandomFloat(params.detourDivider * 0.5, params.detourDivider * 1.5);
 										
 					//Depending on the angle decide if we re-route left ot right				
 					bool isOnLeft = SDRC_Math.IsPointOnLeft(p0, p1, p2);
@@ -1147,11 +1145,11 @@ modded class SDRC_ChopperComp : ScriptComponent
 					//Find a point along the fly path and move it away from the line along tangent					
 					vector vec2 = SDRC_Math.CreateOffsetMidPoint(point, flyDestination.pt, (distance / divRnd), lerpRnd, isOnLeft);
 					//Find a similar point but now between the start and vec2
-					vector vec1 = SDRC_Math.CreateOffsetMidPoint(point, vec2, (distance / 4), 0.5, isOnLeft);
+					vector vec1 = SDRC_Math.CreateOffsetMidPoint(point, vec2, (distance / (divRnd * 1.3)), 0.5, isOnLeft);
 					AddFlyPathPoint(vec1);									
 					AddFlyPathPoint(vec2);
-					//SDRC_DebugHelper.AddDebugPos(vec1, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
-					//SDRC_DebugHelper.AddDebugPos(vec2, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
+					SDRC_DebugHelper.AddDebugPos(vec1, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
+					SDRC_DebugHelper.AddDebugPos(vec2, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
 				}
 				
 				AddFlyPathPoint(flyDestination.pt, flyDestination.type, flyDestination.value);
