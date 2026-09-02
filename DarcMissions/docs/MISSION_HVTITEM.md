@@ -3,7 +3,7 @@ Example: [dc_missionConfig_HvtItem.json](https://github.com/mokdevel/DarcMods/bl
 
 <img src="https://github.com/mokdevel/DarcMods/blob/main/pics/s_hvtitem.jpg" width=30% height=30%>
 
-AIs have built a camp/installation which has a target that needs to be destroyed in order to complete the mission. Loot is spawned in the box when a win condition is achieved.
+AIs have built a camp/installation which has a target or targets that needs to be destroyed in order to complete the mission. Loot is spawned in the box when a win condition is achieved.
 
 ### GM requested mission
 Location chosen will be close to where the mission was dropped. The mission location might not be exactly what you wanted as the it needs to have enough free space to spawn.
@@ -33,6 +33,6 @@ SDRC_HvtItem uses Camp functionality.
 ```
 # SDRC_HvtItem specific
 SDRC_Camp
-  campItems : (mandatory) Prefabs to spawn at the HvtItem missions. Note that first item shall be the loot box, but the item to destroy is defined with the targetIdx parameter.
-int targetIdx : The item index in the camp that is to be destroyed for the mission to be completed.
+  campItems : (mandatory) Prefabs to spawn at the HvtItem missions. Note that first item shall be the loot box, but the items to be destroyed are defined with the targetIdx parameter.
+array<int>targetIdx : The indexes to items that needs to be destroyed for the mission to be completed.
 ```

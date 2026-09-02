@@ -5,6 +5,14 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 
+## 202609xx
+Main Features:
+* dc_missionConfig_HvtItem.json 
+  * Parameter change: targetIdx is an array insted of signle int. You can define multiple items to be destroyed for the mission to be completed.
+  * Added a new HvtItem mission: Kill Wolfpack (enabled when BAR_FrenchAnimals mod is loaded)
+  * The file will auto update
+* Added LootE_SackUniversal_01 as a usable loot box.
+
 ## 20260901
 Main Features:
 * Added a new HvtItem mission: Kill Wolf (enabled when BAR_FrenchAnimals mod is loaded)
