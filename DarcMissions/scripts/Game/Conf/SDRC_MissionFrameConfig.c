@@ -36,7 +36,7 @@
 		private const int SDRC_MISSION_MIN_DISTANCE = 200;		
 		private const int SDRC_PLAYER_MIN_DISTANCE = 10;//300;		
 		private const int SDRC_PLAYER_MAX_DISTANCE = 1200;		
-		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
+		private const int SDRC_MISSION_COUNT_DYNAMIC = 6;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
 		private const int SDRC_MISSION_COUNT_STATIC = 5;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
@@ -225,36 +225,33 @@ class SDRC_MissionFrameConfig : SDRC_Config
 			missionDifficultyList = {0,1,2,3,4};
 //			missionDifficultyList = {0};
 		
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY};
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.HUNTER};
-			missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.PATROL};
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.STASH};
+//			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.CHOPPER);
+//			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.CONVOY);
+//			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.CRASHSITE);
+//			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.HUNTER);
+//			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.HVTITEM);
+//			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.HVTVIP);
+//			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.OCCUPATION);
+//			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.PATROL);
+//			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.ROADBLOCK);
+			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.SQUATTERS);
+//			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.STASH);
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS};
 		
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.CRASHSITE};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.HUNTER};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTVIP};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.OCCUPATION};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.PATROL};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.ROADBLOCK};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.HVTVIP};
-			missionStatic.missionTypeArray = {SDRC_EMissionType.STASH, SDRC_EMissionType.OCCUPATION};
-//			missionStatic.missionTypeArray = {};
+//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.CHOPPER);
+//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.CONVOY);
+//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.CRASHSITE);
+//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.HVTITEM);
+//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.HVTVIP);
+//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.OCCUPATION);
+//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.PATROL);
+//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.ROADBLOCK);
+//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.SQUATTERS);
+			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.STASH);
+//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.PATROL);
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CHOPPER};		
 		
 		#endif
 	}

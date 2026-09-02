@@ -34,6 +34,13 @@ sealed class SDRC_Misc
 		{
 			return min;
 		}
+		
+		if (max < min)
+		{
+			SDRC_Log.Add("[SDRC_Misc:RandomFloat] Max smaller than min. Switching.", LogLevel.WARNING);
+			return Math.RandomFloatInclusive(max, min);	
+		}
+		
 		return Math.RandomFloatInclusive(min, max);	
 	}
 
@@ -48,6 +55,13 @@ sealed class SDRC_Misc
 		{
 			return min;
 		}
+		
+		if (max < min)
+		{
+			SDRC_Log.Add("[SDRC_Misc:RandomInt] Max smaller than min. Switching.", LogLevel.WARNING);
+			return Math.RandomIntInclusive(max, min);	
+		}
+		
 		return Math.RandomIntInclusive(min, max);	
 	}
 			
