@@ -6,7 +6,7 @@ High Value Target (HVT) - Item target
 */
 
 const string DC_MISSIONCONFIG_FILE_HVTITEM = "dc_missionConfig_HvtItem.json";
-const int DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER = 2;
+const int DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER = 3;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_HvtItem : SDRC_Mission
@@ -21,13 +21,13 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	private int m_iSpawnIndex = 0;					//Counter for the item to spawn
 	private float m_fSpawnRotation = 0;				//Rotation of the camp for random locations.
 	
-	private IEntity m_Target = null;
+	private ref array<IEntity> m_Targets = {};
 		
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission_HvtItem(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER, safeUpdate: true))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
@@ -125,8 +125,13 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		
 		if ( (ready) && (GetState() != SDRC_EMissionState.FAILED) )
 		{
-			m_Target = GetFromEntityList(m_DC_HvtItem.targetIdx);
-			SDRC_Log.Add("[SDRC_Mission_HvtItem:MissionSpawn] " +  GetId() + " : Target: " + m_Target, LogLevel.DEBUG);
+			foreach (int idx : m_DC_HvtItem.targetIdx)
+			{
+				IEntity target = GetFromEntityList(idx);
+				m_Targets.Insert(target);
+				
+				SDRC_Log.Add("[SDRC_Mission_HvtItem:MissionSpawn] " +  GetId() + " : Target: " + target, LogLevel.DEBUG);
+			}
 			
 			GetGame().GetCallqueue().CallLater(IsTargetDestroyed, AI_TARGET_DESTROYED_CYCLE_TIME, false);
 			
@@ -151,23 +156,25 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		if (GetWinCondition() == SDRC_EMissionWinCondition.HVT_DESTROY_ITEM && GetState() == SDRC_EMissionState.ACTIVE && GetSuccess() == SDRC_EMissionSuccess.UNKNOWN)
 		{
 			bool isDestroyed = false;
-			if (m_Target)
+			
+			foreach(IEntity entity : m_Targets)
 			{				
-				DamageManagerComponent damageManager = DamageManagerComponent.Cast(m_Target.FindComponent(DamageManagerComponent));
+				DamageManagerComponent damageManager = DamageManagerComponent.Cast(entity.FindComponent(DamageManagerComponent));
 				if (damageManager)
 				{
 					float health = damageManager.GetHealthScaled();
 					SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] " +  GetId() + " : Target health: " + health, LogLevel.SPAM);
-					if (health < 0.1)
+					if (health > 0.1)
 					{
 						isDestroyed = true;
 					}
 				}
+				isDestroyed = true;
 			}	
-			else
+/*			else
 			{
 				isDestroyed = true;
-			}
+			}*/
 			
 			if (isDestroyed)
 			{
@@ -288,7 +295,12 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		
 		//Default
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {};//{0,1,2};
+		missionList = {0,1,2};
+		
+		#ifndef SDRC_RELEASE
+			//missionList = {};
+		#endif
+		
 		//Mission specific
 		//----------------------------------------------------
 		subMissions.Insert(HvtItem0());				
@@ -333,7 +345,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 			SDRC_EWaypointGenerationType.LOITER,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);	
-		hvtItem.targetIdx = 1;
+		hvtItem.targetIdx.Insert(1);
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
@@ -456,7 +468,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 			SDRC_EWaypointGenerationType.LOITER,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);	
-		hvtItem.targetIdx = 1;
+		hvtItem.targetIdx.Insert(1);
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
@@ -560,7 +572,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 			SDRC_EWaypointGenerationType.LOITER,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);		
-		hvtItem.targetIdx = 9;
+		hvtItem.targetIdx.Insert(9);
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
@@ -750,5 +762,5 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 class SDRC_HvtItem : SDRC_Camp
 {
 	SDRC_Camp camp = SDRC_Camp();
-	int targetIdx; 
+	ref array<int> targetIdx = {};
 }

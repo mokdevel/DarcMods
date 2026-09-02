@@ -240,10 +240,11 @@ class SDRC_StashConfig : SDRC_MissionConfig
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		activeDistance = 50;
 		missionList = {0,0,0,1};
-//		missionFiles.Insert("dc_missionConfig_Stash_010.json");
-/*		#ifndef SDRC_RELEASE
-			missionFiles.Insert("dc_missionConfig_Stash_01x.json");	//Just for testing that dummy files don't appear
-		#endif*/
+		
+		#ifndef SDRC_RELEASE
+			//missionList = {};
+		#endif
+		
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Insert(Stash0());				

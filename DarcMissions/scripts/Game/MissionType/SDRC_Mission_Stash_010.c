@@ -38,6 +38,11 @@ class SDRC_StashConfig_010 : SDRC_StashConfig
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		activeDistance = 50;
 		missionList = {0, 1};		
+		
+		#ifndef SDRC_RELEASE
+			//missionList = {};
+		#endif
+		
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Clear();

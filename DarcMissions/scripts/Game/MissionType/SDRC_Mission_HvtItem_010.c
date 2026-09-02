@@ -8,7 +8,7 @@
 class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 {
 	private const string DC_MISSIONCONFIG_FILE_HVTITEM_010 = "dc_missionConfig_HvtItem_010.json";
-	private const int DC_MISSIONCONFIG_FILE_HVTITEM_010_JSONVER = 2;
+	private const int DC_MISSIONCONFIG_FILE_HVTITEM_010_JSONVER = DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER;
 	
 	//------------------------------------------------------------------------------------------------
 	static string GetFileName()
@@ -37,7 +37,12 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 		
 		//Default
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {};//{0,1,2};
+		missionList = {0,1,2};
+		
+		#ifndef SDRC_RELEASE
+			//missionList = {};
+		#endif
+		
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Clear();
@@ -75,7 +80,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 			SDRC_EWaypointGenerationType.RADIUS,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);		
-		hvtItem.targetIdx = 5;
+		hvtItem.targetIdx.Insert(5);
 
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
@@ -299,7 +304,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 			SDRC_EWaypointGenerationType.RADIUS,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);		
-		hvtItem.targetIdx = 12;
+		hvtItem.targetIdx.Insert(12);
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
@@ -558,7 +563,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 			SDRC_EWaypointGenerationType.RADIUS,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);		
-		hvtItem.targetIdx = 5;
+		hvtItem.targetIdx.Insert(5);
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
