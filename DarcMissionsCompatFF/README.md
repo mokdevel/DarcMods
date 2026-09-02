@@ -30,7 +30,7 @@ bool setEnemyFactionAutomatically : Automatically set enemy faction from FF. Thi
 bool rewardPerUser : The amount of money to receive.
   true: The full reward is given to each player.
   false: The full reward is split within the group and each player gets reward divided by player count.
-bool rewardDefault : Default reward unless specific reward has been set in mission XP. If mission XP value is zero, rewardDefault will be used.
+int rewardDefault : Default reward unless specific reward has been set in mission XP. If mission XP value is zero, rewardDefault will be used.
 ```
 
 # Version history
