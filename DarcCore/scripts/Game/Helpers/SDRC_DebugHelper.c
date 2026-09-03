@@ -458,7 +458,23 @@ sealed class SDRC_DebugHelper
 			}			
 		}		
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Deletes a debug sphere with a certain id. The id works as a wild card.
+	*/
+	static void DeleteDebugSphere(string id)
+	{
+		for (int i = 0; i < m_Sphere.Count(); i++)		
+		{
+			if (m_Sphere[i].id.Contains(id))
+			{
+				m_Sphere.Remove(i);
+				i--;
+			}			
+		}		
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Deletes all debug items with a certain id. The id works as a wild card.
