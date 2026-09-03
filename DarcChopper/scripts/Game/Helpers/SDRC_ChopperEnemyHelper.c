@@ -60,6 +60,7 @@ class SDRC_ChopperEnemyHelper
 //			chopperComp.m_fEnemyFoundTimer = chopperComp.m_fEnemyForgetTimeout;
 			//Set enemy knowledge to be as long as the attack is ongoing
 			chopperComp.m_fEnemyFoundTimer = chopperComp.m_fTimerAttack;
+			SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vEnemyPosition, ARGB(32, 255, 0, 128), 5, chopperComp.m_sDid + "att");
 		}
 		
 		return found;
@@ -348,7 +349,6 @@ class SDRC_ChopperEnemyHelper
 		vector fwd = owner.GetTransformAxis(2);
 		fwd.Normalize();
 		
-//		if (SDRC_Math.IsTargetInSector(owner.GetOrigin(), fwd, enemyPosition, 35) )
 		if (SDRC_Math.IsTargetInSector(owner.GetOrigin(), fwd, enemyPosition, chopperComp.m_RocketSector) )
 		{
 			ShootRocket(owner, enemyPosition);

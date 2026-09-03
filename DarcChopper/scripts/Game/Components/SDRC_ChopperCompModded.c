@@ -281,6 +281,17 @@ modded class SDRC_ChopperComp
 	}	
 	
 	//------------------------------------------------------------------------------------------------	
+	/*!
+	Sets attack position
+	*/
+	override void SetAttackPosition(vector pos)
+	{
+		m_vAttackPosition = pos;
+		SDRC_DebugHelper.DeleteDebugSphere(m_sDid + "att");
+		SDRC_DebugHelper.AddDebugSphere(pos, ARGB(32, 255, 0, 0), 10.0, m_sDid + "att");
+	}
+	
+	//------------------------------------------------------------------------------------------------	
 	// Damage settings
 	//------------------------------------------------------------------------------------------------	
 	
@@ -485,13 +496,13 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
 				//Set attack position. At this stage, it could be at 0 height
-				m_vAttackPosition = destination;
+				SetAttackPosition(destination);
 				
-				//Set attack position on ground, unless some other height was defined.
+/*				//Set attack position on ground, unless some other height was defined.
 				if (m_vAttackPosition[1] == 0)
 				{
 					m_vAttackPosition[1] = SDRC_Misc.GetSurfaceYWithWater(destination, true);
-				}
+				}*/
 				
 				//With default attack time, set it to DEFAULT_ATTACK_TIME seconds
 				if (value == -1)
@@ -510,7 +521,7 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 			{
 				value = params.timeSearchAndDestroy;
-				m_vAttackPosition = destination;			//Where to attack
+				SetAttackPosition(destination);				//Where to attack
 				break;
 			}								
 			case SDRC_EFlyWayPointType.WP_BRAKE:
@@ -632,7 +643,7 @@ modded class SDRC_ChopperComp
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_FLY, rndPos, 0);
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_ATTACK, destination, value);
 				}
-				m_vAttackPosition = destination;			//Where to attack
+				SetAttackPosition(destination);			//Where to attack
 				//All things are already added
 				addDestinationPoint = false;
 				break;
@@ -795,7 +806,7 @@ modded class SDRC_ChopperComp
 					hostilePos = owner.GetOrigin();
 				}
 				
-				m_vAttackPosition = hostilePos;
+				SetAttackPosition(hostilePos);
 				
 				if (m_vEnemyPosition != vector.Zero)
 				{
@@ -815,7 +826,7 @@ modded class SDRC_ChopperComp
 					//If no enemy found, add another patrol round
 					if (SDRC_ChopperHelper.GetNextWayPointType(owner) != SDRC_EFlyWayPointType.WP_PATROL_ONCE)
 					{
-						AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, hostilePos, index: 0);
+						AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, hostilePos, index: 0);		//NOTE: This is set as first waypoint
 					}
 				}
 				

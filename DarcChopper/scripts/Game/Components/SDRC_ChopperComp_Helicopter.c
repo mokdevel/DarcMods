@@ -242,8 +242,8 @@ modded class SDRC_ChopperComp
 			return;
 		}
 		
-		//Handle attacks:
-		if (m_fTimerAttack < 0)	
+		//Handle attacks:		
+		if ( (m_fTimerAttack < 0) && (m_vAttackPosition == vector.Zero) )
 		{
 			//Normal case:
 			SDRC_ChopperEnemyHelper.SearchForEnemy(owner);

@@ -445,7 +445,7 @@ class SDRC_ChopperHelper
 			
 			switch (heliState)
 			{
-				/*case SDRC_EHeliState.ATTACK:
+				case SDRC_EHeliState.ATTACK:
 				{
 					//Modify attack height defaults
 					//Attack height is the lowest point modified by attackHeightMul. The final attackHeight could be below m_fFlyHeightLow
@@ -455,11 +455,10 @@ class SDRC_ChopperHelper
 					//We know where to attack so return to normal flight mode
 					chopperComp.SetState(SDRC_EHeliState.FLY);
 					
-					//TBD: The J-curve currently modifies the whole flight including XZ so does not fit attacking. Needs fixing.
-					//CreateEndCurveJ(chopperComp, lowestHeight);
+					CreateEndCurveJAttack(chopperComp, lowestHeight);
 					isSmoothingNeeded = false;
 					break;
-				}*/
+				}
 				case SDRC_EHeliState.CRASH:
 				{
 					vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];
@@ -489,7 +488,7 @@ class SDRC_ChopperHelper
 					}
 					else
 					{						
-						CreateEndCurveJ(chopperComp, lowestHeight);
+						CreateEndCurveJ(chopperComp, lowestHeight, true);
 					}
 					isSmoothingNeeded = false;
 					break;
@@ -553,15 +552,17 @@ class SDRC_ChopperHelper
 		        /
 		___---"´
 	
+	\params chopperComp
+	\params lowestHeight Lowest height where to end the curve
+	\params idxFrom Start point on spline
+	\params idxTo End point on spline. Usually the last point.
+	\params straightLine If true, creates a straight line for curve. False uses the existing XZ positions.
 	*/
-	static void CreateEndCurveJ(SDRC_ChopperComp chopperComp, float lowestHeight)
+	static void CreateEndCurveJCalc(SDRC_ChopperComp chopperComp, float lowestHeight, int idxFrom, int idxTo, bool straightLine = false)
 	{
-		//If we're braking set points towards the last point			
-		int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
-
 		//Find high point, low point and difference
-		vector v0 = chopperComp.m_vSplinePointBelow;
-		vector v1 = chopperComp.m_vSplinePoints[lastIdx];
+		vector v0 = chopperComp.m_vSplinePoints[idxFrom];
+		vector v1 = chopperComp.m_vSplinePoints[idxTo];
 		v1[1] = lowestHeight;
 		
 		//Count a braking (bell) curve
@@ -569,17 +570,52 @@ class SDRC_ChopperHelper
 		float p1 = v1[1];
 		float pdiff = p0 - p1;
 							
+		vector pt = vector.Zero;
+		
 		//Create a Y spline to replace the given points to smooth the curve for braking
-		int points = lastIdx - chopperComp.m_iClosestIndex;
+		int points = idxTo - idxFrom + 1;
 		for (int i = 0; i < points; i++)
 		{					
 			float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
 
-			vector pt = vector.Lerp(v1, v0, step);
-			pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
-			chopperComp.m_vSplinePoints[lastIdx - points + i] = pt;
-			chopperComp.m_vSplinePoints[lastIdx - points + i + 1] = pt;	//Ugly hack to make sure the last point is also modified
+			//Straight line
+			if (straightLine)
+			{
+				pt = vector.Lerp(v1, v0, step);
+				pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
+			}
+			else
+			{
+				float height = Math.Lerp(v1[1], v0[1], step);
+				pt = chopperComp.m_vSplinePoints[idxFrom + i];
+				pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
+			}			
+			chopperComp.m_vSplinePoints[idxFrom + i] = pt;
 		}	
+		
+		//chopperComp.m_vSplinePoints[idxTo] = pt;	//Ugly hack to make sure the last point is also modified
+	}		
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Create a curve that looks like a J. Mainly for braking.
+	*/
+	static void CreateEndCurveJ(SDRC_ChopperComp chopperComp, float lowestHeight, bool straightLine = false)
+	{
+		int idxTo = chopperComp.m_vSplinePoints.Count() - 1;
+		int idxFrom = chopperComp.m_iClosestIndex;
+		CreateEndCurveJCalc(chopperComp, lowestHeight, idxFrom, idxTo, straightLine);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Create a curve that looks like a J. Mainly for attacking.
+	*/
+	static void CreateEndCurveJAttack(SDRC_ChopperComp chopperComp, float lowestHeight, bool straightLine = false)
+	{
+		int idxTo = chopperComp.m_vSplinePoints.Count() - 1;
+		int idxFrom = idxTo * 0.7;
+		CreateEndCurveJCalc(chopperComp, lowestHeight, idxFrom, idxTo, straightLine);
 	}
 	
 	//------------------------------------------------------------------------------------------------

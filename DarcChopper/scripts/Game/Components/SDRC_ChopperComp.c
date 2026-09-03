@@ -247,7 +247,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 //	float m_fEnemyForgetTimeout = 10;			//Time to forget the enemy position
 		
 	//Attack related
-	private vector m_vAttackPosition;			//Position to attack
+	private vector m_vAttackPosition;			//Position to attack. Use SetAttackPosition() to set this
 	const int DEFAULT_ATTACK_TIME = 60;			//(seconds) The time to stay in attack mode
 	float m_fTimerAttack = 0;					//Timer to do attacks
 	private float m_fTimerAttackToSet = 0;		//Timer to set when attack starts
@@ -889,7 +889,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	*/
 	void ResetAttack()
 	{
-		m_vAttackPosition = vector.Zero;
+		SetAttackPosition(vector.Zero);
 		m_fTimerAttack = 0;
 		m_fTimerAttackToSet = 0;
 	}
@@ -1145,11 +1145,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 					//Find a point along the fly path and move it away from the line along tangent					
 					vector vec2 = SDRC_Math.CreateOffsetMidPoint(point, flyDestination.pt, (distance / divRnd), lerpRnd, isOnLeft);
 					//Find a similar point but now between the start and vec2
-					vector vec1 = SDRC_Math.CreateOffsetMidPoint(point, vec2, (distance / (divRnd * 1.3)), 0.5, isOnLeft);
+					vector vec1 = SDRC_Math.CreateOffsetMidPoint(point, vec2, (distance / (divRnd * 1.5)), 0.5, isOnLeft);
 					AddFlyPathPoint(vec1);									
 					AddFlyPathPoint(vec2);
-					SDRC_DebugHelper.AddDebugPos(vec1, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
-					SDRC_DebugHelper.AddDebugPos(vec2, ARGB(255, 0, 0, 0), 1.0, m_sDid, 500);
+					SDRC_DebugHelper.DeleteDebugPos(m_sDid + "detour");
+					SDRC_DebugHelper.AddDebugPos(vec1, ARGB(255, 0, 0, 0), 1.0, m_sDid + "detour", 500);
+					SDRC_DebugHelper.AddDebugPos(vec2, ARGB(255, 0, 0, 0), 1.0, m_sDid + "detour", 500);
 				}
 				
 				AddFlyPathPoint(flyDestination.pt, flyDestination.type, flyDestination.value);
@@ -1364,6 +1365,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	// Enemy related - defined in modded class
 	//------------------------------------------------------------------------------------------------	
 	void SetEnemySearchType(SDRC_EHeliEnemySearchType type) {}
+	void SetAttackPosition(vector pos) {}
 	//------------------------------------------------------------------------------------------------	
 	// Helicopter settings - defined in modded class
 	//------------------------------------------------------------------------------------------------	
