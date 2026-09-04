@@ -43,6 +43,11 @@ sealed class SDRC_PlayerHelper
 			IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
 			if (player)
 			{
+				if (!IsAlive(player))
+				{
+					continue;
+				}
+				
 				float distance = vector.Distance(player.GetOrigin(), positionToCheck);
 			
 				if ((distance < closestDistance) && (distance >= distanceAway))
@@ -102,6 +107,11 @@ sealed class SDRC_PlayerHelper
 			IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
 			if (player)
 			{
+				if (!IsAlive(player))
+				{
+					continue;
+				}
+				
 				float distance = vector.DistanceXZ(player.GetOrigin(), positionToCheck);
 			
 				if (distance < radiusToCheck)
