@@ -244,7 +244,7 @@ class SDRC_ChopperDebug
 			//Show if enemy is known			
 			if (chopperComp.m_vEnemyPosition != vector.Zero)
 			{
-				debugText = debugText + " (enemy: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fTimerAttack) + ")";
+				debugText = debugText + " (enemy: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fAttackTimer) + ")";
 			}
 			
 			float health;
@@ -269,8 +269,13 @@ class SDRC_ChopperDebug
 	//						   	"Avg time:" + m_fTimeBetweenPtsAvg + "\n" +
 								" \n";
 			debugText = debugText + 
+							   	"RotorForceMul:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fRotorForceMultiplier, 2) + 
+							   	" Low:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fBelowFlyHeightLowMul, 2) + 
+							   	" Spl:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fDistanceFromSplineMul, 2) + 
+							   	" Ray:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fRayLenMul, 2) + 
+								" \n";
+			debugText = debugText + 
 //							   	"Alt:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fAltitude) + " " + textAltAgl + "\n" + 
-							   	"RotorForceMul:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fRotorForceMultiplier, 2) + "\n" +
 //						   		"SplinePoints:" + m_vSplinePoints.Count() + "\n" +
 //						   		"TurnInternal:" + m_fTimeTurnInterval + "\n" +
 //								"Angle: " + m_fDbgAngle * Math.RAD2DEG + "\n" +
@@ -363,17 +368,12 @@ class SDRC_ChopperDebug
 		SDRC_ChopperDebug.DrawLine(origin, origin + (vVel * chopperComp.m_fSpeed), Color.GRAY_75);			
 		
 		//Draw raycast stuff
-		float rayLen = chopperComp.params.rayLenFront;		
-		vector rayEnd = SDRC_ChopperHelper.GetDestinationForward(owner, chopperComp.params.rayLenFront);
-		rayEnd[1] = rayEnd[1] - chopperComp.params.rayDown;
-		
-		float len = SDRC_Misc.RayCast(origin, rayEnd, owner);
 		int color = Color.GREEN;
-		if (len < 1)
+		if (chopperComp.m_vRayLen < 1)
 		{
 			color = Color.RED;
 		}
-		SDRC_ChopperDebug.DrawLine(origin, rayEnd, color);		
+		SDRC_ChopperDebug.DrawLine(origin, chopperComp.m_vRayEnd, color);		
 		
 		//Enemy stuff
 		

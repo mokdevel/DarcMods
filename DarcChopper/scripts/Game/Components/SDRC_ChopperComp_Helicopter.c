@@ -26,14 +26,14 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		pitchNoseAngleUp   = pitchAngleRadFlat - (60 * Math.DEG2RAD);
 		
 		//Rotor force multipliers
-		fRotorForceMulUp = 1.3 * 10;
+		fRotorForceMulUp = 1.3 * 10;	//Was 1.3
 		iRotorForceNormal = 30;
-		iRotorForceRaise = 40;
+		iRotorForceRaise = 50;
 		iRotorForceHover = 0;
 		iRotorForceCrash = 8;
 		
 		//Obstacle awareness
-		rayLenFront = 400;
+		rayLenFront = 1000;
 		rayDown = 50;
 				
 		//Flight parameters
@@ -44,6 +44,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		rayLenEnemy = 1000;
 		timeSearchAndDestroy = 4*60;
 		attackHeightMul = 0.5;
+		attackDefaultTime = 60;
 		
 		//Damage levels
 		damageHeavy = 0.90;
@@ -243,7 +244,7 @@ modded class SDRC_ChopperComp
 		}
 		
 		//Handle attacks:		
-		if ( (m_fTimerAttack < 0) && (m_vAttackPosition == vector.Zero) )
+		if ( (m_fAttackTimer <= 0) && (m_vAttackPosition == vector.Zero) )
 		{
 			//Normal case:
 			SDRC_ChopperEnemyHelper.SearchForEnemy(owner);

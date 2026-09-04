@@ -41,6 +41,7 @@ class SDRC_ChopperParams
 	int rayLenEnemy;								//Max distance to see an enemy
 	int timeSearchAndDestroy;						//(seconds) Time to be in search and destroy behaviour
 	float attackHeightMul;							//Height multiplier to use for attack position. This will take m_fFlyHeightLow and multiply with this value.
+	int attackDefaultTime;							//(seconds) How long to attack a location
 	
 	//Damage levels
 	float damageHeavy;
@@ -51,7 +52,7 @@ class SDRC_ChopperParams
 	float wpSteepAngle;								//Waypoint angle that is considered steep. This is the angle between current direction and new direction.
 													//If chopper destination makes a too steep turn, we will add a few additional points.
 	int destinationForwardInitial;					//Distance to fly forward on first fligth at init
-	int destinationForward;							//Distance to add points forward when creating new flight path
+	float destinationForward;						//Distance to add points forward when creating new flight path
 	
 	//Flight pattern related
 	int patrolRadius;								//Default radius for WP_PATROL and WP_PATROL_ONCE commands. The radius will be between 70% - 130

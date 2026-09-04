@@ -81,7 +81,7 @@ class SDRC_ChopperHelper
 		}
 		
 		//If attacking, create an attack WP
-		if ( (chopperComp.m_fTimerAttack > 0) && (chopperComp.m_vEnemyPosition != vector.Zero) )
+		if ( (chopperComp.m_fAttackTimer > 0) && (chopperComp.m_vEnemyPosition != vector.Zero) )
 		{
 			float radius = chopperComp.params.patrolRadius * SDRC_Misc.RandomFloat(0.9, 1.8);
 			
@@ -250,7 +250,7 @@ class SDRC_ChopperHelper
 							}
 							case "E_AIWaypoint_ArtillerySupport":
 							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, pos, 120);
+								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, pos);
 								break;
 							}
 							case "E_AIWaypoint_SearchAndDestroy":
@@ -364,6 +364,11 @@ class SDRC_ChopperHelper
 		if (splinePoints.IsEmpty())
 		{
 			return 0;
+		}
+		
+		if (currentIndex >= splinePoints.Count())
+		{
+			currentIndex = splinePoints.Count() - 1;
 		}
 		
 		float distance = vector.Distance(origin, splinePoints[currentIndex]);

@@ -288,7 +288,10 @@ modded class SDRC_ChopperComp
 	{
 		m_vAttackPosition = pos;
 		SDRC_DebugHelper.DeleteDebugSphere(m_sDid + "att");
-		SDRC_DebugHelper.AddDebugSphere(pos, ARGB(32, 255, 0, 0), 10.0, m_sDid + "att");
+		if (pos != vector.Zero)
+		{
+			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(32, 255, 0, 0), 10.0, m_sDid + "att");
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------	
@@ -504,18 +507,18 @@ modded class SDRC_ChopperComp
 					m_vAttackPosition[1] = SDRC_Misc.GetSurfaceYWithWater(destination, true);
 				}*/
 				
-				//With default attack time, set it to DEFAULT_ATTACK_TIME seconds
+				//If value is -1, use the default time
 				if (value == -1)
 				{
-					value = DEFAULT_ATTACK_TIME;
+					value = params.attackDefaultTime;
 				}
 								
-				if (value < 30)
-				{
-					SDRC_Log.Add("[SDRC_ChopperComp:AddDestination] Time assigned to WP_ATTACK is very short: " + value + " seconds.", LogLevel.WARNING);
-				}
+				m_fAttackTimerToSet = value;				//For how long to continue attacks
 				
-				m_fTimerAttackToSet = value;				//For how long to continue attacks
+				if (value < 10)
+				{
+					SDRC_Log.Add("[SDRC_ChopperComp:AddDestination] Time assigned to WP_ATTACK is quite short: " + value + " seconds.", LogLevel.WARNING);
+				}
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
@@ -778,7 +781,7 @@ modded class SDRC_ChopperComp
 		m_fTimerBehaviourCycle = BEHAVIOUR_CHECK_CYCLE;
 
 		//Do not change attack course if we're already in attack.
-		if (m_fTimerAttack > 0)
+		if (m_fAttackTimer > 0)
 		{
 			return;
 		}
@@ -815,11 +818,11 @@ modded class SDRC_ChopperComp
 					TypeAttackSetup(owner, hostilePos);
 					
 					//Set attack timer. Usually set when we come here, but a check just in case.
-					if (m_fTimerAttackToSet <= 0)
+					if (m_fAttackTimerToSet <= 0)
 					{
-						m_fTimerAttackToSet = DEFAULT_ATTACK_TIME;
+						m_fAttackTimerToSet = params.attackDefaultTime;
 					}
-					m_fTimerAttack = m_fTimerAttackToSet;
+					m_fAttackTimer = m_fAttackTimerToSet;
 				}
 				else
 				{

@@ -38,28 +38,22 @@ class SDRC_ChopperEnemyHelper
 			return false;
 		}
 		
-		//Search on cyclic time
+		//Search on cyclic time. This usually is m_fEnemyFoundTimeout time, but when enemy is found, it's set to m_fAttackTimer
 		if (chopperComp.m_fEnemyFoundTimer > 0)
 		{
 			return false;
 		}
 		chopperComp.m_fEnemyFoundTimer = chopperComp.m_fEnemyFoundTimeout;
 		chopperComp.m_vEnemyPosition = "0 0 0";
+		chopperComp.SetAttackPosition(vector.Zero);
 		SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchForEnemy] Enemy position reset.", LogLevel.SPAM);
-		
-/*		if ( (chopperComp.m_fEnemyFoundTimer < (-1 * chopperComp.m_fEnemyForgetTimeout)) && (chopperComp.m_vEnemyPosition != "0 0 0") )
-		{
-			chopperComp.m_vEnemyPosition = "0 0 0";
-			SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchForEnemy] Enemy position reset.", LogLevel.DEBUG);
-		}*/
 		
 		chopperComp.m_vEnemyPosition = SDRC_ChopperEnemyHelper.DoEnemySearch(owner);
 		if (chopperComp.m_vEnemyPosition != vector.Zero)
 		{
 			found = true;
-//			chopperComp.m_fEnemyFoundTimer = chopperComp.m_fEnemyForgetTimeout;
 			//Set enemy knowledge to be as long as the attack is ongoing
-			chopperComp.m_fEnemyFoundTimer = chopperComp.m_fTimerAttack;
+			chopperComp.m_fEnemyFoundTimer = chopperComp.m_fAttackTimer;
 			SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vEnemyPosition, ARGB(32, 255, 0, 128), 5, chopperComp.m_sDid + "att");
 		}
 		
@@ -190,8 +184,11 @@ class SDRC_ChopperEnemyHelper
 					{
 						if (EntityUtils.IsPlayer(target))
 						{
-							enemyPosition = target.GetOrigin();
-							//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyForHelicopter] Player enemy found at " + enemyPosition, LogLevel.DEBUG);
+							if (SDRC_PlayerHelper.IsAlive(target))
+							{
+								enemyPosition = target.GetOrigin();
+								//SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchEnemyForHelicopter] Player enemy found at " + enemyPosition, LogLevel.DEBUG);
+							}
 							break;
 						}
 					}
@@ -258,8 +255,7 @@ class SDRC_ChopperEnemyHelper
 					enemyGroups.Insert(group);
 					i++;
 					//Found
-//					FactionKey factionKey = SDRC_AIHelper.GetGroupFactionKey(group);
-					
+//					FactionKey factionKey = SDRC_AIHelper.GetGroupFactionKey(group);					
 				}
 				
 				//Find only 10 groups as max
