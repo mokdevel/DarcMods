@@ -2,10 +2,9 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
-Summary: spawn - initial destination - fly - brake - hover up/down - land - stop engine
+Summary: spawn - initial destination - fly - crash
 
-An example of spawning a chopper and set an initial fly path, do some air tricks and eventually land
-and turning engines off. 
+An example of spawning a chopper and set an initial fly path and crash on the building.
 */
 
 //------------------------------------------------------------------------------------------------
@@ -58,7 +57,7 @@ class SDRC_ChopperExample_09
 		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, flyHereFirst);
 		//Add our flight path		
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, flyHereFirst);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_CRASH, "1350 3 2400");
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_CRASH, "1350 2 2400");
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_END);
 	}	
 }
