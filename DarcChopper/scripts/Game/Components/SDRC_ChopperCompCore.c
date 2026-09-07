@@ -28,6 +28,7 @@ class SDRC_ChopperParams
 	int   iRotorForceRaise; 						//.. when raising from stand still
 	int   iRotorForceHover; 						//.. when hovering in one place
 	int   iRotorForceCrash; 						//.. when crashin. Bigger value causes a deeper curve
+	int   iRotorForceBrake; 						//.. when braking
 	
 	//Obstacle awareness
 	float rayLenFront;								//Length of the ray to detect obstacles in front of vehicle
@@ -42,7 +43,11 @@ class SDRC_ChopperParams
 	int timeSearchAndDestroy;						//(seconds) Time to be in search and destroy behaviour
 	float attackHeightMul;							//Height multiplier to use for attack position. This will take m_fFlyHeightLow and multiply with this value.
 	int attackDefaultTime;							//(seconds) How long to attack a location
-	
+
+	//Braking
+	int brakingDistance;							//The default braking distance to use
+	int brakingDistanceCurveLimit;					//The distance to select J or Steep curve
+		
 	//Damage levels
 	float damageHeavy;
 	float damageMedium;

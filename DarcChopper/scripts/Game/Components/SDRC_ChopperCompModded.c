@@ -529,7 +529,7 @@ modded class SDRC_ChopperComp
 			}								
 			case SDRC_EFlyWayPointType.WP_BRAKE:
 			{
-				if (value == -1)
+/*				if (value == -1)
 				{
 					if (!m_vFlyDestinations.IsEmpty() )
 					{
@@ -538,10 +538,15 @@ modded class SDRC_ChopperComp
 					}
 					else					
 					{
-						value = DEFAULT_BRAKE_DISTANCE;
+						value = params.brakingDistance;
 					}
 				}
-				
+*/
+				if (value == -1)
+				{
+					value = params.brakingDistance;
+				}				
+								
 				if (value < 50)
 				{
 					SDRC_Log.Add("[SDRC_ChopperComp:AddDestination] The distance (value) for WP_BRAKE is very short: " + value, LogLevel.WARNING);
@@ -572,14 +577,14 @@ modded class SDRC_ChopperComp
 				SDRC_Log.Add("[SDRC_ChopperComp:AddDestination] WP_LAND is deprecated. Use WP_M_LAND instead.", LogLevel.WARNING);
 			case SDRC_EFlyWayPointType.WP_M_LAND:
 			{
-				//Get the distance from last spline point to the braking destination
-				float distance = DEFAULT_BRAKE_DISTANCE;
+/*				//Get the distance from last spline point to the braking destination
+				float distance = params.brakingDistance;
 				if (!m_vSplinePoints.IsEmpty())
 				{
 					distance = vector.DistanceXZ(m_vSplinePoints[m_vSplinePoints.Count() - 1], destination);
-				}
-				AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, destination, distance);
-				AddDestination(SDRC_EFlyWayPointType.WP_LAND_VERTICAL, destination, value);
+				}*/
+				AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, destination + "0 3 0", value);
+				AddDestination(SDRC_EFlyWayPointType.WP_LAND_VERTICAL, destination);
 //				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
 				addDestinationPoint = false;
 				break;

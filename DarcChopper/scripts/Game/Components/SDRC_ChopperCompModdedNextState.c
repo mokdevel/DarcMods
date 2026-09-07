@@ -447,9 +447,8 @@ modded class SDRC_ChopperComp
 			}
 			else
 			{
-				float distMul = distance / (m_fBrakingDistance * 0.8);	//We use a shorter braking distance to keep the speed up for a bit longer
-				m_fSpeedTarget = m_fSpeedBrakingOrig * distMul + 0.01;
-//				m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, 1, 100);
+				float distMul = distance / (m_fBrakingDistance * BRAKE_SPEED_MODIFIER);	//We use a shorter braking distance to keep the speed up for a bit longer
+				m_fSpeedTarget = m_fSpeedBrakingOrig * distMul + 0.3;
 				
 				//If we have passed the point, adjust values
 				if (SDRC_Math.HasPassedPointXZ(m_fPositionBrakingOrig, lastPt, owner.GetOrigin()))

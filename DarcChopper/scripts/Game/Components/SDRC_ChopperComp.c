@@ -51,10 +51,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 	[Attribute(category: "Chopper", defvalue: "1.2", desc: "Throttle aka acceleration", params: "0.1 3.0 0.1")]	
 	float m_fThrottle;
 	float m_fThrottleOrig;
-	[Attribute(category: "Chopper", defvalue: "2.0", desc: "Main rotor force", params: "0.1 5.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "1.0", desc: "Main rotor force", params: "0.1 5.0 0.1")]	
 	float m_fRotorForce0;
 	float m_fRotorForce0Orig;
-	[Attribute(category: "Chopper", defvalue: "1.2", desc: "Rear rotor force", params: "0.1 4.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "1.0", desc: "Rear rotor force", params: "0.1 4.0 0.1")]	
 	float m_fRotorForce1;
 	float m_fRotorForce1Orig;
 	
@@ -195,15 +195,24 @@ modded class SDRC_ChopperComp : ScriptComponent
 	//Rotor force variables
 	float m_fRotorForceMultiplier;				//Rotor force multiplier that simulates up/down throttle
 	float m_fBelowFlyHeightLowMul;
-	float m_fDistanceFromSplineMul;
+	
+	//Rotor force: Obstacle avoidance	
 	float m_fRayLenMul;
-	vector m_vRayEnd;							//The point where the raycast for objects end. 
-	float m_vRayLen;							//Raycast length for objects. 
-	private const float RAY_INTERVAL = 5.0;		//(seconds) Interval to modify ray lon multiplier
+	const float RF_RAY_INTERVAL = 1.0;			//(seconds) Interval to modify ray lon multiplier
 	float m_fTimeRay = 0;
 	float m_fRayLenMulStart = 1;
 	float m_fRayLenMulTarget = 1;
+	vector m_vRayEnd;							//The point where the raycast for objects end. 
+	float m_vRayLen;							//Raycast length for objects. 
+
+	//Rotor force: Distance to spline
+	float m_fDistanceFromSplineMul;
+	const float RF_SPLINE_INTERVAL = 4.0;		//(seconds) Interval to modify distance to spline multiplier
+	float m_fTimeSpline = 0;
+	float m_fDistanceFromSplineMulStart = 1;
+	float m_fDistanceFromSplineMulTarget = 1;
 	
+		
 	//Angular velocities
 	private vector m_vAngularVel;
 	vector m_vRollTarget;
@@ -240,7 +249,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	private vector m_fPositionLandingOrig;		//Position from where we start to descend
 	
 	//Braking related
-	const int DEFAULT_BRAKE_DISTANCE = 200;		//Default distance to brake
+	const float BRAKE_SPEED_MODIFIER = 1.4;		//Modifier for deciding the final target speed for braking. Smaller value increases the final approach speed.
 	private bool m_bIsBraking;					//If true, braking sequence has started
 	float m_fBrakingDistance;					//Distance for braking
 	private float m_fBrakingSpeed;				//The speed to brake the chopper
@@ -686,7 +695,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fAnglePitch);
 		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 1.0);// * 0.2);
 		
-		//ROLL ON DIRECTION: See how steep we're turning. Roll the helicopter accordingly for more natural flight. We only care about ZX plane.
+		//ROLL ON DIRECTION: See how steep we're turning. Roll the helicopter accordingly for more natural flight. We only care about XZ plane.
 		m_fAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliForward, m_vHeliDirectionFuture);
 		m_fAngleRoll = Math.Clamp(m_fAngleRoll, -0.5, 0.5) * params.rollAngleMul;
 		m_vRadRollVel = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliUp, m_fAngleRoll);
@@ -722,7 +731,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 
 		//This modification is weird. The choppers have a slight drag to the right. It's unknown where it comes from, but this removes/reduces it. 
 		//For now, leaving this ugly hack here.			
-		const float FIX_DRAG_VALUE = 0.86;
+		const float FIX_DRAG_VALUE = 0.5;//0.86;
 		float dragFixValue = FIX_DRAG_VALUE;
 				
 		if (    (m_eHeliState != SDRC_EHeliState.ON_GROUND)
@@ -780,12 +789,15 @@ modded class SDRC_ChopperComp : ScriptComponent
 
 		//Lerp timers
 		m_fTimeRay += timeSlice;		
+		m_fTimeSpline += timeSlice;		
 				
 		//The normal way to slowly go towards the spline
 		float rotorForce = params.iRotorForceNormal;
 
 		m_fBelowFlyHeightLowMul = 1;
-		m_fDistanceFromSplineMul = 1;
+		m_fRayLenMul = 1;
+		
+/*		m_fDistanceFromSplineMul = 1;
 		//m_fRayLenMul = 1;
 		
 		float splineHeightFromGround = m_vSplinePointBelow[1] - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
@@ -798,8 +810,11 @@ modded class SDRC_ChopperComp : ScriptComponent
 		//Absolute distance be it below or above the spline
 //		m_fDistanceFromSplineMul = 3 * (splineHeightFromGround - heliHeightFromGround) / heliHeightFromGround;
 //		float heliToSplineDistance = heliHeightFromGround - splineHeightFromGround;
-		m_fDistanceFromSplineMul = -1 * (heliHeightFromGround - splineHeightFromGround) / 10;
+		m_fDistanceFromSplineMul = -1 * (heliHeightFromGround - splineHeightFromGround) / 5;
+		
 //		m_fDistanceFromSplineMul = -1 * (heliHeightFromGround - splineHeightFromGround) / splineHeightFromGround;
+*/		
+		LerpDistanceFromSplineMul(owner);
 		
 		const int VERTICAL_SPEED_UP_TIME = 3;	//Spend 3 seconds to increase rotorForce
 				
@@ -842,7 +857,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			case SDRC_EHeliState.BRAKE:
 			{
 				//In BRAKE state, do movemements faster
-				rotorForce = rotorForce * 3.0;
+				rotorForce = rotorForce * params.iRotorForceBrake;
 				break;
 			}		
 			case SDRC_EHeliState.CRASH:
@@ -864,38 +879,76 @@ modded class SDRC_ChopperComp : ScriptComponent
 				m_fBelowFlyHeightLowMul = 1 + ((m_fFlyHeightLow - m_fAltitude) / m_fAltitude);
 				m_fBelowFlyHeightLowMul = Math.Clamp(m_fBelowFlyHeightLowMul, 1, 100);
 				
-				//If we're close to an object infront of us, raise			
-				m_vRayEnd = SDRC_ChopperHelper.GetDestinationForward(owner, params.rayLenFront);
-				m_vRayEnd[1] = m_vRayEnd[1] - params.rayDown;
-				m_vRayLen = SDRC_Misc.RayCastXZ(owner.GetOrigin(), m_vRayEnd, owner);			
-//				m_fRayLenMul = 2 - (1 / m_vRayLen);
+				LerpRayLenMul(owner);
 				
-				float oldRayLenMulTarget = m_fRayLenMulTarget;
-				m_fRayLenMulTarget = 2 - m_vRayLen;
-				
-				if (oldRayLenMulTarget != m_fRayLenMulTarget)
-				{
-					m_fRayLenMulStart = oldRayLenMulTarget;
-					m_fTimeRay = 0;
-				}
-
-//				m_fRayLenMul = 2 - m_vRayLen;
 			}
 		}
 
 		//Handle lerps
-		//Lerp obstacle avoidance multiplier		
-		if (m_fTimeRay < RAY_INTERVAL)
+		//Lerp below minimyn fly height correction
+/*		if (m_fTimeRay < RAY_INTERVAL)
 		{
 			float ts = m_fTimeRay / RAY_INTERVAL;
 			m_fRayLenMul = Math.Lerp(m_fRayLenMulStart, m_fRayLenMulTarget, ts);
 			//m_fRayLenMul = Math.Clamp(m_fRayLenMul, m_fSpeedMin, m_fSpeedMax);
-		}		
+		}		*/
+		
+	
 
 		//Set the final Rotor Force				
 		m_fRotorForceMultiplier = rotorForce * m_fBelowFlyHeightLowMul * m_fDistanceFromSplineMul * m_fRayLenMul;
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Lerp ray mul
+	*/
+	void LerpRayLenMul(IEntity owner)
+	{
+		//If we're close to an object infront of us, raise			
+		m_vRayEnd = SDRC_ChopperHelper.GetDestinationForward(owner, params.rayLenFront);
+		m_vRayEnd[1] = m_vRayEnd[1] - params.rayDown;
+		m_vRayLen = SDRC_Misc.RayCastXZ(owner.GetOrigin(), m_vRayEnd, owner);			
+		
+		//float oldRayLenMulTarget = m_fRayLenMulTarget;
+		m_fRayLenMulTarget = 2 - m_vRayLen;
+		
+		//Lerp obstacle avoidance multiplier		
+		if (m_fTimeRay < RF_RAY_INTERVAL)
+		{
+			float ts = m_fTimeRay / RF_RAY_INTERVAL;
+			m_fRayLenMul = Math.Lerp(m_fRayLenMulStart, m_fRayLenMulTarget, ts);
+		}
+		else
+		{
+			m_fRayLenMulStart = m_fRayLenMul;
+			m_fTimeRay = 0;
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Lerp distance to spline mul
+	*/
+	void LerpDistanceFromSplineMul(IEntity owner)
+	{
+		float splineHeightFromGround = m_vSplinePointBelow[1] - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
+		float heliHeightFromGround = m_fAltitude;
+		m_fDistanceFromSplineMulTarget = -1 * (heliHeightFromGround - splineHeightFromGround) / 4;
+		
+		//Lerp obstacle avoidance multiplier		
+		if (m_fTimeSpline < RF_SPLINE_INTERVAL)
+		{
+			float ts = m_fTimeSpline / RF_SPLINE_INTERVAL;
+			m_fDistanceFromSplineMul = Math.Lerp(m_fDistanceFromSplineMulStart, m_fDistanceFromSplineMulTarget, ts);
+		}
+		else
+		{
+			m_fDistanceFromSplineMulStart = m_fDistanceFromSplineMul;
+			m_fTimeSpline = 0;
+		}
+	}	
+	
 	//------------------------------------------------------------------------------------------------	
 	// Reset
 	//------------------------------------------------------------------------------------------------	
@@ -908,6 +961,16 @@ modded class SDRC_ChopperComp : ScriptComponent
 	{
 		m_vFlightPoints.Clear();
 		m_vSplinePoints.Clear();
+
+		m_fRayLenMul = 0;
+		m_fTimeRay = 0;
+		m_fRayLenMulStart = 0;
+		m_fRayLenMulTarget = 0;
+		
+		m_fDistanceFromSplineMul = 0;
+		m_fTimeSpline = 0;
+		m_fDistanceFromSplineMulStart = 0;
+		m_fDistanceFromSplineMulTarget = 0;						
 	}
 	
 	//------------------------------------------------------------------------------------------------

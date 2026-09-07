@@ -324,15 +324,12 @@ class SDRC_ChopperHelper
 			{
 				case SDRC_EFlyWayPointType.WP_HOVER_UP: //Do nothing .. 
 					break;
-				case SDRC_EFlyWayPointType.WP_LAND:		//Do nothing .. height will be on ground due to y being set and flyHeigt is zero. See above.
-					break;
-				case SDRC_EFlyWayPointType.WP_BRAKE: 	//Do nothing .. NOTE: If braking height was set to 0, the point height has been set to the same as helicopter at the time. See: AddDestinationPoint()
-					break;
-				case SDRC_EFlyWayPointType.WP_CRASH: 	//Do nothing .. height will be on ground due to y being set and flyHeigt is zero. See above.
-					break;
+				case SDRC_EFlyWayPointType.WP_LAND:
+				case SDRC_EFlyWayPointType.WP_BRAKE:
+				case SDRC_EFlyWayPointType.WP_CRASH:
 				case SDRC_EFlyWayPointType.WP_ATTACK:
 				{
-					//Raise the attack point to a minimum of ground level
+					//Raise the point to a minimum of ground level
 					if (pt[1] < y)
 					{
 						pt[1] = pt[1] + y;
@@ -474,7 +471,6 @@ class SDRC_ChopperHelper
 				}
 				case SDRC_EHeliState.BRAKE:
 				{
-					const int BRAKING_DISTANCE_LIMIT = 90;
 					//Modify brake height defaults
 					//Braking height is the last point. Could be below m_fFlyHeightLow...
 					vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];
@@ -487,13 +483,13 @@ class SDRC_ChopperHelper
 					}
 					
 					//Depending on the braking distance, define the curve type
-					if (chopperComp.m_fBrakingDistance < BRAKING_DISTANCE_LIMIT)
+					if (chopperComp.m_fBrakingDistance < chopperComp.params.brakingDistanceCurveLimit)
 					{						
 						CreateEndCurveSteep(chopperComp, lowestHeight);
 					}
 					else
 					{						
-						CreateEndCurveJ(chopperComp, lowestHeight, true);
+						CreateEndCurveJBrake(chopperComp, lowestHeight, true);
 					}
 					isSmoothingNeeded = false;
 					break;
@@ -605,13 +601,35 @@ class SDRC_ChopperHelper
 	/*!	
 	Create a curve that looks like a J. Mainly for braking.
 	*/
+	static void CreateEndCurveJBrake(SDRC_ChopperComp chopperComp, float lowestHeight, bool straightLine = false)
+	{
+		int idxTo = chopperComp.m_vSplinePoints.Count() - 1;
+		int idxFrom = chopperComp.m_iClosestIndex;
+		
+		foreach (int i, vector pt : chopperComp.m_vSplinePoints)
+		{
+			float distance = vector.DistanceXZ(pt, chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1]);
+			if (distance < (chopperComp.m_fBrakingDistance * 1.4) )
+			{
+				idxFrom = i;
+				break;
+			}
+		}
+		
+		CreateEndCurveJCalc(chopperComp, lowestHeight, idxFrom, idxTo, straightLine);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Create a curve that looks like a J. Mainly for braking.
+	*/
 	static void CreateEndCurveJ(SDRC_ChopperComp chopperComp, float lowestHeight, bool straightLine = false)
 	{
 		int idxTo = chopperComp.m_vSplinePoints.Count() - 1;
 		int idxFrom = chopperComp.m_iClosestIndex;
+		
 		CreateEndCurveJCalc(chopperComp, lowestHeight, idxFrom, idxTo, straightLine);
-	}
-
+	}	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Create a curve that looks like a J. Mainly for attacking.

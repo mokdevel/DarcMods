@@ -26,14 +26,15 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		pitchNoseAngleUp   = pitchAngleRadFlat - (60 * Math.DEG2RAD);
 		
 		//Rotor force multipliers
-		fRotorForceMulUp = 1.3 * 10;	//Was 1.3
-		iRotorForceNormal = 30;
-		iRotorForceRaise = 50;
-		iRotorForceHover = 0;
-		iRotorForceCrash = 8;
+		fRotorForceMulUp = 15.0;
+		iRotorForceNormal = 15;
+		iRotorForceRaise = 30;
+		iRotorForceHover = 10;
+		iRotorForceCrash = 15;
+		iRotorForceBrake = 8;
 		
 		//Obstacle awareness
-		rayLenFront = 1000;
+		rayLenFront = 400;
 		rayDown = 50;
 				
 		//Flight parameters
@@ -45,6 +46,10 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		timeSearchAndDestroy = 4*60;
 		attackHeightMul = 0.5;
 		attackDefaultTime = 60;
+		
+		//Braking
+		brakingDistance = 120;
+		brakingDistanceCurveLimit = 80;
 		
 		//Damage levels
 		damageHeavy = 0.90;
