@@ -37,6 +37,7 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		iRotorForceRaise = 40;
 		iRotorForceHover = 1;
 		iRotorForceCrash = 10;
+		iRotorForceBrake = 10;
 		
 		//Obstacle awareness
 		rayLenFront = 200;
@@ -51,6 +52,10 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		timeSearchAndDestroy = 120;
 		attackHeightMul = -0.3;
 		attackDefaultTime = 60;
+		
+		//Braking
+		brakingDistance = 150;
+		brakingDistanceCurveLimit = 100;
 		
 		//Damage levels
 		damageHeavy = 0.10;
