@@ -290,7 +290,7 @@ modded class SDRC_ChopperComp
 		SDRC_DebugHelper.DeleteDebugSphere(m_sDid + "att");
 		if (pos != vector.Zero)
 		{
-			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(32, 255, 0, 0), 10.0, m_sDid + "att");
+			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(32, 255, 0, 0), 4.0, m_sDid + "att");
 		}
 	}
 	
@@ -529,19 +529,6 @@ modded class SDRC_ChopperComp
 			}								
 			case SDRC_EFlyWayPointType.WP_BRAKE:
 			{
-/*				if (value == -1)
-				{
-					if (!m_vFlyDestinations.IsEmpty() )
-					{
-						vector pos = m_vFlyDestinations[m_vFlyDestinations.Count() - 1].pt;
-						value = Math.AbsFloat(vector.DistanceXZ(pos, destination)) / 1.5;
-					}
-					else					
-					{
-						value = params.brakingDistance;
-					}
-				}
-*/
 				if (value == -1)
 				{
 					value = params.brakingDistance;
