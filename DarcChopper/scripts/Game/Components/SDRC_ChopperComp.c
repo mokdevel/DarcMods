@@ -207,7 +207,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 
 	//Rotor force: Distance to spline
 	float m_fDistanceFromSplineMul;
-	const float RF_SPLINE_INTERVAL = 4.0;		//(seconds) Interval to modify distance to spline multiplier
+	const float RF_SPLINE_INTERVAL = 0.1;		//(seconds) Interval to modify distance to spline multiplier
 	float m_fTimeSpline = 0;
 	float m_fDistanceFromSplineMulStart = 1;
 	float m_fDistanceFromSplineMulTarget = 1;
@@ -691,9 +691,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 //		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleDown, params.pitchNoseAngleUp);	//Nose down, nose up
 		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleUp, params.pitchNoseAngleDown);	//Nose down, nose up
 		
-		//Turn helicopter nose m_fAnglePitch amount up or down
+		//Rotate helicopter nose m_fAnglePitch amount up or down
 		m_vRadRollPitch = SDRC_Math.RotateAroundAxis(m_vHeliForward, heliPitch, m_fAnglePitch);
-		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 1.0);// * 0.2);
+		m_vRadRollPitch = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vRadRollPitch, deltaTime * 0.9);
 		
 		//ROLL ON DIRECTION: See how steep we're turning. Roll the helicopter accordingly for more natural flight. We only care about XZ plane.
 		m_fAngleRoll = SDRC_Math.GetAngleBetweenVectorsXZ(m_vHeliForward, m_vHeliDirectionFuture);
@@ -934,7 +934,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 	{
 		float splineHeightFromGround = m_vSplinePointBelow[1] - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
 		float heliHeightFromGround = m_fAltitude;
-		m_fDistanceFromSplineMulTarget = -1 * (heliHeightFromGround - splineHeightFromGround) / 4;
+//		m_fDistanceFromSplineMulTarget = -1 * (heliHeightFromGround - splineHeightFromGround) / 4;
+		
+//		m_fDistanceFromSplineMulTarget = -1 * (splineHeightFromGround - heliHeightFromGround) / (m_vOrigin[1] - m_vDestination[1]);
 		
 		//Lerp obstacle avoidance multiplier		
 		if (m_fTimeSpline < RF_SPLINE_INTERVAL)
@@ -945,6 +947,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		else
 		{
 			m_fDistanceFromSplineMulStart = m_fDistanceFromSplineMul;
+			m_fDistanceFromSplineMulTarget = -1 * (heliHeightFromGround - splineHeightFromGround - 1.2) / 8;
 			m_fTimeSpline = 0;
 		}
 	}	

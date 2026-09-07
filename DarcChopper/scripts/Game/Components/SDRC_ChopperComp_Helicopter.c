@@ -21,7 +21,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		
 		//Pitch
 		pitchAngleRad 	   =  5 * Math.DEG2RAD;
-		pitchAngleRadFlat  = -85 * Math.DEG2RAD;	//0 points XX degress downwards
+		pitchAngleRadFlat  = -85 * Math.DEG2RAD;	//pitchAngleRadFlat + pitchAngleRad is close 90 degrees
 		pitchNoseAngleDown = pitchAngleRadFlat + (10 * Math.DEG2RAD);
 		pitchNoseAngleUp   = pitchAngleRadFlat - (60 * Math.DEG2RAD);
 		
