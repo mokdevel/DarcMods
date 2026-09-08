@@ -442,7 +442,57 @@ sealed class SDRC_Misc
 		}
 		return y;
 	}	
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Test the position for an obstacle
+	*/	
+	static bool PosHasObstacle(vector position, out float height = 0)
+	{
+		float y = GetGame().GetWorld().GetSurfaceY(position[0], position[2]);
+		float ys = GetSurfaceYWithWater(position, true);
+		bool hasObstacle = false;
+		
+		//If the surface hit is higher than ground surface, we have an obstacle
+		
+		SoundWorld soundWorld;
+		ChimeraWorld chimeraWorld = ChimeraWorld.CastFrom(GetGame().GetWorld());
+		if (chimeraWorld)
+			soundWorld = chimeraWorld.GetSoundWorld();
+
+		if ( (!chimeraWorld) || (!soundWorld) )
+		{
+			SDRC_Log.Add("[SDRC_Misc:ObstacleHeight] Missing ChimeraWorld or SoundWorld.", LogLevel.SPAM);
+		}
+		else
+		{
+			
+			float sea, forest, city, meadow;
+			float limit = 0.2;
+			
+			soundWorld.GetMapValuesAtPos(position, sea, forest, city, meadow);
+			
+			if ( (forest >= limit) || 
+			     (city >= limit) 
+			   )
+			{
+				hasObstacle = true;
+				ys = y + 20;
+			}
+		}
+				
+		if ((ys - y) > 2)
+		{
+			hasObstacle = true;
+			position[1] = ys;
+			SDRC_DebugHelper.AddDebugPos(position, ARGB(64, 255, 0, 0), 5.0, "", 3, false);
+		}
+
+		height = ys;
+				
+		return hasObstacle;
+	}	
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Sets the current position to surface height

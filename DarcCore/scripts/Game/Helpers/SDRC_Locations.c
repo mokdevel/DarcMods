@@ -516,6 +516,15 @@ sealed class SDRC_Locations
 	}	
 
 	//------------------------------------------------------------------------------------------------
+	/*!
+	Adds the world areas to cache. Testing is done one a grid of cellSize
+	
+	\params type Type to add to cache
+	\params prefix Prefix to give for the location
+	\params cellSize Size of the square cell to use for searching
+	\params limit Limit value to define it as the searched area
+	*/	
+	
 	static private void AddAreaToCache(EMapDescriptorType type, string prefix, int cellSize, float limit)
 	{
 		int worldSize = SDRC_Misc.GetWorldSize();
