@@ -344,7 +344,7 @@ modded class SDRC_ChopperComp
 		vector origin = owner.GetOrigin();
 				
 		vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];
-		float distance = vector.Distance(origin, lastPt);
+		float distance = vector.DistanceXZ(origin, lastPt);
 
 		if (distance < m_fLandingDistance)
 		{

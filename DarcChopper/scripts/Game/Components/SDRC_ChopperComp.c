@@ -825,7 +825,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			{
 				if (m_fTimeInStateLeft > 0)
 				{
-					float percentage = Math.Clamp(m_fTimeInStateBeen/VERTICAL_SPEED_UP_TIME, 0, 1);
+					float percentage = Math.Clamp(m_fTimeInStateBeen / VERTICAL_SPEED_UP_TIME, 0, 1);
 					rotorForce = 3 * rotorForce * percentage;
 					m_fDistanceFromSplineMul = m_fDistanceFromSplineMul * percentage;
 				}
@@ -835,7 +835,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			{
 				if (m_fTimeInStateLeft > 0)
 				{
-					float percentage = Math.Clamp(m_fTimeInStateBeen/VERTICAL_SPEED_UP_TIME, 0, 1);
+					float percentage = Math.Clamp(m_fTimeInStateBeen / VERTICAL_SPEED_UP_TIME, 0, 1);
 					rotorForce = 3 * rotorForce * percentage;
 					m_fDistanceFromSplineMul = m_fDistanceFromSplineMul * percentage;
 				}
@@ -843,9 +843,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 			}
 			case SDRC_EHeliState.LAND_VERTICAL:
 			{
-				float percentage = Math.Clamp(m_fTimeInStateBeen/VERTICAL_SPEED_UP_TIME, 0, 1);
+				float percentage = Math.Clamp(m_fTimeInStateBeen / VERTICAL_SPEED_UP_TIME, 0, 1);
 				rotorForce = -3 * rotorForce * percentage;
-				m_fDistanceFromSplineMul = Math.AbsFloat(m_fDistanceFromSplineMul) * percentage;
+				m_fDistanceFromSplineMul = 0.05 * percentage + Math.AbsFloat(m_fDistanceFromSplineMul) * percentage;
 				break;
 			}		
 			case SDRC_EHeliState.RAISE:
