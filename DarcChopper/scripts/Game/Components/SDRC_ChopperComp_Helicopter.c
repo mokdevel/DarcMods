@@ -49,7 +49,6 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		
 		//Braking
 		brakingDistance = 120;
-		brakingDistanceCurveLimit = 80;
 		
 		//Damage levels
 		damageHeavy = 0.90;

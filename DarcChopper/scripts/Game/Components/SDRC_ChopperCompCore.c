@@ -46,7 +46,6 @@ class SDRC_ChopperParams
 
 	//Braking
 	int brakingDistance;							//The default braking distance to use
-	int brakingDistanceCurveLimit;					//The distance to select J or Steep curve
 		
 	//Damage levels
 	float damageHeavy;

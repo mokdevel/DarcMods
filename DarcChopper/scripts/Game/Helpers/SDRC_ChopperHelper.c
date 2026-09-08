@@ -441,9 +441,33 @@ class SDRC_ChopperHelper
 			//Default heights
 			oldHeight = chopperComp.m_vSplinePoints[chopperComp.m_iClosestIndex];
 			float lowestHeight = chopperComp.m_fFlyHeightLow;
+			//Store last point to know the requested height/pos
+			vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];				
 
 			//Use a local heliState as it could be changed later in the function
 			SDRC_EHeliState heliState = chopperComp.GetState();
+			
+			//Make sure the points are at minimum lowestHeight from the ground.
+			//This is done first in all cases. Other states will modify these later in the function.
+			foreach (int i, vector pt : chopperComp.m_vSplinePoints)
+			{
+				if (i < skipCount)
+				{
+					continue;
+				}
+
+				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
+
+				//If point lower than requested point, set lowest flight height
+				if (pt[1] < (surfaceY + lowestHeight))
+				{
+					//If we're low, fix the point a bit above the lowestHeight fly height
+					pt[1] = surfaceY + lowestHeight + 5;	//Make chopper fly higher for a moment
+					chopperComp.m_vSplinePoints[i] = pt;
+					
+					isSmoothingNeeded = true;
+				}
+			}			
 			
 			switch (heliState)
 			{
@@ -451,8 +475,6 @@ class SDRC_ChopperHelper
 				{
 					//Modify attack height defaults
 					//Attack height is the lowest point modified by attackHeightMul. The final attackHeight could be below m_fFlyHeightLow
-					vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];				
-					//lowestHeight = chopperComp.m_fFlyHeightLow * chopperComp.params.attackHeightMul + lastPoint[1];
 					lowestHeight = SDRC_Misc.GetSurfaceYWithWater(lastPoint, true, owner) +  chopperComp.m_fFlyHeightLow * chopperComp.params.attackHeightMul;
 					//We know where to attack so return to normal flight mode
 					chopperComp.SetState(SDRC_EHeliState.FLY);
@@ -463,7 +485,6 @@ class SDRC_ChopperHelper
 				}
 				case SDRC_EHeliState.CRASH:
 				{
-					vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];
 					lowestHeight = SDRC_Misc.GetSurfaceYWithWater(lastPoint) - 2;
 					CreateEndCurveSteep(chopperComp, lowestHeight);
 					isSmoothingNeeded = false;
@@ -473,7 +494,6 @@ class SDRC_ChopperHelper
 				{
 					//Modify brake height defaults
 					//Braking height is the last point. Could be below m_fFlyHeightLow...
-					vector lastPoint = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];
 					lowestHeight = lastPoint[1];
 					float surfaceY = SDRC_Misc.GetSurfaceYWithWater(lastPoint, true, owner);
 					if (lowestHeight < surfaceY)
@@ -481,50 +501,15 @@ class SDRC_ChopperHelper
 						//...but always above ground
 						lowestHeight = surfaceY;
 					}
+			
+					CreateEndCurveBrake(chopperComp, lowestHeight, true);
 					
-					//Depending on the braking distance, define the curve type
-					if (chopperComp.m_fBrakingDistance < chopperComp.params.brakingDistanceCurveLimit)
-					{						
-						CreateEndCurveSteep(chopperComp, lowestHeight);
-					}
-					else
-					{						
-						CreateEndCurveJBrake(chopperComp, lowestHeight, true);
-					}
 					isSmoothingNeeded = false;
 					break;
 				}
 				default:
 				{
-					//Make sure the points are at minimum lowestHeight from the ground.
-					//This is done first in all cases. Other states will modify these later in the function.
-					foreach (int i, vector pt : chopperComp.m_vSplinePoints)
-					{
-						if (i < skipCount)
-						{
-							continue;
-						}
-		
-						float surfaceY = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
-		
-						//With lowAdd = 0, just accept the height. No modification.
-	/*					if (lowAdd == 0)
-						{
-							pt[1] = surfaceY + lowestHeight;
-							chopperComp.m_vSplinePoints[i] = pt;
-							
-							isSmoothingNeeded = true;
-						}*/
-						//If point lower than requested point, set lowest flight height
-						if (pt[1] < (surfaceY + lowestHeight))
-						{
-							//If we're low, fix the point a bit above the lowestHeight fly height
-							pt[1] = surfaceY + lowestHeight + 5;	//Make chopper fly higher for a moment
-							chopperComp.m_vSplinePoints[i] = pt;
-							
-							isSmoothingNeeded = true;
-						}
-					}
+					break;
 				}
 			}
 		}
@@ -590,7 +575,8 @@ class SDRC_ChopperHelper
 				float height = Math.Lerp(v1[1], v0[1], step);
 				pt = chopperComp.m_vSplinePoints[idxFrom + i];
 				pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
-			}			
+			}
+			
 			chopperComp.m_vSplinePoints[idxFrom + i] = pt;
 		}	
 		
@@ -599,13 +585,14 @@ class SDRC_ChopperHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Create a curve that looks like a J. Mainly for braking.
+	Create a braking curve.
 	*/
-	static void CreateEndCurveJBrake(SDRC_ChopperComp chopperComp, float lowestHeight, bool straightLine = false)
+	static void CreateEndCurveBrake(SDRC_ChopperComp chopperComp, float lowestHeight, bool straightLine = false)
 	{
 		int idxTo = chopperComp.m_vSplinePoints.Count() - 1;
 		int idxFrom = chopperComp.m_iClosestIndex;
 		
+		//Find the index from where to start to break
 		foreach (int i, vector pt : chopperComp.m_vSplinePoints)
 		{
 			float distance = vector.DistanceXZ(pt, chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1]);
@@ -616,7 +603,27 @@ class SDRC_ChopperHelper
 			}
 		}
 		
-		CreateEndCurveJCalc(chopperComp, lowestHeight, idxFrom, idxTo, straightLine);
+		//Are there any obstacles
+		bool obstacles = false;
+		for (int i = idxFrom; i < (idxTo + 1); i++)
+		{					
+			//Check obstacles
+			vector pt = chopperComp.m_vSplinePoints[i];
+			if (SDRC_Misc.PosHasObstacle(pt))
+			{
+				obstacles = true;
+				break;
+			}
+		}		
+		
+		if (obstacles)
+		{
+			CreateEndCurveSteep(chopperComp, lowestHeight, idxFrom, idxTo);
+		}
+		else
+		{
+			CreateEndCurveJCalc(chopperComp, lowestHeight, idxFrom, idxTo, straightLine);
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -638,6 +645,7 @@ class SDRC_ChopperHelper
 	{
 		int idxTo = chopperComp.m_vSplinePoints.Count() - 1;
 		int idxFrom = idxTo * 0.7;
+		
 		CreateEndCurveJCalc(chopperComp, lowestHeight, idxFrom, idxTo, straightLine);
 	}
 	
@@ -648,38 +656,41 @@ class SDRC_ChopperHelper
 		 ,--**'''
 		/
 	*/
-	static void CreateEndCurveSteep(SDRC_ChopperComp chopperComp, float lowestHeight)
+	static void CreateEndCurveSteep(SDRC_ChopperComp chopperComp, float lowestHeight, int idxFrom = -1, int idxTo = -1)
 	{
 		//If we're braking set points towards the last point			
-		int lastIdx = chopperComp.m_vSplinePoints.Count() - 1;
-		int firstIdx = chopperComp.m_iClosestIndex;
-
+		if ( (idxFrom == -1) || (idxTo == -1) )
+		{
+			idxTo = chopperComp.m_vSplinePoints.Count() - 1;
+			idxFrom = chopperComp.m_iClosestIndex;
+		}
+		
 		//The max distance from current point to destination
-		float maxDistance = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePointBelow, chopperComp.m_vSplinePoints[lastIdx]));
+		float maxDistance = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePointBelow, chopperComp.m_vSplinePoints[idxTo]));
 		
 		//Calculate the point from where to turn the curve down.
-		for (int i = firstIdx; i < lastIdx; i++)
+		for (int i = idxFrom; i < idxTo; i++)
 		{
-			float distanceToTarget = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePoints[i], chopperComp.m_vSplinePoints[lastIdx]));
+			float distanceToTarget = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePoints[i], chopperComp.m_vSplinePoints[idxTo]));
 			if (distanceToTarget < maxDistance / 1.1)
 			{
-				firstIdx = i;
+				idxFrom = i;
 				break;
 			}
 		}
 		
-		if ((lastIdx - firstIdx) <= 1)
+		if ((idxTo - idxFrom) <= 1)
 		{
-			//Only one point, move firstIdx back one.
-			firstIdx--;			
+			//Only one point, move idxFrom back one.
+			idxFrom--;			
 		}
 		
 		//Start to brake immediately
 		chopperComp.m_fBrakingDistance = maxDistance;
 		
 		//Find high point, low point and difference
-		vector v0 = chopperComp.m_vSplinePoints[firstIdx];
-		vector v1 = chopperComp.m_vSplinePoints[lastIdx];
+		vector v0 = chopperComp.m_vSplinePoints[idxFrom];
+		vector v1 = chopperComp.m_vSplinePoints[idxTo];
 		v1[1] = lowestHeight;
 		
 		//Count a braking (bell) curve
@@ -688,7 +699,7 @@ class SDRC_ChopperHelper
 		float pdiff = p0 - p1;
 		
 		//Create a Y spline to replace the given points to smooth the curve for braking
-		int points = lastIdx - firstIdx;
+		int points = idxTo - idxFrom;
 		for (int i = 0; i < points; i++)
 		{					
 			float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
@@ -697,8 +708,9 @@ class SDRC_ChopperHelper
 			
 			vector pt = vector.Lerp(v1, v0, step);						
 			pt[1] = p1 + pdiff * (ptc[0] / 100);
-			chopperComp.m_vSplinePoints[lastIdx - points + i] = pt;
-			chopperComp.m_vSplinePoints[lastIdx - points + i + 1] = pt;	//Ugly hack to make sure the last point is also modified
+			
+			chopperComp.m_vSplinePoints[idxTo - points + i] = pt;
+			chopperComp.m_vSplinePoints[idxTo - points + i + 1] = pt;	//Ugly hack to make sure the last point is also modified
 		}		
 	}
 	

@@ -932,7 +932,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 	*/
 	void LerpDistanceFromSplineMul(IEntity owner)
 	{
-		float splineHeightFromGround = m_vSplinePointBelow[1] - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
+//		float splineHeightFromGround = m_vSplinePointBelow[1] - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
+		float splineHeightFromGround = m_vSplinePointBelow[1] - GetGame().GetWorld().GetSurfaceY(m_vSplinePointBelow[0], m_vSplinePointBelow[2]);
 		float heliHeightFromGround = m_fAltitude;
 //		m_fDistanceFromSplineMulTarget = -1 * (heliHeightFromGround - splineHeightFromGround) / 4;
 		
