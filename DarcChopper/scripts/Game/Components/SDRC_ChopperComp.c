@@ -447,7 +447,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		}		
 		
 		m_vOrigin = owner.GetOrigin();
-		m_fAltitude = GetAltitude();
+		m_fAltitude = m_vOrigin[1] - GetGame().GetWorld().GetSurfaceY(m_vOrigin[0], m_vOrigin[2]);	//Using GetAltitude() is troublesome as it will find objects like bushes below.
 	
 		m_fTimeSpeed += timeSlice;
 		m_fTimeBetweenPts += timeSlice;

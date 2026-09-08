@@ -447,7 +447,7 @@ class SDRC_ChopperHelper
 			//Use a local heliState as it could be changed later in the function
 			SDRC_EHeliState heliState = chopperComp.GetState();
 			
-			//Make sure the points are at minimum lowestHeight from the ground.
+			//Make sure the points are at minimum lowestHeight from the ground and objects.
 			//This is done first in all cases. Other states will modify these later in the function.
 			foreach (int i, vector pt : chopperComp.m_vSplinePoints)
 			{
@@ -533,58 +533,6 @@ class SDRC_ChopperHelper
 
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Create a curve that looks like a J
-	
-		        /
-		___---"´
-	
-	\params chopperComp
-	\params lowestHeight Lowest height where to end the curve
-	\params idxFrom Start point on spline
-	\params idxTo End point on spline. Usually the last point.
-	\params straightLine If true, creates a straight line for curve. False uses the existing XZ positions.
-	*/
-	static void CreateEndCurveJCalc(SDRC_ChopperComp chopperComp, float lowestHeight, int idxFrom, int idxTo, bool straightLine = false)
-	{
-		//Find high point, low point and difference
-		vector v0 = chopperComp.m_vSplinePoints[idxFrom];
-		vector v1 = chopperComp.m_vSplinePoints[idxTo];
-		v1[1] = lowestHeight;
-		
-		//Count a braking (bell) curve
-		float p0 = v0[1];
-		float p1 = v1[1];
-		float pdiff = p0 - p1;
-							
-		vector pt = vector.Zero;
-		
-		//Create a Y spline to replace the given points to smooth the curve for braking
-		int points = idxTo - idxFrom + 1;
-		for (int i = 0; i < points; i++)
-		{					
-			float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
-
-			//Straight line
-			if (straightLine)
-			{
-				pt = vector.Lerp(v1, v0, step);
-				pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
-			}
-			else
-			{
-				float height = Math.Lerp(v1[1], v0[1], step);
-				pt = chopperComp.m_vSplinePoints[idxFrom + i];
-				pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
-			}
-			
-			chopperComp.m_vSplinePoints[idxFrom + i] = pt;
-		}	
-		
-		//chopperComp.m_vSplinePoints[idxTo] = pt;	//Ugly hack to make sure the last point is also modified
-	}		
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
 	Create a braking curve.
 	*/
 	static void CreateEndCurveBrake(SDRC_ChopperComp chopperComp, float lowestHeight, bool straightLine = false)
@@ -611,11 +559,13 @@ class SDRC_ChopperHelper
 			vector pt = chopperComp.m_vSplinePoints[i];
 			if (SDRC_Misc.PosHasObstacle(pt))
 			{
+				idxFrom = i;
 				obstacles = true;
 				break;
 			}
 		}		
 		
+		//Select curve
 		if (obstacles)
 		{
 			CreateEndCurveSteep(chopperComp, lowestHeight, idxFrom, idxTo);
@@ -651,6 +601,58 @@ class SDRC_ChopperHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
+	Create a curve that looks like a J
+	
+		        /
+		___---"´
+	
+	\params chopperComp
+	\params lowestHeight Lowest height where to end the curve
+	\params idxFrom Start point on spline
+	\params idxTo End point on spline. Usually the last point.
+	\params straightLine If true, creates a straight line for curve. False uses the existing XZ positions.
+	*/
+	static void CreateEndCurveJCalc(SDRC_ChopperComp chopperComp, float lowestHeight, int idxFrom, int idxTo, bool straightLine = false)
+	{
+		//Find high point, low point and difference
+		vector v0 = chopperComp.m_vSplinePoints[idxFrom];
+		vector v1 = chopperComp.m_vSplinePoints[idxTo];
+		v1[1] = lowestHeight;
+		
+		//Count a braking (bell) curve
+		float p0 = v0[1];
+		float p1 = v1[1];
+		float pdiff = p0 - p1;
+							
+		vector pt = vector.Zero;
+		
+		//Create a Y spline to replace the given points to smooth the curve for braking
+		int points = idxTo - idxFrom + 1;
+		for (int i = 0; i < points; i++)
+		{					
+			float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier.
+
+			//Straight line
+			if (straightLine)
+			{
+				pt = vector.Lerp(v1, v0, step);
+				pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
+			}
+			else
+			{
+				float height = Math.Lerp(v1[1], v0[1], step);
+				pt = chopperComp.m_vSplinePoints[idxFrom + i];
+				pt[1] = p1 + pdiff * SDRC_Math.HalfBell(step);
+			}
+			
+			chopperComp.m_vSplinePoints[idxFrom + i] = pt;
+		}	
+		
+		//chopperComp.m_vSplinePoints[idxTo] = pt;	//Ugly hack to make sure the last point is also modified
+	}		
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
 	Create a steep dropping curve
 	
 		 ,--**'''
@@ -663,30 +665,38 @@ class SDRC_ChopperHelper
 		{
 			idxTo = chopperComp.m_vSplinePoints.Count() - 1;
 			idxFrom = chopperComp.m_iClosestIndex;
-		}
 		
-		//The max distance from current point to destination
-		float maxDistance = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePointBelow, chopperComp.m_vSplinePoints[idxTo]));
-		
-		//Calculate the point from where to turn the curve down.
-		for (int i = idxFrom; i < idxTo; i++)
-		{
-			float distanceToTarget = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePoints[i], chopperComp.m_vSplinePoints[idxTo]));
-			if (distanceToTarget < maxDistance / 1.1)
+			//Find the index from where to start to break
+			foreach (int i, vector pt : chopperComp.m_vSplinePoints)
 			{
-				idxFrom = i;
-				break;
+				float distance = vector.DistanceXZ(pt, chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1]);
+				if (distance < (chopperComp.m_fBrakingDistance * 1.4) )
+				{
+					idxFrom = i;
+					break;
+				}
 			}
+			
+/*			//The max distance from current point to destination
+			float maxDistance = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePointBelow, chopperComp.m_vSplinePoints[idxTo]));
+			
+			//Calculate the point from where to turn the curve down.
+			for (int i = idxFrom; i < idxTo; i++)
+			{
+				float distanceToTarget = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePoints[i], chopperComp.m_vSplinePoints[idxTo]));
+				if (distanceToTarget < maxDistance / 1.1)
+				{
+					idxFrom = i;
+					break;
+				}
+			}*/
 		}
-		
+					
 		if ((idxTo - idxFrom) <= 1)
 		{
 			//Only one point, move idxFrom back one.
 			idxFrom--;			
 		}
-		
-		//Start to brake immediately
-		chopperComp.m_fBrakingDistance = maxDistance;
 		
 		//Find high point, low point and difference
 		vector v0 = chopperComp.m_vSplinePoints[idxFrom];
@@ -699,18 +709,18 @@ class SDRC_ChopperHelper
 		float pdiff = p0 - p1;
 		
 		//Create a Y spline to replace the given points to smooth the curve for braking
-		int points = idxTo - idxFrom;
+		int points = idxTo - idxFrom + 1;
 		for (int i = 0; i < points; i++)
 		{					
-			float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier. The last point of the bell is ignored. Change to (pointsToGround -1) for full bell curve.
+			float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier.
 
-			vector ptc = SDRC_Misc.GetCoordinatesOnCircle(vector.Zero, 100, 90 * (i / points));
+			vector ptc = SDRC_Misc.GetCoordinatesOnCircle(vector.Zero, 100, 90 * (i / (points - 1)));
+			Print("ptc: " + ptc);
 			
 			vector pt = vector.Lerp(v1, v0, step);						
 			pt[1] = p1 + pdiff * (ptc[0] / 100);
 			
-			chopperComp.m_vSplinePoints[idxTo - points + i] = pt;
-			chopperComp.m_vSplinePoints[idxTo - points + i + 1] = pt;	//Ugly hack to make sure the last point is also modified
+			chopperComp.m_vSplinePoints[idxFrom + i] = pt;
 		}		
 	}
 	
