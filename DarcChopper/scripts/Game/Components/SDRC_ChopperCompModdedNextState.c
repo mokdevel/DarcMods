@@ -370,7 +370,7 @@ modded class SDRC_ChopperComp
 
 				m_fSpeedTarget = m_fSpeedLandingOrig * distMul + 0.01;
 								
-				float decreasePower = -1.0;
+//				float decreasePower = -1.0;
 				
 				//Check if we're close to landing place, slow down and descent
 				vector closePos = m_vSplinePoints[m_vSplinePoints.Count() - 4];
@@ -384,17 +384,17 @@ modded class SDRC_ChopperComp
 					m_fSpeedTarget = distance / 4;
 					//	m_fSpeedTarget = Math.Clamp(decrMul, 1.0, 5.0);
 					m_fSpeedTarget = 8 * distMul + 0.1;
-					decreasePower = 2 * ((mulc + decrMul) / 2);
+//					decreasePower = 2 * ((mulc + decrMul) / 2);
 					m_bOnlyVerticalMovement = true;
 				}				
 
-				m_fRotorForceMultiplier = m_fRotorForceMultiplier * 2.5 - decreasePower * decrMul;
+//				m_fRotorForceMultiplier = m_fRotorForceMultiplier * 2.5 - decreasePower * decrMul;
 											
-				//If multiplier too small, enforce a higher value
+/*				//If multiplier too small, enforce a higher value
 				if (m_fRotorForceMultiplier > -3.0)
 				{
 					m_fRotorForceMultiplier = -5.0;
-				}
+				}*/
 				
 				//This affects yaw-pitch-roll counting in SetTurn
 				m_fSpeedSlowingMul = distMul;

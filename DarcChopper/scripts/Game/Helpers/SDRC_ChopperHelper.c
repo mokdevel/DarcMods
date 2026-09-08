@@ -551,8 +551,11 @@ class SDRC_ChopperHelper
 			}
 		}
 		
-		//Are there any obstacles
+		//#define IGNORE_OBSTACLES
 		bool obstacles = false;
+		
+		#ifndef IGNORE_OBSTACLES		
+		//Are there any obstacles
 		for (int i = idxFrom; i < (idxTo + 1); i++)
 		{					
 			//Check obstacles
@@ -564,7 +567,8 @@ class SDRC_ChopperHelper
 				break;
 			}
 		}		
-		
+		#endif
+				
 		//Select curve
 		if (obstacles)
 		{
@@ -715,7 +719,6 @@ class SDRC_ChopperHelper
 			float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier.
 
 			vector ptc = SDRC_Misc.GetCoordinatesOnCircle(vector.Zero, 100, 90 * (i / (points - 1)));
-			Print("ptc: " + ptc);
 			
 			vector pt = vector.Lerp(v1, v0, step);						
 			pt[1] = p1 + pdiff * (ptc[0] / 100);
