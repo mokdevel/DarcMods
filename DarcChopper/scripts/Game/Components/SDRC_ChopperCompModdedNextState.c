@@ -18,7 +18,7 @@ modded class SDRC_ChopperComp
 		//Reset the timer between points as we're setting new state with new points.
 		m_fTimeBetweenPts = 0;
 		
-		//By default we remove the destination
+		//By default we don't remove the destination point from m_vFlyDestinations
 		bool isRemoveDestination = false;
 		
 		//Check that next waypoint type is valid
@@ -151,26 +151,6 @@ modded class SDRC_ChopperComp
 				isRemoveDestination = true;
 				break;
 			}
-			case SDRC_EFlyWayPointType.WP_HOVER:
-			{
-				SetState(SDRC_EHeliState.HOVER);
-				SetTimeInState(m_vFlyDestinations[0].value);
-				//Stop heli from moving
-				m_bOnlyVerticalMovement = true;
-/*				m_fSpeed = 0.01;
-				m_fSpeedMin = 0.01;*/
-				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
-				//m_fSpeedMax = 0.2;
-				isRemoveDestination = true;
-				break;
-			}
-/*			case SDRC_EFlyWayPointType.WP_LAND:
-			{
-				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
-				//Set the state so that when creating flight 
-				SetState(SDRC_EHeliState.LAND);
-				break;
-			}*/
 			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
@@ -200,16 +180,45 @@ modded class SDRC_ChopperComp
 				isRemoveDestination = true;
 				break;				
 			}
+			/*case SDRC_EFlyWayPointType.WP_HOVER:
+			{
+				SetState(SDRC_EHeliState.HOVER);
+				SetTimeInState(m_vFlyDestinations[0].value);
+				m_vFlyDestinations[0].pt = owner.GetOrigin();
+				//Stop heli from moving
+				m_bOnlyVerticalMovement = true;
+				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
+				
+				//Clear flight as we are adding the points ourselves.
+				ResetFlight();
+				
+				//Reset heli settings
+				SDRC_ChopperCompCore.ResetOriginalValues(owner);
+				
+				isRemoveDestination = true;
+				break;
+			}*/
+			case SDRC_EFlyWayPointType.WP_HOVER:
 			case SDRC_EFlyWayPointType.WP_HOVER_UP:
 			case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
 			{
-				if (nextType == SDRC_EFlyWayPointType.WP_HOVER_DOWN)
+				switch(nextType)
 				{
-					SetState(SDRC_EHeliState.HOVER_DOWN);
-				}
-				if (nextType == SDRC_EFlyWayPointType.WP_HOVER_UP)
-				{
-					SetState(SDRC_EHeliState.HOVER_UP);
+					case SDRC_EFlyWayPointType.WP_HOVER:
+					{
+						SetState(SDRC_EHeliState.HOVER);
+						break;
+					}
+					case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
+					{
+						SetState(SDRC_EHeliState.HOVER_DOWN);
+						break;
+					}
+					case SDRC_EFlyWayPointType.WP_HOVER_UP:
+					{
+						SetState(SDRC_EHeliState.HOVER_UP);
+						break;
+					}
 				}
 				
 				SetTimeInState(m_vFlyDestinations[0].value);
@@ -224,8 +233,6 @@ modded class SDRC_ChopperComp
 				
 				//Stop heli from moving
 				m_bOnlyVerticalMovement = true;
-/*				m_fSpeedMin = 0.3;
-				m_fSpeedMax = 0.6;*/
 				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
 				
 				vector pos = owner.GetOrigin();
@@ -236,9 +243,7 @@ modded class SDRC_ChopperComp
 					m_vSplinePoints.Insert(pos);
 				}
 				m_iClosestIndex = 0;
-				//CreateNewFlight(owner, firstDestination);
 				
-				//SDRC_ChopperDebug.DrawDebugPaths(owner);
 				isRemoveDestination = true;
 				break;
 			}
@@ -339,7 +344,7 @@ modded class SDRC_ChopperComp
 	/*!	
 	Handle landing
 	*/
-	override private void HandleLanding(IEntity owner, float timeSlice)
+/*	override private void HandleLanding(IEntity owner, float timeSlice)
 	{
 		vector origin = owner.GetOrigin();
 				
@@ -389,12 +394,7 @@ modded class SDRC_ChopperComp
 				}				
 
 //				m_fRotorForceMultiplier = m_fRotorForceMultiplier * 2.5 - decreasePower * decrMul;
-											
-/*				//If multiplier too small, enforce a higher value
-				if (m_fRotorForceMultiplier > -3.0)
-				{
-					m_fRotorForceMultiplier = -5.0;
-				}*/
+
 				
 				//This affects yaw-pitch-roll counting in SetTurn
 				m_fSpeedSlowingMul = distMul;
@@ -405,7 +405,7 @@ modded class SDRC_ChopperComp
 			}
 		}
 	}
-
+*/
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Handle landing

@@ -110,7 +110,7 @@ enum SDRC_EHeliState
 	FLY,					// 1 - Normal state
 	FLY_AWAY,				// 2 - In this state, when all destinations have been flown through, we fly away and end.
 	FLY_AWAY_IMMEDIATELY,	// 3 - NOTE: This is not a real state. When set, state will change to FLY_AWAY
-	LAND,					// 4 - Chopper is landing
+	_FREE_,					// 4 - Unused
 	LAND_VERTICAL,			// 5 - Chopper is landing vertically
 	BRAKE,					// 6 - Chopper is braking
 	WAIT,					// 7 - NOTE: Velocity disabled

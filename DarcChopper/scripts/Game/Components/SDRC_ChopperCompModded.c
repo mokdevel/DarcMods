@@ -695,11 +695,6 @@ modded class SDRC_ChopperComp
 	{	
 		switch (m_eHeliState)
 		{
-			case SDRC_EHeliState.LAND:
-			{
-				HandleLanding(owner, timeSlice);	
-				break;
-			}
 			case SDRC_EHeliState.LAND_VERTICAL:
 			{
 				HandleLandingVertical(owner, timeSlice);	

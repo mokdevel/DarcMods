@@ -796,25 +796,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 
 		m_fBelowFlyHeightLowMul = 1;
 		m_fRayLenMul = 1;
-		
-/*		m_fDistanceFromSplineMul = 1;
-		//m_fRayLenMul = 1;
-		
-		float splineHeightFromGround = m_vSplinePointBelow[1] - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
-		float heliHeightFromGround = m_fAltitude;
-//		float heliHeightFromGround = m_vOrigin[1];// - 10;				//Move the origin slightly below the spline
-		if (heliHeightFromGround <= 0)
-		{
-			heliHeightFromGround = 1.0;
-		}
-		//Absolute distance be it below or above the spline
-//		m_fDistanceFromSplineMul = 3 * (splineHeightFromGround - heliHeightFromGround) / heliHeightFromGround;
-//		float heliToSplineDistance = heliHeightFromGround - splineHeightFromGround;
-		m_fDistanceFromSplineMul = -1 * (heliHeightFromGround - splineHeightFromGround) / 5;
-		
-//		m_fDistanceFromSplineMul = -1 * (heliHeightFromGround - splineHeightFromGround) / splineHeightFromGround;
-*/		
-		LerpDistanceFromSplineMul(owner);
+		m_fDistanceFromSplineMul = GetVerticalVelocity(owner.GetOrigin(), m_vDestination, 2 * m_fRotorForce0, 100.0);
+		//m_vDestinationFuture
+		//m_vDestination
 		
 		const int VERTICAL_SPEED_UP_TIME = 3;	//Spend 3 seconds to increase rotorForce
 				
@@ -827,7 +811,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 				{
 					float percentage = Math.Clamp(m_fTimeInStateBeen / VERTICAL_SPEED_UP_TIME, 0, 1);
 					rotorForce = 3 * rotorForce * percentage;
-					m_fDistanceFromSplineMul = m_fDistanceFromSplineMul * percentage;
+					//m_fDistanceFromSplineMul = m_fDistanceFromSplineMul * percentage;
 				}
 				break;
 			}		
@@ -837,7 +821,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 				{
 					float percentage = Math.Clamp(m_fTimeInStateBeen / VERTICAL_SPEED_UP_TIME, 0, 1);
 					rotorForce = 3 * rotorForce * percentage;
-					m_fDistanceFromSplineMul = m_fDistanceFromSplineMul * percentage;
+					//m_fDistanceFromSplineMul = m_fDistanceFromSplineMul * percentage;
 				}
 				break;
 			}
@@ -869,7 +853,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 			case SDRC_EHeliState.HOVER:
 			{				
 				//Stay in one place
-				rotorForce = params.iRotorForceHover;
+				//rotorForce = params.iRotorForceHover;
+				//m_fDistanceFromSplineMul = 1.0;
 				break;
 			}
 			case SDRC_EHeliState.FLY:
@@ -930,7 +915,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	/*!	
 	Lerp distance to spline mul
 	*/
-	void LerpDistanceFromSplineMul(IEntity owner)
+/*	void LerpDistanceFromSplineMul(IEntity owner)
 	{
 //		float splineHeightFromGround = m_vSplinePointBelow[1] - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
 		float splineHeightFromGround = m_vSplinePointBelow[1] - GetGame().GetWorld().GetSurfaceY(m_vSplinePointBelow[0], m_vSplinePointBelow[2]);
@@ -951,6 +936,42 @@ modded class SDRC_ChopperComp : ScriptComponent
 			m_fDistanceFromSplineMulTarget = -1 * (heliHeightFromGround - splineHeightFromGround - 1.2) / 8;
 			m_fTimeSpline = 0;
 		}
+	}	*/
+
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Finetune the vertical velocity to follow the spline smoothly
+	
+	\param helicopterPos Position of helicopter 
+	\param targetPos Destination where we're going. 
+	\param maxVerticalVelocity The maximum (rotor) force up-down 
+	\param responseDistance The distance to react to change
+	*/
+		
+	float GetVerticalVelocity(vector helicopterPos, vector targetPos, float maxVerticalVelocity, float responseDistance)
+	{
+	    float error = targetPos[1] - helicopterPos[1];
+	
+	    float factor = error / responseDistance;
+		factor = Math.Clamp(factor, -1.0, 1.0);
+		
+/*	    if (factor > 1.0)
+	        factor = 1.0;
+	
+	    if (factor < -1.0)
+	        factor = -1.0;*/
+	
+	    float sign = 1.0;
+	
+	    if (factor < 0.0)
+	    {
+	        sign = -1.0;
+	        factor = -factor;
+	    }
+	
+	    factor = Math.Sin(factor * Math.PI * 0.5);
+	
+	    return factor * maxVerticalVelocity * sign;
 	}	
 	
 	//------------------------------------------------------------------------------------------------	
@@ -1339,14 +1360,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 				//NOTE: m_vAttackPosition has been set in AddDestination
 				break;
 			}
-/*			case SDRC_EFlyWayPointType.WP_LAND:
-			{
-				int x = 0;
-			}*/
 			case SDRC_EFlyWayPointType.WP_M_LAND:
 			{
 				destination = SDRC_Misc.SetPosToSurface(destination);
-				SetState(SDRC_EHeliState.LAND);				
+				//SetState(SDRC_EHeliState.LAND);
 				m_bIsLanding = false;
 				break;
 			}
