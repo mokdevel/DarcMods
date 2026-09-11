@@ -53,35 +53,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			hoverPos[1] = (m_fFlyHeightLow + m_fFlyHeightHigh) / 2;
 			AddDestination(SDRC_EFlyWayPointType.WP_RAISE, hoverPos);
 		}
-/*		else //In the air. Normal case to check if a destination was assigned
-		{
-			//If a fly destination has been assigned, use it
-			if ( (!m_vFlyDestinations.IsEmpty()) && (destination == vector.Zero) )
-			{
-				destination = m_vFlyDestinations[0].pt;
-				//Add the destination to the list
-				AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);
-			}
-		}*/
-		
-		//Add first points to fly to. 
-/*		vector firstPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial / 3);
-		AddFlyPathPoint(firstPoint);
-		firstPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial / 2);
-		AddFlyPathPoint(firstPoint);
-		
-		//If no destination has been assigned, create a random one to use for rotating the chopper and fly first to
-		if (m_vFlyDestinations.IsEmpty())
-		{
-			destination = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial);
-			//Make sure we're on proper flight height.
-			destination[1] = SDRC_ChopperHelper.SetPointHeight(destination, m_fFlyHeightLow, m_fFlyHeightHigh); 
-			AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);			
-			
-			//Turn chopper to face the first destination
-			SDRC_Math.TurnEntityTowardsXZ(owner, destination);							
-		}
-*/
+
 		destination = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial);
 		//Make sure we're on proper flight height.
 		destination[1] = SDRC_ChopperHelper.SetPointHeight(destination, m_fFlyHeightLow, m_fFlyHeightHigh); 
@@ -89,9 +61,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 		
 		//Turn chopper to face the first destination
 		SDRC_Math.TurnEntityTowardsXZ(owner, destination);							
-		
-//		CreateFlightPoints(owner);
-//		SDRC_ChopperHelper.SetFlightPointHeight(owner);
 		
 		SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Chopper initial position: " + owner.GetOrigin(), LogLevel.DEBUG);
 				
@@ -118,24 +87,15 @@ modded class SDRC_ChopperComp : ScriptComponent
 		
 		//Take the height of the current spline point to set a couple of points to it.
 		vector oldHeight = m_vSplinePoints[m_iClosestIndex];
-		//Store the two last points of the spline
-		vector p0 = m_vSplinePoints[m_vSplinePoints.Count() - 2];
-		vector p1 = m_vSplinePoints[m_vSplinePoints.Count() - 1];
 		
 		// 1. Clear any existing path points. 
 		ResetFlight();
 		
-		// 2. Add a couple of points from the spline 
-		vector direction = vector.Direction(p0, p1);
-		direction.Normalize();
-//		vector newPoint = m_vOrigin;
-		vector newPoint = p0 + direction * (params.destinationForward / 3);
+		// 2. Add a point in front
+		vector newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward / 2);
 		newPoint[1] = oldHeight[1];
 		AddFlyPathPoint(newPoint);		
-		newPoint = p0 + direction * (params.destinationForward / 2);
-		newPoint[1] = oldHeight[1];
-		AddFlyPathPoint(newPoint);		
-
+		
 		//3. Create flight points. These are the main points on the path which are then used for spline	creation.
 		//   The points may be below the flight height (e.g. landing).
 		//   This will also set the next state for the chopper.
@@ -191,32 +151,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 	*/	
 	override private void CreateFlightPoints(IEntity owner, bool fixHeight = false)
 	{
-/*		//Add a few points in front to smooth the flight pattern
-		float forwardDistance = params.destinationForward;
-		vector origin = owner.GetOrigin();
-		
-		//Height is set to same as heli, but this is only needed at initial flight. 
-		//Later on, CreateNewFlight() will set these heights to old spline height.
-		vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, forwardDistance/2);
-		pos[1] = origin[1];
-		if (fixHeight)
-		{
-			//pos[1] = SDRC_ChopperHelper.SetPointHeight(pos, m_fFlyHeightLow, m_fFlyHeightHigh); 
-			//First point to be on same height even if below m_fFlyHeightLow. Removes jumps
-			pos[1] = SDRC_ChopperHelper.SetPointHeight(pos, 0, m_fFlyHeightHigh); 
-		}
-		AddFlyPathPoint(pos);
-		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid);
-		
-		pos = SDRC_ChopperHelper.GetDestinationForward(owner, forwardDistance);
-		pos[1] = origin[1];
-		if (fixHeight)
-		{
-			pos[1] = SDRC_ChopperHelper.SetPointHeight(pos, m_fFlyHeightLow, m_fFlyHeightHigh); 
-		}
-		AddFlyPathPoint(pos);
-		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 255, 0), 2.0, m_sDid);*/
-		
 		//Add destinations .. if any
 		int lastIdx = 0;
 		
@@ -225,6 +159,14 @@ modded class SDRC_ChopperComp : ScriptComponent
 		if (m_vFlyDestinations.IsEmpty())
 		{		
 			SDRC_ChopperHelper.GenerateWayPoint(owner, pos);
+		}
+
+		//Add a point towards 		
+		if (!m_vFlightPoints.IsEmpty())
+		{
+			vector lastFlightPoint = m_vFlightPoints[m_vFlightPoints.Count() - 1].pt; 
+			vector newPoint = vector.Lerp(lastFlightPoint, m_vFlyDestinations[0].pt, 0.5);
+			AddFlyPathPoint(newPoint);			
 		}
 		
 		bool firstDestinationHandled = false;
