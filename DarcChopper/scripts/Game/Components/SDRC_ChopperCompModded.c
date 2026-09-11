@@ -75,7 +75,7 @@ modded class SDRC_ChopperComp
 			AddDestination(fpp.type, fpp.pt, fpp.value);
 		}		
 
-		//Prepare the first flight spline
+/*		//Prepare the first flight spline
 		SDRC_ChopperHelper.SetFlightPointHeight(owner);
 		
 		//Create points for spline
@@ -86,16 +86,16 @@ modded class SDRC_ChopperComp
 		SDRC_Spline3D.GenerateSplinePoints(flyPathPoints, m_vSplinePoints, -1);
 		
 		//Set final values		
-		m_iClosestIndex = 5;
+		m_iClosestIndex = 0;
 		m_iOldClosestIndex = m_iClosestIndex;
 		
 		//Check that points are above ground
-		SDRC_ChopperHelper.SetSplinePointsAboveGround(owner);
+		SDRC_ChopperHelper.SetSplinePointsAboveGround(owner);*/
 		
 		m_fSpeed = 0.1;
 		m_fSpeedTarget = m_fSpeed;		
 						
-		SDRC_ChopperDebug.DrawDebugPaths(owner);		
+//		SDRC_ChopperDebug.DrawDebugPaths(owner);		
 
 		SetEventMask(owner, EntityEvent.FRAME);
 		Activate(owner);
@@ -190,6 +190,9 @@ modded class SDRC_ChopperComp
 	//------------------------------------------------------------------------------------------------	
 
 	//------------------------------------------------------------------------------------------------
+	/*!
+	Set speed min/max values
+	*/	
 	void SetSpeed(float min = -1, float max = -1)
 	{
 		if (min > -1)
@@ -203,6 +206,20 @@ modded class SDRC_ChopperComp
 		}			
 	}
 
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Set speed to change between speedFrom -> speedTo
+	*/	
+	void SetSpeedToChange(float speedFrom, float speedTo)
+	{
+		m_fSpeed = speedFrom;
+		m_fSpeedStart = speedFrom;
+		m_fSpeedTarget = speedTo;
+		m_fSpeedMin = speedFrom;
+		m_fSpeedMax = speedTo;
+		m_fTimeSpeed = 0;	//Start to change speed
+	}	
+	
 	//------------------------------------------------------------------------------------------------
 	void SetAutostart(bool value)
 	{

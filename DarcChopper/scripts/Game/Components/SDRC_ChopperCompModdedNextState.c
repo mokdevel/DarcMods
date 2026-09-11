@@ -1,4 +1,4 @@
-//SDRC_ChopperCompModded.c
+//SDRC_ChopperCompModdedNextState.c
 
 //------------------------------------------------------------------------------------------------
 //class SDRC_ChopperComp : ScriptGameComponent
@@ -86,17 +86,13 @@ modded class SDRC_ChopperComp
 				
 				//Reset heli settings
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);	//Reset heli settings				
-				m_fSpeed = 2;										//Set a speed to start the raise from	
-				m_fSpeedMax = m_fSpeedMin * 1.5;
-				m_fSpeedMin = 2;
-				m_fThrottle = 2.5;
-				
-				//m_vSplinePoints.Insert(owner.GetOrigin());
+				SetSpeedToChange(1.0, m_fSpeedMin);
+				m_fThrottle = 2.4;
 				
 				//Fly forward
 				if (m_vFlyDestinations[0].pt[0] == 0)
 				{
-					m_vFlyDestinations[0].pt[0] = 200;
+					m_vFlyDestinations[0].pt[0] = params.destinationForward;
 				}
 				vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, m_vFlyDestinations[0].pt[0]);
 				float height = m_vFlyDestinations[0].pt[1];
@@ -115,7 +111,6 @@ modded class SDRC_ChopperComp
 					vector pt = vector.Lerp(owner.GetOrigin(), pos, i / RAISE_POINT_COUNT);
 					pt[1] = m_vOrigin[1] + pdiff * SDRC_Math.HalfBell(i / RAISE_POINT_COUNT);
 					m_vSplinePoints.Insert(pt);
-//					m_vSplinePoints.Insert(vector.Lerp(owner.GetOrigin(), pos, i/RAISE_POINT_COUNT));
 				}
 				
 				m_iClosestIndex = 3;				
@@ -235,11 +230,16 @@ modded class SDRC_ChopperComp
 				m_bOnlyVerticalMovement = true;
 				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
 				
-				vector pos = owner.GetOrigin();
-				pos[1] = pos[1] + m_vFlyDestinations[0].pt[1];		//Hover above original point
+//				vector pos = owner.GetOrigin();
+//				pos[1] = pos[1] + m_vFlyDestinations[0].pt[1];		//Hover above original point
+//				m_vSplinePoints.Insert(pos);
 				
 				for (int i = 0; i < VERTICAL_SPLINE_POINTS; i++)
 				{
+					vector pos;
+					//Add a few points forward
+					pos = SDRC_ChopperHelper.GetDestinationForward(owner, 0.5 * i);
+					pos[1] = pos[1] + m_vFlyDestinations[0].pt[1];		//Hover above original point
 					m_vSplinePoints.Insert(pos);
 				}
 				m_iClosestIndex = 0;
@@ -339,73 +339,7 @@ modded class SDRC_ChopperComp
 	//------------------------------------------------------------------------------------------------	
 	// Special handling
 	//------------------------------------------------------------------------------------------------	
-	
-	//------------------------------------------------------------------------------------------------	
-	/*!	
-	Handle landing
-	*/
-/*	override private void HandleLanding(IEntity owner, float timeSlice)
-	{
-		vector origin = owner.GetOrigin();
-				
-		vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];
-		float distance = vector.DistanceXZ(origin, lastPt);
 
-		if (distance < m_fLandingDistance)
-		{
-			//float height = m_Helicopter_s.GetAltitudeAGL();
-			float height = GetAltitude();
-				
-			if (!m_bIsLanding)
-			{
-				m_fSpeedLandingOrig = m_fSpeed;
-				m_fSpeedMin = 0.001;
-				m_fPositionLandingOrig = owner.GetOrigin();
-								
-				//We have started landing sequence so no need to count values
-				m_bIsLanding = true;
-				m_bOnlyVerticalMovement = false;
-			}
-			
-			if (!m_Helicopter_s.HasAnyGroundContact())
-			{					
-				float distMul = distance / m_fLandingDistance;
-				float decrMul = origin[1] / lastPt[1];
-				decrMul = Math.Clamp(decrMul, 0.1, 4.0);
-
-				m_fSpeedTarget = m_fSpeedLandingOrig * distMul + 0.01;
-								
-//				float decreasePower = -1.0;
-				
-				//Check if we're close to landing place, slow down and descent
-				vector closePos = m_vSplinePoints[m_vSplinePoints.Count() - 4];
-				//If we have passed the point, adjust values
-				if (SDRC_Math.HasPassedPointXZ(m_fPositionLandingOrig, closePos, owner.GetOrigin()))
-				{
-					distance = vector.DistanceXZ(origin, m_fPositionLandingOrig);
-					float distanceClose = vector.DistanceXZ(closePos, m_fPositionLandingOrig);
-					float mulc = distanceClose / distance;
-					
-					m_fSpeedTarget = distance / 4;
-					//	m_fSpeedTarget = Math.Clamp(decrMul, 1.0, 5.0);
-					m_fSpeedTarget = 8 * distMul + 0.1;
-//					decreasePower = 2 * ((mulc + decrMul) / 2);
-					m_bOnlyVerticalMovement = true;
-				}				
-
-//				m_fRotorForceMultiplier = m_fRotorForceMultiplier * 2.5 - decreasePower * decrMul;
-
-				
-				//This affects yaw-pitch-roll counting in SetTurn
-				m_fSpeedSlowingMul = distMul;
-			}
-			else
-			{
-				HandleGroundContact(owner);		
-			}
-		}
-	}
-*/
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Handle landing

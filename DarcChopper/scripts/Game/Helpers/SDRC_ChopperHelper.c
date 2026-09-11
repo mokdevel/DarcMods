@@ -447,28 +447,35 @@ class SDRC_ChopperHelper
 			//Use a local heliState as it could be changed later in the function
 			SDRC_EHeliState heliState = chopperComp.GetState();
 			
-			//Make sure the points are at minimum lowestHeight from the ground and objects.
-			//This is done first in all cases. Other states will modify these later in the function.
-			foreach (int i, vector pt : chopperComp.m_vSplinePoints)
+			if (  (heliState != SDRC_EHeliState.HOVER)
+			   && (heliState != SDRC_EHeliState.HOVER_UP)
+			   && (heliState != SDRC_EHeliState.HOVER_DOWN)
+			)
 			{
-				if (i < skipCount)
+				//Make sure the points are at minimum lowestHeight from the ground and objects.
+				//This is done first in all cases. Other states will modify these later in the function.
+				foreach (int i, vector pt : chopperComp.m_vSplinePoints)
 				{
-					continue;
-				}
-
-				float surfaceY = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
-
-				//If point lower than requested point, set lowest flight height
-				if (pt[1] < (surfaceY + lowestHeight))
-				{
-					//If we're low, fix the point a bit above the lowestHeight fly height
-					pt[1] = surfaceY + lowestHeight + 5;	//Make chopper fly higher for a moment
-					chopperComp.m_vSplinePoints[i] = pt;
-					
-					isSmoothingNeeded = true;
-				}
-			}			
-			
+					if (i < skipCount)
+					{
+						continue;
+					}
+	
+					float surfaceY = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
+	
+					//If point lower than requested point, set lowest flight height
+					if (pt[1] < (surfaceY + lowestHeight))
+					{
+						//If we're low, fix the point a bit above the lowestHeight fly height
+						pt[1] = surfaceY + lowestHeight + 5;	//Make chopper fly higher for a moment
+						chopperComp.m_vSplinePoints[i] = pt;
+						
+						isSmoothingNeeded = true;
+					}
+				}			
+			}
+						
+			//Do add
 			switch (heliState)
 			{
 				case SDRC_EHeliState.ATTACK:
