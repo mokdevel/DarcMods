@@ -25,8 +25,8 @@ class SDRC_ChopperParams
 	//Rotor force multipliers
 	float fRotorForceMulUp							//Rotor force multiplier in velocity counting. Bigger value makes the vehicle react faster to up/down movement but also starts stutter.
 	int   iRotorForceNormal; 						//.. normal flight situation
-	int   iRotorForceRaise; 						//.. when raising from stand still
-	int   iRotorForceHover; 						//.. when hovering in one place
+//	int   iRotorForceRaise; 						//.. when raising from stand still
+//	int   iRotorForceHover; 						//.. when hovering in one place
 	int   iRotorForceCrash; 						//.. when crashin. Bigger value causes a deeper curve
 	int   iRotorForceBrake; 						//.. when braking
 	

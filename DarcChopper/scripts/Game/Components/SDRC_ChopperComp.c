@@ -796,7 +796,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 
 		m_fBelowFlyHeightLowMul = 1;
 		m_fRayLenMul = 1;
-		m_fDistanceFromSplineMul = GetVerticalVelocity(owner.GetOrigin(), m_vDestination, 2 * m_fRotorForce0, 100.0);
+		m_fDistanceFromSplineMul = SDRC_ChopperHelper.GetVerticalVelocity(owner.GetOrigin(), m_vDestination, 2 * m_fRotorForce0, 100.0);
 		//m_vDestinationFuture
 		//m_vDestination
 		
@@ -811,7 +811,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 				{
 					float percentage = Math.Clamp(m_fTimeInStateBeen / VERTICAL_SPEED_UP_TIME, 0, 1);
 					rotorForce = 3 * rotorForce * percentage;
-					//m_fDistanceFromSplineMul = m_fDistanceFromSplineMul * percentage;
 				}
 				break;
 			}		
@@ -821,7 +820,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 				{
 					float percentage = Math.Clamp(m_fTimeInStateBeen / VERTICAL_SPEED_UP_TIME, 0, 1);
 					rotorForce = 3 * rotorForce * percentage;
-					//m_fDistanceFromSplineMul = m_fDistanceFromSplineMul * percentage;
 				}
 				break;
 			}
@@ -834,8 +832,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			}		
 			case SDRC_EHeliState.RAISE:
 			{
-				//In RAISE state, do slow climb
-				rotorForce = params.iRotorForceRaise;
+				//rotorForce = params.iRotorForceRaise;
 				break;
 			}
 			case SDRC_EHeliState.BRAKE:
@@ -864,8 +861,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 				m_fBelowFlyHeightLowMul = 1 + ((m_fFlyHeightLow - m_fAltitude) / m_fAltitude);
 				m_fBelowFlyHeightLowMul = Math.Clamp(m_fBelowFlyHeightLowMul, 1, 100);
 				
-				LerpRayLenMul(owner);
-				
+				LerpRayLenMul(owner);				
 			}
 		}
 
@@ -877,8 +873,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 			m_fRayLenMul = Math.Lerp(m_fRayLenMulStart, m_fRayLenMulTarget, ts);
 			//m_fRayLenMul = Math.Clamp(m_fRayLenMul, m_fSpeedMin, m_fSpeedMax);
 		}		*/
-		
-	
 
 		//Set the final Rotor Force				
 		m_fRotorForceMultiplier = rotorForce * m_fBelowFlyHeightLowMul * m_fDistanceFromSplineMul * m_fRayLenMul;
@@ -910,41 +904,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 			m_fTimeRay = 0;
 		}
 	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Finetune the vertical velocity to follow the spline smoothly
-	
-	\param helicopterPos Position of helicopter 
-	\param targetPos Destination where we're going. 
-	\param maxVerticalVelocity The maximum (rotor) force up-down 
-	\param responseDistance The distance to react to change
-	*/
-	float GetVerticalVelocity(vector helicopterPos, vector targetPos, float maxVerticalVelocity, float responseDistance)
-	{
-	    float error = targetPos[1] - helicopterPos[1];
-	
-	    float factor = error / responseDistance;
-		factor = Math.Clamp(factor, -1.0, 1.0);
-		
-/*	    if (factor > 1.0)
-	        factor = 1.0;
-	
-	    if (factor < -1.0)
-	        factor = -1.0;*/
-	
-	    float sign = 1.0;
-	
-	    if (factor < 0.0)
-	    {
-	        sign = -1.0;
-	        factor = -factor;
-	    }
-	
-	    factor = Math.Sin(factor * Math.PI * 0.5);
-	
-	    return factor * maxVerticalVelocity * sign;
-	}	
 	
 	//------------------------------------------------------------------------------------------------	
 	// Reset

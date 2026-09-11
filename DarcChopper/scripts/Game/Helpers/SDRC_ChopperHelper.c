@@ -95,27 +95,31 @@ class SDRC_ChopperHelper
 			{
 				orig = owner.GetOrigin();
 			}
-			
-			//Occasionally fly towards middle to avoid sliding out of the map
-			if (SDRC_Misc.RandomFloat(0, 1) < 0.2)
-			{
-				orig = SDRC_Misc.GetWorldCenter();
+				
+			for (int j = 0; j < 2; j++)
+			{			
+				//Occasionally fly towards middle to avoid sliding out of the map
+				if (SDRC_Misc.RandomFloat(0, 1) < 0.2)
+				{
+					orig = SDRC_Misc.GetWorldCenter();
+				}
+				
+				vector pos;
+				
+				//Create a random position to fly to. Try to avoid very steep turns by doing iterations.
+				for (int i = 0; i < 10; i++)
+				{
+					pos = SDRC_ChopperHelper.GetRandomPosition(orig, chopperComp.m_fDistanceLow, chopperComp.m_fDistanceHigh);	
+					vector dir1 = vector.Direction(owner.GetOrigin(), pos);
+					float angle = SDRC_Math.GetAngleBetweenVectorsXZ(dir1, chopperComp.m_vHeliDirectionFuture);
+					if (Math.AbsFloat(angle) < (2 * chopperComp.params.wpSteepAngle * Math.DEG2RAD) )
+					{				
+						break;
+					}			
+				}
+				chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos);
+				orig = pos;
 			}
-			
-			vector pos;
-			
-			//Create a random position to fly to. Try to avoid very steep turns by doing iterations.
-			for (int i = 0; i < 10; i++)
-			{
-				pos = SDRC_ChopperHelper.GetRandomPosition(orig, chopperComp.m_fDistanceLow, chopperComp.m_fDistanceHigh);	
-				vector dir1 = vector.Direction(owner.GetOrigin(), pos);
-				float angle = SDRC_Math.GetAngleBetweenVectorsXZ(dir1, chopperComp.m_vHeliDirectionFuture);
-				if (Math.AbsFloat(angle) < (2 * chopperComp.params.wpSteepAngle * Math.DEG2RAD) )
-				{				
-					break;
-				}			
-			}
-			chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos);
 		}
 		
 		//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 255, 00, 00), 2.0, chopperComp.m_sDid, 200);
@@ -749,20 +753,30 @@ class SDRC_ChopperHelper
 		
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Returns the final destination from the spline
-	*/
-/*	vector GetFinalSplineDestination()
-	{
-		return m_vSplinePoints[m_vSplinePoints.Count() - 1];
-	}		*/
+	Finetune the vertical velocity to follow the spline smoothly
 	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Returns the destination where the helicopter is currently going. 
-	NOTE: This is not the final destination on the spline
+	\param helicopterPos Position of helicopter 
+	\param targetPos Destination where we're going. 
+	\param maxVerticalVelocity The maximum (rotor) force up-down 
+	\param responseDistance The distance to react to change
 	*/
-/*	vector GetCurrentSplineDestination()
+	static float GetVerticalVelocity(vector helicopterPos, vector targetPos, float maxVerticalVelocity, float responseDistance)
 	{
-		return m_vDestination;
-	}		*/		
+	    float error = targetPos[1] - helicopterPos[1];
+	
+	    float factor = error / responseDistance;
+		factor = Math.Clamp(factor, -1.0, 1.0);
+	
+	    float sign = 1.0;
+	
+	    if (factor < 0.0)
+	    {
+	        sign = -1.0;
+	        factor = -factor;
+	    }
+	
+	    factor = Math.Sin(factor * Math.PI * 0.5);
+	
+	    return factor * maxVerticalVelocity * sign;
+	}		
 }

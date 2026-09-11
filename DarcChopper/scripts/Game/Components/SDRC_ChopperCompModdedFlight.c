@@ -38,10 +38,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 			m_vOrigin[1] = y + 0.1;
 			owner.SetOrigin(m_vOrigin);
 			
-//			AddDestination(SDRC_EFlyWayPointType.WP_WAIT, value: 1);
-			
-			//The low start destinations are added in the beginning of the list.
-			//These are added in !reverse! order to index 0
 			#ifdef WORKBENCH
 				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 2);
 			#else
