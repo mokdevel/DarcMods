@@ -9,24 +9,24 @@ $grp GenericEntity {
   coords 120.67 1 143.614
  }
 }
-Projectile : "{32E12D322E107F1C}Prefabs/Weapons/Ammo/Ammo_Rocket_PG7VM.et" {
+Projectile Ammo_Rocket_PG7VM_6A56F87509FA5196 : "{32E12D322E107F1C}Prefabs/Weapons/Ammo/Ammo_Rocket_PG7VM.et" {
  coords 122.667 1 144.064
 }
-GenericEntity : "{3E413771E1834D2F}Prefabs/Weapons/Rifles/M16/Rifle_M16A2.et" {
+GenericEntity Rifle_M16A2_6A56F87509FA43E9 : "{3E413771E1834D2F}Prefabs/Weapons/Rifles/M16/Rifle_M16A2.et" {
  coords 121.128 1 143.806
 }
-GenericEntity : "{5897D01F41DB5D2D}Prefabs/Weapons/Magazines/Magazine_545x39_RPK_45rnd_Tracer.et" {
+GenericEntity Magazine_545x39_RPK_45rnd_Tracer_6A56F87509FA7D4F : "{5897D01F41DB5D2D}Prefabs/Weapons/Magazines/Magazine_545x39_RPK_45rnd_Tracer.et" {
  coords 120.845 1 144.437
 }
-GenericEntity : "{7A82FE978603F137}Prefabs/Weapons/Launchers/RPG7/Launcher_RPG7.et" {
+GenericEntity Launcher_RPG7_6A56F87509FA6CBF : "{7A82FE978603F137}Prefabs/Weapons/Launchers/RPG7/Launcher_RPG7.et" {
  coords 121.009 1 145.444
 }
-GenericEntity : "{9207B5D36C3C8C94}Prefabs/Weapons/Rifles/M16/Rifle_M16A2_carbine_base.et" {
+GenericEntity Rifle_M16A2_carbine_base_6A56F87509FD98C0 : "{9207B5D36C3C8C94}Prefabs/Weapons/Rifles/M16/Rifle_M16A2_carbine_base.et" {
  coords 120.654 1 142.925
 }
-GenericEntity : "{9569026177545A20}Prefabs/Weapons/Magazines/Magazine_545x39_RPK_45rnd_Base.et" {
+GenericEntity Magazine_545x39_RPK_45rnd_Base_6A56F87509FDB594 : "{9569026177545A20}Prefabs/Weapons/Magazines/Magazine_545x39_RPK_45rnd_Base.et" {
  coords 120.941 1 144.848
 }
-GenericEntity : "{FA5C25BF66A53DCF}Prefabs/Weapons/Rifles/AK74/Rifle_AK74.et" {
+GenericEntity Rifle_AK74_6A56F87509FDA4C8 : "{FA5C25BF66A53DCF}Prefabs/Weapons/Rifles/AK74/Rifle_AK74.et" {
  coords 122.162 1 144.901
 }

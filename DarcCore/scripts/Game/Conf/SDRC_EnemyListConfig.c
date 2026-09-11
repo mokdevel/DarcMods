@@ -158,6 +158,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Cultists_Light", 											//Ballien Cultists
 			 "CloseProtectionTeam",										//RHS_ION
 			 "DSF_1983_SBS_Patrol",										//1st RM DSF			
+			 "Team_Light",												//CLA
 			},	
 			{"_Base", "_NotSpawned", "_Remnants", "_Random", "_Heavy"},
 			{}
@@ -226,6 +227,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "TA_SentryTeam",											//Takistan
 			 "Argentina_Sentry",										//1st RM AFOA
 			 "DSF_1983_SAS_SpecialProjectsTeam",						//1st RM DSF
+			 "Team_HQ",													//CLA
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -248,6 +250,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "StaticSecurityTeam",										//RHS_ION			
 			 "Argentina_Sentry",										//1st RM AFOA
 			 "DSF_1983_SAS_Patrol",										//1st RM DSF			
+			 "Team_Medic",												//CLA
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -271,6 +274,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "TA_Team_Suppress",										//Takistan
 			 "Argentina_Sentry",										//1st RM AFOA
 			 "DSF_1983_SAS_Patrol",										//1st RM DSF			
+			
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -293,6 +297,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing
 			 "QuickReactionForce",										//RHS_ION
 			 "Recce",													//1st RM DSF
+			 "Team_MG",													//CLA
 			},	
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -337,6 +342,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "CloseProtectionTeam",										//RHS_ION
 			 "Argentina_Sentry",										//1st RM AFOA			
 			 "DSF_1983_SAS_Patrol",										//1st RM DSF
+			 "Team_Recon",												//CLA
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -534,6 +540,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "TA_SL",										//Takistan			
 			 "Argentina_MAT",								//1st RM AFOA
 			 "SP_Trooper", "SP_Sapper",	"SAS_Demolitionist", //1st RM DSF			
+			 "_Shotgun",									//CLA
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}

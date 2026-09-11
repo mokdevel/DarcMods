@@ -181,7 +181,8 @@ class SDRC_MissionFrameConfig : SDRC_Config
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-			enemyFactions = {"USSR"};
+//			enemyFactions = {"USSR"};
+			enemyFactions = {"CLA"};
 //			enemyFactions = {"US"};
 //			enemyFactions = {"FIA"};
 //			enemyFactions = {"AFOA"};

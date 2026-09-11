@@ -12,6 +12,7 @@ Main Features:
   * Added a new HvtItem mission: Kill Wolfpack (enabled when BAR_FrenchAnimals mod is loaded)
   * The file will auto update
 * Added LootE_SackUniversal_01 as a usable loot box.
+* Support for FF-Chernarus Liberation Army (CLA)
 
 ## 20260901
 Main Features:

@@ -23,7 +23,8 @@
                 "Group_Zombies_USSR",
                 "Cultists_Light",
                 "CloseProtectionTeam",
-                "DSF_1983_SBS_Patrol"
+                "DSF_1983_SBS_Patrol",
+                "Team_Light"
             ],
             "exclude": [
                 "_Base",
@@ -110,7 +111,8 @@
                 "StaticSecurityTeam",
                 "TA_SentryTeam",
                 "Argentina_Sentry",
-                "DSF_1983_SAS_SpecialProjectsTeam"
+                "DSF_1983_SAS_SpecialProjectsTeam",
+                "Team_HQ"
             ],
             "exclude": [
                 "_Base",
@@ -135,7 +137,8 @@
                 "JGSDF_2008_LightFireTeam",
                 "StaticSecurityTeam",
                 "Argentina_Sentry",
-                "DSF_1983_SAS_Patrol"
+                "DSF_1983_SAS_Patrol",
+                "Team_Medic"
             ],
             "exclude": [
                 "_Base",
@@ -195,7 +198,8 @@
                 "Cultists_Horde",
                 "JGSDF_2008_SentryTeam",
                 "QuickReactionForce",
-                "Recce"
+                "Recce",
+                "Team_MG"
             ],
             "exclude": [
                 "_Base",
@@ -256,7 +260,8 @@
                 "JGSDF_2008_LightFireTeam",
                 "CloseProtectionTeam",
                 "Argentina_Sentry",
-                "DSF_1983_SAS_Patrol"
+                "DSF_1983_SAS_Patrol",
+                "Team_Recon"
             ],
             "exclude": [
                 "_Base",
@@ -569,7 +574,8 @@
                 "Argentina_MAT",
                 "SP_Trooper",
                 "SP_Sapper",
-                "SAS_Demolitionist"
+                "SAS_Demolitionist",
+                "_Shotgun"
             ],
             "exclude": [
                 "_Base",

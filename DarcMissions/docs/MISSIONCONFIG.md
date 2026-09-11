@@ -81,6 +81,7 @@ The mission faction is defined in ``enemyFactions`` or individually per sub-miss
 * ``Takistan`` : Takistani Army - [MOD](https://reforger.armaplatform.com/workshop/611A2A77548D2F97-TakistaniArmy)
 * ``AFOA, DSF`` : Argentinian Infantry forces - [MOD](https://reforger.armaplatform.com/workshop/685771C973A5516B)
 * WIP: ``TF_US, TF_RF`` : Tactical Flava - [MOD](https://reforger.armaplatform.com/workshop/DEADC0DE00000000-TacticalFlava-Core)
+* ``CLA`` : FF-Chernarus Liberation Army - [MOD](https://reforger.armaplatform.com/workshop/69E4E0B84E0FD9ED-FF-ChernarusLiberationArmy)
 * Unsupported values
   * ``MEC``
 
