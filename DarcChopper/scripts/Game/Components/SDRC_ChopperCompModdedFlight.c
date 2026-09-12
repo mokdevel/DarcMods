@@ -88,9 +88,20 @@ modded class SDRC_ChopperComp : ScriptComponent
 		ResetFlight();
 		
 		// 2. Add a point in front
-		vector newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward / 2);
+		
+		SDRC_DebugHelper.DeleteDebugPos(m_sDid + "line");
+		vector newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward * 0.4);
 		newPoint[1] = oldHeight[1];
-		AddFlyPathPoint(newPoint);		
+		AddFlyPathPoint(newPoint);
+		SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 50);		
+		newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward * 0.7);
+		newPoint[1] = oldHeight[1];
+		AddFlyPathPoint(newPoint);
+		SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 50);
+		newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward);
+		newPoint[1] = oldHeight[1];
+		AddFlyPathPoint(newPoint);
+		SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 50);
 		
 		//3. Create flight points. These are the main points on the path which are then used for spline	creation.
 		//   The points may be below the flight height (e.g. landing).
@@ -98,23 +109,23 @@ modded class SDRC_ChopperComp : ScriptComponent
 		CreateFlightPoints(owner);
 		
 		//Flight point management is skipped if there are none. This could happen at init stage were the points are set straight to the spline.
-		if (!m_vFlightPoints.IsEmpty())
+		if (!m_vFlyPathPoints.IsEmpty())
 		{
 			//4. By default, check that flight points are above the minimum flight height.
 			SDRC_ChopperHelper.SetFlightPointHeight(owner);
 			
 			//5. Set first flight points to same height as the helicopter. This smooths the flight.
 			vector origin = owner.GetOrigin();
-			//m_vFlightPoints[0].pt[1] = origin[1];
-			//m_vFlightPoints[1].pt[1] = origin[1];
-			//m_vFlightPoints[0].pt[1] = oldHeight[1];
-			//m_vFlightPoints[1].pt[1] = oldHeight[1];
-			m_vFlightPoints[0].pt[1] = m_vSplinePointBelow[1];// - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
-			m_vFlightPoints[1].pt[1] = m_vSplinePointBelow[1];// - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
+			//m_vFlyPathPoints[0].pt[1] = origin[1];
+			//m_vFlyPathPoints[1].pt[1] = origin[1];
+			//m_vFlyPathPoints[0].pt[1] = oldHeight[1];
+			//m_vFlyPathPoints[1].pt[1] = oldHeight[1];
+			m_vFlyPathPoints[0].pt[1] = m_vSplinePointBelow[1];// - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
+			m_vFlyPathPoints[1].pt[1] = m_vSplinePointBelow[1];// - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
 					
 			//6. Generate the spline
 			array<vector> flyPathPoints = {};
-			SDRC_ChopperDebug.GivePoints(flyPathPoints, m_vFlightPoints);
+			SDRC_ChopperDebug.GivePoints(flyPathPoints, m_vFlyPathPoints);
 			SDRC_Spline3D.GenerateSplinePoints(flyPathPoints, m_vSplinePoints, -1);
 		}
 				
@@ -157,13 +168,15 @@ modded class SDRC_ChopperComp : ScriptComponent
 			SDRC_ChopperHelper.GenerateWayPoint(owner, pos);
 		}
 
-		//Add a point towards 		
-		if (!m_vFlightPoints.IsEmpty())
+		//Add a point towards our next destination
+/*		if (!m_vFlyPathPoints.IsEmpty())
 		{
-			vector lastFlightPoint = m_vFlightPoints[m_vFlightPoints.Count() - 1].pt; 
+			vector lastFlightPoint = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt; 
 			vector newPoint = vector.Lerp(lastFlightPoint, m_vFlyDestinations[0].pt, 0.5);
-			AddFlyPathPoint(newPoint);			
-		}
+			AddFlyPathPoint(newPoint);
+
+			SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 150);
+		}*/
 		
 		bool firstDestinationHandled = false;
 		bool oneShotHandled = false;
@@ -191,9 +204,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 			switch (flyDestination.type)
 			{
 				case SDRC_EFlyWayPointType.WP_HOVER:
-					SetNextState(owner, flyDestination.type, false);					
-					destinationHandled = true;
-					break;
 				case SDRC_EFlyWayPointType.WP_PATROL:
 				case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
 				{
@@ -206,19 +216,21 @@ modded class SDRC_ChopperComp : ScriptComponent
 			}
 					
 			//If destination has already been set, skip the re-routing etc.
-			if (!m_vFlightPoints.IsEmpty())
+			if (!m_vFlyPathPoints.IsEmpty())
 			{
 				if (!destinationHandled)
 				{	
 					//Distance of last flight point defined and the next destination
-					float distance = vector.DistanceXZ(m_vFlightPoints[m_vFlightPoints.Count() - 1].pt, flyDestination.pt);
+					float distance = vector.DistanceXZ(m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt, flyDestination.pt);
 			
 					//Get the angle for the destination
-					vector p0 = m_vFlightPoints[m_vFlightPoints.Count() - 2].pt;
-					vector p1 = m_vFlightPoints[m_vFlightPoints.Count() - 1].pt;
+					vector p0 = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 2].pt;
+					vector p1 = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt;
 					vector p2 = flyDestination.pt;
 					float heliAngle = SDRC_Math.GetRadiansBetweenThreePointsXZ(p0, p1, p2) * Math.RAD2DEG;
 		
+					SDRC_DebugHelper.AddDebugPos(p2, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 200);
+					
 					SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Distance: " + distance + " - Angle: " + heliAngle, LogLevel.DEBUG);
 					
 					//Is the angle too steep? Re-route.
@@ -235,7 +247,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 						SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle is steep: " + heliAngle, LogLevel.SPAM);
 						
 						//Get the last point
-						vector point = m_vFlightPoints[m_vFlightPoints.Count() - 1].pt;
+						vector point = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt;
 						
 						//We need to take a detour. Add an additional points outside of the line to make the route rounder				
 						float lerpRnd = SDRC_Misc.RandomFloat(params.detourLerpPosition * 0.5, params.detourLerpPosition * 1.5);
@@ -272,15 +284,15 @@ modded class SDRC_ChopperComp : ScriptComponent
 
 		//If only two points, add a mid point. 
 		//NOTE: We ignore the cases where there is no points or only 1. Not sure if this causes issues.
-		if (m_vFlightPoints.Count() == 2)
+		if (m_vFlyPathPoints.Count() == 2)
 		{
-			vector p0 = m_vFlightPoints[0].pt;
-			vector p1 = m_vFlightPoints[1].pt;
+			vector p0 = m_vFlyPathPoints[0].pt;
+			vector p1 = m_vFlyPathPoints[1].pt;
 			vector mid = vector.Lerp(p0, p1, 0.5);
 			AddFlyPathPoint(mid, index: 1);
 		}		
 		
-		SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Created " + m_vFlightPoints.Count() + " points.", LogLevel.SPAM);
+		SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Created " + m_vFlyPathPoints.Count() + " points.", LogLevel.SPAM);
 		
 		//Remove the destinations that have been handled
 		for (int i = 0; i <= lastIdx; i++)
@@ -329,12 +341,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 		if (index == -1)
 		{
 			fpp.Set(type, destination, value);
-			m_vFlightPoints.Insert(fpp);
+			m_vFlyPathPoints.Insert(fpp);
 		}
 		else
 		{
 			fpp.Set(type, destination, value);
-			m_vFlightPoints.InsertAt(fpp, index);
+			m_vFlyPathPoints.InsertAt(fpp, index);
 		}
 	}		
 }

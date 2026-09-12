@@ -186,7 +186,7 @@ class SDRC_ChopperDebug
 		}
 		
 		array<vector> flyPathPoints = {};
-		GivePoints(flyPathPoints, chopperComp.m_vFlightPoints);
+		GivePoints(flyPathPoints, chopperComp.m_vFlyPathPoints);
 		
 		SDRC_DebugHelper.DeleteDebugItems(chopperComp.m_sDid + "path", marks: false);
 		SDRC_DebugHelper.DrawPointList(chopperComp.m_vSplinePoints, chopperComp.m_sDid + "path");		

@@ -310,9 +310,9 @@ class SDRC_ChopperHelper
 		
 		vector origin = owner.GetOrigin();
 		
-		foreach (int i, SDRC_FlyPathPoint flightPoint : chopperComp.m_vFlightPoints)
+		foreach (int i, SDRC_FlyPathPoint flyPathPoint : chopperComp.m_vFlyPathPoints)
 		{
-			vector pt = flightPoint.pt;
+			vector pt = flyPathPoint.pt;
 
 			//Do not change height of two first points. These are the two points from the previous spline. 
 			if (i < 2)
@@ -324,7 +324,7 @@ class SDRC_ChopperHelper
 			float y = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
 			float flyHeight = 0;
 						
-			switch (flightPoint.type)
+			switch (flyPathPoint.type)
 			{
 				case SDRC_EFlyWayPointType.WP_HOVER_UP: //Do nothing .. 
 					break;
@@ -351,7 +351,7 @@ class SDRC_ChopperHelper
 			}
 			
 			pt[1] = pt[1] + flyHeight;
-			chopperComp.m_vFlightPoints[i].pt = pt;
+			chopperComp.m_vFlyPathPoints[i].pt = pt;
 		}
 	}	
 		

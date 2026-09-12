@@ -58,8 +58,8 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		//Waypoint values
 		wpSteepAngle = 60;
 														
-		destinationForwardInitial = 400;//400;
-		destinationForward = 100;
+		destinationForwardInitial = 400;
+		destinationForward = 200;
 		
 		//Flight pattern related
 		patrolRadius = 300;	

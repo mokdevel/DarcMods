@@ -41,7 +41,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 	private SDRC_ChopperComp s_Instance;	
 	ref array<vector> m_vSplinePoints = new array<vector>();
 	private VehicleHelicopterSimulation m_Helicopter_s;
-//	ref SDRC_ChopperParams params = new SDRC_ChopperParams();
 	ref SDRC_ChopperParams params = null;
 			
 	//Parameters accessible helicopter parameters
@@ -109,7 +108,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		
 	//Category: Unsorted
 	//Flight path
-	ref array<ref SDRC_FlyPathPoint> m_vFlightPoints = {};
+	ref array<ref SDRC_FlyPathPoint> m_vFlyPathPoints = {};
 	[Attribute("", UIWidgets.Object, "Destinations")]	
 	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinationsOnPrefab;	//Requested destinations set on the prefab. These will be used FIRST
 	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations = {};			//Requested destinations set with AddDestination()
@@ -915,7 +914,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	*/
 	void ResetFlight()
 	{
-		m_vFlightPoints.Clear();
+		m_vFlyPathPoints.Clear();
 		m_vSplinePoints.Clear();
 
 		m_fRayLenMul = 0;
