@@ -76,14 +76,15 @@ The mission faction is defined in ``enemyFactions`` or individually per sub-miss
 * ``BALLIEN_BC_FACTION`` : Ballien Creatures - [MOD](https://reforger.armaplatform.com/workshop/6534B9CEB6D12EE7-BallienCreatures)
 * ``BACON_622120A5448725E3_FACTION`` : Bacon Zombies - [MOD](https://reforger.armaplatform.com/workshop/622120A5448725E3-BaconZombies)
 * ``PLASTICBANDIT`` : Bandit Faction - [MOD](https://reforger.armaplatform.com/workshop/66C4458756B32594-BanditFaction)
-* ``ChinesePLA`` : Chinese People's Liberation Army (PLA) - [MOD](https://reforger.armaplatform.com/workshop/60A6507633AB1954-ChinesePLA)
-* ``JSDF_RAS`` : Japan Self-Defense Forces (JSDF) - [MOD](https://reforger.armaplatform.com/workshop/658809A83416F34D-JapanSelf-DefenseForces)
-* ``Takistan`` : Takistani Army - [MOD](https://reforger.armaplatform.com/workshop/611A2A77548D2F97-TakistaniArmy)
 * ``AFOA, DSF`` : Argentinian Infantry forces - [MOD](https://reforger.armaplatform.com/workshop/685771C973A5516B)
 * WIP: ``TF_US, TF_RF`` : Tactical Flava - [MOD](https://reforger.armaplatform.com/workshop/DEADC0DE00000000-TacticalFlava-Core)
 * ``CLA`` : FF-Chernarus Liberation Army - [MOD](https://reforger.armaplatform.com/workshop/69E4E0B84E0FD9ED-FF-ChernarusLiberationArmy)
 * Unsupported values
   * ``MEC``
+* Supported, but mod is not available anymore
+  * ``ChinesePLA`` : Chinese People's Liberation Army (PLA) - [MOD](https://reforger.armaplatform.com/workshop/60A6507633AB1954-ChinesePLA)
+  * ``JSDF_RAS`` : Japan Self-Defense Forces (JSDF) - [MOD](https://reforger.armaplatform.com/workshop/658809A83416F34D-JapanSelf-DefenseForces)
+  * ``Takistan`` : Takistani Army - [MOD](https://reforger.armaplatform.com/workshop/611A2A77548D2F97-TakistaniArmy)
 
 You can define multiple factions and when enemies are chosen, the faction is chosen randomly per mission. 
 
