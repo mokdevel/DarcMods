@@ -219,6 +219,11 @@ modded class SDRC_ChopperComp
 		}
 
 		AddDestination(SDRC_EFlyWayPointType.WP_CUT);
+		
+		AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, m_vEnemyPosition, index: 0);	//Note: index is used!
+		vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward * 3);
+		AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos, index: 0);					//Note: index is used!
+		
 		//Add WP_ATTACK and WP_PATROL to the list of next destinations. These are added as first items in the list and
 		//have to be added in reverse order to have WP_ATTACK as the first item.
 //		AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, hostilePos, index: 0);		//Note: index is used!
@@ -228,7 +233,7 @@ modded class SDRC_ChopperComp
 		
 //		AddDestination(SDRC_EFlyWayPointType.WP_FLY, fwdPoint, index: 0);				//Note: index is used!
 //		AddDestination(SDRC_EFlyWayPointType.WP_FLY, fwdPoint, index: 0);				//Note: index is used!
-		AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, m_vEnemyPosition, index: 0);	//Note: index is used!
+//		AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, m_vEnemyPosition, index: 0);	//Note: index is used!
 	}
 			
 	//------------------------------------------------------------------------------------------------

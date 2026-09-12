@@ -197,7 +197,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 				bool isOnLeft = SDRC_Math.IsPointOnLeft(p0, p1, p2);
 		
 				//Find a point along the fly path and move it away from the line along tangent					
-				vector newPoint = SDRC_Math.CreateOffsetMidPoint(p1, p2, (distance / 4), 0.4, isOnLeft);
+				vector newPoint = SDRC_Math.CreateOffsetMidPoint(p1, p2, (distance / 6), 0.2, isOnLeft);
 				AddFlyPathPoint(newPoint);
 				SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 100);
 			}
