@@ -94,14 +94,14 @@ modded class SDRC_ChopperComp : ScriptComponent
 		newPoint[1] = oldHeight[1];
 		AddFlyPathPoint(newPoint);
 		SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 50);		
-		newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward * 0.7);
+/*		newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward * 0.7);
 		newPoint[1] = oldHeight[1];
 		AddFlyPathPoint(newPoint);
 		SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 50);
 		newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward);
 		newPoint[1] = oldHeight[1];
 		AddFlyPathPoint(newPoint);
-		SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 50);
+		SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 50);*/
 		
 		//3. Create flight points. These are the main points on the path which are then used for spline	creation.
 		//   The points may be below the flight height (e.g. landing).
@@ -177,6 +177,37 @@ modded class SDRC_ChopperComp : ScriptComponent
 
 			SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 150);
 		}*/
+
+		if (true)
+		{
+			//Create a point that smoothens the curve		
+			vector p0 = m_vOrigin;
+			vector p1 = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt;
+			vector p2 = m_vFlyDestinations[0].pt;		
+	
+			//Get the angle for the destination
+			float heliAngle = SDRC_Math.GetRadiansBetweenThreePointsXZ(p0, p1, p2) * Math.RAD2DEG;
+
+			if ( Math.AbsFloat(heliAngle) < (params.wpSteepAngle * 1.5) )
+			{
+				//Distance of last flight point defined and the next destination
+				float distance = vector.DistanceXZ(p1, p2);
+								
+				//Depending on the angle decide if we re-route left ot right				
+				bool isOnLeft = SDRC_Math.IsPointOnLeft(p0, p1, p2);
+		
+				//Find a point along the fly path and move it away from the line along tangent					
+				vector newPoint = SDRC_Math.CreateOffsetMidPoint(p1, p2, (distance / 4), 0.4, isOnLeft);
+				AddFlyPathPoint(newPoint);
+				SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 100);
+			}
+			else
+			{
+				vector newPoint = vector.Lerp(p1, p2, 0.5);
+				AddFlyPathPoint(newPoint);
+				SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 100);
+			}
+		}
 		
 		bool firstDestinationHandled = false;
 		bool oneShotHandled = false;
@@ -220,13 +251,14 @@ modded class SDRC_ChopperComp : ScriptComponent
 			{
 				if (!destinationHandled)
 				{	
-					//Distance of last flight point defined and the next destination
-					float distance = vector.DistanceXZ(m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt, flyDestination.pt);
-			
-					//Get the angle for the destination
 					vector p0 = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 2].pt;
 					vector p1 = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt;
 					vector p2 = flyDestination.pt;
+					
+					//Distance of last flight point defined and the next destination
+					//float distance = vector.DistanceXZ(m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt, flyDestination.pt);
+					float distance = vector.DistanceXZ(p0, p2);
+					//Get the angle for the destination
 					float heliAngle = SDRC_Math.GetRadiansBetweenThreePointsXZ(p0, p1, p2) * Math.RAD2DEG;
 		
 					SDRC_DebugHelper.AddDebugPos(p2, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 200);
@@ -247,7 +279,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 						SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle is steep: " + heliAngle, LogLevel.SPAM);
 						
 						//Get the last point
-						vector point = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt;
+						//vector point = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt;
+						vector point = p1;
 						
 						//We need to take a detour. Add an additional points outside of the line to make the route rounder				
 						float lerpRnd = SDRC_Misc.RandomFloat(params.detourLerpPosition * 0.5, params.detourLerpPosition * 1.5);
@@ -257,7 +290,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 						bool isOnLeft = SDRC_Math.IsPointOnLeft(p0, p1, p2);
 	
 						//Find a point along the fly path and move it away from the line along tangent					
-						vector vec2 = SDRC_Math.CreateOffsetMidPoint(point, flyDestination.pt, (distance / divRnd), lerpRnd, isOnLeft);
+						//vector vec2 = SDRC_Math.CreateOffsetMidPoint(point, flyDestination.pt, (distance / divRnd), lerpRnd, isOnLeft);
+						vector vec2 = SDRC_Math.CreateOffsetMidPoint(point, p2, (distance / divRnd), lerpRnd, isOnLeft);
 						//Find a similar point but now between the start and vec2
 						vector vec1 = SDRC_Math.CreateOffsetMidPoint(point, vec2, (distance / (divRnd * 1.5)), 0.5, isOnLeft);
 						AddFlyPathPoint(vec1);									
