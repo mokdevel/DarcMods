@@ -23,7 +23,6 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		pitchAngleRad 	   =  5 * Math.DEG2RAD;
 		pitchAngleRadFlat  = -85 * Math.DEG2RAD;	//pitchAngleRadFlat + pitchAngleRad is close 90 degrees
 		pitchNoseAngleDown = pitchAngleRadFlat + (10 * Math.DEG2RAD);
-//		pitchNoseAngleUp   = pitchAngleRadFlat - (60 * Math.DEG2RAD);
 		pitchNoseAngleUp   = pitchAngleRadFlat - (30 * Math.DEG2RAD);
 		
 		//Rotor force multipliers
@@ -49,7 +48,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		attackDefaultTime = 60;
 		
 		//Braking
-		brakingDistance = 120;
+		brakingDistance = 40;
 		
 		//Damage levels
 		damageHeavy = 0.90;
@@ -104,8 +103,6 @@ modded class SDRC_ChopperComp
 			return;
 		}
 
-		//HELICOPTER specific
-						
 		//Set engine on		
 		SetEngine(true, m_fThrottle, m_fRotorForce0, m_fRotorForce1);
 		
@@ -173,7 +170,23 @@ modded class SDRC_ChopperComp
 
 		health = SDRC_VehicleHelper.GetHealthScaled(owner, false);
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Set scaled health
+	*/	
+	override void TypeSetHealthScaled(IEntity owner, float health)
+	{
+		super.TypeSetHealthScaled(owner, health);
+		
+		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
+		{
+			return;
+		}
+		
+		//TBD: Currently not supported
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Handle the final parts after damage that breaks flying
@@ -206,9 +219,7 @@ modded class SDRC_ChopperComp
 
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Setup attacks. Search for the enemy and then react on the finding.
-	
-	- Normal case: If enemy is seen, consider dropping the grenade.
+	Setup attacks. Enemy was found in S&D state. Prepare an attack destination for a possible attack. 
 	*/
 	override void TypeAttackSetup(IEntity owner, vector hostilePos = vector.Zero)
 	{
@@ -224,17 +235,6 @@ modded class SDRC_ChopperComp
 		AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, m_vEnemyPosition, index: 0);	//Note: index is used!
 		vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward * 3);
 		AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos, index: 0);					//Note: index is used!
-		
-		//Add WP_ATTACK and WP_PATROL to the list of next destinations. These are added as first items in the list and
-		//have to be added in reverse order to have WP_ATTACK as the first item.
-//		AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, hostilePos, index: 0);		//Note: index is used!
-//		vector direction = vector.Direction(owner.GetOrigin(), m_vEnemyPosition);
-//		direction.Normalize();
-//		vector fwdPoint = owner.GetOrigin() + direction * 200;
-		
-//		AddDestination(SDRC_EFlyWayPointType.WP_FLY, fwdPoint, index: 0);				//Note: index is used!
-//		AddDestination(SDRC_EFlyWayPointType.WP_FLY, fwdPoint, index: 0);				//Note: index is used!
-//		AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, m_vEnemyPosition, index: 0);	//Note: index is used!
 	}
 			
 	//------------------------------------------------------------------------------------------------

@@ -254,7 +254,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		
 					SDRC_DebugHelper.AddDebugPos(p2, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 200);
 					
-					SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Distance: " + distance + " - Angle: " + heliAngle, LogLevel.DEBUG);
+					//SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Distance: " + distance + " - Angle: " + heliAngle, LogLevel.DEBUG);
 					
 					//Is the angle too steep? Re-route.
 					if (Math.AbsFloat(heliAngle) < params.wpSteepAngle)
@@ -345,6 +345,13 @@ modded class SDRC_ChopperComp : ScriptComponent
 				//NOTE: m_vAttackPosition has been set in AddDestination
 				break;
 			}
+			case SDRC_EFlyWayPointType.WP_CRASH:
+			{
+				SetState(SDRC_EHeliState.CRASH);
+				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, -1);
+				//NOTE: m_vAttackPosition has been set in AddDestination
+				break;
+			}			
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 			{	
 				SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, value);

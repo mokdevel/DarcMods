@@ -322,6 +322,9 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_CRASH:
 				SetState(SDRC_EHeliState.CRASH);			
 				break;
+			case SDRC_EFlyWayPointType.WP_DESTROY:
+				TypeSetHealthScaled(owner, 0);
+				break;
 			default:
 				SDRC_Log.Add("[SDRC_ChopperComp:SetNextState] State not defined: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.WARNING);
 		}
@@ -336,6 +339,49 @@ modded class SDRC_ChopperComp
 		}
 	}		
 			
+	//------------------------------------------------------------------------------------------------	
+	// States 
+	//------------------------------------------------------------------------------------------------	
+	
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Handle state (machine)
+	*/
+	override private void HandleState(IEntity owner, float timeSlice)
+	{	
+		switch (m_eHeliState)
+		{
+			case SDRC_EHeliState.LAND_VERTICAL:
+			{
+				HandleLandingVertical(owner, timeSlice);	
+				break;
+			}
+			case SDRC_EHeliState.BRAKE:
+			{
+				HandleBraking(owner, timeSlice);	
+				break;
+			}
+			case SDRC_EHeliState.CRASH:
+			{
+				HandleCrashing(owner, timeSlice);	
+				break;
+			}
+			case SDRC_EHeliState.GET_OUT:
+			{
+				SetNextState(owner);
+				break;				
+			}			
+		}
+		
+		//Wait for the state timer to end and go to next state
+		if (    (m_eHeliState != SDRC_EHeliState.FLY) 			//We do not automatically change state when flying
+		     //&& (m_eHeliState != SDRC_EHeliState.RAISE) 		//..or raising
+		     && (m_fTimeInStateLeft < 0) && m_bTimeInStateEnabled) 
+		{
+				SetNextState(owner);
+		}
+	}	
+	
 	//------------------------------------------------------------------------------------------------	
 	// Special handling
 	//------------------------------------------------------------------------------------------------	
@@ -443,7 +489,7 @@ modded class SDRC_ChopperComp
 			else 
 			{
 				//If no component to use for ground contact, check with altitude
-				if ( (SDRC_Misc.GetSurfaceYWithWater(m_vOrigin)) < (m_vOrigin[1] + 0.1) )
+				if ( m_vOrigin[1] < (SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + 0.3) )
 				{
 					SetNextState(owner);			
 				}				

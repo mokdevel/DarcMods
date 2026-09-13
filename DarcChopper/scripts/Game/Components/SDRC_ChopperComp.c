@@ -921,12 +921,11 @@ modded class SDRC_ChopperComp : ScriptComponent
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Clear the destination as a preparation for a completely new path. This also resets timers.
+	Clear the destination as a preparation for a completely new path.
 	*/
 	private void ResetDestinations()
 	{
 		m_vFlyDestinations.Clear();
-		ResetAttack();
 		m_fTimerBehaviour = 0;
 		SetTimeInState(0);
 	}	
@@ -1127,6 +1126,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	Type specific to get scaled health
 	*/	
 	void TypeGetHealthScaled(IEntity owner, out float health) {}
+	void TypeSetHealthScaled(IEntity owner, float health) {}
 	
 	//------------------------------------------------------------------------------------------------
 	/*!

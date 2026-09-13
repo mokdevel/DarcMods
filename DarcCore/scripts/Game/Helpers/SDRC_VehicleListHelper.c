@@ -36,12 +36,11 @@ sealed class SDRC_VehicleListHelper
 			
 			foreach (SDRC_List list : m_Config.lists)
 			{
-				SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);	//NOTE: SDRC_ListConfig:Populate left here on purpose! 
+				SDRC_Log.Add("[SDRC_ListConfig:Populate] List: " + list.id + " (" + list.items.Count() + ")", LogLevel.DEBUG);	//NOTE: Prefix SDRC_ListConfig:Populate left here on purpose! 
 				
-				//Print a detailed list of items when debug level is ALL
-				//if (SDRC_Log.GetLogLevel() > DC_LogLevel.DEBUG)
-				{				
-					list.items.Debug();
+				foreach (int i, string item : list.items)
+				{
+					SDRC_Log.Add("[SDRC_ListConfig:Populate] [" + i + "] " + SDRC_Misc.GetSimpleEntityName(item) + " (" + list.factions[i] + ")", LogLevel.DEBUG);	//NOTE: Prefix SDRC_ListConfig:Populate left here on purpose! 
 				}
 			}
 			

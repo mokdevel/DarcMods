@@ -86,15 +86,16 @@ enum SDRC_EFlyWayPointType
 	WP_CRASH,					//18 - 
 	
 	//One shot commands
-	WP_GET_OUT,					//19 - Orders AI to get out
-	WP_STOP_ENGINE,				//20 - Does the action and goes to WAIT state
-	WP_ATTACK,					//21 - Sets attack position and time and then FLY
-	WP_SEARCH_DESTROY,			//   - Search for enemy by patroling an area. If enemy is found, attack the location.
-	WP_RESET,					//   - Reset destinations and flight patg. Cut the current flight planned and pick the next destination in the list.
-	WP_CUT,						//   - Cut the current flight planned and pick the next destination in the list.
+	WP_GET_OUT = 30,			//30 - Orders AI to get out
+	WP_STOP_ENGINE,				//31 - Does the action and goes to WAIT state
+	WP_ATTACK,					//32 - Sets attack position and time and then FLY
+	WP_SEARCH_DESTROY,			//33 - Search for enemy by patroling an area. If enemy is found, attack the location.
+	WP_RESET,					//34 - Reset destinations and flight patg. Cut the current flight planned and pick the next destination in the list.
+	WP_CUT,						//35 - Cut the current flight planned and pick the next destination in the list.
+	WP_DESTROY,					//36 - Destroys the entity via damage, explosion or similar
 	
 	//Macro actions
-	WP_M_LAND,					//50 - Land to a position by doing WP_BRAKE and WP_LAND
+	WP_M_LAND = 50,					//50 - Land to a position by doing WP_BRAKE and WP_LAND
 	WP_M_LAND_TROOPS,			//   - Drop of troops to exact position, wait and leave
 	WP_M_LAND_TO_FREE_SPOT,		//   - Drop of troops, but search for empty spot. Stop engine.
 	WP_M_EVAC_TROOPS,			//   - Drop troops to a safe spot and stop engine

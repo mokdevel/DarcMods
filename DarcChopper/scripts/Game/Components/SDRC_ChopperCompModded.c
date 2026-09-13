@@ -486,6 +486,7 @@ modded class SDRC_ChopperComp
 				//Fly immediately to a destination
 				//Remove any existing destination
 				ResetDestinations();
+				ResetAttack();
 				SDRC_ChopperCompCore.ResetOriginalValuesComp(this);
 				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
 				type = SDRC_EFlyWayPointType.WP_FLY;
@@ -496,6 +497,7 @@ modded class SDRC_ChopperComp
 			{
 				//Fly away immediately
 				ResetDestinations();
+				ResetAttack();
 				SDRC_ChopperCompCore.ResetOriginalValuesComp(this);
 				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
 				//NOTE: Will drop through WP_FLY_AWAY
@@ -559,18 +561,17 @@ modded class SDRC_ChopperComp
 				m_fBrakingDistance = value;
 				break;
 			}
-			case SDRC_EFlyWayPointType.WP_CUT:
+			case SDRC_EFlyWayPointType.WP_RESET:
 			{
+				ResetDestinations();
+				ResetAttack();
+				SDRC_ChopperCompCore.ResetOriginalValuesComp(this);
 				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
 				addDestinationPoint = false;
 				break;
 			}
-			case SDRC_EFlyWayPointType.WP_RESET:
+			case SDRC_EFlyWayPointType.WP_DESTROY:
 			{
-				ResetDestinations();
-				SDRC_ChopperCompCore.ResetOriginalValuesComp(this);
-				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
-				addDestinationPoint = false;
 				break;
 			}
 			
@@ -700,49 +701,6 @@ modded class SDRC_ChopperComp
 		}
 	}		
 
-	//------------------------------------------------------------------------------------------------	
-	// States 
-	//------------------------------------------------------------------------------------------------	
-	
-	//------------------------------------------------------------------------------------------------	
-	/*!	
-	Handle state (machine)
-	*/
-	override private void HandleState(IEntity owner, float timeSlice)
-	{	
-		switch (m_eHeliState)
-		{
-			case SDRC_EHeliState.LAND_VERTICAL:
-			{
-				HandleLandingVertical(owner, timeSlice);	
-				break;
-			}
-			case SDRC_EHeliState.BRAKE:
-			{
-				HandleBraking(owner, timeSlice);	
-				break;
-			}
-			case SDRC_EHeliState.CRASH:
-			{
-				HandleCrashing(owner, timeSlice);	
-				break;
-			}
-			case SDRC_EHeliState.GET_OUT:
-			{
-				SetNextState(owner);
-				break;				
-			}			
-		}
-		
-		//Wait for the state timer to end and go to next state
-		if (    (m_eHeliState != SDRC_EHeliState.FLY) 			//We do not automatically change state when flying
-		     //&& (m_eHeliState != SDRC_EHeliState.RAISE) 		//..or raising
-		     && (m_fTimeInStateLeft < 0) && m_bTimeInStateEnabled) 
-		{
-				SetNextState(owner);
-		}
-	}	
-	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Handle behaviour
@@ -790,8 +748,9 @@ modded class SDRC_ChopperComp
 			return;
 		}
 		
-		//If enemy is near by, enter S&D behaviour
-		if (m_vEnemyPosition != vector.Zero)
+		//If enemy is near by, enter S&D behaviour in case we're in normal behaviour. 
+		//If we're passive, doing evac or .. we don't want S&D to happen.
+		if ( (m_vEnemyPosition != vector.Zero) && (GetBehaviour() == SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) )
 		{
 			//If yes, become aggressive and/or reset timer.
 			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, params.timeSearchAndDestroy);
