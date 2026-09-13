@@ -35,7 +35,7 @@ class SDRC_ChopperHelper
 		}
 		else
 		{
-			newpos = SDRC_Misc.GetCoordinatesOnCircle(pos, distance, SDRC_Misc.RandomInt(0, 360));
+			newpos = SDRC_Math.GetCoordinatesOnCircle(pos, distance, SDRC_Misc.RandomInt(0, 360));
 		}
 				
 		return newpos;
@@ -729,7 +729,7 @@ class SDRC_ChopperHelper
 		{					
 			float step = 1 - (i / (points - 1));	//NOTE: The step will not go from 1..0 but end a little earlier.
 
-			vector ptc = SDRC_Misc.GetCoordinatesOnCircle(vector.Zero, 100, 90 * (i / (points - 1)));
+			vector ptc = SDRC_Math.GetCoordinatesOnCircle(vector.Zero, 100, 90 * (i / (points - 1)));
 			
 			vector pt = vector.Lerp(v1, v0, step);						
 			pt[1] = p1 + pdiff * (ptc[0] / 100);
@@ -755,14 +755,14 @@ class SDRC_ChopperHelper
 	/*!	
 	Finetune the vertical velocity to follow the spline smoothly
 	
-	\param helicopterPos Position of helicopter 
+	\param fromPos Position of from where to count. E.g. helicopter position
 	\param targetPos Destination where we're going. 
 	\param maxVerticalVelocity The maximum (rotor) force up-down 
 	\param responseDistance The distance to react to change
 	*/
-	static float GetVerticalVelocity(vector helicopterPos, vector targetPos, float maxVerticalVelocity, float responseDistance)
+	static float GetVerticalVelocity(vector fromPos, vector targetPos, float maxVerticalVelocity, float responseDistance)
 	{
-	    float error = targetPos[1] - helicopterPos[1];
+	    float error = targetPos[1] - fromPos[1];
 	
 	    float factor = error / responseDistance;
 		factor = Math.Clamp(factor, -1.0, 1.0);

@@ -87,21 +87,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 		// 1. Clear any existing path points. 
 		ResetFlight();
 		
-		// 2. Add a point in front
-		
+		// 2. Add a point in front		
 		SDRC_DebugHelper.DeleteDebugPos(m_sDid + "line");
 		vector newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward * 0.4);
 		newPoint[1] = oldHeight[1];
 		AddFlyPathPoint(newPoint);
-		SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 50);		
-/*		newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward * 0.7);
-		newPoint[1] = oldHeight[1];
-		AddFlyPathPoint(newPoint);
-		SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 50);
-		newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward);
-		newPoint[1] = oldHeight[1];
-		AddFlyPathPoint(newPoint);
-		SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 50);*/
+		//SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 50);		
 		
 		//3. Create flight points. These are the main points on the path which are then used for spline	creation.
 		//   The points may be below the flight height (e.g. landing).
@@ -199,13 +190,13 @@ modded class SDRC_ChopperComp : ScriptComponent
 				//Find a point along the fly path and move it away from the line along tangent					
 				vector newPoint = SDRC_Math.CreateOffsetMidPoint(p1, p2, (distance / 6), 0.2, isOnLeft);
 				AddFlyPathPoint(newPoint);
-				SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 100);
+				//SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 100);
 			}
 			else
 			{
 				vector newPoint = vector.Lerp(p1, p2, 0.5);
 				AddFlyPathPoint(newPoint);
-				SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 100);
+				//SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 100);
 			}
 		}
 		

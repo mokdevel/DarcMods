@@ -829,49 +829,40 @@ modded class SDRC_ChopperComp : ScriptComponent
 				m_fDistanceFromSplineMul = 0.05 * percentage + Math.AbsFloat(m_fDistanceFromSplineMul) * percentage;
 				break;
 			}		
+			case SDRC_EHeliState.HOVER:
+			{				
+				break;
+			}
 			case SDRC_EHeliState.RAISE:
 			{
-				//rotorForce = params.iRotorForceRaise;
 				break;
 			}
 			case SDRC_EHeliState.BRAKE:
 			{
 				//In BRAKE state, do movemements faster
-				rotorForce = rotorForce * params.iRotorForceBrake;
+				rotorForce = params.iRotorForceBrake;
 				break;
 			}		
 			case SDRC_EHeliState.CRASH:
 			{
 				//In CRASH state, do movemements faster
-				rotorForce = rotorForce * params.iRotorForceCrash;
+				rotorForce = params.iRotorForceCrash;
 				break;
 			}		
-			case SDRC_EHeliState.HOVER:
-			{				
-				//Stay in one place
-				//rotorForce = params.iRotorForceHover;
-				//m_fDistanceFromSplineMul = 1.0;
-				break;
-			}
 			case SDRC_EHeliState.FLY:
 			{
 				//Modify if we're too close to the ground, do additional raise
 				//We only care about situation when we're below m_fFlyHeightLow
-				m_fBelowFlyHeightLowMul = 1 + ((m_fFlyHeightLow - m_fAltitude) / m_fAltitude);
-				m_fBelowFlyHeightLowMul = Math.Clamp(m_fBelowFlyHeightLowMul, 1, 100);
+				if (m_fAltitude < m_fFlyHeightLow)
+				{
+					vector flyHeightLowPoint = m_vOrigin;
+					flyHeightLowPoint[1] = GetGame().GetWorld().GetSurfaceY(m_vOrigin[0], m_vOrigin[2]) + m_fFlyHeightLow;
+					m_fBelowFlyHeightLowMul = 1 + SDRC_ChopperHelper.GetVerticalVelocity(m_vOrigin, flyHeightLowPoint, 4 * m_fRotorForce0, 50.0);
+				}
 				
-				LerpRayLenMul(owner);				
+				LerpRayLenMul(owner);
 			}
 		}
-
-		//Handle lerps
-		//Lerp below minimyn fly height correction
-/*		if (m_fTimeRay < RAY_INTERVAL)
-		{
-			float ts = m_fTimeRay / RAY_INTERVAL;
-			m_fRayLenMul = Math.Lerp(m_fRayLenMulStart, m_fRayLenMulTarget, ts);
-			//m_fRayLenMul = Math.Clamp(m_fRayLenMul, m_fSpeedMin, m_fSpeedMax);
-		}		*/
 
 		//Set the final Rotor Force				
 		m_fRotorForceMultiplier = rotorForce * m_fBelowFlyHeightLowMul * m_fDistanceFromSplineMul * m_fRayLenMul;

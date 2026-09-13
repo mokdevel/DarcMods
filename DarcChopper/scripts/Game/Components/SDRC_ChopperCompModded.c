@@ -646,11 +646,11 @@ modded class SDRC_ChopperComp
 				{
 					float angle = SDRC_Misc.RandomFloat(0, 360);
 					float distance = SDRC_Misc.RandomFloat(100, 200);
-					vector rndPos = SDRC_Misc.GetCoordinatesOnCircle(destination, distance, angle);
+					vector rndPos = SDRC_Math.GetCoordinatesOnCircle(destination, distance, angle);
 					rndPos[1] = 0;	//Zero height to get a random height in SetFlightPointHeight()
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_FLY, rndPos, 0);
 					distance = SDRC_Misc.RandomFloat(200, 400);
-					rndPos = SDRC_Misc.GetCoordinatesOnCircle(destination, distance, angle + SDRC_Misc.RandomFloat(-120, 120));
+					rndPos = SDRC_Math.GetCoordinatesOnCircle(destination, distance, angle + SDRC_Misc.RandomFloat(-120, 120));
 					rndPos[1] = 0;	//Zero height to get a random height in SetFlightPointHeight()
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_FLY, rndPos, 0);
 					AddDestinationPoint(SDRC_EFlyWayPointType.WP_ATTACK, destination, value);

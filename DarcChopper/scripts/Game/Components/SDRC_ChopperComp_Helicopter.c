@@ -17,21 +17,22 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		turnTimeIntervalBase = 120;
 	
 		//Roll 
-		rollAngleMul = 2.4;
+		rollAngleMul = 1.2;//2.4;
 		
 		//Pitch
 		pitchAngleRad 	   =  5 * Math.DEG2RAD;
 		pitchAngleRadFlat  = -85 * Math.DEG2RAD;	//pitchAngleRadFlat + pitchAngleRad is close 90 degrees
 		pitchNoseAngleDown = pitchAngleRadFlat + (10 * Math.DEG2RAD);
-		pitchNoseAngleUp   = pitchAngleRadFlat - (60 * Math.DEG2RAD);
+//		pitchNoseAngleUp   = pitchAngleRadFlat - (60 * Math.DEG2RAD);
+		pitchNoseAngleUp   = pitchAngleRadFlat - (30 * Math.DEG2RAD);
 		
 		//Rotor force multipliers
 		fRotorForceMulUp = 15.0;
-		iRotorForceNormal = 15;
+		iRotorForceNormal = 20;
 //		iRotorForceRaise = 30;
 //		iRotorForceHover = 5;
-		iRotorForceCrash = 15;
-		iRotorForceBrake = 8;
+		iRotorForceCrash = iRotorForceNormal * 4;
+		iRotorForceBrake = iRotorForceNormal * 3;
 		
 		//Obstacle awareness
 		rayLenFront = 400;

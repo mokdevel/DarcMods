@@ -270,9 +270,10 @@ class SDRC_ChopperDebug
 								" \n";
 			debugText = debugText + 
 							   	"RotorForceMul:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fRotorForceMultiplier, 2) + 
-							   	" Low:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fBelowFlyHeightLowMul, 2) + 
-							   	" Spl:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fDistanceFromSplineMul, 2) + 
-							   	" Ray:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fRayLenMul, 2) + 
+								" \n" + 
+							   	" Low:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fBelowFlyHeightLowMul, 1) + 
+							   	" Spl:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fDistanceFromSplineMul, 1) + 
+							   	" Ray:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fRayLenMul, 1) + 
 								" \n";
 			debugText = debugText + 
 //							   	"Alt:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fAltitude) + " " + textAltAgl + "\n" + 
