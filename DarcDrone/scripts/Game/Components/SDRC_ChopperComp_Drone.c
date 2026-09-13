@@ -33,10 +33,10 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		
 		//Rotor force multipliers
 		fRotorForceMulUp = 14;
-		iRotorForceNormal = 30;
+		iRotorForceNormal = 25;
 //		iRotorForceRaise = 40;
 //		iRotorForceHover = 1;
-		iRotorForceCrash = iRotorForceNormal * 1.0;
+		iRotorForceCrash = iRotorForceNormal * 2.3;
 		iRotorForceBrake = iRotorForceNormal * 3;
 		
 		//Obstacle awareness
