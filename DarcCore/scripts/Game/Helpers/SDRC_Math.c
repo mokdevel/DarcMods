@@ -160,6 +160,32 @@ sealed class SDRC_Math
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
+	Find a point on circle with given radius and angle in degrees (0-360)
+	*/
+    static vector GetCoordinatesOnCircle(vector vec, float radius, float angleInDegrees, float startAngle = 0)
+    {
+        // Convert the angle to radians
+//        float angleInRadians = AngleToRadians(startAngle + angleInDegrees);
+        float angleInRadians = (startAngle + angleInDegrees) * Math.DEG2RAD;
+
+        // Calculate the coordinates using trigonometric functions
+        vec[0] = vec[0] + radius * Math.Cos(angleInRadians);
+        vec[2] = vec[2] + radius * Math.Sin(angleInRadians);
+
+		return vec;
+    }	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Convert angle in degrees (0-360) to radians 
+	*/
+/*	static float AngleToRadians(float angle)
+	{
+		return (angle) * (Math.PI / 180.0);
+	}*/
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
 	Convert a vector to angle in degrees (0-360) to radians 
 	*/
 	static float VectorToAngle(vector direction)
@@ -256,7 +282,8 @@ sealed class SDRC_Math
 	*/
 	static vector MovePosToAngle(vector pos, float distance, float angle)
 	{
-	    float angleInRadians = SDRC_Misc.AngleToRadians(angle);
+//	    float angleInRadians = SDRC_Math.AngleToRadians(angle);
+	    float angleInRadians = angle  * Math.DEG2RAD;
 	
 	    // Calculate the new x and y coordinates
 	    pos[0] = pos[0] + distance * Math.Cos(angleInRadians);
@@ -292,7 +319,8 @@ sealed class SDRC_Math
 		Math3D.MatrixIdentity3(transform);
 		transform[3] = pos;
 						
-		SCR_Math3D.RotateAround(transform, pivot, "0 1 0", SDRC_Misc.AngleToRadians(rotation), newtransform);			
+//		SCR_Math3D.RotateAround(transform, pivot, "0 1 0", SDRC_Math.AngleToRadians(rotation), newtransform);			
+		SCR_Math3D.RotateAround(transform, pivot, "0 1 0", rotation  * Math.DEG2RAD, newtransform);			
 		
 		return newtransform[3];		
 	}

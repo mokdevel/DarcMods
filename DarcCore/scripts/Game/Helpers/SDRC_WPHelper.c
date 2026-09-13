@@ -268,7 +268,7 @@ sealed class SDRC_WPHelper
 			
 			for (int i = 0; i < count; i++)
 			{				
-				vector vec = SDRC_Misc.GetCoordinatesOnCircle(posFrom, range, i*(360/count), startAngle);
+				vector vec = SDRC_Math.GetCoordinatesOnCircle(posFrom, range, i*(360/count), startAngle);
 				
 				AIWaypoint waypoint = FindAndCreateWaypoint(vec, moveType, (range/8), emptyspot);
 				if (waypoint != null)

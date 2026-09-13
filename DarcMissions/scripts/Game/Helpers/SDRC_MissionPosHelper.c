@@ -151,7 +151,7 @@ class SDRC_MissionPosHelper
 		
 		for (int i = 0; i < 12; i++)
 		{
-			vector testPos = SDRC_Misc.GetCoordinatesOnCircle(pos, radius + (i*30), i*(360/12), randomAngle);
+			vector testPos = SDRC_Math.GetCoordinatesOnCircle(pos, radius + (i*30), i*(360/12), randomAngle);
 			if (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(testPos, 200))
 			{
 				//Check that the suggested position is not in water nor nonValidArea

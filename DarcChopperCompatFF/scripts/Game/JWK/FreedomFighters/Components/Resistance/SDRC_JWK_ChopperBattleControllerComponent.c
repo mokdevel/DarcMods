@@ -163,7 +163,7 @@ class SDRC_JWK_ChopperBattleControllerComponent: JWK_EntityComponent
 		}
 		
 		//Set to initial position, rotation and spawn
-		m_vPosOrigin = SDRC_Misc.GetCoordinatesOnCircle(m_vPosDestination, 500, SDRC_Misc.RandomInt(0, 360));
+		m_vPosOrigin = SDRC_Math.GetCoordinatesOnCircle(m_vPosDestination, 500, SDRC_Misc.RandomInt(0, 360));
 		m_vPosOrigin[1] = SDRC_Misc.RandomFloat(m_DC_Attack.flyHeight[0], m_DC_Attack.flyHeight[1]) + SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin);		
 		
 		ref IEntity vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosOrigin, resourceName, 0, -1, false);

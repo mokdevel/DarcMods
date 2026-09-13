@@ -128,30 +128,7 @@ sealed class SDRC_Misc
 	}
 	
 	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Find a point on circle with given radius and angle in degrees (0-360)
-	*/
-    static vector GetCoordinatesOnCircle(vector vec, float radius, float angleInDegrees, float startAngle = 0)
-    {
-        // Convert the angle to radians
-        float angleInRadians = AngleToRadians(startAngle + angleInDegrees);
 
-        // Calculate the coordinates using trigonometric functions
-        vec[0] = vec[0] + radius * Math.Cos(angleInRadians);
-        vec[2] = vec[2] + radius * Math.Sin(angleInRadians);
-
-		return vec;
-    }	
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Convert angle in degrees (0-360) to radians 
-	*/
-	static float AngleToRadians(float angle)
-	{
-		return (angle) * (Math.PI / 180.0);
-	}
 
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -363,7 +340,7 @@ sealed class SDRC_Misc
 			pos[2] = SDRC_Misc.GetWorldSize()/2;
 		}
 		
-		pos = SDRC_Misc.GetCoordinatesOnCircle(pos, SDRC_Misc.GetWorldSize() * distancePercentage, SDRC_Misc.RandomInt(0, 360));
+		pos = SDRC_Math.GetCoordinatesOnCircle(pos, SDRC_Misc.GetWorldSize() * distancePercentage, SDRC_Misc.RandomInt(0, 360));
 		
 		return pos;
 	}

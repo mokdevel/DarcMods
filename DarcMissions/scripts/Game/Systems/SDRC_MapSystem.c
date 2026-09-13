@@ -368,7 +368,7 @@ class SDRC_MapSystem : GameSystem
 		for(int i = 0; i < n; i++)
 		{			
 			float angle = i * (350/n);
-			vector pos = SDRC_Misc.GetCoordinatesOnCircle(pos_center, r, angle);
+			vector pos = SDRC_Math.GetCoordinatesOnCircle(pos_center, r, angle);
 			drawCommand.m_Vertices.Insert(pos[0]);
 			drawCommand.m_Vertices.Insert(pos[2]);			
 		}
