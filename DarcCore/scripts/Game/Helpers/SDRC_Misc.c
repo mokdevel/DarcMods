@@ -191,7 +191,7 @@ sealed class SDRC_Misc
 	NOTE: Some maps may have the bounding box larger than the actualy play area (GenericTerrainEntity). 
 	In these cases the worldsize not correct.	
 	*/	
-	static int GetWorldSize()
+	static int GetWorldSize(out int otherSize = -1)
 	{
 		int worldSize = -1;
 		
@@ -200,7 +200,21 @@ sealed class SDRC_Misc
 			vector mins, maxs;
 			GetGame().GetWorld().GetBoundBox(mins, maxs);		
 			worldSize = FindMaxValue(maxs);
-			SDRC_Log.Add("[SDRC_Misc:GetWorldSize] Worldsize:" + worldSize, LogLevel.SPAM);
+			SDRC_Log.Add("[SDRC_Misc:GetWorldSize] Worldsize with GetBoundBox:" + worldSize, LogLevel.SPAM);
+			
+			GetGame().GetWorldEntity().GetTerrain(0, 0).GetTerrainBoundBox(mins, maxs);		
+			int worldSize2 = FindMaxValue(maxs);			
+			SDRC_Log.Add("[SDRC_Misc:GetWorldSize] Worldsize with GetTerrainBoundBox:" + worldSize2, LogLevel.SPAM);
+			
+			if (worldSize2 < worldSize)
+			{
+				otherSize = worldSize;
+				worldSize = worldSize2;
+			}
+			else
+			{
+				otherSize = worldSize2;
+			}
 		}
 						
 		return worldSize;
