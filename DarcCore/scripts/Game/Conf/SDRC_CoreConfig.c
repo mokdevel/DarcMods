@@ -59,6 +59,9 @@ class SDRC_CoreConfig : SDRC_Config
 			"FuelTank_",
 			//Kunar
 			"BigHBarrier", "Wall_E", "Wall_ATC", 
+			//Bystrany
+			"GateCollective", "Hayloft_", "PortableCabin", "CoalMineShaft", "CoalLoader", "SmokestackMetal", "GantryCrane", "SilageStorage", "Silo_0", "Well_0", "Fountain_", 
+			"Workshop_01_Side", "WaterTower_USSR", "FuelStation_E_01_roof", 
 		};
 		emptyPos.limit = 5;
 		emptyPos.ignoreFilter = {
