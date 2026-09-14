@@ -81,6 +81,7 @@ class SDRC_BuildingHelper
 			}
 			
 			ResourceName buildingName = building.GetPrefabData().GetPrefabName();
+			buildingName.ToLower();
 			
 			if (SCR_StringHelper.ContainsAny(buildingName, filter))
 			{
@@ -93,11 +94,19 @@ class SDRC_BuildingHelper
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Prepare an array with all houses on the map.
+	
+	\param 
 	NOTE: The list is not necessarily only buildings but anything you'd like to consider as a point for e.g. mission spawning. 
 	*/		
-	static void FillBuildingsCache(array<string> filter)
+	static void FillBuildingsCache(array<string> excludeFilter)
 	{
 		SDRC_Log.Add("[SDRC_BuildingHelper:FillBuildingsCache] Searching..", LogLevel.NORMAL);			
+		
+		foreach (int i, string filter : excludeFilter)
+		{
+			filter.ToLower();
+			excludeFilter[i] = filter;
+		}
 		
 		m_BuildingsCache.Clear();
 /*		float worldSize = SDRC_Misc.GetWorldSize();		
@@ -107,13 +116,14 @@ class SDRC_BuildingHelper
 		float radius = worldSize;*/
 		
 		m_TmpBuildings.Clear();
-		GetGame().GetWorld().QueryEntitiesBySphere(SDRC_Misc.GetWorldCenter(), SDRC_Misc.GetWorldSizeRadius(), FindBuildingCallback, null, EQueryEntitiesFlags.STATIC);		
+		GetGame().GetWorld().QueryEntitiesBySphere(SDRC_Misc.GetWorldCenter(), SDRC_Misc.GetWorldSizeRadius(), FindBuildingCallback, null, EQueryEntitiesFlags.STATIC | EQueryEntitiesFlags.NO_PROXIES);		
 
 		foreach (IEntity building : m_TmpBuildings)
 		{
 			ResourceName buildingName = building.GetPrefabData().GetPrefabName();
+			buildingName.ToLower();
 			
-			if (SCR_StringHelper.ContainsAny(buildingName, filter))
+			if (SCR_StringHelper.ContainsAny(buildingName, excludeFilter))
 			{
 				continue;
 			}
