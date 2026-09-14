@@ -2,6 +2,11 @@
 
 ## Next Version
 
+## 202609xx
+Main features:
+* All kinds of flight model finetuning.
+* Added WP_CRASH
+
 ## 20260829
 Main features:
 * Landing curves finetuned. Should land nicely on spot now. Obstacle awareness to be added later for those tight landings.

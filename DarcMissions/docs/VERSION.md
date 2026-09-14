@@ -14,6 +14,9 @@ Main Features:
 * Added LootE_SackUniversal_01 as a usable loot box.
 * Support for FF-Chernarus Liberation Army (CLA)
 
+Fixes:
+* Improved world size check. Should fix maps like Bystrany.
+
 ## 20260901
 Main Features:
 * Added a new HvtItem mission: Kill Wolf (enabled when BAR_FrenchAnimals mod is loaded)

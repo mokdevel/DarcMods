@@ -110,7 +110,7 @@ Raises the helicopter from the current position to given position while moving f
 
 ### WP_HOVER
 Hover the helicopter at current height. You should always do a ``WP_BRAKE`` before this.
-* ``destination`` : Not used.
+* ``destination`` : Not used. Will be set to the same as helicopter was when hovering was set.
 * ``value`` : Time to stay hovering
 
 ### WP_HOVER_UP
