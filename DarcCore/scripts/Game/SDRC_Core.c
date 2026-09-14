@@ -96,12 +96,22 @@ class SDRC_Core
 		{
 			hasRoadNetwork = true;
 		}
-		
+
+		//Check world size
+		int otherWorldSize = -1;
+		int worldSize = SDRC_Misc.GetWorldSize(otherWorldSize);
+		string worldSizeString = "" + worldSize;
+		if (otherWorldSize != -1)
+		{
+			worldSizeString = worldSizeString + " (vs. " + otherWorldSize + " - using smaller one)"
+		}
+				
+		//Print general information
 		SDRC_Log.Add("[SDRC_Core] -------- General information --------", LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] Platform: " + SDRC_Misc.GetPlatformName(), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] Conf destination: $profile:/" + SDRC_Conf.CONF_DIRECTORY + "/" + SDRC_Conf.subDir, LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World name: " + SDRC_Misc.GetWorldName(true), LogLevel.NORMAL);
-		SDRC_Log.Add("[SDRC_Core] World size: " + SDRC_Misc.GetWorldSize(), LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_Core] World size: " + worldSizeString, LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World has ocean: " + GetGame().GetWorld().IsOcean(), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World has road network: " + hasRoadNetwork, LogLevel.NORMAL);
 		
