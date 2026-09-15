@@ -244,13 +244,11 @@ modded class SDRC_ChopperComp : ScriptComponent
 	private vector m_fPositionLandingOrig;		//Position from where we start to descend
 	
 	//Braking related
-	const float BRAKE_SPEED_MODIFIER = 12.0;	//Modifier for deciding the final target speed for braking. Smaller value increases the final approach speed.
 	const float BRAKING_DISTANCE_END = 2.0;		//The distance to tell that we've reached the destination
 	private bool m_bIsBraking;					//If true, braking sequence has started
 	float m_fBrakingDistance;					//Distance for braking
-	private float m_fBrakingSpeed;				//The speed to brake the chopper
-	private float m_fSpeedBrakingOrig;			//Speed from where we start to brake
-	private vector m_fPositionBrakingOrig;		//Position from where we start to brake
+	private float m_fSpeedBrakingOrig;			//Speed from where we started to brake
+	private vector m_fPositionBrakingOrig;		//Position from where we started to brake
 	
 	//Crashing related
 	private bool m_bIsCrashing;					//If true, crashing sequence has started
@@ -655,9 +653,11 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_fSpeedStart = m_fSpeed;
 		m_fSpeedTarget = m_fSpeed * m_fSpeedMul;
 
-		if (GetState() != SDRC_EHeliState.CRASH)	//In crashing, we don't slow down
+		//If we're too close to ground, slow down the speed to allow time for climb
+		if ( (GetState() != SDRC_EHeliState.CRASH)	//In crashing, we don't slow down
+		  && (GetState() != SDRC_EHeliState.BRAKE)	//In braking, we don't slow down
+		   )
 		{
-			//If we're too close to ground, slow down the speed to allow time for climb
 			const int ALTITUDE_ADD = 5;
 			if ((m_fAltitude + ALTITUDE_ADD) < m_fFlyHeightLow)
 			{		
@@ -677,11 +677,15 @@ modded class SDRC_ChopperComp : ScriptComponent
 		//Handle yaw, pitch, roll		
 				
 		//ROLL PITCH: Change pitch according to speed
-		float mul = m_fSpeedMul;
-		if (mul < 1)
+		float mul = params.pitchMul * (m_fSpeedMul - 1);
+		if (m_fSpeedSlowingMul < 1)
+		{
+			mul = params.pitchMulBrake * (m_fSpeedMul - 1);
+		}
+/*		if (mul < 1)
 		{
 			mul = -30 * (1 + (1 - m_fSpeedSlowingMul));
-		}
+		}*/
 		
 		m_fAnglePitch = params.pitchAngleRadFlat + params.pitchAngleRad * mul;
 //		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleDown, params.pitchNoseAngleUp);	//Nose down, nose up

@@ -413,7 +413,7 @@ modded class SDRC_ChopperComp
 	{
 		vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];
 		float distance = vector.DistanceXZ(m_vOrigin, lastPt);
-
+		
 		if (distance < m_fBrakingDistance)
 		{
 			if (!m_bIsBraking)
@@ -426,8 +426,8 @@ modded class SDRC_ChopperComp
 			}
 			else
 			{
-				float distMul = distance / (m_fBrakingDistance * BRAKE_SPEED_MODIFIER);	//We use a shorter braking distance to keep the speed up for a bit longer
-				m_fSpeedTarget = m_fSpeedBrakingOrig * distMul + 0.3;
+				float distMul = (distance / m_fBrakingDistance) * (m_fSpeed / m_fSpeedBrakingOrig);
+				m_fSpeedTarget = m_fSpeedBrakingOrig * distMul + 0.1;
 				
 				//If we have passed the point, adjust values
 				if (SDRC_Math.HasPassedPointXZ(m_fPositionBrakingOrig, lastPt, owner.GetOrigin()))
@@ -440,7 +440,7 @@ modded class SDRC_ChopperComp
 				
 				//This affects yaw-pitch-roll counting in SetTurn
 				m_fSpeedSlowingMul = distMul;
-				
+									
 				if ( (distMul < 0.001) || (distance < BRAKING_DISTANCE_END) )
 				{
 					SetNextState(owner);

@@ -55,13 +55,6 @@ modded class SDRC_ChopperComp
 	{
 		SDRC_Log.Add("[SDRC_ChopperComp:Ready] Called..", LogLevel.DEBUG);
 		
-		//Add fly destinations added to prefab to the beginning of array.
-/*		array<ref SDRC_FlyPathPoint> flyDestinationsTemp = {};
-		foreach(SDRC_FlyPathPoint fpp : m_vFlyDestinationsOnPrefab)
-		{
-			flyDestinationsTemp.Insert(fpp);
-		}*/
-		
 		// Some things needs to be done delayed
 		if (m_bAutoStart)
 		{
@@ -74,23 +67,6 @@ modded class SDRC_ChopperComp
 		{
 			AddDestination(fpp.type, fpp.pt, fpp.value);
 		}		
-
-/*		//Prepare the first flight spline
-		SDRC_ChopperHelper.SetFlightPointHeight(owner);
-		
-		//Create points for spline
-		CreateFlightPoints(owner, true);
-		
-		array<vector> flyPathPoints = {};
-		SDRC_ChopperDebug.GivePoints(flyPathPoints, m_vFlightPoints);
-		SDRC_Spline3D.GenerateSplinePoints(flyPathPoints, m_vSplinePoints, -1);
-		
-		//Set final values		
-		m_iClosestIndex = 0;
-		m_iOldClosestIndex = m_iClosestIndex;
-		
-		//Check that points are above ground
-		SDRC_ChopperHelper.SetSplinePointsAboveGround(owner);*/
 		
 		m_fSpeed = 0.1;
 		m_fSpeedTarget = m_fSpeed;		

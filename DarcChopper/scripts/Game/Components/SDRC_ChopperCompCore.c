@@ -21,6 +21,8 @@ class SDRC_ChopperParams
 	float pitchAngleRadFlat;						//The pitch angle when chopper is flying flat. This value shall be between pitchNoseAngleDown and pitchNoseAngleUp
 	float pitchNoseAngleDown;						//Maximum angle to turn the vehicle nose down when in high speed.
 	float pitchNoseAngleUp;							//Maximum angle to turn the vehicle nose up when braking.
+	int pitchMul;									//Multiplier for pitchAngleRad 
+	int pitchMulBrake;								//Multiplier for pitchAngleRad when braking
 	
 	//Rotor force multipliers
 	float fRotorForceMulUp							//Rotor force multiplier in velocity counting. Bigger value makes the vehicle react faster to up/down movement but also starts stutter.

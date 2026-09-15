@@ -685,7 +685,7 @@ class SDRC_ChopperHelper
 			foreach (int i, vector pt : chopperComp.m_vSplinePoints)
 			{
 				float distance = vector.DistanceXZ(pt, chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1]);
-				if (distance < (chopperComp.m_fBrakingDistance * 1.8) )
+				if (distance < (chopperComp.m_fBrakingDistance * 1.4) )
 				{
 					idxFrom = i;
 					break;
