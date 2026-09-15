@@ -555,7 +555,7 @@ class SDRC_ChopperHelper
 		foreach (int i, vector pt : chopperComp.m_vSplinePoints)
 		{
 			float distance = vector.DistanceXZ(pt, chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1]);
-			if (distance < (chopperComp.m_fBrakingDistance * 1.4) )
+			if (distance < (chopperComp.m_fBrakingDistance * 1.8) )
 			{
 				idxFrom = i;
 				break;
@@ -685,26 +685,12 @@ class SDRC_ChopperHelper
 			foreach (int i, vector pt : chopperComp.m_vSplinePoints)
 			{
 				float distance = vector.DistanceXZ(pt, chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1]);
-				if (distance < (chopperComp.m_fBrakingDistance * 1.4) )
+				if (distance < (chopperComp.m_fBrakingDistance * 1.8) )
 				{
 					idxFrom = i;
 					break;
 				}
 			}
-			
-/*			//The max distance from current point to destination
-			float maxDistance = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePointBelow, chopperComp.m_vSplinePoints[idxTo]));
-			
-			//Calculate the point from where to turn the curve down.
-			for (int i = idxFrom; i < idxTo; i++)
-			{
-				float distanceToTarget = Math.AbsFloat(vector.DistanceXZ(chopperComp.m_vSplinePoints[i], chopperComp.m_vSplinePoints[idxTo]));
-				if (distanceToTarget < maxDistance / 1.1)
-				{
-					idxFrom = i;
-					break;
-				}
-			}*/
 		}
 					
 		if ((idxTo - idxFrom) <= 1)
@@ -735,7 +721,13 @@ class SDRC_ChopperHelper
 			pt[1] = p1 + pdiff * (ptc[0] / 100);
 			
 			chopperComp.m_vSplinePoints[idxFrom + i] = pt;
-		}		
+		}
+		
+		/* TBD: Check that the rest of the points are above last point to avoid holes
+			           ________
+			 ,--**'''\/
+			/         ^ this is to be avoided
+		*/
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -778,5 +770,34 @@ class SDRC_ChopperHelper
 	    factor = Math.Sin(factor * Math.PI * 0.5);
 	
 	    return factor * maxVerticalVelocity * sign;
-	}		
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Finetune the vertical velocity to follow the spline smoothly
+	
+	\param fromPos Position of from where to count. E.g. helicopter position
+	\param targetPos Destination where we're going. 
+	\param maxVerticalVelocity The maximum (rotor) force up-down 
+	\param responseDistance The distance to react to change
+	*/
+	static float GetVelocity(float fromPos, float targetPos, float maxVerticalVelocity, float responseDistance)
+	{
+	    float error = fromPos - targetPos;
+	
+	    float factor = error / responseDistance;
+		factor = Math.Clamp(factor, -1.0, 1.0);
+	
+	    float sign = 1.0;
+	
+	    if (factor < 0.0)
+	    {
+	        sign = -1.0;
+	        factor = -factor;
+	    }
+	
+	    factor = Math.Sin(factor * Math.PI * 0.5);
+	
+	    return factor * maxVerticalVelocity * sign;
+	}	
 }

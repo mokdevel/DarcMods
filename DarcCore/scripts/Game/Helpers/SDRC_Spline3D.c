@@ -38,9 +38,9 @@ sealed class SDRC_Spline3D
 				float distance = vector.DistanceXZ(controlPoints[i], controlPoints[i + 1]);
 				
 				//Distance between points				
-				int divider = SDRC_Misc.RandomInt(10, 30);				
+				int divider = SDRC_Misc.RandomInt(8, 20);				
 								
-				samplesPerSegment = Math.ClampInt(distance / divider, 5, 100);
+				samplesPerSegment = Math.ClampInt(distance / divider, 10, 100);
 			}
 						
 			// Handle start and end edges

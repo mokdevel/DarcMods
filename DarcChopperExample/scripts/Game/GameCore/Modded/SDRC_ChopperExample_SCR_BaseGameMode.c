@@ -52,7 +52,7 @@ modded class SCR_BaseGameMode
 				m_ChopperExample_4 = new SDRC_ChopperExample_04();				
 //				m_ChopperExample_5 = new SDRC_ChopperExample_05();
 //				m_ChopperExample_6 = new SDRC_ChopperExample_06();
-				m_ChopperExample_9 = new SDRC_ChopperExample_09();
+//				m_ChopperExample_9 = new SDRC_ChopperExample_09();
 		}
 		else
 		{

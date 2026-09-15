@@ -4,7 +4,6 @@
 //class SDRC_ChopperComp : ScriptGameComponent
 modded class SDRC_ChopperComp
 {
-	const float BRAKING_DISTANCE_END = 3.0;		//The distance to tell that we've reached the destination
 	const int VERTICAL_SPLINE_POINTS = 3;		//How many vertical spline points to create
 	
 	//------------------------------------------------------------------------------------------------
@@ -442,7 +441,7 @@ modded class SDRC_ChopperComp
 				//This affects yaw-pitch-roll counting in SetTurn
 				m_fSpeedSlowingMul = distMul;
 				
-				if ( (distMul < 0.01) || (distance < BRAKING_DISTANCE_END) )
+				if ( (distMul < 0.001) || (distance < BRAKING_DISTANCE_END) )
 				{
 					SetNextState(owner);
 				}

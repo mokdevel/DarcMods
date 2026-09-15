@@ -273,6 +273,7 @@ class SDRC_ChopperDebug
 								" \n" + 
 							   	" Low:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fBelowFlyHeightLowMul, 1) + 
 							   	" Spl:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fDistanceFromSplineMul, 1) + 
+							   	" Far:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fDistanceFromSplineMulFar, 1) + 
 							   	" Ray:" + SDRC_Misc.FloatWithDecimals(chopperComp.m_fRayLenMul, 1) + 
 								" \n";
 			debugText = debugText + 
@@ -369,12 +370,15 @@ class SDRC_ChopperDebug
 		SDRC_ChopperDebug.DrawLine(origin, origin + (vVel * chopperComp.m_fSpeed), Color.GRAY_75);			
 		
 		//Draw raycast stuff
-		int color = Color.GREEN;
-		if (chopperComp.m_vRayLen < 1)
+		if (chopperComp.m_vRayEnd != vector.Zero)
 		{
-			color = Color.RED;
+			int color = Color.GREEN;
+			if (chopperComp.m_vRayLen < 1)
+			{
+				color = Color.RED;
+			}
+			SDRC_ChopperDebug.DrawLine(origin, chopperComp.m_vRayEnd, color);		
 		}
-		SDRC_ChopperDebug.DrawLine(origin, chopperComp.m_vRayEnd, color);		
 		
 		//Enemy stuff
 		
