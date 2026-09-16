@@ -60,7 +60,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	[Attribute(category: "Chopper", defvalue: "15.0", desc: "Minimum speed", params: "1.0 100.0 0.1")]	
 	float m_fSpeedMin;				//Minimum speed
 	float m_fSpeedMinOrig = 2;
-	[Attribute(category: "Chopper", defvalue: "40.0", desc: "Maximum speed", params: "1.0 100.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "60.0", desc: "Maximum speed", params: "1.0 100.0 0.1")]	
 	float m_fSpeedMax;				//Maximum speed
 	float m_fSpeedMaxOrig;
 	[Attribute(category: "Chopper", defvalue: "50.0", desc: "Minimum fly height (from ground level)", params: "5 100.0 1")]	
@@ -247,8 +247,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 	const float BRAKING_DISTANCE_END = 2.0;		//The distance to tell that we've reached the destination
 	private bool m_bIsBraking;					//If true, braking sequence has started
 	float m_fBrakingDistance;					//Distance for braking
-	private float m_fSpeedBrakingOrig;			//Speed from where we started to brake
-	private vector m_fPositionBrakingOrig;		//Position from where we started to brake
+	float m_fSpeedBrakingOrig;					//Speed from where we started to brake
+	vector m_fPositionBrakingOrig;				//Position from where we started to brake
+	float m_fSpeedBrakingMul;					//Braking reduction multiplier depending on the original speed
 	
 	//Crashing related
 	private bool m_bIsCrashing;					//If true, crashing sequence has started
@@ -682,10 +683,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 		{
 			mul = params.pitchMulBrake * (m_fSpeedMul - 1);
 		}
-/*		if (mul < 1)
-		{
-			mul = -30 * (1 + (1 - m_fSpeedSlowingMul));
-		}*/
 		
 		m_fAnglePitch = params.pitchAngleRadFlat + params.pitchAngleRad * mul;
 //		m_fAnglePitch = Math.Clamp(m_fAnglePitch, params.pitchNoseAngleDown, params.pitchNoseAngleUp);	//Nose down, nose up
@@ -705,7 +702,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_vAngularVel = SDRC_Math.ComputeAngularVelocity(m_vHeliForward, m_vHeliDirection, deltaTime);
 
 		//Handle angular velocities when slowing down
-		if (m_fSpeedSlowingMul < 0.2)
+		if (m_fSpeedSlowingMul < 0.15)
 		{
 			//Flatten the chopper when landing/braking/hovering
 			m_vAngularVel = vector.Zero;

@@ -45,7 +45,7 @@ class SDRC_ChopperExample_04
 		
 		//Disable autostart to set things our selves. Call Ready() after the setup.
 		//Modify some values to our liking
-		m_Vehicle_c.SetHeli(10, 30, 				//Min/max speed
+		m_Vehicle_c.SetHeli(10, 50, 				//Min/max speed
 		                    m_fMinFlyHeight, 60, 	//Min/max height
 		                    200, 800);				//Min/max distance for new destination
 		//Only react to players as enemies
@@ -59,7 +59,7 @@ class SDRC_ChopperExample_04
 		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, flyHereFirst);
 		//Add our flight path		
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, flyHereFirst);
-		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "1350 35 2287");
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_BRAKE, "1350 1 2287");
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 4);				//Hover for 8 seconds
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, "0 30 0", 8);			//Raise up 30 meters. Stay in the state or 8 seconds.
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_HOVER_DOWN, "0 -20 0", 8);		//Hover down 20 meters. Stay in the state or 8 seconds.

@@ -418,15 +418,23 @@ modded class SDRC_ChopperComp
 		{
 			if (!m_bIsBraking)
 			{
-				m_fSpeedBrakingOrig = m_fSpeed;
+				m_fSpeedBrakingOrig = m_fSpeed * 0.7;
 				m_fPositionBrakingOrig = m_vOrigin;
-								
+				m_fSpeedBrakingMul = m_fSpeedBrakingOrig / 15;
+				m_fSpeedBrakingMul = 3.2;
+				//30 = 1;
+				//40 = 1.5 
+				//50 = 2.2
+				//60 = 4.0
+				
+												
 				//We have started landing sequence so no need to count values
 				m_bIsBraking = true;
 			}
 			else
 			{
-				float distMul = (distance / m_fBrakingDistance) * (m_fSpeed / m_fSpeedBrakingOrig);
+				
+				float distMul = (distance / (m_fBrakingDistance * m_fSpeedBrakingMul) ) * (m_fSpeed / m_fSpeedBrakingOrig);
 				m_fSpeedTarget = m_fSpeedBrakingOrig * distMul + 0.1;
 				
 				//If we have passed the point, adjust values

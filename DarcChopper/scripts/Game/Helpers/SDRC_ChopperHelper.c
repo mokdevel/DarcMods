@@ -661,6 +661,8 @@ class SDRC_ChopperHelper
 			}
 			
 			chopperComp.m_vSplinePoints[idxFrom + i] = pt;
+			
+			//SDRC_DebugHelper.AddDebugSphere(pt, COLOR_YELLOW, 1.2, chopperComp.m_sDid);
 		}	
 		
 		//chopperComp.m_vSplinePoints[idxTo] = pt;	//Ugly hack to make sure the last point is also modified
@@ -703,7 +705,10 @@ class SDRC_ChopperHelper
 		vector v0 = chopperComp.m_vSplinePoints[idxFrom];
 		vector v1 = chopperComp.m_vSplinePoints[idxTo];
 		v1[1] = lowestHeight;
-		
+
+		SDRC_DebugHelper.AddDebugSphere(v0, COLOR_BLUE, 2.0, chopperComp.m_sDid);
+		SDRC_DebugHelper.AddDebugSphere(v1, COLOR_BLUE, 2.0, chopperComp.m_sDid);				
+				
 		//Count a braking (bell) curve
 		float p0 = v0[1];
 		float p1 = v1[1];
@@ -721,13 +726,30 @@ class SDRC_ChopperHelper
 			pt[1] = p1 + pdiff * (ptc[0] / 100);
 			
 			chopperComp.m_vSplinePoints[idxFrom + i] = pt;
+			
+			//SDRC_DebugHelper.AddDebugSphere(pt, COLOR_YELLOW, 1.2, chopperComp.m_sDid);
 		}
-		
-		/* TBD: Check that the rest of the points are above last point to avoid holes
+
+		/* Check that the rest of the points are above last point to avoid holes. 
+		   Holes may appear when there are obstacles and points after the hole has been risen.
 			           ________
 			 ,--**'''\/
 			/         ^ this is to be avoided
 		*/
+		vector plast = chopperComp.m_vSplinePoints[idxFrom];
+		
+		for (int i = idxFrom; i > 0; i--)
+		{
+			vector pt = chopperComp.m_vSplinePoints[idxFrom - i];
+		
+			if (pt[1] < plast[1])
+			{				
+				pt[1] = plast[1];
+				chopperComp.m_vSplinePoints[idxFrom - i] = pt;
+				//SDRC_DebugHelper.AddDebugSphere(pt, COLOR_RED, 1.2, chopperComp.m_sDid);
+			}
+		}
+				
 	}
 	
 	//------------------------------------------------------------------------------------------------
