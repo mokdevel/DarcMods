@@ -273,12 +273,15 @@ class SDRC_VehicleHelper
 			
 			//Collect the groups that were ordered to climb out. 
 			SCR_AIGroup AIgroup = SCR_AIGroup.Cast(aiAgent.GetParentGroup());					
-			EntityID groupId = AIgroup.GetID();
-			
-			if (!groupIds.Contains(groupId))
+			if (AIgroup)
 			{
-				groupIds.Insert(groupId);
-				groups.Insert(AIgroup);
+				EntityID groupId = AIgroup.GetID();
+				
+				if (!groupIds.Contains(groupId))
+				{
+					groupIds.Insert(groupId);
+					groups.Insert(AIgroup);
+				}
 			}
 		}
     }	

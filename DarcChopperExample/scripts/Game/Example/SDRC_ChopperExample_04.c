@@ -45,7 +45,7 @@ class SDRC_ChopperExample_04
 		
 		//Disable autostart to set things our selves. Call Ready() after the setup.
 		//Modify some values to our liking
-		m_Vehicle_c.SetHeli(10, 50, 				//Min/max speed
+		m_Vehicle_c.SetHeli(10, 20, 				//Min/max speed
 		                    m_fMinFlyHeight, 60, 	//Min/max height
 		                    200, 800);				//Min/max distance for new destination
 		//Only react to players as enemies

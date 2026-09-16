@@ -60,7 +60,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	[Attribute(category: "Chopper", defvalue: "15.0", desc: "Minimum speed", params: "1.0 100.0 0.1")]	
 	float m_fSpeedMin;				//Minimum speed
 	float m_fSpeedMinOrig = 2;
-	[Attribute(category: "Chopper", defvalue: "60.0", desc: "Maximum speed", params: "1.0 100.0 0.1")]	
+	[Attribute(category: "Chopper", defvalue: "40.0", desc: "Maximum speed", params: "1.0 100.0 0.1")]	
 	float m_fSpeedMax;				//Maximum speed
 	float m_fSpeedMaxOrig;
 	[Attribute(category: "Chopper", defvalue: "50.0", desc: "Minimum fly height (from ground level)", params: "5 100.0 1")]	
@@ -799,7 +799,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		//m_vDestinationFuture
 		//m_vDestination
 		
-		const int VERTICAL_SPEED_UP_TIME = 3;	//Spend 3 seconds to increase rotorForce
+		const int VERTICAL_SPEED_UP_TIME = 5;	//Spend 3 seconds to increase rotorForce
 				
 		//Modify the values depending on state
 		switch (m_eHeliState)

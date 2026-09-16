@@ -418,16 +418,32 @@ modded class SDRC_ChopperComp
 		{
 			if (!m_bIsBraking)
 			{
-				m_fSpeedBrakingOrig = m_fSpeed * 0.7;
+				m_fSpeedBrakingOrig = m_fSpeed * 0.7;	//0.7 is just a good value :-)
 				m_fPositionBrakingOrig = m_vOrigin;
-				m_fSpeedBrakingMul = m_fSpeedBrakingOrig / 15;
-				m_fSpeedBrakingMul = 3.2;
-				//30 = 1;
-				//40 = 1.5 
-				//50 = 2.2
-				//60 = 4.0
+							
+				//This value is calculated depending on the speed. The higher the speed, the bigger the multiplier needs to be.
+				// <30 = value smaller than 1.0
+				//	30 = 1.00 (orig: 1.00)
+				//	40 = 1.49 (orig: 1.50)
+				//	50 = 2.93 (orig: 2.20)
+				//	60 = 4.78 (orig: 4.80)
 				
-												
+				const float MAGIC_NUMBER = 21;	// 21 = 30 * 0.7
+				
+				if (m_fSpeedBrakingOrig < MAGIC_NUMBER)
+				{
+					m_fSpeedBrakingMul = m_fSpeedBrakingOrig / MAGIC_NUMBER;
+				}
+				else
+				{
+					float var = (m_fSpeedBrakingOrig - MAGIC_NUMBER) / MAGIC_NUMBER;			
+					m_fSpeedBrakingMul = 1 + 4.5 * Math.Sin(var * var);		//The formula creates a semi exponentially growing value
+				}
+				
+				SDRC_Log.Add("[SDRC_ChopperComp:HandleBraking] m_fSpeedBrakingMul: " + m_fSpeedBrakingMul, LogLevel.DEBUG);
+				
+				//m_fSpeedBrakingMul = 3.15;
+				
 				//We have started landing sequence so no need to count values
 				m_bIsBraking = true;
 			}
@@ -435,7 +451,8 @@ modded class SDRC_ChopperComp
 			{
 				
 				float distMul = (distance / (m_fBrakingDistance * m_fSpeedBrakingMul) ) * (m_fSpeed / m_fSpeedBrakingOrig);
-				m_fSpeedTarget = m_fSpeedBrakingOrig * distMul + 0.1;
+				m_fSpeedTarget = m_fSpeedBrakingOrig * distMul;
+				m_fSpeedTarget = Math.Clamp(m_fSpeedTarget, 1.0, 100);	//Clamp to have some speed forward
 				
 				//If we have passed the point, adjust values
 				if (SDRC_Math.HasPassedPointXZ(m_fPositionBrakingOrig, lastPt, owner.GetOrigin()))

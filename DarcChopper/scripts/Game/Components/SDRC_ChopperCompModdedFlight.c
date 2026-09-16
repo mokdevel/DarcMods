@@ -39,13 +39,13 @@ modded class SDRC_ChopperComp : ScriptComponent
 			owner.SetOrigin(m_vOrigin);
 			
 			#ifdef WORKBENCH
-				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 2);
+				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 6);
 			#else
 				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 30);
 			#endif
 			vector hoverPos = vector.Zero;
 			hoverPos[1] = m_fFlyHeightLow;
-			AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 3);
+			AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 5);
 			hoverPos[1] = (m_fFlyHeightLow + m_fFlyHeightHigh) / 2;
 			AddDestination(SDRC_EFlyWayPointType.WP_RAISE, hoverPos);
 		}
