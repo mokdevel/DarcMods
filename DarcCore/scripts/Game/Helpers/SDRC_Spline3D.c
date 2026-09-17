@@ -225,7 +225,8 @@ sealed class SDRC_Spline3D
 	Extended from SCR_Math3D function
 	\param points array of all points forming the spline, minimum 1 point
 	\param point point that is being checked
-	\param index The variable to used to update the index. The search will start from this one till end and update the parameter. If search is to be for the whole spline, set this to 0
+	\param index Index of the lowest point. Also, the search starts from this and one till the end. ..unless quickSearch is used. If search is to be for the whole spline, set this to 0
+	\param quickSearch True if search is to stop when distance starts to grow.
 	
 	\return distance from spline, -1 if no points are provided
 	*/

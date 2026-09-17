@@ -44,8 +44,9 @@ class SDRC_ChopperParams
 	int rayLenEnemy;								//Max distance to see an enemy
 	int timeSearchAndDestroy;						//(seconds) Time to be in search and destroy behaviour
 	float attackHeightMul;							//Height multiplier to use for attack position. This will take m_fFlyHeightLow and multiply with this value.
-	int attackDefaultTime;							//(seconds) How long to attack a location
-
+//	int attackDefaultTime;							//(seconds) How long to attack a location
+	int enemyKnownTime;								//How long the enemy is known
+	
 	//Braking
 	int brakingDistance;							//The default braking distance to use
 		

@@ -244,7 +244,7 @@ class SDRC_ChopperDebug
 			//Show if enemy is known			
 			if (chopperComp.m_vEnemyPosition != vector.Zero)
 			{
-				debugText = debugText + " (enemy: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fAttackTimer) + ")";
+				debugText = debugText + " (enemy: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fEnemyFoundTimer) + ")";
 			}
 			
 			float health;

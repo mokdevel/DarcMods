@@ -35,7 +35,7 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
-				//Do nothing
+				TypeAttackStart(owner);
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_CRASH:
@@ -350,6 +350,13 @@ modded class SDRC_ChopperComp
 	{	
 		switch (m_eHeliState)
 		{
+			
+			case SDRC_EHeliState.FLY:
+			case SDRC_EHeliState.ATTACK:
+			{
+				TypeHandleAttack(owner);
+				break;
+			}
 			case SDRC_EHeliState.LAND_VERTICAL:
 			{
 				HandleLandingVertical(owner, timeSlice);	

@@ -81,7 +81,8 @@ class SDRC_ChopperHelper
 		}
 		
 		//If attacking, create an attack WP
-		if ( (chopperComp.m_fAttackTimer > 0) && (chopperComp.m_vEnemyPosition != vector.Zero) )
+//		if ( (chopperComp.m_fAttackTimer > 0) && (chopperComp.m_vEnemyPosition != vector.Zero) )
+		if (chopperComp.m_vEnemyPosition != vector.Zero)
 		{
 			float radius = chopperComp.params.patrolRadius * SDRC_Misc.RandomFloat(0.9, 1.8);
 			
@@ -486,11 +487,30 @@ class SDRC_ChopperHelper
 				{
 					//Modify attack height defaults
 					//Attack height is the lowest point modified by attackHeightMul. The final attackHeight could be below m_fFlyHeightLow
-					lowestHeight = SDRC_Misc.GetSurfaceYWithWater(lastPoint, true, owner) +  chopperComp.m_fFlyHeightLow * chopperComp.params.attackHeightMul;
-					//We know where to attack so return to normal flight mode
-					chopperComp.SetState(SDRC_EHeliState.FLY);
+					lowestHeight = SDRC_Misc.GetSurfaceYWithWater(chopperComp.m_vAttackPosition, true, owner) +  chopperComp.m_fFlyHeightLow * chopperComp.params.attackHeightMul;
 					
-					CreateEndCurveJAttack(chopperComp, lowestHeight);
+					int attackPoint = 0;
+					SDRC_Spline3D.GetDistanceFromSpline(chopperComp.m_vSplinePoints, chopperComp.m_vAttackPosition, attackPoint, true);
+					
+					//Create an attack sine drop before the attackPoint
+					int pt_from = attackPoint * 0.3;
+					if (pt_from < 0)
+					{
+						pt_from = 0;
+					}
+					int pt_to = attackPoint * 0.8;
+										
+					for (int i = pt_from; i < pt_to; i++)
+					{					
+						float t = (i - pt_from) / (pt_to - pt_from);
+						float y = chopperComp.m_vSplinePoints[pt_from][1] - (chopperComp.m_vSplinePoints[pt_from][1] - lowestHeight) * Math.Sin(Math.PI * t);
+							
+						vector pt = chopperComp.m_vSplinePoints[i];
+						pt[1] = y;
+						chopperComp.m_vSplinePoints[i] = pt;
+						//SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vSplinePoints[i], ARGB(32, 255, 0, 0), 4.0, chopperComp.m_sDid);
+					}
+					//smoothCount = pt_to;
 					isSmoothingNeeded = false;
 					break;
 				}
@@ -528,7 +548,7 @@ class SDRC_ChopperHelper
 		if (isSmoothingNeeded)
 		{
 			//Smooth the Up curve
-			SDRC_Spline3D.SmoothSplineUpOnly(chopperComp.m_vSplinePoints, smoothCount);
+			SDRC_Spline3D.SmoothSplineUpOnly(chopperComp.m_vSplinePoints, smoothCount, 3);
 		}
 
 		//After smoothing, set heli original height to points in the beginning. This is to avoid jumping.

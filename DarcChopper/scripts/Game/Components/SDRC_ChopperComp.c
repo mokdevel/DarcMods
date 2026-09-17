@@ -261,9 +261,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 	float m_fEnemyFoundTimeout = 2;				//Time between enemy position updates
 		
 	//Attack related
-	private vector m_vAttackPosition;			//Position to attack. Use SetAttackPosition() to set this
-	float m_fAttackTimer = 0;					//Timer to do attacks
-	private float m_fAttackTimerToSet = 0;		//Timer to set when attack starts
+	vector m_vAttackPosition;					//Position to attack. Use SetAttackPosition() to set this
+//	float m_fAttackTimer = 0;					//Timer to do attacks
+//	private float m_fAttackTimerToSet = 0;		//Timer to set when attack starts
 	
 	//The order of things:
 	//- Spawn chopper via GM or mod
@@ -450,7 +450,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_fTimeInStateLeft -= timeSlice;		
 		m_fTimeInStateBeen += timeSlice;		
 		m_fTimerRocketDelay -= timeSlice;		
-		m_fAttackTimer -= timeSlice;
+//		m_fAttackTimer -= timeSlice;
 		m_fTimerBehaviour -= timeSlice;
 		m_fTimerBehaviourCycle -= timeSlice;
 		m_fEnemyFoundTimer -= timeSlice;
@@ -604,7 +604,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 		
 		//Handle states, attacks, ...
 		HandleState(owner, timeSlice);
-		TypeHandleAttack(owner);
 		HandleBehaviour(owner);
 
 		//Set velocity
@@ -657,6 +656,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		//If we're too close to ground, slow down the speed to allow time for climb
 		if ( (GetState() != SDRC_EHeliState.CRASH)	//In crashing, we don't slow down
 		  && (GetState() != SDRC_EHeliState.BRAKE)	//In braking, we don't slow down
+		  && (GetState() != SDRC_EHeliState.ATTACK)	//In attack, we don't slow down
 		   )
 		{
 			const int ALTITUDE_ADD = 5;
@@ -935,8 +935,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 	void ResetAttack()
 	{
 		SetAttackPosition(vector.Zero);
-		m_fAttackTimer = 0;
-		m_fAttackTimerToSet = 0;
+//		m_fAttackTimer = 0;
+//		m_fAttackTimerToSet = 0;
 	}
 		
 	//------------------------------------------------------------------------------------------------	
@@ -968,11 +968,14 @@ modded class SDRC_ChopperComp : ScriptComponent
 	void SetState(SDRC_EHeliState state)
 	{
 		m_eHeliState = state;
-		
-		//If in normal flight mode, disable the TimeInState counter
+
+		//Changing to normal flight mode		
 		if (state == SDRC_EHeliState.FLY)
 		{			
-			SetTimeInState(0)
+			//Disable the TimeInState counter
+			SetTimeInState(0);
+			//Reset attack
+			ResetAttack();
 		}
 		
 		SDRC_Log.Add("[SDRC_ChopperComp:SetState] State: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.SPAM);
@@ -1136,12 +1139,31 @@ modded class SDRC_ChopperComp : ScriptComponent
 	/*!
 	Type specific handling of attacks. Search for the enemy and then react on the finding.
 	*/	
-	void TypeAttackSetup(IEntity owner, vector hostilePos) {}
+	void TypeAttackSetup(IEntity owner, vector hostilePos) 
+	{
+		//If m_fAttackTimerToSet is -1, use the default time
+/*		if (m_fAttackTimerToSet == -1)
+		{
+			m_fAttackTimerToSet = params.attackDefaultTime;
+		}
+		
+		if (m_fAttackTimerToSet < 10)
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp:TypeAttackSetup] Time assigned to WP_ATTACK is quite short: " + m_fAttackTimerToSet + " seconds.", LogLevel.WARNING);
+		}*/
+	}
+	
+	void TypeAttackStart(IEntity owner)
+	{
+		//For how long to continue attacks
+//		m_fAttackTimer = m_fAttackTimerToSet;
+	}
+	
 	void TypeHandleAttack(IEntity owner) 
 	{
-		if (m_fAttackTimer < 0)
+/*		if (m_fAttackTimer < 0)
 		{
 			ResetAttack();
-		}
+		}*/
 	}		
 }

@@ -53,7 +53,7 @@ class SDRC_ChopperEnemyHelper
 		{
 			found = true;
 			//Set enemy knowledge to be as long as the attack is ongoing
-			chopperComp.m_fEnemyFoundTimer = chopperComp.m_fAttackTimer;
+			chopperComp.m_fEnemyFoundTimer = chopperComp.params.enemyKnownTime;
 			SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vEnemyPosition, ARGB(32, 255, 0, 128), 5, chopperComp.m_sDid + "att");
 		}
 		

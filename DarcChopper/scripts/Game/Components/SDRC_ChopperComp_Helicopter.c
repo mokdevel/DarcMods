@@ -46,8 +46,9 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		//Attack and enemy related
 		rayLenEnemy = 1000;
 		timeSearchAndDestroy = 4*60;
-		attackHeightMul = 0.5;
-		attackDefaultTime = 60;
+		enemyKnownTime = 60;
+		attackHeightMul = 0.6;
+//		attackDefaultTime = 60;
 		
 		//Braking
 		brakingDistance = 120;
@@ -241,6 +242,22 @@ modded class SDRC_ChopperComp
 			
 	//------------------------------------------------------------------------------------------------
 	/*!	
+	Start attack by setting timers.
+	*/
+	override void TypeAttackStart(IEntity owner)
+	{
+		super.TypeAttackStart(owner);
+		
+		if (m_EntityType != SDRC_EChopperType.HELICOPTER)
+		{
+			return;
+		}
+		
+		/* NOTHING TO DO */
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
 	Handle attacks. Search for the enemy and then react on the finding.
 	
 	- Normal case: If enemy is seen, consider shooting
@@ -256,7 +273,8 @@ modded class SDRC_ChopperComp
 		}
 		
 		//Handle attacks:		
-		if ( (m_fAttackTimer <= 0) && (m_vAttackPosition == vector.Zero) )
+//		if ( (m_fAttackTimer <= 0) && (m_vAttackPosition == vector.Zero) )
+		if (m_vAttackPosition == vector.Zero)
 		{
 			//Normal case:
 			SDRC_ChopperEnemyHelper.SearchForEnemy(owner);

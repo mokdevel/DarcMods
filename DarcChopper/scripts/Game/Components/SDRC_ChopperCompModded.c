@@ -279,7 +279,13 @@ modded class SDRC_ChopperComp
 	*/
 	override void SetAttackPosition(vector pos)
 	{
+		if (pos[1] == 0)
+		{
+			float y = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
+			pos[1] = y;			
+		}
 		m_vAttackPosition = pos;
+		
 		SDRC_DebugHelper.DeleteDebugSphere(m_sDid + "att");
 		if (pos != vector.Zero)
 		{
@@ -496,24 +502,26 @@ modded class SDRC_ChopperComp
 				//Set attack position. At this stage, it could be at 0 height
 				SetAttackPosition(destination);
 				
-/*				//Set attack position on ground, unless some other height was defined.
-				if (m_vAttackPosition[1] == 0)
+				if (index == -1)
 				{
-					m_vAttackPosition[1] = SDRC_Misc.GetSurfaceYWithWater(destination, true);
-				}*/
-				
-				//If value is -1, use the default time
-				if (value == -1)
-				{
-					value = params.attackDefaultTime;
+					//Find the previous position and move the attack *flight* position a bit further
+					vector prevPos = m_vSplinePoints[m_vSplinePoints.Count() - 1];
+					vector newPos = destination;
+					
+					//If there is a destination before the WP_ATTACK, let's use it's destination
+					if (!m_vFlyDestinations.IsEmpty())
+					{
+						prevPos = m_vFlyDestinations[m_vFlyDestinations.Count() - 1].pt;
+					}
+					
+					//Move on XZ level
+					prevPos[1] = 0;
+					newPos[1] = 0;
+					
+					vector direction = vector.Direction(prevPos, destination);
+					destination = destination + (direction.Normalized() * params.destinationForward);
 				}
-								
-				m_fAttackTimerToSet = value;				//For how long to continue attacks
 				
-				if (value < 10)
-				{
-					SDRC_Log.Add("[SDRC_ChopperComp:AddDestination] Time assigned to WP_ATTACK is quite short: " + value + " seconds.", LogLevel.WARNING);
-				}
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
@@ -719,10 +727,10 @@ modded class SDRC_ChopperComp
 		m_fTimerBehaviourCycle = BEHAVIOUR_CHECK_CYCLE;
 
 		//Do not change attack course if we're already in attack.
-		if (m_fAttackTimer > 0)
+/*		if (m_fAttackTimer > 0)
 		{
 			return;
-		}
+		}*/
 		
 		//If enemy is near by, enter S&D behaviour in case we're in normal behaviour. 
 		//If we're passive, doing evac or .. we don't want S&D to happen.
@@ -757,11 +765,11 @@ modded class SDRC_ChopperComp
 					TypeAttackSetup(owner, hostilePos);
 					
 					//Set attack timer. Usually set when we come here, but a check just in case.
-					if (m_fAttackTimerToSet <= 0)
+/*					if (m_fAttackTimerToSet <= 0)
 					{
 						m_fAttackTimerToSet = params.attackDefaultTime;
 					}
-					m_fAttackTimer = m_fAttackTimerToSet;
+					m_fAttackTimer = m_fAttackTimerToSet;*/
 				}
 				else
 				{
