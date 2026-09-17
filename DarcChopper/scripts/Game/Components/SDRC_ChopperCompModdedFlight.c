@@ -252,7 +252,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 					//Get the angle for the destination
 					float heliAngle = SDRC_Math.GetRadiansBetweenThreePointsXZ(p0, p1, p2) * Math.RAD2DEG;
 		
-					SDRC_DebugHelper.AddDebugPos(p2, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 200);
+					//SDRC_DebugHelper.AddDebugPos(p2, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 200);
 					
 					//SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Distance: " + distance + " - Angle: " + heliAngle, LogLevel.DEBUG);
 					
@@ -288,8 +288,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 						AddFlyPathPoint(vec1);									
 						AddFlyPathPoint(vec2);
 						SDRC_DebugHelper.DeleteDebugPos(m_sDid + "detour");
-						SDRC_DebugHelper.AddDebugPos(vec1, ARGB(255, 0, 0, 0), 1.0, m_sDid + "detour", 500);
-						SDRC_DebugHelper.AddDebugPos(vec2, ARGB(255, 0, 0, 0), 1.0, m_sDid + "detour", 500);
+						//SDRC_DebugHelper.AddDebugPos(vec1, ARGB(255, 0, 0, 0), 1.0, m_sDid + "detour", 500);
+						//SDRC_DebugHelper.AddDebugPos(vec2, ARGB(255, 0, 0, 0), 1.0, m_sDid + "detour", 500);
 					}
 					
 					AddFlyPathPoint(flyDestination.pt, flyDestination.type, flyDestination.value);

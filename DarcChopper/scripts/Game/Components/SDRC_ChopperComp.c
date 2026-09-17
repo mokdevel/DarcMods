@@ -466,7 +466,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 		}
 		//---
 		//Normal flying part
-		if ( (m_fTimeBetweenPts > 20) && (m_eHeliState == SDRC_EHeliState.FLY) )
+//		if ( (m_fTimeBetweenPts > 20) && (m_eHeliState == SDRC_EHeliState.FLY) )
+		if (m_fTimeBetweenPts > 20)
 		{
 			#ifdef WORKBENCH			
 				SDRC_Log.Add("[SDRC_ChopperComp] Time in point is very long.", LogLevel.DEBUG);

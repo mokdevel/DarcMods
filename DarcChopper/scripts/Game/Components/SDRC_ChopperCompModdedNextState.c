@@ -174,24 +174,6 @@ modded class SDRC_ChopperComp
 				isRemoveDestination = true;
 				break;				
 			}
-			/*case SDRC_EFlyWayPointType.WP_HOVER:
-			{
-				SetState(SDRC_EHeliState.HOVER);
-				SetTimeInState(m_vFlyDestinations[0].value);
-				m_vFlyDestinations[0].pt = owner.GetOrigin();
-				//Stop heli from moving
-				m_bOnlyVerticalMovement = true;
-				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
-				
-				//Clear flight as we are adding the points ourselves.
-				ResetFlight();
-				
-				//Reset heli settings
-				SDRC_ChopperCompCore.ResetOriginalValues(owner);
-				
-				isRemoveDestination = true;
-				break;
-			}*/
 			case SDRC_EFlyWayPointType.WP_HOVER:
 			case SDRC_EFlyWayPointType.WP_HOVER_UP:
 			case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
@@ -228,10 +210,6 @@ modded class SDRC_ChopperComp
 				//Stop heli from moving
 				m_bOnlyVerticalMovement = true;
 				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
-				
-//				vector pos = owner.GetOrigin();
-//				pos[1] = pos[1] + m_vFlyDestinations[0].pt[1];		//Hover above original point
-//				m_vSplinePoints.Insert(pos);
 				
 				for (int i = 0; i < VERTICAL_SPLINE_POINTS; i++)
 				{

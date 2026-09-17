@@ -84,11 +84,11 @@ class SDRC_ChopperHelper
 //		if ( (chopperComp.m_fAttackTimer > 0) && (chopperComp.m_vEnemyPosition != vector.Zero) )
 		if (chopperComp.m_vEnemyPosition != vector.Zero)
 		{
-			float radius = chopperComp.params.patrolRadius * SDRC_Misc.RandomFloat(0.9, 1.8);
-			
+/*			float radius = chopperComp.params.patrolRadius * SDRC_Misc.RandomFloat(0.9, 1.8);
 			vector fwdPoint = SDRC_ChopperHelper.GetDestinationForward(owner, radius);
-			chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, fwdPoint);
-			chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, chopperComp.m_vEnemyPosition);
+			chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, fwdPoint);*/
+			chopperComp.TypeAttackSetup(owner, chopperComp.m_vEnemyPosition);			
+//			chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, chopperComp.m_vEnemyPosition);
 		}
 		else	//If not attacking, create a normal flight pos
 		{

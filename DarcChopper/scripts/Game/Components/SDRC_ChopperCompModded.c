@@ -549,6 +549,12 @@ modded class SDRC_ChopperComp
 				addDestinationPoint = false;
 				break;
 			}
+			case SDRC_EFlyWayPointType.WP_CUT:
+			{
+				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
+				addDestinationPoint = false;
+				break;
+			}
 			case SDRC_EFlyWayPointType.WP_DESTROY:
 			{
 				break;
@@ -730,7 +736,7 @@ modded class SDRC_ChopperComp
 		{
 			//If yes, become aggressive and/or reset timer.
 			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, params.timeSearchAndDestroy);
-			
+			m_fTimerBehaviourCycle = params.enemyKnownTime + 1;
 			SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] Enemy found. Changing to S&D behaviour." + m_vEnemyPosition, LogLevel.DEBUG);
 		}			
 						
