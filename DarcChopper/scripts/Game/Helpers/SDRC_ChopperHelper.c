@@ -82,12 +82,12 @@ class SDRC_ChopperHelper
 		
 		//If attacking, create an attack WP
 //		if ( (chopperComp.m_fAttackTimer > 0) && (chopperComp.m_vEnemyPosition != vector.Zero) )
-		if (chopperComp.m_vEnemyPosition != vector.Zero)
+		if (chopperComp.m_vAttackPosition != vector.Zero)
 		{
 /*			float radius = chopperComp.params.patrolRadius * SDRC_Misc.RandomFloat(0.9, 1.8);
 			vector fwdPoint = SDRC_ChopperHelper.GetDestinationForward(owner, radius);
 			chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, fwdPoint);*/
-			chopperComp.TypeAttackSetup(owner, chopperComp.m_vEnemyPosition);			
+			chopperComp.TypeAttackSetup(owner, chopperComp.m_vAttackPosition);			
 //			chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, chopperComp.m_vEnemyPosition);
 		}
 		else	//If not attacking, create a normal flight pos
@@ -491,6 +491,7 @@ class SDRC_ChopperHelper
 					
 					int attackPoint = 0;
 					SDRC_Spline3D.GetDistanceFromSpline(chopperComp.m_vSplinePoints, chopperComp.m_vAttackPosition, attackPoint, true);
+					SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vSplinePoints[attackPoint], ARGB(32, 255, 255, 255), 4.0, chopperComp.m_sDid);
 					
 					//Create an attack sine drop before the attackPoint
 					int pt_from = attackPoint * 0.3;

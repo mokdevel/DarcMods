@@ -242,9 +242,9 @@ class SDRC_ChopperDebug
 			}
 			
 			//Show if enemy is known			
-			if (chopperComp.m_vEnemyPosition != vector.Zero)
+			if (chopperComp.m_vAttackPosition != vector.Zero)
 			{
-				debugText = debugText + " (enemy: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fEnemyFoundTimer) + ")";
+				debugText = debugText + " (enemy: " + SDRC_Misc.FloatWithDecimals(chopperComp.m_fAttackPositionSetTime) + ")";
 			}
 			
 			float health;
@@ -383,9 +383,9 @@ class SDRC_ChopperDebug
 		//Enemy stuff
 		
 		//Draw current enemy sighting		
-		if (chopperComp.m_vEnemyPosition != "0 0 0")
+		if (chopperComp.m_vAttackPosition != "0 0 0")
 		{
-			SDRC_ChopperDebug.DrawLine(origin, chopperComp.m_vEnemyPosition, Color.PINK);
+			SDRC_ChopperDebug.DrawLine(origin, chopperComp.m_vAttackPosition, Color.PINK);
 		}
 		
 		//Draw eyesight		

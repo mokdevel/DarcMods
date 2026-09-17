@@ -260,7 +260,7 @@ modded class SDRC_ChopperComp
 	*/
 	vector GetEnemyPosition()
 	{
-		return m_vEnemyPosition;
+		return m_vAttackPosition;
 	}
 
 	//------------------------------------------------------------------------------------------------	
@@ -269,6 +269,23 @@ modded class SDRC_ChopperComp
 	*/
 	override void SetAttackPosition(vector pos)
 	{
+		//We will not reset attack position if there is still time left
+		if ( (m_fAttackPositionSetTime > 0) && (pos == vector.Zero) )
+		{
+			return;
+		}
+		
+		//Set time for attack position
+		if (pos == vector.Zero)
+		{
+			m_fAttackPositionSetTime = 0;
+		}
+		else
+		{
+			m_fAttackPositionSetTime = params.enemyKnownTime;
+		}
+		
+		//Set position to right height
 		if (pos != vector.Zero)
 		{		
 			if (pos[1] == 0)
@@ -497,25 +514,38 @@ modded class SDRC_ChopperComp
 				//Set attack position. At this stage, it could be at 0 height
 				SetAttackPosition(destination);
 				
-				if (index == -1)
+				//Find the previous position and move the attack *flight* position a bit further
+				vector prevPos = m_vOrigin;
+				vector newPos = destination;
+				
+				//Try with the last splinepoint
+				if (!m_vSplinePoints.IsEmpty())
 				{
-					//Find the previous position and move the attack *flight* position a bit further
-					vector prevPos = m_vSplinePoints[m_vSplinePoints.Count() - 1];
-					vector newPos = destination;
-					
-					//If there is a destination before the WP_ATTACK, let's use it's destination
-					if (!m_vFlyDestinations.IsEmpty())
-					{
-						prevPos = m_vFlyDestinations[m_vFlyDestinations.Count() - 1].pt;
-					}
-					
-					//Move on XZ level
-					prevPos[1] = 0;
-					newPos[1] = 0;
-					
-					vector direction = vector.Direction(prevPos, destination);
-					destination = destination + (direction.Normalized() * params.destinationForward);
+					prevPos = m_vSplinePoints[m_vSplinePoints.Count() - 1];
 				}
+					
+				//If there is a destination before the WP_ATTACK, let's use it's destination
+				if (!m_vFlyDestinations.IsEmpty())
+				{
+					switch (index)
+					{
+						case -1:
+							prevPos = m_vFlyDestinations[m_vFlyDestinations.Count() - 1].pt;
+							break;
+						case 0:
+							//Use spline point set above as we're setting the WP_ATTACK as the first item in m_vFlyDestinations
+							break;
+						default:
+							prevPos = m_vFlyDestinations[index].pt;
+					}
+				}
+					
+				//Move on XZ level
+				prevPos[1] = 0;
+				newPos[1] = 0;
+				
+				vector direction = vector.Direction(prevPos, newPos);
+				destination = destination + (direction.Normalized() * params.destinationForward);
 				
 				break;
 			}
@@ -732,12 +762,12 @@ modded class SDRC_ChopperComp
 		
 		//If enemy is near by, enter S&D behaviour in case we're in normal behaviour. 
 		//If we're passive, doing evac or .. we don't want S&D to happen.
-		if ( (m_vEnemyPosition != vector.Zero) && (GetBehaviour() == SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) )
+		if ( (m_vAttackPosition != vector.Zero) && (GetBehaviour() == SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) )
 		{
 			//If yes, become aggressive and/or reset timer.
 			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, params.timeSearchAndDestroy);
 			m_fTimerBehaviourCycle = params.enemyKnownTime + 1;
-			SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] Enemy found. Changing to S&D behaviour." + m_vEnemyPosition, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] Enemy found. Changing to S&D behaviour." + m_vAttackPosition, LogLevel.DEBUG);
 		}			
 						
 		switch (m_eHeliBehaviour)
@@ -745,12 +775,8 @@ modded class SDRC_ChopperComp
 			case SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR:
 			{
 				//Make sure we have a proper danger position. 
-				//The priority is m_vAttackPosition (last ordered attack position) -> m_vEnemyPosition (last seen enemy) -> around itself 
+				//The priority is m_vAttackPosition (last ordered attack position) -> m_vAttackPosition (last seen enemy) -> around itself 
 				vector hostilePos = m_vAttackPosition;
-				if (hostilePos == vector.Zero)
-				{
-					hostilePos = m_vEnemyPosition;
-				}
 				if (hostilePos == vector.Zero)
 				{
 					hostilePos = owner.GetOrigin();
@@ -758,15 +784,15 @@ modded class SDRC_ChopperComp
 				
 				SetAttackPosition(hostilePos);
 				
-				if ( (m_vEnemyPosition != vector.Zero) && (m_fEnemyFoundTimer == params.enemyKnownTime) )
+				if ( (m_vAttackPosition != vector.Zero) && (m_fAttackPositionSetTime == params.enemyKnownTime) )
 				{
-					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D: Enemy found, attacking: " + m_vEnemyPosition, LogLevel.NORMAL);
+					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D: Enemy found, attacking: " + m_vAttackPosition, LogLevel.NORMAL);
 
 					TypeAttackSetup(owner, hostilePos);
 				}
 				else
 				{
-					if (m_fEnemyFoundTimer < 0)
+					if (m_fAttackPositionSetTime < 0)
 					{					
 						//If no enemy, add another patrol round
 						if (SDRC_ChopperHelper.GetNextWayPointType(owner) != SDRC_EFlyWayPointType.WP_PATROL_ONCE)

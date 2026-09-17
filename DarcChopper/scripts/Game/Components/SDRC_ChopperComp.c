@@ -255,16 +255,13 @@ modded class SDRC_ChopperComp : ScriptComponent
 	private bool m_bIsCrashing;					//If true, crashing sequence has started
 	private vector m_fPositionCrashingOrig;		//Position from where we start to crash
 	
-	//Enemy positions
-	vector m_vEnemyPosition = vector.Zero;		//Position of last found enemy
-	float m_fEnemyFoundTimer;					//Time to wait to before allowing enemy position 
-	float m_fEnemyFoundTimeout = 2;				//Time between enemy position updates
-		
 	//Attack related
 	vector m_vAttackPosition;					//Position to attack. Use SetAttackPosition() to set this
-//	float m_fAttackTimer = 0;					//Timer to do attacks
-//	private float m_fAttackTimerToSet = 0;		//Timer to set when attack starts
+	float m_fAttackPositionSetTime;				//Time to consider the position as a valid target
 	
+	//Enemy positions
+	float m_fEnemySearchCycleTime = 2;			//Time between enemy position updates
+		
 	//The order of things:
 	//- Spawn chopper via GM or mod
 	//- OnPostInit()
@@ -326,7 +323,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		SetTimeInState(0);
 		
 		//Initialize enemyFoundTime
-		m_fEnemyFoundTimer = m_fEnemyFoundTimeout;
+		m_fAttackPositionSetTime = 0;
 		
 		//Set wheel brake on
 		HelicopterControllerComponent hcc = HelicopterControllerComponent.Cast(owner.FindComponent(HelicopterControllerComponent));
@@ -453,7 +450,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 //		m_fAttackTimer -= timeSlice;
 		m_fTimerBehaviour -= timeSlice;
 		m_fTimerBehaviourCycle -= timeSlice;
-		m_fEnemyFoundTimer -= timeSlice;
+		m_fAttackPositionSetTime -= timeSlice;
 		
 		//---
 		//Check if we're still functional	
@@ -944,9 +941,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	*/
 	void ResetEnemy()
 	{
-		//SetAttackPosition(vector.Zero);
-		m_vEnemyPosition = "0 0 0";
-		m_fEnemyFoundTimer = m_fEnemyFoundTimeout;
+		SetAttackPosition(vector.Zero);
 		
 		SDRC_Log.Add("[SDRC_ChopperComp:ResetEnemy] Enemy position reset.", LogLevel.SPAM);
 	}

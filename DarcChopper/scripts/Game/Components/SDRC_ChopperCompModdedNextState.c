@@ -289,9 +289,9 @@ modded class SDRC_ChopperComp
 				}
 				
 				//If we have a known enemy position, fly to it.
-				if (m_vEnemyPosition != vector.Zero)
+				if (m_vAttackPosition != vector.Zero)
 				{
-					AddFlyPathPoint(m_vEnemyPosition);
+					AddFlyPathPoint(m_vAttackPosition);
 				}
 				
 				break;

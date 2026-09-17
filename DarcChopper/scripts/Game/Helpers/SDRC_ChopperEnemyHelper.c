@@ -39,20 +39,21 @@ class SDRC_ChopperEnemyHelper
 		}
 		
 		//Search on cyclic time. This usually is m_fEnemyFoundTimeout time, but when enemy is found, it's set to m_fAttackTimer
-		if (chopperComp.m_fEnemyFoundTimer > 0)
+		if (chopperComp.m_fAttackPositionSetTime > 0)
 		{
 			return false;
 		}
 		
 		chopperComp.ResetEnemy();		
-		chopperComp.m_vEnemyPosition = SDRC_ChopperEnemyHelper.DoEnemySearch(owner);
+		chopperComp.m_vAttackPosition = SDRC_ChopperEnemyHelper.DoEnemySearch(owner);
+		chopperComp.m_fAttackPositionSetTime = chopperComp.m_fEnemySearchCycleTime;
 		
-		if (chopperComp.m_vEnemyPosition != vector.Zero)
+		if (chopperComp.m_vAttackPosition != vector.Zero)
 		{
 			found = true;
 			//Set enemy knowledge to be as long as the attack is ongoing
-			chopperComp.m_fEnemyFoundTimer = chopperComp.params.enemyKnownTime;
-			SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vEnemyPosition, ARGB(32, 255, 0, 128), 5, chopperComp.m_sDid + "att");
+			chopperComp.SetAttackPosition(chopperComp.m_vAttackPosition);
+			SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vAttackPosition, ARGB(32, 255, 0, 128), 5, chopperComp.m_sDid + "att");
 		}
 		
 		return found;

@@ -235,7 +235,7 @@ modded class SDRC_ChopperComp
 
 		AddDestination(SDRC_EFlyWayPointType.WP_CUT);
 		//NOTE: These are added in reverse order to beginning of the list!
-		AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, m_vEnemyPosition, index: 0);	//Note: index is used!
+		AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, hostilePos, index: 0);	//Note: index is used!
 		float radius = params.patrolRadius * SDRC_Misc.RandomFloat(1.4, 2.8);
 		vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, radius);
 		AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos, index: 0);					//Note: index is used!
