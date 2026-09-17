@@ -262,35 +262,30 @@ modded class SDRC_ChopperComp
 	{
 		return m_vEnemyPosition;
 	}
-	
-	//------------------------------------------------------------------------------------------------	
-	/*!
-	Reset enemy knowledge and timeout
-	*/
-	void EnemyHandled()
-	{
-		m_vEnemyPosition = "0 0 0";
-		m_fEnemyFoundTimer = m_fEnemyFoundTimeout;
-	}	
-	
+
 	//------------------------------------------------------------------------------------------------	
 	/*!
 	Sets attack position
 	*/
 	override void SetAttackPosition(vector pos)
 	{
-		if (pos[1] == 0)
-		{
-			float y = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
-			pos[1] = y;			
+		if (pos != vector.Zero)
+		{		
+			if (pos[1] == 0)
+			{
+				float y = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
+				pos[1] = y;			
+			}
 		}
 		m_vAttackPosition = pos;
 		
-		SDRC_DebugHelper.DeleteDebugSphere(m_sDid + "att");
-		if (pos != vector.Zero)
-		{
-			SDRC_DebugHelper.AddDebugSphere(pos, ARGB(32, 255, 0, 0), 4.0, m_sDid + "att");
-		}
+		#ifdef WORKBENCH
+			SDRC_DebugHelper.DeleteDebugSphere(m_sDid + "att");		
+			if (pos != vector.Zero)
+			{
+				SDRC_DebugHelper.AddDebugSphere(pos, ARGB(32, 255, 0, 0), 4.0, m_sDid + "att");
+			}
+		#endif
 	}
 	
 	//------------------------------------------------------------------------------------------------	
@@ -726,11 +721,8 @@ modded class SDRC_ChopperComp
 		
 		m_fTimerBehaviourCycle = BEHAVIOUR_CHECK_CYCLE;
 
-		//Do not change attack course if we're already in attack.
-/*		if (m_fAttackTimer > 0)
-		{
-			return;
-		}*/
+		//Do enemy search				
+		SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
 		
 		//If enemy is near by, enter S&D behaviour in case we're in normal behaviour. 
 		//If we're passive, doing evac or .. we don't want S&D to happen.
@@ -738,6 +730,8 @@ modded class SDRC_ChopperComp
 		{
 			//If yes, become aggressive and/or reset timer.
 			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, params.timeSearchAndDestroy);
+			
+			SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] Enemy found. Changing to S&D behaviour." + m_vEnemyPosition, LogLevel.DEBUG);
 		}			
 						
 		switch (m_eHeliBehaviour)
@@ -758,28 +752,23 @@ modded class SDRC_ChopperComp
 				
 				SetAttackPosition(hostilePos);
 				
-				if (m_vEnemyPosition != vector.Zero)
+				if ( (m_vEnemyPosition != vector.Zero) && (m_fEnemyFoundTimer == params.enemyKnownTime) )
 				{
 					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D: Enemy found, attacking: " + m_vEnemyPosition, LogLevel.NORMAL);
 
 					TypeAttackSetup(owner, hostilePos);
-					
-					//Set attack timer. Usually set when we come here, but a check just in case.
-/*					if (m_fAttackTimerToSet <= 0)
-					{
-						m_fAttackTimerToSet = params.attackDefaultTime;
-					}
-					m_fAttackTimer = m_fAttackTimerToSet;*/
 				}
 				else
 				{
-					//If no enemy found, add another patrol round
-					if (SDRC_ChopperHelper.GetNextWayPointType(owner) != SDRC_EFlyWayPointType.WP_PATROL_ONCE)
-					{
-						AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, hostilePos, index: 0);		//NOTE: This is set as first waypoint
+					if (m_fEnemyFoundTimer < 0)
+					{					
+						//If no enemy, add another patrol round
+						if (SDRC_ChopperHelper.GetNextWayPointType(owner) != SDRC_EFlyWayPointType.WP_PATROL_ONCE)
+						{
+							AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, hostilePos, index: 0);		//NOTE: This is set as first waypoint
+						}
 					}
 				}
-				
 				break;
 			}
 		}

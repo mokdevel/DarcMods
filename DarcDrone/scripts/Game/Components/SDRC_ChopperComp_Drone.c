@@ -51,7 +51,6 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		rayLenEnemy = 200;
 		timeSearchAndDestroy = 2*60;
 		attackHeightMul = 0.3;
-		attackDefaultTime = 60;
 		
 		//Braking
 		brakingDistance = 150;
@@ -368,8 +367,6 @@ modded class SDRC_ChopperComp
 		{
 			return;
 		}
-		
-		SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
 		
 		if (m_vEnemyPosition == vector.Zero)
 		{

@@ -935,10 +935,21 @@ modded class SDRC_ChopperComp : ScriptComponent
 	void ResetAttack()
 	{
 		SetAttackPosition(vector.Zero);
-//		m_fAttackTimer = 0;
-//		m_fAttackTimerToSet = 0;
 	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Reset enemy knowledge and timeout
+	*/
+	void ResetEnemy()
+	{
+		//SetAttackPosition(vector.Zero);
+		m_vEnemyPosition = "0 0 0";
+		m_fEnemyFoundTimer = m_fEnemyFoundTimeout;
 		
+		SDRC_Log.Add("[SDRC_ChopperComp:ResetEnemy] Enemy position reset.", LogLevel.SPAM);
+	}
+			
 	//------------------------------------------------------------------------------------------------	
 	/*!
 	Get altitude from helicopter down to first object below

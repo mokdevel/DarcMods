@@ -233,8 +233,7 @@ modded class SDRC_ChopperComp
 			return;
 		}
 
-		AddDestination(SDRC_EFlyWayPointType.WP_CUT);
-		
+		AddDestination(SDRC_EFlyWayPointType.WP_CUT);		
 		AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, m_vEnemyPosition, index: 0);	//Note: index is used!
 		vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward * 3);
 		AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos, index: 0);					//Note: index is used!
@@ -273,12 +272,8 @@ modded class SDRC_ChopperComp
 		}
 		
 		//Handle attacks:		
-//		if ( (m_fAttackTimer <= 0) && (m_vAttackPosition == vector.Zero) )
 		if (m_vAttackPosition == vector.Zero)
 		{
-			//Normal case:
-			SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
-			
 			if (m_fTimerRocketDelay < 0)
 			{
 				SDRC_ChopperEnemyHelper.SearchEnemyForRocket(owner);

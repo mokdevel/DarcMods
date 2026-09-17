@@ -43,12 +43,10 @@ class SDRC_ChopperEnemyHelper
 		{
 			return false;
 		}
-		chopperComp.m_fEnemyFoundTimer = chopperComp.m_fEnemyFoundTimeout;
-		chopperComp.m_vEnemyPosition = "0 0 0";
-		chopperComp.SetAttackPosition(vector.Zero);
-		SDRC_Log.Add("[SDRC_ChopperEnemyHelper:SearchForEnemy] Enemy position reset.", LogLevel.SPAM);
 		
+		chopperComp.ResetEnemy();		
 		chopperComp.m_vEnemyPosition = SDRC_ChopperEnemyHelper.DoEnemySearch(owner);
+		
 		if (chopperComp.m_vEnemyPosition != vector.Zero)
 		{
 			found = true;
