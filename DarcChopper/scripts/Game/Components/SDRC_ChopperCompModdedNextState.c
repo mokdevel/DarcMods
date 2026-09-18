@@ -32,27 +32,7 @@ modded class SDRC_ChopperComp
 			{
 				//Should never happen
 				break;
-			}
-			case SDRC_EFlyWayPointType.WP_ATTACK:
-			{
-				TypeAttackStart(owner);
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_CRASH:
-			{
-				SetState(SDRC_EHeliState.CRASH);
-				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, -1);
-				//NOTE: The final height will be set in SetFlightPointHeight
-				m_bIsCrashing = false;
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_BRAKE:
-			{
-				SetState(SDRC_EHeliState.BRAKE);			
-				//NOTE: The final height will be set in SetFlightPointHeight
-				m_bIsBraking = false;
-				break;
-			}
+			}			
 			case SDRC_EFlyWayPointType.WP_FLY:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
@@ -60,10 +40,10 @@ modded class SDRC_ChopperComp
 				//Don't remove the destination as it has the next point where to fly
 				break;
 			}			
-			case SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY:	//NOTE: This is not a real state. When set, state will change to FLY_AWAY
-			{
-				//Don't remove the destination as it will be removed when creating a waypoint in CreateFlightPoints
-			}
+			case SDRC_EFlyWayPointType.WP_FLY_IMMEDIATELY:
+				//Handled in AddDestination() as this interrupts previous flight
+				ResetAttack();
+				break;
 			case SDRC_EFlyWayPointType.WP_FLY_AWAY:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
@@ -72,8 +52,96 @@ modded class SDRC_ChopperComp
 				AddDestination(SDRC_EFlyWayPointType.WP_DESPAWN, owner.GetOrigin()); 
 				break;
 			}
-			
-			//These will remove the item from destination list. These are considered handled.
+			case SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY:	//NOTE: This is not a real state. When set, state will change to FLY_AWAY
+			{
+				//Handled in AddDestination() as this interrupts previous flight
+				ResetAttack();
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_PATROL:
+			{
+				patrolCount = SDRC_Misc.RandomInt(10, 25);
+				//NOTE: This will fall through to WP_PATROL_ONCE 
+			}
+			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
+			{
+				//If request to patrol, create additional points around position. We will do _count_ amount of points around the area
+				int degree = 45; 		//Degrees per patrolCount
+				int sign = 1;			//SDRC_Misc.RandomSign(); <- does not work very well
+				
+				for (int i = 0; i < patrolCount; i++)
+				{
+					float value = m_vFlyDestinations[0].value;
+					if (value <= 0)
+					{
+						value = params.patrolRadius;
+					}
+					float range = Math.RandomFloat(value * 0.7, value * 1.3);					
+					//Make waypoints around the position to patrol.					
+					vector dir = SDRC_Math.RotateAroundAxis(m_vHeliDirection, vector.Up, sign * i * degree * Math.DEG2RAD);
+					dir.Normalize();
+					vector pos = m_vFlyDestinations[0].pt + dir * range;						
+					AddFlyPathPoint(pos);
+					//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid, 50 + i * 20);
+				}
+				
+				//If we have a known enemy position, fly to it.
+				if (m_vAttackPosition != vector.Zero)
+				{
+					AddFlyPathPoint(m_vAttackPosition);
+				}
+				
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_LAND:
+				break;
+			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
+			{
+				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
+				
+				SetState(SDRC_EHeliState.LAND_VERTICAL);
+				SetTimeInState(60);								//Just set some timer value. One minute for the max time.
+
+				//Clear flight as we are adding the points ourselves.
+				ResetFlight();
+
+				vector pos = m_vOrigin;
+				pos[1] = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, owner) - 1;	//Set the point slightly below surface level
+				//Set the landing distance to be from the helicopter height to slightly below ground. This is needed for the touch down check.
+				m_fLandingDistance = vector.Distance(m_vOrigin, pos);
+				
+				//Stop heli from moving
+				m_bOnlyVerticalMovement = true;
+/*				m_fSpeedMin = 0.01;
+				m_fSpeedMax = 0.01;*/
+				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
+				
+				for (int i = 0; i < VERTICAL_SPLINE_POINTS; i++)
+				{
+					m_vSplinePoints.Insert(pos);
+				}
+				m_iClosestIndex = 0;
+				isRemoveDestination = true;
+				break;				
+			}			
+			case SDRC_EFlyWayPointType.WP_WAIT:
+			{
+				//Just wait
+				SetState(SDRC_EHeliState.WAIT);
+				SetTimeInState(m_vFlyDestinations[0].value); 
+				isRemoveDestination = true;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
+			{
+				//Wait for disembark. Time is dependent of crew count
+				SetState(SDRC_EHeliState.WAIT);
+				int crewCount = SDRC_ChopperCrewHelper.CountCrew(GetOwner());
+				int time = 5 + crewCount * 4;	//Give N seconds per AI plus additional time
+				SetTimeInState(time); 
+				isRemoveDestination = true;
+				break;
+			}
 			case SDRC_EFlyWayPointType.WP_RAISE:
 			{				
 				SetState(SDRC_EHeliState.RAISE);
@@ -130,52 +198,11 @@ modded class SDRC_ChopperComp
 				SDRC_ChopperDebug.DrawDebugPaths(owner);
 				isRemoveDestination = true;
 				break;
-			}				
-			case SDRC_EFlyWayPointType.WP_END:
-			{
-				SetState(SDRC_EHeliState.DESTROYED);
-				m_vSplinePoints.Clear();
-				isRemoveDestination = true;
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_DESPAWN:
-			{
-				SetState(SDRC_EHeliState.DESPAWN);
-				m_vSplinePoints.Clear();
-				isRemoveDestination = true;
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
-			{
-				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
-				
-				SetState(SDRC_EHeliState.LAND_VERTICAL);
-				SetTimeInState(60);								//Just set some timer value. One minute for the max time.
-
-				//Clear flight as we are adding the points ourselves.
-				ResetFlight();
-
-				vector pos = m_vOrigin;
-				pos[1] = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, owner) - 1;	//Set the point slightly below surface level
-				//Set the landing distance to be from the helicopter height to slightly below ground. This is needed for the touch down check.
-				m_fLandingDistance = vector.Distance(m_vOrigin, pos);
-				
-				//Stop heli from moving
-				m_bOnlyVerticalMovement = true;
-/*				m_fSpeedMin = 0.01;
-				m_fSpeedMax = 0.01;*/
-				m_fSpeedSlowingMul = 0.1;	//Make the heli stay upright
-				
-				for (int i = 0; i < VERTICAL_SPLINE_POINTS; i++)
-				{
-					m_vSplinePoints.Insert(pos);
-				}
-				m_iClosestIndex = 0;
-				isRemoveDestination = true;
-				break;				
 			}
 			case SDRC_EFlyWayPointType.WP_HOVER:
+				//Fall through
 			case SDRC_EFlyWayPointType.WP_HOVER_UP:
+				//Fall through
 			case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
 			{
 				switch(nextType)
@@ -224,6 +251,35 @@ modded class SDRC_ChopperComp
 				isRemoveDestination = true;
 				break;
 			}
+			case SDRC_EFlyWayPointType.WP_BRAKE:
+			{
+				SetState(SDRC_EHeliState.BRAKE);			
+				//NOTE: The final height will be set in SetFlightPointHeight
+				m_bIsBraking = false;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_END:
+			{
+				SetState(SDRC_EHeliState.DESTROYED);
+				m_vSplinePoints.Clear();
+				isRemoveDestination = true;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_DESPAWN:
+			{
+				SetState(SDRC_EHeliState.DESPAWN);
+				m_vSplinePoints.Clear();
+				isRemoveDestination = true;
+				break;
+			}
+			case SDRC_EFlyWayPointType.WP_CRASH:
+			{
+				SetState(SDRC_EHeliState.CRASH);
+				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, -1);
+				//NOTE: The final height will be set in SetFlightPointHeight
+				m_bIsCrashing = false;
+				break;
+			}
 			case SDRC_EFlyWayPointType.WP_GET_OUT:
 			{
 				SDRC_ChopperCrewHelper.GetOut(owner);
@@ -243,61 +299,17 @@ modded class SDRC_ChopperComp
 				//ResetFlight();	//TBD: Check if lines are staying on screen after stop engine 
 				break;
 			}
-			case SDRC_EFlyWayPointType.WP_WAIT:
+			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
-				//Just wait
-				SetState(SDRC_EHeliState.WAIT);
-				SetTimeInState(m_vFlyDestinations[0].value); 
-				isRemoveDestination = true;
+				SetState(SDRC_EHeliState.ATTACK);
+				TypeAttackStart(owner);
 				break;
 			}
-			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
-			{
-				//Wait for disembark. Time is dependent of crew count
-				SetState(SDRC_EHeliState.WAIT);
-				int crewCount = SDRC_ChopperCrewHelper.CountCrew(GetOwner());
-				int time = 5 + crewCount * 4;	//Give N seconds per AI plus additional time
-				SetTimeInState(time); 
-				isRemoveDestination = true;
+			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 				break;
-			}
-			case SDRC_EFlyWayPointType.WP_PATROL:
-			{
-				patrolCount = SDRC_Misc.RandomInt(10, 25);
-				//NOTE: This will fall through to WP_PATROL_ONCE 
-			}
-			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
-			{
-				//If request to patrol, create additional points around position. We will do _count_ amount of points around the area
-				int degree = 45; 		//Degrees per patrolCount
-				int sign = 1;			//SDRC_Misc.RandomSign(); <- does not work very well
-				
-				for (int i = 0; i < patrolCount; i++)
-				{
-					float value = m_vFlyDestinations[0].value;
-					if (value <= 0)
-					{
-						value = params.patrolRadius;
-					}
-					float range = Math.RandomFloat(value * 0.7, value * 1.3);					
-					//Make waypoints around the position to patrol.					
-					vector dir = SDRC_Math.RotateAroundAxis(m_vHeliDirection, vector.Up, sign * i * degree * Math.DEG2RAD);
-					dir.Normalize();
-					vector pos = m_vFlyDestinations[0].pt + dir * range;						
-					AddFlyPathPoint(pos);
-					//SDRC_DebugHelper.AddDebugPos(pos, ARGB(255, 0, 0, 255), 2.0, m_sDid, 50 + i * 20);
-				}
-				
-				//If we have a known enemy position, fly to it.
-				if (m_vAttackPosition != vector.Zero)
-				{
-					AddFlyPathPoint(m_vAttackPosition);
-				}
-				
+			case SDRC_EFlyWayPointType.WP_RESET:
 				break;
-			}			
-			case SDRC_EFlyWayPointType.WP_CRASH:
-				SetState(SDRC_EHeliState.CRASH);			
+			case SDRC_EFlyWayPointType.WP_CUT:
 				break;
 			case SDRC_EFlyWayPointType.WP_DESTROY:
 				TypeSetHealthScaled(owner, 0);

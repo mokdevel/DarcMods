@@ -495,7 +495,7 @@ modded class SDRC_ChopperComp
 				SDRC_ChopperCompCore.ResetOriginalValuesComp(this);
 				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
 				//NOTE: Will drop through WP_FLY_AWAY
-			}		
+			}
 			case SDRC_EFlyWayPointType.WP_FLY_AWAY:
 			{
 				//Fly away after all destinations have been handled
@@ -513,7 +513,7 @@ modded class SDRC_ChopperComp
 			{
 				//Set attack position. At this stage, it could be at 0 height
 				SetAttackPosition(destination);
-				
+/*				
 				//Find the previous position and move the attack *flight* position a bit further
 				vector prevPos = m_vOrigin;
 				vector newPos = destination;
@@ -545,7 +545,7 @@ modded class SDRC_ChopperComp
 				newPos[1] = 0;
 				
 				vector direction = vector.Direction(prevPos, newPos);
-				destination = destination + (direction.Normalized() * params.destinationForward);
+				destination = destination + (direction.Normalized() * params.destinationForward);*/
 				
 				break;
 			}

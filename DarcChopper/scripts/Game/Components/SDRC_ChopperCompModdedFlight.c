@@ -183,20 +183,21 @@ modded class SDRC_ChopperComp : ScriptComponent
 			{
 				//Distance of last flight point defined and the next destination
 				float distance = vector.DistanceXZ(p1, p2);
+				distance = Math.Clamp(distance, (params.destinationForward / 4), params.destinationForward);
 								
 				//Depending on the angle decide if we re-route left ot right				
 				bool isOnLeft = SDRC_Math.IsPointOnLeft(p0, p1, p2);
 		
 				//Find a point along the fly path and move it away from the line along tangent					
-				vector newPoint = SDRC_Math.CreateOffsetMidPoint(p1, p2, (distance / 6), 0.2, isOnLeft);
+				vector newPoint = SDRC_Math.CreateOffsetMidPoint(p1, p2, distance, 0.2, isOnLeft);
 				AddFlyPathPoint(newPoint);
-				//SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 100);
+				SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 100);
 			}
 			else
 			{
 				vector newPoint = vector.Lerp(p1, p2, 0.5);
 				AddFlyPathPoint(newPoint);
-				//SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 100);
+				SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 128, 0, 0), 1.0, m_sDid + "line", 100);
 			}
 		}
 		
@@ -235,6 +236,48 @@ modded class SDRC_ChopperComp : ScriptComponent
 					destinationHandled = true;
 					break;
 				}		
+				case SDRC_EFlyWayPointType.WP_ATTACK:
+				{
+					//Find the previous position and move the attack *flight* position a bit further
+//					vector prevPos = m_vOrigin;
+					vector newPos = flyDestination.pt;
+					
+					//Add a point to fly over the attack point 
+/*					float radius = params.patrolRadius * 0.5;
+					vector posForward = SDRC_ChopperHelper.GetDestinationForward(owner, radius);
+					AddFlyPathPoint(posForward);
+					SDRC_DebugHelper.AddDebugSphere(posForward, ARGB(32, 255, 255, 255), 3.0, m_sDid);*/
+					
+					SDRC_FlyPathPoint fpp = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1];
+					vector direction = vector.Direction(m_vOrigin, fpp.pt);
+					float radius = params.patrolRadius * SDRC_Misc.RandomFloat(0.8, 1.8);
+					vector posForward = fpp.pt + (direction.Normalized() * radius);
+					SDRC_DebugHelper.AddDebugSphere(posForward, ARGB(32, 255, 255, 255), 4.0, m_sDid);					
+					AddFlyPathPoint(posForward);
+					
+/*					float radius = params.patrolRadius * SDRC_Misc.RandomFloat(0.8, 1.8);
+					vector posForward = SDRC_ChopperHelper.GetDestinationForward(owner, radius);
+					AddFlyPathPoint(posForward);
+					SDRC_DebugHelper.AddDebugSphere(posForward, ARGB(32, 255, 255, 255), 5.0, m_sDid);
+*/					
+					//Modify the attack point
+					float lowestHeight = SDRC_Misc.GetSurfaceYWithWater(m_vAttackPosition, true, owner) +  m_fFlyHeightLow * params.attackHeightMul;
+					newPos[1] = lowestHeight;
+					HandleRerouting(newPos);
+					AddFlyPathPoint(newPos);	//This is the attack position
+					SDRC_DebugHelper.AddDebugSphere(newPos, ARGB(32, 255, 255, 255), 6.0, m_sDid);
+//					SDRC_DebugHelper.AddDebugPos(newPos, ARGB(32, 255, 255, 255), 4.0, m_sDid);					
+						
+					//Move on XZ level
+					posForward[1] = 0;
+					newPos[1] = 0;
+					
+					//Add a point further from the attackpoint along the vector from newpos to attackpos.
+					//This is the last point in the attack sequence
+					direction = vector.Direction(posForward, newPos);
+					flyDestination.pt = newPos + (direction.Normalized() * params.destinationForward);
+					SDRC_DebugHelper.AddDebugSphere(flyDestination.pt, ARGB(32, 255, 255, 255), 7.0, m_sDid);					
+				}
 			}
 					
 			//If destination has already been set, skip the re-routing etc.
@@ -242,58 +285,11 @@ modded class SDRC_ChopperComp : ScriptComponent
 			{
 				if (!destinationHandled)
 				{	
-					vector p0 = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 2].pt;
-					vector p1 = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt;
-					vector p2 = flyDestination.pt;
-					
-					//Distance of last flight point defined and the next destination
-					//float distance = vector.DistanceXZ(m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt, flyDestination.pt);
-					float distance = vector.DistanceXZ(p0, p2);
-					//Get the angle for the destination
-					float heliAngle = SDRC_Math.GetRadiansBetweenThreePointsXZ(p0, p1, p2) * Math.RAD2DEG;
-		
-					//SDRC_DebugHelper.AddDebugPos(p2, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 200);
-					
-					//SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Distance: " + distance + " - Angle: " + heliAngle, LogLevel.DEBUG);
-					
-					//Is the angle too steep? Re-route.
-					if (Math.AbsFloat(heliAngle) < params.wpSteepAngle)
-					{				
-						// Rerouting creates points CD for a path ABE
-						//
-						//       _C__B 
-						//      /    |
-						//     D     |
-						//    |      A (usually origin)
-						//    E      
-						//
-						SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle is steep: " + heliAngle, LogLevel.SPAM);
-						
-						//Get the last point
-						//vector point = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt;
-						vector point = p1;
-						
-						//We need to take a detour. Add an additional points outside of the line to make the route rounder				
-						float lerpRnd = SDRC_Misc.RandomFloat(params.detourLerpPosition * 0.5, params.detourLerpPosition * 1.5);
-						float divRnd = SDRC_Misc.RandomFloat(params.detourDivider * 0.5, params.detourDivider * 1.5);
-											
-						//Depending on the angle decide if we re-route left ot right				
-						bool isOnLeft = SDRC_Math.IsPointOnLeft(p0, p1, p2);
-	
-						//Find a point along the fly path and move it away from the line along tangent					
-						//vector vec2 = SDRC_Math.CreateOffsetMidPoint(point, flyDestination.pt, (distance / divRnd), lerpRnd, isOnLeft);
-						vector vec2 = SDRC_Math.CreateOffsetMidPoint(point, p2, (distance / divRnd), lerpRnd, isOnLeft);
-						//Find a similar point but now between the start and vec2
-						vector vec1 = SDRC_Math.CreateOffsetMidPoint(point, vec2, (distance / (divRnd * 1.5)), 0.5, isOnLeft);
-						AddFlyPathPoint(vec1);									
-						AddFlyPathPoint(vec2);
-						SDRC_DebugHelper.DeleteDebugPos(m_sDid + "detour");
-						//SDRC_DebugHelper.AddDebugPos(vec1, ARGB(255, 0, 0, 0), 1.0, m_sDid + "detour", 500);
-						//SDRC_DebugHelper.AddDebugPos(vec2, ARGB(255, 0, 0, 0), 1.0, m_sDid + "detour", 500);
-					}
-					
+					//Check if re-routing is needed
+					HandleRerouting(flyDestination.pt);
+					//Add the final point
 					AddFlyPathPoint(flyDestination.pt, flyDestination.type, flyDestination.value);
-					
+					//Set the state
 					SetNextState(owner, flyDestination.type, false);
 				}
 			}
@@ -338,13 +334,13 @@ modded class SDRC_ChopperComp : ScriptComponent
 	{
 		switch (type)
 		{
-			case SDRC_EFlyWayPointType.WP_ATTACK:
+/*			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
 				//Attack to be on low altitude. This will be set in SDRC_ChopperHelper.SetSplinePointsAboveGround()
 				SetState(SDRC_EHeliState.ATTACK);
 				//NOTE: m_vAttackPosition has been set in AddDestination
 				break;
-			}
+			}*/
 			case SDRC_EFlyWayPointType.WP_CRASH:
 			{
 				SetState(SDRC_EHeliState.CRASH);
@@ -381,4 +377,63 @@ modded class SDRC_ChopperComp : ScriptComponent
 			m_vFlyPathPoints.InsertAt(fpp, index);
 		}
 	}		
+	
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	This takes care of steep corners in the flight path creation. If needed, new FlyPathPoints are added.
+	
+	\param pE The point E in the image
+	*/
+	void HandleRerouting(vector pE)
+	{
+		vector pA = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 2].pt;	//Second to last when reroutePoint = 0
+		vector pB = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt;	//Last point
+		//vector p2 = flyDestination.pt;
+		
+		//Distance of last flight point defined and the next destination
+		//float distance = vector.DistanceXZ(m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt, flyDestination.pt);
+		float distance = vector.DistanceXZ(pA, pE);
+		//Get the angle for the destination
+		float heliAngle = SDRC_Math.GetRadiansBetweenThreePointsXZ(pA, pB, pE) * Math.RAD2DEG;
+
+		//SDRC_DebugHelper.AddDebugPos(pE, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 200);
+		
+		//SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Distance: " + distance + " - Angle: " + heliAngle, LogLevel.DEBUG);
+		
+		//Is the angle too steep? Re-route.
+		if (Math.AbsFloat(heliAngle) < params.wpSteepAngle)
+		{				
+			// Rerouting creates points CD for a path ABE
+			//
+			//       _C__B 
+			//      /    |
+			//     D     |
+			//    |      A (usually origin)
+			//    E      
+			//
+			SDRC_Log.Add("[SDRC_ChopperComp:GenerateWayPoint] Heli direction angle is steep: " + heliAngle, LogLevel.SPAM);
+			
+			//Get the last point
+			//vector point = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt;
+			vector point = pB;
+			
+			//We need to take a detour. Add an additional points outside of the line to make the route rounder				
+			float lerpRnd = SDRC_Misc.RandomFloat(params.detourLerpPosition * 0.5, params.detourLerpPosition * 1.5);
+			float divRnd = SDRC_Misc.RandomFloat(params.detourDivider * 0.5, params.detourDivider * 1.5);
+								
+			//Depending on the angle decide if we re-route left ot right				
+			bool isOnLeft = SDRC_Math.IsPointOnLeft(pA, pB, pE);
+
+			//Find a point along the fly path and move it away from the line along tangent					
+			//vector vec2 = SDRC_Math.CreateOffsetMidPoint(point, flyDestination.pt, (distance / divRnd), lerpRnd, isOnLeft);
+			vector vec2 = SDRC_Math.CreateOffsetMidPoint(point, pE, (distance / divRnd), lerpRnd, isOnLeft);
+			//Find a similar point but now between the start and vec2
+			vector vec1 = SDRC_Math.CreateOffsetMidPoint(point, vec2, (distance / (divRnd * 1.5)), 0.5, isOnLeft);
+			AddFlyPathPoint(vec1);									
+			AddFlyPathPoint(vec2);
+			SDRC_DebugHelper.DeleteDebugPos(m_sDid + "detour");
+			//SDRC_DebugHelper.AddDebugPos(vec1, ARGB(255, 0, 0, 0), 1.0, m_sDid + "detour", 500);
+			//SDRC_DebugHelper.AddDebugPos(vec2, ARGB(255, 0, 0, 0), 1.0, m_sDid + "detour", 500);
+		}
+	}						
 }

@@ -44,7 +44,7 @@ class SDRC_ChopperEnemyHelper
 			return false;
 		}
 		
-		chopperComp.ResetEnemy();		
+		chopperComp.ResetAttack();		
 		chopperComp.m_vAttackPosition = SDRC_ChopperEnemyHelper.DoEnemySearch(owner);
 		chopperComp.m_fAttackPositionSetTime = chopperComp.m_fEnemySearchCycleTime;
 		

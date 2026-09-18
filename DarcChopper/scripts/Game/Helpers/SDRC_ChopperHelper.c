@@ -487,7 +487,7 @@ class SDRC_ChopperHelper
 				{
 					//Modify attack height defaults
 					//Attack height is the lowest point modified by attackHeightMul. The final attackHeight could be below m_fFlyHeightLow
-					lowestHeight = SDRC_Misc.GetSurfaceYWithWater(chopperComp.m_vAttackPosition, true, owner) +  chopperComp.m_fFlyHeightLow * chopperComp.params.attackHeightMul;
+/*					lowestHeight = SDRC_Misc.GetSurfaceYWithWater(chopperComp.m_vAttackPosition, true, owner) +  chopperComp.m_fFlyHeightLow * chopperComp.params.attackHeightMul;
 					
 					int attackPoint = 0;
 					SDRC_Spline3D.GetDistanceFromSpline(chopperComp.m_vSplinePoints, chopperComp.m_vAttackPosition, attackPoint, true);
@@ -512,7 +512,7 @@ class SDRC_ChopperHelper
 						//SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vSplinePoints[i], ARGB(32, 255, 0, 0), 4.0, chopperComp.m_sDid);
 					}
 					//smoothCount = pt_to;
-					isSmoothingNeeded = false;
+					isSmoothingNeeded = false;*/
 					break;
 				}
 				case SDRC_EHeliState.CRASH:
