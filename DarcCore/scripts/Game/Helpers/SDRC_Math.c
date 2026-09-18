@@ -10,7 +10,18 @@ sealed class SDRC_Math
 	//------------------------------------------------------------------------------------------------	
 	// Vector math helpers
 	//------------------------------------------------------------------------------------------------	
+
+	//------------------------------------------------------------------------------------------------	
+	//Get direction on a flat XZ surface
 	
+	//\param v1,v2 Vectors to use for the direction definition
+	static vector DirectionXZ(vector v1, vector v2)
+	{
+		v1[1] = 0;
+		v2[1] = 0;
+		return vector.Direction(v1, v2);
+	}
+		
 	//------------------------------------------------------------------------------------------------	
 	//\param angle in radians with sign
 	static float GetAngleBetweenVectors(vector v1, vector v2)
