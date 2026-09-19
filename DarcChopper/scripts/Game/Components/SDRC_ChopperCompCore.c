@@ -46,7 +46,9 @@ class SDRC_ChopperParams
 	float attackHeightMul;							//Height multiplier to use for attack position. This will take m_fFlyHeightLow and multiply with this value.
 //	int attackDefaultTime;							//(seconds) How long to attack a location
 	int enemyKnownTime;								//How long the enemy is known
-	int enemySearchCycleTime;						//Cycle time between enemy searches
+	
+	//Behaviour
+	int behaviourCycleTime;							//Cycle time between behaviour actions. For example, enemy is searched with this cycle
 	
 	//Braking
 	int brakingDistance;							//The default braking distance to use

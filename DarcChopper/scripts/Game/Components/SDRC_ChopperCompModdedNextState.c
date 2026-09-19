@@ -504,14 +504,6 @@ modded class SDRC_ChopperComp
 	*/
 	override private void HandleBehaviour(IEntity owner)
 	{
-		const int BEHAVIOUR_CHECK_CYCLE = 1;
-		
-		//Only when we're flying, do things.
-/*		if (GetState() != SDRC_EHeliState.FLY)
-		{
-			return;
-		}*/
-		
 		//Return to normal state
 		if ( (m_fTimerBehaviour < 0) && (GetBehaviour() != SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) )
 		{
@@ -529,14 +521,14 @@ modded class SDRC_ChopperComp
 			return;
 		}		
 				
-		//Handle behaviour in cycles of BEHAVIOUR_CHECK_CYCLE seconds
+		//Handle behaviour in cycles of behaviourCycleTime seconds
 		if (m_fTimerBehaviourCycle > 0)
 		{
 			return;
 		}
 		
 		//Reset behaviour cycle timeout
-		m_fTimerBehaviourCycle = BEHAVIOUR_CHECK_CYCLE;
+		m_fTimerBehaviourCycle = params.behaviourCycleTime;
 
 		//Do enemy search
 		SetAttackPosition(vector.Zero);	//NOTE: This will not reset m_fAttackPositionSetTime if we're still S&D state

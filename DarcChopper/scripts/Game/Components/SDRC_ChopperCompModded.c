@@ -445,7 +445,7 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
 				//Set attack position. At this stage, it could be at 0 height
-				SetAttackPosition(destination);
+//				SetAttackPosition(destination);
 /*				
 				//Find the previous position and move the attack *flight* position a bit further
 				vector prevPos = m_vOrigin;
