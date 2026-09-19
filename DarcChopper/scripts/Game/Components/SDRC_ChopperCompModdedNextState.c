@@ -93,13 +93,19 @@ modded class SDRC_ChopperComp
 	- FLY will start to fly
 	- Others will have some action bound to them.
 	*/
-	override private void SetNextState(IEntity owner, SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.WP_UNDEFINED, bool allowRemove = true)
+	override private void SetNextState(IEntity owner, SDRC_FlyPathPoint flyDestination = null, bool allowRemove = true)
 	{
 		//Reset the timer between points as we're setting new state with new points.
 		m_fTimeBetweenPts = 0;
 		
 		//By default we don't remove the destination point from m_vFlyDestinations
 		bool isRemoveDestination = false;
+		
+		SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.WP_UNDEFINED;
+		if (flyDestination)
+		{
+			nextType = flyDestination.type;
+		}		
 		
 		//Check that next waypoint type is valid
 		nextType = SDRC_ChopperHelper.GetNextWayPointType(owner, nextType);
@@ -116,7 +122,9 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
-				SetState(SDRC_EHeliState.ATTACK);
+				//NOTE: SetAttackPosition() has been set in CreateFlightPoints() because we add some additional FlyPathPoints 
+				//      to make a better attack path.
+				SetState(SDRC_EHeliState.ATTACK);				
 				TypeAttackStart(owner);
 				break;
 			}
@@ -481,6 +489,7 @@ modded class SDRC_ChopperComp
 		if (behaviour == SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR)
 		{			
 			time = 0;
+			m_fTimerBehaviourCycle = params.behaviourCycleTime;
 		}
 				
 		//If time is set as -1, make time veeeeery long.

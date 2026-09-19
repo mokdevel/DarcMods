@@ -52,7 +52,7 @@ class SDRC_ChopperEnemyHelper
 		if (chopperComp.m_vAttackPosition != vector.Zero)
 		{
 			found = true;
-			SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vAttackPosition, ARGB(32, 255, 0, 128), 5, chopperComp.m_sDid + "att");
+			//SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vAttackPosition, ARGB(32, 255, 0, 128), 5, chopperComp.m_sDid + "att");
 		}
 		else
 		{

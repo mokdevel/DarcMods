@@ -232,14 +232,15 @@ modded class SDRC_ChopperComp : ScriptComponent
 				case SDRC_EFlyWayPointType.WP_PATROL:
 				case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
 				{
-					//Special case where the flight points are added in SetNextState()
-					
-					SetNextState(owner, flyDestination.type, false);					
+					//Special case where the flight points are added in SetNextState()					
+					SetNextState(owner, flyDestination, false);					
 					destinationHandled = true;
 					break;
 				}		
 				case SDRC_EFlyWayPointType.WP_ATTACK:
 				{
+					SetAttackPosition(flyDestination.pt);
+					
 					//Find the previous position and move the attack *flight* position a bit further
 					vector attackPos = flyDestination.pt;
 					
@@ -276,7 +277,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 					//Add the final point
 					AddFlyPathPoint(flyDestination.pt, flyDestination.type, flyDestination.value);
 					//Set the state
-					SetNextState(owner, flyDestination.type, false);
+					SetNextState(owner, flyDestination, false);
 				}
 			}
 					
