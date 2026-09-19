@@ -6,6 +6,7 @@
 Main features:
 * All kinds of flight model finetuning.
 * Added WP_CRASH
+* SDRC_EHeliState and SDRC_EFlyWayPointType reordered. This may have an effect on other mods so check and recompile yours if needed. 
 
 ## 20260829
 Main features:

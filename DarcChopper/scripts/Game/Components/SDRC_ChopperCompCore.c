@@ -46,6 +46,7 @@ class SDRC_ChopperParams
 	float attackHeightMul;							//Height multiplier to use for attack position. This will take m_fFlyHeightLow and multiply with this value.
 //	int attackDefaultTime;							//(seconds) How long to attack a location
 	int enemyKnownTime;								//How long the enemy is known
+	int enemySearchCycleTime;						//Cycle time between enemy searches
 	
 	//Braking
 	int brakingDistance;							//The default braking distance to use
@@ -111,10 +112,10 @@ enum SDRC_EFlyWayPointType
 enum SDRC_EHeliState
 {
 	UNKNOWN,
-	FLY,					// 1 - Normal state
-	FLY_AWAY,				// 2 - In this state, when all destinations have been flown through, we fly away and end.
-	FLY_AWAY_IMMEDIATELY,	// 3 - NOTE: This is not a real state. When set, state will change to FLY_AWAY
-	_FREE_,					// 4 - Unused
+	ATTACK,					// 1 - Added when WP_ATTACK is handled to inform that spline height checking can go below minimum height	
+	FLY,					// 2 - Normal state
+	FLY_AWAY,				// 3 - In this state, when all destinations have been flown through, we fly away and end.
+	FLY_AWAY_IMMEDIATELY,	// 4 - NOTE: This is not a real state. When set, state will change to FLY_AWAY
 	LAND_VERTICAL,			// 5 - Chopper is landing vertically
 	BRAKE,					// 6 - Chopper is braking
 	WAIT,					// 7 - NOTE: Velocity disabled
@@ -123,8 +124,7 @@ enum SDRC_EHeliState
 	HOVER_UP,				//10 - Chopper is hovering upwards
 	HOVER_DOWN,				//11 - Chopper is hovering upwards
 	GET_OUT,				//12 - One frame state to order AI to get out
-	ATTACK,					//13 - Added when WP_ATTACK is handled to inform that spline height checking can go below minimum height	
-	CRASH,					//14 - Chopper has a target to crash
+	CRASH,					//13 - Chopper has a target to crash
 	END,
 	
 	

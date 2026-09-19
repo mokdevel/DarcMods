@@ -58,6 +58,11 @@ modded class SDRC_ChopperComp
 				pos[1] = y;			
 			}
 		}
+		
+		if (m_vAttackPosition != vector.Zero)
+		{
+			m_vAttackPositionOld = m_vAttackPosition;
+		}		
 		m_vAttackPosition = pos;
 		
 		#ifdef WORKBENCH

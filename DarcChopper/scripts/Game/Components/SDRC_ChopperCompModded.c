@@ -439,7 +439,6 @@ modded class SDRC_ChopperComp
 					destination = GetOwner().GetOrigin() + (direction.Normalized() * (float)SDRC_Misc.GetWorldSize());
 				}
 				
-				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, -1);	//Become passive once flying away.
 				SetState(SDRC_EHeliState.FLY_AWAY);
 				break;
 			}

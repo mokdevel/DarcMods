@@ -256,12 +256,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 	private vector m_fPositionCrashingOrig;		//Position from where we start to crash
 	
 	//Attack related
-	vector m_vAttackPosition;					//Position to attack. Use SetAttackPosition() to set this
-	float m_fAttackPositionSetTime;				//Time to consider the position as a valid target
+	vector m_vAttackPosition = vector.Zero;		//Position to attack. Use SetAttackPosition() to set this
+	vector m_vAttackPositionOld = vector.Zero;	//Previous position that was attacked. Automatically set in SetAttackPosition()
+	float m_fAttackPositionSetTime				//Time to consider the position as a valid target
 	
-	//Enemy positions
-	float m_fEnemySearchCycleTime = 2;			//Time between enemy position updates
-		
 	//The order of things:
 	//- Spawn chopper via GM or mod
 	//- OnPostInit()

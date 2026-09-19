@@ -46,17 +46,18 @@ class SDRC_ChopperEnemyHelper
 			return false;
 		}
 		
-		chopperComp.ResetAttack();		
-		chopperComp.m_vAttackPosition = SDRC_ChopperEnemyHelper.DoEnemySearch(owner);
-		//Reset the cyclic time
-		chopperComp.m_fAttackPositionSetTime = chopperComp.m_fEnemySearchCycleTime;
+		chopperComp.ResetAttack();
+		chopperComp.SetAttackPosition(SDRC_ChopperEnemyHelper.DoEnemySearch(owner));
 		
 		if (chopperComp.m_vAttackPosition != vector.Zero)
 		{
 			found = true;
-			//SetAttackPosition() will set the cyclic time m_fAttackPositionSetTime to enemyKnownTime. A new enemy is only searched after this.
-			chopperComp.SetAttackPosition(chopperComp.m_vAttackPosition);
 			SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vAttackPosition, ARGB(32, 255, 0, 128), 5, chopperComp.m_sDid + "att");
+		}
+		else
+		{
+			//Enemy not found, so try again in a moment.
+			chopperComp.m_fAttackPositionSetTime = chopperComp.params.enemySearchCycleTime;
 		}
 		
 		return found;

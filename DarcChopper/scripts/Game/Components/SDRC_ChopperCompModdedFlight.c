@@ -330,7 +330,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 			case SDRC_EFlyWayPointType.WP_CRASH:
 			{
 				SetState(SDRC_EHeliState.CRASH);
-				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, -1);
 				//NOTE: m_vAttackPosition has been set in AddDestination
 				break;
 			}			

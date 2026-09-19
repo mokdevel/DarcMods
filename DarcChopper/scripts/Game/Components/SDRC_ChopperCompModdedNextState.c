@@ -21,13 +21,41 @@ modded class SDRC_ChopperComp
 	{
 		m_eHeliState = state;
 
-		//Changing to normal flight mode		
-		if (state == SDRC_EHeliState.FLY)
-		{			
-			//Disable the TimeInState counter
-			SetTimeInState(0);
-			//Reset attack
-			ResetAttack();
+		switch (state)
+		{
+			case SDRC_EHeliState.UNKNOWN:
+				break;
+			case SDRC_EHeliState.ATTACK:
+				break;
+			case SDRC_EHeliState.FLY:
+			{
+				//Disable the TimeInState counter
+				SetTimeInState(0);			
+				//Set normal behaviour
+				SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
+				//Reset attack
+				ResetAttack();
+				break;
+			}
+			case SDRC_EHeliState.FLY_AWAY:
+			case SDRC_EHeliState.FLY_AWAY_IMMEDIATELY:
+			case SDRC_EHeliState.LAND_VERTICAL:
+			case SDRC_EHeliState.BRAKE:
+			case SDRC_EHeliState.WAIT:
+			case SDRC_EHeliState.RAISE:
+			case SDRC_EHeliState.HOVER:
+			case SDRC_EHeliState.HOVER_UP:
+			case SDRC_EHeliState.HOVER_DOWN:
+			case SDRC_EHeliState.GET_OUT:
+			case SDRC_EHeliState.CRASH:
+			case SDRC_EHeliState.END:
+			case SDRC_EHeliState.ON_GROUND:
+			case SDRC_EHeliState.DESTROYED:
+			case SDRC_EHeliState.DESPAWN:
+			{
+				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, -1);
+				break;
+			}
 		}
 		
 		SDRC_Log.Add("[SDRC_ChopperComp:SetState] State: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.SPAM);
@@ -85,7 +113,13 @@ modded class SDRC_ChopperComp
 			{
 				//Should never happen
 				break;
-			}			
+			}
+			case SDRC_EFlyWayPointType.WP_ATTACK:
+			{
+				SetState(SDRC_EHeliState.ATTACK);
+				TypeAttackStart(owner);
+				break;
+			}
 			case SDRC_EFlyWayPointType.WP_FLY:
 			{
 				SDRC_ChopperCompCore.ResetOriginalValues(owner);		//Reset heli settings
@@ -306,7 +340,7 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_BRAKE:
 			{
-				SetState(SDRC_EHeliState.BRAKE);			
+				SetState(SDRC_EHeliState.BRAKE);
 				//NOTE: The final height will be set in SetFlightPointHeight
 				m_bIsBraking = false;
 				break;
@@ -328,7 +362,6 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_CRASH:
 			{
 				SetState(SDRC_EHeliState.CRASH);
-				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, -1);
 				//NOTE: The final height will be set in SetFlightPointHeight
 				m_bIsCrashing = false;
 				break;
@@ -350,12 +383,6 @@ modded class SDRC_ChopperComp
 				isRemoveDestination = true;
 				
 				//ResetFlight();	//TBD: Check if lines are staying on screen after stop engine 
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_ATTACK:
-			{
-				SetState(SDRC_EHeliState.ATTACK);
-				TypeAttackStart(owner);
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
@@ -394,8 +421,8 @@ modded class SDRC_ChopperComp
 		switch (m_eHeliState)
 		{
 			
-			case SDRC_EHeliState.FLY:
 			case SDRC_EHeliState.ATTACK:
+			case SDRC_EHeliState.FLY:
 			{
 				TypeHandleAttack(owner);
 				break;
@@ -470,8 +497,8 @@ modded class SDRC_ChopperComp
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Handle behaviour
-	- Normal case: Fly and react normally
-	- Active case: A behaviour cycle is run every BEHAVIOUR_CHECK_CYCLE seconds. If we're in a behaviour, 
+	- Normal case Fly and react normally
+	- Active case A behaviour cycle is run every BEHAVIOUR_CHECK_CYCLE seconds. If we're in a behaviour, 
 				after this time, we check if there is a need to change the behaviour. This is quite rapid 
 				checking
 	*/
@@ -485,36 +512,38 @@ modded class SDRC_ChopperComp
 			return;
 		}*/
 		
+		//Return to normal state
+		if ( (m_fTimerBehaviour < 0) && (GetBehaviour() != SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) )
+		{
+			//Normal case
+			m_eHeliBehaviour = SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR;
+			ResetAttack();
+			return;
+		}
+
 		//When in EVAC or PASSIVE behaviour, stay there.
 		if ( (m_eHeliBehaviour == SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR) 
 		  || (m_eHeliBehaviour == SDRC_EHeliBehaviour.EVAC_BEHAVIOUR) 
 		   )
 		{
 			return;
-		}
-		
-		//Return to normal state
-		if ( (m_fTimerBehaviour < 0) && (GetBehaviour() != SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) )
-		{
-			//Normal case:
-			m_eHeliBehaviour = SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR;
-			ResetAttack();
-			return;
-		}
-		
+		}		
+				
 		//Handle behaviour in cycles of BEHAVIOUR_CHECK_CYCLE seconds
 		if (m_fTimerBehaviourCycle > 0)
 		{
 			return;
 		}
 		
+		//Reset behaviour cycle timeout
 		m_fTimerBehaviourCycle = BEHAVIOUR_CHECK_CYCLE;
 
-		//Do enemy search				
-		ResetAttack();
+		//Do enemy search
+		SetAttackPosition(vector.Zero);	//NOTE: This will not reset m_fAttackPositionSetTime if we're still S&D state
+		//ResetAttack();
 		SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
 		
-		//If enemy is near by, enter S&D behaviour in case we're in normal behaviour. 
+		//If enemy found, enter S&D behaviour in case we're in normal behaviour. 
 		//If we're passive, doing evac or .. we don't want S&D to happen.
 		if ( (m_vAttackPosition != vector.Zero) && (GetBehaviour() == SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) )
 		{
@@ -530,30 +559,25 @@ modded class SDRC_ChopperComp
 		{
 			case SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR:
 			{
-				//Make sure we have a proper danger position. 
-				vector hostilePos = m_vAttackPosition;
-				if (hostilePos == vector.Zero)
-				{
-					hostilePos = owner.GetOrigin();
-				}
-
 				//Set attack position. This also resets the m_fAttackPositionSetTime		
-				SetAttackPosition(hostilePos);
+				//SetAttackPosition(m_vAttackPosition);
 				
 				if ( (m_vAttackPosition != vector.Zero) && (m_fAttackPositionSetTime == params.enemyKnownTime) )
 				{
-					TypeAttackSetup(owner, hostilePos);
+					TypeAttackSetup(owner, m_vAttackPosition);
 					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D: Enemy found, attacking: " + m_vAttackPosition, LogLevel.NORMAL);
 				}
 				else
 				{
-					if (m_fAttackPositionSetTime < 0)
+					if ( (m_fAttackPositionSetTime < 0) && (m_vAttackPositionOld != vector.Zero) )
 					{					
 						//If no enemy, add another patrol round
 						if (SDRC_ChopperHelper.GetNextWayPointType(owner) != SDRC_EFlyWayPointType.WP_PATROL_ONCE)
 						{
-							AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, hostilePos, index: 0);		//NOTE: This is set as first waypoint
+							AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, m_vAttackPositionOld, index: 0);		//NOTE: This is set as first waypoint							
 						}
+						//We consider the spot 
+						m_fTimerBehaviourCycle = params.enemyKnownTime;
 					}
 				}
 				break;
