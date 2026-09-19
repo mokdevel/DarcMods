@@ -1,7 +1,6 @@
 //SDRC_ChopperCompModded.c
 
 //------------------------------------------------------------------------------------------------
-//class SDRC_ChopperComp : ScriptGameComponent
 modded class SDRC_ChopperComp
 {
 	//------------------------------------------------------------------------------------------------	
@@ -15,8 +14,7 @@ modded class SDRC_ChopperComp
 	*/	
 	override void Setup(IEntity owner)
 	{
-		GetGame().GetCallqueue().CallLater(Setup_Delayed, TIME_DELAY_READY * 1000, false, owner);		
-		
+		GetGame().GetCallqueue().CallLater(Setup_Delayed, TIME_DELAY_READY * 1000, false, owner);			
 	}	
 	
 	void Setup_Delayed(IEntity owner)
@@ -239,70 +237,6 @@ modded class SDRC_ChopperComp
 	        heliSimulation.RotorSetForceScaleState(0, rotorForce0);
 	        heliSimulation.RotorSetForceScaleState(1, rotorForce1);		
 		}
-	}
-		
-	//------------------------------------------------------------------------------------------------	
-	// Enemy related
-	//------------------------------------------------------------------------------------------------	
-	
-	//------------------------------------------------------------------------------------------------	
-	/*!
-	Enable/Disable enemy searching
-	*/		
-	override void SetEnemySearchType(SDRC_EHeliEnemySearchType type)
-	{
-		m_EnemySearchType = type;
-	}
-	
-	//------------------------------------------------------------------------------------------------	
-	/*!
-	Get last known enemy position
-	*/
-	vector GetEnemyPosition()
-	{
-		return m_vAttackPosition;
-	}
-
-	//------------------------------------------------------------------------------------------------	
-	/*!
-	Sets attack position
-	*/
-	override void SetAttackPosition(vector pos)
-	{
-		//We will not reset attack position if there is still time left
-		if ( (m_fAttackPositionSetTime > 0) && (pos == vector.Zero) )
-		{
-			return;
-		}
-		
-		//Set time for attack position
-		if (pos == vector.Zero)
-		{
-			m_fAttackPositionSetTime = 0;
-		}
-		else
-		{
-			m_fAttackPositionSetTime = params.enemyKnownTime;
-		}
-		
-		//Set position to right height
-		if (pos != vector.Zero)
-		{		
-			if (pos[1] == 0)
-			{
-				float y = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
-				pos[1] = y;			
-			}
-		}
-		m_vAttackPosition = pos;
-		
-		#ifdef WORKBENCH
-			SDRC_DebugHelper.DeleteDebugSphere(m_sDid + "att");		
-			if (pos != vector.Zero)
-			{
-				SDRC_DebugHelper.AddDebugSphere(pos, ARGB(32, 255, 0, 0), 4.0, m_sDid + "att");
-			}
-		#endif
 	}
 	
 	//------------------------------------------------------------------------------------------------	
@@ -715,96 +649,6 @@ modded class SDRC_ChopperComp
 			m_vFlyDestinations.Insert(fpp);
 		}
 	}		
-
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Handle behaviour
-	- Normal case: Fly and react normally
-	- Active case: A behaviour cycle is run every BEHAVIOUR_CHECK_CYCLE seconds. If we're in a behaviour, 
-				after this time, we check if there is a need to change the behaviour. This is quite rapid 
-				checking
-	*/
-	override private void HandleBehaviour(IEntity owner)
-	{
-		const int BEHAVIOUR_CHECK_CYCLE = 1;
-		
-		//When in EVAC or PASSIVE mode, stay there.
-		if ( (m_eHeliBehaviour == SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR) || (m_eHeliBehaviour == SDRC_EHeliBehaviour.EVAC_BEHAVIOUR) )
-		{
-			return;
-		}
-		
-		//Only when we're flying, do things.
-		if (GetState() != SDRC_EHeliState.FLY)
-		{
-			return;
-		}
-		
-		//Return to normal state
-		if ( (m_fTimerBehaviour < 0) && (GetBehaviour() != SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) )
-		{
-			//Normal case:
-			m_eHeliBehaviour = SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR;
-			ResetAttack();
-			return;
-		}
-		
-		//Handle behaviour in cycles of BEHAVIOUR_CHECK_CYCLE seconds
-		if (m_fTimerBehaviourCycle > 0)
-		{
-			return;
-		}
-		
-		m_fTimerBehaviourCycle = BEHAVIOUR_CHECK_CYCLE;
-
-		//Do enemy search				
-		SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
-		
-		//If enemy is near by, enter S&D behaviour in case we're in normal behaviour. 
-		//If we're passive, doing evac or .. we don't want S&D to happen.
-		if ( (m_vAttackPosition != vector.Zero) && (GetBehaviour() == SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) )
-		{
-			//If yes, become aggressive and/or reset timer.
-			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, params.timeSearchAndDestroy);
-			m_fTimerBehaviourCycle = params.enemyKnownTime + 1;
-			SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] Enemy found. Changing to S&D behaviour." + m_vAttackPosition, LogLevel.DEBUG);
-		}			
-						
-		switch (m_eHeliBehaviour)
-		{
-			case SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR:
-			{
-				//Make sure we have a proper danger position. 
-				//The priority is m_vAttackPosition (last ordered attack position) -> m_vAttackPosition (last seen enemy) -> around itself 
-				vector hostilePos = m_vAttackPosition;
-				if (hostilePos == vector.Zero)
-				{
-					hostilePos = owner.GetOrigin();
-				}
-				
-				SetAttackPosition(hostilePos);
-				
-				if ( (m_vAttackPosition != vector.Zero) && (m_fAttackPositionSetTime == params.enemyKnownTime) )
-				{
-					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D: Enemy found, attacking: " + m_vAttackPosition, LogLevel.NORMAL);
-
-					TypeAttackSetup(owner, hostilePos);
-				}
-				else
-				{
-					if (m_fAttackPositionSetTime < 0)
-					{					
-						//If no enemy, add another patrol round
-						if (SDRC_ChopperHelper.GetNextWayPointType(owner) != SDRC_EFlyWayPointType.WP_PATROL_ONCE)
-						{
-							AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, hostilePos, index: 0);		//NOTE: This is set as first waypoint
-						}
-					}
-				}
-				break;
-			}
-		}
-	}	
 	
 	//------------------------------------------------------------------------------------------------	
 	// Misc

@@ -1,5 +1,7 @@
 //SDRC_ChopperCompModdedFlight.c
 
+//Flight related functions collected in this file.
+
 //------------------------------------------------------------------------------------------------
 modded class SDRC_ChopperComp : ScriptComponent
 {
@@ -191,13 +193,13 @@ modded class SDRC_ChopperComp : ScriptComponent
 				//Find a point along the fly path and move it away from the line along tangent					
 				vector newPoint = SDRC_Math.CreateOffsetMidPoint(p1, p2, distance, 0.2, isOnLeft);
 				AddFlyPathPoint(newPoint);
-				SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 100);
+				//SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 100);
 			}
 			else
 			{
 				vector newPoint = vector.Lerp(p1, p2, 0.5);
 				AddFlyPathPoint(newPoint);
-				SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 128, 0, 0), 1.0, m_sDid + "line", 100);
+				//SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 128, 0, 0), 1.0, m_sDid + "line", 100);
 			}
 		}
 		
@@ -246,7 +248,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 					vector direction = SDRC_Math.DirectionXZ(m_vOrigin, fpp.pt);
 					float radius = params.patrolRadius * SDRC_Misc.RandomFloat(0.8, 1.8);
 					vector posForward = fpp.pt + (direction.Normalized() * radius);
-					SDRC_DebugHelper.AddDebugSphere(posForward, ARGB(32, 255, 255, 255), 4.0, m_sDid);					
+//					SDRC_DebugHelper.AddDebugSphere(posForward, ARGB(32, 255, 255, 255), 4.0, m_sDid);					
 					AddFlyPathPoint(posForward);
 					
 					//Modify the attack point. Set if lower and handle rerouting.
@@ -254,14 +256,13 @@ modded class SDRC_ChopperComp : ScriptComponent
 					attackPos[1] = lowestHeight;
 					HandleRerouting(attackPos);
 					AddFlyPathPoint(attackPos, SDRC_EFlyWayPointType.WP_ATTACK);	//This is the attack position
-					SDRC_DebugHelper.AddDebugSphere(attackPos, ARGB(32, 255, 255, 255), 6.0, m_sDid);
-//					SDRC_DebugHelper.AddDebugPos(attackPos, ARGB(32, 255, 255, 255), 4.0, m_sDid);					
+//					SDRC_DebugHelper.AddDebugSphere(attackPos, ARGB(32, 255, 255, 255), 6.0, m_sDid);
 						
 					//Add a point further from the attackpoint along the vector from newpos to attackpos.
 					//This is the last point in the attack sequence
 					direction = SDRC_Math.DirectionXZ(posForward, attackPos);
 					flyDestination.pt = attackPos + (direction.Normalized() * params.destinationForward);
-					SDRC_DebugHelper.AddDebugSphere(flyDestination.pt, ARGB(32, 255, 255, 255), 7.0, m_sDid);					
+//					SDRC_DebugHelper.AddDebugSphere(flyDestination.pt, ARGB(32, 255, 255, 255), 7.0, m_sDid);					
 				}
 			}
 					

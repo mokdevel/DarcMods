@@ -955,88 +955,23 @@ modded class SDRC_ChopperComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------	
 	// States 
 	//------------------------------------------------------------------------------------------------	
-	
-	//------------------------------------------------------------------------------------------------
-	SDRC_EHeliState GetState()
-	{
-		return m_eHeliState;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void SetState(SDRC_EHeliState state)
-	{
-		m_eHeliState = state;
-
-		//Changing to normal flight mode		
-		if (state == SDRC_EHeliState.FLY)
-		{			
-			//Disable the TimeInState counter
-			SetTimeInState(0);
-			//Reset attack
-			ResetAttack();
-		}
-		
-		SDRC_Log.Add("[SDRC_ChopperComp:SetState] State: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.SPAM);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	SDRC_EHeliBehaviour GetBehaviour()
-	{
-		return m_eHeliBehaviour;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Sets the behaviour.
-	\param time (seconds) How long to stay in behaviour. -1 = infinite
-	*/	
-	void SetBehaviour(SDRC_EHeliBehaviour behaviour, int time)
-	{
-		m_eHeliBehaviour = behaviour;
-
-		//Reset timer for NORMAL
-		if (behaviour == SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR)
-		{			
-			time = 0;
-		}
-				
-		//If time is set as -1, make time veeeeery long.
-		if (time == -1)
-		{
-			time = 10000000;
-		}
-		
-		SDRC_Log.Add("[SDRC_ChopperComp:SetBehaviour] Setting: " + SCR_Enum.GetEnumName(SDRC_EHeliBehaviour, behaviour), LogLevel.SPAM);
-		
-		m_fTimerBehaviour = time;
-	}	
-	
+	SDRC_EHeliState GetState() {}
+	void SetState(SDRC_EHeliState state) {}
+	void SetTimeInState(int seconds) {}
+	private void SetNextState(IEntity owner, SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.WP_UNDEFINED, bool allowRemove = true) {}
+	private void HandleState(IEntity owner, float timeSlice) {}
 	//------------------------------------------------------------------------------------------------	
-	void SetTimeInState(int seconds)	
-	{
-		if (seconds == -1)
-		{
-			seconds = 0;
-		}
-
-		//Store original time
-		m_fTimeInStateOrig = seconds;
-		//Set the time to the default. Value is decreased in EOnFrame
-		m_fTimeInStateLeft = seconds;
-		//Reset the timer we've been in the state. Value is increased in EOnFrame
-		m_fTimeInStateBeen = 0;
-		
-		//If a time was requested, mark that we have a state with a timer
-		if (seconds == 0)
-		{
-			m_bTimeInStateEnabled = false;
-		}
-		else
-		{
-			m_bTimeInStateEnabled = true;
-		}
-	}	
-
+	// Behaviour
+	//------------------------------------------------------------------------------------------------	
+	SDRC_EHeliBehaviour GetBehaviour() {}
+	void SetBehaviour(SDRC_EHeliBehaviour behaviour, int time) {}
+	private void HandleBehaviour(IEntity owner) {}
+	//------------------------------------------------------------------------------------------------	
+	// Special handling - defined in modded class
+	//------------------------------------------------------------------------------------------------	
+	private void HandleLandingVertical(IEntity owner, float timeSlice) {}
+	private void HandleBraking(IEntity owner, float timeSlice) {}
+	private void HandleCrashing(IEntity owner, float timeSlice) {}
 	//------------------------------------------------------------------------------------------------	
 	// Helicopter setup - defined in modded class
 	//------------------------------------------------------------------------------------------------	
@@ -1049,12 +984,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 	void CreateNewFlight(IEntity owner) {}
 	private void CreateFlightPoints(IEntity owner, bool fixHeight = false) {}
 	//------------------------------------------------------------------------------------------------	
-	// State Handling  - defined in modded class
-	//------------------------------------------------------------------------------------------------	
-	private void HandleState(IEntity owner, float timeSlice) {}
-	private void HandleBehaviour(IEntity owner) {}
-	private void SetNextState(IEntity owner, SDRC_EFlyWayPointType nextType = SDRC_EFlyWayPointType.WP_UNDEFINED, bool allowRemove = true) {}
-	//------------------------------------------------------------------------------------------------	
 	// Damage settings - defined in modded class
 	//------------------------------------------------------------------------------------------------	
 	bool IsStillWorking(IEntity owner, bool inInit) {}
@@ -1063,16 +992,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------	
 	void AddDestination(SDRC_EFlyWayPointType type = SDRC_EFlyWayPointType.WP_FLY, vector destination = vector.Zero, float value = -1, int index = -1) {}
 	//------------------------------------------------------------------------------------------------	
-	// Special handling - defined in modded class
-	//------------------------------------------------------------------------------------------------	
-	private void HandleLanding(IEntity owner, float timeSlice) {}
-	private void HandleLandingVertical(IEntity owner, float timeSlice) {}
-	private void HandleBraking(IEntity owner, float timeSlice) {}
-	private void HandleCrashing(IEntity owner, float timeSlice) {}
-	//------------------------------------------------------------------------------------------------	
 	// Enemy related - defined in modded class
 	//------------------------------------------------------------------------------------------------	
 	void SetEnemySearchType(SDRC_EHeliEnemySearchType type) {}
+	vector GetEnemyPosition() {}
 	void SetAttackPosition(vector pos) {}
 	//------------------------------------------------------------------------------------------------	
 	// Helicopter settings - defined in modded class

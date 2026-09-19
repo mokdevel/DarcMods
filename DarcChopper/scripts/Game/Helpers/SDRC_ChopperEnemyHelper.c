@@ -22,6 +22,8 @@ class SDRC_ChopperEnemyHelper
 	/*!
 	Search for enemy and mark it. The knowledge will eventually be lost. 
 	After a while, we may find another enemy to track.
+	
+	This function will set m_vAttackPosition and m_fAttackPositionSetTime
 	*/			
 	static bool SearchForEnemy(IEntity owner)
 	{
@@ -46,12 +48,13 @@ class SDRC_ChopperEnemyHelper
 		
 		chopperComp.ResetAttack();		
 		chopperComp.m_vAttackPosition = SDRC_ChopperEnemyHelper.DoEnemySearch(owner);
+		//Reset the cyclic time
 		chopperComp.m_fAttackPositionSetTime = chopperComp.m_fEnemySearchCycleTime;
 		
 		if (chopperComp.m_vAttackPosition != vector.Zero)
 		{
 			found = true;
-			//Set enemy knowledge to be as long as the attack is ongoing
+			//SetAttackPosition() will set the cyclic time m_fAttackPositionSetTime to enemyKnownTime. A new enemy is only searched after this.
 			chopperComp.SetAttackPosition(chopperComp.m_vAttackPosition);
 			SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vAttackPosition, ARGB(32, 255, 0, 128), 5, chopperComp.m_sDid + "att");
 		}
