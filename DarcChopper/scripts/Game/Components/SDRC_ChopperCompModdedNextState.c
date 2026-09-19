@@ -569,7 +569,7 @@ modded class SDRC_ChopperComp
 				}
 				else
 				{
-					if ( (m_fAttackPositionSetTime < 0) && (m_vAttackPositionOld != vector.Zero) )
+					if ( (m_fAttackPositionSetTime <= 0) && (m_vAttackPositionOld != vector.Zero) )
 					{					
 						//If no enemy, add another patrol round
 						if (SDRC_ChopperHelper.GetNextWayPointType(owner) != SDRC_EFlyWayPointType.WP_PATROL_ONCE)

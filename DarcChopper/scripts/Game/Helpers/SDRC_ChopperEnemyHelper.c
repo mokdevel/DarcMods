@@ -57,7 +57,7 @@ class SDRC_ChopperEnemyHelper
 		else
 		{
 			//Enemy not found, so try again in a moment.
-			chopperComp.m_fAttackPositionSetTime = chopperComp.params.enemySearchCycleTime;
+			chopperComp.m_fAttackPositionSetTime = 0;//chopperComp.params.enemySearchCycleTime;
 		}
 		
 		return found;

@@ -45,7 +45,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		
 		//Attack and enemy related
 		rayLenEnemy = 1000;
-		timeSearchAndDestroy = 60;//4*60;
+		timeSearchAndDestroy = 2*60;//4*60;
 		enemyKnownTime = 20;//60;
 		enemySearchCycleTime = 2;
 		attackHeightMul = 0.2;
