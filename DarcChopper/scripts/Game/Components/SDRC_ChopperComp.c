@@ -95,7 +95,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	[Attribute(category: "Weapons", defvalue: "0.5", desc: "Delay between rockets", params: "0.1 30.0 0.1")]	
 	float m_RocketDelay;
 	float m_fTimerRocketDelay = 0;
-	[Attribute(category: "Weapons", defvalue: "10 1 0", desc: "Rocket spawn position")]	
+	[Attribute(category: "Weapons", defvalue: "10 3 0", desc: "Rocket spawn position")]	
 	vector m_RocketPosition;
 //	[Attribute(category: "Weapons", params: "et", defvalue: "{EE65544BA845C458}Prefabs/Weapons/Ammo/Ammo_Rocket_S5_HEDP_S5KO.et", desc: "Rocket to use")]	
 	[Attribute(category: "Weapons", params: "et", defvalue: "", desc: "Rocket to use")]	
@@ -1058,31 +1058,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 	/*!
 	Type specific handling of attacks. Search for the enemy and then react on the finding.
 	*/	
-	void TypeAttackSetup(IEntity owner, vector hostilePos) 
-	{
-		//If m_fAttackTimerToSet is -1, use the default time
-/*		if (m_fAttackTimerToSet == -1)
-		{
-			m_fAttackTimerToSet = params.attackDefaultTime;
-		}
-		
-		if (m_fAttackTimerToSet < 10)
-		{
-			SDRC_Log.Add("[SDRC_ChopperComp:TypeAttackSetup] Time assigned to WP_ATTACK is quite short: " + m_fAttackTimerToSet + " seconds.", LogLevel.WARNING);
-		}*/
-	}
-	
-	void TypeAttackStart(IEntity owner)
-	{
-		//For how long to continue attacks
-//		m_fAttackTimer = m_fAttackTimerToSet;
-	}
-	
-	void TypeHandleAttack(IEntity owner) 
-	{
-/*		if (m_fAttackTimer < 0)
-		{
-			ResetAttack();
-		}*/
-	}		
+	void TypeAttackSetup(IEntity owner, vector hostilePos) {}
+	void TypeHandleAttack(IEntity owner) {}
 }

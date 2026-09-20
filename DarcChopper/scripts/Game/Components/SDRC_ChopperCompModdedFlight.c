@@ -328,12 +328,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 				//NOTE: m_vAttackPosition has been set in AddDestination
 				break;
 			}*/
-			case SDRC_EFlyWayPointType.WP_CRASH:
+/*			case SDRC_EFlyWayPointType.WP_CRASH:
 			{
 				SetState(SDRC_EHeliState.CRASH);
 				//NOTE: m_vAttackPosition has been set in AddDestination
 				break;
-			}			
+			}*/
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 			{	
 				SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, value);

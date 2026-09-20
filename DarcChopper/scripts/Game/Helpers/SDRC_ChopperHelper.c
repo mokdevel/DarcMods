@@ -386,12 +386,16 @@ class SDRC_ChopperHelper
 					SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vSplinePoints[attackPoint], ARGB(32, 255, 255, 255), 4.0, chopperComp.m_sDid);
 					
 					//Create an attack sine drop before the attackPoint
-					int pt_from = attackPoint * 0.3;
+					int pt_from = attackPoint * 0.8;
 					if (pt_from < 0)
 					{
 						pt_from = 0;
 					}
-					int pt_to = attackPoint * 0.8;
+					int pt_to = attackPoint * 1.1;
+					if (pt_to > chopperComp.m_vSplinePoints.Count() - 1)
+					{
+						pt_from = chopperComp.m_vSplinePoints.Count() - 1;
+					}
 										
 					for (int i = pt_from; i < pt_to; i++)
 					{					

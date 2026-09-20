@@ -419,6 +419,7 @@ modded class SDRC_ChopperComp
 				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
 				type = SDRC_EFlyWayPointType.WP_FLY;
 				SetState(SDRC_EHeliState.FLY);
+				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, -1);
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY:
@@ -444,42 +445,6 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_ATTACK:
 			{
-				//Set attack position. At this stage, it could be at 0 height
-//				SetAttackPosition(destination);
-/*				
-				//Find the previous position and move the attack *flight* position a bit further
-				vector prevPos = m_vOrigin;
-				vector newPos = destination;
-				
-				//Try with the last splinepoint
-				if (!m_vSplinePoints.IsEmpty())
-				{
-					prevPos = m_vSplinePoints[m_vSplinePoints.Count() - 1];
-				}
-					
-				//If there is a destination before the WP_ATTACK, let's use it's destination
-				if (!m_vFlyDestinations.IsEmpty())
-				{
-					switch (index)
-					{
-						case -1:
-							prevPos = m_vFlyDestinations[m_vFlyDestinations.Count() - 1].pt;
-							break;
-						case 0:
-							//Use spline point set above as we're setting the WP_ATTACK as the first item in m_vFlyDestinations
-							break;
-						default:
-							prevPos = m_vFlyDestinations[index].pt;
-					}
-				}
-					
-				//Move on XZ level
-				prevPos[1] = 0;
-				newPos[1] = 0;
-				
-				vector direction = vector.Direction(prevPos, newPos);
-				destination = destination + (direction.Normalized() * params.destinationForward);*/
-				
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:

@@ -66,10 +66,12 @@ modded class SDRC_ChopperComp
 		m_vAttackPosition = pos;
 		
 		#ifdef WORKBENCH
-			SDRC_DebugHelper.DeleteDebugSphere(m_sDid + "att");		
+			//SDRC_DebugHelper.DeleteDebugSphere(m_sDid + "att");		
+			SDRC_DebugHelper.DeleteDebugPos(m_sDid + "att");		
 			if (pos != vector.Zero)
 			{
-				SDRC_DebugHelper.AddDebugSphere(pos, ARGB(32, 255, 0, 0), 4.0, m_sDid + "att");
+				//SDRC_DebugHelper.AddDebugSphere(pos, ARGB(32, 255, 0, 0), 4.0, m_sDid + "att");
+				SDRC_DebugHelper.AddDebugPos(pos, ARGB(32, 255, 0, 0), 4.0, m_sDid + "att", 2.0);
 			}
 		#endif
 	}
