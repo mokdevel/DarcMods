@@ -30,14 +30,14 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 		pitchAngleRadFlat  = -85 * Math.DEG2RAD;	//0 points XX degress downwards
 		pitchNoseAngleDown = pitchAngleRadFlat + (10 * Math.DEG2RAD);
 		pitchNoseAngleUp   = pitchAngleRadFlat - (60 * Math.DEG2RAD);
+		pitchMul = 10;
+		pitchMulBrake = 100;
 		
 		//Rotor force multipliers
 		fRotorForceMulUp = 14;
 		iRotorForceNormal = 25;
-//		iRotorForceRaise = 40;
-//		iRotorForceHover = 1;
 		iRotorForceCrash = iRotorForceNormal * 2.3;
-		iRotorForceBrake = iRotorForceNormal * 3;
+		iRotorForceBrake = iRotorForceNormal * 2;
 		
 		//Obstacle awareness
 		rayLenFront = 200;
@@ -45,15 +45,19 @@ class SDRC_ChopperParams_Drone : SDRC_ChopperParams
 				
 		//Flight parameters
 		detourLerpPosition = 0.4;
-		detourDivider = 5.5;
+		detourDivider = 1.6;
 		
 		//Attack and enemy related
-		rayLenEnemy = 200;
+		rayLenEnemy = 300;
 		timeSearchAndDestroy = 2*60;
+		enemyKnownTime = 2*60;
 		attackHeightMul = 0.3;
 		
+		//Behaviour
+		behaviourCycleTime = 1;
+		
 		//Braking
-		brakingDistance = 150;
+		brakingDistance = 60;
 		
 		//Damage levels
 		damageHeavy = 0.10;
@@ -316,16 +320,8 @@ modded class SDRC_ChopperComp
 		//For dropper drone, the attack position needs to a bit further than the one defined. We want a fly by towards or over the player.
 		if (m_EntitySubType == SDRC_EChopperSubType.DRONE_DROPPER)
 		{				
-			//Move it along the flight path.
-			vector fromPos = m_vOrigin;
-			if (!m_vSplinePoints.IsEmpty())
-			{
-				fromPos = m_vSplinePoints[m_vSplinePoints.Count() - 1];
-			}
-			vector direction = vector.Direction(fromPos, m_vAttackPosition);
-			direction.Normalize();
-			direction[1] = 0;		//Move only on XZ plane
-			m_vAttackPosition = m_vAttackPosition + (direction * 100);
+			AddDestination(SDRC_EFlyWayPointType.WP_CUT);
+			AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, hostilePos, index: 0);	//Note: index is used!
 		}
 		
 		//For crasher drone, we want to drive the drone to ground.
@@ -336,7 +332,6 @@ modded class SDRC_ChopperComp
 			rndPos[2] = SDRC_Misc.RandomInt(-params.patrolRadius, params.patrolRadius);
 			
 			AddDestination(SDRC_EFlyWayPointType.WP_CUT); 
-			ResetDestinations();
 			AddDestination(SDRC_EFlyWayPointType.WP_FLY, owner.GetOrigin() + rndPos); 
 			AddDestination(SDRC_EFlyWayPointType.WP_CRASH, m_vAttackPosition);
 			AddDestination(SDRC_EFlyWayPointType.WP_DESTROY);
@@ -344,7 +339,6 @@ modded class SDRC_ChopperComp
 			
 			//Ignore any interruptions, like a new enemy, during crash 
 			SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, -1);
-			//AddDestination(SDRC_EFlyWayPointType.WP_END); 					
 		}
 	}
 	
@@ -368,7 +362,7 @@ modded class SDRC_ChopperComp
 			return;
 		}
 		
-		if (m_vEnemyPosition == vector.Zero)
+		if (m_vAttackPosition == vector.Zero)
 		{
 			return;
 		}
@@ -400,7 +394,6 @@ modded class SDRC_ChopperComp
 					{
 						DroneGrenade(droneControllerComponent.m_DroneId);
 						AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY); 
-						SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
 						m_bAttackDone = true;
 					}
 				}
@@ -413,7 +406,6 @@ modded class SDRC_ChopperComp
 					{
 						DroneGrenade(droneControllerComponent.m_DroneId);
 						AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY); 
-						SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
 						m_bAttackDone = true;
 					}
 				}
@@ -422,14 +414,6 @@ modded class SDRC_ChopperComp
 			case SDRC_EChopperSubType.DRONE_CRASHER:
 			{
 				//Nothing needs to be done. The attack was defined in TypeAttackSetup to do a final dive.
-/*				//Any target near position?
-				vector pos = SDRC_PlayerHelper.AnyPlayerPosCloseToPos(owner.GetOrigin(), distance * 10, 0);
-				
-				if (pos != vector.Zero)
-				{
-					AddDestination(SDRC_EFlyWayPointType.WP_CRASH, pos); 
-					m_bAttackDone = true;					
-				}*/
 				m_bAttackDone = true;					
 				break;
 			}
@@ -476,6 +460,10 @@ modded class SDRC_ChopperComp
 		SAL_DroneConnectionManager.GetInstance().DropGrenadeBroadcast(droneId);		
 	}
 	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Explode the drone
+	*/	
 	private void DroneExplode(RplId droneId)
 	{
 		if (!Replication.FindItem(droneId))
@@ -488,30 +476,5 @@ modded class SDRC_ChopperComp
 		SCR_ExplosiveTriggerComponent explComp = SCR_ExplosiveTriggerComponent.Cast(drone.FindComponent(SCR_ExplosiveTriggerComponent));
 		explComp.UseTrigger();
 		GetGame().GetCallqueue().CallLater(SCR_EntityHelper.DeleteEntityAndChildren, 1000, false, drone);
-		
-/*				
-		SAL_DropperComponent dropperComp = SAL_DropperComponent.Cast(drone.FindComponent(SAL_DropperComponent));
-		if (!dropperComp)
-			return;
-		
-		SlotManagerComponent slotComp = SlotManagerComponent.Cast(drone.FindComponent(SlotManagerComponent));
-		if (!slotComp)
-			return;
-		
-		IEntity grenade = slotComp.GetSlotByName("GrenadeDropper").GetAttachedEntity();
-		if (grenade == null)
-			return;
-		
-		
-		
-		vector transform[4];
-		grenade.GetTransform(transform);
-		SCR_EntityHelper.DeleteEntityAndChildren(grenade);
-		dropperComp.m_BGrenadeDropped = true;
-		
-		EntitySpawnParams spawnParams = EntitySpawnParams();
-		spawnParams.Transform = transform;
-		GetGame().SpawnEntityPrefab(Resource.Load(dropperComp.m_DropperGrenade), GetGame().GetWorld(), spawnParams);
-		SAL_DroneConnectionManager.GetInstance().DropGrenadeBroadcast(droneId);		*/
 	}	
 }

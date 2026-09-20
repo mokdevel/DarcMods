@@ -125,7 +125,6 @@ modded class SDRC_ChopperComp
 				//NOTE: SetAttackPosition() has been set in CreateFlightPoints() because we add some additional FlyPathPoints 
 				//      to make a better attack path.
 				SetState(SDRC_EHeliState.ATTACK);				
-				TypeAttackStart(owner);
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_FLY:
@@ -718,7 +717,7 @@ modded class SDRC_ChopperComp
 			else 
 			{
 				//If no component to use for ground contact, check with altitude
-				if ( m_vOrigin[1] < (SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + 0.3) )
+				if ( m_vOrigin[1] < (SDRC_Misc.GetSurfaceYWithWater(m_vOrigin) + 1.0) )
 				{
 					SetNextState(owner);			
 				}				
