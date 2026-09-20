@@ -187,7 +187,6 @@ class SDRC_Mission_Chopper : SDRC_Mission
 						vector enemyPos = m_Vehicle_c.GetEnemyPosition();
 						if (enemyPos != "0 0 0")
 						{
-							m_Vehicle_c.EnemyHandled();
 							flyAway = true;
 							SpawnHunterMission(enemyPos);
 							SDRC_Log.Add("[SDRC_Mission_Chopper:MissionRun] Enemy found at " + enemyPos + ". Sending Hunters.", LogLevel.NORMAL);
@@ -569,7 +568,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,1,1,2,2,3,4,4,5};
+		missionList = {4};//{0,1,1,2,2,3,4,4,5};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 100;

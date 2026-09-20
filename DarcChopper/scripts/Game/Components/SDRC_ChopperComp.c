@@ -881,7 +881,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			m_vRayLen = SDRC_Misc.RayCastXZ(owner.GetOrigin(), m_vRayEnd, owner);			
 			
 			//float oldRayLenMulTarget = m_fRayLenMulTarget;
-			m_fRayLenMulTarget = 2 - m_vRayLen;
+			m_fRayLenMulTarget = 2.5 - m_vRayLen;
 	
 			if (m_fRayLenMulTarget != m_fRayLenMul)
 			{

@@ -392,7 +392,7 @@ class SDRC_ChopperHelper
 						pt_from = 0;
 					}
 					int pt_to = attackPoint * 1.1;
-					if (pt_to > chopperComp.m_vSplinePoints.Count() - 1)
+					if (pt_to > chopperComp.m_vSplinePoints.Count() - 2)
 					{
 						pt_from = chopperComp.m_vSplinePoints.Count() - 1;
 					}

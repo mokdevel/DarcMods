@@ -436,7 +436,11 @@ modded class SDRC_ChopperComp
 				//Fly away after all destinations have been handled
 				if (destination == vector.Zero)
 				{
-					vector direction = vector.Direction(SDRC_Misc.GetWorldCenter(), GetOwner().GetOrigin() );
+					vector worldCenter = SDRC_Misc.GetWorldCenter();
+					vector origin = m_vOrigin;
+					worldCenter[1] = m_fFlyHeightHigh;
+					origin[1] = m_fFlyHeightHigh;					
+					vector direction = vector.Direction(worldCenter, origin);
 					destination = GetOwner().GetOrigin() + (direction.Normalized() * (float)SDRC_Misc.GetWorldSize());
 				}
 				
