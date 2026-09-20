@@ -57,9 +57,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 		destination[1] = SDRC_ChopperHelper.SetPointHeight(destination, m_fFlyHeightLow, m_fFlyHeightHigh); 
 		AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);			
 		
-		//Turn chopper to face the first destination
-		SDRC_Math.TurnEntityTowardsXZ(owner, destination);							
-		
 		SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Chopper initial position: " + owner.GetOrigin(), LogLevel.DEBUG);
 				
 		//NOTE: We draw the debug paths once the component is ready
@@ -75,10 +72,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 		{
 			//If no spline points defined, add a few to get an initial flight direction. 
 			//This should only happen at init.
-			vector firstPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial / 3);
+			vector firstPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward / 8);
 			m_vSplinePoints.Insert(firstPoint);
-			firstPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial / 2);
+			SDRC_DebugHelper.AddDebugPos(firstPoint, ARGB(255, 128, 0, 0), 1.0, m_sDid + "line", 50);
+			firstPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward / 6);
 			m_vSplinePoints.Insert(firstPoint);
+			SDRC_DebugHelper.AddDebugPos(firstPoint, ARGB(255, 128, 0, 0), 1.0, m_sDid + "line", 75);
 			SDRC_Log.Add("[SDRC_ChopperComp:CreateNewFlight] Setting initial spline points.", LogLevel.DEBUG);
 			return;
 		}
@@ -90,11 +89,11 @@ modded class SDRC_ChopperComp : ScriptComponent
 		ResetFlight();
 		
 		// 2. Add a point in front		
-		SDRC_DebugHelper.DeleteDebugPos(m_sDid + "line");
-		vector newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward * 0.4);
+		//SDRC_DebugHelper.DeleteDebugPos(m_sDid + "line");
+		vector newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward / 2);
 		newPoint[1] = oldHeight[1];
 		AddFlyPathPoint(newPoint);
-		//SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 50);		
+		SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 128, 0, 0), 1.0, m_sDid + "line", 100);
 		
 		//3. Create flight points. These are the main points on the path which are then used for spline	creation.
 		//   The points may be below the flight height (e.g. landing).
@@ -155,21 +154,11 @@ modded class SDRC_ChopperComp : ScriptComponent
 		int lastIdx = 0;
 		
 		//Generate a random destination point if needed
-		vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward / 2);
 		if (m_vFlyDestinations.IsEmpty())
 		{		
+			vector pos = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward / 2);
 			SDRC_ChopperHelper.GenerateWayPoint(owner, pos);
 		}
-
-		//Add a point towards our next destination
-/*		if (!m_vFlyPathPoints.IsEmpty())
-		{
-			vector lastFlightPoint = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt; 
-			vector newPoint = vector.Lerp(lastFlightPoint, m_vFlyDestinations[0].pt, 0.5);
-			AddFlyPathPoint(newPoint);
-
-			SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 150);
-		}*/
 
 		if (true)
 		{
@@ -193,13 +182,13 @@ modded class SDRC_ChopperComp : ScriptComponent
 				//Find a point along the fly path and move it away from the line along tangent					
 				vector newPoint = SDRC_Math.CreateOffsetMidPoint(p1, p2, distance, 0.2, isOnLeft);
 				AddFlyPathPoint(newPoint);
-				//SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 100);
+				SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 125);
 			}
 			else
 			{
 				vector newPoint = vector.Lerp(p1, p2, 0.5);
 				AddFlyPathPoint(newPoint);
-				//SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 128, 0, 0), 1.0, m_sDid + "line", 100);
+				SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 128, 128, 0), 1.0, m_sDid + "line", 125);
 			}
 		}
 		

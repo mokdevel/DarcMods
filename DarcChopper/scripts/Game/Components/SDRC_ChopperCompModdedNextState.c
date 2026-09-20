@@ -540,7 +540,6 @@ modded class SDRC_ChopperComp
 
 		//Do enemy search
 		SetAttackPosition(vector.Zero);	//NOTE: This will not reset m_fAttackPositionSetTime if we're still S&D state
-		//ResetAttack();
 		SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
 		
 		//If enemy found, enter S&D behaviour in case we're in normal behaviour. 

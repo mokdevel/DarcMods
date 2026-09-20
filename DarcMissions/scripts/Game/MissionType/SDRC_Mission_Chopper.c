@@ -27,7 +27,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 
 	private SDRC_EMissionChopperState missionChopperState = SDRC_EMissionChopperState.SPAWN;
 		
-	private vector m_vPosOrigin = vector.Zero;
+	private vector m_vPosHeliOrigin = vector.Zero;
 	private IEntity m_Vehicle = null;
 	private SDRC_ChopperComp m_Vehicle_c;
 	private VehicleHelicopterSimulation m_Vehicle_s;
@@ -95,19 +95,19 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			{
 				if (!SDRC_MissionPosHelper.IsPosInNonValidArea(heliPos))
 				{
-					m_vPosOrigin = heliPos;
+					m_vPosHeliOrigin = heliPos;
 					break;
 				}
 			}
 		}
 		
-		if (m_vPosOrigin == vector.Zero)
+		if (m_vPosHeliOrigin == vector.Zero)
 		{
 			SDRC_Log.Add("[SDRC_Mission_Chopper] Chopper spawn may be neat player(s).", LogLevel.WARNING);
-			m_vPosOrigin = SDRC_Misc.GetRandomWorldPos(false);
+			m_vPosHeliOrigin = SDRC_Misc.GetRandomWorldPos(false);
 		}
 		
-		//m_vPosOrigin = SDRC_Misc.GetRandomWorldEdgePosition();
+		//m_vPosHeliOrigin = SDRC_Misc.GetRandomWorldEdgePosition();
 
 		//Set end time for mission.
 		m_iFlyEndTime = m_Config.activeTime * 0.2;
@@ -135,6 +135,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			switch (missionChopperState)
 			{
 				case SDRC_EMissionChopperState.SPAWN:
+				{
 					MissionSpawn();
 					if (GetState() == SDRC_EMissionState.FAILED)
 					{
@@ -143,21 +144,24 @@ class SDRC_Mission_Chopper : SDRC_Mission
 					else
 					{
 						missionChopperState = SDRC_EMissionChopperState.SPAWN_CREW;
-						//Set a faster MissionRun time during SPAWN
-						GetGame().GetCallqueue().CallLater(MissionRun, 1000);
-						return;
 					}
 					break;
+				}
 				case SDRC_EMissionChopperState.SPAWN_CREW:
+				{
 					MissionSpawnCrew();
-					GetGame().GetCallqueue().CallLater(MissionRun, 1000);
 					missionChopperState = SDRC_EMissionChopperState.SET_FLIGHT;				
 					break;
+				}
 				case SDRC_EMissionChopperState.SET_FLIGHT:
+				{
 					MissionSpawnSetFlight();
 					SetState(SDRC_EMissionState.ACTIVE);				
 					break;
+				}
 			} 			
+			//Set a faster MissionRun time during SPAWN
+			GetGame().GetCallqueue().CallLater(MissionRun, 1000);
 		}
 
 		if (GetState() == SDRC_EMissionState.END)
@@ -275,11 +279,11 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		}
 		
 		//Set to initial position, rotation and spawn
-		m_vPosOrigin[1] = SDRC_Misc.RandomFloat(m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1]) + SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin);		
-/*		vector rotation = vector.Direction(m_vPosOrigin, GetPos());		
-		m_Vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosOrigin, resourceName, rotation[1], -1, false);*/
+		m_vPosHeliOrigin[1] = SDRC_Misc.RandomFloat(m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1]) + SDRC_Misc.GetSurfaceYWithWater(m_vPosHeliOrigin);		
+/*		vector rotation = vector.Direction(m_vPosHeliOrigin, GetPos());		
+		m_Vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosHeliOrigin, resourceName, rotation[1], -1, false);*/
 		
-		m_Vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosOrigin, resourceName, 0, -1, false);
+		m_Vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosHeliOrigin, resourceName, 0, -1, false);
 		
 		if (m_Vehicle)
 		{
@@ -297,11 +301,11 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " +  GetId() + " : Vehicle: " + m_Vehicle, LogLevel.SPAM);
 				
 		m_EntityList.Insert(m_Vehicle);
+		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, GetPos());
 		m_Vehicle_c.SetAutostart(false);
 		m_Vehicle_c.SetHeli(m_DC_Chopper.speed[0], m_DC_Chopper.speed[1], m_DC_Chopper.flyHeight[0], m_DC_Chopper.flyHeight[1], m_DC_Chopper.flyDistance[0], m_DC_Chopper.flyDistance[1]);
 		m_Vehicle_c.SetEnemySearchType(m_DC_Chopper.enemyType);
 		m_Vehicle_c.Setup(m_Vehicle);
-		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, GetPos());
 		
 		//SDRC_Misc.PauseGame();
 		
@@ -312,7 +316,6 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private void MissionSpawnSetFlight()
 	{
 		//Init flight
-		
 		m_Vehicle_c.InitFlight(m_Vehicle);
 		
 		switch (m_DC_Chopper.wpType)
@@ -568,7 +571,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		showMarker = false;
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {4};//{0,1,1,2,2,3,4,4,5};
+		missionList = {0};//{0,1,1,2,2,3,4,4,5};
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 100;

@@ -29,7 +29,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		
 		//Rotor force multipliers
 		fRotorForceMulUp = 15.0;
-		iRotorForceNormal = 27;
+		iRotorForceNormal = 25;
 		iRotorForceCrash = iRotorForceNormal * 2.5;
 		iRotorForceBrake = iRotorForceNormal * 2;
 		

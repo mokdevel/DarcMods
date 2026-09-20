@@ -39,8 +39,10 @@ class SDRC_FlyPathPoint
 modded class SDRC_ChopperComp : ScriptComponent
 {
 	private SDRC_ChopperComp s_Instance;	
-	ref array<vector> m_vSplinePoints = new array<vector>();
 	private VehicleHelicopterSimulation m_Helicopter_s;
+	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations = {};			//Requested destinations set with AddDestination()
+	ref array<ref SDRC_FlyPathPoint> m_vFlyPathPoints = {};
+	ref array<vector> m_vSplinePoints = new array<vector>();
 	ref SDRC_ChopperParams params = null;
 			
 	//Parameters accessible helicopter parameters
@@ -108,10 +110,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 		
 	//Category: Unsorted
 	//Flight path
-	ref array<ref SDRC_FlyPathPoint> m_vFlyPathPoints = {};
 	[Attribute("", UIWidgets.Object, "Destinations")]	
 	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinationsOnPrefab;	//Requested destinations set on the prefab. These will be used FIRST
-	ref array<ref SDRC_FlyPathPoint> m_vFlyDestinations = {};			//Requested destinations set with AddDestination()
 	//Autonomous flying stuff
 	[Attribute(defvalue: typename.EnumToString(SDRC_EChopperType, SDRC_EChopperType.HELICOPTER), uiwidget: UIWidgets.ComboBox, desc: "The type of the entity.", enumType: SDRC_EChopperType)]		
 	SDRC_EChopperType m_EntityType;
@@ -341,7 +341,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 			owner.GetPhysics().SetVelocity("0 0 0");
 		}
 		
-		Setup(owner);
+		if (m_bAutoStart)
+		{
+			Setup(owner);
+		}
 //		GetGame().GetCallqueue().CallLater(Setup, TIME_DELAY_READY * 1000, false, owner);		
 		
 		super.OnPostInit(owner);
@@ -791,7 +794,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		
 		m_fRotorForceMultiplier = -1;
 		m_fDistanceFromSplineMul = SDRC_ChopperHelper.GetVerticalVelocity(owner.GetOrigin(), m_vSplinePointBelow, 7 * m_fRotorForce0, 50);
-		m_fDistanceFromSplineMulFar = SDRC_ChopperHelper.GetVerticalVelocity(owner.GetOrigin(), m_vDestination, 1.5 * m_fRotorForce0, distance);
+		m_fDistanceFromSplineMulFar = SDRC_ChopperHelper.GetVerticalVelocity(owner.GetOrigin(), m_vDestination, 1.5 * m_fRotorForce0, distance * 3);
 		//m_vDestinationFuture
 		//m_vDestination
 		
@@ -880,8 +883,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			m_vRayEnd[1] = m_vRayEnd[1] - params.rayDown;
 			m_vRayLen = SDRC_Misc.RayCastXZ(owner.GetOrigin(), m_vRayEnd, owner);			
 			
-			//float oldRayLenMulTarget = m_fRayLenMulTarget;
-			m_fRayLenMulTarget = 2.5 - m_vRayLen;
+			m_fRayLenMulTarget = 2 - m_vRayLen;
 	
 			if (m_fRayLenMulTarget != m_fRayLenMul)
 			{

@@ -21,6 +21,7 @@ modded class SDRC_ChopperComp
 	{
 		if (m_bSetupDone)
 		{
+			SDRC_Log.Add("[SDRC_ChopperComp:Setup_Delayed] Staup was called twice..", LogLevel.WARNING);
 			return;
 		}
 		
@@ -53,7 +54,7 @@ modded class SDRC_ChopperComp
 	{
 		SDRC_Log.Add("[SDRC_ChopperComp:Ready] Called..", LogLevel.DEBUG);
 		
-		// Some things needs to be done delayed
+		// If AutoStart is disabled, InitFlight() is to be called from the mod that disabled AutoStart.
 		if (m_bAutoStart)
 		{
 			//Init flight path
