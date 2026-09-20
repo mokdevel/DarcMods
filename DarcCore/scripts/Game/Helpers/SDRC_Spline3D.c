@@ -221,11 +221,13 @@ sealed class SDRC_Spline3D
 	}
 
 	//------------------------------------------------------------------------------------------------	
-	/*! Gets the shortest 3D distance between a point and a spline
+	/*! 
+	Gets the shortest 3D distance between a point and a spline
 	Extended from SCR_Math3D function
+	
 	\param points array of all points forming the spline, minimum 1 point
 	\param point point that is being checked
-	\param index Index of the lowest point. Also, the search starts from this and one till the end. ..unless quickSearch is used. If search is to be for the whole spline, set this to 0
+	\param index Index of the lowest point. The search starts from this and moves till the end. ..unless quickSearch is used. If search is to be for the whole spline, set this to 0
 	\param quickSearch True if search is to stop when distance starts to grow.
 	
 	\return distance from spline, -1 if no points are provided
@@ -277,6 +279,66 @@ sealed class SDRC_Spline3D
 			}
 
 			segmentStart = segmentEnd;		
+		}
+
+		return Math.Sqrt(minDistanceSq);
+	}		
+	
+	//------------------------------------------------------------------------------------------------	
+	/*! 
+	Gets the shortest 3D distance between a point and a spline. The search is done from the back of the spline to the beginning
+	
+	\param points array of all points forming the spline, minimum 1 point
+	\param point point that is being checked
+	\param index Index of the lowest point. Also, the search starts from this and moves to the start. ..unless quickSearch is used. If search is to be for the whole spline, set this to 0
+	\param quickSearch True if search is to stop when distance starts to grow.
+	
+	\return distance from spline, -1 if no points are provided
+	*/	
+	static float GetDistanceFromSplineEndToStart(notnull array<vector> points, vector point, inout int index = 0, bool quickSearch = false)
+	{		
+		int count = points.Count();
+		if (count < 1)
+		{
+			return -1;
+		}
+
+		if (count == 1)
+		{
+			return vector.Distance(point, points[0]);
+		}
+
+		float tempDistanceSq;
+		//Take last point
+		vector segmentStart = points[points.Count() - 1];
+		//Move the start to search backwards on the spline 
+		index = (points.Count() - 1) - index;		
+		
+		//Find the distance to the last known closest point.
+		float minDistanceSq = vector.DistanceSq(point, segmentStart);
+
+		for (int i = points.Count() - 2; i < index; i--)
+		{
+/*			//This check is to avoid Math3D.PointLineSegmentDistanceSqr returning a BadFloat(val) assert when v0 and v1 are the same.
+			if (segmentStart == segmentEnd)
+				continue;*/
+			
+			//TBD: This could be optimized to stop searching when tempDistanceSq starts to grow. No need to go to the end for chopper mission.
+			tempDistanceSq = Math3D.PointLineSegmentDistanceSqr(point, segmentStart, points[i]);
+			if (tempDistanceSq < minDistanceSq)
+			{
+				index = i;
+				minDistanceSq = tempDistanceSq;
+			}
+			else
+			{
+				if (quickSearch)
+				{
+					break;
+				}
+			}
+
+			segmentStart = points[i];		
 		}
 
 		return Math.Sqrt(minDistanceSq);
