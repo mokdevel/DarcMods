@@ -163,115 +163,6 @@ class SDRC_ChopperHelper
 				
 		return nextType;
 	}	
-				
-	//------------------------------------------------------------------------------------------------
-	/*!
-	Handle waypoints set
-	*/
-	static void HandleAIWaypoints(IEntity owner)
-	{
-		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
-		if (!chopperComp)
-		{
-			return;
-		}
-
-		array<AIWaypoint> waypoints = {};
-				
-		foreach (AIGroup group : chopperComp.m_aGroups)
-		{
-			if (group != null)
-			{
-				group.GetWaypoints(waypoints);
-				
-				//If group has no waypoints, check the next group
-				if (waypoints.Count() == 0)
-				{
-					continue;
-				}
-
-				//Find if it is a cycle				
-				foreach (AIWaypoint wp : waypoints)
-				{
-					//Skip cycle waypoints
-					if (AIWaypointCycle.Cast(wp) != null)
-					{
-						continue;
-					}
-					
-					if (AIWaypoint.Cast(wp) != null)
-					{
-						vector pos = wp.GetOrigin();
-						
-						EntityPrefabData prefabData = wp.GetPrefabData();
-						ResourceName resourceName = prefabData.GetPrefabName();
-						resourceName = SDRC_Misc.GetSimpleEntityName(resourceName);
-						SDRC_Log.Add("[SDRC_ChopperHelper:HandleWaypoints] Waypoint " + resourceName + " found at: " + pos, LogLevel.DEBUG);						
-						
-						//If we're really close, set to zero. 
-						if (Math.AbsFloat(pos[1] - SDRC_Misc.GetSurfaceYWithWater(pos, true, wp)) < 1.0)
-						{
-							//It's on ground. Let's set the height to zero.
-							//In SetFlightPointHeight(), a zeroed height will be set between m_fFlyHeightLow and m_fFlyHeightHigh
-							pos[1] = 0;
-						}
-						
-						switch (resourceName)
-						{
-							case "E_AIWaypoint_Move":
-							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos);
-								break;
-							}						
-							case "E_AIWaypoint_ForcedMove":
-							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY_IMMEDIATELY, pos);
-								break;
-							}						
-							case "E_AIWaypoint_Patrol":
-							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_PATROL, pos);
-								break;
-							}
-							case "E_AIWaypoint_GetOut":
-							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TROOPS, pos);
-								break;
-							}
-							case "E_AIWaypoint_Defend":
-							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_LAND_TO_FREE_SPOT, pos);
-								break;
-							}
-							case "E_AIWaypoint_GetIn":
-							{
-								break;
-							}
-							case "E_AIWaypoint_Wait":
-							case "E_AIWaypoint_Suppress_Editor":
-							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_M_SUPPRESSIVE, pos);
-								break;
-							}
-							case "E_AIWaypoint_ArtillerySupport":
-							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_ATTACK, pos);
-								break;
-							}
-							case "E_AIWaypoint_SearchAndDestroy":
-							{
-								chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, pos, chopperComp.params.timeSearchAndDestroy);	
-								break;
-							}
-						}
-					}
-				}
-				
-				//Clear all waypoints
-				SDRC_WPHelper.RemoveWaypoints(group);	
-			}
-		}
-	}
 
 	//------------------------------------------------------------------------------------------------	
 	// FlyPoint fixing and sanity check
@@ -487,10 +378,11 @@ class SDRC_ChopperHelper
 				{
 					//Modify attack height defaults
 					//Attack height is the lowest point modified by attackHeightMul. The final attackHeight could be below m_fFlyHeightLow
-/*					lowestHeight = SDRC_Misc.GetSurfaceYWithWater(chopperComp.m_vAttackPosition, true, owner) +  chopperComp.m_fFlyHeightLow * chopperComp.params.attackHeightMul;
+					lowestHeight = SDRC_Misc.GetSurfaceYWithWater(chopperComp.m_vAttackPosition, true, owner) +  chopperComp.m_fFlyHeightLow * chopperComp.params.attackHeightMul;
 					
 					int attackPoint = 0;
-					SDRC_Spline3D.GetDistanceFromSpline(chopperComp.m_vSplinePoints, chopperComp.m_vAttackPosition, attackPoint, true);
+//					SDRC_Spline3D.GetDistanceFromSpline(chopperComp.m_vSplinePoints, chopperComp.m_vAttackPosition, attackPoint, true);
+					SDRC_Spline3D.GetDistanceFromSplineEndToStart(chopperComp.m_vSplinePoints, chopperComp.m_vAttackPosition, attackPoint, true);
 					SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vSplinePoints[attackPoint], ARGB(32, 255, 255, 255), 4.0, chopperComp.m_sDid);
 					
 					//Create an attack sine drop before the attackPoint
@@ -512,7 +404,7 @@ class SDRC_ChopperHelper
 						//SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vSplinePoints[i], ARGB(32, 255, 0, 0), 4.0, chopperComp.m_sDid);
 					}
 					//smoothCount = pt_to;
-					isSmoothingNeeded = false;*/
+					isSmoothingNeeded = false;
 					break;
 				}
 				case SDRC_EHeliState.CRASH:

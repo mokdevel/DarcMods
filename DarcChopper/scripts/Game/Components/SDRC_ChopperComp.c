@@ -605,7 +605,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		//Set velocity
 		SetVelocity(owner, timeSlice);
 
-		SDRC_ChopperHelper.HandleAIWaypoints(owner);				
+		SDRC_ChopperCrewHelper.HandleAIWaypoints(owner);				
 		SDRC_ChopperDebug.DrawHelicopterVectors(owner);
 	}
 	
