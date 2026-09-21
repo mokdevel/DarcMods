@@ -21,7 +21,7 @@ modded class SDRC_ChopperComp
 	{
 		if (m_bSetupDone)
 		{
-			SDRC_Log.Add("[SDRC_ChopperComp:Setup_Delayed] Staup was called twice..", LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_ChopperComp:Setup_Delayed] Setup was called twice..", LogLevel.WARNING);
 			return;
 		}
 		

@@ -65,9 +65,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 	[Attribute(category: "Chopper", defvalue: "40.0", desc: "Maximum speed", params: "1.0 100.0 0.1")]	
 	float m_fSpeedMax;				//Maximum speed
 	float m_fSpeedMaxOrig;
-	[Attribute(category: "Chopper", defvalue: "50.0", desc: "Minimum fly height (from ground level)", params: "5 100.0 1")]	
+	[Attribute(category: "Chopper", defvalue: "60.0", desc: "Minimum fly height (from ground level)", params: "5 100.0 1")]	
 	float m_fFlyHeightLow;			//Flight height low
-	[Attribute(category: "Chopper", defvalue: "80.0", desc: "Maximum fly height (from ground level)", params: "5 600.0 1")]	
+	[Attribute(category: "Chopper", defvalue: "90.0", desc: "Maximum fly height (from ground level)", params: "5 600.0 1")]	
 	float m_fFlyHeightHigh;			//Flight height high
 	[Attribute(category: "Chopper", defvalue: "300", desc: "Minimum distance for waypoint", params: "0.1 1000.0 0.1")]	
 	float m_fDistanceLow;			//Distance for waypoint min
@@ -181,8 +181,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 	private float m_fTimeTurnInterval;
 	
 	//Flight path runtime variables	
-	private vector m_vOrigin;					//Current position
+	vector m_vOrigin;							//Current position
 	float m_fAltitude;							//Current altitude from ground
+	float m_fOldHeight;							//Last height of the spline before creating a new flightpath
 	float m_fSpeed;								//Current speed
 	float m_fSpeedStart;						//Speed lerp start
 	float m_fSpeedTarget;						//Speed lerp target aka end

@@ -32,7 +32,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		
 		//Store the origin. This value is updated in EOnFrame, but needed already in calculations.
 		m_vOrigin = owner.GetOrigin();	
-		float y = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, owner);
+		float y = SDRC_Misc.GetSurfaceYWithWater(m_vOrigin);//, true, owner);
 				
 		//If we're on low altitude, wait for a moment and then hover to start flight
 		if ( m_vOrigin[1] < (y + 3) )
@@ -40,22 +40,25 @@ modded class SDRC_ChopperComp : ScriptComponent
 			m_vOrigin[1] = y + 0.1;
 			owner.SetOrigin(m_vOrigin);
 			
-			#ifdef WORKBENCH
-				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 6);
-			#else
-				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 30);
-			#endif
 			vector hoverPos = vector.Zero;
 			hoverPos[1] = m_fFlyHeightLow;
-			AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 5);
-			hoverPos[1] = (m_fFlyHeightLow + m_fFlyHeightHigh) / 2;
-			AddDestination(SDRC_EFlyWayPointType.WP_RAISE, hoverPos);
+			vector raisePos = vector.Zero;
+			raisePos[1] = (m_fFlyHeightLow + m_fFlyHeightHigh) / 2;
+			AddDestination(SDRC_EFlyWayPointType.WP_RAISE, raisePos, index: 0);
+			AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 5, index: 0);
+			
+			//Add these in the beginning of the list. Needs to be added in reverse order.
+			#ifdef WORKBENCH
+				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 6, index: 0);
+			#else
+				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 30, index: 0);
+			#endif
 		}
 
-		destination = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial);
+		/*destination = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial);
 		//Make sure we're on proper flight height.
 		destination[1] = SDRC_ChopperHelper.SetPointHeight(destination, m_fFlyHeightLow, m_fFlyHeightHigh); 
-		AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);			
+		AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);	*/		
 		
 		SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Chopper initial position: " + owner.GetOrigin(), LogLevel.DEBUG);
 				
@@ -72,28 +75,28 @@ modded class SDRC_ChopperComp : ScriptComponent
 		{
 			//If no spline points defined, add a few to get an initial flight direction. 
 			//This should only happen at init.
-			vector firstPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward / 8);
+			vector firstPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward * 0.1);
 			m_vSplinePoints.Insert(firstPoint);
-			SDRC_DebugHelper.AddDebugPos(firstPoint, ARGB(255, 128, 0, 0), 1.0, m_sDid + "line", 50);
-			firstPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward / 6);
+			//SDRC_DebugHelper.AddDebugPos(firstPoint, ARGB(255, 128, 0, 0), 1.0, m_sDid + "line", 50);
+			firstPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward * 0.3);
 			m_vSplinePoints.Insert(firstPoint);
-			SDRC_DebugHelper.AddDebugPos(firstPoint, ARGB(255, 128, 0, 0), 1.0, m_sDid + "line", 75);
+			//SDRC_DebugHelper.AddDebugPos(firstPoint, ARGB(255, 128, 0, 0), 1.0, m_sDid + "line", 75);
 			SDRC_Log.Add("[SDRC_ChopperComp:CreateNewFlight] Setting initial spline points.", LogLevel.DEBUG);
 			return;
 		}
 		
 		//Take the height of the current spline point to set a couple of points to it.
-		vector oldHeight = m_vSplinePoints[m_iClosestIndex];
+		m_fOldHeight = m_vSplinePoints[m_iClosestIndex][1];
 		
 		// 1. Clear any existing path points. 
 		ResetFlight();
 		
 		// 2. Add a point in front		
 		//SDRC_DebugHelper.DeleteDebugPos(m_sDid + "line");
-		vector newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward / 2);
-		newPoint[1] = oldHeight[1];
+		vector newPoint = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForward * 0.5);
+		newPoint[1] = m_fOldHeight;
 		AddFlyPathPoint(newPoint);
-		SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 128, 0, 0), 1.0, m_sDid + "line", 100);
+		//SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 128, 0, 0), 1.0, m_sDid + "line", 100);
 		
 		//3. Create flight points. These are the main points on the path which are then used for spline	creation.
 		//   The points may be below the flight height (e.g. landing).
@@ -110,8 +113,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 			vector origin = owner.GetOrigin();
 			//m_vFlyPathPoints[0].pt[1] = origin[1];
 			//m_vFlyPathPoints[1].pt[1] = origin[1];
-			//m_vFlyPathPoints[0].pt[1] = oldHeight[1];
-			//m_vFlyPathPoints[1].pt[1] = oldHeight[1];
+			//m_vFlyPathPoints[0].pt[1] = m_fOldHeight;
+			//m_vFlyPathPoints[1].pt[1] = m_fOldHeight;
 			m_vFlyPathPoints[0].pt[1] = m_vSplinePointBelow[1];// - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
 			m_vFlyPathPoints[1].pt[1] = m_vSplinePointBelow[1];// - SDRC_Misc.GetSurfaceYWithWater(m_vSplinePointBelow, true, owner);
 					
@@ -165,7 +168,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			//Create a point that smoothens the curve		
 			vector p0 = m_vOrigin;
 			vector p1 = m_vFlyPathPoints[m_vFlyPathPoints.Count() - 1].pt;
-			vector p2 = m_vFlyDestinations[0].pt;		
+			vector p2 = m_vFlyDestinations[0].pt;
 	
 			//Get the angle for the destination
 			float heliAngle = SDRC_Math.GetRadiansBetweenThreePointsXZ(p0, p1, p2) * Math.RAD2DEG;
@@ -182,13 +185,13 @@ modded class SDRC_ChopperComp : ScriptComponent
 				//Find a point along the fly path and move it away from the line along tangent					
 				vector newPoint = SDRC_Math.CreateOffsetMidPoint(p1, p2, distance, 0.2, isOnLeft);
 				AddFlyPathPoint(newPoint);
-				SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 125);
+				//SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 0, 128, 0), 1.0, m_sDid + "line", 125);
 			}
 			else
 			{
-				vector newPoint = vector.Lerp(p1, p2, 0.5);
-				AddFlyPathPoint(newPoint);
-				SDRC_DebugHelper.AddDebugPos(newPoint, ARGB(255, 128, 128, 0), 1.0, m_sDid + "line", 125);
+				vector p3 = vector.Lerp(p1, p2, 0.5);
+				AddFlyPathPoint(p3);
+				//SDRC_DebugHelper.AddDebugPos(p3, ARGB(255, 128, 128, 0), 1.0, m_sDid + "line", 125);
 			}
 		}
 		
@@ -264,6 +267,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 					//Check if re-routing is needed
 					HandleRerouting(flyDestination.pt);
 					//Add the final point
+					flyDestination.pt[1] = SDRC_ChopperHelper.SetPointHeight(flyDestination.pt, m_fFlyHeightLow, m_fFlyHeightHigh); 
+					Print("Pointheight:" + flyDestination.pt[1]);
 					AddFlyPathPoint(flyDestination.pt, flyDestination.type, flyDestination.value);
 					//Set the state
 					SetNextState(owner, flyDestination, false);
