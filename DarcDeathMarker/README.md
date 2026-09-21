@@ -22,6 +22,10 @@ bool visibleOnlyToFaction : If true, the markers will only be visible for player
 
 # Version history
 
+## 202609xx
+Fixes:
+* Works also with Overthrow
+
 ## 20260725
 Fixes:
 * Mod waits for gamemode to start before starting to run. This could have side effects.

@@ -9,7 +9,7 @@ const int DC_CONFIG_FILE_DEATHMARKER_JSONVER = 2;
 modded class SCR_BaseGameMode 
 {
 	private ref SDRC_JsonApi2 m_JsonApi = null;	
-	private ref SDRC_DeathMarkerConfig m_Config = new SDRC_DeathMarkerConfig();	
+	private ref SDRC_DeathMarkerConfig m_DeathMarkerConfig = new SDRC_DeathMarkerConfig();	
 
 	//------------------------------------------------------------------------------------------------
     override void OnGameModeStart()
@@ -44,7 +44,7 @@ modded class SCR_BaseGameMode
 		{		
 			//Load config
 			m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_DEATHMARKER);	
-			bool success = m_JsonApi.Load(m_Config, SDRC_DeathMarkerConfig.Cast(m_Config), DC_CONFIG_FILE_DEATHMARKER_JSONVER);
+			bool success = m_JsonApi.Load(m_DeathMarkerConfig, SDRC_DeathMarkerConfig.Cast(m_DeathMarkerConfig), DC_CONFIG_FILE_DEATHMARKER_JSONVER);
 			
 			if (!success)
 			{
@@ -62,7 +62,7 @@ modded class SCR_BaseGameMode
 	//------------------------------------------------------------------------------------------------
 	override void OnPlayerKilled(int playerId, IEntity playerEntity, IEntity killerEntity, notnull Instigator killer)
 	{
-		if (SDRC_Conf.SDRC_ENABLE_DARCDEATHMARKER && m_Config)
+		if (SDRC_Conf.SDRC_ENABLE_DARCDEATHMARKER && m_DeathMarkerConfig)
 		{
 			string playername = SDRC_PlayerHelper.GetPlayerName(playerId);
 			
@@ -70,13 +70,13 @@ modded class SCR_BaseGameMode
 			{
 				Faction faction = null;				//By default, marker is visible for everyone
 	
-				if (m_Config.visibleOnlyToFaction)
+				if (m_DeathMarkerConfig.visibleOnlyToFaction)
 				{
 					faction = SDRC_PlayerHelper.GetPlayerFaction(playerEntity);
 				}
 				
 				SDRC_MapMarkerHelper.DeleteMarker(playername, true);
-				SDRC_MapMarkerHelper.CreateMapMarker(playerEntity.GetOrigin(), SDRC_EMissionIcon.ICON_DEATHMARKER_SMALL_MAP, playername, playername, m_Config.markerLifeTime, faction: faction);
+				SDRC_MapMarkerHelper.CreateMapMarker(playerEntity.GetOrigin(), SDRC_EMissionIcon.ICON_DEATHMARKER_SMALL_MAP, playername, playername, m_DeathMarkerConfig.markerLifeTime, faction: faction);
 			}
 			
 			SDRC_Log.Add("[SDRC_DeathMarker_BaseGameMode:OnPlayerKilled] Player died: " + playername, LogLevel.DEBUG);        
