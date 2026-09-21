@@ -100,7 +100,7 @@ class SDRC_ChopperHelper
 			for (int j = 0; j < 2; j++)
 			{			
 				//Occasionally fly towards middle to avoid sliding out of the map
-				if (SDRC_Misc.RandomFloat(0, 1) < 0.2)
+				if (SDRC_Misc.RandomFloat(0, 1) < chopperComp.FLY_TO_CENTER_CHANCE)
 				{
 					orig = SDRC_Misc.GetWorldCenter();
 				}

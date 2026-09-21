@@ -454,8 +454,11 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 			{
-				value = params.timeSearchAndDestroy;
-				SetAttackPosition(destination);				//Where to attack
+				if (value == -1)
+				{
+					value = params.timeSearchAndDestroy;
+				}
+//				SetAttackPosition(destination);				//Where to attack
 				break;
 			}								
 			case SDRC_EFlyWayPointType.WP_BRAKE:

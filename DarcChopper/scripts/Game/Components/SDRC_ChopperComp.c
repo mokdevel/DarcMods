@@ -150,6 +150,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	private const int POINTS_TO_NEW_DISTANCE = 3;		//How many spline points in to the future flight path is checked before adding new flight points.
 	private const int POINTS_TO_SPLINE_START = 5;		//Points to go back from m_iClosestIndex when creating a new flight path 
 	private const int DESTINATION_POINT_DIV = 12;		//How many points ahead to look for the destination. This is the divider for speed.
+	const float FLY_TO_CENTER_CHANCE = 0.3;				//The chance to force fly towards middle to avoid sliding out of the map
 
 	private const int FLIGHT_FIX_TIME = 2;				//(seconds) Time to wait between flight fixes when chopper is pointing to the sky.
 	private const int FLIGHT_FIX_ANGLE = 1.4;			//Angle that enforces 
