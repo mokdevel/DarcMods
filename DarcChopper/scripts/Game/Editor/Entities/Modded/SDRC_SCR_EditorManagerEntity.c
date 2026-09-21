@@ -81,22 +81,25 @@ modded class SCR_EditorManagerEntity
 	//------------------------------------------------------------------------------------------------
 	override void EOnFrame(IEntity owner, float timeSlice) //--- Active only when the entity is local (see InitOwner())
 	{		
-		if ( (m_wCanvas) && (IsOpened()) )
-		{
-			if (!SDRC_PlayerHelper.IsGMInterfaceVisible())
+		if (owner)
+		{		
+			if ( (m_wCanvas) && (IsOpened()) )
 			{
-				drawCommands.Clear();
-			}
-			else
-			{				
-				SDRC_RplLineDrawComp rplLineDrawComp = SDRC_RplLineDrawComp.FindLocalInstance();
-				if (rplLineDrawComp)
+				if (!SDRC_PlayerHelper.IsGMInterfaceVisible())
 				{
-					SDRC_LineDrawHelper.CreateDrawCommandsFromData(rplLineDrawComp.m_lineData, drawCommands);
-				}								
+					drawCommands.Clear();
+				}
+				else
+				{				
+					SDRC_RplLineDrawComp rplLineDrawComp = SDRC_RplLineDrawComp.FindLocalInstance();
+					if (rplLineDrawComp)
+					{
+						SDRC_LineDrawHelper.CreateDrawCommandsFromData(rplLineDrawComp.m_lineData, drawCommands);
+					}								
+				}
+				
+				m_wCanvas.SetDrawCommands(drawCommands);
 			}
-			
-			m_wCanvas.SetDrawCommands(drawCommands);
 		}
 		
 		super.EOnFrame(owner, timeSlice);
