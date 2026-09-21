@@ -63,21 +63,51 @@ class SDRC_ChopperDebug
 
 		const int NONE_COLOR = -2;	//NOTE: -1 is Color.WHITE so we another value
 		
+		vector prevPos = vector.Zero;
 		//Add destinations if any
 		if (!chopperComp.m_vFlyDestinations.IsEmpty())
 		{	
 			int currentColor = NONE_COLOR;
 			
-			foreach (SDRC_FlyPathPoint destination : chopperComp.m_vFlyDestinations)
+			foreach (int i, SDRC_FlyPathPoint destination : chopperComp.m_vFlyDestinations)
 			{
 				int color = NONE_COLOR;	
 
 				vector pos = destination.pt;
-				pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 20;
-				
+				if (pos[1] == 0)
+				{
+					pos[1] = SDRC_Misc.GetSurfaceYWithWater(pos) + 20;
+				}				
+
+				//If prevPos is 0 on X/Y, use the last splinepoint as a good guess.
+				if ( (prevPos[0] == 0) || (prevPos[0] == 0) )
+				{
+					prevPos = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1];					
+				}
+												
 				switch (destination.type)
 				{
+					case SDRC_EFlyWayPointType.WP_HOVER:
+					case SDRC_EFlyWayPointType.WP_HOVER_UP:
+					case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
+					{
+						pos = prevPos + destination.pt;
+						color = ARGB(255, 128, 128, 0);		//Yellow, dark
+						break;
+					}
 					case SDRC_EFlyWayPointType.WP_FLY:					
+					{
+						color = ARGB(255, 0, 0, 255);		//Blue
+						break;
+					}
+					case SDRC_EFlyWayPointType.WP_BRAKE:
+					{
+						pos = SDRC_Misc.SetPosToSurface(pos);
+						pos[1] = pos[1] + destination.pt[1];
+						color = ARGB(255, 0, 0, 128);		//Blue, dark
+						break;
+					}
+					case SDRC_EFlyWayPointType.WP_PATROL:
 					{
 						color = Color.DARK_BLUE;
 						break;
@@ -85,28 +115,34 @@ class SDRC_ChopperDebug
 					case SDRC_EFlyWayPointType.WP_LAND:
 					case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
 					{
-						color = Color.DARK_CYAN;
+						pos = SDRC_Misc.SetPosToSurface(prevPos);
+						pos = pos + destination.pt;
+						color = ARGB(255, 128, 0, 128);		//Purple, dark
 						break;
 					}				
 					case SDRC_EFlyWayPointType.WP_PATROL:
 					{
-						color = Color.GRAY;
+						color = ARGB(255, 128, 128, 128);	//Gray
 						break;
 					}
 					case SDRC_EFlyWayPointType.WP_CRASH:
+						pos = SDRC_Misc.SetPosToSurface(pos);
+						pos[1] = pos[1] + destination.pt[1];
+						color = ARGB(255, 0, 0, 0);			//Black
+						break;
 					case SDRC_EFlyWayPointType.WP_ATTACK:
 					{
-						color = Color.RED;
+						color = ARGB(255, 255, 0, 0);		//Red
 						break;
 					}
 					case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 					{
-						color = Color.WHITE;
+						color = ARGB(255, 192, 192, 192);	//Gray
 						break;
 					}
 					case SDRC_EFlyWayPointType.WP_FLY_AWAY:
 					{
-						color = Color.PINK;
+						color = ARGB(255, 0, 0, 64);		//Blue, dark
 						break;
 					}
 				}
@@ -126,6 +162,7 @@ class SDRC_ChopperDebug
 				}
 				
 				vertices.Insert(pos);
+				prevPos = pos;
 			}		
 		}		
 		
