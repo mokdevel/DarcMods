@@ -2,15 +2,16 @@
 
 modded class SCR_BaseGameMode 
 {		
-	ref SDRC_ChopperExample_01 m_ChopperExample_1;
-	ref SDRC_ChopperExample_02 m_ChopperExample_2;
-	ref SDRC_ChopperExample_03 m_ChopperExample_3;
-	ref SDRC_ChopperExample_04 m_ChopperExample_4;
-	ref SDRC_ChopperExample_05 m_ChopperExample_5;
-	ref SDRC_ChopperExample_06 m_ChopperExample_6;
+	ref SDRC_ChopperExample_01 m_ChopperExample_01;
+	ref SDRC_ChopperExample_02 m_ChopperExample_02;
+	ref SDRC_ChopperExample_03 m_ChopperExample_03;
+	ref SDRC_ChopperExample_04 m_ChopperExample_04;
+	ref SDRC_ChopperExample_05 m_ChopperExample_05;
+	ref SDRC_ChopperExample_06 m_ChopperExample_06;
 	//ref SDRC_ChopperExample_07 - NOTE: These are prefabs in the example world and do not contain any code. 
 	//ref SDRC_ChopperExample_08 - NOTE: These are prefabs in the example world and do not contain any code.  
-	ref SDRC_ChopperExample_09 m_ChopperExample_9;
+	ref SDRC_ChopperExample_09 m_ChopperExample_09;
+	ref SDRC_ChopperExample_10 m_ChopperExample_10;
 	
 	//------------------------------------------------------------------------------------------------
     override void OnGameModeStart()
@@ -46,13 +47,14 @@ modded class SCR_BaseGameMode
 	{
 		if (SDRC_Conf.coreHasStarted)	//Wait for core to be available
 		{		
-				/*m_ChopperExample_1 = new SDRC_ChopperExample_01();
-				m_ChopperExample_2 = new SDRC_ChopperExample_02();				
-				m_ChopperExample_3 = new SDRC_ChopperExample_03();
-				m_ChopperExample_4 = new SDRC_ChopperExample_04();				
-				m_ChopperExample_5 = new SDRC_ChopperExample_05();
-				m_ChopperExample_6 = new SDRC_ChopperExample_06();
-				m_ChopperExample_9 = new SDRC_ChopperExample_09();*/
+//				m_ChopperExample_01 = new SDRC_ChopperExample_01();
+//				m_ChopperExample_02 = new SDRC_ChopperExample_02();				
+//				m_ChopperExample_03 = new SDRC_ChopperExample_03();
+				m_ChopperExample_04 = new SDRC_ChopperExample_04();				
+				m_ChopperExample_05 = new SDRC_ChopperExample_05();
+//				m_ChopperExample_06 = new SDRC_ChopperExample_06();
+				m_ChopperExample_09 = new SDRC_ChopperExample_09();
+//				m_ChopperExample_10 = new SDRC_ChopperExample_10();
 		}
 		else
 		{

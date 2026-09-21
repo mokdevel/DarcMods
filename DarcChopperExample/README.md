@@ -11,6 +11,10 @@ Open the ArlandEmpty world provided with the mod and hit run. You will find two 
 
 # Version history
 
+## 202609xx
+Main features:
+* Added new modding examples to a total of 10.
+
 ## 20260829
 Main features:
 * Added new modding examples to a total of 8.

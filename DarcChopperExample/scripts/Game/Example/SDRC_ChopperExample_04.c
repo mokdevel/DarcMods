@@ -2,7 +2,7 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
-Summary: spawn - initial destination - fly - brake - hover up/down - land - stop engine
+Summary: spawn - initial destination - fly - brake - hover - hover up/down - land - stop engine
 
 An example of spawning a chopper and set an initial fly path, do some air tricks and eventually land
 and turning engines off. 

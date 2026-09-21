@@ -178,6 +178,7 @@ class SDRC_ChopperHelper
 		
 		//Make sure we're on proper flight height.
 		float y = SDRC_Misc.GetSurfaceYWithWater(pos, true);
+		height = height + SDRC_Misc.RandomFloat( (-1 * ((height - min) / 2)), ((max - height) / 2) );
 		height = Math.Clamp(height, (y + min), (y + max) ); 
 		
 		return height;
@@ -214,7 +215,7 @@ class SDRC_ChopperHelper
 			
 			//Initial height will be on ground
 			float y = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
-			float flyHeight = 0;
+//			float flyHeight = 0;
 						
 			switch (flyPathPoint.type)
 			{
@@ -233,16 +234,14 @@ class SDRC_ChopperHelper
 				}
 				default:
 				{
-					//TBD: Change to do only relatively big changes.
 					if (pt[1] == 0)
 					{
-						//flyheight = SDRC_Misc.GetSurfaceYWithWater(pt, true, owner);
-						flyHeight = SDRC_Misc.RandomFloat(chopperComp.m_fFlyHeightLow, chopperComp.m_fFlyHeightHigh);
+//						pt[1] = SDRC_ChopperHelper.SetPointHeight(chopperComp.m_vOrigin, chopperComp.m_fFlyHeightLow, chopperComp.m_fFlyHeightHigh); 
+						pt[1] = chopperComp.m_fOldHeight;
+						pt[1] = SDRC_ChopperHelper.SetPointHeight(pt, chopperComp.m_fFlyHeightLow, chopperComp.m_fFlyHeightHigh); 
 					}
 				}
 			}
-			
-			pt[1] = pt[1] + flyHeight;
 			chopperComp.m_vFlyPathPoints[i].pt = pt;
 		}
 	}	

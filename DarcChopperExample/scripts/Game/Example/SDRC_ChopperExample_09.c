@@ -25,7 +25,6 @@ class SDRC_ChopperExample_09
 		
 		//Select chopper and spawn
 		string resourceName	= "{5678893357C6FC10}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_gunship_HE_Patrol.et";		
-//		string resourceName	= "{446634BB04ED3705}Prefabs/Vehicles/Helicopters/UH1H/SP02_GUNSHIP_Patrol.et";		
 		m_Vehicle = SDRC_SpawnHelper.SpawnItem(m_vPosOrigin, resourceName, 0, -1, false);
 		
 		//Find the chopper component
@@ -50,11 +49,10 @@ class SDRC_ChopperExample_09
 		m_Vehicle_c.SetEnemySearchType(SDRC_EHeliEnemySearchType.PLAYER);
 		
 		//Do setup
-		vector flyHereFirst = "1470 0 2360";		//Lands with a long slow descent as the distance to brake position is long
-//		vector flyHereFirst = "1400 0 2330";		//Lands with a steeper curve as the distance to brake position is short
-		
+		vector flyHereFirst = "1470 0 2360";
 		//Turn vehicle towards first flight position
 		SDRC_Math.TurnEntityTowardsXZ(m_Vehicle, flyHereFirst);
+		
 		//Add our flight path		
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, flyHereFirst);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_CRASH, "1350 2 2400");

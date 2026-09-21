@@ -62,6 +62,8 @@ class SDRC_CoreConfig : SDRC_Config
 			//Bystrany
 			"GateCollective", "Hayloft_", "PortableCabin", "CoalMineShaft", "CoalLoader", "SmokestackMetal", "GantryCrane", "SilageStorage", "Silo_0", "Well_0", "Fountain_", 
 			"Workshop_01_Side", "WaterTower_USSR", "FuelStation_E_01_roof", 
+			//Gulfcoast
+			"HDOCoil", 
 		};
 		emptyPos.limit = 5;
 		emptyPos.ignoreFilter = {
