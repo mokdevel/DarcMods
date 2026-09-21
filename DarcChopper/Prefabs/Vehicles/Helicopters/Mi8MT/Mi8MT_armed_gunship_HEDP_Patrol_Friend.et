@@ -11,7 +11,6 @@ Vehicle : "{98225ED6D5F724D7}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_armed_guns
    m_Flags 69
   }
   SDRC_ChopperComp "{6A12AE1C699D7059}" {
-   m_fRotorForce0 3
    m_sFaction "FRIEND"
    m_RocketDelay 0.7
    m_RocketPrefabs {
