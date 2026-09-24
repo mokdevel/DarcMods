@@ -1,0 +1,44 @@
+GenericEntity : "{EC8D41432F50A730}PrefabsEditable/Auto/Props/Civilian/E_SackUniversal_01.et" {
+ ID "51946DD6C036331B"
+ components {
+  SCR_ArsenalComponent "{6A44B2B7C8C62F55}" {
+  }
+  SCR_UniversalInventoryStorageComponent "{6A44B2B7ECE9687B}" {
+   Attributes SCR_ItemAttributeCollection "{6A44B2B795BB4E3D}" {
+    ItemDisplayName SCR_InventoryUIInfo "{6A44B2B791C6D321}" {
+     Name "Loot box"
+    }
+    m_bDraggable 0
+    m_bRefundable 0
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 1000
+  }
+  ScriptedInventoryStorageManagerComponent "{6A44B2B7C1EFEE13}" {
+  }
+  ActionsManagerComponent "{6A44B2B7CD991343}" {
+   ActionContexts {
+    UserActionContext "{6A44B2B7BC5FEE7D}" {
+     ContextName "default"
+     Position PointInfo "{6A44B2B7A796069D}" {
+     }
+     Radius 1.56
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{6A44B2B64452CCC6}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{6A44B2B64F980642}" {
+      Name "Open Loot"
+     }
+     "Sort Priority" 1000
+    }
+   }
+  }
+ }
+ coords 0 0 0
+ angles 90 0 0
+}
