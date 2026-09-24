@@ -103,7 +103,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		
 		if (m_vPosHeliOrigin == vector.Zero)
 		{
-			SDRC_Log.Add("[SDRC_Mission_Chopper] Chopper spawn may be neat player(s).", LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_Mission_Chopper] " + GetId() + " Chopper spawn may be near player(s).", LogLevel.WARNING);
 			m_vPosHeliOrigin = SDRC_Misc.GetRandomWorldPos(false);
 		}
 		
@@ -156,12 +156,15 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				case SDRC_EMissionChopperState.SET_FLIGHT:
 				{
 					MissionSpawnSetFlight();
-					SetState(SDRC_EMissionState.ACTIVE);				
+					SetState(SDRC_EMissionState.ACTIVE);
+					SetObserver();
+//					SetObserver(vector.Zero, m_Vehicle);
 					break;
 				}
 			} 			
 			//Set a faster MissionRun time during SPAWN
-			GetGame().GetCallqueue().CallLater(MissionRun, 1000);
+			GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_CYCLE_DELAY);
+			return;
 		}
 
 		if (GetState() == SDRC_EMissionState.END)
@@ -193,7 +196,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 						{
 							flyAway = true;
 							SpawnHunterMission(enemyPos);
-							SDRC_Log.Add("[SDRC_Mission_Chopper:MissionRun] Enemy found at " + enemyPos + ". Sending Hunters.", LogLevel.NORMAL);
+							SDRC_Log.Add("[SDRC_Mission_Chopper:MissionRun] " + GetId() + " Enemy found at " + enemyPos + ". Sending Hunters.", LogLevel.NORMAL);
 						}
 					}
 				}				
@@ -267,7 +270,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			string faction = SDRC_Resources.GetResourceFaction(resourceName);
 			if (faction != GetFaction())
 			{
-				SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] Faction not correct: " + resourceName, LogLevel.WARNING);
+				SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " + GetId() + " Faction not correct: " + resourceName, LogLevel.WARNING);
 			}
 		}
 		
@@ -364,7 +367,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 				if (group)
 				{			
 					SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(GetDifficulty()), m_DC_Chopper.ai.GetPerception(GetDifficulty()));
-					m_Groups.Insert(group);					
+					//m_Groups.Insert(group);					
+					AddToGroupsList(group);					
 				}
 			}
 		}
@@ -383,7 +387,8 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			if (group)
 			{			
 				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Chopper.ai.GetSkill(GetDifficulty()), m_DC_Chopper.ai.GetPerception(GetDifficulty()));
-				m_Groups.Insert(group);					
+				//m_Groups.Insert(group);					
+				AddToGroupsList(group);					
 			}
 		}		
 		
@@ -509,12 +514,12 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 					{
 						if (!SDRC_Misc.IsAddonLoaded(mod))
 						{
+							modsOk = false;
 							if (!silent)
 							{
-								modsOk = false;
 								SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] For " + subMission.general.comment + " (" + missionFile + ") to work, a mod is needed: " + mod, LogLevel.WARNING);
-								break;								
 							}
+							break;								
 						}
 					}
 					
@@ -580,7 +585,7 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		activeTime = 45*60;
 	#endif
 	#ifndef SDRC_RELEASE
-		activeTime = 25*60;
+		activeTime = 45*60;
 		//activeTime = 3*60 + 10;
 	#endif
 		

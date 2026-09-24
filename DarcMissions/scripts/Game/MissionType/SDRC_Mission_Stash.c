@@ -85,7 +85,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
-			GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_ITEM_DELAY);		//Spawn stuff slowly
+			GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_CYCLE_DELAY);		//Spawn stuff slowly
 			return;
 		}
 
@@ -123,6 +123,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 		if ( (ready) && (GetState() != SDRC_EMissionState.FAILED) )
 		{
 			SetState(SDRC_EMissionState.ACTIVE);
+			SetObserver();
 		}
 	}
 	
@@ -173,12 +174,12 @@ class SDRC_StashConfig : SDRC_MissionConfig
 					{
 						if (!SDRC_Misc.IsAddonLoaded(mod))
 						{
+							modsOk = false;
 							if (!silent)
 							{
-								modsOk = false;
 								SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] For " + subMission.general.comment + " (" + missionFile + ") to work, a mod is needed: " + mod, LogLevel.WARNING);
-								break;								
 							}
+							break;								
 						}
 					}
 					

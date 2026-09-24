@@ -98,6 +98,8 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
+			GetGame().GetCallqueue().CallLater(MissionRun, m_Config.missionCycleTime*1000);
+			return;			
 		}
 
 		if (GetState() == SDRC_EMissionState.END)
@@ -149,7 +151,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 			if (group)
 			{
 				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Patrol.ai.GetSkill(GetDifficulty()), m_DC_Patrol.ai.GetPerception(GetDifficulty()));					
-				m_Groups.Insert(group);
+				AddToGroupsList(group);
 				if (m_DC_Patrol.ai.waypointGenType == SDRC_EWaypointGenerationType.ROUTE)
 				{
 					SDRC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.ai.waypointGenType, GetPos(), m_vPosDestination, m_DC_Patrol.ai.waypointMoveType);
@@ -159,10 +161,17 @@ class SDRC_Mission_Patrol : SDRC_Mission
 					SDRC_WPHelper.CreateMissionAIWaypoints(group, m_DC_Patrol.ai.waypointGenType, GetPos(), "0 0 0", m_DC_Patrol.ai.waypointMoveType, m_DC_Patrol.ai.waypointRange[0], m_DC_Patrol.ai.waypointRange[1]);
 				}
 			}			
-			SDRC_Log.Add("[SDRC_Mission_Patrol:MissionSpawn] AI groups spawned: " + m_Groups.Count() + " (tried: " + aiCount + ")", LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_Mission_Patrol:MissionSpawn] " + GetId() + " :  AI groups spawned: " + m_Groups.Count() + " (tried: " + aiCount + ")", LogLevel.DEBUG);
 		}
-		
+
+		if (m_Groups.IsEmpty())
+		{
+			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.UNABLE_TO_SPAWN_AI);
+			return;
+		}
+				
 		SetState(SDRC_EMissionState.ACTIVE);
+		SetObserver();
 	}
 }
 
@@ -214,12 +223,12 @@ class SDRC_PatrolConfig : SDRC_MissionConfig
 					{
 						if (!SDRC_Misc.IsAddonLoaded(mod))
 						{
+							modsOk = false;
 							if (!silent)
 							{
-								modsOk = false;
 								SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] For " + subMission.general.comment + " (" + missionFile + ") to work, a mod is needed: " + mod, LogLevel.WARNING);
-								break;								
 							}
+							break;								
 						}
 					}
 					

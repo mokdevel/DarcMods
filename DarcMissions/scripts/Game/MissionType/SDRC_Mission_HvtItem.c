@@ -87,8 +87,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
-			GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_ITEM_DELAY);		//Spawn stuff slowly
-			//NOTE: ACTIVE set inside MissionSpawn()
+			GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_CYCLE_DELAY);		//Spawn stuff slowly
 			return;
 		}
 
@@ -136,6 +135,18 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 			GetGame().GetCallqueue().CallLater(IsTargetDestroyed, AI_TARGET_DESTROYED_CYCLE_TIME, false);
 			
 			SetState(SDRC_EMissionState.ACTIVE);
+			
+			SetObserver();
+			
+/*			IEntity item = GetFromEntityList(0);
+			if (item)
+			{
+				SetObserver();				
+			}
+			else
+			{
+				SetObserver(vector.Zero, item);
+			}			*/
 		}
 	}
 	
@@ -155,30 +166,38 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 	{
 		if (GetWinCondition() == SDRC_EMissionWinCondition.HVT_DESTROY_ITEM && GetState() == SDRC_EMissionState.ACTIVE && GetSuccess() == SDRC_EMissionSuccess.UNKNOWN)
 		{
-			bool isDestroyed = false;
+			bool isDestroyed = true;
 			
 			foreach(IEntity entity : m_Targets)
 			{				
+				if (!entity)
+				{
+					SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] " +  GetId() + " : Target is null.", LogLevel.DEBUG);
+					continue;
+				}
+				
 				DamageManagerComponent damageManager = DamageManagerComponent.Cast(entity.FindComponent(DamageManagerComponent));
 				if (damageManager)
 				{
 					float health = damageManager.GetHealthScaled();
-					SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] " +  GetId() + " : Target health: " + health, LogLevel.SPAM);
+					SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] " +  GetId() + " : Target health: " + health, LogLevel.DEBUG);
 					if (health > 0.1)
 					{
-						isDestroyed = true;
+						//Found one target that is not destroyed.
+						isDestroyed = false;	
 					}
 				}
-				isDestroyed = true;
+				
+				//Only if all targets are destroyed, the mission is done. If we found one
+				if (!isDestroyed)
+				{
+					break;
+				}
 			}	
-/*			else
-			{
-				isDestroyed = true;
-			}*/
 			
 			if (isDestroyed)
 			{
-				SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] " +  GetId() + " : Target destroyed!", LogLevel.DEBUG);
+				SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] " + GetId() + " : Target destroyed!", LogLevel.DEBUG);
 				DoWin();
 				return;
 			}
@@ -226,12 +245,12 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 					{
 						if (!SDRC_Misc.IsAddonLoaded(mod))
 						{
+							modsOk = false;
 							if (!silent)
 							{
-								modsOk = false;
 								SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] For " + subMission.general.comment + " (" + missionFile + ") to work, a mod is needed: " + mod, LogLevel.WARNING);
-								break;								
 							}
+							break;								
 						}
 					}
 					
@@ -298,7 +317,7 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		missionList = {0,1,2};
 		
 		#ifndef SDRC_RELEASE
-			//missionList = {};
+			missionList = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 		#endif
 		
 		//Mission specific

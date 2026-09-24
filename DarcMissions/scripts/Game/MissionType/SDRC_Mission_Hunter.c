@@ -125,7 +125,8 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
-			SetState(SDRC_EMissionState.ACTIVE);
+			GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_CYCLE_DELAY);
+			return;
 		}
 		
 		if (GetState() == SDRC_EMissionState.END)
@@ -167,10 +168,11 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		{
 			SDRC_Log.Add(("[SDRC_Mission_Hunter:MissionSpawn] " +  GetId() + " : Initiating spawn for group " + i + " of " + m_iGroupsToSpawn), LogLevel.DEBUG);
 			
-			GetGame().GetCallqueue().CallLater(SpawnGroup, (SDRC_Conf.SPAWN_ITEM_DELAY + i*1000), false);
+			GetGame().GetCallqueue().CallLater(SpawnGroup, (SDRC_Conf.SPAWN_CYCLE_DELAY + i*1000), false);
 		}
 		
-		SDRC_Log.Add("[SDRC_Mission_Hunter:MissionSpawn] " +  GetId() + " : INIT ready. Changing to ACTIVE state", LogLevel.DEBUG);		
+		SetState(SDRC_EMissionState.ACTIVE);
+		SetObserver();				//NOTE: In theory this is not needed as hunter mission in general is near a player
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -263,7 +265,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 			SDRC_Log.Add("[SDRC_Mission_Hunter:SpawnHunterGroup] " +  GetId() + " : Unable to find spawn point for group! Retrying...", LogLevel.WARNING);
 			
 			// Try again later
-			GetGame().GetCallqueue().CallLater(SpawnGroup, SDRC_Conf.SPAWN_ITEM_DELAY, false);
+			GetGame().GetCallqueue().CallLater(SpawnGroup, SDRC_Conf.SPAWN_CYCLE_DELAY, false);
 		}
 	}
 
@@ -344,12 +346,12 @@ class SDRC_HunterConfig : SDRC_MissionConfig
 					{
 						if (!SDRC_Misc.IsAddonLoaded(mod))
 						{
+							modsOk = false;
 							if (!silent)
 							{
-								modsOk = false;
 								SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] For " + subMission.general.comment + " (" + missionFile + ") to work, a mod is needed: " + mod, LogLevel.WARNING);
-								break;								
 							}
+							break;								
 						}
 					}
 					

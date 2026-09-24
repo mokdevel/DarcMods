@@ -145,6 +145,8 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
+			GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_CYCLE_DELAY);
+			return;
 		}
 
 		if (GetState() == SDRC_EMissionState.END)
@@ -218,7 +220,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 					}
 					else
 					{
-						GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_ITEM_DELAY);		//Spawn stuff slowly
+						GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_CYCLE_DELAY);		//Spawn stuff slowly
 						return;				
 					}				
 					break;
@@ -290,6 +292,7 @@ class SDRC_Mission_Crashsite : SDRC_Mission
 		m_Vehicle.GetPhysics().SetVelocity(vel);
 		
 		SetState(SDRC_EMissionState.ACTIVE);
+		SetObserver();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -350,12 +353,12 @@ class SDRC_CrashsiteConfig : SDRC_MissionConfig
 					{
 						if (!SDRC_Misc.IsAddonLoaded(mod))
 						{
+							modsOk = false;
 							if (!silent)
 							{
-								modsOk = false;
 								SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] For " + subMission.general.comment + " (" + missionFile + ") to work, a mod is needed: " + mod, LogLevel.WARNING);
-								break;								
 							}
+							break;								
 						}
 					}
 					

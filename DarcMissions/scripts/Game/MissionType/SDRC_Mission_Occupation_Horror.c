@@ -136,6 +136,7 @@ class SDRC_OccupationConfig_Horror : SDRC_OccupationConfig
 			"Avoid getting yourself eaten.",
 			"The dead shall stay dead.",
 			"Oh the horrors. You were slain.",);
+		occupation.general.modList.Insert("$Zombies:");	//TBD: Fix to correct one!
 		occupation.general.Set(
 			2, "index 2: Zombies",
 			{"0 0 0"}, 3,

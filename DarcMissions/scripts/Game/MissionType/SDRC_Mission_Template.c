@@ -60,7 +60,8 @@ class SDRC_Mission_Template : SDRC_Mission
 		if (GetState() == SDRC_EMissionState.SPAWN)
 		{
 			MissionSpawn();
-			SetState(SDRC_EMissionState.ACTIVE);
+			GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_CYCLE_DELAY);		//Spawn stuff slowly
+			return;
 		}
 
 		if (GetState() == SDRC_EMissionState.END)
@@ -99,6 +100,9 @@ class SDRC_Mission_Template : SDRC_Mission
 	private void MissionSpawn()
 	{					
 		//Code for whatever you need for spawning things.
+		
+		SetState(SDRC_EMissionState.ACTIVE);
+		SetObserver();
 	}
 }
 	

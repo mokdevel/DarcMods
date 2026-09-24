@@ -172,10 +172,11 @@ class SDRC_Mission_Convoy : SDRC_Mission
 					break;			
 				case SDRC_EMissionConvoyState.RUN:
 					SetState(SDRC_EMissionState.ACTIVE);
+					SetObserver();
 					break;
 			}
 			
-			GetGame().GetCallqueue().CallLater(MissionRun, 2000);	//Run SPAWN steps every 2 secs
+			GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_CYCLE_DELAY);
 			return;
 		}
 
@@ -235,7 +236,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			string faction = SDRC_Resources.GetResourceFaction(resourceName);
 			if (faction != GetFaction())
 			{
-				SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] Faction not correct: " + resourceName, LogLevel.WARNING);
+				SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] " + GetId() + " : Faction not correct: " + resourceName, LogLevel.WARNING);
 			}
 		}
 		
@@ -282,7 +283,8 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			if (group)
 			{			
 				SDRC_AIHelper.SetAIGroupSettings(group, m_DC_Convoy.ai.GetSkill(GetDifficulty()), m_DC_Convoy.ai.GetPerception(GetDifficulty()));
-				m_Groups.Insert(group);					
+				//m_Groups.Insert(group);					
+				AddToGroupsList(group);					
 			}
 		}
 	}
@@ -341,7 +343,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		vector pos = waypoints[0].GetOrigin();
 		
 		SDRC_DebugHelper.DeleteDebugPos("virtualConvoy");
-		SDRC_DebugHelper.AddDebugPos(pos, id: "virtualConvoy");
+		//SDRC_DebugHelper.AddDebugPos(pos, id: "virtualConvoy");
 		
 		if (   (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(pos, DISTANCE_PLAYER))
 			&& (!SDRC_PlayerHelper.IsAnyPlayerCloseToPos(m_Vehicle.GetOrigin(), DISTANCE_PLAYER))
@@ -356,7 +358,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 			float lerp = Math.Clamp((DISTANCE_LERP / distance), 0, 1);
 			
 			vector newPos = vector.Lerp(m_Vehicle.GetOrigin(), pos, lerp);
-			SDRC_DebugHelper.AddDebugPos(newPos, id: "virtualConvoy");	
+			//SDRC_DebugHelper.AddDebugPos(newPos, id: "virtualConvoy");	
 			
 			SDRC_RoadPos roadPosStart = new SDRC_RoadPos();
 			pos = SDRC_RoadHelper.FindClosestRoadposToPos(roadPosStart, newPos, DISTANCE_ROADPOINT);
@@ -370,7 +372,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 					{
 						m_vPrevVirtualPos = pos;
 						m_Vehicle.SetOrigin(pos);
-						SDRC_DebugHelper.AddDebugPos(pos, color: Color.YELLOW, id: "virtualConvoy");
+						//SDRC_DebugHelper.AddDebugPos(pos, color: Color.YELLOW, id: "virtualConvoy");
 					}
 				}
 			}
@@ -417,12 +419,12 @@ class SDRC_ConvoyConfig : SDRC_MissionConfig
 					{
 						if (!SDRC_Misc.IsAddonLoaded(mod))
 						{
+							modsOk = false;
 							if (!silent)
 							{
-								modsOk = false;
 								SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] For " + subMission.general.comment + " (" + missionFile + ") to work, a mod is needed: " + mod, LogLevel.WARNING);
-								break;								
 							}
+							break;								
 						}
 					}
 					
