@@ -52,58 +52,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		bool obc = (IsRequested() || IsStatic());
 		
 		//Building search
-//		float radius = 100;					//Default size for the radius. 
-//		array<string> buildingFilter = {};
-
 		SDRC_EMissionError missionError = SDRC_MissionPosHelper.FindMissionBuilding(m_Building, m_DC_HvtVip.general.pos, m_DC_HvtVip.general.locationTypes, m_DC_HvtVip.buildingNames, m_Config.buildingRadius, IsRequested());
-		
-/*		//Get the position
-		vector pos = m_DC_HvtVip.general.pos.GetRandomElement();
-		
-		//Find a location for the mission
-		if (IsRequested())
-		{
-			//NOTE: Requested mission should always have a position other than 0,0,0
-			//Any building near the location will be accepted.
-			buildingFilter.Insert("");
-			radius = 10;	//Try to find the nearest building.
-		}
-		else
-		{				
-			radius = m_Config.buildingRadius;
-			buildingFilter = m_DC_HvtVip.buildingNames;
-						
-			if (pos == vector.Zero)
-			{
-				//If no locationTypes defined, we search for any building matching on the map
-				if (m_DC_HvtVip.general.locationTypes.IsEmpty())
-				{
-					radius = -1;
-				}
-				else
-				{
-					pos = SDRC_MissionPosHelper.FindMissionPosWithLocationTypes(m_DC_HvtVip.general.locationTypes, m_DC_HvtVip.general.size);
-					//If failed, stop
-					if (pos ==  vector.Zero)	//No suitable location found.
-					{				
-						SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.LOCATION_NOT_FOUND);
-						return;
-					}	
-				}
-			}
-		}
-		
-		//Find the mission house
-		m_Building = SDRC_MissionHelper.FindMissionBuilding(pos, buildingFilter, radius);
-		if (m_Building)
-		{
-			pos = m_Building.GetOrigin();
-		}
-		else //No suitable location found.
-		{
-			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.SUITABLE_BUILDING_NOT_FOUND);
-			return;
-		}*/
 		
 		if (missionError != SDRC_EMissionError.NONE)
 		{

@@ -48,46 +48,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		bool obc = (IsRequested() || IsStatic());
 		
 		//Building search
-//		float radius = m_Config.buildingRadius;
-//		array<string>buildingFilter = {};
-		
 		SDRC_EMissionError missionError = SDRC_MissionPosHelper.FindMissionBuilding(m_Building, m_DC_Squatter.general.pos, m_DC_Squatter.general.locationTypes, m_DC_Squatter.buildingNames, m_Config.buildingRadius, IsRequested());
-		
-/*		//Find a location for the mission
-		vector pos = "0 0 0";
-		//If pos has been set, we blindly accept it. 
-		
-		//Find a location for the mission
-		if (IsRequested())
-		{
-			pos = request.general.pos[0];
-			//If the missions is requested with a position, any building near the location will be accepted.
-			buildingFilter.Insert("");
-			radius = 10;	//Try to find the nearest building.
-		}
-		else
-		{
-			pos = SDRC_MissionPosHelper.SelectMissionPos(m_DC_Squatter.general.pos, m_DC_Squatter.general.size, obc, m_DC_Squatter.general.locationTypes);
-			buildingFilter = m_DC_Squatter.buildingNames;
-			if (m_DC_Squatter.general.locationTypes.IsEmpty())
-			{
-				//If no locationTypes defined, we search for any building matching on the map
-				radius = -1;
-			}
-		}
-
-		//Find the mission house
-		m_Building = SDRC_MissionHelper.FindMissionBuilding(pos, buildingFilter, radius);
-		if (m_Building)
-		{
-			//SDRC_Misc.GetSimpleEntityName(m_Building.GetPrefabData().GetPrefabName())
-			pos = m_Building.GetOrigin();
-		}
-		else //No suitable location found.
-		{
-			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.SUITABLE_BUILDING_NOT_FOUND);
-			return;
-		}	*/		
 		
 		if (missionError != SDRC_EMissionError.NONE)
 		{
