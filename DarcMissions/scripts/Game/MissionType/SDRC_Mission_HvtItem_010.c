@@ -40,7 +40,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 		missionList = {0,1,2};
 		
 		#ifndef SDRC_RELEASE
-			//missionList = {};
+			missionList = {};
 		#endif
 		
 		//Mission specific		

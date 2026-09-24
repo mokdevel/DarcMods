@@ -2,9 +2,10 @@
 
 ## Next Version
 
-## 202609xx
+## 20260924
 Main features:
 * All kinds of flight model finetuning.
+* Attack pattern rewritten.
 * Added WP_CRASH
 * SDRC_EHeliState and SDRC_EFlyWayPointType reordered. This may have an effect on other mods so check and recompile yours if needed. 
 

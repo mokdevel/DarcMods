@@ -562,7 +562,7 @@ class SDRC_Mission : Managed
 			m_iObserverId = DC_OBSERVER_ID_PREFIX + m_iObserverCounter;
 			m_iObserverCounter++;
 			observers.InsertObserverSP(m_iObserverId, pos[0], pos[2], entity);
-			SDRC_Log.Add("[SDRC_Mission:SetObserver] " +  GetId() + " : Key: " + m_iObserverId + " to: " + entity, LogLevel.DEBUG);
+			//SDRC_Log.Add("[SDRC_Mission:SetObserver] " +  GetId() + " : Key: " + m_iObserverId + " to: " + entity, LogLevel.DEBUG);
 		}
 	}
 
@@ -914,7 +914,7 @@ class SDRC_Mission : Managed
 		int currentTime = (System.GetTickCount() / 1000);
 
 		string missionType = SCR_Enum.GetEnumName(SDRC_EMissionType, GetType());
-		SDRC_Log.Add("[SDRC_Mission:IsActive] " + GetId() + " / " + missionType + " : AI count: " + GetAICountActive(), LogLevel.DEBUG);
+		//SDRC_Log.Add("[SDRC_Mission:IsActive] " + GetId() + " / " + missionType + " : AI count: " + GetAICountActive(), LogLevel.DEBUG);
 		
 		//Are there players still nearby, reset the timer
 		if (m_iActiveDistance > -1)

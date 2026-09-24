@@ -5,7 +5,9 @@ No changes in mission jsons.
 
 ## Next release (unreleased)
 
-## 202609xx
+..empty..
+
+## 20260924
 Main Features:
 * dc_missionConfig_HvtItem.json 
   * Parameter change: targetIdx is an array insted of signle int. You can define multiple items to be destroyed for the mission to be completed.
@@ -16,6 +18,7 @@ Main Features:
 
 Fixes:
 * Improved world size check. Should fix maps like Bystrany.
+* Improved building selection for HvtVip and Squatters missions.
 
 ## 20260901
 Main Features:

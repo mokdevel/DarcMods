@@ -172,7 +172,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 			{				
 				if (!entity)
 				{
-					SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] " +  GetId() + " : Target is null.", LogLevel.DEBUG);
+					//SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] " +  GetId() + " : Target is null.", LogLevel.DEBUG);
 					continue;
 				}
 				
@@ -180,7 +180,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 				if (damageManager)
 				{
 					float health = damageManager.GetHealthScaled();
-					SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] " +  GetId() + " : Target health: " + health, LogLevel.DEBUG);
+					//SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] " +  GetId() + " : Target health: " + health, LogLevel.DEBUG);
 					if (health > 0.1)
 					{
 						//Found one target that is not destroyed.
@@ -317,7 +317,8 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		missionList = {0,1,2};
 		
 		#ifndef SDRC_RELEASE
-			missionList = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+			missionList = {};
+			//missionList = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 		#endif
 		
 		//Mission specific
