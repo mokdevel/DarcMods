@@ -2,7 +2,7 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
-Summary: spawn - initial destination - fly
+Summary: spawn on ground - initial destination - fly
 
 This is a very simple example of spawning a chopper and set an initial destination. After reaching
 the destination, it will start to fly randomly.
@@ -21,7 +21,8 @@ class SDRC_ChopperExample_01
 		//Set to initial position height
 		if (m_vPosOrigin[1] == 0)
 		{
-			m_vPosOrigin[1] = m_fMinFlyHeight + SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin, true);
+			m_vPosOrigin[1] = SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin, true);
+//			m_vPosOrigin[1] = m_fMinFlyHeight + SDRC_Misc.GetSurfaceYWithWater(m_vPosOrigin, true);
 		}
 		
 		//Select chopper and spawn

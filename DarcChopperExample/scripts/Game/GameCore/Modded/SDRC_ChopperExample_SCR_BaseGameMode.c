@@ -47,14 +47,14 @@ modded class SCR_BaseGameMode
 	{
 		if (SDRC_Conf.coreHasStarted)	//Wait for core to be available
 		{		
-//				m_ChopperExample_01 = new SDRC_ChopperExample_01();
-//				m_ChopperExample_02 = new SDRC_ChopperExample_02();				
-//				m_ChopperExample_03 = new SDRC_ChopperExample_03();
+				m_ChopperExample_01 = new SDRC_ChopperExample_01();
+				m_ChopperExample_02 = new SDRC_ChopperExample_02();				
+				m_ChopperExample_03 = new SDRC_ChopperExample_03();
 				m_ChopperExample_04 = new SDRC_ChopperExample_04();				
 				m_ChopperExample_05 = new SDRC_ChopperExample_05();
-//				m_ChopperExample_06 = new SDRC_ChopperExample_06();
+				m_ChopperExample_06 = new SDRC_ChopperExample_06();
 				m_ChopperExample_09 = new SDRC_ChopperExample_09();
-//				m_ChopperExample_10 = new SDRC_ChopperExample_10();
+				m_ChopperExample_10 = new SDRC_ChopperExample_10();
 		}
 		else
 		{
