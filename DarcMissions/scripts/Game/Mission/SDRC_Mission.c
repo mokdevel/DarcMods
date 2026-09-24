@@ -94,6 +94,9 @@ class SDRC_MissionConfig : SDRC_Config
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Override to load mission files. Remember to call super to add the unique suids to a list
+	
+	\param ver Json version of the file
+	\param silent If true, do not print out an errormessage
 	*/		
 	void LoadMissionFiles(int ver, bool silent = false)
 	{
@@ -165,17 +168,21 @@ class SDRC_MissionConfig : SDRC_Config
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission : Managed
 {
-	static int m_MissionIDCounter = 1;			//Static counter for mission ID
+	static int m_iMissionIDCounter = 1;			//Static counter for mission ID
+	static int m_iObserverCounter = 1;			//Static counter for observer ID
 	
 	//Common for all missions
-    private string m_sId;
+    private string m_sId;						//The mission ID with the prefix.
 	private SDRC_EMissionState m_State;
 	private SDRC_EMissionType m_Type;
 	private bool m_bStatic;						//Defines if the mission is dynamic or static. Dynamic is default. 
     private bool m_bShowHint;
     private bool m_bShowMessage;
 	private bool m_bShowMarker;					//If the icon is to be shown
-	
+
+	//Observer details
+	private int m_iObserverId = -1;				//The ID assigned to the observer
+		
 	//Common for all sub missions
 	private ref SDRC_MissionConfigGeneral m_General = new SDRC_MissionConfigGeneral();
 	private string m_sFaction;					//The faction in use for the mission
@@ -193,6 +200,7 @@ class SDRC_Mission : Managed
 	private bool m_bMissionIsEnding;			//Once all AIs are dead, we're getting close to end the mission.
 	//Win condition related
 	private int m_iAICountOriginal;				//The amount of AI at the beginning on the mission - at the time it was set active
+	private int m_iAICountOriginalTries;			//The amount of AI at the beginning on the mission - at the time it was set active
 	private int m_iAIKillPercentageRandom;		//The random amount of AIs to kill (30%-100%)	
 	protected ref array<IEntity> m_EntityList = {};		//Entities (e.g., tents) spawned
 	protected ref array<SCR_AIGroup> m_Groups = {};		//Groups spawned
@@ -202,8 +210,8 @@ class SDRC_Mission : Managed
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Mission(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
-		m_sId = DC_ID_PREFIX + SCR_StringHelper.PadLeft(string.ToString(m_MissionIDCounter), 4, "0");
-		m_MissionIDCounter++;
+		m_sId = DC_ID_PREFIX + SCR_StringHelper.PadLeft(string.ToString(m_iMissionIDCounter), 4, "0");
+		m_iMissionIDCounter++;
 		m_State = SDRC_EMissionState.INIT;
 		m_Type = missionType;	//SDRC_EMissionType.NONE;
 		m_bStatic = staticMission;
@@ -238,6 +246,7 @@ class SDRC_Mission : Managed
 		m_bMissionIsEnding = false;
 		//Win condition related	
 		m_iAICountOriginal = -1;						//Defaults set, updated once mission goes ACTIVE
+		m_iAICountOriginalTries = 0;					//Count of tries
 		m_iAIKillPercentageRandom = 99;
 		
 		SDRC_MissionStats.Add(m_sId, m_iRequestId, m_Type, m_State, m_Success);
@@ -313,6 +322,8 @@ class SDRC_Mission : Managed
 	*/
 	void MissionEnd()	//You should calls this at the end of your mission
 	{
+		RemoveObserver();
+		
 		//Remove spawned items
 		SDRC_Log.Add("[SDRC_Mission:MissionEnd] " +  GetId() + " : Deleting entities", LogLevel.DEBUG);
 		foreach (IEntity entity : m_EntityList)
@@ -474,7 +485,7 @@ class SDRC_Mission : Managed
 		if (state == SDRC_EMissionState.ACTIVE)
 		{			
 			//Things to set when mission goes to active state
-			GetGame().GetCallqueue().CallLater(GetAICountActiveDelayed, 10000);		//Do the counting after a while. AIs needs to be spawned.
+			GetGame().GetCallqueue().CallLater(GetAICountActiveDelayed, SDRC_Conf.AI_COUNTING_DELAY);		//Do the counting after a while. AIs needs to be spawned.
 			m_iAIKillPercentageRandom = SDRC_Misc.RandomInt(30, 99);
 			ShowMarker();
 		}
@@ -528,7 +539,50 @@ class SDRC_Mission : Managed
 	{
 		return m_sId;
 	}	
-			
+
+	//------------------------------------------------------------------------------------------------
+	void SetObserver(vector pos = vector.Zero, IEntity entity = null)
+	{
+		if (!entity)
+		{
+			if (!m_Groups.IsEmpty())
+			{
+				entity = m_Groups[0];
+			}
+		}
+		
+		ChimeraWorld world = ChimeraWorld.CastFrom(GetGame().GetWorld());
+		if (entity)
+		{		
+			world = ChimeraWorld.CastFrom(entity.GetWorld());
+		}
+		ObserversSystem observers = ObserversSystem.Cast(world.FindSystem(ObserversSystem));	
+		if (observers)
+		{
+			m_iObserverId = DC_OBSERVER_ID_PREFIX + m_iObserverCounter;
+			m_iObserverCounter++;
+			observers.InsertObserverSP(m_iObserverId, pos[0], pos[2], entity);
+			SDRC_Log.Add("[SDRC_Mission:SetObserver] " +  GetId() + " : Key: " + m_iObserverId + " to: " + entity, LogLevel.DEBUG);
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------
+	void RemoveObserver()
+	{
+		if (m_iObserverId == -1)
+		{
+			return;
+		}
+		
+		//ChimeraWorld world = ChimeraWorld.CastFrom(entity.GetWorld());
+		ChimeraWorld world = ChimeraWorld.CastFrom(GetGame().GetWorld());
+		ObserversSystem observers = ObserversSystem.Cast(world.FindSystem(ObserversSystem));	
+		if (observers)
+		{
+			observers.RemoveObserverSP(m_iObserverId);
+		}		
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	vector GetPos()
 	{
@@ -858,6 +912,9 @@ class SDRC_Mission : Managed
 	{
 		bool isWin = false;
 		int currentTime = (System.GetTickCount() / 1000);
+
+		string missionType = SCR_Enum.GetEnumName(SDRC_EMissionType, GetType());
+		SDRC_Log.Add("[SDRC_Mission:IsActive] " + GetId() + " / " + missionType + " : AI count: " + GetAICountActive(), LogLevel.DEBUG);
 		
 		//Are there players still nearby, reset the timer
 		if (m_iActiveDistance > -1)
@@ -1224,6 +1281,21 @@ class SDRC_Mission : Managed
 	private void GetAICountActiveDelayed()
 	{
 		m_iAICountOriginal = GetAICountActive();
-		SDRC_Log.Add("[SDRC_Mission:GetAICountDelayed] " + GetId() + " : Spawned " + m_iAICountOriginal + " AIs.", LogLevel.SPAM);
+		
+		if ( (m_iAICountOriginal == 0) && (!m_Groups.IsEmpty()) )
+		{
+			m_iAICountOriginal = -1;
+			if (m_iAICountOriginalTries < 4)
+			{
+				GetGame().GetCallqueue().CallLater(GetAICountActiveDelayed, SDRC_Conf.AI_COUNTING_DELAY);		//Do the counting after a while. AIs needs to be spawned.
+				SDRC_Log.Add("[SDRC_Mission:GetAICountDelayed] " + GetId() + " : No AI counted. Trying again.", LogLevel.DEBUG);
+			}
+			m_iAICountOriginalTries++;
+		}
+		
+		if (m_iAICountOriginal > 0)
+		{		
+			SDRC_Log.Add("[SDRC_Mission:GetAICountDelayed] " + GetId() + " : Spawned " + m_iAICountOriginal + " AIs.", LogLevel.DEBUG);
+		}
 	}
 }
