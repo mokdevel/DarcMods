@@ -200,7 +200,7 @@ class SDRC_CoverHelper
 			}
 			else
 			{
-				int xx = 0;
+				//int xx = 0;	//Just for breaking point setting 
 			}
 		}
 		
@@ -232,7 +232,7 @@ class SDRC_CoverHelper
 	//------------------------------------------------------------------------------------------------
 	void SetCoverQueryProps()
 	{
-		CoverQueryProperties m_CoverQueryProps = new CoverQueryProperties();
+		m_CoverQueryProps = new CoverQueryProperties();
 		m_CoverQueryProps.m_vNearestPolyHalfExtend = SCR_AIFindCover.NEAREST_POLY_HALF_EXTEND;
 		m_CoverQueryProps.m_vSectorPos = m_Pos + "0 2 0";
 		m_CoverQueryProps.m_vThreatPos = m_Pos + "50 2 50";

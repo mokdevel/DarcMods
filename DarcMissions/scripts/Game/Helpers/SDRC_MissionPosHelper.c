@@ -40,7 +40,7 @@ class SDRC_MissionPosHelper
 		//If we had an empty positions list, let's search with locationTypes
 		if (pos == "0 0 0")
 		{			
-			if (locationTypes)
+			if (!locationTypes.IsEmpty())
 			{		
 				pos = SDRC_MissionPosHelper.FindMissionPosWithLocationTypes(locationTypes, size, onlyBasicChecks, posRandomization);
 			}
@@ -332,6 +332,66 @@ class SDRC_MissionPosHelper
 
 		return pos;
 	}		
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Find building for a mission
+	
+	\param locationTypes Array of EMapDescriptorType to look for a place
+	\param missionPos The mission position aka the starting point for mission
+	\param distance Minimum distance for missionPos and destination
+	*/		
+	static SDRC_EMissionError FindMissionBuilding(out IEntity building, array<vector> positions, array<EMapDescriptorType> locationTypes, array<string> buildingNames, int radius = 100, bool requested = false)
+	{
+		SDRC_EMissionError error = SDRC_EMissionError.NONE;
+		
+		//Building search
+		array<string> buildingFilter = {};
+
+		//Get the position
+		vector pos = positions.GetRandomElement();
+		
+		//Find a location for the mission
+		if (requested)
+		{
+			//NOTE: Requested mission should always have a position other than 0,0,0
+			//Any building near the location will be accepted.
+			buildingFilter.Insert("");
+			radius = 10;	//Try to find the nearest building.
+		}
+		else
+		{				
+			buildingFilter = buildingNames;
+						
+			if (pos == vector.Zero)
+			{
+				//If no locationTypes defined, we search for any building matching on the map
+				if (locationTypes.IsEmpty())
+				{
+					radius = -1;
+				}
+				else
+				{
+					pos = SDRC_MissionPosHelper.FindMissionPosWithLocationTypes(locationTypes, 0);
+					//If failed, stop
+					if (pos ==  vector.Zero)	//No suitable location found.
+					{				
+						error = SDRC_EMissionError.LOCATION_NOT_FOUND;
+						return error;
+					}	
+				}
+			}
+		}		
+		
+		//Find the mission house
+		building = SDRC_MissionHelper.FindMissionBuilding(pos, buildingFilter, radius);
+		if (!building)
+		{
+			error = SDRC_EMissionError.SUITABLE_BUILDING_NOT_FOUND;
+		}			
+		
+		return error;		
+	}	
 	
 	//------------------------------------------------------------------------------------------------
 	/*!

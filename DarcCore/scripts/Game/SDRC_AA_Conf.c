@@ -28,9 +28,10 @@ sealed class SDRC_Conf
 	const int MISSION_RUN_DELAY = 5000;						//Time between INIT and SPAWN states.
 	const int PERSISTENCE_DELAY = 6000;						//Time to delay the persistence setting for spawned entities. 
 	const int DESPAWN_ENTITY_USED_FOR_SIZE_DELAY = 1000;	//Time to delay the deletion of an entity that was used for defining the size or weapon used for finding the mag.
-	const int AI_SETTING_DELAY = 10000;
+	const int AI_SETTING_DELAY = 20000;						//Delay to give AI time to set values.
+	const int AI_COUNTING_DELAY = 30000;					//Delay before AI count is calculated.
 	const int POSITION_RANDOMIZATION = 150;					//Randomization for position. 
-	const int SPAWN_ITEM_DELAY = 1000;						//Time used between AI/item spawns for example for Roadblock items
+	const int SPAWN_CYCLE_DELAY = 2000;						//Time used between AI/item spawns for example for Roadblock items
 	static ref array<string> errorList = {};				//Errors reported and spamchatted to players 
 	
 	//TBD: const int MISSION_END_TIME = 5000;				//Time to set for mission cycle when mission is set to end.

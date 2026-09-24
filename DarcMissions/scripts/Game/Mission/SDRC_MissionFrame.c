@@ -6,6 +6,7 @@ This is the mission main framework file.
 //------------------------------------------------------------------------------------------------
 
 const string DC_ID_PREFIX = "DCM_";				//The prefix used for marker and missions Id's.
+const int DC_OBSERVER_ID_PREFIX = 14322688;	//The prefix used for marker and missions Id's. Hex: DA8C00
 
 const string DC_MISSIONCONFIG_FILE_FRAME = "dc_missionConfig.json";
 const int 	 DC_MISSIONCONFIG_FILE_FRAME_JSONVER = 4;

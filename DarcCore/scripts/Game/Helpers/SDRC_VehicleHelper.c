@@ -96,12 +96,12 @@ class SDRC_VehicleHelper
 					// This fixes the issue where AI is spawned invisible and not entering the vehicle before GM is moving. 
 					// Thanks to Gramps for finding the fix.
 					// ---
-					SCR_ChimeraCharacter chimeraCharacter = SCR_ChimeraCharacter.Cast(character);
+					/*SCR_ChimeraCharacter chimeraCharacter = SCR_ChimeraCharacter.Cast(character);
 					CharacterControllerComponent characterController = chimeraCharacter.GetCharacterController();			
 					AIControlComponent aiControlComponent = characterController.GetAIControlComponent();
 					AIAgent aiAgent = aiControlComponent.GetControlAIAgent();			
 					//aiAgent.SetLOD(1);					
-					aiAgent.SetPermanentLOD(1);					
+					aiAgent.SetPermanentLOD(1);*/
 					// ---
 					
 					compartment.SetReserved(character);

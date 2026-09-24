@@ -353,7 +353,7 @@ sealed class SDRC_WPHelper
 		
 		if (SDRC_Misc.IsPosInWater(wpPos))
 		{
-			SDRC_Log.Add("[SDRC_WPHelper:FindAndCreateWaypoint] Waypoint in water. Skipping.", LogLevel.DEBUG);			
+			SDRC_Log.Add("[SDRC_WPHelper:FindAndCreateWaypoint] Waypoint in water. Skipping.", LogLevel.SPAM);			
 			return null;
 		}
 		

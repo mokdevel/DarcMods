@@ -100,7 +100,7 @@ class SDRC_Spawner
 		m_spawnCount = 0;
 		m_failCount = 0;						//Counter for failed spawns
 		m_failLimit = 0;						//Limit for fails before stopping. This is 2* maximum amount.
-		array<vector> m_positionsUsed = {};		//When using position spawning, avoid spawning to same positions.
+		//array<vector> m_positionsUsed = {};		//When using position spawning, avoid spawning to same positions.
 		
 		SDRC_Log.Add("[SDRC_Spawner] --- Starting spawner: " + m_Config.comment, LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Spawner] Spawner author: " + m_Config.author, LogLevel.NORMAL);

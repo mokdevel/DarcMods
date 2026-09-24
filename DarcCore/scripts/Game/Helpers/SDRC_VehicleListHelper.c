@@ -94,13 +94,13 @@ sealed class SDRC_VehicleListHelper
 					doDelete = true;
 				}*/
 
-				#ifndef SDRC_RELEASE
+/*				#ifndef SDRC_RELEASE
 					//Just for being able to set a breaking point when debugging
 					if (list.id.Contains("VEHICLE_CHOPPER_DRONE"))
 					{
 						int x = 0;
 					}
-				#endif				
+				#endif	*/
 								
 				string containerClass = SCR_BaseContainerTools.GetContainerClassName(res);
 				SDRC_Log.Add("[SDRC_VehicleListHelper:Sanitize] Found: " + containerClass + " from " + SDRC_Misc.GetSimpleEntityName(item), LogLevel.SPAM);				

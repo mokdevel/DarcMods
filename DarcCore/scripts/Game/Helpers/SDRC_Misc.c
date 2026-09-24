@@ -37,7 +37,7 @@ sealed class SDRC_Misc
 		
 		if (max < min)
 		{
-			SDRC_Log.Add("[SDRC_Misc:RandomFloat] Max smaller than min. Switching.", LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_Misc:RandomFloat] Max smaller than min. Switching.", LogLevel.SPAM);
 			return Math.RandomFloatInclusive(max, min);	
 		}
 		
@@ -58,7 +58,7 @@ sealed class SDRC_Misc
 		
 		if (max < min)
 		{
-			SDRC_Log.Add("[SDRC_Misc:RandomInt] Max smaller than min. Switching.", LogLevel.WARNING);
+			SDRC_Log.Add("[SDRC_Misc:RandomInt] Max smaller than min. Switching.", LogLevel.SPAM);
 			return Math.RandomIntInclusive(max, min);	
 		}
 		
@@ -361,16 +361,25 @@ sealed class SDRC_Misc
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Move given position range meters away from the given position in X/Y.	
+	Move given position radius meters away from the given position in X/Y.	
+	
+	\param position Origin
+	\param radius Randomization radius
+	\param snap If true, position will be snapped to ground. 
 	*/	
-	static vector RandomizePos(vector position, float range = 100)
+	static vector RandomizePos(vector position, float radius = 100, bool snap = false)
 	{
 		vector posRnd = "0 0 0";
 		vector newPos;
-		posRnd[0] = SDRC_Misc.RandomFloat(-range, range);
-		posRnd[2] = SDRC_Misc.RandomFloat(-range, range);
+		posRnd[0] = SDRC_Misc.RandomFloat(-radius, radius);
+		posRnd[2] = SDRC_Misc.RandomFloat(-radius, radius);
 		
 		newPos = position + posRnd;
+		
+		if (snap)
+		{
+			newPos = SetPosToSurface(newPos);
+		}
 		
 		return newPos;
 	}	
@@ -378,6 +387,7 @@ sealed class SDRC_Misc
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Return surface height either on land or water.
+	
 	\param position The position to find Y
 	\param doTrace If true, an additional ray cast is done to find the highest point on the location. For example, there could be a building.
 	\param traceHeightMod From which height the trace should start

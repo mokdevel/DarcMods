@@ -15,7 +15,7 @@
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 30;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 1*60;							//Time to wait before spawning the first mission (seconds)
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 8*60;			//Minimum delay between dynamic missions. 
-		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 5;				//Minimum delay between static missions. 
+		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 20;				//Minimum delay between static missions. 
 		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 45*60;						//Time to keep the mission active (seconds)
 		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 60*60*10; //10hrs			//Static missions are to be kept alive longer
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 150;							//Mission is to be removed if no players close to the position after the mission active time has passed.
@@ -38,14 +38,14 @@
 		private const int SDRC_PLAYER_MAX_DISTANCE = 1200;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 4;
+		private const int SDRC_MISSION_COUNT_STATIC = 3;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 1;
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 1;
 		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 5*60;				
-		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 8*60;//SDRC_MISSION_ACTIVE_TIME_DYNAMIC * 10;	
+		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 8*60;	//SDRC_MISSION_ACTIVE_TIME_DYNAMIC * 10;	
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 150;
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 45;
 		private const float SDRC_MISSION_ACTIVE_MUL_TO_END = 0.9;
@@ -240,7 +240,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS};
 		
-			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.CHOPPER);
+//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.CHOPPER);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.CONVOY);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.CRASHSITE);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.HVTITEM);
@@ -248,7 +248,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.OCCUPATION);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.PATROL);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.ROADBLOCK);
-//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.SQUATTERS);
+			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.SQUATTERS);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.STASH);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.PATROL);
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};

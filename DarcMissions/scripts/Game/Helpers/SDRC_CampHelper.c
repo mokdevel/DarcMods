@@ -88,7 +88,7 @@ sealed class SDRC_CampHelper
 				}
 				else
 				{
-					SDRC_Log.Add("[SDRC_CampHelper:Spawn] AI groups spawned: " + mission.GetGroupsCount() + " (tried: " + aiCount + ")", LogLevel.DEBUG);
+					SDRC_Log.Add("[SDRC_CampHelper:Spawn] " + mission.GetId() + " : AI groups spawned: " + mission.GetGroupsCount() + " (tried: " + aiCount + ")", LogLevel.DEBUG);
 				}
 			}
 			
