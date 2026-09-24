@@ -45,13 +45,17 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		
 		//Set defaults
 		m_iAiCount = m_DC_Squatter.ai.GetCount(GetDifficulty());
-		float radius = m_Config.buildingRadius;
-		array<string>buildingFilter = {};
+		bool obc = (IsRequested() || IsStatic());
 		
-		//Find a location for the mission
+		//Building search
+//		float radius = m_Config.buildingRadius;
+//		array<string>buildingFilter = {};
+		
+		SDRC_EMissionError missionError = SDRC_MissionPosHelper.FindMissionBuilding(m_Building, m_DC_Squatter.general.pos, m_DC_Squatter.general.locationTypes, m_DC_Squatter.buildingNames, m_Config.buildingRadius, IsRequested());
+		
+/*		//Find a location for the mission
 		vector pos = "0 0 0";
 		//If pos has been set, we blindly accept it. 
-		bool obc = (IsRequested() || IsStatic());
 		
 		//Find a location for the mission
 		if (IsRequested())
@@ -83,9 +87,21 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.SUITABLE_BUILDING_NOT_FOUND);
 			return;
-		}			
+		}	*/		
 		
-		SDRC_EMissionError missionError = SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested());
+		if (missionError != SDRC_EMissionError.NONE)
+		{
+			SetState(SDRC_EMissionState.FAILED, missionError);
+			return;
+		}
+
+		vector pos = vector.Zero;
+		if (m_Building)
+		{
+			pos = m_Building.GetOrigin();
+		}
+		
+		missionError = SDRC_MissionPosHelper.IsValidMissionPos(pos, obc, IsRequested());
 		if (missionError != SDRC_EMissionError.NONE)
 		{
 			pos = "0 0 0";
@@ -124,7 +140,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 				MissionSpawn();
 			}
 			
-			GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_ITEM_DELAY);		//Spawn stuff slowly
+			GetGame().GetCallqueue().CallLater(MissionRun, SDRC_Conf.SPAWN_CYCLE_DELAY);		//Spawn stuff slowly
 			return;
 		}
 
@@ -198,7 +214,8 @@ class SDRC_Mission_Squatter : SDRC_Mission
 				SDRC_Log.Add("[SDRC_Mission_Squatter:MissionSpawn] " +  GetId() + " : Could not spawn loot box: " + m_DC_Squatter.lootBox, LogLevel.ERROR);
 			}
 		
-			SetState(SDRC_EMissionState.ACTIVE);			
+			SetState(SDRC_EMissionState.ACTIVE);
+			SetObserver();
 		}
 	}
 	
@@ -268,12 +285,12 @@ class SDRC_SquatterConfig : SDRC_MissionConfig
 					{
 						if (!SDRC_Misc.IsAddonLoaded(mod))
 						{
+							modsOk = false;
 							if (!silent)
 							{
-								modsOk = false;
 								SDRC_Log.Add("[SDRC_MissionConfig:LoadMissionFiles] For " + subMission.general.comment + " (" + missionFile + ") to work, a mod is needed: " + mod, LogLevel.WARNING);
-								break;								
 							}
+							break;								
 						}
 					}
 					

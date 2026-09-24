@@ -72,6 +72,12 @@ class SDRC_BuildingHelper
 	*/	
 	static void FilterBuildingList(out array<IEntity> buildings, array<IEntity> buildingListSource, array<string> filter)
 	{
+		foreach (int i, string filteritem : filter)
+		{
+			filteritem.ToLower();
+			filter[i] = filteritem;
+		}
+		
 		foreach (IEntity building : buildingListSource)
 		{
 			if (!building)
