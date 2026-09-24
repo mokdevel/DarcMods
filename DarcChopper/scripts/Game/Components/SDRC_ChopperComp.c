@@ -442,7 +442,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		}		
 		
 		m_vOrigin = owner.GetOrigin();
-		m_fAltitude = m_vOrigin[1] - GetGame().GetWorld().GetSurfaceY(m_vOrigin[0], m_vOrigin[2]);	//Using GetAltitude() is troublesome as it will find objects like bushes below.
+		m_fAltitude = m_vOrigin[1] - GetGame().GetWorld().GetSurfaceY(m_vOrigin[0], m_vOrigin[2]);	//Using SDRC_ChopperHelper.GetAltitude() is troublesome as it will find objects like bushes below.
 	
 		m_fTimeSpeed += timeSlice;
 		m_fTimeBetweenPts += timeSlice;
@@ -800,7 +800,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		//m_vDestinationFuture
 		//m_vDestination
 		
-		const int VERTICAL_SPEED_UP_TIME = 5;	//Spend 3 seconds to increase rotorForce
+		const int VERTICAL_SPEED_UP_TIME = 8;	//Spend 3 seconds to increase rotorForce
 				
 		//Modify the values depending on state
 		switch (m_eHeliState)
@@ -808,7 +808,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			case SDRC_EHeliState.HOVER_UP:
 			{
 				float percentage = Math.Clamp(m_fTimeInStateBeen / VERTICAL_SPEED_UP_TIME, 0, 1);
-				m_fRotorForceMultiplier = (0.05 * percentage + rotorForce * m_fDistanceFromSplineMul * percentage);
+				m_fRotorForceMultiplier = (0.05 * percentage + 0.7 * rotorForce * m_fDistanceFromSplineMul * percentage);
 				break;
 			}
 			case SDRC_EHeliState.HOVER_DOWN:
@@ -902,11 +902,11 @@ modded class SDRC_ChopperComp : ScriptComponent
 			m_fRayLenMul = Math.Lerp(m_fRayLenMulStart, m_fRayLenMulTarget, ts);
 		}
 	}
-	
+
 	//------------------------------------------------------------------------------------------------	
 	// Reset
 	//------------------------------------------------------------------------------------------------	
-				
+	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Clear the fly path as a preparation for a completely new path
@@ -937,21 +937,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 		m_fAttackPositionSetTime = 0;
 		SetAttackPosition(vector.Zero);
 		SDRC_Log.Add("[SDRC_ChopperComp:ResetAttack] Attack position reset.", LogLevel.SPAM);
-	}
-
-	//------------------------------------------------------------------------------------------------	
-	/*!
-	Get altitude from helicopter down to first object below
-	*/
-	float GetAltitude()
-	{
-		//Start to look for a position below heli
-		float y = m_vOrigin[1] - SDRC_Misc.GetSurfaceYWithWater(m_vOrigin, true, GetOwner(), -0.1);
-		if (y < 0)
-		{
-			y = 0.001;	//Do not set to zero as this is used in some division calculations
-		}
-		return y;
 	}
 	
 	//------------------------------------------------------------------------------------------------	

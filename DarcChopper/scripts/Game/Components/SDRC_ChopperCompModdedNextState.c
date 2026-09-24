@@ -347,8 +347,7 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_BRAKE:
 			{
-				SetState(SDRC_EHeliState.BRAKE);
-				//NOTE: The final height will be set in SetFlightPointHeight
+				SetState(SDRC_EHeliState.BRAKE);			
 				m_bIsBraking = false;
 				break;
 			}
@@ -482,8 +481,14 @@ modded class SDRC_ChopperComp
 	*/	
 	override void SetBehaviour(SDRC_EHeliBehaviour behaviour, int time)
 	{
+		//If we're in evac state, this is considered to be the last state. Do not change anything.
+		if (GetBehaviour() == SDRC_EHeliBehaviour.EVAC_BEHAVIOUR)
+		{
+			return;
+		}
+		
 		m_eHeliBehaviour = behaviour;
-
+		
 		//Reset timer for NORMAL
 		if (behaviour == SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR)
 		{			
@@ -516,7 +521,8 @@ modded class SDRC_ChopperComp
 		if ( (m_fTimerBehaviour < 0) && (GetBehaviour() != SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) )
 		{
 			//Normal case
-			m_eHeliBehaviour = SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR;
+			SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
+//			m_eHeliBehaviour = SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR;
 			ResetAttack();
 			return;
 		}
@@ -643,7 +649,7 @@ modded class SDRC_ChopperComp
 					m_fSpeedBrakingMul = 1 + 4.5 * Math.Sin(var * var);		//The formula creates a semi exponentially growing value
 				}
 				
-				SDRC_Log.Add("[SDRC_ChopperComp:HandleBraking] m_fSpeedBrakingMul: " + m_fSpeedBrakingMul, LogLevel.DEBUG);
+				//SDRC_Log.Add("[SDRC_ChopperComp:HandleBraking] m_fSpeedBrakingMul: " + m_fSpeedBrakingMul, LogLevel.DEBUG);
 				
 				//m_fSpeedBrakingMul = 3.15;
 				

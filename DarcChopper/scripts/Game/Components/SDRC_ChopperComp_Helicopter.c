@@ -30,7 +30,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		//Rotor force multipliers
 		fRotorForceMulUp = 17.0;
 		iRotorForceNormal = 27;
-		iRotorForceCrash = iRotorForceNormal * 2.5;
+		iRotorForceCrash = iRotorForceNormal * 3.2;
 		iRotorForceBrake = iRotorForceNormal * 2;
 		
 		//Obstacle awareness
@@ -45,7 +45,7 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		rayLenEnemy = 1000;
 		timeSearchAndDestroy = 4*60;
 		enemyKnownTime = 2*60;
-		attackHeightMul = 0.5;
+		attackHeightMul = 0.7;
 
 		//Behaviour
 		behaviourCycleTime = 1;

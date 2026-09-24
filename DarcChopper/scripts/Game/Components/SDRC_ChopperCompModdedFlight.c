@@ -45,7 +45,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 			vector raisePos = vector.Zero;
 			raisePos[1] = (m_fFlyHeightLow + m_fFlyHeightHigh) / 2;
 			AddDestination(SDRC_EFlyWayPointType.WP_RAISE, raisePos, index: 0);
-			AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 5, index: 0);
+			float time = (raisePos[1] - m_vOrigin[1]) / 6;
+			AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, time, index: 0);
 			
 			//Add these in the beginning of the list. Needs to be added in reverse order.
 			#ifdef WORKBENCH
@@ -220,15 +221,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 			
 			switch (flyDestination.type)
 			{
-				case SDRC_EFlyWayPointType.WP_HOVER:
-				case SDRC_EFlyWayPointType.WP_PATROL:
-				case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
-				{
-					//Special case where the flight points are added in SetNextState()					
-					SetNextState(owner, flyDestination, false);					
-					destinationHandled = true;
-					break;
-				}		
 				case SDRC_EFlyWayPointType.WP_ATTACK:
 				{
 					SetAttackPosition(flyDestination.pt);
@@ -255,8 +247,18 @@ modded class SDRC_ChopperComp : ScriptComponent
 					//This is the last point in the attack sequence
 					direction = SDRC_Math.DirectionXZ(posForward, attackPos);
 					flyDestination.pt = attackPos + (direction.Normalized() * params.destinationForward);
-//					SDRC_DebugHelper.AddDebugSphere(flyDestination.pt, ARGB(32, 255, 255, 255), 7.0, m_sDid);					
+//					SDRC_DebugHelper.AddDebugSphere(flyDestination.pt, ARGB(32, 255, 255, 255), 7.0, m_sDid);
+					break;
 				}
+				case SDRC_EFlyWayPointType.WP_HOVER:
+				case SDRC_EFlyWayPointType.WP_PATROL:
+				case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
+				{
+					//Special case where the flight points are added in SetNextState()					
+					SetNextState(owner, flyDestination, false);					
+					destinationHandled = true;
+					break;
+				}		
 			}
 					
 			//If destination has already been set, skip the re-routing etc.
@@ -266,9 +268,15 @@ modded class SDRC_ChopperComp : ScriptComponent
 				{	
 					//Check if re-routing is needed
 					HandleRerouting(flyDestination.pt);
+					//Modify height ... but not for braking.
+					if (flyDestination.type != SDRC_EFlyWayPointType.WP_BRAKE)
+					{
+						flyDestination.pt[1] = SDRC_ChopperHelper.SetPointHeight(flyDestination.pt, m_fFlyHeightLow, m_fFlyHeightHigh); 
+						#ifdef WORKBENCH
+							SDRC_Log.Add("[SDRC_ChopperComp:CreateFlightPoints] Pointheight " + flyDestination.pt[1], LogLevel.DEBUG);
+						#endif
+					}
 					//Add the final point
-					flyDestination.pt[1] = SDRC_ChopperHelper.SetPointHeight(flyDestination.pt, m_fFlyHeightLow, m_fFlyHeightHigh); 
-					Print("Pointheight:" + flyDestination.pt[1]);
 					AddFlyPathPoint(flyDestination.pt, flyDestination.type, flyDestination.value);
 					//Set the state
 					SetNextState(owner, flyDestination, false);

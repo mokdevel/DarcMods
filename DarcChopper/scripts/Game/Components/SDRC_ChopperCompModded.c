@@ -313,9 +313,8 @@ modded class SDRC_ChopperComp
 				//If damage is high, evac!
 				if ( ( (m_eDamageLevel == SDRC_EHeliDamageLevel.MEDIUM) || (m_eDamageLevel == SDRC_EHeliDamageLevel.HEAVY) ) && (GetBehaviour() != SDRC_EHeliBehaviour.EVAC_BEHAVIOUR) )
 				{
-					SetBehaviour(SDRC_EHeliBehaviour.EVAC_BEHAVIOUR, -1);
 					AddDestination(SDRC_EFlyWayPointType.WP_RESET);
-					AddDestination(SDRC_EFlyWayPointType.WP_M_EVAC_TROOPS, SDRC_Misc.RandomizePos(owner.GetOrigin(), 600));
+					AddDestination(SDRC_EFlyWayPointType.WP_M_EVAC_TROOPS, SDRC_Misc.RandomizePos(owner.GetOrigin(), 600, snap: true));
 				}		
 				
 				if ( SCR_AIVehicleUsability.VehicleCanMove(owner) && (pilotCount > 0) )
@@ -472,8 +471,15 @@ modded class SDRC_ChopperComp
 				{
 					SDRC_Log.Add("[SDRC_ChopperComp:AddDestination] The distance (value) for WP_BRAKE is very short: " + value, LogLevel.WARNING);
 				}
-				
 				m_fBrakingDistance = value;
+
+				//Set the brake position height
+				vector surfacePos = SDRC_Misc.SetPosToSurface(destination);
+				
+				if (destination[1] < surfacePos[1])
+				{				
+					destination[1] = surfacePos[1] + destination[1];
+				}
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_RESET:
@@ -522,15 +528,17 @@ modded class SDRC_ChopperComp
 				{
 					//Safe landing position found
 					SDRC_DebugHelper.AddDebugPos(destination, ARGB(32, 64, 255, 64), SAFE_LANDING_SIZE, m_sDid, 10.0);				
-					AddDestination(SDRC_EFlyWayPointType.WP_M_LAND, destination);
+					AddDestination(SDRC_EFlyWayPointType.WP_M_LAND, destination + "0 3 0");
 					AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
 					AddDestination(SDRC_EFlyWayPointType.WP_STOP_ENGINE);
 					AddDestination(SDRC_EFlyWayPointType.WP_END);
+					SetBehaviour(SDRC_EHeliBehaviour.EVAC_BEHAVIOUR, -1);
 				}
 				else
 				{
 					//No safe landing position found
 					AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY);
+					SetBehaviour(SDRC_EHeliBehaviour.EVAC_BEHAVIOUR, -1);
 				}
 				//All things are already added
 				addDestinationPoint = false;

@@ -173,7 +173,7 @@ enum SDRC_EHeliBehaviour
 	UNKNOWN_BEHAVIOUR,
 	NORMAL_BEHAVIOUR,				//Normal state which changes to S&D if an enemy is seen.
 	SEARCH_AND_DESTROY_BEHAVIOUR,	//S&D looking for enemies. Returns to NORMAL if enemies are lost.
-	EVAC_BEHAVIOUR,					//Chopper is doing an evac or landing
+	EVAC_BEHAVIOUR,					//Chopper is doing an evac or landing. This is a FINAL state and will not changed anymore. 
 	PASSIVE_BEHAVIOUR,				//Just flying around
 }
 
