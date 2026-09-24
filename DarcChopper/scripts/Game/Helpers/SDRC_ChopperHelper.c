@@ -45,7 +45,7 @@ class SDRC_ChopperHelper
 	/*!	
 	Tries to find a safe landing spot
 	*/	
-	static bool GetSafeLandingPosition(out vector landingSpot, float emptySize = 40, int tries = 3, int searchSize = 100)
+	static bool GetSafeLandingPosition(out vector landingSpot, float emptySize = 40, int tries = 6, int searchSize = 100)
 	{
 		bool foundLandingSpot = false;
 
@@ -60,6 +60,22 @@ class SDRC_ChopperHelper
 		
 		return foundLandingSpot;
 	}
+	
+	//------------------------------------------------------------------------------------------------	
+	/*!
+	Get altitude from helicopter down to first object below
+	*/
+	static float GetAltitude(IEntity owner)
+	{
+		//Start to look for a position below heli
+		vector origin = owner.GetOrigin();
+		float y = origin[1] - SDRC_Misc.GetSurfaceYWithWater(origin, true, owner, -0.1);
+		if (y < 0)
+		{
+			y = 0.001;	//Do not set to zero as this is used in some division calculations
+		}
+		return y;
+	}	
 	
 	//------------------------------------------------------------------------------------------------
 	// Waypoint stuff
@@ -220,9 +236,9 @@ class SDRC_ChopperHelper
 			switch (flyPathPoint.type)
 			{
 				case SDRC_EFlyWayPointType.WP_HOVER_UP: //Do nothing .. 
+				case SDRC_EFlyWayPointType.WP_BRAKE: 	//Do nothing .. height has been set in AddDestinations()
 					break;
 				case SDRC_EFlyWayPointType.WP_LAND:
-				case SDRC_EFlyWayPointType.WP_BRAKE:
 				case SDRC_EFlyWayPointType.WP_CRASH:
 				case SDRC_EFlyWayPointType.WP_ATTACK:
 				{
@@ -380,12 +396,11 @@ class SDRC_ChopperHelper
 					lowestHeight = SDRC_Misc.GetSurfaceYWithWater(chopperComp.m_vAttackPosition, true, owner) +  chopperComp.m_fFlyHeightLow * chopperComp.params.attackHeightMul;
 					
 					int attackPoint = 0;
-//					SDRC_Spline3D.GetDistanceFromSpline(chopperComp.m_vSplinePoints, chopperComp.m_vAttackPosition, attackPoint, true);
 					SDRC_Spline3D.GetDistanceFromSplineEndToStart(chopperComp.m_vSplinePoints, chopperComp.m_vAttackPosition, attackPoint, true);
-					SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vSplinePoints[attackPoint], ARGB(32, 255, 255, 255), 4.0, chopperComp.m_sDid);
+					SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vSplinePoints[attackPoint], ARGB(32, 255, 0, 0), 2.0, chopperComp.m_sDid + "att");
 					
 					//Create an attack sine drop before the attackPoint
-					int pt_from = attackPoint * 0.8;
+					int pt_from = attackPoint * 0.7;
 					if (pt_from < 0)
 					{
 						pt_from = 0;
@@ -393,7 +408,7 @@ class SDRC_ChopperHelper
 					int pt_to = attackPoint * 1.1;
 					if (pt_to > chopperComp.m_vSplinePoints.Count() - 2)
 					{
-						pt_from = chopperComp.m_vSplinePoints.Count() - 1;
+						pt_to = chopperComp.m_vSplinePoints.Count() - 1;
 					}
 										
 					for (int i = pt_from; i < pt_to; i++)
@@ -404,7 +419,7 @@ class SDRC_ChopperHelper
 						vector pt = chopperComp.m_vSplinePoints[i];
 						pt[1] = y;
 						chopperComp.m_vSplinePoints[i] = pt;
-						//SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vSplinePoints[i], ARGB(32, 255, 0, 0), 4.0, chopperComp.m_sDid);
+						//SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vSplinePoints[i], ARGB(32, 255, 0, 0), 4.0, chopperComp.m_sDid + "att");
 					}
 					//smoothCount = pt_to;
 					isSmoothingNeeded = false;
@@ -477,8 +492,10 @@ class SDRC_ChopperHelper
 				break;
 			}
 		}
-		
-		//#define IGNORE_OBSTACLES
+
+		#ifdef WORKBENCH		
+			//#define IGNORE_OBSTACLES
+		#endif
 		bool obstacles = false;
 		
 		#ifndef IGNORE_OBSTACLES		
@@ -622,8 +639,8 @@ class SDRC_ChopperHelper
 		vector v1 = chopperComp.m_vSplinePoints[idxTo];
 		v1[1] = lowestHeight;
 
-		SDRC_DebugHelper.AddDebugSphere(v0, COLOR_BLUE, 2.0, chopperComp.m_sDid);
-		SDRC_DebugHelper.AddDebugSphere(v1, COLOR_BLUE, 2.0, chopperComp.m_sDid);				
+		//SDRC_DebugHelper.AddDebugSphere(v0, COLOR_BLUE, 2.0, chopperComp.m_sDid);
+		//SDRC_DebugHelper.AddDebugSphere(v1, COLOR_BLUE, 2.0, chopperComp.m_sDid);				
 				
 		//Count a braking (bell) curve
 		float p0 = v0[1];
