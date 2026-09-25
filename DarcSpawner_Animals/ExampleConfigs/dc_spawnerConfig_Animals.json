@@ -1,5 +1,5 @@
 {
-    "jsonVersion": 5,
+    "jsonVersion": 6,
     "version": 1,
     "author": "darc",
     "comment": "Animal spawner using French Animals mod. ",
@@ -28,6 +28,7 @@
         13,
         14,
         14,
+        15,
         5,
         6,
         6,
@@ -388,6 +389,30 @@
             "positions": [],
             "entities": [
                 "{11630E7955BEF10C}PrefabsEditable/Animals/E_Cow.et\t"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 15: Chickens",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64,
+                62,
+                60
+            ],
+            "positions": [],
+            "entities": [
+                "{EF861077F4847DD6}PrefabsEditable/Animals_Groups/E_Chicken_Group.et\t"
             ],
             "spawnRndRadius": 200,
             "spawnOnRoad": false,

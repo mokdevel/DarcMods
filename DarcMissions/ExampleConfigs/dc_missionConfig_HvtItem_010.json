@@ -1,5 +1,5 @@
 {
-    "jsonVersion": 2,
+    "jsonVersion": 3,
     "missionType": 9,
     "version": 1,
     "author": "darc",
@@ -10,18 +10,16 @@
     "showMessage": true,
     "disableArsenal": false,
     "missionList": [
-        10,
-        11,
-        12
+        0,
+        1,
+        2
     ],
-    "missionFiles": [
-        "dc_missionConfig_HvtItem_010.json"
-    ],
+    "missionFiles": [],
     "subMissions": [
         {
             "general": {
-                "subIdx": 10,
-                "comment": "index 10: Destroy silo",
+                "subIdx": 0,
+                "comment": "index 0: Destroy silo",
                 "pos": [
                     [
                         0.0,
@@ -339,12 +337,14 @@
                 }
             ],
             "camp": null,
-            "targetIdx": 5
+            "targetIdx": [
+                5
+            ]
         },
         {
             "general": {
-                "subIdx": 11,
-                "comment": "index 11: Destroy kitchen",
+                "subIdx": 1,
+                "comment": "index 1: Destroy kitchen",
                 "pos": [
                     [
                         0.0,
@@ -789,12 +789,14 @@
                 }
             ],
             "camp": null,
-            "targetIdx": 12
+            "targetIdx": [
+                12
+            ]
         },
         {
             "general": {
-                "subIdx": 12,
-                "comment": "index 12: Destroy transformer",
+                "subIdx": 2,
+                "comment": "index 2: Destroy transformer",
                 "pos": [
                     [
                         0.0,
@@ -981,7 +983,9 @@
                 }
             ],
             "camp": null,
-            "targetIdx": 5
+            "targetIdx": [
+                5
+            ]
         }
     ]
 }

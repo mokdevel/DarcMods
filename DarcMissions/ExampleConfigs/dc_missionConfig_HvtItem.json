@@ -1,5 +1,5 @@
 {
-    "jsonVersion": 2,
+    "jsonVersion": 3,
     "missionType": 9,
     "version": 1,
     "author": "darc",
@@ -14,9 +14,7 @@
         1,
         2
     ],
-    "missionFiles": [
-        "dc_missionConfig_HvtItem_010.json"
-    ],
+    "missionFiles": [],
     "subMissions": [
         {
             "general": {
@@ -225,7 +223,9 @@
                 }
             ],
             "camp": null,
-            "targetIdx": 1
+            "targetIdx": [
+                1
+            ]
         },
         {
             "general": {
@@ -425,7 +425,9 @@
                 }
             ],
             "camp": null,
-            "targetIdx": 1
+            "targetIdx": [
+                1
+            ]
         },
         {
             "general": {
@@ -779,7 +781,9 @@
                 }
             ],
             "camp": null,
-            "targetIdx": 9
+            "targetIdx": [
+                9
+            ]
         }
     ]
 }

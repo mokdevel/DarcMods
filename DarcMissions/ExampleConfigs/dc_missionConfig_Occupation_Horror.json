@@ -172,7 +172,9 @@
                     -1
                 ],
                 "xp": 0,
-                "modList": []
+                "modList": [
+                    "$Zombies:"
+                ]
             },
             "ai": {
                 "count": [
