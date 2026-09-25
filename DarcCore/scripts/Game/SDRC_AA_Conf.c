@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-#define SDRC_RELEASE
+//#define SDRC_RELEASE
 
 #ifdef SDRC_RELEASE
 	const bool SHOW_DEBUG_BOOL = false;		//Controls if debug visuals are to be shown. Disable for DarcMissions release.
@@ -15,7 +15,6 @@ Stupid file to handle a few common variables accross multiple mods
 
 //#define DEBUG_DO_NOT_CLEAR		//Leave old visual debug lines etc on restart
 //#define NEW_VERSION_WIP			//New functionality (..that affects jsons)
-//#define EXPERIMENTAL
 
 sealed class SDRC_Conf
 {
@@ -25,13 +24,13 @@ sealed class SDRC_Conf
 	static string subDirPath = "";							//Updated in SDRC_Core_BaseGameMode
 	static bool coreHasStarted = false;
 	static bool coreInitReady = false;
-	const int MISSION_RUN_DELAY = 5000;						//Time between INIT and SPAWN states.
-	const int PERSISTENCE_DELAY = 6000;						//Time to delay the persistence setting for spawned entities. 
-	const int DESPAWN_ENTITY_USED_FOR_SIZE_DELAY = 1000;	//Time to delay the deletion of an entity that was used for defining the size or weapon used for finding the mag.
-	const int AI_SETTING_DELAY = 20000;						//Delay to give AI time to set values.
-	const int AI_COUNTING_DELAY = 30000;					//Delay before AI count is calculated.
+	const int MISSION_RUN_DELAY = 5000;						//(milliseconds) Time between INIT and SPAWN states.
+	const int PERSISTENCE_DELAY = 6000;						//(milliseconds) Time to delay the persistence setting for spawned entities. 
+	const int DESPAWN_ENTITY_USED_FOR_SIZE_DELAY = 1000;	//(milliseconds) Time to delay the deletion of an entity that was used for defining the size or weapon used for finding the mag.
+	const int AI_SETTING_DELAY = 20;						//(seconds) Delay to give AI time to set values.
+	const int AI_COUNTING_DELAY = 2;//10;						//(seconds) Delay before AI count is calculated.
 	const int POSITION_RANDOMIZATION = 150;					//Randomization for position. 
-	const int SPAWN_CYCLE_DELAY = 2000;						//Time used between AI/item spawns for example for Roadblock items
+	const int SPAWN_CYCLE_DELAY = 2000;						//(milliseconds) Time used between AI/item spawns for example for Roadblock items
 	static ref array<string> errorList = {};				//Errors reported and spamchatted to players 
 	
 	//TBD: const int MISSION_END_TIME = 5000;				//Time to set for mission cycle when mission is set to end.
@@ -39,6 +38,7 @@ sealed class SDRC_Conf
 //Release options	
 #ifdef SDRC_RELEASE
 	const bool RELEASE = true;							//Define for release compilation to workshop
+	const bool EXPERIMENTAL = false;
 	const string DEFAULT_DIR = "default";
 	const bool SDRC_ENABLE_DARCSPAWNER = true;			//Enable the spawner mod during development
 	const bool SDRC_ENABLE_DARCMISSIONS = true;			//Enable the missions mod during development
@@ -60,6 +60,7 @@ sealed class SDRC_Conf
 //Development time options	
 #ifndef SDRC_RELEASE
 	const bool RELEASE = false;
+	const bool EXPERIMENTAL = true;
 	const string DEFAULT_DIR = "debug";
 	const bool SDRC_ENABLE_DARCSPAWNER = false;
 	const bool SDRC_ENABLE_DARCMISSIONS	= true;

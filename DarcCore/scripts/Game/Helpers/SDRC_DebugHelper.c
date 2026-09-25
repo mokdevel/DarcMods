@@ -109,31 +109,33 @@ sealed class SDRC_DebugHelper
 	*/
 	static void OnFrame(IEntity owner)
 	{	
-		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_WAYPOINTS))
-		{
-			SDRC_DebugHelper.DrawWaypointShapes();
-			SDRC_DebugHelper.DrawWaypointLines();
-		}
-		
-		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
-		{		
-			SDRC_DebugHelper.DrawMarks();
-		}
-		
-		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
-		{		
-			SDRC_DebugHelper.DrawSpheres();
-		}
-		
-		if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_LINES))
-		{		
-			SDRC_DebugHelper.DrawLines();
-		}
-		
-		if (m_DebugSlots)
-		{			
-			SDRC_DebugHelper.DrawSlots();	
-		}		
+		#ifdef WORKBENCH
+			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_WAYPOINTS))
+			{
+				SDRC_DebugHelper.DrawWaypointShapes();
+				SDRC_DebugHelper.DrawWaypointLines();
+			}
+			
+			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
+			{		
+				SDRC_DebugHelper.DrawMarks();
+			}
+			
+			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
+			{		
+				SDRC_DebugHelper.DrawSpheres();
+			}
+			
+			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_LINES))
+			{		
+				SDRC_DebugHelper.DrawLines();
+			}
+			
+			if (m_DebugSlots)
+			{			
+				SDRC_DebugHelper.DrawSlots();	
+			}
+		#endif
 	}
 	
 	//------------------------------------------------------------------------------------------------

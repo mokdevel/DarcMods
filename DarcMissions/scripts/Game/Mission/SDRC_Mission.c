@@ -485,7 +485,7 @@ class SDRC_Mission : Managed
 		if (state == SDRC_EMissionState.ACTIVE)
 		{			
 			//Things to set when mission goes to active state
-			GetGame().GetCallqueue().CallLater(GetAICountActiveDelayed, SDRC_Conf.AI_COUNTING_DELAY);		//Do the counting after a while. AIs needs to be spawned.
+			GetGame().GetCallqueue().CallLater(GetAICountActiveDelayed, SDRC_Conf.AI_COUNTING_DELAY * 1000);		//Do the counting after a while. AIs needs to be spawned.
 			m_iAIKillPercentageRandom = SDRC_Misc.RandomInt(30, 99);
 			ShowMarker();
 		}
@@ -562,7 +562,9 @@ class SDRC_Mission : Managed
 			m_iObserverId = DC_OBSERVER_ID_PREFIX + m_iObserverCounter;
 			m_iObserverCounter++;
 			observers.InsertObserverSP(m_iObserverId, pos[0], pos[2], entity);
-			//SDRC_Log.Add("[SDRC_Mission:SetObserver] " +  GetId() + " : Key: " + m_iObserverId + " to: " + entity, LogLevel.DEBUG);
+			#ifdef WORKBENCH			
+				SDRC_Log.Add("[SDRC_Mission:SetObserver] " +  GetId() + " : Key: " + m_iObserverId + " to: " + entity, LogLevel.DEBUG);
+			#endif
 		}
 	}
 
@@ -914,7 +916,9 @@ class SDRC_Mission : Managed
 		int currentTime = (System.GetTickCount() / 1000);
 
 		string missionType = SCR_Enum.GetEnumName(SDRC_EMissionType, GetType());
-		//SDRC_Log.Add("[SDRC_Mission:IsActive] " + GetId() + " / " + missionType + " : AI count: " + GetAICountActive(), LogLevel.DEBUG);
+		#ifdef WORKBENCH
+			SDRC_Log.Add("[SDRC_Mission:IsActive] " + GetId() + " / " + missionType + " : AI count: " + GetAICountActive(), LogLevel.DEBUG);
+		#endif
 		
 		//Are there players still nearby, reset the timer
 		if (m_iActiveDistance > -1)
@@ -1264,14 +1268,22 @@ class SDRC_Mission : Managed
 	int GetAICountActive()
 	{
 		int count = 0;
+		int countDormant = 0;
 		
 		foreach (SCR_AIGroup group: m_Groups)
 		{		
 			if (group)
 			{
-				count = count + group.GetAgentsCount();
+				if (group.IsDormant())
+				{
+					countDormant = group.GetDormantAliveCount();
+				}				
+				
+				count = count + group.GetAgentsCount() + countDormant;				
 			}
 		}
+		
+		SDRC_Log.Add("[SDRC_Mission:GetAICountActive] " + GetId() + " : " + count + " (" + countDormant + ")", LogLevel.DEBUG);
 		
 		return count;
 	}	
@@ -1287,13 +1299,15 @@ class SDRC_Mission : Managed
 			m_iAICountOriginal = -1;
 			if (m_iAICountOriginalTries < 4)
 			{
-				GetGame().GetCallqueue().CallLater(GetAICountActiveDelayed, SDRC_Conf.AI_COUNTING_DELAY);		//Do the counting after a while. AIs needs to be spawned.
-				SDRC_Log.Add("[SDRC_Mission:GetAICountDelayed] " + GetId() + " : No AI counted. Trying again.", LogLevel.DEBUG);
+				GetGame().GetCallqueue().CallLater(GetAICountActiveDelayed, SDRC_Conf.AI_COUNTING_DELAY * 1000);		//Do the counting after a while. AIs needs to be spawned.
+				#ifdef WORKBENCH
+					SDRC_Log.Add("[SDRC_Mission:GetAICountDelayed] " + GetId() + " : No AI counted. Trying again.", LogLevel.DEBUG);
+				#endif
 			}
 			m_iAICountOriginalTries++;
 		}
 		
-		if (m_iAICountOriginal > 0)
+		if (m_iAICountOriginal > -1)
 		{		
 			SDRC_Log.Add("[SDRC_Mission:GetAICountDelayed] " + GetId() + " : Spawned " + m_iAICountOriginal + " AIs.", LogLevel.DEBUG);
 		}

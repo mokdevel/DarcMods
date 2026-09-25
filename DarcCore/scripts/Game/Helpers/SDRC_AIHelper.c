@@ -96,6 +96,11 @@ sealed class SDRC_AIHelper
 				{
 					group.SetNewLeader(aiAgent);
 					group.AddAgent(aiAgent);
+					
+					if (SDRC_Conf.EXPERIMENTAL)
+					{
+						group.SetDormantCounts(1,0);
+					}				
 				}
 					
 				SDRC_Log.Add("[SDRC_AIHelper:SpawnGroup] Spawned single unit (" + name + ") to " + faction + " faction.", LogLevel.DEBUG);
@@ -111,6 +116,11 @@ sealed class SDRC_AIHelper
 				params.Transform[3] = spawnPosition;
 				
 				group = SCR_AIGroup.Cast(SDRC_SpawnHelper.SpawnEntityPrefabPersistence(resource, null, params));
+				
+				if (SDRC_Conf.EXPERIMENTAL)
+				{
+					group.SetDormantCounts(10,0);
+				}
 			}
 		}	
 		
@@ -201,7 +211,7 @@ sealed class SDRC_AIHelper
 	*/
 	static void SetAISettings(AIAgent aiAgent, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
-		GetGame().GetCallqueue().CallLater(SetAISettingsDelayed, SDRC_Conf.AI_SETTING_DELAY, false, aiAgent, skill, perceptionFactor);
+		GetGame().GetCallqueue().CallLater(SetAISettingsDelayed, SDRC_Conf.AI_SETTING_DELAY * 1000, false, aiAgent, skill, perceptionFactor);
 	}
 		
 	static void SetAISettingsDelayed(AIAgent aiAgent, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
@@ -237,7 +247,7 @@ sealed class SDRC_AIHelper
 	*/
 	static void SetAIGroupSettings(SCR_AIGroup group, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
 	{
-		GetGame().GetCallqueue().CallLater(SetAIGroupSettingsDelayed, SDRC_Conf.AI_SETTING_DELAY, false, group, skill, perceptionFactor);
+		GetGame().GetCallqueue().CallLater(SetAIGroupSettingsDelayed, SDRC_Conf.AI_SETTING_DELAY * 1000, false, group, skill, perceptionFactor);
 	}
 		
 	static void SetAIGroupSettingsDelayed(SCR_AIGroup group, EAISkill skill = EAISkill.REGULAR, float perceptionFactor = 1.0)
@@ -263,7 +273,7 @@ sealed class SDRC_AIHelper
 	*/
 	static void SetAIGroupMovementType(SCR_AIGroup group, EMovementType movementType)
 	{
-		GetGame().GetCallqueue().CallLater(SetAIGroupMovementTypeDelayed, SDRC_Conf.AI_SETTING_DELAY, false, group, movementType);
+		GetGame().GetCallqueue().CallLater(SetAIGroupMovementTypeDelayed, SDRC_Conf.AI_SETTING_DELAY * 1000, false, group, movementType);
 	}
 	
 	static void SetAIGroupMovementTypeDelayed(SCR_AIGroup group, EMovementType movementType)
@@ -298,7 +308,7 @@ sealed class SDRC_AIHelper
 	*/
 	static void SetAIGroupEnable(SCR_AIGroup group, bool enable = true)
 	{
-		GetGame().GetCallqueue().CallLater(SetAIGroupEnableDelayed, SDRC_Conf.AI_SETTING_DELAY, false, group, enable);
+		GetGame().GetCallqueue().CallLater(SetAIGroupEnableDelayed, SDRC_Conf.AI_SETTING_DELAY * 1000, false, group, enable);
 	}
 	
 	static void SetAIGroupEnableDelayed(SCR_AIGroup group, bool enable)
@@ -378,7 +388,10 @@ sealed class SDRC_AIHelper
 				group = agent.GetParentGroup();
 				if (group != null)
 				{
-					groups.Insert(group);
+					if (!groups.Contains(group))
+					{					
+						groups.Insert(group);
+					}
 				}
 			}
 			//Print(string.Format("[FindAllGroups] : %1", groups.Count()), LogLevel.NORMAL);				

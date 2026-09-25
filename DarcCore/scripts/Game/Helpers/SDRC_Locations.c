@@ -360,10 +360,10 @@ sealed class SDRC_Locations
 			
 			string dispName = WidgetManager.Translate(mapItem.GetDisplayName());			
 			
-		/*#ifdef EXPERIMENTAL			
+		/*#ifdef SDRC_EXPERIMENTAL			
 			string dispName = WidgetManager.Translate(mapItem.GetDisplayName());
 		#endif
-		#ifndef EXPERIMENTAL						
+		#ifndef SDRC_EXPERIMENTAL						
 			string dispName = SCR_StringHelper.Translate(mapItem.GetDisplayName());
 		#endif			*/
 			
