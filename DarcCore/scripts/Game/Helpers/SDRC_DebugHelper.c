@@ -62,20 +62,22 @@ sealed class SDRC_DebugHelper
 	*/
 	static void Setup()
 	{		
-		#ifndef DEBUG_DO_NOT_CLEAR
-			Clear();
+		#ifdef WORKBENCH
+			#ifndef DEBUG_DO_NOT_CLEAR
+				Clear();
+			#endif
+			
+			// Some init script
+			const string categoryName = "DarcDebug";
+			DiagMenu.RegisterMenu(SCR_DebugMenuID.MODMENU , categoryName, categoryName);
+			{
+			    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_WAYPOINTS, "", "Show waypoints", categoryName);
+			    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_MARKS, "", "Show markers", categoryName);
+			    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_SPHERES, "", "Show spheres", categoryName);
+			    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_LINES, "", "Show lines", categoryName);
+			    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_INFO, "", "Show info", categoryName);
+			}
 		#endif
-		
-		// Some init script		
-		const string categoryName = "DarcDebug";
-		DiagMenu.RegisterMenu(SCR_DebugMenuID.MODMENU , categoryName, categoryName);
-		{
-		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_WAYPOINTS, "", "Show waypoints", categoryName);
-		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_MARKS, "", "Show markers", categoryName);
-		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_SPHERES, "", "Show spheres", categoryName);
-		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_LINES, "", "Show lines", categoryName);
-		    DiagMenu.RegisterBool(SCR_DebugMenuID.MODMENU_INFO, "", "Show info", categoryName);
-		}
 	}		
 
 	//------------------------------------------------------------------------------------------------

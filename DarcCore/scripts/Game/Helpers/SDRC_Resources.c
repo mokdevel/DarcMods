@@ -162,7 +162,7 @@ sealed class SDRC_Resources
 		BaseContainer baseContainer = res.GetResource().ToBaseContainer();
 		if (!baseContainer)
 		{
-			return null;
+			return vehicleType;
 		}
 		
 		baseContainer.Get("m_eVehicleType", vehicleType);

@@ -376,6 +376,7 @@ sealed class SDRC_Spline3D
 	};		
 	
 	//------------------------------------------------------------------------------------------------
+	/*
 	static void TestSplineAdd()
 	{
 		static int idx = 0;
@@ -406,4 +407,5 @@ sealed class SDRC_Spline3D
 		}
 	#endif
 	}	
+	*/
 }
