@@ -603,9 +603,15 @@ class SDRC_Mission : Managed
 		return m_General.posName;
 	}
 
-	void SetPosName(string posname)
+	void SetPosName(string posName)
 	{
-		m_General.posName = posname;
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode) {return;}
+		if (!baseGameMode.m_SDRC_Core){return;}
+		
+		posName = baseGameMode.m_SDRC_Core.m_LocationsHelper.CreateName(GetPos(), posName);
+		
+		m_General.posName = posName;
 	}
 
 	//------------------------------------------------------------------------------------------------	
@@ -1249,10 +1255,14 @@ class SDRC_Mission : Managed
 	//Fix the string with proper information - like location, destination, ..	
 	private string FixString(string info)
 	{
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode) {return info;}
+		if (!baseGameMode.m_SDRC_Core){return info;}
+		
 		string destinationName = "";
 		if (m_General.pos[1] != "0 0 0")
 		{
-			destinationName = SDRC_Locations.CreateName(m_General.pos[1], "any");			
+			destinationName = baseGameMode.m_SDRC_Core.m_LocationsHelper.CreateName(m_General.pos[1], "any");			
 		}
 		
 		info = SDRC_MissionHelper.CreateInfo(info, GetPosName(), destinationName, GetDifficulty());

@@ -178,13 +178,17 @@ class SDRC_MissionPosHelper
 	{	
 		//Find a random location
 		vector pos = "0 0 0";
-		
+
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode) {return pos;}
+		if (!baseGameMode.m_SDRC_Core){return pos;}
+				
 		SDRC_Location location = null;
 		array<SDRC_Location> locations = {};
 		
 		if ( (locationTypes) && (!locationTypes.IsEmpty()) )
 		{
-			SDRC_Locations.GetLocationsCached(locations, locationTypes);
+			baseGameMode.m_SDRC_Core.m_LocationsHelper.GetLocationsCached(locations, locationTypes);
 		}
 
 		//If no locations define, we select a random position
@@ -198,11 +202,7 @@ class SDRC_MissionPosHelper
 		{				
 			if (locations.IsEmpty())
 			{
-				SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
-				if (baseGameMode)
-				{
-					pos = SDRC_MissionPosHelper.FindMissionPosWithDistances(baseGameMode.missionFrame.m_Config.minDistanceToMission, baseGameMode.missionFrame.m_Config.minDistanceToPlayer);
-				}
+				pos = SDRC_MissionPosHelper.FindMissionPosWithDistances(baseGameMode.missionFrame.m_Config.minDistanceToMission, baseGameMode.missionFrame.m_Config.minDistanceToPlayer);
 			}
 			else
 			{	

@@ -50,7 +50,11 @@ class SDRC_MissionFrame
 		
 		SDRC_Log.Add("[SDRC_MissionFrame] Starting SDRC_MissionFrame", LogLevel.NORMAL);
 		s_Instance = this;
-				
+
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+		if (!baseGameMode) {SDRC_Log.Add("[SDRC_MissionFrame] baseGameMode not found", LogLevel.ERROR); return;}
+		if (!baseGameMode.m_SDRC_Core) {SDRC_Log.Add("[SDRC_MissionFrame] m_SDRC_Core not found", LogLevel.ERROR); return;}		
+						
 		m_sWorldName = SDRC_Misc.GetWorldName(true);
 
 		//Load configuration from file		
@@ -81,8 +85,8 @@ class SDRC_MissionFrame
 		SDRC_Log.Add("[SDRC_MissionFrame] -------- General information --------", LogLevel.NORMAL);
 		//Checking the enemies found
 		SDRC_Log.Add("[SDRC_MissionFrame] Enemy factions: " + m_Config.enemyFactions, LogLevel.NORMAL);
-		SDRC_EnemyHelper.SetEnemyFactions(m_Config.enemyFactions);
-		SDRC_Log.Add("[SDRC_MissionFrame] Fallback faction: " + SDRC_EnemyHelper.GetDefaultEnemyFaction(), LogLevel.NORMAL);
+		baseGameMode.m_SDRC_Core.m_EnemyListHelper.SetEnemyFactions(m_Config.enemyFactions);
+		SDRC_Log.Add("[SDRC_MissionFrame] Fallback faction: " + baseGameMode.m_SDRC_Core.m_EnemyListHelper.GetDefaultEnemyFaction(), LogLevel.NORMAL);
 
 		//Count amount of dynamic and static missions
 		m_iMissionCountDynamicMax = SDRC_MissionHelper.GetMissionCountForWorld(m_Config.missionDynamic.count, m_Config.missionDynamic.countMul);

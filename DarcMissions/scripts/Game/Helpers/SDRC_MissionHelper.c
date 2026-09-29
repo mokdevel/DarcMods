@@ -15,13 +15,18 @@ class SDRC_MissionHelper
 	static IEntity FindMissionBuilding(vector pos, array<string>buildingFilter, float radius)
 	{
 		array<IEntity>buildings = {};
-		SDRC_BuildingHelper.FindBuildings(buildings, buildingFilter, pos, radius);
+		
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode) {return null;}
+		if (!baseGameMode.m_SDRC_Core){return null;}
+		
+		baseGameMode.m_SDRC_Core.m_BuildingHelper.FindBuildings(buildings, buildingFilter, pos, radius);
 
 		IEntity building = null;
 		
 		if (buildings.IsEmpty())
 		{
-			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionBuilding] Could not find suitable building near " + SDRC_Locations.CreateName(pos, "any") + " " + pos, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_MissionHelper:FindMissionBuilding] Could not find suitable building near " + baseGameMode.m_SDRC_Core.m_LocationsHelper.CreateName(pos, "any") + " " + pos, LogLevel.DEBUG);
 			return null;
 		}
 		
@@ -105,7 +110,7 @@ class SDRC_MissionHelper
 			}						
 		}
 		
-		SDRC_LootHelper.SpawnItemsToStorage(storage, itemNames, itemChance);
+		SDRC_StorageHelper.SpawnItemsToStorage(storage, itemNames, itemChance);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -176,7 +181,14 @@ class SDRC_MissionHelper
 		//Spawn vehicle
 		if (vehicleName[0] != "{")
 		{
-			vehicleName = SDRC_VehicleListHelper.FindVehicleItem(vehicleName, mission.GetFaction());
+			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+			if (baseGameMode)
+			{
+				if (baseGameMode.m_SDRC_Core)
+				{			
+					vehicleName = baseGameMode.m_SDRC_Core.m_VehicleListHelper.FindVehicleItem(vehicleName, mission.GetFaction());
+				}
+			}
 		}				
 		
 		ref IEntity vehicle = null;

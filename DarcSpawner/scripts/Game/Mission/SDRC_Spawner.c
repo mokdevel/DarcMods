@@ -197,7 +197,14 @@ class SDRC_Spawner
 		//Find from location types
 		if (!spawnSet.locationTypes.IsEmpty())
 		{
-			SDRC_Locations.GetLocationsCached(locations, spawnSet.locationTypes);
+			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+			if (baseGameMode) 
+			{
+				if (baseGameMode.m_SDRC_Core)
+				{		
+					baseGameMode.m_SDRC_Core.m_LocationsHelper.GetLocationsCached(locations, spawnSet.locationTypes);
+				}
+			}
 			
 			if (locations.IsEmpty())
 			{
@@ -205,7 +212,6 @@ class SDRC_Spawner
 				return false;				
 			}
 			
-			//SDRC_Locations.GetLocations(locations, spawnSet.locationTypes);
 			location = locations.GetRandomElement();
 			pos = location.pos;
 			SDRC_Log.Add("[SDRC_Spawner:Spawn] Chosen location: " + location.displayName + " (" + pos + ")", LogLevel.DEBUG);
@@ -308,7 +314,7 @@ class SDRC_Spawner
 				{
 					//Set the spawned entity as the target.
 					spawnSet.loot.box = entity;
-					SDRC_LootHelper.SpawnItemsToStorage(entity, spawnSet.loot.items, spawnSet.loot.itemChance);
+					SDRC_StorageHelper.SpawnItemsToStorage(entity, spawnSet.loot.items, spawnSet.loot.itemChance);
 				}
 					
 				if (spawnSet.showMarker)
