@@ -94,7 +94,11 @@ class SDRC_JsonApi2 : JsonApiStruct
 				SDRC_Log.Add("[SDRC_JsonApi2:Load] Please delete the file and restart to receive an updated one: " + GetFileName(), LogLevel.ERROR);
 				SDRC_Log.Add("[SDRC_JsonApi2:Load] ------------------", LogLevel.ERROR);
 				
-				SDRC_Conf.errorList.Insert(GetFileName() + " has been updated. Delete to receive an updated one."); 
+				SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+				if (!baseGameMode)
+				{
+					baseGameMode.m_SDRC_Core.AddError(GetFileName() + " has been updated. Delete to receive an updated one."); 
+				}
 				
 				return false;
 			}

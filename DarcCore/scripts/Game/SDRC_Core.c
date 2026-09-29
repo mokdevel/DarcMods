@@ -47,6 +47,8 @@ class SDRC_Core
 	
 	private ref array<string> m_sAddonList = {};
 	private ref array<string> m_sFactionList = {};
+	
+	private ref array<string> errorList = {};				//Errors reported and spamchatted to players 	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Core()
 	{
@@ -295,9 +297,13 @@ class SDRC_Core
 			case SDRC_ECoreScanState.READY:
 				allDone = true;
 			
+				//Setup the error reporter
+				GetGame().GetCallqueue().CallLater(ErrorReporter, 10000, true);					
+			
 				//Everything related to core start up has been done! 
 				SDRC_Conf.coreInitReady = true;
 				SDRC_Log.Add("[SDRC_Core] Core init ready.", LogLevel.NORMAL);
+		
 				m_bCoreStarted = true;
 				break;
 		}
@@ -344,5 +350,26 @@ class SDRC_Core
 		}
 
 		SDRC_Log.Add("[SDRC_Core:FillAreaCache] Done!", LogLevel.DEBUG);
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	void AddError(string errorMsg)
+	{
+		errorList.Insert(errorMsg);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	private void ErrorReporter()
+	{
+		if (!errorList.IsEmpty())
+		{
+			SDRC_Log.Add("[SDRC DarcMods:ErrorReporter] ------------------", LogLevel.ERROR);
+			SDRC_Log.Add("[SDRC DarcMods:ErrorReporter] Errors found:", LogLevel.ERROR);
+			foreach (string errorStr : errorList)
+			{
+				SDRC_Log.Add("[SDRC DarcMods:ErrorReporter] - " + errorStr, LogLevel.ERROR);
+			}
+			SDRC_Log.Add("[SDRC DarcMods:ErrorReporter] ------------------", LogLevel.ERROR);
+		}
 	}	
 }

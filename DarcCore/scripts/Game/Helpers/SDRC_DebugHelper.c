@@ -43,13 +43,14 @@ class SDRC_DebugHelperLine : Managed
 sealed class SDRC_DebugHelper
 {
 	static bool m_DebugSlots = true;	//TBD: Slots functionality is very untested. Should be under MODMENU
+	#ifdef WORKBENCH
+		static ref array<ref SDRC_DebugHelperPos> m_Pos = {};
+		static ref array<ref SDRC_DebugHelperPos> m_Sphere = {};
+		static ref array<ref SDRC_DebugHelperLine> m_Line = {};
+		static ref array<IEntity> m_Slots = {};
+//		static ref array<ref SDRC_DebugHelperPos> m_MapCircle = {};
+	#endif
 	
-	static ref array<ref SDRC_DebugHelperPos> m_Pos = {};
-	static ref array<ref SDRC_DebugHelperPos> m_Sphere = {};
-//	static ref array<ref SDRC_DebugHelperPos> m_MapCircle = {};
-	static ref array<ref SDRC_DebugHelperLine> m_Line = {};
-	static ref array<IEntity> m_Slots = {};
-
 	//------------------------------------------------------------------------------------------------
 	static void ~SDRC_DebugHelper()
 	{

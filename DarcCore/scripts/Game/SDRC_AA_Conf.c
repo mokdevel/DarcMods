@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-//#define SDRC_RELEASE
+#define SDRC_RELEASE
 
 #ifdef SDRC_RELEASE
 	const bool SHOW_DEBUG_BOOL = false;		//Controls if debug visuals are to be shown. Disable for DarcMissions release.
@@ -31,7 +31,6 @@ sealed class SDRC_Conf
 	const int AI_COUNTING_DELAY = 2;//10;						//(seconds) Delay before AI count is calculated.
 	const int POSITION_RANDOMIZATION = 150;					//Randomization for position. 
 	const int SPAWN_CYCLE_DELAY = 2000;						//(milliseconds) Time used between AI/item spawns for example for Roadblock items
-	static ref array<string> errorList = {};				//Errors reported and spamchatted to players 
 	
 	//TBD: const int MISSION_END_TIME = 5000;				//Time to set for mission cycle when mission is set to end.
 	
