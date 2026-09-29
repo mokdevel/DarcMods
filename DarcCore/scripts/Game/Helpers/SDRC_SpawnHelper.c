@@ -154,8 +154,14 @@ class SDRC_SpawnHelper
 		vector floorpos;
 		
 		if (pos == vector.Zero)
-		{		
-			SDRC_BuildingHelper.FindBuildingFloors(floors, building);
+		{	
+			//This is the *OLD* system with trace. Left here just in case the cover system did not provide a proper spot.
+			
+			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+			if (!baseGameMode) {return null;}
+			if (!baseGameMode.m_SDRC_Core){return null;}
+			
+			baseGameMode.m_SDRC_Core.m_BuildingHelper.FindBuildingFloors(floors, building);
 	
 			//Find the building size. The bigger X or Y value will be used as the radius
 			vector sums = SDRC_SpawnHelper.FindEntitySize(building);

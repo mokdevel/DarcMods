@@ -95,9 +95,12 @@ class SDRC_JsonApi2 : JsonApiStruct
 				SDRC_Log.Add("[SDRC_JsonApi2:Load] ------------------", LogLevel.ERROR);
 				
 				SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
-				if (!baseGameMode)
+				if (baseGameMode)
 				{
-					baseGameMode.m_SDRC_Core.AddError(GetFileName() + " has been updated. Delete to receive an updated one."); 
+					if (baseGameMode.m_SDRC_Core)
+					{
+						baseGameMode.m_SDRC_Core.AddError(GetFileName() + " has been updated. Delete to receive an updated one."); 
+					}
 				}
 				
 				return false;

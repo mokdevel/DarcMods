@@ -33,9 +33,9 @@ class DC_Mmarker : Managed
 
 //------------------------------------------------------------------------------------------------
 /*
-Create a map ma
+Create a map marker
 */
-sealed class SDRC_MapMarkerHelper
+class SDRC_MapMarkerHelper
 {
 	static ref array<ref DC_Mmarker> m_markers = {};
 	

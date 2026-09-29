@@ -9,14 +9,14 @@ NOTE: In order to use the caching, FillBuildingsCache has to be run at startup.
 
 class SDRC_BuildingHelper
 {
-	private static ref array<IEntity> m_BuildingsCache = {};
-	private static ref array<IEntity> m_TmpBuildings = {};
+	private ref array<IEntity> m_BuildingsCache = {};
+	private ref array<IEntity> m_TmpBuildings = {};
 
 	//-----------------------------------------------------------------------------------------------
 	/*!
 	Check if locations are needed to be cached. If not, startup is much faster
 	*/
-	static bool IsBuildingCacheNeeded()
+	bool IsBuildingCacheNeeded()
 	{
 		array<string> addonList = {};
 		
@@ -39,7 +39,7 @@ class SDRC_BuildingHelper
 	\param pos Position to start the search
 	\param radius Search radius. If set to -1, cached data will be used. This is for fast full map search but will ignore pos.
 	*/		
-	static void FindBuildings(out array<IEntity> buildings, array<string> filter, vector pos = "0 0 0", float radius = -1)
+	void FindBuildings(out array<IEntity> buildings, array<string> filter, vector pos = "0 0 0", float radius = -1)
 	{	
 		if (radius == -1)
 		{
@@ -70,7 +70,7 @@ class SDRC_BuildingHelper
 	\param buildingListSource List to filter
 	\param filter Words used to keep an item in the list
 	*/	
-	static void FilterBuildingList(out array<IEntity> buildings, array<IEntity> buildingListSource, array<string> filter)
+	void FilterBuildingList(out array<IEntity> buildings, array<IEntity> buildingListSource, array<string> filter)
 	{
 		foreach (int i, string filteritem : filter)
 		{
@@ -104,7 +104,7 @@ class SDRC_BuildingHelper
 	\param 
 	NOTE: The list is not necessarily only buildings but anything you'd like to consider as a point for e.g. mission spawning. 
 	*/		
-	static void FillBuildingsCache(array<string> excludeFilter)
+	void FillBuildingsCache(array<string> excludeFilter)
 	{
 		SDRC_Log.Add("[SDRC_BuildingHelper:FillBuildingsCache] Searching..", LogLevel.NORMAL);			
 		
@@ -153,7 +153,7 @@ class SDRC_BuildingHelper
 	/*!
 	Call back filter for FindBuilding
 	*/		
-	static bool FindBuildingCallback(IEntity entity)
+	bool FindBuildingCallback(IEntity entity)
 	{
 		if (entity.ClassName() == "SCR_DestructibleBuildingEntity")
 		{
@@ -177,10 +177,10 @@ class SDRC_BuildingHelper
 	Find floors from a building entity.
 	From the returned vector positions, the [0] item is the floor height. Roof has been removed.
 	*/		
-	static EntityID buildingID = null;	
-	static ref array<vector> buildingIDfloorCache = {};	
+	EntityID buildingID = null;	
+	ref array<vector> buildingIDfloorCache = {};	
 	
-	static void FindBuildingFloors(out array<vector> floors, IEntity building)
+	void FindBuildingFloors(out array<vector> floors, IEntity building)
 	{
 		array<vector>floorsTmp = {};
 		floors = {};
@@ -417,5 +417,5 @@ class SDRC_BuildingHelper
 				SDRC_DebugHelper.AddDebugSphere(fpos, ARGB(50, 0, 0, 255), 0.06);	//Blue ball for the found floor
 			}				
 		#endif 
-	}	
+	}
 }

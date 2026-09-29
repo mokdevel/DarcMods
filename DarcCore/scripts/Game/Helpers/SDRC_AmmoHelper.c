@@ -17,6 +17,10 @@ sealed class SDRC_AmmoHelper
 	{
 		SDRC_Log.Add("[SDRC_AmmoHelper:Setup] Preparing..", LogLevel.NORMAL);
 
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+		if (!baseGameMode) {SDRC_Log.Add("[SDRC_AmmoHelper:Setup] baseGameMode not found", LogLevel.ERROR); return;}
+		if (!baseGameMode.m_SDRC_Core) {SDRC_Log.Add("[SDRC_AmmoHelper:Setup] m_SDRC_Core not found", LogLevel.ERROR); return;}		
+		
 		//Put a random box to put all our magazines available.
 		//This is needed for the predicates to work.
 		m_ammoHelperBox = SDRC_SpawnHelper.SpawnItem("122 1 144", "{86B51DAF731A4C87}Prefabs/Props/Military/SupplyBox/SupplyCrate/LootSupplyCrate_Base.et", emptyPosRadius: -1);		
@@ -25,11 +29,11 @@ sealed class SDRC_AmmoHelper
 		{	
 			m_invManager = InventoryStorageManagerComponent.Cast(m_ammoHelperBox.FindComponent(InventoryStorageManagerComponent));		
 			array<string> itemNames = {};
-			SDRC_LootHelper.GetLootListItems(itemNames, "UTIL_MAGAZINE");
-			SDRC_LootHelper.SpawnItemsToStorage(m_ammoHelperBox, itemNames);
+			baseGameMode.m_SDRC_Core.m_LootHelper.GetLootListItems(itemNames, "UTIL_MAGAZINE");
+			SDRC_StorageHelper.SpawnItemsToStorage(m_ammoHelperBox, itemNames);
 			itemNames = {};
-			SDRC_LootHelper.GetLootListItems(itemNames, "UTIL_AMMO");
-			SDRC_LootHelper.SpawnItemsToStorage(m_ammoHelperBox, itemNames);
+			baseGameMode.m_SDRC_Core.m_LootHelper.GetLootListItems(itemNames, "UTIL_AMMO");
+			SDRC_StorageHelper.SpawnItemsToStorage(m_ammoHelperBox, itemNames);
 		}
 		else
 		{

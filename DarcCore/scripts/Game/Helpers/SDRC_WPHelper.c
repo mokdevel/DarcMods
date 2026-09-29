@@ -308,7 +308,15 @@ sealed class SDRC_WPHelper
 		if (genType == SDRC_EWaypointGenerationType.SLOTS)
 		{		
 			array<IEntity> slots = {};
-			SDRC_Locations.GetLocationSlots(slots, posFrom, range);
+			
+			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+			if (baseGameMode)
+			{
+				if (baseGameMode.m_SDRC_Core)
+				{
+					baseGameMode.m_SDRC_Core.m_LocationsHelper.GetLocationSlots(slots, posFrom, range);
+				}
+			}
 			
 			for (int i = 0; i < count; i++)
 			{

@@ -48,7 +48,14 @@ class SDRC_Core
 	private ref array<string> m_sAddonList = {};
 	private ref array<string> m_sFactionList = {};
 	
-	private ref array<string> errorList = {};				//Errors reported and spamchatted to players 	
+	private ref array<string> m_sErrorList = {};				//Errors reported and spamchatted to players 	
+	
+	ref SDRC_BuildingHelper m_BuildingHelper = new SDRC_BuildingHelper();
+	ref SDRC_Locations m_LocationsHelper = new SDRC_Locations();
+	ref SDRC_LootHelper m_LootHelper = new SDRC_LootHelper();
+	ref SDRC_EnemyListHelper m_EnemyListHelper = new SDRC_EnemyListHelper();
+	ref SDRC_VehicleListHelper m_VehicleListHelper = new SDRC_VehicleListHelper();
+	
 	//------------------------------------------------------------------------------------------------
 	void SDRC_Core()
 	{
@@ -200,7 +207,13 @@ class SDRC_Core
 	{
 		bool fullScan = false;
 		bool allDone = false;
-		
+
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode)
+		{
+			return;	//TBD: This is an error that is not handled properly
+		}
+				
 		//Limit where Loot and Ammo helper is needed
 		if (    SDRC_Misc.IsAddonLoaded("$DarcMissions:") || SDRC_Misc.IsAddonLoaded("$DarcMissionsDev:") 
 		     || SDRC_Misc.IsAddonLoaded("$DarcSpawner:") || SDRC_Misc.IsAddonLoaded("$DarcSpawnerDev:") 
@@ -218,7 +231,7 @@ class SDRC_Core
 				break;
 			case SDRC_ECoreScanState.ENEMY:
 				//Initialize EnemyHelper
-				if (SDRC_EnemyHelper.Scan(m_iListIndex, m_Config.fallbackEnemyFaction))
+				if (m_EnemyListHelper.Scan(m_iListIndex, m_Config.fallbackEnemyFaction))
 				{
 					m_iListIndex = 0;
 					m_iScanState++;
@@ -232,7 +245,7 @@ class SDRC_Core
 				if (fullScan)
 				{
 					//Initialize Vehicle list
-					if (SDRC_VehicleListHelper.Scan(m_iListIndex))
+					if (m_VehicleListHelper.Scan(m_iListIndex))
 					{
 						m_iListIndex = 0;
 						m_iScanState++;
@@ -251,7 +264,7 @@ class SDRC_Core
 				if (fullScan)
 				{
 					//Initialize LootHelper
-					if (SDRC_LootHelper.Scan(m_iListIndex))
+					if (m_LootHelper.Scan(m_iListIndex))
 					{
 						m_iListIndex = 0;
 						m_iScanState++;
@@ -291,7 +304,7 @@ class SDRC_Core
 				m_iScanState++;
 				break;
 			case SDRC_ECoreScanState.DUMPCACHE:
-				SDRC_Locations.DumpLocationsCache();
+				baseGameMode.m_SDRC_Core.m_LocationsHelper.DumpLocationsCache();
 				m_iScanState++;
 				break;
 			case SDRC_ECoreScanState.READY:
@@ -317,11 +330,15 @@ class SDRC_Core
 	//------------------------------------------------------------------------------------------------		
 	void FillBuildingCache()
 	{
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode) {return;}
+		if (!baseGameMode.m_SDRC_Core){return;}
+		
 		//Building caching takes time, so don't do it, if not needed.
-		if (SDRC_BuildingHelper.IsBuildingCacheNeeded())
+		if (baseGameMode.m_SDRC_Core.m_BuildingHelper.IsBuildingCacheNeeded())
 		{	
 			//Initialize building cache
-			SDRC_BuildingHelper.FillBuildingsCache(m_Config.buildingExcludeFilter);
+			baseGameMode.m_SDRC_Core.m_BuildingHelper.FillBuildingsCache(m_Config.buildingExcludeFilter);
 		}
 		SDRC_Log.Add("[SDRC_Core:FillBuildingCache] Done!", LogLevel.DEBUG);
 	}
@@ -329,11 +346,15 @@ class SDRC_Core
 	//------------------------------------------------------------------------------------------------		
 	void FillLocationCache()
 	{
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode) {return;}
+		if (!baseGameMode.m_SDRC_Core){return;}
+		
 		//Location caching takes time, so don't do it, if not needed.
-		if (SDRC_Locations.IsLocationCacheNeeded())
+		if (baseGameMode.m_SDRC_Core.m_LocationsHelper.IsLocationCacheNeeded())
 		{	
 			//Initialize locations cache
-			SDRC_Locations.FillLocationsCache(m_Config.locationAkas, m_Config.buildingAkas);
+			baseGameMode.m_SDRC_Core.m_LocationsHelper.FillLocationsCache(m_Config.locationAkas, m_Config.buildingAkas);
 		}
 
 		SDRC_Log.Add("[SDRC_Core:FillLocationCache] Done!", LogLevel.DEBUG);
@@ -342,11 +363,15 @@ class SDRC_Core
 	//------------------------------------------------------------------------------------------------		
 	void FillAreaCache()
 	{
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode) {return;}
+		if (!baseGameMode.m_SDRC_Core){return;}
+		
 		//Area caching takes time, so don't do it, if not needed. It is not needed if locations are not needed.
-		if (SDRC_Locations.IsLocationCacheNeeded())
+		if (baseGameMode.m_SDRC_Core.m_LocationsHelper.IsLocationCacheNeeded())
 		{	
 			//Initialize locations cache
-			SDRC_Locations.FillAreaCache(m_Config.locationAkas, m_Config.buildingAkas);
+			baseGameMode.m_SDRC_Core.m_LocationsHelper.FillAreaCache(m_Config.locationAkas, m_Config.buildingAkas);
 		}
 
 		SDRC_Log.Add("[SDRC_Core:FillAreaCache] Done!", LogLevel.DEBUG);
@@ -355,17 +380,17 @@ class SDRC_Core
 	//------------------------------------------------------------------------------------------------
 	void AddError(string errorMsg)
 	{
-		errorList.Insert(errorMsg);
+		m_sErrorList.Insert(errorMsg);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	private void ErrorReporter()
 	{
-		if (!errorList.IsEmpty())
+		if (!m_sErrorList.IsEmpty())
 		{
 			SDRC_Log.Add("[SDRC DarcMods:ErrorReporter] ------------------", LogLevel.ERROR);
 			SDRC_Log.Add("[SDRC DarcMods:ErrorReporter] Errors found:", LogLevel.ERROR);
-			foreach (string errorStr : errorList)
+			foreach (string errorStr : m_sErrorList)
 			{
 				SDRC_Log.Add("[SDRC DarcMods:ErrorReporter] - " + errorStr, LogLevel.ERROR);
 			}

@@ -11,12 +11,11 @@ sealed class SDRC_VehicleListHelper
 	private const string DC_MISSIONCONFIG_FILE_VEHICLELIST = "dc_vehicleList.json";
 	private const int DC_MISSIONCONFIG_FILE_VEHICLELIST_JSONVER = 4;
 	
-	private static ref SDRC_JsonApi2 m_JsonApi = null;
-	private static ref SDRC_VehicleListConfig m_Config = null;
+	private ref SDRC_VehicleListConfig m_Config = null;
 	
-	private static bool m_bIsReady = false;
+	private bool m_bIsReady = false;
 	
-	static bool Scan(int index)
+	bool Scan(int index)
 	{
 		if (!m_Config)
 		{		
@@ -24,7 +23,7 @@ sealed class SDRC_VehicleListHelper
 			
 			//Load vehicle list config
 			m_Config = new SDRC_VehicleListConfig();
-			m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_VEHICLELIST);	
+			SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_VEHICLELIST);	
 			m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_MISSIONCONFIG_FILE_VEHICLELIST_JSONVER, safeUpdate: true);		
 		}
 		
@@ -54,7 +53,7 @@ sealed class SDRC_VehicleListHelper
 	/*!
 	Checker to see if everything is ready.
 	*/
-	static bool IsReady()
+	bool IsReady()
 	{
 		return m_bIsReady;
 	}
@@ -63,7 +62,7 @@ sealed class SDRC_VehicleListHelper
 	/*! 
 	Clean up the lists.
 	*/	
-	static void Sanitize()
+	void Sanitize()
 	{		
 		//Let's find the factions for the vehicles
 		foreach (SDRC_List list : m_Config.lists)
@@ -259,7 +258,7 @@ sealed class SDRC_VehicleListHelper
 	/*! 
 	Find the the right vehicle
 	*/	
-	static ResourceName FindVehicleItem(string listName, string faction = "")
+	ResourceName FindVehicleItem(string listName, string faction = "")
 	{
 /*		int vehicleIndex = -1;
 		for (int i = 0; i < m_Config.lists.Count(); i++)		
@@ -345,7 +344,7 @@ sealed class SDRC_VehicleListHelper
 	/*! 
 	Find the the right vehicle
 	*/	
-	static string FindPopulatedListVehicle(array<string> testList)
+	string FindPopulatedListVehicle(array<string> testList)
 	{
 		return SDRC_ListHelper.FindPopulatedList(m_Config.lists, testList);
 	}	

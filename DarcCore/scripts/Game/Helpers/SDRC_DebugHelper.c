@@ -87,10 +87,12 @@ sealed class SDRC_DebugHelper
 	*/
 	static void Clear()
 	{
-		m_Pos.Clear();
-		m_Sphere.Clear();
-		m_Line.Clear();
-		m_Slots.Clear();
+		#ifdef WORKBENCH
+			m_Pos.Clear();
+			m_Sphere.Clear();
+			m_Line.Clear();
+			m_Slots.Clear();
+		#endif
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -148,19 +150,21 @@ sealed class SDRC_DebugHelper
 	*/
 	static void DrawLines()
 	{
-		const int pLimit = 4;
-		int shapeFlags = ShapeFlags.ONCE;
-		int color = Color.RED;
-		
-		vector p[pLimit];
-
-		foreach (SDRC_DebugHelperLine line : m_Line)
-		{			
-			p[0] = line.pos[0];
-			p[1] = line.pos[1];
+		#ifdef WORKBENCH	
+			const int pLimit = 4;
+			int shapeFlags = ShapeFlags.ONCE;
+			int color = Color.RED;
 			
-			Shape.CreateLines(line.color, shapeFlags, p, 2);
-		}
+			vector p[pLimit];
+	
+			foreach (SDRC_DebugHelperLine line : m_Line)
+			{			
+				p[0] = line.pos[0];
+				p[1] = line.pos[1];
+				
+				Shape.CreateLines(line.color, shapeFlags, p, 2);
+			}
+		#endif
 	}		
 	
 	//------------------------------------------------------------------------------------------------
@@ -170,154 +174,162 @@ sealed class SDRC_DebugHelper
 	*/
 	static void DrawWaypointLines()
 	{
-		const int pLimit = 50;
-		array<AIGroup> groups = {};
-		array<AIWaypoint> waypoints = {};
-		array<AIWaypoint> waypointsCycle = {};	
-		int shapeFlags = ShapeFlags.ONCE;
-		int color = Color.RED;
-		bool isCycle = false;
-		
-		vector p[pLimit];
-
-		SDRC_AIHelper.GroupFindAll(groups);
-		
-		foreach (AIGroup group : groups)
-		{
-			if (group != null)
+		#ifdef WORKBENCH			
+			const int pLimit = 50;
+			array<AIGroup> groups = {};
+			array<AIWaypoint> waypoints = {};
+			array<AIWaypoint> waypointsCycle = {};	
+			int shapeFlags = ShapeFlags.ONCE;
+			int color = Color.RED;
+			bool isCycle = false;
+			
+			vector p[pLimit];
+	
+			SDRC_AIHelper.GroupFindAll(groups);
+			
+			foreach (AIGroup group : groups)
 			{
-				int index = 0;
-				
-				group.GetWaypoints(waypoints);
-				
-				//If group has no waypoints, check the next group
-				if (waypoints.Count() == 0)
+				if (group != null)
 				{
-					continue;
-				}
-
-				//Find if it is a cycle				
-				foreach (AIWaypoint wp : waypoints)
-				{
-					if (AIWaypointCycle.Cast(wp) != null)
-					{
-						isCycle = true;
-						break;
-					}
-				}
-				
-				//Put the current group position as the first one
-				p[index] = RaiseWaypointPos(group.GetOrigin());
-				index++;				
-				
-				//If it is a cycle, make a line to the next target waypoint
-				if (isCycle)
-				{
-					p[index] = RaiseWaypointPos(waypoints[0]);
-					index++;
-					Shape.CreateLines(color, shapeFlags, p, index);
-					//Reset the index to draw the cycle properly
-					index = 0;										
-				}
+					int index = 0;
 					
-				foreach (AIWaypoint wp : waypoints)
-				{				
-					if (AIWaypointCycle.Cast(wp) == null && !isCycle)	//Filter cycle waypoints away
+					group.GetWaypoints(waypoints);
+					
+					//If group has no waypoints, check the next group
+					if (waypoints.Count() == 0)
 					{
-						vector pos = RaiseWaypointPos(wp);
-						p[index] = pos;
+						continue;
+					}
+	
+					//Find if it is a cycle				
+					foreach (AIWaypoint wp : waypoints)
+					{
+						if (AIWaypointCycle.Cast(wp) != null)
+						{
+							isCycle = true;
+							break;
+						}
+					}
+					
+					//Put the current group position as the first one
+					p[index] = RaiseWaypointPos(group.GetOrigin());
+					index++;				
+					
+					//If it is a cycle, make a line to the next target waypoint
+					if (isCycle)
+					{
+						p[index] = RaiseWaypointPos(waypoints[0]);
 						index++;
+						Shape.CreateLines(color, shapeFlags, p, index);
+						//Reset the index to draw the cycle properly
+						index = 0;										
 					}
-					
-					if (AIWaypointCycle.Cast(wp) != null && isCycle)
-					{
-						AIWaypointCycle.Cast(wp).GetWaypoints(waypointsCycle);
-						foreach (AIWaypoint wpc : waypointsCycle)
-						{											
-							vector pos = RaiseWaypointPos(wpc);
+						
+					foreach (AIWaypoint wp : waypoints)
+					{				
+						if (AIWaypointCycle.Cast(wp) == null && !isCycle)	//Filter cycle waypoints away
+						{
+							vector pos = RaiseWaypointPos(wp);
 							p[index] = pos;
 							index++;
-						}						
+						}
+						
+						if (AIWaypointCycle.Cast(wp) != null && isCycle)
+						{
+							AIWaypointCycle.Cast(wp).GetWaypoints(waypointsCycle);
+							foreach (AIWaypoint wpc : waypointsCycle)
+							{											
+								vector pos = RaiseWaypointPos(wpc);
+								p[index] = pos;
+								index++;
+							}						
+						}
+						
+						if (index >= (pLimit - 1))	//-1 to have a slot for cycle wp
+						{
+							SDRC_Log.Add("[SDRC_DebugHelper:DrawWaypointLines] There are more than " + pLimit + " waypoints. Ignoring the rest.", LogLevel.WARNING);						
+							break;
+						}
 					}
 					
-					if (index >= (pLimit - 1))	//-1 to have a slot for cycle wp
+					if (isCycle)
 					{
-						SDRC_Log.Add("[SDRC_DebugHelper:DrawWaypointLines] There are more than " + pLimit + " waypoints. Ignoring the rest.", LogLevel.WARNING);						
-						break;
+						p[index] = p[0];		//Close the cycle
+						index++;	
+						color = Color.BLUE;		//Cycle is blue
+					}
+					
+					if (index > 0)
+					{
+						Shape.CreateLines(color, shapeFlags, p, index);
 					}
 				}
-				
-				if (isCycle)
-				{
-					p[index] = p[0];		//Close the cycle
-					index++;	
-					color = Color.BLUE;		//Cycle is blue
-				}
-				
-				if (index > 0)
-				{
-					Shape.CreateLines(color, shapeFlags, p, index);
-				}
 			}
-		}				
+		#endif		
 	}	
 				
 	//------------------------------------------------------------------------------------------------
 	static void DrawWaypointShapes()
 	{
-		array<AIGroup> groups = {};		
-		array<AIWaypoint> waypoints = {};
-		int shapeFlags = ShapeFlags.ONCE;
-
-		SDRC_AIHelper.GroupFindAll(groups);	
-		
-		if (groups.Count() == 0)
-			return;
-
-		foreach (AIGroup group : groups)
-		{
-			if (group != null)
+		#ifdef WORKBENCH			
+			array<AIGroup> groups = {};		
+			array<AIWaypoint> waypoints = {};
+			int shapeFlags = ShapeFlags.ONCE;
+	
+			SDRC_AIHelper.GroupFindAll(groups);	
+			
+			if (groups.Count() == 0)
+				return;
+	
+			foreach (AIGroup group : groups)
 			{
-				group.GetWaypoints(waypoints);
-				foreach (AIWaypoint wp : waypoints)
+				if (group != null)
 				{
-					vector pos = RaiseWaypointPos(wp);
-					Shape.CreateSphere(Color.DARK_RED, shapeFlags, pos, 0.3);
+					group.GetWaypoints(waypoints);
+					foreach (AIWaypoint wp : waypoints)
+					{
+						vector pos = RaiseWaypointPos(wp);
+						Shape.CreateSphere(Color.DARK_RED, shapeFlags, pos, 0.3);
+					}
 				}
 			}
-		}
+		#endif
 	}
 
 	//------------------------------------------------------------------------------------------------
 	static void DrawSpheres()
 	{
-		array<vector> sphere = {};
-		int shapeFlags = ShapeFlags.ONCE;
-
-		foreach (SDRC_DebugHelperPos dpos: m_Sphere)
-		{
-			if (dpos != null)
+		#ifdef WORKBENCH			
+			array<vector> sphere = {};
+			int shapeFlags = ShapeFlags.ONCE;
+	
+			foreach (SDRC_DebugHelperPos dpos: m_Sphere)
 			{
-				Shape.CreateSphere(dpos.color, shapeFlags, dpos.pos, dpos.radius);
-			}
-		}		
+				if (dpos != null)
+				{
+					Shape.CreateSphere(dpos.color, shapeFlags, dpos.pos, dpos.radius);
+				}
+			}		
+		#endif
 	}	
 	
 	//------------------------------------------------------------------------------------------------
 	static void DrawMarks()
 	{
-		int shapeFlags = ShapeFlags.TRANSP|ShapeFlags.ONCE|ShapeFlags.ADDITIVE;
-
-		if (m_Pos.Count() == 0)
-			return;
-		
-		foreach (SDRC_DebugHelperPos dpos: m_Pos)
-		{
-			if (dpos != null)
+		#ifdef WORKBENCH			
+			int shapeFlags = ShapeFlags.TRANSP|ShapeFlags.ONCE|ShapeFlags.ADDITIVE;
+	
+			if (m_Pos.Count() == 0)
+				return;
+			
+			foreach (SDRC_DebugHelperPos dpos: m_Pos)
 			{
-				Shape.CreateCylinder(dpos.color, shapeFlags, dpos.pos, dpos.radius, dpos.height);
-			}
-		}			
+				if (dpos != null)
+				{
+					Shape.CreateCylinder(dpos.color, shapeFlags, dpos.pos, dpos.radius, dpos.height);
+				}
+			}			
+		#endif
 	}	
 
 	//------------------------------------------------------------------------------------------------
@@ -343,23 +355,25 @@ sealed class SDRC_DebugHelper
 	
 	static void AddDebugPos(vector pos, int color = Color.RED, float radius = 1.0, string id = "NONE", int height = 300, bool snap = true)
 	{
-		if (SDRC_Conf.SHOW_DEBUG)
-		{
-			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
+		#ifdef WORKBENCH			
+			if (SDRC_Conf.SHOW_DEBUG)
 			{
-				SDRC_DebugHelperPos dpos = new SDRC_DebugHelperPos;
-				if (snap)
+				if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_MARKS))
 				{
-					pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + (height/2);
+					SDRC_DebugHelperPos dpos = new SDRC_DebugHelperPos;
+					if (snap)
+					{
+						pos[1] = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]) + (height/2);
+					}
+					dpos.pos = pos;
+					dpos.color = color;
+					dpos.radius = radius;
+					dpos.id = id;
+					dpos.height = height;
+					m_Pos.Insert(dpos);
 				}
-				dpos.pos = pos;
-				dpos.color = color;
-				dpos.radius = radius;
-				dpos.id = id;
-				dpos.height = height;
-				m_Pos.Insert(dpos);
 			}
-		}
+		#endif		
 	}				
 	
 	//------------------------------------------------------------------------------------------------
@@ -381,36 +395,40 @@ sealed class SDRC_DebugHelper
 	
 	static void AddDebugSphere(vector pos, int color = Color.BLUE, float radius = 1.0, string id = "NONE")
 	{
-		if (SDRC_Conf.SHOW_DEBUG)
-		{
-			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
+		#ifdef WORKBENCH			
+			if (SDRC_Conf.SHOW_DEBUG)
 			{
-				SDRC_DebugHelperPos dpos = new SDRC_DebugHelperPos;
-				dpos.pos = pos;
-				dpos.color = color;
-				dpos.radius = radius;
-				dpos.id = id;
-				dpos.height = 0;
-				m_Sphere.Insert(dpos);
+				if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_SPHERES))
+				{
+					SDRC_DebugHelperPos dpos = new SDRC_DebugHelperPos;
+					dpos.pos = pos;
+					dpos.color = color;
+					dpos.radius = radius;
+					dpos.id = id;
+					dpos.height = 0;
+					m_Sphere.Insert(dpos);
+				}
 			}
-		}
+		#endif
 	}					
 
 	//------------------------------------------------------------------------------------------------
 	static void AddDebugLine(vector pos0, vector pos1, int color = Color.BLUE, string id = "NONE")
 	{
-		if (SDRC_Conf.SHOW_DEBUG)
-		{
-			if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_LINES))
+		#ifdef WORKBENCH			
+			if (SDRC_Conf.SHOW_DEBUG)
 			{
-				SDRC_DebugHelperLine dpos = new SDRC_DebugHelperLine;
-				dpos.pos.Insert(pos0);
-				dpos.pos.Insert(pos1);
-				dpos.color = color;
-				dpos.id = id;
-				m_Line.Insert(dpos);
+				if (DiagMenu.GetBool(SCR_DebugMenuID.MODMENU_LINES))
+				{
+					SDRC_DebugHelperLine dpos = new SDRC_DebugHelperLine;
+					dpos.pos.Insert(pos0);
+					dpos.pos.Insert(pos1);
+					dpos.color = color;
+					dpos.id = id;
+					m_Line.Insert(dpos);
+				}
 			}
-		}
+		#endif
 	}					
 		
 	//------------------------------------------------------------------------------------------------
@@ -419,18 +437,20 @@ sealed class SDRC_DebugHelper
 	*/	
 	static void DrawPointList(array<vector> points, string id = "", int color = ARGB(10, 128, 64, 64), float size = 0.5)
 	{
-		if (SDRC_Conf.SHOW_DEBUG)
-		{
-			foreach (int i, vector pos : points)
+		#ifdef WORKBENCH			
+			if (SDRC_Conf.SHOW_DEBUG)
 			{
-				SDRC_DebugHelper.AddDebugSphere(pos, color, size, id);			//Red
-				
-				if (i < (points.Count() - 1))
+				foreach (int i, vector pos : points)
 				{
-					SDRC_DebugHelper.AddDebugLine(points[i], points[i+1], color, id);				
-				}			
+					SDRC_DebugHelper.AddDebugSphere(pos, color, size, id);			//Red
+					
+					if (i < (points.Count() - 1))
+					{
+						SDRC_DebugHelper.AddDebugLine(points[i], points[i+1], color, id);				
+					}			
+				}
 			}
-		}
+		#endif		
 	}	
 	
 	//------------------------------------------------------------------------------------------------
@@ -454,14 +474,16 @@ sealed class SDRC_DebugHelper
 	*/
 	static void DeleteDebugPos(string id)
 	{
-		for (int i = 0; i < m_Pos.Count(); i++)		
-		{
-			if (m_Pos[i].id.Contains(id))
+		#ifdef WORKBENCH			
+			for (int i = 0; i < m_Pos.Count(); i++)		
 			{
-				m_Pos.Remove(i);
-				i--;
-			}			
-		}		
+				if (m_Pos[i].id.Contains(id))
+				{
+					m_Pos.Remove(i);
+					i--;
+				}			
+			}		
+		#endif
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -470,14 +492,16 @@ sealed class SDRC_DebugHelper
 	*/
 	static void DeleteDebugSphere(string id)
 	{
-		for (int i = 0; i < m_Sphere.Count(); i++)		
-		{
-			if (m_Sphere[i].id.Contains(id))
+		#ifdef WORKBENCH			
+			for (int i = 0; i < m_Sphere.Count(); i++)		
 			{
-				m_Sphere.Remove(i);
-				i--;
-			}			
-		}		
+				if (m_Sphere[i].id.Contains(id))
+				{
+					m_Sphere.Remove(i);
+					i--;
+				}			
+			}		
+		#endif
 	}	
 		
 	//------------------------------------------------------------------------------------------------
@@ -486,43 +510,45 @@ sealed class SDRC_DebugHelper
 	*/
 	static void DeleteDebugItems(string id, bool marks = true, bool spheres = true, bool lines = true)
 	{
-		if (marks)
-		{
-			DeleteDebugPos(id);
-		}
-		
-		if (spheres)
-		{				
-			for (int i = 0; i < m_Sphere.Count(); i++)		
+		#ifdef WORKBENCH			
+			if (marks)
 			{
-				if (m_Sphere[i].id.Contains(id))
+				DeleteDebugPos(id);
+			}
+			
+			if (spheres)
+			{				
+				for (int i = 0; i < m_Sphere.Count(); i++)		
 				{
-					m_Sphere.Remove(i);
+					if (m_Sphere[i].id.Contains(id))
+					{
+						m_Sphere.Remove(i);
+						i--;
+					}			
+				}
+			}
+			
+			if (lines)
+			{
+				for (int i = 0; i < m_Line.Count(); i++)		
+				{
+					if (m_Line[i].id.Contains(id))
+					{
+						m_Line.Remove(i);
+						i--;
+					}			
+				}
+			}
+	
+	/*		for (i = 0; i < m_Slots.Count(); i++)		
+			{
+				if (m_Slots[i].id.Contains(id))
+				{
+					m_Slots.Remove(i);
 					i--;
 				}			
-			}
-		}
-		
-		if (lines)
-		{
-			for (int i = 0; i < m_Line.Count(); i++)		
-			{
-				if (m_Line[i].id.Contains(id))
-				{
-					m_Line.Remove(i);
-					i--;
-				}			
-			}
-		}
-
-/*		for (i = 0; i < m_Slots.Count(); i++)		
-		{
-			if (m_Slots[i].id.Contains(id))
-			{
-				m_Slots.Remove(i);
-				i--;
-			}			
-		}*/
+			}*/
+		#endif
 	}	
 
 	//------------------------------------------------------------------------------------------------
@@ -531,33 +557,37 @@ sealed class SDRC_DebugHelper
 	*/
 	static void MoveDebugPos(string id, vector pos)
 	{
-		for (int i = 0; i < m_Pos.Count(); i++)		
-		{
-			if (m_Pos[i].id == id)
+		#ifdef WORKBENCH			
+			for (int i = 0; i < m_Pos.Count(); i++)		
 			{
-				m_Pos[i].pos = pos;
-				break;
-			}			
-		}		
+				if (m_Pos[i].id == id)
+				{
+					m_Pos[i].pos = pos;
+					break;
+				}			
+			}		
+		#endif		
 	}
 			
 	//------------------------------------------------------------------------------------------------
 	static void DrawSlots()
 	{
-		int shapeFlags = ShapeFlags.ONCE;
-
-		if (m_Slots.Count() == 0)
-			return;
-
-		foreach (IEntity loc: m_Slots)
-		{
-			if (loc != null)
+		#ifdef WORKBENCH			
+			int shapeFlags = ShapeFlags.ONCE;
+	
+			if (m_Slots.Count() == 0)
+				return;
+	
+			foreach (IEntity loc: m_Slots)
 			{
-				vector pos = RaiseWaypointPos(loc.GetOrigin());
-				int color = Color.BLUE;
-				Shape.CreateCylinder(color, shapeFlags, pos, 1, 100);
+				if (loc != null)
+				{
+					vector pos = RaiseWaypointPos(loc.GetOrigin());
+					int color = Color.BLUE;
+					Shape.CreateCylinder(color, shapeFlags, pos, 1, 100);
+				}
 			}
-		}
+		#endif
 	}	
 
 	//------------------------------------------------------------------------------------------------

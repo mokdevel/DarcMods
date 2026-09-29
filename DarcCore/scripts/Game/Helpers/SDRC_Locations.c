@@ -31,18 +31,18 @@ class SDRC_LocationAka : Managed
 }
 
 //------------------------------------------------------------------------------------------------
-sealed class SDRC_Locations
+class SDRC_Locations
 {
-	private static ref array<IEntity> m_aTmpSlots = {};
-	private static string m_sName;
+	private ref array<IEntity> m_aTmpSlots = {};
+	private string m_sName;
 	
-	private static ref array<ref SDRC_Location> m_LocationsCache = {};
+	private ref array<ref SDRC_Location> m_LocationsCache = {};
 
 	//-----------------------------------------------------------------------------------------------
 	/*!
 	Check if locations are needed to be cached. If not, startup is much faster
 	*/
-	static bool IsLocationCacheNeeded()
+	bool IsLocationCacheNeeded()
 	{
 		if ( SDRC_Misc.IsAddonLoaded("$DarcMissions*") || SDRC_Misc.IsAddonLoaded("$DarcSpawner*") )
 		{
@@ -74,7 +74,11 @@ sealed class SDRC_Locations
 	{
 		array<MapItem> locationArrayMapItem = {};
 		
-		GetLocationsMapItem(locationArrayMapItem, locationTypeArray);
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode) {return;}
+		if (!baseGameMode.m_SDRC_Core){return;}
+		
+		baseGameMode.m_SDRC_Core.m_LocationsHelper.GetLocationsMapItem(locationArrayMapItem, locationTypeArray);
 		
 		foreach (MapItem tmpMapItem : locationArrayMapItem)
 		{
@@ -87,17 +91,17 @@ sealed class SDRC_Locations
 				location.baseType = tmpMapItem.GetBaseType();
 				location.name = tmpMapItem.GetDisplayName();
 				location.displayName = WidgetManager.Translate(tmpMapItem.GetDisplayName());
-				location.createdName = CreateName(location.pos);
+				location.createdName = baseGameMode.m_SDRC_Core.m_LocationsHelper.CreateName(location.pos);
 				locationArray.Insert(location);
 			}
 		}
 				
 		SDRC_Log.Add("[SDRC_Locations:GetLocations] Found locations: " + locationArray.Count(), LogLevel.DEBUG);
-		ShowDebugInfo(locationArray);
+		baseGameMode.m_SDRC_Core.m_LocationsHelper.ShowDebugInfo(locationArray);
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	static void GetLocationsMapItem(out array<MapItem> locationArray, array<EMapDescriptorType> locationTypeArray)
+	void GetLocationsMapItem(out array<MapItem> locationArray, array<EMapDescriptorType> locationTypeArray)
 	{
 		//If SCR_MapEntity does not exist, we most likely are playing in some debug map
 		SCR_MapEntity mapEnt = SCR_MapEntity.GetMapInstance();
@@ -142,7 +146,7 @@ sealed class SDRC_Locations
 	/*!
 	Prepare an array with all locations on the map.
 	*/		
-	static void FillLocationsCache(array<ref SDRC_LocationAka> locationAkas, array<ref SDRC_LocationAka> buildingAkas = null)
+	void FillLocationsCache(array<ref SDRC_LocationAka> locationAkas, array<ref SDRC_LocationAka> buildingAkas = null)
 	{
 		#ifndef SDRC_RELEASE
 			//If SCR_MapEntity does not exist, we most likely are playing in some debug map
@@ -183,13 +187,18 @@ sealed class SDRC_Locations
 				}
 			}
 		}
-		
+
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode) {return;}
+		if (!baseGameMode.m_SDRC_Core){return;}
+				
 		//Handle building akas
 		foreach (SDRC_LocationAka aka : buildingAkas)
 		{
 			EMapDescriptorType type = aka.type;
 			array<IEntity> buildings = {};
-			SDRC_BuildingHelper.FindBuildings(buildings, aka.names);		
+			
+			baseGameMode.m_SDRC_Core.m_BuildingHelper.FindBuildings(buildings, aka.names);		
 
 			foreach (IEntity building : buildings)
 			{
@@ -209,7 +218,7 @@ sealed class SDRC_Locations
 	/*!
 	Prepare an array with all locations on the map.
 	*/		
-	static void FillAreaCache(array<ref SDRC_LocationAka> locationAkas, array<ref SDRC_LocationAka> buildingAkas = null)
+	void FillAreaCache(array<ref SDRC_LocationAka> locationAkas, array<ref SDRC_LocationAka> buildingAkas = null)
 	{
 		#ifndef SDRC_RELEASE
 			//If SCR_MapEntity does not exist, we most likely are playing in some debug map
@@ -244,7 +253,7 @@ sealed class SDRC_Locations
 	/*!
 	Print out debug data of locations
 	*/		
-	static void DumpLocationsCache()
+	void DumpLocationsCache()
 	{				
 		//Print debug information
 		foreach (SDRC_Location location : m_LocationsCache)
@@ -262,7 +271,7 @@ sealed class SDRC_Locations
 	/*!
 	Search for locations from the world using the cache. The types to search are defined in locationTypeArray.
 	*/		
-	static void GetLocationsCached(out array<SDRC_Location> locationArray, array<EMapDescriptorType> locationTypeArray)
+	void GetLocationsCached(out array<SDRC_Location> locationArray, array<EMapDescriptorType> locationTypeArray)
 	{
 		//int stime = System.GetTickCount();
 		
@@ -291,7 +300,7 @@ sealed class SDRC_Locations
 	\param location/pos Either IEntity or position.
 	\param nameDefault The default name to use. "any" will search for one, empty name will result in [REDACTED]
 	*/	
-	static string CreateName(IEntity location, string nameDefault = "any")
+	string CreateName(IEntity location, string nameDefault = "any")
 	{
 		string name = CreateName(location.GetOrigin(), nameDefault);
 		
@@ -299,16 +308,22 @@ sealed class SDRC_Locations
 	}
 
 	//----------------------------------------------------------
-	static string CreateName(vector pos, string nameDefault = "any")
+	string CreateName(vector pos, string nameDefault = "any")
 	{
-		string name;
+		const string ERROR_NAME = "[REDACTED]";
 		
+		string name;
+
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode) {return ERROR_NAME;}
+		if (!baseGameMode.m_SDRC_Core){return ERROR_NAME;}
+						
 		if (nameDefault == "any")
 		{	
 			array<int>distancesToTry = {10, 20, 30, 50, 100, 150, 300, 400, 500, 600};
 			foreach (int distance : distancesToTry)
 			{
-				name = SDRC_Locations.GetNameCloseToPos(pos, distance);
+				name = baseGameMode.m_SDRC_Core.m_LocationsHelper.GetNameCloseToPos(pos, distance);
 				if (name != "")
 				{
 					break;
@@ -322,7 +337,7 @@ sealed class SDRC_Locations
 		
 		if (name == "")
 		{
-			name = "[REDACTED]";
+			name = ERROR_NAME;
 		}		
 		
 		return name;		
@@ -333,7 +348,7 @@ sealed class SDRC_Locations
 	Find a name close to a position. 
 	Query for entities with SCR_MapDescriptorComponent and pick the first one found. 
 	*/	
-	static string GetNameCloseToPos(vector pos, int distance = 300)
+	string GetNameCloseToPos(vector pos, int distance = 300)
 	{
 		m_sName = "";
 		
@@ -346,7 +361,7 @@ sealed class SDRC_Locations
 	/*!
 	Call back filter for GetNameCloseToPos
 	*/	
-	static private bool GetNameCloseToPosCallBack(IEntity entity)
+	private bool GetNameCloseToPosCallBack(IEntity entity)
 	{
 	    SCR_MapDescriptorComponent mapDescr = SCR_MapDescriptorComponent.Cast(entity.FindComponent(SCR_MapDescriptorComponent));
 		
@@ -383,10 +398,14 @@ sealed class SDRC_Locations
 	\param position Middle position
 	\param distance Radius to seach
 	*/	
-	static int GetLocationSlots(out array<IEntity> slots, vector position, float distance = 200)
+	int GetLocationSlots(out array<IEntity> slots, vector position, float distance = 200)
 	{
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode) {return 0;}
+		if (!baseGameMode.m_SDRC_Core){return 0;}
+		
 		m_aTmpSlots.Clear();
-		GetGame().GetWorld().QueryEntitiesBySphere(position, 200, SDRC_Locations.GetLocationSlotsCallBack);
+		GetGame().GetWorld().QueryEntitiesBySphere(position, 200, baseGameMode.m_SDRC_Core.m_LocationsHelper.GetLocationSlotsCallBack);
 		
 		foreach (IEntity slot : m_aTmpSlots)
 		{
@@ -400,7 +419,7 @@ sealed class SDRC_Locations
 	/*!
 	Call back filter for GetLocationsSlots
 	*/	
-	static private bool GetLocationSlotsCallBack(IEntity entity)
+	private bool GetLocationSlotsCallBack(IEntity entity)
 	{
 		if (entity.Type() == SCR_SiteSlotEntity)
 		{
@@ -413,7 +432,7 @@ sealed class SDRC_Locations
 	/*!
 	Helper function that just prints the information for debugging purposes.
 	*/	
-	static private void ShowDebugInfo(array<MapItem> m_tmpLocationArray)
+	private void ShowDebugInfo(array<MapItem> m_tmpLocationArray)
 	{
 		array<IEntity> slots = {};
 
@@ -476,7 +495,7 @@ sealed class SDRC_Locations
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	static private void ShowDebugInfo(array<ref SDRC_Location> m_tmpLocationArray)
+	private void ShowDebugInfo(array<ref SDRC_Location> m_tmpLocationArray)
 	{
 		array<IEntity> slots = {};
 
@@ -525,7 +544,7 @@ sealed class SDRC_Locations
 	\params limit Limit value to define it as the searched area
 	*/	
 	
-	static private void AddAreaToCache(EMapDescriptorType type, string prefix, int cellSize, float limit)
+	private void AddAreaToCache(EMapDescriptorType type, string prefix, int cellSize, float limit)
 	{
 		int worldSize = SDRC_Misc.GetWorldSize();
 		
@@ -645,7 +664,7 @@ sealed class SDRC_Locations
 	}	*/
 		
 	//------------------------------------------------------------------------------------------------
-	private static ref array<EMapDescriptorType>m_LocationTypeArray =
+	private ref array<EMapDescriptorType>m_LocationTypeArray =
 	{
 		//EMapDescriptorType.MDT_TREE,
 		//EMapDescriptorType.MDT_SMALLTREE,
