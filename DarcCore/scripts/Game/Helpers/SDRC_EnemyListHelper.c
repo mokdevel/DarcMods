@@ -1,0 +1,380 @@
+//Helpers SDRC_EnemyListHelper.c
+
+//------------------------------------------------------------------------------------------------
+/*!
+Functions for various enemy related things
+*/
+
+//------------------------------------------------------------------------------------------------
+class SDRC_EnemyListHelper
+{
+	private const string DC_CONFIG_FILE_ENEMYLIST = "dc_enemyList.json";
+	private const int DC_CONFIG_FILE_ENEMYLIST_JSONVER = 4;
+	
+	private ref SDRC_JsonApi2 m_JsonApi = null;
+	private ref SDRC_EnemyListConfig m_Config = null;
+	
+	string m_sDefaultEnemyFactionKey;
+	Faction m_DefaultEnemyFaction = null;
+	private ref array<string> m_sFactionList = {};		//Full faction list populated once at start up
+	private ref array<string> m_sEnemyFactions = {};		//Enemy faction list populated at start up, but may later change by another mod via SetEnemyFactions()
+	
+	private static bool m_bIsReady = false;
+	
+	//------------------------------------------------------------------------------------------------
+	/*! 
+	Setup enemyHelper.
+	This will prepare the enemyLists, factionList and set default enemyFaction
+	*/	
+	bool Scan(int index, string defaultEnemyFaction)
+	{
+		if (!m_Config)
+		{		
+			SDRC_Log.Add("[SDRC_EnemyListHelper:Scan] Preparing..", LogLevel.NORMAL);
+
+			//Collect the full list of factions	
+			SDRC_FactionHelper.GetFactionKeyList(m_sFactionList);
+			
+			//By default, all factions can be used. This may later be changed by a mod like DarcMissions
+			SDRC_FactionHelper.GetFactionKeyList(m_sEnemyFactions);
+			SDRC_Log.Add("[SDRC_EnemyListHelper:Scan] enemyFactions available: " + m_sEnemyFactions, LogLevel.NORMAL);
+					
+			m_sDefaultEnemyFactionKey = defaultEnemyFaction;
+			m_DefaultEnemyFaction = GetFactionWithName(m_sDefaultEnemyFactionKey);
+			if (!m_DefaultEnemyFaction)
+			{
+				SDRC_Log.Add("[SDRC_EnemyListHelper:Scan] Error in setting fallback enemy faction: " + defaultEnemyFaction, LogLevel.ERROR);
+			}
+			
+			//Load configuration from file
+			m_Config = new SDRC_EnemyListConfig();
+			m_JsonApi = new SDRC_JsonApi2(DC_CONFIG_FILE_ENEMYLIST);	
+			m_JsonApi.Load(m_Config, SDRC_Config.Cast(m_Config), DC_CONFIG_FILE_ENEMYLIST_JSONVER, safeUpdate: true);		
+		}
+	
+		m_bIsReady = m_Config.Populate(index);
+		
+		if (m_bIsReady)
+		{
+			//Create a C_RANDOMIZED list
+			//Choose randomized characters from randomizedLists defined below
+			array<string> randomizedLists = {"C_RIFLEMAN", "C_HEAVY", "C_RECON"};
+			
+			ref SDRC_List randomizedList = new SDRC_List();
+			randomizedList.Set("C_RANDOMIZED", {}, {}, {}, {});
+			
+			foreach (string rlist : randomizedLists)
+			{		
+				int listIndex = SDRC_ListHelper.FindListIndex(m_Config.lists, rlist);
+				if (listIndex != -1)
+				{
+					foreach (string item : m_Config.lists[listIndex].items)
+					{
+						randomizedList.items.Insert(item);
+					}
+				}
+			}		
+			m_Config.lists.Insert(randomizedList);
+			
+			SDRC_Log.Add("[SDRC_EnemyListHelper:Setup] List: " + randomizedList.id + " (" + randomizedList.items.Count() + ")", LogLevel.DEBUG);				
+			if (SDRC_Log.GetLogLevel() > DC_LogLevel.DEBUG)
+			{
+				randomizedList.items.Debug();
+			}
+							
+			SDRC_Log.Add("[SDRC_EnemyListHelper:Setup] Done!", LogLevel.DEBUG);
+		}
+		
+		return m_bIsReady;		
+	}
+
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Checker to see if everything is ready.
+	*/
+	bool IsReady()
+	{
+		return m_bIsReady;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*! 
+	Select the proper enemy factions. This will do a sanity check to check all factions have proper 
+	AIs assigned.
+	
+	\param enemyFactions The list of factions to consider enemy.
+	*/	
+	void SetEnemyFactions(array<string> enemyFactions)
+	{
+		SDRC_Log.Add("[SDRC_EnemyListHelper:SetEnemyFactions] Setting enemy factions: " + enemyFactions, LogLevel.SPAM);
+		m_sEnemyFactions = enemyFactions;		
+		SanityCheck(m_sEnemyFactions);
+	}	
+		
+	//------------------------------------------------------------------------------------------------
+	string GetDefaultEnemyFaction()
+	{
+		return m_sDefaultEnemyFactionKey;
+	}
+	
+/*	void SetDefaultEnemyFaction(string faction)
+	{
+		if (faction != "")
+		{
+			m_sDefaultEnemyFactionKey = faction;
+		}
+		
+		SDRC_Log.Add("[SDRC_EnemyListHelper:SetDefaultEnemyFaction] Default enemy faction: " + faction, LogLevel.NORMAL);
+	}*/
+			
+	//------------------------------------------------------------------------------------------------
+	void SanityCheck(array<string> enemyFactions)
+	{
+		//Sanity check
+		SDRC_Log.Add("[SDRC_EnemyListHelper:SanityCheck] Checking that all factions (" + enemyFactions + ") have enemies.", LogLevel.NORMAL);
+		
+		array<string> factionsFound = {};		
+		array<string> factionsMissing = {};
+		
+		foreach (SDRC_List list : m_Config.lists)
+		{
+			factionsFound.Clear();
+			factionsMissing.Clear();
+			
+			foreach (string faction : enemyFactions)
+			{
+				array<string> factionsToTest = {};
+				
+				//Check if the requested faction has an aka
+				foreach (SDRC_Aka aka : m_Config.akas)
+				{
+					if (aka.names[0] == faction)
+					{
+						for (int i = 1; i < aka.names.Count(); i++)
+						{
+							factionsToTest.Insert(aka.names[i]);					
+						}						
+					}
+				}
+				
+				//If no Akas, add the default
+				if (factionsToTest.IsEmpty())
+				{
+					factionsToTest.Insert(faction);
+				}
+
+				foreach (string factionToTest : factionsToTest)
+				{
+					SDRC_Log.Add("[SDRC_EnemyListHelper:SanityCheck] Testing " + faction + " as " + factionToTest, LogLevel.DEBUG);
+					
+					//Collect factions found
+					foreach (ResourceName enemy : list.items)
+					{
+//						if (enemy.Contains("_" + factionToTest + "_"))
+						if ( (enemy.Contains("_" + factionToTest + "_")) || (enemy.Contains("_" + factionToTest + ".")) )
+						{
+							if (!factionsFound.Contains(faction))
+							{
+								factionsFound.Insert(faction);
+							}
+							break;
+						}
+					}
+	
+					//Collect factions missing
+/*					foreach (ResourceName enemy : list.items)
+					{
+						if (!enemy.Contains("_" + factionToTest + "_"))
+						{
+							if (!factionsMissing.Contains(faction))
+							{
+								factionsMissing.Insert(faction);
+							}
+							break;
+						}
+					}*/
+				}
+				
+				//Collect factions missing
+				if (!factionsFound.Contains(faction))
+				{
+					factionsMissing.Insert(faction);
+				}
+			}
+			
+			if (factionsFound.Count() == enemyFactions.Count())
+			{
+				SDRC_Log.Add("[SDRC_EnemyListHelper:SanityCheck] " + list.id + " OK. Has " + factionsFound.Count() + " enemy factions", LogLevel.DEBUG);
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_EnemyListHelper:SanityCheck] " + list.id + " is missing enemies in faction: " + factionsMissing, LogLevel.WARNING);
+				if (list.id.Contains("C_"))
+				{
+					//TBD: The problem with some of the characters is that they don't have any faction IDs. For example: "justASoldier.et"
+					SDRC_Log.Add("[SDRC_EnemyListHelper:SanityCheck] For C_xxxx lists, the sanity check may report incorrect info. Check logs for details.", LogLevel.WARNING);
+				}
+			}
+		}		
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*! 
+	Select the proper enemy resourcename for spawning. 
+	\param listName The enemyList to check. If a prefab "{xxx}.." is provided, that is returned.
+	*/	
+	ResourceName SelectEnemyFromList(string listName, string faction)
+	{
+		array<string> enemyList = {};
+		array<string> factions = {};
+		
+		if (listName[0] == "{")		//If it is already a resource name, return
+		{		
+			return listName;
+		}
+		
+		//Select the enemy faction from a list
+		faction = SelectEnemyFactionFromList(faction);
+		//Put the factions as default in the list.
+		factions.Insert(faction);
+
+		//Check if the requested faction has an aka
+		foreach (SDRC_Aka aka : m_Config.akas)
+		{			
+			if (aka.names[0] == faction)
+			{			
+				factions.Clear();
+				for (int i = 1; i < aka.names.Count(); i++)
+				{
+					factions.Insert(aka.names[i]);					
+				}
+			}
+			
+/*			if (aka.names[0] == faction)
+			{
+				SDRC_Log.Add("[SDRC_EnemyListHelper:SelectEnemy] Using " + aka.names[1] + " for " + faction, LogLevel.DEBUG);
+				faction = aka.names[1];
+				break;
+			}*/
+		}
+
+		//Find the right list index		
+		int index = SDRC_ListHelper.FindListIndex(m_Config.lists, listName);
+		
+		//Did we find it?
+		if (index == -1)
+		{
+			SDRC_Log.Add("[SDRC_EnemyListHelper:SelectEnemy] No enemyList with id: " + listName + ". Typo?", LogLevel.WARNING);
+			return "";				
+		}
+
+		//Filter with faction		
+		foreach (string enemy : m_Config.lists[index].items)
+		{
+			foreach (string fac : factions)
+			{
+//				if (enemy.Contains("_" + fac + "_"))	//This checks for "_US_"
+				if (enemy.Contains(fac + "_"))			//This checks for "US_".
+				{
+					enemyList.Insert(enemy);
+					continue;
+				}
+				if (enemy.Contains("_" + fac + "."))	//This checks for "_US.". Typically this is not the case, but there are some mods like Ballien Creatures where the naming is different.
+				{
+					enemyList.Insert(enemy);
+					continue;
+				}
+			}
+		}
+		
+		ResourceName resourceName = "";
+		
+		if (enemyList.IsEmpty())
+		{
+			SDRC_Log.Add("[SDRC_EnemyListHelper:SelectEnemy] Enemy name does not have faction in it. Using the full list.", LogLevel.WARNING);
+			if (!m_Config.lists[index].items.IsEmpty())
+			{
+				resourceName = m_Config.lists[index].items.GetRandomElement();
+			}
+		}
+		else		
+		{
+			resourceName = enemyList.GetRandomElement();
+		}
+		
+		if (resourceName == "")
+		{
+			SDRC_Log.Add("[SDRC_EnemyListHelper:SelectEnemy] No enemy selected. List  (" + listName + ") has " + enemyList.Count() + " enemies.", LogLevel.ERROR);
+		}
+		else
+		{
+			SDRC_Log.Add("[SDRC_EnemyListHelper:SelectEnemy] Selected: (" + listName + ") " + resourceName, LogLevel.DEBUG);
+		}
+		return resourceName;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*! 
+	Select faction for the enemy.
+	\param faction The faction requested
+	*/	
+	string SelectEnemyFactionFromList(string faction = "")
+	{
+		if (m_sEnemyFactions.IsEmpty())
+		{
+			SDRC_Log.Add("[SDRC_EnemyListHelper:SelectEnemyFaction] No enemy factions defined.", LogLevel.WARNING);
+			return "";
+		}
+		
+		if (faction == "")	//RANDOM
+		{
+			//Select random faction from the assigned m_sEnemyFactions list.
+			faction = m_sEnemyFactions.GetRandomElement();
+			SDRC_Log.Add("[SDRC_EnemyListHelper:SelectEnemyFaction] Selected: " + faction, LogLevel.SPAM);
+			return faction;
+		}
+		
+		if (faction != "")
+		{			
+			//Select the requested faction
+			if (m_sFactionList.Contains(faction))
+			{
+				//faction = m_sDefaultEnemyFactionKey;
+				SDRC_Log.Add("[SDRC_EnemyListHelper:SelectEnemyFaction] Requested specific: " + faction, LogLevel.DEBUG);
+				return faction;
+			}
+			else
+			{
+				SDRC_Log.Add("[SDRC_EnemyListHelper:SelectEnemyFaction] Incorrect faction requested: " + faction + " . Using default: " + m_sDefaultEnemyFactionKey, LogLevel.WARNING);
+				faction = m_sDefaultEnemyFactionKey;
+				return faction;
+			}
+		}
+				
+		SDRC_Log.Add("[SDRC_EnemyListHelper:SelectEnemyFaction] Selected: " + faction + " (no change)", LogLevel.SPAM);
+		return faction;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Get Faction with string name
+	*/	
+	Faction GetFactionWithName(string name)
+	{
+		FactionManager factionManager = GetGame().GetFactionManager();
+		if (!factionManager)
+		{			
+			SDRC_Log.Add("[SDRC_EnemyListHelper:GetFactionWithName] No faction manager found.", LogLevel.ERROR);
+			return m_DefaultEnemyFaction;
+		}
+		
+		Faction faction = factionManager.GetFactionByKey(name);
+		if (!faction)
+		{
+			SDRC_Log.Add("[SDRC_EnemyListHelper:GetFactionWithName] Using default faction: " + m_sDefaultEnemyFactionKey, LogLevel.WARNING);
+			return m_DefaultEnemyFaction;
+		}
+		
+		return faction;
+	}	
+}
