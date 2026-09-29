@@ -7,6 +7,7 @@
 
 const string DC_MISSIONCONFIG_FILE_ROADBLOCK = "dc_missionConfig_Roadblock.json";
 const int DC_MISSIONCONFIG_FILE_ROADBLOCK_JSONVER = 2;
+const bool DC_MISSIONCONFIG_FILE_ROADBLOCK_SAFEUPDATE = false;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Roadblock : SDRC_Mission
@@ -22,7 +23,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 	void SDRC_Mission_Roadblock(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_ROADBLOCK_JSONVER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_ROADBLOCK_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_ROADBLOCK_SAFEUPDATE))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
@@ -120,7 +121,7 @@ class SDRC_Mission_Roadblock : SDRC_Mission
 		}	
 		
 		SetPos(pos);
-		SetPosName(SDRC_Locations.CreateName(GetPos(), m_DC_Roadblock.general.posName));
+		SetPosName(m_DC_Roadblock.general.posName);
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Roadblock.general);		
 

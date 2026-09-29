@@ -12,6 +12,7 @@ Note: The original HunterKiller mod is discontinued.
 
 const string DC_MISSIONCONFIG_FILE_HUNTER = "dc_missionConfig_Hunter.json";
 const int DC_MISSIONCONFIG_FILE_HUNTER_JSONVER = 2;
+const bool DC_MISSIONCONFIG_FILE_HUNTER_SAFEUPDATE = false;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Hunter : SDRC_Mission
@@ -29,7 +30,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 	void SDRC_Mission_Hunter(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_HUNTER_JSONVER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_HUNTER_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_HUNTER_SAFEUPDATE))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
@@ -110,7 +111,7 @@ class SDRC_Mission_Hunter : SDRC_Mission
 		}
 		
 		SetPos(pos);
-		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Hunter.general.posName));
+		SetPosName(m_DC_Hunter.general.posName);
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Hunter.general);		
 		SetActiveDistance(m_Config.maxDistanceToPlayer);		//Change the m_iActiveDistance to a mission specific one.		

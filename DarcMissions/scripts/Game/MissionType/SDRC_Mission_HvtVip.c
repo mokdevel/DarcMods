@@ -7,6 +7,7 @@ High Value Target (HVT) - Very Important Person
 
 const string DC_MISSIONCONFIG_FILE_HVTVIP = "dc_missionConfig_HvtVip.json";
 const int DC_MISSIONCONFIG_FILE_HVTVIP_JSONVER = 2;
+const bool DC_MISSIONCONFIG_FILE_HVTVIP_SAFEUPDATE = false;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_HvtVip : SDRC_Mission
@@ -28,7 +29,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 	void SDRC_Mission_HvtVip(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_HVTVIP_JSONVER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_HVTVIP_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_HVTVIP_SAFEUPDATE))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
@@ -78,7 +79,7 @@ class SDRC_Mission_HvtVip : SDRC_Mission
 		coverHelper = new SDRC_CoverHelper(m_Building);		
 		
 		SetPos(pos);
-		SetPosName(SDRC_Locations.CreateName(pos, m_DC_HvtVip.general.posName));
+		SetPosName(m_DC_HvtVip.general.posName);
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_HvtVip.general);		
 	}	

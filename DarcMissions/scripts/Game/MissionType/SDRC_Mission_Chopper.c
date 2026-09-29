@@ -17,6 +17,7 @@ enum SDRC_EMissionChopperState
 
 const string DC_MISSIONCONFIG_FILE_CHOPPER = "dc_missionConfig_Chopper.json";
 const int DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER = 3;
+const bool DC_MISSIONCONFIG_FILE_CHOPPER_SAFEUPDATE = false;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Chopper : SDRC_Mission
@@ -41,7 +42,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	void SDRC_Mission_Chopper(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_CHOPPER_SAFEUPDATE))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
@@ -114,7 +115,7 @@ class SDRC_Mission_Chopper : SDRC_Mission
 		m_iFlyEndTime = Math.ClampInt(m_iFlyEndTime, MIN_FLY_END_TIME, MAX_FLY_END_TIME);
 		
 		SetPos(pos);
-		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Chopper.general.posName));
+		SetPosName(m_DC_Chopper.general.posName);
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Chopper.general);		
 		if (!IsStatic())
@@ -256,21 +257,30 @@ class SDRC_Mission_Chopper : SDRC_Mission
 	private void MissionSpawn()
 	{
 		//Spawn vehicle
-		string resourceNameRequested = SDRC_VehicleListHelper.FindPopulatedListVehicle(m_DC_Chopper.heliList);
+		string resourceNameRequested = "";
 		string resourceName = "";
 		
-		if (resourceNameRequested[0] != "{")
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (baseGameMode)
 		{
-			resourceName = SDRC_VehicleListHelper.FindVehicleItem(resourceNameRequested, GetFaction());
-		}
-		else
-		{
-			resourceName = resourceNameRequested;
-			//Check faction for prefabs
-			string faction = SDRC_Resources.GetResourceFaction(resourceName);
-			if (faction != GetFaction())
+			if (baseGameMode.m_SDRC_Core)
 			{
-				SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " + GetId() + " Faction not correct: " + resourceName, LogLevel.WARNING);
+				resourceNameRequested = baseGameMode.m_SDRC_Core.m_VehicleListHelper.FindPopulatedListVehicle(m_DC_Chopper.heliList);
+				
+				if (resourceNameRequested[0] != "{")
+				{
+					resourceName = baseGameMode.m_SDRC_Core.m_VehicleListHelper.FindVehicleItem(resourceNameRequested, GetFaction());
+				}
+				else
+				{
+					resourceName = resourceNameRequested;
+					//Check faction for prefabs
+					string faction = SDRC_Resources.GetResourceFaction(resourceName);
+					if (faction != GetFaction())
+					{
+						SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " + GetId() + " Faction not correct: " + resourceName, LogLevel.WARNING);
+					}
+				}
 			}
 		}
 		

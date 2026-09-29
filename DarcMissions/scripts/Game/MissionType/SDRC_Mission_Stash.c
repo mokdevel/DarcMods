@@ -9,6 +9,7 @@ The usage for Stash mission is mainly as a story ending when using DarcStories.
 
 const string DC_MISSIONCONFIG_FILE_STASH = "dc_missionConfig_Stash.json";
 const int DC_MISSIONCONFIG_FILE_STASH_JSONVER = 2;
+const bool DC_MISSIONCONFIG_FILE_STASH_SAFEUPDATE = false;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Stash : SDRC_Mission
@@ -24,7 +25,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 	void SDRC_Mission_Stash(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_STASH_JSONVER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_STASH_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_STASH_SAFEUPDATE))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
@@ -71,7 +72,7 @@ class SDRC_Mission_Stash : SDRC_Mission
 		SDRC_SpawnHelper.SetStructuresToOrigo(m_DC_Stash.campItems);
 				
 		SetPos(pos);
-		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Stash.general.posName));
+		SetPosName(m_DC_Stash.general.posName);
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Stash.general);
 		SetActiveDistance(m_Config.activeDistance);		//Change the m_iActiveDistance to a mission specific one.		

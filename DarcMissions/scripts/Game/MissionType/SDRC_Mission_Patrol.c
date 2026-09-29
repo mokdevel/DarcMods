@@ -7,6 +7,7 @@
 
 const string DC_MISSIONCONFIG_FILE_PATROL = "dc_missionConfig_Patrol.json";
 const int DC_MISSIONCONFIG_FILE_PATROL_JSONVER = 2;
+const bool DC_MISSIONCONFIG_FILE_PATROL_SAFEUPDATE = false;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Patrol : SDRC_Mission
@@ -21,7 +22,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 	void SDRC_Mission_Patrol(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_PATROL_JSONVER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_PATROL_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_PATROL_SAFEUPDATE))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
@@ -83,7 +84,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		}	
 		
 		SetPos(pos, m_vPosDestination);
-		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Patrol.general.posName));
+		SetPosName(m_DC_Patrol.general.posName);
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Patrol.general);		
 		SetActiveDistance(m_Config.distanceToPlayer);		//Change the m_iActiveDistance to a mission specific one.

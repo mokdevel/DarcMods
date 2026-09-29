@@ -5,13 +5,14 @@
 A building is guarded by AIs with loot available.
 */
 
-const string DC_MISSIONCONFIG_FILE_SQUATTER = "dc_missionConfig_Squatter.json";
-const int DC_MISSIONCONFIG_FILE_SQUATTER_JSONVER = 2;
+const string DC_MISSIONCONFIG_FILE_SQUATTERS = "dc_missionConfig_Squatter.json";
+const int DC_MISSIONCONFIG_FILE_SQUATTERS_JSONVER = 2;
+const bool DC_MISSIONCONFIG_FILE_SQUATTERS_SAFEUPDATE = false;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Squatter : SDRC_Mission
 {
-	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_SQUATTER);	
+	private ref SDRC_JsonApi2 m_JsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_SQUATTERS);	
 	private ref SDRC_SquatterConfig m_Config = new SDRC_SquatterConfig();
 	private ref SDRC_Squatter m_DC_Squatter = new SDRC_Squatter();
 	
@@ -24,12 +25,12 @@ class SDRC_Mission_Squatter : SDRC_Mission
 	void SDRC_Mission_Squatter(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_SQUATTER_JSONVER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_SQUATTERS_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_SQUATTERS_SAFEUPDATE))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
 		}
-		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_SQUATTER_JSONVER);
+		m_Config.LoadMissionFiles(DC_MISSIONCONFIG_FILE_SQUATTERS_JSONVER);
 		
 		//Pick a configuration for mission
 		SetSubIdx(SDRC_MissionHelper.SelectMissionIndex(m_Config.missionList, GetSubIdx()));
@@ -74,7 +75,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 		coverHelper = new SDRC_CoverHelper(m_Building);		
 		
 		SetPos(pos);
-		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Squatter.general.posName));
+		SetPosName(m_DC_Squatter.general.posName);
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Squatter.general);		
 	}	
@@ -159,7 +160,7 @@ class SDRC_Mission_Squatter : SDRC_Mission
 			
 			if (coverHelper.IsReady())
 			{
-				//Use new system. If pos is set, AI will be spawned at the requested position.
+				//Use new system. If pos is set, loot will be spawned at the requested position.
 				pos = coverHelper.GetPosition(m_iSpawnIndex);
 				snap = false;
 			}

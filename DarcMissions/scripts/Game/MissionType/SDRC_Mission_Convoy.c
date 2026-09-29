@@ -7,6 +7,10 @@ A convoy traveling from A to B.
 Note to self: RADIUS, SCATTERED : This could also work, but support was removed as unnecessary. The concoy would follow a path created with waypointRange starting from posStart. posDestination is ignored.
 */
 
+const string DC_MISSIONCONFIG_FILE_CONVOY = "dc_missionConfig_Convoy.json";
+const int DC_MISSIONCONFIG_FILE_CONVOY_JSONVER = 2;
+const bool DC_MISSIONCONFIG_FILE_CONVOY_SAFEUPDATE = false;
+
 //------------------------------------------------------------------------------------------------
 enum SDRC_EMissionConvoyState
 {
@@ -17,9 +21,6 @@ enum SDRC_EMissionConvoyState
 	RUN
 };
 
-const string DC_MISSIONCONFIG_FILE_CONVOY = "dc_missionConfig_Convoy.json";
-const int DC_MISSIONCONFIG_FILE_CONVOY_JSONVER = 2;
-	
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Convoy : SDRC_Mission
 {
@@ -38,7 +39,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	void SDRC_Mission_Convoy(SDRC_EMissionType missionType, SDRC_MissionRequested request, bool staticMission = false)
 	{
 		//Load config
-		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_CONVOY_JSONVER))
+		if (!m_JsonApi.Load(m_Config, SDRC_MissionConfig.Cast(m_Config), DC_MISSIONCONFIG_FILE_CONVOY_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_CONVOY_SAFEUPDATE))
 		{
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.ERROR_LOADING_JSON);
 			return;
@@ -133,7 +134,7 @@ class SDRC_Mission_Convoy : SDRC_Mission
 		SDRC_DebugHelper.AddDebugPos(m_vPosDestination, Color.GREEN, 3, id: GetId(), 150);	
 		
 		SetPos(pos, m_vPosDestination);
-		SetPosName(SDRC_Locations.CreateName(pos, m_DC_Convoy.general.posName));
+		SetPosName(m_DC_Convoy.general.posName);
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_DC_Convoy.general);		
 		SetActiveDistance(m_Config.distanceToPlayer);				//Change the m_ActiveDistance to a mission specific one.
@@ -221,22 +222,31 @@ class SDRC_Mission_Convoy : SDRC_Mission
 	//------------------------------------------------------------------------------------------------
 	private void MissionSpawn()
 	{					
-		//Spawn vehicle					
-		string resourceNameRequested = SDRC_VehicleListHelper.FindPopulatedListVehicle(m_DC_Convoy.vehicleTypes);
+		//Spawn vehicle
+		string resourceNameRequested = "";
 		string resourceName = "";
 		
-		if (resourceNameRequested[0] != "{")
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (baseGameMode)
 		{
-			resourceName = SDRC_VehicleListHelper.FindVehicleItem(resourceNameRequested, GetFaction());
-		}
-		else
-		{
-			resourceName = resourceNameRequested;
-			//Check faction for prefabs
-			string faction = SDRC_Resources.GetResourceFaction(resourceName);
-			if (faction != GetFaction())
+			if (baseGameMode.m_SDRC_Core)
 			{
-				SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] " + GetId() + " : Faction not correct: " + resourceName, LogLevel.WARNING);
+				resourceNameRequested = baseGameMode.m_SDRC_Core.m_VehicleListHelper.FindPopulatedListVehicle(m_DC_Convoy.vehicleTypes);
+		
+				if (resourceNameRequested[0] != "{")
+				{
+					resourceName = baseGameMode.m_SDRC_Core.m_VehicleListHelper.FindVehicleItem(resourceNameRequested, GetFaction());
+				}
+				else
+				{
+					resourceName = resourceNameRequested;
+					//Check faction for prefabs
+					string faction = SDRC_Resources.GetResourceFaction(resourceName);
+					if (faction != GetFaction())
+					{
+						SDRC_Log.Add("[SDRC_Mission_Convoy:MissionSpawn] " + GetId() + " : Faction not correct: " + resourceName, LogLevel.WARNING);
+					}
+				}
 			}
 		}
 		

@@ -43,7 +43,7 @@ class SDRC_Mission_Template : SDRC_Mission
 		}
 		
 		SetPos(pos);
-		SetPosName(SDRC_Locations.CreateName(GetPos(), m_Config.general.posName));
+		SetPosName(m_Config.general.posName);
 		SetVisibility(m_Config.showMarker, m_Config.showHint, m_Config.showMessage);
 		UpdateGeneral(m_Config.general);		
 /*		SetHint(m_Config.showHint, m_Config.general.title, m_Config.general.info);		
