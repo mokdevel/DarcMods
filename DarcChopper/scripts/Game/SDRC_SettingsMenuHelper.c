@@ -5,8 +5,8 @@
 //------------------------------------------------------------------------------------------------
 class SDRC_SettingsMenuHelper
 {
-	static const string MODULE_NAME = "SDRC_EnableSetting";
-	static const string ENABLED_KEY = "m_bShowFlyPath";
+	const string MODULE_NAME = "SDRC_EnableSetting";
+	const string ENABLED_KEY = "m_bShowFlyPath";
 
 	static bool GetShowFlyPathEnabled()
 	{

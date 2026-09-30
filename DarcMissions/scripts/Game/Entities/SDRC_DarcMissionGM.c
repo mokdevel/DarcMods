@@ -68,8 +68,11 @@ class SDRC_DarcMissionGM : GenericEntity
 						nva.worldName = "";
 						nva.pos = owner.GetOrigin();
 						nva.radius = width;
-						nva.name = SDRC_Locations.CreateName(nva.pos);
-						//baseGameMode.missionFrame.m_aNonValidAreas.Insert(nva);
+						nva.name = "";
+						if (baseGameMode.m_SDRC_Core)
+						{						
+							nva.name = baseGameMode.m_SDRC_Core.m_LocationsHelper.CreateName(nva.pos);
+						}
 						baseGameMode.missionFrame.m_ConfigNonValidArea.m_NonValidAreas.Insert(nva);
 						
 						SDRC_SpawnHelper.DespawnItem(owner);						

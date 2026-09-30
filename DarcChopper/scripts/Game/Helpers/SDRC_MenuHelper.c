@@ -1,7 +1,7 @@
 class SDRC_MenuHelper
 {
-	static const string MODULE_NAME = "SDRC_EnableSetting";
-	static const string FLYPATH_KEY = "m_bShowFlyPath";
+	const string MODULE_NAME = "SDRC_EnableSetting";
+	const string FLYPATH_KEY = "m_bShowFlyPath";
 
 	//------------------------------------------------------------------------------------------------
 	static bool GetShowFlyPath()

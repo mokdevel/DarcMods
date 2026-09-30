@@ -93,7 +93,7 @@ modded class SDRC_ChopperComp
 	- FLY will start to fly
 	- Others will have some action bound to them.
 	*/
-	override private void SetNextState(IEntity owner, SDRC_FlyPathPoint flyDestination = null, bool allowRemove = true)
+	override void SetNextState(IEntity owner, SDRC_FlyPathPoint flyDestination = null, bool allowRemove = true)
 	{
 		//Reset the timer between points as we're setting new state with new points.
 		m_fTimeBetweenPts = 0;
@@ -159,6 +159,8 @@ modded class SDRC_ChopperComp
 			}
 			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
 			{
+				//NOTE: patrolCount has been set above
+				
 				//If request to patrol, create additional points around position. We will do _count_ amount of points around the area
 				int degree = 45; 		//Degrees per patrolCount
 				int sign = 1;			//SDRC_Misc.RandomSign(); <- does not work very well
@@ -422,7 +424,7 @@ modded class SDRC_ChopperComp
 	/*!	
 	Handle state (machine)
 	*/
-	override private void HandleState(IEntity owner, float timeSlice)
+	override void HandleState(IEntity owner, float timeSlice)
 	{	
 		switch (m_eHeliState)
 		{

@@ -945,8 +945,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 	SDRC_EHeliState GetState() {}
 	void SetState(SDRC_EHeliState state) {}
 	void SetTimeInState(int seconds) {}
-	private void SetNextState(IEntity owner, SDRC_FlyPathPoint flyDestination = null, bool allowRemove = true) {}
-	private void HandleState(IEntity owner, float timeSlice) {}
+	void SetNextState(IEntity owner, SDRC_FlyPathPoint flyDestination = null, bool allowRemove = true) {}
+	void HandleState(IEntity owner, float timeSlice) {}
 	//------------------------------------------------------------------------------------------------	
 	// Behaviour
 	//------------------------------------------------------------------------------------------------	
