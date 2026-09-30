@@ -543,6 +543,8 @@ class SDRC_Mission : Managed
 	//------------------------------------------------------------------------------------------------
 	void SetObserver(vector pos = vector.Zero, IEntity entity = null)
 	{
+		return;
+		
 		if (!entity)
 		{
 			if (!m_Groups.IsEmpty())

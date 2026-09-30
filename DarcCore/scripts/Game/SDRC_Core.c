@@ -106,6 +106,14 @@ class SDRC_Core
 			hasRoadNetwork = true;
 		}
 
+		//Check if observer system exists
+		bool hasObserverSystem = false;
+		ObserversSystem observers = ObserversSystem.Cast(GetGame().GetWorld().FindSystem(ObserversSystem));	
+		if (observers)
+		{
+			hasObserverSystem = true;
+		}
+		
 		//Check world size
 		int otherWorldSize = -1;
 		int worldSize = SDRC_Misc.GetWorldSize(otherWorldSize);
@@ -123,6 +131,7 @@ class SDRC_Core
 		SDRC_Log.Add("[SDRC_Core] World size: " + worldSizeString, LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World has ocean: " + GetGame().GetWorld().IsOcean(), LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World has road network: " + hasRoadNetwork, LogLevel.NORMAL);
+		SDRC_Log.Add("[SDRC_Core] World has observersystem: " + hasObserverSystem, LogLevel.NORMAL);
 		
 		bool bAiWorld = false;
 		if (GetGame().GetAIWorld())

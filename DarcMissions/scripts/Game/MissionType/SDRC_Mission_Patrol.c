@@ -172,7 +172,7 @@ class SDRC_Mission_Patrol : SDRC_Mission
 		}
 				
 		SetState(SDRC_EMissionState.ACTIVE);
-		//SetObserver();
+		SetObserver();
 	}
 }
 
