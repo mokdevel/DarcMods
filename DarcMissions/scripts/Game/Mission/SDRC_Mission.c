@@ -169,7 +169,6 @@ class SDRC_MissionConfig : SDRC_Config
 class SDRC_Mission : Managed
 {
 	static int m_iMissionIDCounter = 1;			//Static counter for mission ID
-	static int m_iObserverCounter = 1;			//Static counter for observer ID
 	
 	//Common for all missions
     private string m_sId;						//The mission ID with the prefix.
@@ -541,33 +540,14 @@ class SDRC_Mission : Managed
 	}	
 
 	//------------------------------------------------------------------------------------------------
-	void SetObserver(vector pos = vector.Zero, IEntity entity = null)
+	void SetObserver(IEntity entity = null, vector pos = vector.Zero)
 	{
 		return;
 		
-		if (!entity)
-		{
-			if (!m_Groups.IsEmpty())
-			{
-				entity = m_Groups[0];
-			}
-		}
-		
-		ChimeraWorld world = ChimeraWorld.CastFrom(GetGame().GetWorld());
-		if (entity)
-		{		
-			world = ChimeraWorld.CastFrom(entity.GetWorld());
-		}
-		ObserversSystem observers = ObserversSystem.Cast(world.FindSystem(ObserversSystem));	
-		if (observers)
-		{
-			m_iObserverId = DC_OBSERVER_ID_PREFIX + m_iObserverCounter;
-			m_iObserverCounter++;
-			observers.InsertObserverSP(m_iObserverId, pos[0], pos[2], entity);
-			#ifdef WORKBENCH			
-				SDRC_Log.Add("[SDRC_Mission:SetObserver] " +  GetId() + " : Key: " + m_iObserverId + " to: " + entity, LogLevel.DEBUG);
-			#endif
-		}
+		m_iObserverId = SDRC_AIHelper.SetObserver(entity, pos);
+		#ifdef WORKBENCH			
+			SDRC_Log.Add("[SDRC_Mission:SetObserver] " +  GetId() + " : Key: " + m_iObserverId + " to: " + entity, LogLevel.DEBUG);
+		#endif
 	}
 
 	//------------------------------------------------------------------------------------------------

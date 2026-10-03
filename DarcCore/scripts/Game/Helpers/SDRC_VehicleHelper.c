@@ -206,7 +206,8 @@ class SDRC_VehicleHelper
 		}
 		// This fixes the issue where AI is spawned invisible and not entering the vehicle before GM is moving. 
 		// Thanks to Gramps for finding the fix.
-		aiAgent.SetLOD(1);
+		//aiAgent.SetLOD(1);
+		aiAgent.SetPermanentLOD(1);
 		
 		BaseCompartmentManagerComponent compartmentManager = BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(BaseCompartmentManagerComponent));
 		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
@@ -340,7 +341,8 @@ class SDRC_VehicleHelper
 		
 		// This fixes the issue where AI is spawned invisible and not entering the vehicle before GM is moving. 
 		// Thanks to Gramps for finding the fix.
-		aiAgent.SetLOD(1);
+		//aiAgent.SetLOD(1);
+		aiAgent.SetPermanentLOD(1);
 		
 		bool success = accessComponent.GetInVehicle(vehicle, slot, forceTeleport, -1, ECloseDoorAfterActions.CLOSE_DOOR, true);
 		//bool success = accessComponent.GetInVehicle(vehicle, slot, forceTeleport, -1, ECloseDoorAfterActions.INVALID, false);

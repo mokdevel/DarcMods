@@ -778,4 +778,30 @@ sealed class SDRC_AIHelper
 		return aiAgent;
 	}
 	
+	//------------------------------------------------------------------------------------------------
+	const int DC_OBSERVER_ID_PREFIX = 14322688;	//The prefix used for marker and missions Id's. Hex: DA8C00
+	static int m_iObserverCounter = 1;			//Static counter for observer ID
+	
+	static int SetObserver(IEntity entity = null, vector pos = vector.Zero)
+	{
+		int observerId = -1;
+		
+		ChimeraWorld world = ChimeraWorld.CastFrom(GetGame().GetWorld());
+		if (entity)
+		{		
+			world = ChimeraWorld.CastFrom(entity.GetWorld());
+		}
+		ObserversSystem observers = ObserversSystem.Cast(world.FindSystem(ObserversSystem));	
+		if (observers)
+		{
+			observerId = DC_OBSERVER_ID_PREFIX + m_iObserverCounter;
+			m_iObserverCounter++;
+			observers.InsertObserverSP(observerId, pos[0], pos[2], entity);
+			#ifdef WORKBENCH			
+				SDRC_Log.Add("[SDRC_AIHelper:SetObserver] Key: " + observerId + " to: " + entity, LogLevel.DEBUG);
+			#endif
+		}
+		
+		return observerId;
+	}		
 }

@@ -38,14 +38,14 @@
 		private const int SDRC_PLAYER_MAX_DISTANCE = 1200;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 12;
+		private const int SDRC_MISSION_COUNT_STATIC = 20;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_DYNAMIC = 1;
 		private const int SDRC_MISSION_DELAY_BETWEEN_MISSIONS_STATIC = 1;
 		private const int SDRC_MISSION_ACTIVE_TIME_DYNAMIC = 5*60;				
-		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 8*60;	//SDRC_MISSION_ACTIVE_TIME_DYNAMIC * 10;	
+		private const int SDRC_MISSION_ACTIVE_TIME_STATIC = 80*60;	//SDRC_MISSION_ACTIVE_TIME_DYNAMIC * 10;	
 		private const int SDRC_MISSION_ACTIVE_DISTANCE = 150;
 		private const int SDRC_MISSION_ACTIVE_TIME_TO_END = 45;
 		private const float SDRC_MISSION_ACTIVE_MUL_TO_END = 0.9;
@@ -237,22 +237,22 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.ROADBLOCK);
 			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.SQUATTERS);
 //			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.STASH);
-//			missionDynamic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
+//			missionDynamic.missionTypeArray = {SDRC_EMissionType.CHOPPER, SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS};
 		
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.CHOPPER);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.CONVOY);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.CRASHSITE);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.HUNTER);
-			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.HVTITEM);
+//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.HVTITEM);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.HVTVIP);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.OCCUPATION);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.PATROL);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.ROADBLOCK);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.SQUATTERS);
-//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.STASH);
+			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.STASH);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.PATROL);
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH, SDRC_EMissionType.CHOPPER};
+//			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER, SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 		
 		#endif

@@ -113,7 +113,7 @@ class SDRC_Core
 		{
 			hasObserverSystem = true;
 		}
-		
+
 		//Check world size
 		int otherWorldSize = -1;
 		int worldSize = SDRC_Misc.GetWorldSize(otherWorldSize);
@@ -133,13 +133,23 @@ class SDRC_Core
 		SDRC_Log.Add("[SDRC_Core] World has road network: " + hasRoadNetwork, LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] World has observersystem: " + hasObserverSystem, LogLevel.NORMAL);
 		
-		bool bAiWorld = false;
-		if (GetGame().GetAIWorld())
+		//Print AI data
+		SCR_AIWorld aiWorld = SCR_AIWorld.Cast(GetGame().GetAIWorld());
+		int aiLimit = -1; 
+		bool hasAiWorld = false;
+		if (aiWorld)
 		{
-			bAiWorld = true;
+			hasAiWorld = true;
+			aiLimit = aiWorld.GetLimitOfActiveAIs();
+		}		
+				
+		SDRC_Log.Add("[SDRC_Core] World has AIWorld: " + hasAiWorld, LogLevel.NORMAL);
+		if (hasAiWorld)
+		{
+			SDRC_Log.Add("[SDRC_Core] AI limit: " + aiLimit, LogLevel.NORMAL);
 		}
-		SDRC_Log.Add("[SDRC_Core] World has AIWorld: " + bAiWorld, LogLevel.NORMAL);
 		
+		//Print persistence data
 		bool bPersistence = false;
 		if (PersistenceSystem.GetInstance())
 		{
@@ -147,6 +157,7 @@ class SDRC_Core
 		}
 		SDRC_Log.Add("[SDRC_Core] World has persistence: " + bPersistence, LogLevel.NORMAL);
 		
+		//Print faction data
 		int factionCount = SDRC_FactionHelper.GetFactionKeyList(m_sFactionList);
 		SDRC_Log.Add("[SDRC_Core] Factions available: " + factionCount + " - " + m_sFactionList, LogLevel.NORMAL);
 		SDRC_Log.Add("[SDRC_Core] Fallback faction: " + m_Config.fallbackEnemyFaction, LogLevel.NORMAL);
