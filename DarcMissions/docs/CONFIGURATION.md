@@ -29,6 +29,18 @@ Frequently asked parameters:
 * [Factions](./MISSIONCONFIG.md#factions)
 * [Mission count](./MISSIONFRAME.md#mission-count)
 
+Other parameter details available:
+* [Lists](./P_LISTS.md) for automatic loot and enemy lists
+* [Locations](./P_LOCATIONS.md)
+* [Loot](./P_LOOT.md)
+* [Non Valid Areas](./NONVALIDAREAS.md) aka safe zones
+* [Structures](./P_STRUCTURE.md)
+* [Buildings](./P_BUILDING.md)
+* [QRF - Quick Reaction Force](./P_QRF.md)
+* [Helicopters Crashing](./P_HELICOPTER_CRASH.md)
+* [Helicopters Flying](./P_HELICOPTER_FLY.md)
+
+## Mission parameters
 Mission specific parameters for each mission type: 
 * (1) [Hunter](./MISSION_HUNTER.md)
 * (2) [Occupation](./MISSION_OCCUPATION.md)
@@ -41,17 +53,6 @@ Mission specific parameters for each mission type:
 * (9) [HVT Item](./MISSION_HVTITEM.md)
 * (10) [Stash](./MISSION_STASH.md)
 * (11) [Chopper](./MISSION_CHOPPER.md)
-
-Other parameter details available:
-* [Lists](./P_LISTS.md) for automatic loot and enemy lists
-* [Locations](./P_LOCATIONS.md)
-* [Loot](./P_LOOT.md)
-* [Non Valid Areas](./NONVALIDAREAS.md) aka safe zones
-* [Structures](./P_STRUCTURE.md)
-* [Buildings](./P_BUILDING.md)
-* [QRF - Quick Reaction Force](./P_QRF.md)
-* [Helicopters Crashing](./P_HELICOPTER_CRASH.md)
-* [Helicopters Flying](./P_HELICOPTER_FLY.md)
 
 # Configuration files
 The configuration files will be under your ```profile\DarcMods\<subConfDir>```. The <subConfDir> is a name for the specific sub directory under DarcMods and can be changed in dc_coreConfig.json. The default directory will be called ```default```.
