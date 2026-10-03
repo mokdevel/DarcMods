@@ -457,6 +457,7 @@ modded class SDRC_ChopperComp
 				{
 					value = params.timeSearchAndDestroy;
 				}
+				AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, destination);
 //				SetAttackPosition(destination);				//Where to attack
 				break;
 			}								

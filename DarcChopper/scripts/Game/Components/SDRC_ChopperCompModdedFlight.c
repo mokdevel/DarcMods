@@ -45,7 +45,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 			vector raisePos = vector.Zero;
 			raisePos[1] = (m_fFlyHeightLow + m_fFlyHeightHigh) / 2;
 			AddDestination(SDRC_EFlyWayPointType.WP_RAISE, raisePos, index: 0);
-			float time = (raisePos[1] - m_vOrigin[1]) / 6;
+			float time = (raisePos[1] - (m_vOrigin[1] - y)) / 6;
 			AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, time, index: 0);
 			
 			//Add these in the beginning of the list. Needs to be added in reverse order.

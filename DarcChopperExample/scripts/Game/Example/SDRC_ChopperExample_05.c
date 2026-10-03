@@ -49,5 +49,7 @@ class SDRC_ChopperExample_05
 		//Add our flight path
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, flyHereFirst);
 		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_PATROL, "2750 0 1640");
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY, "2750 0 2250");
+		m_Vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_PATROL, "2500 0 2250");
 	}	
 }

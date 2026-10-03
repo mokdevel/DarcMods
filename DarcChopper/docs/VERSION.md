@@ -2,6 +2,13 @@
 
 ## Next Version
 
+## 202610xx
+Main features:
+
+Fixes:
+* WP_SEARCH_DESTROY sets also a WP_PATROL to the location. This way the chopper will remain in the area to search for enemies.
+* WP_HOVER_UP timer calculated incorrectly.
+
 ## 20260924
 Main features:
 * All kinds of flight model finetuning.
