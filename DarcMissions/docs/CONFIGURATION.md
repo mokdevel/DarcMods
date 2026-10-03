@@ -12,11 +12,11 @@ Each file has a ``jsonVersion`` parameter. This tells the version of the structu
 
 The mod is WIP so the files are getting version changes occasionally.
 
-## Files
-Core has common configurations for mods. See:
+## Parameter details
+Core has common configurations for mods.
 * [Core](./CORE.md)
 
-The mission frame has the main definitions on mission spawn times, counts, etc. See:
+The mission frame has the main definitions on mission spawn times, counts, etc.
 * [Mission Frame](./MISSIONFRAME.md)
 * [Mission Frame Config](./MISSIONCONFIG.md)
 * [Mission files](./MISSIONFILES.md)
@@ -24,6 +24,10 @@ The mission frame has the main definitions on mission spawn times, counts, etc. 
 Missions are configurable via .json files. Each mission have their own configuration file, but some information is shared. There are:
 * [General parameters](./P_COMMON.md) that are valid for all missions. 
 * [Camps](./P_CAMP.md) is a common structure used in multiple missions.
+
+Frequently asked parameters:
+* [Factions](./MISSIONCONFIG.md#factions)
+* [Mission count](./MISSIONFRAME.md#mission-count)
 
 Mission specific parameters for each mission type: 
 * (1) [Hunter](./MISSION_HUNTER.md)
