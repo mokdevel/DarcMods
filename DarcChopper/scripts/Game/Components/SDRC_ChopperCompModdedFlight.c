@@ -196,10 +196,25 @@ modded class SDRC_ChopperComp : ScriptComponent
 			}
 		}
 		
-		//If we're still in S&D, add a patrol to the list
-		if (GetBehaviour() == SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR)
+		//If we're still in S&D, but not tasked or planned to attack, add a patrol to the list
+		if (GetBehaviour() == SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR) 
 		{
-			AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, m_vSearchAndDestroyPosition, index: 0);
+			//Decide what to do in S&D mode			
+			if ( (GetState() == SDRC_EHeliState.ATTACK) && (m_fAttackPositionKnownTime > 0) )			
+			{
+				//If we're in attack mode, and know the enemy, do an additional attack
+				TypeAttackSetup(owner, m_vAttackPosition);
+			}
+			else if (m_vFlyDestinations[0].type == SDRC_EFlyWayPointType.WP_ATTACK)
+			{
+				//The next destination will be ATTACK. Let's execute that. Nothing to do here.				
+			}
+			else
+			{			
+				//Enemy is not known, let's do one patrol around the area and decide what to do next.
+				AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, m_vSearchAndDestroyPosition, index: 0);
+				SetState(SDRC_EHeliState.FLY);	//NOTE: Setting to FLY will also reset the attack position and timers
+			}
 		}
 		
 		bool firstDestinationHandled = false;

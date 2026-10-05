@@ -33,36 +33,36 @@ modded class SDRC_ChopperComp
 	*/
 	override void SetAttackPosition(vector pos)
 	{
+		//If position is reset, reset also known time and return to flight mode
+		if (pos == vector.Zero)
+		{
+			m_fAttackPositionKnownTime = 0;
+			m_vAttackPosition = pos;
+			return;
+		}
+		
 		//We will not reset attack position if there is still time left
-		if ( (m_fAttackPositionKnownTime > 0) && (pos == vector.Zero) )
+		if (m_fAttackPositionKnownTime > 0)
+		{
+			return;
+		}
+
+		//If attack is set to same position as before, don't reset timers. Just return to continue hitting the previous spot.
+		if (pos == m_vAttackPosition)
 		{
 			return;
 		}
 		
 		//Set time for attack position
-		if (pos == vector.Zero)
-		{
-			m_fAttackPositionKnownTime = 0;
-		}
-		else
-		{
-			m_fAttackPositionKnownTime = params.enemyKnownTime;
-		}
+		m_fAttackPositionKnownTime = params.enemyKnownTime;
 		
 		//Set position to right height
-		if (pos != vector.Zero)
-		{		
-			if (pos[1] == 0)
-			{
-				float y = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
-				pos[1] = y;			
-			}
-		}
-		
-		if (m_vAttackPosition != vector.Zero)
+		if (pos[1] == 0)
 		{
-			m_vAttackPositionOld = m_vAttackPosition;
-		}		
+			float y = GetGame().GetWorld().GetSurfaceY(pos[0], pos[2]);
+			pos[1] = y;			
+		}
+
 		m_vAttackPosition = pos;
 		
 		#ifdef WORKBENCH

@@ -259,9 +259,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 	
 	//Attack related
 	vector m_vAttackPosition = vector.Zero;		//Position to attack. Use SetAttackPosition() to set this
-	vector m_vAttackPositionOld = vector.Zero;	//Previous position that was attacked. Automatically set in SetAttackPosition()
 	float m_fAttackPositionKnownTime;			//Time to consider the position as a valid target
 	vector m_vSearchAndDestroyPosition = vector.Zero;	//Position where current S&D is happening
+	
 	//The order of things:
 	//- Spawn chopper via GM or mod
 	//- OnPostInit()

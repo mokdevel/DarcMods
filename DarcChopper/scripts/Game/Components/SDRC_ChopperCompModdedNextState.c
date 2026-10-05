@@ -29,11 +29,6 @@ modded class SDRC_ChopperComp
 				break;
 			case SDRC_EHeliState.FLY:
 			{
-/*				//Disable the TimeInState counter
-				SetTimeInState(0);			
-				//Set normal behaviour
-				SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);*/
-				//Reset attack
 				ResetAttack();
 				break;
 			}
@@ -111,7 +106,7 @@ modded class SDRC_ChopperComp
 		nextType = SDRC_ChopperHelper.GetNextWayPointType(owner, nextType);
 
 		//Parameters needed below.
-		int patrolCount = 8 + SDRC_Misc.RandomInt(0, 6);		//Do a few rounds around the area
+		int patrolCount = 6 + SDRC_Misc.RandomInt(0, 6);		//Do a few rounds around the area
 		
 		#ifdef WORKBENCH
 			//patrolCount = 3;
@@ -547,50 +542,47 @@ modded class SDRC_ChopperComp
 		
 		//Reset behaviour cycle timeout
 		m_fTimerBehaviourCycle = params.behaviourCycleTime;
-
+		
+		//If we know the enemy, don't search for a new enemy
+		if (m_fAttackPositionKnownTime > 0)
+		{
+			return;
+		}
+		
+		//We have forgotten the enemy. Let's look around.
+		
 		//Do enemy search
 		SetAttackPosition(vector.Zero);	//NOTE: This will not reset m_fAttackPositionSetTime if we're still S&D state
 		SDRC_ChopperEnemyHelper.SearchForEnemy(owner);
 		
-		//If enemy found, enter S&D behaviour in case we're in normal behaviour. 
-		//If we're passive, doing evac or .. we don't want S&D to happen.
-		if ( (m_vAttackPosition != vector.Zero) && (GetBehaviour() == SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR) )
+		//If enemy was found, change to S&D behaviour and start an attack.
+		if (m_vAttackPosition != vector.Zero)
 		{
 			//If yes, become aggressive and/or reset timer.
 			SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, params.timeSearchAndDestroy);
 			//When an enemy is found, set the behaviour timer to enemyKnownTime. This way a new enemy is searched only after it's forgotten.
-			//m_fTimerBehaviourCycle is set slightly after the enemy is forgotten.
+			//m_fTimerBehaviourCycle is set slightly longer that enemy known time.
 			m_fTimerBehaviourCycle = params.enemyKnownTime + 1;
-			SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] Enemy found. Changing to S&D behaviour." + m_vAttackPosition, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] Enemy found." + m_vAttackPosition, LogLevel.DEBUG);
+
+			//Prepare an attack			
+			TypeAttackSetup(owner, m_vAttackPosition);
+			SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D: Enemy found, attacking: " + m_vAttackPosition, LogLevel.NORMAL);
 		}			
-						
-		switch (GetBehaviour())
-		{
-			case SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR:
-			{
-				//Setup the attack in case m_fAttackPositionKnownTime was set and position is new
-				if ( (m_vAttackPosition != vector.Zero) && (m_fAttackPositionKnownTime == params.enemyKnownTime) )
+/*		else
+		{						
+			//If enemy has been forgotten, do an additional round of flight
+			if ( (m_fAttackPositionKnownTime <= 0) && (m_vAttackPositionOld != vector.Zero) )
+			{					
+				//If no enemy, add another patrol round
+				if (SDRC_ChopperHelper.GetNextWayPointType(owner) != SDRC_EFlyWayPointType.WP_PATROL_ONCE)
 				{
-					TypeAttackSetup(owner, m_vAttackPosition);
-					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D: Enemy found, attacking: " + m_vAttackPosition, LogLevel.NORMAL);
+					AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, m_vAttackPositionOld, index: 0);		//NOTE: This is set as first waypoint							
 				}
-				else
-				{
-					//If enemy has been forgotten, do an additional round of flight
-					if ( (m_fAttackPositionKnownTime <= 0) && (m_vAttackPositionOld != vector.Zero) )
-					{					
-						//If no enemy, add another patrol round
-						if (SDRC_ChopperHelper.GetNextWayPointType(owner) != SDRC_EFlyWayPointType.WP_PATROL_ONCE)
-						{
-							AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, m_vAttackPositionOld, index: 0);		//NOTE: This is set as first waypoint							
-						}
-						//We consider the spot 
-						m_fTimerBehaviourCycle = params.enemyKnownTime;
-					}
-				}
-				break;
+				//We consider the spot 
+				m_fTimerBehaviourCycle = params.enemyKnownTime;
 			}
-		}
+		}*/
 	}	
 		
 	//------------------------------------------------------------------------------------------------	

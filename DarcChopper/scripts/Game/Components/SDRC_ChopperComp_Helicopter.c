@@ -43,8 +43,8 @@ class SDRC_ChopperParams_Helicopter : SDRC_ChopperParams
 		
 		//Attack and enemy related
 		rayLenEnemy = 1000;
-		timeSearchAndDestroy = 4*60;
-		enemyKnownTime = 2*60;
+		timeSearchAndDestroy = 2*60;
+		enemyKnownTime = 60;
 		attackHeightMul = 0.7;
 
 		//Behaviour
@@ -239,10 +239,10 @@ modded class SDRC_ChopperComp
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Handle attacks. Search for the enemy and then react on the finding.
+	Execute non-AI managed attacks.
 	
-	- Normal case: If enemy is seen, consider shooting
-	- Attack case: The location to bomb has been assigned. (m_vAttackPosition)
+	- Normal case: If attack position is not defined, search and consider shooting
+	- Attack case: If attack position is set, bomb the location. (m_vAttackPosition)
 	*/
 	override void TypeHandleAttack(IEntity owner)
 	{
@@ -253,9 +253,10 @@ modded class SDRC_ChopperComp
 			return;
 		}
 		
-		//Handle attacks:		
+		//Handle attacks
 		if (m_vAttackPosition == vector.Zero)
 		{
+			//Normal case
 			if (m_fTimerRocketDelay < 0)
 			{
 				SDRC_ChopperEnemyHelper.SearchEnemyForRocket(owner);
@@ -264,7 +265,7 @@ modded class SDRC_ChopperComp
 		}
 		else
 		{
-			//Attack case:
+			//Attack case
 			if (m_fTimerRocketDelay < 0)
 			{
 				SDRC_ChopperEnemyHelper.EnemyFoundForRocket(owner, m_vAttackPosition);
