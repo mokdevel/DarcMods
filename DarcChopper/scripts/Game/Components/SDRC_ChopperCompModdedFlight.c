@@ -196,6 +196,12 @@ modded class SDRC_ChopperComp : ScriptComponent
 			}
 		}
 		
+		//If we're still in S&D, add a patrol to the list
+		if (GetBehaviour() == SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR)
+		{
+			AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, m_vSearchAndDestroyPosition, index: 0);
+		}
+		
 		bool firstDestinationHandled = false;
 		bool oneShotHandled = false;
 		
@@ -217,7 +223,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 			//SDRC_DebugHelper.AddDebugPos(flyDestination.pt, ARGB(32, 255, 128, 64), 1.0, m_sDid, 50);
 			
 			bool destinationHandled = false;	//Set true, if destination was added
-			int patrolCount = 8;				//Do one round for patrol by default (8*45 degrees)
 			
 			switch (flyDestination.type)
 			{
@@ -323,22 +328,10 @@ modded class SDRC_ChopperComp : ScriptComponent
 	{
 		switch (type)
 		{
-/*			case SDRC_EFlyWayPointType.WP_ATTACK:
-			{
-				//Attack to be on low altitude. This will be set in SDRC_ChopperHelper.SetSplinePointsAboveGround()
-				SetState(SDRC_EHeliState.ATTACK);
-				//NOTE: m_vAttackPosition has been set in AddDestination
-				break;
-			}*/
-/*			case SDRC_EFlyWayPointType.WP_CRASH:
-			{
-				SetState(SDRC_EHeliState.CRASH);
-				//NOTE: m_vAttackPosition has been set in AddDestination
-				break;
-			}*/
 			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
 			{	
 				SetBehaviour(SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR, value);
+				m_vSearchAndDestroyPosition = destination;
 				//NOTE: m_vAttackPosition has been set in AddDestination
 				break;
 			}

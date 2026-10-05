@@ -34,7 +34,7 @@ modded class SDRC_ChopperComp
 	override void SetAttackPosition(vector pos)
 	{
 		//We will not reset attack position if there is still time left
-		if ( (m_fAttackPositionSetTime > 0) && (pos == vector.Zero) )
+		if ( (m_fAttackPositionKnownTime > 0) && (pos == vector.Zero) )
 		{
 			return;
 		}
@@ -42,11 +42,11 @@ modded class SDRC_ChopperComp
 		//Set time for attack position
 		if (pos == vector.Zero)
 		{
-			m_fAttackPositionSetTime = 0;
+			m_fAttackPositionKnownTime = 0;
 		}
 		else
 		{
-			m_fAttackPositionSetTime = params.enemyKnownTime;
+			m_fAttackPositionKnownTime = params.enemyKnownTime;
 		}
 		
 		//Set position to right height

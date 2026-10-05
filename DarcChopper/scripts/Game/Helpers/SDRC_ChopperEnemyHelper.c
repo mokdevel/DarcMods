@@ -40,8 +40,8 @@ class SDRC_ChopperEnemyHelper
 			return false;
 		}
 		
-		//Search on cyclic time. This usually is m_fEnemyFoundTimeout time, but when enemy is found, it's set to m_fAttackTimer
-		if (chopperComp.m_fAttackPositionSetTime > 0)
+		//Search on cyclic time. If position is still known, don't change it.
+		if (chopperComp.m_fAttackPositionKnownTime > 0)
 		{
 			return false;
 		}
@@ -57,7 +57,7 @@ class SDRC_ChopperEnemyHelper
 		else
 		{
 			//Enemy not found, so try again in a moment.
-			chopperComp.m_fAttackPositionSetTime = 0;//chopperComp.params.enemySearchCycleTime;
+			chopperComp.m_fAttackPositionKnownTime = 0;
 		}
 		
 		return found;

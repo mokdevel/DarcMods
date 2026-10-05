@@ -65,9 +65,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 	[Attribute(category: "Chopper", defvalue: "40.0", desc: "Maximum speed", params: "1.0 100.0 0.1")]	
 	float m_fSpeedMax;				//Maximum speed
 	float m_fSpeedMaxOrig;
-	[Attribute(category: "Chopper", defvalue: "75.0", desc: "Minimum fly height (from ground level)", params: "5 100.0 1")]	
+	[Attribute(category: "Chopper", defvalue: "50.0", desc: "Minimum fly height (from ground level)", params: "5 100.0 1")]	
 	float m_fFlyHeightLow;			//Flight height low
-	[Attribute(category: "Chopper", defvalue: "110.0", desc: "Maximum fly height (from ground level)", params: "5 600.0 1")]	
+	[Attribute(category: "Chopper", defvalue: "95.0", desc: "Maximum fly height (from ground level)", params: "5 600.0 1")]	
 	float m_fFlyHeightHigh;			//Flight height high
 	[Attribute(category: "Chopper", defvalue: "300", desc: "Minimum distance for waypoint", params: "0.1 1000.0 0.1")]	
 	float m_fDistanceLow;			//Distance for waypoint min
@@ -260,8 +260,8 @@ modded class SDRC_ChopperComp : ScriptComponent
 	//Attack related
 	vector m_vAttackPosition = vector.Zero;		//Position to attack. Use SetAttackPosition() to set this
 	vector m_vAttackPositionOld = vector.Zero;	//Previous position that was attacked. Automatically set in SetAttackPosition()
-	float m_fAttackPositionSetTime				//Time to consider the position as a valid target
-	
+	float m_fAttackPositionKnownTime;			//Time to consider the position as a valid target
+	vector m_vSearchAndDestroyPosition = vector.Zero;	//Position where current S&D is happening
 	//The order of things:
 	//- Spawn chopper via GM or mod
 	//- OnPostInit()
@@ -323,7 +323,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 		SetTimeInState(0);
 		
 		//Initialize enemyFoundTime
-		m_fAttackPositionSetTime = 0;
+		m_fAttackPositionKnownTime = 0;
 		
 		//Set wheel brake on
 		HelicopterControllerComponent hcc = HelicopterControllerComponent.Cast(owner.FindComponent(HelicopterControllerComponent));
@@ -453,7 +453,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 //		m_fAttackTimer -= timeSlice;
 		m_fTimerBehaviour -= timeSlice;
 		m_fTimerBehaviourCycle -= timeSlice;
-		m_fAttackPositionSetTime -= timeSlice;
+		m_fAttackPositionKnownTime -= timeSlice;
 		
 		//---
 		//Check if we're still functional	
@@ -934,7 +934,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	*/
 	void ResetAttack()
 	{
-		m_fAttackPositionSetTime = 0;
+		m_fAttackPositionKnownTime = 0;
 		SetAttackPosition(vector.Zero);
 		SDRC_Log.Add("[SDRC_ChopperComp:ResetAttack] Attack position reset.", LogLevel.SPAM);
 	}

@@ -29,10 +29,10 @@ modded class SDRC_ChopperComp
 				break;
 			case SDRC_EHeliState.FLY:
 			{
-				//Disable the TimeInState counter
+/*				//Disable the TimeInState counter
 				SetTimeInState(0);			
 				//Set normal behaviour
-				SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
+				SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);*/
 				//Reset attack
 				ResetAttack();
 				break;
@@ -111,7 +111,11 @@ modded class SDRC_ChopperComp
 		nextType = SDRC_ChopperHelper.GetNextWayPointType(owner, nextType);
 
 		//Parameters needed below.
-		int patrolCount = 8;				//Do one round for patrol by default (8*45 degrees)
+		int patrolCount = 8 + SDRC_Misc.RandomInt(0, 6);		//Do a few rounds around the area
+		
+		#ifdef WORKBENCH
+			//patrolCount = 3;
+		#endif
 		
 		switch (nextType)
 		{
@@ -185,8 +189,7 @@ modded class SDRC_ChopperComp
 				if (m_vAttackPosition != vector.Zero)
 				{
 					AddFlyPathPoint(m_vAttackPosition);
-				}
-				
+				}				
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_LAND:
@@ -524,7 +527,6 @@ modded class SDRC_ChopperComp
 		{
 			//Normal case
 			SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
-//			m_eHeliBehaviour = SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR;
 			ResetAttack();
 			return;
 		}
@@ -566,17 +568,16 @@ modded class SDRC_ChopperComp
 		{
 			case SDRC_EHeliBehaviour.SEARCH_AND_DESTROY_BEHAVIOUR:
 			{
-				//Set attack position. This also resets the m_fAttackPositionSetTime		
-				//SetAttackPosition(m_vAttackPosition);
-				
-				if ( (m_vAttackPosition != vector.Zero) && (m_fAttackPositionSetTime == params.enemyKnownTime) )
+				//Setup the attack in case m_fAttackPositionKnownTime was set and position is new
+				if ( (m_vAttackPosition != vector.Zero) && (m_fAttackPositionKnownTime == params.enemyKnownTime) )
 				{
 					TypeAttackSetup(owner, m_vAttackPosition);
 					SDRC_Log.Add("[SDRC_ChopperComp:HandleBehaviour] S&D: Enemy found, attacking: " + m_vAttackPosition, LogLevel.NORMAL);
 				}
 				else
 				{
-					if ( (m_fAttackPositionSetTime <= 0) && (m_vAttackPositionOld != vector.Zero) )
+					//If enemy has been forgotten, do an additional round of flight
+					if ( (m_fAttackPositionKnownTime <= 0) && (m_vAttackPositionOld != vector.Zero) )
 					{					
 						//If no enemy, add another patrol round
 						if (SDRC_ChopperHelper.GetNextWayPointType(owner) != SDRC_EFlyWayPointType.WP_PATROL_ONCE)

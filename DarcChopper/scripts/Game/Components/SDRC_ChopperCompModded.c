@@ -377,38 +377,10 @@ modded class SDRC_ChopperComp
 		
 		switch (type)
 		{
-			//------------------------------------------------------------------------------------------------	
-			// Normal actions without the need for any additional handling
-			// These just fall through and do a basic AddDestinationPoint()
-			//------------------------------------------------------------------------------------------------				
-			case SDRC_EFlyWayPointType.WP_GET_OUT:			//Handled in HandleState()
-			case SDRC_EFlyWayPointType.WP_END:
-			case SDRC_EFlyWayPointType.WP_DESPAWN:
-			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
-			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
-			case SDRC_EFlyWayPointType.WP_PATROL:
-			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
-			case SDRC_EFlyWayPointType.WP_RAISE:
-			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
-			case SDRC_EFlyWayPointType.WP_CRASH:
+			case SDRC_EFlyWayPointType.WP_FLY:
 			{
 				break;
 			}
-			case SDRC_EFlyWayPointType.WP_WAIT:
-			case SDRC_EFlyWayPointType.WP_HOVER:
-			case SDRC_EFlyWayPointType.WP_HOVER_UP:
-			case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
-			{
-				if (value < 1)
-				{
-					SDRC_Log.Add("[SDRC_ChopperComp:AddDestination] Time assigned to " + SCR_Enum.GetEnumName(SDRC_EFlyWayPointType, type) + " is very short: " + value + " seconds.", LogLevel.WARNING);					
-				}
-				break;
-			}
-						
-			//------------------------------------------------------------------------------------------------	
-			// Normal actions
-			//------------------------------------------------------------------------------------------------	
 			case SDRC_EFlyWayPointType.WP_FLY_IMMEDIATELY:
 			{
 				//Fly immediately to a destination
@@ -447,20 +419,16 @@ modded class SDRC_ChopperComp
 				SetState(SDRC_EHeliState.FLY_AWAY);
 				break;
 			}
-			case SDRC_EFlyWayPointType.WP_ATTACK:
-			{
+			case SDRC_EFlyWayPointType.WP_PATROL:
+			case SDRC_EFlyWayPointType.WP_PATROL_ONCE:
+			case SDRC_EFlyWayPointType.WP_LAND_VERTICAL:
+			case SDRC_EFlyWayPointType.WP_WAIT:
+			case SDRC_EFlyWayPointType.WP_WAIT_GETOUT:
+			case SDRC_EFlyWayPointType.WP_RAISE:
+			case SDRC_EFlyWayPointType.WP_HOVER:
+			case SDRC_EFlyWayPointType.WP_HOVER_UP:
+			case SDRC_EFlyWayPointType.WP_HOVER_DOWN:
 				break;
-			}
-			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
-			{
-				if (value == -1)
-				{
-					value = params.timeSearchAndDestroy;
-				}
-				AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, destination);
-//				SetAttackPosition(destination);				//Where to attack
-				break;
-			}								
 			case SDRC_EFlyWayPointType.WP_BRAKE:
 			{
 				if (value == -1)
@@ -483,6 +451,23 @@ modded class SDRC_ChopperComp
 				}
 				break;
 			}
+			case SDRC_EFlyWayPointType.WP_END:
+			case SDRC_EFlyWayPointType.WP_DESPAWN:
+			case SDRC_EFlyWayPointType.WP_CRASH:
+			case SDRC_EFlyWayPointType.WP_GET_OUT:			//Handled in HandleState()
+			case SDRC_EFlyWayPointType.WP_STOP_ENGINE:
+			case SDRC_EFlyWayPointType.WP_ATTACK:
+				break;
+			case SDRC_EFlyWayPointType.WP_SEARCH_DESTROY:
+			{
+				if (value == -1)
+				{
+					value = params.timeSearchAndDestroy;
+				}
+//				AddDestination(SDRC_EFlyWayPointType.WP_PATROL_ONCE, destination);
+//				SetAttackPosition(destination);				//Where to attack
+				break;
+			}								
 			case SDRC_EFlyWayPointType.WP_RESET:
 			{
 				ResetDestinations();
@@ -522,6 +507,22 @@ modded class SDRC_ChopperComp
 				addDestinationPoint = false;
 				break;
 			}
+			case SDRC_EFlyWayPointType.WP_M_LAND_TROOPS:
+			{
+				AddDestination(SDRC_EFlyWayPointType.WP_M_LAND, destination);
+				AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
+				AddDestination(SDRC_EFlyWayPointType.WP_WAIT_GETOUT);
+				vector hoverPos = vector.Zero;
+				hoverPos[1] = m_fFlyHeightLow * 0.7;		//We don't want to raise to exactly same position
+				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 5);
+				vector raisePos = "300 0 0";
+				raisePos[1] = m_fFlyHeightHigh;
+				AddDestination(SDRC_EFlyWayPointType.WP_RAISE, raisePos);
+				
+				//All things are already added
+				addDestinationPoint = false;
+				break;
+			}
 			case SDRC_EFlyWayPointType.WP_M_LAND_TO_FREE_SPOT:
 			case SDRC_EFlyWayPointType.WP_M_EVAC_TROOPS:
 			{
@@ -541,22 +542,6 @@ modded class SDRC_ChopperComp
 					AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY);
 					SetBehaviour(SDRC_EHeliBehaviour.EVAC_BEHAVIOUR, -1);
 				}
-				//All things are already added
-				addDestinationPoint = false;
-				break;
-			}
-			case SDRC_EFlyWayPointType.WP_M_LAND_TROOPS:
-			{
-				AddDestination(SDRC_EFlyWayPointType.WP_M_LAND, destination);
-				AddDestination(SDRC_EFlyWayPointType.WP_GET_OUT);
-				AddDestination(SDRC_EFlyWayPointType.WP_WAIT_GETOUT);
-				vector hoverPos = vector.Zero;
-				hoverPos[1] = m_fFlyHeightLow * 0.7;		//We don't want to raise to exactly same position
-				AddDestination(SDRC_EFlyWayPointType.WP_HOVER_UP, hoverPos, 5);
-				vector raisePos = "300 0 0";
-				raisePos[1] = m_fFlyHeightHigh;
-				AddDestination(SDRC_EFlyWayPointType.WP_RAISE, raisePos);
-				
 				//All things are already added
 				addDestinationPoint = false;
 				break;
