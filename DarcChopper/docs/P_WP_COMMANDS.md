@@ -157,13 +157,13 @@ _TBD_
 _TBD_
 
 ### WP_ATTACK
-_TBD_
+The chopper will do a bombing run to the position. 
 
 ### WP_SEARCH_DESTROY
-This will set the behaviour of the chopper to ``SEARCH_AND_DESTROY_BEHAVIOUR`` for a given time before returning back to ``NORMAL_BEHAVIOUR``. The chopper will arrive at the destination and start to patrol the area. Enemy is searched with a cycle of 2 seconds. If an enemy is found, current flight is interrupted, and a new flight pattern to attack the enemy is created. Chopper will stay in attack mode for 60 seconds and then resume to patroling. 
+This will set the behaviour of the chopper to ``SEARCH_AND_DESTROY_BEHAVIOUR`` for a given time before returning back to ``NORMAL_BEHAVIOUR``. The chopper will arrive at the destination and start to patrol the area. Enemy is searched with a cycle of 2 seconds. If an enemy is found, current flight is interrupted, and a new flight pattern to attack the enemy is created. The given position is considered an enemy. The chopper will remember the enemy for 90 seconds. 
 * ``destination`` : The position to keep an eye on. The helicopter will patrol around this area with a circle of patrolRadius defined in (internal) parameters. Default for helicopter is 300m.  
 * ``value`` : The time to be in ``SEARCH_AND_DESTROY_BEHAVIOUR``. Once time has passed, we return to ``NORMAL_BEHAVIOUR``.
-  * GM default: 600
+  * GM default: 300
   
 Note that if you have a long time and you give the chopper an order to land, the given order is only respected once the time in behaviour has ended. To break this, use a ``WP_FLY_IMMEDIATELY`` or ``WP_RESET`` before giving the new order. Logic is that the chopper will perform its prefious task till the end and only after that listen to new ones.
 

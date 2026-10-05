@@ -421,6 +421,24 @@ class SDRC_ChopperHelper
 						chopperComp.m_vSplinePoints[i] = pt;
 						//SDRC_DebugHelper.AddDebugSphere(chopperComp.m_vSplinePoints[i], ARGB(32, 255, 0, 0), 4.0, chopperComp.m_sDid + "att");
 					}
+										
+					//Create a smooth spline for the section after the attack position
+					array<float> endSpline = {};
+					const int START = 5;			//How many points before the attack position to create the spline
+					float y0 = chopperComp.m_vSplinePoints[pt_to - START][1];
+					float y1 = chopperComp.m_vSplinePoints[pt_to][1];
+					float y2 = chopperComp.m_vSplinePoints[chopperComp.m_vSplinePoints.Count() - 1][1];
+					endSpline = SDRC_Spline3D.CreateYSpline(y0, y1, y2, chopperComp.m_vSplinePoints.Count() - (pt_to - START));
+					
+					int j = 0;
+					for (int i = (pt_to - START); i < chopperComp.m_vSplinePoints.Count(); i++)
+					{
+						vector pt = chopperComp.m_vSplinePoints[i];
+						pt[1] = endSpline[j];
+						chopperComp.m_vSplinePoints[i] = pt;
+						j++;
+					}
+					
 					//smoothCount = pt_to;
 					isSmoothingNeeded = false;
 					break;

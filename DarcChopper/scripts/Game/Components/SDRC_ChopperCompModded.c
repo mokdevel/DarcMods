@@ -391,7 +391,7 @@ modded class SDRC_ChopperComp
 				SDRC_ChopperHelper.CutSplineTail(m_vSplinePoints, m_iClosestIndex);
 				type = SDRC_EFlyWayPointType.WP_FLY;
 				SetState(SDRC_EHeliState.FLY);
-				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, -1);
+				SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY:
