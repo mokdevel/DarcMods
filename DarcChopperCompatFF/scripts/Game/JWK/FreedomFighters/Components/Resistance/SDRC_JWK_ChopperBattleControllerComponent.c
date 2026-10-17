@@ -159,7 +159,14 @@ class SDRC_JWK_ChopperBattleControllerComponent: JWK_EntityComponent
 		string resourceName	= SDRC_SpawnHelper.SelectResourceName(m_DC_Attack.heliList);		
 		if (resourceName[0] != "{")
 		{
-			resourceName = SDRC_VehicleListHelper.FindVehicleItem(resourceName, m_sFaction);
+			SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+			if (baseGameMode)
+			{
+				if (baseGameMode.m_SDRC_Core)
+				{
+					resourceName = baseGameMode.m_SDRC_Core.m_VehicleListHelper.FindVehicleItem(resourceName, m_sFaction);
+				}
+			}
 		}
 		
 		//Set to initial position, rotation and spawn
