@@ -51,7 +51,7 @@ modded class SDRC_Compat
 		return true;
 	}
 	
-	static void MyCallback(EPF_PersistenceManager persistenceManager)
+/*	static void MyCallback(EPF_PersistenceManager persistenceManager)
 	{
 	    if (persistenceManager.GetState() != EPF_EPersistenceManagerState.ACTIVE) 
 		{
@@ -62,8 +62,7 @@ modded class SDRC_Compat
 	    persistenceManager.GetOnStateChangeEvent().Remove(MyCallback);
 	    
 		Clear();
-	}		
-	
+	}*/
 	
 	//------------------------------------------------------------------------------------------------
 	static void WaitForPlayers()
