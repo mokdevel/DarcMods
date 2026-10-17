@@ -77,8 +77,10 @@ The mission faction is defined in ``enemyFactions`` or individually per sub-miss
 * ``BACON_622120A5448725E3_FACTION`` : Bacon Zombies - [MOD](https://reforger.armaplatform.com/workshop/622120A5448725E3-BaconZombies)
 * ``PLASTICBANDIT`` : Bandit Faction - [MOD](https://reforger.armaplatform.com/workshop/66C4458756B32594-BanditFaction)
 * ``AFOA, DSF`` : Argentinian Infantry forces - [MOD](https://reforger.armaplatform.com/workshop/685771C973A5516B)
-* WIP: ``TF_US, TF_RF`` : Tactical Flava - [MOD](https://reforger.armaplatform.com/workshop/DEADC0DE00000000-TacticalFlava-Core)
 * ``CLA`` : FF-Chernarus Liberation Army - [MOD](https://reforger.armaplatform.com/workshop/69E4E0B84E0FD9ED-FF-ChernarusLiberationArmy)
+* ``MEM`` : BSI Middle Eastern Military - [MOD](https://reforger.armaplatform.com/workshop/69CB3504E6DC0DB0-BSIMiddleEasternMilitary)
+* WIP: ``TF_US, TF_RF`` : Tactical Flava - [MOD](https://reforger.armaplatform.com/workshop/DEADC0DE00000000-TacticalFlava-Core) 
+  * There are only a few groups defined which are re-used in multiple G_names
 * Unsupported values
   * ``MEC``
 * Supported, but mod is not available anymore

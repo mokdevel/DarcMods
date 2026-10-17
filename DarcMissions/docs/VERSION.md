@@ -7,6 +7,15 @@ No changes in mission jsons.
 
 ..empty..
 
+## 20261017
+Main Features:
+* Support for BSI Middle Eastern Military. Use ``MEM`` as the faction.
+* dc_enemyList.json update to support BSI
+  * The file will auto update
+
+Fixes:
+* Json auto-update fix 
+
 ## 20260924
 Main Features:
 * dc_missionConfig_HvtItem.json 
@@ -32,6 +41,7 @@ Fixes:
 Main Features:
 * Added a new Occupation mission: Training camp
 * Optional: Delete dc_missionConfig_Occupation.json to receive an updated one.
+
 Fixes:
 * Made a small mistake in last update where Occupation mission list was left empty. 
   * If Occupation missions are not spawning, delete dc_missionConfig_Occupation.json to receive an updated one.

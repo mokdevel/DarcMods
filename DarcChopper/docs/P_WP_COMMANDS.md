@@ -6,39 +6,11 @@ The function takes three parameters. Depending on the command used, the result m
 
 * ``type`` : This is the command given to the chopper. The possible options are below.
 * ``destination`` : The destination position where to go. 
-* ``value`` : Additional value that you can provide with the specific command. Usually this is time to perform the action.
+* ``value`` : Additional value that you can provide with the specific command. Usually this is time to perform the action. Default = -1.
 * ``index`` : This is internal and should not be used modders.
 
 ### FIFO
 The commands are put in a First-In-First-Out array from where they're picked once the previous command has executed. The exception is ``WP_FLY`` which will be performed in a serie. 
-
-List of available commands:
-* ``WP_UNDEFINED`` : Undefined - not to be used
-* ``WP_FLY`` : Fly, normal flight pattern
-* ``WP_FLY_IMMEDIATELY`` : Fly, but remove all already added destinations. This will interrupt any existing flight plans.
-* ``WP_FLY_AWAY`` : Fly away as a last move.
-* ``WP_FLY_AWAY_IMMEDIATELY`` : Fly away immediately removing any added destinations. This will interrupt any existing flight plans.
-* ``WP_PATROL`` : Patrol around an area.
-* ``WP_PATROL_ONCE`` : Do one patrol round around an area.
-* ``WP_M_LAND`` : Order chopper to do landing sequence. (WP_LAND is not to be used, deprecated!)
-* ``WP_LAND_VERTICAL`` : Order chopper to do a vertical landing sequence
-* ``WP_WAIT`` : Wait, before moving to next state
-* ``WP_WAIT_GETOUT`` : Same as WP_WAIT, but time set is dependent on crew count
-* ``WP_RAISE`` : Raises the helicopter from the current position to given position while moving forward increasing speed.
-* ``WP_HOVER`` : Hover at a certain altitude
-* ``WP_HOVER_UP`` : Hover the helicopter up from the current height.
-* ``WP_HOVER_DOWN`` : Hover the helicopter down from the current height.
-* ``WP_BRAKE`` : Brakes the helicopter speed to stand still.
-* ``WP_END`` : Stop running SDRC_ChopperComp and let AR handle everything
-* ``WP_DESPAWN`` : Despawn the helicopter. KNOWN: AI is not despawned so .. lot's of fun. :-)
-* ``WP_CRASH`` : TBD
-
-* ``WP_GET_OUT`` : Order AI to get out from the chopper
-* ``WP_STOP_ENGINE`` : Helicopter engine is stopped. Does the action and goes to WAIT state. 
-* ``WP_ATTACK`` : Sets attack position to shoot at. This is performed once.
-* ``WP_SEARCH_DESTROY`` : Search for enemy by patroling an area. If enemy is found, attack the location.
-* ``WP_RESET`` : Reset destinations and helicopter settings to defaults.
-* ``WP_CUT`` : Cut the current flight spline and pick the next destination in the list.
 
 ### WP_UNDEFINED
 Undefined - not to be used
@@ -118,14 +90,18 @@ Hover the helicopter up from the current height.
 * ``destination[0]`` : Not used.
 * ``destination[1]`` : The relative distance to raise up.
 * ``destination[2]`` : Not used
-* ``value`` : Time to use for upwards movement
+* ``value`` : (Optional) Time to use for upwards movement.
+  * If -1, once the position to hover to is reached, go to next state
+  * If set, hover movement is done and we stay in the state. If the position to hover to is reached, we hover in place.
 
 ### WP_HOVER_DOWN
 Hover the helicopter down from the current height.
 * ``destination[0]`` : Not used.
 * ``destination[1]`` : The relative distance to raise up.
 * ``destination[2]`` : Not used
-* ``value`` : Time to use for upwards movement
+* ``value`` : (Optional) Time to use for downwards movement.
+  * If -1, once the position to hover to is reached, go to next state
+  * If set, hover movement is done and we stay in the state. If the position to hover to is reached, we hover in place.
 
 ### WP_BRAKE
 Brakes the helicopter speed to stand still.
@@ -151,10 +127,10 @@ Creates a flight pattern to crash the chopper to a destination. Once touching gr
 * ``value`` : Not used.
 
 ### WP_GET_OUT
-_TBD_
+Orders AI to get out of the vehicle. Pilots and gunners will stay in the chopper by default. If chopper is in evac mode ``EVAC_BEHAVIOUR``, also pilots and gunners will get out. Getting out is an AR feature and sometimes the AI does what AI does and they stay inside.
 
 ### WP_STOP_ENGINE
-_TBD_
+Stops the engine. Should be only used after landing.
 
 ### WP_ATTACK
 The chopper will do a bombing run to the position. 
@@ -178,6 +154,23 @@ Cut the current flight planned and pick the next destination in the list. Differ
 * Queued: No
 * ``destination`` : Not used.
 * ``value`` : Not used.
+
+### WP_DESTROY
+Destroys the entity via damage, explosion or similar
+* ``destination`` : Not used.
+* ``value`` : Not used.
+
+### WP_BEHAVIOUR_NORMAL
+Set behaviour to normal
+* ``destination`` : Not used.
+* ``value`` : Time to stay in behaviour.
+  * If -1, we stay in the behaviour until the next behaviour change happens 
+
+### WP_BEHAVIOUR_PASSIVE
+Set behaviour to passive
+* ``destination`` : Not used.
+* ``value`` : Time to stay in behaviour.
+  * If -1, we stay in the behaviour until the next behaviour change happens 
 
 ## Macro commands
 Assigning single macro command will perform a set of single commands. 

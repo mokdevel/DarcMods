@@ -2,12 +2,17 @@
 
 ## Next Version
 
-## 202610xx
+## 20261017
 Main features:
+* Fine tuning on the flight model
+* Added WP_BEHAVIOUR_NORMAL
+* Added WP_BEHAVIOUR_PASSIVE
 
 Fixes:
 * WP_SEARCH_DESTROY sets also a WP_PATROL to the location. This way the chopper will remain in the area to search for enemies.
+* Time setting in WP_HOVER_UP and WP_HOVER_DOWN is optional. Once the height is reached, next waypoint is selected.
 * WP_HOVER_UP timer calculated incorrectly.
+* Updated documentation: https://github.com/mokdevel/DarcMods/blob/main/DarcChopper/docs/P_WP_COMMANDS.md
 
 ## 20260924
 Main features:
