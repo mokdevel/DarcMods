@@ -285,11 +285,11 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		
 		SDRC_JsonApi2 jsonApi0 = new SDRC_JsonApi2(SDRC_HvtItemConfig_010.GetFileName());				
 		SDRC_HvtItemConfig_010 conf0 = new SDRC_HvtItemConfig_010();
-		jsonApi0.Load(conf0, SDRC_MissionConfig.Cast(conf0), SDRC_HvtItemConfig_010.GetFileVersion(), silent: true);
+		jsonApi0.Load(conf0, SDRC_MissionConfig.Cast(conf0), SDRC_HvtItemConfig_010.GetFileVersion(), safeUpdate: true, silent: true);
 		
 		SDRC_JsonApi2 jsonApi1 = new SDRC_JsonApi2(SDRC_HvtItemConfig_Animals.GetFileName());				
 		SDRC_HvtItemConfig_Animals conf1 = new SDRC_HvtItemConfig_Animals();
-		jsonApi1.Load(conf1, SDRC_MissionConfig.Cast(conf1), SDRC_HvtItemConfig_Animals.GetFileVersion(), silent: true);				
+		jsonApi1.Load(conf1, SDRC_MissionConfig.Cast(conf1), SDRC_HvtItemConfig_Animals.GetFileVersion(), safeUpdate: true, silent: true);				
 	}
 	
 	//------------------------------------------------------------------------------------------------

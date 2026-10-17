@@ -214,7 +214,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 		
 		SDRC_JsonApi2 jsonApi = new SDRC_JsonApi2(SDRC_StashConfig_010.GetFileName());				
 		SDRC_StashConfig_010 conf = new SDRC_StashConfig_010();
-		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), SDRC_StashConfig_010.GetFileVersion(), silent: true);
+		jsonApi.Load(conf, SDRC_MissionConfig.Cast(conf), SDRC_StashConfig_010.GetFileVersion(), safeUpdate: true, silent: true);
 	}
 				
 	//------------------------------------------------------------------------------------------------	

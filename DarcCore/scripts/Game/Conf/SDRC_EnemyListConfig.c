@@ -182,6 +182,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "CloseProtectionTeam",										//RHS_ION
 			 "TA_RifleSquad", 											//Takistan
 			 "Argentina_Sentry",										//1st RM AFOA
+			 "MEM_SentryTeam",											//BSI (MEM)
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -343,6 +344,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Argentina_Sentry",										//1st RM AFOA			
 			 "DSF_1983_SAS_Patrol",										//1st RM DSF
 			 "Team_Recon",												//CLA
+			 "ManeuverGroup",											//BSI (MEM)
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "_Random"},
 			{}
@@ -454,6 +456,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "ION_Scout",									//RHS_ION			
 			 "TA_AR",										//Takistan			
 			 "SP_Trooper", 									//1st RM DSF
+			 "MEM_Conscript", 								//BSI (MEM)
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -541,6 +544,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Argentina_MAT",								//1st RM AFOA
 			 "SP_Trooper", "SP_Sapper",	"SAS_Demolitionist", //1st RM DSF			
 			 "_Shotgun",									//CLA
+			 "MEM_Ammo",									//BSI (MEM)
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}

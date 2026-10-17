@@ -210,11 +210,11 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 		
 		SDRC_JsonApi2 jsonApi0 = new SDRC_JsonApi2(SDRC_OccupationConfig_Horror.GetFileName());				
 		SDRC_OccupationConfig_Horror conf0 = new SDRC_OccupationConfig_Horror();
-		jsonApi0.Load(conf0, SDRC_MissionConfig.Cast(conf0), SDRC_OccupationConfig_Horror.GetFileVersion(), silent: true);
+		jsonApi0.Load(conf0, SDRC_MissionConfig.Cast(conf0), SDRC_OccupationConfig_Horror.GetFileVersion(), safeUpdate: true, silent: true);
 		
 		SDRC_JsonApi2 jsonApi1 = new SDRC_JsonApi2(SDRC_OccupationConfig_Animals.GetFileName());				
 		SDRC_OccupationConfig_Animals conf1 = new SDRC_OccupationConfig_Animals();
-		jsonApi1.Load(conf1, SDRC_MissionConfig.Cast(conf1), SDRC_OccupationConfig_Animals.GetFileVersion(), silent: true);		
+		jsonApi1.Load(conf1, SDRC_MissionConfig.Cast(conf1), SDRC_OccupationConfig_Animals.GetFileVersion(), safeUpdate: true, silent: true);		
 	}	
 	
 	//------------------------------------------------------------------------------------------------

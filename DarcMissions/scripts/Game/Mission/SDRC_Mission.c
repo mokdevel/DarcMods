@@ -1275,7 +1275,9 @@ class SDRC_Mission : Managed
 			}
 		}
 		
-		SDRC_Log.Add("[SDRC_Mission:GetAICountActive] " + GetId() + " : " + count + " (" + countDormant + ")", LogLevel.DEBUG);
+		#ifdef WORKBENCH
+			SDRC_Log.Add("[SDRC_Mission:GetAICountActive] " + GetId() + " : " + count + " (" + countDormant + ")", LogLevel.DEBUG);
+		#endif
 		
 		return count;
 	}	
