@@ -419,12 +419,18 @@ class SDRC_ChopperDebug
 		
 		//Enemy stuff
 		
-		//Draw current enemy sighting		
+		//Draw current enemy sighting
 		if (chopperComp.m_vAttackPosition != "0 0 0")
 		{
 			SDRC_ChopperDebug.DrawLine(origin, chopperComp.m_vAttackPosition, Color.PINK);
 		}
-		
+
+		//Draw current S&D position
+		if (chopperComp.m_vSearchAndDestroyPosition != "0 0 0")
+		{
+			SDRC_ChopperDebug.DrawLine(origin, chopperComp.m_vSearchAndDestroyPosition, Color.VIOLET);
+		}
+				
 		//Draw eyesight		
 		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(owner.FindComponent(SCR_BaseCompartmentManagerComponent));
 		

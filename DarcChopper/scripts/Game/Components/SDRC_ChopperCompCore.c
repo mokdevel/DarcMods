@@ -99,6 +99,8 @@ enum SDRC_EFlyWayPointType
 	WP_RESET,					//34 - Reset destinations and flight patg. Cut the current flight planned and pick the next destination in the list.
 	WP_CUT,						//35 - Cut the current flight planned and pick the next destination in the list.
 	WP_DESTROY,					//36 - Destroys the entity via damage, explosion or similar
+	WP_BEHAVIOUR_NORMAL,		//37 - Set behaviour to normal
+	WP_BEHAVIOUR_PASSIVE,		//38 - Set behaviour to passive
 	
 	//Macro actions
 	WP_M_LAND = 50,					//50 - Land to a position by doing WP_BRAKE and WP_LAND

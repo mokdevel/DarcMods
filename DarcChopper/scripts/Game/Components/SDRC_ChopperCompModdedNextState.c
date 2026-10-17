@@ -32,15 +32,12 @@ modded class SDRC_ChopperComp
 				ResetAttack();
 				break;
 			}
+			//These will stay in PASSIVE behaviour forever
 			case SDRC_EHeliState.FLY_AWAY:
 			case SDRC_EHeliState.FLY_AWAY_IMMEDIATELY:
 			case SDRC_EHeliState.LAND_VERTICAL:
 			case SDRC_EHeliState.BRAKE:
 			case SDRC_EHeliState.WAIT:
-			case SDRC_EHeliState.RAISE:
-			case SDRC_EHeliState.HOVER:
-			case SDRC_EHeliState.HOVER_UP:
-			case SDRC_EHeliState.HOVER_DOWN:
 			case SDRC_EHeliState.GET_OUT:
 			case SDRC_EHeliState.CRASH:
 			case SDRC_EHeliState.END:
@@ -49,6 +46,15 @@ modded class SDRC_ChopperComp
 			case SDRC_EHeliState.DESPAWN:
 			{
 				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, -1);
+				break;
+			}
+			//Limit the PASSIVE behaviour time to get back to normal flight eventually
+			case SDRC_EHeliState.RAISE:
+			case SDRC_EHeliState.HOVER:
+			case SDRC_EHeliState.HOVER_UP:
+			case SDRC_EHeliState.HOVER_DOWN:
+			{
+				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, 120);
 				break;
 			}
 		}
@@ -318,6 +324,12 @@ modded class SDRC_ChopperComp
 					}
 				}
 				
+				if (m_vFlyDestinations[0].value == -1)
+				{
+					//Set a very short time
+					m_vFlyDestinations[0].value = 1;
+				}
+				
 				SetTimeInState(m_vFlyDestinations[0].value);
 				
 				//NOTE: We do not use AddDestination() for setting the flight. We just add points in the spline.
@@ -400,6 +412,12 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_DESTROY:
 				TypeSetHealthScaled(owner, 0);
 				break;
+			case SDRC_EFlyWayPointType.WP_BEHAVIOUR_NORMAL:
+				SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, flyDestination.value);
+				break;
+			case SDRC_EFlyWayPointType.WP_BEHAVIOUR_PASSIVE:
+				SetBehaviour(SDRC_EHeliBehaviour.PASSIVE_BEHAVIOUR, flyDestination.value);
+				break;			
 			default:
 				SDRC_Log.Add("[SDRC_ChopperComp:SetNextState] State not defined: " + SCR_Enum.GetEnumName(SDRC_EHeliState, m_eHeliState), LogLevel.WARNING);
 		}
@@ -452,13 +470,18 @@ modded class SDRC_ChopperComp
 			{
 				SetNextState(owner);
 				break;				
-			}			
+			}
+			case SDRC_EHeliState.HOVER_UP:
+			case SDRC_EHeliState.HOVER_DOWN:
+			{		
+				HandleHoverUpDown(owner);
+			}
 		}
 		
 		//Wait for the state timer to end and go to next state
 		if (    (m_eHeliState != SDRC_EHeliState.FLY) 			//We do not automatically change state when flying
 		     //&& (m_eHeliState != SDRC_EHeliState.RAISE) 		//..or raising
-		     && (m_fTimeInStateLeft < 0) && m_bTimeInStateEnabled) 
+		     && (m_fTimeInStateLeft <= 0) && m_bTimeInStateEnabled) 
 		{
 				SetNextState(owner);
 		}
@@ -609,6 +632,32 @@ modded class SDRC_ChopperComp
 		}
 	}
 
+	//------------------------------------------------------------------------------------------------	
+	/*!	
+	Handle hover up/down
+	*/
+	override private void HandleHoverUpDown(IEntity owner)
+	{
+		vector origin = owner.GetOrigin();
+				
+		vector lastPt = m_vSplinePoints[m_vSplinePoints.Count() - 1];
+		float distance = vector.Distance(origin, lastPt);
+		
+		//Stop hover movement if close enough
+		if ( (distance < 3) && (m_fTimeInStateLeft < 1) )
+		{
+			m_fTimeInStateLeft = 0;
+		}
+		else
+		{
+			//If time is running out, wait for a second
+			if (m_fTimeInStateLeft < 1)
+			{
+				m_fTimeInStateLeft = 1;
+			}
+		}
+	}	
+	
 	//------------------------------------------------------------------------------------------------	
 	/*!	
 	Handle braking

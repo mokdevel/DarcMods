@@ -88,7 +88,7 @@ class SDRC_ChopperHelper
 	\param owner ..
 	\param orig The position to use for waypoint generation.
 	*/
-	static void GenerateWayPoint(IEntity owner, vector orig = vector.Zero)
+	static void GenerateWayPoint(IEntity owner, out vector orig = vector.Zero)
 	{		
 		SDRC_ChopperComp chopperComp = SDRC_ChopperComp.Cast(owner.FindComponent(SDRC_ChopperComp));
 		if (!chopperComp)
@@ -135,6 +135,10 @@ class SDRC_ChopperHelper
 					}			
 				}
 				chopperComp.AddDestination(SDRC_EFlyWayPointType.WP_FLY, pos);
+				//If we created a position, return to normal behaviour
+				
+				//chopperComp.SetBehaviour(SDRC_EHeliBehaviour.NORMAL_BEHAVIOUR, -1);
+				//Return the position
 				orig = pos;
 			}
 		}

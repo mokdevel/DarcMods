@@ -65,9 +65,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 	[Attribute(category: "Chopper", defvalue: "40.0", desc: "Maximum speed", params: "1.0 100.0 0.1")]	
 	float m_fSpeedMax;				//Maximum speed
 	float m_fSpeedMaxOrig;
-	[Attribute(category: "Chopper", defvalue: "50.0", desc: "Minimum fly height (from ground level)", params: "5 100.0 1")]	
+	[Attribute(category: "Chopper", defvalue: "60.0", desc: "Minimum fly height (from ground level)", params: "5 100.0 1")]	
 	float m_fFlyHeightLow;			//Flight height low
-	[Attribute(category: "Chopper", defvalue: "95.0", desc: "Maximum fly height (from ground level)", params: "5 600.0 1")]	
+	[Attribute(category: "Chopper", defvalue: "115.0", desc: "Maximum fly height (from ground level)", params: "5 600.0 1")]	
 	float m_fFlyHeightHigh;			//Flight height high
 	[Attribute(category: "Chopper", defvalue: "300", desc: "Minimum distance for waypoint", params: "0.1 1000.0 0.1")]	
 	float m_fDistanceLow;			//Distance for waypoint min
@@ -957,6 +957,7 @@ modded class SDRC_ChopperComp : ScriptComponent
 	// Special handling - defined in modded class
 	//------------------------------------------------------------------------------------------------	
 	private void HandleLandingVertical(IEntity owner, float timeSlice) {}
+	private void HandleHoverUpDown(IEntity owner) {}
 	private void HandleBraking(IEntity owner, float timeSlice) {}
 	private void HandleCrashing(IEntity owner, float timeSlice) {}
 	//------------------------------------------------------------------------------------------------	

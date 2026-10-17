@@ -484,6 +484,8 @@ modded class SDRC_ChopperComp
 				break;
 			}
 			case SDRC_EFlyWayPointType.WP_DESTROY:
+			case SDRC_EFlyWayPointType.WP_BEHAVIOUR_NORMAL:
+			case SDRC_EFlyWayPointType.WP_BEHAVIOUR_PASSIVE:
 			{
 				break;
 			}
