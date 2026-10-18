@@ -1,0 +1,187 @@
+{
+    "jsonVersion": 1,
+    "version": 1,
+    "author": "darc",
+    "comment": "Argh Fauna spawner using ArghFauna mod. ",
+    "spawnCount": 10,
+    "spawnWorldSizeMultiplier": 0.0,
+    "spawnSetList": [
+        5
+    ],
+    "spawnSets": [
+        {
+            "comment": "index 0: Spawn kangaroo",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64
+            ],
+            "positions": [],
+            "entities": [
+                "{92FC5FF61DAD100C}Prefabs/Characters/Animals/Character_Kangaroo_Roo.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 1: Spawn Cobra A",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{8968DC7FA65F5A20}Prefabs/Characters/Animals/Character_Snake_Cobra_A.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 2: Spawn Cobra B",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{FB7FB9D9EB6ED8F5}Prefabs/Characters/Animals/Character_Snake_Cobra_B.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 3: Spawn Snake V2",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{D5567BAD5D891258}Prefabs/Characters/Animals/Character_Snake_V2.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 4: Kangaroo territory",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64
+            ],
+            "positions": [],
+            "entities": [
+                "{23D6EBDC498004D9}PrefabsEditable/Fauna/ARGH_AmbientFauna_SDRC_kangaroos.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 5: Snake territory",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                34,
+                34,
+                34,
+                58,
+                64
+            ],
+            "positions": [],
+            "entities": [
+                "{0AE95D649C3693BA}PrefabsEditable/Fauna/ARGH_AmbientFauna_SDRC_snakes.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 6: Snakes in specific areas",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                65,
+                10,
+                10,
+                10,
+                10,
+                10,
+                81,
+                81,
+                54,
+                54,
+                54,
+                54,
+                54,
+                54,
+                54,
+                54,
+                56,
+                56,
+                56,
+                56
+            ],
+            "positions": [],
+            "entities": [
+                "{0AE95D649C3693BA}PrefabsEditable/Fauna/ARGH_AmbientFauna_SDRC_snakes.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        }
+    ]
+}
