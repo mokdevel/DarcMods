@@ -1,0 +1,8 @@
+GameProject {
+ ID "DarcSpawner_OutbreakZombies"
+ GUID "6AA4F08A7578BCD8"
+ TITLE "DarcSpawner_OutbreakZombies"
+ Dependencies {
+  "631C9C204D8FAF47" "58D0FB3206B6F859" "F1D4B9B5245B36ED" "384E32C2A832444E"
+ }
+}

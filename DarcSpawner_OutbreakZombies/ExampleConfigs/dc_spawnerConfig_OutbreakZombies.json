@@ -1,0 +1,251 @@
+{
+    "jsonVersion": 1,
+    "version": 1,
+    "author": "darc",
+    "comment": "Project Outbreak Zombies spawner using multiple Project Outbreak zombie mods.",
+    "spawnCount": 10,
+    "spawnWorldSizeMultiplier": 0.0,
+    "spawnSetList": [
+        4,
+        4,
+        5,
+        6,
+        6,
+        6,
+        6,
+        6,
+        7,
+        7
+    ],
+    "spawnSets": [
+        {
+            "comment": "index 0: Z small group in random places",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                58,
+                58,
+                64,
+                64,
+                64,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{96D499F1705E9E55}Prefabs/Groups/INDFOR/Group_Z_Climber_x4.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 1: Z large group",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                58,
+                58,
+                64,
+                64,
+                64,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{96D499F1705E9E55}Prefabs/Groups/INDFOR/Group_Z_Climber_x4.et",
+                "{A07B0E7A0F100005}Prefabs/Groups/INDFOR/Group_Z.et",
+                "{A07B0E7A0F1000D8}Prefabs/Groups/INDFOR/Group_Z_Feral.et",
+                "{A07B0E7A0F1000F0}Prefabs/Groups/INDFOR/Group_Z_Sprinter_x16.et"
+            ],
+            "spawnRndRadius": 50,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 2: Z groups in cities",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                59,
+                59,
+                60,
+                60,
+                61,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{96D499F1705E9E55}Prefabs/Groups/INDFOR/Group_Z_Climber_x4.et",
+                "{A07B0E7A0F100005}Prefabs/Groups/INDFOR/Group_Z.et",
+                "{A07B0E7A0F1000D8}Prefabs/Groups/INDFOR/Group_Z_Feral.et",
+                "{A07B0E7A0F1000F0}Prefabs/Groups/INDFOR/Group_Z_Sprinter_x16.et"
+            ],
+            "spawnRndRadius": 50,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 3: Z groups in special places",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                11,
+                11,
+                11,
+                10,
+                10,
+                10,
+                56,
+                56,
+                79,
+                79,
+                81,
+                81,
+                58
+            ],
+            "positions": [],
+            "entities": [
+                "{96D499F1705E9E55}Prefabs/Groups/INDFOR/Group_Z_Climber_x4.et",
+                "{A07B0E7A0F100005}Prefabs/Groups/INDFOR/Group_Z.et",
+                "{A07B0E7A0F1000D8}Prefabs/Groups/INDFOR/Group_Z_Feral.et",
+                "{A07B0E7A0F1000F0}Prefabs/Groups/INDFOR/Group_Z_Sprinter_x16.et"
+            ],
+            "spawnRndRadius": 20,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 4: Outbreak small group in random places",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                58,
+                58,
+                64,
+                64,
+                64,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{F3587B8613CF4D5B}Prefabs/Groups/INDFOR/Outbreak/Group_Ferals_x4.et",
+                "{2F5161D4809D40E6}Prefabs/Groups/INDFOR/Outbreak/Group_Shamblers_x4.et",
+                "{43999BB6B7F149EF}Prefabs/Groups/INDFOR/Outbreak/Group_Sprinters_x4.et",
+                "{6089EC0A215D4DE8}Prefabs/Groups/INDFOR/Outbreak/Group_Sprinters_x8.et"
+            ],
+            "spawnRndRadius": 200,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 5: Outbreak large group",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                34,
+                58,
+                58,
+                64,
+                64,
+                64,
+                64,
+                60,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{B2535120A3574A97}Prefabs/Groups/INDFOR/Outbreak/Group_Ferals_x16.et",
+                "{358C4AC3CD784AFF}Prefabs/Groups/INDFOR/Outbreak/Group_MixedHorde_x16.et",
+                "{925119D0E3E843F7}Prefabs/Groups/INDFOR/Outbreak/Group_Shamblers_x16.et"
+            ],
+            "spawnRndRadius": 50,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 6: Outbreak groups in cities",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                59,
+                59,
+                60,
+                60,
+                61,
+                62
+            ],
+            "positions": [],
+            "entities": [
+                "{F3587B8613CF4D5B}Prefabs/Groups/INDFOR/Outbreak/Group_Ferals_x4.et",
+                "{F3587B8613CF4D5B}Prefabs/Groups/INDFOR/Outbreak/Group_Ferals_x4.et",
+                "{2F5161D4809D40E6}Prefabs/Groups/INDFOR/Outbreak/Group_Shamblers_x4.et",
+                "{2F5161D4809D40E6}Prefabs/Groups/INDFOR/Outbreak/Group_Shamblers_x4.et",
+                "{43999BB6B7F149EF}Prefabs/Groups/INDFOR/Outbreak/Group_Sprinters_x4.et",
+                "{43999BB6B7F149EF}Prefabs/Groups/INDFOR/Outbreak/Group_Sprinters_x4.et",
+                "{6089EC0A215D4DE8}Prefabs/Groups/INDFOR/Outbreak/Group_Sprinters_x8.et",
+                "{6089EC0A215D4DE8}Prefabs/Groups/INDFOR/Outbreak/Group_Sprinters_x8.et",
+                "{B2535120A3574A97}Prefabs/Groups/INDFOR/Outbreak/Group_Ferals_x16.et",
+                "{358C4AC3CD784AFF}Prefabs/Groups/INDFOR/Outbreak/Group_MixedHorde_x16.et",
+                "{925119D0E3E843F7}Prefabs/Groups/INDFOR/Outbreak/Group_Shamblers_x16.et"
+            ],
+            "spawnRndRadius": 50,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        },
+        {
+            "comment": "index 7: Outbreak groups in special places",
+            "showMarker": false,
+            "markerType": "DARC_MISSION",
+            "markerIdx": 53,
+            "locationTypes": [
+                11,
+                11,
+                11,
+                10,
+                10,
+                10,
+                56,
+                56,
+                79,
+                79,
+                81,
+                81,
+                58
+            ],
+            "positions": [],
+            "entities": [
+                "{F3587B8613CF4D5B}Prefabs/Groups/INDFOR/Outbreak/Group_Ferals_x4.et",
+                "{2F5161D4809D40E6}Prefabs/Groups/INDFOR/Outbreak/Group_Shamblers_x4.et",
+                "{43999BB6B7F149EF}Prefabs/Groups/INDFOR/Outbreak/Group_Sprinters_x4.et",
+                "{6089EC0A215D4DE8}Prefabs/Groups/INDFOR/Outbreak/Group_Sprinters_x8.et"
+            ],
+            "spawnRndRadius": 20,
+            "spawnOnRoad": false,
+            "disableArsenal": false,
+            "loot": null
+        }
+    ]
+}
