@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{23D6EBDC498004D9}PrefabsEditable/Fauna/ARGH_AmbientFauna_SDRC_kangaroos.et"
+ Configurations {
+  EntityTemplateResourceClass PC {
+  }
+  EntityTemplateResourceClass XBOX_ONE : PC {
+  }
+  EntityTemplateResourceClass XBOX_SERIES : PC {
+  }
+  EntityTemplateResourceClass PS4 : PC {
+  }
+  EntityTemplateResourceClass PS5 : PC {
+  }
+  EntityTemplateResourceClass HEADLESS : PC {
+  }
+ }
+}

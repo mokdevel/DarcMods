@@ -1,0 +1,22 @@
+GameProject {
+ ID "DarcSpawner_ArghFauna"
+ GUID "6AA4B8CD75ACC7ED"
+ TITLE "DarcSpawner_ArghFauna"
+ Dependencies {
+  "631C9C204D8FAF47" "58D0FB3206B6F859" "6A9AAD0C3019E083"
+ }
+ Configurations {
+  GameProjectConfig PC {
+  }
+  GameProjectConfig XBOX_ONE {
+  }
+  GameProjectConfig XBOX_SERIES {
+  }
+  GameProjectConfig PS4 {
+  }
+  GameProjectConfig PS5 {
+  }
+  GameProjectConfig HEADLESS {
+  }
+ }
+}

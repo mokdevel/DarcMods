@@ -1,0 +1,12 @@
+GenericEntity : "{254E17A3960C8F15}PrefabsEditable/Fauna/ARGH_AmbientFauna.et" {
+ ID "EF3C9C7ACBDF636C"
+ components {
+  ARGH_FaunaZoneComponent "{0E8235BCD5967ACD}" {
+   m_Enabled 1
+   m_Species 8
+   m_Pack 2
+   m_Radius 100
+   m_Respawn 10
+  }
+ }
+}
