@@ -1,0 +1,32 @@
+ImageSetClass {
+ RefSize 136 272
+ Textures {
+  ImageSetTextureClass "{6AA713343C3E43E5}" {
+   screenSize FHD
+   size 136 272
+   path "{1EFD2D8D3173247A}UI/Textures/Icons/SDRC_icons_mapMarkersUIround-100_atlas.edds"
+  }
+ }
+ Images {
+  ImageSetDefClass gm_mission_Biohazard_map_round {
+   Pos 2 2
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Car_side_map_round {
+   Pos 68 2
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Chopper_map_round {
+   Pos 2 135
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Convoy_map_round {
+   Pos 68 135
+   Size 64 131
+   Flags 0 0
+  }
+ }
+}

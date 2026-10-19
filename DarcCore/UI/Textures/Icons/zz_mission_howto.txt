@@ -4,7 +4,7 @@ https://github.com/StefanTraistaru/batch-export?tab=readme-ov-file
 Three icons are needed:
 
 # Map icon: The one shown on map for a mission
-- Name: gm_mission_MissionName_map
+- Name: gm_mission_XXX_map
 -- Prefix: gm_mission
 -- Suffix: map
 - Size: 54x110 with DPI 30
@@ -12,7 +12,7 @@ Three icons are needed:
 - Color: Black
 
 # Round image for GM drop: The icon shown on the game master entity browser 
-- Name: gm_mission_MissionName_round
+- Name: gm_mission_XXX_round
 -- Prefix: gm_mission
 -- Suffix: round
 - Hide grayball, location, sizebox
@@ -23,7 +23,7 @@ Three icons are needed:
 -- Invert color
 
 # UI image for GM view: The icon shown on the prefab and seen when dropped on the map by GM
-- Name: gm_mission_MissionName
+- Name: gm_mission_XXX
 -- Prefix: gm_mission
 -- Suffix: N/A
 - Hide grayball
@@ -43,6 +43,16 @@ Three icons are needed:
 - In Gimp: 
 -- Invert color
 -- Set opacity to 60%
+
+# Map icon: Round black icon - used with spawner
+- Name: gm_mission_XXX_map_round
+-- Prefix: gm_mission
+-- Suffix: map_round
+- Size: 64x88 with DPI 35,5
+- Color: Black
+- In Gimp: 
+-- Canvas Size 64x131 - center
+-- Y offset 43
 
 # Other icons
 - Name: icon_IconName
