@@ -113,9 +113,10 @@ class SDRC_MissionFrame
 		SDRC_Log.Add("[SDRC_MissionFrame] Waiting for " + m_Config.missionStartDelay + " seconds before spawning missions.", LogLevel.NORMAL);
 		m_Config.missionStartDelay = m_Config.missionStartDelay * 1000;		//sec to ms
 		
-		#ifdef SDRC_Conf.SHOW_DEBUG
+		if (SDRC_Conf.SHOW_DEBUG)
+		{
 			SDRC_DevHelper.SDRC_DevDump();
-		#endif	
+		}
 		
 		//Start the mission framework.
 		GetGame().GetCallqueue().CallLater(MissionCycleManager, m_Config.missionStartDelay, false);

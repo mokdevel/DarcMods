@@ -38,7 +38,7 @@
 		private const int SDRC_PLAYER_MAX_DISTANCE = 1200;		
 		private const int SDRC_MISSION_COUNT_DYNAMIC = 0;//10;//3;//3;//8;
 		private const float SDRC_MISSION_COUNT_DYNAMIC_MUL = 2.0;
-		private const int SDRC_MISSION_COUNT_STATIC = 20;
+		private const int SDRC_MISSION_COUNT_STATIC = 5;
 		private const float SDRC_MISSION_COUNT_STATIC_MUL = 3;
 		private const int SDRC_MISSION_CYCLE_TIME_DEFAULT = 20;
 		private const int SDRC_MISSIONFRAME_START_DELAY = 2;					
@@ -181,8 +181,8 @@ class SDRC_MissionFrameConfig : SDRC_Config
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-//			enemyFactions = {"USSR"};
-			enemyFactions = {"MEM"};
+			enemyFactions = {"USSR"};
+//			enemyFactions = {"MEM"};
 //			enemyFactions = {"CLA"};
 //			enemyFactions = {"US"};
 //			enemyFactions = {"FIA"};
@@ -249,9 +249,9 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.HVTVIP);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.OCCUPATION);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.PATROL);
-//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.ROADBLOCK);
+			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.ROADBLOCK);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.SQUATTERS);
-			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.STASH);
+//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.STASH);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.PATROL);
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER, SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};

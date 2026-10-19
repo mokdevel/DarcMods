@@ -55,7 +55,30 @@ sealed class SDRC_DevHelper
 		SDRC_MapMarkerHelper.CreateMapMarker("2900 0 1000", SDRC_EMissionIcon.GM_MISSION_CAR_SIDE_MAP, "DMC_B", "Car side");
 		SDRC_MapMarkerHelper.CreateMapMarker("3000 0 1000", SDRC_EMissionIcon.GM_MISSION_MEDAL_MAP, "DMC_B", "Medal");
 		SDRC_MapMarkerHelper.CreateMapMarker("3100 0 1000", SDRC_EMissionIcon.GM_MISSION_PORTAL_MAP, "DMC_B", "Medal");
-		
+
+		SDRC_MapMarkerHelper.CreateMapMarker("1000 0 0800", SDRC_EMissionIcon.GM_MISSION_X_MAP, "DMC_B", "X");
+		SDRC_MapMarkerHelper.CreateMapMarker("1100 0 0800", SDRC_EMissionIcon.GM_MISSION_SQUATTERS_MAP, "DMC_B", "Squatters");
+		SDRC_MapMarkerHelper.CreateMapMarker("1200 0 0800", SDRC_EMissionIcon.GM_MISSION_CRASHSITE_MAP, "DMC_B", "Crashsite");
+		SDRC_MapMarkerHelper.CreateMapMarker("1300 0 0800", SDRC_EMissionIcon.GM_MISSION_OCCUPATION_MAP, "DMC_B", "Occupation");
+		SDRC_MapMarkerHelper.CreateMapMarker("1400 0 0800", SDRC_EMissionIcon.GM_MISSION_CONVOY_MAP_ROUND, "DMC_B", "Convoy");
+		SDRC_MapMarkerHelper.CreateMapMarker("1500 0 0800", SDRC_EMissionIcon.GM_MISSION_HELICOPTER_MAP, "DMC_B", "Helicopter");
+		SDRC_MapMarkerHelper.CreateMapMarker("1600 0 0800", SDRC_EMissionIcon.GM_MISSION_HUNTER_MAP, "DMC_B", "Hunter");
+		SDRC_MapMarkerHelper.CreateMapMarker("1700 0 0800", SDRC_EMissionIcon.GM_MISSION_PATROL_MAP, "DMC_B", "Patrol");
+		SDRC_MapMarkerHelper.CreateMapMarker("1800 0 0800", SDRC_EMissionIcon.GM_MISSION_RADIOACTIVE_MAP, "DMC_B", "Radioactive");
+		SDRC_MapMarkerHelper.CreateMapMarker("1900 0 0800", SDRC_EMissionIcon.GM_MISSION_ROADBLOCK_MAP, "DMC_B", "Roadblock");
+		SDRC_MapMarkerHelper.CreateMapMarker("2000 0 0800", SDRC_EMissionIcon.GM_MISSION_HVTVIP_MAP, "DMC_B", "HVT VIP");
+		SDRC_MapMarkerHelper.CreateMapMarker("2100 0 0800", SDRC_EMissionIcon.GM_MISSION_HVTITEM_MAP, "DMC_B", "HVT Item");
+		SDRC_MapMarkerHelper.CreateMapMarker("2200 0 0800", SDRC_EMissionIcon.GM_MISSION_STASH_MAP, "DMC_B", "Stash");
+		SDRC_MapMarkerHelper.CreateMapMarker("2300 0 0800", SDRC_EMissionIcon.GM_MISSION_BIOHAZARD_MAP_ROUND, "DMC_B", "Biohazard");
+		SDRC_MapMarkerHelper.CreateMapMarker("2400 0 0800", SDRC_EMissionIcon.GM_MISSION_GOLD_MAP, "DMC_B", "Gold");
+		SDRC_MapMarkerHelper.CreateMapMarker("2500 0 0800", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP, "DMC_B", "Demon");
+		SDRC_MapMarkerHelper.CreateMapMarker("2600 0 0800", SDRC_EMissionIcon.GM_MISSION_DIAMOND_MAP, "DMC_B", "Diamond");
+		SDRC_MapMarkerHelper.CreateMapMarker("2700 0 0800", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP, "DMC_B", "Zombie");
+		SDRC_MapMarkerHelper.CreateMapMarker("2800 0 0800", SDRC_EMissionIcon.GM_MISSION_CHOPPER_MAP_ROUND, "DMC_B", "Chopper");
+		SDRC_MapMarkerHelper.CreateMapMarker("2900 0 0800", SDRC_EMissionIcon.GM_MISSION_CAR_SIDE_MAP_ROUND, "DMC_B", "Car side");
+		SDRC_MapMarkerHelper.CreateMapMarker("3000 0 0800", SDRC_EMissionIcon.GM_MISSION_MEDAL_MAP, "DMC_B", "Medal");
+		SDRC_MapMarkerHelper.CreateMapMarker("3100 0 0800", SDRC_EMissionIcon.GM_MISSION_PORTAL_MAP, "DMC_B", "Medal");
+				
 //			vector pos = "4600 0 6100";
 //			SDRC_SpawnHelper.FindEmptyPos(pos, 300, 60);			
 		
