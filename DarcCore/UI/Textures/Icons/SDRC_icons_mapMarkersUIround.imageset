@@ -1,9 +1,9 @@
 ImageSetClass {
- RefSize 136 272
+ RefSize 336 804
  Textures {
-  ImageSetTextureClass "{6AA713343C3E43E5}" {
+  ImageSetTextureClass "{6AAA9A35C41776F8}" {
    screenSize FHD
-   size 136 272
+   size 336 804
    path "{1EFD2D8D3173247A}UI/Textures/Icons/SDRC_icons_mapMarkersUIround-100_atlas.edds"
   }
  }
@@ -19,12 +19,127 @@ ImageSetClass {
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Chopper_map_round {
-   Pos 2 135
+   Pos 134 2
    Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Convoy_map_round {
+   Pos 200 2
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Crashsite_map_round {
+   Pos 266 2
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Deer_map_round {
+   Pos 2 135
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Demon_map_round {
    Pos 68 135
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Diamond_map_round {
+   Pos 134 135
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Gold_map_round {
+   Pos 200 135
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Helicopter_map_round {
+   Pos 266 135
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Hunter_map_round {
+   Pos 2 268
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_HvtItem_map_round {
+   Pos 68 268
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_HvtVip_map_round {
+   Pos 134 268
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Lose_map_round {
+   Pos 200 268
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Medal_map_round {
+   Pos 266 268
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Mushroom_map_round {
+   Pos 2 401
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Occupation_map_round {
+   Pos 68 401
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Patrol_map_round {
+   Pos 134 401
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Portal_map_round {
+   Pos 200 401
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_RadioActive_map_round {
+   Pos 266 401
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Roadblock_map_round {
+   Pos 2 534
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Squatters_map_round {
+   Pos 68 534
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Stash_map_round {
+   Pos 134 534
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Win_map_round {
+   Pos 200 534
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Wolf_map_round {
+   Pos 266 534
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_X_map_round {
+   Pos 2 667
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Zombie_map_round {
+   Pos 68 667
    Size 64 131
    Flags 0 0
   }

@@ -1,185 +1,200 @@
 ImageSetClass {
- RefSize 284 788
+ RefSize 2404 140
  Textures {
-  ImageSetTextureClass "{6853026559C24315}" {
+  ImageSetTextureClass "{6AAA9A347CA0AD84}" {
    screenSize FHD
-   size 284 788
-   path "{84F3106DED438339}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-100_atlas.edds"
+   size 2404 140
+   path "{C18A2F772A54B130}UI/Textures/Icons/SDRC_icons_mapMarkersUInew-119_atlas.edds"
   }
  }
  Images {
   ImageSetDefClass gm_mission_Biohazard_map {
-   Pos 2 2
-   Size 54 110
+   Pos 1322 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Car_side_map {
-   Pos 58 2
-   Size 54 110
+   Pos 332 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Chopper_map {
-   Pos 114 2
-   Size 54 110
+   Pos 1124 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Convoy_map {
-   Pos 170 2
-   Size 54 110
+   Pos 464 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Crashsite_map {
-   Pos 226 2
-   Size 54 110
+   Pos 1256 2
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Deer_map {
+   Pos 200 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Demon_map {
-   Pos 2 114
-   Size 54 110
+   Pos 596 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Diamond_map {
-   Pos 58 114
-   Size 54 110
+   Pos 1520 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Gold_map {
-   Pos 114 114
-   Size 54 110
+   Pos 728 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Helicopter_map {
-   Pos 170 114
-   Size 54 110
+   Pos 1586 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Hunter_map {
-   Pos 226 114
-   Size 54 110
+   Pos 860 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_HvtItem_map {
-   Pos 2 226
-   Size 54 110
+   Pos 1652 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_HvtVip_map {
-   Pos 58 226
-   Size 54 110
+   Pos 992 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Lose_map {
-   Pos 114 226
-   Size 54 110
+   Pos 1058 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Medal_map {
-   Pos 170 226
-   Size 54 110
+   Pos 1190 2
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Mushroom_map {
+   Pos 1454 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Occupation_map {
-   Pos 226 226
-   Size 54 110
+   Pos 1388 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Patrol_map {
-   Pos 2 338
-   Size 54 110
+   Pos 1718 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Portal_map {
-   Pos 58 338
-   Size 54 110
+   Pos 2 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_RadioActive_map {
-   Pos 114 338
-   Size 54 110
+   Pos 134 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Roadblock_map {
-   Pos 170 338
-   Size 54 110
+   Pos 266 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Squatters_map {
-   Pos 226 338
-   Size 54 110
+   Pos 398 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Stash_map {
-   Pos 2 450
-   Size 54 110
+   Pos 530 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Win_map {
-   Pos 58 450
-   Size 54 110
+   Pos 662 2
+   Size 64 131
+   Flags 0 0
+  }
+  ImageSetDefClass gm_mission_Wolf_map {
+   Pos 68 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_X_map {
-   Pos 114 450
-   Size 54 110
+   Pos 794 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass gm_mission_Zombie_map {
-   Pos 170 450
-   Size 54 110
+   Pos 926 2
+   Size 64 131
    Flags 0 0
   }
   ImageSetDefClass icon_Crate_small_map {
-   Pos 226 450
+   Pos 2344 2
    Size 54 110
    Flags 0 0
   }
   ImageSetDefClass icon_DeathMarker_map {
-   Pos 2 562
+   Pos 1840 2
    Size 54 110
    Flags 0 0
   }
   ImageSetDefClass icon_DeathMarker_small_map {
-   Pos 58 562
+   Pos 2008 2
    Size 54 110
    Flags 0 0
   }
   ImageSetDefClass icon_DeathMarker_small_red_map {
-   Pos 114 562
+   Pos 2064 2
    Size 54 110
    Flags 0 0
   }
   ImageSetDefClass icon_Exclamation_small_map {
-   Pos 170 562
+   Pos 2120 2
    Size 54 110
    Flags 0 0
   }
   ImageSetDefClass icon_Plus_small_map {
-   Pos 226 562
+   Pos 1952 2
    Size 54 110
    Flags 0 0
   }
   ImageSetDefClass icon_diff_0_map {
-   Pos 2 674
+   Pos 1784 2
    Size 54 110
    Flags 0 0
   }
   ImageSetDefClass icon_diff_1_map {
-   Pos 58 674
+   Pos 2288 2
    Size 54 110
    Flags 0 0
   }
   ImageSetDefClass icon_diff_2_map {
-   Pos 114 674
+   Pos 2232 2
    Size 54 110
    Flags 0 0
   }
   ImageSetDefClass icon_diff_3_map {
-   Pos 170 674
+   Pos 2176 2
    Size 54 110
    Flags 0 0
   }
   ImageSetDefClass icon_diff_4_map {
-   Pos 226 674
+   Pos 1896 2
    Size 54 110
    Flags 0 0
   }
