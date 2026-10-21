@@ -19,3 +19,6 @@ SCR_SpawnPoint : "{5A2220DD0C16958B}Prefabs/MP/Spawning/SpawnPoint_US.et" {
 SCR_LoadoutManager : "{97EF4C1A41F63DDB}Prefabs/MP/Managers/Loadouts/LoadoutManager_USxUSSR.et" {
  coords 119.663 1 139.187
 }
+GenericEntity : "{E6361C6DEE144462}Prefabs/Groups/INDFOR/Horde_Z.et" {
+ coords 97.811 1 140.746
+}

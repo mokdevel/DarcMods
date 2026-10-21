@@ -287,6 +287,11 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		missionList = {0,1,2,3,4};
+		
+		#ifndef SDRC_RELEASE
+			missionList = {0};
+		#endif
+		
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Insert(Roadblock0());				
