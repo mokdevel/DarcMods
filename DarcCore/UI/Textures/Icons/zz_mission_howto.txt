@@ -1,15 +1,24 @@
 Export plugin to 
 https://github.com/StefanTraistaru/batch-export?tab=readme-ov-file
 
-Three icons are needed:
+Export icons to: C:\ARCode\DarcMods\DarcCore\UI\Textures\ExportedIcons\ as png
 
-# Map icon: The one shown on map for a mission
+# Map icon: The one shown on map for a mission (size: 64x131)
 - Name: gm_mission_XXX_map
 -- Prefix: gm_mission
 -- Suffix: map
-- Size: 54x110 with DPI 30
-(- Size: 64x131 with DPI 36 --- This could be the future size)
-- Color: Black
+- Export size: 64x88 with DPI 35,5
+- In Gimp: 
+-- Use: gm_mission_XXX_map.scm
+
+# Map icon: Round black icon - used with spawner (size: 64x131)
+- Name: gm_mission_XXX_map_round
+-- Prefix: gm_mission
+-- Suffix: map_round
+- Hide location
+- Export size: 64x88 with DPI 35,5
+- In Gimp: 
+-- Use: gm_mission_XXX_map_round.scm
 
 # Round image for GM drop: The icon shown on the game master entity browser 
 - Name: gm_mission_XXX_round
@@ -43,16 +52,6 @@ Three icons are needed:
 - In Gimp: 
 -- Invert color
 -- Set opacity to 60%
-
-# Map icon: Round black icon - used with spawner
-- Name: gm_mission_XXX_map_round
--- Prefix: gm_mission
--- Suffix: map_round
-- Size: 64x88 with DPI 35,5
-- Color: Black
-- In Gimp: 
--- Canvas Size 64x131 - center
--- Y offset 43
 
 # Other icons
 - Name: icon_IconName
