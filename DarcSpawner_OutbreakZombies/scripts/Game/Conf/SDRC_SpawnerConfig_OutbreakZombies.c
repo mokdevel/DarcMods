@@ -44,7 +44,7 @@ class SDRC_SpawnerConfig_OutbreakZombies : SDRC_SpawnerConfig
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(		
 			"index 0: Z small group in random places",
-			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			true, "DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP_ROUND, 
 			{
 				EMapDescriptorType.MDT_FOREST,
 				EMapDescriptorType.MDT_NAME_GENERIC, EMapDescriptorType.MDT_NAME_GENERIC,
@@ -67,7 +67,7 @@ class SDRC_SpawnerConfig_OutbreakZombies : SDRC_SpawnerConfig
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(		
 			"index 1: Z large group",
-			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			true, "DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP_ROUND, 
 			{
 				EMapDescriptorType.MDT_FOREST,
 				EMapDescriptorType.MDT_NAME_GENERIC, EMapDescriptorType.MDT_NAME_GENERIC,
@@ -93,7 +93,7 @@ class SDRC_SpawnerConfig_OutbreakZombies : SDRC_SpawnerConfig
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(		
 			"index 2: Z groups in cities",
-			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			true, "DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP_ROUND, 
 			{
 				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY, 
 				EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE, 
@@ -118,7 +118,7 @@ class SDRC_SpawnerConfig_OutbreakZombies : SDRC_SpawnerConfig
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(		
 			"index 3: Z groups in special places",
-			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			true, "DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP_ROUND, 
 			{
 				EMapDescriptorType.MDT_CHAPEL, EMapDescriptorType.MDT_CHAPEL, EMapDescriptorType.MDT_CHAPEL, 
 				EMapDescriptorType.MDT_CHURCH, EMapDescriptorType.MDT_CHURCH, EMapDescriptorType.MDT_CHURCH,
@@ -147,7 +147,7 @@ class SDRC_SpawnerConfig_OutbreakZombies : SDRC_SpawnerConfig
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(		
 			"index 4: Outbreak small group in random places",
-			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			true, "DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP_ROUND, 
 			{
 				EMapDescriptorType.MDT_FOREST,
 				EMapDescriptorType.MDT_NAME_GENERIC, EMapDescriptorType.MDT_NAME_GENERIC,
@@ -173,7 +173,7 @@ class SDRC_SpawnerConfig_OutbreakZombies : SDRC_SpawnerConfig
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(		
 			"index 5: Outbreak large group",
-			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			true, "DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP_ROUND, 
 			{
 				EMapDescriptorType.MDT_FOREST,
 				EMapDescriptorType.MDT_NAME_GENERIC, EMapDescriptorType.MDT_NAME_GENERIC,
@@ -198,7 +198,7 @@ class SDRC_SpawnerConfig_OutbreakZombies : SDRC_SpawnerConfig
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(		
 			"index 6: Outbreak groups in cities",
-			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			true, "DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP_ROUND, 
 			{
 				EMapDescriptorType.MDT_NAME_CITY, EMapDescriptorType.MDT_NAME_CITY, 
 				EMapDescriptorType.MDT_NAME_VILLAGE, EMapDescriptorType.MDT_NAME_VILLAGE, 
@@ -226,7 +226,7 @@ class SDRC_SpawnerConfig_OutbreakZombies : SDRC_SpawnerConfig
 		SDRC_SpawnSet spawnSet = new SDRC_SpawnSet();
 		spawnSet.Set(		
 			"index 7: Outbreak groups in special places",
-			false, "DARC_MISSION", SDRC_EMissionIcon.ICON_PLUS_SMALL_MAP, 
+			true, "DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP_ROUND, 
 			{
 				EMapDescriptorType.MDT_CHAPEL, EMapDescriptorType.MDT_CHAPEL, EMapDescriptorType.MDT_CHAPEL, 
 				EMapDescriptorType.MDT_CHURCH, EMapDescriptorType.MDT_CHURCH, EMapDescriptorType.MDT_CHURCH,

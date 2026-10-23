@@ -8,7 +8,7 @@ modded class SDRC_Spawner
 {
 	const string DC_CONFIG_ADDON_NAME_OUTBREAKZOMBIES = "OutbreakZombies";
 	const string DC_CONFIG_FILE_SPAWNER_OUTBREAKZOMBIES = "dc_spawnerConfig_OutbreakZombies.json";
-	const int DC_CONFIG_FILE_SPAWNER_OUTBREAKZOMBIES_JSONVER = 1;
+	const int DC_CONFIG_FILE_SPAWNER_OUTBREAKZOMBIES_JSONVER = 2;
 	
 	private ref SDRC_JsonApi2 m_JsonApi_OutbreakZombies = null;
 	private ref SDRC_SpawnerConfig_OutbreakZombies m_Config_OutbreakZombies = null;
