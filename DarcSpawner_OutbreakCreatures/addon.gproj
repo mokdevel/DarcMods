@@ -1,0 +1,22 @@
+GameProject {
+ ID "DarcSpawner_OutbreakCreatures"
+ GUID "6AAB093268839B57"
+ TITLE "DarcSpawner_OutbreakCreatures"
+ Dependencies {
+  "631C9C204D8FAF47" "58D0FB3206B6F859" "E3617517555C481D" "0751D781B4F6F9BB" "E1DCD3CAF138441C"
+ }
+ Configurations {
+  GameProjectConfig PC {
+  }
+  GameProjectConfig XBOX_ONE {
+  }
+  GameProjectConfig XBOX_SERIES {
+  }
+  GameProjectConfig PS4 {
+  }
+  GameProjectConfig PS5 {
+  }
+  GameProjectConfig HEADLESS {
+  }
+ }
+}
