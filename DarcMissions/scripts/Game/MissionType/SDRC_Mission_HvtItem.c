@@ -188,6 +188,10 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 						isDestroyed = false;	
 					}
 				}
+				else
+				{
+					SDRC_Log.Add("[SDRC_Mission_HvtItem:IsTargetDestroyed] " + GetId() + " : No DamageManagerComponent found for: " + entity, LogLevel.ERROR);					
+				}
 				
 				//Only if all targets are destroyed, the mission is done. If we found one
 				if (!isDestroyed)
@@ -290,6 +294,10 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		SDRC_JsonApi2 jsonApi1 = new SDRC_JsonApi2(SDRC_HvtItemConfig_Animals.GetFileName());				
 		SDRC_HvtItemConfig_Animals conf1 = new SDRC_HvtItemConfig_Animals();
 		jsonApi1.Load(conf1, SDRC_MissionConfig.Cast(conf1), SDRC_HvtItemConfig_Animals.GetFileVersion(), safeUpdate: true, silent: true);				
+
+		SDRC_JsonApi2 jsonApi2 = new SDRC_JsonApi2(SDRC_HvtItemConfig_Horror.GetFileName());				
+		SDRC_HvtItemConfig_Horror conf2 = new SDRC_HvtItemConfig_Horror();
+		jsonApi2.Load(conf2, SDRC_MissionConfig.Cast(conf2), SDRC_HvtItemConfig_Horror.GetFileVersion(), safeUpdate: true, silent: true);				
 	}
 	
 	//------------------------------------------------------------------------------------------------

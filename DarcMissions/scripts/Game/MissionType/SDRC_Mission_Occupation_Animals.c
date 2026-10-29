@@ -8,7 +8,7 @@
 class SDRC_OccupationConfig_Animals : SDRC_OccupationConfig
 {
 	private const string DC_MISSIONCONFIG_FILE_OCCUPATION_ANIMALS = "dc_missionConfig_Occupation_Animals.json";
-	private const int DC_MISSIONCONFIG_FILE_OCCUPATION_ANIMALS_JSONVER = 2;
+	private const int DC_MISSIONCONFIG_FILE_OCCUPATION_ANIMALS_JSONVER = DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER;
 	
 	//------------------------------------------------------------------------------------------------
 	static string GetFileName()

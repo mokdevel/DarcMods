@@ -244,7 +244,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 		missionList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5,6};
 
 		#ifndef SDRC_RELEASE
-			//missionList = {};
+			missionList = {};
 		#endif
 				
 		//Mission specific		

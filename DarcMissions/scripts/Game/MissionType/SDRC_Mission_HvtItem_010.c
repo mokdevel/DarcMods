@@ -46,13 +46,13 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Clear();
-		subMissions.Insert(HvtItem_010());				
-		subMissions.Insert(HvtItem_011());				
-		subMissions.Insert(HvtItem_012());				
+		subMissions.Insert(HvtItem_010_0());				
+		subMissions.Insert(HvtItem_010_1());				
+		subMissions.Insert(HvtItem_010_2());				
 	};
 	
 	//----------------------------------------------------
-	SDRC_HvtItem HvtItem_010()
+	SDRC_HvtItem HvtItem_010_0()
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
@@ -276,7 +276,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 	};			
 	
 	//----------------------------------------------------
-	SDRC_HvtItem HvtItem_011()
+	SDRC_HvtItem HvtItem_010_1()
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
@@ -535,7 +535,7 @@ class SDRC_HvtItemConfig_010 : SDRC_HvtItemConfig
 	};
 	
 	//----------------------------------------------------
-	SDRC_HvtItem HvtItem_012()
+	SDRC_HvtItem HvtItem_010_2()
 	{
 		ref SDRC_HvtItem hvtItem = new SDRC_HvtItem();
 		ref SDRC_MissionMessage message = new SDRC_MissionMessage();

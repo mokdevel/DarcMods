@@ -8,7 +8,7 @@
 class SDRC_OccupationConfig_Horror : SDRC_OccupationConfig
 {
 	private const string DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR = "dc_missionConfig_Occupation_Horror.json";
-	private const int DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR_JSONVER = 2;
+	private const int DC_MISSIONCONFIG_FILE_OCCUPATION_HORROR_JSONVER = DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER;
 	
 	//------------------------------------------------------------------------------------------------
 	static string GetFileName()
@@ -38,8 +38,8 @@ class SDRC_OccupationConfig_Horror : SDRC_OccupationConfig
 		//Default		
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-//		missionList = {0, 1, 2};		
-		missionList = {0};				
+		missionList = {0, 1, 2};		
+		//missionList = {0};				
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Clear();
@@ -57,7 +57,7 @@ class SDRC_OccupationConfig_Horror : SDRC_OccupationConfig
 			"Avoid the location. No loot available.",
 			"Spawns from hell are dead!",
 			"Are you scared of a few ghosts..?",);
-		occupation.general.modList.Insert("$Zombies:");	//TBD: Fix to correct one!
+		occupation.general.modList.Insert("$BallienCreatures:");
 		occupation.general.Set(
 			0, "index 0: Zombie and Demon characters.",
 			{"0 0 0"}, 3,
@@ -68,7 +68,7 @@ class SDRC_OccupationConfig_Horror : SDRC_OccupationConfig
 			"any",
 			{message},
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
-			{},
+			{"BALLIEN_BC_FACTION"},
 			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP,
 			{SDRC_EDifficulty.RANDOM},
 			0
@@ -76,11 +76,12 @@ class SDRC_OccupationConfig_Horror : SDRC_OccupationConfig
 		occupation.ai.Set(
 			{1, 8},
 			{
-			 "C_DEMON", "C_DEMON_BOSS",
-			 "C_BEASTS", //"C_BEASTS", "C_BEASTS", "C_BEASTS", "C_BEASTS", "C_BEASTS", "C_BEASTS", 
+				"C_DEMON", "C_DEMON", "C_DEMON", 
+				"C_BEASTS", "C_BEASTS", 
+				"C_DEMON_BOSS",
 			},
 			50, 1.0,
-			{50, 300},
+			{50, 100},
 			SDRC_EWaypointGenerationType.RANDOM,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
@@ -97,7 +98,7 @@ class SDRC_OccupationConfig_Horror : SDRC_OccupationConfig
 			"Braaaainss.....",
 			"The living dead are just dead now.",
 			"You were tasty.",);
-		occupation.general.modList.Insert("$Zombies:");	//TBD: Fix to correct one!
+		occupation.general.modList.Insert("$BaconZombies:");
 		occupation.general.Set(
 			1, "index 1: Zombie hordes",
 			{"0 0 0"}, 3,
@@ -116,10 +117,12 @@ class SDRC_OccupationConfig_Horror : SDRC_OccupationConfig
 		occupation.ai.Set(
 			{1, 4},
 			{
-			 "G_ZOMBIE_SMALL", "G_ZOMBIE_MEDIUM", "G_ZOMBIE_LARGE"
+				"G_ZOMBIE_SMALL", "G_ZOMBIE_SMALL", "G_ZOMBIE_SMALL", 
+				"G_ZOMBIE_MEDIUM", 
+				"G_ZOMBIE_LARGE"
 			},
 			50, 0.3,
-			{50, 300},
+			{50, 120},
 			SDRC_EWaypointGenerationType.RANDOM,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
@@ -136,7 +139,7 @@ class SDRC_OccupationConfig_Horror : SDRC_OccupationConfig
 			"Avoid getting yourself eaten.",
 			"The dead shall stay dead.",
 			"Oh the horrors. You were slain.",);
-		occupation.general.modList.Insert("$Zombies:");	//TBD: Fix to correct one!
+		occupation.general.modList.Insert("$BaconZombies:");
 		occupation.general.Set(
 			2, "index 2: Zombies",
 			{"0 0 0"}, 3,
@@ -149,17 +152,19 @@ class SDRC_OccupationConfig_Horror : SDRC_OccupationConfig
 			{message},
 			SDRC_EMissionWinCondition.AI_KILL_75,
 			{"BACON_622120A5448725E3_FACTION"},
-			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_ZOMBIE_MAP,
 			{SDRC_EDifficulty.RANDOM},
 			0
 		);
 		occupation.ai.Set(
 			{1, 4},
 			{
-			 "G_ZOMBIE_SMALL", "G_ZOMBIE_MEDIUM", "G_ZOMBIE_LARGE"
+				"G_ZOMBIE_SMALL", "G_ZOMBIE_SMALL", 
+				"G_ZOMBIE_MEDIUM", 
+				"G_ZOMBIE_LARGE"
 			},
 			50, 0.3,
-			{50, 300},
+			{50, 150},
 			SDRC_EWaypointGenerationType.RANDOM,
 			SDRC_EWaypointMoveType.PATROLCYCLE,
 		);
