@@ -37,6 +37,7 @@
 	C_ZOMBIE
 	C_DEMON
 	C_DEMON_BOSS	
+	C_CREATURE
 */
 
 //------------------------------------------------------------------------------------------------
@@ -139,6 +140,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 		lists.Insert(enemyList60());		
 		lists.Insert(enemyList61());				
 		lists.Insert(enemyList62());				
+		lists.Insert(enemyList63());				
 	}
 				
 	//------------------------------------------------------------------------------------------------
@@ -645,6 +647,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{
 			 "ShadowTwin", "Whisper", 
 			 "Kamikaze_Cultist",							//Ballien Cultists
+			 "Stalker",										//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -661,7 +664,8 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{
 			 "Stalker Heavy", "Zombie_Heavy",
 			 "character_115_dupe", "character_115_pump", "character_115_skel.",
-			 "Warrior_Cultist", 							//Ballien Cultists
+			 "Firemage_Cultist", 							//Ballien Cultists
+			 "Shadow", 							//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -684,5 +688,20 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{}
 		);					
 		return enemyList;
-	}	
+	}
+	
+	SDRC_List enemyList63()
+	{
+		ref SDRC_List enemyList = new SDRC_List();
+		enemyList.Set(
+			"C_CREATURE",
+			{"Prefabs/Characters", "Beasts"},				//NOTE: Here we have upper level Prefabs/Characters as filter
+			{
+			 "Civilian_Cultist", 							//Ballien Cultists
+			},
+			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
+			{}
+		);					
+		return enemyList;
+	}		
 }
