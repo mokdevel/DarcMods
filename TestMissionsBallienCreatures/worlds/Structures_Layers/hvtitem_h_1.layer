@@ -1,0 +1,81 @@
+GenericEntity : "{155C3A8D0CDC2AD6}Prefabs/Props/Cultist/Prop_Cultist_SkullStake.et" {
+ coords 30.733 1 77.345
+ angles 0 -145.716 0
+}
+$grp GenericEntity : "{27B95A994D0DC1D3}Prefabs/Props/Cultist/Prop_Cultist_Totem.et" {
+ {
+  coords 25.328 1 75.272
+ }
+ {
+  coords 33.499 1 75.54
+ }
+}
+$grp GenericEntity : "{4BCD2240C8EF8473}Prefabs/Props/Cultist/Prop_Cultist_Candles.et" {
+ {
+  coords 29.197 1 73.783
+  {
+   LightEntity {
+    ID "B1A81B70D2667030"
+    coords 0 0.45 0
+   }
+  }
+ }
+ {
+  coords 30.077 1 74.587
+  {
+   LightEntity {
+    ID "B1A81B70D2667030"
+    coords 0 0.45 0
+   }
+  }
+ }
+ {
+  coords 29.289 1 75.32
+  {
+   LightEntity {
+    ID "B1A81B70D2667030"
+    coords 0 0.45 0
+   }
+  }
+ }
+ {
+  coords 28.364 1 74.526
+  {
+   LightEntity {
+    ID "B1A81B70D2667030"
+    coords 0 0.45 0
+   }
+  }
+ }
+}
+SCR_DestructibleBuildingEntity : "{4BCF7ABAC254083C}Prefabs/Portal/PortalDimension.et" {
+ coords 29.612 0 65.518
+}
+GenericEntity : "{56E50470D4FE39A6}Prefabs/Props/Cultist/Prop_Cultist_Altar.et" {
+ coords 29.41 1 77.813
+ angles 0 -177.546 0
+}
+$grp GenericEntity : "{9564A2C5DE570326}Prefabs/Props/Cultist/Prop_Cultist_Monolith.et" {
+ {
+  coords 27.069 1.241 68.747
+ }
+ {
+  coords 32.507 1.131 68.632
+ }
+ {
+  coords 32.859 1 70.856
+ }
+ {
+  coords 33.475 1 73.315
+ }
+ {
+  coords 26.256 1 70.914
+ }
+ {
+  coords 25.742 1 73.221
+ }
+}
+GenericEntity : "{973BB83B14B97689}PrefabsEditable/Auto/Props/Civilian/LootE_SackUniversal_01.et" {
+ coords 29.317 1 74.647
+ angles 0 0 0
+}

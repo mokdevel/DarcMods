@@ -1,0 +1,33 @@
+GenericEntity : "{155C3A8D0CDC2AD6}Prefabs/Props/Cultist/Prop_Cultist_SkullStake.et" {
+ coords 72.256 1 74.485
+ angles 0 -158.403 0
+}
+GenericEntity : "{27B95A994D0DC1D3}Prefabs/Props/Cultist/Prop_Cultist_Totem.et" {
+ coords 74.018 1 73.534
+ angles 0 51.883 0
+}
+GenericEntity : "{4BCD2240C8EF8473}Prefabs/Props/Cultist/Prop_Cultist_Candles.et" {
+ coords 72.636 1 74.395
+}
+GenericEntity : "{663260647F5C5E0E}Prefabs/Props/Cultist/Prop_Cultist_Brazier.et" {
+ coords 67.696 1 75.232
+}
+GenericEntity : "{80EAE46C81FCED20}Prefabs/Portal/PortaleDistruttonoEFFECT.et" {
+ coords 70.02 1 66.507
+}
+GenericEntity : "{941C76E878C3C46E}Prefabs/Props/Cultist/Prop_Cultist_Tent.et" {
+ coords 63.268 1 76.188
+ angles 0 66.137 0
+}
+GenericEntity : "{9564A2C5DE570326}Prefabs/Props/Cultist/Prop_Cultist_Monolith.et" {
+ coords 65.634 1 81.546
+ angles 0 107.21 0
+}
+GenericEntity : "{973BB83B14B97689}PrefabsEditable/Auto/Props/Civilian/LootE_SackUniversal_01.et" {
+ coords 61.465 1 75.514
+ angles 0 59.467 0
+}
+GenericEntity : "{E38660774DD60788}Prefabs/Props/Cultist/Prop_Cultist_Lectern.et" {
+ coords 73.366 1 74.321
+ angles 0 19.097 0
+}

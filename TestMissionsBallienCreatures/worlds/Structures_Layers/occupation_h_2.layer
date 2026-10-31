@@ -1,0 +1,46 @@
+$grp GenericEntity : "{155C3A8D0CDC2AD6}Prefabs/Props/Cultist/Prop_Cultist_SkullStake.et" {
+ {
+  coords 69.868 1 108.715
+  angles 0 -46.785 0
+ }
+ {
+  coords 72.108 1 111.615
+  angles 0 -58.138 0
+ }
+}
+$grp GenericEntity : "{4BCD2240C8EF8473}Prefabs/Props/Cultist/Prop_Cultist_Candles.et" {
+ {
+  coords 64.789 1 107.492
+ }
+ {
+  coords 62.42 1 107.473
+ }
+ {
+  coords 74.05 1 105.182
+ }
+}
+GenericEntity : "{663260647F5C5E0E}Prefabs/Props/Cultist/Prop_Cultist_Brazier.et" {
+ coords 72.256 1 113.299
+}
+SCR_DestructibleBuildingEntity : "{810071129368254F}PrefabsEditable/Auto/Structures/Ruins/HouseRuins/E_HouseRuin_01_BrickPile_Small.et" {
+ coords 68.782 0 108.885
+ angles 0 -16.021 0
+}
+SCR_DestructibleBuildingEntity : "{81CDBA11F502E520}PrefabsEditable/Auto/Structures/Cultural/Calvaries/E_CalvaryLarge_02.et" {
+ coords 63.559 0 106.673
+ angles 0 0.6 0
+}
+GenericEntity : "{941C76E878C3C46E}Prefabs/Props/Cultist/Prop_Cultist_Tent.et" {
+ coords 73.693 1 107.912
+ angles 0 -51.437 0
+}
+StaticModelEntity : "{95BFB5C33EA78DE6}PrefabsEditable/Auto/Structures/Military/Fortifications/E_DirtPile_01_small.et" {
+ coords 72.038 0 108.377
+}
+StaticModelEntity : "{9E954B448BC92414}PrefabsEditable/Auto/Structures/Agriculture/VegetableBed_01/E_VegetableBed_01_small.et" {
+ coords 74.113 0 107.692
+ angles 0 40.5 0
+}
+SCR_DestructibleBuildingEntity : "{B719A6C120A0EA5E}PrefabsEditable/Auto/Structures/Cultural/Cemeteries/Graves/E_Grave_E_01_Covered_Loot.et" {
+ coords 63.686 0 108.585
+}

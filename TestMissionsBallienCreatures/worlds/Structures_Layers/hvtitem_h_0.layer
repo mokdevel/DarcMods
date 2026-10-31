@@ -1,0 +1,25 @@
+$grp SCR_DestructibleEntity : "{21D15F6160864CF6}PrefabsEditable/Auto/Structures/Cultural/Statues/E_StatueFIA_01_big.et" {
+ {
+  coords 31.779 0.715 33.284
+ }
+ {
+  coords 27.524 0.667 33.254
+ }
+}
+SCR_DestructibleBuildingEntity : "{4BCF7ABAC254083C}Prefabs/Portal/PortalDimension.et" {
+ coords 29.482 0 30.468
+}
+SCR_DestructibleBuildingEntity : "{81CDBA11F502E520}PrefabsEditable/Auto/Structures/Cultural/Calvaries/E_CalvaryLarge_02.et" {
+ coords 22.528 0 34.433
+ angles 0 56.453 0
+}
+GenericEntity : "{973BB83B14B97689}PrefabsEditable/Auto/Props/Civilian/LootE_SackUniversal_01.et" {
+ coords 21.77 1 34.252
+ angles 0 49.786 0
+}
+SCR_DestructibleBuildingEntity : "{9E25698E084833D3}PrefabsEditable/Auto/Structures/Ruins/HouseRuins/E_HouseRuin_01_BrickPile_Big.et" {
+ coords 29.113 0.292 33.782
+}
+SCR_IndestructibleEnvironmentalEntity : "{D9423A468CABE765}PrefabsEditable/Auto/Rocks/Granite/E_Granite_Cluster_01.et" {
+ coords 32.13 0 35.376
+}
