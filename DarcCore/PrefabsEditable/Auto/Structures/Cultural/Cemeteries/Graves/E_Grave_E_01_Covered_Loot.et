@@ -1,0 +1,41 @@
+SCR_DestructibleBuildingEntity : "{A772B82D11327D38}PrefabsEditable/Auto/Structures/Cultural/Cemeteries/Graves/E_Grave_E_01_Covered.et" {
+ ID "5272E317AA6C9C92"
+ components {
+  SCR_UniversalInventoryStorageComponent "{6ABE97EB2A77B4A1}" {
+   Attributes SCR_ItemAttributeCollection "{6ABE97EB9BF71958}" {
+    ItemDisplayName SCR_InventoryUIInfo "{6ABE97EB8D18A295}" {
+     Name "Loot box"
+    }
+    m_Size SLOT_3x3
+    m_bDraggable 0
+    m_bRefundable 0
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 1000
+  }
+  SCR_InventoryStorageManagerComponent "{6ABE97EBDA5379AD}" {
+  }
+  ActionsManagerComponent "{6ABE97EBCCF2C7E1}" {
+   ActionContexts {
+    UserActionContext "{6ABE97EBCF6B29FC}" {
+     ContextName "default"
+     Position PointInfo "{6ABE97EBF61B07F5}" {
+     }
+     Radius 1.5
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{6ABE97EBE0A42145}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{6ABE97EBE3729D7C}" {
+      Name "Open Loot"
+     }
+     "Sort Priority" 1000
+    }
+   }
+  }
+ }
+}
