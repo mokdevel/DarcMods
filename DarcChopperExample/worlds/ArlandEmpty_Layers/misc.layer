@@ -1,0 +1,28 @@
+$grp GenericEntity : "{4A9E0C3D18D5A1B7}Prefabs/Props/Crates/LootCrateWooden_01.et" {
+ {
+  coords 2500 104.031 2500
+ }
+ {
+  coords 2523.821 140.557 2204.28
+ }
+ {
+  coords 3100 72.75 1580
+ }
+ {
+  coords 2450.974 78.069 1780.508
+ }
+ {
+  coords 1800 39.581 2660
+ }
+}
+$grp StaticModelEntity : "{E95CB8F4C4B2C210}Prefabs/Decals/Markings/Runway/Decal_Helipad_01.et" {
+ {
+  coords 1350.12 39 2287.375
+ }
+ {
+  coords 1465.739 38.156 2668.491
+ }
+}
+SoundWorld : "{EAFF9DEA6BDEC26C}Prefabs/Sounds/SoundWorld/Arland/SoundWorld_Arland.et" {
+ coords 1306.969 39 2081.563
+}
