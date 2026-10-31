@@ -7,7 +7,7 @@ NOTE: SDRC_LootHelper needs to initialized before using this. UTIL_MAGAZINE and 
 */
 
 //------------------------------------------------------------------------------------------------
-sealed class SDRC_AmmoHelper
+class SDRC_AmmoHelper
 {
 	private static InventoryStorageManagerComponent m_invManager;// = new InventoryStorageManagerComponent();
 	private static IEntity m_ammoHelperBox;

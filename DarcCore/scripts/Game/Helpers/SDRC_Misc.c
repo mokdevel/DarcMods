@@ -5,7 +5,7 @@
 Includes various small functions. 
 */
 
-sealed class SDRC_Misc
+class SDRC_Misc
 {
 	//------------------------------------------------------------------------------------------------
 	/*!

@@ -6,8 +6,8 @@ This mission spawns groups to defend a location
 */
 
 const string DC_MISSIONCONFIG_FILE_OCCUPATION = "dc_missionConfig_Occupation.json";
-const int DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER = 2;
-const bool DC_MISSIONCONFIG_FILE_OCCUPATION_SAFEUPDATE = false;
+const int DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER = 3;
+const bool DC_MISSIONCONFIG_FILE_OCCUPATION_SAFEUPDATE = true;
 
 //------------------------------------------------------------------------------------------------
 class SDRC_Mission_Occupation : SDRC_Mission

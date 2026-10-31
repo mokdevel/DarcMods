@@ -115,7 +115,7 @@ class SDRC_MissionFrame
 		
 		if (SDRC_Conf.SHOW_DEBUG)
 		{
-			SDRC_DevHelper.SDRC_DevDump();
+			//SDRC_DevHelper.SDRC_DevDump();
 		}
 		
 		//Start the mission framework.

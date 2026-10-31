@@ -15,7 +15,7 @@ class SDRC_Camp : Managed
 	ref array<ref SDRC_Structure> campItems = {};	
 }
 
-sealed class SDRC_CampHelper
+class SDRC_CampHelper
 {
 	//------------------------------------------------------------------------------------------------
 	/*!

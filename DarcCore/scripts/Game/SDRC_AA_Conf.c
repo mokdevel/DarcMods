@@ -5,7 +5,7 @@
 Stupid file to handle a few common variables accross multiple mods
 */
 
-//#define SDRC_RELEASE
+#define SDRC_RELEASE
 
 //#define DEBUG_DO_NOT_CLEAR		//Leave old visual debug lines etc on restart
 //#define NEW_VERSION_WIP			//New functionality (..that affects jsons)
@@ -55,7 +55,7 @@ sealed class SDRC_Conf
 	const bool RELEASE = false;
 	const bool EXPERIMENTAL = true;
 	const string DEFAULT_DIR = "debug";
-	const bool SDRC_ENABLE_DARCSPAWNER = false;
+	const bool SDRC_ENABLE_DARCSPAWNER = true;
 	const bool SDRC_ENABLE_DARCMISSIONS	= true;
 	const bool SDRC_ENABLE_DARCDEATHMARKER = false;
 	const bool SDRC_ENABLE_DARCSTORIES = false;

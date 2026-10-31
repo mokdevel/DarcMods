@@ -6,7 +6,7 @@ High Value Target (HVT) - Item target
 */
 
 const string DC_MISSIONCONFIG_FILE_HVTITEM = "dc_missionConfig_HvtItem.json";
-const int DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER = 3;
+const int DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER = 4;
 const bool DC_MISSIONCONFIG_FILE_HVTITEM_SAFEUPDATE = true;
 
 //------------------------------------------------------------------------------------------------

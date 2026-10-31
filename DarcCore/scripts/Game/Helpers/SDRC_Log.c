@@ -29,7 +29,7 @@ enum LogLevel
 */
 
 //------------------------------------------------------------------------------------------------
-sealed class SDRC_Log
+class SDRC_Log
 {
 	static private DC_LogLevel m_LogLevel = DC_LogLevel.NORMAL;
 	

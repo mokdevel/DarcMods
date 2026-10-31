@@ -7,6 +7,19 @@ No changes in mission jsons.
 
 ..empty..
 
+## 20261031
+Halloween update!
+
+Main Features:
+* Horror update for Halloween. A big thank you to AlienBallien for fulfilling my wishes.
+  * Updated BallienCreatures support
+  * Horror missions using BaconZombies and BallienCreatures: HvtItem, Occupation
+  * Updated files - files will autoupdate:
+    * dc_missionConfig_HvtItem.json
+    * dc_missionConfig_Occupation.json
+
+Known issue: The new icons are not visible in GM. 
+
 ## 20261017
 Main Features:
 * Support for BSI Middle Eastern Military. Use ``MEM`` as the faction.
