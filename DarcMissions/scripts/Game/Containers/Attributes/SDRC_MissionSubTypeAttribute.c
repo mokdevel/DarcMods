@@ -26,15 +26,15 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 		
 		if (baseGameMode)		
 		{		
-			//Get the mission type enum value and use it as the index for missionBigIndexForEdit
+			//Get the mission type enum value and use it as the index for missionLargestIndexForEdit
 			int index = missionComp.GetMissionType();
 			int value = 15;	//Setting just a default here
-			if ( (index > 0) && (index < baseGameMode.missionBigIndex.Count()) )
+			if ( (index > 0) && (index < baseGameMode.missionLargestIndex.Count()) )
 			{
-				value = baseGameMode.missionBigIndex[index];
+				value = baseGameMode.missionLargestIndex[index];
 			}
 				
-			baseGameMode.missionBigIndexForEdit = value;	//TBD: For this to work on clients, it needs to be replicated. 
+			baseGameMode.missionLargestIndexForEdit = value;	//TBD: For this to work on clients, it needs to be replicated. 
 			SDRC_Log.Add("[SDRC_MissionSubTypeAttribute] Editing value: " + value, LogLevel.DEBUG);			
 		}		
 		

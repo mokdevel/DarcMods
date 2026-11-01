@@ -11,8 +11,8 @@ modded class SCR_BaseGameMode
 	//a global value that can be set and read in SDRC_MissionSubIdxEditorAttributeBaseValues
 	//The table is filled in SDRC_MissionEnumHelper:CreateAllConfigs
 	
-	ref array<int> missionBigIndex = {0};	//The largest index found in the missionListMission. First item is prefilled to reflect SDRC_EMissionType.NONE
-	int missionBigIndexForEdit = 0;			//The index to use for the specific 
+	ref array<int> missionLargestIndex = {0};	//The largest index found in the missionListMission. First item is prefilled to reflect SDRC_EMissionType.NONE
+	int missionLargestIndexForEdit = 0;			//The index to use for the specific 
 	//------------------------------------------------------------------------------------------------
 		
 	//------------------------------------------------------------------------------------------------

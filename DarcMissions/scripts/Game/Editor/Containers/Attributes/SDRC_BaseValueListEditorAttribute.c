@@ -10,7 +10,7 @@ class SDRC_MissionSubIdxEditorAttributeBaseValues:SCR_EditorAttributeBaseValues
 		
 		if (baseGameMode)		
 		{		
-			int num = baseGameMode.missionBigIndexForEdit;
+			int num = baseGameMode.missionLargestIndexForEdit;
 		
 			m_fMin = -1;
 			m_fMax = num;
