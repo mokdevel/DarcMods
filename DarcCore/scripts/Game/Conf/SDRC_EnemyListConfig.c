@@ -157,7 +157,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Regulars_Brick", "InfantrySection",						//British Forces
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies
-			 "Cultists_Light", 											//Ballien Cultists
+			 "Cultist_Light", 											//Ballien Cultists
 			 "CloseProtectionTeam",										//RHS_ION
 			 "DSF_1983_SBS_Patrol",										//1st RM DSF			
 			 "Team_Light",												//CLA
@@ -178,7 +178,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "KS05_SF_GROUP_A", "KS05_SF_GROUP_C", 						//Omega gropus
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies
-			 "Cultists_Light", 											//Ballien Cultists
+			 "Cultist_Shadow", 											//Ballien Cultists
 			 "PLAGF_SentryTeam",										//PLA: Proper Sniper Group is missing
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing
 			 "CloseProtectionTeam",										//RHS_ION
@@ -201,7 +201,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{"Team_AT", "Team_GL", "Team_LAT",
 			 "Group_Zombies_High",	//Bacon Zombies
 //			 "CIV_Medium", "FIA_Medium", "USSR_Medium", "Tier1_Medium",	//Bacon Zombies
-			 "Cultists_Medium", 										//Ballien Cultists
+			 "Cultist_Firemage", 										//Ballien Cultists
 			 "PLASTICBANDIT_FireTeam_Heavy",							//Bandit faction
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing			
 			 "CloseProtectionTeam",										//RHS_ION
@@ -223,7 +223,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{"_Platoon",
 			 "Group_Zombies_High",	//Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
-			 "Cultists_Light", 											//Ballien Cultists
+			 "Cultist_Firemage_S", 										//Ballien Cultists
 			 "PLASTICBANDIT_Squad",										//Bandit faction random team			
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing			
 			 "StaticSecurityTeam",										//RHS_ION						
@@ -247,7 +247,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{"_Medical",
 			 "Group_Zombies_High",	//Bacon Zombies
 //			 "CIV_Medium", "FIA_Medium", "USSR_Medium", "Tier1_Medium",	//Bacon Zombies	
-			 "Cultists_Light", 											//Ballien Cultists
+			 "Cultist_Warrior_S",										//Ballien Cultists
 			 "PLASTICBANDIT_Squad",										//Bandit faction random team
 			 "JGSDF_2008_LightFireTeam",								//JSFD: Proper Group is missing
 			 "StaticSecurityTeam",										//RHS_ION			
@@ -270,7 +270,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{"_Recon", "_Maneuver", "_RecceTeam",
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
-			 "Cultists_Medium", 										//Ballien Cultists
+			 "Cultist_Stalker", 										//Ballien Cultists
 			 "PLASTICBANDIT_Squad",										//Bandit faction random team		
 			 "JGSDF_2008_LightFireTeam",								//JSFD: Proper Group is missing
 			 "CloseProtectionTeam",										//RHS_ION
@@ -296,7 +296,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "Group_Zombies_Horde", "Group_Zombies_CIV_Large",			//Bacon Zombies
 //			 "CIV_Large", "FIA_Large", "USSR_Large", "Tier1_Large", 	//Bacon Zombies			
 //			 "AmbientPatrol_Horde", "Zombies_Horde",					//Bacon Zombies	Hordes
-			 "Cultists_Horde", 											//Ballien Cultists
+			 "Cultist_Warrior_L", 										//Ballien Cultists
 			 "JGSDF_2008_SentryTeam",									//JSFD: Proper Group is missing
 			 "QuickReactionForce",										//RHS_ION
 			 "Recce",													//1st RM DSF
@@ -318,7 +318,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "KS05_SF_GROUP_B", 		//Omega groups
 			 "Group_Zombies_Horde",		//Bacon Zombies
 //			 "CIV_Large", "FIA_Large", "USSR_Large", "Tier1_Large", 	//Bacon Zombies			
-			 "Cultists_Medium", 										//Ballien Cultists
+			 "Cultist_Mixed", "Cultist_Kamikaze", "Cultist_Shadow",		//Ballien Cultists
 			 "PLASTICBANDIT_Squad",										//Bandit faction
 			 "MobileSecurityTeam",										//RHS_ION
 			 "SAS_SpecialProjectsTeam",									//1st RM DSF
@@ -339,7 +339,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			 "SharpshooterTeam", "MedicalSection", "SapperTeam", 
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR", //Bacon Zombies
 //			 "CIV_Small", "FIA_Small", "USSR_Small", "Tier1_Small", 	//Bacon Zombies			
-			 "Cultists_Light", 											//Ballien Cultists
+			 "Cultist_Light", 											//Ballien Cultists
 			 "PLASTICBANDIT_Patrol",									//Bandit faction
 			 "JGSDF_2008_LightFireTeam",								//JSFD: Proper Group is missing
 			 "CloseProtectionTeam",										//RHS_ION
@@ -581,9 +581,10 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_ZOMBIE_SMALL",
-			{"622120A5448725E3/Prefabs/Groups"},
+			{"Prefabs/Groups", "622120A5448725E3/Prefabs/Groups"},
 			{
 			 "Group_Zombies_CIV", "Group_Zombies_FIA", "Group_Zombies_US", "Group_Zombies_USSR",
+			 "Group_Cultist_Horde", 
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random", "_Huge", "_Large", "_Medium"},
 			{}
@@ -596,9 +597,10 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_ZOMBIE_MEDIUM",
-			{"622120A5448725E3/Prefabs/Groups"},
+			{"Prefabs/Groups", "622120A5448725E3/Prefabs/Groups"},
 			{
 			 "Group_Zombies_CIV_Large", "Group_Zombies_High",
+			 "Group_Cultist_Horde", 
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -611,9 +613,10 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"G_ZOMBIE_LARGE",
-			{"622120A5448725E3/Prefabs/Groups"},
+			{"Prefabs/Groups", "622120A5448725E3/Prefabs/Groups"},
 			{
 			 "Group_Zombies_Horde",
+			 "Group_Cultist_Mixed", 
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -626,8 +629,11 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 		ref SDRC_List enemyList = new SDRC_List();
 		enemyList.Set(
 			"C_ZOMBIE",
-			{"622120A5448725E3/Prefabs/Characters"},
-			{"Zombie_", "Character_", "Variant_"},
+			{"Prefabs/Characters", "622120A5448725E3/Prefabs/Characters"},
+			{
+			 "Zombie_", "Character_", "Variant_",
+			 "Character_Cultist_Civilian_",
+			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random", "Zombie_Heavy"},
 			{}
 		);			
@@ -646,8 +652,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{"Prefabs/Characters", "Beasts"},				//NOTE: Here we have upper level Prefabs/Characters as filter
 			{
 			 "ShadowTwin", "Whisper", 
-			 "Kamikaze_Cultist",							//Ballien Cultists
-			 "Stalker",										//Ballien Cultists
+			 "Cultist_Kamikaze", "Cultist_Stalker",			//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -664,8 +669,8 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{
 			 "Stalker Heavy", "Zombie_Heavy",
 			 "character_115_dupe", "character_115_pump", "character_115_skel.",
-			 "Firemage_Cultist", 							//Ballien Cultists
-			 "Shadow", 							//Ballien Cultists
+			 "Cultist_Firemage", "Cultist_Warrior",			//Ballien Cultists
+			 "Cultist_Shadow", 								//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -682,7 +687,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			{
 			 "GhoulHeavy", "PumpkinHead", "Skeleton", 		//"TreeDemon",
 			 "Whisper", 
-			 "Warrior_Cultist", 							//Ballien Cultists
+			 "Cultist_Stalker", "Cultist_Kamikaze", "Cultist_Shadow",	//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
@@ -697,7 +702,7 @@ class SDRC_EnemyListConfig : SDRC_ListConfig
 			"C_CREATURE",
 			{"Prefabs/Characters", "Beasts"},				//NOTE: Here we have upper level Prefabs/Characters as filter
 			{
-			 "Civilian_Cultist", 							//Ballien Cultists
+			 "Cultist_Civilian", 							//Ballien Cultists
 			},
 			{"_Base", "_NotSpawned", "_Remnants", "/CIV/", "_Randomized", "Variant", "Suppressed", "Unarmed", "_Random"},
 			{}
