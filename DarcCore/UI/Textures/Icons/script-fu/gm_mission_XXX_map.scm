@@ -38,7 +38,7 @@
 			;------- 
 			;Creates black icons to be used as mission locations
 			
-			(gimp-image-resize image 64 131 0 0)
+			(gimp-image-resize image 64 128 0 0)
 			;------- 
 
 			; Export

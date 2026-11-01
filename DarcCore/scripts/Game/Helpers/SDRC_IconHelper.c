@@ -133,6 +133,21 @@ sealed class SDRC_IconHelper
 				texture = "{F94A25321E590851}UI/Textures/Icons/gm_mission_Portal_map.edds";
 				break;
 			}
+			case SDRC_EMissionIcon.GM_MISSION_DEER_MAP:
+			{				
+				texture = "{F78433AF02335E01}UI/Textures/Icons/gm_mission_Deer_map.edds";
+				break;
+			}
+			case SDRC_EMissionIcon.GM_MISSION_WOLF_MAP:
+			{				
+				texture = "{195210D4A11E678D}UI/Textures/Icons/gm_mission_Wolf_map.edds";
+				break;
+			}			
+			case SDRC_EMissionIcon.GM_MISSION_MUSHROOM_MAP:
+			{				
+				texture = "{6339E83D617D0DF1}UI/Textures/Icons/gm_mission_Mushroom_map.edds";
+				break;
+			}
 						
 			//Win / Lose markers
 			case SDRC_EMissionIcon.GM_MISSION_WIN_MAP:		
