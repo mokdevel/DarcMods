@@ -1,6 +1,8 @@
 /**
 Attribute base for slider values for other attributes to inherent from
 */
+
+/*
 [BaseContainerProps()]
 class SDRC_MissionSubIdxEditorAttributeBaseValues:SCR_EditorAttributeBaseValues
 {
@@ -25,3 +27,5 @@ class SDRC_MissionSubIdxEditorAttributeBaseValues:SCR_EditorAttributeBaseValues
 		}			
 	}
 };
+
+*/

@@ -34,7 +34,7 @@ class SDRC_DarcNonValidAreaEditableRequestComp : SCR_EditableSystemComponent
 	/*!	
 	Return the mission type. This is not used for NonValidArea but left here for compatibility.
 	*/
-	SDRC_EMissionType GetMissionType()
+/*	SDRC_EMissionType GetMissionType()
 	{
 		return m_MissionType;
 	}
@@ -42,5 +42,5 @@ class SDRC_DarcNonValidAreaEditableRequestComp : SCR_EditableSystemComponent
 	void SetMissionType(SDRC_EMissionType missionType)
 	{
 		m_MissionType = missionType;
-	}					
+	}*/
 }

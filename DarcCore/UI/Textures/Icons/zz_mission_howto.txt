@@ -3,7 +3,7 @@ https://github.com/StefanTraistaru/batch-export?tab=readme-ov-file
 
 Export icons to: C:\ARCode\DarcMods\DarcCore\UI\Textures\ExportedIcons\ as png
 
-# Map icon: The one shown on map for a mission (size: 64x131)
+# Map icon: The one shown on map for a mission (size: 64x128)
 - Name: gm_mission_XXX_map
 -- Prefix: gm_mission
 -- Suffix: map
@@ -11,7 +11,7 @@ Export icons to: C:\ARCode\DarcMods\DarcCore\UI\Textures\ExportedIcons\ as png
 - In Gimp: 
 -- Use: gm_mission_XXX_map.scm
 
-# Map icon: Round black icon - used with spawner (size: 64x131)
+# Map icon: Round black icon - used with spawner (size: 64x128)
 - Name: gm_mission_XXX_map_round
 -- Prefix: gm_mission
 -- Suffix: map_round

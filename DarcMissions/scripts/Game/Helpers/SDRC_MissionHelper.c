@@ -174,7 +174,8 @@ class SDRC_MissionHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
-	Spawn mission AI from class SDRC_MissionConfigAi
+	Spawn mission AI from class SDRC_MissionConfigAi in to a vehicle.
+	Ground vehicles will be spawned on ground. Helicopters will be spawned in the air.
 	*/	
 	static int SpawnAIFromClassAIInVehicle(ResourceName vehicleName, SDRC_MissionConfigAi ai, SDRC_Mission mission, vector spawnPos, vector destinationPos)
 	{
@@ -198,7 +199,7 @@ class SDRC_MissionHelper
 		{
 			//Chopper spawn
 			isChopper = true;
-			spawnPos[1] = SDRC_Misc.GetSurfaceYWithWater(spawnPos) + 30;
+			spawnPos[1] = SDRC_Misc.GetSurfaceYWithWater(spawnPos) + 60;
 			vehicle = SDRC_SpawnHelper.SpawnItem(spawnPos, vehicleName, emptyPosRadius: -1, snap: false);
 		}
 		else
@@ -262,9 +263,7 @@ class SDRC_MissionHelper
 				return false;			
 			}
 			
-			vehicle_c.SetAutostart(false);
 			vehicle_c.SetEnemySearchType(SDRC_EHeliEnemySearchType.PLAYER);
-			vehicle_c.Setup(vehicle);
 	
 			//Spawn mission AI
 			groupCount = 0;		
@@ -285,15 +284,15 @@ class SDRC_MissionHelper
 					mission.AddToGroupsList(group);
 				}
 			}
-			
+	
+			SDRC_Math.TurnEntityTowardsXZ(vehicle, destinationPos);			
+					
 			//Add our flight path
 			int time = SDRC_Misc.RandomInt(300, mission.GetActiveTime() - 120);		//QRF chopper will fly away 2 mins before mission end
 			SDRC_Log.Add("[SDRC_MissionHelper:SpawnAiFromClassAiInVehicle] Chopper will fly away after " + time + " seconds.", LogLevel.DEBUG);
 			vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_SEARCH_DESTROY, destinationPos, time);
 			vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY);
 			vehicle_c.AddDestination(SDRC_EFlyWayPointType.WP_DESPAWN);			
-			
-			vehicle_c.Ready(vehicle);
 		}
 		
 		return groupCount;
