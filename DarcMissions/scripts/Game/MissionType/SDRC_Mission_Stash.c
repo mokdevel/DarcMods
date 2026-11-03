@@ -244,7 +244,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 		missionList = {0,0,0,1};
 		
 		#ifndef SDRC_RELEASE
-			//missionList = {};
+			//missionList = {0};	//DEBUG
 		#endif
 		
 		//Mission specific		
@@ -285,7 +285,7 @@ class SDRC_StashConfig : SDRC_MissionConfig
 		
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{2, 3, 5, }, SDRC_EMissionSuccess.WIN,
+			{2, 3, 5, 60, }, SDRC_EMissionSuccess.WIN,
 			0.2, {30, 240}
 		);
 		stash.qrf = qrf;			

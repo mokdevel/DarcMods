@@ -40,7 +40,7 @@ class SDRC_StashConfig_010 : SDRC_StashConfig
 		missionList = {0, 1};		
 		
 		#ifndef SDRC_RELEASE
-			//missionList = {};
+			//missionList = {};	//DEBUG
 		#endif
 		
 		//Mission specific		

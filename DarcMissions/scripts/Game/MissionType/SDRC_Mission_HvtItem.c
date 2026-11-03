@@ -326,8 +326,8 @@ class SDRC_HvtItemConfig : SDRC_MissionConfig
 		missionList = {0,1,2};
 		
 		#ifndef SDRC_RELEASE
-			missionList = {};
-			//missionList = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+			//missionList = {};	//DEBUG
+			//missionList = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};	//DEBUG
 		#endif
 		
 		//Mission specific

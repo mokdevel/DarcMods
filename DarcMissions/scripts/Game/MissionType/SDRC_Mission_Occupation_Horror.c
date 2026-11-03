@@ -41,7 +41,7 @@ class SDRC_OccupationConfig_Horror : SDRC_OccupationConfig
 		missionList = {0,1,2,3,4};
 
 		#ifndef SDRC_RELEASE
-			missionList = {4};
+			//missionList = {4};	//DEBUG
 		#endif
 		
 		//Mission specific		

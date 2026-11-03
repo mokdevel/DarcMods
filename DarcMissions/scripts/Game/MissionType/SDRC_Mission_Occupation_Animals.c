@@ -38,7 +38,7 @@ class SDRC_OccupationConfig_Animals : SDRC_OccupationConfig
 		//Default		
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
-		missionList = {0,1,2};				
+		missionList = {0,1,2,3,};				
 //		missionList = {};//{3};//{0,1,2};				
 		//Mission specific		
 		//----------------------------------------------------
@@ -71,7 +71,7 @@ class SDRC_OccupationConfig_Animals : SDRC_OccupationConfig
 			{message},
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			{},
-			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEER_MAP,
 			{SDRC_EDifficulty.RANDOM},
 			0
 		);
@@ -142,7 +142,7 @@ class SDRC_OccupationConfig_Animals : SDRC_OccupationConfig
 			{message},
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			{},
-			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEER_MAP,
 			{SDRC_EDifficulty.RANDOM},
 			0
 		);
@@ -243,7 +243,7 @@ class SDRC_OccupationConfig_Animals : SDRC_OccupationConfig
 			{message},
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			{},
-			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_WOLF_MAP,
 			{SDRC_EDifficulty.RANDOM},
 			0
 		);
@@ -366,7 +366,7 @@ class SDRC_OccupationConfig_Animals : SDRC_OccupationConfig
 		ref SDRC_MissionMessage message = new SDRC_MissionMessage();
 		message.Set("City wolves in %l",
 			"Wolves are scaring the people. Help them!",
-			"Roads are safe again.",
+			"You handled the wolves.",
 			"Nature was stronger this time.",);
 		occupation.general.modList.Insert("$BARFrenchAnimals:");
 		occupation.general.Set(
@@ -380,7 +380,7 @@ class SDRC_OccupationConfig_Animals : SDRC_OccupationConfig
 			{message},
 			SDRC_EMissionWinCondition.AI_KILL_ALL,
 			{},
-			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_DEMON_MAP,
+			"DARC_MISSION", SDRC_EMissionIcon.GM_MISSION_WOLF_MAP,
 			{SDRC_EDifficulty.RANDOM},
 			0
 		);

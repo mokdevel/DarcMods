@@ -244,7 +244,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 		missionList = {0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,4,5,6};
 
 		#ifndef SDRC_RELEASE
-			missionList = {};
+			//missionList = {};	//DEBUG
 		#endif
 				
 		//Mission specific		
@@ -916,7 +916,7 @@ class SDRC_OccupationConfig : SDRC_MissionConfig
 
 		ref SDRC_MissionConfigQrf qrf = new SDRC_MissionConfigQrf();		
 		qrf.Set(
-			{5, }, SDRC_EMissionSuccess.WIN,
+			{5, 5, 60, }, SDRC_EMissionSuccess.WIN,
 			0.8, {30, 240}
 		);
 		occupation.qrf = qrf;		

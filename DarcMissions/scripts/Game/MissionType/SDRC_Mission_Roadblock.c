@@ -289,7 +289,7 @@ class SDRC_RoadblockConfig : SDRC_MissionConfig
 		missionList = {0,1,2,3,4};
 		
 		#ifndef SDRC_RELEASE
-			missionList = {0};
+			//missionList = {0};	//DEBUG
 		#endif
 		
 		//Mission specific		
