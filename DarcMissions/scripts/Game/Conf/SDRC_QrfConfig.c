@@ -396,7 +396,7 @@ class SDRC_QrfConfig : SDRC_Config
 		qrf.Set(
 			60, "index 60: Armed chopper",
 			"",
-			{200, 250},
+			{1000, 1500},
 			"VEHICLE_CHOPPER_ARMED", 0,
 			{SDRC_EDifficulty.RANDOM},
 			0,

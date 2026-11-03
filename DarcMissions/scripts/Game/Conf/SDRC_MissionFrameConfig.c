@@ -181,7 +181,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 		#endif	
 
 		#ifndef SDRC_RELEASE				
-//			enemyFactions = {"USSR"};
+			enemyFactions = {"USSR"};
 //			enemyFactions = {"MEM"};
 //			enemyFactions = {"CLA"};
 //			enemyFactions = {"US"};
@@ -190,7 +190,7 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			enemyFactions = {"DSF"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION", "BALLIEN_BC_FACTION"};
 //			enemyFactions = {"BACON_622120A5448725E3_FACTION"};
-			enemyFactions = {"BALLIEN_BC_FACTION"};
+//			enemyFactions = {"BALLIEN_BC_FACTION"};
 //			enemyFactions = {"TF_RF"};
 //			enemyFactions = {"TF_US"};
 //			enemyFactions = {"US","UK"};
@@ -233,10 +233,10 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.HUNTER);
 //			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.HVTITEM);
 //			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.HVTVIP);
-//			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.OCCUPATION);
+			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.OCCUPATION);
 //			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.PATROL);
 //			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.ROADBLOCK);
-			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.SQUATTERS);
+//			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.SQUATTERS);
 //			missionDynamic.missionTypeArray.Insert(SDRC_EMissionType.STASH);
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.CHOPPER, SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 //			missionDynamic.missionTypeArray = {SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.SQUATTERS};
@@ -247,13 +247,13 @@ class SDRC_MissionFrameConfig : SDRC_Config
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.HUNTER);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.HVTITEM);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.HVTVIP);
-			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.OCCUPATION);
+//			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.OCCUPATION);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.PATROL);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.ROADBLOCK);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.SQUATTERS);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.STASH);
 //			missionStatic.missionTypeArray.Insert(SDRC_EMissionType.PATROL);
-//			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER, SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
+			missionStatic.missionTypeArray = {SDRC_EMissionType.CHOPPER, SDRC_EMissionType.CONVOY, SDRC_EMissionType.CRASHSITE, SDRC_EMissionType.HUNTER, SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.PATROL, SDRC_EMissionType.ROADBLOCK, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 //			missionStatic.missionTypeArray = {SDRC_EMissionType.HVTITEM, SDRC_EMissionType.HVTVIP, SDRC_EMissionType.OCCUPATION, SDRC_EMissionType.SQUATTERS, SDRC_EMissionType.STASH};
 		
 		#endif
