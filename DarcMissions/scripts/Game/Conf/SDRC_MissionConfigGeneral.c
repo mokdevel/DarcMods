@@ -17,6 +17,24 @@ class SDRC_MissionMessage : Managed
 }	
 
 //------------------------------------------------------------------------------------------------
+enum SDRC_EMissionRewardType
+{
+									//Reward given by being..
+	INGAME,							//.. in game
+	DISTANCE,						//.. within distance is of mission completion
+	DAMAGE,							//.. one that damaged a mission AI
+}
+
+class SDRC_MissionReward : Managed
+{
+	int xp;							//Experience given per player
+	int money;						//Money reward given either to group of individual players
+	bool moneyPerUser = true;		//Shall the same _money_ reward be given to all players or shared accross players
+	SDRC_EMissionRewardType type;	//See above
+	int distance;					//Mission distance when using SDRC_EMissionRewardType.DISTANCE
+}
+
+//------------------------------------------------------------------------------------------------
 // GENERAL CONFIG
 //------------------------------------------------------------------------------------------------
 class SDRC_MissionConfigGeneral : Managed
