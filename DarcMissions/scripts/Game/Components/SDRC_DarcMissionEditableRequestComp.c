@@ -72,7 +72,7 @@ class SDRC_DarcMissionEditableRequestComp : SCR_EditableSystemComponent
 		return m_SubIdx;
 	}
 	
-	void SetSubIdx(SDRC_EMissionType subIdx)
+	void SetSubIdx(int subIdx)
 	{
 		m_SubIdx = subIdx;
 	}				
@@ -107,45 +107,21 @@ class SDRC_MissionSubIdxEditorAttributeBaseValues : SCR_EditorAttributeBaseValue
 	}
 };
 
-[BaseContainerProps(), SCR_BaseContainerLocalizedTitleField("Name")]
-class SDRC_SCR_EditorAttributeUIInfo : SCR_EditorAttributeUIInfo
-{
-	//------------------------------------------------------------------------------------------------
-	//! Copy UI info from source with potential overwrites
-	//! \param source Source to copy from
-	//! \param overwriteDescription Optional description overwrite
-	//! \param overwriteColor Optional description icon Color overwrite
-	override void CopyFromEditorAttributeUIInfo(notnull SCR_EditorAttributeUIInfo source, LocalizedString overwriteDescription = string.Empty, Color overwriteColor = null)
-	{		
-		Description = "Dippadai2";
-	}	
-	
-	override void CopyFrom(SCR_UIName source)
-	{
-		SCR_EditorAttributeUIInfo sourceInfo = SCR_EditorAttributeUIInfo.Cast(source);
-		if (sourceInfo)
-		{
-			Icon = sourceInfo.Icon;
-			IconSetName = sourceInfo.IconSetName;
-			Description = "Dippadai";
-			m_cDescriptionIconColor = sourceInfo.m_cDescriptionIconColor;
-		}
-
-		super.CopyFrom(source);
-	}
-}
-
-/*
-[BaseContainerProps(), SCR_BaseContainerCustomTitleEnum(EAttributeValueDynamicDescription, "m_eDisplayIfValue", "Value: %1")]
-class SDRC_SCR_ValueAttributeDynamicDescription : SCR_ValueAttributeDynamicDescription
-{
-}
-
-class SDRC_SCR_ValueAttributeDynamicDescription : SDRC_SCR_BaseAttributeDynamicDescription
-{
-}
-
+[BaseContainerProps(), BaseContainerCustomStringTitleField("Using base class even if not recommended.")]
 class SDRC_SCR_BaseAttributeDynamicDescription : SCR_BaseAttributeDynamicDescription
-{
+{	
+	int m_iVar = 0;
 	
-}*/
+	override void GetDescriptionData(notnull SCR_BaseEditorAttribute attribute, notnull SCR_BaseEditorAttributeUIComponent attributeUi, out SCR_EditorAttributeUIInfo uiInfo, out string param1 = string.Empty, out string param2 = string.Empty, out string param3 = string.Empty)
+	{
+//		SDRC_DarcMissionEditableRequestComp requestComp = SDRC_DarcMissionEditableRequestComp.Cast(this.FindComponent(SDRC_DarcMissionEditableRequestComp));
+//		int id = requestComp.GetRequestId();		
+		
+//		IEntity entity = this.GetOwner();
+		
+		m_DescriptionDisplayInfo.SetDescription("dang: " + m_iVar);
+		m_iVar++;
+		uiInfo = m_DescriptionDisplayInfo;
+	}
+	
+}
