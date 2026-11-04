@@ -117,18 +117,18 @@ class SDRC_MissionConfig : SDRC_Config
 	/*!
 	Return the biggest index used in missionList.
 	*/		
-	int FindBiggestIndex()
+	int FindMaxIndex()
 	{
-		int bigIndex = -1;
+		int maxIndex = -1;
 		foreach (int index : missionList)
 		{
-			if (index > bigIndex)
+			if (index > maxIndex)
 			{
-				bigIndex = index
+				maxIndex = index
 			}
 		}
 		
-		return bigIndex;		
+		return maxIndex;		
 	}
 	
 	//------------------------------------------------------------------------------------------------

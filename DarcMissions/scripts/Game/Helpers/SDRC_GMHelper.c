@@ -4,7 +4,7 @@
 class SDRC_GMHelper
 {		
 	static private SCR_BaseGameMode m_BaseGameMode;
-	static private SDRC_RplGMComp m_GmComponent;
+	static private SDRC_RplGMComp m_RplGMComp;
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
@@ -13,7 +13,7 @@ class SDRC_GMHelper
 	static private void FindGameModeAndComponent()
 	{		
 		m_BaseGameMode = null;
-		m_GmComponent = null;
+		m_RplGMComp = null;
 		
 		m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (!m_BaseGameMode)
@@ -22,8 +22,8 @@ class SDRC_GMHelper
 			return;
 		}
 	
-		m_GmComponent = SDRC_RplGMComp.GetInstance();
-		if (!m_GmComponent)
+		m_RplGMComp = SDRC_RplGMComp.GetInstance();
+		if (!m_RplGMComp)
 		{
 			SDRC_Log.Add("[SDRC_GMHelper:FindGameModeAndComponent] SDRC_RplGMComp not found", LogLevel.ERROR);
 			return;
@@ -56,12 +56,12 @@ class SDRC_GMHelper
 	*/
 	static private void AddNonValidAreas()
 	{
-		if ((m_BaseGameMode) && (m_GmComponent))
+		if ((m_BaseGameMode) && (m_RplGMComp))
 		{
 			bool visibleForGm = m_BaseGameMode.m_SDRC_Core.m_Config.showOnGMMapNonValidArea;
 			foreach (int idx, SDRC_NonValidArea nonValidArea : m_BaseGameMode.missionFrame.m_ConfigNonValidArea.m_NonValidAreas)
 			{
-				m_GmComponent.AddSymbolCircle(visibleForGm, nonValidArea.pos, nonValidArea.name, nonValidArea.radius, idx, ARGB(75, 255, 0, 0));
+				m_RplGMComp.AddSymbolCircle(visibleForGm, nonValidArea.pos, nonValidArea.name, nonValidArea.radius, idx, ARGB(75, 255, 0, 0));
 			}
 		}
 	}
@@ -72,7 +72,7 @@ class SDRC_GMHelper
 	*/	
 	static private void AddMarkers()
 	{
-		if ((m_BaseGameMode) && (m_GmComponent))
+		if ((m_BaseGameMode) && (m_RplGMComp))
 		{
 			bool visibleForGm = m_BaseGameMode.m_SDRC_Core.m_Config.showOnGMMapMissionMarker;
 			foreach (SDRC_Mission mission : m_BaseGameMode.missionFrame.m_MissionList)
@@ -86,7 +86,7 @@ class SDRC_GMHelper
 					{
 						icon = SDRC_EMissionIcon.GM_MISSION_X_MAP;
 					}*/
-					m_GmComponent.AddSymbolMarker(visibleForGm, mission.GetPos(), mission.GetType(), icon, markerType, mission.GetActiveTime(), mission.GetId(), mission.GetTitle());
+					m_RplGMComp.AddSymbolMarker(visibleForGm, mission.GetPos(), mission.GetType(), icon, markerType, mission.GetActiveTime(), mission.GetId(), mission.GetTitle());
 				}
 			}
 		}	
@@ -103,7 +103,7 @@ class SDRC_GMHelper
 		
 		int idx = -1;
 		
-		if ((m_BaseGameMode) && (m_GmComponent))
+		if ((m_BaseGameMode) && (m_RplGMComp))
 		{		
 			idx = GetSymbolIndex(worldX, worldY);
 		}
@@ -119,7 +119,7 @@ class SDRC_GMHelper
 
 		SDRC_Log.Add("[SDRC_GMHelper:GetMarkerDetails] Searching for symbol: " + idx, LogLevel.SPAM);	
 								
-		return m_GmComponent.GetSymbolMarker(idx);
+		return m_RplGMComp.GetSymbolMarker(idx);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -147,12 +147,12 @@ class SDRC_GMHelper
 		
 		float distanceCheck = (MARKER_SIZE_BB/2)/currentZoom;		
 				
-		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
-		if (gmComponent)
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+		if (rplGMComp)
 		{
 			int idx = 0;
 			 
-			foreach (SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
+			foreach (SDRC_GMMapSymbol symbol : rplGMComp.m_Symbols)
 			{
 				//SDRC_Log.Add("[SDRC_GMHelper:GetMarkerIndex] Checking: " + pos + " vs " + symbol.vPos + " r=" + radius, LogLevel.NORMAL);
 				
@@ -197,12 +197,12 @@ class SDRC_GMHelper
 	*/	
 	static bool IsShowMissionTimeLeft()
 	{
-		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
-		if (!gmComponent)
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+		if (!rplGMComp)
 		{
 			return false;
 		}
-		return gmComponent.m_ShowMissionTimeLeft;
+		return rplGMComp.m_ShowMissionTimeLeft;
 	}
 	
 	//------------------------------------------------------------------------------------------------	

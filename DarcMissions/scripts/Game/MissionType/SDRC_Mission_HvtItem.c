@@ -169,7 +169,7 @@ class SDRC_Mission_HvtItem : SDRC_Mission
 		{
 			bool isDestroyed = true;
 			
-			foreach(IEntity entity : m_Targets)
+			foreach (IEntity entity : m_Targets)
 			{				
 				if (!entity)
 				{

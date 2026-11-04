@@ -8,8 +8,8 @@ class SDRC_RplGMEntityClass: GenericEntityClass {}
  
 class SDRC_RplGMEntity : GenericEntity
 {
-	protected static SDRC_RplGMEntity s_Instance;	
-
+	protected static SDRC_RplGMEntity s_Instance;
+	
 	//------------------------------------------------------------------------------------------------
 	override void EOnActivate(IEntity owner)
 	{

@@ -12,7 +12,7 @@ class SDRC_MapClickComp : SCR_ScriptedWidgetComponent
 	override bool OnClick(Widget w, int x, int y, int button)
 	{
 		//SCR_MilitaryBaseManager.GetInstance().UpdateBasesSettings();
-		//ShowChatMessage(WidgetManager.Translate("Mission ID: " + gmComponent.m_Symbols[markerIdx].id + " : " + gmComponent.m_Symbols[markerIdx].strval));
+		//ShowChatMessage(WidgetManager.Translate("Mission ID: " + rplGMComp.m_Symbols[markerIdx].id + " : " + rplGMComp.m_Symbols[markerIdx].strval));
 
 		SDRC_Log.Add("[SDRC_MapClickComp:OnClick]", LogLevel.SPAM);
 				

@@ -98,22 +98,22 @@ class SDRC_MapSystem : GameSystem
 		//SDRC_Log.Add("[SDRC_MapSystem:ShowMarkerInfo] Click.", LogLevel.NORMAL);
 		int markerIdx = FindSymbolIndex();
 
-		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
-		if (!gmComponent)
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+		if (!rplGMComp)
 		{
 			return;
 		}
 		
 		if (markerIdx > -1)
 		{		
-			if (gmComponent.m_Symbols[markerIdx].symbolType == SDRC_EDrawSymbol.MARKER)
+			if (rplGMComp.m_Symbols[markerIdx].symbolType == SDRC_EDrawSymbol.MARKER)
 			{
-				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Mission ID: " + gmComponent.m_Symbols[markerIdx].sId + " : " + gmComponent.m_Symbols[markerIdx].sStrval + " : time left: " + gmComponent.m_Symbols[markerIdx].iTimeLeft));
+				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Mission ID: " + rplGMComp.m_Symbols[markerIdx].sId + " : " + rplGMComp.m_Symbols[markerIdx].sStrval + " : time left: " + rplGMComp.m_Symbols[markerIdx].iTimeLeft));
 			}
 			
-			if (gmComponent.m_Symbols[markerIdx].symbolType == SDRC_EDrawSymbol.NON_VALID_AREA)
+			if (rplGMComp.m_Symbols[markerIdx].symbolType == SDRC_EDrawSymbol.NON_VALID_AREA)
 			{
-				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("NonValidArea ID: " + gmComponent.m_Symbols[markerIdx].sId + " : " + gmComponent.m_Symbols[markerIdx].sStrval + " : radius: " + gmComponent.m_Symbols[markerIdx].fRadius));
+				SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("NonValidArea ID: " + rplGMComp.m_Symbols[markerIdx].sId + " : " + rplGMComp.m_Symbols[markerIdx].sStrval + " : radius: " + rplGMComp.m_Symbols[markerIdx].fRadius));
 			}
 		}
 	}
@@ -127,27 +127,27 @@ class SDRC_MapSystem : GameSystem
 		int symbolIdx = FindSymbolIndex();
 		
 		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
-		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
 		
-		if ( (!gmComponent) || (!playerComponent) )
+		if ( (!rplGMComp) || (!playerComponent) )
 		{
 			return;
 		}
 
 		SDRC_Log.Add("[SDRC_MapSystem:OnSymbolDelete] Deleting symbol: " + symbolIdx, LogLevel.SPAM);
 				
-		if ( (symbolIdx > -1) && (gmComponent.m_Symbols[symbolIdx].symbolType == SDRC_EDrawSymbol.MARKER) )
+		if ( (symbolIdx > -1) && (rplGMComp.m_Symbols[symbolIdx].symbolType == SDRC_EDrawSymbol.MARKER) )
 		{		
-			playerComponent.AskForMissionDeletion(gmComponent.m_Symbols[symbolIdx].sId);
-			SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Deletion requested for Mission ID: " + gmComponent.m_Symbols[symbolIdx].sId));
-			gmComponent.m_Symbols[symbolIdx].visible = false;
+			playerComponent.AskForMissionDeletion(rplGMComp.m_Symbols[symbolIdx].sId);
+			SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Deletion requested for Mission ID: " + rplGMComp.m_Symbols[symbolIdx].sId));
+			rplGMComp.m_Symbols[symbolIdx].visible = false;
 			m_SymbolCount = 0;	//Ask for map update
 		}
 		
-		if ( (symbolIdx > -1) && (gmComponent.m_Symbols[symbolIdx].symbolType == SDRC_EDrawSymbol.NON_VALID_AREA) )
+		if ( (symbolIdx > -1) && (rplGMComp.m_Symbols[symbolIdx].symbolType == SDRC_EDrawSymbol.NON_VALID_AREA) )
 		{
-			SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Deletion requested for NonValidArea: " + gmComponent.m_Symbols[symbolIdx].sId + " : " + gmComponent.m_Symbols[symbolIdx].sStrval));
-			playerComponent.AskForNonValidAreaDeletion(gmComponent.m_Symbols[symbolIdx].sId);
+			SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("Deletion requested for NonValidArea: " + rplGMComp.m_Symbols[symbolIdx].sId + " : " + rplGMComp.m_Symbols[symbolIdx].sStrval));
+			playerComponent.AskForNonValidAreaDeletion(rplGMComp.m_Symbols[symbolIdx].sId);
 			m_bNvaChangesDone = true;
 		}		
 	}
@@ -211,10 +211,10 @@ class SDRC_MapSystem : GameSystem
 		m_DrawCommands = null;		
 		m_wCanvasWidget = null;
 
-		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
-		if (gmComponent)
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+		if (rplGMComp)
 		{
-			gmComponent.ClearSymbols();
+			rplGMComp.ClearSymbols();
 		}
 		
 		//If we made changes to NonValidAreas, request for a save
@@ -241,12 +241,12 @@ class SDRC_MapSystem : GameSystem
 			return;
 
 		bool updateMap = false;			
-		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
-		if (gmComponent)
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+		if (rplGMComp)
 		{
-			if (m_SymbolCount != gmComponent.m_Symbols.Count())
+			if (m_SymbolCount != rplGMComp.m_Symbols.Count())
 			{
-				m_SymbolCount = gmComponent.m_Symbols.Count();
+				m_SymbolCount = rplGMComp.m_Symbols.Count();
 				updateMap = true;
 			}
 		}		
@@ -266,9 +266,9 @@ class SDRC_MapSystem : GameSystem
 		
 		m_DrawCommands.Clear();
 		
-		if (gmComponent)
+		if (rplGMComp)
 		{
-			foreach (SDRC_GMMapSymbol symbol : gmComponent.m_Symbols)
+			foreach (SDRC_GMMapSymbol symbol : rplGMComp.m_Symbols)
 			{			
 				switch (symbol.symbolType)
 				{
@@ -462,26 +462,26 @@ class SDRC_MapSystem : GameSystem
 	{
 		int nvaIdx = FindSymbolIndex();
 
-		SDRC_RplGMComp gmComponent = SDRC_RplGMComp.GetInstance();
-		if (!gmComponent)
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+		if (!rplGMComp)
 		{
 			return;
 		}
 
-		if ( (nvaIdx > -1) && (gmComponent.m_Symbols[nvaIdx].symbolType == SDRC_EDrawSymbol.NON_VALID_AREA) )
+		if ( (nvaIdx > -1) && (rplGMComp.m_Symbols[nvaIdx].symbolType == SDRC_EDrawSymbol.NON_VALID_AREA) )
 		{		
 			SDRC_Log.Add("[SDRC_MapSystem:NonValidAreaChangeSize] Changing: " + nvaIdx, LogLevel.SPAM);
 			
 			SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
 			
-			if ( (playerComponent) && (gmComponent) )
+			if ( (playerComponent) && (rplGMComp) )
 			{
-				if ( ((gmComponent.m_Symbols[nvaIdx].fRadius + size) > 0) && 
-				     ((gmComponent.m_Symbols[nvaIdx].fRadius + size) < SDRC_Misc.GetWorldSize()) 
+				if ( ((rplGMComp.m_Symbols[nvaIdx].fRadius + size) > 0) && 
+				     ((rplGMComp.m_Symbols[nvaIdx].fRadius + size) < SDRC_Misc.GetWorldSize()) 
 				   )
 				{
-					playerComponent.AskForNonValidAreaSizeChange(gmComponent.m_Symbols[nvaIdx].sId, size);
-					SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("NonValidArea ID: " + gmComponent.m_Symbols[nvaIdx].sId + " : Radius changed to : " + gmComponent.m_Symbols[nvaIdx].fRadius));
+					playerComponent.AskForNonValidAreaSizeChange(rplGMComp.m_Symbols[nvaIdx].sId, size);
+					SDRC_PlayerHelper.ShowChatMessage(WidgetManager.Translate("NonValidArea ID: " + rplGMComp.m_Symbols[nvaIdx].sId + " : Radius changed to : " + rplGMComp.m_Symbols[nvaIdx].fRadius));
 					m_SymbolCount = 0;	//Ask for map update
 					m_bNvaChangesDone = true;
 				}

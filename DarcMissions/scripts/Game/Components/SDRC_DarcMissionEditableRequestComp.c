@@ -25,9 +25,6 @@ class SDRC_DarcMissionEditableRequestComp : SCR_EditableSystemComponent
 	[Attribute("-1", desc: "Sub mission index")]	
 	protected int m_SubIdx;
 
-	[Attribute("Dummy", desc: "Mission title")]	
-	protected string m_Title;
-				
 	protected int m_RequestId;	//ID for the request that you can refer to from other mods.
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	
@@ -87,41 +84,106 @@ class SDRC_MissionSubIdxEditorAttributeBaseValues : SCR_EditorAttributeBaseValue
 {
 	override void GetSliderValues(out string sliderValueFormating, out float min, out float max, out float step, out int decimals)
 	{		
-		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());	
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+
+		int num = rplGMComp.missionIndexMax;
+	
+		m_fMin = -1;
+		m_fMax = num;
+		m_fStep = 1;
+		m_iDecimals = 0;
 		
-		if (baseGameMode)		
-		{		
-			int num = baseGameMode.missionLargestIndexForEdit;
-		
-			m_fMin = -1;
-			m_fMax = num;
-			m_fStep = 1;
-			m_iDecimals = 0;
-			
-			sliderValueFormating = m_sSliderValueFormating;
-			min = m_fMin;
-			max = m_fMax;
-			step = m_fStep;
-			decimals = m_iDecimals;
-		}		
+		sliderValueFormating = m_sSliderValueFormating;
+		min = m_fMin;
+		max = m_fMax;
+		step = m_fStep;
+		decimals = m_iDecimals;
 	}
 };
+
+//------------------------------------------------------------------------------------------------
+//! Attribute for mission subIdx
+[BaseContainerProps(), SCR_BaseEditorAttributeCustomTitle()]
+class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
+{
+	//------------------------------------------------------------------------------------------------
+	override SCR_BaseEditorAttributeVar ReadVariable(Managed item, SCR_AttributesManagerEditorComponent manager)
+	{
+		SCR_EditableEntityComponent editableEntity = SCR_EditableEntityComponent.Cast(item);
+		if (!editableEntity)
+			return null;
+
+		IEntity owner = editableEntity.GetOwner();
+		if (!owner)
+			return null;
+
+		SDRC_DarcMissionEditableRequestComp missionComp = SDRC_DarcMissionEditableRequestComp.Cast(owner.FindComponent(SDRC_DarcMissionEditableRequestComp));
+		if (!missionComp)
+			return null;
+
+		int subIdx; 
+		subIdx = missionComp.GetSubIdx();
+		
+		//Modify the scale with a hacky-hack way. 
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+		
+		//Get the mission type enum value and use it as the index for missionIndexMax
+		int index = missionComp.GetMissionType();
+		int value = 15;	//Setting just a default here
+		if ( (index > 0) && (index < rplGMComp.missionIndexMaxList.Count()) )
+		{
+			value = rplGMComp.missionIndexMaxList[index];
+		}
+			
+		rplGMComp.missionIndexMax = value;	//TBD: For this to work on clients, it needs to be replicated. 
+		SDRC_Log.Add("[SDRC_MissionSubTypeAttribute] Editing value: " + value, LogLevel.DEBUG);			
+		
+		return SCR_BaseEditorAttributeVar.CreateInt(subIdx);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	// Update the subIdx value when moving the slider
+	
+	override void WriteVariable(Managed item, SCR_BaseEditorAttributeVar var, SCR_AttributesManagerEditorComponent manager, int playerID)
+	{
+		if (!var)
+			return;
+
+		SCR_EditableEntityComponent editableEntity = SCR_EditableEntityComponent.Cast(item);
+		if (!editableEntity)
+			return;
+
+		IEntity owner = editableEntity.GetOwner();
+		if (!owner)
+			return;
+
+		SDRC_DarcMissionEditableRequestComp missionComp = SDRC_DarcMissionEditableRequestComp.Cast(owner.FindComponent(SDRC_DarcMissionEditableRequestComp));
+		if (!missionComp)
+			return;
+
+		missionComp.SetSubIdx(var.GetInt());
+	}
+}
+
+//------------------------------------------------------------------------------------------------
+// Update the description. 
+// This is a bit hacky. 
 
 [BaseContainerProps(), BaseContainerCustomStringTitleField("Using base class even if not recommended.")]
 class SDRC_SCR_BaseAttributeDynamicDescription : SCR_BaseAttributeDynamicDescription
 {	
-	int m_iVar = 0;
-	
 	override void GetDescriptionData(notnull SCR_BaseEditorAttribute attribute, notnull SCR_BaseEditorAttributeUIComponent attributeUi, out SCR_EditorAttributeUIInfo uiInfo, out string param1 = string.Empty, out string param2 = string.Empty, out string param3 = string.Empty)
 	{
-//		SDRC_DarcMissionEditableRequestComp requestComp = SDRC_DarcMissionEditableRequestComp.Cast(this.FindComponent(SDRC_DarcMissionEditableRequestComp));
-//		int id = requestComp.GetRequestId();		
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+		SCR_BaseEditorAttributeVar var = attribute.GetVariable();		
 		
-//		IEntity entity = this.GetOwner();
-		
-		m_DescriptionDisplayInfo.SetDescription("dang: " + m_iVar);
-		m_iVar++;
+		int index = var.GetInt();
+		string description = "Random";
+		if (index > -1)
+		{
+			description = rplGMComp.m_MissionData[1].names[index];
+		}
+		m_DescriptionDisplayInfo.SetDescription("Title: " + description);
 		uiInfo = m_DescriptionDisplayInfo;
-	}
-	
+	}	
 }

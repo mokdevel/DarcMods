@@ -36,17 +36,44 @@ class SDRC_GMMapSymbol : Managed
 }
 
 //------------------------------------------------------------------------------------------------
+// Generic symbol class
+// NOTE: Depending on SDRC_EDrawSymbol type, parameters are used for various topics
+class SDRC_GMMissionData : Managed
+{	
+	SDRC_EMissionType type = SDRC_EMissionType.NONE;
+	int maxIndex = 0;
+	ref array<string> names = {};
+}
+
+//------------------------------------------------------------------------------------------------
 class SDRC_RplGMComp : ScriptComponent
 {
 	private static SDRC_RplGMComp s_Instance;	
 	static ref array<ref SDRC_GMMapSymbol> m_Symbols = {};
-	 
+	static ref array<ref SDRC_GMMissionData> m_MissionData = {};
+	
 	[RplProp(onRplName: "OnUpdateTimeLeft")]
 	bool m_ShowMissionTimeLeft = false;
+
+	//------------------------------------------------------------------------------------------------
+	//Values needed for runtime SDRC_MissionSubIdxEditorAttributeBaseValues modifying. Ugly hack!
+	//AR does not provide proper runtime editing of the editable values so trick the game. We use 
+	//a global value that can be set and read in SDRC_MissionSubIdxEditorAttributeBaseValues
+	//The table is filled in SDRC_MissionEnumHelper:CreateAllConfigs
+	
+	//The largest index found in the missionListMission. The array is filled SDRC_MissionEnumHelper:CreateAllConfigs at startup.
+	ref array<int> missionIndexMaxList = {0};	//First item is prefilled to reflect SDRC_EMissionType.NONE
+	int missionIndexMax = 0;					//The max value for the slider. This is the biggest mission index found. This is filled from missionIndexMaxList when opening the mission for editing in GM.
+	int missionIndexCurrent = 0;				//The current mission index value on the slider
 	
 	//------------------------------------------------------------------------------------------------
     override void OnPostInit(IEntity owner)
     {
+		//Add an empty stub for missionType.NONE
+		ref SDRC_GMMissionData missionData = new SDRC_GMMissionData();
+		m_MissionData.Insert(missionData);
+		
+		//Store instance
 		s_Instance = this;				
     }
  
@@ -285,5 +312,20 @@ class SDRC_RplGMComp : ScriptComponent
 		SDRC_Log.Add("[SDRC_RplGMComp:DoDeleteNonValidArea] Deletion of NonValidArea " + nvaId + " requested by " + playerID, LogLevel.DEBUG);	
 		SDRC_GMHelper.DeleteNonValidArea(nvaId);
 		SyncMapSymbols(playerID);
-	}	
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	// Mission name stuff
+	//------------------------------------------------------------------------------------------------	
+	void AddMissionData(SDRC_EMissionType type, int maxIndex, array<string> names)
+	{
+		ref SDRC_GMMissionData missionData = new SDRC_GMMissionData();
+		missionData.type = type;
+		missionData.maxIndex = maxIndex;
+		foreach (string name : names)
+		{
+			missionData.names.Insert(name);
+		}
+		m_MissionData.Insert(missionData);
+	}
 }
