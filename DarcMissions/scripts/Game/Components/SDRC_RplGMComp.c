@@ -62,14 +62,16 @@ class SDRC_RplGMComp : ScriptComponent
 	//The table is filled in SDRC_MissionEnumHelper:CreateAllConfigs
 	
 	//The largest index found in the missionListMission. The array is filled SDRC_MissionEnumHelper:CreateAllConfigs at startup.
-	ref array<int> missionIndexMaxList = {0};	//First item is prefilled to reflect SDRC_EMissionType.NONE
-	int missionIndexMax = 0;					//The max value for the slider. This is the biggest mission index found. This is filled from missionIndexMaxList when opening the mission for editing in GM.
-	int missionIndexCurrent = 0;				//The current mission index value on the slider
+	ref array<int> missionIndexMaxList = {0};					//First item is prefilled to reflect SDRC_EMissionType.NONE
+	//Values are filled in SCR_BaseEditorAttributeVar ReadVariable() when opening the mission for editing in GM.
+	int m_MissionIndexMax = 0;									//The max value for the slider. This is the biggest mission index found.
+	SDRC_EMissionType m_MissionType = SDRC_EMissionType.NONE;	//Mission type we're editing.
+//	int missionIndexCurrent = 0;				//The current mission index value on the slider
 	
 	//------------------------------------------------------------------------------------------------
     override void OnPostInit(IEntity owner)
     {
-		//Add an empty stub for missionType.NONE
+		//Add an empty stub for missionType.NONE as the first one
 		ref SDRC_GMMissionData missionData = new SDRC_GMMissionData();
 		m_MissionData.Insert(missionData);
 		

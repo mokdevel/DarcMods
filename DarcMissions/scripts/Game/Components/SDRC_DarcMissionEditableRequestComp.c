@@ -86,7 +86,7 @@ class SDRC_MissionSubIdxEditorAttributeBaseValues : SCR_EditorAttributeBaseValue
 	{		
 		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
 
-		int num = rplGMComp.missionIndexMax;
+		int num = rplGMComp.m_MissionIndexMax;
 	
 		m_fMin = -1;
 		m_fMax = num;
@@ -121,22 +121,15 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 		if (!missionComp)
 			return null;
 
-		int subIdx; 
-		subIdx = missionComp.GetSubIdx();
+		//Get subIdx
+		int subIdx = missionComp.GetSubIdx();
+		//Get the mission type enum value and use it as the index for finding the biggest index
+		int missionType = missionComp.GetMissionType();
 		
 		//Modify the scale with a hacky-hack way. 
-		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
-		
-		//Get the mission type enum value and use it as the index for missionIndexMax
-		int index = missionComp.GetMissionType();
-		int value = 15;	//Setting just a default here
-		if ( (index > 0) && (index < rplGMComp.missionIndexMaxList.Count()) )
-		{
-			value = rplGMComp.missionIndexMaxList[index];
-		}
-			
-		rplGMComp.missionIndexMax = value;	//TBD: For this to work on clients, it needs to be replicated. 
-		SDRC_Log.Add("[SDRC_MissionSubTypeAttribute] Editing value: " + value, LogLevel.DEBUG);			
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();			
+		rplGMComp.m_MissionIndexMax = rplGMComp.m_MissionData[missionType].maxIndex;	//TBD: For this to work on clients, it needs to be replicated. 
+		rplGMComp.m_MissionType = missionType;
 		
 		return SCR_BaseEditorAttributeVar.CreateInt(subIdx);
 	}
@@ -181,7 +174,7 @@ class SDRC_SCR_BaseAttributeDynamicDescription : SCR_BaseAttributeDynamicDescrip
 		string description = "Random";
 		if (index > -1)
 		{
-			description = rplGMComp.m_MissionData[1].names[index];
+			description = rplGMComp.m_MissionData[rplGMComp.m_MissionType].names[index];
 		}
 		m_DescriptionDisplayInfo.SetDescription("Title: " + description);
 		uiInfo = m_DescriptionDisplayInfo;

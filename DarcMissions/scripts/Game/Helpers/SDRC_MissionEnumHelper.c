@@ -48,15 +48,17 @@ sealed class SDRC_MissionEnumHelper
 		nonValidAreaJsonApi.Load(confNonValidArea, SDRC_NonValidAreaConfig.Cast(confNonValidArea), DC_MISSIONCONFIG_FILE_NONVALIDAREA_JSONVER);
 		delete confNonValidArea;
 		delete nonValidAreaJsonApi;
-		
+
+		//Names of the missions
+		array<string> names = {};
+				
 		//Create a default mission configs
-		
 		SDRC_JsonApi2 hunterJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_HUNTER);	
 		SDRC_HunterConfig confHunter = new SDRC_HunterConfig();		
 		hunterJsonApi.Load(confHunter, SDRC_MissionConfig.Cast(confHunter), DC_MISSIONCONFIG_FILE_HUNTER_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_HUNTER_SAFEUPDATE);
 		confHunter.CreateMissionFiles();
 		confHunter.LoadMissionFiles(DC_MISSIONCONFIG_FILE_HUNTER_JSONVER);
-		array<string> names = {};
+		names.Clear();
 		foreach (SDRC_Hunter subMission : confHunter.subMissions)
 		{
 			names.Insert(subMission.general.messages[0].title);
@@ -70,8 +72,13 @@ sealed class SDRC_MissionEnumHelper
 		occupationJsonApi.Load(confOccupation, SDRC_MissionConfig.Cast(confOccupation), DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_OCCUPATION_SAFEUPDATE);		
 		confOccupation.CreateMissionFiles();
 		confOccupation.LoadMissionFiles(DC_MISSIONCONFIG_FILE_OCCUPATION_JSONVER);
-		rplGMComp.missionIndexMaxList.Insert(confOccupation.FindMaxIndex()); //NOTE: Order is important so that m_SDRC_RplGMEntity.missionIndexMaxList is filled correctly!
-		delete confOccupation;
+		names.Clear();
+		foreach (SDRC_Camp subMission : confOccupation.subMissions)
+		{
+			names.Insert(subMission.general.messages[0].title);
+		}
+		rplGMComp.AddMissionData(SDRC_EMissionType.OCCUPATION, confOccupation.FindMaxIndex(), names); //NOTE: Order is important so that SDRC_RplGMEntity.m_MissionData is filled correctly!
+		delete confHunter;		delete confOccupation;
 		delete occupationJsonApi;			
 		
 		SDRC_JsonApi2 convoyJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_CONVOY);	
@@ -79,7 +86,12 @@ sealed class SDRC_MissionEnumHelper
 		convoyJsonApi.Load(confConvoy, SDRC_MissionConfig.Cast(confConvoy), DC_MISSIONCONFIG_FILE_CONVOY_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_CONVOY_SAFEUPDATE);
 		confConvoy.CreateMissionFiles();
 		confConvoy.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CONVOY_JSONVER);
-		rplGMComp.missionIndexMaxList.Insert(confConvoy.FindMaxIndex()); //NOTE: Order is important so that m_SDRC_RplGMEntity.missionIndexMaxList is filled correctly!		
+		names.Clear();
+		foreach (SDRC_Convoy subMission : confConvoy.subMissions)
+		{
+			names.Insert(subMission.general.messages[0].title);
+		}
+		rplGMComp.AddMissionData(SDRC_EMissionType.CONVOY, confConvoy.FindMaxIndex(), names); //NOTE: Order is important so that SDRC_RplGMEntity.m_MissionData is filled correctly!
 		delete confConvoy;
 		delete convoyJsonApi;		
 		
