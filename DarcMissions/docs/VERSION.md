@@ -12,6 +12,7 @@ Fixes:
 * Updated BallienCreatures support. Using BALLIEN_BC_FACTION as enemy faction will change all missions properly to support cultist faction.
   * dc_enemyList.json will auto update
 * Chopper QRF spawned near mission position.
+* Mission position search fixes.
 
 ## 20261031
 Halloween update!

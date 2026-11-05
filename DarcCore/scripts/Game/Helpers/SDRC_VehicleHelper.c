@@ -62,7 +62,7 @@ class SDRC_VehicleHelper
 		{
 			//Find the list of AIs in the group prefab		
 			int count = SDRC_AIHelper.GroupGetEntitySourceMembers(aiResourceName, aiPrefabs);
-			SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Prefabs found: " + count, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Prefabs found: " + count, LogLevel.SPAM);
 		}
 
 		SDRC_AIHelper.GroupHandleRandomized(aiPrefabs, faction);
@@ -75,7 +75,7 @@ class SDRC_VehicleHelper
 				continue;
 			}
 			
-			SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Prefab to spawn: " + aiPrefab, LogLevel.DEBUG);
+			SDRC_Log.Add("[SDRC_VehicleHelper:SpawnGroupInVehicle] Prefab to spawn: " + aiPrefab, LogLevel.SPAM);
 			foreach (BaseCompartmentSlot compartment : compartments)
 			{
 				if (compartment.IsOccupied() || !compartment.IsCompartmentAccessible() || compartment.IsReserved())
