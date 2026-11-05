@@ -100,7 +100,12 @@ sealed class SDRC_MissionEnumHelper
 		crashsiteJsonApi.Load(confCrashsite, SDRC_MissionConfig.Cast(confCrashsite), DC_MISSIONCONFIG_FILE_CRASHSITE_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_CRASHSITE_SAFEUPDATE);		
 		confCrashsite.CreateMissionFiles();
 		confCrashsite.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CRASHSITE_JSONVER);
-		rplGMComp.missionIndexMaxList.Insert(confCrashsite.FindMaxIndex()); //NOTE: Order is important so that m_SDRC_RplGMEntity.missionIndexMaxList is filled correctly!		
+		names.Clear();
+		foreach (SDRC_Crashsite subMission : confCrashsite.subMissions)
+		{
+			names.Insert(subMission.general.messages[0].title);
+		}
+		rplGMComp.AddMissionData(SDRC_EMissionType.CRASHSITE, confCrashsite.FindMaxIndex(), names); //NOTE: Order is important so that SDRC_RplGMEntity.m_MissionData is filled correctly!
 		delete confCrashsite;
 		delete crashsiteJsonApi;
 		
@@ -109,7 +114,12 @@ sealed class SDRC_MissionEnumHelper
 		patrolJsonApi.Load(confPatrol, SDRC_MissionConfig.Cast(confPatrol), DC_MISSIONCONFIG_FILE_PATROL_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_PATROL_SAFEUPDATE);		
 		confPatrol.CreateMissionFiles();
 		confPatrol.LoadMissionFiles(DC_MISSIONCONFIG_FILE_PATROL_JSONVER);
-		rplGMComp.missionIndexMaxList.Insert(confPatrol.FindMaxIndex()); //NOTE: Order is important so that m_SDRC_RplGMEntity.missionIndexMaxList is filled correctly!		
+		names.Clear();
+		foreach (SDRC_Patrol subMission : confPatrol.subMissions)
+		{
+			names.Insert(subMission.general.messages[0].title);
+		}
+		rplGMComp.AddMissionData(SDRC_EMissionType.CRASHSITE, confPatrol.FindMaxIndex(), names); //NOTE: Order is important so that SDRC_RplGMEntity.m_MissionData is filled correctly!
 		delete confPatrol;
 		delete patrolJsonApi;		
 		
@@ -118,7 +128,12 @@ sealed class SDRC_MissionEnumHelper
 		squatterJsonApi.Load(confSquatter, SDRC_MissionConfig.Cast(confSquatter), DC_MISSIONCONFIG_FILE_SQUATTERS_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_SQUATTERS_SAFEUPDATE);
 		confSquatter.CreateMissionFiles();
 		confSquatter.LoadMissionFiles(DC_MISSIONCONFIG_FILE_SQUATTERS_JSONVER);
-		rplGMComp.missionIndexMaxList.Insert(confSquatter.FindMaxIndex()); //NOTE: Order is important so that m_SDRC_RplGMEntity.missionIndexMaxList is filled correctly!		
+		names.Clear();
+		foreach (SDRC_Squatter subMission : confSquatter.subMissions)
+		{
+			names.Insert(subMission.general.messages[0].title);
+		}
+		rplGMComp.AddMissionData(SDRC_EMissionType.SQUATTERS, confSquatter.FindMaxIndex(), names); //NOTE: Order is important so that SDRC_RplGMEntity.m_MissionData is filled correctly!
 		delete confSquatter;
 		delete squatterJsonApi;			
 		
@@ -127,7 +142,12 @@ sealed class SDRC_MissionEnumHelper
 		roadblockJsonApi.Load(confRoadblock, SDRC_MissionConfig.Cast(confRoadblock), DC_MISSIONCONFIG_FILE_ROADBLOCK_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_ROADBLOCK_SAFEUPDATE);
 		confRoadblock.CreateMissionFiles();
 		confRoadblock.LoadMissionFiles(DC_MISSIONCONFIG_FILE_ROADBLOCK_JSONVER);
-		rplGMComp.missionIndexMaxList.Insert(confRoadblock.FindMaxIndex()); //NOTE: Order is important so that m_SDRC_RplGMEntity.missionIndexMaxList is filled correctly!		
+		names.Clear();
+		foreach (SDRC_Camp subMission : confRoadblock.subMissions)
+		{
+			names.Insert(subMission.general.messages[0].title);
+		}
+		rplGMComp.AddMissionData(SDRC_EMissionType.ROADBLOCK, confRoadblock.FindMaxIndex(), names); //NOTE: Order is important so that SDRC_RplGMEntity.m_MissionData is filled correctly!	
 		delete confRoadblock;
 		delete roadblockJsonApi;			
 		
@@ -136,7 +156,12 @@ sealed class SDRC_MissionEnumHelper
 		hvtVipJsonApi.Load(confHvtVip, SDRC_MissionConfig.Cast(confHvtVip), DC_MISSIONCONFIG_FILE_HVTVIP_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_HVTVIP_SAFEUPDATE);
 		confHvtVip.CreateMissionFiles();
 		confHvtVip.LoadMissionFiles(DC_MISSIONCONFIG_FILE_HVTVIP_JSONVER);
-		rplGMComp.missionIndexMaxList.Insert(confHvtVip.FindMaxIndex()); //NOTE: Order is important so that m_SDRC_RplGMEntity.missionIndexMaxList is filled correctly!		
+		names.Clear();
+		foreach (SDRC_HvtVip subMission : confHvtVip.subMissions)
+		{
+			names.Insert(subMission.general.messages[0].title);
+		}
+		rplGMComp.AddMissionData(SDRC_EMissionType.HVTVIP, confHvtVip.FindMaxIndex(), names); //NOTE: Order is important so that SDRC_RplGMEntity.m_MissionData is filled correctly!		
 		delete confHvtVip;
 		delete hvtVipJsonApi;		
 				
@@ -145,7 +170,12 @@ sealed class SDRC_MissionEnumHelper
 		hvtItemJsonApi.Load(confHvtItem, SDRC_MissionConfig.Cast(confHvtItem), DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_HVTITEM_SAFEUPDATE);
 		confHvtItem.CreateMissionFiles();
 		confHvtItem.LoadMissionFiles(DC_MISSIONCONFIG_FILE_HVTITEM_JSONVER);
-		rplGMComp.missionIndexMaxList.Insert(confHvtItem.FindMaxIndex()); //NOTE: Order is important so that m_SDRC_RplGMEntity.missionIndexMaxList is filled correctly!		
+		names.Clear();
+		foreach (SDRC_HvtItem subMission : confHvtItem.subMissions)
+		{
+			names.Insert(subMission.general.messages[0].title);
+		}
+		rplGMComp.AddMissionData(SDRC_EMissionType.HVTITEM, confHvtItem.FindMaxIndex(), names); //NOTE: Order is important so that SDRC_RplGMEntity.m_MissionData is filled correctly!		
 		delete confHvtItem;
 		delete hvtItemJsonApi;		
 		
@@ -154,7 +184,12 @@ sealed class SDRC_MissionEnumHelper
 		stashJsonApi.Load(confStash, SDRC_MissionConfig.Cast(confStash), DC_MISSIONCONFIG_FILE_STASH_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_STASH_SAFEUPDATE);
 		confStash.CreateMissionFiles();
 		confStash.LoadMissionFiles(DC_MISSIONCONFIG_FILE_STASH_JSONVER);
-		rplGMComp.missionIndexMaxList.Insert(confStash.FindMaxIndex()); //NOTE: Order is important so that m_SDRC_RplGMEntity.missionIndexMaxList is filled correctly!		
+		names.Clear();
+		foreach (SDRC_Camp subMission : confStash.subMissions)
+		{
+			names.Insert(subMission.general.messages[0].title);
+		}
+		rplGMComp.AddMissionData(SDRC_EMissionType.STASH, confStash.FindMaxIndex(), names); //NOTE: Order is important so that SDRC_RplGMEntity.m_MissionData is filled correctly!				
 		delete confStash;
 		delete stashJsonApi;
 		
@@ -163,7 +198,12 @@ sealed class SDRC_MissionEnumHelper
 		chopperJsonApi.Load(confChopper, SDRC_MissionConfig.Cast(confChopper), DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_CHOPPER_SAFEUPDATE);
 		confChopper.CreateMissionFiles();
 		confChopper.LoadMissionFiles(DC_MISSIONCONFIG_FILE_CHOPPER_JSONVER);
-		rplGMComp.missionIndexMaxList.Insert(confChopper.FindMaxIndex()); //NOTE: Order is important so that m_SDRC_RplGMEntity.missionIndexMaxList is filled correctly!		
+		names.Clear();
+		foreach (SDRC_Chopper subMission : confChopper.subMissions)
+		{
+			names.Insert(subMission.general.messages[0].title);
+		}
+		rplGMComp.AddMissionData(SDRC_EMissionType.CHOPPER, confChopper.FindMaxIndex(), names); //NOTE: Order is important so that SDRC_RplGMEntity.m_MissionData is filled correctly!				
 		delete confChopper;
 		delete chopperJsonApi;
 	}		
