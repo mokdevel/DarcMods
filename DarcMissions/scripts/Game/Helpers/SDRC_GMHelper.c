@@ -32,6 +32,76 @@ class SDRC_GMHelper
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
+	Find the clicked marker on the map.
+	\return -1 if no marker found
+	*/
+	static int GetSymbolIndex(float worldX, float worldY)
+	{
+		const int MARKER_SIZE_BB = 64;//(24 * 0.8);		//Marker 'bounding box size' when searhing for mouse hit		
+		int symbolIdx = -1;
+		
+		SCR_MapEntity m_MapEntity = SCR_MapEntity.GetMapInstance();
+		
+		if (!m_MapEntity)
+			return symbolIdx;
+		
+		float currentZoom = m_MapEntity.GetCurrentZoom();
+
+		//SDRC_Log.Add("[SDRC_GMHelper:GetMarkerIndex] pos: " + worldX + " , " + worldY + " z:" + currentZoom, LogLevel.NORMAL);	
+				
+		vector pos = "0 0 0";
+		pos[0] = worldX;
+		pos[2] = worldY - (MARKER_SIZE_BB/2);///currentZoom;	//Move the point to check up a little
+		
+		float distanceCheck = (MARKER_SIZE_BB/2)/currentZoom;		
+				
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+		
+		if (rplGMComp)
+		{
+			int idx = 0;
+			 
+			foreach (SDRC_GMMapSymbol symbol : rplGMComp.m_Symbols)
+			{
+				//SDRC_Log.Add("[SDRC_GMHelper:GetMarkerIndex] Checking: " + pos + " vs " + symbol.vPos + " r=" + radius, LogLevel.NORMAL);
+				
+				//Find symbol: Marker
+				if (symbol.symbolType == SDRC_EDrawSymbol.MARKER && symbol.visible)
+				{
+					float distance = vector.DistanceXZ(pos, symbol.vPos);
+					if (SDRC_Misc.IsPosNearPos(pos, symbol.vPos, distanceCheck))
+					{
+						SDRC_Log.Add("[SDRC_GMHelper:GetCircleIndex] Found: " + idx, LogLevel.DEBUG);
+						symbolIdx = idx;
+						break;
+					}								
+				}
+				
+				//Find symbol: NonValidArea
+				if (symbol.symbolType == SDRC_EDrawSymbol.NON_VALID_AREA)
+				{
+					if (SDRC_Misc.IsPosNearPos(pos, symbol.vPos, symbol.fRadius))
+					{
+						SDRC_Log.Add("[SDRC_GMHelper:GetCircleIndex] Found: " + idx, LogLevel.DEBUG);
+						symbolIdx = idx;
+						break;
+					}								
+				}
+								
+				idx++;
+			}
+			
+			if (symbolIdx > -1)
+			{
+				SDRC_Log.Add("[SDRC_GMHelper:GetMarkerIndex] Found symbol - index: " + symbolIdx, LogLevel.SPAM);
+			}
+		}		
+		
+		return symbolIdx;
+	}		
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
 	Fill the symbol table with various information to sync to players
 	- NonValidAreas
 	- Markers
@@ -91,206 +161,4 @@ class SDRC_GMHelper
 			}
 		}	
 	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Get details of the clicked symbol on the map.
-	\return null
-	*/
-	static SDRC_GMMapSymbol GetSymbolDetails(float worldX, float worldY)
-	{
-		FindGameModeAndComponent();
-		
-		int idx = -1;
-		
-		if ((m_BaseGameMode) && (m_RplGMComp))
-		{		
-			idx = GetSymbolIndex(worldX, worldY);
-		}
-		else
-		{
-			return null;	
-		}
-			
-		if (idx < 0)
-		{
-			return null;
-		}
-
-		SDRC_Log.Add("[SDRC_GMHelper:GetMarkerDetails] Searching for symbol: " + idx, LogLevel.SPAM);	
-								
-		return m_RplGMComp.GetSymbolMarker(idx);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Find the clicked marker on the map.
-	\return -1 if no marker found
-	*/
-	static int GetSymbolIndex(float worldX, float worldY)
-	{
-		const int MARKER_SIZE_BB = 64;//(24 * 0.8);		//Marker 'bounding box size' when searhing for mouse hit		
-		int symbolIdx = -1;
-		
-		SCR_MapEntity m_MapEntity = SCR_MapEntity.GetMapInstance();
-		
-		if (!m_MapEntity)
-			return symbolIdx;
-		
-		float currentZoom = m_MapEntity.GetCurrentZoom();
-
-		//SDRC_Log.Add("[SDRC_GMHelper:GetMarkerIndex] pos: " + worldX + " , " + worldY + " z:" + currentZoom, LogLevel.NORMAL);	
-				
-		vector pos = "0 0 0";
-		pos[0] = worldX;
-		pos[2] = worldY - (MARKER_SIZE_BB/2);///currentZoom;	//Move the point to check up a little
-		
-		float distanceCheck = (MARKER_SIZE_BB/2)/currentZoom;		
-				
-		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
-		if (rplGMComp)
-		{
-			int idx = 0;
-			 
-			foreach (SDRC_GMMapSymbol symbol : rplGMComp.m_Symbols)
-			{
-				//SDRC_Log.Add("[SDRC_GMHelper:GetMarkerIndex] Checking: " + pos + " vs " + symbol.vPos + " r=" + radius, LogLevel.NORMAL);
-				
-				//Find symbol: Marker
-				if (symbol.symbolType == SDRC_EDrawSymbol.MARKER && symbol.visible)
-				{
-					float distance = vector.DistanceXZ(pos, symbol.vPos);
-					if (SDRC_Misc.IsPosNearPos(pos, symbol.vPos, distanceCheck))
-					{
-						SDRC_Log.Add("[SDRC_GMHelper:GetCircleIndex] Found: " + idx, LogLevel.DEBUG);
-						symbolIdx = idx;
-						break;
-					}								
-				}
-				
-				//Find symbol: NonValidArea
-				if (symbol.symbolType == SDRC_EDrawSymbol.NON_VALID_AREA)
-				{
-					if (SDRC_Misc.IsPosNearPos(pos, symbol.vPos, symbol.fRadius))
-					{
-						SDRC_Log.Add("[SDRC_GMHelper:GetCircleIndex] Found: " + idx, LogLevel.DEBUG);
-						symbolIdx = idx;
-						break;
-					}								
-				}
-								
-				idx++;
-			}
-			
-			if (symbolIdx > -1)
-			{
-				SDRC_Log.Add("[SDRC_GMHelper:GetMarkerIndex] Found symbol - index: " + symbolIdx, LogLevel.SPAM);
-			}
-		}		
-		
-		return symbolIdx;
-	}			
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Shall we show time left for players
-	*/	
-	static bool IsShowMissionTimeLeft()
-	{
-		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
-		if (!rplGMComp)
-		{
-			return false;
-		}
-		return rplGMComp.m_ShowMissionTimeLeft;
-	}
-	
-	//------------------------------------------------------------------------------------------------	
-	// Mission stuff
-	//------------------------------------------------------------------------------------------------	
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Delete a mission with specific mission ID (DCMxxxx).
-	*/	
-	static void DeleteMission(string id, SDRC_EMissionSuccess success = SDRC_EMissionSuccess.DELETED)
-	{
-		FindGameModeAndComponent();
-		
-		int idx = m_BaseGameMode.missionFrame.FindMissionWithId(id);
-		if (idx != -1)
-		{
-			m_BaseGameMode.missionFrame.m_MissionList[idx].SetState(SDRC_EMissionState.END);
-			m_BaseGameMode.missionFrame.m_MissionList[idx].SetSuccess(success);
-			SDRC_Log.Add("[SDRC_GMHelper:DeleteMission] Ending mission: " + id + " - " + m_BaseGameMode.missionFrame.m_MissionList[idx].GetTitle(), LogLevel.DEBUG);				
-		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Delete a mission with specific mission ID (DCMxxxx).
-	*/	
-	static void EndMission(string id, SDRC_EMissionSuccess success)
-	{
-		FindGameModeAndComponent();
-		
-		int idx = m_BaseGameMode.missionFrame.FindMissionWithId(id);
-		if (idx != -1)
-		{
-			if (success == SDRC_EMissionSuccess.LOSE)
-			{
-				m_BaseGameMode.missionFrame.m_MissionList[idx].DoLose();
-			}
-			if (success == SDRC_EMissionSuccess.WIN)
-			{
-				m_BaseGameMode.missionFrame.m_MissionList[idx].DoWin();
-			}
-			SDRC_Log.Add("[SDRC_GMHelper:DeleteMission] Ending mission: " + id + " - (" + SCR_Enum.GetEnumName(SDRC_EMissionSuccess, success) + ")" + m_BaseGameMode.missionFrame.m_MissionList[idx].GetTitle(), LogLevel.DEBUG);				
-		}
-	}
-	
-	//------------------------------------------------------------------------------------------------	
-	// NonValidArea stuff
-	//------------------------------------------------------------------------------------------------	
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Delete a NonValidArea.
-	*/	
-	static void DeleteNonValidArea(string id, SDRC_EMissionSuccess success = SDRC_EMissionSuccess.DELETED)
-	{
-		FindGameModeAndComponent();
-		
-		int idx = id.ToInt();
-		
-		if (idx < m_BaseGameMode.missionFrame.m_ConfigNonValidArea.m_NonValidAreas.Count())
-		{
-			SDRC_Log.Add("[SDRC_GMHelper:DeleteNonValidArea] Deleting NonValidArea: " + idx + " - " + m_BaseGameMode.missionFrame.m_ConfigNonValidArea.m_NonValidAreas[idx].name, LogLevel.DEBUG);				
-			m_BaseGameMode.missionFrame.m_ConfigNonValidArea.m_NonValidAreas.RemoveOrdered(idx);
-		}		
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Adjust the size of a NonValidArea
-	*/	
-	static void NonValidAreaSizeChange(string id, float size)
-	{
-		FindGameModeAndComponent();
-		
-		int idx = id.ToInt();
-		
-		SDRC_Log.Add("[SDRC_GMHelper:NonValidAreaIncrease] Changing area " + idx + " with " + size, LogLevel.DEBUG);		
-		m_BaseGameMode.missionFrame.m_ConfigNonValidArea.m_NonValidAreas[idx].ChangeRadius(size);
-	}	
-			
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Save the NonValidArea json
-	*/	
-	static void SaveNonValidAreaData()
-	{
-		SDRC_Log.Add("[SDRC_GMHelper:SaveNonValidAreaData] Saving...", LogLevel.DEBUG);		
-		m_BaseGameMode.missionFrame.m_NonValidAreaJsonApi.Save(m_BaseGameMode.missionFrame.m_ConfigNonValidArea, SDRC_Config.Cast(m_BaseGameMode.missionFrame.m_ConfigNonValidArea));
-	}			
 }
