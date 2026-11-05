@@ -168,6 +168,7 @@ modded class SDRC_Compat
 		cleanUpList.id = "CompatFF_Helicopters";
 		cleanUpList.modDir.Insert("Prefabs");
 		cleanUpList.include.Insert("_flying");
+		cleanUpList.include.Insert("_crashing");
 		cleanUpList.include.Insert("Loot");
 		cleanUpList.include.Insert("Hvt");
 		SDRC_Resources.GetList(m_FF_cleanUpList, "$DarcMissions:", cleanUpList);

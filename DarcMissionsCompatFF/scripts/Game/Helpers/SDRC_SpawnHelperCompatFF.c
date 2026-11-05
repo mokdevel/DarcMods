@@ -1,4 +1,4 @@
-//Helpers SDRC_SpawnHelper.c
+//Helpers SDRC_SpawnHelperCompatFF.c
 
 //------------------------------------------------------------------------------------------------
 /*!
@@ -14,7 +14,9 @@ modded class SDRC_SpawnHelper
 	*/
 	override static void SetPersistence(IEntity entity, bool persistence = true)	
 	{	
-		if (SDRC_VehicleHelper.IsVehicle(entity))
+		bool isVehicle = SDRC_VehicleHelper.IsVehicle(entity);
+		
+		if ( (isVehicle) || Turret.Cast(entity) )
 		{
 			//Avoid despawning of vehicles
 			auto JWK_persistence = JWK_CompTU<EPF_PersistenceComponent>.FindIn(entity);
@@ -30,6 +32,10 @@ modded class SDRC_SpawnHelper
 					SDRC_Log.Add("[SDRC_SpawnHelperCompatFF:SetPersistence] Persistence disabled for: " + entity.GetPrefabData().GetPrefabName(), LogLevel.DEBUG);
 				}
 			}
+		}		
+			
+		if (isVehicle)
+		{
 			//FF despawns vehicles beyond certain distance from players and spawns them back in when they get near for performance, this will disable that.
 			auto streamable = JWK_CompTU<JWK_StreamableVehicleComponent>.FindIn(entity);
 			if (streamable) streamable.SetStreamingEnabled_S(false);
