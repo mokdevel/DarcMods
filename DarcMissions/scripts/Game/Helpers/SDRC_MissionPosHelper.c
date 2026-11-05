@@ -40,10 +40,12 @@ class SDRC_MissionPosHelper
 		//If we had an empty positions list, let's search with locationTypes
 		if (pos == "0 0 0")
 		{			
-			if (!locationTypes.IsEmpty())
+			/*if (!locationTypes.IsEmpty())
 			{		
 				pos = SDRC_MissionPosHelper.FindMissionPosWithLocationTypes(locationTypes, size, onlyBasicChecks, posRandomization);
-			}
+			}*/
+			//If pos is empty, search with locationTypes. If locationTypes is empty, the function will search a random location
+			pos = SDRC_MissionPosHelper.FindMissionPosWithLocationTypes(locationTypes, size, onlyBasicChecks, posRandomization);
 		}
 				
 		return pos;
@@ -181,7 +183,7 @@ class SDRC_MissionPosHelper
 
 		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (!baseGameMode) {return pos;}
-		if (!baseGameMode.m_SDRC_Core){return pos;}
+		if (!baseGameMode.m_SDRC_Core) {return pos;}
 				
 		SDRC_Location location = null;
 		array<SDRC_Location> locations = {};
