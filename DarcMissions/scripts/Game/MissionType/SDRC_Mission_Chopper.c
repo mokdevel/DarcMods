@@ -587,6 +587,11 @@ class SDRC_ChopperConfig : SDRC_MissionConfig
 		disableArsenal = true;
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		missionList = {0,1,1,2,2,3,4,4,5};
+		
+		#ifndef SDRC_RELEASE
+			missionList = {4};	//DEBUG
+		#endif
+		
 		//Mission specific
 		distanceToMission = 100;
 		distanceToPlayer = 100;

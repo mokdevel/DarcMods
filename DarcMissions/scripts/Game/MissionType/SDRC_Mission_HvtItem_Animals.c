@@ -38,6 +38,11 @@ class SDRC_HvtItemConfig_Animals : SDRC_HvtItemConfig
 		//Default
 		missionCycleTime = SDRC_MISSION_CYCLE_TIME_DEFAULT;
 		missionList = {0,0,1};
+		
+		#ifndef SDRC_RELEASE
+			//missionList = {1};	//DEBUG
+		#endif
+		
 		//Mission specific		
 		//----------------------------------------------------
 		subMissions.Clear();
