@@ -35,6 +35,10 @@ int rewardDefault : Default reward unless specific reward has been set in missio
 
 # Version history
 
+## 20261105
+Fixes:
+* Turrets like PKM spawned via missions should not be stored in a game save. Thanks ScaryLarry4268.
+
 ## 20260731
 Fixes:
 * Configuration file load issues.
