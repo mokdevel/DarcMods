@@ -4,36 +4,16 @@
 /*!
 RPL component to provide GM map information to clients.
 
+The component is split accross multiple additional files:
+- SDRC_RPLGMComp_NonValidArea.c
+- SDRC_RPLGMComp_Symbols.c
+- SDRC_RPLGMComp_MissionData.c
+
 NOTE: This has been added to {}}Prefabs/Characters/DarcMissions/DefaultPlayerController.et
 */
 [ComponentEditorProps(category: "GameScripted/DarcMissions", description: "DarcMissions GM Helper Component")]
 class SDRC_RplGMCompClass : ScriptComponentClass { }
 SDRC_RplGMCompClass g_RplGMCompClass;
-
-//------------------------------------------------------------------------------------------------
-enum SDRC_EDrawSymbol
-{
-	NONE,
-	NON_VALID_AREA,
-	MARKER
-}
- 
-//------------------------------------------------------------------------------------------------
-// Generic symbol class
-// NOTE: Depending on SDRC_EDrawSymbol type, parameters are used for various topics
-class SDRC_GMMapSymbol : Managed
-{	
-	//Default information
-	bool visible = true;			//If true, will be shown on the GM map
-	SDRC_EDrawSymbol symbolType;
-	vector vPos;
-	int iTimeLeft;					//Seconds
-	float fRadius;					
-	string sId;						//
-	int iIntval;					//Integer value for color or icon or ..
-	string sStrval;
-	int iType;						//Generic type int - used for SDRC_EMissionType
-}
 
 //------------------------------------------------------------------------------------------------
 // Generic symbol class
@@ -49,31 +29,14 @@ class SDRC_GMMissionData : Managed
 class SDRC_RplGMComp : ScriptComponent
 {
 	private static SDRC_RplGMComp s_Instance;	
-	static ref array<ref SDRC_GMMapSymbol> m_Symbols = {};
-	static ref array<ref SDRC_GMMissionData> m_MissionData = {};
 	
 	[RplProp(onRplName: "OnUpdateTimeLeft")]
 	bool m_ShowMissionTimeLeft = false;
 
 	//------------------------------------------------------------------------------------------------
-	//Values needed for runtime SDRC_MissionSubIdxEditorAttributeBaseValues modifying. Ugly hack!
-	//AR does not provide proper runtime editing of the editable values so trick the game. We use 
-	//a global value that can be set and read in SDRC_MissionSubIdxEditorAttributeBaseValues
-	//The table is filled in SDRC_MissionEnumHelper:CreateAllConfigs
-	
-	//The largest index found in the missionListMission. The array is filled SDRC_MissionEnumHelper:CreateAllConfigs at startup.
-	ref array<int> missionIndexMaxList = {0};					//First item is prefilled to reflect SDRC_EMissionType.NONE
-	//Values are filled in SCR_BaseEditorAttributeVar ReadVariable() when opening the mission for editing in GM.
-	int m_MissionIndexMax = 0;									//The max value for the slider. This is the biggest mission index found.
-	SDRC_EMissionType m_MissionType = SDRC_EMissionType.NONE;	//Mission type we're editing.
-//	int missionIndexCurrent = 0;				//The current mission index value on the slider
-	
-	//------------------------------------------------------------------------------------------------
     override void OnPostInit(IEntity owner)
     {
-		//Add an empty stub for missionType.NONE as the first one
-		ref SDRC_GMMissionData missionData = new SDRC_GMMissionData();
-		m_MissionData.Insert(missionData);
+		InitMissionData();
 		
 		//Store instance
 		s_Instance = this;				
@@ -103,129 +66,10 @@ class SDRC_RplGMComp : ScriptComponent
 		return SDRC_RplGMComp.Cast(gmEnt.FindComponent(SDRC_RplGMComp));
 	}
 	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Clear symbols
-	*/
-	void ClearSymbols()
-	{
-		m_Symbols.Clear();
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Add a circle on symbol list
-	*/
- 	void AddSymbolCircle(bool visible, vector pos, string name, float radius, int id, int color)
-    {
-		pos[1] = 0;			//Set to zero plane
+	//------------------------------------------------------------------------------------------------	
+	// Time left stuff
+	//------------------------------------------------------------------------------------------------	
 		
-		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
-		symbol.visible = visible;
-		symbol.symbolType = SDRC_EDrawSymbol.NON_VALID_AREA;
-		symbol.vPos = pos;
-		symbol.iTimeLeft = -1;
-		symbol.fRadius = radius;						//Radius of the circle
-		symbol.sId = id.ToString();						//Index
-		symbol.iIntval = color;							//Color for the circle
-		symbol.sStrval = name;							//Name of the area
-		symbol.iType = -1;								//Unused
-		m_Symbols.Insert(symbol);
-    }
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Add a marker on symbol list
-	*/
- 	void AddSymbolMarker(bool visible, vector pos, SDRC_EMissionType missionType, SDRC_EMissionIcon icon, string markerTypeString, int timeLeft, string id, string strval)
-    {
-		pos[1] = 0;			//Set to zero plane
-		
-		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
-		symbol.visible = visible;
-		symbol.symbolType = SDRC_EDrawSymbol.MARKER;
-		symbol.vPos = pos;
-		symbol.iTimeLeft = timeLeft;
-		symbol.fRadius = 0;								//Not used
-		symbol.sId = id;								//Id for the marker
-		symbol.iIntval = icon;							//SDRC_EMissionIcon
-		symbol.sStrval = strval;						//Title of marker
-		symbol.iType = missionType;						//MissionType
-		m_Symbols.Insert(symbol);
-    }
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Get marker symbol information
-	*/
-	SDRC_GMMapSymbol GetSymbolMarker(int idx)
-	{
-		if (m_Symbols.IsEmpty())
-		{
-			return null;
-		}
-				
-		if (idx < 0 || idx > m_Symbols.Count())
-		{
-			return null;
-		}
-		
-		return m_Symbols[idx];
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Sync all map symbols to all players
-	*/
- 	void SyncMapSymbols(int playerID)
-	{
-		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.SPAM);	
-		//Clear symbols on server
-		ClearSymbols();
-		//Clear symbols on client
-		Rpc(RpcDo_ClearSymbols);
-		
-		SDRC_GMHelper.AddSymbols();
-		
-		foreach (SDRC_GMMapSymbol symbol : m_Symbols)
-		{
-			SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Syncing: " + symbol.vPos, LogLevel.SPAM);	
-	        Rpc(RpcDo_SyncMapSymbol, symbol.symbolType, symbol.vPos, symbol.iTimeLeft, symbol.fRadius, symbol.sId, symbol.iIntval, symbol.sStrval, symbol.iType); 	// broadcast to clients			
-		}		
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	RPL: Clear symbols 
-	*/
-    [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-    protected void RpcDo_ClearSymbols()
-    {
-		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_ClearSymbols] Clearing.. ", LogLevel.SPAM);
-		ClearSymbols();
-    }
-		
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	RPL: Syncronize symbols to clients
-	*/
-    [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-    protected void RpcDo_SyncMapSymbol(SDRC_EDrawSymbol symbolType, vector pos, int timeLeft, float radius, string id, int intval, string strval, int type)
-    {
-		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(SDRC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.SPAM);
-		
-		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
-		symbol.symbolType = symbolType;
-		symbol.vPos = pos;
-		symbol.iTimeLeft = timeLeft;
-		symbol.fRadius = radius;
-		symbol.sId = id;
-		symbol.iIntval = intval;
-		symbol.sStrval = strval;
-		symbol.iType = type;
-		m_Symbols.Insert(symbol);
-    }
-	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Update time left attribute
@@ -265,7 +109,7 @@ class SDRC_RplGMComp : ScriptComponent
  	void DoDeleteMission(int playerID, string missionId)
 	{
 		SDRC_Log.Add("[SDRC_RplGMComp:DoDeleteMission] Deletion of " + missionId + " requested by " + playerID, LogLevel.SPAM);	
-		SDRC_GMHelper.DeleteMission(missionId);
+		DeleteMission(missionId);
 //		SyncMapSymbols(playerID);
 	}
 		
@@ -276,58 +120,70 @@ class SDRC_RplGMComp : ScriptComponent
  	void DoEndMission(int playerID, string missionId)
 	{
 		SDRC_Log.Add("[SDRC_RplGMComp:DoEndMission] Ending of " + missionId + " requested by " + playerID, LogLevel.SPAM);	
-		SDRC_GMHelper.EndMission(missionId, SDRC_EMissionSuccess.LOSE);
+		EndMission(missionId, SDRC_EMissionSuccess.LOSE);
 //		SyncMapSymbols(playerID);
 	}
-		
+	
 	//------------------------------------------------------------------------------------------------	
-	// NonValidArea stuff
+	// Mission stuff
 	//------------------------------------------------------------------------------------------------	
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Request for NonValidArea size change
-	*/
- 	void DoNonValidAreaSizeChange(int playerID, string nvaId, float size)
+	Delete a mission with specific mission ID (DCMxxxx).
+	*/	
+	void DeleteMission(string id, SDRC_EMissionSuccess success = SDRC_EMissionSuccess.DELETED)
 	{
-		SDRC_Log.Add("[SDRC_RplGMComp:DoNonValidAreaIncrease] Change of " + size + " asked for NonValidArea " + nvaId + ". Requested by " + playerID, LogLevel.DEBUG);	
-		SDRC_GMHelper.NonValidAreaSizeChange(nvaId, size);
-		SyncMapSymbols(playerID);
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Request for NonValidArea save to file
-	*/
- 	void DoNonValidAreaSave(int playerID)
-	{
-		SDRC_Log.Add("[SDRC_RplGMComp:DoNonValidAreaSave] Asked for save. Requested by " + playerID, LogLevel.DEBUG);	
-		SDRC_GMHelper.SaveNonValidAreaData();
-	}
-		
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Request for NonValidArea deletion
-	*/
- 	void DoDeleteNonValidArea(int playerID, string nvaId)
-	{
-		SDRC_Log.Add("[SDRC_RplGMComp:DoDeleteNonValidArea] Deletion of NonValidArea " + nvaId + " requested by " + playerID, LogLevel.DEBUG);	
-		SDRC_GMHelper.DeleteNonValidArea(nvaId);
-		SyncMapSymbols(playerID);
-	}
-	
-	//------------------------------------------------------------------------------------------------	
-	// Mission name stuff
-	//------------------------------------------------------------------------------------------------	
-	void AddMissionData(SDRC_EMissionType type, int maxIndex, array<string> names)
-	{
-		ref SDRC_GMMissionData missionData = new SDRC_GMMissionData();
-		missionData.type = type;
-		missionData.maxIndex = maxIndex;
-		foreach (string name : names)
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode)
 		{
-			missionData.names.Insert(name);
+			SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] SCR_BaseGameMode not found.", LogLevel.ERROR);
 		}
-		m_MissionData.Insert(missionData);
+		
+		int idx = baseGameMode.missionFrame.FindMissionWithId(id);
+		if (idx != -1)
+		{
+			baseGameMode.missionFrame.m_MissionList[idx].SetState(SDRC_EMissionState.END);
+			baseGameMode.missionFrame.m_MissionList[idx].SetSuccess(success);
+			SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Ending mission: " + id + " - " + baseGameMode.missionFrame.m_MissionList[idx].GetTitle(), LogLevel.DEBUG);				
+		}
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Delete a mission with specific mission ID (DCMxxxx).
+	*/	
+	void EndMission(string id, SDRC_EMissionSuccess success)
+	{
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode)
+		{
+			SDRC_Log.Add("[SDRC_RplGMComp:EndMission] SCR_BaseGameMode not found.", LogLevel.ERROR);
+		}
+		
+		int idx = baseGameMode.missionFrame.FindMissionWithId(id);
+		if (idx != -1)
+		{
+			if (success == SDRC_EMissionSuccess.LOSE)
+			{
+				baseGameMode.missionFrame.m_MissionList[idx].DoLose();
+			}
+			if (success == SDRC_EMissionSuccess.WIN)
+			{
+				baseGameMode.missionFrame.m_MissionList[idx].DoWin();
+			}
+			SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Ending mission: " + id + " - (" + SCR_Enum.GetEnumName(SDRC_EMissionSuccess, success) + ")" + baseGameMode.missionFrame.m_MissionList[idx].GetTitle(), LogLevel.DEBUG);				
+		}
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	// Modded class references
+	//
+	// Functions in modded class to sort the stuff in files per topic. Reference are here for compilation reasons.
+	//------------------------------------------------------------------------------------------------	
+	
+ 	void InitMissionData() {}
+	void SyncMapSymbols(int playerID) {}
+	
+	//------------------------------------------------------------------------------------------------
 }

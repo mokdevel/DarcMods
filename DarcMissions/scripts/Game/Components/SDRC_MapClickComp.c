@@ -16,7 +16,7 @@ class SDRC_MapClickComp : SCR_ScriptedWidgetComponent
 
 		SDRC_Log.Add("[SDRC_MapClickComp:OnClick]", LogLevel.SPAM);
 				
-		if (SDRC_GMHelper.IsShowMissionTimeLeft())
+		if (IsShowMissionTimeLeft())
 		{
 			SCR_MapEntity m_MapEntity = SCR_MapEntity.GetMapInstance();
 			
@@ -31,7 +31,7 @@ class SDRC_MapClickComp : SCR_ScriptedWidgetComponent
 				SDRC_Log.Add("[SDRC_MapClickComp:OnClick] Index: " + idx + " at " + worldX + "," + worldY, LogLevel.SPAM);
 			#endif
 			
-			SDRC_GMMapSymbol symbol = SDRC_GMHelper.GetSymbolDetails(worldX, worldY);
+			SDRC_GMMapSymbol symbol = GetSymbolDetails(worldX, worldY);
 			
 			if (symbol)
 			{		
@@ -52,5 +52,50 @@ class SDRC_MapClickComp : SCR_ScriptedWidgetComponent
 		}
 				
 		return false;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Shall we show time left for players
+	*/	
+	bool IsShowMissionTimeLeft()
+	{
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+		if (!rplGMComp)
+		{
+			return false;
+		}
+		return rplGMComp.m_ShowMissionTimeLeft;
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Get details of the clicked symbol on the map.
+	\return null
+	*/
+	SDRC_GMMapSymbol GetSymbolDetails(float worldX, float worldY)
+	{
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+		
+		int idx = -1;
+		
+		if ((baseGameMode) && (rplGMComp))
+		{		
+			idx = SDRC_GMHelper.GetSymbolIndex(worldX, worldY);
+		}
+		else
+		{
+			return null;	
+		}
+			
+		if (idx < 0)
+		{
+			return null;
+		}
+
+		SDRC_Log.Add("[SDRC_GMHelper:GetMarkerDetails] Searching for symbol: " + idx, LogLevel.SPAM);	
+								
+		return rplGMComp.GetSymbolMarker(idx);
 	}
 }
