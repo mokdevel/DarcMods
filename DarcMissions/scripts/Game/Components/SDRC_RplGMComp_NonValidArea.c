@@ -22,7 +22,7 @@ modded class SDRC_RplGMComp
 	{
 		SDRC_Log.Add("[SDRC_RplGMComp:DoNonValidAreaIncrease] Change of " + size + " asked for NonValidArea " + nvaId + ". Requested by " + playerID, LogLevel.DEBUG);	
 		NonValidAreaSizeChange(nvaId, size);
-		SyncMapSymbols(playerID);
+		Sync_Symbols(playerID);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ modded class SDRC_RplGMComp
 	{
 		SDRC_Log.Add("[SDRC_RplGMComp:DoDeleteNonValidArea] Deletion of NonValidArea " + nvaId + " requested by " + playerID, LogLevel.DEBUG);	
 		DeleteNonValidArea(nvaId);
-		SyncMapSymbols(playerID);
+		Sync_Symbols(playerID);
 	}	
 		
 	//------------------------------------------------------------------------------------------------

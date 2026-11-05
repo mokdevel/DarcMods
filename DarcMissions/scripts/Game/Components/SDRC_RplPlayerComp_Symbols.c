@@ -1,4 +1,4 @@
-//SDRC_RplPlayerComp.c
+//SDRC_RplPlayerComp_Symbols.c
 
 //------------------------------------------------------------------------------------------------
 /*!
@@ -17,20 +17,20 @@ modded class SDRC_RplPlayerComp
  	void AskForInfo()
 	{
 		int playerId = GetGame().GetPlayerController().GetPlayerId();		
-		Rpc(RpcAsk_GiveMeInfo, playerId);
+		Rpc(RpcAsk_GiveMeInfo_Symbols, playerId);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	//! Client requests for information
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
-    protected void RpcAsk_GiveMeInfo(int playerId)
+    protected void RpcAsk_GiveMeInfo_Symbols(int playerId)
     {
-		SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_GiveMeInfo] Asked by: " + playerId, LogLevel.SPAM);	
+		SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_GiveMeInfo_Symbols] Asked by: " + playerId, LogLevel.SPAM);	
 
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
 		if (gmComp)
 		{
-			gmComp.SyncMapSymbols(playerId);
+			gmComp.Sync_Symbols(playerId);
 		}
     }
 	

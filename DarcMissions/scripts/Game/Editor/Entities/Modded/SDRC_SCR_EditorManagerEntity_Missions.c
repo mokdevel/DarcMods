@@ -34,11 +34,11 @@ modded class SCR_EditorManagerEntity
 			{
 				m_bDataAvailable = true;
 				
-/*				SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
+				SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
 				if (playerComponent)
 				{
-					playerComponent.AskForInfo();
-				}*/
+					playerComponent.AskForInfo_MissionData();
+				}
 			}
 			
 			SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity_Missions:IsOpened] GM mode opened.", LogLevel.DEBUG);			

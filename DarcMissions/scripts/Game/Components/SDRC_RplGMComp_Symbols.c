@@ -41,7 +41,7 @@ modded class SDRC_RplGMComp
 	/*!	
 	Clear symbols
 	*/
-	void ClearSymbols()
+	void Clear_Symbols()
 	{
 		m_Symbols.Clear();
 	}
@@ -111,20 +111,20 @@ modded class SDRC_RplGMComp
 	/*!	
 	Sync all map symbols to all players
 	*/
- 	override void SyncMapSymbols(int playerID)
+ 	override void Sync_Symbols(int playerID)
 	{
 		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.SPAM);	
 		//Clear symbols on server
-		ClearSymbols();
+		Clear_Symbols();
 		//Clear symbols on client
-		Rpc(RpcDo_ClearSymbols);
+		Rpc(RpcDo_Clear_Symbols);
 		
 		SDRC_GMHelper.AddSymbols();
 		
 		foreach (SDRC_GMMapSymbol symbol : m_Symbols)
 		{
 			SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Syncing: " + symbol.vPos, LogLevel.SPAM);	
-	        Rpc(RpcDo_SyncMapSymbol, symbol.symbolType, symbol.vPos, symbol.iTimeLeft, symbol.fRadius, symbol.sId, symbol.iIntval, symbol.sStrval, symbol.iType); 	// broadcast to clients			
+	        Rpc(RpcDo_Sync_Symbol, symbol.symbolType, symbol.vPos, symbol.iTimeLeft, symbol.fRadius, symbol.sId, symbol.iIntval, symbol.sStrval, symbol.iType); 	// broadcast to clients			
 		}		
 	}
 
@@ -133,10 +133,10 @@ modded class SDRC_RplGMComp
 	RPL: Clear symbols 
 	*/
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-    protected void RpcDo_ClearSymbols()
+    protected void RpcDo_Clear_Symbols()
     {
-		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_ClearSymbols] Clearing.. ", LogLevel.SPAM);
-		ClearSymbols();
+		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_Clear_Symbols] Clearing.. ", LogLevel.SPAM);
+		Clear_Symbols();
     }
 		
 	//------------------------------------------------------------------------------------------------
@@ -144,9 +144,9 @@ modded class SDRC_RplGMComp
 	RPL: Syncronize symbols to clients
 	*/
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-    protected void RpcDo_SyncMapSymbol(SDRC_EDrawSymbol symbolType, vector pos, int timeLeft, float radius, string id, int intval, string strval, int type)
+    protected void RpcDo_Sync_Symbol(SDRC_EDrawSymbol symbolType, vector pos, int timeLeft, float radius, string id, int intval, string strval, int type)
     {
-		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(SDRC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.SPAM);
+		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_Sync_Symbol] Adding " + SCR_Enum.GetEnumName(SDRC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.SPAM);
 		
 		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
 		symbol.symbolType = symbolType;

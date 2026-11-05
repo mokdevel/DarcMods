@@ -214,7 +214,7 @@ class SDRC_MapSystem : GameSystem
 		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
 		if (rplGMComp)
 		{
-			rplGMComp.ClearSymbols();
+			rplGMComp.Clear_Symbols();
 		}
 		
 		//If we made changes to NonValidAreas, request for a save

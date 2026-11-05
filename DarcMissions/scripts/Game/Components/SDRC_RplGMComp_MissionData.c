@@ -52,4 +52,44 @@ modded class SDRC_RplGMComp
 		}
 		m_MissionData.Insert(missionData);
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	// Mission data stuff
+	//------------------------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Sync mission data to all players
+	*/
+ 	void Sync_MissionData(int playerID)
+	{
+		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.SPAM);	
+		
+		foreach (SDRC_GMMissionData missionData : m_MissionData)
+		{
+			SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Syncing: " + missionData.type, LogLevel.SPAM);	
+//	        Rpc(RpcDo_Sync_MissionData, symbol.symbolType, symbol.vPos, symbol.iTimeLeft, symbol.fRadius, symbol.sId, symbol.iIntval, symbol.sStrval, symbol.iType); 	// broadcast to clients			
+		}		
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	RPL: Syncronize symbols to clients
+	*/
+    [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
+    protected void RpcDo_Sync_MissionData(SDRC_EDrawSymbol symbolType, vector pos, int timeLeft, float radius, string id, int intval, string strval, int type)
+    {
+/*		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(SDRC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.SPAM);
+		
+		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
+		symbol.symbolType = symbolType;
+		symbol.vPos = pos;
+		symbol.iTimeLeft = timeLeft;
+		symbol.fRadius = radius;
+		symbol.sId = id;
+		symbol.iIntval = intval;
+		symbol.sStrval = strval;
+		symbol.iType = type;
+		m_Symbols.Insert(symbol);*/
+    }	
 }

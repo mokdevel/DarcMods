@@ -183,7 +183,7 @@ class SDRC_RplGMComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------	
 	
  	void InitMissionData() {}
-	void SyncMapSymbols(int playerID) {}
+	void Sync_Symbols(int playerID) {}
 	
 	//------------------------------------------------------------------------------------------------
 }
