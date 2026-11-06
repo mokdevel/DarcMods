@@ -206,6 +206,8 @@ sealed class SDRC_MissionEnumHelper
 		rplGMComp.AddMissionData(SDRC_EMissionType.CHOPPER, confChopper.FindMaxIndex(), names); //NOTE: Order is important so that SDRC_RplGMEntity.m_MissionData is filled correctly!				
 		delete confChopper;
 		delete chopperJsonApi;
+		
+		rplGMComp.MissionDataReady();
 	}		
 	
 	//------------------------------------------------------------------------------------------------

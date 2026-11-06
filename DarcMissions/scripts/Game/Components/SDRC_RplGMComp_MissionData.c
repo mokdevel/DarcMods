@@ -7,10 +7,19 @@ RPL component to provide GM map information to clients.
 NOTE: This has been added to {}}Prefabs/Characters/DarcMissions/DefaultPlayerController.et
 */
 
+class SDRC_GMMissionData : Managed
+{	
+	SDRC_EMissionType type = SDRC_EMissionType.NONE;
+	int maxIndex = 0;
+	ref array<string> names = {};
+}
+
 //------------------------------------------------------------------------------------------------
 modded class SDRC_RplGMComp
 {
-	static ref array<ref SDRC_GMMissionData> m_MissionData = {};
+	static ref array<ref SDRC_GMMissionData> m_MissionData_S = {};	//Server side data
+	static ref array<ref SDRC_GMMissionData> m_MissionData = {};	//Client table
+	static bool m_bMissionDataReady = false;
 
 	//------------------------------------------------------------------------------------------------
 	//Values needed for runtime SDRC_MissionSubIdxEditorAttributeBaseValues modifying. Ugly hack!
@@ -29,11 +38,14 @@ modded class SDRC_RplGMComp
 	// Mission data stuff
 	//------------------------------------------------------------------------------------------------	
 	
-	override void InitMissionData()
+	override void Init_MissionData()
 	{
 		//Add an empty stub for missionType.NONE as the first one
 		ref SDRC_GMMissionData missionData = new SDRC_GMMissionData();
-		m_MissionData.Insert(missionData);
+		missionData.type = SDRC_EMissionType.NONE;
+		missionData.maxIndex = 0;
+		missionData.names.Insert("NONE");
+		m_MissionData_S.Insert(missionData);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -43,6 +55,8 @@ modded class SDRC_RplGMComp
 	
 	void AddMissionData(SDRC_EMissionType type, int maxIndex, array<string> names)
 	{
+		SDRC_Log.Add("[SDRC_RplGMComp:AddMissionData] " + SCR_Enum.GetEnumName(SDRC_EMissionType, type), LogLevel.NORMAL);	
+		
 		ref SDRC_GMMissionData missionData = new SDRC_GMMissionData();
 		missionData.type = type;
 		missionData.maxIndex = maxIndex;
@@ -50,9 +64,20 @@ modded class SDRC_RplGMComp
 		{
 			missionData.names.Insert(name);
 		}
-		m_MissionData.Insert(missionData);
+		m_MissionData_S.Insert(missionData);
 	}
 	
+	//------------------------------------------------------------------------------------------------
+	void MissionDataReady()
+	{
+		m_bMissionDataReady = true;
+	}
+
+	bool IsMissionDataReady()
+	{
+		return m_bMissionDataReady;
+	}
+		
 	//------------------------------------------------------------------------------------------------
 	// Mission data stuff
 	//------------------------------------------------------------------------------------------------
@@ -63,33 +88,38 @@ modded class SDRC_RplGMComp
 	*/
  	void Sync_MissionData(int playerID)
 	{
-		SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Starting..", LogLevel.SPAM);	
+		SDRC_Log.Add("[SDRC_RplGMComp:Sync_MissionData] Starting..", LogLevel.NORMAL);	
 		
-		foreach (SDRC_GMMissionData missionData : m_MissionData)
+		//Clear mission data
+		m_MissionData.Clear();
+		
+		if (m_bMissionDataReady)
+		{		
+			foreach (SDRC_GMMissionData missionData : m_MissionData_S)
+			{
+				SDRC_Log.Add("[SDRC_RplGMComp:Sync_MissionData] Syncing: " + SCR_Enum.GetEnumName(SDRC_EMissionType, missionData.type), LogLevel.NORMAL);	
+		        Rpc(RpcDo_Sync_MissionData, missionData.type, missionData.maxIndex, missionData.names[0]); 	// broadcast to clients	
+			}
+		}
+		else
 		{
-			SDRC_Log.Add("[SDRC_RplGMComp:SyncMapSymbols] Syncing: " + missionData.type, LogLevel.SPAM);	
-//	        Rpc(RpcDo_Sync_MissionData, symbol.symbolType, symbol.vPos, symbol.iTimeLeft, symbol.fRadius, symbol.sId, symbol.iIntval, symbol.sStrval, symbol.iType); 	// broadcast to clients			
-		}		
+			SDRC_Log.Add("[SDRC_RplGMComp:Sync_MissionData] Data not available yet.", LogLevel.NORMAL);	
+		}
 	}	
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	RPL: Syncronize symbols to clients
 	*/
-    [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-    protected void RpcDo_Sync_MissionData(SDRC_EDrawSymbol symbolType, vector pos, int timeLeft, float radius, string id, int intval, string strval, int type)
+    [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
+    protected void RpcDo_Sync_MissionData(SDRC_EMissionType type, int maxIndex, string name)
     {
-/*		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_SyncMapSymbols] Adding " + SCR_Enum.GetEnumName(SDRC_EDrawSymbol, symbolType) + " at pos: " + pos, LogLevel.SPAM);
+		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_Sync_MissionData] Adding " + SCR_Enum.GetEnumName(SDRC_EMissionType, type), LogLevel.NORMAL);
 		
-		SDRC_GMMapSymbol symbol = new SDRC_GMMapSymbol();
-		symbol.symbolType = symbolType;
-		symbol.vPos = pos;
-		symbol.iTimeLeft = timeLeft;
-		symbol.fRadius = radius;
-		symbol.sId = id;
-		symbol.iIntval = intval;
-		symbol.sStrval = strval;
-		symbol.iType = type;
-		m_Symbols.Insert(symbol);*/
+		SDRC_GMMissionData missionData = new SDRC_GMMissionData();
+		missionData.type = type;
+		missionData.maxIndex = maxIndex;
+		missionData.names.Insert(name);
+		m_MissionData.Insert(missionData);
     }	
 }

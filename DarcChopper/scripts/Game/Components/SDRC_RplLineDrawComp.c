@@ -2,6 +2,10 @@
 
 //------------------------------------------------------------------------------------------------
 /*!
+RPL component to provide line drawing of flight pattern to clients in GM view.
+
+NOTE: This has been added to {}}Prefabs/Characters/DarcMissions/DefaultPlayerController.et
+*/
 
 */
 [ComponentEditorProps(category: "GameScripted/DarcChopper", description: "DarcChopper Line Draw Component")]

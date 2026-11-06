@@ -16,16 +16,6 @@ class SDRC_RplGMCompClass : ScriptComponentClass { }
 SDRC_RplGMCompClass g_RplGMCompClass;
 
 //------------------------------------------------------------------------------------------------
-// Generic symbol class
-// NOTE: Depending on SDRC_EDrawSymbol type, parameters are used for various topics
-class SDRC_GMMissionData : Managed
-{	
-	SDRC_EMissionType type = SDRC_EMissionType.NONE;
-	int maxIndex = 0;
-	ref array<string> names = {};
-}
-
-//------------------------------------------------------------------------------------------------
 class SDRC_RplGMComp : ScriptComponent
 {
 	private static SDRC_RplGMComp s_Instance;	
@@ -36,7 +26,7 @@ class SDRC_RplGMComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------
     override void OnPostInit(IEntity owner)
     {
-		InitMissionData();
+		Init_MissionData();
 		
 		//Store instance
 		s_Instance = this;				
@@ -182,7 +172,7 @@ class SDRC_RplGMComp : ScriptComponent
 	// Functions in modded class to sort the stuff in files per topic. Reference are here for compilation reasons.
 	//------------------------------------------------------------------------------------------------	
 	
- 	void InitMissionData() {}
+ 	void Init_MissionData() {}
 	void Sync_Symbols(int playerID) {}
 	
 	//------------------------------------------------------------------------------------------------

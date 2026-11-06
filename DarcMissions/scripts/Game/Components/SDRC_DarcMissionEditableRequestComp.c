@@ -127,8 +127,16 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 		int missionType = missionComp.GetMissionType();
 		
 		//Modify the scale with a hacky-hack way. 
-		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();			
-		rplGMComp.m_MissionIndexMax = rplGMComp.m_MissionData[missionType].maxIndex;	//TBD: For this to work on clients, it needs to be replicated. 
+		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+		
+		if ( (!rplGMComp.m_MissionData.IsEmpty()) && (rplGMComp.IsMissionDataReady()) )
+		{
+			rplGMComp.m_MissionIndexMax = -1;
+		}
+		else
+		{
+			rplGMComp.m_MissionIndexMax = rplGMComp.m_MissionData[missionType].maxIndex;
+		}
 		rplGMComp.m_MissionType = missionType;
 		
 		return SCR_BaseEditorAttributeVar.CreateInt(subIdx);
@@ -172,9 +180,18 @@ class SDRC_SCR_BaseAttributeDynamicDescription : SCR_BaseAttributeDynamicDescrip
 		
 		int index = var.GetInt();
 		string description = "Random";
+		
+		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:GetDescriptionData] Count: " + rplGMComp.m_MissionData.Count(), LogLevel.NORMAL);	
+		
+		if (!rplGMComp.IsMissionDataReady())
+		{
+			description = "Mission data not available";
+		}
+		
 		if (index > -1)
 		{
-			description = rplGMComp.m_MissionData[rplGMComp.m_MissionType].names[index];
+			//description = rplGMComp.m_MissionData[rplGMComp.m_MissionType].names[index];
+			description = rplGMComp.m_MissionData[rplGMComp.m_MissionType].names[0];
 		}
 		m_DescriptionDisplayInfo.SetDescription("Title: " + description);
 		uiInfo = m_DescriptionDisplayInfo;

@@ -22,26 +22,26 @@ modded class SCR_EditorManagerEntity
 			//SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity_Missions:IsOpened] Limited mode.", LogLevel.DEBUG);
 			return isOpened;
 		}
-		
+
+		if (m_bDataAvailable)
+		{
+			return isOpened;
+		}
+				
 		if (isOpened)
 		{	
-			if (m_bDataAvailable)
-			{
-				return isOpened;
-			}
-			
+			SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity_Missions:IsOpened] GM mode opened.", LogLevel.DEBUG);			
+						
 			if (!m_bDataAvailable)
 			{
-				m_bDataAvailable = true;
-				
 				SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
 				if (playerComponent)
 				{
 					playerComponent.AskForInfo_MissionData();
 				}
-			}
-			
-			SDRC_Log.Add("[SDRC_SCR_EditorManagerEntity_Missions:IsOpened] GM mode opened.", LogLevel.DEBUG);			
+
+				m_bDataAvailable = true;
+			}			
 		}
 				
 		return isOpened;

@@ -25,7 +25,7 @@ modded class SDRC_RplPlayerComp
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
     protected void RpcAsk_GiveMeInfo_MissionData(int playerId)
     {
-		SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_GiveMeInfo_MissionData] Asked by: " + playerId, LogLevel.SPAM);	
+		SDRC_Log.Add("[SDRC_RplPlayerComp:RpcAsk_GiveMeInfo_MissionData] Asked by: " + playerId, LogLevel.NORMAL);	
 
 		SDRC_RplGMComp gmComp = SDRC_RplGMComp.FindInstance();
 		if (gmComp)
