@@ -18,9 +18,8 @@ class SDRC_GMMissionData : Managed
 modded class SDRC_RplGMComp
 {
 	static ref array<ref SDRC_GMMissionData> m_MissionData_S = {};	//Server side data
-	static ref array<ref SDRC_GMMissionData> m_MissionData = {};	//Client table
-	static bool m_bMissionDataReady = false;
-
+	static bool m_bMissionDataReady_S = false;						//If MissionData_S is available on server
+	
 	//------------------------------------------------------------------------------------------------
 	//Values needed for runtime SDRC_MissionSubIdxEditorAttributeBaseValues modifying. Ugly hack!
 	//AR does not provide proper runtime editing of the editable values so trick the game. We use 
@@ -68,58 +67,13 @@ modded class SDRC_RplGMComp
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void MissionDataReady()
+	void MissionDataReady_S()
 	{
-		m_bMissionDataReady = true;
+		m_bMissionDataReady_S = true;
 	}
 
-	bool IsMissionDataReady()
+	bool IsMissionDataReady_S()
 	{
-		return m_bMissionDataReady;
-	}
-		
-	//------------------------------------------------------------------------------------------------
-	// Mission data stuff
-	//------------------------------------------------------------------------------------------------
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	Sync mission data to all players
-	*/
- 	void Sync_MissionData(int playerID)
-	{
-		SDRC_Log.Add("[SDRC_RplGMComp:Sync_MissionData] Starting..", LogLevel.NORMAL);	
-		
-		//Clear mission data
-		m_MissionData.Clear();
-		
-		if (m_bMissionDataReady)
-		{		
-			foreach (SDRC_GMMissionData missionData : m_MissionData_S)
-			{
-				SDRC_Log.Add("[SDRC_RplGMComp:Sync_MissionData] Syncing: " + SCR_Enum.GetEnumName(SDRC_EMissionType, missionData.type), LogLevel.NORMAL);	
-		        Rpc(RpcDo_Sync_MissionData, missionData.type, missionData.maxIndex, missionData.names[0]); 	// broadcast to clients	
-			}
-		}
-		else
-		{
-			SDRC_Log.Add("[SDRC_RplGMComp:Sync_MissionData] Data not available yet.", LogLevel.NORMAL);	
-		}
+		return m_bMissionDataReady_S;
 	}	
-	
-	//------------------------------------------------------------------------------------------------
-	/*!	
-	RPL: Syncronize symbols to clients
-	*/
-    [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
-    protected void RpcDo_Sync_MissionData(SDRC_EMissionType type, int maxIndex, string name)
-    {
-		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_Sync_MissionData] Adding " + SCR_Enum.GetEnumName(SDRC_EMissionType, type), LogLevel.NORMAL);
-		
-		SDRC_GMMissionData missionData = new SDRC_GMMissionData();
-		missionData.type = type;
-		missionData.maxIndex = maxIndex;
-		missionData.names.Insert(name);
-		m_MissionData.Insert(missionData);
-    }	
 }

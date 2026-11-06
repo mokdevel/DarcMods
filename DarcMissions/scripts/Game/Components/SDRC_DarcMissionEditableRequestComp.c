@@ -128,14 +128,15 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 		
 		//Modify the scale with a hacky-hack way. 
 		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
 		
-		if ( (!rplGMComp.m_MissionData.IsEmpty()) && (rplGMComp.IsMissionDataReady()) )
+		if ( (!playerComponent.m_MissionData.IsEmpty()) && (playerComponent.IsMissionDataReady()) )
 		{
 			rplGMComp.m_MissionIndexMax = -1;
 		}
 		else
 		{
-			rplGMComp.m_MissionIndexMax = rplGMComp.m_MissionData[missionType].maxIndex;
+			rplGMComp.m_MissionIndexMax = playerComponent.m_MissionData[missionType].maxIndex;
 		}
 		rplGMComp.m_MissionType = missionType;
 		
@@ -177,21 +178,23 @@ class SDRC_SCR_BaseAttributeDynamicDescription : SCR_BaseAttributeDynamicDescrip
 	{
 		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
 		SCR_BaseEditorAttributeVar var = attribute.GetVariable();		
-		
+
+		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
+				
 		int index = var.GetInt();
 		string description = "Random";
 		
-		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:GetDescriptionData] Count: " + rplGMComp.m_MissionData.Count(), LogLevel.NORMAL);	
+		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:GetDescriptionData] Count: " + playerComponent.m_MissionData.Count(), LogLevel.NORMAL);	
 		
-		if (!rplGMComp.IsMissionDataReady())
+		if (!playerComponent.IsMissionDataReady())
 		{
 			description = "Mission data not available";
 		}
 		
 		if (index > -1)
 		{
-			//description = rplGMComp.m_MissionData[rplGMComp.m_MissionType].names[index];
-			description = rplGMComp.m_MissionData[rplGMComp.m_MissionType].names[0];
+			//description = playerComponent.m_MissionData[playerComponent.m_MissionType].names[index];
+			description = playerComponent.m_MissionData[rplGMComp.m_MissionType].names[0];
 		}
 		m_DescriptionDisplayInfo.SetDescription("Title: " + description);
 		uiInfo = m_DescriptionDisplayInfo;

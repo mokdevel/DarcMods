@@ -172,8 +172,8 @@ class SDRC_RplGMComp : ScriptComponent
 	// Functions in modded class to sort the stuff in files per topic. Reference are here for compilation reasons.
 	//------------------------------------------------------------------------------------------------	
 	
- 	void Init_MissionData() {}
 	void Sync_Symbols(int playerID) {}
+ 	void Init_MissionData() {}
 	
 	//------------------------------------------------------------------------------------------------
 }

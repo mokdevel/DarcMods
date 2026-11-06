@@ -207,7 +207,7 @@ sealed class SDRC_MissionEnumHelper
 		delete confChopper;
 		delete chopperJsonApi;
 		
-		rplGMComp.MissionDataReady();
+		rplGMComp.MissionDataReady_S();
 	}		
 	
 	//------------------------------------------------------------------------------------------------

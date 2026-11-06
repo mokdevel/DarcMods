@@ -39,5 +39,5 @@ class SDRC_RplPlayerComp : ScriptComponent
 	static SDRC_RplPlayerComp GetInstance()
 	{
 		return s_Instance;
-	}
+	}	
 }
