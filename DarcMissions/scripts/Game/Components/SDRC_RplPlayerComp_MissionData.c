@@ -38,6 +38,12 @@ modded class SDRC_RplPlayerComp
 	RPL: Syncronize mission data to clients
 	*/
     [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
+    void RpcDo_Clear_MissionData()
+	{
+		m_MissionData.Clear();
+	}
+	
+    [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
     void RpcDo_Sync_MissionData(SDRC_EMissionType type, int maxIndex)
     {
 		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_Sync_MissionData] Adding " + SCR_Enum.GetEnumName(SDRC_EMissionType, type), LogLevel.NORMAL);
@@ -83,7 +89,7 @@ modded class SDRC_RplPlayerComp
 		}
 		
 		//Clear mission data
-		m_MissionData.Clear();
+		Rpc(RpcDo_Clear_MissionData);
 		
 		if (rplGMComp.IsMissionDataReady_S())
 		{		

@@ -85,6 +85,7 @@ class SDRC_MissionSubIdxEditorAttributeBaseValues : SCR_EditorAttributeBaseValue
 	override void GetSliderValues(out string sliderValueFormating, out float min, out float max, out float step, out int decimals)
 	{		
 		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
+		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
 
 		int num = rplGMComp.m_MissionIndexMax;
 	
@@ -132,13 +133,16 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 		
 		if ( (playerComponent.m_MissionData.IsEmpty()) || (!playerComponent.IsMissionDataReady()) )
 		{
-			rplGMComp.m_MissionIndexMax = -1;
+			//rplGMComp.m_MissionIndexMax = -1;
+			rplGMComp.RpcDo_UpdateMissionIndexMax(-1);
 		}
 		else
 		{
-			rplGMComp.m_MissionIndexMax = playerComponent.m_MissionData[missionType].maxIndex;
+			//rplGMComp.m_MissionIndexMax = playerComponent.m_MissionData[missionType].maxIndex;
+			rplGMComp.RpcDo_UpdateMissionIndexMax(playerComponent.m_MissionData[missionType].maxIndex);
 		}
-		rplGMComp.m_MissionType = missionType;
+		//rplGMComp.m_MissionType = missionType;
+		rplGMComp.RpcDo_UpdateMissionType(missionType);
 		
 		return SCR_BaseEditorAttributeVar.CreateInt(subIdx);
 	}
