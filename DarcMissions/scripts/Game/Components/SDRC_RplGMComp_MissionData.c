@@ -37,16 +37,6 @@ modded class SDRC_RplGMComp
 	// Mission data stuff
 	//------------------------------------------------------------------------------------------------	
 	
-	override void Init_MissionData()
-	{
-		//Add an empty stub for missionType.NONE as the first one
-		ref SDRC_GMMissionData missionData = new SDRC_GMMissionData();
-		missionData.type = SDRC_EMissionType.NONE;
-		missionData.maxIndex = 0;
-		missionData.names.Insert("NONE");
-		m_MissionData_S.Insert(missionData);
-	}
-	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Store mission data in the component

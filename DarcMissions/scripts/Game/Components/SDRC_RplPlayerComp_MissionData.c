@@ -35,26 +35,33 @@ modded class SDRC_RplPlayerComp
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	RPL: Syncronize symbols to clients
+	RPL: Syncronize mission data to clients
 	*/
     [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
-    protected void RpcDo_Sync_MissionData(SDRC_EMissionType type, int maxIndex, string name)
+    void RpcDo_Sync_MissionData(SDRC_EMissionType type, int maxIndex)
     {
 		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_Sync_MissionData] Adding " + SCR_Enum.GetEnumName(SDRC_EMissionType, type), LogLevel.NORMAL);
-		
-		SDRC_GMMissionData missionData = new SDRC_GMMissionData();
-		missionData.type = type;
-		missionData.maxIndex = maxIndex;
-		missionData.names.Insert(name);
-		m_MissionData.Insert(missionData);
-    }	
 
+	    SDRC_GMMissionData missionData = new SDRC_GMMissionData();
+        missionData.type = type;
+        missionData.maxIndex = maxIndex;
+        //NOTE: missionData.names will be filled in next stage
+        m_MissionData.Insert(missionData);
+    }	
+	
+    [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
+    void RpcDo_Sync_MissionDataName(SDRC_EMissionType type, string name)
+    {
+		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_Sync_MissionDataName] Adding: " + name, LogLevel.NORMAL);
+		m_MissionData[type].names.Insert(name);
+    }	
+	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	RPL: Syncronize symbols to clients
 	*/
     [RplRpc(RplChannel.Reliable, RplRcver.Owner)]
-    protected void RpcDo_Ready_MissionData()
+    void RpcDo_Ready_MissionData()
     {
 		SDRC_Log.Add("[SDRC_RplGMComp:RpcDo_Ready_MissionData] Done!", LogLevel.NORMAL);
 		m_bMissionDataReady = true;
@@ -83,8 +90,13 @@ modded class SDRC_RplPlayerComp
 			foreach (SDRC_GMMissionData missionData : rplGMComp.m_MissionData_S)
 			{
 				SDRC_Log.Add("[SDRC_RplGMComp:Sync_MissionData] Syncing: " + SCR_Enum.GetEnumName(SDRC_EMissionType, missionData.type), LogLevel.NORMAL);	
-		        Rpc(RpcDo_Sync_MissionData, missionData.type, missionData.maxIndex, missionData.names[0]); 	// broadcast to clients	
+		        Rpc(RpcDo_Sync_MissionData, missionData.type, missionData.maxIndex); 	// broadcast to clients	
+				foreach(string name : missionData.names)
+				{
+		        	Rpc(RpcDo_Sync_MissionDataName, missionData.type, name); 			// broadcast to clients	
+				}
 			}
+			Rpc(RpcDo_Ready_MissionData); 	// broadcast to clients	
 		}
 		else
 		{

@@ -130,7 +130,7 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
 		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
 		
-		if ( (!playerComponent.m_MissionData.IsEmpty()) && (playerComponent.IsMissionDataReady()) )
+		if ( (playerComponent.m_MissionData.IsEmpty()) || (!playerComponent.IsMissionDataReady()) )
 		{
 			rplGMComp.m_MissionIndexMax = -1;
 		}
@@ -194,7 +194,7 @@ class SDRC_SCR_BaseAttributeDynamicDescription : SCR_BaseAttributeDynamicDescrip
 		if (index > -1)
 		{
 			//description = playerComponent.m_MissionData[playerComponent.m_MissionType].names[index];
-			description = playerComponent.m_MissionData[rplGMComp.m_MissionType].names[0];
+			description = playerComponent.m_MissionData[rplGMComp.m_MissionType].names[index];
 		}
 		m_DescriptionDisplayInfo.SetDescription("Title: " + description);
 		uiInfo = m_DescriptionDisplayInfo;

@@ -51,8 +51,11 @@ sealed class SDRC_MissionEnumHelper
 
 		//Names of the missions
 		array<string> names = {};
-				
-		//Create a default mission configs
+		
+		//Add an empty stub to MissionData for NONE
+		rplGMComp.AddMissionData(SDRC_EMissionType.NONE, -1, names); //NOTE: Order is important so that SDRC_RplGMEntity.m_MissionData is filled correctly!
+		
+		//Create a default mission configs and fill in MissionData
 		SDRC_JsonApi2 hunterJsonApi = new SDRC_JsonApi2(DC_MISSIONCONFIG_FILE_HUNTER);	
 		SDRC_HunterConfig confHunter = new SDRC_HunterConfig();		
 		hunterJsonApi.Load(confHunter, SDRC_MissionConfig.Cast(confHunter), DC_MISSIONCONFIG_FILE_HUNTER_JSONVER, safeUpdate: DC_MISSIONCONFIG_FILE_HUNTER_SAFEUPDATE);
@@ -119,7 +122,7 @@ sealed class SDRC_MissionEnumHelper
 		{
 			names.Insert(subMission.general.messages[0].title);
 		}
-		rplGMComp.AddMissionData(SDRC_EMissionType.CRASHSITE, confPatrol.FindMaxIndex(), names); //NOTE: Order is important so that SDRC_RplGMEntity.m_MissionData is filled correctly!
+		rplGMComp.AddMissionData(SDRC_EMissionType.PATROL, confPatrol.FindMaxIndex(), names); //NOTE: Order is important so that SDRC_RplGMEntity.m_MissionData is filled correctly!
 		delete confPatrol;
 		delete patrolJsonApi;		
 		

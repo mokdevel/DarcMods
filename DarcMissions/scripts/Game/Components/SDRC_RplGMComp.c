@@ -26,8 +26,6 @@ class SDRC_RplGMComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------
     override void OnPostInit(IEntity owner)
     {
-		Init_MissionData();
-		
 		//Store instance
 		s_Instance = this;				
     }
@@ -173,7 +171,6 @@ class SDRC_RplGMComp : ScriptComponent
 	//------------------------------------------------------------------------------------------------	
 	
 	void Sync_Symbols(int playerID) {}
- 	void Init_MissionData() {}
-	
+ 	
 	//------------------------------------------------------------------------------------------------
 }
