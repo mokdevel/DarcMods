@@ -16,7 +16,7 @@ SDRC_DarcMissionEditableRequestCompClass g_DarcMissionEditableRequestClass;
  
 //------------------------------------------------------------------------------------------------
 //! @ingroup Editable_Entities
-class SDRC_DarcMissionEditableRequestComp : SCR_EditableSystemComponent
+class SDRC_DarcMissionEditableRequestComp : SCR_Editable	SystemComponent
 {
 	[Attribute(typename.EnumToString(SDRC_EMissionType, SDRC_EMissionType.NONE), UIWidgets.ComboBox, desc: "Mission type", enumType: SDRC_EMissionType)]	
 	protected SDRC_EMissionType m_MissionType;	//The type of mission

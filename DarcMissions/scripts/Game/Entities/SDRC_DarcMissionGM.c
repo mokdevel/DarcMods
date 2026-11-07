@@ -79,13 +79,23 @@ class SDRC_DarcMissionGM : GenericEntity
 					}
 					else //Handle missions requests
 					{
-						//Add to the requested mission to list for spawning
+						SDRC_DarcMissionEditableRequestComp missionComp = SDRC_DarcMissionEditableRequestComp.Cast(owner.FindComponent(SDRC_DarcMissionEditableRequestComp));
+						SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInitDelayed] Author: " + missionComp.GetAuthorPlayerID() + " - " + missionComp.GetEntityStates(), LogLevel.NORMAL);						
+						
+						GetGame().GetCallqueue().CallLater(EOnInitDelayed, 1000, false, owner);
+						
+						if (missionComp.HasEntityState(EEditableEntityState.EDITED))
+						{
+							SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInitDelayed] Being edited by author: " + missionComp.GetAuthorPlayerID(), LogLevel.NORMAL);						
+						}
+						
+		/*				//Add to the requested mission to list for spawning
 						ref SDRC_MissionRequested mission = new SDRC_MissionRequested();
 						mission.entityID = owner.GetID();
 											
 						baseGameMode.missionFrame.m_missionsRequested.Insert(mission);
 						
-						ent.AddedToList();					
+						ent.AddedToList();					*/
 					}
 				}
 			}
