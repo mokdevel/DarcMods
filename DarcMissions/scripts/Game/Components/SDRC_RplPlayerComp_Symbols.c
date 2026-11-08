@@ -41,7 +41,7 @@ modded class SDRC_RplPlayerComp
 	//------------------------------------------------------------------------------------------------
  	void AskForMissionDeletion(string missionId)
 	{
-		int playerId = GetGame().GetPlayerController().GetPlayerId();		
+		int playerId = GetGame().GetPlayerController().GetPlayerId();
 		Rpc(RpcAsk_DeleteMission, playerId, missionId);
 	}
 	

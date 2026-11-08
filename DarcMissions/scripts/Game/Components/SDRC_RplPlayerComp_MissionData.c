@@ -34,6 +34,17 @@ modded class SDRC_RplPlayerComp
     }
 	
 	//------------------------------------------------------------------------------------------------
+	// Edit mode stuff
+	//------------------------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------------------------
+ 	void SetEditing_MissionData(bool editing)
+	{
+		int playerId = GetGame().GetPlayerController().GetPlayerId();		
+		//Rpc(RpcAsk_SetEditing_MissionData, playerId, editing);
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	/*!	
 	RPL: Syncronize mission data to clients
 	*/
@@ -96,13 +107,13 @@ modded class SDRC_RplPlayerComp
 			foreach (SDRC_GMMissionData missionData : rplGMComp.m_MissionData_S)
 			{
 				SDRC_Log.Add("[SDRC_RplGMComp:Sync_MissionData] Syncing: " + SCR_Enum.GetEnumName(SDRC_EMissionType, missionData.type), LogLevel.NORMAL);	
-		        Rpc(RpcDo_Sync_MissionData, missionData.type, missionData.maxIndex); 	// broadcast to clients	
+		        Rpc(RpcDo_Sync_MissionData, missionData.type, missionData.maxIndex); 	// send to client	
 				foreach(string name : missionData.names)
 				{
-		        	Rpc(RpcDo_Sync_MissionDataName, missionData.type, name); 			// broadcast to clients	
+		        	Rpc(RpcDo_Sync_MissionDataName, missionData.type, name); 			// send to client
 				}
 			}
-			Rpc(RpcDo_Ready_MissionData); 	// broadcast to clients	
+			Rpc(RpcDo_Ready_MissionData); 	// send to client
 		}
 		else
 		{

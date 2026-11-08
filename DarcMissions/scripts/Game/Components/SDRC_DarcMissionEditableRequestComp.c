@@ -10,13 +10,21 @@ TBD: The editing part is not working at the moment.
 */
 
 //------------------------------------------------------------------------------------------------
+enum SDRC_EEditModeForMission
+{
+	UNKNOWN = 0,
+	IN_EDITING,
+	NO_ONE_IS_EDITING,	
+};
+
+//------------------------------------------------------------------------------------------------
 [ComponentEditorProps(category: "GameScripted/Editor (Editables)", description: "", icon: "WBData/ComponentEditorProps/componentEditor.png")]
-class SDRC_DarcMissionEditableRequestCompClass : SCR_EditableSystemComponentClass { }
+class SDRC_DarcMissionEditableRequestCompClass : SCR_EditableEntityComponentClass { }
 SDRC_DarcMissionEditableRequestCompClass g_DarcMissionEditableRequestClass;
  
 //------------------------------------------------------------------------------------------------
 //! @ingroup Editable_Entities
-class SDRC_DarcMissionEditableRequestComp : SCR_Editable	SystemComponent
+class SDRC_DarcMissionEditableRequestComp : SCR_EditableEntityComponent
 {
 	[Attribute(typename.EnumToString(SDRC_EMissionType, SDRC_EMissionType.NONE), UIWidgets.ComboBox, desc: "Mission type", enumType: SDRC_EMissionType)]	
 	protected SDRC_EMissionType m_MissionType;	//The type of mission
@@ -25,6 +33,9 @@ class SDRC_DarcMissionEditableRequestComp : SCR_Editable	SystemComponent
 	[Attribute("-1", desc: "Sub mission index")]	
 	protected int m_SubIdx;
 
+	[RplProp(onRplName: "OnUpdateBeingEdited")]	
+	protected SDRC_EEditModeForMission m_eBeingEdited = SDRC_EEditModeForMission.UNKNOWN;
+	
 	protected int m_RequestId;	//ID for the request that you can refer to from other mods.
 	ref SDRC_MissionConfigGeneral general = new SDRC_MissionConfigGeneral();
 	
@@ -42,6 +53,36 @@ class SDRC_DarcMissionEditableRequestComp : SCR_Editable	SystemComponent
 		m_RequestId = requestId;
 	}		
 
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Get/set request ID. 
+	*/
+	SDRC_EEditModeForMission IsBeingEdited()
+	{
+		return m_eBeingEdited;
+	}	
+	
+	void SetBeingEdited(SDRC_EEditModeForMission edited)
+	{
+		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:SetBeingEdited] State to: " + edited, LogLevel.NORMAL);
+		int playerId = GetGame().GetPlayerController().GetPlayerId();
+		Rpc(RpcDo_UpdateBeingEdited, playerId, edited);
+	}		
+	
+	void OnUpdateBeingEdited()
+	{
+		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:OnUpdateBeingEdited] Updated.", LogLevel.NORMAL);
+	}	
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Owner)]
+	void RpcDo_UpdateBeingEdited(int playerID, SDRC_EEditModeForMission edited)
+	{
+		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:RpcDo_UpdateBeingEdited] Edit state changed to: " + edited + " by: " + playerID, LogLevel.DEBUG);	
+		m_eBeingEdited = edited;
+
+		Replication.BumpMe();
+	}		
+	
 	//------------------------------------------------------------------------------------------------
 	// Mission specific parameters coming from the request
 	//------------------------------------------------------------------------------------------------	
@@ -72,7 +113,7 @@ class SDRC_DarcMissionEditableRequestComp : SCR_Editable	SystemComponent
 	void SetSubIdx(int subIdx)
 	{
 		m_SubIdx = subIdx;
-	}				
+	}
 }
 
 //------------------------------------------------------------------------------------------------
@@ -122,6 +163,9 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 		if (!missionComp)
 			return null;
 
+		//Inform server that we're editing the entity
+		missionComp.SetBeingEdited(SDRC_EEditModeForMission.IN_EDITING);
+		
 		//Get subIdx
 		int subIdx = missionComp.GetSubIdx();
 		//Get the mission type enum value and use it as the index for finding the biggest index
@@ -133,15 +177,12 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 		
 		if ( (playerComponent.m_MissionData.IsEmpty()) || (!playerComponent.IsMissionDataReady()) )
 		{
-			//rplGMComp.m_MissionIndexMax = -1;
 			rplGMComp.RpcDo_UpdateMissionIndexMax(-1);
 		}
 		else
 		{
-			//rplGMComp.m_MissionIndexMax = playerComponent.m_MissionData[missionType].maxIndex;
 			rplGMComp.RpcDo_UpdateMissionIndexMax(playerComponent.m_MissionData[missionType].maxIndex);
 		}
-		//rplGMComp.m_MissionType = missionType;
 		rplGMComp.RpcDo_UpdateMissionType(missionType);
 		
 		return SCR_BaseEditorAttributeVar.CreateInt(subIdx);
@@ -168,8 +209,43 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 			return;
 
 		missionComp.SetSubIdx(var.GetInt());
+		
+		//Inform server that we're done with the editing
+		missionComp.SetBeingEdited(SDRC_EEditModeForMission.NO_ONE_IS_EDITING);
+	}
+	
+}
+
+//------------------------------------------------------------------------------------------------
+// Sync that we're editing to server so that the mission is not picked to be spawned while someone is accessing it.
+
+modded class SCR_AttributesManagerEditorComponent
+{
+	override void ConfirmEditing()
+	{
+		if (m_aEditedItems.IsEmpty())
+			return;
+		
+		SCR_EditableEntityComponent editableEntity = SCR_EditableEntityComponent.Cast(m_aEditedItems[0]);
+		if (!editableEntity)
+			return;
+
+		IEntity owner = editableEntity.GetOwner();
+		if (!owner)
+			return;
+
+		SDRC_DarcMissionEditableRequestComp missionComp = SDRC_DarcMissionEditableRequestComp.Cast(owner.FindComponent(SDRC_DarcMissionEditableRequestComp));
+		if (missionComp)
+		{
+			SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:SCR_AttributesManagerEditorComponent] Confirm editing.", LogLevel.NORMAL);
+			//Inform server that we're done with the editing
+			missionComp.SetBeingEdited(SDRC_EEditModeForMission.NO_ONE_IS_EDITING);
+		}
+		
+		super.ConfirmEditing();
 	}
 }
+
 
 //------------------------------------------------------------------------------------------------
 // Update the description. 
@@ -188,7 +264,7 @@ class SDRC_SCR_BaseAttributeDynamicDescription : SCR_BaseAttributeDynamicDescrip
 		int index = var.GetInt();
 		string description = "Random";
 		
-		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:GetDescriptionData] Count: " + playerComponent.m_MissionData.Count(), LogLevel.NORMAL);	
+		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:GetDescriptionData] m_MissionData count: " + playerComponent.m_MissionData.Count(), LogLevel.NORMAL);	
 		
 		if (!playerComponent.IsMissionDataReady())
 		{
@@ -197,7 +273,6 @@ class SDRC_SCR_BaseAttributeDynamicDescription : SCR_BaseAttributeDynamicDescrip
 		
 		if (index > -1)
 		{
-			//description = playerComponent.m_MissionData[playerComponent.m_MissionType].names[index];
 			description = playerComponent.m_MissionData[rplGMComp.m_MissionType].names[index];
 		}
 		m_DescriptionDisplayInfo.SetDescription("Title: " + description);

@@ -6,7 +6,7 @@ SDRC_DarcMissionGM : "{C599195C442D7125}Prefabs/Compositions/Misc/CustomEntities
    m_UIInfo SCR_EditableEntityUIInfoColored "{663310CA9879E170}" {
     Name "DarcMissions Occupation"
     Description "Spawns a random Occupation mission"
-    Icon "{AD5B6FECDE9A1E1E}UI/Textures/Icons/gm_mission_Occupation_round.edds"
+    Icon "{AD5B6FECDE9A1E1E}UI/Textures/Icons/gm_icons/gm_mission_Occupation_round.edds"
     m_Image "{83FBFA44C296A183}UI/Textures/Icons/gm_mission_Occupation.edds"
     m_aAuthoredLabels {
      ENTITYTYPE_SYSTEM ENTITYTYPE_DARCMISSIONS
@@ -14,6 +14,12 @@ SDRC_DarcMissionGM : "{C599195C442D7125}Prefabs/Compositions/Misc/CustomEntities
    }
    m_bAutoRegister ALWAYS
    m_MissionType OCCUPATION
+  }
+  SDRC_SCR_AttributesManagerEditorComponent "{6ACF46EE4BA8E794}" {
+   m_EffectsActivate {
+    SCR_UIEditorEffect "{6ACF46E19463DA69}" {
+    }
+   }
   }
   RplComponent "{663310CA9879E103}" {
    Streamable Disabled

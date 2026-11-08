@@ -37,6 +37,9 @@ modded class SDRC_RplGMComp
 {
 	static ref array<ref SDRC_GMMapSymbol> m_Symbols = {};
 	
+	[RplProp(onRplName: "OnUpdateTimeLeft")]
+	bool m_ShowMissionTimeLeft = false;
+	
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	Clear symbols
@@ -159,4 +162,114 @@ modded class SDRC_RplGMComp
 		symbol.iType = type;
 		m_Symbols.Insert(symbol);
     }
+	
+	//------------------------------------------------------------------------------------------------	
+	// Time left stuff
+	//------------------------------------------------------------------------------------------------	
+		
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Update time left attribute
+	*/
+	protected void OnUpdateTimeLeft()
+	{
+		SDRC_Log.Add("[SDRC_RplStoryComp:OnUpdateTimeLeft] TimeLeft updated.", LogLevel.NORMAL);
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	void UpdateTimeLeft(bool timeLeft)
+	{
+		RpcDo_UpdateTimeLeft(timeLeft);
+		Rpc(RpcDo_UpdateTimeLeft, timeLeft);
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	RPL: Time left attribute update
+	*/
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	protected void RpcDo_UpdateTimeLeft(bool timeLeft)
+	{
+		m_ShowMissionTimeLeft = timeLeft;
+
+		Replication.BumpMe();
+	}		
+	
+	//------------------------------------------------------------------------------------------------	
+	// Mission stuff
+	//------------------------------------------------------------------------------------------------	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Request for a mission deletion.
+	*/
+ 	void DoDeleteMission(int playerID, string missionId)
+	{
+		SDRC_Log.Add("[SDRC_RplGMComp:DoDeleteMission] Deletion of " + missionId + " requested by " + playerID, LogLevel.SPAM);	
+		DeleteMission(missionId);
+//		SyncMapSymbols(playerID);
+	}
+		
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Request for a mission ending. Used by DarcStories
+	*/
+ 	void DoEndMission(int playerID, string missionId)
+	{
+		SDRC_Log.Add("[SDRC_RplGMComp:DoEndMission] Ending of " + missionId + " requested by " + playerID, LogLevel.SPAM);	
+		EndMission(missionId, SDRC_EMissionSuccess.LOSE);
+//		SyncMapSymbols(playerID);
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	// Mission stuff
+	//------------------------------------------------------------------------------------------------	
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Delete a mission with specific mission ID (DCMxxxx).
+	*/	
+	void DeleteMission(string id, SDRC_EMissionSuccess success = SDRC_EMissionSuccess.DELETED)
+	{
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode)
+		{
+			SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] SCR_BaseGameMode not found.", LogLevel.ERROR);
+		}
+		
+		int idx = baseGameMode.missionFrame.FindMissionWithId(id);
+		if (idx != -1)
+		{
+			baseGameMode.missionFrame.m_MissionList[idx].SetState(SDRC_EMissionState.END);
+			baseGameMode.missionFrame.m_MissionList[idx].SetSuccess(success);
+			SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Ending mission: " + id + " - " + baseGameMode.missionFrame.m_MissionList[idx].GetTitle(), LogLevel.DEBUG);				
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!	
+	Delete a mission with specific mission ID (DCMxxxx).
+	*/	
+	void EndMission(string id, SDRC_EMissionSuccess success)
+	{
+		SCR_BaseGameMode baseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
+		if (!baseGameMode)
+		{
+			SDRC_Log.Add("[SDRC_RplGMComp:EndMission] SCR_BaseGameMode not found.", LogLevel.ERROR);
+		}
+		
+		int idx = baseGameMode.missionFrame.FindMissionWithId(id);
+		if (idx != -1)
+		{
+			if (success == SDRC_EMissionSuccess.LOSE)
+			{
+				baseGameMode.missionFrame.m_MissionList[idx].DoLose();
+			}
+			if (success == SDRC_EMissionSuccess.WIN)
+			{
+				baseGameMode.missionFrame.m_MissionList[idx].DoWin();
+			}
+			SDRC_Log.Add("[SDRC_RplGMComp:DeleteMission] Ending mission: " + id + " - (" + SCR_Enum.GetEnumName(SDRC_EMissionSuccess, success) + ")" + baseGameMode.missionFrame.m_MissionList[idx].GetTitle(), LogLevel.DEBUG);				
+		}
+	}		
 }
