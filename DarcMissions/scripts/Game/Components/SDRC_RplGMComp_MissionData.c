@@ -35,7 +35,7 @@ modded class SDRC_RplGMComp
 		
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	RPL: Time left attribute update
+	RPL: Index max attribute update
 	*/
 	void OnUpdateMissionIndexMax()
 	{
@@ -52,7 +52,7 @@ modded class SDRC_RplGMComp
 
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	RPL: Time left attribute update
+	RPL: Mission type attribute update
 	*/
 	void OnUpdateMissionType()
 	{
@@ -73,9 +73,8 @@ modded class SDRC_RplGMComp
 	
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Store mission data in the component
+	[Server] Store mission data in the component.
 	*/	
-	
 	void AddMissionData(SDRC_EMissionType type, int maxIndex, array<string> names)
 	{
 		SDRC_Log.Add("[SDRC_RplGMComp:AddMissionData] " + SCR_Enum.GetEnumName(SDRC_EMissionType, type), LogLevel.NORMAL);	

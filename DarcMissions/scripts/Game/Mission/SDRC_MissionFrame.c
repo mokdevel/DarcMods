@@ -366,6 +366,13 @@ class SDRC_MissionFrame
 		SDRC_Mission tmpDC_Mission = null;
 		SDRC_MissionRequested missionRequest = null;
 		
+		if (!missionType)
+		{
+			//This is a rare situation where requested mission was deleted at the right/wrong time.
+			SDRC_Log.Add("[SDRC_MissionFrame:MissionCreate] missionType = null. Was the requested mission was deleted? ", LogLevel.WARNING);
+			return null;
+		}
+		
 		if (missionType == SDRC_EMissionType.REQUESTED)
 		{					
 			//If mission was requested, fill information from the request

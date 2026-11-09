@@ -55,7 +55,7 @@ class SDRC_DarcMissionEditableRequestComp : SCR_EditableEntityComponent
 
 	//------------------------------------------------------------------------------------------------
 	/*!	
-	Get/set request ID. 
+	Get/set if details are being edited.
 	*/
 	SDRC_EEditModeForMission IsBeingEdited()
 	{
@@ -166,6 +166,8 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 		//Inform server that we're editing the entity
 		missionComp.SetBeingEdited(SDRC_EEditModeForMission.IN_EDITING);
 		
+		SDRC_Log.Add("[SDRC_Editable:ReadVariable] Owner: " + owner + " missionComp: " + missionComp + " EntityID: " + owner.GetID(), LogLevel.NORMAL);
+		
 		//Get subIdx
 		int subIdx = missionComp.GetSubIdx();
 		//Get the mission type enum value and use it as the index for finding the biggest index
@@ -209,7 +211,9 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 			return;
 
 		missionComp.SetSubIdx(var.GetInt());
-		
+
+		SDRC_Log.Add("[SDRC_Editable:WriteVariable] Owner: " + owner + " missionComp: " + missionComp + " EntityID: " + owner.GetID(), LogLevel.NORMAL);
+				
 		//Inform server that we're done with the editing
 		missionComp.SetBeingEdited(SDRC_EEditModeForMission.NO_ONE_IS_EDITING);
 	}
@@ -234,10 +238,14 @@ modded class SCR_AttributesManagerEditorComponent
 		if (!owner)
 			return;
 
+		
 		SDRC_DarcMissionEditableRequestComp missionComp = SDRC_DarcMissionEditableRequestComp.Cast(owner.FindComponent(SDRC_DarcMissionEditableRequestComp));
 		if (missionComp)
 		{
 			SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:SCR_AttributesManagerEditorComponent] Confirm editing.", LogLevel.NORMAL);
+			
+			SDRC_Log.Add("[SDRC_Editable:ConfirmEditing] Owner: " + owner + " missionComp: " + missionComp + " EntityID: " + owner.GetID(), LogLevel.NORMAL);
+			
 			//Inform server that we're done with the editing
 			missionComp.SetBeingEdited(SDRC_EEditModeForMission.NO_ONE_IS_EDITING);
 		}
@@ -262,7 +270,7 @@ class SDRC_SCR_BaseAttributeDynamicDescription : SCR_BaseAttributeDynamicDescrip
 		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
 				
 		int index = var.GetInt();
-		string description = "Random";
+		string description = "Randomly selected.";
 		
 		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:GetDescriptionData] m_MissionData count: " + playerComponent.m_MissionData.Count(), LogLevel.NORMAL);	
 		
@@ -273,9 +281,10 @@ class SDRC_SCR_BaseAttributeDynamicDescription : SCR_BaseAttributeDynamicDescrip
 		
 		if (index > -1)
 		{
-			description = playerComponent.m_MissionData[rplGMComp.m_MissionType].names[index];
+			description = playerComponent.m_MissionData[rplGMComp.m_MissionType].names[index];			
+			description = SDRC_MissionHelper.CreateInfo(description, "LOCATION", "DESTINATION");
 		}
-		m_DescriptionDisplayInfo.SetDescription("Title: " + description);
+		m_DescriptionDisplayInfo.SetDescription("Mission: " + description);
 		uiInfo = m_DescriptionDisplayInfo;
 	}	
 }

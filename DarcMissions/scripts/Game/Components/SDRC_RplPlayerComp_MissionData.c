@@ -10,6 +10,7 @@ NOTE: This has been added to {}}Prefabs/Characters/DarcMissions/DefaultPlayerCon
 //------------------------------------------------------------------------------------------------
 modded class SDRC_RplPlayerComp
 {
+	//This data is asked from server and filled in via RPL
 	static ref array<ref SDRC_GMMissionData> m_MissionData = {};	//Client table
 	static bool m_bMissionDataReady = false;						//If MissionData is available for client
 	
