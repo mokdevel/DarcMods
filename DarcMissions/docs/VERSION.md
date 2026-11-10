@@ -7,6 +7,10 @@ No changes in mission jsons.
 
 ..empty..
 
+## 20261110.1
+Fixes:
+* Previous update broke the editing of e.g. weather and time.
+
 ## 20261110
 Fixes:
 * Updated BallienCreatures support. Using BALLIEN_BC_FACTION as enemy faction will change all missions properly to support cultist faction.

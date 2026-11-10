@@ -226,7 +226,9 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 modded class SCR_AttributesManagerEditorComponent
 {
 	override void ConfirmEditing()
-	{
+	{	
+		super.ConfirmEditing();
+/*		
 		if (m_aEditedItems.IsEmpty())
 			return;
 		
@@ -248,9 +250,7 @@ modded class SCR_AttributesManagerEditorComponent
 			
 			//Inform server that we're done with the editing
 			missionComp.SetBeingEdited(SDRC_EEditModeForMission.NO_ONE_IS_EDITING);
-		}
-		
-		super.ConfirmEditing();
+		}*/
 	}
 }
 
