@@ -7,7 +7,7 @@ No changes in mission jsons.
 
 ..empty..
 
-## 202611xx
+## 20261110
 Fixes:
 * Updated BallienCreatures support. Using BALLIEN_BC_FACTION as enemy faction will change all missions properly to support cultist faction.
   * dc_enemyList.json will auto update
