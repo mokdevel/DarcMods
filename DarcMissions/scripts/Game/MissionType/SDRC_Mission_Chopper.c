@@ -309,7 +309,24 @@ class SDRC_Mission_Chopper : SDRC_Mission
 			SetState(SDRC_EMissionState.FAILED, SDRC_EMissionError.COULD_NOT_SPAWN_VEHICLE, resourceName);
 			return;			
 		}
-
+									
+/*		IEntity plr = SDRC_PlayerHelper.GetPlayerClosestToPos(m_Vehicle.GetOrigin());		
+		int playerID = GetGame().GetPlayerManager().GetPlayerIdFromControlledEntity(plr);
+		PlayerController playerController = GetGame().GetPlayerManager().GetPlayerController(playerID);
+		if (!playerController) 
+			return;
+		
+		RplIdentity rplIdentity = playerController.GetRplIdentity();
+		if (rplIdentity == Replication.INVALID_IDENTITY)
+			return;
+		
+		ChimeraWorld world = ChimeraWorld.CastFrom(GetGame().GetWorld());
+		ObserversSystem observersSystem = ObserversSystem.Cast(world.FindSystem(ObserversSystem));	
+		if (observersSystem)
+		{
+			observersSystem.InsertObserverMP(rplIdentity, 0, 0, m_Vehicle);			
+		}		*/
+		
 		SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " +  GetId() + " : Vehicle spawned: " + SDRC_Misc.GetSimpleEntityName(resourceName) + " at: " + m_Vehicle.GetOrigin(), LogLevel.DEBUG);
 		SDRC_Log.Add("[SDRC_Mission_Chopper:MissionSpawn] " +  GetId() + " : Vehicle: " + m_Vehicle, LogLevel.SPAM);
 				

@@ -66,6 +66,7 @@ class SDRC_DarcMissionEditableRequestComp : SCR_EditableEntityComponent
 	{
 		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:SetBeingEdited] State to: " + edited, LogLevel.NORMAL);
 		int playerId = GetGame().GetPlayerController().GetPlayerId();
+		RpcDo_UpdateBeingEdited(playerId, edited);
 		Rpc(RpcDo_UpdateBeingEdited, playerId, edited);
 	}		
 	
@@ -228,7 +229,10 @@ modded class SCR_AttributesManagerEditorComponent
 	override void ConfirmEditing()
 	{	
 		super.ConfirmEditing();
-/*		
+		
+		if (!m_aEditedItems)
+			return;
+		
 		if (m_aEditedItems.IsEmpty())
 			return;
 		
@@ -239,7 +243,6 @@ modded class SCR_AttributesManagerEditorComponent
 		IEntity owner = editableEntity.GetOwner();
 		if (!owner)
 			return;
-
 		
 		SDRC_DarcMissionEditableRequestComp missionComp = SDRC_DarcMissionEditableRequestComp.Cast(owner.FindComponent(SDRC_DarcMissionEditableRequestComp));
 		if (missionComp)
@@ -250,7 +253,7 @@ modded class SCR_AttributesManagerEditorComponent
 			
 			//Inform server that we're done with the editing
 			missionComp.SetBeingEdited(SDRC_EEditModeForMission.NO_ONE_IS_EDITING);
-		}*/
+		}
 	}
 }
 

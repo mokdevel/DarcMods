@@ -262,6 +262,9 @@ modded class SDRC_ChopperComp : ScriptComponent
 	float m_fAttackPositionKnownTime;			//Time to consider the position as a valid target
 	vector m_vSearchAndDestroyPosition = vector.Zero;	//Position where current S&D is happening
 	
+	//Observer
+	int observerID = -1;						//The player ID that is the observer for the chopper
+	
 	//The order of things:
 	//- Spawn chopper via GM or mod
 	//- OnPostInit()

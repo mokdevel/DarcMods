@@ -208,7 +208,16 @@ class SDRC_VehicleHelper
 		// Thanks to Gramps for finding the fix.
 		//aiAgent.SetLOD(1);
 		aiAgent.SetPermanentLOD(1);
+
+/*		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(aiAgent);
+		if (!character)
+			return;*/
+		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(aiAgent.GetControlledEntity());		
 		
+		SCR_CharacterControllerComponent controller = SCR_CharacterControllerComponent.Cast(character.GetCharacterController());
+		if (!controller)
+			return false;
+
 		BaseCompartmentManagerComponent compartmentManager = BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(BaseCompartmentManagerComponent));
 		SCR_BaseCompartmentManagerComponent scr_compartmentManager = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
 		

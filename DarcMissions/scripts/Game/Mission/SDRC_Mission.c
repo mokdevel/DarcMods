@@ -542,18 +542,16 @@ class SDRC_Mission : Managed
 	//------------------------------------------------------------------------------------------------
 	void SetObserver(IEntity entity = null, vector pos = vector.Zero)
 	{
-		return;
-		
-		m_iObserverId = SDRC_AIHelper.SetObserver(entity, pos);
+/*		m_iObserverId = SDRC_AIHelper.SetObserver(entity, pos);
 		#ifdef WORKBENCH			
 			SDRC_Log.Add("[SDRC_Mission:SetObserver] " +  GetId() + " : Key: " + m_iObserverId + " to: " + entity, LogLevel.DEBUG);
-		#endif
+		#endif*/
 	}
 
 	//------------------------------------------------------------------------------------------------
 	void RemoveObserver()
 	{
-		if (m_iObserverId == -1)
+/*		if (m_iObserverId == -1)
 		{
 			return;
 		}
@@ -564,7 +562,7 @@ class SDRC_Mission : Managed
 		if (observers)
 		{
 			observers.RemoveObserverSP(m_iObserverId);
-		}		
+		}		*/
 	}
 		
 	//------------------------------------------------------------------------------------------------

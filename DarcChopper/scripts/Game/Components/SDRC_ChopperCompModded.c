@@ -117,6 +117,7 @@ modded class SDRC_ChopperComp
 		
 		if (owner)	//In case the owner was deleted before we ended up here
 		{
+			InsertObserver(owner);
 			SetEventMask(owner, EntityEvent.INIT);
 			
 			GetGame().GetCallqueue().CallLater(InitDone, TIME_IN_INIT * 1000, false, owner);
@@ -134,6 +135,8 @@ modded class SDRC_ChopperComp
 	override void OnDelete(IEntity owner)
 	{
 		//TBD: Remove from helilist
+		
+		RemoveObserver(owner);
 		
 		SCR_BaseGameMode m_BaseGameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());			
 		if (m_BaseGameMode)
@@ -642,4 +645,88 @@ modded class SDRC_ChopperComp
 			}
 		}		
 	}			
+	
+	//------------------------------------------------------------------------------------------------	
+	// Helicopter observer 
+	//------------------------------------------------------------------------------------------------	
+	void InsertObserver(IEntity owner)
+	{
+		observerID = -1;
+		SDRC_Log.Add("[SDRC_ChopperComp:InsertObserver] Adding.", LogLevel.DEBUG);
+				
+		if (owner)	//In case the owner was deleted before we ended up here
+		{
+			IEntity plr = SDRC_PlayerHelper.GetPlayerClosestToPos(owner.GetOrigin());		
+			if (plr)
+			{
+				int playerID = GetGame().GetPlayerManager().GetPlayerIdFromControlledEntity(plr);
+				PlayerController playerController = GetGame().GetPlayerManager().GetPlayerController(playerID);
+				
+				if (playerController) 
+				{				
+					RplIdentity rplIdentity = playerController.GetRplIdentity();
+					if (rplIdentity != Replication.INVALID_IDENTITY)
+					{
+						ChimeraWorld world = ChimeraWorld.CastFrom(GetGame().GetWorld());
+						ObserversSystem observersSystem = ObserversSystem.Cast(world.FindSystem(ObserversSystem));	
+						if (observersSystem)
+						{
+							observerID = playerID;
+							observersSystem.InsertObserverMP(rplIdentity, 0, 0, owner);			
+							SDRC_Log.Add("[SDRC_ChopperComp:InsertObserver] Observer added to player: " + playerID, LogLevel.DEBUG);
+						}
+						else
+						{
+							SDRC_Log.Add("[SDRC_ChopperComp:InsertObserver] ObserversSystem not found." + playerID, LogLevel.DEBUG);
+						}
+					}
+					else
+					{
+						SDRC_Log.Add("[SDRC_ChopperComp:InsertObserver] rplIdentity not found for: " + playerID, LogLevel.DEBUG);
+					}
+				}
+				else
+				{
+					SDRC_Log.Add("[SDRC_ChopperComp:InsertObserver] PlayerController not found for: " + playerID, LogLevel.DEBUG);
+				}
+			}
+		}		
+		
+		if (observerID == -1)
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp:InsertObserver] No observer added.", LogLevel.DEBUG);
+			return;
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------	
+	void RemoveObserver(IEntity owner)
+	{
+		if (observerID == -1)
+		{
+			SDRC_Log.Add("[SDRC_ChopperComp:RemoveObserver] Observer not defined.", LogLevel.DEBUG);
+			return;
+		}
+		
+		if (owner)	//In case the owner was deleted before we ended up here
+		{
+			PlayerController playerController = GetGame().GetPlayerManager().GetPlayerController(observerID);
+			
+			if (playerController) 
+			{				
+				RplIdentity rplIdentity = playerController.GetRplIdentity();
+				if (rplIdentity != Replication.INVALID_IDENTITY)
+				{					
+					ChimeraWorld world = ChimeraWorld.CastFrom(GetGame().GetWorld());
+					ObserversSystem observersSystem = ObserversSystem.Cast(world.FindSystem(ObserversSystem));	
+					if (observersSystem)
+					{
+						observersSystem.RemoveObserverMP(rplIdentity);			
+						SDRC_Log.Add("[SDRC_ChopperComp:RemoveObserver] Observer removed from player: " + observerID, LogLevel.DEBUG);
+						observerID = -1;
+					}
+				}
+			}
+		}		
+	}
 }

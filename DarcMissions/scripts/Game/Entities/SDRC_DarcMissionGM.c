@@ -24,8 +24,15 @@ class SDRC_DarcMissionGM : GenericEntity
 			if (baseGameMode.IsMaster() && baseGameMode.missionFrame)
 			{
 				SDRC_Log.Add("[SDRC_DarcMissionGM:EOnInit] Entity created.", LogLevel.DEBUG);
-		
-				GetGame().GetCallqueue().CallLater(EOnInitDelayed, 15000, false, owner);
+
+				SDRC_DarcMissionEditableRequestComp missionComp = SDRC_DarcMissionEditableRequestComp.Cast(owner.FindComponent(SDRC_DarcMissionEditableRequestComp));
+				if (missionComp)
+				{
+					missionComp.SetBeingEdited(SDRC_EEditModeForMission.NO_ONE_IS_EDITING);
+				}
+						
+//				GetGame().GetCallqueue().CallLater(EOnInitDelayed, 15000, false, owner);
+				GetGame().GetCallqueue().CallLater(EOnInitDelayed, 2000, false, owner);
 			}
 		}
 			

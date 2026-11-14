@@ -2,6 +2,14 @@
 
 ## Next Version
 
+# 20261114
+Debugging choppers
+## DarcChopper
+Fixes:
+* Trying to sort out the issue with unmanned choppers. This is an experiment with observers. Seems to work, but I don't have the possibility to test on server with a larger amount players. So.. please report any weird things you may see.
+
+**DarcCore** and **DarcMissions** updated for compatibility. No new features.
+
 ## 20261017
 Main features:
 * Fine tuning on the flight model
