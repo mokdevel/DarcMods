@@ -65,7 +65,12 @@ class SDRC_DarcMissionEditableRequestComp : SCR_EditableEntityComponent
 	void SetBeingEdited(SDRC_EEditModeForMission edited)
 	{
 		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:SetBeingEdited] State to: " + edited, LogLevel.NORMAL);
-		int playerId = GetGame().GetPlayerController().GetPlayerId();
+//		PlayerController playerController = GetGame().GetPlayerController();
+		int playerId = 0;
+/*		if (playerController)
+		{
+			playerId = GetGame().GetPlayerController().GetPlayerId();
+		}*/
 		RpcDo_UpdateBeingEdited(playerId, edited);
 		Rpc(RpcDo_UpdateBeingEdited, playerId, edited);
 	}		
@@ -125,14 +130,20 @@ Attribute base for slider values for other attributes to inherent from
 class SDRC_MissionSubIdxEditorAttributeBaseValues : SCR_EditorAttributeBaseValues
 {
 	override void GetSliderValues(out string sliderValueFormating, out float min, out float max, out float step, out int decimals)
-	{		
+	{	
 		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
 		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
-
-		int num = rplGMComp.m_MissionIndexMax;
-	
+		
+		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:GetSliderValues] m_MissionType: " + rplGMComp.m_MissionType_S, LogLevel.NORMAL);	
+		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:GetSliderValues] Count: " + playerComponent.m_MissionData.Count(), LogLevel.NORMAL);	
+					
+		int missionType = rplGMComp.m_MissionType_S;
+		int indexCount = playerComponent.m_MissionData[missionType].names.Count() - 1;
+		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:GetSliderValues] indexCount: " + indexCount, LogLevel.NORMAL);	
+		SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:GetSliderValues] Setting slider max to " + indexCount + " for " + SCR_Enum.GetEnumName(SDRC_EMissionType, missionType) + " missions.", LogLevel.NORMAL);	
+		
 		m_fMin = -1;
-		m_fMax = num;
+		m_fMax = indexCount;
 		m_fStep = 1;
 		m_iDecimals = 0;
 		
@@ -178,14 +189,16 @@ class SDRC_MissionSubTypeAttribute : SCR_BaseValueListEditorAttribute
 		SDRC_RplGMComp rplGMComp = SDRC_RplGMComp.GetInstance();
 		SDRC_RplPlayerComp playerComponent = SDRC_RplPlayerComp.FindLocalInstance();
 		
-		if ( (playerComponent.m_MissionData.IsEmpty()) || (!playerComponent.IsMissionDataReady()) )
+/*		if ( (playerComponent.m_MissionData.IsEmpty()) || (!playerComponent.IsMissionDataReady()) )
 		{
+			SDRC_Log.Add("[SDRC_Editable:ReadVariable] RpcDo_UpdateMissionIndexMax: -1 for missionType: " + missionType, LogLevel.NORMAL);
 			rplGMComp.RpcDo_UpdateMissionIndexMax(-1);
 		}
 		else
 		{
+			SDRC_Log.Add("[SDRC_Editable:ReadVariable] RpcDo_UpdateMissionIndexMax: " + playerComponent.m_MissionData[missionType].maxIndex + " for missionType: " + missionType, LogLevel.NORMAL);
 			rplGMComp.RpcDo_UpdateMissionIndexMax(playerComponent.m_MissionData[missionType].maxIndex);
-		}
+		}*/
 		rplGMComp.RpcDo_UpdateMissionType(missionType);
 		
 		return SCR_BaseEditorAttributeVar.CreateInt(subIdx);
@@ -284,8 +297,9 @@ class SDRC_SCR_BaseAttributeDynamicDescription : SCR_BaseAttributeDynamicDescrip
 		
 		if (index > -1)
 		{
-			description = playerComponent.m_MissionData[rplGMComp.m_MissionType].names[index];			
+			description = playerComponent.m_MissionData[rplGMComp.m_MissionType_S].names[index];			
 			description = SDRC_MissionHelper.CreateInfo(description, "LOCATION", "DESTINATION");
+			SDRC_Log.Add("[SDRC_DarcMissionEditableRequestComp:GetDescriptionData] description: " + description, LogLevel.NORMAL);			
 		}
 		m_DescriptionDisplayInfo.SetDescription("Mission: " + description);
 		uiInfo = m_DescriptionDisplayInfo;

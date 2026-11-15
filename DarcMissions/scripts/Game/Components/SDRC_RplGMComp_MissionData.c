@@ -27,17 +27,17 @@ modded class SDRC_RplGMComp
 	//The table is filled in SDRC_MissionEnumHelper:CreateAllConfigs
 	
 	//Values are filled in SCR_BaseEditorAttributeVar ReadVariable() when opening the mission for editing in GM.
-	[RplProp(onRplName: "OnUpdateMissionIndexMax")]
-	int m_MissionIndexMax = 0;									//The max value for the slider. This is the biggest mission index found.
+//	[RplProp(onRplName: "OnUpdateMissionIndexMax")]
+//	int m_MissionIndexMax_S = 0;								//The max value for the slider. This is the biggest mission index found.
 	
 	[RplProp(onRplName: "OnUpdateMissionType")]
-	SDRC_EMissionType m_MissionType = SDRC_EMissionType.NONE;	//Mission type we're editing.	
+	SDRC_EMissionType m_MissionType_S = SDRC_EMissionType.NONE;	//Mission type we're editing.	
 		
 	//------------------------------------------------------------------------------------------------
 	/*!	
 	RPL: Index max attribute update
 	*/
-	void OnUpdateMissionIndexMax()
+/*	void OnUpdateMissionIndexMax()
 	{
 		SDRC_Log.Add("[SDRC_RplGMComp:OnUpdateMissionIndexMax] Updated.", LogLevel.NORMAL);
 	}	
@@ -45,10 +45,10 @@ modded class SDRC_RplGMComp
 	[RplRpc(RplChannel.Reliable, RplRcver.Owner)]
 	void RpcDo_UpdateMissionIndexMax(int indexMax)
 	{
-		m_MissionIndexMax = indexMax;
+		m_MissionIndexMax_S = indexMax;
 
 		Replication.BumpMe();
-	}		
+	}	*/	
 
 	//------------------------------------------------------------------------------------------------
 	/*!	
@@ -62,7 +62,7 @@ modded class SDRC_RplGMComp
 	[RplRpc(RplChannel.Reliable, RplRcver.Owner)]
 	void RpcDo_UpdateMissionType(SDRC_EMissionType type)
 	{
-		m_MissionType = type;
+		m_MissionType_S = type;
 
 		Replication.BumpMe();
 	}		
