@@ -11,7 +11,7 @@ Compatibility mod for Freedom Fighters that integrates DarcChoppers to game play
 When a battle starts, chance to spawn one or more helicopters is checked. By default the spawn chance ``spawnChance`` is 30%. Campaign progress percentage is added to the value and this is the total chance for spawning. 
   Example: With a 20% progression in the campaing, the total default chance is 50%.
 
-If a request to spawn is made, a delay of ``spawnDelay`` (min/max) defined minutes is set for each helicopter. Eventually the helicopter will arrive and do a 'search and destroy' activity around the area. This action will happen for ``attackTime`` (min/max) defined minutes. Once the time is over, the helicopter will fly away and despawn.
+If a request to spawn is made, a delay of ``spawnDelay`` (min/max) defined minutes is set for each helicopter. Eventually the helicopter will arrive and do a 'search and destroy' activity around the area. This action will happen for ``attackTime`` (min/max) defined minutes. Once the time is over, the helicopter will behave depending on the ``battleEndType``.
 
 See also: [Search and destroy](https://github.com/mokdevel/DarcMods/blob/main/DarcChopper/docs/P_WP_COMMANDS.md#wp_search_destroy)
 
@@ -72,11 +72,11 @@ For more details, on AI functionality, read [AI section](https://github.com/mokd
 ```
 array<int> count : (min, max) Amount of AI groups of characters to spawn.
 array<string> types : The prefab names of AI groups or characters. The AI is randomly picked from this list.
-  Example : {
-            "{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
-            "{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et",
-			"G_LIGHT", "C_OFFICER"
-            }
+  Example : 
+	{
+	"{A62FA97C4EC64F14}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_HeliPilot.et",
+	"G_LIGHT", "C_PILOT"
+	}
 int skill : Skill for AI (0-100). See SCR_AICombatComponent and EaiSkill.
   0 = NONE
   10 = NOOB

@@ -562,6 +562,7 @@ class SDRC_Misc
 	//------------------------------------------------------------------------------------------------
 	/*!
 	Returns the resourceName in human readable format
+	TBD: Refactor to GetSimpleResourceName
 	*/	
 	static string GetSimpleEntityName(ResourceName resourceName)
 	{
@@ -569,7 +570,21 @@ class SDRC_Misc
 		name = SCR_StringHelper.ReplaceRecursive(name, " ", "_");
 		
 		return name;
-	}	
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*!
+	Returns the resourceName in human readable format from an entity
+	TBD: Refactor to GetSimpleEntityName
+	*/	
+	static string GetSimpleEntityNameFromEntity(IEntity entity)
+	{
+		ResourceName resourceName = entity.GetPrefabData().GetPrefabName();	
+		string name = SCR_StringHelper.FormatResourceNameToUserFriendly(resourceName);
+		name = SCR_StringHelper.ReplaceRecursive(name, " ", "_");
+		
+		return name;
+	}
 
 	//------------------------------------------------------------------------------------------------
 	/*!

@@ -238,6 +238,7 @@ class SDRC_Core
 		if (    SDRC_Misc.IsAddonLoaded("$DarcMissions:") || SDRC_Misc.IsAddonLoaded("$DarcMissionsDev:") 
 		     || SDRC_Misc.IsAddonLoaded("$DarcSpawner:") || SDRC_Misc.IsAddonLoaded("$DarcSpawnerDev:") 
 		     || SDRC_Misc.IsAddonLoaded("$DarcChopperCompatFF:") || SDRC_Misc.IsAddonLoaded("$DarcChopperCompatFFDev:") 
+		     || SDRC_Misc.IsAddonLoaded("$DarcChopperCompatFF*") || SDRC_Misc.IsAddonLoaded("$DarcChopperCompatFFDev*") 
 		   )
 		{
 			fullScan = true;			

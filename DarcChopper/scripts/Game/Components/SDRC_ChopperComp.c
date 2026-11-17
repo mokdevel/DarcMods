@@ -272,15 +272,31 @@ modded class SDRC_ChopperComp : ScriptComponent
 	//- EOnInit()
 	//- External mod code if any after this. Here we can set AutoStart to false to control the spawn details ourselves.
 	//
-	//If AutoStart is enabled, we continue automatically with steps below.
-	//- Setup() is run after a delay
+	
+	//If AutoStart is enabled in the prefab, we continue automatically with steps below.
+	//- Setup() is called
+	//  - Calls a delayed Setup_Delayed()
 	//  - Calls TypeSetup()
 	//- Ready() is automatically called if AutoStart is enabled. If not, remember to call it in your mod!
 	//- ReadyDelayed() .. to do delayed spawn of AI crew
-	//- ReadyDelayed_2() .. to do delayed counting of pilots
+	//- ReadyDelayed_2()
 	//- InitDone() 
 	//  - Calls TypeInitDone()
 	//- EOnFrame()
+	
+	//If AutoStart is disabled in the prefab, the steps are below.
+	//- Setup() is to be called from the external mod.
+	//  - Calls a delayed Setup_Delayed()
+	//  - Calls TypeSetup()
+	//- (optional) InitFlight() is to be called from the external mod to setup the initial flight path.
+	//- Spawn crew on the external mod.
+	//- Ready() is to be called from the external mod.
+	//- ReadyDelayed() .. now AI crew is spawned
+	//- ReadyDelayed_2()
+	//- InitDone() 
+	//  - Calls TypeInitDone()
+	//- EOnFrame()
+	
 	
 	//------------------------------------------------------------------------------------------------
 	override void EOnInit(IEntity owner)
@@ -350,7 +366,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 		{
 			Setup(owner);
 		}
-//		GetGame().GetCallqueue().CallLater(Setup, TIME_DELAY_READY * 1000, false, owner);		
 		
 		super.OnPostInit(owner);
 	}

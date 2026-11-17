@@ -16,7 +16,7 @@ modded class SDRC_ChopperComp
 	{
 		GetGame().GetCallqueue().CallLater(Setup_Delayed, TIME_DELAY_READY * 1000, false, owner);			
 	}	
-	
+		
 	void Setup_Delayed(IEntity owner)
 	{
 		if (m_bSetupDone)
@@ -55,11 +55,11 @@ modded class SDRC_ChopperComp
 		SDRC_Log.Add("[SDRC_ChopperComp:Ready] Called..", LogLevel.DEBUG);
 		
 		// If AutoStart is disabled, InitFlight() is to be called from the mod that disabled AutoStart.
-		if (m_bAutoStart)
-		{
+//		if (m_bAutoStart)
+//		{
 			//Init flight path
 			InitFlight(owner);
-		}
+//		}
 
 		//Any assigned destination on the prefab will be added to the end
 		foreach(SDRC_FlyPathPoint fpp : m_vFlyDestinationsOnPrefab)
@@ -85,6 +85,8 @@ modded class SDRC_ChopperComp
 	*/
 	void ReadyDelayed(IEntity owner)
 	{
+		//TBD: Combine with Ready...
+		
 		// Some things needs to be done delayed
 		if (m_bAutoStart)
 		{
@@ -531,6 +533,12 @@ modded class SDRC_ChopperComp
 			case SDRC_EFlyWayPointType.WP_M_LAND_TO_FREE_SPOT:
 			case SDRC_EFlyWayPointType.WP_M_EVAC_TROOPS:
 			{
+				if (destination == vector.Zero)
+				{
+					IEntity owner = GetInstance().GetOwner();
+					destination = SDRC_Math.GetCoordinatesOnCircle(owner.GetOrigin(), 300, SDRC_Misc.RandomInt(0, 360));					
+				}
+				
 				if (SDRC_ChopperHelper.GetSafeLandingPosition(destination, SAFE_LANDING_SIZE))
 				{
 					//Safe landing position found
@@ -543,9 +551,10 @@ modded class SDRC_ChopperComp
 				}
 				else
 				{
-					//No safe landing position found
+					//No safe landing position found. Fly away and despawn.
 					AddDestination(SDRC_EFlyWayPointType.WP_FLY_AWAY_IMMEDIATELY);
-					SetBehaviour(SDRC_EHeliBehaviour.EVAC_BEHAVIOUR, -1);
+					AddDestination(SDRC_EFlyWayPointType.WP_DESPAWN);
+					SetBehaviour(SDRC_EHeliBehaviour.EVAC_BEHAVIOUR, -1);					
 				}
 				//All things are already added
 				addDestinationPoint = false;

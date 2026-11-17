@@ -55,11 +55,6 @@ modded class SDRC_ChopperComp : ScriptComponent
 				AddDestination(SDRC_EFlyWayPointType.WP_HOVER, value: 30, index: 0);
 			#endif
 		}
-
-		/*destination = SDRC_ChopperHelper.GetDestinationForward(owner, params.destinationForwardInitial);
-		//Make sure we're on proper flight height.
-		destination[1] = SDRC_ChopperHelper.SetPointHeight(destination, m_fFlyHeightLow, m_fFlyHeightHigh); 
-		AddDestination(SDRC_EFlyWayPointType.WP_FLY, destination);	*/		
 		
 		SDRC_Log.Add("[SDRC_ChopperComp:InitFlight] Chopper initial position: " + owner.GetOrigin(), LogLevel.DEBUG);
 				
