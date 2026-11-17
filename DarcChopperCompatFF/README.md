@@ -3,6 +3,8 @@
 
 Compatibility mod for Freedom Fighters that integrates DarcChoppers to game play. DarcMissions and DarcMissionsCompatFF is thoroughly designed to work on any map without specific configs.
 
+* [Version history](./docs/VERSION.md)
+
 ## Functionality
 * Choppers join battle with a random chance.
 
@@ -25,44 +27,63 @@ The configuration files will be under your ```profile\DarcMods\*```. Depending o
 ## Parameters
 Example: [dc_compatFFConfigChopper.json](https://github.com/mokdevel/DarcMods/blob/main/DarcChopperCompatFF/ExampleConfigs/dc_compatFFConfigChopper.json)
 
+### SDRC_ChopperCompatFFConfig
 ```
 int version : Version id of the file
 string author : Author of the file
 string comment : Generic comment. Not used in game.
 array<string> factions : Factions to use for choppers. "FF" uses Freedom Fighters default.
-float spawnChance : Chance percentage that is added to campaign progress. 
-array<int> spawnDistance : Distance min/max to spawn the attacking chopper.
-array<int> spawnDelay : (minutes) Min/max delay before spawning the attacking chopper.
-array<int> chopperCount : The amount choppers to spawn.
-array<int> attackTime : (minutes) Min/max time to attack an area.
-array<ref int> attackList : The list of mission indexes.
+float spawnChance : Chance percentage that is added on top of campaign progress. Total values of 1.0 means 100% chance.
+array<int> spawnDistance : (min, max) Distance to spawn the attacking chopper.
+array<int> spawnDelay : (minutes) (min, max) Delay before spawning the attacking chopper.
+array<int> attackTime : (minutes) (min, max) Time to attack an area.
+array<ref int> attackList : The list of attack indexes.
 array<ref SDRC_ChopperCompatFF> attacks : List of attacks
 ```
 
-# Version history
+### SDRC_ChopperCompatFF
+For more details, see related documentation
+  * [Flight settings](https://github.com/mokdevel/DarcMods/blob/main/DarcChopper/docs/P_HELICOPTER_FLY.md#flight-settings)
+  * ``heliList`` values, see [Vehicle lists](https://github.com/mokdevel/DarcMods/blob/main/DarcMissions/docs/P_LISTS.md#vehicle-lists)
+  * ``enemySearchType`` values, see [enemyType](https://github.com/mokdevel/DarcMods/blob/main/DarcChopper/docs/P_HELICOPTER_FLY.md#ai-settings)
+```
+string comment : Generic comment. Not used in game.
+array<int> chopperCount : (min, max) Count of choppers to spawn.
+array<string> heliList : List of helicopters to spawn. You can use available vehicle list names or a prefab name.
+  Example : 
+	{
+	"VEHICLE_CHOPPER_ARMED ", "VEHICLE_CHOPPER_ARMED "
+	"{5BBDA2DACF9CDCA4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport_Patrol.et",
+	}
+array<int> flyHeight : (min, max) Helicopter fly height.
+array<int> speed : (min, max) Helicopter speed. 
+array<float> flyDistance : (min, max) Distance for finding new positions
+SDRC_EHeliWaypointGenerationType wpType;
+SDRC_EHeliEnemySearchType enemySearchType : Type enemy to search for. See Enemy Search Type from DarcChopper documentation.  
+SDRC_EBattleEndType battleEndType;
+  0 = LEAVE : After the battle, helicopter will fly away and eventually despawn.
+  1 = STAY : After the battle, helicopter stay in the area. If no enemies are anymore in the area, it will fly away and eventually despawn.
+  2 = LAND : After the battle, helicopter will try to land in a safe spot and the crew will jump out. 
+SDRC_ChopperConfigAi ai : AI settings. 
+```
 
-## Next Version
-
-## 20260829
-Fixes:
-* Sometimes helicopters were found floating with their engines off in the air.
-
-## 20260812
-Fixes:
-* Disable streaming and persistence for choppers.
-
-## 20260809
-Main Feature:
-* Support for friendly choppers.
-  * Known issue: If you spawn a friendly chopper too far away from player, FF will remove the chopper. Same happens if they fly too far away. Something to fix but not for this release.
-  * Known issue: There is an error ``The object ___ has no RplComponent. This will not be seen by players.`` which I'm investigating. Reason unknown and happens only with FF.
-
-## 20260731
-Fixes:
-* Mod waits for gamemode to start before starting to run. This could have side effects.
-* Configuration file load issues.
-* dc_compatFFConfigChopper.json was created with test settings. Recommendation is to delete the file and receive an updated one at startup.
-* Default chance for choppers arriving to battle is 30% + progression%.
-
-## 20260421
-First version
+### SDRC_ChopperConfigAi
+For more details, on AI functionality, read [AI section](https://github.com/mokdevel/DarcMods/tree/main/DarcChopper#ai-functionality)
+```
+array<int> count : (min, max) Amount of AI groups of characters to spawn.
+array<string> types : The prefab names of AI groups or characters. The AI is randomly picked from this list.
+  Example : {
+            "{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
+            "{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et",
+			"G_LIGHT", "C_OFFICER"
+            }
+int skill : Skill for AI (0-100). See SCR_AICombatComponent and EaiSkill.
+  0 = NONE
+  10 = NOOB
+  20 = ROOKIE
+  50 = REGULAR
+  70 = VETERAN
+  80 = EXPERT
+  100 = CYLON
+float perception : How quickly AI reacts to danger. See SCR_AICombatComponent for details on perception factors.
+```
