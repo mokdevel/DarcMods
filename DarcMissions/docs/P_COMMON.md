@@ -74,7 +74,7 @@ array<string> types : The prefab names of AI groups or characters. The AI is ran
   Example : {
             "{ADB43E67E3766CE7}Prefabs/Characters/Factions/OPFOR/USSR_Army/Spetsnaz/Character_USSR_SF_Sharpshooter.et",
             "{8E29E7581DE832CC}Prefabs/Groups/OPFOR/KLMK/Group_USSR_MedicalSection_KLMK.et",
-	"G_LIGHT", "C_OFFICER"
+		"G_LIGHT", "C_OFFICER"
             }
 int skill : Skill for AI (0-100). See SCR_AICombatComponent and EaiSkill.
   0 = NONE
